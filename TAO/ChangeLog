@@ -1,3 +1,26 @@
+Thu Aug 21 11:51:51 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Any_Special_Impl_T.cpp (extract):
+
+          Made the attempted dynamic_cast conditional on the
+          Any_Impl's ACE_Message_BLock being 0 (so that we know
+          the Any contains an instantiation of one of the template
+          Any_Impl classes and not TAO::Unknown_IDL_Type. Attempting
+          dynamic_cast when the latter is the case, on Windows, results
+          in an internal exception, rather than the 0 result we would
+          expect. This change has already been made to the other
+          template Any_Impl classes, it was overlooked on this one.
+
+        * tao/DynamicAny/DynSequence_i.cpp (to_any):
+
+          In processing each sequence element, added a check for a null
+          ACE_Message_Block in the Any_Impl class, along with the
+          appropriate action if this is the case.
+
+          For the above changes, thanks to Johnny Willemsen 
+          <jwillemsen@remedy.nl> for reporting the problem, and for
+          sending the extensions to Dynany_Test that reproduced it.
+
 Thu Aug 21 15:48:46 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * TAO.mwc:
