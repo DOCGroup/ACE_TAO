@@ -1121,6 +1121,12 @@ be_union::tc_encap_len (void)
   return this->encap_len_;
 }
 
+int
+be_union::accept (be_visitor *visitor)
+{
+  return visitor->visit_union (this);
+}
+
 // Narrowing
 IMPL_NARROW_METHODS3 (be_union, AST_Union, be_scope, be_type)
 IMPL_NARROW_FROM_DECL (be_union)

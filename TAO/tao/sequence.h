@@ -18,139 +18,82 @@
 #if !defined (TAO_SEQUENCE_H)
 #  define TAO_SEQUENCE_H
 
-// unbounded sequences
-template <class T>
-class TAO_UnboundedSeq
+class TAO_Base_Sequence
 {
-  // =TITLE
-  //  TAO_UnboundedSeq
-  // =DESCRIPTION
-  //  parametrized type for unbounded sequences
+  // = TITLE
+  //   Base class for TAO sequences.
+  //
+  // = DESCRIPTION
+  //   This class provides a common interface for all IDL sequences,
+  //   hence the interpreted marshall engine can manipulate them in a
+  //   type safe manner.
+  //
 public:
+  friend class TAO_Marshal_Sequence;
+  // We give access to TAO_Marshal_Sequence, this allows a safe yet
+  // small footprint implementation of the marshal engine.
 
-  typedef T ElemType;
-
-  // =operations
-
-  TAO_UnboundedSeq (void);
-  // default constructor
-
-  TAO_UnboundedSeq (CORBA::ULong max);
-  // constructor using a maximum length value
-
-  TAO_UnboundedSeq (CORBA::ULong max, CORBA::ULong length, T *data,
-                    CORBA::Boolean release=0);
-  // constructor using the data and memory management flag
-
-  TAO_UnboundedSeq (const TAO_UnboundedSeq<T> &);
-  // copy constructor
-
-  ~TAO_UnboundedSeq (void);
-  // destructor
-
-  TAO_UnboundedSeq<T> &operator= (const TAO_UnboundedSeq<T> &);
-  // assignment operator
+  virtual ~TAO_Base_Sequence (void);
+  // destructor.
 
   CORBA::ULong maximum (void) const;
-  // return the max length of the sequence
+  // return the maximum length of the sequence
 
-  void length (CORBA::ULong);
+  void length (CORBA::ULong length);
   // set the length
 
   CORBA::ULong length (void) const;
   // return the current length
 
-  T &operator[] (CORBA::ULong);
-  // operator []
+  virtual void _allocate_buffer (CORBA::ULong length) = 0;
+  // Ensure that the buffer contains space for at leat <length>
+  // elements.  The constructor must be called for any new elements,
+  // the old ones (if any) must be copied into the buffer using
+  // operator= and then their destructors must be called.
+  // Finally the old buffer must be released.
 
-  const T &operator[] (CORBA::ULong) const;
-  // operator []
+  virtual void _deallocate_buffer (void) = 0;
+  // Releases the buffer and call the destructor for all the elements
+  // in it; remember that there are <maximum> elements in the buffer.
 
-  // =static operations
+  virtual int _bounded (void) const = 0;
+  // Retuns 1 if the sequence is bounded (hence it cannot be resized)
+  // and 0 otherwise.
 
-  static T *allocbuf (CORBA::ULong);
-  // allocate storage for the sequence
+protected:
+  TAO_Base_Sequence (void);
+  // Default constructor.
 
-  static void freebuf (T *);
-  // free the sequence
+  TAO_Base_Sequence (CORBA::ULong maximum,
+		     CORBA::ULong length,
+		     void* buffer,
+		     CORBA::Boolean release = 0);
+  // Constructor with control of ownership.
 
-private:
+  TAO_Base_Sequence (CORBA::ULong maximum,
+		     void* buffer);
+  // Assume ownership and set length to 0.
+
+  TAO_Base_Sequence (const TAO_Base_Sequence& rhs);
+  TAO_Base_Sequence& operator=(const TAO_Base_Sequence& rhs);
+  // Copy constructor and assignment operator are protected, the
+  // derived classes must provided the right semantics for the buffer
+  // copy, only the static fields are actually copy.
+
+protected:
   CORBA::ULong maximum_;
-  // maximum length
+  // The maximum number of elements the buffer can contain.
 
   CORBA::ULong length_;
-  // length
+  // The current number of elements in the buffer.
 
-  T *buffer_;
-  // buffer
-
-  CORBA::Boolean release_;
-  // memory management
-
-};
-
-// bounded sequences
-template <class T, CORBA::ULong size>
-class TAO_BoundedSeq
-{
-  // =TITLE
-  //  TAO_BoundedSeq
-  // =DESCRIPTION
-  //  parametrized type for Bounded sequences
-public:
-
-  typedef T ElemType;
-
-  // =operations
-
-  TAO_BoundedSeq (void);
-  // default constructor
-
-  TAO_BoundedSeq (CORBA::ULong length, T *data,
-                    CORBA::Boolean release=0);
-  // constructor using the data and memory management flag
-
-  TAO_BoundedSeq (const TAO_BoundedSeq<T,size> &);
-  // copy constructor
-
-  ~TAO_BoundedSeq (void);
-  // destructor
-
-  TAO_BoundedSeq<T,size> &operator= (const TAO_BoundedSeq<T,size> &);
-  // assignment operator
-
-  CORBA::ULong maximum (void) const;
-  // return the max length of the sequence
-
-  void length (CORBA::ULong);
-  // set the length
-
-  CORBA::ULong length (void) const;
-  // return the current length
-
-  T &operator[] (CORBA::ULong);
-  // operator []
-
-  const T &operator[] (CORBA::ULong) const;
-  // operator []
-
-  // =static operations
-
-  static T *allocbuf (CORBA::ULong);
-  // allocate storage for the sequence
-
-  static void freebuf (T *);
-  // free the sequence
-
-private:
-  CORBA::ULong length_;
-  // length
+  void* buffer_;
+  // The buffer with all the elements, casting must be done in derived
+  // classes.
 
   CORBA::Boolean release_;
-  // memory management
-
-  T *buffer_;
-  // buffer
+  // If true then the sequence should release the buffer when it is
+  // destroyed.
 };
 
 #endif /* TAO_SEQUENCE_H */

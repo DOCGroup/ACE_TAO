@@ -249,6 +249,12 @@ be_type::gen_out_impl (void)
   return 0;
 }
 
+int
+be_type::accept (be_visitor *visitor)
+{
+  return visitor->visit_type (this);
+}
+
 // Narrowing
 IMPL_NARROW_METHODS2 (be_type, AST_Type, be_decl)
 IMPL_NARROW_FROM_DECL (be_type)

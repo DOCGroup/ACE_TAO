@@ -60,6 +60,9 @@ public:
   virtual long tc_encap_len (void);
   // return length of encapsulation
 
+  // Visiting
+  virtual int accept (be_visitor *visitor);
+
   // Narrowing
   DEF_NARROW_METHODS2 (be_enum_val, AST_EnumVal, be_decl);
   DEF_NARROW_FROM_DECL (be_enum_val);

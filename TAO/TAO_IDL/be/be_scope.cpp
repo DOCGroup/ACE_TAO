@@ -479,6 +479,12 @@ be_scope::decl (void)
     }
 }
 
+int
+be_scope::accept (be_visitor *visitor)
+{
+  return visitor->visit_scope (this);
+}
+
 // narrowing methods
 IMPL_NARROW_METHODS1 (be_scope, UTL_Scope)
 IMPL_NARROW_FROM_SCOPE (be_scope)

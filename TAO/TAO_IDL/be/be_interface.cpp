@@ -1837,6 +1837,11 @@ be_interface::relative_skel_name (const char *skelname)
   return macro;
 }
 
+int
+be_interface::accept (be_visitor *visitor)
+{
+  return visitor->visit_interface (this);
+}
 
 // Narrowing
 IMPL_NARROW_METHODS3 (be_interface, AST_Interface, be_scope, be_type)
