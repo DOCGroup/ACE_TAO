@@ -52,6 +52,9 @@ public:
   /// Shutdown reactor.
   void shutdown_reactor (void);
 
+  // Does <mprofile> belong to us?
+  int is_collocated (const TAO_MProfile &mprofile);
+
   /// @name Accessors
   // @{
 
