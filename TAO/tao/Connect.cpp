@@ -385,9 +385,8 @@ TAO_Server_Connection_Handler::send_response (TAO_OutputCDR &msg)
 {
   TAO_SVC_HANDLER *this_ptr = this;
 
-  ACE_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_SEND_RESPONSE_START);
+  ACE_FUNCTION_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_SEND_RESPONSE_START);
   TAO_GIOP::send_request (this_ptr, msg);
-  ACE_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_SEND_RESPONSE_END);
 }
 
 int
@@ -399,7 +398,7 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
   // 2. construct a complete request
   // 3. dispatch that request and return any required reply and errors
 
-  ACE_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_START);
+  ACE_FUNCTION_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_START);
 
   char reqbuf[CDR::DEFAULT_BUFSIZE];
   TAO_InputCDR msg (reqbuf, sizeof(reqbuf));
@@ -456,7 +455,6 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
   if (response_required || error_encountered)
     this->send_response (reply);
 
-  ACE_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_END);
   return result;
 }
 
@@ -525,7 +523,7 @@ int
 TAO_Client_Connection_Handler::send_request (TAO_OutputCDR &stream,
 					     int is_twoway)
 {
-  ACE_TIMEPROBE (TAO_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_START);
+  ACE_FUNCTION_TIMEPROBE (TAO_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_START);
 
   // NOTE: Here would also be a fine place to calculate a digital
   // signature for the message and place it into a preallocated slot
@@ -571,7 +569,6 @@ TAO_Client_Connection_Handler::send_request (TAO_OutputCDR &stream,
       this->expecting_response_ = 0;
     }
 
-  ACE_TIMEPROBE (TAO_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_END);
   return 0;
 }
 

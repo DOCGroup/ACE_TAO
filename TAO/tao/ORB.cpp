@@ -185,7 +185,9 @@ CORBA_ORB::run (ACE_Time_Value *tv)
 
   while (this->should_shutdown_ == 0)
     {
-      ACE_TIMEPROBE (TAO_CORBA_ORB_RUN_START);
+      ACE_TIMEPROBE_PRINT_USING_TABLE (TAO_Timeprobe_Description);
+      ACE_TIMEPROBE_RESET;
+      ACE_FUNCTION_TIMEPROBE (TAO_CORBA_ORB_RUN_START);
       switch (r->handle_events (tv))
         {
         case 0: // Timed out, so we return to caller.
@@ -196,7 +198,6 @@ CORBA_ORB::run (ACE_Time_Value *tv)
           /* NOTREACHED */
         default: // Some handlers were dispatched, so keep on processing
                  // requests until we're told to shutdown .
-          ACE_TIMEPROBE (TAO_CORBA_ORB_RUN_END);
           break;
           /* NOTREACHED */
         }

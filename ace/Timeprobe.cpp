@@ -94,7 +94,7 @@ ACE_Timeprobe<ACE_LOCK>::print_times (const char *event_descriptions[]) const
     description = event_descriptions[this->timeprobes_[0].event_.event_number_];
                                     
   ACE_DEBUG ((LM_DEBUG,
-              "%-50s %8.8x %10.10s\n",
+              "%-50.50s %8.8x %10.10s\n",
               description,
               this->timeprobes_[0].thread_,
               "START"));
@@ -110,11 +110,26 @@ ACE_Timeprobe<ACE_LOCK>::print_times (const char *event_descriptions[]) const
         description = event_descriptions[this->timeprobes_[i].event_.event_number_];
                                     
       ACE_DEBUG ((LM_DEBUG,
-                  "%-50s %8.8x %10.3d\n",
+                  "%-50.50s %8.8x %10.3d\n",
                   description,
                   this->timeprobes_[i].thread_,
                   elapsed.msec () * 1000));
     }
+}
+
+template <class Timeprobe>
+ACE_Function_Timeprobe<Timeprobe>::ACE_Function_Timeprobe (Timeprobe &timeprobe, 
+                                                           u_long event)
+  : timeprobe_ (timeprobe),
+    event_ (event)
+{
+  this->timeprobe_.timeprobe (this->event_);
+}
+
+template <class Timeprobe>
+ACE_Function_Timeprobe<Timeprobe>::~ACE_Function_Timeprobe (void)
+{
+  this->timeprobe_.timeprobe (this->event_ + 1);
 }
 
 #endif /* ACE_ENABLE_TIMEPROBES */

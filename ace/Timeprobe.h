@@ -117,6 +117,21 @@ protected:
   // Current size of timestamp table
 };
 
+template <class Timeprobe> 
+class ACE_Function_Timeprobe 
+{
+public:
+  ACE_Function_Timeprobe (Timeprobe &timeprobe, 
+                          u_long event);
+
+  ~ACE_Function_Timeprobe (void);
+
+protected:
+
+  Timeprobe &timeprobe_;
+
+  u_long event_;
+};
 
 #if defined (__ACE_INLINE__)
 #include "ace/Timeprobe.i"
@@ -163,6 +178,7 @@ typedef ACE_Singleton<ACE_TIMEPROBE_WITH_LOCKING, ACE_Thread_Mutex> ACE_TIMEPROB
 #  define ACE_TIMEPROBE(id) ACE_TIMEPROBE_SINGLETON::instance ()->timeprobe (id)
 #  define ACE_TIMEPROBE_PRINT ACE_TIMEPROBE_SINGLETON::instance ()->print_times ()
 #  define ACE_TIMEPROBE_PRINT_USING_TABLE(table) ACE_TIMEPROBE_SINGLETON::instance ()->print_times (table)
+#  define ACE_FUNCTION_TIMEPROBE(X) ACE_Function_Timeprobe<ACE_TIMEPROBE_WITH_LOCKING> function_timeprobe (*ACE_TIMEPROBE_SINGLETON::instance (), X)
 
 #else /* ACE_ENABLE_TIMEPROBES */
 
@@ -170,6 +186,7 @@ typedef ACE_Singleton<ACE_TIMEPROBE_WITH_LOCKING, ACE_Thread_Mutex> ACE_TIMEPROB
 #  define ACE_TIMEPROBE(id)
 #  define ACE_TIMEPROBE_PRINT
 #  define ACE_TIMEPROBE_PRINT_USING_TABLE(table)
+#  define ACE_FUNCTION_TIMEPROBE(X) 
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
