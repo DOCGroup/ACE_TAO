@@ -206,8 +206,7 @@ TAO_ClientRequestInfo::response_expected (ACE_ENV_SINGLE_ARG_DECL)
   return this->info_->response_expected (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
-#if TAO_HAS_CORBA_MESSAGING == 1
-CORBA::Short
+Messaging::SyncScope
 TAO_ClientRequestInfo::sync_scope (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -216,7 +215,6 @@ TAO_ClientRequestInfo::sync_scope (ACE_ENV_SINGLE_ARG_DECL)
 
   return this->info_->sync_scope (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
-#endif  /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 PortableInterceptor::ReplyStatus
 TAO_ClientRequestInfo::reply_status (ACE_ENV_SINGLE_ARG_DECL)

@@ -1,3 +1,17 @@
+Tue Mar 25 14:06:58 2003  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ClientRequestInfo.h (sync_scope):
+	* tao/ClientRequestInfo.cpp (sync_scope):
+	* tao/ClientRequestInfo_i.h (sync_scope):
+	* tao/ClientRequestInfo_i.cpp (sync_scope):
+
+	  Do not protect this method with a "TAO_HAS_CORBA_MESSAGING"
+	  preprocessor block.  Doing is no longer necessary since it
+	  always possible to retrieve the SyncScope oneway setting.  This
+	  problem only occurred recently, i.e. after the
+	  PortableInterceptorC.* stub was regenerated.  Fixes builds where
+	  CORBA messaging support is disabled.
+
 Tue Mar 25 10:54:57 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/IORManipulation/IORC.h:
