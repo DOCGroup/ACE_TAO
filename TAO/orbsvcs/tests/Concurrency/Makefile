@@ -68,6 +68,7 @@ lex.CC_command.cpp:     CC_command.l CC_command.tab.h
 lex.CC_command.cpp.target:
 		$(LEX) -t -I CC_command.l > /tmp/$(USER).CC_L1
 		sed -e "s/unistd/stdio/g" \
+	        -e "s/\\$$\(Header[^$$]*\) \\$$/\\1/" \
 		-e "s/yy/ace_cc_yy/g" \
 		-e "s/YY/ACE_CC_YY/g" \
 		-e "s/free( ptr );/free( ACE_MALLOC_T (ptr) );/g" \
