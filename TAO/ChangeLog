@@ -1,3 +1,10 @@
+Tue Aug 27 15:41:57 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
+
+	* tests/ORB_shutdown/server.bor:
+	* tests/ORB_shutdown/Makefile.bor: Added these files. 
+	
+	* tests/Makefile: Added the new test for the daily builds to pick up. 
+	
 Tue Aug 27 15:48:17 2002  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tao\PortableServer\PortableServer_PolicyFactory.cpp: New class
