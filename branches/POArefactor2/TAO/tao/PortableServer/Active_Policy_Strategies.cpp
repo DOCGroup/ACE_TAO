@@ -157,7 +157,7 @@ namespace TAO
       if (implicit_activation_strategy_factory == 0)
         {
           ACE_Service_Config::process_directive (ACE_TEXT("dynamic ImplicitActivationStrategyFactory Service_Object *")
-                                                 ACE_TEXT("TAO_PortableServer:_make_ImplicitActivationFactoryImpl()"));
+                                                 ACE_TEXT("TAO_PortableServer:_make_ImplicitActivationStrategyFactoryImpl()"));
           implicit_activation_strategy_factory =
             ACE_Dynamic_Service<ImplicitActivationStrategyFactory>::instance ("ImplicitActivationStrategyFactory");
         }
