@@ -41,21 +41,24 @@ CORBA_TypeCode::kind (CORBA::Environment &) const
   return (CORBA::TCKind) this->kind_;
 }
 
-// Returns true if the two typecodes are identical
+// Returns true if the two typecodes are equivalent.
+ACE_INLINE CORBA::Boolean
+CORBA_TypeCode::equivalent (const CORBA::TypeCode_ptr tc,
+                            CORBA::Environment &ACE_TRY_ENV) const
+{
+  return this->equ_common (tc,
+                           1,
+			   ACE_TRY_ENV);
+}
+
+// Returns true if the two typecodes are identical.
 ACE_INLINE CORBA::Boolean
 CORBA_TypeCode::equal (const CORBA::TypeCode_ptr tc,
                        CORBA::Environment &ACE_TRY_ENV) const
 {
-  // Are the two pointers the same?
-  if (this == tc)
-    return 1;
-
-  if (this->kind_ != tc->kind (ACE_TRY_ENV))
-    // simple case
-    return 0;
-  else
-    // typecode kinds are same
-    return this->private_equal (tc, ACE_TRY_ENV);
+  return this->equ_common (tc,
+                           0,
+			   ACE_TRY_ENV);
 }
 
 // returns the Repository ID
