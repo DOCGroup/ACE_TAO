@@ -1,3 +1,8 @@
+Wed Apr 17 14:30:29 2002  Steve Huston  <shuston@riverace.com>
+
+        * examples/C++NPv2/display_logfile.cpp (Logrec_Module ctor): Change
+          name from ACE_TCHAR * to const ACE_TCHAR *.
+
 Wed Apr 17 10:39:24 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Dev_Poll_Reactor.cpp (open):
