@@ -1,3 +1,8 @@
+Fri Aug 18 12:36:21 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/SUN_Proactor.cpp (find_completed_aio): Wrapped ACE_GUARD_RETURN
+          with ACE_MT to build ok single-threaded.
+
 Thu Aug 17 05:48:51 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/config-win32-common.h: Wrapped the redefinition of FD_SETSIZE
