@@ -83,6 +83,7 @@ void TAO_FTEC_ProxyPushConsumer::connect_push_supplier (
     ACE_TRY_CHECK;
   }
   ACE_CATCHALL {
+    TAO_FTRTEC::Log(1, "Cannot replicate the request connect_push_supplier, rollback...\n");
     this->disconnect_push_consumer(ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_RE_THROW;
   }
