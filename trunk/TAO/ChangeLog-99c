@@ -1,3 +1,9 @@
+Mon Jun 28 12:46:57 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp: 
+  	Fixed the exception macros problems. Thanks Carlos for reporting the 
+	errors. 
+
 Mon Jun 28 12:19:21 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
 
 	* examples/Logging/Logger_i.cpp 
