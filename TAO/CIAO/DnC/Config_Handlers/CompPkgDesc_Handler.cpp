@@ -29,6 +29,7 @@ void CompPkgDesc_Handler::process_ComponentPackageDescription
        node != 0;
        node = this->iter_->nextNode())
     {
+      ACE_DEBUG ((LM_DEBUG, "i am here \n"));
       XStr node_name (node->getNodeName());
 
       if (false);

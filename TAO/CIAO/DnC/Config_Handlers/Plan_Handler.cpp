@@ -195,6 +195,7 @@ void Plan_Handler::process_add (DOMNodeIterator* iter,
 void Plan_Handler::process_idd (DOMNodeIterator* iter,
                                 Deployment::InstanceDeploymentDescription& idd)
 {
+  ACE_DEBUG ((LM_DEBUG, "i am here in IDD\n"));
   for (DOMNode* node = iter->nextNode();
        node != 0;
        node = iter->nextNode ())
@@ -244,6 +245,9 @@ void Plan_Handler::process_mdd
        node = iter->nextNode ())
     {
       XStr node_name (node->getNodeName());
+
+      ACE_DEBUG ((LM_DEBUG, " Node Name is %s \n", XMLString::transcode
+        (node_name)));
 
       if (false);
       else if

@@ -70,6 +70,7 @@ CIAO::Config_Handler::Any_Handler::process_Any (DOMNodeIterator * iter,
           break;
 
         case CORBA::tk_long:
+
           // Check if next node is a <value> node
           CIAO::Config_Handler::Any_Handler::validate_ValueNode (iter,
                                                                  "value");
