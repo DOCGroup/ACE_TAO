@@ -1,3 +1,11 @@
+Thu Mar 15 11:26:35 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SSL/SSL_SOCK_Acceptor.i (ACE_SSL_SOCK_Acceptor):
+
+	  Make sure the handle is set for the ACE_SSL_SOCK_Acceptor, after
+	  initializing the underlying ACE_SOCK_Acceptor.  This ensures
+	  that OpenSSL has the proper handle.
+
 Thu Mar 15 05:46:59 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/FILE_Addr.cpp (ACE_FILE_Addr): Make sure to divide the size of
