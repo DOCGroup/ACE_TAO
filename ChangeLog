@@ -1,3 +1,19 @@
+Thu Nov 14 22:47:45 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* include/makeinclude/platform_freebsd.GNU: Merged with the
+	  pthread version of this file.  To compile without threads,
+	  set, do make threads=0, or set threads=0 in this file.
+	* include/makeinclude/platform_freebsd_pthread.GNU: Removed.
+	* ace/config-freebsd.h: Merge with pthread version of this file.
+	* ace/config-freebsd-pthread.h: Removed.
+	* ace/OS.h: Use new ACE_HAS_POSIX_REALTIME_SIGNALS macro for
+	  POSIX RT signals stuff, instead of ACE_HAS_AIO_CALLS.
+	  FreeBSD has POSIX AIO, but not POSIX RT signals.
+	* ace/config-sunos5.6.h: Define ACE_HAS_POSIX_REALTIME_SIGNALS,
+	  ACE_HAS_POSIX_MESSAGE_PASSING.
+	* ace/config-linux-common.h: Define ACE_HAS_POSIX_REALTIME_SIGNALS,
+	  ACE_HAS_AIO_CALLS.
+
 Thu Nov 14 16:19:57 2002  Balachandran Natarajan  <bala@bala@isis-server.isis.vanderbilt.edu>
 
 	* bin/auto_run_tests.lst: Added two tests, Bug_1269_Regression and

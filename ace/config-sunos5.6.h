@@ -111,10 +111,22 @@
 #define ACE_HAS_AIO_CALLS
 #endif /* ACE_HAS_AIO_CALLS */
 
+#if !defined (ACE_HAS_POSIX_REALTIME_SIGNALS)
+#define ACE_HAS_POSIX_REALTIME_SIGNALS
+#endif /* ACE_HAS_POSIX_REALTIME_SIGNALS */
+
+#if !defined (ACE_HAS_POSIX_MESSAGE_PASSING)
+#define ACE_HAS_POSIX_MESSAGE_PASSING
+#endif /* ACE_HAS_POSIX_MESSAGE_PASSING */
+
+#if !defined (ACE_HAS_POSIX_SEM)
 #define ACE_HAS_POSIX_SEM
+#endif /* ACE_HAS_POSIX_SEM */
 
 // Sunos 5.6's aio_* with RT signals is broken.
+#if !defined (ACE_POSIX_AIOCB_PROACTOR)
 #define ACE_POSIX_AIOCB_PROACTOR
+#endif /* ACE_POSIX_AIOCB_PROACTOR */
 
 // SunOS 5.6 has a buggy select
 #define ACE_HAS_LIMITED_SELECT

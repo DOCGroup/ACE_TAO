@@ -6945,7 +6945,7 @@ typedef ACE_TRANSMIT_FILE_BUFFERS* ACE_LPTRANSMIT_FILE_BUFFERS;
 #   define ACE_NTOHS(x) x
 # endif /* ACE_LITTLE_ENDIAN */
 
-# if defined (ACE_HAS_AIO_CALLS)
+# if defined (ACE_HAS_POSIX_REALTIME_SIGNALS)
   // = Giving unique ACE scoped names for some important
   // RTSignal-Related constants. Becuase sometimes, different
   // platforms use different names for these constants.
@@ -6961,7 +6961,7 @@ typedef ACE_TRANSMIT_FILE_BUFFERS* ACE_LPTRANSMIT_FILE_BUFFERS;
   // some other name. If yes, use that instead of 8.
 #     define ACE_RTSIG_MAX 8
 #   endif /* _POSIX_RTSIG_MAX */
-# endif /* ACE_HAS_AIO_CALLS */
+# endif /* ACE_HAS_POSIX_REALTIME_SIGNALS */
 
   // Wrapping around wait status <wstat> macros for platforms that
   // lack them.
@@ -7126,13 +7126,21 @@ typedef ACE_TRANSMIT_FILE_BUFFERS* ACE_LPTRANSMIT_FILE_BUFFERS;
 //@}
 
 // Defining POSIX4 real-time signal range.
-#if defined ACE_HAS_AIO_CALLS
+#if defined(ACE_HAS_POSIX_REALTIME_SIGNALS)
 #define ACE_SIGRTMIN SIGRTMIN
 #define ACE_SIGRTMAX SIGRTMAX
-#else /* !ACE_HAS_AIO_CALLS */
+
+#else /* !ACE_HAS_POSIX_REALTIME_SIGNALS */
+
+#ifndef ACE_SIGRTMIN
 #define ACE_SIGRTMIN 0
+#endif /* ACE_SIGRTMIN */
+
+#ifndef ACE_SIGRTMAX
 #define ACE_SIGRTMAX 0
-#endif /* ACE_HAS_AIO_CALLS */
+#endif /* ACE_SIGRTMAX */
+
+#endif /* ACE_HAS_POSIX_REALTIME_SIGNALS */
 
 # if defined (ACE_LACKS_SYS_NERR)
 extern ACE_OS_Export int sys_nerr;
