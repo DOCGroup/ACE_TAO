@@ -9,9 +9,6 @@ Thu Jan 30 16:01:37 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.h: define hrtime_t as long long if ACE_HAS_AIX_HIRES_TIMER.
 
-	* ace/High_Res_Timer.*: added ACE_HAS_AIX_HIRES_TIMER support.
-	  Also, renamed get_time () to elapsed_microseconds ().
-
 	* ace/OS.{i,cpp}: uninlined ACE_OS::gethostbyname (),
 	  and ACE_OS::inet_ntoa () on VxWorks, because they have
 	  static char arrays.
@@ -22,6 +19,13 @@ Thu Jan 30 16:01:37 1997  David L. Levine  <levine@cs.wustl.edu>
 	  Thanks to Michael Maxie <maxie@acm.org> for pointing out the
 	  problem with the nonstatic char arrays with sizes determined at
 	  runtime.
+
+	* ace/High_Res_Timer.*: added ACE_HAS_AIX_HIRES_TIMER support.
+	  Also, renamed get_time () to elapsed_microseconds ().
+
+	* examples/Threads/{Timer.h,context_switch_time.cpp}:
+	  ACE_High_Res_Timer::elapsed_microseconds () instead of
+	  ACE_High_Res_Timer::get_time ().
 
 	* bin/create_ace_build: added this script: it creates an ACE build
 	  tree in directory "build/<build name>" below the current
