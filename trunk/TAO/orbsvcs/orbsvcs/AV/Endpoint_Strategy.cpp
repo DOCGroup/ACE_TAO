@@ -672,9 +672,8 @@ int
 TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::register_vdev (CORBA::Environment &env)
 {  
   // create the name
-  CosNaming::Name vdev_name (1);
-  vdev_name.length (1);
-  vdev_name [0].id = CORBA::string_dup ("VDev");
+  this->vdev_name_.length (1);
+  this->vdev_name_ [0].id = CORBA::string_dup ("VDev");
 
   // make the media controller a property of the vdev
   CORBA::Any media_ctrl_property;
@@ -686,7 +685,7 @@ TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::register_vdev (CO
   TAO_CHECK_ENV_RETURN (env,-1);
   
   // Register the vdev with the naming server.
-  this->naming_context_->bind (vdev_name,
+  this->naming_context_->bind (this->vdev_name_,
                                this->vdev_->_this (env),
                                env);
   
@@ -695,7 +694,7 @@ TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::register_vdev (CO
   if (env.exception () != 0)
     {
       env.clear ();
-      this->naming_context_->rebind (vdev_name,
+      this->naming_context_->rebind (this->vdev_name_,
                                      this->vdev_->_this (env),
                                      env);
       TAO_CHECK_ENV_RETURN (env, -1);
@@ -774,14 +773,9 @@ TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::register_stream_e
 {  
   //  ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
   // Create a name for the video control object
-  CosNaming::Name Stream_Endpoint_Name (1);
-  
   // subclasses can define their own name for the streamendpoint
-  Stream_Endpoint_Name.length (1);
-  Stream_Endpoint_Name [0].id = CORBA::string_dup (this->stream_endpoint_name_);
-
   // Register the stream endpoint object with the naming server.
-  this->naming_context_->bind (Stream_Endpoint_Name,
+  this->naming_context_->bind (this->stream_endpoint_name_,
                                this->stream_endpoint_->_this (env),
                                env);
   
@@ -789,7 +783,7 @@ TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::register_stream_e
   if (env.exception () != 0)
     {
       env.clear ();
-      this->naming_context_->rebind (Stream_Endpoint_Name,
+      this->naming_context_->rebind (this->stream_endpoint_name_,
                                      this->stream_endpoint_->_this (env),
                                      env);
       TAO_CHECK_ENV_RETURN (env, -1);
@@ -840,6 +834,26 @@ TAO_AV_Child_Process<T_StreamEndpoint, T_VDev, T_MediaCtrl>::make_mediactrl (T_M
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::~TAO_AV_Child_Process ()
 {
+  // Remove the names from the naming service
+  if (this->naming_context_ == 0)
+    return;
+  TAO_TRY
+    {
+      this->naming_context_->unbind (this->stream_endpoint_name_,
+                                     TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      this->naming_context_->unbind (this->vdev_name_,
+                                     TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+    }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("TAO_Endpoint_Process_Strategy::activate");
+      return -1;
+    }      
+  TAO_ENDTRY;
+    
 //  if (this->stream_endpoint_ != 0)
 //    delete this->stream_endpoint_;
 //  if (this->vdev_ != 0)      
@@ -856,8 +870,10 @@ TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::~TAO_AV_Child_Pro
 // the  naming service
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 TAO_AV_Child_Process_A  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Child_Process_A ()
+  : stream_endpoint_name_ (1)
 {  
-  this->stream_endpoint_name_ = "Stream_Endpoint_A";
+  this->stream_endpoint_name_.length (1);
+  this->stream_endpoint_name_ [0].id = CORBA::string_dup ("Stream_Endpoint_A");
 }
 
 // ----------------------------------------------------------------------
@@ -868,6 +884,8 @@ TAO_AV_Child_Process_A  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Child_Pr
 // the  naming service
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 TAO_AV_Child_Process_B  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Child_Process_B ()
+  : stream_endpoint_name_ (1)
 {  
-  this->stream_endpoint_name_ = "Stream_Endpoint_B";
+  this->stream_endpoint_name_.length (1);
+  this->stream_endpoint_name_ [0].id = CORBA::string_dup ("Stream_Endpoint_B");
 }
