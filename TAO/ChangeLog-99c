@@ -1,3 +1,10 @@
+Wed Jul 14 17:23:23 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_sunsoft.cpp:
+	  Added a 'f' at the end of a printed floating point literal, to 
+	  avoid the MSVC warning, since it reads decimal constants as
+	  doubles.
+
 Wed Jul 14 17:03:16 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_scope.cpp:
