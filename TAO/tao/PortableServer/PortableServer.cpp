@@ -68,11 +68,9 @@ TAO_POA_Initializer::init (void)
       TAO::Portable_Server::ace_svc_desc_IdUniquenessStrategyUniqueFactoryImpl
     );
 
-#if (TAO_HAS_MINIMUM_POA == 0)
   ACE_Service_Config::process_directive (
       TAO::Portable_Server::ace_svc_desc_ImplicitActivationStrategyExplicit
     );
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   ACE_Service_Config::process_directive (
       TAO::Portable_Server::ace_svc_desc_ImplicitActivationStrategyImplicit

@@ -40,7 +40,7 @@ namespace TAO
         strategy = strategy_factory->create (value);
       else
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) Unable to get %s\n"),
+                    ACE_TEXT ("(%P|%t) ERROR, Unable to get %s\n"),
                     strategy_name));
 
 
