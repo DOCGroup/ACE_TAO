@@ -1,3 +1,10 @@
+Sun Sep 27 18:53:25 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/Map_Manager_Test.cpp: 
+	  Instead of clearing the capacity and size in the
+	  free_search_structure() method we do it on the close()
+	  method. The first method is also used in other places...
+
 Sun Sep 27 18:25:57 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.i (readdir_r): added __USE_POSIX test for three-arg
