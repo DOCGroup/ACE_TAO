@@ -178,9 +178,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Parent spawned child process with pid = %d.\n"),
                       children[i].getpid ()));
-
-          // Give the newly spawned child process a chance to start...
-          ACE_OS::sleep (1);
         }
 
       for (i = 0; i < n_processes; i++)
