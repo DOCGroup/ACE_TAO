@@ -65,7 +65,6 @@ public:
   int connect (TAO_GIOP_Invocation *invocation,
                TAO_Transport_Descriptor_Interface *desc
                ACE_ENV_ARG_DECL);
-  int preconnect (const char *preconnections);
   TAO_Profile *create_profile (TAO_InputCDR& cdr);
 
   virtual int check_prefix (const char *endpoint);

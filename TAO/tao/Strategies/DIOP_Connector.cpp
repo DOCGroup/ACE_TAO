@@ -164,13 +164,6 @@ TAO_DIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
   return 0;
 }
 
-int
-TAO_DIOP_Connector::preconnect (const char *)
-{
-  // @@ Michael: We do not support preconnects.
-  return 0;
-}
-
 TAO_Profile *
 TAO_DIOP_Connector::create_profile (TAO_InputCDR& cdr)
 {
