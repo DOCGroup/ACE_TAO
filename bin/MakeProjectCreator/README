@@ -150,6 +150,12 @@ specific        This scope allows assignments that are specific to a
                   ...
                 }
 
+                If a keyword is not recognized as a valid MPC keyword, it is
+                interpreted as a template value modifier.  In this
+                situation, this construct has the exact same restrictions as
+                the -value_template command line option.  See the USAGE file
+                for more information.
+
 requires        Specifies which features should be enabled in order to
                 generate the project file.  Under the GNUACE type, it also
                 specifies which tao macros should be set to build the
@@ -209,6 +215,10 @@ automatic           If set to 1, then attempt to automatically determine
                     adding files to Source_Files, Inline_Files, Header_Files
                     Template_Files, Resource_Files and Documentation_Files
                     depending on which extension types the command generates.
+dependent           If this value is set, then a dependency upon the command
+                    will be placed upon all of the generated files.  The
+                    default for this is unset and no dependency will be
+                    generated.
 command             The name of the command that should be used to process
                     the input files for the custom type.
 commandflags        Any options that should be passed to the command go here.

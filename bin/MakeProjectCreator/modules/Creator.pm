@@ -358,9 +358,12 @@ sub parse_scope {
           }
         }
         else {
-          $status = 0;
-          $errorString = "Invalid assignment name: $values[1]";
-          last;
+          ($status,
+           $errorString) = $self->handle_unknown_assignment($type,
+                                                            @values);
+          if (!$status) {
+            last;
+          }
         }
       }
       else {
@@ -859,6 +862,14 @@ sub handle_scoped_end {
   #my($type)  = shift;
   #my($flags) = shift;
   return 1, undef;
+}
+
+
+sub handle_unknown_assignment {
+  my($self)   = shift;
+  my($type)   = shift;
+  my(@values) = @_;
+  return 0, "Invalid assignment name: $values[1]";
 }
 
 

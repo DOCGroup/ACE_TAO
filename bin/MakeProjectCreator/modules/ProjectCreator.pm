@@ -65,6 +65,7 @@ my(%validNames) = ('exename'         => 1,
 ##  0 means that it is an array that gets outputext converted to files
 ##  1 means that it is always scalar
 my(%customDefined) = ('automatic'               => 1,
+                      'dependent'               => 1,
                       'command'                 => 1,
                       'commandflags'            => 1,
                       'inputext'                => -1,
@@ -533,8 +534,9 @@ sub parse_line {
         }
         elsif ($comp eq 'specific') {
           my($scope_parsed) = 0;
+          my($defcomp) = $self->get_default_component_name();
           foreach my $type (split(/\s*,\s*/, $name)) {
-            if ($type eq $self->{'pctype'}) {
+            if ($type eq $self->{'pctype'} || $type eq $defcomp) {
               ($status, $errorString) = $self->parse_scope(
                                           $ih, $values[1], $type,
                                           $self->{'valid_names'},
@@ -638,6 +640,34 @@ sub parse_scoped_assignment {
     }
   }
   return $status;
+}
+
+
+sub handle_unknown_assignment {
+  my($self)   = shift;
+  my($type)   = shift;
+  my(@values) = @_;
+
+  ## Unknown assignments within a 'specific' section are handled as
+  ## template value modifications.  These are handled exactly as the
+  ## -value_template option in Options.pm.
+
+  ## If $type is not defined, then we are skipping this section
+  if (defined $type) {
+    $self->information("'$values[1]' was used as a template modifier.");
+    if ($values[0] eq 'assign_add') {
+      $values[0] = 1;
+    }
+    elsif ($values[0] eq 'assign_sub') {
+      $values[0] = -1;
+    }
+    else {
+      $values[0] = 0;
+    }
+    $self->get_addtemp()->{$values[1]} = [$values[0], $values[2]];
+  }
+
+  return 1, undef;
 }
 
 
