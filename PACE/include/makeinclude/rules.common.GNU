@@ -18,7 +18,12 @@ ifeq ($(PACE_SYSVER),)
   PACE_SYSVER = $(shell uname -r)
 endif # ! PACE_SYSVER
 
-PACE_SYSVER := $(shell echo $(PACE_SYSVER) | sed 's/\.//g')
+ifeq ($(PACE_SYSNAME),Linux)
+  PACE_SYSVER := $(shell echo $(PACE_SYSVER) | \
+    perl -ne 'printf "%lu\n", hex sprintf "%02X%02X%02x", split /\./')
+else
+  PACE_SYSVER := $(shell echo $(PACE_SYSVER) | sed 's/\.//g')
+endif # PACE_SYSNAME == Linux
 
 # List of platforms and uname -s values
 # =====================================
