@@ -11,7 +11,8 @@ SHLIB    = $(LIBNAME).$(SOEXT)
 
 DIRS = \
   PortableServer \
-  DynamicAny
+  DynamicAny \
+  IORManipulation
 
 # These are headers for things which are exported and must be
 # installed.  (Currently not used).

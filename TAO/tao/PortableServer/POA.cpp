@@ -3831,7 +3831,7 @@ TAO_Default_Acceptor_Filter::fill_mprofile (const TAO_ObjectKey &object_key,
                                             TAO_Acceptor **acceptors_begin,
                                             TAO_Acceptor **acceptors_end)
 {
-  int acceptors_used = 0;
+  //int acceptors_used = 0;
 
   for (TAO_Acceptor** acceptor = acceptors_begin;
        acceptor != acceptors_end;
