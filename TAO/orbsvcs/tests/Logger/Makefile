@@ -12,11 +12,11 @@
 LDLIBS     =  -lorbsvcs -lTAO
 
 IDL_SRC	= loggerC.cpp loggerS.cpp
-PROG_SRCS =	$(IDL_SRC) logger_i.cpp ior_multicast.cpp
+PROG_SRCS =	$(IDL_SRC) logger_i.cpp 
 
 LSRC = $(PROG_SRCS)
 
-logger_SVR_OBJS = loggerC.o loggerS.o svr.o logger_i.o ior_multicast.o
+logger_SVR_OBJS = loggerC.o loggerS.o svr.o logger_i.o 
 logger_CLT_OBJS = loggerC.o clnt.o
 
 BIN = svr clnt
