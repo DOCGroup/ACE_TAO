@@ -202,12 +202,12 @@ ACE_Task_Base::svc_run (void *args)
   // Call the Task's svc() hook method.
   int svc_status = t->svc ();
   ACE_THR_FUNC_RETURN status;
-#if defined (__BORLANDC__) || defined (__MINGW32__)
+#if defined (__BORLANDC__) || defined (__MINGW32__) || (_MSC_VER <= 1200)
   // C++Builder and MingW complain about reinterpret_cast from int to unsigned long...
   status = ACE_static_cast (ACE_THR_FUNC_RETURN, svc_status);
 #else
   status = ACE_reinterpret_cast(ACE_THR_FUNC_RETURN, svc_status);
-#endif /* __BORLANDC__ || __MINGW32__*/
+#endif /* __BORLANDC__ || __MINGW32__ || _MSC_VER <= 1200 */
 
 // If we changed this zero change the other if in OS.cpp Thread_Adapter::invoke
 #if 1
