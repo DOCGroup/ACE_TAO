@@ -1,3 +1,10 @@
+Tue Sep 12 11:29:34 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAOACE.dsw:
+
+	  Added IORTable project dependency to ImplRepo_Service
+	  and IFR_Service projects.
+
 Tue Sep 12 10:53:37 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile.Svc_Utils:
