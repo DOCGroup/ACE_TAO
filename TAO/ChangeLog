@@ -1,3 +1,22 @@
+Fri Apr 25 08:59:12 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/IFR_Client/IFR_BaseC.cpp:
+	* tao/IFR_Client/IFR_BaseC.h:
+	* tao/IFR_Client/IFR_BaseC.i:
+	* tao/IFR_Client/IFR_BasicC.cpp:
+	* tao/IFR_Client/IFR_BasicC.h:
+	* tao/IFR_Client/IFR_BasicC.i:
+	* tao/IFR_Client/IFR_ComponentsC.cpp:
+	* tao/IFR_Client/IFR_ComponentsC.h:
+	* tao/IFR_Client/IFR_ComponentsC.i:
+	* tao/IFR_Client/IFR_ExtendedC.cpp:
+	* tao/IFR_Client/IFR_ExtendedC.h:
+	* tao/IFR_Client/IFR_ExtendedC.i: Generated code for the IFR. This
+	  should compile fine if explicit template instantiations are
+	  used. 
+
+	  We still have a lots of link errors that needs fixing in TAO.
+
 Fri Apr 25 07:06:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/PortableServer/PortableServerC.i: Added #if
