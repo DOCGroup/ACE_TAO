@@ -83,7 +83,7 @@ Grid_i::get (CORBA::Short x,
 // Access methods.
 
 CORBA::Short
-Grid_i::width (CORBA::Environment &A)
+Grid_i::width (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->width_;
