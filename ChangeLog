@@ -1,3 +1,11 @@
+Fri Jul 30 23:29:17 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/make_release:
+	  
+	  The chgrp on deuce.doc freaked out again. This checkin fixes
+	  this problem using a hack. Cutting a beta on deuce.doc should
+	  probably be avoided.
+
 Fri Jul 30 19:18:08 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* bin/make_release:
