@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 // The following configuration file is designed to work for QNX RTP
@@ -90,10 +91,9 @@
 #define ACE_LACKS_SBRK
 #define ACE_LACKS_SEEKDIR
 #define ACE_LACKS_SOCKET_BUFSIZ
-#define ACE_LACKS_SOCKETPAIR     
-// Even if the QNX RTP docs says that socket pair are
-// available, there is actually no implementation of
-// socket-pairs.
+#define ACE_LACKS_SOCKETPAIR     // Even if the QNX RTP docs says that socket pair are
+                                 // available, there is actually no implementation of
+				 // soket-pairs.
 #define ACE_LACKS_STREAM_MODULES
 #define ACE_LACKS_STRRECVFD
 #define ACE_LACKS_SYSCALL
