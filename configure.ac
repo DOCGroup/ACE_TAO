@@ -6216,6 +6216,9 @@ ACE_CACHE_CHECK([for UNIX domain sockets],
   [ace_cv_feature_unix_sockets],
    [
     AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+#ifndef ACE_LACKS_SYS_TYPES_H
+# include <sys/types.h>
+#endif
 #include <sys/un.h>
       ]], [[
        sockaddr_un su;
