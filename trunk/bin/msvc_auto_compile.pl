@@ -17,6 +17,7 @@ else {
 @ace_dirs = ("$ACE_ROOT\\ace",
              "$ACE_ROOT\\ACEXML\\common",
              "$ACE_ROOT\\ACEXML\\parser",
+             "$ACE_ROOT\\ACEXML\\apps",
              "$ACE_ROOT\\ACEXML\\tests",
              "$ACE_ROOT\\ACEXML\\examples",
              "$ACE_ROOT\\apps",
