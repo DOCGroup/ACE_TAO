@@ -127,7 +127,7 @@ Quoter_Impl::copy (CosLifeCycle::FactoryFinder_ptr there,
 
           if (CORBA::is_nil (quoter_Factory_var.in ()))
             ACE_ERROR_RETURN ((LM_ERROR,
-                        "Quoter::copy: Factory did not create the Quoter properly.\n"),
+                        "Quoter::copy: Narrow failed. Factory is not valid.\n"),
                         0);
 
           // Try to get a Quoter created by this factory.
