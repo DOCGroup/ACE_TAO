@@ -83,15 +83,15 @@ public:
   int exec (ACE_Service_Repository_Iterator *sri);
   // Run the test and advanced the service repository iterator
 
-  virtual void pre_run_test (void) = 0;
+  virtual int pre_run_test (void) = 0;
   // Before running the real test.  Subclasses implement this method
   // to dictate how the test is performed.
 
-  virtual void run_test (void) = 0;
+  virtual int run_test (void) = 0;
   // Run the real test.  Subclasses implement this method to
   // dictate how the test is performed.
 
-  virtual void post_run_test (void) = 0;
+  virtual int post_run_test (void) = 0;
   // After running the real test.  Subclasses implement this method to
   // dictate how the test is performed.
 
@@ -112,4 +112,4 @@ protected:
 
 
 # endif /* ACE_HAS_THREADS */
-#endif /* ACE_BENCHMARK_H */
+#endif /* ACE_BENCHMARK_BASE_H */

@@ -3,11 +3,11 @@
 #define  ACE_BUILD_SVC_DLL
 #include "ace/Thread_Manager.h"
 #include "Options.h"
-#include "Benchmark.h"
+#include "Benchmark_Performance.h"
 
 #if defined (ACE_HAS_THREADS)
 
-class ACE_Svc_Export Pipe_Thr_Test : public Benchmark
+class ACE_Svc_Export Pipe_Thr_Test : public Benchmark_Performance
 {
 public:
   virtual int init (int, char **);
@@ -25,7 +25,7 @@ Pipe_Thr_Test::reader (Pipe_Thr_Test *t)
   ACE_HANDLE handle = t->pipe_handles[0];
   int ni = t->thr_id ();
   size_t length = options.msg_size ();
-  char *to; 
+  char *to;
   ACE_NEW_RETURN (to, char[length], 0);
 
   while (ACE_OS::read (handle, to, length) > 0)
@@ -42,7 +42,7 @@ Pipe_Thr_Test::init (int, char **)
   if (ACE_OS::pipe (this->pipe_handles) == -1)
     ACE_OS::perror ("pipe"), ACE_OS::exit (1);
 
-  if (ACE_Thread_Manager::instance ()->spawn 
+  if (ACE_Thread_Manager::instance ()->spawn
       (ACE_THR_FUNC (Pipe_Thr_Test::reader),
        (void *) this, options.t_flags ()) == -1)
     ACE_OS::perror ("thr_create"), ACE_OS::exit (1);

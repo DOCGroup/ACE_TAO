@@ -1,7 +1,7 @@
 // $Id$
 
 #define  ACE_BUILD_SVC_DLL
-#include "Benchmark.h"
+#include "Benchmark_Performance.h"
 
 #if defined (ACE_HAS_THREADS)
 

@@ -3,11 +3,11 @@
 #define  ACE_BUILD_SVC_DLL
 #include "ace/Synch.h"
 #include "Options.h"
-#include "Benchmark.h"
+#include "Benchmark_Performance.h"
 
 #if defined (ACE_HAS_THREADS)
 
-class ACE_Svc_Export RWWR_Test : public Benchmark
+class ACE_Svc_Export RWWR_Test : public Benchmark_Performance
 {
 public:
   virtual int svc (void);

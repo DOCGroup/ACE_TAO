@@ -3,11 +3,11 @@
 #define  ACE_BUILD_SVC_DLL
 #include "ace/Synch.h"
 #include "Options.h"
-#include "Benchmark.h"
+#include "Benchmark_Performance.h"
 
 #if defined (ACE_HAS_THREADS)
 
-class ACE_Svc_Export Cond_Brdcast_Test : public Benchmark
+class ACE_Svc_Export Cond_Brdcast_Test : public Benchmark_Performance
 {
 public:
   virtual int svc (void);
@@ -61,7 +61,7 @@ Cond_Brdcast_Test::svc (void)
   return 0;
 }
 
-ACE_SVC_FACTORY_DECLARE (Cond_Brdcast_Test) 
+ACE_SVC_FACTORY_DECLARE (Cond_Brdcast_Test)
 ACE_SVC_FACTORY_DEFINE  (Cond_Brdcast_Test)
 
 // ACE_Service_Object_Type cbt (&cond_brdcast_test, "Condition_Broadcast_Test");
