@@ -28,6 +28,7 @@
 
 template <class RECEIVER, class ACTION>
 class Command
+{
   // = TITLE
   //    Defines an abstract class that allows us to invoke commands
   //    without knowing anything about the implementation.  This class
@@ -39,7 +40,6 @@ class Command
   //    binding a RECEIVER object with an ACTION.  The RECEIVER knows
   //    how to implement the operation.  A class can invoke operations
   //    without knowing anything about it, or how it was implemented.
-{
 public:
   Command (RECEIVER &recvr, ACTION action);
   // Sets the <receiver_> of the Command to recvr, and the
@@ -58,6 +58,7 @@ private:
 
 template <class TQ, class RECEIVER, class ACTION>
 class Timer_Queue_Test_Driver
+{
   // = TITLE
   //    Defines a class that provides a simmple implementation for
   //      a test driver for timer queues.
@@ -69,7 +70,6 @@ class Timer_Queue_Test_Driver
   //    read_input() and the get_next_request().  Subclasses can
   //    override these methods if there is some logic that is specific
   //    to that implementation.
-{
 public:
   virtual ~Timer_Queue_Test_Driver (void);
   // Default destructor
