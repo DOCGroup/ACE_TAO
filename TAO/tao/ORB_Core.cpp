@@ -915,6 +915,7 @@ TAO_ORB_Core::root_poa (TAO_POA *np)
   this->resource_factory ()->set_root_poa (np);
   TAO_POA *old_poa = this->root_poa_;
   this->root_poa_ = np;
+  this->root_poa_reference_ = PortableServer::POA::_nil ();  
   return old_poa;
 }
 

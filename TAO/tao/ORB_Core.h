@@ -144,6 +144,10 @@ public:
   TAO_POA *root_poa (const char *adapter_name = TAO_DEFAULT_ROOTPOA_NAME,
                      TAO_POA_Manager *poa_manager = 0,
                      const TAO_POA_Policies *policies = 0);
+  PortableServer::POA_ptr root_poa_reference (CORBA::Environment &env = CORBA_Environment::default_environment (),
+                                              const char *adapter_name = TAO_DEFAULT_ROOTPOA_NAME,
+                                              TAO_POA_Manager *poa_manager = 0,
+                                              const TAO_POA_Policies *policies = 0);
 
   int inherit_from_parent_thread (TAO_ORB_Core *p);
   // A spawned thread needs to inherit some properties/objects from
@@ -310,6 +314,9 @@ protected:
   // Pointer to the root POA.  It will eventually be the pointer
   // returned by calls to <CORBA::ORB::resolve_initial_references
   // ("RootPOA")>.
+
+  PortableServer::POA_var root_poa_reference_;
+  // Cached POA reference
 
   TAO_OA_Parameters *oa_params_;
   // Parameters which should be used by OAs attached to this ORB.
