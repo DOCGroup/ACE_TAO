@@ -119,8 +119,12 @@ TAO_Active_Demux_OpTable::TAO_Active_Demux_OpTable (const
 						    CORBA::ULong dbsize)
   : next_ (0),
     tablesize_ (dbsize),
-    tbl_ (new TAO_Active_Demux_OpTable_Entry[dbsize])
+    tbl_ (0)
 {
+
+  ACE_NEW (tbl_,
+           TAO_Active_Demux_OpTable_Entry[dbsize]);
+
   // The job of the constructor is to go thru each entry of the
   // database and bind the operation name to its corresponding
   // skeleton.
@@ -185,10 +189,10 @@ TAO_Perfect_Hash_OpTable::~TAO_Perfect_Hash_OpTable (void)
 {
 }
 
-
 // Uses <{opname}> to look up the skeleton function and pass it back
-// in <{skelfunc}>.  Returns non-negative integer on success, or -1
-// on failure.
+// in <{skelfunc}>.  Returns non-negative integer on success, or -1 on
+// failure.
+
 int
 TAO_Perfect_Hash_OpTable::find (const char *opname,
                                 TAO_Skeleton &skelfunc)
@@ -225,20 +229,20 @@ TAO_Binary_Search_OpTable::~TAO_Binary_Search_OpTable (void)
 {
 }
 
-
 // Uses <{opname}> to look up the skeleton function and pass it back
-// in <{skelfunc}>.  Returns non-negative integer on success, or -1
-// on failure.
+// in <{skelfunc}>.  Returns non-negative integer on success, or -1 on
+// failure.
+
 int
 TAO_Binary_Search_OpTable::find (const char *opname,
-                                TAO_Skeleton &skelfunc)
+                                 TAO_Skeleton &skelfunc)
 {
   const TAO_operation_db_entry *entry = lookup (opname);
+
   if (entry == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "TAO_Binary_Search_Table:find failed\n"),
                       -1);
-
   // Valid entry. Figure out the skel_ptr.
   skelfunc = entry->skel_ptr_;
 
@@ -302,7 +306,8 @@ TAO_Operation_Table_Factory::~TAO_Operation_Table_Factory (void)
 TAO_Operation_Table *
 TAO_Operation_Table_Factory::opname_lookup_strategy (void)
 {
-  TAO_Operation_Table_Parameters *p = TAO_OP_TABLE_PARAMETERS::instance ();
+  TAO_Operation_Table_Parameters *p =
+    TAO_OP_TABLE_PARAMETERS::instance ();
 
   return p->concrete_strategy ();
 }

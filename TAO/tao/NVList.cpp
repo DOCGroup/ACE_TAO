@@ -128,8 +128,8 @@ CORBA_NVList::add_value (const char *name,
         // the ORB, but rather that the ORB copies its value.
         //
         // Initialize the newly allocated memory using a copy
-        // constructor that places the new "Any" value at just the right
-        // place, and makes a "deep copy" of the data.
+        // constructor that places the new "Any" value at just the
+        // right place, and makes a "deep copy" of the data.
         nv->any_ = value;
       else
 	{
@@ -184,14 +184,13 @@ CORBA_NVList::add_value_consume (char * name,
       // consume name
       nv->name_ = name;
 
-      // consume the value @@ (ASG) have we? we may need to destroy the in
-      // parameter
+      // consume the value @@ (ASG) have we? we may need to destroy
+      // the in parameter
       nv->any_ = *value;
       return nv;
     }
   else
     return 0;
-
 }
 
 //CORBA::Status
@@ -200,7 +199,6 @@ CORBA_NVList::remove (CORBA::ULong /*n*/, CORBA::Environment &/*env*/)
 {
   // not implemented
   // @@ (ASG) - TODO
-
 }
 
 // Helper method
@@ -208,7 +206,8 @@ CORBA::NamedValue_ptr
 CORBA_NVList::add_element (CORBA::Flags flags, CORBA::Environment &env)
 {
   env.clear ();
-  if (ACE_BIT_DISABLED (flags, CORBA::ARG_IN | CORBA::ARG_OUT | CORBA::ARG_INOUT))
+  if (ACE_BIT_DISABLED (flags,
+                        CORBA::ARG_IN | CORBA::ARG_OUT | CORBA::ARG_INOUT))
     {
       env.exception (new CORBA::BAD_PARAM (CORBA::COMPLETED_NO));
       return 0;

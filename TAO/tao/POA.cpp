@@ -2998,10 +2998,8 @@ TAO_POA::decode_string_to_sequence (TAO_Unbounded_Sequence<CORBA::Octet> &seq,
           cp += 3;
         }
       else
-        {
-          // Copy it in
-          seq[i] = *cp++;
-        }
+        // Copy it in
+        seq[i] = *cp++;
     }
 
   // Set the length appropriately
@@ -3193,7 +3191,8 @@ TAO_POA_Manager::deactivate (CORBA::Boolean etherealize_objects,
   // crisis (for example, unrecoverable error) situation.
 
   for (POA_COLLECTION::iterator iterator = this->poa_collection_.begin ();
-       iterator != this->poa_collection_.end () && env.exception () == 0;
+       iterator != this->poa_collection_.end () 
+         && env.exception () == 0;
        ++iterator)
     {
       TAO_POA *poa = *iterator;
