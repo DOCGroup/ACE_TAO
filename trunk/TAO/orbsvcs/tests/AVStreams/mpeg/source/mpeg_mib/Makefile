@@ -6,11 +6,11 @@
 
 MAKEFILE = Makefile
 LIBNAME  = libmpeg_mib
-LIB      = $(LIBNAME).a
-SHLIB    = $(LIBNAME).$(SOEXT)
+LIB2     = $(LIBNAME).a
+SHLIB2   = $(LIBNAME).$(SOEXT)
 
 ifndef TAO_ROOT
-TAO_ROOT = $(ACE_ROOT)/TAO
+  TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
 # On non-Windows environment, we should at least define
@@ -34,20 +34,21 @@ LSRC	= $(addsuffix .cpp,$(FILES))
 
 ##LIBS 	+= -lTAO -lACE
 
+#### If the TAO orbsvcs library wasn't built with sufficient components,
+#### don't try to build here.
+TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (AV,$(findstring AV,$(TAO_ORBSVCS)))
+  LIB = $(LIB2)
+  SHLIB = $(SHLIB2)
+else
+  override INSTALL =
+endif # ! AV
+
 #----------------------------------------------------------------------------
 #	Include macros and targets
 #----------------------------------------------------------------------------
 
 include	$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-
-#### If the TAO orbsvcs library wasn't built with sufficient components,
-#### don't try to build here.
-TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifneq (AV,$(findstring AV,$(TAO_ORBSVCS)))
-  BUILD =
-  override INSTALL =
-endif # ! AV
-
 include	$(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU

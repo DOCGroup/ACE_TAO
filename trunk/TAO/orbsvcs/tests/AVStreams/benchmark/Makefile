@@ -25,20 +25,20 @@ FILES = client server child child_process
 DEFS    = $(addsuffix .h,$(FILES))
 LSRC	= $(addsuffix .cpp,$(FILES))
 
+BIN2 = server client child_process
+
+#### If the TAO orbsvcs library wasn't built with sufficient components,
+#### don't try to build here.
+TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (AV,$(findstring AV,$(TAO_ORBSVCS)))
+  BIN = $(BIN2)
+endif # AV
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-
-#### If the TAO orbsvcs library wasn't built with sufficient components,
-#### don't try to build here.
-TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq (AV,$(findstring AV,$(TAO_ORBSVCS)))
-  BIN = server client child_process
-endif # AV
-
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
@@ -59,9 +59,6 @@ client:$(addprefix $(VDIR),$(CLIENT_OBJS))
 
 child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
-
-realclean: clean
-	-/bin/rm -rf 
 
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.

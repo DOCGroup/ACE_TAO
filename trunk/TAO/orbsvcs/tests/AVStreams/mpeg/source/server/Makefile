@@ -35,19 +35,20 @@ LIBS 	+= -lTAO -lACE -lorbsvcs -lmpeg_server -lmpeg_shared -lrpcsvc
 MPEG_ROOT = $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source
 CPPFLAGS += -I$(MPEG_ROOT) -I$(TAO_ROOT)/orbsvcs/orbsvcs
 
-#----------------------------------------------------------------------------
-#	Include macros and targets
-#----------------------------------------------------------------------------
-
-include	$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+BIN2 = augmented_server server vs as
 
 #### If the TAO orbsvcs library wasn't built with sufficient components,
 #### don't try to build here.
 TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq (AV,$(findstring AV,$(TAO_ORBSVCS)))
-  BIN = augmented_server server vs as 
+  BIN = $(BIN2)
 endif # AV
 
+#----------------------------------------------------------------------------
+#	Include macros and targets
+#----------------------------------------------------------------------------
+
+include	$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include	$(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
@@ -85,7 +86,7 @@ as:$(addprefix $(VDIR),$(AV_AS_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 clean:
-	-/bin/rm -rf *.o Log $(BIN) obj.* core Templates.DB .make.state
+	-/bin/rm -rf *.o Log obj.* core Templates.DB .make.state
 
 realclean: clean
 	-/bin/rm -rf $(addsuffix .h, $(IDL_FILES)) $(addsuffix .i, $(IDL_FILES)) $(addsuffix .cpp, $(IDL_FILES)) \
