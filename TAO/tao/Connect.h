@@ -75,6 +75,8 @@ private:
   // when <expecting_response_> is non-zero.
 };
 
+class TAO_ORB_Core;
+
 class TAO_Server_Connection_Handler : public TAO_SVC_HANDLER
 {
   // = TITLE
@@ -87,6 +89,18 @@ public:
   virtual int open (void *);
   // Called by the <Strategy_Acceptor> when the handler is completely
   // connected.  Argument is unused.
+
+  // = Active object activation method.
+  virtual int activate (long flags = THR_NEW_LWP,
+                        int n_threads = 1,
+                        int force_active = 0,
+                        long priority = ACE_DEFAULT_THREAD_PRIORITY,
+                        int grp_id = -1,
+                        ACE_Task_Base *task = 0,
+                        ACE_hthread_t thread_handles[] = 0,
+                        void *stack[] = 0,
+                        size_t stack_size[] = 0,
+                        ACE_thread_t  thread_names[] = 0);
 
   virtual int svc (void);
   // Only used when the handler is turned into an active object by
@@ -130,6 +144,8 @@ protected:
   virtual int handle_close (ACE_HANDLE,
                             ACE_Reactor_Mask);
   // Perform appropriate closing of the connection.
+
+  TAO_ORB_Core *parent_;
 
   TAO_OA_Parameters *params_;
   // Pointer to the object adapter parameters.
