@@ -180,11 +180,11 @@ main (int argc, char *argv[])
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class ACE_Hash_Map_Manager<KEY, unsigned int, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator<KEY, unsigned int, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Entry<KEY, unsigned int>;
-template class ACE_Map_Manager<KEY, unsigned int, ACE_Null_Mutex>;
-template class ACE_Map_Iterator<KEY, unsigned int, ACE_Null_Mutex>;
-template class ACE_Map_Reverse_Iterator<KEY, unsigned int, ACE_Null_Mutex>;
-template class ACE_Map_Entry<KEY, unsigned int>;
+template class ACE_Hash_Map_Manager<KEY, VALUE, MUTEX>;
+template class ACE_Hash_Map_Iterator<KEY, VALUE, MUTEX>;
+template class ACE_Hash_Map_Entry<KEY, VALUE>;
+template class ACE_Map_Manager<KEY, VALUE, MUTEX>;
+template class ACE_Map_Iterator<KEY, VALUE, MUTEX>;
+template class ACE_Map_Reverse_Iterator<KEY, VALUE, MUTEX>;
+template class ACE_Map_Entry<KEY, VALUE>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
