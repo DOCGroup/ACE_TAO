@@ -10,7 +10,7 @@
  *
  * The command used to generate code from this file is:
  *
- *   tao_idl.exe -Gp -Gd -Ge 1 -Sc -GT -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include=portableserver_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" ImplRepo.pidl
+ *   tao_idl.exe -o orig -Gp -Gd -Ge 1 -Sc -GT -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include=portableserver_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" ImplRepo.pidl
  *
  */
 //=============================================================================
@@ -34,29 +34,29 @@ module ImplementationRepository
   };
 
   // = Exceptions
-  
+
   exception AlreadyRegistered {};
   // Object already bound in the Implementation Repository
-  
+
   exception CannotActivate
   {
     string reason;
   };
   // The server could not be restarted.
-  
+
   exception NotFound {};
   // Object not found in the Implementation Repository
-  
+
   struct EnvironmentVariable
   // One environment variable/value pair.
   {
     string name;
     string value;
   };
-  
+
   typedef string Address;
   // This is used in places that require a partial IOR with
-  // just the ObjectKey missing. 
+  // just the ObjectKey missing.
 
   typedef sequence<EnvironmentVariable> EnvironmentList;
   // Complete Environment.
@@ -69,13 +69,13 @@ module ImplementationRepository
   {
     /// Startup command (program name and arguments).
     string command_line;
-    
+
     /// Environment Variables.
     EnvironmentList environment;
-    
+
     /// Working directory.
     string working_directory;
-    
+
     /// Activation Mode
     ActivationMode activation;
 
@@ -91,10 +91,10 @@ module ImplementationRepository
 
     /// Server name.
     string server;
-    
+
     /// How to start up the server.
     StartupOptions startup;
-    
+
     /// Where the server is located currently.
     Address location;
   };
@@ -161,7 +161,7 @@ module ImplementationRepository
     //
     // The <NotFound> exception is raised when <server> is not found
     // in the Implementation Repository.
-    
+
     void server_is_running (in string server,
                                in Address addr,
                                in ServerObject server_object)
@@ -171,7 +171,7 @@ module ImplementationRepository
     //
     // The <NotFound> exception is raised when <server> is not found
     // in the Implementation Repository.
-    
+
     void server_is_shutting_down (in string server)
       raises (NotFound);
     // Used to tell the Implementation Repository that <server> is shutting
