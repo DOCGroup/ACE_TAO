@@ -113,7 +113,7 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
   // Generate the actual code for the stub. However, if any of the argument
   // types is "native", we flag a MARSHAL exception.
   // last argument - is always CORBA::Environment
-  *os << "{\n" << be_idt;
+  *os << "{" << be_idt_nl;
 
   // generate any pre stub info if and only if none of our parameters is of the
   // native type
@@ -162,12 +162,24 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
     }
   else
     {
-      os->indent ();
       // Generate code that retrieves the underlying stub object and then
       // invokes do_static_call on it.
-      *os << "STUB_Object *istub = this->_stubobj ();" << be_nl
-          << "if (istub)" << be_nl
-          << "{\n" << be_idt;
+      *os << be_nl
+          << "STUB_Object *istub = this->_stubobj ();" << be_nl
+          << "if (istub == 0)" << be_idt_nl;
+
+      // if the stub object was bad, then we raise a system exception
+      if (this->gen_raise_exception (bt, "CORBA::INV_OBJREF", 
+                                     "CORBA::COMPLETED_NO") == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_operation_cs::"
+                             "visit_operation - "
+                             "codegen for checking exception failed\n"),
+                            -1);
+
+        }
+      *os << be_uidt_nl << "\n";
 
       // do any pre marshal and invoke processing with return type. This
       // includes allocating memory, initialization.
@@ -259,20 +271,6 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
         }
       *os << ";" << be_uidt_nl;
 
-      *os << "}\n";
-      // if the stub object was bad, then we raise a system exception
-      if (this->gen_raise_exception (bt, "CORBA::INV_OBJREF", 
-                                     "CORBA::COMPLETED_NO") == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_operation_cs::"
-                             "visit_operation - "
-                             "codegen for checking exception failed\n"),
-                            -1);
-
-        }
-      *os << be_uidt;
-
     } // end of if (!native)
 
   *os << "}\n\n";
@@ -327,18 +325,15 @@ be_visitor_operation_cs::gen_raise_exception (be_type *bt,
   be_visitor *visitor;
   be_visitor_context ctx;
 
-  os->indent ();
   if (this->void_return_type (bt))
     {
       *os << "ACE_THROW ("
           << excep << " (" << completion_status << "));\n";
-      //        << "_tao_environment);\n";
     }
   else
     {
       *os << "ACE_THROW_RETURN ("
           << excep << " (" << completion_status << "), ";
-      //<< "_tao_environment, ";
       
       // return the appropriate return value
       ctx = *this->ctx_;
@@ -684,7 +679,9 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
     default:
       *os << "TAO_GIOP_Twoway_Invocation _tao_call ";
     }
-  *os << "(istub, ";
+  *os << "(" << be_idt << be_idt_nl
+      << "istub," << be_nl;
+
   if (this->ctx_->attribute ())
     {
       // now check if we are a "get" or "set" operation
@@ -694,9 +691,30 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
         *os << "\"_get_\"";
     }
   *os << "\"" << node->local_name () 
-      << "\", TAO_ORB_Core_instance ());" << be_nl;
-  // initialize the invocation
-  *os << "_tao_call.start (ACE_TRY_ENV);\n";
+      << "\"," << be_nl
+      << "TAO_ORB_Core_instance ()" << be_uidt_nl
+      << ");" << be_uidt_nl;
+
+  *os << "\n" << be_nl
+      << "// If we get forwarded we have to return to this point:"
+      << be_uidt_nl
+      << "_tao_start_again:\n" << be_idt_nl;
+
+  *os << "ACE_TRY_EX (_tao_START_FAILED)" << be_idt_nl
+      << "{" << be_idt_nl
+      << "_tao_call.start (ACE_TRY_ENV);" << be_nl
+      << "ACE_TRY_CHECK_EX (_tao_START_FAILED);" << be_uidt_nl
+      << "}" << be_uidt_nl
+      << "ACE_CATCH (CORBA_SystemException, ex)" << be_idt_nl
+      << "{" << be_idt_nl
+      << "if (istub->next_profile_retry ())" << be_nl
+      << "{" << be_idt_nl
+      << "ACE_TRY_ENV.clear ();" << be_nl
+      << "goto _tao_start_again;" << be_uidt_nl
+      << "}" << be_nl
+      << "ACE_RETHROW;" << be_uidt_nl
+      << "}" << be_uidt_nl
+      << "ACE_ENDTRY;\n";
 
   // check if there is an exception
   if (this->gen_check_exception (bt) == -1)
@@ -709,17 +727,15 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
       
     }
   
-  
   // now make sure that we have some in and inout parameters. Otherwise, there
   // is nothing to be marshaled in
   if (this->has_param_type (node, AST_Argument::dir_IN) ||
       this->has_param_type (node, AST_Argument::dir_INOUT))
     {
-      os->indent ();
-      // grab the outgoing stream
-      *os << "TAO_OutputCDR &_tao_out = _tao_call.out_stream ();" << be_nl;
-
-      *os << "if (!(\n" << be_idt;
+      *os << be_nl
+          << "TAO_OutputCDR &_tao_out = _tao_call.out_stream ();"
+          << be_nl
+          << "if (!(\n" << be_idt << be_idt << be_idt;
 
       // marshal each in and inout argument
       ctx = *this->ctx_;
@@ -735,7 +751,8 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
                              "codegen for return var in do_static_call failed\n"),
                             -1);
         }
-      *os << be_uidt_nl << "))\n" << be_idt;
+      *os << be_uidt << be_uidt_nl
+          << "))" << be_nl;
 
       // if marshaling fails, raise exception
       if (this->gen_raise_exception (bt, "CORBA::MARSHAL", 
@@ -747,31 +764,20 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
                              "codegen for return var failed\n"),
                             -1);
         }
-      *os << be_uidt << "\n";
-      
+      *os << be_uidt;
     }
 
-  // call invoke
-  os->indent ();
+  *os << be_nl
+      << "TAO_GIOP_ReplyStatusType _invoke_status;" << be_nl
+      << "ACE_TRY_EX (_tao_INVOKE_FAILED)" << be_idt_nl
+      << "{" << be_idt_nl;
 
-  // We should only need to capture the invocation status if we are
-  // actually going to use it, otherwise we get nasty warnings from
-  // some C++ compiler.
-  if (!this->void_return_type (bt) ||
-      this->has_param_type (node, AST_Argument::dir_INOUT) ||
-      this->has_param_type (node, AST_Argument::dir_OUT))
-    {
-      *os << "TAO_GIOP_ReplyStatusType _invoke_status = ";
-    }
-  else
-    {
-      *os << "(void) ";
-    }
+  *os << "_invoke_status =" << be_idt_nl;
         
   if (node->flags () == AST_Operation::OP_oneway)
     {
       // oneway operation
-      *os << "_tao_call.invoke (ACE_TRY_ENV);" << be_nl;
+      *os << "_tao_call.invoke (ACE_TRY_ENV);";
     }
   else
     {
@@ -780,27 +786,38 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
           *os << "_tao_call.invoke (_tao_" << node->flatname () 
               << "_exceptiondata, "
               << node->exceptions ()->length ()
-              << ", ACE_TRY_ENV);" << be_nl;
+              << ", ACE_TRY_ENV);";
         }
       else
         {
-          *os << "_tao_call.invoke (0, 0, ACE_TRY_ENV);" << be_nl;
+          *os << "_tao_call.invoke (0, 0, ACE_TRY_ENV);";
         }
-
-      *os << "// Exceptions will be caught here\n";
-      // check if there is an exception
-      if (this->gen_check_exception (bt) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_compiled_visitor_operation_cs::"
-                             "gen_marshal_and_invoke - "
-                             "codegen for checking exception failed\n"),
-                            -1);
-      
-        }
-  
     }
-
+      
+  *os << be_uidt_nl
+      << "ACE_TRY_CHECK_EX (_tao_INVOKE_FAILED);" << be_uidt_nl
+      << "}" << be_uidt_nl
+      << "ACE_CATCH (CORBA_SystemException, ex)" << be_idt_nl
+      << "{" << be_idt_nl
+      << "if (istub->next_profile_retry ())" << be_nl
+      << "{" << be_idt_nl
+      << "ACE_TRY_ENV.clear ();" << be_nl
+      << "goto _tao_start_again;" << be_uidt_nl
+      << "}" << be_nl
+      << "ACE_RETHROW;" << be_uidt_nl
+      << "}" << be_uidt_nl
+      << "ACE_ENDTRY;\n";
+  
+  // check if there is an exception
+  if (this->gen_check_exception (bt) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_compiled_visitor_operation_cs::"
+                         "gen_marshal_and_invoke - "
+                         "codegen for checking exception failed\n"),
+                        -1);
+    }
+  
   // the code below this is for 2way operations only
 
   if (!this->void_return_type (bt) ||
@@ -821,19 +838,16 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
                              "codegen for args in post do_static_call\n"),
                             -1);
         }
-      // check if there was a user exception, else demarshal the return val (if
-      // any) and parameters (if any) that came with the response message 
-      os->indent ();
-      *os << "if (_invoke_status == TAO_GIOP_NO_EXCEPTION)" << be_nl
-          << "{" << be_idt << "\n";
-
-      os->indent ();
-      // grab the incoming stream
-      *os << "TAO_InputCDR &_tao_in = _tao_call.inp_stream ();" << be_nl;
-      *os << "if (!(\n" << be_idt;
+      // check if there was a user exception, else demarshal the
+      // return val (if any) and parameters (if any) that came with
+      // the response message
+      *os << be_nl
+          << "if (_invoke_status == TAO_GIOP_NO_EXCEPTION)" << be_nl
+          << "{" << be_idt_nl
+          << "TAO_InputCDR &_tao_in = _tao_call.inp_stream ();" << be_nl
+          << "if (!(\n" << be_idt << be_idt << be_idt;
     }
-  
-  
+
   if (!this->void_return_type (bt))
     {
       // demarshal the return val and each inout and out argument
@@ -861,8 +875,7 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
   if (this->has_param_type (node, AST_Argument::dir_INOUT) ||
       this->has_param_type (node, AST_Argument::dir_OUT))
     {
-      
-      // marshal each in and inout argument
+      // demarshal each out and inout argument
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_INVOKE_CS);
       ctx.sub_state (TAO_CodeGen::TAO_CDR_INPUT);
@@ -883,7 +896,8 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
       this->has_param_type (node, AST_Argument::dir_OUT))
     {
       
-      *os << be_uidt_nl << "))\n" << be_idt;
+      *os << be_uidt << be_uidt << be_nl
+          << "))" << be_nl;
       // if marshaling fails, raise exception
       if (this->gen_raise_exception (bt, "CORBA::MARSHAL", 
                                      "CORBA::COMPLETED_NO") == -1)
@@ -894,14 +908,30 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
                              "codegen for return var failed\n"),
                             -1);
         }
-      *os << be_uidt << be_uidt << "\n";
-      os->indent ();
-      *os << "}" << be_nl;
-      // else something has terribly gone wrong
-      *os << "else" << be_nl
-          << "{" << be_idt << "\n";
-      // if this operation is not supposed to raise a user defined exception, then
-      // flag an UNKNOWN exception error
+      *os << be_uidt << be_uidt_nl
+          << "}" << be_nl
+          << "else if (_invoke_status == TAO_GIOP_LOCATION_FORWARD)"
+          << be_nl
+          << "{" << be_idt_nl
+          << "if (istub->next_profile_retry ())" << be_nl
+          << "{" << be_idt_nl
+          << "ACE_TRY_ENV.clear ();" << be_nl
+          << "goto _tao_start_again;" << be_uidt_nl
+          << "}" << be_nl;
+      if (this->gen_raise_exception (bt, "CORBA::TRANSIENT", 
+                                     "CORBA::COMPLETED_NO") == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_compiled_visitor_operation_cs::"
+                             "gen_marshal_and_invoke\n"),
+                            -1);
+        }
+      *os << be_uidt_nl << "}" << be_nl
+          << "else" << be_nl
+          << "{" << be_idt_nl;
+
+      // if this operation is not supposed to raise a user defined
+      // exception, then flag an UNKNOWN exception error
       if (this->gen_raise_exception (bt, "CORBA::UNKNOWN", 
                                      "CORBA::COMPLETED_MAYBE") == -1)
         {
