@@ -1,6 +1,8 @@
 /* -*- C++ -*- */
 // $Id$
 
+// NOTE: please do not use this file.  Please use config-sunos5.5.h
+// instead!
 // The following configuration file is designed to work for SunOS5.x86
 // platforms using the SunC++ 4.0.x compiler.
 
@@ -16,7 +18,7 @@
 #define ACE_HAS_P_READ_WRITE
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
-#define ACE_HAS_SYSV_IPC			
+#define ACE_HAS_SYSV_IPC
 
 // Platform supports recvmsg and sendmsg.
 #define ACE_HAS_MSG
@@ -40,7 +42,7 @@
 #define ACE_HAS_IP_MULTICAST
 
 // Compiler/platform supports alloca()
-#define ACE_HAS_ALLOCA 
+#define ACE_HAS_ALLOCA
 
 // Compiler/platform has <alloca.h>
 #define ACE_HAS_ALLOCA_H
@@ -108,7 +110,7 @@
 /* Turn off the following three defines if you want to disable threading. */
 // Compile using multi-thread libraries.
 #if !defined (ACE_MT_SAFE)
-	#define ACE_MT_SAFE 1
+        #define ACE_MT_SAFE 1
 #endif
 
 // Platform supports Solaris threads.
