@@ -1,3 +1,15 @@
+Sat Dec  2 05:58:37 2000  Christopher Kohlhoff  <chris@kohlhoff.com>
+
+        * ace/config-win32-borland.h:
+
+          Automatically define WIN32 macro if we are able to
+          determine that it is the target platform from pre-
+          defined compiler macros.
+
+        * ace/Makefile.bor:
+
+          Added missing template source file for install target.
+
 Sat Dec  2 00:19:38 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* bin/auto_run_tests.lst:

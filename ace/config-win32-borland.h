@@ -19,6 +19,12 @@
 #  endif /* __ACE_INLINE__ */
 # endif /* __BORLANDC__ == 0x540 */
 
+// Automatically define WIN32 macro if the compiler tells us it is our
+// target platform.
+# if defined (__WIN32__) && !defined (WIN32)
+#  define WIN32 1
+# endif
+
 # include "ace/config-win32-common.h"
 
 # define ACE_CC_NAME ACE_LIB_TEXT ("Borland C++ Builder")

@@ -251,6 +251,7 @@ INCLUDES = \
 	Stream.cpp \
 	Stream_Modules.cpp \
 	Svc_Handler.cpp \
+	Test_and_Set.cpp \
 	Timer_Queue_Adapters.cpp \
 	Typed_SV_Message.cpp \
 	Typed_SV_Message_Queue.cpp
