@@ -1,6 +1,7 @@
 Fri Jun 11 14:48:11 1999  David L. Levine  <levine@cs.wustl.edu>
 
-        * performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:
+        * performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl,
+          performance-tests/Cubit/TAO/MT_Cubit/run_test.pl:
           updated to use Carlos' timeouts.  Cool!
 
 Fri Jun 11 14:33:27 1999  Jeff Parsons  <parsons@cs.wustl.edu>
