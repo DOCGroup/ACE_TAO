@@ -1,3 +1,135 @@
+Sun Nov 17 13:00:02 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/test_config.h: VxWorks passes in a NULL argv (arrghhh...).
+	  Therefore, to work around this in the ./tests directory, I changed
+	  the ACE_START_TEST macro to take a NAME parameter, and then I
+	  added the following local variable:
+
+	  const char *program = argv ? argv[0] : NAME;
+
+	  Thanks to David Levine for this fix.
+
+Sat Nov 16 12:01:08 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/Threads/test_tss2.cpp: Added Detlef's new test for
+ 	  ACE_TSS.
+
+	* ace/Synch_T.cpp (ts_get): Added Detlef's changes to fix deadlock
+ 	  problems with ACE_TSS on NT.
+
+Fri Nov 15 18:01:26 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/ACE_SOCK_Stream.cpp: NT will signal an abortive close
+ 	  to the opposite party if a socket is closed before all of its
+ 	  data has been sent out. According to the NT SDK-docs, you should
+ 	  do a shutdown before the closesocket() in order to prepare a
+ 	  graceful close.  Thus, I've placed an
+ 	  ACE_SOCK_Stream::close_writer() method just before the call to
+ 	  ACE_SOCK::close() in the new close() of the ACE_SOCK_Stream
+ 	  class.  Thanks to Tilo Christ <christ@swl.fh-heilbronn.de> for
+ 	  this suggestion.
+
+	* ace/INET_Addr.cpp: The function ACE_INET_Addr::addr_to_string
+ 	  was a virtual function that is also inline and defined in the .i
+ 	  file.  Some compilers have a problem with this, so I moved it
+ 	  into the *.cpp file.  In addition, its sister function was also
+ 	  virtual and is defined as:
+
+	  ACE_INLINE int
+	  ACE_INET_Addr::string_to_addr (const char s[])
+
+	  in the .cpp file.  I removed the ACE_INLINE directive.  Thanks
+ 	  to Fred LaBar <flabar@fallschurch.esys.com> for reporting this.
+
+Thu Nov 14 16:20:20 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Malloc_T.cpp: Added a new method to ACE_Malloc that will
+ 	  return the number of chunks available on the free list.  Thanks
+ 	  to Fred Labar <flabar@fallschurch.esys.com> for this.
+
+Wed Nov 13 01:22:16 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/ReactorEx.cpp (handle_events):  I've changed siginfo_t on
+	  Win32 (which was previously typedef'd to int) so that it has the
+	  following structure: 
+
+	  struct siginfo_t
+	  {
+	    siginfo_t (ACE_HANDLE handle);
+
+	    ACE_HANDLE si_handle_;
+	    // Win32 HANDLE that has become signaled.
+	  };
+
+	  Then, I've changed the ACE_ReactorEx::handle_events() method to
+ 	  look like this:
+
+	    // Assign the ``signaled'' HANDLE so that callers can get
+	    // it.
+	    siginfo_t sig (relative_handles[relative_index]);
+	    
+	    if (relative_handlers[relative_index]->handle_signal 
+		(0, &sig) == -1)
+
+          Thus, you can refer to the signaled handle as 
+
+	  si_handle_
+
+	  within the handle_signal() call back.  Thanks to Matthias
+ 	  Kerkhoff <make@cs.tu-berlin.de> for suggesting this.
+
+	* ace/System_Time.h: Made ACE_System_Time::get_local_time() a
+ 	  static member function.  Thanks to Matthias Kerkhoff
+ 	  <make@cs.tu-berlin.de> for suggesting this.
+
+	* ace/Message_Queue.h: The internal variables for counting the
+	  bytes stored in the queue were declared as of type int (in
+	  Message_Queue.h).  But they are set (e.g. with
+	  ACE_Message_Queue::ACE_Message_Queue) with values of size_t.
+
+	  When running tests/Priority_Buffer_Test, the high_water_mark_ is
+ 	  preset with the value LONG_MAX. While assigning this value from
+ 	  size_t to int, this becomes -1 and the queue is always believed
+ 	  to be full :-( The fix is to change the internal data structures
+ 	  in Message_Queue.h from int to size_t.  Thanks to Thilo Kielmann
+ 	  <kielmann@informatik.uni-siegen.de> for reporting this.
+
+	* tests: Fixed problems with the following three tests:
+
+	  Priority_Buffer_Test.cpp
+	  Reader_Writer_Test.cpp
+	  UPIPE_SAP_Test.cpp
+
+	  When these are compiled with gcc on Digital UNIX 4.0a the static
+ 	  ACE_Thread_Manager thr_mgr; was never getting initialized due to
+ 	  gcc compiler bugs.  The fix is to replace the static thread
+ 	  manager with the ACE_Service_Config::thr_mgr() singleton.
+  	  Thanks to Thilo Kielmann <kielmann@informatik.uni-siegen.de> for
+ 	  pointing this out.
+
+Tue Nov 12 19:43:12 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Thread_Manager.cpp (spawn_n): Was missing a 0 after ?.
+  	  Thanks to Thilo Kielmann <kielmann@informatik.uni-siegen.de> for
+ 	  reporting this.
+
+	* ace/Log_Msg.h: Created a new macro call ACE_ERROR_BREAK(X) {
+ 	  ACE_ERROR(X); break;} for use within switch and loop statements.
+  	  Thanks to Luca for this idea.
+
+	* ace/Pipe.cpp: Enabled the "reuse addr" flag for accepting and
+ 	  connecting the Win32 version of ACE_Pipe.  Thanks to Luca for
+ 	  reporting this problem.
+
+	* ace/OS.i (thr_join): ACE_Thread::join () has a default second
+ 	  parameter (the status) set to 0. This is not handled in
+ 	  ACE_OS::thr_join(). To avoid getting a system error in NT we
+ 	  handle this as we did with ACE_OS::thr_create() and the
+ 	  thr_handle parameter.
+
+	* ace/config-irix6.2-sgic++.h: Updated the set of patches required
+ 	  for IRIX 6.2.  Thanks to Amos Shapira for reporting this.
+
 Sun Nov 10 15:40:17 1996  Tim H. Harrison  <harrison@lambada.cs.wustl.edu>
 
 	* ace/Token_Invariants.cpp: Moved static data
@@ -15,6 +147,11 @@ Sun Nov 10 13:22:03 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  gives parameters for stack, stack_size, and also for the
  	  assigned ACE_hthread_t's.  Thanks to Thilo Kielmann
  	  <kielmann@informatik.uni-siegen.de> for suggesting this.
+
+Sun Nov 10 13:56:38 1996  Prashant Jain  <pjain@merengue.cs.wustl.edu>
+
+	* tests/Reactors_Test.cpp (main): Fixed the test so that the
+	  output of the test goes to a log file instead of STDOUT.
 
 Sat Nov  9 11:23:13 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
@@ -95,6 +232,7 @@ Sat Nov  9 01:44:15 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
  	  typedefs does not break existing code.
 
 Tue Nov  5 14:26:32 1996  David Levine  <levine@cs.wustl.edu>
+
 	* include/makeinclude/wrapper_macros.GNU: Changed LINK.{c,cc}
  	  commands to use LD instead of CXX.  Changed all platform macros
  	  files (except for g++ on VxWorks) to correspond.

@@ -197,7 +197,7 @@ Consumer::svc (void)
 int 
 main (int argc, char *argv[])
 {
-  ACE_START_TEST;
+  ACE_START_TEST ("Buffer_Stream_Test.cpp");
 
   ACE_Service_Config daemon (argv[0]);
 

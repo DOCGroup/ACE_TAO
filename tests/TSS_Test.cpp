@@ -190,7 +190,7 @@ handler (int signum)
 int 
 main (int, char *argv[])
 {
-  ACE_START_TEST;
+  ACE_START_TEST ("TSS_Test.cpp");
   
   ACE_Thread_Control tc (ACE_Service_Config::thr_mgr ());
   ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);

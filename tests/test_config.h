@@ -47,7 +47,7 @@ public:
       delete this->output_file_;
     }
 
-  int set_output (char *filename)
+  int set_output (const char *filename)
     {
       char temp[BUFSIZ];
       // Ignore the error value since the directory may already exist.
@@ -81,13 +81,14 @@ private:
 
 static ACE_Test_Output ace_file_stream;
 
-#define ACE_START_TEST \
-  if (ace_file_stream.set_output (argv[0]) == -1) \
+#define ACE_START_TEST(NAME) \
+  const char *program = argv ? argv[0] : NAME; \
+  if (ace_file_stream.set_output (program) == -1) \
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "set_output failed"), -1); \
-  ACE_DEBUG ((LM_DEBUG, "starting %s test at %T\n", argv[0]));
+  ACE_DEBUG ((LM_DEBUG, "starting %s test at %T\n", program));
 
 #define ACE_END_TEST \
-  ACE_DEBUG ((LM_DEBUG, "Ending %s test at %T\n", argv[0])); \
+  ACE_DEBUG ((LM_DEBUG, "Ending %s test at %T\n", program)); \
   ace_file_stream.flush ();
 
 #define ACE_NEW_THREAD \

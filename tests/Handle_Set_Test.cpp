@@ -67,7 +67,7 @@ run_test (int count)
 int
 main (int argc, char *argv[])
 {
-  ACE_START_TEST;
+  ACE_START_TEST ("Handle_Set_Test.cpp");
 
   int count = argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_Handle_Set::MAXSIZE;
   run_test (count);

@@ -24,7 +24,7 @@
 int 
 main (int argc, char *argv[])
 {
-  ACE_START_TEST;
+  ACE_START_TEST ("SString_Test.cpp");
 
   ACE_CString s1 ("hello");
   ACE_CString s2 ("world");

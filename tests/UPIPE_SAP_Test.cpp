@@ -21,12 +21,10 @@
 #include "ace/Stream.h"
 #include "ace/UPIPE_Acceptor.h"
 #include "ace/UPIPE_Connector.h"
+#include "ace/Service_Config.h"
 #include "test_config.h"
 
 #if defined (ACE_HAS_THREADS)
-
-// Global thread manager.
-static ACE_Thread_Manager thr_mgr;
 
 // Global pattern
 static ACE_UPIPE_Addr addr ("pattern");
@@ -37,7 +35,7 @@ static void *
 peer1 (void *)
 {
   // Insert thread into thr_mgr.
-  ACE_Thread_Control thread_control (&thr_mgr); 
+  ACE_Thread_Control thread_control (ACE_Service_Config::thr_mgr ());
   ACE_NEW_THREAD;
 
   ACE_UPIPE_Stream c_stream;
@@ -84,8 +82,8 @@ peer1 (void *)
     }
 
   conbuf[i] = '\0';
-  ACE_ASSERT (ACE_OS::strcmp (conbuf, "this is the peer2 response!")
-	      == 0);
+  ACE_DEBUG ((LM_DEBUG, "(%t) conbuf = %s", conbuf));
+  ACE_ASSERT (ACE_OS::strcmp (conbuf, "this is the peer2 response!") == 0);
   c_stream.close ();
   return 0;
 }
@@ -94,15 +92,16 @@ static void *
 peer2 (void *)
 {
   // Insert thread into thr_mgr.
-  ACE_Thread_Control thread_control (&thr_mgr); 
+  ACE_Thread_Control thread_control (ACE_Service_Config::thr_mgr ());
   ACE_NEW_THREAD;
 
   ACE_UPIPE_Acceptor acc (addr);
   ACE_UPIPE_Stream s_stream;
 
   // Spawn a peer1 thread.
-  if (thr_mgr.spawn (ACE_THR_FUNC (peer1), (void *) 0,
-		     THR_NEW_LWP | THR_DETACHED) == -1)
+  if (ACE_Service_Config::thr_mgr ()->spawn (ACE_THR_FUNC (peer1), 
+					     (void *) 0,
+					     THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), 0);
 
   ACE_DEBUG ((LM_DEBUG, "(%t) peer2 starting accept\n"));
@@ -145,18 +144,18 @@ peer2 (void *)
 int 
 main (int argc, char *argv[])
 {
-  ACE_START_TEST;
+  ACE_START_TEST ("UPIPE_SAP_Test.cpp");
 
   // Spawn a peer2 thread.
-  if (thr_mgr.spawn (ACE_THR_FUNC (peer2), (void *) 0,
-			  THR_NEW_LWP | THR_DETACHED) == -1)
+  if (ACE_Service_Config::thr_mgr ()->spawn (ACE_THR_FUNC (peer2), 
+					     (void *) 0,
+					     THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), 1);
 
   // Wait for peer2 and peer1 threads to exit.
-  thr_mgr.wait ();
+  ACE_Service_Config::thr_mgr ()->wait ();
 
   ACE_END_TEST;
-
   return 0;
 }
 #else

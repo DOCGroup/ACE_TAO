@@ -63,7 +63,7 @@ static const int DEFAULT_ITERATIONS = 100000;
 int
 main (int argc, char *argv[])
 {
-  ACE_START_TEST;
+  ACE_START_TEST ("Thread_Manager_Test.cpp");
 
   ACE_Service_Config daemon;
 

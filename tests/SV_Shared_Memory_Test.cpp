@@ -69,7 +69,8 @@ server (void)
 int
 main (int, char *argv[])
 {
-  ACE_START_TEST;
+  ACE_START_TEST ("SV_Shared_Memory_Test.cpp");
+
   switch (ACE_OS::fork ())
     {
     case -1:
@@ -80,6 +81,7 @@ main (int, char *argv[])
     default:
       server ();
     }
+
   ACE_END_TEST;
   return 0;
 }

@@ -115,7 +115,7 @@ find (ACE_Naming_Context *ns_context, int sign, int result)
 int
 main (int argc, char *argv[])
 {
-  ACE_START_TEST;
+  ACE_START_TEST ("Naming_Test.cpp");
 
   ACE_Naming_Context *ns_context = new ACE_Naming_Context ();
   ACE_Name_Options *name_options = ns_context->name_options ();

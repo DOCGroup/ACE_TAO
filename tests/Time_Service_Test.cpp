@@ -29,7 +29,7 @@
 int
 main (int, char *argv[])
 {
-  ACE_START_TEST;
+  ACE_START_TEST ("Time_Service_Test.cpp");
 
   char app[BUFSIZ];
   char server_conf[BUFSIZ];
@@ -48,6 +48,7 @@ main (int, char *argv[])
   s_argv[3] = 0;
 
   ACE_Process server;
+
   if (server.start (s_argv) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG, "%p.\n", "Server fork failed"), 0);
   else
@@ -57,8 +58,9 @@ main (int, char *argv[])
   s_argv[2] = clerk_conf;
 
   ACE_Process clerk;
+
   if (clerk.start (s_argv) == -1)
-    ACE_ERROR_RETURN ((LM_DEBUG, "%p.\n", "Server fork failed"), 0);
+    ACE_ERROR_RETURN ((LM_DEBUG, "%p.\n", "Clerk fork failed"), 0);
   else
     ACE_DEBUG ((LM_DEBUG, "Server forked with pid = %d.\n", clerk.getpid ()));
 
@@ -66,12 +68,11 @@ main (int, char *argv[])
   ACE_OS::sleep (10);
 
   if (clerk.kill () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "Kill failed.\n"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, "Kill failed for clerk.\n"), -1);
 
   if (server.kill () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "Kill failed.\n"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, "Kill failed for server.\n"), -1);
 
   ACE_END_TEST;
-
   return 0;
 }
