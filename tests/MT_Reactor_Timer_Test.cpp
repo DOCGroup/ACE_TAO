@@ -184,8 +184,6 @@ int
 Dispatch_Count_Handler::handle_close (ACE_HANDLE h,
                                       ACE_Reactor_Mask m)
 {
-  ACE_Reactor *r = ACE_Reactor::instance ();
-
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("%T (%t): handle_close\n")));
 
