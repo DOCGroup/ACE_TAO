@@ -74,12 +74,15 @@ cleanup (void *ptr)
   // old value is replaced.  This function is intended to be
   // used with Draft 6 and later threads, where it is called
   // on thread termination with the thread-specific value.
+
+  // Anyways, for whatever reason, the ACE_DEBUG causes a
+  // core dump on LynxOS 2.5.0.
   ACE_UNUSED_ARG (ptr);
 #else  /* ! ACE_HAS_PTHREADS_DRAFT4 */
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) in cleanup, ptr = %x\n"), ptr));
+#endif /* ! ACE_HAS_PTHREADS_DRAFT4 */
 
   operator delete (ptr);
-#endif /* ! ACE_HAS_PTHREADS_DRAFT4 */
 }
 
 // This worker function is the entry point for each thread.
@@ -139,7 +142,10 @@ worker (void *c)
         ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%t) %p\n"),
                     ASYS_TEXT ("ACE_Thread::setspecific")));
 
+#if ! defined (ACE_HAS_PTHREADS_DRAFT4)
+      // See comment in cleanup () above.
       delete ip;
+#endif /* ! ACE_HAS_PTHREADS_DRAFT4 */
 
       if (ACE_Thread::keyfree (key) == -1)
         ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%t) %p\n"),
@@ -206,7 +212,10 @@ worker (void *c)
         ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%t) %p\n"),
                     ASYS_TEXT ("ACE_Thread::setspecific")));
 
+#if ! defined (ACE_HAS_PTHREADS_DRAFT4)
+      // See comment in cleanup () above.
       delete ip;
+#endif /* ! ACE_HAS_PTHREADS_DRAFT4 */
 
       if (ACE_Thread::keyfree (key) == -1)
         ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%t) %p\n"),
@@ -272,9 +281,7 @@ main (int, ASYS_TCHAR *[])
   ACE_Thread_Manager::instance ()->wait ();
 
   delete u;
-  u = 0;
   delete tss_error;
-  tss_error = 0;
 
   Errno::deallocate_lock ();
 #else
