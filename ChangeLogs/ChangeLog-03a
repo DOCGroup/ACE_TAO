@@ -1,3 +1,9 @@
+Tue Feb 22 01:52:09 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Message_Block.cpp: Refactored the code in duplicate()
+	  and clone() so that it doesn't have macro within macros.
+	  Thanks to Nanbor for reporting this. 
+
 Tue Feb 22 01:19:40 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/MEM_IO.h: Added more comments.
