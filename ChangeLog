@@ -25,7 +25,6 @@ Thu Jul 31 00:49:18 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           since MPC doesn't currently allow you to easily exclude projects
           based on platform.
 
-
         * examples/Connection/blocking/SPIPE-acceptor.cpp:
         * examples/Connection/blocking/SPIPE-connector.cpp:
           Removed an unused parameter and added parentheses to fix compile
