@@ -37,8 +37,6 @@ template class ACE_Static_Allocator<8192>;
 #pragma instantiate ACE_Static_Allocator<8192>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-static ACE_Static_Allocator<8192> alloc;
-
 static ACE_STRING string_table[] =
 {
   // Note: all these casts are to appease SC 5.0 which is not pleased
@@ -72,8 +70,6 @@ run_iterate (STRLIST &list)
 static int
 run_test (void)
 {
-  alloc.dump ();
-
   STRLIST list;
 
   size_t i;
@@ -108,7 +104,6 @@ run_test (void)
 
   run_iterate (list);
 
-  alloc.dump ();
   return 0;
 }
 

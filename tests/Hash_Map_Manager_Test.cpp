@@ -59,7 +59,7 @@ template class ACE_Static_Allocator<STRING_TABLE_SIZE>;
 #pragma instantiate ACE_Static_Allocator<STRING_TABLE_SIZE>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-static ACE_Static_Allocator<STRING_TABLE_SIZE> alloc;
+static ACE_Static_Allocator<STRING_TABLE_SIZE> ace_test_allocator;
 
 typedef ACE_Hash_Map_Manager_Ex<const ACE_TCHAR *,
                                 const ACE_TCHAR *,
@@ -114,9 +114,9 @@ static String_Table string_table[] =
 static int
 run_test (void)
 {
-  alloc.dump ();
+  ace_test_allocator.dump ();
 
-  HASH_STRING_MAP hash (MAX_HASH, &alloc);
+  HASH_STRING_MAP hash (MAX_HASH, &ace_test_allocator);
 
   size_t i;
 
@@ -244,7 +244,7 @@ run_test (void)
                          ACE_TEXT ("bind"),
                          string_table[i].key_), -1);
 
-  alloc.dump ();
+  ace_test_allocator.dump ();
   return 0;
 }
 
