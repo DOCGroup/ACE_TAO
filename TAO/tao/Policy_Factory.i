@@ -7,12 +7,12 @@
 
 #endif
 
-ACE_INLINE
-CORBA::Policy * Policy_Factory::create_policy (CORBA::PolicyType ptype)
+ACE_INLINE CORBA::Policy *
+Policy_Factory::create_policy (CORBA::PolicyType ptype)
 {
   CORBA::Policy_ptr policy = 0;
 
-  #if (TAO_HAS_RT_CORBA == 1)
+#if (TAO_HAS_RT_CORBA == 1)
 
   if (ptype == RTCORBA::PRIORITY_MODEL_POLICY_TYPE)
     ACE_NEW_RETURN(policy, TAO_PriorityModelPolicy, 0);
@@ -22,8 +22,8 @@ CORBA::Policy * Policy_Factory::create_policy (CORBA::PolicyType ptype)
 
   if (ptype == RTCORBA::SERVER_PROTOCOL_POLICY_TYPE)
     ACE_NEW_RETURN(policy, TAO_ServerProtocolPolicy, 0);
-  
-  #endif
+
+#endif
 
   return policy;
 }

@@ -118,22 +118,19 @@ public:
   // already been decoded. So this method will just make a
   // IOP::TaggedProfile struct from the existing information and
   // return the reference to that. This method is necessary for GIOP
-  // 1.2. 
-  
-  virtual void policies(CORBA::PolicyList *policy_list);
-  // This method sets the "Policies" associated with this profile,
-  // thispolicies are exported to the client by encapsulating those
-  // into the IOR. The policies are shared by all the Profile 
-  // (i.e. All profiles have the same policies)
-  
-  virtual CORBA::PolicyList&  policies();
-  // This methods gives the "Policies associated with the profile.
-  // If no policy has been set for the current profile, then NULL
-  // is returned.
+  // 1.2.
+
+  virtual void policies (CORBA::PolicyList *policy_list);
+  // This method sets the client exposed policies, i.e., the ones
+  // propagated in the IOR, for this profile.
+
+  virtual CORBA::PolicyList&  policies (void);
+  // Accessor for the client exposed policies of this profile.
 
 private:
 
   void _create_policy_list (int length);
+  // @@ Angelo, remove the leading underscore from the method name.
 
 private:
   TAO_MProfile *forward_to_i (void);
@@ -146,16 +143,13 @@ private:
 protected:
   TAO_Tagged_Components tagged_components_;
   // The tagged components
-  
-  CORBA::Boolean are_policies_parsed_; 
-  // this member variable is used to lazy evaluate the 
-  // policies once the profile is created from an IOR. 
-  // In fact the CORBA::PolicyList should be obtained by
-  // parsing the TAO_Tagged_Components, and this operation
-  // is deferred until the policies are queried for the 
-  // first time.
- 
+
+  CORBA::Boolean are_policies_parsed_;
+  // Flag indicating whether the lazy decoding of the client exposed
+  // policies has taken place.
+
   CORBA::PolicyList_var policy_list_;
+  // Client exposed policies of this profile.
 
 private:
   CORBA::ULong tag_;
@@ -206,7 +200,7 @@ public:
   virtual int addr_to_string(char *buffer, size_t length);
   virtual void reset_hint (void);
   virtual IOP::TaggedProfile &create_tagged_profile (void);
-  
+
 private:
   TAO_opaque body_;
   IOP::TaggedProfile tagged_profile_;
