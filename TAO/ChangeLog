@@ -1,9 +1,15 @@
+Wed Dec 15 14:14:22 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor_structure.cpp:
+
+          Remove build warnings from gcc 2.95.3.
+
 Wed Dec 15 11:37:50 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/tests/Bug_1393_Regression/run_test.pl:
-        
+
           My previous checkin
-          
+
           Tue Dec  7 16:35:59 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
           actually fixed the path to tao_idl (which was also incorrect).

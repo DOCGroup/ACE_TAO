@@ -206,7 +206,7 @@ ifr_adding_visitor_structure::visit_structure (AST_Structure *node)
             }
 
           // Correct ir_current_ and move the real structure members into the struct
-          this->ir_current_= CORBA::StructDef::_duplicate( struct_def );
+          this->ir_current_= CORBA::StructDef::_duplicate (struct_def.in ());
           struct_def->members( this->members_ );
 
           ACE_TRY_CHECK;
