@@ -1,3 +1,11 @@
+Tue Mar 22 11:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config*.h:
+          Removed defining ACE_HAS_STD_TEMPLATE_SPECIALIZATION and
+          ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION. We use now
+          the normal C++ way of doing this and we don't need the defines
+          above.
+
 Mon Mar 21 18:19:24 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/Shared_Memory_Pool.cpp:
