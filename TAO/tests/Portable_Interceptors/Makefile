@@ -17,7 +17,8 @@ DIRS  = \
   IORInterceptor \
   ForwardRequest \
   Request_Interceptor_Flow \
-  PICurrent
+  PICurrent \
+  AMI
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

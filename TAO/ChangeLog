@@ -1,6 +1,11 @@
+Sat Nov 16 21:09:32 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/Portable_Interceptors/Makefile: Added AMI test to the list
+	  of tests that needs compilation.
+
 Sat Nov 16 20:43:21 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* */Maefile: Updated dependency.
+	* */Makefile: Updated dependency.
 
 Sat Nov 16 20:11:13 2002  Pradeep Gore  <pradeep@oomworks.com>
 
