@@ -1,10 +1,22 @@
+Wed Dec 30 16:19:06 1998  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+	added the following files for the CosEC test to orbsvcs
+	* orbsvcs/tests/CosEC_Basic:
+	* orbsvcs/tests/CosEC_Basic/README:
+	* orbsvcs/tests/CosEC_Basic/CosECConsumer.cpp:
+	* orbsvcs/tests/CosEC_Basic/CosECConsumer.h:
+	* orbsvcs/tests/CosEC_Basic/CosECSupplier.cpp:
+	* orbsvcs/tests/CosEC_Basic/CosECSupplier.h:
+	* orbsvcs/tests/CosEC_Basic/CosEC_Basic.cpp:
+	* orbsvcs/tests/CosEC_Basic/CosEC_Basic.h:
+	* orbsvcs/tests/CosEC_Basic/Makefile:
+
 1998-12-30  Seth Widoff  <swidoff@cs.cmu.edu>
 
 	* orbsvcs/orbsvcs/Trader/Trader_T.{cpp,h}:
 	  Fixed a couple of syntax errors in my last change that were
 	  caught by NT, but missed by the more liberal SunCC
 	  compiler. Ack!
-	
+
 Wed Dec 30 12:22:58 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Any.cpp (CORBA_Any): Removed sharing of <value_> in the copy
