@@ -24,12 +24,15 @@ Repository::add (const char *key, const Repository::Record &rec)
                         + ACE_OS::strlen (rec.env)
                         + ACE_OS::strlen (rec.wdir)
                         + ACE_OS::strlen (rec.ping_ior)
+                        + ACE_OS::strlen (rec.host)
                         + 40],
                   -1);
 
-  //Put them all in a string
+  // Put them all in a string
+  // Why use the extra space?  Well, strtok doesn't like null strings
+  // because they show up as \n\n, which it skips past.
   ACE_OS::sprintf (temp,
-                   "%s\n%s\n%s\n%lu %hu\n%s\n",
+                   " %s\n %s\n %s\n %s\n %hu\n %s\n",
                    rec.comm_line,
                    rec.env,
                    rec.wdir,
@@ -65,96 +68,26 @@ Repository::remove (const char *key)
 int
 Repository::resolve (const char *key, Repository::Record &rec)
 {
-  char *value, *type; // Temp variables needed for resolve
-  char *last, *temp ; // For fields
+  char *value = 0, *type = 0; // Temp variables needed for resolve
   int retval = this->repository_.resolve (key, value, type);
 
-  // If successful, return what we need.
-  while (retval == 0) // Why a while statement?  So we can break out of it.
+  if (retval == 0)
   {
-    temp = value;
-    last = ACE_OS::strstr (temp, "\n");
-    if (last != 0 && *last == '\n')
-    {
-      *last = '\0';
-      ACE_NEW_RETURN (rec.comm_line, char [strlen (temp) + 1], -1);
-
-      // Copy to the comm_line argument
-      strcpy (rec.comm_line, temp);
-    }
-    else
-    {
-      retval = -1;
-      break;
-    }
-
-    temp = last + 1;
-    last = ACE_OS::strstr (temp, "\n");
-    if (last != 0 && *last == '\n')
-    {
-      *last = '\0';
-      ACE_NEW_RETURN (rec.env, char [strlen (temp) + 1], -1);
-
-      // Copy to the env argument
-      strcpy (rec.env, temp);
-    }
-    else
-    {
-      retval = -1;
-      break;
-    }
-
-    temp = last + 1;
-    last = ACE_OS::strstr (temp, "\n");
-    if (last != 0)
-    {
-      *last = '\0';
-      ACE_NEW_RETURN (rec.wdir, char [strlen (temp) + 1], -1);
-
-      // Copy to the env argument
-      strcpy (rec.wdir, temp);
-    }
-    else
-    {
-      retval = -1;
-      break;
-    }
-
-    temp = last + 1;
-    last = ACE_OS::strstr (temp, "\n");
-    if (last != 0)
-    {
-      *last = '\0';
-      ::sscanf (temp, "%lu %hu", &rec.host, &rec.port);
-    }
-    else
-    {
-      retval = -1;
-      break;
-    }
-
-    temp = last + 1;
-    last = ACE_OS::strstr (temp, "\n");
-    if (last != 0)
-    {
-      *last = '\0';
-      ACE_NEW_RETURN (rec.ping_ior, char [strlen (temp) + 1], -1);
-
-      // Copy to the ping_ior argument
-      strcpy (rec.ping_ior, temp);
-    }
-    else
-    {
-      retval = -1;
-      break;
-    }
-
-    delete [] value;
-    delete [] type;
-
-    // Now exit out.
-    break;
+    // +1 to get rid of the space
+    rec.comm_line = ACE::strnew (ACE_OS::strtok (value, "\n") + 1);
+    rec.env = ACE::strnew (ACE_OS::strtok (NULL, "\n") + 1);
+    rec.wdir = ACE::strnew (ACE_OS::strtok (NULL, "\n") + 1);
+    rec.host = ACE::strnew (ACE_OS::strtok (NULL, "\n") + 1);
+    ::sscanf (ACE_OS::strtok (NULL, "\n"), "%hu", &rec.port);
+    rec.ping_ior = ACE::strnew (ACE_OS::strtok (NULL, "\n") + 1);
   }
+  else
+  {
+    retval = -1;
+  }
+
+  delete [] value;
+  delete [] type;
 
   return retval;
 }
@@ -189,6 +122,7 @@ Repository::get_env (const char *key, char *&env)
       delete [] rec.comm_line;
       env = rec.env;
       delete [] rec.wdir;
+      delete [] rec.host;
       delete [] rec.ping_ior;
     }
 
@@ -206,6 +140,7 @@ Repository::get_wdir (const char *key, char *&wdir)
       delete [] rec.comm_line;
       delete [] rec.env;
       wdir = rec.wdir;
+      delete [] rec.host;
       delete [] rec.ping_ior;
     }
 
@@ -213,7 +148,7 @@ Repository::get_wdir (const char *key, char *&wdir)
 }
 
 int
-Repository::get_hostport (const char *key, unsigned long &host, unsigned short &port)
+Repository::get_hostport (const char *key, char *&host, unsigned short &port)
 {
   Repository::Record rec;
   int retval = this->resolve (key, rec);
@@ -242,6 +177,7 @@ Repository::get_ping_ior (const char *key, char *&ping_ior)
       delete [] rec.comm_line;
       delete [] rec.env;
       delete [] rec.wdir;
+      delete [] rec.host;
       ping_ior = rec.ping_ior;
     }
 

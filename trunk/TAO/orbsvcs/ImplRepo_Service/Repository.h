@@ -33,7 +33,7 @@ public:
     char *comm_line;
     char *env;
     char *wdir;
-    unsigned long host;
+    char *host;
     unsigned short port;
     char *ping_ior;
   };
@@ -55,7 +55,7 @@ public:
   int get_env (const char *key, char *&env);
   int get_wdir (const char *key, char *&wdir);
   int get_ping_ior (const char *key, char *&ping_ior);
-  int get_hostport (const char *key, unsigned long &host, unsigned short &port);
+  int get_hostport (const char *key, char *&host, unsigned short &port);
 
   // Dump method
   void dump (void);
