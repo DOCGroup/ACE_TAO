@@ -439,8 +439,7 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
       *os << "_tao_call.sync_scope ();";
       break;
     default:
-      *os << "131;" << be_nl;
-      *os << "// Tremporary hack until GIOP 1.2 is implemented." << be_nl;
+      *os << "TAO_TWOWAY_RESPONSE_FLAG;" << be_nl;
     }
 
   *os << be_nl
