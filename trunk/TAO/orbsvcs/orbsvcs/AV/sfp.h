@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_AV_SFP_H)
+#ifndef TAO_AV_SFP_H
 #define TAO_AV_SFP_H
 
 #include "orbsvcs/AV/AV_export.h"

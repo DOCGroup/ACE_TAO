@@ -18,7 +18,7 @@
 //
 // ============================================================================
 
-#if !defined (EVENTCHANNEL_I_H)
+#ifndef EVENTCHANNEL_I_H
 #define EVENTCHANNEL_I_H
 
 #include "orbsvcs/RtecEventChannelAdminC.h"
