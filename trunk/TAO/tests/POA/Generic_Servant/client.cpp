@@ -122,6 +122,19 @@ main (int argc, char **argv)
       return -1;
     }
 
+  CORBA::String_var ior =
+    orb->object_to_string (foo.in (), env);
+
+  if (env.exception () != 0)
+    {
+      env.print_exception ("CORBA::ORB::object_to_string");
+      return -1;
+    }
+
+  ACE_DEBUG ((LM_DEBUG,
+              "\nConnecting to: %s\n\n",
+              ior.in ()));
+
   ACE_Profile_Timer timer;
   ACE_Profile_Timer::ACE_Elapsed_Time elapsed_time;
 
