@@ -17,7 +17,8 @@ BIN = basic_perf \
 #### See below for test_naming.
 
 # Only build static library for optimum run-time speed.
-static_libs_only = 1
+static_libs = 1
+shared_libs = 0
 LIB     = libPerf.a
 FILES   = basic_func
 LSRC    = $(addsuffix .cpp,$(FILES))

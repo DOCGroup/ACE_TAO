@@ -1,3 +1,14 @@
+Wed Dec 17 15:21:36 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * performance_tests/Misc/Makefile:
+          Remove static_libs_only=0 and add static_libs=1 and
+          shared_libs=0 to insure that only static libs are built.  We
+          need to set these values individually instead of setting
+          static_libs_only, since users may override it in
+          platform_macros.GNU.  Thanks to John Zorko <jmzorko@mac.com> for
+          tracking this down and supplying the patch.  This fixed the
+          MacOSX compile errors on the scoreboard. 
+
 Wed Dec 17 11:25:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/TMCast/Group.cpp:
