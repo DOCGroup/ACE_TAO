@@ -59,6 +59,8 @@ interface Video_Control
     long framesPerSecond;
     long VStimeAdvance;
   };
+  
+  typedef FFpara FBpara;
 
   /*CmdPLAY: followed by following parameter */
   struct PLAYpara
