@@ -1,44 +1,51 @@
+Fri Mar 19 22:50:19 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/ace_ld: inserted ^['"]? at beginning of patterns that check
+          for -l and -L, to make sure they're at the beginning of arguments.
+          Thanks to Henric Jungheim <junghelh@pe-nelson.com> for
+          suggesting this.
+
 Fri Mar 19 18:56:26 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* Fixed several makefiles that did not have a SRC or LSRC variable 
-	  defined.
+        * Fixed several makefiles that did not have a SRC or LSRC variable
+          defined.
 
-	* Re-generated the dependencies for both ACE and TAO, this time on 
-	  a platform that includes the template code.
+        * Re-generated the dependencies for both ACE and TAO, this time on
+          a platform that includes the template code.
 
-	* include/makeinclude/rules.local.GNU: 
-	  Now we can run make depend inside a build directory.
-	  Removed any $(ACE_ROOT)/ace/config*.h files from the dependency
-	  list, those are not used. 
+        * include/makeinclude/rules.local.GNU:
+          Now we can run make depend inside a build directory.
+          Removed any $(ACE_ROOT)/ace/config*.h files from the dependency
+          list, those are not used.
 
 Fri Mar 19 18:05:27 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* netsvcs/lib/Server_Logging_Handler_T.cpp (handle_logging_record): 
-	  Reverted change that was thought to work around egcs compiler bug.
-	  The call to ntohl() within the templates still causes the compiler
-	  to complain.
+        * netsvcs/lib/Server_Logging_Handler_T.cpp (handle_logging_record):
+          Reverted change that was thought to work around egcs compiler bug.
+          The call to ntohl() within the templates still causes the compiler
+          to complain.
 
 Fri Mar 19 17:31:57 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/CDR_Stream.cpp: 
-	  Fixed silly error in the InputCDR constructor taking an
-	  ACE_Message_Block.
+        * ace/CDR_Stream.cpp:
+          Fixed silly error in the InputCDR constructor taking an
+          ACE_Message_Block.
 
 Fri Mar 19 15:41:30 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/config-win32-common.h: Added CE fix.
+        * ace/config-win32-common.h: Added CE fix.
 
 Fri Mar 19 15:03:54 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/CDR_Stream.h:
-	* ace/CDR_Stream.i:
-	* ace/CDR_Stream.cpp:
-	  Changed CDR to ACE_CDR.
-	  Fixed ACE_InputCDR constructor when receiving a linked list of
-	  Message_Blocks.
+        * ace/CDR_Stream.h:
+        * ace/CDR_Stream.i:
+        * ace/CDR_Stream.cpp:
+          Changed CDR to ACE_CDR.
+          Fixed ACE_InputCDR constructor when receiving a linked list of
+          Message_Blocks.
 
-	* tests/CDR_Test.cpp:
-	  Added a test for the constructor above.
+        * tests/CDR_Test.cpp:
+          Added a test for the constructor above.
 
 Fri Mar 19 10:29:17 1999  David L. Levine  <levine@cs.wustl.edu>
 
