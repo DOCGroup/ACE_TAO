@@ -1645,55 +1645,63 @@ ACE_Thread_Adapter::invoke (void)
 
   void *status = 0;
 
-#if 0
-  status = (void*) (*func) (arg);  // Call thread entry point.
-#else
   ACE_SEH_TRY {
-    status = (void*) (*func) (arg);  // Call thread entry point.
-  }
-  ACE_SEH_EXCEPT (EXCEPTION_EXECUTE_HANDLER) {
-    ACE_DEBUG ((LM_DEBUG, "(%t) Win32 structured exception exiting thread\n"));
-    // Here's where we might want to provide a hook to report this...
-    // As it stands now, we just catch all Win32 structured exceptions
-    // so that we can make sure to clean up correctly when the thread
-    // exits.
-  }
-#endif /* 0 */
-
-  // Call the Task->close () hook.
-  if (func == (ACE_THR_FUNC) ACE_Task_Base::svc_run)
-    {
-      ACE_Task_Base *task_ptr = (ACE_Task_Base *) arg;
-      ACE_Thread_Manager *thr_mgr_ptr = task_ptr->thr_mgr ();
-
-      // This calls the Task->close () hook.
-      task_ptr->cleanup (task_ptr, 0);
-
-      // This prevents a second invocation of the cleanup code (called
-      // later by ACE_Thread_Manager::exit()).
-      thr_mgr_ptr->at_exit (task_ptr, 0, 0);
+    ACE_SEH_TRY {
+      status = (void*) (*func) (arg);  // Call thread entry point.
     }
 
+    ACE_SEH_FINALLY {
+      // Call the Task->close () hook.
+      if (func == (ACE_THR_FUNC) ACE_Task_Base::svc_run)
+	{
+	  ACE_Task_Base *task_ptr = (ACE_Task_Base *) arg;
+	  ACE_Thread_Manager *thr_mgr_ptr = task_ptr->thr_mgr ();
+	  
+	  // This calls the Task->close () hook.
+	  task_ptr->cleanup (task_ptr, 0);
+	  
+	  // This prevents a second invocation of the cleanup code (called
+	  // later by ACE_Thread_Manager::exit()).
+	  thr_mgr_ptr->at_exit (task_ptr, 0, 0);
+	}
+      
 #if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
-  // Call TSS destructors.
-  ACE_OS::cleanup_tss (0 /* not main thread */);
-
+      // Call TSS destructors.
+      ACE_OS::cleanup_tss (0 /* not main thread */);
+      
 # if defined (ACE_WIN32) && defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
-  // Exit the thread.
-  // Allow CWinThread-destructor to be invoked from AfxEndThread.
-  // _endthreadex will be called from AfxEndThread so don't exit the
-  // thread now if we are running an MFC thread.
-  CWinThread *pThread = ::AfxGetThread ();
-  if (!pThread || pThread->m_nThreadID != ACE_OS::thr_self ())
-    ::_endthreadex ((DWORD) status);
-  else
-    ::AfxEndThread ((DWORD)status);
+      // Exit the thread.
+      // Allow CWinThread-destructor to be invoked from AfxEndThread.
+      // _endthreadex will be called from AfxEndThread so don't exit the
+      // thread now if we are running an MFC thread.
+      CWinThread *pThread = ::AfxGetThread ();
+      if (!pThread || pThread->m_nThreadID != ACE_OS::thr_self ())
+	::_endthreadex ((DWORD) status);
+      else
+	::AfxEndThread ((DWORD)status);
 # endif /* ACE_WIN32 && ACE_HAS_MFC && ACE_HAS_MFS != 0*/
-
+      
 #endif /* ACE_WIN32 || ACE_HAS_TSS_EMULATION */
-
-  return status;
+      
+      return status;
+    }
+  }
+  ACE_SEH_EXCEPT (this->rethrow_w32_structural_exception ()) {
+    // Here's where we might want to provide a hook to report this...
+    // As it stands now, we just rethrow all Win32 structured exceptions
+    // and report the situation.  It is up to application programmers to
+    // determine what to do.
+  }
 }
+
+#if defined (ACE_WIN32)
+int
+ACE_Thread_Adapter::rethrow_w32_structural_exception ()
+{
+  ACE_DEBUG ((LM_DEBUG, "(%t) Win32 structured exception exiting thread\n"));
+  return (DWORD) EXCEPTION_CONTINUE_SEARCH;
+}
+#endif /* ACE_WIN32 */
 
 ACE_Cleanup::~ACE_Cleanup ()
 {
