@@ -312,7 +312,7 @@ protected:
       return streambuf_size_;
     }
 
-  void setb (char* b, char* eb, int a=0)
+  void setb (char* b, char* eb, int /* a */=0)
     {
       setbuf (b, (eb - b));
     }

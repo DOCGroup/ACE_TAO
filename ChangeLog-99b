@@ -1,3 +1,8 @@
+Mon Dec 27 16:24:09 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/IOStream.h (setb): commented out declaration of
+          unused arg a.
+
 Mon Dec 27 15:51:39 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/test_config.h (set_output): with __USE_STD_OSTREAM
