@@ -4,12 +4,12 @@
 
 #include "Base_Optimizer.h"
 
-template<class Base, class Member> ACE_INLINE
+template<class Base, class Member>
 Base_Optimizer<Base, Member>::Base_Optimizer (void)
 {
 }
 
-template<class Base, class Member> ACE_INLINE
+template<class Base, class Member>
 Base_Optimizer<Base, Member>::Base_Optimizer (const Base &base,
                                               const Member &member)
   : Base (base),
@@ -17,7 +17,7 @@ Base_Optimizer<Base, Member>::Base_Optimizer (const Base &base,
 {
 }
 
-template<class Base, class Member> ACE_INLINE
+template<class Base, class Member>
 Base_Optimizer<Base, Member>::Base_Optimizer (const Base &base)
   : Base (base)
 {
