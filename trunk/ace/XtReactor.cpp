@@ -40,7 +40,8 @@ ACE_XtReactor::ACE_XtReactor (XtAppContext context,
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   this->notify_handler_.close ();
-  this->notify_handler_.open (this);
+  this->notify_handler_.open (this, 0);
+  // @@ The notify pipe is always enabled, check this...
 #endif /* ACE_MT_SAFE */
 }
 
