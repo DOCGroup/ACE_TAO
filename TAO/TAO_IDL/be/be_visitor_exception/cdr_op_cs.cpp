@@ -52,7 +52,7 @@ be_visitor_exception_cdr_op_cs::visit_exception (be_exception *node)
 
   //  set the sub state as generating code for the output operator
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_OUTPUT);
-  *os << "CORBA::Boolean operator<< (TAO_OutputCDR &strm, "
+  *os << "inline CORBA::Boolean operator<< (TAO_OutputCDR &strm, "
       << "const " << node->name () << " &_tao_aggregate)" << be_nl
       << "{" << be_idt_nl;
   // do we have any members?
@@ -95,7 +95,7 @@ be_visitor_exception_cdr_op_cs::visit_exception (be_exception *node)
 
   // set the substate as generating code for the input operator
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_INPUT);
-  *os << "CORBA::Boolean operator>> (TAO_InputCDR &strm, "
+  *os << "inline CORBA::Boolean operator>> (TAO_InputCDR &strm, "
       << node->name () << " &_tao_aggregate)" << be_nl
       << "{" << be_idt_nl;
   // retrieve the repository ID and compare with what we have
