@@ -9,25 +9,25 @@ Tue Apr 27 12:07:22 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	  type" warning.  A boolean value is always going to be less than
 	  or equal to one (i.e. false (0) or true (1)).
 
-	* examples/mfc/client.cpp: 
+	* examples/mfc/client.cpp:
 
 	  Removed unnecessary TAO header #includes.
 
 Tue Apr 27 13:57:48 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* TAO_IDL/Makefile.BE:
+	* TAO_IDL/Makefile.BE:
 	* TAO_IDL/Makefile.EXE:
 	* TAO_IDL/Makefile.FE:
 
-	  Updated dependencies. 
-	
+	  Updated dependencies.
+
 	* TAO_IDL/be/be_visitor_valuetype/valuetype_init_ch.cpp:
 	* TAO_IDL/be/be_visitor_valuetype/valuetype_init_cs.cpp:
 
-	  Added environment variables for create_for_unmarshal (). 
-	  
+	  Added environment variables for create_for_unmarshal ().
+
 	* tao/Valuetype/ValueFactory.h:
-	  
+
 	  Added an environment for create_for_unmarshal ();
 
 Tue Apr 27 08:59:24 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
