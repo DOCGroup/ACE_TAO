@@ -1,3 +1,11 @@
+Tue Jul 23 22:23:35 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* orbsvcs/orbsvcs/AV/TCP.h:
+	* orbsvcs/orbsvcs/AV/TCP.cpp: Change name of TAO_AV_TCP_Base_Acceptor::open()
+	  method to acceptor_open(), to prevent hiding of ACE_Acceptor::open() 
+	  virtual method.  Thanks to Steve Huston <shuston@riverace.com> and 
+	  Ossama Othman <ossama@doc.ece.uci.edu>.
+
 Tue Jul 23 15:19:00 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* tests/AMH_Exceptions/client.cpp (main):

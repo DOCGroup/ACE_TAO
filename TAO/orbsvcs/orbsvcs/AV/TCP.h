@@ -123,7 +123,7 @@ class TAO_AV_TCP_Acceptor;
 class TAO_AV_TCP_Base_Acceptor  :public ACE_Acceptor <TAO_AV_TCP_Flow_Handler,ACE_SOCK_ACCEPTOR>
 {
 public:
-  virtual int open (TAO_AV_TCP_Acceptor *acceptor,
+  virtual int acceptor_open (TAO_AV_TCP_Acceptor *acceptor,
                     ACE_Reactor *reactor,
                     const ACE_INET_Addr &local_addr,
                     TAO_FlowSpec_Entry *entry);
