@@ -554,8 +554,8 @@ CORBA_ORB::multicast_to_service (TAO_Service_ID service_id,
 
   // Figure out what port to listen on for server replies, and convert
   // to network byte order.
-  mcast_info.reply_port = htons (response_addr.get_port_number ());
-  mcast_info.service_id = htons (service_id);
+  mcast_info.reply_port = ACE_HTONS (response_addr.get_port_number ());
+  mcast_info.service_id = ACE_HTONS (service_id);
 
   // Send multicast of one byte, enough to wake up server.
   ssize_t n_bytes = multicast.send (&mcast_info,
