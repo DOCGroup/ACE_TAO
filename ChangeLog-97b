@@ -43,6 +43,9 @@ Wed Oct 15 07:21:05 1997  David L. Levine  <levine@cs.wustl.edu>
 	* include/makeinclude/platform_osf1_4.0.GNU: minor cleanup, incl.
 	  addition of -use_ld_input to SOFLAGS.
 
+	* include/makeinclude/platform_osf1_4.0_g++.GNU: added "c" to
+	  ARFLAGS.
+
 	* tests/Future_Test.cpp,examples/Threads/future[12].cpp
 	  (Method_Object_Name): removed extraneous ";" after function
 	  definition.
