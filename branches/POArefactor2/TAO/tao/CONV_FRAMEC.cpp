@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:323
+// be\be_codegen.cpp:301
 
 
 #include "CONV_FRAMEC.h"
@@ -38,7 +38,7 @@
 #endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
-#include "CONV_FRAMEC.i"
+#include "CONV_FRAMEC.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
@@ -97,7 +97,7 @@ void CONV_FRAME::CodeSetIdSeq::_tao_any_destructor (
   )
 {
   CodeSetIdSeq * _tao_tmp_pointer =
-    ACE_static_cast (CodeSetIdSeq *, _tao_void_pointer);
+    static_cast<CodeSetIdSeq *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
@@ -112,7 +112,7 @@ CONV_FRAME::CodeSetComponent::_tao_any_destructor (
   )
 {
   CodeSetComponent *_tao_tmp_pointer =
-    ACE_static_cast (CodeSetComponent *, _tao_void_pointer);
+    static_cast<CodeSetComponent *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
@@ -125,7 +125,7 @@ CONV_FRAME::CodeSetComponentInfo::_tao_any_destructor (
   )
 {
   CodeSetComponentInfo *_tao_tmp_pointer =
-    ACE_static_cast (CodeSetComponentInfo *, _tao_void_pointer);
+    static_cast<CodeSetComponentInfo *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
@@ -138,7 +138,7 @@ CONV_FRAME::CodeSetContext::_tao_any_destructor (
   )
 {
   CodeSetContext *_tao_tmp_pointer =
-    ACE_static_cast (CodeSetContext *, _tao_void_pointer);
+    static_cast<CodeSetContext *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
@@ -153,7 +153,7 @@ CORBA::Boolean operator<< (
     const CONV_FRAME::CodeSetIdSeq &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len = _tao_sequence.length ();
+  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
   
   if (strm << _tao_seq_len)
     {
@@ -270,7 +270,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1628
+// be\be_visitor_root/root.cpp:1629
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -399,4 +399,3 @@ CORBA::Boolean operator>> (
       >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
-

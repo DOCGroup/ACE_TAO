@@ -27,6 +27,7 @@ tao_idl.exe -o orig -Gp -Gd -Ge 1 -GT -GA -Sc -Wb,export_macro=TAO_Export -Wb,ex
 tao_idl.exe -o orig -Ge 1 -GT -GA -Sa -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I c:\ace\poarefactor\ace_wrappers\tao ObjectIdList.pidl
 tao_idl.exe -o orig -Gp -Gd -Ge 1 -GT -GA -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I c:\ace\poarefactor\ace_wrappers\tao Domain.pidl
 tao_idl.exe -o orig -Ge 1 -GT -GA -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I c:\ace\poarefactor\ace_wrappers\tao TimeBase.pidl
+tao_idl.exe -o orig -Ge 1 -GT -GA -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I c:\ace\poarefactor\ace_wrappers\tao CONV_FRAME.pidl
 
 copy orig\*A.cpp .
 copy orig\*C.cpp .
@@ -43,3 +44,4 @@ patch < diffs/Domain.diff
 patch < diffs/GIOP.diff
 patch < diffs/TimeBase.diff
 patch < diffs/OctetSeq.diff
+patch < diffs/CONV_FRAME.diff

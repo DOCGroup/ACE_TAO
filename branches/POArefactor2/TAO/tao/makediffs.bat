@@ -25,3 +25,7 @@ unix2dos diffs\GIOP.diff
 diff -wub orig/TimeBaseS.cpp TimeBaseS.cpp > diffs/TimeBase.diff
 diff -wub orig/TimeBaseS.h TimeBaseS.h >> diffs/TimeBase.diff
 unix2dos diffs\TimeBase.diff
+
+diff -wub orig/CONV_FRAMES.cpp CONV_FRAMES.cpp > diffs/CONV_FRAME.diff
+diff -wub orig/CONV_FRAMES.h CONV_FRAMES.h >> diffs/CONV_FRAME.diff
+unix2dos diffs\CONV_FRAME.diff
