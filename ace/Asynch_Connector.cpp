@@ -18,10 +18,6 @@ ACE_RCSID(ace, Asynch_Connector, "$Id$")
 #include "ace/Message_Block.h"
 #include "ace/INET_Addr.h"
 
-template <class HANDLER>
-const ACE_INET_Addr
-ACE_Asynch_Connector<HANDLER>::inet_addr_any_ = ACE_INET_Addr ( (unsigned short) 0, ACE_UINT32 (INADDR_ANY) );
-
 
 template <class HANDLER>
 ACE_Asynch_Connector<HANDLER>::ACE_Asynch_Connector (void)
