@@ -57,20 +57,13 @@ main (void)
   mc = (Magazine_Creator) dll.symbol ("create_magazine");
   if (mc == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                      dll.error ()),
+                       // @@ Kirthika, something is missing here....
+                       dll.error ()),
                       -1);
-
-  //*done*
-  // Kirthika, can you please use the trick of putting this inside of
-  // a bracketed expression and using auto_ptr on it as I showed
-  // above?
-  
   {
+    auto_ptr <Magazine> magazine = mc ();
 
-   auto_ptr <Magazine> magazine = mc ();
-
-   magazine->title ();
-
+    magazine->title ();
   }
 
   dll.close ();

@@ -20,10 +20,14 @@ performing various operations on the library object.
 Execution:
 ---------
 
-> make
+First, build the test program, which you can do on UNIX as follows:
 
-> test_dll
+% make
 
-is the sequence of commands to get going!
+Then run the test program:
+
+% test_dll
+
+to exercise the test.
 
 -----------------------------------------------------------------
