@@ -8,17 +8,18 @@ Sat Nov 02 18:10:44 2002  Pradeep Gore  <pradeep@oomworks.com>
 	  Inserted missing , in constructor.
 
 	* orbscvs/orbsvcs/Notify/Notify_Service.cpp:
-	  Removed ACE_DEFAULT_THREAD_PRIORITY to threadpool task. Thanks
+	  Removed ACE_DEFAULT_THREAD_PRIORITY to threadpool task. Thanks 
 	  to Bala for suggesting a fix.
 
 	* orbscvs/orbsvcs/Notify/Thread_Pool_Task.cpp:
 	  Modified call to <activate> to use ACE_DEFAULT_THREAD_PRIORITY.
 
-	* orbsvcs\Logging_Service\Notify_Logging_Service\Notify_Logging_Service.cpp:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
 	  Changed code to obtain the notify service.
 
-	* orbsvcs\Logging_Service\Notify_Logging_Service\svc.conf:	  	
-          Modified the .conf file to use the revised Notify Service directive.
+	* orbsvcs/Logging_Service/Notify_Logging_Service/svc.conf:	  	
+          Modified the .conf file to use the revised Notify Service
+	  directive. 
 	  
 Sat Nov  2 10:48:46 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
