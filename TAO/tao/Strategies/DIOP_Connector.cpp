@@ -71,7 +71,8 @@ TAO_DIOP_Connector::open (TAO_ORB_Core *orb_core)
   this->orb_core (orb_core);
 
   // Create our connect strategy
-  this->create_connect_strategy ();
+  if (this->create_connect_strategy () == 0)
+    return -1;
 
   // @@ Michael: We do not use regular connection management.
 

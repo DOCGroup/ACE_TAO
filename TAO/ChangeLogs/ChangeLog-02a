@@ -1,3 +1,16 @@
+Sun Apr 28 21:43:17 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Transport_Connector.h:
+	* tao/Transport_Connector.cpp: Changed the method
+	  create_connect_strategy () to return an int. This should help
+	  us to do some error checking.
+
+	* tao/IIOP_Connector.cpp:
+	* tao/Strategies/DIOP_Connector.cpp:
+	* tao/Strategies/UIOP_Connector.cpp: 
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp: Used the
+	  return value to check for errors.
+
 Sun Apr 28 18:01:47 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Makefile:
