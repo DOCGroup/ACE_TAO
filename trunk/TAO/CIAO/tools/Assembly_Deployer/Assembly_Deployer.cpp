@@ -8,6 +8,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/streams.h"
 #include "ace/High_Res_Timer.h"
+#include "ace/OS_NS_stdio.h"
 
 const char *ior = "file://test.ior";
 const char *cad = 0;
