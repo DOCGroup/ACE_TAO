@@ -1,3 +1,8 @@
+Wed Dec 10 15:12:34 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Smart_Proxies/Collocation/Smart_Proxy_Impl.cpp:
+          Removed not used local variable
+
 Wed Dec 10 07:08:30 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/DsNotifyLogAdmin.mpc:
