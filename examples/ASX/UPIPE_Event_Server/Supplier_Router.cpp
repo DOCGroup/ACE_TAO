@@ -56,7 +56,6 @@ int
 Supplier_Router::open (void *)
 {
   ACE_ASSERT (this->is_writer ());
-
   char *argv[3];
 
   argv[0] = (char *) this->name ();
@@ -65,8 +64,12 @@ Supplier_Router::open (void *)
 
   if (this->init (1, &argv[1]) == -1)
     return -1;
-  // Make this an active object.  Return this->activate
-  // (options.t_flags ());
+
+  // Make this an active object.
+  //   return this->activate (options.t_flags ());
+
+  // Until that's done, return 1 to indicate that the object wasn't activated.
+  return 1;
 }
 
 // Close down the router..
