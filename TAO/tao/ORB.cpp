@@ -787,7 +787,19 @@ CORBA_ORB::resolve_initial_references (const char *name,
                                        &lasts))
             {
               list_of_profiles += ACE_CString (str);
-              list_of_profiles += ACE_CString ("/");
+              // @@ Make sure that default initial reference doesn't
+              //    end with the object key delimiter character.
+              //    Currently, this only works for pluggable protocols 
+              //    that use a forward slash '/' as the object key
+              //    delimiter.  However, this will not work for
+              //    pluggable protocols that do not use a '/' as their 
+              //    object key delimiter, such as UIOP.  This parsing
+              //    code should be merged with or use the parsing code 
+              //    used during MProfile creation in the TAO_Connector 
+              //    base class.
+              //            -Ossama
+              if (list_of_profiles[list_of_profiles.length() - 1] != '/')
+                list_of_profiles += ACE_CString ("/");
               list_of_profiles += object_id;
               list_of_profiles += ACE_CString (",");
             }
