@@ -1,3 +1,10 @@
+Tue Apr 20 20:43:25 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i_T.h: Added a
+	operator= declaration to avoid this being generated which leads to
+	undefined operator= for the PropertyTypes member when linking orbsvcs.
+	Thanks to Irfan Pyarali for the fix.
+	
 Tue Apr 20 20:27:48 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * orbsvcs/ImplRepo_Service/*:  Added an options class for storing
