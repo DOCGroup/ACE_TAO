@@ -1,3 +1,9 @@
+Mon Dec  8 10:06:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/tests/Time/Time.mpc:
+	  Changed name of project to fix msvc6 duplicate project error. Set
+	  exename to client to match the perl script.
+ 
 Mon Dec  8 09:10:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp:
