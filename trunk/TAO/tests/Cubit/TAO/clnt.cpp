@@ -210,9 +210,24 @@ cube_union_dii (u_int &call_count,
   CORBA::release (req);
 }
 
+
+class ACE_winsock_proper_shutdown
+// @@ We need this helper class to properly shutdown
+// WinSock before we figure out how to do this properly.
+{
+public:
+  ~ACE_winsock_proper_shutdown (void)
+  {
+    ACE_OS::socket_fini ();
+  }
+};
+
 int
 main (int argc, char *argv[])
 {
+  // @@ Winsock shutdown object.
+  ACE_winsock_proper_shutdown shutdown_object;
+
   CORBA::Object_ptr objref = CORBA::Object::_nil ();
   CORBA::Environment env;
 
