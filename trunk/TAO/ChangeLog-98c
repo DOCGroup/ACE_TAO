@@ -1,3 +1,8 @@
+Sun Sep 27 22:53:08 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
+
+	* examples/POA/Explicit_Activation/run_test.pl: Changed
+	  permissions to allow execution. Nothing special. Feh.
+
 Sun Sep 27 22:37:11 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
 	* examples/POA/Default_Servant/server.cpp
