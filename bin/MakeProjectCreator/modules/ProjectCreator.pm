@@ -471,10 +471,22 @@ sub parse_components {
                                     $values[2], \%flags);
         }
         elsif ($values[0] eq 'assign_add') {
+          ## If there is no value in %flags, then we need to get
+          ## the outer scope value and put it in there.
+          if (!defined $self->get_assignment($values[1], \%flags)) {
+            my($outer) = $self->get_assignment($values[1]);
+            $self->process_assignment($values[1], $outer, \%flags);
+          }
           $self->process_assignment_add($values[1],
                                         $values[2], \%flags);
         }
         elsif ($values[0] eq 'assign_sub') {
+          ## If there is no value in %flags, then we need to get
+          ## the outer scope value and put it in there.
+          if (!defined $self->get_assignment($values[1], \%flags)) {
+            my($outer) = $self->get_assignment($values[1]);
+            $self->process_assignment($values[1], $outer, \%flags);
+          }
           $self->process_assignment_sub($values[1],
                                         $values[2], \%flags);
         }
