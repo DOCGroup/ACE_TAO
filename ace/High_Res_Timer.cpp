@@ -205,28 +205,18 @@ ACE_High_Res_Timer::dump (void) const
              start_incr_.hi (), start_incr_.lo ()));
 #else  /* ! ACE_LACKS_LONGLONG_T */
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT (":\nstart_.hi ():     %8x; start_.lo ():      %8x;\n"
-                         "end_.hi ():       %8x; end_.lo ():        %8x;\n"
-                         "total_.hi ():     %8x; total_.lo ():      %8x;\n"
-                         "start_incr_.hi () %8x; start_incr_.lo (): %8x;\n"),
-              start_ >> 32,
-              start_ & 0xfffffffful,
-              end_ >> 32,
-              end_ & 0xfffffffful,
-              total_ >> 32,
-              total_ & 0xfffffffful,
-              start_incr_ >> 32,
-              start_incr_ & 0xfffffffful));
-#if 0
-  ACE_static_cast (ACE_UINT32, start_ >> 32),
-  ACE_static_cast (ACE_UINT32, start_ & 0xfffffffful),
-  ACE_static_cast (ACE_UINT32, end_ >> 32),
-  ACE_static_cast (ACE_UINT32, end_ & 0xfffffffful),
-  ACE_static_cast (ACE_UINT32, total_ >> 32),
-  ACE_static_cast (ACE_UINT32, total_ & 0xfffffffful),
-  ACE_static_cast (ACE_UINT32, start_incr_ >> 32),
-  ACE_static_cast (ACE_UINT32, start_incr_ & 0xfffffffful)));
-#endif /* 0 */
+             ASYS_TEXT (":\nstart_.hi ():     %8x; start_.lo ():      %8x;\n"
+                        "end_.hi ():       %8x; end_.lo ():        %8x;\n"
+                        "total_.hi ():     %8x; total_.lo ():      %8x;\n"
+                        "start_incr_.hi () %8x; start_incr_.lo (): %8x;\n"),
+             ACE_CU64_TO_CU32 (start_ >> 32),
+             ACE_CU64_TO_CU32 (start_ & 0xfffffffful),
+             ACE_CU64_TO_CU32 (end_ >> 32),
+             ACE_CU64_TO_CU32 (end_ & 0xfffffffful),
+             ACE_CU64_TO_CU32 (total_ >> 32),
+             ACE_CU64_TO_CU32 (total_ & 0xfffffffful),
+             ACE_CU64_TO_CU32 (start_incr_ >> 32),
+             ACE_CU64_TO_CU32 (start_incr_ & 0xfffffffful)));
 #endif /* ! ACE_LACKS_LONGLONG_T */
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
