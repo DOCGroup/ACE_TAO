@@ -2291,7 +2291,7 @@ TAO_POA::parse_key (const TAO_ObjectKey &key,
       ACE_OS::memcpy (&poa_name_size,
                       key_data + starting_at,
                       sizeof (poa_name_size));
-      ACE_NTOHL (poa_name_size);
+      poa_name_size = ACE_NTOHL (poa_name_size);
       starting_at += sizeof (poa_name_size);
     }
 
@@ -2383,7 +2383,7 @@ TAO_POA::create_object_key (const PortableServer::ObjectId &id)
   if (this->persistent_ &&
       !this->system_id_)
     {
-      ACE_HTONL (poa_name_length);
+      poa_name_length = ACE_HTONL (poa_name_length);
       ACE_OS::memcpy (&buffer[starting_at],
                       &poa_name_length,
                       sizeof (poa_name_length));
