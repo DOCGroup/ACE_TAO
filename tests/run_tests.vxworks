@@ -41,6 +41,10 @@ ld < CDR_Test
 write 2, "CDR_Test ", 9
 ace_main; unld "CDR_Test"
 
+ld < DLList_Test
+write 2, "DLList_Test ", 9
+ace_main; unld "DLList_Test"
+
 ld < Env_Value_Test
 write 2, "Env_Value_Test ", 15
 ace_main; unld "Env_Value_Test"

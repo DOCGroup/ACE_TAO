@@ -34,6 +34,8 @@ echo "Starting tests..."
 
 run Basic_Types_Test
 
+run DLList_Test
+
 #Atomic_Op_Test: threads not supported on this platform
 #run Atomic_Op_Test                      # uses Atomic_Op
 
