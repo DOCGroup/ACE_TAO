@@ -1,3 +1,24 @@
+Mon May 24 16:20:39 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/tests/Param_Test/recursive_struct.h:
+	* TAO/tests/Param_Test/recursive_struct.cpp:
+	* TAO/tests/Param_Test/param_test.idl:
+	* TAO/tests/Param_Test/param_test_i.h:
+	* TAO/tests/Param_Test/param_test_i.cpp:
+	* TAO/tests/Param_Test/driver.cpp:
+	* TAO/tests/Param_Test/options.h:
+	* TAO/tests/Param_Test/options.cpp:
+	* TAO/tests/Param_Test/tests.h:
+	* TAO/tests/Param_Test/client.dsp:
+	* TAO/tests/Param_Test/run_test.pl:
+	* TAO/tests/Param_Test/Makefile:
+	  Added new test to Param_Test to test a struct that
+	  contains a sequence of itself, for example:
+	    struct foo {
+	      long x;
+	      sequence<foo> offspring;
+	    }; 
+
 Mon May 24 16:03:20 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests: Modified/fixed the following NT makefiles:
