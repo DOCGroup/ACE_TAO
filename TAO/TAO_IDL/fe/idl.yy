@@ -394,6 +394,8 @@ interface :
 	     * Add the interface to its definition scope
 	     */
 	    (void) s->fe_add_interface (i);
+            // And reference it inside itself so it can't be redefined there.
+            i->add_to_referenced (i, I_FALSE, i->local_name ());
 	  }
 	  /*
 	   * Push it on the scope stack
@@ -506,6 +508,8 @@ value_concrete_decl :
 	     * Add the valuetype to its definition scope
 	     */
 	    (void) s->fe_add_interface(i);
+            // And reference it inside itself so it can't be redefined there.
+            i->add_to_referenced (i, I_FALSE, i->local_name ());
 	  }
 	  /*
 	   * Push it on the scope stack
@@ -560,6 +564,8 @@ value_abs_decl :
 	     * Add the valuetype to its definition scope
 	     */
 	    (void) s->fe_add_interface(i);
+            // And reference it inside itself so it can't be redefined there.
+            i->add_to_referenced (i, I_FALSE, i->local_name ());
 	  }
 	  /*
 	   * Push it on the scope stack
@@ -1437,6 +1443,8 @@ struct_type :
 	  if (s != NULL) {
 	    d = idl_global->gen()->create_structure(n, p);
 	    (void) s->fe_add_structure(d);
+            // And reference it inside itself so it can't be redefined there.
+            d->add_to_referenced (d, I_FALSE, d->local_name ());
 	  }
 	  /*
 	   * Push the scope of the struct on the scopes stack
@@ -1606,6 +1614,8 @@ union_type :
             } else {
 	      u = idl_global->gen()->create_union(tp, n, p);
 	      (void) s->fe_add_union(u);
+            // And reference it inside itself so it can't be redefined there.
+            u->add_to_referenced (u, I_FALSE, u->local_name ());
  	    }
 	  }
 	  /*
@@ -2302,6 +2312,8 @@ exception :
 	  if (s != NULL) {
 	    e = idl_global->gen()->create_exception(n, p);
 	    (void) s->fe_add_exception(e);
+            // And reference it inside itself so it can't be redefined there.
+            e->add_to_referenced (e, I_FALSE, e->local_name ());
 	  }
 	  /*
 	   * Push the exception scope on the scope stack
