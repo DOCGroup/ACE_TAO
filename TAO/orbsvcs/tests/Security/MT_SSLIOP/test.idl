@@ -8,3 +8,8 @@ interface Simple_Server
 
   oneway void shutdown ();
 };
+
+interface Another_One
+{
+  long test_method (in long x);
+};
