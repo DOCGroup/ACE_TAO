@@ -1,3 +1,11 @@
+Sun Apr 21 21:23:59 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * include/makeinclude/platform_osf1_4.x_cxx.GNU (SOFLAGS):
+
+          Re-enable -use_ld_input in SOFLAGS. Seems that this flag is used
+          to identify Digital Unix in some Makefiles which resort to all
+          kinds of hackery to get some files to link.
+
 Sun Apr 21 20:59:26 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * include/makeinclude/platform_osf1_4.x_cxx.GNU (OCFLAGS):
