@@ -165,7 +165,7 @@ public:
 
 // ****************************************************************
 
-class TAO_GIOP_Message_State
+class TAO_Export TAO_GIOP_Message_State
 {
   // = TITLE
   //   Represent the state of an incoming GIOP message.
