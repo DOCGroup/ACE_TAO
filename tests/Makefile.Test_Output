@@ -41,7 +41,7 @@ endif
 
 ifeq ($(shared_libs),1)
 ifneq ($(SHLIB),)
-CPPFLAGS     += -DSERVICE_CONFIG_DLL_BUILD_DLL
+CPPFLAGS     += -DTEST_OUTPUT_BUILD_DLL
 endif
 endif
 

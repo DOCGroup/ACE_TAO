@@ -1,3 +1,23 @@
+Tue May 20 01:10:42 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/DLL_Manager.cpp (get_handle):
+          Always return handle on success.  As coded, it only returned the
+          handle if the refcount was > 0 when become_owner was passed.
+
+          Added additional debug statements when ACE::debug() is enabled.
+
+        * tests/Makefile.Test_Output:
+          Correctly define TEST_OUTPUT_BUILD_DLL when building shared
+          library.
+
+        * tests/test_config.h:
+        * tests/Test_Output.cpp:
+          Reverted Test_Output to a singleton, although not based on
+          ACE_Singleton.  This keeps us from having to include
+          Singleton.h, which in turn includes OS.h.  Thanks to Johnny
+          Willemsen <jwillemsen@remedy.nl> for helping track this down and
+          suggesting the fix.
+
 Mon May 19 11:03:31 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* configure.ac: 

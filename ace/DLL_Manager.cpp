@@ -114,6 +114,11 @@ ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
             }
         }
     }
+  if (ACE::debug ())
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_LIB_TEXT ("ACE_DLL_Handle::open: loading %s (%d)\n"),
+                this->dll_name_,
+                this->handle_));
 
   ++this->refcount_;
   return 0;
@@ -141,8 +146,9 @@ ACE_DLL_Handle::close (int unload)
     {
       if (ACE::debug ())
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_LIB_TEXT ("ACE_DLL_Handle::close: unloading %s\n"),
-                    this->dll_name_));
+                    ACE_LIB_TEXT ("ACE_DLL_Handle::close: unloading %s (%d)\n"),
+                    this->dll_name_,
+                    this->handle_));
       // First remove any associated Framework Components.
       ACE_Framework_Repository * frPtr= ACE_Framework_Repository::instance ();
       
@@ -204,16 +210,18 @@ ACE_DLL_Handle::get_handle (int become_owner)
                        ACE_LIB_TEXT ("ACE_DLL_Handle::get_handle: ")
                        ACE_LIB_TEXT ("cannot become owner, refcount == 0.\n")),
                       ACE_SHLIB_INVALID_HANDLE);
-  else if (become_owner != 0)
+
+  handle = this->handle_;
+  
+  if (become_owner != 0)
     {
-      handle = this->handle_;
       if (--this->refcount_ == 0)
         this->handle_ = ACE_SHLIB_INVALID_HANDLE;
     }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_LIB_TEXT ("ACE_DLL_Handle::get_handle: ")
-              ACE_LIB_TEXT ("handle %s, refcount %d\n"),
+              ACE_LIB_TEXT ("post call: handle %s, refcount %d\n"),
               this->handle_ == ACE_SHLIB_INVALID_HANDLE ?
                 ACE_LIB_TEXT ("invalid") : ACE_LIB_TEXT ("valid"),
               this->refcount_));
