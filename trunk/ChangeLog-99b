@@ -1,3 +1,17 @@
+Wed Nov 10 21:35:47 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* m4/compiler.m4:
+
+	  Added some default flags for compilers on IRIX.
+
+	* m4/threads.m4:
+
+	  Added more thread library checks in an effort to figure out if a
+	  thread library really is needed, in the case that the initial
+	  check for pthread_create succeeds without the need of a thread
+	  library.  Such a problem occurred on IRIX.  This modification
+	  should correct the problem.
+
 Wed Nov 10 10:55:34 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* ace/OS.i (memset, thr_self, thr_getspecific):
