@@ -1,9 +1,0 @@
-//
-// $Id$
-//
-
-interface test
-{
-  unsigned long method (in unsigned long work);
-  oneway void shutdown ();
-};

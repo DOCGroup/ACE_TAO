@@ -1,7 +1,0 @@
-// This is the default relative definitions.
-// The first column is the name for which we create a relative definition.
-// The second column is the value to build up if it isn't defined as an
-// environmenment variable.
-ACE_ROOT
-TAO_ROOT,  $ACE_ROOT/TAO
-CIAO_ROOT, $TAO_ROOT/CIAO

@@ -1,5 +1,0 @@
-// $Id$
-project : taolib, core, ifr_client {
-  sharedname   = TAO_TypeCodeFactory
-  dynamicflags = TAO_TYPECODEFACTORY_BUILD_DLL
-}
