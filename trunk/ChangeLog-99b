@@ -1,33 +1,39 @@
+Tue Aug 24 21:47:44 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Synch_Options.{h,cpp} (timeout): added const to
+          ACE_Time_Value & argument, because it's not modified.
+          Thanks to John Lindal <jafl@cco.caltech.edu> for suggesting this.
+
 Tue Aug 24 10:02:51 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/Process_Manager_Test.cpp: Fixed a number of warnings
-	  caused by unused args and signed/unsigned mismatches.  Thanks to
- 	  David Levine for reporting this.
+        * tests/Process_Manager_Test.cpp: Fixed a number of warnings
+          caused by unused args and signed/unsigned mismatches.  Thanks to
+          David Levine for reporting this.
 
-	* ace/Service_Repository.h,
-	  ace/Service_Config.h,
-	  ace/OS.h:
-	  Changed the default number of entries in the 
-	  ACE_Service_Repository from ACE_DEFAULT_SELECT_REACTOR_SIZE
-	  to ACE_DEFAULT_SERVICE_REPOSITORY_SIZE, which defaults to
-	  1024.  Thanks to Ivan Murthy <Ivan.Murphy@med.siemens.de> for
-	  suggesting this.
+        * ace/Service_Repository.h,
+          ace/Service_Config.h,
+          ace/OS.h:
+          Changed the default number of entries in the
+          ACE_Service_Repository from ACE_DEFAULT_SELECT_REACTOR_SIZE
+          to ACE_DEFAULT_SERVICE_REPOSITORY_SIZE, which defaults to
+          1024.  Thanks to Ivan Murthy <Ivan.Murphy@med.siemens.de> for
+          suggesting this.
 
 Tue Aug 24 16:23:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* bin/make_release:
-	  Use an explicit temporary file to create the ChangeLog, i had
-	  some problems with the previous scheme, but it could be my
-	  shell.
-	  When tagging TAO we have to change directories.
+        * bin/make_release:
+          Use an explicit temporary file to create the ChangeLog, i had
+          some problems with the previous scheme, but it could be my
+          shell.
+          When tagging TAO we have to change directories.
 
 Tue Aug 24 12:19:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Makefile:
-	  Updated dependencies
+        * tests/Makefile:
+          Updated dependencies
 
-	* performance-tests/TCP/tcp_test.cpp:
-	  Fixed argument parsing.
+        * performance-tests/TCP/tcp_test.cpp:
+          Fixed argument parsing.
 
 Tue Aug 24 10:37:02 1999  David L. Levine  <levine@cs.wustl.edu>
 
