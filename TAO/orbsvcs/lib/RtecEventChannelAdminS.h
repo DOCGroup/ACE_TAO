@@ -23,7 +23,7 @@ public:
     ProxyPushConsumer (const char *obj_name = 0);
     virtual ~ProxyPushConsumer (void);
   public:
-    virtual void connect_push_supplier (RtecEventComm::PushSupplier_ptr  push_supplier, const RtecEventChannelAdmin::SupplierQOS & qos,  CORBA::Environment &env) = 0; // pure virtual
+    virtual void connect_push_supplier (RtecEventComm::PushSupplier_ptr push_supplier, const RtecEventChannelAdmin::SupplierQOS &qos,  CORBA::Environment &env) = 0; // pure virtual
     static void connect_push_supplier_skel (CORBA::ServerRequest &req, CORBA::Object_ptr obj, CORBA::Environment &env);
 
     static void _is_a_skel (CORBA::ServerRequest &req, CORBA::Object_ptr obj, CORBA::Environment &env);
@@ -38,7 +38,7 @@ public:
     ProxyPushSupplier (const char *obj_name = 0);
     virtual ~ProxyPushSupplier (void);
   public:
-    virtual void connect_push_consumer (RtecEventComm::PushConsumer_ptr  push_consumer, const RtecEventChannelAdmin::ConsumerQOS & qos,  CORBA::Environment &env) = 0; // pure virtual
+    virtual void connect_push_consumer (RtecEventComm::PushConsumer_ptr push_consumer, const RtecEventChannelAdmin::ConsumerQOS &qos,  CORBA::Environment &env) = 0; // pure virtual
     static void connect_push_consumer_skel (CORBA::ServerRequest &req, CORBA::Object_ptr obj, CORBA::Environment &env);
 
     static void _is_a_skel (CORBA::ServerRequest &req, CORBA::Object_ptr obj, CORBA::Environment &env);

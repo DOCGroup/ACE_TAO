@@ -50,9 +50,11 @@ void POA_RtecEventComm::PushConsumer::push_skel (CORBA::ServerRequest &_tao_serv
   // parse the arguments
   _tao_server_request.params (nvlist, _tao_environment);
   if (_tao_environment.exception ()) return;
-  impl = (POA_RtecEventComm::PushConsumer_ptr) _tao_object_reference->get_subclass ();
+  
+impl = (POA_RtecEventComm::PushConsumer_ptr) _tao_object_reference->get_subclass ();
   impl->push(data, _tao_environment);
   
+
 }
 
 void POA_RtecEventComm::PushConsumer::disconnect_push_consumer_skel (CORBA::ServerRequest &_tao_server_request, CORBA::Object_ptr _tao_object_reference, CORBA::Environment &_tao_environment)
@@ -66,9 +68,11 @@ void POA_RtecEventComm::PushConsumer::disconnect_push_consumer_skel (CORBA::Serv
   // parse the arguments
   _tao_server_request.params (nvlist, _tao_environment);
   if (_tao_environment.exception ()) return;
-  impl = (POA_RtecEventComm::PushConsumer_ptr) _tao_object_reference->get_subclass ();
+  
+impl = (POA_RtecEventComm::PushConsumer_ptr) _tao_object_reference->get_subclass ();
   impl->disconnect_push_consumer(_tao_environment);
   
+
 }
 
 void POA_RtecEventComm::PushConsumer::_is_a_skel (CORBA::ServerRequest &req, CORBA::Object_ptr /* obj */, CORBA::Environment &env)
@@ -130,9 +134,11 @@ void POA_RtecEventComm::PushSupplier::disconnect_push_supplier_skel (CORBA::Serv
   // parse the arguments
   _tao_server_request.params (nvlist, _tao_environment);
   if (_tao_environment.exception ()) return;
-  impl = (POA_RtecEventComm::PushSupplier_ptr) _tao_object_reference->get_subclass ();
+  
+impl = (POA_RtecEventComm::PushSupplier_ptr) _tao_object_reference->get_subclass ();
   impl->disconnect_push_supplier(_tao_environment);
   
+
 }
 
 void POA_RtecEventComm::PushSupplier::_is_a_skel (CORBA::ServerRequest &req, CORBA::Object_ptr /* obj */, CORBA::Environment &env)
