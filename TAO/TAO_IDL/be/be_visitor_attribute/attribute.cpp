@@ -125,13 +125,24 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
     case TAO_CodeGen::TAO_ATTRIBUTE_SMART_PROXY_CS:
       ctx.state (TAO_CodeGen::TAO_OPERATION_SMART_PROXY_CS);
       break;
+    case TAO_CodeGen::TAO_ATTRIBUTE_INTERCEPTORS_CH:
+      ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_CH);
+      break;
+    case TAO_CodeGen::TAO_ATTRIBUTE_INTERCEPTORS_CS:
+      ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_CS);
+      break;
+    case TAO_CodeGen::TAO_ATTRIBUTE_INTERCEPTORS_SH:
+      ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_SH);
+      break;
+    case TAO_CodeGen::TAO_ATTRIBUTE_INTERCEPTORS_SS:
+      ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_SS);
+      break;
     case TAO_CodeGen::TAO_ATTRIBUTE_TIE_SH:
       ctx.state (TAO_CodeGen::TAO_OPERATION_TIE_SH);
       break;
     case TAO_CodeGen::TAO_ATTRIBUTE_TIE_SI:
       ctx.state (TAO_CodeGen::TAO_OPERATION_TIE_SI);
       break;
-
     default:
       // error
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -262,6 +273,19 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
     case TAO_CodeGen::TAO_ATTRIBUTE_SMART_PROXY_CS:
       ctx.state (TAO_CodeGen::TAO_OPERATION_SMART_PROXY_CS);
       break;
+    case TAO_CodeGen::TAO_ATTRIBUTE_INTERCEPTORS_CH:
+      ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_CH);
+      break;
+    case TAO_CodeGen::TAO_ATTRIBUTE_INTERCEPTORS_CS:
+      ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_CS);
+      break;
+    case TAO_CodeGen::TAO_ATTRIBUTE_INTERCEPTORS_SH:
+      ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_SH);
+      break;
+    case TAO_CodeGen::TAO_ATTRIBUTE_INTERCEPTORS_SS:
+      ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_SS);
+      break;
+
     default:
       // error
       ACE_ERROR_RETURN ((LM_ERROR,
