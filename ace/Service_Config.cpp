@@ -537,7 +537,7 @@ ACE_Service_Config::process_directives (void)
       if (ace_yyerrno > 0)
 	{
 	  errno = EINVAL; // This is a hack, better errors should be provided... 
-	  return -1;
+	  return ace_yyerrno;
 	}
       else
 	return 0;
