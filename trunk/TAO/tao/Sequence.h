@@ -95,6 +95,8 @@ protected:
   // destroyed.
 };
 
+// ****************************************************************
+
 class TAO_Export TAO_Unbounded_Base_Sequence : public TAO_Base_Sequence
 {
   // = TITLE
@@ -138,6 +140,8 @@ protected:
                                void *buffer);
   // Assume ownership and set length to 0.
 };
+
+// ****************************************************************
 
 class TAO_Export TAO_Bounded_Base_Sequence : public TAO_Base_Sequence
 {
@@ -233,6 +237,8 @@ private:
   CORBA::Boolean release_;
   // control memory managment semantics.
 };
+
+// ****************************************************************
 
 class TAO_Export TAO_Unbounded_String_Sequence : public TAO_Unbounded_Base_Sequence
 {
@@ -347,6 +353,90 @@ public:
   virtual void _shrink_buffer (CORBA::ULong new_length,
                                CORBA::ULong old_length);
 };
+
+// ****************************************************************
+
+#if defined (TAO_NO_COPY_OCTET_SEQUENCES)
+class ACE_Message_Block;
+template<class T> class TAO_Unbounded_Sequence;
+// forward declaration, we are going to specialize that template
+// here.
+// The template itself requires this file so every user of the
+// template should also see the specialization.
+
+class TAO_Export TAO_Unbounded_Sequence<CORBA::Octet> : public TAO_Unbounded_Base_Sequence
+{
+  // = TITLE
+  //   An unbounded sequence of Octets
+  //
+  // = DESCRIPTION
+  //   Marshalling and demarshalling cctet sequences can be highly
+  //   optimize, for instance at demarshalling we don't require a copy
+  //   from the CDR buffer to the octet sequence buffer, we can simply
+  //   hold a duplicate of the underlying ACE_Message_Block.
+  //   Specializing the TAO_Unbounded_Sequence<T> parametric
+  //   class, is an excellent way to achieve this optimizations.
+  //
+public:
+  friend class TAO_Marshal_Sequence;
+  // For efficient marshalling and demarshalling.
+
+  TAO_Unbounded_Sequence<CORBA::Octet> (void);
+  TAO_Unbounded_Sequence<CORBA::Octet> (CORBA::ULong max);
+  TAO_Unbounded_Sequence<CORBA::Octet> (CORBA::ULong max,
+					CORBA::ULong length,
+					CORBA::Octet *data,
+					CORBA::Boolean release = 0);
+  ~TAO_Unbounded_Sequence (void);
+  // see TAO_Unbounded_Sequence in "Sequence_T.h"
+
+  TAO_Unbounded_Sequence (const TAO_Unbounded_Sequence<CORBA::Octet> &);
+  TAO_Unbounded_Sequence<CORBA::Octet>& operator= (const TAO_Unbounded_Sequence<CORBA::Octet> &);
+  // The copy constructor and assignment operators *do* copy the data,
+  // though we could simply duplicate the ref count in the
+  // ACE_Message_Block this will change the semantics for this
+  // operations.
+
+  CORBA::Octet &operator[] (CORBA::ULong);
+  const CORBA::Octet &operator[] (CORBA::ULong) const;
+  // See the general description in "Sequence_T.h"
+
+  // = Static operations.
+
+  static CORBA::Octet *allocbuf (CORBA::ULong);
+  // Allocate storage for the sequence, please note that the storage
+  // is always held in a ACE_Message_Block.
+
+  static void freebuf (CORBA::Octet *);
+  // Free the storage.
+
+  virtual void _allocate_buffer (CORBA::ULong length);
+  virtual void _deallocate_buffer (void);
+  // Implement the methods for all the sequence, please seee
+  // TAO_Base_Sequence.
+
+  // = orbos/98-01-11 proposed extensions.
+  CORBA::Octet *get_buffer (CORBA::Boolean orphan = CORBA::B_FALSE);
+  const CORBA::Octet *get_buffer (void) const;
+  void replace (CORBA::ULong max,
+                CORBA::ULong length,
+                CORBA::Octet *data,
+                CORBA::Boolean release = CORBA::B_FALSE);
+  // See the general description of this methods in "Sequence_T.h".
+
+  // = TAO extension
+  ACE_Message_Block* mb (void);
+  // returns a duplicate of the underlying message block, it is the
+  // caller responsability to release the copy (IMHO this is
+  // consistent with the CORBA calling semantics, return values are
+  // owned by the caller).
+
+private:
+  ACE_Message_Block* mb_;
+};
+#endif /* defined (TAO_NO_COPY_OCTET_SEQUENCES) */
+
+// ****************************************************************
 
 #if defined (__ACE_INLINE__)
 #include "tao/Sequence.i"

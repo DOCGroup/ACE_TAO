@@ -222,3 +222,71 @@ TAO_Unbounded_String_Sequence::operator[] (CORBA::ULong index) const
     ACE_reinterpret_cast (char **ACE_CAST_CONST, this->buffer_);
   return TAO_String_Manager (tmp + index, this->release_);
 }
+
+// ****************************************************************
+
+#if defined (TAO_NO_COPY_OCTET_SEQUENCES)
+ACE_INLINE CORBA::Octet *
+TAO_Unbounded_Sequence<CORBA::Octet>::allocbuf (CORBA::ULong size)
+{
+  return new CORBA::Octet[size];
+}
+
+ACE_INLINE void
+TAO_Unbounded_Sequence<CORBA::Octet>::freebuf (CORBA::Octet *buffer)
+{
+  delete [] buffer;
+}
+
+ACE_INLINE
+TAO_Unbounded_Sequence<CORBA::Octet>::TAO_Unbounded_Sequence (void)
+  :  mb_ (0)
+{
+}
+
+ACE_INLINE
+TAO_Unbounded_Sequence<CORBA::Octet>::TAO_Unbounded_Sequence (CORBA::ULong maximum)
+  : TAO_Unbounded_Base_Sequence (maximum,
+                                 TAO_Unbounded_Sequence<CORBA::Octet>::allocbuf (maximum)),
+    mb_ (0)
+{
+}
+
+ACE_INLINE
+TAO_Unbounded_Sequence<CORBA::Octet>::TAO_Unbounded_Sequence (CORBA::ULong maximum,
+                                                   CORBA::ULong length,
+                                                   CORBA::Octet *data,
+                                                   CORBA::Boolean release)
+  : TAO_Unbounded_Base_Sequence (maximum, length, data, release),
+    mb_ (0)
+{
+}
+
+ACE_INLINE const CORBA::Octet *
+TAO_Unbounded_Sequence<CORBA::Octet>::get_buffer (void) const
+{
+  return ACE_reinterpret_cast(const CORBA::Octet * ACE_CAST_CONST, this->buffer_);
+}
+
+ACE_INLINE CORBA::Octet &
+TAO_Unbounded_Sequence<CORBA::Octet>::operator[] (CORBA::ULong i)
+{
+  ACE_ASSERT (i < this->maximum_);
+  CORBA::Octet* tmp = ACE_reinterpret_cast(CORBA::Octet*,this->buffer_);
+  return tmp[i];
+}
+
+ACE_INLINE const CORBA::Octet &
+TAO_Unbounded_Sequence<CORBA::Octet>::operator[] (CORBA::ULong i) const
+{
+  ACE_ASSERT (i < this->maximum_);
+  CORBA::Octet * const tmp = ACE_reinterpret_cast (CORBA::Octet* ACE_CAST_CONST, this->buffer_);
+  return tmp[i];
+}
+
+ACE_INLINE ACE_Message_Block*
+TAO_Unbounded_Sequence<CORBA::Octet>::mb (void)
+{
+  return ACE_Message_Block::duplicate (this->mb_);
+}
+#endif /* defined (TAO_NO_COPY_OCTET_SEQUENCES) */

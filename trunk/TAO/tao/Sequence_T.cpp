@@ -76,7 +76,7 @@ void TAO_Unbounded_Sequence<T>::_allocate_buffer (CORBA::ULong length)
         tmp[i] = old[i];
 
       if (this->release_)
-        delete[] old;
+        TAO_Unbounded_Sequence<T>::freebuf (old);
     }
 
   this->buffer_ = tmp;

@@ -1057,15 +1057,12 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
   // here, on the "be gracious in what you accept" principle.  We
   // don't generate illegal sequences (i.e. length > bounds).
 
-  continue_decoding = stream->read_ulong (seq->length_);
-  seq->maximum_ = seq->length_;
-  seq->release_ = 1;
-  seq->buffer_ = 0;
+  continue_decoding = stream->read_ulong (bounds);
 
   if (continue_decoding)
     {
       // No point decoding an empty sequence.
-      if (seq->length_ > 0)
+      if (bounds > 0)
         {
           // Get element typecode.
           tc2 = tc->content_type (env);
@@ -1076,14 +1073,41 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
 
               if (env.exception () == 0)
                 {
-                  bounds = seq->length_;
+#if defined (TAO_NO_COPY_OCTET_SEQUENCES)
+		  // The treatment of octet sequences is completely
+		  // different.
+		  if (tc2->kind_ == CORBA::tk_octet
+		      && ACE_BIT_DISABLED (stream->start ()->flags (),
+					   ACE_Message_Block::DONT_DELETE))
+		    {
+		      TAO_Unbounded_Sequence<CORBA::Octet>* seq2 = 
+			ACE_dynamic_cast(TAO_Unbounded_Sequence<CORBA::Octet>*, seq);
+		      seq2->_deallocate_buffer ();
+		      seq2->mb_ = stream->start ()->duplicate ();
+		      seq2->buffer_ = seq2->mb_->rd_ptr ();
+		      seq2->maximum_ = bounds;
+		      seq2->length_ = bounds;
+		      stream->skip_bytes (bounds);
+		      return CORBA::TypeCode::TRAVERSE_CONTINUE;
+		    }
+#endif /* defined (TAO_NO_COPY_OCTET_SEQUENCES) */
 
                   // Allocate the buffer using the virtual
                   // _allocate_buffer method, hence the right
                   // constructors are invoked and size for the array
                   // is OK.  The sequence will release it, since its
                   // release_ field is 1.
-                  seq->_allocate_buffer (bounds);
+		  if (seq->maximum_ < bounds)
+		    {
+		      seq->_deallocate_buffer ();
+		      seq->maximum_ = bounds;
+		      seq->release_ = 1;
+		      seq->buffer_ = 0;
+		      seq->_allocate_buffer (bounds);
+		    }
+		  // In any case the sequence length is changed.
+		  seq->length_ = bounds;
+		   
 
                   value = (char *) seq->buffer_;
 
@@ -1136,6 +1160,14 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
                       break;
 
                     case CORBA::tk_char:
+                      // For primitives, compute the size only once
+		      continue_decoding = continue_decoding &&
+			stream->read_char_array
+			((CORBA::Char *) value, bounds);
+                      if (continue_decoding == CORBA::B_TRUE)
+                        return CORBA::TypeCode::TRAVERSE_CONTINUE;
+                      break;
+
                     case CORBA::tk_octet:
                       // For primitives, compute the size only once
 		      continue_decoding = continue_decoding &&

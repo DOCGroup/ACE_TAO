@@ -5,57 +5,21 @@
 // Operations on the generic unbounded sequence class.
 // ***************************************************
 
-template <class T> ACE_INLINE
-TAO_Unbounded_Sequence<T>::TAO_Unbounded_Sequence (void)
-{
-}
-
 template <class T> ACE_INLINE T *
-TAO_Unbounded_Sequence<T>::get_buffer (CORBA::Boolean orphan)
+TAO_Unbounded_Sequence<T>::allocbuf (CORBA::ULong size)
 {
-  if (orphan == CORBA::B_FALSE)
-    {
-      // We retain ownership.
-
-      if (this->buffer_ == 0)
-        this->buffer_ = (void *) new T[this->length_];
-    }
-  else // if (orphan == CORBA::B_TRUE)
-    {
-      if (this->release_ == CORBA::B_FALSE)
-        // Oops, it's not our buffer to relinquish...
-        return 0;
-      else
-        {
-          // We set the state back to default and relinquish
-          // ownership.
-          this->maximum_ = 0;
-          this->length_ = 0;
-          this->buffer_ = 0;
-          this->release_ = CORBA::B_FALSE;
-        }
-    }
-  return (T *) this->buffer_;
-}
-
-template <class T> ACE_INLINE const T *
-TAO_Unbounded_Sequence<T>::get_buffer (void) const
-{
-  return (const T *) this->buffer_;
+  return new T[size];
 }
 
 template <class T> ACE_INLINE void
-TAO_Unbounded_Sequence<T>::replace (CORBA::ULong max,
-                                    CORBA::ULong length,
-                                    T *data,
-                                    CORBA::Boolean release)
+TAO_Unbounded_Sequence<T>::freebuf (T *buffer)
 {
-  this->maximum_ = max;
-  this->length_ = length;
-  if (this->buffer_ && this->release_ == CORBA::B_TRUE)
-    TAO_Unbounded_Sequence<T>::freebuf ((T *) this->buffer_);
-  this->buffer_ = data;
-  this->release_ = release;
+  delete [] buffer;
+}
+
+template <class T> ACE_INLINE
+TAO_Unbounded_Sequence<T>::TAO_Unbounded_Sequence (void)
+{
 }
 
 template <class T> ACE_INLINE
@@ -74,6 +38,69 @@ TAO_Unbounded_Sequence<T>::TAO_Unbounded_Sequence (CORBA::ULong maximum,
 {
 }
 
+template <class T> ACE_INLINE T *
+TAO_Unbounded_Sequence<T>::get_buffer (CORBA::Boolean orphan)
+{
+  T *result = 0;
+  if (orphan == CORBA::B_FALSE)
+    {
+      // We retain ownership.
+
+      if (this->buffer_ == 0)
+	{
+	  result = TAO_Unbounded_Sequence<T>::allocbuf (this->length_);
+	  this->buffer_ = result;
+	}
+      else
+	{
+	  result = 
+	    ACE_reinterpret_cast (T*, this->buffer_);
+	}
+    }
+  else // if (orphan == CORBA::B_TRUE)
+    {
+      if (this->release_ != CORBA::B_FALSE)
+        {
+          // We set the state back to default and relinquish
+          // ownership.
+	  result = ACE_reinterpret_cast(T*,this->buffer_);
+          this->maximum_ = 0;
+          this->length_ = 0;
+          this->buffer_ = 0;
+          this->release_ = CORBA::B_FALSE;
+        }
+      /* else
+	 // Oops, it's not our buffer to relinquish...
+	 return 0;
+      */
+    }
+  return result;
+}
+
+template <class T> ACE_INLINE const T *
+TAO_Unbounded_Sequence<T>::get_buffer (void) const
+{
+  return ACE_reinterpret_cast(const T *, this->buffer_);
+}
+
+template <class T> ACE_INLINE void
+TAO_Unbounded_Sequence<T>::replace (CORBA::ULong max,
+                                    CORBA::ULong length,
+                                    T *data,
+                                    CORBA::Boolean release)
+{
+  this->maximum_ = max;
+  this->length_ = length;
+  if (this->buffer_ && this->release_ == CORBA::B_TRUE)
+    {
+      T *tmp = ACE_reinterpret_cast(T*,this->buffer_);
+      TAO_Unbounded_Sequence<CORBA::Octet>::freebuf (tmp);
+    }
+    TAO_Unbounded_Sequence<T>::freebuf ((T *) this->buffer_);
+  this->buffer_ = data;
+  this->release_ = release;
+}
+
 template <class T> ACE_INLINE T &
 TAO_Unbounded_Sequence<T>::operator[] (CORBA::ULong i)
 {
@@ -90,68 +117,20 @@ TAO_Unbounded_Sequence<T>::operator[] (CORBA::ULong i) const
   return tmp[i];
 }
 
-template <class T> ACE_INLINE T *
-TAO_Unbounded_Sequence<T>::allocbuf (CORBA::ULong size)
-{
-  return new T[size];
-}
-
-template <class T> ACE_INLINE void
-TAO_Unbounded_Sequence<T>::freebuf (T *buffer)
-{
-  delete [] buffer;
-}
-
 // ***************************************************
 // operations on the generic Bounded sequence class
 // ***************************************************
 
 template <class T, CORBA::ULong MAX> ACE_INLINE T *
-TAO_Bounded_Sequence<T, MAX>::get_buffer (CORBA::Boolean orphan)
+TAO_Bounded_Sequence<T, MAX>::allocbuf (CORBA::ULong)
 {
-  if (orphan == CORBA::B_FALSE)
-    {
-      // We retain ownership.
-
-      if (this->buffer_ == 0)
-        this->buffer_ = (void *) new T[this->maximum_];
-    }
-  else // if (orphan == CORBA::B_TRUE)
-    {
-      if (this->release_ == CORBA::B_FALSE)
-        // Oops, it's not our buffer to relinquish...
-        return 0;
-      else
-        {
-          // We set the state back to default and relinquish
-          // ownership.
-          this->maximum_ = 0;
-          this->length_ = 0;
-          this->buffer_ = 0;
-          this->release_ = CORBA::B_FALSE;
-        }
-    }
-  return (T *) this->buffer_;
-}
-
-template <class T, CORBA::ULong MAX> ACE_INLINE const T *
-TAO_Bounded_Sequence<T, MAX>::get_buffer (void) const
-{
-  return (const T *) this->buffer_;
+  return new T[MAX];
 }
 
 template <class T, CORBA::ULong MAX> ACE_INLINE void
-TAO_Bounded_Sequence<T, MAX>::replace (CORBA::ULong max,
-                                       CORBA::ULong length,
-                                       T *data,
-                                       CORBA::Boolean release)
+TAO_Bounded_Sequence<T, MAX>::freebuf (T *buffer)
 {
-  this->maximum_ = max;
-  this->length_ = length;
-  if (this->buffer_ && this->release_ == CORBA::B_TRUE)
-    TAO_Bounded_Sequence<T, MAX>::freebuf ((T *) this->buffer_);
-  this->buffer_ = data;
-  this->release_ = release;
+  delete [] buffer;
 }
 
 template <class T, CORBA::ULong MAX> ACE_INLINE
@@ -167,6 +146,64 @@ TAO_Bounded_Sequence<T, MAX>::TAO_Bounded_Sequence (CORBA::ULong length,
 {
 }
 
+template <class T, CORBA::ULong MAX> ACE_INLINE T *
+TAO_Bounded_Sequence<T, MAX>::get_buffer (CORBA::Boolean orphan)
+{
+  T *result = 0;
+  if (orphan == CORBA::B_FALSE)
+    {
+      // We retain ownership.
+
+      if (this->buffer_ == 0)
+	{
+	  result = TAO_Bounded_Sequence<T,MAX>::allocbuf (this->maximum_);
+	  this->buffer_ = result;
+	}
+      else
+	{
+	  result = 
+	    ACE_reinterpret_cast (T*, this->buffer_);
+	}
+    }
+  else // if (orphan == CORBA::B_TRUE)
+    {
+      if (this->release_ != CORBA::B_FALSE)
+        {
+          // We set the state back to default and relinquish
+          // ownership.
+	  result = ACE_reinterpret_cast(T*,this->buffer_);
+          this->maximum_ = 0;
+          this->length_ = 0;
+          this->buffer_ = 0;
+          this->release_ = CORBA::B_FALSE;
+        }
+    }
+  return result;
+}
+
+template <class T, CORBA::ULong MAX> ACE_INLINE const T *
+TAO_Bounded_Sequence<T, MAX>::get_buffer (void) const
+{
+  return ACE_reinterpret_cast(const T *, this->buffer_);
+}
+
+template <class T, CORBA::ULong MAX> ACE_INLINE void
+TAO_Bounded_Sequence<T, MAX>::replace (CORBA::ULong max,
+                                       CORBA::ULong length,
+                                       T *data,
+                                       CORBA::Boolean release)
+{
+  this->maximum_ = max;
+  this->length_ = length;
+  if (this->buffer_ && this->release_ == CORBA::B_TRUE)
+    {
+      T* tmp = ACE_reinterpret_cast(T*, this->buffer_);
+      TAO_Bounded_Sequence<T, MAX>::freebuf (tmp);
+    }
+  this->buffer_ = data;
+  this->release_ = release;
+}
+
 template <class T, CORBA::ULong MAX> ACE_INLINE T &
 TAO_Bounded_Sequence<T, MAX>::operator[] (CORBA::ULong i)
 {
@@ -179,20 +216,8 @@ template <class T, CORBA::ULong MAX> ACE_INLINE const T &
 TAO_Bounded_Sequence<T, MAX>::operator[] (CORBA::ULong i) const
 {
   ACE_ASSERT (i < this->maximum_);
-  const T* tmp = ACE_reinterpret_cast (const T*,this->buffer_);
+  const T* tmp = ACE_reinterpret_cast (const T* ACE_CAST_CONST,this->buffer_);
   return tmp[i];
-}
-
-template <class T, CORBA::ULong MAX> ACE_INLINE T *
-TAO_Bounded_Sequence<T, MAX>::allocbuf (CORBA::ULong)
-{
-  return new T[MAX];
-}
-
-template <class T, CORBA::ULong MAX> ACE_INLINE void
-TAO_Bounded_Sequence<T, MAX>::freebuf (T *buffer)
-{
-  delete [] buffer;
 }
 
 // *************************************************************

@@ -164,6 +164,15 @@ public:
   // Calculate size and alignment for a structure.
 
 
+#if defined (TAO_NO_COPY_OCTET_SEQUENCES)
+  static size_t calc_seq_attributes (TAO_InputCDR *stream,
+				     size_t &alignment,
+				     CORBA::Environment &env);
+  // Calculate size and alignment for a sequence, most of them have
+  // the same requirements, but for the sequences of Octets that are
+  // optimized to minimize copying.
+#endif /* defined (TAO_NO_COPY_OCTET_SEQUENCES) */
+
   static size_t calc_exception_attributes (TAO_InputCDR *stream,
                                            size_t &alignment,
                                            CORBA::Environment &env);

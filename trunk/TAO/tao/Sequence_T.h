@@ -68,9 +68,9 @@ public:
   static void freebuf (T *);
   // Free the sequence.
 
-  // @@ What do these methods do? (i.e., please add comments).
   virtual void _allocate_buffer (CORBA::ULong length);
   virtual void _deallocate_buffer (void);
+  // Implement the TAO_Base_Sequence methods (see Sequence.h)
 
   // = orbos/98-01-11 proposed extensions.
   T *get_buffer (CORBA::Boolean orphan = CORBA::B_FALSE);

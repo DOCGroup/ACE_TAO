@@ -109,7 +109,7 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
 	  TAO_CHECK_ENV;
 
 	  ACE_DEBUG ((LM_DEBUG,
-		      "listening as object <%s>\n",
+		      "NameService IOR is <%s>\n",
 		      this->naming_service_ior_.in ()));
 
 #if defined (ACE_HAS_IP_MULTICAST)
@@ -203,7 +203,7 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
 	  TAO_CHECK_ENV;
 
 	  ACE_DEBUG ((LM_DEBUG,
-		      "listening as object <%s>\n",
+		      "NameService IOR is <%s>\n",
 		      this->naming_service_ior_.in ()));
 
 	  // Bind our context into the default name server.

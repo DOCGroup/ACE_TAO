@@ -1,3 +1,49 @@
+Tue May 12 16:53:18 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/orbconf.h: 
+	* tao/Sequence.h: 
+	* tao/Sequence.i: 
+	* tao/Sequence.cpp: 
+	* tao/Sequence_T.h: 
+	* tao/Sequence_T.i: 
+	* tao/Sequence_T.cpp: 
+	* tao/decode.cpp: 
+	  Unbounded Sequences of octets are specialized so their
+	  demarshalling (and eventually their marshalling) is implemented
+	  by increasing the reference count on the CDR stream message
+	  block and then setting the buffer as a pointer to that stream.
+	  The buffers are copied upon assingment or copy ctor.
+	  The feature is enabled by the macro TAO_NO_COPY_OCTET_SEQUENCES,
+	  by default the macro is defined in $TAO_ROOT/tao/orbconf.h
+	  and only applies if the CDR stream owns its buffer, in other
+	  words the optimization is disabled when the buffer is allocated
+	  on the stack or is not allocated by the CDR stream.
+
+	* tao/IIOP_Interpreter.h: 
+	* tao/IIOP_Interpreter.cpp: 
+	  If the octet sequence is enabled then the size of a sequence
+	  depends on its basic type.
+
+	* tao/ORB.cpp: 
+	  If the octet sequence optimization is enabled we don't need to
+	  instantiate TAO_Unbounded_Sequence<CORBA::Octet>.
+
+	* tests/Makefile: 
+	* tests/OctetSeq/Makefile: 
+	* tests/OctetSeq/svc.conf: 
+	* tests/OctetSeq/test.idl: 
+	* tests/OctetSeq/OctetSeq.cpp: 
+	  Added a simple test that just writes an octet sequence in a CDR
+	  stream and then reads it back. The test compares the time
+	  against a char sequence.
+
+	* tao/GIOP.cpp: 
+	  Changed several system exceptions from COMPLETED_MAYBE to
+	  COMPLETED_NO.
+
+	* orbsvcs/orbsvcs/Sched/Config_Scheduler.h: 
+	  Added missing forward declaration for ACE_Scheduler.
+
 Tue May 12 16:48:46 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
 	* tao/corba.h:

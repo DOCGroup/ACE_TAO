@@ -133,6 +133,17 @@
 // #define TAO_DISABLE_SWAP_ON_READ
 //
 
+//
+// For some applications it is important to optimize octet sequences
+// and minimize the number of copies made of the sequence buffer.
+// TAO supports this optimizations by sharing the CDR stream buffer
+// and the octet sequences buffer via ACE_Message_Block's.
+// This feature can be disabled for: debugging, performance
+// comparisons, complaince checking (the octet sequences add an API to
+// access the underlying message block).
+//
+#define TAO_NO_COPY_OCTET_SEQUENCES
+
 // BC++ seems to have a different convention for detecting Win32 than
 // VC++.
 

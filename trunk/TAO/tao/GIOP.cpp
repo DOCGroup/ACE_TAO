@@ -323,7 +323,7 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
   CDR::mb_align (msg.start_);
   if (CDR::grow (msg.start_, TAO_GIOP_HEADER_LEN) == -1)
     {
-      env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_MAYBE));
+      env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
       return TAO_GIOP::MessageError;
     }
 
@@ -361,7 +361,7 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
           /* NOTREACHED */
         }
 
-      env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE));
+      env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
       ACE_TIMEPROBE ("  -> GIOP::recv_request - fail");
       return TAO_GIOP::MessageError;
     }
@@ -377,7 +377,7 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
         && header [2] == 'O'
         && header [3] == 'P'))
     {
-      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));      // header
+      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
       ACE_DEBUG ((LM_DEBUG, "bad header, magic word\n"));
       ACE_TIMEPROBE ("  -> GIOP::recv_request - fail");
       return TAO_GIOP::MessageError;
@@ -389,7 +389,7 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
   if (!(header [4] == TAO_GIOP_MessageHeader::MY_MAJOR
         && header [5] <= TAO_GIOP_MessageHeader::MY_MINOR))
     {
-      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));      // header
+      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
       ACE_DEBUG ((LM_DEBUG, "bad header, version\n"));
       ACE_TIMEPROBE ("  -> GIOP::recv_request - fail");
       return TAO_GIOP::MessageError;
@@ -418,7 +418,7 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
 
   if (CDR::grow (msg.start_, TAO_GIOP_HEADER_LEN + message_size) == -1)
     {
-      env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_MAYBE));
+      env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
       return TAO_GIOP::MessageError;
     }
 
@@ -461,7 +461,7 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
         }
 
       // clean up, and ...
-      env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE)); // body
+      env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
       ACE_DEBUG ((LM_DEBUG, "couldn't read rest of message\n"));
       ACE_TIMEPROBE ("  -> GIOP::recv_request - fail");
       return TAO_GIOP::MessageError;
@@ -497,7 +497,7 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (IIOP_Object *data,
     opname_ (operation),
     do_rsvp_ (is_roundtrip),
     my_request_id_ (0),
-    out_stream_ (buffer, sizeof buffer),
+    out_stream_ (CDR::DEFAULT_BUFSIZE), /* (buffer, sizeof buffer), */
     inp_stream_ (out_stream_),
     handler_ (0)
 {
