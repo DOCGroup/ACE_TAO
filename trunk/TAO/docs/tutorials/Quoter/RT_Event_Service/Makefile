@@ -314,6 +314,8 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Utilities.i
 
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp Stock_Factory_i.h QuoterS.h QuoterC.h \
+  $(TAO_ROOT)/tao/corba.h \
+  $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
@@ -508,15 +510,20 @@ realclean: clean
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   QuoterC.i \
+  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
+  $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
   $(ACE_ROOT)/ace/Atomic_Op.h \
   $(ACE_ROOT)/ace/Atomic_Op.i \
   $(ACE_ROOT)/ace/Atomic_Op.cpp \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
+  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
+  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
+  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
   QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
@@ -804,6 +811,8 @@ realclean: clean
   QuoterC.h QuoterC.i
 
 .obj/Stock_i.o .obj/Stock_i.so .shobj/Stock_i.o .shobj/Stock_i.so: Stock_i.cpp Stock_i.h QuoterS.h QuoterC.h \
+  $(TAO_ROOT)/tao/corba.h \
+  $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
@@ -998,15 +1007,20 @@ realclean: clean
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   QuoterC.i \
+  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
+  $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
   $(ACE_ROOT)/ace/Atomic_Op.h \
   $(ACE_ROOT)/ace/Atomic_Op.i \
   $(ACE_ROOT)/ace/Atomic_Op.cpp \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
+  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
+  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
+  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
   QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
   $(TAO_ROOT)/tao/TimeBaseS.h \
@@ -1044,6 +1058,9 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Utilities.i
 
 .obj/Stock_Factory_i.o .obj/Stock_Factory_i.so .shobj/Stock_Factory_i.o .shobj/Stock_Factory_i.so: Stock_Factory_i.cpp Stock_Factory_i.h QuoterS.h \
+  QuoterC.h \
+  $(TAO_ROOT)/tao/corba.h \
+  $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
@@ -1238,15 +1255,20 @@ realclean: clean
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   QuoterC.i \
+  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
+  $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
   $(ACE_ROOT)/ace/Atomic_Op.h \
   $(ACE_ROOT)/ace/Atomic_Op.i \
   $(ACE_ROOT)/ace/Atomic_Op.cpp \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
+  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
+  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
+  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
   QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
@@ -1292,6 +1314,8 @@ realclean: clean
   Stock_i.h
 
 .obj/QuoterC.o .obj/QuoterC.so .shobj/QuoterC.o .shobj/QuoterC.so: QuoterC.cpp QuoterC.h \
+  $(TAO_ROOT)/tao/corba.h \
+  $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
@@ -1485,7 +1509,8 @@ realclean: clean
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  QuoterC.i $(TAO_ROOT)/tao/Pluggable.h \
+  QuoterC.i $(TAO_ROOT)/tao/Stub.h \
+  $(TAO_ROOT)/tao/Pluggable.h \
   $(TAO_ROOT)/tao/Pluggable.i \
   $(TAO_ROOT)/tao/MProfile.h \
   $(TAO_ROOT)/tao/Profile.h \
@@ -1570,6 +1595,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Thread_Manager.i \
   $(TAO_ROOT)/tao/ORB_Core.i \
   $(TAO_ROOT)/tao/Stub.i \
+  $(TAO_ROOT)/tao/Invocation.h \
   $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.i \
@@ -1586,10 +1612,16 @@ realclean: clean
   $(TAO_ROOT)/tao/Invocation_Endpoint_Selectors.h \
   $(TAO_ROOT)/tao/Invocation_Endpoint_Selectors.i \
   $(TAO_ROOT)/tao/Invocation.i \
-  $(TAO_ROOT)/tao/ClientRequestInfo.inl \
+  $(TAO_ROOT)/tao/PortableInterceptor.h \
+  $(TAO_ROOT)/tao/RequestInfo_Util.h \
+  $(TAO_ROOT)/tao/ClientRequestInfo_i.h \
+  $(TAO_ROOT)/tao/ClientRequestInfo_i.inl \
+  $(TAO_ROOT)/tao/ClientInterceptorAdapter.h \
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
 .obj/QuoterS.o .obj/QuoterS.so .shobj/QuoterS.o .shobj/QuoterS.so: QuoterS.cpp QuoterS.h QuoterC.h \
+  $(TAO_ROOT)/tao/corba.h \
+  $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
@@ -1784,16 +1816,22 @@ realclean: clean
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   QuoterC.i \
+  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
+  $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
   $(ACE_ROOT)/ace/Atomic_Op.h \
   $(ACE_ROOT)/ace/Atomic_Op.i \
   $(ACE_ROOT)/ace/Atomic_Op.cpp \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
+  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
+  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
+  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
   QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i \
+  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
   $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
   $(ACE_ROOT)/ace/Map.h \
   $(ACE_ROOT)/ace/Map_T.h \
@@ -1855,6 +1893,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Policy_Set.i \
   $(TAO_ROOT)/tao/PortableServer/POA_Policy_Set.i \
   $(TAO_ROOT)/tao/PortableServer/Object_Adapter.i \
+  $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
+  $(TAO_ROOT)/tao/TAO_Server_Request.h \
   $(TAO_ROOT)/tao/Tagged_Profile.h \
   $(TAO_ROOT)/tao/GIOPC.h \
   $(TAO_ROOT)/tao/GIOPC.i \
@@ -1866,8 +1906,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Array_Base.inl \
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(TAO_ROOT)/tao/PICurrent.inl \
-  $(TAO_ROOT)/tao/TAO_AMH_Response_Handler.h \
   $(TAO_ROOT)/tao/TAO_Server_Request.i \
+  $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/Policy_Manager.h \
   $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/Policy_Manager.i \
@@ -1901,6 +1941,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Singleton.cpp \
   $(ACE_ROOT)/ace/Thread_Manager.i \
   $(TAO_ROOT)/tao/ORB_Core.i \
+  $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/MProfile.h \
   $(TAO_ROOT)/tao/Profile.h \
   $(TAO_ROOT)/tao/Tagged_Components.h \
@@ -1912,8 +1953,14 @@ realclean: clean
   $(TAO_ROOT)/tao/Profile.i \
   $(TAO_ROOT)/tao/MProfile.i \
   $(TAO_ROOT)/tao/Stub.i \
+  $(TAO_ROOT)/tao/IFR_Client_Adapter.h \
+  $(TAO_ROOT)/tao/PortableInterceptor.h \
+  $(TAO_ROOT)/tao/RequestInfo_Util.h \
+  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
   $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.inl \
+  $(TAO_ROOT)/tao/PortableServer/ServerInterceptorAdapter.h \
   $(TAO_ROOT)/tao/PortableServer/ServerInterceptorAdapter.inl \
+  $(ACE_ROOT)/ace/Dynamic_Service.h \
   $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
   $(ACE_ROOT)/ace/Dynamic_Service.i \
   $(ACE_ROOT)/ace/Dynamic_Service.cpp

@@ -387,7 +387,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Messaging.h \
   $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
   $(TAO_ROOT)/tao/Asynch_Invocation.i \
-  QuoterC.h $(TAO_ROOT)/tao/NVList.h \
+  QuoterC.h \
+  $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
   $(TAO_ROOT)/tao/Principal.h \
   $(TAO_ROOT)/tao/OctetSeqC.h \
@@ -401,8 +402,8 @@ realclean: clean
   $(TAO_ROOT)/tao/ObjectIDList.h \
   $(TAO_ROOT)/tao/ObjectIDList.i \
   $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i QuoterC.i \
-  QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i
+  $(TAO_ROOT)/tao/StringSeqC.i \
+  QuoterC.i QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i
 
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp Stock_Factory_i.h Stock_i.h QuoterS.h \
   $(TAO_ROOT)/tao/orbconf.h \
@@ -735,7 +736,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Messaging.h \
   $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
   $(TAO_ROOT)/tao/Asynch_Invocation.i \
-  QuoterC.h $(TAO_ROOT)/tao/NVList.h \
+  QuoterC.h \
+  $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
   $(TAO_ROOT)/tao/Principal.h \
   $(TAO_ROOT)/tao/OctetSeqC.h \
@@ -749,8 +751,8 @@ realclean: clean
   $(TAO_ROOT)/tao/ObjectIDList.h \
   $(TAO_ROOT)/tao/ObjectIDList.i \
   $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i QuoterC.i \
-  QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i
+  $(TAO_ROOT)/tao/StringSeqC.i \
+  QuoterC.i QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i
 
 .obj/QuoterC.o .obj/QuoterC.so .shobj/QuoterC.o .shobj/QuoterC.so: QuoterC.cpp QuoterC.h \
   $(ACE_ROOT)/ace/post.h \
@@ -1075,7 +1077,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
   $(TAO_ROOT)/tao/Asynch_Invocation.i \
   QuoterC.i \
-  $(TAO_ROOT)/tao/ClientRequestInfo.inl \
+  $(TAO_ROOT)/tao/ClientRequestInfo_i.inl \
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
 .obj/QuoterS.o .obj/QuoterS.so .shobj/QuoterS.o .shobj/QuoterS.so: QuoterS.cpp QuoterS.h \
@@ -1409,7 +1411,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Messaging.h \
   $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
   $(TAO_ROOT)/tao/Asynch_Invocation.i \
-  QuoterC.h $(TAO_ROOT)/tao/NVList.h \
+  QuoterC.h \
+  $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
   $(TAO_ROOT)/tao/Principal.h \
   $(TAO_ROOT)/tao/OctetSeqC.h \
@@ -1423,8 +1426,8 @@ realclean: clean
   $(TAO_ROOT)/tao/ObjectIDList.h \
   $(TAO_ROOT)/tao/ObjectIDList.i \
   $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i QuoterC.i \
-  QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i \
+  $(TAO_ROOT)/tao/StringSeqC.i \
+  QuoterC.i QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i \
   $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
   $(ACE_ROOT)/ace/Map.h \
   $(ACE_ROOT)/ace/Map_T.h \
@@ -1455,7 +1458,6 @@ realclean: clean
   $(TAO_ROOT)/tao/GIOPC.h \
   $(TAO_ROOT)/tao/GIOPC.i \
   $(TAO_ROOT)/tao/Tagged_Profile.i \
-  $(TAO_ROOT)/tao/TAO_AMH_Response_Handler.h \
   $(TAO_ROOT)/tao/TAO_Server_Request.i \
   $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.inl \
   $(TAO_ROOT)/tao/PortableServer/ServerInterceptorAdapter.inl \
@@ -1794,7 +1796,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Messaging.h \
   $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
   $(TAO_ROOT)/tao/Asynch_Invocation.i \
-  QuoterC.h $(TAO_ROOT)/tao/NVList.h \
+  QuoterC.h \
+  $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
   $(TAO_ROOT)/tao/Principal.h \
   $(TAO_ROOT)/tao/OctetSeqC.h \
@@ -1808,8 +1811,8 @@ realclean: clean
   $(TAO_ROOT)/tao/ObjectIDList.h \
   $(TAO_ROOT)/tao/ObjectIDList.i \
   $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i QuoterC.i \
-  QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i
+  $(TAO_ROOT)/tao/StringSeqC.i \
+  QuoterC.i QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i
 
 .obj/Stock_i.o .obj/Stock_i.so .shobj/Stock_i.o .shobj/Stock_i.so: Stock_i.cpp Stock_i.h QuoterS.h \
   $(TAO_ROOT)/tao/orbconf.h \
@@ -2142,7 +2145,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Messaging.h \
   $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
   $(TAO_ROOT)/tao/Asynch_Invocation.i \
-  QuoterC.h $(TAO_ROOT)/tao/NVList.h \
+  QuoterC.h \
+  $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
   $(TAO_ROOT)/tao/Principal.h \
   $(TAO_ROOT)/tao/OctetSeqC.h \
@@ -2156,11 +2160,12 @@ realclean: clean
   $(TAO_ROOT)/tao/ObjectIDList.h \
   $(TAO_ROOT)/tao/ObjectIDList.i \
   $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i QuoterC.i \
-  QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i
+  $(TAO_ROOT)/tao/StringSeqC.i \
+  QuoterC.i QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i
 
 .obj/Stock_Factory_i.o .obj/Stock_Factory_i.so .shobj/Stock_Factory_i.o .shobj/Stock_Factory_i.so: Stock_Factory_i.cpp Stock_Factory_i.h Stock_i.h \
-  QuoterS.h $(TAO_ROOT)/tao/orbconf.h \
+  QuoterS.h \
+  $(TAO_ROOT)/tao/orbconf.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
@@ -2490,7 +2495,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Messaging.h \
   $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
   $(TAO_ROOT)/tao/Asynch_Invocation.i \
-  QuoterC.h $(TAO_ROOT)/tao/NVList.h \
+  QuoterC.h \
+  $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
   $(TAO_ROOT)/tao/Principal.h \
   $(TAO_ROOT)/tao/OctetSeqC.h \
@@ -2504,7 +2510,7 @@ realclean: clean
   $(TAO_ROOT)/tao/ObjectIDList.h \
   $(TAO_ROOT)/tao/ObjectIDList.i \
   $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i QuoterC.i \
-  QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i
+  $(TAO_ROOT)/tao/StringSeqC.i \
+  QuoterC.i QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
