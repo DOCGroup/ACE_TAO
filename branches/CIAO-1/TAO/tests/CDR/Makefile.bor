@@ -1,0 +1,22 @@
+#
+# Makefile for building the CDR tests
+#
+
+NAMES = \
+        alignment \
+        allocator \
+        basic_types \
+        growth \
+        octet_sequence \
+        tc
+
+OBJFILES = $(OBJDIR)\$(NAME).obj
+
+CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS)
+
+LIBFILES = $(ACE_LIB) $(TAO_LIB)
+
+CPPDIR = .
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>

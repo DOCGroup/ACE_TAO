@@ -1,0 +1,29 @@
+This directory contains a simple client/server Java implementation of the
+distributed logging server described in several papers in the C++
+Report (which can be obtained via the following WWW URLs:
+http://www.cs.wustl.edu/~schmidt/{Reactor1-93.ps.gz,Reactor2-93.ps.gz}).
+
+The example consists of the following two directories:
+
+	. client
+		NOT YET CONVERTED
+		This program talks directly to the server logging
+		daemon.  The server daemon must be started before you
+		can run this test. 
+
+	. simple-server
+
+		This program runs a simple
+		implementation of the
+		distributed logging server daemon.  It also contains
+		code for a simple client as well.
+
+	. Acceptor-server
+		NOT YET CONVERTED
+		This program runs templated, Acceptor-based
+		single-threaded Reactive implementation of the
+		distributed logging server daemon.
+
+The server implemented in "simple" is completely compatible with the
+client defined in the C++ version of ACE.
+

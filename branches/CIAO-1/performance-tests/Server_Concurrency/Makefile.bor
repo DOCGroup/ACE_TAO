@@ -1,0 +1,9 @@
+#
+# Makefile for building the ACE Server_Concurrency performance-tests
+#
+
+DIRS = \
+        Leader_Follower \
+        Queue_Based_Workers
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

@@ -1,0 +1,34 @@
+// $Id$
+
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/IDL_Test
+//
+// = FILENAME
+//    keywords.idl
+//
+// = DESCRIPTION
+//    This file contains examples of IDL code that has 
+//    caused problems in the past for the TAO IDL
+//    compiler. This test is to make sure the problems
+//    stay fixed.
+//
+// = AUTHORS
+//    Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
+//
+// ============================================================================
+
+// All these identifiers should be accepted, but
+// prepended with _cxx_.
+
+struct Keywords
+{
+  unsigned short or;
+  char or_eq;
+  octet private;
+  boolean protected;
+  float public;
+  double int;
+};
+

@@ -1,0 +1,29 @@
+#
+# Makefile for building the Time-date example
+#
+
+NAME = client
+
+OBJFILES = \
+        $(OBJDIR)\Time_DateC.obj \
+        $(OBJDIR)\Time_DateS.obj \
+        $(OBJDIR)\Time_Date_Client_i.obj \
+	$(OBJDIR)\Simple_util.obj \
+	$(OBJDIR)\client.obj
+
+IDLFILES = \
+        $(IDLDIR)\Time_Date.idl
+
+CPPDIR = .;..
+
+IDLDIR = .
+
+!include <$(ACE_ROOT)\include\makeinclude\build_example.bor>
+
+#
+# IDL Build rules
+#
+
+$(IDLDIR)\Time_DateC.cpp $(IDLDIR)\Time_DateS.cpp: $(IDLDIR)\Time_Date.idl
+	$(TAO_IDL) $**
+
