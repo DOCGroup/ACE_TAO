@@ -1,3 +1,17 @@
+Tue Sep 19 10:46:15 2000  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/Invocation.cpp:
+          Used the Bind_Dispatcher_Guard to bind and unbind the dispatchers.
+
+        * tao/Makefile
+          Add the Bind_Dispatcher_Guard files.
+
+        * tao/Bind_Dispatcher_Guard.h
+        * tao/Bind_Dispatcher_Guard.i
+        * tao/Bind_Dispatcher_Guard.cpp
+          Guard class to unbind a dispatcher as it goes out of scope.
+          Thanks Carlos for helping me out with this one.
+
 Tue Sep 19 10:36:56 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Object.cpp: Moved the is_nil () of minimum_corba
