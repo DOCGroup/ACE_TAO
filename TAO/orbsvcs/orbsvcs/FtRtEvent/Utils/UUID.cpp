@@ -131,7 +131,7 @@ UUID::create (unsigned char *buffer)
 
   // Days in years
   static ACE_UINT64 SecondsToJan1970 =
-    (ACE_static_cast<ACE_UINT64>(365)*(1970-1583) // Days in years
+    (static_cast<ACE_UINT64>(365)*(1970-1583) // Days in years
     + (1970-1583)/4 // Leap days
     - 3  // Allow for 1700, 1800, 1900 not leap years
     + 31  // Days in December 1583
