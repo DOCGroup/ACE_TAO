@@ -1,3 +1,8 @@
+Wed Jun  5 23:06:11 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* ace/DLL_Manager.h:  Fixed compile error. Thanks to Jai
+	  Balasubramanian for pointing this out.
+
 Wed Jun  5 16:58:41 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ACEXML/common/Mem_Map_Stream.cpp:
