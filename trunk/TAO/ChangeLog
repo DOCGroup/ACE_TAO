@@ -1,3 +1,10 @@
+Mon Jan 31 20:42:11 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_PropertyManager.h:
+
+          Added missing header include directives that are necessary due
+          to inter-header dependency reductions in ACE.
+
 Mon Jan 31 16:56:25 2005  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/orbsvcs/SSLIOP_Connector.cpp:
