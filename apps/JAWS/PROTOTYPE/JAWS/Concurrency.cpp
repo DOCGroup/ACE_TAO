@@ -84,7 +84,8 @@ JAWS_Concurrency_Base::svc_loop (JAWS_Data_Block *db)
   JAWS_TRACE ("JAWS_Concurrency_Base::svc_loop");
 
   for (;;)
-    this->svc_hook (db);
+    if (this->svc_hook (db) != 0)
+      break;
 
   return 0;
 }
@@ -178,7 +179,7 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *db)
   while (result == 0);
 
   policy->ioh_factory ()->destroy_io_handler (handler);
-  ts_db->release ();
+  delete ts_db;
 
   return result;
 }

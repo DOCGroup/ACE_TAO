@@ -27,12 +27,13 @@ JAWS_IO_Handler::JAWS_IO_Handler (JAWS_IO_Handler_Factory *factory)
 
 JAWS_IO_Handler::~JAWS_IO_Handler (void)
 {
-  if (this->mb_)
-    this->mb_->release ();
   this->mb_ = 0;
+  this->status_ = 0;
+  this->task_ = 0;
+  this->factory_ = 0;
+
   ACE_OS::close (this->handle_);
   this->handle_ = ACE_INVALID_HANDLE;
-  this->status_ = 0;
 }
 
 void
@@ -290,6 +291,8 @@ void
 JAWS_Asynch_Handler::handle_write_stream (const ACE_Asynch_Write_Stream::Result
                                           &result)
 {
+  this->dispatch_handler ();
+
   result.message_block ().release ();
 
   if (result.act () == (void *) CONFORMATION)
@@ -303,6 +306,8 @@ JAWS_Asynch_Handler::handle_transmit_file (const
                                            ACE_Asynch_Transmit_File::Result
                                            &result)
 {
+  this->dispatch_handler ();
+
   if (result.success ())
     this->handler ()->transmit_file_complete ();
   else
