@@ -48,7 +48,7 @@ public:
   /// Schedule the timer according to the semantics of the
   /// <ACE_Timer_List>.
   /**
-   * Tthis timer gets dispatched via a signal, rather than by a user
+   * This timer gets dispatched via a signal, rather than by a user
    * calling <expire>.  Note that interval timers are not implemented
    * yet.
    */
