@@ -1,3 +1,29 @@
+Wed Sep 22 10:21:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Loadable_*_Policy.{h,cpp}:
+          Minor updates for values
+
+        * tao/PortableServer/*_Policy_Value.{h,cpp}:
+          New policy value files
+
+        * tao/PortableServer/POA_Policies.{h,cpp,i}:
+          Zapped these files
+
+        * tao/PortableServer/Default_Policy_Validator.cpp:
+          Removed include of POA_Policies, but had to include all *PolicyC.h
+          files
+
+        * tao/PortableServer/POA.cpp:
+          Commented out some code, have to get a cleaner to implement each
+          create policy method
+
+        * tao/PortableServer/POA_Cached_Policies.{h,cpp}:
+          Removed include of POA_Policies, but had to include all *PolicyC.h
+          files
+
+        * tao/PortableServer/POA_Policy_Set.h:
+          Removed include of POA_Policies
+
 Wed Sep 22 07:42:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Loadable_*_Policy.{h,cpp}:

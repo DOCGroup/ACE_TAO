@@ -9,6 +9,13 @@
 #include "ServerInterceptorAdapter.h"
 #include "PortableServer_ORBInitializer.h"
 #include "Collocated_Object_Proxy_Broker.h"
+#include "IdAssignmentPolicyC.h"
+#include "IdUniquenessPolicyC.h"
+#include "ImplicitActivationPolicyC.h"
+#include "LifespanPolicyC.h"
+#include "RequestProcessingPolicyC.h"
+#include "ServantRetentionPolicyC.h"
+#include "ThreadPolicyC.h"
 
 // -- ACE Include --
 #include "ace/Auto_Ptr.h"
@@ -224,7 +231,7 @@ TAO_Object_Adapter::init_default_policies (TAO_POA_Policy_Set &policies
                                            ACE_ENV_ARG_DECL)
 {
   // Initialize the default policies.
-
+// @@Johnny, update this
 #if (TAO_HAS_MINIMUM_POA == 0)
 
   // Thread policy.
@@ -239,7 +246,7 @@ TAO_Object_Adapter::init_default_policies (TAO_POA_Policy_Set &policies
   ACE_CHECK;
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
-
+/*
   // Lifespan policy.
   TAO_Lifespan_Policy lifespan_policy (PortableServer::TRANSIENT);
   policies.merge_policy (&lifespan_policy ACE_ENV_ARG_PARAMETER);
@@ -608,16 +615,17 @@ TAO_Object_Adapter::open (ACE_ENV_SINGLE_ARG_DECL)
   TAO_POA_Policy_Set policies (this->default_poa_policies ());
 
 #if (TAO_HAS_MINIMUM_POA == 0)
+// @@Johnny handle this
   // Specify the implicit activation policy since it should
   // be different from the default.  Note that merge_policy
   // takes a const reference and makes its own copy of the
   // policy.  (Otherwise, we'd have to allocate the policy
   // on the heap.)
-  TAO_Implicit_Activation_Policy
+/*  TAO_Implicit_Activation_Policy
     implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION);
 
   policies.merge_policy (&implicit_activation_policy
-                         ACE_ENV_ARG_PARAMETER);
+                         ACE_ENV_ARG_PARAMETER);*/
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   // Merge policies from the ORB level.

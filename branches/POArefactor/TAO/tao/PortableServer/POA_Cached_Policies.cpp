@@ -2,6 +2,13 @@
 
 #include "POA_Cached_Policies.h"
 #include "POA_Policy_Set.h"
+#include "IdAssignmentPolicyC.h"
+#include "IdUniquenessPolicyC.h"
+#include "ImplicitActivationPolicyC.h"
+#include "LifespanPolicyC.h"
+#include "RequestProcessingPolicyC.h"
+#include "ServantRetentionPolicyC.h"
+#include "ThreadPolicyC.h"
 
 #if !defined (__ACE_INLINE__)
 # include "POA_Cached_Policies.i"

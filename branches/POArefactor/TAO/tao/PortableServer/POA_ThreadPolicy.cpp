@@ -72,15 +72,15 @@ namespace TAO
   POA_ThreadPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    POA_ThreadPolicy *thread_policy_copy = 0;
-    ACE_NEW_THROW_EX (thread_policy_copy,
+    POA_ThreadPolicy *copy = 0;
+    ACE_NEW_THROW_EX (copy,
                       POA_ThreadPolicy,
                       CORBA::NO_MEMORY ());
     ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
-    (void) thread_policy_copy->init (this->value_->policy_type ());
+    (void) copy->init (this->value_->policy_type ());
 
-    return thread_policy_copy;
+    return copy;
   }
 
   void

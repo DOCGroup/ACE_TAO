@@ -1,6 +1,12 @@
 #include "PortableServer_PolicyFactory.h"
-#include "POA_Policies.h"
 #include "Loadable_Thread_Policy.h"
+#include "IdAssignmentPolicyC.h"
+#include "IdUniquenessPolicyC.h"
+#include "ImplicitActivationPolicyC.h"
+#include "LifespanPolicyC.h"
+#include "RequestProcessingPolicyC.h"
+#include "ServantRetentionPolicyC.h"
+#include "ThreadPolicyC.h"
 #include "ace/Dynamic_Service.h"
 
 ACE_RCSID (PortableServer,
@@ -36,7 +42,7 @@ TAO_PortableServer_PolicyFactory::create_policy (
 
     if (policy == 0)
       {
-        return PortableServer::ThreadPolicy::_nil();
+        return CORBA::Policy::_nil ();
       }
     else
       {
@@ -46,7 +52,8 @@ TAO_PortableServer_PolicyFactory::create_policy (
   }
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
-
+/*
+ @@Johnny
   if (type == PortableServer::LIFESPAN_POLICY_ID)
     return TAO_Lifespan_Policy::create (value
                                         ACE_ENV_ARG_PARAMETER);

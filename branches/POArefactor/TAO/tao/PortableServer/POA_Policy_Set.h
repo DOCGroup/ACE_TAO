@@ -17,7 +17,7 @@
 #define TAO_POA_POLICY_SET_H
 #include /**/ "ace/pre.h"
 
-#include "POA_Policies.h"
+#include "portableserver_export.h"
 #include "tao/Policy_Set.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
