@@ -124,9 +124,9 @@ Server::init (int argc,
 
       PortableServer::POAManager_var mgr
         = TAO_AV_CORE::instance ()->poa ()->the_POAManager ();
-      
+
       mgr->activate ();
-      
+
       int result = this->parse_args (argc,argv);
       if (result == -1)
         ACE_ERROR_RETURN  ((LM_ERROR,"parse args failed\n"),-1);
@@ -246,17 +246,17 @@ main (int argc,
       char **argv)
 {
 
-  CORBA::ORB_var orb = CORBA::ORB_init (argc, 
+  CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                         argv);
-  
+
   CORBA::Object_var obj
     = orb->resolve_initial_references ("RootPOA");
-  
+
   PortableServer::POA_var poa
     = PortableServer::POA::_narrow (obj.in ());
-  
+
   ACE_DECLARE_NEW_CORBA_ENV;
-  
+
   ACE_TRY
     {
       TAO_AV_CORE::instance ()->init (orb.in (),
@@ -279,6 +279,8 @@ main (int argc,
   result = FTP_SERVER::instance ()->run ();
   if (result < 0)
     ACE_ERROR_RETURN ((LM_ERROR,"FTP_SERVER::run failed\n"),1);
+
+  return result;
 }
 
 

@@ -38,7 +38,7 @@ FTP_Client_Callback::handle_timeout (void *)
         {
           ACE_ERROR_RETURN ((LM_ERROR,"FTP_Client_Flow_Handler::fread end of file\n"),-1);
         }
-    
+
       if (n == 0)
         {
           if (feof (CLIENT::instance ()->file ()))
@@ -240,12 +240,12 @@ Client::init (int argc,char **argv)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      
+
       PortableServer::POAManager_var mgr
         = TAO_AV_CORE::instance ()->poa ()->the_POAManager ();
-      
+
       mgr->activate ();
-      
+
       this->parse_args (this->argc_, this->argv_);
 
       ACE_NEW_RETURN (this->fdev_,
@@ -274,12 +274,12 @@ Client::init (int argc,char **argv)
                           -1);
 
       this->fp_ = ACE_OS::fopen (this->filename_,"r");
-      
+
       if (this->fp_ != 0)
         {
           ACE_DEBUG ((LM_DEBUG,"file opened successfully\n"));
         }
-      
+
       if (this->bind_to_server () == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P|%t) Error binding to the naming service\n"),
@@ -344,7 +344,7 @@ Client::run (void)
       if (this->orb_->run (tv) == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
-      
+
       ACE_DEBUG ((LM_DEBUG, "Exited the TAO_AV_Core::run\n"));
     }
   ACE_CATCHANY
@@ -364,45 +364,46 @@ main (int argc,
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, 
+      CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv);
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA");
-      
+
       PortableServer::POA_var poa
         = PortableServer::POA::_narrow (obj.in ());
-        
+
       TAO_AV_CORE::instance ()->init (orb.in (),
                                       poa.in (),
                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
-      
+
+
       int result = 0;
       result = CLIENT::instance ()->init (argc,argv);
       if (result < 0)
         ACE_ERROR_RETURN ((LM_ERROR,"client::init failed\n"),1);
       result = CLIENT::instance ()->run ();
-      
+
       poa->destroy (1, 1, ACE_TRY_ENV);
       ACE_CHECK_RETURN (-1);
-      
+
       orb->destroy (ACE_TRY_ENV);
       ACE_CHECK_RETURN (-1);
-      
+
       if (result < 0)
         ACE_ERROR_RETURN ((LM_ERROR,"client::run failed\n"),1);
-      
+
     }
   ACE_CATCHANY
-    
+
   {
     ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Client Failed\n");
     return -1;
   }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
-  
+
+  return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
