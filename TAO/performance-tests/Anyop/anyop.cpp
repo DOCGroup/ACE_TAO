@@ -161,7 +161,7 @@ main (int argc, char *argv[])
         stats.dump_results ("Total", gsf);
 
         ACE_Throughput_Stats::dump_throughput ("Total",
-                                                                                                                 gsf,
+                                               gsf,
                                                test_end - test_start,
                                                stats.samples_count ());
       }
@@ -228,7 +228,7 @@ main (int argc, char *argv[])
         stats.dump_results ("Total", gsf);
 
         ACE_Throughput_Stats::dump_throughput ("Total",
-                                                                                                                 gsf,
+                                               gsf,
                                                test_end - test_start,
                                                stats.samples_count ());
       }
@@ -296,7 +296,7 @@ main (int argc, char *argv[])
         stats.dump_results ("Total", gsf);
 
         ACE_Throughput_Stats::dump_throughput ("Total",
-                                                                                                                 gsf,
+                                               gsf,
                                                test_end - test_start,
                                                stats.samples_count ());
       }
@@ -364,7 +364,7 @@ main (int argc, char *argv[])
         stats.dump_results ("Total", gsf);
 
         ACE_Throughput_Stats::dump_throughput ("Total",
-                                                                                                                 gsf,
+                                               gsf,
                                                test_end - test_start,
                                                stats.samples_count ());
       }
@@ -440,7 +440,7 @@ main (int argc, char *argv[])
         stats.dump_results ("Total", gsf);
 
         ACE_Throughput_Stats::dump_throughput ("Total",
-                                                                                                                 gsf,
+                                               gsf,
                                                test_end - test_start,
                                                stats.samples_count ());
       }
@@ -517,7 +517,7 @@ main (int argc, char *argv[])
         stats.dump_results ("Total", gsf);
 
         ACE_Throughput_Stats::dump_throughput ("Total",
-                                                                                                                 gsf,
+                                               gsf,
                                                test_end - test_start,
                                                stats.samples_count ());
       }
@@ -593,7 +593,7 @@ main (int argc, char *argv[])
         stats.dump_results ("Total", gsf);
 
         ACE_Throughput_Stats::dump_throughput ("Total",
-                                                                                                                 gsf,
+                                               gsf,
                                                test_end - test_start,
                                                stats.samples_count ());
       }
@@ -670,7 +670,7 @@ main (int argc, char *argv[])
         stats.dump_results ("Total", gsf);
 
         ACE_Throughput_Stats::dump_throughput ("Total",
-                                                                                                                 gsf,
+                                               gsf,
                                                test_end - test_start,
                                                stats.samples_count ());
       }
@@ -744,7 +744,7 @@ main (int argc, char *argv[])
         stats.dump_results ("Total", gsf);
 
         ACE_Throughput_Stats::dump_throughput ("Total",
-                                                                                                                 gsf,
+                                               gsf,
                                                test_end - test_start,
                                                stats.samples_count ());
       }
@@ -821,7 +821,7 @@ main (int argc, char *argv[])
         stats.dump_results ("Total", gsf);
 
         ACE_Throughput_Stats::dump_throughput ("Total",
-                                                                                                                 gsf,
+                                               gsf,
                                                test_end - test_start,
                                                stats.samples_count ());
       }
@@ -891,7 +891,7 @@ main (int argc, char *argv[])
         stats.dump_results ("Total", gsf);
 
         ACE_Throughput_Stats::dump_throughput ("Total",
-                                                                                                                 gsf,
+                                               gsf,
                                                test_end - test_start,
                                                stats.samples_count ());
       }
