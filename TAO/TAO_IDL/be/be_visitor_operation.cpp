@@ -54,6 +54,9 @@
 #include "be_visitor_operation/tie_si.cpp"
 #include "be_visitor_operation/compiled_marshal.cpp"
 #include "be_visitor_operation/rettype_pre_invoke_cs.cpp"
+#include "be_visitor_operation/operation_ami_ch.cpp"
+#include "be_visitor_operation/operation_ami_cs.cpp"
+#include "be_visitor_operation/arglist_ami.cpp"
 
 ACE_RCSID(be, be_visitor_operation, "$Id$")
 

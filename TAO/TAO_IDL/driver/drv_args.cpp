@@ -129,6 +129,9 @@ DRV_usage (void)
   cerr << GTDEVEL (" -Gv\t\t\tenable OBV (Valuetype) support (disabled by default)\n");
 #endif /* IDL_HAS_VALUETYPE */
   cerr << GTDEVEL (" -GI[h|s|b|e|c]\tGenerate Implemenation Files \n");
+
+  cerr << GTDEVEL (" -GC \t\tGenerate the code for using AMI Call back model\n");
+
   cerr << GTDEVEL ("  \t\t\th - Implementation header file name ending. Default is I.h \n");
   cerr << GTDEVEL ("  \t\t\ts - Implementation skeleton file name ending. Default is I.cpp\n");
   cerr << GTDEVEL ("  \t\t\tb - Prefix to the implementation class names. Default is 'no prefix' \n");
@@ -377,6 +380,9 @@ DRV_parse_args (long ac, char **av)
               idl_global->gperf_path (av[i+1]);
               i++;
               break;
+              
+              // Option to generate the features regarding the
+              // Messaging Specification.  
 
               // Directory where all the IDL-Compiler-Generated files are to
               // be kept. Default is the current directory from which the
@@ -577,11 +583,16 @@ DRV_parse_args (long ac, char **av)
                 }
               break;
             case 'G':
-              // enable generation of ...
+              // Enable generation of ...
               if (av[i][2] == 'c')
                 {
                   // compiled marshaling support
                   idl_global->compiled_marshaling (1);
+                }
+              else if (av[i][2] == 'C')
+                {
+                  // AMI with Call back.
+                  idl_global->ami_call_back (I_TRUE);
                 }
               else if (av[i][2] == 'i')
                 {

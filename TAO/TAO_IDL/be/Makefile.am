@@ -39,6 +39,7 @@ libbe_a_SOURCES = \
          be_module.cpp  \
          be_native.cpp  \
          be_operation.cpp  \
+         be_operation_ami.cpp  \
          be_predefined_type.cpp  \
          be_produce.cpp  \
          be_root.cpp  \
@@ -68,6 +69,7 @@ libbe_a_SOURCES = \
          be_visitor_interface_fwd.cpp  \
          be_visitor_module.cpp  \
          be_visitor_operation.cpp  \
+         be_visitor_operation_ami.cpp \
          be_visitor_root.cpp  \
          be_visitor_scope.cpp  \
          be_visitor_sequence.cpp  \
