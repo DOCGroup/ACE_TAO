@@ -1,8 +1,19 @@
+Mon Jan 20 18:59:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/C++NPv2/Makefile.CLD:
+        * examples/C++NPv2/Makefile.SLD:
+        * examples/C++NPv2/Makefile.SLDex:
+        * examples/C++NPv2/Makefile.TPCLS:
+        * examples/C++NPv2/Makefile.TPLS:
+        * ace/RMCast/Makefile:
+          Set the correct x_BUILD_DLL defines. These are needed for the
+          Cygwin/MingW and Kylix compiler.
+
 Mon Jan 20 11:58:00 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* bin/generate_doxygen.pl: Fixed the spaces in the file names
 	  of generated man pages. Thanks to Olver Kellogg for providing
-	  this patch. 
+	  this patch.
 
 Sun Jan 19 11:40:10 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
