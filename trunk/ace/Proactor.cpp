@@ -109,15 +109,11 @@ ACE_Proactor_Timer_Handler::svc (void)
 
           // Time to wait.
           time = absolute_time.msec ();
-
-          // Make sure the time is positive.
-          if (time < 0)
-            time = 0;
         }
 
       // Wait for event upto <time> milli seconds.
-      int result = ::WaitForSingleObject (this->timer_event_.handle (),
-                                          time);
+      u_int result = ::WaitForSingleObject (this->timer_event_.handle (),
+                                            time);
       switch (result)
         {
         case ACE_WAIT_TIMEOUT:

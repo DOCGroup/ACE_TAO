@@ -1,3 +1,9 @@
+Tue Dec 29 10:29:03 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace: Fixed a bunch of warnings produced by Intel's C++ 4.0
+ 	  compiler.  Thanks to Karel Zuidrveld
+ 	  <kzuiderveld@vitalimages.com> for reporting these.
+
 Tue Dec 29 09:47:48 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-sunos*.h,README:
