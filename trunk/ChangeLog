@@ -1,3 +1,8 @@
+Wed Apr 14 06:54:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Tokens_Test.cpp:
+          Fixed compile errors when ACE_HAS_TOKENS_LIBRARY is defined
+
 Tue Apr 13 12:51:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Local_Tokens.h:

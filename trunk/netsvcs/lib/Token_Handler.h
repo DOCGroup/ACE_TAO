@@ -28,6 +28,7 @@
 #include "ace/Local_Tokens.h"
 #include "ace/Token_Collection.h"
 #include "ace/Token_Request_Reply.h"
+#include "ace/svc_export.h"
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)
 
