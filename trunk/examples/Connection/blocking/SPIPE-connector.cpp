@@ -129,7 +129,7 @@ IPC_Client::init (int argc, char *argv[])
   if (this->connect (ph,
 		     ACE_SPIPE_Addr (rendezvous_),
 		     ACE_Synch_Options::defaults,
-		     *((ACE_SPIPE_Addr *) &ACE_Addr::sap_any),
+		     (ACE_SPIPE_Addr &) ACE_Addr::sap_any,
 		     0,
 		     O_RDWR | FILE_FLAG_OVERLAPPED,
 		     0) == -1)

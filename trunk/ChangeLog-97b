@@ -1,5 +1,8 @@
 Thu Nov 06 22:13:01 1997    <irfan@TWOSTEP>
 
+	* examples/Connection/blocking/SPIPE-connector.cpp (init): Fixed
+ 	  odd looking typecast.
+
 	* ace: Changed the comparison &local_sap == &ACE_Addr::sap_any to
  	  local_sap == ACE_Addr::sap_any.  Thanks to Steve Coy
  	  <stevec@magna.com.au> for pointing out that the default
