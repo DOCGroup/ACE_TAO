@@ -91,13 +91,6 @@ Tue Sep 29 16:13:10 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	  Added accessors for the strategy.
 	
-Tue Sep 29 13:09:49 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
-
-	* TAO/performance-tests/Cubit/TAO/MT_Cubit/client.cpp:	
-	* TAO/performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp: Used
- 	begin() to obtain iterator fom the ACE_Unbounded_Queue class.  In
- 	addition, I made changes to fix minor warnings.
-
 Tue Sep 29 14:04:49 EDT 1998  James CE Johnson  <jcej@lads.com>
 
         * docs/tutorials/013/page08.html:  Removed link to message_queue.
