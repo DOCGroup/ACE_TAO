@@ -1,0 +1,7 @@
+Tue May 23 17:55:40 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+    * When compiling pace/pace/* files, all .o files all currently
+      appear in the pace/pace directory. E.G.: pace/pace/sys/socket.c
+      generates pace/pace/socket.o. This needs to be addressed
+      concurrently as we build the pacelib and link to the rest of
+      ace.
