@@ -71,9 +71,9 @@ ACE_DLL::open (const ACE_TCHAR *dll_filename,
 
   // Transform the pathname into the appropriate dynamic link library
   // by searching the ACE_LD_SEARCH_PATH.
-  int result = ACE::ldfind (dll_filename,
-                            dll_pathname,
-                            (sizeof dll_pathname / sizeof (ACE_TCHAR)));
+  int result = ACE_Lib_Find::ldfind (dll_filename,
+                                     dll_pathname,
+                                     (sizeof dll_pathname / sizeof (ACE_TCHAR)));
   // Check for errors
   if (result != 0)
     return result;

@@ -24,12 +24,19 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/ACE_Flag_Manip.h"
+#include "ace/ACE_Handle_Ops.h"
+#include "ace/ACE_Lib_Find.h"
+#include "ace/ACE_Init.h"
+#include "ace/ACE_Sock_Connect.h"
+
 // Forward declarations.
 class ACE_Time_Value;
-class ACE_INET_Addr;
 class ACE_Message_Block;
 
-class ACE_Export ACE
+class ACE_Export ACE : public ACE_Flag_Manip, public ACE_Handle_Ops,
+                       public ACE_Lib_Find, public ACE_Init, 
+                       public ACE_Sock_Connect
 {
   // = TITLE
   //     Contains value added ACE methods that extend the behavior
@@ -43,15 +50,6 @@ class ACE_Export ACE
 
   ACE_CLASS_IS_NAMESPACE (ACE);
 public:
-  // Initialize ACE library services.  Can be called only once per
-  // program invocation.
-  static int init (void);
-  // Returns 0 on success, -1 on failure, and 1 if it had already been called.
-
-  // Shut down ACE library services.  Can be called only once per
-  // program invocation.
-  static int fini (void);
-  // Returns 0 on success, -1 on failure, and 1 if it had already been called.
 
   // = ACE version information.
   static u_int major_version (void);
@@ -303,39 +301,6 @@ public:
                            int iovcnt,
                            size_t *bytes_transferred = 0);
 
-  // = Socket connection establishment calls.
-
-  static int bind_port (ACE_HANDLE handle,
-                        ACE_UINT32 ip_addr = INADDR_ANY);
-  // Bind a new unused port to <handle>.
-
-  static int get_bcast_addr (ACE_UINT32 &bcast_addr,
-                             const ACE_TCHAR *hostname = 0,
-                             ACE_UINT32 host_addr = 0,
-                             ACE_HANDLE handle = ACE_INVALID_HANDLE);
-  // Get our broadcast address based on our <host_addr>.  If
-  // <hostname> is non-0 we'll use it to determine our IP address.  If
-  // <handle> is not <ACE_INVALID_HANDLE> then we'll use this to
-  // determine our broadcast address, otherwise we'll have to create a
-  // socket internally (and free it).  Returns -1 on failure and 0 on
-  // success.
-
-  static int get_ip_interfaces (size_t &count,
-                                ACE_INET_Addr *&addr_array);
-  // Return count and array of all configured IP interfaces on this
-  // host, rc = 0 on success (count == number of interfaces else -1).
-  // Caller is responsible for calling delete [] on <addr_array>.
-
-  static int count_interfaces (ACE_HANDLE handle,
-                               size_t &how_many);
-  // Helper routine for get_ip_interfaces, differs by UNIX platform so
-  // put into own subroutine.  perform some ioctls to retrieve ifconf
-  // list of ifreq structs.
-
-  static ACE_HANDLE get_handle (void);
-  // Routine to return a handle from which <ioctl> requests can be
-  // made.  Caller must <close> the handle.
-
   static int handle_timed_accept (ACE_HANDLE listener,
                                   ACE_Time_Value *timeout,
                                   int restart);
@@ -350,28 +315,6 @@ public:
   // established non-blocking connection.  If <is_tli> is non-0 then
   // we are being called by a TLI wrapper (which behaves slightly
   // differently from a socket wrapper).
-
-  // = Operations on HANDLEs.
-
-  static ACE_HANDLE handle_timed_open (ACE_Time_Value *timeout,
-                                       const ACE_TCHAR *name,
-                                       int flags,
-                                       int perms);
-  // Wait up to <timeout> amount of time to actively open a device.
-  // This method doesn't perform the <connect>, it just does the timed
-  // wait...
-
-  // = Set/get/clear various flags related to I/O HANDLE.
-  static int set_flags (ACE_HANDLE handle,
-                        int flags);
-  // Set flags associated with <handle>.
-
-  static int clr_flags (ACE_HANDLE handle,
-                        int flags);
-  // Clear flags associated with <handle>.
-
-  static int get_flags (ACE_HANDLE handle);
-  // Return the current setting of flags associated with <handle>.
 
   static int set_handle_limit (int new_limit = -1);
   // Reset the limit on the number of open handles.  If <new_limit> ==
@@ -408,17 +351,6 @@ public:
   // Create a fresh new copy of <str>, up to <n> chars long.  Uses
   // <ACE_OS::malloc> to allocate the new string.
 
-  static char *strsplit_r (char *s, const char *token, char *&next_start);
-  // Splits string <s> into pieces separated by the string <token>.
-  // <next_start> is an opaque cookie handed back by the call to store
-  // its state for the next invocation, thus making it re-entrant.
-  // This operates very similar to Perl's <split> function except that
-  // it returns pieces one at a time instead of into an array.
-
-  static size_t strrepl (char *s, char search, char replace);
-  // Replace all instances of <search> in <s> with <replace>.  Returns
-  // the number of replacements made.
-
 #if defined (ACE_HAS_WCHAR)
   static const wchar_t *strend (const wchar_t *s);
 
@@ -427,12 +359,6 @@ public:
   static wchar_t *strndup (const wchar_t *str, size_t n);
 
   static wchar_t *strnnew (const wchar_t *str, size_t n);
-
-  static wchar_t *strsplit_r (wchar_t *s,
-                              const wchar_t *token,
-                              wchar_t *&next_start);
-
-  static size_t strrepl (wchar_t *s, wchar_t search, wchar_t replace);
 
 #endif /* ACE_HAS_WCHAR */
 
@@ -480,43 +406,6 @@ public:
   // "Advanced Programming in the UNIX Environment."  If
   // <close_all_handles> is non-zero then all open file handles are
   // closed.
-
-  // = Methods for searching and opening shared libraries.
-
-  static int ldfind (const ACE_TCHAR *filename,
-                     ACE_TCHAR *pathname,
-                     size_t maxlen);
-  // Finds the file <filename> either using an absolute path or using
-  // a relative path in conjunction with ACE_LD_SEARCH_PATH (e.g.,
-  // $LD_LIBRARY_PATH on UNIX or $PATH on Win32).  This function will
-  // add appropriate suffix (e.g., .dll on Win32 or .so on UNIX)
-  // according to the OS platform.  In addition, this function will
-  // apply the appropriate prefix (e.g., "lib" on UNIX and "" on
-  // Win32) if the <filename> doesn't match directly.
-
-  static FILE *ldopen (const ACE_TCHAR *filename,
-                       const ACE_TCHAR *type);
-  // Uses <ldopen> to locate and open the appropriate <filename> and
-  // returns a pointer to the file, else it returns a NULL
-  // pointer. <type> specifies how the file should be open.
-
-  static ACE_TCHAR *ldname (const ACE_TCHAR *entry_point);
-  // Transforms <entry_point> into a form that can be located in a
-  // dynamic library using <dlsym>. For example, with Win32/Borland
-  // extern "C" functions which use the default calling convention
-  // have a '_' prepended. Always returns a buffer that has been
-  // dynamically allocated using <operator new>.
-
-  static int get_temp_dir (ACE_TCHAR *buffer, size_t buffer_len);
-  // Returns the temporary directory including the trailing slash in
-  // <buffer>.  Returns -1 for an error or if the buffer_len is not
-  // long enough.
-
-  static ACE_HANDLE open_temp_file (const ACE_TCHAR *name,
-                                    int mode,
-                                    int perm = 0);
-  // Opening the temp file.  File is automagically unlinked when it is
-  // closed.  This is useful for have temp files.
 
   // = Shield us from Win32's inability to select on STDIN.
 
@@ -776,11 +665,6 @@ private:
                             int iovcnt,
                             const ACE_Time_Value *timeout,
                             size_t *bytes_transferred);
-
-  static u_int init_fini_count_;
-  // Counter to match <init>/<fini> calls.  <init> must increment it;
-  // <fini> must decrement it.  <fini> then does nothing until it
-  // reaches 0.
 
   static size_t pagesize_;
   // Size of a VM page.

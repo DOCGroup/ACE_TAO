@@ -15,10 +15,10 @@
 #include "ace/Containers_T.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, Containers_T, "$Id$") 
+ACE_RCSID(ace, Containers_T, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Bounded_Stack)
-  
+
 template <class T> void
 ACE_Bounded_Stack<T>::dump (void) const
 {
@@ -445,7 +445,7 @@ ACE_Unbounded_Queue<T>::delete_nodes (void)
                              <T>);
       this->cur_size_--;
       // @@ Doesnt make sense to have this check since
-      // this will always be true. 
+      // this will always be true.
       //   ACE_ASSERT (this->cur_size_ >= 0);
     }
 
@@ -680,7 +680,7 @@ ACE_Unbounded_Queue_Iterator<T>::next (T *&item)
 
 //--------------------------------------------------
 ACE_ALLOC_HOOK_DEFINE(ACE_Double_Linked_List_Iterator_Base)
-  
+
 template <class T>
 ACE_Double_Linked_List_Iterator_Base<T>::ACE_Double_Linked_List_Iterator_Base (ACE_Double_Linked_List<T> &dll)
   : current_ (0), dllist_ (&dll)
@@ -717,7 +717,7 @@ ACE_Double_Linked_List_Iterator_Base<T>::done (void) const
   return this->not_done () ? 0 : 1;
 }
 
-template <class T> T & 
+template <class T> T &
 ACE_Double_Linked_List_Iterator_Base<T>::operator* (void) const
 {
   return *(this->not_done ());
@@ -789,7 +789,7 @@ ACE_Double_Linked_List_Iterator_Base<T>::dump_i (void) const
 
 //--------------------------------------------------
 ACE_ALLOC_HOOK_DEFINE(ACE_Double_Linked_List_Iterator)
-  
+
 template <class T>
 ACE_Double_Linked_List_Iterator<T>::ACE_Double_Linked_List_Iterator (ACE_Double_Linked_List<T> &dll)
   : ACE_Double_Linked_List_Iterator_Base <T> (dll)
@@ -988,7 +988,7 @@ ACE_Double_Linked_List_Reverse_Iterator<T>::operator-- (int)
 
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Double_Linked_List)
-  
+
   template <class T>
 ACE_Double_Linked_List<T>:: ACE_Double_Linked_List (ACE_Allocator *alloc)
   : size_ (0), allocator_ (alloc)
@@ -1076,7 +1076,7 @@ ACE_Double_Linked_List<T>::delete_head (void)
   temp = ACE_static_cast (T *,
                           this->head_->next_);
   // Detach it from the list.
-  this->remove_element (temp);  
+  this->remove_element (temp);
   return temp;
 }
 
@@ -1091,7 +1091,7 @@ ACE_Double_Linked_List<T>::delete_tail (void)
   temp = ACE_static_cast (T *,
                           this->head_->prev_);
   // Detach it from the list.
-  this->remove_element (temp);  
+  this->remove_element (temp);
   return temp;
 }
 

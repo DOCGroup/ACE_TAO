@@ -20,6 +20,13 @@ typedef ACE_Local_Name_Space <ACE_LITE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex> L
 // Server client.
 
 ACE_FACTORY_DEFINE (ACE, ACE_Naming_Context)
+ACE_STATIC_SVC_DEFINE (ACE_Naming_Context,
+                       ACE_TEXT ("ACE_Naming_Context"),
+                       ACE_SVC_OBJ_T,
+                       &ACE_SVC_NAME (ACE_Naming_Context),
+                       ACE_Service_Type::DELETE_THIS |
+                       ACE_Service_Type::DELETE_OBJ,
+                       0)
 
 // The ACE_Naming_Context static service object is now defined
 // by the ACE_Object_Manager, in Object_Manager.cpp.
@@ -419,7 +426,7 @@ ACE_Name_Options::ACE_Name_Options (void)
   size_t pathsize = (MAXPATHLEN + 1) * sizeof (ACE_TCHAR);
   this->namespace_dir_ = ACE_static_cast (ACE_TCHAR *, ACE_OS::malloc (pathsize));
 
-  if (ACE::get_temp_dir (this->namespace_dir_, MAXPATHLEN) == -1)
+  if (ACE_Lib_Find::get_temp_dir (this->namespace_dir_, MAXPATHLEN) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_LIB_TEXT ("Temporary path too long, ")

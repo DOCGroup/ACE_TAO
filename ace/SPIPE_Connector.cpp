@@ -56,9 +56,9 @@ ACE_SPIPE_Connector::connect (ACE_SPIPE_Stream &new_io,
 #if ! defined (ACE_PSOS_DIAB_MIPS)
   ACE_CLR_BITS (flags, O_CREAT);
 # endif /* !ACE_PSOS_DIAB_MIPS */
-  ACE_HANDLE handle = ACE::handle_timed_open (timeout,
-					      remote_sap.get_path_name (),
-					      flags, perms);
+  ACE_HANDLE handle = ACE_Handle_Ops::handle_timed_open (timeout,
+                                                         remote_sap.get_path_name (),
+                                                         flags, perms);
   new_io.set_handle (handle);
   new_io.remote_addr_ = remote_sap; // class copy.
 

@@ -19,8 +19,9 @@ ACE_System_Time::ACE_System_Time (const ACE_TCHAR *poolname)
       ACE_OS::strcpy (this->poolname_,
                       ACE_DEFAULT_BACKING_STORE);
 #else /* ACE_DEFAULT_BACKING_STORE */
-      if (ACE::get_temp_dir (this->poolname_, 
-                             MAXPATHLEN - 17) == -1) // -17 for ace-malloc-XXXXXX
+      if (ACE_Lib_Find::get_temp_dir (this->poolname_, 
+                                      MAXPATHLEN - 17) == -1)
+        // -17 for ace-malloc-XXXXXX
         {
           ACE_ERROR ((LM_ERROR, 
                       ACE_LIB_TEXT ("Temporary path too long, ")
