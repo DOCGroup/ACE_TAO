@@ -415,30 +415,12 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "return 0;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  // now the dispatch method
-  *os << "void " << node->full_skel_name () <<
-    "::_dispatch (TAO_ServerRequest &req, " <<
-    "void *context, CORBA::Environment &ACE_TRY_ENV)" << be_nl;
-  *os << "{" << be_idt_nl;
-  //BRT
-  *os << "this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);" << be_uidt_nl;
-//  *os << "TAO_Skeleton skel; // pointer to skeleton for operation" << be_nl;
-//  *os << "const char *opname = req.operation (); // retrieve operation name"
-//      << be_nl;
-//  *os << "// find the skeleton corresponding to this opname" << be_nl;
-//  *os << "if (this->_find (opname, skel, req.operation_length ()) == -1)" << be_nl;
-//  *os << "{" << be_idt_nl;
-//  *os << "ACE_ERROR ((LM_ERROR, \"Bad operation <%s>\\n\", opname));" << be_nl;
-//  if (idl_global->use_raw_throw ())
-//    *os << "throw CORBA_BAD_OPERATION ();";
-//  else
-//    *os << "ACE_THROW (CORBA_BAD_OPERATION ());";
-//  *os << be_uidt_nl;
-//  *os << "}" << be_nl;
-//  *os << "else" << be_idt_nl;
-//  *os << "skel (req, this, context, ACE_TRY_ENV);" << be_uidt << be_uidt_nl;
-  *os << "}" << be_nl << be_nl;
 
+  // Print out dispatch method
+  this->dispatch_method (node);
+
+  *os << be_nl;
+  
   *os << "const char* " << node->full_skel_name ()
       << "::_interface_repository_id (void) const"
       << be_nl;
@@ -446,13 +428,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "return \"" << node->repoID () << "\";" << be_uidt_nl;
   *os << "}" << be_nl << be_nl;
 
-  // the _this () operation
-  *os << node->full_name () << "*" << be_nl
-      << node->full_skel_name ()
-      << "::_this (CORBA_Environment &ACE_TRY_ENV)" << be_nl
-      << "{" << be_idt_nl // idt = 1
-      << "TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);" << be_nl
-      << "ACE_CHECK_RETURN (0);" << be_nl << be_nl;
+  this->this_method (node);
 
   *os << "CORBA::Object_ptr tmp = CORBA::Object::_nil ();" << be_nl
       << be_nl
@@ -528,4 +504,49 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "\n\n";
 
   return 0;
+}
+
+
+void 
+be_visitor_interface_ss::this_method (be_interface *node)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+  
+  // the _this () operation
+  *os << node->full_name () << "*" << be_nl
+      << node->full_skel_name ()
+      << "::_this (CORBA_Environment &ACE_TRY_ENV)" << be_nl
+      << "{" << be_idt_nl // idt = 1
+      << "TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);" << be_nl
+      << "ACE_CHECK_RETURN (0);" << be_nl << be_nl;
+}
+
+void 
+be_visitor_interface_ss::dispatch_method (be_interface *node)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+  
+  // now the dispatch method
+  *os << "void " << node->full_skel_name () <<
+    "::_dispatch (TAO_ServerRequest &req, " <<
+    "void *context, CORBA::Environment &ACE_TRY_ENV)" << be_nl;
+  *os << "{" << be_idt_nl;
+  //BRT
+  *os << "this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);" << be_uidt_nl;
+  //  *os << "TAO_Skeleton skel; // pointer to skeleton for operation" << be_nl;
+//  *os << "const char *opname = req.operation (); // retrieve operation name"
+//      << be_nl;
+//  *os << "// find the skeleton corresponding to this opname" << be_nl;
+//  *os << "if (this->_find (opname, skel, req.operation_length ()) == -1)" << be_nl;
+//  *os << "{" << be_idt_nl;
+//  *os << "ACE_ERROR ((LM_ERROR, \"Bad operation <%s>\\n\", opname));" << be_nl;
+//  if (idl_global->use_raw_throw ())
+//    *os << "throw CORBA_BAD_OPERATION ();";
+//  else
+//    *os << "ACE_THROW (CORBA_BAD_OPERATION ());";
+//  *os << be_uidt_nl;
+//  *os << "}" << be_nl;
+//  *os << "else" << be_idt_nl;
+//  *os << "skel (req, this, context, ACE_TRY_ENV);" << be_uidt << be_uidt_nl;
+  *os << "}" << be_nl << be_nl;
 }

@@ -53,6 +53,7 @@
 #include "be_visitor_operation/tie_sh.cpp"
 #include "be_visitor_operation/tie_si.cpp"
 #include "be_visitor_operation/rettype_pre_invoke_cs.cpp"
+#include "be_visitor_operation/amh_ss.cpp"
 #include "be_visitor_operation/ami_ch.cpp"
 #include "be_visitor_operation/ami_cs.cpp"
 #include "be_visitor_operation/ami_handler_reply_stub_operation_ch.cpp"

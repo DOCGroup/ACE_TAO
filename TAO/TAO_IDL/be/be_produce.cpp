@@ -154,6 +154,28 @@ BE_produce (void)
       delete visitor;
     }
 
+  if (be_global->gen_amh_classes () == I_TRUE)
+    {
+      // Make a first pass over the AST and introduce
+      // AMH specific code
+      be_visitor_context *local_ctx = 0;
+      ACE_NEW (local_ctx,
+               be_visitor_context (ctx));
+
+      ACE_NEW (visitor,
+               be_visitor_amh_pre_proc (local_ctx));
+      
+      if (root->accept (visitor) == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "(%N:%l) be_produce - "
+                      "client header for Root failed\n"));
+          BE_abort ();
+        }
+
+      delete visitor;
+    }
+
   // Code generation involves six steps because of the six files that we
   // generate.
 

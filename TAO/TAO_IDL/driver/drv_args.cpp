@@ -953,6 +953,11 @@ DRV_parse_args (long ac, char **av)
                   // AMI with Call back.
                   be_global->ami_call_back (I_TRUE);
                 }
+              else if (av[i][2] == 'H')
+                {
+                  // AMH classes.
+                  be_global->gen_amh_classes (I_TRUE);
+                }
               else if (av[i][2] == 'e')
                 {
                   int option = ACE_OS::atoi (av[i+1]);
