@@ -1,3 +1,13 @@
+Thu Oct 16 18:08:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Basic_Types.h:
+          Reverted my change below, when I committed it, I realized it
+          is not the correct place
+
+        * ace/config-win32-borland.h:
+          Added ACE_LACKS_PTRDIFF_T and ACE_PTRDIFF_T_TYPE to get the
+          ptrdiff_t out of the std namespace.
+
 Thu Oct 16 17:56:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Basic_Types.h:
