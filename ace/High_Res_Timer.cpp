@@ -1,5 +1,4 @@
 // High_Res_Timer.cpp
-// $Id$
 
 #define ACE_BUILD_DLL
 #include "ace/High_Res_Timer.h"
@@ -14,7 +13,53 @@ ACE_ALLOC_HOOK_DEFINE(ACE_High_Res_Timer)
 // ACE_OS::gethrtime.  We'll still set this to one to prevent division
 // by zero errors.
 #if defined (ACE_WIN32)
-u_long ACE_High_Res_Timer::global_scale_factor_ = 1;
+
+// This is used to find out the Mhz of the machine for the scale factor.  If
+// there are any problems getting it, we just return 1 (the default).
+static u_long get_registry_scale_factor (void)
+{
+  HKEY hk; 
+  DWORD buf_type = REG_DWORD;
+  DWORD buf_len = 10;
+  TCHAR *buffer = new TCHAR[10];
+  
+  LONG rc = RegOpenKeyEx (HKEY_LOCAL_MACHINE, 
+                          TEXT("HARDWARE\\DESCRIPTION\\System\\CentralProcessor\\0"), 
+                          NULL, 
+                          KEY_READ, 
+                          &hk);
+
+  if (rc != ERROR_SUCCESS) 
+  {
+    // Couldn't find key
+    delete buffer;
+    return 1; 
+  }
+
+
+  rc = RegQueryValueEx (hk, 
+                        TEXT("~MHz"), 
+                        0, 
+                        &buf_type, 
+		        (unsigned char *) buffer, 
+                        &buf_len);
+
+  RegCloseKey (hk);
+
+  if (rc != ERROR_SUCCESS) 
+  {
+    // Couldn't get the value
+    delete buffer;
+    return 1;
+  }
+
+  u_long mhz = (DWORD (*buffer) & 0xFF);
+  delete buffer;
+  return mhz;
+}
+
+u_long ACE_High_Res_Timer::global_scale_factor_ = get_registry_scale_factor ();
+
 #else
 // A scale_factor of 1000 converts nanosecond ticks to microseconds.
 // That is, on these platforms, 1 tick == 1 nanosecond.

@@ -362,8 +362,6 @@ main (int argc, char *argv[])
 {
   ACE_START_TEST ("Timer_Queue_Test");
 
-  ACE_High_Res_Timer::get_env_global_scale_factor();
-  
   ACE_OS::srand (ACE_OS::time (0L));
  
   if (argc > 1)
