@@ -4,7 +4,6 @@
 #include "ace/TP_Reactor.h"
 #include "ace/Reactor.h"
 #include "ace/Thread.h"
-//#include "ace/Thread.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/TP_Reactor.i"
@@ -87,8 +86,6 @@ ACE_TP_Reactor::max_notify_iterations (int /*iterations*/)
 {
   ACE_TRACE ("ACE_TP_Reactor::max_notify_iterations");
 
-  ACE_ERROR ((LM_ERROR,
-              "(%P|%t) This has no effect in the TP_Reactor.. \n"));
 }
 
 int
