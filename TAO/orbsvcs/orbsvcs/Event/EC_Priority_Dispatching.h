@@ -31,6 +31,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Message_Block.h"
+
 class TAO_EC_Dispatching_Task;
 
 class TAO_EC_Priority_Dispatching : public TAO_EC_Dispatching
@@ -52,7 +54,7 @@ class TAO_EC_Priority_Dispatching : public TAO_EC_Dispatching
   //
 public:
   TAO_EC_Priority_Dispatching (void);
-  // The scheduler is used to find the range of priorities and similar 
+  // The scheduler is used to find the range of priorities and similar
   // info.
 
   // = The EC_Dispatching methods.
@@ -76,6 +78,10 @@ private:
 
   TAO_EC_Dispatching_Task** tasks_;
   // The tasks..
+
+  ACE_Locked_Data_Block<ACE_Lock_Adapter<ACE_SYNCH_MUTEX> > data_block_;
+  // Helper data structure to minimize memory allocations...
+  // @@ Should be a per-queue object!
 };
 
 #if defined (__ACE_INLINE__)
