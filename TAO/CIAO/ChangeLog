@@ -1,3 +1,18 @@
+Fri Sep 19 13:31:50 2003  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * performance-tests/Benchmark/descriptors/Test-IOR.cad:
+          cad file to test CORBA server with Component client
+        * performance-tests/Benchmark/RoundTripClient/run_test_ior.pl:
+          Perl script to run the benchmark
+        * performance-tests/Benchmark/RounTrip_server:
+        * performance-tests/Benchmark/RoundTripServer/LatencyTest.cpp:
+        * performance-tests/Benchmark/RoundTripServer/LatencyTest.h:
+        * performance-tests/Benchmark/RoundTripServer.mpc:
+        * performance-tests/Benchmark/RoundTripServer/server.cpp:
+        * performance-tests/Benchmark/RoundTripServer/Test.idl:
+          A server to communicate with CIAO client, implementing the same
+          interface needed.
+
 Tue Sep 16 14:04:06 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CCF/Example/ComponentDeploymentDescriptor: Added small example
