@@ -1,3 +1,8 @@
+Fri Nov  7 16:03:13 1997  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
+
+	* tests/SOCK_Connector_Test.cpp (fail_no_listener_nonblocking):
+	Added ECONNREFUSED as a "valid failure", alongwith EWOULDBLOCK.
+
 Fri Nov 07 15:14:51 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/Threads/tss1.cpp: replaced ACE_SYNCH_1 and _2 with
