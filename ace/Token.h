@@ -39,26 +39,28 @@ class ACE_Export ACE_Token
   //    token that is serviced in strict FIFO ordering and that also
   //    supports (1) recursion and (2) readers/writer semantics.
   //
-  // = DESCRIPTION
-  //    This class is a more general-purpose synchronization mechanism
-  //    than SunOS 5.x mutexes.  For example, it implements "recursive
-  //    mutex" semantics, where a thread that owns the token can
-  //    reacquire it without deadlocking.  In addition, threads that
-  //    are blocked awaiting the token are serviced in strict FIFO
-  //    order as other threads release the token (Solaris and Pthread
-  //    mutexes don't strictly enforce an acquisition order).  There
-  //    are two FIFO lists within the class.  Write acquires always
-  //    have higher priority over read acquires.  Which means, if you
-  //    use both write/read operations, care must be taken to avoid
-  //    starvation on the readers.  Notice that the read/write acquire
-  //    operations do not have the usual semantic of reader/writer
-  //    locks.  Only one reader can acquire the token at a time (which
-  //    is different from the usual reader/writer locks where several
-  //    readers can acquire a lock at the same time as long as there
-  //    is no writer waiting for the lock.)  We choose the names 1.)
-  //    to borrow the semantic to give writers higher priority, and,
-  //    2.) to support a common interface over all locking classes in
-  //    ACE.
+  // = DESCRIPTION This class is a more general-purpose
+  // synchronization mechanism than SunOS 5.x mutexes.  For example,
+  // it implements "recursive mutex" semantics, where a thread that
+  // owns the token can reacquire it without deadlocking.  If the same
+  // thread calls <acquire> multiple times, however, it must call
+  // <release> an equal number of times before the token is actually
+  // released.  
+  // 
+  // Threads that are blocked awaiting the token are serviced in
+  // strict FIFO order as other threads release the token (Solaris and
+  // Pthread mutexes don't strictly enforce an acquisition order).
+  // There are two FIFO lists within the class.  Write acquires always
+  // have higher priority over read acquires.  Which means, if you use
+  // both write/read operations, care must be taken to avoid
+  // starvation on the readers.  Notice that the read/write acquire
+  // operations do not have the usual semantic of reader/writer locks.
+  // Only one reader can acquire the token at a time (which is
+  // different from the usual reader/writer locks where several
+  // readers can acquire a lock at the same time as long as there is
+  // no writer waiting for the lock.)  We choose the names 1.)  to
+  // borrow the semantic to give writers higher priority, and, 2.) to
+  // support a common interface over all locking classes in ACE.
 public:
   // = Initialization and termination.
 

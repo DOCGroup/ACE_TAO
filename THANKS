@@ -946,6 +946,7 @@ Johnny Chen <jchen@informatica.com>
 John Foresteire <John_J_Foresteire@res.raytheon.com>
 Larry Peacock <larry@appsmiths.com>
 Francisco Bravo <emefjbm@madrid.es.eu.ericsson.se>
+Antti Valtokari <Antti.Valtokari@iocore.fi>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that
