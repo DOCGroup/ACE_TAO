@@ -487,10 +487,6 @@ extern "C" {
   PACE_INLINE ssize_t pace_write (int fildes, const void * buf, size_t nbyte);
 #endif /* PACE_HAS_POSIX_DI_UOF */
 
-#if defined (PACE_HAS_CPLUSPLUS)
-}
-#endif /* PACE_HAS_CPLUSPLUS */
-
 #if defined (PACE_HAS_INLINE)
 #  if (PACE_HAS_POSIX)
 #    include "pace/posix/unistd.inl"
