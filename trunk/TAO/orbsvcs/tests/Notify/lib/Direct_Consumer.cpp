@@ -17,8 +17,6 @@ TAO_Notify_Tests_Direct_Consumer::~TAO_Notify_Tests_Direct_Consumer ()
 void
 TAO_Notify_Tests_Direct_Consumer::connect (ACE_ENV_SINGLE_ARG_DECL)
 {
-  ACE_DEBUG ((LM_DEBUG, "TAO_Notify_Tests_Direct_Consumer::connect resolving poa %s\n",
-              this->poa_name_.c_str ()));
   // Get the POA
   PortableServer::POA_var poa;
   LOOKUP_MANAGER->resolve (poa, this->poa_name_.c_str () ACE_ENV_ARG_PARAMETER);
@@ -27,8 +25,6 @@ TAO_Notify_Tests_Direct_Consumer::connect (ACE_ENV_SINGLE_ARG_DECL)
   // set the POA
   this->set_poa (poa.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-
-  ACE_DEBUG ((LM_DEBUG, "TAO_Notify_Tests_Direct_Consumer::connect - _this\n"));
 
   // Activate the consumer with the default_POA_.
   CosNotifyComm::StructuredPushConsumer_var consumer_ref =

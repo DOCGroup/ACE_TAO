@@ -470,7 +470,7 @@ Worker::svc (void)
       return -1;
     }
 
-  ACE_DEBUG ((LM_ERROR, "Activated Worker Thread to tun the ORB @ priority:%d \n", priority));
+  ACE_DEBUG ((LM_ERROR, "Activated Worker Thread to run the ORB @ priority:%d \n", priority));
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
