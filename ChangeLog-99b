@@ -1,92 +1,101 @@
+Fri Jun 25 16:48:17 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.h: don't #include <signal.h> directly on VxWorks.
+          When cross-compiling on NT host, the GreenHills compiler
+          #includes ace's Signal.h instead of VxWorks' signal.h.
+          No comment.  OS.h doesn't need to #include signal.h directly,
+          because it gets indirectly #included through sigLib.h.  Thanks
+          to Dale Wood <Dale_Wood@Mitel.com> for reporting this.
+
 Fri Jun 25 16:03:59 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Future.cpp: Fixed a couple of places where the set() method
-	  didn't have the new *this parameter added.
+        * ace/Future.cpp: Fixed a couple of places where the set() method
+          didn't have the new *this parameter added.
 
-	* ace: Added Future_Set.{h,cpp} and Future_Node.{h,cpp}, as well
-	  as the new Future.{h,cpp} files to the ACE release.  Thanks to
- 	  John Tucker <jtucker@infoglide.com> for contributing these.
+        * ace: Added Future_Set.{h,cpp} and Future_Node.{h,cpp}, as well
+          as the new Future.{h,cpp} files to the ACE release.  Thanks to
+          John Tucker <jtucker@infoglide.com> for contributing these.
 
-	* ace/Synch.h: Added a comment pointing out that Solaris
-	  threads do not support timed acquire().  Thanks to Darren
- 	  DeRidder <darren.deridder@bridgewatersys.com> for reporting
- 	  this.
+        * ace/Synch.h: Added a comment pointing out that Solaris
+          threads do not support timed acquire().  Thanks to Darren
+          DeRidder <darren.deridder@bridgewatersys.com> for reporting
+          this.
 
 Fri Jun 25 15:07:00 1999  John Tucker <jtucker@infoglide.com>
-  
+
         The following describes the changes to ACE_Future_Set:
 
-	* I followed the Observer Pattern where the ACE_Future_Set is the
-	  "Observer" and the ACE_Future_Rep is the "Subject".
+        * I followed the Observer Pattern where the ACE_Future_Set is the
+          "Observer" and the ACE_Future_Rep is the "Subject".
 
-	* I created an abstract base class called ACE_Future_Observer<T>
-	  which contains a single pure virtual member function "update()".
+        * I created an abstract base class called ACE_Future_Observer<T>
+          which contains a single pure virtual member function "update()".
 
-	* The ACE_Future_Rep is modified so that it contains a list of
-	  ACE_Future_Observer<T> pointers and an interface for attaching
- 	  and detaching ACE_Future_Observer<T> Observer objects.  The
- 	  "attach(...)" member function allows objects which implement the
- 	  ACE_Future_Observer<T> interface to attach themselves to
- 	  ACE_Future_Rep<T> objects so that they will be notified of
- 	  changes to the ACE_Future_Rep<T> Subject.  The "detach(...)"
- 	  member function allows objects which implement the
- 	  ACE_Future_Observer<T> interface to detach themselves from
- 	  ACE_Future_Rep<T> objects so that they will no longer be
- 	  notified of changes to the ACE_Future_Rep<T> Subject.
+        * The ACE_Future_Rep is modified so that it contains a list of
+          ACE_Future_Observer<T> pointers and an interface for attaching
+          and detaching ACE_Future_Observer<T> Observer objects.  The
+          "attach(...)" member function allows objects which implement the
+          ACE_Future_Observer<T> interface to attach themselves to
+          ACE_Future_Rep<T> objects so that they will be notified of
+          changes to the ACE_Future_Rep<T> Subject.  The "detach(...)"
+          member function allows objects which implement the
+          ACE_Future_Observer<T> interface to detach themselves from
+          ACE_Future_Rep<T> objects so that they will no longer be
+          notified of changes to the ACE_Future_Rep<T> Subject.
 
-	* The ACE_Future_Rep::set() method is modified so that it invokes the 
-	  "update()" method of each ACE_Future_Observer<T> object stored
- 	  in its list of attached ACE_Future_Observer<T> Observer
- 	  objects. It also removes each ACE_Future_Observer<T> Observer
- 	  object from its list.
+        * The ACE_Future_Rep::set() method is modified so that it invokes the
+          "update()" method of each ACE_Future_Observer<T> object stored
+          in its list of attached ACE_Future_Observer<T> Observer
+          objects. It also removes each ACE_Future_Observer<T> Observer
+          object from its list.
 
-	* The ACE_Future_Set<T> class derives from the ACE_Future_Observer<T>
-	  class.
+        * The ACE_Future_Set<T> class derives from the ACE_Future_Observer<T>
+          class.
 
         * The ACE_Future_Set<T> class contains its own ACE_Message_Queue
-	  attribute which will be used by writer threads to notify reader
- 	  threads that an ACE_Future is readable.
+          attribute which will be used by writer threads to notify reader
+          threads that an ACE_Future is readable.
 
         * The ACE_Future_Set<T> class contains a list of ACE_Future<T>
-	  Subject objects which clients in the reader threads insert into
- 	  it.  When an ACE_Future<T> is inserted into an
- 	  ACE_Future_Set<T>, the ACE_Future_Set<T> attaches itself to the
- 	  specified ACE_Future<T>, keeping in mind the ACE_Future_Set<T>
- 	  implements the ACE_Future_Observer<T> interface, and also
- 	  inserts the specified ACE_Future<T> object into its list of
- 	  ACE_Future<T> objects.
+          Subject objects which clients in the reader threads insert into
+          it.  When an ACE_Future<T> is inserted into an
+          ACE_Future_Set<T>, the ACE_Future_Set<T> attaches itself to the
+          specified ACE_Future<T>, keeping in mind the ACE_Future_Set<T>
+          implements the ACE_Future_Observer<T> interface, and also
+          inserts the specified ACE_Future<T> object into its list of
+          ACE_Future<T> objects.
 
         * The ACE_Future_Set<T> class implements its "update()" method to
-	  just enqueue an ACE_Message_Block with Null data onto its
- 	  ACE_Message_Queue.  Since this "ACE_Future_Set<T>::update()"
- 	  method will be invoked by the ACE_Future_Rep::set() method in
- 	  the writer thread, it will allow the ACE_Future_Set<T> in the
- 	  writer thread to signal itself that an ACE_Future has become
- 	  readable.
+          just enqueue an ACE_Message_Block with Null data onto its
+          ACE_Message_Queue.  Since this "ACE_Future_Set<T>::update()"
+          method will be invoked by the ACE_Future_Rep::set() method in
+          the writer thread, it will allow the ACE_Future_Set<T> in the
+          writer thread to signal itself that an ACE_Future has become
+          readable.
 
         * The "int ACE_Future_Set<T>::next_readable(ACE_Future<T> &future,
-	  ACE_Time_Value *)" method in the reader thread will block via a
- 	  call to "dequeue()" on its ACE_Message_Queue until is awakened
- 	  by a call to "ACE_Future_Set<T>::update()" in the writer thread.
-  	  Once awakened, the ACE_Future_Set<T> object iterates through its
- 	  list of ACE_Future<T> objects until it encounters a readable
- 	  one.  This readable ACE_Future<T> will be removed from its list
- 	  and assigned to the specified "future" parameter".
+          ACE_Time_Value *)" method in the reader thread will block via a
+          call to "dequeue()" on its ACE_Message_Queue until is awakened
+          by a call to "ACE_Future_Set<T>::update()" in the writer thread.
+          Once awakened, the ACE_Future_Set<T> object iterates through its
+          list of ACE_Future<T> objects until it encounters a readable
+          one.  This readable ACE_Future<T> will be removed from its list
+          and assigned to the specified "future" parameter".
 
         * The ACE_Future_Set<T> destructor detaches itself from all
-	  ACE_Future<T> objects remaining in its list.
+          ACE_Future<T> objects remaining in its list.
 
         * I did not use the ACE_Reactor since I could foresee the
-	  ACE_Future_Set being used by applications which did not run,or
- 	  want to run, the event loop.	
-  
+          ACE_Future_Set being used by applications which did not run,or
+          want to run, the event loop.
+
 Fri Jun 25 14:28:05 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/UNIX_Addr.cpp (ACE_UNIX_Addr): Moved base_set() call in
-	  constructor to member initializer list.  This is cleaner coding
- 	  style.  The original code, before a bug fix was made, was like
- 	  that.  I just forgot to put it back in the member initializer
- 	  list after the fix.
+        * ace/UNIX_Addr.cpp (ACE_UNIX_Addr): Moved base_set() call in
+          constructor to member initializer list.  This is cleaner coding
+          style.  The original code, before a bug fix was made, was like
+          that.  I just forgot to put it back in the member initializer
+          list after the fix.
 
 Fri Jun 25 15:15:32 1999  Steve Huston  <shuston@riverace.com>
 
@@ -109,19 +118,19 @@ Fri Jun 25 15:15:32 1999  Steve Huston  <shuston@riverace.com>
         * examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp:
         * examples/IPC_SAP/SOCK_SAP/CPP-inserver-fancy.cpp:
           Split the Options class to a new file, CPP-inclient.h, to make
- 	  IBM C++ (xlC) like it.
+          IBM C++ (xlC) like it.
 
         * examples/IOStream/server/iostream_server.cpp: Split the Handler
           class off to new iostream_server.h file, to make IBM C++ (xlC)
- 	  like it.
+          like it.
 
-        * examples/Logger/Acceptor-server/server_loggerd.cpp: Moved the 
-	  Options and handler classes' definitions to new server_loggerd.h
- 	  file to build with AIX IBM C++.
+        * examples/Logger/Acceptor-server/server_loggerd.cpp: Moved the
+          Options and handler classes' definitions to new server_loggerd.h
+          file to build with AIX IBM C++.
 
         * examples/Misc/testr_dump.cpp: Moved the program's classes'
           definitions to new server_loggerd.h file to build with AIX IBM
- 	  C++.
+          C++.
 
         * examples/IPC_SAP/SOCK_SAP/Makefile:
         * examples/Connection/non_blocking/Makefile:
@@ -136,16 +145,16 @@ Fri Jun 25 15:15:32 1999  Steve Huston  <shuston@riverace.com>
 
         * include/platform_aix4_cset++.GNU: Removed TMPL_OBJS - not needed now.
         * examples/Misc/Makefile: On AIX w/ IBM C++, delete the tempinc
-	  directory before compiling each new program. Keeps the template
- 	  instantiations from one program from conflicting with the
- 	  others.
+          directory before compiling each new program. Keeps the template
+          instantiations from one program from conflicting with the
+          others.
 
 Fri Jun 25 12:40:29 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE-INSTALL.html: added/expanded/moved discussions of
           enabling/increasing virtual memory on Linux and LynxOS.  Thanks
- 	  to Fabrice Podlyski <podlyski@clrhp04.in2p3.fr> for providing
- 	  detailed information for LynxOS.
+          to Fabrice Podlyski <podlyski@clrhp04.in2p3.fr> for providing
+          detailed information for LynxOS.
 
 Fri Jun 25 11:16:32 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
@@ -161,7 +170,7 @@ Thu Jun 24 22:42:44 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/SOCK_Dgram_Mcast.cpp (subscribe): fixed UNICOS
           preprocessor usage so that it's not in the middle of the
- 	  ACE_reintepret_cast.
+          ACE_reintepret_cast.
 
 Thu Jun 24 22:18:52 1999  Doug Anderson  <doug@clark.net>
 
@@ -174,12 +183,12 @@ Thu Jun 24 21:33:11 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
         * ace/Caching_Strategies_T.{h, cpp} (class ACE_LRU_Caching_Strategy):
         * ace/Caching_Strategies_T.{h, cpp} (class ACE_LFU_Caching_Strategy):
           Removed the overloaded clear_cache () method with entries as an
- 	  formal argument.
+          formal argument.
 
         * ace/Caching_Strategy_Utility_T.{h,i,cpp}: Renamed as
           Caching_Utiltity.{h, i, cpp}. Also, removed <entries> formal
- 	  argument from the clear_cache() method, and made purge_percent
- 	  of type double instead of unsigned int.
+          argument from the clear_cache() method, and made purge_percent
+          of type double instead of unsigned int.
 
         * tests/Cache_Map_Manager_Test.cpp: Changed the purge_test and
           added a test for the Cache_Map_Manager using the Map_Manager.
@@ -196,13 +205,13 @@ Thu Jun 24 20:43:54 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * examples/Reactor/WFMO_Reactor/test_multithreading.cpp
           (Task_Handler): Change loop to go from 1 to number_of_handles
- 	  instead of 0 to number_of_handles - 1.
+          instead of 0 to number_of_handles - 1.
 
 Thu Jun 24 18:36:22 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/Signal.h: Removed the still-born
           ACE_Sig_Action (struct sigaction *) method.  Thanks to Umar
- 	  Syyid for reporting this.
+          Syyid for reporting this.
 
 Thu Jun 24 15:47:32 1999  Steve Huston  <shuston@riverace.com>
 
