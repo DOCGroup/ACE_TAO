@@ -1,3 +1,15 @@
+Wed Jun  2 21:07:31 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* bin/MakeProjectCreator/config/ciao_servant_dnc.mpb:
+	* bin/MakeProjectCreator/config/ciao_deployment_stub.mpb:
+	* bin/MakeProjectCreator/config/ciao_deployment_svnt.mpb:
+	* bin/MakeProjectCreator/config/ciao_client_dnc.mpb:
+
+	  I have to change these file again to prepare to delete
+	  $CIAO_ROOT/DnC/Core directory and move every thing there to
+	  $CIAO_ROOT/DnC/ciao directory so the CIDL generated code will
+	  find the right include file.
+
 Wed Jun  2 20:42:49 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* bin/MakeProjectCreator/config/ciao_client_dnc.mpb:
