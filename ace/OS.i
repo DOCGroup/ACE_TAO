@@ -6897,6 +6897,26 @@ ACE_OS::sigwait (sigset_t *set, int *sig)
 #endif /* ACE_HAS_THREADS */
 }
 
+ACE_INLINE int
+ACE_OS::sigtimedwait (const sigset_t *set,
+                      siginfo_t *info,
+                      const struct timespec *timeout
+{
+  ACE_TRACE ("ACE_OS::sigtimedwait");
+  siginfo_t local_siginfo;
+  if (info == 0)
+    info = &local_siginfo;
+#if defined (ACE_HAS_SIGTIMEDWAIT)
+  ACE_OSCALL_RETURN (::sigtimedwait (set, info, timeout),
+                     int, -1);
+#else
+    ACE_UNUSED_ARG (set);
+    ACE_UNUSED_ARG (info);
+    ACE_UNUSED_ARG (timeout);
+    ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_THREADS */
+}
+
 ACE_INLINE void
 ACE_OS::thr_testcancel (void)
 {

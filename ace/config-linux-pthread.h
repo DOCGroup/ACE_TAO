@@ -18,7 +18,6 @@
 #define ACE_HAS_PTHREADS
 #define ACE_HAS_PTHREADS_STD
 #define ACE_LACKS_RWLOCK_T
-#define ACE_HAS_SIGWAIT
 // If ACE doesn't compile due to the lack of these methods, please
 // send email to schmidt@cs.wustl.edu reporting this.
 // #define ACE_LACKS_CONDATTR_PSHARED

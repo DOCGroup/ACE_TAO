@@ -92,11 +92,11 @@
 # error unsupported compiler in ace/config-linux-common.h
 #endif /* ! __GNUG__ && ! __KCC */
 
-
 // Completely common part :-)
 
 // Platform/compiler has the sigwait(2) prototype
-#define ACE_HAS_SIGWAIT
+# define ACE_HAS_SIGWAIT
+# define ACE_HAS_SIGTIMEDWAIT
 
 #if !defined (ACE_DEFAULT_BASE_ADDR)
 # define ACE_DEFAULT_BASE_ADDR ((char *) 0x80000000)

@@ -57,8 +57,6 @@
 #define ACE_LACKS_RWLOCK_T                      // JCEJ 12/23/96        #1
 #define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS    // JCEJ 1/7-8/96
 
-#define ACE_HAS_SIGWAIT
-
 #if defined(__GLIBC__)
 // Platform supports reentrant functions (i.e., all the POSIX *_r
 // functions).
