@@ -202,7 +202,7 @@ pace_getgroups (int gidsetsize, pace_gid_t grouplist[])
 {
   return getgroups (gidsetsize, grouplist);
 }
-#endif /* PACE_HAS_POSIX_UGR_UOF */
+#endif /* PACE_HAS_POSIX_UG_UOF */
 
 #if (PACE_HAS_POSIX_UG_UOF)
 PACE_INLINE

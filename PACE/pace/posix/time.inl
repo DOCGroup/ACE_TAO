@@ -33,7 +33,7 @@ pace_asctime_r (const pace_tm * time, char * buf)
 {
 #if (PACE_LYNXOS)
   /*lynxos 3.1 has POSIX.4 Draft 9 versions of this */
-  if (asctime_r (time, buf, 26) == -1) /* ??? */
+  if (asctime_r (time, buf, 26) != 0)
     return (char*) 0;
   return buf;
 #else
@@ -149,9 +149,9 @@ pace_gmtime_r (const pace_time_t * clock, pace_tm * result)
 {
 #if (PACE_LYNXOS)
   /*lynxos 3.1 has POSIX.4 Draft 9 versions of these */
-  if (gmtime_r (result, clock) == 0)
+  if (gmtime_r (result, clock) != 0)
     return (pace_tm*)0;
-  return result; /* ????? */
+  return result;
 #else
   return gmtime_r (clock, result);
 #endif /* PACE_LYNXOS */
@@ -174,9 +174,9 @@ pace_localtime_r (const pace_time_t * clock, pace_tm * result)
 {
 #if (PACE_LYNXOS)
   /*lynxos 3.1 has POSIX.4 Draft 9 versions of these */
-  if (localtime_r (result, clock) == 0)
+  if (localtime_r (result, clock) != 0)
     return (pace_tm*)0;
-  return result; /* ????? */
+  return result;
 #else
   return localtime_r (clock, result);
 #endif /* PACE_LYNXOS */
