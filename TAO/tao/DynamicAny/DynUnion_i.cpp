@@ -1,7 +1,9 @@
+/* -*- C++ -*- */
+// $Id$
+
 #include "DynUnion_i.h"
 #include "DynAnyFactory.h"
 #include "tao/Marshal.h"
-
 
 ACE_RCSID (DynamicAny,
            DynUnion_i,
@@ -48,18 +50,11 @@ TAO_DynUnion_i::init (const CORBA::Any& any
 
   this->init_common ();
 
-  // Map TypeMismatch to InconsistentTypeCode.2
-  ACE_TRY
-  {
-     this->set_from_any (any
-                         ACE_ENV_ARG_PARAMETER);
-     ACE_CHECK;
-  }
-  ACE_CATCH(DynamicAny::DynAny::TypeMismatch, ex)
-  {
-     ACE_TRY_THROW (DynamicAny::DynAnyFactory::InconsistentTypeCode ());
-  }
-  ACE_ENDTRY;
+  // Set the from_factory arg to TRUE, so any problems will throw
+  // InconsistentTypeCode.
+  this->set_from_any (any,
+                      1
+                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -146,7 +141,8 @@ TAO_DynUnion_i::_tao_QueryInterface (ptr_arith_t type)
 // This code is common to from_any() and the init() overload that takes
 // an Any argument.
 void
-TAO_DynUnion_i::set_from_any (const CORBA::Any & any
+TAO_DynUnion_i::set_from_any (const CORBA::Any & any,
+                              CORBA::Boolean from_factory
                               ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -162,13 +158,17 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any
 
   CORBA::TypeCode_var tc = any.type ();
 
-  CORBA::TypeCode_var disc_tc = tc->discriminator_type (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::TypeCode_var disc_tc = 
+    tc->discriminator_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::Any disc_any (disc_tc.in (),
-                      0,
-                      cdr.byte_order (),
-                      cdr.start ());
+  CORBA::Any disc_any;
+  TAO::Unknown_IDL_Type *unk = 0;
+  ACE_NEW (unk,
+           TAO::Unknown_IDL_Type (disc_tc.in (),
+                                  cdr.start (),
+                                  cdr.byte_order ()));
+  disc_any.replace (unk);
 
   // Need this here because we might have been called from init().
   if (!CORBA::is_nil (this->discriminator_.in ()))
@@ -225,10 +225,13 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any
                                                        ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      CORBA::Any member_any (member_tc.in (),
-                            0,
-                            cdr.byte_order (),
-                            cdr.start ());
+      CORBA::Any member_any;
+      TAO::Unknown_IDL_Type *unk = 0;
+      ACE_NEW (unk,
+               TAO::Unknown_IDL_Type (member_tc.in (),
+                                      cdr.start (),
+                                      cdr.byte_order ()));
+      member_any.replace (unk);
 
       this->member_ =
         TAO_DynAnyFactory::make_dyn_any (member_any
@@ -264,10 +267,13 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any
                                                             ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
 
-          CORBA::Any default_any (default_tc.in (),
-                                 0,
-                                 cdr.byte_order (),
-                                 cdr.start ());
+          CORBA::Any default_any;
+          TAO::Unknown_IDL_Type *unk = 0;
+          ACE_NEW (unk,
+                   TAO::Unknown_IDL_Type (default_tc.in (),
+                                          cdr.start (),
+                                          cdr.byte_order ()));
+          default_any.replace (unk);
 
           this->member_ =
             TAO_DynAnyFactory::make_dyn_any (default_any
@@ -707,7 +713,10 @@ TAO_DynUnion_i::from_any (const CORBA::Any& any
       // May be changed in set_from_any().
       this->component_count_ = 2;
 
-      this->set_from_any (any
+      // Set the from_factory arg to FALSE, so any problems will throw
+      // TypeMismatch.
+      this->set_from_any (any,
+                          0
                           ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
@@ -774,13 +783,19 @@ TAO_DynUnion_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
 
   CORBA::Any_ptr retval = 0;
   ACE_NEW_THROW_EX (retval,
-                    CORBA::Any (this->type_.in (),
-                               0,
-                               in_cdr.byte_order (),
-                               in_cdr.start ()),
+                    CORBA::Any,
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
+  TAO::Unknown_IDL_Type *unk = 0;
+  ACE_NEW_THROW_EX (unk,
+                    TAO::Unknown_IDL_Type (this->type_.in (),
+                                           in_cdr.start (),
+                                           in_cdr.byte_order ()),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (0);
+
+  retval->replace (unk);
   return retval;
 }
 

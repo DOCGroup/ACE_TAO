@@ -94,6 +94,7 @@ SOURCE=.\ObjectReferenceFactory.idl
 !IF  "$(CFG)" == "ORT Server - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
+USERDEP__OBJEC="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build
 InputPath=.\ObjectReferenceFactory.idl
 InputName=ObjectReferenceFactory
@@ -132,6 +133,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORT Server - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
+USERDEP__OBJEC="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build
 InputPath=.\ObjectReferenceFactory.idl
 InputName=ObjectReferenceFactory
@@ -177,6 +179,7 @@ SOURCE=.\ORT_test.idl
 !IF  "$(CFG)" == "ORT Server - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
+USERDEP__ORT_T="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build
 InputPath=.\ORT_test.idl
 InputName=ORT_test
@@ -215,6 +218,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORT Server - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
+USERDEP__ORT_T="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build
 InputPath=.\ORT_test.idl
 InputName=ORT_test
@@ -312,6 +316,7 @@ SOURCE=.\ObjectReferenceFactory.cpp
 # Begin Source File
 
 SOURCE=.\ObjectReferenceFactoryC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -324,6 +329,7 @@ SOURCE=.\ORT_test_IORInterceptor.cpp
 # Begin Source File
 
 SOURCE=.\ORT_testC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 

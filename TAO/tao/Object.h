@@ -28,6 +28,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Policy_ForwardC.h"
+#include "tao/Object_KeyC.h"
 #include "ace/Synch.h"
 
 class TAO_Stub;
@@ -37,6 +38,9 @@ class TAO_ObjectKey;
 
 namespace CORBA
 {
+  class InterfaceDef;
+  typedef InterfaceDef *InterfaceDef_ptr;
+
   /**
    * @class Object
    *
@@ -100,20 +104,24 @@ namespace CORBA
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
     virtual CORBA::Boolean _non_existent (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      );
 
     /// This method is deprecated in the CORBA 2.2 spec, we just return 0
     /// every time.
     virtual CORBA::ImplementationDef_ptr _get_implementation (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      );
 
     /// Get info about the object from the Interface Repository.
-    virtual CORBA::InterfaceDef_ptr _get_interface (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+    virtual InterfaceDef_ptr _get_interface (
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      );
 
     /// Get info about the object from the Interface Repository.
     virtual CORBA::Object_ptr _get_component (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      );
 
     // DII operations to create a request.
     //
@@ -195,24 +203,22 @@ namespace CORBA
 
     /// Return the object key as an out parameter.  Caller should release
     /// return value when finished with it.
-    virtual TAO_ObjectKey *_key (ACE_ENV_SINGLE_ARG_DECL);
+    virtual TAO::ObjectKey *_key (ACE_ENV_SINGLE_ARG_DECL);
 
     /**
      * Return a reference to the object key of profile in-use.
      * If there's no in-use profile, then the program will
      * probably crash.  This method does not create a new copy.
      */
-    virtual const TAO_ObjectKey &_object_key (void);
+    virtual const TAO::ObjectKey &_object_key (void);
 
     /// Downcasting this object pointer to some other derived class.
     /// This QueryInterface stuff only work for local object.
     virtual void * _tao_QueryInterface (ptr_arith_t type);
 
     // Useful for template programming.
-#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
     typedef Object_ptr _ptr_type;
     typedef Object_var _var_type;
-#endif /* __GNUC__ */
 
     /**
      * @name Reference Count Managment
@@ -241,6 +247,9 @@ namespace CORBA
 
     /// Get the proxy broker.
     virtual TAO_Object_Proxy_Broker *_proxy_broker (void);
+
+    /// Allows us to forbid marshaling of local interfaces.
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 
   protected:
 

@@ -133,7 +133,7 @@ TAO_Adapter_Registry::insert (TAO_Adapter *adapter
 }
 
 void
-TAO_Adapter_Registry::dispatch (TAO_ObjectKey &key,
+TAO_Adapter_Registry::dispatch (TAO::ObjectKey &key,
                                 TAO_ServerRequest &request,
                                 CORBA::Object_out forward_to
                                 ACE_ENV_ARG_DECL)

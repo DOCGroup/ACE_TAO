@@ -158,6 +158,7 @@ LINK32=link.exe
 # Begin Source File
 
 SOURCE=.\CosLoadBalancingC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -242,6 +243,7 @@ SOURCE=.\LoadBalancing\LB_ORBInitializer.cpp
 # Begin Source File
 
 SOURCE=.\LB_ORTC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -553,6 +555,7 @@ SOURCE=.\LB_ORT.idl
 !IF  "$(CFG)" == "CosLoadBalancing - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
+USERDEP__LB_OR="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\LB_ORT.idl
 InputName=LB_ORT

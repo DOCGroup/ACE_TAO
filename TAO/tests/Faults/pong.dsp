@@ -94,6 +94,7 @@ SOURCE=.\ping_i.cpp
 # Begin Source File
 
 SOURCE=.\pingC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 

@@ -1,3 +1,5 @@
+// "$Id$"
+
 #include "Synch_Queued_Message.h"
 #include "debug.h"
 #include "ace/Malloc_T.h"

@@ -20,7 +20,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:604
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:604
 
 #ifndef _TAO_IDL_ORIG_IMPLREPOS_T_H_
 #define _TAO_IDL_ORIG_IMPLREPOS_T_H_
@@ -36,14 +36,14 @@
 
 
 // TAO_IDL - Generated from 
-// be/be_visitor_root/root_sth.cpp:116
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root_sth.cpp:116
 
 #if defined (ACE_HAS_USING_KEYWORD)
 TAO_NAMESPACE  POA_ImplementationRepository
 {
   
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/tie_sh.cpp:87
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_sh.cpp:87
   
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
@@ -83,7 +83,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
       );
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     void ping (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -93,7 +93,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     void shutdown (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -113,7 +113,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
   };
   
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/tie_sh.cpp:87
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_sh.cpp:87
   
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
@@ -153,7 +153,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
       );
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     void activate_server (
         const char * server
@@ -166,7 +166,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     char * activate_server_with_startup (
         const char * server,
@@ -180,7 +180,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     void register_server (
         const char * server,
@@ -193,7 +193,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     void reregister_server (
         const char * server,
@@ -205,7 +205,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     void remove_server (
         const char * server
@@ -217,7 +217,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     void shutdown_server (
         const char * server
@@ -229,7 +229,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     char * server_is_running (
         const char * server,
@@ -243,7 +243,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     void server_is_shutting_down (
         const char * server
@@ -255,7 +255,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     void find (
         const char * server,
@@ -268,7 +268,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     void list (
         CORBA::ULong how_many,
@@ -291,7 +291,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
   };
   
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/tie_sh.cpp:87
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_sh.cpp:87
   
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
@@ -331,7 +331,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
       );
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     CORBA::Boolean next_n (
         CORBA::ULong how_many,
@@ -343,7 +343,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/tie_sh.cpp:60
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     void destroy (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -366,7 +366,7 @@ TAO_NAMESPACE_CLOSE // module ImplementationRepository
 #endif /* ACE_HAS_USING_KEYWORD */
 
 // TAO_IDL - Generated from 
-// be/be_codegen.cpp:1141
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1141
 
 #if defined (__ACE_INLINE__)
 #include "ImplRepoS_T.i"

@@ -94,6 +94,7 @@ SOURCE=.\client.cpp
 # Begin Source File
 
 SOURCE=.\FooC.cpp
+# ADD CPP /GR
 # End Source File
 # End Group
 # Begin Group "Header Files"

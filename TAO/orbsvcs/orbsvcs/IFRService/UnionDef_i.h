@@ -45,8 +45,7 @@ class TAO_IFRService_Export TAO_UnionDef_i : public virtual TAO_TypedefDef_i,
   //    Represents an OMG IDL union definition.
   //
 public:
-  TAO_UnionDef_i (TAO_Repository_i *repo,
-                  ACE_Configuration_Section_Key section_key);
+  TAO_UnionDef_i (TAO_Repository_i *repo);
   // Constructor
 
   virtual ~TAO_UnionDef_i (void);

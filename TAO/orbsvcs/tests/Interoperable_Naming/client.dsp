@@ -98,6 +98,7 @@ SOURCE=.\ncontextext_client_i.cpp
 # Begin Source File
 
 SOURCE=.\Web_ServerC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 

@@ -92,18 +92,22 @@ LINK32=link.exe
 # Begin Source File
 
 SOURCE=.\Bank_Client_i.cpp
+# ADD CPP /GR-
 # End Source File
 # Begin Source File
 
 SOURCE=.\BankC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
 SOURCE=.\BankS.cpp
+# ADD CPP /GR-
 # End Source File
 # Begin Source File
 
 SOURCE=.\client.cpp
+# ADD CPP /GR-
 # End Source File
 # End Group
 # Begin Group "Header Files"

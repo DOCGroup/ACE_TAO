@@ -1,7 +1,8 @@
+// $Id$
+
 #include "Direct_Object_Proxy_Impl.h"
 #include "Object_Adapter.h"
 #include "tao/Object.h"
-
 
 ACE_RCSID (PortableServer,
            TAO_Direct_Object_Proxy_Impl,

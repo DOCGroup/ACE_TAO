@@ -1,4 +1,5 @@
 // -*- C++ -*-
+// $Id$
 
 //=============================================================================
 /**
@@ -84,11 +85,9 @@ namespace CORBA
                      CORBA::NVList_ptr &values
                      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
     // Useful for template programming.
     typedef CORBA::Context_ptr _ptr_type;
     typedef CORBA::Context_var _var_type;
-#endif /* __GNUC__ */
 
   private:
     /// Reference counting.

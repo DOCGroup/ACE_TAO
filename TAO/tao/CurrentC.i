@@ -20,9 +20,18 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+
 #if !defined (_CORBA_CURRENT___CI_)
 #define _CORBA_CURRENT___CI_
 
+ACE_INLINE
+CORBA::Boolean
+CORBA::Current::marshal (TAO_OutputCDR &)
+{
+  return 0;
+}
 
 #endif /* end #if !defined */
 

@@ -26,7 +26,6 @@
 #include "ace/Synch_T.h"
 #include "ace/CORBA_macros.h"
 
-
 class ACE_Allocator;
 
 class TAO_ORB_Core;

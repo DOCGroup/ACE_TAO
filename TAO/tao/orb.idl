@@ -8,6 +8,7 @@
 #define TAO_ORB_IDL
 
 #include <Policy.pidl>
+#include <Services.pidl>
 
 #pragma prefix "omg.org"
 
@@ -80,24 +81,18 @@ module CORBA
     PARAM_INOUT
   };
 
+  typedef short ValueModifier;
+  const ValueModifier VM_NONE = 0;
+  const ValueModifier VM_CUSTOM = 1;
+  const ValueModifier VM_ABSTRACT = 2;
+  const ValueModifier VM_TRUNCATABLE = 3;
+
+  typedef short Visibility;
+  const Visibility PRIVATE_MEMBER = 0;
+  const Visibility PUBLIC_MEMBER = 1;
+
   typedef string ObjectId;
   typedef sequence <ObjectId> ObjectIdList;
-
-  typedef unsigned short ServiceType;
-  typedef unsigned long ServiceOption;
-  typedef unsigned long ServiceDetailType;
-
-  struct ServiceDetail
-  {
-    ServiceDetailType service_detail_type;
-    sequence <octet> service_detail;
-  };
-
-  struct ServiceInformation
-  {
-    sequence <ServiceOption> service_options;
-    sequence <ServiceDetail> service_details;
-  };
 
   // Portable Interceptor specification adds these types.
   typedef sequence<string> StringSeq;

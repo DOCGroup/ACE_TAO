@@ -35,6 +35,8 @@ namespace CORBA
   TAO_NAMESPACE_INLINE_FUNCTION void add_ref (ValueBase *);
   TAO_NAMESPACE_INLINE_FUNCTION void remove_ref (ValueBase *);
 
+  class ValueBase_var;
+
   /**
    * @class ValueBase
    *
@@ -45,6 +47,9 @@ namespace CORBA
   class TAO_Export ValueBase
   {
   public:
+    typedef ValueBase* _ptr_type;
+    typedef ValueBase_var _var_type;
+
     // reference counting
     /// %! virtual CORBA::ValueBase* _copy_value (void) = 0;
     virtual void _add_ref (void) = 0;
@@ -52,7 +57,10 @@ namespace CORBA
     virtual CORBA::ULong _refcount_value (void) = 0;
 
     // dynamic casting
-    static CORBA::ValueBase* _downcast (CORBA::ValueBase*);
+    static CORBA::ValueBase* _downcast (CORBA::ValueBase *);
+
+    /// Used in the implementation of CORBA::Any
+    static void _tao_any_destructor (void *);
 
     /// TAO extension
     virtual const char* _tao_obv_repository_id (void) const = 0;
@@ -135,6 +143,13 @@ namespace CORBA
     CORBA::ValueBase *&out (void);
     CORBA::ValueBase *_retn (void);
     CORBA::ValueBase *ptr (void) const;
+
+    static CORBA::ValueBase * tao_duplicate (CORBA::ValueBase *);
+    static void tao_release (CORBA::ValueBase *);
+    static CORBA::ValueBase * tao_nil (void);
+    static CORBA::ValueBase * tao_narrow (CORBA::ValueBase *
+                                          ACE_ENV_ARG_DECL_NOT_USED);
+    static CORBA::ValueBase * tao_upcast (void *);
 
   private:
     CORBA::ValueBase *ptr_;

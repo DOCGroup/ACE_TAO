@@ -43,8 +43,7 @@ class TAO_IFRService_Export TAO_SequenceDef_i : public virtual TAO_IDLType_i
   //    Represents an IDL sequence type.
   //
 public:
-  TAO_SequenceDef_i (TAO_Repository_i *repo,
-                     ACE_Configuration_Section_Key section_key);
+  TAO_SequenceDef_i (TAO_Repository_i *repo);
   // Constructor
 
   virtual ~TAO_SequenceDef_i (void);

@@ -1,7 +1,9 @@
+/* -*- C++ -*- */
+// $Id$
+
 #include "DynArray_i.h"
 #include "DynAnyFactory.h"
 #include "tao/Marshal.h"
-
 
 ACE_RCSID (DynamicAny,
            DynArray_i,
@@ -62,13 +64,15 @@ TAO_DynArray_i::init (const CORBA::Any & any
     this->get_element_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  for (CORBA::ULong i = 0; i < numfields; i++)
+  for (CORBA::ULong i = 0; i < numfields; ++i)
     {
-      // This Any constructor is a TAO extension.
-      CORBA::Any field_any (field_tc.in (),
-                            0,
-                            cdr.byte_order (),
-                            cdr.start ());
+      CORBA::Any field_any;
+      TAO::Unknown_IDL_Type *unk = 0;
+      ACE_NEW (unk,
+               TAO::Unknown_IDL_Type (field_tc.in (),
+                                      cdr.start (),
+                                      cdr.byte_order ()));
+      field_any.replace (unk);
 
       // This recursive step will call the correct constructor
       // based on the type of field_any.
@@ -429,11 +433,13 @@ TAO_DynArray_i::from_any (const CORBA::Any& any
 
       for (CORBA::ULong i = 0; i < arg_length; ++i)
         {
-          // This Any constructor is a TAO extension.
-          CORBA::Any field_any (field_tc.in (),
-                               0,
-                               cdr.byte_order (),
-                               cdr.start ());
+          CORBA::Any field_any;
+          TAO::Unknown_IDL_Type *unk = 0;
+          ACE_NEW (unk,
+                   TAO::Unknown_IDL_Type (field_tc.in (),
+                                          cdr.start (),
+                                          cdr.byte_order ()));
+          field_any.replace (unk);
 
           this->da_members_[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
@@ -499,13 +505,19 @@ TAO_DynArray_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
 
   CORBA::Any_ptr retval = 0;
   ACE_NEW_THROW_EX (retval,
-                    CORBA::Any (this->type_.in (),
-                                0,
-                                in_cdr.byte_order (),
-                                in_cdr.start ()),
+                    CORBA::Any,
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
+  TAO::Unknown_IDL_Type *unk = 0;
+  ACE_NEW_THROW_EX (unk,
+                    TAO::Unknown_IDL_Type (this->type_.in (),
+                                           in_cdr.start (),
+                                           in_cdr.byte_order ()),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (0);
+
+  retval->replace (unk);
   return retval;
 }
 

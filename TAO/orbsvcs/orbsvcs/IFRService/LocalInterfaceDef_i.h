@@ -43,29 +43,28 @@ class TAO_IFRService_Export TAO_LocalInterfaceDef_i : public virtual TAO_Interfa
   //    Represents an local interface definition.
   //
 public:
-  TAO_LocalInterfaceDef_i (TAO_Repository_i *repo,
-                           ACE_Configuration_Section_Key section_key);
+  TAO_LocalInterfaceDef_i (TAO_Repository_i *repo);
   // Constructor
 
   virtual ~TAO_LocalInterfaceDef_i (void);
   // Destructor
 
   virtual CORBA::DefinitionKind def_kind (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Return our definition kind.
 
   virtual CORBA::Boolean is_a (
       const char *interface_id
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::Boolean is_a_i (
       const char *interface_id
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 

@@ -25,8 +25,9 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Exception.h"
-#include "Services.h"
+#include "ServicesC.h"
 #include "CORBA_String.h"
+#include "ObjectIdListC.h"
 #include "objectid.h"
 
 // IRIX needs this for the throw specs
@@ -60,6 +61,11 @@ class TAO_ValueFactory_Map;
 
 namespace CORBA
 {
+  class EnumMemberSeq;
+  class StructMemberSeq;
+  class UnionMemberSeq;
+  class ValueMemberSeq;
+
   class ORB_ObjectIdList;
   class ORB_ObjectIdList_var;
   class ORB_ObjectIdList_out;
@@ -407,8 +413,9 @@ namespace CORBA
     void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
     CORBA::Object_ptr resolve_initial_references (
-      const char *name
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+        const char *name
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
 
     /**
      * This method acts as a mini-bootstrapping Naming Service, which is
@@ -498,11 +505,10 @@ namespace CORBA
     /// Factory method that creates an ORB.
     static CORBA::ORB_ptr _tao_make_ORB (TAO_ORB_Core * orb_core);
 
-#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
     // Useful for template programming.
     typedef ORB_ptr _ptr_type;
     typedef ORB_var _var_type;
-#endif /* __GNUC__ */
+
 
     /// Get the Timeout value
     ACE_Time_Value *get_timeout (void);
@@ -614,7 +620,6 @@ namespace CORBA
 
   private:
     CORBA::ORB_ptr ptr_;
-
   };
 
   /**
@@ -640,7 +645,6 @@ namespace CORBA
   private:
     CORBA::ORB_ptr &ptr_;
   };
-
 }  // End namespace CORBA
 
 #if defined (__ACE_INLINE__)

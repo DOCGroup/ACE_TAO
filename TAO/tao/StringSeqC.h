@@ -19,8 +19,11 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#ifndef _TAO_IDL_CORBA_STRINGSEQC_H_
-#define _TAO_IDL_CORBA_STRINGSEQC_H_
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:151
+
+#ifndef _TAO_IDL_ORIG_STRINGSEQC_H_
+#define _TAO_IDL_ORIG_STRINGSEQC_H_
 
 #include "ace/pre.h"
 
@@ -69,10 +72,12 @@ namespace CORBA
   // *************************************************************
   
   class TAO_Export StringSeq : public 
+
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-    TAO_Unbounded_String_Sequence
+  TAO_Unbounded_String_Sequence
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-    TAO_Unbounded_String_Sequence
+  TAO_Unbounded_String_Sequence
+
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
   {
   public:
@@ -87,19 +92,18 @@ namespace CORBA
     StringSeq (const StringSeq &); // copy ctor
     ~StringSeq (void);
     static void _tao_any_destructor (void*);
-
-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
+    
     typedef StringSeq_var _var_type;
-#endif /* ! __GNUC__ || g++ >= 2.8 */
-
   };
-  
-#endif /* end #if !defined */
 
+#endif /* end #if !defined */
 
 #if !defined (_CORBA_STRINGSEQ___VAR_CH_)
 #define _CORBA_STRINGSEQ___VAR_CH_
-
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:549
+  
   // *************************************************************
   // class CORBA::StringSeq_var
   // *************************************************************
@@ -135,9 +139,7 @@ namespace CORBA
     StringSeq *ptr_;
   };
 
-
 #endif /* end #if !defined */
-
 
 #if !defined (_CORBA_STRINGSEQ___OUT_CH_)
 #define _CORBA_STRINGSEQ___OUT_CH_
@@ -154,15 +156,19 @@ namespace CORBA
     StringSeq *&ptr (void);
     StringSeq *operator-> (void);
     TAO_SeqElem_String_Manager operator[] (CORBA::ULong index);
-    
+  
   private:
     StringSeq *&ptr_;
     // assignment from T_var not allowed
     void operator= (const StringSeq_var &);
   };
 
-
 #endif /* end #if !defined */
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_StringSeq;
 
 #if !defined (_CORBA_WSTRINGSEQ_CH_)
 #define _CORBA_WSTRINGSEQ_CH_
@@ -176,9 +182,10 @@ namespace CORBA
   
   class TAO_Export WStringSeq : public 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-    TAO_Unbounded_WString_Sequence
+  TAO_Unbounded_WString_Sequence
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-    TAO_Unbounded_WString_Sequence
+  TAO_Unbounded_WString_Sequence
+
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
   {
   public:
@@ -193,19 +200,18 @@ namespace CORBA
     WStringSeq (const WStringSeq &); // copy ctor
     ~WStringSeq (void);
     static void _tao_any_destructor (void*);
-
-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
+    
     typedef WStringSeq_var _var_type;
-#endif /* ! __GNUC__ || g++ >= 2.8 */
-
   };
-  
-#endif /* end #if !defined */
 
+#endif /* end #if !defined */
 
 #if !defined (_CORBA_WSTRINGSEQ___VAR_CH_)
 #define _CORBA_WSTRINGSEQ___VAR_CH_
-
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:549
+  
   // *************************************************************
   // class WStringSeq_var
   // *************************************************************
@@ -241,9 +247,7 @@ namespace CORBA
     WStringSeq *ptr_;
   };
 
-
 #endif /* end #if !defined */
-
 
 #if !defined (_CORBA_WSTRINGSEQ___OUT_CH_)
 #define _CORBA_WSTRINGSEQ___OUT_CH_
@@ -260,19 +264,17 @@ namespace CORBA
     WStringSeq *&ptr (void);
     WStringSeq *operator-> (void);
     TAO_SeqElem_WString_Manager operator[] (CORBA::ULong index);
-    
+  
   private:
     WStringSeq *&ptr_;
     // assignment from T_var not allowed
     void operator= (const WStringSeq_var &);
   };
 
-
 #endif /* end #if !defined */
-
+  
 }  // End namespace CORBA
 
-// Proxy Broker Factory function pointer declarations.
 
 TAO_Export void operator<<= (CORBA::Any &, const CORBA::StringSeq &); // copying version
 TAO_Export void operator<<= (CORBA::Any &, CORBA::StringSeq*); // noncopying version
@@ -285,6 +287,8 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::WStringS
 
 #ifndef __ACE_INLINE__
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:57
 
 #if !defined _TAO_CDR_OP_CORBA_StringSeq_H_
 #define _TAO_CDR_OP_CORBA_StringSeq_H_
@@ -300,6 +304,8 @@ TAO_Export CORBA::Boolean operator>> (
 
 #endif /* _TAO_CDR_OP_CORBA_StringSeq_H_ */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:57
 
 #if !defined _TAO_CDR_OP_CORBA_WStringSeq_H_
 #define _TAO_CDR_OP_CORBA_WStringSeq_H_
@@ -315,9 +321,13 @@ TAO_Export CORBA::Boolean operator>> (
 
 #endif /* _TAO_CDR_OP_CORBA_WStringSeq_H_ */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:64
 
 #endif /* __ACE_INLINE__ */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1009
 
 #if defined (__ACE_INLINE__)
 #include "StringSeqC.i"
@@ -333,3 +343,4 @@ TAO_Export CORBA::Boolean operator>> (
 
 #include "ace/post.h"
 #endif /* ifndef */
+

@@ -20,52 +20,18 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+
 #if !defined (_RTPORTABLESERVER_POA___CI_)
 #define _RTPORTABLESERVER_POA___CI_
 
-ACE_INLINE RTPortableServer::POA_ptr
-tao_RTPortableServer_POA_duplicate (
-    RTPortableServer::POA_ptr p
-  )
+ACE_INLINE
+CORBA::Boolean
+RTPortableServer::POA::marshal (TAO_OutputCDR &)
 {
-  return RTPortableServer::POA::_duplicate (p);
+  return 0;
 }
-
-ACE_INLINE void
-tao_RTPortableServer_POA_release (
-    RTPortableServer::POA_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE RTPortableServer::POA_ptr
-tao_RTPortableServer_POA_nil (
-    void
-  )
-{
-  return RTPortableServer::POA::_nil ();
-}
-
-ACE_INLINE RTPortableServer::POA_ptr
-tao_RTPortableServer_POA_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return RTPortableServer::POA::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-ACE_INLINE CORBA::Object *
-tao_RTPortableServer_POA_upcast (
-    void *src
-  )
-{
-  RTPortableServer::POA **tmp =
-    ACE_static_cast (RTPortableServer::POA **, src);
-  return *tmp;
-}
-
 
 #endif /* end #if !defined */
 

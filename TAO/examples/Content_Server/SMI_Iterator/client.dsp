@@ -94,6 +94,7 @@ SOURCE=.\client.cpp
 # Begin Source File
 
 SOURCE=.\Web_ServerC.cpp
+# ADD CPP /GR
 # End Source File
 # End Group
 # Begin Group "IDL Files"

@@ -28,6 +28,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "Object_KeyC.h"
+
 namespace CORBA
 {
   /**
@@ -162,7 +164,7 @@ namespace CORBA
     // = TAO extensions
 
     /// Throws CORBA::NO_IMPLEMENT.
-    virtual TAO_ObjectKey *_key (ACE_ENV_SINGLE_ARG_DECL);
+    virtual TAO::ObjectKey *_key (ACE_ENV_SINGLE_ARG_DECL);
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
     /// Useful for template programming.

@@ -45,8 +45,7 @@ class TAO_IFRService_Export TAO_StructDef_i : public virtual TAO_TypedefDef_i,
   //    Represents an OMG IDL structure definition.
   //
 public:
-  TAO_StructDef_i (TAO_Repository_i *repo,
-                   ACE_Configuration_Section_Key section_key);
+  TAO_StructDef_i (TAO_Repository_i *repo);
   // Constructor
 
   virtual ~TAO_StructDef_i (void);

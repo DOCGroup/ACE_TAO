@@ -2150,7 +2150,7 @@ TAO_POA::reference_to_servant_i (CORBA::Object_ptr reference
   int result = -1;
   if (this->cached_policies_.servant_retention () == PortableServer::RETAIN)
     {
-      TAO_ObjectKey_var key = reference->_key (ACE_ENV_SINGLE_ARG_PARAMETER);
+      TAO::ObjectKey_var key = reference->_key (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       // If the object reference was not created by this POA, the
@@ -2279,7 +2279,7 @@ TAO_POA::reference_to_id (CORBA::Object_ptr reference
   // POA on which the operation is being performed.  If the object
   // reference was not created by this POA, the WrongAdapter exception
   // is raised.
-  TAO_ObjectKey_var key = reference->_key (ACE_ENV_SINGLE_ARG_PARAMETER);
+  TAO::ObjectKey_var key = reference->_key (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   PortableServer::ObjectId system_id;
@@ -2443,7 +2443,7 @@ TAO_POA::id_to_reference_i (const PortableServer::ObjectId &id
                                                                            priority) == 0)
     {
       // Create object key.
-      TAO_ObjectKey_var key = this->create_object_key (system_id.in ());
+      TAO::ObjectKey_var key = this->create_object_key (system_id.in ());
 
       // Ask the ORB to create you a reference
       return this->key_to_object (key.in (),
@@ -2804,7 +2804,7 @@ TAO_POA::locate_servant_i (const char *operation,
 
 /* static */
 int
-TAO_POA::parse_key (const TAO_ObjectKey &key,
+TAO_POA::parse_key (const TAO::ObjectKey &key,
                     TAO_Object_Adapter::poa_name &poa_system_name,
                     PortableServer::ObjectId &system_id,
                     CORBA::Boolean &is_root,
@@ -2940,7 +2940,7 @@ TAO_POA::parse_key (const TAO_ObjectKey &key,
   return 0;
 }
 
-TAO_ObjectKey *
+TAO::ObjectKey *
 TAO_POA::create_object_key (const PortableServer::ObjectId &id)
 {
   // Calculate the space required for the key.
@@ -2949,7 +2949,7 @@ TAO_POA::create_object_key (const PortableServer::ObjectId &id)
     id.length ();
 
   // Create the buffer for the key.
-  CORBA::Octet *buffer = TAO_ObjectKey::allocbuf (buffer_size);
+  CORBA::Octet *buffer = TAO::ObjectKey::allocbuf (buffer_size);
 
   // First copy the POA id into the key.
   ACE_OS::memcpy (&buffer[0],
@@ -2963,9 +2963,9 @@ TAO_POA::create_object_key (const PortableServer::ObjectId &id)
 
   // Create the key, giving the ownership of the buffer to the
   // sequence.
-  TAO_ObjectKey *key = 0;
+  TAO::ObjectKey *key = 0;
   ACE_NEW_RETURN (key,
-                  TAO_ObjectKey (buffer_size,
+                  TAO::ObjectKey (buffer_size,
                                  buffer_size,
                                  buffer,
                                  1),
@@ -3261,6 +3261,25 @@ TAO_POA::ObjectId_to_wstring (const PortableServer::ObjectId &id)
   return string;
 }
 
+int
+TAO_POA::parse_ir_object_key (const TAO::ObjectKey &object_key,
+                              PortableServer::ObjectId &user_id)
+{
+  TAO_Object_Adapter::poa_name poa_system_name;
+  CORBA::Boolean is_root = 0;
+  CORBA::Boolean is_persistent = 0;
+  CORBA::Boolean is_system_id = 0;
+  TAO_Temporary_Creation_Time poa_creation_time;
+
+  return TAO_POA::parse_key (object_key,
+                             poa_system_name,
+                             user_id,
+                             is_root,
+                             is_persistent,
+                             is_system_id,
+                             poa_creation_time);
+}
+
 TAO_Object_Adapter &
 TAO_POA::object_adapter (void)
 {
@@ -3373,7 +3392,7 @@ TAO_POA::invoke_key_to_object (const char *intf,
     }
 
   // Create object key.
-  TAO_ObjectKey_var key = this->create_object_key (system_id.in ());
+  TAO::ObjectKey_var key = this->create_object_key (system_id.in ());
 
   CORBA::Object_var object = 0;
 
@@ -3426,7 +3445,7 @@ TAO_POA::invoke_key_to_object (const char *intf,
 }
 
 CORBA::Object_ptr
-TAO_POA::key_to_object (const TAO_ObjectKey &key,
+TAO_POA::key_to_object (const TAO::ObjectKey &key,
                         const char *type_id,
                         TAO_ServantBase *servant,
                         CORBA::Boolean collocated,
@@ -3496,7 +3515,7 @@ TAO_POA::key_to_object (const TAO_ObjectKey &key,
       // Add the key.
 
       CORBA::String_var key_str;
-      TAO_ObjectKey::encode_sequence_to_string (key_str.inout (), key);
+      TAO::ObjectKey::encode_sequence_to_string (key_str.inout (), key);
 
       ior += key_str.in ();
 
@@ -3553,7 +3572,7 @@ orbkey:
 }
 
 TAO_Stub *
-TAO_POA::key_to_stub (const TAO_ObjectKey &key,
+TAO_POA::key_to_stub (const TAO::ObjectKey &key,
                       const char *type_id,
                       CORBA::Short priority
                       ACE_ENV_ARG_DECL)
@@ -3568,7 +3587,7 @@ TAO_POA::key_to_stub (const TAO_ObjectKey &key,
 }
 
 TAO_Stub *
-TAO_POA::key_to_stub_i (const TAO_ObjectKey &key,
+TAO_POA::key_to_stub_i (const TAO::ObjectKey &key,
                         const char *type_id,
                         CORBA::Short priority
                         ACE_ENV_ARG_DECL)
@@ -3740,7 +3759,7 @@ save_ior_component_and_profile_id (const IOP::TaggedComponent &component,
 }
 
 TAO_Stub *
-TAO_POA::create_stub_object (const TAO_ObjectKey &object_key,
+TAO_POA::create_stub_object (const TAO::ObjectKey &object_key,
                              const char *type_id,
                              CORBA::PolicyList *policy_list,
                              TAO_Acceptor_Filter *filter,

@@ -59,7 +59,7 @@ public:
   TAO_Server_Protocol_Acceptor_Filter (RTCORBA::ProtocolList &protocols);
 
   /// Populate <mprofile> based on what's in <protocols_>.
-  int fill_profile (const TAO_ObjectKey &object_key,
+  int fill_profile (const TAO::ObjectKey &object_key,
                     TAO_MProfile &mprofile,
                     TAO_Acceptor **acceptors_begin,
                     TAO_Acceptor **acceptors_end,

@@ -1,11 +1,11 @@
+// $Id$
+
 #include "Constraint_Nodes.h"
 #include "Constraint_Visitors.h"
-
 
 ACE_RCSID (Trader,
            Constraint_Nodes,
            "$Id$")
-
 
 int
 TAO_Noop_Constraint::accept (TAO_Constraint_Visitor* visitor)

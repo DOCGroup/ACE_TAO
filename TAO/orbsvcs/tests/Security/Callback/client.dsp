@@ -98,6 +98,15 @@ SOURCE=.\client_i.cpp
 # Begin Source File
 
 SOURCE=.\clientC.cpp
+
+!IF  "$(CFG)" == "client - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "client - Win32 Debug"
+
+# ADD CPP /GR
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 

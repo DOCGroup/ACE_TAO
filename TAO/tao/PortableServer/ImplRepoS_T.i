@@ -21,7 +21,7 @@
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/tie_si.cpp:96
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:96
 
 #if defined (ACE_HAS_USING_KEYWORD)
 
@@ -116,7 +116,7 @@ POA_ImplementationRepository::ServerObject_tie<T>::_default_POA (ACE_ENV_SINGLE_
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
 void POA_ImplementationRepository::ServerObject_tie<T>::ping  (
@@ -132,7 +132,7 @@ void POA_ImplementationRepository::ServerObject_tie<T>::ping  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
 void POA_ImplementationRepository::ServerObject_tie<T>::shutdown  (
@@ -150,7 +150,7 @@ void POA_ImplementationRepository::ServerObject_tie<T>::shutdown  (
 #endif /* ACE_HAS_USING_KEYWORD */
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/tie_si.cpp:96
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:96
 
 #if defined (ACE_HAS_USING_KEYWORD)
 
@@ -245,7 +245,7 @@ POA_ImplementationRepository::Administration_tie<T>::_default_POA (ACE_ENV_SINGL
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
 void POA_ImplementationRepository::Administration_tie<T>::activate_server  (
@@ -265,7 +265,7 @@ void POA_ImplementationRepository::Administration_tie<T>::activate_server  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
 char * POA_ImplementationRepository::Administration_tie<T>::activate_server_with_startup  (
@@ -287,7 +287,7 @@ char * POA_ImplementationRepository::Administration_tie<T>::activate_server_with
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
 void POA_ImplementationRepository::Administration_tie<T>::register_server  (
@@ -308,7 +308,7 @@ void POA_ImplementationRepository::Administration_tie<T>::register_server  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
 void POA_ImplementationRepository::Administration_tie<T>::reregister_server  (
@@ -328,7 +328,7 @@ void POA_ImplementationRepository::Administration_tie<T>::reregister_server  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
 void POA_ImplementationRepository::Administration_tie<T>::remove_server  (
@@ -347,7 +347,7 @@ void POA_ImplementationRepository::Administration_tie<T>::remove_server  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
 void POA_ImplementationRepository::Administration_tie<T>::shutdown_server  (
@@ -366,7 +366,7 @@ void POA_ImplementationRepository::Administration_tie<T>::shutdown_server  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
 char * POA_ImplementationRepository::Administration_tie<T>::server_is_running  (
@@ -389,7 +389,7 @@ char * POA_ImplementationRepository::Administration_tie<T>::server_is_running  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
 void POA_ImplementationRepository::Administration_tie<T>::server_is_shutting_down  (
@@ -408,7 +408,7 @@ void POA_ImplementationRepository::Administration_tie<T>::server_is_shutting_dow
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
 void POA_ImplementationRepository::Administration_tie<T>::find  (
@@ -429,7 +429,7 @@ void POA_ImplementationRepository::Administration_tie<T>::find  (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
 void POA_ImplementationRepository::Administration_tie<T>::list  (
@@ -453,7 +453,7 @@ void POA_ImplementationRepository::Administration_tie<T>::list  (
 #endif /* ACE_HAS_USING_KEYWORD */
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/tie_si.cpp:96
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:96
 
 #if defined (ACE_HAS_USING_KEYWORD)
 
@@ -548,7 +548,7 @@ POA_ImplementationRepository::ServerInformationIterator_tie<T>::_default_POA (AC
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
 CORBA::Boolean POA_ImplementationRepository::ServerInformationIterator_tie<T>::next_n  (
@@ -568,7 +568,7 @@ CORBA::Boolean POA_ImplementationRepository::ServerInformationIterator_tie<T>::n
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/tie_si.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
 void POA_ImplementationRepository::ServerInformationIterator_tie<T>::destroy  (
@@ -584,4 +584,3 @@ void POA_ImplementationRepository::ServerInformationIterator_tie<T>::destroy  (
 }
 
 #endif /* ACE_HAS_USING_KEYWORD */
-

@@ -21,10 +21,10 @@
 
 
 // TAO_IDL - Generated from 
-// be/be_codegen.cpp:677
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:670
 
-#ifndef _TAO_IDL_ORIG_IFR_BASICS_CPP_
-#define _TAO_IDL_ORIG_IFR_BASICS_CPP_
+#ifndef _TAO_IDL_______ORBSVCS_ORBSVCS_IFRSERVICE_ORIG_IFR_BASICS_CPP_
+#define _TAO_IDL_______ORBSVCS_ORBSVCS_IFRSERVICE_ORIG_IFR_BASICS_CPP_
 
 
 #include "IFR_BasicS.h"
@@ -55,7 +55,7 @@
 
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:1732
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1731
 
 class TAO_CORBA_Repository_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
 {
@@ -66,7 +66,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: /u1/ossama/ACE_wrappers/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_CORBA_Repository_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_CORBA_Repository_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_CORBA_Repository_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -123,14 +123,14 @@ TAO_CORBA_Repository_Perfect_Hash_OpTable::lookup (const char *str, unsigned int
 {
   enum
     {
-      TOTAL_KEYWORDS = 31,
+      TOTAL_KEYWORDS = 32,
       MIN_WORD_LENGTH = 5,
       MAX_WORD_LENGTH = 25,
       MIN_HASH_VALUE = 11,
       MAX_HASH_VALUE = 51,
       HASH_VALUE_RANGE = 41,
-      DUPLICATES = 2,
-      WORDLIST_SIZE = 42
+      DUPLICATES = 3,
+      WORDLIST_SIZE = 43
     };
 
   static const class TAO_operation_db_entry  wordlist[] =
@@ -151,6 +151,7 @@ TAO_CORBA_Repository_Perfect_Hash_OpTable::lookup (const char *str, unsigned int
       {"create_native", 	&POA_CORBA::Repository::create_native_skel},
       {"create_sequence", 	&POA_CORBA::Repository::create_sequence_skel},
       {"create_interface", 	&POA_CORBA::Repository::create_interface_skel},
+      {"create_ext_value", 	&POA_CORBA::Repository::create_ext_value_skel},
       {"create_union", 	&POA_CORBA::Repository::create_union_skel},
       {"get_primitive", 	&POA_CORBA::Repository::get_primitive_skel},
       {"lookup_name", 	&POA_CORBA::Repository::lookup_name_skel},
@@ -172,10 +173,10 @@ TAO_CORBA_Repository_Perfect_Hash_OpTable::lookup (const char *str, unsigned int
 
   static const signed char lookup[] =
     {
-       -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1, -21,  -2,  11,  12,  13, 
-       14,  15,  16,  -1,  17,  18,  -1,  19,  20, -65,  -1,  23,  24,  25, 
-       26,  27,  -1,  28,  29,  -1,  -1,  30,  31,  32,  33,  -1,  34,  35, 
-       36,  37,  -1,  38,  -1,  39,  -1,  -1,  40,  41, 
+       -1,  -1,  -1,  -1,  -1,  -1,  -1, -21,  -2, -24,  -2,  11,  12,  13, 
+       14,  15,  16,  -1,  17,  18,  -1,  19,  20, -67,  -1,  23, -68,  26, 
+       27,  28,  -1,  29,  30,  -1,  -1,  31,  32,  33,  34,  -1,  35,  36, 
+       37,  38,  -1,  39,  -1,  40,  -1,  -1,  41,  42, 
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -212,12 +213,12 @@ TAO_CORBA_Repository_Perfect_Hash_OpTable::lookup (const char *str, unsigned int
 static TAO_CORBA_Repository_Perfect_Hash_OpTable tao_CORBA_Repository_optable;
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interceptors_ss.cpp:52
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interceptors_ss.cpp:52
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_Repository_lookup_id : public TAO_ServerRequestInfo
 {
@@ -274,7 +275,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_Repository_lookup_id::TAO_ServerRequestInfo_CORBA_Repository_lookup_id (
     TAO_ServerRequest &_tao_server_request,
@@ -371,7 +372,7 @@ TAO_ServerRequestInfo_CORBA_Repository_lookup_id::result (::CORBA::Contained_ptr
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_Repository_get_canonical_typecode : public TAO_ServerRequestInfo
 {
@@ -428,7 +429,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_Repository_get_canonical_typecode::TAO_ServerRequestInfo_CORBA_Repository_get_canonical_typecode (
     TAO_ServerRequest &_tao_server_request,
@@ -525,7 +526,7 @@ TAO_ServerRequestInfo_CORBA_Repository_get_canonical_typecode::result (CORBA::Ty
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_Repository_get_primitive : public TAO_ServerRequestInfo
 {
@@ -582,7 +583,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_Repository_get_primitive::TAO_ServerRequestInfo_CORBA_Repository_get_primitive (
     TAO_ServerRequest &_tao_server_request,
@@ -679,7 +680,7 @@ TAO_ServerRequestInfo_CORBA_Repository_get_primitive::result (::CORBA::Primitive
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_Repository_create_string : public TAO_ServerRequestInfo
 {
@@ -736,7 +737,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_Repository_create_string::TAO_ServerRequestInfo_CORBA_Repository_create_string (
     TAO_ServerRequest &_tao_server_request,
@@ -833,7 +834,7 @@ TAO_ServerRequestInfo_CORBA_Repository_create_string::result (::CORBA::StringDef
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_Repository_create_wstring : public TAO_ServerRequestInfo
 {
@@ -890,7 +891,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_Repository_create_wstring::TAO_ServerRequestInfo_CORBA_Repository_create_wstring (
     TAO_ServerRequest &_tao_server_request,
@@ -987,7 +988,7 @@ TAO_ServerRequestInfo_CORBA_Repository_create_wstring::result (::CORBA::WstringD
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_Repository_create_sequence : public TAO_ServerRequestInfo
 {
@@ -1046,7 +1047,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_Repository_create_sequence::TAO_ServerRequestInfo_CORBA_Repository_create_sequence (
     TAO_ServerRequest &_tao_server_request,
@@ -1149,7 +1150,7 @@ TAO_ServerRequestInfo_CORBA_Repository_create_sequence::result (::CORBA::Sequenc
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_Repository_create_array : public TAO_ServerRequestInfo
 {
@@ -1208,7 +1209,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_Repository_create_array::TAO_ServerRequestInfo_CORBA_Repository_create_array (
     TAO_ServerRequest &_tao_server_request,
@@ -1311,7 +1312,7 @@ TAO_ServerRequestInfo_CORBA_Repository_create_array::result (::CORBA::ArrayDef_p
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_Repository_create_fixed : public TAO_ServerRequestInfo
 {
@@ -1370,7 +1371,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_Repository_create_fixed::TAO_ServerRequestInfo_CORBA_Repository_create_fixed (
     TAO_ServerRequest &_tao_server_request,
@@ -1479,7 +1480,7 @@ TAO_ServerRequestInfo_CORBA_Repository_create_fixed::result (::CORBA::FixedDef_p
 //
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/strategized_proxy_broker_ss.cpp:40
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_ss.cpp:40
 
 // Factory function Implementation.
 POA_CORBA::_TAO_Repository_Strategized_Proxy_Broker *POA_CORBA::_TAO_Repository_Strategized_Proxy_Broker::the_TAO_Repository_Strategized_Proxy_Broker (void)
@@ -1568,7 +1569,7 @@ POA_CORBA::_TAO_Repository_Strategized_Proxy_Broker::create_proxy (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:598
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:596
 
 CORBA::_TAO_Repository_Proxy_Broker *
 CORBA__TAO_Repository_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
@@ -1595,7 +1596,7 @@ static int CORBA__TAO_Repository_Proxy_Broker_Stub_Factory_Initializer_Scarecrow
 //
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/thru_poa_proxy_impl_ss.cpp:37
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_ss.cpp:37
 
 POA_CORBA::_TAO_Repository_ThruPOA_Proxy_Impl::_TAO_Repository_ThruPOA_Proxy_Impl (void)
 {}
@@ -1603,7 +1604,7 @@ POA_CORBA::_TAO_Repository_ThruPOA_Proxy_Impl::_TAO_Repository_ThruPOA_Proxy_Imp
 // ThruPOA Implementation of the IDL interface methods
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 ::CORBA::Contained_ptr POA_CORBA::_TAO_Repository_ThruPOA_Proxy_Impl::lookup_id (
     CORBA::Object *_collocated_tao_target_,
@@ -1646,7 +1647,7 @@ POA_CORBA::_TAO_Repository_ThruPOA_Proxy_Impl::_TAO_Repository_ThruPOA_Proxy_Imp
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 CORBA::TypeCode_ptr POA_CORBA::_TAO_Repository_ThruPOA_Proxy_Impl::get_canonical_typecode (
     CORBA::Object *_collocated_tao_target_,
@@ -1689,7 +1690,7 @@ CORBA::TypeCode_ptr POA_CORBA::_TAO_Repository_ThruPOA_Proxy_Impl::get_canonical
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 ::CORBA::PrimitiveDef_ptr POA_CORBA::_TAO_Repository_ThruPOA_Proxy_Impl::get_primitive (
     CORBA::Object *_collocated_tao_target_,
@@ -1732,7 +1733,7 @@ CORBA::TypeCode_ptr POA_CORBA::_TAO_Repository_ThruPOA_Proxy_Impl::get_canonical
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 ::CORBA::StringDef_ptr POA_CORBA::_TAO_Repository_ThruPOA_Proxy_Impl::create_string (
     CORBA::Object *_collocated_tao_target_,
@@ -1775,7 +1776,7 @@ CORBA::TypeCode_ptr POA_CORBA::_TAO_Repository_ThruPOA_Proxy_Impl::get_canonical
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 ::CORBA::WstringDef_ptr POA_CORBA::_TAO_Repository_ThruPOA_Proxy_Impl::create_wstring (
     CORBA::Object *_collocated_tao_target_,
@@ -1818,7 +1819,7 @@ CORBA::TypeCode_ptr POA_CORBA::_TAO_Repository_ThruPOA_Proxy_Impl::get_canonical
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 ::CORBA::SequenceDef_ptr POA_CORBA::_TAO_Repository_ThruPOA_Proxy_Impl::create_sequence (
     CORBA::Object *_collocated_tao_target_,
@@ -1863,7 +1864,7 @@ CORBA::TypeCode_ptr POA_CORBA::_TAO_Repository_ThruPOA_Proxy_Impl::get_canonical
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 ::CORBA::ArrayDef_ptr POA_CORBA::_TAO_Repository_ThruPOA_Proxy_Impl::create_array (
     CORBA::Object *_collocated_tao_target_,
@@ -1908,7 +1909,7 @@ CORBA::TypeCode_ptr POA_CORBA::_TAO_Repository_ThruPOA_Proxy_Impl::get_canonical
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 ::CORBA::FixedDef_ptr POA_CORBA::_TAO_Repository_ThruPOA_Proxy_Impl::create_fixed (
     CORBA::Object *_collocated_tao_target_,
@@ -1955,7 +1956,7 @@ CORBA::TypeCode_ptr POA_CORBA::_TAO_Repository_ThruPOA_Proxy_Impl::get_canonical
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_ss.cpp:98
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:98
 
 POA_CORBA::Repository::Repository (void)
 {
@@ -1973,7 +1974,7 @@ POA_CORBA::Repository::~Repository (void)
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::Repository::lookup_id_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -2110,7 +2111,7 @@ void POA_CORBA::Repository::lookup_id_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::Repository::get_canonical_typecode_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -2247,7 +2248,7 @@ void POA_CORBA::Repository::get_canonical_typecode_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::Repository::get_primitive_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -2384,7 +2385,7 @@ void POA_CORBA::Repository::get_primitive_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::Repository::create_string_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -2521,7 +2522,7 @@ void POA_CORBA::Repository::create_string_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::Repository::create_wstring_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -2658,7 +2659,7 @@ void POA_CORBA::Repository::create_wstring_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::Repository::create_sequence_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -2801,7 +2802,7 @@ void POA_CORBA::Repository::create_sequence_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::Repository::create_array_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -2944,7 +2945,7 @@ void POA_CORBA::Repository::create_array_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::Repository::create_fixed_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -3087,7 +3088,7 @@ void POA_CORBA::Repository::create_fixed_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_ss.cpp:163
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:163
 
 void POA_CORBA::Repository::_is_a_skel (
     TAO_ServerRequest &_tao_server_request, 
@@ -3270,7 +3271,7 @@ const char* POA_CORBA::Repository::_interface_repository_id (void) const
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:532
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:531
 
 void POA_CORBA::Repository::_dispatch (
     TAO_ServerRequest &req,
@@ -3285,7 +3286,7 @@ void POA_CORBA::Repository::_dispatch (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:478
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:477
 
 CORBA::Repository *
 POA_CORBA::Repository::_this (ACE_ENV_SINGLE_ARG_DECL)
@@ -3327,7 +3328,7 @@ POA_CORBA::Repository::_this (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:1732
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1731
 
 class TAO_CORBA_ModuleDef_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
 {
@@ -3338,7 +3339,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: /u1/ossama/ACE_wrappers/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_CORBA_ModuleDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_CORBA_ModuleDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_CORBA_ModuleDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -3395,14 +3396,14 @@ TAO_CORBA_ModuleDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int 
 {
   enum
     {
-      TOTAL_KEYWORDS = 34,
+      TOTAL_KEYWORDS = 35,
       MIN_WORD_LENGTH = 4,
       MAX_WORD_LENGTH = 26,
       MIN_HASH_VALUE = 4,
       MAX_HASH_VALUE = 63,
       HASH_VALUE_RANGE = 60,
-      DUPLICATES = 5,
-      WORDLIST_SIZE = 38
+      DUPLICATES = 6,
+      WORDLIST_SIZE = 39
     };
 
   static const class TAO_operation_db_entry  wordlist[] =
@@ -3414,6 +3415,7 @@ TAO_CORBA_ModuleDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int 
       {"create_module", 	&POA_CORBA::ModuleDef::create_module_skel},
       {"create_native", 	&POA_CORBA::ModuleDef::create_native_skel},
       {"create_interface", 	&POA_CORBA::ModuleDef::create_interface_skel},
+      {"create_ext_value", 	&POA_CORBA::ModuleDef::create_ext_value_skel},
       {"create_union", 	&POA_CORBA::ModuleDef::create_union_skel},
       {"create_exception", 	&POA_CORBA::ModuleDef::create_exception_skel},
       {"create_local_interface", 	&POA_CORBA::ModuleDef::create_local_interface_skel},
@@ -3447,10 +3449,10 @@ TAO_CORBA_ModuleDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int 
   static const signed char lookup[] =
     {
        -1,  -1,  -1,  -1,   4,  -1,  -1,  -1,  -1,  -7,  -2,   5,   6, -67, 
-       -1,  -1,   9,  10,  -1, -18,  -2,  11,  12,  13,  -1,  14,  15,  16, 
-       17, -73,  20,  21,  22, -25,  -2,  23,  24, -67,  27,  -1,  28, -31, 
-       -2,  29,  -1,  30,  -1, -69,  -1,  -1,  -1,  33,  34,  35,  -1,  -1, 
-       -1,  -1,  -1,  -1,  36,  -1,  -1,  37, 
+       -9,  -2, -65,  11,  -1, -19,  -2,  12,  13,  14,  -1,  15,  16,  17, 
+       18, -73,  21,  22,  23, -26,  -2,  24,  25, -67,  28,  -1,  29, -32, 
+       -2,  30,  -1,  31,  -1, -69,  -1,  -1,  -1,  34,  35,  36,  -1,  -1, 
+       -1,  -1,  -1,  -1,  37,  -1,  -1,  38, 
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -3487,7 +3489,7 @@ TAO_CORBA_ModuleDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int 
 static TAO_CORBA_ModuleDef_Perfect_Hash_OpTable tao_CORBA_ModuleDef_optable;
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interceptors_ss.cpp:52
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interceptors_ss.cpp:52
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 
@@ -3498,7 +3500,7 @@ static TAO_CORBA_ModuleDef_Perfect_Hash_OpTable tao_CORBA_ModuleDef_optable;
 //
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/strategized_proxy_broker_ss.cpp:40
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_ss.cpp:40
 
 // Factory function Implementation.
 POA_CORBA::_TAO_ModuleDef_Strategized_Proxy_Broker *POA_CORBA::_TAO_ModuleDef_Strategized_Proxy_Broker::the_TAO_ModuleDef_Strategized_Proxy_Broker (void)
@@ -3587,7 +3589,7 @@ POA_CORBA::_TAO_ModuleDef_Strategized_Proxy_Broker::create_proxy (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:598
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:596
 
 CORBA::_TAO_ModuleDef_Proxy_Broker *
 CORBA__TAO_ModuleDef_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
@@ -3614,7 +3616,7 @@ static int CORBA__TAO_ModuleDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow 
 //
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/thru_poa_proxy_impl_ss.cpp:37
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_ss.cpp:37
 
 POA_CORBA::_TAO_ModuleDef_ThruPOA_Proxy_Impl::_TAO_ModuleDef_ThruPOA_Proxy_Impl (void)
 {}
@@ -3624,7 +3626,7 @@ POA_CORBA::_TAO_ModuleDef_ThruPOA_Proxy_Impl::_TAO_ModuleDef_ThruPOA_Proxy_Impl 
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_ss.cpp:98
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:98
 
 POA_CORBA::ModuleDef::ModuleDef (void)
 {
@@ -3643,7 +3645,7 @@ POA_CORBA::ModuleDef::~ModuleDef (void)
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_ss.cpp:163
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:163
 
 void POA_CORBA::ModuleDef::_is_a_skel (
     TAO_ServerRequest &_tao_server_request, 
@@ -3836,7 +3838,7 @@ const char* POA_CORBA::ModuleDef::_interface_repository_id (void) const
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:532
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:531
 
 void POA_CORBA::ModuleDef::_dispatch (
     TAO_ServerRequest &req,
@@ -3851,7 +3853,7 @@ void POA_CORBA::ModuleDef::_dispatch (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:478
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:477
 
 CORBA::ModuleDef *
 POA_CORBA::ModuleDef::_this (ACE_ENV_SINGLE_ARG_DECL)
@@ -3893,7 +3895,7 @@ POA_CORBA::ModuleDef::_this (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:1732
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1731
 
 class TAO_CORBA_ConstantDef_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
 {
@@ -3904,7 +3906,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: /u1/ossama/ACE_wrappers/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_CORBA_ConstantDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_CORBA_ConstantDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_CORBA_ConstantDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -4039,12 +4041,12 @@ TAO_CORBA_ConstantDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned in
 static TAO_CORBA_ConstantDef_Perfect_Hash_OpTable tao_CORBA_ConstantDef_optable;
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interceptors_ss.cpp:52
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interceptors_ss.cpp:52
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_ConstantDef_type_get : public TAO_ServerRequestInfo
 {
@@ -4099,7 +4101,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_ConstantDef_type_get::TAO_ServerRequestInfo_CORBA_ConstantDef_type_get (
     TAO_ServerRequest &_tao_server_request,
@@ -4186,7 +4188,7 @@ TAO_ServerRequestInfo_CORBA_ConstantDef_type_get::result (CORBA::TypeCode_ptr re
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_ConstantDef_type_def_get : public TAO_ServerRequestInfo
 {
@@ -4241,7 +4243,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_ConstantDef_type_def_get::TAO_ServerRequestInfo_CORBA_ConstantDef_type_def_get (
     TAO_ServerRequest &_tao_server_request,
@@ -4328,7 +4330,7 @@ TAO_ServerRequestInfo_CORBA_ConstantDef_type_def_get::result (::CORBA::IDLType_p
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_ConstantDef_type_def_set : public TAO_ServerRequestInfo
 {
@@ -4383,7 +4385,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_ConstantDef_type_def_set::TAO_ServerRequestInfo_CORBA_ConstantDef_type_def_set (
     TAO_ServerRequest &_tao_server_request,
@@ -4469,7 +4471,7 @@ TAO_ServerRequestInfo_CORBA_ConstantDef_type_def_set::target_is_a (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_ConstantDef_value_get : public TAO_ServerRequestInfo
 {
@@ -4524,7 +4526,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_ConstantDef_value_get::TAO_ServerRequestInfo_CORBA_ConstantDef_value_get (
     TAO_ServerRequest &_tao_server_request,
@@ -4611,7 +4613,7 @@ TAO_ServerRequestInfo_CORBA_ConstantDef_value_get::result (CORBA::Any * result)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_ConstantDef_value_set : public TAO_ServerRequestInfo
 {
@@ -4666,7 +4668,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_ConstantDef_value_set::TAO_ServerRequestInfo_CORBA_ConstantDef_value_set (
     TAO_ServerRequest &_tao_server_request,
@@ -4758,7 +4760,7 @@ TAO_ServerRequestInfo_CORBA_ConstantDef_value_set::target_is_a (
 //
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/strategized_proxy_broker_ss.cpp:40
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_ss.cpp:40
 
 // Factory function Implementation.
 POA_CORBA::_TAO_ConstantDef_Strategized_Proxy_Broker *POA_CORBA::_TAO_ConstantDef_Strategized_Proxy_Broker::the_TAO_ConstantDef_Strategized_Proxy_Broker (void)
@@ -4847,7 +4849,7 @@ POA_CORBA::_TAO_ConstantDef_Strategized_Proxy_Broker::create_proxy (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:598
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:596
 
 CORBA::_TAO_ConstantDef_Proxy_Broker *
 CORBA__TAO_ConstantDef_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
@@ -4874,7 +4876,7 @@ static int CORBA__TAO_ConstantDef_Proxy_Broker_Stub_Factory_Initializer_Scarecro
 //
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/thru_poa_proxy_impl_ss.cpp:37
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_ss.cpp:37
 
 POA_CORBA::_TAO_ConstantDef_ThruPOA_Proxy_Impl::_TAO_ConstantDef_ThruPOA_Proxy_Impl (void)
 {}
@@ -4882,7 +4884,7 @@ POA_CORBA::_TAO_ConstantDef_ThruPOA_Proxy_Impl::_TAO_ConstantDef_ThruPOA_Proxy_I
 // ThruPOA Implementation of the IDL interface methods
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 CORBA::TypeCode_ptr POA_CORBA::_TAO_ConstantDef_ThruPOA_Proxy_Impl::type (
     CORBA::Object *_collocated_tao_target_
@@ -4923,7 +4925,7 @@ CORBA::TypeCode_ptr POA_CORBA::_TAO_ConstantDef_ThruPOA_Proxy_Impl::type (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 ::CORBA::IDLType_ptr POA_CORBA::_TAO_ConstantDef_ThruPOA_Proxy_Impl::type_def (
     CORBA::Object *_collocated_tao_target_
@@ -4964,7 +4966,7 @@ CORBA::TypeCode_ptr POA_CORBA::_TAO_ConstantDef_ThruPOA_Proxy_Impl::type (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 void POA_CORBA::_TAO_ConstantDef_ThruPOA_Proxy_Impl::type_def (
     CORBA::Object *_collocated_tao_target_,
@@ -5006,7 +5008,7 @@ void POA_CORBA::_TAO_ConstantDef_ThruPOA_Proxy_Impl::type_def (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 CORBA::Any * POA_CORBA::_TAO_ConstantDef_ThruPOA_Proxy_Impl::value (
     CORBA::Object *_collocated_tao_target_
@@ -5047,7 +5049,7 @@ CORBA::Any * POA_CORBA::_TAO_ConstantDef_ThruPOA_Proxy_Impl::value (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 void POA_CORBA::_TAO_ConstantDef_ThruPOA_Proxy_Impl::value (
     CORBA::Object *_collocated_tao_target_,
@@ -5091,7 +5093,7 @@ void POA_CORBA::_TAO_ConstantDef_ThruPOA_Proxy_Impl::value (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_ss.cpp:98
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:98
 
 POA_CORBA::ConstantDef::ConstantDef (void)
 {
@@ -5109,7 +5111,7 @@ POA_CORBA::ConstantDef::~ConstantDef (void)
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::ConstantDef::_get_type_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -5236,7 +5238,7 @@ void POA_CORBA::ConstantDef::_get_type_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::ConstantDef::_get_type_def_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -5363,7 +5365,7 @@ void POA_CORBA::ConstantDef::_get_type_def_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::ConstantDef::_set_type_def_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -5491,7 +5493,7 @@ void POA_CORBA::ConstantDef::_set_type_def_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::ConstantDef::_get_value_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -5618,7 +5620,7 @@ void POA_CORBA::ConstantDef::_get_value_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::ConstantDef::_set_value_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -5746,7 +5748,7 @@ void POA_CORBA::ConstantDef::_set_value_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_ss.cpp:163
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:163
 
 void POA_CORBA::ConstantDef::_is_a_skel (
     TAO_ServerRequest &_tao_server_request, 
@@ -5929,7 +5931,7 @@ const char* POA_CORBA::ConstantDef::_interface_repository_id (void) const
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:532
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:531
 
 void POA_CORBA::ConstantDef::_dispatch (
     TAO_ServerRequest &req,
@@ -5944,7 +5946,7 @@ void POA_CORBA::ConstantDef::_dispatch (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:478
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:477
 
 CORBA::ConstantDef *
 POA_CORBA::ConstantDef::_this (ACE_ENV_SINGLE_ARG_DECL)
@@ -5986,7 +5988,7 @@ POA_CORBA::ConstantDef::_this (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:1732
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1731
 
 class TAO_CORBA_StructDef_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
 {
@@ -5997,7 +5999,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: /u1/ossama/ACE_wrappers/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_CORBA_StructDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_CORBA_StructDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_CORBA_StructDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -6054,14 +6056,14 @@ TAO_CORBA_StructDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int 
 {
   enum
     {
-      TOTAL_KEYWORDS = 37,
+      TOTAL_KEYWORDS = 38,
       MIN_WORD_LENGTH = 4,
       MAX_WORD_LENGTH = 26,
       MIN_HASH_VALUE = 5,
       MAX_HASH_VALUE = 60,
       HASH_VALUE_RANGE = 56,
-      DUPLICATES = 7,
-      WORDLIST_SIZE = 42
+      DUPLICATES = 8,
+      WORDLIST_SIZE = 43
     };
 
   static const class TAO_operation_db_entry  wordlist[] =
@@ -6093,6 +6095,7 @@ TAO_CORBA_StructDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int 
       {"create_module", 	&POA_CORBA::StructDef::create_module_skel},
       {"create_native", 	&POA_CORBA::StructDef::create_native_skel},
       {"create_interface", 	&POA_CORBA::StructDef::create_interface_skel},
+      {"create_ext_value", 	&POA_CORBA::StructDef::create_ext_value_skel},
       {"create_union", 	&POA_CORBA::StructDef::create_union_skel},
       {"describe_contents", 	&POA_CORBA::StructDef::describe_contents_skel},
       {"create_exception", 	&POA_CORBA::StructDef::create_exception_skel},
@@ -6110,9 +6113,9 @@ TAO_CORBA_StructDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int 
     {
        -1,  -1,  -1,  -7,  -3,   5,   6, -12,  -2, -66,  10,  11,  -1, -15, 
        -2, -68,  14, -64,  17,  18,  19,  20,  -1,  -1,  -1,  21,  -1,  -1, 
-      -23,  -2,  22,  -1, -64,  25, -28,  -2,  26,  27, -64,  -1,  -1,  30, 
-       31,  -1,  -1,  32,  33,  34,  -1,  -1,  35,  36,  -1,  37,  -1,  -1, 
-       38,  39,  40,  -1,  41, 
+      -23,  -2,  22,  -1, -64,  25, -28,  -2,  26,  27, -64, -30,  -2, -62, 
+       32,  -1,  -1,  33,  34,  35,  -1,  -1,  36,  37,  -1,  38,  -1,  -1, 
+       39,  40,  41,  -1,  42, 
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -6149,12 +6152,12 @@ TAO_CORBA_StructDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int 
 static TAO_CORBA_StructDef_Perfect_Hash_OpTable tao_CORBA_StructDef_optable;
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interceptors_ss.cpp:52
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interceptors_ss.cpp:52
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_StructDef_members_get : public TAO_ServerRequestInfo
 {
@@ -6209,7 +6212,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_StructDef_members_get::TAO_ServerRequestInfo_CORBA_StructDef_members_get (
     TAO_ServerRequest &_tao_server_request,
@@ -6296,7 +6299,7 @@ TAO_ServerRequestInfo_CORBA_StructDef_members_get::result (::CORBA::StructMember
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_StructDef_members_set : public TAO_ServerRequestInfo
 {
@@ -6351,7 +6354,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_StructDef_members_set::TAO_ServerRequestInfo_CORBA_StructDef_members_set (
     TAO_ServerRequest &_tao_server_request,
@@ -6443,7 +6446,7 @@ TAO_ServerRequestInfo_CORBA_StructDef_members_set::target_is_a (
 //
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/strategized_proxy_broker_ss.cpp:40
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_ss.cpp:40
 
 // Factory function Implementation.
 POA_CORBA::_TAO_StructDef_Strategized_Proxy_Broker *POA_CORBA::_TAO_StructDef_Strategized_Proxy_Broker::the_TAO_StructDef_Strategized_Proxy_Broker (void)
@@ -6532,7 +6535,7 @@ POA_CORBA::_TAO_StructDef_Strategized_Proxy_Broker::create_proxy (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:598
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:596
 
 CORBA::_TAO_StructDef_Proxy_Broker *
 CORBA__TAO_StructDef_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
@@ -6559,7 +6562,7 @@ static int CORBA__TAO_StructDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow 
 //
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/thru_poa_proxy_impl_ss.cpp:37
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_ss.cpp:37
 
 POA_CORBA::_TAO_StructDef_ThruPOA_Proxy_Impl::_TAO_StructDef_ThruPOA_Proxy_Impl (void)
 {}
@@ -6567,7 +6570,7 @@ POA_CORBA::_TAO_StructDef_ThruPOA_Proxy_Impl::_TAO_StructDef_ThruPOA_Proxy_Impl 
 // ThruPOA Implementation of the IDL interface methods
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 ::CORBA::StructMemberSeq * POA_CORBA::_TAO_StructDef_ThruPOA_Proxy_Impl::members (
     CORBA::Object *_collocated_tao_target_
@@ -6608,7 +6611,7 @@ POA_CORBA::_TAO_StructDef_ThruPOA_Proxy_Impl::_TAO_StructDef_ThruPOA_Proxy_Impl 
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 void POA_CORBA::_TAO_StructDef_ThruPOA_Proxy_Impl::members (
     CORBA::Object *_collocated_tao_target_,
@@ -6652,7 +6655,7 @@ void POA_CORBA::_TAO_StructDef_ThruPOA_Proxy_Impl::members (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_ss.cpp:98
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:98
 
 POA_CORBA::StructDef::StructDef (void)
 {
@@ -6673,7 +6676,7 @@ POA_CORBA::StructDef::~StructDef (void)
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::StructDef::_get_members_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -6800,7 +6803,7 @@ void POA_CORBA::StructDef::_get_members_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::StructDef::_set_members_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -6928,7 +6931,7 @@ void POA_CORBA::StructDef::_set_members_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_ss.cpp:163
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:163
 
 void POA_CORBA::StructDef::_is_a_skel (
     TAO_ServerRequest &_tao_server_request, 
@@ -7141,7 +7144,7 @@ const char* POA_CORBA::StructDef::_interface_repository_id (void) const
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:532
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:531
 
 void POA_CORBA::StructDef::_dispatch (
     TAO_ServerRequest &req,
@@ -7156,7 +7159,7 @@ void POA_CORBA::StructDef::_dispatch (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:478
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:477
 
 CORBA::StructDef *
 POA_CORBA::StructDef::_this (ACE_ENV_SINGLE_ARG_DECL)
@@ -7198,7 +7201,7 @@ POA_CORBA::StructDef::_this (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:1732
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1731
 
 class TAO_CORBA_UnionDef_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
 {
@@ -7209,7 +7212,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: /u1/ossama/ACE_wrappers/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_CORBA_UnionDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_CORBA_UnionDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_CORBA_UnionDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -7266,14 +7269,14 @@ TAO_CORBA_UnionDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int l
 {
   enum
     {
-      TOTAL_KEYWORDS = 40,
+      TOTAL_KEYWORDS = 41,
       MIN_WORD_LENGTH = 4,
       MAX_WORD_LENGTH = 27,
       MIN_HASH_VALUE = 4,
       MAX_HASH_VALUE = 92,
       HASH_VALUE_RANGE = 89,
-      DUPLICATES = 8,
-      WORDLIST_SIZE = 44
+      DUPLICATES = 9,
+      WORDLIST_SIZE = 45
     };
 
   static const class TAO_operation_db_entry  wordlist[] =
@@ -7304,6 +7307,7 @@ TAO_CORBA_UnionDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int l
       {"create_module", 	&POA_CORBA::UnionDef::create_module_skel},
       {"create_native", 	&POA_CORBA::UnionDef::create_native_skel},
       {"create_interface", 	&POA_CORBA::UnionDef::create_interface_skel},
+      {"create_ext_value", 	&POA_CORBA::UnionDef::create_ext_value_skel},
       {"create_union", 	&POA_CORBA::UnionDef::create_union_skel},
       {"create_exception", 	&POA_CORBA::UnionDef::create_exception_skel},
       {"create_local_interface", 	&POA_CORBA::UnionDef::create_local_interface_skel},
@@ -7325,11 +7329,11 @@ TAO_CORBA_UnionDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int l
     {
        -1,  -1,  -1,  -1,   4,   5,   6,  -7,  -3, -94,  10,  11,  -1,  -1, 
        -1, -12,  -2, -94,  14,  -1,  15,  -1,  -1,  16,  -1, -17,  -2, -94, 
-      -21,  -2,  19,  20, -96,  23, -26,  -2,  24,  25, -96,  -1,  -1,  28, 
-       29,  -1,  -1,  -1,  30,  31,  -1,  -1,  32,  33,  -1,  34,  -1, -38, 
-       -2,  35,  36,  -1,  37,  -1, -99,  40,  -1,  -1,  -1,  41,  42,  -1, 
+      -21,  -2,  19,  20, -96,  23, -26,  -2,  24,  25, -96, -28,  -2, -94, 
+       30,  -1,  -1,  -1,  31,  32,  -1,  -1,  33,  34,  -1,  35,  -1, -39, 
+       -2,  36,  37,  -1,  38,  -1, -99,  41,  -1,  -1,  -1,  42,  43,  -1, 
        -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1, 
-       -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  43, 
+       -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  44, 
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -7366,12 +7370,12 @@ TAO_CORBA_UnionDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int l
 static TAO_CORBA_UnionDef_Perfect_Hash_OpTable tao_CORBA_UnionDef_optable;
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interceptors_ss.cpp:52
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interceptors_ss.cpp:52
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_UnionDef_discriminator_type_get : public TAO_ServerRequestInfo
 {
@@ -7426,7 +7430,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_UnionDef_discriminator_type_get::TAO_ServerRequestInfo_CORBA_UnionDef_discriminator_type_get (
     TAO_ServerRequest &_tao_server_request,
@@ -7513,7 +7517,7 @@ TAO_ServerRequestInfo_CORBA_UnionDef_discriminator_type_get::result (CORBA::Type
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_UnionDef_discriminator_type_def_get : public TAO_ServerRequestInfo
 {
@@ -7568,7 +7572,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_UnionDef_discriminator_type_def_get::TAO_ServerRequestInfo_CORBA_UnionDef_discriminator_type_def_get (
     TAO_ServerRequest &_tao_server_request,
@@ -7655,7 +7659,7 @@ TAO_ServerRequestInfo_CORBA_UnionDef_discriminator_type_def_get::result (::CORBA
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_UnionDef_discriminator_type_def_set : public TAO_ServerRequestInfo
 {
@@ -7710,7 +7714,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_UnionDef_discriminator_type_def_set::TAO_ServerRequestInfo_CORBA_UnionDef_discriminator_type_def_set (
     TAO_ServerRequest &_tao_server_request,
@@ -7796,7 +7800,7 @@ TAO_ServerRequestInfo_CORBA_UnionDef_discriminator_type_def_set::target_is_a (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_UnionDef_members_get : public TAO_ServerRequestInfo
 {
@@ -7851,7 +7855,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_UnionDef_members_get::TAO_ServerRequestInfo_CORBA_UnionDef_members_get (
     TAO_ServerRequest &_tao_server_request,
@@ -7938,7 +7942,7 @@ TAO_ServerRequestInfo_CORBA_UnionDef_members_get::result (::CORBA::UnionMemberSe
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_UnionDef_members_set : public TAO_ServerRequestInfo
 {
@@ -7993,7 +7997,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_UnionDef_members_set::TAO_ServerRequestInfo_CORBA_UnionDef_members_set (
     TAO_ServerRequest &_tao_server_request,
@@ -8085,7 +8089,7 @@ TAO_ServerRequestInfo_CORBA_UnionDef_members_set::target_is_a (
 //
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/strategized_proxy_broker_ss.cpp:40
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_ss.cpp:40
 
 // Factory function Implementation.
 POA_CORBA::_TAO_UnionDef_Strategized_Proxy_Broker *POA_CORBA::_TAO_UnionDef_Strategized_Proxy_Broker::the_TAO_UnionDef_Strategized_Proxy_Broker (void)
@@ -8174,7 +8178,7 @@ POA_CORBA::_TAO_UnionDef_Strategized_Proxy_Broker::create_proxy (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:598
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:596
 
 CORBA::_TAO_UnionDef_Proxy_Broker *
 CORBA__TAO_UnionDef_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
@@ -8201,7 +8205,7 @@ static int CORBA__TAO_UnionDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
 //
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/thru_poa_proxy_impl_ss.cpp:37
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_ss.cpp:37
 
 POA_CORBA::_TAO_UnionDef_ThruPOA_Proxy_Impl::_TAO_UnionDef_ThruPOA_Proxy_Impl (void)
 {}
@@ -8209,7 +8213,7 @@ POA_CORBA::_TAO_UnionDef_ThruPOA_Proxy_Impl::_TAO_UnionDef_ThruPOA_Proxy_Impl (v
 // ThruPOA Implementation of the IDL interface methods
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 CORBA::TypeCode_ptr POA_CORBA::_TAO_UnionDef_ThruPOA_Proxy_Impl::discriminator_type (
     CORBA::Object *_collocated_tao_target_
@@ -8250,7 +8254,7 @@ CORBA::TypeCode_ptr POA_CORBA::_TAO_UnionDef_ThruPOA_Proxy_Impl::discriminator_t
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 ::CORBA::IDLType_ptr POA_CORBA::_TAO_UnionDef_ThruPOA_Proxy_Impl::discriminator_type_def (
     CORBA::Object *_collocated_tao_target_
@@ -8291,7 +8295,7 @@ CORBA::TypeCode_ptr POA_CORBA::_TAO_UnionDef_ThruPOA_Proxy_Impl::discriminator_t
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 void POA_CORBA::_TAO_UnionDef_ThruPOA_Proxy_Impl::discriminator_type_def (
     CORBA::Object *_collocated_tao_target_,
@@ -8333,7 +8337,7 @@ void POA_CORBA::_TAO_UnionDef_ThruPOA_Proxy_Impl::discriminator_type_def (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 ::CORBA::UnionMemberSeq * POA_CORBA::_TAO_UnionDef_ThruPOA_Proxy_Impl::members (
     CORBA::Object *_collocated_tao_target_
@@ -8374,7 +8378,7 @@ void POA_CORBA::_TAO_UnionDef_ThruPOA_Proxy_Impl::discriminator_type_def (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 void POA_CORBA::_TAO_UnionDef_ThruPOA_Proxy_Impl::members (
     CORBA::Object *_collocated_tao_target_,
@@ -8418,7 +8422,7 @@ void POA_CORBA::_TAO_UnionDef_ThruPOA_Proxy_Impl::members (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_ss.cpp:98
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:98
 
 POA_CORBA::UnionDef::UnionDef (void)
 {
@@ -8439,7 +8443,7 @@ POA_CORBA::UnionDef::~UnionDef (void)
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::UnionDef::_get_discriminator_type_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -8566,7 +8570,7 @@ void POA_CORBA::UnionDef::_get_discriminator_type_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::UnionDef::_get_discriminator_type_def_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -8693,7 +8697,7 @@ void POA_CORBA::UnionDef::_get_discriminator_type_def_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::UnionDef::_set_discriminator_type_def_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -8821,7 +8825,7 @@ void POA_CORBA::UnionDef::_set_discriminator_type_def_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::UnionDef::_get_members_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -8948,7 +8952,7 @@ void POA_CORBA::UnionDef::_get_members_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::UnionDef::_set_members_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -9076,7 +9080,7 @@ void POA_CORBA::UnionDef::_set_members_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_ss.cpp:163
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:163
 
 void POA_CORBA::UnionDef::_is_a_skel (
     TAO_ServerRequest &_tao_server_request, 
@@ -9289,7 +9293,7 @@ const char* POA_CORBA::UnionDef::_interface_repository_id (void) const
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:532
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:531
 
 void POA_CORBA::UnionDef::_dispatch (
     TAO_ServerRequest &req,
@@ -9304,7 +9308,7 @@ void POA_CORBA::UnionDef::_dispatch (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:478
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:477
 
 CORBA::UnionDef *
 POA_CORBA::UnionDef::_this (ACE_ENV_SINGLE_ARG_DECL)
@@ -9346,7 +9350,7 @@ POA_CORBA::UnionDef::_this (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:1732
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1731
 
 class TAO_CORBA_EnumDef_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
 {
@@ -9357,7 +9361,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: /u1/ossama/ACE_wrappers/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_CORBA_EnumDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_CORBA_EnumDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_CORBA_EnumDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -9490,12 +9494,12 @@ TAO_CORBA_EnumDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int le
 static TAO_CORBA_EnumDef_Perfect_Hash_OpTable tao_CORBA_EnumDef_optable;
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interceptors_ss.cpp:52
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interceptors_ss.cpp:52
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_EnumDef_members_get : public TAO_ServerRequestInfo
 {
@@ -9550,7 +9554,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_EnumDef_members_get::TAO_ServerRequestInfo_CORBA_EnumDef_members_get (
     TAO_ServerRequest &_tao_server_request,
@@ -9637,7 +9641,7 @@ TAO_ServerRequestInfo_CORBA_EnumDef_members_get::result (::CORBA::EnumMemberSeq 
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_EnumDef_members_set : public TAO_ServerRequestInfo
 {
@@ -9692,7 +9696,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_EnumDef_members_set::TAO_ServerRequestInfo_CORBA_EnumDef_members_set (
     TAO_ServerRequest &_tao_server_request,
@@ -9784,7 +9788,7 @@ TAO_ServerRequestInfo_CORBA_EnumDef_members_set::target_is_a (
 //
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/strategized_proxy_broker_ss.cpp:40
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_ss.cpp:40
 
 // Factory function Implementation.
 POA_CORBA::_TAO_EnumDef_Strategized_Proxy_Broker *POA_CORBA::_TAO_EnumDef_Strategized_Proxy_Broker::the_TAO_EnumDef_Strategized_Proxy_Broker (void)
@@ -9873,7 +9877,7 @@ POA_CORBA::_TAO_EnumDef_Strategized_Proxy_Broker::create_proxy (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:598
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:596
 
 CORBA::_TAO_EnumDef_Proxy_Broker *
 CORBA__TAO_EnumDef_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
@@ -9900,7 +9904,7 @@ static int CORBA__TAO_EnumDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
 //
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/thru_poa_proxy_impl_ss.cpp:37
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_ss.cpp:37
 
 POA_CORBA::_TAO_EnumDef_ThruPOA_Proxy_Impl::_TAO_EnumDef_ThruPOA_Proxy_Impl (void)
 {}
@@ -9908,7 +9912,7 @@ POA_CORBA::_TAO_EnumDef_ThruPOA_Proxy_Impl::_TAO_EnumDef_ThruPOA_Proxy_Impl (voi
 // ThruPOA Implementation of the IDL interface methods
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 ::CORBA::EnumMemberSeq * POA_CORBA::_TAO_EnumDef_ThruPOA_Proxy_Impl::members (
     CORBA::Object *_collocated_tao_target_
@@ -9949,7 +9953,7 @@ POA_CORBA::_TAO_EnumDef_ThruPOA_Proxy_Impl::_TAO_EnumDef_ThruPOA_Proxy_Impl (voi
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 void POA_CORBA::_TAO_EnumDef_ThruPOA_Proxy_Impl::members (
     CORBA::Object *_collocated_tao_target_,
@@ -9993,7 +9997,7 @@ void POA_CORBA::_TAO_EnumDef_ThruPOA_Proxy_Impl::members (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_ss.cpp:98
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:98
 
 POA_CORBA::EnumDef::EnumDef (void)
 {
@@ -10013,7 +10017,7 @@ POA_CORBA::EnumDef::~EnumDef (void)
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::EnumDef::_get_members_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -10140,7 +10144,7 @@ void POA_CORBA::EnumDef::_get_members_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::EnumDef::_set_members_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -10268,7 +10272,7 @@ void POA_CORBA::EnumDef::_set_members_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_ss.cpp:163
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:163
 
 void POA_CORBA::EnumDef::_is_a_skel (
     TAO_ServerRequest &_tao_server_request, 
@@ -10471,7 +10475,7 @@ const char* POA_CORBA::EnumDef::_interface_repository_id (void) const
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:532
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:531
 
 void POA_CORBA::EnumDef::_dispatch (
     TAO_ServerRequest &req,
@@ -10486,7 +10490,7 @@ void POA_CORBA::EnumDef::_dispatch (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:478
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:477
 
 CORBA::EnumDef *
 POA_CORBA::EnumDef::_this (ACE_ENV_SINGLE_ARG_DECL)
@@ -10528,7 +10532,7 @@ POA_CORBA::EnumDef::_this (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:1732
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1731
 
 class TAO_CORBA_AliasDef_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
 {
@@ -10539,7 +10543,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: /u1/ossama/ACE_wrappers/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_CORBA_AliasDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_CORBA_AliasDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_CORBA_AliasDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -10672,12 +10676,12 @@ TAO_CORBA_AliasDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int l
 static TAO_CORBA_AliasDef_Perfect_Hash_OpTable tao_CORBA_AliasDef_optable;
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interceptors_ss.cpp:52
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interceptors_ss.cpp:52
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_AliasDef_original_type_def_get : public TAO_ServerRequestInfo
 {
@@ -10732,7 +10736,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_AliasDef_original_type_def_get::TAO_ServerRequestInfo_CORBA_AliasDef_original_type_def_get (
     TAO_ServerRequest &_tao_server_request,
@@ -10819,7 +10823,7 @@ TAO_ServerRequestInfo_CORBA_AliasDef_original_type_def_get::result (::CORBA::IDL
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_AliasDef_original_type_def_set : public TAO_ServerRequestInfo
 {
@@ -10874,7 +10878,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_AliasDef_original_type_def_set::TAO_ServerRequestInfo_CORBA_AliasDef_original_type_def_set (
     TAO_ServerRequest &_tao_server_request,
@@ -10966,7 +10970,7 @@ TAO_ServerRequestInfo_CORBA_AliasDef_original_type_def_set::target_is_a (
 //
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/strategized_proxy_broker_ss.cpp:40
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_ss.cpp:40
 
 // Factory function Implementation.
 POA_CORBA::_TAO_AliasDef_Strategized_Proxy_Broker *POA_CORBA::_TAO_AliasDef_Strategized_Proxy_Broker::the_TAO_AliasDef_Strategized_Proxy_Broker (void)
@@ -11055,7 +11059,7 @@ POA_CORBA::_TAO_AliasDef_Strategized_Proxy_Broker::create_proxy (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:598
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:596
 
 CORBA::_TAO_AliasDef_Proxy_Broker *
 CORBA__TAO_AliasDef_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
@@ -11082,7 +11086,7 @@ static int CORBA__TAO_AliasDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
 //
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/thru_poa_proxy_impl_ss.cpp:37
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_ss.cpp:37
 
 POA_CORBA::_TAO_AliasDef_ThruPOA_Proxy_Impl::_TAO_AliasDef_ThruPOA_Proxy_Impl (void)
 {}
@@ -11090,7 +11094,7 @@ POA_CORBA::_TAO_AliasDef_ThruPOA_Proxy_Impl::_TAO_AliasDef_ThruPOA_Proxy_Impl (v
 // ThruPOA Implementation of the IDL interface methods
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 ::CORBA::IDLType_ptr POA_CORBA::_TAO_AliasDef_ThruPOA_Proxy_Impl::original_type_def (
     CORBA::Object *_collocated_tao_target_
@@ -11131,7 +11135,7 @@ POA_CORBA::_TAO_AliasDef_ThruPOA_Proxy_Impl::_TAO_AliasDef_ThruPOA_Proxy_Impl (v
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 void POA_CORBA::_TAO_AliasDef_ThruPOA_Proxy_Impl::original_type_def (
     CORBA::Object *_collocated_tao_target_,
@@ -11175,7 +11179,7 @@ void POA_CORBA::_TAO_AliasDef_ThruPOA_Proxy_Impl::original_type_def (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_ss.cpp:98
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:98
 
 POA_CORBA::AliasDef::AliasDef (void)
 {
@@ -11195,7 +11199,7 @@ POA_CORBA::AliasDef::~AliasDef (void)
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::AliasDef::_get_original_type_def_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -11322,7 +11326,7 @@ void POA_CORBA::AliasDef::_get_original_type_def_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::AliasDef::_set_original_type_def_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -11450,7 +11454,7 @@ void POA_CORBA::AliasDef::_set_original_type_def_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_ss.cpp:163
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:163
 
 void POA_CORBA::AliasDef::_is_a_skel (
     TAO_ServerRequest &_tao_server_request, 
@@ -11653,7 +11657,7 @@ const char* POA_CORBA::AliasDef::_interface_repository_id (void) const
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:532
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:531
 
 void POA_CORBA::AliasDef::_dispatch (
     TAO_ServerRequest &req,
@@ -11668,7 +11672,7 @@ void POA_CORBA::AliasDef::_dispatch (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:478
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:477
 
 CORBA::AliasDef *
 POA_CORBA::AliasDef::_this (ACE_ENV_SINGLE_ARG_DECL)
@@ -11710,7 +11714,7 @@ POA_CORBA::AliasDef::_this (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:1732
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1731
 
 class TAO_CORBA_NativeDef_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
 {
@@ -11721,7 +11725,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: /u1/ossama/ACE_wrappers/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_CORBA_NativeDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_CORBA_NativeDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_CORBA_NativeDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -11852,7 +11856,7 @@ TAO_CORBA_NativeDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int 
 static TAO_CORBA_NativeDef_Perfect_Hash_OpTable tao_CORBA_NativeDef_optable;
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interceptors_ss.cpp:52
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interceptors_ss.cpp:52
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 
@@ -11863,7 +11867,7 @@ static TAO_CORBA_NativeDef_Perfect_Hash_OpTable tao_CORBA_NativeDef_optable;
 //
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/strategized_proxy_broker_ss.cpp:40
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_ss.cpp:40
 
 // Factory function Implementation.
 POA_CORBA::_TAO_NativeDef_Strategized_Proxy_Broker *POA_CORBA::_TAO_NativeDef_Strategized_Proxy_Broker::the_TAO_NativeDef_Strategized_Proxy_Broker (void)
@@ -11952,7 +11956,7 @@ POA_CORBA::_TAO_NativeDef_Strategized_Proxy_Broker::create_proxy (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:598
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:596
 
 CORBA::_TAO_NativeDef_Proxy_Broker *
 CORBA__TAO_NativeDef_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
@@ -11979,7 +11983,7 @@ static int CORBA__TAO_NativeDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow 
 //
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/thru_poa_proxy_impl_ss.cpp:37
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_ss.cpp:37
 
 POA_CORBA::_TAO_NativeDef_ThruPOA_Proxy_Impl::_TAO_NativeDef_ThruPOA_Proxy_Impl (void)
 {}
@@ -11989,7 +11993,7 @@ POA_CORBA::_TAO_NativeDef_ThruPOA_Proxy_Impl::_TAO_NativeDef_ThruPOA_Proxy_Impl 
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_ss.cpp:98
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:98
 
 POA_CORBA::NativeDef::NativeDef (void)
 {
@@ -12009,7 +12013,7 @@ POA_CORBA::NativeDef::~NativeDef (void)
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_ss.cpp:163
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:163
 
 void POA_CORBA::NativeDef::_is_a_skel (
     TAO_ServerRequest &_tao_server_request, 
@@ -12212,7 +12216,7 @@ const char* POA_CORBA::NativeDef::_interface_repository_id (void) const
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:532
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:531
 
 void POA_CORBA::NativeDef::_dispatch (
     TAO_ServerRequest &req,
@@ -12227,7 +12231,7 @@ void POA_CORBA::NativeDef::_dispatch (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:478
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:477
 
 CORBA::NativeDef *
 POA_CORBA::NativeDef::_this (ACE_ENV_SINGLE_ARG_DECL)
@@ -12269,7 +12273,7 @@ POA_CORBA::NativeDef::_this (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:1732
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1731
 
 class TAO_CORBA_PrimitiveDef_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
 {
@@ -12280,7 +12284,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: /u1/ossama/ACE_wrappers/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_CORBA_PrimitiveDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_CORBA_PrimitiveDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_CORBA_PrimitiveDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -12382,12 +12386,12 @@ TAO_CORBA_PrimitiveDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned i
 static TAO_CORBA_PrimitiveDef_Perfect_Hash_OpTable tao_CORBA_PrimitiveDef_optable;
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interceptors_ss.cpp:52
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interceptors_ss.cpp:52
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_PrimitiveDef_kind_get : public TAO_ServerRequestInfo
 {
@@ -12442,7 +12446,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_PrimitiveDef_kind_get::TAO_ServerRequestInfo_CORBA_PrimitiveDef_kind_get (
     TAO_ServerRequest &_tao_server_request,
@@ -12535,7 +12539,7 @@ TAO_ServerRequestInfo_CORBA_PrimitiveDef_kind_get::result (::CORBA::PrimitiveKin
 //
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/strategized_proxy_broker_ss.cpp:40
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_ss.cpp:40
 
 // Factory function Implementation.
 POA_CORBA::_TAO_PrimitiveDef_Strategized_Proxy_Broker *POA_CORBA::_TAO_PrimitiveDef_Strategized_Proxy_Broker::the_TAO_PrimitiveDef_Strategized_Proxy_Broker (void)
@@ -12624,7 +12628,7 @@ POA_CORBA::_TAO_PrimitiveDef_Strategized_Proxy_Broker::create_proxy (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:598
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:596
 
 CORBA::_TAO_PrimitiveDef_Proxy_Broker *
 CORBA__TAO_PrimitiveDef_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
@@ -12651,7 +12655,7 @@ static int CORBA__TAO_PrimitiveDef_Proxy_Broker_Stub_Factory_Initializer_Scarecr
 //
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/thru_poa_proxy_impl_ss.cpp:37
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_ss.cpp:37
 
 POA_CORBA::_TAO_PrimitiveDef_ThruPOA_Proxy_Impl::_TAO_PrimitiveDef_ThruPOA_Proxy_Impl (void)
 {}
@@ -12659,7 +12663,7 @@ POA_CORBA::_TAO_PrimitiveDef_ThruPOA_Proxy_Impl::_TAO_PrimitiveDef_ThruPOA_Proxy
 // ThruPOA Implementation of the IDL interface methods
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 ::CORBA::PrimitiveKind POA_CORBA::_TAO_PrimitiveDef_ThruPOA_Proxy_Impl::kind (
     CORBA::Object *_collocated_tao_target_
@@ -12702,7 +12706,7 @@ POA_CORBA::_TAO_PrimitiveDef_ThruPOA_Proxy_Impl::_TAO_PrimitiveDef_ThruPOA_Proxy
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_ss.cpp:98
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:98
 
 POA_CORBA::PrimitiveDef::PrimitiveDef (void)
 {
@@ -12720,7 +12724,7 @@ POA_CORBA::PrimitiveDef::~PrimitiveDef (void)
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::PrimitiveDef::_get_kind_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -12846,7 +12850,7 @@ void POA_CORBA::PrimitiveDef::_get_kind_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_ss.cpp:163
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:163
 
 void POA_CORBA::PrimitiveDef::_is_a_skel (
     TAO_ServerRequest &_tao_server_request, 
@@ -13029,7 +13033,7 @@ const char* POA_CORBA::PrimitiveDef::_interface_repository_id (void) const
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:532
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:531
 
 void POA_CORBA::PrimitiveDef::_dispatch (
     TAO_ServerRequest &req,
@@ -13044,7 +13048,7 @@ void POA_CORBA::PrimitiveDef::_dispatch (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:478
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:477
 
 CORBA::PrimitiveDef *
 POA_CORBA::PrimitiveDef::_this (ACE_ENV_SINGLE_ARG_DECL)
@@ -13086,7 +13090,7 @@ POA_CORBA::PrimitiveDef::_this (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:1732
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1731
 
 class TAO_CORBA_StringDef_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
 {
@@ -13097,7 +13101,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: /u1/ossama/ACE_wrappers/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_CORBA_StringDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_CORBA_StringDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_CORBA_StringDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -13218,12 +13222,12 @@ TAO_CORBA_StringDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int 
 static TAO_CORBA_StringDef_Perfect_Hash_OpTable tao_CORBA_StringDef_optable;
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interceptors_ss.cpp:52
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interceptors_ss.cpp:52
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_StringDef_bound_get : public TAO_ServerRequestInfo
 {
@@ -13278,7 +13282,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_StringDef_bound_get::TAO_ServerRequestInfo_CORBA_StringDef_bound_get (
     TAO_ServerRequest &_tao_server_request,
@@ -13365,7 +13369,7 @@ TAO_ServerRequestInfo_CORBA_StringDef_bound_get::result (CORBA::ULong result)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_StringDef_bound_set : public TAO_ServerRequestInfo
 {
@@ -13420,7 +13424,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_StringDef_bound_set::TAO_ServerRequestInfo_CORBA_StringDef_bound_set (
     TAO_ServerRequest &_tao_server_request,
@@ -13512,7 +13516,7 @@ TAO_ServerRequestInfo_CORBA_StringDef_bound_set::target_is_a (
 //
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/strategized_proxy_broker_ss.cpp:40
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_ss.cpp:40
 
 // Factory function Implementation.
 POA_CORBA::_TAO_StringDef_Strategized_Proxy_Broker *POA_CORBA::_TAO_StringDef_Strategized_Proxy_Broker::the_TAO_StringDef_Strategized_Proxy_Broker (void)
@@ -13601,7 +13605,7 @@ POA_CORBA::_TAO_StringDef_Strategized_Proxy_Broker::create_proxy (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:598
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:596
 
 CORBA::_TAO_StringDef_Proxy_Broker *
 CORBA__TAO_StringDef_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
@@ -13628,7 +13632,7 @@ static int CORBA__TAO_StringDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow 
 //
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/thru_poa_proxy_impl_ss.cpp:37
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_ss.cpp:37
 
 POA_CORBA::_TAO_StringDef_ThruPOA_Proxy_Impl::_TAO_StringDef_ThruPOA_Proxy_Impl (void)
 {}
@@ -13636,7 +13640,7 @@ POA_CORBA::_TAO_StringDef_ThruPOA_Proxy_Impl::_TAO_StringDef_ThruPOA_Proxy_Impl 
 // ThruPOA Implementation of the IDL interface methods
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 CORBA::ULong POA_CORBA::_TAO_StringDef_ThruPOA_Proxy_Impl::bound (
     CORBA::Object *_collocated_tao_target_
@@ -13677,7 +13681,7 @@ CORBA::ULong POA_CORBA::_TAO_StringDef_ThruPOA_Proxy_Impl::bound (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 void POA_CORBA::_TAO_StringDef_ThruPOA_Proxy_Impl::bound (
     CORBA::Object *_collocated_tao_target_,
@@ -13721,7 +13725,7 @@ void POA_CORBA::_TAO_StringDef_ThruPOA_Proxy_Impl::bound (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_ss.cpp:98
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:98
 
 POA_CORBA::StringDef::StringDef (void)
 {
@@ -13739,7 +13743,7 @@ POA_CORBA::StringDef::~StringDef (void)
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::StringDef::_get_bound_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -13865,7 +13869,7 @@ void POA_CORBA::StringDef::_get_bound_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::StringDef::_set_bound_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -13993,7 +13997,7 @@ void POA_CORBA::StringDef::_set_bound_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_ss.cpp:163
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:163
 
 void POA_CORBA::StringDef::_is_a_skel (
     TAO_ServerRequest &_tao_server_request, 
@@ -14176,7 +14180,7 @@ const char* POA_CORBA::StringDef::_interface_repository_id (void) const
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:532
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:531
 
 void POA_CORBA::StringDef::_dispatch (
     TAO_ServerRequest &req,
@@ -14191,7 +14195,7 @@ void POA_CORBA::StringDef::_dispatch (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:478
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:477
 
 CORBA::StringDef *
 POA_CORBA::StringDef::_this (ACE_ENV_SINGLE_ARG_DECL)
@@ -14233,7 +14237,7 @@ POA_CORBA::StringDef::_this (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:1732
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1731
 
 class TAO_CORBA_WstringDef_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
 {
@@ -14244,7 +14248,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: /u1/ossama/ACE_wrappers/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_CORBA_WstringDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_CORBA_WstringDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_CORBA_WstringDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -14365,12 +14369,12 @@ TAO_CORBA_WstringDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int
 static TAO_CORBA_WstringDef_Perfect_Hash_OpTable tao_CORBA_WstringDef_optable;
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interceptors_ss.cpp:52
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interceptors_ss.cpp:52
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_WstringDef_bound_get : public TAO_ServerRequestInfo
 {
@@ -14425,7 +14429,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_WstringDef_bound_get::TAO_ServerRequestInfo_CORBA_WstringDef_bound_get (
     TAO_ServerRequest &_tao_server_request,
@@ -14512,7 +14516,7 @@ TAO_ServerRequestInfo_CORBA_WstringDef_bound_get::result (CORBA::ULong result)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_WstringDef_bound_set : public TAO_ServerRequestInfo
 {
@@ -14567,7 +14571,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_WstringDef_bound_set::TAO_ServerRequestInfo_CORBA_WstringDef_bound_set (
     TAO_ServerRequest &_tao_server_request,
@@ -14659,7 +14663,7 @@ TAO_ServerRequestInfo_CORBA_WstringDef_bound_set::target_is_a (
 //
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/strategized_proxy_broker_ss.cpp:40
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_ss.cpp:40
 
 // Factory function Implementation.
 POA_CORBA::_TAO_WstringDef_Strategized_Proxy_Broker *POA_CORBA::_TAO_WstringDef_Strategized_Proxy_Broker::the_TAO_WstringDef_Strategized_Proxy_Broker (void)
@@ -14748,7 +14752,7 @@ POA_CORBA::_TAO_WstringDef_Strategized_Proxy_Broker::create_proxy (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:598
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:596
 
 CORBA::_TAO_WstringDef_Proxy_Broker *
 CORBA__TAO_WstringDef_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
@@ -14775,7 +14779,7 @@ static int CORBA__TAO_WstringDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow
 //
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/thru_poa_proxy_impl_ss.cpp:37
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_ss.cpp:37
 
 POA_CORBA::_TAO_WstringDef_ThruPOA_Proxy_Impl::_TAO_WstringDef_ThruPOA_Proxy_Impl (void)
 {}
@@ -14783,7 +14787,7 @@ POA_CORBA::_TAO_WstringDef_ThruPOA_Proxy_Impl::_TAO_WstringDef_ThruPOA_Proxy_Imp
 // ThruPOA Implementation of the IDL interface methods
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 CORBA::ULong POA_CORBA::_TAO_WstringDef_ThruPOA_Proxy_Impl::bound (
     CORBA::Object *_collocated_tao_target_
@@ -14824,7 +14828,7 @@ CORBA::ULong POA_CORBA::_TAO_WstringDef_ThruPOA_Proxy_Impl::bound (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 void POA_CORBA::_TAO_WstringDef_ThruPOA_Proxy_Impl::bound (
     CORBA::Object *_collocated_tao_target_,
@@ -14868,7 +14872,7 @@ void POA_CORBA::_TAO_WstringDef_ThruPOA_Proxy_Impl::bound (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_ss.cpp:98
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:98
 
 POA_CORBA::WstringDef::WstringDef (void)
 {
@@ -14886,7 +14890,7 @@ POA_CORBA::WstringDef::~WstringDef (void)
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::WstringDef::_get_bound_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -15012,7 +15016,7 @@ void POA_CORBA::WstringDef::_get_bound_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::WstringDef::_set_bound_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -15140,7 +15144,7 @@ void POA_CORBA::WstringDef::_set_bound_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_ss.cpp:163
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:163
 
 void POA_CORBA::WstringDef::_is_a_skel (
     TAO_ServerRequest &_tao_server_request, 
@@ -15323,7 +15327,7 @@ const char* POA_CORBA::WstringDef::_interface_repository_id (void) const
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:532
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:531
 
 void POA_CORBA::WstringDef::_dispatch (
     TAO_ServerRequest &req,
@@ -15338,7 +15342,7 @@ void POA_CORBA::WstringDef::_dispatch (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:478
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:477
 
 CORBA::WstringDef *
 POA_CORBA::WstringDef::_this (ACE_ENV_SINGLE_ARG_DECL)
@@ -15380,7 +15384,7 @@ POA_CORBA::WstringDef::_this (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:1732
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1731
 
 class TAO_CORBA_SequenceDef_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
 {
@@ -15391,7 +15395,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: /u1/ossama/ACE_wrappers/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_CORBA_SequenceDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_CORBA_SequenceDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_CORBA_SequenceDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -15515,12 +15519,12 @@ TAO_CORBA_SequenceDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned in
 static TAO_CORBA_SequenceDef_Perfect_Hash_OpTable tao_CORBA_SequenceDef_optable;
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interceptors_ss.cpp:52
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interceptors_ss.cpp:52
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_SequenceDef_bound_get : public TAO_ServerRequestInfo
 {
@@ -15575,7 +15579,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_SequenceDef_bound_get::TAO_ServerRequestInfo_CORBA_SequenceDef_bound_get (
     TAO_ServerRequest &_tao_server_request,
@@ -15662,7 +15666,7 @@ TAO_ServerRequestInfo_CORBA_SequenceDef_bound_get::result (CORBA::ULong result)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_SequenceDef_bound_set : public TAO_ServerRequestInfo
 {
@@ -15717,7 +15721,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_SequenceDef_bound_set::TAO_ServerRequestInfo_CORBA_SequenceDef_bound_set (
     TAO_ServerRequest &_tao_server_request,
@@ -15803,7 +15807,7 @@ TAO_ServerRequestInfo_CORBA_SequenceDef_bound_set::target_is_a (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_SequenceDef_element_type_get : public TAO_ServerRequestInfo
 {
@@ -15858,7 +15862,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_SequenceDef_element_type_get::TAO_ServerRequestInfo_CORBA_SequenceDef_element_type_get (
     TAO_ServerRequest &_tao_server_request,
@@ -15945,7 +15949,7 @@ TAO_ServerRequestInfo_CORBA_SequenceDef_element_type_get::result (CORBA::TypeCod
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_SequenceDef_element_type_def_get : public TAO_ServerRequestInfo
 {
@@ -16000,7 +16004,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_SequenceDef_element_type_def_get::TAO_ServerRequestInfo_CORBA_SequenceDef_element_type_def_get (
     TAO_ServerRequest &_tao_server_request,
@@ -16087,7 +16091,7 @@ TAO_ServerRequestInfo_CORBA_SequenceDef_element_type_def_get::result (::CORBA::I
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_SequenceDef_element_type_def_set : public TAO_ServerRequestInfo
 {
@@ -16142,7 +16146,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_SequenceDef_element_type_def_set::TAO_ServerRequestInfo_CORBA_SequenceDef_element_type_def_set (
     TAO_ServerRequest &_tao_server_request,
@@ -16234,7 +16238,7 @@ TAO_ServerRequestInfo_CORBA_SequenceDef_element_type_def_set::target_is_a (
 //
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/strategized_proxy_broker_ss.cpp:40
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_ss.cpp:40
 
 // Factory function Implementation.
 POA_CORBA::_TAO_SequenceDef_Strategized_Proxy_Broker *POA_CORBA::_TAO_SequenceDef_Strategized_Proxy_Broker::the_TAO_SequenceDef_Strategized_Proxy_Broker (void)
@@ -16323,7 +16327,7 @@ POA_CORBA::_TAO_SequenceDef_Strategized_Proxy_Broker::create_proxy (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:598
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:596
 
 CORBA::_TAO_SequenceDef_Proxy_Broker *
 CORBA__TAO_SequenceDef_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
@@ -16350,7 +16354,7 @@ static int CORBA__TAO_SequenceDef_Proxy_Broker_Stub_Factory_Initializer_Scarecro
 //
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/thru_poa_proxy_impl_ss.cpp:37
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_ss.cpp:37
 
 POA_CORBA::_TAO_SequenceDef_ThruPOA_Proxy_Impl::_TAO_SequenceDef_ThruPOA_Proxy_Impl (void)
 {}
@@ -16358,7 +16362,7 @@ POA_CORBA::_TAO_SequenceDef_ThruPOA_Proxy_Impl::_TAO_SequenceDef_ThruPOA_Proxy_I
 // ThruPOA Implementation of the IDL interface methods
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 CORBA::ULong POA_CORBA::_TAO_SequenceDef_ThruPOA_Proxy_Impl::bound (
     CORBA::Object *_collocated_tao_target_
@@ -16399,7 +16403,7 @@ CORBA::ULong POA_CORBA::_TAO_SequenceDef_ThruPOA_Proxy_Impl::bound (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 void POA_CORBA::_TAO_SequenceDef_ThruPOA_Proxy_Impl::bound (
     CORBA::Object *_collocated_tao_target_,
@@ -16441,7 +16445,7 @@ void POA_CORBA::_TAO_SequenceDef_ThruPOA_Proxy_Impl::bound (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 CORBA::TypeCode_ptr POA_CORBA::_TAO_SequenceDef_ThruPOA_Proxy_Impl::element_type (
     CORBA::Object *_collocated_tao_target_
@@ -16482,7 +16486,7 @@ CORBA::TypeCode_ptr POA_CORBA::_TAO_SequenceDef_ThruPOA_Proxy_Impl::element_type
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 ::CORBA::IDLType_ptr POA_CORBA::_TAO_SequenceDef_ThruPOA_Proxy_Impl::element_type_def (
     CORBA::Object *_collocated_tao_target_
@@ -16523,7 +16527,7 @@ CORBA::TypeCode_ptr POA_CORBA::_TAO_SequenceDef_ThruPOA_Proxy_Impl::element_type
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 void POA_CORBA::_TAO_SequenceDef_ThruPOA_Proxy_Impl::element_type_def (
     CORBA::Object *_collocated_tao_target_,
@@ -16567,7 +16571,7 @@ void POA_CORBA::_TAO_SequenceDef_ThruPOA_Proxy_Impl::element_type_def (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_ss.cpp:98
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:98
 
 POA_CORBA::SequenceDef::SequenceDef (void)
 {
@@ -16585,7 +16589,7 @@ POA_CORBA::SequenceDef::~SequenceDef (void)
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::SequenceDef::_get_bound_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -16711,7 +16715,7 @@ void POA_CORBA::SequenceDef::_get_bound_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::SequenceDef::_set_bound_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -16839,7 +16843,7 @@ void POA_CORBA::SequenceDef::_set_bound_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::SequenceDef::_get_element_type_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -16966,7 +16970,7 @@ void POA_CORBA::SequenceDef::_get_element_type_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::SequenceDef::_get_element_type_def_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -17093,7 +17097,7 @@ void POA_CORBA::SequenceDef::_get_element_type_def_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::SequenceDef::_set_element_type_def_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -17221,7 +17225,7 @@ void POA_CORBA::SequenceDef::_set_element_type_def_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_ss.cpp:163
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:163
 
 void POA_CORBA::SequenceDef::_is_a_skel (
     TAO_ServerRequest &_tao_server_request, 
@@ -17404,7 +17408,7 @@ const char* POA_CORBA::SequenceDef::_interface_repository_id (void) const
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:532
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:531
 
 void POA_CORBA::SequenceDef::_dispatch (
     TAO_ServerRequest &req,
@@ -17419,7 +17423,7 @@ void POA_CORBA::SequenceDef::_dispatch (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:478
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:477
 
 CORBA::SequenceDef *
 POA_CORBA::SequenceDef::_this (ACE_ENV_SINGLE_ARG_DECL)
@@ -17461,7 +17465,7 @@ POA_CORBA::SequenceDef::_this (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:1732
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1731
 
 class TAO_CORBA_ArrayDef_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
 {
@@ -17472,7 +17476,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: /u1/ossama/ACE_wrappers/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_CORBA_ArrayDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_CORBA_ArrayDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_CORBA_ArrayDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -17596,12 +17600,12 @@ TAO_CORBA_ArrayDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int l
 static TAO_CORBA_ArrayDef_Perfect_Hash_OpTable tao_CORBA_ArrayDef_optable;
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interceptors_ss.cpp:52
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interceptors_ss.cpp:52
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_ArrayDef_length_get : public TAO_ServerRequestInfo
 {
@@ -17656,7 +17660,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_ArrayDef_length_get::TAO_ServerRequestInfo_CORBA_ArrayDef_length_get (
     TAO_ServerRequest &_tao_server_request,
@@ -17743,7 +17747,7 @@ TAO_ServerRequestInfo_CORBA_ArrayDef_length_get::result (CORBA::ULong result)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_ArrayDef_length_set : public TAO_ServerRequestInfo
 {
@@ -17798,7 +17802,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_ArrayDef_length_set::TAO_ServerRequestInfo_CORBA_ArrayDef_length_set (
     TAO_ServerRequest &_tao_server_request,
@@ -17884,7 +17888,7 @@ TAO_ServerRequestInfo_CORBA_ArrayDef_length_set::target_is_a (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_ArrayDef_element_type_get : public TAO_ServerRequestInfo
 {
@@ -17939,7 +17943,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_ArrayDef_element_type_get::TAO_ServerRequestInfo_CORBA_ArrayDef_element_type_get (
     TAO_ServerRequest &_tao_server_request,
@@ -18026,7 +18030,7 @@ TAO_ServerRequestInfo_CORBA_ArrayDef_element_type_get::result (CORBA::TypeCode_p
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_ArrayDef_element_type_def_get : public TAO_ServerRequestInfo
 {
@@ -18081,7 +18085,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_ArrayDef_element_type_def_get::TAO_ServerRequestInfo_CORBA_ArrayDef_element_type_def_get (
     TAO_ServerRequest &_tao_server_request,
@@ -18168,7 +18172,7 @@ TAO_ServerRequestInfo_CORBA_ArrayDef_element_type_def_get::result (::CORBA::IDLT
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_ArrayDef_element_type_def_set : public TAO_ServerRequestInfo
 {
@@ -18223,7 +18227,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_ArrayDef_element_type_def_set::TAO_ServerRequestInfo_CORBA_ArrayDef_element_type_def_set (
     TAO_ServerRequest &_tao_server_request,
@@ -18315,7 +18319,7 @@ TAO_ServerRequestInfo_CORBA_ArrayDef_element_type_def_set::target_is_a (
 //
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/strategized_proxy_broker_ss.cpp:40
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_ss.cpp:40
 
 // Factory function Implementation.
 POA_CORBA::_TAO_ArrayDef_Strategized_Proxy_Broker *POA_CORBA::_TAO_ArrayDef_Strategized_Proxy_Broker::the_TAO_ArrayDef_Strategized_Proxy_Broker (void)
@@ -18404,7 +18408,7 @@ POA_CORBA::_TAO_ArrayDef_Strategized_Proxy_Broker::create_proxy (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:598
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:596
 
 CORBA::_TAO_ArrayDef_Proxy_Broker *
 CORBA__TAO_ArrayDef_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
@@ -18431,7 +18435,7 @@ static int CORBA__TAO_ArrayDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
 //
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/thru_poa_proxy_impl_ss.cpp:37
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_ss.cpp:37
 
 POA_CORBA::_TAO_ArrayDef_ThruPOA_Proxy_Impl::_TAO_ArrayDef_ThruPOA_Proxy_Impl (void)
 {}
@@ -18439,7 +18443,7 @@ POA_CORBA::_TAO_ArrayDef_ThruPOA_Proxy_Impl::_TAO_ArrayDef_ThruPOA_Proxy_Impl (v
 // ThruPOA Implementation of the IDL interface methods
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 CORBA::ULong POA_CORBA::_TAO_ArrayDef_ThruPOA_Proxy_Impl::length (
     CORBA::Object *_collocated_tao_target_
@@ -18480,7 +18484,7 @@ CORBA::ULong POA_CORBA::_TAO_ArrayDef_ThruPOA_Proxy_Impl::length (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 void POA_CORBA::_TAO_ArrayDef_ThruPOA_Proxy_Impl::length (
     CORBA::Object *_collocated_tao_target_,
@@ -18522,7 +18526,7 @@ void POA_CORBA::_TAO_ArrayDef_ThruPOA_Proxy_Impl::length (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 CORBA::TypeCode_ptr POA_CORBA::_TAO_ArrayDef_ThruPOA_Proxy_Impl::element_type (
     CORBA::Object *_collocated_tao_target_
@@ -18563,7 +18567,7 @@ CORBA::TypeCode_ptr POA_CORBA::_TAO_ArrayDef_ThruPOA_Proxy_Impl::element_type (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 ::CORBA::IDLType_ptr POA_CORBA::_TAO_ArrayDef_ThruPOA_Proxy_Impl::element_type_def (
     CORBA::Object *_collocated_tao_target_
@@ -18604,7 +18608,7 @@ CORBA::TypeCode_ptr POA_CORBA::_TAO_ArrayDef_ThruPOA_Proxy_Impl::element_type (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 void POA_CORBA::_TAO_ArrayDef_ThruPOA_Proxy_Impl::element_type_def (
     CORBA::Object *_collocated_tao_target_,
@@ -18648,7 +18652,7 @@ void POA_CORBA::_TAO_ArrayDef_ThruPOA_Proxy_Impl::element_type_def (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_ss.cpp:98
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:98
 
 POA_CORBA::ArrayDef::ArrayDef (void)
 {
@@ -18666,7 +18670,7 @@ POA_CORBA::ArrayDef::~ArrayDef (void)
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::ArrayDef::_get_length_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -18792,7 +18796,7 @@ void POA_CORBA::ArrayDef::_get_length_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::ArrayDef::_set_length_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -18920,7 +18924,7 @@ void POA_CORBA::ArrayDef::_set_length_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::ArrayDef::_get_element_type_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -19047,7 +19051,7 @@ void POA_CORBA::ArrayDef::_get_element_type_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::ArrayDef::_get_element_type_def_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -19174,7 +19178,7 @@ void POA_CORBA::ArrayDef::_get_element_type_def_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::ArrayDef::_set_element_type_def_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -19302,7 +19306,7 @@ void POA_CORBA::ArrayDef::_set_element_type_def_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_ss.cpp:163
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:163
 
 void POA_CORBA::ArrayDef::_is_a_skel (
     TAO_ServerRequest &_tao_server_request, 
@@ -19485,7 +19489,7 @@ const char* POA_CORBA::ArrayDef::_interface_repository_id (void) const
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:532
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:531
 
 void POA_CORBA::ArrayDef::_dispatch (
     TAO_ServerRequest &req,
@@ -19500,7 +19504,7 @@ void POA_CORBA::ArrayDef::_dispatch (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:478
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:477
 
 CORBA::ArrayDef *
 POA_CORBA::ArrayDef::_this (ACE_ENV_SINGLE_ARG_DECL)
@@ -19542,7 +19546,7 @@ POA_CORBA::ArrayDef::_this (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:1732
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1731
 
 class TAO_CORBA_ExceptionDef_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
 {
@@ -19553,7 +19557,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: /u1/ossama/ACE_wrappers/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_CORBA_ExceptionDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_CORBA_ExceptionDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_CORBA_ExceptionDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -19610,14 +19614,14 @@ TAO_CORBA_ExceptionDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned i
 {
   enum
     {
-      TOTAL_KEYWORDS = 37,
+      TOTAL_KEYWORDS = 38,
       MIN_WORD_LENGTH = 4,
       MAX_WORD_LENGTH = 26,
       MIN_HASH_VALUE = 5,
       MAX_HASH_VALUE = 60,
       HASH_VALUE_RANGE = 56,
-      DUPLICATES = 7,
-      WORDLIST_SIZE = 42
+      DUPLICATES = 8,
+      WORDLIST_SIZE = 43
     };
 
   static const class TAO_operation_db_entry  wordlist[] =
@@ -19649,6 +19653,7 @@ TAO_CORBA_ExceptionDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned i
       {"create_module", 	&POA_CORBA::ExceptionDef::create_module_skel},
       {"create_native", 	&POA_CORBA::ExceptionDef::create_native_skel},
       {"create_interface", 	&POA_CORBA::ExceptionDef::create_interface_skel},
+      {"create_ext_value", 	&POA_CORBA::ExceptionDef::create_ext_value_skel},
       {"create_union", 	&POA_CORBA::ExceptionDef::create_union_skel},
       {"describe_contents", 	&POA_CORBA::ExceptionDef::describe_contents_skel},
       {"create_exception", 	&POA_CORBA::ExceptionDef::create_exception_skel},
@@ -19666,9 +19671,9 @@ TAO_CORBA_ExceptionDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned i
     {
        -1,  -1,  -1,  -7,  -3,   5,   6, -12,  -2, -66,  10,  11,  -1, -15, 
        -2, -68,  14, -64,  17,  18,  19,  20,  -1,  -1,  -1,  21,  -1,  -1, 
-      -23,  -2,  22,  -1, -64,  25, -28,  -2,  26,  27, -64,  -1,  -1,  30, 
-       31,  -1,  -1,  32,  33,  34,  -1,  -1,  35,  36,  -1,  37,  -1,  -1, 
-       38,  39,  40,  -1,  41, 
+      -23,  -2,  22,  -1, -64,  25, -28,  -2,  26,  27, -64, -30,  -2, -62, 
+       32,  -1,  -1,  33,  34,  35,  -1,  -1,  36,  37,  -1,  38,  -1,  -1, 
+       39,  40,  41,  -1,  42, 
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -19705,12 +19710,12 @@ TAO_CORBA_ExceptionDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned i
 static TAO_CORBA_ExceptionDef_Perfect_Hash_OpTable tao_CORBA_ExceptionDef_optable;
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interceptors_ss.cpp:52
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interceptors_ss.cpp:52
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_ExceptionDef_type_get : public TAO_ServerRequestInfo
 {
@@ -19765,7 +19770,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_ExceptionDef_type_get::TAO_ServerRequestInfo_CORBA_ExceptionDef_type_get (
     TAO_ServerRequest &_tao_server_request,
@@ -19852,7 +19857,7 @@ TAO_ServerRequestInfo_CORBA_ExceptionDef_type_get::result (CORBA::TypeCode_ptr r
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_ExceptionDef_members_get : public TAO_ServerRequestInfo
 {
@@ -19907,7 +19912,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_ExceptionDef_members_get::TAO_ServerRequestInfo_CORBA_ExceptionDef_members_get (
     TAO_ServerRequest &_tao_server_request,
@@ -19994,7 +19999,7 @@ TAO_ServerRequestInfo_CORBA_ExceptionDef_members_get::result (::CORBA::StructMem
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_ExceptionDef_members_set : public TAO_ServerRequestInfo
 {
@@ -20049,7 +20054,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_ExceptionDef_members_set::TAO_ServerRequestInfo_CORBA_ExceptionDef_members_set (
     TAO_ServerRequest &_tao_server_request,
@@ -20141,7 +20146,7 @@ TAO_ServerRequestInfo_CORBA_ExceptionDef_members_set::target_is_a (
 //
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/strategized_proxy_broker_ss.cpp:40
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_ss.cpp:40
 
 // Factory function Implementation.
 POA_CORBA::_TAO_ExceptionDef_Strategized_Proxy_Broker *POA_CORBA::_TAO_ExceptionDef_Strategized_Proxy_Broker::the_TAO_ExceptionDef_Strategized_Proxy_Broker (void)
@@ -20230,7 +20235,7 @@ POA_CORBA::_TAO_ExceptionDef_Strategized_Proxy_Broker::create_proxy (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:598
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:596
 
 CORBA::_TAO_ExceptionDef_Proxy_Broker *
 CORBA__TAO_ExceptionDef_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
@@ -20257,7 +20262,7 @@ static int CORBA__TAO_ExceptionDef_Proxy_Broker_Stub_Factory_Initializer_Scarecr
 //
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/thru_poa_proxy_impl_ss.cpp:37
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_ss.cpp:37
 
 POA_CORBA::_TAO_ExceptionDef_ThruPOA_Proxy_Impl::_TAO_ExceptionDef_ThruPOA_Proxy_Impl (void)
 {}
@@ -20265,7 +20270,7 @@ POA_CORBA::_TAO_ExceptionDef_ThruPOA_Proxy_Impl::_TAO_ExceptionDef_ThruPOA_Proxy
 // ThruPOA Implementation of the IDL interface methods
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 CORBA::TypeCode_ptr POA_CORBA::_TAO_ExceptionDef_ThruPOA_Proxy_Impl::type (
     CORBA::Object *_collocated_tao_target_
@@ -20306,7 +20311,7 @@ CORBA::TypeCode_ptr POA_CORBA::_TAO_ExceptionDef_ThruPOA_Proxy_Impl::type (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 ::CORBA::StructMemberSeq * POA_CORBA::_TAO_ExceptionDef_ThruPOA_Proxy_Impl::members (
     CORBA::Object *_collocated_tao_target_
@@ -20347,7 +20352,7 @@ CORBA::TypeCode_ptr POA_CORBA::_TAO_ExceptionDef_ThruPOA_Proxy_Impl::type (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 void POA_CORBA::_TAO_ExceptionDef_ThruPOA_Proxy_Impl::members (
     CORBA::Object *_collocated_tao_target_,
@@ -20391,7 +20396,7 @@ void POA_CORBA::_TAO_ExceptionDef_ThruPOA_Proxy_Impl::members (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_ss.cpp:98
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:98
 
 POA_CORBA::ExceptionDef::ExceptionDef (void)
 {
@@ -20410,7 +20415,7 @@ POA_CORBA::ExceptionDef::~ExceptionDef (void)
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::ExceptionDef::_get_type_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -20537,7 +20542,7 @@ void POA_CORBA::ExceptionDef::_get_type_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::ExceptionDef::_get_members_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -20664,7 +20669,7 @@ void POA_CORBA::ExceptionDef::_get_members_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::ExceptionDef::_set_members_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -20792,7 +20797,7 @@ void POA_CORBA::ExceptionDef::_set_members_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_ss.cpp:163
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:163
 
 void POA_CORBA::ExceptionDef::_is_a_skel (
     TAO_ServerRequest &_tao_server_request, 
@@ -20985,7 +20990,7 @@ const char* POA_CORBA::ExceptionDef::_interface_repository_id (void) const
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:532
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:531
 
 void POA_CORBA::ExceptionDef::_dispatch (
     TAO_ServerRequest &req,
@@ -21000,7 +21005,7 @@ void POA_CORBA::ExceptionDef::_dispatch (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:478
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:477
 
 CORBA::ExceptionDef *
 POA_CORBA::ExceptionDef::_this (ACE_ENV_SINGLE_ARG_DECL)
@@ -21042,7 +21047,7 @@ POA_CORBA::ExceptionDef::_this (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:1732
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1731
 
 class TAO_CORBA_AttributeDef_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
 {
@@ -21053,7 +21058,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: /u1/ossama/ACE_wrappers/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_CORBA_AttributeDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_CORBA_AttributeDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_CORBA_AttributeDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -21188,12 +21193,12 @@ TAO_CORBA_AttributeDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned i
 static TAO_CORBA_AttributeDef_Perfect_Hash_OpTable tao_CORBA_AttributeDef_optable;
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interceptors_ss.cpp:52
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interceptors_ss.cpp:52
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_AttributeDef_type_get : public TAO_ServerRequestInfo
 {
@@ -21248,7 +21253,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_AttributeDef_type_get::TAO_ServerRequestInfo_CORBA_AttributeDef_type_get (
     TAO_ServerRequest &_tao_server_request,
@@ -21335,7 +21340,7 @@ TAO_ServerRequestInfo_CORBA_AttributeDef_type_get::result (CORBA::TypeCode_ptr r
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_AttributeDef_type_def_get : public TAO_ServerRequestInfo
 {
@@ -21390,7 +21395,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_AttributeDef_type_def_get::TAO_ServerRequestInfo_CORBA_AttributeDef_type_def_get (
     TAO_ServerRequest &_tao_server_request,
@@ -21477,7 +21482,7 @@ TAO_ServerRequestInfo_CORBA_AttributeDef_type_def_get::result (::CORBA::IDLType_
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_AttributeDef_type_def_set : public TAO_ServerRequestInfo
 {
@@ -21532,7 +21537,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_AttributeDef_type_def_set::TAO_ServerRequestInfo_CORBA_AttributeDef_type_def_set (
     TAO_ServerRequest &_tao_server_request,
@@ -21618,7 +21623,7 @@ TAO_ServerRequestInfo_CORBA_AttributeDef_type_def_set::target_is_a (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_AttributeDef_mode_get : public TAO_ServerRequestInfo
 {
@@ -21673,7 +21678,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_AttributeDef_mode_get::TAO_ServerRequestInfo_CORBA_AttributeDef_mode_get (
     TAO_ServerRequest &_tao_server_request,
@@ -21760,7 +21765,7 @@ TAO_ServerRequestInfo_CORBA_AttributeDef_mode_get::result (::CORBA::AttributeMod
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_AttributeDef_mode_set : public TAO_ServerRequestInfo
 {
@@ -21815,7 +21820,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_AttributeDef_mode_set::TAO_ServerRequestInfo_CORBA_AttributeDef_mode_set (
     TAO_ServerRequest &_tao_server_request,
@@ -21907,7 +21912,7 @@ TAO_ServerRequestInfo_CORBA_AttributeDef_mode_set::target_is_a (
 //
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/strategized_proxy_broker_ss.cpp:40
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_ss.cpp:40
 
 // Factory function Implementation.
 POA_CORBA::_TAO_AttributeDef_Strategized_Proxy_Broker *POA_CORBA::_TAO_AttributeDef_Strategized_Proxy_Broker::the_TAO_AttributeDef_Strategized_Proxy_Broker (void)
@@ -21996,7 +22001,7 @@ POA_CORBA::_TAO_AttributeDef_Strategized_Proxy_Broker::create_proxy (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:598
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:596
 
 CORBA::_TAO_AttributeDef_Proxy_Broker *
 CORBA__TAO_AttributeDef_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
@@ -22023,7 +22028,7 @@ static int CORBA__TAO_AttributeDef_Proxy_Broker_Stub_Factory_Initializer_Scarecr
 //
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/thru_poa_proxy_impl_ss.cpp:37
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_ss.cpp:37
 
 POA_CORBA::_TAO_AttributeDef_ThruPOA_Proxy_Impl::_TAO_AttributeDef_ThruPOA_Proxy_Impl (void)
 {}
@@ -22031,7 +22036,7 @@ POA_CORBA::_TAO_AttributeDef_ThruPOA_Proxy_Impl::_TAO_AttributeDef_ThruPOA_Proxy
 // ThruPOA Implementation of the IDL interface methods
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 CORBA::TypeCode_ptr POA_CORBA::_TAO_AttributeDef_ThruPOA_Proxy_Impl::type (
     CORBA::Object *_collocated_tao_target_
@@ -22072,7 +22077,7 @@ CORBA::TypeCode_ptr POA_CORBA::_TAO_AttributeDef_ThruPOA_Proxy_Impl::type (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 ::CORBA::IDLType_ptr POA_CORBA::_TAO_AttributeDef_ThruPOA_Proxy_Impl::type_def (
     CORBA::Object *_collocated_tao_target_
@@ -22113,7 +22118,7 @@ CORBA::TypeCode_ptr POA_CORBA::_TAO_AttributeDef_ThruPOA_Proxy_Impl::type (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 void POA_CORBA::_TAO_AttributeDef_ThruPOA_Proxy_Impl::type_def (
     CORBA::Object *_collocated_tao_target_,
@@ -22155,7 +22160,7 @@ void POA_CORBA::_TAO_AttributeDef_ThruPOA_Proxy_Impl::type_def (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 ::CORBA::AttributeMode POA_CORBA::_TAO_AttributeDef_ThruPOA_Proxy_Impl::mode (
     CORBA::Object *_collocated_tao_target_
@@ -22196,7 +22201,7 @@ void POA_CORBA::_TAO_AttributeDef_ThruPOA_Proxy_Impl::type_def (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 void POA_CORBA::_TAO_AttributeDef_ThruPOA_Proxy_Impl::mode (
     CORBA::Object *_collocated_tao_target_,
@@ -22240,7 +22245,7 @@ void POA_CORBA::_TAO_AttributeDef_ThruPOA_Proxy_Impl::mode (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_ss.cpp:98
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:98
 
 POA_CORBA::AttributeDef::AttributeDef (void)
 {
@@ -22258,7 +22263,7 @@ POA_CORBA::AttributeDef::~AttributeDef (void)
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::AttributeDef::_get_type_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -22385,7 +22390,7 @@ void POA_CORBA::AttributeDef::_get_type_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::AttributeDef::_get_type_def_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -22512,7 +22517,7 @@ void POA_CORBA::AttributeDef::_get_type_def_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::AttributeDef::_set_type_def_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -22640,7 +22645,7 @@ void POA_CORBA::AttributeDef::_set_type_def_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::AttributeDef::_get_mode_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -22766,7 +22771,7 @@ void POA_CORBA::AttributeDef::_get_mode_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::AttributeDef::_set_mode_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -22894,7 +22899,7 @@ void POA_CORBA::AttributeDef::_set_mode_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_ss.cpp:163
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:163
 
 void POA_CORBA::AttributeDef::_is_a_skel (
     TAO_ServerRequest &_tao_server_request, 
@@ -23077,7 +23082,7 @@ const char* POA_CORBA::AttributeDef::_interface_repository_id (void) const
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:532
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:531
 
 void POA_CORBA::AttributeDef::_dispatch (
     TAO_ServerRequest &req,
@@ -23092,7 +23097,7 @@ void POA_CORBA::AttributeDef::_dispatch (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:478
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:477
 
 CORBA::AttributeDef *
 POA_CORBA::AttributeDef::_this (ACE_ENV_SINGLE_ARG_DECL)
@@ -23134,7 +23139,2116 @@ POA_CORBA::AttributeDef::_this (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:1732
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1731
+
+class TAO_CORBA_ExtAttributeDef_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
+{
+private:
+  unsigned int hash (const char *str, unsigned int len);
+public:
+ const TAO_operation_db_entry * lookup (const char *str, unsigned int len);
+};
+
+/* C++ code produced by gperf version 2.8 (ACE version) */
+/* Command-line: gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_CORBA_ExtAttributeDef_Perfect_Hash_OpTable -N lookup  */
+unsigned int
+TAO_CORBA_ExtAttributeDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
+{
+  static const unsigned char asso_values[] =
+    {
+#if defined (ACE_MVS)
+     39, 39, 39, 39, 39, 39, 39, 39, 39, 39,
+     39, 39, 39, 39, 39, 39, 39, 39, 39, 39,
+     39, 39, 39, 39, 39, 39, 39, 39, 39, 39,
+     39, 39, 39, 39, 39, 39, 39, 39, 39, 39,
+     39, 39, 39, 39, 39, 39, 39, 39, 39, 39,
+     39, 39, 39, 39, 39, 39, 39, 39, 39, 39,
+     39, 39, 39, 39, 39, 39, 39, 39, 39, 39,
+     39, 39, 39, 39, 39, 39, 39, 39, 39, 39,
+     39, 39, 39, 39, 39, 39, 39, 39, 39, 39,
+     39, 39, 39, 39, 39, 39, 39, 39, 39, 39,
+     39, 39, 39, 39, 39, 39, 39, 39, 39,  0,
+     39, 39, 39, 39, 39, 39, 39, 39, 39, 39,
+     39, 39, 39, 39, 39, 39, 39, 39, 39,  0,
+     39, 39, 15,  0,  0, 39, 39, 39, 39, 39,
+     39, 39, 39, 39, 39, 39, 39, 39,  0,  0,
+     39, 39, 39, 39, 39, 39, 39, 39, 39, 39,
+     39, 39,  0, 25, 39, 39, 39, 39,  5, 39,
+     39, 39, 39, 39, 39, 39, 39, 39, 39, 39,
+     39, 39, 39, 39, 39, 39, 39, 39, 39, 39,
+     39, 39, 39, 39, 39, 39, 39, 39, 39, 39,
+     39, 39, 39, 39, 39, 39, 39, 39, 39, 39,
+     39, 39, 39, 39, 39, 39, 39, 39, 39, 39,
+     39, 39, 39, 39, 39, 39, 39, 39, 39, 39,
+     39, 39, 39, 39, 39, 39, 39, 39, 39, 39,
+     39, 39, 39, 39, 39, 39, 39, 39, 39, 39,
+     39, 39, 39, 39, 39, 39,
+#else
+     39, 39, 39, 39, 39, 39, 39, 39, 39, 39,
+     39, 39, 39, 39, 39, 39, 39, 39, 39, 39,
+     39, 39, 39, 39, 39, 39, 39, 39, 39, 39,
+     39, 39, 39, 39, 39, 39, 39, 39, 39, 39,
+     39, 39, 39, 39, 39, 39, 39, 39, 39, 39,
+     39, 39, 39, 39, 39, 39, 39, 39, 39, 39,
+     39, 39, 39, 39, 39, 39, 39, 39, 39, 39,
+     39, 39, 39, 39, 39, 39, 39, 39, 39, 39,
+     39, 39, 39, 39, 39, 39, 39, 39, 39, 39,
+     39, 39, 39, 39, 39,  0, 39,  0, 39, 39,
+     15,  0,  0, 39, 39, 39, 39, 39, 39,  0,
+      0, 39, 39, 39, 39,  0, 25, 39, 39, 39,
+     39,  5, 39, 39, 39, 39, 39, 39,
+#endif /* ACE_MVS */
+    };
+  return len + asso_values[str[len - 1]] + asso_values[str[0]];
+}
+
+const class TAO_operation_db_entry *
+TAO_CORBA_ExtAttributeDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
+{
+  enum
+    {
+      TOTAL_KEYWORDS = 27,
+      MIN_WORD_LENGTH = 4,
+      MAX_WORD_LENGTH = 26,
+      MIN_HASH_VALUE = 4,
+      MAX_HASH_VALUE = 38,
+      HASH_VALUE_RANGE = 35,
+      DUPLICATES = 11,
+      WORDLIST_SIZE = 31
+    };
+
+  static const class TAO_operation_db_entry  wordlist[] =
+    {
+      {"",0},{"",0},{"",0},{"",0},
+      {"move", 	&POA_CORBA::ExtAttributeDef::move_skel},
+      {"_is_a",  &POA_CORBA::ExtAttributeDef::_is_a_skel},
+      {"_get_type", 	&POA_CORBA::ExtAttributeDef::_get_type_skel},
+      {"_set_name", 	&POA_CORBA::ExtAttributeDef::_set_name_skel},
+      {"_get_name", 	&POA_CORBA::ExtAttributeDef::_get_name_skel},
+      {"_set_mode", 	&POA_CORBA::ExtAttributeDef::_set_mode_skel},
+      {"_get_mode", 	&POA_CORBA::ExtAttributeDef::_get_mode_skel},
+      {"_interface",  &POA_CORBA::ExtAttributeDef::_interface_skel},
+      {"_get_version", 	&POA_CORBA::ExtAttributeDef::_get_version_skel},
+      {"_set_version", 	&POA_CORBA::ExtAttributeDef::_set_version_skel},
+      {"_get_type_def", 	&POA_CORBA::ExtAttributeDef::_get_type_def_skel},
+      {"_set_type_def", 	&POA_CORBA::ExtAttributeDef::_set_type_def_skel},
+      {"_get_defined_in", 	&POA_CORBA::ExtAttributeDef::_get_defined_in_skel},
+      {"_get_absolute_name", 	&POA_CORBA::ExtAttributeDef::_get_absolute_name_skel},
+      {"_get_get_exceptions", 	&POA_CORBA::ExtAttributeDef::_get_get_exceptions_skel},
+      {"_set_set_exceptions", 	&POA_CORBA::ExtAttributeDef::_set_set_exceptions_skel},
+      {"_get_set_exceptions", 	&POA_CORBA::ExtAttributeDef::_get_set_exceptions_skel},
+      {"_set_get_exceptions", 	&POA_CORBA::ExtAttributeDef::_set_get_exceptions_skel},
+      {"_get_id", 	&POA_CORBA::ExtAttributeDef::_get_id_skel},
+      {"_set_id", 	&POA_CORBA::ExtAttributeDef::_set_id_skel},
+      {"describe", 	&POA_CORBA::ExtAttributeDef::describe_skel},
+      {"destroy", 	&POA_CORBA::ExtAttributeDef::destroy_skel},
+      {"_get_def_kind", 	&POA_CORBA::ExtAttributeDef::_get_def_kind_skel},
+      {"_get_containing_repository", 	&POA_CORBA::ExtAttributeDef::_get_containing_repository_skel},
+      {"describe_attribute", 	&POA_CORBA::ExtAttributeDef::describe_attribute_skel},
+      {"_component",  &POA_CORBA::ExtAttributeDef::_component_skel},
+      {"_non_existent",  &POA_CORBA::ExtAttributeDef::_non_existent_skel},
+    };
+
+  static const signed char lookup[] =
+    {
+       -6,  -5, -12,  -2,   4,   5,  -1, -14,  -2, -47,  11,  -1, -48, -44, 
+       -1,  16, -18,  -4,  17, -41, -22,  -2, -40,  24,  -1,  -1,  -1,  25, 
+       26,  -1,  -1,  27,  -1,  28,  -1,  29,  -1,  -1,  30, 
+    };
+
+  if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
+    {
+      unsigned int key = hash (str, len);
+
+      if (key <= MAX_HASH_VALUE && key >= MIN_HASH_VALUE)
+        {
+          int slot = lookup[key];
+
+          if (slot >= 0 && slot < WORDLIST_SIZE)
+            {
+              const char *s = wordlist[slot].opname_;
+
+              if (*str == *s && !strncmp (str + 1, s + 1, len - 1))
+                return &wordlist[slot];
+            }
+          else if (slot < 0 && slot >= -MAX_HASH_VALUE)
+            return 0;
+          else
+            {
+              unsigned int offset = key + slot + (slot > 0 ? -MAX_HASH_VALUE : MAX_HASH_VALUE);
+              const class TAO_operation_db_entry  *base = &wordlist[-lookup[offset]];
+              const class TAO_operation_db_entry  *ptr = base + -lookup[offset + 1];
+
+              while (--ptr >= base)
+                if (*str == *ptr->opname_ && !strncmp (str + 1, ptr->opname_ + 1, len - 1))
+                  return ptr;
+            }
+        }
+    }
+  return 0;
+}
+static TAO_CORBA_ExtAttributeDef_Perfect_Hash_OpTable tao_CORBA_ExtAttributeDef_optable;
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interceptors_ss.cpp:52
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
+
+class TAO_ServerRequestInfo_CORBA_ExtAttributeDef_get_exceptions_get : public TAO_ServerRequestInfo
+{
+public:
+  TAO_ServerRequestInfo_CORBA_ExtAttributeDef_get_exceptions_get (
+      TAO_ServerRequest &_tao_server_request,
+      TAO_Object_Adapter::Servant_Upcall *tao_servant_upcall,
+      POA_CORBA::ExtAttributeDef *tao_impl
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    );
+  
+  virtual Dynamic::ParameterList * arguments (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual Dynamic::ExceptionList * exceptions (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual CORBA::Any * result (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual char * target_most_derived_interface (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual CORBA::Boolean target_is_a (
+      const char * id
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  void result (::CORBA::ExcDescriptionSeq * result);
+
+private:
+  TAO_ServerRequestInfo_CORBA_ExtAttributeDef_get_exceptions_get (
+      const TAO_ServerRequestInfo_CORBA_ExtAttributeDef_get_exceptions_get &
+    );
+  
+  void operator= (
+      const TAO_ServerRequestInfo_CORBA_ExtAttributeDef_get_exceptions_get &
+    );
+  
+private:
+  POA_CORBA::ExtAttributeDef *_tao_impl;
+  ::CORBA::ExcDescriptionSeq * _result;
+};
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
+
+TAO_ServerRequestInfo_CORBA_ExtAttributeDef_get_exceptions_get::TAO_ServerRequestInfo_CORBA_ExtAttributeDef_get_exceptions_get (
+    TAO_ServerRequest &_tao_server_request,
+    TAO_Object_Adapter::Servant_Upcall *_tao_servant_upcall,
+    POA_CORBA::ExtAttributeDef *tao_impl
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+  : TAO_ServerRequestInfo (_tao_server_request, _tao_servant_upcall),
+    _tao_impl (tao_impl)
+{}
+
+Dynamic::ParameterList *
+TAO_ServerRequestInfo_CORBA_ExtAttributeDef_get_exceptions_get::arguments (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the argument list on demand.
+  Dynamic::ParameterList *parameter_list =
+    TAO_RequestInfo_Util::make_parameter_list (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+  
+  return parameter_list;
+}
+
+Dynamic::ExceptionList *
+TAO_ServerRequestInfo_CORBA_ExtAttributeDef_get_exceptions_get::exceptions (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the exception list on demand.
+  Dynamic::ExceptionList *exception_list =
+    TAO_RequestInfo_Util::make_exception_list (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+  
+  return exception_list;
+}
+
+CORBA::Any * 
+TAO_ServerRequestInfo_CORBA_ExtAttributeDef_get_exceptions_get::result (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the result on demand.
+  CORBA::Boolean tk_void_any = 0;
+  CORBA::Any *result_any =
+    TAO_RequestInfo_Util::make_any (tk_void_any ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+  
+  CORBA::Any_var safe_result_any = result_any;
+  
+  (*result_any) <<= this->_result;
+  
+  return safe_result_any._retn ();
+}
+
+char *
+TAO_ServerRequestInfo_CORBA_ExtAttributeDef_get_exceptions_get::target_most_derived_interface (
+    ACE_ENV_SINGLE_ARG_DECL_NOT_USED
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return
+    CORBA::string_dup (this->_tao_impl->_interface_repository_id ());
+}
+
+CORBA::Boolean
+TAO_ServerRequestInfo_CORBA_ExtAttributeDef_get_exceptions_get::target_is_a (
+    const char * id
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return this->_tao_impl->_is_a (id ACE_ENV_ARG_PARAMETER);
+}
+
+void 
+TAO_ServerRequestInfo_CORBA_ExtAttributeDef_get_exceptions_get::result (::CORBA::ExcDescriptionSeq * result)
+{
+  // Update the result.
+   this->_result = result;
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
+
+class TAO_ServerRequestInfo_CORBA_ExtAttributeDef_get_exceptions_set : public TAO_ServerRequestInfo
+{
+public:
+  TAO_ServerRequestInfo_CORBA_ExtAttributeDef_get_exceptions_set (
+      TAO_ServerRequest &_tao_server_request,
+      TAO_Object_Adapter::Servant_Upcall *tao_servant_upcall,
+      POA_CORBA::ExtAttributeDef *tao_impl,
+      const CORBA::ExcDescriptionSeq & get_exceptions
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    );
+  
+  virtual Dynamic::ParameterList * arguments (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual Dynamic::ExceptionList * exceptions (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual CORBA::Any * result (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual char * target_most_derived_interface (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual CORBA::Boolean target_is_a (
+      const char * id
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+private:
+  TAO_ServerRequestInfo_CORBA_ExtAttributeDef_get_exceptions_set (
+      const TAO_ServerRequestInfo_CORBA_ExtAttributeDef_get_exceptions_set &
+    );
+  
+  void operator= (
+      const TAO_ServerRequestInfo_CORBA_ExtAttributeDef_get_exceptions_set &
+    );
+  
+private:
+  POA_CORBA::ExtAttributeDef *_tao_impl;
+  
+  const CORBA::ExcDescriptionSeq & get_exceptions_;
+};
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
+
+TAO_ServerRequestInfo_CORBA_ExtAttributeDef_get_exceptions_set::TAO_ServerRequestInfo_CORBA_ExtAttributeDef_get_exceptions_set (
+    TAO_ServerRequest &_tao_server_request,
+    TAO_Object_Adapter::Servant_Upcall *_tao_servant_upcall,
+    POA_CORBA::ExtAttributeDef *tao_impl,
+    const CORBA::ExcDescriptionSeq & get_exceptions
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+  : TAO_ServerRequestInfo (_tao_server_request, _tao_servant_upcall),
+    _tao_impl (tao_impl),
+    get_exceptions_ (get_exceptions)
+{}
+
+Dynamic::ParameterList *
+TAO_ServerRequestInfo_CORBA_ExtAttributeDef_get_exceptions_set::arguments (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the argument list on demand.
+  Dynamic::ParameterList *parameter_list =
+    TAO_RequestInfo_Util::make_parameter_list (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+  
+  Dynamic::ParameterList_var safe_parameter_list = parameter_list;
+  parameter_list->length (1);
+  CORBA::ULong len = 0;
+  
+  (*parameter_list)[len].argument <<=  this->get_exceptions_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+  
+  return safe_parameter_list._retn ();
+}
+
+Dynamic::ExceptionList *
+TAO_ServerRequestInfo_CORBA_ExtAttributeDef_get_exceptions_set::exceptions (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the exception list on demand.
+  Dynamic::ExceptionList *exception_list =
+    TAO_RequestInfo_Util::make_exception_list (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+  
+  return exception_list;
+}
+
+CORBA::Any * 
+TAO_ServerRequestInfo_CORBA_ExtAttributeDef_get_exceptions_set::result (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the result on demand.
+  CORBA::Boolean tk_void_any = 1;
+  CORBA::Any *result_any =
+    TAO_RequestInfo_Util::make_any (tk_void_any ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+  
+  return result_any;
+}
+
+char *
+TAO_ServerRequestInfo_CORBA_ExtAttributeDef_get_exceptions_set::target_most_derived_interface (
+    ACE_ENV_SINGLE_ARG_DECL_NOT_USED
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return
+    CORBA::string_dup (this->_tao_impl->_interface_repository_id ());
+}
+
+CORBA::Boolean
+TAO_ServerRequestInfo_CORBA_ExtAttributeDef_get_exceptions_set::target_is_a (
+    const char * id
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return this->_tao_impl->_is_a (id ACE_ENV_ARG_PARAMETER);
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
+
+class TAO_ServerRequestInfo_CORBA_ExtAttributeDef_set_exceptions_get : public TAO_ServerRequestInfo
+{
+public:
+  TAO_ServerRequestInfo_CORBA_ExtAttributeDef_set_exceptions_get (
+      TAO_ServerRequest &_tao_server_request,
+      TAO_Object_Adapter::Servant_Upcall *tao_servant_upcall,
+      POA_CORBA::ExtAttributeDef *tao_impl
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    );
+  
+  virtual Dynamic::ParameterList * arguments (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual Dynamic::ExceptionList * exceptions (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual CORBA::Any * result (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual char * target_most_derived_interface (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual CORBA::Boolean target_is_a (
+      const char * id
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  void result (::CORBA::ExcDescriptionSeq * result);
+
+private:
+  TAO_ServerRequestInfo_CORBA_ExtAttributeDef_set_exceptions_get (
+      const TAO_ServerRequestInfo_CORBA_ExtAttributeDef_set_exceptions_get &
+    );
+  
+  void operator= (
+      const TAO_ServerRequestInfo_CORBA_ExtAttributeDef_set_exceptions_get &
+    );
+  
+private:
+  POA_CORBA::ExtAttributeDef *_tao_impl;
+  ::CORBA::ExcDescriptionSeq * _result;
+};
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
+
+TAO_ServerRequestInfo_CORBA_ExtAttributeDef_set_exceptions_get::TAO_ServerRequestInfo_CORBA_ExtAttributeDef_set_exceptions_get (
+    TAO_ServerRequest &_tao_server_request,
+    TAO_Object_Adapter::Servant_Upcall *_tao_servant_upcall,
+    POA_CORBA::ExtAttributeDef *tao_impl
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+  : TAO_ServerRequestInfo (_tao_server_request, _tao_servant_upcall),
+    _tao_impl (tao_impl)
+{}
+
+Dynamic::ParameterList *
+TAO_ServerRequestInfo_CORBA_ExtAttributeDef_set_exceptions_get::arguments (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the argument list on demand.
+  Dynamic::ParameterList *parameter_list =
+    TAO_RequestInfo_Util::make_parameter_list (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+  
+  return parameter_list;
+}
+
+Dynamic::ExceptionList *
+TAO_ServerRequestInfo_CORBA_ExtAttributeDef_set_exceptions_get::exceptions (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the exception list on demand.
+  Dynamic::ExceptionList *exception_list =
+    TAO_RequestInfo_Util::make_exception_list (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+  
+  return exception_list;
+}
+
+CORBA::Any * 
+TAO_ServerRequestInfo_CORBA_ExtAttributeDef_set_exceptions_get::result (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the result on demand.
+  CORBA::Boolean tk_void_any = 0;
+  CORBA::Any *result_any =
+    TAO_RequestInfo_Util::make_any (tk_void_any ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+  
+  CORBA::Any_var safe_result_any = result_any;
+  
+  (*result_any) <<= this->_result;
+  
+  return safe_result_any._retn ();
+}
+
+char *
+TAO_ServerRequestInfo_CORBA_ExtAttributeDef_set_exceptions_get::target_most_derived_interface (
+    ACE_ENV_SINGLE_ARG_DECL_NOT_USED
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return
+    CORBA::string_dup (this->_tao_impl->_interface_repository_id ());
+}
+
+CORBA::Boolean
+TAO_ServerRequestInfo_CORBA_ExtAttributeDef_set_exceptions_get::target_is_a (
+    const char * id
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return this->_tao_impl->_is_a (id ACE_ENV_ARG_PARAMETER);
+}
+
+void 
+TAO_ServerRequestInfo_CORBA_ExtAttributeDef_set_exceptions_get::result (::CORBA::ExcDescriptionSeq * result)
+{
+  // Update the result.
+   this->_result = result;
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
+
+class TAO_ServerRequestInfo_CORBA_ExtAttributeDef_set_exceptions_set : public TAO_ServerRequestInfo
+{
+public:
+  TAO_ServerRequestInfo_CORBA_ExtAttributeDef_set_exceptions_set (
+      TAO_ServerRequest &_tao_server_request,
+      TAO_Object_Adapter::Servant_Upcall *tao_servant_upcall,
+      POA_CORBA::ExtAttributeDef *tao_impl,
+      const CORBA::ExcDescriptionSeq & set_exceptions
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    );
+  
+  virtual Dynamic::ParameterList * arguments (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual Dynamic::ExceptionList * exceptions (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual CORBA::Any * result (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual char * target_most_derived_interface (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual CORBA::Boolean target_is_a (
+      const char * id
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+private:
+  TAO_ServerRequestInfo_CORBA_ExtAttributeDef_set_exceptions_set (
+      const TAO_ServerRequestInfo_CORBA_ExtAttributeDef_set_exceptions_set &
+    );
+  
+  void operator= (
+      const TAO_ServerRequestInfo_CORBA_ExtAttributeDef_set_exceptions_set &
+    );
+  
+private:
+  POA_CORBA::ExtAttributeDef *_tao_impl;
+  
+  const CORBA::ExcDescriptionSeq & set_exceptions_;
+};
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
+
+TAO_ServerRequestInfo_CORBA_ExtAttributeDef_set_exceptions_set::TAO_ServerRequestInfo_CORBA_ExtAttributeDef_set_exceptions_set (
+    TAO_ServerRequest &_tao_server_request,
+    TAO_Object_Adapter::Servant_Upcall *_tao_servant_upcall,
+    POA_CORBA::ExtAttributeDef *tao_impl,
+    const CORBA::ExcDescriptionSeq & set_exceptions
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+  : TAO_ServerRequestInfo (_tao_server_request, _tao_servant_upcall),
+    _tao_impl (tao_impl),
+    set_exceptions_ (set_exceptions)
+{}
+
+Dynamic::ParameterList *
+TAO_ServerRequestInfo_CORBA_ExtAttributeDef_set_exceptions_set::arguments (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the argument list on demand.
+  Dynamic::ParameterList *parameter_list =
+    TAO_RequestInfo_Util::make_parameter_list (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+  
+  Dynamic::ParameterList_var safe_parameter_list = parameter_list;
+  parameter_list->length (1);
+  CORBA::ULong len = 0;
+  
+  (*parameter_list)[len].argument <<=  this->set_exceptions_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+  
+  return safe_parameter_list._retn ();
+}
+
+Dynamic::ExceptionList *
+TAO_ServerRequestInfo_CORBA_ExtAttributeDef_set_exceptions_set::exceptions (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the exception list on demand.
+  Dynamic::ExceptionList *exception_list =
+    TAO_RequestInfo_Util::make_exception_list (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+  
+  return exception_list;
+}
+
+CORBA::Any * 
+TAO_ServerRequestInfo_CORBA_ExtAttributeDef_set_exceptions_set::result (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the result on demand.
+  CORBA::Boolean tk_void_any = 1;
+  CORBA::Any *result_any =
+    TAO_RequestInfo_Util::make_any (tk_void_any ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+  
+  return result_any;
+}
+
+char *
+TAO_ServerRequestInfo_CORBA_ExtAttributeDef_set_exceptions_set::target_most_derived_interface (
+    ACE_ENV_SINGLE_ARG_DECL_NOT_USED
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return
+    CORBA::string_dup (this->_tao_impl->_interface_repository_id ());
+}
+
+CORBA::Boolean
+TAO_ServerRequestInfo_CORBA_ExtAttributeDef_set_exceptions_set::target_is_a (
+    const char * id
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return this->_tao_impl->_is_a (id ACE_ENV_ARG_PARAMETER);
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
+
+class TAO_ServerRequestInfo_CORBA_ExtAttributeDef_describe_attribute : public TAO_ServerRequestInfo
+{
+public:
+  TAO_ServerRequestInfo_CORBA_ExtAttributeDef_describe_attribute (
+      TAO_ServerRequest &_tao_server_request,
+      TAO_Object_Adapter::Servant_Upcall *tao_servant_upcall,
+      POA_CORBA::ExtAttributeDef *tao_impl
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    );
+  
+  virtual Dynamic::ParameterList * arguments (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual Dynamic::ExceptionList * exceptions (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual CORBA::Any * result (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual char * target_most_derived_interface (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual CORBA::Boolean target_is_a (
+      const char * id
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  void result (::CORBA::ExtAttributeDescription * result);
+
+private:
+  TAO_ServerRequestInfo_CORBA_ExtAttributeDef_describe_attribute (
+      const TAO_ServerRequestInfo_CORBA_ExtAttributeDef_describe_attribute &
+    );
+  
+  void operator= (
+      const TAO_ServerRequestInfo_CORBA_ExtAttributeDef_describe_attribute &
+    );
+  
+private:
+  POA_CORBA::ExtAttributeDef *_tao_impl;
+  ::CORBA::ExtAttributeDescription * _result;
+};
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
+
+TAO_ServerRequestInfo_CORBA_ExtAttributeDef_describe_attribute::TAO_ServerRequestInfo_CORBA_ExtAttributeDef_describe_attribute (
+    TAO_ServerRequest &_tao_server_request,
+    TAO_Object_Adapter::Servant_Upcall *_tao_servant_upcall,
+    POA_CORBA::ExtAttributeDef *tao_impl
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+  : TAO_ServerRequestInfo (_tao_server_request, _tao_servant_upcall),
+    _tao_impl (tao_impl)
+{}
+
+Dynamic::ParameterList *
+TAO_ServerRequestInfo_CORBA_ExtAttributeDef_describe_attribute::arguments (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the argument list on demand.
+  Dynamic::ParameterList *parameter_list =
+    TAO_RequestInfo_Util::make_parameter_list (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+  
+  return parameter_list;
+}
+
+Dynamic::ExceptionList *
+TAO_ServerRequestInfo_CORBA_ExtAttributeDef_describe_attribute::exceptions (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the exception list on demand.
+  Dynamic::ExceptionList *exception_list =
+    TAO_RequestInfo_Util::make_exception_list (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+  
+  return exception_list;
+}
+
+CORBA::Any * 
+TAO_ServerRequestInfo_CORBA_ExtAttributeDef_describe_attribute::result (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the result on demand.
+  CORBA::Boolean tk_void_any = 0;
+  CORBA::Any *result_any =
+    TAO_RequestInfo_Util::make_any (tk_void_any ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+  
+  CORBA::Any_var safe_result_any = result_any;
+  
+  (*result_any) <<= this->_result;
+  
+  return safe_result_any._retn ();
+}
+
+char *
+TAO_ServerRequestInfo_CORBA_ExtAttributeDef_describe_attribute::target_most_derived_interface (
+    ACE_ENV_SINGLE_ARG_DECL_NOT_USED
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return
+    CORBA::string_dup (this->_tao_impl->_interface_repository_id ());
+}
+
+CORBA::Boolean
+TAO_ServerRequestInfo_CORBA_ExtAttributeDef_describe_attribute::target_is_a (
+    const char * id
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return this->_tao_impl->_is_a (id ACE_ENV_ARG_PARAMETER);
+}
+
+void 
+TAO_ServerRequestInfo_CORBA_ExtAttributeDef_describe_attribute::result (::CORBA::ExtAttributeDescription * result)
+{
+  // Update the result.
+   this->_result = result;
+}
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
+///////////////////////////////////////////////////////////////////////
+//            Strategized Proxy Broker Implementation
+//
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_ss.cpp:40
+
+// Factory function Implementation.
+POA_CORBA::_TAO_ExtAttributeDef_Strategized_Proxy_Broker *POA_CORBA::_TAO_ExtAttributeDef_Strategized_Proxy_Broker::the_TAO_ExtAttributeDef_Strategized_Proxy_Broker (void)
+{
+  static POA_CORBA::_TAO_ExtAttributeDef_Strategized_Proxy_Broker strategized_proxy_broker;
+  return &strategized_proxy_broker;
+}
+
+POA_CORBA::_TAO_ExtAttributeDef_Strategized_Proxy_Broker::_TAO_ExtAttributeDef_Strategized_Proxy_Broker (void)
+{
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
+    {
+      this->proxy_cache_[i] = 0;
+    }
+}
+
+POA_CORBA::_TAO_ExtAttributeDef_Strategized_Proxy_Broker::~_TAO_ExtAttributeDef_Strategized_Proxy_Broker (void)
+{
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
+    {
+      delete this->proxy_cache_[i];
+      
+      // Hack to prevent bug mentioned in 1204. Refer to 1204
+      // for details..
+      this->proxy_cache_[i] = 0;
+    }
+}
+
+CORBA::_TAO_ExtAttributeDef_Proxy_Impl&
+POA_CORBA::_TAO_ExtAttributeDef_Strategized_Proxy_Broker::select_proxy (
+    ::CORBA::ExtAttributeDef *object
+    ACE_ENV_ARG_DECL
+  )
+{
+  int strategy =
+    TAO_ORB_Core::collocation_strategy (object ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
+  
+  if (this->proxy_cache_[strategy] != 0)
+    {
+      return *this->proxy_cache_[strategy];
+    }
+  
+  this->create_proxy (strategy ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
+  
+  return *this->proxy_cache_[strategy];
+}
+
+void 
+POA_CORBA::_TAO_ExtAttributeDef_Strategized_Proxy_Broker::create_proxy (
+    int strategy
+    ACE_ENV_ARG_DECL
+  )
+{
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
+  
+  if (this->proxy_cache_[strategy] == 0)
+    {
+      switch (strategy)
+        {
+        case TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY:
+          ACE_NEW_THROW_EX (
+              this->proxy_cache_[strategy],
+              POA_CORBA::_TAO_ExtAttributeDef_ThruPOA_Proxy_Impl,
+              CORBA::NO_MEMORY ()
+          );
+          ACE_CHECK;
+          break;
+          
+        case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:
+        default:
+          ACE_NEW_THROW_EX (
+              this->proxy_cache_[strategy],
+              ::CORBA::_TAO_ExtAttributeDef_Remote_Proxy_Impl,
+              CORBA::NO_MEMORY ()
+          );
+          ACE_CHECK;
+          break;
+        }
+    }
+}
+
+//
+//        End Strategized Proxy Broker Implementation
+///////////////////////////////////////////////////////////////////////
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:596
+
+CORBA::_TAO_ExtAttributeDef_Proxy_Broker *
+CORBA__TAO_ExtAttributeDef_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
+{
+  ACE_UNUSED_ARG (obj);
+  return ::POA_CORBA::_TAO_ExtAttributeDef_Strategized_Proxy_Broker::the_TAO_ExtAttributeDef_Strategized_Proxy_Broker();
+}
+
+int
+CORBA__TAO_ExtAttributeDef_Proxy_Broker_Factory_Initializer (long)
+{
+  CORBA__TAO_ExtAttributeDef_Proxy_Broker_Factory_function_pointer = 
+    CORBA__TAO_ExtAttributeDef_Proxy_Broker_Factory_function;
+  
+  return 0;
+}
+
+static int CORBA__TAO_ExtAttributeDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow = 
+  CORBA__TAO_ExtAttributeDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, CORBA__TAO_ExtAttributeDef_Proxy_Broker_Factory_Initializer));
+
+
+///////////////////////////////////////////////////////////////////////
+//                 ThruPOA Proxy  Implementation
+//
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_ss.cpp:37
+
+POA_CORBA::_TAO_ExtAttributeDef_ThruPOA_Proxy_Impl::_TAO_ExtAttributeDef_ThruPOA_Proxy_Impl (void)
+{}
+
+// ThruPOA Implementation of the IDL interface methods
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+
+::CORBA::ExcDescriptionSeq * POA_CORBA::_TAO_ExtAttributeDef_ThruPOA_Proxy_Impl::get_exceptions (
+    CORBA::Object *_collocated_tao_target_
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  ::CORBA::ExcDescriptionSeq_var _tao_retval;
+  ACE_UNUSED_ARG (_tao_retval);
+  TAO_Object_Adapter::Servant_Upcall servant_upcall (
+      _collocated_tao_target_->_stubobj ()->servant_orb_var ()->orb_core ()
+    );
+  CORBA::Object_var forward_to;
+  servant_upcall.prepare_for_upcall (
+      _collocated_tao_target_->_object_key (),
+      "_get_get_exceptions",
+      forward_to.out ()
+      ACE_ENV_ARG_PARAMETER
+    );
+  ACE_CHECK_RETURN (_tao_retval._retn ());
+  
+  servant_upcall.pre_invoke_collocated_request (
+      ACE_ENV_SINGLE_ARG_PARAMETER
+    );
+  ACE_CHECK_RETURN (_tao_retval._retn ());
+  
+  return ACE_reinterpret_cast (
+      POA_CORBA::ExtAttributeDef_ptr,
+      servant_upcall.servant ()->_downcast (
+          "IDL:omg.org/CORBA/ExtAttributeDef:1.0"
+        )
+    )->get_exceptions (
+        
+        ACE_ENV_SINGLE_ARG_PARAMETER
+      );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+
+void POA_CORBA::_TAO_ExtAttributeDef_ThruPOA_Proxy_Impl::get_exceptions (
+    CORBA::Object *_collocated_tao_target_,
+    const CORBA::ExcDescriptionSeq & get_exceptions
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  
+  TAO_Object_Adapter::Servant_Upcall servant_upcall (
+      _collocated_tao_target_->_stubobj ()->servant_orb_var ()->orb_core ()
+    );
+  CORBA::Object_var forward_to;
+  servant_upcall.prepare_for_upcall (
+      _collocated_tao_target_->_object_key (),
+      "_set_get_exceptions",
+      forward_to.out ()
+      ACE_ENV_ARG_PARAMETER
+    );
+  ACE_CHECK;
+  
+  servant_upcall.pre_invoke_collocated_request (
+      ACE_ENV_SINGLE_ARG_PARAMETER
+    );
+  ACE_CHECK;
+  
+  ACE_reinterpret_cast (
+      POA_CORBA::ExtAttributeDef_ptr,
+      servant_upcall.servant ()->_downcast (
+          "IDL:omg.org/CORBA/ExtAttributeDef:1.0"
+        )
+    )->get_exceptions (
+        
+        get_exceptions
+        ACE_ENV_ARG_PARAMETER
+      );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+
+::CORBA::ExcDescriptionSeq * POA_CORBA::_TAO_ExtAttributeDef_ThruPOA_Proxy_Impl::set_exceptions (
+    CORBA::Object *_collocated_tao_target_
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  ::CORBA::ExcDescriptionSeq_var _tao_retval;
+  ACE_UNUSED_ARG (_tao_retval);
+  TAO_Object_Adapter::Servant_Upcall servant_upcall (
+      _collocated_tao_target_->_stubobj ()->servant_orb_var ()->orb_core ()
+    );
+  CORBA::Object_var forward_to;
+  servant_upcall.prepare_for_upcall (
+      _collocated_tao_target_->_object_key (),
+      "_get_set_exceptions",
+      forward_to.out ()
+      ACE_ENV_ARG_PARAMETER
+    );
+  ACE_CHECK_RETURN (_tao_retval._retn ());
+  
+  servant_upcall.pre_invoke_collocated_request (
+      ACE_ENV_SINGLE_ARG_PARAMETER
+    );
+  ACE_CHECK_RETURN (_tao_retval._retn ());
+  
+  return ACE_reinterpret_cast (
+      POA_CORBA::ExtAttributeDef_ptr,
+      servant_upcall.servant ()->_downcast (
+          "IDL:omg.org/CORBA/ExtAttributeDef:1.0"
+        )
+    )->set_exceptions (
+        
+        ACE_ENV_SINGLE_ARG_PARAMETER
+      );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+
+void POA_CORBA::_TAO_ExtAttributeDef_ThruPOA_Proxy_Impl::set_exceptions (
+    CORBA::Object *_collocated_tao_target_,
+    const CORBA::ExcDescriptionSeq & set_exceptions
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  
+  TAO_Object_Adapter::Servant_Upcall servant_upcall (
+      _collocated_tao_target_->_stubobj ()->servant_orb_var ()->orb_core ()
+    );
+  CORBA::Object_var forward_to;
+  servant_upcall.prepare_for_upcall (
+      _collocated_tao_target_->_object_key (),
+      "_set_set_exceptions",
+      forward_to.out ()
+      ACE_ENV_ARG_PARAMETER
+    );
+  ACE_CHECK;
+  
+  servant_upcall.pre_invoke_collocated_request (
+      ACE_ENV_SINGLE_ARG_PARAMETER
+    );
+  ACE_CHECK;
+  
+  ACE_reinterpret_cast (
+      POA_CORBA::ExtAttributeDef_ptr,
+      servant_upcall.servant ()->_downcast (
+          "IDL:omg.org/CORBA/ExtAttributeDef:1.0"
+        )
+    )->set_exceptions (
+        
+        set_exceptions
+        ACE_ENV_ARG_PARAMETER
+      );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+
+::CORBA::ExtAttributeDescription * POA_CORBA::_TAO_ExtAttributeDef_ThruPOA_Proxy_Impl::describe_attribute (
+    CORBA::Object *_collocated_tao_target_
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  ::CORBA::ExtAttributeDescription_var _tao_retval;
+  ACE_UNUSED_ARG (_tao_retval);
+  TAO_Object_Adapter::Servant_Upcall servant_upcall (
+      _collocated_tao_target_->_stubobj ()->servant_orb_var ()->orb_core ()
+    );
+  CORBA::Object_var forward_to;
+  servant_upcall.prepare_for_upcall (
+      _collocated_tao_target_->_object_key (),
+      "describe_attribute",
+      forward_to.out ()
+      ACE_ENV_ARG_PARAMETER
+    );
+  ACE_CHECK_RETURN (_tao_retval._retn ());
+  
+  servant_upcall.pre_invoke_collocated_request (
+      ACE_ENV_SINGLE_ARG_PARAMETER
+    );
+  ACE_CHECK_RETURN (_tao_retval._retn ());
+  
+  return ACE_reinterpret_cast (
+      POA_CORBA::ExtAttributeDef_ptr,
+      servant_upcall.servant ()->_downcast (
+          "IDL:omg.org/CORBA/ExtAttributeDef:1.0"
+        )
+    )->describe_attribute (
+        
+        ACE_ENV_SINGLE_ARG_PARAMETER
+      );
+}//
+//           End ThruPOA Proxy Implementation
+///////////////////////////////////////////////////////////////////////
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:98
+
+POA_CORBA::ExtAttributeDef::ExtAttributeDef (void)
+{
+  this->optable_ = &tao_CORBA_ExtAttributeDef_optable;
+}
+
+POA_CORBA::ExtAttributeDef::ExtAttributeDef (const ExtAttributeDef& rhs)
+  :  ACE_NESTED_CLASS (POA_CORBA,AttributeDef) (rhs),
+    ACE_NESTED_CLASS (POA_CORBA,Contained) (rhs),
+    ACE_NESTED_CLASS (POA_CORBA,IRObject) (rhs),
+    TAO_ServantBase (rhs)
+{}
+
+POA_CORBA::ExtAttributeDef::~ExtAttributeDef (void)
+{
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
+
+void POA_CORBA::ExtAttributeDef::_get_get_exceptions_skel (
+    TAO_ServerRequest &_tao_server_request,
+    void *_tao_servant,
+    void *_tao_servant_upcall
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::ExtAttributeDef *_tao_impl =
+    ACE_static_cast (
+        POA_CORBA::ExtAttributeDef *,
+        _tao_servant
+      );
+  ::CORBA::ExcDescriptionSeq_var _tao_retval;
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
+  TAO_ServerRequestInterceptor_Adapter _tao_vfr (
+      _tao_server_request.orb_core ()->server_request_interceptors (),
+      _tao_server_request.interceptor_count ()
+    );
+  
+  TAO_ServerRequestInfo_CORBA_ExtAttributeDef_get_exceptions_get _tao_ri (
+      _tao_server_request,
+      _tao_upcall,
+      _tao_impl
+      ACE_ENV_ARG_PARAMETER
+    );
+  
+  ACE_TRY
+    {
+      {
+        TAO_PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
+                                           1  /* Copy TSC to RSC */);
+        
+        _tao_vfr.receive_request (&_tao_ri ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+        
+        if (!_tao_vfr.location_forwarded ())
+          {
+            
+#endif /* TAO_HAS_INTERCEPTORS */
+            _tao_retval = 
+            _tao_impl->get_exceptions (
+                
+                ACE_ENV_SINGLE_ARG_PARAMETER
+              );
+            TAO_INTERCEPTOR_CHECK;
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+            
+          }
+      }
+      
+      if (!_tao_vfr.location_forwarded ())
+        {
+          ::CORBA::ExcDescriptionSeq * _tao_retval_info = _tao_retval._retn ();
+          _tao_ri.result (_tao_retval_info);
+          _tao_retval = _tao_retval_info;
+          _tao_ri.reply_status (PortableInterceptor::SUCCESSFUL);
+          _tao_vfr.send_reply (&_tao_ri ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+    }
+  ACE_CATCHANY
+    {
+      _tao_ri.exception (&ACE_ANY_EXCEPTION);
+      _tao_vfr.send_exception (
+          &_tao_ri
+          ACE_ENV_ARG_PARAMETER
+        );
+      ACE_TRY_CHECK;
+      
+      PortableInterceptor::ReplyStatus _tao_status =
+        _tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      
+      if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
+          || _tao_status == PortableInterceptor::USER_EXCEPTION)
+        {
+          ACE_RE_THROW;
+        }
+    }
+  
+# if defined (ACE_HAS_EXCEPTIONS) \
+     && defined (ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS)
+  ACE_CATCHALL
+    {
+      CORBA::UNKNOWN ex;
+      
+      _tao_ri.exception (&ex);
+      _tao_vfr.send_exception (
+          &_tao_ri
+          ACE_ENV_ARG_PARAMETER
+        );
+      ACE_TRY_CHECK;
+      
+      PortableInterceptor::ReplyStatus _tao_status =
+        _tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      
+      if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION)
+        ACE_TRY_THROW (ex);
+    }
+# endif  /* ACE_HAS_EXCEPTIONS && ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS */
+  
+  ACE_ENDTRY;
+  ACE_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS */
+  
+  _tao_server_request.init_reply ();
+  
+  TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
+  
+  if (!(
+      (_tao_out << _tao_retval.in ())
+    ))
+    ACE_THROW (CORBA::MARSHAL ());
+  
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
+
+void POA_CORBA::ExtAttributeDef::_set_get_exceptions_skel (
+    TAO_ServerRequest &_tao_server_request,
+    void *_tao_servant,
+    void *_tao_servant_upcall
+    ACE_ENV_ARG_DECL
+  )
+{
+  TAO_InputCDR &_tao_in = _tao_server_request.incoming ();
+  POA_CORBA::ExtAttributeDef *_tao_impl =
+    ACE_static_cast (
+        POA_CORBA::ExtAttributeDef *,
+        _tao_servant
+      );
+  _tao_server_request.argument_flag (0);
+  
+  CORBA::ExcDescriptionSeq get_exceptions;
+  
+  if (!(
+      (_tao_in >> get_exceptions)
+    ))
+    ACE_THROW (CORBA::MARSHAL ());
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
+  TAO_ServerRequestInterceptor_Adapter _tao_vfr (
+      _tao_server_request.orb_core ()->server_request_interceptors (),
+      _tao_server_request.interceptor_count ()
+    );
+  
+  TAO_ServerRequestInfo_CORBA_ExtAttributeDef_get_exceptions_set _tao_ri (
+      _tao_server_request,
+      _tao_upcall,
+      _tao_impl,
+      
+      get_exceptions
+      ACE_ENV_ARG_PARAMETER
+    );
+  
+  ACE_TRY
+    {
+      {
+        TAO_PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
+                                           1  /* Copy TSC to RSC */);
+        
+        _tao_vfr.receive_request (&_tao_ri ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+        
+        if (!_tao_vfr.location_forwarded ())
+          {
+            
+#endif /* TAO_HAS_INTERCEPTORS */
+            
+            _tao_impl->get_exceptions (
+                
+                get_exceptions
+                ACE_ENV_ARG_PARAMETER
+              );
+            TAO_INTERCEPTOR_CHECK;
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+            
+          }
+      }
+      
+      if (!_tao_vfr.location_forwarded ())
+        {
+          _tao_ri.reply_status (PortableInterceptor::SUCCESSFUL);
+          _tao_vfr.send_reply (&_tao_ri ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+    }
+  ACE_CATCHANY
+    {
+      _tao_ri.exception (&ACE_ANY_EXCEPTION);
+      _tao_vfr.send_exception (
+          &_tao_ri
+          ACE_ENV_ARG_PARAMETER
+        );
+      ACE_TRY_CHECK;
+      
+      PortableInterceptor::ReplyStatus _tao_status =
+        _tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      
+      if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
+          || _tao_status == PortableInterceptor::USER_EXCEPTION)
+        {
+          ACE_RE_THROW;
+        }
+    }
+  
+# if defined (ACE_HAS_EXCEPTIONS) \
+     && defined (ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS)
+  ACE_CATCHALL
+    {
+      CORBA::UNKNOWN ex;
+      
+      _tao_ri.exception (&ex);
+      _tao_vfr.send_exception (
+          &_tao_ri
+          ACE_ENV_ARG_PARAMETER
+        );
+      ACE_TRY_CHECK;
+      
+      PortableInterceptor::ReplyStatus _tao_status =
+        _tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      
+      if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION)
+        ACE_TRY_THROW (ex);
+    }
+# endif  /* ACE_HAS_EXCEPTIONS && ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS */
+  
+  ACE_ENDTRY;
+  ACE_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS */
+  
+  _tao_server_request.init_reply ();
+  
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
+
+void POA_CORBA::ExtAttributeDef::_get_set_exceptions_skel (
+    TAO_ServerRequest &_tao_server_request,
+    void *_tao_servant,
+    void *_tao_servant_upcall
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::ExtAttributeDef *_tao_impl =
+    ACE_static_cast (
+        POA_CORBA::ExtAttributeDef *,
+        _tao_servant
+      );
+  ::CORBA::ExcDescriptionSeq_var _tao_retval;
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
+  TAO_ServerRequestInterceptor_Adapter _tao_vfr (
+      _tao_server_request.orb_core ()->server_request_interceptors (),
+      _tao_server_request.interceptor_count ()
+    );
+  
+  TAO_ServerRequestInfo_CORBA_ExtAttributeDef_set_exceptions_get _tao_ri (
+      _tao_server_request,
+      _tao_upcall,
+      _tao_impl
+      ACE_ENV_ARG_PARAMETER
+    );
+  
+  ACE_TRY
+    {
+      {
+        TAO_PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
+                                           1  /* Copy TSC to RSC */);
+        
+        _tao_vfr.receive_request (&_tao_ri ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+        
+        if (!_tao_vfr.location_forwarded ())
+          {
+            
+#endif /* TAO_HAS_INTERCEPTORS */
+            _tao_retval = 
+            _tao_impl->set_exceptions (
+                
+                ACE_ENV_SINGLE_ARG_PARAMETER
+              );
+            TAO_INTERCEPTOR_CHECK;
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+            
+          }
+      }
+      
+      if (!_tao_vfr.location_forwarded ())
+        {
+          ::CORBA::ExcDescriptionSeq * _tao_retval_info = _tao_retval._retn ();
+          _tao_ri.result (_tao_retval_info);
+          _tao_retval = _tao_retval_info;
+          _tao_ri.reply_status (PortableInterceptor::SUCCESSFUL);
+          _tao_vfr.send_reply (&_tao_ri ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+    }
+  ACE_CATCHANY
+    {
+      _tao_ri.exception (&ACE_ANY_EXCEPTION);
+      _tao_vfr.send_exception (
+          &_tao_ri
+          ACE_ENV_ARG_PARAMETER
+        );
+      ACE_TRY_CHECK;
+      
+      PortableInterceptor::ReplyStatus _tao_status =
+        _tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      
+      if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
+          || _tao_status == PortableInterceptor::USER_EXCEPTION)
+        {
+          ACE_RE_THROW;
+        }
+    }
+  
+# if defined (ACE_HAS_EXCEPTIONS) \
+     && defined (ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS)
+  ACE_CATCHALL
+    {
+      CORBA::UNKNOWN ex;
+      
+      _tao_ri.exception (&ex);
+      _tao_vfr.send_exception (
+          &_tao_ri
+          ACE_ENV_ARG_PARAMETER
+        );
+      ACE_TRY_CHECK;
+      
+      PortableInterceptor::ReplyStatus _tao_status =
+        _tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      
+      if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION)
+        ACE_TRY_THROW (ex);
+    }
+# endif  /* ACE_HAS_EXCEPTIONS && ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS */
+  
+  ACE_ENDTRY;
+  ACE_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS */
+  
+  _tao_server_request.init_reply ();
+  
+  TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
+  
+  if (!(
+      (_tao_out << _tao_retval.in ())
+    ))
+    ACE_THROW (CORBA::MARSHAL ());
+  
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
+
+void POA_CORBA::ExtAttributeDef::_set_set_exceptions_skel (
+    TAO_ServerRequest &_tao_server_request,
+    void *_tao_servant,
+    void *_tao_servant_upcall
+    ACE_ENV_ARG_DECL
+  )
+{
+  TAO_InputCDR &_tao_in = _tao_server_request.incoming ();
+  POA_CORBA::ExtAttributeDef *_tao_impl =
+    ACE_static_cast (
+        POA_CORBA::ExtAttributeDef *,
+        _tao_servant
+      );
+  _tao_server_request.argument_flag (0);
+  
+  CORBA::ExcDescriptionSeq set_exceptions;
+  
+  if (!(
+      (_tao_in >> set_exceptions)
+    ))
+    ACE_THROW (CORBA::MARSHAL ());
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
+  TAO_ServerRequestInterceptor_Adapter _tao_vfr (
+      _tao_server_request.orb_core ()->server_request_interceptors (),
+      _tao_server_request.interceptor_count ()
+    );
+  
+  TAO_ServerRequestInfo_CORBA_ExtAttributeDef_set_exceptions_set _tao_ri (
+      _tao_server_request,
+      _tao_upcall,
+      _tao_impl,
+      
+      set_exceptions
+      ACE_ENV_ARG_PARAMETER
+    );
+  
+  ACE_TRY
+    {
+      {
+        TAO_PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
+                                           1  /* Copy TSC to RSC */);
+        
+        _tao_vfr.receive_request (&_tao_ri ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+        
+        if (!_tao_vfr.location_forwarded ())
+          {
+            
+#endif /* TAO_HAS_INTERCEPTORS */
+            
+            _tao_impl->set_exceptions (
+                
+                set_exceptions
+                ACE_ENV_ARG_PARAMETER
+              );
+            TAO_INTERCEPTOR_CHECK;
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+            
+          }
+      }
+      
+      if (!_tao_vfr.location_forwarded ())
+        {
+          _tao_ri.reply_status (PortableInterceptor::SUCCESSFUL);
+          _tao_vfr.send_reply (&_tao_ri ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+    }
+  ACE_CATCHANY
+    {
+      _tao_ri.exception (&ACE_ANY_EXCEPTION);
+      _tao_vfr.send_exception (
+          &_tao_ri
+          ACE_ENV_ARG_PARAMETER
+        );
+      ACE_TRY_CHECK;
+      
+      PortableInterceptor::ReplyStatus _tao_status =
+        _tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      
+      if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
+          || _tao_status == PortableInterceptor::USER_EXCEPTION)
+        {
+          ACE_RE_THROW;
+        }
+    }
+  
+# if defined (ACE_HAS_EXCEPTIONS) \
+     && defined (ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS)
+  ACE_CATCHALL
+    {
+      CORBA::UNKNOWN ex;
+      
+      _tao_ri.exception (&ex);
+      _tao_vfr.send_exception (
+          &_tao_ri
+          ACE_ENV_ARG_PARAMETER
+        );
+      ACE_TRY_CHECK;
+      
+      PortableInterceptor::ReplyStatus _tao_status =
+        _tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      
+      if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION)
+        ACE_TRY_THROW (ex);
+    }
+# endif  /* ACE_HAS_EXCEPTIONS && ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS */
+  
+  ACE_ENDTRY;
+  ACE_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS */
+  
+  _tao_server_request.init_reply ();
+  
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
+
+void POA_CORBA::ExtAttributeDef::describe_attribute_skel (
+    TAO_ServerRequest &_tao_server_request,
+    void *_tao_servant,
+    void *_tao_servant_upcall
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::ExtAttributeDef *_tao_impl =
+    ACE_static_cast (
+        POA_CORBA::ExtAttributeDef *,
+        _tao_servant
+      );
+  ::CORBA::ExtAttributeDescription_var _tao_retval;
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
+  TAO_ServerRequestInterceptor_Adapter _tao_vfr (
+      _tao_server_request.orb_core ()->server_request_interceptors (),
+      _tao_server_request.interceptor_count ()
+    );
+  
+  TAO_ServerRequestInfo_CORBA_ExtAttributeDef_describe_attribute _tao_ri (
+      _tao_server_request,
+      _tao_upcall,
+      _tao_impl
+      ACE_ENV_ARG_PARAMETER
+    );
+  
+  ACE_TRY
+    {
+      {
+        TAO_PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
+                                           1  /* Copy TSC to RSC */);
+        
+        _tao_vfr.receive_request (&_tao_ri ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+        
+        if (!_tao_vfr.location_forwarded ())
+          {
+            
+#endif /* TAO_HAS_INTERCEPTORS */
+            _tao_retval = 
+            _tao_impl->describe_attribute (
+                
+                ACE_ENV_SINGLE_ARG_PARAMETER
+              );
+            TAO_INTERCEPTOR_CHECK;
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+            
+          }
+      }
+      
+      if (!_tao_vfr.location_forwarded ())
+        {
+          ::CORBA::ExtAttributeDescription * _tao_retval_info = _tao_retval._retn ();
+          _tao_ri.result (_tao_retval_info);
+          _tao_retval = _tao_retval_info;
+          _tao_ri.reply_status (PortableInterceptor::SUCCESSFUL);
+          _tao_vfr.send_reply (&_tao_ri ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+    }
+  ACE_CATCHANY
+    {
+      _tao_ri.exception (&ACE_ANY_EXCEPTION);
+      _tao_vfr.send_exception (
+          &_tao_ri
+          ACE_ENV_ARG_PARAMETER
+        );
+      ACE_TRY_CHECK;
+      
+      PortableInterceptor::ReplyStatus _tao_status =
+        _tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      
+      if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
+          || _tao_status == PortableInterceptor::USER_EXCEPTION)
+        {
+          ACE_RE_THROW;
+        }
+    }
+  
+# if defined (ACE_HAS_EXCEPTIONS) \
+     && defined (ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS)
+  ACE_CATCHALL
+    {
+      CORBA::UNKNOWN ex;
+      
+      _tao_ri.exception (&ex);
+      _tao_vfr.send_exception (
+          &_tao_ri
+          ACE_ENV_ARG_PARAMETER
+        );
+      ACE_TRY_CHECK;
+      
+      PortableInterceptor::ReplyStatus _tao_status =
+        _tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      
+      if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION)
+        ACE_TRY_THROW (ex);
+    }
+# endif  /* ACE_HAS_EXCEPTIONS && ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS */
+  
+  ACE_ENDTRY;
+  ACE_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS */
+  
+  _tao_server_request.init_reply ();
+  
+  TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
+  
+  if (!(
+      (_tao_out << _tao_retval.in ())
+    ))
+    ACE_THROW (CORBA::MARSHAL ());
+  
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:163
+
+void POA_CORBA::ExtAttributeDef::_is_a_skel (
+    TAO_ServerRequest &_tao_server_request, 
+    void * _tao_servant,
+    void * /* Servant_Upcall */
+    ACE_ENV_ARG_DECL
+  )
+{
+  TAO_InputCDR &_tao_in = _tao_server_request.incoming ();
+  POA_CORBA::ExtAttributeDef *_tao_impl = (POA_CORBA::ExtAttributeDef *) _tao_servant;
+  CORBA::Boolean _tao_retval = 0;
+  CORBA::String_var value;
+  
+  if (!(_tao_in >> value.out ()))
+    ACE_THROW (CORBA::MARSHAL ());
+  
+  _tao_retval = _tao_impl->_is_a (value.in () ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  
+  _tao_server_request.init_reply ();
+  TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
+  
+  if (!(_tao_out << CORBA::Any::from_boolean (_tao_retval)))
+    ACE_THROW (CORBA::MARSHAL ());
+}
+
+void POA_CORBA::ExtAttributeDef::_non_existent_skel (
+    TAO_ServerRequest &_tao_server_request, 
+    void * _tao_servant,
+    void * /* Servant_Upcall */
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::ExtAttributeDef *_tao_impl = (POA_CORBA::ExtAttributeDef *) _tao_servant;
+  CORBA::Boolean _tao_retval =
+    _tao_impl->_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+  
+  _tao_server_request.init_reply ();
+  TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
+  
+  if (!(_tao_out << CORBA::Any::from_boolean (_tao_retval)))
+    ACE_THROW (CORBA::MARSHAL ());
+}
+
+void POA_CORBA::ExtAttributeDef::_interface_skel (
+    TAO_ServerRequest &_tao_server_request, 
+    void * _tao_servant,
+    void * /* Servant_Upcall */
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::ExtAttributeDef *_tao_impl = (POA_CORBA::ExtAttributeDef *) _tao_servant;
+  CORBA::InterfaceDef_ptr _tao_retval = 0;
+  CORBA::Boolean _tao_result = 0;
+  
+  TAO_IFR_Client_Adapter *_tao_adapter =
+    ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
+        TAO_ORB_Core::ifr_client_adapter_name ()
+      );
+    
+  if (_tao_adapter == 0)
+    {
+      ACE_THROW (CORBA::INTF_REPOS ());
+    }
+  
+  ACE_TRY
+    {
+      _tao_retval = 
+        _tao_impl->_get_interface (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      
+      _tao_server_request.init_reply ();
+      
+      TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
+      
+      _tao_result =
+        _tao_adapter->interfacedef_cdr_insert (
+            _tao_out,
+            _tao_retval
+          );
+    }
+  ACE_CATCHALL
+    {
+      _tao_adapter->dispose (_tao_retval);
+    }
+  ACE_ENDTRY;
+  
+  if (_tao_result == 0)
+    {
+      ACE_THROW (CORBA::MARSHAL ());
+    }
+}
+
+void POA_CORBA::ExtAttributeDef::_component_skel (
+    TAO_ServerRequest &_tao_server_request, 
+    void * _tao_object_reference,
+    void * /* Servant_Upcall */
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::ExtAttributeDef *_tao_impl = (POA_CORBA::ExtAttributeDef *) _tao_object_reference;
+  CORBA::Object_var _tao_retval =
+    _tao_impl->_get_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+  
+  _tao_server_request.init_reply ();
+  TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
+  
+  if (!(_tao_out << _tao_retval._retn ()))
+    ACE_THROW (CORBA::MARSHAL ());
+}
+
+CORBA::Boolean POA_CORBA::ExtAttributeDef::_is_a (
+    const char* value
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/ExtAttributeDef:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/AttributeDef:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/Contained:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/IRObject:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:org.omg/CORBA/Object:1.0"
+        )
+     )
+    {
+      return 1;
+    }
+  else
+    {
+      return 0;
+    }
+}
+
+void* POA_CORBA::ExtAttributeDef::_downcast (
+    const char* logical_type_id
+  )
+{
+  if (ACE_OS::strcmp (logical_type_id,
+                      "IDL:omg.org/CORBA/ExtAttributeDef:1.0") == 0)
+    {
+      return ACE_static_cast (POA_CORBA::ExtAttributeDef_ptr, this);
+    }
+  
+  if (ACE_OS::strcmp (logical_type_id,
+                      "IDL:omg.org/CORBA/AttributeDef:1.0") == 0)
+    {
+      return ACE_static_cast (POA_CORBA::AttributeDef_ptr, this);
+    }
+  
+  if (ACE_OS::strcmp (logical_type_id,
+                      "IDL:omg.org/CORBA/Contained:1.0") == 0)
+    {
+      return ACE_static_cast (POA_CORBA::Contained_ptr, this);
+    }
+  
+  if (ACE_OS::strcmp (logical_type_id,
+                      "IDL:omg.org/CORBA/IRObject:1.0") == 0)
+    {
+      return ACE_static_cast (POA_CORBA::IRObject_ptr, this);
+    }
+  
+  if (ACE_OS::strcmp (logical_type_id,
+                      "IDL:omg.org/CORBA/Object:1.0") == 0)
+    {
+      return ACE_static_cast(PortableServer::Servant, this);
+    }
+  
+  return 0;
+}
+
+const char* POA_CORBA::ExtAttributeDef::_interface_repository_id (void) const
+{
+  return "IDL:omg.org/CORBA/ExtAttributeDef:1.0";
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:531
+
+void POA_CORBA::ExtAttributeDef::_dispatch (
+    TAO_ServerRequest &req,
+    void *servant_upcall
+    ACE_ENV_ARG_DECL
+  )
+{
+  this->synchronous_upcall_dispatch (req,
+                                     servant_upcall,
+                                     this
+                                     ACE_ENV_ARG_PARAMETER);
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:477
+
+CORBA::ExtAttributeDef *
+POA_CORBA::ExtAttributeDef::_this (ACE_ENV_SINGLE_ARG_DECL)
+{
+  TAO_Stub *stub = this->_create_stub (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+  
+  TAO_Stub_Auto_Ptr safe_stub (stub);
+  CORBA::Object_ptr tmp = CORBA::Object::_nil ();
+  
+  if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())
+    {
+      ACE_NEW_RETURN (
+          tmp,
+          CORBA::Object (
+              stub,
+              1,
+              this
+            ),
+          0
+        );
+    }
+  else
+    {
+      ACE_NEW_RETURN (
+          tmp,
+          CORBA::Object (
+              stub,
+              0,
+              this
+            ),
+          0
+        );
+    }
+  
+  CORBA::Object_var obj = tmp;
+  (void) safe_stub.release ();
+  return ::CORBA::ExtAttributeDef::_unchecked_narrow (obj.in ());
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1731
 
 class TAO_CORBA_OperationDef_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
 {
@@ -23145,7 +25259,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: /u1/ossama/ACE_wrappers/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_CORBA_OperationDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_CORBA_OperationDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_CORBA_OperationDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -23339,12 +25453,12 @@ TAO_CORBA_OperationDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned i
 static TAO_CORBA_OperationDef_Perfect_Hash_OpTable tao_CORBA_OperationDef_optable;
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interceptors_ss.cpp:52
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interceptors_ss.cpp:52
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_OperationDef_result_get : public TAO_ServerRequestInfo
 {
@@ -23399,7 +25513,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_OperationDef_result_get::TAO_ServerRequestInfo_CORBA_OperationDef_result_get (
     TAO_ServerRequest &_tao_server_request,
@@ -23486,7 +25600,7 @@ TAO_ServerRequestInfo_CORBA_OperationDef_result_get::result (CORBA::TypeCode_ptr
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_OperationDef_result_def_get : public TAO_ServerRequestInfo
 {
@@ -23541,7 +25655,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_OperationDef_result_def_get::TAO_ServerRequestInfo_CORBA_OperationDef_result_def_get (
     TAO_ServerRequest &_tao_server_request,
@@ -23628,7 +25742,7 @@ TAO_ServerRequestInfo_CORBA_OperationDef_result_def_get::result (::CORBA::IDLTyp
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_OperationDef_result_def_set : public TAO_ServerRequestInfo
 {
@@ -23683,7 +25797,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_OperationDef_result_def_set::TAO_ServerRequestInfo_CORBA_OperationDef_result_def_set (
     TAO_ServerRequest &_tao_server_request,
@@ -23769,7 +25883,7 @@ TAO_ServerRequestInfo_CORBA_OperationDef_result_def_set::target_is_a (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_OperationDef_params_get : public TAO_ServerRequestInfo
 {
@@ -23824,7 +25938,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_OperationDef_params_get::TAO_ServerRequestInfo_CORBA_OperationDef_params_get (
     TAO_ServerRequest &_tao_server_request,
@@ -23911,7 +26025,7 @@ TAO_ServerRequestInfo_CORBA_OperationDef_params_get::result (::CORBA::ParDescrip
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_OperationDef_params_set : public TAO_ServerRequestInfo
 {
@@ -23966,7 +26080,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_OperationDef_params_set::TAO_ServerRequestInfo_CORBA_OperationDef_params_set (
     TAO_ServerRequest &_tao_server_request,
@@ -24052,7 +26166,7 @@ TAO_ServerRequestInfo_CORBA_OperationDef_params_set::target_is_a (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_OperationDef_mode_get : public TAO_ServerRequestInfo
 {
@@ -24107,7 +26221,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_OperationDef_mode_get::TAO_ServerRequestInfo_CORBA_OperationDef_mode_get (
     TAO_ServerRequest &_tao_server_request,
@@ -24194,7 +26308,7 @@ TAO_ServerRequestInfo_CORBA_OperationDef_mode_get::result (::CORBA::OperationMod
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_OperationDef_mode_set : public TAO_ServerRequestInfo
 {
@@ -24249,7 +26363,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_OperationDef_mode_set::TAO_ServerRequestInfo_CORBA_OperationDef_mode_set (
     TAO_ServerRequest &_tao_server_request,
@@ -24335,7 +26449,7 @@ TAO_ServerRequestInfo_CORBA_OperationDef_mode_set::target_is_a (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_OperationDef_contexts_get : public TAO_ServerRequestInfo
 {
@@ -24390,7 +26504,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_OperationDef_contexts_get::TAO_ServerRequestInfo_CORBA_OperationDef_contexts_get (
     TAO_ServerRequest &_tao_server_request,
@@ -24477,7 +26591,7 @@ TAO_ServerRequestInfo_CORBA_OperationDef_contexts_get::result (::CORBA::ContextI
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_OperationDef_contexts_set : public TAO_ServerRequestInfo
 {
@@ -24532,7 +26646,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_OperationDef_contexts_set::TAO_ServerRequestInfo_CORBA_OperationDef_contexts_set (
     TAO_ServerRequest &_tao_server_request,
@@ -24618,7 +26732,7 @@ TAO_ServerRequestInfo_CORBA_OperationDef_contexts_set::target_is_a (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_OperationDef_exceptions_get : public TAO_ServerRequestInfo
 {
@@ -24673,7 +26787,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_OperationDef_exceptions_get::TAO_ServerRequestInfo_CORBA_OperationDef_exceptions_get (
     TAO_ServerRequest &_tao_server_request,
@@ -24760,7 +26874,7 @@ TAO_ServerRequestInfo_CORBA_OperationDef_exceptions_get::result (::CORBA::Except
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_OperationDef_exceptions_set : public TAO_ServerRequestInfo
 {
@@ -24815,7 +26929,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_OperationDef_exceptions_set::TAO_ServerRequestInfo_CORBA_OperationDef_exceptions_set (
     TAO_ServerRequest &_tao_server_request,
@@ -24907,7 +27021,7 @@ TAO_ServerRequestInfo_CORBA_OperationDef_exceptions_set::target_is_a (
 //
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/strategized_proxy_broker_ss.cpp:40
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_ss.cpp:40
 
 // Factory function Implementation.
 POA_CORBA::_TAO_OperationDef_Strategized_Proxy_Broker *POA_CORBA::_TAO_OperationDef_Strategized_Proxy_Broker::the_TAO_OperationDef_Strategized_Proxy_Broker (void)
@@ -24996,7 +27110,7 @@ POA_CORBA::_TAO_OperationDef_Strategized_Proxy_Broker::create_proxy (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:598
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:596
 
 CORBA::_TAO_OperationDef_Proxy_Broker *
 CORBA__TAO_OperationDef_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
@@ -25023,7 +27137,7 @@ static int CORBA__TAO_OperationDef_Proxy_Broker_Stub_Factory_Initializer_Scarecr
 //
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/thru_poa_proxy_impl_ss.cpp:37
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_ss.cpp:37
 
 POA_CORBA::_TAO_OperationDef_ThruPOA_Proxy_Impl::_TAO_OperationDef_ThruPOA_Proxy_Impl (void)
 {}
@@ -25031,7 +27145,7 @@ POA_CORBA::_TAO_OperationDef_ThruPOA_Proxy_Impl::_TAO_OperationDef_ThruPOA_Proxy
 // ThruPOA Implementation of the IDL interface methods
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 CORBA::TypeCode_ptr POA_CORBA::_TAO_OperationDef_ThruPOA_Proxy_Impl::result (
     CORBA::Object *_collocated_tao_target_
@@ -25072,7 +27186,7 @@ CORBA::TypeCode_ptr POA_CORBA::_TAO_OperationDef_ThruPOA_Proxy_Impl::result (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 ::CORBA::IDLType_ptr POA_CORBA::_TAO_OperationDef_ThruPOA_Proxy_Impl::result_def (
     CORBA::Object *_collocated_tao_target_
@@ -25113,7 +27227,7 @@ CORBA::TypeCode_ptr POA_CORBA::_TAO_OperationDef_ThruPOA_Proxy_Impl::result (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 void POA_CORBA::_TAO_OperationDef_ThruPOA_Proxy_Impl::result_def (
     CORBA::Object *_collocated_tao_target_,
@@ -25155,7 +27269,7 @@ void POA_CORBA::_TAO_OperationDef_ThruPOA_Proxy_Impl::result_def (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 ::CORBA::ParDescriptionSeq * POA_CORBA::_TAO_OperationDef_ThruPOA_Proxy_Impl::params (
     CORBA::Object *_collocated_tao_target_
@@ -25196,7 +27310,7 @@ void POA_CORBA::_TAO_OperationDef_ThruPOA_Proxy_Impl::result_def (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 void POA_CORBA::_TAO_OperationDef_ThruPOA_Proxy_Impl::params (
     CORBA::Object *_collocated_tao_target_,
@@ -25238,7 +27352,7 @@ void POA_CORBA::_TAO_OperationDef_ThruPOA_Proxy_Impl::params (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 ::CORBA::OperationMode POA_CORBA::_TAO_OperationDef_ThruPOA_Proxy_Impl::mode (
     CORBA::Object *_collocated_tao_target_
@@ -25279,7 +27393,7 @@ void POA_CORBA::_TAO_OperationDef_ThruPOA_Proxy_Impl::params (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 void POA_CORBA::_TAO_OperationDef_ThruPOA_Proxy_Impl::mode (
     CORBA::Object *_collocated_tao_target_,
@@ -25321,7 +27435,7 @@ void POA_CORBA::_TAO_OperationDef_ThruPOA_Proxy_Impl::mode (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 ::CORBA::ContextIdSeq * POA_CORBA::_TAO_OperationDef_ThruPOA_Proxy_Impl::contexts (
     CORBA::Object *_collocated_tao_target_
@@ -25362,7 +27476,7 @@ void POA_CORBA::_TAO_OperationDef_ThruPOA_Proxy_Impl::mode (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 void POA_CORBA::_TAO_OperationDef_ThruPOA_Proxy_Impl::contexts (
     CORBA::Object *_collocated_tao_target_,
@@ -25404,7 +27518,7 @@ void POA_CORBA::_TAO_OperationDef_ThruPOA_Proxy_Impl::contexts (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 ::CORBA::ExceptionDefSeq * POA_CORBA::_TAO_OperationDef_ThruPOA_Proxy_Impl::exceptions (
     CORBA::Object *_collocated_tao_target_
@@ -25445,7 +27559,7 @@ void POA_CORBA::_TAO_OperationDef_ThruPOA_Proxy_Impl::contexts (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 void POA_CORBA::_TAO_OperationDef_ThruPOA_Proxy_Impl::exceptions (
     CORBA::Object *_collocated_tao_target_,
@@ -25489,7 +27603,7 @@ void POA_CORBA::_TAO_OperationDef_ThruPOA_Proxy_Impl::exceptions (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_ss.cpp:98
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:98
 
 POA_CORBA::OperationDef::OperationDef (void)
 {
@@ -25507,7 +27621,7 @@ POA_CORBA::OperationDef::~OperationDef (void)
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::OperationDef::_get_result_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -25634,7 +27748,7 @@ void POA_CORBA::OperationDef::_get_result_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::OperationDef::_get_result_def_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -25761,7 +27875,7 @@ void POA_CORBA::OperationDef::_get_result_def_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::OperationDef::_set_result_def_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -25889,7 +28003,7 @@ void POA_CORBA::OperationDef::_set_result_def_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::OperationDef::_get_params_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -26016,7 +28130,7 @@ void POA_CORBA::OperationDef::_get_params_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::OperationDef::_set_params_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -26144,7 +28258,7 @@ void POA_CORBA::OperationDef::_set_params_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::OperationDef::_get_mode_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -26270,7 +28384,7 @@ void POA_CORBA::OperationDef::_get_mode_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::OperationDef::_set_mode_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -26398,7 +28512,7 @@ void POA_CORBA::OperationDef::_set_mode_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::OperationDef::_get_contexts_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -26525,7 +28639,7 @@ void POA_CORBA::OperationDef::_get_contexts_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::OperationDef::_set_contexts_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -26653,7 +28767,7 @@ void POA_CORBA::OperationDef::_set_contexts_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::OperationDef::_get_exceptions_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -26780,7 +28894,7 @@ void POA_CORBA::OperationDef::_get_exceptions_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::OperationDef::_set_exceptions_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -26908,7 +29022,7 @@ void POA_CORBA::OperationDef::_set_exceptions_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_ss.cpp:163
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:163
 
 void POA_CORBA::OperationDef::_is_a_skel (
     TAO_ServerRequest &_tao_server_request, 
@@ -27091,7 +29205,7 @@ const char* POA_CORBA::OperationDef::_interface_repository_id (void) const
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:532
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:531
 
 void POA_CORBA::OperationDef::_dispatch (
     TAO_ServerRequest &req,
@@ -27106,7 +29220,7 @@ void POA_CORBA::OperationDef::_dispatch (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:478
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:477
 
 CORBA::OperationDef *
 POA_CORBA::OperationDef::_this (ACE_ENV_SINGLE_ARG_DECL)
@@ -27148,7 +29262,7 @@ POA_CORBA::OperationDef::_this (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:1732
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1731
 
 class TAO_CORBA_InterfaceDef_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
 {
@@ -27159,53 +29273,53 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: /u1/ossama/ACE_wrappers/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_CORBA_InterfaceDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_CORBA_InterfaceDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_CORBA_InterfaceDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
   static const unsigned char asso_values[] =
     {
 #if defined (ACE_MVS)
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81,  0,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81,  0,
-     81, 30, 20,  0, 81, 81, 81, 10, 81, 81,
-     81, 81, 81, 81, 81, 81, 81,  0,  0,  5,
-     81,  0, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 20, 35, 81, 81, 81, 10,  5, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 25,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79,  0,
+     79,  0, 20,  0, 79, 79, 79,  5, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 15,  0,  5,
+     79, 15, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 25, 40, 79, 79, 79, 15,  0, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79,
 #else
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81,  0, 81,  0, 81, 30,
-     20,  0, 81, 81, 81, 10, 81, 81,  0,  0,
-      5, 81,  0, 81, 81, 20, 35, 81, 81, 81,
-     10,  5, 81, 81, 81, 81, 81, 81,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 25, 79,  0, 79,  0,
+     20,  0, 79, 79, 79,  5, 79, 79, 15,  0,
+      5, 79, 15, 79, 79, 25, 40, 79, 79, 79,
+     15,  0, 79, 79, 79, 79, 79, 79,
 #endif /* ACE_MVS */
     };
   return len + asso_values[str[len - 1]] + asso_values[str[0]];
@@ -27216,70 +29330,71 @@ TAO_CORBA_InterfaceDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned i
 {
   enum
     {
-      TOTAL_KEYWORDS = 41,
+      TOTAL_KEYWORDS = 42,
       MIN_WORD_LENGTH = 4,
       MAX_WORD_LENGTH = 26,
       MIN_HASH_VALUE = 4,
-      MAX_HASH_VALUE = 80,
-      HASH_VALUE_RANGE = 77,
-      DUPLICATES = 9,
-      WORDLIST_SIZE = 45
+      MAX_HASH_VALUE = 78,
+      HASH_VALUE_RANGE = 75,
+      DUPLICATES = 10,
+      WORDLIST_SIZE = 46
     };
 
   static const class TAO_operation_db_entry  wordlist[] =
     {
       {"",0},{"",0},{"",0},{"",0},
       {"move", 	&POA_CORBA::InterfaceDef::move_skel},
-      {"_is_a",  &POA_CORBA::InterfaceDef::_is_a_skel},
-      {"lookup", 	&POA_CORBA::InterfaceDef::lookup_skel},
-      {"_get_name", 	&POA_CORBA::InterfaceDef::_get_name_skel},
-      {"_get_type", 	&POA_CORBA::InterfaceDef::_get_type_skel},
-      {"_set_name", 	&POA_CORBA::InterfaceDef::_set_name_skel},
-      {"_interface",  &POA_CORBA::InterfaceDef::_interface_skel},
-      {"lookup_name", 	&POA_CORBA::InterfaceDef::lookup_name_skel},
       {"is_a", 	&POA_CORBA::InterfaceDef::is_a_skel},
-      {"_get_version", 	&POA_CORBA::InterfaceDef::_get_version_skel},
-      {"_set_version", 	&POA_CORBA::InterfaceDef::_set_version_skel},
-      {"_get_absolute_name", 	&POA_CORBA::InterfaceDef::_get_absolute_name_skel},
-      {"_get_defined_in", 	&POA_CORBA::InterfaceDef::_get_defined_in_skel},
-      {"_get_id", 	&POA_CORBA::InterfaceDef::_get_id_skel},
-      {"_set_id", 	&POA_CORBA::InterfaceDef::_set_id_skel},
-      {"describe", 	&POA_CORBA::InterfaceDef::describe_skel},
-      {"_get_containing_repository", 	&POA_CORBA::InterfaceDef::_get_containing_repository_skel},
-      {"destroy", 	&POA_CORBA::InterfaceDef::destroy_skel},
-      {"_get_def_kind", 	&POA_CORBA::InterfaceDef::_get_def_kind_skel},
-      {"describe_interface", 	&POA_CORBA::InterfaceDef::describe_interface_skel},
-      {"_get_base_interfaces", 	&POA_CORBA::InterfaceDef::_get_base_interfaces_skel},
-      {"_set_base_interfaces", 	&POA_CORBA::InterfaceDef::_set_base_interfaces_skel},
       {"create_enum", 	&POA_CORBA::InterfaceDef::create_enum_skel},
       {"create_value", 	&POA_CORBA::InterfaceDef::create_value_skel},
       {"create_module", 	&POA_CORBA::InterfaceDef::create_module_skel},
       {"create_native", 	&POA_CORBA::InterfaceDef::create_native_skel},
-      {"_component",  &POA_CORBA::InterfaceDef::_component_skel},
       {"create_attribute", 	&POA_CORBA::InterfaceDef::create_attribute_skel},
+      {"create_ext_value", 	&POA_CORBA::InterfaceDef::create_ext_value_skel},
       {"create_interface", 	&POA_CORBA::InterfaceDef::create_interface_skel},
       {"create_union", 	&POA_CORBA::InterfaceDef::create_union_skel},
-      {"_non_existent",  &POA_CORBA::InterfaceDef::_non_existent_skel},
       {"create_operation", 	&POA_CORBA::InterfaceDef::create_operation_skel},
       {"create_exception", 	&POA_CORBA::InterfaceDef::create_exception_skel},
       {"create_local_interface", 	&POA_CORBA::InterfaceDef::create_local_interface_skel},
       {"create_abstract_interface", 	&POA_CORBA::InterfaceDef::create_abstract_interface_skel},
+      {"lookup_name", 	&POA_CORBA::InterfaceDef::lookup_name_skel},
+      {"destroy", 	&POA_CORBA::InterfaceDef::destroy_skel},
+      {"describe", 	&POA_CORBA::InterfaceDef::describe_skel},
+      {"_is_a",  &POA_CORBA::InterfaceDef::_is_a_skel},
       {"create_value_box", 	&POA_CORBA::InterfaceDef::create_value_box_skel},
-      {"describe_contents", 	&POA_CORBA::InterfaceDef::describe_contents_skel},
       {"contents", 	&POA_CORBA::InterfaceDef::contents_skel},
+      {"_get_name", 	&POA_CORBA::InterfaceDef::_get_name_skel},
+      {"_get_type", 	&POA_CORBA::InterfaceDef::_get_type_skel},
+      {"_set_name", 	&POA_CORBA::InterfaceDef::_set_name_skel},
+      {"_interface",  &POA_CORBA::InterfaceDef::_interface_skel},
+      {"lookup", 	&POA_CORBA::InterfaceDef::lookup_skel},
       {"create_alias", 	&POA_CORBA::InterfaceDef::create_alias_skel},
+      {"describe_interface", 	&POA_CORBA::InterfaceDef::describe_interface_skel},
+      {"_get_version", 	&POA_CORBA::InterfaceDef::_get_version_skel},
+      {"_set_version", 	&POA_CORBA::InterfaceDef::_set_version_skel},
+      {"_get_absolute_name", 	&POA_CORBA::InterfaceDef::_get_absolute_name_skel},
+      {"_get_defined_in", 	&POA_CORBA::InterfaceDef::_get_defined_in_skel},
+      {"_get_containing_repository", 	&POA_CORBA::InterfaceDef::_get_containing_repository_skel},
+      {"_get_id", 	&POA_CORBA::InterfaceDef::_get_id_skel},
+      {"_set_id", 	&POA_CORBA::InterfaceDef::_set_id_skel},
       {"create_struct", 	&POA_CORBA::InterfaceDef::create_struct_skel},
       {"create_constant", 	&POA_CORBA::InterfaceDef::create_constant_skel},
+      {"_get_def_kind", 	&POA_CORBA::InterfaceDef::_get_def_kind_skel},
+      {"describe_contents", 	&POA_CORBA::InterfaceDef::describe_contents_skel},
+      {"_get_base_interfaces", 	&POA_CORBA::InterfaceDef::_get_base_interfaces_skel},
+      {"_set_base_interfaces", 	&POA_CORBA::InterfaceDef::_set_base_interfaces_skel},
+      {"_component",  &POA_CORBA::InterfaceDef::_component_skel},
+      {"_non_existent",  &POA_CORBA::InterfaceDef::_non_existent_skel},
     };
 
   static const signed char lookup[] =
     {
-       -1,  -1,  -1,  -1,   4,   5,   6,  -7,  -3, -82,  10,  11,  -1,  -1, 
-       12, -13,  -2, -82,  15,  -1,  16,  -1,  -1,  -1,  -1, -17,  -2, -82, 
-       19, -24,  -2,  20,  21,  22, -28,  -2, -31,  -2,  23,  -1, -91,  26, 
-       27, -89,  -1,  30, -90,  33,  34, -35,  -2, -82,  37,  -1,  -1,  38, 
-       39,  40,  41,  -1,  -1,  -1,  42,  -1,  -1,  -1,  -1,  -1,  -1,  -1, 
-       -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  43,  -1,  44, 
+       -1,  -1,  -1,  -1,   4,  -1,  -1,  -8,  -2,   5,  -1,   6,   7, -84, 
+      -10,  -3, -80,  13,  -1, -14,  -2, -80,  16, -24,  -3,  17,  18,  19, 
+       20,  -1,  21,  22,  -1,  23, -89,  27,  28,  29,  30,  -1, -31,  -2, 
+      -80,  33,  -1,  34,  -1,  -1,  -1, -36,  -2,  35, -81,  38,  -1,  39, 
+       -1,  -1,  40,  -1,  -1,  -1,  41,  -1,  -1,  -1,  -1,  -1, -42,  -2, 
+      -80,  -1,  -1,  -1,  -1,  44,  -1,  -1,  45, 
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -27316,12 +29431,12 @@ TAO_CORBA_InterfaceDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned i
 static TAO_CORBA_InterfaceDef_Perfect_Hash_OpTable tao_CORBA_InterfaceDef_optable;
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interceptors_ss.cpp:52
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interceptors_ss.cpp:52
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_InterfaceDef_base_interfaces_get : public TAO_ServerRequestInfo
 {
@@ -27376,7 +29491,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_InterfaceDef_base_interfaces_get::TAO_ServerRequestInfo_CORBA_InterfaceDef_base_interfaces_get (
     TAO_ServerRequest &_tao_server_request,
@@ -27463,7 +29578,7 @@ TAO_ServerRequestInfo_CORBA_InterfaceDef_base_interfaces_get::result (::CORBA::I
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_InterfaceDef_base_interfaces_set : public TAO_ServerRequestInfo
 {
@@ -27518,7 +29633,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_InterfaceDef_base_interfaces_set::TAO_ServerRequestInfo_CORBA_InterfaceDef_base_interfaces_set (
     TAO_ServerRequest &_tao_server_request,
@@ -27604,7 +29719,7 @@ TAO_ServerRequestInfo_CORBA_InterfaceDef_base_interfaces_set::target_is_a (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_InterfaceDef_is_a : public TAO_ServerRequestInfo
 {
@@ -27661,7 +29776,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_InterfaceDef_is_a::TAO_ServerRequestInfo_CORBA_InterfaceDef_is_a (
     TAO_ServerRequest &_tao_server_request,
@@ -27758,7 +29873,7 @@ TAO_ServerRequestInfo_CORBA_InterfaceDef_is_a::result (CORBA::Boolean result)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_InterfaceDef_describe_interface : public TAO_ServerRequestInfo
 {
@@ -27813,7 +29928,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_InterfaceDef_describe_interface::TAO_ServerRequestInfo_CORBA_InterfaceDef_describe_interface (
     TAO_ServerRequest &_tao_server_request,
@@ -27900,7 +30015,7 @@ TAO_ServerRequestInfo_CORBA_InterfaceDef_describe_interface::result (::CORBA::In
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_InterfaceDef_create_attribute : public TAO_ServerRequestInfo
 {
@@ -27965,7 +30080,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_InterfaceDef_create_attribute::TAO_ServerRequestInfo_CORBA_InterfaceDef_create_attribute (
     TAO_ServerRequest &_tao_server_request,
@@ -28086,7 +30201,7 @@ TAO_ServerRequestInfo_CORBA_InterfaceDef_create_attribute::result (::CORBA::Attr
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:74
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
 
 class TAO_ServerRequestInfo_CORBA_InterfaceDef_create_operation : public TAO_ServerRequestInfo
 {
@@ -28157,7 +30272,7 @@ private:
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_operation/interceptors_ss.cpp:438
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
 
 TAO_ServerRequestInfo_CORBA_InterfaceDef_create_operation::TAO_ServerRequestInfo_CORBA_InterfaceDef_create_operation (
     TAO_ServerRequest &_tao_server_request,
@@ -28302,7 +30417,7 @@ TAO_ServerRequestInfo_CORBA_InterfaceDef_create_operation::result (::CORBA::Oper
 //
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/strategized_proxy_broker_ss.cpp:40
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_ss.cpp:40
 
 // Factory function Implementation.
 POA_CORBA::_TAO_InterfaceDef_Strategized_Proxy_Broker *POA_CORBA::_TAO_InterfaceDef_Strategized_Proxy_Broker::the_TAO_InterfaceDef_Strategized_Proxy_Broker (void)
@@ -28391,7 +30506,7 @@ POA_CORBA::_TAO_InterfaceDef_Strategized_Proxy_Broker::create_proxy (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:598
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:596
 
 CORBA::_TAO_InterfaceDef_Proxy_Broker *
 CORBA__TAO_InterfaceDef_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
@@ -28418,7 +30533,7 @@ static int CORBA__TAO_InterfaceDef_Proxy_Broker_Stub_Factory_Initializer_Scarecr
 //
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/thru_poa_proxy_impl_ss.cpp:37
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_ss.cpp:37
 
 POA_CORBA::_TAO_InterfaceDef_ThruPOA_Proxy_Impl::_TAO_InterfaceDef_ThruPOA_Proxy_Impl (void)
 {}
@@ -28426,7 +30541,7 @@ POA_CORBA::_TAO_InterfaceDef_ThruPOA_Proxy_Impl::_TAO_InterfaceDef_ThruPOA_Proxy
 // ThruPOA Implementation of the IDL interface methods
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 ::CORBA::InterfaceDefSeq * POA_CORBA::_TAO_InterfaceDef_ThruPOA_Proxy_Impl::base_interfaces (
     CORBA::Object *_collocated_tao_target_
@@ -28467,7 +30582,7 @@ POA_CORBA::_TAO_InterfaceDef_ThruPOA_Proxy_Impl::_TAO_InterfaceDef_ThruPOA_Proxy
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 void POA_CORBA::_TAO_InterfaceDef_ThruPOA_Proxy_Impl::base_interfaces (
     CORBA::Object *_collocated_tao_target_,
@@ -28509,7 +30624,7 @@ void POA_CORBA::_TAO_InterfaceDef_ThruPOA_Proxy_Impl::base_interfaces (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 CORBA::Boolean POA_CORBA::_TAO_InterfaceDef_ThruPOA_Proxy_Impl::is_a (
     CORBA::Object *_collocated_tao_target_,
@@ -28552,7 +30667,7 @@ CORBA::Boolean POA_CORBA::_TAO_InterfaceDef_ThruPOA_Proxy_Impl::is_a (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 ::CORBA::InterfaceDef::FullInterfaceDescription * POA_CORBA::_TAO_InterfaceDef_ThruPOA_Proxy_Impl::describe_interface (
     CORBA::Object *_collocated_tao_target_
@@ -28593,7 +30708,7 @@ CORBA::Boolean POA_CORBA::_TAO_InterfaceDef_ThruPOA_Proxy_Impl::is_a (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 ::CORBA::AttributeDef_ptr POA_CORBA::_TAO_InterfaceDef_ThruPOA_Proxy_Impl::create_attribute (
     CORBA::Object *_collocated_tao_target_,
@@ -28644,7 +30759,7 @@ CORBA::Boolean POA_CORBA::_TAO_InterfaceDef_ThruPOA_Proxy_Impl::is_a (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 ::CORBA::OperationDef_ptr POA_CORBA::_TAO_InterfaceDef_ThruPOA_Proxy_Impl::create_operation (
     CORBA::Object *_collocated_tao_target_,
@@ -28703,7 +30818,7 @@ CORBA::Boolean POA_CORBA::_TAO_InterfaceDef_ThruPOA_Proxy_Impl::is_a (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_ss.cpp:98
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:98
 
 POA_CORBA::InterfaceDef::InterfaceDef (void)
 {
@@ -28723,7 +30838,7 @@ POA_CORBA::InterfaceDef::~InterfaceDef (void)
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::InterfaceDef::_get_base_interfaces_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -28850,7 +30965,7 @@ void POA_CORBA::InterfaceDef::_get_base_interfaces_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::InterfaceDef::_set_base_interfaces_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -28978,7 +31093,7 @@ void POA_CORBA::InterfaceDef::_set_base_interfaces_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::InterfaceDef::is_a_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -29114,7 +31229,7 @@ void POA_CORBA::InterfaceDef::is_a_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::InterfaceDef::describe_interface_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -29241,7 +31356,7 @@ void POA_CORBA::InterfaceDef::describe_interface_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::InterfaceDef::create_attribute_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -29402,7 +31517,7 @@ void POA_CORBA::InterfaceDef::create_attribute_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_operation/operation_ss.cpp:100
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
 
 void POA_CORBA::InterfaceDef::create_operation_skel (
     TAO_ServerRequest &_tao_server_request,
@@ -29581,7 +31696,7 @@ void POA_CORBA::InterfaceDef::create_operation_skel (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_ss.cpp:163
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:163
 
 void POA_CORBA::InterfaceDef::_is_a_skel (
     TAO_ServerRequest &_tao_server_request, 
@@ -29784,7 +31899,7 @@ const char* POA_CORBA::InterfaceDef::_interface_repository_id (void) const
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:532
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:531
 
 void POA_CORBA::InterfaceDef::_dispatch (
     TAO_ServerRequest &req,
@@ -29799,7 +31914,7 @@ void POA_CORBA::InterfaceDef::_dispatch (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:478
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:477
 
 CORBA::InterfaceDef *
 POA_CORBA::InterfaceDef::_this (ACE_ENV_SINGLE_ARG_DECL)
@@ -29841,7 +31956,1841 @@ POA_CORBA::InterfaceDef::_this (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:1732
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1731
+
+class TAO_CORBA_InterfaceAttrExtension_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
+{
+private:
+  unsigned int hash (const char *str, unsigned int len);
+public:
+ const TAO_operation_db_entry * lookup (const char *str, unsigned int len);
+};
+
+/* C++ code produced by gperf version 2.8 (ACE version) */
+/* Command-line: gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_CORBA_InterfaceAttrExtension_Perfect_Hash_OpTable -N lookup  */
+unsigned int
+TAO_CORBA_InterfaceAttrExtension_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
+{
+  static const unsigned char asso_values[] =
+    {
+#if defined (ACE_MVS)
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23,  0,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23,  0,
+     23,  0,  0,  0, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23,  5, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23,
+#else
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23,  0, 23,  0, 23,  0,
+      0,  0, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23,  5, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23,
+#endif /* ACE_MVS */
+    };
+  return len + asso_values[str[len - 1]] + asso_values[str[0]];
+}
+
+const class TAO_operation_db_entry *
+TAO_CORBA_InterfaceAttrExtension_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
+{
+  enum
+    {
+      TOTAL_KEYWORDS = 6,
+      MIN_WORD_LENGTH = 5,
+      MAX_WORD_LENGTH = 22,
+      MIN_HASH_VALUE = 5,
+      MAX_HASH_VALUE = 22,
+      HASH_VALUE_RANGE = 18,
+      DUPLICATES = 0,
+      WORDLIST_SIZE = 11
+    };
+
+  static const class TAO_operation_db_entry  wordlist[] =
+    {
+      {"",0},{"",0},{"",0},{"",0},{"",0},
+      {"_is_a",  &POA_CORBA::InterfaceAttrExtension::_is_a_skel},
+      {"",0},{"",0},{"",0},{"",0},
+      {"_interface",  &POA_CORBA::InterfaceAttrExtension::_interface_skel},
+      {"",0},{"",0},{"",0},{"",0},
+      {"_component",  &POA_CORBA::InterfaceAttrExtension::_component_skel},
+      {"",0},{"",0},
+      {"_non_existent",  &POA_CORBA::InterfaceAttrExtension::_non_existent_skel},
+      {"",0},
+      {"create_ext_attribute", 	&POA_CORBA::InterfaceAttrExtension::create_ext_attribute_skel},
+      {"",0},
+      {"describe_ext_interface", 	&POA_CORBA::InterfaceAttrExtension::describe_ext_interface_skel},
+    };
+
+  if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
+    {
+      unsigned int key = hash (str, len);
+
+      if (key <= MAX_HASH_VALUE && key >= MIN_HASH_VALUE)
+        {
+          const char *s = wordlist[key].opname_;
+
+          if (*str == *s && !strncmp (str + 1, s + 1, len - 1))
+            return &wordlist[key];
+        }
+    }
+  return 0;
+}
+static TAO_CORBA_InterfaceAttrExtension_Perfect_Hash_OpTable tao_CORBA_InterfaceAttrExtension_optable;
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interceptors_ss.cpp:52
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
+
+class TAO_ServerRequestInfo_CORBA_InterfaceAttrExtension_describe_ext_interface : public TAO_ServerRequestInfo
+{
+public:
+  TAO_ServerRequestInfo_CORBA_InterfaceAttrExtension_describe_ext_interface (
+      TAO_ServerRequest &_tao_server_request,
+      TAO_Object_Adapter::Servant_Upcall *tao_servant_upcall,
+      POA_CORBA::InterfaceAttrExtension *tao_impl
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    );
+  
+  virtual Dynamic::ParameterList * arguments (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual Dynamic::ExceptionList * exceptions (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual CORBA::Any * result (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual char * target_most_derived_interface (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual CORBA::Boolean target_is_a (
+      const char * id
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  void result (::CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription * result);
+
+private:
+  TAO_ServerRequestInfo_CORBA_InterfaceAttrExtension_describe_ext_interface (
+      const TAO_ServerRequestInfo_CORBA_InterfaceAttrExtension_describe_ext_interface &
+    );
+  
+  void operator= (
+      const TAO_ServerRequestInfo_CORBA_InterfaceAttrExtension_describe_ext_interface &
+    );
+  
+private:
+  POA_CORBA::InterfaceAttrExtension *_tao_impl;
+  ::CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription * _result;
+};
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
+
+TAO_ServerRequestInfo_CORBA_InterfaceAttrExtension_describe_ext_interface::TAO_ServerRequestInfo_CORBA_InterfaceAttrExtension_describe_ext_interface (
+    TAO_ServerRequest &_tao_server_request,
+    TAO_Object_Adapter::Servant_Upcall *_tao_servant_upcall,
+    POA_CORBA::InterfaceAttrExtension *tao_impl
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+  : TAO_ServerRequestInfo (_tao_server_request, _tao_servant_upcall),
+    _tao_impl (tao_impl)
+{}
+
+Dynamic::ParameterList *
+TAO_ServerRequestInfo_CORBA_InterfaceAttrExtension_describe_ext_interface::arguments (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the argument list on demand.
+  Dynamic::ParameterList *parameter_list =
+    TAO_RequestInfo_Util::make_parameter_list (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+  
+  return parameter_list;
+}
+
+Dynamic::ExceptionList *
+TAO_ServerRequestInfo_CORBA_InterfaceAttrExtension_describe_ext_interface::exceptions (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the exception list on demand.
+  Dynamic::ExceptionList *exception_list =
+    TAO_RequestInfo_Util::make_exception_list (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+  
+  return exception_list;
+}
+
+CORBA::Any * 
+TAO_ServerRequestInfo_CORBA_InterfaceAttrExtension_describe_ext_interface::result (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the result on demand.
+  CORBA::Boolean tk_void_any = 0;
+  CORBA::Any *result_any =
+    TAO_RequestInfo_Util::make_any (tk_void_any ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+  
+  CORBA::Any_var safe_result_any = result_any;
+  
+  (*result_any) <<= this->_result;
+  
+  return safe_result_any._retn ();
+}
+
+char *
+TAO_ServerRequestInfo_CORBA_InterfaceAttrExtension_describe_ext_interface::target_most_derived_interface (
+    ACE_ENV_SINGLE_ARG_DECL_NOT_USED
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return
+    CORBA::string_dup (this->_tao_impl->_interface_repository_id ());
+}
+
+CORBA::Boolean
+TAO_ServerRequestInfo_CORBA_InterfaceAttrExtension_describe_ext_interface::target_is_a (
+    const char * id
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return this->_tao_impl->_is_a (id ACE_ENV_ARG_PARAMETER);
+}
+
+void 
+TAO_ServerRequestInfo_CORBA_InterfaceAttrExtension_describe_ext_interface::result (::CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription * result)
+{
+  // Update the result.
+   this->_result = result;
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:74
+
+class TAO_ServerRequestInfo_CORBA_InterfaceAttrExtension_create_ext_attribute : public TAO_ServerRequestInfo
+{
+public:
+  TAO_ServerRequestInfo_CORBA_InterfaceAttrExtension_create_ext_attribute (
+      TAO_ServerRequest &_tao_server_request,
+      TAO_Object_Adapter::Servant_Upcall *tao_servant_upcall,
+      POA_CORBA::InterfaceAttrExtension *tao_impl,
+      const char * id,
+      const char * name,
+      const char * version,
+      CORBA::IDLType_ptr type,
+      CORBA::AttributeMode & mode,
+      const CORBA::ExceptionDefSeq & get_exceptions,
+      const CORBA::ExceptionDefSeq & set_exceptions
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    );
+  
+  virtual Dynamic::ParameterList * arguments (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual Dynamic::ExceptionList * exceptions (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual CORBA::Any * result (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual char * target_most_derived_interface (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual CORBA::Boolean target_is_a (
+      const char * id
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  void result (::CORBA::ExtAttributeDef_ptr result);
+
+private:
+  TAO_ServerRequestInfo_CORBA_InterfaceAttrExtension_create_ext_attribute (
+      const TAO_ServerRequestInfo_CORBA_InterfaceAttrExtension_create_ext_attribute &
+    );
+  
+  void operator= (
+      const TAO_ServerRequestInfo_CORBA_InterfaceAttrExtension_create_ext_attribute &
+    );
+  
+private:
+  POA_CORBA::InterfaceAttrExtension *_tao_impl;
+  
+  const char * id_;
+  const char * name_;
+  const char * version_;
+  CORBA::IDLType_ptr type_;
+  const CORBA::AttributeMode & mode_;
+  const CORBA::ExceptionDefSeq & get_exceptions_;
+  const CORBA::ExceptionDefSeq & set_exceptions_;::CORBA::ExtAttributeDef_ptr _result;
+};
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_ss.cpp:436
+
+TAO_ServerRequestInfo_CORBA_InterfaceAttrExtension_create_ext_attribute::TAO_ServerRequestInfo_CORBA_InterfaceAttrExtension_create_ext_attribute (
+    TAO_ServerRequest &_tao_server_request,
+    TAO_Object_Adapter::Servant_Upcall *_tao_servant_upcall,
+    POA_CORBA::InterfaceAttrExtension *tao_impl,
+    const char * id,
+    const char * name,
+    const char * version,
+    CORBA::IDLType_ptr type,
+    CORBA::AttributeMode & mode,
+    const CORBA::ExceptionDefSeq & get_exceptions,
+    const CORBA::ExceptionDefSeq & set_exceptions
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+  : TAO_ServerRequestInfo (_tao_server_request, _tao_servant_upcall),
+    _tao_impl (tao_impl),
+    id_ (id),
+    name_ (name),
+    version_ (version),
+    type_ (type),
+    mode_ (mode),
+    get_exceptions_ (get_exceptions),
+    set_exceptions_ (set_exceptions)
+{}
+
+Dynamic::ParameterList *
+TAO_ServerRequestInfo_CORBA_InterfaceAttrExtension_create_ext_attribute::arguments (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the argument list on demand.
+  Dynamic::ParameterList *parameter_list =
+    TAO_RequestInfo_Util::make_parameter_list (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+  
+  Dynamic::ParameterList_var safe_parameter_list = parameter_list;
+  parameter_list->length (7);
+  CORBA::ULong len = 0;
+  
+  (*parameter_list)[len].argument <<= id_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+  
+  (*parameter_list)[len].argument <<= name_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+  
+  (*parameter_list)[len].argument <<= version_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+  
+  (*parameter_list)[len].argument <<=  this->type_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+  
+  (*parameter_list)[len].argument <<=  this->mode_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+  
+  (*parameter_list)[len].argument <<=  this->get_exceptions_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+  
+  (*parameter_list)[len].argument <<=  this->set_exceptions_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+  
+  return safe_parameter_list._retn ();
+}
+
+Dynamic::ExceptionList *
+TAO_ServerRequestInfo_CORBA_InterfaceAttrExtension_create_ext_attribute::exceptions (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the exception list on demand.
+  Dynamic::ExceptionList *exception_list =
+    TAO_RequestInfo_Util::make_exception_list (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+  
+  return exception_list;
+}
+
+CORBA::Any * 
+TAO_ServerRequestInfo_CORBA_InterfaceAttrExtension_create_ext_attribute::result (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Generate the result on demand.
+  CORBA::Boolean tk_void_any = 0;
+  CORBA::Any *result_any =
+    TAO_RequestInfo_Util::make_any (tk_void_any ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+  
+  CORBA::Any_var safe_result_any = result_any;
+  
+  (*result_any) <<= this->_result;
+  
+  return safe_result_any._retn ();
+}
+
+char *
+TAO_ServerRequestInfo_CORBA_InterfaceAttrExtension_create_ext_attribute::target_most_derived_interface (
+    ACE_ENV_SINGLE_ARG_DECL_NOT_USED
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return
+    CORBA::string_dup (this->_tao_impl->_interface_repository_id ());
+}
+
+CORBA::Boolean
+TAO_ServerRequestInfo_CORBA_InterfaceAttrExtension_create_ext_attribute::target_is_a (
+    const char * id
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return this->_tao_impl->_is_a (id ACE_ENV_ARG_PARAMETER);
+}
+
+void 
+TAO_ServerRequestInfo_CORBA_InterfaceAttrExtension_create_ext_attribute::result (::CORBA::ExtAttributeDef_ptr result)
+{
+  // Update the result.
+   this->_result = result;
+}
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
+///////////////////////////////////////////////////////////////////////
+//            Strategized Proxy Broker Implementation
+//
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_ss.cpp:40
+
+// Factory function Implementation.
+POA_CORBA::_TAO_InterfaceAttrExtension_Strategized_Proxy_Broker *POA_CORBA::_TAO_InterfaceAttrExtension_Strategized_Proxy_Broker::the_TAO_InterfaceAttrExtension_Strategized_Proxy_Broker (void)
+{
+  static POA_CORBA::_TAO_InterfaceAttrExtension_Strategized_Proxy_Broker strategized_proxy_broker;
+  return &strategized_proxy_broker;
+}
+
+POA_CORBA::_TAO_InterfaceAttrExtension_Strategized_Proxy_Broker::_TAO_InterfaceAttrExtension_Strategized_Proxy_Broker (void)
+{
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
+    {
+      this->proxy_cache_[i] = 0;
+    }
+}
+
+POA_CORBA::_TAO_InterfaceAttrExtension_Strategized_Proxy_Broker::~_TAO_InterfaceAttrExtension_Strategized_Proxy_Broker (void)
+{
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
+    {
+      delete this->proxy_cache_[i];
+      
+      // Hack to prevent bug mentioned in 1204. Refer to 1204
+      // for details..
+      this->proxy_cache_[i] = 0;
+    }
+}
+
+CORBA::_TAO_InterfaceAttrExtension_Proxy_Impl&
+POA_CORBA::_TAO_InterfaceAttrExtension_Strategized_Proxy_Broker::select_proxy (
+    ::CORBA::InterfaceAttrExtension *object
+    ACE_ENV_ARG_DECL
+  )
+{
+  int strategy =
+    TAO_ORB_Core::collocation_strategy (object ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
+  
+  if (this->proxy_cache_[strategy] != 0)
+    {
+      return *this->proxy_cache_[strategy];
+    }
+  
+  this->create_proxy (strategy ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
+  
+  return *this->proxy_cache_[strategy];
+}
+
+void 
+POA_CORBA::_TAO_InterfaceAttrExtension_Strategized_Proxy_Broker::create_proxy (
+    int strategy
+    ACE_ENV_ARG_DECL
+  )
+{
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
+  
+  if (this->proxy_cache_[strategy] == 0)
+    {
+      switch (strategy)
+        {
+        case TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY:
+          ACE_NEW_THROW_EX (
+              this->proxy_cache_[strategy],
+              POA_CORBA::_TAO_InterfaceAttrExtension_ThruPOA_Proxy_Impl,
+              CORBA::NO_MEMORY ()
+          );
+          ACE_CHECK;
+          break;
+          
+        case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:
+        default:
+          ACE_NEW_THROW_EX (
+              this->proxy_cache_[strategy],
+              ::CORBA::_TAO_InterfaceAttrExtension_Remote_Proxy_Impl,
+              CORBA::NO_MEMORY ()
+          );
+          ACE_CHECK;
+          break;
+        }
+    }
+}
+
+//
+//        End Strategized Proxy Broker Implementation
+///////////////////////////////////////////////////////////////////////
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:596
+
+CORBA::_TAO_InterfaceAttrExtension_Proxy_Broker *
+CORBA__TAO_InterfaceAttrExtension_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
+{
+  ACE_UNUSED_ARG (obj);
+  return ::POA_CORBA::_TAO_InterfaceAttrExtension_Strategized_Proxy_Broker::the_TAO_InterfaceAttrExtension_Strategized_Proxy_Broker();
+}
+
+int
+CORBA__TAO_InterfaceAttrExtension_Proxy_Broker_Factory_Initializer (long)
+{
+  CORBA__TAO_InterfaceAttrExtension_Proxy_Broker_Factory_function_pointer = 
+    CORBA__TAO_InterfaceAttrExtension_Proxy_Broker_Factory_function;
+  
+  return 0;
+}
+
+static int CORBA__TAO_InterfaceAttrExtension_Proxy_Broker_Stub_Factory_Initializer_Scarecrow = 
+  CORBA__TAO_InterfaceAttrExtension_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, CORBA__TAO_InterfaceAttrExtension_Proxy_Broker_Factory_Initializer));
+
+
+///////////////////////////////////////////////////////////////////////
+//                 ThruPOA Proxy  Implementation
+//
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_ss.cpp:37
+
+POA_CORBA::_TAO_InterfaceAttrExtension_ThruPOA_Proxy_Impl::_TAO_InterfaceAttrExtension_ThruPOA_Proxy_Impl (void)
+{}
+
+// ThruPOA Implementation of the IDL interface methods
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+
+::CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription * POA_CORBA::_TAO_InterfaceAttrExtension_ThruPOA_Proxy_Impl::describe_ext_interface (
+    CORBA::Object *_collocated_tao_target_
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  ::CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription_var _tao_retval;
+  ACE_UNUSED_ARG (_tao_retval);
+  TAO_Object_Adapter::Servant_Upcall servant_upcall (
+      _collocated_tao_target_->_stubobj ()->servant_orb_var ()->orb_core ()
+    );
+  CORBA::Object_var forward_to;
+  servant_upcall.prepare_for_upcall (
+      _collocated_tao_target_->_object_key (),
+      "describe_ext_interface",
+      forward_to.out ()
+      ACE_ENV_ARG_PARAMETER
+    );
+  ACE_CHECK_RETURN (_tao_retval._retn ());
+  
+  servant_upcall.pre_invoke_collocated_request (
+      ACE_ENV_SINGLE_ARG_PARAMETER
+    );
+  ACE_CHECK_RETURN (_tao_retval._retn ());
+  
+  return ACE_reinterpret_cast (
+      POA_CORBA::InterfaceAttrExtension_ptr,
+      servant_upcall.servant ()->_downcast (
+          "IDL:omg.org/CORBA/InterfaceAttrExtension:1.0"
+        )
+    )->describe_ext_interface (
+        
+        ACE_ENV_SINGLE_ARG_PARAMETER
+      );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
+
+::CORBA::ExtAttributeDef_ptr POA_CORBA::_TAO_InterfaceAttrExtension_ThruPOA_Proxy_Impl::create_ext_attribute (
+    CORBA::Object *_collocated_tao_target_,
+    const char * id,
+    const char * name,
+    const char * version,
+    CORBA::IDLType_ptr type,
+    CORBA::AttributeMode mode,
+    const CORBA::ExceptionDefSeq & get_exceptions,
+    const CORBA::ExceptionDefSeq & set_exceptions
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  ::CORBA::ExtAttributeDef_var _tao_retval;
+  ACE_UNUSED_ARG (_tao_retval);
+  TAO_Object_Adapter::Servant_Upcall servant_upcall (
+      _collocated_tao_target_->_stubobj ()->servant_orb_var ()->orb_core ()
+    );
+  CORBA::Object_var forward_to;
+  servant_upcall.prepare_for_upcall (
+      _collocated_tao_target_->_object_key (),
+      "create_ext_attribute",
+      forward_to.out ()
+      ACE_ENV_ARG_PARAMETER
+    );
+  ACE_CHECK_RETURN (_tao_retval._retn ());
+  
+  servant_upcall.pre_invoke_collocated_request (
+      ACE_ENV_SINGLE_ARG_PARAMETER
+    );
+  ACE_CHECK_RETURN (_tao_retval._retn ());
+  
+  return ACE_reinterpret_cast (
+      POA_CORBA::InterfaceAttrExtension_ptr,
+      servant_upcall.servant ()->_downcast (
+          "IDL:omg.org/CORBA/InterfaceAttrExtension:1.0"
+        )
+    )->create_ext_attribute (
+        
+        id,
+        name,
+        version,
+        type,
+        mode,
+        get_exceptions,
+        set_exceptions
+        ACE_ENV_ARG_PARAMETER
+      );
+}//
+//           End ThruPOA Proxy Implementation
+///////////////////////////////////////////////////////////////////////
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:98
+
+POA_CORBA::InterfaceAttrExtension::InterfaceAttrExtension (void)
+{
+  this->optable_ = &tao_CORBA_InterfaceAttrExtension_optable;
+}
+
+POA_CORBA::InterfaceAttrExtension::InterfaceAttrExtension (const InterfaceAttrExtension& rhs)
+  :  TAO_ServantBase (rhs)
+{}
+
+POA_CORBA::InterfaceAttrExtension::~InterfaceAttrExtension (void)
+{
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
+
+void POA_CORBA::InterfaceAttrExtension::describe_ext_interface_skel (
+    TAO_ServerRequest &_tao_server_request,
+    void *_tao_servant,
+    void *_tao_servant_upcall
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::InterfaceAttrExtension *_tao_impl =
+    ACE_static_cast (
+        POA_CORBA::InterfaceAttrExtension *,
+        _tao_servant
+      );
+  ::CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription_var _tao_retval;
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
+  TAO_ServerRequestInterceptor_Adapter _tao_vfr (
+      _tao_server_request.orb_core ()->server_request_interceptors (),
+      _tao_server_request.interceptor_count ()
+    );
+  
+  TAO_ServerRequestInfo_CORBA_InterfaceAttrExtension_describe_ext_interface _tao_ri (
+      _tao_server_request,
+      _tao_upcall,
+      _tao_impl
+      ACE_ENV_ARG_PARAMETER
+    );
+  
+  ACE_TRY
+    {
+      {
+        TAO_PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
+                                           1  /* Copy TSC to RSC */);
+        
+        _tao_vfr.receive_request (&_tao_ri ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+        
+        if (!_tao_vfr.location_forwarded ())
+          {
+            
+#endif /* TAO_HAS_INTERCEPTORS */
+            _tao_retval = 
+            _tao_impl->describe_ext_interface (
+                
+                ACE_ENV_SINGLE_ARG_PARAMETER
+              );
+            TAO_INTERCEPTOR_CHECK;
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+            
+          }
+      }
+      
+      if (!_tao_vfr.location_forwarded ())
+        {
+          ::CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription * _tao_retval_info = _tao_retval._retn ();
+          _tao_ri.result (_tao_retval_info);
+          _tao_retval = _tao_retval_info;
+          _tao_ri.reply_status (PortableInterceptor::SUCCESSFUL);
+          _tao_vfr.send_reply (&_tao_ri ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+    }
+  ACE_CATCHANY
+    {
+      _tao_ri.exception (&ACE_ANY_EXCEPTION);
+      _tao_vfr.send_exception (
+          &_tao_ri
+          ACE_ENV_ARG_PARAMETER
+        );
+      ACE_TRY_CHECK;
+      
+      PortableInterceptor::ReplyStatus _tao_status =
+        _tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      
+      if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
+          || _tao_status == PortableInterceptor::USER_EXCEPTION)
+        {
+          ACE_RE_THROW;
+        }
+    }
+  
+# if defined (ACE_HAS_EXCEPTIONS) \
+     && defined (ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS)
+  ACE_CATCHALL
+    {
+      CORBA::UNKNOWN ex;
+      
+      _tao_ri.exception (&ex);
+      _tao_vfr.send_exception (
+          &_tao_ri
+          ACE_ENV_ARG_PARAMETER
+        );
+      ACE_TRY_CHECK;
+      
+      PortableInterceptor::ReplyStatus _tao_status =
+        _tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      
+      if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION)
+        ACE_TRY_THROW (ex);
+    }
+# endif  /* ACE_HAS_EXCEPTIONS && ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS */
+  
+  ACE_ENDTRY;
+  ACE_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS */
+  
+  _tao_server_request.init_reply ();
+  
+  TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
+  
+  if (!(
+      (_tao_out << _tao_retval.in ())
+    ))
+    ACE_THROW (CORBA::MARSHAL ());
+  
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ss.cpp:100
+
+void POA_CORBA::InterfaceAttrExtension::create_ext_attribute_skel (
+    TAO_ServerRequest &_tao_server_request,
+    void *_tao_servant,
+    void *_tao_servant_upcall
+    ACE_ENV_ARG_DECL
+  )
+{
+  TAO_InputCDR &_tao_in = _tao_server_request.incoming ();
+  POA_CORBA::InterfaceAttrExtension *_tao_impl =
+    ACE_static_cast (
+        POA_CORBA::InterfaceAttrExtension *,
+        _tao_servant
+      );
+  ::CORBA::ExtAttributeDef_var _tao_retval;
+  CORBA::String_var id;
+  CORBA::String_var name;
+  CORBA::String_var version;
+  CORBA::IDLType_var type;
+  CORBA::AttributeMode mode;
+  CORBA::ExceptionDefSeq get_exceptions;
+  CORBA::ExceptionDefSeq set_exceptions;
+  
+  if (!(
+      (_tao_in >> id.out ()) &&
+      (_tao_in >> name.out ()) &&
+      (_tao_in >> version.out ()) &&
+      (_tao_in >> type.out ()) &&
+      (_tao_in >> mode) &&
+      (_tao_in >> get_exceptions) &&
+      (_tao_in >> set_exceptions)
+    ))
+    ACE_THROW (CORBA::MARSHAL ());
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
+  TAO_ServerRequestInterceptor_Adapter _tao_vfr (
+      _tao_server_request.orb_core ()->server_request_interceptors (),
+      _tao_server_request.interceptor_count ()
+    );
+  
+  TAO_ServerRequestInfo_CORBA_InterfaceAttrExtension_create_ext_attribute _tao_ri (
+      _tao_server_request,
+      _tao_upcall,
+      _tao_impl,
+      
+      id.in (),
+      
+      name.in (),
+      
+      version.in (),
+      
+      type.in (),
+      
+      mode,
+      
+      get_exceptions,
+      
+      set_exceptions
+      ACE_ENV_ARG_PARAMETER
+    );
+  
+  ACE_TRY
+    {
+      {
+        TAO_PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
+                                           1  /* Copy TSC to RSC */);
+        
+        _tao_vfr.receive_request (&_tao_ri ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+        
+        if (!_tao_vfr.location_forwarded ())
+          {
+            
+#endif /* TAO_HAS_INTERCEPTORS */
+            _tao_retval = 
+            _tao_impl->create_ext_attribute (
+                
+                id.in (),
+                
+                name.in (),
+                
+                version.in (),
+                
+                type.in (),
+                
+                mode,
+                
+                get_exceptions,
+                
+                set_exceptions
+                ACE_ENV_ARG_PARAMETER
+              );
+            TAO_INTERCEPTOR_CHECK;
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+            
+          }
+      }
+      
+      if (!_tao_vfr.location_forwarded ())
+        {
+          ::CORBA::ExtAttributeDef_ptr _tao_retval_info = _tao_retval._retn ();
+          _tao_ri.result (_tao_retval_info);
+          _tao_retval = _tao_retval_info;
+          _tao_ri.reply_status (PortableInterceptor::SUCCESSFUL);
+          _tao_vfr.send_reply (&_tao_ri ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+    }
+  ACE_CATCHANY
+    {
+      _tao_ri.exception (&ACE_ANY_EXCEPTION);
+      _tao_vfr.send_exception (
+          &_tao_ri
+          ACE_ENV_ARG_PARAMETER
+        );
+      ACE_TRY_CHECK;
+      
+      PortableInterceptor::ReplyStatus _tao_status =
+        _tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      
+      if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
+          || _tao_status == PortableInterceptor::USER_EXCEPTION)
+        {
+          ACE_RE_THROW;
+        }
+    }
+  
+# if defined (ACE_HAS_EXCEPTIONS) \
+     && defined (ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS)
+  ACE_CATCHALL
+    {
+      CORBA::UNKNOWN ex;
+      
+      _tao_ri.exception (&ex);
+      _tao_vfr.send_exception (
+          &_tao_ri
+          ACE_ENV_ARG_PARAMETER
+        );
+      ACE_TRY_CHECK;
+      
+      PortableInterceptor::ReplyStatus _tao_status =
+        _tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      
+      if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION)
+        ACE_TRY_THROW (ex);
+    }
+# endif  /* ACE_HAS_EXCEPTIONS && ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS */
+  
+  ACE_ENDTRY;
+  ACE_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS */
+  
+  _tao_server_request.init_reply ();
+  
+  TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
+  
+  if (!(
+      (_tao_out << _tao_retval.in ())
+    ))
+    ACE_THROW (CORBA::MARSHAL ());
+  
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:163
+
+void POA_CORBA::InterfaceAttrExtension::_is_a_skel (
+    TAO_ServerRequest &_tao_server_request, 
+    void * _tao_servant,
+    void * /* Servant_Upcall */
+    ACE_ENV_ARG_DECL
+  )
+{
+  TAO_InputCDR &_tao_in = _tao_server_request.incoming ();
+  POA_CORBA::InterfaceAttrExtension *_tao_impl = (POA_CORBA::InterfaceAttrExtension *) _tao_servant;
+  CORBA::Boolean _tao_retval = 0;
+  CORBA::String_var value;
+  
+  if (!(_tao_in >> value.out ()))
+    ACE_THROW (CORBA::MARSHAL ());
+  
+  _tao_retval = _tao_impl->_is_a (value.in () ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  
+  _tao_server_request.init_reply ();
+  TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
+  
+  if (!(_tao_out << CORBA::Any::from_boolean (_tao_retval)))
+    ACE_THROW (CORBA::MARSHAL ());
+}
+
+void POA_CORBA::InterfaceAttrExtension::_non_existent_skel (
+    TAO_ServerRequest &_tao_server_request, 
+    void * _tao_servant,
+    void * /* Servant_Upcall */
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::InterfaceAttrExtension *_tao_impl = (POA_CORBA::InterfaceAttrExtension *) _tao_servant;
+  CORBA::Boolean _tao_retval =
+    _tao_impl->_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+  
+  _tao_server_request.init_reply ();
+  TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
+  
+  if (!(_tao_out << CORBA::Any::from_boolean (_tao_retval)))
+    ACE_THROW (CORBA::MARSHAL ());
+}
+
+void POA_CORBA::InterfaceAttrExtension::_interface_skel (
+    TAO_ServerRequest &_tao_server_request, 
+    void * _tao_servant,
+    void * /* Servant_Upcall */
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::InterfaceAttrExtension *_tao_impl = (POA_CORBA::InterfaceAttrExtension *) _tao_servant;
+  CORBA::InterfaceDef_ptr _tao_retval = 0;
+  CORBA::Boolean _tao_result = 0;
+  
+  TAO_IFR_Client_Adapter *_tao_adapter =
+    ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
+        TAO_ORB_Core::ifr_client_adapter_name ()
+      );
+    
+  if (_tao_adapter == 0)
+    {
+      ACE_THROW (CORBA::INTF_REPOS ());
+    }
+  
+  ACE_TRY
+    {
+      _tao_retval = 
+        _tao_impl->_get_interface (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      
+      _tao_server_request.init_reply ();
+      
+      TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
+      
+      _tao_result =
+        _tao_adapter->interfacedef_cdr_insert (
+            _tao_out,
+            _tao_retval
+          );
+    }
+  ACE_CATCHALL
+    {
+      _tao_adapter->dispose (_tao_retval);
+    }
+  ACE_ENDTRY;
+  
+  if (_tao_result == 0)
+    {
+      ACE_THROW (CORBA::MARSHAL ());
+    }
+}
+
+void POA_CORBA::InterfaceAttrExtension::_component_skel (
+    TAO_ServerRequest &_tao_server_request, 
+    void * _tao_object_reference,
+    void * /* Servant_Upcall */
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::InterfaceAttrExtension *_tao_impl = (POA_CORBA::InterfaceAttrExtension *) _tao_object_reference;
+  CORBA::Object_var _tao_retval =
+    _tao_impl->_get_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+  
+  _tao_server_request.init_reply ();
+  TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
+  
+  if (!(_tao_out << _tao_retval._retn ()))
+    ACE_THROW (CORBA::MARSHAL ());
+}
+
+CORBA::Boolean POA_CORBA::InterfaceAttrExtension::_is_a (
+    const char* value
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/InterfaceAttrExtension:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:org.omg/CORBA/Object:1.0"
+        )
+     )
+    {
+      return 1;
+    }
+  else
+    {
+      return 0;
+    }
+}
+
+void* POA_CORBA::InterfaceAttrExtension::_downcast (
+    const char* logical_type_id
+  )
+{
+  if (ACE_OS::strcmp (logical_type_id,
+                      "IDL:omg.org/CORBA/InterfaceAttrExtension:1.0") == 0)
+    {
+      return ACE_static_cast (POA_CORBA::InterfaceAttrExtension_ptr, this);
+    }
+  
+  if (ACE_OS::strcmp (logical_type_id,
+                      "IDL:omg.org/CORBA/Object:1.0") == 0)
+    {
+      return ACE_static_cast(PortableServer::Servant, this);
+    }
+  
+  return 0;
+}
+
+const char* POA_CORBA::InterfaceAttrExtension::_interface_repository_id (void) const
+{
+  return "IDL:omg.org/CORBA/InterfaceAttrExtension:1.0";
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:531
+
+void POA_CORBA::InterfaceAttrExtension::_dispatch (
+    TAO_ServerRequest &req,
+    void *servant_upcall
+    ACE_ENV_ARG_DECL
+  )
+{
+  this->synchronous_upcall_dispatch (req,
+                                     servant_upcall,
+                                     this
+                                     ACE_ENV_ARG_PARAMETER);
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:477
+
+CORBA::InterfaceAttrExtension *
+POA_CORBA::InterfaceAttrExtension::_this (ACE_ENV_SINGLE_ARG_DECL)
+{
+  TAO_Stub *stub = this->_create_stub (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+  
+  TAO_Stub_Auto_Ptr safe_stub (stub);
+  CORBA::Object_ptr tmp = CORBA::Object::_nil ();
+  
+  if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())
+    {
+      ACE_NEW_RETURN (
+          tmp,
+          CORBA::Object (
+              stub,
+              1,
+              this
+            ),
+          0
+        );
+    }
+  else
+    {
+      ACE_NEW_RETURN (
+          tmp,
+          CORBA::Object (
+              stub,
+              0,
+              this
+            ),
+          0
+        );
+    }
+  
+  CORBA::Object_var obj = tmp;
+  (void) safe_stub.release ();
+  return ::CORBA::InterfaceAttrExtension::_unchecked_narrow (obj.in ());
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1731
+
+class TAO_CORBA_ExtInterfaceDef_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
+{
+private:
+  unsigned int hash (const char *str, unsigned int len);
+public:
+ const TAO_operation_db_entry * lookup (const char *str, unsigned int len);
+};
+
+/* C++ code produced by gperf version 2.8 (ACE version) */
+/* Command-line: gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_CORBA_ExtInterfaceDef_Perfect_Hash_OpTable -N lookup  */
+unsigned int
+TAO_CORBA_ExtInterfaceDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
+{
+  static const unsigned char asso_values[] =
+    {
+#if defined (ACE_MVS)
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 30,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74,  0,
+     74,  0, 20,  0, 74, 74, 74,  5, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 15,  0,  5,
+     74, 15, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 15, 30, 74, 74, 74, 15,  5, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74,
+#else
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 30, 74,  0, 74,  0,
+     20,  0, 74, 74, 74,  5, 74, 74, 15,  0,
+      5, 74, 15, 74, 74, 15, 30, 74, 74, 74,
+     15,  5, 74, 74, 74, 74, 74, 74,
+#endif /* ACE_MVS */
+    };
+  return len + asso_values[str[len - 1]] + asso_values[str[0]];
+}
+
+const class TAO_operation_db_entry *
+TAO_CORBA_ExtInterfaceDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
+{
+  enum
+    {
+      TOTAL_KEYWORDS = 44,
+      MIN_WORD_LENGTH = 4,
+      MAX_WORD_LENGTH = 26,
+      MIN_HASH_VALUE = 4,
+      MAX_HASH_VALUE = 73,
+      HASH_VALUE_RANGE = 70,
+      DUPLICATES = 10,
+      WORDLIST_SIZE = 48
+    };
+
+  static const class TAO_operation_db_entry  wordlist[] =
+    {
+      {"",0},{"",0},{"",0},{"",0},
+      {"move", 	&POA_CORBA::ExtInterfaceDef::move_skel},
+      {"is_a", 	&POA_CORBA::ExtInterfaceDef::is_a_skel},
+      {"create_enum", 	&POA_CORBA::ExtInterfaceDef::create_enum_skel},
+      {"create_value", 	&POA_CORBA::ExtInterfaceDef::create_value_skel},
+      {"create_module", 	&POA_CORBA::ExtInterfaceDef::create_module_skel},
+      {"create_native", 	&POA_CORBA::ExtInterfaceDef::create_native_skel},
+      {"create_attribute", 	&POA_CORBA::ExtInterfaceDef::create_attribute_skel},
+      {"create_ext_value", 	&POA_CORBA::ExtInterfaceDef::create_ext_value_skel},
+      {"create_interface", 	&POA_CORBA::ExtInterfaceDef::create_interface_skel},
+      {"create_union", 	&POA_CORBA::ExtInterfaceDef::create_union_skel},
+      {"create_ext_attribute", 	&POA_CORBA::ExtInterfaceDef::create_ext_attribute_skel},
+      {"create_operation", 	&POA_CORBA::ExtInterfaceDef::create_operation_skel},
+      {"create_exception", 	&POA_CORBA::ExtInterfaceDef::create_exception_skel},
+      {"create_local_interface", 	&POA_CORBA::ExtInterfaceDef::create_local_interface_skel},
+      {"contents", 	&POA_CORBA::ExtInterfaceDef::contents_skel},
+      {"create_abstract_interface", 	&POA_CORBA::ExtInterfaceDef::create_abstract_interface_skel},
+      {"lookup_name", 	&POA_CORBA::ExtInterfaceDef::lookup_name_skel},
+      {"create_alias", 	&POA_CORBA::ExtInterfaceDef::create_alias_skel},
+      {"describe", 	&POA_CORBA::ExtInterfaceDef::describe_skel},
+      {"create_value_box", 	&POA_CORBA::ExtInterfaceDef::create_value_box_skel},
+      {"destroy", 	&POA_CORBA::ExtInterfaceDef::destroy_skel},
+      {"_is_a",  &POA_CORBA::ExtInterfaceDef::_is_a_skel},
+      {"lookup", 	&POA_CORBA::ExtInterfaceDef::lookup_skel},
+      {"describe_interface", 	&POA_CORBA::ExtInterfaceDef::describe_interface_skel},
+      {"_get_name", 	&POA_CORBA::ExtInterfaceDef::_get_name_skel},
+      {"_get_type", 	&POA_CORBA::ExtInterfaceDef::_get_type_skel},
+      {"_set_name", 	&POA_CORBA::ExtInterfaceDef::_set_name_skel},
+      {"_interface",  &POA_CORBA::ExtInterfaceDef::_interface_skel},
+      {"describe_ext_interface", 	&POA_CORBA::ExtInterfaceDef::describe_ext_interface_skel},
+      {"create_struct", 	&POA_CORBA::ExtInterfaceDef::create_struct_skel},
+      {"create_constant", 	&POA_CORBA::ExtInterfaceDef::create_constant_skel},
+      {"_get_version", 	&POA_CORBA::ExtInterfaceDef::_get_version_skel},
+      {"_set_version", 	&POA_CORBA::ExtInterfaceDef::_set_version_skel},
+      {"_get_absolute_name", 	&POA_CORBA::ExtInterfaceDef::_get_absolute_name_skel},
+      {"_get_defined_in", 	&POA_CORBA::ExtInterfaceDef::_get_defined_in_skel},
+      {"describe_contents", 	&POA_CORBA::ExtInterfaceDef::describe_contents_skel},
+      {"_get_id", 	&POA_CORBA::ExtInterfaceDef::_get_id_skel},
+      {"_set_id", 	&POA_CORBA::ExtInterfaceDef::_set_id_skel},
+      {"_get_containing_repository", 	&POA_CORBA::ExtInterfaceDef::_get_containing_repository_skel},
+      {"_get_def_kind", 	&POA_CORBA::ExtInterfaceDef::_get_def_kind_skel},
+      {"_get_base_interfaces", 	&POA_CORBA::ExtInterfaceDef::_get_base_interfaces_skel},
+      {"_set_base_interfaces", 	&POA_CORBA::ExtInterfaceDef::_set_base_interfaces_skel},
+      {"_component",  &POA_CORBA::ExtInterfaceDef::_component_skel},
+      {"_non_existent",  &POA_CORBA::ExtInterfaceDef::_non_existent_skel},
+    };
+
+  static const signed char lookup[] =
+    {
+       -1,  -1,  -1,  -1,   4,  -1,  -1,  -8,  -2,   5,  -1,   6,   7, -79, 
+      -10,  -3, -75,  13, -15,  -2,  14, -76,  17,  18,  -1,  19,  20,  21, 
+       22, -28,  -3,  23,  24, -35,  -2,  25,  26,  -1,  27, -83,  31,  -1, 
+       32,  33,  -1,  34,  -1, -87,  37,  -1,  38,  -1,  39,  -1,  -1, -40, 
+       -2, -75,  -1, -44,  -2,  42,  -1,  43,  -1, -79,  -1,  -1,  -1,  -1, 
+       46,  -1,  -1,  47, 
+    };
+
+  if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
+    {
+      unsigned int key = hash (str, len);
+
+      if (key <= MAX_HASH_VALUE && key >= MIN_HASH_VALUE)
+        {
+          int slot = lookup[key];
+
+          if (slot >= 0 && slot < WORDLIST_SIZE)
+            {
+              const char *s = wordlist[slot].opname_;
+
+              if (*str == *s && !strncmp (str + 1, s + 1, len - 1))
+                return &wordlist[slot];
+            }
+          else if (slot < 0 && slot >= -MAX_HASH_VALUE)
+            return 0;
+          else
+            {
+              unsigned int offset = key + slot + (slot > 0 ? -MAX_HASH_VALUE : MAX_HASH_VALUE);
+              const class TAO_operation_db_entry  *base = &wordlist[-lookup[offset]];
+              const class TAO_operation_db_entry  *ptr = base + -lookup[offset + 1];
+
+              while (--ptr >= base)
+                if (*str == *ptr->opname_ && !strncmp (str + 1, ptr->opname_ + 1, len - 1))
+                  return ptr;
+            }
+        }
+    }
+  return 0;
+}
+static TAO_CORBA_ExtInterfaceDef_Perfect_Hash_OpTable tao_CORBA_ExtInterfaceDef_optable;
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interceptors_ss.cpp:52
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
+///////////////////////////////////////////////////////////////////////
+//            Strategized Proxy Broker Implementation
+//
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_ss.cpp:40
+
+// Factory function Implementation.
+POA_CORBA::_TAO_ExtInterfaceDef_Strategized_Proxy_Broker *POA_CORBA::_TAO_ExtInterfaceDef_Strategized_Proxy_Broker::the_TAO_ExtInterfaceDef_Strategized_Proxy_Broker (void)
+{
+  static POA_CORBA::_TAO_ExtInterfaceDef_Strategized_Proxy_Broker strategized_proxy_broker;
+  return &strategized_proxy_broker;
+}
+
+POA_CORBA::_TAO_ExtInterfaceDef_Strategized_Proxy_Broker::_TAO_ExtInterfaceDef_Strategized_Proxy_Broker (void)
+{
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
+    {
+      this->proxy_cache_[i] = 0;
+    }
+}
+
+POA_CORBA::_TAO_ExtInterfaceDef_Strategized_Proxy_Broker::~_TAO_ExtInterfaceDef_Strategized_Proxy_Broker (void)
+{
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
+    {
+      delete this->proxy_cache_[i];
+      
+      // Hack to prevent bug mentioned in 1204. Refer to 1204
+      // for details..
+      this->proxy_cache_[i] = 0;
+    }
+}
+
+CORBA::_TAO_ExtInterfaceDef_Proxy_Impl&
+POA_CORBA::_TAO_ExtInterfaceDef_Strategized_Proxy_Broker::select_proxy (
+    ::CORBA::ExtInterfaceDef *object
+    ACE_ENV_ARG_DECL
+  )
+{
+  int strategy =
+    TAO_ORB_Core::collocation_strategy (object ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
+  
+  if (this->proxy_cache_[strategy] != 0)
+    {
+      return *this->proxy_cache_[strategy];
+    }
+  
+  this->create_proxy (strategy ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
+  
+  return *this->proxy_cache_[strategy];
+}
+
+void 
+POA_CORBA::_TAO_ExtInterfaceDef_Strategized_Proxy_Broker::create_proxy (
+    int strategy
+    ACE_ENV_ARG_DECL
+  )
+{
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
+  
+  if (this->proxy_cache_[strategy] == 0)
+    {
+      switch (strategy)
+        {
+        case TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY:
+          ACE_NEW_THROW_EX (
+              this->proxy_cache_[strategy],
+              POA_CORBA::_TAO_ExtInterfaceDef_ThruPOA_Proxy_Impl,
+              CORBA::NO_MEMORY ()
+          );
+          ACE_CHECK;
+          break;
+          
+        case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:
+        default:
+          ACE_NEW_THROW_EX (
+              this->proxy_cache_[strategy],
+              ::CORBA::_TAO_ExtInterfaceDef_Remote_Proxy_Impl,
+              CORBA::NO_MEMORY ()
+          );
+          ACE_CHECK;
+          break;
+        }
+    }
+}
+
+//
+//        End Strategized Proxy Broker Implementation
+///////////////////////////////////////////////////////////////////////
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:596
+
+CORBA::_TAO_ExtInterfaceDef_Proxy_Broker *
+CORBA__TAO_ExtInterfaceDef_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
+{
+  ACE_UNUSED_ARG (obj);
+  return ::POA_CORBA::_TAO_ExtInterfaceDef_Strategized_Proxy_Broker::the_TAO_ExtInterfaceDef_Strategized_Proxy_Broker();
+}
+
+int
+CORBA__TAO_ExtInterfaceDef_Proxy_Broker_Factory_Initializer (long)
+{
+  CORBA__TAO_ExtInterfaceDef_Proxy_Broker_Factory_function_pointer = 
+    CORBA__TAO_ExtInterfaceDef_Proxy_Broker_Factory_function;
+  
+  return 0;
+}
+
+static int CORBA__TAO_ExtInterfaceDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow = 
+  CORBA__TAO_ExtInterfaceDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, CORBA__TAO_ExtInterfaceDef_Proxy_Broker_Factory_Initializer));
+
+
+///////////////////////////////////////////////////////////////////////
+//                 ThruPOA Proxy  Implementation
+//
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_ss.cpp:37
+
+POA_CORBA::_TAO_ExtInterfaceDef_ThruPOA_Proxy_Impl::_TAO_ExtInterfaceDef_ThruPOA_Proxy_Impl (void)
+{}
+
+// ThruPOA Implementation of the IDL interface methods//
+//           End ThruPOA Proxy Implementation
+///////////////////////////////////////////////////////////////////////
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:98
+
+POA_CORBA::ExtInterfaceDef::ExtInterfaceDef (void)
+{
+  this->optable_ = &tao_CORBA_ExtInterfaceDef_optable;
+}
+
+POA_CORBA::ExtInterfaceDef::ExtInterfaceDef (const ExtInterfaceDef& rhs)
+  :  ACE_NESTED_CLASS (POA_CORBA,InterfaceDef) (rhs),
+    ACE_NESTED_CLASS (POA_CORBA,InterfaceAttrExtension) (rhs),
+    ACE_NESTED_CLASS (POA_CORBA,Container) (rhs),
+    ACE_NESTED_CLASS (POA_CORBA,Contained) (rhs),
+    ACE_NESTED_CLASS (POA_CORBA,IDLType) (rhs),
+    ACE_NESTED_CLASS (POA_CORBA,IRObject) (rhs),
+    TAO_ServantBase (rhs)
+{}
+
+POA_CORBA::ExtInterfaceDef::~ExtInterfaceDef (void)
+{
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:163
+
+void POA_CORBA::ExtInterfaceDef::_is_a_skel (
+    TAO_ServerRequest &_tao_server_request, 
+    void * _tao_servant,
+    void * /* Servant_Upcall */
+    ACE_ENV_ARG_DECL
+  )
+{
+  TAO_InputCDR &_tao_in = _tao_server_request.incoming ();
+  POA_CORBA::ExtInterfaceDef *_tao_impl = (POA_CORBA::ExtInterfaceDef *) _tao_servant;
+  CORBA::Boolean _tao_retval = 0;
+  CORBA::String_var value;
+  
+  if (!(_tao_in >> value.out ()))
+    ACE_THROW (CORBA::MARSHAL ());
+  
+  _tao_retval = _tao_impl->_is_a (value.in () ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  
+  _tao_server_request.init_reply ();
+  TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
+  
+  if (!(_tao_out << CORBA::Any::from_boolean (_tao_retval)))
+    ACE_THROW (CORBA::MARSHAL ());
+}
+
+void POA_CORBA::ExtInterfaceDef::_non_existent_skel (
+    TAO_ServerRequest &_tao_server_request, 
+    void * _tao_servant,
+    void * /* Servant_Upcall */
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::ExtInterfaceDef *_tao_impl = (POA_CORBA::ExtInterfaceDef *) _tao_servant;
+  CORBA::Boolean _tao_retval =
+    _tao_impl->_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+  
+  _tao_server_request.init_reply ();
+  TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
+  
+  if (!(_tao_out << CORBA::Any::from_boolean (_tao_retval)))
+    ACE_THROW (CORBA::MARSHAL ());
+}
+
+void POA_CORBA::ExtInterfaceDef::_interface_skel (
+    TAO_ServerRequest &_tao_server_request, 
+    void * _tao_servant,
+    void * /* Servant_Upcall */
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::ExtInterfaceDef *_tao_impl = (POA_CORBA::ExtInterfaceDef *) _tao_servant;
+  CORBA::InterfaceDef_ptr _tao_retval = 0;
+  CORBA::Boolean _tao_result = 0;
+  
+  TAO_IFR_Client_Adapter *_tao_adapter =
+    ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
+        TAO_ORB_Core::ifr_client_adapter_name ()
+      );
+    
+  if (_tao_adapter == 0)
+    {
+      ACE_THROW (CORBA::INTF_REPOS ());
+    }
+  
+  ACE_TRY
+    {
+      _tao_retval = 
+        _tao_impl->_get_interface (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      
+      _tao_server_request.init_reply ();
+      
+      TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
+      
+      _tao_result =
+        _tao_adapter->interfacedef_cdr_insert (
+            _tao_out,
+            _tao_retval
+          );
+    }
+  ACE_CATCHALL
+    {
+      _tao_adapter->dispose (_tao_retval);
+    }
+  ACE_ENDTRY;
+  
+  if (_tao_result == 0)
+    {
+      ACE_THROW (CORBA::MARSHAL ());
+    }
+}
+
+void POA_CORBA::ExtInterfaceDef::_component_skel (
+    TAO_ServerRequest &_tao_server_request, 
+    void * _tao_object_reference,
+    void * /* Servant_Upcall */
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::ExtInterfaceDef *_tao_impl = (POA_CORBA::ExtInterfaceDef *) _tao_object_reference;
+  CORBA::Object_var _tao_retval =
+    _tao_impl->_get_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+  
+  _tao_server_request.init_reply ();
+  TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
+  
+  if (!(_tao_out << _tao_retval._retn ()))
+    ACE_THROW (CORBA::MARSHAL ());
+}
+
+CORBA::Boolean POA_CORBA::ExtInterfaceDef::_is_a (
+    const char* value
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/ExtInterfaceDef:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/InterfaceDef:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/InterfaceAttrExtension:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/Container:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/Contained:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/IDLType:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/IRObject:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:org.omg/CORBA/Object:1.0"
+        )
+     )
+    {
+      return 1;
+    }
+  else
+    {
+      return 0;
+    }
+}
+
+void* POA_CORBA::ExtInterfaceDef::_downcast (
+    const char* logical_type_id
+  )
+{
+  if (ACE_OS::strcmp (logical_type_id,
+                      "IDL:omg.org/CORBA/ExtInterfaceDef:1.0") == 0)
+    {
+      return ACE_static_cast (POA_CORBA::ExtInterfaceDef_ptr, this);
+    }
+  
+  if (ACE_OS::strcmp (logical_type_id,
+                      "IDL:omg.org/CORBA/InterfaceDef:1.0") == 0)
+    {
+      return ACE_static_cast (POA_CORBA::InterfaceDef_ptr, this);
+    }
+  
+  if (ACE_OS::strcmp (logical_type_id,
+                      "IDL:omg.org/CORBA/InterfaceAttrExtension:1.0") == 0)
+    {
+      return ACE_static_cast (POA_CORBA::InterfaceAttrExtension_ptr, this);
+    }
+  
+  if (ACE_OS::strcmp (logical_type_id,
+                      "IDL:omg.org/CORBA/Container:1.0") == 0)
+    {
+      return ACE_static_cast (POA_CORBA::Container_ptr, this);
+    }
+  
+  if (ACE_OS::strcmp (logical_type_id,
+                      "IDL:omg.org/CORBA/Contained:1.0") == 0)
+    {
+      return ACE_static_cast (POA_CORBA::Contained_ptr, this);
+    }
+  
+  if (ACE_OS::strcmp (logical_type_id,
+                      "IDL:omg.org/CORBA/IDLType:1.0") == 0)
+    {
+      return ACE_static_cast (POA_CORBA::IDLType_ptr, this);
+    }
+  
+  if (ACE_OS::strcmp (logical_type_id,
+                      "IDL:omg.org/CORBA/IRObject:1.0") == 0)
+    {
+      return ACE_static_cast (POA_CORBA::IRObject_ptr, this);
+    }
+  
+  if (ACE_OS::strcmp (logical_type_id,
+                      "IDL:omg.org/CORBA/Object:1.0") == 0)
+    {
+      return ACE_static_cast(PortableServer::Servant, this);
+    }
+  
+  return 0;
+}
+
+const char* POA_CORBA::ExtInterfaceDef::_interface_repository_id (void) const
+{
+  return "IDL:omg.org/CORBA/ExtInterfaceDef:1.0";
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:531
+
+void POA_CORBA::ExtInterfaceDef::_dispatch (
+    TAO_ServerRequest &req,
+    void *servant_upcall
+    ACE_ENV_ARG_DECL
+  )
+{
+  this->synchronous_upcall_dispatch (req,
+                                     servant_upcall,
+                                     this
+                                     ACE_ENV_ARG_PARAMETER);
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:477
+
+CORBA::ExtInterfaceDef *
+POA_CORBA::ExtInterfaceDef::_this (ACE_ENV_SINGLE_ARG_DECL)
+{
+  TAO_Stub *stub = this->_create_stub (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+  
+  TAO_Stub_Auto_Ptr safe_stub (stub);
+  CORBA::Object_ptr tmp = CORBA::Object::_nil ();
+  
+  if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())
+    {
+      ACE_NEW_RETURN (
+          tmp,
+          CORBA::Object (
+              stub,
+              1,
+              this
+            ),
+          0
+        );
+    }
+  else
+    {
+      ACE_NEW_RETURN (
+          tmp,
+          CORBA::Object (
+              stub,
+              0,
+              this
+            ),
+          0
+        );
+    }
+  
+  CORBA::Object_var obj = tmp;
+  (void) safe_stub.release ();
+  return ::CORBA::ExtInterfaceDef::_unchecked_narrow (obj.in ());
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1731
 
 class TAO_CORBA_AbstractInterfaceDef_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
 {
@@ -29852,53 +33801,53 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: /u1/ossama/ACE_wrappers/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_CORBA_AbstractInterfaceDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_CORBA_AbstractInterfaceDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_CORBA_AbstractInterfaceDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
   static const unsigned char asso_values[] =
     {
 #if defined (ACE_MVS)
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81,  0,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81,  0,
-     81, 30, 20,  0, 81, 81, 81, 10, 81, 81,
-     81, 81, 81, 81, 81, 81, 81,  0,  0,  5,
-     81,  0, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 20, 35, 81, 81, 81, 10,  5, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 25,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79,  0,
+     79,  0, 20,  0, 79, 79, 79,  5, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 15,  0,  5,
+     79, 15, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 25, 40, 79, 79, 79, 15,  0, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79,
 #else
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81,  0, 81,  0, 81, 30,
-     20,  0, 81, 81, 81, 10, 81, 81,  0,  0,
-      5, 81,  0, 81, 81, 20, 35, 81, 81, 81,
-     10,  5, 81, 81, 81, 81, 81, 81,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 25, 79,  0, 79,  0,
+     20,  0, 79, 79, 79,  5, 79, 79, 15,  0,
+      5, 79, 15, 79, 79, 25, 40, 79, 79, 79,
+     15,  0, 79, 79, 79, 79, 79, 79,
 #endif /* ACE_MVS */
     };
   return len + asso_values[str[len - 1]] + asso_values[str[0]];
@@ -29909,70 +33858,71 @@ TAO_CORBA_AbstractInterfaceDef_Perfect_Hash_OpTable::lookup (const char *str, un
 {
   enum
     {
-      TOTAL_KEYWORDS = 41,
+      TOTAL_KEYWORDS = 42,
       MIN_WORD_LENGTH = 4,
       MAX_WORD_LENGTH = 26,
       MIN_HASH_VALUE = 4,
-      MAX_HASH_VALUE = 80,
-      HASH_VALUE_RANGE = 77,
-      DUPLICATES = 9,
-      WORDLIST_SIZE = 45
+      MAX_HASH_VALUE = 78,
+      HASH_VALUE_RANGE = 75,
+      DUPLICATES = 10,
+      WORDLIST_SIZE = 46
     };
 
   static const class TAO_operation_db_entry  wordlist[] =
     {
       {"",0},{"",0},{"",0},{"",0},
       {"move", 	&POA_CORBA::AbstractInterfaceDef::move_skel},
-      {"_is_a",  &POA_CORBA::AbstractInterfaceDef::_is_a_skel},
-      {"lookup", 	&POA_CORBA::AbstractInterfaceDef::lookup_skel},
-      {"_get_name", 	&POA_CORBA::AbstractInterfaceDef::_get_name_skel},
-      {"_get_type", 	&POA_CORBA::AbstractInterfaceDef::_get_type_skel},
-      {"_set_name", 	&POA_CORBA::AbstractInterfaceDef::_set_name_skel},
-      {"_interface",  &POA_CORBA::AbstractInterfaceDef::_interface_skel},
-      {"lookup_name", 	&POA_CORBA::AbstractInterfaceDef::lookup_name_skel},
       {"is_a", 	&POA_CORBA::AbstractInterfaceDef::is_a_skel},
-      {"_get_version", 	&POA_CORBA::AbstractInterfaceDef::_get_version_skel},
-      {"_set_version", 	&POA_CORBA::AbstractInterfaceDef::_set_version_skel},
-      {"_get_absolute_name", 	&POA_CORBA::AbstractInterfaceDef::_get_absolute_name_skel},
-      {"_get_defined_in", 	&POA_CORBA::AbstractInterfaceDef::_get_defined_in_skel},
-      {"_get_id", 	&POA_CORBA::AbstractInterfaceDef::_get_id_skel},
-      {"_set_id", 	&POA_CORBA::AbstractInterfaceDef::_set_id_skel},
-      {"describe", 	&POA_CORBA::AbstractInterfaceDef::describe_skel},
-      {"_get_containing_repository", 	&POA_CORBA::AbstractInterfaceDef::_get_containing_repository_skel},
-      {"destroy", 	&POA_CORBA::AbstractInterfaceDef::destroy_skel},
-      {"_get_def_kind", 	&POA_CORBA::AbstractInterfaceDef::_get_def_kind_skel},
-      {"describe_interface", 	&POA_CORBA::AbstractInterfaceDef::describe_interface_skel},
-      {"_get_base_interfaces", 	&POA_CORBA::AbstractInterfaceDef::_get_base_interfaces_skel},
-      {"_set_base_interfaces", 	&POA_CORBA::AbstractInterfaceDef::_set_base_interfaces_skel},
       {"create_enum", 	&POA_CORBA::AbstractInterfaceDef::create_enum_skel},
       {"create_value", 	&POA_CORBA::AbstractInterfaceDef::create_value_skel},
       {"create_module", 	&POA_CORBA::AbstractInterfaceDef::create_module_skel},
       {"create_native", 	&POA_CORBA::AbstractInterfaceDef::create_native_skel},
-      {"_component",  &POA_CORBA::AbstractInterfaceDef::_component_skel},
       {"create_attribute", 	&POA_CORBA::AbstractInterfaceDef::create_attribute_skel},
+      {"create_ext_value", 	&POA_CORBA::AbstractInterfaceDef::create_ext_value_skel},
       {"create_interface", 	&POA_CORBA::AbstractInterfaceDef::create_interface_skel},
       {"create_union", 	&POA_CORBA::AbstractInterfaceDef::create_union_skel},
-      {"_non_existent",  &POA_CORBA::AbstractInterfaceDef::_non_existent_skel},
       {"create_operation", 	&POA_CORBA::AbstractInterfaceDef::create_operation_skel},
       {"create_exception", 	&POA_CORBA::AbstractInterfaceDef::create_exception_skel},
       {"create_local_interface", 	&POA_CORBA::AbstractInterfaceDef::create_local_interface_skel},
       {"create_abstract_interface", 	&POA_CORBA::AbstractInterfaceDef::create_abstract_interface_skel},
+      {"lookup_name", 	&POA_CORBA::AbstractInterfaceDef::lookup_name_skel},
+      {"destroy", 	&POA_CORBA::AbstractInterfaceDef::destroy_skel},
+      {"describe", 	&POA_CORBA::AbstractInterfaceDef::describe_skel},
+      {"_is_a",  &POA_CORBA::AbstractInterfaceDef::_is_a_skel},
       {"create_value_box", 	&POA_CORBA::AbstractInterfaceDef::create_value_box_skel},
-      {"describe_contents", 	&POA_CORBA::AbstractInterfaceDef::describe_contents_skel},
       {"contents", 	&POA_CORBA::AbstractInterfaceDef::contents_skel},
+      {"_get_name", 	&POA_CORBA::AbstractInterfaceDef::_get_name_skel},
+      {"_get_type", 	&POA_CORBA::AbstractInterfaceDef::_get_type_skel},
+      {"_set_name", 	&POA_CORBA::AbstractInterfaceDef::_set_name_skel},
+      {"_interface",  &POA_CORBA::AbstractInterfaceDef::_interface_skel},
+      {"lookup", 	&POA_CORBA::AbstractInterfaceDef::lookup_skel},
       {"create_alias", 	&POA_CORBA::AbstractInterfaceDef::create_alias_skel},
+      {"describe_interface", 	&POA_CORBA::AbstractInterfaceDef::describe_interface_skel},
+      {"_get_version", 	&POA_CORBA::AbstractInterfaceDef::_get_version_skel},
+      {"_set_version", 	&POA_CORBA::AbstractInterfaceDef::_set_version_skel},
+      {"_get_absolute_name", 	&POA_CORBA::AbstractInterfaceDef::_get_absolute_name_skel},
+      {"_get_defined_in", 	&POA_CORBA::AbstractInterfaceDef::_get_defined_in_skel},
+      {"_get_containing_repository", 	&POA_CORBA::AbstractInterfaceDef::_get_containing_repository_skel},
+      {"_get_id", 	&POA_CORBA::AbstractInterfaceDef::_get_id_skel},
+      {"_set_id", 	&POA_CORBA::AbstractInterfaceDef::_set_id_skel},
       {"create_struct", 	&POA_CORBA::AbstractInterfaceDef::create_struct_skel},
       {"create_constant", 	&POA_CORBA::AbstractInterfaceDef::create_constant_skel},
+      {"_get_def_kind", 	&POA_CORBA::AbstractInterfaceDef::_get_def_kind_skel},
+      {"describe_contents", 	&POA_CORBA::AbstractInterfaceDef::describe_contents_skel},
+      {"_get_base_interfaces", 	&POA_CORBA::AbstractInterfaceDef::_get_base_interfaces_skel},
+      {"_set_base_interfaces", 	&POA_CORBA::AbstractInterfaceDef::_set_base_interfaces_skel},
+      {"_component",  &POA_CORBA::AbstractInterfaceDef::_component_skel},
+      {"_non_existent",  &POA_CORBA::AbstractInterfaceDef::_non_existent_skel},
     };
 
   static const signed char lookup[] =
     {
-       -1,  -1,  -1,  -1,   4,   5,   6,  -7,  -3, -82,  10,  11,  -1,  -1, 
-       12, -13,  -2, -82,  15,  -1,  16,  -1,  -1,  -1,  -1, -17,  -2, -82, 
-       19, -24,  -2,  20,  21,  22, -28,  -2, -31,  -2,  23,  -1, -91,  26, 
-       27, -89,  -1,  30, -90,  33,  34, -35,  -2, -82,  37,  -1,  -1,  38, 
-       39,  40,  41,  -1,  -1,  -1,  42,  -1,  -1,  -1,  -1,  -1,  -1,  -1, 
-       -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  43,  -1,  44, 
+       -1,  -1,  -1,  -1,   4,  -1,  -1,  -8,  -2,   5,  -1,   6,   7, -84, 
+      -10,  -3, -80,  13,  -1, -14,  -2, -80,  16, -24,  -3,  17,  18,  19, 
+       20,  -1,  21,  22,  -1,  23, -89,  27,  28,  29,  30,  -1, -31,  -2, 
+      -80,  33,  -1,  34,  -1,  -1,  -1, -36,  -2,  35, -81,  38,  -1,  39, 
+       -1,  -1,  40,  -1,  -1,  -1,  41,  -1,  -1,  -1,  -1,  -1, -42,  -2, 
+      -80,  -1,  -1,  -1,  -1,  44,  -1,  -1,  45, 
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -30009,7 +33959,7 @@ TAO_CORBA_AbstractInterfaceDef_Perfect_Hash_OpTable::lookup (const char *str, un
 static TAO_CORBA_AbstractInterfaceDef_Perfect_Hash_OpTable tao_CORBA_AbstractInterfaceDef_optable;
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interceptors_ss.cpp:52
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interceptors_ss.cpp:52
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 
@@ -30020,7 +33970,7 @@ static TAO_CORBA_AbstractInterfaceDef_Perfect_Hash_OpTable tao_CORBA_AbstractInt
 //
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/strategized_proxy_broker_ss.cpp:40
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_ss.cpp:40
 
 // Factory function Implementation.
 POA_CORBA::_TAO_AbstractInterfaceDef_Strategized_Proxy_Broker *POA_CORBA::_TAO_AbstractInterfaceDef_Strategized_Proxy_Broker::the_TAO_AbstractInterfaceDef_Strategized_Proxy_Broker (void)
@@ -30109,7 +34059,7 @@ POA_CORBA::_TAO_AbstractInterfaceDef_Strategized_Proxy_Broker::create_proxy (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:598
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:596
 
 CORBA::_TAO_AbstractInterfaceDef_Proxy_Broker *
 CORBA__TAO_AbstractInterfaceDef_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
@@ -30136,7 +34086,7 @@ static int CORBA__TAO_AbstractInterfaceDef_Proxy_Broker_Stub_Factory_Initializer
 //
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/thru_poa_proxy_impl_ss.cpp:37
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_ss.cpp:37
 
 POA_CORBA::_TAO_AbstractInterfaceDef_ThruPOA_Proxy_Impl::_TAO_AbstractInterfaceDef_ThruPOA_Proxy_Impl (void)
 {}
@@ -30146,7 +34096,7 @@ POA_CORBA::_TAO_AbstractInterfaceDef_ThruPOA_Proxy_Impl::_TAO_AbstractInterfaceD
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_ss.cpp:98
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:98
 
 POA_CORBA::AbstractInterfaceDef::AbstractInterfaceDef (void)
 {
@@ -30167,7 +34117,7 @@ POA_CORBA::AbstractInterfaceDef::~AbstractInterfaceDef (void)
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_ss.cpp:163
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:163
 
 void POA_CORBA::AbstractInterfaceDef::_is_a_skel (
     TAO_ServerRequest &_tao_server_request, 
@@ -30380,7 +34330,7 @@ const char* POA_CORBA::AbstractInterfaceDef::_interface_repository_id (void) con
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:532
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:531
 
 void POA_CORBA::AbstractInterfaceDef::_dispatch (
     TAO_ServerRequest &req,
@@ -30395,7 +34345,7 @@ void POA_CORBA::AbstractInterfaceDef::_dispatch (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:478
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:477
 
 CORBA::AbstractInterfaceDef *
 POA_CORBA::AbstractInterfaceDef::_this (ACE_ENV_SINGLE_ARG_DECL)
@@ -30437,7 +34387,628 @@ POA_CORBA::AbstractInterfaceDef::_this (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:1732
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1731
+
+class TAO_CORBA_ExtAbstractInterfaceDef_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
+{
+private:
+  unsigned int hash (const char *str, unsigned int len);
+public:
+ const TAO_operation_db_entry * lookup (const char *str, unsigned int len);
+};
+
+/* C++ code produced by gperf version 2.8 (ACE version) */
+/* Command-line: gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_CORBA_ExtAbstractInterfaceDef_Perfect_Hash_OpTable -N lookup  */
+unsigned int
+TAO_CORBA_ExtAbstractInterfaceDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
+{
+  static const unsigned char asso_values[] =
+    {
+#if defined (ACE_MVS)
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 30,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74,  0,
+     74,  0, 20,  0, 74, 74, 74,  5, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 15,  0,  5,
+     74, 15, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 15, 30, 74, 74, 74, 15,  5, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74,
+#else
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 30, 74,  0, 74,  0,
+     20,  0, 74, 74, 74,  5, 74, 74, 15,  0,
+      5, 74, 15, 74, 74, 15, 30, 74, 74, 74,
+     15,  5, 74, 74, 74, 74, 74, 74,
+#endif /* ACE_MVS */
+    };
+  return len + asso_values[str[len - 1]] + asso_values[str[0]];
+}
+
+const class TAO_operation_db_entry *
+TAO_CORBA_ExtAbstractInterfaceDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
+{
+  enum
+    {
+      TOTAL_KEYWORDS = 44,
+      MIN_WORD_LENGTH = 4,
+      MAX_WORD_LENGTH = 26,
+      MIN_HASH_VALUE = 4,
+      MAX_HASH_VALUE = 73,
+      HASH_VALUE_RANGE = 70,
+      DUPLICATES = 10,
+      WORDLIST_SIZE = 48
+    };
+
+  static const class TAO_operation_db_entry  wordlist[] =
+    {
+      {"",0},{"",0},{"",0},{"",0},
+      {"move", 	&POA_CORBA::ExtAbstractInterfaceDef::move_skel},
+      {"is_a", 	&POA_CORBA::ExtAbstractInterfaceDef::is_a_skel},
+      {"create_enum", 	&POA_CORBA::ExtAbstractInterfaceDef::create_enum_skel},
+      {"create_value", 	&POA_CORBA::ExtAbstractInterfaceDef::create_value_skel},
+      {"create_module", 	&POA_CORBA::ExtAbstractInterfaceDef::create_module_skel},
+      {"create_native", 	&POA_CORBA::ExtAbstractInterfaceDef::create_native_skel},
+      {"create_attribute", 	&POA_CORBA::ExtAbstractInterfaceDef::create_attribute_skel},
+      {"create_ext_value", 	&POA_CORBA::ExtAbstractInterfaceDef::create_ext_value_skel},
+      {"create_interface", 	&POA_CORBA::ExtAbstractInterfaceDef::create_interface_skel},
+      {"create_union", 	&POA_CORBA::ExtAbstractInterfaceDef::create_union_skel},
+      {"create_ext_attribute", 	&POA_CORBA::ExtAbstractInterfaceDef::create_ext_attribute_skel},
+      {"create_operation", 	&POA_CORBA::ExtAbstractInterfaceDef::create_operation_skel},
+      {"create_exception", 	&POA_CORBA::ExtAbstractInterfaceDef::create_exception_skel},
+      {"create_local_interface", 	&POA_CORBA::ExtAbstractInterfaceDef::create_local_interface_skel},
+      {"contents", 	&POA_CORBA::ExtAbstractInterfaceDef::contents_skel},
+      {"create_abstract_interface", 	&POA_CORBA::ExtAbstractInterfaceDef::create_abstract_interface_skel},
+      {"lookup_name", 	&POA_CORBA::ExtAbstractInterfaceDef::lookup_name_skel},
+      {"create_alias", 	&POA_CORBA::ExtAbstractInterfaceDef::create_alias_skel},
+      {"describe", 	&POA_CORBA::ExtAbstractInterfaceDef::describe_skel},
+      {"create_value_box", 	&POA_CORBA::ExtAbstractInterfaceDef::create_value_box_skel},
+      {"destroy", 	&POA_CORBA::ExtAbstractInterfaceDef::destroy_skel},
+      {"_is_a",  &POA_CORBA::ExtAbstractInterfaceDef::_is_a_skel},
+      {"lookup", 	&POA_CORBA::ExtAbstractInterfaceDef::lookup_skel},
+      {"describe_interface", 	&POA_CORBA::ExtAbstractInterfaceDef::describe_interface_skel},
+      {"_get_name", 	&POA_CORBA::ExtAbstractInterfaceDef::_get_name_skel},
+      {"_get_type", 	&POA_CORBA::ExtAbstractInterfaceDef::_get_type_skel},
+      {"_set_name", 	&POA_CORBA::ExtAbstractInterfaceDef::_set_name_skel},
+      {"_interface",  &POA_CORBA::ExtAbstractInterfaceDef::_interface_skel},
+      {"describe_ext_interface", 	&POA_CORBA::ExtAbstractInterfaceDef::describe_ext_interface_skel},
+      {"create_struct", 	&POA_CORBA::ExtAbstractInterfaceDef::create_struct_skel},
+      {"create_constant", 	&POA_CORBA::ExtAbstractInterfaceDef::create_constant_skel},
+      {"_get_version", 	&POA_CORBA::ExtAbstractInterfaceDef::_get_version_skel},
+      {"_set_version", 	&POA_CORBA::ExtAbstractInterfaceDef::_set_version_skel},
+      {"_get_absolute_name", 	&POA_CORBA::ExtAbstractInterfaceDef::_get_absolute_name_skel},
+      {"_get_defined_in", 	&POA_CORBA::ExtAbstractInterfaceDef::_get_defined_in_skel},
+      {"describe_contents", 	&POA_CORBA::ExtAbstractInterfaceDef::describe_contents_skel},
+      {"_get_id", 	&POA_CORBA::ExtAbstractInterfaceDef::_get_id_skel},
+      {"_set_id", 	&POA_CORBA::ExtAbstractInterfaceDef::_set_id_skel},
+      {"_get_containing_repository", 	&POA_CORBA::ExtAbstractInterfaceDef::_get_containing_repository_skel},
+      {"_get_def_kind", 	&POA_CORBA::ExtAbstractInterfaceDef::_get_def_kind_skel},
+      {"_get_base_interfaces", 	&POA_CORBA::ExtAbstractInterfaceDef::_get_base_interfaces_skel},
+      {"_set_base_interfaces", 	&POA_CORBA::ExtAbstractInterfaceDef::_set_base_interfaces_skel},
+      {"_component",  &POA_CORBA::ExtAbstractInterfaceDef::_component_skel},
+      {"_non_existent",  &POA_CORBA::ExtAbstractInterfaceDef::_non_existent_skel},
+    };
+
+  static const signed char lookup[] =
+    {
+       -1,  -1,  -1,  -1,   4,  -1,  -1,  -8,  -2,   5,  -1,   6,   7, -79, 
+      -10,  -3, -75,  13, -15,  -2,  14, -76,  17,  18,  -1,  19,  20,  21, 
+       22, -28,  -3,  23,  24, -35,  -2,  25,  26,  -1,  27, -83,  31,  -1, 
+       32,  33,  -1,  34,  -1, -87,  37,  -1,  38,  -1,  39,  -1,  -1, -40, 
+       -2, -75,  -1, -44,  -2,  42,  -1,  43,  -1, -79,  -1,  -1,  -1,  -1, 
+       46,  -1,  -1,  47, 
+    };
+
+  if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
+    {
+      unsigned int key = hash (str, len);
+
+      if (key <= MAX_HASH_VALUE && key >= MIN_HASH_VALUE)
+        {
+          int slot = lookup[key];
+
+          if (slot >= 0 && slot < WORDLIST_SIZE)
+            {
+              const char *s = wordlist[slot].opname_;
+
+              if (*str == *s && !strncmp (str + 1, s + 1, len - 1))
+                return &wordlist[slot];
+            }
+          else if (slot < 0 && slot >= -MAX_HASH_VALUE)
+            return 0;
+          else
+            {
+              unsigned int offset = key + slot + (slot > 0 ? -MAX_HASH_VALUE : MAX_HASH_VALUE);
+              const class TAO_operation_db_entry  *base = &wordlist[-lookup[offset]];
+              const class TAO_operation_db_entry  *ptr = base + -lookup[offset + 1];
+
+              while (--ptr >= base)
+                if (*str == *ptr->opname_ && !strncmp (str + 1, ptr->opname_ + 1, len - 1))
+                  return ptr;
+            }
+        }
+    }
+  return 0;
+}
+static TAO_CORBA_ExtAbstractInterfaceDef_Perfect_Hash_OpTable tao_CORBA_ExtAbstractInterfaceDef_optable;
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interceptors_ss.cpp:52
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
+///////////////////////////////////////////////////////////////////////
+//            Strategized Proxy Broker Implementation
+//
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_ss.cpp:40
+
+// Factory function Implementation.
+POA_CORBA::_TAO_ExtAbstractInterfaceDef_Strategized_Proxy_Broker *POA_CORBA::_TAO_ExtAbstractInterfaceDef_Strategized_Proxy_Broker::the_TAO_ExtAbstractInterfaceDef_Strategized_Proxy_Broker (void)
+{
+  static POA_CORBA::_TAO_ExtAbstractInterfaceDef_Strategized_Proxy_Broker strategized_proxy_broker;
+  return &strategized_proxy_broker;
+}
+
+POA_CORBA::_TAO_ExtAbstractInterfaceDef_Strategized_Proxy_Broker::_TAO_ExtAbstractInterfaceDef_Strategized_Proxy_Broker (void)
+{
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
+    {
+      this->proxy_cache_[i] = 0;
+    }
+}
+
+POA_CORBA::_TAO_ExtAbstractInterfaceDef_Strategized_Proxy_Broker::~_TAO_ExtAbstractInterfaceDef_Strategized_Proxy_Broker (void)
+{
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
+    {
+      delete this->proxy_cache_[i];
+      
+      // Hack to prevent bug mentioned in 1204. Refer to 1204
+      // for details..
+      this->proxy_cache_[i] = 0;
+    }
+}
+
+CORBA::_TAO_ExtAbstractInterfaceDef_Proxy_Impl&
+POA_CORBA::_TAO_ExtAbstractInterfaceDef_Strategized_Proxy_Broker::select_proxy (
+    ::CORBA::ExtAbstractInterfaceDef *object
+    ACE_ENV_ARG_DECL
+  )
+{
+  int strategy =
+    TAO_ORB_Core::collocation_strategy (object ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
+  
+  if (this->proxy_cache_[strategy] != 0)
+    {
+      return *this->proxy_cache_[strategy];
+    }
+  
+  this->create_proxy (strategy ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
+  
+  return *this->proxy_cache_[strategy];
+}
+
+void 
+POA_CORBA::_TAO_ExtAbstractInterfaceDef_Strategized_Proxy_Broker::create_proxy (
+    int strategy
+    ACE_ENV_ARG_DECL
+  )
+{
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
+  
+  if (this->proxy_cache_[strategy] == 0)
+    {
+      switch (strategy)
+        {
+        case TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY:
+          ACE_NEW_THROW_EX (
+              this->proxy_cache_[strategy],
+              POA_CORBA::_TAO_ExtAbstractInterfaceDef_ThruPOA_Proxy_Impl,
+              CORBA::NO_MEMORY ()
+          );
+          ACE_CHECK;
+          break;
+          
+        case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:
+        default:
+          ACE_NEW_THROW_EX (
+              this->proxy_cache_[strategy],
+              ::CORBA::_TAO_ExtAbstractInterfaceDef_Remote_Proxy_Impl,
+              CORBA::NO_MEMORY ()
+          );
+          ACE_CHECK;
+          break;
+        }
+    }
+}
+
+//
+//        End Strategized Proxy Broker Implementation
+///////////////////////////////////////////////////////////////////////
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:596
+
+CORBA::_TAO_ExtAbstractInterfaceDef_Proxy_Broker *
+CORBA__TAO_ExtAbstractInterfaceDef_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
+{
+  ACE_UNUSED_ARG (obj);
+  return ::POA_CORBA::_TAO_ExtAbstractInterfaceDef_Strategized_Proxy_Broker::the_TAO_ExtAbstractInterfaceDef_Strategized_Proxy_Broker();
+}
+
+int
+CORBA__TAO_ExtAbstractInterfaceDef_Proxy_Broker_Factory_Initializer (long)
+{
+  CORBA__TAO_ExtAbstractInterfaceDef_Proxy_Broker_Factory_function_pointer = 
+    CORBA__TAO_ExtAbstractInterfaceDef_Proxy_Broker_Factory_function;
+  
+  return 0;
+}
+
+static int CORBA__TAO_ExtAbstractInterfaceDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow = 
+  CORBA__TAO_ExtAbstractInterfaceDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, CORBA__TAO_ExtAbstractInterfaceDef_Proxy_Broker_Factory_Initializer));
+
+
+///////////////////////////////////////////////////////////////////////
+//                 ThruPOA Proxy  Implementation
+//
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_ss.cpp:37
+
+POA_CORBA::_TAO_ExtAbstractInterfaceDef_ThruPOA_Proxy_Impl::_TAO_ExtAbstractInterfaceDef_ThruPOA_Proxy_Impl (void)
+{}
+
+// ThruPOA Implementation of the IDL interface methods//
+//           End ThruPOA Proxy Implementation
+///////////////////////////////////////////////////////////////////////
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:98
+
+POA_CORBA::ExtAbstractInterfaceDef::ExtAbstractInterfaceDef (void)
+{
+  this->optable_ = &tao_CORBA_ExtAbstractInterfaceDef_optable;
+}
+
+POA_CORBA::ExtAbstractInterfaceDef::ExtAbstractInterfaceDef (const ExtAbstractInterfaceDef& rhs)
+  :  ACE_NESTED_CLASS (POA_CORBA,AbstractInterfaceDef) (rhs),
+    ACE_NESTED_CLASS (POA_CORBA,InterfaceAttrExtension) (rhs),
+    ACE_NESTED_CLASS (POA_CORBA,InterfaceDef) (rhs),
+    ACE_NESTED_CLASS (POA_CORBA,Container) (rhs),
+    ACE_NESTED_CLASS (POA_CORBA,Contained) (rhs),
+    ACE_NESTED_CLASS (POA_CORBA,IDLType) (rhs),
+    ACE_NESTED_CLASS (POA_CORBA,IRObject) (rhs),
+    TAO_ServantBase (rhs)
+{}
+
+POA_CORBA::ExtAbstractInterfaceDef::~ExtAbstractInterfaceDef (void)
+{
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:163
+
+void POA_CORBA::ExtAbstractInterfaceDef::_is_a_skel (
+    TAO_ServerRequest &_tao_server_request, 
+    void * _tao_servant,
+    void * /* Servant_Upcall */
+    ACE_ENV_ARG_DECL
+  )
+{
+  TAO_InputCDR &_tao_in = _tao_server_request.incoming ();
+  POA_CORBA::ExtAbstractInterfaceDef *_tao_impl = (POA_CORBA::ExtAbstractInterfaceDef *) _tao_servant;
+  CORBA::Boolean _tao_retval = 0;
+  CORBA::String_var value;
+  
+  if (!(_tao_in >> value.out ()))
+    ACE_THROW (CORBA::MARSHAL ());
+  
+  _tao_retval = _tao_impl->_is_a (value.in () ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  
+  _tao_server_request.init_reply ();
+  TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
+  
+  if (!(_tao_out << CORBA::Any::from_boolean (_tao_retval)))
+    ACE_THROW (CORBA::MARSHAL ());
+}
+
+void POA_CORBA::ExtAbstractInterfaceDef::_non_existent_skel (
+    TAO_ServerRequest &_tao_server_request, 
+    void * _tao_servant,
+    void * /* Servant_Upcall */
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::ExtAbstractInterfaceDef *_tao_impl = (POA_CORBA::ExtAbstractInterfaceDef *) _tao_servant;
+  CORBA::Boolean _tao_retval =
+    _tao_impl->_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+  
+  _tao_server_request.init_reply ();
+  TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
+  
+  if (!(_tao_out << CORBA::Any::from_boolean (_tao_retval)))
+    ACE_THROW (CORBA::MARSHAL ());
+}
+
+void POA_CORBA::ExtAbstractInterfaceDef::_interface_skel (
+    TAO_ServerRequest &_tao_server_request, 
+    void * _tao_servant,
+    void * /* Servant_Upcall */
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::ExtAbstractInterfaceDef *_tao_impl = (POA_CORBA::ExtAbstractInterfaceDef *) _tao_servant;
+  CORBA::InterfaceDef_ptr _tao_retval = 0;
+  CORBA::Boolean _tao_result = 0;
+  
+  TAO_IFR_Client_Adapter *_tao_adapter =
+    ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
+        TAO_ORB_Core::ifr_client_adapter_name ()
+      );
+    
+  if (_tao_adapter == 0)
+    {
+      ACE_THROW (CORBA::INTF_REPOS ());
+    }
+  
+  ACE_TRY
+    {
+      _tao_retval = 
+        _tao_impl->_get_interface (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      
+      _tao_server_request.init_reply ();
+      
+      TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
+      
+      _tao_result =
+        _tao_adapter->interfacedef_cdr_insert (
+            _tao_out,
+            _tao_retval
+          );
+    }
+  ACE_CATCHALL
+    {
+      _tao_adapter->dispose (_tao_retval);
+    }
+  ACE_ENDTRY;
+  
+  if (_tao_result == 0)
+    {
+      ACE_THROW (CORBA::MARSHAL ());
+    }
+}
+
+void POA_CORBA::ExtAbstractInterfaceDef::_component_skel (
+    TAO_ServerRequest &_tao_server_request, 
+    void * _tao_object_reference,
+    void * /* Servant_Upcall */
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::ExtAbstractInterfaceDef *_tao_impl = (POA_CORBA::ExtAbstractInterfaceDef *) _tao_object_reference;
+  CORBA::Object_var _tao_retval =
+    _tao_impl->_get_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+  
+  _tao_server_request.init_reply ();
+  TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
+  
+  if (!(_tao_out << _tao_retval._retn ()))
+    ACE_THROW (CORBA::MARSHAL ());
+}
+
+CORBA::Boolean POA_CORBA::ExtAbstractInterfaceDef::_is_a (
+    const char* value
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/ExtAbstractInterfaceDef:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/AbstractInterfaceDef:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/InterfaceAttrExtension:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/InterfaceDef:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/Container:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/Contained:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/IDLType:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/IRObject:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:org.omg/CORBA/Object:1.0"
+        )
+     )
+    {
+      return 1;
+    }
+  else
+    {
+      return 0;
+    }
+}
+
+void* POA_CORBA::ExtAbstractInterfaceDef::_downcast (
+    const char* logical_type_id
+  )
+{
+  if (ACE_OS::strcmp (logical_type_id,
+                      "IDL:omg.org/CORBA/ExtAbstractInterfaceDef:1.0") == 0)
+    {
+      return ACE_static_cast (POA_CORBA::ExtAbstractInterfaceDef_ptr, this);
+    }
+  
+  if (ACE_OS::strcmp (logical_type_id,
+                      "IDL:omg.org/CORBA/AbstractInterfaceDef:1.0") == 0)
+    {
+      return ACE_static_cast (POA_CORBA::AbstractInterfaceDef_ptr, this);
+    }
+  
+  if (ACE_OS::strcmp (logical_type_id,
+                      "IDL:omg.org/CORBA/InterfaceAttrExtension:1.0") == 0)
+    {
+      return ACE_static_cast (POA_CORBA::InterfaceAttrExtension_ptr, this);
+    }
+  
+  if (ACE_OS::strcmp (logical_type_id,
+                      "IDL:omg.org/CORBA/InterfaceDef:1.0") == 0)
+    {
+      return ACE_static_cast (POA_CORBA::InterfaceDef_ptr, this);
+    }
+  
+  if (ACE_OS::strcmp (logical_type_id,
+                      "IDL:omg.org/CORBA/Container:1.0") == 0)
+    {
+      return ACE_static_cast (POA_CORBA::Container_ptr, this);
+    }
+  
+  if (ACE_OS::strcmp (logical_type_id,
+                      "IDL:omg.org/CORBA/Contained:1.0") == 0)
+    {
+      return ACE_static_cast (POA_CORBA::Contained_ptr, this);
+    }
+  
+  if (ACE_OS::strcmp (logical_type_id,
+                      "IDL:omg.org/CORBA/IDLType:1.0") == 0)
+    {
+      return ACE_static_cast (POA_CORBA::IDLType_ptr, this);
+    }
+  
+  if (ACE_OS::strcmp (logical_type_id,
+                      "IDL:omg.org/CORBA/IRObject:1.0") == 0)
+    {
+      return ACE_static_cast (POA_CORBA::IRObject_ptr, this);
+    }
+  
+  if (ACE_OS::strcmp (logical_type_id,
+                      "IDL:omg.org/CORBA/Object:1.0") == 0)
+    {
+      return ACE_static_cast(PortableServer::Servant, this);
+    }
+  
+  return 0;
+}
+
+const char* POA_CORBA::ExtAbstractInterfaceDef::_interface_repository_id (void) const
+{
+  return "IDL:omg.org/CORBA/ExtAbstractInterfaceDef:1.0";
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:531
+
+void POA_CORBA::ExtAbstractInterfaceDef::_dispatch (
+    TAO_ServerRequest &req,
+    void *servant_upcall
+    ACE_ENV_ARG_DECL
+  )
+{
+  this->synchronous_upcall_dispatch (req,
+                                     servant_upcall,
+                                     this
+                                     ACE_ENV_ARG_PARAMETER);
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:477
+
+CORBA::ExtAbstractInterfaceDef *
+POA_CORBA::ExtAbstractInterfaceDef::_this (ACE_ENV_SINGLE_ARG_DECL)
+{
+  TAO_Stub *stub = this->_create_stub (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+  
+  TAO_Stub_Auto_Ptr safe_stub (stub);
+  CORBA::Object_ptr tmp = CORBA::Object::_nil ();
+  
+  if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())
+    {
+      ACE_NEW_RETURN (
+          tmp,
+          CORBA::Object (
+              stub,
+              1,
+              this
+            ),
+          0
+        );
+    }
+  else
+    {
+      ACE_NEW_RETURN (
+          tmp,
+          CORBA::Object (
+              stub,
+              0,
+              this
+            ),
+          0
+        );
+    }
+  
+  CORBA::Object_var obj = tmp;
+  (void) safe_stub.release ();
+  return ::CORBA::ExtAbstractInterfaceDef::_unchecked_narrow (obj.in ());
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1731
 
 class TAO_CORBA_LocalInterfaceDef_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
 {
@@ -30448,53 +35019,53 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: /u1/ossama/ACE_wrappers/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_CORBA_LocalInterfaceDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_CORBA_LocalInterfaceDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_CORBA_LocalInterfaceDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
   static const unsigned char asso_values[] =
     {
 #if defined (ACE_MVS)
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81,  0,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81,  0,
-     81, 30, 20,  0, 81, 81, 81, 10, 81, 81,
-     81, 81, 81, 81, 81, 81, 81,  0,  0,  5,
-     81,  0, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 20, 35, 81, 81, 81, 10,  5, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 25,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79,  0,
+     79,  0, 20,  0, 79, 79, 79,  5, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 15,  0,  5,
+     79, 15, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 25, 40, 79, 79, 79, 15,  0, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79,
 #else
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81, 81, 81, 81, 81, 81,
-     81, 81, 81, 81, 81,  0, 81,  0, 81, 30,
-     20,  0, 81, 81, 81, 10, 81, 81,  0,  0,
-      5, 81,  0, 81, 81, 20, 35, 81, 81, 81,
-     10,  5, 81, 81, 81, 81, 81, 81,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 79, 79, 79, 79, 79,
+     79, 79, 79, 79, 79, 25, 79,  0, 79,  0,
+     20,  0, 79, 79, 79,  5, 79, 79, 15,  0,
+      5, 79, 15, 79, 79, 25, 40, 79, 79, 79,
+     15,  0, 79, 79, 79, 79, 79, 79,
 #endif /* ACE_MVS */
     };
   return len + asso_values[str[len - 1]] + asso_values[str[0]];
@@ -30505,70 +35076,71 @@ TAO_CORBA_LocalInterfaceDef_Perfect_Hash_OpTable::lookup (const char *str, unsig
 {
   enum
     {
-      TOTAL_KEYWORDS = 41,
+      TOTAL_KEYWORDS = 42,
       MIN_WORD_LENGTH = 4,
       MAX_WORD_LENGTH = 26,
       MIN_HASH_VALUE = 4,
-      MAX_HASH_VALUE = 80,
-      HASH_VALUE_RANGE = 77,
-      DUPLICATES = 9,
-      WORDLIST_SIZE = 45
+      MAX_HASH_VALUE = 78,
+      HASH_VALUE_RANGE = 75,
+      DUPLICATES = 10,
+      WORDLIST_SIZE = 46
     };
 
   static const class TAO_operation_db_entry  wordlist[] =
     {
       {"",0},{"",0},{"",0},{"",0},
       {"move", 	&POA_CORBA::LocalInterfaceDef::move_skel},
-      {"_is_a",  &POA_CORBA::LocalInterfaceDef::_is_a_skel},
-      {"lookup", 	&POA_CORBA::LocalInterfaceDef::lookup_skel},
-      {"_get_name", 	&POA_CORBA::LocalInterfaceDef::_get_name_skel},
-      {"_get_type", 	&POA_CORBA::LocalInterfaceDef::_get_type_skel},
-      {"_set_name", 	&POA_CORBA::LocalInterfaceDef::_set_name_skel},
-      {"_interface",  &POA_CORBA::LocalInterfaceDef::_interface_skel},
-      {"lookup_name", 	&POA_CORBA::LocalInterfaceDef::lookup_name_skel},
       {"is_a", 	&POA_CORBA::LocalInterfaceDef::is_a_skel},
-      {"_get_version", 	&POA_CORBA::LocalInterfaceDef::_get_version_skel},
-      {"_set_version", 	&POA_CORBA::LocalInterfaceDef::_set_version_skel},
-      {"_get_absolute_name", 	&POA_CORBA::LocalInterfaceDef::_get_absolute_name_skel},
-      {"_get_defined_in", 	&POA_CORBA::LocalInterfaceDef::_get_defined_in_skel},
-      {"_get_id", 	&POA_CORBA::LocalInterfaceDef::_get_id_skel},
-      {"_set_id", 	&POA_CORBA::LocalInterfaceDef::_set_id_skel},
-      {"describe", 	&POA_CORBA::LocalInterfaceDef::describe_skel},
-      {"_get_containing_repository", 	&POA_CORBA::LocalInterfaceDef::_get_containing_repository_skel},
-      {"destroy", 	&POA_CORBA::LocalInterfaceDef::destroy_skel},
-      {"_get_def_kind", 	&POA_CORBA::LocalInterfaceDef::_get_def_kind_skel},
-      {"describe_interface", 	&POA_CORBA::LocalInterfaceDef::describe_interface_skel},
-      {"_get_base_interfaces", 	&POA_CORBA::LocalInterfaceDef::_get_base_interfaces_skel},
-      {"_set_base_interfaces", 	&POA_CORBA::LocalInterfaceDef::_set_base_interfaces_skel},
       {"create_enum", 	&POA_CORBA::LocalInterfaceDef::create_enum_skel},
       {"create_value", 	&POA_CORBA::LocalInterfaceDef::create_value_skel},
       {"create_module", 	&POA_CORBA::LocalInterfaceDef::create_module_skel},
       {"create_native", 	&POA_CORBA::LocalInterfaceDef::create_native_skel},
-      {"_component",  &POA_CORBA::LocalInterfaceDef::_component_skel},
       {"create_attribute", 	&POA_CORBA::LocalInterfaceDef::create_attribute_skel},
+      {"create_ext_value", 	&POA_CORBA::LocalInterfaceDef::create_ext_value_skel},
       {"create_interface", 	&POA_CORBA::LocalInterfaceDef::create_interface_skel},
       {"create_union", 	&POA_CORBA::LocalInterfaceDef::create_union_skel},
-      {"_non_existent",  &POA_CORBA::LocalInterfaceDef::_non_existent_skel},
       {"create_operation", 	&POA_CORBA::LocalInterfaceDef::create_operation_skel},
       {"create_exception", 	&POA_CORBA::LocalInterfaceDef::create_exception_skel},
       {"create_local_interface", 	&POA_CORBA::LocalInterfaceDef::create_local_interface_skel},
       {"create_abstract_interface", 	&POA_CORBA::LocalInterfaceDef::create_abstract_interface_skel},
+      {"lookup_name", 	&POA_CORBA::LocalInterfaceDef::lookup_name_skel},
+      {"destroy", 	&POA_CORBA::LocalInterfaceDef::destroy_skel},
+      {"describe", 	&POA_CORBA::LocalInterfaceDef::describe_skel},
+      {"_is_a",  &POA_CORBA::LocalInterfaceDef::_is_a_skel},
       {"create_value_box", 	&POA_CORBA::LocalInterfaceDef::create_value_box_skel},
-      {"describe_contents", 	&POA_CORBA::LocalInterfaceDef::describe_contents_skel},
       {"contents", 	&POA_CORBA::LocalInterfaceDef::contents_skel},
+      {"_get_name", 	&POA_CORBA::LocalInterfaceDef::_get_name_skel},
+      {"_get_type", 	&POA_CORBA::LocalInterfaceDef::_get_type_skel},
+      {"_set_name", 	&POA_CORBA::LocalInterfaceDef::_set_name_skel},
+      {"_interface",  &POA_CORBA::LocalInterfaceDef::_interface_skel},
+      {"lookup", 	&POA_CORBA::LocalInterfaceDef::lookup_skel},
       {"create_alias", 	&POA_CORBA::LocalInterfaceDef::create_alias_skel},
+      {"describe_interface", 	&POA_CORBA::LocalInterfaceDef::describe_interface_skel},
+      {"_get_version", 	&POA_CORBA::LocalInterfaceDef::_get_version_skel},
+      {"_set_version", 	&POA_CORBA::LocalInterfaceDef::_set_version_skel},
+      {"_get_absolute_name", 	&POA_CORBA::LocalInterfaceDef::_get_absolute_name_skel},
+      {"_get_defined_in", 	&POA_CORBA::LocalInterfaceDef::_get_defined_in_skel},
+      {"_get_containing_repository", 	&POA_CORBA::LocalInterfaceDef::_get_containing_repository_skel},
+      {"_get_id", 	&POA_CORBA::LocalInterfaceDef::_get_id_skel},
+      {"_set_id", 	&POA_CORBA::LocalInterfaceDef::_set_id_skel},
       {"create_struct", 	&POA_CORBA::LocalInterfaceDef::create_struct_skel},
       {"create_constant", 	&POA_CORBA::LocalInterfaceDef::create_constant_skel},
+      {"_get_def_kind", 	&POA_CORBA::LocalInterfaceDef::_get_def_kind_skel},
+      {"describe_contents", 	&POA_CORBA::LocalInterfaceDef::describe_contents_skel},
+      {"_get_base_interfaces", 	&POA_CORBA::LocalInterfaceDef::_get_base_interfaces_skel},
+      {"_set_base_interfaces", 	&POA_CORBA::LocalInterfaceDef::_set_base_interfaces_skel},
+      {"_component",  &POA_CORBA::LocalInterfaceDef::_component_skel},
+      {"_non_existent",  &POA_CORBA::LocalInterfaceDef::_non_existent_skel},
     };
 
   static const signed char lookup[] =
     {
-       -1,  -1,  -1,  -1,   4,   5,   6,  -7,  -3, -82,  10,  11,  -1,  -1, 
-       12, -13,  -2, -82,  15,  -1,  16,  -1,  -1,  -1,  -1, -17,  -2, -82, 
-       19, -24,  -2,  20,  21,  22, -28,  -2, -31,  -2,  23,  -1, -91,  26, 
-       27, -89,  -1,  30, -90,  33,  34, -35,  -2, -82,  37,  -1,  -1,  38, 
-       39,  40,  41,  -1,  -1,  -1,  42,  -1,  -1,  -1,  -1,  -1,  -1,  -1, 
-       -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  43,  -1,  44, 
+       -1,  -1,  -1,  -1,   4,  -1,  -1,  -8,  -2,   5,  -1,   6,   7, -84, 
+      -10,  -3, -80,  13,  -1, -14,  -2, -80,  16, -24,  -3,  17,  18,  19, 
+       20,  -1,  21,  22,  -1,  23, -89,  27,  28,  29,  30,  -1, -31,  -2, 
+      -80,  33,  -1,  34,  -1,  -1,  -1, -36,  -2,  35, -81,  38,  -1,  39, 
+       -1,  -1,  40,  -1,  -1,  -1,  41,  -1,  -1,  -1,  -1,  -1, -42,  -2, 
+      -80,  -1,  -1,  -1,  -1,  44,  -1,  -1,  45, 
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -30605,7 +35177,7 @@ TAO_CORBA_LocalInterfaceDef_Perfect_Hash_OpTable::lookup (const char *str, unsig
 static TAO_CORBA_LocalInterfaceDef_Perfect_Hash_OpTable tao_CORBA_LocalInterfaceDef_optable;
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interceptors_ss.cpp:52
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interceptors_ss.cpp:52
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 
@@ -30616,7 +35188,7 @@ static TAO_CORBA_LocalInterfaceDef_Perfect_Hash_OpTable tao_CORBA_LocalInterface
 //
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/strategized_proxy_broker_ss.cpp:40
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_ss.cpp:40
 
 // Factory function Implementation.
 POA_CORBA::_TAO_LocalInterfaceDef_Strategized_Proxy_Broker *POA_CORBA::_TAO_LocalInterfaceDef_Strategized_Proxy_Broker::the_TAO_LocalInterfaceDef_Strategized_Proxy_Broker (void)
@@ -30705,7 +35277,7 @@ POA_CORBA::_TAO_LocalInterfaceDef_Strategized_Proxy_Broker::create_proxy (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:598
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:596
 
 CORBA::_TAO_LocalInterfaceDef_Proxy_Broker *
 CORBA__TAO_LocalInterfaceDef_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
@@ -30732,7 +35304,7 @@ static int CORBA__TAO_LocalInterfaceDef_Proxy_Broker_Stub_Factory_Initializer_Sc
 //
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/thru_poa_proxy_impl_ss.cpp:37
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_ss.cpp:37
 
 POA_CORBA::_TAO_LocalInterfaceDef_ThruPOA_Proxy_Impl::_TAO_LocalInterfaceDef_ThruPOA_Proxy_Impl (void)
 {}
@@ -30742,7 +35314,7 @@ POA_CORBA::_TAO_LocalInterfaceDef_ThruPOA_Proxy_Impl::_TAO_LocalInterfaceDef_Thr
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_ss.cpp:98
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:98
 
 POA_CORBA::LocalInterfaceDef::LocalInterfaceDef (void)
 {
@@ -30763,7 +35335,7 @@ POA_CORBA::LocalInterfaceDef::~LocalInterfaceDef (void)
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_ss.cpp:163
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:163
 
 void POA_CORBA::LocalInterfaceDef::_is_a_skel (
     TAO_ServerRequest &_tao_server_request, 
@@ -30976,7 +35548,7 @@ const char* POA_CORBA::LocalInterfaceDef::_interface_repository_id (void) const
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:532
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:531
 
 void POA_CORBA::LocalInterfaceDef::_dispatch (
     TAO_ServerRequest &req,
@@ -30991,7 +35563,7 @@ void POA_CORBA::LocalInterfaceDef::_dispatch (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ss.cpp:478
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:477
 
 CORBA::LocalInterfaceDef *
 POA_CORBA::LocalInterfaceDef::_this (ACE_ENV_SINGLE_ARG_DECL)
@@ -31031,4 +35603,626 @@ POA_CORBA::LocalInterfaceDef::_this (ACE_ENV_SINGLE_ARG_DECL)
   (void) safe_stub.release ();
   return ::CORBA::LocalInterfaceDef::_unchecked_narrow (obj.in ());
 }
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1731
+
+class TAO_CORBA_ExtLocalInterfaceDef_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
+{
+private:
+  unsigned int hash (const char *str, unsigned int len);
+public:
+ const TAO_operation_db_entry * lookup (const char *str, unsigned int len);
+};
+
+/* C++ code produced by gperf version 2.8 (ACE version) */
+/* Command-line: gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_CORBA_ExtLocalInterfaceDef_Perfect_Hash_OpTable -N lookup  */
+unsigned int
+TAO_CORBA_ExtLocalInterfaceDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
+{
+  static const unsigned char asso_values[] =
+    {
+#if defined (ACE_MVS)
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 30,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74,  0,
+     74,  0, 20,  0, 74, 74, 74,  5, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 15,  0,  5,
+     74, 15, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 15, 30, 74, 74, 74, 15,  5, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74,
+#else
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 74, 74, 74, 74, 74,
+     74, 74, 74, 74, 74, 30, 74,  0, 74,  0,
+     20,  0, 74, 74, 74,  5, 74, 74, 15,  0,
+      5, 74, 15, 74, 74, 15, 30, 74, 74, 74,
+     15,  5, 74, 74, 74, 74, 74, 74,
+#endif /* ACE_MVS */
+    };
+  return len + asso_values[str[len - 1]] + asso_values[str[0]];
+}
+
+const class TAO_operation_db_entry *
+TAO_CORBA_ExtLocalInterfaceDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
+{
+  enum
+    {
+      TOTAL_KEYWORDS = 44,
+      MIN_WORD_LENGTH = 4,
+      MAX_WORD_LENGTH = 26,
+      MIN_HASH_VALUE = 4,
+      MAX_HASH_VALUE = 73,
+      HASH_VALUE_RANGE = 70,
+      DUPLICATES = 10,
+      WORDLIST_SIZE = 48
+    };
+
+  static const class TAO_operation_db_entry  wordlist[] =
+    {
+      {"",0},{"",0},{"",0},{"",0},
+      {"move", 	&POA_CORBA::ExtLocalInterfaceDef::move_skel},
+      {"is_a", 	&POA_CORBA::ExtLocalInterfaceDef::is_a_skel},
+      {"create_enum", 	&POA_CORBA::ExtLocalInterfaceDef::create_enum_skel},
+      {"create_value", 	&POA_CORBA::ExtLocalInterfaceDef::create_value_skel},
+      {"create_module", 	&POA_CORBA::ExtLocalInterfaceDef::create_module_skel},
+      {"create_native", 	&POA_CORBA::ExtLocalInterfaceDef::create_native_skel},
+      {"create_attribute", 	&POA_CORBA::ExtLocalInterfaceDef::create_attribute_skel},
+      {"create_ext_value", 	&POA_CORBA::ExtLocalInterfaceDef::create_ext_value_skel},
+      {"create_interface", 	&POA_CORBA::ExtLocalInterfaceDef::create_interface_skel},
+      {"create_union", 	&POA_CORBA::ExtLocalInterfaceDef::create_union_skel},
+      {"create_ext_attribute", 	&POA_CORBA::ExtLocalInterfaceDef::create_ext_attribute_skel},
+      {"create_operation", 	&POA_CORBA::ExtLocalInterfaceDef::create_operation_skel},
+      {"create_exception", 	&POA_CORBA::ExtLocalInterfaceDef::create_exception_skel},
+      {"create_local_interface", 	&POA_CORBA::ExtLocalInterfaceDef::create_local_interface_skel},
+      {"contents", 	&POA_CORBA::ExtLocalInterfaceDef::contents_skel},
+      {"create_abstract_interface", 	&POA_CORBA::ExtLocalInterfaceDef::create_abstract_interface_skel},
+      {"lookup_name", 	&POA_CORBA::ExtLocalInterfaceDef::lookup_name_skel},
+      {"create_alias", 	&POA_CORBA::ExtLocalInterfaceDef::create_alias_skel},
+      {"describe", 	&POA_CORBA::ExtLocalInterfaceDef::describe_skel},
+      {"create_value_box", 	&POA_CORBA::ExtLocalInterfaceDef::create_value_box_skel},
+      {"destroy", 	&POA_CORBA::ExtLocalInterfaceDef::destroy_skel},
+      {"_is_a",  &POA_CORBA::ExtLocalInterfaceDef::_is_a_skel},
+      {"lookup", 	&POA_CORBA::ExtLocalInterfaceDef::lookup_skel},
+      {"describe_interface", 	&POA_CORBA::ExtLocalInterfaceDef::describe_interface_skel},
+      {"_get_name", 	&POA_CORBA::ExtLocalInterfaceDef::_get_name_skel},
+      {"_get_type", 	&POA_CORBA::ExtLocalInterfaceDef::_get_type_skel},
+      {"_set_name", 	&POA_CORBA::ExtLocalInterfaceDef::_set_name_skel},
+      {"_interface",  &POA_CORBA::ExtLocalInterfaceDef::_interface_skel},
+      {"describe_ext_interface", 	&POA_CORBA::ExtLocalInterfaceDef::describe_ext_interface_skel},
+      {"create_struct", 	&POA_CORBA::ExtLocalInterfaceDef::create_struct_skel},
+      {"create_constant", 	&POA_CORBA::ExtLocalInterfaceDef::create_constant_skel},
+      {"_get_version", 	&POA_CORBA::ExtLocalInterfaceDef::_get_version_skel},
+      {"_set_version", 	&POA_CORBA::ExtLocalInterfaceDef::_set_version_skel},
+      {"_get_absolute_name", 	&POA_CORBA::ExtLocalInterfaceDef::_get_absolute_name_skel},
+      {"_get_defined_in", 	&POA_CORBA::ExtLocalInterfaceDef::_get_defined_in_skel},
+      {"describe_contents", 	&POA_CORBA::ExtLocalInterfaceDef::describe_contents_skel},
+      {"_get_id", 	&POA_CORBA::ExtLocalInterfaceDef::_get_id_skel},
+      {"_set_id", 	&POA_CORBA::ExtLocalInterfaceDef::_set_id_skel},
+      {"_get_containing_repository", 	&POA_CORBA::ExtLocalInterfaceDef::_get_containing_repository_skel},
+      {"_get_def_kind", 	&POA_CORBA::ExtLocalInterfaceDef::_get_def_kind_skel},
+      {"_get_base_interfaces", 	&POA_CORBA::ExtLocalInterfaceDef::_get_base_interfaces_skel},
+      {"_set_base_interfaces", 	&POA_CORBA::ExtLocalInterfaceDef::_set_base_interfaces_skel},
+      {"_component",  &POA_CORBA::ExtLocalInterfaceDef::_component_skel},
+      {"_non_existent",  &POA_CORBA::ExtLocalInterfaceDef::_non_existent_skel},
+    };
+
+  static const signed char lookup[] =
+    {
+       -1,  -1,  -1,  -1,   4,  -1,  -1,  -8,  -2,   5,  -1,   6,   7, -79, 
+      -10,  -3, -75,  13, -15,  -2,  14, -76,  17,  18,  -1,  19,  20,  21, 
+       22, -28,  -3,  23,  24, -35,  -2,  25,  26,  -1,  27, -83,  31,  -1, 
+       32,  33,  -1,  34,  -1, -87,  37,  -1,  38,  -1,  39,  -1,  -1, -40, 
+       -2, -75,  -1, -44,  -2,  42,  -1,  43,  -1, -79,  -1,  -1,  -1,  -1, 
+       46,  -1,  -1,  47, 
+    };
+
+  if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
+    {
+      unsigned int key = hash (str, len);
+
+      if (key <= MAX_HASH_VALUE && key >= MIN_HASH_VALUE)
+        {
+          int slot = lookup[key];
+
+          if (slot >= 0 && slot < WORDLIST_SIZE)
+            {
+              const char *s = wordlist[slot].opname_;
+
+              if (*str == *s && !strncmp (str + 1, s + 1, len - 1))
+                return &wordlist[slot];
+            }
+          else if (slot < 0 && slot >= -MAX_HASH_VALUE)
+            return 0;
+          else
+            {
+              unsigned int offset = key + slot + (slot > 0 ? -MAX_HASH_VALUE : MAX_HASH_VALUE);
+              const class TAO_operation_db_entry  *base = &wordlist[-lookup[offset]];
+              const class TAO_operation_db_entry  *ptr = base + -lookup[offset + 1];
+
+              while (--ptr >= base)
+                if (*str == *ptr->opname_ && !strncmp (str + 1, ptr->opname_ + 1, len - 1))
+                  return ptr;
+            }
+        }
+    }
+  return 0;
+}
+static TAO_CORBA_ExtLocalInterfaceDef_Perfect_Hash_OpTable tao_CORBA_ExtLocalInterfaceDef_optable;
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interceptors_ss.cpp:52
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
+///////////////////////////////////////////////////////////////////////
+//            Strategized Proxy Broker Implementation
+//
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_ss.cpp:40
+
+// Factory function Implementation.
+POA_CORBA::_TAO_ExtLocalInterfaceDef_Strategized_Proxy_Broker *POA_CORBA::_TAO_ExtLocalInterfaceDef_Strategized_Proxy_Broker::the_TAO_ExtLocalInterfaceDef_Strategized_Proxy_Broker (void)
+{
+  static POA_CORBA::_TAO_ExtLocalInterfaceDef_Strategized_Proxy_Broker strategized_proxy_broker;
+  return &strategized_proxy_broker;
+}
+
+POA_CORBA::_TAO_ExtLocalInterfaceDef_Strategized_Proxy_Broker::_TAO_ExtLocalInterfaceDef_Strategized_Proxy_Broker (void)
+{
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
+    {
+      this->proxy_cache_[i] = 0;
+    }
+}
+
+POA_CORBA::_TAO_ExtLocalInterfaceDef_Strategized_Proxy_Broker::~_TAO_ExtLocalInterfaceDef_Strategized_Proxy_Broker (void)
+{
+  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
+    {
+      delete this->proxy_cache_[i];
+      
+      // Hack to prevent bug mentioned in 1204. Refer to 1204
+      // for details..
+      this->proxy_cache_[i] = 0;
+    }
+}
+
+CORBA::_TAO_ExtLocalInterfaceDef_Proxy_Impl&
+POA_CORBA::_TAO_ExtLocalInterfaceDef_Strategized_Proxy_Broker::select_proxy (
+    ::CORBA::ExtLocalInterfaceDef *object
+    ACE_ENV_ARG_DECL
+  )
+{
+  int strategy =
+    TAO_ORB_Core::collocation_strategy (object ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
+  
+  if (this->proxy_cache_[strategy] != 0)
+    {
+      return *this->proxy_cache_[strategy];
+    }
+  
+  this->create_proxy (strategy ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
+  
+  return *this->proxy_cache_[strategy];
+}
+
+void 
+POA_CORBA::_TAO_ExtLocalInterfaceDef_Strategized_Proxy_Broker::create_proxy (
+    int strategy
+    ACE_ENV_ARG_DECL
+  )
+{
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
+  
+  if (this->proxy_cache_[strategy] == 0)
+    {
+      switch (strategy)
+        {
+        case TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY:
+          ACE_NEW_THROW_EX (
+              this->proxy_cache_[strategy],
+              POA_CORBA::_TAO_ExtLocalInterfaceDef_ThruPOA_Proxy_Impl,
+              CORBA::NO_MEMORY ()
+          );
+          ACE_CHECK;
+          break;
+          
+        case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:
+        default:
+          ACE_NEW_THROW_EX (
+              this->proxy_cache_[strategy],
+              ::CORBA::_TAO_ExtLocalInterfaceDef_Remote_Proxy_Impl,
+              CORBA::NO_MEMORY ()
+          );
+          ACE_CHECK;
+          break;
+        }
+    }
+}
+
+//
+//        End Strategized Proxy Broker Implementation
+///////////////////////////////////////////////////////////////////////
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:596
+
+CORBA::_TAO_ExtLocalInterfaceDef_Proxy_Broker *
+CORBA__TAO_ExtLocalInterfaceDef_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
+{
+  ACE_UNUSED_ARG (obj);
+  return ::POA_CORBA::_TAO_ExtLocalInterfaceDef_Strategized_Proxy_Broker::the_TAO_ExtLocalInterfaceDef_Strategized_Proxy_Broker();
+}
+
+int
+CORBA__TAO_ExtLocalInterfaceDef_Proxy_Broker_Factory_Initializer (long)
+{
+  CORBA__TAO_ExtLocalInterfaceDef_Proxy_Broker_Factory_function_pointer = 
+    CORBA__TAO_ExtLocalInterfaceDef_Proxy_Broker_Factory_function;
+  
+  return 0;
+}
+
+static int CORBA__TAO_ExtLocalInterfaceDef_Proxy_Broker_Stub_Factory_Initializer_Scarecrow = 
+  CORBA__TAO_ExtLocalInterfaceDef_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, CORBA__TAO_ExtLocalInterfaceDef_Proxy_Broker_Factory_Initializer));
+
+
+///////////////////////////////////////////////////////////////////////
+//                 ThruPOA Proxy  Implementation
+//
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_ss.cpp:37
+
+POA_CORBA::_TAO_ExtLocalInterfaceDef_ThruPOA_Proxy_Impl::_TAO_ExtLocalInterfaceDef_ThruPOA_Proxy_Impl (void)
+{}
+
+// ThruPOA Implementation of the IDL interface methods//
+//           End ThruPOA Proxy Implementation
+///////////////////////////////////////////////////////////////////////
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:98
+
+POA_CORBA::ExtLocalInterfaceDef::ExtLocalInterfaceDef (void)
+{
+  this->optable_ = &tao_CORBA_ExtLocalInterfaceDef_optable;
+}
+
+POA_CORBA::ExtLocalInterfaceDef::ExtLocalInterfaceDef (const ExtLocalInterfaceDef& rhs)
+  :  ACE_NESTED_CLASS (POA_CORBA,LocalInterfaceDef) (rhs),
+    ACE_NESTED_CLASS (POA_CORBA,InterfaceAttrExtension) (rhs),
+    ACE_NESTED_CLASS (POA_CORBA,InterfaceDef) (rhs),
+    ACE_NESTED_CLASS (POA_CORBA,Container) (rhs),
+    ACE_NESTED_CLASS (POA_CORBA,Contained) (rhs),
+    ACE_NESTED_CLASS (POA_CORBA,IDLType) (rhs),
+    ACE_NESTED_CLASS (POA_CORBA,IRObject) (rhs),
+    TAO_ServantBase (rhs)
+{}
+
+POA_CORBA::ExtLocalInterfaceDef::~ExtLocalInterfaceDef (void)
+{
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:163
+
+void POA_CORBA::ExtLocalInterfaceDef::_is_a_skel (
+    TAO_ServerRequest &_tao_server_request, 
+    void * _tao_servant,
+    void * /* Servant_Upcall */
+    ACE_ENV_ARG_DECL
+  )
+{
+  TAO_InputCDR &_tao_in = _tao_server_request.incoming ();
+  POA_CORBA::ExtLocalInterfaceDef *_tao_impl = (POA_CORBA::ExtLocalInterfaceDef *) _tao_servant;
+  CORBA::Boolean _tao_retval = 0;
+  CORBA::String_var value;
+  
+  if (!(_tao_in >> value.out ()))
+    ACE_THROW (CORBA::MARSHAL ());
+  
+  _tao_retval = _tao_impl->_is_a (value.in () ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  
+  _tao_server_request.init_reply ();
+  TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
+  
+  if (!(_tao_out << CORBA::Any::from_boolean (_tao_retval)))
+    ACE_THROW (CORBA::MARSHAL ());
+}
+
+void POA_CORBA::ExtLocalInterfaceDef::_non_existent_skel (
+    TAO_ServerRequest &_tao_server_request, 
+    void * _tao_servant,
+    void * /* Servant_Upcall */
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::ExtLocalInterfaceDef *_tao_impl = (POA_CORBA::ExtLocalInterfaceDef *) _tao_servant;
+  CORBA::Boolean _tao_retval =
+    _tao_impl->_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+  
+  _tao_server_request.init_reply ();
+  TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
+  
+  if (!(_tao_out << CORBA::Any::from_boolean (_tao_retval)))
+    ACE_THROW (CORBA::MARSHAL ());
+}
+
+void POA_CORBA::ExtLocalInterfaceDef::_interface_skel (
+    TAO_ServerRequest &_tao_server_request, 
+    void * _tao_servant,
+    void * /* Servant_Upcall */
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::ExtLocalInterfaceDef *_tao_impl = (POA_CORBA::ExtLocalInterfaceDef *) _tao_servant;
+  CORBA::InterfaceDef_ptr _tao_retval = 0;
+  CORBA::Boolean _tao_result = 0;
+  
+  TAO_IFR_Client_Adapter *_tao_adapter =
+    ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
+        TAO_ORB_Core::ifr_client_adapter_name ()
+      );
+    
+  if (_tao_adapter == 0)
+    {
+      ACE_THROW (CORBA::INTF_REPOS ());
+    }
+  
+  ACE_TRY
+    {
+      _tao_retval = 
+        _tao_impl->_get_interface (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      
+      _tao_server_request.init_reply ();
+      
+      TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
+      
+      _tao_result =
+        _tao_adapter->interfacedef_cdr_insert (
+            _tao_out,
+            _tao_retval
+          );
+    }
+  ACE_CATCHALL
+    {
+      _tao_adapter->dispose (_tao_retval);
+    }
+  ACE_ENDTRY;
+  
+  if (_tao_result == 0)
+    {
+      ACE_THROW (CORBA::MARSHAL ());
+    }
+}
+
+void POA_CORBA::ExtLocalInterfaceDef::_component_skel (
+    TAO_ServerRequest &_tao_server_request, 
+    void * _tao_object_reference,
+    void * /* Servant_Upcall */
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::ExtLocalInterfaceDef *_tao_impl = (POA_CORBA::ExtLocalInterfaceDef *) _tao_object_reference;
+  CORBA::Object_var _tao_retval =
+    _tao_impl->_get_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+  
+  _tao_server_request.init_reply ();
+  TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
+  
+  if (!(_tao_out << _tao_retval._retn ()))
+    ACE_THROW (CORBA::MARSHAL ());
+}
+
+CORBA::Boolean POA_CORBA::ExtLocalInterfaceDef::_is_a (
+    const char* value
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/ExtLocalInterfaceDef:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/LocalInterfaceDef:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/InterfaceAttrExtension:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/InterfaceDef:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/Container:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/Contained:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/IDLType:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/IRObject:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:org.omg/CORBA/Object:1.0"
+        )
+     )
+    {
+      return 1;
+    }
+  else
+    {
+      return 0;
+    }
+}
+
+void* POA_CORBA::ExtLocalInterfaceDef::_downcast (
+    const char* logical_type_id
+  )
+{
+  if (ACE_OS::strcmp (logical_type_id,
+                      "IDL:omg.org/CORBA/ExtLocalInterfaceDef:1.0") == 0)
+    {
+      return ACE_static_cast (POA_CORBA::ExtLocalInterfaceDef_ptr, this);
+    }
+  
+  if (ACE_OS::strcmp (logical_type_id,
+                      "IDL:omg.org/CORBA/LocalInterfaceDef:1.0") == 0)
+    {
+      return ACE_static_cast (POA_CORBA::LocalInterfaceDef_ptr, this);
+    }
+  
+  if (ACE_OS::strcmp (logical_type_id,
+                      "IDL:omg.org/CORBA/InterfaceAttrExtension:1.0") == 0)
+    {
+      return ACE_static_cast (POA_CORBA::InterfaceAttrExtension_ptr, this);
+    }
+  
+  if (ACE_OS::strcmp (logical_type_id,
+                      "IDL:omg.org/CORBA/InterfaceDef:1.0") == 0)
+    {
+      return ACE_static_cast (POA_CORBA::InterfaceDef_ptr, this);
+    }
+  
+  if (ACE_OS::strcmp (logical_type_id,
+                      "IDL:omg.org/CORBA/Container:1.0") == 0)
+    {
+      return ACE_static_cast (POA_CORBA::Container_ptr, this);
+    }
+  
+  if (ACE_OS::strcmp (logical_type_id,
+                      "IDL:omg.org/CORBA/Contained:1.0") == 0)
+    {
+      return ACE_static_cast (POA_CORBA::Contained_ptr, this);
+    }
+  
+  if (ACE_OS::strcmp (logical_type_id,
+                      "IDL:omg.org/CORBA/IDLType:1.0") == 0)
+    {
+      return ACE_static_cast (POA_CORBA::IDLType_ptr, this);
+    }
+  
+  if (ACE_OS::strcmp (logical_type_id,
+                      "IDL:omg.org/CORBA/IRObject:1.0") == 0)
+    {
+      return ACE_static_cast (POA_CORBA::IRObject_ptr, this);
+    }
+  
+  if (ACE_OS::strcmp (logical_type_id,
+                      "IDL:omg.org/CORBA/Object:1.0") == 0)
+    {
+      return ACE_static_cast(PortableServer::Servant, this);
+    }
+  
+  return 0;
+}
+
+const char* POA_CORBA::ExtLocalInterfaceDef::_interface_repository_id (void) const
+{
+  return "IDL:omg.org/CORBA/ExtLocalInterfaceDef:1.0";
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:531
+
+void POA_CORBA::ExtLocalInterfaceDef::_dispatch (
+    TAO_ServerRequest &req,
+    void *servant_upcall
+    ACE_ENV_ARG_DECL
+  )
+{
+  this->synchronous_upcall_dispatch (req,
+                                     servant_upcall,
+                                     this
+                                     ACE_ENV_ARG_PARAMETER);
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ss.cpp:477
+
+CORBA::ExtLocalInterfaceDef *
+POA_CORBA::ExtLocalInterfaceDef::_this (ACE_ENV_SINGLE_ARG_DECL)
+{
+  TAO_Stub *stub = this->_create_stub (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+  
+  TAO_Stub_Auto_Ptr safe_stub (stub);
+  CORBA::Object_ptr tmp = CORBA::Object::_nil ();
+  
+  if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())
+    {
+      ACE_NEW_RETURN (
+          tmp,
+          CORBA::Object (
+              stub,
+              1,
+              this
+            ),
+          0
+        );
+    }
+  else
+    {
+      ACE_NEW_RETURN (
+          tmp,
+          CORBA::Object (
+              stub,
+              0,
+              this
+            ),
+          0
+        );
+    }
+  
+  CORBA::Object_var obj = tmp;
+  (void) safe_stub.release ();
+  return ::CORBA::ExtLocalInterfaceDef::_unchecked_narrow (obj.in ());
+}
 #endif /* ifndef */
+

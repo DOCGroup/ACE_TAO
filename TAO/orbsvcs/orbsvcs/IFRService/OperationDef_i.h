@@ -44,8 +44,7 @@ class TAO_IFRService_Export TAO_OperationDef_i : public virtual TAO_Contained_i
   //    of an interface.
   //
 public:
-  TAO_OperationDef_i (TAO_Repository_i *repo,
-                      ACE_Configuration_Section_Key section_key);
+  TAO_OperationDef_i (TAO_Repository_i *repo);
   // Constructor
 
   virtual ~TAO_OperationDef_i (void);

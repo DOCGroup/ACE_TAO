@@ -1,7 +1,9 @@
+/* -*- C++ -*- */
+// $Id$
+
 #include "DynStruct_i.h"
 #include "DynAnyFactory.h"
 #include "tao/Marshal.h"
-
 
 ACE_RCSID (DynamicAny,
            DynStruct_i,
@@ -104,11 +106,13 @@ TAO_DynStruct_i::set_from_any (const CORBA::Any & any
                                    ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      // This Any constructor is a TAO extension.
-      CORBA::Any field_any (field_tc.in (),
-                           0,
-                           cdr.byte_order (),
-                           cdr.start ());
+      CORBA::Any field_any;
+      TAO::Unknown_IDL_Type *unk = 0;
+      ACE_NEW (unk,
+               TAO::Unknown_IDL_Type (field_tc.in (),
+                                      cdr.start (),
+                                      cdr.byte_order ()));
+      field_any.replace (unk);
 
       // This recursive step will call the correct constructor
       // based on the type of field_any.
@@ -537,7 +541,54 @@ TAO_DynStruct_i::from_any (const CORBA::Any & any
 
   if (equivalent)
     {
-       this->set_from_any (any ACE_ENV_ARG_PARAMETER);
+      // Get the CDR stream of the argument.
+      ACE_Message_Block* mb = any._tao_get_cdr ();
+      TAO_InputCDR cdr (mb,
+                        any._tao_byte_order ());
+
+      // If we have an exception type, unmarshal the repository ID.
+      CORBA::TCKind kind = TAO_DynAnyFactory::unalias (this->type_.in ()
+                                                       ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+
+      if (kind == CORBA::tk_except)
+        {
+          CORBA::String_var str;
+          cdr >> str.out ();
+        }
+
+      CORBA::TypeCode_var field_tc;
+
+      for (CORBA::ULong i = 0; i < this->component_count_; ++i)
+        {
+          field_tc = this->type_.in ()->member_type (i
+                                                     ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK;
+
+          CORBA::Any field_any;
+          TAO::Unknown_IDL_Type *unk = 0;
+          ACE_NEW (unk,
+                   TAO::Unknown_IDL_Type (field_tc.in (),
+                                          cdr.start (),
+                                          cdr.byte_order ()));
+          field_any.replace (unk);
+
+          this->da_members_[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_CHECK;
+
+          this->da_members_[i] =
+            TAO_DynAnyFactory::make_dyn_any (field_any
+                                                       ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK;
+
+          // Move to the next field in the CDR stream.
+          (void) TAO_Marshal_Object::perform_skip (field_tc.in (),
+                                                   &cdr
+                                                   ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK;
+        }
+
+      this->current_position_ = this->component_count_ ? 0 : -1;
     }
   else
     {
@@ -594,13 +645,19 @@ TAO_DynStruct_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
 
   CORBA::Any_ptr retval = 0;
   ACE_NEW_THROW_EX (retval,
-                    CORBA::Any (this->type_.in (),
-                                0,
-                                in_cdr.byte_order (),
-                                in_cdr.start ()),
+                    CORBA::Any,
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
+  TAO::Unknown_IDL_Type *unk = 0;
+  ACE_NEW_THROW_EX (unk,
+                    TAO::Unknown_IDL_Type (this->type_.in (),
+                                           in_cdr.start (),
+                                           in_cdr.byte_order ()),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (0);
+
+  retval->replace (unk);
   return retval;
 }
 

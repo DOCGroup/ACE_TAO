@@ -97,35 +97,15 @@ LINK32=link.exe
 # Begin Source File
 
 SOURCE=.\test_i.cpp
-
-!IF  "$(CFG)" == "RTCORBA Test Common DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "RTCORBA Test Common DLL - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\testC.cpp
-
-!IF  "$(CFG)" == "RTCORBA Test Common DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "RTCORBA Test Common DLL - Win32 Debug"
-
-!ENDIF 
-
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
 SOURCE=.\testS.cpp
-
-!IF  "$(CFG)" == "RTCORBA Test Common DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "RTCORBA Test Common DLL - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # End Group
 # Begin Group "Header Files"

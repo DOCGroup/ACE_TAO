@@ -100,6 +100,7 @@ SOURCE=.\Test_Client_Module.cpp
 # Begin Source File
 
 SOURCE=.\TestC.cpp
+# ADD CPP /GR
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -136,6 +137,7 @@ SOURCE=.\Test.idl
 !IF  "$(CFG)" == "DLL_ORB Test_Client_Module - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
+USERDEP__TEST_="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build
 InputPath=.\Test.idl
 InputName=Test
@@ -174,6 +176,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "DLL_ORB Test_Client_Module - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
+USERDEP__TEST_="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build
 InputPath=.\Test.idl
 InputName=Test

@@ -1,3 +1,5 @@
+// $Id$
+
 // Implementation of the Dynamic Server Skeleton Interface.
 
 #include "Server_Request.h"
@@ -172,12 +174,9 @@ CORBA::ServerRequest::dsi_marshal (ACE_ENV_SINGLE_ARG_DECL)
       // Send the return value, if any.
       if (this->retval_ != 0)
         {
-          this->retval_->_tao_encode (
-                             this->orb_server_request_.outgoing (),
-                             this->orb_server_request_.orb_core ()
-                             ACE_ENV_ARG_PARAMETER
-                           );
-          ACE_CHECK;
+          this->retval_->impl ()->marshal_value (
+                                      this->orb_server_request_.outgoing ()
+                                    );
         }
 
       // Send the "inout" and "out" parameters.
@@ -200,12 +199,9 @@ CORBA::ServerRequest::dsi_marshal (ACE_ENV_SINGLE_ARG_DECL)
       // Write the reply header to the ORB request's outgoing CDR stream.
       this->orb_server_request_.init_reply ();
 
-      this->exception_->_tao_encode (
-                            this->orb_server_request_.outgoing (),
-                            this->orb_server_request_.orb_core ()
-                            ACE_ENV_ARG_PARAMETER
-                          );
-      ACE_CHECK;
+      this->exception_->impl ()->marshal_value (
+                                     this->orb_server_request_.outgoing ()
+                                   );
     }
 
   this->orb_server_request_.tao_send_reply ();

@@ -47,8 +47,7 @@ class TAO_IFRService_Export TAO_IDLType_i : public virtual TAO_IRObject_i
   //    the type.
   //
 public:
-  TAO_IDLType_i (TAO_Repository_i *repo,
-                 ACE_Configuration_Section_Key section_key);
+  TAO_IDLType_i (TAO_Repository_i *repo);
   // Constructor.
 
   virtual ~TAO_IDLType_i (void);

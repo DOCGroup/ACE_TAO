@@ -2,54 +2,10 @@
 //
 // $Id$
 
-// Insertion from special types.
-
-ACE_INLINE CORBA::Boolean
-CORBA::Any::any_owns_data (void) const
+ACE_INLINE TAO::Any_Impl *
+CORBA::Any::impl (void) const
 {
-  return (this->any_owns_data_ != 0 && this->value_ != 0);
-}
-
-ACE_INLINE CORBA::Boolean
-CORBA::Any::contains_local (void) const
-{
-  return this->contains_local_;
-}
-
-ACE_INLINE void
-CORBA::Any::contains_local (CORBA::Boolean val)
-{
-  this->contains_local_ = val;
-}
-
-ACE_INLINE ACE_Message_Block*
-CORBA::Any::_tao_get_cdr (void) const
-{
-  return this->cdr_;
-}
-
-ACE_INLINE int
-CORBA::Any::_tao_byte_order (void) const
-{
-  return this->byte_order_;
-}
-
-ACE_INLINE
-CORBA::Any::to_object::to_object (CORBA::Object_out obj)
-  : ref_ (obj.ptr ())
-{
-}
-
-ACE_INLINE
-CORBA::Any::to_abstract_base::to_abstract_base (CORBA::AbstractBase_ptr &obj)
-  : ref_ (obj)
-{
-}
-
-ACE_INLINE
-CORBA::Any::to_value::to_value (CORBA::ValueBase *&obj)
-  : ref_ (obj)
-{
+  return this->impl_;
 }
 
 // *************************************************************
@@ -69,7 +25,7 @@ CORBA::Any_var::Any_var (CORBA::Any *p)
 }
 
 ACE_INLINE
-CORBA::Any_var::Any_var (const CORBA::Any_var& r)
+CORBA::Any_var::Any_var (const CORBA::Any_var &r)
 {
   CORBA::Any_ptr nptr;
   ACE_NEW (nptr,
@@ -81,12 +37,6 @@ ACE_INLINE
 CORBA::Any_var::~Any_var (void)
 {
   delete this->ptr_;
-}
-
-ACE_INLINE
-CORBA::Any_var::operator CORBA::Any &()
-{
-  return *this->ptr_;
 }
 
 ACE_INLINE
@@ -252,117 +202,117 @@ operator <<= (CORBA::Any_var &lhs, CORBA::Any::from_wstring rhs)
 // *************************************************************
 
 ACE_INLINE CORBA::Boolean
-operator >>= (CORBA::Any_var &lhs, CORBA::Short &rhs)
+operator >>= (const CORBA::Any_var &lhs, CORBA::Short &rhs)
 {
-  return lhs.inout () >>= rhs;
+  return lhs.in () >>= rhs;
 }
 
 ACE_INLINE CORBA::Boolean
-operator >>= (CORBA::Any_var &lhs, CORBA::UShort &rhs)
+operator >>= (const CORBA::Any_var &lhs, CORBA::UShort &rhs)
 {
-  return lhs.inout () >>= rhs;
+  return lhs.in () >>= rhs;
 }
 
 ACE_INLINE CORBA::Boolean
-operator >>= (CORBA::Any_var &lhs, CORBA::Long &rhs)
+operator >>= (const CORBA::Any_var &lhs, CORBA::Long &rhs)
 {
-  return lhs.inout () >>= rhs;
+  return lhs.in () >>= rhs;
 }
 
 ACE_INLINE CORBA::Boolean
-operator >>= (CORBA::Any_var &lhs, CORBA::ULong &rhs)
+operator >>= (const CORBA::Any_var &lhs, CORBA::ULong &rhs)
 {
-  return lhs.inout () >>= rhs;
+  return lhs.in () >>= rhs;
 }
 
 ACE_INLINE CORBA::Boolean
-operator >>= (CORBA::Any_var &lhs, CORBA::LongLong &rhs)
+operator >>= (const CORBA::Any_var &lhs, CORBA::LongLong &rhs)
 {
-  return lhs.inout () >>= rhs;
+  return lhs.in () >>= rhs;
 }
 
 ACE_INLINE CORBA::Boolean
-operator >>= (CORBA::Any_var &lhs, CORBA::ULongLong &rhs)
+operator >>= (const CORBA::Any_var &lhs, CORBA::ULongLong &rhs)
 {
-  return lhs.inout () >>= rhs;
+  return lhs.in () >>= rhs;
 }
 
 ACE_INLINE CORBA::Boolean
-operator >>= (CORBA::Any_var &lhs, CORBA::Float &rhs)
+operator >>= (const CORBA::Any_var &lhs, CORBA::Float &rhs)
 {
-  return lhs.inout () >>= rhs;
+  return lhs.in () >>= rhs;
 }
 
 ACE_INLINE CORBA::Boolean
-operator >>= (CORBA::Any_var &lhs, CORBA::Double &rhs)
+operator >>= (const CORBA::Any_var &lhs, CORBA::Double &rhs)
 {
-  return lhs.inout () >>= rhs;
+  return lhs.in () >>= rhs;
 }
 
 ACE_INLINE CORBA::Boolean
-operator >>= (CORBA::Any_var &lhs, CORBA::Any &rhs)
+operator >>= (const CORBA::Any_var &lhs, CORBA::Any &rhs)
 {
-  return lhs.inout () >>= rhs;
+  return lhs.in () >>= rhs;
 }
 
 ACE_INLINE CORBA::Boolean
-operator >>= (CORBA::Any_var &lhs, CORBA::TypeCode_ptr &rhs)
+operator >>= (const CORBA::Any_var &lhs, CORBA::TypeCode_ptr &rhs)
 {
-  return lhs.inout () >>= rhs;
+  return lhs.in () >>= rhs;
 }
 
 ACE_INLINE CORBA::Boolean
-operator >>= (CORBA::Any_var &lhs, const char *&rhs)
+operator >>= (const CORBA::Any_var &lhs, const char *&rhs)
 {
-  return lhs.inout () >>= rhs;
+  return lhs.in () >>= rhs;
 }
 
 ACE_INLINE CORBA::Boolean
-operator >>= (CORBA::Any_var &lhs, const CORBA::WChar *&rhs)
+operator >>= (const CORBA::Any_var &lhs, const CORBA::WChar *&rhs)
 {
-  return lhs.inout () >>= rhs;
+  return lhs.in () >>= rhs;
 }
 
 ACE_INLINE CORBA::Boolean
-operator >>= (CORBA::Any_var &lhs, CORBA::Any::to_boolean rhs)
+operator >>= (const CORBA::Any_var &lhs, CORBA::Any::to_boolean rhs)
 {
-  return lhs.inout () >>= rhs;
+  return lhs.in () >>= rhs;
 }
 
 ACE_INLINE CORBA::Boolean
-operator >>= (CORBA::Any_var &lhs, CORBA::Any::to_octet rhs)
+operator >>= (const CORBA::Any_var &lhs, CORBA::Any::to_octet rhs)
 {
-  return lhs.inout () >>= rhs;
+  return lhs.in () >>= rhs;
 }
 
 ACE_INLINE CORBA::Boolean
-operator >>= (CORBA::Any_var &lhs, CORBA::Any::to_char rhs)
+operator >>= (const CORBA::Any_var &lhs, CORBA::Any::to_char rhs)
 {
-  return lhs.inout () >>= rhs;
+  return lhs.in () >>= rhs;
 }
 
 ACE_INLINE CORBA::Boolean
-operator >>= (CORBA::Any_var &lhs, CORBA::Any::to_wchar rhs)
+operator >>= (const CORBA::Any_var &lhs, CORBA::Any::to_wchar rhs)
 {
-  return lhs.inout () >>= rhs;
+  return lhs.in () >>= rhs;
 }
 
 ACE_INLINE CORBA::Boolean
-operator >>= (CORBA::Any_var &lhs, CORBA::Any::to_string rhs)
+operator >>= (const CORBA::Any_var &lhs, CORBA::Any::to_string rhs)
 {
-  return lhs.inout () >>= rhs;
+  return lhs.in () >>= rhs;
 }
 
 ACE_INLINE CORBA::Boolean
-operator >>= (CORBA::Any_var &lhs, CORBA::Any::to_wstring rhs)
+operator >>= (const CORBA::Any_var &lhs, CORBA::Any::to_wstring rhs)
 {
-  return lhs.inout () >>= rhs;
+  return lhs.in () >>= rhs;
 }
 
 ACE_INLINE CORBA::Boolean
-operator >>= (CORBA::Any_var &lhs, CORBA::Any::to_object rhs)
+operator >>= (const CORBA::Any_var &lhs, CORBA::Any::to_object rhs)
 {
-  return lhs.inout () >>= rhs;
+  return lhs.in () >>= rhs;
 }
 
 // *************************************************************
@@ -419,3 +369,81 @@ CORBA::Any_out::operator-> (void)
 {
   return this->ptr_;
 }
+
+// ***********************************************************************
+
+ACE_INLINE void
+TAO::Any_Impl::free_value (void)
+{
+  // Does nothing so that subclasses for basic types don't have to
+  // override it.
+}
+
+ACE_INLINE CORBA::TypeCode_ptr
+TAO::Any_Impl::type (void) const
+{
+  return CORBA::TypeCode::_duplicate (this->type_);
+}
+
+ACE_INLINE CORBA::TypeCode_ptr
+TAO::Any_Impl::_tao_get_typecode (void) const
+{
+  return this->type_;
+}
+
+ACE_INLINE void
+TAO::Any_Impl::type (CORBA::TypeCode_ptr tc)
+{
+  this->type_ = tc;
+}
+
+ACE_INLINE ACE_Message_Block *
+TAO::Any_Impl::_tao_get_cdr (void) const
+{
+  return 0;
+}
+
+ACE_INLINE int
+TAO::Any_Impl::_tao_byte_order (void) const
+{
+  return TAO_ENCAP_BYTE_ORDER;
+}
+
+ACE_INLINE CORBA::Boolean
+TAO::Any_Impl::to_object (CORBA::Object_ptr &) const
+{
+  return 0;
+}
+
+ACE_INLINE CORBA::Boolean
+TAO::Any_Impl::to_value (CORBA::ValueBase *&) const
+{
+  return 0;
+}
+
+ACE_INLINE CORBA::Boolean
+TAO::Any_Impl::to_abstract_base (CORBA::AbstractBase_ptr &) const
+{
+  return 0;
+}
+
+// ***********************************************************************
+
+ACE_INLINE const void *
+TAO::Unknown_IDL_Type::value (void) const
+{
+  return this->cdr_;
+}
+
+ACE_INLINE ACE_Message_Block *
+TAO::Unknown_IDL_Type::_tao_get_cdr (void) const
+{
+  return this->cdr_;
+}
+
+ACE_INLINE int
+TAO::Unknown_IDL_Type::_tao_byte_order (void) const
+{
+  return this->byte_order_;
+}
+

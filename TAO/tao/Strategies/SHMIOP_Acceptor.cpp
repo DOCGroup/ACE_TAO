@@ -16,7 +16,9 @@
 #include "SHMIOP_Acceptor.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Strategies, SHMIOP_Acceptor, "$Id$")
+ACE_RCSID (Strategies, 
+           SHMIOP_Acceptor, 
+           "$Id$")
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -75,7 +77,7 @@ TAO_SHMIOP_Acceptor::~TAO_SHMIOP_Acceptor (void)
 //       interfaces over which we can receive requests.  Thus a profile
 //       must be made for each one.
 int
-TAO_SHMIOP_Acceptor::create_profile (const TAO_ObjectKey &object_key,
+TAO_SHMIOP_Acceptor::create_profile (const TAO::ObjectKey &object_key,
                                      TAO_MProfile &mprofile,
                                      CORBA::Short priority)
 {
@@ -92,7 +94,7 @@ TAO_SHMIOP_Acceptor::create_profile (const TAO_ObjectKey &object_key,
 }
 
 int
-TAO_SHMIOP_Acceptor::create_new_profile (const TAO_ObjectKey &object_key,
+TAO_SHMIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
                                          TAO_MProfile &mprofile,
                                          CORBA::Short priority)
 {
@@ -136,7 +138,7 @@ TAO_SHMIOP_Acceptor::create_new_profile (const TAO_ObjectKey &object_key,
 }
 
 int
-TAO_SHMIOP_Acceptor::create_shared_profile (const TAO_ObjectKey &object_key,
+TAO_SHMIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
                                             TAO_MProfile &mprofile,
                                             CORBA::Short priority)
 {
@@ -359,7 +361,7 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
 
 int
 TAO_SHMIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
-                                 TAO_ObjectKey &object_key)
+                                 TAO::ObjectKey &object_key)
 {
   // Create the decoding stream from the encapsulation in the buffer,
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)

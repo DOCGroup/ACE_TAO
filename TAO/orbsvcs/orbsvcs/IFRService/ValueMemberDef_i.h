@@ -43,8 +43,7 @@ class TAO_IFRService_Export TAO_ValueMemberDef_i : public virtual TAO_Contained_
   //    Represents the definition of a valuemember structure.
   //
 public:
-  TAO_ValueMemberDef_i (TAO_Repository_i *repo,
-                        ACE_Configuration_Section_Key section_key);
+  TAO_ValueMemberDef_i (TAO_Repository_i *repoy);
   // Constructor
 
   virtual ~TAO_ValueMemberDef_i (void);

@@ -90,6 +90,7 @@ LINK32=link.exe
 # Begin Source File
 
 SOURCE=.\ConsumerC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -110,6 +111,7 @@ SOURCE=.\Notifier_Input_Handler.cpp
 # Begin Source File
 
 SOURCE=.\NotifierC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 

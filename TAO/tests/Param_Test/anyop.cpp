@@ -21,7 +21,9 @@
 #include "tao/Stub.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(Param_Test, anyop, "$Id$")
+ACE_RCSID (Param_Test, 
+           anyop, 
+           "$Id$")
 
 int
 main (int argc, char *argv[])
@@ -36,7 +38,7 @@ main (int argc, char *argv[])
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      ACE_Get_Opt get_opt (argc, argv, "dn:l:");
+      ACE_Get_Opt get_opt (argc, argv, "dn:");
       int opt;
 
       while ((opt = get_opt ()) != EOF)
@@ -65,13 +67,12 @@ main (int argc, char *argv[])
         {
           CORBA::Any any;
 
-#if 0
-          // @@ TODO @@ This one crashes in deep_free!!!
           {
             Param_Test::Var_Array var_array;
             any <<= Param_Test::Var_Array_forany (var_array);
 
             Param_Test::Var_Array_forany forany;
+
             if (!(any >>= forany))
               {
                 ACE_DEBUG ((LM_DEBUG,
@@ -80,13 +81,13 @@ main (int argc, char *argv[])
             Param_Test::Var_Array_var var =
               Param_Test::Var_Array_dup (forany.in ());
             any <<= Param_Test::Var_Array_forany (var.inout ());
+
             if (!(any >>= forany))
               {
                 ACE_DEBUG ((LM_DEBUG,
                             "Failure for Param_Test::Var_Array[2]\n"));
               }
           }
-#endif /* 0 */
 
           {
             CORBA::Object_var obj =
@@ -104,6 +105,7 @@ main (int argc, char *argv[])
             any <<= param_test.in ();
 
             Param_Test_ptr o;
+
             if (!(any >>= o))
               {
                 ACE_DEBUG ((LM_DEBUG,
@@ -112,14 +114,16 @@ main (int argc, char *argv[])
             CORBA::Boolean equiv =
               param_test->_is_equivalent (o ACE_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;
+
             if (!equiv)
               {
                 ACE_DEBUG ((LM_DEBUG,
                             "Mismatched Param_Test extraction\n"));
               }
 
-            CORBA::Object_var other;
-            if (!(any >>= CORBA::Any::to_object (other.inout ())))
+            CORBA::Object_ptr other;
+
+            if (!(any >>= CORBA::Any::to_object (other)))
               {
                 ACE_DEBUG ((LM_DEBUG,
                             "Cannot extract Param_Test as Object\n"));
@@ -131,6 +135,7 @@ main (int argc, char *argv[])
             any <<= i;
 
             CORBA::Short o;
+
             if (!(any >>= o)
                 || i != o)
               {
@@ -145,6 +150,7 @@ main (int argc, char *argv[])
             any <<= i;
 
             CORBA::Long o;
+
             if (!(any >>= o)
                 || i != o)
               {
@@ -159,6 +165,7 @@ main (int argc, char *argv[])
             any <<= i;
 
             CORBA::ULongLong o;
+
             if (!(any >>= o)
                 || i != o)
               {
@@ -182,6 +189,7 @@ main (int argc, char *argv[])
             any <<= i;
 
             CORBA::Double o;
+
             if (!(any >>= o)
                 || i != o)
               {
@@ -192,9 +200,13 @@ main (int argc, char *argv[])
           }
 
           {
-            CORBA::Any i;
-            i <<= CORBA::Short (123);
-            any <<= i;
+            CORBA::Any any;
+            CORBA::Any *i = 0;
+            ACE_NEW_RETURN (i,
+                            CORBA::Any,
+                            -1);
+            *i <<= CORBA::Short (123);
+            any <<= *i;
 
             const CORBA::Any *o;
             CORBA::Short oo;
@@ -204,7 +216,20 @@ main (int argc, char *argv[])
                 || 123 != oo)
               {
                 ACE_DEBUG ((LM_DEBUG,
-                            "Failure for CORBA::Any (%d)\n",
+                            "Failure for CORBA::Any "
+                            "(copying insertion, %d)\n",
+                            oo));
+              }
+
+            any <<= i;
+
+            if (!(any >>= o)
+                || !(*o >>= oo)
+                || 123 != oo)
+              {
+                ACE_DEBUG ((LM_DEBUG,
+                            "Failure for CORBA::Any "
+                            "(non-copying insertion, %d)\n",
                             oo));
               }
           }
@@ -214,6 +239,7 @@ main (int argc, char *argv[])
             any <<= i;
 
             const char *o;
+
             if (!(any >>= o)
                 || ACE_OS::strcmp (i, o) != 0)
               {
@@ -223,11 +249,99 @@ main (int argc, char *argv[])
               }
           }
 
+          {
+            CORBA::Any any;
+            Param_Test::Fixed_Struct *i = 0;
+            ACE_NEW_RETURN (i,
+                            Param_Test::Fixed_Struct,
+                            -1);
+            i->l = -7;
+            i->c = 'c';
+            i->s = 5;
+            i->o = 255;
+            i->f = 2.3f;
+            i->b = 0;
+            i->d = 3.1416;
+
+            any <<= *i;
+            Param_Test::Fixed_Struct *o;
+            
+            if (!(any >>= o)
+                || o->l != i->l
+                || o->c != i->c
+                || o->s != i->s
+                || o->o != i->o
+                || o->f != i->f
+                || o->b != i->b
+                || o->d != i->d)
+              {
+                ACE_DEBUG ((LM_DEBUG,
+                            "Failure for Fixed_Struct "
+                            "(copying insertion)\n"));
+              }
+
+            any <<= i;
+            
+            if (!(any >>= o)
+                || o->l != i->l
+                || o->c != i->c
+                || o->s != i->s
+                || o->o != i->o
+                || o->f != i->f
+                || o->b != i->b
+                || o->d != i->d)
+              {
+                ACE_DEBUG ((LM_DEBUG,
+                            "Failure for Fixed_Struct "
+                            "(non-copying insertion)\n"));
+              }
+          }
+
+          {
+            CORBA::ULong len = 3;
+            CORBA::Any any;
+            Param_Test::Long_Seq *i = 0;
+            ACE_NEW_RETURN (i,
+                            Param_Test::Long_Seq (len),
+                            -1);
+            i->length (len);
+        
+            for (CORBA::ULong k = 0; k < len; ++k)
+              {
+                (*i)[k] = k;
+              }
+
+            any <<= *i;
+            Param_Test::Long_Seq *o;
+
+            if (!(any >>= o)
+                || (*i)[0] != (*o)[0]
+                || (*i)[1] != (*o)[1]
+                || (*i)[2] != (*o)[2])
+              {
+                ACE_DEBUG ((LM_DEBUG,
+                            "Failure for Long_Seq "
+                            "(copying insertion)\n"));
+              }
+
+            any <<= i;
+
+            if (!(any >>= o)
+                || (*i)[0] != (*o)[0]
+                || (*i)[1] != (*o)[1]
+                || (*i)[2] != (*o)[2])
+              {
+                ACE_DEBUG ((LM_DEBUG,
+                            "Failure for Long_Seq "
+                            "(non-copying insertion)\n"));
+              }
+          }
         }
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Basic_Types");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
+                           "IDL Types");
       return 1;
     }
   ACE_ENDTRY;

@@ -106,6 +106,7 @@ SOURCE=.\nestea_server_i.cpp
 # Begin Source File
 
 SOURCE=.\NesteaC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 

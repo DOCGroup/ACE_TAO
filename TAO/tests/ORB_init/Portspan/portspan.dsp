@@ -66,8 +66,8 @@ LINK32=link.exe
 # PROP Intermediate_Dir "Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD  /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\..\\" /I "..\..\..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FD  /c
+# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\..\\" /I "..\..\..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -93,16 +93,54 @@ SOURCE=.\server.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\simpleC.cpp
+# ADD CPP /GR
+# End Source File
+# Begin Source File
+
+SOURCE=.\simpleC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\simpleI.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\simpleI.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\simpleS.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\simpleS.h
+# End Source File
+# End Group
+# Begin Group "Header Files"
+
+# PROP Default_Filter "h;hpp;hxx;hm;inl"
+# End Group
+# Begin Group "Resource Files"
+
+# PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
+# End Group
+# Begin Group "IDL Files"
+
+# PROP Default_Filter "idl"
+# Begin Source File
+
 SOURCE=.\simple.idl
 
 !IF  "$(CFG)" == "portspan - Win32 Release"
 
+USERDEP__SIMPL="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build
 InputPath=.\simple.idl
 InputName=simple
 
 BuildCmds= \
-	..\..\..\..\bin\Release\tao_idl -Ge 1 $(InputName).idl
+	..\..\..\..\..\bin\Release\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -135,12 +173,13 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "portspan - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
+USERDEP__SIMPL="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build
 InputPath=.\simple.idl
 InputName=simple
 
 BuildCmds= \
-	..\..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
+	..\..\..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -173,38 +212,6 @@ BuildCmds= \
 !ENDIF 
 
 # End Source File
-# Begin Source File
-
-SOURCE=.\simpleC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\simpleC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\simpleI.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\simpleI.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\simpleS.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\simpleS.h
-# End Source File
-# End Group
-# Begin Group "Header Files"
-
-# PROP Default_Filter "h;hpp;hxx;hm;inl"
-# End Group
-# Begin Group "Resource Files"
-
-# PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
 # End Group
 # End Target
 # End Project

@@ -223,7 +223,7 @@ TAO_RT_POA::validate_policies (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 TAO_Stub *
-TAO_RT_POA::key_to_stub_i (const TAO_ObjectKey &object_key,
+TAO_RT_POA::key_to_stub_i (const TAO::ObjectKey &object_key,
                            const char *type_id,
                            CORBA::Short priority
                            ACE_ENV_ARG_DECL)
@@ -318,7 +318,7 @@ TAO_RT_POA::key_to_stub_i (const TAO_ObjectKey &object_key,
 }
 
 TAO_Stub *
-TAO_RT_POA::create_stub_object (const TAO_ObjectKey &object_key,
+TAO_RT_POA::create_stub_object (const TAO::ObjectKey &object_key,
                                 const char *type_id,
                                 CORBA::PolicyList *policy_list,
                                 TAO_Acceptor_Filter *filter,

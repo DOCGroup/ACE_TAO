@@ -103,6 +103,7 @@ SOURCE=.\Time_Date_i.cpp
 # Begin Source File
 
 SOURCE=.\Time_DateC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 

@@ -96,6 +96,7 @@ SOURCE=.\client.cpp
 # Begin Source File
 
 SOURCE=.\testC.cpp
+# ADD CPP /GR
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -115,7 +116,7 @@ SOURCE=.\test.idl
 
 !IF  "$(CFG)" == "POA Persistent ID Client - Win32 Release"
 
-USERDEP__TEST_I="..\..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__TEST_="..\..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
 InputPath=.\test.idl
 InputName=test
@@ -154,7 +155,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "POA Persistent ID Client - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__TEST_I="..\..\..\..\bin\tao_idl.exe"	
+USERDEP__TEST_="..\..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
 InputPath=.\test.idl
 InputName=test
