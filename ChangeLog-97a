@@ -1,3 +1,18 @@
+Fri Feb 07 13:56:24 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/High_Res_Timer.{h,cpp},config-linux*.h,README:
+	  use struct timespec instead of timespec_t, because not all
+	  platforms have the timespec_t typedef.  Thanks to
+	  Marius Kjeldahl <marius@funcom.com> for reporting this on Linux
+	  and Chris Lahey <CLahey@cccis.com> for reporting it on AIX.
+
+	* ace/IOStream.h: use "ssize_t send (...)", etc., instead of exact
+	  function prototypes.
+
+	* examples/IPC_SAP/TLI_SAP/db-server.cpp: declare struct member as
+	  const char * instead of const char [] because it's not static and
+	  the struct doesn't have constructors.
+
 Fri Feb  7 01:13:05 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.h: Fixed a minor typo where friend class ACE_rwlock_t
