@@ -38,9 +38,10 @@ class ACE_MEM_Connector;
  * than the underlying MMAP file size minus sizeof (ACE_MEM_SAP_Node).
  * The size of the MMAP file is default to 4096.  If you need to
  * increase the size of allowable message ACE_MEM_Stream can handle,
- * you can set it to
+ * you can set it to either
  * @c ACE_MEM_Acceptor::malloc_options(). minimal_bytes_
- * before accepting a connection.
+ * @c ACE_MEM_Connector::malloc_options(). minimal_bytes_
+ * before establishing a connection.
  */
 class ACE_Export ACE_MEM_Stream : public ACE_MEM_IO
 {
