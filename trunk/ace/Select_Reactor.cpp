@@ -564,7 +564,16 @@ ACE_Select_Reactor_Token::dump (void) const
 }
 
 ACE_Select_Reactor_Token::ACE_Select_Reactor_Token (ACE_Select_Reactor &r)
-  : select_reactor_ (r)
+  : select_reactor_ (&r)
+#if defined (ACE_SELECT_REACTOR_HAS_DEADLOCK_DETECTION)
+  , ACE_Local_Mutex (0) // Triggers unique name by stringifying "this"...
+#endif /* ACE_SELECT_REACTOR_HAS_DEADLOCK_DETECTION */
+{
+  ACE_TRACE ("ACE_Select_Reactor_Token::ACE_Select_Reactor_Token");
+}
+
+ACE_Select_Reactor_Token::ACE_Select_Reactor_Token (void)
+  : select_reactor_ (0)
 #if defined (ACE_SELECT_REACTOR_HAS_DEADLOCK_DETECTION)
   , ACE_Local_Mutex (0) // Triggers unique name by stringifying "this"...
 #endif /* ACE_SELECT_REACTOR_HAS_DEADLOCK_DETECTION */
@@ -578,7 +587,7 @@ void
 ACE_Select_Reactor_Token::sleep_hook (void)
 {
   ACE_TRACE ("ACE_Select_Reactor_Token::sleep_hook");
-  if (this->select_reactor_.notify () == -1)
+  if (this->select_reactor_->notify () == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "sleep_hook failed"));
 }
 

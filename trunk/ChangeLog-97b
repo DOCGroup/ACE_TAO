@@ -1,3 +1,8 @@
+Sun Sep 14 22:36:17 1997    <irfan@TWOSTEP>
+
+	* ace/Select_Reactor.h: Added a no-op constructor for
+ 	  ACE_Select_Reactor_Token to make the compiler happy.
+
 Sun Sep 14 21:02:31 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* include/makeinclude/platform_irix6.x-32_sgic++.GNU,
