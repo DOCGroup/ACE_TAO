@@ -1,3 +1,10 @@
+Sun Nov 10 15:40:17 1996  Tim H. Harrison  <harrison@lambada.cs.wustl.edu>
+
+	* ace/Token_Invariants.cpp: Moved static data
+	  declarations out of ACE_Token_Invariant_Manager::instance and
+ 	  into the header file.  This is supposed to help with a g++
+ 	  problem on VxWorks.
+
 Sun Nov 10 13:22:03 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Pipe.cpp (open): Set the loopback socket into TCP_NODELAY
