@@ -83,7 +83,8 @@ int
 main (int argc, char **argv)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_HANDLE handle=ACE_OS::open("big.txt",O_RDWR | O_CREAT);
+  ACE_HANDLE handle=ACE_OS::open("big.txt",O_RDWR | O_CREAT,
+                                 S_IREAD | S_IWRITE);
   ACE_OS::lseek(handle, 1024*1024*10,SEEK_SET);
   ACE_OS::write(handle,"",1);
   ACE_OS::close(handle);

@@ -1,3 +1,11 @@
+Fri Sep 28 11:41:50 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/File_IO/server.cpp (main): Made the program create a big
+	  file for use.  
+
+	* tests/File_IO/big.txt: Removed the file from the repo. Thanks to
+	  Ossama for driving some sense in me.
+
 Fri Sep 28 10:17:24 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/Smart_Proxies/SmartProxies_Static.dsp:
