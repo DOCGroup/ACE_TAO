@@ -13,7 +13,7 @@ TAO_CEC_Default_Factory::TAO_CEC_Default_Factory (void)
      dispatching_threads_priority_ (TAO_CEC_DEFAULT_DISPATCHING_THREADS_PRIORITY),
      dispatching_threads_force_active_ (TAO_CEC_DEFAULT_DISPATCHING_THREADS_FORCE_ACTIVE),
      reactive_pulling_period_ (TAO_CEC_DEFAULT_REACTIVE_PULLING_PERIOD),
-     orbid_ (TAO_CEC_DEFAULT_ORB_ID),
+     orbid_ ((char*)TAO_CEC_DEFAULT_ORB_ID),
      orbid_dupped_(0),
      consumer_control_ (TAO_CEC_DEFAULT_CONSUMER_CONTROL),
      supplier_control_ (TAO_CEC_DEFAULT_SUPPLIER_CONTROL),
