@@ -8,6 +8,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/os_include/os_netdb.h"
 #include "ciao/Server_init.h"
 #include "ciao/CIAO_common.h"
 

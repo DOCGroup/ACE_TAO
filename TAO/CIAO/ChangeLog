@@ -1,3 +1,10 @@
+Sat Aug 14 14:07:53 2004  Aniruddha Gokhale  <a.gokhale@vanderbilt.edu>
+
+	* DAnCE/NodeManager/Node_Daemon.cpp:
+          
+	  Included "ace/os_include/os_netdb.h since otherwise the 
+	  MAXHOSTNAMELEN constant was not found.
+	
 Sat Aug 14 15:36:28 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* DAnCE/NodeManager/NodeDaemon_Impl.cpp:
