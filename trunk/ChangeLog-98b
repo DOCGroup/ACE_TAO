@@ -1,3 +1,7 @@
+Thu Jul 30 16:54:20 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * ACE version 4.5.26 released.
+
 Thu Jul 30 13:01:12 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Task.h (ACE_Task_Base): Changed the spelling of
