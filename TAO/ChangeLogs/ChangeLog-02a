@@ -1,3 +1,15 @@
+Mon Nov 27 13:16:06 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/CORBALOC_Parser.cpp (parse_string_count_helper): 
+	  Correctly allocated the memory for the end_point.
+	
+	* tests/InterOp-Naming/run_test.pl: 
+	  Updated the perl script in accordance with the recent change for
+	  the syntax of corbaloc: URLs.
+
+	* tests/InterOp-Naming/README: 
+	  Cosmetic changes.
+	
 Mon Nov 27 13:07:29 2000  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Acceptor.h:
