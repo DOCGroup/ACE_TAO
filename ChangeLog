@@ -1,3 +1,11 @@
+Mon Jun  2 00:10:14 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/make_release:Fixed some apparent bugs. Left some debugging
+	  statements for future refernces. 
+
+	* Makefile: Removed acconfig.h since it is not required. Thanks to
+	  Ossama for proving the information.
+
 Sun Jun 01 20:02:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/make_release: Fixed a typo and added comments. 
