@@ -120,8 +120,8 @@ ACE_Time_Value::dump (void) const
 {
   // ACE_TRACE ("ACE_Time_Value::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, "\ntv_sec_ = %d", this->tv_.tv_sec));
-  ACE_DEBUG ((LM_DEBUG, "\ntv_usec_ = %d\n", this->tv_.tv_usec));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\ntv_sec_ = %d"), this->tv_.tv_sec));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\ntv_usec_ = %d\n"), this->tv_.tv_usec));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -539,17 +539,17 @@ ACE_OS::ace_flock_t::dump (void) const
 // ACE_TRACE ("ACE_OS::ace_flock_t::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, "handle_ = %u", this->handle_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("handle_ = %u"), this->handle_));
 #if defined (ACE_WIN32)
-  ACE_DEBUG ((LM_DEBUG, "\nInternal = %d", this->overlapped_.Internal));
-  ACE_DEBUG ((LM_DEBUG, "\nInternalHigh = %d", this->overlapped_.InternalHigh));
-  ACE_DEBUG ((LM_DEBUG, "\nOffsetHigh = %d", this->overlapped_.OffsetHigh));
-  ACE_DEBUG ((LM_DEBUG, "\nhEvent = %d", this->overlapped_.hEvent));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nInternal = %d"), this->overlapped_.Internal));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nInternalHigh = %d"), this->overlapped_.InternalHigh));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nOffsetHigh = %d"), this->overlapped_.OffsetHigh));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nhEvent = %d"), this->overlapped_.hEvent));
 #elif !defined (CHORUS)
-  ACE_DEBUG ((LM_DEBUG, "\nl_whence = %d", this->lock_.l_whence));
-  ACE_DEBUG ((LM_DEBUG, "\nl_start = %d", this->lock_.l_start));
-  ACE_DEBUG ((LM_DEBUG, "\nl_len = %d", this->lock_.l_len));
-  ACE_DEBUG ((LM_DEBUG, "\nl_type = %d", this->lock_.l_type));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nl_whence = %d"), this->lock_.l_whence));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nl_start = %d"), this->lock_.l_start));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nl_len = %d"), this->lock_.l_len));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nl_type = %d"), this->lock_.l_type));
 #endif /* ACE_WIN32 */
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -1145,9 +1145,9 @@ ACE_TSS_Info::dump (void)
 //  ACE_TRACE ("ACE_TSS_Info::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, "key_ = %u", this->key_));
-  ACE_DEBUG ((LM_DEBUG, "\ndestructor_ = %u", this->destructor_));
-  ACE_DEBUG ((LM_DEBUG, "\ntss_obj_ = %u", this->tss_obj_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("key_ = %u"), this->key_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\ndestructor_ = %u"), this->destructor_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\ntss_obj_ = %u"), this->tss_obj_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -1773,7 +1773,7 @@ ACE_Thread_Adapter::invoke (void)
 int
 ACE_Thread_Adapter::rethrow_w32_structural_exception ()
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) Win32 structured exception exiting thread\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) Win32 structured exception exiting thread\n")));
   return (DWORD) EXCEPTION_CONTINUE_SEARCH;
 }
 #endif /* ACE_WIN32 */
@@ -3599,7 +3599,7 @@ ace_sysconf_dump (void)
 {
   ACE_Time_Value time = ACE_OS::gettimeofday ();
   if (time == -1)
-    ACE_DEBUG ((LM_DEBUG, "Cannot get time\n"));
+    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Cannot get time\n")));
   else
     time.dump ();
 
