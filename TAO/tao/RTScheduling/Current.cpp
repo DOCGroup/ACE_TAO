@@ -16,6 +16,9 @@ TAO_RTScheduler_Current::begin_scheduling_segment(const char * name,
   ACE_THROW_SPEC ((CORBA::SystemException,
 		   RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE))
 {
+  ACE_DEBUG ((LM_DEBUG,
+	      "TAO_RTScheduler_Current::begin_scheduling_segment\n"));
+
   TAO_RTScheduler_Current_i *impl = this->implementation ();
   
 	  if (impl == 0)
@@ -53,6 +56,10 @@ TAO_RTScheduler_Current::end_scheduling_segment (const char * name
 						 ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+
+  ACE_DEBUG ((LM_DEBUG,
+	      "TAO_RTScheduler_Current::end_scheduling_segment\n"));
+
   TAO_RTScheduler_Current_i *impl = this->implementation ();
   
   if (impl == 0)
@@ -172,6 +179,16 @@ TAO_RTScheduler_Current::implementation (TAO_RTScheduler_Current_i* new_current)
                      tss->rtscheduler_current_impl_);
   tss->rtscheduler_current_impl_ = new_current;
   return old;
+}
+
+TAO_RTScheduler_Current_i*
+TAO_RTScheduler_Current::implementation (void)
+{
+  TAO_TSS_Resources *tss =
+    TAO_TSS_RESOURCES::instance ();
+
+  return ACE_static_cast (TAO_RTScheduler_Current_i *,
+			  tss->rtscheduler_current_impl_);
 }
 
 TAO_RTScheduler_Current_i::TAO_RTScheduler_Current_i (void)
