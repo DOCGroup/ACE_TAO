@@ -7,12 +7,14 @@
 TESTS = \
 	Aio_Platform_Test \
 	Atomic_Op_Test \
+	Auto_IncDec_Test \
 	Barrier_Test \
 	Basic_Types_Test \
 	Buffer_Stream_Test \
 	Cache_Map_Manager_Test \
 	Cached_Conn_Test \
 	Cached_Accept_Conn_Test \
+	Capabilities_Test \
 	CDR_Test \
 	Collection_Test \
 	Conn_Test \

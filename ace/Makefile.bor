@@ -16,7 +16,9 @@ OBJFILES = \
 	$(OBJDIR)\Asynch_IO_Impl.obj \
 	$(OBJDIR)\Based_Pointer_Repository.obj \
 	$(OBJDIR)\Basic_Types.obj \
+	$(OBJDIR)\Capabilities.obj \
 	$(OBJDIR)\CDR_Stream.obj \
+	$(OBJDIR)\Configuration.obj \
 	$(OBJDIR)\Containers.obj \
 	$(OBJDIR)\CORBA_Handler.obj \
 	$(OBJDIR)\CORBA_Ref.obj \
