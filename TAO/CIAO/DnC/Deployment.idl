@@ -190,11 +190,24 @@ module Deployment {
     string name;
     string node;
     ::CORBA::StringSeq source;
-    unsigned long implementationRef;
     Properties configProperty;
+    // @@Issue 5957, 6392@@ added the following
+    MonolithicDeploymentDescription implementation;
+    InstanceResourceDeploymentDescriptions deployedResource;
+    InstanceResourceDeploymentDescriptions deployedSharedResource;
   };
 
   typedef sequence < InstanceDeploymentDescription > InstanceDeploymentDescriptions;
+
+  // @@Issue 6392@@ added new
+  struct ConnectionResourceDeploymentDescription {
+    string targetName;
+    string requirementName;
+    string resourceName;
+    any resourceValue;
+  };
+
+  typedef sequence < ConnectionResourceDeploymentDescription > ConnectionResourceDeploymentDescriptions;
 
   struct ComponentExternalPortEndpoint {
     string portName;
@@ -205,8 +218,8 @@ module Deployment {
   struct PlanSubcomponentPortEndpoint {
     string portName;
     boolean provider;
-    CCMComponentPortKind kind;
-    unsigned long instanceRef;
+    // following newly added
+    InstanceDeploymentDescription instance;
   };
 
   typedef sequence < PlanSubcomponentPortEndpoint > PlanSubcomponentPortEndpoints;
@@ -224,13 +237,16 @@ module Deployment {
     ComponentExternalPortEndpoints externalEndpoint;
     PlanSubcomponentPortEndpoints internalEndpoint;
     ExternalReferenceEndpoints externalReference;
+    // newly added
+    ConnectionResourceDeploymentDescriptions deployedResource;
   };
 
   typedef sequence < PlanConnectionDescription > PlanConnectionDescriptions;
 
   struct PlanSubcomponentPropertyReference {
     string propertyName;
-    unsigned long instanceRef;
+    // @@Issue 5967@@
+    InstanceDeploymentDescription instance;
   };
 
   typedef sequence < PlanSubcomponentPropertyReference > PlanSubcomponentPropertyReferences;
