@@ -37,6 +37,7 @@
 #else
 // At least true with newer Diab compiler...
 # define ACE_LACKS_PRAGMA_ONCE
+# define ACE_HAS_EXCEPTIONS
 #endif /* __GNUG__ */
 
 #define ACE_PSOS_LACKS_PREPC
