@@ -1,5 +1,7 @@
 Fri Jul 24 15:15:28 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* Updated the manual pages to reflect recent changes.
+
 	* ace/Svc_Conf.h: Change from yyerror (char *) to yyerror (const
 	  char *).
 
