@@ -1,3 +1,11 @@
+Thu Nov 16 23:13:16 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * tests/Param_Test/server.dsp:
+
+          Fixed the Win32 Release inclusion of TAO_Strategies.lib.
+          It was missing the ".lib" which made MSVC think that it 
+          was an .obj instead.
+
 Thu Nov 16 19:29:00 2000  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP_Acceptor.cpp:
