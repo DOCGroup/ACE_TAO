@@ -15,11 +15,11 @@
 #include <tao/corba.h>
 
 TAO_MProfile::TAO_MProfile (CORBA::ULong sz)
-  :  size_ (sz),
-     last_ (0),
+  :  fwded_mprofile_(0),
+     pfiles_ (0),
      current_ (0),
-     fwded_mprofile_(0),
-     pfiles_ (0)
+     size_ (sz),
+     last_ (0)
 {
 
   this->set (sz);
@@ -27,11 +27,11 @@ TAO_MProfile::TAO_MProfile (CORBA::ULong sz)
 }
 
 TAO_MProfile::TAO_MProfile (TAO_MProfile *mprofiles)
-  :  size_ (0),
-     last_ (0),
+  :  fwded_mprofile_(0),
+     pfiles_ (0),
      current_ (0),
-     fwded_mprofile_(0),
-     pfiles_ (0)
+     size_ (sz),
+     last_ (0)
 {
 
   this->set (mprofiles);
@@ -273,7 +273,7 @@ CORBA::ULong
 TAO_MProfile::hash (CORBA::ULong max, CORBA::Environment &env)
 {
 
-  CORBA::ULong hashval;
+  CORBA::ULong hashval=0;
 
   if (last_ == 0) return 0;
 
