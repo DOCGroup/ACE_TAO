@@ -232,7 +232,10 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       << "return retval;" << be_uidt_nl
       << "}";
 
-  if (node->supports_abstract ())
+  // If we inherit from CORBA::Object and/or CORBA::AbstractBase
+  // (in addition to CORBA::ValueBase) we have to add these 
+  // to avoid ambiguity.
+  if (node->n_supports () > 0)
     {
       *os << be_nl << be_nl
           << "CORBA::ValueBase *" << be_nl

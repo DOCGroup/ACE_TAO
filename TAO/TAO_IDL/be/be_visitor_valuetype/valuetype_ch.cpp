@@ -237,9 +237,10 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
-  // If we inherit from both CORBA::ValueBase and CORBA::AbstractBase,
-  // we have to add this to avoid ambiguity.
-  if (node->supports_abstract ())
+  // If we inherit from CORBA::Object and/or CORBA::AbstractBase
+  // (in addition to CORBA::ValueBase) we have to add these 
+  // to avoid ambiguity.
+  if (node->n_supports () > 0)
     {
       *os << be_uidt_nl << be_nl << "public:" << be_idt_nl;
       *os << be_nl << "virtual void _add_ref (void) = 0;" << be_nl;
