@@ -1,3 +1,10 @@
+Web Feb 28 09:36:03 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Makefile.bor
+        * orbsvcs/tests/FaultTolerance/Makefile.bor
+
+        The FaultTolerance test is now build with BCB
+
 Web Feb 28 09:02:51 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * Makefile.bor
