@@ -1,3 +1,8 @@
+Sun Nov 16 20:27:19 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* Priority_Test/Workers/CB_Worker_exec.cpp: Fixed a g++
+	  compilation error.
+
 Sun Nov 16 16:41:39 2003  Nanbor Wang  <nanbor@cse.wustl.edu>
 
 	* tools/Daemon/CIAO_Daemon.cpp: Added the "-c" and "-m" usage
