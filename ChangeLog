@@ -1,3 +1,19 @@
+Wed Jul 09 21:22:24 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* ace\Timer_Heap_T.cpp (insert): 
+
+	  The decision to grow the heap was made on this formula:
+
+	    if (this->cur_size_ + 2 >= this->max_size_)
+
+	  though the correct decision should have been:
+	
+	    if (this->cur_size_ + this->cur_limbo_ + 2 >= this->max_size_)	  
+
+	  Without this, tests/Timer_Queue_Test was failing with
+	  cur_size_ = 15, cur_limbo_ = 20 and max_size_ = 35, but insert()
+	  did not regrow the heap and eventually schedule() failed.
+
 Wed Jul 09 13:17:57 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	* ace\Select_Reactor_Base.cpp (purge_pending_notifications): 
@@ -389,6 +405,9 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	  - Reference counting of ASTs is no longer needed since event
 	  handlers are reference counted.
+	 
+	  Thanks to Andrew Voumard <andrewv@melbpc.org.au> for helping
+	  with this.
 
 	* tests\Reference_Counted_Event_Handler_Test: 
 
