@@ -1,7 +1,5 @@
 // @(#) $Id$
 
-#define POA_NO_TIMESTAMP
-
 // auto_ptr class
 #include "ace/Auto_Ptr.h"
 
