@@ -24,6 +24,7 @@ CFG=tao_idl - Win32 Debug
 # Begin Project
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
+# PROP WCE_Configuration "H/PC Ver. 2.00"
 CPP=cl.exe
 RSC=rc.exe
 
@@ -313,46 +314,6 @@ SOURCE=.\be\be_scope.cpp
 # Begin Source File
 
 SOURCE=.\be\be_sequence.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\be\be_state.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\be\be_state_argument.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\be\be_state_array.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\be\be_state_attribute.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\be\be_state_exception.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\be\be_state_operation.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\be\be_state_sequence.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\be\be_state_structure.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\be\be_state_typedef.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\be\be_state_union.cpp
 # End Source File
 # Begin Source File
 

@@ -1,3 +1,7 @@
+Tue May 26 10:32:12 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/tao_idl.dsp: Updated project files per Andy's changes.
+
 Tue May 26 10:03:51 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/NestedUpcal/server.cpp (init_naming_service): dereferenced
