@@ -2,19 +2,6 @@
 //
 // $Id$
 
-ACE_INLINE CORBA::Float
-TAO_LB_LeastLoaded::raw_load (CORBA::Float load)
-{
-  return this->dampened_load (load + this->per_balance_load_);
-}
-
-
-ACE_INLINE CORBA::Float
-TAO_LB_LeastLoaded::raw_load (CORBA::Float load)
-{
-  return this->dampened_load (load + this->per_balance_load_);
-}
-
 
 ACE_INLINE CORBA::Float
 TAO_LB_LeastLoaded::effective_load (CORBA::Float previous_load,
@@ -29,8 +16,8 @@ TAO_LB_LeastLoaded::effective_load (CORBA::Float previous_load,
 
   ACE_ASSERT (this->tolerance_ != 0);
 
-  // Compute th effective load.
-  result = raw_load / this->tolerance_;
+  // Compute the effective load.
+  result /= this->tolerance_;
 
   return result;
 }

@@ -16,7 +16,7 @@ char *
 TAO_LB_Random::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return CORBA::string_dup ("TAO_LB_Random");
+  return CORBA::string_dup ("Random");
 }
     
 CosLoadBalancing::Properties *
