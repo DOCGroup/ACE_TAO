@@ -16,6 +16,7 @@
 
 #include "Scheduler_Runtime1.h"
 #include "Scheduler_Runtime2.h"
+#include "Scheduler_Runtime_Dynamic.h" /* infos_3 */
 
 #if defined (sun)
 # include <sys/lwp.h> /* for _lwp_self */
@@ -175,8 +176,8 @@ Test_ECG::run (int argc, char* argv[])
                   this->lcl_name_?this->lcl_name_:"nil",
                   this->rmt_name_?this->rmt_name_:"nil",
                   this->scheduling_type_,
-		  this->consumer_disconnects_,
-		  this->supplier_disconnects_,
+                  this->consumer_disconnects_,
+                  this->supplier_disconnects_,
                   this->short_circuit_,
 
                   this->hp_suppliers_,
@@ -293,6 +294,17 @@ Test_ECG::run (int argc, char* argv[])
               scheduler = scheduler_impl->_this (TAO_TRY_ENV);
               TAO_CHECK_ENV;
             }
+          else if (ACE_OS::strcmp (this->lcl_name_, "ECM3") == 0)
+            {
+              scheduler_impl =
+                auto_ptr<POA_RtecScheduler::Scheduler>
+                    (new ACE_Runtime_Scheduler (runtime_infos_3_size,
+                                                runtime_infos_3));
+              if (scheduler_impl.get () == 0)
+                return -1;
+              scheduler = scheduler_impl->_this (TAO_TRY_ENV);
+              TAO_CHECK_ENV;
+            }
           else
             {
               ACE_ERROR ((LM_WARNING,
@@ -396,14 +408,14 @@ Test_ECG::run (int argc, char* argv[])
       ACE_DEBUG ((LM_DEBUG, "located local EC\n"));
 
       for (int sd = 0; sd < this->supplier_disconnects_; ++sd)
-	{
-	  this->connect_suppliers (local_ec.in (), TAO_TRY_ENV);
-	  TAO_CHECK_ENV;
-	  this->disconnect_suppliers (TAO_TRY_ENV);
-	  TAO_CHECK_ENV;
-	  ACE_OS::sleep (5);
-	  ACE_DEBUG ((LM_DEBUG, "Supplier disconnection %d\n", sd));
-	}
+        {
+          this->connect_suppliers (local_ec.in (), TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+          this->disconnect_suppliers (TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+          ACE_OS::sleep (5);
+          ACE_DEBUG ((LM_DEBUG, "Supplier disconnection %d\n", sd));
+        }
 
       this->connect_suppliers (local_ec.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
@@ -452,19 +464,19 @@ Test_ECG::run (int argc, char* argv[])
           if (orb->run (&tv) == -1)
             ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
 
-	  ec_impl.add_gateway (&this->ecg_, TAO_TRY_ENV);
-	  TAO_CHECK_ENV;
+          ec_impl.add_gateway (&this->ecg_, TAO_TRY_ENV);
+          TAO_CHECK_ENV;
         }
 
       for (int cd = 0; cd < this->consumer_disconnects_; ++cd)
-	{
-	  this->connect_consumers (local_ec.in (), TAO_TRY_ENV);
-	  TAO_CHECK_ENV;
-	  this->disconnect_consumers (TAO_TRY_ENV);
-	  TAO_CHECK_ENV;
-	  ACE_OS::sleep (5);
-	  ACE_DEBUG ((LM_DEBUG, "Consumer disconnection %d\n", cd));
-	}
+        {
+          this->connect_consumers (local_ec.in (), TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+          this->disconnect_consumers (TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+          ACE_OS::sleep (5);
+          ACE_DEBUG ((LM_DEBUG, "Consumer disconnection %d\n", cd));
+        }
       this->connect_consumers (local_ec.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
@@ -489,7 +501,7 @@ Test_ECG::run (int argc, char* argv[])
 
       // Create the EC internal threads
       ec_impl.activate ();
-      
+
       ACE_DEBUG ((LM_DEBUG, "running the test\n"));
       if (orb->run () == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
@@ -500,32 +512,6 @@ Test_ECG::run (int argc, char* argv[])
       ec_impl.shutdown ();
 
       this->dump_results ();
-
-      if (this->rmt_name_ != 0)
-        {
-	  ec_impl.del_gateway (&this->ecg_, TAO_TRY_ENV);
-	  TAO_CHECK_ENV;
-
-	  this->ecg_.close (TAO_TRY_ENV);
-	  TAO_CHECK_ENV;
-	  this->ecg_.shutdown (TAO_TRY_ENV);
-	  TAO_CHECK_ENV;
-	}
-
-      this->disconnect_consumers (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-      this->disconnect_suppliers (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-      
-      ACE_DEBUG ((LM_DEBUG, "shutdown grace period\n"));
-      tv.set (5, 0);
-      if (orb->run (&tv) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
-
-      naming_context->unbind (channel_name, TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-
 
       if (this->schedule_file_ != 0)
         {
@@ -562,6 +548,30 @@ Test_ECG::run (int argc, char* argv[])
           ACE_Scheduler_Factory::dump_schedule (infos.in (),
                                                 this->schedule_file_);
         }
+
+      if (this->rmt_name_ != 0)
+        {
+          ec_impl.del_gateway (&this->ecg_, TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+
+          this->ecg_.close (TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+          this->ecg_.shutdown (TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+        }
+
+      this->disconnect_consumers (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      this->disconnect_suppliers (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      ACE_DEBUG ((LM_DEBUG, "shutdown grace period\n"));
+      tv.set (5, 0);
+      if (orb->run (&tv) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
+
+      naming_context->unbind (channel_name, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
     }
   TAO_CATCH (CORBA::SystemException, sys_ex)
     {
@@ -814,7 +824,7 @@ Test_ECG::connect_ecg (RtecEventChannelAdmin::EventChannel_ptr local_ec,
       ACE_OS::strcat (lcl, this->lcl_name_);
 
       this->ecg_.init (remote_ec, local_ec, remote_sch, local_sch,
-		       rmt, lcl, TAO_TRY_ENV);
+                       rmt, lcl, TAO_TRY_ENV);
       TAO_CHECK_ENV;
     }
   TAO_CATCHANY
@@ -982,7 +992,15 @@ Test_ECG::shutdown_consumer (int id)
   ACE_DEBUG ((LM_DEBUG, "Shutdown consumer %d\n", id));
   this->running_consumers_--;
   if (this->running_consumers_ == 0)
-    TAO_ORB_Core_instance ()->orb ()->shutdown ();
+    if (TAO_ORB_Core_instance ()->orb () == 0)
+      {
+        ACE_ERROR ((LM_ERROR,
+                    "(%P|%t) Test_ECG::shutdown_consumer, "
+                      "ORB instance is 0\n"));
+
+      }
+    else
+      TAO_ORB_Core_instance ()->orb ()->shutdown ();
 }
 
 int
@@ -1109,15 +1127,15 @@ Test_ECG::parse_args (int argc, char *argv [])
           this->short_circuit_ = 1;
           break;
 
-	case 'i':
-	  {
+        case 'i':
+          {
             char* aux;
-	    char* arg = ACE_OS::strtok_r (get_opt.optarg, ",", &aux);
-	    this->consumer_disconnects_ = ACE_OS::atoi (arg);
-	    arg = ACE_OS::strtok_r (0, ",", &aux);
-	    this->supplier_disconnects_ = ACE_OS::atoi (arg);
-	  }
-	  break;
+            char* arg = ACE_OS::strtok_r (get_opt.optarg, ",", &aux);
+            this->consumer_disconnects_ = ACE_OS::atoi (arg);
+            arg = ACE_OS::strtok_r (0, ",", &aux);
+            this->supplier_disconnects_ = ACE_OS::atoi (arg);
+          }
+          break;
 
         case 'h':
           {
@@ -1184,7 +1202,7 @@ Test_ECG::parse_args (int argc, char *argv [])
                       "-l <local_name> "
                       "-r <remote_name> "
                       "-s <global|local|runtime> "
-		      "-i <consumer disc.,supplier disc.> "
+                      "-i <consumer disc.,supplier disc.> "
                       "-x (short circuit EC) "
                       "-h <high priority args> "
                       "-w <low priority args> "
@@ -1226,8 +1244,11 @@ Test_ECG::parse_args (int argc, char *argv [])
       || this->hp_suppliers_ + this->lp_suppliers_ >= Test_ECG::MAX_SUPPLIERS)
     {
       ACE_ERROR_RETURN ((LM_DEBUG,
-                         "%s: number of consumers or "
-                         "suppliers out of range\n", argv[0]), -1);
+                         "%s: number of consumers (low: %d, high: %d) or "
+                         "suppliers (low: %d, high: %d) out of range\n",
+                         argv[0],
+                         lp_consumers_, hp_consumers_,
+                         lp_suppliers_, lp_suppliers_), -1);
     }
 
   return 0;
