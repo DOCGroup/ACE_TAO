@@ -4,6 +4,8 @@ Fri Nov 16 13:36:09 2001  Craig Rodrigues  <crodrigu@bbn.com>
 	  destructor.  Was causing Multicast and Pluggable tests to crash.
 	* orbsvcs/orbsvcs/AV/UDP.cpp (open_i): Added a check of the
 	  result variable to remove a KAI C++ warning.
+	* orbsvcs/orbsvcs/AV/RTCP.cpp (rtcp_interval): Replaced argument
+	  to ACE_OS::srand() with ACE_OS::time() to eliminate IA64 warning.
 
 Thu Nov 15 17:54:41 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
