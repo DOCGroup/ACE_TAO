@@ -357,8 +357,10 @@ public:
   virtual ACE_Time_Value *calculate_timeout (ACE_Time_Value *max,
                                              ACE_Time_Value *the_timeout);
 
-  // = Set/get the timer skew for the Timer_Queue.
+  /// Set the timer skew for the Timer_Queue.
   void timer_skew (const ACE_Time_Value &skew);
+
+  /// Get the timer skew for the Timer_Queue.
   const ACE_Time_Value &timer_skew (void) const;
 
   /// Synchronization variable used by the queue
