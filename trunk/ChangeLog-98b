@@ -1,7 +1,12 @@
+Mon Oct 26 08:22:18 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * docs/ACE-guidelines.html: added recommendation and
+          explanation re. use of #pragma once.
+
 Mon Oct 26 01:49:44 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/Env_Value_Test.cpp (main): Changed argv and envp to type
-	  LPTSTR[].
+        * tests/Env_Value_Test.cpp (main): Changed argv and envp to type
+          LPTSTR[].
 
 Sun Oct 25 23:52:40 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -9,26 +14,26 @@ Sun Oct 25 23:52:40 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Sun Oct 25 22:18:26 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Select_Reactor_T.cpp (dispatch): Be more careful in how we
- 	  handle dispatching when signals occur.  In general, if we're
- 	  interrupted by a non-Reactor-aware signal handler we need to
- 	  bail out...  Thanks to Naga for reporting this.
+        * ace/Select_Reactor_T.cpp (dispatch): Be more careful in how we
+          handle dispatching when signals occur.  In general, if we're
+          interrupted by a non-Reactor-aware signal handler we need to
+          bail out...  Thanks to Naga for reporting this.
 
-	* examples/Reactor/Misc/test_signals_1.cpp: Cleaned up this test
- 	  so that it'll show off the signal handling capabilities of the
- 	  ACE Reactor better.
+        * examples/Reactor/Misc/test_signals_1.cpp: Cleaned up this test
+          so that it'll show off the signal handling capabilities of the
+          ACE Reactor better.
 
 Sun Oct 25 14:13:31 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * ace/OS.i: Changed ACE_OS::sigaction to work with a null value
- 	  for <nsa> on Windows.  Thanks to Jim Buck <jim@nowsol.com> for
- 	  reporting this.
+          for <nsa> on Windows.  Thanks to Jim Buck <jim@nowsol.com> for
+          reporting this.
 
         * examples/Reactor/Misc/reactors.dsp:
         * examples/Reactor/Misc/signals_1.dsp:
         * examples/Reactor/Misc/signals_2.dsp:
           Corrected the include and library paths.  Thanks to
-	  Zoran Ivanovic <zorani@pathcom.com> for reporting this.
+          Zoran Ivanovic <zorani@pathcom.com> for reporting this.
 
         * ChangeLog: Removed all the trailing spaces and tab characters so
           CVS's commit-check will be happy.
