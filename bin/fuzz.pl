@@ -664,7 +664,7 @@ sub check_for_push_and_pop ()
             close (FILE);
 
             if ($disable == 0 && $push_count != $pop_count) {
-	        print_error ("#pragma warning(push)/(pop) mismatch in $file");
+                print_error ("#pragma warning(push)/(pop) mismatch in $file");
             }
         }
         else {
@@ -1038,7 +1038,7 @@ sub check_for_changelog_errors ()
                 next if m/^\s*\/\//;
                 next if m/^\s*$/;
 
-		# Check for backslashes in paths.
+                # Check for backslashes in paths.
                 if (m/\*.*\\[^ ]*:/) {
                     print_error ("Backslashes in file path - $file ($line)");
                 }
@@ -1073,12 +1073,12 @@ sub check_for_ptr_arith_t ()
                 next if m/^\s*$/;     # Skip lines only containing
                                       # whitespace.
 
-		# Check for ptr_arith_t usage.  This test should
-		# ignore typedefs, and should only catch variable
-		# declarations and parameter types.
+                # Check for ptr_arith_t usage.  This test should
+                # ignore typedefs, and should only catch variable
+                # declarations and parameter types.
                 if (m/ptr_arith_t / || m/ptr_arith_t,/) {
                     print_error ("ptr_arith_t in $file ($line)."
-				 . "  Use ptrdiff_t instead.");
+                                 . "  Use ptrdiff_t instead.");
                 }
             }
             close (FILE);
@@ -1112,11 +1112,11 @@ sub check_for_include ()
                         #print_error ("<ace\/..> is used in $file.\n");
                         ++$bad_occurance;
                     }
-		    if (/^\s*#\s*include\s*<tao\/.*>/) {
+                    if (/^\s*#\s*include\s*<tao\/.*>/) {
                         #print_error ("<tao\/..> is used in $file.\n");
                         ++$bad_occurance;
                     }
-		    if (/^\s*#\s*include\s*<ciao\/.*>/) {
+                    if (/^\s*#\s*include\s*<ciao\/.*>/) {
                         #print_error ("<ciao\/..> is used in $file.\n");
                         ++$bad_occurance;
                     }
@@ -1145,23 +1145,23 @@ sub check_for_non_bool_operators ()
         my $line = 0;
         if (open (FILE, $file)) {
             print "Looking at file $file\n" if $opt_d;
-	    my $found_bool = 0;
+            my $found_bool = 0;
             while (<FILE>) {
                 ++$line;
 
-		if ($found_bool == 0 && (/[^\w]bool\s*$/ || /^bool\s*$/))
-		  {
-		    $found_bool = 1;
-		    next;
-		  }
+                if ($found_bool == 0 && (/[^\w]bool\s*$/ || /^bool\s*$/))
+                  {
+                    $found_bool = 1;
+                    next;
+                  }
 
                 if ($found_bool == 0
-		    && /(?<![^\w]bool)(\s+|s+\w+::)operator\s*(?:!|<|<=|>|>=|==|!=|&&|\|\|)\s*\(/
-		    && !/^\s*return\s+/) {
+                    && /(?<![^\w]bool)(\s+|s+\w+::)operator\s*(?:!|<|<=|>|>=|==|!=|&&|\|\|)\s*\(/
+                    && !/^\s*return\s+/) {
                     print_error ("non-bool return type for operator in $file on line $line");
                 }
 
-		$found_bool = 0;
+                $found_bool = 0;
             }
             close (FILE);
         }
