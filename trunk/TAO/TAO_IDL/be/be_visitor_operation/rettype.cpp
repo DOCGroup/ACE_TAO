@@ -53,10 +53,8 @@ be_visitor_operation_rettype::visit_array (be_array *node)
   else
     bt = node;
 
-  if (this->ctx_->state () == TAO_CodeGen::TAO_OPERATION_RETTYPE_CH)
-    *os << bt->nested_type_name (this->ctx_->scope (), "_slice") << " *";
-  else
-    *os << bt->name () << "_slice *";
+  *os << bt->name () << "_slice *";
+
   return 0;
 }
 
@@ -72,10 +70,8 @@ be_visitor_operation_rettype::visit_enum (be_enum *node)
   else
     bt = node;
 
-  if (this->ctx_->state () == TAO_CodeGen::TAO_OPERATION_RETTYPE_CH)
-    *os << bt->nested_type_name (this->ctx_->scope ());
-  else
-    *os << bt->name ();
+  *os << bt->name ();
+
   return 0;
 }
 
@@ -91,10 +87,8 @@ be_visitor_operation_rettype::visit_interface (be_interface *node)
   else
     bt = node;
 
-  if (this->ctx_->state () == TAO_CodeGen::TAO_OPERATION_RETTYPE_CH)
-    *os << bt->nested_type_name (this->ctx_->scope (), "_ptr");
-  else
-    *os << bt->name () << "_ptr";
+  *os << bt->name () << "_ptr";
+
   return 0;
 }
 
@@ -110,10 +104,8 @@ be_visitor_operation_rettype::visit_interface_fwd (be_interface_fwd *node)
   else
     bt = node;
 
-  if (this->ctx_->state () == TAO_CodeGen::TAO_OPERATION_RETTYPE_CH)
-    *os << bt->nested_type_name (this->ctx_->scope (), "_ptr");
-  else
-    *os << bt->name () << "_ptr";
+  *os << bt->name () << "_ptr";
+
   return 0;
 }
 
@@ -129,10 +121,8 @@ be_visitor_operation_rettype::visit_native (be_native *node)
   else
     bt = node;
 
-  if (this->ctx_->state () == TAO_CodeGen::TAO_OPERATION_RETTYPE_CH)
-    *os << bt->nested_type_name (this->ctx_->scope ()) << " *";
-  else
-    *os << bt->name () << " *";
+  *os << bt->name () << " *";
+
   return 0;
 }
 
@@ -151,22 +141,13 @@ be_visitor_operation_rettype::visit_predefined_type (be_predefined_type *node)
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_pseudo:
-      if (this->ctx_->state () == TAO_CodeGen::TAO_OPERATION_RETTYPE_CH)
-        *os << bt->nested_type_name (this->ctx_->scope (), "_ptr");
-      else
-        *os << bt->name () << "_ptr";
+      *os << bt->name () << "_ptr";
       break;
     case AST_PredefinedType::PT_any:
-      if (this->ctx_->state () == TAO_CodeGen::TAO_OPERATION_RETTYPE_CH)
-        *os << bt->nested_type_name (this->ctx_->scope ()) << " *";
-      else
-        *os << bt->name () << " *";
+      *os << bt->name () << " *";
       break;
     default:
-      if (this->ctx_->state () == TAO_CodeGen::TAO_OPERATION_RETTYPE_CH)
-        *os << bt->nested_type_name (this->ctx_->scope ());
-      else
-        *os << bt->name ();
+      *os << bt->name ();
       break;
     }
 
@@ -188,10 +169,7 @@ be_visitor_operation_rettype::visit_sequence (be_sequence *node)
   else
     bt = node;
 
-  if (this->ctx_->state () == TAO_CodeGen::TAO_OPERATION_RETTYPE_CH)
-    *os << bt->nested_type_name (this->ctx_->scope ()) << " *";
-  else
-    *os << bt->name () << " *";
+  *os << bt->name () << " *";
   return 0;
 }
 
@@ -225,10 +203,7 @@ be_visitor_operation_rettype::visit_structure (be_structure *node)
   else
     bt = node;
 
-  if (this->ctx_->state () == TAO_CodeGen::TAO_OPERATION_RETTYPE_CH)
-    *os << bt->nested_type_name (this->ctx_->scope ());
-  else
-    *os << bt->name ();
+  *os << bt->name ();
 
   // based on whether we are variable or not, we return a pointer or the
   // aggregate type
@@ -266,10 +241,7 @@ be_visitor_operation_rettype::visit_union (be_union *node)
   else
     bt = node;
 
-  if (this->ctx_->state () == TAO_CodeGen::TAO_OPERATION_RETTYPE_CH)
-    *os << bt->nested_type_name (this->ctx_->scope ());
-  else
-    *os << bt->name ();
+  *os << bt->name ();
 
   // based on whether we are variable or not, we return a pointer or the
   // aggregate type
@@ -292,11 +264,8 @@ be_visitor_operation_rettype::visit_valuetype (be_valuetype *node)
   else
     bt = node;
 
-  if (this->ctx_->state () == TAO_CodeGen::TAO_OPERATION_RETTYPE_CH)
-    *os << bt->nested_type_name (this->ctx_->scope (), " *");
-  else {
-    *os << bt->name () << " *";
-  }
+  *os << bt->name () << " *";
+
   return 0;
 }
 
@@ -312,11 +281,8 @@ be_visitor_operation_rettype::visit_valuetype_fwd (be_valuetype_fwd *node)
   else
     bt = node;
 
-  if (this->ctx_->state () == TAO_CodeGen::TAO_OPERATION_RETTYPE_CH)
-    *os << bt->nested_type_name (this->ctx_->scope (), "*");
-  else {
-    *os << bt->name () << " *";
-  }
+  *os << bt->name () << " *";
+
   return 0;
 }
 
