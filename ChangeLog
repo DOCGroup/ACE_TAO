@@ -1,16 +1,32 @@
+Sat Jan 22 21:10:49 2000  Ossama Othman  <ossama@uci.edu>
+
+	* configure.in:
+
+	  Moved check for old GNU C++ to m4/compilers.m4.
+
+	* m4/acinclude.m4 (ACE_CONVERT_WARNINGS_TO_ERRORS):
+
+	  This macro depends on the compiler settings performed by the
+	  ACE_SET_COMPILER_FLAGS macro, so added an
+	  AC_REQUIRE([ACE_SET_COMPILER_FLAGS]).
+
+	* m4/compilers.m4 (ACE_SET_COMPILER_FLAGS):
+
+	  Moved check for old GNU C++ from configure.in to here.
+
 Sat Jan 22 15:27:39 2000  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
 
-	* ace/Svc_Conf_l.cpp: Updated this file to use the new "warning-free" 
-	  generated file.
+	* ace/Svc_Conf_l.cpp: Updated this file to use the new
+	  "warning-free" generated file.
   
-	* etc/Svc_Conf_l.cpp.diff: Commented out a YY_BREAK macro that was causing
-	  an "unreached statement" warning on some C++ compilers.  Thanks
- 	  to David Levine for reporting this.
+	* etc/Svc_Conf_l.cpp.diff: Commented out a YY_BREAK macro that was
+	  causing an "unreached statement" warning on some C++ compilers.
+	  Thanks to David Levine for reporting this.
 
-	* tests/Thread_Pool_Test.cpp: In the method test_empty_message_shutdown() 
-	  we don't need to allocate a new message block when sending a
- 	  "null" message.  This removes another memory leak.  Thanks to
- 	  David Levine for reporting this.
+	* tests/Thread_Pool_Test.cpp: In the method
+	  test_empty_message_shutdown() we don't need to allocate a new
+	  message block when sending a "null" message.  This removes
+	  another memory leak.  Thanks to David Levine for reporting this.
 
 Sat Jan 21 12:30:33 2000  Ossama Othman  <ossama@uci.edu>
 
