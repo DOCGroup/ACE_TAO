@@ -5,60 +5,15 @@ namespace Kokyu
 {
 
 ACE_INLINE
-Dispatcher_Attributes::Dispatcher_Attributes()
-    :immediate_activation_ (0),
-     base_thread_creation_flags_ (THR_NEW_LWP | THR_BOUND | THR_JOINABLE),
-     thread_creation_flags_ (base_thread_creation_flags_)
-{
-   sched_policy (ACE_SCHED_FIFO);
-   sched_scope (ACE_SCOPE_PROCESS);
-}
-
-ACE_INLINE
 void Dispatcher_Attributes::sched_policy(int policy)
 {       
-   switch (policy)
-   {
-      case ACE_SCHED_FIFO: 
-         thread_creation_flags_ = 
-                base_thread_creation_flags_ | THR_SCHED_FIFO;
-         break;
-
-      case ACE_SCHED_OTHER:
-         thread_creation_flags_ = 
-                base_thread_creation_flags_ | THR_SCHED_DEFAULT;
-         break;
-
-      case ACE_SCHED_RR:
-         thread_creation_flags_ = 
-                base_thread_creation_flags_ | THR_SCHED_RR;
-         break;
-   }
+  sched_policy_ = policy;
 }
 
 ACE_INLINE
 void Dispatcher_Attributes::sched_scope(int scope)
 {       
-   switch (scope)
-   {
-      case ACE_SCOPE_PROCESS:
-      case ACE_SCOPE_LWP:
-         thread_creation_flags_ = 
-                base_thread_creation_flags_ | THR_SCOPE_PROCESS;
-         break;
-
-      case ACE_SCOPE_THREAD: 
-      default:        
-         thread_creation_flags_ = 
-                base_thread_creation_flags_ | THR_SCOPE_SYSTEM;
-         break;
-   }
-}
-
-ACE_INLINE
-int Dispatcher_Attributes::thread_creation_flags () const
-{
-  return thread_creation_flags_;
+  sched_scope_ = scope;
 }
 
 ACE_INLINE

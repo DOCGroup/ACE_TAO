@@ -62,7 +62,7 @@ int main (int argc, char** argv)
 
   if (parse_args (argc, argv) == -1)
     return 0;
-
+  
   if (ACE_OS::strcasecmp(sched_policy_str.c_str(), "fifo") == 0)
     {
       sched_policy = ACE_SCHED_FIFO;
@@ -75,8 +75,9 @@ int main (int argc, char** argv)
     {
       sched_policy = ACE_SCHED_RR;
     }
-
+  
   attrs.sched_policy (sched_policy);
+  
   hi_prio = ACE_Sched_Params::priority_max (sched_policy);
   me_prio = ACE_Sched_Params::previous_priority (sched_policy, 
                                                  hi_prio);
@@ -108,14 +109,29 @@ int main (int argc, char** argv)
   Kokyu::QoSDescriptor qos1, qos2, qos3;
 
   qos1.preemption_priority_ = 2;
+  ACE_DEBUG ((LM_DEBUG, "Priority of command1 is %d\n",
+              qos1.preemption_priority_));
+
   qos2.preemption_priority_ = 3;
+  ACE_DEBUG ((LM_DEBUG, "Priority of command2 is %d\n",
+              qos2.preemption_priority_));
+
   qos3.preemption_priority_ = 1;
+  ACE_DEBUG ((LM_DEBUG, "Priority of command3 is %d\n",
+              qos3.preemption_priority_));
 
-  disp->dispatch (&cmd1, qos1);
-  disp->dispatch (&cmd2, qos2);
-  disp->dispatch (&cmd3, qos3);
+  if (disp->dispatch (&cmd1, qos1) == -1 ||
+      disp->dispatch (&cmd2, qos2) == -1 ||
+      disp->dispatch (&cmd3, qos3) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "Error in dispatching command object\n"), -1);
 
-  disp->activate ();
+  if (disp->activate () == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, 
+                         ACE_TEXT ("Error activating dispatcher. ")
+                         ACE_TEXT ("You might not have superuser privileges ")
+                         ACE_TEXT ("to run FIFO class. Try \"-p other\"\n")), -1);
+    }
 
   disp->shutdown ();
 
