@@ -8,7 +8,7 @@
 #include "HTTP_Server.h"
 
 // class is overkill
-class HTTP_Server_Anchor
+class JAWS
 {
 public:
   enum
@@ -55,15 +55,15 @@ HTTP_Server::parse_args (int argc,
 	// PER_REQUEST -> thread per request
 	// THROTTLE    -> thread per request with throttling
         if (ACE_OS::strcmp (get_opt.optarg, "POOL") == 0)
-          thr_strategy = HTTP_Server_Anchor::POOL;
+          thr_strategy = JAWS::POOL;
         else if (ACE_OS::strcmp (get_opt.optarg, "PER_REQUEST") == 0)
           {
-            thr_strategy = HTTP_Server_Anchor::PER_REQUEST;
+            thr_strategy = JAWS::PER_REQUEST;
             this->throttle_ = 0;
           }
         else if (ACE_OS::strcmp (get_opt.optarg, "THROTTLE") == 0)
           {
-            thr_strategy = HTTP_Server_Anchor::PER_REQUEST;
+            thr_strategy = JAWS::PER_REQUEST;
             this->throttle_ = 1;
           }
 	break;
@@ -82,9 +82,9 @@ HTTP_Server::parse_args (int argc,
 	// SYNCH  -> synchronous I/O
 	// ASYNCH -> asynchronous I/O
         if (ACE_OS::strcmp (get_opt.optarg, "SYNCH") == 0)
-          io_strategy = HTTP_Server_Anchor::SYNCH;
+          io_strategy = JAWS::SYNCH;
         else if (ACE_OS::strcmp (get_opt.optarg, "ASYNCH") == 0)
-          io_strategy = HTTP_Server_Anchor::ASYNCH;
+          io_strategy = JAWS::ASYNCH;
 	break;
       case 'b':
 	this->backlog_ = ACE_OS::atoi (get_opt.optarg);
