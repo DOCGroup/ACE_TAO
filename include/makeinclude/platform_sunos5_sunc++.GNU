@@ -87,23 +87,34 @@ ifeq (Compilers 4.2,$(findstring Compilers 4.2,$(CC_VERSION)))
   #### Create template repository to avoid compiler warning.
   TEMPLATE_REPOSITORY = Templates.DB
 else  # ! 4.2
-ifeq (C++ 5,$(findstring C++ 5,$(CC_VERSION)))
-  #### CC 5.0 or later
-  #### Inlining appears to cause link problems with early releases of
-  #### CC 5.0.
-  inline = 0
+  ifeq (C++ 5,$(findstring C++ 5,$(CC_VERSION)))
+    #### CC 5.0 or later
+    #### Inlining appears to cause link problems with early releases of
+    #### CC 5.0.
+    inline = 0
 
-  CCFLAGS += $(CFLAGS)
+    CCFLAGS += $(CFLAGS)
 
-  #### If compat=4 is desired, set up for that. There are syntactic diffs
-  #### in the compatibility modes, but here all we need to be concerned with
-  #### is turning on -compat=4, and not trying to enable the new libraries.
-  #### RTTI may work, but has not been tested. To try it, cut/paste the
-  #### rtti conditions from the 4.2 section, above.
-  ifeq ($(compat4),1)
-    CCFLAGS += -compat=4 -DACE_LACKS_RTTI -instances=explicit
-  endif # compat4 requested
-endif # CC 5.0 or later
+    #### If compat=4 is desired, set up for that. There are syntactic diffs
+    #### in the compatibility modes, but here all we need to be concerned with
+    #### is turning on -compat=4, and not trying to enable the new libraries.
+    #### RTTI may work, but has not been tested. To try it, cut/paste the
+    #### rtti conditions from the 4.2 section, above.
+    ifeq ($(compat4),1)
+      CCFLAGS += -compat=4 -DACE_LACKS_RTTI -instances=explicit
+    else
+      #### Support RTTI by default.  And, use explicit template instantiation
+      #### because automatic instantiation appears to be broken, at least
+      #### with early releases of CC 5.0.  And, use old iostreams.
+      CCFLAGS += $(CFLAGS) -instances=explicit
+      ifeq (C++ 5.0,$(findstring C++ 5.0,$(CC_VERSION)))
+        CCFLAGS += -library=iostream,no%Cstd
+      else
+        #### SunCC 5.1 seems to need the std cpp lib
+        CCFLAGS += -library=iostream
+      endif # CC 5.0
+    endif # compat4 requested
+  endif # CC 5.0 or later
 endif # ! 4.2
 
 DCFLAGS         += -g
