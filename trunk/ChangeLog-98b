@@ -1,3 +1,9 @@
+Sun Jun 21 10:14:32 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/IPC_SAP/SOCK_SAP/CPP-unserver.cpp (server): Fixed
+ 	  another ambiguity caused by the recent SOCK_IO changes.  Thanks
+ 	  to David for pointing this out.
+
 Sun Jun 21 00:16:56 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.i (dlerror): Have to treat UNICODE differently because
