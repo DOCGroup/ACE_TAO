@@ -276,7 +276,7 @@ Paced_Worker::run (ACE_ENV_SINGLE_ARG_DECL)
 
   ACE_OS::memset (buffer,
                   1,
-                  message_size * sizeof CORBA::Octet);
+                  message_size * sizeof (CORBA::Octet));
 
   // To get things going...
   this->test_->method (payload

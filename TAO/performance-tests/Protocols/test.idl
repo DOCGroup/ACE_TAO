@@ -4,6 +4,6 @@ interface test
 {
   typedef sequence<octet> octets;
   
-  oneway void method (in octets payload);
+  void method (in octets payload);
   oneway void shutdown ();
 };
