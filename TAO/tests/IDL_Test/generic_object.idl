@@ -43,5 +43,3 @@ interface generic
                out Object outarg);
   };
 
-// Definition of interface forward declared in interface.idl.
-interface forward {};
