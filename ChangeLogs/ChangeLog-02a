@@ -1,3 +1,19 @@
+Thu Mar 29 19:12:38 2001  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/rules.lib.GNU: AIX-specific changes to
+          build shared libraries by making a shared shr.o file and putting
+          that into an archive. Seems weird, but that's the way AIX does
+          things. This makes ACE consistent with other AIX software.
+
+        * include/makeinclude/platform_aix4_cset++.GNU: Made some changes
+          to attempt to work with the new scheme for shared lib creation on
+          AIX. Did not test it, and don't plan to. The CSet++ compiler is not
+          supported by IBM any longer, and Riverace is not supporting ACE
+          with it. If someone out there sends patches for this, I'll put
+          them in, but this file is going away after ACE 5.2 is released.
+          All uses of IBM-supported compilers (IBM C/C++ and Visual Age C++
+          in batch mode) should be with the platform_aix_ibm.GNU file.
+
 Thu Mar 29 16:16:07 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/Token.cpp (renew): A conditional expression used an && rather
