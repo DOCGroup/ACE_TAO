@@ -1,3 +1,10 @@
+Fri Dec 20 16:12:33 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ACE.h:
+          The math.h delived with the Cygwin32 compiler already defines
+          log2 as macro so added a define acelog2 as log2 to handle this
+          already defined macro.
+
 Thu Dec 19 18:47:29 2002  Steve Huston  <shuston@riverace.com>
 
         * tests/tests.mpc: Added Obstack_Test and Recursive_Condition_Test.
