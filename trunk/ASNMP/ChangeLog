@@ -1,13 +1,23 @@
+Mon Apr 26 18:37:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/get/get.cpp:
+        * examples/get/get_async.cpp:
+        * examples/next/next.cpp:
+        * examples/set/set.cpp:
+        * examples/trap/trap.cpp:
+        * examples/walk/walk.cpp:
+          Don't use deprecated methods of ACE_Get_Opt and ACE_Reactor
+
 Mon Apr 26 15:14:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * ASNMP/examples/trap/purify4.1.txt:
+        * examples/trap/purify4.1.txt:
           Removed this file, it contains purify results and shouldn't
           belong in the repo.
 
 Thu Apr 22 20:45:27 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ASNMP/tests/Octet_Test.cpp:
-	* ASNMP/tests/Oid_Test.cpp:
+        * tests/Octet_Test.cpp:
+        * tests/Oid_Test.cpp:
 
 	  Changed all return types for equality, relational and logical
 	  operators to "bool", as is the norm for modern C++.
