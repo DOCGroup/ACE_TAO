@@ -14,14 +14,14 @@ TARGETS_NESTED = all debug profile optimize install deinstall clean realclean cl
 
 $(TARGETS_NESTED):
 	@$(MAKE) -f Makefile.Kokyu_DSRT_Schedulers $(@);
-	@$(MAKE) -C fp_example $(@);
-	@$(MAKE) -C mif_example $(@);
-	@$(MAKE) -C muf_example $(@);
+#	@$(MAKE) -C fp_example $(@);
+#	@$(MAKE) -C mif_example $(@);
+#	@$(MAKE) -C muf_example $(@);
 	@$(MAKE) -C edf_example $(@);
 
 reverseclean:
 	@$(MAKE) -f Makefile.Kokyu_DSRT_Schedulers realclean
-	@$(MAKE) -C fp_example realclean;
-	@$(MAKE) -C mif_example realclean;
-	@$(MAKE) -C muf_example realclean;
+#	@$(MAKE) -C fp_example realclean;
+#	@$(MAKE) -C mif_example realclean;
+#	@$(MAKE) -C muf_example realclean;
 	@$(MAKE) -C edf_example $(@);
