@@ -21,6 +21,70 @@ Sat Jan  9 22:50:35 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 Sat Jan  9 22:06:09 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* orbsvcs/Concurrency_Service/Concurrency_Service.cpp:
+	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+	* orbsvcs/LifeCycle_Service/Life_Cycle_Service_i.cpp:
+	* orbsvcs/Trading_Service/Trading_Service.cpp:
+	* orbsvcs/orbsvcs/Channel_Clients_T.cpp:
+	* orbsvcs/orbsvcs/Runtime_Scheduler.cpp:
+	* orbsvcs/orbsvcs/Concurrency/CC_Lock.cpp:
+	* orbsvcs/orbsvcs/Concurrency/CC_LockSet.cpp:
+	* orbsvcs/orbsvcs/Concurrency/CC_LockSetFactory.cpp:
+	* orbsvcs/orbsvcs/CosEvent/ProxyPushSupplier_i.cpp:
+	* orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Gateway.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+	* orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+	* orbsvcs/orbsvcs/Log/Logger_i.cpp:
+	* orbsvcs/orbsvcs/Naming/CosNaming_i.cpp:
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
+	* orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp:
+	* orbsvcs/orbsvcs/Time/TAO_TIO.cpp:
+	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.cpp:
+	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp:
+	* orbsvcs/orbsvcs/Time/TAO_UTO.cpp:
+	* orbsvcs/orbsvcs/Trader/Constraint_Interpreter.cpp:
+	* orbsvcs/orbsvcs/Trader/Offer_Database.cpp:
+	* orbsvcs/orbsvcs/Trader/Offer_Iterators.cpp:
+	* orbsvcs/orbsvcs/Trader/Offer_Iterators_T.cpp:
+	* orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp:
+	* orbsvcs/orbsvcs/Trader/Trader.cpp:
+	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
+	* orbsvcs/orbsvcs/Trader/Trader_T.cpp:
+	* orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:
+	* orbsvcs/tests/AVStreams/mpeg/source/server/Machine_Properties.cpp:
+	* orbsvcs/tests/AVStreams/mpeg/source/server/Property_Exporter.cpp:
+	* orbsvcs/tests/AVStreams/mpeg/source/server/Video_Repository.cpp:
+	* orbsvcs/tests/AVStreams/mpeg/source/server/augmented_server.cpp:
+	* orbsvcs/tests/Concurrency/CC_command.cpp:
+	* orbsvcs/tests/Concurrency/CC_naming_service.cpp:
+	* orbsvcs/tests/EC_Basic/EC_Basic.cpp:
+	* orbsvcs/tests/EC_Custom_Marshal/ECM_Consumer.cpp:
+	* orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp:
+	* orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
+	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
+	* orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp:
+	* orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.cpp:
+	* orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp:
+	* orbsvcs/tests/EC_Throughput/ECT_Supplier_Driver.cpp:
+	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
+	* orbsvcs/tests/Event_Latency/Event_Latency.cpp:
+	* orbsvcs/tests/ImplRepo/IR_Helper.cpp:
+	* orbsvcs/tests/ImplRepo/airplane_i.cpp:
+	* orbsvcs/tests/ImplRepo/airplane_server_i.cpp:
+	* orbsvcs/tests/Simple_Naming/client.cpp:
+	* orbsvcs/tests/Trading/Offer_Exporter.cpp:
+	* orbsvcs/tests/Trading/Offer_Importer.cpp:
+	* orbsvcs/tests/Trading/Service_Type_Exporter.cpp:
+	* orbsvcs/tests/Trading/Simple_Dynamic.cpp:
+	* tests/Param_Test/except.cpp:
+	* examples/Callback_Quoter/Consumer_Input_Handler.cpp:
+	* examples/Callback_Quoter/Notifier_i.cpp:
+	* examples/Quoter/Factory_Finder_i.cpp:
+	* examples/Quoter/Generic_Factory_i.cpp:
+	* examples/Quoter/Quoter_i.cpp:
+	* examples/Simple/bank/AccountManager_i.cpp:
+	* examples/Simple/grid/Grid_i.cpp:
 	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
 	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp:
 	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_cs.cpp:
