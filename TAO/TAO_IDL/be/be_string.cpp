@@ -60,8 +60,7 @@ be_string::be_string (AST_Decl::NodeType nt,
     be_type (nt,
              n)
 {
-  ACE_SET_BITS (idl_global->decls_seen_info_,
-                idl_global->decls_seen_masks.string_seen_);
+  idl_global->string_seen_ = true;
 }
 
 // Overriden method.

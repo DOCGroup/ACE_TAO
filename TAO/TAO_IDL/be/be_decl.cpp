@@ -834,20 +834,17 @@ be_decl::set_arg_seen_bit (be_type *bt)
       case NT_home:
       case NT_eventtype:
       case NT_eventtype_fwd:
-        ACE_SET_BITS (idl_global->decls_seen_info_,
-                      idl_global->decls_seen_masks.object_arg_seen_);
+        idl_global->object_arg_seen_ = true;
         break;
       case NT_union:
       case NT_struct:
         if (bt->size_type () == AST_Type::FIXED)
           {
-            ACE_SET_BITS (idl_global->decls_seen_info_,
-                          idl_global->decls_seen_masks.fixed_size_arg_seen_);
+            idl_global->fixed_size_arg_seen_ = true;
           }
         else
           {
-            ACE_SET_BITS (idl_global->decls_seen_info_,
-                          idl_global->decls_seen_masks.var_size_arg_seen_);
+            idl_global->var_size_arg_seen_ = true;
           }
 
         break;
@@ -861,8 +858,7 @@ be_decl::set_arg_seen_bit (be_type *bt)
         }
       case NT_enum:
       case NT_enum_val:
-        ACE_SET_BITS (idl_global->decls_seen_info_,
-                      idl_global->decls_seen_masks.basic_arg_seen_);
+        idl_global->basic_arg_seen_ = true;
         break;
       case NT_string:
       case NT_wstring:
@@ -871,13 +867,11 @@ be_decl::set_arg_seen_bit (be_type *bt)
 
           if (str->max_size ()->ev ()->u.ulval == 0)
             {
-              ACE_SET_BITS (idl_global->decls_seen_info_,
-                            idl_global->decls_seen_masks.ub_string_arg_seen_);
+              idl_global->ub_string_arg_seen_ = true;
             }
           else
             {
-              ACE_SET_BITS (idl_global->decls_seen_info_,
-                            idl_global->decls_seen_masks.bd_string_arg_seen_);
+              idl_global->bd_string_arg_seen_ = true;
             }
 
           break;
@@ -885,19 +879,16 @@ be_decl::set_arg_seen_bit (be_type *bt)
       case NT_array:
         if (bt->size_type () == AST_Type::FIXED)
           {
-            ACE_SET_BITS (idl_global->decls_seen_info_,
-                          idl_global->decls_seen_masks.fixed_array_arg_seen_);
+            idl_global->fixed_array_arg_seen_ = true;
           }
         else
           {
-            ACE_SET_BITS (idl_global->decls_seen_info_,
-                          idl_global->decls_seen_masks.var_array_arg_seen_);
+            idl_global->var_array_arg_seen_ = true;
           }
 
         break;
       case NT_sequence:
-        ACE_SET_BITS (idl_global->decls_seen_info_,
-                      idl_global->decls_seen_masks.var_size_arg_seen_);
+        idl_global->var_size_arg_seen_ = true;
         break;
       case NT_pre_defined:
         {
@@ -908,27 +899,20 @@ be_decl::set_arg_seen_bit (be_type *bt)
               case AST_PredefinedType::PT_object:
               case AST_PredefinedType::PT_pseudo:
               case AST_PredefinedType::PT_value:
-                ACE_SET_BITS (idl_global->decls_seen_info_,
-                              idl_global->decls_seen_masks.object_arg_seen_);
+                idl_global->object_arg_seen_ = true;
                 break;
               case AST_PredefinedType::PT_any:
-                ACE_SET_BITS (idl_global->decls_seen_info_,
-                              idl_global->decls_seen_masks.var_size_arg_seen_);
-                ACE_SET_BITS (idl_global->decls_seen_info_,
-                              idl_global->decls_seen_masks.any_arg_seen_);
+                idl_global->var_size_arg_seen_ = true;
+                idl_global->any_arg_seen_ = true;
                 break;
               case AST_PredefinedType::PT_char:
               case AST_PredefinedType::PT_wchar:
               case AST_PredefinedType::PT_octet:
               case AST_PredefinedType::PT_boolean:
-                ACE_SET_BITS (
-                    idl_global->decls_seen_info_,
-                    idl_global->decls_seen_masks.special_basic_arg_seen_
-                  );
+                idl_global->special_basic_arg_seen_ = true;
                 break;
              default:
-                ACE_SET_BITS (idl_global->decls_seen_info_,
-                              idl_global->decls_seen_masks.basic_arg_seen_);
+                idl_global->basic_arg_seen_ = true;
                 break;
             }
         }

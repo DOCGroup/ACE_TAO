@@ -265,71 +265,61 @@ public:
     , PS_PragmaPrefixSyntax     // Could not parse the #pragma prefix
   };
 
-  // 64-bit vector of flags for types of declarations seen while parsing.
-  ACE_UINT64 decls_seen_info_;
-
-  // Holds the masks to set and get in the above bit vector.
-  struct dsf
-  {
-    dsf (void);
-
-    ACE_UINT64 interface_seen_;
-    ACE_UINT64 valuetype_seen_;
-    ACE_UINT64 abstract_iface_seen_;
-    ACE_UINT64 local_iface_seen_;
-    ACE_UINT64 non_local_iface_seen_;
-    ACE_UINT64 fwd_iface_seen_;
-    ACE_UINT64 fwd_valuetype_seen_;
-    ACE_UINT64 basic_type_seen_;
-    ACE_UINT64 ambiguous_type_seen_;
-    ACE_UINT64 enum_seen_;
-    ACE_UINT64 string_seen_;
-    ACE_UINT64 array_seen_;
-    ACE_UINT64 aggregate_seen_;
-    ACE_UINT64 union_seen_;
-    ACE_UINT64 exception_seen_;
-    ACE_UINT64 operation_seen_;
-    ACE_UINT64 non_local_op_seen_;
-    ACE_UINT64 typecode_seen_;
-    ACE_UINT64 any_seen_;
-    ACE_UINT64 parametermode_seen_;
-    ACE_UINT64 base_object_seen_;
-    ACE_UINT64 valuefactory_seen_;
-    ACE_UINT64 valuebase_seen_;
-
-    ACE_UINT64 seq_seen_;
-    ACE_UINT64 iface_seq_seen_;
-    ACE_UINT64 vt_seq_seen_;
-    ACE_UINT64 array_seq_seen_;
-    ACE_UINT64 pseudo_seq_seen_;
-    ACE_UINT64 string_seq_seen_;
-    ACE_UINT64 wstring_seq_seen_;
-    ACE_UINT64 octet_seq_seen_;
-    ACE_UINT64 boolean_seq_seen_;
-    ACE_UINT64 char_seq_seen_;
-    ACE_UINT64 wchar_seq_seen_;
-    ACE_UINT64 short_seq_seen_;
-    ACE_UINT64 ushort_seq_seen_;
-    ACE_UINT64 long_seq_seen_;
-    ACE_UINT64 ulong_seq_seen_;
-    ACE_UINT64 longlong_seq_seen_;
-    ACE_UINT64 ulonglong_seq_seen_;
-    ACE_UINT64 float_seq_seen_;
-    ACE_UINT64 double_seq_seen_;
-    ACE_UINT64 longdouble_seq_seen_;
-    ACE_UINT64 any_seq_seen_;
-
-    ACE_UINT64 basic_arg_seen_;
-    ACE_UINT64 bd_string_arg_seen_;
-    ACE_UINT64 fixed_array_arg_seen_;
-    ACE_UINT64 fixed_size_arg_seen_;
-    ACE_UINT64 object_arg_seen_;
-    ACE_UINT64 special_basic_arg_seen_;
-    ACE_UINT64 ub_string_arg_seen_;
-    ACE_UINT64 var_array_arg_seen_;
-    ACE_UINT64 var_size_arg_seen_;
-    ACE_UINT64 any_arg_seen_;
-  } decls_seen_masks;
+  // flags for types of declarations seen while parsing.
+  bool abstract_iface_seen_;
+  bool aggregate_seen_;
+  bool ambiguous_type_seen_;
+  bool any_arg_seen_;
+  bool any_seen_;
+  bool any_seq_seen_;
+  bool array_seen_;
+  bool array_seq_seen_;
+  bool base_object_seen_;
+  bool basic_arg_seen_;
+  bool basic_type_seen_;
+  bool bd_string_arg_seen_;
+  bool boolean_seq_seen_;
+  bool char_seq_seen_;
+  bool double_seq_seen_;
+  bool enum_seen_;
+  bool exception_seen_;
+  bool fixed_array_arg_seen_;
+  bool fixed_size_arg_seen_;
+  bool float_seq_seen_;
+  bool fwd_iface_seen_;
+  bool fwd_valuetype_seen_;
+  bool iface_seq_seen_;
+  bool interface_seen_;
+  bool local_iface_seen_;
+  bool long_seq_seen_;
+  bool longdouble_seq_seen_;
+  bool longlong_seq_seen_;
+  bool non_local_iface_seen_;
+  bool non_local_op_seen_;
+  bool object_arg_seen_;
+  bool octet_seq_seen_;
+  bool operation_seen_;
+  bool parametermode_seen_;
+  bool pseudo_seq_seen_;
+  bool seq_seen_;
+  bool short_seq_seen_;
+  bool special_basic_arg_seen_;
+  bool string_seen_;
+  bool string_seq_seen_;
+  bool typecode_seen_;
+  bool ub_string_arg_seen_;
+  bool ulong_seq_seen_;
+  bool ulonglong_seq_seen_;
+  bool union_seen_;
+  bool ushort_seq_seen_;
+  bool valuebase_seen_;
+  bool valuefactory_seen_;
+  bool valuetype_seen_;
+  bool var_array_arg_seen_;
+  bool var_size_arg_seen_;
+  bool vt_seq_seen_;
+  bool wchar_seq_seen_;
+  bool wstring_seq_seen_;
 
   // Constructor
   IDL_GlobalData (void);
@@ -399,6 +389,8 @@ public:
 
   virtual unsigned long    n_include_file_names (void); // How many
   virtual void             set_n_include_file_names (unsigned long n);
+
+  virtual void             reset_flag_seen (void);
 
   // = Access methods to deal with other IDL files included in the main
   //   IDL file. These IDL files are exactly the same strings that are

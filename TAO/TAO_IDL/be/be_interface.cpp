@@ -110,34 +110,29 @@ be_interface::be_interface (UTL_ScopedName *n,
   if (this->is_defined ())
     {
       // Set the flag that says we have a interface in this IDL file.
-      ACE_SET_BITS (idl_global->decls_seen_info_,
-                    idl_global->decls_seen_masks.interface_seen_);
+      idl_global->interface_seen_ = true;
 
       if (abstract || this->has_mixed_parentage ())
         {
           // Set the flag for abstract interface seen in this IDL file.
-          ACE_SET_BITS (idl_global->decls_seen_info_,
-                        idl_global->decls_seen_masks.abstract_iface_seen_);
+          idl_global->abstract_iface_seen_ = true;
         }
 
       if (local)
         {
           // Set the flag for local interface seen in this IDL file.
-          ACE_SET_BITS (idl_global->decls_seen_info_,
-                        idl_global->decls_seen_masks.local_iface_seen_);
+          idl_global->local_iface_seen_ = true;
         }
       else
         {
           // Set the flag for non-local interface seen in this IDL file.
-          ACE_SET_BITS (idl_global->decls_seen_info_,
-                        idl_global->decls_seen_masks.non_local_iface_seen_);
+          idl_global->non_local_iface_seen_ = true;
         }
     }
   else
     {
       // Forward declared non-defined interface. Still gets a _var decl.
-      ACE_SET_BITS (idl_global->decls_seen_info_,
-                    idl_global->decls_seen_masks.fwd_iface_seen_);
+      idl_global->fwd_iface_seen_ = true;
     }
 }
 

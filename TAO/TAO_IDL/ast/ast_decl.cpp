@@ -1348,8 +1348,7 @@ AST_Decl::last_referenced_as (UTL_ScopedName *n)
       && ACE_OS::strcmp (n->last_component ()->get_string (),
                          "ParameterMode") == 0)
     {
-      ACE_SET_BITS (idl_global->decls_seen_info_,
-                    idl_global->decls_seen_masks.parametermode_seen_);
+      idl_global->parametermode_seen_ = true;
     }
 }
 

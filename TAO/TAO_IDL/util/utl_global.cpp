@@ -91,68 +91,10 @@ ACE_RCSID (util,
 
 static long *pSeenOnce= 0;
 
-IDL_GlobalData::dsf::dsf (void)
-  : interface_seen_ (0),
-    valuetype_seen_ (0),
-    abstract_iface_seen_ (0),
-    local_iface_seen_ (0),
-    non_local_iface_seen_ (0),
-    fwd_iface_seen_ (0),
-    fwd_valuetype_seen_ (0),
-    basic_type_seen_ (0),
-    ambiguous_type_seen_ (0),
-    enum_seen_ (0),
-    string_seen_ (0),
-    array_seen_ (0),
-    aggregate_seen_ (0),
-    union_seen_ (0),
-    exception_seen_ (0),
-    operation_seen_ (0),
-    non_local_op_seen_ (0),
-    typecode_seen_ (0),
-    any_seen_ (0),
-    parametermode_seen_ (0),
-    base_object_seen_ (0),
-    valuefactory_seen_ (0),
-    valuebase_seen_ (0),
 
-    seq_seen_ (0),
-    iface_seq_seen_ (0),
-    vt_seq_seen_ (0),
-    array_seq_seen_ (0),
-    pseudo_seq_seen_ (0),
-    string_seq_seen_ (0),
-    wstring_seq_seen_ (0),
-    octet_seq_seen_ (0),
-    boolean_seq_seen_ (0),
-    char_seq_seen_ (0),
-    wchar_seq_seen_ (0),
-    short_seq_seen_ (0),
-    ushort_seq_seen_ (0),
-    long_seq_seen_ (0),
-    ulong_seq_seen_ (0),
-    longlong_seq_seen_ (0),
-    ulonglong_seq_seen_ (0),
-    float_seq_seen_ (0),
-    double_seq_seen_ (0),
-    longdouble_seq_seen_ (0),
-    any_seq_seen_ (0),
-
-    basic_arg_seen_ (0),
-    bd_string_arg_seen_ (0),
-    fixed_array_arg_seen_ (0),
-    fixed_size_arg_seen_ (0),
-    object_arg_seen_ (0),
-    special_basic_arg_seen_ (0),
-    ub_string_arg_seen_ (0),
-    var_array_arg_seen_ (0),
-    var_size_arg_seen_ (0),
-    any_arg_seen_ (0)
-{}
 
 IDL_GlobalData::IDL_GlobalData (void)
-  : decls_seen_info_ (0),
-    pd_root (0),
+  : pd_root (0),
     pd_gen (0),
     pd_err (0),
     pd_err_count (0),
@@ -239,71 +181,75 @@ IDL_GlobalData::IDL_GlobalData (void)
 #endif /* ACE_GPERF */
     }
 
-  // Initialize the decls seen info masks
-
-  const ACE_UINT64 cursor = 1U;
-
-  ACE_SET_BITS (this->decls_seen_masks.interface_seen_,         cursor);
-  ACE_SET_BITS (this->decls_seen_masks.valuetype_seen_,         cursor << 1);
-  ACE_SET_BITS (this->decls_seen_masks.abstract_iface_seen_,    cursor << 2);
-  ACE_SET_BITS (this->decls_seen_masks.local_iface_seen_,       cursor << 3);
-  ACE_SET_BITS (this->decls_seen_masks.non_local_iface_seen_,   cursor << 4);
-  ACE_SET_BITS (this->decls_seen_masks.fwd_iface_seen_,         cursor << 5);
-  ACE_SET_BITS (this->decls_seen_masks.fwd_valuetype_seen_,     cursor << 6);
-  ACE_SET_BITS (this->decls_seen_masks.basic_type_seen_,        cursor << 7);
-  ACE_SET_BITS (this->decls_seen_masks.ambiguous_type_seen_,    cursor << 8);
-  ACE_SET_BITS (this->decls_seen_masks.enum_seen_,              cursor << 9);
-  ACE_SET_BITS (this->decls_seen_masks.string_seen_,            cursor << 10);
-  ACE_SET_BITS (this->decls_seen_masks.array_seen_,             cursor << 11);
-  ACE_SET_BITS (this->decls_seen_masks.aggregate_seen_,         cursor << 12);
-  ACE_SET_BITS (this->decls_seen_masks.union_seen_,             cursor << 13);
-  ACE_SET_BITS (this->decls_seen_masks.exception_seen_,         cursor << 14);
-  ACE_SET_BITS (this->decls_seen_masks.operation_seen_,         cursor << 15);
-  ACE_SET_BITS (this->decls_seen_masks.non_local_op_seen_,      cursor << 16);
-  ACE_SET_BITS (this->decls_seen_masks.typecode_seen_,          cursor << 17);
-  ACE_SET_BITS (this->decls_seen_masks.any_seen_,               cursor << 18);
-  ACE_SET_BITS (this->decls_seen_masks.parametermode_seen_,     cursor << 19);
-  ACE_SET_BITS (this->decls_seen_masks.base_object_seen_,       cursor << 20);
-  ACE_SET_BITS (this->decls_seen_masks.valuefactory_seen_,      cursor << 21);
-  ACE_SET_BITS (this->decls_seen_masks.valuebase_seen_,         cursor << 22);
-
-  ACE_SET_BITS (this->decls_seen_masks.seq_seen_,               cursor << 27);
-  ACE_SET_BITS (this->decls_seen_masks.iface_seq_seen_,         cursor << 28);
-  ACE_SET_BITS (this->decls_seen_masks.vt_seq_seen_,            cursor << 29);
-  ACE_SET_BITS (this->decls_seen_masks.array_seq_seen_,         cursor << 30);
-  ACE_SET_BITS (this->decls_seen_masks.pseudo_seq_seen_,        cursor << 31);
-  ACE_SET_BITS (this->decls_seen_masks.string_seq_seen_,        cursor << 32);
-  ACE_SET_BITS (this->decls_seen_masks.wstring_seq_seen_,       cursor << 33);
-  ACE_SET_BITS (this->decls_seen_masks.octet_seq_seen_,         cursor << 34);
-  ACE_SET_BITS (this->decls_seen_masks.boolean_seq_seen_,       cursor << 35);
-  ACE_SET_BITS (this->decls_seen_masks.char_seq_seen_,          cursor << 36);
-  ACE_SET_BITS (this->decls_seen_masks.wchar_seq_seen_,         cursor << 37);
-  ACE_SET_BITS (this->decls_seen_masks.short_seq_seen_,         cursor << 38);
-  ACE_SET_BITS (this->decls_seen_masks.ushort_seq_seen_,        cursor << 39);
-  ACE_SET_BITS (this->decls_seen_masks.octet_seq_seen_,         cursor << 40);
-  ACE_SET_BITS (this->decls_seen_masks.long_seq_seen_,          cursor << 41);
-  ACE_SET_BITS (this->decls_seen_masks.ulong_seq_seen_,         cursor << 42);
-  ACE_SET_BITS (this->decls_seen_masks.longlong_seq_seen_,      cursor << 43);
-  ACE_SET_BITS (this->decls_seen_masks.ulonglong_seq_seen_,     cursor << 44);
-  ACE_SET_BITS (this->decls_seen_masks.float_seq_seen_,         cursor << 45);
-  ACE_SET_BITS (this->decls_seen_masks.double_seq_seen_,        cursor << 46);
-  ACE_SET_BITS (this->decls_seen_masks.longdouble_seq_seen_,    cursor << 47);
-  ACE_SET_BITS (this->decls_seen_masks.any_seq_seen_,           cursor << 48);
-
-  ACE_SET_BITS (this->decls_seen_masks.basic_arg_seen_,         cursor << 52);
-  ACE_SET_BITS (this->decls_seen_masks.bd_string_arg_seen_,     cursor << 53);
-  ACE_SET_BITS (this->decls_seen_masks.fixed_array_arg_seen_,   cursor << 54);
-  ACE_SET_BITS (this->decls_seen_masks.fixed_size_arg_seen_,    cursor << 55);
-  ACE_SET_BITS (this->decls_seen_masks.object_arg_seen_,        cursor << 56);
-  ACE_SET_BITS (this->decls_seen_masks.special_basic_arg_seen_, cursor << 57);
-  ACE_SET_BITS (this->decls_seen_masks.ub_string_arg_seen_,     cursor << 58);
-  ACE_SET_BITS (this->decls_seen_masks.var_array_arg_seen_,     cursor << 59);
-  ACE_SET_BITS (this->decls_seen_masks.var_size_arg_seen_,      cursor << 60);
-  ACE_SET_BITS (this->decls_seen_masks.any_arg_seen_,           cursor << 61);
+  // ambiguous_type_seen_ and basic_type_seen_ are not reset between
+  // command line idl files, so do those here and then reset the rest.
+  this->ambiguous_type_seen_ = false;
+  this->basic_type_seen_ = false;
+  this->reset_flag_seen ();
 }
 
 IDL_GlobalData::~IDL_GlobalData (void)
 {
+}
+
+// When starting to process the next command line input idl file, reset.
+void
+IDL_GlobalData::reset_flag_seen (void)
+{
+  abstract_iface_seen_ = false;
+  aggregate_seen_ = false;
+//ambiguous_type_seen_
+  any_arg_seen_ = false;
+  any_seen_ = false;
+  any_seq_seen_ = false;
+  array_seen_ = false;
+  array_seq_seen_ = false;
+  base_object_seen_ = false;
+  basic_arg_seen_ = false;
+//basic_type_seen_
+  bd_string_arg_seen_ = false;
+  boolean_seq_seen_ = false;
+  char_seq_seen_ = false;
+  double_seq_seen_ = false;
+  enum_seen_ = false;
+  exception_seen_ = false;
+  fixed_array_arg_seen_ = false;
+  fixed_size_arg_seen_ = false;
+  float_seq_seen_ = false;
+  fwd_iface_seen_ = false;
+  fwd_valuetype_seen_ = false;
+  iface_seq_seen_ = false;
+  interface_seen_ = false;
+  local_iface_seen_ = false;
+  long_seq_seen_ = false;
+  longdouble_seq_seen_ = false;
+  longlong_seq_seen_ = false;
+  non_local_iface_seen_ = false;
+  non_local_op_seen_ = false;
+  object_arg_seen_ = false;
+  octet_seq_seen_ = false;
+  operation_seen_ = false;
+  parametermode_seen_ = false;
+  pseudo_seq_seen_ = false;
+  seq_seen_ = false;
+  short_seq_seen_ = false;
+  special_basic_arg_seen_ = false;
+  string_seen_ = false;
+  string_seq_seen_ = false;
+  typecode_seen_ = false;
+  ub_string_arg_seen_ = false;
+  ulong_seq_seen_ = false;
+  ulonglong_seq_seen_ = false;
+  union_seen_ = false;
+  ushort_seq_seen_ = false;
+  valuebase_seen_ = false;
+  valuefactory_seen_ = false;
+  valuetype_seen_ = false;
+  var_array_arg_seen_ = false;
+  var_size_arg_seen_ = false;
+  vt_seq_seen_ = false;
+  wchar_seq_seen_ = false;
+  wstring_seq_seen_ = false;
 }
 
 // Get or set scopes stack
