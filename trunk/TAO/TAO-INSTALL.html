@@ -135,6 +135,37 @@ version of the Naming Service.</P>
 to also contain the <code>TAO/tao</code> directory.  You'll find this in the
 C/C++ settings under Input.</P>
 
+<H4>Creating Static Libraries (*.lib)</H4>
+
+<P>Following is an example on how to create a project for a static library for TAO.
+Other projects (such as orbsvcs) should be just as easy to create static libraries
+for.  Just create a new project and copy the files and some of the settings from the 
+DLL project. </P>
+
+<OL>
+  <LI>Switch to FileView for the TAO.dsw Workspace
+  <LI>Add a new project to the workspace (right-click on workspace name)<BR>
+      <UL>
+	    <LI><B>Project type:</B> <CODE>Win32 Static Library</CODE>
+		<LI><B>Project name:</B> <CODE>TAO_Static</CODE>
+		<LI><B>Project directory:</B> <CODE>ACE_wrapper\TAO\tao</CODE>  (make sure to change
+		    this after the project name, since changing the project name affects this)
+		<LI><B>Select</B> "Add to Current Workspace"
+	  </UL>
+  <LI>Copy all folders (Source Files, Header Files...) to TAO_Static
+  <LI>Edit Project Settings<BR>
+      <UL>
+		<LI><B>C/C++ | General:</B> Add the Preprocessor Definitions 
+		    <CODE>TAO_HAS_DLL=0</CODE> and <CODE>__ACE_INLINE__=0</CODE>
+		<LI><B>C/C++ | Code Generation:</B> Change Run-time library to <CODE>Debug
+		    Multithreaded</CODE> (or <CODE>Multithreaded</CODE> for Release)
+	    <LI><B>C/C++ | Preprocessor:</B> Add <CODE>..\..\,..\</CODE> to the 
+		    additional include directories
+		<LI><B>Library:</B> Change the name to TAOs.lib and TAOsd.lib (for 
+		    consistency with the ACE library)
+	  </UL>
+</OL>
+      
 <HR>
 <H3>
 <A NAME="#VC"></A>How to add IDL files into your Visual C++ projects</H3>
