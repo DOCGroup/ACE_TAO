@@ -161,6 +161,14 @@ TAO_CORBANAME_Parser::parse_string (const char *ior,
   return obj;
 }
 
+ACE_STATIC_SVC_DEFINE (TAO_CORBANAME_Parser,
+                       ACE_TEXT ("CORBANAME_Parser"),
+                       ACE_SVC_OBJ_T,
+                       &ACE_SVC_NAME (TAO_CORBANAME_Parser),
+                       ACE_Service_Type::DELETE_THIS |
+                                  ACE_Service_Type::DELETE_OBJ,
+                       0)
+
 ACE_FACTORY_DEFINE (TAO, TAO_CORBANAME_Parser)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

@@ -1,3 +1,18 @@
+Thu Oct  5 09:47:42 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/TAO_Internal.cpp:
+        * tao/CORBALOC_Parser.h:
+        * tao/CORBALOC_Parser.cpp:
+        * tao/CORBANAME_Parser.h:
+        * tao/CORBANAME_Parser.cpp:
+          Statically add the new CORBALOC and CORBANAME parsers into
+          the Service Configurator, otherwise things don't quite work for
+          static builds.
+
+        * tao/Makefile.am:
+        * tao/Makefile.bor:
+          Add the new files to the Borland and automake makefiles.
+
 Thu Oct  5 11:37:08 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile: Added FT library to the makefile.
