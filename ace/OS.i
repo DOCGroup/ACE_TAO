@@ -5889,7 +5889,7 @@ ACE_OS::gethostbyname2 (const char *name, int family)
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (family);
   ACE_NOTSUP_RETURN (0);
-# elif defined (ACE_HAS_IP6)
+# elif defined (ACE_HAS_IPV6)
 #   if defined (ACE_HAS_NONCONST_GETBY)
   ACE_SOCKCALL_RETURN (::gethostbyname2 (ACE_const_cast (char *, name),
                                          family),
@@ -7198,7 +7198,7 @@ ACE_OS::inet_pton (int family, const char *strptr, void *addrptr)
 {
   ACE_OS_TRACE ("ACE_OS::inet_pton");
 
-#if defined (ACE_HAS_IP6)
+#if defined (ACE_HAS_IPV6)
   ACE_OSCALL_RETURN (::inet_pton (family, strptr, addrptr), int, -1);
 #else
   if (family == AF_INET)
@@ -7215,7 +7215,7 @@ ACE_OS::inet_pton (int family, const char *strptr, void *addrptr)
     }
 
   ACE_NOTSUP_RETURN(-1);
-#endif  /* ACE_HAS_IP6 */
+#endif  /* ACE_HAS_IPV6 */
 }
 
 ACE_INLINE const char *
@@ -7223,7 +7223,7 @@ ACE_OS::inet_ntop (int family, const void *addrptr, char *strptr, size_t len)
 {
   ACE_OS_TRACE ("ACE_OS::inet_ntop");
 
-#if defined (ACE_HAS_IP6)
+#if defined (ACE_HAS_IPV6)
   ACE_OSCALL_RETURN (::inet_ntop (family, addrptr, strptr, len), const char *, 0);
 #else
   const u_char *p =
@@ -7251,7 +7251,7 @@ ACE_OS::inet_ntop (int family, const void *addrptr, char *strptr, size_t len)
     }
 
   ACE_NOTSUP_RETURN(0);
-#endif /* ACE_HAS_IP6 */
+#endif /* ACE_HAS_IPV6 */
 }
 
 ACE_INLINE int
