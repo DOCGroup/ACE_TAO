@@ -1,3 +1,18 @@
+Wed Jan 21 01:34:07 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Cubit/TAO/MT_Cubit/{server,client}.cpp: Ifdef'ed out
+ 	  ACE_THR_PRIO_FIFO_DEF if it's not defined.
+
+	* orbsvcs/Naming_Service/Naming_Service.cpp: We should use
+ 	  "ace/streams.h" to include iostream definition instead of using
+ 	  <iostream.h> directly.  It is not compatible with the new
+ 	  standard CPP libraries.	
+
+	* orbsvcs/Event_Service/Event_Service.dsp:
+	* orbsvcs/Naming_Service/Naming_Service.dsp:
+	* orbsvcs/Scheduling_Service/Scheduling_Service.dsp: It used the
+ 	  wrong libraries. 
+	
 Tue Jan 20 22:59:42 1998  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
 	* tao/sequence_T.cpp: Fixed more typos where it was referring to
