@@ -1,3 +1,12 @@
+Thu Apr 22 13:23:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * include/makeinclude/platform_psos_diab_ppc.GNU: commented out -g
+          switch which was triggering a bug in the Diab 4.2b compiler when
+          compiling in debug information.  This is supposed to be fixed in
+          the 4.3a release of the Diab compiler.  The ACE tests all compile
+          now for pSOS/PPC.  Thanks to Sarmeesha Reddy <sreddy@tr.comm.mot.com>
+          for reporting the bug to Diab and obtaining the workaround.
+
 Thu Apr 22 10:46:17 1999  Steve Huston  <shuston@riverace.com>
 
         * apps/JAWS/server: Added $(ACELIB) to LDLIBS to build libJAWS on AIX
@@ -109,7 +118,7 @@ Tue Apr 20 18:22:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
           ace/config-psos-diab-mips.h
           ace/config-psos-diab-ppc.h
           ace/config-psos-diab.h
-          include/makeinclude/platform_psos_deab_ppc.GNU
+          include/makeinclude/platform_psos_diab_ppc.GNU
           tests/Handle_Set_Test.cpp
           tests/Process_Strategy_Test.cpp: fixed the remaining tests
           for which compiler bug workarounds were available for pSOS
