@@ -2653,7 +2653,7 @@ public:
   static u_int alarm (u_int delay);
   static ACE_hrtime_t gethrtime (void);
 #if defined (ACE_HAS_POWERPC) && defined (ghs)
-  static void ACE_OS::readPPCTimeBase (u_long &most, u_long &least);
+  static void readPPCTimeBase (u_long &most, u_long &least);
 #endif /* ACE_HAS_POWERPC && ghs */
   static int clock_gettime (clockid_t, struct timespec *);
   static ACE_Time_Value gettimeofday (void);
