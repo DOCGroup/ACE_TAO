@@ -1,3 +1,11 @@
+Fri Feb 11 16:01:37 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/Thread_Pool_Reactor_Test.cpp:
+        * tests/Thread_Pool_Reactor_Resume_Test.cpp:
+
+          Scaled down the tests on VxWorks as for CHORUS to make them
+          runnable with default target kernel network parameters.
+
 Fri Feb 11 07:32:06 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/OS_NS_sys_time.h:
