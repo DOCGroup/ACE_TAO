@@ -33,6 +33,8 @@ TAO/orbsvcs/orbsvcs/CosProperty.dsp
 TAO/orbsvcs/orbsvcs/CosTrading.dsp
 TAO/orbsvcs/orbsvcs/AV.dsp
 TAO/orbsvcs/orbsvcs/ETCL.dsp
+TAO/orbsvcs/orbsvcs/FaultTolerance.dsp 
+TAO/orbsvcs/orbsvcs/RTCosScheduling.dsp 
 TAO/orbsvcs/orbsvcs/RTEvent.dsp
 TAO/orbsvcs/orbsvcs/RTSched.dsp
 TAO/orbsvcs/orbsvcs/RTSchedEvent.dsp
@@ -49,6 +51,7 @@ TAO/orbsvcs/orbsvcs/DsNotifyLogAdmin.dsp
 TAO/orbsvcs/orbsvcs/FTORB_Utils.dsp
 TAO/orbsvcs/orbsvcs/FT_ClientORB.dsp
 TAO/orbsvcs/orbsvcs/FT_ServerORB.dsp
+TAO/orbsvcs/orbsvcs/FtRtEvent.dsp
 TAO/orbsvcs/orbsvcs/PortableGroup.dsp
 TAO/orbsvcs/orbsvcs/CosLoadBalancing.dsp
 TAO/orbsvcs/orbsvcs/IFRService.dsp
