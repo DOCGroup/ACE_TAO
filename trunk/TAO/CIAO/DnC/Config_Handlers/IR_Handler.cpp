@@ -152,11 +152,7 @@ namespace CIAO
     {
       if (resourcePort)
         {
-	  // increase the length of the sequence
-	  CORBA::ULong i (ir.resourcePort.length ());
-	  ir.resourcePort.length (i + 1);
-
-          ir.resourcePort[i] = XMLString::transcode (resourcePort);
+          ir.resourcePort = XMLString::transcode (resourcePort);
         }
     }
 
@@ -166,11 +162,7 @@ namespace CIAO
     {
       if (componentPort)
         {
-	  // increase the length of the sequence
-	  CORBA::ULong i (ir.componentPort.length ());
-	  ir.componentPort.length (i + 1);
-
-          ir.componentPort[i] = XMLString::transcode (componentPort);
+          ir.componentPort = XMLString::transcode (componentPort);
         }
     }
 
