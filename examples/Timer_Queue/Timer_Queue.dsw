@@ -3,6 +3,18 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
+Project: "Async_Timer_Queue_Test"=.\Async_Timer_Queue_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Reactor_Timer_Queue_Test"=.\Reactor_Timer_Queue_Test.dsp - Package Owner=<4>
 
 Package=<5>

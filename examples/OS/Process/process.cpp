@@ -133,7 +133,7 @@ test_more (void)
                   error));
     }
 
-  int status;
+  ACE_exitcode status;
   new_process.wait (&status);
   ACE_DEBUG ((LM_DEBUG,
               "Process exit with status %d\n",
@@ -164,7 +164,7 @@ test_date (void)
       return;
     }
 
-  int status;
+  ACE_exitcode status;
   new_process.wait (&status);
   ACE_DEBUG ((LM_DEBUG,
               "Process exit with status %d\n",
@@ -189,7 +189,7 @@ test_ls (void)
                   error));
     }
 
-  int status;
+  ACE_exitcode status;
   new_process.wait (&status);
   ACE_DEBUG ((LM_DEBUG,
               "Process exit with status %d\n",
@@ -213,11 +213,10 @@ test_wait (void)
     }
 
   int result;
-  int status;
+  ACE_exitcode status;
 
   ACE_DEBUG ((LM_DEBUG,
-              "[%T] New process sleeping 10; try wait(2)\n",
-              status));
+              "[%T] New process sleeping 10; try wait(2)\n"));
 
   result = process1.wait (ACE_Time_Value (2),
                           &status);
@@ -449,7 +448,7 @@ test_setenv (const char *argv0)
       return;
     }
 
-  int status;
+  ACE_exitcode status;
   process.wait (&status);
   ACE_DEBUG ((LM_DEBUG,
               "Process exit with status %d\n",
@@ -503,7 +502,7 @@ main (int argc, char *argv[])
                            "%p.\n",
                            "main"),
                           -1);
-      int status;
+      ACE_exitcode status;
       process.wait (&status);
       ACE_DEBUG ((LM_DEBUG,
                   "Process exit with status %d\n",

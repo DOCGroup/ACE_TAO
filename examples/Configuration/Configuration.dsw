@@ -3,7 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "ACE DLL"="..\..\ace\ace_dll.dsp" - Package Owner=<4>
+Project: "Test"=.\Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -11,21 +11,6 @@ Package=<5>
 
 Package=<4>
 {{{
-}}}
-
-###############################################################################
-
-Project: "Test"=".\Test.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name ACE DLL
-    End Project Dependency
 }}}
 
 ###############################################################################

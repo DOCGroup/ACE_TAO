@@ -1,5 +1,5 @@
 # Microsoft Developer Studio Project File - Name="NT_Service" - Package Owner=<4>
-# Microsoft Developer Studio Generated Build File, Format Version 5.00
+# Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
@@ -17,13 +17,12 @@ CFG=NT_Service - Win32 Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "NT_Service - Win32 Release" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "NT_Service - Win32 Debug" (based on\
- "Win32 (x86) Console Application")
+!MESSAGE "NT_Service - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "NT_Service - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
