@@ -96,7 +96,8 @@ TAO_PG_GenericFactory::create_object (
   // If the number of factories is less than the initial number of
   // members, then the desired number of members cannot possibly be
   // created.
-  if (factory_infos_count < initial_number_members)
+  if (factory_infos_count < ACE_static_cast (CORBA::ULong,
+                                             initial_number_members))
     ACE_THROW_RETURN (PortableGroup::CannotMeetCriteria (),
                       CORBA::Object::_nil ());
 
