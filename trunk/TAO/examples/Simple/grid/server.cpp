@@ -43,12 +43,8 @@ main (int argc, char *argv[])
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
 template class Server<Grid_Factory_i>;
-
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
 #pragma instantiate Server<Grid_Factory_i>
-
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

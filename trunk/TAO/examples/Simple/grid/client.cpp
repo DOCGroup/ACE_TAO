@@ -1,4 +1,4 @@
-//$Id$
+// $Id$
 
 # include "Grid_Client_i.h"
 
