@@ -20,7 +20,7 @@ template<class Client>
 class Disconnect
 {
 public:
-  void operator() (Client *client ACE_ENV_ARG_DECL);
+  void operator() (Client *client);
 };
 
 /**
