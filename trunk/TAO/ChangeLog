@@ -1,3 +1,8 @@
+Sun Aug  1 17:27:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/QtTests/server.cpp:
+          Added missing include
+
 Sun Aug  1 17:07:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/RTCORBA/Banded_Connections/server.cpp:
