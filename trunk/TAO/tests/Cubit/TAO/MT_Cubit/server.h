@@ -17,8 +17,8 @@
 
 #if defined (TAO_PLATFORM_SVC_CONF_FILE_NOTSUP)
 #define TAO_DEFAULT_SERVER_STRATEGY_FACTORY_ARGS { "-ORBconcurrency", "thread-per-connection", \
-                                                   "-ORBdemuxstrategy", "dynamic", \
-                                                   "-ORBtablesize", "128" }
+  "-ORBdemuxstrategy", "dynamic", \
+  "-ORBtablesize", "128" }
 #endif
 
 #include "ace/Get_Opt.h"
@@ -26,6 +26,7 @@
 #include "ace/ARGV.h"
 #include "ace/Sched_Params.h"
 #include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/Naming/Naming_Utils.h"
 
 // TAO includes.
 #include "tao/corba.h"
@@ -88,7 +89,7 @@ class Cubit_Task : public ACE_Task<ACE_MT_SYNCH>
 {
   // = TITLE
   //    Encapsulates an ORB for the Cubit application.
- public:
+public:
   Cubit_Task (const char *args,
               const char* orbname,
               u_int num_of_objs,
@@ -134,7 +135,7 @@ private:
   CORBA::String *servants_iors_;
   // ior strings of the servants
 
-  CosNaming::NamingContext_var naming_context_;
+  //CosNaming::NamingContext_var naming_context_;
   // Object reference to the naming service
 
   u_int task_id_;
@@ -148,6 +149,10 @@ private:
 
   TAO_ORB_Manager orb_manager_;
   // The TAO ORB Manager
+
+  TAO_Naming_Client my_name_client_;
+  // An instance of the name client used for resolving the factory
+  // objects.
 };
 
 
@@ -158,7 +163,7 @@ public:
   int initialize (int argc, char **argv);
   int start_servants (ACE_Thread_Manager *serv_thr_mgr,Task_State *ts);
   Util_Thread * start_utilization (ACE_Thread_Manager *util_thr_mgr, Task_State *ts);
- private:
+private:
   int argc_;
   char **argv_;
 };

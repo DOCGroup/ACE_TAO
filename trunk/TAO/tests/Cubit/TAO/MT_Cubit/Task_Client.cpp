@@ -9,30 +9,30 @@
 
 ACE_RCSID(MT_Cubit, Task_Client, "$Id$")
 
-Task_State::Task_State (int argc, char **argv)
-  : key_ ("Cubit"),
-    loop_count_ (1000),
-    thread_count_ (2),
-    datatype_ (CB_OCTET),
-    argc_ (argc),
-    argv_ (argv),
-    thread_per_rate_ (0),
-    global_jitter_array_ (0),
-    shutdown_ (0),
-    oneway_ (0),
-    use_name_service_ (1),
-    one_to_n_test_ (0),
-    context_switch_test_ (0),
-    ior_file_ (0),
-    granularity_ (1),
-    use_utilization_test_ (0),
-    high_priority_loop_count_ (0),
-    use_multiple_priority_ (0),
-    utilization_task_started_ (0),
-    run_server_utilization_test_ (0),
-    util_time_ (0),
-    ready_ (0),
-    ready_cnd_ (ready_mtx_)
+  Task_State::Task_State (int argc, char **argv)
+    : key_ ("Cubit"),
+      loop_count_ (1000),
+      thread_count_ (2),
+      datatype_ (CB_OCTET),
+      argc_ (argc),
+      argv_ (argv),
+      thread_per_rate_ (0),
+      global_jitter_array_ (0),
+      shutdown_ (0),
+      oneway_ (0),
+      use_name_service_ (1),
+      one_to_n_test_ (0),
+      context_switch_test_ (0),
+      ior_file_ (0),
+      granularity_ (1),
+      use_utilization_test_ (0),
+      high_priority_loop_count_ (0),
+      use_multiple_priority_ (0),
+      utilization_task_started_ (0),
+      run_server_utilization_test_ (0),
+      util_time_ (0),
+      ready_ (0),
+      ready_cnd_ (ready_mtx_)
 {
 }
 
@@ -181,35 +181,35 @@ Task_State::parse_args (int argc,char **argv)
         // file.
         {
           ACE_NEW_RETURN (barrier_,
-                   ACE_Barrier (thread_count_ + 2),
-                   -1);
+			  ACE_Barrier (thread_count_ + 2),
+			  -1);
         }
       else
         {
           ACE_NEW_RETURN (barrier_,
-                   ACE_Barrier (thread_count_ + 1),
-                   -1);
+			  ACE_Barrier (thread_count_ + 1),
+			  -1);
         }
     }
   else
     {
       ACE_NEW_RETURN (barrier_,
-               ACE_Barrier (thread_count_),
+		      ACE_Barrier (thread_count_),
                       -1);
     }
 
   ACE_NEW_RETURN (semaphore_,
-           ACE_Thread_Semaphore (0),
+		  ACE_Thread_Semaphore (0),
                   -1);
   ACE_NEW_RETURN (latency_,
-           double [thread_count_],
+		  double [thread_count_],
                   -1);
   ACE_NEW_RETURN (global_jitter_array_,
-           double *[thread_count_],
-           -1);
+		  double *[thread_count_],
+		  -1);
   ACE_NEW_RETURN (count_,
-           u_int [thread_count_],
-           -1);
+		  u_int [thread_count_],
+		  -1);
   return 0;
 }
 
@@ -434,17 +434,13 @@ Client::svc (void)
   ACE_DEBUG ((LM_DEBUG,"(%t) ORB_init success\n"));
   if (ts_->use_name_service_ != 0)
     {
-      naming_obj =
-        orb->resolve_initial_references ("NameService");
-
-      if (CORBA::is_nil (naming_obj.in ()))
-        ACE_ERROR ((LM_ERROR,
-                    " (%P|%t) Unable to resolve the Name Service.\n"));
-      else
-        this->naming_context_ =
-          CosNaming::NamingContext::_narrow (naming_obj.in (), env);
+      // Initialize the naming services
+      if (my_name_client_.init (orb.in (), argc, argv) != 0)
+	ACE_ERROR_RETURN ((LM_ERROR,
+			   " (%P|%t) Unable to initialize "
+			   "the TAO_Naming_Client. \n"),
+			  -1);
     }
-
   {
     //    ACE_DEBUG ((LM_DEBUG,"(%t) Not using Naming service\n"));
 
@@ -510,7 +506,7 @@ Client::svc (void)
     TAO_TRY
       {
         // if the naming service was resolved successsfully ...
-        if (!CORBA::is_nil (this->naming_context_.in ()))
+        if (!CORBA::is_nil (this->my_name_client_.get_context ()))
           {
             ACE_DEBUG ((LM_DEBUG,
                         " (%t) ----- Using the NameService resolve() method"
@@ -522,7 +518,7 @@ Client::svc (void)
             mt_cubit_context_name[0].id = CORBA::string_dup ("MT_Cubit");
 
             objref =
-              this->naming_context_->resolve (mt_cubit_context_name,
+              this->my_name_client_->resolve (mt_cubit_context_name,
                                               TAO_TRY_ENV);
             TAO_CHECK_ENV;
 
@@ -853,7 +849,7 @@ Client::run_tests (Cubit_ptr cb,
                   }
                 break;
               }
-            // Cube a long.
+	      // Cube a long.
 
             case CB_LONG:
               {
@@ -984,7 +980,7 @@ Client::run_tests (Cubit_ptr cb,
 #   else /* CHORUS */
           // Store the time in usecs.
           real_time = (delta_t.sec () * ACE_ONE_SECOND_IN_USECS  +
-            delta_t.usec ()) / ts_->granularity_;
+		       delta_t.usec ()) / ts_->granularity_;
 #   endif /* !CHORUS */
           delta = ((40 * fabs (real_time) / 100) + (60 * delta / 100)); // pow(10,6)
           latency += real_time * ts_->granularity_;
@@ -1029,15 +1025,15 @@ Client::run_tests (Cubit_ptr cb,
           my_jitter_array [i/ts_->granularity_] = real_time * ACE_ONE_SECOND_IN_MSECS;
 #endif /* !ACE_LACKS_FLOATING_POINT */
         } // END OF IF   :
-          //       if ( (i % ts_->granularity_) == (ts_->granularity_ - 1) &&
-          //       (ts_->use_utilization_test_ == 0) &&
-          //       (ts_->run_server_utilization_test_ == 0)
-          //       )
+      //       if ( (i % ts_->granularity_) == (ts_->granularity_ - 1) &&
+      //       (ts_->use_utilization_test_ == 0) &&
+      //       (ts_->run_server_utilization_test_ == 0)
+      //       )
 
       if ( ts_->thread_per_rate_ == 1 && id_ < (ts_->thread_count_ - 1) )
         {
           if (ts_->semaphore_->tryacquire () != -1)
-              break;
+	    break;
         }
       else
         // if We are the high priority client.
@@ -1135,7 +1131,7 @@ Client::run_tests (Cubit_ptr cb,
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class ACE_Condition<ACE_SYNCH_MUTEX>;
+template class ACE_Condition<ACE_SYNCH_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 # pragma instantiate ACE_Condition<ACE_SYNCH_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -202,7 +202,8 @@ class TAO_ORBSVCS_Export TAO_AV_Endpoint_Reactive_Strategy_A
 // ----------------------------------------------------------------------
 template <class T_StreamEndpoint, class T_Vdev , class T_MediaCtrl>
 class TAO_ORBSVCS_Export TAO_AV_Endpoint_Reactive_Strategy_B
-  : public TAO_AV_Endpoint_Reactive_Strategy
+  : public TAO_AV_Endpoint_Reactive_Strategy <class T_StreamEndpoint,
+    class T_Vdev, class T_MediaCtrl>
 // = DESCRIPTION
 //    Reactive strategy
 {

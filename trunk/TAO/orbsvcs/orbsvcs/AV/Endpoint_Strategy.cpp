@@ -524,7 +524,7 @@ TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::act
 
   if (this->make_stream_endpoint (stream_endpoint_b) == -1)
     return -1;
-  this->orb_manager_->activate (this->stream_endpoint_b_,
+  this->orb_manager_->activate (stream_endpoint_b,
                                  env);
   TAO_CHECK_ENV_RETURN (env, -1);
 

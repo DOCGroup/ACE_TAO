@@ -22,6 +22,7 @@
 #include "ace/Profile_Timer.h"
 #include "tao/corba.h"
 #include "cubitC.h"
+#include "orbsvcs/Naming/Naming_Utils.h"
 
 class Cubit_Client
 {
@@ -144,4 +145,8 @@ private:
 
   int only_oneway_;
   // Run only the cube_oneway() test.
+
+  TAO_Naming_Client my_name_client_;
+  // An instance of the name client used for resolving the factory
+  // objects.
 };

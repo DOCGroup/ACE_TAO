@@ -27,6 +27,7 @@
 #include "ace/High_Res_Timer.h"
 
 #include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/Naming/Naming_Utils.h"
 #include "cubitC.h"
 
 #if defined (CHORUS)
@@ -269,11 +270,14 @@ private:
   u_int id_;
   // unique id of the task
 
-  CosNaming::NamingContext_var naming_context_;
+  //  CosNaming::NamingContext_var naming_context_;
   // Object reference to the naming service.
 
   CosNaming::NamingContext_var mt_cubit_context_;
   // Object reference to the cubit context "MT_Cubit".
+
+  TAO_Naming_Client my_name_client_;
+  // Naming Client intermediary to naming service stuff
 };
 
 #endif /* !defined (TASK_CLIENT_H) */

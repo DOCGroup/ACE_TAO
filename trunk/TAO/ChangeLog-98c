@@ -1,3 +1,16 @@
+Wed Aug 19 15:18:36 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/Endpoint_Strategy.{h,cpp}: 
+	  Fixed template errors that derailed compilation
+	
+	* orbsvcs/tests/Property/client.{h,cpp}: 
+	* tests/Cubit/TAO/MT_Cubit/Task_Client.{h,cpp}: 
+	* tests/Cubit/TAO/MT_client/server.{h,cpp}
+	* tests/Cubit/TAO/IDL_Cubit/client_i.{h,cpp}
+ 	  Replaced old code with Naming_Utils code. Added a
+	  TAO_Naming_Client to the *.h, and used it in the *.cpp to
+	  contact the Naming Service for binds and resolves.
+
 Wed Aug 19 15:06:59 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/ORB.h: 
