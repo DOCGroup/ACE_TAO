@@ -1,3 +1,18 @@
+Wed May  1 00:59:39 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/receiver.cpp:
+	* orbsvcs/tests/AVStreams/Bidirectional_Flows/sender.cpp:
+	* orbsvcs/tests/AVStreams/Simple_Three_Stage/receiver.cpp:
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage/receiver.cpp:
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/receiver.cpp:
+	  Spelling corrections.
+
+	* orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp:
+	* orbsvcs/orbsvcs/AV/Endpoint_Strategy.h:
+	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp:
+	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.h:
+	  Try to plug some more memory leaks.
+
 Tue Apr 30 17:39:37 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/default_resource.cpp (init): Removed support for

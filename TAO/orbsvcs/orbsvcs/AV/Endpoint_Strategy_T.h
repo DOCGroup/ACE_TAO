@@ -73,6 +73,13 @@ protected:
 
   CORBA::Object_var media_ctrl_obj_;
 
+  T_StreamEndpoint *stream_endpoint_a_servant_;
+
+  T_StreamEndpoint *stream_endpoint_b_servant_;
+
+  T_VDev *vdev_servant_;
+
+  T_MediaCtrl *media_ctrl_servant_;
 };
 // ----------------------------------------------------------------------
 
