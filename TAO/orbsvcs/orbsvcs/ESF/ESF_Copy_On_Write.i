@@ -12,7 +12,7 @@ TAO_ESF_Copy_On_Write_Collection<COLLECTION,ITERATOR>::
 template<class COLLECTION, class ITERATOR, class ACE_LOCK> ACE_INLINE
 TAO_ESF_Copy_On_Write_Read_Guard<COLLECTION,ITERATOR,ACE_LOCK>::
     TAO_ESF_Copy_On_Write_Read_Guard (ACE_LOCK &m,
-                                     Collection*& collection_ref)
+                                      Collection*& collection_ref)
       :  collection (0),
          mutex (m)
 {
@@ -37,17 +37,21 @@ TAO_ESF_Copy_On_Write_Read_Guard<COLLECTION,ITERATOR,ACE_LOCK>::
 template<class COLLECTION, class ITERATOR, ACE_SYNCH_DECL> ACE_INLINE
 TAO_ESF_Copy_On_Write_Write_Guard<COLLECTION,ITERATOR,ACE_SYNCH_USE>::
     TAO_ESF_Copy_On_Write_Write_Guard (ACE_SYNCH_MUTEX_T &m,
-                                      ACE_SYNCH_CONDITION_T &c,
-                                      int &w,
-                                      Collection*& cr)
+                                       ACE_SYNCH_CONDITION_T &c,
+                                       int &p,
+                                       int &w,
+                                       Collection*& cr)
       :  copy (0),
          mutex (m),
          cond (c),
+         pending_writes (p),
          writing_flag (w),
          collection (cr)
 {
   {
     ACE_GUARD (ACE_SYNCH_MUTEX_T, ace_mon, this->mutex);
+
+    this->pending_writes++;
 
     while (this->writing_flag != 0)
       this->cond.wait ();
@@ -58,7 +62,13 @@ TAO_ESF_Copy_On_Write_Write_Guard<COLLECTION,ITERATOR,ACE_SYNCH_USE>::
   // Copy outside the mutex, because it may take a long time.
   // Nobody can change it, because it is protected by the
   // writing_flag.
-  ACE_NEW (this->copy, Collection (*this->collection));
+
+  // First initialize it (with the correct reference count
+  ACE_NEW (this->copy, Collection);
+  // Copy the contents
+  this->copy->collection = this->collection->collection;
+
+  // Increase the reference counts
   ITERATOR end = this->copy->collection.end ();
   for (ITERATOR i = this->copy->collection.begin (); i != end; ++i)
     {
@@ -77,6 +87,8 @@ TAO_ESF_Copy_On_Write_Write_Guard<COLLECTION,ITERATOR,ACE_SYNCH_USE>::
     tmp = this->collection;
     this->collection = this->copy;
     this->writing_flag = 0;
+    this->pending_writes--;
+
     this->cond.signal ();
   }
   // Delete outside the mutex, because it may take a long time.

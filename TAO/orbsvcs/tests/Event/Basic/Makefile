@@ -26,7 +26,8 @@ BIN2 =   Reconnect \
 	Bitmask \
 	Complex \
 	Gateway \
-	Control
+	Control \
+	Random
 
 #### If the orbsvcs library wasn't built with all components, don't
 #### try to build certain tests.

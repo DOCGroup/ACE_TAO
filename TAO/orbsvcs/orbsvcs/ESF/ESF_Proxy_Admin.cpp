@@ -77,6 +77,9 @@ TAO_ESF_Proxy_Admin<EC,P,I>::disconnected (P *proxy,
                                          CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC (())
 {
+  proxy->deactivate (ACE_TRY_ENV);
+  ACE_CHECK; // Cannot happen, just following the discipline.
+
   ACE_TRY
     {
       this->collection_->disconnected (proxy, ACE_TRY_ENV);
@@ -93,9 +96,6 @@ TAO_ESF_Proxy_Admin<EC,P,I>::disconnected (P *proxy,
       // that has an exception for "could not acquire a mutex".
     }
   ACE_ENDTRY;
-
-  proxy->deactivate (ACE_TRY_ENV);
-  ACE_CHECK; // Cannot happen, just following the discipline.
 }
 
 #endif /* TAO_ESF_PROXY_ADMIN_CPP */

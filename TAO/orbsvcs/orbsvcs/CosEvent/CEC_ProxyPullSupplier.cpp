@@ -86,16 +86,14 @@ TAO_CEC_ProxyPullSupplier::shutdown (CORBA::Environment &ACE_TRY_ENV)
     // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
     ACE_CHECK;
 
-    if (this->is_connected_i () == 0)
-      return;
-
     consumer = this->consumer_._retn ();
-
-    this->cleanup_i ();
   }
 
   this->deactivate (ACE_TRY_ENV);
   ACE_CHECK;
+
+  if (CORBA::is_nil (consumer.in ()))
+    return;
 
   ACE_TRY
     {

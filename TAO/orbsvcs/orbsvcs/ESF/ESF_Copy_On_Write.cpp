@@ -43,7 +43,8 @@ TAO_ESF_Copy_On_Write_Collection<COLLECTION,ITERATOR>::_decr_refcnt (void)
 template<class PROXY, class COLLECTION, class ITERATOR, ACE_SYNCH_DECL>
 TAO_ESF_Copy_On_Write<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
     TAO_ESF_Copy_On_Write (void)
-      :  writing_ (0),
+      :  pending_writes_ (0),
+         writing_ (0),
          cond_ (mutex_)
 {
   ACE_NEW (this->collection_, Collection);
@@ -53,7 +54,13 @@ template<class PROXY, class COLLECTION, class ITERATOR, ACE_SYNCH_DECL>
 TAO_ESF_Copy_On_Write<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
     ~TAO_ESF_Copy_On_Write (void)
 {
+  ACE_GUARD (ACE_SYNCH_MUTEX_T, ace_mon, this->mutex_);
+
+  while (this->pending_writes_ != 0)
+    this->cond_.wait ();
+
   this->collection_->_decr_refcnt ();
+  this->collection_ = 0;
 }
 
 template<class PROXY, class COLLECTION, class ITERATOR, ACE_SYNCH_DECL> void
@@ -79,6 +86,7 @@ TAO_ESF_Copy_On_Write<PROXY,C,I,ACE_SYNCH_USE>::
 {
   Write_Guard ace_mon (this->mutex_,
                        this->cond_,
+                       this->pending_writes_,
                        this->writing_,
                        this->collection_);
 
@@ -93,6 +101,7 @@ TAO_ESF_Copy_On_Write<PROXY,C,I,ACE_SYNCH_USE>::
 {
   Write_Guard ace_mon (this->mutex_,
                        this->cond_,
+                       this->pending_writes_,
                        this->writing_,
                        this->collection_);
 
@@ -107,6 +116,7 @@ TAO_ESF_Copy_On_Write<PROXY,C,I,ACE_SYNCH_USE>::
 {
   Write_Guard ace_mon (this->mutex_,
                        this->cond_,
+                       this->pending_writes_,
                        this->writing_,
                        this->collection_);
 
@@ -117,10 +127,10 @@ template<class PROXY, class C, class I, ACE_SYNCH_DECL> void
 TAO_ESF_Copy_On_Write<PROXY,C,I,ACE_SYNCH_USE>::
     shutdown (CORBA::Environment &ACE_TRY_ENV)
 {
-  // @@ Do we really need to perform a copy here?
-  //    I believe so, but i don't have a good scenario for it.
+  // We need to perform a copy to follow the protocol.
   Write_Guard ace_mon (this->mutex_,
                        this->cond_,
+                       this->pending_writes_,
                        this->writing_,
                        this->collection_);
 

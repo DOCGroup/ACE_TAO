@@ -145,4 +145,14 @@ if ($T->TimedWait (60) == -1) {
   $T->Kill (); $T->TimedWait (1);
 }
 
+print STDERR "\n\nRandom test\n";
+$T = Process::Create ($EXEPREFIX . "Random".$EXE_EXT,
+		      " -ORBSvcConf $cwd$DIR_SEPARATOR" . "svc.conf"
+		      . " -suppliers 4 -consumers 4 -max_recursion 1");
+if ($T->TimedWait (60) == -1) {
+  print STDERR "ERROR: Test timedout\n";
+  $status = 1;
+  $T->Kill (); $T->TimedWait (1);
+}
+
 exit $status;

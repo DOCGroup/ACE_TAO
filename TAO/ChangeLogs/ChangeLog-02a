@@ -1,3 +1,91 @@
+Tue Apr 18 08:52:27 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_RefCount_Guard.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_RefCount_Guard.i:
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_RefCount_Guard.cpp:
+        * orbsvcs/orbsvcs/ESF/ESF_RefCount_Guard.h:
+        * orbsvcs/orbsvcs/ESF/ESF_RefCount_Guard.i:
+        * orbsvcs/orbsvcs/ESF/ESF_RefCount_Guard.cpp:
+          New implementations of the Guard idiom that deal with safely
+          incrementing and decrementing the reference count on a proxy.
+
+        * orbsvcs/orbsvcs/ESF/ESF_Delayed_Changes.cpp:
+          Cosmetic fixes.
+
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.cpp:
+          The proxy should be deactivated *before* removing it from the
+          collection.
+
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_List.cpp:
+          The reconnected() call was leaking resources when the object was
+          not in the set.
+
+        * orbsvcs/orbsvcs/ESF/ESF_Copy_On_Write.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Copy_On_Write.i:
+        * orbsvcs/orbsvcs/ESF/ESF_Copy_On_Write.cpp:
+          The Write_Guard was copying not only the contents of the
+          original collection, but also the reference count value.
+          There was a subtle race condition, the destructor has to wait
+          until all the pending writes have completed before removing the
+          object.
+
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.i:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+          Use Guard idioms to safely remove reference count objects and
+          destroy some entities when their reference count reaches 0.
+          In some cases resources where leaked because the destructor was
+          assuming that shutdown() or something similar was invoked.  In
+          general this is correct, but in concurrent scenarios a thread
+          may invoke shutdown() triggering the destruction of the object,
+          while another thread is still making changes.  In such a case
+          the destructor is responsible for the final cleanup operations,
+          because the shutdown() method is not invoked again.
+
+        * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp:
+          Removed bogus inline.
+
+        * orbsvcs/tests/Event/Event.dsw:
+        * orbsvcs/tests/Event/Basic/Basic.dsw:
+        * orbsvcs/tests/Event/Basic/Makefile:
+        * orbsvcs/tests/Event/Basic/Random.dsp:
+        * orbsvcs/tests/Event/Basic/Random.h:
+        * orbsvcs/tests/Event/Basic/Random.cpp:
+        * orbsvcs/tests/Event/Basic/Random.dsp:
+        * orbsvcs/tests/Event/Basic/run_test.pl:
+          New test for the Event service.
+          The test performs random operations on the event service, adding
+          consumers, suppliers, then removing them, pushing events, etc.
+          The operations are performed by multiple concurrent threads, in
+          many cases in the context of an upcall to some consumer.
+          This is the worst (or is it best?) torture test for the event
+          channel.
+
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+          Add an optional argument to the ECG_UDP_EH::open() method,
+          allowing the user to reuse the same socket address in multiple
+          calls.  Thanks to Tom Ziomek <tomz@cc.comm.mot.com> for
+          providing the patch for this feature.
+
+        * orbsvcs/orbsvcs/Makefile.CosNotification:
+          More missing libraries.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_Dispatching_Task.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Dispatching_Task.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Dispatching_Task.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp:
+          Systematically use Guards to increment and decrement reference
+          counts, and to destroy objects once their count reaches 0.
+          Simplified the memory management of some objects by clearly
+          delineating who is responsible for their destruction.
+
 Tue Apr 18 08:19:20 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/tests/Concurrency/CC_command.h:
@@ -8,19 +96,19 @@ Tue Apr 18 08:19:20 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 Tue Apr 18 10:14:05 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* InterfaceS.h:
-	* InterfaceS.cpp:
-	  Removed from TAO, code moved to the IFR_Service
-	  directory.
+        * InterfaceS.h:
+        * InterfaceS.cpp:
+          Removed from TAO, code moved to the IFR_Service
+          directory.
 
-	* Makefile:
-	* TAO.dsp:
-	* TAO_static.dsp:
-	* POA_CORBA.h:
-	  'TAO_Export' removed from declaration of IRObject, 
-	  since it is never instantiated inside TAO, and
-	  declared there only because it must be in the
-	  CORBA namespace.
+        * Makefile:
+        * TAO.dsp:
+        * TAO_static.dsp:
+        * POA_CORBA.h:
+          'TAO_Export' removed from declaration of IRObject,
+          since it is never instantiated inside TAO, and
+          declared there only because it must be in the
+          CORBA namespace.
 
 Mon Apr 17 20:12:13 2000  Vishal  <vishal@cs.wustl.edu>
 
