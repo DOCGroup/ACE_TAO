@@ -2528,7 +2528,7 @@ be_visitor_operation_rettype_vardecl_ss::visit_string (be_string * /* node*/)
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
 
   os->indent ();
-  *os << "CORBA::String_var _tao_retval = 0;" << be_nl;
+  *os << "CORBA::String_var _tao_retval;" << be_nl;
   *os << "char *&_tao_ptr_retval = _tao_retval.out ();\n";
   return 0;
 }
