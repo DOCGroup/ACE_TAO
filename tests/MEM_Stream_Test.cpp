@@ -4,9 +4,9 @@
 //
 // = LIBRARY
 //    tests
-//Read
+//
 // = FILENAME
-//    MEMStream_Test.cpp
+//    MEM_Stream_Test.cpp
 //
 // = DESCRIPTION
 //     This is a test of the <ACE_MEM_Acceptor> and
