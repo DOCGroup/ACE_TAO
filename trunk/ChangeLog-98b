@@ -34,6 +34,9 @@ Tue Aug 25 07:42:40 1998  David L. Levine  <levine@cs.wustl.edu>
           makes to work properly on both Solaris and VxWorks.
           It also means that BUILD is no longer necessary in most Makefiles.
 
+        * tests/Message_Queue_Notification_Test.cpp (main): removed
+          trailing ".cpp" from log file name.
+
 Tue Aug 25 05:23:11 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tests/Message_Queue_Notifications_Test.dsp: Fixed something....
