@@ -1,3 +1,12 @@
+Mon Jun 28 09:32:59 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.i: Fixed a typo where last_error should have been
+	  lerror.  Thanks to Chris Gill for reporting this.
+
+	* ace/OS.cpp (ACE_BEGINTHREADEX): Oops, mistyped "_beginthreadex()"
+	  as "_beingthreadex()".  I must be going through an existential
+ 	  phase ;-).  Thanks to Chris Gill for reporting this.
+
 Sun Jun 27 18:03:24 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
 
 	* ACE-INSTALL.html: Updated the discussion for Borland C++ Building 4.0
