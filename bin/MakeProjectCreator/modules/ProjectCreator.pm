@@ -1476,6 +1476,13 @@ sub get_verbatim {
 }
 
 
+sub generate_recursive_input_list {
+  my($self) = shift;
+  my($dir)  = shift;
+  return $self->extension_recursive_input_list($dir,
+                                               $ProjectCreatorExtension);
+}
+
 # ************************************************************
 # Virtual Methods To Be Overridden
 # ************************************************************
