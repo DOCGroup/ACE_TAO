@@ -61,10 +61,6 @@ TAO_Notify_EventChannelFactory::destroy (ACE_ENV_SINGLE_ARG_DECL)
 
   delete this->ec_container_;
 
-  // Shutdown the ORB.
-  CORBA::ORB_var orb = properties->orb ();
-  orb->shutdown ();
-
   // Reset references to CORBA objects.
   properties->orb (CORBA::ORB::_nil ());
   properties->default_poa (PortableServer::POA::_nil ());
