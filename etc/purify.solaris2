@@ -123,6 +123,12 @@ suppress fmr unsafe_ostream::flush(void); unsafe_ostream::~unsafe_ostream(void);
 suppress fmr thr_getspecific
 suppress fmr thr_setspecific
 
+#### Write of one byte beyond the stack in ::pthread_setcanceltype ().
+#### This code fragment exhibits the BSW error:
+####   int result;
+####   return ::pthread_setcanceltype (PTHREAD_CANCEL_ASYNCHRONOUS, &result);
+suppress bsw pthread_setcanceltype
+
 ####
 #### TSS leaks:  on Solaris, TSS isn't cleaned up very well.
 ####
