@@ -1,3 +1,9 @@
+Wed Oct  7 01:20:35 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* tests/test-6.exp: 
+	  Updated thif file to the current help message.
+
+
 Tue Oct  6 11:51:47 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* src/Key_List.cpp (Key_List): Fixed g++ warnings.
