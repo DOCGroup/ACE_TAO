@@ -112,7 +112,7 @@ sub optionError {
     if ($i != $#keys) {
       print STDERR ' | ';
     }
-    if ((($i + 1) % 6) == 0) {
+    if ($i != $#keys && (($i + 1) % 6) == 0) {
       print STDERR "\n$spaces        ";
     }
   }
