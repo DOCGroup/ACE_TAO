@@ -2999,7 +2999,8 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
           ACE_OS::memset ((void *) &sparam, 0, sizeof sparam);
 
 #       if defined (ACE_HAS_IRIX62_THREADS)
-          sparam.sched_priority = ACE_MIN (priority, PTHREAD_MAX_PRIORITY);
+          sparam.sched_priority = ACE_MIN (priority,
+                                           (long) PTHREAD_MAX_PRIORITY);
 #       elif defined (PTHREAD_MAX_PRIORITY) && !defined(ACE_HAS_PTHREADS_STD)
           /* For MIT pthreads... */
           sparam.prio = ACE_MIN (priority, PTHREAD_MAX_PRIORITY);

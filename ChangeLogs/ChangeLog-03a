@@ -1,3 +1,15 @@
+Thu Feb  3 11:38:15 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.i,
+	* ace/Synch.cpp: Added a cast of (short) to the use of USYNC_THREAD
+	  in order to prevent ambiguity problems for KAI C++.  Thanks to
+	  Chad Elliott <elliott_c@ociweb.com> for reporting this.
+
+        * ace/OS.cpp (thr_create): Added yet another cast to (long) for
+          PRIORITY_MAX so that the types will be consistent for the
+ 	  ace_min() function.  Thanks to Stephen Moon <smoon@oxmol.co.uk>
+ 	  for reporting this.
+	
 Thu Feb  3 08:38:22 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/run_all_list.pm:
