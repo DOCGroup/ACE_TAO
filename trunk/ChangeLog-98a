@@ -1,4 +1,20 @@
-Thu Jan  8 18:39:22 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+Thu Jan  8 19:50:43 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Log_Msg: Added changes to allow the logging of custom built
+ 	  log records.  The main reason for these changes is to allow code
+ 	  to handle the logging of out of memory conditions without
+ 	  allocating any additional memory.  Thanks to Patrick
+ 	  J. McNerthney <pat@thememedia.com> for this feature.
+
+	* ace/Log_Msg: Added a new method called log_priority_enabled(),
+ 	  which returns true if the priority is enabled (gee, is *that*
+ 	  what it does? ;-)).  Thanks to Patrick J. McNerthney
+ 	  <pat@thememedia.com> for this feature.
+
+	* examples/Service_Configurator/IPC-tests/server/server_test.cpp
+ 	  (main): Revised the driver program so that it doesn't create an
+ 	  explicit ACE_Service_Config object.  Thanks to John Mulhern
+ 	  <9107@MN3.LAWSON.lawson.com> for reporting this.
 
 	* apps/Gateway/{Gateway,Peer}/Options.cpp: Oops, ACE_BUILD_DLL
  	  should be ACE_BUILD_SVC_DLL, yikes!  Thanks to Jeff Hellzen

@@ -162,33 +162,38 @@ public:
   u_long flags (void);
   // Return the bits in the logger's options flags.
 
-  // = Operations that allow applications to acquire and release the
-  // synchronization lock used internally by the ACE_Log_Msg
-  // implementation.  This allows applications to hold the lock
-  // atomically over a number of calls to ACE_Log_Msg.
+  // = Allow apps to acquire and release internal synchronization lock.
+
+  // This lock is used internally by the <ACE_Log_Msg> implementation.
+  // By exporting the lock, applications can hold the lock atomically
+  // over a number of calls to <ACE_Log_Msg>.
   int acquire (void);
   // Acquire the internal lock.
   int release (void);
   // Release the internal lock.
 
   void sync (const char *program_name);
-  // Call after doing a fork() to resynchronize the PID and
-  // PROGRAM_NAME variables.
+  // Call after doing a <fork> to resynchronize the process id and
+  // <program_name> variables.
 
   // = Set/get methods.  Note that these are non-static and thus will
   // be thread-specific.
 
   void op_status (int status);
-  // Set the result of the operation status (by convention, -1 means error).
+  // Set the result of the operation status (by convention, -1 means
+  // error).
 
   int op_status (void);
-  // Get the result of the operation status (by convention, -1 means error).
+  // Get the result of the operation status (by convention, -1 means
+  // error).
 
   void errnum (int);
-  // Set the value of the errnum (by convention this corresponds to errno).
+  // Set the value of the errnum (by convention this corresponds to
+  // errno).
 
   int errnum (void);
-  // Get the value of the errnum (by convention this corresponds to errno).
+  // Get the value of the errnum (by convention this corresponds to
+  // errno).
 
   void linenum (int);
   // Set the line number where an error occurred.
@@ -240,8 +245,8 @@ public:
   void thr_desc (ACE_Thread_Descriptor *td,
 		 ACE_Thread_Manager *thr_mgr = 0);
   // Set the TSS thread descriptor.  This method will call
-  // thr_mgr->acquire_release to block execution until this
-  // call return.
+  // thr_mgr->acquire_release to block execution until this call
+  // return.
 
   // = Stop/start/query tracing status on a per-thread basis...
   void stop_tracing (void);
@@ -254,9 +259,12 @@ public:
   u_long priority_mask (u_long);
   // Set the <ACE_Log_Priority> mask, returns original mask.
 
+  int log_priority_enabled (ACE_Log_Priority log_priority);
+  // Return true if the requested priority is enabled.
+
   pid_t getpid (void) const;
-  // Optimize reading of the pid (avoids a system call if the
-  // value is cached...).
+  // Optimize reading of the pid (avoids a system call if the value is
+  // cached...).
 
   // = Set/get the name of the local host.
   const char *local_host (void) const;
@@ -297,10 +305,17 @@ public:
   // 'X', 'x': print as a hex number
   // '%': print out a single percent sign, '%'
 
-  ssize_t log (const char *format, ACE_Log_Priority priority, va_list argp);
+  ssize_t log (const char *format,
+               ACE_Log_Priority priority,
+               va_list argp);
   // An alternative logging mechanism that makes it possible to
   // integrate variable argument lists from other logging mechanisms
   // into the ACE mechanism.
+
+  ssize_t log (ACE_Log_Record &log_record,
+               int suppress_stderr = 0);
+  // Log a custom built log record to the currently enabled logging
+  // sinks.
 
   int log_hexdump (ACE_Log_Priority log_priority,
 		   const char *buffer,
@@ -359,8 +374,9 @@ private:
   // currently enabled.  Default is for all logging priorities to be
   // enabled.
 
-  // = The following fields are *not* kept in thread-specific storage
-  // since we only want one instance for the entire process!
+  // = The following fields are *not* kept in thread-specific storage.
+
+  // We only want one instance for the entire process!
 
   static const char *program_name_;
   // Records the program name.
@@ -378,7 +394,8 @@ private:
   // Offset of msg_[].
 
   static int instance_count_;
-  // Number of existing Log_Msg instances; when 0, delete program/host names
+  // Number of existing Log_Msg instances; when 0, delete program/host
+  // names
 
   static void close (void);
   // For cleanup, at program termination.

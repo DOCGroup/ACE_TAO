@@ -203,11 +203,11 @@ ACE_Log_Msg::instance (void)
   if (tss_log_msg == 0)
     {
       // Allocate memory off the heap and store it in a pointer in
-      // thread-specific storage (on the stack...).
-      // Stop heap checking, the memory will always be freed by the
-      // thread rundown because of the TSS callback set up when the key
-      // was created. This prevents from getting these blocks
-      // reported as memory leaks.
+      // thread-specific storage (on the stack...).  Stop heap
+      // checking, the memory will always be freed by the thread
+      // rundown because of the TSS callback set up when the key was
+      // created. This prevents from getting these blocks reported as
+      // memory leaks.
       {
         ACE_NO_HEAP_CHECK;
 
@@ -350,6 +350,12 @@ u_long
 ACE_Log_Msg::priority_mask (void)
 {
   return this->priority_mask_;
+}
+
+int
+ACE_Log_Msg::log_priority_enabled (ACE_Log_Priority log_priority)
+{
+  return ACE_BIT_ENABLED (this->priority_mask_, log_priority);
 }
 
 int
@@ -564,7 +570,7 @@ ACE_Log_Msg::log (const char *format_str,
   // Only print the message if <priority_mask_> hasn't been reset to
   // exclude this logging priority.
 
-  if (ACE_BIT_DISABLED (this->priority_mask_, log_priority))
+  if (this->log_priority_enabled (log_priority) == 0)
     return 0;
 
   ACE_Log_Record log_record (log_priority,
@@ -573,7 +579,6 @@ ACE_Log_Msg::log (const char *format_str,
   char *bp = (char *) this->msg ();
   int abort_prog = 0;
   int exit_value = 0;
-  int result = 0;
   char *format;
   ACE_ALLOCATOR_RETURN (format, ACE_OS::strdup (format_str), -1);
   char *save_p = format; // Remember pointer for ACE_OS::free()
@@ -868,8 +873,29 @@ ACE_Log_Msg::log (const char *format_str,
 
   ACE_OS::free (ACE_MALLOC_T (save_p));
 
+  ssize_t result = this->log (log_record, abort_prog == 0);
+ 
+  if (abort_prog)
+    {
+      // *Always* print a message to stderr if we're aborting.  We
+      // don't use verbose, however, to avoid recursive aborts if
+      // something is hosed.
+      log_record.print (ACE_Log_Msg::local_host_, 0);
+      ACE_OS::exit (exit_value);
+    }
+   
+   return result;
+}
+
+ssize_t
+ACE_Log_Msg::log (ACE_Log_Record &log_record,
+                  int suppress_stderr)
+{
+  ssize_t result = 0;
+
   // Only print the message if "SILENT" mode is disabled.
-  if (ACE_BIT_DISABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::SILENT))
+  if (ACE_BIT_DISABLED (ACE_Log_Msg::flags_,
+                        ACE_Log_Msg::SILENT))
     {
       // Copy the message from thread-specific storage into the
       // transfer buffer (this can be optimized away by changing other
@@ -886,7 +912,7 @@ ACE_Log_Msg::log (const char *format_str,
       ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Manager::get_lock (), -1));
 
       if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::STDERR)
-          && abort_prog == 0) // We'll get this further down.
+          && !suppress_stderr) // This is taken care of by our caller.
         log_record.print (ACE_Log_Msg::local_host_,
                           ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::VERBOSE),
                           stderr);
@@ -920,15 +946,6 @@ ACE_Log_Msg::log (const char *format_str,
                           ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::VERBOSE),
                           *this->msg_ostream ());
       this->start_tracing ();
-    }
-
-  if (abort_prog)
-    {
-      // *Always* print a message to stderr if we're aborting.  We
-      // don't use verbose, however, to avoid recursive aborts if
-      // something is hosed.
-      log_record.print (ACE_Log_Msg::local_host_, 0);
-      ACE_OS::exit (exit_value);
     }
 
   return result;
