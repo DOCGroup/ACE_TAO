@@ -66,6 +66,17 @@ be_visitor_operation_ami_ch::visit_operation (be_operation *node)
   
   // First the sendc prefix.
   *os << "sendc_";
+
+    // check if we are an attribute node in disguise
+  if (this->ctx_->attribute ())
+    {
+      // now check if we are a "get" or "set" operation
+      if (node->nmembers () == 1) // set
+        *os << "set_";
+      else
+        *os << "get_";
+    }
+
   *os << node->local_name ();
 
   // STEP 3: generate the argument list with the appropriate
@@ -93,6 +104,8 @@ be_visitor_operation_ami_ch::visit_operation (be_operation *node)
                         -1);
     }
   delete visitor;
+
+  *os << "\n";
 
   return 0;
 }

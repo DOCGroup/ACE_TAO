@@ -8,20 +8,19 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 unshift @INC, '../../../bin';
 require ACEutils;
 
-$client_conf="client.global.conf";
-$client_process="client";
+$client_conf="simple_client_muxed.conf";
+$client_process="simple_client";
 $debug_level='5';
 $threads='2';
 $iterations='1';
 
 foreach $i (@ARGV) {
-  if ($i eq '-tss') {
-    $client_conf = "client.tss.conf";
+  if ($i eq '-mux') {
+    $client_conf = "simple_client_muxed.conf";
   } elsif ($i eq '-debug') {
     $debug_level = '1';
-  } elsif ($i eq '-creation') {
-    $client_process = 'orb_creation';
-    $threads='2';
+  } elsif ($i eq '-exclusive') {
+    $client_conf = 'simple_client_exclusive.conf';
   }
 }
 
@@ -40,7 +39,7 @@ $CL = Process::Create ($EXEPREFIX."$client_process$EXE_EXT ",
 			  " -ORBsvcconf $client_conf "
 			  . "-ORBdebuglevel $debug_level"
 			  . " -k file://$iorfile "
-			  . " -n $threads -i $iterations");
+			  . " -i $iterations");
 
 $client = $CL->TimedWait (60);
 if ($client == -1) {

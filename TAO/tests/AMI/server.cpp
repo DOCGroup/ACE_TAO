@@ -1,16 +1,33 @@
 // $Id$
 
-#include "ace/Get_Opt.h"
-#include "test_i.h"
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/AMI
+//
+// = FILENAME
+//    server.cpp
+//
+// = DESCRIPTION
+//    Implementation of the server.
+//
+// = AUTHOR
+//    Alexander Babu Arulanthu <alex@cs.wustl.edu>,
+//    Michael Kircher <Michael.Kircher@mchp.siemens.de>
+//
+// ============================================================================
 
-ACE_RCSID(MT_Client, server, "$Id$")
+#include "ace/Get_Opt.h"
+#include "ami_test_i.h"
+
+ACE_RCSID(AMI, server, "$Id$")
 
 const char *ior_output_file = 0;
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:");
+  ACE_Get_Opt get_opts (argc, argv, "o:d");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -18,6 +35,9 @@ parse_args (int argc, char *argv[])
       {
       case 'o':
         ior_output_file = get_opts.optarg;
+        break;
+      case 'd':
+        TAO_debug_level++;
         break;
       case '?':
       default:
@@ -59,14 +79,14 @@ main (int argc, char *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      Simple_Server_i server_impl (orb.in ());
+      AMI_Test_i ami_test_i (orb.in ());
 
-      A::Simple_Server_var server =
-        server_impl._this (ACE_TRY_ENV);
+      A::AMI_Test_var ami_test_var =
+        ami_test_i._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       CORBA::String_var ior =
-        orb->object_to_string (server.in (), ACE_TRY_ENV);
+        orb->object_to_string (ami_test_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
