@@ -279,27 +279,35 @@ SOURCE=.\giop.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_Accept_State.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOP_Message_Acceptors.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\GIOP_Message_Base.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_Connectors.h
+SOURCE=.\GIOP_Message_Generator_Parser.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_Headers.h
+SOURCE=.\GIOP_Message_Generator_Parser_10.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Generator_Parser_11.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Generator_Parser_12.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Generator_Parser_Impl.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\GIOP_Message_Lite.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Locate_Header.h
 # End Source File
 # Begin Source File
 
@@ -963,19 +971,27 @@ SOURCE=.\giop.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_Accept_State.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOP_Message_Acceptors.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\GIOP_Message_Base.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_Connectors.i
+SOURCE=.\GIOP_Message_Generator_Parser.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Generator_Parser_10.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Generator_Parser_11.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Generator_Parser_12.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Generator_Parser_Impl.inl
 # End Source File
 # Begin Source File
 
@@ -1559,27 +1575,35 @@ SOURCE=.\FILE_Parser.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_Accept_State.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOP_Message_Acceptors.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\GIOP_Message_Base.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_Connectors.cpp
+SOURCE=.\GIOP_Message_Generator_Parser.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_Headers.cpp
+SOURCE=.\GIOP_Message_Generator_Parser_10.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Generator_Parser_11.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Generator_Parser_12.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Generator_Parser_Impl.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\GIOP_Message_Lite.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Locate_Header.cpp
 # End Source File
 # Begin Source File
 

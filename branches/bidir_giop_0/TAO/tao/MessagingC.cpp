@@ -1627,7 +1627,7 @@ Messaging::_TAO_ReplyHandler_Remote_Proxy_Broker::select_proxy (
 // default constructor
 Messaging::ReplyHandler::ReplyHandler (int collocated)
 {
-  this->setup_collocation (collocated);
+  this->_tao_setup_collocation (collocated);
 }
 
 // destructor
@@ -1635,14 +1635,14 @@ Messaging::ReplyHandler::~ReplyHandler (void)
 {}
 
 void
-Messaging::ReplyHandler::setup_collocation (int collocated)
+Messaging::ReplyHandler::_tao_setup_collocation (int collocated)
 {
   if (collocated)
     this->the_TAO_ReplyHandler_Proxy_Broker_ =
-      Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_function_pointer (this);
+      ::Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_function_pointer (this);
   else
     this->the_TAO_ReplyHandler_Proxy_Broker_ =
-      Messaging::_TAO_ReplyHandler_Remote_Proxy_Broker::the_TAO_ReplyHandler_Remote_Proxy_Broker ();
+      ::Messaging::_TAO_ReplyHandler_Remote_Proxy_Broker::the_TAO_ReplyHandler_Remote_Proxy_Broker ();
 }
 
 
@@ -1702,7 +1702,7 @@ Messaging::ReplyHandler_ptr Messaging::ReplyHandler::_unchecked_narrow (
       if (CORBA::is_nil (default_proxy))
         ACE_NEW_RETURN (default_proxy, ::Messaging::ReplyHandler (stub, 0, obj->_servant ()), ReplyHandler::_nil ());
 
-#if (TAO_HAS_SMART_PROXIES == 1)
+#if 0//(TAO_HAS_SMART_PROXIES == 1)
       return TAO_Messaging_ReplyHandler_PROXY_FACTORY_ADAPTER::instance ()->create_proxy (default_proxy);
 # else
      return default_proxy;
@@ -1765,137 +1765,11 @@ const char* Messaging::ReplyHandler::_interface_repository_id (void) const
   return "IDL:omg.org/Messaging/ReplyHandler:1.0";
 }
 
-#if (TAO_HAS_SMART_PROXIES == 1)
-Messaging::TAO_Messaging_ReplyHandler_Default_Proxy_Factory::TAO_Messaging_ReplyHandler_Default_Proxy_Factory (int register_proxy_factory)
+static const CORBA::Long _oc_Messaging_ReplyHandler[] =
 {
-  if (register_proxy_factory)
-    {
-      TAO_Messaging_ReplyHandler_PROXY_FACTORY_ADAPTER::instance ()->register_proxy_factory (this);
-    }
-}
-
-Messaging::TAO_Messaging_ReplyHandler_Default_Proxy_Factory::~TAO_Messaging_ReplyHandler_Default_Proxy_Factory (void)
-{
-}
-
-Messaging::ReplyHandler_ptr
-Messaging::TAO_Messaging_ReplyHandler_Default_Proxy_Factory::create_proxy (
-    ::Messaging::ReplyHandler_ptr proxy,
-    CORBA::Environment &
-  )
-{
-  return proxy;
-}
-
-Messaging::TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter::TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter (void)
-   : proxy_factory_ (0),
-     delete_proxy_factory_ (0)
-{
-}
-
-Messaging::TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter::~TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter (void)
-{
-  // Making sure the factory which the adapter has is destroyed with it.
-  if (this->proxy_factory_ != 0)
-    delete this->proxy_factory_;
-}
-
-int
-Messaging::TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter::register_proxy_factory (
-  TAO_Messaging_ReplyHandler_Default_Proxy_Factory *df,
-     CORBA::Environment &ACE_TRY_ENV
-      )
-{
-  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
-    this->lock_, 0));
-  // Remove any existing <proxy_factory_> and replace with the new one.
-  this->unregister_proxy_factory (ACE_TRY_ENV);
-  this->proxy_factory_ = df;
-  this->delete_proxy_factory_ = 0;
-return 0;
-}
-
-int
-Messaging::TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter::unregister_proxy_factory (
-  CORBA::Environment &
-    )
-{
-  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
-    this->lock_, 0));
-  if (this->delete_proxy_factory_ == 0 && this->proxy_factory_ != 0)
-    {
-      // Its necessary to set <delete_proxy_factory_> to 1 to make sure that it
-      // doesnt get into an infinite loop in <unregister_proxy_factory> as it is
-      // invoked in the destructor of the class too.
-      this->delete_proxy_factory_ = 1;
-      delete this->proxy_factory_;
-      this->proxy_factory_ = 0;
-    }
-return 0;
-}
-
-Messaging::ReplyHandler_ptr
-Messaging::TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter::create_proxy (
-    ::Messaging::ReplyHandler_ptr proxy,
-    CORBA::Environment &
-  )
-{
-  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
-    this->lock_, 0));
-  // Verify that an <proxy_factory_> is available else make one.
-  if (this->proxy_factory_ == 0)
-    ACE_NEW_RETURN (this->proxy_factory_,
-        TAO_Messaging_ReplyHandler_Default_Proxy_Factory (1),
-         0);
-
-
-  return this->proxy_factory_->create_proxy (proxy);
-}
-
-Messaging::TAO_Messaging_ReplyHandler_Smart_Proxy_Base::TAO_Messaging_ReplyHandler_Smart_Proxy_Base (void)
-{
-}
-
-Messaging::TAO_Messaging_ReplyHandler_Smart_Proxy_Base::~TAO_Messaging_ReplyHandler_Smart_Proxy_Base (void)
-{
-}
-
-TAO_Stub *
-Messaging::TAO_Messaging_ReplyHandler_Smart_Proxy_Base::_stubobj (void) const
-{
-  return this->base_proxy_->_stubobj ();
-}
-
-Messaging::ReplyHandler_ptr
-Messaging::TAO_Messaging_ReplyHandler_Smart_Proxy_Base::get_proxy (void)
-
-{
-  // Obtain the real proxy stored in <base_proxy_>
-  if (CORBA::is_nil (this->proxy_.in ()))
-    {
-      // Necessary to do this else you are stuck in an infinte loop
-      // creating smart proxies!
-      TAO_Messaging_ReplyHandler_PROXY_FACTORY_ADAPTER::instance ()->unregister_proxy_factory ();
-      this->proxy_ = ::Messaging::ReplyHandler::_unchecked_narrow (this->base_proxy_.in ());
-    }
-
-    return this->proxy_.in ();
-  }
-
-    #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
-    defined (ACE_HAS_GNU_REPO)
-  template class TAO_Singleton<Messaging::TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
-  #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-  #pragma instantiate TAO_Singleton<Messaging::TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
-  #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-#endif /* TAO_HAS_SMART_PROXIES */
-
-    static const CORBA::Long _oc_Messaging_ReplyHandler[] =
-  {
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    39, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x4d657373), ACE_NTOHL (0x6167696e), ACE_NTOHL (0x672f5265), ACE_NTOHL (0x706c7948), ACE_NTOHL (0x616e646c), ACE_NTOHL (0x65723a31), ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/Messaging/ReplyHandler:1.0
-    13, ACE_NTOHL (0x5265706c), ACE_NTOHL (0x7948616e), ACE_NTOHL (0x646c6572), ACE_NTOHL (0x0),  // name = ReplyHandler
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  39, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x4d657373), ACE_NTOHL (0x6167696e), ACE_NTOHL (0x672f5265), ACE_NTOHL (0x706c7948), ACE_NTOHL (0x616e646c), ACE_NTOHL (0x65723a31), ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/Messaging/ReplyHandler:1.0
+  13, ACE_NTOHL (0x5265706c), ACE_NTOHL (0x7948616e), ACE_NTOHL (0x646c6572), ACE_NTOHL (0x0),  // name = ReplyHandler
 };
   static CORBA::TypeCode _tc_TAO_tc_Messaging_ReplyHandler (CORBA::tk_objref, sizeof (_oc_Messaging_ReplyHandler), (char *) &_oc_Messaging_ReplyHandler, 0, sizeof (Messaging::ReplyHandler));
   TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)

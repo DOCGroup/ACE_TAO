@@ -1221,7 +1221,7 @@ SOURCE=.\GIOP_Message_Generator_Parser_Impl.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_Headers.cpp
+SOURCE=.\GIOP_Message_Lite.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
@@ -1240,7 +1240,7 @@ SOURCE=.\GIOP_Message_Headers.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_Lite.cpp
+SOURCE=.\GIOP_Message_Locate_Header.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
@@ -3572,14 +3572,6 @@ SOURCE=.\giop.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_Accept_State.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOP_Message_Acceptors.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\GIOP_Message_Base.h
 # End Source File
 # Begin Source File
@@ -3608,11 +3600,11 @@ SOURCE=.\GIOP_Message_Generator_Parser_Impl.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_Headers.h
+SOURCE=.\GIOP_Message_Lite.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_Lite.h
+SOURCE=.\GIOP_Message_Locate_Header.h
 # End Source File
 # Begin Source File
 
@@ -4280,23 +4272,23 @@ SOURCE=.\giop.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_Accept_State.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOP_Message_Acceptors.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\GIOP_Message_Base.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_Connectors.i
+SOURCE=.\GIOP_Message_Generator_Parser.inl
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_Generator_Parser.inl
+SOURCE=.\GIOP_Message_Generator_Parser_10.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Generator_Parser_11.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Generator_Parser_12.inl
 # End Source File
 # Begin Source File
 
@@ -4305,10 +4297,6 @@ SOURCE=.\GIOP_Message_Generator_Parser_Impl.inl
 # Begin Source File
 
 SOURCE=.\GIOP_Message_Headers.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOP_Message_Lite.i
 # End Source File
 # Begin Source File
 
