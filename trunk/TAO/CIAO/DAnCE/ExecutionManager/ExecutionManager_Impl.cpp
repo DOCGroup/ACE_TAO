@@ -3,10 +3,11 @@
 
 #include "ExecutionManager_Impl.h"
 
-CIAO::ExecutionManager_Impl::ExecutionManager_Impl (CORBA::ORB_ptr orb,
-                                                    PortableServer::POA_ptr poa,
-                                                    const char * init_file
-                                                    ACE_ENV_ARG_DECL)
+CIAO::ExecutionManager_Impl::ExecutionManager_Impl (
+  CORBA::ORB_ptr orb,
+  PortableServer::POA_ptr poa,
+  const char * init_file
+  ACE_ENV_ARG_DECL_NOT_USED)
   : orb_ (CORBA::ORB::_duplicate  (orb)),
     poa_ (PortableServer::POA::_duplicate (poa)),
     init_file_ (init_file),

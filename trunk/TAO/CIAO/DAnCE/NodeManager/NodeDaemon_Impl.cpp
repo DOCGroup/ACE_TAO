@@ -100,47 +100,48 @@ CIAO::NodeDaemon_Impl::preparePlan (const Deployment::DeploymentPlan &plan
 {
   // Return cached manager
   ACE_TRY
-  {
-    if (CORBA::is_nil (this->manager_.in ()))
     {
-      //Implementation undefined.
-      CIAO::NodeApplicationManager_Impl *app_mgr;
-      ACE_NEW_THROW_EX (app_mgr,
-                        CIAO::NodeApplicationManager_Impl (this->orb_.in (),
-                                                       this->poa_.in ()),
-                        CORBA::NO_MEMORY ());
-      ACE_TRY_CHECK;
-
-      PortableServer::ServantBase_var safe (app_mgr);
-
-     //@@ Note: after the init call the servant ref count would become 2. so
-     //   we can leave the safeservant along and be dead. Also note that I added
-      this->manager_ =
-            app_mgr->init (this->nodeapp_location_,
-                     this->spawn_delay_,
-                     plan,
-                     this->callback_poa_.in ()
-                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      // Obtain the Object Reference
-      //CORBA::Object_var obj =
-      //  this->poa_->servant_to_reference (app_mgr ACE_ENV_ARG_PARAMETER);
-      //ACE_TRY_CHECK;
-
-      //this->manager_ =
-      //  Deployment::NodeApplicationManager::_narrow (obj.in ());
       if (CORBA::is_nil (this->manager_.in ()))
         {
-          ACE_DEBUG ((LM_DEBUG, "NodeDaemon_Impl:preparePlan: NodeApplicationManager ref is nil\n"));
-          ACE_THROW_RETURN (Deployment::StartError (), 0);
+          //Implementation undefined.
+          CIAO::NodeApplicationManager_Impl *app_mgr;
+          ACE_NEW_THROW_EX (app_mgr,
+                            CIAO::NodeApplicationManager_Impl (
+                              this->orb_.in (),
+                              this->poa_.in ()),
+                            CORBA::NO_MEMORY ());
+          ACE_TRY_CHECK;
+
+          PortableServer::ServantBase_var safe (app_mgr);
+
+          //@@ Note: after the init call the servant ref count would
+          //   become 2. so we can leave the safeservant along and be
+          //   dead. Also note that I added
+          this->manager_ =
+            app_mgr->init (this->nodeapp_location_,
+                           this->spawn_delay_,
+                           plan,
+                           this->callback_poa_.in ()
+                           ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          // Obtain the Object Reference
+          //CORBA::Object_var obj =
+          //  this->poa_->servant_to_reference (app_mgr ACE_ENV_ARG_PARAMETER);
+          //ACE_TRY_CHECK;
+
+          //this->manager_ =
+          //  Deployment::NodeApplicationManager::_narrow (obj.in ());
+
+          if (CORBA::is_nil (this->manager_.in ()))
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "NodeDaemon_Impl:preparePlan: "
+                          "NodeApplicationManager ref is nil\n"));
+              ACE_TRY_THROW (Deployment::StartError ());
+            }
         }
     }
-
-    // Duplicate this reference to the caller
-    return
-      Deployment::NodeApplicationManager::_duplicate (this->manager_.in ());
-  }
   ACE_CATCHANY
   {
     ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
@@ -148,7 +149,11 @@ CIAO::NodeDaemon_Impl::preparePlan (const Deployment::DeploymentPlan &plan
     ACE_RE_THROW;
   }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (Deployment::NodeApplicationManager::_nil ());
+
+  // Duplicate this reference to the caller
+  return
+    Deployment::NodeApplicationManager::_duplicate (this->manager_.in ());
 }
 
 void
@@ -157,22 +162,23 @@ CIAO::NodeDaemon_Impl::destroyManager (Deployment::NodeApplicationManager_ptr
   ACE_THROW_SPEC ((CORBA::SystemException, Deployment::StopError))
 {
   ACE_TRY
-  {
-    // Deactivate this object
-    PortableServer::ObjectId_var id =
-          this->poa_->reference_to_id (this->manager_.in () ACE_ENV_ARG_PARAMETER);
+    {
+      // Deactivate this object
+      PortableServer::ObjectId_var id =
+        this->poa_->reference_to_id (this->manager_.in ()
+                                     ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     this->poa_->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     this->manager_ = Deployment::NodeApplicationManager::_nil ();
-  }
+    }
   ACE_CATCHANY
-  {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                         "NodeDaemon_Impl::destroyManager\t\n");
-    ACE_RE_THROW;
-  }
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "NodeDaemon_Impl::destroyManager\t\n");
+      ACE_RE_THROW;
+    }
   ACE_ENDTRY;
 }
