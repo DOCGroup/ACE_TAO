@@ -175,7 +175,8 @@ TAO_CodeGen::start_client_header (const char *fname)
           *this->client_header_ << "#undef TAO_EXPORT_MACRO\n";
           *this->client_header_ << "#endif\n";
           *this->client_header_ << "#define TAO_EXPORT_MACRO "
-                                << idl_global->export_macro () << be_nl;
+                                << idl_global->export_macro ()
+                                << be_nl;
           
           *this->client_header_ << "#if defined(_MSC_VER)\n"
                                 << "#pragma warning(disable:4250)\n"
