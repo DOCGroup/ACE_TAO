@@ -151,14 +151,6 @@ int
 ACE_Message_Queue_Vx::enqueue_tail_i (ACE_Message_Block *new_item)
 {
   ACE_TRACE ("ACE_Message_Queue_Vx::enqueue_tail_i");
-  // No-op.  This should _never_ be called.
-  ACE_NOTSUP_RETURN (-1);
-}
-
-int
-ACE_Message_Queue_Vx::enqueue_head_i (ACE_Message_Block *new_item)
-{
-  ACE_TRACE ("ACE_Message_Queue_Vx::enqueue_head_i");
 
   if (new_item == 0)
     return -1;
@@ -177,6 +169,15 @@ ACE_Message_Queue_Vx::enqueue_head_i (ACE_Message_Block *new_item)
     return ::msgQNumMsgs (msgq ());
   else
     return -1;
+}
+
+int
+ACE_Message_Queue_Vx::enqueue_head_i (ACE_Message_Block *new_item)
+{
+  ACE_TRACE ("ACE_Message_Queue_Vx::enqueue_head_i");
+
+  // Just delegate to enqueue_tail_i.
+  return enqueue_tail_i (new_item);
 }
 
 int
@@ -237,18 +238,6 @@ ACE_Message_Queue_Vx::wait_not_empty_cond (ACE_Guard<ACE_Null_Mutex> &mon,
 }
 
 #if ! defined (ACE_REQUIRES_FUNC_DEFINITIONS)
-int
-ACE_Message_Queue_Vx::enqueue_tail (ACE_Message_Block *mb, ACE_Time_Value *tv)
-{
-  ACE_NOTSUP_RETURN (-1);
-}
-
-int
-ACE_Message_Queue_Vx::enqueue_head (ACE_Message_Block *mb, ACE_Time_Value *tv)
-{
-  ACE_NOTSUP_RETURN (-1);
-}
-
 int
 ACE_Message_Queue_Vx::peek_dequeue_head (ACE_Message_Block *&,
                                          ACE_Time_Value *tv)
