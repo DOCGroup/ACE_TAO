@@ -75,29 +75,6 @@ public:
         ACE_DEBUG((LM_DEBUG,"Once_Handler (%P|%t) handle_service_start() START\n"));
         this->handled_start_++; //set to true
 
-        // Uncommenting this causes the Supplier_EC event type 18 to never be pushed again (despite the timeout happening)
-        //trigger Task 3!
-        /*
-        kokyu_ec_->add_timeout_consumer(
-                                       supplier_impl_,
-                                       timeout_handler_impl_,
-                                       timeout_entry_point_,
-                                       period_,
-                                       crit_,
-                                       imp_
-                                       ACE_ENV_ARG_PARAMETER
-                                       );
-        ACE_CHECK;
-
-        //should be able to just call Kokyu_EC::start() to recompute schedule
-        //BEWARE if kokyu_ec_ overrides start() to do stuff we don't want to redo!
-        //which is why we specify the Kokyu_EC version of the function!
-        kokyu_ec_->Kokyu_EC::start(ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_CHECK;
-        */
-
-        //WARNING: depending on Reactor, might not be a RT solution!
-
         this->timer_handle_ = this->reactor_->schedule_timer(this->timeout_handler_impl_,
                                                              0, //arg
                                                              ACE_Time_Value::zero, //delay
@@ -128,14 +105,6 @@ private:
   ACE_Time_Value period_;
   long timer_handle_;
 
-  /*
-  Timeout_Consumer * timeout_consumer_impl_;
-  Supplier * supplier_impl_;
-  const char * timeout_entry_point_;
-  RtecScheduler::Criticality_t crit_;
-  RtecScheduler::Importance_t imp_;
-  Kokyu_EC * kokyu_ec_;
-  */
 };
 
 class Consumer_EC : public Kokyu_EC
@@ -196,6 +165,11 @@ main (int argc, char* argv[])
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
+      if (parse_args (argc, argv) == -1)
+        {
+          return 1;
+        }
+
 #ifdef ACE_HAS_DSUI
       ds_control ds_cntl("Fan_Test_Consumer","consumer_enabled.dsui");
 #endif // ACE_HAS_DSUI
@@ -204,11 +178,6 @@ main (int argc, char* argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
-      if (parse_args (argc, argv) == -1)
-        {
-          return 1;
-        }
 
       CORBA::Object_var object =
         orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
@@ -284,7 +253,7 @@ main (int argc, char* argv[])
 #endif //ACE_HAS_DSUI
 
       rt.activate(); //need thread creation flags? or priority?
-      ACE_Time_Value stop_time(300,0);
+      ACE_Time_Value stop_time(305,0);
       orb->run (stop_time ACE_ENV_ARG_PARAMETER);
       //orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -316,33 +285,34 @@ main (int argc, char* argv[])
 
 int parse_args (int argc, char *argv[])
 {
-ACE_Get_Opt get_opts (argc, argv, "cs:o:");
-int c;
+  ACE_Get_Opt get_opts (argc, argv, "cs:o:");
+  int c;
 
-while ((c = get_opts ()) != -1)
-  switch (c)
-{
- case 'o':
-   ior_output_file = ACE_OS::fopen (get_opts.opt_arg (), "w");
-   if (ior_output_file == 0)
-     ACE_ERROR_RETURN ((LM_ERROR,
-                        "Unable to open %s for writing: %p\n",
-                        get_opts.opt_arg ()), -1);
-   break;
- case 's':
-   sched_type = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
-   break;
+  while ((c = get_opts ()) != -1)
+    switch (c)
+      {
+      case 'o':
+        ior_output_file = ACE_OS::fopen (get_opts.opt_arg (), "w");
+        if (ior_output_file == 0)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Unable to open %s for writing: %p\n",
+                             get_opts.opt_arg ()), -1);
+        break;
+      case 's':
+        sched_type = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
+        break;
 
- case '?':
- default:
-   ACE_ERROR_RETURN ((LM_ERROR,
-                      "usage:  %s -s <rms|muf|edf>"
-                      "\n",
-                      argv [0]),
-                     -1);
-}
-// Indicates sucessful parsing of the command line
- if (ior_output_file == 0)
-   ior_output_file = ACE_OS::fopen ("consumer_ec.ior", "w");
- return 0;
+      case '?':
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "usage:  %s -s <rms|muf|edf>"
+                           " [-o iorfile]"
+                           "\n",
+                           argv [0]),
+                          -1);
+      }
+  // Indicates sucessful parsing of the command line
+  if (ior_output_file == 0)
+    ior_output_file = ACE_OS::fopen ("consumer_ec.ior", "w");
+  return 0;
 }
