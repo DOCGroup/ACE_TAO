@@ -414,6 +414,9 @@ public:
   // Dump the state of an object.
 
 protected:
+  virtual ACE_thread_t owner_i (void);
+  // Return the ID of the "owner" thread. Does not do any locking.
+
   virtual int ok_to_wait (ACE_Time_Value *max_wait_time,
 			  int alertable);
   // Check to see if it is ok to enter ::WaitForMultipleObjects().
