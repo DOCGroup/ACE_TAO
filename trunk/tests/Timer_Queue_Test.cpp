@@ -297,7 +297,9 @@ main (int argc, char *argv[])
 
   // Preallocate memory.
   ACE_NEW_RETURN (timer_queues[2].queue_,
-		  ACE_Timer_Wheel (1024, 1000, ACE_DEFAULT_TIMERS),
+		  ACE_Timer_Wheel (ACE_DEFAULT_TIMER_WHEEL_SIZE, 
+                                   ACE_DEFAULT_TIMER_WHEEL_RESOLUTION, 
+                                   ACE_DEFAULT_TIMERS),
                   -1);
 
   // Don't preallocate memory.
