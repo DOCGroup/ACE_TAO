@@ -3776,7 +3776,9 @@ int
 ACE_OS::thr_setspecific (ACE_thread_key_t key, void *data)
 {
   // ACE_OS_TRACE ("ACE_OS::thr_setspecific");
-#if defined (ACE_HAS_PACE)
+  // If we are using TSS emulation then we shuld use ACE's implementation
+  //  of it and not make any PACE calls.
+#if defined (ACE_HAS_PACE) && !defined (ACE_HAS_TSS_EMULATION)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_setspecific (key, data),
                                        ace_result_),
                      int, -1);
@@ -3846,12 +3848,10 @@ int
 ACE_OS::thr_keyfree (ACE_thread_key_t key)
 {
   ACE_OS_TRACE ("ACE_OS::thr_keyfree");
-# if defined (ACE_HAS_PACE)
-#   if defined (ACE_HAS_TSS_EMULATION)
-    return ACE_TSS_Cleanup::instance ()->remove (key);
-#   else
+  // If we are using TSS emulation then we shuld use ACE's implementation
+  //  of it and not make any PACE calls.
+# if defined (ACE_HAS_PACE) && !defined (ACE_HAS_TSS_EMULATION)
     return ::pace_pthread_key_delete (key);
-#   endif /* AACE_HAS_TSS_EMULATION */
 # elif defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_TSS_EMULATION)
     return ACE_TSS_Cleanup::instance ()->remove (key);
@@ -3956,27 +3956,13 @@ ACE_OS::thr_keycreate (ACE_thread_key_t *key,
                        void *inst)
 {
   // ACE_OS_TRACE ("ACE_OS::thr_keycreate");
-#if defined (ACE_HAS_PACE)
-# if defined (ACE_HAS_TSS_EMULATION)
-  if (ACE_TSS_Emulation::next_key (*key) == 0)
-  {
-    ACE_TSS_Emulation::tss_destructor (*key, dest);
-
-    // Extract out the thread-specific table instance and stash away
-    // the key and destructor so that we can free it up later on...
-    return ACE_TSS_Cleanup::instance ()->insert (*key, dest, inst);
-  }
-  else
-  {
-    errno = EAGAIN;
-    return -1;
-  }
-# else
+  // If we are using TSS emulation then we shuld use ACE's implementation
+  //  of it and not make any PACE calls.
+#if defined (ACE_HAS_PACE) && !defined (ACE_HAS_TSS_EMULATION)
   ACE_UNUSED_ARG (inst);
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_key_create (key, dest),
                                        ace_result_),
                      int, -1);
-# endif /* ACE_HAS_TSS_EMULATION */
 # elif defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_TSS_EMULATION)
     if (ACE_TSS_Emulation::next_key (*key) == 0)
