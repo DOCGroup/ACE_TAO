@@ -4,7 +4,7 @@
 # 
 # Example: Foo_Test: MSVC SUNCC5 CHORUS
 
-ACE_Init_Test: UNIX
+ACE_Init_Test: UNIX BORLAND
 Atomic_Op_Test
 Auto_IncDec_Test
 Barrier_Test
