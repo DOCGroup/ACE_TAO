@@ -358,7 +358,6 @@ Test_Recursive_Union::deep_check (const Param_Test::Recursive_Union &in_union,
       case 1:
         return this->deep_check_nested (in_union.nested_member (),
                                         test_union.nested_member ());
-        break;
 
       default:
         ACE_DEBUG ((LM_DEBUG,
