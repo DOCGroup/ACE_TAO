@@ -389,8 +389,8 @@ ACE_TSS<TYPE>::ts_init (void) const
           return 0;
         }
     }
-  else
-    return -1;
+
+  return -1;
 }
 
 template <class TYPE>
@@ -535,26 +535,26 @@ ACE_TSS<TYPE>::ts_object (void) const
 
   if (this->once_ == 0) // Return 0 if we've never been initialized.
     return 0;
-  else
-    {
-      TYPE *ts_obj = 0;
-#if defined (ACE_HAS_THR_C_DEST)
-      ACE_TSS_Adapter *tss_adapter = 0;
 
-      // Get the tss adapter from thread-specific storage
-      if (ACE_Thread::getspecific (this->key_,
-                                   (void **) &tss_adapter) == -1)
-        return 0; // This should not happen!
-      else if (tss_adapter != 0)
-        // Extract the real TS object.
-        ts_obj = (TYPE *) tss_adapter->ts_obj_;
+  TYPE *ts_obj = 0;
+
+#if defined (ACE_HAS_THR_C_DEST)
+  ACE_TSS_Adapter *tss_adapter = 0;
+
+  // Get the tss adapter from thread-specific storage
+  if (ACE_Thread::getspecific (this->key_,
+                               (void **) &tss_adapter) == -1)
+    return 0; // This should not happen!
+  else if (tss_adapter != 0)
+    // Extract the real TS object.
+    ts_obj = (TYPE *) tss_adapter->ts_obj_;
 #else
-      if (ACE_Thread::getspecific (this->key_,
-                                   (void **) &ts_obj) == -1)
-        return 0; // This should not happen!
+  if (ACE_Thread::getspecific (this->key_,
+                               (void **) &ts_obj) == -1)
+    return 0; // This should not happen!
 #endif /* ACE_HAS_THR_C_DEST */
-      return ts_obj;
-    }
+
+  return ts_obj;
 }
 
 template <class TYPE> TYPE *
@@ -604,8 +604,8 @@ ACE_TSS<TYPE>::ts_object (TYPE *new_ts_obj)
                                (void *) new_ts_obj) == -1)
     return ts_obj; // This should not happen!
 #endif /* ACE_HAS_THR_C_DEST */
-  else
-    return ts_obj;
+
+  return ts_obj;
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_TSS_Guard)
