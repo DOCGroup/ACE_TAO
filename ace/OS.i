@@ -858,7 +858,7 @@ ACE_OS::pipe (ACE_HANDLE fds[])
   ACE_OSCALL_RETURN (::pace_pipe (fds), int, -1);
 # elif !defined (ACE_HAS_WINCE) && !defined (__IBMCPP__)
   ACE_OS_TRACE ("ACE_OS::pipe");
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL 
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL
                         (::CreatePipe (&fds[0], &fds[1], 0, 0),
                          ace_result_), int, -1);
 # else
@@ -2337,8 +2337,8 @@ ACE_INLINE int
 ACE_OS::thread_mutex_lock (ACE_thread_mutex_t *m,
                            const ACE_Time_Value *timeout)
 {
-  return timeout == 0 
-    ? ACE_OS::thread_mutex_lock (m) 
+  return timeout == 0
+    ? ACE_OS::thread_mutex_lock (m)
     : ACE_OS::thread_mutex_lock (m, *timeout);
 }
 
@@ -4849,7 +4849,7 @@ ACE_OS::event_timedwait (ACE_event_t *event,
           // Time is given in absolute time, we should use
           // gettimeofday() to calculate relative time
           ACE_Time_Value relative_time (*timeout - ACE_OS::gettimeofday ());
- 
+
           // Watchout for situations where a context switch has caused
           // the current time to be > the timeout.  Thanks to Norbert
           // Rapp <NRapp@nexus-informatics.de> for pointing this.
@@ -6152,7 +6152,7 @@ ACE_OS::truncate (const ACE_TCHAR *filename,
   else if (::SetFilePointer (handle,
                              offset,
                              NULL,
-                             FILE_BEGIN) != (unsigned) -1) 
+                             FILE_BEGIN) != (unsigned) -1)
     {
       BOOL result = ::SetEndOfFile (handle);
       ::CloseHandle (handle);
@@ -11564,7 +11564,7 @@ ACE_OS::fopen_mode_to_open_mode_converter (ACE_TCHAR x, int &hmode)
 ACE_INLINE ACE_TCHAR *
 ACE_OS::strenvdup (const ACE_TCHAR *str)
 {
-# if !defined (ACE_LACKS_ENV)
+# if defined (ACE_LACKS_ENV)
   ACE_UNUSED_ARG (str);
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_HAS_WINCE)
