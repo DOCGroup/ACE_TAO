@@ -2,6 +2,7 @@
 
 // Process_Manager.cpp
 #define ACE_BUILD_DLL
+#include "ace/Synch_T.h"
 #include "ace/Process.h"
 #include "ace/Process_Manager.h"
 

@@ -127,7 +127,9 @@
 
 // Threads
 #define	ACE_HAS_THREADS
-#define	ACE_MT_SAFE
+#if !defined (ACE_MT_SAFE)
+	#define ACE_MT_SAFE 1
+#endif
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
 #define	ACE_HAS_PTHREADS
 #define	ACE_HAS_PTHREAD_T

@@ -546,10 +546,10 @@ ACE_Scheduling_Strategy<SVC_HANDLER>::ACE_Scheduling_Strategy (SVC_HANDLER *sche
       ACE_NEW (this->scheduler_, SVC_HANDLER);
 
       if (this->scheduler_->thr_mgr () == 0)
-	this->scheduler_->thr_mgr (ACE_Service_Config::thr_mgr ());
+	this->scheduler_->thr_mgr (ACE_Thread_Manager::instance ());
 
       if (this->scheduler_->reactor () == 0)
-	this->scheduler_->reactor (ACE_Service_Config::reactor ());
+	this->scheduler_->reactor (ACE_Reactor::instance ());
 
       this->delete_scheduler_ = 1;
     }

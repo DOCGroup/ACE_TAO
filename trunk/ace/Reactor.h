@@ -48,7 +48,7 @@ public:
   // Exception events (e.g., SIG_URG).
 };
 
-#if defined (ACE_MT_SAFE)
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 
 // The following two classes have to be moved out here to keep the SGI
 // C++ compiler happy (it doesn't like nested classes).
@@ -318,6 +318,34 @@ public:
 	       ACE_Sig_Handler * = 0,
 	       ACE_Timer_Queue * = 0);
   // Initialize <ACE_Reactor> with size <size>.
+
+  static ACE_Reactor *instance (size_t size = ACE_Reactor::DEFAULT_SIZE);
+  // Get pointer to a process-wide <ACE_Reactor>.
+
+  static ACE_Reactor *instance (ACE_Reactor *);
+  // Set pointer to a process-wide <ACE_Reactor> and return existing
+  // pointer.
+
+  static void close_singleton (void);
+  // Delete the dynamically allocated Singleton
+
+  // = Reactor event loop management methods.
+  static int run_event_loop (void);
+  // Run the event loop until the <ACE_Reactor::handle_events> method
+  // returns -1 or the <end_event_loop> method is invoked.
+
+  static int run_event_loop (ACE_Time_Value &tv);
+  // Run the event loop until the <ACE_Reactor::handle_events> method
+  // returns -1, the <end_event_loop> method is invoked, or the
+  // <ACE_Time_Value> expires.
+
+  static int end_event_loop (void);
+  // Instruct the <ACE_Reactor::instance> to terminate its event loop and
+  // notifies the <ACE_Reactor::instance> so that it can wake up
+  // and close down gracefully.
+
+  static sig_atomic_t event_loop_done (void);
+  // Report if the <ACE_Reactor::instance>'s event loop is finished.
 
   virtual int open (size_t size = DEFAULT_SIZE, 
 		    int restart = 0, 
@@ -750,7 +778,7 @@ protected:
   ACE_Reactor_Token token_;
   // Synchronization token for the MT_SAFE ACE_Reactor.
 
-#if defined (ACE_MT_SAFE)
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   ACE_Reactor_Notify notify_handler_;
   // Callback object that unblocks the ACE_Reactor if it's sleeping.
 
@@ -770,9 +798,18 @@ private:
   int handle_events_i (ACE_Time_Value *max_wait_time = 0);
   // Stops the VC++ compiler from bitching about exceptions and destructors
 
-  // Deny access since member-wise won't work...
+  static ACE_Reactor *reactor_;
+  // Pointer to a process-wide <ACE_Reactor>.
+
+  static int delete_reactor_;
+  // Must delete the <reactor_> if non-0.
+
+  static sig_atomic_t end_event_loop_;
+  // Terminate the event loop.
+
   ACE_Reactor (const ACE_Reactor &);
   ACE_Reactor &operator = (const ACE_Reactor &);
+  // Deny access since member-wise won't work...
 };
 
 #if defined (__ACE_INLINE__)

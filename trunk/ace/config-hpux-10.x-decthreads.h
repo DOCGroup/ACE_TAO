@@ -90,7 +90,9 @@
 #define ACE_HAS_TID_T /* added by shankar */
 #define ACE_LACKS_SETSCHED /* added by shankar */
 #define ACE_LACKS_RWLOCK_T
-#define ACE_MT_SAFE
+#if !defined (ACE_MT_SAFE)
+	#define ACE_MT_SAFE 1
+#endif
 #define ACE_HAS_SIGINFO_T
 #define ACE_LACKS_PTHREAD_THR_SIGSETMASK
 #define ACE_HAS_SETKIND_NP

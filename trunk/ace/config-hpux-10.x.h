@@ -145,7 +145,9 @@ extern int h_errno;	/* This isn't declared in a header file on HP-UX */
 ////////////////////////////////////////////////////////////////////////
 
 #ifdef _ACE_HPUX_USE_DCETHREADS
-#  define ACE_MT_SAFE
+#  if !defined (ACE_MT_SAFE)
+	#define ACE_MT_SAFE 1
+#  endif
 #  define ACE_HAS_THREADS
 #  define ACE_HAS_DCETHREADS
 #  define ACE_HAS_DCE_DRAFT4_THREADS

@@ -176,7 +176,9 @@ struct ip_mreq
 
 /* Turn off the following five defines if you want to disable threading. */
 // Compile using multi-thread libraries.
-#define ACE_MT_SAFE
+#if !defined (ACE_MT_SAFE)
+	#define ACE_MT_SAFE 1
+#endif
 
 #define ACE_HAS_PTHREADS
 #define ACE_LACKS_RWLOCK_T

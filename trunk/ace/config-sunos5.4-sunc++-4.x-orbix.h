@@ -74,7 +74,7 @@
 #define ACE_HAS_MT_SAFE_SOCKETS
 
 // Platform contains the Orbix CORBA implementation.
-#define ACE_HAS_ORBIX
+#define ACE_HAS_ORBIX 1
 
 // Platform contains the multi-threaded Orbix CORBA implementation.
 // #define ACE_HAS_MT_ORBIX
@@ -140,7 +140,9 @@
 
 /* Turn off the following four defines if you want to disable threading. */
 // Compile using multi-thread libraries.
-#define ACE_MT_SAFE
+#if !defined (ACE_MT_SAFE)
+	#define ACE_MT_SAFE 1
+#endif
 
 // Platform supports Solaris threads.
 #define ACE_HAS_STHREADS

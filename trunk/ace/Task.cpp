@@ -17,7 +17,7 @@
 #endif /* ACE_HAS_THREADS && ACE_HAS_THREAD_SPECIFIC_STORAGE */
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
 
-#if defined (ACE_MT_SAFE)
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 // Lock the creation of the Singleton.
 ACE_Thread_Mutex ACE_Task_Exit::ace_task_lock_;
 #endif /* defined (ACE_MT_SAFE) */
@@ -171,7 +171,7 @@ ACE_Task_Base::activate (long flags,
 {
   ACE_TRACE ("ACE_Task_Base::activate");
 
-#if defined (ACE_MT_SAFE)
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
   
   // If the task passed in is zero, we will use <this>
@@ -187,7 +187,7 @@ ACE_Task_Base::activate (long flags,
   // active object and the caller didn't supply us with a
   // Thread_Manager.
   if (this->thr_mgr_ == 0)   
-    this->thr_mgr_ = ACE_Service_Config::thr_mgr ();
+    this->thr_mgr_ = ACE_Thread_Manager::instance ();
 
   this->grp_id_ = this->thr_mgr_->spawn_n (n_threads, 
 					   ACE_THR_FUNC (&ACE_Task_Base::svc_run),

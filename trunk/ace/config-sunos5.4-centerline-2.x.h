@@ -123,7 +123,9 @@
 
 /* Turn off the following four defines if you want to disable threading. */
 // Compile using multi-thread libraries.
-#define ACE_MT_SAFE
+#if !defined (ACE_MT_SAFE)
+	#define ACE_MT_SAFE 1
+#endif
 
 // Platform supports threads.
 #define ACE_HAS_THREADS

@@ -89,6 +89,16 @@ public:
   ACE_Thread_Manager (size_t size = ACE_Thread_Manager::DEFAULT_SIZE);
   virtual ~ACE_Thread_Manager (void);
 
+  static ACE_Thread_Manager *instance (void);
+  // Get pointer to a process-wide <ACE_Thread_Manager>.
+
+  static ACE_Thread_Manager *instance (ACE_Thread_Manager *);
+  // Set pointer to a process-wide <ACE_Thread_Manager> and return
+  // existing pointer.
+
+  static void close_singleton (void);
+  // Delete the dynamically allocated Singleton
+
   int open (size_t size = DEFAULT_SIZE); 
   // Initialize the manager with room for SIZE threads.
 
@@ -369,6 +379,12 @@ protected:
   ACE_Thread_Mutex lock_;
   ACE_Condition_Thread_Mutex zero_cond_;
 #endif /* ACE_HAS_THREADS */
+private:
+  static ACE_Thread_Manager *thr_mgr_;
+  // Pointer to a process-wide <ACE_Thread_Manager>.
+
+  static int delete_thr_mgr_;
+  // Must delete the <thr_mgr_> if non-0.
 };
 
 

@@ -90,7 +90,9 @@
 #define ACE_HAS_POSIX_SEM
 #define ACE_LACKS_NAMED_POSIX_SEM
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
-#define ACE_MT_SAFE
+#if !defined (ACE_MT_SAFE)
+	#define ACE_MT_SAFE 1
+#endif
 // And they're even POSIX pthreads
 #define ACE_HAS_PTHREADS
 #define ACE_LACKS_PTHREAD_CLEANUP

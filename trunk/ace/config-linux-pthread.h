@@ -107,7 +107,9 @@
 #define ACE_HAS_THREADS
 
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
-#define ACE_MT_SAFE
+#if !defined (ACE_MT_SAFE)
+	#define ACE_MT_SAFE 1
+#endif
 // And they're even POSIX pthreads (MIT implementation)
 #define ACE_HAS_PTHREADS
 #define ACE_LACKS_RWLOCK_T

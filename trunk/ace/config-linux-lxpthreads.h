@@ -133,7 +133,9 @@
 
 #define ACE_HAS_PTHREAD_SIGMASK			// JCEJ 12/19/96
 
-#define ACE_MT_SAFE				// JCEJ 12/22/96	#1
+#if !defined (ACE_MT_SAFE)
+	#define ACE_MT_SAFE 1				// JCEJ 12/22/96	#1
+#endif
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE		// jcej 12/22/96	#2
 #define PTHREAD_MIN_PRIORITY		0	// JCEJ 12/22/96	#3
 #if defined(ACE_HAS_PTHREAD_SIGMASK)

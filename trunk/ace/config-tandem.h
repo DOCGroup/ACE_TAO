@@ -174,7 +174,9 @@
 
 /****** THREAD SPECIFIC **********/
 /* If you want to remove threading then comment out the following four #defines .*/
-#define ACE_MT_SAFE			//Compile using multi-thread libraries
+#if !defined (ACE_MT_SAFE)
+	#define ACE_MT_SAFE 1		//Compile using multi-thread libraries
+#endif
 #define ACE_HAS_THREADS			//Platform supports threads
 #define ACE_HAS_STHREADS		//Platform supports Solaris threads
 
@@ -337,6 +339,9 @@
 
 //ACE_HAS_OLD_MALLOC			Compiler/platform uses old malloc()/
 // free() prototypes (ugh)
+#if !defined (ACE_HAS_ORBIX)
+	#define ACE_HAS_ORBIX 0
+#endif
 // ACE_HAS_ORBIX			Platform has Orbix CORBA implementation
 //? ACE_HAS_POSIX_SEM			Platform supports POSIX real-time 
 //semaphores (e.g., VxWorks and Solaris)

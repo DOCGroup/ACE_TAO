@@ -46,7 +46,7 @@ ACE_CString::ACE_CString (const ACE_CString &s)
   ACE_TRACE ("ACE_CString::ACE_CString");
 
   if (this->allocator_ == 0)
-    this->allocator_ = ACE_Service_Config::alloc ();
+    this->allocator_ = ACE_Allocator::instance ();
 
   if (s.fast_rep ()[0] == '\0')
     {
@@ -93,7 +93,7 @@ ACE_CString::ACE_CString (ACE_Allocator *alloc)
   ACE_TRACE ("ACE_CString::ACE_CString");
 
   if (this->allocator_ == 0)
-    this->allocator_ = ACE_Service_Config::alloc ();
+    this->allocator_ = ACE_Allocator::instance ();
 }
 
 // Constructor that actually copies memory.
@@ -104,7 +104,7 @@ ACE_CString::ACE_CString (const char *s, ACE_Allocator *alloc)
   ACE_TRACE ("ACE_CString::ACE_CString");
 
   if (this->allocator_ == 0)
-    this->allocator_ = ACE_Service_Config::alloc ();
+    this->allocator_ = ACE_Allocator::instance ();
 
   if (s == 0 || s[0] == 0')
     {
@@ -129,7 +129,7 @@ ACE_CString::ACE_CString (const ACE_USHORT16 *s, ACE_Allocator *alloc)
   ACE_TRACE ("ACE_CString::ACE_CString");
 
   if (this->allocator_ == 0)
-    this->allocator_ = ACE_Service_Config::alloc ();
+    this->allocator_ = ACE_Allocator::instance ();
 
   if (s == 0 || s[0] == (ACE_USHORT16) '\0')
     {
@@ -159,7 +159,7 @@ ACE_CString::ACE_CString (const char *s,
   ACE_TRACE ("ACE_CString::ACE_CString");
 
   if (this->allocator_ == 0)
-    this->allocator_ = ACE_Service_Config::alloc ();
+    this->allocator_ = ACE_Allocator::instance ();
 
   if (s == 0 || s[0] == '\0')
     {
@@ -316,7 +316,7 @@ ACE_SString::ACE_SString (const ACE_SString &s)
   ACE_TRACE ("ACE_SString::ACE_SString");
 
   if (this->allocator_ == 0)
-    this->allocator_ = ACE_Service_Config::alloc ();
+    this->allocator_ = ACE_Allocator::instance ();
 
   this->rep_ = (char *) this->allocator_->malloc (s.len_ + 1);
   ACE_OS::memcpy ((void *) this->rep_, (const void *) s.rep_, this->len_);
@@ -334,7 +334,7 @@ ACE_SString::ACE_SString (ACE_Allocator *alloc)
   ACE_TRACE ("ACE_SString::ACE_SString");
 
   if (this->allocator_ == 0)
-    this->allocator_ = ACE_Service_Config::alloc ();
+    this->allocator_ = ACE_Allocator::instance ();
 
   this->len_ = 0;
   this->rep_ = (char *) this->allocator_->malloc (this->len_ + 1);
@@ -400,7 +400,7 @@ ACE_SString::ACE_SString (const char *s,
   ACE_TRACE ("ACE_SString::ACE_SString");
 
   if (this->allocator_ == 0)
-    this->allocator_ = ACE_Service_Config::alloc ();
+    this->allocator_ = ACE_Allocator::instance ();
 
   if (s == 0)
     {
@@ -426,7 +426,7 @@ ACE_SString::ACE_SString (const char *s,
   ACE_TRACE ("ACE_SString::ACE_SString");
 
   if (this->allocator_ == 0)
-    this->allocator_ = ACE_Service_Config::alloc ();
+    this->allocator_ = ACE_Allocator::instance ();
 
   if (s == 0)
     {
@@ -482,7 +482,7 @@ ACE_WString::ACE_WString (ACE_Allocator *alloc)
   ACE_TRACE ("ACE_WString::ACE_WString");
 
   if (this->allocator_ == 0)
-    this->allocator_ = ACE_Service_Config::alloc ();
+    this->allocator_ = ACE_Allocator::instance ();
 
   this->len_ = 0;
   this->rep_ = (ACE_USHORT16 *)  this->allocator_->malloc ((this->len_ + 1) * sizeof (ACE_USHORT16));
@@ -536,7 +536,7 @@ ACE_WString::ACE_WString (const char *s,
   ACE_TRACE ("ACE_WString::ACE_WString");
 
   if (this->allocator_ == 0)
-    this->allocator_ = ACE_Service_Config::alloc ();
+    this->allocator_ = ACE_Allocator::instance ();
 
   if (s == 0)
     {
@@ -568,7 +568,7 @@ ACE_WString::ACE_WString (const ACE_USHORT16 *s,
   ACE_TRACE ("ACE_WString::ACE_WString");
 
   if (this->allocator_ == 0)
-    this->allocator_ = ACE_Service_Config::alloc ();
+    this->allocator_ = ACE_Allocator::instance ();
 
   if (s == 0)
     {
@@ -598,7 +598,7 @@ ACE_WString::ACE_WString (const ACE_USHORT16 *s,
   ACE_TRACE ("ACE_WString::ACE_WString");
 
   if (this->allocator_ == 0)
-    this->allocator_ = ACE_Service_Config::alloc ();
+    this->allocator_ = ACE_Allocator::instance ();
 
   if (s == 0)
     {
@@ -627,7 +627,7 @@ ACE_WString::ACE_WString (size_t len,
   ACE_TRACE ("ACE_WString::ACE_WString");
 
   if (this->allocator_ == 0)
-    this->allocator_ = ACE_Service_Config::alloc ();
+    this->allocator_ = ACE_Allocator::instance ();
 
   this->len_ = len;
   this->rep_ = (ACE_USHORT16 *) this->allocator_->malloc ((this->len_ + 1) * sizeof (ACE_USHORT16));
@@ -654,7 +654,7 @@ ACE_WString::ACE_WString (const ACE_WString &s)
   ACE_TRACE ("ACE_WString::ACE_WString");
 
   if (this->allocator_ == 0)
-    this->allocator_ = ACE_Service_Config::alloc ();
+    this->allocator_ = ACE_Allocator::instance ();
 
   this->rep_ = (ACE_USHORT16 *) this->allocator_->malloc ((s.len_ + 1) * sizeof (ACE_USHORT16));
   ACE_OS::memcpy ((void *) this->rep_, (const void *) s.rep_,

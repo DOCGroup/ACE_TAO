@@ -34,6 +34,16 @@ public:
   ACE_Service_Repository (int size);
   // Initialize the repository.
 
+  static ACE_Service_Repository *instance (int size = ACE_Service_Repository::DEFAULT_SIZE);
+  // Get pointer to a process-wide <ACE_Service_Repository>.
+
+  static ACE_Service_Repository *instance (ACE_Service_Repository *);
+  // Set pointer to a process-wide <ACE_Service_Repository> and return
+  // existing pointer.  
+
+  static void close_singleton (void);
+  // Delete the dynamically allocated Singleton
+
   int open (int size = DEFAULT_SIZE);
   // Initialize the repository.
 
@@ -91,7 +101,14 @@ private:
   int total_size_;
   // Maximum number of service.
 
-#if defined (ACE_MT_SAFE)
+  static ACE_Service_Repository *svc_rep_;
+  // Pointer to a process-wide <ACE_Service_Repository>.
+
+  static int delete_svc_rep_;
+  // Must delete the <svc_rep_> if non-0.
+
+
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   ACE_Thread_Mutex lock_; 
   // Synchronization variable for the MT_SAFE Repository 
 #endif /* ACE_MT_SAFE */

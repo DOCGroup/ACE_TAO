@@ -7,6 +7,7 @@
 
 #define ACE_BUILD_DLL
 #include "ace/Service_Config.h"
+#include "ace/Reactor.h"
 
 int
 sc_main (int argc, char *argv[])
@@ -18,15 +19,15 @@ sc_main (int argc, char *argv[])
     ACE_ERROR ((LM_ERROR, "%p\n%a", "open", 1));
 
   // Create an adapter to end the event loop.
-  ACE_Sig_Adapter sa ((ACE_Sig_Handler_Ex) ACE_Service_Config::end_reactor_event_loop);
+  ACE_Sig_Adapter sa ((ACE_Sig_Handler_Ex) ACE_Reactor::end_event_loop);
 
   // Register a signal handler.
-  ACE_Service_Config::reactor ()->register_handler (SIGINT, &sa);
+  ACE_Reactor::instance()->register_handler (SIGINT, &sa);
 
   // Run forever, performing the configured services until we are shut
   // down by a SIGINT/SIGQUIT signal.
 
-  daemon.run_reactor_event_loop ();
+  ACE_Reactor::run_event_loop ();
 
   return 0;
 }

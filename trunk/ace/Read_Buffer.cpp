@@ -26,7 +26,7 @@ ACE_Read_Buffer::ACE_Read_Buffer (FILE *fp,
 {
   ACE_TRACE ("ACE_Read_Buffer::ACE_Read_Buffer");
   if (this->allocator_ == 0)
-    this->allocator_ = ACE_Service_Config::alloc ();
+    this->allocator_ = ACE_Allocator::instance ();
 }
 
 ACE_Read_Buffer::ACE_Read_Buffer (int handle,
@@ -39,7 +39,7 @@ ACE_Read_Buffer::ACE_Read_Buffer (int handle,
   ACE_TRACE ("ACE_Read_Buffer::ACE_Read_Buffer");
 
   if (this->allocator_ == 0)
-    this->allocator_ = ACE_Service_Config::alloc ();
+    this->allocator_ = ACE_Allocator::instance ();
 }
 
 ACE_Read_Buffer::~ACE_Read_Buffer (void)
