@@ -1,3 +1,13 @@
+Fri Mar 22 09:38:14 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/MCAST_Parser.cpp (multicast_query):
+
+	  Fixed problem where the IP_MULTICAST_TTL socket option value was
+	  being passed directly to ACE_SOCK::set_option() instead of its
+	  address.  This should address some multicast query problems when
+	  using "mcast" IORs.  Thanks to Tim Iskander
+	  <timothy.j.iskander@lmco.com> for suggesting the fix. [Bug 1173]
+
 Fri Mar 22 10:31:33 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_operation/operation.cpp:
