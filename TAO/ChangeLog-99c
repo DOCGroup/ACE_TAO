@@ -6,7 +6,8 @@ Fri Oct 22 12:39:29 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 	* tao/Client_Priority_Policy.cpp (TAO_Client_Priority_Policy):
 
 	  Added explicit copy constructors because SUN CC 5.0 won't
-	  compile without them.
+	  compile without them.  One addition: base class constructors
+	  should be explicitly initialized in the copy constructor.
 
 Thu Oct 21 14:55:02 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
