@@ -341,7 +341,13 @@ to Graham for providing the OSE tools!
   </ul>
 
   <li><strong>UNICODE conformity</strong><p>
+
   <ul>
+    <li>Define strings as <strong><code>ASYS_TCHAR</code></strong> if
+        they need to be passed into system API.  It expands to
+        <code>wchar_t</code> only when
+        <code>ACE_HAS_MOSTLY_UNICODE_APIS</code> is deined.<p>
+
     <li>Use <strong><code>ASYS_TEXT</code></strong> and
         <strong><code>ASYS_WIDE_STRING</code></strong> for format
         strings and other string arguments passed to
@@ -365,13 +371,17 @@ to Graham for providing the OSE tools!
         This is because ACE also support platforms which use UNICODE
         in most of their APIs.  On these platforms, ACE also uses
         UNICODE as its system string type.<p>
+
     <li><strong><code>ACE_TRACE</code></strong> handles conversion
         between char strings and UNICODE strings automatically.<p>
+
     <li>Other helper macros include
         <strong><code>ASYS_MULTIBYTE_STRING</code></strong> and
         <strong><code>ASYS_ONLY_MULTIBYTE_STRING</code></strong>. See
         the end of <a href="../ace/OS.h">OS.h</a> for more details.<p>
+
   </ul><p>
+
 </ul><p>
 
 <p><HR><P>
@@ -477,7 +487,7 @@ to Graham for providing the OSE tools!
 
 <hr>
 <!-- hhmts start -->
-Last modified: Sun Apr 12 18:58:50 CDT 1998
+Last modified: Sun Apr 12 21:03:27 CDT 1998
 <!-- hhmts end -->
 
 </body>
