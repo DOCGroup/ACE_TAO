@@ -10,8 +10,8 @@
 
 INFO  = README
 
-DIRS  =	client \
-	server
+DIRS  =	# client \
+	# server
 
 #----------------------------------------------------------------------------
 #	Include macros and targets

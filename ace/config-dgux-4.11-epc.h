@@ -4,6 +4,10 @@
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
+// Platform requires (struct sockaddr *) for msg_name field of struct
+// msghdr.
+#define ACE_HAS_SOCKADDR_MSG_NAME
+
 // Platform lacks strcasecmp().
 #define ACE_LACKS_STRCASECMP
 
