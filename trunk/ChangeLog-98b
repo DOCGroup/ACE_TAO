@@ -1,3 +1,9 @@
+Wed Jul 15 19:00:33 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Dynamic_Service.cpp (instance): Made the error reporting
+ 	  less verbose.  Thanks to Darrell for suggesting this.  In
+ 	  addition, changed the use of (SERVICE *) to ACE_dynamic_cast().
+
 Wed Jul 15 16:23:21 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/make_release: redirect error output of cvs checkout to
