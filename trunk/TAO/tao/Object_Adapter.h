@@ -374,7 +374,7 @@ public:
     TAO_Object_Adapter &object_adapter_;
   };
 
-  friend Non_Servant_Upcall;
+  friend class Non_Servant_Upcall;
 
   class Outstanding_Requests
   {
@@ -404,7 +404,7 @@ public:
     TAO_Object_Adapter &object_adapter_;
   };
 
-  friend Outstanding_Requests;
+  friend class Outstanding_Requests;
 
   class Single_Threaded_POA_Lock
   {
@@ -430,7 +430,7 @@ public:
     PortableServer::Servant servant_;
   };
 
-  friend Single_Threaded_POA_Lock;
+  friend class Single_Threaded_POA_Lock;
 
 };
 
