@@ -369,6 +369,9 @@ public:
 
   CORBA_Any_var &operator= (const CORBA_Any_var &a);
   // assignment from an Any_var
+  // This operation requires memory allocation.
+  // If the allocation fails, *this is returned 
+  // unmodified.
 
   CORBA_Any *operator-> (void);
   // arrow operator (smart pointer)
