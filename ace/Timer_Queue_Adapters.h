@@ -208,7 +208,7 @@ private:
 # endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 # if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#  pragma implementation "Timer_Queue_Adapters.cpp"
+#  pragma implementation ("Timer_Queue_Adapters.cpp")
 # endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* ACE_TIMER_QUEUE_ADAPTERS_H */

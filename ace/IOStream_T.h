@@ -271,7 +271,7 @@ protected:
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation "IOStream_T.cpp"
+#pragma implementation ("IOStream_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 #endif /* ACE_LACKS_ACE_IOSTREAM */
 #endif /* ACE_IOSTREAM_T_H */

@@ -675,8 +675,8 @@ TAO_CodeGen::end_server_template_header (void)
   // insert the code to include the template pragma
   *this->server_template_header_
     << "\n#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)\n";
-  *this->server_template_header_ << "#pragma implementation \"" <<
-    idl_global->be_get_server_template_skeleton_fname (1) << "\"\n";
+  *this->server_template_header_ << "#pragma implementation (\"" <<
+    idl_global->be_get_server_template_skeleton_fname (1) << "\")\n";
   *this->server_template_header_ << "#endif /* defined REQUIRED PRAGMA */\n\n";
 
   *this->server_template_header_ << "#if defined(_MSC_VER)\n"

@@ -40,7 +40,7 @@ public:
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-# pragma implementation "Dynamic_Service.cpp"
+# pragma implementation ("Dynamic_Service.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* ACE_DYNAMIC_SERVICE_H */

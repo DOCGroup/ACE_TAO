@@ -172,7 +172,7 @@ private:
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation "BPR_Drivers_T.cpp"
+#pragma implementation ("BPR_Drivers_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* _BPR_DRIVERS_T_H_ */
