@@ -69,7 +69,6 @@ sub test_body
    close FILE;
    # Tidy up
    $IFRSERVICE->TerminateWaitKill (5);
-   $TAO_IFR->TerminateWaitKill (5);
    return $match ? 0 : -1;
 }
 
