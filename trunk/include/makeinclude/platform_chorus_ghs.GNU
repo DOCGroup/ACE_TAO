@@ -13,7 +13,7 @@ ifndef COOL_DIR
 endif # COOL_DIR
 
 ifndef MVME_DIR
-  MVME_DIR=/project/doc/mvme/mvme177/
+  MVME_DIR=/project/doc/mvme/mvme177
 endif # MVME_DIR
 
 ifndef MVME_INCL
@@ -36,7 +36,7 @@ PATH +=:$(GHS_DIR)
 
 CC      = cxch68
 CXX     = $(CC)
-CFLAGS  = -groot=$(MVME_DIR) -alttools=$(GHS_DIR) -68040 -fprecise \
+CFLAGS  = -groot=$(MVME_DIR)/ -alttools=$(GHS_DIR) -68040 -fprecise \
           -I$(MVME_INCL)/posix \
           -I$(MVME_INCL)/stdc \
           -I$(MVME_INCL)/chorus \
@@ -64,7 +64,7 @@ else
   CRTH = $(MVME_DIR)/lib/crt/crth_d.s.o
 endif # debug
 
-POSTLINK = ; $(CC) -groot=$(MVME_DIR) -alttools=$(GHS_DIR) -68040 \
+POSTLINK = ; $(CC) -groot=$(MVME_DIR)/ -alttools=$(GHS_DIR) -68040 \
            -nostartfiles -nostdlib -e __start -o $@.final \
            $(CRTH) $(MVME_DIR)/lib/crt/crt0.o \
            $(MVME_DIR)/lib/crt/crti.o $@ \
