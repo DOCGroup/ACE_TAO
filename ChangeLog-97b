@@ -1,3 +1,29 @@
+Tue Oct 28 00:38:58 1997    <irfan@TWOSTEP>
+
+	* ace/Strategies_T: 
+
+	  ACE_Recycling_Strategy - Added new class ACE_Recycling_Strategy.
+  	  It defines the interface (and default implementation) for
+ 	  specifying a recycling strategy for a SVC_HANDLER.  This
+ 	  strategy acts as a consular to the Svc_Handler, preparing it for
+ 	  the tough times ahead when the Svc_Handler will be recycled.
+
+	  ACE_NOOP_Concurrency_Strategy - Added new class
+ 	  ACE_NOOP_Concurrency_Strategy.  It implements a no-op activation
+ 	  strategy in order to avoid calling open on a recycled
+ 	  svc_handler multiple times.
+
+	  ACE_Cached_Connect_Strategy - Added a ACE_Creation_Strategy,
+ 	  ACE_Concurrency_Strategy, and ACE_Recycling_Strategy to the
+ 	  cached connector.  This gives it more flexibility than by simply
+ 	  providing template methods.  This is similar to the Strategy
+ 	  Connector.
+
+	  ACE_Cached_Connect_Strategy - Added new template methods for
+ 	  certain key occasions in the cached connector: make_svc_handler,
+ 	  activate_svc_handler, assign_recycler, and
+ 	  prepare_for_recycling.
+
 Mon Oct 27 22:17:54 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* OS.h: Added the ACE_NESTED_CLASS macro to deal with those

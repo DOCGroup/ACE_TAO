@@ -69,6 +69,14 @@ Svc_Handler::open (void *)
   return 0;
 }
 
+int
+Svc_Handler::recycle (void *)
+{
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) recycling Svc_Handler %d with handle %d\n",
+              this, this->peer ().get_handle ()));
+  return 0;
+}
+
 void
 Svc_Handler::send_data (void)
 {
@@ -167,6 +175,7 @@ typedef ACE_Oneshot_Acceptor<Svc_Handler, ACE_SOCK_ACCEPTOR> ACCEPTOR;
 typedef ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR> CONNECTOR;
 typedef ACE_Strategy_Connector<Svc_Handler, ACE_SOCK_CONNECTOR> STRAT_CONNECTOR;
 typedef ACE_NOOP_Creation_Strategy<Svc_Handler> NULL_CREATION_STRATEGY;
+typedef ACE_NOOP_Concurrency_Strategy<Svc_Handler> NULL_ACTIVATION_STRATEGY;
 typedef ACE_Cached_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_RW_MUTEX> CACHED_CONNECT_STRATEGY;
 
 // ****************************************
@@ -316,13 +325,15 @@ client (void *arg)
   CONNECTOR connector;
 
   NULL_CREATION_STRATEGY creation_strategy;
+  NULL_ACTIVATION_STRATEGY activation_strategy;
   // Configure the Strategy Connector with a strategy that caches
   // connection.
   CACHED_CONNECT_STRATEGY caching_connect_strategy;
 
   STRAT_CONNECTOR strat_connector (0,
                                    &creation_strategy,
-                                   &caching_connect_strategy);
+                                   &caching_connect_strategy,
+                                   &activation_strategy);
   Client_Info info;
   info.server_addr_ = &server_addr;
   info.connector_ = &connector;
