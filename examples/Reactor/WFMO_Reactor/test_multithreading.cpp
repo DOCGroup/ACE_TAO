@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    examples
-// 
+//
 // = FILENAME
 //    test_multithreading.cpp
 //
@@ -19,7 +19,7 @@
 //
 // = AUTHOR
 //    Irfan Pyarali
-// 
+//
 // ============================================================================
 
 #include "ace/Task.h"
@@ -36,10 +36,10 @@ static int interval = 2;
 static int iterations = 10;
 
 // Explain usage and exit.
-static void 
+static void
 print_usage_and_die (void)
 {
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
 	      "usage: \n\t"
 	      "[-t (# of threads - default 1)] \n\t"
 	      "[-h (# of handlers) - default 62] \n\t"
@@ -54,8 +54,8 @@ static void
 parse_args (int argc, char **argv)
 {
   ACE_Get_Opt get_opt (argc, argv, "t:h:s:i:e:");
-  int c; 
-  
+  int c;
+
   while ((c = get_opt ()) != -1)
     switch (c)
       {
@@ -126,17 +126,17 @@ Task_Handler::Task_Handler (size_t number_of_handles,
 {
   ACE_NEW (this->events_, ACE_Auto_Event [number_of_handles]);
 
-  for (size_t i = 0; i < number_of_handles; i++)
+  for (size_t i = 1; i <= number_of_handles; i++)
     {
       if (ACE_Reactor::instance ()->register_handler (this,
 						      this->events_[i].handle ()) == -1)
-	ACE_ERROR ((LM_ERROR, "%p\t cannot register handle %d with Reactor\n", 
-		    "Task_Handler::Task_Handler", i));      
+	ACE_ERROR ((LM_ERROR, "%p\t cannot register handle %d with Reactor\n",
+		    "Task_Handler::Task_Handler", i));
     }
   // Make us an active object.
-  if (this->activate (THR_NEW_LWP, 
+  if (this->activate (THR_NEW_LWP,
 		      concurrent_threads) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\t cannot activate task\n", 
+    ACE_ERROR ((LM_ERROR, "%p\t cannot activate task\n",
 		"activate"));
 }
 
@@ -155,52 +155,52 @@ Task_Handler::handle_signal (int signum, siginfo_t *siginfo, ucontext_t *)
   if (ACE_Reactor::instance ()->remove_handler (siginfo->si_handle_,
 						ACE_Event_Handler::DONT_CALL) == -1)
     return -1;
-  // ACE_ERROR_RETURN ((LM_ERROR, 
-  //		       "(%t) %p\tTask cannot be unregistered from Reactor: handle value = %d\n", 
+  // ACE_ERROR_RETURN ((LM_ERROR,
+  //		       "(%t) %p\tTask cannot be unregistered from Reactor: handle value = %d\n",
   //		       "Task_Handler::handle_signal",
   //		       siginfo->si_handle_), -1);
-  
+
   if (ACE_Reactor::instance ()->register_handler (this,
 						  siginfo->si_handle_) == -1)
     return -1;
-  // ACE_ERROR_RETURN ((LM_ERROR, 
-  // 		       "(%t) %p\tTask cannot be registered with Reactor: handle value = %d\n",  
+  // ACE_ERROR_RETURN ((LM_ERROR,
+  // 		       "(%t) %p\tTask cannot be registered with Reactor: handle value = %d\n",
   //		       "Task_Handler::handle_signal",
   //		       siginfo->si_handle_), -1);
   return 0;
 }
 
-int 
+int
 Task_Handler::handle_close (ACE_HANDLE handle,
 			    ACE_Reactor_Mask close_mask)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) handle_close() called: handle value = %d\n", 
+  ACE_DEBUG ((LM_DEBUG, "(%t) handle_close() called: handle value = %d\n",
 	      handle));
   return 0;
 }
 
-int 
+int
 Task_Handler::handle_timeout (const ACE_Time_Value &tv,
 			      const void *arg)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) handle_timeout() called: iteration value = %d\n", 
+  ACE_DEBUG ((LM_DEBUG, "(%t) handle_timeout() called: iteration value = %d\n",
 	      int (arg)));
   return 0;
 }
 
-int 
+int
 Task_Handler::signal (size_t index)
 {
   return this->events_[index].signal ();
 }
 
-int 
+int
 main (int argc, char **argv)
 {
   parse_args (argc, argv);
   Task_Handler task (number_of_handles,
 		     concurrent_threads);
-  
+
   ACE_OS::srand (ACE_OS::time (0L));
 
   for (int i = 1; i <= iterations; i++)
@@ -209,11 +209,11 @@ main (int argc, char **argv)
       ACE_OS::sleep (interval);
 
       // Randomly generate events
-      ACE_DEBUG ((LM_DEBUG, "********************************************************\n"));		
-      ACE_DEBUG ((LM_DEBUG, "(%t -- main thread) signaling %d events : iteration = %d\n", 
+      ACE_DEBUG ((LM_DEBUG, "********************************************************\n"));
+      ACE_DEBUG ((LM_DEBUG, "(%t -- main thread) signaling %d events : iteration = %d\n",
 		  number_of_handles_to_signal,
-		  i));		
-      ACE_DEBUG ((LM_DEBUG, "********************************************************\n"));		
+		  i));
+      ACE_DEBUG ((LM_DEBUG, "********************************************************\n"));
 
       // Setup a timer for the task
       if (ACE_Reactor::instance ()->schedule_timer (&task,
@@ -223,7 +223,7 @@ main (int argc, char **argv)
 
       for (int i = 0; i < number_of_handles_to_signal; i++)
 	// Randomly select a handle to signal.
-	task.signal (ACE_OS::rand() % number_of_handles);	  
+	task.signal (ACE_OS::rand() % number_of_handles);
     }
 
   // Sleep for a while
@@ -232,7 +232,7 @@ main (int argc, char **argv)
   // End the Reactor event loop
   ACE_Reactor::end_event_loop ();
 
-  // Wait for all threads to exit 
+  // Wait for all threads to exit
   ACE_Thread_Manager::instance ()->wait ();
 
   // Delete dynamic resources; this is necessary since it will destroy
@@ -243,4 +243,3 @@ main (int argc, char **argv)
 
   return 0;
 }
-
