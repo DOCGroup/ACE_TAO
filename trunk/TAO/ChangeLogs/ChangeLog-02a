@@ -1,3 +1,11 @@
+Tue Jun 13 11:13:02 2000  Ossama Othman  <ossama@uci.edu>
+
+	* rules.tao.GNU (ami):
+
+	  Disable AMI when Minimum CORBA is enabled.  AMI is not supported
+	  in the Minimum CORBA configuration.  This fixes compile-time
+	  errors in the AMI test directory.
+
 Tue Jun 13 09:47:25 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/Naming_Service/Naming_Server_static.dsp: (added)
