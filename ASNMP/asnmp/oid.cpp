@@ -249,8 +249,6 @@ Oid& Oid::operator+=( const char *a)
    ACE_OS::strcat(ptr,a);
    if ( smival.value.oid.len !=0) {
      set_invalid();
-     delete [] smival.value.oid.ptr;
-     smival.value.oid.len = 0;
     }
 
    if (StrToOid( (char *) ptr, &smival.value.oid, byte_counter) < 0) {
