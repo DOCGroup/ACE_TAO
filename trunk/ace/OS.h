@@ -329,7 +329,6 @@ private:
 #define ACE_ODD(NUM) (((NUM) & 1) == 1)
 #define ACE_BIT_ENABLED(WORD, BIT) (((WORD) & (BIT)) != 0)
 #define ACE_BIT_DISABLED(WORD, BIT) (((WORD) & (BIT)) == 0)
-#define ACE_BIT_STRICTLY_ENABLED(WORD, BIT) (((WORD) & (BIT)) == BIT)
 #define ACE_BIT_CMP_MASK(WORD, BIT, MASK) (((WORD) & (BIT)) == MASK)
 #define ACE_SET_BITS(WORD, BITS) (WORD |= (BITS))
 #define ACE_CLR_BITS(WORD, BITS) (WORD &= ~(BITS))

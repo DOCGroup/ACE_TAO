@@ -297,6 +297,12 @@ ACE_Connector<SH, PR_CO_2>::handle_output (ACE_HANDLE handle)
 
   ACE_ASSERT (ast != 0);   // This shouldn't happen!
 
+  // Try to find out if the reactor uses event associations for the
+  // handles it waits on. If so we need to reset it.
+  int reset_new_handle = this->reactor ()->uses_event_associations ();
+  if (reset_new_handle)
+    this->connector_.reset_new_handle (handle);
+
   // Transfer ownership of the ACE_HANDLE to the SVC_HANDLER.
   ast->svc_handler ()->set_handle (handle);
 

@@ -1234,8 +1234,10 @@ ACE_Select_Reactor::bit_ops (ACE_HANDLE handle,
       // a ACE_Reactor::ADD_MASK we just carry out the operations
       // specified by the mask.
 
+      // READ, ACCEPT, and CONNECT flag will place the handle in the read set
       if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::READ_MASK)
-          || ACE_BIT_ENABLED (mask, ACE_Event_Handler::ACCEPT_MASK))
+          || ACE_BIT_ENABLED (mask, ACE_Event_Handler::ACCEPT_MASK)
+          || ACE_BIT_ENABLED (mask, ACE_Event_Handler::CONNECT_MASK))
         {
           (handle_set.rd_mask_.*ptmf) (handle);
           ACE_SET_BITS (omask, ACE_Event_Handler::READ_MASK);
@@ -1243,7 +1245,9 @@ ACE_Select_Reactor::bit_ops (ACE_HANDLE handle,
       else if (ops == ACE_Reactor::SET_MASK)
         handle_set.rd_mask_.clr_bit (handle);
 
-      if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::WRITE_MASK))
+      // WRITE and CONNECT flag will place the handle in the write set
+      if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::WRITE_MASK)
+          || ACE_BIT_ENABLED (mask, ACE_Event_Handler::CONNECT_MASK))
         {
           (handle_set.wr_mask_.*ptmf) (handle);
           ACE_SET_BITS (omask, ACE_Event_Handler::WRITE_MASK);
@@ -1251,7 +1255,12 @@ ACE_Select_Reactor::bit_ops (ACE_HANDLE handle,
       else if (ops == ACE_Reactor::SET_MASK)
         handle_set.wr_mask_.clr_bit (handle);
 
-      if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::EXCEPT_MASK))
+      // EXCEPT (and CONNECT on Win32) flag will place the handle in the except set
+      if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::EXCEPT_MASK)
+#if defined (ACE_WIN32)
+          || ACE_BIT_ENABLED (mask, ACE_Event_Handler::CONNECT_MASK)
+#endif /* ACE_WIN32 */
+          )        
         {
           (handle_set.ex_mask_.*ptmf) (handle);
           ACE_SET_BITS (omask, ACE_Event_Handler::EXCEPT_MASK);

@@ -21,3 +21,12 @@ ACE_DEV_Connector::ACE_DEV_Connector (ACE_DEV_IO &new_io,
     ACE_ERROR ((LM_ERROR, "address %s, %p\n", 
 	       remote_sap.get_path_name (), "ACE_DEV_IO"));
 }
+
+inline int 
+ACE_DEV_Connector::reset_new_handle (ACE_HANDLE handle)
+{
+  ACE_UNUSED_ARG (handle);
+  // Nothing to do here since the handle is not a socket
+  return 0;
+}
+

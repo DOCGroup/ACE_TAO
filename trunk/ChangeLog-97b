@@ -1,3 +1,30 @@
+Sat Oct 04 03:14:46 1997    <irfan@TWOSTEP>
+
+	* ace/WFMO_Reactor.cpp (add_network_events_i): While looking
+ 	  through all entries in the current (and suspended) handles for a
+ 	  matching handle, we need to skip those that have been scheduled
+ 	  for deletion). Also changed ACE_BIT_STRICTLY_ENABLED to
+ 	  ACE_BIT_ENABLED.
+	  
+	* ace/Select_Reactor.cpp (bit_ops): Since CONNECT is no longer a
+ 	  logical OR of READ and WRITE, we have to explicitly make sure
+ 	  that enable the handle in the correct wait sets.
+
+	* ace/Event_Handler.h: Changed the values of the event
+ 	  masks. CONNECT is no longer a logical OR of READ and WRITE. It
+ 	  was its own unique value.
+
+	* ace/OS.h: Removed ACE_BIT_STRICTLY_ENABLED. It did not do what I
+ 	  thought it would do.
+	
+	* ace/Connector.cpp (handle_output): Added code that tries to find
+ 	  out if the reactor uses event associations for the handles it
+ 	  waits on. If so we need to reset it. This is necessary for
+ 	  asynchronous connects.
+
+	* ace/SOCK_Connector.i (reset_new_handle): Added new method on all
+ 	  connectors to reset event associations of handles. 
+
 Fri Oct 03 21:20:26 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Makefile: disable INSTALL in $(ACE_ROOT)/ace Makefile,

@@ -73,6 +73,9 @@ public:
   // The <flags> and <perms> arguments are passed down to the open()
   // method.
 
+  int reset_new_handle (ACE_HANDLE handle);
+  // Resets any event associations on this handle
+
   void dump (void) const;
   // Dump the state of an object.
 

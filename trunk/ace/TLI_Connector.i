@@ -25,3 +25,12 @@ ACE_TLI_Connector::ACE_TLI_Connector (ACE_TLI_Stream &new_stream,
       && timeout != 0 && !(errno == EWOULDBLOCK || errno == ETIMEDOUT))
     ACE_ERROR ((LM_ERROR, "%p\n", "ACE_TLI_Stream::ACE_TLI_Stream"));
 }
+
+inline int
+ACE_TLI_Connector::reset_new_handle (ACE_HANDLE handle)
+{
+  ACE_UNUSED_ARG (handle);
+  // Nothing to do here since the handle is not a socket
+  return 0;
+}
+

@@ -21,3 +21,12 @@ ACE_FILE_Connector::ACE_FILE_Connector (ACE_FILE_IO &new_io,
     ACE_ERROR ((LM_ERROR, "address %s, %p\n", 
 	       remote_sap.get_path_name (), "ACE_FILE_IO"));
 }
+
+inline int
+ACE_FILE_Connector::reset_new_handle (ACE_HANDLE handle)
+{
+  ACE_UNUSED_ARG (handle);
+  // Nothing to do here since the handle is not a socket
+  return 0;
+}
+
