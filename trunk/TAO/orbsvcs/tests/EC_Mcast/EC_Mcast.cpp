@@ -160,7 +160,7 @@ ECM_Driver::run (int argc, char* argv[])
 
       // Create the EventService implementation, but don't start its
       // internal threads.
-      TAO_Default_Module_Factory module_factory;
+      TAO_Reactive_Module_Factory module_factory;
       ACE_EventChannel ec_impl (0,
                                 ACE_DEFAULT_EVENT_CHANNEL_TYPE,
                                 &module_factory);
