@@ -171,7 +171,10 @@ be_visitor_union_discriminant_ci::visit_predefined_type (be_predefined_type
           *os << dv.u.ulong_val;
           break;
         case AST_Expression::EV_char:
-          os->print ("%d", dv.u.char_val);
+          os->print ("'\\%d'", dv.u.char_val);
+          break;
+        case AST_Expression::EV_wchar:
+          os->print ("L'\\%d'", dv.u.wchar_val);
           break;
         case AST_Expression::EV_bool:
           *os << dv.u.bool_val;
