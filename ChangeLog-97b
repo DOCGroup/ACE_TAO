@@ -26,6 +26,11 @@ Sun Sep 14 21:02:31 1997  David L. Levine  <levine@cs.wustl.edu>
 	  inline functions warnings with g++, both with inlining
 	  enabled and disabled.  Circular #includes are evil :-)
 
+	* ace/Select_Reactor.h: removed "," at end of DEFAULT_SIZE
+	  enum definition.
+
+	* ace/Select_Reactor.i (register_handler): added ACE_UNUSED_ARGS.
+
 	* ace/Select_Reactor.i: moved ACE_Select_Reactor::size () after
 	  ACE_Select_Reactor_Handler_Repository::size () to prevent use
 	  before definition.
@@ -35,10 +40,8 @@ Sun Sep 14 21:02:31 1997  David L. Levine  <levine@cs.wustl.edu>
 	* ace/Svc_Conf_y.cpp: commented out unused args and wrapped
 	  assignments in "if" conditionals to avoid g++ warnings.
 
-	* ace/Select_Reactor.h: removed "," at end of DEFAULT_SIZE
-	  enum definition.
-
-	* ace/Select_Reactor.i (register_handler): added ACE_UNUSED_ARGS.
+	* ace/Token_Manager.h: inserting missing "public" access control
+	  specifier for ACE_Cleanup.
 
 Sun Sep 14 10:35:57 1997    <irfan@TWOSTEP>
 
