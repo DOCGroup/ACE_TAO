@@ -197,6 +197,11 @@ public:
   // semaphore in order for the high priority client to keep running
   // as long as the low priority clients are running.  See explanation
   // of "high_priority_loop_count_" member in this class.
+
+  u_int use_multiple_priority_;
+  // flag to indicate we are to use multiple priorities for the low
+  // priority clients.  By default we use only one priority for all
+  // client threads.
 };
 
 class Client : public ACE_Task<ACE_SYNCH>
