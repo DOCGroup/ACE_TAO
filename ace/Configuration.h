@@ -385,6 +385,11 @@ public:
    */
   int operator!=(const ACE_Configuration& rhs) const {return !(*this == rhs);}
 
+  /**
+   *    *  Represents the "NULL" string to simplify the internal logic.
+   *       */
+  static ACE_TCHAR NULL_String_;
+
 protected:
   /// Default ctor
   ACE_Configuration (void);
@@ -409,11 +414,6 @@ protected:
    * same rules that apply to keys.
    */
   int validate_value_name (const ACE_TCHAR* name);
-
-  /**
-   *  Represents the "NULL" string to simplify the internal logic.
-   */
-  static ACE_TCHAR NULL_String_;
 
   // Not used
   ACE_Configuration (const ACE_Configuration& rhs);
