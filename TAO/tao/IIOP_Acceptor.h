@@ -55,10 +55,10 @@ public:
   /// Returns the array of endpoints in this acceptor
   const ACE_INET_Addr *endpoints (void);
 
-  typedef ACE_Strategy_Acceptor<TAO_IIOP_Connection_Handler, ACE_SOCK_ACCEPTOR> TAO_IIOP_BASE_ACCEPTOR;
-  typedef TAO_Creation_Strategy<TAO_IIOP_Connection_Handler> TAO_IIOP_CREATION_STRATEGY;
-  typedef TAO_Concurrency_Strategy<TAO_IIOP_Connection_Handler> TAO_IIOP_CONCURRENCY_STRATEGY;
-  typedef TAO_Accept_Strategy<TAO_IIOP_Connection_Handler, ACE_SOCK_ACCEPTOR> TAO_IIOP_ACCEPT_STRATEGY;
+  typedef ACE_Strategy_Acceptor<TAO_IIOP_Connection_Handler, ACE_SOCK_ACCEPTOR> BASE_ACCEPTOR;
+  typedef TAO_Creation_Strategy<TAO_IIOP_Connection_Handler> CREATION_STRATEGY;
+  typedef TAO_Concurrency_Strategy<TAO_IIOP_Connection_Handler> CONCURRENCY_STRATEGY;
+  typedef TAO_Accept_Strategy<TAO_IIOP_Connection_Handler, ACE_SOCK_ACCEPTOR> ACCEPT_STRATEGY;
 
   /**
    * The TAO_Acceptor methods, check the documentation in
@@ -202,12 +202,12 @@ protected:
 private:
 
   /// the concrete acceptor, as a pointer to it's base class.
-  TAO_IIOP_BASE_ACCEPTOR base_acceptor_;
+  BASE_ACCEPTOR base_acceptor_;
 
   /// Acceptor strategies.
-  TAO_IIOP_CREATION_STRATEGY *creation_strategy_;
-  TAO_IIOP_CONCURRENCY_STRATEGY *concurrency_strategy_;
-  TAO_IIOP_ACCEPT_STRATEGY *accept_strategy_;
+  CREATION_STRATEGY *creation_strategy_;
+  CONCURRENCY_STRATEGY *concurrency_strategy_;
+  ACCEPT_STRATEGY *accept_strategy_;
 
 };
 
