@@ -13,7 +13,7 @@ void foo (void);
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   TRACE ("main");
-    
+
   MY_DEBUG (ACE_TEXT ("Hi Mom\n"));
   foo ();
   MY_DEBUG (ACE_TEXT ("Goodnight\n"));
@@ -32,7 +32,7 @@ void foo (void)
 #else
 #include <stdio.h>
 
-int main (int, char *[])
+int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   puts ("This example only works on g++ 2.96 and later.\n");
   return 0;
