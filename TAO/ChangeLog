@@ -1,3 +1,9 @@
+Thu Aug 14 13:22:19 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Event/Basic/Control.cpp:
+          Destroy the orb when ready. On our Solaris box this fixes the crashing
+          of this test.
+
 Thu Aug 14 12:58:09 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * TAO_IDL/fe/fe_tmplinst.cpp:
