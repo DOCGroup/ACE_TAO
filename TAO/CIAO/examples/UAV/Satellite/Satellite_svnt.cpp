@@ -144,8 +144,6 @@ namespace Satellite_Impl
     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
     {
-
-
       ACE_CString my_uuid = this->servant_->component_UUID (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
       my_uuid += "_target_located_publisher";
@@ -418,6 +416,264 @@ namespace Satellite_Impl
       ACE_ENV_ARG_PARAMETER);
     }
 
+    Satellite_Servant::UAVReadyConsumer_uav_ready_Servant::UAVReadyConsumer_uav_ready_Servant (
+    ::BBN_UAV::CCM_Satellite_ptr executor,
+    ::BBN_UAV::CCM_Satellite_Context_ptr c)
+    : executor_ (::BBN_UAV::CCM_Satellite::_duplicate (executor)),
+    ctx_ (::BBN_UAV::CCM_Satellite_Context::_duplicate (c))
+    {
+    }
+
+    Satellite_Servant::UAVReadyConsumer_uav_ready_Servant::~UAVReadyConsumer_uav_ready_Servant (void)
+    {
+    }
+
+    CORBA::Object_ptr
+    Satellite_Servant::UAVReadyConsumer_uav_ready_Servant::_get_component (
+    ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+    {
+      return this->ctx_->get_CCM_object (ACE_ENV_SINGLE_ARG_PARAMETER);
+    }
+
+    void
+    Satellite_Servant::UAVReadyConsumer_uav_ready_Servant::push_UAVReady (
+    ::BBN_UAV::UAVReady *evt
+    ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+    {
+      this->executor_->push_uav_ready (
+      evt
+      ACE_ENV_ARG_PARAMETER);
+    }
+
+    // Inherited from ::Components::EventConsumerBase.
+    void
+    Satellite_Servant::UAVReadyConsumer_uav_ready_Servant::push_event (
+    ::Components::EventBase *ev
+    ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((
+    ::CORBA::SystemException,
+    ::Components::BadEventType))
+    {
+      ::BBN_UAV::UAVReady_var ev_type =
+      ::BBN_UAV::UAVReady::_downcast (ev);
+
+      if (ev_type != 0)
+      {
+        this->push_UAVReady (
+        ev_type.in ()
+        ACE_ENV_ARG_PARAMETER);
+
+        return;
+      }
+
+      ACE_THROW (::Components::BadEventType ());
+    }
+
+    ::BBN_UAV::UAVReadyConsumer_ptr
+    Satellite_Servant::get_consumer_uav_ready (
+    ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+    {
+      if (CORBA::is_nil (this->consumes_uav_ready_.in ()))
+      {
+        Satellite_Servant::UAVReadyConsumer_uav_ready_Servant *svt =
+        new Satellite_Servant::UAVReadyConsumer_uav_ready_Servant (
+        this->executor_.in (),
+        this->context_);
+        PortableServer::ServantBase_var safe_servant (svt);
+
+        CORBA::Object_var obj =
+        this->container_->install_servant (
+        svt
+        ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK_RETURN (::BBN_UAV::UAVReadyConsumer::_nil ());
+
+        ::BBN_UAV::UAVReadyConsumer_var eco =
+        ::BBN_UAV::UAVReadyConsumer::_narrow (
+        obj.in ()
+        ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK_RETURN (::BBN_UAV::UAVReadyConsumer::_nil ());
+
+        this->consumes_uav_ready_ = eco;
+      }
+
+      return ::BBN_UAV::UAVReadyConsumer::_duplicate (this->consumes_uav_ready_.in ());
+    }
+
+    Satellite_Servant::UCAVReadyConsumer_ucav_ready_Servant::UCAVReadyConsumer_ucav_ready_Servant (
+    ::BBN_UAV::CCM_Satellite_ptr executor,
+    ::BBN_UAV::CCM_Satellite_Context_ptr c)
+    : executor_ (::BBN_UAV::CCM_Satellite::_duplicate (executor)),
+    ctx_ (::BBN_UAV::CCM_Satellite_Context::_duplicate (c))
+    {
+    }
+
+    Satellite_Servant::UCAVReadyConsumer_ucav_ready_Servant::~UCAVReadyConsumer_ucav_ready_Servant (void)
+    {
+    }
+
+    CORBA::Object_ptr
+    Satellite_Servant::UCAVReadyConsumer_ucav_ready_Servant::_get_component (
+    ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+    {
+      return this->ctx_->get_CCM_object (ACE_ENV_SINGLE_ARG_PARAMETER);
+    }
+
+    void
+    Satellite_Servant::UCAVReadyConsumer_ucav_ready_Servant::push_UCAVReady (
+    ::BBN_UAV::UCAVReady *evt
+    ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+    {
+      this->executor_->push_ucav_ready (
+      evt
+      ACE_ENV_ARG_PARAMETER);
+    }
+
+    // Inherited from ::Components::EventConsumerBase.
+    void
+    Satellite_Servant::UCAVReadyConsumer_ucav_ready_Servant::push_event (
+    ::Components::EventBase *ev
+    ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((
+    ::CORBA::SystemException,
+    ::Components::BadEventType))
+    {
+      ::BBN_UAV::UCAVReady_var ev_type =
+      ::BBN_UAV::UCAVReady::_downcast (ev);
+
+      if (ev_type != 0)
+      {
+        this->push_UCAVReady (
+        ev_type.in ()
+        ACE_ENV_ARG_PARAMETER);
+
+        return;
+      }
+
+      ACE_THROW (::Components::BadEventType ());
+    }
+
+    ::BBN_UAV::UCAVReadyConsumer_ptr
+    Satellite_Servant::get_consumer_ucav_ready (
+    ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+    {
+      if (CORBA::is_nil (this->consumes_ucav_ready_.in ()))
+      {
+        Satellite_Servant::UCAVReadyConsumer_ucav_ready_Servant *svt =
+        new Satellite_Servant::UCAVReadyConsumer_ucav_ready_Servant (
+        this->executor_.in (),
+        this->context_);
+        PortableServer::ServantBase_var safe_servant (svt);
+
+        CORBA::Object_var obj =
+        this->container_->install_servant (
+        svt
+        ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK_RETURN (::BBN_UAV::UCAVReadyConsumer::_nil ());
+
+        ::BBN_UAV::UCAVReadyConsumer_var eco =
+        ::BBN_UAV::UCAVReadyConsumer::_narrow (
+        obj.in ()
+        ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK_RETURN (::BBN_UAV::UCAVReadyConsumer::_nil ());
+
+        this->consumes_ucav_ready_ = eco;
+      }
+
+      return ::BBN_UAV::UCAVReadyConsumer::_duplicate (this->consumes_ucav_ready_.in ());
+    }
+
+    Satellite_Servant::BattleReadyConsumer_battle_ready_Servant::BattleReadyConsumer_battle_ready_Servant (
+    ::BBN_UAV::CCM_Satellite_ptr executor,
+    ::BBN_UAV::CCM_Satellite_Context_ptr c)
+    : executor_ (::BBN_UAV::CCM_Satellite::_duplicate (executor)),
+    ctx_ (::BBN_UAV::CCM_Satellite_Context::_duplicate (c))
+    {
+    }
+
+    Satellite_Servant::BattleReadyConsumer_battle_ready_Servant::~BattleReadyConsumer_battle_ready_Servant (void)
+    {
+    }
+
+    CORBA::Object_ptr
+    Satellite_Servant::BattleReadyConsumer_battle_ready_Servant::_get_component (
+    ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+    {
+      return this->ctx_->get_CCM_object (ACE_ENV_SINGLE_ARG_PARAMETER);
+    }
+
+    void
+    Satellite_Servant::BattleReadyConsumer_battle_ready_Servant::push_BattleReady (
+    ::BBN_UAV::BattleReady *evt
+    ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+    {
+      this->executor_->push_battle_ready (
+      evt
+      ACE_ENV_ARG_PARAMETER);
+    }
+
+    // Inherited from ::Components::EventConsumerBase.
+    void
+    Satellite_Servant::BattleReadyConsumer_battle_ready_Servant::push_event (
+    ::Components::EventBase *ev
+    ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((
+    ::CORBA::SystemException,
+    ::Components::BadEventType))
+    {
+      ::BBN_UAV::BattleReady_var ev_type =
+      ::BBN_UAV::BattleReady::_downcast (ev);
+
+      if (ev_type != 0)
+      {
+        this->push_BattleReady (
+        ev_type.in ()
+        ACE_ENV_ARG_PARAMETER);
+
+        return;
+      }
+
+      ACE_THROW (::Components::BadEventType ());
+    }
+
+    ::BBN_UAV::BattleReadyConsumer_ptr
+    Satellite_Servant::get_consumer_battle_ready (
+    ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+    {
+      if (CORBA::is_nil (this->consumes_battle_ready_.in ()))
+      {
+        Satellite_Servant::BattleReadyConsumer_battle_ready_Servant *svt =
+        new Satellite_Servant::BattleReadyConsumer_battle_ready_Servant (
+        this->executor_.in (),
+        this->context_);
+        PortableServer::ServantBase_var safe_servant (svt);
+
+        CORBA::Object_var obj =
+        this->container_->install_servant (
+        svt
+        ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK_RETURN (::BBN_UAV::BattleReadyConsumer::_nil ());
+
+        ::BBN_UAV::BattleReadyConsumer_var eco =
+        ::BBN_UAV::BattleReadyConsumer::_narrow (
+        obj.in ()
+        ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK_RETURN (::BBN_UAV::BattleReadyConsumer::_nil ());
+
+        this->consumes_battle_ready_ = eco;
+      }
+
+      return ::BBN_UAV::BattleReadyConsumer::_duplicate (this->consumes_battle_ready_.in ());
+    }
+
     ::Components::Cookie *
     Satellite_Servant::connect (
     const char *name,
@@ -508,6 +764,21 @@ namespace Satellite_Impl
         ACE_THROW_RETURN (
         ::Components::InvalidName (),
         ::Components::EventConsumerBase::_nil ());
+      }
+
+      if (ACE_OS::strcmp (sink_name, "uav_ready") == 0)
+      {
+        return this->get_consumer_uav_ready (ACE_ENV_SINGLE_ARG_PARAMETER);
+      }
+
+      if (ACE_OS::strcmp (sink_name, "ucav_ready") == 0)
+      {
+        return this->get_consumer_ucav_ready (ACE_ENV_SINGLE_ARG_PARAMETER);
+      }
+
+      if (ACE_OS::strcmp (sink_name, "battle_ready") == 0)
+      {
+        return this->get_consumer_battle_ready (ACE_ENV_SINGLE_ARG_PARAMETER);
       }
 
       ACE_THROW_RETURN (

@@ -56,6 +56,21 @@ module BBN_UAV
    */
   eventtype StartMove {};
 
+  /**
+   * @eventtype: published by UAV, and consumed by Satellite.
+   */
+  eventtype UAVReady {};
+
+  /**
+   * @eventtype: published by UCAV, and consumed by Satellite.
+   */
+  eventtype UCAVReady {};
+
+  /**
+   * @eventtype: published by Battle, and consumed by Satellite.
+   */
+  eventtype BattleReady {};
+
 };
 
 #endif /*CIAO_BBN_UAV_IDL*/

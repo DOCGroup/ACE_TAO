@@ -70,8 +70,11 @@ main (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Send a satellite alert\n"));
 
-      sat->alert (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      for (int i = 0; i < 1001; ++i)
+        {
+          sat->alert (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
 
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;

@@ -13,6 +13,7 @@
 
 #include "SatelliteEIC.h"
 #include "tao/LocalObject.h"
+#include "ace/High_Res_Timer.h"
 
 // The namespace name for the actual implementation classes doesn't
 // really matter.  Since there may be several different
@@ -37,6 +38,23 @@ namespace MyImpl
 
     /// Default destructor.
     ~Satellite_exec_i (void);
+
+    // Operations from event sink(s)
+
+    virtual void
+    push_uav_ready (BBN_UAV::UAVReady *ev
+                         ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual void
+    push_ucav_ready (BBN_UAV::UCAVReady *ev
+                         ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual void
+    push_battle_ready (BBN_UAV::BattleReady *ev
+                         ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Operations from supported interface(s)
 
@@ -70,6 +88,16 @@ namespace MyImpl
 
     /// Copmponent specific context
     BBN_UAV::CCM_Satellite_Context_var context_;
+
+    ACE_hrtime_t start_;
+
+    ACE_hrtime_t UAV_times_[3000];
+
+    ACE_hrtime_t UCAV_times_[3000];
+
+    ACE_hrtime_t Battle_times_[1000];
+
+    int counter_;
   };
 
   /**

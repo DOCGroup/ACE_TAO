@@ -138,6 +138,104 @@ namespace Battle_Impl
     // Operations for Battle receptacles and event sources,
     // defined in ::BBN_UAV::CCM_Battle_Context.
 
+    void
+    Battle_Context::push_battle_ready (
+    ::BBN_UAV::BattleReady *ev
+    ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+    {
+    
+      ACE_CString my_uuid = this->servant_->component_UUID (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
+      my_uuid += "_battle_ready_publisher";
+
+      this->container_->push_event (ev,
+                                    my_uuid.c_str ()
+                                    ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+
+      /*
+      ACE_Active_Map_Manager<
+      ::BBN_UAV::TargetLocatedConsumer_var>::iterator end =
+      this->ciao_publishes_target_located_map_.end ();
+
+      for (ACE_Active_Map_Manager<
+      ::BBN_UAV::TargetLocatedConsumer_var>::iterator iter =
+      this->ciao_publishes_target_located_map_.begin ();
+      iter != end;
+      ++iter)
+      {
+        ACE_Active_Map_Manager<
+        ::BBN_UAV::TargetLocatedConsumer_var>::ENTRY &entry = *iter;
+
+        ::BBN_UAV::TargetLocatedConsumer_var c =
+        ::BBN_UAV::TargetLocatedConsumer::_narrow (
+        entry.int_id_.in ()
+        ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK;
+
+        entry.int_id_->push_TargetLocated (
+        ev
+        ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK;
+      }
+      */
+    
+    }
+
+    ::Components::Cookie *
+    Battle_Context::subscribe_battle_ready (
+    ::BBN_UAV::BattleReadyConsumer_ptr c
+    ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((
+    ::CORBA::SystemException,
+    ::Components::ExceededConnectionLimit))
+    {
+      if (CORBA::is_nil (c))
+      {
+        ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
+      }
+
+      ::BBN_UAV::BattleReadyConsumer_var sub =
+      ::BBN_UAV::BattleReadyConsumer::_duplicate (c);
+
+      ACE_Active_Map_Manager_Key key;
+      this->ciao_publishes_battle_ready_map_.bind (sub.in (), key);
+      sub._retn ();
+
+      ::Components::Cookie_var retv = new ::CIAO::Map_Key_Cookie (key);
+      return retv._retn ();
+    }
+
+    ::BBN_UAV::BattleReadyConsumer_ptr
+    Battle_Context::unsubscribe_battle_ready (
+    ::Components::Cookie *ck
+    ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((
+    ::CORBA::SystemException,
+    ::Components::InvalidConnection))
+    {
+      ::BBN_UAV::BattleReadyConsumer_var retv;
+      ACE_Active_Map_Manager_Key key;
+
+      if (ck == 0 || ::CIAO::Map_Key_Cookie::extract (ck, key) == -1)
+      {
+        ACE_THROW_RETURN (
+        ::Components::InvalidConnection (),
+        ::BBN_UAV::BattleReadyConsumer::_nil ());
+      }
+
+
+      if (this->ciao_publishes_battle_ready_map_.unbind (key, retv) != 0)
+      {
+        ACE_THROW_RETURN (
+        ::Components::InvalidConnection (),
+        ::BBN_UAV::BattleReadyConsumer::_nil ());
+      }
+
+      return retv._retn ();
+    }
+
     // CIAO-specific.
 
     ::CIAO::Session_Container *
@@ -292,6 +390,32 @@ namespace Battle_Impl
     ::Components::InvalidName))
     {
       ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);
+    }
+
+    ::Components::Cookie *
+    Battle_Servant::subscribe_battle_ready (
+    ::BBN_UAV::BattleReadyConsumer_ptr c
+    ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((
+    ::CORBA::SystemException,
+    ::Components::ExceededConnectionLimit))
+    {
+      return this->context_->subscribe_battle_ready (
+      c
+      ACE_ENV_ARG_PARAMETER);
+    }
+
+    ::BBN_UAV::BattleReadyConsumer_ptr
+    Battle_Servant::unsubscribe_battle_ready (
+    ::Components::Cookie *ck
+    ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((
+    ::CORBA::SystemException,
+    ::Components::InvalidConnection))
+    {
+      return this->context_->unsubscribe_battle_ready (
+      ck
+      ACE_ENV_ARG_PARAMETER);
     }
 
     Battle_Servant::StartEngageConsumer_start_engage_Servant::StartEngageConsumer_start_engage_Servant (
@@ -546,6 +670,24 @@ namespace Battle_Impl
         ACE_THROW_RETURN (::Components::InvalidName (), 0);
       }
 
+      if (ACE_OS::strcmp (publisher_name, "battle_ready") == 0)
+      {
+        ::BBN_UAV::BattleReadyConsumer_var _ciao_consumer =
+        ::BBN_UAV::BattleReadyConsumer::_narrow (
+        subscribe
+        ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK_RETURN (0);
+
+        if (::CORBA::is_nil (_ciao_consumer.in ()))
+        {
+          ACE_THROW_RETURN (::Components::InvalidConnection (), 0);
+        }
+
+        return this->subscribe_battle_ready (
+        _ciao_consumer.in ()
+        ACE_ENV_ARG_PARAMETER);
+      }
+
       ACE_THROW_RETURN (::Components::InvalidName (), 0);
     }
 
@@ -567,6 +709,13 @@ namespace Battle_Impl
         ACE_THROW_RETURN (
         ::Components::InvalidName (),
         ::Components::EventConsumerBase::_nil ());
+      }
+
+      if (ACE_OS::strcmp (publisher_name, "battle_ready") == 0)
+      {
+        return this->unsubscribe_battle_ready (
+        ck
+        ACE_ENV_ARG_PARAMETER);
       }
 
       ACE_THROW_RETURN (

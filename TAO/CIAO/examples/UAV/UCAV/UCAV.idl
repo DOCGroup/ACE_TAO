@@ -18,6 +18,7 @@ module BBN_UAV
 {
   component UCAV
     {
+      publishes UCAVReady ucav_ready;
       consumes StartMove start_move;
     };
 

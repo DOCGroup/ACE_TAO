@@ -18,6 +18,7 @@ module BBN_UAV
 {
   component UAV
     {
+      publishes UAVReady uav_ready;
       consumes StartCapture start_capture;
     };
 
