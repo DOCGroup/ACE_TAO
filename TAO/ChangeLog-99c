@@ -2,7 +2,7 @@ Mon Dec 20 10:17:01 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Trader/Trader.cpp: Removed some template
 	  instantiations which should not have been there in the first
-	  place. I have commenetd them out. Once the relase is fine we can
+	  place. I have commented them out. Once the relase is fine we can
 	  have them removed.
 
 Mon Dec 20 00:21:50 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
