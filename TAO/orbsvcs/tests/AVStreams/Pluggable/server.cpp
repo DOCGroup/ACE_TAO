@@ -91,9 +91,9 @@ Server::init (int argc,
     {
       PortableServer::POAManager_var mgr
         = TAO_AV_CORE::instance ()->poa ()->the_POAManager ();
-      
+
       mgr->activate ();
-      
+
       int result = this->parse_args (argc,argv);
       if (result == -1)
         ACE_ERROR_RETURN  ((LM_ERROR,"parse args failed\n"),-1);
@@ -109,7 +109,7 @@ Server::init (int argc,
       ACE_NEW_RETURN (this->mmdevice_,
                       TAO_MMDevice (&this->reactive_strategy_),
                       -1);
-            
+
       // Register the mmdevice with the naming service.
       CosNaming::Name server_mmdevice_name (1);
       server_mmdevice_name.length (1);
@@ -188,17 +188,17 @@ main (int argc,
       char **argv)
 {
   int result = 0;
-  CORBA::ORB_var orb = CORBA::ORB_init (argc, 
+  CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                         argv);
-  
+
   CORBA::Object_var obj
     = orb->resolve_initial_references ("RootPOA");
-  
+
   PortableServer::POA_var poa
     = PortableServer::POA::_narrow (obj.in ());
-  
+
   ACE_DECLARE_NEW_CORBA_ENV;
-  
+
   ACE_TRY
     {
       TAO_AV_CORE::instance ()->init (orb.in (),
@@ -224,6 +224,7 @@ main (int argc,
   ACE_DEBUG ((LM_DEBUG, "done\n"));
 
   recv_latency.dump_results ("Receive", gsf);
+  return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

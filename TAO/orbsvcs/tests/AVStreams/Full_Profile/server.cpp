@@ -75,7 +75,7 @@ FTP_Server_Callback::handle_end_stream (void)
 }
 
 Server::Server (void)
-  :reactive_strategy_ (TAO_AV_CORE::instance ()->orb (), TAO_AV_CORE::instance ()->poa ()), 
+  :reactive_strategy_ (TAO_AV_CORE::instance ()->orb (), TAO_AV_CORE::instance ()->poa ()),
    orb_ (TAO_AV_CORE::instance ()->orb ()),
    poa_ (TAO_AV_CORE::instance ()->poa ())
 {
@@ -106,13 +106,13 @@ Server::init (int argc,
     {
       PortableServer::POAManager_var mgr
         = this->poa_->the_POAManager ();
-      
+
       mgr->activate ();
-      
+
       int result = this->parse_args (argc,argv);
       if (result == -1)
         ACE_ERROR_RETURN  ((LM_ERROR,"parse args failed\n"),-1);
-      
+
       // Initialize the naming services
       if (my_naming_client_.init (this->orb_.in ()) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -128,15 +128,15 @@ Server::init (int argc,
       ACE_NEW_RETURN (this->fdev_,
                       FTP_Server_FDev,
                       -1);
-      
+
       this->fdev_->flowname ("Data");
-      
+
       AVStreams::MMDevice_var mmdevice = this->mmdevice_->_this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       AVStreams::FDev_var fdev = this->fdev_->_this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       if (CORBA::is_nil (fdev.in ()))
         cout << "FDev is nil" << endl;
 
@@ -224,12 +224,12 @@ main (int argc,
       char **argv)
 {
   int result = 0;
-  CORBA::ORB_var orb = CORBA::ORB_init (argc, 
+  CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                         argv);
-  
+
   CORBA::Object_var obj
     = orb->resolve_initial_references ("RootPOA");
-  
+
   PortableServer::POA_var poa
     = PortableServer::POA::_narrow (obj.in ());
 
@@ -249,16 +249,18 @@ main (int argc,
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
-  
+
   result = FTP_SERVER::instance ()->init (argc,argv);
-  
+
   if (result < 0)
     ACE_ERROR_RETURN ((LM_ERROR,"SERVER::init failed\n"),1);
-  
+
   result = FTP_SERVER::instance ()->run ();
-  
+
   if (result < 0)
     ACE_ERROR_RETURN ((LM_ERROR,"SERVER::run failed\n"),1);
+
+  return result;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
