@@ -392,7 +392,7 @@ public:
   ~TAO_Synchronous_Cancellation_Required (void)
     {
 #if !defined (VXWORKS)
-      int dont_care;
+      int dont_care = 0;
       ACE_OS::thr_setcanceltype(old_type_, &dont_care);
 #endif /* ! VXWORKS */
     }
