@@ -91,7 +91,7 @@ namespace MyImpl
    *
    * GPS home executor implementation class.
    */
-  class GPS_EXEC_Export GPSHome_exec_impl :
+  class GPS_EXEC_Export GPSHome_tracing_exec_impl :
     public virtual HUDisplay::CCM_GPSHome,
     public virtual TAO_Local_RefCounted_Object
   {
