@@ -157,15 +157,11 @@ Tue Nov 18 15:01:49 2003  Simon McQueen  <sm@prismtechnologies.com>
           defining the environment property ACE_LOG_TIMESTAMP to be one of
           'TIME' / 'DATE'. This fixes bug #1635.
 
-Tue Nov 18 08:37:42 2003  Dale Wilson  <wilson_d@ociweb.com>
-
-        * TAO/orbsvcs/orbsvcs/FaultTolerance/FT_ORB_Utils_export.h:
-          Remove diagnostic pragmas.
-
 Tue Nov 18 08:11:52 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * bin/MakeProjectCreator/config/ftorbutils.mpb:
-          ftorbutils depends on CosNaming.
+
+          Ftorbutils depends on CosNaming.
 
 Tue Nov 18 05:12:17 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
