@@ -5,6 +5,8 @@
 #include "ace/OS_NS_string.h"
 #include "NodeManager/NodeDaemonC.h"
 
+#include "Config_Handlers/DnC_Dump.h"
+
 #if !defined (__ACE_INLINE__)
 # include "DomainApplicationManager_Impl.inl"
 #endif /* __ACE_INLINE__ */
@@ -90,6 +92,8 @@ init (ACE_ENV_SINGLE_ARG_DECL)
               // The dump() function is broken.
 				//::Deployment::DnC_Dump::dump (artifacts.child_plan_);
             }
+
+            ::Deployment::DnC_Dump::dump (artifacts.child_plan_);
 
           // Call preparePlan() method on the NodeManager with the
           // corresponding child plan as input, which returns a
@@ -433,7 +437,8 @@ finishLaunch (::CORBA::Boolean start
 
           //@@ Note: Don't delete the below debugging helpers.
           // Dump the connections for debug purpose.
-          if (CIAO::debug_level () > 1)
+          //if (CIAO::debug_level () > 1)
+          if (true)
             {
               ACE_DEBUG ((LM_DEBUG, "==============================================\n"));
               ACE_DEBUG ((LM_DEBUG, "dump incomming connection for child plan:%d\n", i));
@@ -451,7 +456,8 @@ finishLaunch (::CORBA::Boolean start
           Deployment::Connections_var safe (my_connections);
 
           // Dump the connections for debug purpose.
-          if (CIAO::debug_level () > 1)
+          //if (CIAO::debug_level () > 1)
+          if (true)
             {
               ACE_DEBUG ((LM_DEBUG, "==============================================\n"));
               ACE_DEBUG ((LM_DEBUG, "dump outgoingcomming connection for child plan:%d\n", i));
@@ -659,7 +665,7 @@ get_outgoing_connections_i (const char * instname,
       // If the component name matches the name of one of the
       // endpoints in the connection.
       if (ACE_OS::strcmp (this->plan_.instance[endpoint.instanceRef].name.in (),
-                                            instname) == 0 )
+                          instname) == 0 )
       {
         //Look at the port kind to make sure it's what we are interested in.
         if (endpoint.kind != Deployment::Facet &&
