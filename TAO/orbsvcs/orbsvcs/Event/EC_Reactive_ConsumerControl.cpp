@@ -149,8 +149,9 @@ TAO_EC_Reactive_ConsumerControl::consumer_not_exist (
 {
   ACE_TRY
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "Consumer %x does not exists\n", long(proxy)));
+      //ACE_DEBUG ((LM_DEBUG,
+      //            "EC_Reactive_ConsumerControl(%P|%t) - "
+      //            "Consumer %x does not exists\n", long(proxy)));
       proxy->disconnect_push_supplier (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
