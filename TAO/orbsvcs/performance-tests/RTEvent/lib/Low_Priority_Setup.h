@@ -42,10 +42,10 @@ public:
                       int enable_threads,
                       int thread_priority,
                       int thread_sched_class,
+                      int send_period,
                       PortableServer::POA_ptr supplier_poa,
                       PortableServer::POA_ptr consumer_poa,
                       RtecEventChannelAdmin::EventChannel_ptr ec,
-                      ACE_Thread_Manager *thr_mgr,
                       ACE_Barrier *barrier
                       ACE_ENV_ARG_DECL);
 
@@ -68,6 +68,7 @@ private:
   Client_Auto_Disconnect_Array disconnect_;
   Send_Task_Array tasks_;
   Send_Task_Stopper_Array stoppers_;
+  ACE_Thread_Manager thr_mgr_;
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
