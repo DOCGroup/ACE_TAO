@@ -1,3 +1,23 @@
+Sun Apr 13 13:25:11 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/IIOP_Profile.h:
+	* tao/IIOP_Profile.i:
+	* tao/Profile.cpp:
+	* tao/Profile.h:
+	* tao/Profile.i:
+	* tao/Strategies/DIOP_Profile.h:
+	* tao/Strategies/DIOP_Profile.i:
+	* tao/Strategies/SHMIOP_Profile.h:
+	* tao/Strategies/SHMIOP_Profile.i:
+	* tao/Strategies/UIOP_Profile.h:
+	* tao/Strategies/UIOP_Profile.i:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.h:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.i: No idea why
+	  virtual functions, accessors for object_key (), were inlined,
+	  declared and defined in every protocol. Moved the accessor to
+	  the base class and non-virtualized them. 
+
+
 Sun Apr 13 08:07:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/IFRService/tmplinst.cpp: Fixed a compile error

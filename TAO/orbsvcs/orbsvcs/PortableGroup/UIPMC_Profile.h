@@ -40,6 +40,9 @@
  *
  * This class defines the UIPMC profile as specified in the CORBA
  * specification.
+ *
+ * @NOTE: This class inherits the ObjectKey from TAO_Profile which may
+ *  not be needed at all! But lets punt on this for the timebeing.
  */
 class TAO_PortableGroup_Export TAO_UIPMC_Profile : public TAO_Profile
 {
@@ -78,8 +81,6 @@ public:
                              ACE_ENV_ARG_DECL);
   virtual char * to_string (ACE_ENV_SINGLE_ARG_DECL);
   virtual int encode_endpoints (void);
-  virtual const TAO::ObjectKey &object_key (void) const;
-  virtual TAO::ObjectKey *_key (void) const;
   virtual TAO_Endpoint *endpoint (void);
   virtual size_t endpoint_count (void);
   virtual CORBA::Boolean is_equivalent (const TAO_Profile *other_profile);
@@ -134,11 +135,6 @@ protected:
   size_t count_;
 
 private:
-
-  /// object_key associated with this profile.  This is wasted data for
-  /// UIPMC since there is no object key here, but is needed to satisfy
-  /// some of the API calls.
-  TAO::ObjectKey object_key_;
 
   /// Cached version of our tagged profile.
   IOP::TaggedProfile tagged_profile_;
