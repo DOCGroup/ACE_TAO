@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -54,10 +53,9 @@ private:
   int parse_args (void);
   // Parses the arguments passed on the command line.
 
-  void setup_record (Logger::Log_Record &newrec,
-		     Logger::Log_Priority lp,
-		     Logger::Log_Verbosity lv, 
-		     const char *msg);
+  void init_record (Logger::Log_Record &newrec,
+                    Logger::Log_Priority lp,
+                    const char *msg);
   // Prepares the <Log_Record> for logging.
 
    void show_record (Logger::Log_Record &newrec);
@@ -84,9 +82,6 @@ private:
   int test_nesting_;
   // Test nested naming context or not.
   
-  int verb_level_;
-  // The verbosity level of the log message
-
   CORBA::ORB_var orb_;
   // Keep a pointer to the orb, to avoid accidental deletes.
 
@@ -95,5 +90,10 @@ private:
 
   Logger_var logger_2_;
   // Logger obj ref.
+
+  // @@ Matt, I recommend that once you finish implementing the
+  // TAO_Naming_Client class that you include an instance of it in
+  // this class, which can then do the (simplified) initialization of
+  // the Naming Service CLIENT.
 };
 

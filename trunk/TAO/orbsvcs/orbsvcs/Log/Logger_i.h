@@ -14,18 +14,13 @@
 //    Marina Spivak <marina@cs.wustl.edu>,
 //    Sergio Flores-Gaitan <sergio@cs.wustl.edu>, and
 //    Matthew Braun <mjb2@cec.wustl.edu> 
+//
 // ============================================================================
 
 #if !defined (TAO_ORBSVCS_LOGGER_I_H)
 #define TAO_ORBSVCS_LOGGER_I_H
 
 #include "orbsvcs/LoggerS.h"
-
-// @@ I couldn't do this because TAO_MAXLOGMSGLEN isn't exported
-// from the Logger.idl file.
-//#if TAO_MAXLOGMSGLEN != ACE_MAXLOGMSGLEN
-//#error Inconsistent lengths, TAO_MAXLOGMSGLEN != ACE_MAXLOGMSGLEN
-//#endif /* TAO_MAXLOGMSGLEN != ACE_MAXLOGMSGLEN */
 
 class TAO_ORBSVCS_Export Logger_Factory_i : public virtual POA_Logger_Factory
 {
@@ -56,6 +51,8 @@ public:
 		    CORBA::Environment &_env);
   // Writes the <log_rec> to the standard output.
 
+  // @@ Matt, please add the method for verbosity().
+
 private:
   ACE_Log_Priority priority_conversion (Logger::Log_Priority priority);
   // Converts the IDL defined <Log_Priority> enum type to the
@@ -64,10 +61,14 @@ private:
   u_long verbosity_conversion (Logger::Log_Verbosity verbosity);
   // Converts the IDL defined <Log_Verbosity> enum type to a u_long
   // which is used by the <ACE_Log_Record> to distinguish the
-  // verbosity level 
+  // verbosity level
   
   char *name_;
   // Logger identification.
+
+  Logger::Log_Verbosity verbosity_level_;
+  // Keeps track of what our current verbosity level is.  This can be
+  // reset by the client to a new value at any point.
 };
 
 #endif /* TAO_ORBSVCS_LOGGER_I_H */

@@ -9,7 +9,7 @@
 
 // Constructor
 Logger_Client::Logger_Client (void)
-  : test_nesting_ (0), verb_level_ (3)
+  : test_nesting_ (0)
 {
   // Do nothing
 }
@@ -18,7 +18,7 @@ Logger_Client::Logger_Client (void)
 int
 Logger_Client::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "dnv:");
+  ACE_Get_Opt get_opts (argc_, argv_, "dn");
   int c;
   
   while ((c = get_opts ()) != -1)
@@ -30,29 +30,15 @@ Logger_Client::parse_args (void)
       case 'n':
         this->test_nesting_++;
         break;
-      case 'v':
-	{
-	  int temp = ACE_OS::atoi (get_opts.optarg);
-	  if (temp < 1 || temp > 3)
-	    ACE_ERROR_RETURN ((LM_ERROR,
-			       "%s: verbosity level must be between 1-3",
-			       argv_[0]), 1);
-	  else
-	    this->verb_level_ = temp;
-	  break;
-	}
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"
                            " [-d]"
                            " [-n]"
-			   " [-v]"
                            "\n"
                            "    -d: increase debug level\n"
                            "    -n: test nesting in Naming Service\n",
-			   "    -v [n]: change the verbosity level\n",
-			   "\t n= {1-silent, 2-verbose_lite, 3-verbose}\n",
 			   this->argv_ [0]),
                           -1);
       }
@@ -62,10 +48,9 @@ Logger_Client::parse_args (void)
 }
 
 void
-Logger_Client::setup_record (Logger::Log_Record &newrec,
-                             Logger::Log_Priority lp,
-			     Logger::Log_Verbosity lv,
-			     const char *msg)
+Logger_Client::init_record (Logger::Log_Record &newrec,
+                            Logger::Log_Priority lp,
+                            const char *msg)
 {
   // Copy the message data into newrec.
   newrec.msg_data = CORBA::string_copy (msg);
@@ -73,9 +58,6 @@ Logger_Client::setup_record (Logger::Log_Record &newrec,
   // Assign the log priority.
   newrec.type = lp;
 
-  // Assign the log verbosity
-  newrec.verbosity = lv;
-  
   // Create and assign the timestamp.
   ACE_Time_Value time (ACE_OS::gettimeofday ());
   newrec.time = time.sec ();
@@ -99,6 +81,7 @@ Logger_Client::show_record (Logger::Log_Record &newrec)
 {
   in_addr address;
   address.s_addr = newrec.host_addr;
+
   ACE_DEBUG ((LM_DEBUG,
 	      " Log Priority: %d\n"
 	      "Log_Verbosity: %d\n" 
@@ -111,20 +94,21 @@ Logger_Client::show_record (Logger::Log_Record &newrec)
 	      newrec.msg_data.in ()));
 }
 
-
 CORBA::Object_var
-Logger_Client::resolve_name (CosNaming::Name &name, char* namestring,
+Logger_Client::resolve_name (CosNaming::Name &name,
+                             char *namestring,
 			     CosNaming::NamingContext_var context,
 			     CORBA::Environment &env) 
 {
   name.length(1);
   name[0].id = CORBA::string_dup (namestring);
+
   return context->resolve (name, env); 
 }
 
-
 int
-Logger_Client::nesting_test (CosNaming::Name &nested, char* contextstring,
+Logger_Client::nesting_test (CosNaming::Name &nested, 
+                             char *contextstring,
 			     CosNaming::NamingContext_var context,
 			     CORBA::Environment &env)
 {
@@ -164,8 +148,8 @@ Logger_Client::nesting_test (CosNaming::Name &nested, char* contextstring,
 	      "destroy of nested context succeded\n"));
 }
 
-
 // Execute client example code.
+
 int
 Logger_Client::run (void)
 {
@@ -176,31 +160,39 @@ Logger_Client::run (void)
       Logger::Log_Record rec2;
 
       // Setup the first log record
-      this->setup_record (rec1, Logger::LM_DEBUG,
+      this->init_record (rec1, Logger::LM_DEBUG,
 			  ACE_static_cast
 			  (Logger::Log_Verbosity, Logger_Client::verb_level_),
 			  "Logging at logger 1\n");
       
       // Setup the second log record
-      this->setup_record (rec2,  Logger::LM_ERROR,
-			  ACE_static_cast
-			  (Logger::Log_Verbosity, Logger_Client::verb_level_),	
-			  "Logging at logger 2\n");
+      this->init_record (rec2,
+                         Logger::LM_ERROR,
+                         ACE_static_cast (Logger::Log_Verbosity,
+                                          Logger_Client::verb_level_),	
+                         "Logging at logger 2\n");
 
       // If debugging, output the new log records
       if (TAO_debug_level > 0)
 	{
-	  ACE_DEBUG ((LM_DEBUG, "First Log_Record created. Contents:\n"));
+	  ACE_DEBUG ((LM_DEBUG,
+                      "First Log_Record created. Contents:\n"));
 	  this->show_record (rec1);
-	  ACE_DEBUG ((LM_DEBUG, "Second Log_Record created. Contents:\n"));
+
+	  ACE_DEBUG ((LM_DEBUG,
+                      "Second Log_Record created. Contents:\n"));
 	  this->show_record (rec2);
 	}
       
-      // Log the first Log_Record
+      // @@ Matt, I recommend that you make a couple of calls to
+      // log(), using different verbosity levels each time.  Log the
+      // first Log_Record, i.e.,
+      // this->logger_1_->verbosity (foo1);
+
       this->logger_1_->log (rec1, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      // Log the second Log_Record   
+      // Log the second Log_Record.   
       this->logger_2_->log (rec2, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
@@ -225,15 +217,20 @@ Logger_Client::init (int argc, char **argv)
   this->argc_ = argc;
   this->argv_ = argv;
 
+  // @@ Matt, this method is rather long.  Can you please break it
+  // into several smaller (private) methods?
+
   TAO_TRY
     {
       // Initialize ORB.
-      this->orb_ =
-        CORBA::ORB_init (argc,
-                         argv,
-                         "internet",
-                         TAO_TRY_ENV);
+      this->orb_ = CORBA::ORB_init (argc,
+                                    argv,
+                                    "internet",
+                                    TAO_TRY_ENV);
       TAO_CHECK_ENV;
+
+      // @@ Somewhere around here is where we want to initialize the
+      // new TAO_Naming_Client.
 
       CORBA::Object_var naming_obj =
         this->orb_->resolve_initial_references ("NameService");
@@ -249,10 +246,8 @@ Logger_Client::init (int argc, char **argv)
       TAO_CHECK_ENV;
 
       if (TAO_debug_level > 0)
-	{
-	  ACE_DEBUG ((LM_DEBUG,
-		      "Obtained naming_context\n"));
-	}
+        ACE_DEBUG ((LM_DEBUG,
+                    "Obtained naming_context\n"));
       
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
@@ -260,17 +255,20 @@ Logger_Client::init (int argc, char **argv)
            
       CosNaming::Name factory_name (1);
       CORBA::Object_var factory_ref =
-	this->resolve_name (factory_name, "logger_factory",
-			    naming_context, TAO_TRY_ENV);
+	this->resolve_name (factory_name,
+                            "logger_factory",
+			    naming_context,
+                            TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      // The following code must fail with an exception
-      CosNaming::Name factory_name2(1);
+      // The following code must fail with an exception.
+      CosNaming::Name factory_name2 (1);
       CORBA::Object_var factory_ref2 =
-	this->resolve_name (factory_name2,"logger_factory2",
-			    naming_context, TAO_TRY_ENV);
+	this->resolve_name (factory_name2,
+                            "logger_factory2",
+			    naming_context,
+                            TAO_TRY_ENV);
       TAO_CHECK_ENV;
-
       
       if (TAO_TRY_ENV.exception () && TAO_debug_level > 0)
         {
@@ -285,7 +283,6 @@ Logger_Client::init (int argc, char **argv)
 	  TAO_TRY_ENV.clear ();
         }
 
-      
       if (CORBA::is_nil (factory_ref.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "resolved to nil object"),
@@ -314,9 +311,10 @@ Logger_Client::init (int argc, char **argv)
       TAO_CHECK_ENV;
 
       if (TAO_debug_level > 0)
-	ACE_DEBUG ((LM_DEBUG, "The factory IOR is <%s>\n", str.in ()));
+	ACE_DEBUG ((LM_DEBUG,
+                    "The factory IOR is <%s>\n",
+                    str.in ()));
 
-      
       // Now retrieve the Logger obj ref corresponding to key1 and
       // key2.
       this->logger_1_ = factory->make_logger ("key1",
@@ -330,19 +328,26 @@ Logger_Client::init (int argc, char **argv)
 	{      
 	      
       if (CORBA::is_nil (this->logger_1_.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR, "nil logger1"), -1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "nil logger1"),
+                          -1);
       
       if (CORBA::is_nil (this->logger_2_.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR, "nil logger2"), -1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "nil logger2"),
+                          -1);
 
-      ACE_DEBUG ((LM_DEBUG, "Created two loggers\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "Created two loggers\n"));
 	}
       
       if (this->test_nesting_)
         {
-	  CosNaming::Name nested(1);
-	  this->nesting_test (nested, "my_naming_context_1",
-			     naming_context, TAO_TRY_ENV);
+	  CosNaming::Name nested (1);
+	  this->nesting_test (nested,
+                              "my_naming_context_1",
+                              naming_context,
+                              TAO_TRY_ENV);
         }
     }
   TAO_CATCHANY

@@ -45,17 +45,16 @@ Logger_i::priority_conversion (Logger::Log_Priority priority)
       int pval = ACE_static_cast (int, priority);
 
       return ACE_static_cast (ACE_Log_Priority,
-                              (1 << pval));
+                              1 << pval);
       // (1 << pval) == 2^pval. <ACE_Log_Priority> are powers of 2.
     }
 }
-
 
 u_long
 Logger_i::verbosity_conversion (Logger::Log_Verbosity verbosity)
 {
   u_long pval = ACE_static_cast (int, verbosity);
-  return (1 << pval);
+  return 1 << pval;
 }
 
 void
@@ -72,14 +71,14 @@ Logger_i::log (const Logger::Log_Record &log_rec,
 		      ACE_Time_Value (log_rec.time),
                       log_rec.app_id);
   
-  // Create a temporary buffer for manipulating the logging message, adding
-  // additional space for formatting characters..
+  // Create a temporary buffer for manipulating the logging message,
+  // adding additional space for formatting characters..
   ASYS_TCHAR msgbuf [ACE_MAXLOGMSGLEN + 4];
 
   // Format the message for proper display.
   ACE_OS::strcpy (msgbuf, "\n::");
 
-  // Copy the message data into the temporary buffer  
+  // Copy the message data into the temporary buffer
   ACE_OS::strncat (msgbuf, 
 		   log_rec.msg_data,
                    ACE_MAXLOGMSGLEN);
@@ -101,8 +100,10 @@ Logger_i::log (const Logger::Log_Record &log_rec,
                       MAXHOSTNAMELEN);
   
   rec.print (namebuf,
-	     this->verbosity_conversion (log_rec.verbosity),
+	     this->verbosity_level_,
 	     stderr);
   // Print out the logging message to stderr with the given level of
   // verbosity
 }
+
+// @@ Matt, please add the method for verbosity().

@@ -59,31 +59,35 @@ interface Logger
     // adjust for this internally.
   };
 
-
-  enum Log_Verbosity
+  enum Verbosity_Level
   {
     VERBOSE,
-    // Display messages in a verbose manner
+    // Display messages in a verbose manner.
+
     VERBOSE_LITE,
     // Display messages in a less verbose manner (i.e., only print
     // information that can change between calls).
+
     SILENT
     // Do not print messages at all (just leave in thread-specific
-    // storage for later inspection)
+    // storage for later inspection).
   };
     
   struct Log_Record
   {
-    Log_Priority type;             // Type of logging message.
-    Log_Verbosity verbosity;       // The verbosity of the logging message
-    long time;                     // Timestamp of the sender.
-    long app_id;                   // Process id of the sender.
-    long host_addr;	           // IP address of the sender.
+    Log_Priority type;                 // Type of logging message.
+    long time;                         // Timestamp of the sender.
+    long app_id;                       // Process id of the sender.
+    long host_addr;	               // IP address of the sender.
     string<TAO_MAXLOGMSGLEN> msg_data; // The logging message.
   };
   
   oneway void log (in Logger::Log_Record log_rec);
   // Transmit a Log_Record to the logging server.
+
+  void verbosity (Log_Verbosity verbosity_level);
+  // Change the state of the <verbosity_level>.  This controls how
+  // much logging information is displayed by the server.
 };
 
 interface Logger_Factory
