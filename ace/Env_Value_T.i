@@ -71,7 +71,7 @@ ACE_Convert (const char *s, char *&v)
 ACE_INLINE void
 ACE_Convert (const char *s, short &si)
 {
-  si = ACE_OS::strtol (s, 0, 10);
+  si = ACE_static_cast (short, ACE_OS::strtol (s, 0, 10));
 }
 
 ACE_INLINE void
@@ -83,7 +83,7 @@ ACE_Convert (const char *s, long &l)
 ACE_INLINE void
 ACE_Convert (const char *s, int &i)
 {
-  i = ACE_OS::strtol (s, 0, 10);
+  i = ACE_static_cast (int, ACE_OS::strtol (s, 0, 10));
 }
 
 ACE_INLINE void
