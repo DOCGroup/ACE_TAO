@@ -1,3 +1,9 @@
+Thu Oct  9 10:30:43 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* ace/SOCK.h: 
+	  Moved the open() method to the public interface, it is used by
+	  ACE_SOCK_Connector.
+
 Wed Oct  8 20:01:35 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* tests/SOCK_Test.cpp (server): Revised this test to reflect the
