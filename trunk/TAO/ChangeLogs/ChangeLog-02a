@@ -46,6 +46,10 @@ Thu May 17 12:19:24 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 	* tao/GIOP_Message_Lite.h (TAO_GIOP_Message_Lite): 
           Added a new private variable: ACE_Allocator *cdr_msgblock_alloc_ 
 
+	* tao/Makefile: 
+	* tao/*/Makefile:
+	  Updated dependencies.
+
 Thu May 17 11:03:12 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
         * examples/PluggableUDP/tests/Basic/client.dsp:
