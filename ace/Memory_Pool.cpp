@@ -843,9 +843,10 @@ ACE_Shared_Memory_Pool::init_acquire (size_t nbytes,
       // want...
       this->base_addr_ = 
         ACE_OS::shmat (shmid,
-                       (char *) this->base_addr_, 0);
-
-      if (this->base_addr_ == 0)
+                       ACE_reinterpret_cast (char *,
+                                             this->base_addr_),
+                       0);
+      if (this->base_addr_ == ACE_reinterpret_cast (void *, -1))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P|%t) %p, base_addr = %u\n",
                            "shmat",
@@ -860,9 +861,10 @@ ACE_Shared_Memory_Pool::init_acquire (size_t nbytes,
       // want...
       this->base_addr_ = 
         ACE_OS::shmat (shmid,
-                       (char *) this->base_addr_, 0);
-
-      if (this->base_addr_ == 0)
+                       ACE_reinterpret_cast (char *,
+                                             this->base_addr_),
+                       0);
+      if (this->base_addr_ == ACE_reinterpret_cast (char *, -1))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P|%t) %p, base_addr = %u\n",
                            "shmat",

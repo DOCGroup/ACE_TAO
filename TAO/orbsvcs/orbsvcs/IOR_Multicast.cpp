@@ -163,7 +163,7 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
   // Reply to the multicast message.
   ACE_SOCK_Connector connector;
   ACE_INET_Addr peer_addr (ACE_NTOHS (remote_port),
-			   remote_addr.get_host_name ());
+			   remote_addr.get_host_addr ());
   ACE_SOCK_Stream stream;
 
   // Connect.

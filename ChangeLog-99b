@@ -1,3 +1,9 @@
+Fri Jul 23 11:28:17 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Memory_Pool.cpp (init_acquire): shmat() returns -1 on
+	  failure, not 0.  Thanks to Kevin Liu
+ 	  <kliu@fitch.math.uwaterloo.ca> for reporting this.
+
 Fri Jul 23 11:35:31 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/Connection/non_blocking/tests_lsock_{acceptor,
