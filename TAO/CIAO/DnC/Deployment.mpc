@@ -3,8 +3,8 @@
 project(Deployment_stub) : ciao_client {
 
   sharedname = Deployment_stub
-  dynamicflags   = DEPLOYMENT_BUILD_DLL
-  idlflags += -Wb,stub_export_macro=DEPLOYMENT_STUB_Export -Wb,stub_export_include=Deployment_stub_export.h -Wb,skel_export_macro=DEPLOYMENT_SVNT_Export -Wb,skel_export_include=Deployment_svnt_export.h
+  dynamicflags   = DEPLOYMENT_STUB_BUILD_DLL
+  idlflags += -Wb,stub_export_macro=Deployment_stub_Export -Wb,stub_export_include=Deployment_stub_export.h -Wb,skel_export_macro=Deployment_svnt_Export -Wb,skel_export_include=Deployment_svnt_export.h
   includes += $(CIAO_ROOT)/DnC/
   libpaths += $(ACE_ROOT)/ace
 
@@ -20,9 +20,9 @@ project(Deployment_stub) : ciao_client {
 project(Deployment_svnt) : ciao_server {
   after +=  Deployment_stub
   sharedname = Deployment_svnt
-  libs    += Deployment_stub
-  idlflags  +=  -Wb,export_macro=DEPLOYMENT_SVNT_Export -Wb,export_include=Deployment_svnt_export.h
   dynamicflags = DEPLOYMENT_SVNT_BUILD_DLL
+  libs    += Deployment_stub
+  idlflags  +=  -Wb,export_macro=Deployment_svnt_Export -Wb,export_include=Deployment_svnt_export.h
   includes += $(CIAO_ROOT)/DnC/
   libpaths += $(ACE_ROOT)/ace
 
