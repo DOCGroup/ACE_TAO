@@ -16,7 +16,7 @@ status=0
 
 for arg do
   for i in $SUCCESS_MSGS; do
-    egrep -q $i $arg
+    egrep $i $arg >/dev/null 2>&1
     if [ $? -eq 1 ]; then
       echo Error in $arg:  no line with $i
       status=1

@@ -8,7 +8,7 @@ tmp=/tmp
 run()
 {
   echo running $1
-  /bin/rm -f core
+  /bin/rm -f core log/$1.log
 
   ./$1
   status=$?
@@ -21,7 +21,11 @@ run()
     echo \"$1\" dumped core!!!!
   fi
 
-  ./run_tests.check log/$1.log
+  if [ -f log/$1.log ]; then
+    ./run_tests.check log/$1.log
+  else
+    echo No log file (log/$1.log) is present
+  fi
 }
 
 echo "Starting tests..."
