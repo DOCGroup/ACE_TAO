@@ -194,11 +194,9 @@ Echo_Client_Request_Interceptor::receive_reply (
       paramlist[i++].argument >>= param1;
       paramlist[i].argument >>= param2;
 
-      cout << "Here" << endl;
       CORBA::Any_var result_any = ri->result (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
-      cout << "Here ***" << endl;
       (result_any.in ()) >>= result;
 
       ACE_DEBUG ((LM_DEBUG,

@@ -38,8 +38,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Sequence_T.h"
+#include "tao/Objref_VarOut_T.h"
+#include "tao/Seq_Var_T.h"
+#include "tao/Seq_Out_T.h"
+#include "tao/VarOut_T.h"
 
-#include "tao/RTScheduling/RTScheduler.h"
+#include "tao/RTScheduling/RTSchedulerC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -64,54 +69,41 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
-// TAO_IDL - Generated from
-// be/be_interface.cpp:584
+// TAO_IDL - Generated from 
+// be/be_visitor_root/root_ch.cpp:63
 
-#if !defined (_TEST__ODDS_N_ENDS_CH_)
-#define _TEST__ODDS_N_ENDS_CH_
+namespace TAO
+{
+  class Collocation_Proxy_Broker;
+  
+  template<typename T> class Narrow_Utils;
+}
+
+// TAO_IDL - Generated from
+// be/be_interface.cpp:608
+
+#if !defined (_TEST__VAR_OUT_CH_)
+#define _TEST__VAR_OUT_CH_
 
 class test;
 typedef test *test_ptr;
-struct tao_test_life;
 
 typedef
   TAO_Objref_Var_T<
-      test,
-      tao_test_life
+      test
     >
   test_var;
 
 typedef
   TAO_Objref_Out_T<
-      test,
-      tao_test_life
+      test
     >
   test_out;
-
-struct  tao_test_life
-{
-  static test_ptr tao_duplicate (test_ptr);
-  static void tao_release (test_ptr);
-  static test_ptr tao_nil (void);
-  static CORBA::Boolean tao_marshal (
-      test_ptr,
-      TAO_OutputCDR &
-    );
-};
-
-struct  tao_test_cast
-{
-  static test_ptr tao_narrow (
-      CORBA::Object_ptr
-      ACE_ENV_ARG_DECL
-    );
-  static CORBA::Object_ptr tao_upcast (void *);
-};
 
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ch.cpp:53
+// be/be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_TEST_CH_)
 #define _TEST_CH_
@@ -122,17 +114,11 @@ class  test
 public:
   typedef test_ptr _ptr_type;
   typedef test_var _var_type;
-  static int _tao_class_id;
   
   // The static operations.
   static test_ptr _duplicate (test_ptr obj);
   
   static test_ptr _narrow (
-      CORBA::Object_ptr obj
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    );
-  
-  static test_ptr _unchecked_narrow (
       CORBA::Object_ptr obj
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     );
@@ -149,15 +135,19 @@ public:
   
   virtual void bar (
       CORBA::VoidData data
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     )) = 0;
   
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/interface_ch.cpp:210
+  // be/be_visitor_interface/interface_ch.cpp:186
   
-  virtual void *_tao_QueryInterface (ptrdiff_t type);
+  virtual CORBA::Boolean _is_a (
+      const char *type_id
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    );
   
   virtual const char* _interface_repository_id (void) const;
   virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
@@ -179,6 +169,14 @@ private:
 extern  ::CORBA::TypeCode_ptr  _tc_test;
 
 // TAO_IDL - Generated from
+// be/be_visitor_traits.cpp:48
+
+// Traits specializations.
+namespace TAO
+{
+};
+
+// TAO_IDL - Generated from
 // be/be_visitor_interface/any_op_ch.cpp:52
 
  void operator<<= (CORBA::Any &, test_ptr); // copying
@@ -196,7 +194,7 @@ extern  ::CORBA::TypeCode_ptr  _tc_test;
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:1055
+// be/be_codegen.cpp:920
 
 #if defined (__ACE_INLINE__)
 #include "testC.i"

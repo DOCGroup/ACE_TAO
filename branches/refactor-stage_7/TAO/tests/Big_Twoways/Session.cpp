@@ -112,13 +112,12 @@ Session::start (const Test::Session_List &other_sessions
         // access to this object....
         ACE_TRY
           {
-            this->_add_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+            this->_add_ref ();
+
             if (this->task_.activate (
                     THR_NEW_LWP | THR_JOINABLE, 1, 1) == -1)
               {
-                this->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-                ACE_TRY_CHECK;
+                this->_remove_ref ();
               }
             else
               {

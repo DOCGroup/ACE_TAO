@@ -94,7 +94,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       Test_var test =
-        Test::_unchecked_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+        Test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (test.in ()))
