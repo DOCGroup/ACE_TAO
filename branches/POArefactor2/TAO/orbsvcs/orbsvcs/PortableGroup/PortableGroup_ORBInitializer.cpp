@@ -19,6 +19,9 @@ ACE_RCSID (PortableGroup,
 #include "PortableGroup_Request_Dispatcher.h"
 //#include "POA_Hooks.h"
 
+static const char *pg_poa_factory_name = "TAO_PG_POA";
+static const char *pg_poa_factory_directive = "dynamic TAO_PG_POA Service_Object * TAO_PortableGroup:_make_TAO_PG_Object_Adapter_Factory()";
+
 TAO_PortableGroup_ORBInitializer::TAO_PortableGroup_ORBInitializer ()
 {
 }
@@ -59,6 +62,10 @@ TAO_PortableGroup_ORBInitializer::pre_init (
   ACE_CHECK;
 
   tao_info->orb_core ()->request_dispatcher (rd);
+
+  // If the application resolves the root POA, make sure we load the PG POA.
+  TAO_ORB_Core::set_poa_factory (pg_poa_factory_name,
+                                 pg_poa_factory_directive);
 
 /*  // Create and save the hooks for the POA.
   TAO_POA_PortableGroup_Hooks *poa_hooks;

@@ -17,21 +17,19 @@
 
 #include /**/ "ace/pre.h"
 
+#include "portablegroup_export.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/PortableServer/POA.h"
-#include "portablegroup_export.h"
-
 #include "orbsvcs/PortableGroupC.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -316,29 +314,10 @@ protected:
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableGroup::NotAGroupObject));
 };
-/*
-ACE_STATIC_SVC_DECLARE (TAO_GOA)
-ACE_FACTORY_DECLARE (TAO_PortableGroup, TAO_GOA)
-
-#if defined (ACE_HAS_BROKEN_STATIC_CONSTRUCTORS)
-
-typedef int (*TAO_Module_Initializer) (void);
-
-static TAO_Module_Initializer
-  TAO_Requires_GOA_Initializer =
-    &TAO_GOA::Initializer;
-
-  #else
-
-  static int
-  TAO_Requires_GOA_Initializer =
-    TAO_GOA::Initializer ();
-
-  #endif /* ACE_HAS_BROKEN_STATIC_CONSTRUCTORS */
 
 // ****************************************************************
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 

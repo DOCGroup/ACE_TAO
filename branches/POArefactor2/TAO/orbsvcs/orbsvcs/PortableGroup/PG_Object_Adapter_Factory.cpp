@@ -1,6 +1,7 @@
 // $Id$
 
 #include "PG_Object_Adapter_Factory.h"
+#include "PG_Servant_Dispatcher.h"
 
 #include "tao/PortableServer/Object_Adapter.h"
 #include "tao/ORB_Core.h"
@@ -24,12 +25,20 @@ TAO_PG_Object_Adapter_Factory::create (TAO_ORB_Core *orb_core)
                                       *orb_core),
                   0);
 
+  // Create and register the RT servant dispatcher.
+  TAO_PG_Servant_Dispatcher *rt_servant_dispatcher;
+  ACE_NEW_RETURN (rt_servant_dispatcher,
+                  TAO_PG_Servant_Dispatcher,
+                  0);
+  object_adapter->servant_dispatcher (rt_servant_dispatcher);
+
+
   return object_adapter;
 }
 
 ACE_FACTORY_DEFINE (TAO_PortableGroup, TAO_PG_Object_Adapter_Factory)
 ACE_STATIC_SVC_DEFINE (TAO_PG_Object_Adapter_Factory,
-                       ACE_TEXT ("TAO_POA"),
+                       ACE_TEXT ("TAO_GOA"),
                        ACE_SVC_OBJ_T,
                        &ACE_SVC_NAME (TAO_PG_Object_Adapter_Factory),
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,

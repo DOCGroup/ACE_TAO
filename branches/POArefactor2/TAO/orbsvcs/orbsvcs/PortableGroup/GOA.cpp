@@ -705,24 +705,6 @@ TAO_GOA::associate_group_with_ref (
 
 }
 
-/*
-int
-TAO_GOA::Initializer (void)
-{
-  TAO_ORB_Core::set_poa_factory ("TAO_GOA", "dynamic TAO_POA Service_Object * TAO_PortableServer:_make_TAO_Object_Adapter_Factory()"
-    );
-}
-
-ACE_STATIC_SVC_DEFINE (
-  TAO_GOA,
-  ACE_TEXT ("TAO_GOA"),
-  ACE_SVC_OBJ_T,
-  &ACE_SVC_NAME (TAO_GOA),
-  ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
-  0)
-
-ACE_FACTORY_DEFINE (TAO_PortableGroup, TAO_GOA)*/
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)

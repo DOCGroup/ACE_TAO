@@ -28,7 +28,7 @@ TAO_PortableGroup_Loader::init (int /*argc*/,
         PortableInterceptor::ORBInitializer::_nil ();
       PortableInterceptor::ORBInitializer_var orb_initializer;
 
-      /// Register the RTCORBA ORBInitializer.
+      /// Register the Portablegroup ORBInitializer.
       ACE_NEW_THROW_EX (temp_orb_initializer,
                         TAO_PortableGroup_ORBInitializer (),
                         CORBA::NO_MEMORY (
