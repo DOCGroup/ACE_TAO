@@ -1990,12 +1990,7 @@ ACE::recv_n (ACE_HANDLE handle,
       i = ACE::recv (handle, (char *) buf + bytes_received,
                      n - bytes_received, flags, timeout);
 
-#if 0
-      // This causes IOStream_Test to never terminate.
-      if (i == -1 || i == 0  || ACE_BIT_ENABLED (flags, MSG_PEEK))
-#else  /* 1 */
       if (i == -1 || i == 0)
-#endif /* 1 */
         break;
     }
 

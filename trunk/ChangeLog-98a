@@ -1,3 +1,8 @@
+Fri Feb 27 13:42:09 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/ACE.cpp (recv_n): Removed the MSG_PEEK flag since it didn't
+ 	  seem to work correctly.
+
 Fri Feb 27 11:18:28 1998  Chris Cleeland  <cleeland@lambada.cs.wustl.edu>
 
 	* ace/Log_Msg.cpp: Added three new conversion operators: "%{"
