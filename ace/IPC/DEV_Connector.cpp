@@ -1,10 +1,10 @@
 // DEV_Connector.cpp
 // $Id$
 
-#include "ace/DEV_Connector.h"
+#include "ace/IPC/DEV_Connector.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/DEV_Connector.i"
+#include "ace/IPC/DEV_Connector.i"
 #endif
 
 ACE_RCSID(ace, DEV_Connector, "$Id$")

@@ -14,8 +14,12 @@
 #define ACE_DEV_CONNECTOR_H
 #include "ace/pre.h"
 
-#include "ace/DEV_IO.h"
-#include "ace/Log_Msg.h"
+#include "ace/IPC/DEV_IO.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
+
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -97,7 +101,7 @@ public:
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/DEV_Connector.i"
+#include "ace/IPC/DEV_Connector.i"
 #endif
 
 #include "ace/post.h"
