@@ -1,3 +1,17 @@
+Tue Apr 15 16:06:24 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Log_Msg_NT_Event_Log.cpp (close): Make sure to check for
+	  this->evlog_handle_ != 0 before calling DeregisterEventSource().
+  	  Thanks to Paxton Mason <PMason@wolve.com> for reporting this.
+
+	* ace/Timer_Wheel_T.cpp: Removed the use of a namespace since
+	  this breaks certain compilers (e.g., GCC 2.7-97 on LynxOS).
+  	  Thanks to Olli Savia <ops@iki.fi> for reporting this problem.
+
+	* ace/OS.h: Make sure that things don't go awry on platforms
+	  where clearerr is defined as a macro.  Thanks to Olli Savia
+ 	  <ops@iki.fi> for reporting this problem on LynxOS.
+
 Tue Apr 15 17:53:29 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACEXML/parser/parser/Makefile:
