@@ -1,3 +1,14 @@
+Fri Dec 27 23:39:19 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Stream.cpp (pop): Modified the code so that we don't delete
+ 	  the Module we are popping unless the flags request this.
+
+	* ace/Service_Record.cpp (fini): Always make sure to first fini()
+ 	  each Module, then remove() (and delete) them.
+
+	* ace/Stream.cpp (remove): Updated the code so that we don't
+ 	  delete the Module unless the flags request this.
+
 Thu Dec 26 18:51:22 1996  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/config-linux-lxpthreads.h: Has James CE Johnson's

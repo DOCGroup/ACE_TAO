@@ -13,7 +13,7 @@
 
 typedef ACE_Atomic_Op<ACE_Thread_Mutex, int> ATOMIC_INT;
 
-static u_long zero = 0;
+static int zero = 0;
 static ATOMIC_INT task_count (zero);
 static ATOMIC_INT max_count (zero);
 static ATOMIC_INT wait_count (zero);
@@ -46,7 +46,7 @@ Task_Test::open (void *)
 
   task_count++;
   ACE_DEBUG ((LM_DEBUG, "(%t) creating Task_Test, task count = %d\n", 
-	      (u_long) task_count));
+	      (int) task_count));
 
   return this->activate (THR_BOUND);
 }
@@ -58,7 +58,7 @@ Task_Test::close (u_long)
 
   task_count--;
   ACE_DEBUG ((LM_DEBUG, "(%t) destroying Task_Test, task count = %d\n", 
-	      (u_long) task_count));
+	      (int) task_count));
   wait_count--;
 // delete this;
   return 0;
@@ -93,7 +93,7 @@ main (int argc, char *argv[])
   for (int i = 1; i <= n_iterations; i++)
     {
       ACE_DEBUG ((LM_DEBUG, "(%t) iteration = %d, max_count %d\n", 
-		  i, (u_long) max_count));
+		  i, (int) max_count));
       max_count = 0;
 
       ACE_DEBUG ((LM_DEBUG, "(%t) starting %d task%s\n", 
@@ -118,7 +118,7 @@ main (int argc, char *argv[])
 	ACE_Thread::yield ();
 
       ACE_DEBUG ((LM_DEBUG, "(%t) iteration %d finished, max_count %d, wait_count %d, waiting for tasks to exit\n",
-		  i, (u_long) max_count, (u_long) wait_count));
+		  i, (int) max_count, (int) wait_count));
 
       // Wait for all the tasks to exit.
       ACE_Service_Config::thr_mgr ()->wait ();

@@ -37,19 +37,19 @@ class ACE_Module
 public:
   enum
   {
-		M_DELETE_NONE = 0,
-		// Indicates that close() should not delete any tasks.
+    M_DELETE_NONE = 0,
+    // Indicates that close() should not delete any tasks.
 
-		M_DELETE_READER	= 1,
-		// Indicates that close() should delete the writer thread.
+    M_DELETE_READER = 1,
+    // Indicates that close() should delete the writer thread.
 
-		M_DELETE_WRITER = 2,
-		// Indicates that close() should delete the reader thread.
+    M_DELETE_WRITER = 2,
+    // Indicates that close() should delete the reader thread.
 
-		M_DELETE		= 3 
-		// Indicates that close() deletes the Tasks.  Don't change this
-		// value without updating the same enum in class ACE_Stream...
-		// The above flags may be or'ed together.
+    M_DELETE = 3 
+    // Indicates that close() deletes the Tasks.  Don't change this
+    // value without updating the same enum in class ACE_Stream...
+    // The above flags may be or'ed together.
   };
 
   // = Initialization and termination methods.
