@@ -20,13 +20,13 @@
 #define TAO_IIOP_CONNECTOR_H
 #include "ace/pre.h"
 
-#include "ace/Connector.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/SOCK_Connector.h"
+#include "ace/Connector.h"
+
 #include "tao/Pluggable.h"
 #include "tao/Connector_Impl.h"
 #include "tao/IIOP_Connection_Handler.h"

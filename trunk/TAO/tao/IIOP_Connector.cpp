@@ -12,7 +12,6 @@
 #include "tao/Protocols_Hooks.h"
 #include "tao/Transport_Cache_Manager.h"
 #include "ace/Strategies_T.h"
-#include "ace/SOCK_Connector.h"
 
 ACE_RCSID (TAO,
            IIOP_Connector,
