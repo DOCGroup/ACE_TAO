@@ -191,8 +191,8 @@ Nestea_Server_i::init (int argc, char** argv, CORBA::Environment &ACE_TRY_ENV)
       if (this->use_ir_ == 1)
         {
           ACE_NEW_RETURN (this->ir_helper_, IR_Helper (SERVER_NAME,
-                                                       this->nestea_poa_,
-                                                       this->orb_,
+                                                       this->nestea_poa_.in (),
+                                                       this->orb_.in (),
                                                        TAO_debug_level),
                           -1);
           this->ir_helper_->change_object (server_obj.inout (), ACE_TRY_ENV);
