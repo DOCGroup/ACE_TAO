@@ -1,0 +1,48 @@
+project(*server): taoserver {
+  avoids += repo
+
+  IDL_Files {
+    Identity.idl
+    Load_Balancer.idl
+  }
+
+  Source_Files {
+    IdentityC.cpp
+    IdentityS.cpp
+    Load_BalancerC.cpp
+    Identity_Server.cpp
+    Identity_i.cpp
+  }
+}
+
+project(*Client): taoserver {
+  exename = client
+  avoids += repo
+
+  IDL_Files {
+    Identity.idl
+    Load_Balancer.idl
+  }
+
+  Source_Files {
+    IdentityC.cpp
+    Load_BalancerC.cpp
+    Identity_Client.cpp
+  }
+}
+
+project(*Balancer): taoserver {
+  exename = load_balancer
+  avoids += repo
+
+  IDL_Files {
+    Load_Balancer.idl
+  }
+
+  Source_Files {
+    Load_BalancerS.cpp
+    Load_BalancerC.cpp
+    Load_Balancer_i.cpp
+    Load_Balancing_Service.cpp
+  }
+}

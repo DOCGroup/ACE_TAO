@@ -1,0 +1,5 @@
+project : taolib, rtcorba, portableserver, core, corba_messaging {
+  sharedname   = TAO_RTScheduler
+  dynamicflags = TAO_RTSCHEDULER_BUILD_DLL
+  include_dir  = tao/RTScheduler
+}
