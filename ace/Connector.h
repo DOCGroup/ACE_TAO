@@ -306,8 +306,8 @@ public:
   // only flag that is processed is <ACE_NONBLOCK>, which enabled
   // non-blocking I/O on the <SVC_HANDLER> when it is opened.
 
-  virtual int open (ACE_Reactor *r = ACE_Reactor::instance (),
-		    int flags = 0);
+  virtual int open (ACE_Reactor *r,
+		    int flags);
   // Initialize a connector.  <flags> indicates how <SVC_HANDLER>'s
   // should be initialized prior to being activated.  Right now, the
   // only flag that is processed is <ACE_NONBLOCK>, which enabled
