@@ -1,3 +1,14 @@
+Tue Feb 22 18:25:02 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* src/Key_List.cpp,
+	  src/Bool_Array.cpp,
+	  src/Gen_Perf.cpp,
+	  src/Hash_Table.cpp,
+	  src/Options.h,
+	  src/Options.cpp: Renamed the DEBUG enum to DEBUGGING enum
+	  to avoid problems with -DDEBUG is enabled.  Thanks to
+	  Tobin Bergen-Hill <tbhill@dctd.saic.com> for reporting this.
+
 Sat Nov 13 18:43:53 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* src/Key_List.cpp: The code for output_lookup_function() was
