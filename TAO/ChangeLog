@@ -1,3 +1,16 @@
+Fri Mar  4 15:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/fe/fe_lookup.cpp:
+          Removed struct before TAO_IDL_CPP_Keyword_Entry . It is not needed
+          and can cause msvc6 to go crazy. This change matches the earlier change
+
+        Sun Feb 27 10:50:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_interface.cpp:
+          Generate const TAO_operation_db_entry * instead of
+          const struct TAO_operation_db_entry * as return type of the
+          lookup operation, msvc6 has problems with the struct
+
 Fri Mar  4 14:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be_include/be_codegen.h:
