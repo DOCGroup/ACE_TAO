@@ -121,6 +121,7 @@ BIN =   \
 	TP_Reactor_Test \
 	TSS_Test \
 	Task_Test \
+	Task_Ex_Test \
 	Thread_Manager_Test \
 	Thread_Mutex_Test \
 	Thread_Pool_Test \
