@@ -116,23 +116,6 @@ TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (const char *flowname,
 // Destructor.
 TAO_FlowSpec_Entry::~TAO_FlowSpec_Entry (void)
 {
-  if (this->address_)
-    delete this->address_;
-
-  if (this->control_address_)
-    delete this->control_address_;
-
-  if (this->protocol_object_)
-    delete this->protocol_object_;
-
-  if (this->control_protocol_object_)
-    delete this->control_protocol_object_;
-
-  if (this->handler_)
-    delete this->handler_;
-
-  if (this->control_handler_)
-    delete this->control_handler_;
 
 }
 
@@ -146,7 +129,7 @@ TAO_FlowSpec_Entry::set_protocol (void)
       else if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str(),"UDP") == 0)
           this->protocol_ = TAO_AV_Core::TAO_AV_UDP;
       else if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str(),"QoS_UDP") == 0)
-	this->protocol_ = TAO_AV_Core::TAO_AV_QOS_UDP;
+        this->protocol_ = TAO_AV_Core::TAO_AV_QOS_UDP;
       else if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str(),"AAL5") == 0)
         this->protocol_ = TAO_AV_Core::TAO_AV_AAL5;
       else if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str(),"AAL3_4") == 0)
@@ -171,7 +154,11 @@ TAO_FlowSpec_Entry::set_protocol (void)
     {
       if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str(),"UDP") == 0)
         {
-          this->protocol_ = TAO_AV_Core::TAO_AV_SFP_UDP;
+          if (ACE_OS::strncasecmp (this->flow_protocol_.c_str (),"sfp",3) == 0)
+            {
+              this->protocol_ = TAO_AV_Core::TAO_AV_SFP_UDP;
+            }
+          else this->protocol_ = TAO_AV_Core::TAO_AV_USERDEFINED_UDP;
         }
       else
         {
@@ -202,6 +189,9 @@ TAO_FlowSpec_Entry::set_protocol (void)
               break;
             case TAO_AV_Core::TAO_AV_SFP_UDP:
               this->protocol_ = TAO_AV_Core::TAO_AV_SFP_UDP_MCAST;
+              break;
+            case TAO_AV_Core::TAO_AV_USERDEFINED_UDP:
+              this->protocol_ = TAO_AV_Core::TAO_AV_USERDEFINED_UDP_MCAST;
               break;
             default:
               break;
@@ -239,6 +229,7 @@ TAO_FlowSpec_Entry::parse_address (const char *address,
           switch (this->protocol_)
             {
             case TAO_AV_Core::TAO_AV_SFP_UDP:
+            case TAO_AV_Core::TAO_AV_USERDEFINED_UDP:
             case TAO_AV_Core::TAO_AV_RTP_UDP:
             case TAO_AV_Core::TAO_AV_TCP:
             case TAO_AV_Core::TAO_AV_UDP:
@@ -274,6 +265,9 @@ TAO_FlowSpec_Entry::parse_address (const char *address,
                         break;
                       case TAO_AV_Core::TAO_AV_SFP_UDP:
                         this->protocol_ = TAO_AV_Core::TAO_AV_SFP_UDP_MCAST;
+                        break;
+                      case TAO_AV_Core::TAO_AV_USERDEFINED_UDP:
+                        this->protocol_ = TAO_AV_Core::TAO_AV_USERDEFINED_UDP_MCAST;
                         break;
                       default:
                         break;
@@ -312,6 +306,7 @@ TAO_FlowSpec_Entry::parse_address (const char *address,
           switch (this->protocol_)
             {
             case TAO_AV_Core::TAO_AV_SFP_UDP:
+            case TAO_AV_Core::TAO_AV_USERDEFINED_UDP:
             case TAO_AV_Core::TAO_AV_RTP_UDP:
             case TAO_AV_Core::TAO_AV_TCP:
             case TAO_AV_Core::TAO_AV_UDP:
@@ -353,6 +348,9 @@ TAO_FlowSpec_Entry::parse_address (const char *address,
                         break;
                       case TAO_AV_Core::TAO_AV_SFP_UDP:
                         this->protocol_ = TAO_AV_Core::TAO_AV_SFP_UDP_MCAST;
+                        break;
+                      case TAO_AV_Core::TAO_AV_USERDEFINED_UDP:
+                        this->protocol_ = TAO_AV_Core::TAO_AV_USERDEFINED_UDP_MCAST;
                         break;
                       default:
                         break;
@@ -506,6 +504,8 @@ TAO_Forward_FlowSpec_Entry::entry_to_string (void)
         {
         case TAO_AV_Core::TAO_AV_SFP_UDP:
         case TAO_AV_Core::TAO_AV_SFP_UDP_MCAST:
+        case TAO_AV_Core::TAO_AV_USERDEFINED_UDP:
+        case TAO_AV_Core::TAO_AV_USERDEFINED_UDP_MCAST:
         case TAO_AV_Core::TAO_AV_RTP_UDP:
         case TAO_AV_Core::TAO_AV_RTP_UDP_MCAST:
         case TAO_AV_Core::TAO_AV_UDP:
@@ -542,6 +542,8 @@ TAO_Forward_FlowSpec_Entry::entry_to_string (void)
         {
         case TAO_AV_Core::TAO_AV_SFP_UDP:
         case TAO_AV_Core::TAO_AV_SFP_UDP_MCAST:
+        case TAO_AV_Core::TAO_AV_USERDEFINED_UDP:
+        case TAO_AV_Core::TAO_AV_USERDEFINED_UDP_MCAST:
         case TAO_AV_Core::TAO_AV_RTP_UDP:
         case TAO_AV_Core::TAO_AV_RTP_UDP_MCAST:
         case TAO_AV_Core::TAO_AV_UDP:
@@ -571,6 +573,8 @@ TAO_Forward_FlowSpec_Entry::entry_to_string (void)
         {
         case TAO_AV_Core::TAO_AV_SFP_UDP:
         case TAO_AV_Core::TAO_AV_SFP_UDP_MCAST:
+        case TAO_AV_Core::TAO_AV_USERDEFINED_UDP:
+        case TAO_AV_Core::TAO_AV_USERDEFINED_UDP_MCAST:
         case TAO_AV_Core::TAO_AV_RTP_UDP:
         case TAO_AV_Core::TAO_AV_RTP_UDP_MCAST:
         case TAO_AV_Core::TAO_AV_UDP:
@@ -720,6 +724,7 @@ TAO_Reverse_FlowSpec_Entry::entry_to_string (void)
         case TAO_AV_Core::TAO_AV_UDP_MCAST:
         case TAO_AV_Core::TAO_AV_TCP:
         case TAO_AV_Core::TAO_AV_SFP_UDP:
+        case TAO_AV_Core::TAO_AV_USERDEFINED_UDP:
           {
             ACE_INET_Addr *inet_addr = ACE_dynamic_cast (ACE_INET_Addr*,this->address_);
             inet_addr->addr_to_string (address,BUFSIZ);
@@ -749,6 +754,8 @@ TAO_Reverse_FlowSpec_Entry::entry_to_string (void)
         {
         case TAO_AV_Core::TAO_AV_SFP_UDP:
         case TAO_AV_Core::TAO_AV_SFP_UDP_MCAST:
+        case TAO_AV_Core::TAO_AV_USERDEFINED_UDP:
+        case TAO_AV_Core::TAO_AV_USERDEFINED_UDP_MCAST:
         case TAO_AV_Core::TAO_AV_RTP_UDP:
         case TAO_AV_Core::TAO_AV_RTP_UDP_MCAST:
         case TAO_AV_Core::TAO_AV_UDP:

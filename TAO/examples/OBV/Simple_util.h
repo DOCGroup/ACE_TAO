@@ -146,9 +146,6 @@ protected:
   char *name_;
   // Name to be usred for the naming service
 
-  CORBA::Environment env_;
-  // Environment variable.
-
   CORBA::ORB_var orb_;
   // Remember our orb.
 

@@ -1,5 +1,5 @@
 #
-# Makefile for building the TAO performance-tests
+# $Id$
 #
 
 DIRS = \

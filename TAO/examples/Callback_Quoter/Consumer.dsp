@@ -89,7 +89,7 @@ LINK32=link.exe
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\Consumer.cpp
+SOURCE=.\consumer.cpp
 # End Source File
 # Begin Source File
 
@@ -109,11 +109,11 @@ SOURCE=.\Consumer_Signal_Handler.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\consumerC.cpp
+SOURCE=.\ConsumerC.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\consumerS.cpp
+SOURCE=.\ConsumerS.cpp
 # End Source File
 # Begin Source File
 
@@ -145,11 +145,11 @@ SOURCE=.\Consumer_Signal_Handler.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\consumerC.h
+SOURCE=.\ConsumerC.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\consumerS.h
+SOURCE=.\ConsumerS.h
 # End Source File
 # Begin Source File
 

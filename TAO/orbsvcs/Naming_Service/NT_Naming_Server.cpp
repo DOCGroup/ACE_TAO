@@ -21,6 +21,20 @@
 // ============================================================================
 
 #include "ace/OS.h"
+
+#if !defined(ACE_WIN32)
+
+int
+main (int, char*[])
+{
+  ACE_ERROR ((LM_INFO,
+              "This program is only supported "
+              "on Win32 platforms\n"));
+  return 1;
+}
+
+#else
+
 #include "ace/Get_Opt.h"
 
 #include "winreg.h"
@@ -208,3 +222,5 @@ main (int argc, char *argv[])
 {
   return OPTIONS::instance ()->run (argc, argv);
 }
+
+#endif /* ACE_WIN32 */

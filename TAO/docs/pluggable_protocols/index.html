@@ -20,12 +20,12 @@
 <H1 ALIGN="CENTER">Implementing Pluggable Protocols for TAO</H1>
 <P ALIGN="CENTER">
 <STRONG>
-<A HREF="http://www.cs.wustl.edu/~fredk/">Fred Kuhns</A>, 
+<A HREF="http://www.cs.wustl.edu/~fredk/">Fred Kuhns</A>,
 <A HREF="http://www.ece.uci.edu/~schmidt/">Douglas C. Schmidt</A>,
-<A HREF="http://doc.ece.uci.edu/~coryan">Carlos O'Ryan</A>, 
+<A HREF="http://doc.ece.uci.edu/~coryan">Carlos O'Ryan</A>,
 <A HREF="http://www.ece.uci.edu/~ossama/">Ossama Othman</A>,
 and <A HREF="mailto:BTRASK@contactsystems.com">Bruce Trask</A>
-</STRONG> 
+</STRONG>
 </P>
 
 <P ALIGN="CENTER">
@@ -59,9 +59,9 @@ links that describe TAO's pluggable protocols framework, though not
 how to implement one: <BLOCKQUOTE> <A
 HREF="../releasenotes/index.html#pp">../releasenotes/index.html#pp</A><BR>
 
-<A HREF="http://www.cs.wustl.edu/~schmidt/PfHSN.ps.gz">http://www.cs.wustl.edu/~schmidt/PfHSN.ps.gz</A><BR>
+<A HREF="http://www.cs.wustl.edu/~schmidt/PDF/PfHSN.pdf">http://www.cs.wustl.edu/~schmidt/PDF/PfHSN.pdf</A><BR>
 <A
-HREF="http://www.cs.wustl.edu/~schmidt/pluggable_protocols.ps.gz">http://www.cs.wustl.edu/~schmidt/pluggable_protocols.ps.gz</A>
+HREF="http://www.cs.wustl.edu/~schmidt/PDF/pluggable_protocols.pdf">http://www.cs.wustl.edu/~schmidt/PDF/pluggable_protocols.pdf</A>
 </BLOCKQUOTE>
 
 <P>
@@ -124,9 +124,9 @@ HREF="http://www.cs.wustl.edu/~schmidt/pluggable_protocols.ps.gz">http://www.cs.
 
 <P>
 
-<H1><A NAME="SECTION100" HREF="#TOC_SECTION100">
+<H3><A NAME="SECTION100" HREF="#TOC_SECTION100">
 Overview of Implementation of Pluggable Protocols for TAO</A>
-</H1>
+</H3>
 
 <P>
 There are several basic implementation details that should be followed when
@@ -136,9 +136,9 @@ section describes them.
 
 <P>
 
-<H2><A NAME="SECTION110" HREF="#TOC_SECTION110">
+<H3><A NAME="SECTION110" HREF="#TOC_SECTION110">
 The Hard Way</A>
-</H2>
+</H3>
 
 <P>
 It is possible to implement a pluggable protocol for TAO without using
@@ -149,9 +149,9 @@ using existing ACE and TAO models and implementations.
 
 <P>
 
-<H2><A NAME="SECTION120" HREF="#TOC_SECTION120">
+<H3><A NAME="SECTION120" HREF="#TOC_SECTION120">
 The Path of Least Resistance</A>
-</H2>
+</H3>
 
 <P>
 TAO takes advantage of the many useful encapsulations provided by ACE. These
@@ -250,9 +250,9 @@ a pluggable protocol for TAO.
 <P>
 <HR>
 <P>
-<H1><A NAME="SECTION200" HREF="#TOC_SECTION200">
+<H3><A NAME="SECTION200" HREF="#TOC_SECTION200">
 Pluggable Protocol Framework Components</A>
-</H1>
+</H3>
 
 <P>
 In order for a pluggable protocol to be usable by TAO <STRONG><EM>without</EM></STRONG> making any modifications
@@ -264,12 +264,12 @@ within several components, namely the <TT>Acceptor</TT>, <TT>Connector</TT>,
 
 <P>
 
-<H2><A NAME="SECTION210" HREF="#TOC_SECTION210">
+<H3><A NAME="SECTION210" HREF="#TOC_SECTION210">
 The <TT>Acceptor</TT></A>
-</H2>
+</H3>
 
 <P>
- 
+
 <A NAME="design:accept"></A>
 <P>
 
@@ -333,8 +333,8 @@ Server Pluggable Protocol Class Diagram</CAPTION>
 <TR><TD><P>
 
 <P>
- 
-<DIV ALIGN="CENTER"> 
+
+<DIV ALIGN="CENTER">
 <!-- MATH
  $\resizebox* {5in}{!}{\includegraphics{graphics/server.eps}}$
  -->
@@ -394,185 +394,185 @@ public:<BR>
 &nbsp;
 
 <BR>
- 
+
 &nbsp;&nbsp;virtual&nbsp;~TAO_Acceptor&nbsp;(void);
 
 <BR>
- 
+
 &nbsp;&nbsp;//&nbsp;Destructor
 
 <BR>
- 
+
 &nbsp;
 
 <BR>
- 
+
 &nbsp;&nbsp;CORBA::ULong&nbsp;tag&nbsp;(void)&nbsp;const;
 
 <BR>
- 
+
 &nbsp;&nbsp;//&nbsp;The&nbsp;tag,&nbsp;each&nbsp;concrete&nbsp;class&nbsp;will&nbsp;have&nbsp;a&nbsp;specific&nbsp;tag&nbsp;value.
 
 <BR>
- 
+
 &nbsp;
 
 <BR>
- 
+
 &nbsp;&nbsp;CORBA::Short&nbsp;priority&nbsp;(void)&nbsp;const;
 
 <BR>
- 
+
 &nbsp;&nbsp;//&nbsp;The&nbsp;priority&nbsp;for&nbsp;this&nbsp;endpoint.
 
 <BR>
- 
+
 &nbsp;
 
 <BR>
- 
+
 &nbsp;&nbsp;virtual&nbsp;int&nbsp;open&nbsp;(TAO_ORB_Core&nbsp;*orb_core,
 
 <BR>
- 
+
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;version_major,
 
 <BR>
- 
+
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;version_minor,
 
 <BR>
- 
+
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;char&nbsp;*address,
 
 <BR>
- 
+
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;char&nbsp;*options&nbsp;=&nbsp;0)&nbsp;=&nbsp;0;
 
 <BR>
- 
+
 &nbsp;&nbsp;//&nbsp;Method&nbsp;to&nbsp;initialize&nbsp;acceptor&nbsp;for&nbsp;address.
 
 <BR>
- 
+
 &nbsp;
 
 <BR>
- 
+
 &nbsp;&nbsp;virtual&nbsp;int&nbsp;open_default&nbsp;(TAO_ORB_Core&nbsp;*orb_core,
 
 <BR>
- 
+
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;char&nbsp;*options&nbsp;=&nbsp;0)&nbsp;=&nbsp;0;
 
 <BR>
- 
+
 &nbsp;&nbsp;//&nbsp;Open&nbsp;an&nbsp;acceptor&nbsp;on&nbsp;the&nbsp;default&nbsp;endpoint&nbsp;for&nbsp;this&nbsp;protocol
 
 <BR>
- 
+
 &nbsp;
 
 <BR>
- 
+
 &nbsp;&nbsp;virtual&nbsp;int&nbsp;close&nbsp;(void)&nbsp;=&nbsp;0;
 
 <BR>
- 
+
 &nbsp;&nbsp;//&nbsp;Closes&nbsp;the&nbsp;acceptor
 
 <BR>
- 
+
 &nbsp;
 
 <BR>
- 
+
 &nbsp;&nbsp;virtual&nbsp;int&nbsp;create_mprofile&nbsp;(const&nbsp;TAO_ObjectKey&nbsp;&amp;object_key,
 
 <BR>
- 
+
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TAO_MProfile&nbsp;&amp;mprofile)&nbsp;=&nbsp;0;
 
 <BR>
- 
+
 &nbsp;&nbsp;//&nbsp;Create&nbsp;the&nbsp;corresponding&nbsp;profile&nbsp;for&nbsp;this&nbsp;endpoint.
 
 <BR>
- 
+
 &nbsp;
 
 <BR>
- 
+
 &nbsp;&nbsp;virtual&nbsp;int&nbsp;is_collocated&nbsp;(const&nbsp;TAO_Profile*&nbsp;profile)&nbsp;=&nbsp;0;
 
 <BR>
- 
+
 &nbsp;&nbsp;//&nbsp;Return&nbsp;1&nbsp;if&nbsp;the&nbsp;&lt;profile&gt;&nbsp;has&nbsp;the&nbsp;same&nbsp;endpoint&nbsp;as&nbsp;the&nbsp;acceptor.
 
 <BR>
- 
+
 &nbsp;
 
 <BR>
- 
+
 &nbsp;&nbsp;virtual&nbsp;CORBA::ULong&nbsp;endpoint_count&nbsp;(void)&nbsp;=&nbsp;0;
 
 <BR>
- 
+
 &nbsp;&nbsp;//&nbsp;Returns&nbsp;the&nbsp;number&nbsp;of&nbsp;endpoints&nbsp;this&nbsp;acceptor&nbsp;is&nbsp;listening&nbsp;on.&nbsp;&nbsp;This
 
 <BR>
- 
+
 &nbsp;&nbsp;//&nbsp;is&nbsp;used&nbsp;for&nbsp;determining&nbsp;how&nbsp;many&nbsp;profiles&nbsp;will&nbsp;be&nbsp;generated
 
 <BR>
- 
+
 &nbsp;&nbsp;//&nbsp;for&nbsp;this&nbsp;acceptor.
 
 <BR>
- 
+
 &nbsp;
 
 <BR>
 protected:
 
 <BR>
- 
+
 &nbsp;&nbsp;CORBA::Short&nbsp;priority_;
 
 <BR>
- 
+
 &nbsp;&nbsp;//&nbsp;The&nbsp;priority&nbsp;for&nbsp;this&nbsp;endpoint
 
 <BR>
- 
+
 &nbsp;
 
 <BR>
 private:
 
 <BR>
- 
+
 &nbsp;&nbsp;CORBA::ULong&nbsp;tag_;
 
 <BR>
- 
+
 &nbsp;&nbsp;//&nbsp;IOP&nbsp;protocol&nbsp;tag.
 
 <BR>
- 
+
 &nbsp;
 
 <BR>
- 
+
 };
- 
+
 &nbsp;</DD>
 </DL>
 A description of each of the methods that must be implemented follows:
 
 <P>
- 
+
 <DL>
 <DT><STRONG>The&nbsp;Constructor.</STRONG></DT>
 <DD>Other than initializing members of a pluggable protocol <TT>Acceptor</TT>
@@ -586,35 +586,35 @@ the <TT>TAO_IIOP_Acceptor</TT> constructor implementation is:
 <DD>&nbsp;&nbsp;:&nbsp;TAO_Acceptor&nbsp;(TAO_TAG_IIOP_PROFILE),
 
 <BR>
- 
+
 &nbsp;&nbsp;&nbsp;&nbsp;version_&nbsp;(TAO_DEF_GIOP_MAJOR,&nbsp;TAO_DEF_GIOP_MINOR),
 
 <BR>
- 
+
 &nbsp;&nbsp;&nbsp;&nbsp;orb_core_&nbsp;(0),
 
 <BR>
- 
+
 &nbsp;&nbsp;&nbsp;&nbsp;base_acceptor_&nbsp;(),
 
 <BR>
- 
+
 &nbsp;&nbsp;&nbsp;&nbsp;creation_strategy_&nbsp;(0),
 
 <BR>
- 
+
 &nbsp;&nbsp;&nbsp;&nbsp;concurrency_strategy_&nbsp;(0),
 
 <BR>
- 
+
 &nbsp;&nbsp;&nbsp;&nbsp;accept_strategy_&nbsp;(0)
 
 <BR>
- 
+
 {
 
 <BR>
- 
+
 }</DD>
 </DL>
 <P>
@@ -629,7 +629,7 @@ identifies the protocol is assigned, a tag value that isn't
 used by any other protocol can be used in the meantime.
 </DL>
 
-<P> 
+<P>
 <DL>
 <DT><STRONG><TT><A NAME="TAO_Acceptor::open">open</A></TT>.</STRONG></DT>
 <DD>The <TT>open</TT> method initializes the acceptor, i.e. sets
@@ -640,7 +640,7 @@ The address specified by using the <TT><A HREF="../Options.html#-ORBEndpoint">-O
 directly to this method. If more than one address is specified within a given
 <TT>-ORBEndpoint</TT> option then each address is passed one by one to this
 method by the pluggable protocols framework. For example, the following <TT>-ORBEndpoint</TT>
-command line option: 
+command line option:
 
 <P>
 
@@ -649,7 +649,7 @@ command line option:
 <DD>-ORBEndpoint&nbsp;iiop://1.1@foo.xyz.com,1.0@bar.abc.com</DD>
 </DL>
 <P>
-will cause the following <TT>open</TT> method invocations to occur: 
+will cause the following <TT>open</TT> method invocations to occur:
 
 <P>
 
@@ -790,7 +790,7 @@ TAO_MProfile&nbsp;&amp;mprofile)&nbsp;
 &nbsp;&nbsp;return&nbsp;0;
 
 <P>
- 
+
 }</DD>
 </DL>
 <P>
@@ -839,12 +839,12 @@ of TAO's pluggable protocols simply return <TT>1</TT>.</DD>
 
 <P>
 
-<H2><A NAME="SECTION220" HREF="#TOC_SECTION220">
+<H3><A NAME="SECTION220" HREF="#TOC_SECTION220">
 The <TT>Connector</TT></A>
-</H2>
+</H3>
 
 <P>
- 
+
 <A NAME="design:connect"></A>
 <P>
 
@@ -892,8 +892,8 @@ Connection Establishment Using Multiple Pluggable Protocols</CAPTION>
 <P>
 
 <P>
- 
-<DIV ALIGN="CENTER"> 
+
+<DIV ALIGN="CENTER">
 <!-- MATH
  $\resizebox* {9cm}{!}{\includegraphics{graphics/pp_e2e.eps}}$
  -->
@@ -934,8 +934,8 @@ Client Pluggable Protocol Class Diagram</CAPTION>
 <TR><TD><P>
 
 <P>
- 
-<DIV ALIGN="CENTER"> 
+
+<DIV ALIGN="CENTER">
 <!-- MATH
  $\resizebox* {5in}{!}{\includegraphics{graphics/client.eps}}$
  -->
@@ -1119,7 +1119,7 @@ private:&nbsp;
 </DL>A description of each of the methods that must be implemented follows:
 
 <P>
- 
+
 <DL>
 <DT><STRONG>The&nbsp;Constructor.</STRONG></DT>
 <DD>As with the <TT>Acceptor</TT> constructor, the <TT>TAO_Connector</TT>
@@ -1359,9 +1359,9 @@ and the `<TT>/</TT>' is the protocol-specific object key delimiter.
 
 <P>
 
-<H2><A NAME="SECTION230" HREF="#TOC_SECTION230">
+<H3><A NAME="SECTION230" HREF="#TOC_SECTION230">
 The <TT>Profile</TT> Object</A>
-</H2>
+</H3>
 
 <P>
 TAO <TT>Profile</TT> objects encapsulate all of the methods and members necessary
@@ -1491,7 +1491,7 @@ making them static.
 Theses static member are:
 
 <P>
- 
+
 <DL>
 <DT><STRONG><TT>object_key_delimiter</TT>.</STRONG></DT>
 <DD>This <I>variable</I> contains the object key
@@ -1542,7 +1542,7 @@ Common to all concrete <TT>Profile</TT> implementations are a set of methods
 that must be implemented. A description of each of these methods:
 
 <P>
- 
+
 <DL>
 <DT><STRONG>The&nbsp;Constructors.</STRONG></DT>
 <DD>TAO's existing pluggable protocols each implement several
@@ -1698,9 +1698,9 @@ of improved <TT>Connector</TT> table look up times.</DD>
 
 <P>
 
-<H2><A NAME="SECTION240" HREF="#TOC_SECTION240">
+<H3><A NAME="SECTION240" HREF="#TOC_SECTION240">
 The <TT>Protocol_Factory</TT> Object</A>
-</H2>
+</H3>
 
 <P>
 TAO's uses the ACE's Service Configurator implementation&nbsp;[<A
@@ -1789,7 +1789,7 @@ public:&nbsp;
 </DL>Each of the important methods to be implemented are described below:
 
 <P>
- 
+
 <DL>
 <DT><STRONG><TT>init</TT>.</STRONG></DT>
 <DD>The <TT>init</TT> method is invoked immediately after the pluggable
@@ -1899,7 +1899,7 @@ Notice that the `<TT>|</TT>' character is used to mark where the rendezvous
 point ends and where the endpoint-specific options begin.
 
 <P>
- 
+
 <TT>options_delimiter</TT> is a server-side related method. It is of no use
 to the client-side.
 
@@ -2032,9 +2032,9 @@ static&nbsp;Resource_Factory&nbsp;&#34;-ORBProtocolFactory&nbsp;UIOP_Factory&#34
 </DL>
 <P>
 
-<H2><A NAME="SECTION250" HREF="#TOC_SECTION250">
+<H3><A NAME="SECTION250" HREF="#TOC_SECTION250">
 The <TT>Transport</TT> Object</A>
-</H2>
+</H3>
 
 <P>
 
@@ -2088,8 +2088,8 @@ Client Inter-ORB and Transport Class Diagram</CAPTION>
 <TR><TD><P>
 
 <P>
- 
-<DIV ALIGN="CENTER"> 
+
+<DIV ALIGN="CENTER">
 <!-- MATH
  $\resizebox* {5in}{!}{\includegraphics{graphics/pp_iopc.eps}}$
  -->
@@ -2136,8 +2136,8 @@ Server Inter-ORB and Transport Class Diagram</CAPTION>
 <TR><TD><P>
 
 <P>
- 
-<DIV ALIGN="CENTER"> 
+
+<DIV ALIGN="CENTER">
 <!-- MATH
  $\resizebox* {5in}{!}{\includegraphics{graphics/pp_iops.eps}}$
  -->
@@ -2401,7 +2401,7 @@ public:&nbsp;
 </DL>Each method is described below:
 
 <P>
- 
+
 <DL>
 <DT><STRONG>The&nbsp;Constructor.</STRONG></DT>
 <DD>As with all of the TAO pluggable protocol framework components
@@ -2497,9 +2497,9 @@ TAO's existing pluggable protocols implement client-side and server-side specifi
 <TT>Transport</TT>s. For the most part, they can be used as references for other
 pluggable protocols.
 
-<H2><A NAME="SECTION260" HREF="#TOC_SECTION260">
+<H3><A NAME="SECTION260" HREF="#TOC_SECTION260">
 The <TT>Connection_Handler</TT></A>
-</H2>
+</H3>
 A <TT>Connection_Handler</TT> is simply a template instantiation of
 <TT>ACE_Svc_Handler&lt;&gt;</TT>&nbsp;[<A HREF="#Schmidt:97c">1</A>],
 a service handler.  <TT>ACE_Svc_Handler</TT>s provide a well-defined
@@ -2535,9 +2535,9 @@ and
 <HR>
 <P>
 
-<H1><A NAME="SECTION300" HREF="#TOC_SECTION300">
+<H3><A NAME="SECTION300" HREF="#TOC_SECTION300">
 Notes From a ``Real World'' Pluggable Protocol Implementation</A>
-</H1>
+</H3>
 
 By Bruce Trask &lt;<A
 HREF="mailto:btrask@contactsystems.com">btrask@contactsystems.com</A>&gt;
@@ -2552,41 +2552,44 @@ is adding a pluggable protocol to the TAO ORB.
 <P>I found that in order to successfully add the new protocol capabilities, one had to
 have a very good understanding of some of the patterns upon which the ACE framework
 is built.  These are the REACTOR, ACCEPTOR, CONNECTOR, FACTORY, STRATEGY,
-and SERVICE CONFIGURATOR PATTERN.  The papers that I found helpful on these 
+and SERVICE CONFIGURATOR PATTERN.  The papers that I found helpful on these
 were:
 <BR>
 <BLOCKQUOTE>
 Reactor (
 <A HREF="http://www.cs.wustl.edu/~schmidt/Reactor.ps.gz">PostScript</A> |
-<A HREF="http://www.cs.wustl.edu/~schmidt/PDF/Reactor.pdf.gz">PDF</A>
+<A HREF="http://www.cs.wustl.edu/~schmidt/PDF/Reactor.pdf">PDF</A>
 )<BR>
 
 Reactor1-93 (
 <A HREF="http://www.cs.wustl.edu/~schmidt/Reactor1-93.ps.gz">PostScript</A> |
-<A HREF="http://www.cs.wustl.edu/~schmidt/PDF/Reactor1-93.pdf.gz">PDF</A>
+<A HREF="http://www.cs.wustl.edu/~schmidt/PDF/Reactor1-93.pdf">PDF</A>
 )<BR>
 
 Reactor2-93 (
 <A HREF="http://www.cs.wustl.edu/~schmidt/Reactor2-93.ps.gz">PostScript</A> |
-<A HREF="http://www.cs.wustl.edu/~schmidt/PDF/Reactor2-93.pdf.gz">PDF</A>
+<A HREF="http://www.cs.wustl.edu/~schmidt/PDF/Reactor2-93.pdf">PDF</A>
 )<BR>
 
 reactor-rules (
 <A HREF="http://www.cs.wustl.edu/~schmidt/reactor-rules.ps.gz">PostScript</A> |
-<A HREF="http://www.cs.wustl.edu/~schmidt/PDF/reactor-rules.pdf.gz">PDF</A>
+<A HREF="http://www.cs.wustl.edu/~schmidt/PDF/reactor-rules.pdf">PDF</A>
 )<BR>
 
 reactor-siemens (
 <A HREF="http://www.cs.wustl.edu/~schmidt/reactor-siemens.ps.gz">PostScript</A> |
-<A HREF="http://www.cs.wustl.edu/~schmidt/PDF/reactor-siemens.pdf.gz">PDF</A>
+<A HREF="http://www.cs.wustl.edu/~schmidt/PDF/reactor-siemens.pdf">PDF</A>
 )<BR>
 
 Svc-Conf (
-<A HREF="http://www.cs.wustl.edu/~schmidt/Svc-Conf.ps.gz">PostScript</A>
+<A
+HREF="http://www.cs.wustl.edu/~schmidt/Svc-Conf.ps.gz">PostScript</A> |
+<A HREF="http://www.cs.wustl.edu/~schmidt/PDF/Svc-Conf.pdf">PDF</A>
 )<BR>
 
 Acc-Con (
 <A HREF="http://www.cs.wustl.edu/~schmidt/Acc-Con.ps.gz">PostScript</A>
+<A HREF="http://www.cs.wustl.edu/~schmidt/PDF/Acc-Con.pdf">PDF</A>
 )
 </BLOCKQUOTE>
 <P>These are all readily available from the TAO and ACE website.
@@ -2659,7 +2662,7 @@ then it should be fairly straightforward to create a SCRAMNet
 pluggable protocol for TAO.  The hard part is implementing the
 equivalent ACE classes for SCRAMNet.
 <P>
-. . . 
+. . .
 <P>
 It's actually not that bad.  The easiest way to add a pluggable protocol
 to TAO, IMO, is to base your pluggable protocol on existing ones.  As
@@ -2714,12 +2717,12 @@ TAO_SCRAMNet_Profile  (Derived from TAO_Profile in <A HREF="../../tao/Profile.h"
 TAO_SCRAMNet_Acceptor (Derived from TAO_Acceptor in <A HREF="../../tao/Pluggable.h">Pluggable.h</A>) <BR>
 TAO_SCRAMNet_Connector  (Derived from TAO_Connector in <A HREF="../../tao/Pluggable.h">Pluggable.h</A>)<BR>
 TAO_SCRAMNet_Transport  (Derived from TAO_Transport in <A HREF="../../tao/Pluggable.h">Pluggable.h</A>)
-	<BLOCKQUOTE>TAO_SCRAMNet_Server_Transport<BR>
-	TAO_SCRAMNet_Client_Transport</BLOCKQUOTE>
+        <BLOCKQUOTE>TAO_SCRAMNet_Server_Transport<BR>
+        TAO_SCRAMNet_Client_Transport</BLOCKQUOTE>
 TAO_SCRAMNet_Protocol_Factory (Derived from TAO_Protocol Factory in <A HREF="../../tao/Protocol_Factory.h">Protocol_Factory.h</A>)<BR>
 TAO_SCRAMNet_Handler_Base (as in <A HREF="../../tao/IIOP_Connect.h">IIOP_Connect.h</A>)
-	<BLOCKQUOTE>TAO_SCRAMNet_Client_Connection_Handler<BR>
-	TAO_SCRAMNet_Server_Connection_Handler</BLOCKQUOTE></BLOCKQUOTE>
+        <BLOCKQUOTE>TAO_SCRAMNet_Client_Connection_Handler<BR>
+        TAO_SCRAMNet_Server_Connection_Handler</BLOCKQUOTE></BLOCKQUOTE>
 <BLOCKQUOTE>ACE_SCRAMNet_Addr<BR>
 ACE_SCRAMNet_Acceptor<BR>
 ACE_SCRAMNet_Connector<BR>
@@ -2755,7 +2758,7 @@ information correctly.
 <BR><P>
 In order to create the ORB with the Win32 Reactor at the core as well as the
 SCRAMNet protocol factory loaded and initialize I needed to use the
-svc.conf file with the the following options 
+svc.conf file with the the following options
 <A HREF="../Options.html#-ORBReactorType">-ORBReactorType</A> wfmo
 <A HREF="../Options.html#-ORBProtocolFactory">-ORBProtocolFactory</A> SCRAMNet_Factory
 <BR><P>
@@ -2774,22 +2777,22 @@ HREF="mailto:btrask@contactsystems.com">btrask@contactsystems.com</A>
 <HR>
 <P>
 
-<H1>
+<H3>
 <A NAME="SECTION400" HREF="#TOC_SECTION400">
 Additional Implementation Information
 </A>
-</H1>
+</H3>
 
 <P>
 This section covers additional information not necessarily related to
 TAO's pluggable protocol framework but may still be of interest to
 pluggable protocol and ORB developers, nevertheless.
 
-<H2>
+<H3>
 <A NAME="SECTION410" HREF="#TOC_SECTION410">
 Tags
 </A>
-</H2>
+</H3>
 
 Tags are used to uniquely identify certain parts of an ORB, including
 the following:
@@ -2821,9 +2824,9 @@ Information about tags used in TAO is available
 <HR>
 <P>
 
-<H1><A NAME="SECTION500" HREF="#TOC_SECTION500">
+<H3><A NAME="SECTION500" HREF="#TOC_SECTION500">
 Using a Pluggable Protocol</A>
-</H1>
+</H3>
 
 <P>
 Once a TAO pluggable protocol is implemented, the ORB is told to load it by
@@ -2908,12 +2911,12 @@ All ORB options are described <A HREF="../Options.html">here</A>.
 <HR>
 <P>
 
-<H2><A NAME="SECTION600" HREF="#TOC_SECTION600">
+<H3><A NAME="SECTION600" HREF="#TOC_SECTION600">
 Bibliography</A>
-</H2><DL COMPACT><DD><P></P><DT><A NAME="Schmidt:97c">1</A>
+</H3><DL COMPACT><DD><P></P><DT><A NAME="Schmidt:97c">1</A>
 <DD>
 D. C. Schmidt,
-``<A HREF=http://www.cs.wustl.edu/~schmidt/Acc-Con.ps.gz>
+``<A HREF=http://www.cs.wustl.edu/~schmidt/PDF/Acc-Con.pdf>
   Acceptor and Connector: Design Patterns for Initializing
   Communication Services</A>,''
   in <EM> Pattern Languages of Program Design</EM>
@@ -2923,7 +2926,7 @@ D. C. Schmidt,
 <P></P><DT><A NAME="Schmidt:97e">2</A>
 <DD>
 C. Cleeland, D. C. Schmidt and T. Harrison,
-``<A HREF=http://www.cs.wustl.edu/~schmidt/External-Polymorphism.ps.gz>
+``<A HREF=http://www.cs.wustl.edu/~schmidt/PDF/External-Polymorphism.pdf>
   External Polymorphism -- An Object Structural Pattern for
   Transparently Extending Concrete Data Types</A>,''
   in <EM> Pattern Languages of Program Design</EM>
@@ -2933,7 +2936,7 @@ C. Cleeland, D. C. Schmidt and T. Harrison,
 <P></P><DT><A NAME="Schmidt:94k">3</A>
 <DD>
 D. C. Schmidt and T. Suda,
-  ``<A HREF=http://www.cs.wustl.edu/~schmidt/DSEJ-94.ps.gz>
+  ``<A HREF=http://www.cs.wustl.edu/~schmidt/PDF/DSEJ-94.pdf>
   An Object-Oriented Framework for Dynamically
   Configuring Extensible Distributed Communication Systems</A>,'' <EM> IEE/BCS
   Distributed Systems Engineering Journal (Special Issue on Configurable
@@ -2947,14 +2950,15 @@ H. Hueni, R. Johnson, and R. Engel, ``A Framework for Network Protocol
 
 <P></P><DT><A NAME="Buschmann:95b">5</A>
 <DD>
-F. Buschmann, R. Meunier, H. Rohnert, P. Sommerlad, and M. Stal, <EM>  Pattern-Oriented Software Architecture - A System of Patterns</EM>.
-<BR>Wiley and Sons, 1996.
+F. Buschmann, R. Meunier, H. Rohnert, P. Sommerlad, and M. Stal, <A
+HREF="http://www.cs.wustl.edu/~schmidt/POSA/>Pattern-Oriented Software
+Architecture - A System of Patterns</EM>.  <BR>Wiley and Sons, 1996.
 
 <P></P><DT><A NAME="Schmidt:99x">6</A>
 <DD>
 Carlos O'Ryan, Fred Kuhns, Douglas C. Schmidt, Ossama Othman, and Jeff
 Parsons, <A
-HREF="http://www.cs.wustl.edu/~schmidt/pluggable_protocols.ps.gz"> The
+HREF="http://www.cs.wustl.edu/~schmidt/PDF/pluggable_protocols.pdf"> The
 Design and Performance of a Pluggable Protocols Framework for
 Real-time Distributed Object Computing Middleware</A>, Proceedings of
 the IFIP/ACM <A
@@ -2963,7 +2967,7 @@ Conference, Pallisades, New York, April 3-7, 2000. <P>
 
 <P></P><DT><A NAME="Schmidt:99c">7</A> <DD> Fred Kuhns, Carlos O'Ryan,
 Douglas C. Schmidt, Ossama Othman, and Jeff Parsons, <A
-HREF="http://www.cs.wustl.edu/~schmidt/PfHSN.ps.gz">The Design and
+HREF="http://www.cs.wustl.edu/~schmidt/PDF/PfHSN.pdf">The Design and
 Performance of a Pluggable Protocols Framework for Object Request
 Broker Middleware,</A> Proceedings of the <A
 HREF="http://www.isi.edu/pfhsn99/call.html">IFIP Sixth International
@@ -2986,7 +2990,7 @@ examples of the Layers architecture.
     <ADDRESS><a href="mailto:ossama@uci.edu">Ossama Othman</a></ADDRESS>
 <!-- Created: Tue Dec 14 16:53:58 CST 1999 -->
 <!-- hhmts start -->
-Last modified: Sat May 19 17:18:30 CDT 2001
+Last modified: Mon Nov 19 07:56:38 CST 2001
 <!-- hhmts end -->
 </BODY>
 </HTML>

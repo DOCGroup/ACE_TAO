@@ -119,7 +119,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (be_op
 
   // Generate the actual code for the stub. However, if any of the argument
   // types is "native", we flag a MARSHAL exception.
-  // last argument - is always CORBA::Environment
+  // last argument - is always TAO_ENV_ARG_PARAMETER
   *os << "{\n" << be_idt;
 
   // Generate any pre stub info if and only if none of our parameters is of the

@@ -142,9 +142,6 @@ protected:
   char *ior_;
   // IOR of the obj ref of the server.
 
-  CORBA::Environment TAO_ENV_SINGLE_ARG_PARAMETER_;
-  // Environment variable.
-
   int naming_;
   // Flag to use the naming service
 

@@ -274,7 +274,7 @@ TAO_AV_RTCP::rtcp_interval (int members,
   if (initial)
     {
       // initialize the random number generator
-      ACE_OS::srand((unsigned int)avg_rtcp_size);
+      ACE_OS::srand(ACE_OS::time(0L));
 
       rtcp_min_time /= 2;
       *avg_rtcp_size = 128;
@@ -542,7 +542,7 @@ TAO_AV_RTCP_Callback::send_report (int bye)
   RTCP_SDES_Packet sdes;
   ACE_CString value = "";
   ACE_CString note = "";
-  ACE_UINT16 sdes_type = 0;
+  unsigned char sdes_type = 0;
   RTCP_BYE_Packet *bye_packet = 0;  // only used for bye
   ACE_UINT32 ssrc_list[1];          // only used for bye
 
@@ -675,7 +675,10 @@ TAO_AV_RTCP_Callback::send_report (int bye)
                       -1);
     }
   else
-    sdes.add_item (my_ssrc, sdes_type, (unsigned char)value.length (), value.c_str ());
+    {
+      unsigned char length = (unsigned char)(value.length() & 0xFF);
+      sdes.add_item (my_ssrc, sdes_type, length, value.c_str ());
+    }
 
   // create the message block
   char *cp_ptr;

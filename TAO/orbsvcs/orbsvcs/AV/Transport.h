@@ -69,7 +69,7 @@ class TAO_AV_Flow_Protocol_Factory;
 
 /**
  * @class TAO_AV_Flow_Protocol_Item
- * @brief 
+ * @brief
  */
 class TAO_AV_Export TAO_AV_Flow_Protocol_Item
 {
@@ -324,6 +324,7 @@ public:
   virtual int match_protocol (const char *protocol_string);
   virtual TAO_AV_Acceptor *make_acceptor (void);
   virtual TAO_AV_Connector *make_connector (void);
+  int ref_count;
 };
 
 
