@@ -67,7 +67,8 @@ DEMUX_FILES = \
   TP_Reactor \
   TkReactor \
   WFMO_Reactor \
-  XtReactor
+  XtReactor \
+  QtReactor 
 CONNECTION_FILES = \
   Asynch_IO \
   Asynch_IO_Impl \
@@ -356,6 +357,14 @@ ifeq ($(AIX_TEMPLATE_HACK),1)
   TEMPLATE_FILES = 0_ACE_All_Tmp
 endif
 
+#This is a hack. If the qt_reactor needs to be built we need to run
+#the moc (Meta Object Compiler) on QtReactor.h that would generate
+#QtReactor_moc.cpp. We need to compile this file and add it to the
+#library.
+ifneq ($(qt_reactor),)
+  DEMUX_FILES += QtReactor_moc
+endif #qt_recator
+  
 LSRC  = $(addsuffix .cpp,$(FILES))
 
 BUILD += ACE_COMPONENTS
@@ -468,6 +477,15 @@ Svc_Conf_l.cpp: Svc_Conf.l
         else \
           touch $@; \
         fi
+
+#Some compilation for the QtReactor stuff. We need to run moc
+#ie. (Meta Object compiler) for our QtReactor.h. So, let me do it
+#here.
+ 
+ifneq ($(qt_reactor),)
+QtReactor_moc.cpp: QtReactor.h
+		moc QtReactor.h >QtReactor_moc.cpp
+endif #qt_reactor
 
 ifeq ($(SUPPRESS_DASH_G),1)
 #### Build this target without -g on some platforms.
