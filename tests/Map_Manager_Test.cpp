@@ -72,6 +72,7 @@ test_hash_map_manager (size_t table_size, size_t iterations)
 	 iter++, i++)
       {
 	HASH_ENTRY &item = *iter;
+        ACE_UNUSED_ARG (item);
 	ACE_DEBUG ((LM_DEBUG, "%d ", i));
       }
     ACE_DEBUG ((LM_DEBUG, "\n"));
@@ -98,6 +99,7 @@ test_hash_map_manager (size_t table_size, size_t iterations)
 	 iter++, i--)
       {
 	HASH_ENTRY &item = *iter;
+        ACE_UNUSED_ARG (item);
 	ACE_DEBUG ((LM_DEBUG, "%d ", i));
       }
     ACE_DEBUG ((LM_DEBUG, "\n"));
@@ -124,6 +126,7 @@ test_hash_map_manager (size_t table_size, size_t iterations)
 	 iter++, i++)
       {
 	HASH_MAP_MANAGER::ENTRY &item = *iter;
+        ACE_UNUSED_ARG (item);
 	ACE_DEBUG ((LM_DEBUG, "%d ", i));
       }
     ACE_DEBUG ((LM_DEBUG, "\n"));
@@ -150,6 +153,7 @@ test_hash_map_manager (size_t table_size, size_t iterations)
 	 iter++, i--)
       {
 	HASH_MAP_MANAGER::ENTRY &item = *iter;
+        ACE_UNUSED_ARG (item);
 	ACE_DEBUG ((LM_DEBUG, "%d ", i));
       }
     ACE_DEBUG ((LM_DEBUG, "\n"));
