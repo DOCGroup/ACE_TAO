@@ -600,11 +600,12 @@ TAO_GIOP::send_error (const TAO_GIOP_Version &version,
 ssize_t
 TAO_GIOP::read_buffer (TAO_Transport *transport,
                        char *buf,
-                       size_t len)
+                       size_t len,
+                       ACE_Time_Value *max_wait_time)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_GIOP_READ_BUFFER_START);
 
-  ssize_t bytes_read = transport->recv (buf, len);
+  ssize_t bytes_read = transport->recv (buf, len, max_wait_time);
 
   if (bytes_read <= 0 && TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -668,7 +669,8 @@ TAO_GIOP::read_header (TAO_Transport *transport,
                        TAO_ORB_Core *orb_core,
                        TAO_GIOP_Message_State &state,
                        CORBA::ULong &header_size,
-                       TAO_InputCDR &input)
+                       TAO_InputCDR &input,
+                       ACE_Time_Value *max_wait_time)
 {
   // Default header length.
   header_size = TAO_GIOP_HEADER_LEN;
@@ -691,7 +693,7 @@ TAO_GIOP::read_header (TAO_Transport *transport,
        t != 0;
        t -= n)
     {
-      n = transport->recv (buf, t);
+      n = transport->recv (buf, t, max_wait_time);
       if (n == -1)
         return -1;
       else if (n == 0 && errno != EWOULDBLOCK)
@@ -712,7 +714,8 @@ TAO_GIOP::read_header (TAO_Transport *transport,
 int
 TAO_GIOP::handle_input (TAO_Transport *transport,
                         TAO_ORB_Core *orb_core,
-                        TAO_GIOP_Message_State &state)
+                        TAO_GIOP_Message_State &state,
+                        ACE_Time_Value *max_wait_time)
 {
   if (state.header_received () == 0)
     {
@@ -721,7 +724,8 @@ TAO_GIOP::handle_input (TAO_Transport *transport,
                                  orb_core,
                                  state,
                                  header_size,
-                                 state.cdr) == -1)
+                                 state.cdr,
+                                 max_wait_time) == -1)
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
@@ -751,7 +755,8 @@ TAO_GIOP::handle_input (TAO_Transport *transport,
   ssize_t n =
     TAO_GIOP::read_buffer (transport,
                            state.cdr.rd_ptr () + state.current_offset,
-                           missing_data);
+                           missing_data,
+                           max_wait_time);
   if (n == -1)
     {
       if (TAO_debug_level > 0)
