@@ -6031,13 +6031,13 @@ ACE_OS::inet_ntop (int family, const void *addrptr, char *strptr, size_t len)
 
   if (family == AF_INET)
     {
-      char temp[INET_ADDRSTRLEN];
+      ASYS_TCHAR temp[INET_ADDRSTRLEN];
 
       // Stevens uses snprintf() in his implementation but snprintf()
       // doesn't appear to be very portable.  For now, hope that using
       // sprintf() will not cause any string/memory overrun problems.
       ACE_OS::sprintf (temp,
-                       "%d.%d.%d.%d",
+                       ASYS_TEXT ("%d.%d.%d.%d"),
                        p[0], p[1], p[2], p[3]);
 
       if (ACE_OS::strlen (temp) >= len)
@@ -6046,7 +6046,7 @@ ACE_OS::inet_ntop (int family, const void *addrptr, char *strptr, size_t len)
           return 0; // Failure
         }
 
-      ACE_OS::strcpy (strptr, temp);
+      ACE_OS::strcpy (strptr, ASYS_ONLY_MULTIBYTE_STRING (temp));
       return strptr;
     }
 
@@ -8010,7 +8010,6 @@ ACE_OS::dlclose (ACE_SHLIB_HANDLE handle)
 #endif /* ACE_HAS_SVR4_DYNAMIC_LINKING */
 }
 
-#if !defined (ACE_HAS_WINCE)
 ACE_INLINE ASYS_TCHAR *
 ACE_OS::dlerror (void)
 {
@@ -8049,7 +8048,7 @@ ACE_OS::dlerror (void)
 }
 
 ACE_INLINE ACE_SHLIB_HANDLE
-ACE_OS::dlopen (const char *fname,
+ACE_OS::dlopen (const ASYS_TCHAR *fname,
                 int mode)
 {
   ACE_TRACE ("ACE_OS::dlopen");
@@ -8085,7 +8084,11 @@ ACE_OS::dlopen (const char *fname,
 # elif defined (ACE_WIN32)
   ACE_UNUSED_ARG (mode);
 
+#   if defined (ACE_HAS_MOSTLY_UNICODE_APIS)
+  ACE_WIN32CALL_RETURN (::LoadLibrary (filename), ACE_SHLIB_HANDLE, 0);
+#   else
   ACE_WIN32CALL_RETURN (::LoadLibraryA (filename), ACE_SHLIB_HANDLE, 0);
+#   endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
 # elif defined (__hpux)
 
 #   if defined(__GNUC__) || __cplusplus >= 199707L
@@ -8143,8 +8146,6 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
   ACE_NOTSUP_RETURN (0);
 # endif /* ACE_HAS_SVR4_DYNAMIC_LINKING */
 }
-#endif /* ACE_HAS_WINCE */
-
 
 ACE_INLINE int
 ACE_OS::step (const char *str, char *expbuf)
@@ -11067,6 +11068,7 @@ ACE_OS::fgets (wchar_t *buf, int size, FILE *fp)
   ACE_UNUSED_ARG (buf);
   ACE_UNUSED_ARG (size);
   ACE_UNUSED_ARG (fp);
+  ACE_NOTSUP_RETURN (0);
 #endif /* ACE_HAS_WINCE */
 }
 

@@ -4243,11 +4243,19 @@ typedef void *(*ACE_THR_C_FUNC)(void *);
 #   define MAP_FAILED ((void *) -1L)
 # endif /* !MAP_FAILED || ACE_HAS_BROKEN_MAP_FAILED */
 
-# if defined (ACE_HAS_CHARPTR_DL)
-typedef char * ACE_DL_TYPE;
+# if defined (ACE_HAS_MOSTLY_UNICODE_APIS)
+#   if defined (ACE_HAS_CHARPTR_DL)
+typedef ASYS_TCHAR * ACE_DL_TYPE;
+#   else
+typedef const ASYS_TCHAR * ACE_DL_TYPE;
+#   endif /* ACE_HAS_CHARPTR_DL */
 # else
+#   if defined (ACE_HAS_CHARPTR_DL)
+typedef char * ACE_DL_TYPE;
+#   else
 typedef const char * ACE_DL_TYPE;
-# endif /* ACE_HAS_CHARPTR_DL */
+#   endif /* ACE_HAS_CHARPTR_DL */
+#endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
 
 # if !defined (ACE_HAS_SIGINFO_T)
 struct ACE_Export siginfo_t
@@ -5136,14 +5144,12 @@ public:
 
   // = A set of wrappers for explicit dynamic linking.
   static int dlclose (ACE_SHLIB_HANDLE handle);
-  // WinCE only supports UNICODE, so we don't need these functions.
-# if !defined (ACE_HAS_WINCE)
+
   static ASYS_TCHAR *dlerror (void);
-  static ACE_SHLIB_HANDLE dlopen (const char *filename,
+  static ACE_SHLIB_HANDLE dlopen (const ASYS_TCHAR *filename,
                                   int mode = ACE_DEFAULT_SHLIB_MODE);
   static void *dlsym (ACE_SHLIB_HANDLE handle,
                       const char *symbol);
-# endif /* ! ACE_HAS_WINCE */
 
   // = A set of wrappers for the directory iterator.
   static DIR *opendir (const char *filename);
@@ -5374,8 +5380,8 @@ public:
   static char *asctime (const struct tm *tm);
   static char *asctime_r (const struct tm *tm,
                           char *buf, int buflen);
+  static ASYS_TCHAR *ctime (const time_t *t);
 # if !defined (ACE_HAS_WINCE)
-  static char *ctime (const time_t *t);
   static char *ctime_r (const time_t *clock,
                         char *buf,
                         int buflen);
