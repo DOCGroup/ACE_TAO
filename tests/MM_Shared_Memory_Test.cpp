@@ -42,13 +42,13 @@ client (void *)
 #endif /* ACE_WIN32 */
 
   ACE_OS::sleep (3);
-  char t = 'a';
+  char *t = ACE_ALPHABET;
   ACE_Shared_Memory_MM shm_client (shm_key);
   char *shm = (char *) shm_client.malloc ();
 
   for (char *s = shm; *s != '\0'; s++)
     {
-      ACE_ASSERT (t == s[0]);
+      ACE_ASSERT (*t == s[0]);
       t++;
     }
   *shm = '*';
@@ -72,8 +72,8 @@ server (void *)
   char *shm = (char *) shm_server.malloc ();
   char *s = shm;
 
-  for (char c = 'a'; c <= 'z'; c++)
-    *s++ = c;
+  for (char *c = ACE_ALPHABET; *c != '\0'; c++)
+    *s++ = *c;
 
   *s = '\0';
 

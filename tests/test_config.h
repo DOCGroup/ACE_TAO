@@ -135,6 +135,8 @@ const int ACE_MAX_INTERVAL = 0;
 const int ACE_MAX_ITERATIONS = 10;
 const int ACE_MAX_PROCESSES = 10;
 
+char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
+
 class ACE_Test_Output
 {
 public:
