@@ -11,7 +11,7 @@ static void
 usage (const ACE_TCHAR* program)
 {
   ACE_ERROR ((LM_ERROR,
-              ACE_TEXT ("Usage: %s -u <URI>\n")
+              ACE_TEXT ("Usage: %s -p <URI> -d <URI> -k <EX_IOR>\n")
               ACE_TEXT (" <URI>: URI identifying the package\n"),
               program));
 }
@@ -19,8 +19,12 @@ usage (const ACE_TCHAR* program)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  // top level package URL
   ACE_TCHAR* package_url = 0;
+
+  // deployment plan URL
   ACE_TCHAR* plan_url = 0;
+
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("p:d:k:"));
   int c;
 
@@ -87,7 +91,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       if (CORBA::is_nil (exec_mgr.in ()))
         {
-          ACE_DEBUG ((LM_DEBUG, "Executor: nil Execution Manager reference, narrow failed\n"));
+          ACE_DEBUG ((LM_DEBUG, 
+                      "Executor: nil Execution Manager reference, 
+                       narrow failed\n"));
           return 1;
 
         }
@@ -99,7 +105,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (dapp_mgr.in ()))
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "Executor:preparePlan call failed:nil DomainApplicationManager reference\n"));
+                      "Executor:preparePlan call failed:nil 
+                       DomainApplicationManager reference\n"));
           return 1;
         }
       ACE_DEBUG ((LM_DEBUG,
