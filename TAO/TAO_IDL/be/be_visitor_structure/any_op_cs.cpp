@@ -126,8 +126,7 @@ be_visitor_structure_any_op_cs::visit_structure (be_structure *node)
       << "delete _tao_elem;" << be_nl
       << "return 0; " << be_uidt_nl
       << "}" << be_nl
-      << "TAO_ENDTRY;" << be_nl
-      << "return 0;" << be_uidt_nl
+      << "TAO_ENDTRY;" << be_uidt_nl
       << "}\n\n";
 
 
