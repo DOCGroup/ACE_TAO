@@ -18,8 +18,9 @@ Baseline_Test_Options baseline_options;
 // and the test statistics.
 
 Baseline_Test_Base::Baseline_Test_Base (void)
-  : multiply_factor_ (0),
-    iteration_ (0),
+  : yield_method_ (Baseline_Test_Options::USE_SLEEP_ZERO),
+    multiply_factor_ (100),
+    iteration_ (10000),
     Benchmark_Base (Benchmark_Base::BASELINE)
 {
 }
@@ -33,7 +34,7 @@ Baseline_Test_Base::init (int argc, char *argv[])
 int
 Baseline_Test_Base::parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt getopt (argc, argv, "m:i:", 0);
+  ACE_Get_Opt getopt (argc, argv, "m:i:y", 0);
   int c;
 
   while ((c = getopt ()) != -1)
@@ -63,6 +64,10 @@ Baseline_Test_Base::parse_args (int argc, char *argv[])
         }
         break;
 
+      case 'y':                 // Use thr_yield.
+        this->yield_method_ = Baseline_Test_Options::USE_THR_YIELD;
+        break;
+
       default:
         ACE_ERROR ((LM_ERROR, "Invalid argument %c used\n", c));
         break;
@@ -70,11 +75,22 @@ Baseline_Test_Base::parse_args (int argc, char *argv[])
   return 0;
 }
 
+void
+Baseline_Test_Base::yield (void)
+{
+  if (this->yield_method_ == Baseline_Test_Options::USE_SLEEP_ZERO)
+    ACE_OS::sleep (0);
+  else
+    ACE_OS::thr_yield ();
+}
+
 Baseline_Test_Options::Baseline_Test_Options (void)
   : test_try_lock_ (0),
     verbose_ (0),
-    multiply_factor_ (10),
-    iteration_ (10000)
+    current_yield_method_ (0),
+    current_multiply_factor_ (10),
+    current_iteration_ (0),
+    total_iteration_ (10000)
 {
 }
 
@@ -103,7 +119,9 @@ Baseline_Test_Options::parse_args (int argc, char *argv[])
 }
 
 int
-Baseline_Test_Options::reset_params (size_t multiply, size_t iteration)
+Baseline_Test_Options::reset_params (size_t multiply,
+                                     size_t iteration,
+                                     int yield)
 {
   this->total_iteration_ = 0;
   this->real_ = 0;
@@ -111,8 +129,9 @@ Baseline_Test_Options::reset_params (size_t multiply, size_t iteration)
   this->user_ = 0;
   // Start a new test, reset statistic info.
 
-  this->multiply_factor_ = multiply;
-  this->iteration_ = iteration;
+  this->current_yield_method_ = yield;
+  this->current_multiply_factor_ = multiply;
+  this->total_iteration_ = iteration;
   return 0;
 }
 
@@ -142,7 +161,8 @@ Baseline_Test::pre_run_test (Benchmark_Base *bb)
 {
   this->current_test_ = (Baseline_Test_Base *) bb;
   baseline_options.reset_params (this->current_test_->multiply_factor (),
-                                 this->current_test_->iteration ());
+                                 this->current_test_->iteration (),
+                                 this->current_test_->yield_method ());
 
   if (baseline_options.test_try_lock ())
     {
@@ -162,8 +182,10 @@ Baseline_Test::pre_run_test (Benchmark_Base *bb)
 int
 Baseline_Test::run_test (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "calling Baseline_Test::run_test\n"));
-  return 0;
+  if (baseline_options.test_try_lock ())
+    return this->current_test_->test_try_lock ();
+  else
+    return this->current_test_->test_acquire_release ();
 }
 
 int
@@ -192,8 +214,10 @@ void *
 Baseline_Test::hold_lock (void *arg)
 {
   Baseline_Test *this_test = (Baseline_Test *) arg;
+  this_test->current_test_->acquire ();
+  this_test->get_lock_.wait ();
 
-  ACE_UNUSED_ARG (this_test);
+  this_test->let_go_lock_.wait ();
   return 0;
 }
 
