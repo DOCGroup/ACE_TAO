@@ -3,6 +3,8 @@
 #ifndef MIF_SCHEDULER_H
 #define MIF_SCHEDULER_H
 
+#include "tao/orbconf.h"
+#include "ace/Synch_Traits.h"
 #include "tao/RTScheduling/RTScheduler.h"
 #include "../MIF_SchedulingC.h"
 #include "ace/Message_Queue.h"
@@ -124,6 +126,11 @@ public TAO_Local_RefCounted_Object
 
   virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr ri
 			   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+		     PortableInterceptor::ForwardRequest));
+
+  virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr ri
+			  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
 		     PortableInterceptor::ForwardRequest));
 
