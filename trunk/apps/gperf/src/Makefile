@@ -9,8 +9,7 @@ INSBIN  = $ACE_ROOT/bin/gperf
 LIB     = libGperf.a
 SHLIB   = libGperf.$(SOEXT)
 
-FILES   = new \
-          Options \
+FILES   = Options \
           Iterator \
           Gen_Perf \
           Key_List \
