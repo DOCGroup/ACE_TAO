@@ -14,11 +14,11 @@
 
 ACE_RCSID(Shared_Malloc, test_multiple_mallocs, "$Id$")
 
-#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
+#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 typedef ACE_PI_Control_Block CONTROL_BLOCK;
 #else
 typedef ACE_Control_Block CONTROL_BLOCK;
-#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
+#endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 
 typedef ACE_Malloc_T <ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex, CONTROL_BLOCK> MALLOC;
 
@@ -192,9 +192,9 @@ template class ACE_Based_Pointer_Basic<Long_Test>;
 template class ACE_Based_Pointer<Long_Test>;
 template class auto_ptr <MALLOC>;
 template class ACE_Auto_Basic_Ptr<MALLOC>;
-#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
+#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 template class ACE_Malloc_T <ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex, CONTROL_BLOCK>;
-#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
+#endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Based_Pointer<Test_Data>
 #pragma instantiate ACE_Based_Pointer_Basic<Test_Data>
@@ -203,7 +203,7 @@ template class ACE_Malloc_T <ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex, CONTROL_BL
 #pragma instantiate ACE_Based_Pointer_Basic<Long>
 #pragma instantiate auto_ptr <MALLOC>
 #pragma instantiate ACE_Auto_Basic_Ptr<MALLOC>
-#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
+#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 #pragma instantiate ACE_Malloc_T <ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex, CONTROL_BLOCK>
-#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
+#endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

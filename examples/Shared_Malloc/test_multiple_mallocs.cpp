@@ -9,9 +9,9 @@
 
 ACE_RCSID(Shared_Malloc, test_multiple_mallocs, "$Id$")
 
-typedef ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> MALLOC; 
+typedef ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> MALLOC;
 
-#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
+#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 // The Address for the shared memory mapped files defaults to wherever
 // the OS wants to map it.
 const void *REQUEST_BASE_ADDR = 0;
@@ -24,12 +24,12 @@ const void *REQUEST_BASE_ADDR = ((void *) (64 * 1024 * 1024));
 // Default address for shared memory mapped files and SYSV shared
 // memory (defaults to 64 M).
 const void *RESPONSE_BASE_ADDR = ((void *) (128 * 1024 * 1024));
-#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
+#endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 
 static const char *request_string = "hello from request repository";
 static const char *response_string = "hello from response repository";
 
-int 
+int
 main (int, char *[])
 {
   ACE_MMAP_Memory_Pool_Options request_options (REQUEST_BASE_ADDR);
@@ -53,14 +53,14 @@ main (int, char *[])
                           &response_options),
                   1);
   auto_ptr <MALLOC> shmem_response (ptr);
-  void *data = 0; 
+  void *data = 0;
 
   // If we find "foo" then we're running the "second" time, so we must
   // release the resources.
   if (shmem_request->find ("foo",
                            data) == 0)
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "%s\n",
                   data));
       shmem_request->remove ();
