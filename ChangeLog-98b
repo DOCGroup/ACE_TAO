@@ -1,56 +1,61 @@
+Thu Aug 13 13:34:52 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * os-patches/linux-patches.html: the af_inet.c patch is only
+          needed through Linux kernel version 2.0.34.
+
 Wed Aug 12 22:45:50 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/MsgQueue_Notifications_Test.cpp: Added an explicit
-	  template instantiation.
+        * tests/MsgQueue_Notifications_Test.cpp: Added an explicit
+          template instantiation.
 
 Wed Aug 12 21:32:05 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Message_Block.h:
-	* ace/Message_Block.i:
-	* ace/Message_Block.cpp:
-	  Enabled the base() method, it replaces the internal buffer and
-	  resets the Message_Block. There were other ways to do this (like
-	  calling data_block->base()), but some users find it convenient.
-	  I also modified the Data_Block::base() method to release any
-	  memory held by the class before the method is called. Thanks to
-	  Peter.Gorgia@libnet.com for pointing this out.
+        * ace/Message_Block.h:
+        * ace/Message_Block.i:
+        * ace/Message_Block.cpp:
+          Enabled the base() method, it replaces the internal buffer and
+          resets the Message_Block. There were other ways to do this (like
+          calling data_block->base()), but some users find it convenient.
+          I also modified the Data_Block::base() method to release any
+          memory held by the class before the method is called. Thanks to
+          Peter.Gorgia@libnet.com for pointing this out.
 
 Wed Aug 12 17:43:33 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/MsgQueue_Notifications_Test.cpp: The watermark test which
-	  uses cv's signaling to notify other threads is also merged into
-	  this file.
+        * tests/MsgQueue_Notifications_Test.cpp: The watermark test which
+          uses cv's signaling to notify other threads is also merged into
+          this file.
 
-	* tests/MsgQueue_Water_Mark_Test.{dsp,cpp}: Removed.
+        * tests/MsgQueue_Water_Mark_Test.{dsp,cpp}: Removed.
 
 Wed Aug 12 17:12:57 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* APC.DSP:
-	* Abondoned.dsp:
-	* Console_Input.dsp:
-	* Directory_Changes.dsp:
-	* Exceptions.dsp:
-	* Multithreading.dsp:
-	* Network_Events.dsp:
-	* Prerun_State_Changes.dsp:
-	* Registration.dsp:
-	* Registry_Changes.dsp:
-	* Removals.dsp:
-	* Talker.dsp:
-	* Timeouts.dsp:
-	* Window_Messages.dsp:
-	* test_abandoned.cpp:
-	* test_apc.cpp:
-	* test_window_messages.cpp:
-	  Added updated versions of project files (with correct include
-	  directories).  Also changed the <main>'s to take in argc and
-	  argv.  Thanks to Jeff Hellzen <JHellzen@hwdcsaws.cahwnet.gov>
-	  for submitting these changes.
+        * APC.DSP:
+        * Abondoned.dsp:
+        * Console_Input.dsp:
+        * Directory_Changes.dsp:
+        * Exceptions.dsp:
+        * Multithreading.dsp:
+        * Network_Events.dsp:
+        * Prerun_State_Changes.dsp:
+        * Registration.dsp:
+        * Registry_Changes.dsp:
+        * Removals.dsp:
+        * Talker.dsp:
+        * Timeouts.dsp:
+        * Window_Messages.dsp:
+        * test_abandoned.cpp:
+        * test_apc.cpp:
+        * test_window_messages.cpp:
+          Added updated versions of project files (with correct include
+          directories).  Also changed the <main>'s to take in argc and
+          argv.  Thanks to Jeff Hellzen <JHellzen@hwdcsaws.cahwnet.gov>
+          for submitting these changes.
 
 Wed Aug 12 16:16:38 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/MsgQueue_Notifications_Test.cpp: Since this test doesn't
-	  use threads at all, I removed the #if ACE_HAS_THREADS macro.
+        * tests/MsgQueue_Notifications_Test.cpp: Since this test doesn't
+          use threads at all, I removed the #if ACE_HAS_THREADS macro.
 
 Wed Aug 12 14:57:51 1998  Jonathan Biggar  <jon@floorboard.com>
 
