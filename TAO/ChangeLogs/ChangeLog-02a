@@ -1,3 +1,15 @@
+Tue Sep 12 18:19:38 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/PolicyS.h: Addes this nearly empty file to keep generated
+	  code that includes Policy.pidl happy.
+
+	* tao/PortableSeer/PolicyS.cpp: Changed one of the includes to
+	  PolicyS.h instead of PolicyC.h. Now POlicyC.h is included in
+	  PolicyS.h. At the outset, it may look like we have brokenn the
+	  model a bit by having the header file in one place and the cpp
+	  file in another place. This should be an exception for without
+	  any consequences.
+
 Tue Sep 12 18:01:52 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOPS_T.i:
