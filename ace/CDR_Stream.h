@@ -503,9 +503,9 @@ public:
   /// helpful if the applications desires to create a new CDR stream
   /// from a semi-processed datablock.
   ACE_InputCDR (ACE_Data_Block *data,
-                ACE_Message_Block::Message_Flags flag = 0,
-                size_t read_pointer_position = 0,
-                size_t write_pointer_position = 0,
+                ACE_Message_Block::Message_Flags flag,
+                size_t read_pointer_position,
+                size_t write_pointer_position,
                 int byte_order = ACE_CDR_BYTE_ORDER,
                 ACE_CDR::Octet major_version =
                   ACE_CDR_GIOP_MAJOR_VERSION,
