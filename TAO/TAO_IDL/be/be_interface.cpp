@@ -869,49 +869,7 @@ int be_interface::gen_server_skeletons (void)
   this->accept (&visitor);
   *ss << "\n";
 
-  // generate the constructors and destructor
-  *ci << "ACE_INLINE" << nl;
-  *ci << this->name () << "::" << this->local_name () <<
-    " (void) // default constructor" << nl;
-  *ci << "{}" << nl << nl;
-
-  *ci << "ACE_INLINE" << nl;
-  *ci << this->name () << "::" << this->local_name () <<
-    " (STUB_Object *objref) // constructor" << nl;
-  *ci << "\t: CORBA_Object (objref)" << nl;
-  *ci << "{}" << nl << nl;
-
-  *ci << "ACE_INLINE" << nl;
-  *ci << this->name () << "::~" << this->local_name () <<
-    " (void) // destructor" << nl;
-  *ci << "{}\n\n";
-
-  // generate the ifdefined macro for  the _var type
-  ci->gen_ifdef_macro (this->flatname (), "_var");
-
-  if (this->gen_var_impl () == -1)
-    {
-      ACE_ERROR ((LM_ERROR, "be_interface: _var impl code gen failed\n"));
-      return -1;
-    }
-  ci->gen_endif ();
-
-  // generate the ifdefined macro for  the _out type
-  ci->gen_ifdef_macro (this->flatname (), "_out");
-
-  if (this->gen_out_impl () == -1)
-    {
-      ACE_ERROR ((LM_ERROR, "be_interface: _out impl code gen failed\n"));
-      return -1;
-    }
-  ci->gen_endif ();
-
-  if (be_scope::gen_client_inline () == -1)
-    {
-      ACE_ERROR ((LM_ERROR, "be_interface: code gen failed for scope\n"));
-      return -1;
-    }
-  return 0;
+   return 0;
 }
 
 // Generates the server-side inline

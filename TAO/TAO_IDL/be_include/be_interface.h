@@ -115,12 +115,15 @@ public:
                                           TAO_OutStream *os);
   // template method using breadth first traversal of inheritance graph
 
-  virtual int write_as_return (TAO_OutStream *stream,
-			       be_type *type);
-  // write the mapping as a return value on the stream.
+  char *relative_skel_name (const char *);
+  // relative skeleton name
 
   // Visiting
   virtual int accept (be_visitor *visitor);
+
+  virtual int write_as_return (TAO_OutStream *stream,
+			       be_type *type);
+  // write the mapping as a return value on the stream.
 
   // Narrowing
   DEF_NARROW_METHODS3 (be_interface, AST_Interface, be_scope, be_type);
