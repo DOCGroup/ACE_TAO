@@ -14,7 +14,7 @@
 //
 // = AUTHOR
 //    Jeff Parsons <parsons@cs.wustl.edu>
-//    
+//
 // ============================================================================
 
 #include "idl.h"
@@ -73,7 +73,7 @@ BE_GlobalData::BE_GlobalData (void)
 }
 
 BE_GlobalData::~BE_GlobalData (void)
-{  
+{
 }
 
 // To switch between changing or non-changing standard include files
@@ -739,7 +739,7 @@ BE_GlobalData::exception_support (void)
   return this->exception_support_;
 }
 
-void 
+void
 BE_GlobalData::use_raw_throw (idl_bool val)
 {
   this->use_raw_throw_ = val;

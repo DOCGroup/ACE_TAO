@@ -423,7 +423,7 @@ be_visitor_union_branch_cdr_op_ci::visit_predefined_type (be_predefined_type *no
               << "if (result)" << be_idt_nl
               << "{" << be_idt_nl
               << "_tao_union." << f->local_name () << " (_tao_union_tmp.in ());";
-          
+
         }
       else if (node->pt () == AST_PredefinedType::PT_char)
         *os << "CORBA::Char _tao_union_tmp;" << be_nl
@@ -871,7 +871,7 @@ be_visitor_union_branch_cdr_op_ci::visit_union (be_union *node)
   return 0;
 }
 
-int 
+int
 be_visitor_union_branch_cdr_op_ci::explicit_default (void)
 {
   be_union *bu = be_union::narrow_from_decl (this->ctx_->scope ());
@@ -879,12 +879,12 @@ be_visitor_union_branch_cdr_op_ci::explicit_default (void)
 
   if (def_index != -1)
     {
-      be_union_branch *ub = 
+      be_union_branch *ub =
         be_union_branch::narrow_from_decl (this->ctx_->node ());
 
       // instantiate a scope iterator.
-      UTL_ScopeActiveIterator *si = 
-        new UTL_ScopeActiveIterator (bu, 
+      UTL_ScopeActiveIterator *si =
+        new UTL_ScopeActiveIterator (bu,
                                      UTL_Scope::IK_decls);
 
       int i = 0; // counter

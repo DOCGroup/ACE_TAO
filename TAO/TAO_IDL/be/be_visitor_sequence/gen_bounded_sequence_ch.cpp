@@ -154,7 +154,7 @@ be_visitor_sequence_ch::gen_bounded_sequence (be_sequence *node)
   *os << " *get_buffer (void) const;" << be_nl;
 
   // replace
-  *os << "void replace (" << be_idt << be_idt_nl 
+  *os << "void replace (" << be_idt << be_idt_nl
       << "CORBA::ULong max," << be_nl
       << "CORBA::ULong length," << be_nl;
 

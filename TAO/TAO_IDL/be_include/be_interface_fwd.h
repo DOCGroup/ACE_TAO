@@ -34,14 +34,14 @@ class be_interface_fwd : public virtual AST_InterfaceFwd,
 {
   // =TITLE
   //   be_interface_fwd
-  // 
+  //
   // =DESCRIPTION
   //   Extensions to the AST_Interface_Fwd class
 public:
   be_interface_fwd (void);
   // Default constructor.
 
-  be_interface_fwd (AST_Interface *dummy, 
+  be_interface_fwd (AST_Interface *dummy,
                     UTL_ScopedName *n);
   // Constructor.
 

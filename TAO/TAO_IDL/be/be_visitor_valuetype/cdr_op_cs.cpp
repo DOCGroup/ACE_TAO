@@ -118,7 +118,7 @@ be_visitor_valuetype_cdr_op_cs::visit_valuetype (be_valuetype *node)
 
   //@@ Boris: ment to be refactored
   if (!node->is_abstract_valuetype ())
-  { 
+  {
     // functions that marshal state
     be_visitor_context* new_ctx  = new be_visitor_context (*this->ctx_);
     be_visitor_valuetype_marshal_cs visitor (new_ctx);
@@ -126,6 +126,6 @@ be_visitor_valuetype_cdr_op_cs::visit_valuetype (be_valuetype *node)
   }
 
   node->cli_stub_cdr_op_gen (I_TRUE);
-  
+
   return 0;
 }

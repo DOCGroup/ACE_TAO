@@ -39,7 +39,7 @@ be_visitor_sequence_ci::gen_unbounded_obj_sequence (be_sequence *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_sequence_ci::"
                          "visit_sequence - "
-                         "Bad element type\n"), 
+                         "Bad element type\n"),
                         -1);
     }
 
@@ -57,7 +57,7 @@ be_visitor_sequence_ci::gen_unbounded_obj_sequence (be_sequence *node)
       pt = bt;
     }
 
-  const char *name = 
+  const char *name =
     be_decl::narrow_from_decl (pt)->full_name ();
 
   idl_bool bt_is_defined;
@@ -82,22 +82,22 @@ be_visitor_sequence_ci::gen_unbounded_obj_sequence (be_sequence *node)
   const char *class_name = node->instance_name ();
 
   static char full_class_name [NAMEBUFSIZE];
-  ACE_OS::memset (full_class_name, 
-                  '\0', 
+  ACE_OS::memset (full_class_name,
+                  '\0',
                   NAMEBUFSIZE);
 
   if (node->is_nested ())
     {
       be_scope *parent = be_scope::narrow_from_scope (node->defined_in ());
 
-      ACE_OS::sprintf (full_class_name, 
+      ACE_OS::sprintf (full_class_name,
                        "%s::%s",
                        parent->decl ()->full_name (),
                        class_name);
     }
   else
     {
-      ACE_OS::sprintf (full_class_name, 
+      ACE_OS::sprintf (full_class_name,
                        "%s",
                        class_name);
     }
@@ -175,7 +175,7 @@ be_visitor_sequence_ci::gen_unbounded_obj_sequence (be_sequence *node)
       *os << "tao_" << pt->flat_name () << "_nil ();";
     }
 
-  *os << be_uidt_nl 
+  *os << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
       << "return buf;" << be_uidt_nl
       << "}" << be_nl << be_nl;
@@ -203,7 +203,7 @@ be_visitor_sequence_ci::gen_unbounded_obj_sequence (be_sequence *node)
 
   // Constructor.
   *os << "ACE_INLINE" << be_nl
-      << full_class_name << "::" << class_name 
+      << full_class_name << "::" << class_name
       << " (CORBA::ULong maximum)" << be_idt_nl
       << ": TAO_Unbounded_Base_Sequence (maximum, "
       << class_name << "::allocbuf (maximum))" << be_uidt_nl
@@ -213,7 +213,7 @@ be_visitor_sequence_ci::gen_unbounded_obj_sequence (be_sequence *node)
 
   // Constructor.
   *os << "ACE_INLINE" << be_nl
-      << full_class_name << "::" << class_name 
+      << full_class_name << "::" << class_name
       << " (CORBA::ULong maximum," << be_idt_nl
       << "CORBA::ULong length," << be_nl;
 
@@ -238,7 +238,7 @@ be_visitor_sequence_ci::gen_unbounded_obj_sequence (be_sequence *node)
 
   bt->accept(visitor);
 
-  *os <<" **tmp1 = " << class_name << "::allocbuf (this->maximum_);" 
+  *os <<" **tmp1 = " << class_name << "::allocbuf (this->maximum_);"
       << be_nl;
 
   bt->accept (visitor);
@@ -286,7 +286,7 @@ be_visitor_sequence_ci::gen_unbounded_obj_sequence (be_sequence *node)
 
   // Operator =.
   *os << "ACE_INLINE " << full_class_name << " &" << be_nl
-      << full_class_name << "::operator= (const " 
+      << full_class_name << "::operator= (const "
       << class_name << " &rhs)" << be_nl
       << "{" << be_idt_nl
       << "if (this == &rhs)" << be_idt_nl
@@ -410,7 +410,7 @@ be_visitor_sequence_ci::gen_unbounded_obj_sequence (be_sequence *node)
 
   *os << bt->name () << ","
       << bt->name () << "_var>" << be_nl
-      << full_class_name << "::operator[] (CORBA::ULong index) const" 
+      << full_class_name << "::operator[] (CORBA::ULong index) const"
       << be_nl
       << "// read-write accessor" << be_nl
       << "{" << be_idt_nl
@@ -459,7 +459,7 @@ be_visitor_sequence_ci::gen_unbounded_obj_sequence (be_sequence *node)
       << "// We retain ownership." << be_nl
       << "if (this->buffer_ == 0)" << be_nl
       << "{" << be_idt_nl
-      << "result = " << class_name << "::allocbuf (this->maximum_);" 
+      << "result = " << class_name << "::allocbuf (this->maximum_);"
       << be_nl
       << "this->buffer_ = result;" << be_nl
       << "this->release_ = 1;" << be_uidt_nl

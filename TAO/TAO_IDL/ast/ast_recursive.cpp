@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -87,13 +87,13 @@ ACE_RCSID(ast, ast_recursive, "$Id$")
 idl_bool
 AST_illegal_recursive_type (AST_Decl *t)
 {
-  if (t == 0) 
+  if (t == 0)
     {
       return I_FALSE;
     }
-  
+
   // We only care about structs and unions.
-  if (t->node_type () != AST_Decl::NT_struct 
+  if (t->node_type () != AST_Decl::NT_struct
       && t->node_type () != AST_Decl::NT_union)
     {
       return I_FALSE;	// NOT ILLEGAL.
@@ -105,7 +105,7 @@ AST_illegal_recursive_type (AST_Decl *t)
   AST_Union	*un1 = 0;
 
   // Narrow the type appropriately so comparison will work.
-  if (t->node_type () == AST_Decl::NT_struct) 
+  if (t->node_type () == AST_Decl::NT_struct)
     {
       check_for_struct = I_TRUE;
       st1 = AST_Structure::narrow_from_decl (t);
@@ -114,8 +114,8 @@ AST_illegal_recursive_type (AST_Decl *t)
         {
           return I_FALSE;	// NOT ILLEGAL.
         }
-    } 
-  else if (t->node_type () == AST_Decl::NT_union) 
+    }
+  else if (t->node_type () == AST_Decl::NT_union)
     {
       check_for_union = I_TRUE;
       un1 = AST_Union::narrow_from_decl (t);
@@ -136,36 +136,36 @@ AST_illegal_recursive_type (AST_Decl *t)
   AST_Structure *st2 = 0;
   AST_Union *un2 = 0;
 
-  while (!i->is_done ()) 
+  while (!i->is_done ())
     {
       s = i->item ();
 
       // If we hit a NULL we're done since it means that we're nested inside
       // a sequence, where recursive types may be used.
-      if (s == 0) 
+      if (s == 0)
         {
           delete i;
           return I_FALSE;	// NOT ILLEGAL.
         }
 
       // OK, must check this scope.
-      if (s->scope_node_type () == AST_Decl::NT_struct 
-          && check_for_struct == I_TRUE) 
+      if (s->scope_node_type () == AST_Decl::NT_struct
+          && check_for_struct == I_TRUE)
         {
           st2 = AST_Structure::narrow_from_scope (s);
 
-          if (st2 != 0 && st2 == st1) 
+          if (st2 != 0 && st2 == st1)
             {
 	            delete i;
               return I_TRUE;	// ILLEGAL RECURSIVE TYPE USE.
             }
-        } 
-      else if (s->scope_node_type () == AST_Decl::NT_union 
-               && check_for_union == I_TRUE) 
+        }
+      else if (s->scope_node_type () == AST_Decl::NT_union
+               && check_for_union == I_TRUE)
         {
           un2 = AST_Union::narrow_from_scope (s);
 
-          if (un2 != 0 && un2 == un1) 
+          if (un2 != 0 && un2 == un1)
             {
               delete i;
 	            return I_TRUE;	// ILLEGAL RECURSIVE TYPE USE.

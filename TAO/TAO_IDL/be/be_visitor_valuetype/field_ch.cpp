@@ -51,7 +51,7 @@ be_visitor_valuetype_field_ch::visit_field (be_field *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_ch::"
                          "visit_union_branch - "
-                         "Bad type\n"), 
+                         "Bad type\n"),
                         -1);
     }
 
@@ -62,7 +62,7 @@ be_visitor_valuetype_field_ch::visit_field (be_field *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_ch::"
                          "visit_union_branch - "
-                         "codegen failed\n"), 
+                         "codegen failed\n"),
                         -1);
     }
 
@@ -94,7 +94,7 @@ be_visitor_valuetype_field_ch::visit_array (be_array *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_ch::"
                          "visit_array - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -119,7 +119,7 @@ be_visitor_valuetype_field_ch::visit_array (be_array *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_valuetype_field_ch::"
                              "visit_array - "
-                             "Bad visitor\n"), 
+                             "Bad visitor\n"),
                             -1);
         }
 
@@ -128,7 +128,7 @@ be_visitor_valuetype_field_ch::visit_array (be_array *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_valuetype_field_ch::"
                              "visit_array - "
-                             "codegen failed\n"), 
+                             "codegen failed\n"),
                             -1);
         }
 
@@ -189,7 +189,7 @@ be_visitor_valuetype_field_ch::visit_enum (be_enum *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_ch::"
                          "visit_enum - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -212,7 +212,7 @@ be_visitor_valuetype_field_ch::visit_enum (be_enum *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_valuetype_field_ch::"
                              "visit_enum - "
-                             "Bad visitor\n"), 
+                             "Bad visitor\n"),
                             -1);
         }
 
@@ -221,7 +221,7 @@ be_visitor_valuetype_field_ch::visit_enum (be_enum *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_valuetype_field_ch::"
                              "visit_enum - "
-                             "codegen failed\n"), 
+                             "codegen failed\n"),
                             -1);
         }
 
@@ -235,7 +235,7 @@ be_visitor_valuetype_field_ch::visit_enum (be_enum *node)
       << be_nl;
   // The get method.
   *os << pre_op () << bt->name () << " " << ub->local_name ()
-      << " (void) const" << post_op () << "     // get method" 
+      << " (void) const" << post_op () << "     // get method"
       << be_nl << be_nl;
 
   return 0;
@@ -264,7 +264,7 @@ be_visitor_valuetype_field_ch::visit_interface (be_interface *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_ch::"
                          "visit_interface - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -306,7 +306,7 @@ be_visitor_valuetype_field_ch::visit_interface_fwd (be_interface_fwd *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_ch::"
                          "visit_interface_fwd - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -348,7 +348,7 @@ be_visitor_valuetype_field_ch::visit_valuetype (be_valuetype *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_ch::"
                          "visit_valuetype - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -390,7 +390,7 @@ be_visitor_valuetype_field_ch::visit_valuetype_fwd (be_valuetype_fwd *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_ch::"
                          "visit_valuetype_fwd - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -432,7 +432,7 @@ be_visitor_valuetype_field_ch::visit_predefined_type (be_predefined_type *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_ch::"
                          "visit_predefined_type - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -505,7 +505,7 @@ be_visitor_valuetype_field_ch::visit_sequence (be_sequence *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_ch::"
                          "visit_sequence - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -529,7 +529,7 @@ be_visitor_valuetype_field_ch::visit_sequence (be_sequence *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_valuetype_field_ch::"
                              "visit_sequence - "
-                             "Bad visitor\n"), 
+                             "Bad visitor\n"),
                             -1);
         }
 
@@ -538,7 +538,7 @@ be_visitor_valuetype_field_ch::visit_sequence (be_sequence *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_valuetype_field_ch::"
                              "visit_sequence - "
-                             "codegen failed\n"), 
+                             "codegen failed\n"),
                             -1);
         }
 
@@ -551,7 +551,7 @@ be_visitor_valuetype_field_ch::visit_sequence (be_sequence *node)
       os->decr_indent (0);
       *os << "#if !defined (__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)"
           << be_idt_nl
-          << "typedef " << bt->nested_type_name (bu) 
+          << "typedef " << bt->nested_type_name (bu)
           << " _" << ub->local_name () << "_seq;" << be_uidt_nl;
       *os << "#endif /* ! __GNUC__ || ACE_HAS_GNUG_PRE_2_8 */\n" << be_nl;
       os->incr_indent ();
@@ -587,7 +587,7 @@ be_visitor_valuetype_field_ch::visit_string (be_string *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_ch::"
                          "visit_string - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -653,7 +653,7 @@ be_visitor_valuetype_field_ch::visit_structure (be_structure *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_ch::"
                          "visit_structure - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -677,7 +677,7 @@ be_visitor_valuetype_field_ch::visit_structure (be_structure *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_valuetype_field_ch::"
                              "visit_structure - "
-                             "Bad visitor\n"), 
+                             "Bad visitor\n"),
                             -1);
         }
 
@@ -686,7 +686,7 @@ be_visitor_valuetype_field_ch::visit_structure (be_structure *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_valuetype_field_ch::"
                              "visit_structure - "
-                             "codegen failed\n"), 
+                             "codegen failed\n"),
                             -1);
         }
 
@@ -723,7 +723,7 @@ be_visitor_valuetype_field_ch::visit_typedef (be_typedef *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_spec_ch::"
                          "visit_typedef - "
-                         "Bad primitive type\n"), 
+                         "Bad primitive type\n"),
                         -1);
     }
 
@@ -754,7 +754,7 @@ be_visitor_valuetype_field_ch::visit_union (be_union *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_ch::"
                          "visit_union - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -778,7 +778,7 @@ be_visitor_valuetype_field_ch::visit_union (be_union *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_valuetype_field_ch::"
                              "visit_union - "
-                             "Bad visitor\n"), 
+                             "Bad visitor\n"),
                             -1);
         }
 
@@ -787,7 +787,7 @@ be_visitor_valuetype_field_ch::visit_union (be_union *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_valuetype_field_ch::"
                              "visit_union - "
-                             "codegen failed\n"), 
+                             "codegen failed\n"),
                             -1);
         }
 

@@ -10,7 +10,7 @@
 //
 // = DESCRIPTION
 //    Visitor for generating signature needed to invoke a given
-//    operation. 
+//    operation.
 //
 // = AUTHOR
 //    Angelo Corsaro

@@ -686,7 +686,7 @@ be_interface_default_strategy::client_scope (void)
 
   ACE_OS::strncpy (this->client_scope_, full_name, length);
   this->client_scope_[length] = '\0';
-	
+
   return this->client_scope_;
 }
 const char *
@@ -704,7 +704,7 @@ be_interface_default_strategy::flat_client_scope (void)
 
   ACE_OS::strncpy (this->flat_client_scope_, full_name, length);
   this->flat_client_scope_[length] = '\0';
-	
+
   return this->flat_client_scope_;
 }
 
@@ -717,16 +717,16 @@ be_interface_default_strategy::server_scope (void)
 
   const char *full_name =
     this->node_->full_coll_name (be_interface::DIRECT);
-  
+
   const char *name = this->node_->local_coll_name (be_interface::DIRECT);
-  
+
   int offset = ACE_OS::strlen (name);
   int length = ACE_OS::strlen (full_name) - offset;
   this->server_scope_ = new char[length+1];
 
   ACE_OS::strncpy (this->server_scope_, full_name, length);
   this->server_scope_[length] = '\0';
-  
+
   return this->server_scope_;
 }
 
@@ -745,7 +745,7 @@ be_interface_default_strategy::flat_server_scope (void)
 
   ACE_OS::strncpy (this->flat_server_scope_, full_name, length);
   this->flat_server_scope_[length] = '\0';
-	
+
   return this->flat_server_scope_;
 }
 
@@ -857,7 +857,7 @@ be_interface_default_strategy::full_direct_proxy_impl_name (void)
 
   const char *scope = this->server_scope ();
   const char *base_name = this->direct_proxy_impl_name ();
-  
+
   int length = ACE_OS::strlen (scope) + ACE_OS::strlen (base_name);
   this->full_direct_proxy_impl_name_ = new char[length+1];
   ACE_OS::strcpy (this->full_direct_proxy_impl_name_, scope);
@@ -982,6 +982,8 @@ be_interface_amh_strategy::next_state (TAO_CodeGen::CG_STATE current_state,
 {
   switch (current_state)
     {
+    case TAO_CodeGen::TAO_INTERFACE_SH:
+      return TAO_CodeGen::TAO_INTERFACE_AMH_SH;
     case TAO_CodeGen::TAO_INTERFACE_SS:
       return TAO_CodeGen::TAO_INTERFACE_AMH_SS;
     default:

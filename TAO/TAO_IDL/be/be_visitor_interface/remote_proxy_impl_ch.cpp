@@ -24,7 +24,7 @@ be_visitor_interface_remote_proxy_impl_ch::visit_interface (be_interface *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << be_nl
-      << "///////////////////////////////////////////////////////////////////////" 
+      << "///////////////////////////////////////////////////////////////////////"
       << be_nl
       << "//                Remote Proxy Impl. Declaration" << be_nl
       << "//" << be_nl << be_nl;
@@ -73,7 +73,7 @@ be_visitor_interface_remote_proxy_impl_ch::visit_interface (be_interface *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_interface_ch::"
                          "visit_interface - "
-                         "codegen for scope failed\n"), 
+                         "codegen for scope failed\n"),
                         -1);
     }
 

@@ -87,20 +87,20 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // which is then used in the second stage to create the global scope
 // and to populate it with nodes for the predefined types
 
-TAO_IDL_FE_Export void 
+TAO_IDL_FE_Export void
 FE_init_stage1 (void);       // Initialize stage 1
 
-TAO_IDL_FE_Export void 
+TAO_IDL_FE_Export void
 FE_init_stage2 (void);       // Initialize stage 2
 
 // Interface to Yacc parser
 
 class File;
 
-TAO_IDL_FE_Export int 
+TAO_IDL_FE_Export int
 FE_yyparse (void);           // Invode yyparse
 
-TAO_IDL_FE_Export void 
+TAO_IDL_FE_Export void
 FE_set_yyin (File *);    // Set yyin
 
 // Interface to constructors for objects need by the driver

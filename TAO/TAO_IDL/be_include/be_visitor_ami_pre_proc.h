@@ -45,12 +45,12 @@ class be_visitor_ami_pre_proc : public be_visitor_scope
   //   Adds AMI implied IDL code to the AST
   //
 private:
- typedef AST_Interface *AST_Interface_ptr; 
+ typedef AST_Interface *AST_Interface_ptr;
 
  typedef enum {
    NORMAL,
    GET_OPERATION,
-   SET_OPERATION 
+   SET_OPERATION
  } Operation_Kind;
 
 public:
@@ -80,18 +80,18 @@ private:
   // Creates a raise operation from node and inserts it in
   // excep_holder, while obeying if it is a normal operation
   // or a set or get attribute.
-  
+
   be_interface *create_reply_handler (be_interface *node,
                                       be_valuetype *excep_holder);
   // create the reply handler interface
 
   be_valuetype *create_exception_holder (be_interface *node);
   // create the exception holder valuetype
-  
+
   be_operation *create_sendc_operation (be_operation *node,
                                         int for_arguments);
   // create a method with "sendc_" prepended, if for_arguments
-  // equals one the sendc operation contains also the 
+  // equals one the sendc operation contains also the
   // object reference to the reply handler as the first argument,
   // but this should not be marhaled, therefor we need the switch
 
@@ -105,7 +105,7 @@ private:
   // create an operation with only the OUT and INOUT arguments
 
   int visit_scope (be_scope *node);
-  // specialized visit_scope 
+  // specialized visit_scope
 
   int generate_name (ACE_CString &desintation,
                      const char *prefix,

@@ -34,7 +34,7 @@ class be_visitor_operation_rettype_pre_invoke_cs : public be_visitor_decl
   //   be_visitor_operation_rettype_pre_invoke_cs
   //
   // = DESCRIPTION
-  //   This is a visitor to generate any pre processing before 
+  //   This is a visitor to generate any pre processing before
   //   the invocation is made.
   //
 public:

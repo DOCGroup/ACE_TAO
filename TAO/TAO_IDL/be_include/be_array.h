@@ -45,7 +45,7 @@ public:
 
   ~be_array (void);
 
-  virtual int gen_dimensions (TAO_OutStream *os, 
+  virtual int gen_dimensions (TAO_OutStream *os,
                               unsigned short slice = 0);
   // Generate dimensions. If slice == 1, generate dimensions for the slice
   // definition.

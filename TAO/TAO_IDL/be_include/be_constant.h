@@ -29,7 +29,7 @@
 
 class be_visitor;
 
-class be_constant : public virtual AST_Constant, 
+class be_constant : public virtual AST_Constant,
                     public virtual be_decl
 {
 public:

@@ -45,7 +45,7 @@ int be_visitor_operation_tie_si::visit_operation (be_operation *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  be_interface *intf = 
+  be_interface *intf =
     this->ctx_->interface ();
 
   if (!intf)

@@ -71,7 +71,7 @@ class   FE_Declarator
 {
 public:
   // Enum to denote types of declarators.
-  enum DeclaratorType 
+  enum DeclaratorType
   {
     FD_simple,  // Simple declarator
     FD_complex  // Complex declarator (complex_part field used)
@@ -80,8 +80,8 @@ public:
   // Operations.
 
   // Constructor and destructor.
-  FE_Declarator (UTL_ScopedName *n, 
-                 DeclaratorType dt, 
+  FE_Declarator (UTL_ScopedName *n,
+                 DeclaratorType dt,
                  AST_Decl *cp);
   virtual ~FE_Declarator (void) {}
 

@@ -64,12 +64,12 @@ be_visitor_valuetype_cdr_op_ch::visit_valuetype (be_valuetype *node)
       // generate the CDR << and >> operator declarations (prototypes)
 
       os->indent (); //start with whatever indentation level we are at now
-    
-      *os << be_global->stub_export_macro () 
-          << "CORBA::Boolean operator<< (TAO_OutputCDR &, const " 
+
+      *os << be_global->stub_export_macro ()
+          << "CORBA::Boolean operator<< (TAO_OutputCDR &, const "
           << node->full_name () << " *);" << be_nl;
-    
-      *os << be_global->stub_export_macro () 
+
+      *os << be_global->stub_export_macro ()
           << "CORBA::Boolean operator>> (TAO_InputCDR &, "
           << node->full_name () << " *&);" << be_nl;
 
@@ -85,7 +85,7 @@ be_visitor_valuetype_cdr_op_ch::visit_valuetype (be_valuetype *node)
                          "(%N:%l) be_visitor_valuetype_cdr_op_ch::"
                          "visit_valuetype - "
                          "codegen for scope failed\n"), -1);
-    }  
+    }
 
   //@@ Boris: that's suck!
   if (!node->is_abstract_valuetype ())

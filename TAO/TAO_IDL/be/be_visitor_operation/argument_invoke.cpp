@@ -30,7 +30,7 @@ ACE_RCSID(be_visitor_operation, argument_invoke, "$Id$")
 
 
 // ************************************************************
-// operation visitor to handle the passing of arguments to the CDR operators 
+// operation visitor to handle the passing of arguments to the CDR operators
 // ************************************************************
 
 be_compiled_visitor_operation_argument_invoke::
@@ -62,14 +62,14 @@ be_compiled_visitor_operation_argument_invoke::pre_process (be_decl *bd)
                          "Bad argument node\n"),
                         -1);
     }
-  
+
   switch (arg->direction ())
     {
     case AST_Argument::dir_IN:
       if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT)
         {
           if (this->last_arg_printed_ !=
-              be_compiled_visitor_operation_argument_invoke::TAO_ARG_NONE) 
+              be_compiled_visitor_operation_argument_invoke::TAO_ARG_NONE)
             *os << " &&\n";
         }
       else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
@@ -81,13 +81,13 @@ be_compiled_visitor_operation_argument_invoke::pre_process (be_decl *bd)
       if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT)
         {
           if (this->last_arg_printed_ !=
-              be_compiled_visitor_operation_argument_invoke::TAO_ARG_NONE) 
+              be_compiled_visitor_operation_argument_invoke::TAO_ARG_NONE)
             *os << " &&\n";
         }
       else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
         {
           if (this->last_arg_printed_ !=
-              be_compiled_visitor_operation_argument_invoke::TAO_ARG_NONE) 
+              be_compiled_visitor_operation_argument_invoke::TAO_ARG_NONE)
             *os << " &&\n";
         }
       break;
@@ -99,7 +99,7 @@ be_compiled_visitor_operation_argument_invoke::pre_process (be_decl *bd)
       else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
         {
           if (this->last_arg_printed_ !=
-              be_compiled_visitor_operation_argument_invoke::TAO_ARG_NONE) 
+              be_compiled_visitor_operation_argument_invoke::TAO_ARG_NONE)
             *os << " &&\n";
         }
       break;
@@ -130,12 +130,12 @@ be_compiled_visitor_operation_argument_invoke::post_process (be_decl *bd)
         case AST_Argument::dir_IN:
           // only these arguments get printed
           this->last_arg_printed_ =
-            be_compiled_visitor_operation_argument_invoke::TAO_ARG_IN; 
+            be_compiled_visitor_operation_argument_invoke::TAO_ARG_IN;
           break;
         case AST_Argument::dir_INOUT:
           // only these arguments get printed
           this->last_arg_printed_ =
-            be_compiled_visitor_operation_argument_invoke::TAO_ARG_INOUT; 
+            be_compiled_visitor_operation_argument_invoke::TAO_ARG_INOUT;
           break;
         case AST_Argument::dir_OUT:
           // these arguments don't get printed for the << operator on the stub
@@ -151,12 +151,12 @@ be_compiled_visitor_operation_argument_invoke::post_process (be_decl *bd)
         case AST_Argument::dir_INOUT:
           // only these arguments get printed
           this->last_arg_printed_ =
-            be_compiled_visitor_operation_argument_invoke::TAO_ARG_INOUT; 
+            be_compiled_visitor_operation_argument_invoke::TAO_ARG_INOUT;
           break;
         case AST_Argument::dir_OUT:
           // only these arguments get printed
           this->last_arg_printed_ =
-            be_compiled_visitor_operation_argument_invoke::TAO_ARG_OUT; 
+            be_compiled_visitor_operation_argument_invoke::TAO_ARG_OUT;
           break;
         }
       break;

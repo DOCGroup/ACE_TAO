@@ -36,8 +36,8 @@ public:
   be_argument (void);
 
   // Constructor.
-  be_argument (AST_Argument::Direction d, 
-               AST_Type *ft, 
+  be_argument (AST_Argument::Direction d,
+               AST_Type *ft,
                UTL_ScopedName *n);
 
   // Visiting.

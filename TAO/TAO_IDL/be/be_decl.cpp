@@ -50,7 +50,7 @@ be_decl::be_decl (void)
 // Constructor
 be_decl::be_decl (AST_Decl::NodeType type,
                   UTL_ScopedName *n)
-  : AST_Decl (type, 
+  : AST_Decl (type,
               n),
     cli_hdr_gen_ (I_FALSE),
     cli_stub_gen_ (I_FALSE),
@@ -380,12 +380,12 @@ be_decl::scope (void)
 {
   be_decl *d = this;
 
-   switch (this->node_type ()) 
+   switch (this->node_type ())
    {
      case AST_Decl::NT_interface_fwd:
         // Resolve forward declared interface by looking at full_definition()
         // field and iterating.
-        d = 
+        d =
           be_interface::narrow_from_decl (
               (be_interface_fwd::narrow_from_decl (this))->full_definition ()
             );

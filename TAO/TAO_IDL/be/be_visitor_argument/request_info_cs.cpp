@@ -62,7 +62,7 @@ int be_visitor_args_request_info_cs::visit_argument (be_argument *node)
       {
         // Generate the memberlist definition for the constructor.
         *os << "    " << node->local_name ()
-            << "_ " << "(" << node->local_name () << ")"; 
+            << "_ " << "(" << node->local_name () << ")";
         break;
       }
     case TAO_CodeGen::TAO_ARGUMENT_INTERCEPTORS_INFO_ARGLIST_CS:

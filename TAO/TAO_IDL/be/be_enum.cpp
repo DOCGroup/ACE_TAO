@@ -33,13 +33,13 @@ be_enum::be_enum (void)
 be_enum::be_enum (UTL_ScopedName *n,
                   idl_bool local,
                   idl_bool abstract)
-  : AST_Enum (n, 
-              local, 
+  : AST_Enum (n,
+              local,
               abstract),
-    AST_Decl (AST_Decl::NT_enum, 
+    AST_Decl (AST_Decl::NT_enum,
               n),
     UTL_Scope (AST_Decl::NT_enum),
-    COMMON_Base (local, 
+    COMMON_Base (local,
                  abstract)
 {
   this->size_type (be_decl::FIXED);

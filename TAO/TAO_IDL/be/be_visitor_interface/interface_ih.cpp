@@ -57,11 +57,11 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
 
   ACE_OS::sprintf (namebuf, "%s", node->flat_name ());
 
-  *os << "//Class " << be_global->impl_class_prefix () 
+  *os << "//Class " << be_global->impl_class_prefix ()
       << namebuf << be_global->impl_class_suffix () << be_nl;
   // now generate the class definition
   *os << "class " << be_global->stub_export_macro ()
-      << " " << be_global->impl_class_prefix () << namebuf 
+      << " " << be_global->impl_class_prefix () << namebuf
       << be_global->impl_class_suffix () << " : ";
   //inherit from the base skeleton file
   *os <<"public virtual "<< node->full_skel_name ();
@@ -70,30 +70,30 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
       << "{" << be_nl
       << "public:" << be_idt_nl
       << "//Constructor " << be_nl
-      <<  be_global->impl_class_prefix () << namebuf 
+      <<  be_global->impl_class_prefix () << namebuf
       << be_global->impl_class_suffix () << " (void);" << be_nl << be_nl;
 
   if (be_global->gen_copy_ctor ())
     {
       *os << "//Copy Constructor"<<be_nl
-          << be_global->impl_class_prefix () << namebuf 
+          << be_global->impl_class_prefix () << namebuf
           << be_global->impl_class_suffix () << " (const "
-          << be_global->impl_class_prefix () << namebuf 
+          << be_global->impl_class_prefix () << namebuf
           << be_global->impl_class_suffix () << "&);" <<be_nl <<be_nl;
     }
 
   if (be_global->gen_assign_op ())
     {
       *os << "//Copy Assignment" << be_nl
-          << be_global->impl_class_prefix () << namebuf 
-          << be_global->impl_class_suffix () << "& " << "operator=(const " 
-          << be_global->impl_class_prefix () << namebuf 
+          << be_global->impl_class_prefix () << namebuf
+          << be_global->impl_class_suffix () << "& " << "operator=(const "
+          << be_global->impl_class_prefix () << namebuf
           << be_global->impl_class_suffix () << "&);" << be_nl << be_nl;
 
     }
 
   *os << "//Destructor " << be_nl
-      << "virtual " << "~" << be_global->impl_class_prefix () << namebuf 
+      << "virtual " << "~" << be_global->impl_class_prefix () << namebuf
       << be_global->impl_class_suffix () << " (void);" << be_nl << be_uidt_nl;
 
 
@@ -129,7 +129,7 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
 
     }
   */
-  
+
   //Generate the code for the members of the derived classes
   if (node->traverse_inheritance_graph (be_visitor_interface_ih::method_helper, os) == -1)
     {
@@ -139,7 +139,7 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
                          "traversal of inhertance graph failed\n"),
                         -1);
     }
-  
+
 
   *os << "};" << be_nl <<be_nl;
   return 0;
@@ -159,7 +159,7 @@ be_visitor_interface_ih::method_helper (be_interface *derived,
       ctx.state (TAO_CodeGen::TAO_INTERFACE_IH);
       ctx.interface (derived);
       ctx.stream (os);
-      
+
       be_visitor* visitor = tao_cg->make_visitor (&ctx);
       if (visitor == 0 || visitor->visit_scope (node) == -1)
         {

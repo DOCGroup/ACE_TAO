@@ -31,9 +31,9 @@ be_type::be_type (void)
 {
 }
 
-be_type::be_type (AST_Decl::NodeType nt, 
+be_type::be_type (AST_Decl::NodeType nt,
                   UTL_ScopedName *n)
-  : AST_Decl (nt, 
+  : AST_Decl (nt,
               n),
     tc_name_ (0),
     nested_type_name_ (0)
@@ -57,8 +57,8 @@ be_type::compute_tc_name (void)
 
   this->tc_name_ = 0;
 
-  ACE_OS::memset (namebuf, 
-                  '\0', 
+  ACE_OS::memset (namebuf,
+                  '\0',
                   NAMEBUFSIZE);
 
   while (n->tail () != 0)
@@ -83,8 +83,8 @@ be_type::compute_tc_name (void)
       n = (UTL_ScopedName *)n->tail ();
     }
 
-  ACE_OS::sprintf (namebuf, 
-                   "_tc_%s", 
+  ACE_OS::sprintf (namebuf,
+                   "_tc_%s",
                    n->last_component ()->get_string ());
 
   Identifier *id = 0;
@@ -134,7 +134,7 @@ be_type::tc_name (void)
 // Return the type name using the ACE_NESTED_CLASS macro
 
 const char *
-be_type::nested_type_name (be_decl *use_scope, 
+be_type::nested_type_name (be_decl *use_scope,
                            const char *suffix,
                            const char *prefix)
 {
@@ -152,8 +152,8 @@ be_type::nested_type_name (be_decl *use_scope,
 // We can use the flat_name() method for the local_name parm but have
 // to construct the full name ourselves.
 const char *
-be_type::nested_sp_type_name (be_decl *use_scope, 
-                              const char *suffix, 
+be_type::nested_sp_type_name (be_decl *use_scope,
+                              const char *suffix,
                               const char *prefix)
 {
   // Our defining scope.
@@ -161,38 +161,38 @@ be_type::nested_sp_type_name (be_decl *use_scope,
 
   char fu_name [NAMEBUFSIZE];
   char fl_name [NAMEBUFSIZE];
-  
-  ACE_OS::memset (fu_name, 
-                  '\0', 
+
+  ACE_OS::memset (fu_name,
+                  '\0',
                   NAMEBUFSIZE);
 
-  ACE_OS::memset (fl_name, 
-                  '\0', 
+  ACE_OS::memset (fl_name,
+                  '\0',
                   NAMEBUFSIZE);
-  
+
   fu_scope = this->defined_in ()
                ? be_scope::narrow_from_scope (this->defined_in ())->decl ()
                : 0;
-  
-  ACE_OS::strcat (fu_name, 
+
+  ACE_OS::strcat (fu_name,
                   fu_scope->full_name ());
 
-  ACE_OS::strcat (fu_name, 
+  ACE_OS::strcat (fu_name,
                   "::TAO_");
 
-  ACE_OS::strcat (fu_name, 
+  ACE_OS::strcat (fu_name,
                   this->flat_name());
-  
-  ACE_OS::strcat (fl_name, 
+
+  ACE_OS::strcat (fl_name,
                   "TAO_");
 
-  ACE_OS::strcat (fl_name, 
+  ACE_OS::strcat (fl_name,
                   this->flat_name());
-  
-  return this->nested_name (fl_name, 
+
+  return this->nested_name (fl_name,
                             fu_name,
-                            use_scope, 
-                            suffix, 
+                            use_scope,
+                            suffix,
                             prefix);
 }
 
@@ -200,8 +200,8 @@ be_type::nested_sp_type_name (be_decl *use_scope,
 const char *
 be_type::nested_name (const char* local_name,
                       const char* full_name,
-                      be_decl *use_scope, 
-                      const char *suffix, 
+                      be_decl *use_scope,
+                      const char *suffix,
                       const char *prefix)
 {
   // Some compilers do not like generating a fully scoped name for a type that
@@ -219,8 +219,8 @@ be_type::nested_name (const char* local_name,
 
   if (this->nested_type_name_ == 0)
     {
-      ACE_NEW_RETURN (this->nested_type_name_, 
-                      char[NAMEBUFSIZE], 
+      ACE_NEW_RETURN (this->nested_type_name_,
+                      char[NAMEBUFSIZE],
                       0);
     }
 
@@ -241,16 +241,16 @@ be_type::nested_name (const char* local_name,
   int len_to_match = 0;
 
   // Initialize the buffers.
-  ACE_OS::memset (this->nested_type_name_, 
-                  '\0', 
+  ACE_OS::memset (this->nested_type_name_,
+                  '\0',
                   NAMEBUFSIZE);
 
-  ACE_OS::memset (def_name, 
-                  '\0', 
+  ACE_OS::memset (def_name,
+                  '\0',
                   NAMEBUFSIZE);
 
-  ACE_OS::memset (use_name, 
-                  '\0', 
+  ACE_OS::memset (use_name,
+                  '\0',
                   NAMEBUFSIZE);
 
   // Traverse every component of the def_scope and use_scope beginning at the
@@ -264,47 +264,47 @@ be_type::nested_name (const char* local_name,
                 ? be_scope::narrow_from_scope (this->defined_in ())->decl ()
                 : 0;
 
-  if (def_scope 
-      && def_scope->node_type () != AST_Decl::NT_root 
+  if (def_scope
+      && def_scope->node_type () != AST_Decl::NT_root
       && use_scope)
     // If both scopes exist and that we are not in the root scope.
     {
-      ACE_OS::strcpy (def_name, 
+      ACE_OS::strcpy (def_name,
                       def_scope->full_name ());
 
-      ACE_OS::strcpy (use_name, 
+      ACE_OS::strcpy (use_name,
                       use_scope->full_name ());
 
-      // Find the first occurrence of a :: and advance 
+      // Find the first occurrence of a :: and advance
       // the next pointers accordingly.
       def_next = ACE_OS::strstr (def_curr, "::");
       use_next = ACE_OS::strstr (use_curr, "::");
 
       // If the scopes are identical, don't supply them.
-      if  (ACE_OS::strcmp (def_name, 
+      if  (ACE_OS::strcmp (def_name,
                          use_name)
              == 0)
         {
           if (prefix != 0)
             {
-              ACE_OS::strcat (this->nested_type_name_, 
+              ACE_OS::strcat (this->nested_type_name_,
                               prefix);
             }
 
-          ACE_OS::strcat (this->nested_type_name_, 
+          ACE_OS::strcat (this->nested_type_name_,
                           local_name);
           if (suffix != 0)
             {
-              ACE_OS::strcat (this->nested_type_name_, 
+              ACE_OS::strcat (this->nested_type_name_,
                               suffix);
             }
- 
+
           return this->nested_type_name_;
         }
-       
+
       if (def_next != 0)
         {
-          len_to_match = 
+          len_to_match =
             ACE_OS::strlen (def_curr) - ACE_OS::strlen (def_next);
         }
       else
@@ -314,7 +314,7 @@ be_type::nested_name (const char* local_name,
 
       if (use_next != 0)
         {
-          int len = 
+          int len =
             ACE_OS::strlen (use_curr) - ACE_OS::strlen (use_next);
 
           if (len > len_to_match)
@@ -331,20 +331,20 @@ be_type::nested_name (const char* local_name,
               len_to_match = len;
             }
         }
-      
-      if (ACE_OS::strncmp (def_curr, 
-                           use_curr, 
+
+      if (ACE_OS::strncmp (def_curr,
+                           use_curr,
                            len_to_match)
             == 0)
         {
           // Initial prefix matches i.e., they have a common root.
           // Start by initializing the macro.
-          ACE_OS::sprintf (this->nested_type_name_, 
+          ACE_OS::sprintf (this->nested_type_name_,
                            "ACE_NESTED_CLASS (");
 
           // Initialize the first argument.
-          ACE_OS::strncat (this->nested_type_name_, 
-                           def_curr, 
+          ACE_OS::strncat (this->nested_type_name_,
+                           def_curr,
                            len_to_match);
 
           // Shift the current scopes to the next level.
@@ -353,14 +353,14 @@ be_type::nested_name (const char* local_name,
 
           while (def_curr && use_curr)
             {
-              // Find the first occurrence of a :: and advance the 
+              // Find the first occurrence of a :: and advance the
               // next pointers accordingly.
               def_next = ACE_OS::strstr (def_curr, "::");
               use_next = ACE_OS::strstr (use_curr, "::");
 
               if (def_next != 0)
                 {
-                  len_to_match = 
+                  len_to_match =
                     ACE_OS::strlen (def_curr) - ACE_OS::strlen (def_next);
                 }
               else
@@ -370,7 +370,7 @@ be_type::nested_name (const char* local_name,
 
               if (use_next != 0)
                 {
-                  int len  = 
+                  int len  =
                     ACE_OS::strlen (use_curr) - ACE_OS::strlen (use_next);
 
                   if (len > len_to_match)
@@ -387,18 +387,18 @@ be_type::nested_name (const char* local_name,
                       len_to_match = len;
                     }
                 }
-      
-              if (ACE_OS::strncmp (def_curr, 
+
+              if (ACE_OS::strncmp (def_curr,
                                    use_curr,
                                    len_to_match)
                     == 0)
                 {
                   // They have same prefix, append to arg1.
-                  ACE_OS::strcat (this->nested_type_name_, 
+                  ACE_OS::strcat (this->nested_type_name_,
                                   "::");
 
-                  ACE_OS::strncat (this->nested_type_name_, 
-                                   def_curr, 
+                  ACE_OS::strncat (this->nested_type_name_,
+                                   def_curr,
                                    len_to_match);
 
                   def_curr = (def_next ? (def_next + 2) : 0); // Skip the ::
@@ -418,10 +418,10 @@ be_type::nested_name (const char* local_name,
           // Copy the remaining def_name (if any are left).
           if (def_curr != 0)
             {
-              ACE_OS::strcat (this->nested_type_name_, 
+              ACE_OS::strcat (this->nested_type_name_,
                               def_curr);
 
-              ACE_OS::strcat (this->nested_type_name_, 
+              ACE_OS::strcat (this->nested_type_name_,
                               "::");
             }
 
@@ -431,16 +431,16 @@ be_type::nested_name (const char* local_name,
               ACE_OS::strcat (this->nested_type_name_, prefix);
             }
 
-          ACE_OS::strcat (this->nested_type_name_, 
+          ACE_OS::strcat (this->nested_type_name_,
                           local_name);
 
           if (suffix != 0)
             {
-              ACE_OS::strcat (this->nested_type_name_, 
+              ACE_OS::strcat (this->nested_type_name_,
                               suffix);
             }
 
-          ACE_OS::strcat (this->nested_type_name_, 
+          ACE_OS::strcat (this->nested_type_name_,
                           ")");
 
           return this->nested_type_name_;
@@ -453,12 +453,12 @@ be_type::nested_name (const char* local_name,
       ACE_OS::strcat (this->nested_type_name_, prefix);
     }
 
-  ACE_OS::strcat (this->nested_type_name_, 
+  ACE_OS::strcat (this->nested_type_name_,
                   full_name);
 
   if (suffix != 0)
     {
-      ACE_OS::strcat (this->nested_type_name_, 
+      ACE_OS::strcat (this->nested_type_name_,
                       suffix);
     }
 
@@ -479,7 +479,7 @@ be_type::gen_var_defn (char *)
 // Implementation of the _var class. All of these get generated
 // in the inline file
 int
-be_type::gen_var_impl (char *, 
+be_type::gen_var_impl (char *,
                        char *)
 {
   return 0;
@@ -493,7 +493,7 @@ be_type::gen_out_defn (char *)
 }
 
 int
-be_type::gen_out_impl (char *, 
+be_type::gen_out_impl (char *,
                        char *)
 {
   return 0;

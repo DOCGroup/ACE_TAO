@@ -32,10 +32,10 @@ be_structure::be_structure (void)
 be_structure::be_structure (UTL_ScopedName *n,
                             idl_bool local,
                             idl_bool abstract)
-  : AST_Decl (AST_Decl::NT_struct, 
+  : AST_Decl (AST_Decl::NT_struct,
               n),
     UTL_Scope (AST_Decl::NT_struct),
-    COMMON_Base (local, 
+    COMMON_Base (local,
                  abstract)
 {
 }
@@ -90,7 +90,7 @@ be_structure::gen_var_defn (char *)
   *ch << be_nl;
 
   // Assignment operator from a pointer.
-  *ch << namebuf << " &operator= (" << this->local_name () 
+  *ch << namebuf << " &operator= (" << this->local_name ()
       << " *);" << be_nl;
 
   // Assignment from _var.
@@ -164,20 +164,20 @@ be_structure::gen_var_impl (char *,
   char fname [NAMEBUFSIZE];
   char lname [NAMEBUFSIZE];
 
-  ACE_OS::memset (fname, 
-                  '\0', 
+  ACE_OS::memset (fname,
+                  '\0',
                   NAMEBUFSIZE);
 
-  ACE_OS::sprintf (fname, 
-                   "%s_var", 
+  ACE_OS::sprintf (fname,
+                   "%s_var",
                    this->full_name ());
 
-  ACE_OS::memset (lname, 
-                  '\0', 
+  ACE_OS::memset (lname,
+                  '\0',
                   NAMEBUFSIZE);
 
-  ACE_OS::sprintf (lname, 
-                   "%s_var", 
+  ACE_OS::sprintf (lname,
+                   "%s_var",
                    this->local_name ()->get_string ());
 
   ci = tao_cg->client_inline ();
@@ -273,7 +273,7 @@ be_structure::gen_var_impl (char *,
       << "else" << be_idt_nl
       << "{" << be_idt_nl
       << this->local_name () << " *deep_copy =" << be_idt_nl
-      << "new " << this->local_name () << " (*p.ptr_);" 
+      << "new " << this->local_name () << " (*p.ptr_);"
       << be_uidt_nl << be_nl
       << "if (deep_copy != 0)" << be_idt_nl
       << "{" << be_idt_nl
@@ -515,7 +515,7 @@ be_structure::gen_out_defn (char *)
   *ch << "private:" << be_idt_nl;
   *ch << local_name () << " *&ptr_;" << be_nl;
   *ch << "// Assignment from T_var not allowed." << be_nl;
-  *ch << "void operator= (const " << this->local_name () 
+  *ch << "void operator= (const " << this->local_name ()
       << "_var &);" << be_uidt_nl;
 
   *ch << "};" << be_nl << be_nl;

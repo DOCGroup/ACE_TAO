@@ -135,7 +135,7 @@ public:
   // union.
   virtual AST_Field *create_field (AST_Type *ft,
                                    UTL_ScopedName *n,
-                                   AST_Field::Visibility vis = 
+                                   AST_Field::Visibility vis =
                                      AST_Field::vis_NA);
 
   // Create a node representing an argument to an operation.

@@ -38,7 +38,7 @@ public:
   be_string (AST_Expression *v);
   // Constructor.
 
-  be_string (AST_Expression *v, 
+  be_string (AST_Expression *v,
              long wide);
   // Constructor.
 

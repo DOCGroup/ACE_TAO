@@ -63,7 +63,7 @@ class TAO_IDL_FE_Export ast_visitor
   //
   // = DESCRIPTION
   //    To implement BE processing we use the "Visitor Pattern", this
-  //    is the abstract "Visitor". This class is the abstract base class 
+  //    is the abstract "Visitor". This class is the abstract base class
   //    for visitors that traverse the AST_<node> classes. Other abstract
   //    classes for C++ code generation, Java code generation, or IfR
   //    administration, for example, can be derived from this class and

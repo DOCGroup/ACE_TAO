@@ -85,9 +85,9 @@ AST_Typedef::AST_Typedef (AST_Type *bt,
                           UTL_ScopedName *n,
                           idl_bool local,
                           idl_bool abstract)
- : AST_Decl (AST_Decl::NT_typedef, 
+ : AST_Decl (AST_Decl::NT_typedef,
              n),
-   COMMON_Base (bt->is_local () || local, 
+   COMMON_Base (bt->is_local () || local,
                 abstract),
    pd_base_type (bt)
 {

@@ -40,7 +40,7 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_sequence_ci::"
                          "visit_sequence - "
-                         "Bad element type\n"), 
+                         "Bad element type\n"),
                         -1);
     }
 
@@ -58,7 +58,7 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
       pt = bt;
     }
 
-  const char *name = 
+  const char *name =
     be_decl::narrow_from_decl (pt)->full_name ();
 
   idl_bool bt_is_defined;
@@ -83,22 +83,22 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
   const char * class_name = node->instance_name ();
 
   static char full_class_name [NAMEBUFSIZE];
-  ACE_OS::memset (full_class_name, 
-                  '\0', 
+  ACE_OS::memset (full_class_name,
+                  '\0',
                   NAMEBUFSIZE);
 
   if (node->is_nested ())
     {
       be_scope *parent = be_scope::narrow_from_scope (node->defined_in ());
 
-      ACE_OS::sprintf (full_class_name, 
+      ACE_OS::sprintf (full_class_name,
                        "%s::%s",
                        parent->decl ()->full_name (),
                        class_name);
     }
   else
     {
-      ACE_OS::sprintf (full_class_name, 
+      ACE_OS::sprintf (full_class_name,
                        "%s",
                        class_name);
     }
@@ -146,7 +146,7 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
 
   *os << "*[" << node->max_size () << "], 0);" << be_nl
       << be_nl
-      << "for (CORBA::ULong i = 0; i < " << node->max_size () 
+      << "for (CORBA::ULong i = 0; i < " << node->max_size ()
       << "; i++)" << be_idt_nl
       << "{" << be_idt_nl
       << "buf[i] = ";
@@ -192,7 +192,7 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
 
   *os << " **buffer)" << be_nl
       << "{" << be_idt_nl
-      << "for (CORBA::ULong i = 0; i < " << node->max_size () 
+      << "for (CORBA::ULong i = 0; i < " << node->max_size ()
       << "; ++i)" << be_idt_nl
       << "{" << be_idt_nl
       << "if (buffer[i] != ";
@@ -226,7 +226,7 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
           << "tao_" << pt->flat_name () << "_nil ();" << be_uidt_nl;
     }
 
-  *os << "}" << be_uidt << be_uidt_nl 
+  *os << "}" << be_uidt << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
       << "delete[] buffer;" << be_uidt_nl
       << "} " << be_nl
@@ -252,7 +252,7 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
   *os <<"* *value," << be_nl
       << "CORBA::Boolean release)" << be_uidt_nl
       << "// Constructor from data." << be_nl
-      << "  : TAO_Bounded_Base_Sequence (" << node->max_size () 
+      << "  : TAO_Bounded_Base_Sequence (" << node->max_size ()
       << ", length, value, release)" << be_nl
       << "{" << be_nl
       << "}" << be_nl
@@ -363,7 +363,7 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
       << "}" << be_uidt << be_uidt_nl
       << "}" << be_nl
       << "else" << be_idt_nl
-      << "this->buffer_ = " << class_name 
+      << "this->buffer_ = " << class_name
       << "::allocbuf (rhs.maximum_);" << be_uidt_nl
       << be_nl
       << "TAO_Bounded_Base_Sequence::operator= (rhs);" << be_nl
@@ -474,7 +474,7 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
   bt->accept(visitor);
 
   *os << " **" << be_nl;
-  *os << full_class_name << "::get_buffer (CORBA::Boolean orphan)" 
+  *os << full_class_name << "::get_buffer (CORBA::Boolean orphan)"
       << be_nl
       << "{" << be_idt_nl;
 
@@ -486,7 +486,7 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
       << "// We retain ownership." << be_nl
       << "if (this->buffer_ == 0)" << be_nl
       << "{" << be_idt_nl
-      << "result = " << class_name << "::allocbuf (this->maximum_);" 
+      << "result = " << class_name << "::allocbuf (this->maximum_);"
       << be_nl
       << "this->buffer_ = result;" << be_nl
       << "this->release_ = 1;" << be_uidt_nl

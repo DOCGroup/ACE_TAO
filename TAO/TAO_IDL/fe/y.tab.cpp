@@ -1279,7 +1279,7 @@ tao_yyinrecovery:
             if (5 < tao_yydebug)
                 printf("tao_yydebug: state %d, error recovery discards token %d (%s)\n",
                     tao_yystate, tao_yychar, tao_yys);
-            else 
+            else
                 TAO_YYDEBUG_DISCARD_TOKEN(tao_yystate, tao_yychar, tao_yys, tao_yyssp-tao_yyss);
         }
 #endif
@@ -2000,71 +2000,71 @@ case 110:
 break;
 case 114:
 {
-          tao_yyval.exval = idl_global->gen ()->create_expr (AST_Expression::EC_or, 
-                                                tao_yyvsp[-2].exval, 
+          tao_yyval.exval = idl_global->gen ()->create_expr (AST_Expression::EC_or,
+                                                tao_yyvsp[-2].exval,
                                                 tao_yyvsp[0].exval);
         }
 break;
 case 116:
 {
-          tao_yyval.exval = idl_global->gen ()->create_expr (AST_Expression::EC_xor, 
-                                                tao_yyvsp[-2].exval, 
+          tao_yyval.exval = idl_global->gen ()->create_expr (AST_Expression::EC_xor,
+                                                tao_yyvsp[-2].exval,
                                                 tao_yyvsp[0].exval);
         }
 break;
 case 118:
 {
-          tao_yyval.exval = idl_global->gen ()->create_expr (AST_Expression::EC_and, 
-                                                tao_yyvsp[-2].exval, 
+          tao_yyval.exval = idl_global->gen ()->create_expr (AST_Expression::EC_and,
+                                                tao_yyvsp[-2].exval,
                                                 tao_yyvsp[0].exval);
         }
 break;
 case 120:
 {
-          tao_yyval.exval = idl_global->gen ()->create_expr (AST_Expression::EC_left, 
-                                                tao_yyvsp[-2].exval, 
+          tao_yyval.exval = idl_global->gen ()->create_expr (AST_Expression::EC_left,
+                                                tao_yyvsp[-2].exval,
                                                 tao_yyvsp[0].exval);
         }
 break;
 case 121:
 {
-          tao_yyval.exval = idl_global->gen ()->create_expr (AST_Expression::EC_right, 
-                                                tao_yyvsp[-2].exval, 
+          tao_yyval.exval = idl_global->gen ()->create_expr (AST_Expression::EC_right,
+                                                tao_yyvsp[-2].exval,
                                                 tao_yyvsp[0].exval);
         }
 break;
 case 123:
 {
-          tao_yyval.exval = idl_global->gen ()->create_expr (AST_Expression::EC_add, 
-                                                tao_yyvsp[-2].exval, 
+          tao_yyval.exval = idl_global->gen ()->create_expr (AST_Expression::EC_add,
+                                                tao_yyvsp[-2].exval,
                                                 tao_yyvsp[0].exval);
         }
 break;
 case 124:
 {
-          tao_yyval.exval = idl_global->gen ()->create_expr (AST_Expression::EC_minus, 
-                                                tao_yyvsp[-2].exval, 
+          tao_yyval.exval = idl_global->gen ()->create_expr (AST_Expression::EC_minus,
+                                                tao_yyvsp[-2].exval,
                                                 tao_yyvsp[0].exval);
         }
 break;
 case 126:
 {
-          tao_yyval.exval = idl_global->gen ()->create_expr (AST_Expression::EC_mul, 
-                                                tao_yyvsp[-2].exval, 
+          tao_yyval.exval = idl_global->gen ()->create_expr (AST_Expression::EC_mul,
+                                                tao_yyvsp[-2].exval,
                                                 tao_yyvsp[0].exval);
         }
 break;
 case 127:
 {
-          tao_yyval.exval = idl_global->gen ()->create_expr (AST_Expression::EC_div, 
-                                                tao_yyvsp[-2].exval, 
+          tao_yyval.exval = idl_global->gen ()->create_expr (AST_Expression::EC_div,
+                                                tao_yyvsp[-2].exval,
                                                 tao_yyvsp[0].exval);
         }
 break;
 case 128:
 {
-          tao_yyval.exval = idl_global->gen ()->create_expr (AST_Expression::EC_mod, 
-                                                tao_yyvsp[-2].exval, 
+          tao_yyval.exval = idl_global->gen ()->create_expr (AST_Expression::EC_mod,
+                                                tao_yyvsp[-2].exval,
                                                 tao_yyvsp[0].exval);
         }
 break;
@@ -2103,9 +2103,9 @@ case 133:
 
           /*
            * If the scoped name is an IDL constant, it may be used in an
-           * array dim, a string bound, or a sequence bound. If so, it 
+           * array dim, a string bound, or a sequence bound. If so, it
            * must be unsigned and > 0. We assign the constant's value
-           * and type to the expression created here so we can check 
+           * and type to the expression created here so we can check
            * them later.
            */
           if (d != 0 && d->node_type () == AST_Decl::NT_const)
@@ -2228,8 +2228,8 @@ case 145:
 
           if (good_expression)
             {
-              tao_yyval.exval = 
-                idl_global->gen()->create_expr (tao_yyvsp[0].exval, 
+              tao_yyval.exval =
+                idl_global->gen()->create_expr (tao_yyvsp[0].exval,
                                                 AST_Expression::EV_ulong);
             }
           else
@@ -2300,7 +2300,7 @@ case 153:
               AST_Type * tp = d->compose (tao_yyvsp[-2].dcval);
               if (tp == 0)
                 continue;
-              t = idl_global->gen ()->create_typedef (tp, 
+              t = idl_global->gen ()->create_typedef (tp,
                                                       d->name (),
                                                       s->is_local (),
                                                       s->is_abstract ());
@@ -2389,7 +2389,7 @@ case 182:
 break;
 case 183:
 {
-          tao_yyval.deval = new FE_Declarator (new UTL_ScopedName (tao_yyvsp[0].dcval->local_name (), 
+          tao_yyval.deval = new FE_Declarator (new UTL_ScopedName (tao_yyvsp[0].dcval->local_name (),
                                                       0),
                                   FE_Declarator::FD_complex,
                                   tao_yyvsp[0].dcval);
@@ -2554,7 +2554,7 @@ case 213:
            * Check for illegal recursive use of type
            */
           if (tao_yyvsp[-4].dcval != 0 && AST_illegal_recursive_type (tao_yyvsp[-4].dcval))
-            idl_global->err ()->error1 (UTL_Error::EIDL_RECURSIVE_TYPE, 
+            idl_global->err ()->error1 (UTL_Error::EIDL_RECURSIVE_TYPE,
                                         tao_yyvsp[-4].dcval);
           /*
            * Create a node representing a struct or exception member
@@ -2570,8 +2570,8 @@ case 213:
               if (tp == 0)
                 continue;
               /* $0 denotes Visibility, must be on yacc reduction stack */
-              f = idl_global->gen ()->create_field (tp, 
-                                                    d->name (), 
+              f = idl_global->gen ()->create_field (tp,
+                                                    d->name (),
                                                     tao_yyvsp[-5].vival);
               (void) s->fe_add_field (f);
             }
@@ -2682,7 +2682,7 @@ case 226:
               idl_global->err ()->error0 (UTL_Error::EIDL_DISC_TYPE);
             }
 
-          tao_yyval.dcval = 
+          tao_yyval.dcval =
             idl_global->scopes ()->bottom ()->lookup_primitive_type (
                                                   tao_yyvsp[0].etval
                                                 );
@@ -2971,7 +2971,7 @@ case 258:
           if (s != 0 && s->scope_node_type () == AST_Decl::NT_enum) {
             c = AST_Enum::narrow_from_scope (s);
             if (c != 0)
-              e = idl_global->gen ()->create_enum_val (c->next_enum_val (), 
+              e = idl_global->gen ()->create_enum_val (c->next_enum_val (),
                                                        n);
             (void) s->fe_add_enum_val (e);
           }
@@ -3197,11 +3197,11 @@ case 277:
            * Create a node representing an array
            */
           if (tao_yyvsp[0].elval != 0) {
-             tao_yyval.dcval = idl_global->gen ()->create_array (new UTL_ScopedName (tao_yyvsp[-2].idval, 
+             tao_yyval.dcval = idl_global->gen ()->create_array (new UTL_ScopedName (tao_yyvsp[-2].idval,
                                                                         0),
-                                                    tao_yyvsp[0].elval->length (), 
-                                                    tao_yyvsp[0].elval, 
-                                                    0, 
+                                                    tao_yyvsp[0].elval->length (),
+                                                    tao_yyvsp[0].elval,
+                                                    0,
                                                     0);
           }
         }
@@ -3468,7 +3468,7 @@ case 305:
                         ACE_TEXT ("factory construct.\n"),
                         idl_global->filename ()->get_string (),
                         idl_global->lineno ()));
-          }     
+          }
           UTL_ScopedName *n =
                 new UTL_ScopedName (new Identifier (tao_yyvsp[0].strval), 0);
 
@@ -3545,14 +3545,14 @@ case 317:
            * Create a node representing an argument to an operation
            * Add it to the enclosing scope (the operation scope)
            */
-          if (tao_yyvsp[-2].dcval != 0 && tao_yyvsp[0].deval != 0 && s != 0) 
+          if (tao_yyvsp[-2].dcval != 0 && tao_yyvsp[0].deval != 0 && s != 0)
           {
             AST_Type *tp = tao_yyvsp[0].deval->compose (tao_yyvsp[-2].dcval);
-            if (tp != 0) 
+            if (tp != 0)
             {
               a = idl_global->gen ()->create_argument (
-                      AST_Argument::dir_IN, 
-                      tp, 
+                      AST_Argument::dir_IN,
+                      tp,
                       (UTL_IdList *) tao_yyvsp[0].deval->name ()->copy ()
                     );
 
@@ -3622,8 +3622,8 @@ case 328:
               else
                 {
                   a = idl_global->gen ()->create_argument (
-                                              tao_yyvsp[-4].dival, 
-                                              tp, 
+                                              tao_yyvsp[-4].dival,
+                                              tp,
                                               (UTL_IdList *) tao_yyvsp[0].deval->name ()->copy ()
                                             );
                   (void) s->fe_add_argument (a);

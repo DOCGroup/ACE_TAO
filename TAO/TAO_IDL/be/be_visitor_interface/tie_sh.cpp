@@ -52,11 +52,11 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
       return 0;
     }
 
-  ACE_OS::memset (namebuf, 
-                  '\0', 
+  ACE_OS::memset (namebuf,
+                  '\0',
                   NAMEBUFSIZE);
-  ACE_OS::memset (tiename, 
-                  '\0', 
+  ACE_OS::memset (tiename,
+                  '\0',
                   NAMEBUFSIZE);
 
   TAO_OutStream *os = this->ctx_->stream ();
@@ -67,20 +67,20 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
   // We shall have a POA_ prefix only if we are at the topmost level.
   if (node->is_nested ())
     {
-      ACE_OS::sprintf (namebuf, 
-                       "%s", 
+      ACE_OS::sprintf (namebuf,
+                       "%s",
                        node->local_name ());
-      ACE_OS::sprintf (tiename, 
+      ACE_OS::sprintf (tiename,
                        "%s_tie",
                        node->local_name ());
     }
   else
     {
       // We are outermost.
-      ACE_OS::sprintf (namebuf, 
-                       "POA_%s", 
+      ACE_OS::sprintf (namebuf,
+                       "POA_%s",
                        node->local_name ());
-      ACE_OS::sprintf (tiename, 
+      ACE_OS::sprintf (tiename,
                        "POA_%s_tie",
                        node->local_name ());
     }
@@ -122,7 +122,7 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
       << ");" << be_uidt << "\n";
 
   if (node->traverse_inheritance_graph (
-                be_visitor_interface_tie_sh::method_helper, 
+                be_visitor_interface_tie_sh::method_helper,
                 os
               ) == -1)
     {

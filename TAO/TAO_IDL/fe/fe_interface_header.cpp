@@ -435,7 +435,7 @@ idl_bool
 FE_InterfaceHeader::check_further (AST_Interface *i)
 {
   if (i != 0
-      && !i->is_valuetype () 
+      && !i->is_valuetype ()
       && (this->is_local () || !i->is_local ()))
     {
       return 1;
@@ -487,9 +487,9 @@ FE_InterfaceHeader::n_inherits_flat (void)
 FE_Local_InterfaceHeader::FE_Local_InterfaceHeader (UTL_ScopedName *n,
                                                     UTL_NameList *nl,
                                                     UTL_NameList *supports)
-  : FE_InterfaceHeader (n, 
-                        nl, 
-                        supports, 
+  : FE_InterfaceHeader (n,
+                        nl,
+                        supports,
                         0)
 {
   compile_inheritance (nl,
@@ -506,9 +506,9 @@ FE_Abstract_InterfaceHeader::FE_Abstract_InterfaceHeader (UTL_ScopedName *n,
                                                           UTL_NameList *nl,
                                                           UTL_NameList *supports)
 
-  : FE_InterfaceHeader (n, 
-                        nl, 
-                        supports, 
+  : FE_InterfaceHeader (n,
+                        nl,
+                        supports,
                         0)
 {
   compile_inheritance (nl,
@@ -528,8 +528,8 @@ FE_Abstract_InterfaceHeader::is_abstract (void)
 FE_obv_header::FE_obv_header (UTL_ScopedName *n,
                               UTL_NameList *nl,
                               UTL_NameList *supports)
-  : FE_InterfaceHeader (n, 
-                        nl, 
+  : FE_InterfaceHeader (n,
+                        nl,
                         supports,
                         0),
     truncatable_ (0),
@@ -562,7 +562,7 @@ idl_bool
 FE_obv_header::check_further (AST_Interface *i)
 {
   if (i != 0
-      && i->is_valuetype () 
+      && i->is_valuetype ()
       && i->is_abstract_valuetype ())
     {
       return 1;

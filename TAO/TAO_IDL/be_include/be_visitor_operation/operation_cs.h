@@ -47,11 +47,11 @@ public:
 
   virtual int visit_argument (be_argument *node);
   // visit argument to generate ParamData entries
-  
+
   // =helper
   virtual int post_process (be_decl *);
   // stuff to output after every member of the scope is handled
-  
+
 };
 
 #endif /* _BE_VISITOR_OPERATION_OPERATION_CS_H_ */

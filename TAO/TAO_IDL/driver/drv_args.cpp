@@ -91,8 +91,8 @@ DRV_prep_cpp_arg (char *s)
 
   newarg[0] = '\0';
 
-  for (farg = ACE_OS::strtok (s, ","); 
-       farg != NULL; 
+  for (farg = ACE_OS::strtok (s, ",");
+       farg != NULL;
        farg = ACE_OS::strtok (0, ","))
     {
       ACE_OS::strcat (newarg, farg);
@@ -103,7 +103,7 @@ DRV_prep_cpp_arg (char *s)
 
 // Prepare an argument for a BE
 void
-DRV_prep_be_arg (char *s, 
+DRV_prep_be_arg (char *s,
                  idl_bool)
 {
   const char arg_macro[] = "export_macro=";
@@ -664,7 +664,7 @@ DRV_parse_args (long ac, char **av)
                 {
                   ACE_ERROR ((LM_ERROR,
                               ACE_TEXT ("%s: unknown operation lookup <%s>\n"),
-                              av[0], 
+                              av[0],
                               av[i+1]));
                 }
 
@@ -773,13 +773,13 @@ DRV_parse_args (long ac, char **av)
                       idl_global->append_idl_flag (av[i+1]);
 
                       ACE_NEW (buffer,
-                               char[ACE_OS::strlen (av[i]) 
-                                    + ACE_OS::strlen (av[i + 1]) 
+                               char[ACE_OS::strlen (av[i])
+                                    + ACE_OS::strlen (av[i + 1])
                                     + 2]);
 
-                      ACE_OS::sprintf (buffer, 
-                                       "%s%s", 
-                                       av[i], 
+                      ACE_OS::sprintf (buffer,
+                                       "%s%s",
+                                       av[i],
                                        av[i+1]);
 
                       DRV_cpp_putarg (buffer);

@@ -75,7 +75,7 @@ int be_visitor_union_ch::visit_union (be_union *node)
 
       if (!node->is_local ())
         {
-          *os << "static void _tao_any_destructor (void*);" 
+          *os << "static void _tao_any_destructor (void*);"
               << be_nl << be_nl;
         }
 
@@ -120,7 +120,7 @@ int be_visitor_union_ch::visit_union (be_union *node)
 
       // Generate the _var_type typedef
       // but we must protect against certain versions of g++.
-      *os << "\n#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)" 
+      *os << "\n#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)"
           << be_nl;
       *os << "typedef " << node->local_name () << "_var _var_type;\n"
           << "#endif /* ! __GNUC__ || g++ >= 2.8 */" << be_nl << be_nl;
@@ -223,7 +223,7 @@ int be_visitor_union_ch::visit_union (be_union *node)
       // Generate the ifdefined macro for the array type.
       os->gen_ifdef_macro (node->flat_name (), "_out");
 
-      // A class is generated for an out defn only for a variable 
+      // A class is generated for an out defn only for a variable
       // length struct.
       if (node->size_type () == be_decl::VARIABLE)
         {
@@ -237,7 +237,7 @@ int be_visitor_union_ch::visit_union (be_union *node)
         }
       else
         {
-          *os << "typedef " << node->local_name () << " &" 
+          *os << "typedef " << node->local_name () << " &"
               << node->local_name () << "_out;" << be_nl << be_nl;
         }
 

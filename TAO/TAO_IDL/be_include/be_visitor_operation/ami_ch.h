@@ -12,7 +12,7 @@
 //
 // = DESCRIPTION
 //    Visitor for generating AMI stub code for IDL operations in
-//    client header.  
+//    client header.
 //
 // = AUTHOR
 //    Alexander Babu Arulanthu <alex@cs.wustl.edu>

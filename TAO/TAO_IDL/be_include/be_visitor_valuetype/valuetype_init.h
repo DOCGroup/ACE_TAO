@@ -13,11 +13,11 @@
 // = DESCRIPTION
 //    Coomon visitor for the Valuetype node.
 //    This one provides code generation for valuetype factory construct.
-// 
+//
 //
 // = AUTHOR
 //    Boris Kolpackov <bosk@ipmce.ru>
-//    
+//
 //
 // ============================================================================
 
@@ -74,7 +74,7 @@ public:
 
   virtual int visit_factory (be_factory *node);
   // visit a factory
-  
+
   void begin_public (void);
   void begin_private (void);
 };

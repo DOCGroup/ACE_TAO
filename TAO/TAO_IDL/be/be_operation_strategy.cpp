@@ -278,18 +278,12 @@ be_operation_amh_strategy::~be_operation_amh_strategy (void)
 TAO_CodeGen::CG_STATE
 be_operation_amh_strategy::next_state (
                                        TAO_CodeGen::CG_STATE current_state,
-                                       int /*is_extra_state*/
+                                       int is_extra_state
                                        )
 {
-  switch (current_state)
-    {
-    case TAO_CodeGen::TAO_OPERATION_SS:
-      return TAO_CodeGen::TAO_OPERATION_AMH_SS;
-    case TAO_CodeGen::TAO_INTERFACE_SS:
-      return TAO_CodeGen::TAO_INTERFACE_AMH_SS;
-    default:
-      return current_state;
-    }
+// We don't know yet if we need extra state for AMH but
+// we''ll leave the placeholder code her anyways ...
+	return current_state;
 }
 
 be_operation*

@@ -146,9 +146,9 @@ be_visitor_args_pre_invoke_cs::visit_array (be_array *node)
           if (!this->void_return_type ())
             {
               *os << "ACE_ALLOCATOR_RETURN (" << be_idt << be_idt_nl
-                  << arg->local_name () << ".ptr ()," << be_nl 
+                  << arg->local_name () << ".ptr ()," << be_nl
                   << bt->name () << "_alloc ()," << be_nl;
-              
+
               if (this->cannot_return_zero ())
                 {
                   *os <<"_tao_retval";
@@ -161,7 +161,7 @@ be_visitor_args_pre_invoke_cs::visit_array (be_array *node)
           else
             {
               *os << "ACE_ALLOCATOR (" << be_idt << be_idt_nl
-                  << arg->local_name () << ".ptr ()," << be_nl 
+                  << arg->local_name () << ".ptr ()," << be_nl
                   << bt->name () << "_alloc ()";
             }
 
@@ -221,7 +221,7 @@ be_visitor_args_pre_invoke_cs::visit_predefined_type (be_predefined_type *node)
               *os << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
                   << arg->local_name () << ".ptr ()," << be_nl
                   << "CORBA::Any," << be_nl;
-              
+
               if (this->cannot_return_zero ())
                 {
                   *os << "_tao_retval";
@@ -281,7 +281,7 @@ be_visitor_args_pre_invoke_cs::visit_sequence (be_sequence *node)
           *os << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
               << arg->local_name () << ".ptr ()," << be_nl
               << bt->name () << "," << be_nl;
-          
+
           if (this->cannot_return_zero ())
             {
               *os << "_tao_retval";
@@ -344,7 +344,7 @@ be_visitor_args_pre_invoke_cs::visit_structure (be_structure *node)
               *os << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
                   << arg->local_name () << ".ptr ()," << be_nl
                   << bt->name () << "," << be_nl;
-              
+
               if (this->cannot_return_zero ())
                 {
                   *os << "_tao_retval";
@@ -402,7 +402,7 @@ be_visitor_args_pre_invoke_cs::visit_union (be_union *node)
               *os << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
                   << arg->local_name () << ".ptr ()," << be_nl
                   << bt->name () << "," << be_nl;
-              
+
               if (this->cannot_return_zero ())
                 {
                   *os << "_tao_retval";

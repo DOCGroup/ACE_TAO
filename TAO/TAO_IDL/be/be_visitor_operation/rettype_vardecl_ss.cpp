@@ -154,11 +154,11 @@ visit_predefined_type (be_predefined_type *node)
     case AST_PredefinedType::PT_void:
       break;
     case AST_PredefinedType::PT_longdouble:
-      *os << bt->name () 
+      *os << bt->name ()
           << " _tao_retval = ACE_CDR_LONG_DOUBLE_INITIALIZER;\n";
       break;
     case AST_PredefinedType::PT_longlong:
-      *os << bt->name () 
+      *os << bt->name ()
           << " _tao_retval = ACE_CDR_LONGLONG_INITIALIZER;\n";
       break;
     default:

@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -81,7 +81,7 @@ ACE_RCSID(ast, ast_argument, "$Id$")
 static const char *
 direction_to_string (AST_Argument::Direction d)
 {
-  switch (d) 
+  switch (d)
     {
     case AST_Argument::dir_IN:
       return "in";
@@ -101,13 +101,13 @@ AST_Argument::AST_Argument (void)
 {
 }
 
-AST_Argument::AST_Argument (Direction d, 
-                            AST_Type *ft, 
+AST_Argument::AST_Argument (Direction d,
+                            AST_Type *ft,
                             UTL_ScopedName *n)
-  : AST_Field (AST_Decl::NT_argument, 
-               ft, 
+  : AST_Field (AST_Decl::NT_argument,
+               ft,
                n),
-	  AST_Decl (AST_Decl::NT_argument, 
+	  AST_Decl (AST_Decl::NT_argument,
               n),
 	  pd_direction (d)
 {

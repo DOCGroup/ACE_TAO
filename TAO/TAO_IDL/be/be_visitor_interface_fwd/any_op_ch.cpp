@@ -11,7 +11,7 @@
 //    any_op_ch.cpp
 //
 // = DESCRIPTION
-//    Visitor generating code for Any operators for a forward declared interface 
+//    Visitor generating code for Any operators for a forward declared interface
 //    in the client header.
 //
 // = AUTHOR
@@ -55,8 +55,8 @@ be_visitor_interface_fwd_any_op_ch::visit_interface_fwd (be_interface_fwd *node)
       return 0;
     }
 
-  if (node->cli_hdr_any_op_gen () 
-      || node->imported () 
+  if (node->cli_hdr_any_op_gen ()
+      || node->imported ()
       || node->is_local ())
     {
       return 0;

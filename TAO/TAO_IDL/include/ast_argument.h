@@ -91,8 +91,8 @@ public:
   // Constructor(s).
   AST_Argument (void);
 
-  AST_Argument (Direction direction, 
-                AST_Type *ft, 
+  AST_Argument (Direction direction,
+                AST_Type *ft,
                 UTL_ScopedName *n);
 
   // Destructor.

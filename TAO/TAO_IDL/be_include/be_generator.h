@@ -74,7 +74,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "TAO_IDL_BE_Export.h"
 
-class TAO_IDL_BE_Export be_generator : public AST_Generator 
+class TAO_IDL_BE_Export be_generator : public AST_Generator
 {
 public:
   // Create a node representing a module which is the root of an AST made
@@ -126,7 +126,7 @@ public:
                                            idl_bool abstract);
 
   virtual AST_Field *create_field (AST_Type *ft, UTL_ScopedName *n,
-                                   AST_Field::Visibility vis = 
+                                   AST_Field::Visibility vis =
                                      AST_Field::vis_NA);
 
   virtual AST_Argument *create_argument (AST_Argument::Direction d,

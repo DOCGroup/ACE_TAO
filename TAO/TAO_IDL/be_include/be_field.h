@@ -34,8 +34,8 @@ public:
   be_field (void);
   // Default constructor.
 
-  be_field (AST_Type *ft, 
-            UTL_ScopedName *n, 
+  be_field (AST_Type *ft,
+            UTL_ScopedName *n,
             Visibility vis = vis_NA);
   // Constructor.
 

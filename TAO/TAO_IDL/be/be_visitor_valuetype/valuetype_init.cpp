@@ -45,13 +45,13 @@ be_visitor_valuetype_init::visit_attribute (be_attribute *)
   return 0;
 }
 
-int 
+int
 be_visitor_valuetype_init::visit_constant (be_constant *)
 {
   return 0;
 }
 
-int 
+int
 be_visitor_valuetype_init::visit_enum (be_enum *)
 {
   return 0;
@@ -69,7 +69,7 @@ be_visitor_valuetype_init::visit_exception (be_exception *)
   return 0;
 }
 
-int 
+int
 be_visitor_valuetype_init::visit_structure (be_structure *)
 {
   return 0;
@@ -81,7 +81,7 @@ be_visitor_valuetype_init::visit_union (be_union *)
   return 0;
 }
 
-int 
+int
 be_visitor_valuetype_init::visit_typedef (be_typedef *)
 {
   return 0;
@@ -93,7 +93,7 @@ be_visitor_valuetype_init::visit_field (be_field *)
   return 0;
 }
 
-int 
+int
 be_visitor_valuetype_init::visit_factory (be_factory *)
 {
   return 0;

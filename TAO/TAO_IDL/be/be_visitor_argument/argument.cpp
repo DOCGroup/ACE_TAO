@@ -42,7 +42,7 @@ int be_visitor_args::visit_argument (be_argument *)
 // files) or as a fully scoped name. In addition, we make sure that if the type
 // is an alias, we use that name
 const char *
-be_visitor_args::type_name (be_type *node, 
+be_visitor_args::type_name (be_type *node,
                             const char *suffix)
 {
   static char namebuf [NAMEBUFSIZE];
@@ -56,12 +56,12 @@ be_visitor_args::type_name (be_type *node,
   else
     bt = node;
 
-  ACE_OS::sprintf (namebuf, 
-                   "%s", 
+  ACE_OS::sprintf (namebuf,
+                   "%s",
                    bt->full_name ());
 
   if (suffix)
-    ACE_OS::strcat (namebuf, 
+    ACE_OS::strcat (namebuf,
                     suffix);
 
   return namebuf;

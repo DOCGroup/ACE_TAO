@@ -33,7 +33,7 @@ be_root::be_root (void)
 // Constructor used to build the root of the abstract syntax tree (AST).
 be_root::be_root (UTL_ScopedName *n)
   : AST_Root (n),
-    AST_Decl (AST_Decl::NT_root, 
+    AST_Decl (AST_Decl::NT_root,
               n),
     UTL_Scope (AST_Decl::NT_root)
 

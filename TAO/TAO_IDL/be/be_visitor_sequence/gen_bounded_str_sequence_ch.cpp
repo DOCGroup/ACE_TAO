@@ -116,7 +116,7 @@ be_visitor_sequence_ch::gen_bounded_str_sequence (be_sequence *node)
   *os << "// = Accessors." << be_nl;
 
   // operator[]
-  *os << "TAO_SeqElem_String_Manager operator[] (CORBA::ULong index) const;" 
+  *os << "TAO_SeqElem_String_Manager operator[] (CORBA::ULong index) const;"
       << be_nl << be_nl;
 
   // Static operations

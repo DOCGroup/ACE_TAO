@@ -136,7 +136,7 @@ be_visitor_operation_rettype_is::visit_structure (be_structure *)
 {
 
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
-  
+
   *os << "return 0;" <<be_nl;
   return 0;
 }

@@ -100,7 +100,7 @@ private:
 };
 
 // Active iterator fooor UTL_DeclList
-class TAO_IDL_FE_Export UTL_DecllistActiveIterator 
+class TAO_IDL_FE_Export UTL_DecllistActiveIterator
   : public UTL_ListActiveIterator
 {
 public:

@@ -28,18 +28,18 @@ ACE_RCSID(be, be_interface_fwd, "$Id$")
 be_interface_fwd::be_interface_fwd (void)
 {
   // Always the case.
-  this->size_type (be_decl::VARIABLE); 
+  this->size_type (be_decl::VARIABLE);
 }
 
 be_interface_fwd::be_interface_fwd (AST_Interface *dummy,
                                     UTL_ScopedName *n)
-  : AST_InterfaceFwd (dummy, 
+  : AST_InterfaceFwd (dummy,
                       n),
-    AST_Decl (AST_Decl::NT_interface_fwd, 
+    AST_Decl (AST_Decl::NT_interface_fwd,
               n)
 {
   // Always the case.
-  this->size_type (be_decl::VARIABLE); 
+  this->size_type (be_decl::VARIABLE);
 }
 
 be_interface_fwd::~be_interface_fwd (void)

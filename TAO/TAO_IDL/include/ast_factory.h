@@ -76,7 +76,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_scope.h"
 #include "utl_scoped_name.h"
 
-class TAO_IDL_FE_Export AST_Factory : public virtual AST_Decl, 
+class TAO_IDL_FE_Export AST_Factory : public virtual AST_Decl,
                                       public virtual UTL_Scope
 {
 public:
@@ -117,7 +117,7 @@ public:
 
 private:
   // Data.
-  
+
   int argument_count_;
   // Number of arguments.
 
