@@ -1,6 +1,7 @@
 Sat Apr  6 07:40:13 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/PortableServer/ImplRepoC.h:
+	* tao/PortableServer/ImplRepoC.i:
 	* tao/PortableServer/ImplRepoS.h: Changed the export flag from
 	  TAO_Export to TAO_PortableServer_Export.
 
