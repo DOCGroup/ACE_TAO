@@ -1,3 +1,83 @@
+Thu Nov  6 22:32:19 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	This checkin is about an optimization and not definitely for the
+	weak hearted :-)! All this jugglery is for getting rid of one
+        allocation along the critical path. Not sure how much would this
+	fetch us, but never the less an useful optimization. 
+
+	A quick brief. In older versions of TAO, the client thread used to
+        create a output CDR on the TSS and use that for marshalling data
+        and sending data which was neat. But during the reply, we used to
+        create an InputCDR on the global memory since the thread reading
+        the reply message could be different from the thread to whom the
+        reply belongs to. If you want to know why, look for documentation
+        of TAO's LF. After we worked on BUG 1369, we got a few advantages
+        and this  optimization cashed in on that. 
+
+	Refactoring the generated code allowed us to move the CDR stream
+        inside the transport, to be more specific inside the GIOP
+        objects. This was also right, since the CDR's are tied to
+        GIOP. But this gave rise to a problem. We could not use the TSS
+        anymore since multiple threads could share the same transport (one
+        after another). Hence we used the global memory pool (different
+	from the global heap) to allocate the CDR and this is a one time
+	activity cached inside the transport. All threads can infact use
+	the same chunk of memory. That was done when we merged the branch
+        for fixes from 1369. Since the transports are anyway on a per-lane
+        basis RTCORBA wouldn't be affected at all.
+
+	This checkin broke another barrier, ie. the allocation required
+        while getting the replies. The thread collecting the reply can
+        read the messages on its stack and copy the messages to the stack
+        of another thread which is expecting a reply. Therefore we now
+        require no allocations but for a copy. 
+
+	All the above are valid for messages of decent size. If the
+        messages are big we have to hit the global memory. What are the
+        end results?
+
+	- TAO now does not do any allocation along the outgoing request
+	  path. 
+
+	- It doesn't do any allocation along the reply collection path
+	  even in MT scenarios for decent sized messages and when the
+	  network is behaving well (ie. when there is no IP
+	  fragmentation).  
+
+	We were also helped by an optimization that was added in ACE
+        yesterday to the CDR streams. We have to wait and see how much
+        does this checkin buys us in terms of performance. Anyway, this 
+        documentation should be useful for others.
+	
+	* tao/GIOP_Message_Lite.cpp:
+	* tao/GIOP_Message_Base.cpp (process_reply_message):
+
+	  Construct the CDR stream and use that CDR to dispatch the
+	  reply. Now the reply dispatch is done by the GIOP objects. 
+
+	* tao/GIOP_Message_Generator_Parser.cpp:
+	* tao/GIOP_Message_Generator_Parser_10.cpp:
+	* tao/GIOP_Message_Generator_Parser_12.cpp:
+
+	  No need to do any exchange CDR blocks since things are being
+	  taken care elsewhere. 
+
+	* tao/Pluggable_Messaging_Utils.cpp:
+	* tao/Pluggable_Messaging_Utils.h:
+
+	  Added a transport pointer to the Reply_Params object. It is
+	  used by the GIOP layer to dispatch the reply. Removed the
+	  temporary CDR that was created here. 
+
+	* tao/Synch_Reply_Dispatcher.cpp:
+	* tao/DynamicInterface/DII_Reply_Dispatcher.cpp:
+	* tao/Messaging/Asynch_Reply_Dispatcher.cpp:
+
+	  Added a check for null CDR's in the Reply_Param's object. 
+
+	* tao/Transport.cpp: Construct the Reply_Params using the
+	  transport instead of the ORB_Core. 
+	
 Fri Nov  7 02:08:17 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * orbsvcs/ImplRepo_Service/Server_Repository.cpp:

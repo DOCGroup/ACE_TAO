@@ -49,6 +49,13 @@ int
 TAO_Synch_Reply_Dispatcher::dispatch_reply (
     TAO_Pluggable_Reply_Params &params)
 {
+  if (params.input_cdr_ == 0)
+    return -1;
+
+  if (TAO_debug_level > 2)
+    ACE_ERROR ((LM_ERROR,
+                "TAO (%P|%t) - Synch_Reply_Dispatcher::dispatch_reply ",
+                "going on \n"));
   this->reply_status_ = params.reply_status_;
 
   // Steal the buffer, that way we don't do any unnecesary copies of
@@ -64,7 +71,7 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (
 
   // Transfer the <params.input_cdr_>'s content to this->reply_cdr_
   ACE_Data_Block *db =
-    this->reply_cdr_.clone_from (params.input_cdr_);
+    this->reply_cdr_.clone_from (*params.input_cdr_);
 
   if (db == 0)
     {
