@@ -522,6 +522,7 @@ TEMPLATE_FILES = \
   Swap.cpp \
   Synch_T.cpp \
   Task_T.cpp \
+  Template_Instantiations.cpp \
   Test_and_Set.cpp \
   Timeprobe_T.cpp \
   Timer_Hash_T.cpp \
