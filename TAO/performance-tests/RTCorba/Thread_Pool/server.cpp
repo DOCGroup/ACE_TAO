@@ -329,6 +329,20 @@ main (int argc, char *argv[])
             rt_orb->create_threadpool_policy (threadpool_id,
                                               ACE_TRY_ENV);
           ACE_TRY_CHECK;
+
+	  if (ACE_OS::strcmp (bands_file, "empty-file") != 0)
+	    {
+	      result =
+		get_priority_bands ("server",
+				    bands_file,
+				    rt_orb.in (),
+				    policies,
+				    ACE_TRY_ENV);
+	      ACE_TRY_CHECK;
+	      
+	      if (result != 0)
+		return result;
+	    }
         }
 
       policies.length (policies.length () + 1);
