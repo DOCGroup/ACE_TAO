@@ -120,7 +120,7 @@ ACE_IPC_SAP::disable (int signum) const
 #if defined (SIGURG)
     case SIGURG:
 #if defined (F_SETOWN)
-      return ACE_OS::fcntl (this->handle_, F_SETOWN, 0)
+      return ACE_OS::fcntl (this->handle_, F_SETOWN, 0);
 #else
       return -1;
 #endif /* F_SETOWN */
