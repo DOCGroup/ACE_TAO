@@ -1,3 +1,10 @@
+Thu Feb  3 11:38:15 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/Shared_Malloc/test_position_independent_malloc.cpp: Only
+	  explicitly instantiate a template for ACE_Malloc_T if we've got
+ 	  ACE_HAS_POSITION_INDEPEDENT_MALLOC enabled.  Thanks to David
+ 	  Levine for reporting this.
+  
 Thu Feb  3 11:40:27 2000  Ossama Othman  <ossama@uci.edu>
 
 	* docs/ACE-subsets.html:
