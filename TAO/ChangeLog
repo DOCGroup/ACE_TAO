@@ -1,9 +1,21 @@
+Thu Sep 16 10:55:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/RTCORBA/RTCORBA.pidl:
+          Zapped include of orb.idl, not needed and reduces number of manual
+          patching
+
+        * tao/RTCORBA/RTCORBAC.{h,cpp,i,inl}:
+          Regenerated and manually patched
+
+        * tao/RTCORBA/diffs/RTCORBA.diff:
+          Updated
+
 Wed Sep 15 21:25:28 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_root.cpp:
         * TAO_IDL/util/utl_scope.cpp:
-        
-          Fixed cleanup of root scope between IDL files when 
+
+          Fixed cleanup of root scope between IDL files when
           multiple IDL files are passed on the command line.
           The cleanup needs to remove all declarations and
           references except those for the predefined types,
