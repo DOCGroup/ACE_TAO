@@ -2152,7 +2152,8 @@ ACE::count_interfaces (ACE_HANDLE handle,
   if (ACE_OS::ioctl (handle, SIOCGIFNUM, (caddr_t) &how_many) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "ACE::get_ip_interfaces:ioctl - SIOCGIFNUM failed"), -1);
    return 0;
-#elif defined (__unix)  /* Note: DEC CXX doesn't define "unix" */
+#elif defined (__unix) || defined (__Lynx__)
+/* Note: DEC CXX doesn't define "unix" */
 // BSD compatible OS: HP UX, AIX, SunOS 4.x perform some ioctls to
 // retrieve ifconf list of ifreq structs no SIOCGIFNUM on SunOS 4.x,
 // so use guess and scan algorithm
@@ -2202,7 +2203,7 @@ ACE::count_interfaces (ACE_HANDLE handle,
    ACE_UNUSED_ARG (handle);
    ACE_UNUSED_ARG (how_many);
    ACE_NOTSUP_RETURN (-1);; // no implmentation
-#endif /* __SVR4 */
+#endif /* sparc && SIOCGIFNUM */
 }
 
 // Routine to return a handle from which ioctl() requests can be
@@ -2215,10 +2216,10 @@ ACE::get_handle (void)
   ACE_HANDLE handle = ACE_INVALID_HANDLE;
 #if defined (sparc)
   handle = ACE_OS::open ("/dev/udp", O_RDONLY);
-#elif defined (__unix)  /* Note: DEC CXX doesn't define "unix" */
+#elif defined (__unix) || defined (__Lynx__)  /* Note: DEC CXX doesn't define "unix" */
 // BSD compatible OS: HP UX, AIX, SunOS 4.x
   handle = ACE_OS::socket (PF_INET, SOCK_DGRAM, 0);
-#endif /* __SVR4 */
+#endif /* sparc */
   return handle;
 }
 
@@ -2332,7 +2333,7 @@ ACE::get_ip_interfaces (size_t &count,
         }
     }
   return 0;
-#elif defined (__unix)
+#elif defined (__unix) || defined (__Lynx__)
   //  COMMON (SVR4 and BSD) UNIX CODE
 
   size_t num_ifs;
@@ -2404,10 +2405,10 @@ ACE::get_ip_interfaces (size_t &count,
 #endif /* ACE_WIN32 */
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) && defined (__unix)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) && (defined (__unix) || defined (__Lynx__))
 template class ACE_Auto_Array_Ptr<struct ifreq>;
 template class ACE_Auto_Basic_Array_Ptr<struct ifreq>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Auto_Array_Ptr<struct ifreq>
 #pragma instantiate ACE_Auto_Basic_Array_Ptr<struct ifreq>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION && __unix */
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION && (__unix || __Lynx_) */
