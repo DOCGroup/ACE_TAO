@@ -1,3 +1,12 @@
+Wed Jan 24 10:41:35 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/diffs/InterfaceC.*.diff:
+
+          Removed these files. They now exist in
+          tao/IFR_Client/diffs, and I forgot to remove them in
+          my original checkin. Thanks to Nanbor for pointing
+          out the oversight.
+
 Wed Jan 24 00:27:47 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.cpp
