@@ -55,7 +55,7 @@ main (int, ACE_TCHAR *[])
   ACE_RMCast_Fragment_Tester tester;
 
   if (tester.svc () == -1)
-    ACE_ERROR ((LM_ERROR, "Error running the svc() routine\n"));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error running the svc() routine\n")));
 
   ACE_END_TEST;
   return 0;
@@ -89,15 +89,15 @@ ACE_RMCast_Fragment_Tester::svc (void)
 
     if (this->received_bytes_ != n)
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Unexpected number of "
-                         "received bytes (%d/%d)\n",
+                         ACE_TEXT ("Unexpected number of ")
+                         ACE_TEXT ("received bytes (%d/%d)\n"),
                          this->received_bytes_, n),
                         -1);
 
     if (this->compare (&big_blob) == -1)
       {
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Mismatched big_blob data\n"),
+                           ACE_TEXT ("Mismatched big_blob data\n")),
                           -1);
         return -1;
       }
@@ -132,15 +132,15 @@ ACE_RMCast_Fragment_Tester::svc (void)
     ACE_UINT32 total = n * size;
     if (this->received_bytes_ != total)
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Unpexpected number of "
-                         "received bytes (%d/%d)\n",
+                         ACE_TEXT ("Unexpected number of ")
+                         ACE_TEXT ("received bytes (%d/%d)\n"),
                          this->received_bytes_, total),
                         -1);
 
     if (this->compare (small) == -1)
       {
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Mismatched small chain data\n"),
+                           ACE_TEXT ("Mismatched small chain data\n")),
                           -1);
         return -1;
       }
@@ -181,15 +181,15 @@ ACE_RMCast_Fragment_Tester::svc (void)
 
     if (this->received_bytes_ != total)
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Unpexpected number of "
-                         "received bytes (%d/%d)\n",
+                         ACE_TEXT ("Unexpected number of ")
+                         ACE_TEXT ("received bytes (%d/%d)\n"),
                          this->received_bytes_, total),
                         -1);
 
     if (this->compare (small) == -1)
       {
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Mismatched small chain data\n"),
+                           ACE_TEXT ("Mismatched small chain data\n")),
                           -1);
         return -1;
       }
@@ -234,11 +234,11 @@ ACE_RMCast_Fragment_Tester::compare (ACE_Message_Block *mb)
           ACE_HEX_DUMP ((LM_DEBUG,
                          blob.rd_ptr () + offset,
                          z,
-                         "BIG BLOB"));
+                         ACE_TEXT ("BIG BLOB")));
           ACE_HEX_DUMP ((LM_DEBUG,
                          this->received_.rd_ptr () + offset,
                          z,
-                         "RECEIVED"));
+                         ACE_TEXT ("RECEIVED")));
         }
       return -1;
     }
@@ -263,11 +263,11 @@ ACE_RMCast_Fragment_Tester::data (ACE_RMCast::Data &data)
     {
       if (this->message_sequence_number_ != sequence_number)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Mismatched sequence number\n"),
+                           ACE_TEXT ("Mismatched sequence number\n")),
                           -1);
       if (this->received_.length () != message_size)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Mismatched sequence size\n"),
+                           ACE_TEXT ("Mismatched sequence size\n")),
                           -1);
     }
 
@@ -296,7 +296,7 @@ ACE_RMCast_Fragment_Tester::data (ACE_RMCast::Data &data)
 
   if (fragment_size > this->fragment_.max_fragment_size ())
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Invalid fragment size\n"),
+                       ACE_TEXT ("Invalid fragment size\n")),
                       -1);
 
   return 0;

@@ -92,12 +92,12 @@ ACE_RMCast_IO_UDP::handle_input (ACE_HANDLE)
     {
       // @@ LOG??
       ACE_ERROR ((LM_ERROR,
-                  "RMCast_IO_UDP::handle_input () - "
-                  "error in recv %p\n", ""));
+                  ACE_TEXT ("RMCast_IO_UDP::handle_input () - ")
+                  ACE_TEXT ("error in recv %p\n"), ACE_TEXT ("")));
       return -1;
     }
 
-  // ACE_HEX_DUMP ((LM_DEBUG, buffer, 16, "Receiver::handle_input"));
+  // ACE_HEX_DUMP ((LM_DEBUG, buffer, 16, ACE_TEXT ("Receiver::handle_input")));
 
   // @@ Locking!
 
@@ -128,7 +128,7 @@ ACE_RMCast_IO_UDP::handle_input (ACE_HANDLE)
   if (this->map_.find (from_address, proxy) != 0)
     {
       //ACE_DEBUG ((LM_DEBUG,
-      //            "IO_UDP::handle_input - new proxy from <%s:%d>\n",
+      //            ACE_TEXT ("IO_UDP::handle_input - new proxy from <%s:%d>\n"),
       //            from_address.get_host_addr (),
       //            from_address.get_port_number ()));
 
@@ -234,7 +234,7 @@ ACE_RMCast_IO_UDP::send_data (ACE_RMCast::Data &data,
                               const ACE_INET_Addr &to)
 {
   //ACE_DEBUG ((LM_DEBUG,
-  //            "IO_UDP::send_data - pushing out to <%s:%d>\n",
+  //            ACE_TEXT ("IO_UDP::send_data - pushing out to <%s:%d>\n"),
   //            to.get_host_addr (),
   //            to.get_port_number ()));
 
@@ -286,7 +286,9 @@ ACE_RMCast_IO_UDP::send_data (ACE_RMCast::Data &data,
 
 #if 0
   ACE_HEX_DUMP ((LM_DEBUG,
-                 (char*)iov[0].iov_base, iov[0].iov_len, "Sending"));
+                 (char*)iov[0].iov_base, 
+                 iov[0].iov_len, 
+                 ACE_TEXT ("Sending")));
 #endif
 
   return 0;
@@ -297,7 +299,7 @@ ACE_RMCast_IO_UDP::send_poll (ACE_RMCast::Poll &,
                               const ACE_INET_Addr &to)
 {
   //ACE_DEBUG ((LM_DEBUG,
-  //            "IO_UDP::send_poll - pushing out to <%s:%d>\n",
+  //            ACE_TEXT ("IO_UDP::send_poll - pushing out to <%s:%d>\n"),
   //            to.get_host_addr (),
   //            to.get_port_number ()));
 
@@ -320,7 +322,7 @@ ACE_RMCast_IO_UDP::send_ack_join (ACE_RMCast::Ack_Join &ack_join,
                                   const ACE_INET_Addr &to)
 {
   //ACE_DEBUG ((LM_DEBUG,
-  //            "IO_UDP::send_ack_join - pushing out to <%s:%d>\n",
+  //            ACE_TEXT ("IO_UDP::send_ack_join - pushing out to <%s:%d>\n"),
   //            to.get_host_addr (),
   //            to.get_port_number ()));
 
@@ -346,7 +348,7 @@ ACE_RMCast_IO_UDP::send_ack_leave (ACE_RMCast::Ack_Leave &,
                                    const ACE_INET_Addr &to)
 {
   //ACE_DEBUG ((LM_DEBUG,
-  //            "IO_UDP::send_ack_leave - pushing out to <%s:%d>\n",
+  //            ACE_TEXT ("IO_UDP::send_ack_leave - pushing out to <%s:%d>\n"),
   //            to.get_host_addr (),
   //            to.get_port_number ()));
 
@@ -369,7 +371,7 @@ ACE_RMCast_IO_UDP::send_ack (ACE_RMCast::Ack &ack,
                               const ACE_INET_Addr &to)
 {
   //ACE_DEBUG ((LM_DEBUG,
-  //            "IO_UDP::send_ack - pushing (%d:%d) out to <%s:%d>\n",
+  //            ACE_TEXT ("IO_UDP::send_ack - pushing (%d:%d) out to <%s:%d>\n"),
   //            ack.next_expected,
   //            ack.highest_received,
   //            to.get_host_addr (),
@@ -401,7 +403,7 @@ ACE_RMCast_IO_UDP::send_join (ACE_RMCast::Join &,
                               const ACE_INET_Addr &to)
 {
   //ACE_DEBUG ((LM_DEBUG,
-  //            "IO_UDP::send_join - pushing out to <%s:%d>\n",
+  //            ACE_TEXT ("IO_UDP::send_join - pushing out to <%s:%d>\n"),
   //            to.get_host_addr (),
   //            to.get_port_number ()));
 
@@ -424,7 +426,7 @@ ACE_RMCast_IO_UDP::send_leave (ACE_RMCast::Leave &,
                                const ACE_INET_Addr &to)
 {
   //ACE_DEBUG ((LM_DEBUG,
-  //            "IO_UDP::send_leave - pushing out to <%s:%d>\n",
+  //            ACE_TEXT ("IO_UDP::send_leave - pushing out to <%s:%d>\n"),
   //            to.get_host_addr (),
   //            to.get_port_number ()));
 

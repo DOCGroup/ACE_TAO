@@ -127,15 +127,15 @@ main (int, ACE_TCHAR *[])
               ACE::beta_version()));
 
   ACE_INET_Addr mcast_group;
-  mcast_group.set (12345, "224.9.9.1");
+  mcast_group.set (12345, ACE_TEXT ("224.9.9.1"));
 
   Receiver receiver (mcast_group);
   if (receiver.open () != 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "Error in Receiver::open\n"), 1);
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Error in Receiver::open\n")), 1);   
 
   Sender sender (mcast_group);
   if (sender.activate () != 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "Error in Sender::activate\n"), 1);
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Error in Sender::activate\n")), 1);
 
   ACE_Time_Value tv (120, 0);
   for (;;)
@@ -145,7 +145,7 @@ main (int, ACE_TCHAR *[])
       if (r < 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Error in handle_events()\n"),
+                             ACE_TEXT ("Error in handle_events()\n")),
                             1);
         }
       if (tv == ACE_Time_Value::zero)
@@ -153,7 +153,9 @@ main (int, ACE_TCHAR *[])
     }
 
   if (ACE_Thread_Manager::instance ()->wait () != 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "Error in Thread_Manager::wait\n"), 1);
+    ACE_ERROR_RETURN ((LM_ERROR, 
+                       ACE_TEXT ("Error in Thread_Manager::wait\n")), 
+                       1);
 
   receiver.dump ();
 
@@ -181,7 +183,9 @@ int
 Receiver::open (void)
 {
   if (this->io_udp_.subscribe (this->mcast_group_) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "Error in IO_UDP::subscribe\n"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, 
+                       ACE_TEXT ("Error in IO_UDP::subscribe\n")), 
+                      -1);
   return 0;
 }
 
@@ -190,13 +194,13 @@ Receiver::data (ACE_RMCast::Data &data)
 {
   if (data.total_size != message_size)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Invalid message size (%d,%d,%d)\n",
+                       ACE_TEXT ("Invalid message size (%d,%d,%d)\n"),
                        data.sequence_number,
                        data.total_size,
                        data.fragment_offset), -1);
   if (data.fragment_offset != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Invalid message size (%d,%d,%d)\n",
+                       ACE_TEXT ("Invalid message size (%d,%d,%d)\n"),
                        data.sequence_number,
                        data.total_size,
                        data.fragment_offset), -1);
@@ -208,7 +212,7 @@ Receiver::data (ACE_RMCast::Data &data)
     {
       if (*j != expected++)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Unexpected byte at pos %d\n",
+                           ACE_TEXT ("Unexpected byte at pos %d\n"),
                            long(j - data.payload->rd_ptr ())), -1);
     }
 
@@ -221,7 +225,7 @@ void
 Receiver::dump (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "Message count = %d/%d\n",
+              ACE_TEXT ("Message count = %d/%d\n"),
               this->message_count_,
               total_message_count));
 }
@@ -238,10 +242,10 @@ int
 Sender::svc ()
 {
   if (this->fragment_.next (&this->io_udp_) != 0)
-    ACE_ERROR ((LM_ERROR, "Error in Fragment::next()\n"));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error in Fragment::next()\n")));
 
   if (this->io_udp_.subscribe (this->mcast_group_) != 0)
-    ACE_ERROR ((LM_ERROR, "Error in IO_UDP::subscribe()\n"));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error in IO_UDP::subscribe()\n")));
 
   ACE_Message_Block big_blob (message_size);
   big_blob.wr_ptr (message_size);

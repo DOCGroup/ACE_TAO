@@ -64,7 +64,9 @@ main (int, ACE_TCHAR *[])
   ACE_RMCast_Reassembly_Tester tester;
 
   if (tester.activate (THR_NEW_LWP|THR_JOINABLE, 4) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "Cannot activate the threads\n"), 1);
+    ACE_ERROR_RETURN ((LM_ERROR, 
+                       ACE_TEXT ("Cannot activate the threads\n")), 
+                      1);
 
   ACE_Thread_Manager::instance ()->wait ();
 
@@ -85,7 +87,7 @@ ACE_RMCast_Reassembly_Tester::svc (void)
 {
   for (int iteration = 0; iteration != 50; ++iteration)
     {
-      ACE_DEBUG ((LM_DEBUG, "(%t) iteration %d\n", iteration));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) iteration %d\n"), iteration));     
       ACE_UINT32 sequence_number = this->next_sequence_number ();
       {
         ACE_Message_Block received;
@@ -111,7 +113,7 @@ ACE_RMCast_Reassembly_Tester::svc (void)
                                     &big_blob) == -1)
               {
                 ACE_DEBUG ((LM_DEBUG,
-                            "Error in put_fragment\n"));
+                            ACE_TEXT ("Error in put_fragment\n")));
                 return -1;
               }
           }
@@ -119,13 +121,14 @@ ACE_RMCast_Reassembly_Tester::svc (void)
         if (this->compare (&received, &big_blob) == -1)
           {
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "Mismatched big_blob data\n"),
+                               ACE_TEXT ("Mismatched big_blob data\n")),
                               -1);
             return -1;
           }
       }
 
-      ACE_DEBUG ((LM_DEBUG, "(%t) iteration %d, first test passed\n",
+      ACE_DEBUG ((LM_DEBUG, 
+                  ACE_TEXT ("(%t) iteration %d, first test passed\n"),
                   iteration));
       sequence_number = this->next_sequence_number ();
       {
@@ -159,7 +162,7 @@ ACE_RMCast_Reassembly_Tester::svc (void)
                                     &big_blob) == -1)
               {
                 ACE_DEBUG ((LM_DEBUG,
-                            "Error in put_fragment\n"));
+                            ACE_TEXT ("Error in put_fragment\n")));
                 return -1;
               }
           }
@@ -172,7 +175,7 @@ ACE_RMCast_Reassembly_Tester::svc (void)
                                     &big_blob) == -1)
               {
                 ACE_DEBUG ((LM_DEBUG,
-                            "Error in put_fragment\n"));
+                            ACE_TEXT ("Error in put_fragment\n")));
                 return -1;
               }
           }
@@ -180,12 +183,13 @@ ACE_RMCast_Reassembly_Tester::svc (void)
         if (this->compare (&received, &big_blob) == -1)
           {
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "Mismatched random big_blob data\n"),
+                               ACE_TEXT ("Mismatched random big_blob data\n")),
                               -1);
             return -1;
           }
       }
-      ACE_DEBUG ((LM_DEBUG, "(%t) iteration %d, random test passed\n",
+      ACE_DEBUG ((LM_DEBUG, 
+                  ACE_TEXT ("(%t) iteration %d, random test passed\n"),
                   iteration));
     }
 
@@ -218,7 +222,7 @@ ACE_RMCast_Reassembly_Tester::compare (ACE_Message_Block *received,
     }
 
   if (received->rd_ptr () == 0)
-    ACE_ERROR_RETURN ((LM_DEBUG, "INCOMPLETE MESSAGE\n"), -1);
+    ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT ("INCOMPLETE MESSAGE\n")), -1);
 
   if (ACE_OS::memcmp (blob.rd_ptr (),
                       received->rd_ptr (),
@@ -232,7 +236,7 @@ ACE_RMCast_Reassembly_Tester::compare (ACE_Message_Block *received,
           ACE_HEX_DUMP ((LM_DEBUG,
                          blob.rd_ptr () + i,
                          z,
-                         "BIG BLOB"));
+                         ACE_TEXT ("BIG BLOB")));
         }
       for (size_t j = 0; j < n; j += 256)
         {
@@ -242,7 +246,7 @@ ACE_RMCast_Reassembly_Tester::compare (ACE_Message_Block *received,
           ACE_HEX_DUMP ((LM_DEBUG,
                          received->rd_ptr () + j,
                          z,
-                         "RECEIVED"));
+                         ACE_TEXT ("RECEIVED")));
         }
       return -1;
     }
