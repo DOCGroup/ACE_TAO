@@ -3,6 +3,7 @@
 #include "UUID.h"
 #include "resolve_init.h"
 #include "orbsvcs/orbsvcs/FtRtecEventCommS.h"
+#include "tao/ORB_Core.h"
 
 ACE_RCSID (Utils,
            FTEC_Gateway,
@@ -98,6 +99,22 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
+/**
+ * This is used for remove the interceptors registered in the ORB.
+ */
+class Interceptor_Destoryer : public TAO_ORB_Core
+{
+public:
+  inline static void execute(CORBA::ORB_ptr orb ACE_ENV_ARG_DECL) {
+    static_cast<Interceptor_Destoryer*>(orb->orb_core())->do_it(ACE_ENV_SINGLE_ARG_PARAMETER);
+  }
+private:
+  Interceptor_Destoryer();
+  inline void do_it(ACE_ENV_SINGLE_ARG_DECL) {
+    destroy_interceptors(ACE_ENV_SINGLE_ARG_PARAMETER);
+  };
+};
+
 struct FTEC_Gateway_Impl
 {
   CORBA::ORB_var orb;
@@ -111,6 +128,7 @@ struct FTEC_Gateway_Impl
   FTEC_Gateway_ProxyPushConsumer proxy_consumer_servant;
   PushConsumerHandler push_handler_servant;
   FtRtecEventComm::AMI_PushConsumerHandler_var push_handler;
+  bool local_orb;
   FTEC_Gateway_Impl();
 };
 
@@ -125,79 +143,106 @@ FTEC_Gateway_Impl::FTEC_Gateway_Impl()
 FTEC_Gateway::FTEC_Gateway(CORBA::ORB_ptr orb, FtRtecEventChannelAdmin::EventChannel_ptr ftec)
 : impl_(new FTEC_Gateway_Impl)
 {
-  impl_->orb = CORBA::ORB::_duplicate(orb);
+  impl_->local_orb = CORBA::is_nil(orb);
+  if (!impl_->local_orb) 
+    impl_->orb = CORBA::ORB::_duplicate(orb);
   impl_->ftec = FtRtecEventChannelAdmin::EventChannel::_duplicate(ftec);
 }
 
 FTEC_Gateway::~FTEC_Gateway()
 {
+  if (impl_->local_orb)
+    impl_->orb->shutdown();
   delete impl_;
 }
 
 RtecEventChannelAdmin::EventChannel_ptr
-FTEC_Gateway::activate(PortableServer::POA_ptr poa ACE_ENV_ARG_DECL)
+FTEC_Gateway::activate(PortableServer::POA_ptr root_poa ACE_ENV_ARG_DECL)
 {
-    PortableServer::IdUniquenessPolicy_var id_uniqueness_policy =
-      poa->create_id_uniqueness_policy(PortableServer::MULTIPLE_ID
+  PortableServer::POA_var poa;
+  PortableServer::POAManager_var mgr;
+
+  if (impl_->local_orb) {
+    int argc = 0;
+    char** argv = 0;
+    impl_->orb = CORBA::ORB_init(argc, argv, "FTEC_GatewayORB"
       ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(0);
+    ACE_TRY_CHECK;
 
-      PortableServer::LifespanPolicy_var lifespan =
-      poa->create_lifespan_policy(PortableServer::PERSISTENT
+    Interceptor_Destoryer::execute(impl_->orb.in() ACE_ENV_ARG_PARAMETER);
+
+    poa = resolve_init<PortableServer::POA>(impl_->orb.in(), "RootPOA"
       ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(0);
+    ACE_TRY_CHECK;
 
-    // create a USER_ID IdAssignmentPolicy object
-    PortableServer::IdAssignmentPolicy_var assign =
-      poa->create_id_assignment_policy(PortableServer::USER_ID
-      ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(0);
+    mgr = poa->the_POAManager(ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_TRY_CHECK;
 
-    CORBA::PolicyList policy_list;
-    policy_list.length(3);
+    mgr->activate(ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+  }
+  else {
+    poa = PortableServer::POA::_duplicate(root_poa);
+    mgr = poa->the_POAManager(ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+  }
 
-    policy_list[0] = PortableServer::IdUniquenessPolicy::_duplicate(
-      id_uniqueness_policy.in());
-    ACE_CHECK_RETURN(0);
-    policy_list[1]=
-      PortableServer::LifespanPolicy::_duplicate(lifespan.in());
-    ACE_CHECK_RETURN(0);
-    policy_list[2]=
-      PortableServer::IdAssignmentPolicy::_duplicate(assign.in());
-    ACE_CHECK_RETURN(0);
+  PortableServer::IdUniquenessPolicy_var id_uniqueness_policy =
+    poa->create_id_uniqueness_policy(PortableServer::MULTIPLE_ID
+    ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN(0);
 
-    PortableServer::POAManager_var mgr = poa->the_POAManager(ACE_ENV_SINGLE_ARG_PARAMETER);
+  PortableServer::LifespanPolicy_var lifespan =
+    poa->create_lifespan_policy(PortableServer::PERSISTENT
+    ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN(0);
 
-    impl_->poa = poa->create_POA("gateway_poa", mgr.in(), policy_list
-      ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(0);
+  // create a USER_ID IdAssignmentPolicy object
+  PortableServer::IdAssignmentPolicy_var assign =
+    poa->create_id_assignment_policy(PortableServer::USER_ID
+    ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN(0);
 
-    id_uniqueness_policy->destroy();
-    lifespan->destroy();
-    assign->destroy();
+  CORBA::PolicyList policy_list;
+  policy_list.length(3);
 
-    FtRtecEventComm::ObjectId oid;
-    oid.length(16);
-    UUID::create(oid.get_buffer());
+  policy_list[0] = PortableServer::IdUniquenessPolicy::_duplicate(
+    id_uniqueness_policy.in());
+  policy_list[1]=
+    PortableServer::LifespanPolicy::_duplicate(lifespan.in());
+  policy_list[2]=
+    PortableServer::IdAssignmentPolicy::_duplicate(assign.in());
 
-    RtecEventChannelAdmin::EventChannel_var gateway;
+  impl_->poa = poa->create_POA("gateway_poa", mgr.in(), policy_list
+    ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN(0);
 
-    activate_object_with_id(gateway.out(), impl_->poa, this, oid ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(0);
-    ++oid[9];
-    activate_object_with_id(impl_->consumer_admin.out(),
-                            impl_->poa,
-                            &impl_->consumer_admin_servant,
-                            oid ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(0);
-    ++oid[9];
-    activate_object_with_id(impl_->supplier_admin.out(),
-                            impl_->poa,
-                            &impl_->supplier_admin_servant,
-                            oid ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(0);
+  id_uniqueness_policy->destroy();
+  lifespan->destroy();
+  assign->destroy();
 
-    return gateway._retn();
+  FtRtecEventComm::ObjectId oid;
+  oid.length(16);
+  UUID::create(oid.get_buffer());
+
+  RtecEventChannelAdmin::EventChannel_var gateway;
+
+  activate_object_with_id(gateway.out(), impl_->poa, this, oid ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN(0);
+  ++oid[9];
+  activate_object_with_id(impl_->consumer_admin.out(),
+    impl_->poa,
+    &impl_->consumer_admin_servant,
+    oid ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN(0);
+  ++oid[9];
+  activate_object_with_id(impl_->supplier_admin.out(),
+    impl_->poa,
+    &impl_->supplier_admin_servant,
+    oid ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN(0);
+
+  return gateway._retn();
 }
 
 //= The RtecEventChannelAdmin::EventChannel methods
@@ -241,6 +286,20 @@ void FTEC_Gateway::remove_observer (RtecEventChannelAdmin::Observer_Handle handl
                                     RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER))
 {
   impl_->ftec->remove_observer(handle ACE_ENV_ARG_PARAMETER);
+}
+
+void FTEC_Gateway::push(RtecEventChannelAdmin::ProxyPushConsumer_ptr proxy_consumer,
+                        const RtecEventComm::EventSet & data
+                        ACE_ENV_ARG_DECL)
+{
+  PortableServer::ObjectId_var object_id = 
+    impl_->poa->reference_to_id(proxy_consumer  ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  FtRtecEventComm::ObjectId** result;
+  memcpy(&result, &object_id[0], sizeof(FtRtecEventComm::ObjectId**));
+
+  impl_->ftec->push(**result, data ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 
