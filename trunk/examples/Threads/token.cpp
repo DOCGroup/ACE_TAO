@@ -30,8 +30,8 @@ My_Task::My_Task (int n)
 void 
 My_Task::sleep_hook (void *)
 {
-  cerr << '(' << ACE_Thread::self () << ')'
-       << " blocking, My_Task::sleep_hook () called" << endl;
+  ACE_DEBUG ((LM_ERROR, "(%u) blocking, My_Task::sleep_hook () called\n",
+	      ACE_Thread::self())) ;
 }
 
 // Test out the behavior of the ACE_Token class.
