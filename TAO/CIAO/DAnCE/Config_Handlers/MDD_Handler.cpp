@@ -1,102 +1,137 @@
+
 // $Id$
+
+
 #include "MDD_Handler.h"
 #include "Basic_Deployment_Data.hpp"
 #include "ciao/Deployment_DataC.h"
+#include "Singleton_IDREF_Map.h"
 #include "ADD_Handler.h"
 #include "Property_Handler.h"
 #include "Req_Handler.h"
-#include "Singleton_IDREF_Map.h"
+
+
 
 namespace CIAO
 {
   namespace Config_Handlers
   {
-    bool
-    MDD_Handler::mono_deployment_description (
-        const MonolithicDeploymentDescription& desc,
-        Deployment::MonolithicDeploymentDescription& toconfig)
+
+    MDD_Handler::MDD_Handler (void)
     {
-      toconfig.name =
-        CORBA::string_dup (desc.name ().c_str ());
+    }
 
-      MonolithicDeploymentDescription::source_const_iterator me =
+    MDD_Handler::~MDD_Handler (void)
+    {
+    }
+
+
+    void
+    MDD_Handler::monolithic_deployment_descr (
+                    const MonolithicDeploymentDescription& desc,
+                    Deployment::MonolithicDeploymentDescription& toconfig)
+    {
+
+
+      
+      toconfig.name=
+           CORBA::string_dup (desc.name ().c_str ());
+      
+      MonolithicDeploymentDescription::source_const_iterator source_end =
         desc.end_source ();
-
-      for (MonolithicDeploymentDescription::source_const_iterator se =
-             desc.begin_source ();
-           se != me;
-           ++se)
-        {
-          CORBA::ULong len =
-            toconfig.source.length ();
-
-          toconfig.source.length (len + 1);
-
-          toconfig.source[len] =
-            CORBA::string_dup ((*se).c_str ());
+      MonolithicDeploymentDescription::source_const_iterator source_beg =
+        desc.begin_source ();  
+        
+      CORBA::ULong source_length = toconfig.source.length ();
+      size_t source_delta = source_end - source_beg;
+      source_length += source_delta;
+      
+      toconfig.source.length (source_length);  
+      size_t source_count = 0;     
+           
+      for (MonolithicDeploymentDescription::source_const_iterator
+           item (desc.begin_source ());
+           item != source_end;
+           ++item)
+        {	 
+           toconfig.source[source_length - (source_delta - source_count)] =
+             CORBA::string_dup (item->c_str ());
+           ++source_count;
         }
-
-      MonolithicDeploymentDescription::artifact_const_iterator ae =
+      
+      MonolithicDeploymentDescription::artifact_const_iterator artifact_end =
         desc.end_artifact ();
-
+      MonolithicDeploymentDescription::artifact_const_iterator artifact_beg =
+        desc.begin_artifact ();  
+        
+      CORBA::ULong artifact_length = toconfig.artifactRef.length ();
+      size_t artifact_delta = artifact_end - artifact_beg;
+      artifact_length += artifact_delta;
+      
+      toconfig.artifactRef.length (artifact_length);  
+      size_t artifact_count = 0;        
+      IDREF_Map* artifact_instance = Singleton_IDREF_Map::instance ();
+      
+      
       for (MonolithicDeploymentDescription::artifact_const_iterator
-             ab = desc.begin_artifact ();
-           ae != ab;
-           ++ab)
+           item (desc.begin_artifact ());
+           item != artifact_end;
+           ++item)
         {
-          CORBA::ULong tmp = 0;
-
-          // @@ MAJO: What should be do
-          bool r =
-            Singleton_IDREF_Map::instance ()->find_ref (
-              ab->id ().c_str (),
-              tmp);
-
-          if (!r)
-            {
-              // @@MAJO: What should we do if find_ref fails?
-              return false;
-            }
-
-          CORBA::ULong len =
-            toconfig.artifactRef.length ();
-
-          toconfig.artifactRef.length (len + 1);
-
-          toconfig.artifactRef[len] = tmp;
+          ACE_TString artifact_id (item->id ().c_str ());
+          artifact_instance->find_ref (
+            artifact_id,
+            toconfig.artifactRef[artifact_length - (artifact_delta - artifact_count)]);
+          ++artifact_count;  
         }
-
-      MonolithicDeploymentDescription::execParameter_const_iterator epce =
+      
+      MonolithicDeploymentDescription::execParameter_const_iterator execParameter_end =
         desc.end_execParameter ();
+      MonolithicDeploymentDescription::execParameter_const_iterator execParameter_beg =
+        desc.begin_execParameter ();  
+        
+      CORBA::ULong execParameter_length = toconfig.execParameter.length ();
+      size_t execParameter_delta = execParameter_end - execParameter_beg;
+      execParameter_length += execParameter_delta;
+      
+      toconfig.execParameter.length (execParameter_length);  
+      size_t execParameter_count = 0;        
 
-      for (MonolithicDeploymentDescription::execParameter_const_iterator epcb =
-             desc.begin_execParameter ();
-           epcb != epce;
-           ++epcb)
-        {
-          CORBA::ULong len =
-            toconfig.execParameter.length ();
+      for (MonolithicDeploymentDescription::execParameter_const_iterator
+           item (execParameter_beg);
+           item != execParameter_end;
+           ++item)
+        {	        
+          Property_Handler::property (
+            *item,
+            toconfig.execParameter[execParameter_length - (execParameter_delta - execParameter_count)]);
+          ++execParameter_count;  
+        }
+      
+      MonolithicDeploymentDescription::deployRequirement_const_iterator deployRequirement_end =
+        desc.end_deployRequirement ();
+      MonolithicDeploymentDescription::deployRequirement_const_iterator deployRequirement_beg =
+        desc.begin_deployRequirement ();  
+        
+      CORBA::ULong deployRequirement_length = toconfig.deployRequirement.length ();
+      size_t deployRequirement_delta = deployRequirement_end - deployRequirement_beg;
+      deployRequirement_length += deployRequirement_delta;
+      
+      toconfig.deployRequirement.length (deployRequirement_length);  
+      size_t deployRequirement_count = 0;        
 
-          toconfig.execParameter.length (len + 1);
-
-          Property_Handler::get_property ((*epcb),
-                                          toconfig.execParameter[len]);
+      for (MonolithicDeploymentDescription::deployRequirement_const_iterator
+           item (deployRequirement_beg);
+           item != deployRequirement_end;
+           ++item)
+        {	        
+          Req_Handler::requirement (
+            *item,
+            toconfig.deployRequirement[deployRequirement_length - (deployRequirement_delta - deployRequirement_count)]);
+          ++deployRequirement_count;  
         }
 
-#if 0
-      // @@ MAJO: Don't know how to handle this
-      if (desc.deployRequirement_p ())
-        {
-                                  Req_Handler handler;
-          toconfig.deployRequirement.length (
-            toconfig.deployRequirement.length () + 1);
-          handler.get_Requirement (
-            toconfig.deployRequirement[toconfig.deployRequirement.length () - 1],
-            desc.deployRequirement ());
-        }
-#endif /*if 0*/
-
-      return true;
+      
     }
 
   }

@@ -1,4 +1,5 @@
-//==============================================================
+
+      //==============================================================
 /**
  *  @file  IDD_Handler.h
  *
@@ -8,64 +9,60 @@
  */
 //================================================================
 
-#ifndef CIAO_CONFIG_HANDLERS_IDD_HANDLER_H
-#define CIAO_CONFIG_HANDLERS_IDD_HANDLER_H
+#ifndef CIAO_CONFIG_HANDLERS_IDD_Handler_H
+#define CIAO_CONFIG_HANDLERS_IDD_Handler_H
 #include /**/ "ace/pre.h"
 
-#include "Config_Handlers_export.h"
+#include "Config_Handlers/Config_Handlers_Export.h"
+#include "ace/config-lite.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+
+
 namespace Deployment
 {
-  struct InstanceDeploymentDescription; 
-  struct InstanceResourceDeploymentDescription;
+  class InstanceDeploymentDescription;
 }
+
 
 namespace CIAO
 {
 
   namespace Config_Handlers
   {
-    
-   struct InstanceDeploymentDescription;
-    struct InstanceResourceDeploymentDescription;
-   
+
+   class InstanceDeploymentDescription;
+
+
    /*
     * @class IDD_Handler
     *
     * @brief Handler class for <InstanceDeploymentDescription> types.
     *
     * This class defines handler methods to map values from
-    * XSC InstanceDeploymentDescriptionn objects, parsed from
-    * the descriptor files, to the corresponding CORBA IDL type.
+    * XSC InstanceDeploymentDescription objects, parsed from the descriptor files, to the
+    * corresponding CORBA IDL Any type.
     *
     */
     
     class Config_Handlers_Export IDD_Handler {
      
       public:
-       
+
         IDD_Handler (void);
         virtual ~IDD_Handler (void);
-  
-        ///This method takes a <Deployment::InstanceDeploymentDescriptionn>
-        ///and maps the values from the passed in XSC 
-        ///InstanceDeploymentDescriptionn to its members.
-        void get_InstanceDeploymentDescription (
-                    Deployment::InstanceDeploymentDescription& toconfig,
-                    InstanceDeploymentDescription& desc);
 
-        /// This method populates the Deployment::InstanceResourceDeploymentDescription
-        /// Which is inly used in the IDD above.  
-        void get_InstanceResourceDeploymentDescription (
-                    Deployment::InstanceResourceDeploymentDescription &toconfig,
-                    InstanceResourceDeploymentDescription &desc);
+        static void instance_deployment_descr (
+             const InstanceDeploymentDescription& desc,
+             Deployment::InstanceDeploymentDescription& toconfig);
+
     };
   }
 }
 
-#include /**/ "ace/post.h"
-#endif /* CIAO_CONFIG_HANDLERS_IDD_HANDLER_H*/
+#include /**/ "ace/post.h" 
+#endif /* CIAO_CONFIG_HANDLERS_IDD_Handler_H */
+

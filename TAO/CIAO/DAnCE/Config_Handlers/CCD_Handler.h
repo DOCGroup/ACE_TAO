@@ -1,55 +1,68 @@
-//================================================
+
+      //==============================================================
 /**
- *  @file  CID_Handler.h
+ *  @file  CCD_Handler.h
  *
  *  $Id$
  *
  *  @author Jules White <jules@dre.vanderbilt.edu>
  */
-//================================================
+//================================================================
 
-#ifndef CIAO_CONFIG_HANDLERS_CCD_HANDLER_H
-#define CIAO_CONFIG_HANDLERS_CCD_HANDLER_H
+#ifndef CIAO_CONFIG_HANDLERS_CCD_Handler_H
+#define CIAO_CONFIG_HANDLERS_CCD_Handler_H
 #include /**/ "ace/pre.h"
 
 #include "Config_Handlers/Config_Handlers_Export.h"
+#include "ace/config-lite.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Config_Handlers/cid.hpp"
+
 
 namespace Deployment
 {
   class ComponentInterfaceDescription;
 }
 
+
 namespace CIAO
 {
+
   namespace Config_Handlers
   {
+
+   class ComponentInterfaceDescription;
+
+
    /*
     * @class CCD_Handler
     *
     * @brief Handler class for <ComponentInterfaceDescription> types.
     *
-    * This class is named CCD_Handler but actually fills
-    * <ComponentInterfaceDescription>. Why is this confusion? We
-    * want to maintain the correlation between the XSD file and the
-    * actual datatype. The file name corresponds to the XSD file but
-    * the data type being filled in is of type
-    * <ComponentInterfaceDescription>
+    * This class defines handler methods to map values from
+    * XSC ComponentInterfaceDescription objects, parsed from the descriptor files, to the
+    * corresponding CORBA IDL Any type.
+    *
     */
-    class Config_Handlers_Export CCD_Handler
-    {
+    
+    class Config_Handlers_Export CCD_Handler {
+     
       public:
-       static bool component_interface_descr (
-          Deployment::ComponentInterfaceDescription& toconfig,
-          ComponentInterfaceDescription& desc);
+
+        CCD_Handler (void);
+        virtual ~CCD_Handler (void);
+
+        static void comp_interface_descr (
+             const ComponentInterfaceDescription& desc,
+             Deployment::ComponentInterfaceDescription& toconfig);
+
     };
   }
 }
 
-#include /**/ "ace/post.h"
-#endif /* CID_HANDLER_H */
+#include /**/ "ace/post.h" 
+#endif /* CIAO_CONFIG_HANDLERS_CCD_Handler_H */
+
