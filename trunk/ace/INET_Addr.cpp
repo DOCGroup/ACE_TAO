@@ -16,6 +16,7 @@
 #include "ace/OS_NS_arpa_inet.h"
 #include "ace/OS_NS_netdb.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/os_include/net/os_if.h"
 
 ACE_RCSID (ace,
            INET_Addr,
