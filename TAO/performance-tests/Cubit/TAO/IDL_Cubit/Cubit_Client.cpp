@@ -173,8 +173,15 @@ Cubit_Client::parse_args (void)
         TAO_debug_level++;
         break;
       case 'n':                 // loop count
-        this->loop_count_ =
-          (u_int) ACE_OS::atoi (get_opts.optarg);
+        result = ACE_OS::atoi (get_opts.optarg);
+
+        if (result <= 0)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Invalid number of iterations entered: <%s>\n",
+                             get_opts.optarg),
+                            -1);
+        else
+          this->loop_count_ = (u_int) result;
         break;
       case 'f': // read the IOR from the file.
         result = this->read_ior (get_opts.optarg);
@@ -182,7 +189,7 @@ Cubit_Client::parse_args (void)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to read ior from <%s> : %p\n",
                              get_opts.optarg,
-							 ""),
+                             ""),
                             -1);
         break;
       case 'k': // read the cubit IOR from the command-line.
