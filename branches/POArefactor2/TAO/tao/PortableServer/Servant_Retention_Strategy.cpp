@@ -1099,6 +1099,104 @@ namespace TAO
       ACE_CHECK;
     }
 
+    CORBA::Object_ptr
+    Retain_Servant_Retention_Strategy::create_reference (
+      const char *intf,
+      CORBA::Short priority
+      ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::POA::WrongPolicy))
+    {
+      // This operation creates an object reference that encapsulates a
+      // POA-generated Object Id value and the specified interface
+      // repository id. This operation does not cause an activation to
+      // take place. The resulting reference may be passed to clients, so
+      // that subsequent requests on those references will cause the
+      // appropriate servant manager to be invoked, if one is
+      // available. The generated Object Id value may be obtained by
+      // invoking POA::reference_to_id with the created reference.
+
+      PortableServer::ObjectId_var system_id;
+      PortableServer::ObjectId user_id;
+
+      if (this->active_object_map_->
+          bind_using_system_id_returning_system_id (0,
+                                                    priority,
+                                                    system_id.out ()) != 0)
+        {
+          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                            CORBA::Object::_nil ());
+        }
+
+      // Find user id from system id.
+      if (this->active_object_map_->
+          find_user_id_using_system_id (system_id.in (),
+                                        user_id) != 0)
+        {
+          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                            CORBA::Object::_nil ());
+        }
+
+      // Remember params for potentially invoking <key_to_object> later.
+      this->poa_->key_to_object_params_.set (system_id,
+                                       intf,
+                                       0,
+                                       1,
+                                       priority);
+
+      return this->poa_->invoke_key_to_object_helper_i (intf,
+                                                  user_id
+                                                  ACE_ENV_ARG_PARAMETER);
+
+    }
+
+    CORBA::Object_ptr
+    Retain_Servant_Retention_Strategy::create_reference_with_id (
+      const PortableServer::ObjectId &oid,
+      const char *intf,
+      CORBA::Short priority
+      ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::POA::WrongPolicy))
+    {
+      // This operation creates an object reference that encapsulates the
+      // specified Object Id and interface repository Id values. This
+      // operation does not cause an activation to take place.  The
+      // resulting reference may be passed to clients, so that subsequent
+      // requests on those references will cause the object to be
+      // activated if necessary, or the default servant used, depending on
+      // the applicable policies.
+
+      PortableServer::Servant servant = 0;
+      PortableServer::ObjectId_var system_id;
+
+      // @@ We need something that can find the system id using
+      // appropriate strategy, at the same time, return the servant if
+      // one is available.  Before we have that function,
+      // <create_reference_with_id_i> basically generates broken
+      // collocated object when DIRECT collocation strategy is used.
+
+      if (this->active_object_map_->
+          find_system_id_using_user_id (oid,
+                                        priority,
+                                        system_id.out ()) != 0)
+        {
+          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                            CORBA::Object::_nil ());
+        }
+
+      // Remember params for potentially invoking <key_to_object> later.
+      this->poa_->key_to_object_params_.set (system_id,
+                                       intf,
+                                       servant,
+                                       1,
+                                       priority);
+
+      return this->poa_->invoke_key_to_object_helper_i (intf,
+                                                  oid
+                                                  ACE_ENV_ARG_PARAMETER);
+    }
+
   }
 }
 
@@ -1400,6 +1498,94 @@ namespace TAO
 
       ACE_THROW (PortableServer::POA::WrongPolicy ());
     }
+
+    CORBA::Object_ptr
+    Non_Retain_Servant_Retention_Strategy::create_reference (
+      const char *intf,
+      CORBA::Short priority
+      ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::POA::WrongPolicy))
+    {
+      // This operation creates an object reference that encapsulates a
+      // POA-generated Object Id value and the specified interface
+      // repository id. This operation does not cause an activation to
+      // take place. The resulting reference may be passed to clients, so
+      // that subsequent requests on those references will cause the
+      // appropriate servant manager to be invoked, if one is
+      // available. The generated Object Id value may be obtained by
+      // invoking POA::reference_to_id with the created reference.
+
+      PortableServer::ObjectId_var system_id;
+      PortableServer::ObjectId user_id;
+
+      // Otherwise, it is the NON_RETAIN policy.  Therefore, any ol'
+      // object id will do (even an empty one).
+      PortableServer::ObjectId *sys_id;
+      ACE_NEW_THROW_EX (sys_id,
+                        PortableServer::ObjectId,
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
+      system_id = sys_id;
+
+      // User id is the same as system id.
+      user_id = system_id.in ();
+
+      // Remember params for potentially invoking <key_to_object> later.
+      this->poa_->key_to_object_params_.set (system_id,
+                                       intf,
+                                       0,
+                                       1,
+                                       priority);
+
+      return this->poa_->invoke_key_to_object_helper_i (intf,
+                                                  user_id
+                                                  ACE_ENV_ARG_PARAMETER);
+    }
+
+    CORBA::Object_ptr
+    Non_Retain_Servant_Retention_Strategy::create_reference_with_id (
+      const PortableServer::ObjectId &oid,
+      const char *intf,
+      CORBA::Short priority
+      ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::POA::WrongPolicy))
+    {
+      // This operation creates an object reference that encapsulates the
+      // specified Object Id and interface repository Id values. This
+      // operation does not cause an activation to take place.  The
+      // resulting reference may be passed to clients, so that subsequent
+      // requests on those references will cause the object to be
+      // activated if necessary, or the default servant used, depending on
+      // the applicable policies.
+
+      PortableServer::Servant servant = 0;
+      PortableServer::ObjectId_var system_id;
+
+      // Otherwise, it is the NON_RETAIN policy.  Therefore, user id
+      // is the same as system id.
+      PortableServer::ObjectId *sys_id;
+      ACE_NEW_THROW_EX (sys_id,
+                        PortableServer::ObjectId (oid),
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
+      system_id = sys_id;
+
+      // Remember params for potentially invoking <key_to_object> later.
+      this->poa_->key_to_object_params_.set (system_id,
+                                       intf,
+                                       servant,
+                                       1,
+                                       priority);
+
+      return this->poa_->invoke_key_to_object_helper_i (intf,
+                                                  oid
+                                                  ACE_ENV_ARG_PARAMETER);
+    }
+
   }
 }
 

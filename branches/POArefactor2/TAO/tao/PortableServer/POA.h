@@ -867,7 +867,7 @@ protected:
 public:
     // @todo Temporarily for servant retention
   CORBA::ULong caller_key_to_object_;
-protected:
+
   PortableServer::Servant servant_for_key_to_object_;
 
   struct Key_To_Object_Params

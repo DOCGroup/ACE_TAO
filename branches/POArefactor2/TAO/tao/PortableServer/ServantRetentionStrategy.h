@@ -157,6 +157,23 @@ namespace TAO
                       PortableServer::POA::ServantNotActive,
                       PortableServer::POA::WrongPolicy)) = 0;
 
+      virtual
+      CORBA::Object_ptr create_reference (
+        const char *intf,
+        CORBA::Short priority
+        ACE_ENV_ARG_DECL)
+          ACE_THROW_SPEC ((CORBA::SystemException,
+                           PortableServer::POA::WrongPolicy)) = 0;
+
+      virtual
+      CORBA::Object_ptr create_reference_with_id (
+        const PortableServer::ObjectId &oid,
+        const char *intf,
+        CORBA::Short priority
+        ACE_ENV_ARG_DECL)
+          ACE_THROW_SPEC ((CORBA::SystemException,
+                           PortableServer::POA::WrongPolicy)) = 0;
+
     protected:
       TAO_POA* poa_;
     };
