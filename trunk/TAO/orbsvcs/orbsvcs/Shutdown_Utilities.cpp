@@ -51,7 +51,7 @@ Service_Shutdown::set_signals (ACE_Sig_Set& which_signals)
         if (this->shutdown_.register_handler (i, this) == -1)
           ACE_DEBUG ((LM_WARNING,
                       "WARNING: Failed to register signal handler for signal %d: %p\n",
-                      i, ACE_TEXT ("")));
+                      i, ACE_TEXT ("register_handler")));
         else
           did_register = 1;
       }

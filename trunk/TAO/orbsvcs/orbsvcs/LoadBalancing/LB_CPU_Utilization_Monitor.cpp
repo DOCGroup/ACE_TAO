@@ -130,7 +130,7 @@ TAO_LB_CPU_Utilization_Monitor::loads (ACE_ENV_SINGLE_ARG_DECL)
 {
   CORBA::Float load = 0;
 
-#if defined (linux) || defined (sun) || defined (hpux)
+#if defined (linux) || defined (sun)
 
   double load_double = calc_cpu_loading ();
   load = load_double;
@@ -161,6 +161,6 @@ TAO_LB_CPU_Utilization_Monitor::loads (ACE_ENV_SINGLE_ARG_DECL)
   ACE_UNUSED_ARG (load);
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 
-#endif  /* WINDOWS || linux || sun || hpux */
+#endif  /* linux || sun */
 
 }
