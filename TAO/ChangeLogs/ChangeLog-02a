@@ -1,3 +1,18 @@
+Wed Oct 31 17:32:38 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/IFR_Service/IFR_BaseS.cpp:
+        * orbsvcs/IFR_Service/IFR_BasicS.cpp:
+        * orbsvcs/IFR_Service/IFR_ComponentsS.cpp:
+        * orbsvcs/IFR_Service/IFR_ExtendedS.cpp:
+
+          Patched the gperf-generated code in these files using the
+          current version of gperf (a bug fix to gperf was checked in
+          a short while back). Specifically, an optable entry for the
+          _interface() method of CORBA::SequenceDef was missing. Thanks
+          to Stuart Jones <sjones@clcsmail.kcs.nasa.gov> Chad Elliott
+          <elliott_c@ociweb.com> and Phil Mesnier <mesnier_p@ociweb.com>
+          for reporting this bug. This fix closes [BUGID:1076].
+
 Wed Oct 31 15:41:21 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Portable_Interceptors/PICurrent/test_i.cpp (invoke_me):
