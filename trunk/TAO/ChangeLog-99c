@@ -1,3 +1,8 @@
+Wed Apr 14 13:01:13 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: Fixed template instantiation
+	errors. Thanks to Andy Gokhale for reporting this.
+
 Wed Apr 14 07:06:11 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
