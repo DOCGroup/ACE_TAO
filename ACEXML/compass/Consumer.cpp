@@ -15,7 +15,7 @@ createConsumer (int argc, char* argv[])
 }
 
 Consumer::Consumer (void)
-  : event_count_ (0), shutdown_ (0)
+  : event_count_ (0)
 {
 }
 
@@ -34,27 +34,9 @@ Consumer::run (int argc, char* argv[])
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      // Prepend a "dummy" program name argument to the Service
-      // Configurator argument vector.
-      int new_argc = argc + 1;
-
-      CORBA::StringSeq new_argv (new_argc);
-      new_argv.length (new_argc);
-
-      // Prevent the ORB from opening the Service Configurator file
-      // again since the Service Configurator file is already in the
-      // process of being opened.
-      new_argv[0] = CORBA::string_dup ("dummy");
-
-      // Copy the remaining arguments into the new argument vector.
-      for (int i = new_argc - argc, j = 0;
-           j < argc;
-           ++i, ++j)
-        new_argv[i] = CORBA::string_dup (argv[j]);
-
       // Initialize the ORB.
-      CORBA::ORB_var orb = CORBA::ORB_init (new_argc,
-                                            new_argv.get_buffer (),
+      CORBA::ORB_var orb = CORBA::ORB_init (argc,
+                                            argv,
                                             "Consumer"
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -172,8 +154,7 @@ void
 Consumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->shutdown_ = 1;
-  this->orb_->destroy (ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
 }
 
 // ****************************************************************

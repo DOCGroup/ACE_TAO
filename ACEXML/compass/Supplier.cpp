@@ -33,27 +33,9 @@ Supplier::run (int argc, char* argv[])
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      // Prepend a "dummy" program name argument to the Service
-      // Configurator argument vector.
-      int new_argc = argc + 1;
-
-      CORBA::StringSeq new_argv (new_argc);
-      new_argv.length (new_argc);
-
-      // Prevent the ORB from opening the Service Configurator file
-      // again since the Service Configurator file is already in the
-      // process of being opened.
-      new_argv[0] = CORBA::string_dup ("dummy");
-
-      // Copy the remaining arguments into the new argument vector.
-      for (int i = new_argc - argc, j = 0;
-           j < argc;
-           ++i, ++j)
-        new_argv[i] = CORBA::string_dup (argv[j]);
-
       // Initialize the ORB.
-      CORBA::ORB_var orb = CORBA::ORB_init (new_argc,
-                                            new_argv.get_buffer (),
+      CORBA::ORB_var orb = CORBA::ORB_init (argc,
+                                            argv,
                                             "Consumer"
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -120,7 +102,7 @@ Supplier::run (int argc, char* argv[])
       ACE_TRY_CHECK;
 
       // Push the events...
-      ACE_Time_Value sleep_time (0, 30000); // 10 milliseconds
+      ACE_Time_Value sleep_time (0, 10000); // 10 milliseconds
 
       RtecEventComm::EventSet event (1);
       event.length (1);
@@ -136,30 +118,32 @@ Supplier::run (int argc, char* argv[])
         }
       ACE_OS::sleep (3);
 
+      naming_client->unbind (ec_name ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
       // Disconnect from the EC
       consumer->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       ACE_DEBUG ((LM_DEBUG, "Push Consumer disconnected\n"));
 
-      naming_client->unbind (ec_name ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
       // Destroy the EC....
       event_channel->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      ACE_DEBUG ((LM_DEBUG, "Destroying the EventChannel\n"));
+      ACE_DEBUG ((LM_DEBUG, "EventChannel destroyed\n"));
 
       // Deactivate this object...
-      PortableServer::ObjectId_var id =
-        poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+//       PortableServer::ObjectId_var id =
+//         poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
+//       ACE_TRY_CHECK;
 
-      // Destroy the POA
-      poa->destroy (1, 0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-    }
+//       poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
+//       ACE_TRY_CHECK;
+
+//       // Destroy the POA
+//       poa->destroy (1, 0 ACE_ENV_ARG_PARAMETER);
+//       ACE_TRY_CHECK;
+
+}
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Supplier::run");

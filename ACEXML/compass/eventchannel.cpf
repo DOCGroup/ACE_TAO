@@ -4,7 +4,7 @@
   <struct name="ECProperties" type="ACEXML_EC_Property">
     <description>Configuration for a Simple Event Channel</description>
     <simple name="ECDispatching" type="string">
-      <value>reactive</value>
+      <value>mt</value>
     </simple>
     <simple name="ECFiltering" type="string">
       <value>basic</value>

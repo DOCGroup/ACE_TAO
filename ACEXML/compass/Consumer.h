@@ -54,8 +54,6 @@ private:
   CORBA::ULong event_count_;
   // Keep track of the number of events received.
 
-  CORBA::Boolean shutdown_;
-
   CORBA::ORB_ptr orb_;
   // The orb, just a pointer because the ORB does not outlive the
   // run() method...

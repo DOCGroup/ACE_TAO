@@ -6,7 +6,6 @@
 #include "ace/SString.h"
 #include "tao/ORB_Core.h"
 
-static int myargc = 0;
 static ACE_ARGV myargv;
 
 void*
@@ -45,29 +44,21 @@ create_dll (void* name)
   if (ACE_OS::strcmp (dllname, "Service") == 0)
     {
       serviceargv.add (myargv.argv());
-//       serviceargv.add ("-ORBsvcconf");
-//       serviceargv.add ("ec.conf");
+      serviceargv.add ("-ECDispatching");
+      serviceargv.add ("mt");
       return (void*)factory (serviceargv.argc(), serviceargv.argv());
     }
-  return (void*)factory (myargc, myargv.argv());
+  return (void*)factory (myargv.argc(), myargv.argv());
 }
 
 int
 main (int argc, char* argv[])
 {
-  myargc = argc;
   myargv.add (argv);
 
-  const ACE_TCHAR* services[] = { "Service", "Supplier", "Consumer" };
+  const ACE_TCHAR* services[] = { "Service", "Consumer", "Supplier" };
 
   ACE_Thread_Manager* thr_mgr = ACE_Thread_Manager::instance();
-
-//   if (TAO_Singleton_Manager::instance ()->init (0) == -1)
-//     ACE_ERROR_RETURN ((LM_ERROR,
-//                        "Test::init -- ORB pre-initialization "
-//                        "failed.\n"),
-//                       -1);  // No exceptions available yet, so return
-//                             // an error status.
   for (size_t i = 0; i < 3; ++i)
     {
       if (thr_mgr->spawn (create_dll,(void*)services[i]) == -1)
@@ -78,11 +69,6 @@ main (int argc, char* argv[])
         }
       ACE_OS::sleep (3);
     }
-//   if (TAO_Singleton_Manager::instance ()->fini () == -1)
-//     ACE_ERROR_RETURN ((LM_ERROR,
-//                        "Test::fini -- ORB pre-termination "
-//                        "failed."),
-//                       -1);
   thr_mgr->wait();
   return 0;
 }
