@@ -16,7 +16,6 @@
 #ifndef TAO_NAMING_CONTEXT_INTERFACE_H
 #define TAO_NAMING_CONTEXT_INTERFACE_H
 #include "ace/pre.h"
-
 #include "orbsvcs/CosNamingS.h"
 #include "naming_export.h"
 
@@ -29,7 +28,7 @@ class TAO_Naming_Context_Impl;
 
 class TAO_Naming_Export TAO_Naming_Context :
   public virtual PortableServer::RefCountServantBase,
-  public virtual POA_CosNaming::NamingContext
+  public virtual POA_CosNaming::NamingContextExt
 {
   // = TITLE
   //   This class plays a role of the 'Abstraction' (aka 'Interface')
@@ -185,8 +184,83 @@ public:
   // are returned with a BindingIterator.  In the naming context does
   // not contain any additional bindings <bi> returned as null.
 
+  virtual char * to_string (const CosNaming::Name &n,
+                            CORBA::Environment
+                            &ACE_TRY_ENV =
+                            TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     CosNaming::NamingContext::InvalidName));
+  // Stringify the name using '\' as the escape character. The
+  // characters '.' , '/' and '\' are to be escaped. If the input name
+  // is invalid i.e. if the number of characters in the name is zero,
+  // an InvalidName exception is to be raised. 
+  
+  virtual CosNaming::Name * to_name (const char *sn,
+                                   CORBA::Environment &ACE_TRY_ENV =
+                                   TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     CosNaming::NamingContext::InvalidName));
+  // The in parameter is an stringified name. This function removes the
+  // escape character '\' and destringifies the stringified name and returns
+  // it.
+ 
+  virtual char * to_url ( const char * addr,
+                          const char * sn,
+                          CORBA::Environment &ACE_TRY_ENV = 
+                          TAO_default_environment ()
+                          )
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException,
+                     CosNaming::NamingContextExt::InvalidAddress,
+                     CosNaming::NamingContext::InvalidName
+                     ));
+  // The in parameter addr refers to the address of the naming context
+  // and sn refers to the strigified name of the object in that
+  // context. This function returns a fully formed URL string like
+  // iiopname://1.1@myhost.555xyz.com:9999/a/b/c
+  
+  virtual CORBA::Object_ptr resolve_str (const char * n,
+                                         CORBA::Environment &ACE_TRY_ENV = 
+                                         TAO_default_environment ()
+                                         )
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException,
+                     CosNaming::NamingContext::NotFound,
+                     CosNaming::NamingContext::CannotProceed,
+                     CosNaming::NamingContext::InvalidName,
+                     CosNaming::NamingContext::AlreadyBound
+                     ));
+  
+  // Similar to <resolve> as in the CosNaming::NamingContext interface.
+  // It accepts a strigified name as an argument instead of a Name.
+  
+
   virtual PortableServer::POA_ptr _default_POA (CORBA::Environment &env = TAO_default_environment ());
   // Returns the Default POA of this Servant object
+
+private:
+
+  void to_name_helper (char *dest, const char*& src);
+  // This private function is used as a helper to <to_name>. It reads
+  // character by character from 'src' and depending on the character,
+  // either assigns it to 'dest' or returns back to the calling
+  // function. If the character is a seperator between the 'id' and
+  // 'kind' fields or a seperator between two name components, the
+  // control is returned back to the calling function <to_name>.
+
+  void to_string_helper_assign (char * &k, const char * &src);
+  // This method functions similar to <to_name_helper>. If the
+  // character read is '.' or '/' or '\', an escape character '\' is
+  // prepended before the character.
+
+
+  void to_string_helper_length (CORBA::ULong &len, const char * &src);
+  // This method helps count the number of characters in 'src' so
+  // that memory can be allocated for the return parameter. For
+  // all '.' , '/' and '\', the count is incremented by 'one' to
+  // account for the escape character that needs to be
+  // added. Seperators between 'id' and 'kind' as well as seperators
+  // between the name components are also counted.
 
 protected:
 

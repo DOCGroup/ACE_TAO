@@ -232,6 +232,61 @@ module CosNaming
       void destroy ();
       // This operation destroys the iterator.
     };
+
+  interface NamingContextExt:NamingContext 
+    {
+      // = TITLE
+      // Interface for providing operations required to use URLs and
+      // stringified names.
+      //
+      // Reference to: Document orbos/98-10-11 (Interoperable Naming Joint Revised Submission)
+      // Joint Submission by BEA Systems, DSTC, IONA, and Inprise
+
+      typedef string StringName;
+      // Stringified form of a Name.
+      
+      typedef string Address;
+      // URL<address> such as myhost.xyz.com.
+      
+      typedef string URLString;
+      // Stringified form of a URL<address> componoent.
+      
+      StringName to_string (in Name n)
+        raises (InvalidName);
+      // This operation accepts a Name and returns a stringified
+      // name. If the name is invalid, an InvalidName exception is
+      // raised.
+      
+      Name to_name (in StringName sn)
+        raises (InvalidName);
+      // This operation returns a Name. If the input stringified
+      // name is syntactically malformed or violates an
+      // implementation limit, an InvalidName exception is
+      // raised.
+
+      exception InvalidAddress {
+        // = TITLE
+        // Indicates that the URL<address> is invalid.
+      };
+      
+      URLString to_url (in Address addr, 
+                        in StringName sn)
+        raises (InvalidAddress, InvalidName);
+      //
+      // It performs any escapes necessary on the stringified name
+      // and returns a fully formed URL string. An exception is
+      // raised if either the protocol or name parameters are invalid.
+      
+      
+      Object resolve_str (in StringName n)
+        raises (NotFound, CannotProceed, InvalidName, AlreadyBound);
+      //
+      // This is similar to <resolve> as in the
+      // CosNaming::NamingContext interface, except that it accepts
+      // a stringified name as an argument instead of a Name.
+      
+    };
+  
 };
 
 #endif /* TAO_NAMING_IDL */
