@@ -18,7 +18,8 @@
 
 #define ACE_BUILD_SVC_DLL
 
-#include "test_config.h" 
+#include "test_config.h"
+#include "DLL_Test.h"
 #include "ace/DLL.h"
 #include "ace/Auto_Ptr.h"
 
@@ -47,29 +48,6 @@ USELIB("..\ace\aced.lib");
 #  define OBJ_PREFIX "./" ACE_DLL_PREFIX
 #endif /*ACE_WIN32*/
 
-class Hello
-{
-  // = TITLE
-  //    The Hello class in the dynamically linkable library.
-  //
-  // = DESCRIPTION
-  //    This class is used in this example to show how a library can
-  //    be loaded on demand and its methods called on getting the
-  //    symbols from the library.
-public:
-
-  void say_hello (void)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "Hello\n"));
-    }
-
-  void say_next (void)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "How are you?\n"));
-    }
-};
 
 // This function returns the Hello object pointer.
 
