@@ -43,7 +43,7 @@ RSC=rc.exe
 LINK32=link.exe -lib
 MTL=midl.exe
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /Zi /O2 /I "../../" /I "../" /D "_WINDOWS" /D "_CONSOLE" /D "NDEBUG" /D "WIN32" /D "TAO_AS_STATIC_LIBS" /D "ACE_AS_STATIC_LIBS" /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /Zi /O2 /I "../../" /I "../" /D "_WINDOWS" /D "_CONSOLE" /D "NDEBUG" /D "WIN32" /D "TAO_AS_STATIC_LIBS" /D "ACE_AS_STATIC_LIBS" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
@@ -69,7 +69,7 @@ LIB32=link.exe -lib
 LINK32=link.exe -lib
 MTL=midl.exe
 # ADD BASE CPP /nologo /W3 /GX /Z7 /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /GX /Zi /Od /I "../../" /I "../" /D "_WINDOWS" /D "_CONSOLE" /D "_DEBUG" /D "WIN32" /D "ACE_AS_STATIC_LIBS" /D "TAO_AS_STATIC_LIBS" /FD /c
+# ADD CPP /nologo /MDd /W3 /GR /GX /Zi /Od /I "../../" /I "../" /D "_WINDOWS" /D "_CONSOLE" /D "_DEBUG" /D "WIN32" /D "ACE_AS_STATIC_LIBS" /D "TAO_AS_STATIC_LIBS" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
@@ -395,10 +395,6 @@ SOURCE=.\IFR_Client_Adapter.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\IFR_TypeCodes.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\IIOP_Acceptor.cpp
 # End Source File
 # Begin Source File
@@ -583,7 +579,7 @@ SOURCE=.\Object_Ref_Table.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\ObjectIDList.cpp
+SOURCE=.\ObjectIdListC.cpp
 # End Source File
 # Begin Source File
 
@@ -751,11 +747,11 @@ SOURCE=.\Service_Context.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Services.cpp
+SOURCE=.\Services_Activate.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Services_Activate.cpp
+SOURCE=.\ServicesC.cpp
 # End Source File
 # Begin Source File
 
@@ -1015,15 +1011,15 @@ SOURCE=.\CodecFactory.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\CodecFactory_ORBInitializer.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Codeset_Manager.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\Codeset_Translator_Factory.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\CodecFactory_ORBInitializer.h
 # End Source File
 # Begin Source File
 
@@ -1471,7 +1467,7 @@ SOURCE=.\objectid.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\ObjectIDList.h
+SOURCE=.\ObjectIdListC.h
 # End Source File
 # Begin Source File
 
@@ -1655,11 +1651,11 @@ SOURCE=.\Service_Context.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Services.h
+SOURCE=.\Services_Activate.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Services_Activate.h
+SOURCE=.\ServicesC.h
 # End Source File
 # Begin Source File
 
@@ -2139,7 +2135,7 @@ SOURCE=.\Object_Loader.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\ObjectIDList.i
+SOURCE=.\ObjectIdListC.i
 # End Source File
 # Begin Source File
 
@@ -2243,7 +2239,7 @@ SOURCE=.\Service_Context.inl
 # End Source File
 # Begin Source File
 
-SOURCE=.\Services.i
+SOURCE=.\ServicesC.i
 # End Source File
 # Begin Source File
 
