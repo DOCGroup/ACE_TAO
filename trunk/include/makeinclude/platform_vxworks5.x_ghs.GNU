@@ -39,6 +39,7 @@ VXWORKS = 1
 CROSS-COMPILE = 1
 
 debug = 1
+optimize = 1
 shared_libs =
 static_libs = 1
 
