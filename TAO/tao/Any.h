@@ -382,6 +382,9 @@ public:
   // Useful for template programming.
 
   static void _tao_any_destructor (void*);
+  static void _tao_any_string_destructor (void*);
+  static void _tao_any_wstring_destructor (void*);
+  static void _tao_any_tc_destructor (void*);
   // Used to release Anys contained into anys.
 
 protected:
