@@ -1,0 +1,131 @@
+xdr++.o: xdr++.cc rpc++/xdr++.h /usr/include/rpc/rpc.h \
+  /usr/include/rpc/types.h \
+  /pkg/gnu/lib/gcc-lib/sparc-sun-solaris2.3/2.6.0/include/sys/types.h \
+  /usr/include/sys/feature_tests.h /usr/include/sys/machtypes.h \
+  /usr/include/sys/select.h /usr/include/sys/time.h \
+  /pkg/gnu/lib/gcc-lib/sparc-sun-solaris2.3/2.6.0/include/time.h \
+  /usr/include/sys/siginfo.h /usr/include/sys/machsig.h \
+  /usr/include/tiuser.h /usr/include/sys/tiuser.h /usr/include/fcntl.h \
+  /usr/include/sys/fcntl.h /usr/include/memory.h /usr/include/rpc/xdr.h \
+  /pkg/gnu/lib/gcc-lib/sparc-sun-solaris2.3/2.6.0/include/sys/byteorder.h \
+  /pkg/gnu/lib/gcc-lib/sparc-sun-solaris2.3/2.6.0/include/stdio.h \
+  /pkg/gnu/lib/gcc-lib/sparc-sun-solaris2.3/2.6.0/include/rpc/auth.h \
+  /usr/include/sys/cred.h /usr/include/sys/t_lock.h \
+  /usr/include/sys/machlock.h /usr/include/sys/dki_lkinfo.h \
+  /usr/include/sys/dl.h /usr/include/sys/sleepq.h \
+  /usr/include/sys/turnstile.h \
+  /pkg/gnu/lib/gcc-lib/sparc-sun-solaris2.3/2.6.0/include/sys/param.h \
+  /usr/include/sys/unistd.h /usr/include/sys/pirec.h \
+  /usr/include/sys/mutex.h /usr/include/rpc/clnt.h \
+  /usr/include/rpc/rpc_com.h /usr/include/sys/netconfig.h \
+  /usr/include/rpc/rpc_msg.h /usr/include/rpc/auth_sys.h \
+  /usr/include/rpc/auth_des.h /usr/include/rpc/auth_kerb.h \
+  /usr/include/kerberos/krb.h /usr/include/kerberos/mit-copyright.h \
+  /usr/include/kerberos/des.h /usr/include/sys/socket.h \
+  /usr/include/netinet/in.h /usr/include/sys/stream.h \
+  /usr/include/sys/vnode.h /usr/include/sys/uio.h /usr/include/vm/seg_enum.h \
+  /usr/include/sys/poll.h /usr/include/sys/strmdep.h /usr/include/rpc/svc.h \
+  /usr/include/rpc/svc_auth.h /usr/include/rpc/rpcb_clnt.h \
+  /usr/include/rpc/rpcb_prot.h
+service.o: service.cc /pkg/gnu/sparc-sun-solaris2.3/include/assert.h \
+  /pkg/gnu/lib/g++-include/stream.h /pkg/gnu/lib/g++-include/iostream.h \
+  /pkg/gnu/lib/g++-include/streambuf.h /pkg/gnu/lib/g++-include/libio.h \
+  /pkg/gnu/lib/g++-include/_G_config.h /usr/include/memory.h \
+  /usr/include/errno.h /usr/include/sys/errno.h \
+  /pkg/gnu/lib/gcc-lib/sparc-sun-solaris2.3/2.6.0/include/stdlib.h \
+  /usr/include/sys/feature_tests.h \
+  /pkg/gnu/lib/gcc-lib/sparc-sun-solaris2.3/2.6.0/include/sys/types.h \
+  /usr/include/sys/machtypes.h /usr/include/sys/select.h \
+  /usr/include/sys/time.h \
+  /pkg/gnu/lib/gcc-lib/sparc-sun-solaris2.3/2.6.0/include/time.h \
+  /usr/include/sys/siginfo.h /usr/include/sys/machsig.h \
+  /usr/include/sys/socket.h /usr/include/sys/netconfig.h \
+  /usr/include/netdb.h /usr/include/rpc/rpc.h /usr/include/rpc/types.h \
+  /usr/include/tiuser.h /usr/include/sys/tiuser.h /usr/include/fcntl.h \
+  /usr/include/sys/fcntl.h /usr/include/rpc/xdr.h \
+  /pkg/gnu/lib/gcc-lib/sparc-sun-solaris2.3/2.6.0/include/sys/byteorder.h \
+  /pkg/gnu/lib/gcc-lib/sparc-sun-solaris2.3/2.6.0/include/stdio.h \
+  /pkg/gnu/lib/gcc-lib/sparc-sun-solaris2.3/2.6.0/include/rpc/auth.h \
+  /usr/include/sys/cred.h /usr/include/sys/t_lock.h \
+  /usr/include/sys/machlock.h /usr/include/sys/dki_lkinfo.h \
+  /usr/include/sys/dl.h /usr/include/sys/sleepq.h \
+  /usr/include/sys/turnstile.h \
+  /pkg/gnu/lib/gcc-lib/sparc-sun-solaris2.3/2.6.0/include/sys/param.h \
+  /usr/include/sys/unistd.h /usr/include/sys/pirec.h \
+  /usr/include/sys/mutex.h /usr/include/rpc/clnt.h \
+  /usr/include/rpc/rpc_com.h /usr/include/rpc/rpc_msg.h \
+  /usr/include/rpc/auth_sys.h /usr/include/rpc/auth_des.h \
+  /usr/include/rpc/auth_kerb.h /usr/include/kerberos/krb.h \
+  /usr/include/kerberos/mit-copyright.h /usr/include/kerberos/des.h \
+  /usr/include/netinet/in.h /usr/include/sys/stream.h \
+  /usr/include/sys/vnode.h /usr/include/sys/uio.h /usr/include/vm/seg_enum.h \
+  /usr/include/sys/poll.h /usr/include/sys/strmdep.h /usr/include/rpc/svc.h \
+  /usr/include/rpc/svc_auth.h /usr/include/rpc/rpcb_clnt.h \
+  /usr/include/rpc/rpcb_prot.h rpc++/service.h \
+  /pkg/gnu/lib/g++-include/bool.h rpc++/request.h rpc++/xdr++.h \
+  rpc++/callback.h
+stub.o: stub.cc /pkg/gnu/lib/g++-include/stream.h \
+  /pkg/gnu/lib/g++-include/iostream.h /pkg/gnu/lib/g++-include/streambuf.h \
+  /pkg/gnu/lib/g++-include/libio.h /pkg/gnu/lib/g++-include/_G_config.h \
+  /usr/include/memory.h /pkg/gnu/sparc-sun-solaris2.3/include/assert.h \
+  rpc++/stub.h /pkg/gnu/lib/g++-include/bool.h \
+  /pkg/gnu/lib/g++-include/String.h /pkg/gnu/lib/g++-include/Regex.h \
+  /usr/include/sys/time.h /usr/include/sys/feature_tests.h \
+  /pkg/gnu/lib/gcc-lib/sparc-sun-solaris2.3/2.6.0/include/sys/types.h \
+  /usr/include/sys/machtypes.h /usr/include/sys/select.h \
+  /pkg/gnu/lib/gcc-lib/sparc-sun-solaris2.3/2.6.0/include/time.h \
+  /usr/include/sys/siginfo.h /usr/include/sys/machsig.h rpc++/request.h \
+  rpc++/xdr++.h /usr/include/rpc/rpc.h /usr/include/rpc/types.h \
+  /usr/include/tiuser.h /usr/include/sys/tiuser.h /usr/include/fcntl.h \
+  /usr/include/sys/fcntl.h /usr/include/rpc/xdr.h \
+  /pkg/gnu/lib/gcc-lib/sparc-sun-solaris2.3/2.6.0/include/sys/byteorder.h \
+  /pkg/gnu/lib/gcc-lib/sparc-sun-solaris2.3/2.6.0/include/stdio.h \
+  /pkg/gnu/lib/gcc-lib/sparc-sun-solaris2.3/2.6.0/include/rpc/auth.h \
+  /usr/include/sys/cred.h /usr/include/sys/t_lock.h \
+  /usr/include/sys/machlock.h /usr/include/sys/dki_lkinfo.h \
+  /usr/include/sys/dl.h /usr/include/sys/sleepq.h \
+  /usr/include/sys/turnstile.h \
+  /pkg/gnu/lib/gcc-lib/sparc-sun-solaris2.3/2.6.0/include/sys/param.h \
+  /usr/include/sys/unistd.h /usr/include/sys/pirec.h \
+  /usr/include/sys/mutex.h /usr/include/rpc/clnt.h \
+  /usr/include/rpc/rpc_com.h /usr/include/sys/netconfig.h \
+  /usr/include/rpc/rpc_msg.h /usr/include/rpc/auth_sys.h \
+  /usr/include/rpc/auth_des.h /usr/include/rpc/auth_kerb.h \
+  /usr/include/kerberos/krb.h /usr/include/kerberos/mit-copyright.h \
+  /usr/include/kerberos/des.h /usr/include/sys/socket.h \
+  /usr/include/netinet/in.h /usr/include/sys/stream.h \
+  /usr/include/sys/vnode.h /usr/include/sys/uio.h /usr/include/vm/seg_enum.h \
+  /usr/include/sys/poll.h /usr/include/sys/strmdep.h /usr/include/rpc/svc.h \
+  /usr/include/rpc/svc_auth.h /usr/include/rpc/rpcb_clnt.h \
+  /usr/include/rpc/rpcb_prot.h
+request.o: request.cc rpc++/request.h rpc++/xdr++.h /usr/include/rpc/rpc.h \
+  /usr/include/rpc/types.h \
+  /pkg/gnu/lib/gcc-lib/sparc-sun-solaris2.3/2.6.0/include/sys/types.h \
+  /usr/include/sys/feature_tests.h /usr/include/sys/machtypes.h \
+  /usr/include/sys/select.h /usr/include/sys/time.h \
+  /pkg/gnu/lib/gcc-lib/sparc-sun-solaris2.3/2.6.0/include/time.h \
+  /usr/include/sys/siginfo.h /usr/include/sys/machsig.h \
+  /usr/include/tiuser.h /usr/include/sys/tiuser.h /usr/include/fcntl.h \
+  /usr/include/sys/fcntl.h /usr/include/memory.h /usr/include/rpc/xdr.h \
+  /pkg/gnu/lib/gcc-lib/sparc-sun-solaris2.3/2.6.0/include/sys/byteorder.h \
+  /pkg/gnu/lib/gcc-lib/sparc-sun-solaris2.3/2.6.0/include/stdio.h \
+  /pkg/gnu/lib/gcc-lib/sparc-sun-solaris2.3/2.6.0/include/rpc/auth.h \
+  /usr/include/sys/cred.h /usr/include/sys/t_lock.h \
+  /usr/include/sys/machlock.h /usr/include/sys/dki_lkinfo.h \
+  /usr/include/sys/dl.h /usr/include/sys/sleepq.h \
+  /usr/include/sys/turnstile.h \
+  /pkg/gnu/lib/gcc-lib/sparc-sun-solaris2.3/2.6.0/include/sys/param.h \
+  /usr/include/sys/unistd.h /usr/include/sys/pirec.h \
+  /usr/include/sys/mutex.h /usr/include/rpc/clnt.h \
+  /usr/include/rpc/rpc_com.h /usr/include/sys/netconfig.h \
+  /usr/include/rpc/rpc_msg.h /usr/include/rpc/auth_sys.h \
+  /usr/include/rpc/auth_des.h /usr/include/rpc/auth_kerb.h \
+  /usr/include/kerberos/krb.h /usr/include/kerberos/mit-copyright.h \
+  /usr/include/kerberos/des.h /usr/include/sys/socket.h \
+  /usr/include/netinet/in.h /usr/include/sys/stream.h \
+  /usr/include/sys/vnode.h /usr/include/sys/uio.h /usr/include/vm/seg_enum.h \
+  /usr/include/sys/poll.h /usr/include/sys/strmdep.h /usr/include/rpc/svc.h \
+  /usr/include/rpc/svc_auth.h /usr/include/rpc/rpcb_clnt.h \
+  /usr/include/rpc/rpcb_prot.h \
+  /pkg/gnu/sparc-sun-solaris2.3/include/assert.h
+callback.o: callback.cc rpc++/callback.h

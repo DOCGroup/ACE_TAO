@@ -1,0 +1,15 @@
+// $Id$
+
+include "vacpp_setup.icc"
+option
+    link(libSearchPath, platformLibSearchPath),
+    incl(searchPath, ".."),
+    link(linkWithMultiThreadLib,yes),
+    link(debug)
+    {
+	target type (exe) "Time_Value_Test"
+	{
+	   source type (cpp) "Time_Value_Test.cpp"
+	   source platformLinkLibs
+	}
+    }
