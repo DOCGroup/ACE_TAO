@@ -27,7 +27,7 @@ class Test_i : public POA_Test
 {
 public:
   Test_i (CORBA::ORB_ptr orb);
-  
+
   CORBA::Short method  (CORBA::Short boo,
                         CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException,
@@ -38,7 +38,7 @@ public:
 
 private:
   CORBA::ORB_var orb_;
-  
+
 };
 
 Test_i::Test_i (CORBA::ORB_ptr orb)
@@ -110,15 +110,15 @@ main (int argc, char *argv[])
                                             "",
                                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
-      Test_i servant (orb.in ());      
+
+      Test_i servant (orb.in ());
       // Obtain RootPOA.
       CORBA::Object_var object =
         orb->resolve_initial_references ("RootPOA",
                                          ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
-      PortableServer::POA_var root_poa = 
+
+      PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (object.in (),
                                       ACE_TRY_ENV);
 
@@ -131,6 +131,7 @@ main (int argc, char *argv[])
 
       Test_var Test_object =
         servant._this (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       CORBA::String_var ior =
         orb->object_to_string (Test_object.in (),
@@ -139,7 +140,7 @@ main (int argc, char *argv[])
       // If the ior_output_file exists, output the ior to it
       if (ior_output_file != 0)
         {
-          FILE *output_file = 
+          FILE *output_file =
             ACE_OS::fopen (ior_output_file, "w");
 
           if (output_file == 0)
@@ -177,6 +178,3 @@ main (int argc, char *argv[])
   ACE_ENDTRY;
   return 0;
 }
-
-
-

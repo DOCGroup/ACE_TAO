@@ -1,3 +1,12 @@
+Wed Mar 28 13:30:01 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Smart_Proxies/server.cpp:
+	* tests/Smart_Proxies/Benchmark/client.cpp:
+	* tests/Smart_Proxies/Benchmark/server.cpp :
+	* tests/Smart_Proxies/On_Demand/server.cpp:
+	* tests/Smart_Proxies/Policy/server.cpp: Fixed some fuzz script
+	  errors. 
+	
 Wed Mar 28 13:10:22 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/IFR_Service/Makefile:
