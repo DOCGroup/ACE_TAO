@@ -20,10 +20,6 @@
 #ifndef TAO_CONV_FRAMES_T_CPP
 #define TAO_CONV_FRAMES_T_CPP
 
-#if defined(_MSC_VER)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
 #include "tao/CONV_FRAMES_T.h"
 
 #if !defined (__ACE_INLINE__)
