@@ -1,3 +1,19 @@
+Fri Jul 27 11:09:25 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/RTCORBA/Banded_Connections/bands.hpux:
+
+          Added to fix the runtime problem on HP-UX.
+
+        * tests/RTCORBA/Banded_Connections/run_test.pl:
+        * tests/RTCORBA/Client_Propagated/client.cpp:
+        * tests/RTCORBA/Client_Propagated/server.cpp:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/run_test.pl:
+        * tests/RTCORBA/Server_Declared/run_test.pl:
+
+          Corrections to fix some of the RTCORBA runtime test problems for
+          HP-UX.  These tests still have some problems (especially with
+          SHMIOP).
+
 Fri Jul 27 10:50:42 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tests/Smart_Proxies/Benchmark/Makefile:

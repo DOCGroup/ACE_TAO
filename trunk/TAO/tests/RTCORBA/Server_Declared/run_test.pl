@@ -33,17 +33,23 @@ print STDERR "Value is " . $^O;
 if ($^O eq "MSWin32") {
     $server_args =
         "-p $iorfile1 -o $iorfile2 -a 3 -b 5 -c 2 -ORBSvcConf $server_conf "
-            ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=3 "
-                ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=5 "
-                    ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=1 ";
+        ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=3 "
+        ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=5 "
+        ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=1 ";
 }
-
-if ($^O eq "dec_osf") {
+elsif ($^O eq "dec_osf") {
     $server_args =
         "-p $iorfile1 -o $iorfile2 -a 20 -b 30 -c 25 -ORBSvcConf $server_conf "
-      ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=20 "
-      ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=30 "
-      ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=28 ";
+        ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=20 "
+        ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=30 "
+        ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=28 ";
+}
+elsif ($^O eq "hpux") {
+    $server_args =
+        "-p $iorfile1 -o $iorfile2 -a 17 -b 29 -c 24 -ORBSvcConf $server_conf "
+        ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=17 "
+        ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=29 "
+        ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=27 ";
 }
 
 $client_args = "-p file://$iorfile1 -o file://$iorfile2";

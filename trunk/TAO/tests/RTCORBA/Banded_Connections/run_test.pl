@@ -62,6 +62,19 @@ if ($^O eq "dec_osf") {
        ."-a 23 -b 28 -c 34 ";
 }
 
+if ($^O eq "hpux") {
+    $server_args =
+        "-n $iorfile1 -o $iorfile2 -b bands.hpux -ORBSvcConf $server_conf "
+       ."-p 17 -w 32 "
+       ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=20 "
+       ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=27 "
+       ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=31 ";
+
+    $client_args =
+        "-n file://$iorfile1 -o file://$iorfile2 "
+       ."-a 20 -b 27 -c 32 ";
+}
+
 $SV = new PerlACE::Process ("server", $server_args);
 $CL = new PerlACE::Process ("client", $client_args);
 
