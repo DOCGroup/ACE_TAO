@@ -257,7 +257,6 @@ Synch_HTTP_Handler_Factory::destroy_http_handler (HTTP_Handler &handler,
   delete &io;
 }
 
-
 // This only works on Win32
 #if defined (ACE_WIN32)
 void

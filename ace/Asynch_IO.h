@@ -852,15 +852,12 @@ template <class HANDLER>
 class ACE_Asynch_Acceptor;
 
 class ACE_Export ACE_Service_Handler : public ACE_Handler
-  //
   // = TITLE
-  //     
   //     This base class defines the interface for the
   //     ACE_Asynch_Acceptor to call into when new connection are
   //     accepted.
   //
   // = DESCRIPTION
-  //     
   //     Subclasses of this class will fill in appropriate methods to
   //     define application specific behavior.
 {

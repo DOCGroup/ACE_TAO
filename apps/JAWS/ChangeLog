@@ -1,3 +1,10 @@
+Wed Nov 19 05:10:38 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* server/HTTP_Handler.h: Added the keyword "virtual" on the open()
+ 	  method which is inherited from ACE_Sevice_Handler.  Perhaps this
+ 	  will fix a bug with BORLANDC reported by Valik Solorzano Barboza
+ 	  <valik@xs4all.nl>.
+
 Mon Nov 17 07:34:09 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* server/Parse_Headers.cpp (end_of_line): Replaced a const char *
