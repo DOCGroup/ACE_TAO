@@ -10,6 +10,10 @@ Mon Mar 31 09:00:54 1997  David L. Levine  <levine@cs.wustl.edu>
 	  moved context_switch_time.cpp from examples/Threads to
 	  performance-tests/Misc.
 
+	* performance-tests/Misc/context_switch_time.cpp: this test no
+	  longer worked.  So, reverted to revision 4.5, plus minimum
+	  changes necessary to support build on platforms without threads.
+
 Sun Mar 30 12:52:58 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/Malloc.h: The block begining with:
