@@ -16,7 +16,7 @@ Wed Nov 17 16:33:40 1999  Ossama Othman  <othman@cs.wustl.edu>
 	  a seperate config file.  This makes the test self-contained, and
 	  also allows the test to be run in a build environment where the
 	  sources are in a different directory from the binaries (e.g. a
-	  "VPATH" build.  This change was motivated by a problem that
+	  "VPATH" build).  This change was motivated by a problem that
 	  occurred in an ACE+autoconf VPATH build.
 
 	* tests/Capabilities_Test.cfg:
