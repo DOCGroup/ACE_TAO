@@ -21,11 +21,11 @@ man_MANS = ace-config.1
 ## Build the library directories first.
 ## The docs directory is currently handled by the "dist-hook" makefile target.
 SUBDIRS = \
-	ace \
-	netsvcs \
-	tests \
-	apps \
-	man
+  ace \
+  netsvcs \
+  tests \
+  apps \
+  man
 
 ##SUBDIRS = \
 ##          docs \
@@ -40,28 +40,29 @@ SUBDIRS = \
 
 ## For some reason, automake doesn't include acconfig.h in the distribution
 EXTRA_DIST = \
-        ACE-INSTALL.html \
-        ACE-install.sh \
-        BIBLIOGRAPHY \
-        ChangeLog-93 \
-        ChangeLog-94 \
-        ChangeLog-95 \
-        ChangeLog-96a \
-        ChangeLog-96b \
-        ChangeLog-97a \
-        ChangeLog-97b \
-        ChangeLog-98a \
-        ChangeLog-98b \
-	ChangeLog-99a \
-	ChangeLog-99b \
-        FAQ \
-        PROBLEM-REPORT-FORM \
-        README.aceconf \
-        VERSION \
-        acconfig.h \
-        ace-config.in \
-        ace-config.1.in \
-        aceConf.sh.in
+  ACE-INSTALL.html \
+  ACE-install.sh \
+  BIBLIOGRAPHY \
+  ChangeLog-93 \
+  ChangeLog-94 \
+  ChangeLog-95 \
+  ChangeLog-96a \
+  ChangeLog-96b \
+  ChangeLog-97a \
+  ChangeLog-97b \
+  ChangeLog-98a \
+  ChangeLog-98b \
+  ChangeLog-99a \
+  ChangeLog-99b \
+  FAQ \
+  PROBLEM-REPORT-FORM \
+  VERSION \
+  acconfig.h \
+  ace-config.in \
+  ace-config.1.in \
+  aceConf.sh.in \
+  ltcf-c.sh \
+  ltcf-cxx.sh
 
 DISTCLEANFILES = ace-config aceConf.sh ace-config.1 
 
