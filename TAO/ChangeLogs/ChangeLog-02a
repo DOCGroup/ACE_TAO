@@ -1,3 +1,8 @@
+Tue Jul 25 12:39:16 2000  Chad Elliott  <elliott_c@ociweb.com>
+        * orbsvcs/orbsvcs/Makefile
+
+          Put the quotes back around the FOR loop.  Use MAKE_MODE=UNIX.
+
 Tue Jul 25 11:05:14 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* orbsvcs/tests/InterfaceRepo/IFR_Test/IFR_Test.dsp:
