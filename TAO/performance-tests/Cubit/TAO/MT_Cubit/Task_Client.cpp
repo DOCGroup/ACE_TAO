@@ -58,7 +58,7 @@ Task_State::Task_State (int argc, char **argv)
     switch (c) {
     case 's':
       use_name_service_ = 0;
-      break; 
+      break;
     case 'k':
       factory_ior_ = ACE_OS::strdup (opts.optarg);
       break;
@@ -134,13 +134,13 @@ Task_State::Task_State (int argc, char **argv)
                   "\n", argv [0]));
     }
 #if 0
-  FILE *iorFile = fopen (ior_file_, "r"); 
+  FILE *iorFile = fopen (ior_file_, "r");
   char buf[BUFSIZ];
   int i = 0, j=0;
-  while (fgets (buf, BUFSIZ, iorFile) != 0) 
+  while (ACE_OS::fgets (buf, BUFSIZ, iorFile) != 0)
     { j=ACE_OS::strlen(buf); buf[j-1]=0;iors_[i] = ACE_OS::strdup (buf); printf("ior[%d]=\"%s\"\n",i,iors_[i]); i++;  }
   fclose (iorFile);
-#endif
+#endif /* 0 */
 
   // thread_count_ + 1 because there is one utilization thread also
   // wanting to begin at the same time the clients begin..
@@ -227,7 +227,7 @@ Client::get_high_priority_jitter () {
     }
 // @@ This is a *hack*, we need to implement sqrt without double's.
 #if defined (ACE_LACKS_FLOATING_POINT)
-  return 1; 
+  return 1;
 #else  /* ! ACE_LACKS_FLOATING_POINT */
   return sqrt (jitter / (double) (ts_->loop_count_ - 1));
 #endif /* ! ACE_LACKS_FLOATING_POINT */
@@ -257,7 +257,7 @@ Client::svc (void)
   CORBA::Object_var naming_obj (0);
   CORBA::Environment env;
   char ior [1024];
-  double frequency;
+  double frequency = 0.0;
 
   /// Add "-ORBobjrefstyle url" argument to the argv vector for the orb to
   ///   use a URL style to represent the ior.
@@ -287,18 +287,18 @@ Client::svc (void)
   if (ts_->use_name_service_ != 0)
     {
       naming_obj =
-	orb->resolve_initial_references ("NameService");
-      
+        orb->resolve_initial_references ("NameService");
+
       if (CORBA::is_nil (naming_obj.in ()))
-	ACE_ERROR ((LM_ERROR,
-		    " (%P|%t) Unable to resolve the Name Service.\n"));
+        ACE_ERROR ((LM_ERROR,
+                    " (%P|%t) Unable to resolve the Name Service.\n"));
       else
-	{
-	  this->naming_context_ =
-	    CosNaming::NamingContext::_narrow (naming_obj.in (), env);
-	}
+        {
+          this->naming_context_ =
+            CosNaming::NamingContext::_narrow (naming_obj.in (), env);
+        }
     }
-  
+
   {
 #if defined (ACE_HAS_THREADS)
     ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ts_->lock_, -1);
@@ -425,7 +425,7 @@ Client::svc (void)
             Cubit_Factory_var cb_factory = Cubit_Factory::_narrow (objref.in (), TAO_TRY_ENV);
             TAO_CHECK_ENV;
 
-            if (CORBA::is_nil (cb_factory))
+            if (CORBA::is_nil (cb_factory.in ()))
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "Create cubit factory failed\n"), 1);
 
@@ -437,14 +437,14 @@ Client::svc (void)
             objref = orb->string_to_object (my_ior,
                                             TAO_TRY_ENV);
             TAO_CHECK_ENV;
-	  }
-	else
-	  {
+          }
+        else
+          {
             char * my_ior = ts_->iors_[thread_id];
-	    if (my_ior == 0)
+            if (my_ior == 0)
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "Must specify valid factory ior key with -k option, naming service, or ior filename\n"), -1);
-	      
+
             objref = orb->string_to_object (my_ior,
                                             TAO_TRY_ENV);
             TAO_CHECK_ENV;
@@ -497,10 +497,10 @@ Client::svc (void)
       ACE_DEBUG ((LM_DEBUG, "(%t) CALLING SHUTDOWN() ON THE SERVANT\n"));
       cb->shutdown (env);
       if (env.exception () != 0)
-	{
-	  ACE_ERROR ((LM_ERROR, "Shutdown of the server failed!\n"));
-	  env.print_exception ("shutdown() call failed.\n");
-	}
+        {
+          ACE_ERROR ((LM_ERROR, "Shutdown of the server failed!\n"));
+          env.print_exception ("shutdown() call failed.\n");
+        }
     }
 
   return 0;
@@ -542,173 +542,173 @@ Client::run_tests (Cubit_ptr cb,
       timer_.start (); //ACE_OS::ACE_HRTIMER_START); not using sysBench when CHORUS defined
 
       if (ts_->oneway_ == 0)
-	{
-	  switch (datatype)
-	    {
-	    case CB_OCTET:
-	      {
-		// Cube an octet.
-		CORBA::Octet arg_octet = func (i), ret_octet = 0;
+        {
+          switch (datatype)
+            {
+            case CB_OCTET:
+              {
+                // Cube an octet.
+                CORBA::Octet arg_octet = func (i), ret_octet = 0;
 
 #if defined (USE_QUANTIFY)
-	    /* start recording quantify data from here */
-	    quantify_start_recording_data ();
+            /* start recording quantify data from here */
+            quantify_start_recording_data ();
 #endif
-		ret_octet = cb->cube_octet (arg_octet, env);
+                ret_octet = cb->cube_octet (arg_octet, env);
 
 #if defined (USE_QUANTIFY)
-	    quantify_stop_recording_data();
+            quantify_stop_recording_data();
 #endif
 
-		if (env.exception () != 0)
-		  {
-		    env.print_exception ("call to cube_octet()\n");
-		    ACE_ERROR_RETURN ((LM_ERROR,"%s:Call failed\n", env.exception ()), 2);
-		  }
+                if (env.exception () != 0)
+                  {
+                    env.print_exception ("call to cube_octet()\n");
+                    ACE_ERROR_RETURN ((LM_ERROR,"%s:Call failed\n", env.exception ()), 2);
+                  }
 
-		arg_octet = arg_octet * arg_octet * arg_octet;
+                arg_octet = arg_octet * arg_octet * arg_octet;
 
-		if (arg_octet != ret_octet)
-		  {
-		    ACE_DEBUG ((LM_DEBUG, "** cube_octet(%d)  (--> %d)\n", arg_octet , ret_octet));
-		    error_count++;
-		  }
-		call_count++;
-	      }
-	      break;
+                if (arg_octet != ret_octet)
+                  {
+                    ACE_DEBUG ((LM_DEBUG, "** cube_octet(%d)  (--> %d)\n", arg_octet , ret_octet));
+                    error_count++;
+                  }
+                call_count++;
+              }
+              break;
 
-	    case CB_SHORT:
-	      // Cube a short.
-	      {
-		call_count++;
+            case CB_SHORT:
+              // Cube a short.
+              {
+                call_count++;
 
-		CORBA::Short arg_short = func (i), ret_short;
+                CORBA::Short arg_short = func (i), ret_short;
 
 #if defined (USE_QUANTIFY)
-	    /* start recording quantify data from here */
-	    quantify_start_recording_data ();
+            /* start recording quantify data from here */
+            quantify_start_recording_data ();
 #endif
 
-		ret_short = cb->cube_short (arg_short, env);
+                ret_short = cb->cube_short (arg_short, env);
 
 #if defined (USE_QUANTIFY)
-	    quantify_stop_recording_data();
+            quantify_stop_recording_data();
 #endif
 
-		if (env.exception () != 0)
-		  {
-		    env.print_exception ("call to cube_short()\n");
-		    ACE_ERROR_RETURN ((LM_ERROR,
-				       "%s:Call failed\n",
-				       env.exception ()),
-				      2);
-		  }
+                if (env.exception () != 0)
+                  {
+                    env.print_exception ("call to cube_short()\n");
+                    ACE_ERROR_RETURN ((LM_ERROR,
+                                       "%s:Call failed\n",
+                                       env.exception ()),
+                                      2);
+                  }
 
-		arg_short = arg_short * arg_short * arg_short;
+                arg_short = arg_short * arg_short * arg_short;
 
-		if (arg_short != ret_short)
-		  {
-		    ACE_DEBUG ((LM_DEBUG, "** cube_short(%d)  (--> %d)\n", arg_short , ret_short));
-		    error_count++;
-		  }
-		break;
-	      }
-	      // Cube a long.
+                if (arg_short != ret_short)
+                  {
+                    ACE_DEBUG ((LM_DEBUG, "** cube_short(%d)  (--> %d)\n", arg_short , ret_short));
+                    error_count++;
+                  }
+                break;
+              }
+              // Cube a long.
 
-	    case CB_LONG:
-	      {
-		call_count++;
+            case CB_LONG:
+              {
+                call_count++;
 
-		CORBA::Long arg_long = func (i), ret_long;
+                CORBA::Long arg_long = func (i), ret_long;
 
 #if defined (USE_QUANTIFY)
-	    /* start recording quantify data from here */
-	    quantify_start_recording_data ();
+            /* start recording quantify data from here */
+            quantify_start_recording_data ();
 #endif
 
-		ret_long = cb->cube_long (arg_long, env);
+                ret_long = cb->cube_long (arg_long, env);
 
 #if defined (USE_QUANTIFY)
-	    quantify_stop_recording_data();
+            quantify_stop_recording_data();
 #endif
 
-		if (env.exception () != 0)
-		  {
-		    env.print_exception ("call to cube_long()\n");
-		    ACE_ERROR_RETURN ((LM_ERROR,"%s:Call failed\n", env.exception ()), 2);
-		  }
+                if (env.exception () != 0)
+                  {
+                    env.print_exception ("call to cube_long()\n");
+                    ACE_ERROR_RETURN ((LM_ERROR,"%s:Call failed\n", env.exception ()), 2);
+                  }
 
-		arg_long = arg_long * arg_long * arg_long;
+                arg_long = arg_long * arg_long * arg_long;
 
-		if (arg_long != ret_long)
-		  {
-		    ACE_DEBUG ((LM_DEBUG, "** cube_long(%d)  (--> %d)\n", arg_long , ret_long));
-		    error_count++;
-		  }
-		break;
-	      }
+                if (arg_long != ret_long)
+                  {
+                    ACE_DEBUG ((LM_DEBUG, "** cube_long(%d)  (--> %d)\n", arg_long , ret_long));
+                    error_count++;
+                  }
+                break;
+              }
 
-	    case CB_STRUCT:
-	      // Cube a "struct" ...
-	      {
-		Cubit::Many arg_struct, ret_struct;
+            case CB_STRUCT:
+              // Cube a "struct" ...
+              {
+                Cubit::Many arg_struct, ret_struct;
 
-		call_count++;
+                call_count++;
 
-		arg_struct.l = func (i);
-		arg_struct.s = func (i);
-		arg_struct.o = func (i);
+                arg_struct.l = func (i);
+                arg_struct.s = func (i);
+                arg_struct.o = func (i);
 
 #if defined (USE_QUANTIFY)
-	    /* start recording quantify data from here */
-	    quantify_start_recording_data ();
+            /* start recording quantify data from here */
+            quantify_start_recording_data ();
 #endif
 
-		ret_struct = cb->cube_struct (arg_struct, env);
+                ret_struct = cb->cube_struct (arg_struct, env);
 
 #if defined (USE_QUANTIFY)
-	    quantify_stop_recording_data();
+            quantify_stop_recording_data();
 #endif
 
-		if (env.exception () != 0)
-		  {
-		    env.print_exception ("call to cube_struct()\n");
-		    ACE_ERROR_RETURN ((LM_ERROR,"%s:Call failed\n", env.exception ()), 2);
-		  }
+                if (env.exception () != 0)
+                  {
+                    env.print_exception ("call to cube_struct()\n");
+                    ACE_ERROR_RETURN ((LM_ERROR,"%s:Call failed\n", env.exception ()), 2);
+                  }
 
-		arg_struct.l = arg_struct.l  * arg_struct.l  * arg_struct.l ;
-		arg_struct.s = arg_struct.s  * arg_struct.s  * arg_struct.s ;
-		arg_struct.o = arg_struct.o  * arg_struct.o  * arg_struct.o ;
+                arg_struct.l = arg_struct.l  * arg_struct.l  * arg_struct.l ;
+                arg_struct.s = arg_struct.s  * arg_struct.s  * arg_struct.s ;
+                arg_struct.o = arg_struct.o  * arg_struct.o  * arg_struct.o ;
 
-		if (arg_struct.l  != ret_struct.l
-		    || arg_struct.s  != ret_struct.s
-		    || arg_struct.o  != ret_struct.o )
-		  {
-		    ACE_DEBUG ((LM_DEBUG, "**cube_struct error!\n"));
-		    error_count++;
-		  }
+                if (arg_struct.l  != ret_struct.l
+                    || arg_struct.s  != ret_struct.s
+                    || arg_struct.o  != ret_struct.o )
+                  {
+                    ACE_DEBUG ((LM_DEBUG, "**cube_struct error!\n"));
+                    error_count++;
+                  }
 
-		break;
-	      }
-	    }
-	}
+                break;
+              }
+            }
+        }
       else
-	{
-	  call_count++;
+        {
+          call_count++;
 #if defined (USE_QUANTIFY)
-	    /* start recording quantify data from here */
-	    quantify_start_recording_data ();
+            /* start recording quantify data from here */
+            quantify_start_recording_data ();
 #endif
-	  cb->noop (env);
+          cb->noop (env);
 #if defined (USE_QUANTIFY)
-	    quantify_stop_recording_data();
+            quantify_stop_recording_data();
 #endif
-	  if (env.exception () != 0)
-	    {
-	      env.print_exception ("oneway call noop()\n");
-	      ACE_ERROR_RETURN ((LM_ERROR,"(%t) noop() call failed\n"), 2);
-	    }
-	}
+          if (env.exception () != 0)
+            {
+              env.print_exception ("oneway call noop()\n");
+              ACE_ERROR_RETURN ((LM_ERROR,"(%t) noop() call failed\n"), 2);
+            }
+        }
 
       timer_.stop (); //ACE_OS::ACE_HRTIMER_STOP); not using sysBench when CHORUS defined
       timer_.elapsed_time (delta_t);
@@ -717,9 +717,9 @@ Client::run_tests (Cubit_ptr cb,
 
       // Store the time in usecs.
       et.real_time = delta_t.sec () * ACE_ONE_SECOND_IN_USECS  +
-	delta_t.usec ();
+        delta_t.usec ();
 
-      //      ACE_DEBUG ((LM_DEBUG, "   (%t) elapsed time= %u, latency=%u\n",et.real_time,latency)); 
+      //      ACE_DEBUG ((LM_DEBUG, "   (%t) elapsed time= %u, latency=%u\n",et.real_time,latency));
 #if !defined (ACE_HAS_PRUSAGE_T) && !defined (ACE_HAS_GETRUSAGE) && defined (ACE_LACKS_FLOATING_POINT)
       delta = ((40 * fabs (et.real_time) / 100) + (60 * delta / 100)); // pow(10,6)
       latency += et.real_time;
@@ -736,9 +736,9 @@ Client::run_tests (Cubit_ptr cb,
       if (error_count == 0)
         {
 #if defined (ACE_LACKS_FLOATING_POINT)
-	  double tmp = latency / ACE_ONE_SECOND_IN_USECS;
-	  //	  printf("latency=%u, tmp=%u, call_count=%u, \n", latency, tmp, call_count);
-	  double calls_per_second = call_count / tmp;
+          double tmp = latency / ACE_ONE_SECOND_IN_USECS;
+          //      printf("latency=%u, tmp=%u, call_count=%u, \n", latency, tmp, call_count);
+          double calls_per_second = call_count / tmp;
 #endif /* ACE_LACKS_FLOATING_POINT */
 
           latency /= call_count;
