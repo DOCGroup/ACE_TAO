@@ -1,3 +1,20 @@
+Fri Aug 25 15:15:27 2000  Ossama Othman  <ossama@uci.edu>
+
+	* Makefile.am (EXTRA_DIST):
+
+	  Added libtool shell script fragments `ltcf-c.sh' and
+	  `ltcf-cxx.sh' to the list of additional files to be packaged
+	  with the distribution.
+
+	* ace/Makefile (TEMPLATE_FILES):
+
+	  Added `Hash_Map_With_Allocator_T' to the list of template
+	  source files.  It was missing.
+
+	* ace/Makefile.am:
+
+	  Updated to include all newly added source files.
+
 Fri Aug 25 16:29:51 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/TP_Reactor.cpp: Temporarily remove the ACE_SEH directives
