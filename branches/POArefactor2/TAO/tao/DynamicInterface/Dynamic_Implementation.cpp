@@ -10,6 +10,7 @@ ACE_RCSID (DynamicInterface,
 #include "tao/TSS_Resources.h"
 #include "tao/IFR_Client_Adapter.h"
 #include "tao/PortableServer/POA.h"
+#include "tao/PortableServer/POA_Current_Impl.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/OS_NS_string.h"

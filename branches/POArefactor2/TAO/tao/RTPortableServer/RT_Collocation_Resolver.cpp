@@ -9,7 +9,7 @@ ACE_RCSID(RTCORBA, RT_Collocation_Resolver, "$Id$")
 #include "tao/ORB_Core.h"
 #include "tao/Object.h"
 #include "tao/Stub.h"
-#include "tao/PortableServer/Object_Adapter.h"
+#include "tao/PortableServer/Servant_Upcall.h"
 #include "tao/PortableServer/POA.h"
 #include "tao/RTCORBA/Thread_Pool.h"
 #include "tao/Profile.h"
@@ -33,7 +33,7 @@ TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object
 
   // Lookup the target POA.  Note that Object Adapter lock is held
   // until <servant_upcall> dies.
-  TAO_Object_Adapter::Servant_Upcall servant_upcall (orb_core);
+  TAO::Portable_Server::Servant_Upcall servant_upcall (orb_core);
   TAO_POA *poa =
     servant_upcall.lookup_POA (object->_stubobj ()->object_key ()
                                ACE_ENV_ARG_PARAMETER);

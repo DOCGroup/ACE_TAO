@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:411
+// be\be_codegen.cpp:389
 
 #ifndef _TAO_IDL_ORIG_MESSAGINGS_H_
 #define _TAO_IDL_ORIG_MESSAGINGS_H_
@@ -44,9 +44,7 @@
 #include "tao/PortableServer/Servant_Base.h"
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -62,7 +60,7 @@ namespace POA_Messaging
   
   
   // TAO_IDL - Generated from
-  // be\be_visitor_interface/interface_sh.cpp:90
+  // be\be_visitor_interface/interface_sh.cpp:87
   
   class ReplyHandler;
   typedef ReplyHandler *ReplyHandler_ptr;
@@ -226,15 +224,15 @@ namespace POA_Messaging
 } // module Messaging
 
 // TAO_IDL - Generated from 
-// be\be_codegen.cpp:1014
+// be\be_codegen.cpp:994
 
 #include "MessagingS_T.h"
 
 #if defined (__ACE_INLINE__)
-#include "MessagingS.i"
+#include "MessagingS.inl"
 #endif /* defined INLINE */
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
@@ -244,3 +242,4 @@ namespace POA_Messaging
 
 #include /**/ "ace/post.h"
 #endif /* ifndef */
+

@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:323
+// be\be_codegen.cpp:301
 
 
 #include "Messaging.h"
@@ -41,7 +41,7 @@
 #endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
-#include "MessagingC.i"
+#include "MessagingC.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
@@ -151,7 +151,7 @@ namespace Messaging
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Value_Traits<Messaging::ExceptionHolder>::tao_add_ref (
+TAO::Value_Traits<Messaging::ExceptionHolder>::add_ref (
     Messaging::ExceptionHolder * p
   )
 {
@@ -160,7 +160,7 @@ TAO::Value_Traits<Messaging::ExceptionHolder>::tao_add_ref (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Value_Traits<Messaging::ExceptionHolder>::tao_remove_ref (
+TAO::Value_Traits<Messaging::ExceptionHolder>::remove_ref (
     Messaging::ExceptionHolder * p
   )
 {
@@ -197,8 +197,8 @@ void
 Messaging::ExceptionHolder::_tao_any_destructor (void *_tao_void_pointer)
 {
   ExceptionHolder *_tao_tmp_pointer =
-    ACE_static_cast (
-        ExceptionHolder *,
+    static_cast<
+        ExceptionHolder *> (
         _tao_void_pointer
       );
   CORBA::remove_ref (_tao_tmp_pointer);
@@ -228,29 +228,29 @@ CORBA::Boolean Messaging::ExceptionHolder::_tao_unmarshal (
         base,
         ExceptionHolder::_tao_obv_static_repository_id ()
       );
-
+  
   if (retval == 0)
     {
       return 0;
     }
-
+  
   if (factory.in () != 0)
     {
       base = factory->create_for_unmarshal ();
-
+      
       if (base == 0)
         {
           return 0;  // %! except.?
         }
-
+      
       retval = base->_tao_unmarshal_v (strm);
-
+      
       if (retval == 0)
         {
           return 0;
         }
     }
-
+  
   // Now base must be null or point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = ExceptionHolder::_downcast (base);
@@ -268,20 +268,31 @@ Messaging::ExceptionHolder_init::~ExceptionHolder_init (void)
 {
 }
 
-const char*
+Messaging::ExceptionHolder_init *
+Messaging::ExceptionHolder_init::_downcast (CORBA::ValueFactoryBase *v)
+{
+  if (v == 0)
+    {
+      return 0;
+    }
+  
+  return dynamic_cast< ::Messaging::ExceptionHolder_init * > (v);
+}
+
+const char* 
 Messaging::ExceptionHolder_init::tao_repository_id (void)
 {
   return ::Messaging::ExceptionHolder::_tao_obv_static_repository_id ();
 }
 
 CORBA::ValueBase *
-Messaging::ExceptionHolder_init::create_for_unmarshal (void)
+Messaging::ExceptionHolder_init::create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL)
 {
   CORBA::ValueBase *ret_val = 0;
-  ACE_NEW_RETURN (
+  ACE_NEW_THROW_EX (
       ret_val,
       OBV_Messaging::ExceptionHolder,
-      0
+      CORBA::NO_MEMORY ()
     );
   return ret_val;
 }
@@ -327,7 +338,7 @@ TAO::Objref_Traits<Messaging::ReplyHandler>::marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -351,11 +362,11 @@ Messaging::ReplyHandler::Messaging_ReplyHandler_setup_collocation ()
 Messaging::ReplyHandler::~ReplyHandler (void)
 {}
 
-void
+void 
 Messaging::ReplyHandler::_tao_any_destructor (void *_tao_void_pointer)
 {
   ReplyHandler *_tao_tmp_pointer =
-    ACE_static_cast (ReplyHandler *, _tao_void_pointer);
+    static_cast<ReplyHandler *> (_tao_void_pointer);
   CORBA::release (_tao_tmp_pointer);
 }
 
@@ -396,7 +407,7 @@ Messaging::ReplyHandler::_duplicate (ReplyHandler_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -446,20 +457,20 @@ static const CORBA::Long _oc_Messaging_ReplyHandler[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   39,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x4d657373),
-  ACE_NTOHL (0x6167696e),
-  ACE_NTOHL (0x672f5265),
-  ACE_NTOHL (0x706c7948),
-  ACE_NTOHL (0x616e646c),
-  ACE_NTOHL (0x65723a31),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x4d657373), 
+  ACE_NTOHL (0x6167696e), 
+  ACE_NTOHL (0x672f5265), 
+  ACE_NTOHL (0x706c7948), 
+  ACE_NTOHL (0x616e646c), 
+  ACE_NTOHL (0x65723a31), 
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/Messaging/ReplyHandler:1.0
     13,
-  ACE_NTOHL (0x5265706c),
-  ACE_NTOHL (0x7948616e),
-  ACE_NTOHL (0x646c6572),
+  ACE_NTOHL (0x5265706c), 
+  ACE_NTOHL (0x7948616e), 
+  ACE_NTOHL (0x646c6572), 
   ACE_NTOHL (0x0),  // name = ReplyHandler
   };
 
@@ -560,8 +571,6 @@ OBV_Messaging::ExceptionHolder::marshaled_exception (void)
 
 // TAO_IDL - Generated from
 // be\be_visitor_valuetype/any_op_cs.cpp:57
-
-
 
 template<>
 CORBA::Boolean
@@ -704,8 +713,8 @@ operator<< (
   return
     CORBA::ValueBase::_tao_marshal (
         strm,
-        ACE_const_cast (
-            Messaging::ExceptionHolder *,
+        const_cast<
+            Messaging::ExceptionHolder *> (
             _tao_valuetype
           ),
         (ptrdiff_t) &Messaging::ExceptionHolder::_downcast
@@ -762,26 +771,26 @@ CORBA::Boolean operator>> (
   )
 {
   CORBA::Object_var obj;
-
+  
   if ((strm >> obj.inout ()) == 0)
     {
       return 0;
     }
-
+  
   typedef ::Messaging::ReplyHandler RHS_SCOPED_NAME;
-
+  
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (
         obj.in (),
         Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_function_pointer
       );
-
+    
   return 1;
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1628
+// be\be_visitor_root/root.cpp:1629
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -793,13 +802,13 @@ CORBA::Boolean operator>> (
   template class
     TAO_Value_Var_T<
         Messaging::ExceptionHolder
-
+        
       >;
-
+  
   template class
     TAO_Value_Out_T<
         Messaging::ExceptionHolder
-
+        
       >;
 
   template class
@@ -816,7 +825,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T<
         Messaging::ReplyHandler
       >;
-
+  
   template class
     TAO_Objref_Out_T<
         Messaging::ReplyHandler
@@ -842,13 +851,13 @@ CORBA::Boolean operator>> (
 # pragma instantiate \
     TAO_Value_Var_T< \
         Messaging::ExceptionHolder \
-
+        
       >
-
+  
 # pragma instantiate \
     TAO_Value_Out_T< \
         Messaging::ExceptionHolder \
-
+        
       >
 
 # pragma instantiate \
@@ -865,7 +874,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T< \
         Messaging::ReplyHandler
       >
-
+  
 # pragma instantiate \
     TAO_Objref_Out_T< \
         Messaging::ReplyHandler
@@ -881,4 +890,4 @@ CORBA::Boolean operator>> (
         Messaging::ReplyHandler \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 

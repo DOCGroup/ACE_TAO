@@ -431,8 +431,7 @@ TAO_POA::complete_destruction_i (ACE_ENV_SINGLE_ARG_DECL)
     TAO::ORT_Adapter_Factory *ort_factory =
       this->ORT_adapter_factory ();
 
-    ort_factory->destroy (this->ort_adapter_ ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    ort_factory->destroy (this->ort_adapter_);
 
     this->ort_adapter_ = 0;
   }
