@@ -2,7 +2,7 @@
 
 #include "testC.h"
 
-#include "tao/Messaging.h"
+#include "tao/Messaging/Messaging.h"
 #include "ace/Get_Opt.h"
 
 ACE_RCSID(Timeout, client, "$Id$")
