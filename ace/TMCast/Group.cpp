@@ -1,4 +1,4 @@
-// file      : TMCast/Group.cpp
+// file      : ACE_TMCast/Group.cpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 // cvs-id    : $Id$
 
@@ -22,7 +22,7 @@
 #include "FaultDetector.hpp"
 #include "TransactionController.hpp"
 
-namespace TMCast
+namespace ACE_TMCast
 {
   bool
   operator== (std::type_info const* pa, std::type_info const& b)
@@ -380,7 +380,7 @@ namespace TMCast
 
           std::type_info const* exp = &typeid (*m);
 
-          if (exp == typeid (TMCast::Aborted))
+          if (exp == typeid (ACE_TMCast::Aborted))
           {
             throw Group::Aborted ();
           }

@@ -132,7 +132,7 @@ private:
   Log_ log_;
   CORBA::ORB_var orb_;
   PortableServer::POA_var root_poa_;
-  auto_ptr<TMCast::Group> group_;
+  auto_ptr<ACE_TMCast::Group> group_;
 };
 
 #endif  /* REPLICA_CONTROLLER_H */

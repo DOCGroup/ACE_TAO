@@ -1,10 +1,10 @@
-// file      : TMCast/FaultDetector.hpp
+// file      : ACE_TMCast/FaultDetector.hpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 // cvs-id    : $Id$
 
 #include "Protocol.hpp"
 
-namespace TMCast
+namespace ACE_TMCast
 {
   class FaultDetector
   {

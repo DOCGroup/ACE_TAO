@@ -1,4 +1,4 @@
-// file      : TMCast/Messaging.hpp
+// file      : ACE_TMCast/Messaging.hpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 // cvs-id    : $Id$
 
@@ -10,7 +10,7 @@
 
 #include "MTQueue.hpp"
 
-namespace TMCast
+namespace ACE_TMCast
 {
   class Message
   {
