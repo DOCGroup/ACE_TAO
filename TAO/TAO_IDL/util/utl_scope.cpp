@@ -1028,20 +1028,24 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
               // Are we a type, rather than an identifier?
               if (t != NULL)
                 {
-                  UTL_Scope *s = ScopeAsDecl (this)->defined_in ();
-
-                  if (s != NULL)
+                  // Are we defined in this scope or just referenced?
+                  if (d->defined_in () == this)
                     {
-                      AST_Decl *parent = ScopeAsDecl (s);
+                      UTL_Scope *s = ScopeAsDecl (this)->defined_in ();
 
-                      // If the scope we are defined in is itself inside
-                      // an interface or valuetype, then we should also
-                      // be exported to the interface (or valuetype) scope.
-                      if (parent->node_type () == AST_Decl::NT_interface)
+                      if (s != NULL)
                         {
-                          s->add_to_referenced (d,
-                                                I_FALSE,
-                                                d->local_name ());
+                          AST_Decl *parent = ScopeAsDecl (s);
+
+                          // If the scope we are defined in is itself inside
+                          // an interface or valuetype, then we should also
+                          // be exported to the interface (or valuetype) scope.
+                          if (parent->node_type () == AST_Decl::NT_interface)
+                            {
+                              s->add_to_referenced (d,
+                                                    I_FALSE,
+                                                    d->local_name ());
+                            }
                         }
                     }
                 }
