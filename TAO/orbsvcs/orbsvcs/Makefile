@@ -74,6 +74,7 @@ ifneq (,$(findstring AV,$(TAO_ORBSVCS)))
         AV/AVStreams_i \
         AV/Endpoint_Strategy \
         AV/Endpoint_Strategy_T\
+	AV/Transport\
 	AV/sfp
 endif # AV
 
