@@ -32,7 +32,7 @@ ifndef TAO_ROOT
 # only ONE of these rules will be run at make-time,
 
 # The rules are only used if TAO_ROOT is not defined to avoid
-# conflicts with a similar rule in TAO. 
+# conflicts with a similar rule in TAO.
 
 %S.cpp: %.idl
 	$(IDL) --version $(IDLFLAGS) $<
@@ -111,13 +111,19 @@ show_uninit:
 install.local: $(INSTALL)
 
 deinstall.local:
-	$(RM) $(INSTALL) $(LIB:%.a=$(INSLIB)/%*.a) $(SHLIB:%.$(SOEXT)=$(INSLIB)/%*.$(SOEXT))
+	$(RM) $(INSTALL) $(LIB:%.a=$(INSLIB)/%*.a) \
+$(SHLIB:%.$(SOEXT)=$(INSLIB)/%*.$(SOEXT))
 
 
 #### To disable installs, just add "INSTALL=" to your "make" invocation.
 
 ifeq (,$(LN_S))
-  LN_S = ln -s
+  ifdef COMSPEC
+    #### Assume we're on a WIN32 host.
+    LN_S = cp -p
+  else  # ! WIN32
+    LN_S = ln -s
+  endif # ! WIN32
 endif # ! LN_S
 
 $(INSBIN)/%$(VAR) \
