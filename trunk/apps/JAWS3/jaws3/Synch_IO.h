@@ -4,7 +4,6 @@
 #ifndef JAWS_SYNCH_IO_H
 #define JAWS_SYNCH_IO_H
 
-#include "ace/OS.h"
 #include "ace/Singleton.h"
 
 #include "jaws3/IO.h"

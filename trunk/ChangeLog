@@ -1,3 +1,25 @@
+Mon Feb 14 18:24:19 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/OS_TLI.inl: Added "namespace ACE_OS" around all the methods,
+	  instead of prepending ACE_OS to the names. This continues some
+	  similar changes, such as to OS_NS_signal.inl.
+
+	* apps/JAWS3/jaws3/Asynch_IO.h:
+	* apps/JAWS3/jaws3/Asynch_IO_Helpers.h:
+	* apps/JAWS3/jaws3/Concurrency_T.h:
+	* apps/JAWS3/jaws3/Event_Dispatcher.h:
+	* apps/JAWS3/jaws3/Options.h:
+	* apps/JAWS3/jaws3/Reactive_IO.h:
+	* apps/JAWS3/jaws3/Reactive_IO_Helpers.h:
+	* apps/JAWS3/jaws3/Signal_Task.h:
+	* apps/JAWS3/jaws3/Synch_IO.h:
+	  Removed #include "ace/OS.h", replacing with other #includes
+	  as needed. If OS.h is included, some other OS_*.h files can get
+	  pulled in and sometimes ends up tentatively defining structs in
+	  ACE_OS's namespace. This can end up tripping HP-UX aCC. Not sure
+	  why it's only aCC and not other compilers as well, but there it is.
+	  Finally resolves some nagging compile errors on HP-UX.
+
 Mon Feb 14 17:36:43 2005  Steve Huston  <shuston@riverace.com>
 
 	* ace/ace.mwc: Removed RMCast and TMCast, since they're now under

@@ -1,5 +1,6 @@
 // $Id$
 
+#include "ace/OS_NS_strings.h"
 #include "ace/Message_Block.h"
 #include "ace/Singleton.h"
 #include "ace/Synch_Traits.h"

@@ -4,6 +4,8 @@
 #define JAWS_BUILD_DLL
 #endif /*JAWS_BUILD_DLL*/
 
+#include "ace/OS_NS_strings.h"
+
 #include "jaws3/IO.h"
 #include "jaws3/Asynch_IO.h"
 #include "jaws3/Synch_IO.h"

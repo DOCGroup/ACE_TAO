@@ -4,7 +4,6 @@
 #ifndef JAWS_EVENT_DISPATCHER_H
 #define JAWS_EVENT_DISPATCHER_H
 
-#include "ace/OS.h"
 #include "ace/Reactor.h"
 #include "ace/Select_Reactor.h"
 
