@@ -1,85 +1,91 @@
+Thu Jun 10 19:44:55 2004  Olli Savia  <ops@iki.fi>
+
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/AMI_Primary_Replication_Strategy.cpp:
+
+          Replaced NULL with 0 to fix build problems on LynxOS.
+
 Wed Jun  9 15:04:16 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Array_VarOut_T.h (nocopy):
-	* tao/Array_VarOut_T.inl (nocopy):
+        * tao/Array_VarOut_T.h (nocopy):
+        * tao/Array_VarOut_T.inl (nocopy):
 
-	  Reverted change that made the return type of this method bool
-	  instead of CORBA::Boolean.  It turns out it is a CORBA defined
-	  method, meaning that it should return CORBA::Boolean.  Thanks to
-	  Jeff Parsons for pointing this out.
+          Reverted change that made the return type of this method bool
+          instead of CORBA::Boolean.  It turns out it is a CORBA defined
+          method, meaning that it should return CORBA::Boolean.  Thanks to
+          Jeff Parsons for pointing this out.
 
 Wed Jun 09 16:49:17 2004  Simon McQueen  <sm@prismtechnologies.com>
 
-	* orbsvcs/ImplRepo_Service/Activator_NT_Service.cpp:
-	* orbsvcs/ImplRepo_Service/ImR_Activator.cpp:
-	* orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
-	* orbsvcs/ImplRepo_Service/ImR_Activator_i.h:
-	* orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
-	* orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
-	* orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
-	* orbsvcs/ImplRepo_Service/tao_imr_i.h:
-	* tao/PortableServer/ImplRepo.pidl:
-	* tao/PortableServer/ImplRepoC.cpp:
-	* tao/PortableServer/ImplRepoC.h:
-	* tao/PortableServer/ImplRepoC.i:
-	* tao/PortableServer/ImplRepoS.cpp:
-	* tao/PortableServer/ImplRepoS.h:
-	* tao/PortableServer/ImplRepoS.i:
-	* tao/PortableServer/ImR_LocatorC.cpp:
-	* tao/PortableServer/ImR_LocatorC.h:
-	* tao/PortableServer/ImR_LocatorC.i:
-	* tao/PortableServer/ImR_LocatorS.cpp:
-	* tao/PortableServer/ImR_LocatorS.h:
-	* tao/PortableServer/ImR_LocatorS.i:
+        * orbsvcs/ImplRepo_Service/Activator_NT_Service.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Activator.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+        * orbsvcs/ImplRepo_Service/tao_imr_i.h:
+        * tao/PortableServer/ImplRepo.pidl:
+        * tao/PortableServer/ImplRepoC.cpp:
+        * tao/PortableServer/ImplRepoC.h:
+        * tao/PortableServer/ImplRepoC.i:
+        * tao/PortableServer/ImplRepoS.cpp:
+        * tao/PortableServer/ImplRepoS.h:
+        * tao/PortableServer/ImplRepoS.i:
+        * tao/PortableServer/ImR_LocatorC.cpp:
+        * tao/PortableServer/ImR_LocatorC.h:
+        * tao/PortableServer/ImR_LocatorC.i:
+        * tao/PortableServer/ImR_LocatorS.cpp:
+        * tao/PortableServer/ImR_LocatorS.h:
+        * tao/PortableServer/ImR_LocatorS.i:
 
-	  Added command 'shutdown-repo' to tao_imr to permit the remote
-	  orderly shutdown of the ImR and any Activators registered with
-	  it.  This closes bug # 1335.
+          Added command 'shutdown-repo' to tao_imr to permit the remote
+          orderly shutdown of the ImR and any Activators registered with
+          it.  This closes bug # 1335.
 
 Tue Jun  8 17:00:14 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Any_Array_Impl_T.h (extract):
-	* tao/Any_Array_Impl_T.cpp (extract):
+        * tao/Any_Array_Impl_T.h (extract):
+        * tao/Any_Array_Impl_T.cpp (extract):
 
-	  Made slice parameter non-const.  Part of a work-around for
-	  MSVC++ 6 issues involving conversion of non-const
-	  multidimensional arrays to const ones (e.g. int*[3][10] ->
-	  const int*[3][10]).
+          Made slice parameter non-const.  Part of a work-around for
+          MSVC++ 6 issues involving conversion of non-const
+          multidimensional arrays to const ones (e.g. int*[3][10] ->
+          const int*[3][10]).
 
-	* tao/Any_Array_Impl_T.inl:
+        * tao/Any_Array_Impl_T.inl:
 
-	  Added an Emacs C++ mode comment.
+          Added an Emacs C++ mode comment.
 
-	* tao/Array_VarOut_T.h:
+        * tao/Array_VarOut_T.h:
 
-	  No need to use CORBA::Boolean typedef.  The standard C++ bool
-	  type is fine for this case since this code is used internally
-	  within TAO.
+          No need to use CORBA::Boolean typedef.  The standard C++ bool
+          type is fine for this case since this code is used internally
+          within TAO.
 
-	* tao/Array_VarOut_T.inl (in):
+        * tao/Array_VarOut_T.inl (in):
 
-	  MSVC++ 6 can't handle the const_cast<> in the multi-dimensional
-	  array case so reinterpret_cast<> cast instead.  It's not clear
-	  if this is really the right thing to do but the code won't
-	  compile with MSVC++ 6 without it.  We use a reinterpret_cast<>
-	  instead of a C-style "sledgehammer" cast to make it obvious that
-	  this code may have unresolved issues, and also to make it easier
-	  for others to find this code.
+          MSVC++ 6 can't handle the const_cast<> in the multi-dimensional
+          array case so reinterpret_cast<> cast instead.  It's not clear
+          if this is really the right thing to do but the code won't
+          compile with MSVC++ 6 without it.  We use a reinterpret_cast<>
+          instead of a C-style "sledgehammer" cast to make it obvious that
+          this code may have unresolved issues, and also to make it easier
+          for others to find this code.
 
-	* TAO_IDL/be/be_visitor_array/any_op_cs.cpp (visit_array):
+        * TAO_IDL/be/be_visitor_array/any_op_cs.cpp (visit_array):
 
-	  Removed const_cast<> from CORBA::any extraction operator for
-	  CORBA IDL arrays.  It is no longer necessary, nor did it have
-	  the desired effect with broken MSVC++ 6.
+          Removed const_cast<> from CORBA::any extraction operator for
+          CORBA IDL arrays.  It is no longer necessary, nor did it have
+          the desired effect with broken MSVC++ 6.
 
 Tue Jun  8 15:35:20 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_visitor_array/any_op_cs.cpp (visit_array):
+        * TAO_IDL/be/be_visitor_array/any_op_cs.cpp (visit_array):
 
-	  Simplified generated CORBA::Any insertion operator for CORBA IDL
-	  arrays.  The multiple const_cast<>s in the generated code are no
-	  longer necessary.  Fixes a compile-time error exhibited by
-	  MSVC++ 6.
+          Simplified generated CORBA::Any insertion operator for CORBA IDL
+          arrays.  The multiple const_cast<>s in the generated code are no
+          longer necessary.  Fixes a compile-time error exhibited by
+          MSVC++ 6.
 
 Tue Jun  8 09:07:43 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -101,138 +107,138 @@ Tue Jun 08 12:07:55 2004  Simon McQueen  <sm@prismtechnologies.com>
          * orbsvcs/ImplRepo_Service/Locator_Options.cpp:
 
            Allow the setting of an environment variable 'TAO_USE_IMR'
- 	   which has the same effect as specifying an -ORBUseIMR value for
-  	   all servers on a host (any explicitly set -ORBUseIMR value
-  	   passed to individual ORBs will override it).
+           which has the same effect as specifying an -ORBUseIMR value for
+           all servers on a host (any explicitly set -ORBUseIMR value
+           passed to individual ORBs will override it).
 
-	   This fixes bug #1336.
+           This fixes bug #1336.
 
 Fri Jun  4 00:16:19 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/CORBA_String.cpp (string_dup):
-	* tao/IIOP_Connection_Handler.cpp:
-	* tao/IIOP_Transport.cpp:
-	* tao/Strategies/UIOP_Connection_Handler.cpp:
-	* tao/Strategies/UIOP_Transport.cpp:
+        * tao/CORBA_String.cpp (string_dup):
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/IIOP_Transport.cpp:
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
+        * tao/Strategies/UIOP_Transport.cpp:
 
-	  Minor "const correctness" improvements.
+          Minor "const correctness" improvements.
 
-	* tao/Exception.h (initialized_):
+        * tao/Exception.h (initialized_):
 
-	  This member is now a "bool" instead of an "int."  The former is
-	  the more appropriate type in this case.
+          This member is now a "bool" instead of an "int."  The former is
+          the more appropriate type in this case.
 
-	* tao/Exception.cpp (init):
+        * tao/Exception.cpp (init):
 
-	  Made array containing exception names static since its contents
-	  are fixed.
+          Made array containing exception names static since its contents
+          are fixed.
 
-	* tao/IIOP_Acceptor.cpp:
-	* tao/IIOP_Connector.cpp:
-	* tao/ORB.cpp:
-	* tao/ORB_Core.cpp:
-	* tao/ORB_Core.i:
-	* tao/Strategies/UIOP_Acceptor.cpp:
-	* tao/Strategies/UIOP_Connector.cpp:
+        * tao/IIOP_Acceptor.cpp:
+        * tao/IIOP_Connector.cpp:
+        * tao/ORB.cpp:
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Core.i:
+        * tao/Strategies/UIOP_Acceptor.cpp:
+        * tao/Strategies/UIOP_Connector.cpp:
 
-	  Made arrays with fixed content static.  Reduces footprint
-	  slightly.
+          Made arrays with fixed content static.  Reduces footprint
+          slightly.
 
           Converted all ACE cast macro calls to their ANSI C++ cast
           counterparts.
 
-	  Minor "const correctness" improvements.
+          Minor "const correctness" improvements.
 
           Use prefix {in,dec}rement operators where applicable instead of
           postfix operators.  The former are more efficient.
 
-	* tao/IIOP_Acceptor.h (TAO_IIOP_Acceptor):
+        * tao/IIOP_Acceptor.h (TAO_IIOP_Acceptor):
 
-	  Reordered some class members/attributes to prevent the compiler
-	  from necessarily adding alignment padding.  Reduces the size of
-	  this class.
+          Reordered some class members/attributes to prevent the compiler
+          from necessarily adding alignment padding.  Reduces the size of
+          this class.
 
-	* tao/IIOP_Connector.h (lite_flag_):
-	* tao/Strategies/UIOP_Acceptor.h:
-	* tao/Strategies/UIOP_Connector.h:
+        * tao/IIOP_Connector.h (lite_flag_):
+        * tao/Strategies/UIOP_Acceptor.h:
+        * tao/Strategies/UIOP_Connector.h:
 
-	  No need to declare this member as a "CORBA::Boolean".  The
-	  standard C++ "bool" is fine, particularly since this flag is
-	  used internally.
+          No need to declare this member as a "CORBA::Boolean".  The
+          standard C++ "bool" is fine, particularly since this flag is
+          used internally.
 
-	* tao/Strategies/UIOP_Endpoint.cpp:
+        * tao/Strategies/UIOP_Endpoint.cpp:
 
           Converted all ACE cast macro calls to their ANSI C++ cast
           counterparts.
 
 Wed Jun  2 00:37:17 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Acceptor_Registry.cpp:
-	* tao/Any.cpp:
-	* tao/Any_Array_Impl_T.cpp:
-	* tao/Any_Basic_Impl_T.cpp:
-	* tao/Any_Dual_Impl_T.cpp:
-	* tao/Any_Impl.cpp:
-	* tao/Any_Impl_T.cpp:
-	* tao/Any_Special_Impl_T.cpp:
-	* tao/Any_SystemException.cpp:
-	* tao/Array_VarOut_T.cpp:
-	* tao/Array_VarOut_T.inl:
-	* tao/Base_Transport_Property.cpp:
-	* tao/CDR.i:
-	* tao/CDR_Encaps_Codec.cpp:
-	* tao/CORBALOC_Parser.cpp:
-	* tao/CORBA_String.cpp:
-	* tao/ClientRequestInfo_i.cpp:
-	* tao/Fixed_Array_Argument_T.inl:
-	* tao/GIOP_Message_Generator_Parser_10.cpp:
-	* tao/GIOP_Message_Generator_Parser_12.cpp:
-	* tao/GIOP_Message_State.cpp:
-	* tao/IIOP_Connection_Handler.cpp:
-	* tao/IIOP_Connector.cpp:
-	* tao/IIOP_Endpoint.cpp:
-	* tao/IIOP_Profile.cpp:
-	* tao/Invocation_Base.cpp:
-	* tao/LocalObject.cpp:
-	* tao/MCAST_Parser.cpp:
-	* tao/NVList.i:
-	* tao/ORB_Core.cpp:
-	* tao/ORB_Table.cpp:
-	* tao/Object.cpp:
-	* tao/Object_Ref_Table.cpp:
-	* tao/ParameterMode.cpp:
-	* tao/Sequence.i:
-	* tao/Sequence_T.i:
-	* tao/Service_Context.cpp:
-	* tao/Sync_Strategies.cpp:
-	* tao/Tagged_Components.cpp:
-	* tao/Tagged_Profile.i:
-	* tao/TimeBaseC.cpp:
-	* tao/Transport.cpp:
-	* tao/Transport_Connector.cpp:
-	* tao/Var_Array_Argument_T.inl:
-	* tao/orbconf.h:
-	* tao/target_specification.i:
+        * tao/Acceptor_Registry.cpp:
+        * tao/Any.cpp:
+        * tao/Any_Array_Impl_T.cpp:
+        * tao/Any_Basic_Impl_T.cpp:
+        * tao/Any_Dual_Impl_T.cpp:
+        * tao/Any_Impl.cpp:
+        * tao/Any_Impl_T.cpp:
+        * tao/Any_Special_Impl_T.cpp:
+        * tao/Any_SystemException.cpp:
+        * tao/Array_VarOut_T.cpp:
+        * tao/Array_VarOut_T.inl:
+        * tao/Base_Transport_Property.cpp:
+        * tao/CDR.i:
+        * tao/CDR_Encaps_Codec.cpp:
+        * tao/CORBALOC_Parser.cpp:
+        * tao/CORBA_String.cpp:
+        * tao/ClientRequestInfo_i.cpp:
+        * tao/Fixed_Array_Argument_T.inl:
+        * tao/GIOP_Message_Generator_Parser_10.cpp:
+        * tao/GIOP_Message_Generator_Parser_12.cpp:
+        * tao/GIOP_Message_State.cpp:
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/IIOP_Connector.cpp:
+        * tao/IIOP_Endpoint.cpp:
+        * tao/IIOP_Profile.cpp:
+        * tao/Invocation_Base.cpp:
+        * tao/LocalObject.cpp:
+        * tao/MCAST_Parser.cpp:
+        * tao/NVList.i:
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Table.cpp:
+        * tao/Object.cpp:
+        * tao/Object_Ref_Table.cpp:
+        * tao/ParameterMode.cpp:
+        * tao/Sequence.i:
+        * tao/Sequence_T.i:
+        * tao/Service_Context.cpp:
+        * tao/Sync_Strategies.cpp:
+        * tao/Tagged_Components.cpp:
+        * tao/Tagged_Profile.i:
+        * tao/TimeBaseC.cpp:
+        * tao/Transport.cpp:
+        * tao/Transport_Connector.cpp:
+        * tao/Var_Array_Argument_T.inl:
+        * tao/orbconf.h:
+        * tao/target_specification.i:
 
           Converted all ACE cast macro calls to their ANSI C++ cast
           counterparts.
 
-	* tao/Array_VarOut_T.h (nocopy_):
+        * tao/Array_VarOut_T.h (nocopy_):
 
-	  Made this attribute "const."  Its value never changes.
+          Made this attribute "const."  Its value never changes.
 
-	* tao/Asynch_Queued_Message.cpp:
-	* tao/Codeset_Manager.cpp:
-	* tao/Exception.cpp:
-	* tao/IIOP_Transport.cpp:
-	* tao/Incoming_Message_Queue.cpp:
-	* tao/ORB.cpp:
-	* tao/Object_KeyC.cpp:
-	* tao/Synch_Queued_Message.cpp:
-	* tao/Transport_Cache_Manager.cpp:
-	* tao/UTF16_BOM_Translator.cpp:
-	* tao/append.cpp:
-	* tao/skip.cpp:
+        * tao/Asynch_Queued_Message.cpp:
+        * tao/Codeset_Manager.cpp:
+        * tao/Exception.cpp:
+        * tao/IIOP_Transport.cpp:
+        * tao/Incoming_Message_Queue.cpp:
+        * tao/ORB.cpp:
+        * tao/Object_KeyC.cpp:
+        * tao/Synch_Queued_Message.cpp:
+        * tao/Transport_Cache_Manager.cpp:
+        * tao/UTF16_BOM_Translator.cpp:
+        * tao/append.cpp:
+        * tao/skip.cpp:
 
           Converted all ACE cast macro calls to their ANSI C++ cast
           counterparts.
@@ -240,44 +246,44 @@ Wed Jun  2 00:37:17 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
           Use prefix {in,dec}rement operators where applicable instead of
           postfix operators.  The former are more efficient.
 
-	* tao/CORBA_String.h (operator CORBA::WChar *):
-	* tao/CORBA_String.inl (operator CORBA::WChar *):
+        * tao/CORBA_String.h (operator CORBA::WChar *):
+        * tao/CORBA_String.inl (operator CORBA::WChar *):
 
-	  Corrected this conversion operator.  The latest C++ mapping
-	  requires that the conversion return "CORBA::WChar *&" instead.
+          Corrected this conversion operator.  The latest C++ mapping
+          requires that the conversion return "CORBA::WChar *&" instead.
 
-	* tao/GIOPC.h:
+        * tao/GIOPC.h:
 
-	  No need to include "tao/Any.h".
+          No need to include "tao/Any.h".
 
-	* tao/PortableInterceptorC.h:
+        * tao/PortableInterceptorC.h:
 
-	  No need to include "tao/Any.h", nor "tao/PolicyC.h".  Include
-	  the much lighterweight "tao/Policy_ForwardC.h" instead.
+          No need to include "tao/Any.h", nor "tao/PolicyC.h".  Include
+          the much lighterweight "tao/Policy_ForwardC.h" instead.
 
-	* tao/Var_Array_Argument_T.cpp:
+        * tao/Var_Array_Argument_T.cpp:
 
-	  Nuked trailing whitespace.
+          Nuked trailing whitespace.
 
-	* tao/default_resource.cpp:
-	* tao/default_server.cpp:
+        * tao/default_resource.cpp:
+        * tao/default_server.cpp:
 
           Use prefix {in,dec}rement operators where applicable instead of
           postfix operators.  The former are more efficient.
 
-	* tao/Messaging/Asynch_Invocation.cpp:
-	* tao/Messaging/Asynch_Timeout_Handler.cpp:
-	* tao/Messaging/Messaging_PolicyFactory.cpp:
+        * tao/Messaging/Asynch_Invocation.cpp:
+        * tao/Messaging/Asynch_Timeout_Handler.cpp:
+        * tao/Messaging/Messaging_PolicyFactory.cpp:
 
-	  Corrected ACE_RCSID macro arguments.  "tao" -> "Messaging".
+          Corrected ACE_RCSID macro arguments.  "tao" -> "Messaging".
 
 Tue Jun  1 23:20:18 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* docs/interceptors.html:
+        * docs/interceptors.html:
 
-	  Updated Portable Interceptor release notes.  Thanks to Trina
-	  Wisler <trina.wisler@hp.com> for raising questions that revealed
-	  obsolete comments in these notes.
+          Updated Portable Interceptor release notes.  Thanks to Trina
+          Wisler <trina.wisler@hp.com> for raising questions that revealed
+          obsolete comments in these notes.
 
 Sat May 29 12:21:17 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -360,65 +366,65 @@ Thu May 27 18:28:59 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu May 27 11:56:27 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* TAO_IDL/tao_idl.cpp:
-	* TAO_IDL/ast/ast_interface.cpp:
-	* TAO_IDL/ast/ast_module.cpp:
-	* TAO_IDL/ast/ast_type.cpp:
-	* TAO_IDL/be/be_generator.cpp:
-	* TAO_IDL/be/be_interface.cpp:
-	* TAO_IDL/be/be_type.cpp:
-	* TAO_IDL/be/be_typedef.cpp:
-	* TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
-	* TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
-	* TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
-	* TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_component/component_cs.cpp:
-	* TAO_IDL/be/be_visitor_enum/cdr_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_exception/ctor_assign.cpp:
-	* TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
-	* TAO_IDL/be/be_visitor_field/cdr_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_interface/amh_sh.cpp:
-	* TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
-	* TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
-	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/direct_proxy_impl_ss.cpp:
-	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
-	* TAO_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:
-	* TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
-	* TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_structure/structure_cs.cpp:
-	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
-	* TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_union/union_ch.cpp:
-	* TAO_IDL/be/be_visitor_union/union_cs.cpp:
-	* TAO_IDL/be/be_visitor_valuetype/cdr_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_valuetype/field_cdr_cs.cpp:
-	* TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
-	* TAO_IDL/fe/fe_declarator.cpp:
-	* TAO_IDL/fe/fe_extern.cpp:
-	* TAO_IDL/fe/idl.ll:
-	* TAO_IDL/fe/lex.yy.cpp:
-	* TAO_IDL/util/utl_global.cpp:
-	* TAO_IDL/util/utl_scope.cpp:
+        * TAO_IDL/tao_idl.cpp:
+        * TAO_IDL/ast/ast_interface.cpp:
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/ast/ast_type.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_type.cpp:
+        * TAO_IDL/be/be_typedef.cpp:
+        * TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_component/component_cs.cpp:
+        * TAO_IDL/be/be_visitor_enum/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/ctor_assign.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+        * TAO_IDL/be/be_visitor_field/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/amh_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/direct_proxy_impl_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:
+        * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure_cs.cpp:
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+        * TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/union_ch.cpp:
+        * TAO_IDL/be/be_visitor_union/union_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_cdr_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+        * TAO_IDL/fe/fe_declarator.cpp:
+        * TAO_IDL/fe/fe_extern.cpp:
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
 
-	  Replaced all uses of deprecated ACE cast macros with standard
-	  C++ casts.
+          Replaced all uses of deprecated ACE cast macros with standard
+          C++ casts.
 
 Thu May 27 11:18:46 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* man/man1/TAO_Concurrency_Service.1:
-	* man/man1/TAO_CosEvent_Service.1:
-	* man/man1/TAO_Event_Service.1:
-	* man/man1/tao_idl.1:
-	* man/man7/TAO.7:
+        * man/man1/TAO_Concurrency_Service.1:
+        * man/man1/TAO_CosEvent_Service.1:
+        * man/man1/TAO_Event_Service.1:
+        * man/man1/tao_idl.1:
+        * man/man7/TAO.7:
 
-	  Removed these man pages.  They are out-of-date and no longer
-	  maintained.
+          Removed these man pages.  They are out-of-date and no longer
+          maintained.
 
 Wed May 26 13:44:32 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -428,9 +434,9 @@ Wed May 26 13:44:32 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tao/Any_Impl.h:
 
           Added comments to the void* value() method saying that it no
- 	  longer appears in the CORBA C++ mapping, is deprecated by the
- 	  OMG, and is no longer used in TAO.  Thanks to Mike Hepburn
- 	  <mike@anvil.com> for motivating this change.
+          longer appears in the CORBA C++ mapping, is deprecated by the
+          OMG, and is no longer used in TAO.  Thanks to Mike Hepburn
+          <mike@anvil.com> for motivating this change.
 
         * tao/append.cpp (TAO_Marshal_Union::append):
         * tao/skip.cpp (TAO_Marshal_Union::skip):
@@ -515,7 +521,7 @@ Sun May 23 12:03:04 2004  Olli Savia  <ops@iki.fi>
           Removed platform specific portions of filename canonicalization
           and replaced them with the new ACE_OS::realpath() function.
 
-	  Utilized ACE macros instead of conditional compilation.
+          Utilized ACE macros instead of conditional compilation.
 
 Fri May 21 17:25:05 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -629,7 +635,7 @@ Wed May 19 10:19:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/Options.html:
           Added documentation of -ORBVerboseLogging. Thanks to
-          Cyrille Chépélov <cyrille@softek.fr> for supplying this.
+          Cyrille ChÃ©pÃ©lov <cyrille@softek.fr> for supplying this.
 
 Wed May 19 09:20:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -1974,7 +1980,7 @@ Thu Apr 22 20:02:19 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
           The insert_label_value() method called any->value(), which is
           not implemented for the basic types legal for union discriminators.
           Also removed insert_label_value() since it is not used
-          anywhere else. Thanks to Ramiro Peñataro <ramiro.penataro@iac.es>
+          anywhere else. Thanks to Ramiro PeÃ±ataro <ramiro.penataro@iac.es>
           for reporting the problem, which cropped up when trying to
           create an operation in the Interface Repository with a complex
           return type containing a union. In a routine check for the
