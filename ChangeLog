@@ -1,3 +1,9 @@
+Fri Mar  5 22:56:45 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+          Converted it back to unix file by running dos2unix.  Added -*-
+          Makefile -*- to top of file.
+
 Fri Mar  5 16:56:25 2004  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	* bin\tao_other_tests.lst: 
