@@ -1,3 +1,12 @@
+Sun May 30 14:08:48 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* ace/Makefile:
+	* ace/Vector.{h,i,cpp}:
+	* tests/Makefile:
+	* tests/Vector_Test.cpp:
+
+	  Removed the ACE_Vector implementation from the distribution.
+
 Sat May 29 14:14:37 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* ace/Vector.{h,i,cpp}:
