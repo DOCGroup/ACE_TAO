@@ -970,6 +970,9 @@ public:
   int key_used (ACE_thread_key_t key);
   // Mark a key as being used by this thread.
 
+  int free_all_key_left (void);
+  // Free all key left in the table before destruct myself.
+
   static int lockable () { return instance_ != 0; }
   // Indication of whether the ace_tss_cleanup_lock is usable, and
   // therefore whether we are in static constructor/destructor phase
@@ -1036,7 +1039,7 @@ ACE_TSS_Cleanup::exit (void * /* status */)
 {
   // ACE_TRACE ("ACE_TSS_Cleanup::exit");
 
-  ACE_thread_key_t key_arr[ACE_DEFAULT_THREAD_KEYS];
+  //  ACE_thread_key_t key_arr[ACE_DEFAULT_THREAD_KEYS];
   int index = 0;
 
   ACE_TSS_Info *key_info = 0;
@@ -1082,14 +1085,17 @@ ACE_TSS_Cleanup::exit (void * /* status */)
             && ACE_OS::thr_getspecific (key_info->key_, &tss_info) == 0
             && tss_info)
           {
-            info_arr[info_ix].key_ = key_info->key_;
+	    //            info_arr[info_ix].key_ = key_info->key_;
             info_arr[info_ix].destructor_ = key_info->destructor_;
             info_arr[info_ix++].tss_obj_ = key_info->tss_obj_;
           }
-          
+
+#if 0
+	// See below.
         if (key_info->ref_table_.size () == 0 
             && key_info->tss_obj_ == 0)
           key_arr[index++] = key_info->key_;
+#endif /* 0 */
       }
   }
 
@@ -1120,6 +1126,15 @@ ACE_TSS_Cleanup::exit (void * /* status */)
     ACE_GUARD (ACE_Thread_Mutex, ace_mon, *lock);
 #endif /* ACE_MT_SAFE */
 
+#if 0
+    // We shouldn't free the key and remove it from the table here
+    // because if we do and some thread ends before other threads
+    // even get started (or their TSS object haven't been created yet,)
+    // it's entry will be removed from the table and we are in big chaos.
+    // For TSS object, these have been done in ACE_TSS_Cleanup::detach.
+    // Two other use cases will be user managed TSS'es and system wide 
+    // TSS, ones are users responsibilities and the others should be
+    // persistant system wide.
     for (int i = 0; i < index; i++)
       {
 #if defined (ACE_WIN32)
@@ -1129,9 +1144,29 @@ ACE_TSS_Cleanup::exit (void * /* status */)
 #endif /* ACE_WIN32 */
         this->table_.remove (ACE_TSS_Info (key_arr[i]));
       }
+#endif /* 0 */
 
     this->exit_cleanup_i (); // remove thread id from reference list.
   }
+}
+
+int
+ACE_TSS_Cleanup::free_all_key_left (void)
+  // This is call from ACE_OS::cleanup_tss
+  // When this gets called, all threads should 
+  // have exited except the main thread.
+{
+  ACE_thread_key_t key_arr[ACE_DEFAULT_THREAD_KEYS];
+  ACE_TSS_Info *key_info = 0;
+  int idx = 0;
+
+  for (ACE_TSS_TABLE_ITERATOR iter (this->table_);
+       iter.next (key_info) != 0;
+       iter.advance ())
+    key_arr [idx++] = key_info->key_;
+
+  for (int i = 0; i < idx; i++)
+    ACE_OS::thr_keyfree (key_arr[i]);
 }
 
 ACE_TSS_Cleanup::ACE_TSS_Cleanup (void)
@@ -1363,6 +1398,8 @@ ACE_OS::cleanup_tss ()
 #endif /* ACE_HAS_TSS_EMULATION */
 
 #if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
+  // Removed all TSS_Info table entries.
+  ACE_TSS_Cleanup::instance ()->free_all_key_left ();
   // Finally, free up the ACE_TSS_Cleanup instance.  This method gets
   // call by the ACE_Object_Manager.
   delete ACE_TSS_Cleanup::instance ();
