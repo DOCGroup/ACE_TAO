@@ -119,8 +119,8 @@ TAO_Bounded_Sequence<T,MAX>::freebuf (T *buffer)
 // *************************************************************
 
 template <class T> ACE_INLINE
-TAO_Object_Manager<T>::TAO_Object_Manager(T** buffer, CORBA::Boolean release)
-  : ptr_ (buffer),
+TAO_Object_Manager<T>::TAO_Object_Manager(T** ptr, CORBA::Boolean release)
+  : ptr_ (ptr),
     release_ (release)
 {
 }

@@ -38,6 +38,17 @@ TAO_ServantBase::_is_a (const char* logical_type_id,
   return CORBA::B_FALSE;
 }
 
+
+void*
+TAO_ServantBase::_downcast (const char* logical_type_id)
+{
+  if (ACE_OS::strcmp (logical_type_id, CORBA::_tc_Object->id ()) == 0)
+    {
+      return this;
+    }
+  return 0;
+}
+
 void
 TAO_ServantBase::set_parent (TAO_IUnknown *p)
 {

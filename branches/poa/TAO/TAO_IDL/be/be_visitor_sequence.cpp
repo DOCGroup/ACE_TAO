@@ -180,6 +180,9 @@ be_visitor_sequence_base_ch::~be_visitor_sequence_base_ch (void)
 be_decl *
 be_visitor_sequence_base_ch::seq_scope (void)
 {
+  if (this->node_ == 0)
+    return 0;
+
   be_decl *scope = 0;
   if (this->node_->is_nested ())
     scope = be_scope::narrow_from_scope (this->node_->defined_in ())->decl ();
@@ -300,6 +303,9 @@ be_visitor_sequence_elemtype::~be_visitor_sequence_elemtype (void)
 be_decl *
 be_visitor_sequence_elemtype::seq_scope (void)
 {
+  if (this->node_ == 0)
+    return 0;
+
   be_decl *scope = 0;
   if (this->node_->is_nested ())
     scope = be_scope::narrow_from_scope (this->node_->defined_in ())->decl ();
@@ -310,15 +316,12 @@ int
 be_visitor_sequence_elemtype::visit_predefined_type (be_predefined_type *node)
 {
   TAO_OutStream &os = this->stream ();
-  be_sequence *seq = be_sequence::narrow_from_decl (this->be_node ());
-  if (!seq)
-    return -1;
 
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_pseudo:
-      if (seq->unbounded ())
-        os << "TAO_Object_Manager<CORBA::Object> ";
+      os << "TAO_Object_Manager<CORBA::Object> ";
+      break;
     default:
       os << this->current_type_->name () << " &";
     }
@@ -348,9 +351,6 @@ int
 be_visitor_sequence_elemtype::visit_interface (be_interface *node)
 {
   TAO_OutStream &os = this->stream ();
-  be_sequence *seq = be_sequence::narrow_from_decl (this->be_node ());
-  if (!seq)
-    return -1;
 
   os << "TAO_Object_Manager <"
      << this->current_type_->nested_type_name (this->seq_scope ())
@@ -363,9 +363,6 @@ int
 be_visitor_sequence_elemtype::visit_interface_fwd (be_interface_fwd *node)
 {
   TAO_OutStream &os = this->stream ();
-  be_sequence *seq = be_sequence::narrow_from_decl (this->be_node ());
-  if (!seq)
-    return -1;
 
   os << "TAO_Object_Manager <"
      << this->current_type_->nested_type_name (this->seq_scope ())
@@ -378,9 +375,6 @@ int
 be_visitor_sequence_elemtype::visit_string (be_string * /*node*/)
 {
   TAO_OutStream &os = this->stream ();
-  be_sequence *seq = be_sequence::narrow_from_decl (this->be_node ());
-  if (!seq)
-    return -1;
 
   os << "TAO_String_Manager ";
   return 0;

@@ -213,8 +213,6 @@ be_visitor_collocated_ss::~be_visitor_collocated_ss (void)
 
 int be_visitor_collocated_ss::visit_interface (be_interface *node)
 {
-  TAO_NL nl;
-
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
   TAO_OutStream *ss = cg->server_skeletons ();
 
@@ -226,7 +224,7 @@ int be_visitor_collocated_ss::visit_interface (be_interface *node)
   ss->incr_indent (0);
   ss->incr_indent ();
   *ss << node->full_skel_name () << "_ptr "
-      << " servant," << nl;
+      << " servant," << be_nl;
 
   *ss << "STUB_Object *stub\n";
   ss->decr_indent ();
@@ -234,7 +232,19 @@ int be_visitor_collocated_ss::visit_interface (be_interface *node)
   ss->decr_indent (0);
 
   ss->incr_indent ();
-  *ss << ": " << node->name () << " (stub)," << nl;
+#if defined (ACE_WIN32)
+  // @@ TODO MSVC++ compiler has some kind of issue (read
+  // *bug*) wrt nested classes in constructors, if the fully
+  // qualified name is used it gets all confused. Quite to my
+  // dismay the work around is to use a non-qualified name for
+  // the base class!
+  // I wish I never have to know why the symbol table for
+  // MSVC++ can get so confused ;-) (coryan)
+  *ss << ": " << node->local_name () << " (stub)," << be_nl;
+#else
+  *ss << ": " << node->name () << " (stub)," << be_nl;
+#endif /* ACE_WIN32 */
+
   if (this->current_interface_->n_inherits () > 0)
     {
       for (int i = 0; i < node->n_inherits (); ++i)
@@ -249,11 +259,11 @@ int be_visitor_collocated_ss::visit_interface (be_interface *node)
 	  // the base class!
 	  // I wish I never have to know why the symbol table for
 	  // MSVC++ can get so confused ;-) (coryan)
-	  *ss << "  " << parent->local_coll_name () << " (servant),"
-	      << nl;
+	  *ss << "  " << parent->local_coll_name () << " (servant, stub),"
+	      << be_nl;
 #else
-	  *ss << "  " << parent->full_coll_name () << " (servant),"
-	      << nl;
+	  *ss << "  " << parent->full_coll_name () << " (servant, stub),"
+	      << be_nl;
 #endif /* ACE_WIN32 */
 	}
     }
@@ -276,7 +286,7 @@ int be_visitor_collocated_ss::visit_interface (be_interface *node)
   *ss << "}\n\n";
 
   ss->indent ();
-  *ss << "CORBA::Boolean " << this->current_interface_->full_skel_name ()
+  *ss << "CORBA::Boolean " << this->current_interface_->full_coll_name ()
       << "::_is_a (" << be_idt << be_idt_nl
       << "const char* logical_type_id," << be_nl
       << "CORBA::Environment &_tao_environment" << be_uidt_nl

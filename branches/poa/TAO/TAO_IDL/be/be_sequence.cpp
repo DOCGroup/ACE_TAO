@@ -1548,7 +1548,7 @@ be_sequence::gen_var_impl (void)
     }
 #endif
 
-  be_visitor_sequence_elemtype elemtype (ci, this, bt);
+  be_visitor_sequence_elemtype elemtype (ci, 0, bt);
   if (bt->accept (&elemtype) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -1915,7 +1915,7 @@ be_sequence::gen_out_impl (void)
     }
 #endif
 
-  be_visitor_sequence_elemtype elemtype (ci, this, bt);
+  be_visitor_sequence_elemtype elemtype (ci, 0, bt);
   if (bt->accept (&elemtype) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
