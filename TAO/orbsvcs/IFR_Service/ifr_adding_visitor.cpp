@@ -19,6 +19,8 @@
 #include "ast_string.h"
 #include "ast_structure.h"
 #include "ast_union.h"
+#include "ast_valuetype.h"
+#include "ast_valuetype_fwd.h"
 #include "utl_identifier.h"
 #include "utl_string.h"
 
@@ -27,6 +29,8 @@
 #include "ifr_adding_visitor_structure.h"
 #include "ifr_adding_visitor_exception.h"
 #include "ifr_adding_visitor_union.h"
+
+#include "tao/IFR_Client/IFR_ComponentsC.h"
 
 ACE_RCSID (IFR_Service,
            ifr_adding_visitor,
@@ -302,7 +306,7 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
               // safely destroy it, since we know we are not redefining a
               // previous entry, forward declared or not.
               // If we are inside a module that was seen before, we could be
-              // jujst processing an IDL file a second time, in which case we
+              // just processing an IDL file a second time, in which case we
               // again just update ir_current_.
               if (node->ifr_fwd_added () == 0)
                 {
@@ -395,7 +399,7 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
 
               CORBA::InterfaceDef_var extant_def =
                 CORBA::InterfaceDef::_narrow (prev_def. in ()
-                                             ACE_ENV_ARG_PARAMETER);
+                                              ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               extant_def->base_interfaces (bases
@@ -461,8 +465,9 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
               // not defined/added - not possible.
               // defined/not added - takes the other branch.
               // defined/added - we're ok.
-              this->ir_current_ = CORBA::IDLType::_narrow (prev_def.in ()
-                                                          ACE_ENV_ARG_PARAMETER);
+              this->ir_current_ = 
+                CORBA::IDLType::_narrow (prev_def.in ()
+                                         ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
         }
@@ -504,7 +509,7 @@ ifr_adding_visitor::visit_interface_fwd (AST_InterfaceFwd *node)
           // ahead and create the full entry now.
           // The forward declared interface is not defined anywhere
           // in this IDL file, so we just create an empty entry to
-          // be populated by some other IDL file.
+          // be replaced by a full definition in some other IDL file.
           CORBA::InterfaceDefSeq bases (0);
           bases.length (0);
 
@@ -567,14 +572,268 @@ ifr_adding_visitor::visit_interface_fwd (AST_InterfaceFwd *node)
 }
 
 int
-ifr_adding_visitor::visit_valuetype (AST_ValueType *)
+ifr_adding_visitor::visit_valuetype (AST_ValueType *node)
 {
+  if (node->imported () && !be_global->do_included_files ())
+    {
+      return 0;
+    }
+
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      // Is this interface already in the respository?
+      CORBA::Contained_var prev_def =
+        be_global->repository ()->lookup_id (node->repoID ()
+                                             ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      // If not, create a new entry.
+      if (CORBA::is_nil (prev_def.in ()))
+        {
+          int status = this->create_value_def (node
+                                               ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          return status;
+        }
+      else
+        {
+          // There is already an entry in the repository. If the interface is
+          // defined and has not already been populated, we do so
+          // now. If it is not yet defined or the full definition has already
+          // been added to the repository, we just update the current IR object
+          // holder.
+          if (node->is_defined ()
+              && node->ifr_added () == 0
+              && this->in_reopened_ == 0)
+            {
+              // If we are here and the line below is true, then either
+              // 1. We are defining an undefined forward declared interface
+              //    from a previously processed IDL file, or
+              // 2. We are clobbering a previous definition, either of an
+              //    interface or of some other type.
+              // 3. We are inside a module that has a previous entry.
+              // If prev_def would narrow successfully to an InterfaceDef, we
+              // have NO WAY of knowing if we are defining or clobbering. So
+              // we destroy the contents of the previous entry (we don't want
+              // to destroy the entry itself, since it may have already been
+              // made a member of some other entry, and destroying it would
+              // make the containing entry's section key invalid) and repopulate.
+              // On the other hand, if prev_def is NOT an interface, we can
+              // safely destroy it, since we know we are not redefining a
+              // previous entry, forward declared or not.
+              // If we are inside a module that was seen before, we could be
+              // just processing an IDL file a second time, in which case we
+              // again just update ir_current_.
+              if (node->ifr_fwd_added () == 0)
+                {
+                  CORBA::DefinitionKind kind =
+                    prev_def->def_kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+                  ACE_TRY_CHECK;
+
+                  if (kind == CORBA::dk_Value)
+                    {
+                      CORBA::ValueDef_var value =
+                        CORBA::ValueDef::_narrow (prev_def.in ()
+                                                  ACE_ENV_ARG_PARAMETER);
+                      ACE_TRY_CHECK;
+
+                      CORBA::ContainedSeq_var contents =
+                        value->contents (CORBA::dk_all,
+                                         1
+                                         ACE_ENV_ARG_PARAMETER);
+                      ACE_TRY_CHECK;
+
+                      CORBA::ULong length = contents->length ();
+
+                      for (CORBA::ULong i = 0; i < length; ++i)
+                        {
+                          contents[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+                          ACE_TRY_CHECK;
+                        }
+                    }
+                  else
+                    {
+                      prev_def->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+                      ACE_TRY_CHECK;
+
+                      int status = this->create_value_def (node
+                                                           ACE_ENV_ARG_PARAMETER);
+                      ACE_TRY_CHECK;
+
+                      return status;
+                    }
+                }
+
+              // Our previous definition is a valuetype, so narrow it here, then
+              // populate it.
+              CORBA::ValueDef_var extant_def =
+                CORBA::ValueDef::_narrow (prev_def. in ()
+                                          ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+
+             // TODO - Add everything except visit_scope() info here.
+
+              node->ifr_added (1);
+
+              // Push the new IR object onto the scope stack before visiting
+              // the new object's scope.
+              if (be_global->ifr_scopes ().push (extant_def.in ()) != 0)
+                {
+                  ACE_ERROR_RETURN ((
+                      LM_ERROR,
+                      ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
+                      ACE_TEXT ("visit_interface -")
+                      ACE_TEXT (" scope push failed\n")
+                    ),
+                    -1
+                  );
+                }
+
+              // Visit the members, if any.
+              if (this->visit_scope (node) == -1)
+                {
+                  ACE_ERROR_RETURN ((
+                      LM_ERROR,
+                      ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
+                      ACE_TEXT ("visit_interface -")
+                      ACE_TEXT (" visit_scope failed\n")
+                    ),
+                    -1
+                  );
+                }
+
+              // This spot in the AST doesn't necessarily have to be the
+              // interface definition - it could be any reference to it.
+              // The front end will already have fully defined it, so all
+              // the info is available anywhere. So it's a good idea to
+              // update the current IR object holder now.
+              this->ir_current_ =
+                CORBA::IDLType::_duplicate (extant_def.in ());
+
+              CORBA::Container_ptr used_scope = CORBA::Container::_nil ();
+
+              // Pop the new IR object back off the scope stack.
+              if (be_global->ifr_scopes ().pop (used_scope) != 0)
+                {
+                  ACE_ERROR_RETURN ((
+                      LM_ERROR,
+                      ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
+                      ACE_TEXT ("visit_interface -")
+                      ACE_TEXT (" scope pop failed\n")
+                    ),
+                    -1
+                  );
+                }
+            }
+          else
+            {
+              // @@ (JP) I think we're ok here without a check:
+              // not defined/not added - visit_valuetype_fwd will have
+              //                         detected a clobber.
+              // not defined/added - not possible.
+              // defined/not added - takes the other branch.
+              // defined/added - we're ok.
+              this->ir_current_ = 
+                CORBA::IDLType::_narrow (prev_def.in ()
+                                         ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+            }
+        }
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           ACE_TEXT ("visit_interface"));
+
+      return -1;
+    }
+  ACE_ENDTRY;
+
   return 0;
 }
 
 int
-ifr_adding_visitor::visit_valuetype_fwd (AST_ValueTypeFwd *)
+ifr_adding_visitor::visit_valuetype_fwd (AST_ValueTypeFwd *node)
 {
+  if (node->imported () && !be_global->do_included_files ())
+    {
+      return 0;
+    }
+
+  AST_Interface *v = node->full_definition ();
+
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      // Is this interface already in the respository?
+      CORBA::Contained_var prev_def =
+        be_global->repository ()->lookup_id (v->repoID ()
+                                             ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (CORBA::is_nil (prev_def.in ()))
+        {
+          // If our full definition is found in this IDL file, we go
+          // ahead and create the full entry now.
+          // The forward declared valuetype is not defined anywhere
+          // in this IDL file, so we just create an empty entry to
+          // be replaced by a full definition in some other IDL file.
+          CORBA::ValueDefSeq abstract_bases (0);
+          abstract_bases.length (0);
+          CORBA::InterfaceDefSeq supported (0);
+          supported.length (0);
+          CORBA::InitializerSeq initializers (0);
+          initializers.length (0);
+
+          CORBA::Container_ptr current_scope = CORBA::Container::_nil ();
+
+          if (be_global->ifr_scopes ().top (current_scope) == 0)
+            {
+              this->ir_current_ =
+                current_scope->create_value (
+                                   v->repoID (),
+                                   v->local_name ()->get_string (),
+                                   v->version (),
+                                   0, // 'custom' not handled yet
+                                   v->is_abstract (),
+                                   CORBA::ValueDef::_nil (),
+                                   0, // 'truncatable' not handled yet
+                                   abstract_bases,
+                                   supported,
+                                   initializers
+                                   ACE_ENV_ARG_PARAMETER
+                                 );
+
+              ACE_TRY_CHECK;
+            }
+          else
+            {
+              ACE_ERROR_RETURN ((
+                  LM_ERROR,
+                  ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
+                  ACE_TEXT ("visit_valuetype_fwd -")
+                  ACE_TEXT (" scope stack is empty\n")
+                ),
+                -1
+              );
+            }
+
+          node->ifr_added (1);
+          v->ifr_fwd_added (1);
+        }
+
+   }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           ACE_TEXT ("visit_interface_fwd"));
+
+      return -1;
+    }
+  ACE_ENDTRY;
+
   return 0;
 }
 
@@ -1732,6 +1991,13 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node
       );
     }
 
+  return 0;
+}
+
+int
+ifr_adding_visitor::create_value_def (AST_ValueType *node
+                                      ACE_ENV_ARG_DECL)
+{
   return 0;
 }
 
