@@ -63,11 +63,11 @@ public:
 
   // = The CosTypedEventChannelAdmin::TypedConsumerAdmin methods...
   virtual CosEventChannelAdmin::ProxyPushSupplier_ptr
-    obtain_typed_push_supplier (const char * uses_interface)
+    obtain_typed_push_supplier (const char * uses_interface ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosTypedEventChannelAdmin::NoSuchImplementation));
   virtual CosTypedEventChannelAdmin::TypedProxyPullSupplier_ptr
-    obtain_typed_pull_supplier (const char * supported_interface)
+    obtain_typed_pull_supplier (const char * supported_interface ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosTypedEventChannelAdmin::InterfaceNotSupported));
 
