@@ -5,6 +5,7 @@
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Global_Macros.h"
+#include "ace/config-all.h"
 
 ACE_RCSID (ace,
            Synch_Options,
