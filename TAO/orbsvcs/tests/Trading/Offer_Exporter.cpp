@@ -198,7 +198,7 @@ TAO_Offer_Exporter::withdraw_offers (CORBA::Environment& _env)
 		   CosTrading::UnknownOfferId, 
 		   CosTrading::Register::ProxyOfferId))
 {
-  ACE_DEBUG ((LM_DEBUG, "***TAO_Offer_Exporter::Withdrawing all offers.\n"));
+  ACE_DEBUG ((LM_DEBUG, "*** TAO_Offer_Exporter::Withdrawing all offers.\n"));
   
   TAO_TRY
     {
