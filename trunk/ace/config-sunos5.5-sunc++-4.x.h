@@ -14,6 +14,8 @@
 // until we can trust exception handling with Sun C++, it's not enabled . . .
 // #define ACE_HAS_EXCEPTIONS
 
+#define ACE_HAS_TEMPLATE_SPECIALIZATION
+
 // Platform supports pread() and pwrite()
 #define ACE_HAS_P_READ_WRITE
 

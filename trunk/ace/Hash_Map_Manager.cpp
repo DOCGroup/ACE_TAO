@@ -191,11 +191,17 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::total_size (void)
   return this->total_size_;
 }
 
+template <class EXT_ID, class INT_ID, class LOCK> size_t
+ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::hash (const EXT_ID &ext_id)
+{
+  return ext_id.hash ();
+}
+
 template <class EXT_ID, class INT_ID, class LOCK> int 
 ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::bind_i (const EXT_ID &ext_id,
 						    const INT_ID &int_id)
 {
-  size_t loc = ext_id.hash () % this->total_size_;
+  size_t loc = this->hash (ext_id) % this->total_size_;
 
   ACE_Hash_Map_Entry<EXT_ID, INT_ID> *temp = this->table_[loc];
 
@@ -235,7 +241,7 @@ template <class EXT_ID, class INT_ID, class LOCK> int
 ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::trybind_i (const EXT_ID &ext_id,
 						       INT_ID &int_id)
 {
-  size_t loc = ext_id.hash () % this->total_size_;
+  size_t loc = this->hash (ext_id) % this->total_size_;
 
   ACE_Hash_Map_Entry<EXT_ID, INT_ID> *temp = this->table_[loc];
 
@@ -279,7 +285,7 @@ template <class EXT_ID, class INT_ID, class LOCK> int
 ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::unbind_i (const EXT_ID &ext_id,
 						      INT_ID &int_id)
 {
-  size_t loc = ext_id.hash () % this->total_size_;
+  size_t loc = this->hash (ext_id) % this->total_size_;
 
   ACE_Hash_Map_Entry<EXT_ID, INT_ID> *temp = this->table_[loc];
   ACE_Hash_Map_Entry<EXT_ID, INT_ID> *prev = 0;
@@ -334,7 +340,7 @@ template <class EXT_ID, class INT_ID, class LOCK> int
 ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::shared_find (const EXT_ID &ext_id,
 							 ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry)
 {
-  size_t loc = ext_id.hash () % total_size_;
+  size_t loc = this->hash (ext_id) % this->total_size_;
 
   ACE_Hash_Map_Entry<EXT_ID, INT_ID> *temp = this->table_[loc];
 

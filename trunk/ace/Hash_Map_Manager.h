@@ -153,8 +153,10 @@ public:
 protected:
   // = The following methods do the actual work.
 
-  // These methods assume that the locks are held by the private
-  // methods.
+  size_t hash (const EXT_ID &ext_id);
+  // Compute the hash value of the <ext_id>.
+
+  // = These methods assume locks are held by private methods.
   
   int bind_i (const EXT_ID &ext_id, const INT_ID &int_id);
   // Performs the binding of <ext_id> to <int_id>.  Must be

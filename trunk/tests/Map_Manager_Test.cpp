@@ -27,6 +27,17 @@
 typedef ACE_Null_Mutex MUTEX;
 typedef size_t VALUE;
 
+#if defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
+// We need this template specialization since KEY is defined as a
+// size_t, which doesn't have a hash() method defined on it.
+
+size_t
+ACE_Hash_Map_Manager<KEY, VALUE, MUTEX>::hash (const KEY& ext_id)
+{
+  return ext_id;
+}
+#endif /* ACE_HAS_TEMPLATE_SPECIALIZATION */
+
 typedef ACE_Map_Manager <KEY, VALUE, MUTEX> MAP_MANAGER;
 typedef ACE_Map_Iterator <KEY, VALUE, MUTEX> ITERATOR;
 typedef ACE_Map_Reverse_Iterator <KEY, VALUE, MUTEX> REVERSE_ITERATOR;

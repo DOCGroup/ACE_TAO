@@ -11,6 +11,8 @@
 #define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
+#define ACE_HAS_TEMPLATE_SPECIALIZATION
+
 // ACE_HAS_EXCEPTIONS requires -fhandle-exceptions, but that gives
 // g++ 2.7.2 fits:  it spits out all kinds of warnings that it doesn't
 // without that option (and that are just wrong), and runs out of

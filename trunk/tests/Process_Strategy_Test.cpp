@@ -10,10 +10,15 @@
 //
 // = DESCRIPTION
 //     This is a test of the <ACE_Strategy_Acceptor> and
-//     <ACE_File_Lock> classes.  The <ACE_Strategy_Acceptor> uses the
-//     <ACE_Process_Strategy>, which forks a process-per-connection
-//     and runs as a concurrent server.  This concurrent server
-//     queries and increments a "counting value" in a file.
+//     <ACE_File_Lock> classes.  The <ACE_Strategy_Acceptor> uses
+//     either the <ACE_Process_Strategy> (which forks a
+//     process-per-connection and runs as a concurrent server
+//     process), the <ACE_Thread_Strategy> (which spawns a
+//     thread-per-connection and runs as a concurrent server thread),
+//     or <ACE_Reactive_Strategy> (which register the <Svc_Handler>
+//     with the <Reactor> and runs in the main thread of control as an
+//     iterative server).  This server queries and increments a
+//     "counting value" in a file.
 //
 //     To execute this test program you can simply start the server
 //     process and connect to it via telnet.  If you type "inc" and
@@ -26,12 +31,54 @@
 // ============================================================================
 
 #include "ace/Acceptor.h"
+#include "ace/Get_Opt.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Strategies_T.h"
 #include "ace/Service_Config.h"
+#include "ace/Singleton.h"
 #include "test_config.h"
 
-#if !defined (ACE_LACKS_EXEC)
+class Options
+  // = TITLE
+  //     Maintains the options for this program.
+{
+public:
+  Options (void);
+  // Constructor.
+
+  // = Get/set port.
+  u_short port (void);
+  void port (u_short);
+  
+  enum Concurrency_Strategy
+  {
+    PROCESS,
+    REACTIVE,
+    THREAD,
+    MAX_CONCURRENCY_STRATEGY
+  };
+
+  // = Get/set concurrency strategy.
+  Concurrency_Strategy concurrency_strategy (void);
+  void concurrency_strategy (Concurrency_Strategy);
+
+private:
+  u_short port_;
+  // Port we're listening on.
+  
+  Concurrency_Strategy concurrency_strategy_;
+  // Concurrency strategy that we're running.
+
+  ACE_File_Lock file_lock_;
+  // Lock for the counting file.
+
+  ACE_Concurrency_Strategy<Counting_Service> *concurrency_strategy_;
+  // Activation strategy that either forks a new process or spawns a
+  // new thread for each client connection.
+};
+
+// Create an options Singleton.
+typedef ACE_Singleton<Options, ACE_Null_Mutex> OPTIONS;
 
 typedef ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH> SVC_HANDLER;
 
@@ -53,24 +100,38 @@ public:
   // <ACE_Strategy_Acceptor::handle_input>).
 
 protected:
+  // = Methods invoked via "pointer to method" table entry.
+  
+  int process (void);
+  // Handle the PROCESS case.
+
+  virtual int svc (void);
+  // Handle the THREAD case.
+
   // = Operations corresponding to requests from the client.
-  virtual int read (void);
+  int read (void);
   // Execute the read operation on the file.
 
-  virtual int inc (void);
+  int inc (void);
   // Execute the increment operation on the file.
 
   // = Hooks called by <Reactor> and <Strategy_Acceptor>.
 
-  virtual int handle_input (ACE_HANDLE p);
+  virtual int handle_input (ACE_HANDLE p = ACE_INVALID_HANDLE);
   // Hook called by the <Reactor> when data arrives from the client.
 
   virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
-  // Close down the server and exit the process.
+  // Close down the child and exit the process.
 
 private:
   ACE_File_Lock *file_lock_;
   // Lock for the counting file.
+
+  typedef int (Counting_Service::*OPERATION) (void);
+
+  OPERATION dispatch_table_[Options::MAX_CONCURRENCY_STRATEGY];
+  // Array of pointers to methods that will perform the various types
+  // of processing.
 };
 
 typedef ACE_Strategy_Acceptor <Counting_Service, ACE_SOCK_ACCEPTOR> ACCEPTOR;
@@ -101,13 +162,43 @@ public:
   // Catch the SIGCHLD signal and reap the exiting child processes.
 
 private:
-  ACE_File_Lock file_lock_;
-  // Lock for the counting file.
-
-  ACE_Process_Strategy<Counting_Service> proc_strategy_;
-  // Activation strategy that forks a new process for each client
-  // connection.
 };
+
+Options::Options (void)
+  : port_ (ACE_DEFAULT_SERVER_PORT),
+#if !defined (ACE_LACKS_EXEC)
+    concurrency_strategy_ (PROCESS)
+#elif defined (ACE_HAS_THREADS)
+    concurrency_strategy_ (THREAD)
+#else
+    concurrency_strategy_ (REACTIVE)
+#endif /* !ACE_LACKS_EXEC */
+{
+}
+
+u_short 
+Options::port (void)
+{
+  return this->port_;
+}
+
+void 
+Options::port (u_short port)
+{
+  this->port_ = port;
+}
+  
+Options::Concurrency_Strategy 
+Options::concurrency_strategy (void)
+{
+  return this->concurrency_strategy_;
+}
+
+void 
+Options::concurrency_strategy (Options::Concurrency_Strategy cs)
+{
+  this->concurrency_strategy_ = cs;
+}
 
 // Factory Method that creates a new <Counting_Service>.
 
@@ -124,11 +215,20 @@ int
 Counting_Acceptor::handle_signal (int signum, siginfo_t *, ucontext_t *)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) signal %S\n", signum));
-  
-  pid_t pid;
 
-  while ((pid = ACE_OS::waitpid (-1, 0, WNOHANG)) > 0)
-    ACE_DEBUG ((LM_DEBUG, "(%P|%t) reaping child %d\n", pid));
+  switch (signum)
+    {
+    case SIGCHLD:
+      pid_t pid;
+
+      while ((pid = ACE_OS::waitpid (-1, 0, WNOHANG)) > 0)
+	ACE_DEBUG ((LM_DEBUG, "(%P|%t) reaping child %d\n", pid));
+      break;
+
+    case SIGINT:
+      ACE_Service_Config::end_reactor_event_loop ();
+      break;
+    }
 
   return 0;
 }
@@ -158,19 +258,50 @@ Counting_Acceptor::open (const ACE_INET_Addr &addr,
 			 ACE_Reactor *reactor)
 {
   // Initialize the Concurrency strategy.
-  if (this->proc_strategy_.open (1, this, reactor) == -1)
-    return -1;
+  switch (OPTIONS::instance ()->concurrency_strategy ())
+    {
+    case Options::PROCESS:
+#if !defined (ACE_LACKS_EXEC)
+      ACE_NEW_RETURN (this->concurrency_strategy_, 
+		      ACE_Process_Strategy<Counting_Service> (1, this, reactor), 
+		      -1);
+      break;
+#else
+      ACE_ASSERT (!"PROCESS invalid on this platform");
+#endif /* !defined (ACE_LACKS_EXEC) */
+    case Options::THREAD:
+#if defined (ACE_HAS_THREADS)
+      ACE_NEW_RETURN (this->concurrency_strategy_, 
+		      ACE_Thread_Strategy<Counting_Service> (ACE_Service_Config::thr_mgr (),
+							     THR_NEW_LWP,
+							     1),
+		      -1);
+      break;
+#else
+      ACE_ASSERT (!"THREAD invalid on this platform");
+#endif /* !ACE_HAS_THREADS */
+    case Options::REACTIVE:
+      // Settle for the purely Reactive strategy.
+      ACE_NEW_RETURN (this->concurrency_strategy_, 
+		      ACE_Reactive_Strategy<Counting_Service> (ACE_Service_Config::reactor ()),
+		      -1);
+      break;
+    }
 
   // Open the <Strategy_Acceptor>.
-  else if (ACCEPTOR::open (addr,
+  if (ACCEPTOR::open (addr,
 		      reactor,
 		      0,
 		      0,
-		      &this->proc_strategy_) == -1)
+		      this->concurrency_strategy_) == -1)
     return -1;
 
+#if !defined (ACE_WIN32) || !defined (VXWORKS)
   // Register to handle <SIGCHLD> when a child exits.
   else if (reactor->register_handler (SIGCHLD, this) == -1)
+    return -1;
+#endif /* !defined (ACE_WIN32) || !defined (VXWORKS) */
+  else if (reactor->register_handler (SIGINT, this) == -1)
     return -1;
   else
     {
@@ -192,6 +323,9 @@ Counting_Service::Counting_Service (ACE_Thread_Manager *,
   : file_lock_ (file_lock)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) creating the Counting_Service\n"));
+  this->dispatch_table_[0] = &Counting_Service::process;
+  this->dispatch_table_[1] = 0; // Reactive handled via a different approach.
+  this->dispatch_table_[2] = 0; // Threads are handled via the <svc> hook.
 }
 
 // Read the current value from the shared file and return it to the
@@ -291,26 +425,55 @@ Counting_Service::handle_input (ACE_HANDLE)
     }
 }
 
+int
+Counting_Service::process (void)
+{
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) handling process\n"));
+
+  // Register the new handle with the reactor and look for new
+  // input in the handle_input routine.
+
+  if (ACE_Service_Config::reactor ()->register_handler 
+      (this, ACE_Event_Handler::READ_MASK) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "(%P|%t) register_handler"), -1);
+  else
+    {
+      // We need to rerun the event loop here since we ended up here
+      // due to being fork'd and we can't just return to our context
+      // since it's in the wrong location in the process.
+      ACE_Service_Config::run_reactor_event_loop ();
+      return 0;
+    }
+}
+
+int
+Counting_Service::svc (void)
+{
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) handling thread\n"));
+
+  while (this->handle_input () >= 0)
+    continue;
+
+  return 0;
+}
+
+// This method is called back by the <Acceptor> once the client has
+// connected and the process is forked or spawned.
+
 int 
 Counting_Service::open (void *)
 {
   ACE_DEBUG ((LM_DEBUG, 
 	      "(%P|%t) opening service\n"));
 
-  // Register the new handle with the reactor and look for new input
-  // in the handle_input routine.
+  Options::Concurrency_Strategy cs = 
+    OPTIONS::instance ()->concurrency_strategy ();
 
-  if (ACE_Service_Config::reactor ()->register_handler 
-      (this, ACE_Event_Handler::READ_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "(%P|%t) register_handler"), -1);
-
-  // We need to rerun the event loop here since we ended up here due
-  // to being fork'd and we can't just return to our context since
-  // it's in the wrong location in the process.
-  ACE_Service_Config::run_reactor_event_loop ();
-
-  /* NOTREACHED */
-  return 0;
+  // Invoke the appropriate pointer to method call.
+  if (cs < Options::REACTIVE)
+    return (this->*this->dispatch_table_[cs]) ();
+  else
+    return 0;
 }
 
 // Hook called when the child is going to exit.
@@ -318,48 +481,106 @@ Counting_Service::open (void *)
 int 
 Counting_Service::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
-  ACE_DEBUG ((LM_DEBUG, 
-	      "(%P|%t) About to exit from the child\n"));
+  // Initialize the Concurrency strategy.
+  switch (OPTIONS::instance ()->concurrency_strategy ())
+    {
+    case Options::PROCESS:
+#if !defined (ACE_LACKS_EXEC)
+      ACE_DEBUG ((LM_DEBUG, 
+		  "(%P|%t) About to exit from the child\n"));
 
-  // Exit the child.
-  ACE_OS::exit (0);
+      // Exit the child.
+      ACE_OS::exit (0);
+      break;
+#else
+      ACE_ASSERT (!"PROCESS invalid on this platform");
+#endif /* !defined (ACE_LACKS_EXEC) */
+    case Options::THREAD:
+#if defined (ACE_HAS_THREADS)
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) exiting thread\n"));
+      // Call up to complete the close.
+      SVC_HANDLER::handle_close ();
+      break;
+#else
+      ACE_ASSERT (!"THREAD invalid on this platform");
+#endif /* !ACE_HAS_THREADS */
+    case Options::REACTIVE:
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) removing from Reactor\n"));
+      // Call up to complete the close.
+      SVC_HANDLER::handle_close ();
+      break;
+    }
   return 0;
 }
+
+// Explain usage and exit.
+static void 
+print_usage_and_die (void)
+{
+  ACE_DEBUG ((LM_DEBUG, 
+	      "usage: %n [-p (port)] [-c (concurrency strategy)] \n"));
+  ACE_OS::exit (1);
+}
+
+static void
+parse_args (int argc, char *argv[])
+{
+  ACE_Get_Opt get_opt (argc, argv, "p:c:");
+
+  int c; 
+
+  while ((c = get_opt ()) != -1)
+    switch (c)
+    {
+    case 'p':
+      OPTIONS::instance ()->port (ACE_OS::atoi (get_opt.optarg));
+      break;
+    case 'c':
+      if (ACE_OS::strcmp (get_opt.optarg, "REACTIVE") == 0)
+	OPTIONS::instance ()->concurrency_strategy (Options::REACTIVE);
+#if !defined (ACE_LACKS_EXEC)
+      else if (ACE_OS::strcmp (get_opt.optarg, "PROCESS") == 0)
+	OPTIONS::instance ()->concurrency_strategy (Options::PROCESS);
 #endif /* !ACE_LACKS_EXEC */
+#if defined (ACE_HAS_THREADS)
+      else if (ACE_OS::strcmp (get_opt.optarg, "THREAD") == 0)
+	OPTIONS::instance ()->concurrency_strategy (Options::THREAD);
+#endif /* ACE_HAS_THREADS */
+      break;
+    default:
+      print_usage_and_die ();
+      break;
+  }
+}
 
 int
 main (int argc, char *argv[])
 {
-  ACE_START_TEST ("Process_Stratey_Test");
+  // ACE_START_TEST ("Process_Stratey_Test");
 
-#if !defined (ACE_LACKS_EXEC)
   ACE_Service_Config svc_conf;
 
   // Initialize the counting file.
-  Counting_Acceptor counting_acceptor (__TEXT ("counting_file"));
+  Counting_Acceptor counting_acceptor (ACE_TEMP_FILE_NAME);
+
+  parse_args (argc, argv);
   
-  u_short port = ACE_DEFAULT_SERVER_PORT;
+  ACE_INET_Addr addr (OPTIONS::instance ()->port ());
 
-  if (argc > 1)
-    port = ACE_OS::atoi (argv[1]);
-
-  ACE_INET_Addr addr (port);
-
-  // Open the Acceptor.
+  // Open the Acceptor and listen at <addr>.
   if (counting_acceptor.open (addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), 1);
 
-  // Run the event loop.
+  // Run the main event loop.
 
   ACE_Service_Config::run_reactor_event_loop ();
 
-#else
-  ACE_ERROR ((LM_ERROR, "fork() not supported on this platform\n"));
-#endif /* !ACE_LACKS_EXEC */
-  ACE_END_TEST;
+  // Remove the filename.
+  ACE_OS::unlink (ACE_TEMP_FILE_NAME);
+
+  // ACE_END_TEST;
   return 0;
 }
-
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 template class ACE_Accept_Strategy<Counting_Service, ACE_SOCK_ACCEPTOR>;
@@ -370,6 +591,8 @@ template class ACE_Guard<ACE_File_Lock>;
 template class ACE_Message_Queue<ACE_NULL_SYNCH>;
 template class ACE_Module<ACE_NULL_SYNCH>;
 template class ACE_Process_Strategy<Counting_Service>;
+template class ACE_Thread_Strategy<Counting_Service>;
+template class ACE_Reactive_Strategy<Counting_Service>;
 template class ACE_Read_Guard<ACE_File_Lock>;
 template class ACE_Scheduling_Strategy<Counting_Service>;
 template class ACE_Strategy_Acceptor<Counting_Service, ACE_SOCK_ACCEPTOR>;

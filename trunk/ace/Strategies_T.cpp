@@ -203,6 +203,75 @@ ACE_Concurrency_Strategy<SVC_HANDLER>::~ACE_Concurrency_Strategy (void)
 ACE_ALLOC_HOOK_DEFINE(ACE_Thread_Strategy)
 
 template <class SVC_HANDLER> void
+ACE_Reactive_Strategy<SVC_HANDLER>::dump (void) const
+{
+  ACE_TRACE ("ACE_Reactive_Strategy<SVC_HANDLER>::dump");
+}
+
+template <class SVC_HANDLER> int
+ACE_Reactive_Strategy<SVC_HANDLER>::open (ACE_Reactor *reactor,
+					  ACE_Reactor_Mask mask)
+{
+  ACE_TRACE ("ACE_Reactive_Strategy<SVC_HANDLER>::open");
+  this->reactor_ = reactor;
+  this->mask_ = mask;
+
+  // Must have a <Reactor>
+  if (this->reactor_ == 0)
+    return -1;
+  else
+    return 0;
+}
+
+template <class SVC_HANDLER> 
+ACE_Reactive_Strategy<SVC_HANDLER>::ACE_Reactive_Strategy (ACE_Reactor *reactor,
+							   ACE_Reactor_Mask mask)
+{
+  ACE_TRACE ("ACE_Reactive_Strategy<SVC_HANDLER>::ACE_Reactive_Strategy");
+
+  if (this->open (reactor, mask) == -1)
+    ACE_ERROR ((LM_ERROR, "%p\n", 
+		"ACE_Reactive_Strategy<SVC_HANDLER>::ACE_Reactive_Strategy"));
+}
+
+template <class SVC_HANDLER> 
+ACE_Reactive_Strategy<SVC_HANDLER>::ACE_Reactive_Strategy (void)
+  : reactor_ (0),
+    mask_ (ACE_Event_Handler::NULL_MASK)
+{
+  ACE_TRACE ("ACE_Reactive_Strategy<SVC_HANDLER>::ACE_Reactive_Strategy");
+}
+
+template <class SVC_HANDLER> 
+ACE_Reactive_Strategy<SVC_HANDLER>::~ACE_Reactive_Strategy (void)
+{
+  ACE_TRACE ("ACE_Reactive_Strategy<SVC_HANDLER>::~ACE_Reactive_Strategy");
+}
+
+template <class SVC_HANDLER> int
+ACE_Reactive_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_handler,
+							  void *arg)
+{
+  ACE_TRACE ("ACE_Reactive_Strategy<SVC_HANDLER>::activate_svc_handler");
+
+  if (this->reactor_ == 0)
+    return -1;
+  else if (this->reactor_->register_handler (svc_handler, this->mask_) == -1)
+    return -1;
+    // Call up to our parent to do the SVC_HANDLER initialization.
+  else if (this->inherited::activate_svc_handler (svc_handler, arg) == -1)
+    {
+      // Make sure to remove the <svc_handler> from the <Reactor>.
+      this->reactor_->remove_handler (svc_handler, this->mask_);
+      return -1;
+    }
+  else
+    return 0;
+}
+
+ACE_ALLOC_HOOK_DEFINE(ACE_Thread_Strategy)
+
+template <class SVC_HANDLER> void
 ACE_Thread_Strategy<SVC_HANDLER>::dump (void) const
 {
   ACE_TRACE ("ACE_Thread_Strategy<SVC_HANDLER>::dump");
@@ -210,8 +279,8 @@ ACE_Thread_Strategy<SVC_HANDLER>::dump (void) const
 
 template <class SVC_HANDLER> int
 ACE_Thread_Strategy<SVC_HANDLER>::open (ACE_Thread_Manager *thr_mgr,
-			       long thr_flags,
-			       int n_threads)
+					long thr_flags,
+					size_t n_threads)
 {
   ACE_TRACE ("ACE_Thread_Strategy<SVC_HANDLER>::open");
   this->thr_mgr_ = thr_mgr;
@@ -228,11 +297,14 @@ ACE_Thread_Strategy<SVC_HANDLER>::open (ACE_Thread_Manager *thr_mgr,
 
 template <class SVC_HANDLER> 
 ACE_Thread_Strategy<SVC_HANDLER>::ACE_Thread_Strategy (ACE_Thread_Manager *thr_mgr,
-					      long thr_flags,
-					      int n_threads)
+						       long thr_flags,
+						       size_t n_threads)
 {
   ACE_TRACE ("ACE_Thread_Strategy<SVC_HANDLER>::ACE_Thread_Strategy");
-  this->open (thr_mgr, thr_flags, n_threads);
+
+  if (this->open (thr_mgr, thr_flags, n_threads) == -1)
+    ACE_ERROR ((LM_ERROR, "%p\n", 
+		"ACE_Thread_Strategy<SVC_HANDLER>::ACE_Thread_Strategy"));
 }
 
 template <class SVC_HANDLER> 

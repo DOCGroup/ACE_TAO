@@ -1,3 +1,74 @@
+Tue Apr 22 20:17:00 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* tests/Process_Strategy_Test.cpp: Added new test code that
+ 	  exercises the ACE_Process_Strategy, ACE_Thread_Strategy, and
+ 	  ACE_Reactive_Strategy classes.
+
+	* ace/Strategies_T: Added a new class called
+ 	  ACE_Reactive_Strategy, which inherits from
+ 	  ACE_Concurrency_Strategy and registers new Svc_Handlers with the
+ 	  Reactor.
+
+	* ace/Strategies_T.cpp (ACE_Thread_Strategy): Added a check for
+ 	  failed open() methods and call ACE_ERROR.
+
+	* tests/Map_Manager_Test.cpp: Added a template specialization for
+ 	  the ACE_Hash_Map_Manager::hash() method, which is enabled if the
+ 	  compiler supports template specializations.
+
+	* ace/Hash_Map_Manager.h (pool): Moved the ext_id.hash() call into
+ 	  a separate method so that we can perform template specialization
+ 	  of it more easily.
+
+	* ace/README: Added a new #define called
+ 	  ACE_HAS_TEMPLATE_SPECIALIZATION so that we can work around funky
+ 	  compilers that don't support this advanced template feature.
+
+	* ace: Added Nanbor Wang's port to FreeBSD.  The port is done
+	  at FreeBSD 3.0-current as of 2/9/97, which is the
+	  latest stable system before Lite2 merge.  Since the merge is
+	  current under testing and changes are introduced in a daily
+	  basis, I don't recommend using -current after the date.  You
+	  can specified the date in your "supfile", run CVSup to get the entire 
+	  source tree and do a 'make world' to update (or reverse) your
+	  system.
+ 
+ 	  Pthread library is provided by John Birrell.  There is a
+	  bug fix at mid April so you may want to CVSup the latest libc_r
+	  library and re-make the pthreaded library.
+ 
+ 	  Notice that under FreeBSD, the environment variable
+	  LD_LIBRARY_PATH has no effect at all (for stricter security reason
+	  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+	  (?))  Also, a shared library must be name as lib<name>.so.<version
+	  number> (e.g. libACE.4.1.0).  Therefore, if you want to take
+	  advantage of shared library (libACE.so), you'll need to either
+ 	
+	  1. move libACE.so to /usr/local/lib, rename it as libACE.so.4.1.5
+	     then, you'll be able to use it after reboot (or, use 'ldconfig
+	     -m' to "merge" it into current cache immediately, or
+	  2. rename it as libACE.so.4.1.5 and do an 'ldconfig -m
+	     $WRAPPER_ROOT/ace' to put it into cache.  You may want to put
+	     it into <rc> file.
+
+	  No matter which scheme you use, you'll need to have root privilege
+	  to do it (invoke the shared object into system.)
+	  I would recommend adding a post-compile hook in the Makefile so we
+	  FreeBSDers can rename the shared library to it's proper name with
+	  correct major and minor version number attached.  (which is a
+	  trick BSD library makefiles use.)
+
+	* examples/OS/Process/process.cpp (main): Replaced the use of
+ 	  "/bin/cat" with "cat" since we are now using execvp().  Thanks
+ 	  to Nanbor Wang <nw1@cs.wustl.edu> for reporting this.
+
+	* ace/Process.cpp (start): Changed the use of execv() to execvp()
+ 	  in order to avoid having to pass in the full pathname.
+
+	* ace/OS.i (sigwait): Added an #ifdef for FreeBSD so that we
+ 	  return ACE_NOTSUP_RETURN(-1) for ACE_OS::sigwait().  Thanks to
+ 	  Nanbor Wang <nw1@cs.wustl.edu> for reporting this.
+
 Tue Apr 22 17:46:30 1997    <harrison@samba.cs.wustl.edu>
 
 	* Process.cpp (start): We must pass in 0 instead of "" to
@@ -44,19 +115,6 @@ Tue Apr 22 01:38:14 1997    <irfan@TWOSTEP>
 
 	* examples/Reactor/Proactor/test_proactor.{mdp,mak}: Added new
  	  example.
-
-Tue Apr 22 00:21:03 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-	* examples/OS/Process/process.cpp (main): Replaced the use of
- 	  "/bin/cat" with "cat" since we are now using execvp().  Thanks
- 	  to Nanbor Wang <nw1@cs.wustl.edu> for reporting this.
-
-	* ace/Process.cpp (start): Changed the use of execv() to execvp()
- 	  in order to avoid having to pass in the full pathname.
-
-	* ace/OS.i (sigwait): Added an #ifdef for FreeBSD so that we
- 	  return ACE_NOTSUP_RETURN(-1) for ACE_OS::sigwait().  Thanks to
- 	  Nanbor Wang <nw1@cs.wustl.edu> for reporting this.
 
 Mon Apr 21 18:14:32 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
