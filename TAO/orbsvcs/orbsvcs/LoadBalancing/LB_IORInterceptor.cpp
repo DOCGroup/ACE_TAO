@@ -2,6 +2,9 @@
 #include "LB_ObjectReferenceFactory.h"
 #include "LB_LoadAlert.h"
 
+#include "tao/debug.h"
+
+
 ACE_RCSID (LoadBalancing,
            LB_IORInterceptor,
            "$Id$")
@@ -19,7 +22,9 @@ TAO_LB_IORInterceptor::TAO_LB_IORInterceptor (
     location_ (location),
     lm_ (CosLoadBalancing::LoadManager::_duplicate (lm)),
     orb_id_ (CORBA::string_dup (orb_id)),
-    load_alert_ (load_alert)
+    load_alert_ (load_alert),
+    la_ref_ (),
+    lock_ ()
 {
 }
 
@@ -65,19 +70,6 @@ TAO_LB_IORInterceptor::components_established (
     info->current_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  // This is slightly evil.  We're creating an object reference
-  // through a POA that hasn't completed construction!  This can't be
-  // portable.  :(
-  //
-  // Note that this components_established() method is only called
-  // once.  This means that there is no chance of the below _this()
-  // call causing the load balancer's swapped-in
-  // ObjectReferenceFactory from being used to create the object
-  // reference.
-  CosLoadBalancing::LoadAlert_var la =
-    this->load_alert_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-
   PortableInterceptor::ObjectReferenceFactory * tmp;
   ACE_NEW_THROW_EX (tmp,
                     TAO_LB_ObjectReferenceFactory (old_orf.in (),
@@ -85,8 +77,7 @@ TAO_LB_IORInterceptor::components_established (
                                                    this->repository_ids_,
                                                    this->location_.in (),
                                                    orb.in (),
-                                                   this->lm_.in (),
-                                                   la.in ()),
+                                                   this->lm_.in ()),
                     CORBA::NO_MEMORY (
                       CORBA_SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
@@ -104,17 +95,73 @@ TAO_LB_IORInterceptor::components_established (
 void
 TAO_LB_IORInterceptor::adapter_manager_state_changed (
     PortableInterceptor::AdapterManagerId,
-    PortableInterceptor::AdapterState
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::AdapterState state
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  if (state == PortableInterceptor::ACTIVE)
+    {
+      this->register_load_alert (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
+    }
 }
 
 void
-TAO_LB_IORInterceptor:: adapter_state_changed (
+TAO_LB_IORInterceptor::adapter_state_changed (
     const PortableInterceptor::ObjectReferenceTemplateSeq &,
-    PortableInterceptor::AdapterState
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::AdapterState state
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  if (state == PortableInterceptor::ACTIVE)
+    {
+      this->register_load_alert (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
+    }
+}
+
+void
+TAO_LB_IORInterceptor::register_load_alert (ACE_ENV_SINGLE_ARG_DECL)
+{
+  {
+    ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
+
+    if (!CORBA::is_nil (this->la_ref_.in ()))
+      return;
+
+    // By now, the RootPOA has been fully initialized, so it is safe
+    // to activate the LoadAlert object.
+    this->la_ref_ = this->load_alert_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
+  }
+
+  ACE_TRY
+    {
+      PortableGroup::Location location (1);
+      location.length (1);
+      location[0].id = CORBA::string_dup (this->location_.in ());
+
+      this->lm_->register_load_alert (location,
+                                      this->la_ref_.in ()
+                                      ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCH (CosLoadBalancing::LoadAlertAlreadyPresent, ex)
+    {
+      if (TAO_debug_level > 0)
+        ACE_PRINT_EXCEPTION (ex,
+                             "LoadManager::register_load_alert");
+
+      ACE_TRY_THROW (CORBA::BAD_INV_ORDER ());
+    }
+  ACE_CATCH (CosLoadBalancing::LoadAlertNotAdded, ex)
+    {
+      if (TAO_debug_level > 0)
+        ACE_PRINT_EXCEPTION (ex,
+                             "LoadManager::register_load_alert");
+
+      ACE_TRY_THROW (CORBA::INTERNAL ());
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
 }

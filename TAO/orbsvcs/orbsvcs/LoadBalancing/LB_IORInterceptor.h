@@ -108,6 +108,11 @@ public:
 
 private:
 
+  /// Create and register the LoadAlert object with the LoadManager.
+  void register_load_alert (ACE_ENV_SINGLE_ARG_DECL);
+
+private:
+
   /// List of stringified object group references.
   const CORBA::StringSeq object_groups_;
 
@@ -126,6 +131,12 @@ private:
 
   /// Reference to the LoadAlert servant.
   TAO_LB_LoadAlert & load_alert_;
+
+  /// Reference to the LoadAlert object.
+  CosLoadBalancing::LoadAlert_var la_ref_;
+
+  /// Synchronize access to the class state.
+  TAO_SYNCH_MUTEX lock_;
 
 };
 

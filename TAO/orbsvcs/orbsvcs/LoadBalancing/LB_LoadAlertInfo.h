@@ -40,26 +40,11 @@ struct TAO_LB_LoadAlertInfo
   /// Reference to the LoadAlert object.
   CosLoadBalancing::LoadAlert_var load_alert;
 
-  /// The location at which the member resides.
-  PortableGroup::Location location;
-
   /// True if the LoadAlert object has been alerted about a given load
   /// condition.  False otherwise.
   CORBA::Boolean alerted;
 
-  /// Equality operator.
-  /**
-   * For the purposes of the LoadAlert info set, only the location is
-   * important.  In particular, if a LoadAlert object already resides
-   * at the given location for a particular object group, this
-   * equality operator will return true.
-   */
-  int operator== (const TAO_LB_LoadAlertInfo & rhs);
-
 };
-
-
-typedef ACE_Unbounded_Set<TAO_LB_LoadAlertInfo> TAO_LB_LoadAlertInfoSet;
 
 
 #include "ace/post.h"

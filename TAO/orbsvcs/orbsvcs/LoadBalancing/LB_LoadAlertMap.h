@@ -24,18 +24,18 @@
 
 #include "LB_LoadAlertInfo.h"
 
-#include "tao/PortableServer/Key_Adapters.h"
-#include "tao/PortableServer/PortableServerC.h"
+#include "orbsvcs/PortableGroup/PG_Location_Hash.h"
+#include "orbsvcs/PortableGroup/PG_Location_Equal_To.h"
 
 #include "ace/Hash_Map_Manager_T.h"
 
 
 /// LoadAlertInfo hash map typedef.
 typedef ACE_Hash_Map_Manager_Ex<
-  ACE_UINT32,
-  TAO_LB_LoadAlertInfoSet,
-  ACE_Hash<ACE_UINT32>,
-  ACE_Equal_To<ACE_UINT32>,
+  PortableGroup::Location,
+  TAO_LB_LoadAlertInfo,
+  TAO_PG_Location_Hash,
+  TAO_PG_Location_Equal_To,
   ACE_Null_Mutex> TAO_LB_LoadAlertMap;
 
 

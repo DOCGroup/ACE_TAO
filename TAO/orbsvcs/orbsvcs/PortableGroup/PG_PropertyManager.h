@@ -145,10 +145,10 @@ public:
 
   /// Type-specific property hash map.
   typedef ACE_Hash_Map_Manager_Ex<
-    const char *,
+    ACE_CString,
     PortableGroup::Properties,
-    ACE_Hash<const char *>,
-    ACE_Equal_To<const char *>,
+    ACE_Hash<ACE_CString>,
+    ACE_Equal_To<ACE_CString>,
     ACE_Null_Mutex> Type_Prop_Table;
 
 private:

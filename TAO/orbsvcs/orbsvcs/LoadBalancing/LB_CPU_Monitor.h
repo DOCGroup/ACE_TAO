@@ -39,7 +39,8 @@
  * of 1.25 (i.e. 5/4), and so on and so forth.
  */
 class TAO_LoadBalancing_Export TAO_LB_CPU_Monitor
-  : public virtual POA_CosLoadBalancing::LoadMonitor
+  : public virtual POA_CosLoadBalancing::LoadMonitor,
+    public virtual PortableServer::RefCountServantBase
 {
 public:
 
@@ -78,6 +79,15 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   //@}
+
+protected:
+
+  /// Destructor
+  /**
+   * Protected destructor to enforce proper memory management through
+   * reference counting.
+   */
+  ~TAO_LB_CPU_Monitor (void);
 
 private:
 
