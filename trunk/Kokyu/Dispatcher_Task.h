@@ -14,6 +14,7 @@
 #define TAO_DISPATCHER_TASK_H
 #include "ace/pre.h"
 #include "ace/Task.h"
+#include "ace/Lock_Adapter_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

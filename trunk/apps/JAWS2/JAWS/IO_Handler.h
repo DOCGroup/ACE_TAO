@@ -25,6 +25,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Singleton.h"
+#include "ace/Synch_Traits.h"
+#include "ace/RW_Thread_Mutex.h"
 
 #include "JAWS/Export.h"
 
