@@ -411,13 +411,7 @@ if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/IRObject:1.0") == 0)
 
 void POA_CORBA::IRObject::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel, req.operation_length ()) == -1)
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 
 const char* POA_CORBA::IRObject::_interface_repository_id (void) const
@@ -1787,13 +1781,7 @@ if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/Contained:1.0") == 0)
 
 void POA_IR::Contained::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel, req.operation_length ()) == -1)
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 
 const char* POA_IR::Contained::_interface_repository_id (void) const
@@ -4032,13 +4020,7 @@ if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/Container:1.0") == 0)
 
 void POA_IR::Container::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel, req.operation_length ()) == -1)
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 
 const char* POA_IR::Container::_interface_repository_id (void) const
@@ -5014,13 +4996,7 @@ if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/IDLType:1.0") == 0)
 
 void POA_IR::IDLType::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel, req.operation_length ()) == -1)
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 
 const char* POA_IR::IDLType::_interface_repository_id (void) const
@@ -6190,13 +6166,7 @@ if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/Repository:1.0") == 0)
 
 void POA_IR::Repository::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel, req.operation_length ()) == -1)
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 
 const char* POA_IR::Repository::_interface_repository_id (void) const
@@ -7050,13 +7020,7 @@ if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/ComponentRepository:1.0") =
 
 void POA_IR::ComponentRepository::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel, req.operation_length ()) == -1)
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 
 const char* POA_IR::ComponentRepository::_interface_repository_id (void) const
@@ -7523,13 +7487,7 @@ if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/ModuleDef:1.0") == 0)
 
 void POA_IR::ModuleDef::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel, req.operation_length ()) == -1)
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 
 const char* POA_IR::ModuleDef::_interface_repository_id (void) const
@@ -8333,13 +8291,7 @@ if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/ConstantDef:1.0") == 0)
 
 void POA_IR::ConstantDef::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel, req.operation_length ()) == -1)
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 
 const char* POA_IR::ConstantDef::_interface_repository_id (void) const
@@ -8855,13 +8807,7 @@ if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/TypedefDef:1.0") == 0)
 
 void POA_IR::TypedefDef::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel, req.operation_length ()) == -1)
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 
 const char* POA_IR::TypedefDef::_interface_repository_id (void) const
@@ -9432,13 +9378,7 @@ if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/StructDef:1.0") == 0)
 
 void POA_IR::StructDef::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel, req.operation_length ()) == -1)
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 
 const char* POA_IR::StructDef::_interface_repository_id (void) const
@@ -10332,13 +10272,7 @@ if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/UnionDef:1.0") == 0)
 
 void POA_IR::UnionDef::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel, req.operation_length ()) == -1)
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 
 const char* POA_IR::UnionDef::_interface_repository_id (void) const
@@ -11036,13 +10970,7 @@ if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/EnumDef:1.0") == 0)
 
 void POA_IR::EnumDef::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel, req.operation_length ()) == -1)
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 
 const char* POA_IR::EnumDef::_interface_repository_id (void) const
@@ -11652,13 +11580,7 @@ if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/AliasDef:1.0") == 0)
 
 void POA_IR::AliasDef::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel, req.operation_length ()) == -1)
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 
 const char* POA_IR::AliasDef::_interface_repository_id (void) const
@@ -12093,13 +12015,7 @@ if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/NativeDef:1.0") == 0)
 
 void POA_IR::NativeDef::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel, req.operation_length ()) == -1)
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 
 const char* POA_IR::NativeDef::_interface_repository_id (void) const
@@ -12524,13 +12440,7 @@ if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/PrimitiveDef:1.0") == 0)
 
 void POA_IR::PrimitiveDef::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel, req.operation_length ()) == -1)
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 
 const char* POA_IR::PrimitiveDef::_interface_repository_id (void) const
@@ -13089,13 +12999,7 @@ if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/StringDef:1.0") == 0)
 
 void POA_IR::StringDef::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel, req.operation_length ()) == -1)
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 
 const char* POA_IR::StringDef::_interface_repository_id (void) const
@@ -13683,13 +13587,7 @@ if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/WstringDef:1.0") == 0)
 
 void POA_IR::WstringDef::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel, req.operation_length ()) == -1)
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 
 const char* POA_IR::WstringDef::_interface_repository_id (void) const
@@ -14452,13 +14350,7 @@ if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/FixedDef:1.0") == 0)
 
 void POA_IR::FixedDef::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel, req.operation_length ()) == -1)
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 
 const char* POA_IR::FixedDef::_interface_repository_id (void) const
@@ -15366,13 +15258,7 @@ if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/SequenceDef:1.0") == 0)
 
 void POA_IR::SequenceDef::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel, req.operation_length ()) == -1)
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 
 const char* POA_IR::SequenceDef::_interface_repository_id (void) const
@@ -16309,13 +16195,7 @@ if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/ArrayDef:1.0") == 0)
 
 void POA_IR::ArrayDef::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel, req.operation_length ()) == -1)
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 
 const char* POA_IR::ArrayDef::_interface_repository_id (void) const
@@ -17108,13 +16988,7 @@ if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/ExceptionDef:1.0") == 0)
 
 void POA_IR::ExceptionDef::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel, req.operation_length ()) == -1)
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 
 const char* POA_IR::ExceptionDef::_interface_repository_id (void) const
@@ -18005,13 +17879,7 @@ if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/AttributeDef:1.0") == 0)
 
 void POA_IR::AttributeDef::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel, req.operation_length ()) == -1)
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 
 const char* POA_IR::AttributeDef::_interface_repository_id (void) const
@@ -19533,13 +19401,7 @@ if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/OperationDef:1.0") == 0)
 
 void POA_IR::OperationDef::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel, req.operation_length ()) == -1)
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 
 const char* POA_IR::OperationDef::_interface_repository_id (void) const
@@ -21099,13 +20961,7 @@ if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/InterfaceDef:1.0") == 0)
 
 void POA_IR::InterfaceDef::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel, req.operation_length ()) == -1)
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 
 const char* POA_IR::InterfaceDef::_interface_repository_id (void) const
@@ -22203,13 +22059,7 @@ if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/ValueMemberDef:1.0") == 0)
 
 void POA_IR::ValueMemberDef::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel, req.operation_length ()) == -1)
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 
 const char* POA_IR::ValueMemberDef::_interface_repository_id (void) const
@@ -24404,13 +24254,7 @@ if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/ValueDef:1.0") == 0)
 
 void POA_IR::ValueDef::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel, req.operation_length ()) == -1)
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 
 const char* POA_IR::ValueDef::_interface_repository_id (void) const
@@ -25526,13 +25370,7 @@ if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/ValueBoxDef:1.0") == 0)
 
 void POA_IR::ValueBoxDef::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel, req.operation_length ()) == -1)
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 
 const char* POA_IR::ValueBoxDef::_interface_repository_id (void) const
@@ -26045,13 +25883,7 @@ if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/ProvidesDef:1.0") == 0)
 
 void POA_IR::ProvidesDef::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel, req.operation_length ()) == -1)
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 
 const char* POA_IR::ProvidesDef::_interface_repository_id (void) const
@@ -26620,13 +26452,7 @@ if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/UsesDef:1.0") == 0)
 
 void POA_IR::UsesDef::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel, req.operation_length ()) == -1)
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 
 const char* POA_IR::UsesDef::_interface_repository_id (void) const
@@ -27232,13 +27058,7 @@ if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/EventDef:1.0") == 0)
 
 void POA_IR::EventDef::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel, req.operation_length ()) == -1)
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 
 const char* POA_IR::EventDef::_interface_repository_id (void) const
@@ -27670,13 +27490,7 @@ if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/EmitsDef:1.0") == 0)
 
 void POA_IR::EmitsDef::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel, req.operation_length ()) == -1)
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 
 const char* POA_IR::EmitsDef::_interface_repository_id (void) const
@@ -28049,13 +27863,7 @@ if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/PublishesDef:1.0") == 0)
 
 void POA_IR::PublishesDef::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel, req.operation_length ()) == -1)
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 
 const char* POA_IR::PublishesDef::_interface_repository_id (void) const
@@ -28428,13 +28236,7 @@ if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/ConsumesDef:1.0") == 0)
 
 void POA_IR::ConsumesDef::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel, req.operation_length ()) == -1)
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 
 const char* POA_IR::ConsumesDef::_interface_repository_id (void) const
@@ -30148,13 +29950,7 @@ if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/ComponentDef:1.0") == 0)
 
 void POA_IR::ComponentDef::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel, req.operation_length ()) == -1)
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 
 const char* POA_IR::ComponentDef::_interface_repository_id (void) const
@@ -31153,13 +30949,7 @@ if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/PrimaryKeyDef:1.0") == 0)
 
 void POA_IR::PrimaryKeyDef::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel, req.operation_length ()) == -1)
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 
 const char* POA_IR::PrimaryKeyDef::_interface_repository_id (void) const
@@ -31649,13 +31439,7 @@ if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/FactoryDef:1.0") == 0)
 
 void POA_IR::FactoryDef::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel, req.operation_length ()) == -1)
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 
 const char* POA_IR::FactoryDef::_interface_repository_id (void) const
@@ -32086,13 +31870,7 @@ if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/FinderDef:1.0") == 0)
 
 void POA_IR::FinderDef::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel, req.operation_length ()) == -1)
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 
 const char* POA_IR::FinderDef::_interface_repository_id (void) const
@@ -32600,13 +32378,7 @@ void POA_IR::HomeDef::_get_managed_component_skel (
 
 void POA_IR::HomeDef::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel, req.operation_length ()) == -1)
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  else
-    skel (req, this, context, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 
 void POA_IR::HomeDef::_get_primary_key_skel (
