@@ -35,7 +35,8 @@ namespace TAO
       POLICYTYPE *create (
         const char *factory_string,
         const ACE_Static_Svc_Descriptor &directive,
-        const CORBA::Any &value)
+        const CORBA::Any &value ACE_ENV_ARG_DECL)
+          ACE_THROW_SPEC ((CORBA::PolicyError))
       {
         FACTORY *policy_factory =
            ACE_Dynamic_Service<FACTORY>::instance (factory_string);
@@ -53,7 +54,7 @@ namespace TAO
         if (policy_factory == 0)
           return POLICYTYPE::_nil();
         else
-          return policy_factory->create (value);
+          return policy_factory->create (value ACE_ENV_ARG_PARAMETER);
       }
 
       static

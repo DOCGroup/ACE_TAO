@@ -48,7 +48,7 @@ TAO_PortableServer_PolicyFactory::create_policy (
             PortableServer::LifespanPolicyValue>::create (
               "LifespanPolicyFactory",
               TAO::Portable_Server::ace_svc_desc_LifespanPolicyFactory,
-              value);
+              value ACE_ENV_ARG_PARAMETER);
 
   if (type == PortableServer::ID_UNIQUENESS_POLICY_ID)
     return TAO::Portable_Server::Policy_Creator<
@@ -57,7 +57,7 @@ TAO_PortableServer_PolicyFactory::create_policy (
             PortableServer::IdUniquenessPolicyValue>::create (
               "IdUniquenessPolicyFactory",
               TAO::Portable_Server::ace_svc_desc_IdUniquenessPolicyFactory,
-              value);
+              value ACE_ENV_ARG_PARAMETER);
 
   if (type == PortableServer::ID_ASSIGNMENT_POLICY_ID)
     return TAO::Portable_Server::Policy_Creator<
@@ -66,7 +66,7 @@ TAO_PortableServer_PolicyFactory::create_policy (
             PortableServer::IdAssignmentPolicyValue>::create (
               "IdAssignmentPolicyFactory",
               TAO::Portable_Server::ace_svc_desc_IdAssignmentPolicyFactory,
-              value);
+              value ACE_ENV_ARG_PARAMETER);
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
@@ -77,7 +77,7 @@ TAO_PortableServer_PolicyFactory::create_policy (
             PortableServer::ImplicitActivationPolicyValue>::create (
               "ImplicitActivationPolicyFactory",
               TAO::Portable_Server::ace_svc_desc_ImplicitActivationPolicyFactory,
-              value);
+              value ACE_ENV_ARG_PARAMETER);
 
   if (type == PortableServer::SERVANT_RETENTION_POLICY_ID)
     return TAO::Portable_Server::Policy_Creator<
@@ -86,7 +86,7 @@ TAO_PortableServer_PolicyFactory::create_policy (
             PortableServer::ServantRetentionPolicyValue>::create (
               "ServantRetentionPolicyFactory",
               TAO::Portable_Server::ace_svc_desc_ServantRetentionPolicyFactory,
-              value);
+              value ACE_ENV_ARG_PARAMETER);
 
   if (type == PortableServer::REQUEST_PROCESSING_POLICY_ID)
     return TAO::Portable_Server::Policy_Creator<
@@ -95,7 +95,7 @@ TAO_PortableServer_PolicyFactory::create_policy (
             PortableServer::RequestProcessingPolicyValue>::create (
               "RequestProcessingPolicyFactory",
               TAO::Portable_Server::ace_svc_desc_RequestProcessingPolicyFactory,
-              value);
+              value ACE_ENV_ARG_PARAMETER);
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
