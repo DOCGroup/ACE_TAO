@@ -1,5 +1,5 @@
 Wed Aug  4 11:16:47 2004  Will Otte <wotte@dre.vanderbilt.edu>
-	
+
 	* Components/ComplexComponent/Attributes/Attributes.idl:
 	* Homes/Attributes/HomeAttributes.idl:
 	* ImpliedIDL/Components/Basic/ICBasic.idl:
@@ -9,7 +9,7 @@ Wed Aug  4 11:16:47 2004  Will Otte <wotte@dre.vanderbilt.edu>
 	* ImpliedIDL/Components/Receptacles/ICReceptacles.idl:
 
 	  Addressed some build errors on the Fuzz build.
-	
+
 	* Components/ComplexComponent/Attributes/AttributesS.cpp:
 	* Components/ComplexComponent/EventSink/EventSinkS.cpp:
 	* Components/ComplexComponent/EventSource/EventSourceS.cpp:
