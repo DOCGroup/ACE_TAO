@@ -449,6 +449,9 @@ else {
     find_files ();
 }
 
+print "--------------------Configuration: Fuzz - Level ",$opt_l,
+      "--------------------\n";
+
 check_for_inline_in_cpp () if ($opt_l >= 2);
 check_for_id_string () if ($opt_l >= 1);
 check_for_newline () if ($opt_l >= 1);
