@@ -1,3 +1,11 @@
+Fri Jun 15 23:52:44 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Strategies/GIOP_Message_NonReactive_Handler.cpp
+	  (read_message): Added EWOULDBLOCK to one of the expected failure
+	  and instead of returning 0, retrying the recv operation.  This
+	  fixed the sporadic failures when sending large message with
+	  SHMIOP.
+
 Fri Jun 15 20:24:19 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORB_Table.cpp:
