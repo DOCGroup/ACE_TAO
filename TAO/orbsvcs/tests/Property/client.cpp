@@ -58,7 +58,7 @@ Client::init (int argc,
 
   if (CORBA::is_nil (this->propsetdef_.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Couldnot resolve propsetdef in Naming server"),
+                       "Could not resolve propsetdef in Naming server"),
                       -1);
 
   return 0;

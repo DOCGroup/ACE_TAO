@@ -1,10 +1,23 @@
+Thu Jan 20 06:57:40 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/Property/client.cpp:
+        * performance-tests/Callback/client.cpp:
+        * performance-tests/Latency/AMI/client.cpp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/client.cpp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/client.cpp:
+        * tests/MT_BiDir/client.cpp:
+        * tests/Portable_Interceptors/Benchmark/client.cpp:
+        * tests/Smart_Proxies/Benchmark/client.cpp:
+
+          Changed debug messages from printing "server" to "client".
+
 Thu Jan 20 00:47:58 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tests/Collocation_Tests/Hello.cpp (get_string):
+        * tests/Collocation_Tests/Hello.cpp (get_string):
 
-	  Fixed syntax error caused by renaming of TAO_ORB_Table class to
-	  TAO::ORB_Table (see below).  Note that TAO::ORB_Table is only
-	  meant to be used internally by TAO.
+          Fixed syntax error caused by renaming of TAO_ORB_Table class to
+          TAO::ORB_Table (see below).  Note that TAO::ORB_Table is only
+          meant to be used internally by TAO.
 
 Wed Jan 19 11:44:48 2005  Chad Elliott  <elliott_c@ociweb.com>
 
