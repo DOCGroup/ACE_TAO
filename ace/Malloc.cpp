@@ -158,4 +158,39 @@ ACE_Control_Block::ACE_Name_Node::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
+
+#if defined (ACE_HAS_MALLOC_STATS)
+ACE_Malloc_Stats::ACE_Malloc_Stats (void)
+  : nblocks_ (0),
+    nchunks_ (0),
+    ninuse_ (0)
+{
+  ACE_TRACE ("ACE_Malloc_Stats::ACE_Malloc_Stats");
+}
+
+void
+ACE_Malloc_Stats::dump (void) const
+{
+  ACE_TRACE ("ACE_Malloc_Stats::dump");
+
+  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  int nblocks = this->nblocks_.value ();
+  int ninuse  = this->ninuse_.value ();
+  int nchunks = this->nchunks_.value ();
+
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT("nblocks = %d"), nblocks));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT("\nninuse = %d"), ninuse));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT("\nnchunks = %d"), nchunks));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT("\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+}
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Atomic_Op<ACE_PROCESS_MUTEX, int>;
+template class ACE_Atomic_Op_Ex<ACE_PROCESS_MUTEX, int>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Atomic_Op<ACE_PROCESS_MUTEX, int>
+#pragma instantiate ACE_Atomic_Op_Ex<ACE_PROCESS_MUTEX, int>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /*ACE_HAS_MALLOC_STATS*/
 #endif /* ACE_MALLOC_CPP */
