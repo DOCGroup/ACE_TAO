@@ -1,3 +1,23 @@
+Fri Jun  4 14:40:48 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/ORB.cpp:
+	* tao/ORB_Core.cpp:
+	  Added debugging messages to keep track of ORB creation and
+	  destruction (only at debug level >= 3)
+	  The ORB_Table singleton will destroy all ORBs that are still on
+	  the table at process shutdown.
+	  The TAO_ORB_Core_instance() will return the first ORB on the ORB 
+	  table, only if the table is empty it will create one.
+
+	* tests/Param_Test/server.h:
+	* tests/Param_Test/param_test_i.h:
+	* tests/Param_Test/param_test_i.cpp:
+	  It was using ORB_Core_instance() to shutdown the ORB, we keep an 
+	  ORB pointer around to do the right thing.
+
+	* utils/catior/catior.cpp:
+	  Added support for TAO's Unix domain sockets.
+
 Fri Jun  4 13:35:29 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/performance-tests/Cubit/TAO/DII_Cubit/client.cpp:
