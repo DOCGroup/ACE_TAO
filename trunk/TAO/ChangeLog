@@ -1,3 +1,9 @@
+Mon Jan  5 15:33:33 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Smart_Proxies/Policy/Makefile:
+
+	  Added another library for linking.
+
 Mon Jan  5 14:14:25 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp:
