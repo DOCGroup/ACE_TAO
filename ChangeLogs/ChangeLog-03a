@@ -1,3 +1,10 @@
+Fri Aug 23 06:07:38 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ace/OS.h (ACE_OS):
+
+          ungetc() is a macro under Borland. Undefine it to make Borland
+          compiler happy.
+
 Thu Aug 22 21:27:56 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS_String.cpp (strtok_r_emulation): Applied the patch Frank
