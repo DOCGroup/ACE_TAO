@@ -1,3 +1,9 @@
+Fri Jan 02 13:47:46 1998  Nanbor Wang  <nw1@cs.wustl.edu>
+
+	* ace/Token_Invariants.cpp:
+	* ace/Token_Collection.cpp:
+	* ace/Token_Manager.cpp: Added missing ACE_Map_Reverse_Iterator.
+
 Fri Jan  2 12:39:45 1998  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
 
 	* ace/Map_Manager.h: 
