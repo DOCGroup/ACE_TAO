@@ -223,6 +223,6 @@ template class ACE_Unbounded_Queue_Iterator <TAO_Notify_Event*>;
 
 #pragma instantiate ACE_Unbounded_Queue<TAO_Notify_Event*>
 #pragma instantiate ACE_Node<TAO_Notify_Event*>
-#pragma instantiate ACE_Unbounded_Queue_Iterator <TAO_Notify_Event*>;
+#pragma instantiate ACE_Unbounded_Queue_Iterator <TAO_Notify_Event*>
 
 #endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
