@@ -1323,31 +1323,6 @@ TAO_ORB_Core::thread_lane_resources_manager (void)
     ACE_Dynamic_Service<TAO_Thread_Lane_Resources_Manager>::instance
     (TAO_ORB_Core::thread_lane_resources_manager_name_);
 
-  // If there still isn't a reference, allocate the default.
-  if (this->thread_lane_resources_manager_ == 0)
-    {
-      if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_WARNING,
-                    ACE_TEXT ("(%P|%t) WARNING - No Thread Lane Resources Manager found ")
-                    ACE_TEXT ("in Service Repository.\n")
-                    ACE_TEXT ("  Using default instance with GLOBAL resource ")
-                    ACE_TEXT ("source specifier.\n")));
-
-      // @@ RTCORBA Subsetting: The following comment probably should say
-      //    this if this doesn't work, a segmentation fault will be quickly
-      //    generated...
-
-      // This will throw an exception if it fails on exception-throwing
-      // platforms.
-      TAO_Thread_Lane_Resources_Manager *thread_lane_resources_manager;
-      ACE_NEW_RETURN (thread_lane_resources_manager,
-                      TAO_Default_Thread_Lane_Resources_Manager,
-                      0);
-
-      // Store a copy for later use.
-      this->thread_lane_resources_manager_ = thread_lane_resources_manager;
-    }
-
   // Initialize the resources.
   this->thread_lane_resources_manager_->initialize (*this);
 
@@ -3096,6 +3071,7 @@ TAO_ORB_Core_TSS_Resources::TAO_ORB_Core_TSS_Resources (void)
     event_loop_thread_ (0),
     client_leader_thread_ (0),
     leader_follower_condition_variable_ (0),
+    lane_ (0),
     reactor_registry_ (0),
     reactor_registry_cookie_ (0),
     ts_objects_ (),
