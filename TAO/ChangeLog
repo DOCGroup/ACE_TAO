@@ -1,3 +1,18 @@
+Sun Oct  6 08:44:27 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/PortableServer/Object_Adapter.cpp (init):
+
+	  Fixed "unused argument" warnings.
+
+	* orbsvcs/orbsvcs/Log/Log_i.cpp (set_week_mask):
+
+	  Fixed "multiple variable definition" error exhibited by MSVC++
+	  6.0.  MSVC++ 6.0 doesn't correctly handle variables declared in
+	  a "for" scope.  They are visible outside the "for" scope.  This
+	  sometimes causes "multiple variable definition" errors when a
+	  variable of the same name is declared both in the "for" scope
+	  and outside it.
+
 Fri Oct  4 19:31:51 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
 	* orbsvcs/tests/LoadBalancing/GenericFactory/Basic.cpp:
