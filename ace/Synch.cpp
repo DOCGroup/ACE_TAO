@@ -632,6 +632,25 @@ ACE_Recursive_Thread_Mutex::ACE_Recursive_Thread_Mutex (LPCTSTR name,
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Recursive_Thread_Mutex)
 
+ACE_Recursive_Thread_Mutex::~ACE_Recursive_Thread_Mutex (void)
+{
+  // ACE_TRACE ("ACE_Recursive_Thread_Mutex::~ACE_Recursive_Thread_Mutex");
+  this->remove ();
+}
+
+int
+ACE_Recursive_Thread_Mutex::remove (void)
+{
+// ACE_TRACE ("ACE_Recursive_Thread_Mutex::remove");
+  int result = 0;
+  if (this->removed_ == 0)
+    {
+      this->removed_ = 1;
+      result = ACE_OS::recursive_mutex_destroy (&this->recursive_mutex_);
+    }
+  return result;
+}
+
 // The counter part of the following two functions for Win32 are
 // located in file Synch.i
 ACE_thread_t
