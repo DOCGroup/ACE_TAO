@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    FileCharStream.h
+ *  @file    StrCharStream.h
  *
  *  $Id$
  *
@@ -10,31 +10,31 @@
  */
 //=============================================================================
 
-#ifndef _ACEXML_FILECHARSTREAM_H_
-#define _ACEXML_FILECHARSTREAM_H_
+#ifndef _ACEXML_STRCHARSTREAM_H_
+#define _ACEXML_STRCHARSTREAM_H_
 
 #include "common/CharStream.h"
 
 /**
- * @class ACEXML_FileCharStream FileCharStream.h "common/FileCharStream.h"
+ * @class ACEXML_StrCharStream StrCharStream.h "common/StrCharStream.h"
  *
  * An implementation of ACEXML_CharStream for reading
- * input from a file.
+ * input from a null-terminated ACEXML_Char string.
  */
-class ACEXML_Export ACEXML_FileCharStream : public ACEXML_CharStream
+class ACEXML_Export ACEXML_StrCharStream : public ACEXML_CharStream
 {
 public:
   /// Default constructor.
-  ACEXML_FileCharStream (void);
+  ACEXML_StrCharStream (void);
 
-  /// Construct and opening a file.
-  ACEXML_FileCharStream (const ACEXML_Char *name);
+  /// Initializing Constructor.
+  ACEXML_StrCharStream (const ACEXML_Char *str);
 
   /// Destructor
-  virtual ~ACEXML_FileCharStream (void);
+  virtual ~ACEXML_StrCharStream (void);
 
-  /// Open a file.
-  int open (const ACEXML_Char *name);
+  /// Initializing and reset the StrCharStream with @a str.
+  int open (const ACEXML_Char *str);
 
   /**
    * Returns the available ACEXML_Char in the buffer.  -1
@@ -66,10 +66,11 @@ public:
   virtual int peek (void);
 
 private:
-  ACEXML_Char *filename_;
+  ACEXML_Char *start_;
 
-  FILE *infile_;
+  ACEXML_Char *ptr_;
 
+  ACEXML_Char *end_;
 };
 
-#endif /* _ACEXML_FILECHARSTREAM_H_ */
+#endif /* _ACEXML_STRCHARSTREAM_H_ */
