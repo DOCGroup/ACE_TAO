@@ -1,3 +1,12 @@
+Mon Jul 22 18:25:52 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+
+          Moved a block of generated code back to its original
+          position, since the original move reintroduced
+          [BUGID:58]. Thanks to Carlos O'Ryan <coryan@atdesk.com>
+          for pointing this out.
+
 Mon Jul 22 17:26:14 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Stack_Recursion/Client_Task.cpp:
