@@ -358,6 +358,13 @@ private:
                      const ACE_TCHAR *net_if = 0);
 
 protected:
+
+  /// Contains common open functionality so that inheriting classes can
+  /// reuse it.
+  int open_i (const ACE_INET_Addr &mcast_addr,        // Bound & sendto address.
+              const ACE_TCHAR *net_if = 0,            // Net interface for sends.
+              int reuse_addr = 1); 
+
   /// Create a multicast addr/if pair, in format useful for system calls.
   /// If mreq param is NULL, just verify the passed addr/interface specs.
   int make_multicast_ifaddr (ip_mreq *mreq,     // Put result here, if != NULL.

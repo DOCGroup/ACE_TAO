@@ -156,6 +156,15 @@ ACE_SOCK_Dgram_Mcast::open (const ACE_INET_Addr &mcast_addr,
                       reuse_addr) == -1)
     return -1;
 
+  return open_i (mcast_addr, net_if, reuse_addr);
+}
+
+int
+ACE_SOCK_Dgram_Mcast::open_i (const ACE_INET_Addr &mcast_addr,
+                              const ACE_TCHAR *net_if,
+                              int reuse_addr)
+{
+  ACE_TRACE ("ACE_SOCK_Dgram_Mcast::open_i");
   // ACE_SOCK::open calls this if reuse_addr is set, so we only need to 
   // add the port
   // Process addr/port reuse option.

@@ -1,3 +1,22 @@
+Fri Oct 18 17:20:02 UTC 2002  Don Hinton  <dhinton@iee.org>
+
+	* ace/SOCK_Dgram_Mcast.{h,cpp}:
+
+	  Factored out common code to an open_i() method that open()
+	  can call at this level and in inherited classes.
+
+	* ace/QoS/SOCK_Dgram_Mcast_QoS.{h.cpp}:
+
+	  Modified ctor to take same default param as base class and
+	  invoke the base class ctor.
+
+	  Removed duplicate code in open() and have it call base::open_i()
+	  after opening the socket with QoS. Changed 1st parameter from
+	  ACE_Addr to ACE_INET_Addr to match base classes.
+
+	  Removed duplicate code from subscribe by having it call base
+	  class methods.
+
 Fri Oct 18 11:51:44 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * bin/PerlACE/Run_Test.pm: Created a new variable
