@@ -1,14 +1,22 @@
+Wed Apr 22 22:13:57 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/ace_bcc.ide: Added a new IDE for the Borland C++ compiler.
+  	  Thanks to Valik Solorzano Barboza <valik@geodan.nl> for
+ 	  this.
+
+	* ace/tests_bcc.ide: Added a new IDE for the Borland C++ compiler.
+  	  Thanks to Valik Solorzano Barboza <valik@geodan.nl> for
+ 	  suggesting this.
+
+        * ace/Msg_WFMO_Reactor.cpp (wait_for_multiple_events): Fixed a
+          missing semi-colon.  Thanks to Jorn Jensen <jornj@funcom.com>
+          for reporting this.
+
 Wed Apr 22 21:53:12 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * config-linux-kcc.h: added #define ACE_SIZEOF_LONG_DOUBLE
           to 12 on i386.  Thanks to Ben Eng <ben@jetpen.com> for
           reporting this.
-
-Wed Apr 22 08:00:47 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-        * ace/Msg_WFMO_Reactor.cpp (wait_for_multiple_events): Fixed a
-          missing semi-colon.  Thanks to Jorn Jensen <jornj@funcom.com>
-          for reporting this.
 
 Tue Apr 21 18:38:22 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
