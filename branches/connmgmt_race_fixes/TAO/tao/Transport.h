@@ -359,12 +359,15 @@ public:
                 const ACE_Time_Value *timeout = 0);
 
 
-  /// Return a unique identifier for this transport instance.
+  /// Return the identifier for this transport instance.
   /**
-   * It's established at construction, and not changed throughout the life
-   * of a transport.
+   * If not set, this will return an integer representation of
+   * the <code>this</code> pointer for the instance on which
+   * it's called.
    */
-  virtual int id (void);
+  int id (void) const;
+  /// Set the identifier for this transport instance.
+  void id (int id);
 
 protected:
   /** @name Template methods
@@ -375,20 +378,6 @@ protected:
    * following methods with the semantics documented below.
    */
   //@{
-
-#if 0
-  /// Return the file descriptor used for this connection.
-  /**
-   * @todo Someday we should be able to support protocols that do not
-   * have or use file descriptors. But this will require implementing
-   * non-reactive concurrency models for some connections.  Really
-   * hard to do.  Meanwhile, look at the SHMIOP protocol for an
-   * example on how to use file descriptors for signalling while the
-   * actual data is transfer via shared memory (where there are no
-   * file descriptors.)
-   */
-  virtual ACE_HANDLE handle (void) = 0;
-#endif
 
   /// Return the event handler used to receive notifications from the
   /// Reactor.
@@ -645,12 +634,6 @@ public:
   int make_idle (void);
 
 protected:
-#if 0
-  // Access the connection handler
-  // @@CJC Do we still need this?!
-  virtual TAO_Connection_Handler* connection_handler_i (void) const;
-#endif
-
   // @@ see if one of these calls send_message()
   /// Remove the first message from the outgoing queue.
   void dequeue_head (void);

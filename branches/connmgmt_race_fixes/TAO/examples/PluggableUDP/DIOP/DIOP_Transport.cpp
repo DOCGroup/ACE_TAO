@@ -53,28 +53,16 @@ TAO_DIOP_Transport::~TAO_DIOP_Transport (void)
   delete this->messaging_object_;
 }
 
-TAO_DIOP_SVC_HANDLER *
-TAO_DIOP_Transport::service_handler (void)
-{
-  return this->connection_handler_;
-}
-
-ACE_HANDLE
-TAO_DIOP_Transport::handle (void)
-{
-  return this->connection_handler_->get_handle ();
-}
-
 ACE_Event_Handler *
-TAO_DIOP_Transport::event_handler (void)
+TAO_DIOP_Transport::event_handler_i (void)
 {
   return this->connection_handler_;
 }
 
 ssize_t
-TAO_DIOP_Transport::send (const ACE_Message_Block *message_block,
-                          const ACE_Time_Value * /*max_wait_time*/,
-                          size_t *bt)
+TAO_DIOP_Transport::send_i (const ACE_Message_Block *message_block,
+                            const ACE_Time_Value * /*max_wait_time*/,
+                            size_t *bt)
 {
   const ACE_INET_Addr &addr = this->connection_handler_->addr ();
 
@@ -141,8 +129,8 @@ TAO_DIOP_Transport::send (const ACE_Message_Block *message_block,
     {
       ssize_t current_transfer =
         this->connection_handler_->dgram ().send (iov,
-                                       iovcnt,
-                                       addr);
+                                                  iovcnt,
+                                                  addr);
       // Errors.
       if (current_transfer == -1 || current_transfer == 0)
         return current_transfer;
@@ -162,9 +150,9 @@ TAO_DIOP_Transport::send (const ACE_Message_Block *message_block,
 }
 
 ssize_t
-TAO_DIOP_Transport::recv (char *buf,
-                          size_t len,
-                          const ACE_Time_Value * /*max_wait_time*/)
+TAO_DIOP_Transport::recv_i (char *buf,
+                            size_t len,
+                            const ACE_Time_Value * /*max_wait_time*/)
 {
   ACE_INET_Addr from_addr;
 
@@ -174,8 +162,8 @@ TAO_DIOP_Transport::recv (char *buf,
     {
       local_buffer_.crunch ();
       ssize_t n = this->connection_handler_->dgram ().recv (local_buffer_.wr_ptr (),
-                                                  local_buffer_.size (),
-                                                  from_addr);
+                                                            local_buffer_.size (),
+                                                            from_addr);
 
             // Remember the from addr to eventually use it as remote
             // addr for the reply.
@@ -250,7 +238,7 @@ TAO_DIOP_Transport::read_process_message (ACE_Time_Value *max_wait_time,
 
 
 int
-TAO_DIOP_Transport::register_handler (void)
+TAO_DIOP_Transport::register_handler_i (void)
 {
   // @@ It seems like this method should go away, the right reactor is
   //    picked at object creation time.
@@ -314,8 +302,8 @@ TAO_DIOP_Transport::send_message (TAO_OutputCDR &stream,
     {
       if (TAO_debug_level)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO: (%P|%t|%N|%l) closing conn %d after fault %p\n"),
-                    this->handle (),
+                    ACE_TEXT ("TAO: (%P|%t|%N|%l) closing transport %d after fault %p\n"),
+                    this->id (),
                     ACE_TEXT ("send_message ()\n")));
 
       return -1;
@@ -327,8 +315,8 @@ TAO_DIOP_Transport::send_message (TAO_OutputCDR &stream,
       if (TAO_debug_level)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO: (%P|%t|%N|%l) send_message () \n")
-                    ACE_TEXT ("EOF, closing conn %d\n"),
-                    this->handle()));
+                    ACE_TEXT ("EOF, closing transport %d\n"),
+                    this->id ()));
       return -1;
     }
 
@@ -514,8 +502,8 @@ TAO_DIOP_Transport::process_message (void)
           // every reply on this connection.
           if (TAO_debug_level > 0)
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("TAO (%P|%t) : DIOP_Client_Transport::")
-                        ACE_TEXT ("handle_client_input - ")
+                        ACE_TEXT ("TAO (%P|%t) : DIOP_Transport::")
+                        ACE_TEXT ("process_message - ")
                         ACE_TEXT ("dispatch reply failed\n")));
 
           this->messaging_object_->reset ();
@@ -689,13 +677,7 @@ TAO_DIOP_Transport::get_listen_point (
 */
 
 void
-TAO_DIOP_Transport::transition_handler_state (void)
+TAO_DIOP_Transport::transition_handler_state_i (void)
 {
-  connection_handler_ = 0;
-}
-
-TAO_Connection_Handler*
-TAO_DIOP_Transport::connection_handler (void) const
-{
-  return connection_handler_;
+  this->connection_handler_ = 0;
 }

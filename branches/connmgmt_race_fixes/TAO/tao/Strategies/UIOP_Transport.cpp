@@ -36,10 +36,6 @@ TAO_UIOP_Transport::TAO_UIOP_Transport (TAO_UIOP_Connection_Handler *handler,
   , connection_handler_ (handler)
   , messaging_object_ (0)
 {
-  // We'll set the id_ (from TAO_Transport) to the handle from our connection
-  if (connection_handler_ != 0)
-    this->id_ = ACE_static_cast (int, this->connection_handler_->get_handle ());
-
   if (flag)
     {
       // Use the lite version of the protocol
@@ -58,20 +54,6 @@ TAO_UIOP_Transport::~TAO_UIOP_Transport (void)
 {
   delete this->messaging_object_;
 }
-
-#if 0
-TAO_UIOP_SVC_HANDLER *
-TAO_UIOP_Transport::service_handler (void)
-{
-  return this->connection_handler_;
-}
-
-ACE_HANDLE
-TAO_UIOP_Transport::handle (void)
-{
-  return this->connection_handler_->get_handle ();
-}
-#endif
 
 ACE_Event_Handler *
 TAO_UIOP_Transport::event_handler_i (void)
@@ -397,13 +379,5 @@ TAO_UIOP_Transport::transition_handler_state_i (void)
 {
   connection_handler_ = 0;
 }
-
-#if 0
-TAO_Connection_Handler*
-TAO_UIOP_Transport::connection_handler (void) const
-{
-  return connection_handler_;
-}
-#endif
 
 #endif  /* TAO_HAS_UIOP */
