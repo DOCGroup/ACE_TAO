@@ -16,7 +16,7 @@
 #include "Transient_Naming_Context.h"
 #include "Bindings_Iterator_T.h"
 
-ACE_RCSID(Naming, Hash_Naming_Context, "$Id:")
+ACE_RCSID(Naming, Transient_Naming_Context, "$Id$")
 
 int
 TAO_Transient_Bindings_Map::unbind (const char *id,
