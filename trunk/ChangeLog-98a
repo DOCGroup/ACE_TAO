@@ -7,6 +7,9 @@ Mon Mar 16 16:08:45 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/Profile_Timer.{h,cpp},tests/Handle_Set_Test.cpp: use units
           of microseconds instead of seconds if ACE_LACKS_FLOATING_POINT.
 
+        * ace/OS.i (hostname): on Chorus, tyr the HOST environment variable
+          if ::gethostname () returns an empty string.
+
 Mon Mar 16 13:04:58 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
 	* ace/OS.h:
