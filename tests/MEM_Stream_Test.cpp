@@ -219,6 +219,7 @@ run_client (u_short port,
   return status;
 }
 
+#if defined (_TEST_USES_THREADS)
 static ACE_THR_FUNC_RETURN
 connect_client (void *arg)
 {
@@ -226,6 +227,7 @@ connect_client (void *arg)
   run_client (*sport, client_strategy);
   return 0;
 }
+#endif
 
 static void
 create_reactor (void)
@@ -285,7 +287,6 @@ test_reactive (const ACE_TCHAR *prog,
                                                 &sport) == -1)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn_n ()")));
 #else
-  ACE_UNUSED_ARG (connect_client);
   ACE_Process_Options opts;
   opts.command_line (ACE_TEXT ("%s -p%d -r"), prog, sport);
   if (ACE_Process_Manager::instance ()->spawn_n (NUMBER_OF_REACTIVE_CONNECTIONS,
@@ -372,7 +373,6 @@ test_concurrent (const ACE_TCHAR *prog,
                                                 &sport) == -1)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn_n()")));
 #else
-  ACE_UNUSED_ARG (connect_client);
   ACE_Process_Options opts;
   opts.command_line (ACE_TEXT ("%s -p%d -m"), prog, sport);
   if (ACE_Process_Manager::instance ()->spawn_n (NUMBER_OF_MT_CONNECTIONS,
