@@ -313,8 +313,13 @@ TAO_IIOP_Client_Transport::register_handler (void)
   if (r == this->service_handler ()->reactor ())
     return 0;
 
-  return r->register_handler (this->service_handler (),
-                              ACE_Event_Handler::READ_MASK);
+  // About to be registered with the reactor, so bump the ref
+  // count
+  this->svc_handler ()->incr_ref_count ();
+
+  // Register the handler with the reactor
+  return  r->register_handler (this->service_handler (),
+                               ACE_Event_Handler::READ_MASK);
 }
 
 

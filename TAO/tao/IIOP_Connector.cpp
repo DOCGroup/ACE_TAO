@@ -130,11 +130,8 @@ TAO_IIOP_Connector::open (TAO_ORB_Core *orb_core)
 int
 TAO_IIOP_Connector::close (void)
 {
-  this->base_connector_.close ();
-
   delete this->base_connector_.creation_strategy ();
-
-  return 0;
+  return this->base_connector_.close ();
 }
 
 int
