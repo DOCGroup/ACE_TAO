@@ -523,6 +523,10 @@ SOURCE=.\Priority_Mapping.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Priority_Mapping_Manager.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Profile.cpp
 # End Source File
 # Begin Source File
@@ -1163,6 +1167,10 @@ SOURCE=.\Priority_Mapping.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Priority_Mapping_Manager.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Profile.h
 # End Source File
 # Begin Source File
@@ -1636,6 +1644,10 @@ SOURCE=.\Pool_Per_Endpoint.i
 # Begin Source File
 
 SOURCE=.\Priority_Mapping.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Priority_Mapping_Manager.i
 # End Source File
 # Begin Source File
 
