@@ -160,7 +160,7 @@ struct ACE_Export ACE_Malloc_Stats
 
 // Allow the user to override this in the config.h file.
 #if !defined (ACE_MALLOC_ALIGN)
-#define ACE_MALLOC_ALIGN sizeof (long)
+#define ACE_MALLOC_ALIGN ((int)(sizeof (long)))
 #endif /* ACE_MALLOC_ALIGN */
 
 // For alignment to long boundary 
@@ -225,14 +225,14 @@ public:
 #if defined (ACE_MALLOC_STATS)
   // Keep statistics about ACE_Malloc state and performance.
   ACE_Malloc_Stats malloc_stats_;
-#define ACE_CONTROL_BLOCK_SIZE (sizeof (ACE_Name_Node *) \
-				+ sizeof (ACE_Malloc_Header *) \
-				+ MAXNAMELEN  \
-				+ sizeof (ACE_Malloc_Stats))
+#define ACE_CONTROL_BLOCK_SIZE ((int)(sizeof (ACE_Name_Node *) \
+				      + sizeof (ACE_Malloc_Header *) \
+				      + MAXNAMELEN  \
+				      + sizeof (ACE_Malloc_Stats)))
 #else
-#define ACE_CONTROL_BLOCK_SIZE (sizeof(ACE_Name_Node *) \
-				+ sizeof (ACE_Malloc_Header *) \
-				+ MAXNAMELEN)
+#define ACE_CONTROL_BLOCK_SIZE ((int)(sizeof(ACE_Name_Node *) \
+				      + sizeof (ACE_Malloc_Header *) \
+				      + MAXNAMELEN))
 #endif /* ACE_MALLOC_STATS */
 
 // Notice the casting to int for sizeof() otherwise unsigned int
