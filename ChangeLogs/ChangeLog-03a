@@ -1,3 +1,9 @@
+Wed Mar 13 10:21:49 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Configuration_Import_Export.cpp (ACE_Ini_ImpExp::import_config):
+          Remove the "else value = ACE_LIB_TEXT("")" for zero-length
+          values - value is already a zero-length string.
+
 Wed Mar 13 09:40:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Registry_Name_Space.cpp:

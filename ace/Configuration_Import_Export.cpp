@@ -409,8 +409,6 @@ ACE_Ini_ImpExp::import_config (const ACE_TCHAR* fileName)
               value++;
             }
         }
-      else
-        value = ACE_LIB_TEXT ("");
 
       if (config_.set_string_value (section, name, value))
         {
