@@ -1,3 +1,7 @@
+Sun Nov 09 23:43:04 1997    <irfan@TWOSTEP>
+
+	* tao/tao_internals.cpp (close_services): Fixed typo.
+
 Sun Nov 09 23:32:58 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.0.26, released Sun Nov 09 23:32:58 1997.
