@@ -1,3 +1,10 @@
+Mon Jan 10 09:45:14 2005  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* DAnCE/RTNodeApplication/RTServer_Impl.h: 
+	* DAnCE/RTNodeApplication/RTServer_Impl.cpp: Removed init method
+	  altogether.  VC6 can't handle the syntax and we'll deal with
+	  later. 
+
 Fri Jan  7 10:02:02 2005  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* DAnCE/RTNodeApplication/RTServer_Impl.cpp (init): Changed to
