@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_LOCAL_NAME_SPACE_H
 #define ACE_LOCAL_NAME_SPACE_H
 #include "ace/pre.h"
@@ -33,9 +32,7 @@
  * with the Map_Manager.
  *
  * In order to work correctly, this class must be able to
- * convert back and forth with <ACE_NS_WStrings>.  Note that this
- * class must not have a destructor since otherwise we'll have
- * problems...
+ * convert back and forth with <ACE_NS_WStrings>.
  */
 class ACE_Export ACE_NS_String
 {
