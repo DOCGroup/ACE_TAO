@@ -1,3 +1,12 @@
+Thu Jan 29 15:33:16 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+        
+          Added missing parenthesis is a block of code compiled only
+          when ACE_SWAP_ON_WRITE is defined. This closes [BUGID:1732].
+          Thanks to Mouna Seri <seri@crhc.uiuc.edu> for making the
+          entry.
+
 Thu Jan 29 14:10:27 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* TAO/tao/Acceptor_Impl.cpp:
