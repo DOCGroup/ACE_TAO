@@ -162,13 +162,19 @@ TAO_AV_Connector_Registry::open (TAO_Base_StreamEndPoint *endpoint,
 }
 
 int
+TAO_AV_Connector_Registry::close (TAO_AV_Connector *connector)
+{
+  this->connectors_.remove (connector);
+  delete connector;
+
+  return 0;
+}
+
+int
 TAO_AV_Connector_Registry::close_all (void)
 {
-  TAO_AV_ConnectorSetItor end =
-    this->connectors_.end ();
-
   for (TAO_AV_ConnectorSetItor i = this->connectors_.begin ();
-       i != end;
+       i != this->connectors_.end ();
        ++i)
     {
       if (*i == 0)
@@ -425,13 +431,19 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
 }
 
 int
+TAO_AV_Acceptor_Registry::close (TAO_AV_Acceptor *acceptor)
+{
+  this->acceptors_.remove (acceptor);
+  delete acceptor;
+
+  return 0;
+}
+
+int
 TAO_AV_Acceptor_Registry::close_all (void)
 {
-  TAO_AV_AcceptorSetItor end =
-                this->acceptors_.end ();
-
   for (TAO_AV_AcceptorSetItor i = this->acceptors_.begin ();
-       i != end;
+       i != this->acceptors_.end ();
        ++i)
     {
       if (*i == 0)
@@ -479,6 +491,8 @@ TAO_AV_Flow_Handler::TAO_AV_Flow_Handler (void)
 
 TAO_AV_Flow_Handler::~TAO_AV_Flow_Handler(void)
 {
+  // cancel the timer (if there is one)
+  this->cancel_timer();
 }
 
 int
@@ -515,7 +529,6 @@ TAO_AV_Flow_Handler::schedule_timer (void)
   if (tv == 0)
     return 0;
 
-//  this->timer_id_ =  event_handler->reactor ()->schedule_timer (event_handler,
   this->timer_id_ =
       TAO_AV_CORE::instance()->reactor ()->schedule_timer (event_handler,
                                                            0,
@@ -533,11 +546,7 @@ TAO_AV_Flow_Handler::schedule_timer (void)
 int
 TAO_AV_Flow_Handler::cancel_timer (void)
 {
-  ACE_Event_Handler *event_handler = this->event_handler ();
-  ACE_UNUSED_ARG(event_handler);
-  TAO_AV_CORE::instance()->reactor ()->cancel_timer (this->timer_id_);
-
-  return 0;
+  return TAO_AV_CORE::instance()->reactor ()->cancel_timer (this->timer_id_);
 }
 
 

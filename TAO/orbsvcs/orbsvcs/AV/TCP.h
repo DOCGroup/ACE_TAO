@@ -104,6 +104,7 @@ class TAO_AV_TCP_Flow_Handler
 {
 public:
   TAO_AV_TCP_Flow_Handler (TAO_AV_Callback *callback = 0);
+  virtual ~TAO_AV_TCP_Flow_Handler (void);
   virtual TAO_AV_Transport *transport (void);
   virtual int open (void * = 0);
   virtual int handle_input (ACE_HANDLE fd);

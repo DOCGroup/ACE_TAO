@@ -440,6 +440,8 @@ TAO_AV_RTCP_Object::destroy (void)
   my_transport->handler ()->cancel_timer ();
 
   this->callback_->handle_destroy ();
+  delete this;
+  
   return 0;
 }
 

@@ -585,6 +585,10 @@ TAO_StreamCtrl::destroy (const AVStreams::flowSpec &flow_spec
     }
   ACE_ENDTRY;
   ACE_CHECK;
+
+  int result = TAO_AV_Core::deactivate_servant (this);
+  if (result < 0)
+    if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG, "TAO_StreamCtrl::destroy failed\n"));
 }
 
 // request the two MMDevices to create vdev and stream endpoints. save
@@ -673,10 +677,8 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
 
               ACE_TRY_CHECK;
 
-              AVStreams::MMDevice_ptr a_party_copy = AVStreams::MMDevice::_duplicate(a_party);
-
               CORBA::Any mmdevice_a_any;
-              mmdevice_a_any <<= a_party_copy;
+              mmdevice_a_any <<= a_party;
               this->vdev_a_->define_property ("Related_MMDevice",
                                               mmdevice_a_any
                                               TAO_ENV_ARG_PARAMETER);
@@ -751,10 +753,8 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
 
               ACE_TRY_CHECK;
 
-              AVStreams::MMDevice_ptr b_party_copy = AVStreams::MMDevice::_duplicate(b_party);
-
               CORBA::Any mmdevice_b_any;
-              mmdevice_b_any <<= b_party_copy;
+              mmdevice_b_any <<= b_party;
               this->vdev_b_->define_property ("Related_MMDevice",
                                               mmdevice_b_any
                                               TAO_ENV_ARG_PARAMETER);
@@ -776,16 +776,11 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
       // Tell the endpoints about each other.
       if ((!CORBA::is_nil (a_party)) && (!CORBA::is_nil (b_party)))
         {
-          AVStreams::StreamEndPoint_A_var sep_b_peer;
-          AVStreams::StreamEndPoint_B_var sep_a_peer;
           CORBA::Any sep_a_peer_any;
           CORBA::Any sep_b_peer_any;
 
-          sep_a_peer = AVStreams::StreamEndPoint_B::_duplicate(this->sep_b_.in());
-          sep_b_peer = AVStreams::StreamEndPoint_A::_duplicate(this->sep_a_.in());
-
-          sep_a_peer_any <<= sep_a_peer.in();
-          sep_b_peer_any <<= sep_b_peer.in();
+          sep_a_peer_any <<= this->sep_b_.in();
+          sep_b_peer_any <<= this->sep_a_.in();
           this->sep_a_->define_property ("PeerAdapter",
                                           sep_a_peer_any
                                           TAO_ENV_ARG_PARAMETER);
@@ -1632,6 +1627,11 @@ TAO_Base_StreamEndPoint::TAO_Base_StreamEndPoint (void)
 
 TAO_Base_StreamEndPoint::~TAO_Base_StreamEndPoint (void)
 {
+  Flow_Handler_Map_Iterator iter = this->flow_handler_map_.begin();
+  Flow_Handler_Map_Entry *entry = 0;
+
+  for (;iter.next (entry) != 0; iter.advance ())
+    this->flow_handler_map_.unbind (entry->ext_id_);
 }
 
 int
@@ -2098,10 +2098,34 @@ TAO_StreamEndPoint::start (const AVStreams::flowSpec &flow_spec
 // Close the connection
 void
 TAO_StreamEndPoint::destroy (const AVStreams::flowSpec &flow_spec
-                             TAO_ENV_ARG_DECL_NOT_USED)
+                             TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    AVStreams::noSuchFlow))
 {
+  CORBA::Any_var vdev_any = this->get_property_value ("Related_VDev"
+                                                      TAO_ENV_ARG_PARAMETER);
+  CORBA::Any_var mc_str_any;
+  CORBA::Object_var mc_obj;
+  AVStreams::VDev_ptr vdev;
+  // TODO: what if a real AVStreams::MediaControl is used ??
+  Null_MediaCtrl_var media_ctrl;
+  const char *media_ctrl_str;
+  vdev_any.in() >>= vdev;
+  mc_str_any = vdev->get_property_value ("Related_MediaCtrl"
+                                         TAO_ENV_ARG_PARAMETER);
+  mc_str_any.in() >>= media_ctrl_str;
+  mc_obj = TAO_AV_CORE::instance()->orb()->string_to_object (media_ctrl_str
+                                                             TAO_ENV_ARG_PARAMETER);
+  media_ctrl = Null_MediaCtrl::_narrow (mc_obj.in());
+
+  // deactivate the associated vdev and media ctrl
+  PortableServer::ServantBase_var vdev_servant =
+      TAO_AV_CORE::instance()->poa()->reference_to_servant (vdev);
+  TAO_AV_Core::deactivate_servant (vdev_servant.in());
+  PortableServer::ServantBase_var mc_servant =
+      TAO_AV_CORE::instance()->poa()->reference_to_servant (media_ctrl.in());
+  TAO_AV_Core::deactivate_servant (mc_servant.in());
+
   int result = TAO_AV_Core::deactivate_servant (this);
   if (result < 0)
     if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG, "TAO_StreamEndPoint::destroy failed\n"));
@@ -2156,6 +2180,12 @@ TAO_StreamEndPoint::destroy (const AVStreams::flowSpec &flow_spec
             TAO_FlowSpec_Entry *entry = *begin;
             if (entry->protocol_object ())
               {
+
+                ACE_CString control_flowname =
+                    TAO_AV_Core::get_control_flowname (entry->flowname ());
+                TAO_AV_CORE::instance()->remove_acceptor(entry->flowname());
+                TAO_AV_CORE::instance()->remove_acceptor(control_flowname.c_str());
+
                 entry->protocol_object ()->destroy ();
               }
           }
@@ -2168,7 +2198,12 @@ TAO_StreamEndPoint::destroy (const AVStreams::flowSpec &flow_spec
             TAO_FlowSpec_Entry *entry = *begin;
             if (entry->protocol_object ())
               {
+                ACE_CString control_flowname =
+                    TAO_AV_Core::get_control_flowname (entry->flowname ());
+                TAO_AV_CORE::instance()->remove_connector(entry->flowname());
+                TAO_AV_CORE::instance()->remove_connector(control_flowname.c_str());
                 entry->protocol_object ()->destroy ();
+
               }
           }
       }
@@ -3129,7 +3164,7 @@ TAO_VDev::set_media_ctrl (CORBA::Object_ptr media_ctrl
   //  since the media ctrl is not stored or used, delete it.
   //  cleaned up several memory leaks (according to BoundsChecker)
 
-  delete media_ctrl;
+  CORBA::release( media_ctrl);
 
   return 1;
 }
@@ -3553,10 +3588,6 @@ TAO_MMDevice::create_A (AVStreams::StreamCtrl_ptr streamctrl,
   ACE_CHECK_RETURN (0);
 
   AVStreams::StreamEndPoint_A_ptr sep_a = 0;
-  // FIX MEMORY LEAK:
-  //  if this causes a problem it will have to be changed back. None were found
-  //  during testing.  This cleaned up many memory leaks according to BoundsChecker
-//  AVStreams::StreamEndPoint_ptr sep;
   AVStreams::StreamEndPoint_var sep;
   ACE_TRY
     {
@@ -3592,11 +3623,6 @@ TAO_MMDevice::create_B (AVStreams::StreamCtrl_ptr streamctrl,
                    AVStreams::noSuchFlow))
 {
   AVStreams::StreamEndPoint_B_ptr sep_b = AVStreams::StreamEndPoint_B::_nil ();
-
-  // FIX MEMORY LEAK:
-  //  if this causes a problem it will have to be changed back. None were found
-  //  during testing.  This cleaned up many memory leaks according to BoundsChecker
-//  AVStreams::StreamEndPoint_ptr sep;
   AVStreams::StreamEndPoint_var sep;
 
   ACE_TRY
@@ -4308,8 +4334,8 @@ TAO_FlowConnection::add_consumer (AVStreams::FlowConsumer_ptr consumer,
           //             flow_consumer->go_to_listen (the_qos,
           //                                          1,
           //                                          flow_producer,
-          //                                          this->fp_name_.inout (),
-          //                                          TAO_ENV_SINGLE_ARG_PARAMETER);
+          //                                          this->fp_name_.inout ()
+          //                                          TAO_ENV_ARG_PARAMETER);
 
           //            ACE_TRY_CHECK;
         }
@@ -5151,13 +5177,8 @@ TAO_Tokenizer::TAO_Tokenizer (const char *string, char delimiter)
 
 TAO_Tokenizer::~TAO_Tokenizer ()
 {
-//    ACE_Array_Iterator<char*> iterator (this->token_array_);
-//    char **entry = 0;
-//    for (; iterator.next (entry) != 0; iterator.advance ())
-//      {
-//        if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG, "%s\n", *entry));
-//        CORBA::string_free (*entry);
-//      }
+  for (unsigned int i=0; i<this->num_tokens_; i++)
+    CORBA::string_free (this->token_array_[i]);
 }
 
 
@@ -5235,12 +5256,13 @@ TAO_Tokenizer::num_tokens (void)
   return this->num_tokens_;
 }
 
-char *
+const char *
 TAO_Tokenizer::operator [] (size_t index) const
 {
   if (index >= this->num_tokens_)
     return 0;
-  return CORBA::string_dup (this->token_array_[index]);
+
+  return this->token_array_[index];
 }
 
 

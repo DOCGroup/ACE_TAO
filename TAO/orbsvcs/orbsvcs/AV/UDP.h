@@ -113,6 +113,7 @@ public:
   TAO_AV_UDP_Flow_Handler (void);
   virtual ~TAO_AV_UDP_Flow_Handler (void);
   int open (ACE_Addr &address);
+  int close (void);
   virtual TAO_AV_Transport *transport (void);
   virtual int set_remote_address (ACE_Addr *address);
   virtual ACE_HANDLE get_handle (void) const;

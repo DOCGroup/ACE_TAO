@@ -278,6 +278,7 @@ public:
   int open (TAO_Base_StreamEndPoint *endpoint,
             TAO_AV_Core *av_core,
             TAO_AV_FlowSpecSet &flow_spec_set);
+  int close (TAO_AV_Connector *connector);
   int close_all (void);
   TAO_AV_ConnectorSetItor begin (void);
   TAO_AV_ConnectorSetItor end (void);
@@ -300,6 +301,7 @@ public:
   int open (TAO_Base_StreamEndPoint *endpoint,
             TAO_AV_Core *av_core,
             TAO_AV_FlowSpecSet &flow_spec_set);
+  int close (TAO_AV_Acceptor *acceptor);
   int close_all (void);
   TAO_AV_AcceptorSetItor begin (void);
   TAO_AV_AcceptorSetItor end (void);

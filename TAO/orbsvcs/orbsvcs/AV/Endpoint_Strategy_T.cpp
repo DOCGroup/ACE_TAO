@@ -91,11 +91,11 @@ TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activ
         return -1;
 
       // Activate the object under the root poa.
-      CORBA::String_var vdev_ior = this->activate_with_poa (vdev
-                                                            TAO_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"(%P|%t)TAO_AV_Endpoint_Reactive_Strategy::activate_vdev, vdev ior is:%s\n",
-                  vdev_ior. in ()));
+//      CORBA::String_var vdev_ior = this->activate_with_poa (vdev,
+//                                                            TAO_ENV_ARG_PARAMETER);
+//      ACE_TRY_CHECK;
+//      if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"(%P|%t)TAO_AV_Endpoint_Reactive_Strategy::activate_vdev, vdev ior is:%s\n",
+//                  vdev_ior. in ()));
 
       // Save the object reference, so that create_A can return it
       this->vdev_ = vdev->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
@@ -127,12 +127,12 @@ TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activ
         return -1;
 
       // Activate the mediactrl object under the root poa.
-      CORBA::String_var mediactrl_ior = this->activate_with_poa (media_ctrl
-                                                                 TAO_ENV_ARG_PARAMETER);
+//      CORBA::String_var mediactrl_ior = this->activate_with_poa (media_ctrl
+//                                                                 TAO_ENV_ARG_PARAMETER);
 
-      ACE_TRY_CHECK;
-      if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"(%P|%t)TAO_AV_Endpoint_Reactive_Strategy::activate_mediactrl , media_ctrl ior is :%s\n",
-                  mediactrl_ior.in ()));
+//      ACE_TRY_CHECK;
+//      if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"(%P|%t)TAO_AV_Endpoint_Reactive_Strategy::activate_mediactrl , media_ctrl ior is :%s\n",
+//                  mediactrl_ior.in ()));
 
 
       // Associate the media controller object reference with the vdev, as per the OMG spec
@@ -143,8 +143,11 @@ TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activ
       media_ctrl->_remove_ref (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      anyval <<= this->orb_->object_to_string (media_ctrl_obj.in ()
+      CORBA::String_var str = this->orb_->object_to_string (media_ctrl_obj.in ()
                                                TAO_ENV_ARG_PARAMETER);
+
+      anyval <<= str.in();
+
       ACE_TRY_CHECK;
 
      this->vdev_->define_property ("Related_MediaCtrl",
@@ -258,10 +261,10 @@ TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::act
       if (this->make_stream_endpoint (stream_endpoint_a) == -1)
         return -1;
 
-      CORBA::String_var stream_endpoint_ior = this->activate_with_poa (stream_endpoint_a
-                                                                            TAO_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_Endpoint_Reactive_Strategy_A::activate_stream_endpoint,Stream Endpoint ior is : %s\n",stream_endpoint_ior.in ()));
+//      CORBA::String_var stream_endpoint_ior = this->activate_with_poa (stream_endpoint_a
+//                                                                            TAO_ENV_ARG_PARAMETER);
+//      ACE_TRY_CHECK;
+//      if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_Endpoint_Reactive_Strategy_A::activate_stream_endpoint,Stream Endpoint ior is : %s\n",stream_endpoint_ior.in ()));
 
       // Save the object references, so that create_a can return them
       this->stream_endpoint_a_ = stream_endpoint_a->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
@@ -317,10 +320,10 @@ TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::act
 
       if (this->make_stream_endpoint (stream_endpoint_b) == -1)
         return -1;
-      CORBA::String_var stream_endpoint_ior = this->activate_with_poa (stream_endpoint_b
-                                                                       TAO_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_Endpoint_Reactive_Strategy_B::activate_stream_endpoint,Stream Endpoint ior is : %s\n",stream_endpoint_ior.in ()));
+//      CORBA::String_var stream_endpoint_ior = this->activate_with_poa (stream_endpoint_b
+//                                                                       TAO_ENV_ARG_PARAMETER);
+//      ACE_TRY_CHECK;
+//      if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_Endpoint_Reactive_Strategy_B::activate_stream_endpoint,Stream Endpoint ior is : %s\n",stream_endpoint_ior.in ()));
 
       this->stream_endpoint_b_ = stream_endpoint_b->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;

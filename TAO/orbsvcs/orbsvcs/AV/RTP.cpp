@@ -620,6 +620,8 @@ TAO_AV_RTP_Object::destroy (void)
      this->control_object_->destroy ();
 
   this->callback_->handle_destroy ();
+  delete this;
+
   return 0;
 }
 

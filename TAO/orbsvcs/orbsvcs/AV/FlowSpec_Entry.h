@@ -43,7 +43,7 @@ public:
   /// Number of tokens.
   int num_tokens (void);
 
-  char *operator [] (size_t index) const;
+  const char *operator [] (size_t index) const;
 
 protected:
   ACE_Array<char*> token_array_;
@@ -189,7 +189,9 @@ protected:
 
   /// Addr information for the carrier protocol.
   ACE_Addr *address_;
+  int clean_up_address_;         // added to clean up a memory leak
   ACE_Addr *control_address_;
+  int clean_up_control_address_; // added to clean up a memory leak
 
   /// Addr in string format i.e hostname:port.
   ACE_CString address_str_;
