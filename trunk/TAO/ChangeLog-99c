@@ -1,3 +1,9 @@
+Tue Apr 20 14:27:07 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/deep_free.cpp:
+	  Removed local variable discrim_size_with_pad, which is no
+	  longer being used.
+
 Tue Apr 20 11:09:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp:
