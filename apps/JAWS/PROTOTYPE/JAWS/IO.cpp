@@ -178,7 +178,7 @@ JAWS_Synch_IO::transmit_file (JAWS_IO_Handler *ioh,
       if (trailer_size > 0)
         {
           iov[iovcnt].iov_base = ACE_const_cast(char*,trailer);
-          iov[iovcnt].iob_len = trailer_size;
+          iov[iovcnt].iov_len = trailer_size;
           iovcnt++;
         }
       if (ACE_OS::writev (ioh->handle (), iov, iovcnt) < 0)
