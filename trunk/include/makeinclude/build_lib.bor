@@ -16,16 +16,21 @@
 !include <$(ACE_ROOT)\include\makeinclude\outputdir.bor>
 !include <$(ACE_ROOT)\include\makeinclude\compiler.bor>
 
+!ifdef NAME
 TARGET = $(BINDIR)\$(NAME)$(LIB_DECORATOR).lib
+!endif
 
 all: $(TARGET)
+	@echo Do nothing >NUL
 
+!ifdef TARGET
 $(TARGET): $(OBJFILES)
 	@$(MAKE_BINDIR)
 	$(AR) $(LIB_LFLAGS) $(TARGET) @&&!
 	+-$(**:	= &^
 	+-)
 !
+!endif
 
 !include <$(ACE_ROOT)\include\makeinclude\clean.bor>
 
