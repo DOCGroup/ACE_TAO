@@ -82,7 +82,7 @@ module SecurityAdmin {
 
         void clear_audit_selectors (
             in   CORBA::RepositoryId          object_type,
-            in   Security::AuditEventTypeList events         
+            in   Security::AuditEventTypeList events
         );
 
         void replace_audit_selectors (
