@@ -6,7 +6,7 @@
 
 clean:
 	@copy &&!
-@del $(OBJFILES:.obj=.obj ^
+@del $(OBJFILES:.$(OBJ_EXT)=.$(OBJ_EXT) ^
 @del ) $(IDLFILES:.idl=C.cpp ^
 @del ) $(IDLFILES:.idl=C.h ^
 @del ) $(IDLFILES:.idl=C.i ^
