@@ -1,3 +1,7 @@
+Wed Sep 06 19:06:57 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+        * ACE version 5.1.9 released.
+
 Tue Sep 05 13:34:26 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/TP_Reactor.cpp (dispatch_i): Try to correct mis-set size_
