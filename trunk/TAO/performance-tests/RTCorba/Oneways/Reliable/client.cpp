@@ -1,12 +1,12 @@
 // $Id$
 
-ACE_RCSID(Reliable, client, "$Id$")
-
 #include "testC.h"
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
 #include "ace/Stats.h"
 #include "ace/High_Res_Timer.h"
+
+ACE_RCSID(Reliable, client, "$Id$")
 
 // 'File format' IOR
 static const char *ior = "file://test.ior";
