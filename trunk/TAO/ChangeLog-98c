@@ -1,3 +1,10 @@
+Sun Jun 21 16:29:49 1998  Seth Benjamin Widoff  <sbw1@cs.wustl.edu>
+
+	* tao/ORB.cpp:
+	* tao/Params.cpp:
+	Wasn't initializing Params::trading_service_{ior,port}_ or
+	CORBA_ORB::trading_service_. 
+
 Sun Jun 21 14:36:26 1998  Seth Benjamin Widoff  <sbw1@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Trader/*.*:
