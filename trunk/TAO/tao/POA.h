@@ -48,9 +48,6 @@
 // Locking
 #include "ace/Synch.h"
 
-// Active Object Table
-#include "tao/Active_Object_Map.h"
-
 class TAO_POA;
 class TAO_POA_Manager;
 
@@ -60,6 +57,9 @@ public:
   u_long operator () (const PortableServer::ObjectId &id) const;
   // Returns hash value.
 };
+
+// Active Object Table
+#include "tao/Active_Object_Map.h"
 
 class TAO_Export TAO_Thread_Policy : public POA_PortableServer::ThreadPolicy
 {
