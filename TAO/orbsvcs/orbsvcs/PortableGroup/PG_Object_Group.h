@@ -24,6 +24,8 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "PG_Properties_Decoder.h"
+
 //////////////////////////////////
 // Classes declared in this header
 namespace TAO
@@ -112,7 +114,8 @@ namespace TAO
       CORBA::Object_ptr empty_group,
       const PortableGroup::TagGroupTaggedComponent & tag_component,
       const char * type_id,
-      PortableGroup::Criteria the_criteria);
+      PortableGroup::Criteria the_criteria,
+      TAO_PG::Properties_Decoder * type_properties);
 
   public:
     /**
@@ -122,7 +125,8 @@ namespace TAO
       CORBA::ORB_ptr orb,
       CORBA::Object_ptr empty_group, // empty group as created by ObjectManager
       const char * type_id,
-      PortableGroup::Criteria the_criteria
+      PortableGroup::Criteria the_criteria,
+      TAO_PG::Properties_Decoder * type_properties
       ACE_ENV_ARG_DECL);
 
     /// Destructor
@@ -177,7 +181,8 @@ namespace TAO
                        PortableGroup::InvalidProperty,
                        PortableGroup::UnsupportedProperty));
 
-    void get_properties (PortableGroup::Properties_var & result) const;
+    void get_properties (PortableGroup::Properties_var & result) const
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     PortableGroup::ObjectGroupId  get_object_group_id () const;
 
@@ -304,8 +309,7 @@ namespace TAO
 
     // Miscellaneous properties passed to create_object when this group
     // was initially created.  To be used to create new members.
-    PortableGroup::Properties properties_;
-
+    TAO_PG::Properties_Decoder properties_;
 
     // Cached property information
 

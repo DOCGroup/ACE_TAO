@@ -63,7 +63,8 @@ TAO::PG_Object_Group::PG_Object_Group (
   CORBA::Object_ptr empty_group,
   const PortableGroup::TagGroupTaggedComponent & tagged_component,
   const char * type_id,
-  PortableGroup::Criteria the_criteria)
+  PortableGroup::Criteria the_criteria,
+  TAO_PG::Properties_Decoder * type_properties)
     : internals_()
     , orb_ (CORBA::ORB::_duplicate (orb))
     , iorm_ (TAO_IOP::TAO_IOR_Manipulation::_duplicate(iorm))
@@ -73,7 +74,7 @@ TAO::PG_Object_Group::PG_Object_Group (
     , reference_ (CORBA::Object::_duplicate(empty_group))
 //      MemberMap members_ self initialized
     , primary_location_(0)
-    , properties_ (the_criteria)
+    , properties_ (the_criteria, type_properties)
     , membership_style_ (0)
     , initial_number_members_ (0)
     , minimum_number_members_ (0)
@@ -86,7 +87,8 @@ TAO::PG_Object_Group * TAO::PG_Object_Group::create (
   CORBA::ORB_ptr orb,
   CORBA::Object_ptr empty_group, // empty group as created by ObjectManager
   const char * type_id,
-  PortableGroup::Criteria the_criteria
+  PortableGroup::Criteria the_criteria,
+  TAO_PG::Properties_Decoder * type_properties
   ACE_ENV_ARG_DECL)
 {
   //@@ Might be worthwhile making iorm_ static
@@ -130,7 +132,9 @@ TAO::PG_Object_Group * TAO::PG_Object_Group::create (
       empty_group,
       tagged_component,
       type_id,
-      the_criteria),
+      the_criteria,
+      type_properties
+      ),
     CORBA::NO_MEMORY());
   return objectGroup;
 }
@@ -148,7 +152,7 @@ TAO::PG_Object_Group::~PG_Object_Group ()
   }
 }
 
-
+#if 0   // may want this again someday
 /////////////////////
 // q&d debug function
 static void dump_ior (const char * base, const char * ext, unsigned long version, const char * iogr)
@@ -160,7 +164,7 @@ static void dump_ior (const char * base, const char * ext, unsigned long version
   ACE_OS::fwrite (iogr, 1, ACE_OS::strlen(iogr), iorfile);
   ACE_OS::fclose (iorfile);
 }
-
+#endif  // may want this again someday
 
 PortableGroup::ObjectGroup_ptr TAO::PG_Object_Group::reference()const
 {
@@ -462,16 +466,17 @@ void TAO::PG_Object_Group::set_properties_dynamically (
                    PortableGroup::UnsupportedProperty))
 {
   InternalGuard guard(this->internals_);
-  this->properties_ = overrides;
+  this->properties_.decode (overrides ACE_ENV_ARG_PARAMETER);
   //@@  int todo_parse_properties_for_special_value;
   //@@ int todo_override_rather_than_replace_question;
 }
 
-void TAO::PG_Object_Group::get_properties (PortableGroup::Properties_var & result) const
+void TAO::PG_Object_Group::get_properties (PortableGroup::Properties_var & result ACE_ENV_ARG_DECL) const
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // const cast to simulate mutable
   InternalGuard guard(ACE_const_cast (TAO::PG_Object_Group *, this)->internals_);
-  (*result) = this->properties_;
+  this->properties_.export_properties(*result ACE_ENV_ARG_PARAMETER);
 }
 
 
