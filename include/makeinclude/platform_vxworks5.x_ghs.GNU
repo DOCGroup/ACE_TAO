@@ -17,9 +17,4 @@ ARFLAGS         = rv
 RANLIB          = /bin/true
 
 #### don't build shared objects:
-BUILD           = $(VOBJS) $(VLIB) $(VBIN)
-OBJDIRS         = .obj
-SHLIB           =
-SHOBJ           = $(addsuffix .o,$(FILES))
-SOEXT           = o
-VSHDIR          = .obj/
+static_libs_only = 1
