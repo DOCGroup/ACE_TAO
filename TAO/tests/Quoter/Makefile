@@ -51,7 +51,7 @@ GENERIC_FACTORY_OBJS = $(COMMON_OBJS) Generic_Factory.o Generic_Factory_Impl.o
 
 ifdef trader
 
-LDLIBS = -lorbsvcs -lospace -lTAO
+LDLIBS = -lorbsvcs -lTAO
 
 else
 
