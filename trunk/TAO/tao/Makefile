@@ -169,14 +169,14 @@ ifndef rt_corba
   rt_corba = 1
 endif # rt_corba
 
+# TAOC and TAOS should be moved outside the corba_messaging scope once
+# more classes have been added to the TAO module.
 ifeq ($(corba_messaging),1)
 ORB_CORE_FILES += \
   MessagingC \
   MessagingS \
   Policy_Manager \
   Messaging_Policy_i \
-# TAOC and TAOS should be moved outside the corba_messaging scope once
-# more classes have been added to the TAO module.
   TAOC \
   TAOS \
   Client_Priority_Policy \
