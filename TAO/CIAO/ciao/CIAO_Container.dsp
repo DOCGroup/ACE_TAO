@@ -116,6 +116,10 @@ SOURCE=.\CIAO_TransactionC.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Container_Base.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\CosPersistentStateC.cpp
 # End Source File
 # End Group
@@ -149,6 +153,10 @@ SOURCE=.\CIAO_EventS.h
 # Begin Source File
 
 SOURCE=.\CIAO_TransactionC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Container_Base.h
 # End Source File
 # Begin Source File
 

@@ -88,7 +88,7 @@ CIAO_HelloWorld_Context::get_CCM_object (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 /////////////////// CIAO_HelloWorld_Servant ////////////////////
 
 CIAO_HelloWorld_Servant::CIAO_HelloWorld_Servant (CCM_HelloWorld_ptr exe)
-  : executor_ (0)
+  : executor_ (CCM_HelloWorld::_duplicate (exe))
 {
   this->context_ = new CIAO_HelloWorld_Context ();
 }
@@ -434,7 +434,7 @@ CIAO_HelloWorld_Servant::get_all_ports (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 //////////////////// CIAO_HelloHome_Servant ////////////////////
 
 CIAO_HelloHome_Servant::CIAO_HelloHome_Servant (CCM_HelloHome_ptr exe)
-  : executor_ (exe)
+  : executor_ (CCM_HelloHome::_duplicate (exe))
 {
 }
 

@@ -79,7 +79,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 aced.lib taod.lib hello_stubd.lib TAO_IFR_Clientd.lib CIAO_Containerd.lib TAO_PortableServerd.lib TAO_Securityd.lib /nologo /dll /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\tao\IFR_Client" /libpath:"..\..\..\ciao" /libpath:"..\..\..\..\orbsvcs\orbsvcs"
+# ADD LINK32 aced.lib taod.lib hello_stubd.lib TAO_IFR_Clientd.lib CIAO_Containerd.lib TAO_PortableServerd.lib TAO_Securityd.lib /nologo /dll /debug /machine:I386 /out:"hello_executorsd.dll" /pdbtype:sept /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\tao\IFR_Client" /libpath:"..\..\..\ciao" /libpath:"..\..\..\..\orbsvcs\orbsvcs"
 
 !ENDIF 
 
@@ -96,15 +96,7 @@ SOURCE=.\hello_executors.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\hello_servants.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\helloEC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\helloS.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -112,23 +104,15 @@ SOURCE=.\helloS.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
-SOURCE=.\hello_executor_export.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\hello_executors.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\hello_servants.h
+SOURCE=.\hello_executors_export.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\helloEC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\helloS.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"
@@ -150,7 +134,7 @@ InputPath=.\helloE.idl
 InputName=helloE
 
 BuildCmds= \
-	..\..\..\..\..\bin\release\tao_idl -I ../../.. -I ../../../.. -I ../../../../orbsvcs/orbsvcs -Wb,export_macro=HELLO_EXECUTOR_Export -Wb,export_include=hello_executor_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -Sc -Ge 1 $(InputName).idl \
+	..\..\..\..\..\bin\release\tao_idl -I ../../.. -I ../../../.. -I ../../../../orbsvcs/orbsvcs -Wb,export_macro=HELLO_EXECUTOR_Export -Wb,export_include=hello_executors_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -Sc -Ge 1 $(InputName).idl \
 	del *S.* \
 	del *S_T.* \
 	
@@ -173,7 +157,7 @@ InputPath=.\helloE.idl
 InputName=helloE
 
 BuildCmds= \
-	..\..\..\..\..\bin\tao_idl -I ../../.. -I ../../../.. -I ../../../../orbsvcs/orbsvcs -Wb,export_macro=HELLO_EXECUTOR_Export -Wb,export_include=hello_executor_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -Sc -Ge 1 $(InputName).idl
+	..\..\..\..\..\bin\tao_idl -I ../../.. -I ../../../.. -I ../../../../orbsvcs/orbsvcs -Wb,export_macro=HELLO_EXECUTOR_Export -Wb,export_include=hello_executors_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -Sc -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -195,10 +179,6 @@ BuildCmds= \
 # Begin Source File
 
 SOURCE=.\helloEC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\helloS.i
 # End Source File
 # End Group
 # End Target

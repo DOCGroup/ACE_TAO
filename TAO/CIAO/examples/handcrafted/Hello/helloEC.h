@@ -34,7 +34,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
-#include "hello_executor_export.h"
+#include "hello_executors_export.h"
 
 #include "ciao/CIAO_ContainerC.h"
 #include "HelloC.h"
