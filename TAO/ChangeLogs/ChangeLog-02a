@@ -1,3 +1,9 @@
+Mon Feb 14 02:47:55 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Interceptors/server.cpp (main): Changed to activate the
+	  servant explicitly so it would use the right POA.  Thanks to
+	  Russell L. Carter <rcarter@consys.com> for reporting this.
+
 Sun Feb 13 11:09:41 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tao/TAO: Added a fini() method so that the TAO_ORB_Manager
