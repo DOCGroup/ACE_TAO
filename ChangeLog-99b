@@ -1,3 +1,7 @@
+Fri Nov 12 11:50:19 1999  Nanbor Wang  <nanbor@ace.cs.wustl.edu>
+
+	* ACE-INSTALL.html: Added ACE lib/dll naming rules.
+
 Fri Nov 12 10:02:10 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/config-win32-common.h,
