@@ -1,3 +1,8 @@
+Sun Dec 12 17:37:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/BiDir_CORBALOC/TimeServer.cpp:
+          Fixed compile problem in emulated exception case
+
 Sun Dec 12 13:28:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ServicesC.{h,cpp,i,inl}:
