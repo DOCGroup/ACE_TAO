@@ -4,6 +4,22 @@ Wed Jan 03 05:42:20 2001  Carlos O'Ryan  <coryan@uci.edu>
           Remove broken #include of unistd.h, it was a debug statement
           that sneaked through the commit.
 
+Tue Jan  2 18:33:03 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/OS.h:
+        * ace/OS.i:
+          Workaround platforms that define timezone, difftime or cuserid
+          as macros.  Instead of just dropping support for the ACE_OS::XXX
+          method we create an inline ace_XXX() function, that uses the
+          original macro expansion, then we #undef the offending macro,
+          and use the inline function in the code.
+
+        * ace/config-tru64.h:
+          Enable cuserid() again, with the new workaround it should work
+          without problems.
+          This fix should remove some of the redness in the TRU64_CXX
+          builds.
+
 Tue Jan  2 14:22:21 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/auto_run_tests.lst:
