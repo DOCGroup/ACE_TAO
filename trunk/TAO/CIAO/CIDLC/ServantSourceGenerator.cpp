@@ -2240,9 +2240,7 @@ namespace
          << "      " << t.scoped_name ().scope_name () << "::CCM_"
          << t.name () << "_var," << endl
          << "      " << t.name () << "_Context" << endl
-         << "    " << "> (" << t.scoped_name ().scope_name () << "::CCM_"
-         << t.name () << "::_duplicate (exe)," << endl
-         << "       c)" << endl
+         << "    " << "> (exe, c)" << endl
          << "{"
          << "this->context_ = "
          << "new " << t.name () << "_Context (h, c, this);"
@@ -2258,8 +2256,12 @@ namespace
          << "{"
          << "scom->set_session_context (" << endl
          << "this->context_" << endl
-         << STRS[ENV_ARG] << ");" << endl
+         << STRS[ENV_ARG] << ");"
+         << "ACE_TRY_CHECK;"
          << "}" << endl
+         << "this->populate_port_tables (" << STRS[ENV_SNGL_ARG] 
+         << ");"
+         << "ACE_TRY_CHECK;"
          << "}"
          << "ACE_CATCHANY" << endl
          << "{"
@@ -2968,10 +2970,7 @@ namespace
          << "if (! ::CORBA::is_nil (temp.in ()))" << endl
          << "{"
          << "temp->ciao_postactivate (" << STRS[ENV_SNGL_ARG] << ");"
-         << "ACE_CHECK;" << endl
          << "}" << endl
-         << "this->populate_port_tables (" << STRS[ENV_SNGL_ARG] 
-         << ");" << endl
          << "}" << endl;
 
       os << "void" << endl
