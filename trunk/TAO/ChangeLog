@@ -1,3 +1,9 @@
+Tue Oct 12 20:10:06 MST 2004  Trevor Fields  <fields_t@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+          ImR_Locator_IDL project changed to not be built when
+          the ImR_Activator_IDL prerequisites are not built.
+
 Tue Oct 12 08:19:57 2004  Olli Savia  <ops@iki.fi>
 
         * tests/Typedef_String_Array/server.cpp:

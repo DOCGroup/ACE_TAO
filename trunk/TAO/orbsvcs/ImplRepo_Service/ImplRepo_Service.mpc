@@ -20,6 +20,9 @@ project(ImR_Locator_IDL) : orbsvcslib, valuetype, portableserver {
   sharedname   = TAO_ImR_Locator_IDL
   after       += ImR_Activator_IDL
   libs        += TAO_ImR_Activator_IDL
+  // Dont try to build this project if ImR_Activator_IDL is not built
+  requires    += corba_messaging
+
   dynamicflags = LOCATOR_IDL_BUILD_DLL
   idlflags    += -Wb,export_macro=LocatorIDL_Export -Wb,export_include=locator_idl_export.h
   idl_files {
