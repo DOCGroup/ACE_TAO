@@ -1,3 +1,9 @@
+Sun Mar 11 18:41:08 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/CDR_Stream.h: Updated a comment to clarify that the buffer()
+	  method just returns a pointer to the first block in the chain. 
+	  Thanks to Johnny Willemsen for pointing this out.
+
 Sun Mar 11 17:46:45 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Local_Name_Space_T.cpp: Fixed a compiler error on Win32
