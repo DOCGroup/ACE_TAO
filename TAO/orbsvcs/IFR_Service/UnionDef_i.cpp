@@ -136,7 +136,7 @@ TAO_UnionDef_i::discriminator_type_def (
   PortableServer::ObjectId_var oid = 
     this->repo_->ir_poa ()->reference_to_id (discriminator_type_def,
                                              ACE_TRY_ENV);
-  ACE_CHECK_RETURN (IR::UnionDef::_nil ());
+  ACE_CHECK;
 
   CORBA::String_var disc_path =
     PortableServer::ObjectId_to_string (oid.in ());  
@@ -300,7 +300,7 @@ TAO_UnionDef_i::members (const IR::UnionMemberSeq &members,
       PortableServer::ObjectId_var oid = 
         this->repo_->ir_poa ()->reference_to_id (members[i].type_def,
                                                  ACE_TRY_ENV);
-      ACE_CHECK_RETURN (IR::StructDef::_nil ());
+      ACE_CHECK;
 
       CORBA::String_var member_path =
         PortableServer::ObjectId_to_string (oid.in ());
@@ -338,7 +338,7 @@ TAO_UnionDef_i::fetch_label (const ACE_Configuration_Section_Key member_key,
                                              "label",
                                              value);
 
-  CORBA::TypeCode_var tc = this->discriminator_type (ACE_TRY_ENV)
+  CORBA::TypeCode_var tc = this->discriminator_type (ACE_TRY_ENV);
   ACE_CHECK;
 
   CORBA::TCKind kind = tc->kind (ACE_TRY_ENV);
