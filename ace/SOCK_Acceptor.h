@@ -96,6 +96,10 @@ public:
   // Accept a new <ACE_SOCK_Stream> connection.  A <timeout> of 0
   // means block forever, a <timeout> of {0, 0} means poll.  <restart>
   // == 1 means "restart if interrupted," i.e., if errno == EINTR.
+  // Note that <new_stream> inherits the "blocking mode" of <this>
+  // <ACE_SOCK_Acceptor>, i.e., if <this> acceptor factory is in
+  // non-blocking mode, the <net_stream> will be in non-blocking mode
+  // and vice versa.
 
   int accept (ACE_SOCK_Stream &new_stream,
 	      ACE_Accept_QoS_Params qos_params,
@@ -106,7 +110,11 @@ public:
   // Accept a new <ACE_SOCK_Stream> connection using the QoS
   // information in <qos_params>.  A <timeout> of 0 means block
   // forever, a <timeout> of {0, 0} means poll.  <restart> == 1 means
-  // "restart if interrupted," i.e., if errno == EINTR.
+  // "restart if interrupted," i.e., if errno == EINTR.  Note that
+  // <new_stream> inherits the "blocking mode" of <this>
+  // <ACE_SOCK_Acceptor>, i.e., if <this> acceptor factory is in
+  // non-blocking mode, the <net_stream> will be in non-blocking mode
+  // and vice versa.
 
   // = Meta-type info
   typedef ACE_INET_Addr PEER_ADDR;
