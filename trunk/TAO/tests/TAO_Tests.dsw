@@ -747,7 +747,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "IOR CorbaLoc Client"=".\IOR_CORBALOC\IOR CorbaLoc Client.dsp" - Package Owner=<4>
+Project: "IOR CorbaLoc Client"=.\ior_corbaloc\ior_corbaloc_client.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -759,7 +759,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "IOR CorbaLoc Server"=".\IOR_CORBALOC\IOR CorbaLoc Server.dsp" - Package Owner=<4>
+Project: "IOR CorbaLoc Server"=.\ior_corbaloc\ior_corbaloc_server.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -771,7 +771,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "IOR CorbaName Client"=".\IOR_CORBALOC\IOR CorbaName Client.dsp" - Package Owner=<4>
+Project: "IOR CorbaName Client"=.\ior_corbaloc\ior_corbaname_client.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
