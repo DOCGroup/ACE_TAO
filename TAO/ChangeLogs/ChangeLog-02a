@@ -1,188 +1,206 @@
+Wed Aug  8 16:15:59 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/AMI_Buffering/client.cpp:
+        * tests/Oneway_Buffering/client.cpp:
+          The liveness test was blowing the stack on the server.  On each
+          request the server calls the 'admin' interface to report the
+          number of bytes received.  While waiting for a response on that
+          call the server receives another call (the client is pushing
+          oneways or AMI calls like crazy).
+          This results in an segfault when the stack is overflowed, now we
+          sync the server every so many calls.
+
+        * tests/AMI_Buffering/svc.conf:
+          Removed, the default configuration works now.
+
+        * tests/Big_Oneways/Session.cpp:
+          Made the test more silent.
+
 Wed Aug 08 16:14:01 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/default_resource.h (TAO_Default_Resource_Factory):
+        * tao/default_resource.h (TAO_Default_Resource_Factory):
 
-	  The default resource factory now also inherits from ACE_Cleanup
-	  so that it may be registered for destruction with the
-	  TAO_Singleton_Manager.  This generally only necessary for the
-	  default resource factory since it may be created during ORB
-	  initialization, and it must exist long enough for the ORB
-	  Core to make some calls on it during ORB Core finalization.
-	  Resource factories that are statically or dynamically loaded
-	  (i.e. registered with the Service Repository) before the ORB is
-	  initialized need not inherit from ACE_Cleanup, nor is it
-	  necessary for them to register with the TAO_Singleton_Manager.
+          The default resource factory now also inherits from ACE_Cleanup
+          so that it may be registered for destruction with the
+          TAO_Singleton_Manager.  This generally only necessary for the
+          default resource factory since it may be created during ORB
+          initialization, and it must exist long enough for the ORB
+          Core to make some calls on it during ORB Core finalization.
+          Resource factories that are statically or dynamically loaded
+          (i.e. registered with the Service Repository) before the ORB is
+          initialized need not inherit from ACE_Cleanup, nor is it
+          necessary for them to register with the TAO_Singleton_Manager.
 
-	* tao/default_resource.cpp (_make_TAO_Default_Resource_Factory):
+        * tao/default_resource.cpp (_make_TAO_Default_Resource_Factory):
 
-	  A custom factory definition is used instead of the commonly used
-	  one created by the ACE_FACTORY_DEFINE macro.  This is necessary
-	  to get around dynamic unloading issues.  The default resource
-	  factory must exist long enough for the ORB to make the a
-	  resource factory reclaim the reactor, for example.  The easiest
-	  (and probably best) way to do that is register the
-	  TAO_Default_Resource_Factory for destruction with the
-	  TAO_Singleton_Manager.  This fixes a segmentation fault (memory
-	  access violation) that occurred when an ORB that was initialized
-	  within a dynamically loaded object (e.g. within an
-	  ACE_Service_Object instance) was finalized/destroyed.
+          A custom factory definition is used instead of the commonly used
+          one created by the ACE_FACTORY_DEFINE macro.  This is necessary
+          to get around dynamic unloading issues.  The default resource
+          factory must exist long enough for the ORB to make the a
+          resource factory reclaim the reactor, for example.  The easiest
+          (and probably best) way to do that is register the
+          TAO_Default_Resource_Factory for destruction with the
+          TAO_Singleton_Manager.  This fixes a segmentation fault (memory
+          access violation) that occurred when an ORB that was initialized
+          within a dynamically loaded object (e.g. within an
+          ACE_Service_Object instance) was finalized/destroyed.
 
-	  (ACE_STATIC_SVC_DEFINE):
+          (ACE_STATIC_SVC_DEFINE):
 
-	  Do not set the ACE_Service_Type::DELETE_OBJ flag within the
-	  TAO_Default_Resource_Factory-specific declaration/expansion of
-	  this macro.  The "payload" object, i.e. the default resource
-	  factory, is now managed by the TAO_Singleton manager instead of
-	  the Service Repository.
+          Do not set the ACE_Service_Type::DELETE_OBJ flag within the
+          TAO_Default_Resource_Factory-specific declaration/expansion of
+          this macro.  The "payload" object, i.e. the default resource
+          factory, is now managed by the TAO_Singleton manager instead of
+          the Service Repository.
 
-	* tao/DLL_ORB.h (TAO_DLL_ORB):
+        * tao/DLL_ORB.h (TAO_DLL_ORB):
 
-	  Updated class documentation to mention the fact that this class
-	  is deprecated, and why it should not be used.
+          Updated class documentation to mention the fact that this class
+          is deprecated, and why it should not be used.
 
-	* tao/DLL_ORB.cpp (init):
+        * tao/DLL_ORB.cpp (init):
 
-	  Added debugging message that mentions that the TAO_DLL_ORB class
-	  is deprecated.
+          Added debugging message that mentions that the TAO_DLL_ORB class
+          is deprecated.
 
-	* tao/TAO_Internal.cpp (open_i):
-	* tao/TAO_Singleton_Manager.h (TAO_Singleton_Manager):
+        * tao/TAO_Internal.cpp (open_i):
+        * tao/TAO_Singleton_Manager.h (TAO_Singleton_Manager):
 
-	  Updated and corrected class documentation.
+          Updated and corrected class documentation.
 
-	* tests/DLL_ORB/Test_Client_Module.cpp (fini):
+        * tests/DLL_ORB/Test_Client_Module.cpp (fini):
 
-	  Explicitly release the reference to the target object.  This is
-	  a bit of a hack.  The ORB Core's lifetime is tied to the
-	  lifetime of an object reference.  We need to wipe out all object
-	  references before we call fini() on the TAO_Singleton_Manager.
-	  This is a tough problem to correct.  Fortunately, this is not a
-	  problem when a resource factory is loaded into the Service
-	  Repository before the ORB is initialized, i.e. when the default
-	  resource factory is not used.
+          Explicitly release the reference to the target object.  This is
+          a bit of a hack.  The ORB Core's lifetime is tied to the
+          lifetime of an object reference.  We need to wipe out all object
+          references before we call fini() on the TAO_Singleton_Manager.
+          This is a tough problem to correct.  Fortunately, this is not a
+          problem when a resource factory is loaded into the Service
+          Repository before the ORB is initialized, i.e. when the default
+          resource factory is not used.
 
 Wed Aug  8 15:03:58 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Strategies/DIOP_Transport.cpp (send_request): There was no
-	  reason to idle the transport after a send. In other protocols, 
-	  where the handles are cached the call idle_after_send () does
-	  certain things based on the muxed strategy. But for DIOP, we
-	  dont cache the handles and the call started doing something
-	  really bad like closing the handles. We now just return a 0
-	  after sending the request. This should fix the problem in the
-	  full builds with DIOP.
+        * tao/Strategies/DIOP_Transport.cpp (send_request): There was no
+          reason to idle the transport after a send. In other protocols,
+          where the handles are cached the call idle_after_send () does
+          certain things based on the muxed strategy. But for DIOP, we
+          dont cache the handles and the call started doing something
+          really bad like closing the handles. We now just return a 0
+          after sending the request. This should fix the problem in the
+          full builds with DIOP.
 
 Wed Aug  8 12:16:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* performance-tests/Thread_Per_Connection_Latency/svc.conf:
-	* performance-tests/Thread_Pool_Latency/svc.conf: Made the client
-	  to use Wait_On_Read_Write as we see a big performance drop if we
-	  use the Wait_On_LF. To make the test work without any problems,
-	  we now use the exclusive transport mux strategy. Hopefully this
-	  will get our performance back to normal. 
-	
-	* tao/Muxed_TMS.cpp: Fixed a subtle problem in connection_closed
-	  (). While iterating through the reply_disptacher table to close
-	  the  reply dispatchers, a wrong comparision was made in the for
-	  loop. This would not allow any of the reply dispatchers to be
-	  closed and in turn prevent the transport cleaning up the
-	  resources. This lead to the client hanging on select () even
-	  after the connection is closed by the server. I am surprised
-	  that this has not been found out so far. God save people who
-	  have been using the Muxed strategy :-).  
+        * performance-tests/Thread_Per_Connection_Latency/svc.conf:
+        * performance-tests/Thread_Pool_Latency/svc.conf: Made the client
+          to use Wait_On_Read_Write as we see a big performance drop if we
+          use the Wait_On_LF. To make the test work without any problems,
+          we now use the exclusive transport mux strategy. Hopefully this
+          will get our performance back to normal.
 
-	  BTW, the above fix should fix problems seen in the Faults and
-	  Crashed_Callback tests in the daily builds.
+        * tao/Muxed_TMS.cpp: Fixed a subtle problem in connection_closed
+          (). While iterating through the reply_disptacher table to close
+          the  reply dispatchers, a wrong comparision was made in the for
+          loop. This would not allow any of the reply dispatchers to be
+          closed and in turn prevent the transport cleaning up the
+          resources. This lead to the client hanging on select () even
+          after the connection is closed by the server. I am surprised
+          that this has not been found out so far. God save people who
+          have been using the Muxed strategy :-).
+
+          BTW, the above fix should fix problems seen in the Faults and
+          Crashed_Callback tests in the daily builds.
 
 Tue Aug 07 21:54:31 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tests/IORManipulation/IORTest.cpp (main):
+        * tests/IORManipulation/IORTest.cpp (main):
 
-	  Updated URL IORs used in test to be of the standard "corbaloc"
-	  form.  Fixes a CORBA::INV_OBJREF exception.
+          Updated URL IORs used in test to be of the standard "corbaloc"
+          form.  Fixes a CORBA::INV_OBJREF exception.
 
 Tue Aug  7 23:29:34 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* performance-tests/Thread_Per_Connection_Latency/svc.conf:  Did
-	  the same change as the last checkin, ie. removed the RW
-	  connection handler. But beware, we *could* have a performance
-	  drop in our stats page. If wehave performance drop, then we
-	  change the Transport_Mux_Strategy for the following test. Even
-	  if we do change the Mux_Strategy and the connection handler to
-	  RW, it seems that this would be in odd with what we preached a
-	  few days back at the TAO workshop.
+        * performance-tests/Thread_Per_Connection_Latency/svc.conf:  Did
+          the same change as the last checkin, ie. removed the RW
+          connection handler. But beware, we *could* have a performance
+          drop in our stats page. If wehave performance drop, then we
+          change the Transport_Mux_Strategy for the following test. Even
+          if we do change the Mux_Strategy and the connection handler to
+          RW, it seems that this would be in odd with what we preached a
+          few days back at the TAO workshop.
 
 Tue Aug  7 23:02:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* performance-tests/Thread_Pool_Latency/svc.conf: Looks like our
-	  past seems to haunt us. Once upon a time this svc.conf file was
-	  used in Latency measurements. When the tests were changed to a
-	  new directory the svc.conf file was copied. The svc.conf file
-	  had a RW connection handler. That was enough to cause the test
-	  to hang. Further removed the -ORBReactor type as it was trying
-	  to load a TP reactor. This should fix the problem in the daily
-	  builds with this test.
+        * performance-tests/Thread_Pool_Latency/svc.conf: Looks like our
+          past seems to haunt us. Once upon a time this svc.conf file was
+          used in Latency measurements. When the tests were changed to a
+          new directory the svc.conf file was copied. The svc.conf file
+          had a RW connection handler. That was enough to cause the test
+          to hang. Further removed the -ORBReactor type as it was trying
+          to load a TP reactor. This should fix the problem in the daily
+          builds with this test.
 
 Tue Aug  7 14:37:10 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Transport.cpp (handle_input_i): Added the transport
-	  information  to a debugging output.
+        * tao/Transport.cpp (handle_input_i): Added the transport
+          information  to a debugging output.
 
-	* tao/orbconf.h: Fixed a simple typo. 
+        * tao/orbconf.h: Fixed a simple typo.
 
 Mon Aug  6 09:49:39 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
- 	* tao/RTPortableServer/TAO_RTPortableServer.dsp: Fixed a build
-	  problem in Release builds. Should have nailed the problem by
-	  now.
+        * tao/RTPortableServer/TAO_RTPortableServer.dsp: Fixed a build
+          problem in Release builds. Should have nailed the problem by
+          now.
 
 Sun Aug  5 16:58:39 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/DLL_ORB/Makefile: Thanks to Ossama for helping to fix the
-	  the warnings in the daily builds.
+        * tests/DLL_ORB/Makefile: Thanks to Ossama for helping to fix the
+          the warnings in the daily builds.
 
 Sun Aug  5 16:00:28 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Oneway_Buffering/Test.idl: Changed the oneway in the
-	  Test.idl to a twoway call.
+        * tests/Oneway_Buffering/Test.idl: Changed the oneway in the
+          Test.idl to a twoway call.
 
 Sun Aug 05 15:12:31 2001  Balachandran Natarajan <bala@cs.wustl.edu>
 
-	* tao/RTPortableServer/TAO_RTPortableServer.dsp: Fixed a build
-	  problem in Release builds.
+        * tao/RTPortableServer/TAO_RTPortableServer.dsp: Fixed a build
+          problem in Release builds.
 
 Sun Aug 05 15:03:31 2001  Balachandran Natarajan <bala@cs.wustl.edu>
 
-	* tao/TAO_Static.dsp: Added the new flushing strategies to the
-	  static builds.
+        * tao/TAO_Static.dsp: Added the new flushing strategies to the
+          static builds.
 
 Fri Aug 04 3:33:31 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* TAO/orbsvcs/orbsvcs/AV/QoS_UDP.h:
-	* TAO/orbsvcs/orbsvcs/AV/QoS_UDP.cpp:
-	* TAO/orbsvcs/orbsvcs/AV/QoS_UDP.i:
+        * TAO/orbsvcs/orbsvcs/AV/QoS_UDP.h:
+        * TAO/orbsvcs/orbsvcs/AV/QoS_UDP.cpp:
+        * TAO/orbsvcs/orbsvcs/AV/QoS_UDP.i:
 
-	  Added a helper class to create qos sessions, activate qos
-	  handlers and set qos on a session. Fixed a bug in translation
-	  from ACE_Flow_Spec to AVStreams::streamQoS. Fixed addressing
-	  problems.
+          Added a helper class to create qos sessions, activate qos
+          handlers and set qos on a session. Fixed a bug in translation
+          from ACE_Flow_Spec to AVStreams::streamQoS. Fixed addressing
+          problems.
 
 Fri Aug 03 20:50:42 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tests/README:
+        * tests/README:
 
-	  Added summary about the new DLL_ORB test.
+          Added summary about the new DLL_ORB test.
 
 Fri Aug 03 20:33:51 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tests/DLL_ORB/Makefile (MAKEFLAGS):
+        * tests/DLL_ORB/Makefile (MAKEFLAGS):
 
-	  Force non-parallel build of this test since the IDL file rules
-	  in both `Makefile.Test_Client_Module' and
-	  `Makefile.Test_Server_Module' cause corruption of the generated
-	  stubs and skeletons when these Makefiles are run in parallel.
-	  Fixes build problems in some of our parallel build enabled
-	  nightly builds.
+          Force non-parallel build of this test since the IDL file rules
+          in both `Makefile.Test_Client_Module' and
+          `Makefile.Test_Server_Module' cause corruption of the generated
+          stubs and skeletons when these Makefiles are run in parallel.
+          Fixes build problems in some of our parallel build enabled
+          nightly builds.
 
 Fri Aug 03 10:16:37 2001  Carlos O'Ryan  <coryan@uci.edu>
 
