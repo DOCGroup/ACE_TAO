@@ -5,6 +5,7 @@
 #include "../Utils/UUID.h"
 
 #include "tao/Typecode.h"
+#include "tao/IOP_IORA.h"
 
 ACE_RCSID (EventChannel,
            Request_Context_Repository,
