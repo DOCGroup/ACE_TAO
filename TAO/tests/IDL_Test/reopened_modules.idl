@@ -204,10 +204,12 @@ module A
 {
   module B
   {
+    typedef sequence<X2> X2Seq;
+
     interface X3 : X1, X2
-     {
-       string getX3();
-     };
+    {
+      X2Seq getSeqOfX2 ();
+      string getX3 ();
+    };
   };
 };
-
