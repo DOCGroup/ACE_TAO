@@ -1,3 +1,25 @@
+Sun Feb 15 14:06:33 2004  Huang-Ming Huang  <hh1@cse.wustl.edu>
+
+        * orbsvcs/orbsvcs/FtRtEvent.mpc
+        * orbsvcs/orbsvcs/EventChannel/ObjectGroupManagerHandler.cpp:
+ 	* orbsvcs/orbsvcs/EventChannel/ObjectGroupManagerHandler.h:
+ 	* orbsvcs/orbsvcs/EventChannel/AMI_Primary_Replication_Strategy.cpp:
+ 	* orbsvcs/orbsvcs/EventChannel/AMI_Primary_Replication_Strategy.h:
+ 	* orbsvcs/orbsvcs/EventChannel/AMI_Replication_Strategy.cpp:
+ 	* orbsvcs/orbsvcs/EventChannel/AMI_Replication_Strategy.h:
+ 	* orbsvcs/orbsvcs/EventChannel/Basic_Replication_Strategy.cpp:
+ 	* orbsvcs/orbsvcs/EventChannel/Basic_Replication_Strategy.h:
+ 	* orbsvcs/orbsvcs/EventChannel/FTEC_Group_Manager.cpp:
+ 	* orbsvcs/orbsvcs/EventChannel/FTEC_Group_Manager.h:
+ 	* orbsvcs/orbsvcs/EventChannel/GroupInfoPublisher.cpp:
+ 	* orbsvcs/orbsvcs/EventChannel/GroupInfoPublisher.h:
+ 	* orbsvcs/orbsvcs/EventChannel/Replication_Service.cpp:
+ 	* orbsvcs/orbsvcs/EventChannel/Replication_Service.h:
+ 	* orbsvcs/orbsvcs/EventChannel/Replication_Strategy.h:
+ 	Changed for using AMI calls when adding new replicas to a
+ 	object group under AMI replication strategy.
+
+
 Sun Feb 15 08:09:17 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* orbsvcs/examples/CosEC/Factory/CosEventChannelFactory.idl:
