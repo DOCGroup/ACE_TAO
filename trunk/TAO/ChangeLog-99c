@@ -9,7 +9,7 @@ Thu Feb 25 18:16:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  to get back the size... Just subtracted 1 in the 
 	  appropriate spots in IDL compiler code. Checked out the
 	  new version in param_test and all seems to be ok. Thanks to
-	  Henrik Nordberg for reporting this bug.
+	  Henrik Nordberg <hnordberg@lbl.gov> for reporting this bug.
 
 Thu Feb 25 16:06:49 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
