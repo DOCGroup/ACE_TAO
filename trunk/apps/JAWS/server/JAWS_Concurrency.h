@@ -8,7 +8,7 @@
 #include "ace/Task.h"
 #include "IO.h"
 
-class JAWS_Concurrency_Base : public ACE_Task<ACE_MT_SYNCH>
+class JAWS_Concurrency_Base : public ACE_Task<ACE_SYNCH>
   // = TITLE
   //     Base class for different concurrency models
   //
