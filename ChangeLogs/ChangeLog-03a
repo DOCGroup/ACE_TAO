@@ -1,5 +1,9 @@
 Mon May 29 16:49:25 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/IO_Cntl_Msg.h: Changed the ACE_IO_Cntl_Cmds enum to be
+	  a typedef u_short so that users could create their own values.
+  	  Thanks to vsg@ivl.kiev.ua for this suggestion.
+
 	* ace/ACE.h,
   	* ace/ACE.h: Make the documentation consistent for both
 	  sockets and "normal" I/O methods!
