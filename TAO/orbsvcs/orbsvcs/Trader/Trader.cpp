@@ -17,7 +17,7 @@
 #include "Trader.h"
 
 #if defined(_MSC_VER)
-#pragma warning(disable:4250)
+//#pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
 TAO_Trader_Base::TAO_Trader_Base (void)
@@ -242,5 +242,5 @@ TAO_Trader_Factory::create_MT_linked_trader (void)
 #endif /* ACE_HAS_THREADS */
 
 #if defined(_MSC_VER)
-#pragma warning(default:4250)
+//#pragma warning(default:4250)
 #endif /* _MSC_VER */
