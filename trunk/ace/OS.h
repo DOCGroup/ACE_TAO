@@ -5753,6 +5753,14 @@ private:
    do { try { POINTER = new CONSTRUCTOR; } \
         catch (bad_alloc) { errno = ENOMEM; return; } \
    } while (0)
+#   define ACE_NEW_THROW(POINTER,CONSTRUCTOR,EXCEPTION) \
+     do { try { POINTER = new CONSTRUCTOR; } \
+       catch (bad_alloc) { errno = ENOMEM; TAO_THROW (EXCEPTION); } \
+     } while (0)
+#   define ACE_NEW_THROW_RETURN(POINTER,CONSTRUCTOR,EXCEPTION,RET_VAL) \
+     do { try { POINTER = new CONSTRUCTOR; } \
+        catch (bad_alloc) { errno = ENOMEM; TAO_THROW_RETURN (EXCEPTION,RET_VAL); } \
+     } while (0)
 # else
 #   define ACE_NEW_RETURN(POINTER,CONSTRUCTOR,RET_VAL) \
    do { POINTER = new CONSTRUCTOR; \
@@ -5762,6 +5770,15 @@ private:
    do { POINTER = new CONSTRUCTOR; \
      if (POINTER == 0) { errno = ENOMEM; return; } \
    } while (0)
+#   define ACE_NEW_THROW(POINTER,CONSTRUCTOR,EXCEPTION) \
+     do { POINTER = new CONSTRUCTOR; \
+       if (POINTER == 0) { errno = ENOMEM; TAO_THROW (EXCEPTION); } \
+     } while (0)
+#   define ACE_NEW_THROW_RETURN(POINTER,CONSTRUCTOR,EXCEPTION,RET_VAL) \
+     do { POINTER = new CONSTRUCTOR; \
+        if (POINTER == 0)\
+        { errno = ENOMEM; TAO_THROW_RETURN (EXCEPTION,RET_VAL); } \
+     } while (0)
 # endif /* ACE_NEW_THROWS_EXCEPTIONS */
 
 // Some useful abstrations for expressions involving

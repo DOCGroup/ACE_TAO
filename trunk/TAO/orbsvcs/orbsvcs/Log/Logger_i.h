@@ -93,28 +93,4 @@ private:
   // return a previously bound entry.
 };
 
-// I'm going to define these here for testing with the intent of 
-// migration into ace/OS.h
-# if defined(ACE_NEW_THROWS_EXCEPTIONS)
-#   define ACE_NEW_THROW(POINTER,CONSTRUCTOR,EXCEPTION) \
-do { try { POINTER = new CONSTRUCTOR; } \
- catch (bad_alloc) { errno = ENOMEM; TAO_THROW (EXCEPTION); } \
-} while (0)
-  
-#   define ACE_NEW_THROW_RETURN(POINTER,CONSTRUCTOR,EXCEPTION,RET_VAL) \
-do { try { POINTER = new CONSTRUCTOR; } \
- catch (bad_alloc) { errno = ENOMEM; TAO_THROW_RETURN (EXCEPTION,RET_VAL); } \
-} while (0)
-# else
-#   define ACE_NEW_THROW(POINTER,CONSTRUCTOR,EXCEPTION) \
-do { POINTER = new CONSTRUCTOR; \
- if (POINTER == 0) { errno = ENOMEM; TAO_THROW (EXCEPTION); } \
-} while (0)
-#   define ACE_NEW_THROW_RETURN(POINTER,CONSTRUCTOR,EXCEPTION,RET_VAL) \
-do { POINTER = new CONSTRUCTOR; \
- if (POINTER == 0)\
-  { errno = ENOMEM; TAO_THROW_RETURN (EXCEPTION,RET_VAL); } \
-} while (0)
-# endif /* ACE_NEW_THROWS_EXCEPTIONS */
-
 #endif /* TAO_ORBSVCS_LOGGER_I_H */
