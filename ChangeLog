@@ -1,3 +1,22 @@
+Tue Dec  9 15:09:55 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        Thanks to Bruce Jones <bruce.jones@cubic.com> for the
+        following patches for IRIX.
+
+        * ace/config-irix6.5.x-sgic++.h:
+          Removed ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION and
+          added ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION.
+
+        * ace/config-irix6.x-common.h:
+          Added ACE_LACKS_PERFECT_MULTICAST_FILTERING.
+
+        * ace/config-irix6.x-sgic++-nothreads.h:
+          Added ACE_LACKS_STDINT_H.
+
+        * include/makeinclude/platform_irix6.x_sgic++.GNU:
+          Set templates = implicit in not yet defined and only add
+          -no_prelink to CCFLAGS if templates != implicit.
+
 Mon Dec  8 19:44:04 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * include/makeinclude/rules.bin.GNU:
