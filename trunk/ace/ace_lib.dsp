@@ -150,9 +150,9 @@ LIB32=link.exe -lib
 # PROP Intermediate_Dir "Lib\Debug"
 # PROP Target_Dir ""
 CPP=cl.exe
-# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\ /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /FD /c
+# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\ /D " WIN32" /D "_DEBUG" /D "_WINDOWS" /FD /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\ /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /FD /MTd /c
+# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\ /D " WIN32" /D "_DEBUG" /D "_WINDOWS" /FD /MTd /c
 # SUBTRACT CPP /YX
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo /o".\ace.bsc"
@@ -174,9 +174,9 @@ LIB32=link.exe -lib
 # PROP Intermediate_Dir "Lib\Release"
 # PROP Target_Dir ""
 CPP=cl.exe
-# ADD BASE CPP /nologo /Gt0 /W3 /GX /O1 /I "..\\ /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /FD /c
+# ADD BASE CPP /nologo /Gt0 /W3 /GX /O1 /I "..\\ /D " WIN32" /D "NDEBUG" /D "_WINDOWS" /FD /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MT /Gt0 /W3 /GX /O1 /I "..\\ /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /FD /c
+# ADD CPP /nologo /MT /Gt0 /W3 /GX /O1 /I "..\\ /D " WIN32" /D "NDEBUG" /D "_WINDOWS" /FD /c
 # SUBTRACT CPP /YX
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo /o".\ace.bsc"
@@ -198,9 +198,9 @@ LIB32=link.exe -lib
 # PROP Intermediate_Dir "LIB\Unicode_Debug"
 # PROP Target_Dir ""
 CPP=cl.exe
-# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\ /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "UNICODE" /FD /c
+# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\ /D " WIN32" /D "_DEBUG" /D "_WINDOWS" /D "UNICODE" /FD /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\ /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "UNICODE" /FD /MTd /c
+# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\ /D " WIN32" /D "_DEBUG" /D "_WINDOWS" /D "UNICODE" /FD /MTd /c
 # SUBTRACT CPP /YX
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo /o".\ace.bsc"
@@ -222,9 +222,9 @@ LIB32=link.exe -lib
 # PROP Intermediate_Dir "LIB\Unicode_Release"
 # PROP Target_Dir ""
 CPP=cl.exe
-# ADD BASE CPP /nologo /Gt0 /W3 /GX /O1 /I "..\\ /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "UNICODE" /FD /c
+# ADD BASE CPP /nologo /Gt0 /W3 /GX /O1 /I "..\\ /D " WIN32" /D "NDEBUG" /D "_WINDOWS" /D "UNICODE" /FD /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MT /Gt0 /W3 /GX /O1 /I "..\\ /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "UNICODE" /FD /c
+# ADD CPP /nologo /MT /Gt0 /W3 /GX /O1 /I "..\\ /D " WIN32" /D "NDEBUG" /D "_WINDOWS" /D "UNICODE" /FD /c
 # SUBTRACT CPP /YX
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo /o".\ace.bsc"
@@ -14915,10 +14915,6 @@ SOURCE=.\Service_Object.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Service_Record.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Service_Repository.h
 # End Source File
 # Begin Source File
@@ -15548,10 +15544,6 @@ SOURCE=.\Service_Manager.i
 # Begin Source File
 
 SOURCE=.\Service_Object.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Service_Record.i
 # End Source File
 # Begin Source File
 
