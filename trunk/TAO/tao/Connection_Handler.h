@@ -61,13 +61,13 @@ public:
   void transport (TAO_Transport* transport);
 
   /// Is the handler closed?
-  int is_closed (void);
+  bool is_closed (void) const;
 
   /// Is the handler open?
-  int is_open (void);
+  bool is_open (void) const;
 
   /// Is the handler in the process of being connected?
-  int is_connecting (void);
+  bool is_connecting (void) const;
 
   /// Close the underlying connection.
   /**

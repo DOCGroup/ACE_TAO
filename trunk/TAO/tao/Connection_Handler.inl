@@ -14,20 +14,20 @@ TAO_Connection_Handler::transport (void)
   return this->transport_;
 }
 
-ACE_INLINE int
-TAO_Connection_Handler::is_closed (void)
+ACE_INLINE bool
+TAO_Connection_Handler::is_closed (void) const
 {
   return this->state_ == TAO_LF_Event::LFS_CONNECTION_CLOSED;
 }
 
-ACE_INLINE int
-TAO_Connection_Handler::is_open (void)
+ACE_INLINE bool
+TAO_Connection_Handler::is_open (void) const
 {
   return this->state_ == TAO_LF_Event::LFS_SUCCESS;
 }
 
-ACE_INLINE int
-TAO_Connection_Handler::is_connecting (void)
+ACE_INLINE bool
+TAO_Connection_Handler::is_connecting (void) const
 {
   return this->state_ == TAO_LF_Event::LFS_CONNECTION_WAIT;
 }
