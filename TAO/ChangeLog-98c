@@ -1,3 +1,15 @@
+Wed Jul 30 14:18:02 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/Makefile: Corrected automatic definition of TAO_ROOT and
+ 	fixed all dependencies on tao header/inline files.
+
+	* tao/{typecode,object}.i: Moved a few methods to the beginning of the file
+ 	so that the compiler KNOWS that they are inlined when it hits the
+ 	first reference to them later in the file.
+
+	* tao/object.cpp: Added an end-of-line to silence a very picky SGI
+ 	compiler.
+
 Wed Jul 30 10:05:38 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tao/connect.cpp: Removed a number of explicit template

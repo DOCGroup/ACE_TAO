@@ -1,4 +1,10 @@
 // just fetch the 'kind' field out of the typecode
+ACE_INLINE void *
+CORBA_TypeCode::operator new (size_t s)
+{ 
+  return ::operator new (s); 
+}
+
 ACE_INLINE CORBA_TCKind
 CORBA_TypeCode::kind (CORBA_Environment &env) const
 {
@@ -250,10 +256,4 @@ ACE_INLINE void *
 CORBA_TypeCode::operator new (size_t, void *p)
 { 
   return p; 
-}
-
-ACE_INLINE void *
-CORBA_TypeCode::operator new (size_t s)
-{ 
-  return ::operator new (s); 
 }
