@@ -309,7 +309,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CONV_FRAME::CodeSetCompo
     else
     {
       ACE_NEW_RETURN (_tao_elem, CONV_FRAME::CodeSetComponent, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                           _tao_any._tao_byte_order ());
       if (stream.decode (CONV_FRAME::_tc_CodeSetComponent, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
@@ -375,7 +376,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CONV_FRAME::CodeSetCompo
     else
     {
       ACE_NEW_RETURN (_tao_elem, CONV_FRAME::CodeSetComponentInfo, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                           _tao_any._tao_byte_order ());
       if (stream.decode (CONV_FRAME::_tc_CodeSetComponentInfo, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
@@ -441,7 +443,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CONV_FRAME::CodeSetConte
     else
     {
       ACE_NEW_RETURN (_tao_elem, CONV_FRAME::CodeSetContext, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                           _tao_any._tao_byte_order ());
       if (stream.decode (CONV_FRAME::_tc_CodeSetContext, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {

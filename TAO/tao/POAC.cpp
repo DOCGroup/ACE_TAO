@@ -173,7 +173,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::ForwardR
     else
     {
       ACE_NEW_RETURN (_tao_elem, PortableServer::ForwardRequest, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                           _tao_any._tao_byte_order ());
       if (stream.decode (PortableServer::_tc_ForwardRequest, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
@@ -1534,7 +1535,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POAManag
     else
     {
       ACE_NEW_RETURN (_tao_elem, PortableServer::POAManager::AdapterInactive, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                           _tao_any._tao_byte_order ());
       if (stream.decode (PortableServer::POAManager::_tc_AdapterInactive, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
@@ -2037,7 +2039,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA::Ada
     else
     {
       ACE_NEW_RETURN (_tao_elem, PortableServer::POA::AdapterAlreadyExists, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                           _tao_any._tao_byte_order ());
       if (stream.decode (PortableServer::POA::_tc_AdapterAlreadyExists, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
@@ -2171,7 +2174,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA::Ada
     else
     {
       ACE_NEW_RETURN (_tao_elem, PortableServer::POA::AdapterInactive, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                           _tao_any._tao_byte_order ());
       if (stream.decode (PortableServer::POA::_tc_AdapterInactive, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
@@ -2305,7 +2309,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA::Ada
     else
     {
       ACE_NEW_RETURN (_tao_elem, PortableServer::POA::AdapterNonExistent, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                           _tao_any._tao_byte_order ());
       if (stream.decode (PortableServer::POA::_tc_AdapterNonExistent, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
@@ -2446,7 +2451,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA::Inv
     else
     {
       ACE_NEW_RETURN (_tao_elem, PortableServer::POA::InvalidPolicy, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                           _tao_any._tao_byte_order ());
       if (stream.decode (PortableServer::POA::_tc_InvalidPolicy, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
@@ -2583,7 +2589,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA::NoS
     else
     {
       ACE_NEW_RETURN (_tao_elem, PortableServer::POA::NoServant, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                           _tao_any._tao_byte_order ());
       if (stream.decode (PortableServer::POA::_tc_NoServant, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
@@ -2719,7 +2726,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA::Obj
     else
     {
       ACE_NEW_RETURN (_tao_elem, PortableServer::POA::ObjectAlreadyActive, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                           _tao_any._tao_byte_order ());
       if (stream.decode (PortableServer::POA::_tc_ObjectAlreadyActive, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
@@ -2851,7 +2859,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA::Obj
     else
     {
       ACE_NEW_RETURN (_tao_elem, PortableServer::POA::ObjectNotActive, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                           _tao_any._tao_byte_order ());
       if (stream.decode (PortableServer::POA::_tc_ObjectNotActive, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
@@ -2983,7 +2992,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA::Ser
     else
     {
       ACE_NEW_RETURN (_tao_elem, PortableServer::POA::ServantAlreadyActive, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                           _tao_any._tao_byte_order ());
       if (stream.decode (PortableServer::POA::_tc_ServantAlreadyActive, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
@@ -3115,7 +3125,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA::Ser
     else
     {
       ACE_NEW_RETURN (_tao_elem, PortableServer::POA::ServantNotActive, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                           _tao_any._tao_byte_order ());
       if (stream.decode (PortableServer::POA::_tc_ServantNotActive, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
@@ -3247,7 +3258,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA::Wro
     else
     {
       ACE_NEW_RETURN (_tao_elem, PortableServer::POA::WrongAdapter, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                           _tao_any._tao_byte_order ());
       if (stream.decode (PortableServer::POA::_tc_WrongAdapter, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
@@ -3379,7 +3391,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA::Wro
     else
     {
       ACE_NEW_RETURN (_tao_elem, PortableServer::POA::WrongPolicy, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                           _tao_any._tao_byte_order ());
       if (stream.decode (PortableServer::POA::_tc_WrongPolicy, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
@@ -3584,7 +3597,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::Current:
     else
     {
       ACE_NEW_RETURN (_tao_elem, PortableServer::Current::NoContext, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                           _tao_any._tao_byte_order ());
       if (stream.decode (PortableServer::Current::_tc_NoContext, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {

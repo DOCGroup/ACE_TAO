@@ -415,7 +415,8 @@ TAO_GIOP_ServerRequest::dsi_marshal (CORBA::Environment &ACE_TRY_ENV)
             }
           else
             {
-              TAO_InputCDR cdr (retval_->_tao_get_cdr ());
+              TAO_InputCDR cdr (this->retval_->_tao_get_cdr (),
+                                this->retval_->_tao_byte_order ());
               (void) this->outgoing_->append (tc.in (), &cdr,
                                               ACE_TRY_ENV);
               ACE_CHECK;
@@ -707,7 +708,8 @@ TAO_GIOP_ServerRequest::init_reply (CORBA::Environment &ACE_TRY_ENV)
       this->outgoing_->write_ulong (this->exception_type_);
 
       // we use the any's ACE_Message_Block
-      TAO_InputCDR cdr (this->exception_->_tao_get_cdr ());
+      TAO_InputCDR cdr (this->exception_->_tao_get_cdr (),
+                        this->exception_->_tao_byte_order ());
       (void) this->outgoing_->append (except_tc, &cdr, ACE_TRY_ENV);
     }
 }

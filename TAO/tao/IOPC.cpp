@@ -578,7 +578,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IOP::TaggedProfile *&_ta
     else
     {
       ACE_NEW_RETURN (_tao_elem, IOP::TaggedProfile, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                           _tao_any._tao_byte_order ());
       if (stream.decode (IOP::_tc_TaggedProfile, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
@@ -644,7 +645,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IOP::IOR *&_tao_elem)
     else
     {
       ACE_NEW_RETURN (_tao_elem, IOP::IOR, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                           _tao_any._tao_byte_order ());
       if (stream.decode (IOP::_tc_IOR, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
@@ -710,7 +712,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IOP::TaggedComponent *&_
     else
     {
       ACE_NEW_RETURN (_tao_elem, IOP::TaggedComponent, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                           _tao_any._tao_byte_order ());
       if (stream.decode (IOP::_tc_TaggedComponent, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
@@ -779,7 +782,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IOP::MultipleComponentPr
     else
     {
       ACE_NEW_RETURN (_tao_elem, IOP::MultipleComponentProfile, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                           _tao_any._tao_byte_order ());
       if (stream.decode (IOP::_tc_MultipleComponentProfile, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
@@ -845,7 +849,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IOP::ServiceContext *&_t
     else
     {
       ACE_NEW_RETURN (_tao_elem, IOP::ServiceContext, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                           _tao_any._tao_byte_order ());
       if (stream.decode (IOP::_tc_ServiceContext, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
@@ -914,7 +919,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IOP::ServiceContextList 
     else
     {
       ACE_NEW_RETURN (_tao_elem, IOP::ServiceContextList, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                           _tao_any._tao_byte_order ());
       if (stream.decode (IOP::_tc_ServiceContextList, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {

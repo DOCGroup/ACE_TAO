@@ -158,6 +158,7 @@ CORBA_NVList::add_value (const char *name,
           else
             {
               nv->any_._tao_replace (value.type_,
+                                     value.byte_order_,
                                      value.cdr_,
                                      ACE_TRY_ENV);
             }

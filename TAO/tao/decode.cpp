@@ -209,6 +209,7 @@ TAO_Marshal_Any::decode (CORBA::TypeCode_ptr,
     DEEP_FREE (any->type_, any->value_, 0, ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
+  any->byte_order_ = stream->byte_order ();
   any->cdr_ = ACE_Message_Block::duplicate (out.begin ());
   any->value_ = 0;
 
@@ -799,7 +800,8 @@ TAO_Marshal_Union::decode (CORBA::TypeCode_ptr  tc,
           {
             CORBA::ULong ul;
             TAO_InputCDR stream ((ACE_Message_Block *)
-                                 member_label->_tao_get_cdr ());
+                                 member_label->_tao_get_cdr (),
+                                 member_label->_tao_byte_order ());
             (void)stream.decode (discrim_tc.in (), &ul, 0, ACE_TRY_ENV);
             //@@EXC@@ Rethrow CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE)?
             ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
