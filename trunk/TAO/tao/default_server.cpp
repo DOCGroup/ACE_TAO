@@ -11,10 +11,6 @@ ACE_RCSID(tao, default_server, "$Id$")
 
 TAO_Default_Server_Strategy_Factory::TAO_Default_Server_Strategy_Factory (void)
   : thread_flags_ (THR_BOUND),
-    active_object_map_size_ (TAO_DEFAULT_SERVER_ACTIVE_OBJECT_MAP_SIZE),
-    object_lookup_strategy_for_user_id_policy_ (TAO_DYNAMIC_HASH),
-    object_lookup_strategy_for_system_id_policy_ (TAO_ACTIVE_DEMUX),
-    reverse_object_lookup_strategy_for_unique_id_policy_ (TAO_DYNAMIC_HASH),
     poa_lock_type_ (TAO_THREAD_LOCK),
     poa_mgr_lock_type_ (TAO_THREAD_LOCK),
     event_loop_lock_type_ (TAO_NULL_LOCK),
@@ -169,105 +165,6 @@ TAO_Default_Server_Strategy_Factory::create_cached_connector_lock (void)
   return the_lock;
 }
 
-TAO_Active_Object_Map_Impl *
-TAO_Default_Server_Strategy_Factory::create_active_object_map (int user_id_policy)
-{
-  if (user_id_policy)
-    return this->create_user_id_policy_active_object_map ();
-  else
-    return this->create_system_id_policy_active_object_map ();
-}
-
-TAO_Active_Object_Map_Impl *
-TAO_Default_Server_Strategy_Factory::create_user_id_policy_active_object_map (void)
-{
-  return this->create_active_object_map_i (this->object_lookup_strategy_for_user_id_policy_, 1);
-}
-
-TAO_Active_Object_Map_Impl *
-TAO_Default_Server_Strategy_Factory::create_system_id_policy_active_object_map (void)
-{
-  return this->create_active_object_map_i (this->object_lookup_strategy_for_system_id_policy_, 0);
-}
-
-TAO_Active_Object_Map_Impl *
-TAO_Default_Server_Strategy_Factory::create_active_object_map_i (TAO_Demux_Strategy table_type,
-                                                                 int user_id_policy)
-{
-  // Create the appropriate-sized object table based on passed
-  // arguments.
-  TAO_Active_Object_Map_Impl *objtable = 0;
-
-  switch (table_type)
-    {
-    case TAO_LINEAR:
-      ACE_NEW_RETURN (objtable,
-                      TAO_Linear_Active_Object_Map (this->active_object_map_size_),
-                      0);
-      break;
-      // Don't do this one right now until we determine how to deal
-      // with its reliance on a global singleton.
-    case TAO_USER_DEFINED:
-      // it is assumed that the user would have used the hooks to
-      // supply a user-defined instance of the object table
-      //
-      // Note that the usage below doesn't really fit very well now.
-      // We need for the userdef stuff to provide a creation hook--IF
-      // we decide to keep the whole demultiplexing strategy creation
-      // the way it is.  IMHO, the way that userdef stuff should be
-      // done is to create the User_Server_Strategy_Factory and just
-      // link it in.  The default server would only encompass the
-      // strategies that are "shipped", so to speak. --cjc
-      if (user_id_policy)
-        objtable = TAO_ORB_Core_instance()->oa_params()->userdef_lookup_strategy_for_user_id_policy ();
-      else
-        objtable = TAO_ORB_Core_instance()->oa_params()->userdef_lookup_strategy_for_system_id_policy ();
-      break;
-    case TAO_ACTIVE_DEMUX:
-      ACE_NEW_RETURN (objtable,
-                      TAO_Active_Demux_Active_Object_Map (this->active_object_map_size_),
-                      0);
-      break;
-    case TAO_DYNAMIC_HASH:
-      ACE_NEW_RETURN (objtable,
-                      TAO_Dynamic_Hash_Active_Object_Map (this->active_object_map_size_),
-                      0);
-      break;
-    }
-
-  return objtable;
-}
-
-TAO_Reverse_Active_Object_Map_Impl *
-TAO_Default_Server_Strategy_Factory::create_reverse_active_object_map (int unique_id_policy)
-{
-  // Create the appropriate-sized object table based on passed
-  // arguments.
-  TAO_Reverse_Active_Object_Map_Impl *objtable = 0;
-
-  if (unique_id_policy)
-    {
-      if (this->reverse_object_lookup_strategy_for_unique_id_policy_ == TAO_USER_DEFINED)
-        {
-          objtable = TAO_ORB_Core_instance ()->oa_params ()->userdef_reverse_lookup_strategy_for_unique_id_policy ();
-        }
-      else
-        {
-          ACE_NEW_RETURN (objtable,
-                          TAO_Reverse_Active_Object_Map_For_Unique_Id_Policy (this->active_object_map_size_),
-                          0);
-        }
-    }
-  else
-    {
-      ACE_NEW_RETURN (objtable,
-                      TAO_Reverse_Active_Object_Map_For_Multiple_Id_Policy (),
-                      0);
-    }
-
-  return objtable;
-}
-
 // Evil macros b/c I'm lazy!
 #define TAO_BEGINCHECK  if (0)
 #define TAO_CHECKANDSET(sym) else if (ACE_OS::strcmp (flag, #sym) == 0) ACE_SET_BITS (this->thread_flags_, sym)
@@ -338,7 +235,27 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
       {
         curarg++;
         if (curarg < argc)
-          this->active_object_map_size_ = ACE_OS::strtoul (argv[curarg], 0, 10);
+          this->active_object_map_creation_parameters_.active_object_map_size_ = ACE_OS::strtoul (argv[curarg], 0, 10);
+      }
+    else if (ACE_OS::strcmp (argv[curarg], "-ORBactivehintinids") == 0)
+      {
+        curarg++;
+        if (curarg < argc)
+          {
+            char *value = argv[curarg];
+
+            this->active_object_map_creation_parameters_.use_active_hint_in_ids_ = ACE_OS::atoi (value);
+          }
+      }
+    else if (ACE_OS::strcmp (argv[curarg], "-ORBallowreactivationofsystemids") == 0)
+      {
+        curarg++;
+        if (curarg < argc)
+          {
+            char *value = argv[curarg];
+
+            this->active_object_map_creation_parameters_.allow_reactivation_of_system_ids_ = ACE_OS::atoi (value);
+          }
       }
     else if (ACE_OS::strcmp (argv[curarg], "-ORBuseridpolicydemuxstrategy") == 0)
       {
@@ -349,34 +266,24 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
 
             // Active demux not supported with user id policy
             if (ACE_OS::strcasecmp (name, "dynamic") == 0)
-              this->object_lookup_strategy_for_user_id_policy_ = TAO_DYNAMIC_HASH;
+              this->active_object_map_creation_parameters_.object_lookup_strategy_for_user_id_policy_ = TAO_DYNAMIC_HASH;
             else if (ACE_OS::strcasecmp (name, "linear") == 0)
-              this->object_lookup_strategy_for_user_id_policy_ = TAO_LINEAR;
-            else if (ACE_OS::strcasecmp (name, "user") == 0)
-              this->object_lookup_strategy_for_user_id_policy_ = TAO_USER_DEFINED;
+              this->active_object_map_creation_parameters_.object_lookup_strategy_for_user_id_policy_ = TAO_LINEAR;
           }
       }
-    else if (ACE_OS::strcmp (argv[curarg], "-ORBsystemidpolicydemuxstrategy") == 0
-             || ACE_OS::strcmp (argv[curarg], "-ORBdemuxstrategy") == 0)
+    else if (ACE_OS::strcmp (argv[curarg], "-ORBsystemidpolicydemuxstrategy") == 0)
       {
-        // @@ -ORBdemuxstrategy is deprecated and should not be used anymore.
-        if (ACE_OS::strcmp (argv[curarg], "-ORBdemuxstrategy") == 0)
-          ACE_DEBUG ((LM_DEBUG,
-                      "Warning: -ORBdemuxstrategy is deprecated.  Please use -ORBsystemidpolicydemuxstrategy instead.\n"));
-
         curarg++;
         if (curarg < argc)
           {
             char *name = argv[curarg];
 
             if (ACE_OS::strcasecmp (name, "dynamic") == 0)
-              this->object_lookup_strategy_for_system_id_policy_ = TAO_DYNAMIC_HASH;
+              this->active_object_map_creation_parameters_.object_lookup_strategy_for_system_id_policy_ = TAO_DYNAMIC_HASH;
             else if (ACE_OS::strcasecmp (name, "linear") == 0)
-              this->object_lookup_strategy_for_system_id_policy_ = TAO_LINEAR;
+              this->active_object_map_creation_parameters_.object_lookup_strategy_for_system_id_policy_ = TAO_LINEAR;
             else if (ACE_OS::strcasecmp (name, "active") == 0)
-              this->object_lookup_strategy_for_system_id_policy_ = TAO_ACTIVE_DEMUX;
-            else if (ACE_OS::strcasecmp (name, "user") == 0)
-              this->object_lookup_strategy_for_system_id_policy_ = TAO_USER_DEFINED;
+              this->active_object_map_creation_parameters_.object_lookup_strategy_for_system_id_policy_ = TAO_ACTIVE_DEMUX;
           }
       }
     else if (ACE_OS::strcmp (argv[curarg], "-ORBuniqueidpolicyreversedemuxstrategy") == 0)
@@ -387,10 +294,17 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
             char *name = argv[curarg];
 
             if (ACE_OS::strcasecmp (name, "dynamic") == 0)
-              this->reverse_object_lookup_strategy_for_unique_id_policy_ = TAO_DYNAMIC_HASH;
+              this->active_object_map_creation_parameters_.reverse_object_lookup_strategy_for_unique_id_policy_ = TAO_DYNAMIC_HASH;
             else if (ACE_OS::strcasecmp (name, "user") == 0)
-              this->reverse_object_lookup_strategy_for_unique_id_policy_ = TAO_USER_DEFINED;
+              this->active_object_map_creation_parameters_.reverse_object_lookup_strategy_for_unique_id_policy_ = TAO_USER_DEFINED;
           }
+      }
+    else if (ACE_OS::strcmp (argv[curarg], "-ORBdemuxstrategy") == 0)
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    "Warning: -ORBdemuxstrategy is deprecated.  Please use "
+                    "-ORBsystemidpolicydemuxstrategy or -ORBuseridpolicydemuxstrategy instead.\n"));
+        curarg++;
       }
     else if (ACE_OS::strcmp (argv[curarg], "-ORBpoalock") == 0)
       {
@@ -468,21 +382,13 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
   return 0;
 }
 
-u_long
-TAO_Default_Server_Strategy_Factory::active_object_map_size (void) const
-{
-  return this->active_object_map_size_;
-}
-
-TAO_Default_Server_Creation_Strategy::
-TAO_Default_Server_Creation_Strategy (ACE_Thread_Manager *t)
+TAO_Default_Server_Creation_Strategy::TAO_Default_Server_Creation_Strategy (ACE_Thread_Manager *t)
   :  ACE_Creation_Strategy<TAO_Server_Connection_Handler> (t)
 {
 }
 
 int
-TAO_Default_Server_Creation_Strategy::
-make_svc_handler (TAO_Server_Connection_Handler *&sh)
+TAO_Default_Server_Creation_Strategy::make_svc_handler (TAO_Server_Connection_Handler *&sh)
 {
   if (sh == 0)
     {

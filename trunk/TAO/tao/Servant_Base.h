@@ -102,6 +102,8 @@ protected:
   // register with the default POA
 };
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 class TAO_Export TAO_DynamicImplementation : public virtual TAO_ServantBase
 {
   // = TITLE
@@ -145,6 +147,8 @@ protected:
                           CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // Turns around and calls invoke.
 };
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 #if defined (__ACE_INLINE__)
 # include "tao/Servant_Base.i"

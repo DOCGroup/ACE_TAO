@@ -19,7 +19,11 @@
 // ============================================================================
 
 #ifndef TAO_REQUEST_H
-#define TAO_REQUEST_ H
+#define TAO_REQUEST_H
+
+#include "tao/orbconf.h"
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
 #include "tao/corbafwd.h"
 #include "tao/NVList.h"
@@ -202,5 +206,7 @@ private:
 #if defined (__ACE_INLINE__)
 # include "tao/Request.i"
 #endif /* __ACE_INLINE__ */
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 #endif /* TAO_REQUEST_H */

@@ -3,6 +3,9 @@
 // Implementation of Named Value List and NamedValue classes
 
 #include "tao/NVList.h"
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 #include "tao/Exception.h"
 #include "tao/Environment.h"
 #include "tao/ORB.h"
@@ -271,3 +274,5 @@ template class ACE_Unbounded_Queue_Iterator<CORBA::NamedValue_ptr>;
 #pragma instantiate ACE_Unbounded_Queue<CORBA::NamedValue_ptr>
 #pragma instantiate ACE_Unbounded_Queue_Iterator<CORBA::NamedValue_ptr>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#endif /* TAO_HAS_MINIMUM_CORBA */

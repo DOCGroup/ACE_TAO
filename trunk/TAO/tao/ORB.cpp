@@ -26,6 +26,7 @@
 #include "tao/CDR_Interpreter.h"
 #include "tao/debug.h"
 #include "tao/TAO_Internal.h"
+#include "tao/CDR.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/ORB.i"
@@ -55,6 +56,8 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_ORB_Timeprobe_Description,
                                   TAO_CORBA_ORB_RUN_START);
 
 #endif /* ACE_ENABLE_TIMEPROBES */
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
 // Typecode stuff for the InconsistentTypeCode exception
 static const CORBA::Long _oc_CORBA_ORB_InconsistentTypeCode[] =
@@ -91,6 +94,12 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_ORB_InconsistentTypeCode (
     0,
     sizeof (CORBA_ORB_InconsistentTypeCode));
 
+// ORB exception typecode initialization.
+CORBA::TypeCode_ptr CORBA_ORB::_tc_InconsistentTypeCode =
+  &_tc_TAO_tc_CORBA_ORB_InconsistentTypeCode;
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
 // = Static initialization.
 
 // Count of the number of ORBs.
@@ -98,10 +107,6 @@ int CORBA_ORB::orb_init_count_ = 0;
 
 // Pointer to the "default ORB."
 CORBA::ORB_ptr CORBA::instance_ = 0;
-
-// ORB exception typecode initialization.
-CORBA::TypeCode_ptr CORBA_ORB::_tc_InconsistentTypeCode =
-  &_tc_TAO_tc_CORBA_ORB_InconsistentTypeCode;
 
 CORBA_String_var::CORBA_String_var (char *p)
   : ptr_ (p)
@@ -280,6 +285,8 @@ CORBA_ORB::shutdown (CORBA::Boolean wait_for_completion)
   return;
 }
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 void
 CORBA_ORB::create_list (CORBA::Long count,
                         CORBA::NVList_ptr &retval)
@@ -315,6 +322,15 @@ CORBA_ORB::perform_work (const ACE_Time_Value &tv)
   ACE_Time_Value tmp_tv (tv);
   return r->handle_events (tmp_tv);
 }
+
+CORBA::Boolean
+CORBA_ORB::work_pending (void)
+{
+  // There's ALWAYS work to do ;-)
+  return 1;
+}
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 int
 CORBA_ORB::run (ACE_Time_Value *tv,
@@ -624,9 +640,9 @@ CORBA_ORB::multicast_query (char *buf,
   ACE_SOCK_Dgram response;
   ACE_INET_Addr response_addr;
 
-  // Dgram for multicasting to ORB service locator. 
+  // Dgram for multicasting to ORB service locator.
   ACE_SOCK_Dgram_Mcast multicast;
-  ACE_INET_Addr multicast_addr (port, 
+  ACE_INET_Addr multicast_addr (port,
                                    ACE_DEFAULT_MULTICAST_ADDR);
 
   // Subscribe to multicast address.
@@ -700,7 +716,7 @@ CORBA_ORB::multicast_query (char *buf,
                     "# of bytes sent is %d.\n",
                     response_addr.get_port_number (),
                     result));
-    
+
       // Receive response message.
       result = response.recv (buf,
                               ACE_MAX_DGRAM_SIZE,
@@ -918,6 +934,8 @@ CORBA_ORB::leader_follower_info (void)
   return leader_follower_info_;
 }
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 // Dynamic Any factory functions.
 
 ACE_INLINE
@@ -975,6 +993,8 @@ CORBA_ORB::create_dyn_enum      (CORBA_TypeCode_ptr tc,
 {
   return TAO_DynAny_i::create_dyn_enum (tc, env);
 }
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 // String utility support; this needs to be integrated with the ORB's
 // own memory allocation subsystem.

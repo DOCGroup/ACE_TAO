@@ -98,7 +98,7 @@ TAO_ServantBase::_create_stub (CORBA_Environment &env)
       && this == poa_current->servant ())
     {
       stub = orb_core->orb ()->create_stub_object (poa_current->object_key (),
-                                                   this->_interface_repository_id (), 
+                                                   this->_interface_repository_id (),
                                                    env);
     }
   else
@@ -125,7 +125,7 @@ TAO_ServantBase::_create_stub (CORBA_Environment &env)
 STUB_Object *
 TAO_Local_ServantBase::_create_stub (CORBA_Environment &env)
 {
-  PortableServer::ObjectId_var invalid_oid = 
+  PortableServer::ObjectId_var invalid_oid =
     PortableServer::string_to_ObjectId ("invalid");
 
   TAO_ObjectKey tmp_key (invalid_oid->length (),
@@ -137,6 +137,8 @@ TAO_Local_ServantBase::_create_stub (CORBA_Environment &env)
                                                                this->_interface_repository_id (),
                                                                env);
 }
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
 CORBA::Object_ptr
 TAO_DynamicImplementation::_this (CORBA::Environment &env)
@@ -219,3 +221,5 @@ TAO_DynamicImplementation::_dispatch (CORBA::ServerRequest &request,
       request.dsi_marshal (env);
     }
 }
+
+#endif /* TAO_HAS_MINIMUM_CORBA */

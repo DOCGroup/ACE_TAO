@@ -18,6 +18,8 @@
 
 ACE_RCSID(tao, POAS, "$Id$")
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 static const TAO_operation_db_entry PortableServer_ThreadPolicy_operations [] = {
   {"_get_value", &POA_PortableServer::ThreadPolicy::_get_value_skel},
   {"copy", &POA_PortableServer::ThreadPolicy::copy_skel},
@@ -223,6 +225,8 @@ POA_PortableServer::ThreadPolicy::_this (CORBA_Environment &TAO_IN_ENV)
     return 0;
   return new POA_PortableServer::_tao_collocated_ThreadPolicy (this, stub);
 }
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 static const TAO_operation_db_entry PortableServer_LifespanPolicy_operations [] = {
   {"_get_value", &POA_PortableServer::LifespanPolicy::_get_value_skel},
@@ -839,6 +843,8 @@ POA_PortableServer::IdAssignmentPolicy::_this (CORBA_Environment &TAO_IN_ENV)
   return new POA_PortableServer::_tao_collocated_IdAssignmentPolicy (this, stub);
 }
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 static const TAO_operation_db_entry PortableServer_ImplicitActivationPolicy_operations [] = {
   {"_get_value", &POA_PortableServer::ImplicitActivationPolicy::_get_value_skel},
   {"copy", &POA_PortableServer::ImplicitActivationPolicy::copy_skel},
@@ -1454,216 +1460,7 @@ POA_PortableServer::RequestProcessingPolicy::_this (CORBA_Environment &TAO_IN_EN
   return new POA_PortableServer::_tao_collocated_RequestProcessingPolicy (this, stub);
 }
 
-// **************************************************
-//
-// TAO spcific POA locking policy (non-standard)
-//
-// **************************************************
-
-static const TAO_operation_db_entry PortableServer_SynchronizationPolicy_operations [] = {
-  {"_get_value", &POA_PortableServer::SynchronizationPolicy::_get_value_skel},
-  {"copy", &POA_PortableServer::SynchronizationPolicy::copy_skel},
-  {"destroy", &POA_PortableServer::SynchronizationPolicy::destroy_skel},
-  {"_get_policy_type", &POA_PortableServer::SynchronizationPolicy::_get_policy_type_skel},
-  {"_is_a", &POA_PortableServer::SynchronizationPolicy::_is_a_skel}
-};
-
-static const CORBA::Long _tao_PortableServer_SynchronizationPolicy_optable_size = sizeof (ACE_Hash_Map_Entry<const char *, TAO_Skeleton>) * (15);
-static char _tao_PortableServer_SynchronizationPolicy_optable_pool [_tao_PortableServer_SynchronizationPolicy_optable_size];
-static ACE_Static_Allocator_Base _tao_PortableServer_SynchronizationPolicy_allocator (_tao_PortableServer_SynchronizationPolicy_optable_pool, _tao_PortableServer_SynchronizationPolicy_optable_size);
-static TAO_Dynamic_Hash_OpTable tao_PortableServer_SynchronizationPolicy_optable (PortableServer_SynchronizationPolicy_operations, 5, 10, &_tao_PortableServer_SynchronizationPolicy_allocator);
-
-// skeleton constructor
-POA_PortableServer::SynchronizationPolicy::SynchronizationPolicy (void)
-{
-  this->optable_ = &tao_PortableServer_SynchronizationPolicy_optable;
-}
-
-void POA_PortableServer::SynchronizationPolicy::_get_value_skel (
-                                                                 CORBA::ServerRequest &_tao_server_request,
-                                                                 void *_tao_object_reference,
-                                                                 void * /* context */,
-                                                                 CORBA::Environment &_tao_orb_environment
-                                                                 )
-{
-  //  CORBA::Environment _tao_skel_environment;
-  static const TAO_Param_Data_Skel _get_PortableServer_SynchronizationPolicy_value_paramdata [] =
-  {
-    {PortableServer::_tc_SynchronizationPolicyValue, 0, 0}
-  }; // PortableServer_SynchronizationPolicy_value_paramdata
-
-  static const TAO_Call_Data_Skel _get_PortableServer_SynchronizationPolicy_value_calldata =
-  {"_get_value", 1, 1, _get_PortableServer_SynchronizationPolicy_value_paramdata};
-
-  POA_PortableServer::SynchronizationPolicy *_tao_impl = (POA_PortableServer::SynchronizationPolicy *)_tao_object_reference;
-  PortableServer::SynchronizationPolicyValue _tao_retval;
-  _tao_server_request.demarshal (
-                                 _tao_orb_environment,
-                                 &_get_PortableServer_SynchronizationPolicy_value_calldata,
-                                 &_tao_retval
-                                 );
-  if (_tao_orb_environment.exception ()) return;
-  _tao_retval = _tao_impl->value (
-                                  _tao_orb_environment
-                                  );
-  _tao_server_request.marshal (
-                               _tao_orb_environment,
-                               //                               _tao_skel_environment,
-                               &_get_PortableServer_SynchronizationPolicy_value_calldata,
-                               &_tao_retval
-                               );
-}
-
-void POA_PortableServer::SynchronizationPolicy::_is_a_skel (
-                                                            CORBA::ServerRequest &_tao_server_request,
-                                                            void * _tao_object_reference,
-                                                            void * /*context*/,
-                                                            CORBA::Environment &_tao_orb_environment
-                                                            )
-{
-  //  CORBA::Environment _tao_skel_environment;
-  static const TAO_Param_Data_Skel PortableServer_SynchronizationPolicy_is_a_paramdata [] =
-  {
-    {CORBA::_tc_boolean, 0, 0},
-    {CORBA::_tc_string, CORBA::ARG_IN, 0}
-  };
-  static const TAO_Call_Data_Skel PortableServer_SynchronizationPolicy_is_a_calldata =
-  {"_is_a", 1, 2, PortableServer_SynchronizationPolicy_is_a_paramdata};
-  POA_PortableServer::SynchronizationPolicy_ptr  _tao_impl = (POA_PortableServer::SynchronizationPolicy_ptr) _tao_object_reference;
-  CORBA::Boolean _tao_retval;
-  char *_tao_value = 0;
-  _tao_server_request.demarshal (
-                                 _tao_orb_environment,
-                                 &PortableServer_SynchronizationPolicy_is_a_calldata,
-                                 &_tao_retval,
-                                 &_tao_value
-                                 );
-  if (_tao_orb_environment.exception () != 0) return;
-  _tao_retval = _tao_impl->_is_a (_tao_value, _tao_orb_environment);
-  _tao_server_request.marshal (
-                               _tao_orb_environment,
-                               //                               _tao_skel_environment,
-                               &PortableServer_SynchronizationPolicy_is_a_calldata,
-                               &_tao_retval,
-                               &_tao_value
-                               );
-  CORBA::string_free (_tao_value);
-}
-
-CORBA::Boolean POA_PortableServer::SynchronizationPolicy::_is_a (
-                                                                 const char* value,
-                                                                 CORBA::Environment &_tao_orb_environment
-                                                                 )
-{
-  if (
-      (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/SynchronizationPolicy:1.0")) ||
-      (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/Policy:1.0")) ||
-      (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_orb_environment))))
-    return 1;
-  else
-    return 0;
-}
-
-void* POA_PortableServer::SynchronizationPolicy::_downcast (
-                                                            const char* logical_type_id
-                                                            )
-{
-  if (ACE_OS::strcmp (logical_type_id, "IDL:PortableServer/SynchronizationPolicy:1.0") == 0)
-    return ACE_static_cast (POA_PortableServer::SynchronizationPolicy_ptr, this);
-  if (ACE_OS::strcmp (logical_type_id, "IDL:PortableServer/Policy:1.0") == 0)
-    return ACE_static_cast (POA_CORBA::Policy_ptr, this);
-  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
-    return ACE_static_cast(PortableServer::Servant, this);
-  return 0;
-}
-
-void POA_PortableServer::SynchronizationPolicy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env)
-{
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel) == -1)
-    {
-      env.exception (new CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
-      ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
-    }
-  else
-    skel (req, this, context, env);
-}
-
-const char* POA_PortableServer::SynchronizationPolicy::_interface_repository_id (void) const
-{
-  return "IDL:PortableServer/SynchronizationPolicy:1.0";
-}
-
-POA_PortableServer::_tao_collocated_SynchronizationPolicy::_tao_collocated_SynchronizationPolicy (
-                                                                                                  POA_PortableServer::SynchronizationPolicy_ptr  servant,
-                                                                                                  STUB_Object *stub
-                                                                                                  )
-  : ACE_NESTED_CLASS (PortableServer, SynchronizationPolicy) (stub, servant, 1),
-    ACE_NESTED_CLASS (POA_CORBA, _tao_collocated_Policy) (servant, stub),
-    CORBA_Object (stub, servant, 1),
-    servant_ (servant)
-{
-}
-
-POA_PortableServer::SynchronizationPolicy_ptr POA_PortableServer::_tao_collocated_SynchronizationPolicy::_get_servant (void) const
-{
-  return this->servant_;
-}
-
-CORBA::Boolean POA_PortableServer::_tao_collocated_SynchronizationPolicy::_is_a (
-                                                                                 const char* logical_type_id,
-                                                                                 CORBA::Environment &_tao_orb_environment
-                                                                                 )
-{
-  return this->servant_->_is_a (
-                                logical_type_id,
-                                _tao_orb_environment
-                                );
-}
-
-CORBA::Policy_ptr POA_PortableServer::_tao_collocated_SynchronizationPolicy::copy (
-                                                                                   CORBA::Environment &_tao_orb_environment
-                                                                                   )
-{
-  return this->servant_->copy (
-                               _tao_orb_environment
-                               );
-}
-
-void POA_PortableServer::_tao_collocated_SynchronizationPolicy::destroy (
-                                                                         CORBA::Environment &_tao_orb_environment
-                                                                         )
-{
-  this->servant_->destroy (
-                           _tao_orb_environment
-                           );
-}
-
-CORBA::PolicyType POA_PortableServer::_tao_collocated_SynchronizationPolicy::policy_type (
-                                                                                          CORBA::Environment &_tao_orb_environment
-                                                                                          )
-{
-  return this->servant_->policy_type (_tao_orb_environment);
-}
-
-PortableServer::SynchronizationPolicyValue
-POA_PortableServer::_tao_collocated_SynchronizationPolicy::value (
-                                                                  CORBA::Environment &_tao_orb_environment
-                                                                  )
-{
-  return this->servant_->value(_tao_orb_environment);
-}
-
-PortableServer::SynchronizationPolicy*
-POA_PortableServer::SynchronizationPolicy::_this (CORBA_Environment &TAO_IN_ENV)
-{
-  STUB_Object *stub = this->_create_stub (TAO_IN_ENV);
-  if (TAO_IN_ENV.exception () != 0)
-    return 0;
-  return new POA_PortableServer::_tao_collocated_SynchronizationPolicy (this, stub);
-}
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 static const TAO_operation_db_entry PortableServer_POAManager_operations [] = {
   {"_is_a", &POA_PortableServer::POAManager::_is_a_skel}
@@ -1794,6 +1591,8 @@ void POA_PortableServer::_tao_collocated_POAManager::activate (
                             );
 }
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 void POA_PortableServer::_tao_collocated_POAManager::hold_requests (
                                                                     CORBA::Boolean wait_for_completion,
                                                                     CORBA::Environment &_tao_orb_environment
@@ -1829,6 +1628,7 @@ void POA_PortableServer::_tao_collocated_POAManager::deactivate (
                               );
 }
 
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 PortableServer::POAManager*
 POA_PortableServer::POAManager::_this (CORBA_Environment &TAO_IN_ENV)
@@ -1838,6 +1638,8 @@ POA_PortableServer::POAManager::_this (CORBA_Environment &TAO_IN_ENV)
     return 0;
   return new POA_PortableServer::_tao_collocated_POAManager (this, stub);
 }
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
 static const TAO_operation_db_entry PortableServer_AdapterActivator_operations [] = {
   {"_is_a", &POA_PortableServer::AdapterActivator::_is_a_skel}
@@ -2448,6 +2250,8 @@ POA_PortableServer::ServantLocator::_this (CORBA_Environment &TAO_IN_ENV)
   return new POA_PortableServer::_tao_collocated_ServantLocator (this, stub);
 }
 
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
 static const TAO_operation_db_entry PortableServer_POA_operations [] = {
   {"_is_a", &POA_PortableServer::POA::_is_a_skel}
 };
@@ -2609,6 +2413,8 @@ void POA_PortableServer::_tao_collocated_POA::destroy (
                            );
 }
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 PortableServer::ThreadPolicy_ptr POA_PortableServer::_tao_collocated_POA::create_thread_policy (
                                                                                                 PortableServer::ThreadPolicyValue value,
                                                                                                 CORBA::Environment &_tao_orb_environment
@@ -2619,6 +2425,8 @@ PortableServer::ThreadPolicy_ptr POA_PortableServer::_tao_collocated_POA::create
                                                _tao_orb_environment
                                                );
 }
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 PortableServer::LifespanPolicy_ptr POA_PortableServer::_tao_collocated_POA::create_lifespan_policy (
                                                                                                     PortableServer::LifespanPolicyValue value,
@@ -2653,6 +2461,8 @@ PortableServer::IdAssignmentPolicy_ptr POA_PortableServer::_tao_collocated_POA::
                                                       );
 }
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 PortableServer::ImplicitActivationPolicy_ptr POA_PortableServer::_tao_collocated_POA::create_implicit_activation_policy (
                                                                                                                          PortableServer::ImplicitActivationPolicyValue value,
                                                                                                                          CORBA::Environment &_tao_orb_environment
@@ -2686,22 +2496,7 @@ PortableServer::RequestProcessingPolicy_ptr POA_PortableServer::_tao_collocated_
                                                            );
 }
 
-// **************************************************
-//
-// TAO spcific POA locking policy (non-standard)
-//
-// **************************************************
-
-PortableServer::SynchronizationPolicy_ptr POA_PortableServer::_tao_collocated_POA::create_synchronization_policy (
-                                                                                                                  PortableServer::SynchronizationPolicyValue value,
-                                                                                                                  CORBA::Environment &_tao_orb_environment
-                                                                                                                  )
-{
-  return this->servant_->create_synchronization_policy (
-                                                        value,
-                                                        _tao_orb_environment
-                                                        );
-}
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 char*
 POA_PortableServer::_tao_collocated_POA::the_name (
@@ -2724,6 +2519,9 @@ POA_PortableServer::_tao_collocated_POA::the_POAManager (
 {
   return this->servant_->the_POAManager(_tao_orb_environment);
 }
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 PortableServer::AdapterActivator_ptr
 POA_PortableServer::_tao_collocated_POA::the_activator (
                                                         CORBA::Environment &_tao_orb_environment
@@ -2782,6 +2580,8 @@ void POA_PortableServer::_tao_collocated_POA::set_servant (
                                _tao_orb_environment
                                );
 }
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 PortableServer::ObjectId * POA_PortableServer::_tao_collocated_POA::activate_object (
                                                                                      PortableServer::Servant p_servant,

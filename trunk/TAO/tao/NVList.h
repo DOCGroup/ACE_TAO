@@ -19,6 +19,10 @@
 #ifndef TAO_NVLIST_H
 #define TAO_NVLIST_H
 
+#include "tao/orbconf.h"
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 #include "ace/Containers_T.h"
 #include "tao/Any.h"
 
@@ -311,5 +315,7 @@ private:
 #if defined (__ACE_INLINE__)
 # include "tao/NVList.i"
 #endif /* __ACE_INLINE__ */
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 #endif /* TAO_NVLIST_H */

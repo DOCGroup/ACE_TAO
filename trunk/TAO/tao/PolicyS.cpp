@@ -13,6 +13,8 @@
 #include "tao/Operation_Table.h"
 #include "tao/Server_Request.h"
 #include "tao/POA_CORBA.h"
+#include "tao/Environment.h"
+#include "tao/Typecode.h"
 
 ACE_RCSID(tao, PolicyS, "$Id$")
 

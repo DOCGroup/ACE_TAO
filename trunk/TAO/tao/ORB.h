@@ -75,14 +75,14 @@ typedef struct TAO_Leader_Follower_Info_Struct
 {
   ACE_SYNCH_MUTEX leader_follower_lock_;
   // do protect the access to the following three members
-  
+
   ACE_Unbounded_Set<ACE_SYNCH_CONDITION *> follower_set_;
   // keep a set of followers around (protected)
 
   int leaders_;
   // 0 if no leader is around, 1 if there is a leader
   // > 1 if we do nested upcalls (protected)
-  
+
   ACE_thread_t leader_thread_ID_;
   // thread ID of the leader thread (protected)
 } TAO_Leader_Follower_Info;
@@ -248,6 +248,8 @@ public:
   // must implement this and determine what is a collocated object
   // based on information provided in the STUB_Object.
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
   void create_list (CORBA::Long count,
                     CORBA::NVList_ptr &retval);
 
@@ -269,6 +271,8 @@ public:
   //
   // It is platform-specific how the application and ORB arrange to
   // use compatible threading primitives.
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
   int run (void);
   int run (ACE_Time_Value &tv);
@@ -370,6 +374,9 @@ public:
   int should_shutdown (void);
   // Get the shutdown flag value
 
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
   // Forward declaration and typedefs for the exception thrown by
   // the ORB Dynamic Any factory functions.
   class CORBA_ORB_InconsistentTypeCode;
@@ -401,6 +408,7 @@ public:
 
   CORBA_DynEnum_ptr      create_dyn_enum      (CORBA_TypeCode_ptr tc,
                                                CORBA::Environment &TAO_IN_ENV);
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 protected:
   // We must be created via the <ORB_init> call.

@@ -175,6 +175,8 @@ public:
 #endif /* end #if !defined */
 
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 class DynAny;
 typedef DynAny *DynAny_ptr;
 class TAO_Export DynAny : public virtual TAO_Local_ServantBase
@@ -1160,6 +1162,7 @@ private:
 
 #endif /* end #if !defined */
 
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 #if defined(_MSC_VER)
 #pragma warning(default:4250)

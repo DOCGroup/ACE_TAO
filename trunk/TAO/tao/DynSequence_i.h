@@ -17,6 +17,10 @@
 #ifndef TAO_DYNSEQUENCE_I_H
 #define TAO_DYNSEQUENCE_I_H
 
+#include "tao/orbconf.h"
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 #include "ace/Containers.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -178,5 +182,7 @@ private:
   TAO_DynSequence_i (const TAO_DynSequence_i &src);
   TAO_DynSequence_i &operator= (const TAO_DynSequence_i &src);
 };
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 #endif /* TAO_DYNSEQUENCE_I_H */

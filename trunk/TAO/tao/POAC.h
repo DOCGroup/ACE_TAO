@@ -192,7 +192,7 @@ public:
 #if !defined (_PORTABLESERVER_FORWARDREQUEST_CH_)
 #define _PORTABLESERVER_FORWARDREQUEST_CH_
 
-  class TAO_Export ForwardRequest : public CORBA_SystemException
+  class TAO_Export ForwardRequest : public CORBA_UserException
   {
   public:
     ForwardRequest (void); // default ctor
@@ -226,6 +226,9 @@ public:
     ORB_CTRL_MODEL,
     SINGLE_THREAD_MODEL
   };
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
   typedef ThreadPolicyValue &ThreadPolicyValue_out;
   static CORBA::TypeCode_ptr _tc_ThreadPolicyValue;
 
@@ -317,6 +320,8 @@ public:
 #endif /* end #if !defined */
 
   static CORBA::TypeCode_ptr _tc_ThreadPolicy;
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
   enum LifespanPolicyValue
   {
@@ -620,6 +625,9 @@ public:
     IMPLICIT_ACTIVATION,
     NO_IMPLICIT_ACTIVATION
   };
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
   typedef ImplicitActivationPolicyValue &ImplicitActivationPolicyValue_out;
   static CORBA::TypeCode_ptr _tc_ImplicitActivationPolicyValue;
 
@@ -714,11 +722,16 @@ public:
 
   static CORBA::TypeCode_ptr _tc_ImplicitActivationPolicy;
 
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
   enum ServantRetentionPolicyValue
   {
     RETAIN,
     NON_RETAIN
   };
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
   typedef ServantRetentionPolicyValue &ServantRetentionPolicyValue_out;
   static CORBA::TypeCode_ptr _tc_ServantRetentionPolicyValue;
 
@@ -813,12 +826,17 @@ public:
 
   static CORBA::TypeCode_ptr _tc_ServantRetentionPolicy;
 
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
   enum RequestProcessingPolicyValue
   {
     USE_ACTIVE_OBJECT_MAP_ONLY,
     USE_DEFAULT_SERVANT,
     USE_SERVANT_MANAGER
   };
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
   typedef RequestProcessingPolicyValue &RequestProcessingPolicyValue_out;
   static CORBA::TypeCode_ptr _tc_RequestProcessingPolicyValue;
 
@@ -913,112 +931,7 @@ public:
 
   static CORBA::TypeCode_ptr _tc_RequestProcessingPolicy;
 
-  // **************************************************
-  //
-  // TAO spcific POA locking policy (non-standard)
-  //
-  // **************************************************
-
-  enum SynchronizationPolicyValue
-  {
-    DEFAULT_LOCK,
-    NULL_LOCK,
-    THREAD_LOCK
-  };
-  typedef SynchronizationPolicyValue &SynchronizationPolicyValue_out;
-  static CORBA::TypeCode_ptr _tc_SynchronizationPolicyValue;
-
-
-#if !defined (_PORTABLESERVER_SYNCHRONIZATIONPOLICY___PTR_CH_)
-#define _PORTABLESERVER_SYNCHRONIZATIONPOLICY___PTR_CH_
-
-  class SynchronizationPolicy;
-  typedef SynchronizationPolicy *SynchronizationPolicy_ptr;
-
-#endif /* end #if !defined */
-
-#if !defined (_PORTABLESERVER_SYNCHRONIZATIONPOLICY___VAR_CH_)
-#define _PORTABLESERVER_SYNCHRONIZATIONPOLICY___VAR_CH_
-
-  class TAO_Export SynchronizationPolicy_var
-  {
-  public:
-    SynchronizationPolicy_var (void); // default constructor
-    SynchronizationPolicy_var (SynchronizationPolicy_ptr);
-    SynchronizationPolicy_var (const SynchronizationPolicy_var &); // copy constructor
-    ~SynchronizationPolicy_var (void); // destructor
-
-    SynchronizationPolicy_var &operator= (SynchronizationPolicy_ptr);
-    SynchronizationPolicy_var &operator= (const SynchronizationPolicy_var &);
-    SynchronizationPolicy_ptr operator-> (void) const;
-
-    operator const SynchronizationPolicy_ptr &() const;
-    operator SynchronizationPolicy_ptr &();
-    // in, inout, out, _retn
-    SynchronizationPolicy_ptr in (void) const;
-    SynchronizationPolicy_ptr &inout (void);
-    SynchronizationPolicy_ptr &out (void);
-    SynchronizationPolicy_ptr _retn (void);
-    SynchronizationPolicy_ptr ptr (void) const;
-
-  private:
-    SynchronizationPolicy_ptr ptr_;
-  };
-
-#endif /* end #if !defined */
-
-#if !defined (_PORTABLESERVER_SYNCHRONIZATIONPOLICY___OUT_CH_)
-#define _PORTABLESERVER_SYNCHRONIZATIONPOLICY___OUT_CH_
-
-  class TAO_Export SynchronizationPolicy_out
-  {
-  public:
-    SynchronizationPolicy_out (SynchronizationPolicy_ptr &);
-    SynchronizationPolicy_out (SynchronizationPolicy_var &);
-    SynchronizationPolicy_out (SynchronizationPolicy_out &);
-    SynchronizationPolicy_out &operator= (SynchronizationPolicy_out &);
-    SynchronizationPolicy_out &operator= (const SynchronizationPolicy_var &);
-    SynchronizationPolicy_out &operator= (SynchronizationPolicy_ptr);
-    operator SynchronizationPolicy_ptr &();
-    SynchronizationPolicy_ptr &ptr (void);
-    SynchronizationPolicy_ptr operator-> (void);
-
-  private:
-    SynchronizationPolicy_ptr &ptr_;
-  };
-
-#endif /* end #if !defined */
-
-#if !defined (_PORTABLESERVER_SYNCHRONIZATIONPOLICY_CH_)
-#define _PORTABLESERVER_SYNCHRONIZATIONPOLICY_CH_
-
-  class TAO_Export SynchronizationPolicy: public virtual ACE_CORBA_1 (Policy)
-  {
-  public:
-    // the static operations
-    static SynchronizationPolicy_ptr _duplicate (SynchronizationPolicy_ptr obj);
-    static SynchronizationPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
-    static SynchronizationPolicy_ptr _nil (void);
-
-    virtual SynchronizationPolicyValue value (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
-    virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
-  protected:
-    SynchronizationPolicy (
-                           STUB_Object *objref = 0,
-                           TAO_ServantBase *servant = 0,
-                           CORBA::Boolean collocated = 0
-                           );
-  public:
-    virtual ~SynchronizationPolicy (void);
-  private:
-    SynchronizationPolicy (const SynchronizationPolicy&);
-    void operator= (const SynchronizationPolicy&);
-  };
-
-#endif /* end #if !defined */
-
-  static CORBA::TypeCode_ptr _tc_SynchronizationPolicy;
-
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 #if !defined (_PORTABLESERVER_POAMANAGER___PTR_CH_)
 #define _PORTABLESERVER_POAMANAGER___PTR_CH_
@@ -1103,7 +1016,7 @@ public:
 #if !defined (_PORTABLESERVER_POAMANAGER_ADAPTERINACTIVE_CH_)
 #define _PORTABLESERVER_POAMANAGER_ADAPTERINACTIVE_CH_
 
-    class TAO_Export AdapterInactive : public CORBA_SystemException
+    class TAO_Export AdapterInactive : public CORBA_UserException
     {
     public:
       AdapterInactive (void); // default ctor
@@ -1125,9 +1038,15 @@ public:
 #endif /* end #if !defined */
 
     virtual void  activate (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
     virtual void  hold_requests (CORBA::Boolean wait_for_completion, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
     virtual void  discard_requests (CORBA::Boolean wait_for_completion, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
     virtual void  deactivate (CORBA::Boolean etherealize_objects, CORBA::Boolean wait_for_completion, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   protected:
     POAManager (
@@ -1146,6 +1065,7 @@ public:
 
   static CORBA::TypeCode_ptr _tc_POAManager;
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
 #if !defined (_PORTABLESERVER_ADAPTERACTIVATOR___PTR_CH_)
 #define _PORTABLESERVER_ADAPTERACTIVATOR___PTR_CH_
@@ -1515,6 +1435,7 @@ public:
 
   static CORBA::TypeCode_ptr _tc_ServantLocator;
 
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 #if !defined (_PORTABLESERVER_POA___PTR_CH_)
 #define _PORTABLESERVER_POA___PTR_CH_
@@ -1599,7 +1520,7 @@ public:
 #if !defined (_PORTABLESERVER_POA_ADAPTERALREADYEXISTS_CH_)
 #define _PORTABLESERVER_POA_ADAPTERALREADYEXISTS_CH_
 
-    class TAO_Export AdapterAlreadyExists : public CORBA_SystemException
+    class TAO_Export AdapterAlreadyExists : public CORBA_UserException
     {
     public:
       AdapterAlreadyExists (void); // default ctor
@@ -1620,6 +1541,8 @@ public:
 
 #endif /* end #if !defined */
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 #if !defined (_PORTABLESERVER_POA_ADAPTERINACTIVE___PTR_CH_)
 #define _PORTABLESERVER_POA_ADAPTERINACTIVE___PTR_CH_
 
@@ -1631,7 +1554,7 @@ public:
 #if !defined (_PORTABLESERVER_POA_ADAPTERINACTIVE_CH_)
 #define _PORTABLESERVER_POA_ADAPTERINACTIVE_CH_
 
-    class TAO_Export AdapterInactive : public CORBA_SystemException
+    class TAO_Export AdapterInactive : public CORBA_UserException
     {
     public:
       AdapterInactive (void); // default ctor
@@ -1652,6 +1575,8 @@ public:
 
 #endif /* end #if !defined */
 
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
 #if !defined (_PORTABLESERVER_POA_ADAPTERNONEXISTENT___PTR_CH_)
 #define _PORTABLESERVER_POA_ADAPTERNONEXISTENT___PTR_CH_
 
@@ -1663,7 +1588,7 @@ public:
 #if !defined (_PORTABLESERVER_POA_ADAPTERNONEXISTENT_CH_)
 #define _PORTABLESERVER_POA_ADAPTERNONEXISTENT_CH_
 
-    class TAO_Export AdapterNonExistent : public CORBA_SystemException
+    class TAO_Export AdapterNonExistent : public CORBA_UserException
     {
     public:
       AdapterNonExistent (void); // default ctor
@@ -1695,7 +1620,7 @@ public:
 #if !defined (_PORTABLESERVER_POA_INVALIDPOLICY_CH_)
 #define _PORTABLESERVER_POA_INVALIDPOLICY_CH_
 
-    class TAO_Export InvalidPolicy : public CORBA_SystemException
+    class TAO_Export InvalidPolicy : public CORBA_UserException
     {
     public:
       InvalidPolicy (void); // default ctor
@@ -1722,6 +1647,8 @@ public:
 
 #endif /* end #if !defined */
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 #if !defined (_PORTABLESERVER_POA_NOSERVANT___PTR_CH_)
 #define _PORTABLESERVER_POA_NOSERVANT___PTR_CH_
 
@@ -1733,7 +1660,7 @@ public:
 #if !defined (_PORTABLESERVER_POA_NOSERVANT_CH_)
 #define _PORTABLESERVER_POA_NOSERVANT_CH_
 
-    class TAO_Export NoServant : public CORBA_SystemException
+    class TAO_Export NoServant : public CORBA_UserException
     {
     public:
       NoServant (void); // default ctor
@@ -1754,6 +1681,8 @@ public:
 
 #endif /* end #if !defined */
 
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
 #if !defined (_PORTABLESERVER_POA_OBJECTALREADYACTIVE___PTR_CH_)
 #define _PORTABLESERVER_POA_OBJECTALREADYACTIVE___PTR_CH_
 
@@ -1765,7 +1694,7 @@ public:
 #if !defined (_PORTABLESERVER_POA_OBJECTALREADYACTIVE_CH_)
 #define _PORTABLESERVER_POA_OBJECTALREADYACTIVE_CH_
 
-    class TAO_Export ObjectAlreadyActive : public CORBA_SystemException
+    class TAO_Export ObjectAlreadyActive : public CORBA_UserException
     {
     public:
       ObjectAlreadyActive (void); // default ctor
@@ -1797,7 +1726,7 @@ public:
 #if !defined (_PORTABLESERVER_POA_OBJECTNOTACTIVE_CH_)
 #define _PORTABLESERVER_POA_OBJECTNOTACTIVE_CH_
 
-    class TAO_Export ObjectNotActive : public CORBA_SystemException
+    class TAO_Export ObjectNotActive : public CORBA_UserException
     {
     public:
       ObjectNotActive (void); // default ctor
@@ -1829,7 +1758,7 @@ public:
 #if !defined (_PORTABLESERVER_POA_SERVANTALREADYACTIVE_CH_)
 #define _PORTABLESERVER_POA_SERVANTALREADYACTIVE_CH_
 
-    class TAO_Export ServantAlreadyActive : public CORBA_SystemException
+    class TAO_Export ServantAlreadyActive : public CORBA_UserException
     {
     public:
       ServantAlreadyActive (void); // default ctor
@@ -1861,7 +1790,7 @@ public:
 #if !defined (_PORTABLESERVER_POA_SERVANTNOTACTIVE_CH_)
 #define _PORTABLESERVER_POA_SERVANTNOTACTIVE_CH_
 
-    class TAO_Export ServantNotActive : public CORBA_SystemException
+    class TAO_Export ServantNotActive : public CORBA_UserException
     {
     public:
       ServantNotActive (void); // default ctor
@@ -1893,7 +1822,7 @@ public:
 #if !defined (_PORTABLESERVER_POA_WRONGADAPTER_CH_)
 #define _PORTABLESERVER_POA_WRONGADAPTER_CH_
 
-    class TAO_Export WrongAdapter : public CORBA_SystemException
+    class TAO_Export WrongAdapter : public CORBA_UserException
     {
     public:
       WrongAdapter (void); // default ctor
@@ -1925,7 +1854,7 @@ public:
 #if !defined (_PORTABLESERVER_POA_WRONGPOLICY_CH_)
 #define _PORTABLESERVER_POA_WRONGPOLICY_CH_
 
-    class TAO_Export WrongPolicy : public CORBA_SystemException
+    class TAO_Export WrongPolicy : public CORBA_UserException
     {
     public:
       WrongPolicy (void); // default ctor
@@ -1949,31 +1878,40 @@ public:
     virtual POA_ptr  create_POA (const char *adapter_name, POAManager_ptr a_POAManager, const CORBA::PolicyList &policies, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
     virtual POA_ptr  find_POA (const char *adapter_name, CORBA::Boolean activate_it, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
     virtual void  destroy (CORBA::Boolean etherealize_objects, CORBA::Boolean wait_for_completion, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
     virtual ThreadPolicy_ptr  create_thread_policy (ThreadPolicyValue value, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
     virtual LifespanPolicy_ptr  create_lifespan_policy (LifespanPolicyValue value, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
     virtual IdUniquenessPolicy_ptr  create_id_uniqueness_policy (IdUniquenessPolicyValue value, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
     virtual IdAssignmentPolicy_ptr  create_id_assignment_policy (IdAssignmentPolicyValue value, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
     virtual ImplicitActivationPolicy_ptr  create_implicit_activation_policy (ImplicitActivationPolicyValue value, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
     virtual ServantRetentionPolicy_ptr  create_servant_retention_policy (ServantRetentionPolicyValue value, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
     virtual RequestProcessingPolicy_ptr  create_request_processing_policy (RequestProcessingPolicyValue value, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
 
-    // **************************************************
-    //
-    // TAO spcific POA locking policy (non-standard)
-    //
-    // **************************************************
-
-    virtual SynchronizationPolicy_ptr  create_synchronization_policy (SynchronizationPolicyValue value, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
     virtual char * the_name (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
     virtual POA_ptr  the_parent (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
     virtual POAManager_ptr  the_POAManager (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
     virtual AdapterActivator_ptr  the_activator (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
     virtual void the_activator(AdapterActivator_ptr the_activator, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
     virtual ServantManager_ptr  get_servant_manager (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
     virtual void  set_servant_manager (ServantManager_ptr imgr, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
     virtual Servant  get_servant (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
     virtual void  set_servant (Servant p_servant, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
     virtual ObjectId * activate_object (Servant p_servant, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
     virtual void  activate_object_with_id (const ObjectId &id, Servant p_servant, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
     virtual void  deactivate_object (const ObjectId &oid, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
@@ -2087,7 +2025,7 @@ public:
 #if !defined (_PORTABLESERVER_CURRENT_NOCONTEXT_CH_)
 #define _PORTABLESERVER_CURRENT_NOCONTEXT_CH_
 
-    class TAO_Export NoContext : public CORBA_SystemException
+    class TAO_Export NoContext : public CORBA_UserException
     {
     public:
       NoContext (void); // default ctor

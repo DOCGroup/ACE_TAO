@@ -281,13 +281,16 @@ public:
   TAO_Object_Manager<T> &operator= (T *);
   // Assignment from T *.
 
+  T * operator-> (void) const;
+  // Return pointer.
+
   operator const T *() const;
   // Cast (read-only).
 
   operator T *&();
   // Cast.
 
-  const T *in (void) const;
+  T *in (void) const;
   // for in parameter.
 
   T *&inout (void);

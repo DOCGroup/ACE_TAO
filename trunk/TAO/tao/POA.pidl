@@ -50,16 +50,19 @@ module PortableServer
   native Servant;
   typedef sequence<octet> ObjectId;
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
   exception ForwardRequest
     {
       Object forward_reference;
     };
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
   // **********************************************
   //
   // Policy interfaces
   //
   // **********************************************
+#if !defined (TAO_HAS_MINIMUM_CORBA)
   enum ThreadPolicyValue {
     ORB_CTRL_MODEL,
     SINGLE_THREAD_MODEL
@@ -68,6 +71,7 @@ module PortableServer
     {
       readonly attribute ThreadPolicyValue value;
     };
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
   enum LifespanPolicyValue {
     TRANSIENT,
@@ -96,6 +100,7 @@ module PortableServer
       readonly attribute IdAssignmentPolicyValue value;
     };
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
   enum ImplicitActivationPolicyValue {
     IMPLICIT_ACTIVATION,
     NO_IMPLICIT_ACTIVATION
@@ -123,22 +128,7 @@ module PortableServer
     {
       readonly attribute RequestProcessingPolicyValue value;
     };
-
-  // **************************************************
-  //
-  // TAO spcific POA locking policy (non-standard)
-  //
-  // **************************************************
-
-  enum SynchronizationPolicyValue {
-    DEFAULT_LOCK,
-    NULL_LOCK,
-    THREAD_LOCK
-  };
-  interface SynchronizationPolicy : CORBA::Policy
-    {
-      readonly attribute SynchronizationPolicyValue value;
-    };
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
   // **************************************************
   //
@@ -152,15 +142,15 @@ module PortableServer
 
       void activate()
         raises(AdapterInactive);
+#if !defined (TAO_HAS_MINIMUM_CORBA)
       void hold_requests(in boolean wait_for_completion)
         raises(AdapterInactive);
       void discard_requests(in boolean wait_for_completion)
         raises(AdapterInactive);
-      // ****change**** begin take out semi-colon after parameter list in 97-04-14
       void deactivate(  in boolean etherealize_objects,
                         in boolean wait_for_completion)
         raises(AdapterInactive);
-      // ****change**** end   take out semi-colon after parameter list in 97-04-14
+#endif /* TAO_HAS_MINIMUM_CORBA */
     };
 
   // **************************************************
@@ -169,6 +159,7 @@ module PortableServer
   //
   // **************************************************
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
   interface AdapterActivator
     {
       boolean unknown_adapter(in POA parent, in string name);
@@ -214,6 +205,7 @@ module PortableServer
                     in Cookie   the_cookie,
                     in Servant  the_servant     );
   };
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 
   // **************************************************
@@ -225,10 +217,14 @@ module PortableServer
   interface POA
     {
       exception AdapterAlreadyExists {};
+#if !defined (TAO_HAS_MINIMUM_CORBA)
       exception AdapterInactive {};
+#endif /* TAO_HAS_MINIMUM_CORBA */
       exception AdapterNonExistent {};
       exception InvalidPolicy { unsigned short index; };
+#if !defined (TAO_HAS_MINIMUM_CORBA)
       exception NoServant {};
+#endif /* TAO_HAS_MINIMUM_CORBA */
       exception ObjectAlreadyActive {};
       exception ObjectNotActive {};
       exception ServantAlreadyActive {};
@@ -258,8 +254,10 @@ module PortableServer
       // Factories for Policy objects
       //
       // **************************************************
+#if !defined (TAO_HAS_MINIMUM_CORBA)
       ThreadPolicy
         create_thread_policy(in ThreadPolicyValue value);
+#endif /* TAO_HAS_MINIMUM_CORBA */
       LifespanPolicy
         create_lifespan_policy(in LifespanPolicyValue value);
       IdUniquenessPolicy
@@ -268,6 +266,7 @@ module PortableServer
       IdAssignmentPolicy
         create_id_assignment_policy
         (in IdAssignmentPolicyValue value);
+#if !defined (TAO_HAS_MINIMUM_CORBA)
       ImplicitActivationPolicy
         create_implicit_activation_policy
         (in ImplicitActivationPolicyValue value);
@@ -277,16 +276,7 @@ module PortableServer
       RequestProcessingPolicy
         create_request_processing_policy
         (in RequestProcessingPolicyValue value);
-
-      // **************************************************
-      //
-      // TAO spcific POA locking policy (non-standard)
-      //
-      // **************************************************
-
-      SynchronizationPolicy
-        create_synchronization_policy
-        (in SynchronizationPolicyValue value);
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
       //--------------------------------------------------
       //
@@ -297,7 +287,9 @@ module PortableServer
       readonly attribute string the_name;
       readonly attribute POA the_parent;
       readonly attribute POAManager the_POAManager;
+#if !defined (TAO_HAS_MINIMUM_CORBA)
       attribute AdapterActivator the_activator;
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 
       //--------------------------------------------------
@@ -306,6 +298,7 @@ module PortableServer
       //
       //--------------------------------------------------
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
       ServantManager get_servant_manager()
         raises (WrongPolicy);
 
@@ -323,6 +316,7 @@ module PortableServer
 
       void set_servant( in Servant p_servant)
         raises (WrongPolicy);
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
       // **************************************************
       //

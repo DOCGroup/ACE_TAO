@@ -14,6 +14,9 @@
 // ===================================================================
 
 #include "tao/DynAny_i.h"
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 #include "tao/DynEnum_i.h"
 #include "tao/InconsistentTypeCodeC.h"
 
@@ -441,4 +444,4 @@ TAO_DynEnum_i::get_any (CORBA::Environment& env)
   return 0;
 }
 
-
+#endif /* TAO_HAS_MINIMUM_CORBA */

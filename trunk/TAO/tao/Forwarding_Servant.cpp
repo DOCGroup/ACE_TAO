@@ -1,6 +1,9 @@
 // $Id$
 
 #include "tao/Forwarding_Servant.h"
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 #include "tao/Object.h"
 #include "tao/POAC.h"
 #include "tao/Any.h"
@@ -43,3 +46,5 @@ TAO_Forwarding_Servant::_primary_interface (const PortableServer::ObjectId &oid,
 
   return CORBA::string_dup (this->interface_repository_id_.in ());
 }
+
+#endif /* TAO_HAS_MINIMUM_CORBA */

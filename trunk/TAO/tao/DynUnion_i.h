@@ -17,6 +17,10 @@
 #ifndef TAO_DYNUNION_I_H
 #define TAO_DYNUNION_I_H
 
+#include "tao/orbconf.h"
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 #include "tao/DynUnion_i_T.h"
 
 class TAO_Export TAO_DynUnion_i : public POA_CORBA::DynUnion
@@ -216,5 +220,7 @@ private:
   // Code common to the constructor from an Any arg and the member
   // function from_any().
 };
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 #endif /* TAO_DYNUNION_I_H */

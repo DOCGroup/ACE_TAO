@@ -44,6 +44,8 @@ public:
 
   virtual void activate (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
   virtual void hold_requests (CORBA::Boolean wait_for_completion,
                               CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
@@ -53,6 +55,8 @@ public:
   virtual void deactivate (CORBA::Boolean etherealize_objects,
                            CORBA::Boolean wait_for_completion,
                            CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
   TAO_POA_Manager (void);
 
@@ -66,6 +70,8 @@ protected:
 
   virtual void activate_i (CORBA_Environment &ACE_TRY_ENV);
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
   virtual void hold_requests_i (CORBA::Boolean wait_for_completion,
                                 CORBA_Environment &ACE_TRY_ENV);
 
@@ -75,6 +81,8 @@ protected:
   virtual void deactivate_i (CORBA::Boolean etherealize_objects,
                              CORBA::Boolean wait_for_completion,
                              CORBA_Environment &ACE_TRY_ENV);
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
   virtual ACE_Lock &lock (void);
 

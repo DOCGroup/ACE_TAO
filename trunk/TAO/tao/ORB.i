@@ -221,13 +221,6 @@ CORBA::is_nil (CORBA::ORB_ptr obj)
 }
 
 ACE_INLINE CORBA::Boolean
-CORBA_ORB::work_pending (void)
-{
-  // There's ALWAYS work to do ;-)
-  return 1;
-}
-
-ACE_INLINE CORBA::Boolean
 CORBA_ORB::orb_free_resources (void)
 {
   return !CORBA_ORB::orb_init_count_;
@@ -395,4 +388,3 @@ CORBA_ORB_out::operator-> (void)
 {
   return this->ptr_;
 }
-

@@ -1,3 +1,4 @@
+/* -*- C++ -*- */
 // $Id$
 
 // ============================================================================
@@ -9,551 +10,637 @@
 //    Active_Object_Map.h
 //
 // = AUTHOR
-//    Aniruddha Gokhale
 //    Irfan Pyarali
-//    Carlos O'Ryan
 //
 // ============================================================================
 
 #ifndef TAO_ACTIVE_OBJECT_MAP_H
 #define TAO_ACTIVE_OBJECT_MAP_H
 
-#include "ace/Hash_Map_Manager_T.h"
 #include "tao/corbafwd.h"
 #include "tao/Servant_Base.h"
+#include "ace/Map.h"
+#include "tao/Server_Strategy_Factory.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+////////////////////////////////////////////////////////////////////////////////
+
+class TAO_Incremental_Key_Generator
+{
+  // = TITLE
+  //     Defines a key generator.
+  //
+  // = DESCRIPTION
+  //     This class is used in adapters of maps that do not produce keys.
+public:
+
+  TAO_Incremental_Key_Generator (void);
+
+  int operator() (PortableServer::ObjectId &id);
+
+protected:
+
+  CORBA::ULong counter_;
+};
+
+////////////////////////////////////////////////////////////////////////////////
 
 class TAO_Export TAO_ObjectId_Hash
 {
   // = TITLE
-  //     @@ Irfan, please fill in here...
+  //     Hashing class for Object Ids.
+  //
+  // = DESCRIPTION
+  //     Define the hash() method for Object Ids.
 public:
+
   u_long operator () (const PortableServer::ObjectId &id) const;
   // Returns hash value.
 };
 
-// Defined in Stub.cpp for TAO_opaque (an alias of
-// PortableServer::ObjectId).
+////////////////////////////////////////////////////////////////////////////////
+
+class TAO_Ignore_Original_Key_Adapter
+{
+  // = TITLE
+  //     A key adapter (encode/decode) class.
+  //
+  // = DESCRIPTION
+  //     Define the encoding and decoding methods for converting
+  //     between Object Ids and active keys.  This class ignores the
+  //     <original_key> passed to it.
+public:
+
+  int encode (const PortableServer::ObjectId &original_key,
+              const ACE_Active_Map_Manager_Key &active_key,
+              PortableServer::ObjectId &modified_key);
+
+  int decode (const PortableServer::ObjectId &modified_key,
+              ACE_Active_Map_Manager_Key &active_key);
+
+  int decode (const PortableServer::ObjectId &modified_key,
+              PortableServer::ObjectId &original_key);
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
+class TAO_Preserve_Original_Key_Adapter
+{
+  // = TITLE
+  //     A key adapter (encode/decode) class.
+  //
+  // = DESCRIPTION
+  //     Define the encoding and decoding methods for converting
+  //     between Object Ids and active keys.  This class remembers the
+  //     <original_key> passed to it.
+public:
+
+  int encode (const PortableServer::ObjectId &original_key,
+              const ACE_Active_Map_Manager_Key &active_key,
+              PortableServer::ObjectId &modified_key);
+
+  int decode (const PortableServer::ObjectId &modified_key,
+              ACE_Active_Map_Manager_Key &active_key);
+
+  int decode (const PortableServer::ObjectId &modified_key,
+              PortableServer::ObjectId &original_key);
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
+// Comparison of Object Ids. Defined in Stub.cpp for TAO_opaque (an
+// alias of PortableServer::ObjectId).
 extern TAO_Export int operator== (const PortableServer::ObjectId &l,
                                   const PortableServer::ObjectId &r);
 
-class TAO_Export TAO_Active_Object_Map_Entry
+////////////////////////////////////////////////////////////////////////////////
+
+// Forward declarations.
+class TAO_Id_Uniqueness_Strategy;
+class TAO_Lifespan_Strategy;
+class TAO_Id_Assignment_Strategy;
+class TAO_Id_Hint_Strategy;
+
+class TAO_Active_Object_Map
 {
   // = TITLE
-  //     Common entry for all maps
-public:
-  TAO_Active_Object_Map_Entry (void);
-  // Constructor
-
-  PortableServer::ObjectId id_;
-  // Object id
-
-  CORBA::ULong generation_;
-  // Generation count
-
-  PortableServer::Servant servant_;
-  // Servant pointer
-
-  int is_free_;
-  // Is the entry currently in use
-};
-
-// Forward declaration
-class TAO_Active_Object_Map_Iterator_Impl;
-
-class TAO_Export TAO_Active_Object_Map_Iterator
-{
-  // = TITLE
-  //   Bridge for abstract iterator.
+  //     Map of object ids to servants.
   //
   // = DESCRIPTION
-  //   This class provides the "abstraction" for iteration over the
-  //   active object maps.
+  //     Implementation to be used by the POA.
 public:
-  TAO_Active_Object_Map_Iterator (TAO_Active_Object_Map_Iterator_Impl *impl);
-  // Constructor taking an implementation.
 
-  TAO_Active_Object_Map_Iterator (const TAO_Active_Object_Map_Iterator &x);
-  TAO_Active_Object_Map_Iterator &operator= (const TAO_Active_Object_Map_Iterator &x);
-  virtual ~TAO_Active_Object_Map_Iterator (void);
-  // This is a well behaved class
-
-  const TAO_Active_Object_Map_Entry &operator *(void) const;
-  // Return the current item.
-
-  TAO_Active_Object_Map_Iterator operator++ (void);
-  TAO_Active_Object_Map_Iterator operator++ (int);
-  // Increase the current position.
-
-  friend int operator== (const TAO_Active_Object_Map_Iterator &l,
-                         const TAO_Active_Object_Map_Iterator &r);
-  friend int operator!= (const TAO_Active_Object_Map_Iterator &l,
-                         const TAO_Active_Object_Map_Iterator &r);
-  // Compare two iterators.
-
-protected:
-  TAO_Active_Object_Map_Iterator_Impl *impl_;
-};
-
-// Forward declaration
-class TAO_Active_Object_Map_Impl;
-class TAO_Reverse_Active_Object_Map_Impl;
-
-class TAO_Export TAO_Active_Object_Map
-{
-  // = TITLE
-  //     Interface class for maintaining a mapping of object ids to
-  //     pointers to servants.
-public:
   TAO_Active_Object_Map (int user_id_policy,
-                         int unique_id_policy);
-  // System creates map based on <user_id_policy> and
-  // <unique_id_policy>
+                         int unique_id_policy,
+                         int persistent_id_policy,
+                         const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters);
+  // Constructor.
 
-  virtual ~TAO_Active_Object_Map (void);
+  ~TAO_Active_Object_Map (void);
   // Destructor.
 
-  int bind (const PortableServer::ObjectId &id,
-            PortableServer::Servant servant);
-  // Associate <id> with <servant>, returning 0 if object is
-  // registered successfully, 1 if it's already registered, and -1 if
-  // a failure occurs during registration.
-
-  int unbind (const PortableServer::ObjectId &id,
-              PortableServer::Servant &servant);
-  // Remove any association among <id> and <servant>.  Returns 0 if
-  // the operation was succesful, <-1> otherwise.
-
-  int find (const PortableServer::ObjectId &id);
-  // Returns 0 if there is a servant for <id> in the map, <-1>
-  // otherwise.
-
-  int find (const PortableServer::ObjectId &id,
-            PortableServer::Servant &servant);
-  // Find object associated with <id>.  If the <id> is found it sets
-  // <servant> and returns 0.  If not found, <servant> is unchanged
-  // and the value <-1> is returned.
-
-  int find (const PortableServer::Servant servant);
-  // Returns 0 if <servant> is in the map, <-1> otherwise.
-
-  int find (const PortableServer::Servant servant,
-            PortableServer::ObjectId &id);
-  // This method is only used with unique ids.  Find the <id> for
-  // <servant>.  Returns <-1> if <servant> is not found, returns <0>
-  // if <servant> is found.
-
-  PortableServer::ObjectId *create_object_id (PortableServer::Servant servant,
-                                              CORBA::Environment &TAO_IN_ENV);
-  // Create an object id
-
-  virtual CORBA::ULong system_id_size (void) const;
-  // Size of the system generated id.
-
-  typedef TAO_Active_Object_Map_Iterator iterator;
-  iterator begin (void) const;
-  iterator end (void) const;
-
-protected:
-  TAO_Active_Object_Map (const TAO_Active_Object_Map &);
-  TAO_Active_Object_Map &operator= (const TAO_Active_Object_Map &);
-  // Disallow copying.
-
-protected:
-  TAO_Active_Object_Map_Impl *impl_;
-  // Implementation pointer
-
-  TAO_Reverse_Active_Object_Map_Impl *reverse_impl_;
-  // Reverse implementation pointer
-
-  int unique_id_policy_;
-  // Flag to indicate whether we have the UNIQUE_ID policy or the
-  // SYSTEM_ID policy
-};
-
-class TAO_Export TAO_Active_Object_Map_Iterator_Impl
-{
-  // = TITLE
-  //   Abstract iterator for all active object maps.
-  //
-  // = DESCRIPTION
-  //   We want to provide an common interface for the different active
-  //   object maps and their iterators.  Active object maps are
-  //   handled using base classes and virtual methods; but we must
-  //   provide a "by value" interface for iterators.
-  //
-  //   To do this we use several well know patterns:
-  //
-  //     TAO_Active_Object_Map::iterator uses the Bridge pattern to
-  //     give a consistent and "by-value" interface to all the
-  //     iterators.  The base class for all the iterators is
-  //     TAO_Active_Object_Map_Iterator, here we use external
-  //     polymorphism to adapt all the iterators to this common
-  //     interface.
-public:
-  virtual ~TAO_Active_Object_Map_Iterator_Impl (void);
-  // Dtor
-
-  virtual TAO_Active_Object_Map_Iterator_Impl *clone (void) const = 0;
-  // Make a copy of the iterator, pointing to the current position.
-
-  virtual const TAO_Active_Object_Map_Entry &item (void) const = 0;
-  // Obtain the current item
-
-  virtual void advance (void) = 0;
-  // Advance to the next element.
-
-  virtual int done (const TAO_Active_Object_Map_Iterator_Impl *end) const = 0;
-  // Returns 1 if "this" points to the same position as <end>, returns
-  // 0 otherwise.
-};
-
-class TAO_Export TAO_Active_Object_Map_Impl
-{
-  // = TITLE
-  //   Abstract class for maintaining a mapping from object ids to
-  //   servants.
-  //
-  // = NOTES
-  //   Iterators may return free entries, whose "int_id" (the servant)
-  //   is 0.
-public:
-  virtual ~TAO_Active_Object_Map_Impl (void);
-  // Destructor.
-
-  virtual TAO_Active_Object_Map_Iterator_Impl *begin () const = 0;
-  virtual TAO_Active_Object_Map_Iterator_Impl *end () const = 0;
-  // Iterator interface
-
-  virtual int bind (const PortableServer::ObjectId &id,
-                    PortableServer::Servant servant) = 0;
-  virtual int unbind (const PortableServer::ObjectId &id,
-                      PortableServer::Servant &servant) = 0;
-  virtual int find (const PortableServer::ObjectId &id,
-                    PortableServer::Servant &servant) = 0;
-  virtual int find (const PortableServer::ObjectId &id);
-  virtual int find (const PortableServer::Servant servant);
-  virtual int find (const PortableServer::Servant servant,
-                    PortableServer::ObjectId &id);
-  virtual PortableServer::ObjectId *create_object_id (PortableServer::Servant servant,
-                                                      CORBA::Environment &TAO_IN_ENV) = 0;
-  virtual CORBA::ULong system_id_size (void) const = 0;
-  virtual int is_free (const TAO_Active_Object_Map_Entry &item) const = 0;
-};
-
-class TAO_Export TAO_Reverse_Active_Object_Map_Impl
-{
-  // = TITLE
-  //     Abstract base class for maintaining a mapping of servant to
-  //     object ids.
-public:
-  TAO_Reverse_Active_Object_Map_Impl (void);
-  // Constructor
-
-  virtual ~TAO_Reverse_Active_Object_Map_Impl (void);
-  // Destructor.
-
-  virtual int bind (PortableServer::Servant servant,
-                    const PortableServer::ObjectId &id) = 0;
-  // Associate <servant> with <id>.
-
-  virtual int unbind (PortableServer::Servant servant) = 0;
-  // Remote <servant> from table.
-
-  virtual int find (const PortableServer::Servant servant,
-                    PortableServer::ObjectId &id) = 0;
-  // Find <id> of <servant>.
-
-  virtual int find (PortableServer::Servant servant) = 0;
-  // Find <servant> in the table.
-
-private:
-  TAO_Reverse_Active_Object_Map_Impl (const TAO_Reverse_Active_Object_Map_Impl &);
-  TAO_Reverse_Active_Object_Map_Impl &operator= (const TAO_Reverse_Active_Object_Map_Impl &);
-  // Disallow copying.
-};
-
-class TAO_Export TAO_Reverse_Active_Object_Map_For_Unique_Id_Policy : public TAO_Reverse_Active_Object_Map_Impl
-{
-  // = TITLE
-  //     Table for maintaining a mapping of servant to object ids (for
-  //     the UNIQUE_ID POA_Policy)
-public:
-  TAO_Reverse_Active_Object_Map_For_Unique_Id_Policy (size_t size);
-  // Constructor
-
-  virtual ~TAO_Reverse_Active_Object_Map_For_Unique_Id_Policy (void);
-  // Destructor
-
-  virtual int bind (PortableServer::Servant servant,
-                    const PortableServer::ObjectId &id);
-  // Associate <servant> with <id>.
-
-  virtual int unbind (PortableServer::Servant servant);
-  // Remote <servant> from table.
-
-  virtual int find (const PortableServer::Servant servant,
-                    PortableServer::ObjectId &id);
-  // Find <id> of <servant>.
-
-  virtual int find (PortableServer::Servant servant);
-  // Find <servant> in the table.
-
-protected:
-
-  // = Typedef for the hash map
-  typedef ACE_Hash_Map_Manager_Ex<PortableServer::Servant,
-                                  PortableServer::ObjectId,
-                                  TAO_Servant_Hash,
-                                  ACE_Equal_To<PortableServer::Servant>,
-                                  ACE_Null_Mutex>
-          REVERSE_MAP;
-
-  REVERSE_MAP map_;
-  // Hash map instance
-};
-
-class TAO_Export TAO_Reverse_Active_Object_Map_For_Multiple_Id_Policy : public TAO_Reverse_Active_Object_Map_Impl
-{
-  // = TITLE
-  //     Table for maintaining a mapping of servant to object ids (for
-  //     the MULTIPLE_ID POA_Policy)
-public:
-  TAO_Reverse_Active_Object_Map_For_Multiple_Id_Policy (void);
-  // Constructor
-
-  virtual ~TAO_Reverse_Active_Object_Map_For_Multiple_Id_Policy (void);
-  // Destructor
-
-  virtual int bind (PortableServer::Servant servant,
-                    const PortableServer::ObjectId &id);
-  // Associate <servant> with <id>.
-
-  virtual int unbind (PortableServer::Servant servant);
-  // Remote <servant> from table.
-
-  virtual int find (const PortableServer::Servant servant,
-                    PortableServer::ObjectId &id);
-  // Find <id> of <servant>.
-
-  virtual int find (PortableServer::Servant servant);
-  // Find <servant> in the table.
-};
-
-/*******************************************************************/
-
-// In the next section we implement a few concrete active object map
-// implementations, namely:
-//
-//   TAO_Dynamic_Hash_Active_Object_Map, based on dynamic hashing
-//   (ACE_Hash_Map_Manager).
-//
-//   TAO_Linear_Active_Object_Map, using linear search and a simple
-//   dynamically growing array.
-//
-//   TAO_Active_Demux_Active_Object_Map, using also a dynamically
-//   allocated array, but using active demultiplexing to do the
-//   lookups.
-
-/*******************************************************************/
-
-class TAO_Export TAO_Dynamic_Hash_Active_Object_Map : public TAO_Active_Object_Map_Impl
-{
-  // = TITLE
-  //   Lookup strategy based on dynamic hashing.
-  //
-  // = DESCRIPTION
-  //   The active object map is implemented using a ACE_Hash_Map_Manager,
-  //   the iterators are implemented using the ACE_Hash_Map_Iterator
-  //   class.
-public:
-  TAO_Dynamic_Hash_Active_Object_Map (CORBA::ULong size);
-
-  virtual ~TAO_Dynamic_Hash_Active_Object_Map (void);
-
-  virtual TAO_Active_Object_Map_Iterator_Impl *begin (void) const;
-  virtual TAO_Active_Object_Map_Iterator_Impl *end (void) const;
-
-  virtual int find (const PortableServer::Servant servant);
-  virtual int find (const PortableServer::ObjectId &id);
-  virtual int find (const PortableServer::Servant servant,
-                    PortableServer::ObjectId &id);
-  virtual int find (const PortableServer::ObjectId &id,
-                    PortableServer::Servant &servant);
-  virtual int bind (const PortableServer::ObjectId &id,
-                    PortableServer::Servant servant);
-  virtual int unbind (const PortableServer::ObjectId &id,
-                      PortableServer::Servant &servant);
-  virtual PortableServer::ObjectId *create_object_id (PortableServer::Servant servant,
-                                                      CORBA::Environment &TAO_IN_ENV);
-  virtual CORBA::ULong system_id_size (void) const;
-  virtual int is_free (const TAO_Active_Object_Map_Entry &item) const;
-
-  typedef ACE_Hash_Map_Manager_Ex<PortableServer::ObjectId,
-                                  PortableServer::Servant,
-                                  TAO_ObjectId_Hash,
-                                  ACE_Equal_To<PortableServer::ObjectId>,
-                                  ACE_Null_Mutex>
-          Hash_Map;
-
-  typedef Hash_Map::iterator iterator;
-
-protected:
-  Hash_Map hash_map_;
-  // Internal hash map.
-
-  CORBA::ULong counter_;
-  // Internal counter for generating unique ids
-};
-
-class TAO_Export TAO_Dynamic_Hash_Active_Object_Map_Iterator : public TAO_Active_Object_Map_Iterator_Impl
-{
-  // = TITLE
-  //   Iterator for TAO_Dynamic_Hash_Active_Object_Map.
-public:
-  typedef TAO_Dynamic_Hash_Active_Object_Map::iterator Impl;
-
-  TAO_Dynamic_Hash_Active_Object_Map_Iterator (const Impl &impl);
-  virtual ~TAO_Dynamic_Hash_Active_Object_Map_Iterator (void);
-  // default copy ctor and dtor
-
-  // TAO_Active_Object_Map_Impl methods...
-  virtual TAO_Active_Object_Map_Iterator_Impl *clone (void) const;
-  virtual const TAO_Active_Object_Map_Entry &item (void) const;
-  virtual void advance (void);
-  virtual int done (const TAO_Active_Object_Map_Iterator_Impl *end) const;
-
-protected:
-  Impl impl_;
-
-  TAO_Active_Object_Map_Entry entry_;
-};
-
-/****************************************************************/
-
-class TAO_Export TAO_Array_Active_Object_Map_Iterator : public TAO_Active_Object_Map_Iterator_Impl
-{
-  // = TITLE
-  //   Iterator for TAO_Linear_Active_Object_Map and
-  //   TAO_Active_Demux_Active_Object_Map
-public:
-  TAO_Array_Active_Object_Map_Iterator (TAO_Active_Object_Map_Entry *pos);
-  virtual ~TAO_Array_Active_Object_Map_Iterator (void);
-  // default copy ctor and dtor
-
-  // TAO_Active_Object_Map_Impl methods...
-  virtual TAO_Active_Object_Map_Iterator_Impl *clone (void) const;
-  virtual const TAO_Active_Object_Map_Entry &item (void) const;
-  virtual void advance (void);
-  virtual int done (const TAO_Active_Object_Map_Iterator_Impl *end) const;
-
-protected:
-  TAO_Active_Object_Map_Entry *pos_;
-};
-
-/****************************************************************/
-
-class TAO_Export TAO_Linear_Active_Object_Map : public TAO_Active_Object_Map_Impl
-{
-  // = TITLE
-  //    Lookup strategy based on a simple linear search.  Not
-  //    efficient, but most likely will always work.
-  //
-  // = DESCRIPTION
-  //   Uses a dynamic array to store the objects and linear search for
-  //   the lookups.
-public:
-  TAO_Linear_Active_Object_Map (CORBA::ULong size);
-  virtual ~TAO_Linear_Active_Object_Map (void);
-
-  virtual int find (const PortableServer::Servant servant);
-  virtual int find (const PortableServer::ObjectId &id);
-  virtual int find (const PortableServer::Servant servant,
-                    PortableServer::ObjectId &id);
-  virtual int find (const PortableServer::ObjectId &id,
-                    PortableServer::Servant &servant);
-  virtual int bind (const PortableServer::ObjectId &id,
-                    PortableServer::Servant servant);
-  virtual int unbind (const PortableServer::ObjectId &id,
-                      PortableServer::Servant &servant);
-  virtual PortableServer::ObjectId *create_object_id (PortableServer::Servant servant,
-                                                      CORBA::Environment &TAO_IN_ENV);
-  virtual CORBA::ULong system_id_size (void) const;
-  virtual int is_free (const TAO_Active_Object_Map_Entry &item) const;
-  virtual TAO_Active_Object_Map_Iterator_Impl *begin () const;
-  virtual TAO_Active_Object_Map_Iterator_Impl *end () const;
-
-protected:
-
-  enum
+  int is_servant_in_map (PortableServer::Servant servant);
+  // Must be used with UNIQUE_ID policy.
+
+  int is_user_id_in_map (const PortableServer::ObjectId &user_id);
+  // Can be used with any policy.  With the SYSTEM_ID policy,
+  // <user_id> is actually <system_id>.
+
+  int bind_using_system_id_returning_system_id (PortableServer::Servant servant,
+                                                PortableServer::ObjectId_out system_id);
+  // Must be used with SYSTEM_ID policy.
+
+  int bind_using_system_id_returning_user_id (PortableServer::Servant servant,
+                                              PortableServer::ObjectId_out user_id);
+  // Must be used with SYSTEM_ID policy.
+
+  int bind_using_user_id (PortableServer::Servant servant,
+                          const PortableServer::ObjectId &user_id);
+  // Can be used with any policy.  With the SYSTEM_ID policy,
+  // <user_id> is actually <system_id>.
+
+  int find_system_id_using_user_id (const PortableServer::ObjectId &user_id,
+                                    PortableServer::ObjectId_out system_id);
+  // Can be used with any policy.  With the SYSTEM_ID policy,
+  // <user_id> is actually <system_id>.
+
+  int rebind_using_user_id_and_system_id (PortableServer::Servant servant,
+                                          const PortableServer::ObjectId &user_id,
+                                          const PortableServer::ObjectId &system_id);
+  // Can be used with any policy.
+
+  int unbind_using_user_id (const PortableServer::ObjectId &user_id);
+  // Can be used with any policy.  With the SYSTEM_ID policy,
+  // <user_id> is actually <system_id>.
+
+  int find_user_id_using_servant (PortableServer::Servant servant,
+                                  PortableServer::ObjectId_out user_id);
+  // Must be used with UNIQUE_ID policy.  With the SYSTEM_ID policy,
+  // <user_id> is actually <system_id>.
+
+  int find_system_id_using_servant (PortableServer::Servant servant,
+                                    PortableServer::ObjectId_out system_id);
+  // Must be used with UNIQUE_ID policy.  With the SYSTEM_ID policy,
+  // <user_id> is actually <system_id>.
+
+  int find_servant_using_user_id (const PortableServer::ObjectId &user_id,
+                                  PortableServer::Servant &servant);
+  // Can be used with any policy. With the SYSTEM_ID policy,
+  // <user_id> is actually <system_id>.
+
+  int find_servant_using_system_id (const PortableServer::ObjectId &system_id,
+                                    PortableServer::Servant &servant);
+  // Can be used with any policy.
+
+  int find_servant_and_system_id_using_user_id (const PortableServer::ObjectId &user_id,
+                                                PortableServer::Servant &servant,
+                                                PortableServer::ObjectId_out system_id);
+  // Can be used with any policy.  With the SYSTEM_ID policy,
+  // <user_id> is identical to <system_id>.
+
+  int find_user_id_using_system_id (const PortableServer::ObjectId &system_id,
+                                    PortableServer::ObjectId_out user_id);
+  // Can be used with any policy.  When the SYSTEM_ID policy is used,
+  // the <system_id> is identical to <user_id>.
+
+  size_t system_id_size (void);
+  // Can be used with any policy.
+
+  struct Map_Entry
   {
-    // Grow map exponentially up to 64K
-    MAX_EXPONENTIAL = 64 *1024,
+    // = TITLE
+    //     Value field of the active object map.
+    //
+    // = DESCRIPTION
+    //
+    //     We need a mapping from and to all of the following fields:
+    //     <user_id>, <system_id>, and <servant>.  Therefore, we keep
+    //     all the fields together in the map.
 
-    // Afterwards grow in chunks of 32K
-    LINEAR_INCREASE = 32 * 1024
+    PortableServer::ObjectId user_id_;
+    PortableServer::ObjectId system_id_;
+    PortableServer::Servant servant_;
   };
 
-  virtual int resize (void);
+  typedef ACE_Map<
+  PortableServer::ObjectId,
+    Map_Entry *> user_id_map;
+  // Base class of the id map.
 
-  CORBA::ULong next_;
-  CORBA::ULong mapsize_;
-  TAO_Active_Object_Map_Entry *map_;
-  PortableServer::ObjectId empty_id_;
-  CORBA::ULong counter_;
+  typedef ACE_Hash_Map_Manager_Ex_Adapter<
+  PortableServer::ObjectId,
+    Map_Entry *,
+    TAO_ObjectId_Hash,
+    ACE_Equal_To<PortableServer::ObjectId>,
+    TAO_Incremental_Key_Generator> user_id_hash_map;
+  // Id hash map.
+
+  typedef ACE_Map_Manager_Adapter<
+  PortableServer::ObjectId,
+    Map_Entry *,
+    TAO_Incremental_Key_Generator> user_id_linear_map;
+  // Id linear map.
+
+  typedef ACE_Active_Map_Manager_Adapter<
+  PortableServer::ObjectId,
+    Map_Entry *,
+    TAO_Ignore_Original_Key_Adapter> user_id_active_map;
+  // Id active map.
+
+  typedef ACE_Map<
+  PortableServer::Servant,
+    Map_Entry *> servant_map;
+  // Base class of the servant map.
+
+  typedef ACE_Hash_Map_Manager_Ex_Adapter<
+  PortableServer::Servant,
+    Map_Entry *,
+    TAO_Servant_Hash,
+    ACE_Equal_To<PortableServer::Servant>,
+    ACE_Noop_Key_Generator<PortableServer::Servant> > servant_hash_map;
+  // Servant hash map.
+
+  typedef ACE_Map_Manager_Adapter<
+  PortableServer::Servant,
+    Map_Entry *,
+    ACE_Noop_Key_Generator<PortableServer::Servant> > servant_linear_map;
+  // Servant linear map.
+
+  user_id_map *user_id_map_;
+  // Id map.
+
+  servant_map *servant_map_;
+  // Servant map.
+
+  TAO_Id_Uniqueness_Strategy *id_uniqueness_strategy_;
+  // Id uniqueness strategy.
+
+  TAO_Lifespan_Strategy *lifespan_strategy_;
+  // Lifespan strategy.
+
+  TAO_Id_Assignment_Strategy *id_assignment_strategy_;
+  // Id assignment strategy.
+
+  TAO_Id_Hint_Strategy *id_hint_strategy_;
+  // Id hint strategy.
+
+  size_t system_id_size_;
+  // Size of the system id produced by the map.
 };
 
-/****************************************************************/
+////////////////////////////////////////////////////////////////////////////////
 
-class TAO_Export TAO_Active_Demux_Active_Object_Map : public TAO_Linear_Active_Object_Map
+class TAO_Id_Uniqueness_Strategy
 {
   // = TITLE
-  //   An active object map lookup strategy based on active
-  //   demultiplexing strategy.
+  //     Id uniqueness strategy.
   //
   // = DESCRIPTION
-  //   Use the linear active object map as the base; keys must be the
-  //   string representation of the indices into the array and a
-  //   generation count, so lookups can be done in O(1).
-  //
-  //   Iterators are implemented using pointers on the array.
+  //     Strategy for implementing points of variation between the
+  //     UNIQUE_ID and the MULTIPLE_ID policies.
 public:
-  TAO_Active_Demux_Active_Object_Map (CORBA::ULong size);
-  // Constructor, including an initial size.
 
-  virtual ~TAO_Active_Demux_Active_Object_Map (void);
-  // Destructor
+  virtual ~TAO_Id_Uniqueness_Strategy (void);
+  // Virtual destructor.
 
-  // Implement TAO_Dynamic_Hash_Active_Object_Map....
-  virtual int find (const PortableServer::Servant servant);
-  virtual int find (const PortableServer::ObjectId &id);
-  virtual int find (const PortableServer::Servant servant,
-                    PortableServer::ObjectId &id);
-  virtual int find (const PortableServer::ObjectId &id,
-                    PortableServer::Servant &servant);
-  virtual int bind (const PortableServer::ObjectId &id,
-                    PortableServer::Servant servant);
-  virtual int unbind (const PortableServer::ObjectId &id,
-                      PortableServer::Servant &servant);
-  virtual CORBA::ULong system_id_size (void) const;
-  virtual PortableServer::ObjectId *create_object_id (PortableServer::Servant servant,
-                                                      CORBA::Environment &TAO_IN_ENV);
+  virtual int is_servant_in_map (PortableServer::Servant servant) = 0;
+  // Must be used with UNIQUE_ID policy.
+
+  virtual int unbind_using_user_id (const PortableServer::ObjectId &user_id) = 0;
+  // Can be used with any policy.  With the SYSTEM_ID policy,
+  // <user_id> is actually <system_id>.
+
+  virtual int find_user_id_using_servant (PortableServer::Servant servant,
+                                          PortableServer::ObjectId_out user_id) = 0;
+  // Must be used with UNIQUE_ID policy.  With the SYSTEM_ID policy,
+  // <user_id> is actually <system_id>.
+
+  virtual int find_system_id_using_servant (PortableServer::Servant servant,
+                                            PortableServer::ObjectId_out system_id) = 0;
+  // Must be used with UNIQUE_ID policy.  With the SYSTEM_ID policy,
+  // <user_id> is actually <system_id>.
+
+  virtual int bind_using_user_id (PortableServer::Servant servant,
+                                  const PortableServer::ObjectId &user_id,
+                                  TAO_Active_Object_Map::Map_Entry *&entry) = 0;
+  // Can be used with any policy.  With the SYSTEM_ID policy,
+  // <user_id> is actually <system_id>.
+
+  virtual void set_active_object_map (TAO_Active_Object_Map *active_object_map);
+  // Set the active map.
 
 protected:
-  enum
-  {
-    INDEX_FIELD = 0,
-    GENERATION_FIELD = 1
-  };
 
-  virtual CORBA::ULong next_free (void);
-
-  virtual int parse_object_id (const PortableServer::ObjectId &id,
-                               CORBA::ULong &index,
-                               CORBA::ULong &generation);
+  TAO_Active_Object_Map *active_object_map_;
+  // Pointer to the active map.
 };
+
+////////////////////////////////////////////////////////////////////////////////
+
+class TAO_Unique_Id_Strategy : public TAO_Id_Uniqueness_Strategy
+{
+  // = TITLE
+  //     Unique id strategy.
+  //
+  // = DESCRIPTION
+  //     Strategy for the UNIQUE_ID policy.
+public:
+
+  virtual int is_servant_in_map (PortableServer::Servant servant);
+  // Must be used with UNIQUE_ID policy.
+
+  virtual int unbind_using_user_id (const PortableServer::ObjectId &user_id);
+  // Can be used with any policy.  With the SYSTEM_ID policy,
+  // <user_id> is actually <system_id>.
+
+  virtual int find_user_id_using_servant (PortableServer::Servant servant,
+                                          PortableServer::ObjectId_out user_id);
+  // Must be used with UNIQUE_ID policy.  With the SYSTEM_ID policy,
+  // <user_id> is actually <system_id>.
+
+  virtual int find_system_id_using_servant (PortableServer::Servant servant,
+                                            PortableServer::ObjectId_out system_id);
+  // Must be used with UNIQUE_ID policy.  With the SYSTEM_ID policy,
+  // <user_id> is actually <system_id>.
+
+  virtual int bind_using_user_id (PortableServer::Servant servant,
+                                  const PortableServer::ObjectId &user_id,
+                                  TAO_Active_Object_Map::Map_Entry *&entry);
+  // Can be used with any policy.  With the SYSTEM_ID policy,
+  // <user_id> is actually <system_id>.
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
+class TAO_Multiple_Id_Strategy : public TAO_Id_Uniqueness_Strategy
+{
+  // = TITLE
+  //     Multiple id strategy.
+  //
+  // = DESCRIPTION
+  //     Strategy for the MULTIPLE_ID policy.
+public:
+
+  virtual int is_servant_in_map (PortableServer::Servant servant);
+  // Must be used with UNIQUE_ID policy.
+
+  virtual int unbind_using_user_id (const PortableServer::ObjectId &user_id);
+  // Can be used with any policy.  With the SYSTEM_ID policy,
+  // <user_id> is actually <system_id>.
+
+  virtual int find_user_id_using_servant (PortableServer::Servant servant,
+                                          PortableServer::ObjectId_out user_id);
+  // Must be used with UNIQUE_ID policy.  With the SYSTEM_ID policy,
+  // <user_id> is actually <system_id>.
+
+  virtual int find_system_id_using_servant (PortableServer::Servant servant,
+                                            PortableServer::ObjectId_out system_id);
+  // Must be used with UNIQUE_ID policy.  With the SYSTEM_ID policy,
+  // <user_id> is actually <system_id>.
+
+  virtual int bind_using_user_id (PortableServer::Servant servant,
+                                  const PortableServer::ObjectId &user_id,
+                                  TAO_Active_Object_Map::Map_Entry *&entry);
+  // Can be used with any policy.  With the SYSTEM_ID policy,
+  // <user_id> is actually <system_id>.
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
+class TAO_Lifespan_Strategy
+{
+  // = TITLE
+  //     Lifespan strategy.
+  //
+  // = DESCRIPTION
+  //     Strategy for implementing points of variation between the
+  //     TRANSIENT and the PERSISTENT policies.
+public:
+
+  virtual ~TAO_Lifespan_Strategy (void);
+  // Virtual destructor.
+
+  virtual int find_servant_using_system_id (const PortableServer::ObjectId &system_id,
+                                            PortableServer::Servant &servant) = 0;
+  // Can be used with any policy.
+
+  virtual void set_active_object_map (TAO_Active_Object_Map *active_object_map);
+  // Set the active map.
+
+protected:
+
+  TAO_Active_Object_Map *active_object_map_;
+  // Pointer to the active map.
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
+class TAO_Transient_Strategy : public TAO_Lifespan_Strategy
+{
+  // = TITLE
+  //     Transient strategy.
+  //
+  // = DESCRIPTION
+  //     Strategy for the TRANSIENT policy.
+public:
+
+  virtual int find_servant_using_system_id (const PortableServer::ObjectId &system_id,
+                                            PortableServer::Servant &servant);
+  // Can be used with any policy.
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
+class TAO_Persistent_Strategy : public TAO_Lifespan_Strategy
+{
+  // = TITLE
+  //     Persistent strategy.
+  //
+  // = DESCRIPTION
+  //     Strategy for the PERSISTENT policy.
+public:
+
+  virtual int find_servant_using_system_id (const PortableServer::ObjectId &system_id,
+                                            PortableServer::Servant &servant);
+  // Can be used with any policy.
+
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
+class TAO_Id_Assignment_Strategy
+{
+  // = TITLE
+  //     Id uniqueness strategy.
+  //
+  // = DESCRIPTION
+  //     Strategy for implementing points of variation between the
+  //     USER_ID and the SYSTEM_ID policies.
+public:
+
+  virtual ~TAO_Id_Assignment_Strategy (void);
+  // Virtual destructor.
+
+  virtual int bind_using_system_id (PortableServer::Servant servant,
+                                    TAO_Active_Object_Map::Map_Entry *&entry) = 0;
+  // Must be used with SYSTEM_ID policy.
+
+  virtual void set_active_object_map (TAO_Active_Object_Map *active_object_map);
+  // Set the active map.
+
+protected:
+
+  TAO_Active_Object_Map *active_object_map_;
+  // Pointer to the active map.
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
+class TAO_User_Id_Strategy : public TAO_Id_Assignment_Strategy
+{
+  // = TITLE
+  //     User id strategy.
+  //
+  // = DESCRIPTION
+  //     Strategy for the USER_ID policy.
+public:
+
+  virtual int bind_using_system_id (PortableServer::Servant servant,
+                                    TAO_Active_Object_Map::Map_Entry *&entry);
+  // Must be used with SYSTEM_ID policy.
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
+class TAO_System_Id_With_Unique_Id_Strategy : public TAO_Id_Assignment_Strategy
+{
+  // = TITLE
+  //     System id strategy.
+  //
+  // = DESCRIPTION
+  //     Strategy for the SYSTEM_ID policy (with UNIQUE_ID policy).
+public:
+
+  virtual int bind_using_system_id (PortableServer::Servant servant,
+                                    TAO_Active_Object_Map::Map_Entry *&entry);
+  // Must be used with SYSTEM_ID policy.
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
+class TAO_System_Id_With_Multiple_Id_Strategy : public TAO_Id_Assignment_Strategy
+{
+  // = TITLE
+  //     System id strategy.
+  //
+  // = DESCRIPTION
+  //     Strategy for the SYSTEM_ID policy (with MULTIPLE_ID policy).
+public:
+
+  virtual int bind_using_system_id (PortableServer::Servant servant,
+                                    TAO_Active_Object_Map::Map_Entry *&entry);
+  // Must be used with SYSTEM_ID policy.
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
+class TAO_Id_Hint_Strategy
+{
+  // = TITLE
+  //     Id uniqueness strategy.
+  //
+  // = DESCRIPTION
+  //     Strategy for implementing points of variation between the
+  //     active hint and the no hint policies.
+public:
+
+  virtual ~TAO_Id_Hint_Strategy (void);
+  // Virtual destructor.
+
+  virtual int recover_key (const PortableServer::ObjectId &system_id,
+                           PortableServer::ObjectId &user_id) = 0;
+
+  virtual int bind (TAO_Active_Object_Map::Map_Entry &entry) = 0;
+
+  virtual int unbind (TAO_Active_Object_Map::Map_Entry &entry) = 0;
+
+  virtual int find (const PortableServer::ObjectId &system_id,
+                    TAO_Active_Object_Map::Map_Entry *&entry) = 0;
+
+  virtual size_t hint_size (void) = 0;
+
+  virtual int system_id (PortableServer::ObjectId_out system_id,
+                         TAO_Active_Object_Map::Map_Entry &entry) = 0;
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
+class TAO_Active_Hint_Strategy : public TAO_Id_Hint_Strategy
+{
+  // = TITLE
+  //     Active hint strategy.
+  //
+  // = DESCRIPTION
+  //     Strategy for adding active hints to ids.
+public:
+
+  virtual int recover_key (const PortableServer::ObjectId &system_id,
+                           PortableServer::ObjectId &user_id);
+
+  virtual int bind (TAO_Active_Object_Map::Map_Entry &entry);
+
+  virtual int unbind (TAO_Active_Object_Map::Map_Entry &entry);
+
+  virtual int find (const PortableServer::ObjectId &system_id,
+                    TAO_Active_Object_Map::Map_Entry *&entry);
+
+  virtual size_t hint_size (void);
+
+  virtual int system_id (PortableServer::ObjectId_out system_id,
+                         TAO_Active_Object_Map::Map_Entry &entry);
+
+  typedef ACE_Active_Map_Manager_Adapter<
+  PortableServer::ObjectId,
+    TAO_Active_Object_Map::Map_Entry *,
+    TAO_Preserve_Original_Key_Adapter> system_id_map;
+
+  system_id_map system_id_map_;
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
+class TAO_No_Hint_Strategy : public TAO_Id_Hint_Strategy
+{
+  // = TITLE
+  //     No hint strategy.
+  //
+  // = DESCRIPTION
+  //     Strategy for not adding active hints to ids.
+public:
+
+  virtual int recover_key (const PortableServer::ObjectId &system_id,
+                           PortableServer::ObjectId &user_id);
+
+  virtual int bind (TAO_Active_Object_Map::Map_Entry &entry);
+
+  virtual int unbind (TAO_Active_Object_Map::Map_Entry &entry);
+
+  virtual int find (const PortableServer::ObjectId &system_id,
+                    TAO_Active_Object_Map::Map_Entry *&entry);
+
+  virtual size_t hint_size (void);
+
+  virtual int system_id (PortableServer::ObjectId_out system_id,
+                         TAO_Active_Object_Map::Map_Entry &entry);
+};
+
+////////////////////////////////////////////////////////////////////////////////
 
 #if defined (__ACE_INLINE__)
 # include "tao/Active_Object_Map.i"
-#endif /* ! __ACE_INLINE__ */
+#endif /* __ACE_INLINE__ */
 
-#endif /* TAO_ACTIVE_OBJECT_MAP_H */
+#endif /* TAO_ACTIVE_OBJECT_MAP_T_H */

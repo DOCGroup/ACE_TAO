@@ -17,6 +17,10 @@
 #ifndef TAO_DYNARRAY_I_H
 #define TAO_DYNARRAY_I_H
 
+#include "tao/orbconf.h"
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 #include "ace/Containers.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -175,5 +179,7 @@ private:
   TAO_DynArray_i (const TAO_DynArray_i &src);
   TAO_DynArray_i &operator= (const TAO_DynArray_i &src);
 };
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 #endif /* TAO_DYNARRAY_I_H */

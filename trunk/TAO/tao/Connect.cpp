@@ -7,6 +7,7 @@
 #include "tao/GIOP.h"
 #include "tao/Server_Request.h"
 #include "tao/ORB_Core.h"
+#include "tao/CDR.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Connect.i"

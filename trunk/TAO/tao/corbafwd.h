@@ -27,7 +27,7 @@
 #define TAO_CORBAFWD_H
 
 // @@ TODO take the portion that we need of ace/CDR_Stream.h into
-// ace/CDR_Types.h 
+// ace/CDR_Types.h
 #include "ace/CDR_Stream.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -135,6 +135,8 @@ typedef class CORBA_Exception *CORBA_Exception_ptr;
 TAO_SYSTEM_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 class CORBA_Request;
 class CORBA_Request_var;
 class CORBA_Request_out;
@@ -149,6 +151,8 @@ class CORBA_NVList;
 class CORBA_NVList_var;
 class CORBA_NVList_out;
 typedef class CORBA_NVList *CORBA_NVList_ptr;
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 class CORBA_ORB;
 class CORBA_ORB_var;
@@ -310,6 +314,13 @@ public:
   typedef CORBA_SystemException SystemException;
   typedef CORBA_UserException  UserException;
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
+  typedef CORBA_Request Request;
+  typedef Request *Request_ptr;
+  typedef CORBA_Request_var Request_var;
+  typedef CORBA_Request_out Request_out;
+
   typedef CORBA_NamedValue NamedValue;
   typedef NamedValue *NamedValue_ptr;
   typedef CORBA_NamedValue_var NamedValue_var;
@@ -319,6 +330,8 @@ public:
   typedef NVList *NVList_ptr;
   typedef CORBA_NVList_var NVList_var;
   typedef CORBA_NVList_out NVList_out;
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
   typedef CORBA_Object Object;
   typedef CORBA_Object *Object_ptr;
@@ -337,11 +350,6 @@ public:
   typedef CORBA_ORB *ORB_ptr;
   typedef CORBA_ORB_var ORB_var;
   typedef CORBA_ORB_out ORB_out;
-
-  typedef CORBA_Request Request;
-  typedef Request *Request_ptr;
-  typedef CORBA_Request_var Request_var;
-  typedef CORBA_Request_out Request_out;
 
   typedef CORBA_ServerRequest ServerRequest;
   typedef ServerRequest *ServerRequest_ptr;
@@ -405,26 +413,36 @@ TAO_SYSTEM_EXCEPTION_LIST
   // = all the CORBA::is_nil methods.
   static Boolean is_nil (Object_ptr);
   static Boolean is_nil (Environment_ptr);
-  static Boolean is_nil (NamedValue_ptr);
-  static Boolean is_nil (NVList_ptr);
-  static Boolean is_nil (Request_ptr);
   //  static Boolean is_nil (Context_ptr);
   static Boolean is_nil (TypeCode_ptr);
   static Boolean is_nil (ORB_ptr);
   static Boolean is_nil (Principal_ptr);
   static Boolean is_nil (ServerRequest_ptr req);
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
+  static Boolean is_nil (Request_ptr);
+  static Boolean is_nil (NamedValue_ptr);
+  static Boolean is_nil (NVList_ptr);
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
   // = all the CORBA release methods.
   static void release (Object_ptr);
   static void release (Environment_ptr);
-  static void release (NamedValue_ptr);
-  static void release (NVList_ptr);
-  static void release (Request_ptr);
   static void release (Principal_ptr);
   static void release (Context_ptr);
   static void release (TypeCode_ptr);
   static void release (ORB_ptr);
   static void release (ServerRequest_ptr req);
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
+  static void release (Request_ptr);
+  static void release (NamedValue_ptr);
+  static void release (NVList_ptr);
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
   enum TCKind
   {
@@ -514,7 +532,7 @@ TAO_SYSTEM_EXCEPTION_LIST
   // Obtain the thread-specific default environment.
 
   // There could be a single version of these methods, but g++ 2.7.2
-  // gets horribly confused if we used CORBA::default_environment() at 
+  // gets horribly confused if we used CORBA::default_environment() at
   // this point.
   static ORB_ptr ORB_init (int &argc,
                            char *const *argv,

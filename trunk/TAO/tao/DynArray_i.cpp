@@ -14,6 +14,9 @@
 // ====================================================================
 
 #include "tao/DynAny_i.h"
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 #include "tao/DynArray_i.h"
 #include "tao/InconsistentTypeCodeC.h"
 
@@ -233,7 +236,7 @@ TAO_DynArray_i::from_any (const CORBA_Any& any,
           if (!CORBA::is_nil (this->da_members_[i].in ()))
             this->da_members_[i]->destroy (env);
 
-          this->da_members_[i] = 
+          this->da_members_[i] =
             TAO_DynAny_i::create_dyn_any (field_any,
                                           env);
 
@@ -268,8 +271,8 @@ TAO_DynArray_i::to_any (CORBA::Environment& TAO_IN_ENV)
 
       TAO_InputCDR field_cdr (field_mb);
 
-      out_cdr.append (field_tc, 
-                      &field_cdr, 
+      out_cdr.append (field_tc,
+                      &field_cdr,
                       TAO_IN_ENV);
 
       delete field_any;
@@ -970,3 +973,4 @@ template class ACE_Array_Base<CORBA_DynAny_var>;
 #pragma instantiate ACE_Array_Base<CORBA_DynAny_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
+#endif /* TAO_HAS_MINIMUM_CORBA */

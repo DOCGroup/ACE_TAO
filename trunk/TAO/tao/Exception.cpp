@@ -13,7 +13,6 @@
 #include "tao/Environment.h"
 #include "tao/Any.h"
 #include "tao/CDR.h"
-#include "tao/POAC.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Exception.i"
@@ -443,19 +442,6 @@ CORBA::TypeCode_ptr CORBA::_tc_UnknownUserException = 0;
 //    static CORBA::TypeCode tc_std_ ## name (CORBA::tk_except);
 //    CORBA::TypeCode_ptr CORBA::_tc_ ## name = &tc_std_ ## name;
 
-#define POA_EXCEPTION_LIST \
-  POA_EXCEPTION (AdapterAlreadyExists) \
-  POA_EXCEPTION (AdapterInactive) \
-  POA_EXCEPTION (AdapterNonExistent) \
-  POA_EXCEPTION (InvalidPolicy) \
-  POA_EXCEPTION (NoServant) \
-  POA_EXCEPTION (ObjectAlreadyActive) \
-  POA_EXCEPTION (ObjectNotActive) \
-  POA_EXCEPTION (ServantAlreadyActive) \
-  POA_EXCEPTION (ServantNotActive) \
-  POA_EXCEPTION (WrongAdapter) \
-  POA_EXCEPTION (WrongPolicy ) \
-
 void
 TAO_Exceptions::init (CORBA::Environment &env)
 {
@@ -469,16 +455,6 @@ TAO_Exceptions::init (CORBA::Environment &env)
                                            sizeof tc_buf_ ## name, env);
   STANDARD_EXCEPTION_LIST
 #undef  TAO_SYSTEM_EXCEPTION
-
-  // Register POA exceptions as system exceptions
-  TAO_Exceptions::system_exceptions->add (PortableServer::_tc_ForwardRequest);
-  TAO_Exceptions::system_exceptions->add (PortableServer::POAManager::_tc_AdapterInactive);
-  TAO_Exceptions::system_exceptions->add (PortableServer::Current::_tc_NoContext);
-
-#define POA_EXCEPTION(name) \
-  TAO_Exceptions::system_exceptions->add (PortableServer::POA::_tc_ ## name);
-POA_EXCEPTION_LIST
-#undef POA_EXCEPTION
 
   if (env.exception () == 0)
     TAO_Exceptions::make_unknown_user_typecode (CORBA::_tc_UnknownUserException,
@@ -497,34 +473,6 @@ TAO_Exceptions::create_system_exception (const char* id,
   }
   STANDARD_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION
-#define POA_EXCEPTION(name) \
-  { \
-    env.clear (); \
-    const char* xid = PortableServer::POA::_tc_ ## name ->id (env); \
-    if (env.exception () == 0 && ACE_OS::strcmp (id, xid) == 0) \
-      return new PortableServer::POA:: name; \
-  }
-POA_EXCEPTION_LIST
-#undef POA_EXCEPTION
-
-  {
-    env.clear ();
-    const char* xid = PortableServer::_tc_ForwardRequest->id (env);
-    if (env.exception () == 0 && ACE_OS::strcmp (id, xid) == 0)
-      return new PortableServer::ForwardRequest;
-  }
-  {
-    env.clear ();
-    const char* xid = PortableServer::POAManager::_tc_AdapterInactive->id (env);
-    if (env.exception () == 0 && ACE_OS::strcmp (id, xid) == 0)
-      return new PortableServer::POAManager::AdapterInactive;
-  }
-  {
-    env.clear ();
-    const char* xid = PortableServer::Current::_tc_NoContext->id (env);
-    if (env.exception () == 0 && ACE_OS::strcmp (id, xid) == 0)
-      return new PortableServer::Current::NoContext;
-  }
 
   return 0;
 }
@@ -582,7 +530,6 @@ CORBA_##name :: CORBA_##name (void) \
 STANDARD_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION
 
-#undef POA_EXCEPTION_LIST
 #undef STANDARD_EXCEPTION_LIST
 
 CORBA_ExceptionList::CORBA_ExceptionList (CORBA::ULong len,

@@ -17,6 +17,10 @@
 #ifndef TAO_DYNENUM_I_H
 #define TAO_DYNENUM_I_H
 
+#include "tao/orbconf.h"
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 #include "ace/Containers.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -172,5 +176,7 @@ private:
   TAO_DynEnum_i (const TAO_DynEnum_i &src);
   TAO_DynEnum_i &operator= (const TAO_DynEnum_i &src);
 };
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 #endif /* TAO_DYNENUM_I_H */

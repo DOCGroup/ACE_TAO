@@ -623,6 +623,8 @@ STUB_Object::put_params (CORBA::Environment &env,
     }
 }
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 // DII analogue of the above.
 
 void
@@ -864,3 +866,5 @@ STUB_Object::put_params (TAO_GIOP_Invocation &call,
         }
     }
 }
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
