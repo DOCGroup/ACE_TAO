@@ -1,3 +1,29 @@
+Tue Nov 21 09:57:53 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * tests/Reactor_Exceptions_Test.cpp:
+          
+          Code style fix.
+
+        * tests/run_test.lst:
+
+          New_Fail_Test just eats up memory when run, and it only tests
+          the behavior of new.  Not really something we need to run 
+          everynight (and as David Levine reports, using up all the 
+          memory can cause problems in other processes on the nightly
+          build machines).  Commented out the New_Fail_Test.
+          
+        * tests/run_test.pl:
+
+          Fixed to clean up some of the backing_store_* files in the
+          tests directory after running the tests.
+ 
+        * bin/ACEutils.pm:
+
+          Added the ability to pick -ExeSubDir <dir> from the command
+          line to alter $EXEPREFIX.  This should allow us to start
+          running tests with different configurations (ie. Win32 Release)
+          and on Borland.
+
 Tue Nov 21 07:24:54 2000  Chris Kohlhoff  <chris@kohlhoff.com>
 
 	* ace/SSL/Makefile.bor:

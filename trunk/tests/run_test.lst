@@ -43,7 +43,7 @@ MT_Reactor_Timer_Test
 MT_SOCK_Test
 Malloc_Test
 Naming_Test
-New_Fail_Test: MSVC
+# (Using all the memory has bad side effects) New_Fail_Test: MSVC
 Notify_Performance_Test
 Object_Manager_Test
 OrdMultiSet_Test
