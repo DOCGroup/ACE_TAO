@@ -61,8 +61,7 @@ int main(int ac, char **av)
     ACE_TRY_CHECK;
     ACE_ASSERT(! CORBA::is_nil (orb.in ()));
 
-    if (ac > 2
-      && ACE_OS::strcmp (av[1], "-pass"))
+    if (ac > 2 && ACE_OS::strcmp (av[1], "-pass") == 0)
     {
       int pn = av[2][0] - '0';
       switch (pn)
@@ -336,6 +335,14 @@ int main(int ac, char **av)
       strps->connect_structured_push_consumer(push_cons.in());
 
       strps->suspend_connection();
+
+      persistentPOA->deactivate_object (oid1.in ()
+                                        ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      persistentPOA->deactivate_object (oid2.in ()
+                                        ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       ecf->destroy(ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
