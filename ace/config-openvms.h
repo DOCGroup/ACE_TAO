@@ -102,6 +102,8 @@
 #define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
                                         /*Platform has its standard c++
                                         library in the namespace std.*/
+#define ACE_HAS_VOIDPTR_GETTIMEOFDAY 1
+                                        /* 2nd arg 'void*' instead of 'struct timezone*' */
 #define ACE_HAS_SNPRINTF 1
                                         /*Platform offers snprintf().*/
 #define ACE_HAS_P_READ_WRITE
