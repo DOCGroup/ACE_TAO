@@ -1,3 +1,10 @@
+Fri Feb  2 13:35:19 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* tao/RT_ORB.h:
+	* tao/RT_Mutex.h: Updated method documentation.
+
+	* docs/rtcorba/status.html: Update RT Mutex status.
+
 Fri Feb  2 08:01:48 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* tao/IIOP_Profile.cpp (decode): Make sure to initialize the major
