@@ -1,3 +1,9 @@
+Sun Sep  5 03:58:20 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Trader/Interpreter_Utils.h:
+
+	  Added missing "tao/SystemException.h" #include.
+
 Sun Sep  5 01:42:18 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Stub.h (create_ior_info, get_profile_ior_info):
