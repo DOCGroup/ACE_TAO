@@ -25,6 +25,24 @@
 #include "ace/Timer_Heap.h"
 #include "test_config.h"
 
+static void
+randomize_array (int array[], size_t size)
+{
+  size_t i;
+
+  ACE_OS::srand (ACE_OS::time (0L));
+
+  // Randomize the array.
+
+  for (i = 0; i < size; i++)
+    {
+      int index = ACE_OS::rand() % size--;
+      int temp = array [index];
+      array [index] = array [size];
+      array [size] = temp;
+    }
+}
+
 // Number of iterations for the performance tests.
 static int max_iterations =  ACE_DEFAULT_TIMERS * 100 ;
 
@@ -200,6 +218,38 @@ test_performance (ACE_Timer_Queue *tq,
   ACE_DEBUG ((LM_DEBUG, 
 	      "time per call = %f usecs\n", 
 	      (et.user_time / double (max_iterations)) * 1000000));
+
+  // Test the amount of time required to randomly expire all the
+  // timers.
+
+  for (i = 0; i < max_iterations; i++)
+    {
+      timer_ids[i] = tq->schedule (&eh, (const void *) 42,
+				   ACE_OS::gettimeofday ()); 
+      ACE_ASSERT (timer_ids[i] != -1);
+    }
+
+  ACE_ASSERT (tq->is_empty () == 0);
+
+  randomize_array (timer_ids, max_iterations);
+
+  timer.start ();
+
+  for (i = max_iterations - 1; i >= 0; i--)
+    tq->cancel (timer_ids[i]);
+
+  ACE_ASSERT (tq->is_empty ());
+
+  timer.stop ();
+
+  timer.elapsed_time (et);
+
+  ACE_DEBUG ((LM_DEBUG, "time to randomly expire %d timers for %s\n", 
+       max_iterations, test_name));
+  ACE_DEBUG ((LM_DEBUG, "real time = %f secs, user time = %f secs, system time = %f secs\n",
+     et.real_time, et.user_time, et.system_time));
+  ACE_DEBUG ((LM_DEBUG, "time per call = %f usecs\n", 
+       (et.user_time / double (max_iterations)) * 1000000));
 }
 
 struct Timer_Queues
