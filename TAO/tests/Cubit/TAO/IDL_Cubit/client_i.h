@@ -105,9 +105,6 @@ private:
   char *cubit_factory_key_;
   // Key of factory obj ref.
 
-  char *cubit_key_;
-  // Key of the obj ref to be retrieved via the factory.
-
   u_int loop_count_;
   // Number of times to do the cube operations.
 
@@ -120,7 +117,7 @@ private:
   CORBA::Environment env_;
   // Environment variable.
 
-  Cubit_ptr cubit_;
+  Cubit_var cubit_;
   // Cubit obj ref.
 
   CORBA::ORB_var orb_;

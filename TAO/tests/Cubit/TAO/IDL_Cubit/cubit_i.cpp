@@ -92,7 +92,8 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (Cubit_i_Timeprobe_Description,
 
 // Constructor
 
-Cubit_Factory_i::Cubit_Factory_i (void)
+Cubit_Factory_i::Cubit_Factory_i (CORBA::ORB_ptr orb)
+  : my_cubit_ (orb)
 {
 }
 
@@ -103,15 +104,15 @@ Cubit_Factory_i::~Cubit_Factory_i (void)
 }
 
 Cubit_ptr
-Cubit_Factory_i::make_cubit (const char *,
-                             CORBA::Environment &env)
+Cubit_Factory_i::make_cubit (CORBA::Environment &env)
 {
   return my_cubit_._this (env);
 }
 
 // Constructor
 
-Cubit_i::Cubit_i (const char *)
+Cubit_i::Cubit_i (CORBA::ORB_ptr orb)
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
@@ -295,30 +296,5 @@ void Cubit_i::shutdown (CORBA::Environment &env)
               "%s\n",
               "Cubit_i is shutting down"));
 
-  TAO_ORB_Core_instance ()->orb ()->shutdown ();
+  this->orb_->shutdown ();
 }
-
-// Constructor
-
-Cubit_Shutdown_i::Cubit_Shutdown_i (const char *)
-{
-}
-
-// Destructor
-
-Cubit_Shutdown_i::~Cubit_Shutdown_i (void)
-{
-}
-
-void
-Cubit_Shutdown_i::shutdown (CORBA::Environment &env)
-{
-  ACE_UNUSED_ARG (env);
-
-  ACE_DEBUG ((LM_DEBUG,
-              "%s\n",
-              "Cubit_i is shutting down"));
-
-  TAO_ORB_Core_instance ()->orb ()->shutdown ();
-}
-

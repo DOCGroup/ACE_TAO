@@ -450,6 +450,9 @@ public:
     //   Structure containing resources which can be pre-allocated by
     //   the ORB Core without intervention from the application.
   {
+    Pre_Allocated (void);
+    // Constructor
+
     TAO_Default_Reactor r_;
     // The Reactor.
 

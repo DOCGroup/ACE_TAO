@@ -445,7 +445,7 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
 {
   ACE_FUNCTION_TIMEPROBE (TAO_GIOP_RECV_REQUEST_START);
 
-  TAO_GIOP::Message_Type      retval;
+  TAO_GIOP::Message_Type retval;
   CORBA::ULong message_size;
   TAO_SOCK_Stream &connection = handler->peer ();
 

@@ -46,9 +46,6 @@ public:
   virtual int open (void *);
   // Activation template method.
 
-  virtual int close (u_long flags = 0);
-  // Termination template method.
-
   int send_request (TAO_OutputCDR &stream, int is_twoway);
   // Send the request in <stream>.  If it is a twoway invocation, then
   // this re-enters the reactor event loop so that incoming requests
@@ -92,7 +89,7 @@ class TAO_Server_Connection_Handler : public TAO_SVC_HANDLER
   //   Handles requests on a single connection in a server.
 
 public:
-  TAO_Server_Connection_Handler (ACE_Thread_Manager *t = ACE_Thread_Manager::instance ());
+  TAO_Server_Connection_Handler (ACE_Thread_Manager * = 0);
   // Constructor.
 
   virtual int open (void *);
