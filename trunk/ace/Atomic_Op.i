@@ -115,6 +115,14 @@ ACE_Atomic_Op<ACE_LOCK, TYPE>::operator TYPE () const
   return this->value_;    
 }
 
+template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE
+ACE_Atomic_Op<ACE_LOCK, TYPE>::value (void) const
+{
+// ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::value");
+  ACE_Guard<ACE_LOCK> m ((ACE_LOCK &) this->lock_);
+  return this->value_;    
+}
+
 template <class ACE_LOCK, class TYPE> ACE_INLINE void
 ACE_Atomic_Op<ACE_LOCK, TYPE>::operator= (const TYPE &i)
 {

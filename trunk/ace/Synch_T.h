@@ -193,6 +193,9 @@ public:
   operator TYPE () const;
   // Atomically return <count_>.
 
+  TYPE value (void) const;
+  // Explicitly return <count_>.
+
   void dump (void) const;
   // Dump the state of an object.
 
