@@ -1,3 +1,95 @@
+Tue Oct 28 07:05:46 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	The following changes are designed to make profile equivalance
+	checking code consistent between all pluggable protocol
+	implementations.
+
+	* tao/Profile.h (is_equivalent):
+
+	  This method is no longer virtual since it relies on template
+	  methods implemented by subclasses to perform pluggable
+	  protocol-specific profile equivalence check processing.
+
+	  (do_is_equivalent):
+
+	  New protected template method that subclasses must implement in
+	  order to allow pluggable protocols to apply their own definition
+	  of profile equivalance.
+
+	  (endpoint_count):
+
+	  Made this method const to address "discards const qualifier"
+	  errors.  This is now necessary since some equivalence checking
+	  code that calls this method has been refactored to the
+	  is_equivalence() method.
+
+	* tao/Profile.cpp (is_equivalent):
+
+	  Check for a zero pointer to avoid potential a seg fault.
+
+	  Invoke the new do_is_equivalent() template method and the new
+	  is_equivalent_hook() hook method.
+
+	  (is_profile_equivalent_i, is_equivalent_hook):
+
+	  Renamed is_profile_equivalent_i() method to is_equivalent_hook()
+	  to better reflect the purpose of this method.  Note that
+	  is_equivalent_hook() is virtual to allow subclasses to override
+	  the default behavior.
+
+	  (is_equivalent_hook):
+
+	  The TAO_Unknown_Profile::is_equivalent() method does not need to
+	  allow some services (e.g. FT) to apply their own definition of
+	  profile equivalence.  Override this method so that it always
+	  return true.  Note that this behavior is consistent with the
+	  behavior that existed prior to these changes.
+
+	* tao/IIOP_Profile.h (endpoint_count):
+
+	  Now a "const" method to address "discards const qualifier"
+	  errors.
+
+	  (is_equivalent, do_is_equivalent):
+
+	  Renamed this public method to the new protected
+	  do_is_equivalent() template method.
+
+	* tao/IIOP_Profile.cpp (is_equivalent):
+
+	  Refactored common profile equivalence checking code to the
+	  TAO_Profile base class.
+
+	  (do_is_equivalent):
+
+	  Moved protocol-specific profile equivalence checks to this
+	  template method.
+
+	  (endpoint_count):
+
+	  Now a "const" method to address "discards const qualifier"
+	  errors.
+
+	* tao/Strategies/DIOP_Profile.h:
+	* tao/Strategies/DIOP_Profile.cpp:
+	* tao/Strategies/SCIOP_Profile.h:
+	* tao/Strategies/SCIOP_Profile.cpp:
+	* tao/Strategies/SHMIOP_Profile.h:
+	* tao/Strategies/SHMIOP_Profile.cpp:
+	* tao/Strategies/UIOP_Profile.h:
+	* tao/Strategies/UIOP_Profile.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.h:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp:
+
+	  Likewise.
+
+	* orbsvcs/tests/Security/Secure_Invocation/server.cpp:
+
+	  Added a sanity check for properly functioning SSLIOP profile
+	  equivalence checks.
+
 Sat Oct 25 13:19:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAOACE.dsw: Added that EventService is dependent of BiDIR GIOP

@@ -74,7 +74,6 @@ public:
   // = Please see Profile.h for the documentation of these methods.
   virtual int decode (TAO_InputCDR& cdr);
   virtual int encode_endpoints (void);
-  virtual CORBA::Boolean is_equivalent (const TAO_Profile * other_profile);
   virtual TAO_Endpoint *endpoint (void);
 
   /**
@@ -95,6 +94,14 @@ public:
    * added to our parent's class endpoint list.
    */
   void add_endpoint (TAO_SSLIOP_Endpoint * endp);
+
+protected:
+
+  /// Profile equivalence template method.
+  /**
+   * @see TAO_Profile::do_is_equivalent()
+   */
+  virtual CORBA::Boolean do_is_equivalent (const TAO_Profile * other_profile);
 
 private:
 
