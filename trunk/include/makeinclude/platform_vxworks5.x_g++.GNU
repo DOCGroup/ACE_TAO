@@ -18,6 +18,9 @@
 VXWORKS = 1
 CROSS-COMPILE = 1
 
+ifndef exceptions
+  exceptions = 0
+endif # ! exceptions
 ifndef debug
   debug = 1
 endif # ! debug
