@@ -1,3 +1,21 @@
+Tue Jan 27 18:05:19 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/be_include/be_global.h:
+        
+          Eliminated generation of the *A.h file, containing
+          declarations for Any operators and triggered by the
+          option -GA. Moved generation of Any operator declarations
+          back to the *C.h file. Left generation of the *A.cpp file
+          unchanged, except for removal of *A.h #include. This 
+          change allows us to avoid linking *A.cpp in
+          DLLs if the Any operators are not used, while still
+          allowing their declarations to be found if they are referenced
+          in another generated file.
+
 Tue Jan 27 17:41:38 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/OctetSeqA.h:
