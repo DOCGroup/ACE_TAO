@@ -125,18 +125,16 @@ Compiling:
 		"make sure that the following definition is in the 
 			$TAO_ROOT/orbsvcs/orbsvcs/RtecEventComm.idl"
               
-			struct EventData {
-                long x;
-                long y;
-                any any_value;
-            };
+		struct EventData {
+			any any_value;
+		};
 
 		"compile $TAO_ROOT/orbsvcs/orbsvcs"
 		"compile $TAO_ROOT/orbsvcs/Event_Service"
 		"compile $TAO_ROOT/orbsvcs/Naming_Service"
 		"compile $TAO_ROOT/orbsvcs/Scheduling_Service"
 
-
+		! Note: Make sure to recompile RtecEventChannelAdmin.idl!
 
 	Supplier: 
 

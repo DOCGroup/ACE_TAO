@@ -1,3 +1,18 @@
+Tue Jul  8 14:00:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/orbsvcs.dsp: When changing the RtecEventComm.id
+	  file or the RtecScheduler.idl file, it is needed to 
+	  recompile the RtecEventChannelAdmin.idl file. This is a common
+	  problem. So the programmer has to take care that the 
+	  dependencies in the Makefile or VC++ project file 
+	  are set properly.
+
+	* orbsvcs/tests/Simulator/Event_Supplier/DOVE_Supplier.cpp,
+	  orbsvcs/tests/Simulator/DOVEBrowser/PushConsumer.java,
+	  orbsvcs/tests/Simulator/DOVEBrowser/PushConsumer.java.JDK1.2,
+	  orbsvcs/tests/Simulator/README:
+	  Simplified the event data.
+
 Tue Jul  7 22:11:17 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Trader/Trader.{h,cpp}:
