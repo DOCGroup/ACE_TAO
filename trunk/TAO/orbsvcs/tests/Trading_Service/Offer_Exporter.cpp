@@ -1,3 +1,4 @@
+// $Id$
 #include "Offer_Exporter.h"
 
 template<class T>
@@ -51,6 +52,7 @@ TAO_Offer_Exporter::~TAO_Offer_Exporter (void)
 {
   for (int i = 0; i < NUM_OFFERS; i++)
     {
+      /*
       delete dp_plotters_[i].remove_handler
 	(TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_USER_QUEUE]);
       delete dp_plotters_[i].remove_handler
@@ -61,6 +63,7 @@ TAO_Offer_Exporter::~TAO_Offer_Exporter (void)
 	(TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_FILE_SIZES_PENDING]);
       delete dp_fs_[i].remove_handler
 	(TT_Info::FILESYSTEM_PROPERTY_NAMES[TT_Info::SPACE_REMAINING]);
+	*/
     }
 }
 
@@ -164,7 +167,7 @@ TAO_Offer_Exporter::describe_offers (CORBA::Environment& _env)
 	      ACE_DEBUG ((LM_DEBUG, "Offer Id: %s\n", (const char *) offer_id_seq[i]));
 	      ACE_DEBUG ((LM_DEBUG, "Service Type: %s\n", offer_info->type.in ()));	      
 	      TT_Info::dump_properties (offer_info->properties);
-	      ACE_DEBUG ((LM_DEBUG, "------------------------------"));
+	      ACE_DEBUG ((LM_DEBUG, "------------------------------\n"));
 	    }
 	}
     }
@@ -215,7 +218,7 @@ TAO_Offer_Exporter::grab_offerids (CORBA::Environment& _env)
   CosTrading::OfferIdSeq_ptr offer_id_seq;
   TAO_TRY
     {
-      CORBA::ULong length;
+      CORBA::ULong length = NUM_OFFERS;
       CosTrading::OfferIdIterator_ptr offer_id_iter;
 
       this->admin_->list_offers (NUM_OFFERS,
@@ -224,11 +227,11 @@ TAO_Offer_Exporter::grab_offerids (CORBA::Environment& _env)
 				 TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      if (! CORBA::is_nil (offer_id_iter) && offer_id_seq != 0)
+      if ((! CORBA::is_nil (offer_id_iter)) && offer_id_seq != 0)
 	{
 	  CORBA::Boolean any_left = CORBA::B_FALSE;
 	  CosTrading::OfferIdSeq_ptr id_seq;
-	  CosTrading::OfferIdIterator_var (offer_id_iter);
+	  CosTrading::OfferIdIterator_var offer_id_iter_var (offer_id_iter);
 	  
 	  do
 	    {
@@ -238,17 +241,21 @@ TAO_Offer_Exporter::grab_offerids (CORBA::Environment& _env)
 				       TAO_TRY_ENV);
 	      TAO_CHECK_ENV;
 
-	      CosTrading::OfferIdSeq_var id_seq (id_seq);
 	      int offers = id_seq->length ();
 	      int old_length = offer_id_seq->length ();
 	      offer_id_seq->length (old_length + offers);
 
 	      for (int i = 0; i < offers; i++)
-		(*offer_id_seq)[i + old_length] = id_seq[i];
-	      
+		(*offer_id_seq)[i + old_length] = (*id_seq)[i];
+
+	      delete id_seq;
 	    } while (any_left);	      
 	}
 
+      ACE_DEBUG ((LM_DEBUG, "The following offer ids are registered:\n"));
+      for (int len = offer_id_seq->length (), j = 0; j < len; j++)
+	ACE_DEBUG ((LM_DEBUG, "Offer Id: %s\n", (const char *)(*offer_id_seq)[j]));
+      
       return offer_id_seq;
     }
   TAO_CATCHANY
@@ -299,24 +306,24 @@ TAO_Offer_Exporter::create_offers (void)
 	 extra_info,
 	 new Simple_DP_Evaluation_Handler<TAO_Sequences::ULongSeq> (ulong_seq));
       */      
-      this->props_plotters_[i].length (9);
-      this->props_plotters_[i][0].name = TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::NAME];
-      this->props_plotters_[i][0].value <<= name;
-      this->props_plotters_[i][1].name = TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::LOCATION];
+      this->props_plotters_[i].length (7);
+      this->props_plotters_[i][0].name = CORBA::string_dup (TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::NAME]);
+      this->props_plotters_[i][0].value <<= CORBA::string_dup (name);
+      this->props_plotters_[i][1].name = CORBA::string_dup (TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::LOCATION]);
       this->props_plotters_[i][1].value <<= TT_Info::LOCATIONS[i];
-      this->props_plotters_[i][2].name = TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::DESCRIPTION];
-      this->props_plotters_[i][2].value <<= description;
-      this->props_plotters_[i][3].name = TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_NUM_COLORS];
+      this->props_plotters_[i][2].name = CORBA::string_dup (TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::DESCRIPTION]);
+      this->props_plotters_[i][2].value <<= CORBA::string_dup (description);
+      this->props_plotters_[i][3].name = CORBA::string_dup (TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_NUM_COLORS]);
       this->props_plotters_[i][3].value <<= (i * 2);
-      this->props_plotters_[i][4].name = TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_AUTO_LOADING];
+      this->props_plotters_[i][4].name = CORBA::string_dup (TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_AUTO_LOADING]);
       this->props_plotters_[i][4].value <<= CORBA::Any::from_boolean ((CORBA::Boolean) (i % 2));
-      this->props_plotters_[i][5].name = TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_COST_PER_PAGE];
+      this->props_plotters_[i][5].name = CORBA::string_dup (TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_COST_PER_PAGE]);
       this->props_plotters_[i][5].value <<= (CORBA::Float) i;
-      this->props_plotters_[i][6].name = TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_MODEL_NUMBER];
-      this->props_plotters_[i][6].value <<= TT_Info::MODEL_NUMBERS[i];
-      this->props_plotters_[i][7].name = TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_USER_QUEUE];
+      this->props_plotters_[i][6].name = CORBA::string_dup (TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_MODEL_NUMBER]);
+      this->props_plotters_[i][6].value <<= CORBA::string_dup (TT_Info::MODEL_NUMBERS[i]);
+      //      this->props_plotters_[i][7].name = TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_USER_QUEUE];
       //      this->props_plotters_[i][7].value <<= dp_user_queue.in ();
-      this->props_plotters_[i][8].name = TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_FILE_SIZES_PENDING];
+      //      this->props_plotters_[i][8].name = TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_FILE_SIZES_PENDING];
       //      this->props_plotters_[i][8].value <<= dp_file_queue.in ();
     }
 
@@ -348,26 +355,26 @@ TAO_Offer_Exporter::create_offers (void)
 	 extra_info,
 	 new Simple_DP_Evaluation_Handler<TAO_Sequences::ULongSeq> (ulong_seq));
 	 */      
-      this->props_printers_[i].length (10);
-      this->props_printers_[i][0].name = TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::NAME];
-      this->props_printers_[i][0].value <<= name;
-      this->props_printers_[i][1].name = TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::LOCATION];
+      this->props_printers_[i].length (8);
+      this->props_printers_[i][0].name = CORBA::string_dup (TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::NAME]);
+      this->props_printers_[i][0].value <<= CORBA::string_dup (name);
+      this->props_printers_[i][1].name = CORBA::string_dup (TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::LOCATION]);
       this->props_printers_[i][1].value <<= TT_Info::LOCATIONS[i];
-      this->props_printers_[i][2].name = TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::DESCRIPTION];
-      this->props_printers_[i][2].value <<= description;
-      this->props_printers_[i][3].name = TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_COLOR];
+      this->props_printers_[i][2].name = CORBA::string_dup (TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::DESCRIPTION]);
+      this->props_printers_[i][2].value <<= CORBA::string_dup (description);
+      this->props_printers_[i][3].name = CORBA::string_dup (TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_COLOR]);
       this->props_printers_[i][3].value <<= CORBA::Any::from_boolean ((CORBA::Boolean) (i % 2));
-      this->props_printers_[i][4].name = TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_DOUBLE_SIDED];
+      this->props_printers_[i][4].name = CORBA::string_dup (TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_DOUBLE_SIDED]);
       this->props_printers_[i][4].value <<= CORBA::Any::from_boolean ((CORBA::Boolean) ((i + 1) % 2));
-      this->props_printers_[i][5].name = TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_COST_PER_PAGE];
+      this->props_printers_[i][5].name = CORBA::string_dup (TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_COST_PER_PAGE]);
       this->props_printers_[i][5].value <<= (CORBA::Float) i;
-      this->props_printers_[i][6].name = TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_MODEL_NUMBER];
-      this->props_printers_[i][6].value <<= TT_Info::MODEL_NUMBERS[i];
-      this->props_printers_[i][7].name = TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_PAGES_PER_SEC];
+      this->props_printers_[i][6].name = CORBA::string_dup (TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_MODEL_NUMBER]);
+      this->props_printers_[i][6].value <<= CORBA::string_dup (TT_Info::MODEL_NUMBERS[i]);
+      this->props_printers_[i][7].name = CORBA::string_dup (TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_PAGES_PER_SEC]);
       this->props_printers_[i][7].value <<= (CORBA::UShort) i;
-      this->props_printers_[i][8].name = TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_USER_QUEUE];
+      //      this->props_printers_[i][8].name = CORBA::string_dup (TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_USER_QUEUE];
       //      this->props_printers_[i][8].value <<= dp_user_queue.in ();
-      this->props_printers_[i][9].name = TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_FILE_SIZES_PENDING];
+      //      this->props_printers_[i][9].name = CORBA::string_dup (TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_FILE_SIZES_PENDING];
       //      this->props_printers_[i][9].value <<= dp_file_queue.in ();
     }
 
@@ -380,28 +387,26 @@ TAO_Offer_Exporter::create_offers (void)
       ACE_OS::sprintf (description,
 		       "%s is a File System. It stores stuff. Like files.",
 		       name);
-
+      /*
       dp_space_left =
 	this->dp_fs_[i].register_handler
 	(TT_Info::FILESYSTEM_PROPERTY_NAMES[TT_Info::SPACE_REMAINING],
 	 TT_Info::FILESYSTEM_PROPERTY_TYPES[TT_Info::SPACE_REMAINING],
 	 extra_info,
 	 new Simple_DP_Evaluation_Handler<CORBA::ULong> (i * 4434343));
-      
-      this->props_fs_[i].length (6);
-      this->props_fs_[i][0].name = TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::NAME];
-      this->props_fs_[i][0].value <<= name;
-      this->props_fs_[i][1].name = TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::LOCATION];
-      this->props_fs_[i][1].value <<= TT_Info::LOCATIONS[i];
-      this->props_fs_[i][2].name = TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::DESCRIPTION];
-      this->props_fs_[i][2].value <<= description;
-      this->props_fs_[i][0].name = TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::NAME];
-      this->props_fs_[i][0].value <<= name;
-      this->props_fs_[i][1].name = TT_Info::FILESYSTEM_PROPERTY_NAMES[TT_Info::DISK_SIZE];
-      this->props_fs_[i][1].value <<= (CORBA::ULong) i * 2000000;
-      this->props_fs_[i][2].name = TT_Info::FILESYSTEM_PROPERTY_NAMES[TT_Info::SPACE_REMAINING];
-      //      this->props_fs_[i][2].value <<= dp_space_left.in ();
-      this->props_fs_[i][0].name = TT_Info::FILESYSTEM_PROPERTY_NAMES[TT_Info::PERMISSION_LEVEL];
-      this->props_fs_[i][0].value <<= (CORBA::UShort) i + 1;
+	 */      
+      this->props_fs_[i].length (5);
+      this->props_fs_[i][0].name = CORBA::string_dup (TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::NAME]);
+      this->props_fs_[i][0].value <<= CORBA::string_dup (name);
+      this->props_fs_[i][1].name = CORBA::string_dup (TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::LOCATION]);
+      this->props_fs_[i][1].value <<= CORBA::string_dup (TT_Info::LOCATIONS[i]);
+      this->props_fs_[i][2].name = CORBA::string_dup (TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::DESCRIPTION]);
+      this->props_fs_[i][2].value <<= CORBA::string_dup (description);
+      this->props_fs_[i][3].name = CORBA::string_dup (TT_Info::FILESYSTEM_PROPERTY_NAMES[TT_Info::DISK_SIZE]);
+      this->props_fs_[i][3].value <<= (CORBA::ULong) (i * 2000000);
+      this->props_fs_[i][4].name = CORBA::string_dup (TT_Info::FILESYSTEM_PROPERTY_NAMES[TT_Info::PERMISSION_LEVEL]);
+      this->props_fs_[i][4].value <<= (CORBA::UShort) (i + 1);
+      //      this->props_fs_[i][6].name = TT_Info::FILESYSTEM_PROPERTY_NAMES[TT_Info::SPACE_REMAINING];
+      //      this->props_fs_[i][6].value <<= dp_space_left.in ();
     }
 }
