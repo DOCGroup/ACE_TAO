@@ -284,7 +284,7 @@ ACE_SOCK_Connector::ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
                      protocol_family,
                      protocol) == -1
       && timeout != 0
-      && !(errno == EWOULDBLOCK || errno == ETIME))
+      && !(errno == EWOULDBLOCK || errno == ETIME || errno == ETIMEDOUT))
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("%p\n"),
                 ACE_LIB_TEXT ("ACE_SOCK_Connector::ACE_SOCK_Connector")));
@@ -318,7 +318,7 @@ ACE_SOCK_Connector::ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
                      protocol_family,
                      protocol) == -1
       && timeout != 0
-      && !(errno == EWOULDBLOCK || errno == ETIME))
+      && !(errno == EWOULDBLOCK || errno == ETIME || errno == ETIMEDOUT))
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("%p\n"),
                 ACE_LIB_TEXT ("ACE_SOCK_Connector::ACE_SOCK_Connector")));
