@@ -1,3 +1,20 @@
+Thu Mar  4 15:42:23 1999 Fred Kuhns <fredk@cs.wustl.edu>
+        
+        * Primarily cosmetic changes to 
+          tao/GIOP.cpp 
+          tao/GIOP.h 
+          tao/IIOP_Acceptor.h 
+          tao/IIOP_Connector.h 
+          tao/IIOP_Profile.cpp 
+          tao/IIOP_Profile.h 
+          tao/IIOP_Profile.i 
+          tao/IIOP_Transport.cpp 
+          tao/IIOP_Transport.h 
+          tao/Invocation.cpp 
+          tao/Pluggable.cpp 
+          tao/Pluggable.h 
+          tao/Stub.cpp
+
 Thu Mar  4 15:14:19 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set_T.h: 
