@@ -5,7 +5,7 @@ Tue Dec 30 17:03:27 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	  Cosmetic changes.
 
-	
+
 	* CCF/CCF/CompilerElements/Makefile.alt:
 	* CCF/CCF/CompilerElements/Preprocessor.hpp:
 	* CCF/CCF/CompilerElements/PreprocessorToken.cpp:
@@ -13,7 +13,7 @@ Tue Dec 30 17:03:27 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	  New (though not very capable) preprocessor for the time being.
 
-	
+
 	* CCF/CCF/IDL2/SemanticAction/Native.hpp:
 	* CCF/CCF/IDL2/SemanticAction/Impl/Native.cpp:
 	* CCF/CCF/IDL2/SemanticAction/Impl/Native.hpp:
@@ -23,6 +23,12 @@ Tue Dec 30 17:03:27 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 	* CCF/CCF/IDL2/Traversal/Native.hpp:
 
 	  Added support for IDL2 native feature.
+
+	* CCF/CCF/IDL2/SemanticAction/ValueType.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/ValueType.cpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/ValueType.hpp:
+
+	  Extended support for IDL2 valuetype feature.
 	
 
 	* CCF/CCF/IDL2/LexicalAnalyzer.cpp:
@@ -61,14 +67,14 @@ Tue Dec 30 17:03:27 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	  Cosmetic changes.
 
-	
+
 	* CCF/CCF/IDL3/SemanticAction/EventType.hpp:
 	* CCF/CCF/IDL3/SemanticAction/Impl/EventType.cpp:
 	* CCF/CCF/IDL3/SemanticAction/Impl/EventType.hpp:
 
 	  Added support for IDL3 eventtype feature.
 
-	
+
 	* CCF/CCF/IDL3/LexicalAnalyzer.cpp:
 	* CCF/CCF/IDL3/LexicalAnalyzer.hpp:
 	* CCF/CCF/IDL3/Parser.cpp:
@@ -89,7 +95,7 @@ Tue Dec 30 17:03:27 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	  Cosmetic changes.
 
-	
+
 	* CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
 	* CCF/Example/CIDL/LocalExecutorMapping/Makefile.alt:
 	* CCF/Example/CIDL/LocalExecutorMapping/cidlc.cpp:
@@ -113,13 +119,13 @@ Tue Dec 30 17:03:27 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 	* CIDLC/cidlc.cpp:
 
 	  Updated to reflect changes above.
-	
-	
+
+
 	* CCF/Documentation/TODO:
 
 	  Reflected new achievements.
 
-	
+
 Tue Dec 30 13:53:20 2003  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* examples/Philosophers/Philosophers.idl:
