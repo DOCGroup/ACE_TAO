@@ -458,6 +458,7 @@ TAO_LoadBalancing_ReplicationManager_i::init (
       ACE_TRY_CHECK;
 
       this->generic_factory_.poa (this->poa_.in ());
+      this->object_group_manager_.poa (this->poa_.in ());
     }
   ACE_CATCHANY
     {

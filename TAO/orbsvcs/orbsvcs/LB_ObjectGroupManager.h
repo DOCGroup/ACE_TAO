@@ -99,6 +99,7 @@ public:
                      LoadBalancing::ObjectGroupNotFound));
 
   /// Return the ObjectGroupId for the given ObjectGroup.
+  /// @note Does this method make sense for load balanced objects?
   virtual LoadBalancing::ObjectGroupId get_object_group_id (
       LoadBalancing::ObjectGroup_ptr object_group,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
@@ -147,7 +148,24 @@ public:
 
   //@}
 
+  /// Set the reference to the POA that created the object group
+  /// references passed to the ObjectGroupManager methods.
+  void poa (PortableServer::POA_ptr poa);
+
 private:
+
+  /// Obtain the ObjectGroup hash map entry corresponding to the given
+  /// ObjectGroup reference.
+  TAO_LB_ObjectGroup_Map_Entry *get_group_entry (
+      LoadBalancing::ObjectGroup_ptr object_group,
+      CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((LoadBalancing::ObjectGroupNotFound));
+
+private:
+
+  /// Reference to the POA that created the object group references
+  /// passed to the ObjectGroupManager methods.
+  PortableServer::POA_var poa_;
 
   /// Reference to the PropertyManager.
   TAO_LB_PropertyManager &property_manager_;
