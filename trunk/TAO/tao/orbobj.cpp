@@ -27,6 +27,7 @@
 #include "tao/corba.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Service_Repository.h"
+#include "tao/tao_internals.h"
 
 extern void __TC_init_table (void);
 extern void __TC_init_standard_exceptions (CORBA::Environment &env);
@@ -55,6 +56,20 @@ CORBA_ORB::CORBA_ORB (void)
     server_factory_from_service_config_ (CORBA::B_FALSE)
 {
   this->refcount_ = 1;
+}
+
+CORBA_ORB::~CORBA_ORB (void)
+{
+  TAO_Internal::close_services ();
+
+  if (! client_factory_from_service_config_)
+    delete client_factory_;
+
+  if (! server_factory_from_service_config_)
+    delete server_factory_;
+
+  // This assertion isn't valid because our ORB is a singleton
+  // assert (refcount_ == 0);
 }
 
 void
@@ -172,11 +187,7 @@ CORBA::ORB_init (int &argc,
 		 char *orb_name,
 		 CORBA::Environment &env)
 {
-#if defined (ACE_HAS_THREADS)
-  // @@ This use of a static is evil.  Please fix...
-  static ACE_Thread_Mutex lock;
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock, 0);
-#endif /* ACE_HAS_THREADS */
+  ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, TAO_Internal::orbinit_lock_, 0);
 
   env.clear ();
 
@@ -359,62 +370,7 @@ CORBA::ORB_init (int &argc,
     return 0;
 
   // Initialize the Service Configurator
-#if !defined (VXWORKS)
-  ACE_Service_Config::open (svc_config_argc, svc_config_argv);
-#else
-  // Statically stick in the appropriate abstract factories for now.
-
-  // This is such a hack!  Blech!
-  const char* service_name[2] = {
-    "Client_Strategy_Factory",
-    "Server_Strategy_Factory"
-  };
-
-#define FAKE_SVC_ENTRY(svcname, svctype, argc, argv) \
-  do \
-    { \
-      ACE_Service_Object *obj = _make_##svctype (); \
-      obj->init (argc, argv); \
-      ACE_Service_Repository::instance()->insert \
-        (new ACE_Service_Type (svcname,\
-                                 new ACE_Service_Object_Type\
-                                 (obj, svcname, ACE_Service_Type::DELETE_OBJ | ACE_Service_Type::DELETE_THIS), 0, 1));\
-    }\
-  while (0) //;
-
-  
-  char* client_args[] = { 0 };
-  FAKE_SVC_ENTRY ("Client_Strategy_Factory",
-                  TAO_Default_Client_Strategy_Factory,
-                  0, client_args);
-  
-  char* server_args[] = { "-T", "-L", "dynamic", "-o", "128", 0 };
-  FAKE_SVC_ENTRY ("Server_Strategy_Factory",
-                  TAO_Default_Server_Strategy_Factory,
-                  sizeof(server_args)/sizeof(server_args[0]), server_args);
-  
-#if 0
-  u_int flags = ACE_Service_Type::DELETE_OBJ | ACE_Service_Type::DELETE_THIS;
-  ACE_Service_Record* service[2];
-  ACE_Service_Type* type[2];
-  const ACE_SHLIB_HANDLE noShlib = 0;
-  ACE_Service_Object* obj;
-
-  obj = _make_TAO_Default_Client_Strategy_Factory();
-  obj->init(sizeof(client_args)/sizeof(client_args[0]), client_args);
-  type[0] = new ACE_Service_Object_Type (obj, service_name[0], flags);
-  service[0] = new ACE_Service_Record (service_name[0], type[0], noShlib, 1);
-  
-  obj = _make_TAO_Default_Server_Strategy_Factory();
-  obj->init(sizeof(server_args)/sizeof(server_args[0]), server_args);
-  type[1] = new ACE_Service_Object_Type (obj, service_name[1], flags);
-  service[1] = new ACE_Service_Record (service_name[1], type[1], noShlib, 1);
-
-  ACE_Service_Repository *svc_rep = ACE_Service_Repository::instance();
-  svc_rep->insert(service[0]);
-  svc_rep->insert(service[1]);
-#endif /* 0 */
-#endif /* VXWORKS */
+  TAO_Internal::open_services (svc_config_argc, svc_config_argv);
 
   // Inititalize the "ORB" pseudo-object now.
   IIOP_ORB_ptr the_orb = 0;

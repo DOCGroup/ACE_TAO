@@ -1,21 +1,6 @@
+// -*- c++ -*-
+//
 // $Id$
-
-// Constructor and destructor are accessible to subclasses
-
-ACE_INLINE
-CORBA_ORB::~CORBA_ORB (void)
-{
-  ACE_Service_Config::close();
-
-  if (! client_factory_from_service_config_)
-    delete client_factory_;
-
-  if (! server_factory_from_service_config_)
-    delete server_factory_;
-
-  // This assertion isn't valid because our ORB is a singleton
-  // assert (refcount_ == 0);
-}
 
 // CORBA dup/release build on top of COM's (why not).
 
