@@ -727,6 +727,9 @@ class TAO_Export TAO_POA_Current : public POA_PortableServer::Current
   // from TSS.
 
 public:
+
+  friend class TAO_POA;
+
   // = Specification-mandated methods
 
   virtual PortableServer::POA_ptr get_POA (CORBA_Environment &ACE_TRY_ENV);
@@ -792,7 +795,6 @@ public:
 
   TAO_POA_Current (TAO_POA *impl,
                    const TAO_ObjectKey &key,
-                   const PortableServer::ObjectId &id,
                    PortableServer::Servant servant,
                    const char *operation,
                    TAO_ORB_Core &orb_core);
@@ -805,7 +807,7 @@ protected:
   TAO_POA *poa_impl_;
   // The POA implementation invoking an upcall
 
-  const PortableServer::ObjectId *object_id_;
+  PortableServer::ObjectId object_id_;
   // The object ID of the current context.
 
   const TAO_ObjectKey *object_key_;

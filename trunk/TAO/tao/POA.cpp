@@ -1754,22 +1754,22 @@ TAO_POA::reference_to_servant (CORBA::Object_ptr reference,
 
       // If the object reference was not created by this POA, the
       // WrongAdapter exception is raised.
-      PortableServer::ObjectId id;
+      PortableServer::ObjectId system_id;
       TAO_Object_Adapter::poa_name poa_system_name;
-      CORBA::Boolean persistent = 0;
-      CORBA::Boolean system_id = 0;
+      CORBA::Boolean is_persistent = 0;
+      CORBA::Boolean is_system_id = 0;
       TAO_Temporary_Creation_Time poa_creation_time;
 
       int result = this->parse_key (key.in (),
                                     poa_system_name,
-                                    id,
-                                    persistent,
                                     system_id,
+                                    is_persistent,
+                                    is_system_id,
                                     poa_creation_time);
       if (result != 0
           || poa_system_name != this->system_name ()
-          || persistent != this->persistent ()
-          || system_id != this->system_id ()
+          || is_persistent != this->persistent ()
+          || is_system_id != this->system_id ()
           || !this->persistent ()
           && poa_creation_time != this->creation_time_)
         {
@@ -1784,8 +1784,11 @@ TAO_POA::reference_to_servant (CORBA::Object_ptr reference,
       // specified system Object Id value.  If the Object Id value is
       // not active in the POA, an ObjectNotActive exception is
       // raised.
+      PortableServer::ObjectId user_id;
       PortableServer::Servant servant = 0;
-      if (this->active_object_map ().find_servant_using_system_id (id, servant) != -1)
+      if (this->active_object_map ().find_servant_and_user_id_using_system_id (system_id,
+                                                                               servant,
+                                                                               user_id) != -1)
         {
           return servant;
         }
@@ -1870,7 +1873,7 @@ TAO_POA::reference_to_id (CORBA::Object_ptr reference,
   // for this operation to succeed.
   PortableServer::ObjectId_var user_id;
   if (this->active_object_map ().find_user_id_using_system_id (id,
-                                                               user_id) == -1)
+                                                               user_id.out ()) == -1)
     {
       ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
                         0);
@@ -1895,7 +1898,8 @@ TAO_POA::id_to_servant_i (const PortableServer::ObjectId &id,
   // specified Object Id value.  If the Object Id value is not active
   // in the POA, an ObjectNotActive exception is raised.
   PortableServer::Servant servant = 0;
-  if (this->active_object_map ().find_servant_using_user_id (id, servant) != -1)
+  if (this->active_object_map ().find_servant_using_user_id (id,
+                                                             servant) != -1)
     {
       return servant;
     }
@@ -1990,8 +1994,11 @@ TAO_POA::locate_servant_i (const PortableServer::ObjectId &system_id,
   // Object Map to find if there is a servant associated with the
   // Object Id value from the request. If such a servant exists,
   // return TAO_POA::FOUND.
+  PortableServer::ObjectId user_id;
   if (this->policies ().servant_retention () == PortableServer::RETAIN &&
-      this->active_object_map ().find_servant_using_system_id (system_id, servant) != -1)
+      this->active_object_map ().find_servant_and_user_id_using_system_id (system_id,
+                                                                           servant,
+                                                                           user_id) != -1)
     // Success
     return TAO_POA::FOUND;
 
@@ -2058,7 +2065,9 @@ TAO_POA::locate_servant_i (const char *operation,
       {
         ACE_FUNCTION_TIMEPROBE (TAO_POA_FIND_SERVANT_START);
 
-        if (this->active_object_map ().find_servant_using_system_id (system_id, servant) != -1)
+        if (this->active_object_map ().find_servant_and_user_id_using_system_id (system_id,
+                                                                                 servant,
+                                                                                 poa_current->object_id_) != -1)
           // Success
           return servant;
       }
@@ -2895,7 +2904,7 @@ TAO_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
 
 TAO_POA_Current::TAO_POA_Current (void)
   : poa_impl_ (0),
-    object_id_ (0),
+    object_id_ (),
     object_key_ (0),
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
@@ -2913,12 +2922,11 @@ TAO_POA_Current::TAO_POA_Current (void)
 
 TAO_POA_Current::TAO_POA_Current (TAO_POA *impl,
                                   const TAO_ObjectKey &key,
-                                  const PortableServer::ObjectId &id,
                                   PortableServer::Servant servant,
                                   const char *operation,
                                   TAO_ORB_Core &orb_core)
   : poa_impl_ (impl),
-    object_id_ (&id),
+    object_id_ (),
     object_key_ (&key),
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
@@ -2995,7 +3003,7 @@ TAO_POA_Current::get_object_id (CORBA::Environment &ACE_TRY_ENV)
     }
 
   // Create a new one and pass it back
-  return new PortableServer::ObjectId (*this->object_id_);
+  return new PortableServer::ObjectId (this->object_id_);
 }
 
 

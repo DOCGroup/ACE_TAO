@@ -260,7 +260,6 @@ TAO_Object_Adapter::dispatch_servant_i (const TAO_ObjectKey &key,
   const char *operation = req.operation ();
   TAO_POA_Current current_context (poa,
                                    key,
-                                   id,
                                    0,
                                    operation,
                                    this->orb_core_);

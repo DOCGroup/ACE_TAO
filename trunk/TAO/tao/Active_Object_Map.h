@@ -101,8 +101,9 @@ public:
   // Can be used with any policy. With the SYSTEM_ID policy,
   // <user_id> is actually <system_id>.
 
-  int find_servant_using_system_id (const PortableServer::ObjectId &system_id,
-                                    PortableServer::Servant &servant);
+  int find_servant_and_user_id_using_system_id (const PortableServer::ObjectId &system_id,
+                                                PortableServer::Servant &servant,
+                                                PortableServer::ObjectId &user_id);
   // Can be used with any policy.
 
   int find_servant_and_system_id_using_user_id (const PortableServer::ObjectId &user_id,
@@ -336,8 +337,9 @@ public:
   virtual ~TAO_Lifespan_Strategy (void);
   // Virtual destructor.
 
-  virtual int find_servant_using_system_id (const PortableServer::ObjectId &system_id,
-                                            PortableServer::Servant &servant) = 0;
+  virtual int find_servant_and_user_id_using_system_id (const PortableServer::ObjectId &system_id,
+                                                        PortableServer::Servant &servant,
+                                                        PortableServer::ObjectId &user_id) = 0;
   // Can be used with any policy.
 
   virtual void set_active_object_map (TAO_Active_Object_Map *active_object_map);
@@ -360,8 +362,9 @@ class TAO_Transient_Strategy : public TAO_Lifespan_Strategy
   //     Strategy for the TRANSIENT policy.
 public:
 
-  virtual int find_servant_using_system_id (const PortableServer::ObjectId &system_id,
-                                            PortableServer::Servant &servant);
+  virtual int find_servant_and_user_id_using_system_id (const PortableServer::ObjectId &system_id,
+                                                        PortableServer::Servant &servant,
+                                                        PortableServer::ObjectId &user_id);
   // Can be used with any policy.
 };
 
@@ -376,8 +379,9 @@ class TAO_Persistent_Strategy : public TAO_Lifespan_Strategy
   //     Strategy for the PERSISTENT policy.
 public:
 
-  virtual int find_servant_using_system_id (const PortableServer::ObjectId &system_id,
-                                            PortableServer::Servant &servant);
+  virtual int find_servant_and_user_id_using_system_id (const PortableServer::ObjectId &system_id,
+                                                        PortableServer::Servant &servant,
+                                                        PortableServer::ObjectId &user_id);
   // Can be used with any policy.
 
 };
