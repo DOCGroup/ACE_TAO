@@ -315,7 +315,7 @@ public:
   ACE_Atomic_Op (const TYPE &c); 
  
   /// Manage copying... 
-  ACE_Atomic_Op (const ACE_Atomic_Op_Ex<ACE_LOCK, TYPE> &); 
+  ACE_Atomic_Op (const ACE_Atomic_Op<ACE_LOCK, TYPE> &); 
  
   /// Atomically assign i to <value_>.
   void operator= (const TYPE &i);
