@@ -1,0 +1,91 @@
+--- orig/PortableInterceptorC.h	2004-12-11 16:46:29.861737600 +0100
++++ PortableInterceptorC.h	2004-12-11 16:47:24.019612800 +0100
+@@ -50,10 +50,10 @@
+ 
+ #include "tao/PI_ForwardC.h"
+ #include "tao/CurrentC.h"
+-#include "tao/DynamicC.h"
+ #include "tao/Messaging_SyncScopeC.h"
+ #include "tao/IOP_CodecC.h"
+ #include "tao/IOP_IORC.h"
++#include "tao/PolicyC.h"
+ 
+ #if defined (TAO_EXPORT_MACRO)
+ #undef TAO_EXPORT_MACRO
+@@ -76,6 +76,15 @@
+ #pragma option push -w-rvl -w-rch -w-ccc -w-inl
+ #endif /* __BORLANDC__ */
+ 
++// Hand crafted, keep DynamicC.h out of header files.
++namespace Dynamic
++{
++  class ParameterList;
++  class ExceptionList;
++  typedef CORBA::StringSeq ContextList;
++  typedef CORBA::StringSeq RequestContext;
++}
++
+ // TAO_IDL - Generated from 
+ // be\be_visitor_root/root_ch.cpp:62
+ 
+@@ -1324,17 +1333,19 @@
+     
+     // TAO_IDL - Generated from
+     // be\be_visitor_operation/operation_ch.cpp:46
++#if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
+     
+     virtual void tao_ft_interception_point (
+         ::PortableInterceptor::ServerRequestInfo_ptr ri,
+-        ::CORBA::OctetSeq_out os
+-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
++        ::CORBA::OctetSeq_out
++        ACE_ENV_ARG_DECL_NOT_USED
+       )
+       ACE_THROW_SPEC ((
+         CORBA::SystemException,
+         ::PortableInterceptor::ForwardRequest
+-      )) = 0;
++        )) {}
+     
++#endif /*TAO_HAS_EXTENDED_FT_INTERCEPTORS*/
+     // TAO_IDL - Generated from
+     // be\be_visitor_operation/operation_ch.cpp:46
+     
+@@ -1481,6 +1492,16 @@
+     
+     static void _tao_any_destructor (void *);
+     
++    // Hand-crafted addition.
++    virtual ::CORBA::Policy_ptr _create_policy (
++        CORBA::PolicyType type
++        ACE_ENV_ARG_DECL_WITH_DEFAULTS
++      )
++      ACE_THROW_SPEC ((
++        CORBA::SystemException
++        , CORBA::PolicyError
++      ));
++
+     // TAO_IDL - Generated from
+     // be\be_visitor_operation/operation_ch.cpp:46
+     
+--- orig/PortableInterceptorC.cpp	2004-12-11 16:46:29.861737600 +0100
++++ PortableInterceptorC.cpp	2004-12-11 16:18:27.762998400 +0100
+@@ -1957,6 +1957,18 @@
+   return 0;
+ }
+ 
++// Hand-crafted.
++
++::CORBA::Policy_ptr
++PortableInterceptor::PolicyFactory::_create_policy (CORBA::PolicyType
++                                                    ACE_ENV_ARG_DECL)
++  ACE_THROW_SPEC ((CORBA::SystemException,
++                   CORBA::PolicyError))
++{
++  ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
++                    CORBA::Policy::_nil ());
++}
++
+ // TAO_IDL - Generated from
+ // be\be_visitor_interface/interface_cs.cpp:60
+ 

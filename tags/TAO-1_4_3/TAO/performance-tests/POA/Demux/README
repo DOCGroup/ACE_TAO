@@ -1,0 +1,112 @@
+// $Id$
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/performance-tests/Demux
+//
+// = FILENAME
+//    README
+//
+// = AUTHOR
+//
+//    Aniruddha Gokhale
+//
+// ============================================================================
+
+
+This test directory tests various demultiplexing strategies used in
+TAO for POA, object, and operation name lookups
+
+Description of various files:
+
+CodeGen		Directory containing the code generator
+
+server.cpp	server main program
+demux_test_server.{h, cpp}: Server-side implementation details
+
+client.cpp	client main program
+demux_test_client.{h, cpp}: Client-side implementation details
+demux_test_macros.h: Some constants used by both the client and the server
+
+
+Generated Files: 
+----------------
+
+Must run ./CodeGen/demux tool to generate the following files. See
+CodeGen/README for command line options.
+
+
+demux_test.idl: The Demux_Test IDL interface
+demux_test_i.{h, cpp}: Implementation of the Interface
+demux_test_client.i: Code to be included with the client
+poa_names.dat: Names for all the POAs to be used
+
+
+Command Line options
+--------------------
+
+server -d  (for debugging)
+       -p <num POAs>
+       -o <num objects>
+       -f <IOR file>  default is ior.dat
+
+client -d  (for debugging)
+       -p <num POAs>
+       -o <num objs>
+       -m <num methods>
+       -f <IOR file>  default is ior.dat
+       -n <loop count>
+       -i <invoke strategy> (L = linear
+                             R = random
+                             B = best w.r.t linear
+                             W = worst w.r.t linear)
+
+
+------
+*NOTE* 
+------
+The num_POAs, num_objs, and num_ops must match on the client
+and server side.
+
+Use the svc.conf file and change the -ORBsystemidpolicydemuxstrategy
+option to use the desired object lookup strategy. For system ID
+policy, active demuxing in the default.
+
+Use the desired options to the TAO_IDL compiler so that it will
+generate the right lookup strategy for operation name
+demultiplexing.
+
+
+THE POA LATENCY TEST
+--------------------
+
+Make the following changes in Object_Adapter.cpp :
+
+#define ACE_ENABLE_TIMEPROBES
+
+Comment out all ACE_FUNCTION_TIMEPROBE calls except the one 
+in  locate_poa  ACE_FUNCTION_TIMEPROBE
+(TAO_OBJECT_ADAPTER_FIND_POA_START);
+
+
+In the demux_test_client : The object loop increments by one.
+In gen_names.cpp : 
+> Codegen/demux -p 25
+> make
+> ./server -p 25
+> ./client -p 25
+
+The results will reveal themselves !!
+
+
+THE SERVANT DEMUX TEST :
+------------------------
+
+In the demux_test_client : The object loop increments by 5.
+
+
+
+
+
+
+
