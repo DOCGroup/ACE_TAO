@@ -34,7 +34,7 @@
  * This class implements the generic string manager and is used in the C++
  * mapping of "struct" members that are of type "string". The difference
  * between this class and the CORBA::String_var class is that the default
- * conctructor initializes the underlying string to an empty string in this
+ * constructor initializes the underlying string to an empty string in this
  * class whereas it is a NUL string for the _var class.
  */
 class TAO_Export TAO_String_Manager
