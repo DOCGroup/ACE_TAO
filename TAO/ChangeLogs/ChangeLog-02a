@@ -1,3 +1,12 @@
+Tue Nov 28 12:03:34 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tao/MessagingC.cpp:
+	* tao/MessagingC.h:
+	* tao/MessagingC.i:
+
+	  Renamed <setup_collocation> to <_tao_setup_collocation> to
+	  reflect the chages made in the generated code.
+
 Tue Nov 28 00:29:40 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Acceptor_Registry.cpp (open):
@@ -13,17 +22,17 @@ Tue Nov 28 00:29:40 2000  Ossama Othman  <ossama@uci.edu>
 
 Mon Nov 27 17:24:14 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* performance-tests/Latency/client.cpp: 
+	* performance-tests/Latency/client.cpp:
 	  Removed 'cout' debug statements.
 
 Mon Nov 27 15:44:55 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	* examples/POA/DSI/Database_i.cpp:
-	  removed template instantiation declaration of 
+	  removed template instantiation declaration of
 	  ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex, ACE_Control_Block>;
 	  and ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> - already
 	  declared in ace/System_Time.cpp
-	  
+
 	* examples/Load_Balancing/Load_Balancer_i.cpp:
 	  removed template instantiation declaration of
 	  ACE_Equal_To<ACE_CString> and ACE_Hash<ACE_CString> - already
@@ -34,16 +43,16 @@ Mon Nov 27 15:44:55 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 Mon Nov 27 13:16:06 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/CORBALOC_Parser.cpp (parse_string_count_helper): 
+	* tao/CORBALOC_Parser.cpp (parse_string_count_helper):
 	  Correctly allocated the memory for the end_point.
-	
-	* tests/InterOp-Naming/run_test.pl: 
+
+	* tests/InterOp-Naming/run_test.pl:
 	  Updated the perl script in accordance with the recent change for
 	  the syntax of corbaloc: URLs.
 
-	* tests/InterOp-Naming/README: 
+	* tests/InterOp-Naming/README:
 	  Cosmetic changes.
-	
+
 Mon Nov 27 13:07:29 2000  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Acceptor.h:
