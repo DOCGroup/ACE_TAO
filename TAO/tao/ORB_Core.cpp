@@ -1925,6 +1925,10 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
       // Otherwise just continue..
     }
 
+  if (this->has_shutdown () == 1 &&
+      this->server_factory_->activate_server_connections ())
+      this->tm_.wait ();
+      
   if (TAO_debug_level > 2)
     {
       ACE_DEBUG ((LM_DEBUG,
