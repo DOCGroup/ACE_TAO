@@ -36,6 +36,9 @@ SHLIB            = $(SHLIB_UNCHECKED)
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif
+<%endif%>
+<%if(ciao)%>
+
 ifndef CIAO_ROOT
   CIAO_ROOT = $(TAO_ROOT)/CIAO
 endif
