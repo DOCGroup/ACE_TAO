@@ -98,7 +98,7 @@ TAO_SSLIOP_ORBInitializer::post_init (
 
   // Register the SSLIOP secure invocation server request interceptor
   // with the ORB.
-  info->add_server_request_interceptor (si_interceptor,
+  info->add_server_request_interceptor (si_interceptor.in (),
                                         ACE_TRY_ENV);
   ACE_CHECK;
 }
