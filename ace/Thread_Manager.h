@@ -455,6 +455,58 @@ private:
 #endif /* defined (ACE_MT_SAFE) */
 };
 
+class ACE_Export ACE_Thread_Exit
+  // = TITLE
+  //    Keep exit information for a Thread in thread specific storage.
+  //    so that the thread-specific exit hooks will get called no
+  //    matter how the thread exits (e.g., via <ACE_Thread::exit>, C++
+  //    or Win32 exception, "falling off the end" of the thread entry
+  //    point function, etc.).
+  //
+  // = DESCRIPTION
+  //    This clever little helper class is stored in thread-specific
+  //    storage using the <ACE_TSS> wrapper.  When a thread exits the
+  //    <ACE_TSS::cleanup> function deletes this object, thereby
+  //    closing it down gracefully.
+{
+public:
+  ACE_Thread_Exit (void);
+  // Capture the Thread that will be cleaned up automatically.
+
+  void thr_mgr (ACE_Thread_Manager *tm);
+  // Set the <ACE_Thread_Manager>.
+
+  void *status (void *s);
+  // Set the exit status.
+
+  void *status (void);
+  // Get the exit status.
+
+  ~ACE_Thread_Exit (void);
+  // Destructor calls the thread-specific exit hooks when a thread
+  // exits.
+
+  static ACE_Thread_Exit *instance (void);
+  // Singleton access point.
+
+  static void cleanup (void *instance, void *);
+  // Cleanup method, used by the <ACE_Object_Manager> to destroy the
+  // singleton.
+
+private:
+  void *status_;
+  // Exit status...
+
+  ACE_Thread_Control thread_control_;
+  // Automatically add/remove the thread from the
+  // <ACE_Thread_Manager>.
+
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+  static ACE_Thread_Mutex ace_thread_exit_lock_;
+  // Lock the creation of the Singleton.
+#endif /* defined (ACE_MT_SAFE) */
+};
+
 #if defined (__ACE_INLINE__)
 #include "ace/Thread_Manager.i"
 #endif /* __ACE_INLINE__ */

@@ -189,57 +189,6 @@ public:
 #endif /* ACE_MT_SAFE */
 };
 
-class ACE_Export ACE_Task_Exit
-  // = TITLE
-  //    Keep exit information for a Task in thread specific storage so
-  //    that the <Task::close> method will get called no matter how
-  //    the thread exits (e.g., via <Thread::exit>, C++ or Win32
-  //    exception, "falling off the end" of <Task::svc_run>, etc.).
-  //
-  // = DESCRIPTION
-  //    This clever little helper class is stored in thread-specific
-  //    storage using the <ACE_TSS> wrapper.  When a thread exits the
-  //    <ACE_TSS::cleanup> function deletes this object, thereby
-  //    closing it down gracefully.
-{
-public:
-  ACE_Task_Exit (void);
-  // Capture the Task object that will be cleaned up automatically.
-
-  void set_task (ACE_Task_Base *t);
-  // Set the this pointer...
-
-  ACE_Task_Base *get_task (void);
-  // Get the pointer to the ACE_Task.
-
-  void *status (void *s);
-  // Set the exit status.
-
-  void *status (void);
-  // Get the exit status.
-
-  ~ACE_Task_Exit (void);
-  // Destructor calls the <close> method of the captured Task on exit.
-
-  static ACE_Task_Exit *instance (void);
-  // Singleton access point.
-
-  static void cleanup (void *instance, void *);
-  // Cleanup method, used by ACE_Object_Manager to destroy the singleton.
-
-private:
-  ACE_Task_Base *t_;
-  // Pointer to the captured Task.
-
-  void *status_;
-  // Exit status...
-
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  static ACE_Thread_Mutex ace_task_lock_;
-  // Lock the creation of the Singleton.
-#endif /* defined (ACE_MT_SAFE) */
-};
-
 #if defined (__ACE_INLINE__)
 #include "ace/Task.i"
 #endif /* __ACE_INLINE__ */

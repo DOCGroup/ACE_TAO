@@ -239,19 +239,179 @@ ACE_Thread_Manager::~ACE_Thread_Manager (void)
   this->close ();
 }
 
-// Run the thread entry point for the <ACE_Thread_Adapter>.  This must
-// be an extern "C" to make certain compilers happy...
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+// Lock the creation of the Singleton.
+ACE_Thread_Mutex ACE_Thread_Exit::ace_thread_exit_lock_;
+#endif /* defined (ACE_MT_SAFE) */
+
+#if defined (ACE_HAS_SIG_C_FUNC)
+extern "C" void
+ACE_Thread_Exit_cleanup (void *instance, void *)
+{
+  ACE_TRACE ("ACE_Thread_Exit::cleanup");
+
+  delete (ACE_TSS_TYPE (ACE_Thread_Exit) *) instance;
+}
+#else
+void
+ACE_Thread_Exit::cleanup (void *instance, void *)
+{
+  ACE_TRACE ("ACE_Thread_Exit::cleanup");
+
+  delete (ACE_TSS_TYPE (ACE_Thread_Exit) *) instance;
+}
+#endif /* ACE_HAS_SIG_C_FUNC */
+
+// NOTE: this preprocessor directive should match the one in
+// ACE_Task_Base::svc_run () below.  This prevents the two statics
+// from being defined.
+ACE_Thread_Exit *
+ACE_Thread_Exit::instance (void)
+{
+#if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) && ! defined (ACE_HAS_PTHREAD_SIGMASK) && !defined (ACE_HAS_FSU_PTHREADS)
+  ACE_TRACE ("ACE_Thread_Exit::instance");
+
+  // Determines if we were dynamically allocated.
+  static ACE_TSS_TYPE (ACE_Thread_Exit) *instance_;
+
+  // Implement the Double Check pattern.
+
+  if (instance_ == 0)
+    {
+      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_thread_exit_lock_, 0));
+
+      if (instance_ == 0)
+        {
+	  ACE_NEW_RETURN (instance_, ACE_TSS_TYPE (ACE_Thread_Exit), 0);
+
+          // Register for destruction with ACE_Object_Manager.
+#if defined ACE_HAS_SIG_C_FUNC
+          ACE_Object_Manager::at_exit (instance_, ACE_Thread_Exit_cleanup, 0);
+#else
+          ACE_Object_Manager::at_exit (instance_, ACE_Thread_Exit::cleanup, 0);
+#endif /* ACE_HAS_SIG_C_FUNC */
+        }
+    }
+
+  return ACE_TSS_GET (instance_, ACE_Thread_Exit);
+#else
+  return 0;
+#endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE && ! ACE_HAS_PTHREAD_SIGMASK && ! ACE_HAS_FSU_PTHREADS */
+}
+
+// Grab hold of the Task * so that we can close() it in the
+// destructor.
+
+ACE_Thread_Exit::ACE_Thread_Exit (void)
+  : status_ ((void *) -1)
+{
+  ACE_TRACE ("ACE_Thread_Exit::ACE_Thread_Exit");
+}
+
+// Set the this pointer...
+
+void
+ACE_Thread_Exit::thr_mgr (ACE_Thread_Manager *tm)
+{
+  ACE_TRACE ("ACE_Thread_Exit::set_task");
+
+  if (tm != 0)
+    this->tc_.insert (tm->thr_mgr ());
+}
+
+// Set the thread exit status value.
+
+void *
+ACE_Thread_Exit::status (void *s)
+{
+  ACE_TRACE ("ACE_Thread_Exit::status");
+  return this->status_ = s;
+}
+
+void *
+ACE_Thread_Exit::status (void)
+{
+  ACE_TRACE ("ACE_Thread_Exit::status");
+  return this->status_;
+}
+
+// When this object is destroyed the Task is automatically closed
+// down!
+
+ACE_Thread_Exit::~ACE_Thread_Exit (void)
+{
+  ACE_TRACE ("ACE_Thread_Exit::~ACE_Thread_Exit");
+
+#if 0
+  // The thread count must be decremented first in case the <close>
+  // hook does something crazy like "delete this".
+  this->t_->thr_count_dec ();
+  this->t_->close (u_long (this->status_));
+#endif /* 0 */
+}
+
+// Run the entry point for thread spawned under the control of the
+// <ACE_Thread_Manager>.  This must be an extern "C" to make certain
+// compilers happy...
+//
+// The interaction with <ACE_Thread_Exit> and
+// <ace_thread_manager_adapter> works like this, with
+// ACE_HAS_THREAD_SPECIFIC_STORAGE:
+//
+// o Every thread in the <ACE_Thread_Manager> is run with
+//   <ace_thread_manager_adapter>.
+//
+// o <ace_thread_manager_adapter> retrieves the singleton
+//   <ACE_Thread_Exit> instance from <ACE_Thread_Exit::instance>.
+//   The singleton gets created in thread-specific storage
+//   in the first call to that function.  The key point is that the
+//   instance is in thread-specific storage.
+//
+// o A thread can exit by various means, such as <ACE_Thread::exit>, C++
+//   or Win32 exception, "falling off the end" of the thread entry
+//   point function, etc.
+//
+// o If you follow this so far, now it gets really fun . . .
+//   When the thread-specific storage (for the thread that
+//   is being destroyed) is cleaned up, the OS threads package (or
+//   the ACE emulation of thread-specific storage) will destroy any
+//   objects that are in thread-specific storage.  It has a list of
+//   them, and just walks down the list and destroys each one.
+//
+// o That's where the ACE_Thread_Exit destructor gets called.
 
 extern "C" void *
 ace_thread_manager_adapter (void *args)
 {
   ACE_Thread_Adapter *thread_args = (ACE_Thread_Adapter *) args;
 
-  // This really needs to go into TSS!
-  ACE_Thread_Control tc (thread_args->thr_mgr ());
+  // NOTE: this preprocessor directive should match the one in above 
+  // ACE_Thread_Exit::instance ().  With the Xavier Pthreads package,
+  // the exit_hook in TSS causes a seg fault.  So, this works around
+  // that by creating exit_hook on the stack.
+#if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) && ! defined (ACE_HAS_PTHREAD_SIGMASK) && !defined (ACE_HAS_FSU_PTHEADS)
+  // Obtain our thread-specific exit hook and make sure that it knows
+  // how to clean us up!  Note that we never use this pointer directly
+  // (it's stored in thread-specific storage), so it's ok to
+  // dereference it here and only store it as a reference.
+  ACE_Thread_Exit &exit_hook = *ACE_Thread_Exit::instance ();
+#else
+  // Without TSS, create an <ACE_Thread_Exit> instance.  When this
+  // function returns, its destructor will be called because the
+  // object goes out of scope.  The drawback with this appraoch is
+  // that the destructor _won't_ get called if <thr_exit> is called.
+  // So, threads shouldn't exit that way.  Instead, they should return
+  // from <svc>.
+  ACE_Thread_Exit exit_hook;
+#endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE && ! ACE_HAS_PTHREAD_SIGMASK && !ACE_HAS_FSU_PTHREADS */
+
+  exit_hook.thr_mgr (thread_args->thr_mgr ());
 
   // Invoke the user-supplied function with the args.
   return thread_args->invoke ();
+}
+  return exit_hook.status (status);
+  /* NOTREACHED */
 }
 
 // Call the appropriate OS routine to spawn a thread.  Should *not* be
@@ -1223,3 +1383,6 @@ ACE_Thread_Control::exit (void *exit_status, int do_thr_exit)
       return 0;
     }
 }
+
+
+
