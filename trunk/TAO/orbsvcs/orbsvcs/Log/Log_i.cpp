@@ -438,7 +438,6 @@ Log_i::set_capacity_alarm_thresholds (const
   ACE_THROW_SPEC ((CORBA::SystemException,
                    DsLogAdmin::InvalidThreshold))
 {
-
   const CORBA::Boolean validated =
     Log_i::validate_capacity_alarm_thresholds (threshs
                                                ACE_ENV_ARG_PARAMETER);
@@ -981,6 +980,7 @@ Log_i::set_record_attribute (DsLogAdmin::RecordId id,
 {
   this->remove_old_records (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
+
   // TODO: validate attributes here.
 
   DsLogAdmin::LogRecord rec;
@@ -1288,7 +1288,6 @@ Log_i::remove_old_records (ACE_ENV_SINGLE_ARG_DECL)
   this->reset_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
-
 
 void
 Log_i::check_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_DECL)
