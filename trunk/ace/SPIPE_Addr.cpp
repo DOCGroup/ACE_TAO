@@ -85,7 +85,7 @@ ACE_SPIPE_Addr::set (LPCTSTR addr,
   len += sizeof (this->SPIPE_addr_.gid_);
 
 #if defined (ACE_WIN32)
-  TCHAR *colonp = ACE_OS::strchr (addr, ':');
+  const TCHAR *colonp = ACE_OS::strchr (addr, ':');
   TCHAR temp[BUFSIZ];
 
   if (colonp == 0) // Assume it's a local name.
