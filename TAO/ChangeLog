@@ -1,3 +1,8 @@
+Sun Aug  1 15:42:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Security/SL3_CredentialsCurator.cpp:
+          Fixed conversion warning by adding missing .in()
+
 Sun Aug  1 15:34:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Security/SL3_SecurityCurrent_Impl.h:
