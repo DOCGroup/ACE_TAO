@@ -34,7 +34,11 @@ TAO_IIOP_Interpreter::table_[CORBA::TC_KIND_COUNT] =
 
   { 0, 1, 0, skip_encapsulation },        // CORBA::tk_enum
   { 0, 1, 0, skip_long },                 // CORBA::tk_string
+#if defined (TAO_NO_COPY_OCTET_SEQUENCES)
+  { 0, 1, calc_seq_attributes, 0 },        // CORBA::tk_sequence
+#else
   { 0, 1, 0, skip_encapsulation },        // CORBA::tk_sequence
+#endif
   { 0, 1, calc_array_attributes, 0 },     // CORBA::tk_array
 
   // = Two TCKind values added in 94-11-7
@@ -165,7 +169,9 @@ declare_entry (CORBA::Principal_ptr, tk_Principal);
 declare_entry (CORBA::Object_ptr, tk_objref);
 
 declare_entry (CORBA::String, tk_string);
+#if !defined (TAO_NO_COPY_OCTET_SEQUENCES)
 declare_entry (TAO_opaque, tk_sequence);
+#endif
 
 declare_entry (CORBA::LongLong, tk_longlong);
 declare_entry (CORBA::ULongLong, tk_ulonglong);
@@ -203,7 +209,9 @@ TAO_IIOP_Interpreter::init (void)
     sizeof (generic_enum);
 
   setup_entry (CORBA::String, tk_string);
+#if !defined (TAO_NO_COPY_OCTET_SEQUENCES)
   setup_entry (TAO_opaque, tk_sequence);
+#endif /* defined (TAO_NO_COPY_OCTET_SEQUENCES) */
 
   setup_entry (CORBA::LongLong, tk_longlong);
   setup_entry (CORBA::ULongLong, tk_ulonglong);
@@ -805,6 +813,95 @@ TAO_IIOP_Interpreter::calc_array_attributes (TAO_InputCDR *stream,
   // Array size is a function only of member number and count
   return member_size * (size_t) member_count;
 }
+
+#if defined (TAO_NO_COPY_OCTET_SEQUENCES)
+// Calculate size and alignment of a sequence.
+// If octet sequence optimizations are enabled the size of octet
+// sequences differ from the size of a regular sequence.
+
+size_t
+TAO_IIOP_Interpreter::calc_seq_attributes (TAO_InputCDR *stream,
+					   size_t &alignment,
+					   CORBA::Environment &env)
+{
+  CORBA::TCKind kind;
+
+  // Get the "kind" ... if this is an indirection, this is a guess
+  // which will soon be updated.
+  CORBA::ULong temp;
+  if (stream->read_ulong (temp) == CORBA::B_FALSE)
+    {
+      env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
+      return 0;
+    }
+
+  if (temp == ~0)
+    {
+      // Get indirection, sanity check it, set up new stream pointing
+      // there.
+      //
+      // XXX access to "real" size limit for this typecode and use it
+      // to check for errors before indirect and to limit the new
+      // stream's length.  ULONG_MAX is too much!
+      CORBA::Long offset;
+      if (!stream->read_long (offset)
+	  || offset >= -8
+	  || ((-offset) & 0x03) != 0)
+	{
+	  env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
+	  return 0;
+	}
+      // Notice how we change the sign of the offset to estimate the
+      // maximum size.
+      TAO_InputCDR indirected_stream (*stream, -offset, offset);
+
+      // Fetch indirected-to TCKind; this *cannot* be an indirection
+      // again because multiple indirections are non-complaint.
+      if (indirected_stream.read_ulong (temp) == CORBA::B_FALSE
+	  || temp == ~0)
+	{
+	  env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
+	  return 0;
+	}
+    }
+
+  kind = ACE_static_cast(CORBA::TCKind, temp);
+
+  // Skip the rest of the stream because we don't use it.
+  if (stream->skip_bytes (stream->length ()) == CORBA::B_FALSE)
+    {
+      env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
+      return 0;
+    }
+
+  size_t size;
+  if (kind == CORBA::tk_octet)
+    {
+      declare_entry (TAO_opaque, tk_sequence);
+      align_struct_tk_sequence align;
+      size = sizeof (TAO_opaque);
+#if defined (TAO_HAS_FIXED_BYTE_ALIGNMENT)
+      alignment = 1;
+#else
+      alignment =
+	(char*)&align.two - (char*)&align.one - TAO_MAXIMUM_NATIVE_TYPE_SIZE;
+#endif /* TAO_HAS_FIXED_BYTE_ALIGNMENT */
+    }
+  else
+    {
+      declare_entry (TAO_Unbounded_Sequence<CORBA::Long>, tk_sequence);
+      size = sizeof (TAO_Unbounded_Sequence<CORBA::Long>);
+      align_struct_tk_sequence align;
+#if defined (TAO_HAS_FIXED_BYTE_ALIGNMENT)
+      alignment = 1;
+#else
+      alignment =
+	(char*)&align.two - (char*)&align.one - TAO_MAXIMUM_NATIVE_TYPE_SIZE;
+#endif /* TAO_HAS_FIXED_BYTE_ALIGNMENT */
+    }
+  return size;
+}
+#endif /* defined (TAO_NO_COPY_OCTET_SEQUENCES) */
 
 // Cast the discriminant values to the right type and compare them.
 
