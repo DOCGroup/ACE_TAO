@@ -3,7 +3,7 @@
 // ============================================================================
 //
 // = FILENAME
-//    Generic_Factory.h
+//    Life_Cycle_Service.h
 //
 // = DESCRIPTION
 //    A generic factory, customized for the use with the Quoter example.
@@ -15,21 +15,21 @@
 
 #include "ace/Get_Opt.h"
 #include "tao/TAO.h"
-#include "Generic_Factory_Impl.h"
+#include "Life_Cycle_Service_Impl.h"
 
-#if !defined (GENERIC_FACTORY_H)
-#define GENERIC_FACTORY_H
+#if !defined (LIFE_CYCLE_SERVICE_H)
+#define LIFE_CYCLE_SERVICE_H
 
-class Quoter_Generic_Factory_Server
+class Quoter_Life_Cycle_Service_Server
 {
   // = TILE
   //   Server object for the Quoter Generic Factory
 
 public:
-  Quoter_Generic_Factory_Server (void);
+  Quoter_Life_Cycle_Service_Server (void);
   // Default constructor
 
-  ~Quoter_Generic_Factory_Server (void);
+  ~Quoter_Life_Cycle_Service_Server (void);
   // Destructor
 
   int init (int argc,
@@ -60,4 +60,4 @@ private:
   // commandline arguments.
 };
 
-#endif /* GENERIC_FACTORY_H */
+#endif /* LIFE_CYCLE_SERVICE_H */
