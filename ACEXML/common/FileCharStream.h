@@ -54,7 +54,7 @@ public:
 
   /**
    * Read the next ACEXML_Char.  Return -1 if we are not able to
-   * return an ACEXML_Char, 0 if EOS is reached, or 1 if succeed.
+   * return an ACEXML_Char, 0 if EOF is reached, or 1 if succeed.
    */
   virtual int get (ACEXML_Char& ch);
 

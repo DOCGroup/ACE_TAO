@@ -29,8 +29,6 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT ("Obstack_Test"));
 
   int errors = 0;
-  // For this test, the length of the ACE_Obstack must be larger than
-  // both of these strings, but less than their sum.
   const ACE_TCHAR str1[] = ACE_TEXT ("Mary had a little lamb.");
   const ACE_TCHAR str2[] = ACE_TEXT ("It's fleece was white as snow; but....");
   ACE_Obstack_T<ACE_TCHAR> stack (sizeof (str1) + 1);

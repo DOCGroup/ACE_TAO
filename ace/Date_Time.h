@@ -48,9 +48,6 @@ public:
   /// Update to the current time/date.
   void update (void);
 
-  /// Update to the given ACE_Time_Value
-  void update (const ACE_Time_Value& timevalue);
-
   /// Get day.
   long day (void) const;
 

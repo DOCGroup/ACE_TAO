@@ -1,4 +1,5 @@
 <?xml version='1.0'?>
+<!DOCTYPE ACE_Svc_Conf "http://www.cs.wustl.edu/~kitty/svcconf.dtd">
 <!-- Converted from Service_Config_Test.conf by svcconf-convert.pl -->
 <ACE_Svc_Conf>
  <!--  Dynamically loading each of the Service Objects below causes a -->

@@ -2154,12 +2154,13 @@ typedef ACE_thread_mutex_t ACE_recursive_thread_mutex_t;
 #  if defined (ACE_WIN32)
 // Windows has recursive mutexes, but doesn't have condition variables,
 // so there's no built-in support for this. Thus, the condition-related
-// unlock/relock is augmented in ACE.
+// save/restore is handled in ACE.
 struct ACE_recursive_mutex_state
 {
-  // On Windows the augmented processing is simply unlocking/relocking
-  // the recursive locks - the condition handles a single lock ok.
-  LONG relock_count_;
+  // On windows the mutex is a CRITICAL_SECTION, and these members
+  // match those in the CRITICAL_SECTION struct.
+  LONG lock_count_;
+  LONG recursion_count_;
 };
 #  else
 // No need for special handling; just need a type for method signatures.
@@ -2841,14 +2842,10 @@ PAGE_NOCACHE  */
 #   define EDQUOT                  WSAEDQUOT
 #   define ESTALE                  WSAESTALE
 #   define EREMOTE                 WSAEREMOTE
-// Grrr! ENAMETOOLONG and ENOTEMPTY are already defined by the horrible
-// 'standard' library.
+// Grrr! These two are already defined by the horrible 'standard'
+// library.
 // #define ENAMETOOLONG            WSAENAMETOOLONG
-
-#   if defined (__BORLANDC__) && (__BORLANDC__ <= 0x540)
-#     define ENOTEMPTY               WSAENOTEMPTY
-#   endif /* __BORLANDC__  && __BORLANDC__ <= 0x540*/
-
+// #define ENOTEMPTY               WSAENOTEMPTY
 
 #   if !defined (ACE_HAS_WINCE)
 #     include /**/ <time.h>
@@ -4392,7 +4389,7 @@ inline long ace_timezone()
     && !defined (CHORUS)
 # if defined (ACE_WIN32)
   return _timezone;  // For Win32.
-# elif ( defined (__Lynx__) || defined (__FreeBSD__) || defined (ACE_HAS_SUNOS4_GETTIMEOFDAY) ) && ( !defined (__linux__) )
+# elif defined (__Lynx__) || defined (__FreeBSD__) || defined (ACE_HAS_SUNOS4_GETTIMEOFDAY)
   long result = 0;
   struct timeval time;
   struct timezone zone;
@@ -4400,15 +4397,6 @@ inline long ace_timezone()
   ACE_OSCALL (::gettimeofday (&time, &zone), int, -1, result);
   return zone.tz_minuteswest * 60;
 # else  /* __Lynx__ || __FreeBSD__ ... */
-# if defined (__linux__)
-  // Under Linux, gettimeofday() does not correctly set the timezone
-  // struct, so we should use the global variable <timezone>.
-  // However, it is initialized by tzset().  I assume other systems
-  // are the same (i.e., tzset() needs to be called to set
-  // <timezone>), but since no one is complaining, I will only make
-  // the change for Linux.
-  ::tzset();
-# endif
   return timezone;
 # endif /* __Lynx__ || __FreeBSD__ ... */
 #else
@@ -6945,7 +6933,7 @@ typedef ACE_TRANSMIT_FILE_BUFFERS* ACE_LPTRANSMIT_FILE_BUFFERS;
 #   define ACE_NTOHS(x) x
 # endif /* ACE_LITTLE_ENDIAN */
 
-# if defined (ACE_HAS_POSIX_REALTIME_SIGNALS)
+# if defined (ACE_HAS_AIO_CALLS)
   // = Giving unique ACE scoped names for some important
   // RTSignal-Related constants. Becuase sometimes, different
   // platforms use different names for these constants.
@@ -6961,7 +6949,7 @@ typedef ACE_TRANSMIT_FILE_BUFFERS* ACE_LPTRANSMIT_FILE_BUFFERS;
   // some other name. If yes, use that instead of 8.
 #     define ACE_RTSIG_MAX 8
 #   endif /* _POSIX_RTSIG_MAX */
-# endif /* ACE_HAS_POSIX_REALTIME_SIGNALS */
+# endif /* ACE_HAS_AIO_CALLS */
 
   // Wrapping around wait status <wstat> macros for platforms that
   // lack them.
@@ -7126,21 +7114,13 @@ typedef ACE_TRANSMIT_FILE_BUFFERS* ACE_LPTRANSMIT_FILE_BUFFERS;
 //@}
 
 // Defining POSIX4 real-time signal range.
-#if defined(ACE_HAS_POSIX_REALTIME_SIGNALS)
+#if defined ACE_HAS_AIO_CALLS
 #define ACE_SIGRTMIN SIGRTMIN
 #define ACE_SIGRTMAX SIGRTMAX
-
-#else /* !ACE_HAS_POSIX_REALTIME_SIGNALS */
-
-#ifndef ACE_SIGRTMIN
+#else /* !ACE_HAS_AIO_CALLS */
 #define ACE_SIGRTMIN 0
-#endif /* ACE_SIGRTMIN */
-
-#ifndef ACE_SIGRTMAX
 #define ACE_SIGRTMAX 0
-#endif /* ACE_SIGRTMAX */
-
-#endif /* ACE_HAS_POSIX_REALTIME_SIGNALS */
+#endif /* ACE_HAS_AIO_CALLS */
 
 # if defined (ACE_LACKS_SYS_NERR)
 extern ACE_OS_Export int sys_nerr;

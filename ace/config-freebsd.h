@@ -1,13 +1,14 @@
 /* -*- C++ -*- */
 // $Id$
 
+// ***** This configuration file is still under testing. *****
+
 // The following configuration file is designed to work for FreeBSD
+// platforms using GNU C++ but without the POSIX (pthread) threads package
 
-#ifndef ACE_CONFIG_H
-#define ACE_CONFIG_H
+#ifndef ACE_CONFIG_FREEBSD_H
+#define ACE_CONFIG_FREEBSD_H
 #include "ace/pre.h"
-
-#include "ace/config-posix.h"
 
 #include <osreldate.h>
 // Make sure we source in the OS version.
@@ -16,7 +17,7 @@
 #define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
-#if (__FreeBSD_version < 220000)
+#if (__FreeBSD_version < 220000) && defined (_THREAD_SAFE)
 #error Threads are not supported.
 #endif /* __FreeBSD_version < 220000 */
 
@@ -26,57 +27,69 @@
 # include "ace/config-g++-common.h"
 #endif /* __GNUG__ */
 
-#if defined (ACE_HAS_PENTIUM)
-# undef ACE_HAS_PENTIUM
-#endif /* ACE_HAS_PENTIUM */
-
-// Platform specific directives
-// gcc defines __FreeBSD__ automatically for us.
-#ifdef ACE_HAS_THREADS
-#if !defined (_THREAD_SAFE)
-#define _THREAD_SAFE
-#endif /* _THREAD_SAFE */
-#endif
-
 #define ACE_HAS_GPERF
 
-#if (__FreeBSD_version < 420000)
+// Platform specific directives
 #define ACE_LACKS_GETPGID
 #define ACE_LACKS_SETPGID
 #define ACE_LACKS_SETREGID
 #define ACE_LACKS_SETREUID
-#endif /* __FreeBSD_version < 420000 */
-
-#define ACE_HAS_ALT_CUSERID
-#define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
 #define ACE_LACKS_RWLOCK_T
 #define ACE_LACKS_READDIR_R
 #define ACE_HAS_SIG_MACROS
-// Optimize ACE_Handle_Set for select().
-#define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
-#define ACE_HAS_NONCONST_SELECT_TIMEVAL
 #define ACE_HAS_CHARPTR_DL
-
-#if (__FreeBSD_version < 400000)
+#define ACE_HAS_DIRENT
+#define ACE_USES_ASM_SYMBOL_IN_DLSYM
 #define ACE_LACKS_SIGSET
-#endif
+#define ACE_LACKS_SIGINFO_H
+#define ACE_LACKS_UCONTEXT_H
+#define ACE_LACKS_SI_ADDR
 
-#define ACE_NEEDS_SCHED_H
+#if (__FreeBSD__ > 2)
+#define ACE_HAS_SIGINFO_T
+#endif /* __FreeBSD__ > 2 */
 
 // Use of <malloc.h> is deprecated.
 #define ACE_LACKS_MALLOC_H
 
-// sched.h still not fully support on FreeBSD ?
-// this is taken from /usr/src/lib/libc_r/uthread/pthread-private.h
-enum schedparam_policy {
-        SCHED_RR,
-        SCHED_IO,
-        SCHED_FIFO,
-        SCHED_OTHER
-};
+// This is for 2.1.x only.  By default, gcc defines __FreeBSD__ automatically
+#if (__FreeBSD_version < 220000)
 
-// This won't be necessary after it is fixed in the system include headers.
-extern "C" { char * cuserid (char *s); }
+#define ACE_HAS_CPLUSPLUS_HEADERS
+
+// This is to fix the nested struct if_data definition on FreeBSD 2.1.x
+#include <sys/types.h>
+#include <sys/time.h>
+struct  if_data {
+/* generic interface information */
+  u_char  ifi_type;       /* ethernet, tokenring, etc */
+  u_char  ifi_physical;   /* e.g., AUI, Thinnet, 10base-T, etc */
+  u_char  ifi_addrlen;    /* media address length */
+  u_char  ifi_hdrlen;     /* media header length */
+  u_long  ifi_mtu;        /* maximum transmission unit */
+  u_long  ifi_metric;     /* routing metric (external only) */
+  u_long  ifi_baudrate;   /* linespeed */
+/* volatile statistics */
+  u_long  ifi_ipackets;   /* packets received on interface */
+  u_long  ifi_ierrors;    /* input errors on interface */
+  u_long  ifi_opackets;   /* packets sent on interface */
+  u_long  ifi_oerrors;    /* output errors on interface */
+  u_long  ifi_collisions; /* collisions on csma interfaces */
+  u_long  ifi_ibytes;     /* total number of octets received */
+  u_long  ifi_obytes;     /* total number of octets sent */
+  u_long  ifi_imcasts;    /* packets received via multicast */
+  u_long  ifi_omcasts;    /* packets sent via multicast */
+  u_long  ifi_iqdrops;    /* dropped on input, this interface */
+  u_long  ifi_noproto;    /* destined for unsupported protocol */
+  struct  timeval ifi_lastchange;/* time of last administrative ch
+ange */
+} ;
+
+// this is a hack, but since this only occured in FreeBSD 2.1.x,
+// I guess it is ok.
+#define ACE_HAS_BROKEN_TIMESPEC_MEMBERS
+
+#endif /* __FreeBSD_version < 220000 */
 
 // Platform supports POSIX timers via struct timespec.
 #define ACE_HAS_POSIX_TIME
@@ -97,26 +110,9 @@ extern "C" { char * cuserid (char *s); }
 // Compiler/platform contains the <sys/syscall.h> file.
 #define ACE_HAS_SYSCALL_H
 
-#if (__FreeBSD_version >= 300000)
-#define ACE_HAS_SIGINFO_T
-#endif /* __FreeBSD_version >= 300000 */
-
-#if (__FreeBSD_version >= 320000)
-#define ACE_HAS_REENTRANT_FUNCTIONS
-#define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
-#define ACE_LACKS_PWD_REENTRANT_FUNCTIONS
-#define ACE_LACKS_RAND_REENTRANT_FUNCTIONS
-#define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
-#endif /* __FreeBSD_version >= 320000 */
-
+#if !defined(FreeBSD_2_1)
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
-#define ACE_LACKS_SIGINFO_H
-
-#if (__FreeBSD_version < 400000)
-#define ACE_LACKS_UCONTEXT_H
-#endif
-
-#define ACE_LACKS_SI_ADDR
+#endif /* defined FreeBSD_2_1 */
 
 // Compiler/platform supports SVR4 signal typedef
 #define ACE_HAS_SVR4_SIGNAL_T
@@ -138,11 +134,6 @@ extern "C" { char * cuserid (char *s); }
 
 // platform supports IP multicast
 #define ACE_HAS_IP_MULTICAST
-
-// Lacks perfect filtering, must bind group address.
-#if !defined ACE_LACKS_PERFECT_MULTICAST_FILTERING
-# define ACE_LACKS_PERFECT_MULTICAST_FILTERING 1
-#endif /* ACE_LACKS_PERFECT_MULTICAST_FILTERING */
 
 // Compiler/platform has <alloca.h>
 //#define ACE_HAS_ALLOCA_H
@@ -188,58 +179,18 @@ extern "C" { char * cuserid (char *s); }
 #define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
 #define ACE_HAS_NONCONST_MSGSND
 
-// Thread specific settings
-// Yes, we do have threads.
-#ifdef ACE_HAS_THREADS
-#if !defined (ACE_MT_SAFE)
-# define ACE_MT_SAFE 1
-#endif /* ! ACE_MT_SAFE */
-#endif /* ACE_HAS_THREADS */
-
-#if (__FreeBSD_version > 400000)
-#define ACE_LACKS_SETSCHED
-#endif
-
-#if (__FreeBSD_version < 420000)
-#define ACE_LACKS_PTHREAD_CANCEL
-#endif 
-
-#define ACE_LACKS_THREAD_PROCESS_SCOPING
-#define ACE_LACKS_PTHREAD_THR_SIGSETMASK
-#define ACE_LACKS_CONDATTR_PSHARED
-#define ACE_LACKS_MUTEXATTR_PSHARED
-#define ACE_HAS_THREAD_SPECIFIC_STORAGE
-#define ACE_HAS_DIRENT
-
+#if (__FreeBSD_version >= 228000)
 #define ACE_HAS_SIGWAIT
+#endif /* __FreeBSD_version >= 22800 */
+
+// Optimize ACE_Handle_Set for select().
+#define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
+#define ACE_HAS_NONCONST_SELECT_TIMEVAL
 
 #define ACE_HAS_TERM_IOCTLS
 #define ACE_USES_NEW_TERMIOS_STRUCT
 #define TCGETS TIOCGETA
 #define TCSETS TIOCSETA
 
-#if (__FreeBSD_version > 400000)
-#define ACE_HAS_UCONTEXT_T
-#define ACE_HAS_SOCKLEN_T
-#define ACE_HAS_GETIFADDRS
-#endif
-
-// Note, on FreeBSD 5, POSIX aio is now an optional kernel module which
-// must be loaded.
-// Read the aio(4) man page for what to do, otherwise any aio_* call 
-// will coredump.
-
-// By default use Proactor which does not use POSIX Real-time Signals
-#ifdef ACE_HAS_AIO_CALLS
-#ifndef ACE_POSIX_AIOCB_PROACTOR
-#define ACE_POSIX_AIOCB_PROACTOR
-#endif /* ACE_POSIX_AIOCB_PROACTOR */
-#endif /* ACE_HAS_AIO_CALLS */
-
-/* FreeBSD does not define sigval_t */
-#include <sys/signal.h>
-typedef union sigval sigval_t;
-
 #include "ace/post.h"
-
-#endif /* ACE_CONFIG_H */
+#endif /* ACE_CONFIG_FREEBSD_H */

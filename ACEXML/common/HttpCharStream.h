@@ -62,8 +62,7 @@ public:
   /**
    *  Read the next batch of ACEXML_Char strings
    */
-  virtual int read (ACEXML_Char *str,
-                    size_t len);
+  virtual int read (ACEXML_Char *str, size_t len);
 
   /**
    *  Peek the next ACEXML_Char in the CharStream.  Return the
@@ -75,6 +74,11 @@ public:
    *  Resets the file pointer to the beginning of the stream.
    */
   virtual void rewind (void);
+
+  /**
+   *  Determine the encoding of the file.
+   */
+  virtual int determine_encoding (void);
 
   /**
    * Get the encoding of the file

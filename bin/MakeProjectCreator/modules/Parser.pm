@@ -13,8 +13,6 @@ package Parser;
 use strict;
 use FileHandle;
 
-my($cwd) = Cwd::getcwd();
-
 # ************************************************************
 # Subroutine Section
 # ************************************************************
@@ -27,33 +25,11 @@ sub new {
 }
 
 
-sub cd {
-  my($self)   = shift;
-  my($dir)    = shift;
-  my($status) = chdir($dir);
-  if ($status) {
-    if ($dir =~ /^\// || $dir =~ /^[A-Za-z]:/) {
-      $cwd = $dir;
-    }
-    else {
-      $cwd .= "/$dir";
-    }
-  }
-  return $status;
-}
-
-
-sub getcwd {
-  #my($self) = shift;
-  return $cwd;
-}
-
-
 sub strip_line {
   my($self) = shift;
   my($line) = shift;
 
-  ++$self->{'line_number'};
+  $self->{'line_number'}++;
   $line =~ s/\/\/.*//;
   $line =~ s/^\s+//;
   $line =~ s/\s+$//;
@@ -70,11 +46,11 @@ sub process_special {
   for(my $i = 0; $i < $length; $i++) {
     my($ch) = substr($line, $i, 1);
     if ($ch eq "\\" && $i + 1 < $length) {
-      substr($line, $i, 1) = '';
+      substr($line, $i, 1) = "";
       $length--;
     }
     elsif ($ch eq '"') {
-      substr($line, $i, 1) = '';
+      substr($line, $i, 1) = "";
       $length--;
       $i--;
     }
@@ -88,7 +64,7 @@ sub read_file {
   my($input)       = shift;
   my($ih)          = new FileHandle();
   my($status)      = 1;
-  my($errorString) = '';
+  my($errorString) = "";
 
   $self->{'line_number'} = 0;
   if (open($ih, $input)) {
@@ -104,7 +80,7 @@ sub read_file {
     close($ih);
   }
   else {
-    $errorString = 'ERROR: Unable to open for reading';
+    $errorString = "ERROR: Unable to open for reading";
     $status = 0;
   }
 
@@ -134,7 +110,7 @@ sub create_array {
 
   for(my $i = 0; $i <= $length; $i++) {
     my($ch) = substr($line, $i, 1);
-    if (!$double && ($ch eq '' || $ch =~ /\s/)) {
+    if (!$double && ($ch eq "" || $ch =~ /\s/)) {
       my($val) = substr($line, $prev, $i - $prev);
       $val =~ s/^\s+//;
       $val =~ s/\s+$//;
@@ -151,7 +127,7 @@ sub create_array {
       $prev = $i + 1;
     }
     elsif ($double && $ch eq "\\" && $i + 1 < $length) {
-      substr($line, $i, 1) = '';
+      substr($line, $i, 1) = "";
       $length--;
     }
     elsif ($ch eq '"') {
@@ -162,22 +138,14 @@ sub create_array {
 }
 
 
-sub slash_to_backslash {
-  my($self) = shift;
-  my($file) = shift;
-  $file =~ s/\//\\/g;
-  return $file;
-}
-
-
 # ************************************************************
 # Virtual Methods To Be Overridden
 # ************************************************************
 
 sub parse_line {
-  #my($self) = shift;
-  #my($ih)   = shift;
-  #my($line) = shift;
+  my($self) = shift;
+  my($ih)   = shift;
+  my($line) = shift;
 }
 
 

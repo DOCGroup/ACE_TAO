@@ -14,12 +14,6 @@
 #define _ACEXML_ATTRIBUTES_H_
 #include "ace/pre.h"
 
-#include "ACEXML/common/ACEXML_Export.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
 #include "ACEXML/common/XML_Types.h"
 
 /**

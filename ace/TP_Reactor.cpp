@@ -562,11 +562,7 @@ ACE_TP_Reactor::handle_socket_events (int &event_count,
   if (this->dispatch_socket_event (dispatch_info) == 0)
     ++result;                // Dispatched an event
 
-  // This is to get around a problem/ which  is well described in
-  // 1361. This is just a work around that  would help applications
-  // from resuming handles at the most  inopportune moment.
-  int flag =
-    ACE_Event_Handler::ACE_EVENT_HANDLER_NOT_RESUMED;
+  int flag = 0;
 
   // Acquire the token since we want to access the handler
   // repository. The call to find () does not hold a lock and hence

@@ -363,12 +363,11 @@ ACE_Process::wait (const ACE_Time_Value &tv,
                                  tv.msec ()))
     {
     case WAIT_OBJECT_0:
+      if (status != 0)
         // The error status of <GetExitCodeProcess> is nonetheless not
         // tested because we don't know how to return the value.
         ::GetExitCodeProcess (process_info_.hProcess,
-                              &this->exit_code_);
-      if (status != 0)
-        *status = this->exit_code_;
+                              status);
       return this->getpid ();
     case WAIT_TIMEOUT:
       errno = ETIME;
@@ -379,16 +378,10 @@ ACE_Process::wait (const ACE_Time_Value &tv,
     }
 #else /* ACE_WIN32 */
   if (tv == ACE_Time_Value::zero)
-    {
-      pid_t retv =
-        ACE_OS::waitpid (this->child_id_,
-                         &this->exit_code_,
-                         WNOHANG);
-      if (status != 0)
-        *status = this->exit_code_;
-
-      return retv;
-    }
+    ACE_OSCALL_RETURN (ACE_OS::waitpid (this->child_id_,
+                                        status,
+                                        WNOHANG),
+                       int, ACE_INVALID_PID);
 
   if (tv == ACE_Time_Value::max_time)
     return this->wait (status);
@@ -407,12 +400,7 @@ ACE_Process::wait (const ACE_Time_Value &tv,
   ACE_Time_Value tmo (tv);       // Need one we can change
   for (ACE_Countdown_Time time_left (&tmo); ; time_left.update ())
     {
-      pid = ACE_OS::waitpid (this->getpid (),
-                             &this->exit_code_,
-                             WNOHANG);
-      if (status != 0)
-        *status = this->exit_code_;
-
+      pid = ACE_OS::waitpid (this->getpid (), status, WNOHANG);
       if (pid > 0 || pid == ACE_INVALID_PID)
         break;          // Got a child or an error - all done
 

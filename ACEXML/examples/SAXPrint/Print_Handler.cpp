@@ -22,14 +22,14 @@ ACEXML_Print_Handler::~ACEXML_Print_Handler (void)
 void
 ACEXML_Print_Handler::characters (const ACEXML_Char *cdata,
                                   int start,
-                                  int end ACEXML_ENV_ARG_DECL_NOT_USED)
+                                  int length ACEXML_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((ACEXML_SAXException))
 {
 
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("* Event characters () ** start: %d  end: %d ***************\n%s\n- End event characters () ---------------\n"),
-              start, end, cdata));
+              start, length, cdata));
 }
 
 void
@@ -75,10 +75,8 @@ ACEXML_Print_Handler::ignorableWhitespace (const ACEXML_Char *,
                                            ACEXML_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-
-
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("* Event ignorableWhitespace () ***************\n")));
+//   ACE_DEBUG ((LM_DEBUG,
+//               ACE_TEXT ("* Event ignorableWhitespace () ***************\n")));
 }
 
 void
@@ -99,8 +97,7 @@ ACEXML_Print_Handler::setDocumentLocator (ACEXML_Locator * locator)
 {
 
   this->locator_ = locator;
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("* Event setDocumentLocator () ***************\n")));
+  // ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("* Event setDocumentLocator () ***************\n")));
 }
 
 void

@@ -48,21 +48,13 @@ public:
   /// Default constructor.
   ACE_Time_Request (void);
 
-  /**
-   * Create a ACE_Time_Request message.
-   * @param msg_type Type of request.
-   * @param time Time.
-   * @param timeout Max time waiting for request.
-   */
-  ACE_Time_Request (ACE_INT32 msg_type,
+  /// Create a <ACE_Time_Request> message.
+  ACE_Time_Request (ACE_INT32 msg_type, // Type of request.
                     const ACE_UINT32 time,
-                    ACE_Time_Value *timeout = 0);
+                    ACE_Time_Value *timeout = 0); // Max time waiting for request.
 
-  /**
-   * Initialize length_ in order to ensure correct byte ordering before a
-   * request is sent.
-   * @deprecated This method is a no-op.
-   */
+  /// Initialize length_ in order to ensure correct byte ordering
+  /// before a request is sent.
   void init (void);
 
   // Get the fixed size of message
@@ -90,7 +82,7 @@ public:
   ACE_Time_Value timeout (void) const;
 
   /// Set the timeout.
-  void timeout (const ACE_Time_Value& timeout);
+  void timeout (const ACE_Time_Value timeout);
 
   /// Encode the message before transmission.
   int encode (void *&);
@@ -111,8 +103,8 @@ private:
     /// Type of the request (i.e., <TIME_UPDATE>)
     ACE_INT32 msg_type_;
 
-    /// Indicates if we should block forever.  If 0, then sec_timeout_
-    /// and usec_timeout_ indicates how long we should wait.
+    /// Indicates if we should block forever.  If 0, then <secTimeout_>
+    /// and <usecTimeout_> indicates how long we should wait.
     ACE_UINT32 block_forever_;
 
     /// Max seconds willing to wait for name if not blocking forever.

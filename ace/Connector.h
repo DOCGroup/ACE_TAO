@@ -38,7 +38,6 @@ template <class SVC_HANDLER>
 class ACE_Svc_Tuple
 {
 public:
-
   // = Initialization methods.
   ACE_Svc_Tuple (SVC_HANDLER *,
                  ACE_HANDLE,
@@ -390,27 +389,6 @@ class ACE_Strategy_Connector
   : public ACE_Connector <SVC_HANDLER, ACE_PEER_CONNECTOR_2>
 {
 public:
-
-  // Useful STL-style traits.
-  typedef ACE_Creation_Strategy<SVC_HANDLER>
-          creation_strategy_type;
-  typedef ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2> 
-          connect_strategy_type;
-  typedef ACE_Concurrency_Strategy<SVC_HANDLER>
-          concurrency_strategy_type;
-  typedef ACE_Connector <SVC_HANDLER, ACE_PEER_CONNECTOR_2>
-          base_type;
-
-  // = Define some useful (old style) traits.
-  typedef ACE_Creation_Strategy<SVC_HANDLER>
-          CREATION_STRATEGY;
-  typedef ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>
-          CONNECT_STRATEGY;
-  typedef ACE_Concurrency_Strategy<SVC_HANDLER>
-          CONCURRENCY_STRATEGY;
-  typedef ACE_Connector <SVC_HANDLER, ACE_PEER_CONNECTOR_2>
-          SUPER;
-
   /**
    * Initialize a connector.  <flags> indicates how <SVC_HANDLER>'s
    * should be initialized prior to being activated.  Right now, the
@@ -450,6 +428,16 @@ public:
 
   /// Close down the Connector
   virtual int close (void);
+
+  // = Define some useful typedefs traits.
+  typedef ACE_Creation_Strategy<SVC_HANDLER>
+          CREATION_STRATEGY;
+  typedef ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>
+          CONNECT_STRATEGY;
+  typedef ACE_Concurrency_Strategy<SVC_HANDLER>
+          CONCURRENCY_STRATEGY;
+  typedef ACE_Connector <SVC_HANDLER, ACE_PEER_CONNECTOR_2>
+          SUPER;
 
   // = Strategies accessors
   virtual ACE_Creation_Strategy<SVC_HANDLER> *creation_strategy (void) const;

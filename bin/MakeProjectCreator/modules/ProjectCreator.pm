@@ -60,7 +60,6 @@ my(%validNames) = ('exename'         => 1,
                    'tagchecks'       => 1,
                    'include_dir'     => 1,
                    'core'            => 1,
-                   'idlgendir'       => 1,
                   );
 
 ## Deal with these components in a special way
@@ -104,9 +103,6 @@ sub new {
   $self->{'want_static_projects'}  = $static;
   $self->{'flag_overrides'}        = {};
 
-  ## Set up the verbatim constructs
-  $self->{'verbatim'} = {};
-
   ## Valid component names within a project along with the valid file extensions
   my(%vc) = ('source_files'        => [ "\\.cpp", "\\.cxx", "\\.cc", "\\.c", "\\.C", ],
              'template_files'      => [ "_T\\.cpp", "_T\\.cxx", "_T\\.cc", "_T\\.c", "_T\\.C", ],
@@ -123,12 +119,12 @@ sub new {
 
   ## Match up assignments with the valid components
   my(%ma) = ('source_files' => [ 'includes' ],
-             'idl_files'    => [ 'idlgendir', 'idlflags' ],
+             'idl_files' => [ 'idlflags' ],
             );
   $self->{'matching_assignments'} = \%ma;
   $self->{'valid_components'}     = \%vc;
   $self->{'exclude_components'}   = \%ec;
-  $self->{'skeleton_endings'}     = [ 'C', 'S' ];
+  $self->{'skeleton_endings'}     = [ "C", "S" ];
 
   ## Allow subclasses to override the default extensions
   $self->set_component_extensions();
@@ -171,7 +167,7 @@ sub parse_line {
     if ($values[0] eq $type) {
       my($name)      = $values[1];
       my($typecheck) = $self->{'type_check'};
-      if (defined $name && $name eq '}') {
+      if (defined $name && $name eq "}") {
         ## Project Ending
         my($rp) = $self->{'reading_parent'};
         if (!defined $$rp[0] && !$self->{'reading_global'}) {
@@ -195,7 +191,7 @@ sub parse_line {
               }
             }
             else {
-              $errorString = 'ERROR: Invalid ' .
+              $errorString = "ERROR: Invalid " .
                              "assignment modification name: $ap";
               $status = 0;
             }
@@ -208,8 +204,7 @@ sub parse_line {
             foreach my $key (keys %{$self->{'valid_components'}}) {
               delete $self->{$key};
             }
-            $self->{'assign'}   = {};
-            $self->{'verbatim'} = {};
+            $self->{'assign'} = {};
           }
         }
         $self->{$typecheck}         = 0;
@@ -232,9 +227,10 @@ sub parse_line {
             }
 
             if (defined $file) {
-              push(@{$self->{'reading_parent'}}, 1);
+              my($rp) = $self->{'reading_parent'};
+              push(@$rp, 1);
               $status = $self->parse_file($file);
-              pop(@{$self->{'reading_parent'}});
+              pop(@$rp);
 
               if (!$status) {
                 $errorString = "ERROR: Invalid parent: $parent";
@@ -265,7 +261,7 @@ sub parse_line {
         }
       }
     }
-    elsif ($values[0] eq 'assignment') {
+    elsif ($values[0] eq "assignment") {
       my($name)  = $values[1];
       my($value) = $values[2];
       if (defined $validNames{$name}) {
@@ -276,7 +272,7 @@ sub parse_line {
         $status = 0;
       }
     }
-    elsif ($values[0] eq 'assign_add') {
+    elsif ($values[0] eq "assign_add") {
       my($name)  = $values[1];
       my($value) = $values[2];
       if (defined $validNames{$name}) {
@@ -287,7 +283,7 @@ sub parse_line {
         $status = 0;
       }
     }
-    elsif ($values[0] eq 'assign_sub') {
+    elsif ($values[0] eq "assign_sub") {
       my($name)  = $values[1];
       my($value) = $values[2];
       if (defined $validNames{$name}) {
@@ -298,7 +294,7 @@ sub parse_line {
         $status = 0;
       }
     }
-    elsif ($values[0] eq 'component') {
+    elsif ($values[0] eq "component") {
       my($comp) = $values[1];
       my($name) = $values[2];
       if (defined $name) {
@@ -317,17 +313,8 @@ sub parse_line {
         }
       }
       else {
-        if ($comp eq 'verbatim') {
-          my($type, $loc) = split(/\s*,\s*/, $name);
-          if (!$self->parse_verbatim($ih, $comp, $type, $loc)) {
-            $errorString = "ERROR: Unable to process $comp";
-            $status = 0;
-          }
-        }
-        else {
-          $errorString = "ERROR: Invalid component name: $comp";
-          $status = 0;
-        }
+        $errorString = "ERROR: Invalid component name: $comp";
+        $status = 0;
       }
     }
     else {
@@ -375,7 +362,7 @@ sub parse_components {
   while(<$fh>) {
     my($line) = $self->strip_line($_);
 
-    if ($line eq '') {
+    if ($line eq "") {
     }
     elsif ($line =~ /^(\w+)\s*{$/) {
       if (!defined $current || !$set) {
@@ -450,41 +437,6 @@ sub parse_components {
 }
 
 
-sub parse_verbatim {
-  my($self)    = shift;
-  my($fh)      = shift;
-  my($tag)     = shift;
-  my($type)    = shift;
-  my($loc)     = shift;
-
-  ## All types are lowercase
-  $type = lc($type);
-
-  if (!defined $self->{'verbatim'}->{$type}) {
-    $self->{'verbatim'}->{$type} = {};
-  }
-  $self->{'verbatim'}->{$type}->{$loc} = [];
-  my($array) = $self->{'verbatim'}->{$type}->{$loc};
-
-  while(<$fh>) {
-    my($line) = $self->strip_line($_);
-
-    if ($line eq '') {
-    }
-    elsif ($line =~ /^}/) {
-      ## This is not an error,
-      ## this is the end of the components
-      last;
-    }
-    else {
-      push(@$array, $line);
-    }
-  }
-
-  return 1;
-}
-
-
 sub process_assignment {
   my($self)   = shift;
   my($name)   = shift;
@@ -508,7 +460,7 @@ sub process_assignment {
     $value =~ s/\s+$//;
 
     if ($self->convert_slashes()) {
-      $value = $self->slash_to_backslash($value);
+      $value =~ s/\//\\/g;
     }
   }
 
@@ -542,13 +494,14 @@ sub process_assignment_sub {
 
   if (defined $nval) {
     my($parts) = $self->create_array($nval);
-    $nval = '';
+    $nval = "";
     foreach my $part (@$parts) {
-      if ($part ne $value && $part ne '') {
+      if ($part ne $value && $part ne "") {
         $nval .= "$part ";
       }
     }
     $self->process_assignment($name, $nval, $assign);
+    $self->process_duplicate_modification($name, $assign);
   }
 }
 
@@ -562,12 +515,12 @@ sub process_duplicate_modification {
   ## either addition or subtraction, we are going to
   ## perform a little fix on the value to avoid multiple
   ## libraries and to try to insure the correct linking order
-  if ($name eq 'libs' || $name eq 'libpaths' || $name eq 'includes') {
+  if ($name eq "libs" || $name eq "libpaths" || $name eq "includes") {
     my($nval) = $self->get_assignment($name, $assign);
     if (defined $nval) {
       my($parts) = $self->create_array($nval);
       my(%seen)  = ();
-      my($value) = '';
+      my($value) = "";
       foreach my $part (reverse @$parts) {
         if (!defined $seen{$part}) {
           $value = "$part $value";
@@ -583,7 +536,7 @@ sub process_duplicate_modification {
 sub read_template_input {
   my($self)        = shift;
   my($status)      = 1;
-  my($errorString) = '';
+  my($errorString) = "";
   my($file)        = undef;
   my($tag)         = undef;
   my($ti)          = $self->get_ti_override();
@@ -651,7 +604,7 @@ sub read_template_input {
     else {
       if ($override) {
         $status = 0;
-        $errorString = 'Unable to locate template input file.';
+        $errorString = "Unable to locate template input file.";
       }
     }
   }
@@ -1102,8 +1055,7 @@ sub add_source_corresponding_component_files {
             ## we must check to see if the file *would be* generated
             ## from idl.  If so, we will add the file with the default
             ## (i.e. first) file extension.
-            foreach my $idlfile (@idl) {
-              my($idl) = $self->escape_regex_special($idlfile);
+            foreach my $idl (@idl) {
               if ($c =~ /^$idl/) {
                 foreach my $ending (@{$self->{'skeleton_endings'}}) {
                   if ($c =~ /^$idl$ending$/) {
@@ -1218,7 +1170,7 @@ sub get_component_list {
 
   if ($self->convert_slashes()) {
     for(my $i = 0; $i <= $#list; $i++) {
-      $list[$i] = $self->slash_to_backslash($list[$i]);
+      $list[$i] =~ s/\//\\/g;
     }
   }
 
@@ -1234,7 +1186,7 @@ sub write_output_file {
   my($self)     = shift;
   my($name)     = shift;
   my($status)   = 0;
-  my($error)    = '';
+  my($error)    = "";
   my($dir)      = dirname($name);
   my($fh)       = new FileHandle();
   my($tover)    = $self->get_template_override();
@@ -1243,7 +1195,7 @@ sub write_output_file {
   my($tfile)    = $self->search_include_path($template);
 
   if (defined $tfile) {
-    if ($dir ne '.') {
+    if ($dir ne ".") {
       mkpath($dir, 0, 0777);
     }
 
@@ -1263,7 +1215,7 @@ sub write_output_file {
         if (open($fh, ">$name")) {
           my($lines) = $tp->get_lines();
           foreach my $line (@$lines) {
-            print $fh $line;
+            print $fh "$line";
           }
           close($fh);
           my($fw) = $self->{'files_written'};
@@ -1288,7 +1240,7 @@ sub write_output_file {
 sub write_project {
   my($self)     = shift;
   my($status)   = 1;
-  my($error)    = '';
+  my($error)    = "";
   my($name)     = $self->transform_file_name($self->project_file_name());
   my($prjname)  = $self->get_assignment('project_name');
   my($progress) = $self->get_progress_callback();
@@ -1400,7 +1352,7 @@ sub update_project_info {
   my($names)   = shift;
   my($sep)     = shift;
   my($pi)      = $self->get_project_info();
-  my($value)   = '';
+  my($value)   = "";
   my($arr)     = ($append && defined $$pi[0] ? pop(@$pi) : []);
 
   ## Set up the hash table when we are starting a new project_info
@@ -1414,7 +1366,7 @@ sub update_project_info {
     my($key) = $narr[$i];
     $value .= $self->translate_value($key,
                                      $tparser->get_value_with_default($key)) .
-              (defined $sep && $i != $#narr ? $sep : '');
+              (defined $sep && $i != $#narr ? $sep : "");
   }
 
   ## If we haven't seen this value yet, put it on the array
@@ -1431,53 +1383,27 @@ sub update_project_info {
 }
 
 
-sub get_verbatim {
-  my($self)   = shift;
-  my($marker) = shift;
-  my($type)   = lc(substr("$self", 0, 3));  ## This number corresponds to
-                                            ## signif in Driver.pm
-  my($str)    = undef;
-  my($thash)  = $self->{'verbatim'}->{$type};
-
-  if (defined $thash) {
-    if (defined $thash->{$marker}) {
-      my($crlf) = $self->crlf();
-      foreach my $line (@{$thash->{$marker}}) {
-        if (!defined $str) {
-          $str = '';
-        }
-        $str .= $self->process_special($line) . $crlf;
-      }
-      if (defined $str) {
-        $str .= $crlf;
-      }
-    }
-  }
-  return $str;
-}
-
-
 # ************************************************************
 # Virtual Methods To Be Overridden
 # ************************************************************
 
 sub specific_lookup {
-  #my($self) = shift;
-  #my($key)  = shift;
+  my($self) = shift;
+  my($key)  = shift;
   return undef;
 }
 
 
 sub save_project_value {
-  #my($self)  = shift;
-  #my($name)  = shift;
-  #my($value) = shift;
+  my($self)  = shift;
+  my($name)  = shift;
+  my($value) = shift;
 }
 
 
 sub get_type_append {
-  #my($self) = shift;
-  return '';
+  my($self) = shift;
+  return "";
 }
 
 
@@ -1490,76 +1416,76 @@ sub translate_value {
 
 
 sub convert_slashes {
-  #my($self) = shift;
+  my($self) = shift;
   return 1;
 }
 
 
 sub fill_value {
-  #my($self) = shift;
-  #my($name) = shift;
+  my($self) = shift;
+  my($name) = shift;
   return undef;
 }
 
 
 sub separate_static_project {
-  #my($self) = shift;
+  my($self) = shift;
   return 0;
 }
 
 
 sub project_file_name {
-  #my($self) = shift;
+  my($self) = shift;
   return undef;
 }
 
 
 sub static_project_file_name {
-  #my($self) = shift;
+  my($self) = shift;
   return undef;
 }
 
 
 sub override_valid_component_extensions {
-  #my($self) = shift;
-  #my($comp) = shift;
+  my($self) = shift;
+  my($comp) = shift;
   return undef;
 }
 
 
 sub override_exclude_component_extensions {
-  #my($self) = shift;
-  #my($comp) = shift;
+  my($self) = shift;
+  my($comp) = shift;
   return undef;
 }
 
 
 sub get_dll_exe_template_input_file {
-  #my($self) = shift;
+  my($self) = shift;
   return undef;
 }
 
 
 sub get_lib_exe_template_input_file {
-  #my($self) = shift;
+  my($self) = shift;
   return undef;
 }
 
 
 sub get_lib_template_input_file {
-  #my($self) = shift;
+  my($self) = shift;
   return undef;
 }
 
 
 sub get_dll_template_input_file {
-  #my($self) = shift;
+  my($self) = shift;
   return undef;
 }
 
 
 sub get_template {
-  #my($self) = shift;
+  my($self) = shift;
   return undef;
 }
 

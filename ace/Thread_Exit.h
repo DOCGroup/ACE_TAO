@@ -55,9 +55,12 @@ public:
 
   /// Cleanup method, used by the <ACE_Object_Manager> to destroy the
   /// singleton.
-  static void cleanup (void *instance);
+  static void cleanup (void *instance, void *);
 
 private:
+  /// Allow OS_Object_Manager to reset the status of <is_constructed_>.
+  friend class ACE_OS_Object_Manager;
+
   /// Automatically add/remove the thread from the
   /// <ACE_Thread_Manager>.
   ACE_Thread_Control thread_control_;

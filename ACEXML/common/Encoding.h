@@ -36,14 +36,14 @@ class ACEXML_Export ACEXML_Encoding
 {
 public:
   enum {
-    UCS4BE = 0,
-    UCS4LE = 1,
-    UCS4_2143 = 2,
-    UCS4_3412 = 3,
-    UTF16BE = 4,
-    UTF16LE = 5,
-    UTF8 = 6,
-    OTHER = 7
+    UCS4BE,
+    UCS4LE,
+    UCS4_2143,
+    UCS4_3412,
+    UTF16BE,
+    UTF16LE,
+    UTF8,
+    OTHER
   } ENCODING;
 
   static const ACEXML_Char* encoding_names_[8];

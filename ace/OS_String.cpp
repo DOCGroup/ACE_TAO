@@ -489,9 +489,7 @@ ACE_OS_String::itoa_emulation (int value, char *string, int radix)
   if (value < 0 && radix == 10)
     {
       string[0] = '-';
-      ++b;
-      ++e; // Don't overwrite the negative sign.
-      value = -value; // Drop negative sign so character selection is correct.
+      b++;
     }
 
   // Convert to base <radix>, but in reverse order
@@ -509,13 +507,13 @@ ACE_OS_String::itoa_emulation (int value, char *string, int radix)
   // Now reverse the string to get the correct result
 
   while (e > b)
-    {
-      char temp = *e;
-      *e = *b;
-      *b = temp;
-      ++b;
-      --e;
-    }
+  {
+    char temp = *e;
+    *e = *b;
+    *b = temp;
+    ++b;
+    --e;
+  }
 
   return string;
 }

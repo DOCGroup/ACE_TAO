@@ -1,3 +1,4 @@
+// FIFO_Send_Msg.cpp
 // $Id$
 
 #include "ace/FIFO_Send_Msg.h"
@@ -37,12 +38,9 @@ ACE_FIFO_Send_Msg::send (const ACE_Str_Buf &send_msg)
   iov[0].iov_len  = sizeof send_msg.len;
 
   iov[1].iov_base = (char *) send_msg.buf;
-  iov[1].iov_len  =  ACE_static_cast (size_t, send_msg.len);
+  iov[1].iov_len  =  int (send_msg.len);
 
-  ssize_t sent = ACE_OS::writev (this->get_handle (), iov, 2);
-  if (sent > 0)
-    sent -= iov[0].iov_len;       // Don't count the length we added.
-  return sent;
+  return ACE_OS::writev (this->get_handle (), iov, 2);
 #endif /* ACE_HAS_STREAM_PIPES */
 }
 

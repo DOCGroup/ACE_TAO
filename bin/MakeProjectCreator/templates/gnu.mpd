@@ -1,7 +1,7 @@
 #----------------------------------------------------------------------------
 #       GNU Makefile
 #----------------------------------------------------------------------------
-<%marker(top)%>
+
 MAKEFILE        = <%project_file%>
 DEPENDENCY_FILE = .depend.<%project_file%>
 <%if(exename)%>
@@ -73,7 +73,6 @@ endif
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
-<%marker(macros)%>
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 <%if(tao)%>
 include $(TAO_ROOT)/rules.tao.GNU
@@ -177,34 +176,20 @@ TAO_IDLFLAGS += <%idlflags%>
 #----------------------------------------------------------------------------
 #       Local targets
 #----------------------------------------------------------------------------
-<%marker(local)%>
 <%comptarget%>
 <%if(idl_files)%>
 
 ADDITIONAL_IDL_TARGETS =
 <%foreach(idl_files)%>
-<%if(flag_overrides(idl_file, idlgendir))%>
-ADDITIONAL_IDL_TARGETS := $(ADDITIONAL_IDL_TARGETS) <%flag_overrides(idl_file, idlgendir)%>/<%basenoextension(idl_file)%>C.h
-<%flag_overrides(idl_file, idlgendir)%>/<%basenoextension(idl_file)%>C.h: <%idl_file%>
-	$(TAO_IDL) -o <%flag_overrides(idl_file, idlgendir)%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%>$(TAO_IDLFLAGS)<%endif%> $^
-<%else%>
-<%if(idlgendir)%>
-ADDITIONAL_IDL_TARGETS := $(ADDITIONAL_IDL_TARGETS) <%idlgendir%>/<%basenoextension(idl_file)%>C.h
-<%idlgendir%>/<%basenoextension(idl_file)%>C.h: <%idl_file%>
-	$(TAO_IDL) -o <%idlgendir%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%>$(TAO_IDLFLAGS)<%endif%> $^
-<%else%>
-
 # IDL File Directory: <%dirname(idl_file)%>
 <%if(dirname_found)%>
 ADDITIONAL_IDL_TARGETS := $(ADDITIONAL_IDL_TARGETS) <%noextension(idl_file)%>C.h
 <%noextension(idl_file)%>C.h: <%idl_file%>
-	$(TAO_IDL) -o <%dirname(idl_file)%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%>$(TAO_IDLFLAGS)<%endif%> $^
+	(cd <%dirname(idl_file)%> && $(TAO_IDL) <%if(flag_overrides(idl_file))%><%flag_overrides(idl_file)%><%else%>$(TAO_IDLFLAGS)<%endif%> <%basename(idl_file)%>)
 <%else%>
-<%if(flag_overrides(idl_file, idlflags))%>
+<%if(flag_overrides(idl_file))%>
 <%noextension(idl_file)%>C.h: <%idl_file%>
-	$(TAO_IDL) <%flag_overrides(idl_file, idlflags)%> $^
-<%endif%>
-<%endif%>
+	$(TAO_IDL) <%flag_overrides(idl_file)%> <%basename(idl_file)%>
 <%endif%>
 <%endif%>
 <%endfor%>
@@ -226,4 +211,10 @@ realclean: clean <%compclean%>
 	-$(RM) $(foreach ext, $(IDL_EXT), $(foreach file, $(IDL_FILES), $(file)$(ext)))
 <%endif%>
 
-<%marker(bottom)%>
+#----------------------------------------------------------------------------
+#       Dependencies
+#----------------------------------------------------------------------------
+# DO NOT DELETE THIS LINE -- g++dep uses it.
+# DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
+
+# IF YOU PUT ANYTHING HERE IT WILL GO AWAY

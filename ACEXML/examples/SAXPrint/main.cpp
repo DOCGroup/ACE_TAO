@@ -2,6 +2,7 @@
 
 #include "ACEXML/common/FileCharStream.h"
 #include "ACEXML/common/HttpCharStream.h"
+#include "ACEXML/common/ZipCharStream.h"
 #include "ACEXML/common/StrCharStream.h"
 #include "ACEXML/parser/parser/Parser.h"
 #include "Print_Handler.h"
@@ -16,10 +17,11 @@ static void
 usage (const ACE_TCHAR* program)
 {
   ACE_ERROR ((LM_ERROR,
-              ACE_TEXT ("Usage: %s [-sl] [-f <filename> | -u <url>]\n")
+              ACE_TEXT ("Usage: %s [-sl] [-f <filename> | -u <url> | -z <ZIP Archive>]\n")
               ACE_TEXT ("  -s: Use SAXPrint_Handler (Default is Print_Handler)\n")
               ACE_TEXT ("  -l: Parse the internal strings (test the StrCharStream class)\n")
               ACE_TEXT ("  -f: Specify the filename when -l is not specified\n")
+              ACE_TEXT ("  -z: Specify that the file is inside a ZIP archive\n")
               ACE_TEXT ("  -u: URL specifying the path to the file\n"),
               program));
 }
@@ -30,30 +32,34 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACEXML_Char* filename = 0;
   int sax = 0;                  // Use SAXPrint handler or not.
   int str = 0;
+  int zip = 0;
   ACEXML_Char* url = 0;
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("sf:lu:"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("sf:lu:z"));
   int c;
 
   while ((c = get_opt ()) != EOF)
     {
       switch (c)
         {
-        case 's':
-          sax = 1;
-          break;
-        case 'l':
-          str = 1;
-          break;
-        case 'f':
-          filename = get_opt.opt_arg ();
-          break;
-        case 'u':
-          url = get_opt.opt_arg();
-          break;
-        default:
-          usage(argv[0]);
-          return -1;
+          case 's':
+            sax = 1;
+            break;
+          case 'l':
+            str = 1;
+            break;
+          case 'f':
+            filename = get_opt.opt_arg ();
+            break;
+          case 'u':
+            url = get_opt.opt_arg();
+            break;
+          case 'z':
+            zip = 1;
+            break;
+          default:
+            usage(argv[0]);
+            return -1;
         }
     }
 
@@ -67,66 +73,78 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACEXML_CharStream *stm = 0;
   ACEXML_FileCharStream *fstm = 0;
   ACEXML_HttpCharStream *ustm = 0;
-    if (filename != 0)
-      {
-        ACE_NEW_RETURN (fstm,
-                        ACEXML_FileCharStream (),
-                        -1);
+  ACEXML_ZipCharStream* zstm = 0;
+  if (filename != 0)
+    {
+      if (zip)
+        {
+          ACE_NEW_RETURN (zstm, ACEXML_ZipCharStream(), -1);
+          if (zstm->open (filename) != 0)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("Failed to open XML file: %s\n"),
+                               filename),
+                              -1);
+          stm = zstm;
+        }
+      else
+        {
+          ACE_NEW_RETURN (fstm, ACEXML_FileCharStream (), -1);
+          if (fstm->open (filename) != 0)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("Failed to open XML file: %s\n"),
+                               filename),
+                              -1);
+          stm = fstm;
+        }
+    }
+  else if (url != 0)
+    {
 
-        if (fstm->open (filename) != 0)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("Failed to open XML file: %s\n"),
-                             filename),
-                            -1);
-        stm = fstm;
-      }
-    else if (url != 0)
-      {
-
-        ACE_NEW_RETURN (ustm,
-                        ACEXML_HttpCharStream (),
-                        -1);
-        if (ustm->open (url) != 0)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("Failed to open URL : %s\n"),
-                             url),
-                            -1);
-        stm = ustm;
-      }
-    else {
-      ACE_NEW_RETURN (stm,
-                        ACEXML_StrCharStream (test_string),
-                        -1);
-      }
+      ACE_NEW_RETURN (ustm,
+                      ACEXML_HttpCharStream (),
+                      -1);
+      if (ustm->open (url) != 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("Failed to open URL : %s\n"),
+                           url),
+                          -1);
+      stm = ustm;
+    }
+  else {
+    ACE_NEW_RETURN (stm,
+                    ACEXML_StrCharStream (test_string),
+                    -1);
+  }
 
   ACEXML_Char* name = (filename == 0) ? url : filename;
-    if (sax == 0)
-      ACE_NEW_RETURN (handler,
+  if (sax == 0)
+    ACE_NEW_RETURN (handler,
                     ACEXML_Print_Handler (name),
-                      -1);
-    else
-      ACE_NEW_RETURN (handler,
+                    -1);
+  else
+    ACE_NEW_RETURN (handler,
                     ACEXML_SAXPrint_Handler (name),
-                      -1);
+                    -1);
 
-    ACEXML_Parser parser;
-    ACEXML_InputSource input(stm);
+  ACEXML_Parser parser;
+  ACEXML_InputSource* input = 0;
+  ACE_NEW_RETURN (input, ACEXML_InputSource (stm), -1);
 
-    parser.setContentHandler (handler);
-    parser.setDTDHandler (handler);
-    parser.setErrorHandler (handler);
-    parser.setEntityResolver (handler);
+  parser.setContentHandler (handler);
+  parser.setDTDHandler (handler);
+  parser.setErrorHandler (handler);
+  parser.setEntityResolver (handler);
 
   ACEXML_TRY_NEW_ENV
     {
-      parser.parse (&input ACEXML_ENV_ARG_PARAMETER);
+      parser.parse (input ACEXML_ENV_ARG_PARAMETER);
       ACEXML_TRY_CHECK;
     }
   ACEXML_CATCH (ACEXML_SAXException, ex)
     {
       ACE_UNUSED_ARG (ex);
       ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Exception occurred. Exiting...\n")));
-  }
+    }
   ACEXML_ENDTRY;
   return 0;
 }

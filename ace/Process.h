@@ -412,8 +412,6 @@ protected:
   ACE_TCHAR process_name_[MAXPATHLEN + 1];
 };
 
-//class ACE_Process_Manager;
-
 /**
  * @class ACE_Process
  *
@@ -430,7 +428,6 @@ protected:
 class ACE_Export ACE_Process
 {
 public:
-  friend class ACE_Process_Manager;
 
   /// Default construction.  Must use <ACE_Process::spawn> to start.
   ACE_Process (void);
@@ -514,14 +511,12 @@ public:
   /// Return 1 if running; 0 otherwise.
   int running (void) const;
 
-  /// Return the Process' exit code.  This method returns the raw
-  /// exit status returned from system APIs (such as <wait> or
-  /// <waitpid>).  This value is system dependent.
-  ACE_exitcode exit_code (void) const;
+  /// Return the Process' exit code
+  int exit_code (void) const;
 
-  /// Return the Process' return value.  This method returns the 
-  /// actual return value that a child process returns or <exit>s.
-  int return_value (void) const;
+  /// Set the Process' exit code (completely unrelated to whether the
+  /// Process has actually exited)!
+  void exit_code (int code);
 
   /// Close all the handles in the set obtained from the
   /// @arg ACE_Process_Options::dup_handles object used to spawn
@@ -538,18 +533,13 @@ public:
 #endif /* ACE_WIN32 */
 
 protected:
-  /// Set this process' <exit_code_>.  ACE_Process_Manager uses this
-  /// method to set the <exit_code_> after successfully waiting for
-  /// this proecess to exit.
-  void exit_code (ACE_exitcode code);
-
 #if defined (ACE_WIN32)
   PROCESS_INFORMATION process_info_;
 #else /* ACE_WIN32 */
   /// Process id of the child.
   pid_t child_id_;
 #endif /* ACE_WIN32 */
-  ACE_exitcode exit_code_;
+  int exit_code_;
 
   /// Set of handles that were passed to the child process.
   ACE_Handle_Set handles_passed_;

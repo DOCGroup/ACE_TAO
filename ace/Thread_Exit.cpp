@@ -1,16 +1,24 @@
 // $Id$
 
 #include "ace/Thread_Exit.h"
+#include "ace/OS.h"
 #include "ace/Synch.h"
 #include "ace/Managed_Object.h"
-#include "ace/Thread_Manager.h"
 
 ACE_RCSID(ace, Thread_Exit, "$Id$")
 
 u_int ACE_Thread_Exit::is_constructed_ = 0;
 
+#if defined (ACE_HAS_SIG_C_FUNC)
+extern "C" void
+ACE_Thread_Exit_cleanup (void *instance, void *arg)
+{
+  ACE_Thread_Exit::cleanup (instance, arg);
+}
+#endif
+
 void
-ACE_Thread_Exit::cleanup (void *instance)
+ACE_Thread_Exit::cleanup (void *instance, void *)
 {
   ACE_OS_TRACE ("ACE_Thread_Exit::cleanup");
 
@@ -51,7 +59,16 @@ ACE_Thread_Exit::instance (void)
 
           ACE_Thread_Exit::is_constructed_ = 1;
 
-          ACE_Thread_Manager::set_thr_exit (instance_);
+          // Register for destruction with ACE_Object_Manager.
+#if defined ACE_HAS_SIG_C_FUNC
+          ACE_Object_Manager::at_exit (instance_,
+                                       ACE_Thread_Exit_cleanup,
+                                       0);
+#else
+          ACE_Object_Manager::at_exit (instance_,
+                                       ACE_Thread_Exit::cleanup,
+                                       0);
+#endif /* ACE_HAS_SIG_C_FUNC */
         }
     }
 

@@ -11,10 +11,6 @@ ifndef exceptions
   exceptions = 1
 endif
 
-ifeq (,$(threads))
-  threads = 1
-endif
-
 ifeq (,$(debug))
   debug = 1
 endif
@@ -49,9 +45,3 @@ RANLIB          = ranlib
 SOFLAGS += $(CPPFLAGS) -shared
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 PRELIB = @echo
-
-ifeq ($(threads),1)
-LDFLAGS         += -pthread
-CFLAGS          += -D_THREAD_SAFE
-endif # threads
-

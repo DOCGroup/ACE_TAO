@@ -105,7 +105,7 @@ public:
   /**
    * This method holds the queue lock during this operation.
    *
-   * @return The number of messages flushed.
+   * @retval The number of messages flushed.
    */
   virtual int flush (void);
 
@@ -115,7 +115,7 @@ public:
    * The caller must be holding the queue lock before calling this
    * method.
    *
-   * @return The number of messages flushed.
+   * @retval The number of messages flushed.
    */
   virtual int flush_i (void);
 
@@ -129,7 +129,7 @@ public:
   // elapses, (in which case errno = EWOULDBLOCK).
 
   /**
-   * Retrieve a pointer to the first ACE_Message_Block in the queue
+   * Retrieve a poiner to the first ACE_Message_Block in the queue
    * without removing it.
    *
    * @param first_item  Reference to an ACE_Message_Block * that will
@@ -139,10 +139,10 @@ public:
    * @param timeout     The absolute time the caller will wait until
    *                    for a block to be queued.
    *
-   * @retval >0 The number of ACE_Message_Blocks on the queue.
-   * @retval -1 On failure.  errno holds the reason. If EWOULDBLOCK,
-   *            the timeout elapsed.  If ESHUTDOWN, the queue was
-   *            deactivated or pulsed.
+   * @retval  The number of ACE_Message_Blocks on the queue.
+   * @return  -1 on failure.  errno holds the reason. If EWOULDBLOCK,
+   *             the timeout elapsed.  If ESHUTDOWN, the queue was
+   *             deactivated or pulsed.
    */
   virtual int peek_dequeue_head (ACE_Message_Block *&first_item,
                                  ACE_Time_Value *timeout = 0);
@@ -159,11 +159,11 @@ public:
    * @param timeout  The absolute time the caller will wait until
    *                 for the block to be queued.
    *
-   * @retval >0 The number of ACE_Message_Blocks on the queue after adding
-   *             the specified block.
-   * @retval -1 On failure.  errno holds the reason. If EWOULDBLOCK,
-   *            the timeout elapsed.  If ESHUTDOWN, the queue was
-   *            deactivated or pulsed.
+   * @retval  The number of ACE_Message_Blocks on the queue after adding
+   *          the specified block.
+   * @return  -1 on failure.  errno holds the reason. If EWOULDBLOCK,
+   *             the timeout elapsed.  If ESHUTDOWN, the queue was
+   *             deactivated or pulsed.
    */
   virtual int enqueue_prio (ACE_Message_Block *new_item,
                             ACE_Time_Value *timeout = 0);
@@ -348,7 +348,7 @@ public:
    * queue state to PULSED; future enqueue/dequeue operations proceed
    * as in ACTIVATED state.
    *
-   * @return The queue's state before this call.
+   * @retval  The queue's state before this call.
    */
   virtual int pulse (void);
 
@@ -374,10 +374,8 @@ public:
    */
   virtual int notify (void);
 
-  /// Get the notification strategy for the <Message_Queue>
+  // = Get/set the notification strategy for the <Message_Queue>
   virtual ACE_Notification_Strategy *notification_strategy (void);
-
-  /// Set the notification strategy for the <Message_Queue>
   virtual void notification_strategy (ACE_Notification_Strategy *s);
 
   /// Returns a reference to the lock used by the <ACE_Message_Queue>.
@@ -453,7 +451,7 @@ protected:
    *               If not zero, only the waiting threads are notified and
    *               the queue's state changes to PULSED.
    *
-   * @return The state of the queue before the call.
+   * @retval The state of the queue before the call.
    */
   virtual int deactivate_i (int pulse = 0);
 
@@ -702,7 +700,7 @@ public:
   virtual void dump (void) const;
 
   /**
-   * Just call priority enqueue method: tail enqueue semantics for dynamic
+   * just call priority enqueue method: tail enqueue semantics for dynamic
    * message queues are unstable: the message may or may not be where
    * it was placed after the queue is refreshed prior to the next
    * enqueue or dequeue operation.
@@ -711,7 +709,7 @@ public:
                             ACE_Time_Value *timeout = 0);
 
   /**
-   * Just call priority enqueue method: head enqueue semantics for dynamic
+   * just call priority enqueue method: head enqueue semantics for dynamic
    * message queues are unstable: the message may or may not be where
    * it was placed after the queue is refreshed prior to the next
    * enqueue or dequeue operation.
@@ -734,7 +732,7 @@ protected:
    */
   virtual int enqueue_i (ACE_Message_Block *new_item);
 
-  /// Enqueue a message in priority order within a given priority status sublist
+  /// enqueue a message in priority order within a given priority status sublist
   virtual int sublist_enqueue_i (ACE_Message_Block *new_item,
                                  const ACE_Time_Value &current_time,
                                  ACE_Message_Block *&sublist_head,
@@ -792,7 +790,7 @@ private:
   // provide definitions for these (just call base class method),
   // but make them private so they're not accessible outside the class
 
-  /// Private method to hide public base class method: just calls base class method
+  /// private method to hide public base class method: just calls base class method
   virtual int peek_dequeue_head (ACE_Message_Block *&first_item,
                                  ACE_Time_Value *timeout = 0);
 
@@ -816,13 +814,13 @@ template <ACE_SYNCH_DECL>
 class ACE_Message_Queue_Factory
 {
 public:
-  /// Factory method for a statically prioritized ACE_Message_Queue
+  /// factory method for a statically prioritized ACE_Message_Queue
   static ACE_Message_Queue<ACE_SYNCH_USE> *
     create_static_message_queue (size_t hwm = ACE_Message_Queue_Base::DEFAULT_HWM,
                                  size_t lwm = ACE_Message_Queue_Base::DEFAULT_LWM,
                                  ACE_Notification_Strategy * = 0);
 
-  /// Factory method for a dynamically prioritized (by time to deadline) ACE_Dynamic_Message_Queue
+  /// factory method for a dynamically prioritized (by time to deadline) ACE_Dynamic_Message_Queue
   static ACE_Dynamic_Message_Queue<ACE_SYNCH_USE> *
     create_deadline_message_queue (size_t hwm = ACE_Message_Queue_Base::DEFAULT_HWM,
                                    size_t lwm = ACE_Message_Queue_Base::DEFAULT_LWM,
@@ -832,7 +830,7 @@ public:
                                    u_long dynamic_priority_max = 0x3FFFFFUL,      // 2^(22)-1
                                    u_long dynamic_priority_offset =  0x200000UL); // 2^(22-1)
 
-  /// Factory method for a dynamically prioritized (by laxity) ACE_Dynamic_Message_Queue
+  /// factory method for a dynamically prioritized (by laxity) ACE_Dynamic_Message_Queue
   static ACE_Dynamic_Message_Queue<ACE_SYNCH_USE> *
     create_laxity_message_queue (size_t hwm = ACE_Message_Queue_Base::DEFAULT_HWM,
                                  size_t lwm = ACE_Message_Queue_Base::DEFAULT_LWM,
@@ -845,7 +843,7 @@ public:
 
 #if defined (VXWORKS)
 
-  /// Factory method for a wrapped VxWorks message queue
+  /// factory method for a wrapped VxWorks message queue
   static ACE_Message_Queue_Vx *
     create_Vx_message_queue (size_t max_messages, size_t max_message_length,
                              ACE_Notification_Strategy *ns = 0);
@@ -854,7 +852,7 @@ public:
 
 #if defined (ACE_WIN32) && (ACE_HAS_WINNT4 != 0)
 
-  /// Factory method for a NT message queue.
+  /// factory method for a NT message queue.
   static ACE_Message_Queue_NT *
   create_NT_message_queue (size_t max_threads);
 
@@ -943,12 +941,12 @@ public:
   /// Close down the message queue and release all resources.
   virtual ~ACE_Message_Queue_Ex (void);
 
-  /// Release all resources from the message queue but do not mark it as deactivated.
-  /// This method holds the queue lock during this operation.  Returns the number of
+  /// Release all resources from the message queue but do not mark it as deactivated. 
+  /// This method holds the queue lock during this operation.  Returns the number of 
   /// messages flushed.
   virtual int flush (void);
 
-  /// Release all resources from the message queue but do not mark it as deactivated.
+  /// Release all resources from the message queue but do not mark it as deactivated. 
   /// This method does not hold the queue lock during this operation, i.e., it assume
   /// the lock is held externally.    Returns the number of messages flushed.
   virtual int flush_i (void);

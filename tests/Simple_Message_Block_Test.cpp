@@ -171,41 +171,6 @@ ACE_TMAIN (int, ACE_TCHAR *[])
     mb1->release ();
   }
 
-  {
-    // Checks failure of copy when "virtual" allocation (using mark)
-    // is too small
-    char message[]="abcdefghijklmnop";
-    ACE_Message_Block mb1 (ACE_OS::strlen (message) + 1);
-    ACE_Message_Block mb2 (ACE_OS::strlen (message) + 1);
-
-    // Resize mb2 so that we mark for use less than the allocated buffer
-    if (mb2.size (ACE_OS::strlen (message) + 1 - 10) == -1)
-      {
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) Resize test failed ..\n")));
-      }
-
-    // We expect this to succeed
-    if (mb1.copy (message, ACE_OS::strlen (message) + 1) == -1)
-      {
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) Copy test failed ..\n")));
-      }
-
-    // We expect this to fail
-    if (mb2.copy (message, ACE_OS::strlen (message) + 1) != -1)
-      {
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) Copy test succeeded when it should have failed ..\n")));
-      }
-
-    // We also expect this to fail
-    if (mb2.copy (message) != -1)
-      {
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) Copy test succeeded when it should have failed ..\n")));
-      }
-  }
   ACE_END_TEST;
   return 0;
 }
@@ -215,3 +180,4 @@ template class ACE_Lock_Adapter<ACE_SYNCH_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Lock_Adapter<ACE_SYNCH_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

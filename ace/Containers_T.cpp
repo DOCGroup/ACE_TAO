@@ -828,9 +828,7 @@ ACE_Double_Linked_List<T>::delete_nodes (void)
     {
       T * temp = ACE_static_cast (T*, this->head_->next_);
       this->remove_element (temp);
-      ACE_DES_FREE (temp,
-                    this->allocator_->free,
-                    T);
+      delete temp;
     }
 }
 

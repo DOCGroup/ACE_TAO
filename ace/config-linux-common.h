@@ -168,16 +168,6 @@
 # endif  /* ACE_POSIX_SIG_PROACTOR */
 
 #if __GLIBC__ >= 2
-#ifndef ACE_HAS_POSIX_REALTIME_SIGNALS
-#define ACE_HAS_POSIX_REALTIME_SIGNALS
-#endif /* ACE_HAS_POSIX_REALTIME_SIGNALS */
-
-#ifndef ACE_HAS_AIO_CALLS
-#define ACE_HAS_AIO_CALLS
-#endif /* ACE_HAS_AIO_CALLS */
-#endif 
-
-#if __GLIBC__ >= 2
 // glibc 2 and higher has wchar support
 # define ACE_HAS_XPG4_MULTIBYTE_CHAR
 #endif
@@ -220,11 +210,6 @@
 #if !defined (ACE_HAS_IP_MULTICAST)
 # define ACE_HAS_IP_MULTICAST
 #endif /* ! ACE_HAS_IP_MULTICAST */
-
-// At least for IPv4, Linux lacks perfect filtering.
-#if !defined ACE_LACKS_PERFECT_MULTICAST_FILTERING
-# define ACE_LACKS_PERFECT_MULTICAST_FILTERING 1
-#endif /* ACE_LACKS_PERFECT_MULTICAST_FILTERING */
 
 #define ACE_HAS_BIG_FD_SET
 

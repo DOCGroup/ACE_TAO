@@ -100,6 +100,14 @@ SOURCE=.\Entity_Manager.cpp
 
 SOURCE=.\Parser.cpp
 # End Source File
+# Begin Source File
+
+SOURCE=.\ParserContext.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ParserInternals.cpp
+# End Source File
 # End Group
 # Begin Group "Header Files"
 
@@ -115,6 +123,18 @@ SOURCE=.\Parser.h
 # Begin Source File
 
 SOURCE=.\Parser_export.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ParserContext.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ParserContext.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\ParserInternals.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"

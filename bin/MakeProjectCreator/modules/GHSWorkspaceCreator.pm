@@ -24,8 +24,8 @@ use vars qw(@ISA);
 # ************************************************************
 
 sub workspace_file_name {
-  #my($self) = shift;
-  return 'ghs/default.bld';
+  my($self) = shift;
+  return "ghs/default.bld";
 }
 
 
@@ -59,7 +59,7 @@ sub write_comps {
 
   foreach my $project (@list) {
     ## Convert all /'s to \
-    $project = $self->slash_to_backslash($project);
+    $project =~ s/\//\\/g;
 
     print $fh "..\\$project$crlf";
     if ($gen->exe_target()) {

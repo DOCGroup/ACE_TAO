@@ -29,9 +29,12 @@ public:
                               size_t len,
                               int clip_portnum)       // clip port# info?
     {
+      // Text displayed in case of conversion error.
+      static const ACE_TCHAR *cvt_err_string = ACE_LIB_TEXT ("<?>");
+
       if (ip_addr.addr_to_string (ret_string, len, 1) == -1)
         {
-          ACE_OS_String::strcpy (ret_string, ACE_LIB_TEXT ("<?>"));
+          ACE_OS_String::strcpy (ret_string, cvt_err_string);
         }
       else
         {
@@ -162,12 +165,18 @@ ACE_SOCK_Dgram_Mcast::open_i (const ACE_INET_Addr &mcast_addr,
                               int reuse_addr)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::open_i");
-  // ACE_SOCK::open calls this if reuse_addr is set, so we only need to
-  // process port reuse option.
+  // ACE_SOCK::open calls this if reuse_addr is set, so we only need to 
+  // add the port
+  // Process addr/port reuse option.
   if (reuse_addr)
     {
-#if defined (SO_REUSEPORT)
       int one = 1;
+      if (this->ACE_SOCK::set_option (SOL_SOCKET,
+                                      SO_REUSEADDR,
+                                      &one,
+                                      sizeof one) == -1)
+        return -1;
+#if defined (SO_REUSEPORT)
       if (this->ACE_SOCK::set_option (SOL_SOCKET,
                                       SO_REUSEPORT,
                                       &one,

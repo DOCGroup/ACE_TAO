@@ -22,12 +22,12 @@ ACEXML_SAXPrint_Handler::~ACEXML_SAXPrint_Handler (void)
 void
 ACEXML_SAXPrint_Handler::characters (const ACEXML_Char *cdata,
                                      int start,
-                                     int end ACEXML_ENV_ARG_DECL_NOT_USED)
+                                     int length ACEXML_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((ACEXML_SAXException))
 {
 
   ACE_UNUSED_ARG (start);
-  ACE_UNUSED_ARG (end);
+  ACE_UNUSED_ARG (length);
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("%s"),
               cdata));
@@ -76,10 +76,8 @@ ACEXML_SAXPrint_Handler::ignorableWhitespace (const ACEXML_Char *,
                                               int ACEXML_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-
-
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("* Event ignorableWhitespace () ***************\n")));
+//   ACE_DEBUG ((LM_DEBUG,
+//               ACE_TEXT ("* Event ignorableWhitespace () ***************\n")));
 }
 
 void
@@ -101,8 +99,7 @@ ACEXML_SAXPrint_Handler::setDocumentLocator (ACEXML_Locator * locator)
 {
 
   this->locator_ = locator;
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("* Event setDocumentLocator () ***************\n")));
+  //ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("* Event setDocumentLocator () ***************\n")));
 }
 
 void
@@ -206,7 +203,8 @@ ACEXML_SAXPrint_Handler::error (ACEXML_SAXParseException & ex
                                 ACEXML_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  ACE_DEBUG ((LM_DEBUG, "%s: line :%d col: %d ", this->fileName_,
+  ACE_DEBUG ((LM_DEBUG, "%s: line :%d col: %d ",
+              (this->locator_->getSystemId() == 0 ? this->fileName_ : this->locator_->getSystemId()),
               this->locator_->getLineNumber(),
               this->locator_->getColumnNumber()));
   ex.print();
@@ -217,7 +215,8 @@ ACEXML_SAXPrint_Handler::fatalError (ACEXML_SAXParseException & ex
                                      ACEXML_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  ACE_DEBUG ((LM_DEBUG, "%s: line :%d col: %d ", this->fileName_,
+  ACE_DEBUG ((LM_DEBUG, "%s: line :%d col: %d ",
+              (this->locator_->getSystemId() == 0 ? this->fileName_ : this->locator_->getSystemId()),
               this->locator_->getLineNumber(),
               this->locator_->getColumnNumber()));
   ex.print();
@@ -228,7 +227,8 @@ ACEXML_SAXPrint_Handler::warning (ACEXML_SAXParseException & ex
                                   ACEXML_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  ACE_DEBUG ((LM_DEBUG, "%s: line :%d col: %d ", this->fileName_,
+  ACE_DEBUG ((LM_DEBUG, "%s: line :%d col: %d ",
+              (this->locator_->getSystemId() == 0 ? this->fileName_ : this->locator_->getSystemId()),
               this->locator_->getLineNumber(),
               this->locator_->getColumnNumber()));
   ex.print();
