@@ -1,3 +1,10 @@
+Sat May  2 14:28:41 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp (init): There was a bug
+ 	  in Ross' code that was failing to initialize the
+ 	  naming_context_var_.  This is now fixed.  Thanks to Andy for
+ 	  noticing this.
+
 Sat May  2 09:58:41 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_exception.cpp: We now make the *_alloc

@@ -32,8 +32,8 @@ TAO_Naming_Server::TAO_Naming_Server (void)
 
 // Constructor which takes an ORB and POA.
 
-TAO_Naming_Server::TAO_Naming_Server (CORBA::ORB_var &orb,
-                                      PortableServer::POA_var &child_poa,
+TAO_Naming_Server::TAO_Naming_Server (CORBA::ORB_ptr orb,
+                                      PortableServer::POA_ptr child_poa,
 				      int argc,
                                       char **argv)
 {
@@ -82,11 +82,16 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
       if (ACE_OS::strcmp (this->naming_context_name_,
                           "NameService") == 0)
 	{
+          // Get the naming context ptr to NameService.
+          this->naming_context_var_ =
+            this->naming_context_impl_._this (TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+
 	  PortableServer::ObjectId_var id =
-	    PortableServer::string_to_ObjectId (this->naming_context_name_);
+	    PortableServer::string_to_ObjectId ("NameService");
 
 	  child_poa->activate_object_with_id (id.in (),
-					      &naming_context_impl_,
+					      &this->naming_context_impl_,
 					      TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
 

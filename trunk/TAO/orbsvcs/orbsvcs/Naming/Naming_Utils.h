@@ -41,8 +41,8 @@ public:
   TAO_Naming_Server (void);
   //Default constructor.
 
-  TAO_Naming_Server (CORBA::ORB_var &orb,
-                     PortableServer::POA_var &root_poa,
+  TAO_Naming_Server (CORBA::ORB_ptr orb,
+                     PortableServer::POA_ptr root_poa,
 		     int argc = 0,
                      char **argv = 0);
   // Takes the POA under which to register the Naming Service
