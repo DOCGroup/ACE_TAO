@@ -31,15 +31,17 @@
 #ifndef _TAO_IDL_ORIG_OCTETSEQA_ANYOP_H_
 #define _TAO_IDL_ORIG_OCTETSEQA_ANYOP_H_
 
-
+#include /**/ "ace/pre.h"
 
 // TAO_IDL - Generated from
 // be/be_visitor_sequence/any_op_ch.cpp:52
 
- void operator<<= (CORBA::Any &, const CORBA::OctetSeq &); // copying version
- void operator<<= (CORBA::Any &, CORBA::OctetSeq*); // noncopying version
- CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::OctetSeq *&); // deprecated
- CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::OctetSeq *&);
+TAO_Export void operator<<= (CORBA::Any &, const CORBA::OctetSeq &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, CORBA::OctetSeq*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::OctetSeq *&); // deprecated
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::OctetSeq *&);
+
+#include /**/ "ace/post.h"
 
 #endif /* ifndef */
 
