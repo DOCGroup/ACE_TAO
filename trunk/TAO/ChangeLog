@@ -1,110 +1,122 @@
+Fri Jan  2 10:00:48 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/AV.mpc:
+
+          Changed md5c.c to md5c.cpp and removed a duplicate md5c.h entry in
+          the Header_Files section.
+
+        * orbsvcs/orbsvcs/AV/md5c.c:
+
+          Renamed this file to md5c.cpp to avoid build problems for some
+          64-bit UNIX platforms.
+
 Fri Jan  2 00:59:33 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	The following changes work around a problem introduced by "magic"
-	static constructors in the TAO PortableServer headers where
-	dynamic loading/unloading of the ORB failed.  TAO's singleton
-	manager must be explicitly initialized to avoid registering itself
-	with the ACE_Object_Manager in the DLL ORB case.  The static
-	constructors in the PortableServer library were causing the
-	TAO_Singleton_Manager to be implicitly initialized.  In that case,
-	the TAO_Singleton_Manager will register itself with the
-	ACE_Object_Manager, thus preventing DLL ORB loading/unloading from
-	from functioning properly.
+        The following changes work around a problem introduced by "magic"
+        static constructors in the TAO PortableServer headers where
+        dynamic loading/unloading of the ORB failed.  TAO's singleton
+        manager must be explicitly initialized to avoid registering itself
+        with the ACE_Object_Manager in the DLL ORB case.  The static
+        constructors in the PortableServer library were causing the
+        TAO_Singleton_Manager to be implicitly initialized.  In that case,
+        the TAO_Singleton_Manager will register itself with the
+        ACE_Object_Manager, thus preventing DLL ORB loading/unloading from
+        from functioning properly.
 
-	* examples/Simple/time-date/Time_Date.h:
-	* examples/Simple/time-date/Time_Date.cpp:
+        * examples/Simple/time-date/Time_Date.h:
+        * examples/Simple/time-date/Time_Date.cpp:
 
-	  Removed all dependencies on the TAO_ORB_Manager.  It implicitly
-	  introduces the static "magic" constructors that prevent DLL ORB
-	  loading/unloading from functioning properly.
+          Removed all dependencies on the TAO_ORB_Manager.  It implicitly
+          introduces the static "magic" constructors that prevent DLL ORB
+          loading/unloading from functioning properly.
 
-	* examples/Simple/time-date/Time_Date_Client_i.h:
-	* examples/Simple/time-date/client.cpp:
+        * examples/Simple/time-date/Time_Date_Client_i.h:
+        * examples/Simple/time-date/client.cpp:
 
-	  Nuked trailing whitespace.
+          Nuked trailing whitespace.
 
-	* examples/Simple/time-date/Time_Date_i.h (Time_Date_i):
+        * examples/Simple/time-date/Time_Date_i.h (Time_Date_i):
 
-	  Reference count the servant to improve memory management.
+          Reference count the servant to improve memory management.
 
-	* examples/Simple/time-date/Time_Date_i.cpp:
+        * examples/Simple/time-date/Time_Date_i.cpp:
 
-	  Removed no-op constructor and destructor.  The compiler
-	  generated versions satisfy our needs.
+          Removed no-op constructor and destructor.  The compiler
+          generated versions satisfy our needs.
 
-	* examples/Simple/time-date/Makefile (server):
+        * examples/Simple/time-date/Makefile (server):
 
-	  No need to link "../Simple_util.o" object file in the server
-	  binary.
+          No need to link "../Simple_util.o" object file in the server
+          binary.
 
-	  (LDLIBS, ACE_SHLIBS, client):
+          (LDLIBS, ACE_SHLIBS, client):
 
-	  Explicitly link CosNaming related libraries only to client
-	  binary.  The server and libTime_Date binaries do not depend on
-	  the CosNaming related libraries.
+          Explicitly link CosNaming related libraries only to client
+          binary.  The server and libTime_Date binaries do not depend on
+          the CosNaming related libraries.
 
-	* examples/Simple/time-date/Simple_time_date.mpc:
-	* examples/Simple/time-date/client.bor:
-	* examples/Simple/time-date/server.bor:
-	* examples/Simple/time-date/time_date.bor:
+        * examples/Simple/time-date/Simple_time_date.mpc:
+        * examples/Simple/time-date/client.bor:
+        * examples/Simple/time-date/server.bor:
+        * examples/Simple/time-date/time_date.bor:
 
-	  Likewise.
+          Likewise.
 
 Fri Jan  2 08:38:19 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tests/Smart_Proxies/Collocation/Coll_Test_Stubs.bor:
-	* tests/Smart_Proxies/Collocation/Collocation.bor:
-	* tests/Smart_Proxies/Collocation/Diamond.bor:
-	  Updated these BCB makefiles
+        * tests/Smart_Proxies/Collocation/Coll_Test_Stubs.bor:
+        * tests/Smart_Proxies/Collocation/Collocation.bor:
+        * tests/Smart_Proxies/Collocation/Diamond.bor:
+          Updated these BCB makefiles
 
 Fri Jan  2 08:30:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tao/Utils/Server_Main.cpp:
-	  Fixed emulated exception usage. This is one of the problems I see
-	  in the FT_App orbsvcs tests, but there are several more
+        * tao/Utils/Server_Main.cpp:
+          Fixed emulated exception usage. This is one of the problems I see
+          in the FT_App orbsvcs tests, but there are several more
 
 Fri Jan  2 08:20:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/examples/RtEC/IIOPGateway/Supplier.cpp:
-	  Added include of ace/OS_NS_unistd.h to get ACE_OS::sleep
+        * orbsvcs/examples/RtEC/IIOPGateway/Supplier.cpp:
+          Added include of ace/OS_NS_unistd.h to get ACE_OS::sleep
 
 Fri Jan  2 08:17:33 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* examples/Simple/time-date/Time_Date.cpp:
-	  Only set defines when they are not set yet.
+        * examples/Simple/time-date/Time_Date.cpp:
+          Only set defines when they are not set yet.
 
 Fri Jan  2 08:04:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tests/Smart_Proxies/Collocation/Coll_Tester.cpp:
-	  Fixed warnings in gnu builds.
+        * tests/Smart_Proxies/Collocation/Coll_Tester.cpp:
+          Fixed warnings in gnu builds.
 
 Thu Jan  1 21:28:35 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* TAO-INSTALL.html:
+        * TAO-INSTALL.html:
 
-	  Added notes and observations about VC++ 7.1 in the install
-	  file. Thanks to Valery Salamakha <ccapstan@bigpond.net.au>.
+          Added notes and observations about VC++ 7.1 in the install
+          file. Thanks to Valery Salamakha <ccapstan@bigpond.net.au>.
 
 Thu Jan 01 20:10:47 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/FTORB_Utils.dsp:
-	* orbsvcs/orbsvcs/PortableGroup.dsp:
+        * orbsvcs/orbsvcs/FTORB_Utils.dsp:
+        * orbsvcs/orbsvcs/PortableGroup.dsp:
 
-	  Fixed the release version of the project files.
+          Fixed the release version of the project files.
 
 Thu Jan  1 17:07:09 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/Security/Secure_Inovcation/Foo_i.h:
-	* orbsvcs/tests/Security/Secure_Inovcation/server.cpp:
+        * orbsvcs/tests/Security/Secure_Inovcation/Foo_i.h:
+        * orbsvcs/tests/Security/Secure_Inovcation/server.cpp:
 
-	  Fixed a memory managemnt problem with servants.
+          Fixed a memory managemnt problem with servants.
 
 Thu Jan  1 16:42:12 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/EC_MT_MCast/MCast.cpp:
+        * orbsvcs/tests/EC_MT_MCast/MCast.cpp:
 
-	  Tested and applied a patch from Johnny Willemsen for the crash
-	  of this test in the daily builds.
+          Tested and applied a patch from Johnny Willemsen for the crash
+          of this test in the daily builds.
 
 Thu Jan  1 22:32:14 UTC 2004  Don Hinton  <dhinton@dresystems.com>
 
@@ -114,47 +126,47 @@ Thu Jan  1 22:32:14 UTC 2004  Don Hinton  <dhinton@dresystems.com>
 
 Thu Jan  1 20:07:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tests/Smart_Proxies/Collocation/Smart_Proxies_Collocation.mpc:
-	  The Test project needs strategies
+        * tests/Smart_Proxies/Collocation/Smart_Proxies_Collocation.mpc:
+          The Test project needs strategies
 
-	* tests/Smart_Proxies/Collocation/Collocation.bor:
-	  Added strategies library
+        * tests/Smart_Proxies/Collocation/Collocation.bor:
+          Added strategies library
 
 Thu Jan  1 13:58:35 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_visitor_valuetype/valuetype_obv_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_obv_cs.cpp:
 
-	  Fixed a problem with scoping the DefaultValueRefcountBase. This
-	  showed up as a problem with Borland. Thanks to Johnny for
-	  reporting the problem.
+          Fixed a problem with scoping the DefaultValueRefcountBase. This
+          showed up as a problem with Borland. Thanks to Johnny for
+          reporting the problem.
 
 Thu Jan  1 13:39:42 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Smart_Proxies/Collocation/Makefile.Coll_Test_Stubs:
-	* tests/Smart_Proxies/Collocation/Makefile.Diamond:
-	* tests/Smart_Proxies/Collocation/Makefile.main:
+        * tests/Smart_Proxies/Collocation/Makefile.Coll_Test_Stubs:
+        * tests/Smart_Proxies/Collocation/Makefile.Diamond:
+        * tests/Smart_Proxies/Collocation/Makefile.main:
 
-	  Fixed some of the nagging problems.
+          Fixed some of the nagging problems.
 
-	* tests/Smart_Proxies/Collocation/Smart_Proxy_Impl.cpp:
+        * tests/Smart_Proxies/Collocation/Smart_Proxy_Impl.cpp:
 
-	  Fixed a compile error in Borland builds. Thanks to Johnny for
-	  reporting the problem.
+          Fixed a compile error in Borland builds. Thanks to Johnny for
+          reporting the problem.
 
 Thu Jan  1 19:07:41 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tests/Makefile.bor:
-	  Added Abstract_Interface
+        * tests/Makefile.bor:
+          Added Abstract_Interface
 
 Thu Jan  1 18:50:45 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tests/Smart_Proxies/Makefile.bor:
-	  Added collocation directory
+        * tests/Smart_Proxies/Makefile.bor:
+          Added collocation directory
 
 Thu Jan  1 17:52:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* performance-tests/Sequence_Latency/DII/DII.mpc:
-	  Added new MPC file for this performance test
+        * performance-tests/Sequence_Latency/DII/DII.mpc:
+          Added new MPC file for this performance test
 
 Thu Jan  1 17:23:44 UTC 2004  Don Hinton  <dhinton@dresystems.com>
 
@@ -173,125 +185,125 @@ Thu Jan  1 17:23:44 UTC 2004  Don Hinton  <dhinton@dresystems.com>
 
 Thu Jan  1 17:25:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/orbsvcs/FTORB_Utils.bor:
-	  No need to link with portablegroup
+        * orbsvcs/orbsvcs/FTORB_Utils.bor:
+          No need to link with portablegroup
 
-	* orbsvcs/orbsvcs/Makefile.bor:
-	  Moved portablegroup before the ft projects.
+        * orbsvcs/orbsvcs/Makefile.bor:
+          Moved portablegroup before the ft projects.
 
 Thu Jan  1 16:35:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tests/Bug_1670_Regression/Bug_1670_Regression.mpc:
-	  Set the exename for the client to client, so that it matches the
-	  perl script to run this test.
+        * tests/Bug_1670_Regression/Bug_1670_Regression.mpc:
+          Set the exename for the client to client, so that it matches the
+          perl script to run this test.
 
 Thu Jan  1 16:33:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tests/Bug_1568_Regression/Bug_1568_Regression.mpc:
-	  Set the exename for the client to client, so that it matches the
-	  perl script to run this test.
+        * tests/Bug_1568_Regression/Bug_1568_Regression.mpc:
+          Set the exename for the client to client, so that it matches the
+          perl script to run this test.
 
 Thu Jan  1 15:56:09 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* examples/RTScheduling/FP_SchedulingC.{h,cpp}:
-	* examples/RTScheduling/MIF_SchedulingC.{h,cpp}:
+        * examples/RTScheduling/FP_SchedulingC.{h,cpp}:
+        * examples/RTScheduling/MIF_SchedulingC.{h,cpp}:
           Removed not needed ; after c++ namespace closure.
 
 Thu Jan  1 15:51:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/tests/Bug_1334_Regression/test.mpc:
-	* tests/Portable_Interceptors/Bug_1559/Bug_1559.mpc:
-	* tests/OBV/Collocated/Forward/OBV_Forward.mpc:
-	  Removed not needed libpaths
+        * orbsvcs/tests/Bug_1334_Regression/test.mpc:
+        * tests/Portable_Interceptors/Bug_1559/Bug_1559.mpc:
+        * tests/OBV/Collocated/Forward/OBV_Forward.mpc:
+          Removed not needed libpaths
 
-	* tests/Bug_1330_Regression/Bug_1330_Regression.mpc:
-	  Base the server on iortable instead of adding this lib by hand
+        * tests/Bug_1330_Regression/Bug_1330_Regression.mpc:
+          Base the server on iortable instead of adding this lib by hand
 
-	* tests/Bug_1627_Regression/test.mpc:
-	  Base the server on iortable instead of adding this lib by hand and
-	  removed not needed libpaths
+        * tests/Bug_1627_Regression/test.mpc:
+          Base the server on iortable instead of adding this lib by hand and
+          removed not needed libpaths
 
-	* tests/OBV/Supports/Supports_Test.mpc:
-	  Base the server on strategies instead of adding this lib by hand and
-	  removed not needed libpaths
+        * tests/OBV/Supports/Supports_Test.mpc:
+          Base the server on strategies instead of adding this lib by hand and
+          removed not needed libpaths
 
 Thu Jan  1 09:40:04 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* tests/Smart_Proxies/Makefile:
+        * tests/Smart_Proxies/Makefile:
 
-	  Added new directories into theMakefile.
+          Added new directories into theMakefile.
 
-	* tests/Smart_Proxies/Collocation/Coll_Tester.h:
-	* tests/Smart_Proxies/Collocation/Diamond_i.h:
+        * tests/Smart_Proxies/Collocation/Coll_Tester.h:
+        * tests/Smart_Proxies/Collocation/Diamond_i.h:
 
-	  Fixed warnings with g++. This is an indication these files have
-	  never been compiled with g++.
+          Fixed warnings with g++. This is an indication these files have
+          never been compiled with g++.
 
-	* tests/Smart_Proxies/Collocation/Makefile:
-	* tests/Smart_Proxies/Collocation/Makefile.Coll_Test_Stubs:
-	* tests/Smart_Proxies/Collocation/Makefile.Diamond:
-	* tests/Smart_Proxies/Collocation/Makefile.main:
+        * tests/Smart_Proxies/Collocation/Makefile:
+        * tests/Smart_Proxies/Collocation/Makefile.Coll_Test_Stubs:
+        * tests/Smart_Proxies/Collocation/Makefile.Diamond:
+        * tests/Smart_Proxies/Collocation/Makefile.main:
 
-	  New makefiles for building these directories.
+          New makefiles for building these directories.
 
-	* tests/Smart_Proxies/Collocation/main.cpp:
-	* tests/Smart_Proxies/Collocation/svc.conf:
+        * tests/Smart_Proxies/Collocation/main.cpp:
+        * tests/Smart_Proxies/Collocation/svc.conf:
 
-	  Cosmetic fixes.
+          Cosmetic fixes.
 
 Thu Jan  1 15:40:04 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tao/DynamicInterface/DII_ClientRequestInfo.{h,cpp}:
-	  Removed these files, not needed anymore
+        * tao/DynamicInterface/DII_ClientRequestInfo.{h,cpp}:
+          Removed these files, not needed anymore
 
-	* tao/DynamicInterface/TAO_DynamicInterface_Static.dsp:
-	  Removed DII_ClientRequestInfo files
+        * tao/DynamicInterface/TAO_DynamicInterface_Static.dsp:
+          Removed DII_ClientRequestInfo files
 
 Thu Jan  1 15:30:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tao/Domain/TAO_Domain_Static.dsp:
-	* tao/DynamicInterface/TAO_DynamicInterface_Static.dsp:
-	* tao/IFR_Client/TAO_IFR_Client_Static.dsp:
-	* tao/IORInterceptor/TAO_IORInterceptor_Static.dsp:
-	* tao/ObjRefTemplate/TAO_ObjRefTemplate_Static.dsp:
-	* tao/RTPortableServer/TAO_RTPortableServer_Static.dsp:
-	* tao/SmartProxies/SmartProxies_Static.dsp:
-	* tao/Valuetype/TAO_Valuetype_Static.dsp:
-	* orbsvcs/orbsvcs/AV_Static.dsp:
-	* orbsvcs/orbsvcs/CosConcurrency_Static.dsp:
-	* orbsvcs/orbsvcs/CosEvent_Static.dsp:
-	* orbsvcs/orbsvcs/CosLifeCycle_Static.dsp:
-	* orbsvcs/orbsvcs/CosLoadBalancing_Static.dsp:
-	* orbsvcs/orbsvcs/CosNaming_Static.dsp:
-	* orbsvcs/orbsvcs/CosProperty_Static.dsp:
-	* orbsvcs/orbsvcs/CosTime_Static.dsp:
-	* orbsvcs/orbsvcs/CosTrading_Static.dsp:
-	* orbsvcs/orbsvcs/DsLogAdmin_Static.dsp:
-	* orbsvcs/orbsvcs/PortableGroup_Static.dsp:
-	* orbsvcs/orbsvcs/RTCORBAEvent_Static.dsp:
-	* orbsvcs/orbsvcs/RTEvent_Static.dsp:
-	* orbsvcs/orbsvcs/RTKokyuEvent_Static.dsp:
-	* orbsvcs/orbsvcs/RTOLDEvent_Static.dsp:
-	* orbsvcs/orbsvcs/RTSched_Static.dsp:
-	* orbsvcs/orbsvcs/RTSchedEvent_Static.dsp:
-	* orbsvcs/orbsvcs/Security_Static.dsp:
-	* orbsvcs/orbsvcs/SSLIOP_Static.dsp:
-	* orbsvcs/orbsvcs/Svc_Utils_Static.dsp:
-	  Enabled rtti
+        * tao/Domain/TAO_Domain_Static.dsp:
+        * tao/DynamicInterface/TAO_DynamicInterface_Static.dsp:
+        * tao/IFR_Client/TAO_IFR_Client_Static.dsp:
+        * tao/IORInterceptor/TAO_IORInterceptor_Static.dsp:
+        * tao/ObjRefTemplate/TAO_ObjRefTemplate_Static.dsp:
+        * tao/RTPortableServer/TAO_RTPortableServer_Static.dsp:
+        * tao/SmartProxies/SmartProxies_Static.dsp:
+        * tao/Valuetype/TAO_Valuetype_Static.dsp:
+        * orbsvcs/orbsvcs/AV_Static.dsp:
+        * orbsvcs/orbsvcs/CosConcurrency_Static.dsp:
+        * orbsvcs/orbsvcs/CosEvent_Static.dsp:
+        * orbsvcs/orbsvcs/CosLifeCycle_Static.dsp:
+        * orbsvcs/orbsvcs/CosLoadBalancing_Static.dsp:
+        * orbsvcs/orbsvcs/CosNaming_Static.dsp:
+        * orbsvcs/orbsvcs/CosProperty_Static.dsp:
+        * orbsvcs/orbsvcs/CosTime_Static.dsp:
+        * orbsvcs/orbsvcs/CosTrading_Static.dsp:
+        * orbsvcs/orbsvcs/DsLogAdmin_Static.dsp:
+        * orbsvcs/orbsvcs/PortableGroup_Static.dsp:
+        * orbsvcs/orbsvcs/RTCORBAEvent_Static.dsp:
+        * orbsvcs/orbsvcs/RTEvent_Static.dsp:
+        * orbsvcs/orbsvcs/RTKokyuEvent_Static.dsp:
+        * orbsvcs/orbsvcs/RTOLDEvent_Static.dsp:
+        * orbsvcs/orbsvcs/RTSched_Static.dsp:
+        * orbsvcs/orbsvcs/RTSchedEvent_Static.dsp:
+        * orbsvcs/orbsvcs/Security_Static.dsp:
+        * orbsvcs/orbsvcs/SSLIOP_Static.dsp:
+        * orbsvcs/orbsvcs/Svc_Utils_Static.dsp:
+          Enabled rtti
 
 Thu Jan  1 15:04:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* examples/Simple/time-date/Simple_time_date.mpc:
-	  Removed idl_flags, they are not set in the original project files and
-	  cause problems in the VC71 build
+        * examples/Simple/time-date/Simple_time_date.mpc:
+          Removed idl_flags, they are not set in the original project files and
+          cause problems in the VC71 build
 
 Thu Jan  1 08:49:18 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
 
-	  Use flat_name () instead of local_name () while generating code
-	  for create_proxy. Thanks to Christoph for reminding me to do
-	  this.
+          Use flat_name () instead of local_name () while generating code
+          for create_proxy. Thanks to Christoph for reminding me to do
+          this.
 
 Thu Jan  1 14:47:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -300,70 +312,70 @@ Thu Jan  1 14:47:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Jan  1 00:26:12 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/Sched/DynSched.cpp:
+        * orbsvcs/orbsvcs/Sched/DynSched.cpp:
 
-	  #included ace/Null_Mutex.h to fix a compile error on Solaris.
+          #included ace/Null_Mutex.h to fix a compile error on Solaris.
 
 Thu Jan  1 00:10:35 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* tao/PortableInterceptorC.h:
+        * tao/PortableInterceptorC.h:
 
-	  Some handcrafting to prevent VC++ from crying hoarse. Thanks to
-	  Johnny for pointing it out.
+          Some handcrafting to prevent VC++ from crying hoarse. Thanks to
+          Johnny for pointing it out.
 
-	* tao/diffs/PortableInterceptor.diff:
+        * tao/diffs/PortableInterceptor.diff:
 
-	  Updated dthe diffs.
+          Updated dthe diffs.
 
 Wed Dec 31 23:48:35 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
 
-	  Fixed code generation for smart proxies. We never invoked the
-	  smart proxy during a _narrow () or _unchecked_narrow (). Our
-	  great tests are simply of no use to detect such important
-	  problems.  This should fix [BUGID 1697]. Thanks to Chris Liebig
-	  for reporting this problem.
+          Fixed code generation for smart proxies. We never invoked the
+          smart proxy during a _narrow () or _unchecked_narrow (). Our
+          great tests are simply of no use to detect such important
+          problems.  This should fix [BUGID 1697]. Thanks to Chris Liebig
+          for reporting this problem.
 
-	* orbsvcs/tests/Notify/lib/Command_Factory_T.h:
+        * orbsvcs/tests/Notify/lib/Command_Factory_T.h:
 
-	  Fixed a warning with g++.
+          Fixed a warning with g++.
 
-	* tests/Smart_Proxies/Policy/Makefile:
+        * tests/Smart_Proxies/Policy/Makefile:
 
-	  Fixed dependancies.
+          Fixed dependancies.
 
 Wed Dec 31 15:46:38 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* tests/Bug_1361_Regression/Server_Thread_Pool.cpp:
-	* tests/Collocation_Tests/Collocated_Test.cpp:
-	* tests/Connection_Failure/client.cpp:
+        * tests/Bug_1361_Regression/Server_Thread_Pool.cpp:
+        * tests/Collocation_Tests/Collocated_Test.cpp:
+        * tests/Connection_Failure/client.cpp:
 
-	  Fixed more CXX warnings.
+          Fixed more CXX warnings.
 
 Wed Dec 31 15:26:41 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* TAO_IDL/be/be_visitor_argument/marshal_ss.cpp:
-	* TAO_IDL/be/be_visitor_operation/rettype_marshal_ss.cpp:
+        * TAO_IDL/be/be_visitor_argument/marshal_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_marshal_ss.cpp:
 
-	  Reverted part of the changes made in "Wed Dec 31 13:44:20 2003
-	  Jeff Parsons <j.parsons@vanderbilt.edu>" since they don't
-	  compile with g++.
+          Reverted part of the changes made in "Wed Dec 31 13:44:20 2003
+          Jeff Parsons <j.parsons@vanderbilt.edu>" since they don't
+          compile with g++.
 
-	* TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
 
-	  Fixed warnings on TRU 64.
+          Fixed warnings on TRU 64.
 
 Wed Dec 31 14:24:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 
- 	* TAO_IDL/be/be_visitor_root/root.cpp:
-	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
-	* tao/Object.cpp:
-	* tests/Portable_Interceptors/Collocated/Dynamic/Client_Task.cpp:
-	* tests/RTScheduling/Thread_Cancel/Thread_Task.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * tao/Object.cpp:
+        * tests/Portable_Interceptors/Collocated/Dynamic/Client_Task.cpp:
+        * tests/RTScheduling/Thread_Cancel/Thread_Task.cpp:
 
-	  Fixed unused variable warnings from CXX.
+          Fixed unused variable warnings from CXX.
 
 Wed Dec 31 13:44:20 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -390,10 +402,10 @@ Wed Dec 31 13:44:20 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Dec 31 10:13:48 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* tao/IFR_Client/IFR_Base.pidl:
+        * tao/IFR_Client/IFR_Base.pidl:
 
-	  Removed defenitions of CORBA::Identifier and
-	  CORBA::RepositoryId since they are already defined in orb.idl.
+          Removed defenitions of CORBA::Identifier and
+          CORBA::RepositoryId since they are already defined in orb.idl.
 
 Wed Dec 31 09:54:05 2003  Chad Elliott  <elliott_c@ociweb.com>
 

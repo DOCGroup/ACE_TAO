@@ -31,7 +31,7 @@ project(AV) : orbsvcslib, core, property, naming, qos {
       AV/FlowSpec_Entry.cpp
       AV/Flows_T.cpp
       AV/MCast.cpp
-      AV/md5c.c
+      AV/md5c.cpp
       AV/Nil.cpp
       AV/Policy.cpp
       AV/Protocol_Factory.cpp
@@ -78,7 +78,6 @@ project(AV) : orbsvcslib, core, property, naming, qos {
     AV/UDP.h
     AV/default_resource.h
     AV/global.h
-    AV/md5.h
     AV/media_timer.h
     AV/ntp-time.h
     AV/sfp.h
