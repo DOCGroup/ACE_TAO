@@ -1617,35 +1617,6 @@ int be_visitor_interface_collocated_sh::visit_interface (be_interface *node)
                         -1);
     }
 
-#if 0
-  // XXXASG - don't remove until we are sure that the scope visitor is doing
-  // the task we expect it to do
-  if (node->nmembers () > 0)
-    {
-      UTL_ScopeActiveIterator *si;
-      ACE_NEW_RETURN (si,
-                      UTL_ScopeActiveIterator (node,
-                                               UTL_Scope::IK_decls),
-                      -1);
-      while (!si->is_done ())
-        {
-          AST_Decl *d = si->item ();
-          si->next ();
-          be_decl *bd = be_decl::narrow_from_decl (d);
-          if (d->imported () || bd == 0)
-            {
-              continue;
-            }
-          if (bd->accept (this) == -1)
-            {
-              delete si;
-              return -1;
-            }
-        }
-      delete si;
-    }
-#endif
-
   os->decr_indent ();
 
   *os << be_nl << "private:\n";
@@ -1664,95 +1635,6 @@ int be_visitor_interface_collocated_sh::visit_interface (be_interface *node)
 
   return 0;
 }
-
-#if 0
-int be_visitor_interface_collocated_sh::visit_operation (be_operation *node)
-{
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  os->indent (); // start with the current indentation level
-
-  // every operation is declared virtual
-  *os << "virtual ";
-
-  // first generate the return type
-  be_type *bt = be_type::narrow_from_decl (node->return_type ());
-
-  // XXASG - this changes
-  if (bt->write_as_return (os, bt) == -1)
-    {
-      return -1;
-    }
-
-  // generate the operation name
-  *os << " " << node->local_name () << " ";
-
-  // XXXASG - TODO
-  be_visitor_context ctx (*this->ctx_);
-  ctx.state (TAO_CodeGen::TAO_OPERATION_ARGLIST_OTHERS);
-  be_visitor *visitor = tao_cg->make_visitor (&ctx);
-  if (!visitor)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_interface_colocated_sh::"
-                         "visit_operation - "
-                         "Bad visitor for arglist\n"),
-                        -1);
-    }
-
-  if (node->accept (visitor) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_interface_colocated_sh::"
-                         "visit_operation - "
-                         "codegen for arglist failed\n"),
-                        -1);
-    }
-  *os << ";\n";
-
-  return 0;
-}
-
-int be_visitor_interface_collocated_sh::visit_attribute (be_attribute *node)
-{
-  TAO_OutStream *os = this->ctx_->stream ();
-  os->indent (); // start with the current indentation level
-
-  be_type* bt = be_type::narrow_from_decl (node->field_type ());
-
-  // the retrieve method is defined virtual
-  *os << "virtual ";
-
-  // XXXASG - change this
-  if (bt->write_as_return (os, bt) == -1)
-    {
-      return -1;
-    }
-
-  *os << " " << node->local_name () << " (" << be_idt << be_idt_nl
-      << "CORBA::Environment &env" << be_uidt_nl
-      << ");\n" << be_uidt;
-
-  if (!node->readonly ())
-    {
-      os->indent ();
-      *os << "virtual void " << node->local_name ()
-          << " (" << be_idt << be_idt;
-
-      // XXXASG - TODO
-      be_visitor_args_decl vdecl (os);
-      vdecl.current_type_name (bt->name ());
-      vdecl.argument_direction (AST_Argument::dir_IN);
-      if (bt->accept (&vdecl) == -1)
-        return -1;
-
-      *os << " _tao_value," << be_nl
-          << "CORBA::Environment &_tao_environment" << be_uidt_nl
-          << ");\n" << be_uidt;
-    }
-  return 0;
-}
-#endif
 
 // ************************************************************
 //  be_visitor_interface_collacted_ss
@@ -1809,6 +1691,17 @@ int be_visitor_interface_collocated_ss::visit_interface (be_interface *node)
   // @@ We should call the constructor for all base classes, since we
   // are using multiple inheritance.
 
+  if (node->traverse_inheritance_graph (be_interface::collocated_ctor_helper, os)
+      == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_interface_collocated_ss::"
+                         "visit_interface - "
+                         "codegen for base class ctor init failed\n"),
+                        -1);
+    }
+
+#if 0
   if (node->n_inherits () > 0)
     {
       for (i = 0; i < node->n_inherits (); ++i)
@@ -1832,6 +1725,7 @@ int be_visitor_interface_collocated_ss::visit_interface (be_interface *node)
 	    }
         }
     }
+#endif
 
   *os << "  CORBA_Object (stub, servant, CORBA::B_TRUE)," << be_nl
       << "  servant_ (servant)";

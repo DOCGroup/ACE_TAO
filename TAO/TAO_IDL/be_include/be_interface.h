@@ -121,21 +121,32 @@ public:
   DEF_NARROW_FROM_SCOPE (be_interface);
 
   static int is_a_helper (be_interface *, be_interface *, TAO_OutStream *os);
-  // helper method passed to the template method
+  // helper method passed to the template method that generates code for the
+  // is_a method
 
   static int downcast_helper (be_interface *,
 			      be_interface *,
 			      TAO_OutStream *os);
+  // helper method passed to the template method that generates code for the
+  // downcast.
 
   static int gen_optable_helper (be_interface *,
                                  be_interface *,
                                  TAO_OutStream *os);
-  // helper method passed to the template method
+  // helper method passed to the template method to generate code for the
+  // operation table
 
   static int gen_skel_helper (be_interface *,
                               be_interface *,
                               TAO_OutStream *os);
-  // helper method passed to the template method
+  // helper method passed to the template method to generate code for the
+  // skeletons in the inline file
+
+  static int collocated_ctor_helper (be_interface *,
+                                     be_interface *,
+                                     TAO_OutStream *os);
+  // helper method passed to the template method to invoke ctors of all the
+  // base classes.
 
   void compute_fullskelname (void);
   // compute the fully scoped skel class name

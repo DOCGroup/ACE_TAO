@@ -278,8 +278,8 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       os->indent ();
       *os << "// default constructor" << be_nl;
       *os << node->name () << "::" << node->local_name () << " (void)" << be_nl;
-      *os << "  : CORBA_UserException (CORBA::TypeCode::_duplicate ("
-          << node->tc_name () << "))\n";
+      *os << "  : CORBA_UserException ("
+          << node->tc_name () << ")\n";
       *os << "{" << be_nl;
       *os << "}\n\n";
 
@@ -296,7 +296,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       *os << node->name () << "::" << node->local_name () << " (const " <<
         node->name () << " &_tao_excp)" << be_nl;
       *os << "  :CORBA_UserException (" <<
-        "CORBA::TypeCode::_duplicate (_tao_excp._type ()))" << be_nl;
+        "_tao_excp._type ())" << be_nl;
       *os << "{\n";
       os->incr_indent ();
       // assign each individual member
@@ -323,8 +323,8 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
         node->name () << " &_tao_excp)" << be_nl;
       *os << "{\n";
       os->incr_indent ();
-      *os << "this->type_ = " <<
-        "CORBA::TypeCode::_duplicate (_tao_excp._type ());\n";
+      *os << "this->ACE_CORBA_1 (UserException)::operator= " <<
+        "(_tao_excp._type ());\n";
       // assign each individual member
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_EXCEPTION_CTOR_ASSIGN_CS);
