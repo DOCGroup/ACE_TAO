@@ -1,5 +1,8 @@
 Tue Feb 24 21:05:08 1998  Nagarajan Surendran  <naga@mambo.cs.wustl.edu>
 
+	* tests/Cubit/TAO/IDL_Cubit/server.h (class Cubit_Server): Defined
+	a new Cubit_Server class akin to Cubit_Client.
+
 	* orbsvcs/Naming_Service/Naming_Service.cpp: Moved the main () to
 	a separate file Main.cpp
 	
