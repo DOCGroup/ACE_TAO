@@ -1,0 +1,8 @@
+#
+# Makefile for building the Reactor examples
+#
+
+DIRS = \
+        Multicast
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

@@ -1,0 +1,11 @@
+#----------------------------------------------------------------------------
+#       $Id$
+#
+#       Makefile for building tests using Visual Age C++ Incremental compiler
+#----------------------------------------------------------------------------
+
+all:
+	vacbld_r -p tests.icp:all -severity=warning -showprogress=60
+
+realclean:
+	vacbld_r -p tests.icp:all -clean

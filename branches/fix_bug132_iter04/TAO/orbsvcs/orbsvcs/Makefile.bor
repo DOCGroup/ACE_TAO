@@ -1,0 +1,26 @@
+#
+# Makefile for building	the TAO	ORB Services libraries
+#
+
+MAKEFILES = \
+	Svc_Utils.bor \
+	CosNaming.bor \
+	CosProperty.bor	\
+	CosTrading.bor \
+	RTSched.bor \
+	RTEvent.bor \
+	RTOLDEvent.bor \
+	RTSchedEvent.bor \
+	CosEvent.bor \
+	CosNotification.bor \
+	Security.bor \
+	SSLIOP.bor \
+	AV.bor \
+	CosConcurrency.bor \
+	CosLifeCycle.bor \
+	CosTime.bor \
+	DsLogAdmin.bor \
+	LoadBalancing.bor \
+	FaultTolerance.bor
+
+!include <$(ACE_ROOT)/include/makeinclude/recurse.bor>
