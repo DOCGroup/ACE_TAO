@@ -1,3 +1,9 @@
+Fri Jul 31 23:47:50 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* bin/auto_compile: 
+	  We now run several on-button tests in TAO, though it is still
+	  hard to detect any errors.
+
 Fri Jul 31 21:33:22 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Select_Reactor.cpp (open): Changed the code to ignore the
