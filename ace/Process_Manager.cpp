@@ -180,7 +180,7 @@ ACE_Process_Manager::open (size_t size,
   if (r)
     {
       ACE_Event_Handler::reactor (r);
-#if !defined(ACE_WIN32)
+#if !defined(ACE_WIN32) && !defined (ACE_PSOS)
       // (No signals for child-exited on Win32) Assign the
       // Process_Manager a dummy I/O descriptor.  Note that even
       // though we open this file "Write Only" we still need to use
@@ -210,7 +210,7 @@ ACE_Process_Manager::open (size_t size,
                     "%p\n%a",
                     "register_handler",
                     1));
-#endif  // !defined(ACE_WIN32)
+#endif  // !defined(ACE_WIN32) && !defined (ACE_PSOS)
     }
 
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));

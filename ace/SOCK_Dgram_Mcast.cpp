@@ -8,6 +8,12 @@
 #include "ace/SOCK_Dgram_Mcast.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
+// This is a workaround for platforms with non-standard
+// definitions of the ip_mreq structure
+#if ! defined (IMR_MULTIADDR)
+#define IMR_MULTIADDR imr_multiaddr
+#endif /* ! defined (IMR_MULTIADDR) */
+
 ACE_RCSID(ace, SOCK_Dgram_Mcast, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_Dgram_Mcast)
@@ -405,15 +411,15 @@ ACE_SOCK_Dgram_Mcast::subscribe (const ACE_INET_Addr &mcast_addr,
   // Check for the "short-circuit" return value of 1 (for NT).
   if (result != 0)
     return result;
-  
+
   // Tell network device driver to read datagrams with a
   // <mcast_request_if_> IP interface.
-  else 
+  else
     {
-      // Check if the mcast_addr passed into this method is the 
-      // same as the QoS session address.  
+      // Check if the mcast_addr passed into this method is the
+      // same as the QoS session address.
       if (mcast_addr == qos_session->dest_addr ())
-        
+
         // Subscribe to the QoS session.
         if (this->join_qos_session (qos_session) == -1)
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -424,14 +430,15 @@ ACE_SOCK_Dgram_Mcast::subscribe (const ACE_INET_Addr &mcast_addr,
                              "Dest Addr in the QoS Session does"
                              " not match the address passed into"
                              " subscribe\n"),
-                            -1);      
-      
+                            -1);
+
       sockaddr_in mult_addr;
-      
+
       mult_addr.sin_family = protocolinfo->iAddressFamily;
       mult_addr.sin_port = ACE_HTONS (mcast_addr.get_port_number ());
-      mult_addr.sin_addr = this->mcast_request_if_.imr_multiaddr;
-      
+
+      mult_addr.sin_addr = this->mcast_request_if_.IMR_MULTIADDR;
+
       if (ACE_OS::join_leaf (this->get_handle (),
                              ACE_reinterpret_cast (const sockaddr *,
                                                    &mult_addr),
@@ -440,7 +447,7 @@ ACE_SOCK_Dgram_Mcast::subscribe (const ACE_INET_Addr &mcast_addr,
         return -1;
       else
         qos_session->qos (*(qos_params.socket_qos ()));
-      
+
       return 0;
     }
 }
@@ -608,11 +615,7 @@ ACE_SOCK_Dgram_Mcast::make_multicast_address_i (const ACE_INET_Addr &mcast_addr,
   else
     multicast_address.imr_interface.s_addr = INADDR_ANY;
 
-#if defined (ACE_PSOS) && !defined (ACE_PSOS_TM) && !defined (ACE_PSOS_DIAB_MIPS)
-  multicast_address.imr_mcastaddr.s_addr = htonl (mcast_addr.get_ip_address());
-#else
-  multicast_address.imr_multiaddr.s_addr = htonl (mcast_addr.get_ip_address ());
-#endif /* defined (ACE_PSOS) */
+  multicast_address.IMR_MULTIADDR.s_addr = htonl (mcast_addr.get_ip_address ());
   return 0;
 }
 
