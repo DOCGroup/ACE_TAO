@@ -1,3 +1,18 @@
+Thu Jun 29 09:21:19 2000  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * pace/config/config.h:
+          Changed C++ // comment to C /* */ comment. The compiler
+          (appropriately) choked on the former.
+
+        * pace/Makefile:
+          Moved defining PACE_SYSNAME until after all the macro and rules
+          files are included. Otherwise, PACE_SYSNAME was not getting
+          defined for LynxOS.
+
+        * pace/posix/types.h:
+          Put an #if defined (PACE_SUNOS) guard around inclusion of
+          inttypes.h since this file isn't found on Lynx.
+
 Thu Jun 29 02:38:52 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
 	* pace/posix/mman.inl:
