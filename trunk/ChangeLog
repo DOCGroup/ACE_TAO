@@ -1,3 +1,11 @@
+Fri Sep 12 11:36:17 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Modified the AIX compiler support to be a rule, instead of
+          modifying $(COMPILE.cc), that will be run before building the all
+          target.
+
 Fri Sep 12 10:56:02 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/DLL_Test_Impl.dsp:
