@@ -14,7 +14,10 @@ LIB = libJAWS.a
 
 MYFILES  	= \
 	Pipeline \
+	Data_Block \
+	Policy \
 	Concurrency \
+	Server \
 	IO_Acceptor \
 	IO_Handler \
 	IO

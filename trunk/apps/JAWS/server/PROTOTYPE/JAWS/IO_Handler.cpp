@@ -2,6 +2,7 @@
 
 #include "JAWS/IO.h"
 #include "JAWS/IO_Handler.h"
+#include "JAWS/Data_Block.h"
 
 JAWS_IO_Handler_Factory::~JAWS_IO_Handler_Factory (void)
 {
@@ -14,7 +15,7 @@ JAWS_Synch_IO_Handler::JAWS_Synch_IO_Handler (JAWS_IO *io,
     pipeline_ (0),
     factory_ (factory)
 {
-  this->io_.handler (this);
+  this->io_->handler (this);
 }
 
 JAWS_Synch_IO_Handler::~JAWS_Synch_IO_Handler (void)
@@ -39,26 +40,28 @@ JAWS_Synch_IO_Handler::accept_error (void)
 void
 JAWS_Synch_IO_Handler::read_complete (ACE_Message_Block &data)
 {
+  ACE_UNUSED_ARG (data);
   // We can call back into the pipeline task at this point
-  this->pipeline_->read_complete (data);
+  // this->pipeline_->read_complete (data);
 }
 
 void
 JAWS_Synch_IO_Handler::read_error (void)
 {
-  this->pipeline_->read_error ();
+  // this->pipeline_->read_error ();
 }
 
 void
 JAWS_Synch_IO_Handler::transmit_file_complete (void)
 {
-  this->pipeline_->transmit_file_complete ();
+  // this->pipeline_->transmit_file_complete ();
 }
 
 void
 JAWS_Synch_IO_Handler::transmit_file_error (int result)
 {
-  this->pipeline_->transmit_file_complete (result);
+  ACE_UNUSED_ARG (result);
+  // this->pipeline_->transmit_file_complete (result);
 }
 
 void
@@ -75,8 +78,7 @@ JAWS_Synch_IO_Handler::receive_file_error (int result)
 void
 JAWS_Synch_IO_Handler::write_error (void)
 {
-  ACE_DEBUG ((LM_DEBUG, " (%t) %s error in writing response\n",
-              request_.uri ()));
+  ACE_DEBUG ((LM_DEBUG, " (%t) error in writing response\n"));
 
   this->done ();
 }
@@ -100,7 +102,7 @@ JAWS_Synch_IO_Handler::factory (void)
 void
 JAWS_Synch_IO_Handler::done (void)
 {
-  this->factory()->destroy_http_handler (this, this->io_);
+  this->factory ()->destroy_io_handler (this, this->io_);
 }
 
 JAWS_IO_Handler *

@@ -12,7 +12,9 @@
 
 JAWS_IO::JAWS_IO (void)
   : handle_ (ACE_INVALID_HANDLE),
-    handler_ (0)
+    handler_ (0),
+    inet_addr_ (0),
+    acceptor_ (0)
 {
 }
 
@@ -48,8 +50,11 @@ JAWS_Synch_IO::~JAWS_Synch_IO (void)
 }
 
 void
-JAWS_Synch_IO::accept (ACE_SOCK_Stream &new_stream)
+JAWS_Synch_IO::accept (ACE_INET_Addr *addr)
 {
+  // HACK
+  ACE_UNUSED_ARG (addr);
+  ACE_SOCK_Stream new_stream;
   if (this->acceptor_->accept (new_stream) == -1)
     this->handler_->accept_error ();
   else

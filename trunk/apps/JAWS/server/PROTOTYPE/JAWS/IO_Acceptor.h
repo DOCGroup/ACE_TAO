@@ -9,6 +9,7 @@
 
 #include "ace/Asynch_Acceptor.h"
 #include "ace/LOCK_SOCK_Acceptor.h"
+#include "ace/Singleton.h"
 
 #include "JAWS/IO.h"
 
@@ -29,29 +30,17 @@ public:
   JAWS_IO_Acceptor (void);
   virtual ~JAWS_IO_Acceptor (void);
 
-  virtual int open (const ACE_Addr &local_sap,
-                    int reuse_addr = 0,
-                    int protocol_family = PF_INET,
-                    int backlog = 5,
-                    int protocol = 0) = 0;
-  // Initiate a synchronous passive mode socket.
+  virtual int open (const ACE_INET_Addr &address);
+  // Initiate a passive mode socket.
 
   virtual int accept (ACE_SOCK_Stream &new_stream,
                       ACE_Addr *remote_addr = 0,
                       ACE_Time_Value *timeout = 0,
                       int restart = 1,
-                      int reset_new_handle = 0) const = 0;
+                      int reset_new_handle = 0) const;
   // Synchronously accept the connection
 
-  virtual int open (const ACE_INET_Addr &address,
-                    size_t bytes_to_read = 0,
-                    int pass_addresses = 0,
-                    int backlog = 5,
-                    int reuse_addr = 1,
-                    ACE_Proactor *proactor = 0) = 0;
-  // Initiate an asynchronous passive connection
-
-  virtual int accept (size_t bytes_to_read = 0) = 0;
+  virtual int accept (size_t bytes_to_read = 0);
   // This initiates a new asynchronous accept through the AcceptEx call.
 
   enum { ASYNC = 0, SYNCH = 1 };
@@ -66,11 +55,7 @@ class JAWS_IO_Synch_Acceptor : public JAWS_IO_Acceptor
 {
 public:
 
-  virtual int open (const ACE_Addr &local_sap,
-                    int reuse_addr = 0,
-                    int protocol_family = PF_INET,
-                    int backlog = 5,
-                    int protocol = 0);
+  virtual int open (const ACE_INET_Addr &local_sap);
   // Initiate a passive mode socket.
 
   virtual int accept (ACE_SOCK_Stream &new_stream,
@@ -85,28 +70,30 @@ private:
 };
 
 
-#if defined (ACE_WIN32)
-// This only works on Win32 platforms
-
 class JAWS_IO_Asynch_Acceptor : public JAWS_IO_Acceptor
 {
 public:
 
-  virtual int open (const ACE_INET_Addr &address,
-                    size_t bytes_to_read = 0,
-                    int pass_addresses = 0,
-                    int backlog = 5,
-                    int reuse_addr = 1,
-                    ACE_Proactor *proactor = 0);
+  virtual int open (const ACE_INET_Addr &address);
   // Initiate an asynchronous passive connection
 
   virtual int accept (size_t bytes_to_read = 0);
   // This initiates a new asynchronous accept through the AcceptEx call.
 
 private:
+
+#if defined (ACE_WIN32)
+// This only works on Win32 platforms
   ACE_Asynch_Acceptor<JAWS_IO_Handler> *acceptor_;
+#else
+  void *acceptor_;
+#endif /* defined (ACE_WIN32) */
 };
 
-#endif /* defined (ACE_WIN32) */
+typedef ACE_Singleton<JAWS_IO_Synch_Acceptor, ACE_SYNCH_MUTEX>
+        JAWS_IO_Synch_Acceptor_Singleton;
+
+typedef ACE_Singleton<JAWS_IO_Asynch_Acceptor, ACE_SYNCH_MUTEX>
+        JAWS_IO_Asynch_Acceptor_Singleton;
 
 #endif /* !defined (JAWS_IO_ACCEPTOR_H) */
