@@ -1,6 +1,14 @@
 /* -*- C++ -*- */
 
-template <class T> ACE_INLINE size_t 
+// Clean up the array (e.g., delete dynamically allocated memory).
+
+template <class T>  ACE_INLINE
+ACE_Array<T>::~ACE_Array (void)
+{
+   delete [] this->array_;
+}
+
+template <class T> ACE_INLINE size_t
 ACE_Array<T>::size (void) const
 {
   return this->cur_size_;
