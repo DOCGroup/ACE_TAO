@@ -16,6 +16,14 @@
 
 #include "test_config.h"
 
+ACE_RCSID (tests,
+           Proactor_Test,
+           "$Id$")
+
+#if ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS)))
+  // This only works on Win32 platforms and on Unix platforms
+  // supporting POSIX aio calls.
+
 #include "ace/Signal.h"
 
 #include "ace/Service_Config.h"
@@ -30,23 +38,14 @@
 #include "ace/Asynch_Acceptor.h"
 #include "ace/Task.h"
 
-
-ACE_RCSID (tests,
-           Proactor_Test,
-           "$Id$")
-
-#if ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS)))
-  // This only works on Win32 platforms and on Unix platforms
-  // supporting POSIX aio calls.
-
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
 
-#	include "ace/WIN32_Proactor.h"
+#       include "ace/WIN32_Proactor.h"
 
 #elif defined (ACE_HAS_AIO_CALLS)
 
-#	include "ace/POSIX_Proactor.h"
-#	include "ace/SUN_Proactor.h"
+#       include "ace/POSIX_Proactor.h"
+#       include "ace/SUN_Proactor.h"
 
 #endif /* defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) */
 
@@ -251,7 +250,7 @@ public:
 
   /// This is called after the new connection has been accepted.
   virtual void open (ACE_HANDLE handle,
-		     ACE_Message_Block &message_block);
+                     ACE_Message_Block &message_block);
 
 protected:
 
@@ -817,7 +816,7 @@ int Sender::open (const ACE_TCHAR *host, u_short port)
   ACE_SOCK_Connector connector;
 
   if (connector.connect (tmp_stream,
-			 address) == -1)
+                         address) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%p\n"),
@@ -1143,16 +1142,16 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case 'v':  // log level
         loglevel = ACE_OS::atoi (get_opt.optarg);
         break;
-      case 'd':		// duplex
+      case 'd':         // duplex
         duplex = ACE_OS::atoi (get_opt.optarg);
         break;
-      case 'h':		// host for sender
+      case 'h':         // host for sender
         host = get_opt.optarg;
         break;
-      case 'p':		// port number
+      case 'p':         // port number
         port = ACE_OS::atoi (get_opt.optarg);
         break;
-      case 'n':		// thread pool size
+      case 'n':         // thread pool size
         threads = ACE_OS::atoi (get_opt.optarg);
         break;
       case 's':     // number of senders
@@ -1269,5 +1268,21 @@ template class ACE_Asynch_Acceptor<Receiver>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Asynch_Acceptor<Receiver>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#else
+
+int
+main (int, ACE_TCHAR *[])
+{
+  ACE_START_TEST (ACE_TEXT ("Proactor_Test"));
+
+  ACE_DEBUG ((LM_INFO,
+              ACE_TEXT ("Asynchronous IO is unsupported.\n")
+              ACE_TEXT ("Proactor_Test will not be run.")));
+
+  ACE_END_TEST;
+
+  return 0;
+}
 
 #endif  /* ACE_WIN32 && !ACE_HAS_WINCE || ACE_HAS_AIO_CALLS */
