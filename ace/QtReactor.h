@@ -53,6 +53,10 @@
  * lead to excessive memory management. 
  * - create/destroy_notifiers_for_handle may also be reworked to 
  * establish more clean relations between handles and QSocketNotifiers.
+ * - read/write_exception_event disable now SocketNotifier for a while 
+ * to clear pending events. The cost of this operation is high: two hash 
+ * acces in ACE and at least two next ones in Qt. This makes QtReator slow, 
+ * but how clear pending events another way ?
  * - there is qapplication() mutator, which sets new qapplication for 
  * QtReactor. This mutator violates implicit assumption about the 
  * relations between QTimer and QSocketNotifiers and QApplication for 
