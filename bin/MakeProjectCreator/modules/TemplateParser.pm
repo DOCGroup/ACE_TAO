@@ -62,6 +62,7 @@ sub new {
   $self->{'foreach'}  = {};
   $self->{'foreach'}->{'count'}      = -1;
   $self->{'foreach'}->{'nested'}     = 0;
+  $self->{'foreach'}->{'name'}       = [];
   $self->{'foreach'}->{'names'}      = [];
   $self->{'foreach'}->{'text'}       = [];
   $self->{'foreach'}->{'scope'}      = [];
@@ -370,7 +371,7 @@ sub process_foreach {
   my($errorString) = '';
   my(@values) = ();
   my($names)  = $self->create_array($self->{'foreach'}->{'names'}->[$index]);
-  my($name)   = undef;
+  my($name)   = $self->{'foreach'}->{'name'}->[$index];
 
   foreach my $n (@$names) {
     my($vals) = $self->get_value($n);
@@ -382,6 +383,7 @@ sub process_foreach {
     }
     if (!defined $name) {
       $name = $n;
+      $name =~ s/s$//;
     }
   }
 
@@ -389,10 +391,8 @@ sub process_foreach {
   $self->{'foreach'}->{'text'}->[$index] = '';
 
   if (defined $values[0]) {
-    my($inner) = $name;
     my($scope) = $self->{'foreach'}->{'scope'}->[$index];
 
-    $inner =~ s/s$//;
     $$scope{'forlast'}     = 0;
     $$scope{'fornotlast'}  = 1;
     $$scope{'forfirst'}    = 1;
@@ -416,10 +416,10 @@ sub process_foreach {
       }
       ## We don't use adjust_value here because these names
       ## are generated from a foreach and should not be adjusted.
-      $$scope{$inner} = $value;
+      $$scope{$name} = $value;
 
       ## A tiny hack for VC7
-      if ($inner eq 'configuration') {
+      if ($name eq 'configuration') {
         $self->{'prjc'}->update_project_info($self, 1,
                                              ['configuration', 'platform'],
                                              '|');
@@ -562,10 +562,21 @@ sub handle_foreach {
 
   push(@{$self->{'lstack'}}, $self->line_number());
   if (!$self->{'if_skip'}) {
+    my($vname) = undef;
+    if ($val =~ /([^,]+),(.*)/) {
+      $vname = $1;
+      $val   = $2;
+      $vname =~ s/^\s+//;
+      $vname =~ s/\s+$//;
+      $val   =~ s/^\s+//;
+      $val   =~ s/\s+$//;
+    }
+
     push(@{$self->{'sstack'}}, $name);
     ++$self->{'foreach'}->{'count'};
 
     my($index) = $self->{'foreach'}->{'count'};
+    $self->{'foreach'}->{'name'}->[$index]  = $vname;
     $self->{'foreach'}->{'names'}->[$index] = $val;
     $self->{'foreach'}->{'text'}->[$index]  = '';
     $self->{'foreach'}->{'scope'}->[$index] = {};
