@@ -12,11 +12,6 @@
 ACE_ALLOC_HOOK_DEFINE(ACE_Thread_Control)
 ACE_ALLOC_HOOK_DEFINE(ACE_Thread_Manager)
 
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-// Lock the creation of the Singletons.
-static ACE_Thread_Mutex ace_thread_manager_lock_;
-#endif /* ACE_MT_SAFE */
-
 // Process-wide Thread Manager.
 ACE_Thread_Manager *ACE_Thread_Manager::thr_mgr_ = 0;
 
@@ -174,7 +169,8 @@ ACE_Thread_Manager::instance (void)
   if (ACE_Thread_Manager::thr_mgr_ == 0)
     {
       // Perform Double-Checked Locking Optimization.
-      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_thread_manager_lock_, 0));
+      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon,
+				*ACE_Static_Object_Lock::get_lock (), 0));
 
       if (ACE_Thread_Manager::thr_mgr_ == 0)
 	{
@@ -191,7 +187,8 @@ ACE_Thread_Manager::instance (ACE_Thread_Manager *tm)
 {
   ACE_TRACE ("ACE_Thread_Manager::instance");
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_thread_manager_lock_, 0));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon,
+			    *ACE_Static_Object_Lock::get_lock (), 0));
 
   ACE_Thread_Manager *t = ACE_Thread_Manager::thr_mgr_;
   // We can't safely delete it since we don't know who created it!
@@ -206,7 +203,8 @@ ACE_Thread_Manager::close_singleton (void)
 {
   ACE_TRACE ("ACE_Thread_Manager::close_singleton");
 
-  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, ace_thread_manager_lock_));
+  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon,
+		     *ACE_Static_Object_Lock::get_lock ()));
 
   if (ACE_Thread_Manager::delete_thr_mgr_)
     {
