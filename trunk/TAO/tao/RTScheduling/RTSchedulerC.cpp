@@ -32,7 +32,15 @@
 #include "RTScheduler.h"
 #include "tao/CDR.h"
 #include "tao/ORB_Core.h"
-#include "tao/Typecode.h"
+#include "tao/Null_RefCount_Policy.h"
+#include "tao/TypeCode_Constants.h"
+#include "tao/Alias_TypeCode.h"
+#include "tao/TypeCode_Non_Default_Case.h"
+#include "tao/Enum_TypeCode.h"
+#include "tao/Objref_TypeCode.h"
+#include "tao/Sequence_TypeCode.h"
+#include "tao/String_TypeCode.h"
+#include "tao/Struct_TypeCode.h"
 #include "tao/Var_Size_Argument_T.h"
 #include "ace/OS_NS_string.h"
 
@@ -52,7 +60,7 @@ namespace TAO
 {
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:480
+  // be\be_visitor_arg_traits.cpp:492
 
 #if !defined (_CORBA_POLICYLIST__ARG_TRAITS_CS_)
 #define _CORBA_POLICYLIST__ARG_TRAITS_CS_
@@ -457,57 +465,10 @@ void RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE::_tao_decode (
 }
 
 // TAO extension - the virtual _type method.
-CORBA::TypeCode_ptr RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE::_type (void) const
+CORBA::TypeCode_ptr RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE::_tao_type (void) const
 {
   return ::RTScheduling::Current::_tc_UNSUPPORTED_SCHEDULING_DISCIPLINE;
 }
-
-// TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
-
-static const CORBA::Long _oc_RTScheduling_Current_UNSUPPORTED_SCHEDULING_DISCIPLINE[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  63,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x52545363), 
-  ACE_NTOHL (0x68656475), 
-  ACE_NTOHL (0x6c696e67), 
-  ACE_NTOHL (0x2f437572), 
-  ACE_NTOHL (0x72656e74), 
-  ACE_NTOHL (0x2f554e53), 
-  ACE_NTOHL (0x5550504f), 
-  ACE_NTOHL (0x52544544), 
-  ACE_NTOHL (0x5f534348), 
-  ACE_NTOHL (0x4544554c), 
-  ACE_NTOHL (0x494e475f), 
-  ACE_NTOHL (0x44495343), 
-  ACE_NTOHL (0x49504c49), 
-  ACE_NTOHL (0x4e453a31), 
-  ACE_NTOHL (0x2e300000),  // repository ID = IDL:RTScheduling/Current/UNSUPPORTED_SCHEDULING_DISCIPLINE:1.0
-    34,
-  ACE_NTOHL (0x554e5355), 
-  ACE_NTOHL (0x50504f52), 
-  ACE_NTOHL (0x5445445f), 
-  ACE_NTOHL (0x53434845), 
-  ACE_NTOHL (0x44554c49), 
-  ACE_NTOHL (0x4e475f44), 
-  ACE_NTOHL (0x49534349), 
-  ACE_NTOHL (0x504c494e), 
-  ACE_NTOHL (0x45000000),  // name = UNSUPPORTED_SCHEDULING_DISCIPLINE
-  0, // member count
-  };
-
-static CORBA::TypeCode _tc_TAO_tc_RTScheduling_Current_UNSUPPORTED_SCHEDULING_DISCIPLINE (
-    CORBA::tk_except,
-    sizeof (_oc_RTScheduling_Current_UNSUPPORTED_SCHEDULING_DISCIPLINE),
-    (char *) &_oc_RTScheduling_Current_UNSUPPORTED_SCHEDULING_DISCIPLINE,
-    0,
-    0
-  );
-
-::CORBA::TypeCode_ptr const RTScheduling::Current::_tc_UNSUPPORTED_SCHEDULING_DISCIPLINE =
-  &_tc_TAO_tc_RTScheduling_Current_UNSUPPORTED_SCHEDULING_DISCIPLINE;
 
 // TAO_IDL - Generated from 
 // be\be_visitor_sequence/sequence_cs.cpp:65
@@ -952,58 +913,10 @@ void RTScheduling::Scheduler::INCOMPATIBLE_SCHEDULING_DISCIPLINES::_tao_decode (
 }
 
 // TAO extension - the virtual _type method.
-CORBA::TypeCode_ptr RTScheduling::Scheduler::INCOMPATIBLE_SCHEDULING_DISCIPLINES::_type (void) const
+CORBA::TypeCode_ptr RTScheduling::Scheduler::INCOMPATIBLE_SCHEDULING_DISCIPLINES::_tao_type (void) const
 {
   return ::RTScheduling::Scheduler::_tc_INCOMPATIBLE_SCHEDULING_DISCIPLINES;
 }
-
-// TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
-
-static const CORBA::Long _oc_RTScheduling_Scheduler_INCOMPATIBLE_SCHEDULING_DISCIPLINES[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  67,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x52545363), 
-  ACE_NTOHL (0x68656475), 
-  ACE_NTOHL (0x6c696e67), 
-  ACE_NTOHL (0x2f536368), 
-  ACE_NTOHL (0x6564756c), 
-  ACE_NTOHL (0x65722f49), 
-  ACE_NTOHL (0x4e434f4d), 
-  ACE_NTOHL (0x50415449), 
-  ACE_NTOHL (0x424c455f), 
-  ACE_NTOHL (0x53434845), 
-  ACE_NTOHL (0x44554c49), 
-  ACE_NTOHL (0x4e475f44), 
-  ACE_NTOHL (0x49534349), 
-  ACE_NTOHL (0x504c494e), 
-  ACE_NTOHL (0x45533a31), 
-  ACE_NTOHL (0x2e300000),  // repository ID = IDL:RTScheduling/Scheduler/INCOMPATIBLE_SCHEDULING_DISCIPLINES:1.0
-    36,
-  ACE_NTOHL (0x494e434f), 
-  ACE_NTOHL (0x4d504154), 
-  ACE_NTOHL (0x49424c45), 
-  ACE_NTOHL (0x5f534348), 
-  ACE_NTOHL (0x4544554c), 
-  ACE_NTOHL (0x494e475f), 
-  ACE_NTOHL (0x44495343), 
-  ACE_NTOHL (0x49504c49), 
-  ACE_NTOHL (0x4e455300),  // name = INCOMPATIBLE_SCHEDULING_DISCIPLINES
-  0, // member count
-  };
-
-static CORBA::TypeCode _tc_TAO_tc_RTScheduling_Scheduler_INCOMPATIBLE_SCHEDULING_DISCIPLINES (
-    CORBA::tk_except,
-    sizeof (_oc_RTScheduling_Scheduler_INCOMPATIBLE_SCHEDULING_DISCIPLINES),
-    (char *) &_oc_RTScheduling_Scheduler_INCOMPATIBLE_SCHEDULING_DISCIPLINES,
-    0,
-    0
-  );
-
-::CORBA::TypeCode_ptr const RTScheduling::Scheduler::_tc_INCOMPATIBLE_SCHEDULING_DISCIPLINES =
-  &_tc_TAO_tc_RTScheduling_Scheduler_INCOMPATIBLE_SCHEDULING_DISCIPLINES;
 
 RTScheduling::Scheduler::Scheduler (void)
 {}
@@ -1103,7 +1016,7 @@ RTScheduling::Scheduler::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1619
+// be\be_visitor_root/root.cpp:1528
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

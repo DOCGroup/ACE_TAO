@@ -26,86 +26,40 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "Dynamic_ParameterC.h"
-#include "tao/Typecode.h"
+#include "tao/Null_RefCount_Policy.h"
+#include "tao/TypeCode_Constants.h"
+#include "tao/Alias_TypeCode.h"
 #include "tao/CDR.h"
 #include "tao/Any.h"
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
+// be\be_visitor_typecode/struct_typecode.cpp:34
 
-static const CORBA::Long _oc_Dynamic_Parameter[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  26,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x44796e61), 
-  ACE_NTOHL (0x6d69632f), 
-  ACE_NTOHL (0x50617261), 
-  ACE_NTOHL (0x6d657465), 
-  ACE_NTOHL (0x723a312e), 
-  ACE_NTOHL (0x30000000),  // repository ID = IDL:Dynamic/Parameter:1.0
-    10,
-  ACE_NTOHL (0x50617261), 
-  ACE_NTOHL (0x6d657465), 
-  ACE_NTOHL (0x72000000),  // name = Parameter
-  2, // member count
-    9,
-  ACE_NTOHL (0x61726775), 
-  ACE_NTOHL (0x6d656e74), 
-  ACE_NTOHL (0x0),  // name = argument
-    CORBA::tk_any,
-
-  5,
-  ACE_NTOHL (0x6d6f6465), 
-  ACE_NTOHL (0x0),  // name = mode
-    CORBA::tk_enum, // typecode kind
-  116, // encapsulation length
-TAO_ENCAP_BYTE_ORDER, // byte order
-    36,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f5061), 
-    ACE_NTOHL (0x72616d65), 
-    ACE_NTOHL (0x7465724d), 
-    ACE_NTOHL (0x6f64653a), 
-    ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/ParameterMode:1.0
-    14,
-    ACE_NTOHL (0x50617261), 
-    ACE_NTOHL (0x6d657465), 
-    ACE_NTOHL (0x724d6f64), 
-    ACE_NTOHL (0x65000000),  // name = ParameterMode
-    3, // member count
-    9,
-    ACE_NTOHL (0x50415241), 
-    ACE_NTOHL (0x4d5f494e), 
-    ACE_NTOHL (0x0),  // name = PARAM_IN
-    10,
-    ACE_NTOHL (0x50415241), 
-    ACE_NTOHL (0x4d5f4f55), 
-    ACE_NTOHL (0x54000000),  // name = PARAM_OUT
-    12,
-    ACE_NTOHL (0x50415241), 
-    ACE_NTOHL (0x4d5f494e), 
-    ACE_NTOHL (0x4f555400),  // name = PARAM_INOUT
+static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_Dynamic_Parameter[] =
+  {
+    { "argument", &CORBA::_tc_any },
+    { "mode", &CORBA::_tc_ParameterMode }
     
-};
+  };
 
-static CORBA::TypeCode _tc_TAO_tc_Dynamic_Parameter (
-    CORBA::tk_struct,
-    sizeof (_oc_Dynamic_Parameter),
-    (char *) &_oc_Dynamic_Parameter,
-    0,
-    0
-  );
-
+static TAO::TypeCode::Struct<char const *,
+                             TAO::TypeCode::Struct_Field<char const *> const *,
+                             CORBA::tk_struct,
+                             TAO::Null_RefCount_Policy>
+  _tao_tc_Dynamic_Parameter (
+    "IDL:Dynamic/Parameter:1.0",
+    "Parameter",
+    _tao_fields_Dynamic_Parameter,
+    2);
+  
 namespace Dynamic
 {
   ::CORBA::TypeCode_ptr const _tc_Parameter =
-    &_tc_TAO_tc_Dynamic_Parameter;
+    &_tao_tc_Dynamic_Parameter;
 }
+
+
 
 // TAO_IDL - Generated from 
 // be\be_visitor_structure/any_op_cs.cpp:54

@@ -31,7 +31,11 @@
 
 #include "PS_CurrentC.h"
 #include "tao/CDR.h"
-#include "tao/Typecode.h"
+#include "tao/Null_RefCount_Policy.h"
+#include "tao/TypeCode_Constants.h"
+#include "tao/Alias_TypeCode.h"
+#include "tao/Objref_TypeCode.h"
+#include "tao/Struct_TypeCode.h"
 #include "ace/OS_NS_string.h"
 
 #if defined (__BORLANDC__)
@@ -177,48 +181,10 @@ void PortableServer::Current::NoContext::_tao_decode (
 }
 
 // TAO extension - the virtual _type method.
-CORBA::TypeCode_ptr PortableServer::Current::NoContext::_type (void) const
+CORBA::TypeCode_ptr PortableServer::Current::NoContext::_tao_type (void) const
 {
   return ::PortableServer::Current::_tc_NoContext;
 }
-
-// TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
-
-static const CORBA::Long _oc_PortableServer_Current_NoContext[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  49,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x65722f43), 
-  ACE_NTOHL (0x75727265), 
-  ACE_NTOHL (0x6e742f4e), 
-  ACE_NTOHL (0x6f436f6e), 
-  ACE_NTOHL (0x74657874), 
-  ACE_NTOHL (0x3a322e33), 
-  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/PortableServer/Current/NoContext:2.3
-    10,
-  ACE_NTOHL (0x4e6f436f), 
-  ACE_NTOHL (0x6e746578), 
-  ACE_NTOHL (0x74000000),  // name = NoContext
-  0, // member count
-  };
-
-static CORBA::TypeCode _tc_TAO_tc_PortableServer_Current_NoContext (
-    CORBA::tk_except,
-    sizeof (_oc_PortableServer_Current_NoContext),
-    (char *) &_oc_PortableServer_Current_NoContext,
-    0,
-    0
-  );
-
-::CORBA::TypeCode_ptr const PortableServer::Current::_tc_NoContext =
-  &_tc_TAO_tc_PortableServer_Current_NoContext;
 
 PortableServer::Current::Current (void)
 {}
@@ -330,7 +296,7 @@ PortableServer::Current::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1619
+// be\be_visitor_root/root.cpp:1528
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

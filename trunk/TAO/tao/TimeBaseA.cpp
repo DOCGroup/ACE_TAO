@@ -26,304 +26,142 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "TimeBaseC.h"
-#include "tao/Typecode.h"
+#include "tao/Null_RefCount_Policy.h"
+#include "tao/TypeCode_Constants.h"
+#include "tao/Alias_TypeCode.h"
 #include "tao/CDR.h"
 #include "tao/Any.h"
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
+// be\be_visitor_typecode/alias_typecode.cpp:31
 
-static const CORBA::Long _oc_TimeBase_TimeT[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  31,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x54696d65), 
-  ACE_NTOHL (0x42617365), 
-  ACE_NTOHL (0x2f54696d), 
-  ACE_NTOHL (0x65543a31), 
-  ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/TimeBase/TimeT:1.0
-    6,
-  ACE_NTOHL (0x54696d65), 
-  ACE_NTOHL (0x54000000),  // name = TimeT
-    CORBA::tk_ulonglong,
-
-};
-
-static CORBA::TypeCode _tc_TAO_tc_TimeBase_TimeT (
-    CORBA::tk_alias,
-    sizeof (_oc_TimeBase_TimeT),
-    (char *) &_oc_TimeBase_TimeT,
-    0,
-    0
-  );
-
+static TAO::TypeCode::Alias<char const *,
+                            TAO::Null_RefCount_Policy>
+  _tao_tc_TimeBase_TimeT (
+    "IDL:omg.org/TimeBase/TimeT:1.0",
+    "TimeT",
+    &::_tao_tc_CORBA::_tc_ulonglong);
+  
 namespace TimeBase
 {
   ::CORBA::TypeCode_ptr const _tc_TimeT =
-    &_tc_TAO_tc_TimeBase_TimeT;
+    &_tao_tc_TimeBase_TimeT;
 }
 
+
+
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
+// be\be_visitor_typecode/alias_typecode.cpp:31
 
-static const CORBA::Long _oc_TimeBase_InaccuracyT[] =
+
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/alias_typecode.cpp:31
+
+static TAO::TypeCode::Alias<char const *,
+                            TAO::Null_RefCount_Policy>
+  _tao_tc_TimeBase_TimeT (
+    "IDL:omg.org/TimeBase/TimeT:1.0",
+    "TimeT",
+    &::_tao_tc_CORBA::_tc_ulonglong);
+  
+namespace TimeBase
 {
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  37,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x54696d65), 
-  ACE_NTOHL (0x42617365), 
-  ACE_NTOHL (0x2f496e61), 
-  ACE_NTOHL (0x63637572), 
-  ACE_NTOHL (0x61637954), 
-  ACE_NTOHL (0x3a312e30), 
-  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/TimeBase/InaccuracyT:1.0
-    12,
-  ACE_NTOHL (0x496e6163), 
-  ACE_NTOHL (0x63757261), 
-  ACE_NTOHL (0x63795400),  // name = InaccuracyT
-    CORBA::tk_alias, // typecode kind for typedefs
-  56, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    31,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x54696d65), 
-    ACE_NTOHL (0x42617365), 
-    ACE_NTOHL (0x2f54696d), 
-    ACE_NTOHL (0x65543a31), 
-    ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/TimeBase/TimeT:1.0
-        6,
-    ACE_NTOHL (0x54696d65), 
-    ACE_NTOHL (0x54000000),  // name = TimeT
-        CORBA::tk_ulonglong,
+  ::CORBA::TypeCode_ptr const _tc_TimeT =
+    &_tao_tc_TimeBase_TimeT;
+}
 
-
-};
-
-static CORBA::TypeCode _tc_TAO_tc_TimeBase_InaccuracyT (
-    CORBA::tk_alias,
-    sizeof (_oc_TimeBase_InaccuracyT),
-    (char *) &_oc_TimeBase_InaccuracyT,
-    0,
-    0
-  );
-
+static TAO::TypeCode::Alias<char const *,
+                            TAO::Null_RefCount_Policy>
+  _tao_tc_TimeBase_InaccuracyT (
+    "IDL:omg.org/TimeBase/InaccuracyT:1.0",
+    "InaccuracyT",
+    &TimeBase::_tc_TimeT);
+  
 namespace TimeBase
 {
   ::CORBA::TypeCode_ptr const _tc_InaccuracyT =
-    &_tc_TAO_tc_TimeBase_InaccuracyT;
+    &_tao_tc_TimeBase_InaccuracyT;
 }
 
+
+
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
+// be\be_visitor_typecode/alias_typecode.cpp:31
 
-static const CORBA::Long _oc_TimeBase_TdfT[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  30,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x54696d65), 
-  ACE_NTOHL (0x42617365), 
-  ACE_NTOHL (0x2f546466), 
-  ACE_NTOHL (0x543a312e), 
-  ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/TimeBase/TdfT:1.0
-    5,
-  ACE_NTOHL (0x54646654), 
-  ACE_NTOHL (0x0),  // name = TdfT
-    CORBA::tk_short,
-
-};
-
-static CORBA::TypeCode _tc_TAO_tc_TimeBase_TdfT (
-    CORBA::tk_alias,
-    sizeof (_oc_TimeBase_TdfT),
-    (char *) &_oc_TimeBase_TdfT,
-    0,
-    0
-  );
-
+static TAO::TypeCode::Alias<char const *,
+                            TAO::Null_RefCount_Policy>
+  _tao_tc_TimeBase_TdfT (
+    "IDL:omg.org/TimeBase/TdfT:1.0",
+    "TdfT",
+    &::_tao_tc_CORBA::_tc_short);
+  
 namespace TimeBase
 {
   ::CORBA::TypeCode_ptr const _tc_TdfT =
-    &_tc_TAO_tc_TimeBase_TdfT;
+    &_tao_tc_TimeBase_TdfT;
 }
 
+
+
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
+// be\be_visitor_typecode/struct_typecode.cpp:34
 
-static const CORBA::Long _oc_TimeBase_UtcT[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  30,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x54696d65), 
-  ACE_NTOHL (0x42617365), 
-  ACE_NTOHL (0x2f557463), 
-  ACE_NTOHL (0x543a312e), 
-  ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/TimeBase/UtcT:1.0
-    5,
-  ACE_NTOHL (0x55746354), 
-  ACE_NTOHL (0x0),  // name = UtcT
-  4, // member count
-    5,
-  ACE_NTOHL (0x74696d65), 
-  ACE_NTOHL (0x0),  // name = time
-    CORBA::tk_alias, // typecode kind for typedefs
-  56, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    31,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x54696d65), 
-    ACE_NTOHL (0x42617365), 
-    ACE_NTOHL (0x2f54696d), 
-    ACE_NTOHL (0x65543a31), 
-    ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/TimeBase/TimeT:1.0
-        6,
-    ACE_NTOHL (0x54696d65), 
-    ACE_NTOHL (0x54000000),  // name = TimeT
-        CORBA::tk_ulonglong,
+static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_TimeBase_UtcT[] =
+  {
+    { "time", &TimeBase::_tc_TimeT },
+    { "inacclo", &CORBA::_tc_ulong },
+    { "inacchi", &CORBA::_tc_ushort },
+    { "tdf", &TimeBase::_tc_TdfT }
+    
+  };
 
-
-  8,
-  ACE_NTOHL (0x696e6163), 
-  ACE_NTOHL (0x636c6f00),  // name = inacclo
-    CORBA::tk_ulong,
-
-  8,
-  ACE_NTOHL (0x696e6163), 
-  ACE_NTOHL (0x63686900),  // name = inacchi
-    CORBA::tk_ushort,
-
-  4,
-  ACE_NTOHL (0x74646600),  // name = tdf
-    CORBA::tk_alias, // typecode kind for typedefs
-  56, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    30,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x54696d65), 
-    ACE_NTOHL (0x42617365), 
-    ACE_NTOHL (0x2f546466), 
-    ACE_NTOHL (0x543a312e), 
-    ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/TimeBase/TdfT:1.0
-        5,
-    ACE_NTOHL (0x54646654), 
-    ACE_NTOHL (0x0),  // name = TdfT
-        CORBA::tk_short,
-
-
-};
-
-static CORBA::TypeCode _tc_TAO_tc_TimeBase_UtcT (
-    CORBA::tk_struct,
-    sizeof (_oc_TimeBase_UtcT),
-    (char *) &_oc_TimeBase_UtcT,
-    0,
-    0
-  );
-
+static TAO::TypeCode::Struct<char const *,
+                             TAO::TypeCode::Struct_Field<char const *> const *,
+                             CORBA::tk_struct,
+                             TAO::Null_RefCount_Policy>
+  _tao_tc_TimeBase_UtcT (
+    "IDL:omg.org/TimeBase/UtcT:1.0",
+    "UtcT",
+    _tao_fields_TimeBase_UtcT,
+    4);
+  
 namespace TimeBase
 {
   ::CORBA::TypeCode_ptr const _tc_UtcT =
-    &_tc_TAO_tc_TimeBase_UtcT;
+    &_tao_tc_TimeBase_UtcT;
 }
 
+
+
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
+// be\be_visitor_typecode/struct_typecode.cpp:34
 
-static const CORBA::Long _oc_TimeBase_IntervalT[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  35,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x54696d65), 
-  ACE_NTOHL (0x42617365), 
-  ACE_NTOHL (0x2f496e74), 
-  ACE_NTOHL (0x65727661), 
-  ACE_NTOHL (0x6c543a31), 
-  ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/TimeBase/IntervalT:1.0
-    10,
-  ACE_NTOHL (0x496e7465), 
-  ACE_NTOHL (0x7276616c), 
-  ACE_NTOHL (0x54000000),  // name = IntervalT
-  2, // member count
-    12,
-  ACE_NTOHL (0x6c6f7765), 
-  ACE_NTOHL (0x725f626f), 
-  ACE_NTOHL (0x756e6400),  // name = lower_bound
-    CORBA::tk_alias, // typecode kind for typedefs
-  56, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    31,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x54696d65), 
-    ACE_NTOHL (0x42617365), 
-    ACE_NTOHL (0x2f54696d), 
-    ACE_NTOHL (0x65543a31), 
-    ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/TimeBase/TimeT:1.0
-        6,
-    ACE_NTOHL (0x54696d65), 
-    ACE_NTOHL (0x54000000),  // name = TimeT
-        CORBA::tk_ulonglong,
+static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_TimeBase_IntervalT[] =
+  {
+    { "lower_bound", &TimeBase::_tc_TimeT },
+    { "upper_bound", &TimeBase::_tc_TimeT }
+    
+  };
 
-
-  12,
-  ACE_NTOHL (0x75707065), 
-  ACE_NTOHL (0x725f626f), 
-  ACE_NTOHL (0x756e6400),  // name = upper_bound
-    CORBA::tk_alias, // typecode kind for typedefs
-  56, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    31,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x54696d65), 
-    ACE_NTOHL (0x42617365), 
-    ACE_NTOHL (0x2f54696d), 
-    ACE_NTOHL (0x65543a31), 
-    ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/TimeBase/TimeT:1.0
-        6,
-    ACE_NTOHL (0x54696d65), 
-    ACE_NTOHL (0x54000000),  // name = TimeT
-        CORBA::tk_ulonglong,
-
-
-};
-
-static CORBA::TypeCode _tc_TAO_tc_TimeBase_IntervalT (
-    CORBA::tk_struct,
-    sizeof (_oc_TimeBase_IntervalT),
-    (char *) &_oc_TimeBase_IntervalT,
-    0,
-    0
-  );
-
+static TAO::TypeCode::Struct<char const *,
+                             TAO::TypeCode::Struct_Field<char const *> const *,
+                             CORBA::tk_struct,
+                             TAO::Null_RefCount_Policy>
+  _tao_tc_TimeBase_IntervalT (
+    "IDL:omg.org/TimeBase/IntervalT:1.0",
+    "IntervalT",
+    _tao_fields_TimeBase_IntervalT,
+    2);
+  
 namespace TimeBase
 {
   ::CORBA::TypeCode_ptr const _tc_IntervalT =
-    &_tc_TAO_tc_TimeBase_IntervalT;
+    &_tao_tc_TimeBase_IntervalT;
 }
+
+
 
 // TAO_IDL - Generated from 
 // be\be_visitor_structure/any_op_cs.cpp:54
