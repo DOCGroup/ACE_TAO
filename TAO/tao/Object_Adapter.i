@@ -163,18 +163,58 @@ TAO_Object_Adapter::Servant_Upcall::id (void) const
   return this->id_;
 }
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
+ACE_INLINE PortableServer::ServantLocator::Cookie
+TAO_Object_Adapter::Servant_Upcall::locator_cookie (void) const
+{
+  return this->cookie_;
+}
+
+ACE_INLINE void
+TAO_Object_Adapter::Servant_Upcall::locator_cookie (PortableServer::ServantLocator::Cookie cookie)
+{
+  this->cookie_ = cookie;
+}
+
+ACE_INLINE const char *
+TAO_Object_Adapter::Servant_Upcall::operation (void) const
+{
+  return this->operation_;
+}
+
+ACE_INLINE void
+TAO_Object_Adapter::Servant_Upcall::operation (const char *name)
+{
+  this->operation_ = name;
+}
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
+ACE_INLINE void
+TAO_Object_Adapter::Servant_Upcall::active_object_map_entry (TAO_Active_Object_Map::Map_Entry *entry)
+{
+  this->active_object_map_entry_ = entry;
+}
+
+ACE_INLINE TAO_Active_Object_Map::Map_Entry *
+TAO_Object_Adapter::Servant_Upcall::active_object_map_entry (void) const
+{
+  return this->active_object_map_entry_;
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 
 ACE_INLINE void
-TAO_POA_Current_Impl::POA_impl (TAO_POA *impl)
+TAO_POA_Current_Impl::poa (TAO_POA *p)
 {
-  this->poa_impl_ = impl;
+  this->poa_ = p;
 }
 
 ACE_INLINE TAO_POA *
-TAO_POA_Current_Impl::POA_impl (void) const
+TAO_POA_Current_Impl::poa (void) const
 {
-  return this->poa_impl_;
+  return this->poa_;
 }
 
 ACE_INLINE void
@@ -211,32 +251,4 @@ ACE_INLINE PortableServer::Servant
 TAO_POA_Current_Impl::servant (void) const
 {
   return this->servant_;
-}
-
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-
-ACE_INLINE PortableServer::ServantLocator::Cookie
-TAO_POA_Current_Impl::locator_cookie (void) const
-{
-  return this->cookie_;
-}
-
-ACE_INLINE void
-TAO_POA_Current_Impl::locator_cookie (PortableServer::ServantLocator::Cookie cookie)
-{
-  this->cookie_ = cookie;
-}
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
-
-ACE_INLINE void
-TAO_POA_Current_Impl::active_object_map_entry (TAO_Active_Object_Map::Map_Entry *entry)
-{
-  this->active_object_map_entry_ = entry;
-}
-
-ACE_INLINE TAO_Active_Object_Map::Map_Entry *
-TAO_POA_Current_Impl::active_object_map_entry (void) const
-{
-  return this->active_object_map_entry_;
 }

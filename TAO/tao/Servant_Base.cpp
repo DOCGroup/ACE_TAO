@@ -409,9 +409,9 @@ TAO_DynamicImplementation::_create_stub (CORBA::Environment &ACE_TRY_ENV)
                                                             ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  return poa_current_impl->POA_impl ()->orb_core ().orb ()->create_stub_object (poa_current_impl->object_key (),
-                                                                                interface,
-                                                                                ACE_TRY_ENV);
+  return poa_current_impl->poa ()->orb_core ().orb ()->create_stub_object (poa_current_impl->object_key (),
+                                                                           interface,
+                                                                           ACE_TRY_ENV);
 }
 
 void

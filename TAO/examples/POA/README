@@ -71,11 +71,6 @@ these applications further.
                 Shows off the standard TIE features of the new CORBA
                 2.2 specification.
 
-        . Identity
-
-                The example shows the identity between servants, ids,
-                and references.
-
         . On_Demand_Loading
 
                 This example illustrates how to dynamically link and

@@ -279,6 +279,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "POA Destruction"=.\POA\Destruction\Destruction.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "POA Identity"=.\POA\Identity\Identity.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Param_Test Client"=.\Param_Test\client.dsp - Package Owner=<4>
 
 Package=<5>

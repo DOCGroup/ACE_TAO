@@ -1,3 +1,33 @@
+Tue Jun 22 17:09:45 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Active_Object_Map.cpp
+	  (TAO_Multiple_Id_Strategy::is_servant_in_map() and
+	  TAO_User_Id_Strategy::bind_using_system_id()): Fixed unused arg
+	  warnings.  Thanks to Carlos for pointing these out.
+
+	* tao/Object_Adapter and tao/POA:
+
+	  Did some major rework of the POA Current object.  Previously,
+	  this object was used for the POA Current as well as the cleanup
+	  object. Servant_Upcall has taken over the role of the cleanup
+	  object.  Therefore, moved all extra state from POA Current to
+	  Servant Upcall.
+
+	  The above change allowed me to fix POA::destroy().  Previously,
+	  when POA::destroy() was called, the POA object was destroyed
+	  immediately.  The problem with this was that there might be
+	  outstanding requests being dispatched by this POA.  These
+	  outstanding requests access POA state once they complete.  If
+	  the POA is already gone by this time, a seg fault will occur.
+	  The fix allows the POA destruction to be delayed till all the
+	  outstanding requests complete.
+
+	* tests/POA/Destruction/Destruction.cpp: This new test will make
+	  sure that the above mentioned change works.
+
+	* test/POA/Identity: Moved this application from examples
+	  directory to the test directory.
+
 Tue Jun 22 18:38:35 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/Simple/Simple_util.cpp: Made the POA state active
