@@ -5361,7 +5361,7 @@ ACE_OS::cond_destroy (ACE_cond_t *cv)
 # endif /* ACE_HAS_THREADS */
 }
 
-// @@ The following functions could be inlined if i could figure where 
+// @@ The following functions could be inlined if i could figure where
 // to put it among the #ifdefs!
 int
 ACE_OS::condattr_init (ACE_condattr_t &attributes,
@@ -6363,8 +6363,8 @@ ACE_OS_Object_Manager::init (void)
             ACE_OS_Object_Manager::preallocated_object[
               ACE_OS_MONITOR_LOCK])) != 0)
             ACE_ERROR ((LM_ERROR,
-              ASYS_TEXT("%p\n"),
-              ASYS_TEXT("ACE_OS_Object_Manager::init, ACE_OS_MONITOR_LOCK")));
+              ASYS_TEXT ("%p\n"),
+              ASYS_TEXT ("ACE_OS_Object_Manager::init, ACE_OS_MONITOR_LOCK")));
           ACE_OS_PREALLOCATE_OBJECT (ACE_recursive_thread_mutex_t,
                                      ACE_TSS_CLEANUP_LOCK)
           if (ACE_OS::recursive_mutex_init (ACE_reinterpret_cast (
@@ -6372,8 +6372,19 @@ ACE_OS_Object_Manager::init (void)
             ACE_OS_Object_Manager::preallocated_object[
               ACE_TSS_CLEANUP_LOCK])) != 0)
             ACE_ERROR ((LM_ERROR,
-              ASYS_TEXT("%p\n"),
-              ASYS_TEXT("ACE_OS_Object_Manager::init, ACE_TSS_CLEANUP_LOCK")));
+              ASYS_TEXT ("%p\n"),
+              ASYS_TEXT ("ACE_OS_Object_Manager::init, ")
+              ASYS_TEXT ("ACE_TSS_CLEANUP_LOCK")));
+          ACE_OS_PREALLOCATE_OBJECT (ACE_thread_mutex_t,
+                                     ACE_LOG_MSG_INSTANCE_LOCK)
+          if (ACE_OS::thread_mutex_init (ACE_reinterpret_cast (
+            ACE_thread_mutex_t *,
+            ACE_OS_Object_Manager::preallocated_object[
+              ACE_LOG_MSG_INSTANCE_LOCK])) != 0)
+            ACE_ERROR ((LM_ERROR,
+              ASYS_TEXT ("%p\n"),
+              ASYS_TEXT ("ACE_OS_Object_Manager::init, ")
+              ASYS_TEXT ("ACE_LOG_MSG_INSTANCE_LOCK")));
 #   if defined (ACE_HAS_TSS_EMULATION)
           ACE_OS_PREALLOCATE_OBJECT (ACE_recursive_thread_mutex_t,
                                      ACE_TSS_KEY_LOCK)
@@ -6382,8 +6393,8 @@ ACE_OS_Object_Manager::init (void)
             ACE_OS_Object_Manager::preallocated_object[
               ACE_TSS_KEY_LOCK])) != 0)
             ACE_ERROR ((LM_ERROR,
-              ASYS_TEXT("%p\n"),
-              ASYS_TEXT("ACE_OS_Object_Manager::init, ACE_TSS_KEY_LOCK")));
+              ASYS_TEXT ("%p\n"),
+              ASYS_TEXT ("ACE_OS_Object_Manager::init, ACE_TSS_KEY_LOCK")));
 #     if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
           ACE_OS_PREALLOCATE_OBJECT (ACE_recursive_thread_mutex_t,
                                      ACE_TSS_BASE_LOCK)
@@ -6392,8 +6403,8 @@ ACE_OS_Object_Manager::init (void)
             ACE_OS_Object_Manager::preallocated_object[
               ACE_TSS_BASE_LOCK])) != 0)
             ACE_ERROR ((LM_ERROR,
-              ASYS_TEXT("%p\n"),
-              ASYS_TEXT("ACE_OS_Object_Manager::init, ACE_TSS_BASE_LOCK")));
+              ASYS_TEXT ("%p\n"),
+              ASYS_TEXT ("ACE_OS_Object_Manager::init, ACE_TSS_BASE_LOCK")));
 #     endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
 #   endif /* ACE_HAS_TSS_EMULATION */
 # endif /* ACE_MT_SAFE */
@@ -6459,8 +6470,8 @@ ACE_OS_Object_Manager::fini (void)
         ACE_thread_mutex_t *,
         ACE_OS_Object_Manager::preallocated_object[ACE_OS_MONITOR_LOCK])) != 0)
           ACE_ERROR ((LM_ERROR,
-            ASYS_TEXT("%p\n"),
-            ASYS_TEXT("ACE_OS_Object_Manager::fini, ACE_OS_MONITOR_LOCK")));
+            ASYS_TEXT ("%p\n"),
+            ASYS_TEXT ("ACE_OS_Object_Manager::fini, ACE_OS_MONITOR_LOCK")));
 #   endif /* ! __Lynx__ */
       ACE_OS_DELETE_PREALLOCATED_OBJECT (ACE_thread_mutex_t,
                                          ACE_OS_MONITOR_LOCK)
@@ -6470,11 +6481,24 @@ ACE_OS_Object_Manager::fini (void)
        ACE_recursive_thread_mutex_t *,
        ACE_OS_Object_Manager::preallocated_object[ACE_TSS_CLEANUP_LOCK])) != 0)
           ACE_ERROR ((LM_ERROR,
-            ASYS_TEXT("%p\n"),
-            ASYS_TEXT("ACE_OS_Object_Manager::fini, ACE_TSS_CLEANUP_LOCK")));
+            ASYS_TEXT ("%p\n"),
+            ASYS_TEXT ("ACE_OS_Object_Manager::fini, ACE_TSS_CLEANUP_LOCK")));
 #   endif /* ! __Lynx__ */
       ACE_OS_DELETE_PREALLOCATED_OBJECT (ACE_recursive_thread_mutex_t,
                                          ACE_TSS_CLEANUP_LOCK)
+#   if !defined (__Lynx__)
+      // LynxOS 3.0.0 has problems with this after fork.
+      if (ACE_OS::thread_mutex_destroy (ACE_reinterpret_cast (
+        ACE_thread_mutex_t *,
+        ACE_OS_Object_Manager::preallocated_object
+            [ACE_LOG_MSG_INSTANCE_LOCK])) != 0)
+          ACE_ERROR ((LM_ERROR,
+            ASYS_TEXT ("%p\n"),
+            ASYS_TEXT ("ACE_OS_Object_Manager::fini, ")
+            ASYS_TEXT ("ACE_LOG_MSG_INSTANCE_LOCK")));
+#   endif /* ! __Lynx__ */
+      ACE_OS_DELETE_PREALLOCATED_OBJECT (ACE_thread_mutex_t,
+                                         ACE_LOG_MSG_INSTANCE_LOCK)
 #   if defined (ACE_HAS_TSS_EMULATION)
 #     if !defined (__Lynx__)
         // LynxOS 3.0.0 has problems with this after fork.
@@ -6483,8 +6507,8 @@ ACE_OS_Object_Manager::fini (void)
           ACE_OS_Object_Manager::preallocated_object[
             ACE_TSS_KEY_LOCK])) != 0)
           ACE_ERROR ((LM_ERROR,
-              ASYS_TEXT("%p\n"),
-              ASYS_TEXT("ACE_OS_Object_Manager::fini, ACE_TSS_KEY_LOCK")));
+              ASYS_TEXT ("%p\n"),
+              ASYS_TEXT ("ACE_OS_Object_Manager::fini, ACE_TSS_KEY_LOCK")));
 #     endif /* ! __Lynx__ */
       ACE_OS_DELETE_PREALLOCATED_OBJECT (ACE_recursive_thread_mutex_t,
                                          ACE_TSS_KEY_LOCK)
@@ -6496,8 +6520,8 @@ ACE_OS_Object_Manager::fini (void)
             ACE_OS_Object_Manager::preallocated_object[
               ACE_TSS_BASE_LOCK])) != 0)
             ACE_ERROR ((LM_ERROR,
-              ASYS_TEXT("%p\n"),
-              ASYS_TEXT("ACE_OS_Object_Manager::fini, ACE_TSS_BASE_LOCK")));
+              ASYS_TEXT ("%p\n"),
+              ASYS_TEXT ("ACE_OS_Object_Manager::fini, ACE_TSS_BASE_LOCK")));
 #       endif /* ! __Lynx__ */
       ACE_OS_DELETE_PREALLOCATED_OBJECT (ACE_recursive_thread_mutex_t,
                                          ACE_TSS_BASE_LOCK)
