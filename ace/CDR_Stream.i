@@ -1083,7 +1083,9 @@ operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_octet x)
 ACE_INLINE ACE_CDR::Boolean
 operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_string x)
 {
-  ACE_CDR::ULong len = ACE_OS::strlen (x.val_);
+  ACE_CDR::ULong len = 0;
+  if (x.val_ != 0)
+    len = ACE_OS::strlen (x.val_);
   os.write_string (len, x.val_);
   return os.good_bit () && (len <= x.bound_);
 }
@@ -1091,7 +1093,9 @@ operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_string x)
 ACE_INLINE ACE_CDR::Boolean
 operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_wstring x)
 {
-  ACE_CDR::ULong len = ACE_OS::wslen (x.val_);
+  ACE_CDR::ULong len;
+  if (x.val_ != 0)
+    len = ACE_OS::wslen (x.val_);
   os.write_wstring (len, x.val_);
   return os.good_bit () && (len <= x.bound_);
 }

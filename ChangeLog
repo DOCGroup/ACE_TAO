@@ -1,6 +1,18 @@
+Tue Mar 21 10:37:17 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+        * Merged the non_interpretive branch.
+          This fixes [BUGID:135]
+
+        Fri Mar 10 11:27:04 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/CDR_Stream.i:
+          Fixed the << operators for ACE_OutputCDR::from_string and
+          ACE_OutputCDR::from_wstring. They did not work with null
+          strings.
+
 Mon Mar 20 17:54:15 2000  Darrell Brunsch <brunsch@uci.edu>
 
-        * ace/ACE.cpp:  
+        * ace/ACE.cpp:
 
           The ascii version of get_temp_dir () was calling the wchar_t
           version, which doesn't work on Win95/98 since the GetTempPathW
@@ -9,7 +21,7 @@ Mon Mar 20 17:54:15 2000  Darrell Brunsch <brunsch@uci.edu>
           Thanks to David Hauck <davidh@realtimeint.com> for first pointing
           this out, Shalabh Bhatnagar <shalabh_b@hotmail.com> for informing
           me that it doesn't work on Win95, and Torsten Pfuetzenreuter
-          <torsten_pf@geocities.com> for pointing out this doesn't work on 
+          <torsten_pf@geocities.com> for pointing out this doesn't work on
           Win98 either.
 
           [BUG 499]
