@@ -9,13 +9,11 @@ use lib "../../../bin";
 require Process;
 
 $status = 0;
-$POAConfigFile = "POA.cfg";
-$ObjectConfigFile = "Object.cfg";
 
-$SV = Process::Create ($EXEPREFIX."server$EXE_EXT", "-POAConfigFile $POAConfigFile -ObjectConfigFile $ObjectConfigFile");
+$SV = Process::Create ($EXEPREFIX."server$EXE_EXT", "-ORBSvcConf server.conf -ORBendpoint iiop://localhost:0/priority=5 -ORBendpoint iiop://localhost:0/priority=15 -POAConfigFile POA.cfg -ObjectConfigFile Object.cfg");
 
 
-$client = Process::Create($EXEPREFIX."client$EXE_EXT", "-POAConfigFile $POAConfigFile -ObjectConfigFile $ObjectConfigFile");
+$client = Process::Create($EXEPREFIX."client$EXE_EXT", "-POAConfigFile POA.cfg  -ObjectConfigFile Object.cfg");
 
 if ($client->TimedWait (60) == -1) {
   print STDERR "ERROR: client timedout\n";
