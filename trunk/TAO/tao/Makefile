@@ -70,7 +70,7 @@ ORBCORE_SRCS = \
 	GIOP \
 	Invocation \
 	IIOP_ORB \
-	IIOP_Interpreter \
+	CDR_Interpreter \
 	Marshal \
 	Active_Object_Map \
 	Operation_Table \
@@ -2311,7 +2311,7 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/IIOP_Interpreter.h \
+ $(TAO_ROOT)/tao/CDR_Interpreter.h \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/TAO_Internal.h \
  $(TAO_ROOT)/tao/Timeprobe.h \
@@ -4885,7 +4885,7 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/IIOP_Interpreter.h \
+ $(TAO_ROOT)/tao/CDR_Interpreter.h \
  $(TAO_ROOT)/tao/Principal.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Managed_Types.h \
@@ -7286,8 +7286,8 @@ LDFLAGS += $(RLDFLAGS)
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
-.obj/IIOP_Interpreter.o .obj/IIOP_Interpreter.so .shobj/IIOP_Interpreter.o .shobj/IIOP_Interpreter.so: IIOP_Interpreter.cpp \
- $(TAO_ROOT)/tao/IIOP_Interpreter.h \
+.obj/CDR_Interpreter.o .obj/CDR_Interpreter.so .shobj/CDR_Interpreter.o .shobj/CDR_Interpreter.so: CDR_Interpreter.cpp \
+ $(TAO_ROOT)/tao/CDR_Interpreter.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \

@@ -16,7 +16,7 @@
 #include "tao/Environment.h"
 #include "tao/Any.h"
 #include "tao/Exception.h"
-#include "tao/IIOP_Interpreter.h"
+#include "tao/CDR_Interpreter.h"
 #include "tao/Principal.h"
 
 #if !defined (__ACE_INLINE__)
@@ -1970,7 +1970,7 @@ CORBA_TypeCode::private_discrim_pad_size (CORBA::Environment &env)
   size_t discrim_size;
   size_t overall_align;
 
- (void) TAO_IIOP_Interpreter::calc_key_union_attributes (&stream,
+ (void) TAO_CDR_Interpreter::calc_key_union_attributes (&stream,
                                                          overall_align,
                                                          discrim_size,
                                                          env);
@@ -2314,11 +2314,11 @@ CORBA::TypeCode::private_size (CORBA::Environment &env)
   if (this->private_state_->tc_size_known_)
     return this->private_state_->tc_size_;
 
-  if (TAO_IIOP_Interpreter::table_[kind_].calc_ == 0)
+  if (TAO_CDR_Interpreter::table_[kind_].calc_ == 0)
     {
       private_state_->tc_size_known_ = 1;
       private_state_->tc_size_ =
-        TAO_IIOP_Interpreter::table_[kind_].size_;
+        TAO_CDR_Interpreter::table_[kind_].size_;
       return private_state_->tc_size_;
     }
 
@@ -2328,7 +2328,7 @@ CORBA::TypeCode::private_size (CORBA::Environment &env)
 
   private_state_->tc_size_known_ = 1;
   private_state_->tc_size_ =
-    TAO_IIOP_Interpreter::table_[kind_].calc_ (&stream, alignment, env);
+    TAO_CDR_Interpreter::table_[kind_].calc_ (&stream, alignment, env);
   return private_state_->tc_size_;
 }
 
@@ -2350,11 +2350,11 @@ CORBA::TypeCode::private_alignment (CORBA::Environment &env)
   if (this->private_state_->tc_alignment_known_)
     return this->private_state_->tc_alignment_;
 
-  if (TAO_IIOP_Interpreter::table_[kind_].calc_ == 0)
+  if (TAO_CDR_Interpreter::table_[kind_].calc_ == 0)
     {
       private_state_->tc_alignment_known_ = 1;
       private_state_->tc_alignment_ =
-        TAO_IIOP_Interpreter::table_[kind_].alignment_;
+        TAO_CDR_Interpreter::table_[kind_].alignment_;
       return private_state_->tc_alignment_;
     }
 
@@ -2362,7 +2362,7 @@ CORBA::TypeCode::private_alignment (CORBA::Environment &env)
   TAO_InputCDR stream (this->buffer_+4, this->length_-4,
                        this->byte_order_);
 
-  (void) TAO_IIOP_Interpreter::table_[kind_].calc_ (&stream,
+  (void) TAO_CDR_Interpreter::table_[kind_].calc_ (&stream,
                                                     alignment,
                                                     env);
   TAO_CHECK_ENV_RETURN (env, 0);

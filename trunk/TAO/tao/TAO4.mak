@@ -70,7 +70,7 @@ CLEAN :
 	-@erase "$(INTDIR)\Exception.obj"
 	-@erase "$(INTDIR)\Forwarding_Servant.obj"
 	-@erase "$(INTDIR)\GIOP.obj"
-	-@erase "$(INTDIR)\IIOP_Interpreter.obj"
+	-@erase "$(INTDIR)\CDR_Interpreter.obj"
 	-@erase "$(INTDIR)\IIOP_Object.obj"
 	-@erase "$(INTDIR)\IIOP_ORB.obj"
 	-@erase "$(INTDIR)\Marshal.obj"
@@ -150,7 +150,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\Exception.obj" \
 	"$(INTDIR)\Forwarding_Servant.obj" \
 	"$(INTDIR)\GIOP.obj" \
-	"$(INTDIR)\IIOP_Interpreter.obj" \
+	"$(INTDIR)\CDR_Interpreter.obj" \
 	"$(INTDIR)\IIOP_Object.obj" \
 	"$(INTDIR)\IIOP_ORB.obj" \
 	"$(INTDIR)\Marshal.obj" \
@@ -220,7 +220,7 @@ CLEAN :
 	-@erase "$(INTDIR)\Exception.obj"
 	-@erase "$(INTDIR)\Forwarding_Servant.obj"
 	-@erase "$(INTDIR)\GIOP.obj"
-	-@erase "$(INTDIR)\IIOP_Interpreter.obj"
+	-@erase "$(INTDIR)\CDR_Interpreter.obj"
 	-@erase "$(INTDIR)\IIOP_Object.obj"
 	-@erase "$(INTDIR)\IIOP_ORB.obj"
 	-@erase "$(INTDIR)\Marshal.obj"
@@ -305,7 +305,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\Exception.obj" \
 	"$(INTDIR)\Forwarding_Servant.obj" \
 	"$(INTDIR)\GIOP.obj" \
-	"$(INTDIR)\IIOP_Interpreter.obj" \
+	"$(INTDIR)\CDR_Interpreter.obj" \
 	"$(INTDIR)\IIOP_Object.obj" \
 	"$(INTDIR)\IIOP_ORB.obj" \
 	"$(INTDIR)\Marshal.obj" \
@@ -403,7 +403,7 @@ DEP_CPP_TYPEC=\
 	{$(INCLUDE)}"\.\Exception.i"\
 	{$(INCLUDE)}"\.\GIOP.h"\
 	{$(INCLUDE)}"\.\GIOP.i"\
-	{$(INCLUDE)}"\.\IIOP_Interpreter.h"\
+	{$(INCLUDE)}"\.\CDR_Interpreter.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.i"\
 	{$(INCLUDE)}"\.\IIOP_ORB.h"\
@@ -638,7 +638,7 @@ DEP_CPP_APPEN=\
 	{$(INCLUDE)}"\.\Exception.i"\
 	{$(INCLUDE)}"\.\GIOP.h"\
 	{$(INCLUDE)}"\.\GIOP.i"\
-	{$(INCLUDE)}"\.\IIOP_Interpreter.h"\
+	{$(INCLUDE)}"\.\CDR_Interpreter.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.i"\
 	{$(INCLUDE)}"\.\IIOP_ORB.h"\
@@ -873,7 +873,7 @@ DEP_CPP_CDR_C=\
 	{$(INCLUDE)}"\.\Exception.i"\
 	{$(INCLUDE)}"\.\GIOP.h"\
 	{$(INCLUDE)}"\.\GIOP.i"\
-	{$(INCLUDE)}"\.\IIOP_Interpreter.h"\
+	{$(INCLUDE)}"\.\CDR_Interpreter.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.i"\
 	{$(INCLUDE)}"\.\IIOP_ORB.h"\
@@ -1108,7 +1108,7 @@ DEP_CPP_CLIEN=\
 	{$(INCLUDE)}"\.\Exception.i"\
 	{$(INCLUDE)}"\.\GIOP.h"\
 	{$(INCLUDE)}"\.\GIOP.i"\
-	{$(INCLUDE)}"\.\IIOP_Interpreter.h"\
+	{$(INCLUDE)}"\.\CDR_Interpreter.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.i"\
 	{$(INCLUDE)}"\.\IIOP_ORB.h"\
@@ -1344,7 +1344,7 @@ DEP_CPP_CONNE=\
 	{$(INCLUDE)}"\.\Exception.i"\
 	{$(INCLUDE)}"\.\GIOP.h"\
 	{$(INCLUDE)}"\.\GIOP.i"\
-	{$(INCLUDE)}"\.\IIOP_Interpreter.h"\
+	{$(INCLUDE)}"\.\CDR_Interpreter.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.i"\
 	{$(INCLUDE)}"\.\IIOP_ORB.h"\
@@ -1586,7 +1586,7 @@ DEP_CPP_DEBUG=\
 	{$(INCLUDE)}"\.\Exception.i"\
 	{$(INCLUDE)}"\.\GIOP.h"\
 	{$(INCLUDE)}"\.\GIOP.i"\
-	{$(INCLUDE)}"\.\IIOP_Interpreter.h"\
+	{$(INCLUDE)}"\.\CDR_Interpreter.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.i"\
 	{$(INCLUDE)}"\.\IIOP_ORB.h"\
@@ -1821,7 +1821,7 @@ DEP_CPP_DECOD=\
 	{$(INCLUDE)}"\.\Exception.i"\
 	{$(INCLUDE)}"\.\GIOP.h"\
 	{$(INCLUDE)}"\.\GIOP.i"\
-	{$(INCLUDE)}"\.\IIOP_Interpreter.h"\
+	{$(INCLUDE)}"\.\CDR_Interpreter.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.i"\
 	{$(INCLUDE)}"\.\IIOP_ORB.h"\
@@ -2056,7 +2056,7 @@ DEP_CPP_DEEP_=\
 	{$(INCLUDE)}"\.\Exception.i"\
 	{$(INCLUDE)}"\.\GIOP.h"\
 	{$(INCLUDE)}"\.\GIOP.i"\
-	{$(INCLUDE)}"\.\IIOP_Interpreter.h"\
+	{$(INCLUDE)}"\.\CDR_Interpreter.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.i"\
 	{$(INCLUDE)}"\.\IIOP_ORB.h"\
@@ -2291,7 +2291,7 @@ DEP_CPP_DEEP_F=\
 	{$(INCLUDE)}"\.\Exception.i"\
 	{$(INCLUDE)}"\.\GIOP.h"\
 	{$(INCLUDE)}"\.\GIOP.i"\
-	{$(INCLUDE)}"\.\IIOP_Interpreter.h"\
+	{$(INCLUDE)}"\.\CDR_Interpreter.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.i"\
 	{$(INCLUDE)}"\.\IIOP_ORB.h"\
@@ -2526,7 +2526,7 @@ DEP_CPP_DEFAU=\
 	{$(INCLUDE)}"\.\Exception.i"\
 	{$(INCLUDE)}"\.\GIOP.h"\
 	{$(INCLUDE)}"\.\GIOP.i"\
-	{$(INCLUDE)}"\.\IIOP_Interpreter.h"\
+	{$(INCLUDE)}"\.\CDR_Interpreter.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.i"\
 	{$(INCLUDE)}"\.\IIOP_ORB.h"\
@@ -2761,7 +2761,7 @@ DEP_CPP_DEFAUL=\
 	{$(INCLUDE)}"\.\Exception.i"\
 	{$(INCLUDE)}"\.\GIOP.h"\
 	{$(INCLUDE)}"\.\GIOP.i"\
-	{$(INCLUDE)}"\.\IIOP_Interpreter.h"\
+	{$(INCLUDE)}"\.\CDR_Interpreter.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.i"\
 	{$(INCLUDE)}"\.\IIOP_ORB.h"\
@@ -2996,7 +2996,7 @@ DEP_CPP_ENCOD=\
 	{$(INCLUDE)}"\.\Exception.i"\
 	{$(INCLUDE)}"\.\GIOP.h"\
 	{$(INCLUDE)}"\.\GIOP.i"\
-	{$(INCLUDE)}"\.\IIOP_Interpreter.h"\
+	{$(INCLUDE)}"\.\CDR_Interpreter.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.i"\
 	{$(INCLUDE)}"\.\IIOP_ORB.h"\
@@ -3231,7 +3231,7 @@ DEP_CPP_EXCEP=\
 	{$(INCLUDE)}"\.\Exception.i"\
 	{$(INCLUDE)}"\.\GIOP.h"\
 	{$(INCLUDE)}"\.\GIOP.i"\
-	{$(INCLUDE)}"\.\IIOP_Interpreter.h"\
+	{$(INCLUDE)}"\.\CDR_Interpreter.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.i"\
 	{$(INCLUDE)}"\.\IIOP_ORB.h"\
@@ -3466,7 +3466,7 @@ DEP_CPP_GIOP_=\
 	{$(INCLUDE)}"\.\Exception.i"\
 	{$(INCLUDE)}"\.\GIOP.h"\
 	{$(INCLUDE)}"\.\GIOP.i"\
-	{$(INCLUDE)}"\.\IIOP_Interpreter.h"\
+	{$(INCLUDE)}"\.\CDR_Interpreter.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.i"\
 	{$(INCLUDE)}"\.\IIOP_ORB.h"\
@@ -3680,7 +3680,7 @@ DEP_CPP_GIOP_=\
 ################################################################################
 # Begin Source File
 
-SOURCE=.\IIOP_Interpreter.cpp
+SOURCE=.\CDR_Interpreter.cpp
 DEP_CPP_IIOP_=\
 	".\CurrentC.i"\
 	".\Object_KeyC.i"\
@@ -3708,7 +3708,7 @@ DEP_CPP_IIOP_=\
 	{$(INCLUDE)}"\.\Exception.i"\
 	{$(INCLUDE)}"\.\GIOP.h"\
 	{$(INCLUDE)}"\.\GIOP.i"\
-	{$(INCLUDE)}"\.\IIOP_Interpreter.h"\
+	{$(INCLUDE)}"\.\CDR_Interpreter.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.i"\
 	{$(INCLUDE)}"\.\IIOP_ORB.h"\
@@ -3908,7 +3908,7 @@ DEP_CPP_IIOP_=\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
-"$(INTDIR)\IIOP_Interpreter.obj" : $(SOURCE) $(DEP_CPP_IIOP_) "$(INTDIR)"
+"$(INTDIR)\CDR_Interpreter.obj" : $(SOURCE) $(DEP_CPP_IIOP_) "$(INTDIR)"
 
 
 # End Source File
@@ -3943,7 +3943,7 @@ DEP_CPP_IIOP_O=\
 	{$(INCLUDE)}"\.\Exception.i"\
 	{$(INCLUDE)}"\.\GIOP.h"\
 	{$(INCLUDE)}"\.\GIOP.i"\
-	{$(INCLUDE)}"\.\IIOP_Interpreter.h"\
+	{$(INCLUDE)}"\.\CDR_Interpreter.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.i"\
 	{$(INCLUDE)}"\.\IIOP_ORB.h"\
@@ -4185,7 +4185,7 @@ DEP_CPP_IIOP_OR=\
 	{$(INCLUDE)}"\.\Exception.i"\
 	{$(INCLUDE)}"\.\GIOP.h"\
 	{$(INCLUDE)}"\.\GIOP.i"\
-	{$(INCLUDE)}"\.\IIOP_Interpreter.h"\
+	{$(INCLUDE)}"\.\CDR_Interpreter.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.i"\
 	{$(INCLUDE)}"\.\IIOP_ORB.h"\
@@ -4420,7 +4420,7 @@ DEP_CPP_MARSH=\
 	{$(INCLUDE)}"\.\Exception.i"\
 	{$(INCLUDE)}"\.\GIOP.h"\
 	{$(INCLUDE)}"\.\GIOP.i"\
-	{$(INCLUDE)}"\.\IIOP_Interpreter.h"\
+	{$(INCLUDE)}"\.\CDR_Interpreter.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.i"\
 	{$(INCLUDE)}"\.\IIOP_ORB.h"\
@@ -4655,7 +4655,7 @@ DEP_CPP_NVLIS=\
 	{$(INCLUDE)}"\.\Exception.i"\
 	{$(INCLUDE)}"\.\GIOP.h"\
 	{$(INCLUDE)}"\.\GIOP.i"\
-	{$(INCLUDE)}"\.\IIOP_Interpreter.h"\
+	{$(INCLUDE)}"\.\CDR_Interpreter.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.i"\
 	{$(INCLUDE)}"\.\IIOP_ORB.h"\
@@ -4890,7 +4890,7 @@ DEP_CPP_OBJEC=\
 	{$(INCLUDE)}"\.\Exception.i"\
 	{$(INCLUDE)}"\.\GIOP.h"\
 	{$(INCLUDE)}"\.\GIOP.i"\
-	{$(INCLUDE)}"\.\IIOP_Interpreter.h"\
+	{$(INCLUDE)}"\.\CDR_Interpreter.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.i"\
 	{$(INCLUDE)}"\.\IIOP_ORB.h"\
@@ -5125,7 +5125,7 @@ DEP_CPP_OBJECT=\
 	{$(INCLUDE)}"\.\Exception.i"\
 	{$(INCLUDE)}"\.\GIOP.h"\
 	{$(INCLUDE)}"\.\GIOP.i"\
-	{$(INCLUDE)}"\.\IIOP_Interpreter.h"\
+	{$(INCLUDE)}"\.\CDR_Interpreter.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.i"\
 	{$(INCLUDE)}"\.\IIOP_ORB.h"\
@@ -5360,7 +5360,7 @@ DEP_CPP_OBJECT_=\
 	{$(INCLUDE)}"\.\Exception.i"\
 	{$(INCLUDE)}"\.\GIOP.h"\
 	{$(INCLUDE)}"\.\GIOP.i"\
-	{$(INCLUDE)}"\.\IIOP_Interpreter.h"\
+	{$(INCLUDE)}"\.\CDR_Interpreter.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.i"\
 	{$(INCLUDE)}"\.\IIOP_ORB.h"\
@@ -5595,7 +5595,7 @@ DEP_CPP_OPERA=\
 	{$(INCLUDE)}"\.\Exception.i"\
 	{$(INCLUDE)}"\.\GIOP.h"\
 	{$(INCLUDE)}"\.\GIOP.i"\
-	{$(INCLUDE)}"\.\IIOP_Interpreter.h"\
+	{$(INCLUDE)}"\.\CDR_Interpreter.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.i"\
 	{$(INCLUDE)}"\.\IIOP_ORB.h"\
@@ -5830,7 +5830,7 @@ DEP_CPP_ORB_C=\
 	{$(INCLUDE)}"\.\Exception.i"\
 	{$(INCLUDE)}"\.\GIOP.h"\
 	{$(INCLUDE)}"\.\GIOP.i"\
-	{$(INCLUDE)}"\.\IIOP_Interpreter.h"\
+	{$(INCLUDE)}"\.\CDR_Interpreter.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.i"\
 	{$(INCLUDE)}"\.\IIOP_ORB.h"\
@@ -6077,7 +6077,7 @@ DEP_CPP_ORB_CO=\
 	{$(INCLUDE)}"\.\Exception.i"\
 	{$(INCLUDE)}"\.\GIOP.h"\
 	{$(INCLUDE)}"\.\GIOP.i"\
-	{$(INCLUDE)}"\.\IIOP_Interpreter.h"\
+	{$(INCLUDE)}"\.\CDR_Interpreter.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.i"\
 	{$(INCLUDE)}"\.\IIOP_ORB.h"\
@@ -6325,7 +6325,7 @@ DEP_CPP_PARAM=\
 	{$(INCLUDE)}"\.\Exception.i"\
 	{$(INCLUDE)}"\.\GIOP.h"\
 	{$(INCLUDE)}"\.\GIOP.i"\
-	{$(INCLUDE)}"\.\IIOP_Interpreter.h"\
+	{$(INCLUDE)}"\.\CDR_Interpreter.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.i"\
 	{$(INCLUDE)}"\.\IIOP_ORB.h"\
@@ -6561,7 +6561,7 @@ DEP_CPP_POA_C=\
 	{$(INCLUDE)}"\.\Forwarding_Servant.h"\
 	{$(INCLUDE)}"\.\GIOP.h"\
 	{$(INCLUDE)}"\.\GIOP.i"\
-	{$(INCLUDE)}"\.\IIOP_Interpreter.h"\
+	{$(INCLUDE)}"\.\CDR_Interpreter.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.i"\
 	{$(INCLUDE)}"\.\IIOP_ORB.h"\
@@ -6803,7 +6803,7 @@ DEP_CPP_POAC_=\
 	{$(INCLUDE)}"\.\Exception.i"\
 	{$(INCLUDE)}"\.\GIOP.h"\
 	{$(INCLUDE)}"\.\GIOP.i"\
-	{$(INCLUDE)}"\.\IIOP_Interpreter.h"\
+	{$(INCLUDE)}"\.\CDR_Interpreter.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.i"\
 	{$(INCLUDE)}"\.\IIOP_ORB.h"\
@@ -7038,7 +7038,7 @@ DEP_CPP_POAS_=\
 	{$(INCLUDE)}"\.\Exception.i"\
 	{$(INCLUDE)}"\.\GIOP.h"\
 	{$(INCLUDE)}"\.\GIOP.i"\
-	{$(INCLUDE)}"\.\IIOP_Interpreter.h"\
+	{$(INCLUDE)}"\.\CDR_Interpreter.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.i"\
 	{$(INCLUDE)}"\.\IIOP_ORB.h"\
@@ -7273,7 +7273,7 @@ DEP_CPP_POLIC=\
 	{$(INCLUDE)}"\.\Exception.i"\
 	{$(INCLUDE)}"\.\GIOP.h"\
 	{$(INCLUDE)}"\.\GIOP.i"\
-	{$(INCLUDE)}"\.\IIOP_Interpreter.h"\
+	{$(INCLUDE)}"\.\CDR_Interpreter.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.i"\
 	{$(INCLUDE)}"\.\IIOP_ORB.h"\
@@ -7508,7 +7508,7 @@ DEP_CPP_POLICY=\
 	{$(INCLUDE)}"\.\Exception.i"\
 	{$(INCLUDE)}"\.\GIOP.h"\
 	{$(INCLUDE)}"\.\GIOP.i"\
-	{$(INCLUDE)}"\.\IIOP_Interpreter.h"\
+	{$(INCLUDE)}"\.\CDR_Interpreter.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.i"\
 	{$(INCLUDE)}"\.\IIOP_ORB.h"\
@@ -7743,7 +7743,7 @@ DEP_CPP_PRINC=\
 	{$(INCLUDE)}"\.\Exception.i"\
 	{$(INCLUDE)}"\.\GIOP.h"\
 	{$(INCLUDE)}"\.\GIOP.i"\
-	{$(INCLUDE)}"\.\IIOP_Interpreter.h"\
+	{$(INCLUDE)}"\.\CDR_Interpreter.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.i"\
 	{$(INCLUDE)}"\.\IIOP_ORB.h"\
@@ -7981,7 +7981,7 @@ DEP_CPP_REQUE=\
 	{$(INCLUDE)}"\.\Exception.i"\
 	{$(INCLUDE)}"\.\GIOP.h"\
 	{$(INCLUDE)}"\.\GIOP.i"\
-	{$(INCLUDE)}"\.\IIOP_Interpreter.h"\
+	{$(INCLUDE)}"\.\CDR_Interpreter.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.i"\
 	{$(INCLUDE)}"\.\IIOP_ORB.h"\
@@ -8216,7 +8216,7 @@ DEP_CPP_SEQUE=\
 	{$(INCLUDE)}"\.\Exception.i"\
 	{$(INCLUDE)}"\.\GIOP.h"\
 	{$(INCLUDE)}"\.\GIOP.i"\
-	{$(INCLUDE)}"\.\IIOP_Interpreter.h"\
+	{$(INCLUDE)}"\.\CDR_Interpreter.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.i"\
 	{$(INCLUDE)}"\.\IIOP_ORB.h"\
@@ -8451,7 +8451,7 @@ DEP_CPP_SERVA=\
 	{$(INCLUDE)}"\.\Exception.i"\
 	{$(INCLUDE)}"\.\GIOP.h"\
 	{$(INCLUDE)}"\.\GIOP.i"\
-	{$(INCLUDE)}"\.\IIOP_Interpreter.h"\
+	{$(INCLUDE)}"\.\CDR_Interpreter.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.i"\
 	{$(INCLUDE)}"\.\IIOP_ORB.h"\
@@ -8686,7 +8686,7 @@ DEP_CPP_SERVE=\
 	{$(INCLUDE)}"\.\Exception.i"\
 	{$(INCLUDE)}"\.\GIOP.h"\
 	{$(INCLUDE)}"\.\GIOP.i"\
-	{$(INCLUDE)}"\.\IIOP_Interpreter.h"\
+	{$(INCLUDE)}"\.\CDR_Interpreter.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.i"\
 	{$(INCLUDE)}"\.\IIOP_ORB.h"\
@@ -8928,7 +8928,7 @@ DEP_CPP_SERVER=\
 	{$(INCLUDE)}"\.\Exception.i"\
 	{$(INCLUDE)}"\.\GIOP.h"\
 	{$(INCLUDE)}"\.\GIOP.i"\
-	{$(INCLUDE)}"\.\IIOP_Interpreter.h"\
+	{$(INCLUDE)}"\.\CDR_Interpreter.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.i"\
 	{$(INCLUDE)}"\.\IIOP_ORB.h"\
@@ -9164,7 +9164,7 @@ DEP_CPP_SKIP_=\
 	{$(INCLUDE)}"\.\Exception.i"\
 	{$(INCLUDE)}"\.\GIOP.h"\
 	{$(INCLUDE)}"\.\GIOP.i"\
-	{$(INCLUDE)}"\.\IIOP_Interpreter.h"\
+	{$(INCLUDE)}"\.\CDR_Interpreter.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.i"\
 	{$(INCLUDE)}"\.\IIOP_ORB.h"\
@@ -9399,7 +9399,7 @@ DEP_CPP_STUB_=\
 	{$(INCLUDE)}"\.\Exception.i"\
 	{$(INCLUDE)}"\.\GIOP.h"\
 	{$(INCLUDE)}"\.\GIOP.i"\
-	{$(INCLUDE)}"\.\IIOP_Interpreter.h"\
+	{$(INCLUDE)}"\.\CDR_Interpreter.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.i"\
 	{$(INCLUDE)}"\.\IIOP_ORB.h"\
@@ -9635,7 +9635,7 @@ DEP_CPP_TAO_C=\
 	{$(INCLUDE)}"\.\Exception.i"\
 	{$(INCLUDE)}"\.\GIOP.h"\
 	{$(INCLUDE)}"\.\GIOP.i"\
-	{$(INCLUDE)}"\.\IIOP_Interpreter.h"\
+	{$(INCLUDE)}"\.\CDR_Interpreter.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.i"\
 	{$(INCLUDE)}"\.\IIOP_ORB.h"\
@@ -9870,7 +9870,7 @@ DEP_CPP_TAO_I=\
 	{$(INCLUDE)}"\.\Exception.i"\
 	{$(INCLUDE)}"\.\GIOP.h"\
 	{$(INCLUDE)}"\.\GIOP.i"\
-	{$(INCLUDE)}"\.\IIOP_Interpreter.h"\
+	{$(INCLUDE)}"\.\CDR_Interpreter.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.i"\
 	{$(INCLUDE)}"\.\IIOP_ORB.h"\
@@ -10106,7 +10106,7 @@ DEP_CPP_TYPECO=\
 	{$(INCLUDE)}"\.\Exception.i"\
 	{$(INCLUDE)}"\.\GIOP.h"\
 	{$(INCLUDE)}"\.\GIOP.i"\
-	{$(INCLUDE)}"\.\IIOP_Interpreter.h"\
+	{$(INCLUDE)}"\.\CDR_Interpreter.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.i"\
 	{$(INCLUDE)}"\.\IIOP_ORB.h"\
@@ -10341,7 +10341,7 @@ DEP_CPP_ANY_C=\
 	{$(INCLUDE)}"\.\Exception.i"\
 	{$(INCLUDE)}"\.\GIOP.h"\
 	{$(INCLUDE)}"\.\GIOP.i"\
-	{$(INCLUDE)}"\.\IIOP_Interpreter.h"\
+	{$(INCLUDE)}"\.\CDR_Interpreter.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.i"\
 	{$(INCLUDE)}"\.\IIOP_ORB.h"\
@@ -10577,7 +10577,7 @@ DEP_CPP_FORWA=\
 	{$(INCLUDE)}"\.\Forwarding_Servant.h"\
 	{$(INCLUDE)}"\.\GIOP.h"\
 	{$(INCLUDE)}"\.\GIOP.i"\
-	{$(INCLUDE)}"\.\IIOP_Interpreter.h"\
+	{$(INCLUDE)}"\.\CDR_Interpreter.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.i"\
 	{$(INCLUDE)}"\.\IIOP_ORB.h"\
@@ -10812,7 +10812,7 @@ DEP_CPP_CURRE=\
 	{$(INCLUDE)}"\.\Exception.i"\
 	{$(INCLUDE)}"\.\GIOP.h"\
 	{$(INCLUDE)}"\.\GIOP.i"\
-	{$(INCLUDE)}"\.\IIOP_Interpreter.h"\
+	{$(INCLUDE)}"\.\CDR_Interpreter.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.i"\
 	{$(INCLUDE)}"\.\IIOP_ORB.h"\
@@ -11047,7 +11047,7 @@ DEP_CPP_CURREN=\
 	{$(INCLUDE)}"\.\Exception.i"\
 	{$(INCLUDE)}"\.\GIOP.h"\
 	{$(INCLUDE)}"\.\GIOP.i"\
-	{$(INCLUDE)}"\.\IIOP_Interpreter.h"\
+	{$(INCLUDE)}"\.\CDR_Interpreter.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.h"\
 	{$(INCLUDE)}"\.\IIOP_Object.i"\
 	{$(INCLUDE)}"\.\IIOP_ORB.h"\

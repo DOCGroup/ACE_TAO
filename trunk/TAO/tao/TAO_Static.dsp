@@ -198,7 +198,7 @@ SOURCE=.\IIOP_Connector.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\IIOP_Interpreter.cpp
+SOURCE=.\CDR_Interpreter.cpp
 # End Source File
 # Begin Source File
 
@@ -442,7 +442,7 @@ SOURCE=.\IIOP_Connector.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\IIOP_Interpreter.h
+SOURCE=.\CDR_Interpreter.h
 # End Source File
 # Begin Source File
 
