@@ -412,6 +412,128 @@ to Graham for providing the OSE tools!<p>
 
   </ul><p>
 
+  <li><strong>Exceptions</strong><p>
+
+  <ul>
+    <li>There are many ways of throwing and catching exceptions. The
+        code below gives several examples.  Note that each method has
+        different semantics and costs. Whenever possible, use the
+        first approach.<p>
+
+        <pre>
+        #include "iostream.h"
+        
+        class exe_foo 
+        { 
+        public:
+          exe_foo (int data) : data_ (data)
+            { cerr << "constructor of exception called" << endl; }
+          ~exe_foo () 
+            { cerr << "destructor of exception called" << endl; }
+          exe_foo (const exe_foo& foo) : data_ (foo.data_)
+            { cerr << "copy constructor of exception called" << endl; }
+          int data_;
+        };
+        
+        
+        void 
+        good (int a)
+        {
+          throw exe_foo (a);
+        };
+        
+        void 
+        bad (int a)
+        {
+          exe_foo foo (a);
+          throw foo;
+        };
+        
+        int main ()
+        {
+          cout << endl << "First exception" << endl << endl;
+          try
+            {
+              good (0);
+            }
+          catch (exe_foo &foo)
+            {
+              cerr << "execption caught: " << foo.data_ << endl;
+            }
+        
+          cout << endl << "Second exception" << endl << endl;
+          try
+            {
+              good (0);
+            }
+          catch (exe_foo foo)
+            {
+              cerr << "execption caught: " << foo.data_ << endl;
+            }
+        
+          cout << endl << "Third exception" << endl << endl;
+          try
+            {
+              bad (1);
+            }
+          catch (exe_foo &foo)
+            {
+              cerr << "execption caught: " << foo.data_ << endl;
+            }
+        
+          cout << endl << "Forth exception" << endl << endl;
+          try
+            {
+              bad (1);
+            }
+          catch (exe_foo foo)
+            {
+              cerr << "execption caught: " << foo.data_ << endl;
+            }
+          
+          return 0;
+        }
+        </pre>
+
+     Output is: <p>
+   
+        <pre>
+        First exception
+        
+        constructor of exception called
+        execption caught: 0
+        destructor of exception called
+        
+        Second exception
+        
+        constructor of exception called
+        copy constructor of exception called
+        execption caught: 0
+        destructor of exception called
+        destructor of exception called
+        
+        Third exception
+        
+        constructor of exception called
+        copy constructor of exception called
+        destructor of exception called
+        execption caught: 1
+        destructor of exception called
+        
+        Forth exception
+        
+        constructor of exception called
+        copy constructor of exception called
+        destructor of exception called
+        copy constructor of exception called
+        execption caught: 1
+        destructor of exception called
+        destructor of exception called
+           
+        </pre>        
+
+      </ul><p>
+
 </ul>
 
 
