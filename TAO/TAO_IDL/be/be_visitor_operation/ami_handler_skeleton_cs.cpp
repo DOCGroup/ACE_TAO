@@ -153,14 +153,14 @@ be_visitor_operation_ami_handler_skeleton_cs::visit_operation (be_operation *nod
   *os << parent->full_name ();
   *os << "::_narrow(_tao_reply_handler, ACE_TRY_ENV);" << be_uidt_nl;
 
-#if 0
+//#if 0
   *os << "ACE_CHECK;" << be_nl << be_nl
       << "// Exception handling" << be_nl
       << "switch (reply_status)" << be_idt_nl
       << "{" << be_idt_nl
       << "case TAO_AMI_REPLY_OK:" << be_idt_nl
       << "{\n";
-#endif /* 0 */
+//#endif /* 0 */
 
   // declare variables for arguments
   ctx = *this->ctx_;
@@ -188,7 +188,7 @@ be_visitor_operation_ami_handler_skeleton_cs::visit_operation (be_operation *nod
                         -1);
     }
 
-#if 0
+//#if 0
   os->indent ();
   *os << be_uidt_nl
       << "}" << be_uidt_nl << "return;" << be_uidt_nl
@@ -209,33 +209,33 @@ be_visitor_operation_ami_handler_skeleton_cs::visit_operation (be_operation *nod
     }
 
 
-  *os << original->compute_local_name ("AMI_", "ExceptionHolder") << "* exception_holder_var;" << be_nl
+  *os << original->compute_local_name ("AMI_", "ExceptionHolder") << "_var exception_holder_var;" << be_nl
       << "ACE_NEW (exception_holder_var," << be_idt_nl;
 
-// @@ Michael: Verify if we really need that.
-#if 0
-  if (original->defined_in ()->defined_in ()->scope_node_type () == AST_Decl::NT_module)
+  if (original->defined_in ()->scope_node_type () == AST_Decl::NT_module)
     {
-      be_decl *scope = be_scope::narrow_from_scope (original->->defined_in ())->decl ();
-      *os << "ACE_NESTED_CLASS ("
+      be_decl *scope = be_scope::narrow_from_scope (original->defined_in ())->decl ();
+#if 0
+      *os << "ACE_NESTED_CLASS (OBV_"
           << scope->name() << ","
           << "_tao_" << original->compute_local_name ("AMI_", "ExceptionHolder") << ")";
+#endif /* 0 */ 
+      *os << "OBV_" << scope->name() << "::" 
+          << "_tao_" << original->compute_local_name ("AMI_", "ExceptionHolder");
     }
   else
-#endif /* 0 */
     *os << "_tao_" << original->compute_local_name ("AMI_", "ExceptionHolder");
 
   *os << " ());" << be_uidt_nl
-      << "exception_holder_var->marshaled_exception.replace" << be_idt_nl 
+      << "exception_holder_var->marshaled_exception ().replace" << be_idt_nl 
       << "(cdr->length (), // max" << be_nl
       << " cdr->length (), // length" << be_nl
       << " (unsigned char*) cdr->rd_ptr (),// data" << be_nl
       << " 0); // release" << be_uidt_nl;
 
   *os << "if (reply_status == TAO_AMI_REPLY_SYSTEM_EXCEPTION)" << be_idt_nl
-      << " exception_holder_var->is_system_exception = 1;" << be_uidt_nl << be_nl
-      << "_tao_reply_handler_object->foo_excep (" << be_idt_nl
-      << original->compute_name ("AMI_", "ExceptionHolder") << "::_duplicate (exception_holder_var)," << be_nl
+      << " exception_holder_var->is_system_exception (1);" << be_uidt_nl << be_nl
+      << "_tao_reply_handler_object->foo_excep (exception_holder_var," << be_nl
       << " ACE_TRY_ENV);" << be_uidt_nl
       << "}" << be_uidt_nl
       << "return;" << be_uidt_nl;
@@ -243,11 +243,9 @@ be_visitor_operation_ami_handler_skeleton_cs::visit_operation (be_operation *nod
   *os << "case TAO_AMI_REPLY_NOT_OK:" << be_idt_nl
       << "// @@ Michael: Not even the spec mentions this case." << be_nl
       << "//             We have to think about this case." << be_nl
-      << "// Handle the forwarding and return so the stub restarts the" << be_nl
-      << "// request!" << be_nl
       << "break;" << be_uidt_nl
       << "}" << be_uidt_nl;
-#endif /* 0 */
+//#endif /* 0 */
   *os << be_uidt_nl << "};" << be_nl << be_nl;
 
   return 0;

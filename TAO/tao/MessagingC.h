@@ -2011,7 +2011,7 @@ TAO_NAMESPACE  OBV_Messaging
 #define _MESSAGING_EXCEPTIONHOLDER___OBV_CH_
 
   // OBV_ class
-  class ExceptionHolder : public virtual Messaging::ExceptionHolder
+  class TAO_Export ExceptionHolder : public virtual Messaging::ExceptionHolder
   {
   public:
     virtual void is_system_exception (CORBA::Boolean);    // set
