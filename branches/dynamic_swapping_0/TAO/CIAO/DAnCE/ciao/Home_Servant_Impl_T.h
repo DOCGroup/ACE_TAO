@@ -81,6 +81,9 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CreateFailure));
 
+    virtual void
+    update_component_map (PortableServer::ObjectId &oid);
+
   protected:
     // CIAO-specific operations.
 
@@ -97,16 +100,6 @@ namespace CIAO
   protected:
     EXEC_VAR executor_;
 
-
-    // @@ Jai, why do you need two maps? Can't you derive one from the
-    // other? Its a waste of memory to do TWO things if it can be done
-    // by one.
-    ACE_Hash_Map_Manager_Ex<PortableServer::ObjectId,
-                            COMP_SVNT *,
-                            TAO_ObjectId_Hash,
-                            ACE_Equal_To<PortableServer::ObjectId>,
-                            ACE_SYNCH_MUTEX>
-      component_map_;
     typedef ACE_Hash_Map_Manager_Ex<PortableServer::ObjectId,
                             Components::CCMObject_ptr,
                             TAO_ObjectId_Hash,

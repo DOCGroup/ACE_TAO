@@ -13,9 +13,11 @@ namespace CIAO
             typename CONTEXT>
   Servant_Impl<BASE_SKEL, EXEC, EXEC_VAR, CONTEXT>::Servant_Impl (
       EXEC * exe,
+      Components::CCMHome_ptr home,
+      Home_Servant_Impl_Base *home_servant,
       Session_Container * c
     )
-    : Servant_Impl_Base (c),
+    : Servant_Impl_Base (home, home_servant, c),
       executor_ (EXEC::_duplicate (exe))
   {
   }
@@ -89,6 +91,25 @@ namespace CIAO
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return this->context_->get_CCM_home (ACE_ENV_SINGLE_ARG_PARAMETER);
+  }
+
+  template <typename BASE_SKEL,
+            typename EXEC,
+            typename EXEC_VAR,
+            typename CONTEXT>
+  Components::SessionComponent_ptr
+  Servant_Impl<BASE_SKEL, EXEC, EXEC_VAR, CONTEXT>::get_executor (
+      ACE_ENV_SINGLE_ARG_DECL
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException))
+  {
+    ::Components::SessionComponent_var temp =
+      ::Components::SessionComponent::_narrow (
+          this->executor_.in ()
+          ACE_ENV_ARG_PARAMETER
+        );
+    ACE_CHECK;
+    return temp._retn ();
   }
 
   template <typename BASE_SKEL,
@@ -209,6 +230,7 @@ namespace CIAO
     )
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
+    ACE_DEBUG ((LM_DEBUG, "i am about to passivate\n"));
     // @@ Jai, could you please see why this is required?
     ::Components::SessionComponent_var temp =
       ::Components::SessionComponent::_narrow (

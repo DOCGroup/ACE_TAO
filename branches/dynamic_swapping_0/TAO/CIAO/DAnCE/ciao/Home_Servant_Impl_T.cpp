@@ -91,13 +91,10 @@ namespace CIAO
                                                      ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
-    Components::CCMObject_var ccm_obj_ptr;
-    COMP_SVNT *servant = 0;
-
-    if (objref_map_.unbind (oid.in (), ccm_obj_ptr) != 0)
+    Components::CCMObject_ptr ccm_obj_ptr;
+    if (objref_map_.find (oid.in (), ccm_obj_ptr) != 0)
       {
-        // @@ JAI do error handling like printing out debug statements
-        // etc.
+        ACE_DEBUG ((LM_DEBUG, "Invalid component object reference\n"));
         return;
       }
 
@@ -108,23 +105,40 @@ namespace CIAO
 
     if (CORBA::is_nil (_ciao_comp.in ()))
       {
-        // @@ Jai, This should not be thrown by applications like
-        // this. Try a beter one, mostly CCM specific.
-        ACE_THROW (CORBA::INTERNAL ());
+        ACE_THROW (Components::RemoveFailure ());
       }
 
-    // @@ Jai, could you please add a line of documentation to say
-    // what this is supposed to be doing?
     _ciao_comp->remove (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
+  }
 
-    if (component_map_.unbind (oid.in (), servant) == 0)
+  template <typename BASE_SKEL,
+            typename EXEC,
+            typename EXEC_VAR,
+            typename COMP,
+            typename COMP_VAR,
+            typename COMP_EXEC,
+            typename COMP_EXEC_VAR,
+            typename COMP_SVNT>
+  void
+  Home_Servant_Impl<BASE_SKEL,
+                    EXEC,
+                    EXEC_VAR,
+                    COMP,
+                    COMP_VAR,
+                    COMP_EXEC,
+                    COMP_EXEC_VAR,
+                    COMP_SVNT>::update_component_map (
+      PortableServer::ObjectId &oid)
+  {
+    Components::CCMObject_var ccm_obj_ptr;
+    if (objref_map_.unbind (oid, ccm_obj_ptr) != 0)
       {
-
-        PortableServer::ServantBase_var safe (servant);
-        servant->_ciao_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_CHECK;
+        ACE_DEBUG ((LM_DEBUG, "Invalid component object reference\n"));
+        return;
       }
+    ACE_DEBUG ((LM_DEBUG, "updated the map\n"));
+    return;
   }
 
   // Operations for keyless home interface.
@@ -235,6 +249,7 @@ namespace CIAO
     ACE_NEW_RETURN (svt,
                     COMP_SVNT (exe,
                                home.in (),
+                               this,
                                this->container_),
                     COMP::_nil ());
 
@@ -258,12 +273,7 @@ namespace CIAO
 
     this->objref_map_.bind (oid.in (),
       Components::CCMObject::_duplicate (ccmobjref.in ()));
-
-    if (this->component_map_.bind (oid.in (), svt) == 0)
-      {
-        safe._retn ();
-      }
-
+    
     return ho._retn ();
   }
 
@@ -294,16 +304,6 @@ namespace CIAO
                                            oid.out ()
                                            ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
-
-    COMP_SVNT *servant = 0;
-
-    if (this->component_map_.unbind (oid.in (), servant) == 0)
-    {
-      PortableServer::ServantBase_var safe (servant);
-
-      servant->_ciao_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
-    }
   }
 }
 
