@@ -23,14 +23,16 @@ int
 ACE_FIFO_Recv_Msg::open (const char *fifo_name,
 			 int flags,
 			 int perms,
-			 int persistent)
+			 int persistent,
+                         LPSECURITY_ATTRIBUTES sa)
 {
   ACE_TRACE ("ACE_FIFO_Recv_Msg::open");
 
   return ACE_FIFO_Recv::open (fifo_name,
 			      flags,
 			      perms,
-			      persistent);
+			      persistent,
+                              sa);
 }
 
 ACE_FIFO_Recv_Msg::ACE_FIFO_Recv_Msg (void)
@@ -41,13 +43,15 @@ ACE_FIFO_Recv_Msg::ACE_FIFO_Recv_Msg (void)
 ACE_FIFO_Recv_Msg::ACE_FIFO_Recv_Msg (const char *fifo_name,
 				      int flags,
 				      int perms,
-				      int persistent)
+				      int persistent,
+                                      LPSECURITY_ATTRIBUTES sa)
 {
   ACE_TRACE ("ACE_FIFO_Recv_Msg::ACE_FIFO_Recv_Msg");
 
   if (this->ACE_FIFO_Recv_Msg::open (fifo_name,
 				     flags,
 				     perms, 
-				     persistent) == -1)
+				     persistent,
+                                     sa) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "ACE_FIFO_Recv_Msg"));
 }

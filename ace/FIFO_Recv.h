@@ -32,13 +32,15 @@ public:
   ACE_FIFO_Recv (const char *rendezvous, 
 		 int flags = O_CREAT | O_RDONLY, 
 		 int perms = ACE_DEFAULT_FILE_PERMS, 
-		 int persistent = 1);
+		 int persistent = 1,
+                 LPSECURITY_ATTRIBUTES sa = 0);
   // Open up a bytestream named pipe for reading.
 
   int open (const char *rendezvous, 
 	    int flags = O_CREAT | O_RDONLY, 
 	    int perms = ACE_DEFAULT_FILE_PERMS, 
-	    int persistent = 1);
+	    int persistent = 1,
+            LPSECURITY_ATTRIBUTES sa = 0);
   // Open up a bytestream named pipe for reading.
 
   int close (void);
