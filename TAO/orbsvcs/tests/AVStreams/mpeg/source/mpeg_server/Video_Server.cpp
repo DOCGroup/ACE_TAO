@@ -812,8 +812,9 @@ Video_Server::on_exit_routine(void)
 	     VIDEO_SINGLETON::instance ()->pkts_sent, VIDEO_SINGLETON::instance ()->videoFile);
     }
   }
+  /*
   ComCloseConn(VIDEO_SINGLETON::instance ()->serviceSocket);
-  ComCloseConn(VIDEO_SINGLETON::instance ()->videoSocket);
+  ComCloseConn(VIDEO_SINGLETON::instance ()->videoSocket);*/
 }
 
 int
@@ -838,6 +839,7 @@ Video_Server::position (void)
   CheckGroupRange(para.nextGroup);
   VIDEO_SINGLETON::instance ()->cmdsn = para.sn;
   result = SendPacket(VIDEO_SINGLETON::instance ()->numS>1 || para.nextGroup == 0, para.nextGroup, 0, 0);
+  Video_Server::read_cmd ();
   return result;
 }
 
@@ -889,6 +891,7 @@ Video_Server::step_video()
   }
   
   if (VIDEO_SINGLETON::instance ()->live_source) StopPlayLiveVideo();
+  Video_Server::read_cmd ();
   return 0;
 }
 
@@ -954,6 +957,7 @@ Video_Server::stat_stream(void)
     CmdWrite((char *)&type, 1);
     CmdWrite((char *)&size, 2);
   }
+  Video_Server::read_cmd ();
   return 0;
 }
 
@@ -968,5 +972,6 @@ Video_Server::stat_sent(void)
   for (i = 0; i < (VIDEO_SINGLETON::instance ()->numF + 7) / 8; i++)
     CmdWrite((char *)&zeroByte, 1);
 #endif
+  Video_Server::read_cmd ();
   return 0;
 }
