@@ -1,5 +1,9 @@
 Wed Jan  7 13:38:28 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* tests/test_config.h (set_output): Added an environment variable
+ 	  to specify where to put the log directory: ACE_TEST_DIR.  Thanks
+ 	  to Keith Nicewarner <knicewar@sanders.com> for reporting this.
+
 	* ace/Service_Repository.cpp (close): Removed a fragment of
  	  redundant code.  Thanks to Eric Newton <ecn@smart.net> and Alex
  	  Chan <Alex.Chan@Aspect.com> for reporting this.
