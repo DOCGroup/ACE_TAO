@@ -56,9 +56,14 @@ static const int watermark_iterations = 2 * default_high_water_mark;
 
 class Message_Handler : public ACE_Task<ACE_NULL_SYNCH>
 {
+  // = TITLE
+  //   This class implements a notification strategy for the Reactor.
 public:
+  // = Initialization and termination.
   Message_Handler (ACE_Reactor &reactor);
-
+  // Constructor.
+  
+  // = Demuxing hooks.
   virtual int handle_input (ACE_HANDLE);
   virtual int handle_output (ACE_HANDLE fd = ACE_INVALID_HANDLE);
   virtual int handle_exception (ACE_HANDLE fd = ACE_INVALID_HANDLE);
@@ -72,6 +77,8 @@ private:
 
 class Watermark_Test : public ACE_Task<ACE_SYNCH>
 {
+  // = TITLE
+  // @@ Nanbor, can you please add a comment here?
 public:
   Watermark_Test (void);
 
@@ -108,7 +115,7 @@ Message_Handler::handle_input (ACE_HANDLE)
   ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT ("Message_Handler::handle_input\n")));
 
-  // Next time handle_output will be called
+  // Next time handle_output will be called.
   this->notification_strategy_.mask (ACE_Event_Handler::WRITE_MASK);
 
   return process_message ();
@@ -121,7 +128,7 @@ Message_Handler::handle_output (ACE_HANDLE fd)
               ASYS_TEXT ("Message_Handler::handle_output\n")));
   ACE_UNUSED_ARG (fd);
 
-  // Next time handle_exception will be called
+  // Next time handle_exception will be called.
   this->notification_strategy_.mask (ACE_Event_Handler::EXCEPT_MASK);
 
   return process_message ();
@@ -134,7 +141,7 @@ Message_Handler::handle_exception (ACE_HANDLE fd)
               ASYS_TEXT ("Message_Handler::handle_exception\n")));
   ACE_UNUSED_ARG (fd);
 
-  // Next time handle_input will be called
+  // Next time handle_input will be called.
   this->notification_strategy_.mask (ACE_Event_Handler::READ_MASK);
 
   return this->process_message ();
@@ -156,7 +163,7 @@ Message_Handler::process_message (void)
       ACE_DEBUG ((LM_DEBUG,
                   ASYS_TEXT ("message received = %s\n"),
                   mb->rd_ptr ()));
-      delete mb;
+      mb->release ();
     }
 
   this->make_message ();
@@ -264,7 +271,7 @@ Watermark_Test::get_message (void)
                   ASYS_TEXT ("message count = %3d\n"),
                   this->msg_queue ()-> message_bytes (),
                   this->msg_queue ()-> message_count ()));
-      delete mb;
+      mb->release ();
     }
 
   return 0;

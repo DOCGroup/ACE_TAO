@@ -1,5 +1,10 @@
 Sun Jan 10 17:33:29 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
+	* tests/Message_Queue_Notifications_Test.cpp: Replaced delete mb
+ 	  with mb->release().  Thanks to Susan Liebeskind
+ 	  <susan.liebeskind@gtri.gatech.edu> for reporting this
+ 	  inconsistency.
+
 	* ace/Task_T.h,
 	  ace/Message_Queue_T.h: Clarified the fact that the
 	  ACE_Time_Value arguments to the Message_Queue methods
