@@ -1878,7 +1878,7 @@ ACE::handle_timed_accept (ACE_HANDLE listener,
           /* NOTREACHED */
         }
     }
-  ACE_NOTREACHED(return 0);
+  ACE_NOTREACHED (return 0);
 }
 
 // Bind socket to an unused port.
