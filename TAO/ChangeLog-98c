@@ -1,3 +1,16 @@
+Fri Aug  7 18:00:22 1998  Jeff Parsons <jp4@cs.wustl.edu>
+
+	* Param_Test/bd_short_seq.{h,cpp}:
+	* Param_Test/bd_long_seq.{h,cpp}:
+	* Param_Test/bd_str_seq.{h,cpp}:
+	* Param_Test/bd_struct_seq.{h,cpp}:
+	* Param_Test/ub_short_seq.{h,cpp}:
+	* Param_Test/ub_long_seq.{h,cpp}:
+	* Param_Test/ub_str_seq.{h,cpp}:
+	* Param_Test/ub_struct_seq.{h,cpp}:
+
+	  DII tests now work with _vars.
+
 Fri Aug  7 15:30:06 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
 	* tests/Param_Test/typecode.{h,cpp}:
