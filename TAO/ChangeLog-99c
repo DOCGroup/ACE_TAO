@@ -2,7 +2,8 @@ Fri Apr 02 15:42:34 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/MT_Cubit/svc.conf{,.static}:
           updated ORB configuration to correspond to that of IDL_Cubit,
-          except to use -ORBresources tss.
+          except to use -ORBresources tss.  Thanks to Irfan for
+          providing the configuration parameters.
 
 Fri Apr  2 13:25:37 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
