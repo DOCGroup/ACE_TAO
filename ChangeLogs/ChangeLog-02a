@@ -1,3 +1,36 @@
+Sat Jun 15 20:30:41 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Asynch_Acceptor.{h cpp}: Added a new template method,
+            virtual int validate_connection
+	                    (const ACE_Asynch_Connect::Result& result,
+                             const ACE_INET_Addr &remote,
+                             const ACE_INET_Addr& local)
+          It replaces the old validate_new_connection() method, which is
+          now marked deprecated. Semantics are the same (return -1 to
+          ask framework to abort the connection before activating a
+          service).  However, more information is available, including
+          the socket handle.
+
+        * ace/Asynch_Connector.{h cpp}: Replaced validate_new_connection()
+          method with:
+            virtual int validate_connection
+	                    (const ACE_Asynch_Connect::Result& result,
+                             const ACE_INET_Addr &remote,
+                             const ACE_INET_Addr& local)
+          Examining the result argument is the only way to find out if
+          the asynchronous connect attempt succeeded or not.
+          The connect completion calls validate_connection() on either
+          success or failure as long as the validate_new_connection
+          flag is set on open().  The default value was changed from
+          0 (don't call) to 1 (call) since this is the only way to learn
+          about connection success/failure.
+
+        * ace/POSIX_Proactor.{h cpp} (application_specific_code):
+        * ace/WIN32_Proactor.{h cpp} (application_specific_code): Removed the
+          'int success' argument. Success/fail is determined by the error
+          value now (0 == success).  Simplifies the code, and makes the
+          result.success() call return 1 iff the operation succeeded.
+
 Sat Jun 15 12:01:38 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Obstack_T.cpp (request): Don't lose an initial set of characters

@@ -56,7 +56,7 @@ public:
    */
   virtual int open (int pass_addresses = 0,
                     ACE_Proactor *proactor = 0,
-                    int validate_new_connection = 0);
+                    int validate_new_connection = 1);
   
   /// This initiates a new asynchronous connect
   virtual int connect (const ACE_INET_Addr &remote_sap,
@@ -76,12 +76,37 @@ public:
    */
   virtual int cancel (void);
 
+
   /**
-   * Template method for address validation.
+   * Template method to validate peer before service is opened.
+   * This method is called when the connection attempt completes,
+   * whether it succeeded or failed, if the @a validate_connection
+   * argument to @c open() was non-zero or the @c validate_new_connection()
+   * method is called to turn this feature on.  The default implementation
+   * returns 0.  Users can (and probably should) reimplement this method
+   * to learn about the success or failure of the connection attempt.
+   * If the connection completed successfully, this method can be used to
+   * perform validation of the peer using it's address, running an
+   * authentication procedure (such as SSL) or anything else necessary or
+   * desireable. The return value from this method determines whether or
+   * not ACE will continue opening the service or abort the connection.
    *
-   * Default implemenation always validates the remote address.
+   * @arg result    Result of the connection acceptance. Use
+   *                result.success() to determine success or failure of
+   *                the connection attempt.
+   * @arg remote    Peer's address. If the connection failed, this object
+   *                is undefined.
+   * @arg local     Local address connection was completed from. If the
+   *                connection failed, this object is undefined.
+   *
+   * @retval  -1  ACE_Asynch_Connector will close the connection, and
+   *              the service will not be opened.
+   * @retval  0   Service opening will proceeed.
+   * @return  Return value is ignored if the connection attempt failed.
    */
-  virtual int validate_new_connection (const ACE_INET_Addr &remote_address);
+  virtual int validate_connection (const ACE_Asynch_Connect::Result& result,
+                                   const ACE_INET_Addr &remote,
+                                   const ACE_INET_Addr& local);
 
   //
   // These are low level tweaking methods

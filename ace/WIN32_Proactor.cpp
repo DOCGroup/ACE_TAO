@@ -611,7 +611,6 @@ ACE_WIN32_Proactor::handle_events (unsigned long milli_seconds)
 
       this->application_specific_code (asynch_result,
                                        bytes_transferred,
-                                       result,
                                        (void *) completion_key,
                                        result_err);
     }
@@ -621,7 +620,6 @@ ACE_WIN32_Proactor::handle_events (unsigned long milli_seconds)
 void
 ACE_WIN32_Proactor::application_specific_code (ACE_WIN32_Asynch_Result *asynch_result,
                                                u_long bytes_transferred,
-                                               int success,
                                                const void *completion_key,
                                                u_long error)
 {
@@ -629,7 +627,7 @@ ACE_WIN32_Proactor::application_specific_code (ACE_WIN32_Asynch_Result *asynch_r
     {
       // Call completion hook
       asynch_result->complete (bytes_transferred,
-                               success,
+                               error ? 0 : 1,
                                (void *) completion_key,
                                error);
     }

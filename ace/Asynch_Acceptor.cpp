@@ -231,7 +231,8 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
   // Validate remote address
   if (!error &&
       this->validate_new_connection_ &&
-      this->validate_new_connection (remote_address) == -1)
+      (this->validate_connection (result, remote_address, local_address) == -1
+       || this->validate_new_connection (remote_address) == -1))
     {
       error = 1;
     }
@@ -285,9 +286,19 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
 }
 
 template <class HANDLER> int
+ACE_Asynch_Acceptor<HANDLER>::validate_connection
+  (const ACE_Asynch_Accept::Result& /* result */,
+   const ACE_INET_Addr& /* remote */,
+   const ACE_INET_Addr& /* local */)
+{
+  // Default implementation always validates the remote address.
+  return 0;
+}
+
+template <class HANDLER> int
 ACE_Asynch_Acceptor<HANDLER>::validate_new_connection (const ACE_INET_Addr&)
 {
-  // Default implemenation always validates the remote address.
+  // Default implementation always validates the remote address.
   return 0;
 }
 
