@@ -22,11 +22,6 @@
 #if !defined (ACE_LOG_RECORD_H)
 #define ACE_LOG_RECORD_H
 
-// In case ace/stdcpp.h is not #included before this header . . .
-#if !defined(ACE_STDCPP_H) || defined(ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
-  class ostream;
-#endif
-
 class ACE_Export ACE_Log_Record
 {
   // = TITLE
