@@ -207,7 +207,8 @@ main (int, ASYS_TCHAR *[])
       // Pthreads w/o UNIX 98 extensions doesn't support suspend/resume,
       // so it's allowed to ENOTSUP; anything else is a hard fail.
       ACE_ASSERT (errno == ENOTSUP);
-      ACE_DEBUG((LM_DEBUG, "%p\n", "suspend_grp"));
+      ACE_DEBUG((LM_DEBUG,
+                 " OK: suspend_grp isn't supported with Pthreads\n"));
     }
 
   // Wait for 1 more second and then resume every thread in the
@@ -219,7 +220,7 @@ main (int, ASYS_TCHAR *[])
   if (thr_mgr->resume_grp (grp_id) == -1)
     {
       ACE_ASSERT (errno == ENOTSUP);
-      ACE_DEBUG((LM_DEBUG, "%p\n", "suspend_grp"));
+      ACE_DEBUG((LM_DEBUG, " OK: resume_grp isn't supported with Pthreads\n"));
     }
 
   // Wait for 1 more second and then send a SIGINT to every thread in
