@@ -1,3 +1,10 @@
+Thu Oct 08 23:06:20 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * config-linux-common.h: on Alpha only, added ACE_POLL_IS_BROKEN.
+          High_Res_Timer_Test revealed that it's necessary with
+          glibc 2.0.7-13.  I don't think that its necessary on
+          Pentiums, but maybe it depends on glibc version.
+
 Thu Oct 08 15:22:22 1998  Arturo Montes <mitosys@colomsat.com.co>
 
         * ace/OS.{i,cpp}: Reverted FSU thread changes for now.
