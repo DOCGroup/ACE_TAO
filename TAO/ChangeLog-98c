@@ -1,5 +1,9 @@
 Tue Sep 22 19:18:36 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
+	* orbsvcs/tests/EC_Mcast/EC_Mcast.h: 
+	* orbsvcs/tests/EC_Mcast/EC_Mcast.cpp: 
+	  Updated the comments and removed some warnings.
+
 	* utils/IOR-parser/ior-handler.cpp: 
 	  Fixed out-of-bounds error in an array.
 	  the IorHander::hexChar2int() function was not returning a value
