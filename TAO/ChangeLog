@@ -1,3 +1,10 @@
+Mon Jan 12 15:59:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tao/OctetSeqA.h:
+	  Added missing pre/post includes and TAO_Export macro to export the
+	  methods. Thanks to Heiko Bachmann <h.bachmann@unicontrol.de> for
+	  reporting thisl
+
 Mon Jan 12 01:20:33 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Server_Request_Interceptor.cpp:
@@ -16,7 +23,7 @@ Sat Jan 10 23:17:55 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tests/MT_Client/client.tss.conf.xml:
 
 	  These need to go too.
-	
+
 Sat Jan 10 23:09:14 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/MT_Client/client.global.conf:
@@ -33,12 +40,12 @@ Sat Jan 10 22:56:57 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  The best fix for the problem outlined is "Sat Jan 10 21:17:10
 	  2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>" to
 	  wait for all threads exit () before finishing shutting down the
-	  ORB_Core. I was trying to avoid this with earlier checkins. 
+	  ORB_Core. I was trying to avoid this with earlier checkins.
 
 	  The cost of avoiding this can be catostrophical though it doesn't
 	  show up for us. We now explicitly call shutdown with a boolean
 	  flag to prevent the crash. We have now moved the configuration
-	  details to the application, but looks like it is hard to avoid. 
+	  details to the application, but looks like it is hard to avoid.
 
 Sat Jan 10 22:17:59 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -52,9 +59,9 @@ Sat Jan 10 22:17:59 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 Sat Jan 10 21:42:47 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/FtRtEvent.mpc:
-	  
+
 	  Added a missing file, which gave rise to link errors with VC71
-	  builds. 
+	  builds.
 
 Sat Jan 10 21:17:10 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -70,7 +77,7 @@ Sat Jan 10 21:17:10 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  prevent that from happening we will increment the refcount. With
 	  reactive model this is not be needed at all, since all the
 	  threads are  kicked out of the reactor before the ORB is
-	  shutdown by the closing thread. 
+	  shutdown by the closing thread.
 
 	  Thanks to valgrind for helping me catch this. This should have
 	  slipped through for a very long time, if my guess is right.
