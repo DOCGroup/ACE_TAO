@@ -135,15 +135,20 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
         default, a service configurator-based application will look
         for a file named "svc.conf" in the current directory.</TD>
   </TR>
+  <!-- <TR NAME="ORBsvcconf"> -->
   <tr>
     <TD><CODE>-ORBSvcConfDirective</CODE> <EM>directivestring</EM></TD>
     <TD>Specifies a service configuration directive, which is passed to ACE's Service Configurator.</TD>
   </TR>
   <tr>
-    <TD><CODE>-ORBServiceConfigLoggerKey</CODE> <EM>loggerkey string</EM></TD>
-    <TD>Specifies the logger key that is passed to ACE's Service Configurator.</TD>
+    <TD><CODE><A
+    NAME="-ORBServiceConfigLoggerKey">-ORBServiceConfigLoggerKey</A></CODE>
+    <EM>logger key</EM></TD>
+    <TD>Set the logger key in the <CODE>ACE_Service_Config</CODE>
+    framework.  Equivalent to the <CODE>-k</CODE> option on the ACE
+    service configurator class.
+    </TD>
   </TR>
-
   <TR>
     <TD><CODE>-ORBDaemon</CODE></TD>
     <TD>Specifies that the ORB should <I>daemonize</I> itself.</TD>
@@ -514,10 +519,17 @@ the ORB.
 <TR>
   <TD><CODE>-ORBFlushingStrategy</CODE> <EM>type</EM></TD>
   <TD><a name="-ORBFlshingStrategy"></a>
-      By default TAO provides two strategies to flush queued messages.
-      The <CODE>reactive</CODE> strategy uses the Reactor and
-      non-blocking I/O to drain the queue.
-      In contrast, the <CODE>blocking</CODE> strategy flushes the
+      By default TAO provides three strategies to flush queued
+      messages.
+      The <CODE>leader_follower</CODE> strategy uses the Reactor and
+      non-blocking I/O to send the outgoing messages,
+      this strategy participates in the Leader/Followers protocol to
+      synchronize access to the Reactor.
+      The <CODE>reactive</CODE> strategy uses the Reactor but does not
+      take part in the Leader/Followers
+      protocol, thus it is better used only
+      in single threaded applications.
+      Finally, the <CODE>blocking</CODE> strategy flushes the
       queue as soon as it becomes "full", and blocks the
       thread until all the data is sent.
   </TD>
