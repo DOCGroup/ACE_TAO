@@ -19,7 +19,11 @@
 #if !defined (COSPROPERTYSERVICE_I_H)
 #define	COSPROPERTYSERVICE_I_H
 
+#include "ace/OS.h"
 #include "orbsvcs/CosPropertyServiceS.h"
+#include "orbsvcs/CosProperty_Hash.h"
+
+const int HASH_TABLE_SIZE =  256;
 
 class TAO_PropertySetFactory :  public virtual POA_CosPropertyService::PropertySetFactory
 {
@@ -36,6 +40,7 @@ public:
     create_initial_propertyset (const CosPropertyService::Properties &initial_properties,  CORBA::Environment &env) ;
 
   virtual ~TAO_PropertySetFactory (void);
+
 };
 
 class TAO_PropertySetDefFactory :  public virtual POA_CosPropertyService::PropertySetDefFactory  
@@ -59,6 +64,7 @@ public:
 
 
 class TAO_PropertySet :  public virtual POA_CosPropertyService::PropertySet  
+// Gives operations for defining, deleting, enumerating and checking for the existence of properties.
 {    
 public:
  
@@ -79,7 +85,7 @@ public:
   virtual CORBA::Any * get_property_value (const char *property_name,  CORBA::Environment &env);
 
   virtual CORBA::Boolean get_properties (const CosPropertyService::PropertyNames &property_names,
-                                         CosPropertyService::Properties_out nproperties,  CORBA::Environment &env) = 0;
+                                         CosPropertyService::Properties_out nproperties,  CORBA::Environment &env);
 
   virtual void get_all_properties (CORBA::ULong how_many, CosPropertyService::Properties_out nproperties, 
                                    CosPropertyService::PropertiesIterator_out rest,  CORBA::Environment &env);
@@ -91,6 +97,10 @@ public:
   virtual CORBA::Boolean delete_all_properties ( CORBA::Environment &env);
 
   virtual CORBA::Boolean is_property_defined (const char *property_name,  CORBA::Environment &env);
+
+private:
+  // Data Members
+  Hash_Property_Map hash_table_;
 };
 
 class TAO_PropertySetDef : public virtual TAO_PropertySet
