@@ -36,15 +36,15 @@ namespace CORBA
 
 class TAO_ORB_Core;
 
+/**
+ * @class TAO_DII_Deferred_Reply_Dispatcher
+ *
+ * @brief Reply dispatcher for DII deferred requests.
+ */
+
 class TAO_DynamicInterface_Export TAO_DII_Deferred_Reply_Dispatcher
   : public TAO_Asynch_Reply_Dispatcher_Base
 {
-  // = TITLE
-  //    TAO_DII_Deferred_Reply_Dispatcher
-  //
-  // = DESCRIPTION
-  //    Reply dispatcher for DII deferred requests.
-  //
 public:
   TAO_DII_Deferred_Reply_Dispatcher (const CORBA::Request_ptr req,
                                      TAO_ORB_Core *orb_core);
