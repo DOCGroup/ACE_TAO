@@ -1,5 +1,6 @@
 // $Id$
 
+
 // Portions of this file are:
 // Copyright 1994-1995 by Sun Microsystems Inc.
 // All Rights Reserved
@@ -42,6 +43,7 @@
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(tao, CDR, "$Id$")
+
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 

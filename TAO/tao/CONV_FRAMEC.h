@@ -1,4 +1,5 @@
 // $Id$
+
 //
 // ================================================================
 //
@@ -353,7 +354,6 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        CONV_FRAME::CodeSetContext *&); // deprecated
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
                                        const CONV_FRAME::CodeSetContext *&);
-
 #ifndef __ACE_INLINE__
 
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CONV_FRAME::CodeSetComponent &);
