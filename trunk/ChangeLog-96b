@@ -1,3 +1,11 @@
+Fri Dec 13 13:44:12 1996  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/config-vxworks*.h: added ACE_NEEDS_SYSTIME_H to VxWorks
+	  configs because it's needed with inlining
+
+	* include/makeinclude/platform_vxworks*.GNU: cleaned up VxWorks
+	  config files
+
 Thu Dec 12 18:51:04 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace: Added a new macro called ACE_UNUSED_ARG() to keep 
@@ -32,7 +40,7 @@ Thu Dec 12 18:51:04 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 Thu Dec 12 20:55:02 1996  David L. Levine  <levine@cs.wustl.edu>
 
 	* include/makeinclude/platform_sunos5_sunc++*.GNU: removed
- 	  SOLINK step in build of shared objects for SunOS5 with SunC++:
+	  SOLINK step in build of shared objects for SunOS5 with SunC++:
 	  it's not necessary.
 
 Thu Dec 12 03:48:26 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
