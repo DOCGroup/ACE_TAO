@@ -744,6 +744,21 @@ Package=<4>
 
 ###############################################################################
 
+Project: "SmartProxies"=.\tao\SmartProxies\SmartProxies.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "Svc Utils"=.\orbsvcs\orbsvcs\Svc_Utils.dsp - Package Owner=<4>
 
 Package=<5>
