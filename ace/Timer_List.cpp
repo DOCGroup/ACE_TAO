@@ -238,7 +238,7 @@ ACE_Timer_List::cancel (int timer_id,
       if (arg != 0)
 	*arg = curr->arg_;
 
-      if (dont_call_handle_close)
+      if (dont_call_handle_close == 0)
 	// Call the close hook.
 	curr->handler_->handle_close (ACE_INVALID_HANDLE, 
 				      ACE_Event_Handler::TIMER_MASK);
