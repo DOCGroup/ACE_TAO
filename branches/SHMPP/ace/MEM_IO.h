@@ -145,6 +145,14 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
+  /*  int get_local_port (u_short &) const;
+  // Return the local endpoint port number.  Returns 0 if successful,
+  // else -1.
+
+  int get_remote_port (u_short &) const;
+  // Return the port number of the remotely connected peer (if there
+  // is one). Returns 0 if successful, else -1.
+  */
 private:
   void *recv_buffer_;
   // Internal pointer for support recv/send.

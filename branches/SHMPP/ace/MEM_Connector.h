@@ -24,7 +24,7 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/MEM_Stream.h"
 
-class ACE_Export ACE_MEM_Connector : public ACE_SOCK_Connector
+class ACE_Export ACE_MEM_Connector : protected ACE_SOCK_Connector
 {
   // = TITLE
   //     Defines the format and interface for the connector side of
@@ -35,13 +35,12 @@ public:
   // Default constructor.
 
   ACE_MEM_Connector (ACE_MEM_Stream &new_stream,
-                     const ACE_INET_Addr &remote_sap,
+                     const u_short remote_port,
                      ACE_Time_Value *timeout = 0,
-                     const ACE_Addr &local_sap = ACE_Addr::sap_any,
+                     const u_short &local_sap = 0,
                      int reuse_addr = 0,
                      int flags = 0,
                      int perms = 0,
-                     int protocol_family = PF_INET,
                      int protocol = 0);
   // Actively connect and produce a <new_stream> if things go well.
   // The <remote_sap> is the address that we are trying to connect
@@ -53,18 +52,17 @@ public:
   // this is the amount of time to wait before timing out.  If the
   // time expires before the connection is made <errno == ETIME>.  The
   // <local_sap> is the value of local address to bind to.  If it's
-  // the default value of <ACE_Addr::sap_any> then the user is letting
+  // the default value of <0> then the user is letting
   // the OS do the binding.  If <reuse_addr> == 1 then the
   // <local_addr> is reused, even if it hasn't been cleanedup yet.
 
   int connect (ACE_MEM_Stream &new_stream,
-               const ACE_INET_Addr &remote_sap,
+               const u_short remote_port,
                ACE_Time_Value *timeout = 0,
-               const ACE_Addr &local_sap = ACE_Addr::sap_any,
+               const u_short &local_sap = 0,
                int reuse_addr = 0,
                int flags = 0,
                int perms = 0,
-               int protcol_family = PF_INET,
                int protocol = 0);
   // Actively connect and produce a <new_stream> if things go well.
   // The <remote_sap> is the address that we are trying to connect
@@ -76,12 +74,12 @@ public:
   // this is the amount of time to wait before timing out.  If the
   // time expires before the connection is made <errno == ETIME>.  The
   // <local_sap> is the value of local address to bind to.  If it's
-  // the default value of <ACE_Addr::sap_any> then the user is letting
+  // the default value of <0> then the user is letting
   // the OS do the binding.  If <reuse_addr> == 1 then the
   // <local_addr> is reused, even if it hasn't been cleanedup yet.
 
   // = Meta-type info
-  typedef ACE_Addr PEER_ADDR;
+  typedef u_short PEER_ADDR;
   typedef ACE_MEM_Stream PEER_STREAM;
 
   void dump (void) const;
