@@ -137,7 +137,7 @@ namespace ImplementationRepository
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_AlreadyRegistered;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_AlreadyRegistered;
 
 #endif /* end #if !defined */
   
@@ -195,7 +195,7 @@ namespace ImplementationRepository
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_CannotActivate;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_CannotActivate;
 
 #endif /* end #if !defined */
   
@@ -245,7 +245,7 @@ namespace ImplementationRepository
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotFound;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_NotFound;
 
 #endif /* end #if !defined */
   
@@ -282,7 +282,7 @@ namespace ImplementationRepository
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_EnvironmentVariable;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_EnvironmentVariable;
   
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
@@ -335,7 +335,7 @@ namespace ImplementationRepository
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_EnvironmentList;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_EnvironmentList;
   
   // TAO_IDL - Generated from
   // be\be_visitor_enum/enum_ch.cpp:57
@@ -353,7 +353,7 @@ namespace ImplementationRepository
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ActivationMode;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_ActivationMode;
   
   // TAO_IDL - Generated from
   // be\be_type.cpp:258
@@ -392,7 +392,7 @@ namespace ImplementationRepository
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_StartupOptions;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_StartupOptions;
   
   // TAO_IDL - Generated from
   // be\be_type.cpp:258
@@ -428,7 +428,7 @@ namespace ImplementationRepository
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ServerInformation;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_ServerInformation;
   
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
@@ -481,7 +481,7 @@ namespace ImplementationRepository
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ServerInformationList;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_ServerInformationList;
   
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
@@ -523,6 +523,8 @@ namespace ImplementationRepository
     // The static operations.
     static ServerInformationIterator_ptr _duplicate (ServerInformationIterator_ptr obj);
     
+    static void _tao_release (ServerInformationIterator_ptr obj);
+    
     static ServerInformationIterator_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -563,7 +565,7 @@ namespace ImplementationRepository
       ));
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -611,7 +613,7 @@ namespace ImplementationRepository
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ServerInformationIterator;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_ServerInformationIterator;
   
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
@@ -652,6 +654,8 @@ namespace ImplementationRepository
     
     // The static operations.
     static Administration_ptr _duplicate (Administration_ptr obj);
+    
+    static void _tao_release (Administration_ptr obj);
     
     static Administration_ptr _narrow (
         CORBA::Object_ptr obj
@@ -788,7 +792,7 @@ namespace ImplementationRepository
       ));
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -836,7 +840,7 @@ namespace ImplementationRepository
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Administration;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_Administration;
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:66
@@ -846,7 +850,7 @@ namespace ImplementationRepository
 // Proxy Broker Factory function pointer declarations.
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:120
+// be\be_visitor_root/root.cpp:230
 
 extern TAO_IMR_Client_Export
 TAO::Collocation_Proxy_Broker *
@@ -870,7 +874,7 @@ namespace TAO
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR__TRAITS_CH_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_IMR_Client_Export Objref_Traits< ::ImplementationRepository::ServerInformationIterator>
   {
     static ::ImplementationRepository::ServerInformationIterator_ptr duplicate (
@@ -891,7 +895,7 @@ namespace TAO
 #if !defined (_IMPLEMENTATIONREPOSITORY_ADMINISTRATION__TRAITS_CH_)
 #define _IMPLEMENTATIONREPOSITORY_ADMINISTRATION__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_IMR_Client_Export Objref_Traits< ::ImplementationRepository::Administration>
   {
     static ::ImplementationRepository::Administration_ptr duplicate (

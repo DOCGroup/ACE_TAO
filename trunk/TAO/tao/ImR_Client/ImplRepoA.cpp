@@ -83,7 +83,7 @@ static CORBA::TypeCode _tc_TAO_tc_ImplementationRepository_EnvironmentVariable (
 
 namespace ImplementationRepository
 {
-  ::CORBA::TypeCode_ptr _tc_EnvironmentVariable =
+  ::CORBA::TypeCode_ptr const _tc_EnvironmentVariable =
     &_tc_TAO_tc_ImplementationRepository_EnvironmentVariable;
 }
 
@@ -165,7 +165,7 @@ static CORBA::TypeCode _tc_TAO_tc_ImplementationRepository_EnvironmentList (
 
 namespace ImplementationRepository
 {
-  ::CORBA::TypeCode_ptr _tc_EnvironmentList =
+  ::CORBA::TypeCode_ptr const _tc_EnvironmentList =
     &_tc_TAO_tc_ImplementationRepository_EnvironmentList;
 }
 
@@ -220,7 +220,7 @@ static CORBA::TypeCode _tc_TAO_tc_ImplementationRepository_ActivationMode (
 
 namespace ImplementationRepository
 {
-  ::CORBA::TypeCode_ptr _tc_ActivationMode =
+  ::CORBA::TypeCode_ptr const _tc_ActivationMode =
     &_tc_TAO_tc_ImplementationRepository_ActivationMode;
 }
 
@@ -397,7 +397,7 @@ static CORBA::TypeCode _tc_TAO_tc_ImplementationRepository_StartupOptions (
 
 namespace ImplementationRepository
 {
-  ::CORBA::TypeCode_ptr _tc_StartupOptions =
+  ::CORBA::TypeCode_ptr const _tc_StartupOptions =
     &_tc_TAO_tc_ImplementationRepository_StartupOptions;
 }
 
@@ -613,7 +613,7 @@ static CORBA::TypeCode _tc_TAO_tc_ImplementationRepository_ServerInformation (
 
 namespace ImplementationRepository
 {
-  ::CORBA::TypeCode_ptr _tc_ServerInformation =
+  ::CORBA::TypeCode_ptr const _tc_ServerInformation =
     &_tc_TAO_tc_ImplementationRepository_ServerInformation;
 }
 
@@ -860,7 +860,7 @@ static CORBA::TypeCode _tc_TAO_tc_ImplementationRepository_ServerInformationList
 
 namespace ImplementationRepository
 {
-  ::CORBA::TypeCode_ptr _tc_ServerInformationList =
+  ::CORBA::TypeCode_ptr const _tc_ServerInformationList =
     &_tc_TAO_tc_ImplementationRepository_ServerInformationList;
 }
 
@@ -906,7 +906,7 @@ static CORBA::TypeCode _tc_TAO_tc_ImplementationRepository_ServerInformationIter
 
 namespace ImplementationRepository
 {
-  ::CORBA::TypeCode_ptr _tc_ServerInformationIterator =
+  ::CORBA::TypeCode_ptr const _tc_ServerInformationIterator =
     &_tc_TAO_tc_ImplementationRepository_ServerInformationIterator;
 }
 
@@ -946,7 +946,7 @@ static CORBA::TypeCode _tc_TAO_tc_ImplementationRepository_Administration (
 
 namespace ImplementationRepository
 {
-  ::CORBA::TypeCode_ptr _tc_Administration =
+  ::CORBA::TypeCode_ptr const _tc_Administration =
     &_tc_TAO_tc_ImplementationRepository_Administration;
 }
 

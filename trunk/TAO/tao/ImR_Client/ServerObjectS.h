@@ -65,7 +65,6 @@ namespace POA_ImplementationRepository
   class ServerObject;
   typedef ServerObject *ServerObject_ptr;
   
-  class _TAO_ServerObject_ThruPOA_Proxy_Impl;
   class _TAO_ServerObject_Direct_Proxy_Impl;
   class _TAO_ServerObject_Strategized_Proxy_Broker;
   
@@ -89,41 +88,37 @@ namespace POA_ImplementationRepository
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-    
     static void _is_a_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _non_existent_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _interface_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _component_skel (
-        TAO_ServerRequest &req,
-        void *obj,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     virtual void _dispatch (
-        TAO_ServerRequest &req,
-        void *_servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall
         ACE_ENV_ARG_DECL
       );
     
@@ -144,9 +139,9 @@ namespace POA_ImplementationRepository
       )) = 0;
     
     static void ping_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -161,9 +156,9 @@ namespace POA_ImplementationRepository
       )) = 0;
     
     static void shutdown_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
   };
@@ -212,52 +207,6 @@ namespace POA_ImplementationRepository
   ///////////////////////////////////////////////////////////////////////
   
   
-  ///////////////////////////////////////////////////////////////////////
-  //                    ThruPOA Proxy Impl. Declaration
-  //
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
-  
-  class TAO_IMR_Client_Export _TAO_ServerObject_ThruPOA_Proxy_Impl
-  {
-  public:
-    _TAO_ServerObject_ThruPOA_Proxy_Impl (void);
-    
-    virtual ~_TAO_ServerObject_ThruPOA_Proxy_Impl (void) {}
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    ping (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    shutdown (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-  };
-  
-  //
-  //                ThruPOA  Proxy Impl. Declaration
-  ///////////////////////////////////////////////////////////////////////
   
   // TAO_IDL - Generated from 
   // be\be_visitor_interface/direct_proxy_impl_sh.cpp:31
