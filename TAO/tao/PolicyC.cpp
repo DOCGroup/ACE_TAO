@@ -97,8 +97,8 @@ TAO_NAMESPACE_DEFINE (const CORBA::Short, UNSUPPORTED_POLICY_VALUE, 4)
 TAO_NAMESPACE_END
 // Default constructor.
 CORBA::PolicyError::PolicyError (void)
-  : CORBA_UserException ("IDL:omg.org/CORBA/PolicyError:1.0",
-                         "PolicyError")
+  : CORBA::UserException ("IDL:omg.org/CORBA/PolicyError:1.0",
+                          "PolicyError")
 {
 }
 
@@ -109,7 +109,7 @@ CORBA::PolicyError::~PolicyError (void)
 
 // Copy constructor.
 CORBA::PolicyError::PolicyError (const ::CORBA::PolicyError &_tao_excp)
-  : CORBA_UserException (
+  : CORBA::UserException (
         _tao_excp._rep_id (),
         _tao_excp._name ()
       )
@@ -121,7 +121,7 @@ CORBA::PolicyError::PolicyError (const ::CORBA::PolicyError &_tao_excp)
 CORBA::PolicyError&
 CORBA::PolicyError::operator= (const ::CORBA::PolicyError &_tao_excp)
 {
-  this->CORBA_UserException::operator= (_tao_excp);
+  this->UserException::operator= (_tao_excp);
   this->reason = _tao_excp.reason;
   return *this;
 }
@@ -198,8 +198,8 @@ void CORBA::PolicyError::_tao_decode (
 CORBA::PolicyError::PolicyError (
     CORBA::PolicyErrorCode _tao_reason
   )
-  : CORBA_UserException ("IDL:omg.org/CORBA/PolicyError:1.0",
-                         "PolicyError")
+  : CORBA::UserException ("IDL:omg.org/CORBA/PolicyError:1.0",
+                          "PolicyError")
 {
   this->reason = _tao_reason;
 }
@@ -367,10 +367,10 @@ void CORBA::InvalidPolicies::_tao_seq_UShort::_tao_any_destructor (void *_tao_vo
 
 // Default constructor.
 CORBA::InvalidPolicies::InvalidPolicies (void)
-  : CORBA_UserException (
-        "IDL:omg.org/CORBA/InvalidPolicies:1.0",
-        "InvalidPolicies"
-      )
+  : CORBA::UserException (
+                          "IDL:omg.org/CORBA/InvalidPolicies:1.0",
+                          "InvalidPolicies"
+                          )
 {
 }
 
@@ -381,7 +381,7 @@ CORBA::InvalidPolicies::~InvalidPolicies (void)
 
 // Copy constructor.
 CORBA::InvalidPolicies::InvalidPolicies (const ::CORBA::InvalidPolicies &_tao_excp)
-  : CORBA_UserException (
+  : CORBA::UserException (
         _tao_excp._rep_id (),
         _tao_excp._name ()
       )
@@ -393,7 +393,7 @@ CORBA::InvalidPolicies::InvalidPolicies (const ::CORBA::InvalidPolicies &_tao_ex
 CORBA::InvalidPolicies&
 CORBA::InvalidPolicies::operator= (const ::CORBA::InvalidPolicies &_tao_excp)
 {
-  this->CORBA_UserException::operator= (_tao_excp);
+  this->UserException::operator= (_tao_excp);
   this->indices = _tao_excp.indices;
   return *this;
 }
@@ -470,7 +470,7 @@ void CORBA::InvalidPolicies::_tao_decode (
 CORBA::InvalidPolicies::InvalidPolicies (
     const CORBA::InvalidPolicies::_tao_seq_UShort & _tao_indices
   )
-  : CORBA_UserException (
+  : CORBA::UserException (
         "IDL:omg.org/CORBA/InvalidPolicies:1.0",
         "InvalidPolicies"
       )
@@ -1013,7 +1013,7 @@ CORBA::_TAO_Policy_Remote_Proxy_Impl::_TAO_Policy_Remote_Proxy_Impl (void)
 // Remote Implementation of the IDL interface methods
 
 CORBA::PolicyType CORBA::_TAO_Policy_Remote_Proxy_Impl::policy_type (
-    CORBA_Object *_collocated_tao_target_
+    CORBA::Object *_collocated_tao_target_
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -1178,7 +1178,7 @@ return _tao_retval;
 }
 
 ::CORBA::Policy_ptr CORBA::_TAO_Policy_Remote_Proxy_Impl::copy (
-    CORBA_Object *_collocated_tao_target_
+    CORBA::Object *_collocated_tao_target_
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -1345,7 +1345,7 @@ return _tao_retval._retn ();
 }
 
 void CORBA::_TAO_Policy_Remote_Proxy_Impl::destroy (
-    CORBA_Object *_collocated_tao_target_
+    CORBA::Object *_collocated_tao_target_
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -1672,7 +1672,7 @@ CORBA::Boolean CORBA::Policy::_is_a (const CORBA::Char *value ACE_ENV_ARG_DECL)
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
-    return this->CORBA_Object::_is_a (value ACE_ENV_ARG_PARAMETER);
+    return this->Object::_is_a (value ACE_ENV_ARG_PARAMETER);
 }
 
 void *CORBA::Policy::_tao_QueryInterface (ptr_arith_t type)

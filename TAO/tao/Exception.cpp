@@ -40,15 +40,15 @@ extern CORBA::TypeCode_ptr TC_completion_status;
 
 // ****************************************************************
 
-CORBA_Exception::CORBA_Exception (const char *repository_id,
-                                  const char *local_name)
+CORBA::Exception::Exception (const char *repository_id,
+                             const char *local_name)
   : id_ (CORBA::string_dup (repository_id)),
-    name_ ( CORBA::string_dup (local_name))
+    name_ (CORBA::string_dup (local_name))
 {
   ACE_ASSERT (this->id_ != 0 && this->name_ != 0);
 }
 
-CORBA_Exception::CORBA_Exception (const CORBA_Exception &src)
+CORBA::Exception::Exception (const CORBA::Exception &src)
   : id_ (CORBA::string_dup (src.id_)),
     name_ (CORBA::string_dup (src.name_))
 {
@@ -59,20 +59,20 @@ CORBA_Exception::CORBA_Exception (const CORBA_Exception &src)
 // responsible for releasing any storage owned by the exception.  It
 // can do this because it's got the local name and the id.
 
-CORBA_Exception::CORBA_Exception (void)
+CORBA::Exception::Exception (void)
   : id_ (0),
     name_ (0)
 {
 }
 
-CORBA_Exception::~CORBA_Exception (void)
+CORBA::Exception::~Exception (void)
 {
   CORBA::string_free (this->id_);
   CORBA::string_free (this->name_);
 }
 
-CORBA_Exception &
-CORBA_Exception::operator= (const CORBA_Exception &src)
+CORBA::Exception &
+CORBA::Exception::operator= (const CORBA::Exception &src)
 {
   if (this->id_)
     {
@@ -94,33 +94,33 @@ CORBA_Exception::operator= (const CORBA_Exception &src)
 }
 
 const char *
-CORBA_Exception::_rep_id (void) const
+CORBA::Exception::_rep_id (void) const
 {
   return this->id_;
 }
 
 const char *
-CORBA_Exception::_name (void) const
+CORBA::Exception::_name (void) const
 {
   return this->name_;
 }
 
 CORBA::TypeCode_ptr
-CORBA_Exception::_type (void) const
+CORBA::Exception::_type (void) const
 {
   return CORBA::TypeCode::_nil ();
 }
 
 int
-CORBA_Exception::_is_a (const char* repository_id) const
+CORBA::Exception::_is_a (const char* repository_id) const
 {
   return ACE_OS_String::strcmp (repository_id,
                                 "IDL:omg.org/CORBA/Exception:1.0") == 0;
 }
 
 void
-CORBA_Exception::_tao_print_exception (const char *user_provided_info,
-                                       FILE *) const
+CORBA::Exception::_tao_print_exception (const char *user_provided_info,
+                                        FILE *) const
 {
   ACE_DEBUG ((LM_ERROR,
               ACE_LIB_TEXT("(%P|%t) EXCEPTION, %s\n")
@@ -131,20 +131,20 @@ CORBA_Exception::_tao_print_exception (const char *user_provided_info,
 
 #if defined (ACE_USES_WCHAR)
 void
-CORBA_Exception::_tao_print_exception (const ACE_WCHAR_T *info,
-                                       FILE *f) const
+CORBA::Exception::_tao_print_exception (const ACE_WCHAR_T *info,
+                                        FILE *f) const
 {
-    // Even though this call causes additional type conversions,
-    // this is better for the maintenance.  Plus, this will occur
-    // only on exception anyway.
-    this->_tao_print_exception(ACE_TEXT_ALWAYS_CHAR(info), f);
+  // Even though this call causes additional type conversions, this is
+  // better for the maintenance.  Plus, this will occur only on
+  // exception anyway.
+  this->_tao_print_exception (ACE_TEXT_ALWAYS_CHAR (info), f);
 }
 #endif  // ACE_USES_WCHAR
 
 void
-CORBA_Exception::_tao_any_destructor (void *x)
+CORBA::Exception::_tao_any_destructor (void *x)
 {
-  CORBA_Exception *tmp = ACE_static_cast (CORBA_Exception *, x);
+  CORBA::Exception *tmp = ACE_static_cast (CORBA::Exception *, x);
   delete tmp;
 }
 
@@ -152,7 +152,7 @@ CORBA_Exception::_tao_any_destructor (void *x)
 
 // Convenient ostrean operator.
 ostream& operator<< (ostream &os,
-                     const CORBA_Exception &e)
+                     const CORBA::Exception &e)
 {
   os << e._name () << " (" << e._rep_id () << ')';
 
@@ -163,42 +163,42 @@ ostream& operator<< (ostream &os,
 
 // Avoid zillions of not-quite-inlined copies of utilities.
 
-CORBA_UserException::CORBA_UserException (void)
+CORBA::UserException::UserException (void)
 {
 }
 
-CORBA_UserException::CORBA_UserException (const char *repository_id,
-                                          const char *local_name)
-  : CORBA_Exception (repository_id,
-                     local_name)
+CORBA::UserException::UserException (const char *repository_id,
+                                     const char *local_name)
+  : CORBA::Exception (repository_id,
+                      local_name)
 {
 }
 
-CORBA_UserException::~CORBA_UserException (void)
+CORBA::UserException::~UserException (void)
 {
 }
 
-CORBA_UserException &
-CORBA_UserException::operator= (const CORBA_UserException &src)
+CORBA::UserException &
+CORBA::UserException::operator= (const CORBA::UserException &src)
 {
-  this->CORBA_Exception::operator= (src);
+  this->Exception::operator= (src);
   return *this;
 }
 
 int
-CORBA_UserException::_is_a (const char* interface_id) const
+CORBA::UserException::_is_a (const char* interface_id) const
 {
   return ACE_OS_String::strcmp (interface_id,
                                 "IDL:omg.org/CORBA/UserException:1.0") == 0
-    || CORBA_Exception::_is_a (interface_id);
+    || this->Exception::_is_a (interface_id);
 }
 
-CORBA_UserException*
-CORBA_UserException::_downcast (CORBA_Exception* exception)
+CORBA::UserException*
+CORBA::UserException::_downcast (CORBA::Exception* exception)
 {
   if (exception->_is_a ("IDL:omg.org/CORBA/UserException:1.0"))
     {
-      return ACE_dynamic_cast (CORBA_UserException *,
+      return ACE_dynamic_cast (CORBA::UserException *,
                                exception);
     }
 
@@ -206,7 +206,7 @@ CORBA_UserException::_downcast (CORBA_Exception* exception)
 }
 
 ACE_CString
-CORBA_UserException::_info (void) const
+CORBA::UserException::_info (void) const
 {
   // @@ we can use the exception's typecode to dump all the data held
   // within it ...
@@ -226,36 +226,36 @@ TAO_NAMESPACE_END
 
 // ****************************************************************
 
-CORBA_SystemException::CORBA_SystemException (void)
+CORBA::SystemException::SystemException (void)
 {
 }
 
-CORBA_SystemException::CORBA_SystemException (const char *repository_id,
-                                              const char *local_name,
-                                              CORBA::ULong code,
-                                              CORBA::CompletionStatus completed)
-  : CORBA_Exception (repository_id,
-                     local_name),
+CORBA::SystemException::SystemException (const char *repository_id,
+                                         const char *local_name,
+                                         CORBA::ULong code,
+                                         CORBA::CompletionStatus completed)
+  : CORBA::Exception (repository_id,
+                      local_name),
     minor_ (code),
     completed_ (completed)
 {
 }
 
-CORBA_SystemException::CORBA_SystemException (const CORBA_SystemException &src)
-  : CORBA_Exception (src),
+CORBA::SystemException::SystemException (const CORBA::SystemException &src)
+  : CORBA::Exception (src),
     minor_ (src.minor_),
     completed_ (src.completed_)
 {
 }
 
-CORBA_SystemException::~CORBA_SystemException (void)
+CORBA::SystemException::~SystemException (void)
 {
 }
 
-CORBA_SystemException &
-CORBA_SystemException::operator= (const CORBA_SystemException &src)
+CORBA::SystemException &
+CORBA::SystemException::operator= (const CORBA::SystemException &src)
 {
-  this->CORBA_Exception::operator= (src);
+  this->Exception::operator= (src);
 
   this->minor_ = src.minor_;
   this->completed_ = src.completed_;
@@ -264,19 +264,19 @@ CORBA_SystemException::operator= (const CORBA_SystemException &src)
 }
 
 int
-CORBA_SystemException::_is_a (const char* interface_id) const
+CORBA::SystemException::_is_a (const char* interface_id) const
 {
   return ACE_OS_String::strcmp (interface_id,
                                 "IDL:omg.org/CORBA/SystemException:1.0") == 0
-    || CORBA_Exception::_is_a (interface_id);
+    || this->Exception::_is_a (interface_id);
 }
 
-CORBA_SystemException*
-CORBA_SystemException::_downcast (CORBA_Exception* exception)
+CORBA::SystemException*
+CORBA::SystemException::_downcast (CORBA::Exception* exception)
 {
   if (exception->_is_a ("IDL:omg.org/CORBA/SystemException:1.0"))
     {
-      return ACE_dynamic_cast (CORBA_SystemException *,
+      return ACE_dynamic_cast (CORBA::SystemException *,
                                exception);
     }
 
@@ -284,8 +284,8 @@ CORBA_SystemException::_downcast (CORBA_Exception* exception)
 }
 
 void
-CORBA_SystemException::_tao_encode (TAO_OutputCDR &cdr
-                                    ACE_ENV_ARG_DECL) const
+CORBA::SystemException::_tao_encode (TAO_OutputCDR &cdr
+                                     ACE_ENV_ARG_DECL) const
 {
   if (cdr.write_string (this->_rep_id ())
       && cdr.write_ulong (this->minor ())
@@ -298,8 +298,8 @@ CORBA_SystemException::_tao_encode (TAO_OutputCDR &cdr
 }
 
 void
-CORBA_SystemException::_tao_decode (TAO_InputCDR &cdr
-                                    ACE_ENV_ARG_DECL)
+CORBA::SystemException::_tao_decode (TAO_InputCDR &cdr
+                                     ACE_ENV_ARG_DECL)
 {
   // The string is read by the caller, to determine the exact type of
   // the exception.  We just decode the fields...
@@ -317,7 +317,7 @@ CORBA_SystemException::_tao_decode (TAO_InputCDR &cdr
 }
 
 CORBA::ULong
-CORBA_SystemException::_tao_errno (int errno_value)
+CORBA::SystemException::_tao_errno (int errno_value)
 {
   switch (errno_value)
     {
@@ -378,8 +378,8 @@ CORBA_SystemException::_tao_errno (int errno_value)
 }
 
 CORBA::ULong
-CORBA_SystemException::_tao_minor_code (u_int location,
-                                        int errno_value)
+CORBA::SystemException::_tao_minor_code (u_int location,
+                                         int errno_value)
 {
   return
     TAO_DEFAULT_MINOR_CODE
@@ -388,7 +388,7 @@ CORBA_SystemException::_tao_minor_code (u_int location,
 }
 
 void
-CORBA_SystemException::_tao_print_system_exception (FILE *) const
+CORBA::SystemException::_tao_print_system_exception (FILE *) const
 {
   ACE_DEBUG ((LM_ERROR,
               ACE_LIB_TEXT("(%P|%t) system exception, ID '%s'\n"),
@@ -396,7 +396,7 @@ CORBA_SystemException::_tao_print_system_exception (FILE *) const
 }
 
 ACE_CString
-CORBA_SystemException::_info (void) const
+CORBA::SystemException::_info (void) const
 {
   // @@ there are a other few "user exceptions" in the CORBA scope,
   // they're not all standard/system exceptions ... really need to
@@ -620,7 +620,7 @@ CORBA_SystemException::_info (void) const
 }
 
 const char *
-CORBA_SystemException::_tao_get_omg_exception_description (
+CORBA::SystemException::_tao_get_omg_exception_description (
   const CORBA::SystemException &exc,
   CORBA::ULong minor_code)
 {
@@ -869,7 +869,7 @@ void
 TAO_Exceptions::make_unknown_user_typecode (CORBA::TypeCode_ptr &tcp
                                             ACE_ENV_ARG_DECL)
 {
-  // Create the TypeCode for the CORBA_UnknownUserException.
+  // Create the TypeCode for the CORBA::UnknownUserException.
 
 #if defined(ACE_MVS)
   // @@ We need to use a translator to make sure that all TypeCodes
@@ -904,18 +904,18 @@ TAO_Exceptions::make_unknown_user_typecode (CORBA::TypeCode_ptr &tcp
     || stream.write_ulong (1L) == 0
     || stream.write_string (field_name) == 0;
   if (result)
-    ACE_THROW (CORBA_INITIALIZE ());
+    ACE_THROW (CORBA::INITIALIZE ());
 
   if (!(stream << CORBA::_tc_any))
-    ACE_THROW (CORBA_INITIALIZE ());
+    ACE_THROW (CORBA::INITIALIZE ());
 
   ACE_NEW_THROW_EX (tcp,
                     CORBA::TypeCode (CORBA::tk_except,
                                      stream.length (),
                                      stream.buffer (),
                                      1,
-                                     sizeof (CORBA_UserException)),
-                    CORBA_INITIALIZE ());
+                                     sizeof (CORBA::UserException)),
+                    CORBA::INITIALIZE ());
 }
 
 void
@@ -1003,8 +1003,8 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
                                      stream.length (),
                                      stream.buffer (),
                                      1,
-                                     sizeof (CORBA_SystemException)),
-                    CORBA_INITIALIZE ());
+                                     sizeof (CORBA::SystemException)),
+                    CORBA::INITIALIZE ());
   ACE_CHECK;
 
   ACE_ASSERT (tcp->length_ <= buflen);
@@ -1066,11 +1066,9 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
 #define TAO_TC_BUF_LEN 256
 
 #define TAO_SYSTEM_EXCEPTION(name) \
-    static CORBA::Long tc_buf_##name[TAO_TC_BUF_LEN/sizeof(CORBA::Long)]; \
-    TAO_NAMESPACE_TYPE(CORBA::TypeCode_ptr) \
-    TAO_NAMESPACE_BEGIN (CORBA) \
-    TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_##name, 0) \
-    TAO_NAMESPACE_END
+    static CORBA::Long tc_buf_##name[TAO_TC_BUF_LEN / sizeof (CORBA::Long)]; \
+    CORBA::TypeCode_ptr CORBA::_tc_##name = 0;
+
   STANDARD_EXCEPTION_LIST
 #undef  TAO_SYSTEM_EXCEPTION
 #undef TAO_TC_BUF_LEN
@@ -1085,8 +1083,6 @@ TAO_Exceptions::init (ACE_ENV_SINGLE_ARG_DECL)
   if (TAO_Exceptions::initialized_ != 0)
     return;
 
-  TAO_Exceptions::initialized_ = 1;
-
   // Initialize the start up allocator.
   ACE_NEW (TAO_Exceptions::global_allocator_,
            ACE_New_Allocator);
@@ -1094,18 +1090,20 @@ TAO_Exceptions::init (ACE_ENV_SINGLE_ARG_DECL)
 #define TAO_SYSTEM_EXCEPTION(name) \
   TAO_Exceptions::make_standard_typecode (CORBA::_tc_ ## name, \
                                           #name, \
-                                          (char*)tc_buf_##name, \
-                                          sizeof(tc_buf_##name) \
-                                           ACE_ENV_ARG_PARAMETER); \
+                                          (char*) tc_buf_##name, \
+                                          sizeof (tc_buf_##name) \
+                                          ACE_ENV_ARG_PARAMETER); \
   ACE_CHECK;
   STANDARD_EXCEPTION_LIST
 #undef  TAO_SYSTEM_EXCEPTION
 
   TAO_Exceptions::make_unknown_user_typecode (CORBA::_tc_UnknownUserException
                                               ACE_ENV_ARG_PARAMETER);
+
+  TAO_Exceptions::initialized_ = 1;
 }
 
-CORBA_SystemException *
+CORBA::SystemException *
 TAO_Exceptions::create_system_exception (const char *id
                                          ACE_ENV_ARG_DECL_NOT_USED)
 {
@@ -1139,22 +1137,22 @@ TAO_Exceptions::fini (void)
 
 #define TAO_SYSTEM_EXCEPTION(name) \
 int \
-CORBA_##name ::_is_a (const char* interface_id) const \
+CORBA::##name ::_is_a (const char* interface_id) const \
 { \
   return ((ACE_OS_String::strcmp ( \
                interface_id, \
                "IDL:omg.org/CORBA/" #name ":1.0") == 0) \
-          || CORBA_SystemException::_is_a (interface_id)); \
+          || this->SystemException::_is_a (interface_id)); \
 }
 STANDARD_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION
 
 #define TAO_SYSTEM_EXCEPTION(name) \
-CORBA_##name * \
-CORBA_##name ::_downcast (CORBA_Exception* exception) \
+CORBA::##name * \
+CORBA::##name ::_downcast (CORBA::Exception* exception) \
 { \
   if (exception->_is_a ("IDL:omg.org/CORBA/" #name ":1.0")) \
-    return ACE_dynamic_cast (CORBA_##name *, exception); \
+    return ACE_dynamic_cast (CORBA::##name *, exception); \
   return 0; \
 }
 STANDARD_EXCEPTION_LIST
@@ -1162,19 +1160,20 @@ STANDARD_EXCEPTION_LIST
 
 #define TAO_SYSTEM_EXCEPTION(name) \
 void \
-CORBA_##name ::_raise (void) \
+CORBA::##name ::_raise (void) \
 { \
   TAO_RAISE (*this); \
 }
 STANDARD_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION
 
+// SystemException constructors
 #define TAO_SYSTEM_EXCEPTION(name) \
-CORBA_##name :: CORBA_##name (void) \
-  :  CORBA_SystemException ("IDL:omg.org/CORBA/" #name ":1.0", \
-                            #name, \
-                            TAO_DEFAULT_MINOR_CODE, \
-                            CORBA::COMPLETED_NO) \
+CORBA::##name ::##name (void) \
+  :  CORBA::SystemException ("IDL:omg.org/CORBA/" #name ":1.0", \
+                             #name, \
+                             TAO_DEFAULT_MINOR_CODE, \
+                             CORBA::COMPLETED_NO) \
 { \
 }
 STANDARD_EXCEPTION_LIST
@@ -1182,7 +1181,7 @@ STANDARD_EXCEPTION_LIST
 
 #define TAO_SYSTEM_EXCEPTION(name) \
 CORBA::TypeCode_ptr \
-CORBA_##name ::_type (void) const \
+CORBA::##name ::_type (void) const \
 { \
   return CORBA::_tc_ ## name; \
 }
@@ -1191,20 +1190,20 @@ STANDARD_EXCEPTION_LIST
 
 #define TAO_SYSTEM_EXCEPTION(name) \
 void \
-CORBA_##name ::_tao_any_destructor (void *x) \
+CORBA::##name ::_tao_any_destructor (void *x) \
 { \
-  CORBA_##name *tmp = ACE_static_cast (CORBA_##name *, x); \
+  CORBA::##name *tmp = ACE_static_cast (CORBA::##name *, x); \
   delete tmp; \
 }
 STANDARD_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION
 
 #define TAO_SYSTEM_EXCEPTION(name) \
-CORBA_Exception * \
-CORBA_##name ::_tao_duplicate (void) const \
+CORBA::Exception * \
+CORBA::##name ::_tao_duplicate (void) const \
 { \
-  CORBA_Exception *result; \
-  ACE_NEW_RETURN (result, CORBA_##name (*this), 0); \
+  CORBA::Exception *result; \
+  ACE_NEW_RETURN (result, CORBA::##name (*this), 0); \
   return result; \
 }
 STANDARD_EXCEPTION_LIST
@@ -1236,10 +1235,10 @@ tao_insert_for_insertion_system_exception (CORBA::Any &any,
 }
 
 #define TAO_SYSTEM_EXCEPTION(name) \
-void operator<<= (CORBA::Any &any, const CORBA_##name &ex) \
+void operator<<= (CORBA::Any &any, const CORBA::##name &ex) \
 { \
   tao_insert_for_insertion_system_exception (any, ex, \
-            "\tCORBA::Any insertion (non-copy) of CORBA_" #name "\n" \
+            "\tCORBA::Any insertion (non-copy) of CORBA::" #name "\n" \
                                ); \
 }
 STANDARD_EXCEPTION_LIST
@@ -1276,11 +1275,11 @@ tao_insert_system_exception (CORBA::Any &any,
 }
 
 #define TAO_SYSTEM_EXCEPTION(name) \
-void operator<<= (CORBA::Any &any, CORBA_##name *ex) \
+void operator<<= (CORBA::Any &any, CORBA::##name *ex) \
 { \
   tao_insert_system_exception (any, ex, \
-          CORBA_##name ::_tao_any_destructor, \
-          "\tCORBA::Any insertion (non-copy) of CORBA_" #name "\n" \
+          CORBA::##name ::_tao_any_destructor, \
+          "\tCORBA::Any insertion (non-copy) of CORBA::" #name "\n" \
                                ); \
 }
 
@@ -1288,22 +1287,22 @@ STANDARD_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION
 
 #define TAO_SYSTEM_EXCEPTION(name) \
-static CORBA_SystemException* _tao_allocator_##name (void) \
+static CORBA::SystemException* _tao_allocator_##name (void) \
 { \
-  return new CORBA_##name; \
+  return new CORBA::##name; \
 }
 STANDARD_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION
 
 static CORBA::Boolean
 tao_insert_in_extractor_system_exception (
-        const CORBA::Any &any,
-        CORBA::SystemException *&tmp,
-        CORBA::SystemException * (*allocator)(void),
-        CORBA::TypeCode_ptr tc_name,
-        CORBA::Any::_tao_destructor destructor,
-        const char *compare_IR_Id,
-        const char *msg)
+  const CORBA::Any &any,
+  CORBA::SystemException *&tmp,
+  CORBA::SystemException * (*allocator)(void),
+  CORBA::TypeCode_ptr tc_name,
+  CORBA::Any::_tao_destructor destructor,
+  const char *compare_IR_Id,
+  const char *msg)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
@@ -1316,7 +1315,7 @@ tao_insert_in_extractor_system_exception (
         return 0;
       if (any.any_owns_data ())
         {
-          tmp = (CORBA_SystemException *)any.value ();
+          tmp = (CORBA::SystemException *)any.value ();
           return 1;
         }
       else
@@ -1356,22 +1355,22 @@ tao_insert_in_extractor_system_exception (
 
 #define TAO_SYSTEM_EXCEPTION(name) \
 CORBA::Boolean operator>>= (const CORBA::Any &any, \
-                            const CORBA_##name *&ex) \
+                            const CORBA::##name *&ex) \
 { \
   ex = 0; \
-  CORBA_SystemException *tmp; \
+  CORBA::SystemException *tmp; \
   if (tao_insert_in_extractor_system_exception (any, \
        tmp, \
        _tao_allocator_##name, \
        CORBA::_tc_##name, \
-       CORBA_##name ::_tao_any_destructor, \
+       CORBA::##name ::_tao_any_destructor, \
        "IDL:omg.org/CORBA/" #name ":1.0", \
-       "\tCORBA::Any extraction of CORBA_" #name "\n") == 0) \
+       "\tCORBA::Any extraction of CORBA::" #name "\n") == 0) \
          { \
              ex = 0; \
          return 0; \
          } \
- ex = (CORBA_##name*)tmp; \
+ ex = (CORBA::##name*)tmp; \
  return 1; \
 }
 
