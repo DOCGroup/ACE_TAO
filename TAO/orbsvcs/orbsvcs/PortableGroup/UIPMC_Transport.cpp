@@ -549,9 +549,9 @@ TAO_UIPMC_Transport::recv (char *buf,
 }
 
 int
-TAO_UIPMC_Transport::handle_input (TAO_Resume_Handle &rh,
-                                   ACE_Time_Value *max_wait_time,
-                                   int /*block*/)
+TAO_DIOP_Transport::handle_input (TAO_Resume_Handle &rh,
+                                  ACE_Time_Value *max_wait_time,
+                                  int /*block*/)
 {
   // If there are no messages then we can go ahead to read from the
   // handle for further reading..
@@ -587,58 +587,68 @@ TAO_UIPMC_Transport::handle_input (TAO_Resume_Handle &rh,
 
   // Read the message into the  message block that we have created on
   // the stack.
-  ssize_t n = this->recv (message_block.rd_ptr (),
+  ssize_t n = this->recv (message_block.wr_ptr (),
                           message_block.space (),
                           max_wait_time);
 
   // If there is an error return to the reactor..
   if (n <= 0)
     {
-      if (TAO_debug_level)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO: (%P|%t|%N|%l) recv returned error on transport %d after fault %p\n"),
-                      this->id (),
-                      ACE_TEXT ("handle_input_i ()\n")));
-        }
-
       if (n == -1)
+        // @@ Why not send_connection_closed_notifications() ?
         this->tms_->connection_closed ();
 
       return n;
     }
 
-  // Set the write pointer in the stack buffer.
+  // Set the write pointer in the stack buffer
   message_block.wr_ptr (n);
 
-  // Parse the incoming message for validity. The check needs to be
+  // Check the incoming message for validity. The check needs to be
   // performed by the messaging objects.
-  if (this->parse_incoming_messages (message_block) == -1)
+  //
+  // NOTE!  I don't completely understand how this transport is supposed
+  // to work.  I don't know if it's possible to get a partial header,
+  // in which case check_for_valid_header would return -1 because it didn't
+  // have enough information to decide valid or invalid.  For now I'll assume
+  // that we either get a complete, valid header or a complete INVALID header.
+  if (this->messaging_object ()->check_for_valid_header (message_block) != 1)
     {
       if (TAO_debug_level)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO: (%P|%t|%N|%l) parse_incoming_messages failed on transport %d after fault %p\n"),
+                      ACE_TEXT ("TAO: (%P|%t|%N|%l) failed to find a valid header on transport %d after fault %p\n"),
                       this->id (),
-                      ACE_TEXT ("handle_input_i ()\n")));
+                      ACE_TEXT ("handle_input ()\n")));
         }
 
       return -1;
     }
 
   // NOTE: We are not performing any queueing nor any checking for
-  // missing data. We are assuming that ALL the data would be got in a
+  // missing data. We are assuming that ALL the data arrives in a
   // single read.
 
   // Make a node of the message block..
-  TAO_Queued_Data qd (&message_block);
-
-  // Extract the data for the node..
-  this->messaging_object ()->get_message_data (&qd);
-
-  // Process the message
-  return this->process_parsed_messages (&qd, rh);
+  //
+  // We could make this more efficient by having a fixed Queued Data
+  // allocator, i.e., it always gave back the same thing.  Actually,
+  // we *could* create an allocator that took a stack-allocated object
+  // as an argument and returned that when asked an allocation is
+  // done.  Something to contemplate...
+  TAO_Queued_Data* qd =
+    TAO_Queued_Data::make_completed_message (message_block,
+                                             *this->messaging_object ());
+  int retval = -1;
+  if (qd)
+    {
+      // Process the message
+      retval = this->process_parsed_messages (qd, rh);
+      TAO_Queued_Data::release (qd);
+    }
+  return retval;
 }
+
 
 int
 TAO_UIPMC_Transport::register_handler (void)

@@ -1,3 +1,12 @@
+Thu Dec 11 10:45:53 2003  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp
+	  (handle_input):
+
+	  Updated this to reflect the new APIs from the PMB changes.
+	  Thanks to Ossama Othman <ossama@dre.vanderbilt.edu> for pointing
+	  out my oversight.
+
 Thu Dec 11 07:49:01 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/RTCORBA/Thread_Pool/RTCORBA_Thread_Pool.mpc:
