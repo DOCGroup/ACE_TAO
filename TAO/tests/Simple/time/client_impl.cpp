@@ -28,6 +28,7 @@ Client_Impl::read_ior (char *filename)
                        "Unable to open %s for writing: %p\n",
                        filename),
                       -1);
+
   ACE_Read_Buffer ior_buffer (f_handle_);
   this->server_key_ = ior_buffer.read ();
 
@@ -91,15 +92,17 @@ Client_Impl::parse_args (void)
 void
 Client_Impl::time (void)
 {
+  // Make the RMI.
   CORBA::Long timedate = this->server_->time (this->env_);
 
   if (this->env_.exception () != 0)
     this->env_.print_exception ("from time");
   else
     {
-      dmsg1 ("time:  %d\n", timedate);
+      dmsg1 ("time: %d\n", timedate);
 
-      char *ascii_timedate = ACE_OS::ctime (ACE_static_cast (time_t *, &timedate));
+      char *ascii_timedate =
+        ACE_OS::ctime (ACE_static_cast (time_t *, &timedate));
 
       ACE_DEBUG ((LM_DEBUG,
                   "string time is %s\n",
@@ -128,14 +131,11 @@ Client_Impl::run (void)
 
 Client_Impl::~Client_Impl (void)
 {
-  // Free resources
-  // Close the ior files
+  // Free resources and close the IOR files.
   CORBA::release (this->server_);
 
-  if (this->server_key_ != 0)
-    ACE_OS::free (this->server_key_);
+  ACE_OS::free (this->server_key_);
 }
-
 
 int
 Client_Impl::init (int argc, char **argv)
@@ -148,7 +148,7 @@ Client_Impl::init (int argc, char **argv)
       // Retrieve the ORB.
       this->orb_ = CORBA::ORB_init (this->argc_,
                                     this->argv_,
-                                    "internet",
+                                    0,
                                     TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
@@ -164,10 +164,12 @@ Client_Impl::init (int argc, char **argv)
 
 
       CORBA::Object_var server_object =
-        this->orb_->string_to_object (this->server_key_, TAO_TRY_ENV);
+        this->orb_->string_to_object (this->server_key_,
+                                      TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      this->server_ = Time::_narrow (server_object.in(), TAO_TRY_ENV);
+      this->server_ = Time::_narrow (server_object.in (),
+                                     TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       if (CORBA::is_nil (server_object.in ()))
