@@ -328,28 +328,14 @@ Mon Nov 22 17:06:34 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
           <Derek.Dominish@Australia.Boeing.com> for pointing this out.
 
 Mon Nov 22 14:15:23 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
-<<<<<<< ChangeLog
-=======
 
-        * examples/Configuration/config_test.cpp: ACE-ified this example.
->>>>>>> 4.2455
-
-<<<<<<< ChangeLog
 	* examples/Configuration/config_test.cpp: ACE-ified this example.
-=======
-        * ace/OS.i: Replaced all the uses of ACE_Time_Value private methods
+
+	* ace/OS.i: Replaced all the uses of ACE_Time_Value private methods
           within the overloaded global relational operator to use inline
           methods.  This change should work around bugs with MSVC++.
           Thanks to Alok Gupta <alokg@ssind.stpn.soft.net> for reporting
           this.
->>>>>>> 4.2455
-
-<<<<<<< ChangeLog
-	* ace/OS.i: Replaced all the uses of ACE_Time_Value private methods
-	  within the overloaded global relational operator to use inline
- 	  methods.  This change should work around bugs with MSVC++.
-  	  Thanks to Alok Gupta <alokg@ssind.stpn.soft.net> for reporting
- 	  this.
 
 	* ace/Service_Config.cpp (parse_args): Reverted the behavior
 	  of parse_args() so that it doesn't return an error when it runs
@@ -360,17 +346,6 @@ Mon Nov 22 14:15:23 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
  	  Ivan Murphy <Ivan.Murphy@med.siemens.de> for reporting this and
  	  suggesting a fix.
 
-=======
-        * ace/Service_Config.cpp (parse_args): Reverted the behavior
-          of parse_args() so that it doesn't return an error when it runs
-          across an option that it doesn't recognize.  This is necessary
-          to support certain use-cases where the Service Configurator is
-          part of an application-specific configuration process.  We do,
-          however, print a warning message if ACE::debug() > 0.  Thanks to
-          Ivan Murphy <Ivan.Murphy@med.siemens.de> for reporting this and
-          suggesting a fix.
-
->>>>>>> 4.2455
 Sat Nov 20 10:16:07 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/Configuration.cpp: Moved DEFBUFSIZE into the Win32-specific
