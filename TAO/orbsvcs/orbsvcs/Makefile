@@ -41,7 +41,8 @@ ifndef TAO_ORBSVCS
                 CosEvent
 
 ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
-  TAO_ORBSVCS += Event2
+  TAO_ORBSVCS += Event2 \
+	NativeCosEvent
 endif # ACE_HAS_GNUG_PRE_2_8
 
 ### The following service(s) are not compiled by default because:
@@ -141,6 +142,27 @@ ifneq (,$(findstring CosEvent,$(TAO_ORBSVCS)))
         CosEvent/ProxyPushSupplier_i \
         CosEvent_Utilities
 endif # CosEvent
+
+ifneq (,$(findstring NativeCosEvent,$(TAO_ORBSVCS)))
+  ifeq (,$(findstring CosEvent,$(TAO_ORBSVCS)))
+    IDL_SRCS += CosEventComm CosEventChannelAdmin
+  endif # ! CosEvent
+  TAO_ORBSVCS_SRCS += \
+	CosEvent/CEC_ConsumerAdmin \
+	CosEvent/CEC_ConsumerControl \
+	CosEvent/CEC_Dispatching \
+	CosEvent/CEC_EventChannel \
+	CosEvent/CEC_Factory \
+	CosEvent/CEC_ProxyPushConsumer \
+	CosEvent/CEC_ProxyPushSupplier \
+	CosEvent/CEC_SupplierAdmin \
+	CosEvent/CEC_SupplierControl \
+	CosEvent/CEC_Dispatching_Task \
+	CosEvent/CEC_MT_Dispatching \
+	CosEvent/CEC_Reactive_ConsumerControl \
+	CosEvent/CEC_Reactive_SupplierControl \
+	CosEvent/CEC_Default_Factory
+endif # NativeCosEvent
 
 ifneq (,$(findstring Event,$(TAO_ORBSVCS)))
   IDL_SRCS += \
@@ -597,12 +619,7 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -716,6 +733,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -878,12 +899,7 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -997,6 +1013,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -1152,14 +1172,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -1273,6 +1288,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -1428,14 +1447,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -1549,6 +1563,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -1707,14 +1725,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -1828,6 +1841,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -1991,12 +2008,7 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -2110,6 +2122,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -2278,12 +2294,7 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -2397,6 +2408,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -2570,12 +2585,7 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -2689,6 +2699,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -2858,12 +2872,7 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -2977,6 +2986,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -3134,14 +3147,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -3255,6 +3263,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -3412,14 +3424,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -3533,6 +3540,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -3691,14 +3702,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -3812,6 +3818,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -3967,14 +3977,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -4088,6 +4093,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -4245,14 +4254,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -4366,6 +4370,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -4523,14 +4531,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -4644,6 +4647,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -4800,14 +4807,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -4921,6 +4923,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -5076,14 +5082,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -5197,6 +5198,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -5359,12 +5364,7 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -5478,6 +5478,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -5634,14 +5638,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -5755,6 +5754,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -5910,14 +5913,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -6031,6 +6029,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -6199,14 +6201,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -6320,6 +6317,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -6479,14 +6480,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -6600,6 +6596,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -6760,14 +6760,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -6881,6 +6876,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -7034,14 +7033,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -7155,6 +7149,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -7308,14 +7306,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -7429,6 +7422,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -7583,14 +7580,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -7704,6 +7696,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -7859,14 +7855,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -7980,6 +7971,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -8133,14 +8128,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -8254,6 +8244,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -8409,14 +8403,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -8530,6 +8519,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -8685,14 +8678,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -8806,6 +8794,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -8961,14 +8953,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -9082,6 +9069,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -9235,14 +9226,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -9356,6 +9342,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -9509,14 +9499,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -9630,6 +9615,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -9784,14 +9773,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -9905,6 +9889,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -10058,14 +10046,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -10179,6 +10162,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -10332,14 +10319,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -10453,6 +10435,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -10606,14 +10592,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -10727,6 +10708,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -10881,14 +10866,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -11002,6 +10982,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -11155,14 +11139,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -11276,6 +11255,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -11429,14 +11412,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -11550,6 +11528,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -11703,14 +11685,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -11824,6 +11801,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -11978,14 +11959,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -12099,6 +12075,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -12255,14 +12235,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -12376,6 +12351,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -12530,14 +12509,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -12651,6 +12625,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -12808,14 +12786,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -12929,6 +12902,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -13152,12 +13129,7 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -13271,6 +13243,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -13478,12 +13454,7 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -13597,6 +13568,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -13804,12 +13779,7 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -13923,6 +13893,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -14126,12 +14100,7 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -14245,6 +14214,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -14439,14 +14412,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -14560,6 +14528,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -14759,14 +14731,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -14880,6 +14847,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -15045,14 +15016,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -15166,6 +15132,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -15373,14 +15343,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -15494,6 +15459,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -15655,14 +15624,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -15776,6 +15740,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -15940,14 +15908,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -16061,6 +16024,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -16258,14 +16225,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -16379,6 +16341,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -16533,14 +16499,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -16654,6 +16615,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -16813,14 +16778,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -16934,6 +16894,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -17158,14 +17122,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -17279,6 +17238,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -17440,14 +17403,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -17561,6 +17519,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -17722,14 +17684,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -17843,6 +17800,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -18004,14 +17965,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -18125,6 +18081,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -18287,14 +18247,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -18408,6 +18363,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -18583,14 +18542,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -18704,6 +18658,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -18932,14 +18890,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -19053,6 +19006,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -19302,14 +19259,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -19423,6 +19375,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -19640,14 +19596,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -19761,6 +19712,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -19973,14 +19928,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -20094,6 +20044,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -20301,14 +20255,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -20422,6 +20371,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -20592,14 +20545,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -20713,6 +20661,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -20877,14 +20829,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -20998,6 +20945,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -21214,14 +21165,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -21335,6 +21281,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -21548,14 +21498,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -21640,6 +21585,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -21837,14 +21786,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -21958,6 +21902,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -22123,14 +22071,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -22244,6 +22187,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -22452,14 +22399,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -22573,6 +22515,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -22737,14 +22683,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -22858,6 +22799,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -23022,14 +22967,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -23143,6 +23083,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -23343,14 +23287,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -23464,6 +23403,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -23619,14 +23562,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -23740,6 +23678,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -23895,14 +23837,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -24016,6 +23953,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -24223,14 +24164,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -24344,6 +24280,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -24551,14 +24491,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -24672,6 +24607,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -24833,14 +24772,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -24954,6 +24888,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -25116,14 +25054,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -25237,6 +25170,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -25413,14 +25350,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -25534,6 +25466,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -25695,14 +25631,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -25816,6 +25747,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -25998,14 +25933,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -26119,6 +26049,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -26331,14 +26265,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -26452,6 +26381,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -26667,14 +26600,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -26788,6 +26716,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -27003,14 +26935,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -27124,6 +27051,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -27325,14 +27256,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -27446,6 +27372,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -27524,6 +27454,4256 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
+
+.obj/CEC_ConsumerAdmin.o .obj/CEC_ConsumerAdmin.so .shobj/CEC_ConsumerAdmin.o .shobj/CEC_ConsumerAdmin.so: CosEvent/CEC_ConsumerAdmin.cpp \
+ CosEvent/CEC_ConsumerAdmin.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+ $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(TAO_ROOT)/tao/corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers_T.h \
+ $(ACE_ROOT)/ace/Containers_T.i \
+ $(ACE_ROOT)/ace/Containers_T.cpp \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/Message_Block_T.h \
+ $(ACE_ROOT)/ace/Message_Block_T.i \
+ $(ACE_ROOT)/ace/Message_Block_T.cpp \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(TAO_ROOT)/tao/try_macros.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/IOR_LookupTable.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/Functor.h \
+ $(ACE_ROOT)/ace/Functor.i \
+ $(ACE_ROOT)/ace/Functor_T.h \
+ $(ACE_ROOT)/ace/Functor_T.i \
+ $(ACE_ROOT)/ace/Functor_T.cpp \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/varout.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/varout.i \
+ $(TAO_ROOT)/tao/varout.cpp \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/IORManipulation.h \
+ $(TAO_ROOT)/tao/IORS.h \
+ $(TAO_ROOT)/tao/IORC.h \
+ $(TAO_ROOT)/tao/CDR.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/IORC.i \
+ $(TAO_ROOT)/tao/Servant_Base.h \
+ $(TAO_ROOT)/tao/POAC.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/POAC.i \
+ $(TAO_ROOT)/tao/Servant_Base.i \
+ $(TAO_ROOT)/tao/IORS.i \
+ $(TAO_ROOT)/tao/Interceptor.h \
+ $(TAO_ROOT)/tao/InterceptorS.h \
+ $(TAO_ROOT)/tao/InterceptorC.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/InterceptorC.i \
+ $(TAO_ROOT)/tao/Interceptor.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/NVList.h \
+ $(TAO_ROOT)/tao/NVList.i \
+ $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/Principal.i \
+ $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Context.h \
+ $(TAO_ROOT)/tao/Context.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/Request.i \
+ $(TAO_ROOT)/tao/Server_Request.h \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/GIOP.h \
+ $(TAO_ROOT)/tao/GIOP.i \
+ $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/Marshal.h \
+ $(TAO_ROOT)/tao/Marshal.i \
+ $(TAO_ROOT)/tao/singletons.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/POA.h \
+ $(TAO_ROOT)/tao/Object_Adapter.h \
+ $(TAO_ROOT)/tao/Key_Adapters.h \
+ $(ACE_ROOT)/ace/Map.h \
+ $(ACE_ROOT)/ace/Map.i \
+ $(ACE_ROOT)/ace/Map_T.h \
+ $(ACE_ROOT)/ace/Pair.h \
+ $(ACE_ROOT)/ace/Pair.i \
+ $(ACE_ROOT)/ace/Pair_T.h \
+ $(ACE_ROOT)/ace/Pair_T.i \
+ $(ACE_ROOT)/ace/Pair_T.cpp \
+ $(ACE_ROOT)/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.i \
+ $(ACE_ROOT)/ace/Map_Manager.cpp \
+ $(ACE_ROOT)/ace/Active_Map_Manager.h \
+ $(ACE_ROOT)/ace/Active_Map_Manager.i \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Map_T.i \
+ $(ACE_ROOT)/ace/Map_T.cpp \
+ $(TAO_ROOT)/tao/Key_Adapters.i \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/POAS.h \
+ $(TAO_ROOT)/tao/POA_CORBA.h \
+ $(TAO_ROOT)/tao/DynAnyC.h \
+ $(TAO_ROOT)/tao/DynAnyC.i \
+ $(TAO_ROOT)/tao/DomainC.h \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/POAS.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
+ $(TAO_ROOT)/tao/Object_Adapter.i \
+ $(TAO_ROOT)/tao/POAManager.h \
+ $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/ImplRepoC.h \
+ $(TAO_ROOT)/tao/Operation_Table.h \
+ $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/Pluggable.h \
+ $(ACE_ROOT)/ace/Message_Queue.h \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Synch_Options.h \
+ $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
+ $(ACE_ROOT)/ace/Strategies_T.i \
+ $(ACE_ROOT)/ace/Strategies_T.cpp \
+ $(ACE_ROOT)/ace/Service_Repository.h \
+ $(ACE_ROOT)/ace/Service_Types.h \
+ $(ACE_ROOT)/ace/Service_Types.i \
+ $(ACE_ROOT)/ace/Service_Repository.i \
+ $(ACE_ROOT)/ace/WFMO_Reactor.h \
+ $(ACE_ROOT)/ace/WFMO_Reactor.i \
+ $(ACE_ROOT)/ace/Strategies.i \
+ $(ACE_ROOT)/ace/Message_Queue.i \
+ $(TAO_ROOT)/tao/Pluggable.i \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/Profile.h \
+ $(TAO_ROOT)/tao/Tagged_Components.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.i \
+ $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/Profile.i \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(TAO_ROOT)/tao/Protocol_Factory.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(ACE_ROOT)/ace/Dynamic_Service.h \
+ $(ACE_ROOT)/ace/Dynamic_Service.cpp \
+ $(TAO_ROOT)/tao/Invocation.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/TAOC.h \
+ $(TAO_ROOT)/tao/TAOC.i \
+ $(TAO_ROOT)/tao/Invocation.i \
+ $(TAO_ROOT)/tao/ImplRepoC.i \
+ $(TAO_ROOT)/tao/POA.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
+ $(TAO_ROOT)/tao/DynAny_i.h \
+ $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
+ $(TAO_ROOT)/tao/ObjectIDList.h \
+ $(TAO_ROOT)/tao/ObjectIDList.i \
+ $(TAO_ROOT)/tao/WrongTransactionC.h \
+ $(TAO_ROOT)/tao/InterfaceC.h \
+ $(TAO_ROOT)/tao/BoundsC.h \
+ $(TAO_ROOT)/tao/BoundsC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Proxy_Collection.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Busy_Lock.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Busy_Lock.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Busy_Lock.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Proxy_Collection.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Proxy_Collection.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Command.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Command.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Command.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Worker.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Worker.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Worker.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Defaults.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
+ CosEvent/CEC_ConsumerAdmin.i CosEvent/CEC_ProxyPushSupplier.h \
+ CosEvent/CEC_ProxyPushSupplier.i CosEvent/CEC_ProxyPushConsumer.h \
+ CosEvent/CEC_ProxyPushConsumer.i CosEvent/CEC_EventChannel.h \
+ CosEvent/CEC_Factory.h CosEvent/CEC_Factory.i CosEvent/CEC_Defaults.h \
+ CosEvent/CEC_EventChannel.i
+
+.obj/CEC_ConsumerControl.o .obj/CEC_ConsumerControl.so .shobj/CEC_ConsumerControl.o .shobj/CEC_ConsumerControl.so: CosEvent/CEC_ConsumerControl.cpp \
+ CosEvent/CEC_ConsumerControl.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers_T.h \
+ $(ACE_ROOT)/ace/Containers_T.i \
+ $(ACE_ROOT)/ace/Containers_T.cpp \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/Message_Block_T.h \
+ $(ACE_ROOT)/ace/Message_Block_T.i \
+ $(ACE_ROOT)/ace/Message_Block_T.cpp \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(TAO_ROOT)/tao/try_macros.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/IOR_LookupTable.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/Functor.h \
+ $(ACE_ROOT)/ace/Functor.i \
+ $(ACE_ROOT)/ace/Functor_T.h \
+ $(ACE_ROOT)/ace/Functor_T.i \
+ $(ACE_ROOT)/ace/Functor_T.cpp \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/varout.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/varout.i \
+ $(TAO_ROOT)/tao/varout.cpp \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/IORManipulation.h \
+ $(TAO_ROOT)/tao/IORS.h \
+ $(TAO_ROOT)/tao/IORC.h \
+ $(TAO_ROOT)/tao/CDR.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/IORC.i \
+ $(TAO_ROOT)/tao/Servant_Base.h \
+ $(TAO_ROOT)/tao/POAC.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/POAC.i \
+ $(TAO_ROOT)/tao/Servant_Base.i \
+ $(TAO_ROOT)/tao/IORS.i \
+ $(TAO_ROOT)/tao/Interceptor.h \
+ $(TAO_ROOT)/tao/InterceptorS.h \
+ $(TAO_ROOT)/tao/InterceptorC.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/InterceptorC.i \
+ $(TAO_ROOT)/tao/Interceptor.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/NVList.h \
+ $(TAO_ROOT)/tao/NVList.i \
+ $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/Principal.i \
+ $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Context.h \
+ $(TAO_ROOT)/tao/Context.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/Request.i \
+ $(TAO_ROOT)/tao/Server_Request.h \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/GIOP.h \
+ $(TAO_ROOT)/tao/GIOP.i \
+ $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/Marshal.h \
+ $(TAO_ROOT)/tao/Marshal.i \
+ $(TAO_ROOT)/tao/singletons.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/POA.h \
+ $(TAO_ROOT)/tao/Object_Adapter.h \
+ $(TAO_ROOT)/tao/Key_Adapters.h \
+ $(ACE_ROOT)/ace/Map.h \
+ $(ACE_ROOT)/ace/Map.i \
+ $(ACE_ROOT)/ace/Map_T.h \
+ $(ACE_ROOT)/ace/Pair.h \
+ $(ACE_ROOT)/ace/Pair.i \
+ $(ACE_ROOT)/ace/Pair_T.h \
+ $(ACE_ROOT)/ace/Pair_T.i \
+ $(ACE_ROOT)/ace/Pair_T.cpp \
+ $(ACE_ROOT)/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.i \
+ $(ACE_ROOT)/ace/Map_Manager.cpp \
+ $(ACE_ROOT)/ace/Active_Map_Manager.h \
+ $(ACE_ROOT)/ace/Active_Map_Manager.i \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Map_T.i \
+ $(ACE_ROOT)/ace/Map_T.cpp \
+ $(TAO_ROOT)/tao/Key_Adapters.i \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/POAS.h \
+ $(TAO_ROOT)/tao/POA_CORBA.h \
+ $(TAO_ROOT)/tao/DynAnyC.h \
+ $(TAO_ROOT)/tao/DynAnyC.i \
+ $(TAO_ROOT)/tao/DomainC.h \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/POAS.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
+ $(TAO_ROOT)/tao/Object_Adapter.i \
+ $(TAO_ROOT)/tao/POAManager.h \
+ $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/ImplRepoC.h \
+ $(TAO_ROOT)/tao/Operation_Table.h \
+ $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/Pluggable.h \
+ $(ACE_ROOT)/ace/Message_Queue.h \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Synch_Options.h \
+ $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
+ $(ACE_ROOT)/ace/Strategies_T.i \
+ $(ACE_ROOT)/ace/Strategies_T.cpp \
+ $(ACE_ROOT)/ace/Service_Repository.h \
+ $(ACE_ROOT)/ace/Service_Types.h \
+ $(ACE_ROOT)/ace/Service_Types.i \
+ $(ACE_ROOT)/ace/Service_Repository.i \
+ $(ACE_ROOT)/ace/WFMO_Reactor.h \
+ $(ACE_ROOT)/ace/WFMO_Reactor.i \
+ $(ACE_ROOT)/ace/Strategies.i \
+ $(ACE_ROOT)/ace/Message_Queue.i \
+ $(TAO_ROOT)/tao/Pluggable.i \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/Profile.h \
+ $(TAO_ROOT)/tao/Tagged_Components.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.i \
+ $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/Profile.i \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(TAO_ROOT)/tao/Protocol_Factory.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(ACE_ROOT)/ace/Dynamic_Service.h \
+ $(ACE_ROOT)/ace/Dynamic_Service.cpp \
+ $(TAO_ROOT)/tao/Invocation.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/TAOC.h \
+ $(TAO_ROOT)/tao/TAOC.i \
+ $(TAO_ROOT)/tao/Invocation.i \
+ $(TAO_ROOT)/tao/ImplRepoC.i \
+ $(TAO_ROOT)/tao/POA.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
+ $(TAO_ROOT)/tao/DynAny_i.h \
+ $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
+ $(TAO_ROOT)/tao/ObjectIDList.h \
+ $(TAO_ROOT)/tao/ObjectIDList.i \
+ $(TAO_ROOT)/tao/WrongTransactionC.h \
+ $(TAO_ROOT)/tao/InterfaceC.h \
+ $(TAO_ROOT)/tao/BoundsC.h \
+ $(TAO_ROOT)/tao/BoundsC.i \
+ CosEvent/CEC_ConsumerControl.i
+
+.obj/CEC_Dispatching.o .obj/CEC_Dispatching.so .shobj/CEC_Dispatching.o .shobj/CEC_Dispatching.so: CosEvent/CEC_Dispatching.cpp \
+ CosEvent/CEC_Dispatching.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+ $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(TAO_ROOT)/tao/corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers_T.h \
+ $(ACE_ROOT)/ace/Containers_T.i \
+ $(ACE_ROOT)/ace/Containers_T.cpp \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/Message_Block_T.h \
+ $(ACE_ROOT)/ace/Message_Block_T.i \
+ $(ACE_ROOT)/ace/Message_Block_T.cpp \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(TAO_ROOT)/tao/try_macros.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/IOR_LookupTable.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/Functor.h \
+ $(ACE_ROOT)/ace/Functor.i \
+ $(ACE_ROOT)/ace/Functor_T.h \
+ $(ACE_ROOT)/ace/Functor_T.i \
+ $(ACE_ROOT)/ace/Functor_T.cpp \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/varout.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/varout.i \
+ $(TAO_ROOT)/tao/varout.cpp \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/IORManipulation.h \
+ $(TAO_ROOT)/tao/IORS.h \
+ $(TAO_ROOT)/tao/IORC.h \
+ $(TAO_ROOT)/tao/CDR.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/IORC.i \
+ $(TAO_ROOT)/tao/Servant_Base.h \
+ $(TAO_ROOT)/tao/POAC.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/POAC.i \
+ $(TAO_ROOT)/tao/Servant_Base.i \
+ $(TAO_ROOT)/tao/IORS.i \
+ $(TAO_ROOT)/tao/Interceptor.h \
+ $(TAO_ROOT)/tao/InterceptorS.h \
+ $(TAO_ROOT)/tao/InterceptorC.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/InterceptorC.i \
+ $(TAO_ROOT)/tao/Interceptor.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/NVList.h \
+ $(TAO_ROOT)/tao/NVList.i \
+ $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/Principal.i \
+ $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Context.h \
+ $(TAO_ROOT)/tao/Context.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/Request.i \
+ $(TAO_ROOT)/tao/Server_Request.h \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/GIOP.h \
+ $(TAO_ROOT)/tao/GIOP.i \
+ $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/Marshal.h \
+ $(TAO_ROOT)/tao/Marshal.i \
+ $(TAO_ROOT)/tao/singletons.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/POA.h \
+ $(TAO_ROOT)/tao/Object_Adapter.h \
+ $(TAO_ROOT)/tao/Key_Adapters.h \
+ $(ACE_ROOT)/ace/Map.h \
+ $(ACE_ROOT)/ace/Map.i \
+ $(ACE_ROOT)/ace/Map_T.h \
+ $(ACE_ROOT)/ace/Pair.h \
+ $(ACE_ROOT)/ace/Pair.i \
+ $(ACE_ROOT)/ace/Pair_T.h \
+ $(ACE_ROOT)/ace/Pair_T.i \
+ $(ACE_ROOT)/ace/Pair_T.cpp \
+ $(ACE_ROOT)/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.i \
+ $(ACE_ROOT)/ace/Map_Manager.cpp \
+ $(ACE_ROOT)/ace/Active_Map_Manager.h \
+ $(ACE_ROOT)/ace/Active_Map_Manager.i \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Map_T.i \
+ $(ACE_ROOT)/ace/Map_T.cpp \
+ $(TAO_ROOT)/tao/Key_Adapters.i \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/POAS.h \
+ $(TAO_ROOT)/tao/POA_CORBA.h \
+ $(TAO_ROOT)/tao/DynAnyC.h \
+ $(TAO_ROOT)/tao/DynAnyC.i \
+ $(TAO_ROOT)/tao/DomainC.h \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/POAS.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
+ $(TAO_ROOT)/tao/Object_Adapter.i \
+ $(TAO_ROOT)/tao/POAManager.h \
+ $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/ImplRepoC.h \
+ $(TAO_ROOT)/tao/Operation_Table.h \
+ $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/Pluggable.h \
+ $(ACE_ROOT)/ace/Message_Queue.h \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Synch_Options.h \
+ $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
+ $(ACE_ROOT)/ace/Strategies_T.i \
+ $(ACE_ROOT)/ace/Strategies_T.cpp \
+ $(ACE_ROOT)/ace/Service_Repository.h \
+ $(ACE_ROOT)/ace/Service_Types.h \
+ $(ACE_ROOT)/ace/Service_Types.i \
+ $(ACE_ROOT)/ace/Service_Repository.i \
+ $(ACE_ROOT)/ace/WFMO_Reactor.h \
+ $(ACE_ROOT)/ace/WFMO_Reactor.i \
+ $(ACE_ROOT)/ace/Strategies.i \
+ $(ACE_ROOT)/ace/Message_Queue.i \
+ $(TAO_ROOT)/tao/Pluggable.i \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/Profile.h \
+ $(TAO_ROOT)/tao/Tagged_Components.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.i \
+ $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/Profile.i \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(TAO_ROOT)/tao/Protocol_Factory.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(ACE_ROOT)/ace/Dynamic_Service.h \
+ $(ACE_ROOT)/ace/Dynamic_Service.cpp \
+ $(TAO_ROOT)/tao/Invocation.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/TAOC.h \
+ $(TAO_ROOT)/tao/TAOC.i \
+ $(TAO_ROOT)/tao/Invocation.i \
+ $(TAO_ROOT)/tao/ImplRepoC.i \
+ $(TAO_ROOT)/tao/POA.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
+ $(TAO_ROOT)/tao/DynAny_i.h \
+ $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
+ $(TAO_ROOT)/tao/ObjectIDList.h \
+ $(TAO_ROOT)/tao/ObjectIDList.i \
+ $(TAO_ROOT)/tao/WrongTransactionC.h \
+ $(TAO_ROOT)/tao/InterfaceC.h \
+ $(TAO_ROOT)/tao/BoundsC.h \
+ $(TAO_ROOT)/tao/BoundsC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
+ CosEvent/CEC_Dispatching.i CosEvent/CEC_ProxyPushSupplier.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
+ CosEvent/CEC_ProxyPushSupplier.i
+
+.obj/CEC_EventChannel.o .obj/CEC_EventChannel.so .shobj/CEC_EventChannel.o .shobj/CEC_EventChannel.so: CosEvent/CEC_EventChannel.cpp \
+ CosEvent/CEC_EventChannel.h CosEvent/CEC_Factory.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers_T.h \
+ $(ACE_ROOT)/ace/Containers_T.i \
+ $(ACE_ROOT)/ace/Containers_T.cpp \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/Message_Block_T.h \
+ $(ACE_ROOT)/ace/Message_Block_T.i \
+ $(ACE_ROOT)/ace/Message_Block_T.cpp \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(TAO_ROOT)/tao/try_macros.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/IOR_LookupTable.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/Functor.h \
+ $(ACE_ROOT)/ace/Functor.i \
+ $(ACE_ROOT)/ace/Functor_T.h \
+ $(ACE_ROOT)/ace/Functor_T.i \
+ $(ACE_ROOT)/ace/Functor_T.cpp \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/varout.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/varout.i \
+ $(TAO_ROOT)/tao/varout.cpp \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/IORManipulation.h \
+ $(TAO_ROOT)/tao/IORS.h \
+ $(TAO_ROOT)/tao/IORC.h \
+ $(TAO_ROOT)/tao/CDR.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/IORC.i \
+ $(TAO_ROOT)/tao/Servant_Base.h \
+ $(TAO_ROOT)/tao/POAC.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/POAC.i \
+ $(TAO_ROOT)/tao/Servant_Base.i \
+ $(TAO_ROOT)/tao/IORS.i \
+ $(TAO_ROOT)/tao/Interceptor.h \
+ $(TAO_ROOT)/tao/InterceptorS.h \
+ $(TAO_ROOT)/tao/InterceptorC.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/InterceptorC.i \
+ $(TAO_ROOT)/tao/Interceptor.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/NVList.h \
+ $(TAO_ROOT)/tao/NVList.i \
+ $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/Principal.i \
+ $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Context.h \
+ $(TAO_ROOT)/tao/Context.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/Request.i \
+ $(TAO_ROOT)/tao/Server_Request.h \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/GIOP.h \
+ $(TAO_ROOT)/tao/GIOP.i \
+ $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/Marshal.h \
+ $(TAO_ROOT)/tao/Marshal.i \
+ $(TAO_ROOT)/tao/singletons.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/POA.h \
+ $(TAO_ROOT)/tao/Object_Adapter.h \
+ $(TAO_ROOT)/tao/Key_Adapters.h \
+ $(ACE_ROOT)/ace/Map.h \
+ $(ACE_ROOT)/ace/Map.i \
+ $(ACE_ROOT)/ace/Map_T.h \
+ $(ACE_ROOT)/ace/Pair.h \
+ $(ACE_ROOT)/ace/Pair.i \
+ $(ACE_ROOT)/ace/Pair_T.h \
+ $(ACE_ROOT)/ace/Pair_T.i \
+ $(ACE_ROOT)/ace/Pair_T.cpp \
+ $(ACE_ROOT)/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.i \
+ $(ACE_ROOT)/ace/Map_Manager.cpp \
+ $(ACE_ROOT)/ace/Active_Map_Manager.h \
+ $(ACE_ROOT)/ace/Active_Map_Manager.i \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Map_T.i \
+ $(ACE_ROOT)/ace/Map_T.cpp \
+ $(TAO_ROOT)/tao/Key_Adapters.i \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/POAS.h \
+ $(TAO_ROOT)/tao/POA_CORBA.h \
+ $(TAO_ROOT)/tao/DynAnyC.h \
+ $(TAO_ROOT)/tao/DynAnyC.i \
+ $(TAO_ROOT)/tao/DomainC.h \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/POAS.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
+ $(TAO_ROOT)/tao/Object_Adapter.i \
+ $(TAO_ROOT)/tao/POAManager.h \
+ $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/ImplRepoC.h \
+ $(TAO_ROOT)/tao/Operation_Table.h \
+ $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/Pluggable.h \
+ $(ACE_ROOT)/ace/Message_Queue.h \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Synch_Options.h \
+ $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
+ $(ACE_ROOT)/ace/Strategies_T.i \
+ $(ACE_ROOT)/ace/Strategies_T.cpp \
+ $(ACE_ROOT)/ace/Service_Repository.h \
+ $(ACE_ROOT)/ace/Service_Types.h \
+ $(ACE_ROOT)/ace/Service_Types.i \
+ $(ACE_ROOT)/ace/Service_Repository.i \
+ $(ACE_ROOT)/ace/WFMO_Reactor.h \
+ $(ACE_ROOT)/ace/WFMO_Reactor.i \
+ $(ACE_ROOT)/ace/Strategies.i \
+ $(ACE_ROOT)/ace/Message_Queue.i \
+ $(TAO_ROOT)/tao/Pluggable.i \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/Profile.h \
+ $(TAO_ROOT)/tao/Tagged_Components.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.i \
+ $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/Profile.i \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(TAO_ROOT)/tao/Protocol_Factory.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(ACE_ROOT)/ace/Dynamic_Service.h \
+ $(ACE_ROOT)/ace/Dynamic_Service.cpp \
+ $(TAO_ROOT)/tao/Invocation.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/TAOC.h \
+ $(TAO_ROOT)/tao/TAOC.i \
+ $(TAO_ROOT)/tao/Invocation.i \
+ $(TAO_ROOT)/tao/ImplRepoC.i \
+ $(TAO_ROOT)/tao/POA.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
+ $(TAO_ROOT)/tao/DynAny_i.h \
+ $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
+ $(TAO_ROOT)/tao/ObjectIDList.h \
+ $(TAO_ROOT)/tao/ObjectIDList.i \
+ $(TAO_ROOT)/tao/WrongTransactionC.h \
+ $(TAO_ROOT)/tao/InterfaceC.h \
+ $(TAO_ROOT)/tao/BoundsC.h \
+ $(TAO_ROOT)/tao/BoundsC.i \
+ CosEvent/CEC_Factory.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
+ CosEvent/CEC_Defaults.h CosEvent/CEC_EventChannel.i \
+ CosEvent/CEC_Dispatching.h CosEvent/CEC_Dispatching.i \
+ CosEvent/CEC_ConsumerAdmin.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Proxy_Collection.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Busy_Lock.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Busy_Lock.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Busy_Lock.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Proxy_Collection.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Proxy_Collection.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Command.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Command.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Command.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Worker.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Worker.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Worker.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Defaults.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
+ CosEvent/CEC_ConsumerAdmin.i CosEvent/CEC_SupplierAdmin.h \
+ CosEvent/CEC_SupplierAdmin.i CosEvent/CEC_ConsumerControl.h \
+ CosEvent/CEC_ConsumerControl.i CosEvent/CEC_SupplierControl.h \
+ CosEvent/CEC_SupplierControl.i
+
+.obj/CEC_Factory.o .obj/CEC_Factory.so .shobj/CEC_Factory.o .shobj/CEC_Factory.so: CosEvent/CEC_Factory.cpp CosEvent/CEC_Factory.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers_T.h \
+ $(ACE_ROOT)/ace/Containers_T.i \
+ $(ACE_ROOT)/ace/Containers_T.cpp \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/Message_Block_T.h \
+ $(ACE_ROOT)/ace/Message_Block_T.i \
+ $(ACE_ROOT)/ace/Message_Block_T.cpp \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(TAO_ROOT)/tao/try_macros.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/IOR_LookupTable.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/Functor.h \
+ $(ACE_ROOT)/ace/Functor.i \
+ $(ACE_ROOT)/ace/Functor_T.h \
+ $(ACE_ROOT)/ace/Functor_T.i \
+ $(ACE_ROOT)/ace/Functor_T.cpp \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/varout.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/varout.i \
+ $(TAO_ROOT)/tao/varout.cpp \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/IORManipulation.h \
+ $(TAO_ROOT)/tao/IORS.h \
+ $(TAO_ROOT)/tao/IORC.h \
+ $(TAO_ROOT)/tao/CDR.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/IORC.i \
+ $(TAO_ROOT)/tao/Servant_Base.h \
+ $(TAO_ROOT)/tao/POAC.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/POAC.i \
+ $(TAO_ROOT)/tao/Servant_Base.i \
+ $(TAO_ROOT)/tao/IORS.i \
+ $(TAO_ROOT)/tao/Interceptor.h \
+ $(TAO_ROOT)/tao/InterceptorS.h \
+ $(TAO_ROOT)/tao/InterceptorC.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/InterceptorC.i \
+ $(TAO_ROOT)/tao/Interceptor.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/NVList.h \
+ $(TAO_ROOT)/tao/NVList.i \
+ $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/Principal.i \
+ $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Context.h \
+ $(TAO_ROOT)/tao/Context.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/Request.i \
+ $(TAO_ROOT)/tao/Server_Request.h \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/GIOP.h \
+ $(TAO_ROOT)/tao/GIOP.i \
+ $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/Marshal.h \
+ $(TAO_ROOT)/tao/Marshal.i \
+ $(TAO_ROOT)/tao/singletons.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/POA.h \
+ $(TAO_ROOT)/tao/Object_Adapter.h \
+ $(TAO_ROOT)/tao/Key_Adapters.h \
+ $(ACE_ROOT)/ace/Map.h \
+ $(ACE_ROOT)/ace/Map.i \
+ $(ACE_ROOT)/ace/Map_T.h \
+ $(ACE_ROOT)/ace/Pair.h \
+ $(ACE_ROOT)/ace/Pair.i \
+ $(ACE_ROOT)/ace/Pair_T.h \
+ $(ACE_ROOT)/ace/Pair_T.i \
+ $(ACE_ROOT)/ace/Pair_T.cpp \
+ $(ACE_ROOT)/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.i \
+ $(ACE_ROOT)/ace/Map_Manager.cpp \
+ $(ACE_ROOT)/ace/Active_Map_Manager.h \
+ $(ACE_ROOT)/ace/Active_Map_Manager.i \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Map_T.i \
+ $(ACE_ROOT)/ace/Map_T.cpp \
+ $(TAO_ROOT)/tao/Key_Adapters.i \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/POAS.h \
+ $(TAO_ROOT)/tao/POA_CORBA.h \
+ $(TAO_ROOT)/tao/DynAnyC.h \
+ $(TAO_ROOT)/tao/DynAnyC.i \
+ $(TAO_ROOT)/tao/DomainC.h \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/POAS.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
+ $(TAO_ROOT)/tao/Object_Adapter.i \
+ $(TAO_ROOT)/tao/POAManager.h \
+ $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/ImplRepoC.h \
+ $(TAO_ROOT)/tao/Operation_Table.h \
+ $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/Pluggable.h \
+ $(ACE_ROOT)/ace/Message_Queue.h \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Synch_Options.h \
+ $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
+ $(ACE_ROOT)/ace/Strategies_T.i \
+ $(ACE_ROOT)/ace/Strategies_T.cpp \
+ $(ACE_ROOT)/ace/Service_Repository.h \
+ $(ACE_ROOT)/ace/Service_Types.h \
+ $(ACE_ROOT)/ace/Service_Types.i \
+ $(ACE_ROOT)/ace/Service_Repository.i \
+ $(ACE_ROOT)/ace/WFMO_Reactor.h \
+ $(ACE_ROOT)/ace/WFMO_Reactor.i \
+ $(ACE_ROOT)/ace/Strategies.i \
+ $(ACE_ROOT)/ace/Message_Queue.i \
+ $(TAO_ROOT)/tao/Pluggable.i \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/Profile.h \
+ $(TAO_ROOT)/tao/Tagged_Components.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.i \
+ $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/Profile.i \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(TAO_ROOT)/tao/Protocol_Factory.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(ACE_ROOT)/ace/Dynamic_Service.h \
+ $(ACE_ROOT)/ace/Dynamic_Service.cpp \
+ $(TAO_ROOT)/tao/Invocation.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/TAOC.h \
+ $(TAO_ROOT)/tao/TAOC.i \
+ $(TAO_ROOT)/tao/Invocation.i \
+ $(TAO_ROOT)/tao/ImplRepoC.i \
+ $(TAO_ROOT)/tao/POA.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
+ $(TAO_ROOT)/tao/DynAny_i.h \
+ $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
+ $(TAO_ROOT)/tao/ObjectIDList.h \
+ $(TAO_ROOT)/tao/ObjectIDList.i \
+ $(TAO_ROOT)/tao/WrongTransactionC.h \
+ $(TAO_ROOT)/tao/InterfaceC.h \
+ $(TAO_ROOT)/tao/BoundsC.h \
+ $(TAO_ROOT)/tao/BoundsC.i \
+ CosEvent/CEC_Factory.i
+
+.obj/CEC_ProxyPushConsumer.o .obj/CEC_ProxyPushConsumer.so .shobj/CEC_ProxyPushConsumer.o .shobj/CEC_ProxyPushConsumer.so: CosEvent/CEC_ProxyPushConsumer.cpp \
+ CosEvent/CEC_ProxyPushConsumer.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+ $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(TAO_ROOT)/tao/corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers_T.h \
+ $(ACE_ROOT)/ace/Containers_T.i \
+ $(ACE_ROOT)/ace/Containers_T.cpp \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/Message_Block_T.h \
+ $(ACE_ROOT)/ace/Message_Block_T.i \
+ $(ACE_ROOT)/ace/Message_Block_T.cpp \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(TAO_ROOT)/tao/try_macros.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/IOR_LookupTable.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/Functor.h \
+ $(ACE_ROOT)/ace/Functor.i \
+ $(ACE_ROOT)/ace/Functor_T.h \
+ $(ACE_ROOT)/ace/Functor_T.i \
+ $(ACE_ROOT)/ace/Functor_T.cpp \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/varout.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/varout.i \
+ $(TAO_ROOT)/tao/varout.cpp \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/IORManipulation.h \
+ $(TAO_ROOT)/tao/IORS.h \
+ $(TAO_ROOT)/tao/IORC.h \
+ $(TAO_ROOT)/tao/CDR.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/IORC.i \
+ $(TAO_ROOT)/tao/Servant_Base.h \
+ $(TAO_ROOT)/tao/POAC.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/POAC.i \
+ $(TAO_ROOT)/tao/Servant_Base.i \
+ $(TAO_ROOT)/tao/IORS.i \
+ $(TAO_ROOT)/tao/Interceptor.h \
+ $(TAO_ROOT)/tao/InterceptorS.h \
+ $(TAO_ROOT)/tao/InterceptorC.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/InterceptorC.i \
+ $(TAO_ROOT)/tao/Interceptor.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/NVList.h \
+ $(TAO_ROOT)/tao/NVList.i \
+ $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/Principal.i \
+ $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Context.h \
+ $(TAO_ROOT)/tao/Context.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/Request.i \
+ $(TAO_ROOT)/tao/Server_Request.h \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/GIOP.h \
+ $(TAO_ROOT)/tao/GIOP.i \
+ $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/Marshal.h \
+ $(TAO_ROOT)/tao/Marshal.i \
+ $(TAO_ROOT)/tao/singletons.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/POA.h \
+ $(TAO_ROOT)/tao/Object_Adapter.h \
+ $(TAO_ROOT)/tao/Key_Adapters.h \
+ $(ACE_ROOT)/ace/Map.h \
+ $(ACE_ROOT)/ace/Map.i \
+ $(ACE_ROOT)/ace/Map_T.h \
+ $(ACE_ROOT)/ace/Pair.h \
+ $(ACE_ROOT)/ace/Pair.i \
+ $(ACE_ROOT)/ace/Pair_T.h \
+ $(ACE_ROOT)/ace/Pair_T.i \
+ $(ACE_ROOT)/ace/Pair_T.cpp \
+ $(ACE_ROOT)/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.i \
+ $(ACE_ROOT)/ace/Map_Manager.cpp \
+ $(ACE_ROOT)/ace/Active_Map_Manager.h \
+ $(ACE_ROOT)/ace/Active_Map_Manager.i \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Map_T.i \
+ $(ACE_ROOT)/ace/Map_T.cpp \
+ $(TAO_ROOT)/tao/Key_Adapters.i \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/POAS.h \
+ $(TAO_ROOT)/tao/POA_CORBA.h \
+ $(TAO_ROOT)/tao/DynAnyC.h \
+ $(TAO_ROOT)/tao/DynAnyC.i \
+ $(TAO_ROOT)/tao/DomainC.h \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/POAS.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
+ $(TAO_ROOT)/tao/Object_Adapter.i \
+ $(TAO_ROOT)/tao/POAManager.h \
+ $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/ImplRepoC.h \
+ $(TAO_ROOT)/tao/Operation_Table.h \
+ $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/Pluggable.h \
+ $(ACE_ROOT)/ace/Message_Queue.h \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Synch_Options.h \
+ $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
+ $(ACE_ROOT)/ace/Strategies_T.i \
+ $(ACE_ROOT)/ace/Strategies_T.cpp \
+ $(ACE_ROOT)/ace/Service_Repository.h \
+ $(ACE_ROOT)/ace/Service_Types.h \
+ $(ACE_ROOT)/ace/Service_Types.i \
+ $(ACE_ROOT)/ace/Service_Repository.i \
+ $(ACE_ROOT)/ace/WFMO_Reactor.h \
+ $(ACE_ROOT)/ace/WFMO_Reactor.i \
+ $(ACE_ROOT)/ace/Strategies.i \
+ $(ACE_ROOT)/ace/Message_Queue.i \
+ $(TAO_ROOT)/tao/Pluggable.i \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/Profile.h \
+ $(TAO_ROOT)/tao/Tagged_Components.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.i \
+ $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/Profile.i \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(TAO_ROOT)/tao/Protocol_Factory.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(ACE_ROOT)/ace/Dynamic_Service.h \
+ $(ACE_ROOT)/ace/Dynamic_Service.cpp \
+ $(TAO_ROOT)/tao/Invocation.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/TAOC.h \
+ $(TAO_ROOT)/tao/TAOC.i \
+ $(TAO_ROOT)/tao/Invocation.i \
+ $(TAO_ROOT)/tao/ImplRepoC.i \
+ $(TAO_ROOT)/tao/POA.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
+ $(TAO_ROOT)/tao/DynAny_i.h \
+ $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
+ $(TAO_ROOT)/tao/ObjectIDList.h \
+ $(TAO_ROOT)/tao/ObjectIDList.i \
+ $(TAO_ROOT)/tao/WrongTransactionC.h \
+ $(TAO_ROOT)/tao/InterfaceC.h \
+ $(TAO_ROOT)/tao/BoundsC.h \
+ $(TAO_ROOT)/tao/BoundsC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Worker.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Worker.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Worker.cpp \
+ CosEvent/CEC_ProxyPushConsumer.i CosEvent/CEC_EventChannel.h \
+ CosEvent/CEC_Factory.h CosEvent/CEC_Factory.i CosEvent/CEC_Defaults.h \
+ CosEvent/CEC_EventChannel.i CosEvent/CEC_ConsumerAdmin.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Proxy_Collection.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Busy_Lock.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Busy_Lock.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Busy_Lock.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Proxy_Collection.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Proxy_Collection.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Command.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Command.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Command.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Defaults.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
+ CosEvent/CEC_ConsumerAdmin.i CosEvent/CEC_ProxyPushSupplier.h \
+ CosEvent/CEC_ProxyPushSupplier.i
+
+.obj/CEC_ProxyPushSupplier.o .obj/CEC_ProxyPushSupplier.so .shobj/CEC_ProxyPushSupplier.o .shobj/CEC_ProxyPushSupplier.so: CosEvent/CEC_ProxyPushSupplier.cpp \
+ CosEvent/CEC_ProxyPushSupplier.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+ $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(TAO_ROOT)/tao/corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers_T.h \
+ $(ACE_ROOT)/ace/Containers_T.i \
+ $(ACE_ROOT)/ace/Containers_T.cpp \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/Message_Block_T.h \
+ $(ACE_ROOT)/ace/Message_Block_T.i \
+ $(ACE_ROOT)/ace/Message_Block_T.cpp \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(TAO_ROOT)/tao/try_macros.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/IOR_LookupTable.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/Functor.h \
+ $(ACE_ROOT)/ace/Functor.i \
+ $(ACE_ROOT)/ace/Functor_T.h \
+ $(ACE_ROOT)/ace/Functor_T.i \
+ $(ACE_ROOT)/ace/Functor_T.cpp \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/varout.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/varout.i \
+ $(TAO_ROOT)/tao/varout.cpp \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/IORManipulation.h \
+ $(TAO_ROOT)/tao/IORS.h \
+ $(TAO_ROOT)/tao/IORC.h \
+ $(TAO_ROOT)/tao/CDR.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/IORC.i \
+ $(TAO_ROOT)/tao/Servant_Base.h \
+ $(TAO_ROOT)/tao/POAC.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/POAC.i \
+ $(TAO_ROOT)/tao/Servant_Base.i \
+ $(TAO_ROOT)/tao/IORS.i \
+ $(TAO_ROOT)/tao/Interceptor.h \
+ $(TAO_ROOT)/tao/InterceptorS.h \
+ $(TAO_ROOT)/tao/InterceptorC.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/InterceptorC.i \
+ $(TAO_ROOT)/tao/Interceptor.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/NVList.h \
+ $(TAO_ROOT)/tao/NVList.i \
+ $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/Principal.i \
+ $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Context.h \
+ $(TAO_ROOT)/tao/Context.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/Request.i \
+ $(TAO_ROOT)/tao/Server_Request.h \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/GIOP.h \
+ $(TAO_ROOT)/tao/GIOP.i \
+ $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/Marshal.h \
+ $(TAO_ROOT)/tao/Marshal.i \
+ $(TAO_ROOT)/tao/singletons.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/POA.h \
+ $(TAO_ROOT)/tao/Object_Adapter.h \
+ $(TAO_ROOT)/tao/Key_Adapters.h \
+ $(ACE_ROOT)/ace/Map.h \
+ $(ACE_ROOT)/ace/Map.i \
+ $(ACE_ROOT)/ace/Map_T.h \
+ $(ACE_ROOT)/ace/Pair.h \
+ $(ACE_ROOT)/ace/Pair.i \
+ $(ACE_ROOT)/ace/Pair_T.h \
+ $(ACE_ROOT)/ace/Pair_T.i \
+ $(ACE_ROOT)/ace/Pair_T.cpp \
+ $(ACE_ROOT)/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.i \
+ $(ACE_ROOT)/ace/Map_Manager.cpp \
+ $(ACE_ROOT)/ace/Active_Map_Manager.h \
+ $(ACE_ROOT)/ace/Active_Map_Manager.i \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Map_T.i \
+ $(ACE_ROOT)/ace/Map_T.cpp \
+ $(TAO_ROOT)/tao/Key_Adapters.i \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/POAS.h \
+ $(TAO_ROOT)/tao/POA_CORBA.h \
+ $(TAO_ROOT)/tao/DynAnyC.h \
+ $(TAO_ROOT)/tao/DynAnyC.i \
+ $(TAO_ROOT)/tao/DomainC.h \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/POAS.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
+ $(TAO_ROOT)/tao/Object_Adapter.i \
+ $(TAO_ROOT)/tao/POAManager.h \
+ $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/ImplRepoC.h \
+ $(TAO_ROOT)/tao/Operation_Table.h \
+ $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/Pluggable.h \
+ $(ACE_ROOT)/ace/Message_Queue.h \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Synch_Options.h \
+ $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
+ $(ACE_ROOT)/ace/Strategies_T.i \
+ $(ACE_ROOT)/ace/Strategies_T.cpp \
+ $(ACE_ROOT)/ace/Service_Repository.h \
+ $(ACE_ROOT)/ace/Service_Types.h \
+ $(ACE_ROOT)/ace/Service_Types.i \
+ $(ACE_ROOT)/ace/Service_Repository.i \
+ $(ACE_ROOT)/ace/WFMO_Reactor.h \
+ $(ACE_ROOT)/ace/WFMO_Reactor.i \
+ $(ACE_ROOT)/ace/Strategies.i \
+ $(ACE_ROOT)/ace/Message_Queue.i \
+ $(TAO_ROOT)/tao/Pluggable.i \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/Profile.h \
+ $(TAO_ROOT)/tao/Tagged_Components.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.i \
+ $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/Profile.i \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(TAO_ROOT)/tao/Protocol_Factory.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(ACE_ROOT)/ace/Dynamic_Service.h \
+ $(ACE_ROOT)/ace/Dynamic_Service.cpp \
+ $(TAO_ROOT)/tao/Invocation.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/TAOC.h \
+ $(TAO_ROOT)/tao/TAOC.i \
+ $(TAO_ROOT)/tao/Invocation.i \
+ $(TAO_ROOT)/tao/ImplRepoC.i \
+ $(TAO_ROOT)/tao/POA.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
+ $(TAO_ROOT)/tao/DynAny_i.h \
+ $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
+ $(TAO_ROOT)/tao/ObjectIDList.h \
+ $(TAO_ROOT)/tao/ObjectIDList.i \
+ $(TAO_ROOT)/tao/WrongTransactionC.h \
+ $(TAO_ROOT)/tao/InterfaceC.h \
+ $(TAO_ROOT)/tao/BoundsC.h \
+ $(TAO_ROOT)/tao/BoundsC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
+ CosEvent/CEC_ProxyPushSupplier.i CosEvent/CEC_Dispatching.h \
+ CosEvent/CEC_Dispatching.i CosEvent/CEC_EventChannel.h \
+ CosEvent/CEC_Factory.h CosEvent/CEC_Factory.i CosEvent/CEC_Defaults.h \
+ CosEvent/CEC_EventChannel.i
+
+.obj/CEC_SupplierAdmin.o .obj/CEC_SupplierAdmin.so .shobj/CEC_SupplierAdmin.o .shobj/CEC_SupplierAdmin.so: CosEvent/CEC_SupplierAdmin.cpp \
+ CosEvent/CEC_SupplierAdmin.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+ $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(TAO_ROOT)/tao/corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers_T.h \
+ $(ACE_ROOT)/ace/Containers_T.i \
+ $(ACE_ROOT)/ace/Containers_T.cpp \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/Message_Block_T.h \
+ $(ACE_ROOT)/ace/Message_Block_T.i \
+ $(ACE_ROOT)/ace/Message_Block_T.cpp \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(TAO_ROOT)/tao/try_macros.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/IOR_LookupTable.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/Functor.h \
+ $(ACE_ROOT)/ace/Functor.i \
+ $(ACE_ROOT)/ace/Functor_T.h \
+ $(ACE_ROOT)/ace/Functor_T.i \
+ $(ACE_ROOT)/ace/Functor_T.cpp \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/varout.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/varout.i \
+ $(TAO_ROOT)/tao/varout.cpp \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/IORManipulation.h \
+ $(TAO_ROOT)/tao/IORS.h \
+ $(TAO_ROOT)/tao/IORC.h \
+ $(TAO_ROOT)/tao/CDR.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/IORC.i \
+ $(TAO_ROOT)/tao/Servant_Base.h \
+ $(TAO_ROOT)/tao/POAC.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/POAC.i \
+ $(TAO_ROOT)/tao/Servant_Base.i \
+ $(TAO_ROOT)/tao/IORS.i \
+ $(TAO_ROOT)/tao/Interceptor.h \
+ $(TAO_ROOT)/tao/InterceptorS.h \
+ $(TAO_ROOT)/tao/InterceptorC.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/InterceptorC.i \
+ $(TAO_ROOT)/tao/Interceptor.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/NVList.h \
+ $(TAO_ROOT)/tao/NVList.i \
+ $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/Principal.i \
+ $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Context.h \
+ $(TAO_ROOT)/tao/Context.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/Request.i \
+ $(TAO_ROOT)/tao/Server_Request.h \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/GIOP.h \
+ $(TAO_ROOT)/tao/GIOP.i \
+ $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/Marshal.h \
+ $(TAO_ROOT)/tao/Marshal.i \
+ $(TAO_ROOT)/tao/singletons.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/POA.h \
+ $(TAO_ROOT)/tao/Object_Adapter.h \
+ $(TAO_ROOT)/tao/Key_Adapters.h \
+ $(ACE_ROOT)/ace/Map.h \
+ $(ACE_ROOT)/ace/Map.i \
+ $(ACE_ROOT)/ace/Map_T.h \
+ $(ACE_ROOT)/ace/Pair.h \
+ $(ACE_ROOT)/ace/Pair.i \
+ $(ACE_ROOT)/ace/Pair_T.h \
+ $(ACE_ROOT)/ace/Pair_T.i \
+ $(ACE_ROOT)/ace/Pair_T.cpp \
+ $(ACE_ROOT)/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.i \
+ $(ACE_ROOT)/ace/Map_Manager.cpp \
+ $(ACE_ROOT)/ace/Active_Map_Manager.h \
+ $(ACE_ROOT)/ace/Active_Map_Manager.i \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Map_T.i \
+ $(ACE_ROOT)/ace/Map_T.cpp \
+ $(TAO_ROOT)/tao/Key_Adapters.i \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/POAS.h \
+ $(TAO_ROOT)/tao/POA_CORBA.h \
+ $(TAO_ROOT)/tao/DynAnyC.h \
+ $(TAO_ROOT)/tao/DynAnyC.i \
+ $(TAO_ROOT)/tao/DomainC.h \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/POAS.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
+ $(TAO_ROOT)/tao/Object_Adapter.i \
+ $(TAO_ROOT)/tao/POAManager.h \
+ $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/ImplRepoC.h \
+ $(TAO_ROOT)/tao/Operation_Table.h \
+ $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/Pluggable.h \
+ $(ACE_ROOT)/ace/Message_Queue.h \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Synch_Options.h \
+ $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
+ $(ACE_ROOT)/ace/Strategies_T.i \
+ $(ACE_ROOT)/ace/Strategies_T.cpp \
+ $(ACE_ROOT)/ace/Service_Repository.h \
+ $(ACE_ROOT)/ace/Service_Types.h \
+ $(ACE_ROOT)/ace/Service_Types.i \
+ $(ACE_ROOT)/ace/Service_Repository.i \
+ $(ACE_ROOT)/ace/WFMO_Reactor.h \
+ $(ACE_ROOT)/ace/WFMO_Reactor.i \
+ $(ACE_ROOT)/ace/Strategies.i \
+ $(ACE_ROOT)/ace/Message_Queue.i \
+ $(TAO_ROOT)/tao/Pluggable.i \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/Profile.h \
+ $(TAO_ROOT)/tao/Tagged_Components.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.i \
+ $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/Profile.i \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(TAO_ROOT)/tao/Protocol_Factory.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(ACE_ROOT)/ace/Dynamic_Service.h \
+ $(ACE_ROOT)/ace/Dynamic_Service.cpp \
+ $(TAO_ROOT)/tao/Invocation.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/TAOC.h \
+ $(TAO_ROOT)/tao/TAOC.i \
+ $(TAO_ROOT)/tao/Invocation.i \
+ $(TAO_ROOT)/tao/ImplRepoC.i \
+ $(TAO_ROOT)/tao/POA.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
+ $(TAO_ROOT)/tao/DynAny_i.h \
+ $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
+ $(TAO_ROOT)/tao/ObjectIDList.h \
+ $(TAO_ROOT)/tao/ObjectIDList.i \
+ $(TAO_ROOT)/tao/WrongTransactionC.h \
+ $(TAO_ROOT)/tao/InterfaceC.h \
+ $(TAO_ROOT)/tao/BoundsC.h \
+ $(TAO_ROOT)/tao/BoundsC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Proxy_Collection.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Busy_Lock.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Busy_Lock.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Busy_Lock.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Proxy_Collection.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Proxy_Collection.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Command.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Command.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Command.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Worker.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Worker.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Worker.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Defaults.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
+ CosEvent/CEC_SupplierAdmin.i CosEvent/CEC_ProxyPushConsumer.h \
+ CosEvent/CEC_ProxyPushConsumer.i CosEvent/CEC_ProxyPushSupplier.h \
+ CosEvent/CEC_ProxyPushSupplier.i CosEvent/CEC_EventChannel.h \
+ CosEvent/CEC_Factory.h CosEvent/CEC_Factory.i CosEvent/CEC_Defaults.h \
+ CosEvent/CEC_EventChannel.i
+
+.obj/CEC_SupplierControl.o .obj/CEC_SupplierControl.so .shobj/CEC_SupplierControl.o .shobj/CEC_SupplierControl.so: CosEvent/CEC_SupplierControl.cpp \
+ CosEvent/CEC_SupplierControl.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers_T.h \
+ $(ACE_ROOT)/ace/Containers_T.i \
+ $(ACE_ROOT)/ace/Containers_T.cpp \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/Message_Block_T.h \
+ $(ACE_ROOT)/ace/Message_Block_T.i \
+ $(ACE_ROOT)/ace/Message_Block_T.cpp \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(TAO_ROOT)/tao/try_macros.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/IOR_LookupTable.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/Functor.h \
+ $(ACE_ROOT)/ace/Functor.i \
+ $(ACE_ROOT)/ace/Functor_T.h \
+ $(ACE_ROOT)/ace/Functor_T.i \
+ $(ACE_ROOT)/ace/Functor_T.cpp \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/varout.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/varout.i \
+ $(TAO_ROOT)/tao/varout.cpp \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/IORManipulation.h \
+ $(TAO_ROOT)/tao/IORS.h \
+ $(TAO_ROOT)/tao/IORC.h \
+ $(TAO_ROOT)/tao/CDR.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/IORC.i \
+ $(TAO_ROOT)/tao/Servant_Base.h \
+ $(TAO_ROOT)/tao/POAC.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/POAC.i \
+ $(TAO_ROOT)/tao/Servant_Base.i \
+ $(TAO_ROOT)/tao/IORS.i \
+ $(TAO_ROOT)/tao/Interceptor.h \
+ $(TAO_ROOT)/tao/InterceptorS.h \
+ $(TAO_ROOT)/tao/InterceptorC.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/InterceptorC.i \
+ $(TAO_ROOT)/tao/Interceptor.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/NVList.h \
+ $(TAO_ROOT)/tao/NVList.i \
+ $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/Principal.i \
+ $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Context.h \
+ $(TAO_ROOT)/tao/Context.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/Request.i \
+ $(TAO_ROOT)/tao/Server_Request.h \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/GIOP.h \
+ $(TAO_ROOT)/tao/GIOP.i \
+ $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/Marshal.h \
+ $(TAO_ROOT)/tao/Marshal.i \
+ $(TAO_ROOT)/tao/singletons.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/POA.h \
+ $(TAO_ROOT)/tao/Object_Adapter.h \
+ $(TAO_ROOT)/tao/Key_Adapters.h \
+ $(ACE_ROOT)/ace/Map.h \
+ $(ACE_ROOT)/ace/Map.i \
+ $(ACE_ROOT)/ace/Map_T.h \
+ $(ACE_ROOT)/ace/Pair.h \
+ $(ACE_ROOT)/ace/Pair.i \
+ $(ACE_ROOT)/ace/Pair_T.h \
+ $(ACE_ROOT)/ace/Pair_T.i \
+ $(ACE_ROOT)/ace/Pair_T.cpp \
+ $(ACE_ROOT)/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.i \
+ $(ACE_ROOT)/ace/Map_Manager.cpp \
+ $(ACE_ROOT)/ace/Active_Map_Manager.h \
+ $(ACE_ROOT)/ace/Active_Map_Manager.i \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Map_T.i \
+ $(ACE_ROOT)/ace/Map_T.cpp \
+ $(TAO_ROOT)/tao/Key_Adapters.i \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/POAS.h \
+ $(TAO_ROOT)/tao/POA_CORBA.h \
+ $(TAO_ROOT)/tao/DynAnyC.h \
+ $(TAO_ROOT)/tao/DynAnyC.i \
+ $(TAO_ROOT)/tao/DomainC.h \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/POAS.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
+ $(TAO_ROOT)/tao/Object_Adapter.i \
+ $(TAO_ROOT)/tao/POAManager.h \
+ $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/ImplRepoC.h \
+ $(TAO_ROOT)/tao/Operation_Table.h \
+ $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/Pluggable.h \
+ $(ACE_ROOT)/ace/Message_Queue.h \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Synch_Options.h \
+ $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
+ $(ACE_ROOT)/ace/Strategies_T.i \
+ $(ACE_ROOT)/ace/Strategies_T.cpp \
+ $(ACE_ROOT)/ace/Service_Repository.h \
+ $(ACE_ROOT)/ace/Service_Types.h \
+ $(ACE_ROOT)/ace/Service_Types.i \
+ $(ACE_ROOT)/ace/Service_Repository.i \
+ $(ACE_ROOT)/ace/WFMO_Reactor.h \
+ $(ACE_ROOT)/ace/WFMO_Reactor.i \
+ $(ACE_ROOT)/ace/Strategies.i \
+ $(ACE_ROOT)/ace/Message_Queue.i \
+ $(TAO_ROOT)/tao/Pluggable.i \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/Profile.h \
+ $(TAO_ROOT)/tao/Tagged_Components.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.i \
+ $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/Profile.i \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(TAO_ROOT)/tao/Protocol_Factory.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(ACE_ROOT)/ace/Dynamic_Service.h \
+ $(ACE_ROOT)/ace/Dynamic_Service.cpp \
+ $(TAO_ROOT)/tao/Invocation.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/TAOC.h \
+ $(TAO_ROOT)/tao/TAOC.i \
+ $(TAO_ROOT)/tao/Invocation.i \
+ $(TAO_ROOT)/tao/ImplRepoC.i \
+ $(TAO_ROOT)/tao/POA.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
+ $(TAO_ROOT)/tao/DynAny_i.h \
+ $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
+ $(TAO_ROOT)/tao/ObjectIDList.h \
+ $(TAO_ROOT)/tao/ObjectIDList.i \
+ $(TAO_ROOT)/tao/WrongTransactionC.h \
+ $(TAO_ROOT)/tao/InterfaceC.h \
+ $(TAO_ROOT)/tao/BoundsC.h \
+ $(TAO_ROOT)/tao/BoundsC.i \
+ CosEvent/CEC_SupplierControl.i
+
+.obj/CEC_Dispatching_Task.o .obj/CEC_Dispatching_Task.so .shobj/CEC_Dispatching_Task.o .shobj/CEC_Dispatching_Task.so: CosEvent/CEC_Dispatching_Task.cpp \
+ CosEvent/CEC_Dispatching_Task.h \
+ $(ACE_ROOT)/ace/Task.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers_T.h \
+ $(ACE_ROOT)/ace/Containers_T.i \
+ $(ACE_ROOT)/ace/Containers_T.cpp \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
+ $(ACE_ROOT)/ace/Task.i \
+ $(ACE_ROOT)/ace/Task_T.h \
+ $(ACE_ROOT)/ace/Message_Queue.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/Message_Block_T.h \
+ $(ACE_ROOT)/ace/Message_Block_T.i \
+ $(ACE_ROOT)/ace/Message_Block_T.cpp \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/Synch_Options.h \
+ $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/Functor.h \
+ $(ACE_ROOT)/ace/Functor.i \
+ $(ACE_ROOT)/ace/Functor_T.h \
+ $(ACE_ROOT)/ace/Functor_T.i \
+ $(ACE_ROOT)/ace/Functor_T.cpp \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Strategies_T.i \
+ $(ACE_ROOT)/ace/Strategies_T.cpp \
+ $(ACE_ROOT)/ace/Service_Repository.h \
+ $(ACE_ROOT)/ace/Service_Types.h \
+ $(ACE_ROOT)/ace/Service_Types.i \
+ $(ACE_ROOT)/ace/Service_Repository.i \
+ $(ACE_ROOT)/ace/WFMO_Reactor.h \
+ $(ACE_ROOT)/ace/WFMO_Reactor.i \
+ $(ACE_ROOT)/ace/Strategies.i \
+ $(ACE_ROOT)/ace/Message_Queue.i \
+ $(ACE_ROOT)/ace/Task_T.i \
+ $(ACE_ROOT)/ace/Task_T.cpp \
+ $(ACE_ROOT)/ace/Module.h \
+ $(ACE_ROOT)/ace/Module.i \
+ $(ACE_ROOT)/ace/Module.cpp \
+ $(ACE_ROOT)/ace/Stream_Modules.h \
+ $(ACE_ROOT)/ace/Stream_Modules.i \
+ $(ACE_ROOT)/ace/Stream_Modules.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
+ $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(TAO_ROOT)/tao/try_macros.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/IOR_LookupTable.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/varout.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/varout.i \
+ $(TAO_ROOT)/tao/varout.cpp \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/IORManipulation.h \
+ $(TAO_ROOT)/tao/IORS.h \
+ $(TAO_ROOT)/tao/IORC.h \
+ $(TAO_ROOT)/tao/CDR.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/IORC.i \
+ $(TAO_ROOT)/tao/Servant_Base.h \
+ $(TAO_ROOT)/tao/POAC.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/POAC.i \
+ $(TAO_ROOT)/tao/Servant_Base.i \
+ $(TAO_ROOT)/tao/IORS.i \
+ $(TAO_ROOT)/tao/Interceptor.h \
+ $(TAO_ROOT)/tao/InterceptorS.h \
+ $(TAO_ROOT)/tao/InterceptorC.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/InterceptorC.i \
+ $(TAO_ROOT)/tao/Interceptor.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/NVList.h \
+ $(TAO_ROOT)/tao/NVList.i \
+ $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/Principal.i \
+ $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Context.h \
+ $(TAO_ROOT)/tao/Context.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/Request.i \
+ $(TAO_ROOT)/tao/Server_Request.h \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/GIOP.h \
+ $(TAO_ROOT)/tao/GIOP.i \
+ $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/Marshal.h \
+ $(TAO_ROOT)/tao/Marshal.i \
+ $(TAO_ROOT)/tao/singletons.h \
+ $(TAO_ROOT)/tao/POA.h \
+ $(TAO_ROOT)/tao/Object_Adapter.h \
+ $(TAO_ROOT)/tao/Key_Adapters.h \
+ $(ACE_ROOT)/ace/Map.h \
+ $(ACE_ROOT)/ace/Map.i \
+ $(ACE_ROOT)/ace/Map_T.h \
+ $(ACE_ROOT)/ace/Pair.h \
+ $(ACE_ROOT)/ace/Pair.i \
+ $(ACE_ROOT)/ace/Pair_T.h \
+ $(ACE_ROOT)/ace/Pair_T.i \
+ $(ACE_ROOT)/ace/Pair_T.cpp \
+ $(ACE_ROOT)/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.i \
+ $(ACE_ROOT)/ace/Map_Manager.cpp \
+ $(ACE_ROOT)/ace/Active_Map_Manager.h \
+ $(ACE_ROOT)/ace/Active_Map_Manager.i \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Map_T.i \
+ $(ACE_ROOT)/ace/Map_T.cpp \
+ $(TAO_ROOT)/tao/Key_Adapters.i \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/POAS.h \
+ $(TAO_ROOT)/tao/POA_CORBA.h \
+ $(TAO_ROOT)/tao/DynAnyC.h \
+ $(TAO_ROOT)/tao/DynAnyC.i \
+ $(TAO_ROOT)/tao/DomainC.h \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/POAS.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
+ $(TAO_ROOT)/tao/Object_Adapter.i \
+ $(TAO_ROOT)/tao/POAManager.h \
+ $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/ImplRepoC.h \
+ $(TAO_ROOT)/tao/Operation_Table.h \
+ $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/Pluggable.h \
+ $(TAO_ROOT)/tao/Pluggable.i \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/Profile.h \
+ $(TAO_ROOT)/tao/Tagged_Components.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.i \
+ $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/Profile.i \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(TAO_ROOT)/tao/Protocol_Factory.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(ACE_ROOT)/ace/Dynamic_Service.h \
+ $(ACE_ROOT)/ace/Dynamic_Service.cpp \
+ $(TAO_ROOT)/tao/Invocation.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/TAOC.h \
+ $(TAO_ROOT)/tao/TAOC.i \
+ $(TAO_ROOT)/tao/Invocation.i \
+ $(TAO_ROOT)/tao/ImplRepoC.i \
+ $(TAO_ROOT)/tao/POA.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
+ $(TAO_ROOT)/tao/DynAny_i.h \
+ $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
+ $(TAO_ROOT)/tao/ObjectIDList.h \
+ $(TAO_ROOT)/tao/ObjectIDList.i \
+ $(TAO_ROOT)/tao/WrongTransactionC.h \
+ $(TAO_ROOT)/tao/InterfaceC.h \
+ $(TAO_ROOT)/tao/BoundsC.h \
+ $(TAO_ROOT)/tao/BoundsC.i \
+ CosEvent/CEC_Dispatching_Task.i CosEvent/CEC_ProxyPushSupplier.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
+ CosEvent/CEC_ProxyPushSupplier.i
+
+.obj/CEC_MT_Dispatching.o .obj/CEC_MT_Dispatching.so .shobj/CEC_MT_Dispatching.o .shobj/CEC_MT_Dispatching.so: CosEvent/CEC_MT_Dispatching.cpp \
+ CosEvent/CEC_MT_Dispatching.h CosEvent/CEC_Dispatching.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+ $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(TAO_ROOT)/tao/corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers_T.h \
+ $(ACE_ROOT)/ace/Containers_T.i \
+ $(ACE_ROOT)/ace/Containers_T.cpp \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/Message_Block_T.h \
+ $(ACE_ROOT)/ace/Message_Block_T.i \
+ $(ACE_ROOT)/ace/Message_Block_T.cpp \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(TAO_ROOT)/tao/try_macros.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/IOR_LookupTable.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/Functor.h \
+ $(ACE_ROOT)/ace/Functor.i \
+ $(ACE_ROOT)/ace/Functor_T.h \
+ $(ACE_ROOT)/ace/Functor_T.i \
+ $(ACE_ROOT)/ace/Functor_T.cpp \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/varout.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/varout.i \
+ $(TAO_ROOT)/tao/varout.cpp \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/IORManipulation.h \
+ $(TAO_ROOT)/tao/IORS.h \
+ $(TAO_ROOT)/tao/IORC.h \
+ $(TAO_ROOT)/tao/CDR.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/IORC.i \
+ $(TAO_ROOT)/tao/Servant_Base.h \
+ $(TAO_ROOT)/tao/POAC.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/POAC.i \
+ $(TAO_ROOT)/tao/Servant_Base.i \
+ $(TAO_ROOT)/tao/IORS.i \
+ $(TAO_ROOT)/tao/Interceptor.h \
+ $(TAO_ROOT)/tao/InterceptorS.h \
+ $(TAO_ROOT)/tao/InterceptorC.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/InterceptorC.i \
+ $(TAO_ROOT)/tao/Interceptor.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/NVList.h \
+ $(TAO_ROOT)/tao/NVList.i \
+ $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/Principal.i \
+ $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Context.h \
+ $(TAO_ROOT)/tao/Context.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/Request.i \
+ $(TAO_ROOT)/tao/Server_Request.h \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/GIOP.h \
+ $(TAO_ROOT)/tao/GIOP.i \
+ $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/Marshal.h \
+ $(TAO_ROOT)/tao/Marshal.i \
+ $(TAO_ROOT)/tao/singletons.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/POA.h \
+ $(TAO_ROOT)/tao/Object_Adapter.h \
+ $(TAO_ROOT)/tao/Key_Adapters.h \
+ $(ACE_ROOT)/ace/Map.h \
+ $(ACE_ROOT)/ace/Map.i \
+ $(ACE_ROOT)/ace/Map_T.h \
+ $(ACE_ROOT)/ace/Pair.h \
+ $(ACE_ROOT)/ace/Pair.i \
+ $(ACE_ROOT)/ace/Pair_T.h \
+ $(ACE_ROOT)/ace/Pair_T.i \
+ $(ACE_ROOT)/ace/Pair_T.cpp \
+ $(ACE_ROOT)/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.i \
+ $(ACE_ROOT)/ace/Map_Manager.cpp \
+ $(ACE_ROOT)/ace/Active_Map_Manager.h \
+ $(ACE_ROOT)/ace/Active_Map_Manager.i \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Map_T.i \
+ $(ACE_ROOT)/ace/Map_T.cpp \
+ $(TAO_ROOT)/tao/Key_Adapters.i \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/POAS.h \
+ $(TAO_ROOT)/tao/POA_CORBA.h \
+ $(TAO_ROOT)/tao/DynAnyC.h \
+ $(TAO_ROOT)/tao/DynAnyC.i \
+ $(TAO_ROOT)/tao/DomainC.h \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/POAS.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
+ $(TAO_ROOT)/tao/Object_Adapter.i \
+ $(TAO_ROOT)/tao/POAManager.h \
+ $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/ImplRepoC.h \
+ $(TAO_ROOT)/tao/Operation_Table.h \
+ $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/Pluggable.h \
+ $(ACE_ROOT)/ace/Message_Queue.h \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Synch_Options.h \
+ $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
+ $(ACE_ROOT)/ace/Strategies_T.i \
+ $(ACE_ROOT)/ace/Strategies_T.cpp \
+ $(ACE_ROOT)/ace/Service_Repository.h \
+ $(ACE_ROOT)/ace/Service_Types.h \
+ $(ACE_ROOT)/ace/Service_Types.i \
+ $(ACE_ROOT)/ace/Service_Repository.i \
+ $(ACE_ROOT)/ace/WFMO_Reactor.h \
+ $(ACE_ROOT)/ace/WFMO_Reactor.i \
+ $(ACE_ROOT)/ace/Strategies.i \
+ $(ACE_ROOT)/ace/Message_Queue.i \
+ $(TAO_ROOT)/tao/Pluggable.i \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/Profile.h \
+ $(TAO_ROOT)/tao/Tagged_Components.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.i \
+ $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/Profile.i \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(TAO_ROOT)/tao/Protocol_Factory.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(ACE_ROOT)/ace/Dynamic_Service.h \
+ $(ACE_ROOT)/ace/Dynamic_Service.cpp \
+ $(TAO_ROOT)/tao/Invocation.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/TAOC.h \
+ $(TAO_ROOT)/tao/TAOC.i \
+ $(TAO_ROOT)/tao/Invocation.i \
+ $(TAO_ROOT)/tao/ImplRepoC.i \
+ $(TAO_ROOT)/tao/POA.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
+ $(TAO_ROOT)/tao/DynAny_i.h \
+ $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
+ $(TAO_ROOT)/tao/ObjectIDList.h \
+ $(TAO_ROOT)/tao/ObjectIDList.i \
+ $(TAO_ROOT)/tao/WrongTransactionC.h \
+ $(TAO_ROOT)/tao/InterfaceC.h \
+ $(TAO_ROOT)/tao/BoundsC.h \
+ $(TAO_ROOT)/tao/BoundsC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
+ CosEvent/CEC_Dispatching.i CosEvent/CEC_Dispatching_Task.h \
+ $(ACE_ROOT)/ace/Task.h \
+ $(ACE_ROOT)/ace/Task.i \
+ $(ACE_ROOT)/ace/Task_T.h \
+ $(ACE_ROOT)/ace/Task_T.i \
+ $(ACE_ROOT)/ace/Task_T.cpp \
+ $(ACE_ROOT)/ace/Module.h \
+ $(ACE_ROOT)/ace/Module.i \
+ $(ACE_ROOT)/ace/Module.cpp \
+ $(ACE_ROOT)/ace/Stream_Modules.h \
+ $(ACE_ROOT)/ace/Stream_Modules.i \
+ $(ACE_ROOT)/ace/Stream_Modules.cpp \
+ CosEvent/CEC_Dispatching_Task.i CosEvent/CEC_MT_Dispatching.i
+
+.obj/CEC_Reactive_ConsumerControl.o .obj/CEC_Reactive_ConsumerControl.so .shobj/CEC_Reactive_ConsumerControl.o .shobj/CEC_Reactive_ConsumerControl.so: \
+ CosEvent/CEC_Reactive_ConsumerControl.cpp \
+ CosEvent/CEC_Reactive_ConsumerControl.h \
+ CosEvent/CEC_ConsumerControl.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers_T.h \
+ $(ACE_ROOT)/ace/Containers_T.i \
+ $(ACE_ROOT)/ace/Containers_T.cpp \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/Message_Block_T.h \
+ $(ACE_ROOT)/ace/Message_Block_T.i \
+ $(ACE_ROOT)/ace/Message_Block_T.cpp \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(TAO_ROOT)/tao/try_macros.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/IOR_LookupTable.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/Functor.h \
+ $(ACE_ROOT)/ace/Functor.i \
+ $(ACE_ROOT)/ace/Functor_T.h \
+ $(ACE_ROOT)/ace/Functor_T.i \
+ $(ACE_ROOT)/ace/Functor_T.cpp \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/varout.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/varout.i \
+ $(TAO_ROOT)/tao/varout.cpp \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/IORManipulation.h \
+ $(TAO_ROOT)/tao/IORS.h \
+ $(TAO_ROOT)/tao/IORC.h \
+ $(TAO_ROOT)/tao/CDR.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/IORC.i \
+ $(TAO_ROOT)/tao/Servant_Base.h \
+ $(TAO_ROOT)/tao/POAC.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/POAC.i \
+ $(TAO_ROOT)/tao/Servant_Base.i \
+ $(TAO_ROOT)/tao/IORS.i \
+ $(TAO_ROOT)/tao/Interceptor.h \
+ $(TAO_ROOT)/tao/InterceptorS.h \
+ $(TAO_ROOT)/tao/InterceptorC.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/InterceptorC.i \
+ $(TAO_ROOT)/tao/Interceptor.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/NVList.h \
+ $(TAO_ROOT)/tao/NVList.i \
+ $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/Principal.i \
+ $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Context.h \
+ $(TAO_ROOT)/tao/Context.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/Request.i \
+ $(TAO_ROOT)/tao/Server_Request.h \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/GIOP.h \
+ $(TAO_ROOT)/tao/GIOP.i \
+ $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/Marshal.h \
+ $(TAO_ROOT)/tao/Marshal.i \
+ $(TAO_ROOT)/tao/singletons.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/POA.h \
+ $(TAO_ROOT)/tao/Object_Adapter.h \
+ $(TAO_ROOT)/tao/Key_Adapters.h \
+ $(ACE_ROOT)/ace/Map.h \
+ $(ACE_ROOT)/ace/Map.i \
+ $(ACE_ROOT)/ace/Map_T.h \
+ $(ACE_ROOT)/ace/Pair.h \
+ $(ACE_ROOT)/ace/Pair.i \
+ $(ACE_ROOT)/ace/Pair_T.h \
+ $(ACE_ROOT)/ace/Pair_T.i \
+ $(ACE_ROOT)/ace/Pair_T.cpp \
+ $(ACE_ROOT)/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.i \
+ $(ACE_ROOT)/ace/Map_Manager.cpp \
+ $(ACE_ROOT)/ace/Active_Map_Manager.h \
+ $(ACE_ROOT)/ace/Active_Map_Manager.i \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Map_T.i \
+ $(ACE_ROOT)/ace/Map_T.cpp \
+ $(TAO_ROOT)/tao/Key_Adapters.i \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/POAS.h \
+ $(TAO_ROOT)/tao/POA_CORBA.h \
+ $(TAO_ROOT)/tao/DynAnyC.h \
+ $(TAO_ROOT)/tao/DynAnyC.i \
+ $(TAO_ROOT)/tao/DomainC.h \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/POAS.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
+ $(TAO_ROOT)/tao/Object_Adapter.i \
+ $(TAO_ROOT)/tao/POAManager.h \
+ $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/ImplRepoC.h \
+ $(TAO_ROOT)/tao/Operation_Table.h \
+ $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/Pluggable.h \
+ $(ACE_ROOT)/ace/Message_Queue.h \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Synch_Options.h \
+ $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
+ $(ACE_ROOT)/ace/Strategies_T.i \
+ $(ACE_ROOT)/ace/Strategies_T.cpp \
+ $(ACE_ROOT)/ace/Service_Repository.h \
+ $(ACE_ROOT)/ace/Service_Types.h \
+ $(ACE_ROOT)/ace/Service_Types.i \
+ $(ACE_ROOT)/ace/Service_Repository.i \
+ $(ACE_ROOT)/ace/WFMO_Reactor.h \
+ $(ACE_ROOT)/ace/WFMO_Reactor.i \
+ $(ACE_ROOT)/ace/Strategies.i \
+ $(ACE_ROOT)/ace/Message_Queue.i \
+ $(TAO_ROOT)/tao/Pluggable.i \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/Profile.h \
+ $(TAO_ROOT)/tao/Tagged_Components.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.i \
+ $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/Profile.i \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(TAO_ROOT)/tao/Protocol_Factory.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(ACE_ROOT)/ace/Dynamic_Service.h \
+ $(ACE_ROOT)/ace/Dynamic_Service.cpp \
+ $(TAO_ROOT)/tao/Invocation.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/TAOC.h \
+ $(TAO_ROOT)/tao/TAOC.i \
+ $(TAO_ROOT)/tao/Invocation.i \
+ $(TAO_ROOT)/tao/ImplRepoC.i \
+ $(TAO_ROOT)/tao/POA.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
+ $(TAO_ROOT)/tao/DynAny_i.h \
+ $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
+ $(TAO_ROOT)/tao/ObjectIDList.h \
+ $(TAO_ROOT)/tao/ObjectIDList.i \
+ $(TAO_ROOT)/tao/WrongTransactionC.h \
+ $(TAO_ROOT)/tao/InterfaceC.h \
+ $(TAO_ROOT)/tao/BoundsC.h \
+ $(TAO_ROOT)/tao/BoundsC.i \
+ CosEvent/CEC_ConsumerControl.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Worker.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Worker.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Worker.cpp \
+ CosEvent/CEC_Reactive_ConsumerControl.i CosEvent/CEC_EventChannel.h \
+ CosEvent/CEC_Factory.h CosEvent/CEC_Factory.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
+ CosEvent/CEC_Defaults.h CosEvent/CEC_EventChannel.i \
+ CosEvent/CEC_ConsumerAdmin.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Proxy_Collection.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Busy_Lock.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Busy_Lock.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Busy_Lock.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Proxy_Collection.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Proxy_Collection.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Command.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Command.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Command.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Defaults.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
+ CosEvent/CEC_ConsumerAdmin.i CosEvent/CEC_ProxyPushSupplier.h \
+ CosEvent/CEC_ProxyPushSupplier.i
+
+.obj/CEC_Reactive_SupplierControl.o .obj/CEC_Reactive_SupplierControl.so .shobj/CEC_Reactive_SupplierControl.o .shobj/CEC_Reactive_SupplierControl.so: \
+ CosEvent/CEC_Reactive_SupplierControl.cpp \
+ CosEvent/CEC_Reactive_SupplierControl.h \
+ CosEvent/CEC_SupplierControl.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers_T.h \
+ $(ACE_ROOT)/ace/Containers_T.i \
+ $(ACE_ROOT)/ace/Containers_T.cpp \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/Message_Block_T.h \
+ $(ACE_ROOT)/ace/Message_Block_T.i \
+ $(ACE_ROOT)/ace/Message_Block_T.cpp \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(TAO_ROOT)/tao/try_macros.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/IOR_LookupTable.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/Functor.h \
+ $(ACE_ROOT)/ace/Functor.i \
+ $(ACE_ROOT)/ace/Functor_T.h \
+ $(ACE_ROOT)/ace/Functor_T.i \
+ $(ACE_ROOT)/ace/Functor_T.cpp \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/varout.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/varout.i \
+ $(TAO_ROOT)/tao/varout.cpp \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/IORManipulation.h \
+ $(TAO_ROOT)/tao/IORS.h \
+ $(TAO_ROOT)/tao/IORC.h \
+ $(TAO_ROOT)/tao/CDR.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/IORC.i \
+ $(TAO_ROOT)/tao/Servant_Base.h \
+ $(TAO_ROOT)/tao/POAC.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/POAC.i \
+ $(TAO_ROOT)/tao/Servant_Base.i \
+ $(TAO_ROOT)/tao/IORS.i \
+ $(TAO_ROOT)/tao/Interceptor.h \
+ $(TAO_ROOT)/tao/InterceptorS.h \
+ $(TAO_ROOT)/tao/InterceptorC.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/InterceptorC.i \
+ $(TAO_ROOT)/tao/Interceptor.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/NVList.h \
+ $(TAO_ROOT)/tao/NVList.i \
+ $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/Principal.i \
+ $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Context.h \
+ $(TAO_ROOT)/tao/Context.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/Request.i \
+ $(TAO_ROOT)/tao/Server_Request.h \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/GIOP.h \
+ $(TAO_ROOT)/tao/GIOP.i \
+ $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/Marshal.h \
+ $(TAO_ROOT)/tao/Marshal.i \
+ $(TAO_ROOT)/tao/singletons.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/POA.h \
+ $(TAO_ROOT)/tao/Object_Adapter.h \
+ $(TAO_ROOT)/tao/Key_Adapters.h \
+ $(ACE_ROOT)/ace/Map.h \
+ $(ACE_ROOT)/ace/Map.i \
+ $(ACE_ROOT)/ace/Map_T.h \
+ $(ACE_ROOT)/ace/Pair.h \
+ $(ACE_ROOT)/ace/Pair.i \
+ $(ACE_ROOT)/ace/Pair_T.h \
+ $(ACE_ROOT)/ace/Pair_T.i \
+ $(ACE_ROOT)/ace/Pair_T.cpp \
+ $(ACE_ROOT)/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.i \
+ $(ACE_ROOT)/ace/Map_Manager.cpp \
+ $(ACE_ROOT)/ace/Active_Map_Manager.h \
+ $(ACE_ROOT)/ace/Active_Map_Manager.i \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Map_T.i \
+ $(ACE_ROOT)/ace/Map_T.cpp \
+ $(TAO_ROOT)/tao/Key_Adapters.i \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/POAS.h \
+ $(TAO_ROOT)/tao/POA_CORBA.h \
+ $(TAO_ROOT)/tao/DynAnyC.h \
+ $(TAO_ROOT)/tao/DynAnyC.i \
+ $(TAO_ROOT)/tao/DomainC.h \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/POAS.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
+ $(TAO_ROOT)/tao/Object_Adapter.i \
+ $(TAO_ROOT)/tao/POAManager.h \
+ $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/ImplRepoC.h \
+ $(TAO_ROOT)/tao/Operation_Table.h \
+ $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/Pluggable.h \
+ $(ACE_ROOT)/ace/Message_Queue.h \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Synch_Options.h \
+ $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
+ $(ACE_ROOT)/ace/Strategies_T.i \
+ $(ACE_ROOT)/ace/Strategies_T.cpp \
+ $(ACE_ROOT)/ace/Service_Repository.h \
+ $(ACE_ROOT)/ace/Service_Types.h \
+ $(ACE_ROOT)/ace/Service_Types.i \
+ $(ACE_ROOT)/ace/Service_Repository.i \
+ $(ACE_ROOT)/ace/WFMO_Reactor.h \
+ $(ACE_ROOT)/ace/WFMO_Reactor.i \
+ $(ACE_ROOT)/ace/Strategies.i \
+ $(ACE_ROOT)/ace/Message_Queue.i \
+ $(TAO_ROOT)/tao/Pluggable.i \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/Profile.h \
+ $(TAO_ROOT)/tao/Tagged_Components.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.i \
+ $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/Profile.i \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(TAO_ROOT)/tao/Protocol_Factory.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(ACE_ROOT)/ace/Dynamic_Service.h \
+ $(ACE_ROOT)/ace/Dynamic_Service.cpp \
+ $(TAO_ROOT)/tao/Invocation.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/TAOC.h \
+ $(TAO_ROOT)/tao/TAOC.i \
+ $(TAO_ROOT)/tao/Invocation.i \
+ $(TAO_ROOT)/tao/ImplRepoC.i \
+ $(TAO_ROOT)/tao/POA.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
+ $(TAO_ROOT)/tao/DynAny_i.h \
+ $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
+ $(TAO_ROOT)/tao/ObjectIDList.h \
+ $(TAO_ROOT)/tao/ObjectIDList.i \
+ $(TAO_ROOT)/tao/WrongTransactionC.h \
+ $(TAO_ROOT)/tao/InterfaceC.h \
+ $(TAO_ROOT)/tao/BoundsC.h \
+ $(TAO_ROOT)/tao/BoundsC.i \
+ CosEvent/CEC_SupplierControl.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Worker.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Worker.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Worker.cpp \
+ CosEvent/CEC_Reactive_SupplierControl.i CosEvent/CEC_EventChannel.h \
+ CosEvent/CEC_Factory.h CosEvent/CEC_Factory.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
+ CosEvent/CEC_Defaults.h CosEvent/CEC_EventChannel.i \
+ CosEvent/CEC_SupplierAdmin.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Proxy_Collection.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Busy_Lock.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Busy_Lock.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Busy_Lock.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Proxy_Collection.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Proxy_Collection.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Command.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Command.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Command.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Defaults.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
+ CosEvent/CEC_SupplierAdmin.i CosEvent/CEC_ProxyPushConsumer.h \
+ CosEvent/CEC_ProxyPushConsumer.i
+
+.obj/CEC_Default_Factory.o .obj/CEC_Default_Factory.so .shobj/CEC_Default_Factory.o .shobj/CEC_Default_Factory.so: CosEvent/CEC_Default_Factory.cpp \
+ CosEvent/CEC_Default_Factory.h CosEvent/CEC_Factory.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers_T.h \
+ $(ACE_ROOT)/ace/Containers_T.i \
+ $(ACE_ROOT)/ace/Containers_T.cpp \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/Message_Block_T.h \
+ $(ACE_ROOT)/ace/Message_Block_T.i \
+ $(ACE_ROOT)/ace/Message_Block_T.cpp \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(TAO_ROOT)/tao/try_macros.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/IOR_LookupTable.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/Functor.h \
+ $(ACE_ROOT)/ace/Functor.i \
+ $(ACE_ROOT)/ace/Functor_T.h \
+ $(ACE_ROOT)/ace/Functor_T.i \
+ $(ACE_ROOT)/ace/Functor_T.cpp \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/varout.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/varout.i \
+ $(TAO_ROOT)/tao/varout.cpp \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/IORManipulation.h \
+ $(TAO_ROOT)/tao/IORS.h \
+ $(TAO_ROOT)/tao/IORC.h \
+ $(TAO_ROOT)/tao/CDR.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/IORC.i \
+ $(TAO_ROOT)/tao/Servant_Base.h \
+ $(TAO_ROOT)/tao/POAC.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/POAC.i \
+ $(TAO_ROOT)/tao/Servant_Base.i \
+ $(TAO_ROOT)/tao/IORS.i \
+ $(TAO_ROOT)/tao/Interceptor.h \
+ $(TAO_ROOT)/tao/InterceptorS.h \
+ $(TAO_ROOT)/tao/InterceptorC.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/InterceptorC.i \
+ $(TAO_ROOT)/tao/Interceptor.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/NVList.h \
+ $(TAO_ROOT)/tao/NVList.i \
+ $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/Principal.i \
+ $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Context.h \
+ $(TAO_ROOT)/tao/Context.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/Request.i \
+ $(TAO_ROOT)/tao/Server_Request.h \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/GIOP.h \
+ $(TAO_ROOT)/tao/GIOP.i \
+ $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/Marshal.h \
+ $(TAO_ROOT)/tao/Marshal.i \
+ $(TAO_ROOT)/tao/singletons.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/POA.h \
+ $(TAO_ROOT)/tao/Object_Adapter.h \
+ $(TAO_ROOT)/tao/Key_Adapters.h \
+ $(ACE_ROOT)/ace/Map.h \
+ $(ACE_ROOT)/ace/Map.i \
+ $(ACE_ROOT)/ace/Map_T.h \
+ $(ACE_ROOT)/ace/Pair.h \
+ $(ACE_ROOT)/ace/Pair.i \
+ $(ACE_ROOT)/ace/Pair_T.h \
+ $(ACE_ROOT)/ace/Pair_T.i \
+ $(ACE_ROOT)/ace/Pair_T.cpp \
+ $(ACE_ROOT)/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.i \
+ $(ACE_ROOT)/ace/Map_Manager.cpp \
+ $(ACE_ROOT)/ace/Active_Map_Manager.h \
+ $(ACE_ROOT)/ace/Active_Map_Manager.i \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Map_T.i \
+ $(ACE_ROOT)/ace/Map_T.cpp \
+ $(TAO_ROOT)/tao/Key_Adapters.i \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/POAS.h \
+ $(TAO_ROOT)/tao/POA_CORBA.h \
+ $(TAO_ROOT)/tao/DynAnyC.h \
+ $(TAO_ROOT)/tao/DynAnyC.i \
+ $(TAO_ROOT)/tao/DomainC.h \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/POAS.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
+ $(TAO_ROOT)/tao/Object_Adapter.i \
+ $(TAO_ROOT)/tao/POAManager.h \
+ $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/ImplRepoC.h \
+ $(TAO_ROOT)/tao/Operation_Table.h \
+ $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/Pluggable.h \
+ $(ACE_ROOT)/ace/Message_Queue.h \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Synch_Options.h \
+ $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
+ $(ACE_ROOT)/ace/Strategies_T.i \
+ $(ACE_ROOT)/ace/Strategies_T.cpp \
+ $(ACE_ROOT)/ace/Service_Repository.h \
+ $(ACE_ROOT)/ace/Service_Types.h \
+ $(ACE_ROOT)/ace/Service_Types.i \
+ $(ACE_ROOT)/ace/Service_Repository.i \
+ $(ACE_ROOT)/ace/WFMO_Reactor.h \
+ $(ACE_ROOT)/ace/WFMO_Reactor.i \
+ $(ACE_ROOT)/ace/Strategies.i \
+ $(ACE_ROOT)/ace/Message_Queue.i \
+ $(TAO_ROOT)/tao/Pluggable.i \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/Profile.h \
+ $(TAO_ROOT)/tao/Tagged_Components.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.h \
+ $(TAO_ROOT)/tao/CONV_FRAMEC.i \
+ $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/Profile.i \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(TAO_ROOT)/tao/Protocol_Factory.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(ACE_ROOT)/ace/Dynamic_Service.h \
+ $(ACE_ROOT)/ace/Dynamic_Service.cpp \
+ $(TAO_ROOT)/tao/Invocation.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/TAOC.h \
+ $(TAO_ROOT)/tao/TAOC.i \
+ $(TAO_ROOT)/tao/Invocation.i \
+ $(TAO_ROOT)/tao/ImplRepoC.i \
+ $(TAO_ROOT)/tao/POA.i \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
+ $(TAO_ROOT)/tao/DynAny_i.h \
+ $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
+ $(TAO_ROOT)/tao/ObjectIDList.h \
+ $(TAO_ROOT)/tao/ObjectIDList.i \
+ $(TAO_ROOT)/tao/WrongTransactionC.h \
+ $(TAO_ROOT)/tao/InterfaceC.h \
+ $(TAO_ROOT)/tao/BoundsC.h \
+ $(TAO_ROOT)/tao/BoundsC.i \
+ CosEvent/CEC_Factory.i CosEvent/CEC_Defaults.h \
+ CosEvent/CEC_Default_Factory.i CosEvent/CEC_MT_Dispatching.h \
+ CosEvent/CEC_Dispatching.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
+ CosEvent/CEC_Dispatching.i CosEvent/CEC_Dispatching_Task.h \
+ $(ACE_ROOT)/ace/Task.h \
+ $(ACE_ROOT)/ace/Task.i \
+ $(ACE_ROOT)/ace/Task_T.h \
+ $(ACE_ROOT)/ace/Task_T.i \
+ $(ACE_ROOT)/ace/Task_T.cpp \
+ $(ACE_ROOT)/ace/Module.h \
+ $(ACE_ROOT)/ace/Module.i \
+ $(ACE_ROOT)/ace/Module.cpp \
+ $(ACE_ROOT)/ace/Stream_Modules.h \
+ $(ACE_ROOT)/ace/Stream_Modules.i \
+ $(ACE_ROOT)/ace/Stream_Modules.cpp \
+ CosEvent/CEC_Dispatching_Task.i CosEvent/CEC_MT_Dispatching.i \
+ CosEvent/CEC_ConsumerAdmin.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Proxy_Collection.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Busy_Lock.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Busy_Lock.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Busy_Lock.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Proxy_Collection.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Proxy_Collection.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Command.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Command.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Command.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Worker.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Worker.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Worker.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Defaults.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
+ CosEvent/CEC_ConsumerAdmin.i CosEvent/CEC_SupplierAdmin.h \
+ CosEvent/CEC_SupplierAdmin.i CosEvent/CEC_ProxyPushConsumer.h \
+ CosEvent/CEC_ProxyPushConsumer.i CosEvent/CEC_ProxyPushSupplier.h \
+ CosEvent/CEC_ProxyPushSupplier.i CosEvent/CEC_EventChannel.h \
+ CosEvent/CEC_EventChannel.i CosEvent/CEC_Reactive_ConsumerControl.h \
+ CosEvent/CEC_ConsumerControl.h CosEvent/CEC_ConsumerControl.i \
+ CosEvent/CEC_Reactive_ConsumerControl.i \
+ CosEvent/CEC_Reactive_SupplierControl.h \
+ CosEvent/CEC_SupplierControl.h CosEvent/CEC_SupplierControl.i \
+ CosEvent/CEC_Reactive_SupplierControl.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Concrete_Proxy_Set.h \
+ $(ACE_ROOT)/ace/RB_Tree.h \
+ $(ACE_ROOT)/ace/RB_Tree.i \
+ $(ACE_ROOT)/ace/RB_Tree.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Concrete_Proxy_Set.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Concrete_Proxy_Set.cpp \
+ $(ACE_ROOT)/ace/Arg_Shifter.h \
+ $(ACE_ROOT)/ace/Sched_Params.h \
+ $(ACE_ROOT)/ace/Sched_Params.i
 
 .obj/Event_Utilities.o .obj/Event_Utilities.so .shobj/Event_Utilities.o .shobj/Event_Utilities.so: Event_Utilities.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Utilities.h \
@@ -27672,14 +31852,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -27793,6 +31968,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -27980,14 +32159,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -28101,6 +32275,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -28348,14 +32526,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -28469,6 +32642,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -28722,14 +32899,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -28843,6 +33015,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -29002,14 +33178,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -29123,6 +33294,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -29330,14 +33505,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -29448,6 +33618,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -29691,14 +33865,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -29812,6 +33981,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -29825,7 +33998,8 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.i \
- Event/RT_Task.h $(ACE_ROOT)/ace/Task.h \
+ Event/RT_Task.h \
+ $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Task_T.i \
@@ -30060,14 +34234,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -30181,6 +34350,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -30413,14 +34586,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -30534,6 +34702,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -30780,12 +34952,7 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -30899,6 +35066,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -31120,12 +35291,7 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -31239,6 +35405,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -31448,12 +35618,7 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -31567,6 +35732,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -31768,14 +35937,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -31889,6 +36053,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -32121,14 +36289,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -32234,6 +36397,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -32411,14 +36578,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -32532,6 +36694,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -32712,14 +36878,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -32833,6 +36994,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -32992,14 +37157,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -33113,6 +37273,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -33301,14 +37465,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -33419,6 +37578,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -33588,14 +37751,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -33709,6 +37867,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -33899,14 +38061,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -34020,6 +38177,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -34201,14 +38362,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -34322,6 +38478,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -34486,14 +38646,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -34607,6 +38762,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -34774,14 +38933,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -34892,6 +39046,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -35058,14 +39216,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -35176,6 +39329,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -35340,14 +39497,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -35461,6 +39613,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -35644,14 +39800,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -35765,6 +39916,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -35924,14 +40079,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -36045,6 +40195,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -36207,14 +40361,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -36328,6 +40477,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -36502,14 +40655,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -36623,6 +40771,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -36796,14 +40948,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -36917,6 +41064,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -37094,14 +41245,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -37215,6 +41361,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -37391,14 +41541,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -37512,6 +41657,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -37690,14 +41839,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -37811,6 +41955,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -37985,14 +42133,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -38106,6 +42249,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -38299,14 +42446,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -38420,6 +42562,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -38609,14 +42755,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -38730,6 +42871,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -38920,14 +43065,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -39041,6 +43181,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -39216,14 +43360,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -39337,6 +43476,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -39496,14 +43639,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -39617,6 +43755,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -39797,14 +43939,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -39918,6 +44055,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -40078,14 +44219,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -40199,6 +44335,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -40356,14 +44496,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -40477,6 +44612,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -40635,14 +44774,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -40756,6 +44890,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -40914,14 +45052,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -41035,6 +45168,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -41196,14 +45333,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -41317,6 +45449,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -41479,14 +45615,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -41600,6 +45731,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -41762,14 +45897,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -41883,6 +46013,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -42049,12 +46183,7 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -42168,6 +46297,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -42337,14 +46470,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -42458,6 +46586,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -42665,12 +46797,7 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -42784,6 +46911,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -42961,12 +47092,7 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -43080,6 +47206,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -43255,12 +47385,7 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -43374,6 +47499,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -43562,14 +47691,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -43683,6 +47807,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -43859,14 +47987,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -43980,6 +48103,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -44144,14 +48271,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -44265,6 +48387,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -44430,14 +48556,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -44551,6 +48672,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -44722,14 +48847,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -44843,6 +48963,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -45007,14 +49131,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -45128,6 +49247,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -45283,14 +49406,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -45404,6 +49522,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -45563,14 +49685,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -45684,6 +49801,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -45850,14 +49971,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -45971,6 +50087,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -46237,14 +50357,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -46358,6 +50473,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -46550,12 +50669,7 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -46669,6 +50783,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -46850,12 +50968,7 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -46969,6 +51082,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -47153,12 +51270,7 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -47272,6 +51384,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -47451,12 +51567,7 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -47570,6 +51681,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -47753,12 +51868,7 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -47872,6 +51982,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -48042,14 +52156,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -48163,6 +52272,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -48326,14 +52439,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -48447,6 +52555,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -48467,10 +52579,7 @@ ETCL_y: ETCL/ETCL.yy
 .obj/Notify_EventChannelFactory_i.o .obj/Notify_EventChannelFactory_i.so .shobj/Notify_EventChannelFactory_i.o .shobj/Notify_EventChannelFactory_i.so: \
  Notify/Notify_EventChannelFactory_i.cpp \
  Notify/Notify_EventChannelFactory_i.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
- $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/Min_Max.h \
@@ -48483,15 +52592,16 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Functor.i \
+ $(ACE_ROOT)/ace/Functor_T.h \
+ $(ACE_ROOT)/ace/Functor_T.i \
+ $(ACE_ROOT)/ace/Functor_T.cpp \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -48506,54 +52616,34 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Malloc_T.cpp \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers_T.h \
- $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp \
- $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/Message_Block_T.h \
- $(ACE_ROOT)/ace/Message_Block_T.i \
- $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- $(TAO_ROOT)/tao/try_macros.h \
- $(TAO_ROOT)/tao/orbconf.h \
- $(ACE_ROOT)/ace/CORBA_macros.h \
- $(TAO_ROOT)/tao/corbafwd.i \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
- $(TAO_ROOT)/tao/ORB.h \
- $(TAO_ROOT)/tao/Exception.h \
- $(TAO_ROOT)/tao/Exception.i \
- $(TAO_ROOT)/tao/IOR_LookupTable.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Functor.h \
- $(ACE_ROOT)/ace/Functor.i \
- $(ACE_ROOT)/ace/Functor_T.h \
- $(ACE_ROOT)/ace/Functor_T.i \
- $(ACE_ROOT)/ace/Functor_T.cpp \
- $(ACE_ROOT)/ace/Hash_Map_Manager.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers_T.h \
+ $(ACE_ROOT)/ace/Containers_T.i \
+ $(ACE_ROOT)/ace/Containers_T.cpp \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -48565,6 +52655,28 @@ ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
+ $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/Message_Block_T.h \
+ $(ACE_ROOT)/ace/Message_Block_T.i \
+ $(ACE_ROOT)/ace/Message_Block_T.cpp \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(TAO_ROOT)/tao/try_macros.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/IOR_LookupTable.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Managed_Types.h \
@@ -48614,14 +52726,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -48735,6 +52842,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -48781,11 +52892,11 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.i \
- Notify/Notify_EventChannel_i.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_QoSAdmin_i.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/ID_Pool_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/ID_Pool_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/ID_Pool_T.cpp \
+ Notify/Notify_EventChannel_i.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_QoSAdmin_i.h \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
@@ -48943,14 +53054,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -49064,6 +53170,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -49271,14 +53381,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -49392,6 +53497,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -49554,14 +53663,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -49675,6 +53779,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -49850,14 +53958,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -49971,6 +54074,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -50147,14 +54254,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -50268,6 +54370,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -50455,14 +54561,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -50576,6 +54677,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -50786,14 +54891,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -50907,6 +55007,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -51112,14 +55216,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -51233,6 +55332,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -51441,14 +55544,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -51562,6 +55660,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -51769,14 +55871,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -51890,6 +55987,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -52098,14 +56199,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -52219,6 +56315,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -52424,14 +56524,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -52545,6 +56640,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -52737,14 +56836,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -52858,6 +56952,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -53049,14 +57147,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -53170,6 +57263,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -53359,14 +57456,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -53480,6 +57572,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -53669,14 +57765,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -53790,6 +57881,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -53953,14 +58048,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -54074,6 +58164,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -54282,14 +58376,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -54403,6 +58492,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -54612,14 +58705,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -54733,6 +58821,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -54930,14 +59022,9 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -55051,6 +59138,10 @@ ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \

@@ -7,7 +7,7 @@
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
 
-ACE_RCSID(EC_Tests, Wildcard, "$Id$")
+ACE_RCSID(EC_Tests, Complex, "$Id$")
 
 int
 main (int argc, char* argv[])
@@ -209,6 +209,9 @@ main (int argc, char* argv[])
       // ****************************************************************
 
       poa->destroy (1, 1, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      orb->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // ****************************************************************

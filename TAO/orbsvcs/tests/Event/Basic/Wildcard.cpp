@@ -270,12 +270,42 @@ main (int argc, char* argv[])
       poa->destroy (1, 1, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      orb->destroy (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       // ****************************************************************
 
-      wildcard_consumer.dump_results (500, 5);
-      any_source_consumer.dump_results (400, 5);
-      any_type_consumer.dump_results (400, 5);
-      regular_consumer.dump_results (400, 5);
+      CORBA::ULong expected =
+        wildcard_supplier.event_count
+        + any_type_supplier.event_count
+        + any_source_supplier.event_count
+        + other_supplier.event_count
+        + supplier.event_count;
+      wildcard_consumer.dump_results (expected, 5);
+
+      expected =
+        wildcard_supplier.event_count
+        + any_type_supplier.event_count
+        + any_source_supplier.event_count
+        // NOT THIS ONE + other_supplier.event_count
+        + supplier.event_count;
+      any_source_consumer.dump_results (expected, 5);
+
+      expected =
+        wildcard_supplier.event_count
+        + any_type_supplier.event_count
+        + any_source_supplier.event_count
+        // NOT THIS ONE + other_supplier.event_count
+        + supplier.event_count;
+      any_type_consumer.dump_results (expected, 5);
+
+      expected =
+        wildcard_supplier.event_count
+        + any_type_supplier.event_count
+        + any_source_supplier.event_count
+        // NOT THIS ONE + other_supplier.event_count
+        + supplier.event_count;
+      regular_consumer.dump_results (expected, 5);
     }
   ACE_CATCHANY
     {

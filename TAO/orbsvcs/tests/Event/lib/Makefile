@@ -212,12 +212,7 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -331,6 +326,10 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -557,12 +556,7 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -676,6 +670,10 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -876,12 +874,7 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -995,6 +988,10 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -1207,12 +1204,7 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -1326,6 +1318,10 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -1513,12 +1509,7 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(TAO_ROOT)/tao/Context.h \
  $(TAO_ROOT)/tao/Context.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
- $(TAO_ROOT)/tao/ValueBase.i \
- $(TAO_ROOT)/tao/ValueFactory.h \
- $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -1632,6 +1623,10 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/Union.h \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \

@@ -20,7 +20,8 @@ DIRS  = Simple_Naming \
         CosEC_Multiple \
         Sched_Conf \
         Time \
-        Event
+        Event \
+	CosEvent
 
 # Not compiled by default
 #       Concurrency \

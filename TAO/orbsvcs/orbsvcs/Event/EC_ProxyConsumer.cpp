@@ -314,6 +314,11 @@ TAO_EC_ProxyPushConsumer::push (const RtecEventComm::EventSet& event,
                                 CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  // @@ The following code is not exception safe, must fix, but the
+  // canonical tricks don't work: the destroy_push_consumer () method
+  // must be invoked only once the mutex is released, but after the
+  // refcount get to zero, seems hard...
+
   TAO_EC_Supplier_Filter* filter = 0;
   {
     ACE_GUARD_THROW_EX (
