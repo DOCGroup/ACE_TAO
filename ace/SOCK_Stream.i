@@ -34,7 +34,7 @@ ACE_SOCK_Stream::close_reader (void)
     return 0;
 }
 
-// Shut down just the writing end of a ACE_SOCK. 
+// Shut down just the writing end of a ACE_SOCK.
 
 ASYS_INLINE int
 ACE_SOCK_Stream::close_writer (void)
@@ -46,7 +46,7 @@ ACE_SOCK_Stream::close_writer (void)
     return 0;
 }
 
-ASYS_INLINE ssize_t 
+ASYS_INLINE ssize_t
 ACE_SOCK_Stream::send_n (const void *buf, size_t len, int flags,
 			 const ACE_Time_Value *timeout)
 {
@@ -54,8 +54,8 @@ ACE_SOCK_Stream::send_n (const void *buf, size_t len, int flags,
   return ACE::send_n (this->get_handle (), buf, len, flags, timeout);
 }
 
-ASYS_INLINE ssize_t 
-ACE_SOCK_Stream::recv_n (void *buf, size_t len, int flags, 
+ASYS_INLINE ssize_t
+ACE_SOCK_Stream::recv_n (void *buf, size_t len, int flags,
 			 const ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_SOCK_Stream::recv_n");
@@ -72,8 +72,8 @@ ACE_SOCK_Stream::recv_n (void *buf, int buf_size, int flags) const
   return ACE::recv_n (this->get_handle (), buf, buf_size, flags);
 }
 
-// Send exactly N bytes from <buf> to <handle>.  Keeping trying 
-// until this many bytes are sent. 
+// Send exactly N bytes from <buf> to <handle>.  Keeping trying
+// until this many bytes are sent.
 
 ASYS_INLINE ssize_t
 ACE_SOCK_Stream::send_n (const void *buf, int buf_size, int flags) const
@@ -82,8 +82,8 @@ ACE_SOCK_Stream::send_n (const void *buf, int buf_size, int flags) const
   return ACE::send_n (this->get_handle (), buf, buf_size, flags);
 }
 
-// Receive exactly BUF_SIZE bytes from file descriptor 
-// into BUF.  Keep trying until this many bytes are received. 
+// Receive exactly BUF_SIZE bytes from file descriptor
+// into BUF.  Keep trying until this many bytes are received.
 
 ASYS_INLINE ssize_t
 ACE_SOCK_Stream::recv_n (void *buf, int buf_size) const
@@ -102,17 +102,36 @@ ACE_SOCK_Stream::send_n (const void *buf, int buf_size) const
   return ACE::send_n (this->get_handle (), buf, buf_size);
 }
 
-ASYS_INLINE ssize_t  
+ASYS_INLINE ssize_t
+ACE_SOCK_Stream::sendv_n (const iovec iov[], size_t n) const
+{
+  ACE_TRACE ("ACE_SOCK_Stream::sendv_n");
+  return ACE::sendv_n (this->get_handle (),
+                       iov,
+                       n);
+}
+
+// Recv an n byte message from the connected socket.
+
+ASYS_INLINE ssize_t
+ACE_SOCK_Stream::recvv_n (iovec iov[], size_t n) const
+{
+  ACE_TRACE ("ACE_SOCK_Stream::recvv_n");
+  // @@ Carlos, can you please update this to call the
+  // new ACE::recvv_n() method that you write?
+  return ACE_OS::recvv (this->get_handle (), iov, n);
+}
+
+ASYS_INLINE ssize_t
 ACE_SOCK_Stream::send_urg (void *ptr, int len)
 {
   ACE_TRACE ("ACE_SOCK_Stream::send_urg");
   return ACE_OS::send (this->get_handle (), (char *) ptr, len, MSG_OOB);
 }
 
-ASYS_INLINE ssize_t  
+ASYS_INLINE ssize_t
 ACE_SOCK_Stream::recv_urg (void *ptr, int len)
 {
   ACE_TRACE ("ACE_SOCK_Stream::recv_urg");
   return ACE_OS::recv (this->get_handle (), (char *) ptr, len, MSG_OOB);
 }
-
