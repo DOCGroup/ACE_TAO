@@ -78,7 +78,7 @@ static const unsigned short ACE_UNICODE_BOM_SWAPPED = 0xFFFEU;
 
 /// load next two bytes from buffer into a short. Byte swapping as necessary
 static
-ACE_INLINE
+//ACE_INLINE
 ACE_UTF16_T
 load_raw_wchar (const char * buffer, size_t & pos, int do_byte_swap)
 {
@@ -99,7 +99,7 @@ load_raw_wchar (const char * buffer, size_t & pos, int do_byte_swap)
 
 /// convert UTF-16 surrogate pair to wchar_t
 static
-ACE_INLINE
+//ACE_INLINE
 ACE_CDR::WChar
 convert_surrogate_pair (ACE_UTF16_T high, ACE_UTF16_T low)
 {
@@ -114,7 +114,7 @@ convert_surrogate_pair (ACE_UTF16_T high, ACE_UTF16_T low)
 /// converts surrogate pairs
 /// substitutes SUBSTITUTE_CHAR for bad encoding
 static
-ACE_INLINE
+//ACE_INLINE
 ACE_CDR::WChar
 load_wchar (const char * buffer, size_t & pos, size_t length, int do_byte_swap)
 {
@@ -159,7 +159,7 @@ load_wchar (const char * buffer, size_t & pos, size_t length, int do_byte_swap)
 }
 
 static
-ACE_INLINE
+//ACE_INLINE
 size_t encode_utf16 (ACE_UTF16_T * buffer, ACE_CDR::WChar value)
 {
   buffer[0] = ACE_static_cast (ACE_UTF16_T, value);

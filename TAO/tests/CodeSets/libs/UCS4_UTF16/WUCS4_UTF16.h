@@ -14,7 +14,7 @@
 
 #ifndef WUCS4_UTF16_H
 #define WUCS4_UTF16_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -88,5 +88,5 @@ private:
 
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* WCHAR_UCS4_UTF16_TRANSLATOR */

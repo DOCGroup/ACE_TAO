@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $ID:$
+
 project(*Server): taoexe, portableserver {
   Source_Files {
     interop_wchar_i.cpp
