@@ -47,9 +47,9 @@ interface Implementation_Repository
     // Creation flags
   };
 
-//  Object activate_object (in Object obj)
-//    raises (Not_Found,
-//            Cannot_Activate);
+  Object activate_object (in Object obj)
+    raises (Not_Found,
+            Cannot_Activate);
   // Restart server that will contain this persistent object and return the
   // new Object reference.
   //
@@ -58,9 +58,9 @@ interface Implementation_Repository
   // is raised when <obj> is found in the Repository but could not be
   // activated.
 
-//  INET_Addr activate_server (in string server)
-//    raises (Not_Found,
-//            Cannot_Activate);
+  INET_Addr activate_server (in string server)
+    raises (Not_Found,
+            Cannot_Activate);
   // Restart server that is named <server> and return the host/port
   //
   // The <Not_Found> exception is raised when <server> is not found
@@ -72,43 +72,33 @@ interface Implementation_Repository
   void register_server (in string server,
                         in Process_Options options)
     raises (Already_Registered);
-  // Restart server process when client is looking for <server>.
+  // Register the <options> to specify how the <server> should be
+  // restarted when a client asks for it.  
   //
   // The <Already_Registered> exception is raised when <server> has
   // already been registered with the Implementation Repository.
-  //
-  // The <Object_Not_Persistent> exception is raised when <server> is
-  // not a Persistent Object Reference.
 
-//  void reregister_server (in string server,
-//                          in Process_Options options)
-//    raises (Already_Registered);
-  // Restart server process when client is looking for <server>.
-  //
-  // The <Already_Registered> exception is raised when <server> has
-  // already been registered with the Implementation Repository.
-  //
-  // The <Object_Not_Persistent> exception is raised when <server> is
-  // not a Persistent Object Reference.
+  void reregister_server (in string server,
+                          in Process_Options options);
+  // Update the <options> to specify how the <server> should be
+  // restarted when a client asks for it.  Will register the server
+  // if not already registered.
 
-
-//  void remove_server (in string server)
-//    raises (Not_Found);
+  void remove_server (in string server)
+    raises (Not_Found);
   // Remove <server> from the Implementation Repository.
   //
   // The <Not_Found> exception is raised when <server> is not found
   // in the Implementation Repository.
 
-//  Profile server_is_running (in string server,
-  string server_is_running (in string server,
-//                          in INET_Addr addr,
-                          in Object ior,
-                          in Object ping);
+  INET_Addr server_is_running (in string server,
+                               in INET_Addr addr,
+                               in Object ping);
 
   // Used to notify the Implementation Repository that <server> is alive and
   // well at <addr>.
 
-//  void server_is_shutting_down (in string server);
+  void server_is_shutting_down (in string server);
   // Used to tell the Implementation Repository that <server> is shutting
   // down.
 };
