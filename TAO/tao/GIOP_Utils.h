@@ -130,8 +130,6 @@ public:
  */
 class TAO_Export TAO_GIOP_Utils
 {
-
-  // = DESCRIPTION
 public:
   static int read_bytes_input (TAO_Transport *transport,
                                TAO_InputCDR &cdr,
