@@ -36,9 +36,9 @@ ACE_Name_Proxy::open (const ACE_INET_Addr &remote_addr,
   ACE_Time_Value *timeout = 0;
 
   if (options[ACE_Synch_Options::USE_TIMEOUT])
-    timeout = (ACE_Time_Value *) &ACE_Time_Value::zero;
-  else 
-    timeout = (ACE_Time_Value *) options.time_value ();
+    timeout = ACE_const_cast (ACE_Time_Value *, options.time_value ());
+  else
+    timeout = ACE_const_cast (ACE_Time_Value *, &ACE_Time_Value::zero);
 
   // Initiate the connection.
   return this->connector_.connect (this->peer_,
@@ -47,7 +47,7 @@ ACE_Name_Proxy::open (const ACE_INET_Addr &remote_addr,
 }
 
 // Establish binding with the ACE_Name Server at remote_addr.
- 
+
 ACE_Name_Proxy::ACE_Name_Proxy (const ACE_INET_Addr &remote_addr,
 				ACE_Synch_Options& options)
 {
@@ -58,31 +58,31 @@ ACE_Name_Proxy::ACE_Name_Proxy (const ACE_INET_Addr &remote_addr,
                 ASYS_TEXT ("%p\n"),
                 ASYS_TEXT ("ACE_Name_Proxy::ACE_Name_Proxy")));
 }
- 
+
 // Obtain underlying handle.
- 
+
 /* VIRTUAL */ ACE_HANDLE
 ACE_Name_Proxy::get_handle (void) const
 {
   ACE_TRACE ("ACE_Name_Proxy::get_handle");
   return this->peer_.get_handle ();
 }
- 
+
 int
 ACE_Name_Proxy::request_reply (ACE_Name_Request &request)
 {
   ACE_TRACE ("ACE_Name_Proxy::request_reply");
   void *buffer;
   ssize_t length = request.encode (buffer);
- 
+
   if (length == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ASYS_TEXT ("%p\n"),
                        ASYS_TEXT ("encode failed")),
                       -1);
- 
+
   // Transmit request via a blocking send.
- 
+
   if (this->peer_.send_n (buffer, length) != length)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ASYS_TEXT ("%p\n"),
@@ -91,9 +91,9 @@ ACE_Name_Proxy::request_reply (ACE_Name_Request &request)
   else
     {
       ACE_Name_Reply reply;
- 
+
       // Receive reply via blocking read.
- 
+
       if (this->peer_.recv_n (&reply,
                               sizeof reply) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -116,15 +116,15 @@ ACE_Name_Proxy::send_request (ACE_Name_Request &request)
   ACE_TRACE ("ACE_Name_Proxy::send_request");
   void *buffer;
   ssize_t length = request.encode (buffer);
- 
+
   if (length == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ASYS_TEXT ("%p\n"),
                        ASYS_TEXT ("encode failed")),
                       -1);
- 
+
   // Transmit request via a blocking send.
- 
+
   else if (this->peer_.send_n (buffer, length) != length)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ASYS_TEXT ("%p\n"),
@@ -145,7 +145,7 @@ ACE_Name_Proxy::recv_reply (ACE_Name_Request &reply)
   switch (n)
     {
     case -1:
-      // FALLTHROUGH 
+      // FALLTHROUGH
       ACE_DEBUG ((LM_DEBUG,
                   ASYS_TEXT ("****************** recv_reply returned -1\n")));
     default:
@@ -154,20 +154,20 @@ ACE_Name_Proxy::recv_reply (ACE_Name_Request &reply)
 		  "recv failed",
                   n,
                   sizeof (ACE_UINT32)));
-      // FALLTHROUGH 
+      // FALLTHROUGH
     case 0:
       // We've shutdown unexpectedly
       return -1;
-      // NOTREACHED 
+      // NOTREACHED
     case sizeof (ACE_UINT32):
-      {  
+      {
         // Transform the length into host byte order.
         ssize_t length = ntohl (reply.length ());
 
         // Receive the rest of the request message.
         // @@ beware of blocking read!!!.
         n = this->peer_.recv ((void *) (((char *) &reply)
-                                        + sizeof (ACE_UINT32)), 
+                                        + sizeof (ACE_UINT32)),
 			      length - sizeof (ACE_UINT32));
 
         // Subtract off the size of the part we skipped over...
@@ -188,17 +188,15 @@ ACE_Name_Proxy::recv_reply (ACE_Name_Request &reply)
                         ASYS_TEXT ("decode failed")));
             return -1;
           }
-      }  
+      }
     }
   return 0;
 }
 
 // Close down the connection to the server.
- 
+
 ACE_Name_Proxy::~ACE_Name_Proxy (void)
 {
   ACE_TRACE ("ACE_Name_Proxy::~ACE_Name_Proxy");
   this->peer_.close ();
 }
-
-
