@@ -195,7 +195,7 @@ namespace CORBA
       
       static EventDef_ptr _nil (void)
       {
-        return (EventDef_ptr)0;
+        return static_cast<EventDef_ptr> (0);
       }
       
       static void _tao_any_destructor (void *);
@@ -303,7 +303,7 @@ namespace CORBA
       
       static Container_ptr _nil (void)
       {
-        return (Container_ptr)0;
+        return static_cast<Container_ptr> (0);
       }
       
       static void _tao_any_destructor (void *);
@@ -464,7 +464,7 @@ namespace CORBA
       
       static ModuleDef_ptr _nil (void)
       {
-        return (ModuleDef_ptr)0;
+        return static_cast<ModuleDef_ptr> (0);
       }
       
       static void _tao_any_destructor (void *);
@@ -573,7 +573,7 @@ namespace CORBA
       
       static Repository_ptr _nil (void)
       {
-        return (Repository_ptr)0;
+        return static_cast<Repository_ptr> (0);
       }
       
       static void _tao_any_destructor (void *);
@@ -681,7 +681,7 @@ namespace CORBA
       
       static ProvidesDef_ptr _nil (void)
       {
-        return (ProvidesDef_ptr)0;
+        return static_cast<ProvidesDef_ptr> (0);
       }
       
       static void _tao_any_destructor (void *);
@@ -848,7 +848,7 @@ namespace CORBA
       
       static UsesDef_ptr _nil (void)
       {
-        return (UsesDef_ptr)0;
+        return static_cast<UsesDef_ptr> (0);
       }
       
       static void _tao_any_destructor (void *);
@@ -1037,7 +1037,7 @@ namespace CORBA
       
       static EventPortDef_ptr _nil (void)
       {
-        return (EventPortDef_ptr)0;
+        return static_cast<EventPortDef_ptr> (0);
       }
       
       static void _tao_any_destructor (void *);
@@ -1215,7 +1215,7 @@ namespace CORBA
       
       static EmitsDef_ptr _nil (void)
       {
-        return (EmitsDef_ptr)0;
+        return static_cast<EmitsDef_ptr> (0);
       }
       
       static void _tao_any_destructor (void *);
@@ -1323,7 +1323,7 @@ namespace CORBA
       
       static PublishesDef_ptr _nil (void)
       {
-        return (PublishesDef_ptr)0;
+        return static_cast<PublishesDef_ptr> (0);
       }
       
       static void _tao_any_destructor (void *);
@@ -1431,7 +1431,7 @@ namespace CORBA
       
       static ConsumesDef_ptr _nil (void)
       {
-        return (ConsumesDef_ptr)0;
+        return static_cast<ConsumesDef_ptr> (0);
       }
       
       static void _tao_any_destructor (void *);
@@ -1516,7 +1516,7 @@ namespace CORBA
       
       static ComponentDef_ptr _nil (void)
       {
-        return (ComponentDef_ptr)0;
+        return static_cast<ComponentDef_ptr> (0);
       }
       
       static void _tao_any_destructor (void *);
@@ -1942,7 +1942,7 @@ namespace CORBA
       
       static FactoryDef_ptr _nil (void)
       {
-        return (FactoryDef_ptr)0;
+        return static_cast<FactoryDef_ptr> (0);
       }
       
       static void _tao_any_destructor (void *);
@@ -2050,7 +2050,7 @@ namespace CORBA
       
       static FinderDef_ptr _nil (void)
       {
-        return (FinderDef_ptr)0;
+        return static_cast<FinderDef_ptr> (0);
       }
       
       static void _tao_any_destructor (void *);
@@ -2135,7 +2135,7 @@ namespace CORBA
       
       static HomeDef_ptr _nil (void)
       {
-        return (HomeDef_ptr)0;
+        return static_cast<HomeDef_ptr> (0);
       }
       
       static void _tao_any_destructor (void *);

@@ -92,7 +92,7 @@ namespace CORBA
 {
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typedef/typedef_ch.cpp:376
+  // be\be_visitor_typedef/typedef_ch.cpp:413
   
   typedef char * ScopedName;
   typedef CORBA::String_var ScopedName_var;
@@ -205,7 +205,7 @@ namespace CORBA
     
     static IRObject_ptr _nil (void)
     {
-      return (IRObject_ptr)0;
+      return static_cast<IRObject_ptr> (0);
     }
     
     static void _tao_any_destructor (void *);
@@ -282,7 +282,7 @@ namespace CORBA
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_IRObject;
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typedef/typedef_ch.cpp:376
+  // be\be_visitor_typedef/typedef_ch.cpp:413
   
   typedef char * VersionSpec;
   typedef CORBA::String_var VersionSpec_var;
@@ -391,7 +391,7 @@ namespace CORBA
     
     static Contained_ptr _nil (void)
     {
-      return (Contained_ptr)0;
+      return static_cast<Contained_ptr> (0);
     }
     
     static void _tao_any_destructor (void *);
@@ -2079,7 +2079,7 @@ namespace CORBA
     
     static Container_ptr _nil (void)
     {
-      return (Container_ptr)0;
+      return static_cast<Container_ptr> (0);
     }
     
     static void _tao_any_destructor (void *);
@@ -2511,7 +2511,7 @@ namespace CORBA
     
     static IDLType_ptr _nil (void)
     {
-      return (IDLType_ptr)0;
+      return static_cast<IDLType_ptr> (0);
     }
     
     static void _tao_any_destructor (void *);
@@ -2630,7 +2630,7 @@ namespace CORBA
     
     static TypedefDef_ptr _nil (void)
     {
-      return (TypedefDef_ptr)0;
+      return static_cast<TypedefDef_ptr> (0);
     }
     
     static void _tao_any_destructor (void *);
