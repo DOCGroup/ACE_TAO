@@ -321,11 +321,8 @@ If this is done, TAO_HAS_AMI_CALLBACK will automatically be defined to
 1 as well. IDL_HAS_VALUETYPE is defined to 1 by default.
 
 <li>
-The rule that forward declared interfaces must be defined in the same
-file has been recently relaxed by CORBA 2.3.1 (99-10-07). This relaxation
-has been added to the TAO IDL compiler. The forward declared interface
-in question must be fully defined in some generated .cpp file included
-in the build, or there will be a C++ link error.
+New command line option -Sc added to suppress generation of tie classes
+and *S_T.* files. The default is still to generate them.
 </ul>
 
 <p><br>Known bugs/unimplemented constructs:
