@@ -908,8 +908,9 @@ ACE_Asynch_Accept::ACE_Asynch_Accept (void)
 }
 #endif /* ACE_HAS_AIO_CALLS */
 
+#if defined (ACE_HAS_AIO_CALLS)
 int
-ACE_Asynch_Accept::open (ACE_Handler &handler,
+ACE_Asynch_Accept::open(ACE_Handler &handler,
                          ACE_HANDLE handle,
                          const void *completion_key,
                          ACE_Proactor *proactor)
@@ -940,6 +941,7 @@ ACE_Asynch_Accept::open (ACE_Handler &handler,
   ACE_Thread_Manager::instance ()->spawn (ACE_Asynch_Accept::thread_function,
                                           (void *)&this->reactor_);
 }
+#endif /* ACE_HAS_AIO_CALLS */
 
 int
 ACE_Asynch_Accept::accept (ACE_Message_Block &message_block,
