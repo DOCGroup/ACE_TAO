@@ -34,8 +34,6 @@ namespace CIAO_GLUE_BasicSP
   ciao_proxy_timeout_consumer_ (RtecEventChannelAdmin::ProxyPushConsumer::_nil ()),
   ciao_event_channel_ (RtecEventChannelAdmin::EventChannel::_nil ())
   {
-    // @@ Bala, the event channel is now created in the constructor instead of
-    // in subscribe_timeout ().
     this->create_event_channel ();
   }
   // END new event code
@@ -43,22 +41,11 @@ namespace CIAO_GLUE_BasicSP
   // START new event code
   void EC_Context::create_event_channel (void)
   {
-    // @@ Bala, I've created this new method to decouple event channel
-    // creation from other tasks.
 
-    // @@ Bala, this crashes if I call
-	// CORBA::ORB_var orb = this->orb_core ()->orb ();
-	// I'll keep looking for the problem, but if you have any ideas
-	// tell me.
-	// Get a reference to the ORB.
-    char * argv[1] = { "EC_exec" };
-    int argc = sizeof (argv) / sizeof (argv[0]);
-    CORBA::ORB_var orb = CORBA::ORB_init (argc, argv ACE_ENV_ARG_PARAMETER);
-		ACE_TRY_CHECK;
-
+  	// Get a reference to the ORB.
+    CORBA::ORB_var orb = this->container_->_ciao_the_ORB ();
     if (CORBA::is_nil (orb.in ()))
       ACE_ERROR ((LM_ERROR, "Nil ORB\n"));
-
 
     // Get a reference to the POA
     CORBA::Object_var poa_object =
@@ -201,8 +188,6 @@ namespace CIAO_GLUE_BasicSP
     events[0].header.source = ACE_ES_EVENT_SOURCE_ANY + 1;
     events[0].header.type = ACE_ES_EVENT_UNDEFINED + 1;
     events[0].data.any_value <<= ev;
-
-    // @@ Bala, I've added an exception specification here.
     ciao_proxy_timeout_consumer_->push (events ACE_ENV_ARG_PARAMETER);
 	  ACE_CHECK;
     // END new event code
@@ -242,19 +227,11 @@ namespace CIAO_GLUE_BasicSP
   ::Components::ExceededConnectionLimit))
   {
     // START new event code
-
-	// @@ Bala, same problem as above with
-    // CORBA::ORB_var orb = this->orb_core ()->orb ();
-    // Get a reference to the ORB.
-    char * argv[1] = { "EC_exec" };
-    int argc = sizeof (argv) / sizeof (argv[0]);
-    CORBA::ORB_var orb = CORBA::ORB_init (argc, argv ACE_ENV_ARG_PARAMETER);
-		ACE_TRY_CHECK;
+    CORBA::ORB_var orb = this->container_->_ciao_the_ORB ();
 
     // Establish supplier's connection to event channel if not done yet
     if (CORBA::is_nil (this->ciao_proxy_timeout_consumer_.in ()))
       {
-        // @@ Bala, I've added exception specifications here.
         RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
           this->ciao_event_channel_->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_CHECK;
@@ -262,16 +239,6 @@ namespace CIAO_GLUE_BasicSP
           supplier_admin->obtain_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_CHECK;
 
-        // @@ Bala,
-        //
-        // >> @@ George, there is a leak when creating the supplier
-        // >> servant. Who deletes the supplier_servant?
-        //
-        // The supplier_servant deactivates itself in the POA in
-        // disconnect_push_supplier (). Is that sufficient to delete it?
-        // The timeout_Supplier_impl class inherits from RefCountServantBase.
-        // Do I need to call remove_ref ()?
-        
         // Create and register supplier servant
         timeout_Supplier_impl * supplier_servant;
         ACE_NEW_RETURN (supplier_servant,
@@ -280,7 +247,6 @@ namespace CIAO_GLUE_BasicSP
         RtecEventComm::PushSupplier_var supplier =
           supplier_servant->_this ();
 
-        // @@ Bala, let me know how to handle this.
         // Set QoS properties and connect
         ACE_SupplierQOS_Factory qos;
         qos.insert (ACE_ES_EVENT_SOURCE_ANY + 1,
@@ -325,21 +291,11 @@ namespace CIAO_GLUE_BasicSP
   EC_Context::subscribe_timeout_consumer (
   ::BasicSP::TimeOutConsumer_ptr c)
   {
-    // @@ Bala, I've created this new method to decouple consumer connection
-	// establishment from other tasks.
-
-	// @@ Bala, same problem as above with
-    // CORBA::ORB_var orb = this->orb_core ()->orb ();
-    // Get a reference to the ORB.
-    char * argv[1] = { "EC_exec" };
-    int argc = sizeof (argv) / sizeof (argv[0]);
-    CORBA::ORB_var orb = CORBA::ORB_init (argc, argv ACE_ENV_ARG_PARAMETER);
-		ACE_TRY_CHECK;
+    CORBA::ORB_var orb = this->container_->_ciao_the_ORB ();
 
     ::BasicSP::TimeOutConsumer_var sub =
         ::BasicSP::TimeOutConsumer::_duplicate (c);
 
-    // @@ Bala, I've added exception specifications here.
     RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
       this->ciao_event_channel_->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
@@ -347,21 +303,10 @@ namespace CIAO_GLUE_BasicSP
       consumer_admin->obtain_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
 
-    // @@ Bala, same comments as above pertaining to memory leaks.
     // Create and register consumer servant
     timeout_Consumer_impl * consumer_servant;
     ACE_NEW_RETURN (consumer_servant, timeout_Consumer_impl (orb.in (), sub.in ()), 0);
     RtecEventComm::PushConsumer_var consumer = consumer_servant->_this ();
-
-    // Put reference to this PushConsumer in the map so we can
-    // disconnect later
-    // @@ Bala, I have a map here because consumers will disconnect by a sequence of
-    // calls that ultimately calls unsubscribe_timeout (), which uses the cookie to find
-    // the right ProxyPushSupplier. The alternative I can see is to have the consumer keep a
-	// reference to its ProxyPushSupplier, and call disconnect itself or pass that
-	// reference to unsubscribe_timeout ().
-	ACE_Active_Map_Manager_Key key;
-    this->ciao_proxy_timeout_supplier_map_.bind (ciao_proxy_timeout_supplier.in (), key);
 
     // Set QoS properties and connect
     ACE_ConsumerQOS_Factory qos;
@@ -371,23 +316,13 @@ namespace CIAO_GLUE_BasicSP
     ciao_proxy_timeout_supplier->connect_push_consumer (consumer.in (),
                                                         qos.get_ConsumerQOS ());
 
-    // @@ Bala, I kept this in because it was in the original code. Should I
-	  // remove it?
     sub._retn ();
 
-    // @@ Bala,
-    //
-    // >> @@ George, okay one problem is that we dont know how to return
-    // >> a cookie. But cookie is a sequence<octet> valuetype. You cold
-    // >> probably convert a object reference to a cookie and return it
-    // >> to the user. You can probably do the reverse too. Does that
-    // >> help?
-    //
-    // I'm a little confused about this. Can I talk to you
-    // about this?
-    ::Components::Cookie_var retv =
-        new ::CIAO::Map_Key_Cookie (key);
-    return retv._retn ();
+    ::Components::Cookie * return_cookie;
+    ACE_NEW_RETURN (return_cookie,
+                    ::CIAO::Object_Reference_Cookie (consumer.in ()),
+                    0);
+    return return_cookie;
   }
 
   ::BasicSP::TimeOutConsumer_ptr
@@ -399,36 +334,31 @@ namespace CIAO_GLUE_BasicSP
   ::Components::InvalidConnection))
   {
     // START new event code
-    ACE_DEBUG ((LM_DEBUG, "EC_Context::unsubscribe_timeout\n"));
-    ::BasicSP::TimeOutConsumer_var retv;
-    ACE_Active_Map_Manager_Key key;
+    CORBA::Object_var obj = CORBA::Object::_nil ();
+    ::BasicSP::TimeOutConsumer_var return_consumer;
 
-    if (ck == 0 || ::CIAO::Map_Key_Cookie::extract (ck, key) == -1)
-    {
-      ACE_THROW_RETURN (
-      ::Components::InvalidConnection (),
-      ::BasicSP::TimeOutConsumer::_nil ());
-    }
+    if (ck == 0 || ::CIAO::Object_Reference_Cookie::extract (ck, obj.out ()) == -1)
+      {
+        ACE_THROW_RETURN (
+        ::Components::InvalidConnection (),
+        ::BasicSP::TimeOutConsumer::_nil ());
+      }
 
-    RtecEventChannelAdmin::ProxyPushSupplier_var push_supplier;
+    RtecEventComm::PushConsumer_var push_consumer =
+      ::RtecEventComm::PushConsumer::_narrow (obj.in ());
 
-    if (this->ciao_proxy_timeout_supplier_map_.find (key, push_supplier) != 0)
-    {
-      ACE_THROW_RETURN (
-      ::Components::InvalidConnection (),
-      ::BasicSP::TimeOutConsumer::_nil ());
-    }
+    if (CORBA::is_nil (push_consumer.in ()))
+      {
+        ACE_THROW_RETURN (
+        ::Components::InvalidConnection (),
+        ::BasicSP::TimeOutConsumer::_nil ());
+      }
 
-    push_supplier->disconnect_push_supplier ();
+    push_consumer->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
 
-    if (this->ciao_proxy_timeout_supplier_map_.unbind (key, push_supplier) != 0)
-    {
-      ACE_THROW_RETURN (
-      ::Components::InvalidConnection (),
-      ::BasicSP::TimeOutConsumer::_nil ());
-    }
-
-    return retv._retn ();
+    // @@ Bala, what should I return here?
+    return ::BasicSP::TimeOutConsumer::_nil ();
     // END new event code
 
     // START old event code
@@ -1262,14 +1192,15 @@ namespace CIAO_GLUE_BasicSP
   {
     CORBA::Object_var poa_object =
       orb_->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-          PortableServer::POA_var root_poa =
+    ACE_CHECK;
+    PortableServer::POA_var root_poa =
       PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-          if (CORBA::is_nil (root_poa.in ()))
+    ACE_CHECK;
+    if (CORBA::is_nil (root_poa.in ()))
       ACE_ERROR ((LM_ERROR, "Nil RootPOA\n"));
     PortableServer::ObjectId_var oid = root_poa->servant_to_id (this);
     root_poa->deactivate_object (oid);
+    this->_remove_ref ();
   }
 
   // @@ Bala, I don't see how this class can be moved to the consumer without making
@@ -1306,14 +1237,15 @@ namespace CIAO_GLUE_BasicSP
   {
     CORBA::Object_var poa_object =
       orb_->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-          PortableServer::POA_var root_poa =
+    ACE_CHECK;
+    PortableServer::POA_var root_poa =
       PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-          if (CORBA::is_nil (root_poa.in ()))
+    ACE_CHECK;
+    if (CORBA::is_nil (root_poa.in ()))
       ACE_ERROR ((LM_ERROR, "Nil RootPOA\n"));
     PortableServer::ObjectId_var oid = root_poa->servant_to_id (this);
     root_poa->deactivate_object (oid);
+    this->_remove_ref ();
   }
   // END new event code
 
@@ -1345,4 +1277,106 @@ ACE_ENV_ARG_DECL)
   ::CIAO_GLUE_BasicSP::ECHome_Servant (
   x.in (),
   c);
+}
+
+CIAO::Object_Reference_Cookie::Object_Reference_Cookie ()
+{
+
+}
+
+CIAO::Object_Reference_Cookie::~Object_Reference_Cookie ()
+{
+
+}
+
+CIAO::Object_Reference_Cookie::Object_Reference_Cookie (CORBA::Object_ptr obj)
+{
+  CORBA::ORB_var orb = obj->orb_core ()->orb ();
+
+  CORBA::Object_var poa_object =
+  orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  PortableServer::POA_var poa =
+    PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  if (CORBA::is_nil (poa.in ()))
+    ACE_ERROR ((LM_ERROR, "Nil RootPOA\n"));
+
+  PortableServer::ObjectId_var oid = poa->reference_to_id (obj);
+
+  // @@ Bala, is this line necessary?
+  this->cookieValue ().length (oid->length ());
+
+  this->cookieValue (oid.in ());
+}
+
+int
+CIAO::Object_Reference_Cookie::insert (CORBA::Object_ptr obj)
+{
+  CORBA::ORB_var orb = obj->orb_core ()->orb ();
+
+  CORBA::Object_var poa_object =
+  orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  PortableServer::POA_var poa =
+    PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  if (CORBA::is_nil (poa.in ()))
+    ACE_ERROR ((LM_ERROR, "Nil RootPOA\n"));
+
+  PortableServer::ObjectId_var oid = poa->reference_to_id (obj ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  this->cookieValue ().length (oid->length ());
+
+  this->cookieValue (oid.in ());
+
+  return 0;
+}
+
+int
+CIAO::Object_Reference_Cookie::extract (::Components::Cookie *ck,
+                                        CORBA::Object_ptr obj)
+{
+
+  // @@ Bala, this obviously doesn't work. How can I get a reference to the ORB here?
+  CORBA::ORB_var orb = obj->orb_core ()->orb ();
+
+  CORBA::Object_var poa_object =
+  orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  PortableServer::POA_var poa =
+    PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  if (CORBA::is_nil (poa.in ()))
+    ACE_ERROR ((LM_ERROR, "Nil RootPOA\n"));
+
+  CIAO::Cookie *c = CIAO::Cookie::_downcast (ck);
+
+  if (c == 0)
+    return -1;
+
+  PortableServer::ObjectId_var oid = c->get_cookie ();
+
+  obj = poa->id_to_reference (oid.in () ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  return 0;
+}
+
+
+CORBA::ValueBase *
+CIAO::Object_Reference_Cookie_init::create_for_unmarshal (void)
+{
+  CORBA::ValueBase * return_value = 0;
+  ACE_NEW_RETURN (return_value,
+                  CIAO::Object_Reference_Cookie,
+                  0);
+  return return_value;
+}
+
+::CORBA::OctetSeq *
+CIAO::Object_Reference_Cookie::get_cookie (ACE_ENV_SINGLE_ARG_DECL)
+{
+  return &this->cookieValue ();
 }

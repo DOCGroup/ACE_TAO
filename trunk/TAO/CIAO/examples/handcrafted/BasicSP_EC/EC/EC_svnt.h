@@ -21,7 +21,7 @@
 #ifndef CIAO_GLUE_SESSION_EC_SVNT_H
 #define CIAO_GLUE_SESSION_EC_SVNT_H
 #include /**/ "ace/pre.h"
-#include "tao/Orb_Core.h"
+#include "tao/ORB_Core.h"
 
 #include "ECS.h"
 #include "ECEC.h"
@@ -37,6 +37,7 @@
 #include "Event_Utilities.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
+#include "CIAO_ValueC.h"
 // END new event code
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -146,22 +147,18 @@ namespace CIAO_GLUE_BasicSP
     // END new event code
 
     protected:
-    // @@ Bala, I've commented this out
-	// START old event code
-	/*
+
+	  // START old event code
+	  /*
     ACE_Active_Map_Manager<
     ::BasicSP::TimeOutConsumer_var>
     ciao_publishes_timeout_map_;
-	*/
-	// END old event code
+	  */
+	  // END old event code
 
     // START new event code
     RtecEventChannelAdmin::ProxyPushConsumer_var
     ciao_proxy_timeout_consumer_;
-
-    ACE_Active_Map_Manager<
-    ::RtecEventChannelAdmin::ProxyPushSupplier_var>
-    ciao_proxy_timeout_supplier_map_;
 
     RtecEventChannelAdmin::EventChannel_var ciao_event_channel_;
     // END new event code
@@ -596,6 +593,41 @@ namespace CIAO_GLUE_BasicSP
     ::BasicSP::TimeOutConsumer_var timeout_consumer_;
   };
   // END new event code
+
+}
+
+namespace CIAO
+{
+
+  class EC_SVNT_Export Object_Reference_Cookie
+    : public virtual OBV_CIAO::Cookie
+  {
+
+  public:
+    Object_Reference_Cookie ();
+
+    Object_Reference_Cookie (CORBA::Object_ptr obj);
+
+    virtual ::CORBA::OctetSeq * get_cookie (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+
+    ~Object_Reference_Cookie ();
+
+    int insert (CORBA::Object_ptr obj);
+
+    static int extract (::Components::Cookie *ck,
+                        CORBA::Object_ptr obj);
+  };
+
+  class Object_Reference_Cookie_init : public virtual ::Components::Cookie_init
+  {
+
+  public:
+    Object_Reference_Cookie_init (void);
+
+    virtual ~Object_Reference_Cookie_init (void);
+
+    virtual CORBA::ValueBase * create_for_unmarshal (void);
+  };
 
 }
 
