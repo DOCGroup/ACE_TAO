@@ -88,7 +88,6 @@ namespace TAO
       PortableServer::Servant
       get_servant (ACE_ENV_SINGLE_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::NoServant,
                          PortableServer::POA::WrongPolicy)) = 0;
 
       virtual
@@ -131,10 +130,6 @@ namespace TAO
       reference_to_servant (CORBA::Object_ptr reference
                             ACE_ENV_ARG_DECL) = 0;
 
-      virtual
-      PortableServer::Servant
-      get_default_servant () const;
-
     protected:
       TAO_POA* poa_;
     };
@@ -163,7 +158,6 @@ namespace TAO
       PortableServer::Servant
       get_servant (ACE_ENV_SINGLE_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::NoServant,
                          PortableServer::POA::WrongPolicy));
 
       void
@@ -222,7 +216,6 @@ namespace TAO
       PortableServer::Servant
       get_servant (ACE_ENV_SINGLE_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::NoServant,
                          PortableServer::POA::WrongPolicy));
 
       void
@@ -258,10 +251,6 @@ namespace TAO
 
       virtual
       PortableServer::Servant
-      get_default_servant () const;
-
-      virtual
-      PortableServer::Servant
       locate_servant (const char *operation,
                         const PortableServer::ObjectId &system_id,
                         TAO::Portable_Server::Servant_Upcall &servant_upcall,
@@ -282,7 +271,6 @@ namespace TAO
       PortableServer::Servant
       get_servant (ACE_ENV_SINGLE_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::NoServant,
                          PortableServer::POA::WrongPolicy));
 
       void

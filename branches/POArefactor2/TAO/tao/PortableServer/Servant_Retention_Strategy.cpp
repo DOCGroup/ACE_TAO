@@ -18,6 +18,7 @@
 #include "POA_Current_Impl.h"
 #include "POA.h"
 #include "tao/debug.h"
+#include "tao/TSS_Resources.h"
 
 // @todo Check the usage of non_retain and request_processing (default servant especially)
 
@@ -359,12 +360,8 @@ namespace TAO
 
       if (servant == 0)
       {
-        servant = this->poa_->active_policy_strategies().request_processing_strategy()->get_default_servant ();
-        if (servant == 0)
-        {
-          ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
-                            0);
-        }
+        servant = this->poa_->active_policy_strategies().request_processing_strategy()->get_servant (ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_CHECK_RETURN (0);
       }
 
       if (servant != 0)
@@ -814,18 +811,11 @@ namespace TAO
                          PortableServer::POA::ObjectNotActive,
                          PortableServer::POA::WrongPolicy))
     {
-      // @todo Johnny, this must be changed, we only want to call something to request_processing_strategy
-
-      // We must have default servant, if not, wrong policy
-      if (this->poa_->cached_policies().request_processing () != PortableServer::USE_DEFAULT_SERVANT)
-        {
-          ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
-                            0);
-        }
-
-      // When request processing is default servant then we should use that
+      // Get the default servant, in case we have a not correct request_processing
+      // strategy we will get an exception
       PortableServer::Servant servant = 0;
-      servant = this->poa_->active_policy_strategies().request_processing_strategy()->get_default_servant ();
+      servant = this->poa_->active_policy_strategies().request_processing_strategy()->get_servant (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
 
       if (servant != 0)
         {
@@ -973,7 +963,6 @@ namespace TAO
     Non_Retain_Servant_Retention_Strategy::servant_to_id (PortableServer::Servant servant
                           ACE_ENV_ARG_DECL)
     {
-      // todo
       /*
        * If the POA has the USE_DEFAULT_SERVANT policy, the servant specified
        * is the default servant, and the operation is being invoked in the
@@ -981,14 +970,35 @@ namespace TAO
        * ObjectId associated with the current invocation is returned.
        */
 
-      /*
-       * Otherwise, the ServantNotActive exception is raised.
-       */
+      PortableServer::Servant default_servant = 0;
+      default_servant = this->poa_->active_policy_strategies().request_processing_strategy()->get_servant (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
 
-      /*
-       * If no default servant is available, the POA will raise the
-       * OBJ_ADAPTER system exception.
-       */
+      if (default_servant != 0 &&
+          default_servant == servant)
+        {
+          // If they are the same servant, then check if we are in an
+          // upcall.
+          TAO::Portable_Server::POA_Current_Impl *poa_current_impl =
+            static_cast <TAO::Portable_Server::POA_Current_Impl *>
+                        (TAO_TSS_RESOURCES::instance ()->poa_current_impl_);
+          // If we are in an upcall on the default servant, return the
+          // ObjectId associated with the current invocation.
+          if (poa_current_impl != 0 &&
+              servant == poa_current_impl->servant ())
+            {
+              return poa_current_impl->get_object_id (ACE_ENV_SINGLE_ARG_PARAMETER);
+            }
+        }
+      else
+        {
+          /*
+           * If no default servant is available, the POA will raise the
+            * OBJ_ADAPTER system exception.
+            */
+          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                            0);
+        }
     }
 
     CORBA::Object_ptr
