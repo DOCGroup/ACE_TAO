@@ -1359,8 +1359,14 @@ ACE_DynScheduler::setup_task_entries (void)
     }
     task_entries_ [i].rt_info (*info_entry);
 
-    // tie rt_info to corresponding task entry
-    task_entries_ [i].rt_info ()->volatile_token = (u_long) &(task_entries_ [i]);
+    // Tie rt_info to corresponding task entry: the double cast is
+    // needed to ensure that the size of the pointer and the size of the
+    // stored magic cookie are the same (see the definition of
+    // ptr_arith_t in ACE to grok how this works portably).
+    task_entries_ [i].rt_info ()->volatile_token =
+      ACE_static_cast (CORBA::ULongLong,
+                       ACE_reinterpret_cast (ptr_arith_t,
+                                             &(task_entries_ [i])));
 
     // tie ordered task entry pointer to corresponding task entry
     ordered_task_entries_ [i] = &(task_entries_ [i]);
@@ -1430,9 +1436,16 @@ ACE_DynScheduler::relate_task_entries_recurse (long &time, Task_Entry &entry)
         return ST_BAD_INTERNAL_POINTER;
       }
 
-      // obtain a pointer to the Task_Entry from the dependency RT_Info
+      // Obtain a pointer to the Task_Entry from the dependency
+      // RT_Info: the double cast is needed to ensure that the size of
+      // the pointer and the size of the stored magic cookie are the
+      // same (see the definition of ptr_arith_t in ACE to grok how
+      // this works portably).
       Task_Entry *dependency_entry_ptr =
-        (Task_Entry *) dependency_info->volatile_token;
+        ACE_reinterpret_cast (Task_Entry *,
+                              ACE_static_cast (ptr_arith_t,
+                                               dependency_info->
+                                                 volatile_token));
 
       if (! dependency_entry_ptr)
       {
