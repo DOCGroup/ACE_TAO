@@ -1,3 +1,9 @@
+Sun Feb 13 13:25:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * Release:
+          Removed CIAO-INSTALL from the release files. It is already
+          picked up because we include the complete CIAO directory
+
 Fri Feb 11 11:12:21 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/NEWS
@@ -6,7 +12,7 @@ Fri Feb 11 11:12:21 2005  Gan Deng  <gan.deng@vanderbilt.edu>
           attribute in component configuration.
 
 Fri Feb 11 11:10:54 2005  Will Otte <wotte@dre.vanderbilt.edu>
-	
+
 	* docs/schema/Modified_Deployment.xsd:
 
 	  Corrected a couple mistakes in the schema.
