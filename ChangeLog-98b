@@ -1,3 +1,8 @@
+
+Tue Sep 29 14:04:49 EDT 1998  James CE Johnson  <jcej@lads.com>
+
+        * docs/tutorials/013/page08.html:  Removed link to message_queue
+
 Tue Sep 29 11:05:04 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/README: removed ACE_HAS_ONLY_TWO_PARAMS_FOR_ASCTIME_R_AND_CTIME_R
