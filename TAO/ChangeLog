@@ -1,3 +1,16 @@
+Wed Oct 15 15:04:12 UTC  2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedConsumerAdmin.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedConsumerAdmin.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedSupplierAdmin.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedSupplierAdmin.h:
+          Fixed compile problems in the Cygwin TAO build which is using MPC
+          and emulated exceptions.
+
 Wed Oct 15 08:58:43 UTC  2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.cpp:
