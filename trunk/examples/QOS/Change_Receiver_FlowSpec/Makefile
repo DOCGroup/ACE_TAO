@@ -2,10 +2,30 @@
 #
 # $Id$
 #
+LDLIBS += -lACE_QoS
 
-DIRS =  Simple \
-	Change_Sender_TSpec \
-	Change_Receiver_FlowSpec
+VLDLIBS = $(LDLIBS:%=%$(VAR))
+
+PSRC    = $(addsuffix .cpp,$(BIN))
+
+CLT_OBJS =					\
+		QoS_Signal_Handler.o		\
+		QoS_Util.o			\
+		Fill_ACE_QoS.o			\
+                sender.o			\
+                Sender_QoS_Event_Handler.o
+
+SVR_OBJS =					\
+		QoS_Signal_Handler.o		\
+		QoS_Util.o			\
+		Fill_ACE_QoS.o			\
+                receiver.o			\
+                Receiver_QoS_Event_Handler.o
+
+BIN2 = receiver					\
+	sender
+
+BIN = $(BIN2)
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -14,12 +34,19 @@ DIRS =  Simple \
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
-#include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.nested.GNU
-#include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
-#include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.nolocal.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
+#----------------------------------------------------------------------------
+#       Local targets
+#----------------------------------------------------------------------------
+
+receiver: $(addprefix $(VDIR),$(SVR_OBJS))
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
+
+sender: $(addprefix $(VDIR),$(CLT_OBJS))
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 #----------------------------------------------------------------------------
 #       Dependencies
 #----------------------------------------------------------------------------
@@ -28,7 +55,8 @@ include $(ACE_ROOT)/include/makeinclude/rules.nolocal.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp $(ACE_ROOT)/ace/OS.h \
+.obj/receiver.o .obj/receiver.so .shobj/receiver.o .shobj/receiver.so: receiver.cpp \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -53,6 +81,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.nolocal.GNU
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/QoS/QoS_Session.h \
+ $(ACE_ROOT)/ace/QoS/ACE_QoS_Export.h \
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
@@ -93,7 +122,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.nolocal.GNU
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
- $(ACE_ROOT)/ace/QoS/ACE_QoS_Export.h \
  $(ACE_ROOT)/ace/QoS/QoS_Decorator.h \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -136,8 +164,9 @@ include $(ACE_ROOT)/include/makeinclude/rules.nolocal.GNU
  $(ACE_ROOT)/ace/SOCK_Dgram.i \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
  $(ACE_ROOT)/ace/QoS/QoS_Manager.h \
- $(ACE_ROOT)/ace/QoS/SOCK_Dgram_Mcast_QoS.i QoS_Util.h \
- Fill_ACE_QoS.h $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/QoS/SOCK_Dgram_Mcast_QoS.i \
+ QoS_Util.h Fill_ACE_QoS.h \
+ $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -169,10 +198,11 @@ include $(ACE_ROOT)/include/makeinclude/rules.nolocal.GNU
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Memory_Pool.i QoS_Signal_Handler.h \
- Receiver_QoS_Event_Handler.h
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ QoS_Signal_Handler.h Receiver_QoS_Event_Handler.h
 
-.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp $(ACE_ROOT)/ace/OS.h \
+.obj/sender.o .obj/sender.so .shobj/sender.o .shobj/sender.so: sender.cpp \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -197,6 +227,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.nolocal.GNU
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/QoS/QoS_Session.h \
+ $(ACE_ROOT)/ace/QoS/ACE_QoS_Export.h \
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
@@ -237,8 +268,10 @@ include $(ACE_ROOT)/include/makeinclude/rules.nolocal.GNU
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
- $(ACE_ROOT)/ace/QoS/ACE_QoS_Export.h \
  $(ACE_ROOT)/ace/QoS/QoS_Session_Impl.h \
+ \
+ \
+ \
  $(ACE_ROOT)/ace/QoS/QoS_Session_Impl.i \
  $(ACE_ROOT)/ace/QoS/QoS_Decorator.h \
  $(ACE_ROOT)/ace/Reactor.h \
@@ -282,8 +315,9 @@ include $(ACE_ROOT)/include/makeinclude/rules.nolocal.GNU
  $(ACE_ROOT)/ace/SOCK_Dgram.i \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
  $(ACE_ROOT)/ace/QoS/QoS_Manager.h \
- $(ACE_ROOT)/ace/QoS/SOCK_Dgram_Mcast_QoS.i QoS_Util.h \
- Fill_ACE_QoS.h $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/QoS/SOCK_Dgram_Mcast_QoS.i \
+ QoS_Util.h Fill_ACE_QoS.h \
+ $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -315,7 +349,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.nolocal.GNU
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Memory_Pool.i QoS_Signal_Handler.h \
- Sender_QoS_Event_Handler.h
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ QoS_Signal_Handler.h Sender_QoS_Event_Handler.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
