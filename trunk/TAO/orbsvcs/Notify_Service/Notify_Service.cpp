@@ -43,7 +43,7 @@ TAO_Notify_Service::init_ORB (int& argc, ACE_TCHAR *argv []
                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  this->notify_service_ = ACE_Dynamic_Service<TAO_NS_Service>::instance (TAO_NS_COS_NOTIFICATION_SERVICE_NAME); //("TAO_NS_Service");
+  this->notify_service_ = ACE_Dynamic_Service<TAO_NS_Service>::instance (TAO_NS_COS_NOTIFICATION_SERVICE_NAME);
 
   if (this->notify_service_ == 0)
   {
@@ -451,13 +451,3 @@ Worker::svc (void)
   ACE_ENDTRY;
   return 0;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Dynamic_Service<TAO_NS_Service>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Dynamic_Service<TAO_NS_Service>
-
-#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

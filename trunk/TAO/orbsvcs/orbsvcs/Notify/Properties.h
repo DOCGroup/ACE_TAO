@@ -30,7 +30,7 @@ class TAO_NS_Builder;
 /**
  * @class TAO_NS_Properties
  *
- * @brief Global properties that strategize RT Notify's run-time behaviour.
+ * @brief Global properties that strategize Notify's run-time behaviour.
  *
  */
 class TAO_Notify_Export TAO_NS_Properties
@@ -103,6 +103,8 @@ protected:
   /// The default EC QoS Properties.
   CosNotification::QoSProperties ec_qos_;
 };
+
+#define TAO_NS_DEFAULT_UPDATES_PERIOD 10000 // 10mS
 
 typedef ACE_Singleton<TAO_NS_Properties, TAO_SYNCH_MUTEX> TAO_NS_PROPERTIES;
 
