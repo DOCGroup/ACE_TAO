@@ -30,19 +30,12 @@ UDP_i::orb (CORBA::ORB_ptr orb)
 
 void
 UDP_i::setResponseHandler (UDP_ptr udpHandler,
-                           CORBA::Environment &ACE_TRY_ENV)
+                           CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_TRY
-    {
-      this->responseHandler_ = UDP::_duplicate (udpHandler);
-    }
-  ACE_CATCHANY
-    {
-       ACE_DEBUG ((LM_DEBUG,
-                   "UDP_i::svc: Received exception\n"));
-    }
-  ACE_ENDTRY;
+  this->responseHandler_ = UDP::_duplicate (udpHandler);
+  ACE_DEBUG ((LM_DEBUG,
+              "UDP_i::svc: Received exception\n"));
 }
 
 
@@ -82,7 +75,7 @@ UDP_i::invoke (const char * client_name,
       request_id_table_.rebind (client_name,
                                 request_id);
 
-      if (!CORBA::is_nil (responseHandler_))
+      if (!CORBA::is_nil (responseHandler_.in ()))
         {
           responseHandler_->invoke (client_name,
                                     request_id,
@@ -112,7 +105,7 @@ UDP_i::reset (const char * client_name,
 
       request_id_table_.rebind (client_name,
                                 0);
-      if (!CORBA::is_nil (responseHandler_))
+      if (!CORBA::is_nil (responseHandler_.in ()))
         {
           responseHandler_->reset (client_name,
                                    ACE_TRY_ENV);
