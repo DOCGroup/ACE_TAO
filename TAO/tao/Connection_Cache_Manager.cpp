@@ -90,7 +90,7 @@ TAO_Connection_Cache_Manager::bind_i (TAO_Cache_ExtId &ext_id,
                   ACE_TEXT ("(%P|%t) TAO_Connection_Cache_Manager::bind_i")
                   ACE_TEXT (" unable to bind \n")));
     }
-
+  cout <<"Size of map 0 " <<this->cache_map_.current_size () <<endl;
   return retval;
 }
 
@@ -233,10 +233,10 @@ int
 TAO_Connection_Cache_Manager::close_i (ACE_Handle_Set &handle_set)
 {
 
-
+  cout <<"Size of map " <<this->cache_map_.current_size () <<endl;
   for (HASH_MAP_ITER iter = this->cache_map_.begin ();
        iter != this->cache_map_.end ();
-       iter ++)
+       ++iter)
     {
 
       // Should I look for IDLE & PURGABLE ones to remove? That would
@@ -254,15 +254,11 @@ TAO_Connection_Cache_Manager::close_i (ACE_Handle_Set &handle_set)
 
       // Then decrement the reference count on the handler
       (*iter).int_id_.handler ()->decr_ref_count ();
-
-      // Then remove the entry from the map
-      // @@ When I get the purging ready, I should call purge () from
-      // here.
-      HASH_MAP_ENTRY &entry = (*iter);
-
-      this->cache_map_.unbind (&entry);
     }
 
+  // Unbind all the entries in the map
+  this->cache_map_.unbind_all ();
+  
   return 0;
 }
 
