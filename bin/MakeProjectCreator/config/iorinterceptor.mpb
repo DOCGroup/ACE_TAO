@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : taolib, portableserver, objreftemplate, valuetype {
-  after += IORInterceptor
-  libs  += TAO_IORInterceptor
-}
