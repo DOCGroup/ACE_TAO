@@ -73,27 +73,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "global_extern.h"
 #include "fe_extern.h"
 
-ACE_RCSID (fe, 
-           fe_init, 
+ACE_RCSID (fe,
+           fe_init,
            "$Id$")
-
-// Create a scoped name
-static UTL_ScopedName *
-create_scoped_name (const char *s)
-{
-  Identifier *id = 0;
-  ACE_NEW_RETURN (id,
-                  Identifier (s),
-                  0);
-
-  UTL_ScopedName *retval = 0;
-  ACE_NEW_RETURN (retval,
-                  UTL_ScopedName (id,
-                                  0),
-                  0);
-
-  return retval;
-}
 
 // Populate the global scope with all predefined entities.
 void

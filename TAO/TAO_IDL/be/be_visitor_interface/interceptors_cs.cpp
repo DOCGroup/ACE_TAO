@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_interface, 
-           interceptors_cs, 
+ACE_RCSID (be_visitor_interface,
+           interceptors_cs,
            "$Id$")
 
 // ************************************************************
@@ -70,7 +70,7 @@ int be_visitor_interface_interceptors_cs::visit_interface (be_interface *node)
        ACE_ERROR_RETURN ((LM_ERROR,
                           "(%N:%l) be_visitor_interface_ch::"
                           "visit_interface - "
-                          "codegen for scope failed\n"), 
+                          "codegen for scope failed\n"),
                          -1);
      }
 
@@ -79,7 +79,7 @@ int be_visitor_interface_interceptors_cs::visit_interface (be_interface *node)
   return 0;
 }
 
-int 
+int
 be_visitor_interface_interceptors_cs::gen_abstract_ops_helper (
     be_interface *node,
     be_interface *base,
@@ -109,8 +109,6 @@ be_visitor_interface_interceptors_cs::gen_abstract_ops_helper (
                              "bad node in this scope\n"),
                             -1);
         }
-
-      AST_Decl::NodeType nt = d->node_type ();
 
       if (d->node_type () == AST_Decl::NT_op)
         {
@@ -145,4 +143,3 @@ be_visitor_interface_interceptors_cs::gen_abstract_ops_helper (
 
   return 0;
 }
-

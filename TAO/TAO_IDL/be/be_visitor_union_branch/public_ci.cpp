@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_union_branch, 
-           public_ci, 
+ACE_RCSID (be_visitor_union_branch,
+           public_ci,
            "$Id$")
 
 // *****************************************************
@@ -50,7 +50,7 @@ be_visitor_union_branch_public_ci::visit_union_branch (be_union_branch *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cs::"
                          "visit_union_branch - "
-                         "Bad union_branch type\n"), 
+                         "Bad union_branch type\n"),
                         -1);
     }
 
@@ -61,7 +61,7 @@ be_visitor_union_branch_public_ci::visit_union_branch (be_union_branch *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cs::"
                          "visit_union_branch - "
-                         "codegen for union_branch type failed\n"), 
+                         "codegen for union_branch type failed\n"),
                         -1);
     }
 
@@ -92,7 +92,7 @@ be_visitor_union_branch_public_ci::visit_array (be_array *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_ci::"
                          "visit_enum - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -118,7 +118,7 @@ be_visitor_union_branch_public_ci::visit_array (be_array *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_union_branch_public_ci::"
                              "visit_array - "
-                             "codegen failed\n"), 
+                             "codegen failed\n"),
                             -1);
         }
     }
@@ -233,7 +233,7 @@ be_visitor_union_branch_public_ci::visit_enum (be_enum *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_ci::"
                          "visit_enum - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -309,7 +309,7 @@ be_visitor_union_branch_public_ci::visit_interface (be_interface *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_ci::"
                          "visit_interface - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -402,7 +402,7 @@ be_visitor_union_branch_public_ci::visit_interface_fwd (be_interface_fwd *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_ci::"
                          "visit_interface_fwd - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -495,7 +495,7 @@ be_visitor_union_branch_public_ci::visit_valuetype (be_valuetype *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_ci::"
                          "visit_valuetype - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -532,8 +532,6 @@ be_visitor_union_branch_public_ci::visit_valuetype (be_valuetype *node)
 
       ub->gen_default_label_value (os, bu);
     }
-
-  idl_bool bt_is_defined = node->is_defined ();
 
   *os << ";" << be_nl
       << "CORBA::add_ref (val);" << be_nl
@@ -579,7 +577,7 @@ be_visitor_union_branch_public_ci::visit_valuetype_fwd (be_valuetype_fwd *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_ci::"
                          "visit_valuetype_fwd - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -674,7 +672,7 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_ci::"
                          "visit_interface - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -848,7 +846,7 @@ be_visitor_union_branch_public_ci::visit_sequence (be_sequence *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_ci::"
                          "visit_sequence - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -874,7 +872,7 @@ be_visitor_union_branch_public_ci::visit_sequence (be_sequence *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_union_branch_public_ci::"
                              "visit_sequence - "
-                             "codegen failed\n"), 
+                             "codegen failed\n"),
                             -1);
         }
     }
@@ -948,7 +946,7 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_ci::"
                          "visit_string - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -1151,7 +1149,7 @@ be_visitor_union_branch_public_ci::visit_structure (be_structure *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_ci::"
                          "visit_structure - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -1177,7 +1175,7 @@ be_visitor_union_branch_public_ci::visit_structure (be_structure *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_union_branch_public_ci::"
                              "visit_structure - "
-                             "codegen failed\n"), 
+                             "codegen failed\n"),
                             -1);
         }
     }
@@ -1284,7 +1282,7 @@ be_visitor_union_branch_public_ci::visit_typedef (be_typedef *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_ci::"
                          "visit_typedef - "
-                         "Bad primitive type\n"), 
+                         "Bad primitive type\n"),
                         -1);
     }
 
@@ -1314,7 +1312,7 @@ be_visitor_union_branch_public_ci::visit_union (be_union *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_ci::"
                          "visit_union - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -1340,7 +1338,7 @@ be_visitor_union_branch_public_ci::visit_union (be_union *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_union_branch_public_ci::"
                              "visit_union - "
-                             "codegen failed\n"), 
+                             "codegen failed\n"),
                             -1);
         }
     }

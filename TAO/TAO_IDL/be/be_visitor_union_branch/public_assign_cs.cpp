@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_union_branch, 
-           public_assign_cs, 
+ACE_RCSID (be_visitor_union_branch,
+           public_assign_cs,
            "$Id$")
 
 // **********************************************
@@ -412,8 +412,6 @@ be_visitor_union_branch_public_assign_cs::visit_valuetype (be_valuetype *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  idl_bool bt_is_defined = node->is_defined ();
-
   *os << "if (u.u_." << ub->local_name () << "_ == 0)" << be_idt_nl
       << "{" << be_idt_nl
       << "this->u_." << ub->local_name () << "_ = 0;" << be_uidt_nl
@@ -424,7 +422,7 @@ be_visitor_union_branch_public_assign_cs::visit_valuetype (be_valuetype *node)
   // So the template will work with the macro.
   *os << "typedef "
       << bt->name () << "_var OBJECT_FIELD;" << be_nl;
-  *os << "CORBA::add_ref (u.u_." << ub->local_name () 
+  *os << "CORBA::add_ref (u.u_." << ub->local_name ()
       << "_->ptr ());" << be_nl;
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_UNION_COPY_CONSTRUCTOR)
@@ -483,8 +481,6 @@ be_visitor_union_branch_public_assign_cs::visit_valuetype_fwd (
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
-
-  idl_bool bt_is_defined = node->full_definition ()->is_defined ();
 
   *os << "if (u.u_." << ub->local_name () << "_ == 0)" << be_idt_nl
       << "{" << be_idt_nl

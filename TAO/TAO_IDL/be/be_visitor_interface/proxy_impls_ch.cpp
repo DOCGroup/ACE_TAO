@@ -2,8 +2,8 @@
 // $Id$
 //
 
-ACE_RCSID (be_visitor_interface, 
-           base_proxy_broker_impl_ch, 
+ACE_RCSID (be_visitor_interface,
+           base_proxy_broker_impl_ch,
            "$Id$")
 
 be_visitor_interface_proxy_impls_ch::be_visitor_interface_proxy_impls_ch (
@@ -35,7 +35,6 @@ be_visitor_interface_proxy_impls_ch::visit_interface (be_interface *node)
       << "// an invocation logic." << be_nl << be_nl;
 
   // Code Generation for the proxy imlpementations base class.
-  be_visitor *visitor = 0;
   be_visitor_context ctx (*this->ctx_);
   ctx.state (TAO_CodeGen::TAO_INTERFACE_BASE_PROXY_IMPL_CH);
   be_visitor_interface_base_proxy_impl_ch bpi_visitor (&ctx);

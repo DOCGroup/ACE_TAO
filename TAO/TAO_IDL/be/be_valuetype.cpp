@@ -27,8 +27,8 @@
 #include "idl_defines.h"
 #include "nr_extern.h"
 
-ACE_RCSID (be, 
-           be_valuetype, 
+ACE_RCSID (be,
+           be_valuetype,
            "$Id$")
 
 // Default constructor.
@@ -447,7 +447,7 @@ be_valuetype::gen_var_impl (char *local_name,
   *cs << "return tmp;" << be_uidt_nl;
   *cs << "}" << be_nl << be_nl;
 
-  // Hooks for the flat name global functions used by references to 
+  // Hooks for the flat name global functions used by references to
   // non-defined valuetypes.
   *cs << "void" << be_nl
       << fname << "::tao_add_ref (" << be_idt << be_idt_nl
@@ -686,9 +686,9 @@ be_valuetype::gen_helper_header (char*,
   *os << "TAO_NAMESPACE CORBA" << be_nl
       << "{"
       << be_idt_nl
-      << "TAO_NAMESPACE_STORAGE_CLASS void add_ref (" 
+      << "TAO_NAMESPACE_STORAGE_CLASS void add_ref ("
       << this->full_name () << " *);" << be_nl
-      << "TAO_NAMESPACE_STORAGE_CLASS void remove_ref (" 
+      << "TAO_NAMESPACE_STORAGE_CLASS void remove_ref ("
       << this->full_name () << " *);";
 
   *os <<  be_uidt_nl
@@ -717,9 +717,9 @@ be_valuetype::gen_helper_inline (char*,
       << "TAO_NAMESPACE CORBA" << be_nl
       << "{"
       << be_idt_nl
-      << "TAO_NAMESPACE_STORAGE_CLASS void add_ref (" 
+      << "TAO_NAMESPACE_STORAGE_CLASS void add_ref ("
       << this->full_name () << " *);" << be_nl
-      << "TAO_NAMESPACE_STORAGE_CLASS void remove_ref (" 
+      << "TAO_NAMESPACE_STORAGE_CLASS void remove_ref ("
       << this->full_name () << " *);"
       <<  be_uidt_nl
       << "}" << be_nl
@@ -938,7 +938,7 @@ be_valuetype::traverse_supports_list_graphs (
 
   for (long i = 0; i < n_supports; ++i)
     {
-      if (abstract_paths_only 
+      if (abstract_paths_only
           && ! this->pd_supports[i]->is_abstract ())
         {
           continue;
@@ -960,12 +960,12 @@ be_valuetype::traverse_supports_list_graphs (
 
   be_code_emitter_wrapper wrapper (gen);
 
-  return this->traverse_inheritance_graph (wrapper, 
-                                           os, 
+  return this->traverse_inheritance_graph (wrapper,
+                                           os,
                                            abstract_paths_only);
 }
 
-int 
+int
 be_valuetype::traverse_concrete_inheritance_graph (tao_code_emitter gen,
                                                    TAO_OutStream *os)
 {
@@ -994,7 +994,7 @@ be_valuetype::traverse_concrete_inheritance_graph (tao_code_emitter gen,
 
   be_code_emitter_wrapper wrapper (gen);
 
-  return this->traverse_inheritance_graph (wrapper, 
+  return this->traverse_inheritance_graph (wrapper,
                                            os);
 }
 
@@ -1023,14 +1023,11 @@ be_valuetype::abstract_supports_helper (be_interface *,
   return 0;
 }
 
-int 
+int
 be_valuetype::gen_abstract_init_helper (be_interface *,
                                         be_interface *,
-                                        TAO_OutStream *os)
+                                        TAO_OutStream *)
 {
-//  *os << be_nl
-//      << "this->value_ = this;";
-
   return 0;
 }
 

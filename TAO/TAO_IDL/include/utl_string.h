@@ -84,7 +84,7 @@ public:
 
   UTL_String (UTL_String *s);
 
-  ~UTL_String (void);
+  virtual ~UTL_String (void);
 
   virtual void dump (ACE_OSTREAM_TYPE &o);
   // Dump to the ostream.

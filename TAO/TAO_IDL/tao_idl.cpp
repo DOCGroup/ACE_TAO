@@ -77,8 +77,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/Process.h"
 #include "../tao/Version.h"
 
-ACE_RCSID (TAO_IDL, 
-           tao_idl, 
+ACE_RCSID (TAO_IDL,
+           tao_idl,
            "$Id$")
 
 #define IDL_CFE_VERSION "1.3.0"
@@ -321,7 +321,7 @@ DRV_drive (const char *s)
     }
   else
     {
-      ACE_OS::exit (ACE_static_cast (int, 
+      ACE_OS::exit (ACE_static_cast (int,
                                      error_count));
     }
 

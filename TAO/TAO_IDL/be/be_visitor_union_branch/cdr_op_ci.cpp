@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_union_branch, 
-           cdr_op_ci, 
+ACE_RCSID (be_visitor_union_branch,
+           cdr_op_ci,
            "$Id$")
 
 // **********************************************
@@ -48,7 +48,7 @@ be_visitor_union_branch_cdr_op_ci::visit_union_branch (be_union_branch *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cdr_op_ci::"
                          "visit_union_branch - "
-                         "Bad union_branch type\n"), 
+                         "Bad union_branch type\n"),
                         -1);
     }
 
@@ -59,7 +59,7 @@ be_visitor_union_branch_cdr_op_ci::visit_union_branch (be_union_branch *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cdr_op_ci::"
                          "visit_union_branch - "
-                         "codegen for union_branch type failed\n"), 
+                         "codegen for union_branch type failed\n"),
                         -1);
     }
 
@@ -79,7 +79,7 @@ be_visitor_union_branch_cdr_op_ci::visit_array (be_array *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cdr_op_ci::"
                          "visit_array - "
-                         "cannot retrieve union_branch node\n"), 
+                         "cannot retrieve union_branch node\n"),
                         -1);
     }
 
@@ -89,8 +89,8 @@ be_visitor_union_branch_cdr_op_ci::visit_array (be_array *node)
 
   // Save the node's local name and full name in a buffer for quick
   // use later on.
-  ACE_OS::memset (fname, 
-                  '\0', 
+  ACE_OS::memset (fname,
+                  '\0',
                   NAMEBUFSIZE);
 
   if (!this->ctx_->alias () // not a typedef
@@ -104,15 +104,15 @@ be_visitor_union_branch_cdr_op_ci::visit_array (be_array *node)
         {
           be_decl *parent =
             be_scope::narrow_from_scope (node->defined_in ())->decl ();
-          ACE_OS::sprintf (fname, 
-                           "%s::_%s", 
+          ACE_OS::sprintf (fname,
+                           "%s::_%s",
                            parent->full_name (),
                            node->local_name ()->get_string ());
         }
       else
         {
-          ACE_OS::sprintf (fname, 
-                           "_%s", 
+          ACE_OS::sprintf (fname,
+                           "_%s",
                            node->full_name ());
         }
     }
@@ -155,7 +155,7 @@ be_visitor_union_branch_cdr_op_ci::visit_array (be_array *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cdr_op_ci::"
                          "visit_array - "
-                         "bad sub state\n"), 
+                         "bad sub state\n"),
                         -1);
     }
 
@@ -180,7 +180,7 @@ be_visitor_union_branch_cdr_op_ci::visit_array (be_array *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_union_branch_cdr_op_ci::"
                              "visit_array - "
-                             "codegen failed\n"), 
+                             "codegen failed\n"),
                             -1);
         }
     }
@@ -201,7 +201,7 @@ be_visitor_union_branch_cdr_op_ci::visit_enum (be_enum *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cdr_op_ci::"
                          "visit_array - "
-                         "cannot retrieve union_branch node\n"), 
+                         "cannot retrieve union_branch node\n"),
                         -1);
     }
 
@@ -234,7 +234,7 @@ be_visitor_union_branch_cdr_op_ci::visit_enum (be_enum *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cdr_op_ci::"
                          "visit_enum - "
-                         "bad sub state\n"), 
+                         "bad sub state\n"),
                         -1);
     }
 
@@ -255,7 +255,7 @@ be_visitor_union_branch_cdr_op_ci::visit_enum (be_enum *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_union_branch_cdr_op_ci::"
                              "visit_enum - "
-                             "codegen failed\n"), 
+                             "codegen failed\n"),
                             -1);
         }
     }
@@ -276,7 +276,7 @@ be_visitor_union_branch_cdr_op_ci::visit_interface (be_interface *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cdr_op_ci::"
                          "visit_interface - "
-                         "cannot retrieve union_branch node\n"), 
+                         "cannot retrieve union_branch node\n"),
                         -1);
     }
 
@@ -311,7 +311,7 @@ be_visitor_union_branch_cdr_op_ci::visit_interface (be_interface *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cdr_op_ci::"
                          "visit_interface - "
-                         "bad sub state\n"), 
+                         "bad sub state\n"),
                         -1);
     }
 
@@ -331,7 +331,7 @@ be_visitor_union_branch_cdr_op_ci::visit_interface_fwd (be_interface_fwd *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cdr_op_ci::"
                          "visit_interface_fwd - "
-                         "cannot retrieve union_branch node\n"), 
+                         "cannot retrieve union_branch node\n"),
                         -1);
     }
 
@@ -366,7 +366,7 @@ be_visitor_union_branch_cdr_op_ci::visit_interface_fwd (be_interface_fwd *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cdr_op_ci::"
                          "visit_interface_fwd - "
-                         "bad sub state\n"), 
+                         "bad sub state\n"),
                         -1);
     }
 
@@ -386,7 +386,7 @@ be_visitor_union_branch_cdr_op_ci::visit_valuetype (be_valuetype *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cdr_op_ci::"
                          "visit_valuetype - "
-                         "cannot retrieve union_branch node\n"), 
+                         "cannot retrieve union_branch node\n"),
                         -1);
     }
 
@@ -421,7 +421,7 @@ be_visitor_union_branch_cdr_op_ci::visit_valuetype (be_valuetype *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cdr_op_ci::"
                          "visit_valuetype - "
-                         "bad sub state\n"), 
+                         "bad sub state\n"),
                         -1);
     }
 
@@ -441,7 +441,7 @@ be_visitor_union_branch_cdr_op_ci::visit_valuetype_fwd (be_valuetype_fwd *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cdr_op_ci::"
                          "visit_valuetype_fwd - "
-                         "cannot retrieve union_branch node\n"), 
+                         "cannot retrieve union_branch node\n"),
                         -1);
     }
 
@@ -476,7 +476,7 @@ be_visitor_union_branch_cdr_op_ci::visit_valuetype_fwd (be_valuetype_fwd *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cdr_op_ci::"
                          "visit_valuetype_fwd - "
-                         "bad sub state\n"), 
+                         "bad sub state\n"),
                         -1);
     }
 
@@ -496,7 +496,7 @@ be_visitor_union_branch_cdr_op_ci::visit_predefined_type (be_predefined_type *no
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cdr_op_ci::"
                          "visit_predefined_type - "
-                         "cannot retrieve union_branch node\n"), 
+                         "cannot retrieve union_branch node\n"),
                         -1);
     }
 
@@ -509,8 +509,6 @@ be_visitor_union_branch_cdr_op_ci::visit_predefined_type (be_predefined_type *no
     case TAO_CodeGen::TAO_CDR_INPUT:
       if (pt == AST_PredefinedType::PT_object)
         {
-          char *local_name = node->local_name ()->get_string ();
-
           *os << "CORBA::Object_var _tao_union_tmp;" << be_nl;
 
           *os << "result = strm >> _tao_union_tmp.out ();" << be_nl
@@ -521,8 +519,6 @@ be_visitor_union_branch_cdr_op_ci::visit_predefined_type (be_predefined_type *no
         }
       else if (pt == AST_PredefinedType::PT_pseudo)
         {
-          char *local_name = node->local_name ()->get_string ();
-
           *os << "CORBA::TypeCode_var _tao_union_tmp;" << be_nl;
 
           //@@TODO - case for ValueBase.
@@ -637,7 +633,7 @@ be_visitor_union_branch_cdr_op_ci::visit_predefined_type (be_predefined_type *no
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cdr_op_ci::"
                          "visit_array - "
-                         "bad sub state\n"), 
+                         "bad sub state\n"),
                         -1);
     }
 
@@ -705,7 +701,7 @@ be_visitor_union_branch_cdr_op_ci::visit_sequence (be_sequence *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cdr_op_ci::"
                          "visit_sequence - "
-                         "bad sub state\n"), 
+                         "bad sub state\n"),
                         -1);
     }
 
@@ -726,7 +722,7 @@ be_visitor_union_branch_cdr_op_ci::visit_sequence (be_sequence *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_union_branch_cdr_op_ci::"
                              "visit_sequence - "
-                             "codegen failed\n"), 
+                             "codegen failed\n"),
                             -1);
         }
     }
@@ -747,7 +743,7 @@ be_visitor_union_branch_cdr_op_ci::visit_string (be_string *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cdr_op_ci::"
                          "visit_string - "
-                         "cannot retrieve union_branch node\n"), 
+                         "cannot retrieve union_branch node\n"),
                         -1);
     }
 
@@ -788,7 +784,7 @@ be_visitor_union_branch_cdr_op_ci::visit_string (be_string *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cdr_op_ci::"
                          "visit_array - "
-                         "bad sub state\n"), 
+                         "bad sub state\n"),
                         -1);
     }
 
@@ -808,7 +804,7 @@ be_visitor_union_branch_cdr_op_ci::visit_structure (be_structure *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cdr_op_ci::"
                          "visit_structure - "
-                         "cannot retrieve union_branch node\n"), 
+                         "cannot retrieve union_branch node\n"),
                         -1);
     }
 
@@ -841,7 +837,7 @@ be_visitor_union_branch_cdr_op_ci::visit_structure (be_structure *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cdr_op_ci::"
                          "visit_structure - "
-                         "bad sub state\n"), 
+                         "bad sub state\n"),
                         -1);
     }
 
@@ -861,7 +857,7 @@ be_visitor_union_branch_cdr_op_ci::visit_structure (be_structure *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_union_branch_cdr_op_ci::"
                              "visit_struct - "
-                             "codegen failed\n"), 
+                             "codegen failed\n"),
                             -1);
         }
     }
@@ -882,7 +878,7 @@ be_visitor_union_branch_cdr_op_ci::visit_typedef (be_typedef *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_ci::"
                          "visit_typedef - "
-                         "Bad typedef\n"), 
+                         "Bad typedef\n"),
                         -1);
     }
 
@@ -903,7 +899,7 @@ be_visitor_union_branch_cdr_op_ci::visit_union (be_union *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cdr_op_ci::"
                          "visit_union - "
-                         "cannot retrieve union_branch node\n"), 
+                         "cannot retrieve union_branch node\n"),
                         -1);
     }
 
@@ -937,7 +933,7 @@ be_visitor_union_branch_cdr_op_ci::visit_union (be_union *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cdr_op_ci::"
                          "visit_union - "
-                         "bad sub state\n"), 
+                         "bad sub state\n"),
                         -1);
     }
 
@@ -957,7 +953,7 @@ be_visitor_union_branch_cdr_op_ci::visit_union (be_union *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_union_branch_cdr_op_ci::"
                              "visit_union - "
-                             "codegen failed\n"), 
+                             "codegen failed\n"),
                             -1);
         }
     }

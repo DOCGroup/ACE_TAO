@@ -1,7 +1,7 @@
 // $Id$
 
-ACE_RCSID (be_visitor_operation, 
-           be_visitor_operation_thru_poa_proxy_impl_ss, 
+ACE_RCSID (be_visitor_operation,
+           be_visitor_operation_thru_poa_proxy_impl_ss,
            "$Id$")
 
 // ************************************************************
@@ -219,11 +219,7 @@ be_visitor_operation_thru_poa_proxy_impl_ss::gen_invoke (
   *os << be_uidt_nl
       << ");";
 
-  // Retrieve the operation return type.
-  be_type *bt = be_type::narrow_from_decl (node->return_type ());
-
   *os << be_uidt << be_uidt << be_uidt_nl;
 
   return 0;
 }
-
