@@ -244,7 +244,7 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (be_oper
           << "continue;" << be_uidt_nl << be_nl
  
           << "// match" << be_nl
-          << "CORBA::Exception_ptr exception = exceptions_data[i].alloc ();" 
+          << "CORBA::Exception *exception = exceptions_data[i].alloc ();" 
           << be_nl << be_nl
 
           << "if (exception == 0)" << be_idt_nl

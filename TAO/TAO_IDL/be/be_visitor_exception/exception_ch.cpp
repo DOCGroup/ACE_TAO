@@ -50,12 +50,6 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
     {
       os = this->ctx_->stream ();
 
-      os->gen_ifdef_macro (node->flat_name (), "_ptr");
-
-      os->indent ();
-      *os << "class " << node->local_name () << ";" << be_nl;
-      os->gen_endif ();
-
       os->gen_ifdef_macro (node->flat_name ());
 
       os->indent ();
