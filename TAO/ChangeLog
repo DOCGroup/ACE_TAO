@@ -1,3 +1,16 @@
+Sun Aug 17 16:14:03 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* examples/RTScheduling/Fixed_Priority_Scheduler/Makefile (LIBS):
+	* examples/RTScheduling/MIF_Scheduler/Makefile (LIBS):
+
+	  Corrected library link order and added missing libraries.  Fixes
+	  unresolved symbol link-time errors in static builds.
+
+	* orbsvcs/tests/EC_Multiple/Makefile (LDLIBS):
+
+	  Added missing TAO_Messaging library to library link list.  Fixes
+	  unresolved symbol link-time errors in static builds.
+
 Sun Aug 17 13:28:40 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Condition.h:
