@@ -247,10 +247,10 @@ main (int argc, char *argv[])
   CPULoad::calibrate(5);
 
   //print out the start time of the program.
-  ACE_Time_Value start_time=ACE_OS::gettimeofday();
-  ACE_OS::printf ( ACE_TEXT ("The Start time: %u (sec), %u (usec)\n"), start_time.sec(), start_time.usec());
-  ACE_DEBUG((LM_DEBUG,"START\n"));
-  DSTRM_EVENT(MAIN_GROUP_FAM, START,0,sizeof(Object_ID), (char*)&oid);
+//  ACE_Time_Value start_time=ACE_OS::gettimeofday();
+//  ACE_OS::printf ( ACE_TEXT ("The Start time: %u (sec), %u (usec)\n"), start_time.sec(), start_time.usec());
+//  ACE_DEBUG((LM_DEBUG,"START\n"));
+//  DSTRM_EVENT(MAIN_GROUP_FAM, START,0,sizeof(Object_ID), (char*)&oid);
 
   ACE_TRY_NEW_ENV
     {
@@ -378,6 +378,11 @@ main (int argc, char *argv[])
               "(%t|%T) cannot activate worker thread.\n"));
               }
       */
+  ACE_Time_Value start_time=ACE_OS::gettimeofday();
+  ACE_OS::printf ( ACE_TEXT ("The Start time: %u (sec), %u (usec)\n"), start_time.sec(), start_time.usec());
+  ACE_DEBUG((LM_DEBUG,"START\n"));
+  DSTRM_EVENT(MAIN_GROUP_FAM, START,0,sizeof(Object_ID), (char*)&oid);
+
       Worker worker2 (orb.in (),
                       server.in (),
                       current.in (),
@@ -412,6 +417,8 @@ main (int argc, char *argv[])
 
 //      ACE_DEBUG ((LM_DEBUG,
 //                  "(%t): wait for worker threads done in main thread\n"));
+
+  DSTRM_EVENT(MAIN_GROUP_FAM, STOP, 0, sizeof(Object_ID), (char*)&oid);
 
       if (do_shutdown)
         {
@@ -470,7 +477,7 @@ main (int argc, char *argv[])
   ACE_ENDTRY;
 
   /* MEASURE: Program stop time */
-  DSTRM_EVENT(MAIN_GROUP_FAM, STOP, 0, sizeof(Object_ID), (char*)&oid); 
+//  DSTRM_EVENT(MAIN_GROUP_FAM, STOP, 0, sizeof(Object_ID), (char*)&oid); 
 
   non_dsui_timer.stop();
   ACE_hrtime_t dsui_ovhd_time;
