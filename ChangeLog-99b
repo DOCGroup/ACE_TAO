@@ -1,3 +1,9 @@
+Sat Jan 09 10:53:37 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Name_Proxy.cpp (open): swapped branches of conditional
+          so that options.time_value () is used if USE_TIMEOUT is enabled.
+          Thanks to Mike Goldman <whig@by.net> for reporting this.
+
 Fri Jan 08 19:19:17 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/OS.h: Applied ACE_TEXT to the definition of
