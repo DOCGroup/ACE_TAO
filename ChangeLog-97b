@@ -20,9 +20,8 @@ Tue Oct 14 08:02:20 1997  David L. Levine  <levine@cs.wustl.edu>
 	  isn't really needed any more, but has been kept for backward
 	  compatibility.
 
-	* ace/Object_Manager.cpp: use a static ACE_Static_Object_Lock with
-	  ACE_HAS_NONSTATIC_OBJECT_MANAGER, because the ACE static services
-	  needs it.
+	* ace/Object_Manager.cpp: use a static ACE_Static_Object_Lock,
+	  temporarily, because the ACE static services needs it.
 
 	* ace/Malloc.cpp,Reactor.cpp,Service_Repository.cpp: added
 	  #include "ace/Object_Manager.h" for ACE_Static_Object_Lock.
@@ -37,6 +36,10 @@ Tue Oct 14 08:02:20 1997  David L. Levine  <levine@cs.wustl.edu>
 	* tests/IOStream_Test.cpp (client): multiply floats by 1.0 instead
 	  of 1 to avoid bad code generation on g++/VxWorks/i960.  Thanks to
 	  Aaron Valdivia <avaldivia@hns.com> for reporting this.
+
+	* tests/Buffer_Stream_Test.cpp: removed unused static thread_manager.
+	  It caused core dump during destruction of static objects with
+	  ACE_HAS_NONSTATIC_OBJECT_MANAGER.
 
 	* examples/Timer_Queue/Reactor_Timer_Queue_Test.cpp (handle_timeout):
 	  removed declaration of unused arg "tv".
