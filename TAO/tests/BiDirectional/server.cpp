@@ -139,7 +139,8 @@ main (int argc, char *argv[])
       int retval = 0;
       while (retval == 0)
         {
-          // Please see the README file on why this is being done
+          // Just process one upcall. We know that we would get the
+          // clients IOR in that call.
           CORBA::Boolean pending =
             orb->work_pending(TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
@@ -150,6 +151,8 @@ main (int argc, char *argv[])
               ACE_TRY_CHECK;
             }
 
+          // Now that hopefully we have the clients IOR, just start
+          // making remote calls to the client.
           retval = server_impl.call_client (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }

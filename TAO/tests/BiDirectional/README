@@ -13,28 +13,7 @@ ready for callback. The server then callsback the client on the same
 connection <no_iterations> times. If the server creates a new
 connection the server would crash itself.
 
-Notes and Observations:
-----------------------
-It has been observed that when the server tries to call the client
-during the upcall on the same connection, there is a deadlock. To make
-things clearer, the scenario can be picturised as follows
 
-- the server receives a request from the client 
-- in the upcall the server makes a remote call to the client
-  (callback) 
-- the server received BiDirectional context info from the client (and
-  the server has the ability to call the client on the same
-  connection) 
-- then the call from the server to the client would be on the same
-  connection established by the client. 
-
-This situation would result in a deadlock. The deadlock would occur at
-the server end as the server does not read the reply from the
-client. This situation occurs because of the way the TP reactor (the
-default in TAO) works. The reactor suspends the handler during the
-upcall and so it is not in a position to react to the messages
-appearing on the handle. We are trying to look at ways to get around
-this situation.
 
 
 
