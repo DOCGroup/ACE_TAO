@@ -1229,6 +1229,7 @@ TAO_Object_Adapter::Non_Servant_Upcall::Non_Servant_Upcall (TAO_POA &poa)
       // Assert that the thread is the same as the one before.
       ACE_ASSERT (ACE_OS::thr_equal (this->object_adapter_.non_servant_upcall_thread_,
                                      ACE_OS::thr_self ()));
+    }
 
   // Remember which thread is calling the adapter activators.
   this->object_adapter_.non_servant_upcall_thread_ = ACE_OS::thr_self ();
