@@ -2758,8 +2758,13 @@ ACE::handle_timed_complete (ACE_HANDLE h,
 #if defined (SOL_SOCKET) && defined (SO_ERROR)
       int sock_err = 0;
       int sock_err_len = sizeof (sock_err);
-      ACE_OS::getsockopt (h, SOL_SOCKET, SO_ERROR,
-                          (char *)&sock_err, &sock_err_len);
+      int sockopt_ret = ACE_OS::getsockopt (h, SOL_SOCKET, SO_ERROR,
+                                            (char *)&sock_err, &sock_err_len);
+      if (sockopt_ret < 0)
+        {
+          h = ACE_INVALID_HANDLE;
+        }
+
       if (sock_err != 0 || known_failure)
         {
           h = ACE_INVALID_HANDLE;
@@ -3372,7 +3377,7 @@ ACE::strnew (const char *s)
   if (s == 0)
     return 0;
   char *t = 0;
-  ACE_NEW_RETURN (t, 
+  ACE_NEW_RETURN (t,
                   char [::strlen (s) + 1],
                   0);
   if (t == 0)
@@ -3388,8 +3393,8 @@ ACE::strnew (const wchar_t *s)
   if (s == 0)
     return 0;
   wchar_t *t = 0;
-  ACE_NEW_RETURN (t, 
-                  wchar_t[ACE_OS_String::strlen (s) + 1], 
+  ACE_NEW_RETURN (t,
+                  wchar_t[ACE_OS_String::strlen (s) + 1],
                   0);
   if (t == 0)
     return 0;
