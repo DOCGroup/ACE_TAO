@@ -348,13 +348,13 @@ TAO_Server_Connection_Handler::send_error (CORBA::ULong request_id,
         output.write_ulong (TAO_GIOP_LOCATION_FORWARD);
 
         // write the object reference into the stream
-        CORBA::Object_ptr object_ptr = forward_request_ptr->forward_reference;
+        CORBA::Object_ptr object_ptr = forward_request_ptr->forward_reference.in();
 
         output.encode (CORBA::_tc_Object,
-			                 &object_ptr, 
-			                 0, 
-			                 env2);
-	    }
+		       &object_ptr, 
+		       0, 
+		       env2);
+      }
       // end of the forwarding code ****************************
       else
       {
@@ -470,7 +470,7 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
   else if (error_encountered && (env.exception() != 0))
     // Something happened and we know why
     this->send_error (request_id, env);
-  else
+  else if (error_encountered)
   {
     // Now we are completely lost
     ACE_DEBUG ((LM_DEBUG,
@@ -478,7 +478,10 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
                 this->peer().get_handle (), 
                 "TAO_Server_ConnectionHandler::handle_input"));
     this->close ();
+    result = -1;
   }
+  // else there was no repsonse expected and no error happened
+
   return result;
 }
 
