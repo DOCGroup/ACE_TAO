@@ -1,5 +1,12 @@
+Sun Jan 23 00:25:48 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* m4/ace.m4:
+
+	  Initial --enable-tk-reactor and --enable-qt-reactor support.
+	  Set BUILD_{FL,TK,QT,XT} automake conditionals.
+
 Sun Jan 23 01:54:59 2005  Marek Brudka  <mbrudka@aster.pl>
-	
+
 	* */.cvsignore:
 	  To make cvs silent.
 
@@ -64,7 +71,7 @@ Sun Jan 23 01:54:59 2005  Marek Brudka  <mbrudka@aster.pl>
 	* ace/ACE_FlReactor_export.h:
 	* ACE-INSTALL.html:
 	  Changes related with separation of GUI reactors.
-	  The additional information is avalaible in ChangeLog at 
+	  The additional information is avalaible in ChangeLog at
           REACTOR_SEPARATION branch.
 
 Sat Jan 22 21:18:58 2005  Kobi Cohen-Arazi  <kobi.cohenarazi@gmail.com>
@@ -72,7 +79,7 @@ Sat Jan 22 21:18:58 2005  Kobi Cohen-Arazi  <kobi.cohenarazi@gmail.com>
 	* ace/Logging_Strategy.cpp (handle_timeout): Fixed when defined
 	  ACE_LACKS_IOSTREAM_TOTALLY. Use ftell instead of fseek in order
 	  to get the current file length. Thanks to Kim ByeongSu <kcando
-	  at kcando dot org> for pointing it out. 
+	  at kcando dot org> for pointing it out.
 
 Sat Jan 22 21:13:11 2005  Kobi Cohen-Arazi  <kobi.cohenarazi@gmail.com>
 
