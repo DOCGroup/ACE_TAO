@@ -881,6 +881,11 @@ CORBA_ORB::resolve_initial_references (const char *name,
       // Check if a DefaultInitRef was specified.
       if (ACE_OS::strlen (default_init_ref) != 0)
         {
+          // @@ This parsing code should be merged with or use the
+          //    parsing code used during MProfile creation in the
+          //    TAO_Connector base class.
+          //            -Ossama
+
           ACE_CString list_of_profiles;
 
           // Used by the strtok_r.
@@ -897,19 +902,16 @@ CORBA_ORB::resolve_initial_references (const char *name,
                                        &lasts))
             {
               list_of_profiles += ACE_CString (str);
-              // @@ Make sure that default initial reference doesn't
+
+              // Make sure that default initial reference doesn't
               //    end with the object key delimiter character.
-              //    Currently, this only works for pluggable protocols
-              //    that use a forward slash '/' as the object key
-              //    delimiter.  However, this will not work for
-              //    pluggable protocols that do not use a '/' as their
-              //    object key delimiter, such as UIOP.  This parsing
-              //    code should be merged with or use the parsing code
-              //    used during MProfile creation in the TAO_Connector
-              //    base class.
-              //            -Ossama
-              if (list_of_profiles[list_of_profiles.length() - 1] != '/')
-                list_of_profiles += ACE_CString ("/");
+
+              const char object_key_delimiter = 
+                this->orb_core_->connector_registry ()->object_key_delimiter (str);
+
+              if (list_of_profiles[list_of_profiles.length() - 1] != 
+                  object_key_delimiter)
+                list_of_profiles += ACE_CString (object_key_delimiter);
               list_of_profiles += object_id;
               list_of_profiles += ACE_CString (",");
             }
@@ -969,15 +971,12 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
   TAO_Stub *stub = 0;
 
   size_t pfile_count =
-         this->orb_core_->acceptor_registry ()->endpoint_count ();
+    this->orb_core_->acceptor_registry ()->endpoint_count ();
 
   // First we create a profile list, well actually the empty container
   TAO_MProfile mp (pfile_count);
 
   this->orb_core_->acceptor_registry ()->make_mprofile (key, mp);
-
-  // @@ Ossama, Fred:  Why do we need this ACE_CHECK_RETURN here?
-  ACE_CHECK_RETURN (stub);
 
   ACE_NEW_THROW_EX (stub,
                     TAO_Stub (id, mp, this->orb_core_),
@@ -1092,11 +1091,8 @@ CORBA_String_var::CORBA_String_var (const CORBA_String_var& r)
 
 CORBA_String_var::~CORBA_String_var (void)
 {
-  if (this->ptr_ != 0)
-    {
-      CORBA::string_free (this->ptr_);
-      this->ptr_ = 0;
-    }
+  CORBA::string_free (this->ptr_);
+  this->ptr_ = 0;
 }
 
 CORBA_String_var &
@@ -1104,8 +1100,7 @@ CORBA_String_var::operator= (char *p)
 {
   if (this->ptr_ != p)
     {
-      if (this->ptr_ != 0)
-        CORBA::string_free (this->ptr_);
+      CORBA::string_free (this->ptr_);
       this->ptr_ = p;
     }
   return *this;
@@ -1114,8 +1109,7 @@ CORBA_String_var::operator= (char *p)
 CORBA_String_var &
 CORBA_String_var::operator= (const char *p)
 {
-  if (this->ptr_ != 0)
-    CORBA::string_free (this->ptr_);
+  CORBA::string_free (this->ptr_);
 
   this->ptr_ = CORBA::string_dup (p);
   return *this;
@@ -1126,8 +1120,7 @@ CORBA_String_var::operator= (const CORBA_String_var& r)
 {
   if (this != &r)
     {
-      if (this->ptr_ != 0)
-        CORBA::string_free (this->ptr_);
+      CORBA::string_free (this->ptr_);
       this->ptr_ = CORBA::string_dup (r.ptr_);
     }
   return *this;
@@ -1150,11 +1143,8 @@ CORBA_WString_var::CORBA_WString_var (const CORBA_WString_var& r)
 
 CORBA_WString_var::~CORBA_WString_var (void)
 {
-  if (this->ptr_ != 0)
-    {
-      CORBA::wstring_free (this->ptr_);
-      this->ptr_ = 0;
-    }
+  CORBA::wstring_free (this->ptr_);
+  this->ptr_ = 0;
 }
 
 CORBA_WString_var &
@@ -1162,8 +1152,7 @@ CORBA_WString_var::operator= (CORBA::WChar *p)
 {
   if (this->ptr_ != p)
     {
-      if (this->ptr_ != 0)
-        CORBA::wstring_free (this->ptr_);
+      CORBA::wstring_free (this->ptr_);
       this->ptr_ = p;
     }
   return *this;
@@ -1172,8 +1161,7 @@ CORBA_WString_var::operator= (CORBA::WChar *p)
 CORBA_WString_var &
 CORBA_WString_var::operator= (const CORBA::WChar *p)
 {
-  if (this->ptr_ != 0)
-    CORBA::wstring_free (this->ptr_);
+  CORBA::wstring_free (this->ptr_);
 
   this->ptr_ = CORBA::wstring_dup (p);
   return *this;
@@ -1184,8 +1172,7 @@ CORBA_WString_var::operator= (const CORBA_WString_var& r)
 {
   if (this != &r)
     {
-      if (this->ptr_ != 0)
-        CORBA::wstring_free (this->ptr_);
+      CORBA::wstring_free (this->ptr_);
       this->ptr_ = CORBA::wstring_dup (r.ptr_);
     }
   return *this;
@@ -1435,18 +1422,8 @@ CORBA_ORB::object_to_string (CORBA::Object_ptr obj,
     }
   else
     {
-      // The "internet" ORB uses readable URL style objrefs, as used
-      // in the World Wide Web.
-      //
-      // This only works for IIOP objrefs.  If we're handed an objref
-      // that's not an IIOP objref, fail -- application must use an
-      // ORB that's configured differently.  @@ Is this true? FRED
-      // @@ Need to fix!!
-
       if (obj->_stubobj () == 0)
-        return CORBA::string_copy ("iiop:");
-        // @@ This should be some sort of default prefix, not
-        // hardcoded to IIOP!! FRED
+        ACE_THROW_RETURN (CORBA::INV_OBJREF (), 0);
 
       return obj->_stubobj ()->profile_in_use ()->to_string (ACE_TRY_ENV);
     }
@@ -1459,8 +1436,6 @@ CORBA::Object_ptr
 CORBA_ORB::string_to_object (const char *str,
                              CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA::Object_ptr obj = CORBA::Object::_nil ();
-
   if (ACE_OS::strncmp (str,
                        file_prefix,
                        sizeof file_prefix - 1) == 0)
@@ -1470,45 +1445,9 @@ CORBA_ORB::string_to_object (const char *str,
                             ior_prefix,
                             sizeof ior_prefix - 1) == 0)
     return this->ior_string_to_object (str + sizeof ior_prefix - 1,
-                                      ACE_TRY_ENV);
+                                       ACE_TRY_ENV);
   else
-    {
-      TAO_MProfile mprofile (0);
-      // It is safe to declare this on the stack since the contents of
-      // mprofile get copied.  No memory is allocated for profile storage
-      // here.  The Connector Registry will determine the exact number
-      // of profiles and tell the MProfile object to allocate enough memory
-      // to hold them all.
-
-      int retv = this->orb_core_->connector_registry ()->make_mprofile (str,
-                                                                        mprofile,
-                                                                        ACE_TRY_ENV);
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());   // Return nil.
-      if (retv != 0)
-        {
-          ACE_THROW_RETURN (CORBA::INITIALIZE (), CORBA::Object::_nil ());
-        }
-
-      // Now make the TAO_Stub.
-      TAO_Stub *data;
-      ACE_NEW_THROW_EX (data,
-                        TAO_Stub ((char *) 0, mprofile, this->orb_core_),
-                        CORBA::INITIALIZE ());
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
-      // Create the CORBA level proxy.
-      TAO_ServantBase *servant = this->_get_collocated_servant (data);
-
-      // This will increase the ref_count on data by one
-      ACE_NEW_THROW_EX (obj,
-                        CORBA_Object (data,
-                                      servant,
-                                      servant != 0),
-                        CORBA::INITIALIZE ());
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
-    }
-
-  return obj;
+    return this->url_ior_string_to_object (str, ACE_TRY_ENV);
 }
 
 // ****************************************************************
@@ -1647,6 +1586,59 @@ CORBA_ORB::file_string_to_object (const char* filename,
   return object;
 }
 
+// Convert an URL style IOR in an object
+
+CORBA::Object_ptr
+CORBA_ORB::url_ior_string_to_object (const char* str,
+                                     CORBA::Environment& ACE_TRY_ENV)
+{
+  CORBA::Object_ptr obj = CORBA::Object::_nil ();
+
+  TAO_MProfile mprofile;
+  // It is safe to declare this on the stack since the contents of
+  // mprofile get copied.  No memory is allocated for profile storage
+  // here.  The Connector Registry will determine the exact number
+  // of profiles and tell the MProfile object to allocate enough memory
+  // to hold them all.
+
+  int retv =
+    this->orb_core_->connector_registry ()->make_mprofile (str,
+                                                           mprofile,
+                                                           ACE_TRY_ENV);
+
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());   // Return nil.
+
+  if (retv != 0)
+    {
+      ACE_THROW_RETURN (CORBA::INV_OBJREF (
+        CORBA_SystemException::_tao_minor_code (
+          TAO_NULL_POINTER_MINOR_CODE,
+          0),
+        CORBA::COMPLETED_NO),
+        CORBA::Object::_nil ());
+    }
+
+  // Now make the TAO_Stub.
+  TAO_Stub *data = 0;
+  ACE_NEW_THROW_EX (data,
+                    TAO_Stub ((char *) 0, mprofile, this->orb_core_),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
+  // Create the CORBA level proxy.
+  TAO_ServantBase *servant = this->_get_collocated_servant (data);
+
+  // This will increase the ref_count on data by one
+  ACE_NEW_THROW_EX (obj,
+                    CORBA_Object (data,
+                                  servant,
+                                  servant != 0),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
+  return obj;
+}
+
 // ****************************************************************
 
 void
@@ -1713,8 +1705,9 @@ CORBA_ORB::_get_collocated_servant (TAO_Stub *sobj)
                     oa->find_servant (objkey.in (), ACE_TRY_ENV);
                   ACE_TRY_CHECK;
 
-                  // Found collocated object.  Perhaps we can get around by simply
-                  // setting the servant_orb, but let get this to work first.
+                  // Found collocated object.  Perhaps we can get
+                  // around by simply setting the servant_orb, but let
+                  // get this to work first.
                   sobj->servant_orb (CORBA::ORB::_duplicate ((*i).int_id_->orb ()));
                   return servant;
                 }
