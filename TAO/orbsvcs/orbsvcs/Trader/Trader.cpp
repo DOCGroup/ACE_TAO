@@ -634,7 +634,6 @@ TAO_Trader_Factory::create_linked_trader (void)
   return new NULL_TRADER (linked_trader);
 }
 
-
 #ifdef ACE_HAS_THREADS
 /*
 TAO_Trader_Factory::TAO_TRADER*
