@@ -871,7 +871,9 @@ ACE_Service_Config::start_daemon (void)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Array<ACE_Get_Opt::ACE_Get_Opt_Long_Option *>;
 template class ACE_Array_Base<ACE_Get_Opt::ACE_Get_Opt_Long_Option *>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Array<ACE_Get_Opt::ACE_Get_Opt_Long_Option *>
 #pragma instantiate ACE_Array_Base<ACE_Get_Opt::ACE_Get_Opt_Long_Option *>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
