@@ -22,12 +22,6 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Time_Value)
 
 // Initializes the ACE_Time_Value object from a timeval.
 
-ACE_Time_Value::ACE_Time_Value (const timeval &tv)
-{
-  // ACE_TRACE ("ACE_Time_Value::ACE_Time_Value");
-  this->set (tv);
-}
-
 #if defined(ACE_WIN32)
 //  Initializes the ACE_Time_Value object from a Win32 FILETIME
 
@@ -43,9 +37,9 @@ void ACE_Time_Value::set (const FILETIME &file_time)
   ACE_QWORD _100ns = ACE_MAKE_QWORD (file_time.dwLowDateTime, 
 				     file_time.dwHighDateTime);
   // Convert 100ns units to seconds;
-  this->tv_sec_ = long (_100ns / (10000 * 1000));
+  this->tv_.tv_sec = long (_100ns / (10000 * 1000));
   // Convert remainder to microseconds;
-  this->tv_usec_ = long ((_100ns - (this->tv_sec_ * (10000 * 1000))) / 10);
+  this->tv_.tv_usec = long ((_100ns - (this->tv_.tv_sec * (10000 * 1000))) / 10);
 }
 
 // Returns the value of the object as a Win32 FILETIME.
@@ -53,7 +47,7 @@ void ACE_Time_Value::set (const FILETIME &file_time)
 ACE_Time_Value::operator FILETIME () const
 {
   // ACE_TRACE ("ACE_Time_Value::operator FILETIME");
-  ACE_QWORD _100ns = ((ACE_QWORD) this->tv_sec_ * (1000 * 1000) + this->tv_usec_) * 10;
+  ACE_QWORD _100ns = ((ACE_QWORD) this->tv_.tv_sec * (1000 * 1000) + this->tv_.tv_usec) * 10;
   FILETIME file_time;
   file_time.dwLowDateTime = ACE_LOW_DWORD (_100ns);
   file_time.dwHighDateTime = ACE_HIGH_DWORD (_100ns);
@@ -80,170 +74,40 @@ ACE_Time_Value::dump (void) const
 }
 
 void
-ACE_Time_Value::set (long sec, long usec)
-{
-  // ACE_TRACE ("ACE_Time_Value::set");
-  this->tv_sec_ = sec;
-  this->tv_usec_ = usec;
-}
-
-void
-ACE_Time_Value::set (double d)
-{
-  // ACE_TRACE ("ACE_Time_Value::set");
-  long l = (long) d;
-  this->tv_sec_ = l;
-  this->tv_usec_ = ((long) (d - (double) l)) * 1000000;
-  this->normalize ();
-}
-
-ACE_Time_Value::ACE_Time_Value (long sec, long usec)
-{
-  // ACE_TRACE ("ACE_Time_Value::ACE_Time_Value");
-  this->set (sec, usec);
-  this->normalize ();
-}
-
-// Returns the value of the object as a timeval.
-
-ACE_Time_Value::operator timeval () const
-{
-  // ACE_TRACE ("ACE_Time_Value::operator timeval");
-  timeval tv;
-  tv.tv_sec = this->tv_sec_;
-  tv.tv_usec = this->tv_usec_;
-  return tv;
-}
-
-// Add TV to this.
-
-void
-ACE_Time_Value::operator+= (const ACE_Time_Value &tv)
-{
-  // ACE_TRACE ("ACE_Time_Value::operator+=");
-  this->tv_sec_ += tv.tv_sec_;
-  this->tv_usec_ += tv.tv_usec_;
-  this->normalize ();
-}
-
-// Subtract TV to this.
-
-void
-ACE_Time_Value::operator-= (const ACE_Time_Value &tv)
-{
-  // ACE_TRACE ("ACE_Time_Value::operator-=");
-  this->tv_sec_ -= tv.tv_sec_;
-  this->tv_usec_ -= tv.tv_usec_;
-  this->normalize ();
-}
-
-// Adds two ACE_Time_Value objects together, returns the sum.
-
-ACE_Time_Value 
-operator + (const ACE_Time_Value &tv1, const ACE_Time_Value &tv2)
-{
-  // ACE_TRACE ("operator +");
-  ACE_Time_Value sum (tv1.tv_sec_ + tv2.tv_sec_, 
-		      tv1.tv_usec_ + tv2.tv_usec_); 
-
-  sum.normalize ();
-  return sum;
-}
-
-// Subtracts two ACE_Time_Value objects, returns the difference.
-
-ACE_Time_Value 
-operator - (const ACE_Time_Value &tv1, const ACE_Time_Value &tv2)
-{
-  // ACE_TRACE ("operator -");
-  ACE_Time_Value delta (tv1.tv_sec_ - tv2.tv_sec_, 
-			tv1.tv_usec_ - tv2.tv_usec_); 
-  delta.normalize ();
-  return delta;
-}
-
-// True if tv1 > tv2.
-
-int
-operator > (const ACE_Time_Value &tv1, const ACE_Time_Value &tv2)
-{
-  // ACE_TRACE ("operator >");
-  if (tv1.tv_sec_ > tv2.tv_sec_)
-    return 1;
-  else if (tv1.tv_sec_ == tv2.tv_sec_ 
-	   && tv1.tv_usec_ > tv2.tv_usec_) 
-    return 1;
-  else
-    return 0;
-}
-
-// True if tv1 >= tv2.
-
-int
-operator >= (const ACE_Time_Value &tv1, const ACE_Time_Value &tv2)
-{
-  // ACE_TRACE ("operator >=");
-  if (tv1.tv_sec_ > tv2.tv_sec_)
-    return 1;
-  else if (tv1.tv_sec_ == tv2.tv_sec_ 
-	   && tv1.tv_usec_ >= tv2.tv_usec_)
-    return 1;
-  else
-    return 0;
-}
-
-void
 ACE_Time_Value::normalize (void)
 {
   // ACE_TRACE ("ACE_Time_Value::normalize");
   // New code from Hans Rohnert...
 
-  if (this->tv_usec_ >= ONE_SECOND)
+  if (this->tv_.tv_usec >= ONE_SECOND)
     {
       do
 	{ 
-	  this->tv_sec_++;
-	  this->tv_usec_ -= ONE_SECOND;
+	  this->tv_.tv_sec++;
+	  this->tv_.tv_usec -= ONE_SECOND;
 	}
-      while (this->tv_usec_ >= ONE_SECOND);
+      while (this->tv_.tv_usec >= ONE_SECOND);
     }
-  else if (this->tv_usec_ <= -ONE_SECOND)
+  else if (this->tv_.tv_usec <= -ONE_SECOND)
     {
       do
 	{ 
-	  this->tv_sec_--;
-	  this->tv_usec_ += ONE_SECOND;
+	  this->tv_.tv_sec--;
+	  this->tv_.tv_usec += ONE_SECOND;
 	}
-      while (this->tv_usec_ <= -ONE_SECOND);
+      while (this->tv_.tv_usec <= -ONE_SECOND);
     }
  
-  if (this->tv_sec_ >= 1 && this->tv_usec_ < 0)
+  if (this->tv_.tv_sec >= 1 && this->tv_.tv_usec < 0)
     {
-      this->tv_sec_--;
-      this->tv_usec_ += ONE_SECOND;
+      this->tv_.tv_sec--;
+      this->tv_.tv_usec += ONE_SECOND;
     }
-  else if (this->tv_sec_ < 0 && this->tv_usec_ > 0)
+  else if (this->tv_.tv_sec < 0 && this->tv_.tv_usec > 0)
     {
-      this->tv_sec_++;
-      this->tv_usec_ -= ONE_SECOND;
+      this->tv_.tv_sec++;
+      this->tv_.tv_usec -= ONE_SECOND;
     }
-
-#if 0
-  // Old code...
-  while ((this->tv_usec_ >= ONE_SECOND) 
-	 || (this->tv_sec_ < 0 && this->tv_usec_ > 0 ))
-    {
-      this->tv_usec_ -= ONE_SECOND;
-      this->tv_sec_++;
-    }
-
-  while ((this->tv_usec_ <= -ONE_SECOND) 
-	 || (this->tv_sec_ > 0 && this->tv_usec_ < 0))
-    {
-      this->tv_usec_ += ONE_SECOND;
-      this->tv_sec_--;
-    }
-#endif 
 }
 
 int

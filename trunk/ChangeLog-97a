@@ -1,5 +1,36 @@
 Thu Mar 27 14:10:39 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* ace/OS.h: Added two new accessors to ACE_Time_Value:
+
+	  operator timeval *() const;
+	  // Returns a pointer to the object as a timeval.
+
+	  const operator timeval *() const;
+	  // Returns a pointer to the object as a timeval.
+
+	  Thanks to Carlos O'Ryan <coryan@mat.puc.cl> for this suggestion.
+
+	* ace/OS.i (ACE_Time_Value): Inlined many of the ACE_Time_Value
+ 	  accessors.
+
+	* ace/OS.h: Reimplemented ACE_Str_Buf at 
+
+	  struct ACE_Export ACE_Str_Buf : public strbuf
+	  {
+	    // = Initialization method
+	    ACE_Str_Buf(void* b = 0, int l = 0, int max = 0);
+	    // Constructor.
+	  };
+ 
+          this makes the casting from ACE_Str_Buf* to strbuf* a "safe"
+ 	  cast and makes it more portable (say on platforms where the
+ 	  fields in strbuf are not in the right order).  Thanks to Carlos
+ 	  O'Ryan <coryan@mat.puc.cl> for this fix.
+
+	* ace/OS.h: Moved the definition of imr_multiaddr to just before
+ 	  class ACE_OS so that it picks everything up appropriately.
+  	  Thanks to Hakan Kallberg <hk@simulina.se> for reporting this.
+
 	* ace/config-aix-4.[12].x.h and config-mvs.h: Fixed the
  	  ACE_HAS_MULTICAST macros, which should have said
  	  ACE_HAS_IP_MULTICAST.  Thanks to Daniel Montalibet
@@ -125,6 +156,100 @@ Tue Mar 25 10:01:05 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* platform_linux.GNU: Added -ldl to LIBS.  Thanks to
  	alex@aureus.sublink.org (Sandro Doro) for the change.
+
+Tue Mar 25 16:01:34 1997  Carlos O'Ryan  <coryan@charlie>
+
+	* ace/Svc_Handler.cpp: 
+	I forgot to comment this: "operator delete" used to call ::delete
+	on a void*, on ANSI/C++ this is not allowed. Since "operator new"
+	calls ::new for a char[] I do a casting to char* and call
+	::delete[] on the char pointer.
+
+	* ace/config-hpux-10.x-aCC.h: 
+	HP-UX 10.10 supports CLOCK_GETTIME, my guess is that it should
+	work with g++ and HP/C++, but I won't mess with those files yet.
+
+	* ace/Connector.h: 
+	The default address parameter for "connect" is a bit tricky, from
+	the comments in the file:
+	  //
+	  // If the compiler supports 'typename' we cannot use
+	  // 
+	  // PEER_CONNECTOR::PEER_ADDR::sap_any
+	  // 
+	  // because PEER_CONNECTOR::PEER_ADDR is not considered a
+	  // type. But: 
+	  //
+	  // typename PEER_CONNECTOR::PEER_ADDR::sap_any
+	  // 
+	  // will not work either, because now we are declaring sap_any a
+	  // type, further:
+	  // 
+	  // (typename PEER_CONNECTOR::PEER_ADDR)::sap_any
+	  //
+	  // is considered a casting expression. All I can think of is
+	  // using a typedef, I tried PEER_ADDR but that was a source of
+	  // trouble on some platforms. I will try:
+	  //
+	  typedef ACE_PEER_CONNECTOR_ADDR ACE_PEER_ADDR_TYPEDEF;
+
+	* ace/OS.h: 
+	The stock HP C++ compiler (cfront based) gives lots of warnings in
+	<net/if.h>. I used to define volatile to avoid this warnings. Now
+	I think I'll rather like to see them.
+
+	* ace/SPIPE_Stream.h: 
+	* ace/SPIPE_Connector.h: 
+	There was no meta-type info (PEER_ADDR) for SPIPE_Stream and
+	SPIPE_Connector.
+
+	* ace/Stream_Modules.h: 
+	* ace/Stream_Modules.cpp: 
+	Fixed a "bug" introduced in my last change: a couple of
+	ACE_ALLOC_HOOK_* were commented but shouldn't.
+
+	* examples/Connection/non-blocking/CPP-acceptor.cpp (open): 
+	PR_AD cannot be used in this context, it expands to
+	_ACE_PEER_ACCEPTOR::PEER_ADDR (via ACE_PEER_ACCEPTOR_ADDR), but
+	the template parameter is _ACE_PEER_STREAM (aka PR_ST_1, aka
+	ACE_PEER_STREAM_1).
+	The right macro was ACE_PEER_STREAM_ADDR.
+
+	* ace/Connector.h: 
+	* ace/Connector.cpp: 
+	The typedef trick I used (PEER_ADDR) did not work on every
+	platform.
+	I also broke some examples since ACE_PEER_CONNECTOR_ADDR did not
+	include ACE_TYPENAME on its definition. Hopefully this new trick
+	will work everywhere.
+
+	* I finally sorted out the mistery of including "ace/Module.h"
+	into "ace/Task_T.cpp": when compiling "ace/Stream_Modules.cpp" you
+	get the following include sequence:
+	Stream_Modules.cpp
+	  Stream_Modules.h
+	    Task.h
+	      Task.i
+	      Task_T.h
+	        Message_Queue.h (descendants removed)
+		Synch_T.h (descendants removed)
+		Task.h (already included).
+		Task_T.i
+		Task_T.cpp
+		  Module.h
+		    ACE.h (descendants removed)
+		    Task.h (already included).
+		    Module.i
+		    Module.cpp
+
+	At this point Module.cpp uses ACE_Thru_Task declared on
+	Stream_Modules.h, but after the #include "ace/Task.h";
+	in fact Module.cpp tries to #include "ace/Stream_Modules.cpp" but
+	that second #include expands to nothing due to the canonical
+	protection on Stream_Modules.h.
+	That explains the removal of Module.h in Task_T.cpp.
+	If you are wondering why so long an explanation for this change
+	the answer is simple: just because I was curious on now it worked.
 
 Mon Mar 24 14:08:48 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
@@ -286,6 +411,104 @@ Sat Mar 22 07:30:49 1997  David L. Levine  <levine@cs.wustl.edu>
 	* ace/OS.h: Changed ACE_hrtime_t to unsigned __int64 with
 	  _MSC_VER.  Also, fixed typo: "uint64" instead of "unit64"
 	  without _MSC_VER.
+
+Fri Mar 21 08:37:34 1997  Carlos O'Ryan  <coryan@charlie>
+
+	* makeinclude/rules.lib.GNU:
+	I use the macro SOEXT to support HP non-standard extension for
+	shared library names (.sl instead of .so).
+	I also changed the rule to build shared libraries: under HP-UX you
+	cannot pass extra libraries (-lXXX options) when building a shared
+	lib. Before HP-UX 10.10 it wasn't a problem because no library was
+	needed with ACE, but to support XLI the '-lxti' flag must be used
+	on binaries (but not on shared libs).
+
+	* include/makeinclude/platform_hpux.GNU: 
+	The PIC option (+Z) was used always, clearly not intended.
+
+	* include/makeinclude/platform_hpux_gcc.GNU: 
+	Added a config file for g++ under HP-UX.
+
+	* include/makeinclude/platform_hpux_aCC.GNU: 
+	Added a config file for HP/aCC compiler under HP-UX.
+
+	* ace/Makefile: 
+	* netsvcs/lib/Makefile: 
+	Changed to support the SOEXT macro.
+
+	* config-hpux-10.x.h: 
+	* config-hpux-10.x-aCC.h: 
+	* config-hpux-10.x-g++.h: 
+	I updated the files to HP-UX 10.10, AFAIK since that version HP-UX
+	uses fd_set instead of int in select(2) (so ACE_SELECT_USES_INT is
+	not needed) and the OS supports siginfo_t and ucontext_t so
+	ACE_HAS_SIGINFO_T and ACE_HAS_UCONTEXT_T are defined.
+	I *do not* have threads at my site nor the infamous PHSS_6246
+	patch so I couldn't test the threaded version nor the HP cfront
+	based one.
+	ACE compiled fine with g++ and HP/aCC though.
+
+	* ace/OS.h: 
+	* ace/Malloc_T.h: 
+	HP/aCC supports the typename keyword. I added a new config macro
+	'ACE_HAS_TYPENAME_KEYWORD', when it is defined ACE_TYPENAME
+	expands to 'typename' when not it expands to nothing.
+	On the cases where HP/aCC requires the usage of 'typename' I added
+	a 'ACE_TYPENAME'.
+
+	* ace/OS.i: 
+	* ace/OS.cpp: 
+	ACE_OS::inet_aton cannot be inlined under HP-UX.
+
+	* ace/Connector.h: 
+	* ace/Connector.cpp: 
+	I have decided to use a typedef (PEER_ADDR) instead of
+	ACE_PEER_CONNECTOR_ADDR, mainly because the second form
+	requires a ACE_TYPENAME before each usage.
+
+	* ace/Event_Handler_T.i: 
+	Much to my surprize ACE_TYPENAME is required when using a template
+	typedef as a return value.
+
+	* ace/Local_Name_Space_T.h: 
+	HP/aCC does not like the usage of a private typedef from another
+	class.
+
+	* ace/Strategies_T.h: 
+	* ace/Strategies_T.cpp: 
+	ACE_Process_Strategy declared two defaults constructors:
+	ACE_Process_Strategy(void) and ACE_Process_Strategy(int = 1).
+	The constructor code was wrong, it called open() with parameters:
+	open(thr_mgr, thr_flags, n_threads)
+	none of which were defined, worse, open() receives just one
+	parameter (the number of processes) just as the constructor, I
+	believe that C-w programming is lurking here.
+
+	* ace/Signal.cpp: 
+	Though the header file does not declare ACE_Sig_Handlers under
+	HP-UX (and the code is not defined too) some auxiliary functions
+	that use ACE_Sig_Handlers were defined. I removed their
+	definition.
+	Some day I'll try to take a look at the code, trying to find out
+	was wrong with them.
+
+	* ace/Stream_Modules.h: 
+	* ace/Stream_Modules.cpp: 
+	By mistake I commented out the ACE_ALLOC_HOOK_* macros; have to
+	fix it *real soon*.
+
+	* ace/Task_T.cpp: 
+	No need to include "ace/Module.h" since only the template
+	declaration is used. When ACE_TEMPLATES_REQUIRE_SOURCE is defined
+	you end up using ACE_Thru_Task before it gets defined.
+	This is no problem unless your compiler checks template	sintax
+	before instantiation as the HP/aCC compiler do.
+
+	* examples/Reactor/Misc/test_demuxing.cpp: 
+	ACE_MT_SYNCH was used, but it is only defined if ACE_HAS_THREADS,
+	I used ACE_SYNCH instead, which is defined as ACE_MT_SYNCH if
+	ACE_HAS_THREADS and as ACE_NULL_SYNCH if not.
+	Maybe the semantics are wrong, but the thing compiles.
 
 Fri Mar 21 15:10:59 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 

@@ -100,7 +100,137 @@ typedef const struct timespec * ACE_TIMESPEC_PTR;
 // can't make this an enum due to compiler bugs on some platforms...
 static const long ONE_SECOND = 1000000L;
 
-// Initializes the ACE_Time_Value object.
+// Returns the value of the object as a timeval.
+
+ACE_INLINE
+ACE_Time_Value::operator timeval () const
+{
+  // ACE_TRACE ("ACE_Time_Value::operator timeval");
+  return this->tv_;
+}
+
+// Returns a pointer to the object as a timeval.
+
+ACE_INLINE
+ACE_Time_Value::operator timeval * () const
+{
+  // ACE_TRACE ("ACE_Time_Value::operator timeval");
+  return (timeval *) &this->tv_;
+}
+
+// Add TV to this.
+
+ACE_INLINE void
+ACE_Time_Value::operator+= (const ACE_Time_Value &tv)
+{
+  // ACE_TRACE ("ACE_Time_Value::operator+=");
+  this->tv_.tv_sec += tv.tv_.tv_sec;
+  this->tv_.tv_usec += tv.tv_.tv_usec;
+  this->normalize ();
+}
+
+// Subtract TV to this.
+
+ACE_INLINE void
+ACE_Time_Value::operator-= (const ACE_Time_Value &tv)
+{
+  // ACE_TRACE ("ACE_Time_Value::operator-=");
+  this->tv_.tv_sec -= tv.tv_.tv_sec;
+  this->tv_.tv_usec -= tv.tv_.tv_usec;
+  this->normalize ();
+}
+
+// Adds two ACE_Time_Value objects together, returns the sum.
+
+ACE_INLINE ACE_Time_Value 
+operator + (const ACE_Time_Value &tv1, 
+	    const ACE_Time_Value &tv2)
+{
+  // ACE_TRACE ("operator +");
+  ACE_Time_Value sum (tv1.tv_.tv_sec + tv2.tv_.tv_sec, 
+		      tv1.tv_.tv_usec + tv2.tv_.tv_usec); 
+
+  sum.normalize ();
+  return sum;
+}
+
+ACE_INLINE void
+ACE_Time_Value::set (long sec, long usec)
+{
+  // ACE_TRACE ("ACE_Time_Value::set");
+  this->tv_.tv_sec = sec;
+  this->tv_.tv_usec = usec;
+}
+
+ACE_INLINE
+ACE_Time_Value::ACE_Time_Value (const timeval &tv)
+{
+  // ACE_TRACE ("ACE_Time_Value::ACE_Time_Value");
+  this->set (tv);
+}
+
+ACE_INLINE 
+ACE_Time_Value::ACE_Time_Value (long sec, long usec)
+{
+  // ACE_TRACE ("ACE_Time_Value::ACE_Time_Value");
+  this->set (sec, usec);
+  this->normalize ();
+}
+
+ACE_INLINE void
+ACE_Time_Value::set (double d)
+{
+  // ACE_TRACE ("ACE_Time_Value::set");
+  long l = (long) d;
+  this->tv_.tv_sec = l;
+  this->tv_.tv_usec = ((long) (d - (double) l)) * 1000000;
+  this->normalize ();
+}
+
+// Subtracts two ACE_Time_Value objects, returns the difference.
+
+ACE_INLINE ACE_Time_Value 
+operator - (const ACE_Time_Value &tv1, 
+	    const ACE_Time_Value &tv2)
+{
+  // ACE_TRACE ("operator -");
+  ACE_Time_Value delta (tv1.tv_.tv_sec - tv2.tv_.tv_sec, 
+			tv1.tv_.tv_usec - tv2.tv_.tv_usec); 
+  delta.normalize ();
+  return delta;
+}
+
+// True if tv1 > tv2.
+
+ACE_INLINE int
+operator > (const ACE_Time_Value &tv1, 
+	    const ACE_Time_Value &tv2)
+{
+  // ACE_TRACE ("operator >");
+  if (tv1.tv_.tv_sec > tv2.tv_.tv_sec)
+    return 1;
+  else if (tv1.tv_.tv_sec == tv2.tv_.tv_sec 
+	   && tv1.tv_.tv_usec > tv2.tv_.tv_usec) 
+    return 1;
+  else
+    return 0;
+}
+
+// True if tv1 >= tv2.
+
+ACE_INLINE int
+operator >= (const ACE_Time_Value &tv1, 
+	     const ACE_Time_Value &tv2)
+{
+  // ACE_TRACE ("operator >=");
+  if (tv1.tv_.tv_sec > tv2.tv_.tv_sec)
+    return 1;
+  else if (tv1.tv_.tv_sec == tv2.tv_.tv_sec 
+	   && tv1.tv_.tv_usec >= tv2.tv_.tv_usec)
+    return 1;
+  else
+    return 0;
+}
 
 // Initializes a timestruc_t.  Note that this approach loses precision
 // since it converts the nano-seconds into micro-seconds.  But then
@@ -111,8 +241,8 @@ ACE_INLINE void
 ACE_Time_Value::set (const timestruc_t &tv)
 {
   // ACE_TRACE ("ACE_Time_Value::set");
-  this->tv_sec_ = tv.tv_sec;
-  this->tv_usec_ = tv.tv_nsec / 1000;
+  this->tv_.tv_sec = tv.tv_sec;
+  this->tv_.tv_usec = tv.tv_nsec / 1000;
 
   this->normalize ();
 }
@@ -124,8 +254,8 @@ ACE_Time_Value::operator timestruc_t () const
 {
   // ACE_TRACE ("ACE_Time_Value::operator timestruc_t");
   timestruc_t tv;
-  tv.tv_sec = this->tv_sec_;
-  tv.tv_nsec = this->tv_usec_ * 1000;
+  tv.tv_sec = this->tv_.tv_sec;
+  tv.tv_nsec = this->tv_.tv_usec * 1000;
   return tv;
 }
 
@@ -142,8 +272,8 @@ ACE_INLINE void
 ACE_Time_Value::set (const timeval &tv)
 {
   // ACE_TRACE ("ACE_Time_Value::set");
-  this->tv_sec_ = tv.tv_sec;
-  this->tv_usec_ = tv.tv_usec;
+  this->tv_.tv_sec = tv.tv_sec;
+  this->tv_.tv_usec = tv.tv_usec;
 
   this->normalize ();
 }
@@ -152,8 +282,7 @@ ACE_Time_Value::set (const timeval &tv)
 
 ACE_INLINE
 ACE_Time_Value::ACE_Time_Value (const ACE_Time_Value &tv)
-  : tv_sec_ (tv.tv_sec_), 
-    tv_usec_ (tv.tv_usec_)
+  : tv_ (tv.tv_)
 {
   // ACE_TRACE ("ACE_Time_Value::ACE_Time_Value");
 }
@@ -164,7 +293,7 @@ ACE_INLINE long
 ACE_Time_Value::sec (void) const
 {
   // ACE_TRACE ("ACE_Time_Value::sec");
-  return this->tv_sec_;
+  return this->tv_.tv_sec;
 }
 
 // Sets the number of seconds.
@@ -173,7 +302,7 @@ ACE_INLINE void
 ACE_Time_Value::sec (long sec) 
 {
   // ACE_TRACE ("ACE_Time_Value::sec");
-  this->tv_sec_ = sec;
+  this->tv_.tv_sec = sec;
 }
 
 // Converts from Time_Value format into milli-seconds format.
@@ -182,7 +311,7 @@ ACE_INLINE long
 ACE_Time_Value::msec (void) const
 {
   // ACE_TRACE ("ACE_Time_Value::msec");
-  return this->tv_sec_ * 1000 + this->tv_usec_ / 1000;
+  return this->tv_.tv_sec * 1000 + this->tv_.tv_usec / 1000;
 }
 
 // Converts from milli-seconds format into Time_Value format.
@@ -192,9 +321,9 @@ ACE_Time_Value::msec (long milliseconds)
 {
   // ACE_TRACE ("ACE_Time_Value::msec");
   // Convert millisecond units to seconds;
-  this->tv_sec_ = milliseconds / 1000;
+  this->tv_.tv_sec = milliseconds / 1000;
   // Convert remainder to microseconds;
-  this->tv_usec_ = (milliseconds - (this->tv_sec_ * 1000)) * 1000;
+  this->tv_.tv_usec = (milliseconds - (this->tv_.tv_sec * 1000)) * 1000;
 }
 
 // Returns number of micro-seconds.
@@ -203,7 +332,7 @@ ACE_INLINE long
 ACE_Time_Value::usec (void) const
 {
   // ACE_TRACE ("ACE_Time_Value::usec");
-  return this->tv_usec_;
+  return this->tv_.tv_usec;
 }
 
 // Sets the number of micro-seconds.
@@ -212,7 +341,7 @@ ACE_INLINE void
 ACE_Time_Value::usec (long usec) 
 {
   // ACE_TRACE ("ACE_Time_Value::usec");
-  this->tv_usec_ = usec;
+  this->tv_.tv_usec = usec;
 }
 
 // True if tv1 < tv2.
@@ -242,8 +371,8 @@ operator == (const ACE_Time_Value &tv1,
 	     const ACE_Time_Value &tv2)
 {
   // ACE_TRACE ("operator ==");
-  return tv1.tv_sec_ == tv2.tv_sec_ 
-    && tv1.tv_usec_ == tv2.tv_usec_;
+  return tv1.tv_.tv_sec == tv2.tv_.tv_sec
+    && tv1.tv_.tv_usec == tv2.tv_.tv_usec;
 }
 
 // True if tv1 != tv2.
@@ -261,7 +390,6 @@ operator != (const ACE_Time_Value &tv1,
 #if !defined (ACE_LACKS_RPC_H)
 #include /**/ <rpc/rpc.h>
 #endif /* ACE_LACKS_RPC_H */
-
 
 // Matthew Stevens 7-10-95 Fix GNU GCC 2.7 for memchr() problem.
 #if defined (ACE_HAS_GNU_CSTRING_H)
@@ -6063,10 +6191,18 @@ ACE_OS::getenv (const char *symbol)
 
 ACE_INLINE
 ACE_Str_Buf::ACE_Str_Buf (void *b, int l, int max)
-  : maxlen (max),
-    len (l), 
-    buf (b)
 { 
+  this->maxlen = max;
+  this->len = l;
+  this->buf = (char *) b;
+}
+
+ACE_INLINE
+ACE_Str_Buf::ACE_Str_Buf (strbuf &sb)
+{ 
+  this->maxlen = sb.maxlen;
+  this->len = sb.len;
+  this->buf = sb.buf;
 }
 
 #if defined (ACE_HAS_UNICODE)

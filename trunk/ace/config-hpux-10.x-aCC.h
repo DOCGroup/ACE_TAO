@@ -77,6 +77,12 @@
 // Compiler/platform has thread-specific storage
 // #define ACE_HAS_THREAD_SPECIFIC_STORAGE
 
+// Platform supports POSIX 1.b clock_gettime ()
+#define ACE_HAS_CLOCK_GETTIME
+
+// iostream header lacks ipfx (), isfx (), etc., declarations
+#define ACE_LACKS_IOSTREAM_FX
+
 // Compiler/platform supports struct strbuf.
 #define ACE_HAS_STRBUF_T
 #include /**/ <stropts.h> /* for struct strbuf */

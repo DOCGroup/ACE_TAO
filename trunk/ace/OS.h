@@ -199,16 +199,6 @@ typedef int key_t;
 #include /**/ <vxWorks.h>
 #endif /* VXWORKS */
 
-#if !defined (ACE_HAS_IP_MULTICAST)
-struct ip_mreq 
-{
-  struct in_addr imr_multiaddr;  
-  // IP multicast address of group
-  struct in_addr imr_interface;  
-  // local IP address of interface
-};
-#endif /* ACE_HAS_IP_MULTICAST */
-
 #if defined (ACE_HAS_CHARPTR_SPRINTF)
 #define ACE_SPRINTF_ADAPTER(X) ::strlen (X)
 #else
@@ -401,6 +391,9 @@ public:
   operator timeval () const;
   // Returns the value of the object as a timeval.
 
+  operator timeval *() const;
+  // Returns a pointer to the object as a timeval.
+
 #if defined(ACE_WIN32)
   operator FILETIME () const;
   // Returns the value of the object as a Win32 FILETIME.
@@ -460,11 +453,8 @@ private:
   void normalize (void);
   // Put the timevalue into a canonical form.
 
-  long tv_sec_;
-  // Seconds.
-  
-  long tv_usec_;
-  // Microseconds.
+  timeval tv_;
+  // Store the values as a <timeval>.
 };
 
 class ACE_Export ACE_Countdown_Time
@@ -554,6 +544,29 @@ private:
 #define ACE_PEER_CONNECTOR_2 _ACE_PEER_CONNECTOR
 #define ACE_PEER_CONNECTOR _ACE_PEER_CONNECTOR
 #define ACE_PEER_CONNECTOR_ADDR ACE_TYPENAME _ACE_PEER_CONNECTOR::PEER_ADDR
+#if !defined(ACE_HAS_TYPENAME_KEYWORD)
+#define ACE_PEER_CONNECTOR_ADDR_ANY ACE_PEER_CONNECTOR_ADDR::sap_any
+#else
+//
+// If the compiler supports 'typename' we cannot use
+// 
+// PEER_CONNECTOR::PEER_ADDR::sap_any
+// 
+// because PEER_CONNECTOR::PEER_ADDR is not considered a type. But:
+//
+// typename PEER_CONNECTOR::PEER_ADDR::sap_any
+// 
+// will not work either, because now we are declaring sap_any a
+// type, further:
+// 
+// (typename PEER_CONNECTOR::PEER_ADDR)::sap_any
+//
+// is considered a casting expression. All I can think of is using a
+// typedef, I tried PEER_ADDR but that was a source of trouble on
+// some platforms. I will try:
+//
+#define ACE_PEER_CONNECTOR_ADDR_ANY ACE_PEER_ADDR_TYPEDEF::sap_any
+#endif /* ACE_HAS_TYPENAME_KEYWORD */ 
 
 // Handle ACE_SOCK_*
 #define ACE_SOCK_ACCEPTOR ACE_SOCK_Acceptor
@@ -618,6 +631,7 @@ private:
 #define ACE_PEER_CONNECTOR_2 _ACE_PEER_CONNECTOR, _ACE_PEER_ADDR
 #define ACE_PEER_CONNECTOR _ACE_PEER_CONNECTOR
 #define ACE_PEER_CONNECTOR_ADDR _ACE_PEER_ADDR
+#define ACE_PEER_CONNECTOR_ADDR_ANY ACE_PEER_CONNECTOR_ADDR::sap_any
 
 // Handle ACE_SOCK_*
 #define ACE_SOCK_ACCEPTOR ACE_SOCK_Acceptor, ACE_INET_Addr
@@ -751,33 +765,6 @@ typedef struct rlimit ACE_SETRLIMIT_TYPE;
 #else
 typedef const struct rlimit ACE_SETRLIMIT_TYPE;
 #endif /* ACE_HAS_BROKEN_SETRLIMIT */
-
-#if !defined (ACE_HAS_STRBUF_T)
-struct strbuf
-{
-  int maxlen; // no. of bytes in buffer.
-  int len;    // no. of bytes returned.
-  void *buf;  // pointer to data.
-};
-#endif /* ACE_HAS_STRBUF_T */
-
-struct ACE_Export ACE_Str_Buf
-  // = TITLE
-  //     Simple wrapper for STREAM pipes strbuf.
-{
-  int maxlen;                 
-  // Number of bytes in buffer.
-
-  int len;                    
-  // Number of bytes returned.
-
-  void *buf;              
-  // Pointer to data.
-
-  // = Initialization method
-  ACE_Str_Buf (void *b = 0, int l = 0, int max = 0);
-  // Constructor.
-};
 
 #if defined (ACE_MT_SAFE)
 #define ACE_MT(X) X
@@ -1751,13 +1738,7 @@ extern "C" {
 #else
 #include /**/ <netdb.h>
 #endif /* VXWORKS */
-#if defined (HPUX)
-#define volatile
-#endif /* HPUX */
 #include /**/ <net/if.h>
-#if defined (HPUX)
-#undef volatile
-#endif /* HPUX */
 #include /**/ <netinet/in.h>
 #include /**/ <arpa/inet.h>
 }
@@ -2408,6 +2389,37 @@ struct flock
   long	l_pad[4];		/* reserve area */
 };
 #endif /* ACE_LACKS_FILELOCKS */
+
+#if !defined (ACE_HAS_IP_MULTICAST)
+struct ip_mreq 
+{
+  struct in_addr imr_multiaddr;  
+  // IP multicast address of group
+  struct in_addr imr_interface;  
+  // local IP address of interface
+};
+#endif /* ACE_HAS_IP_MULTICAST */
+
+#if !defined (ACE_HAS_STRBUF_T)
+struct strbuf
+{
+  int maxlen; // no. of bytes in buffer.
+  int len;    // no. of bytes returned.
+  void *buf;  // pointer to data.
+};
+#endif /* ACE_HAS_STRBUF_T */
+
+struct ACE_Export ACE_Str_Buf : public strbuf 
+  // = TITLE
+  //     Simple wrapper for STREAM pipes strbuf.
+{
+  // = Initialization method
+  ACE_Str_Buf (void *b = 0, int l = 0, int max = 0);
+  // Constructor.
+
+  ACE_Str_Buf (strbuf &);
+  // Constructor.
+};
 
 class ACE_Export ACE_OS
   // = TITLE

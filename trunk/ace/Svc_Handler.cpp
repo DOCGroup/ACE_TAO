@@ -77,7 +77,11 @@ template <PR_ST_1, ACE_SYNCH_1> void
 ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::operator delete (void *obj) 
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::delete");
-  ::delete obj;
+  // You cannot delete a 'void*' (X3J16/95-0087 5.3.5.3), but we know
+  // the pointer was created using new char[] (see operator new code),
+  // so we use a cast:
+  char *tmp = (char *) obj;
+  ::delete [] tmp;
 }
 
 // Default constructor.
