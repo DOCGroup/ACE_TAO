@@ -1,65 +1,70 @@
+Mon Jun 07 10:55:12 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-osf1-4.0.h: added #define ACE_HAS_BROKEN_T_ERROR
+          to permit building again.  Thanks to Doug for this fix.
+
 Mon Jun  7 00:11:00 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/Service_Configurator/Misc/main.cpp (main): Cast to
- 	  (ASYS_TCHAR **) rather than (ASYS_THCAR *[]).  Thanks to David
- 	  for reporting this.
+        * examples/Service_Configurator/Misc/main.cpp (main): Cast to
+          (ASYS_TCHAR **) rather than (ASYS_THCAR *[]).  Thanks to David
+          for reporting this.
 
-	* examples/IPC_SAP/DEV_SAP/writer/writer.cpp (main): Fixed a stray
- 	  comma.  Thanks to David for reporting this.
+        * examples/IPC_SAP/DEV_SAP/writer/writer.cpp (main): Fixed a stray
+          comma.  Thanks to David for reporting this.
 
-	* tests/Hash_Map_Manager_Test.cpp: Changed the use of ASYS_TCHAR *
- 	  to LPCTSTR to ensure const-correctness.
+        * tests/Hash_Map_Manager_Test.cpp: Changed the use of ASYS_TCHAR *
+          to LPCTSTR to ensure const-correctness.
 
-	* netsvcs/lib: Reformatted all the *.h files to conform to the ACE
- 	  programming guidelines.
+        * netsvcs/lib: Reformatted all the *.h files to conform to the ACE
+          programming guidelines.
 
 Sun Jun  6 22:02:43 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS.i (t_error): Fixed the broken t_error() usage on SunOS
- 	  5.5 and 5.6...
+        * ace/OS.i (t_error): Fixed the broken t_error() usage on SunOS
+          5.5 and 5.6...
 
-	* ace/README: Added a new macro called ACE_HAS_BROKEN_T_ERROR to
- 	  workaround the frigging broken prototype for t_error() on
- 	  Solaris 2.5.  Note that this macro is required for SunOS 2.5 and
- 	  2.6, but not SunOS 2.7 (thank goodness).
+        * ace/README: Added a new macro called ACE_HAS_BROKEN_T_ERROR to
+          workaround the frigging broken prototype for t_error() on
+          Solaris 2.5.  Note that this macro is required for SunOS 2.5 and
+          2.6, but not SunOS 2.7 (thank goodness).
 
-	* Fixed gazillions of incorrect usages of char * (which should
- 	  have been const char *) throughout ACE.
+        * Fixed gazillions of incorrect usages of char * (which should
+          have been const char *) throughout ACE.
 
-	* netsvcs/clients/Tokens: Fixed some const char * inconsistencies.
+        * netsvcs/clients/Tokens: Fixed some const char * inconsistencies.
 
-	* netsvcs/lib/Name_Handler.h: Fixed another inconsistent use of
- 	  char * that should have been const char *.
+        * netsvcs/lib/Name_Handler.h: Fixed another inconsistent use of
+          char * that should have been const char *.
 
-	* ace/Service_Config.h: Fixed a const incorrectness in the
- 	  ACE_Static_Svc_Descriptor.
+        * ace/Service_Config.h: Fixed a const incorrectness in the
+          ACE_Static_Svc_Descriptor.
 
-	* ace/Process.h (ACE_Process_Options): The parameter type of
- 	  command_line() should be LPCTSTR argv[] *not* LPTSTR argv[].
-  	  This fix should be ok as a further extension to what Carlos did
- 	  below.
+        * ace/Process.h (ACE_Process_Options): The parameter type of
+          command_line() should be LPCTSTR argv[] *not* LPTSTR argv[].
+          This fix should be ok as a further extension to what Carlos did
+          below.
 
 Sun Jun 06 20:33:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/SString.h:
-	  Added missing ACE_Export macro
+        * ace/SString.h:
+          Added missing ACE_Export macro
 
 Sun Jun  6 20:34:40 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Synch.h:
-	* ace/Timer_Queue_T.h:
-	* ace/Timer_Queue.cpp:
-	* ace/Select_Reactor.cpp:
-	  Moved explicit template instantiations around, now ACE compiles
-	  and links with Sun/CC and inlining enabled.  TAO does not.
+        * ace/Synch.h:
+        * ace/Timer_Queue_T.h:
+        * ace/Timer_Queue.cpp:
+        * ace/Select_Reactor.cpp:
+          Moved explicit template instantiations around, now ACE compiles
+          and links with Sun/CC and inlining enabled.  TAO does not.
 
 Sun Jun  6 18:05:48 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Process.h:
-	* ace/Process.cpp:
-	  Added const-correct version of the command_line() method, in the 
-	  future we should remove the non-const version, but I don't feel
-	  like breaking an interface today.
+        * ace/Process.h:
+        * ace/Process.cpp:
+          Added const-correct version of the command_line() method, in the
+          future we should remove the non-const version, but I don't feel
+          like breaking an interface today.
 
 Sun Jun 06 09:08:48 1999  David L. Levine  <levine@cs.wustl.edu>
 
