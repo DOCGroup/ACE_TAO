@@ -424,6 +424,7 @@ AV_Server::init (int argc,
 
       CORBA::Object_var audio_mmdevice
         = this->audio_mmdevice_->_this (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (-1);
 
       this->my_name_client_->rebind (audio_server_mmdevice_name,
                                      audio_mmdevice.in (),
