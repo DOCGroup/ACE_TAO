@@ -60,10 +60,10 @@
  * ticks since system boot.  For a 200MHz cpu, each clock tick
  * is 1/200 of a microsecond; the global_scale_factor_ should
  * therefore be 200 or 200000 if it's in unit/millisecond.
- * On Windows ::QueryPerformanceCounter() is used, which can be a 
+ * On Windows ::QueryPerformanceCounter() is used, which can be a
  * different implementation depending on the used windows HAL
  * (Hardware Abstraction Layer).  On some it uses the PC "timer chip"
- * while it uses RDTSC on others.   
+ * while it uses RDTSC on others.
  * NOTE:  the elapsed time calculations in the print methods use
  * ACE_hrtime_t values.  Those methods do _not_ check for overflow!
  * NOTE: Gabe <begeddov@proaxis.com> raises this issue regarding
@@ -74,20 +74,20 @@
  * This issue is not mentioned in the Solaris 2.5.1 gethrtime
  * man page.
  * A RDTSC NOTE: RDTSC is the Intel Pentium read-time stamp counter
- * and is actualy a 64 bit clock cycle counter, which is increased 
+ * and is actualy a 64 bit clock cycle counter, which is increased
  * with every cycle.  It has a low overhead and can be read within
  * 16 (pentium) or 32 (pentium II,III,...) cycles, but it doesn't
  * serialize the processor, which could give wrong timings when
- * profiling very short code fragments.  
+ * profiling very short code fragments.
  * Problematic is that some power sensitive devices
- * (laptops for example, but probably also embeded devices),
- * do change the cycle rate while running.  
+ * (laptops for example, but probably also embedded devices),
+ * do change the cycle rate while running.
  * Some pentiums can run on (at least) two clock frequency's.
  * Another problem arises with multiprocessor computers, there
  * are reports that the different RDTSC's are not always kept
  * in sync.
  * A windows "timer chip" NOTE: (8254-compatible real-time clock)
- * When ::QueryPerformanceCounter() uses the 8254 it has a 
+ * When ::QueryPerformanceCounter() uses the 8254 it has a
  * frequency off about 1.193 Mhz (or sometimes 3.579 Mhz?) and
  * reading it requires some time (several thousand cycles).
  */
@@ -100,7 +100,7 @@ public:
    * global_scale_factor_ is set to <gsf>.  All High_Res_Timers use
    * global_scale_factor_.  This allows applications to set the scale
    * factor just once for all High_Res_Timers.  Check
-   * High_Res_Timer.cpp for the default global_scale_factors for
+   *  High_Res_Timer.cpp for the default global_scale_factors for
    * several platforms.  For many platforms (e.g., Solaris), the
    * global_scale_factor_ is set to 1000 so that <scale_factor> need
    * not be set.  Careful, a <scale_factor> of 0 will cause division
@@ -174,7 +174,7 @@ public:
 
   /// Set <nanoseconds> to the number of nanoseconds elapsed.
   /**
-   *  Will overflow when measuring more than 194 day's. 
+   *  Will overflow when measuring more than 194 day's.
    */
   void elapsed_time (ACE_hrtime_t &nanoseconds) const;
 
@@ -187,7 +187,7 @@ public:
   /// Sets <usecs> to the elapsed (stop - start) time in microseconds.
   /**
    *  Will overflow on windows when measuring more than appox. 2^^54 ticks.
-   *  Is still more than 48 days with a 4 Ghz counter. 
+   *  Is still more than 48 days with a 4 Ghz counter.
    */
   void elapsed_microseconds (ACE_hrtime_t &usecs) const;
 
