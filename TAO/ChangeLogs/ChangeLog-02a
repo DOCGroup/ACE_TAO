@@ -1,8 +1,15 @@
+Wed Feb  6 13:36:00 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORB_Core.cpp (shutdown):
+
+	  Synchronize the ORB Core state during shutdown.  Fixes a race
+	  condition.
+
 Tue Feb 05 15:37:15 2002  Boris Kolpackov  <bosk@ipmce.ru>
 
 	* TAO_IDL/be/be_visitor_valuetype/valuetype.cpp
 	  Fixed minor bug with type selection for field visitor.
-	
+
 Mon Feb 04 09:19:53 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
