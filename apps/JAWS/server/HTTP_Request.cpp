@@ -604,7 +604,7 @@ const char *
 HTTP_Request::path (const char *uri_string)
 {
   char const *file_name = uri_string;
-  char buf[MAXPATHLEN+1];
+  char buf[MAXPATHLEN + 1];
   buf[0] = '\0';
 
   if (file_name == 0) return 0;
