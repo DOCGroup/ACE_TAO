@@ -33,6 +33,13 @@
 
 #include /**/ "ace/pre.h"
 
+#include "tao/orbconf.h"
+
+#if defined (TAO_EXPORT_MACRO)
+#undef TAO_EXPORT_MACRO
+#endif
+#define TAO_EXPORT_MACRO TAO_Export
+
 // ====== Handcrafted
 namespace TAO
 {
