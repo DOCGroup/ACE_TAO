@@ -1,3 +1,9 @@
+Tue Aug 24 15:32:43 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tests/Load_Balancing/Load_Balancer_i.cpp:
+	  Added some template instantiations that the Irix linker
+	  had trouble finding.
+
 Tue Aug 24 14:44:12 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/MessagingC.i:
