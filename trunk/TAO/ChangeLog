@@ -1,3 +1,11 @@
+Tue Oct 29 00:33:27 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Makefile.CosNotification (realclean):
+
+	  Fixed typo where the command to be executed for this target was
+	  placed in the target's dependency list.  Addresses several build
+	  errors.
+
 Tue Oct 29 07:38:44 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/EC_MT_Mcast/Makefile.bor:
