@@ -11,6 +11,7 @@ Thu Mar 24 17:02:34  Will Otte <wotte@dre.vanderbilt.edu>
 	* DAnCE/Config_Handlers/pcd.hpp
 	* DAnCE/Config_Handlers/toplevel.hpp
 	* DAnCE/Config_Handlers/XSCRT/XML.hpp
+	* DAnCE/Config_Handlers/vc6-4786.h
 
 	Finally beat a big warning problem in VC6.
 
