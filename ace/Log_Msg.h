@@ -278,6 +278,7 @@ public:
   // 'a': exit the program at this point (var-argument is the exit status!)
   // 'c': print a character
   // 'i', 'd': print a decimal number
+  // 'I', indent according to nesting depth
   // 'e', 'E', 'f', 'F', 'g', 'G': print a double
   // 'l', print line number where an error occurred.
   // 'N': print file name where the error occurred.
@@ -290,6 +291,7 @@ public:
   // 'S': print out the appropriate _sys_siglist entry corresponding to var-argument.
   // 's': print out a character string
   // 'T': print timestamp in hour:minute:sec:usec format.
+  // 'D': print timestamp in month/day/year hour:minute:sec:usec format.
   // 't': print thread id (1 if single-threaded)
   // 'u': print as unsigned int
   // 'X', 'x': print as a hex number
