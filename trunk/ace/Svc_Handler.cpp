@@ -128,7 +128,8 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::ACE_Svc_Handler (ACE_Thread_Manager *tm,
   // in the April '96 issue of the C++ Report.  We've spruced it up to
   // work correctly in multi-threaded programs by using our ACE_TSS
   // class.
-  this->dynamic_ = ACE_Svc_Handler<ACE_PEER_STREAM_2, ACE_SYNCH_2>::instance()->is_dynamic ();
+  this->dynamic_ = 
+    ACE_Svc_Handler<ACE_PEER_STREAM_2, ACE_SYNCH_2>::instance()->is_dynamic ();
   if (this->dynamic_)
     // Make sure to reset the flag
     ACE_Svc_Handler<ACE_PEER_STREAM_2, ACE_SYNCH_2>::instance()->reset ();
