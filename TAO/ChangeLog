@@ -1,3 +1,9 @@
+Mon Nov  8 12:24:15 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/Event_Service/Event_Service.mpc:
+
+          Removed an unnecessary dependency upon the TAO_CosEvent libraray.
+
 Mon Nov  8 11:30:24 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/FTORB.mpc:
