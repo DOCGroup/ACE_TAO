@@ -15,7 +15,7 @@
 //
 // ============================================================================
 
-#include "param_testCli.h"
+#include "param_testC.h"
 #include "tao/corba.h"
 #include "tao/debug.h"
 #include "tao/Stub.h"

@@ -19,7 +19,7 @@
 #ifndef PARAM_TEST_BOUNDED_LONG_SEQUENCE_H
 #define PARAM_TEST_BOUNDED_LONG_SEQUENCE_H
 
-#include "param_testCli.h"
+#include "param_testC.h"
 
 // =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
 //           test bounded sequences of longs

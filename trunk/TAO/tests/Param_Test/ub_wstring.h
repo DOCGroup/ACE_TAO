@@ -19,7 +19,7 @@
 #ifndef PARAM_TEST_UNBOUNDED_WSTRING_H
 #define PARAM_TEST_UNBOUNDED_WSTRING_H
 
-#include "param_testCli.h"
+#include "param_testC.h"
 
 // =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
 //                        test unbounded wide strings

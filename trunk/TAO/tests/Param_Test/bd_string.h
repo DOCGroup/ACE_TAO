@@ -19,7 +19,7 @@
 #ifndef PARAM_TEST_BOUNDED_STRING_H
 #define PARAM_TEST_BOUNDED_STRING_H
 
-#include "param_testCli.h"
+#include "param_testC.h"
 
 // =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
 //                        tests bounded strings
