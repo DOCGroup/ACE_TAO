@@ -166,7 +166,6 @@ dnl FIXME: "FSU" isn't a platform!  We need to move this somewhere.
     AC_DEFINE([ACE_DEFAULT_MAX_SOCKET_BUFSIZ], [65535])
     AC_DEFINE([ACE_DEFAULT_BASE_ADDR], [((char *) 0x80000000)])
     AC_DEFINE([ACE_HAS_BIG_FD_SET]) dnl FIXME: We need a test for this!
-    AC_DEFINE([ACE_UINT64_FORMAT_SPECIFIER], ["%Lu"])
     AC_DEFINE([ACE_TIMER_SKEW], [(1000 * 10)])
     ;;
   *lynxos*)
@@ -379,6 +378,18 @@ case "$host_os" in
 darwin*)
   AC_DEFINE([ACE_SIZE_T_FORMAT_SPECIFIER], ["%lu"])
   ;;
+
+linux*)
+  case "$host_cpu" in
+    alpha|ia64|x86_64)
+      AC_DEFINE([ACE_SIZE_T_FORMAT_SPECIFIER], ["%lu"])
+      AC_DEFINE([ACE_SSIZE_T_FORMAT_SPECIFIER], ["%ld"])
+      ;;
+    *)
+      ;;
+  esac
+  ;;
+
 netbsd*)
   case "$host_cpu" in
     x86_64)
