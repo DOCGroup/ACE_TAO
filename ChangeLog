@@ -1,3 +1,11 @@
+Sun Jan 16 16:43:10 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/config.h.in:
+
+	  Removed this file from the repository.  It is automatically
+	  generated when autoconf support is bootstrapped into a
+	  workspace.
+
 Sun Jan 16 16:13:00 2000  Ossama Othman  <ossama@uci.edu>
 
 	* acconfig.h:
