@@ -78,6 +78,29 @@ TAO_Cache_ExtId::~TAO_Cache_ExtId (void)
     delete this->transport_property_;
 }
 
+ACE_INLINE TAO_Cache_ExtId &
+TAO_Cache_ExtId::operator= (const TAO_Cache_ExtId &rhs)
+{
+  if (this != &rhs)
+    {
+      // Do a deep copy
+      this->transport_property_ =
+        rhs.transport_property_->duplicate ();
+
+      if (this->transport_property_ == 0)
+        {
+          this->is_delete_ = 0;
+          this->index_ = 0;
+        }
+    else
+      {
+        this->is_delete_ = 1;
+        this->index_ = rhs.index_;
+      }
+    }
+  return *this;
+}
+
 ACE_INLINE
 TAO_Cache_ExtId::TAO_Cache_ExtId (const TAO_Cache_ExtId &rhs)
   : transport_property_ (0),
@@ -85,26 +108,6 @@ TAO_Cache_ExtId::TAO_Cache_ExtId (const TAO_Cache_ExtId &rhs)
     index_ (0)
 {
   *this = rhs;
-}
-
-ACE_INLINE TAO_Cache_ExtId&
-TAO_Cache_ExtId::operator= (const TAO_Cache_ExtId &rhs)
-{
-  if (this != &rhs) {
-    // Do a deep copy
-    this->transport_property_ =
-      rhs.transport_property_->duplicate ();
-
-    if (this->transport_property_ == 0) {
-      this->is_delete_ = 0;
-      this->index_ = 0;
-    }
-    else {
-      this->is_delete_ = 1;
-      this->index_ = rhs.index_;
-    }
-  }
-  return *this;
 }
 
 ACE_INLINE int
