@@ -248,6 +248,14 @@ The IDL compiler generates source code for the management and (de)marshaling
 of wide characters and wide strings, enabling the sending and receiving of
 Unicode over the wire. However, wide character and wide string literals are
 not yet portable to Unix platforms (see entry under Future Work below).</li>
+
+<li>
+Since the CORBA spec requires that all enums be 32 bits, and some compilers
+will try to use less space if the enum values are small enough, the IDL
+compiler now appends <enum name>_TAO_ENUM_32BIT_ENFORCER = 0xFFFFFFFF to
+every enum. This appended enum value is not part of the IDL compiler's
+internal representation of the enum, so unions that use the enum as a
+discriminator will not have incorrect _default() code generated for them.
 </ul>
 
 <p><br>Known bugs/unimplemented constructs:
