@@ -13,7 +13,7 @@ Notes on the DIOP implementation:
 - The server DIOP implementation bypasses the actual TAO Acceptor
   and opens always a UDP socket on start-up.
 
-- The address of that UDP socket can be configured via -ORBendpoint,
+- The address of that UDP socket can be configured via -ORBEndpoint,
   e.g., -ORBEndpoint diop://:1303
 
   If nothing is specified, the implementation will select a port and
@@ -92,11 +92,3 @@ Disclaimer:
     <= 4kB, i.e., ACE_MAX_DGRAM_SIZE.  Support for fragmentation, as
     GIOP 1.2 supports it might help, this is a future option.
     Thus, no data sent via DIOP can be larger than ACE_MAX_DGRAM_SIZE.
-
-Appendix:
-
- The client understands the following options:
-                           -d
-                           -k <ior>
-                           -t <timeout in ms>
-                           -i <iterations>

@@ -1,3 +1,18 @@
+Sat May 26 17:12:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+        * examples/PluggableUDP/DIOP/README:
+        * examples/PluggableUDP/tests/Basic/README:
+        * examples/PluggableUDP/tests/Performance/README:
+        * examples/PluggableUDP/tests/SimplePerformance/Readme.txt:
+        * examples/PluggableUDP/tests/SimplePerformance/README:
+
+          Fixed the content of the README's. Removed the Readme.txt and
+          replaced it with a README file for the SimplePerformance test.
+
+        * examples/PluggableUDP/tests/Performance/client.cpp:
+
+          Fixed some formatting.
+
 Sat May 26 16:45:04 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
 	* examples/PluggableUDP/tests/SimplePerformance/run_test.pl:
