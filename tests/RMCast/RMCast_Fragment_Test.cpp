@@ -205,9 +205,7 @@ ACE_RMCast_Fragment_Tester::initialize (ACE_Message_Block *mb)
     {
       char z = 0;
       for (char *j = i->rd_ptr (); j != i->wr_ptr (); ++j)
-        {
-          *j = ++z;
-        }
+        *j = ++z;
     }
 }
 
@@ -219,10 +217,10 @@ ACE_RMCast_Fragment_Tester::compare (ACE_Message_Block *mb)
 
   for (const ACE_Message_Block *i = mb; i != 0; i = i->cont ())
     {
-      blob.copy (i->rd_ptr (), i->length ());
+      blob.copy (i->wr_ptr (), i->length ());
     }
 
-  if (ACE_OS::memcmp (blob.rd_ptr (),
+  if (ACE_OS::memcmp (blob.wr_ptr (),
                       this->received_.rd_ptr (),
                       n) != 0)
     {
@@ -275,7 +273,7 @@ ACE_RMCast_Fragment_Tester::data (ACE_RMCast::Data &data)
   size_t fragment_size = payload_size;
   if (payload_size > 0)
     {
-      ACE_OS::memcpy (this->received_.rd_ptr () + offset,
+      ACE_OS::memcpy (this->received_.wr_ptr () + offset,
                       mb->rd_ptr (),
                       payload_size);
       this->received_bytes_ += payload_size;
@@ -288,8 +286,9 @@ ACE_RMCast_Fragment_Tester::data (ACE_RMCast::Data &data)
       // ACE_DEBUG ((LM_DEBUG,
       //         "offset = %d , payload = %d\n", offset, payload_size));
       fragment_size += payload_size;
-      ACE_OS::memcpy (this->received_.rd_ptr () + offset,
-                      i->rd_ptr (), payload_size);
+      ACE_OS::memcpy (this->received_.wr_ptr () + offset,
+                      i->rd_ptr (),
+                      payload_size);
       this->received_bytes_ += payload_size;
       offset += payload_size;
     }
