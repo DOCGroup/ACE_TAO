@@ -977,16 +977,21 @@ int
 ACE_OS::fprintf (FILE *fp, const wchar_t *format, ...)
 {
   ACE_TRACE ("ACE_OS::fprintf");
-# if defined (ACE_HAS_WINCE)
+
+# if !defined (ACE_HAS_VFWPRINTF)
+  ACE_UNUSED_ARG (fp);
+  ACE_UNUSED_ARG (format);
   ACE_NOTSUP_RETURN (-1);
-# else /* ACE_HAS_WINCE */
+
+# else
   int result = 0;
   va_list ap;
   va_start (ap, format);
   ACE_OSCALL (::vfwprintf (fp, format, ap), int, -1, result);
   va_end (ap);
   return result;
-# endif /* ACE_HAS_WINCE */
+
+# endif /* ACE_HAS_VFWPRINTF */
 }
 #endif /* ACE_HAS_WCHAR */
 
@@ -1020,12 +1025,23 @@ int
 ACE_OS::sprintf (wchar_t *buf, const wchar_t *format, ...)
 {
   ACE_TRACE ("ACE_OS::sprintf");
+
+# if defined (ACE_HAS_VSWPRINTF)
+
   int result;
   va_list ap;
   va_start (ap, format);
   ACE_OSCALL (::vswprintf (buf, format, ap), int, -1, result);
   va_end (ap);
   return result;
+
+# else
+
+  ACE_UNUSED_ARG (buf);
+  ACE_UNUSED_ARG (format);
+  ACE_NOTSUP_RETURN (-1);
+
+# endif /* ACE_HAS_VSWPRINTF */
 }
 #endif /* ACE_HAS_WCHAR */
 

@@ -1,3 +1,28 @@
+Sun Aug  6 21:40:42 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/OS.i:
+        * ace/OS.cpp:
+        * ace/OS_String.cpp:
+        * ace/OS_String.h:
+        * ace/OS_String.inl:
+        * ace/ace_wchar.h:
+        * ace/config-all.h
+        * ace/config-linux-common.h:
+        * ace/config-win32-common.h:
+
+          Fixed up miscellaneous problems with ACE_HAS_WCHAR on Linux.
+          Highlights are:
+
+          - Added ACE_HAS_VFWPRINTF and ACE_HAS_VFWPRINTF to NOTSUP a
+            couple of methods, since they don't seem to be available yet.
+          - Added ACE_LACKS_WCSDUP_PROTOTYPE, and added the prototype.
+          - Removed an extra copy of itoa_emulation (..wchar_t..).
+          - Added some static_cast's to remove unsigned/signed comparison
+            warnings.
+          - Added ACE-HAS_SAFE_WCSTOK, since the version supplied with MSVC
+            is the multi-threaded unsafe version (just like strtok).  Here
+            it is similar to strtok_r.
+
 Sun Aug  6 17:03:29 2000  Ossama Othman  <ossama@uci.edu>
 
 	* include/makeinclude/wrapper_macros.GNU (CPPFLAGS):

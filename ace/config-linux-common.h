@@ -134,6 +134,10 @@
 
 # define ACE_HAS_SIGSUSPEND
 
+// Some misc wide character stuff
+# define ACE_HAS_SAFE_WCSTOK
+# define ACE_LACKS_WCSDUP_PROTOTYPE
+
 #if !defined (ACE_DEFAULT_BASE_ADDR)
 # define ACE_DEFAULT_BASE_ADDR ((char *) 0x80000000)
 #endif /* ! ACE_DEFAULT_BASE_ADDR */
