@@ -1,3 +1,12 @@
+Thu Jun  6 07:11:15 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* THANKS: Just added our 1,500th ACE+TAO contributor!!!!!
+
+	* ace/Malloc_T.cpp: Clarify that the memory backing store must
+	  reside in a directory with the appropriate visibility and
+ 	  permissions.  Thanks to Frank O. Flemisch <f.o.flemisch@larc.nasa.gov> 
+	  for reporting this.
+
 Wed Jun  5 23:06:11 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* ace/DLL_Manager.h:  Fixed compile error. Thanks to Jai
