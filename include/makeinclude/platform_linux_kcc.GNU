@@ -59,9 +59,6 @@ ifdef static_libs_only
     static_libs=1
   endif
 endif
-# Kind of a hack since LDFLAGS is used for both non-static  
-# library generation and binary generation.  LD is only used for
-# binary generation.
 ifneq ($(static_libs),0)
   CCFLAGS   += --one_instantiation_per_object
 endif
