@@ -89,7 +89,7 @@ dump_iov (iovec *iov, int iovcnt, size_t id,
             }
 
           ACE_HEX_DUMP ((LM_DEBUG,
-                         ACE_static_cast(char*,iov[i].iov_base) + offset,
+                         static_cast<char*> (iov[i].iov_base) + offset,
                          len,
                          header));
         }

@@ -126,7 +126,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
     if (ACE_OS::strcasecmp (argv[curarg],
                             ACE_LIB_TEXT("-ORBResources")) == 0)
       {
-        curarg++;
+        ++curarg;
 
         ACE_DEBUG ((LM_DEBUG,
                     ACE_LIB_TEXT ("(%P|%t) This option has been deprecated \n")));
@@ -135,7 +135,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_LIB_TEXT("-ORBReactorMaskSignals")) == 0)
       {
-        curarg++;
+        ++curarg;
         if (curarg < argc)
           {
             ACE_TCHAR* name = argv[curarg];
@@ -153,7 +153,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                                  ACE_LIB_TEXT("-ORBProtocolFactory")) == 0)
       {
         TAO_ProtocolFactorySet *pset = this->get_protocol_factories ();
-        curarg++;
+        ++curarg;
         if (curarg < argc)
           {
             TAO_Protocol_Item *item = 0;
@@ -171,7 +171,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_LIB_TEXT("-ORBNativeCharCodeSet")) == 0)
     {
-        curarg++;
+        ++curarg;
         CONV_FRAME::CodeSetId ncs;
         if (ACE_Codeset_Registry::locale_to_registry (ACE_TEXT_ALWAYS_CHAR(argv[curarg]),
                                                       ncs) == 0)
@@ -197,18 +197,18 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_LIB_TEXT("-ORBNativeWCharCodeSet")) == 0)
       {
-        curarg++;
+        ++curarg;
         CONV_FRAME::CodeSetId ncs;
-        if (ACE_Codeset_Registry::locale_to_registry( ACE_TEXT_ALWAYS_CHAR (argv[curarg]),
+        if (ACE_Codeset_Registry::locale_to_registry (ACE_TEXT_ALWAYS_CHAR (argv[curarg]),
                                                       ncs) == 0)
           {
             char **endPtr = 0;
-            ncs = ACE_OS::strtoul(ACE_TEXT_ALWAYS_CHAR(argv[curarg]),
+            ncs = ACE_OS::strtoul (ACE_TEXT_ALWAYS_CHAR(argv[curarg]),
                                   endPtr, 0);
           }
         // Validate the CodesetId
         int mb = ACE_Codeset_Registry::get_max_bytes(ncs);
-        if (mb == 0 || ACE_static_cast(size_t,mb) > sizeof (ACE_CDR::WChar))
+        if (mb == 0 || static_cast<size_t> (mb) > sizeof (ACE_CDR::WChar))
           {
             if (TAO_debug_level > 0)
               ACE_ERROR((LM_ERROR,
@@ -224,7 +224,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_LIB_TEXT("-ORBCharCodesetTranslator")) == 0)
       {
-        curarg++;
+        ++curarg;
         if (curarg < argc)
           {
             TAO_Codeset_Manager *csm = this->get_codeset_manager();
@@ -238,7 +238,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_LIB_TEXT("-ORBWCharCodesetTranslator")) == 0)
       {
-        curarg++;
+        ++curarg;
         if (curarg < argc)
           {
             TAO_Codeset_Manager *csm = this->get_codeset_manager();
@@ -251,7 +251,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_LIB_TEXT("-ORBConnectionCachingStrategy")) == 0)
       {
-        curarg++;
+        ++curarg;
 
         // @@todo: This needs to be removed after a few betas. The
         // note is being written during 1.2.3 timeframe.
@@ -286,7 +286,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_LIB_TEXT("-ORBConnectionPurgingStrategy")) == 0)
       {
-        curarg++;
+        ++curarg;
 
         if (curarg < argc)
           {
@@ -315,7 +315,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
    else if (ACE_OS::strcasecmp (argv[curarg],
                                 ACE_LIB_TEXT("-ORBConnectionCacheMax")) == 0)
       {
-        curarg++;
+        ++curarg;
         if (curarg < argc)
             this->cache_maximum_ = ACE_OS::atoi (argv[curarg]);
         else
@@ -325,7 +325,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
    else if (ACE_OS::strcasecmp (argv[curarg],
                                 ACE_LIB_TEXT("-ORBConnectionCachePurgePercentage")) == 0)
       {
-        curarg++;
+        ++curarg;
         if (curarg < argc)
             this->purge_percentage_ = ACE_OS::atoi (argv[curarg]);
         else
@@ -335,7 +335,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_LIB_TEXT("-ORBIORParser")) == 0)
       {
-        curarg++;
+        ++curarg;
 
         if (curarg < argc)
           {
@@ -346,7 +346,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_LIB_TEXT("-ORBConnectionCacheLock")) == 0)
       {
-        curarg++;
+        ++curarg;
         if (curarg < argc)
           {
             ACE_TCHAR* name = argv[curarg];
@@ -370,7 +370,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_LIB_TEXT("-ORBObjectKeyTableLock")) == 0)
       {
-        curarg++;
+        ++curarg;
         if (curarg < argc)
           {
             ACE_TCHAR* name = argv[curarg];
@@ -393,7 +393,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_LIB_TEXT("-ORBCorbaObjectLock")) == 0)
       {
-        curarg++;
+        ++curarg;
         if (curarg < argc)
           {
             ACE_TCHAR* name = argv[curarg];
@@ -416,7 +416,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_LIB_TEXT("-ORBResourceUsage")) == 0)
       {
-        curarg++;
+        ++curarg;
         if (curarg < argc)
           {
             ACE_TCHAR* name = argv[curarg];
@@ -436,7 +436,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_LIB_TEXT("-ORBFlushingStrategy")) == 0)
       {
-        curarg++;
+        ++curarg;
         if (curarg < argc)
           {
             ACE_TCHAR* name = argv[curarg];
@@ -457,7 +457,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_LIB_TEXT ("-ORBMuxedConnectionMax")) == 0)
       {
-        curarg++;
+        ++curarg;
         if (curarg < argc)
             this->max_muxed_connections_ =
               ACE_OS::atoi (argv[curarg]);
@@ -470,7 +470,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                               4) == 0)
       {
         // Can we assume there is an argument after the option?
-        // curarg++;
+        // ++curarg;
         ACE_ERROR ((LM_ERROR,
                     ACE_LIB_TEXT ("Default_Resource_Factory - ")
                     ACE_LIB_TEXT ("unknown option <%s>\n"),
@@ -512,19 +512,19 @@ TAO_Default_Resource_Factory::get_parser_names (char **&names,
   CORBA::ULong index = 0;
 
   this->parser_names_[index] = CORBA::string_dup ("DLL_Parser");
-  index++;
+  ++index;
 
   this->parser_names_[index] = CORBA::string_dup ("FILE_Parser");
-  index++;
+  ++index;
 
   this->parser_names_[index] = CORBA::string_dup ("CORBALOC_Parser");
-  index++;
+  ++index;
 
   this->parser_names_[index] = CORBA::string_dup ("CORBANAME_Parser");
-  index++;
+  ++index;
 
   this->parser_names_[index] = CORBA::string_dup ("MCAST_Parser");
-  index++;
+  ++index;
 
   names = this->parser_names_;
 
@@ -655,7 +655,7 @@ TAO_Default_Resource_Factory::load_default_protocols (void)
 int
 TAO_Default_Resource_Factory::init_protocol_factories (void)
 {
-  TAO_ProtocolFactorySetItor end = protocol_factories_.end ();
+  const TAO_ProtocolFactorySetItor end = protocol_factories_.end ();
   TAO_ProtocolFactorySetItor factory = protocol_factories_.begin ();
 
   if (factory == end)
@@ -663,7 +663,7 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
       return this->load_default_protocols ();
     }
 
-  for (; factory != end; factory++)
+  for (; factory != end; ++factory)
     {
       const ACE_CString &name = (*factory)->protocol_name ();
       (*factory)->factory (
@@ -688,15 +688,6 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
 
   return 0;
 }
-
-#if 0
-// @@todo: Need to go at a later date!
-int
-TAO_Default_Resource_Factory::use_tss_resources (void) const
-{
-  return 0;
-}
-#endif /*if 0*/
 
 int
 TAO_Default_Resource_Factory::use_locked_data_blocks (void) const

@@ -118,11 +118,11 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
 
   int curarg;
 
-  for (curarg = 0; curarg < argc && argv[curarg]; curarg++)
+  for (curarg = 0; curarg < argc && argv[curarg]; ++curarg)
     if (ACE_OS::strcasecmp (argv[curarg],
                             ACE_LIB_TEXT("-ORBConcurrency")) == 0)
       {
-        curarg++;
+        ++curarg;
         if (curarg < argc)
           {
             ACE_TCHAR* name = argv[curarg];
@@ -141,7 +141,7 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_LIB_TEXT("-ORBThreadPerConnectionTimeout")) == 0)
       {
-        curarg++;
+        ++curarg;
         if (curarg < argc)
           {
             ACE_TCHAR* name = argv[curarg];
@@ -166,7 +166,7 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
              || ACE_OS::strcasecmp (argv[curarg],
                                     ACE_LIB_TEXT("-ORBActiveObjectMapSize")) == 0)
       {
-        curarg++;
+        ++curarg;
         if (curarg < argc)
           this->active_object_map_creation_parameters_.active_object_map_size_ =
             ACE_OS::strtoul (argv[curarg],
@@ -176,7 +176,7 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_LIB_TEXT("-ORBPOAMapSize")) == 0)
       {
-        curarg++;
+	++curarg;
         if (curarg < argc)
           this->active_object_map_creation_parameters_.poa_map_size_ =
             ACE_OS::strtoul (argv[curarg],
@@ -186,7 +186,7 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_LIB_TEXT("-ORBActiveHintInIds")) == 0)
       {
-        curarg++;
+        ++curarg;
         if (curarg < argc)
           {
             ACE_TCHAR* value = argv[curarg];
@@ -198,7 +198,7 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_LIB_TEXT("-ORBActiveHintInPOANames")) == 0)
       {
-        curarg++;
+        ++curarg;
         if (curarg < argc)
           {
             ACE_TCHAR* value = argv[curarg];
@@ -210,7 +210,7 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_LIB_TEXT("-ORBAllowReactivationOfSystemids")) == 0)
       {
-        curarg++;
+        ++curarg;
         if (curarg < argc)
           {
             ACE_TCHAR* value = argv[curarg];
@@ -222,7 +222,7 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_LIB_TEXT("-ORBUseridPolicyDemuxStrategy")) == 0)
       {
-        curarg++;
+        ++curarg;
         if (curarg < argc)
           {
             ACE_TCHAR* name = argv[curarg];
@@ -243,7 +243,7 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_LIB_TEXT("-ORBSystemidPolicyDemuxStrategy")) == 0)
       {
-        curarg++;
+        ++curarg;
         if (curarg < argc)
           {
             ACE_TCHAR* name = argv[curarg];
@@ -267,7 +267,7 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_LIB_TEXT("-ORBPersistentidPolicyDemuxStrategy")) == 0)
       {
-        curarg++;
+        ++curarg;
         if (curarg < argc)
           {
             ACE_TCHAR* name = argv[curarg];
@@ -288,7 +288,7 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_LIB_TEXT("-ORBTransientidPolicyDemuxStrategy")) == 0)
       {
-        curarg++;
+        ++curarg;
         if (curarg < argc)
           {
             ACE_TCHAR* name = argv[curarg];
@@ -312,7 +312,7 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_LIB_TEXT("-ORBUniqueidPolicyReverseDemuxStrategy")) == 0)
       {
-        curarg++;
+        ++curarg;
         if (curarg < argc)
           {
             ACE_TCHAR* name = argv[curarg];
@@ -332,7 +332,7 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_LIB_TEXT("-ORBPOALock")) == 0)
       {
-        curarg++;
+        ++curarg;
         if (curarg < argc)
           {
             ACE_TCHAR* name = argv[curarg];
@@ -350,7 +350,7 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_LIB_TEXT("-ORBThreadFlags")) == 0)
       {
-        curarg++;
+        ++curarg;
 
         if (curarg < argc)
           this->tokenize (argv[curarg]);
@@ -359,7 +359,7 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
     else if (ACE_OS::strncmp (argv[curarg], ACE_LIB_TEXT("-ORB"), 4) == 0)
       {
         // Can we assume there is an argument after the option?
-        // curarg++;
+        // ++curarg;
         ACE_ERROR ((LM_ERROR,
                     ACE_LIB_TEXT("Server_Strategy_Factory - ")
                     ACE_LIB_TEXT("unknown option <%s>\n"),

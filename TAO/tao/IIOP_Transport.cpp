@@ -285,7 +285,7 @@ TAO_IIOP_Transport::tear_listen_point_list (TAO_InputCDR &cdr)
   if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
     return -1;
 
-  cdr.reset_byte_order (ACE_static_cast (int, byte_order));
+  cdr.reset_byte_order (static_cast<int> (byte_order));
 
   IIOP::ListenPointList listen_list;
   if ((cdr >> listen_list) == 0)
@@ -305,24 +305,23 @@ TAO_IIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
   TAO_Acceptor_Registry &ar =
     this->orb_core ()->lane_resources ().acceptor_registry ();
 
-  // Get the first acceptor in the registry
-  TAO_AcceptorSetIterator acceptor = ar.begin ();
-
   IIOP::ListenPointList listen_point_list;
 
-  for (;
-       acceptor != ar.end ();
-       acceptor++)
+  const TAO_AcceptorSetIterator end = ar.end ();
+
+  for (TAO_AcceptorSetIterator acceptor = ar.begin ();
+       acceptor != end;
+       ++acceptor)
     {
       // Check whether it is a IIOP acceptor
       if ((*acceptor)->tag () == IOP::TAG_INTERNET_IOP)
         {
-          if (this->get_listen_point (listen_point_list,
-                                      *acceptor) == -1)
+          if (this->get_listen_point (listen_point_list, *acceptor) == -1)
             {
-              ACE_ERROR ((LM_ERROR,
-                          "TAO (%P|%t) - IIOP_Transport::set_bidir_info, "
-                          "error getting listen_point \n"));
+              if (TAO_debug_level > 0)
+                ACE_ERROR ((LM_ERROR,
+                            "TAO (%P|%t) - IIOP_Transport::set_bidir_info, "
+                            "error getting listen_point \n"));
 
               return;
             }
@@ -333,7 +332,7 @@ TAO_IIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
   // stream at this point
   TAO_OutputCDR cdr;
 
-  // Marshall the information into the stream
+  // Marshal the information into the stream
   if ((cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER) == 0)
       || (cdr << listen_point_list) == 0)
     return;
@@ -351,8 +350,7 @@ TAO_IIOP_Transport::get_listen_point (
     TAO_Acceptor *acceptor)
 {
   TAO_IIOP_Acceptor *iiop_acceptor =
-    ACE_dynamic_cast (TAO_IIOP_Acceptor *,
-                      acceptor);
+    dynamic_cast<TAO_IIOP_Acceptor *> (acceptor);
 
   if (iiop_acceptor == 0)
     return -1;
@@ -395,8 +393,8 @@ TAO_IIOP_Transport::get_listen_point (
     }
 
   for (size_t index = 0;
-       index != count;
-       index++)
+       index < count;
+       ++index)
     {
       if (local_addr.get_ip_address()
           == endpoint_addr[index].get_ip_address ())

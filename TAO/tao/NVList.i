@@ -36,7 +36,7 @@ ACE_INLINE
 CORBA::Any_ptr
 CORBA::NamedValue::value (void) const
 {
-  return ACE_const_cast (CORBA::Any_ptr, &this->any_);
+  return const_cast<CORBA::Any_ptr> (&this->any_);
 }
 
 ACE_INLINE
@@ -99,8 +99,8 @@ ACE_INLINE
 CORBA::ULong
 CORBA::NVList::count (ACE_ENV_SINGLE_ARG_DECL) const
 {
-  (ACE_const_cast (CORBA::NVList *,
-                   this))->evaluate (ACE_ENV_SINGLE_ARG_PARAMETER);
+  (const_cast<CORBA::NVList *> (this))->evaluate (
+    ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   return this->max_;

@@ -1018,7 +1018,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
                     10);
 
       CORBA::String_var ns_port_ptr =
-        CORBA::string_alloc (ACE_static_cast (CORBA::ULong,
+        CORBA::string_alloc (static_cast<CORBA::ULong> (
                                ACE_OS::strlen ((const char *) ns_port_char)));
 
       ns_port_ptr = (const char *) ns_port_char;
@@ -1027,7 +1027,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
 
       CORBA::String_var def_init_ref =
         CORBA::string_alloc (sizeof (prefix) +
-                             ACE_static_cast (CORBA::ULong,
+                             static_cast<CORBA::ULong> (
                                     ACE_OS::strlen (ns_port_ptr.in ())) +
                              2);
 
@@ -2307,12 +2307,12 @@ TAO_ORB_Core::list_initial_references (ACE_ENV_SINGLE_ARG_DECL)
 
   ACE_NEW_THROW_EX (tmp,
                     CORBA::ORB::ObjectIdList (
-                      ACE_static_cast (CORBA::ULong, total_size)),
+                      static_cast<CORBA::ULong> (total_size)),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
   CORBA::ORB::ObjectIdList_var list = tmp;
-  list->length (ACE_static_cast (CORBA::ULong, total_size));
+  list->length (static_cast<CORBA::ULong> (total_size));
 
   CORBA::ULong index = 0;
   // Index for ObjectIdList members.
@@ -2444,8 +2444,8 @@ TAO_ORB_Core::create_data_block_i (size_t size,
 
   ACE_NEW_MALLOC_RETURN (
                          nb,
-                         ACE_static_cast(ACE_Data_Block*,
-                                         dblock_allocator->malloc (sizeof (ACE_Data_Block))),
+                         static_cast<ACE_Data_Block*> (
+                           dblock_allocator->malloc (sizeof (ACE_Data_Block))),
                          ACE_Data_Block (size,
                                          ACE_Message_Block::MB_DATA,
                                          0,

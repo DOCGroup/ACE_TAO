@@ -103,7 +103,7 @@ TAO::Any_Basic_Impl_T<T>::extract (const CORBA::Any & any,
       if (result == 1)
         {
           _tao_elem = replacement->value_;
-          ACE_const_cast (CORBA::Any &, any).replace (replacement);
+          const_cast<CORBA::Any &> (any).replace (replacement);
           replacement_safety.release ();
           return 1;
         }
@@ -126,7 +126,7 @@ TAO::Any_Basic_Impl_T<T>::create_empty (CORBA::TypeCode_ptr tc)
   TAO::Any_Basic_Impl_T<T> * retval = 0;
   ACE_NEW_RETURN (retval,
                   TAO::Any_Basic_Impl_T<T> (tc,
-                                            ACE_static_cast (T, 0)),
+                                            static_cast<T> (0)),
                   0);
   return retval;
 }

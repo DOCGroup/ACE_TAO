@@ -142,7 +142,7 @@ TAO::Any_SystemException::extract (const CORBA::Any & any,
       if (result == 1)
         {
           _tao_elem = replacement->value_;
-          ACE_const_cast (CORBA::Any &, any).replace (replacement);
+          const_cast<CORBA::Any &> (any).replace (replacement);
           replacement_safety.release ();
           return 1;
         }

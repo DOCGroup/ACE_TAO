@@ -483,8 +483,7 @@ TAO_IIOP_Connector::remote_endpoint (TAO_Endpoint *endpoint)
     return 0;
 
   TAO_IIOP_Endpoint *iiop_endpoint =
-    ACE_dynamic_cast (TAO_IIOP_Endpoint *,
-                      endpoint );
+    dynamic_cast<TAO_IIOP_Endpoint *> (endpoint );
   if (iiop_endpoint == 0)
     return 0;
 

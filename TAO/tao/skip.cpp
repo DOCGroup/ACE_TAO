@@ -109,7 +109,7 @@ TAO_Marshal_Any::skip (CORBA::TypeCode_ptr,
 
   return TAO_Marshal_Object::perform_skip (elem_tc.in (),
                                            stream
-                                            ACE_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
 }
 
 TAO::traverse_status
@@ -312,17 +312,17 @@ TAO_Marshal_Struct::skip (CORBA::TypeCode_ptr  tc,
                           TAO_InputCDR *stream
                           ACE_ENV_ARG_DECL)
 {
-  TAO::traverse_status retval =
-    TAO::TRAVERSE_CONTINUE;
+  TAO::traverse_status retval = TAO::TRAVERSE_CONTINUE;
   CORBA::TypeCode_var param;
 
   // Number of fields in the struct.
-  int member_count = tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
+  const CORBA::ULong member_count =
+    tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 
-  for (int i = 0; i < member_count
-         && retval == TAO::TRAVERSE_CONTINUE;
-       i++)
+  for (CORBA::ULong i = 0;
+       i < member_count && retval == TAO::TRAVERSE_CONTINUE;
+       ++i)
     {
       param = tc->member_type (i ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
@@ -339,6 +339,7 @@ TAO_Marshal_Struct::skip (CORBA::TypeCode_ptr  tc,
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO_Marshal_Struct::skip detected error\n")));
+
   ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                     CORBA::COMPLETED_MAYBE),
                     TAO::TRAVERSE_STOP);
@@ -429,17 +430,17 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
       return TAO::TRAVERSE_STOP;
     }
 
-  CORBA::ULong member_count =
+  const CORBA::ULong member_count =
     tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 
-  const CORBA::ULong null_member = ~ACE_static_cast (CORBA::ULong, 0U);
+  const CORBA::ULong null_member = ~static_cast<CORBA::ULong> (0U);
 
   CORBA::ULong current_member = null_member;
   CORBA::ULong default_member = null_member;
 
   for (CORBA::ULong i = 0;
-       i != member_count && current_member == null_member;
+       i < member_count && current_member == null_member;
        ++i)
     {
       CORBA::Any_var any = tc->member_label (i ACE_ENV_ARG_PARAMETER);
@@ -511,7 +512,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
                 ACE_CDR::consolidate (mb, out.begin ());
                 type_known = true;
               }
-              
+
             TAO_InputCDR cdr (mb->data_block (),
                               ACE_Message_Block::DONT_DELETE,
                               mb->rd_ptr () - mb->base (),
@@ -521,7 +522,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
                               TAO_DEF_GIOP_MINOR);
 
             cdr.read_ulong (d);
-            
+
             if (type_known)
               {
                 mb->release ();
@@ -588,6 +589,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
   CORBA::TypeCode_var member_tc =
     tc->member_type (current_member ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
+
   return TAO_Marshal_Object::perform_skip (member_tc.in (),
                                            src
                                            ACE_ENV_ARG_PARAMETER);
@@ -724,6 +726,7 @@ TAO_Marshal_Sequence::skip (CORBA::TypeCode_ptr  tc,
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO_Marshal_Sequence::skip detected error\n")));
+
   ACE_THROW_RETURN (CORBA::MARSHAL (),
                     TAO::TRAVERSE_STOP);
 }
@@ -802,7 +805,7 @@ TAO_Marshal_Array::skip (CORBA::TypeCode_ptr  tc,
           int stop =
             TAO_Marshal_Object::perform_skip (tc2.in (),
                                               stream
-                                               ACE_ENV_ARG_PARAMETER);
+                                              ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
           if (stop == TAO::TRAVERSE_STOP)
             continue_skipping = 0;
@@ -817,6 +820,7 @@ TAO_Marshal_Array::skip (CORBA::TypeCode_ptr  tc,
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO_Marshal_Sequence::skip detected error\n")));
+
   ACE_THROW_RETURN (CORBA::MARSHAL (),
                     TAO::TRAVERSE_STOP);
 }
@@ -850,6 +854,7 @@ TAO_Marshal_Alias::skip (CORBA::TypeCode_ptr  tc,
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO_Marshal_Alias::skip detected error\n")));
+
   ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                     CORBA::COMPLETED_MAYBE),
                     TAO::TRAVERSE_STOP);
@@ -876,19 +881,20 @@ TAO_Marshal_Except::skip (CORBA::TypeCode_ptr  tc,
     return TAO::TRAVERSE_STOP;
 
   // Number of fields in the exception
-  int member_count = tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
+  const CORBA::ULong member_count =
+    tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 
-  for (int i = 0; i < member_count
-         && retval == TAO::TRAVERSE_CONTINUE;
-       i++)
+  for (CORBA::ULong i = 0;
+       i < member_count && retval == TAO::TRAVERSE_CONTINUE;
+       ++i)
     {
       param = tc->member_type (i ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 
       retval = TAO_Marshal_Object::perform_skip (param.in (),
                                                  stream
-                                                  ACE_ENV_ARG_PARAMETER);
+                                                 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
     }
 
@@ -898,6 +904,7 @@ TAO_Marshal_Except::skip (CORBA::TypeCode_ptr  tc,
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO_Marshal_Except::skip detected error\n")));
+
   ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                     CORBA::COMPLETED_MAYBE),
                     TAO::TRAVERSE_STOP);
@@ -939,8 +946,7 @@ TAO_Marshal_Value::skip (CORBA::TypeCode_ptr  tc,
                          TAO_InputCDR *stream
                          ACE_ENV_ARG_DECL)
 {
-  TAO::traverse_status retval =
-    TAO::TRAVERSE_CONTINUE;
+  TAO::traverse_status retval = TAO::TRAVERSE_CONTINUE;
   CORBA::TypeCode_var param;
 
   // Use the same method to skip over our base valuetype.
@@ -948,9 +954,9 @@ TAO_Marshal_Value::skip (CORBA::TypeCode_ptr  tc,
   // first-time/nested skips so that we won't attempt to
   // skip rep_id several times.
   //
-  if (nested_processing_ == 0)
+  if (this->nested_processing_ == 0)
     {
-      nested_processing_ = 1;
+      this->nested_processing_ = 1;
 
       CORBA::ULong value_tag;
 
@@ -1003,19 +1009,20 @@ TAO_Marshal_Value::skip (CORBA::TypeCode_ptr  tc,
     }
 
   // Number of fields in the valuetype.
-  int member_count = tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
+  const CORBA::ULong member_count =
+    tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 
-  for (int i = 0; i < member_count
-         && retval == TAO::TRAVERSE_CONTINUE;
-       i++)
+  for (CORBA::ULong i = 0;
+       i < member_count && retval == TAO::TRAVERSE_CONTINUE;
+       ++i)
     {
       param = tc->member_type (i ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 
       retval = TAO_Marshal_Object::perform_skip (param.in (),
                                                  stream
-                                                  ACE_ENV_ARG_PARAMETER);
+                                                 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
     }
 
@@ -1025,6 +1032,7 @@ TAO_Marshal_Value::skip (CORBA::TypeCode_ptr  tc,
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO_Marshal_Value::skip detected error\n")));
+
   ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                     CORBA::COMPLETED_MAYBE),
                     TAO::TRAVERSE_STOP);

@@ -50,10 +50,10 @@ namespace TAO
 }
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_structure/structure_cs.cpp:66
 
-void 
+void
 TimeBase::UtcT::_tao_any_destructor (
     void *_tao_void_pointer
   )
@@ -63,16 +63,15 @@ TimeBase::UtcT::_tao_any_destructor (
   delete _tao_tmp_pointer;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_structure/structure_cs.cpp:66
 
-void 
+void
 TimeBase::IntervalT::_tao_any_destructor (
     void *_tao_void_pointer
   )
 {
-  IntervalT *_tao_tmp_pointer =
-    ACE_static_cast (IntervalT *, _tao_void_pointer);
+  IntervalT *_tao_tmp_pointer = static_cast<IntervalT *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
@@ -173,5 +172,4 @@ CORBA::Boolean operator>> (
         TimeBase::IntervalT \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
-
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

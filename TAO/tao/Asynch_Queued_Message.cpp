@@ -74,9 +74,8 @@ TAO_Asynch_Queued_Message::fill_iov (int iovcnt_max,
   ACE_UNUSED_ARG (iovcnt_max); // not used if ACE_ASSERT() is empty
 
   iov[iovcnt].iov_base = this->buffer_ + this->offset_;
-  iov[iovcnt].iov_len  = ACE_static_cast (u_long,
-                                          this->size_ - this->offset_);
-  iovcnt++;
+  iov[iovcnt].iov_len  = static_cast<u_long> (this->size_ - this->offset_);
+  ++iovcnt;
 }
 
 void
@@ -124,7 +123,7 @@ TAO_Asynch_Queued_Message::clone (ACE_Allocator *alloc)
   if (alloc)
     {
       ACE_NEW_MALLOC_RETURN (qm,
-                             ACE_static_cast (TAO_Asynch_Queued_Message *,
+                             static_cast<TAO_Asynch_Queued_Message *> (
                                  alloc->malloc (sizeof (TAO_Asynch_Queued_Message))),
                              TAO_Asynch_Queued_Message (buf,
                                                         sz,

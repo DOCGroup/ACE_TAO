@@ -118,8 +118,8 @@ TAO::Any_Impl_T<T>::extract (const CORBA::Any & any,
 
       if (result == 1)
         {
-          _tao_elem = ACE_const_cast (T *, replacement->value_);
-          ACE_const_cast (CORBA::Any &, any).replace (replacement);
+          _tao_elem = const_cast<T *> (replacement->value_);
+          const_cast<CORBA::Any &> (any).replace (replacement);
           replacement_safety.release ();
           return 1;
         }

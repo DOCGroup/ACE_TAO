@@ -1,6 +1,6 @@
 #include "Messaging_PolicyFactory.h"
 
-ACE_RCSID (tao,
+ACE_RCSID (Messaging,
            Messaging_PolicyFactory,
            "$Id$")
 

@@ -35,7 +35,7 @@ TAO_Tagged_Profile::object_key (TAO::ObjectKey &object_key)
 ACE_INLINE const TAO::ObjectKey &
 TAO_Tagged_Profile::object_key (void) const
 {
-  return ACE_const_cast(TAO_Tagged_Profile *, this)->object_key ();
+  return const_cast<TAO_Tagged_Profile *> (this)->object_key ();
 }
 
 ACE_INLINE const IOP::TaggedProfile &

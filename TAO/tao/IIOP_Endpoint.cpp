@@ -209,16 +209,14 @@ TAO_IIOP_Endpoint::object_addr_i (void) const
 CORBA::Boolean
 TAO_IIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
 {
-  TAO_Endpoint *endpt =
-    ACE_const_cast (TAO_Endpoint *, other_endpoint);
+  const TAO_IIOP_Endpoint *endpoint =
+    dynamic_cast<const TAO_IIOP_Endpoint *> (other_endpoint);
 
-  TAO_IIOP_Endpoint *endpoint =
-    ACE_dynamic_cast (TAO_IIOP_Endpoint *, endpt);
   if (endpoint == 0)
     return 0;
 
   return (this->port_ == endpoint->port_
-          && (ACE_OS::strcmp(this->host(), endpoint->host()) == 0));
+          && (ACE_OS::strcmp (this->host (), endpoint->host ()) == 0));
 }
 
 CORBA::ULong

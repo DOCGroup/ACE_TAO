@@ -15,7 +15,7 @@ TAO_Synch_Queued_Message::
                               ACE_Allocator *alloc,
                               int is_heap_allocated)
   : TAO_Queued_Message (alloc, is_heap_allocated)
-  , contents_ (ACE_const_cast (ACE_Message_Block*,contents))
+  , contents_ (const_cast<ACE_Message_Block*> (contents))
   , current_block_ (contents_)
 {
 }
@@ -66,10 +66,10 @@ TAO_Synch_Queued_Message::fill_iov (int iovcnt_max,
         {
               // Collect the data in the iovec.
           iov[iovcnt].iov_base = message_block->rd_ptr ();
-          iov[iovcnt].iov_len  = ACE_static_cast (u_long, message_block_length);
+          iov[iovcnt].iov_len  = static_cast<u_long> (message_block_length);
 
           // Increment iovec counter.
-          iovcnt++;
+          ++iovcnt;
         }
     }
 }
@@ -122,8 +122,8 @@ TAO_Synch_Queued_Message::clone (ACE_Allocator *alloc)
   if (alloc)
     {
       ACE_NEW_MALLOC_RETURN (qm,
-                             ACE_static_cast (TAO_Synch_Queued_Message *,
-                                 alloc->malloc (sizeof (TAO_Synch_Queued_Message))),
+                             static_cast<TAO_Synch_Queued_Message *> (
+                               alloc->malloc (sizeof (TAO_Synch_Queued_Message))),
                              TAO_Synch_Queued_Message (mb,
                                                        alloc),
                              0);

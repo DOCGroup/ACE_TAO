@@ -51,12 +51,11 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::insert (CORBA::Any & any,
 
   if (bound > 0)
     {
-      CORBA::TCKind kind = ACE_static_cast (CORBA::TCKind,
-                                            tc->kind_);
+      CORBA::TCKind kind = static_cast<CORBA::TCKind> (tc->kind_);
       static CORBA::Long _oc_buffer [] =
         {
           TAO_ENCAP_BYTE_ORDER,
-          ACE_static_cast (CORBA::Long, bound)
+          static_cast<CORBA::Long> (bound)
         };
 
       ACE_NEW (bounded_tc,
@@ -171,7 +170,7 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (const CORBA::Any & any,
       if (result == 1)
         {
           _tao_elem = replacement->value_;
-          ACE_const_cast (CORBA::Any &, any).replace (replacement);
+          const_cast<CORBA::Any &> (any).replace (replacement);
           replacement_safety.release ();
           return 1;
         }

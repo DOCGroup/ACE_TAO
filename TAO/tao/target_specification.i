@@ -23,8 +23,7 @@ TAO_Target_Specification::target_specifier (const TAO::ObjectKey &key)
   // general is better....  but you are probably right in this case, i
   // suspect this stuff goes right in the critical path, right? So
   // making a copy of the object key would be too expensive..
-  this->u_.object_key_ = ACE_const_cast (TAO::ObjectKey *,
-                                         &key);
+  this->u_.object_key_ = const_cast<TAO::ObjectKey *> (&key);
 }
 
 ACE_INLINE void
@@ -32,20 +31,18 @@ TAO_Target_Specification::target_specifier (IOP::TaggedProfile &profile)
 
 {
   this->specifier_ = TAO_Target_Specification::Profile_Addr;
-  this->u_.profile_ = ACE_const_cast (IOP::TaggedProfile *,
-                                      &profile);
-  
+  this->u_.profile_ = const_cast<IOP::TaggedProfile *> (&profile);
+
 }
 
 ACE_INLINE void
 TAO_Target_Specification::target_specifier (IOP::IOR &ior,
                                             CORBA::ULong prof_index)
-{ 
+{
   this->specifier_ = TAO_Target_Specification::Reference_Addr;
-  this->u_.ior_ = ACE_const_cast (IOP::IOR *,
-                                  &ior);
+  this->u_.ior_ = const_cast<IOP::IOR *> (&ior);
   this->profile_index_ = prof_index;
-      
+
 }
 
 ACE_INLINE const TAO::ObjectKey*

@@ -358,12 +358,13 @@ TAO_Marshal_Struct::append (CORBA::TypeCode_ptr  tc,
   CORBA::TypeCode_var param;
 
   // Number of fields in the struct.
-  int member_count = tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
+  const CORBA::ULong member_count =
+    tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 
-  for (int i = 0;
+  for (CORBA::ULong i = 0;
        i < member_count && retval == TAO::TRAVERSE_CONTINUE;
-       i++)
+       ++i)
     {
       // get member type
       param = tc->member_type (i ACE_ENV_ARG_PARAMETER);
@@ -373,7 +374,7 @@ TAO_Marshal_Struct::append (CORBA::TypeCode_ptr  tc,
         TAO_Marshal_Object::perform_append (param.in (),
                                             src,
                                             dest
-                                             ACE_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
     }
 
@@ -483,17 +484,17 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
       return TAO::TRAVERSE_STOP;
     }
 
-  CORBA::ULong member_count =
+  const CORBA::ULong member_count =
     tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 
-  const CORBA::ULong null_member = ~ACE_static_cast (CORBA::ULong, 0U);
+  const CORBA::ULong null_member = ~static_cast<CORBA::ULong> (0U);
 
   CORBA::ULong current_member = null_member;
   CORBA::ULong default_member = null_member;
 
   for (CORBA::ULong i = 0;
-       i != member_count && current_member == null_member;
+       i < member_count && current_member == null_member;
        ++i)
     {
       CORBA::Any_var any = tc->member_label (i
@@ -567,7 +568,7 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
                 ACE_CDR::consolidate (mb, out.begin ());
                 type_known = true;
               }
-              
+
             TAO_InputCDR cdr (mb->data_block (),
                               ACE_Message_Block::DONT_DELETE,
                               mb->rd_ptr () - mb->base (),
@@ -577,7 +578,7 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
                               TAO_DEF_GIOP_MINOR);
 
             cdr.read_ulong (d);
-            
+
             if (type_known)
               {
                 mb->release ();
@@ -1146,12 +1147,15 @@ TAO_Marshal_Except::append (CORBA::TypeCode_ptr  tc,
   continue_append = dest->append_string (*src);
 
   // Number of fields in the struct.
-  int member_count = tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
+  const CORBA::ULong int member_count =
+    tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 
-  for (int i = 0; i < member_count
+  for (CORBA::ULong i = 0;
+       i < member_count
          && retval == TAO::TRAVERSE_CONTINUE
-         && continue_append == 1; i++)
+         && continue_append == 1;
+       ++i)
     {
       param = tc->member_type (i ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
@@ -1159,7 +1163,7 @@ TAO_Marshal_Except::append (CORBA::TypeCode_ptr  tc,
       retval = TAO_Marshal_Object::perform_append (param.in (),
                                                    src,
                                                    dest
-                                                    ACE_ENV_ARG_PARAMETER);
+                                                   ACE_ENV_ARG_PARAMETER);
     }
 
   if (retval == TAO::TRAVERSE_CONTINUE
@@ -1169,6 +1173,7 @@ TAO_Marshal_Except::append (CORBA::TypeCode_ptr  tc,
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO_Marshal_Except::append detected error\n")));
+
   ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                     CORBA::COMPLETED_MAYBE),
                     TAO::TRAVERSE_STOP);
@@ -1198,6 +1203,7 @@ TAO_Marshal_WString::append (CORBA::TypeCode_ptr,
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO_Marshal_WString::append detected error\n")));
+
   ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                     CORBA::COMPLETED_MAYBE),
                     TAO::TRAVERSE_STOP);
@@ -1218,9 +1224,9 @@ TAO_Marshal_Value::append (CORBA::TypeCode_ptr  tc,
   // first-time/nested appends so that we won't attempt to
   // append rep_id several times.
   //
-  if (nested_processing_ == 0)
+  if (this->nested_processing_ == 0)
     {
-      nested_processing_ = 1;
+      this->nested_processing_ = 1;
 
       CORBA::ULong value_tag;
 
@@ -1277,12 +1283,13 @@ TAO_Marshal_Value::append (CORBA::TypeCode_ptr  tc,
     }
 
   // Number of fields in the struct.
-  int member_count = tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
+  const CORBA::ULong member_count =
+    tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 
-  for (int i = 0;
+  for (CORBA::ULong i = 0;
        i < member_count && retval == TAO::TRAVERSE_CONTINUE;
-       i++)
+       ++i)
     {
       // get member type
       param = tc->member_type (i ACE_ENV_ARG_PARAMETER);
@@ -1292,7 +1299,7 @@ TAO_Marshal_Value::append (CORBA::TypeCode_ptr  tc,
         TAO_Marshal_Object::perform_append (param.in (),
                                             src,
                                             dest
-                                             ACE_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
     }
 

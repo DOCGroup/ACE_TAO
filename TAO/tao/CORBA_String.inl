@@ -168,7 +168,7 @@ CORBA::WString_var::operator[] (CORBA::ULong slot) const
 }
 
 ACE_INLINE
-CORBA::WString_var::operator CORBA::WChar *()
+CORBA::WString_var::operator CORBA::WChar *&()
 {
   return this->ptr_;
 }
