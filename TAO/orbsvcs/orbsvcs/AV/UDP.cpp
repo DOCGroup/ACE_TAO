@@ -609,7 +609,7 @@ TAO_AV_UDP_Factory::~TAO_AV_UDP_Factory (void)
 int
 TAO_AV_UDP_Factory::match_protocol (const char *protocol_string)
 {
-  if (ACE_OS::strstr (protocol_string,"UDP") != 0)
+  if (ACE_OS::strcasecmp (protocol_string,"UDP") == 0)
     return 1;
   return 0;
 }

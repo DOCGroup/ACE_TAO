@@ -4,6 +4,13 @@
 // AVStreams_i.i
 
 ACE_INLINE
+TAO_AV_QoS &
+TAO_Base_StreamEndPoint::qos (void)
+{
+  return this->qos_;
+}
+
+ACE_INLINE
 int
 TAO_AV_QoS::set (AVStreams::streamQoS &stream_qos)
 {
@@ -22,10 +29,15 @@ TAO_AV_QoS::set (AVStreams::streamQoS &stream_qos)
 
 ACE_INLINE
 int
-TAO_AV_QoS::get_flow_qos (const char *flowname,AVStreams::QoS &flow_qos)
+TAO_AV_QoS::get_flow_qos (const char *flowname,
+			  AVStreams::QoS &flow_qos)
 {
-  int result = this->qos_map_.find (flowname, flow_qos);
+  int result = this->qos_map_.find (flowname, 
+				    flow_qos);
+
   if (result < 0)
     ACE_ERROR_RETURN ((LM_DEBUG,"qos_map::find failed\n"),-1);
   return 0;
 }
+
+
