@@ -5,10 +5,6 @@
 
 ACE_RCSID(mpeg_client, Command_Handler, "$Id$")
 
-  static int temp_argc = 5;
-static char *temp_argv [] = {"Command_Handler",
-                             "-ORBobjrefstyle", "url"
-};
 
 Command_Handler::Command_Handler (ACE_HANDLE command_handle)
   :command_suspended_ (UNSUSPENDED),
@@ -77,11 +73,10 @@ int
 Command_Handler::init (int argc,
                        char *argv[])
 {
-  this->argc_ = temp_argc;
-  this->argv_ = temp_argv;
+  this->argc_ = argc;
+  this->argv_ = argv;
 
   // Increase the debug_level so that we can see the output
-  this->parse_args (argc, argv);
   TAO_debug_level++;
   CORBA::String_var ior;
   TAO_TRY
@@ -91,6 +86,7 @@ Command_Handler::init (int argc,
                                          "child_poa",
                                          TAO_TRY_ENV);
       TAO_CHECK_ENV;
+      this->parse_args (this->argc_, this->argv_);
       // activate the client video mmdevice under the child poa.
       ior = this->orb_manager_.activate (&this->receiver_,
                                          TAO_TRY_ENV);
