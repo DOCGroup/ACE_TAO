@@ -1,3 +1,15 @@
+Tue Oct 24 13:36:05 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/PolicyFactory_Registry.h:
+
+	  Removed the local ITERATOR typedef.  It confused brain-damaged
+	  g++ 2.7.x.
+
+	* tao/PolicyFactory_Registry.cpp (~TAO_PolicyFactory_Registry):
+
+	  Use the ACE_Map_Manager<>::ITERATOR trait instead of the now
+	  removed typedef local to this class.
+
 Tue Oct 24 11:18:01 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/Typecode.cpp : 

@@ -16,7 +16,10 @@ TAO_PolicyFactory_Registry::TAO_PolicyFactory_Registry (TAO_ORB_Core *orb_core)
 
 TAO_PolicyFactory_Registry::~TAO_PolicyFactory_Registry (void)
 {
-  for (ITERATOR i (this->factories_); !i.done (); ++i)
+  TABLE::ITERATOR begin = this->factories_.begin ();
+  TABLE::ITERATOR end   = this->factories_.end ();
+
+  for (TABLE::ITERATOR i = begin; i != end; ++i)
     CORBA::release ((*i).int_id_);
 }
 
