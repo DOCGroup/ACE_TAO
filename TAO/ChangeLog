@@ -1,3 +1,13 @@
+Thu Jan 23 16:31:28 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/util/utl_global.cpp:
+	* TAO_IDL/include/idl_global.h:
+
+	  Fixed a bug in the clearing of a #pragma prefix directive
+	  at the end of an indirectly included IDL file, based on an
+	  example set of five IDL files sent in by 
+	  John Fletcher <john.fletcher@rd.bbc.co.uk>
+
 Thu Jan 23 11:30:04 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orsbvcs/IFRService/Container_i.cpp (store_label):

@@ -523,9 +523,6 @@ private:
   ACE_Unbounded_Stack<char *> pragma_prefixes_;
   // Container for all the #pragma prefix declarations.
 
-  long last_seen_index_;
-  // The index (not zero-based!) of the last seen included file.
-
   idl_bool repeat_include_;
   // Has this IDL file been included before?
 };
