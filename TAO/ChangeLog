@@ -1,3 +1,12 @@
+Fri Dec 13 13:14:19 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/IFR_Service/Makefile.BE:
+        * orbsvcs/IFR_Service/Makefile.EX:
+        * orbsvcs/IFR_Service/Makefile.IFR_Service:
+        * orbsvcs/orbsvcs/Makefile.IFRService:
+
+          Updated dependencies.
+
 Fri Dec 13 11:48:24 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/AliasDef_i.cpp:
