@@ -1,18 +1,24 @@
+Fri Jan 15 17:05:12 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Log_Record: Factored out the redundant formatting code.  The
+ 	  new scheme also allows the end user to get to verbose formatted
+ 	  string.  Thanks to Nanbor for helping out with this.
+
 Fri Jan 15 17:15:18 EST 1999   James CE Johnson  <jcej@lads.com>
 
-  * docs/tutorials/templates.html
-    docs/tutorials/001/acceptor.h
-    docs/tutorials/001/logger.h
-    docs/tutorials/001/page01.html
-    docs/tutorials/001/page02.html
-    docs/tutorials/001/page03.html
-    docs/tutorials/001/page04.html
-    docs/tutorials/001/page05.html
-    docs/tutorials/001/server.cpp
-    docs/tutorials/003/page01.html
+        * docs/tutorials/templates.html
+	  docs/tutorials/001/acceptor.h
+	  docs/tutorials/001/logger.h
+	  docs/tutorials/001/page01.html
+	  docs/tutorials/001/page02.html
+	  docs/tutorials/001/page03.html
+	  docs/tutorials/001/page04.html
+	  docs/tutorials/001/page05.html
+	  docs/tutorials/001/server.cpp
+	  docs/tutorials/003/page01.html
 
-		Many changes from Ossama plus a new abstract (for T3)
-		from Kirthika.
+	  Many changes from Ossama plus a new abstract (for T3) from
+ 	  Kirthika.
 
 Fri Jan 15 14:40:26 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
@@ -86,22 +92,21 @@ Thu Jan 14 20:41:33 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 Thu Jan 14 16:18:37 EST 1999  James CE Johnson  <jcej@lads.com>
 
-  * docs/tutorials/001/page02.html:
-    docs/tutorials/001/page03.html:
+        * docs/tutorials/001/page02.html:
+	  docs/tutorials/001/page03.html:
 
-    Included Kirthika Parameswaran's <Kirthika@cs.wustl.edu>
-    abstract and analogy.  Thanks Kirthika!
+	  Included Kirthika Parameswaran's <Kirthika@cs.wustl.edu>
+ 	  abstract and analogy.  Thanks Kirthika!
 
-  * docs/tutorials/001/Source.tgz:
-    docs/tutorials/001/acceptor.h:
-    docs/tutorials/001/logger.h:
-    docs/tutorials/001/server.cpp:
-    docs/tutorials/001/page[345].html:
-  * docs/tutorials/002/page0[23].html:
-    docs/tutorials/002/handler.h:
+	* docs/tutorials/001/Source.tgz:
+	  docs/tutorials/001/acceptor.h:
+	  docs/tutorials/001/logger.h:
+	  docs/tutorials/001/server.cpp:
+	  docs/tutorials/001/page[345].html:
+        * docs/tutorials/002/page0[23].html:
+	  docs/tutorials/002/handler.h:
 
-    Added improvements from Kirthika, Pradeep and Yamuna
-
+	  Added improvements from Kirthika, Pradeep and Yamuna
 
 Thu Jan 14 11:46:25 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
@@ -433,14 +438,13 @@ Tue Jan 05 22:55:07 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 Tue Jan  5 18:48:47  James CE Johnson  <jcej@lads.com>
 
-        * docs/tutorials/templates.html:
-        Fixed a number of problems here.  Thanks to Amos Shapira
-        <Amos_Shapira@icomverse.com> for pointing them out.
+        * docs/tutorials/templates.html: Fixed a number of problems here.
+  	  Thanks to Amos Shapira <Amos_Shapira@icomverse.com> for pointing
+ 	  them out.
 
-        * docs/tutorials/colorize:
-        I pulled out the colorization code from combine into this
-        standalone script.  One of these days I'll fix combine so that the
-        code isn't duplicated...
+        * docs/tutorials/colorize: I pulled out the colorization code from
+ 	  combine into this standalone script.  One of these days I'll fix
+ 	  combine so that the code isn't duplicated...
 
 Tue Jan  5 16:14:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 

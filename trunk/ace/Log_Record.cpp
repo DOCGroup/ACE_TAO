@@ -115,101 +115,11 @@ ACE_Log_Record::ACE_Log_Record (void)
   // ACE_TRACE ("ACE_Log_Record::ACE_Log_Record");
 }
 
-#if defined (ACE_HAS_WINCE)
 int
 ACE_Log_Record::format_msg (const ASYS_TCHAR host_name[],
                             u_long verbose_flag,
-                            CString *msg)
+                            ASYS_TCHAR *verbose_msg)
 {
-  if (ACE_BIT_ENABLED (verbose_flag, ACE_Log_Msg::VERBOSE))
-    {
-      time_t now = this->time_stamp_.sec ();
-      ASYS_TCHAR ctp[26]; // 26 is a magic number...
-
-      if (ACE_OS::ctime_r (&now, ctp, sizeof ctp) == 0)
-        return -1;
-
-      /* 01234567890123456789012345 */
-      /* Wed Oct 18 14:25:36 1989n0 */
-
-      ctp[19] = '\0'; // NUL-terminate after the time.
-      ctp[24] = '\0'; // NUL-terminate after the date.
-
-      const ASYS_TCHAR *lhost_name = host_name ==
-        0 ? ASYS_TEXT ("<local_host>") : host_name;
-
-      msg->Format (ASYS_TEXT ("%s.%d %s@%s@%d@%s@%s"),
-                   ctp + 4,
-                   this->time_stamp_.usec () / 1000,
-                   ctp + 20,
-                   lhost_name,
-                   this->pid_,
-                   ACE_Log_Record::priority_name (ACE_Log_Priority (this->type_)),
-                   this->msg_data_);
-    }
-  else if (ACE_BIT_ENABLED (verbose_flag, ACE_Log_Msg::VERBOSE_LITE))
-      msg->Format (ASYS_TEXT ("%s@%s"),
-                   ACE_Log_Record::priority_name (ACE_Log_Priority (this->type_)),
-                   this->msg_data_);
-  else
-    msg->Format (ASYS_TEXT ("%s"), this->msg_data_);
-
-  return 0;
-}
-
-
-int
-ACE_Log_Record::print (const ASYS_TCHAR *host_name,
-                       u_long verbose_flag,
-                       ACE_CE_Bridge *log_window)
-{
-  // ACE_TRACE ("ACE_Log_Record::print");
-
-  CString *msg = new CString ();
-
-  if (this->format_msg (host_name, verbose_flag, msg) != -1)
-    {
-      if (log_window == 0)
-        log_window = ACE_CE_Bridge::get_default_winbridge ();
-      log_window->write_msg (msg);
-      return 0;
-    }
-
-  return -1;
-}
-
-int
-ACE_Log_Record::print (const ASYS_TCHAR *host_name,
-                       u_long verbose_flag,
-                       FILE *fp)
-{
-  int ret = -1;
-
-  CString msg;
-
-  if (this->format_msg (host_name, verbose_flag, &msg) != -1 &&
-      fp != NULL)
-    {
-      ret = ACE_OS::fwrite (ACE_MULTIBYTE_STRING (msg),
-                      1,
-                      msg.GetLength (),
-                      fp);
-    }
-
-  return ret;
-}
-
-#else /* ! ACE_HAS_WINCE */
-
-int
-ACE_Log_Record::print (const ASYS_TCHAR *host_name,
-                       u_long verbose_flag,
-                       FILE *fp)
-{
-  // ACE_TRACE ("ACE_Log_Record::print");
-
-  int ret;
-
   if (ACE_BIT_ENABLED (verbose_flag, ACE_Log_Msg::VERBOSE))
     {
       time_t now = this->time_stamp_.sec ();
@@ -226,41 +136,99 @@ ACE_Log_Record::print (const ASYS_TCHAR *host_name,
 
 # if defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS)
       const ASYS_TCHAR *lhost_name =  (const ASYS_TCHAR *) ((host_name == 0)
-        ? ((char *) "<local_host>") : ((char *) host_name));
+        ? ((char *) ASYS_TEXT ("<local_host>")) : ((char *) host_name));
 # else /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
       const ASYS_TCHAR *lhost_name = host_name ==
         0 ? ASYS_TEXT ("<local_host>") : host_name;
 # endif /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
 
-      ret =  ACE_OS::fprintf (fp,
-                              ASYS_TEXT ("%s.%d %s@%s@%d@%s@%s"),
-                              ctp + 4,
-                              this->time_stamp_.usec () / 1000,
-                              ctp + 20,
-                              lhost_name,
-                              this->pid_,
-                              ACE_Log_Record::priority_name (ACE_Log_Priority (this->type_)),
-                              this->msg_data_);
+      ACE_OS::sprintf (verbose_msg,
+                       ASYS_TEXT ("%s.%03d %s@%s@%d@%s@%s"),
+                       ctp + 4,
+                       this->time_stamp_.usec () / 1000,
+                       ctp + 20,
+                       lhost_name,
+                       this->pid_,
+                       ACE_Log_Record::priority_name (ACE_Log_Priority (this->type_)),
+                       this->msg_data_);
     }
   else if (ACE_BIT_ENABLED (verbose_flag, ACE_Log_Msg::VERBOSE_LITE))
-    ret =  ACE_OS::fprintf (fp,
-                            ASYS_TEXT ("%s@%s"),
-                            ACE_Log_Record::priority_name (ACE_Log_Priority (this->type_)),
-                            this->msg_data_);
+    {
+      ACE_OS::sprintf (verbose_msg,
+                       ASYS_TEXT ("%s@%s"),
+                       ACE_Log_Record::priority_name (ACE_Log_Priority (this->type_)),
+                       this->msg_data_);
+    }
   else
-    ret =  ACE_OS::fprintf (fp,
-                            ASYS_TEXT ("%s"),
-                            this->msg_data_);
+    {
+      ACE_OS::sprintf (verbose_msg,
+                       ASYS_TEXT ("%s"),
+                       this->msg_data_);
+    }
 
-  if (ret > 0)
-    ACE_OS::fflush (fp);
-  return ret;
+  return 0;
 }
 
-#endif /* defined (ACE_HAS_WINCE) */
+#if defined (ACE_HAS_WINCE)
 
-// Print out the record on the stderr stream with the appropriate
-// format.
+int
+ACE_Log_Record::print (const ASYS_TCHAR *host_name,
+                       u_long verbose_flag,
+                       ACE_CE_Bridge *log_window)
+{
+  ASYS_TCHAR verbose_msg [MAXVERBOSELOGMSGLEN];
+  int result = this->format_msg (host_name, verbose_flag, verbose_msg);
+
+  if (result == 0)
+    {
+      if (log_window == 0)
+        log_window = ACE_CE_Bridge::get_default_winbridge ();
+      
+      CString *verbose_cstring = new CString (verbose_msg);
+
+      // <verbose_cstring> will be deleted by <write_msg> function
+      log_window->write_msg (verbose_cstring);
+    }
+
+  return result;
+}
+
+int
+ACE_Log_Record::print (const ASYS_TCHAR *host_name,
+                       u_long verbose_flag,
+                       FILE *fp)
+{
+  ASYS_TCHAR verbose_msg [MAXVERBOSELOGMSGLEN];
+  int result = this->format_msg (host_name, verbose_flag, verbose_msg);
+
+  if (result == 0)
+    {
+      if (fp != NULL)
+        {
+          size_t verbose_msg_len = ACE_OS::strlen (verbose_msg);
+          int fwrite_result = ACE_OS::fwrite (verbose_msg,
+                                              1,
+                                              verbose_msg_len,
+                                              fp);
+
+          // We should have written everything
+          if (fwrite_result != verbose_msg_len)
+            {
+              result = -1;
+            }
+          else
+            {
+              ACE_OS::fflush (fp);
+            }              
+        }
+    }
+
+  return result;
+}
+
+#else /* ! ACE_HAS_WINCE */
+
+#endif /* defined (ACE_HAS_WINCE) */
 
 #if ! defined (ACE_LACKS_IOSTREAM_TOTALLY)
 
@@ -269,60 +237,16 @@ ACE_Log_Record::print (const ASYS_TCHAR host_name[],
                        u_long verbose_flag,
                        ostream &s)
 {
-  // ACE_TRACE ("ACE_Log_Record::print");
+  ASYS_TCHAR verbose_msg [MAXVERBOSELOGMSGLEN];
+  int result = this->format_msg (host_name, verbose_flag, verbose_msg);
 
-  if (ACE_BIT_ENABLED (verbose_flag, ACE_Log_Msg::VERBOSE))
-    {
-      time_t now = this->time_stamp_.sec ();
-      ASYS_TCHAR ctp[26]; // 26 is a magic number...
-
-      if (ACE_OS::ctime_r (&now, ctp, sizeof ctp) == 0)
-        return -1;
-
-      /* 01234567890123456789012345 */
-      /* Wed Oct 18 14:25:36 1989n0 */
-
-      ctp[19] = '\0'; // NUL-terminate after the time.
-      ctp[24] = '\0'; // NUL-terminate after the date.
-
-#  if defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS)
-      const ASYS_TCHAR *lhost_name =
-        (const ASYS_TCHAR *) ((host_name == 0)
-        ? ((char *) "<local_host>") : ((char *) host_name));
-#  else /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
-      const ASYS_TCHAR *lhost_name = host_name ==
-        0 ? ASYS_TEXT ("<local_host>") : host_name;
-#  endif /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
-
-      // Make sure that the output of the timestamp and process id is
-      // "fixed width."
-      ASYS_TCHAR s_msec [10];
-      ACE_OS::sprintf (s_msec,
-                       "%03d",
-                       this->time_stamp_.usec () / 1000);
-      ASYS_TCHAR s_pid [10];
-      ACE_OS::sprintf (s_pid,
-                       "%03d",
-                       this->pid_);
-      s << (ctp + 4) << '.'
-        << s_msec
-        << ' '
-        << (ctp + 20)
-        << '@'
-        << lhost_name
-        << '@'
-        << s_pid
-        << '@'
-        << ACE_Log_Record::priority_name (ACE_Log_Priority (this->type_))
-        << '@';
+  if (result == 0)
+    {      
+      s << verbose_msg;
+      s.flush ();
     }
-  else if (ACE_BIT_ENABLED (verbose_flag, ACE_Log_Msg::VERBOSE_LITE))
-    s << ACE_Log_Record::priority_name (ACE_Log_Priority (this->type_))
-       << '@';
 
-  s << this->msg_data_;
-  s.flush ();
-  return 0;
+  return result;
 }
 
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */

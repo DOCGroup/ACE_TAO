@@ -42,10 +42,13 @@ public:
     ALIGN_WORDB  = 8,
     // Most restrictive alignment.
 
-    VERBOSE_LEN = 128
+    VERBOSE_LEN = 128,
     // Size used by verbose mode.
     // 20 (date) + 15 (host_name) + 10 (pid) + 10 (type) + 4 (@) ... +
     // ? (progname)
+
+    MAXVERBOSELOGMSGLEN = VERBOSE_LEN + MAXLOGMSGLEN
+    // Maximum size of a logging message with the verbose headers
   };
 
   // = Initialization
@@ -64,52 +67,36 @@ public:
   ~ACE_Log_Record (void);
   // Default dtor.
 
-#if ! defined (ACE_LACKS_IOSTREAM_TOTALLY)
 
   int print (const ASYS_TCHAR host_name[],
              u_long verbose_flag,
+#if !defined (ACE_HAS_WINCE)
              FILE *fp = stderr);
+#else
+             FILE *fp);
+#endif /* ACE_HAS_WINCE */
   // Write the contents of the logging record to the appropriate
   // <FILE>.
 
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
   int print (const ASYS_TCHAR host_name[],
              u_long verbose_flag,
              ostream &stream);
   // Write the contents of the logging record to the appropriate
   // <ostream>.
-
-#else
-
-# if defined (ACE_HAS_WINCE)
+#endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
   int format_msg (const ASYS_TCHAR host_name[],
                   u_long verbose_flag,
-                  CString *msg);
+                  ASYS_TCHAR *verbose_msg);
 
+#if defined (ACE_HAS_WINCE)
   int print (const ASYS_TCHAR host_name[],
              u_long verbose_flag,
              ACE_CE_Bridge *log_ = 0);
   // For Windows CE, the default is to log messages to a preset
   // window.
-
-  int print (const ASYS_TCHAR host_name[],
-             u_long verbose_flag,
-             FILE *fp);
-  // Write the contents of the logging record to the appropriate
-  // <FILE>.
-
-#else
-
-  int print (const ASYS_TCHAR host_name[],
-             u_long verbose_flag,
-             FILE *fp = stderr);
-  // Write the contents of the logging record to the appropriate
-  // <FILE>.
-
-# endif /* defined (ACE_HAS_WINCE) */
-
-
-#endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
+#endif /* defined (ACE_HAS_WINCE) */
 
   static const ASYS_TCHAR *priority_name (ACE_Log_Priority p);
   // Returns a character array with the string form of the
