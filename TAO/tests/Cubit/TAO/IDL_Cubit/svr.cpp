@@ -84,18 +84,19 @@ main (int argc, char *argv[])
 
   if (TAO_debug_level > 0)
     {
+      CORBA::Object_ptr obj = factory->_this (env);
+      if (env.exception () != 0)
+        {
+          env.print_exception ("factor::_this");
+          return 1;
+        }
+
       // Stringify the objref we'll be implementing, and print it to
       // stdout.  Someone will take that string and give it to a
       // client.  Then release the object.
 
-      CORBA::Object_ptr obj = factory->_this (env);
-      if (env.exception () != 0)
-        {
-          env.print_exception ("factory::_this()");
-          return 1;
-        }
-      
-      CORBA::String str = orb_ptr->object_to_string (obj, env);
+      CORBA::String str = 
+	orb_ptr->object_to_string (obj, env);
       CORBA::release (obj);
 
       if (env.exception () != 0)
@@ -106,6 +107,8 @@ main (int argc, char *argv[])
 
       ACE_OS::puts ((char *) str);
       ACE_OS::fflush (stdout);
+
+      CORBA::release (obj);
       //dmsg1 ("Object Created at: '%ul'", obj);
       dmsg1 ("listening as object '%s'", str);
     }

@@ -1,3 +1,12 @@
+Fri Jan  2 14:09:49 1998  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp: 
+	  Sequences work on Solaris, even Purify gives its "Houston it's a
+	  go", so I'm reinstating them.
+
+	* tests/Cubit/TAO/IDL_Cubit/svr.cpp: 
+	  Minor cosmetic changes.
+
 Fri Jan 02 08:31:32 1998    <coryan@MILONGA>
 
 	* Merged changes from revision main_to_poa_merge_2 up to revision
