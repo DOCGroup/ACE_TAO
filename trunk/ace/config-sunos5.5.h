@@ -74,6 +74,11 @@
 # define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
+// Platform supports the POSIX regular expression library.
+// NOTE:  please comment out the ACE_HAS_REGEX #define if you
+// have link problems with g++ or egcs on SunOS 5.5.
+#define ACE_HAS_REGEX
+
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 
@@ -91,9 +96,6 @@
 
 // Platform supports system configuration information.
 #define ACE_HAS_SYSINFO
-
-// Platform supports the POSIX regular expression library.
-#define ACE_HAS_REGEX
 
 // Platform supports recvmsg and sendmsg.
 #define ACE_HAS_MSG
