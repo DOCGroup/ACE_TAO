@@ -1,13 +1,21 @@
+Fri Dec 17 22:25:56 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-cxx-common.h: added, to factor out common
+          configuration for Compaq cxx.
+
+        * ace/config-osf1-4.0.h,config-linux-common.h: updated to
+          use config-cxx-common.h.
+
 Fri Dec 17 21:32:48 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-linux-common.h: added support for Compaq
-          (Digital Unix) cxx.  Currently, that just means allowing
+          (Digital) cxx.  Currently, that just means allowing
           compilation to succeed.
 
 Fri Dec 17 21:29:19 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.h: use __DECCXX instead of DEC_CXX to detect that
-          the compiler is Compaq (Digital Unix) cxx.  DEC_CXX is
+          the compiler is Compaq (Digital) cxx.  DEC_CXX is
           #defined in ACE config files for cxx, but __DECCXX is
           #defined by the compiler.  Only the latter should be used.
 
