@@ -1,3 +1,7 @@
+Fri May 21 09:31:32 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+	* orbsvcs/orbsvcs/Makefile: ran "make depend".
+
 Thu May 20 23:09:32 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/examples/CosEC/Factory/FactoryClient.cpp:
@@ -672,11 +676,11 @@ Sat May 15 10:22:52 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell
           added later to the typecode visitor. This is still TO-DO.
 
         * TAO_IDL/be/be_visitor_enum/enum_cs.cpp:
-          TAO_IDL/be/be_visitor_enum/exception_cs.cpp:
-          TAO_IDL/be/be_visitor_enum/interface_cs.cpp:
-          TAO_IDL/be/be_visitor_enum/structure_cs.cpp:
-          TAO_IDL/be/be_visitor_enum/typedef_cs.cpp:
-          TAO_IDL/be/be_visitor_enum/union_cs.cpp:
+          TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+          TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+          TAO_IDL/be/be_visitor_structure/structure_cs.cpp:
+          TAO_IDL/be/be_visitor_typedef/typedef_cs.cpp:
+          TAO_IDL/be/be_visitor_union/union_cs.cpp:
 
           Added a step where we set the context substate to typecode
           generation. This way we can then generate the top-level typecode
