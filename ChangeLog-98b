@@ -1,3 +1,29 @@
+Wed Oct 07 09:30:00 CDT 1998  Chris Gill <cdgill@cs.wustl.edu>
+
+        * ace/Functor.{cpp, h, i}
+          ace/Functor_T.{cpp, h, i}
+          ace/Makefile:
+
+          Added ACE_Command_Base abstract base class and derived class
+          template ACE_Command_Callback to ACE to support the GOF Command
+          design pattern.
+
+        * ace/Timer_Queue_Adapters.{cpp, h}:
+
+          Added registration and deferred executiton of ACE_Command_Base
+          objects to ACE_Thread_Timer_Queue_Adapter.  This is conditionally
+          compiled if the ACE_HAS_DEFERRED_TIMER_COMMANDS symbol is defined.
+
+        * examples/Bounded_Packet_Relay/BPR_Drivers.{cpp, h}
+          examples/Bounded_Packet_Relay/BPR_Drivers_T.{cpp, h}
+          examples/Bounded_Packet_Relay/Makefile
+          examples/Bounded_Packet_Relay/Thread_Bounded_Packet_Relay.{cpp, h}
+          examples/Bounded_Packet_Relay/bpr_thread.cpp:
+
+          Changed example to use ACE_Command_Callback objects, modified event
+          handlers to register ACE_Command_Callback objects for deferred
+          excecution of timer cancellations and registrations.
+
 Wed Oct 07 02:37:58 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.5.49 released.
