@@ -29,17 +29,14 @@
 #include "ace/Svc_Handler.h"
 
 #include "tao/corbafwd.h"
-#include "tao/GIOP.h"
-#include "tao/CDR.h"
+#include "tao/Wait_Strategy.h"
+
+#include "tao/IIOP_Transport.h"
 
 // Forward Decls
-class TAO_Transport;
 class TAO_ORB_Core;
 class TAO_ORB_Core_TSS_Resources;
 
-class TAO_IIOP_Transport;
-class TAO_IIOP_Client_Transport;
-class TAO_IIOP_Server_Transport;
 
 typedef ACE_Svc_Handler<TAO_SOCK_STREAM, ACE_NULL_SYNCH>
         TAO_SVC_HANDLER;
@@ -87,8 +84,11 @@ public:
   // Return the transport objects
 
 protected:
-  TAO_IIOP_Client_Transport *transport_;
+  TAO_IIOP_Client_Transport transport_;
   // Reference to the transport object, it is owned by this class.
+
+  TAO_ORB_Core *orb_core_;
+  // Cached ORB Core.
 };
 
 // ****************************************************************
@@ -141,7 +141,7 @@ protected:
   // Perform appropriate closing.
 
 protected:
-  TAO_IIOP_Server_Transport *transport_;
+  TAO_IIOP_Server_Transport transport_;
   // @@ New transport object reference.
 
   TAO_ORB_Core *orb_core_;
