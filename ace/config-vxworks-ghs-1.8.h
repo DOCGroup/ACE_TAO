@@ -53,6 +53,5 @@ typedef int key_t;
 #if !defined (ACE_NTRACE)
 #define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
-#define ACE_HAS_STRBUF_T
 
 #endif /* ACE_CONFIG_H */
