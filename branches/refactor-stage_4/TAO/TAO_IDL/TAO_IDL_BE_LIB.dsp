@@ -395,7 +395,7 @@ SOURCE=.\be\be_visitor_structure_fwd.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\be\be_visitor_tmplinst.cpp
+SOURCE=.\be\be_visitor_tmplinst_cs.cpp
 # End Source File
 # Begin Source File
 
@@ -727,7 +727,7 @@ SOURCE=.\be_include\be_visitor_structure_fwd.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\be_include\be_visitor_tmplinst.h
+SOURCE=.\be_include\be_visitor_tmplinst_cs.h
 # End Source File
 # Begin Source File
 

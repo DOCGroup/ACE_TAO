@@ -14,17 +14,23 @@
 #ifndef TAO_BE_VISITOR_ARG_TMPLINST_H
 #define TAO_BE_VISITOR_ARG_TMPLINST_H
 
-#include "be_visitor_tmplinst.h"
+#include "be_visitor_tmplinst_cs.h"
+#include "ast_argument.h"
 
 /**
  * @class be_visitor_arg_tmplinst
  *
  * @brief Generates explicit template instantiations for arg helper classes.
  */
-class be_visitor_arg_tmplinst : public be_visitor_tmplinst
+class be_visitor_arg_tmplinst : public be_visitor_decl
 {
 public:
-  be_visitor_arg_tmplinst (be_visitor_tmplinst *rhs);
+  be_visitor_arg_tmplinst (be_visitor_context *ctx,
+                           be_visitor_tmplinst_cs::Mode mode,
+                           char * prefix,
+                           char * suffix,
+                           char * linebreak,
+                           const char * S);
 
   virtual ~be_visitor_arg_tmplinst (void);
 
@@ -50,16 +56,58 @@ public:
 
   virtual int visit_structure (be_structure *node);
 
+  virtual int visit_structure_fwd (be_structure_fwd *node);
+
   virtual int visit_field (be_field *node);
 
   virtual int visit_union (be_union *node);
+
+  virtual int visit_union_fwd (be_union_fwd *node);
 
   virtual int visit_union_branch (be_union_branch *node);
 
   virtual int visit_typedef (be_typedef *node);
 
-protected:
-  virtual void cleanup (void);
+  // Accdessors for the member.
+  void direction (void);
+  void direction (AST_Argument::Direction dir);
+
+private:
+  // Set/get the appropriate flag on the node we are traversing,
+  // to make sure we don't generate something twice.
+  idl_bool this_mode_and_dir_generated (be_decl *node) const;
+  void this_mode_and_dir_generated (be_decl *node, 
+                                    idl_bool val);
+
+  // Generate the direction prefix to the arg class name.
+  void gen_direction (TAO_OutStream *os);
+
+private:
+  enum Direction
+    {
+      _tao_IN,
+      _tao_INOUT,
+      _tao_OUT,
+      _tao_RET
+    };
+
+  // Generating 'template class' or '#pragma instantiate'.
+  be_visitor_tmplinst_cs::Mode mode_;
+
+  // Contains the prefix string itself.
+  char * prefix_;
+
+  // ';' or empty string
+  char * suffix_;
+
+  // backslash for '#pragma instantiate' mode, empty otherwise.
+  char * linebreak_;
+
+  // Value of the above enum we are holding.
+  Direction dir_;
+
+  // Contains 'S' to insert in skel side arg class name, or empty.
+  const char * S_;
 };
 
 
