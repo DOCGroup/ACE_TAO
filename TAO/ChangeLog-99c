@@ -6,6 +6,11 @@ Fri Dec 10 09:00:54 1999  David L. Levine  <levine@cs.wustl.edu>
           commented out some unused variables.  (run_nav_thread,
           run_weap_thread): added a couple of ACE_TRY_CHECK's.
 
+        * examples/Simulator/Event_Supplier/Event_Con.cpp (push):
+          use a temporary int to avoid overload ambiguities with
+          the kind enum value.  (disconnect_push_consumer): removed
+          declaration of unused arg ACE_TRY_ENV.
+
 Fri Dec 10 08:58:49 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/Simulator/DOVEMIB/DOVEMIB.cpp (disconnect_push_consumer):
