@@ -83,8 +83,9 @@ extern "C" {
 
 #ifndef PACE_SSIZE_T
 #define PACE_SSIZE_T
-  typedef long ssize_t;
-  typedef ssize_t pace_ssize_t;
+  /* typedef long ssize_t;
+   * typedef ssize_t pace_ssize_t; */
+  typedef long pace_ssize_t;
 #endif /* PACE_SSIZE_T */
 
 #ifndef PACE_UID_T

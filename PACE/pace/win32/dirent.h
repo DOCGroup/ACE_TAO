@@ -26,7 +26,7 @@ extern "C" {
 #ifndef PACE_DIRENT_T
 #define PACE_DIRENT_T
 
-  typedef struct dirent {
+  typedef struct /* dirent */ {
     unsigned short d_ino;
     unsigned short d_off;
     unsigned short d_reclen;
@@ -40,7 +40,7 @@ extern "C" {
 
   typedef WIN32_FIND_DATA PACE_TEXT_WIN32_FIND_DATA;
 
-  typedef struct DIR {
+  typedef struct /* DIR */ {
     char * directory_name_;
     // The name of the directory we are looking into
     HANDLE current_handle_;
