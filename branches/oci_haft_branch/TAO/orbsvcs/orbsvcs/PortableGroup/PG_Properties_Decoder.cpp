@@ -11,7 +11,7 @@
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
 //=============================================================================
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "PG_Properties_Decoder.h"
 
 

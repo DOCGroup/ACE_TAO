@@ -533,22 +533,6 @@ TAO_PG_GenericFactory::process_criteria (
   const CORBA::ULong factory_infos_count =
     (factory_infos_tmp == 0 ? 0 : factory_infos_tmp->length ());
 
-/////////////////////////////////////////////////////
-  // InitialNumberReplicas
-  PortableGroup::Properties_var p_out = props;
-  ::TAO_PG::Properties_Decoder decoder_out(p_out);
-
-  CORBA::Long value_out;
-  CORBA::Boolean result = 
-    TAO_PG::find (decoder_out, 
-                  PortableGroup::PG_INITIAL_NUMBER_REPLICAS, 
-                  value_out);
-
-  result = TAO_PG::get_property_value (name, props.in (), value);
-  result = value >>= minimum_number_replicas;
-/////////////////////////////////////////////////////
-
-
   // InitialNumberReplicas
   name[0].id =
     CORBA::string_dup (PortableGroup::PG_INITIAL_NUMBER_REPLICAS);

@@ -9,6 +9,7 @@
 #include "orbsvcs/PortableGroup/PG_Properties_Encoder.h"
 #include "orbsvcs/PortableGroup/PG_Properties_Decoder.h"
 #include "orbsvcs/orbsvcs/PortableGroup/PG_Operators.h"
+#include "orbsvcs/PortableGroup/PG_Property_Utils.h"
 
 #include "tao/corbafwd.h"
 #include "tao/ORB.h"
@@ -24,6 +25,7 @@
 int FT_UnitTests::test_001 (int run_test,
                             CORBA::String_var & desc)
 {
+  ACE_CString test_name = "FT UnitTest[001]";
   int result = 0;
 
   ACE_TRY_NEW_ENV
@@ -32,30 +34,47 @@ int FT_UnitTests::test_001 (int run_test,
       "FT UnitTest[001]: default properties.");
     if (run_test)
     {
+      FT::ReplicationStyleValue replication_style_in = FT::SEMI_ACTIVE;
+      FT::MembershipStyleValue membership_style_in = FT::MEMB_INF_CTRL;
+      FT::ConsistencyStyleValue consistemcy_style_in = FT::CONS_APP_CTRL;
+      FT::FaultMonitoringStyleValue fault_monitoring_style_in = FT::PULL;
+      FT::FaultMonitoringGranularityValue fault_granularity_style_in = FT::MEMB;
+      FT::InitialNumberReplicasValue initial_number_replicas_in = 5;
+      FT::MinimumNumberReplicasValue minimum_number_replicas_in = 3;
+
+      FT::ReplicationStyleValue replication_style_out = 999;
+      FT::MembershipStyleValue membership_style_out = 999;
+      FT::ConsistencyStyleValue consistemcy_style_out = 999;
+      FT::FaultMonitoringStyleValue fault_monitoring_style_out = 999;
+      FT::FaultMonitoringGranularityValue fault_granularity_style_out = 999;
+      FT::InitialNumberReplicasValue initial_number_replicas_out = 5;
+      FT::MinimumNumberReplicasValue minimum_number_replicas_out = 3;
+
+      FT::Value value;
+
       // create a property set
       TAO_PG::Properties_Encoder encoder;
-      PortableGroup::Value value;
 
-      value <<= ::FT::SEMI_ACTIVE;
-      encoder.add(::FT::FT_REPLICATION_STYLE, value);
+      value <<= replication_style_in;
+      encoder.add(FT::FT_REPLICATION_STYLE, value);
 
-      value <<= ::FT::MEMB_INF_CTRL;
-      encoder.add(::FT::FT_MEMBERSHIP_STYLE, value);
+      value <<= membership_style_in;
+      encoder.add(FT::FT_MEMBERSHIP_STYLE, value);
 
-      value <<= ::FT::CONS_APP_CTRL;
-      encoder.add(::FT::FT_CONSISTENCY_STYLE, value);
+      value <<= consistemcy_style_in;
+      encoder.add(FT::FT_CONSISTENCY_STYLE, value);
 
-      value <<= ::FT::PULL;
-      encoder.add(::FT::FT_FAULT_MONITORING_STYLE, value);
+      value <<= fault_monitoring_style_in;
+      encoder.add(FT::FT_FAULT_MONITORING_STYLE, value);
 
-      value <<= ::FT::MEMB;
-      encoder.add(::FT::FT_FAULT_MONITORING_GRANULARITY, value);
+      value <<= fault_granularity_style_in;
+      encoder.add(FT::FT_FAULT_MONITORING_GRANULARITY, value);
 
-      value <<= 5;
-      encoder.add(::FT::FT_INITIAL_NUMBER_REPLICAS, value);
+      value <<= initial_number_replicas_in;
+      encoder.add(FT::FT_INITIAL_NUMBER_REPLICAS, value);
 
-      value <<= 3;
-      encoder.add(::FT::FT_MINIMUM_NUMBER_REPLICAS, value);
+      value <<= minimum_number_replicas_in;
+      encoder.add(FT::FT_MINIMUM_NUMBER_REPLICAS, value);
 
       // allocate and populate the criteria
       FT::Properties_var props_in;
@@ -75,7 +94,6 @@ int FT_UnitTests::test_001 (int run_test,
                                     ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
-        //TODO: do a get props and check the return value
         FT::Properties_var props_out;
         props_out = rm_->get_default_properties (
           ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -90,39 +108,113 @@ int FT_UnitTests::test_001 (int run_test,
 
         if (len_out != len_in)
         {
-          std::cout << "FT UnitTest[001]: Wrong number of properties." << std::endl;
+          std::cout << test_name << ": Wrong number of properties." << std::endl;
           result = 1;
         }
 
-        for (int i = 0; i < len_out; ++i)
+        // ----- Check ReplicationStyle --------
+        if (TAO_PG::find (decoder_out, FT::FT_REPLICATION_STYLE, replication_style_out))
         {
-          const PortableGroup::Property & property1 = p_out[i];
-          ACE_CString prop_name = property1.nam[0].id;
-
-          CORBA::Long value_in;
-          CORBA::Long value_out;
-
-          if(TAO_PG::find (decoder_in, prop_name, value_in) )
+          if (replication_style_out != replication_style_in)
           {
-            if(TAO_PG::find (decoder_out, prop_name, value_out) )
-            {
-              if (value_in != value_out)
-              {
-                std::cout << "FT UnitTest[001]: Property '" << prop_name << "' did not have the same value." << std::endl;
-                result = 1;
-              }
-            }
-            else
-            {
-              std::cout << "FT UnitTest[001]: Property '" << prop_name << "' was not in the output set." << std::endl;
-              result = 1;
-            }
-          }
-          else
-          {
-            std::cout << "FT UnitTest[001]: Property '" << prop_name << "' was not in the input set." << std::endl;
+            std::cout << test_name << ": Property '" << FT::FT_REPLICATION_STYLE << "' did not have the same value." << std::endl;
             result = 1;
           }
+        }
+        else
+        {
+          std::cout << test_name << ": Property '" << FT::FT_MEMBERSHIP_STYLE << "' was not in the output set." << std::endl;
+          result = 1;
+        }
+
+        // ----- Check MembershipStyle --------
+        if (TAO_PG::find (decoder_out, FT::FT_MEMBERSHIP_STYLE, membership_style_out))
+        {
+          if (membership_style_out != membership_style_in)
+          {
+            std::cout << test_name << ": Property '" << FT::FT_MEMBERSHIP_STYLE << "' did not have the same value." << std::endl;
+            result = 1;
+          }
+        }
+        else
+        {
+          std::cout << test_name << ": Property '" << FT::FT_MEMBERSHIP_STYLE << "' was not in the output set." << std::endl;
+          result = 1;
+        }
+
+        // ----- Check ConsistencyStyle --------
+        if (TAO_PG::find (decoder_out, FT::FT_CONSISTENCY_STYLE, consistemcy_style_out))
+        {
+          if (consistemcy_style_out != consistemcy_style_in)
+          {
+            std::cout << test_name << ": Property '" << FT::FT_CONSISTENCY_STYLE << "' did not have the same value." << std::endl;
+            result = 1;
+          }
+        }
+        else
+        {
+          std::cout << test_name << ": Property '" << FT::FT_CONSISTENCY_STYLE << "' was not in the output set." << std::endl;
+          result = 1;
+        }
+
+        // ----- Check FaultMonitoringStyle --------
+        if (TAO_PG::find (decoder_out, FT::FT_FAULT_MONITORING_STYLE, fault_monitoring_style_out))
+        {
+          if (fault_monitoring_style_out != fault_monitoring_style_in)
+          {
+            std::cout << test_name << ": Property '" << FT::FT_FAULT_MONITORING_STYLE << "' did not have the same value." << std::endl;
+            result = 1;
+          }
+        }
+        else
+        {
+          std::cout << test_name << ": Property '" << FT::FT_FAULT_MONITORING_STYLE << "' was not in the output set." << std::endl;
+          result = 1;
+        }
+
+        // ----- Check FaultMonitoringGranularity --------
+        if (TAO_PG::find (decoder_out, FT::FT_FAULT_MONITORING_GRANULARITY, fault_granularity_style_out))
+        {
+          if (fault_granularity_style_out != fault_granularity_style_in)
+          {
+            std::cout << test_name << ": Property '" << FT::FT_FAULT_MONITORING_GRANULARITY << "' did not have the same value." << std::endl;
+            result = 1;
+          }
+        }
+        else
+        {
+          std::cout << test_name << ": Property '" << FT::FT_FAULT_MONITORING_GRANULARITY << "' was not in the output set." << std::endl;
+          result = 1;
+        }
+
+        // ----- Check InitialNumberReplicas --------
+        if (TAO_PG::find (decoder_out, FT::FT_INITIAL_NUMBER_REPLICAS, initial_number_replicas_out))
+        {
+          if (initial_number_replicas_out != initial_number_replicas_in)
+          {
+            std::cout << test_name << ": Property '" << FT::FT_INITIAL_NUMBER_REPLICAS << "' did not have the same value." << std::endl;
+            result = 1;
+          }
+        }
+        else
+        {
+          std::cout << test_name << ": Property '" << FT::FT_INITIAL_NUMBER_REPLICAS << "' was not in the output set." << std::endl;
+          result = 1;
+        }
+
+        // ----- Check MinimumNumberReplicas --------
+        if (TAO_PG::find (decoder_out, FT::FT_MINIMUM_NUMBER_REPLICAS, minimum_number_replicas_out))
+        {
+          if (minimum_number_replicas_out != minimum_number_replicas_in)
+          {
+            std::cout << test_name << ": Property '" << FT::FT_MINIMUM_NUMBER_REPLICAS << "' did not have the same value." << std::endl;
+            result = 1;
+          }
+        }
+        else
+        {
+          std::cout << test_name << ": Property '" << FT::FT_MINIMUM_NUMBER_REPLICAS << "' was not in the output set." << std::endl;
+          result = 1;
         }
       }
     }
@@ -143,6 +235,7 @@ int FT_UnitTests::test_001 (int run_test,
 int FT_UnitTests::test_002 (int run_test,
                             CORBA::String_var & desc)
 {
+  ACE_CString test_name = "FT UnitTest[002]";
   int result = 0;
 
   ACE_TRY_NEW_ENV
@@ -151,23 +244,34 @@ int FT_UnitTests::test_002 (int run_test,
       "FT UnitTest[002]: type properties.");
     if (run_test)
     {
+      FT::MembershipStyleValue membership_style_in = FT::MEMB_INF_CTRL;
+      FT::ConsistencyStyleValue consistemcy_style_in = FT::CONS_APP_CTRL;
+      FT::InitialNumberReplicasValue initial_number_replicas_in = 3;
+      FT::MinimumNumberReplicasValue minimum_number_replicas_in = 2;
+
+      FT::MembershipStyleValue membership_style_out = 999;
+      FT::ConsistencyStyleValue consistemcy_style_out = 999;
+      FT::InitialNumberReplicasValue initial_number_replicas_out = 999;
+      FT::MinimumNumberReplicasValue minimum_number_replicas_out = 999;
+
+      FT::Value value;
+ 
       // create a test type-id
       const char * type_id = "IDL:FT_TEST/TestReplica:1.0";
 
       // create a property set
       TAO_PG::Properties_Encoder encoder;
-      PortableGroup::Value value;
 
-      value <<= ::FT::MEMB_APP_CTRL;
-      encoder.add(::FT::FT_MEMBERSHIP_STYLE, value);
+      value <<= membership_style_in;
+      encoder.add(FT::FT_MEMBERSHIP_STYLE, value);
 
-      value <<= ::FT::CONS_INF_CTRL;
+      value <<= consistemcy_style_in;
       encoder.add(::FT::FT_CONSISTENCY_STYLE, value);
 
-      value <<= 3;
+      value <<= initial_number_replicas_in;
       encoder.add(::FT::FT_INITIAL_NUMBER_REPLICAS, value);
 
-      value <<= 2;
+      value <<= minimum_number_replicas_in;
       encoder.add(::FT::FT_MINIMUM_NUMBER_REPLICAS, value);
 
       // allocate and populate the criteria
@@ -191,50 +295,67 @@ int FT_UnitTests::test_002 (int run_test,
         FT::Properties_var props_out;
         props_out = rm_->get_type_properties (type_id
                                               ACE_ENV_ARG_PARAMETER);
-
-        const FT::Properties & p_in = props_in;
-        ::TAO_PG::Properties_Decoder decoder_in(p_in);
-        int len_in = p_in.length ();
-
         const FT::Properties & p_out = props_out;
         ::TAO_PG::Properties_Decoder decoder_out(p_out);
-        int len_out = p_out.length ();
 
-        // Note: the output properties is the merged set of the
-        // default properties and the type properties. Therefore,
-        // we *can* get back more properties than we set. However,
-        // the ones that we did set should come back with the same
-        // values.
-
-        for (int i = 0; i < len_in; ++i)
+        // ----- Check MembershipStyle --------
+        if (TAO_PG::find (decoder_out, FT::FT_MEMBERSHIP_STYLE, membership_style_out))
         {
-          const PortableGroup::Property & property1 = p_in[i];
-          ACE_CString prop_name = property1.nam[0].id;
-
-          CORBA::Long value_in;
-          CORBA::Long value_out;
-
-          if(TAO_PG::find (decoder_in, prop_name, value_in) )
+          if (membership_style_out != membership_style_in)
           {
-            if(TAO_PG::find (decoder_out, prop_name, value_out) )
-            {
-              if (value_in != value_out)
-              {
-                std::cout << "FT UnitTest[002]: Property '" << prop_name << "' did not have the same value." << std::endl;
-                result = 1;
-              }
-            }
-            else
-            {
-              std::cout << "FT UnitTest[002]: Property '" << prop_name << "' was not in the output set." << std::endl;
-              result = 1;
-            }
-          }
-          else
-          {
-            std::cout << "FT UnitTest[002]: Property '" << prop_name << "' was not in the input set." << std::endl;
+            std::cout << test_name << ": Property '" << FT::FT_MEMBERSHIP_STYLE << "' did not have the same value." << std::endl;
             result = 1;
           }
+        }
+        else
+        {
+          std::cout << test_name << ": Property '" << FT::FT_MEMBERSHIP_STYLE << "' was not in the output set." << std::endl;
+          result = 1;
+        }
+
+        // ----- Check ConsistencyStyle --------
+        if (TAO_PG::find (decoder_out, FT::FT_CONSISTENCY_STYLE, consistemcy_style_out))
+        {
+          if (consistemcy_style_out != consistemcy_style_in)
+          {
+            std::cout << test_name << ": Property '" << FT::FT_CONSISTENCY_STYLE << "' did not have the same value." << std::endl;
+            result = 1;
+          }
+        }
+        else
+        {
+          std::cout << test_name << ": Property '" << FT::FT_CONSISTENCY_STYLE << "' was not in the output set." << std::endl;
+          result = 1;
+        }
+
+        // ----- Check InitialNumberReplicas --------
+        if (TAO_PG::find (decoder_out, FT::FT_INITIAL_NUMBER_REPLICAS, initial_number_replicas_out))
+        {
+          if (initial_number_replicas_out != initial_number_replicas_in)
+          {
+            std::cout << test_name << ": Property '" << FT::FT_INITIAL_NUMBER_REPLICAS << "' did not have the same value." << std::endl;
+            result = 1;
+          }
+        }
+        else
+        {
+          std::cout << test_name << ": Property '" << FT::FT_INITIAL_NUMBER_REPLICAS << "' was not in the output set." << std::endl;
+          result = 1;
+        }
+
+        // ----- Check MinimumNumberReplicas --------
+        if (TAO_PG::find (decoder_out, FT::FT_MINIMUM_NUMBER_REPLICAS, minimum_number_replicas_out))
+        {
+          if (minimum_number_replicas_out != minimum_number_replicas_in)
+          {
+            std::cout << test_name << ": Property '" << FT::FT_MINIMUM_NUMBER_REPLICAS << "' did not have the same value." << std::endl;
+            result = 1;
+          }
+        }
+        else
+        {
+          std::cout << test_name << ": Property '" << FT::FT_MINIMUM_NUMBER_REPLICAS << "' was not in the output set." << std::endl;
+          result = 1;
         }
       }
     }
@@ -250,27 +371,32 @@ int FT_UnitTests::test_002 (int run_test,
 }
 
 /////////////////////////////////////////////////////
-// Test object group properties
+// Test object group properties (dynamic)
 //
 int FT_UnitTests::test_003 (int run_test,
                             CORBA::String_var & desc)
 {
+  ACE_CString test_name = "FT UnitTest[003]";
   int result = 0;
 
   ACE_TRY_NEW_ENV
   {
     desc = CORBA::string_dup(
-      "FT UnitTest[003]: object group properties.");
+      "FT UnitTest[003]: object group (dynamic) properties.");
     if (run_test)
     {
+      FT::MinimumNumberReplicasValue minimum_number_replicas_in = 7;
+      FT::MinimumNumberReplicasValue minimum_number_replicas_out = 999;
+
+      FT::Value value;
+ 
       // create a test type-id
       const char * type_id = "IDL:FT_TEST/TestReplica:1.0";
 
       // create a property set
       TAO_PG::Properties_Encoder encoder;
-      PortableGroup::Value value;
 
-      value <<= 7;
+      value <<= minimum_number_replicas_in;
       encoder.add(::FT::FT_MINIMUM_NUMBER_REPLICAS, value);
 
       // allocate and populate the criteria
@@ -291,54 +417,25 @@ int FT_UnitTests::test_003 (int run_test,
                                          ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
-        //TODO: do a get props and check the return value
         FT::Properties_var props_out;
         props_out = rm_->get_properties (test_iogr_
-                                         ACE_ENV_ARG_PARAMETER);
-
-        const FT::Properties & p_in = props_in;
-        ::TAO_PG::Properties_Decoder decoder_in(p_in);
-        int len_in = p_in.length ();
-
+                                              ACE_ENV_ARG_PARAMETER);
         const FT::Properties & p_out = props_out;
         ::TAO_PG::Properties_Decoder decoder_out(p_out);
-        int len_out = p_out.length ();
 
-        // Note: the output properties is the merged set of the
-        // default properties and the type properties. Therefore,
-        // we *can* get back more properties than we set. However,
-        // the ones that we did set should come back with the same
-        // values.
-
-        for (int i = 0; i < len_in; ++i)
+        // ----- Check MinimumNumberReplicas --------
+        if (TAO_PG::find (decoder_out, FT::FT_MINIMUM_NUMBER_REPLICAS, minimum_number_replicas_out))
         {
-          const PortableGroup::Property & property1 = p_in[i];
-          ACE_CString prop_name = property1.nam[0].id;
-
-          CORBA::Long value_in;
-          CORBA::Long value_out;
-
-          if(TAO_PG::find (decoder_in, prop_name, value_in) )
+          if (minimum_number_replicas_out != minimum_number_replicas_in)
           {
-            if(TAO_PG::find (decoder_out, prop_name, value_out) )
-            {
-              if (value_in != value_out)
-              {
-                std::cout << "FT UnitTest[003]: Property '" << prop_name << "' did not have the same value." << std::endl;
-                result = 1;
-              }
-            }
-            else
-            {
-              std::cout << "FT UnitTest[003]: Property '" << prop_name << "' was not in the output set." << std::endl;
-              result = 1;
-            }
-          }
-          else
-          {
-            std::cout << "FT UnitTest[003]: Property '" << prop_name << "' was not in the input set." << std::endl;
+            std::cout << test_name << ": Property '" << FT::FT_MINIMUM_NUMBER_REPLICAS << "' did not have the same value." << std::endl;
             result = 1;
           }
+        }
+        else
+        {
+          std::cout << test_name << ": Property '" << FT::FT_MINIMUM_NUMBER_REPLICAS << "' was not in the output set." << std::endl;
+          result = 1;
         }
       }
     }
@@ -359,31 +456,38 @@ int FT_UnitTests::test_003 (int run_test,
 int FT_UnitTests::test_004 (int run_test,
                             CORBA::String_var & desc)
 {
+  ACE_CString test_name = "FT UnitTest[004]";
   int result = 0;
 
   ACE_TRY_NEW_ENV
   {
     desc = CORBA::string_dup(
-      "FT UnitTest[002]: create_object.");
+      "FT UnitTest[004]: create_object.");
     if (run_test)
     {
+      FT::MembershipStyleValue membership_style_in = FT::MEMB_INF_CTRL;
+      FT::ConsistencyStyleValue consistemcy_style_in = FT::CONS_APP_CTRL;
+      FT::InitialNumberReplicasValue initial_number_replicas_in = 3;
+      FT::MinimumNumberReplicasValue minimum_number_replicas_in = 2;
+
+      FT::Value value;
+ 
       // create a test type-id
       const char * type_id = "IDL:FT_TEST/TestReplica:1.0";
 
       // create a property set
       TAO_PG::Properties_Encoder encoder;
-      PortableGroup::Value value;
 
-      value <<= ::FT::MEMB_INF_CTRL;
-      encoder.add(::FT::FT_MEMBERSHIP_STYLE, value);
+      value <<= membership_style_in;
+      encoder.add(FT::FT_MEMBERSHIP_STYLE, value);
 
-      value <<= ::FT::CONS_INF_CTRL;
+      value <<= consistemcy_style_in;
       encoder.add(::FT::FT_CONSISTENCY_STYLE, value);
 
-      value <<= 3;
+      value <<= initial_number_replicas_in;
       encoder.add(::FT::FT_INITIAL_NUMBER_REPLICAS, value);
 
-      value <<= 2;
+      value <<= minimum_number_replicas_in;
       encoder.add(::FT::FT_MINIMUM_NUMBER_REPLICAS, value);
 
       // allocate and populate the criteria
@@ -427,13 +531,25 @@ int FT_UnitTests::test_004 (int run_test,
 int FT_UnitTests::test_005 (int run_test,
                             CORBA::String_var & desc)
 {
+  ACE_CString test_name = "FT UnitTest[005]";
   int result = 0;
-  desc = CORBA::string_dup(
-    "This test has not been implemented.");
-  if (run_test)
+
+  ACE_TRY_NEW_ENV
   {
-    // put the test code here
+    desc = CORBA::string_dup(
+      "FT UnitTest[005]: This test has not been implemented.");
+    if (run_test)
+    {
+      // put the test code here
+    }
   }
+  ACE_CATCHANY
+  {
+    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught");
+    result = 1;
+  }
+  ACE_ENDTRY;
+
   return result;
 }
 
@@ -443,13 +559,25 @@ int FT_UnitTests::test_005 (int run_test,
 int FT_UnitTests::test_006 (int run_test,
                             CORBA::String_var & desc)
 {
+  ACE_CString test_name = "FT UnitTest[006]";
   int result = 0;
-  desc = CORBA::string_dup(
-    "This test has not been implemented.");
-  if (run_test)
+
+  ACE_TRY_NEW_ENV
   {
-    // put the test code here
+    desc = CORBA::string_dup(
+      "FT UnitTest[006]: This test has not been implemented.");
+    if (run_test)
+    {
+      // put the test code here
+    }
   }
+  ACE_CATCHANY
+  {
+    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught");
+    result = 1;
+  }
+  ACE_ENDTRY;
+
   return result;
 }
 
@@ -459,13 +587,25 @@ int FT_UnitTests::test_006 (int run_test,
 int FT_UnitTests::test_007 (int run_test,
                             CORBA::String_var & desc)
 {
+  ACE_CString test_name = "FT UnitTest[007]";
   int result = 0;
-  desc = CORBA::string_dup(
-    "This test has not been implemented.");
-  if (run_test)
+
+  ACE_TRY_NEW_ENV
   {
-    // put the test code here
+    desc = CORBA::string_dup(
+      "FT UnitTest[007]: This test has not been implemented.");
+    if (run_test)
+    {
+      // put the test code here
+    }
   }
+  ACE_CATCHANY
+  {
+    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught");
+    result = 1;
+  }
+  ACE_ENDTRY;
+
   return result;
 }
 
@@ -475,13 +615,25 @@ int FT_UnitTests::test_007 (int run_test,
 int FT_UnitTests::test_008 (int run_test,
                             CORBA::String_var & desc)
 {
+  ACE_CString test_name = "FT UnitTest[008]";
   int result = 0;
-  desc = CORBA::string_dup(
-    "This test has not been implemented.");
-  if (run_test)
+
+  ACE_TRY_NEW_ENV
   {
-    // put the test code here
+    desc = CORBA::string_dup(
+      "FT UnitTest[008]: This test has not been implemented.");
+    if (run_test)
+    {
+      // put the test code here
+    }
   }
+  ACE_CATCHANY
+  {
+    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught");
+    result = 1;
+  }
+  ACE_ENDTRY;
+
   return result;
 }
 
@@ -491,13 +643,25 @@ int FT_UnitTests::test_008 (int run_test,
 int FT_UnitTests::test_009 (int run_test,
                             CORBA::String_var & desc)
 {
+  ACE_CString test_name = "FT UnitTest[009]";
   int result = 0;
-  desc = CORBA::string_dup(
-    "This test has not been implemented.");
-  if (run_test)
+
+  ACE_TRY_NEW_ENV
   {
-    // put the test code here
+    desc = CORBA::string_dup(
+      "FT UnitTest[009]: This test has not been implemented.");
+    if (run_test)
+    {
+      // put the test code here
+    }
   }
+  ACE_CATCHANY
+  {
+    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught");
+    result = 1;
+  }
+  ACE_ENDTRY;
+
   return result;
 }
 
@@ -507,13 +671,25 @@ int FT_UnitTests::test_009 (int run_test,
 int FT_UnitTests::test_010 (int run_test,
                             CORBA::String_var & desc)
 {
+  ACE_CString test_name = "FT UnitTest[010]";
   int result = 0;
-  desc = CORBA::string_dup(
-    "This test has not been implemented.");
-  if (run_test)
+
+  ACE_TRY_NEW_ENV
   {
-    // put the test code here
+    desc = CORBA::string_dup(
+      "FT UnitTest[010]: This test has not been implemented.");
+    if (run_test)
+    {
+      // put the test code here
+    }
   }
+  ACE_CATCHANY
+  {
+    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught");
+    result = 1;
+  }
+  ACE_ENDTRY;
+
   return result;
 }
 
@@ -523,13 +699,25 @@ int FT_UnitTests::test_010 (int run_test,
 int FT_UnitTests::test_011 (int run_test,
                             CORBA::String_var & desc)
 {
+  ACE_CString test_name = "FT UnitTest[011]";
   int result = 0;
-  desc = CORBA::string_dup(
-    "This test has not been implemented.");
-  if (run_test)
+
+  ACE_TRY_NEW_ENV
   {
-    // put the test code here
+    desc = CORBA::string_dup(
+      "FT UnitTest[011]: This test has not been implemented.");
+    if (run_test)
+    {
+      // put the test code here
+    }
   }
+  ACE_CATCHANY
+  {
+    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught");
+    result = 1;
+  }
+  ACE_ENDTRY;
+
   return result;
 }
 
