@@ -1,5 +1,15 @@
 Thu Jan 21 10:57:25 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
+	* tao/CDR.cpp: 
+	  Fixed a problem with TAO_OutputCDR::write_octet_array_mb, thanks
+	  to Dave Meyer <dmeyer@std.saic.com> for reporting and isolating
+	  this bug.
+
+	* tests/CDR/Makefile: 
+	* tests/CDR/octet_sequence.cpp: 
+	  Added a new test to verify that the fix above worked, thanks to
+	  Dave for this test also.
+
 	* EC_ConsumerAdmin.cpp: 
 	* EC_ConsumerAdmin.h: 
 	* EC_ConsumerAdmin.i: 

@@ -787,9 +787,10 @@ TAO_Marshal_Sequence::encode (CORBA::TypeCode_ptr tc,
           // less/equal to the bounds
           if (bounds == 0 || len <= bounds)
             {
-              bounds = len;  // number of times you encode
-              continue_encoding = stream->write_ulong (seq->length_);
-              if (continue_encoding && seq->length_ != 0)
+              // We just encode the current elements in the sequence
+              bounds = len;
+              continue_encoding = stream->write_ulong (bounds);
+              if (continue_encoding && bounds != 0)
                 {
                   // get element typecode
                   tc2 = tc->content_type (env);
