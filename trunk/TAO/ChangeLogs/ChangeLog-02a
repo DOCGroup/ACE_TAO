@@ -1,9 +1,18 @@
+Thu Apr 18 09:00:31 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/TAOC.cpp:
+	* tao/diffs/TAOC.cpp.diff:
+
+	  Fixed "extra tokens at end of #endif directive" warning.  The
+	  "extra tokens" should have been comment.  Thanks to Craig for
+	  pointing out that a gcc 3.1 build exhibited this warning.
+
 Thu Apr 18 10:51:52 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp (open_helper): Replaced
-  	  the ACE_NEW_RETURN macro with a direct call to operator
- 	  placement new.  Thanks to Jean Quinsat <jean.quinsat@airbus.com>
- 	  for reporting this.
+	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp
+	  (open_helper): Replaced the ACE_NEW_RETURN macro with a direct
+	  call to operator placement new.  Thanks to Jean Quinsat
+	  <jean.quinsat@airbus.com> for reporting this.
 
 Thu Apr 18 10:57:41 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -14,7 +23,7 @@ Thu Apr 18 08:49:55 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* performance-tests/Cubit/TAO/IDL_Cubit/Makefile: 
 	  Updated Dependencies.
-	
+
 Thu Apr 18 08:09:06 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Timed_Buffered_Oneways/client.cpp
