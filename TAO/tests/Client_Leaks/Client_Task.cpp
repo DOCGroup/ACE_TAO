@@ -71,7 +71,7 @@ Client_Task::validate_connection (CORBA::Environment &ACE_TRY_ENV)
     {
       for (int i = 0; i != 100; ++i)
         {
-          (void) this->process_factory_->_non_existent (ACE_TRY_ENV);
+          (void) this->process_factory_->noop (ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
     }

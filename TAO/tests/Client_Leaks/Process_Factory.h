@@ -31,6 +31,9 @@ public:
   virtual Test::Process_ptr create_new_process (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException,Test::Spawn_Failed));
 
+  virtual void noop (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   virtual void shutdown (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
