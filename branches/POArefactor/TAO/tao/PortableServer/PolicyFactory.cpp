@@ -9,7 +9,7 @@ ACE_RCSID (PortableServer,
 
 namespace TAO
 {
-  namespace PortableServer
+  namespace Portable_Server
   {
     PolicyFactory::~PolicyFactory (void)
     {
@@ -24,6 +24,6 @@ namespace TAO
     #pragma instantiate ACE_Dynamic_Service<PolicyFactory>
 
     #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-  } /* namespace PortableServer */
+  } /* namespace Portable_Server */
 } /* namespace TAO */
 

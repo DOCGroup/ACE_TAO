@@ -1,3 +1,9 @@
+Sun Sep 26 14:52:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/*.{h,cpp}:
+          Moved everything from TAO::PortableServer to TAO::Portable_Server to
+          prevent any accidents that a wrong namespace is taken
+
 Fri Sep 24 14:27:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/*.{h,cpp}:

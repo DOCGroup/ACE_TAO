@@ -25,7 +25,7 @@
 
 namespace TAO
 {
-  namespace PortableServer
+  namespace Portable_Server
   {
     class TAO_PortableServer_Export LifespanPolicyValue
       : public virtual ACE_Service_Object

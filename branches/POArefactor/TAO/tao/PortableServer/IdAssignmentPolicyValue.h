@@ -25,7 +25,7 @@
 
 namespace TAO
 {
-  namespace PortableServer
+  namespace Portable_Server
   {
     class TAO_PortableServer_Export IdAssignmentPolicyValue
       : public virtual ACE_Service_Object
@@ -62,7 +62,7 @@ namespace TAO
 
     ACE_STATIC_SVC_DECLARE (User_IdAssignment_Policy)
     ACE_FACTORY_DECLARE (TAO_PortableServer, User_IdAssignment_Policy)
-  } /* namespace PortableServer */
+  } /* namespace Portable_Server */
 } /* namespace TAO */
 
 #include /**/ "ace/post.h"

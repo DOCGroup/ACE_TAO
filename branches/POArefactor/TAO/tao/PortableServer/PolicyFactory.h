@@ -24,7 +24,7 @@
 
 namespace TAO
 {
-  namespace PortableServer
+  namespace Portable_Server
   {
     class TAO_PortableServer_Export PolicyFactory :
        public virtual ACE_Service_Object
@@ -39,7 +39,7 @@ namespace TAO
       /// orbconf.h.
       virtual TAO_Policy_Scope _tao_scope (void) const = 0;
     };
-  } /* namespace PortableServer */
+  } /* namespace Portable_Server */
 } /* namespace TAO */
 
 #include /**/ "ace/post.h"

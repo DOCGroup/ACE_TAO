@@ -11,7 +11,7 @@ ACE_RCSID (PortableServer,
 
 namespace TAO
 {
-  namespace PortableServer
+  namespace Portable_Server
   {
     IdAssignmentPolicy::IdAssignmentPolicy () :
       value_ (0)
@@ -44,7 +44,7 @@ namespace TAO
             if (this->value_ == 0)
               {
                 ACE_Service_Config::process_directive (
-                  ::TAO::PortableServer::ace_svc_desc_User_IdAssignment_Policy);
+                  ::TAO::Portable_Server::ace_svc_desc_User_IdAssignment_Policy);
 
                 this->value_ =
                   ACE_Dynamic_Service<User_IdAssignment_Policy>::instance ("User_IdAssignment_Policy");
@@ -59,7 +59,7 @@ namespace TAO
             if (this->value_ == 0)
               {
                 ACE_Service_Config::process_directive (
-                  ::TAO::PortableServer::ace_svc_desc_System_IdAssignment_Policy);
+                  ::TAO::Portable_Server::ace_svc_desc_System_IdAssignment_Policy);
 
                 this->value_ =
                   ACE_Dynamic_Service<System_IdAssignment_Policy>::instance ("System_IdAssignment_Policy");

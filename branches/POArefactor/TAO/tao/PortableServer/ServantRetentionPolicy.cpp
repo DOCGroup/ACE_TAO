@@ -11,7 +11,7 @@ ACE_RCSID (PortableServer,
 
 namespace TAO
 {
-  namespace PortableServer
+  namespace Portable_Server
   {
     ServantRetentionPolicy::ServantRetentionPolicy () :
       value_ (0)
@@ -44,7 +44,7 @@ namespace TAO
             if (this->value_ == 0)
               {
                 ACE_Service_Config::process_directive (
-                  ::TAO::PortableServer::ace_svc_desc_Retain_Servant_Retention_Policy);
+                  ::TAO::Portable_Server::ace_svc_desc_Retain_Servant_Retention_Policy);
 
                 this->value_ =
                   ACE_Dynamic_Service<Retain_Servant_Retention_Policy>::instance ("Retain_Servant_Retention_Policy");
@@ -59,7 +59,7 @@ namespace TAO
             if (this->value_ == 0)
               {
                 ACE_Service_Config::process_directive (
-                  ::TAO::PortableServer::ace_svc_desc_Non_Retain_Servant_Retention_Policy);
+                  ::TAO::Portable_Server::ace_svc_desc_Non_Retain_Servant_Retention_Policy);
 
                 this->value_ =
                   ACE_Dynamic_Service<Non_Retain_Servant_Retention_Policy>::instance ("Non_Retain_Servant_Retention_Policy");

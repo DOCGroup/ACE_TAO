@@ -11,7 +11,7 @@ ACE_RCSID (PortableServer,
 
 namespace TAO
 {
-  namespace PortableServer
+  namespace Portable_Server
   {
     POA_LifespanPolicy::POA_LifespanPolicy () :
       value_ (0)
@@ -44,7 +44,7 @@ namespace TAO
             if (this->value_ == 0)
               {
                 ACE_Service_Config::process_directive (
-                  ::TAO::PortableServer::ace_svc_desc_Transient_Lifespan_Policy);
+                  ::TAO::Portable_Server::ace_svc_desc_Transient_Lifespan_Policy);
 
                 this->value_ =
                   ACE_Dynamic_Service<Transient_Lifespan_Policy>::instance ("Transient_Lifespan_Policy");
@@ -59,7 +59,7 @@ namespace TAO
             if (this->value_ == 0)
               {
                 ACE_Service_Config::process_directive (
-                  ::TAO::PortableServer::ace_svc_desc_Persistent_Lifespan_Policy);
+                  ::TAO::Portable_Server::ace_svc_desc_Persistent_Lifespan_Policy);
 
                 this->value_ =
                   ACE_Dynamic_Service<Persistent_Lifespan_Policy>::instance ("Persistent_Lifespan_Policy");

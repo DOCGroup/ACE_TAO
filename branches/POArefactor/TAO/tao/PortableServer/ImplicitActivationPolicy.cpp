@@ -11,7 +11,7 @@ ACE_RCSID (PortableServer,
 
 namespace TAO
 {
-  namespace PortableServer
+  namespace Portable_Server
   {
     ImplicitActivationPolicy::ImplicitActivationPolicy () :
       value_ (0)
@@ -44,7 +44,7 @@ namespace TAO
             if (this->value_ == 0)
               {
                 ACE_Service_Config::process_directive (
-                  ::TAO::PortableServer::ace_svc_desc_Implicit_Implicit_Activation_Policy);
+                  ::TAO::Portable_Server::ace_svc_desc_Implicit_Implicit_Activation_Policy);
 
                 this->value_ =
                   ACE_Dynamic_Service<Implicit_Implicit_Activation_Policy>::instance ("Implicit_Implicit_Activation_Policy");
@@ -59,7 +59,7 @@ namespace TAO
             if (this->value_ == 0)
               {
                 ACE_Service_Config::process_directive (
-                  ::TAO::PortableServer::ace_svc_desc_No_Implicit_Implicit_Activation_Policy);
+                  ::TAO::Portable_Server::ace_svc_desc_No_Implicit_Implicit_Activation_Policy);
 
                 this->value_ =
                   ACE_Dynamic_Service<No_Implicit_Implicit_Activation_Policy>::instance ("No_Implicit_Implicit_Activation_Policy");

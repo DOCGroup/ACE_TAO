@@ -11,7 +11,7 @@ ACE_RCSID (PortableServer,
 
 namespace TAO
 {
-  namespace PortableServer
+  namespace Portable_Server
   {
     RequestProcessingPolicy::RequestProcessingPolicy () :
       value_ (0)
@@ -44,7 +44,7 @@ namespace TAO
             if (this->value_ == 0)
               {
                 ACE_Service_Config::process_directive (
-                  ::TAO::PortableServer::ace_svc_desc_Active_Object_Map_Request_Processing_Policy);
+                  ::TAO::Portable_Server::ace_svc_desc_Active_Object_Map_Request_Processing_Policy);
 
                 this->value_ =
                   ACE_Dynamic_Service<Active_Object_Map_Request_Processing_Policy>::instance ("Active_Object_Map_Request_Processing_Policy");
@@ -59,7 +59,7 @@ namespace TAO
             if (this->value_ == 0)
               {
                 ACE_Service_Config::process_directive (
-                  ::TAO::PortableServer::ace_svc_desc_Default_Servant_Request_Processing_Policy);
+                  ::TAO::Portable_Server::ace_svc_desc_Default_Servant_Request_Processing_Policy);
 
                 this->value_ =
                   ACE_Dynamic_Service<Default_Servant_Request_Processing_Policy>::instance ("Default_Servant_Request_Processing_Policy");
@@ -75,7 +75,7 @@ namespace TAO
             if (this->value_ == 0)
               {
                 ACE_Service_Config::process_directive (
-                  ::TAO::PortableServer::ace_svc_desc_Servant_Manager_Request_Processing_Policy);
+                  ::TAO::Portable_Server::ace_svc_desc_Servant_Manager_Request_Processing_Policy);
 
                 this->value_ =
                   ACE_Dynamic_Service<Servant_Manager_Request_Processing_Policy>::instance ("Servant_Manager_Request_Processing_Policy");

@@ -11,7 +11,7 @@ ACE_RCSID (PortableServer,
 
 namespace TAO
 {
-  namespace PortableServer
+  namespace Portable_Server
   {
     POA_ThreadPolicy::POA_ThreadPolicy () :
       value_ (0)
@@ -44,7 +44,7 @@ namespace TAO
             if (this->value_ == 0)
               {
                 ACE_Service_Config::process_directive (
-                  ::TAO::PortableServer::ace_svc_desc_ORB_CTRL_Thread_Policy);
+                  ::TAO::Portable_Server::ace_svc_desc_ORB_CTRL_Thread_Policy);
 
                 this->value_ =
                   ACE_Dynamic_Service<ORB_CTRL_Thread_Policy>::instance ("ORB_CTRL_Thread_Policy");
@@ -59,7 +59,7 @@ namespace TAO
             if (this->value_ == 0)
               {
                 ACE_Service_Config::process_directive (
-                  ::TAO::PortableServer::ace_svc_desc_SINGLE_THREAD_Thread_Policy);
+                  ::TAO::Portable_Server::ace_svc_desc_SINGLE_THREAD_Thread_Policy);
 
                 this->value_ =
                   ACE_Dynamic_Service<SINGLE_THREAD_Thread_Policy>::instance ("SINGLE_THREAD_Thread_Policy");

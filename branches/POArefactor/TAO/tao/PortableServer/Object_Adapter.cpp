@@ -235,17 +235,17 @@ TAO_Object_Adapter::init_default_policies (TAO_POA_Policy_Set &policies
 #if (TAO_HAS_MINIMUM_POA == 0)
 
   // Thread policy.
-  TAO::PortableServer::ThreadPolicyFactory *policy =
-    ACE_Dynamic_Service<TAO::PortableServer::ThreadPolicyFactory>::instance (
+  TAO::Portable_Server::ThreadPolicyFactory *policy =
+    ACE_Dynamic_Service<TAO::Portable_Server::ThreadPolicyFactory>::instance (
            "ThreadPolicyFactory");
 
   if (policy == 0)
     {
       ACE_Service_Config::process_directive (
-        ::TAO::PortableServer::ace_svc_desc_ThreadPolicyFactory);
+        ::TAO::Portable_Server::ace_svc_desc_ThreadPolicyFactory);
 
       policy =
-        ACE_Dynamic_Service<TAO::PortableServer::ThreadPolicyFactory>::instance (
+        ACE_Dynamic_Service<TAO::Portable_Server::ThreadPolicyFactory>::instance (
            "ThreadPolicyFactory");
     }
 

@@ -12,7 +12,7 @@ ACE_RCSID (PortableServer,
 
 namespace TAO
 {
-  namespace PortableServer
+  namespace Portable_Server
   {
     ThreadPolicyFactory::~ThreadPolicyFactory (void)
     {

@@ -11,7 +11,7 @@ ACE_RCSID (PortableServer,
 
 namespace TAO
 {
-  namespace PortableServer
+  namespace Portable_Server
   {
     IdUniquenessPolicy::IdUniquenessPolicy () :
       value_ (0)
@@ -44,7 +44,7 @@ namespace TAO
             if (this->value_ == 0)
               {
                 ACE_Service_Config::process_directive (
-                  ::TAO::PortableServer::ace_svc_desc_Unique_IdUniqueness_Policy);
+                  ::TAO::Portable_Server::ace_svc_desc_Unique_IdUniqueness_Policy);
 
                 this->value_ =
                   ACE_Dynamic_Service<Unique_IdUniqueness_Policy>::instance ("Unique_IdUniqueness_Policy");
@@ -59,7 +59,7 @@ namespace TAO
             if (this->value_ == 0)
               {
                 ACE_Service_Config::process_directive (
-                  ::TAO::PortableServer::ace_svc_desc_Multiple_IdUniqueness_Policy);
+                  ::TAO::Portable_Server::ace_svc_desc_Multiple_IdUniqueness_Policy);
 
                 this->value_ =
                   ACE_Dynamic_Service<Multiple_IdUniqueness_Policy>::instance ("Multiple_IdUniqueness_Policy");

@@ -33,7 +33,7 @@
 
 namespace TAO
 {
-  namespace PortableServer
+  namespace Portable_Server
   {
     class ServantRetentionPolicyValue;
 

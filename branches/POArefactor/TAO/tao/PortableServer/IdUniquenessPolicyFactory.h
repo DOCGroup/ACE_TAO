@@ -30,7 +30,7 @@ namespace CORBA
 
 namespace TAO
 {
-  namespace PortableServer
+  namespace Portable_Server
   {
     class TAO_PortableServer_Export IdUniquenessPolicyFactory :
        public virtual PolicyFactory

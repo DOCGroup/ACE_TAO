@@ -64,18 +64,18 @@ TAO_POA::create_thread_policy (PortableServer::ThreadPolicyValue value
                                ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO::PortableServer::ThreadPolicyFactory *policy =
-    ACE_Dynamic_Service<TAO::PortableServer::ThreadPolicyFactory>::instance (
+  TAO::Portable_Server::ThreadPolicyFactory *policy =
+    ACE_Dynamic_Service<TAO::Portable_Server::ThreadPolicyFactory>::instance (
            "ThreadPolicyFactory");
 
   // For static libraries try to force load
   if (policy == 0)
     {
       ACE_Service_Config::process_directive (
-        ::TAO::PortableServer::ace_svc_desc_ThreadPolicyFactory);
+        ::TAO::Portable_Server::ace_svc_desc_ThreadPolicyFactory);
 
       policy =
-        ACE_Dynamic_Service<TAO::PortableServer::ThreadPolicyFactory>::instance (
+        ACE_Dynamic_Service<TAO::Portable_Server::ThreadPolicyFactory>::instance (
            "ThreadPolicyFactory");
     }
 
