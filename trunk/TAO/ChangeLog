@@ -1,3 +1,10 @@
+Thu Aug 12 09:36:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/Client_Task.cpp:
+        * tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/Server_Task.cpp:
+          When catching an exception, tell whether it is in the client or
+          server task. When an event loop ends, also tell which loop it is.
+
 Thu Aug 12 09:22:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/AMI_Buffering/admin.cpp:

@@ -85,7 +85,7 @@ Server_Task::svc (void)
      sorb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
      ACE_TRY_CHECK;
 
-     ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
+     ACE_DEBUG ((LM_DEBUG, "server task - event loop finished\n"));
 
      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
      ACE_TRY_CHECK;
@@ -96,7 +96,7 @@ Server_Task::svc (void)
  ACE_CATCHANY
    {
      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                          "Exception caught:");
+                          "Exception caught in server task:");
      return 1;
    }
  ACE_ENDTRY;
