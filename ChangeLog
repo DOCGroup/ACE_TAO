@@ -1,3 +1,12 @@
+Wed Oct 09 12:19:40 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* bin/PerlACE/Process_Win32.pm: Added hack to purify a process.
+	  This will allow us to purify all the examples, tests much
+	  easier.  It is, however, tightly coupled to Purify 6.0.  The
+	  script automaticaly switch to purifying the process if the
+	  ACE_RUN_PURIFY_CMD environment variable is defined.  See the
+	  comments in this file for more details.
+
 Tue Oct  8 21:06:23 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/config-sunos5.6.h: Undef ACE_HAS_TEMPLATE_TYPEDEFS for the
