@@ -1,7 +1,61 @@
+Wed Feb 11 09:23:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/Concurrency_Service/Concurrency_Service.vcp:
+        * orbsvcs/CosEvent_Service/CosEvent_Service.vcp:
+        * orbsvcs/Dump_Schedule/Dump_Schedule.vcp:
+        * orbsvcs/Event_Service/Event_Service.vcp:
+        * orbsvcs/LifeCycle_Service/LifeCycle_Service.vcp:
+        * orbsvcs/Naming_Service/Naming_Service.vcp:
+        * orbsvcs/Notify_Service/Notify_Service.vcp:
+        * orbsvcs/orbsvcs/CosConcurrency.vcp:
+        * orbsvcs/orbsvcs/CosEvent.vcp:
+        * orbsvcs/orbsvcs/CosLifeCycle.vcp:
+        * orbsvcs/orbsvcs/CosNaming.vcp:
+        * orbsvcs/orbsvcs/CosNotification.vcp:
+        * orbsvcs/orbsvcs/CosProperty.vcp:
+        * orbsvcs/orbsvcs/CosTime.vcp:
+        * orbsvcs/orbsvcs/CosTrading.vcp:
+        * orbsvcs/orbsvcs/DsLogAdmin.vcp:
+        * orbsvcs/orbsvcs/ETCL.VCP:
+        * orbsvcs/orbsvcs/Fault_Tolerance.vcp:
+        * orbsvcs/orbsvcs/RTCosScheduling.vcp:
+        * orbsvcs/orbsvcs/RTEvent.vcp:
+        * orbsvcs/orbsvcs/RTOLDEvent.vcp:
+        * orbsvcs/orbsvcs/RTSched.vcp:
+        * orbsvcs/orbsvcs/RTSchedEvent.vcp:
+        * orbsvcs/orbsvcs/Security.vcp:
+        * orbsvcs/orbsvcs/Svc_Utils.vcp:
+        * orbsvcs/Scheduling_Service/Scheduling_Service.vcp:
+        * orbsvcs/tests/RTCosScheduling/RTCosScheduling_Client.vcp:
+        * orbsvcs/tests/RTCosScheduling/RTCosScheduling_Server.vcp:
+        * orbsvcs/Time_Service/Time_Service_Clerk.vcp:
+        * orbsvcs/Time_Service/Time_Service_Server.vcp:
+        * orbsvcs/Trading_Service/Trading_Service.vcp:
+        * tao/BiDir_GIOP/TAO_BiDir_GIOP.vcp:
+        * tao/Domain/TAO_Domain.vcp:
+        * tao/DynamicAny/TAO_DynamicAny.vcp:
+        * tao/DynamicInterface/TAO_DynamicInterface.vcp:
+        * tao/IFR_Client/TAO_IFR_Client.vcp:
+        * tao/IORManipulation/TAO_IORManip.vcp:
+        * tao/IORTable/TAO_IORTable.vcp:
+        * tao/Messaging/TAO_Messaging.vcp:
+        * tao/RTCORBA/TAO_RTCORBA.vcp:
+        * tao/RTPortableServer/TAO_RTPortableServer.vcp:
+        * tao/SmartProxies/SmartProxies.vcp:
+        * tao/Strategies/TAO_Strategies.vcp:
+        * tao/TAO.vcp:
+        * tao/TypeCodeFactory/TypeCodeFactory.vcp:
+        * TAOACE_WinCE.vcw:
+        * tests/CodeSets/libs/IBM1047_ISO8859/IBM1047_ISO8859.vcp:
+        * tests/CodeSets/libs/IBM1047_ISO8859/IBM1047_ISO8859_Static.vcp:
+          Removed these procect files from the repo. If you want embedded
+          Visual C++ project files generate them with MCP. These files where
+          just not maintained after the first checkin.
+
 Tue Feb 10 11:18:35 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_valuetype/ami_exception_holder_ch.cpp:
-        
+
           Added unindent macro insertion to the output stream after
           visiting each raise_* operation in the generated internal
           class _tao_*_ExceptionHolder, to keep the indentation from
