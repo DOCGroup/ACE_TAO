@@ -51,23 +51,6 @@
 #undef ACE_HAS_TANDEM_SIGNALS
 #undef ACE_HAS_IRIX_53_SIGNALS
 
-/*
- * TODO: These two next #defines have an #undef before them, in
- * case the variable being defined already had a value.
- * The #undefs are being picked up by configure, and are commented out!
- */
-#undef ACE_THREAD_MIN_PRIORITY
-#if defined (ACE_THREAD_MIN_PRIORITY)
-# undef PTHREAD_MIN_PRIORITY
-# define PTHREAD_MIN_PRIORITY ACE_THREAD_MIN_PRIORITY
-#endif  /* #if defined (ACE_THREAD_MIN_PRIORITY) */
-
-#undef ACE_THREAD_MAX_PRIORITY
-#if defined (ACE_THREAD_MAX_PRIORITY)
-# undef PTHREAD_MAX_PRIORITY
-# define PTHREAD_MAX_PRIORITY ACE_THREAD_MAX_PRIORITY
-#endif  /* #if defined (ACE_THREAD_MAX_PRIORITY) */
-
 #undef PTHREAD_STACK_MIN
 #undef PTHREAD_STACK_MAX
 
@@ -1478,6 +1461,8 @@
 /* A parameter list indicating the version of WinSock (e.g., "1, 1" is
    version 1.1). */
 #undef ACE_WSOCK_VERSION
+
+#undef HAVE_RESTARTABLE_SYSCALLS
 
 
 /*   @BOTTOM@   */
