@@ -65,8 +65,6 @@ Thu Jan 17 17:04:25 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/RTPortableServer/RT_Policy_Validator.h: Changes to
 	  accomodate the new policy_Validator class in $TAO_ROOT/tao.
 
-
-
 Thu Jan 17 12:22:32 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORB_Core.cpp (init):
