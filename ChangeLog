@@ -1,5 +1,6 @@
 Fri Apr 13 12:05:38 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* tests/MEM_Stream_Test.h:
 	* tests/MEM_Stream_Test.cpp: Borland C++ has problem cleaning up
 	  the static Atomic_Op object in Echo_Handler in the right order.
 	  Made that an ACE_Singleton and re-organized the test a big.
