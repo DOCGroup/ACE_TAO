@@ -8,9 +8,11 @@ DIRS = \
         Bidirectional \
         Bidirectional_NestedUpcall \
 	CDR \
+	Client_Leaks \
 	Codec \
 	Collocation \
 	Connection_Purging \
+	Crashed_Callback \
 	DSI_Gateway \
 	DynAny_Test \
 	Endpoint_Per_Priority \
@@ -19,35 +21,39 @@ DIRS = \
 	Faults \
         FL_Cube \
         Forwarding \
+        Hello \
 	IDL_Test \
+	InterOp-Naming \
         ior_corbaloc \
 	IORManipulation \
-	InterOp-Naming \
 	Leader_Followers \
+        LongUpcalls \
+        LongWrites \
 	MProfile \
+        MProfile_Forwarding \
+	MT_Client \
+	MT_Server \
+        Multiple \
 	Multiple_Inheritance \
+	Muxing \
         Native_Exceptions \
 	Nested_Event_Loop \
+        NestedUpcall \
+        Object_Loader \
+	OctetSeq \
 	ORB_destroy \
 	ORB_init \
-	OctetSeq \
 	Param_Test \
         POA \
 	Policies \
         Portable_Interceptors \
         QtTests \
 	RTCORBA \
+	Server_Leaks \
         Single_Read \
+        Smart_Proxies \
         Strategies \
 	Timed_Buffered_Oneways \
-	Timeout \
-	MT_Client \
-	MT_Server \
-	Muxing \
-	Client_Leaks \
-	Server_Leaks \
-	Crashed_Callback \
-	LongUpcalls \
-	Hello
+        Timeout
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
