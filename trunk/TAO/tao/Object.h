@@ -172,7 +172,7 @@ public:
   // Return the object key as an out parameter.  Caller should release
   // return value when finished with it.
 
-  virtual const TAO_ObjectKey &CORBA::Object::_object_key (void);
+  virtual const TAO_ObjectKey &_object_key (void);
   // Return a reference to the object key of profile in-use.
   // If there's no in-use profile, then the program will
   // probably crash.  This method does not create a new copy.
