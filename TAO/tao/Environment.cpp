@@ -107,6 +107,24 @@ CORBA_Environment::clear (void)
 CORBA_Environment&
 CORBA_Environment::default_environment ()
 {
+#if defined (TAO_USE_EXCEPTIONS)
+  //
+  // If we are using native C++ exceptions the user is *not* supposed
+  // to clear the environment every time she calls into TAO, in fact
+  // the user is not supposed to use the environment at all!
+  //
+  // But TAO is using the default environment internally, thus
+  // somebody has to clear it. Since TAO passes the environment around
+  // this function should only be called when going from the user code
+  // into TAO's code.
+  //
+  // This is not an issue when using the alternative C++ mapping (with
+  // the Environment argument) because then the user is supposed to
+  // clear the environment before calling into the ORB.
+  //
+  TAO_ORB_Core_instance ()->default_environment ()->clear ();  
+#endif /* TAO_USE_EXCEPTIONS */
+
   return *TAO_ORB_Core_instance ()->default_environment ();
 }
 
