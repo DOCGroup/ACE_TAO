@@ -1,3 +1,14 @@
+Thu May 18 17:02:11 2000  Ossama Othman  <ossama@uci.edu>
+
+	* docs/ORBEndpoint.html:
+
+	  Fixed typos in IIOP endpoint examples, and clarified that quotes
+	  should be used when specifying more than one endpoint option, or
+	  whenever any option is used with an UIOP endpoint.  Quotes are
+	  needed to prevent the shell from interpreting some characters as
+	  shell commands.  Thanks to Steve Totten <totten_s@ociweb.com>
+	  and Irfan for noticing these problems.
+
 Thu May 18 16:33:16 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.cpp: 
