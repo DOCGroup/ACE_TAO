@@ -28,3 +28,10 @@ TAO_Default_Acceptor_Filter::fill_mprofile (const TAO_ObjectKey &object_key,
 
   return 0;
 }
+
+int
+TAO_Default_Acceptor_Filter::encode_endpoints (TAO_MProfile &)
+{
+  // No encoding required.
+  return 0;
+}

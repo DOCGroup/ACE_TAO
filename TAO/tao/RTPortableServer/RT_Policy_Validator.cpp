@@ -32,12 +32,15 @@ TAO_POA_RT_Policy_Validator::validate_impl (TAO_Policy_Set &policies,
   this->validate_priorities (policies, ACE_TRY_ENV);
   ACE_CHECK;
 
+  this->validate_thread_pool (policies, ACE_TRY_ENV);
+  ACE_CHECK;
 }
 
 CORBA::Boolean
 TAO_POA_RT_Policy_Validator::legal_policy_impl (CORBA::PolicyType type)
 {
   return (type == RTCORBA::PRIORITY_MODEL_POLICY_TYPE ||
+          type == RTCORBA::THREADPOOL_POLICY_TYPE ||
           type == RTCORBA::CLIENT_PROTOCOL_POLICY_TYPE ||
           type == RTCORBA::SERVER_PROTOCOL_POLICY_TYPE ||
           type == RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE);
@@ -82,7 +85,7 @@ TAO_POA_RT_Policy_Validator::validate_server_protocol (TAO_Policy_Set &policies,
 
 void
 TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies,
-                                              CORBA::Environment &ACE_TRY_ENV)
+                                                  CORBA::Environment &ACE_TRY_ENV)
 {
   // Initialize to the default priority/priority model.
   RTCORBA::Priority priority = TAO_INVALID_PRIORITY;
@@ -198,3 +201,28 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies,
       ACE_THROW (CORBA::BAD_PARAM ());
     }
 }
+
+void
+TAO_POA_RT_Policy_Validator::validate_thread_pool (TAO_Policy_Set &policies,
+                                                   CORBA::Environment &ACE_TRY_ENV)
+{
+  CORBA::Policy_var policy =
+    policies.get_cached_policy (TAO_CACHED_POLICY_THREADPOOL);
+
+  RTCORBA::ThreadpoolPolicy_var thread_pool =
+    RTCORBA::ThreadpoolPolicy::_narrow (policy.in (),
+                                        ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (!CORBA::is_nil (thread_pool.in ()))
+    {
+      RTCORBA::ThreadpoolId thread_pool_id =
+        = thread_pool->thread_pool (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      // Check that the thread pool id is valid.
+      int result =
+        find (thread_pool_id);
+      if (result != 0)
+        ACE_THROW (PortableServer::POA::InvalidPolicy ());
+    }

@@ -48,27 +48,6 @@ TAO_Acceptor_Registry::endpoint_count (void)
 }
 
 int
-TAO_Acceptor_Registry::make_mprofile (const TAO_ObjectKey &object_key,
-                                      TAO_MProfile &mprofile,
-                                      TAO_Acceptor_Filter *filter)
-{
-  // Allocate space for storing the profiles.  There can never be more
-  // profiles than there are endpoints.  In some cases, there can be
-  // fewer profiles than endpoints.
-  size_t pfile_count = this->endpoint_count ();
-  if (mprofile.set (pfile_count) < 0)
-    return -1;
-
-  // Leave it to the filter to decide which acceptors/in which order
-  // go into the mprofile.
-  return filter->fill_mprofile (object_key,
-                                mprofile,
-                                this->begin (),
-                                this->end ());
-
-}
-
-int
 TAO_Acceptor_Registry::is_collocated (const TAO_MProfile &mprofile)
 {
   TAO_AcceptorSetIterator end = this->end ();

@@ -14,6 +14,8 @@
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
 #include "tao/Server_Strategy_Factory.h"
+#include "tao/Acceptor_Registry.h"
+#include "tao/Thread_Lane_Resources.h"
 #include "tao/Environment.h"
 #include "tao/Exception.h"
 #include "tao/Stub.h"
@@ -3230,20 +3232,93 @@ TAO_POA::key_to_stub_i (const TAO_ObjectKey &key,
                         CORBA::Short priority,
                         CORBA_Environment &ACE_TRY_ENV)
 {
+  (void) this->orb_core_.open (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
   CORBA::PolicyList_var client_exposed_policies =
     this->client_exposed_policies (priority,
                                    ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
   TAO_Default_Acceptor_Filter filter;
-  TAO_Stub *data = this->orb_core_.create_stub_object (key,
-                                                       type_id,
-                                                       client_exposed_policies._retn (),
-                                                       &filter,
-                                                       ACE_TRY_ENV);
+  TAO_Stub *data =
+    this->create_stub_object (key,
+                              type_id,
+                              client_exposed_policies._retn (),
+                              &filter,
+                              ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
   return data;
+}
+
+TAO_Stub *
+TAO_POA::create_stub_object (const TAO_ObjectKey &object_key,
+                             const char *type_id,
+                             CORBA::PolicyList *policy_list,
+                             TAO_Acceptor_Filter *filter,
+                             CORBA::Environment &ACE_TRY_ENV)
+{
+  int error = 0;
+  TAO_Acceptor_Registry &acceptor_registry =
+    this->orb_core_.lane_resources ().acceptor_registry ();
+
+   // Count the number of endpoints.
+  size_t profile_count =
+    acceptor_registry.endpoint_count ();
+
+   // Create a profile container and have acceptor registries populate
+   // it with profiles as appropriate.
+  TAO_MProfile mprofile (0);
+
+  // Allocate space for storing the profiles.  There can never be more
+  // profiles than there are endpoints.  In some cases, there can be
+  // less profiles than endpoints.
+  int result =
+    mprofile.set (profile_count);
+  if (result == -1)
+    error = 1;
+
+  if (!error)
+    {
+      result =
+        filter->fill_mprofile (object_key,
+                               mprofile,
+                               acceptor_registry.begin (),
+                               acceptor_registry.end ());
+      if (result == -1)
+        error = 1;
+    }
+
+  if (!error)
+    result = filter->encode_endpoints (mprofile);
+  if (result == -1)
+    error = 1;
+
+  if (error)
+    ACE_THROW_RETURN (CORBA::INTERNAL (
+                        CORBA::SystemException::_tao_minor_code (
+                          TAO_MPROFILE_CREATION_ERROR,
+                          0),
+                        CORBA::COMPLETED_NO),
+                      0);
+
+  // Make sure we have at least one profile.  <mp> may end up being
+  // empty if none of the acceptor endpoints have the right priority
+  // for this object, for example.
+  if (mprofile.profile_count () == 0)
+    ACE_THROW_RETURN (CORBA::BAD_PARAM (
+                        CORBA::SystemException::_tao_minor_code (
+                          TAO_MPROFILE_CREATION_ERROR,
+                          0),
+                        CORBA::COMPLETED_NO),
+                      0);
+
+  return
+    this->orb_core_.create_stub_object (mprofile,
+                                        type_id,
+                                        policy_list,
+                                        ACE_TRY_ENV);
 }
 
 CORBA::PolicyList *
