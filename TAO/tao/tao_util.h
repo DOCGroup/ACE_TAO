@@ -43,9 +43,8 @@ public:
 		      char *poa_name,
 		      CORBA_Environment &env);
   // Creates a child poa under the root poa with PERSISTENT and
-  // USER_ID policies.Call this if you want a child_poa with the above
-  // policies, otherwise call init.
-
+  // USER_ID policies.  Call this if you want a <child_poa> with the
+  // above policies, otherwise call init.
 		      
   CORBA::String activate (PortableServer::Servant servant,
                           CORBA_Environment &env);
@@ -53,25 +52,24 @@ public:
   // can call this method multiple times to activate multiple objects.
   // Returns 0 on failure
       
-  CORBA::String activate_under_child_poa (const char* servant_name,
-					  PortableServer::Servant
-					  servant,
+  CORBA::String activate_under_child_poa (const char *servant_name,
+					  PortableServer::Servant servant,
 					  CORBA_Environment& env);
-  // Precondition: init_child_poa has been called.
-  // Activate <servant> using the POA <activate_object_with_id>
-  // created from the string servant_name. Users should call this to
-  // activate objects under the child_poa.
+  // Precondition: init_child_poa has been called.  Activate <servant>
+  // using the POA <activate_object_with_id> created from the string
+  // servant_name. Users should call this to activate objects under
+  // the child_poa.
 
   int run (CORBA_Environment &env,
            ACE_Time_Value *tv = 0);
-  // Run the ORB event loop with the specified <tv> time value
-  // Returns -1 on failure
+  // Run the ORB event loop with the specified <tv> time value Returns
+  // -1 on failure.
       
   CORBA::ORB_ptr orb (void);
   // Accessor which returns the ORB pointer.
   
   ~TAO_ORB_Manager (void);
-  // Destructor
+  // Destructor.
       
 protected:
   CORBA::ORB_var orb_;
