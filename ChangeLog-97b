@@ -1,3 +1,7 @@
+Tue Nov 04 02:56:46 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * ACE version 4.3.36, released Tue Nov 04 02:56:46 1997.
+
 Tue Nov  4 01:47:23 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* apps/Gateway/Gateway/Event_Channel.cpp (initiate_acceptor): 
