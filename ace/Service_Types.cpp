@@ -405,6 +405,7 @@ ACE_Service_Object_Type::fini (void) const
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Message_Queue<ACE_SYNCH>;
+template class ACE_Message_Queue_Iterator<ACE_SYNCH>;
 template class ACE_Message_Queue_Factory<ACE_SYNCH>;
 template class ACE_Dynamic_Message_Queue<ACE_SYNCH>;
 template class ACE_Module<ACE_SYNCH>;
@@ -417,6 +418,7 @@ template class ACE_Thru_Task<ACE_SYNCH>;
 // Even with threads, these ACE_NULL_SYNCH specializations are necessary.
 #if defined (ACE_HAS_THREADS)
   template class ACE_Message_Queue<ACE_NULL_SYNCH>;
+  template class ACE_Message_Queue_Iterator<ACE_NULL_SYNCH>;
   template class ACE_Message_Queue_Factory<ACE_NULL_SYNCH>;
   template class ACE_Dynamic_Message_Queue<ACE_NULL_SYNCH>;
   template class ACE_Module<ACE_NULL_SYNCH>;
@@ -425,6 +427,7 @@ template class ACE_Thru_Task<ACE_SYNCH>;
 #endif /* ACE_HAS_THREADS */
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Message_Queue<ACE_SYNCH>
+#pragma instantiate ACE_Message_Queue_Iterator<ACE_SYNCH>
 #pragma instantiate ACE_Message_Queue_Factory<ACE_SYNCH>
 #pragma instantiate ACE_Dynamic_Message_Queue<ACE_SYNCH>
 #pragma instantiate ACE_Module<ACE_SYNCH>
@@ -436,6 +439,7 @@ template class ACE_Thru_Task<ACE_SYNCH>;
 // Even with threads, these ACE_NULL_SYNCH specializations are necessary.
 #if defined (ACE_HAS_THREADS)
   #pragma instantiate ACE_Message_Queue<ACE_NULL_SYNCH>
+  #pragma instantiate ACE_Message_Queue_Iterator<ACE_NULL_SYNCH>
   #pragma instantiate ACE_Message_Queue_Factory<ACE_NULL_SYNCH>
   #pragma instantiate ACE_Dynamic_Message_Queue<ACE_NULL_SYNCH>
   #pragma instantiate ACE_Module<ACE_NULL_SYNCH>
