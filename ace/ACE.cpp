@@ -558,9 +558,9 @@ u_long ACE::crc_table_[] =
 
 // UNICOS UINT32's are 64-bit on the Cray PVP architecture
 #if !defined(_UNICOS)
-#  define COMPUTE(var, ch) (var) = ((var) << 8) ^ ACE::crc_table_[((var) >> 24) ^ (ch)]
+#  define COMPUTE(var, ch) (var) = ((var) << 8) ^ ACE::crc_table_[(((var) >> 24) ^ (ch))&0xff]
 #else /* ! _UNICOS */
-#  define COMPUTE(var, ch) (var) = ( 0x00000000ffffffff & ((var) << 8)) ^ ACE::crc_table_[((var) >> 24) ^ (ch)]
+#  define COMPUTE(var, ch) (var) = ( 0x00000000ffffffff & ((var) << 8)) ^ ACE::crc_table_[(((var) >> 24) ^ (ch))&0xff]
 #endif /* ! _UNICOS */
 
 u_long
@@ -999,10 +999,10 @@ ACE::get_temp_dir (char *buffer, size_t buffer_len)
 {
   int result;
 #if defined (ACE_WIN32)
-  
+
   // Use the wchar version and convert it to char when
   // it returns.
-  
+
   wchar_t *wcsBuffer;
   ACE_NEW_RETURN (wcsBuffer, wchar_t[buffer_len], -1);
 
@@ -1011,18 +1011,18 @@ ACE::get_temp_dir (char *buffer, size_t buffer_len)
   result = ACE::get_temp_dir (autoBuffer.get (), buffer_len);
 
   if (result != -1)  // Convert the string if there is no error
-    ::WideCharToMultiByte (CP_ACP, 
-                           0, 
-                           autoBuffer.get (), 
-                           -1, 
+    ::WideCharToMultiByte (CP_ACP,
+                           0,
+                           autoBuffer.get (),
+                           -1,
                            buffer,
                            buffer_len,
                            NULL,
                            NULL);
 
 #else /* ACE_WIN32 */
-  
-  // On non-win32 platforms, check to see what the TMPDIR environment 
+
+  // On non-win32 platforms, check to see what the TMPDIR environment
   // variable is defined to be.  If it doesn't exist, just use /tmp
   char *tmpdir = ACE_OS::getenv ("TMPDIR");
 
@@ -1064,7 +1064,7 @@ ACE::get_temp_dir (wchar_t *buffer, size_t buffer_len)
 #  endif /* ACE_HAS_WINCE */
 
   // Make sure to return -1 if there is an error
-  if (result == 0 && ::GetLastError () != ERROR_SUCCESS  
+  if (result == 0 && ::GetLastError () != ERROR_SUCCESS
       || result > ACE_static_cast (int, buffer_len))
     result = -1;
 

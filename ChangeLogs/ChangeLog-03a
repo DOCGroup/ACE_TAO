@@ -1,3 +1,20 @@
+Tue Feb 29 16:40:43 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* ace/CDR_Stream.h:
+	* ace/CDR_Stream.i:
+	* ace/CDR_Stream.cpp:
+	  Fixed alignment problems when inserting message blocks without
+	  copying.  The same fix was a good excuse to optimize the
+	  OutputCDR class, as described in bug #160.
+
+	* ace/OS.h:
+	  Use the ACE_ prefix in a couple of naked macros.
+
+        * ace/ACE.cpp:
+          Fixed the crc32 routine, it seems we inherited a bug from the
+          FreeBSD code.  Thanks to Jonathan Reis <reis@stentorsoft.com>
+          for finding the bug and providing a patch for it.
+
 Tue Feb 29 16:23:41 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/Handle_Set.h: Added some explanation to a few ACE_Handle_Set

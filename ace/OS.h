@@ -8498,15 +8498,15 @@ ACE_OS_CString (ASCII_STRING).wchar_rep ()
 // multiple we wanted.
 //
 
-#define align_binary(ptr, alignment) \
+#define ACE_align_binary(ptr, alignment) \
     ((ptr + ((ptr_arith_t)((alignment)-1))) & (~((ptr_arith_t)((alignment)-1))))
 
 // Efficiently round "ptr" up to an "alignment" boundary, knowing that
 // all such boundaries are binary powers and that we're using two's
 // complement arithmetic.
 //
-#define ptr_align_binary(ptr, alignment) \
-        ((char *) align_binary (((ptr_arith_t) (ptr)), (alignment)))
+#define ACE_ptr_align_binary(ptr, alignment) \
+        ((char *) ACE_align_binary (((ptr_arith_t) (ptr)), (alignment)))
 
 // Defining POSIX4 real-time signal range.
 #if defined ACE_HAS_AIO_CALLS
