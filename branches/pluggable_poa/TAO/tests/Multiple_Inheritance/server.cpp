@@ -2,7 +2,7 @@
 
 #include "ace/Get_Opt.h"
 #include "Multiple_Inheritance_i.h"
-#include "tao/TAO.h"
+#include "tao/PortableServer/ORB_Manager.h"
 
 ACE_RCSID(Multiple_Inheritance, server, "$Id$")
 

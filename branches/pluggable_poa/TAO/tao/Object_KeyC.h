@@ -45,6 +45,11 @@ public:
                   CORBA::Boolean release = 0);
   TAO_ObjectKey (const TAO_ObjectKey &);
   TAO_ObjectKey& operator= (const TAO_ObjectKey &);
+
+  static void encode_sequence_to_string (char * &str,
+                                         const TAO_Unbounded_Sequence<CORBA::Octet> &seq);
+  static void decode_string_to_sequence (TAO_Unbounded_Sequence<CORBA::Octet> &seq,
+                                         const char *str);
 };
 
 class TAO_Export TAO_ObjectKey_var

@@ -21,7 +21,7 @@
 
 #include "Notifier_i.h"
 #include "NotifierS.h"
-#include "tao/TAO.h"
+#include "tao/PortableServer/ORB_Manager.h"
 #include "orbsvcs/CosNamingS.h"
 #include "orbsvcs/Naming/Naming_Utils.h"
 
@@ -29,12 +29,12 @@ class Notifier_Input_Handler : public ACE_Event_Handler
 {
   // = TITLE
   //   The class defines the callback quoter Notifier initialization
-  //   and run methods. 
+  //   and run methods.
   //
   // = DESCRIPTION
   //   This class handles initialization tasks, as well, such as
   //   setting up the Orb manager and registers the Notifier servant
-  //   object. 
+  //   object.
 public:
   // = Initialization and termination methods.
   Notifier_Input_Handler (void);

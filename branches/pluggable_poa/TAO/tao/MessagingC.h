@@ -2554,7 +2554,6 @@ class TAO_Export ReplyHandler : public virtual CORBA_Object
   protected:
     ReplyHandler (void);
     ReplyHandler (TAO_Stub *objref,
-        TAO_ServantBase *_tao_servant = 0,
         CORBA::Boolean _tao_collocated = 0
       );
     virtual ~ReplyHandler (void);

@@ -6,7 +6,7 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
-#include "tao/TAO.h"
+#include "tao/PortableServer/ORB_Manager.h"
 #include "orbsvcs/Naming/Naming_Utils.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/Flows_T.h"

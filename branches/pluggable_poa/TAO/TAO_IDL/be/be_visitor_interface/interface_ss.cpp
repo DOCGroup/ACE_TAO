@@ -92,11 +92,19 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "case TAO_ORB_Core::DIRECT:" << be_idt_nl;
 
   if (be_global->gen_direct_collocation ())
-    *os << "if (obj->_servant () != 0)" << be_idt_nl
+    *os << "if (obj->_is_local () != 0)" << be_idt_nl
         << "{" << be_idt_nl
-        << node->full_skel_name () << " *servant = ACE_reinterpret_cast ("
-        << node->full_skel_name () << "*, obj->_servant ()->_downcast (\""
-        << node->repoID () << "\"));" << be_nl
+        << "TAO_Collocated_Object *local_object =" << be_nl
+        << "  TAO_Collocated_Object::_narrow (obj);" << be_nl
+        << "if (local_object == 0)" << be_nl
+        << "  return 0;" << be_nl
+        << node->full_skel_name () << " *servant =" << be_idt_nl
+        << "ACE_reinterpret_cast (" << be_idt_nl
+        << node->full_skel_name () << "*," << be_nl
+        << "local_object->_servant ()->_downcast (\""
+        << node->repoID () << "\")" << be_uidt_nl
+        << ");" << be_uidt_nl
+        << "local_object->_remove_ref ();" << be_nl
         << "if (servant != 0)" << be_idt_nl
         << "{" << be_idt_nl
         << node->full_name () << " *retval = 0;" << be_nl
@@ -462,7 +470,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "\n\n";
 
   // Interceptor classes
-  
+
   be_visitor_context ctx (*this->ctx_);
   be_visitor *visitor = 0;
 

@@ -21,7 +21,7 @@
 #include "ace/pre.h"
 
 #include "AVStreams_i.h"
-#include "tao/TAO.h"
+#include "tao/PortableServer/ORB_Manager.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.

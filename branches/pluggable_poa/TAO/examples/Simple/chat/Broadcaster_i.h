@@ -22,7 +22,7 @@
 
 #include "BroadcasterS.h"
 #include "ReceiverC.h"
-#include "tao/TAO.h"
+#include "tao/PortableServer/ORB_Manager.h"
 #include "ace/Containers.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

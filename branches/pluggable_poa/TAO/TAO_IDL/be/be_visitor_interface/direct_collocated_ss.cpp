@@ -71,12 +71,11 @@ int be_visitor_interface_direct_collocated_ss::visit_interface (be_interface *no
       *os << ": ACE_NESTED_CLASS ("
 	        << scope->name () << ","
 	        << node->local_name ()
-	        << ") ()," << be_nl;
+	        << ") ()" << be_nl;
     }
   else
     {
-      *os << ": " << node->name ()
-	        << " ()," << be_nl;
+      *os << ": " << node->name () << " ()" << be_nl;
     }
 
   // @@ We should call the constructor for all base classes, since we
@@ -92,11 +91,10 @@ int be_visitor_interface_direct_collocated_ss::visit_interface (be_interface *no
                         -1);
     }
 
-  *os << "  CORBA_Object (stub, servant, 1)," << be_nl
-      << "  servant_ (servant)";
-
-  *os << "\n";
-  os->decr_indent ();
+  *os << be_nl << ", TAO_Collocated_Object (stub, 1, servant)"
+      << be_nl << ", CORBA_Object (stub, 1)"
+      << be_nl << ", servant_ (servant)"
+      << be_uidt_nl;
   *os << "{\n";
   *os << "}\n\n";
 
@@ -161,12 +159,17 @@ be_visitor_interface_direct_collocated_ss::collocated_ctor_helper (be_interface 
     {
       be_decl *scope;
       scope = be_scope::narrow_from_scope (base->defined_in ())->decl ();
-      *os << "  ACE_NESTED_CLASS (POA_" << scope->name () << ","
-          << base->local_coll_name (be_interface::DIRECT) << ") (servant, stub)," << be_nl;
+      *os << be_nl << ", "
+          << "ACE_NESTED_CLASS (POA_" << scope->name ()
+          << ","
+          << base->local_coll_name (be_interface::DIRECT)
+          << ") (servant, stub)";
     }
   else
     {
-      *os << "  " << base->full_coll_name (be_interface::DIRECT) << " (servant, stub)," << be_nl;
+      *os << be_nl << ", "
+          << base->full_coll_name (be_interface::DIRECT)
+          << " (servant, stub)";
     }
 
   return 0;

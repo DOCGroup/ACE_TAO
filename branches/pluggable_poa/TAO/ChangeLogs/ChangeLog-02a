@@ -1,3 +1,299 @@
+Tue Aug 29 22:50:14 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* Move the POA to a separate library, using the Service
+	  Configurator to decouple the ORB from its factory.
+
+        * tao/Adapter.h:
+        * tao/Adapter.i:
+        * tao/Adapter.cpp:
+	  Define the interfaces used to dynamically load adapters into the
+	  ORB.
+
+        * tao/Acceptor_Filter.h:
+        * tao/Acceptor_Filter.i:
+        * tao/Acceptor_Filter.cpp:
+	  When creating an object reference an adapter may pass down a
+	  filter to reject some of the acceptors, for example, the RT POA
+	  creates a filter based on user supplied policies to remove some
+	  of the endpoints.
+
+        * tao/ORB.h:
+        * tao/ORB.cpp:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i:
+        * tao/ORB_Core.cpp:
+	  The ORB no longer contains or creates the TAO_Object_Adapter
+	  class or the root poa.  Instead it maintains an Adapter
+	  Registry, that is expected to be dynamically initialized as more
+	  adapters are added to the ORB.
+	  When resolving RootPOA the ORB uses the Service Configurator to
+	  find a factory that creates the POA adapter, that adapter is
+	  then inserted into the registry and used from then on.
+	  When a request is received it is dispatched to the target
+	  adapter through the registry, to speed up things a bit adapters
+	  are stored in "priority order", the POA should have the highest
+	  priority.
+	  NOTE: why do we need a registry?  Things like the IOR table and
+	  adapters for multicast protocols (where an activation may
+	  contain the multicast group) should be easier to implement with
+	  an adapter in place.
+
+        * tao/Acceptor_Registry.h:
+        * tao/Acceptor_Registry.cpp:
+	  User the Acceptor_Filter instead of a POA pointer to select what
+	  endpoints are added into an object reference.
+
+        * tao/Domain.pidl:
+        * tao/DomainC.h:
+        * tao/DomainC.i:
+        * tao/DomainC.cpp:
+	  Regenerated the files.  The old versions still had the S.cpp and
+	  C.cpp files coupled to implement collocation.
+
+        * tao/GIOP_Message_Acceptors.h:
+        * tao/GIOP_Message_Acceptors.cpp:
+        * tao/GIOP_Message_Lite.h:
+        * tao/GIOP_Message_Lite.cpp:
+	  Use the ORB and the Adapter Registry to dispatch requests.
+
+        * tao/GIOP_Server_Request.h:
+        * tao/GIOP_Server_Request.cpp:
+	  Remove the objref() method, it was not used anywhere (not in a
+	  meaningful way), and it was introducing too much coupling.
+
+        * tao/IIOP_Profile.h:
+        * tao/IIOP_Profile.cpp:
+        * tao/SHMIOP_Profile.cpp:
+        * tao/UIOP_Profile.cpp:
+        * tao/Object_KeyC.h:
+        * tao/Object_KeyC.cpp:
+	  Move encode_string_to_sequence() and decode_string_to_sequence()
+	  from the TAO_POA class to the ObjectKey class.
+
+        * tao/Object.h:
+        * tao/Object.i:
+        * tao/Object.cpp:
+        * tao/LocalObject.cpp:
+	  CORBA_Object no longer keeps a pointer to the servant.  A new
+	  derived class (TAO_Collocated_Object) does that.
+	  The POA creates TAO_Collocated_Object instances whenever
+	  collocation is in place.
+
+        * tao/InterfaceC.h:
+        * tao/InterfaceC.i:
+        * tao/MProfile.i:
+        * tao/MessagingC.h:
+        * tao/MessagingC.i:
+        * tao/MessagingC.cpp:
+        * tao/PolicyC.h:
+        * tao/PolicyC.i:
+        * tao/Policy_Manager.h:
+        * tao/PollableC.cpp:
+        * tao/PortableInterceptorC.h:
+        * tao/PortableInterceptorC.i:
+        * tao/Reply_Dispatcher.cpp:
+        * tao/Request_Info.h:
+        * tao/Server_Request.h:
+        * tao/Typecode.h:
+        * tao/FT_CORBAC.h:
+        * tao/FT_CORBAC.i:
+	  Only include the header files available in the main TAO library,
+	  some headers where included without any need for it.
+	  
+        * tao/corba.h:
+	  Removed a ton of includes that were not needed now that the POA
+	  is decoupled.
+
+        * tao/PortableServer/Makefile:
+        * tao/PortableServer/Active_Object_Map.h:
+        * tao/PortableServer/Active_Object_Map.i:
+        * tao/PortableServer/Active_Object_Map.cpp:
+        * tao/PortableServer/Collocated_Object.h:
+        * tao/PortableServer/Collocated_Object.i:
+        * tao/PortableServer/Collocated_Object.cpp:
+        * tao/PortableServer/DomainS.h:
+        * tao/PortableServer/DomainS.i:
+        * tao/PortableServer/DomainS.cpp:
+        * tao/PortableServer/FT_CORBAS.h:
+        * tao/PortableServer/FT_CORBAS.i:
+        * tao/PortableServer/FT_CORBAS.cpp:
+        * tao/PortableServer/Forwarding_Servant.h:
+        * tao/PortableServer/Forwarding_Servant.cpp:
+        * tao/PortableServer/ImplRepo.pidl:
+        * tao/PortableServer/ImplRepoC.h:
+        * tao/PortableServer/ImplRepoC.i:
+        * tao/PortableServer/ImplRepoC.cpp:
+        * tao/PortableServer/ImplRepoS.h:
+        * tao/PortableServer/ImplRepoS.i:
+        * tao/PortableServer/ImplRepoS.cpp:
+        * tao/PortableServer/ImplRepoS_T.h:
+        * tao/PortableServer/ImplRepoS_T.i:
+        * tao/PortableServer/ImplRepoS_T.cpp:
+        * tao/PortableServer/Key_Adapters.h:
+        * tao/PortableServer/Key_Adapters.i:
+        * tao/PortableServer/Key_Adapters.cpp:
+        * tao/PortableServer/MessagingS.h:
+        * tao/PortableServer/MessagingS.i:
+        * tao/PortableServer/MessagingS.cpp:
+        * tao/PortableServer/MessagingS_T.h:
+        * tao/PortableServer/MessagingS_T.i:
+        * tao/PortableServer/MessagingS_T.cpp:
+        * tao/PortableServer/ORB_Manager.h:
+        * tao/PortableServer/ORB_Manager.cpp:
+        * tao/PortableServer/Object_Adapter.h:
+        * tao/PortableServer/Object_Adapter.i:
+        * tao/PortableServer/Object_Adapter.cpp:
+        * tao/PortableServer/Operation_Table.h:
+        * tao/PortableServer/Operation_Table.cpp:
+        * tao/PortableServer/POA.h:
+        * tao/PortableServer/POA.i:
+        * tao/PortableServer/POA.cpp:
+        * tao/PortableServer/POAManager.h:
+        * tao/PortableServer/POAManager.i:
+        * tao/PortableServer/POAManager.cpp:
+        * tao/PortableServer/POA_CORBA.h:
+        * tao/PortableServer/PolicyS.cpp:
+        * tao/PortableServer/PortableServer.cpp:
+        * tao/PortableServer/PortableServer.h:
+        * tao/PortableServer/PortableServer.pidl:
+        * tao/PortableServer/PortableServerC.h:
+        * tao/PortableServer/PortableServerC.i:
+        * tao/PortableServer/PortableServerC.cpp:
+        * tao/PortableServer/Servant_Base.h:
+        * tao/PortableServer/Servant_Base.i:
+        * tao/PortableServer/Servant_Base.cpp:
+        * tao/PortableServer/poa_macros.h:
+	  Move all the POA related classes to a new subdirectory.
+
+        * tao/Exception.cpp:
+        * tao/DynamicAny/DynamicAny.h:
+	  Cosmetic fixes
+
+        * rules.tao.GNU:
+	  Define macros that contain the list of libraries required by TAO
+	  clients and TAO servers.
+
+        * TAO_IDL/be/be_codegen.cpp:
+	  The skeleton files include special header files from the
+	  PortableServer library.
+
+        * TAO_IDL/be/be_visitor_interface/direct_collocated_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/direct_collocated_ss.cpp:
+	  The classes for direct collocation inherit from
+	  TAO_Collocated_Object, because CORBA_Object no longer contains a
+	  servant pointer.
+
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
+        * TAO_IDL/be/be_visitor_interface/thru_poa_collocated_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/thru_poa_collocated_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ci.cpp:
+	  Remove the use of Servant_Base from the regular interfaces.
+	  The TAO_Object_Adapter::Servant_Upcall class is initialized
+	  using an ORB_Code* instead of a Object_Adapter& because the
+	  latter is harder to obtain now (to make the POA pluggable).
+	  The code to find an Object_Adapter was moved into the
+	  Servant_Upcall class, which seems a more appropriate place
+	  anyway.
+
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+	  Use the TAO_Collocated_Interface to create collocated objects
+
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+	  Fixed indentation in the generated code
+
+        * TAO_IDL/tao_idl.cpp:
+        * TAO_IDL/be/be_visitor_interface/cdr_op_ci.cpp:
+	  Cosmetic fixes
+
+        * examples/Callback_Quoter/Consumer_Handler.h:
+        * examples/Callback_Quoter/Notifier_Input_Handler.h:
+        * examples/Callback_Quoter/Notifier_i.h:
+        * examples/Event_Comm/Notifier_Server.h:
+        * examples/Load_Balancing/Identity_Client.h:
+        * examples/Load_Balancing/Identity_Server.h:
+        * examples/Load_Balancing/Load_Balancing_Service.h:
+        * examples/Load_Balancing_persistent/Identity_Client.h:
+        * examples/Load_Balancing_persistent/Identity_Server.h:
+        * examples/Load_Balancing_persistent/Load_Balancing_Service.h:
+        * examples/Logging/Logging_Service_i.h:
+        * examples/OBV/Simple_util.h:
+        * examples/Persistent_Grid/Simple_util.h:
+        * examples/Quoter/Factory_Finder.h:
+        * examples/Quoter/Generic_Factory.h:
+        * examples/Quoter/server.h:
+        * examples/Simple/Simple_util.h:
+        * examples/Simple/bank/AccountManager_i.h:
+        * examples/Simple/chat/Broadcaster_i.h:
+        * examples/Simple/chat/Client_i.h:
+        * examples/Simple/chat/Server_i.h:
+        * examples/Simple/time-date/Time_Date.h:
+        * examples/Simulator/Event_Supplier/DualEC_Sup.cpp:
+        * examples/Simulator/Event_Supplier/Event_Sup.cpp:
+        * examples/Simulator/Event_Supplier/Logging_Sup.cpp:
+        * orbsvcs/Concurrency_Service/Concurrency_Service.h:
+        * orbsvcs/IFR_Service/InterfaceS.h:
+        * orbsvcs/IFR_Service/TypeCodeFactory_skel.cpp:
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.h:
+        * orbsvcs/ImplRepo_Service/tao_imr_i.h:
+        * orbsvcs/LifeCycle_Service/LifeCycle_Service.h:
+        * orbsvcs/Naming_Service/Naming_Service.h:
+        * orbsvcs/Scheduling_Service/Scheduling_Service.h:
+        * orbsvcs/Time_Service/Clerk_i.h:
+        * orbsvcs/Time_Service/Server_i.h:
+        * orbsvcs/Trading_Service/Trading_Service.h:
+        * orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.cpp:
+        * orbsvcs/orbsvcs/AV/AVStreams_i.h:
+        * orbsvcs/orbsvcs/AV/AV_Core.h:
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy.h:
+        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp:
+        * orbsvcs/orbsvcs/AV/Policy.h:
+        * orbsvcs/orbsvcs/AV/Transport.cpp:
+        * orbsvcs/orbsvcs/AV/source.h:
+        * orbsvcs/orbsvcs/Time/TAO_TIO.h:
+        * orbsvcs/orbsvcs/Trader/Trading_Loader.h:
+        * orbsvcs/tests/AVStreams/Full_Profile/ftp.h:
+        * orbsvcs/tests/AVStreams/Full_Profile/server.h:
+        * orbsvcs/tests/AVStreams/Latency/control.cpp:
+        * orbsvcs/tests/AVStreams/Latency/ping.cpp:
+        * orbsvcs/tests/AVStreams/Latency/pong.cpp:
+        * orbsvcs/tests/AVStreams/Multicast/ftp.h:
+        * orbsvcs/tests/AVStreams/Multicast/server.h:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.h:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.h:
+        * orbsvcs/tests/AVStreams/Pluggable/ftp.h:
+        * orbsvcs/tests/AVStreams/Pluggable/server.h:
+        * orbsvcs/tests/AVStreams/benchmark/client.h:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/Command_Handler.h:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Audio_Server.h:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Server.h:
+        * orbsvcs/tests/AVStreams/server_discovery/Trader_Client.h:
+        * orbsvcs/tests/CosEC_Basic/CosEC_Basic.cpp:
+        * orbsvcs/tests/Property/client.h:
+        * orbsvcs/tests/Property/server.h:
+        * orbsvcs/tests/Simple_Naming/client.h:
+        * orbsvcs/tests/Trading/colocated_test.cpp:
+        * orbsvcs/tests/Trading/export_test.cpp:
+        * orbsvcs/tests/Trading/import_test.cpp:
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Server.h:
+        * performance-tests/Cubit/TAO/MT_Cubit/Cubit_Task.h:
+        * performance-tests/Cubit/TAO/MT_Cubit/server.h:
+        * performance-tests/POA/Demux/demux_test_server.h:
+        * performance-tests/Pluggable/PP_Test_Server.h:
+        * tests/InterOp-Naming/Server_i.h:
+        * tests/Multiple_Inheritance/server.cpp:
+        * tests/NestedUpcall/MT_Client_Test/local_server.h:
+        * tests/NestedUpcall/MT_Client_Test/server.h:
+        * tests/NestedUpcall/Triangle_Test/initiator.h:
+        * tests/NestedUpcall/Triangle_Test/server_A.h:
+        * tests/NestedUpcall/Triangle_Test/server_B.h:
+        * tests/ORB_destroy/ORB_destroy.cpp:
+        * utils/nslist/nslist.cpp:
+	  Change all the includes that were related to the POA.
+	
+        * */Makefile:
+	  Update all the dependencies, more of these will follow. 
+
 Tue Aug 29 20:28:30 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Notify/Notify_Listeners.h: 

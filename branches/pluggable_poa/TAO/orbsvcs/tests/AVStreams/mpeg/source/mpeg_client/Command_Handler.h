@@ -55,7 +55,7 @@
 #include "ace/Reactor.h"
 #include "ace/Event_Handler.h"
 #include "ace/ARGV.h"
-#include "tao/TAO.h"
+#include "tao/PortableServer/ORB_Manager.h"
 #include "mpeg_shared/Video_ControlC.h"
 #include "orbsvcs/CosNamingC.h"
 #include "ace/SOCK_Dgram.h"

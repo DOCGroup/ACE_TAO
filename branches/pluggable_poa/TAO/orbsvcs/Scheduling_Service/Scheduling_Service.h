@@ -12,7 +12,7 @@
 //      This class implements the functionality of a Scheduling Service in
 //      a stand-alone process.
 //
-// = AUTHORS 
+// = AUTHORS
 //      Chris Gill (cdgill@cs.wustl.edu) Based on the original
 //      Scheduling Service program by David Levine
 //      (levine@cs.wustl.edu) and Carlos O'Ryan (coryan@cs.wustl.edu),
@@ -25,7 +25,7 @@
 #ifndef TAO_SCHEDULING_SERVICE_H
 #define TAO_SCHEDULING_SERVICE_H
 
-#include "tao/TAO.h"
+#include "tao/PortableServer/ORB_Manager.h"
 #include "orbsvcs/Sched/Reconfig_Scheduler.h"
 #if defined (TAO_USES_STRATEGY_SCHEDULER)
 #include "orbsvcs/Sched/Strategy_Scheduler.h"
@@ -98,4 +98,3 @@ private:
 };
 
 #endif /* TAO_SCHEDULING_SERVICE_H */
-

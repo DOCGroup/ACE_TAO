@@ -20,7 +20,7 @@
 #include "ace/pre.h"
 
 #include "ace/Addr.h"
-#include "tao/TAO.h"
+#include "tao/PortableServer/ORB_Manager.h"
 #include "tao/debug.h"
 #include "orbsvcs/AV/AV_export.h"
 

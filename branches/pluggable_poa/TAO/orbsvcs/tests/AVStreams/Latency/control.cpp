@@ -2,7 +2,7 @@
 
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/FlowSpec_Entry.h"
-#include "tao/TAO.h"
+#include "tao/PortableServer/ORB_Manager.h"
 #include "ace/Get_Opt.h"
 #include "ace/INET_Addr.h"
 
