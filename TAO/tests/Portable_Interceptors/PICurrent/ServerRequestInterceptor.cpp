@@ -68,7 +68,7 @@ ServerRequestInterceptor::receive_request_service_contexts (
     }
   ACE_ENDTRY;
   ACE_CHECK;
- 
+
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Inserted number <%d> into RSC.\n",
               number));
@@ -139,7 +139,7 @@ ServerRequestInterceptor::send_reply (
                   "(%P|%t) Unable to extract data (a string) "
                   "from the RSC.\n"));
 
-      ACE_THROW ((CORBA::INTERNAL ()));
+      ACE_THROW (CORBA::INTERNAL ());
     }
 }
 
