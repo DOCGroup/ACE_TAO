@@ -3,5 +3,10 @@
 interface Test_Object
 {
   // = TITLE
-  //   This is a simple "no-op" interface to test the Naming Service.
+  //   This is a simple  interface to test the Naming Service.
+
+ short get_id ();
+ // Returns the id of the object.  This method provides an easy
+ // way to differentiate objects if each objects is served by a
+ // separate servant.
 };
