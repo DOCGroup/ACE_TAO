@@ -1,3 +1,17 @@
+Sat Oct 30 12:16:50 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* orbsvcs/Trading_Service/: Split off the main() function into a
+	  separate file (Trading_Server.cpp) so that the Trading Service
+ 	  can be used with "3rd-party" main() functions.
+
+        * orbsvcs/Naming_Service/Naming_Server.cpp (main): The error returns
+          from the main() functions should be 1, not -1.
+
+        * orbsvcs/Trading_Service/Trading_Service.cpp: Made the various
+          instance variables protected rather than private so they can be
+          accessed by subclasses.  Thanks to Goran Lowkrantz
+          <Goran.Lowkrantz@infologigruppen.se> for this suggestion.
+
 Fri Oct 29 21:37:31 1999  Erik Johannes <ejohannes@oresis.com>
 
         * performance-tests/Cubit/TAO/IDL_Cubit/cubit.idl,
