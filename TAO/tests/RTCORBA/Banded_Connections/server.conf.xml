@@ -1,7 +1,0 @@
-<?xml version='1.0'?>
-<!-- Converted from ./tests/RTCORBA/Banded_Connections/server.conf by svcconf-convert.pl -->
-<ACE_Svc_Conf>
- <!--  $Id$ -->
- <!--  -->
- <static id="Advanced_Resource_Factory" params="-ORBReactorType tp -ORBReactorRegistry per-priority"/>
-</ACE_Svc_Conf>
