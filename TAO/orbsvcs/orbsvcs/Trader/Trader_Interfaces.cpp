@@ -437,7 +437,7 @@ fill_receptacles (const char* type,
     }
 
   // Clear the preference intrerpreter of superfluous items.
-  int num_offers = pref_inter.num_offers ();
+  CORBA::ULong num_offers = pref_inter.num_offers ();
   for (i = 0; i < num_offers; i++)
     {
       CosTrading::Offer* offer = 0;
@@ -645,7 +645,7 @@ federated_query (const CosTrading::LinkNameSeq& links,
                                 TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
 
-          int j = 0;
+          CORBA::ULong j = 0;
           CosTrading::OfferSeq_var out_offers_var (out_offers);
           CosTrading::PolicyNameSeq_var out_limits_var (out_limits);
 
@@ -690,7 +690,7 @@ TAO_Lookup<TRADER,TRADER_LOCK_TYPE>::
 order_merged_sequence (TAO_Preference_Interpreter& pref_inter,
                        CosTrading::OfferSeq& offers)
 {
-  int j = 0;
+  CORBA::ULong j = 0;
   CORBA::ULong length = offers.length ();
 
   // Grab ownership of the offers already in the target sequence.
@@ -1129,7 +1129,7 @@ validate_properties (const char* type,
   
   // Perform property validation
   length = prop_types.length ();
-  for (int i = 0; i < length; i++)
+  for (CORBA::ULong i = 0; i < length; i++)
     {
       const CosTradingRepos::ServiceTypeRepository::PropStruct&
         prop_struct = prop_types[i]; 
