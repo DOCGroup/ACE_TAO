@@ -1,3 +1,22 @@
+Tue Nov 25 12:34:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/DLL.h: Made the constructors explicit.
+
+	* ace/Service_Config.cpp:
+
+	  Fix for one of the problems that showed up in TAO. For some
+	  reason  we were passing in a "0" to the constructor
+	  ACE_Service_Type that was expecting a const ACE_DLL &. None of
+	  the compilers complained about this, since they created
+	  temporary. This created all sorts of problems once this "Sun Nov
+	  23 11:00:02 2003  Douglas C. Schmidt
+	  <schmidt@ace.cs.wustl.edu>" went through since it added a new
+	  constructor. 
+
+	  We have now fixed it by creating a temporary and forcing the
+	  compiler to use the right constructor of ACE_Service_Type. This
+	  shouldn't be harmful, since we were expecting just this. 
+
 Tue Nov 25 11:14:09 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/config-lynxos.h:
@@ -16,40 +35,40 @@ Tue Nov 25 14:13:24 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Tue Nov 25 10:08:12 2003  Kobi Cohen-Arazi  <kobi-co@barak-online.net>
 
-        * apps/JAWS3/jaws3/io.h:
-        * apps/JAWS3/jaws3/io.cpp:
-        * apps/JAWS3/jaws3/file.h:
-        * apps/JAWS3/jaws3/file.cpp:
-          Removed.
-
+	* apps/JAWS3/jaws3/io.h: 
+	* apps/JAWS3/jaws3/io.cpp: 
+	* apps/JAWS3/jaws3/file.h: 
+	* apps/JAWS3/jaws3/file.cpp: 
+	  Removed.
+	
 
 Tue Nov 25 09:23:35 2003  Kobi Cohen-Arazi  <kobi-co@barak-online.net>
 
-        * apps/JAWS3/small/SS_Templates.cpp:
-        * apps/JAWS3/jaws3/io.h:
-        * apps/JAWS3/jaws3/io.cpp:
-        * apps/JAWS3/jaws3/file.h:
-        * apps/JAWS3/jaws3/file.cpp:
-        * apps/JAWS3/jaws3/Timer_Helpers.h:
-        * apps/JAWS3/jaws3/Timer_Helpers.cpp:
-        * apps/JAWS3/jaws3/Templates.cpp:
-        * apps/JAWS3/jaws3/Reactive_IO_Helpers.h:
-        * apps/JAWS3/jaws3/Options.h:
-        * apps/JAWS3/jaws3/Options.cpp:
-        * apps/JAWS3/jaws3/Asynch_IO_Helpers.h:
-        * apps/JAWS3/jaws3-todo/Reactive_Socket_Helpers.h:
-        * apps/JAWS3/jaws3-todo/Reactive_Socket_Helpers.cpp:
-        * apps/JAWS3/http/HTTP_States.h:
-        * apps/JAWS3/contrib/john_at_lyris_dot_com/readme:
-        * apps/JAWS3/contrib/jmills_at_tga_dot_com/readme:
-        * apps/JAWS3/bench/rqfiles.cpp:
-        * apps/JAWS3/bench/mkfiles.cpp:
-        * apps/JAWS3/docs/web/images/jaws3_components.gif:
-        * apps/JAWS3/docs/web/images/jaws3_components.fig:
-        * apps/JAWS3/docs/web/images/jaws3_banner.png:
-        * apps/JAWS3/docs/web/images/jaws3_banner.gif:
-
-          Added to the repository
+	* apps/JAWS3/small/SS_Templates.cpp: 
+	* apps/JAWS3/jaws3/io.h: 
+	* apps/JAWS3/jaws3/io.cpp: 
+	* apps/JAWS3/jaws3/file.h: 
+	* apps/JAWS3/jaws3/file.cpp: 
+	* apps/JAWS3/jaws3/Timer_Helpers.h: 
+	* apps/JAWS3/jaws3/Timer_Helpers.cpp: 
+	* apps/JAWS3/jaws3/Templates.cpp: 
+	* apps/JAWS3/jaws3/Reactive_IO_Helpers.h: 
+	* apps/JAWS3/jaws3/Options.h: 
+	* apps/JAWS3/jaws3/Options.cpp: 
+	* apps/JAWS3/jaws3/Asynch_IO_Helpers.h: 
+	* apps/JAWS3/jaws3-todo/Reactive_Socket_Helpers.h: 
+	* apps/JAWS3/jaws3-todo/Reactive_Socket_Helpers.cpp: 
+	* apps/JAWS3/http/HTTP_States.h: 
+	* apps/JAWS3/contrib/john_at_lyris_dot_com/readme: 
+	* apps/JAWS3/contrib/jmills_at_tga_dot_com/readme: 
+	* apps/JAWS3/bench/rqfiles.cpp: 
+	* apps/JAWS3/bench/mkfiles.cpp: 
+	* apps/JAWS3/docs/web/images/jaws3_components.gif: 
+	* apps/JAWS3/docs/web/images/jaws3_components.fig: 
+	* apps/JAWS3/docs/web/images/jaws3_banner.png: 
+	* apps/JAWS3/docs/web/images/jaws3_banner.gif:
+	
+	  Added to the repository
 
 Tue Nov 25 05:25:58 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -96,6 +115,7 @@ Mon Nov 24 05:26:14 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           Only cleanup shared libraries when shared_libs is defined and
           static libraries when static_libs is defined.  Also, test for
           whether or not the CLEANUP targets in this case are empty, not
+	  b
           just for existience, since they always exist by this time.
 
 Mon Nov 24 02:38:58 UTC 2003  Don Hinton  <dhinton@dresystems.com>
