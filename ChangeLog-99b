@@ -1,3 +1,50 @@
+Fri Jan 22 21:27:14 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* ace/Hash_Map_Manager_T.h 
+	  (class ACE_Hash_Map_Entry): Modified the destructor to be
+	  "virtual" so that it gets invoked on the destruction of its
+	  derived class objects.
+          (class ACE_Hash_Map_Manager_Ex): Modified the destructor to be
+	  "virtual" so that it gets invoked on the destruction of its
+	  derived class objects. 
+	  Modified shared_find () to be "virtual" so that it can be
+	  defined in its derived classes.
+          Declared a virtual method for creating new entries for the map
+	  called create_entry ().
+	
+	* ace/Hash_Map_Manager_T.cpp
+	  (create_entry): Added this virtual method which creates a new
+	  map entry. This is necessary to allow the map to contain various
+	  types of map entries.
+	  (bind_i): 
+	  (trybind_i):
+          (unbind_i):
+	  Used create_entry () to obtain a new entry object.
+
+	* ace/Hash_Purgable_Map_Manager_T.{h,i,cpp}:
+ 	  The ACE_Hash_Purgable_Map_Manager_Ex derives from
+	  ACE_Hash_Map_Manager_Ex and provides the feature of purging
+	  K entries from the map. The default purging algorithm is Least
+	  Recently Used, which has been implemented using a virtual timer
+	  that increments whenever an entry is looked up or used. Each
+	  entry has a purge_tag which is the timestamp updated by the
+	  timer value whenever it is referenced. The entry is an object of
+	  ACE_Hash_Purgable_Map_Entry class which is derived from
+	  ACE_Hash_Map_Entry.
+	  (purge): This is the method which flushes K entries from the
+	  map. Locks are held.
+	  (purge_i): This method also flushes K entries but w.o. locks
+	  being held.
+	  (create_entry): Creates an ACE_Hash_Purgable_Map_Entry object.
+	  (shared_find): This method is used to lup and verify whether
+	  an entry is present in the map. Also, the purge_tag of the entry
+	  is updated with the current timer value.
+
+	* tests/Purgable_Map_Manager.cpp: Added this test which
+          illustrates the use of the Hash_Purgable_Map_Manager to maintain
+	  a cache map. Also displays the change in the map size on
+	  purging.
+	
 Fri Jan 22 16:10:35 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/Select_Reactor_Base.cpp (ACE_Select_Reactor_Notify::handle_input)
