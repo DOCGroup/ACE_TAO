@@ -19,9 +19,13 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
+// TAO_IDL - Generated from
+// be/be_visitor_interface/tie_si.cpp:95
+
 #if defined (ACE_HAS_USING_KEYWORD)
 
-#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
+// TAO_IDL - Generated from be/be_visitor_interface/tie_si.cpp:105
+
 
 template <class T> ACE_INLINE
 POA_Messaging::ReplyHandler_tie<T>::ReplyHandler_tie (T &t)
@@ -99,6 +103,6 @@ POA_Messaging::ReplyHandler_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
 
   return this->ReplyHandler::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
-#endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
+
 #endif /* ACE_HAS_USING_KEYWORD */
 

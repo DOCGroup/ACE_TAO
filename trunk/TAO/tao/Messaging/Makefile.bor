@@ -7,6 +7,9 @@ NAME = TAO_Messaging
 OBJFILES = \
         $(OBJDIR)\Messaging.obj \
         $(OBJDIR)\MessagingC.obj \
+        $(OBJDIR)\Messaging_RT_PolicyC.obj \
+        $(OBJDIR)\Messaging_SyncScope_PolicyC.obj \
+        $(OBJDIR)\Messaging_No_ImplC.obj \
         $(OBJDIR)\MessagingS.obj \
         $(OBJDIR)\MessagingS_T.obj \
         $(OBJDIR)\Asynch_Reply_Dispatcher.obj \

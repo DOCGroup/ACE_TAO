@@ -1,3 +1,44 @@
+Tue Sep  3 17:08:32 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
+
+
+	This checkin is aimed to help with the following 
+
+	- Reduce the TAO_HAS_SOME_POLICY madness 
+	- Make the compiler do the work of linking in the pieces that it
+	  requires instead of putting the burden on the developers by
+	  these #define madness
+
+	All the pocliies that are implemented in TAO are placed in
+        seperate pidl files. The compiler should link in only pieces that
+        are required. More work is required to achieve that. This is just
+	a temporary checkin to facilitate stuff. 
+
+	* tao/Messaging/Messaging_RT_Policy.pidl: 
+	* tao/Messaging/Messaging_SyncScope_Policy.pidl: These two files
+	  just house the RoundTrip and the SyncScope policies. 
+	
+	* tao/Messaging/Messaging_No_Impl.pidl: This file contains stuff
+	  that has not been implemented in TAO. 
+	
+	* tao/Messaging/Messaging.pidl: Broken up the contents of this
+	  file into multiple files described above. 
+
+	* tao/Messaging/Messaging{C,S, S_T}.{h,cpp,i}: 
+	* tao/Messaging/Messaging_RT_PolicyC.{h,cpp,i}:
+	* tao/Messaging/Messaging_SyncScope_PolicyC.{h,cpp,i}:
+	* tao/Messaging/Messaging_No_ImplC.{h,cpp,i}: The new generated
+	  code. 
+
+	* tao/Messaging/diffs/Messaging.diff:
+	* tao/Messaging/diff/Messaging_RT_Policy.diff:
+	* tao/Messaging/diff/Messaging_SyncScope_Policy.diff:
+	* tao/Messaging/diff/Messaging_No_Impl.diff: The diff files for
+	  the generated code. 
+
+	* tao/Messaging/Makefile.bor: 
+	* tao/Messaging/Makefile: Added the new files.
+
+
 Tue Sep  3 14:48:55 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/RTEvent_Static.dsp:
