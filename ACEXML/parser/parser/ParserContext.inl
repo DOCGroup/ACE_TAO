@@ -1,3 +1,5 @@
+// -*- C++ -*-
+//
 // $Id$
 
 
@@ -26,7 +28,7 @@ ACEXML_Parser_Context::ACEXML_Parser_Context (const ACEXML_Parser_Context& src)
 
 }
 
-ACEXML_INLINE int
+ACEXML_INLINE bool
 ACEXML_Parser_Context::operator!= (const ACEXML_Parser_Context& src)
 {
   return (this->instream_ != src.instream_ && this->locator_ != src.locator_);
