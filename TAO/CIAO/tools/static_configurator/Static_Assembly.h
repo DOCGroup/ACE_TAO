@@ -94,11 +94,77 @@ struct ResolveInfoAttributes
   CIAO::Assembly_Connection::IF_Resolver_Info *nested_resolver_;
 };
 
+struct ThreadPoolAttributes
+{
+ ACE_CString       name_;
+ unsigned long     stacksize_;
+ unsigned long     static_threads_;
+ unsigned long     dynamic_threads_;
+ short             default_priority_;
+ int               allow_request_buffering_;
+ unsigned long     max_buffered_requests_;
+ unsigned long     max_request_buffer_size_;
+};
+
+struct LaneAttributes
+{
+ short             lane_priority_;
+ unsigned long     static_threads_;
+ unsigned long     dynamic_threads_;
+};
+
+struct ThreadPoolLanesAttributes
+{
+ ACE_CString       name_;
+ unsigned long     stacksize_;
+ unsigned int      lane_begin_index_;
+ unsigned int      lane_end_index_;
+ int               allow_borrowing_;
+ int               allow_request_buffering_;
+ unsigned long     max_buffered_requests_;
+ unsigned long     max_request_buffer_size_;
+};
+
+struct BandAttributes
+{
+ short low_;
+ short high_;
+};
+
+struct PriorityBandsAttributes
+{
+ ACE_CString       name_;
+ unsigned int      band_begin_index_;
+ unsigned int      band_end_index_;
+};
+
+struct PolicyConfigAttributes
+{
+ CORBA::PolicyType      type_;
+ ACE_CString            name_;
+ RTCORBA::PriorityModel model_;
+ RTCORBA::Priority      default_priority_;
+};
+
+struct PolicySetAttributes
+{
+ ACE_CString      name_;
+ unsigned int     config_begin_index_;
+ unsigned int     config_end_index_;
+};
+
 static const int MAX_CONTAINERS = 100;
 static const int MAX_HOMES = 1000;
 static const int MAX_COMPONENTS = 10000;
 static const int MAX_COMPONENT_REGISTRATIONS = 30000;
 static const int MAX_CONNECTIONS = 30000;
+static const int MAX_THREADPOOLS = 1000;
+static const int MAX_LANES = 1000;
+static const int MAX_THREAD_POOL_LANES = 1000;
+static const int MAX_BANDS = 1000;
+static const int MAX_PRIORITY_BANDS = 1000;
+static const int MAX_POLICY_CONFIGS = 1000;
+static const int MAX_POLICY_SETS = 1000;
 
 struct Static_Config_Info
 {
@@ -108,6 +174,13 @@ struct Static_Config_Info
   CIAO::Assembly_Placement::componentinstantiation::Register_Info component_registrations_table_[MAX_COMPONENT_REGISTRATIONS];
   ConnectionAttributes connections_table_[MAX_CONNECTIONS];
   ResolveInfoAttributes resolvers_table_[MAX_CONNECTIONS];
+  ThreadPoolAttributes      thread_pool_table_[MAX_THREADPOOLS];
+  LaneAttributes            lane_table_[MAX_LANES];
+  ThreadPoolLanesAttributes thread_pool_lanes_table_[MAX_THREAD_POOL_LANES];
+  BandAttributes            band_table_[MAX_BANDS];
+  PriorityBandsAttributes   priority_band_table_[MAX_PRIORITY_BANDS];
+  PolicyConfigAttributes    policy_config_table_[MAX_POLICY_CONFIGS];
+  PolicySetAttributes       policy_set_table_[MAX_POLICY_SETS];
 
   int containers_table_last_index_;
   int homes_table_last_index_;
@@ -115,6 +188,13 @@ struct Static_Config_Info
   int component_registrations_table_last_index_;
   int connections_table_last_index_;
   int resolvers_table_last_index_;
+  int thread_pool_table_last_index_;
+  int lane_table_last_index_;
+  int thread_pool_lanes_table_last_index_;
+  int band_table_last_index_;
+  int priority_band_table_last_index_;
+  int policy_config_table_last_index_;
+  int policy_set_table_last_index_;
 
   Static_Config_Info ()
     :containers_table_last_index_ (-1),
@@ -122,7 +202,14 @@ struct Static_Config_Info
      components_table_last_index_ (-1),
      component_registrations_table_last_index_ (-1),
      connections_table_last_index_ (-1),
-     resolvers_table_last_index_ (-1)
+     resolvers_table_last_index_ (-1),
+     thread_pool_table_last_index_ (-1),
+     lane_table_last_index_ (-1),
+     thread_pool_lanes_table_last_index_ (-1),
+     band_table_last_index_ (-1),
+     priority_band_table_last_index_ (-1),
+     policy_config_table_last_index_ (-1),
+     policy_set_table_last_index_ (-1)
   {
   }
 };

@@ -59,8 +59,10 @@ namespace CIAO
       /// Constructor
       RTComponentServer_Impl (CORBA::ORB_ptr o,
                               RTCORBA::RTORB_ptr rto,
-                              PortableServer::POA_ptr p);
-
+                              PortableServer::POA_ptr p,
+			      int static_config_flag = 0,
+			      const Static_Config_EntryPoints_Maps* static_entrypts_maps = 0);
+ 
       /// Destructor
       virtual ~RTComponentServer_Impl (void);
 
@@ -101,10 +103,12 @@ namespace CIAO
     {
     public:
     /// Constructor
-      RTContainer_Impl (CORBA::ORB_ptr o,
-                        PortableServer::POA_ptr p,
-                        Components::Deployment::ComponentServer_ptr server,
-                        CIAO::RTPolicy_Set_Manager &policyset_manager);
+       RTContainer_Impl (CORBA::ORB_ptr o,
+                         PortableServer::POA_ptr p,
+                         Components::Deployment::ComponentServer_ptr server,
+                         CIAO::RTPolicy_Set_Manager &policyset_manager,
+                         int static_config_flag =0,
+                         const Static_Config_EntryPoints_Maps* static_entrypts_maps=0);
 
       /// Destructor
       virtual ~RTContainer_Impl (void);
@@ -134,7 +138,9 @@ namespace CIAO
       : public CIAO::Session_Container
     {
     public:
-      RTSession_Container (CORBA::ORB_ptr o);
+      RTSession_Container (CORBA::ORB_ptr o, 
+		           int static_config_flag =0,
+                           const Static_Config_EntryPoints_Maps* static_entrypts_maps =0);
 
       virtual ~RTSession_Container (void);
 

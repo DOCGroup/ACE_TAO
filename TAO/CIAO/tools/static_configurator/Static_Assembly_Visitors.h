@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/ -*- C++ -*-
 
 //=============================================================================
 /**
@@ -29,6 +29,7 @@
 //#include "Deployment_Configuration.h"
 #include "Static_Assembly.h"
 #include "ace/Configuration.h"
+#include "../XML_Helpers/RTConfigurationC.h"
 
 namespace CIAO
 {
@@ -80,13 +81,24 @@ namespace CIAO
     //Deployment_Configuration &deployment_config_;
 
     Static_Config::Static_Config_Info& static_config_info_;
-    Static_Config::ContainerAttributes *containers_table_;
-    Static_Config::HomeAttributes *homes_table_;
-    Static_Config::ComponentAttributes *components_table_;
+
+    Static_Config::ContainerAttributes   *containers_table_;
+    Static_Config::HomeAttributes        *homes_table_;
+    Static_Config::ComponentAttributes   *components_table_;
+    
     Assembly_Placement::componentinstantiation::Register_Info
-    *component_registrations_table_;
-    Static_Config::ConnectionAttributes *connections_table_;
+                                         *component_registrations_table_;
+
+    Static_Config::ConnectionAttributes  *connections_table_;
     Static_Config::ResolveInfoAttributes *resolvers_table_;
+
+    Static_Config::ThreadPoolAttributes      *thread_pool_table_;
+    Static_Config::LaneAttributes            *lane_table_;
+    Static_Config::ThreadPoolLanesAttributes *thread_pool_lanes_table_;
+    Static_Config::BandAttributes            *band_table_;
+    Static_Config::PriorityBandsAttributes   *priority_band_table_;
+    Static_Config::PolicyConfigAttributes    *policy_config_table_;
+    Static_Config::PolicySetAttributes       *policy_set_table_;
 
     int& containers_table_last_index_;
     int& homes_table_last_index_;
@@ -94,15 +106,29 @@ namespace CIAO
     int& component_registrations_table_last_index_;
     int& connections_table_last_index_;
     int& resolvers_table_last_index_;
+    int& thread_pool_table_last_index_;
+    int& lane_table_last_index_;
+    int& thread_pool_lanes_table_last_index_;
+    int& band_table_last_index_;
+    int& priority_band_table_last_index_;
+    int& policy_config_table_last_index_;
+    int& policy_set_table_last_index_;
 
     ACE_CString installation_file_;
     ACE_Configuration* installation_;
     ACE_CString section_name_;
     ACE_Configuration_Section_Key section_;
 
+    bool is_realtime_;
+
   protected:
     int find_container (const ACE_CString& rtpolicy_name);
     int build_resolver_info (Assembly_Connection::IF_Resolver_Info* info);
+
+    int  build_rt_resource_info(CIAO::RTConfiguration::RTORB_Resource_Info &rt_resources);
+    int  build_rt_policy_set(CIAO::RTConfiguration::Policy_Sets &pset);
+
+    void generate_rt_static_app_driver (const char* app_driver_file_name);
   };
 }
 

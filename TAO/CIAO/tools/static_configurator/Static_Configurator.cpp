@@ -2,6 +2,7 @@
 
 #include "Static_Configurator.h"
 #include "ace/OS_NS_stdio.h"
+#include "Segment_Timer.h"
 
 int CIAO::Static_Configurator::configure(
                    CORBA::ORB_ptr orb,
@@ -45,6 +46,8 @@ int CIAO::Static_Configurator::create_homes (ACE_ENV_SINGLE_ARG_DECL)
   ACE_DEBUG ((LM_DEBUG, "Creating Homes...\n"));
   for (int i=0; i<homes_count_; ++i)
     {
+      segment_timers[CREATE_HOME_TIMER].start_timer ();
+
       // install home
       Components::ConfigValues home_config;
       // Setting home config value here:
@@ -97,7 +100,7 @@ int CIAO::Static_Configurator::create_homes (ACE_ENV_SINGLE_ARG_DECL)
 
       this->installed_homes_.bind (homes_[i].id_,
                                                      home);
-
+      segment_timers[CREATE_HOME_TIMER].stop_timer ();
       homes_[i].home_ = klhome;
     }
   ACE_DEBUG ((LM_DEBUG, "Homes installed...\n"));
@@ -108,7 +111,9 @@ int CIAO::Static_Configurator::create_connections (ACE_ENV_SINGLE_ARG_DECL)
 {
   for (int i=0; i<connections_count_; ++i)
     {
+      segment_timers[CREATE_CONNECTION_TIMER].start_timer ();
       make_connection (i ACE_ENV_ARG_PARAMETER);
+      segment_timers[CREATE_CONNECTION_TIMER].stop_timer ();
     }
   return 0;
 }
@@ -362,6 +367,8 @@ Components::Deployment::Container_ptr
 CIAO::Static_Configurator::get_container (const ACE_CString& rtpolicy
                                           ACE_ENV_ARG_DECL)
 {
+  segment_timers[CREATE_CONTAINER_TIMER].start_timer ();
+
   // If we are not using the same rtpolicy set, or the there's no
   // cached container, then create a new one.
 
@@ -371,8 +378,11 @@ CIAO::Static_Configurator::get_container (const ACE_CString& rtpolicy
       if (containers_[i].rtpolicyset_ref_ == rtpolicy)
         {
           if (!CORBA::is_nil (containers_[i].container_.in ()))
-            return Components::Deployment::Container::_duplicate
-              (containers_[i].container_.in ());
+            {
+              segment_timers[CREATE_CONTAINER_TIMER].stop_timer ();
+              return Components::Deployment::Container::_duplicate
+                (containers_[i].container_.in ());
+            }
           else break;
         }
     }
@@ -409,6 +419,7 @@ CIAO::Static_Configurator::get_container (const ACE_CString& rtpolicy
     ACE_DEBUG ((LM_DEBUG,
                 "Creating container with empty policy set\n"));
 
+  segment_timers[CREATE_CONTAINER_TIMER].stop_timer ();
   return Components::Deployment::Container::_duplicate
     (this->containers_[container_index].container_.in ());
 }
@@ -418,6 +429,7 @@ int CIAO::Static_Configurator::create_components (ACE_ENV_SINGLE_ARG_DECL)
   for (int i=0; i<components_count_; ++i)
     {
       // @@ instantiation and register component.
+      segment_timers[CREATE_COMPONENT_TIMER].start_timer ();
       ACE_DEBUG ((LM_DEBUG, "ComponentInstantiation %s\n",
                   components_[i].id_.c_str ()));
 
@@ -427,6 +439,8 @@ int CIAO::Static_Configurator::create_components (ACE_ENV_SINGLE_ARG_DECL)
 
       this->instantiated_components_.bind (components_[i].id_,
                                                              comp);
+
+      segment_timers[CREATE_COMPONENT_TIMER].stop_timer ();
 
       int begin_index = components_[i].component_registration_begin_index_;
       int end_index = components_[i].component_registration_end_index_;
@@ -438,10 +452,12 @@ int CIAO::Static_Configurator::create_components (ACE_ENV_SINGLE_ARG_DECL)
             {
               CIAO::Assembly_Placement::componentinstantiation::Register_Info
                 info = component_instantiations_[j];
+              segment_timers[REGISTER_COMPONENT_TIMER].start_timer ();
               this->register_component (info,
                                         comp.in ()
                                         ACE_ENV_ARG_PARAMETER);
 
+              segment_timers[REGISTER_COMPONENT_TIMER].stop_timer ();
             }
         }
     }
@@ -512,4 +528,131 @@ CIAO::Static_Configurator::register_component (
     default:
       ACE_THROW (CORBA::INTERNAL ());
     }
+}
+
+void CIAO::Static_Configurator::
+       config_rt_info(Components::ConfigValues &configs, 
+		      CIAO::Static_Config::ThreadPoolAttributes *thread_pool_table,
+		      int thread_pool_table_size,
+		      CIAO::Static_Config::LaneAttributes *lane_table,
+		      int lane_table_size,
+		      CIAO::Static_Config::ThreadPoolLanesAttributes *thread_pool_lanes_table,
+		      int thread_pool_lanes_table_size,
+		      CIAO::Static_Config::BandAttributes *band_table,
+		      int band_table_size,
+		      CIAO::Static_Config::PriorityBandsAttributes *priority_band_table,
+		      int priority_band_table_size,
+		      CIAO::Static_Config::PolicyConfigAttributes *policy_config_table,
+		      int policy_config_table_size,
+		      CIAO::Static_Config::PolicySetAttributes    *policy_set_table,
+		      int policy_set_table_size)
+{
+ CIAO::RTConfiguration::RTORB_Resource_Info rt_resources;
+ CIAO::RTConfiguration::Policy_Sets psets;
+ int i;
+ unsigned j, k;
+
+ rt_resources.tp_configs.length(thread_pool_table_size);
+ for(i=0; i < thread_pool_table_size;i++)
+ { 
+  rt_resources.tp_configs[i].name                    = thread_pool_table[i].name_.c_str();
+  rt_resources.tp_configs[i].stacksize               = thread_pool_table[i].stacksize_;
+  rt_resources.tp_configs[i].static_threads          = thread_pool_table[i].static_threads_;
+  rt_resources.tp_configs[i].dynamic_threads         = thread_pool_table[i].dynamic_threads_;
+  rt_resources.tp_configs[i].default_priority        = thread_pool_table[i].default_priority_;
+  rt_resources.tp_configs[i].allow_request_buffering = thread_pool_table[i].allow_request_buffering_;
+  rt_resources.tp_configs[i].max_buffered_requests   = thread_pool_table[i].max_buffered_requests_;
+  rt_resources.tp_configs[i].max_request_buffer_size = thread_pool_table[i].max_request_buffer_size_;
+ }
+
+ rt_resources.tpl_configs.length(thread_pool_lanes_table_size);
+ for(i=0; i < thread_pool_lanes_table_size;i++)
+ {
+   rt_resources.tpl_configs[i].name                    = thread_pool_lanes_table[i].name_.c_str();
+   rt_resources.tpl_configs[i].stacksize               = thread_pool_lanes_table[i].stacksize_;
+   rt_resources.tpl_configs[i].allow_borrowing         = thread_pool_lanes_table[i].allow_borrowing_;
+   rt_resources.tpl_configs[i].allow_request_buffering = thread_pool_lanes_table[i].allow_request_buffering_;
+   rt_resources.tpl_configs[i].max_buffered_requests   = thread_pool_lanes_table[i].max_buffered_requests_;
+   rt_resources.tpl_configs[i].max_request_buffer_size = thread_pool_lanes_table[i].max_request_buffer_size_;
+
+   k = 0;
+
+   rt_resources.tpl_configs[i].lanes.length(thread_pool_lanes_table[i].lane_end_index_ - thread_pool_lanes_table[i].lane_begin_index_ +1);
+   for(j=thread_pool_lanes_table[i].lane_begin_index_; j <= thread_pool_lanes_table[i].lane_end_index_;j++)
+   {
+    
+	rt_resources.tpl_configs[i].lanes[k].lane_priority  = lane_table[j].lane_priority_;
+	rt_resources.tpl_configs[i].lanes[k].static_threads = lane_table[j].static_threads_;
+	rt_resources.tpl_configs[i].lanes[k].dynamic_threads= lane_table[j].dynamic_threads_;
+    
+    k++;
+   }
+ }
+
+ rt_resources.pb_configs.length(priority_band_table_size);
+ for(i=0; i < priority_band_table_size;i++)
+ {
+  
+  rt_resources.pb_configs[i].name = priority_band_table[i].name_.c_str();
+
+  k = 0;
+  
+  rt_resources.pb_configs[i].bands.length(priority_band_table[i].band_end_index_ -  priority_band_table[i].band_begin_index_ +1);
+  for(j=priority_band_table[i].band_begin_index_;j<=priority_band_table[i].band_end_index_;j++)
+  {
+	rt_resources.pb_configs[i].bands[k].low = band_table[j].low_;
+	rt_resources.pb_configs[i].bands[k].high= band_table[j].high_;
+
+	k++;
+  }
+ }
+
+ psets.length(policy_set_table_size);
+ for(i=0; i < policy_set_table_size;i++)
+ {
+  psets[i].name = policy_set_table[i].name_.c_str();
+
+  k=0;
+  psets[i].configs.length(policy_set_table[i].config_end_index_ - policy_set_table[i].config_begin_index_+1);
+  
+  for(j=policy_set_table[i].config_begin_index_;j<=policy_set_table[i].config_end_index_;j++)
+  {
+   
+   psets[i].configs[k].type = policy_config_table[j].type_;
+
+   switch( psets[i].configs[k].type)
+   {
+    case RTCORBA::PRIORITY_MODEL_POLICY_TYPE:
+		 CIAO::RTConfiguration::Priority_Model_Config model_config;
+		 model_config.model            = policy_config_table[j].model_;
+		 model_config.default_priority = policy_config_table[j].default_priority_;
+		 psets[i].configs[k].configuration <<= model_config;
+		 break;
+
+    case RTCORBA::THREADPOOL_POLICY_TYPE:
+		 psets[i].configs[k].configuration <<= policy_config_table[j].name_.c_str();
+		 break;
+
+    case RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE:
+		 psets[i].configs[k].configuration <<= policy_config_table[j].name_.c_str();
+		 break;
+   }
+   k++;
+  }
+ }
+
+ CORBA::ULong len = configs.length ();
+ configs.length (len+2);
+
+ Components::ConfigValue *newconfig
+        = new OBV_Components::ConfigValue;
+ newconfig->name ((const char *) "CIAO-RTResources");
+ newconfig->value () <<= rt_resources;
+ configs[len] = newconfig;
+
+ ++len;
+ newconfig = new OBV_Components::ConfigValue;
+ newconfig->name ((const char *) "CIAO-RTPolicySets");
+ newconfig->value () <<= psets;
+ configs[len] = newconfig;
 }
