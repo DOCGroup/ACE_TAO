@@ -140,9 +140,9 @@ ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>::reset (X *p)
 }
 
 template <class X, class ACE_LOCK> inline X *
-ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>::get (void)
+ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>::get (void) const
 {
-  ACE_GUARD_RETURN (ACE_LOCK, guard, this->lock_, 0);
+  ACE_GUARD_RETURN (ACE_LOCK, guard, ACE_const_cast (ACE_LOCK &, this->lock_), 0);
 
   return this->ptr_.get ();
 }

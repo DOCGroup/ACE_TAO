@@ -1,3 +1,8 @@
+Thu Feb  6 07:13:06 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Refcounted_Auto_Ptr.{h,i} (get): Made the get() method const.
+	  Thanks to Jenny Kowald <jkowald@agile.tv> for suggesting this.
+
 Wed Feb  5 20:48:47 2003  Krishnakumar B  <kitty@cse.wustl.edu>
 
         * include/makeinclude/rules.local.GNU: Added rules to generate
