@@ -40,7 +40,7 @@
 #endif /* _MSC_VER */
 
 /// Policy factory for all FTCORBA related policies.
-class TAO_Export TAO_FT_PolicyFactory :
+class TAO_FT_Export TAO_FT_PolicyFactory :
   public PortableInterceptor::PolicyFactory,
   public TAO_Local_RefCounted_Object
 {
