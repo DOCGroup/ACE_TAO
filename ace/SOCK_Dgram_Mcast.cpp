@@ -29,12 +29,9 @@ public:
                               size_t len,
                               int clip_portnum)       // clip port# info?
     {
-      // Text displayed in case of conversion error.
-      static const ACE_TCHAR *cvt_err_string = ACE_LIB_TEXT ("<?>");
-
       if (ip_addr.addr_to_string (ret_string, len, 1) == -1)
         {
-          ACE_OS_String::strcpy (ret_string, cvt_err_string);
+          ACE_OS_String::strcpy (ret_string, ACE_LIB_TEXT ("<?>"));
         }
       else
         {
