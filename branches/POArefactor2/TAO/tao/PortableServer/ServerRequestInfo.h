@@ -32,13 +32,14 @@
 #include "tao/PortableInterceptorC.h"
 #include "tao/LocalObject.h"
 #include "tao/OctetSeqC.h"
-#include "tao/Service_Context.h"
-#include "tao/TAO_Server_Request.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+class TAO_ServerRequest;
+class TAO_Service_Context;
 
 namespace TAO
 {
