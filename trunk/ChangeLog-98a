@@ -1,3 +1,15 @@
+Tue Dec 30 14:56:18 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Obstack: Enhanced ACE_Obstack so that it can be given a
+ 	  pointer to an allocator strategy.  This allows users to take
+ 	  complete control of where the memory comes from for the Obstack.
+
+	* ace/Obstack: Changed the default value of "size" so that it is
+	  (4096 - sizeof (ACE_Obstack)).
+
+	* ace/Obstack: Added a new ACE_Obchunk constructor to simplify
+	  some of the code.
+
 Mon Dec 29 20:21:32 1997  Steve Huston  <shuston@riverace.com>
 
 	* include/makeinclude/rules.lib.GNU: Adjusted dependencies on building
