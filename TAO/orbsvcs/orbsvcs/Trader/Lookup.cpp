@@ -43,6 +43,13 @@ TAO_Lookup<TRADER>::~TAO_Lookup (void)
 {
 }
 
+class Yadda
+{
+public:
+  Yadda (void) {}
+  ~Yadda (void) { new char [10]; }
+};
+
 template <class TRADER> void
 TAO_Lookup<TRADER>::
 query (const char *type,
@@ -66,7 +73,7 @@ query (const char *type,
 		   CosTrading::IllegalPropertyName,
 		   CosTrading::DuplicatePropertyName,
 		   CosTrading::DuplicatePolicyName))
-{    
+{
   // Initializing out parameters
   returned_offers = new CosTrading::OfferSeq;
   returned_offer_iterator = CosTrading::OfferIterator::_nil ();
@@ -75,10 +82,10 @@ query (const char *type,
   // Get service type map
   TRADER::SERVICE_TYPE_MAP& service_type_map =
     this->trader_.service_type_map ();
-  
+
   TAO_Policies policies (this->trader_, in_policies, env);
   TAO_CHECK_ENV_RETURN_VOID (env);
-
+  
   // If the importer has specified a starting trader, foward the
   // query.
   CosTrading::TraderName* trader_name = policies.starting_trader (env);
@@ -107,7 +114,7 @@ query (const char *type,
     return;
 
   // If the type is invalid or unknown, let us know now.
-  TAO_Support_Attributes_Impl support_attrs =
+  const TAO_Support_Attributes_Impl& support_attrs =
     this->trader_.support_attributes ();  
   CosTrading::TypeRepository_ptr type_repos =
     support_attrs.type_repos ();
@@ -146,7 +153,6 @@ query (const char *type,
   // Determine if we should perform a federated query, and if so
   // construct a sequence of links to follow.
   CosTrading::LinkNameSeq* links = 0;
-  CosTrading::LinkNameSeq_var links_to_follow (links);  
   CORBA::Boolean should_follow =
     this->retrieve_links (policies,
 			  offers_returned,
@@ -157,6 +163,7 @@ query (const char *type,
   if (should_follow)
     {
       // Perform the sequence of fedrated queries.
+      CosTrading::LinkNameSeq_var links_to_follow (links);  
       this->federated_query (*links,
 			     type,
 			     constraint,
@@ -169,7 +176,7 @@ query (const char *type,
 			     returned_limits_applied,
 			     env);
     }
-  TAO_CHECK_ENV_RETURN_VOID (env);  
+  TAO_CHECK_ENV_RETURN_VOID (env);
 }
 
 template <class TRADER> void

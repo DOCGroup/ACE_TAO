@@ -67,9 +67,6 @@ public:
 
   static const char* REMOTE_IO_NAME;
   static const char* REMOTE_IO_PROPERTY_NAMES[];
-  static CORBA::TypeCode_ptr REMOTE_IO_PROPERTY_TYPES[];
-  static CosTradingRepos::ServiceTypeRepository::PropertyMode REMOTE_IO_PROPERTY_MODES[];
-
   
   // = Plotter property descriptions 
   
@@ -85,8 +82,6 @@ public:
 
   static const char* PLOTTER_NAME;
   static const char* PLOTTER_PROPERTY_NAMES[]; 
-  static CORBA::TypeCode_ptr PLOTTER_PROPERTY_TYPES[];
-  static CosTradingRepos::ServiceTypeRepository::PropertyMode PLOTTER_PROPERTY_MODES[];
   
   // = Printer property descriptions
   
@@ -103,8 +98,6 @@ public:
 
   static const char* PRINTER_NAME;
   static const char* PRINTER_PROPERTY_NAMES[];
-  static CORBA::TypeCode_ptr PRINTER_PROPERTY_TYPES[];
-  static CosTradingRepos::ServiceTypeRepository::PropertyMode PRINTER_PROPERTY_MODES[];
   
   // = File System Property Descriptions
   
@@ -117,10 +110,7 @@ public:
 
   static const char* FILESYSTEM_NAME;
   static const char* FILESYSTEM_PROPERTY_NAMES[];
-  static CORBA::TypeCode_ptr FILESYSTEM_PROPERTY_TYPES[];  
-  static CosTradingRepos::ServiceTypeRepository::PropertyMode FILESYSTEM_PROPERTY_MODES[];
 
-  
   // = PostScript Printer property descriptions.  
   
   enum PS_PRINTER_PROPERTIES
@@ -130,8 +120,6 @@ public:
 
   static const char* PS_PRINTER_NAME;
   static const char* PS_PRINTER_PROPERTY_NAMES[];
-  static CORBA::TypeCode_ptr PS_PRINTER_PROPERTY_TYPES[];
-  static CosTradingRepos::ServiceTypeRepository::PropertyMode PS_PRINTER_PROPERTY_MODES[];
   
   // = Offer Info
 
