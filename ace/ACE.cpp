@@ -264,7 +264,7 @@ ACE::execname (const char *old_name)
 
       ACE_NEW_RETURN (new_name,
                       char[size],
-                      -1);
+                      0);
       char *end = new_name;
 
       end = ACE_OS::strecpy (new_name, old_name);
@@ -344,7 +344,7 @@ ACE::execname (const wchar_t *old_name)
 
       ACE_NEW_RETURN (new_name,
                       wchar_t[size],
-                      -1);
+                      0);
       wchar_t *end = new_name;
 
       end = ACE_OS::strecpy (new_name, old_name);
