@@ -24,6 +24,7 @@
 #include "tao/GIOP_Message_Generator_Parser_Impl.h"
 #include "tao/GIOP_Utils.h"
 #include "tao/GIOP_Message_State.h"
+#include "tao/Incoming_Message_Queue.h"
 
 class TAO_Pluggable_Reply_Params;
 
@@ -199,19 +200,11 @@ private:
   /// incoming messages
   TAO_GIOP_Message_State message_state_;
 
+  /// @@Bala:Docu
+  TAO_Incoming_Message_Queue message_queue_;
+
   /// Output CDR
   TAO_OutputCDR *output_;
-
-  /// Allocators for the output CDR that we hold. As we cannot rely on
-  /// the resources from ORB Core we reserve our own resources. The
-  /// reason that we cannot believe the ORB core is that, for a
-  /// multi-threaded servers it dishes out resources cached in
-  /// TSS. This would be dangerous as TSS gets destroyed before we
-  /// would. So we have our own memory that we can rely on.
-  /// Implementations of GIOP that we have
-  ACE_Allocator *cdr_buffer_alloc_;
-  ACE_Allocator *cdr_dblock_alloc_;
-  ACE_Allocator *cdr_msgblock_alloc_;
 
   /// A buffer that we will use to initialise the CDR stream
   char repbuf_[ACE_CDR::DEFAULT_BUFSIZE];
@@ -220,9 +213,9 @@ private:
   TAO_GIOP_Message_Generator_Parser_Impl tao_giop_impl_;
 
 protected:
-
   /// The generator and parser state.
   TAO_GIOP_Message_Generator_Parser *generator_parser_;
+
 };
 
 

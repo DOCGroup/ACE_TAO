@@ -244,7 +244,13 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
               this->cached_connection_lock_type_ = TAO_THREAD_LOCK;
             else if (ACE_OS::strcasecmp (name,
                                          "null") == 0)
-              this->cached_connection_lock_type_ = TAO_NULL_LOCK;
+              {
+                // @@Carlos:This is a sort of hack now. We need to put
+                // this in a common place once we get teh common
+                // switch that we talked during the workshop to work.
+                //                this->use_locked_data_blocks_  = 0;
+                this->cached_connection_lock_type_ = TAO_NULL_LOCK;
+              }
           }
       }
 
@@ -265,7 +271,13 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
               this->cached_connection_lock_type_ = TAO_THREAD_LOCK;
             else if (ACE_OS::strcasecmp (name,
                                          "null") == 0)
-              this->cached_connection_lock_type_ = TAO_NULL_LOCK;
+              {
+                // @@Carlos:This is a sort of hack now. We need to put
+                // this in a common place once we get teh common
+                // switch that we talked during the workshop to work.
+                // this->use_locked_data_blocks_  = 0;
+                this->cached_connection_lock_type_ = TAO_NULL_LOCK;
+              }
           }
       }
 
@@ -286,7 +298,13 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
               this->cached_connection_lock_type_ = TAO_THREAD_LOCK;
             else if (ACE_OS::strcasecmp (name,
                                          "null") == 0)
-              this->cached_connection_lock_type_ = TAO_NULL_LOCK;
+              {
+                // @@Carlos:This is a sort of hack now. We need to put
+                // this in a common place once we get teh common
+                // switch that we talked during the workshop to work.
+                // this->use_locked_data_blocks_  = 0;
+                this->cached_connection_lock_type_ = TAO_NULL_LOCK;
+              }
           }
       }
 
