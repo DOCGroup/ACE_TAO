@@ -254,18 +254,6 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
       return 0;
     }
 
-  // @@ TODO this may be different when we complete support for native
-  // C++ exceptions.
-  *os << "if (_tao_skel_environment.exception () != 0)" << be_idt_nl
-      << "{" << be_idt_nl
-      << "_tao_environment.exception "
-      << "(_tao_skel_environment.exception ());" << be_uidt_nl
-      << "}" << be_uidt << "\n\n";
-  if (this->gen_check_exception (bt, "_tao_environment") == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%N:%l) be_visitor_operation_ss::visit_operation"
-                       " - error on gen_check_exception\n"), -1);
-
   // marshal outgoing parameters
   if (this->gen_marshal_params (node, bt) == -1)
     {
