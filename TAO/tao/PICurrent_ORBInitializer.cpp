@@ -2,6 +2,9 @@
 
 #include "PICurrent_ORBInitializer.h"
 
+
+#if TAO_HAS_INTERCEPTORS == 1
+
 #include "ORB_Core.h"
 
 #include "PICurrent.h"
@@ -55,3 +58,6 @@ TAO_PICurrent_ORBInitializer::post_init (
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
+
+
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
