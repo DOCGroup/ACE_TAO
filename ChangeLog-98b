@@ -1,25 +1,33 @@
+Tue Sep 15 16:34:47 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.i (gethrtime): added high-res timer support with
+          g++ and ACE_HAS_POWERPC_TIMER.
+
+        * ace/config-vxworks5.x.GNU,README: changed ACE_HAS_POWERPC to
+          ACE_HAS_POWERPC_TIMER.
+
 Tue Sep 15 16:28:12 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* ace/ARGV.cpp (ACE_ARGV::argv_to_string): Fixed the problem where
-	  we were allocating space only for the length of the string whereas
-	  strecpy was inserting the extra '\0' leading to Array bounds write.
+        * ace/ARGV.cpp (ACE_ARGV::argv_to_string): Fixed the problem where
+          we were allocating space only for the length of the string whereas
+          strecpy was inserting the extra '\0' leading to Array bounds write.
 
 Tue Sep 15 13:33:26 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/config-{WinCE,g++-common}.h:
-	* ace/OS.{h,i,cpp}: Deprecated ACE_LACKS_GETS and ACE_OS::gets (void).
+        * ace/config-{WinCE,g++-common}.h:
+        * ace/OS.{h,i,cpp}: Deprecated ACE_LACKS_GETS and ACE_OS::gets (void).
 
 Tue Sep 15 11:22:53 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* ace/OS.{h, i}:
+        * ace/OS.{h, i}:
 
-	  Added definition for the "stat" data structure. Also added the
-	  definition for the "truncate" function.
+          Added definition for the "stat" data structure. Also added the
+          definition for the "truncate" function.
 
 Tue Sep 15 09:44:07 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* apps/gperf/src/gperf_lib.dsp: Enabled c++ exception handling to
-	  avoid warning when compiling with standard c++ libraries.
+        * apps/gperf/src/gperf_lib.dsp: Enabled c++ exception handling to
+          avoid warning when compiling with standard c++ libraries.
 
 Mon Sep 14 23:28:24 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
