@@ -1,3 +1,8 @@
+Tue Feb 12 11:50:18 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* bin/pippen.pl: Applied a patch from "the source" to fix a
+	  problem in determining project dependencies.
+
 Tue Feb 12 09:37:56 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ACE-INSTALL.html:
@@ -21,7 +26,7 @@ Mon Feb 11 13:49:35 2002  Ossama Othman  <ossama@uci.edu>
 	  New test that verifies the number of #pragma warning(push)
 	  pragmas matches the number of #pragma warning(pop) pragmas.
 
-	* examples/IPC_SAP/SSL_SAP/SSL-client.cpp (shared_client_test): 
+	* examples/IPC_SAP/SSL_SAP/SSL-client.cpp (shared_client_test):
 	* examples/IPC_SAP/SSL_SAP/SSL-client-simple.cpp
 	  (shared_client_test):
 
@@ -38,12 +43,12 @@ Mon Feb 11 05:42:02 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Connector.h: Fixed a typo in the coments. Thanks to Miljenko
 	  Norsic (ETK) <Miljenko.Norsic@etk.ericsson.se> for reporting
-	  this. 
+	  this.
 
 Sun Feb 10 16:28:30 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/config-macosx.h 
-	* ace/config-freebsd.h 
+	* ace/config-macosx.h
+	* ace/config-freebsd.h
 	* ace/config-freebsd-pthread.h
 	* ace/TTY_IO.cpp:
 	* TODO: Removed the ACE_USES_HIGH_BAUD_RATES macro since it no longer
@@ -68,7 +73,7 @@ Fri Feb  8 22:56:29 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Fri Feb  8 14:54:21 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* apps/JAWS2/Makefile (LDFLAGS): 
+	* apps/JAWS2/Makefile (LDFLAGS):
 	* apps/JAWS2/HTTPU/Makefile (LDFLAGS): Fixed some makefile bugs so
 	  that this stuff compiles on AIX.  Thanks to Steve Ige
  	  <steve.ige@reuters.com> for reporting this.
