@@ -1,4 +1,3 @@
-
 // $Id$
 
 // ============================================================================
@@ -40,8 +39,8 @@ USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
-typedef size_t KEY;
-typedef size_t VALUE;
+typedef ACE_UINT32 KEY;
+typedef ACE_UINT32 VALUE;
 typedef int ATTR;
 typedef ACE_Pair<VALUE, ATTR> CACHE_VALUE;
 typedef ACE_Hash<KEY> HASH_KEY;
