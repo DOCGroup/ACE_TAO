@@ -289,7 +289,6 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
- Security/security_export.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -436,6 +435,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IIOP_Connection_Handler.i \
  SSLIOP/SSLIOP_Current.h SSLIOP/SSLIOP_Current_Impl.h \
  Security/Security_Current_Impl.h \
+ Security/security_export.h \
  SecurityLevel2C.h \
  SecurityLevel1C.h \
  SecurityLevel1C.i \
@@ -692,7 +692,6 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
- Security/security_export.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -839,6 +838,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IIOP_Connection_Handler.i \
  SSLIOP/SSLIOP_Current.h SSLIOP/SSLIOP_Current_Impl.h \
  Security/Security_Current_Impl.h \
+ Security/security_export.h \
  SecurityLevel2C.h \
  SecurityLevel1C.h \
  SecurityLevel1C.i \
@@ -1079,7 +1079,6 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
- Security/security_export.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -1098,6 +1097,7 @@ realclean: clean
  SecurityC.i \
  SSLIOPC.i \
  Security/Security_Current_Impl.h \
+ Security/security_export.h \
  SecurityLevel2C.h \
  SecurityLevel1C.h \
  SecurityLevel1C.i \
@@ -1448,7 +1448,6 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
- Security/security_export.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -1595,6 +1594,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IIOP_Connection_Handler.i \
  SSLIOP/SSLIOP_Current.h SSLIOP/SSLIOP_Current_Impl.h \
  Security/Security_Current_Impl.h \
+ Security/security_export.h \
  SecurityLevel2C.h \
  SecurityLevel1C.h \
  SecurityLevel1C.i \
@@ -1853,7 +1853,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- Security/security_export.h \
+ SSLIOP/SSLIOP_Export.h \
  SecurityLevel1C.h \
  SecurityC.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
@@ -2060,7 +2060,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- Security/security_export.h \
+ SSLIOP/SSLIOP_Export.h \
  SecurityLevel1C.h \
  SecurityC.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
@@ -2267,7 +2267,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- Security/security_export.h \
+ SSLIOP/SSLIOP_Export.h \
  SecurityLevel1C.h \
  SecurityC.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
@@ -2472,7 +2472,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- Security/security_export.h \
+ SSLIOP/SSLIOP_Export.h \
  SecurityLevel2C.h \
  SecurityLevel1C.h \
  SecurityC.h \
@@ -2496,12 +2496,22 @@ realclean: clean
  SecurityLevel2C.i \
  SecurityReplaceableC.i \
  SSLIOPC.h \
- SSLIOP/SSLIOP_Export.h \
  SSLIOPC.i \
  SSLIOP/SSLIOP_Credentials.h SSLIOP/SSLIOP_Export.h \
  SSLIOP/SSLIOP_X509.h SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_EVP_PKEY.h \
  SSLIOP/SSLIOP_EVP_PKEY.inl SSLIOP/SSLIOP_Credentials.inl \
- $(TAO_ROOT)/tao/debug.h
+ $(TAO_ROOT)/tao/debug.h \
+ $(ACE_ROOT)/ace/SSL/SSL_Context.h \
+ $(ACE_ROOT)/ace/SSL/SSL_Export.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Framework_Component.h \
+ $(ACE_ROOT)/ace/Framework_Component.inl \
+ $(ACE_ROOT)/ace/Framework_Component_T.h \
+ $(ACE_ROOT)/ace/Framework_Component_T.inl \
+ $(ACE_ROOT)/ace/Framework_Component_T.cpp \
+ $(ACE_ROOT)/ace/SSL/SSL_Context.inl
 
 .obj/SSLIOP_Current.o .obj/SSLIOP_Current.so .shobj/SSLIOP_Current.o .shobj/SSLIOP_Current.so: SSLIOP/SSLIOP_Current.cpp SSLIOP/SSLIOP_Current.h \
  $(ACE_ROOT)/ace/pre.h SSLIOP/SSLIOP_Export.h \
@@ -2688,7 +2698,6 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
- Security/security_export.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -2707,6 +2716,7 @@ realclean: clean
  SecurityC.i \
  SSLIOPC.i \
  Security/Security_Current_Impl.h \
+ Security/security_export.h \
  SecurityLevel2C.h \
  SecurityLevel1C.h \
  SecurityLevel1C.i \
@@ -2975,7 +2985,6 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
- Security/security_export.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -2994,6 +3003,7 @@ realclean: clean
  SecurityC.i \
  SSLIOPC.i \
  Security/Security_Current_Impl.h \
+ Security/security_export.h \
  SecurityLevel2C.h \
  SecurityLevel1C.h \
  SecurityLevel1C.i \
@@ -3268,7 +3278,6 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
- Security/security_export.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -3470,7 +3479,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- Security/security_export.h \
+ SSLIOP/SSLIOP_Export.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -3495,11 +3504,11 @@ realclean: clean
  SecurityLevel2C.i \
  SecurityReplaceableC.i \
  SSLIOPC.h \
- SSLIOP/SSLIOP_Export.h \
  SSLIOPC.i \
  $(TAO_ROOT)/tao/debug.h SSLIOP/SSLIOP_Current.h \
  SSLIOP/SSLIOP_Current_Impl.h \
  Security/Security_Current_Impl.h \
+ Security/security_export.h \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Set.h \
@@ -3767,7 +3776,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- Security/security_export.h \
+ SSLIOP/SSLIOP_Export.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -3810,7 +3819,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Reactor_Impl.h SSLIOP/SSLIOP_Acceptor.h \
  SSLIOP/IIOP_SSL_Acceptor.h SSLIOP/IIOP_SSL_Connection_Handler.h \
  SSLIOPC.h \
- SSLIOP/SSLIOP_Export.h \
  SSLIOPC.i \
  $(TAO_ROOT)/tao/IIOP_Connection_Handler.h \
  $(ACE_ROOT)/ace/Acceptor.h \
@@ -3918,6 +3926,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IIOP_Connection_Handler.i \
  SSLIOP/SSLIOP_Current.h SSLIOP/SSLIOP_Current_Impl.h \
  Security/Security_Current_Impl.h \
+ Security/security_export.h \
  SecurityLevel2C.h \
  SecurityLevel1C.h \
  SecurityLevel1C.i \
@@ -4200,7 +4209,6 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
- Security/security_export.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -4429,7 +4437,6 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
- Security/security_export.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -4580,6 +4587,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Dynamic.i SSLIOP/SSLIOP_Current.h \
  SSLIOP/SSLIOP_Current_Impl.h \
  Security/Security_Current_Impl.h \
+ Security/security_export.h \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Set.h \
@@ -4929,7 +4937,6 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
- Security/security_export.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -4943,6 +4950,7 @@ realclean: clean
  SecurityC.i \
  SSLIOPC.i \
  Security/Security_Current_Impl.h \
+ Security/security_export.h \
  SecurityLevel2C.h \
  SecurityLevel1C.h \
  SecurityLevel1C.i \
@@ -5287,7 +5295,6 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
- Security/security_export.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -5410,6 +5417,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IIOP_Connection_Handler.i \
  SSLIOP/SSLIOP_Current.h SSLIOP/SSLIOP_Current_Impl.h \
  Security/Security_Current_Impl.h \
+ Security/security_export.h \
  SecurityLevel2C.h \
  SecurityLevel1C.h \
  SecurityLevel1C.i \
@@ -5683,7 +5691,6 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
- Security/security_export.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -5830,6 +5837,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IIOP_Connection_Handler.i \
  SSLIOP/SSLIOP_Current.h SSLIOP/SSLIOP_Current_Impl.h \
  Security/Security_Current_Impl.h \
+ Security/security_export.h \
  SecurityLevel2C.h \
  SecurityLevel1C.h \
  SecurityLevel1C.i \
@@ -6238,7 +6246,6 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
- Security/security_export.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -6252,6 +6259,7 @@ realclean: clean
  SecurityC.i \
  SSLIOPC.i \
  Security/Security_Current_Impl.h \
+ Security/security_export.h \
  SecurityLevel2C.h \
  SecurityLevel1C.h \
  SecurityLevel1C.i \
@@ -6637,7 +6645,6 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
- Security/security_export.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -6651,6 +6658,7 @@ realclean: clean
  SecurityC.i \
  SSLIOPC.i \
  Security/Security_Current_Impl.h \
+ Security/security_export.h \
  SecurityLevel2C.h \
  SecurityLevel1C.h \
  SecurityLevel1C.i \
@@ -6885,7 +6893,6 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
- Security/security_export.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -7085,7 +7092,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- SSLIOP/SSLIOP_Export.h SecurityC.h Security/security_export.h \
+ SSLIOP/SSLIOP_Export.h SecurityC.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
