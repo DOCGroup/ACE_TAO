@@ -1,3 +1,11 @@
+Sat Dec 18 19:21:01 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * tao/POA.cpp: Fixed the imr_notify_startup method to not
+          deadlock.  But the change required the server_object to
+          be moved into the current POA, instead of the root.  This
+          means a POA registered with the IMR must also have the
+          USER_ID policy in addition to the PERSITENT policy (for now).
+
 Sat Dec 18 17:01:11 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * orbsvcs/Time_Service/Server_i.cpp:
