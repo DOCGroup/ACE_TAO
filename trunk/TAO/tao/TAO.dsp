@@ -345,6 +345,7 @@ DEP_CPP_ACTIV=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -365,7 +366,6 @@ DEP_CPP_ACTIV=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -607,6 +607,7 @@ DEP_CPP_ACTIV=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -627,7 +628,6 @@ DEP_CPP_ACTIV=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -880,6 +880,7 @@ DEP_CPP_ANY_C=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -900,7 +901,6 @@ DEP_CPP_ANY_C=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -1142,6 +1142,7 @@ DEP_CPP_ANY_C=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -1162,7 +1163,6 @@ DEP_CPP_ANY_C=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -1415,6 +1415,7 @@ DEP_CPP_APPEN=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -1435,7 +1436,6 @@ DEP_CPP_APPEN=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -1677,6 +1677,7 @@ DEP_CPP_APPEN=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -1697,7 +1698,6 @@ DEP_CPP_APPEN=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -1956,6 +1956,7 @@ DEP_CPP_CDR_C=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -1976,7 +1977,6 @@ DEP_CPP_CDR_C=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -2224,6 +2224,7 @@ DEP_CPP_CDR_C=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -2244,7 +2245,6 @@ DEP_CPP_CDR_C=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -2307,6 +2307,541 @@ DEP_CPP_CDR_C=\
 	".\varout.i"\
 	
 NODEP_CPP_CDR_C=\
+	".\align.h"\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
+	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\CDR_Interpreter.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+DEP_CPP_CDR_I=\
+	"..\..\ace\Acceptor.cpp"\
+	"..\..\ace\Acceptor.h"\
+	"..\..\ace\Acceptor.i"\
+	"..\..\ace\ACE.h"\
+	"..\..\ace\ACE.i"\
+	"..\..\ace\Addr.h"\
+	"..\..\ace\Addr.i"\
+	"..\..\ace\Atomic_Op.i"\
+	"..\..\ace\Auto_Ptr.cpp"\
+	"..\..\ace\Auto_Ptr.h"\
+	"..\..\ace\Auto_Ptr.i"\
+	"..\..\ace\Basic_Types.h"\
+	"..\..\ace\Basic_Types.i"\
+	"..\..\ace\config-win32-borland.h"\
+	"..\..\ace\config-win32-common.h"\
+	"..\..\ace\config-win32.h"\
+	"..\..\ace\config-WinCE.h"\
+	"..\..\ace\config.h"\
+	"..\..\ace\Connector.cpp"\
+	"..\..\ace\Connector.h"\
+	"..\..\ace\Connector.i"\
+	"..\..\ace\Containers.h"\
+	"..\..\ace\Containers.i"\
+	"..\..\ace\Containers_T.cpp"\
+	"..\..\ace\Containers_T.h"\
+	"..\..\ace\Containers_T.i"\
+	"..\..\ace\Dynamic.h"\
+	"..\..\ace\Dynamic.i"\
+	"..\..\ace\Dynamic_Service.cpp"\
+	"..\..\ace\Dynamic_Service.h"\
+	"..\..\ace\Event_Handler.h"\
+	"..\..\ace\Event_Handler.i"\
+	"..\..\ace\Free_List.cpp"\
+	"..\..\ace\Free_List.h"\
+	"..\..\ace\Free_List.i"\
+	"..\..\ace\Functor.h"\
+	"..\..\ace\Functor.i"\
+	"..\..\ace\Functor_T.cpp"\
+	"..\..\ace\Functor_T.h"\
+	"..\..\ace\Functor_T.i"\
+	"..\..\ace\Get_Opt.h"\
+	"..\..\ace\Get_Opt.i"\
+	"..\..\ace\Handle_Set.h"\
+	"..\..\ace\Handle_Set.i"\
+	"..\..\ace\Hash_Map_Manager.h"\
+	"..\..\ace\Hash_Map_Manager.i"\
+	"..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\ace\inc_user_config.h"\
+	"..\..\ace\INET_Addr.h"\
+	"..\..\ace\INET_Addr.i"\
+	"..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\ace\iosfwd.h"\
+	"..\..\ace\IPC_SAP.h"\
+	"..\..\ace\IPC_SAP.i"\
+	"..\..\ace\Log_Msg.h"\
+	"..\..\ace\Log_Priority.h"\
+	"..\..\ace\Log_Record.h"\
+	"..\..\ace\Log_Record.i"\
+	"..\..\ace\Malloc.h"\
+	"..\..\ace\Malloc.i"\
+	"..\..\ace\Malloc_Base.h"\
+	"..\..\ace\Malloc_T.cpp"\
+	"..\..\ace\Malloc_T.h"\
+	"..\..\ace\Malloc_T.i"\
+	"..\..\ace\Managed_Object.cpp"\
+	"..\..\ace\Managed_Object.h"\
+	"..\..\ace\Managed_Object.i"\
+	"..\..\ace\Map_Manager.cpp"\
+	"..\..\ace\Map_Manager.h"\
+	"..\..\ace\Map_Manager.i"\
+	"..\..\ace\Mem_Map.h"\
+	"..\..\ace\Mem_Map.i"\
+	"..\..\ace\Memory_Pool.h"\
+	"..\..\ace\Memory_Pool.i"\
+	"..\..\ace\Message_Block.h"\
+	"..\..\ace\Message_Block.i"\
+	"..\..\ace\Message_Block_T.cpp"\
+	"..\..\ace\Message_Block_T.h"\
+	"..\..\ace\Message_Block_T.i"\
+	"..\..\ace\Message_Queue.h"\
+	"..\..\ace\Message_Queue.i"\
+	"..\..\ace\Message_Queue_T.cpp"\
+	"..\..\ace\Message_Queue_T.h"\
+	"..\..\ace\Message_Queue_T.i"\
+	"..\..\ace\Module.cpp"\
+	"..\..\ace\Module.h"\
+	"..\..\ace\Module.i"\
+	"..\..\ace\Object_Manager.h"\
+	"..\..\ace\Object_Manager.i"\
+	"..\..\ace\OS.h"\
+	"..\..\ace\OS.i"\
+	"..\..\ace\Reactor.h"\
+	"..\..\ace\Reactor.i"\
+	"..\..\ace\Reactor_Impl.h"\
+	"..\..\ace\Service_Config.h"\
+	"..\..\ace\Service_Config.i"\
+	"..\..\ace\Service_Object.h"\
+	"..\..\ace\Service_Object.i"\
+	"..\..\ace\Service_Repository.h"\
+	"..\..\ace\Service_Repository.i"\
+	"..\..\ace\Service_Types.h"\
+	"..\..\ace\Service_Types.i"\
+	"..\..\ace\Shared_Object.h"\
+	"..\..\ace\Shared_Object.i"\
+	"..\..\ace\Signal.h"\
+	"..\..\ace\Signal.i"\
+	"..\..\ace\Singleton.cpp"\
+	"..\..\ace\Singleton.h"\
+	"..\..\ace\Singleton.i"\
+	"..\..\ace\SOCK.h"\
+	"..\..\ace\SOCK.i"\
+	"..\..\ace\SOCK_Acceptor.h"\
+	"..\..\ace\SOCK_Acceptor.i"\
+	"..\..\ace\SOCK_Connector.h"\
+	"..\..\ace\SOCK_Connector.i"\
+	"..\..\ace\SOCK_IO.h"\
+	"..\..\ace\SOCK_IO.i"\
+	"..\..\ace\SOCK_Stream.h"\
+	"..\..\ace\SOCK_Stream.i"\
+	"..\..\ace\SString.h"\
+	"..\..\ace\SString.i"\
+	"..\..\ace\Strategies.h"\
+	"..\..\ace\Strategies.i"\
+	"..\..\ace\Strategies_T.cpp"\
+	"..\..\ace\Strategies_T.h"\
+	"..\..\ace\Strategies_T.i"\
+	"..\..\ace\Stream_Modules.cpp"\
+	"..\..\ace\Stream_Modules.h"\
+	"..\..\ace\Stream_Modules.i"\
+	"..\..\ace\streams.h"\
+	"..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\ace\Svc_Handler.cpp"\
+	"..\..\ace\Svc_Handler.h"\
+	"..\..\ace\Svc_Handler.i"\
+	"..\..\ace\Synch.h"\
+	"..\..\ace\Synch.i"\
+	"..\..\ace\Synch_Options.h"\
+	"..\..\ace\Synch_Options.i"\
+	"..\..\ace\Synch_T.cpp"\
+	"..\..\ace\Synch_T.h"\
+	"..\..\ace\Synch_T.i"\
+	"..\..\ace\Task.h"\
+	"..\..\ace\Task.i"\
+	"..\..\ace\Task_T.cpp"\
+	"..\..\ace\Task_T.h"\
+	"..\..\ace\Task_T.i"\
+	"..\..\ace\Thread.h"\
+	"..\..\ace\Thread.i"\
+	"..\..\ace\Thread_Manager.h"\
+	"..\..\ace\Thread_Manager.i"\
+	"..\..\ace\Time_Value.h"\
+	"..\..\ace\Timer_Queue.h"\
+	"..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\ace\Timer_Queue_T.h"\
+	"..\..\ace\Timer_Queue_T.i"\
+	"..\..\ace\Trace.h"\
+	"..\..\ace\WFMO_Reactor.h"\
+	"..\..\ace\WFMO_Reactor.i"\
+	"..\..\ace\ws2tcpip.h"\
+	".\Active_Object_Map.h"\
+	".\Active_Object_Map.i"\
+	".\any.h"\
+	".\any.i"\
+	".\cdr.h"\
+	".\cdr.i"\
+	".\CDR_Interpreter.h"\
+	".\Client_Strategy_Factory.h"\
+	".\connect.h"\
+	".\connect.i"\
+	".\corba.h"\
+	".\CurrentC.h"\
+	".\CurrentC.i"\
+	".\debug.h"\
+	".\default_client.h"\
+	".\default_client.i"\
+	".\default_server.h"\
+	".\default_server.i"\
+	".\DynAny_i.h"\
+	".\DynAnyC.h"\
+	".\DynAnyC.i"\
+	".\Environment.h"\
+	".\Environment.i"\
+	".\Exception.h"\
+	".\Exception.i"\
+	".\giop.h"\
+	".\giop.i"\
+	".\IIOP_ORB.h"\
+	".\IIOP_ORB.i"\
+	".\InconsistentTypeCodeC.h"\
+	".\Invocation.h"\
+	".\Invocation.i"\
+	".\Managed_Types.h"\
+	".\Managed_Types.i"\
+	".\marshal.h"\
+	".\marshal.i"\
+	".\nvlist.h"\
+	".\NVList.i"\
+	".\object.h"\
+	".\object.i"\
+	".\Object_KeyC.h"\
+	".\Object_KeyC.i"\
+	".\Operation_Table.h"\
+	".\orb.h"\
+	".\ORB.i"\
+	".\orb_core.h"\
+	".\orb_core.i"\
+	".\ORB_Strategies_T.cpp"\
+	".\ORB_Strategies_T.h"\
+	".\ORB_Strategies_T.i"\
+	".\orbconf.h"\
+	".\params.h"\
+	".\params.i"\
+	".\poa.h"\
+	".\POA.i"\
+	".\POA_CORBA.h"\
+	".\poa_macros.h"\
+	".\poaC.h"\
+	".\poaC.i"\
+	".\poaS.h"\
+	".\poaS.i"\
+	".\PolicyC.h"\
+	".\PolicyC.i"\
+	".\Principal.h"\
+	".\Principal.i"\
+	".\request.h"\
+	".\Request.i"\
+	".\sequence.h"\
+	".\sequence.i"\
+	".\Sequence_T.cpp"\
+	".\Sequence_T.h"\
+	".\Sequence_T.i"\
+	".\servant_base.h"\
+	".\Servant_Base.i"\
+	".\Server_Request.h"\
+	".\Server_Request.i"\
+	".\Server_Strategy_Factory.h"\
+	".\singletons.h"\
+	".\stub.h"\
+	".\stub.i"\
+	".\try_macros.h"\
+	".\typecode.h"\
+	".\typecode.i"\
+	".\Union.h"\
+	".\varout.cpp"\
+	".\varout.h"\
+	".\varout.i"\
+	
+NODEP_CPP_CDR_I=\
+	".\align.h"\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
+	
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
+
+DEP_CPP_CDR_I=\
+	"..\..\ace\Acceptor.cpp"\
+	"..\..\ace\Acceptor.h"\
+	"..\..\ace\Acceptor.i"\
+	"..\..\ace\ACE.h"\
+	"..\..\ace\ACE.i"\
+	"..\..\ace\Addr.h"\
+	"..\..\ace\Addr.i"\
+	"..\..\ace\Atomic_Op.i"\
+	"..\..\ace\Auto_Ptr.cpp"\
+	"..\..\ace\Auto_Ptr.h"\
+	"..\..\ace\Auto_Ptr.i"\
+	"..\..\ace\Basic_Types.h"\
+	"..\..\ace\Basic_Types.i"\
+	"..\..\ace\config-win32-borland.h"\
+	"..\..\ace\config-win32-common.h"\
+	"..\..\ace\config-win32.h"\
+	"..\..\ace\config-WinCE.h"\
+	"..\..\ace\config.h"\
+	"..\..\ace\Connector.cpp"\
+	"..\..\ace\Connector.h"\
+	"..\..\ace\Connector.i"\
+	"..\..\ace\Containers.h"\
+	"..\..\ace\Containers.i"\
+	"..\..\ace\Containers_T.cpp"\
+	"..\..\ace\Containers_T.h"\
+	"..\..\ace\Containers_T.i"\
+	"..\..\ace\Dynamic.h"\
+	"..\..\ace\Dynamic.i"\
+	"..\..\ace\Dynamic_Service.cpp"\
+	"..\..\ace\Dynamic_Service.h"\
+	"..\..\ace\Event_Handler.h"\
+	"..\..\ace\Event_Handler.i"\
+	"..\..\ace\Free_List.cpp"\
+	"..\..\ace\Free_List.h"\
+	"..\..\ace\Free_List.i"\
+	"..\..\ace\Functor.h"\
+	"..\..\ace\Functor.i"\
+	"..\..\ace\Functor_T.cpp"\
+	"..\..\ace\Functor_T.h"\
+	"..\..\ace\Functor_T.i"\
+	"..\..\ace\Get_Opt.h"\
+	"..\..\ace\Get_Opt.i"\
+	"..\..\ace\Handle_Set.h"\
+	"..\..\ace\Handle_Set.i"\
+	"..\..\ace\Hash_Map_Manager.h"\
+	"..\..\ace\Hash_Map_Manager.i"\
+	"..\..\ace\Hash_Map_Manager_T.cpp"\
+	"..\..\ace\Hash_Map_Manager_T.h"\
+	"..\..\ace\Hash_Map_Manager_T.i"\
+	"..\..\ace\inc_user_config.h"\
+	"..\..\ace\INET_Addr.h"\
+	"..\..\ace\INET_Addr.i"\
+	"..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\ace\iosfwd.h"\
+	"..\..\ace\IPC_SAP.h"\
+	"..\..\ace\IPC_SAP.i"\
+	"..\..\ace\Log_Msg.h"\
+	"..\..\ace\Log_Priority.h"\
+	"..\..\ace\Log_Record.h"\
+	"..\..\ace\Log_Record.i"\
+	"..\..\ace\Malloc.h"\
+	"..\..\ace\Malloc.i"\
+	"..\..\ace\Malloc_Base.h"\
+	"..\..\ace\Malloc_T.cpp"\
+	"..\..\ace\Malloc_T.h"\
+	"..\..\ace\Malloc_T.i"\
+	"..\..\ace\Managed_Object.cpp"\
+	"..\..\ace\Managed_Object.h"\
+	"..\..\ace\Managed_Object.i"\
+	"..\..\ace\Map_Manager.cpp"\
+	"..\..\ace\Map_Manager.h"\
+	"..\..\ace\Map_Manager.i"\
+	"..\..\ace\Mem_Map.h"\
+	"..\..\ace\Mem_Map.i"\
+	"..\..\ace\Memory_Pool.h"\
+	"..\..\ace\Memory_Pool.i"\
+	"..\..\ace\Message_Block.h"\
+	"..\..\ace\Message_Block.i"\
+	"..\..\ace\Message_Block_T.cpp"\
+	"..\..\ace\Message_Block_T.h"\
+	"..\..\ace\Message_Block_T.i"\
+	"..\..\ace\Message_Queue.h"\
+	"..\..\ace\Message_Queue.i"\
+	"..\..\ace\Message_Queue_T.cpp"\
+	"..\..\ace\Message_Queue_T.h"\
+	"..\..\ace\Message_Queue_T.i"\
+	"..\..\ace\Module.cpp"\
+	"..\..\ace\Module.h"\
+	"..\..\ace\Module.i"\
+	"..\..\ace\Object_Manager.h"\
+	"..\..\ace\Object_Manager.i"\
+	"..\..\ace\OS.h"\
+	"..\..\ace\OS.i"\
+	"..\..\ace\Reactor.h"\
+	"..\..\ace\Reactor.i"\
+	"..\..\ace\Reactor_Impl.h"\
+	"..\..\ace\Service_Config.h"\
+	"..\..\ace\Service_Config.i"\
+	"..\..\ace\Service_Object.h"\
+	"..\..\ace\Service_Object.i"\
+	"..\..\ace\Service_Repository.h"\
+	"..\..\ace\Service_Repository.i"\
+	"..\..\ace\Service_Types.h"\
+	"..\..\ace\Service_Types.i"\
+	"..\..\ace\Shared_Object.h"\
+	"..\..\ace\Shared_Object.i"\
+	"..\..\ace\Signal.h"\
+	"..\..\ace\Signal.i"\
+	"..\..\ace\Singleton.cpp"\
+	"..\..\ace\Singleton.h"\
+	"..\..\ace\Singleton.i"\
+	"..\..\ace\SOCK.h"\
+	"..\..\ace\SOCK.i"\
+	"..\..\ace\SOCK_Acceptor.h"\
+	"..\..\ace\SOCK_Acceptor.i"\
+	"..\..\ace\SOCK_Connector.h"\
+	"..\..\ace\SOCK_Connector.i"\
+	"..\..\ace\SOCK_IO.h"\
+	"..\..\ace\SOCK_IO.i"\
+	"..\..\ace\SOCK_Stream.h"\
+	"..\..\ace\SOCK_Stream.i"\
+	"..\..\ace\SString.h"\
+	"..\..\ace\SString.i"\
+	"..\..\ace\Strategies.h"\
+	"..\..\ace\Strategies.i"\
+	"..\..\ace\Strategies_T.cpp"\
+	"..\..\ace\Strategies_T.h"\
+	"..\..\ace\Strategies_T.i"\
+	"..\..\ace\Stream_Modules.cpp"\
+	"..\..\ace\Stream_Modules.h"\
+	"..\..\ace\Stream_Modules.i"\
+	"..\..\ace\streams.h"\
+	"..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\ace\Svc_Handler.cpp"\
+	"..\..\ace\Svc_Handler.h"\
+	"..\..\ace\Svc_Handler.i"\
+	"..\..\ace\Synch.h"\
+	"..\..\ace\Synch.i"\
+	"..\..\ace\Synch_Options.h"\
+	"..\..\ace\Synch_Options.i"\
+	"..\..\ace\Synch_T.cpp"\
+	"..\..\ace\Synch_T.h"\
+	"..\..\ace\Synch_T.i"\
+	"..\..\ace\Task.h"\
+	"..\..\ace\Task.i"\
+	"..\..\ace\Task_T.cpp"\
+	"..\..\ace\Task_T.h"\
+	"..\..\ace\Task_T.i"\
+	"..\..\ace\Thread.h"\
+	"..\..\ace\Thread.i"\
+	"..\..\ace\Thread_Manager.h"\
+	"..\..\ace\Thread_Manager.i"\
+	"..\..\ace\Time_Value.h"\
+	"..\..\ace\Timer_Queue.h"\
+	"..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\ace\Timer_Queue_T.h"\
+	"..\..\ace\Timer_Queue_T.i"\
+	"..\..\ace\Trace.h"\
+	"..\..\ace\WFMO_Reactor.h"\
+	"..\..\ace\WFMO_Reactor.i"\
+	"..\..\ace\ws2tcpip.h"\
+	".\Active_Object_Map.h"\
+	".\Active_Object_Map.i"\
+	".\any.h"\
+	".\any.i"\
+	".\cdr.h"\
+	".\cdr.i"\
+	".\CDR_Interpreter.h"\
+	".\Client_Strategy_Factory.h"\
+	".\connect.h"\
+	".\connect.i"\
+	".\corba.h"\
+	".\CurrentC.h"\
+	".\CurrentC.i"\
+	".\debug.h"\
+	".\default_client.h"\
+	".\default_client.i"\
+	".\default_server.h"\
+	".\default_server.i"\
+	".\DynAny_i.h"\
+	".\DynAnyC.h"\
+	".\DynAnyC.i"\
+	".\Environment.h"\
+	".\Environment.i"\
+	".\Exception.h"\
+	".\Exception.i"\
+	".\giop.h"\
+	".\giop.i"\
+	".\IIOP_ORB.h"\
+	".\IIOP_ORB.i"\
+	".\InconsistentTypeCodeC.h"\
+	".\Invocation.h"\
+	".\Invocation.i"\
+	".\Managed_Types.h"\
+	".\Managed_Types.i"\
+	".\marshal.h"\
+	".\marshal.i"\
+	".\nvlist.h"\
+	".\NVList.i"\
+	".\object.h"\
+	".\object.i"\
+	".\Object_KeyC.h"\
+	".\Object_KeyC.i"\
+	".\Operation_Table.h"\
+	".\orb.h"\
+	".\ORB.i"\
+	".\orb_core.h"\
+	".\orb_core.i"\
+	".\ORB_Strategies_T.cpp"\
+	".\ORB_Strategies_T.h"\
+	".\ORB_Strategies_T.i"\
+	".\orbconf.h"\
+	".\params.h"\
+	".\params.i"\
+	".\poa.h"\
+	".\POA.i"\
+	".\POA_CORBA.h"\
+	".\poa_macros.h"\
+	".\poaC.h"\
+	".\poaC.i"\
+	".\poaS.h"\
+	".\poaS.i"\
+	".\PolicyC.h"\
+	".\PolicyC.i"\
+	".\Principal.h"\
+	".\Principal.i"\
+	".\request.h"\
+	".\Request.i"\
+	".\sequence.h"\
+	".\sequence.i"\
+	".\Sequence_T.cpp"\
+	".\Sequence_T.h"\
+	".\Sequence_T.i"\
+	".\servant_base.h"\
+	".\Servant_Base.i"\
+	".\Server_Request.h"\
+	".\Server_Request.i"\
+	".\Server_Strategy_Factory.h"\
+	".\singletons.h"\
+	".\stub.h"\
+	".\stub.i"\
+	".\try_macros.h"\
+	".\typecode.h"\
+	".\typecode.i"\
+	".\Union.h"\
+	".\varout.cpp"\
+	".\varout.h"\
+	".\varout.i"\
+	
+NODEP_CPP_CDR_I=\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -2497,6 +3032,7 @@ DEP_CPP_CLIEN=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -2517,7 +3053,6 @@ DEP_CPP_CLIEN=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -2759,6 +3294,7 @@ DEP_CPP_CLIEN=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -2779,7 +3315,6 @@ DEP_CPP_CLIEN=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -3038,6 +3573,7 @@ DEP_CPP_CONNE=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -3058,7 +3594,6 @@ DEP_CPP_CONNE=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -3307,6 +3842,7 @@ DEP_CPP_CONNE=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -3327,7 +3863,6 @@ DEP_CPP_CONNE=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -3395,6 +3930,21 @@ NODEP_CPP_CONNE=\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
 	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Context.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
 
 !ENDIF 
 
@@ -3581,6 +4131,7 @@ DEP_CPP_CURRE=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -3601,7 +4152,6 @@ DEP_CPP_CURRE=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -3843,6 +4393,7 @@ DEP_CPP_CURRE=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -3863,7 +4414,6 @@ DEP_CPP_CURRE=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -4116,6 +4666,7 @@ DEP_CPP_CURREN=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -4136,7 +4687,6 @@ DEP_CPP_CURREN=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -4378,6 +4928,7 @@ DEP_CPP_CURREN=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -4398,7 +4949,6 @@ DEP_CPP_CURREN=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -4651,6 +5201,7 @@ DEP_CPP_DEBUG=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -4671,7 +5222,6 @@ DEP_CPP_DEBUG=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -4913,6 +5463,7 @@ DEP_CPP_DEBUG=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -4933,7 +5484,6 @@ DEP_CPP_DEBUG=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -5186,6 +5736,7 @@ DEP_CPP_DECOD=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -5206,7 +5757,6 @@ DEP_CPP_DECOD=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -5448,6 +5998,7 @@ DEP_CPP_DECOD=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -5468,7 +6019,6 @@ DEP_CPP_DECOD=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -5721,6 +6271,7 @@ DEP_CPP_DEEP_=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -5741,7 +6292,6 @@ DEP_CPP_DEEP_=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -5983,6 +6533,7 @@ DEP_CPP_DEEP_=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -6003,7 +6554,6 @@ DEP_CPP_DEEP_=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -6256,6 +6806,7 @@ DEP_CPP_DEFAU=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -6276,7 +6827,6 @@ DEP_CPP_DEFAU=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -6518,6 +7068,7 @@ DEP_CPP_DEFAU=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -6538,7 +7089,6 @@ DEP_CPP_DEFAU=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -6791,6 +7341,7 @@ DEP_CPP_DEFAUL=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -6811,7 +7362,6 @@ DEP_CPP_DEFAUL=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -7053,6 +7603,7 @@ DEP_CPP_DEFAUL=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -7073,7 +7624,6 @@ DEP_CPP_DEFAUL=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -7326,6 +7876,7 @@ DEP_CPP_DYNAN=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -7353,7 +7904,6 @@ DEP_CPP_DYNAN=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -7595,6 +8145,7 @@ DEP_CPP_DYNAN=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -7622,7 +8173,6 @@ DEP_CPP_DYNAN=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -7875,6 +8425,7 @@ DEP_CPP_DYNANY=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -7895,7 +8446,6 @@ DEP_CPP_DYNANY=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -8137,6 +8687,7 @@ DEP_CPP_DYNANY=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -8157,7 +8708,6 @@ DEP_CPP_DYNANY=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -8410,6 +8960,7 @@ DEP_CPP_DYNANYS=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -8430,7 +8981,6 @@ DEP_CPP_DYNANYS=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -8672,6 +9222,7 @@ DEP_CPP_DYNANYS=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -8692,7 +9243,6 @@ DEP_CPP_DYNANYS=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -8945,6 +9495,7 @@ DEP_CPP_DYNAR=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -8966,7 +9517,6 @@ DEP_CPP_DYNAR=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -9208,6 +9758,7 @@ DEP_CPP_DYNAR=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -9229,7 +9780,6 @@ DEP_CPP_DYNAR=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -9482,6 +10032,7 @@ DEP_CPP_DYNEN=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -9503,7 +10054,6 @@ DEP_CPP_DYNEN=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -9745,6 +10295,7 @@ DEP_CPP_DYNEN=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -9766,7 +10317,6 @@ DEP_CPP_DYNEN=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -10019,6 +10569,7 @@ DEP_CPP_DYNSE=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -10040,7 +10591,6 @@ DEP_CPP_DYNSE=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -10282,6 +10832,7 @@ DEP_CPP_DYNSE=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -10303,7 +10854,6 @@ DEP_CPP_DYNSE=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -10556,6 +11106,7 @@ DEP_CPP_DYNST=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -10577,7 +11128,6 @@ DEP_CPP_DYNST=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -10819,6 +11369,7 @@ DEP_CPP_DYNST=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -10840,7 +11391,6 @@ DEP_CPP_DYNST=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -11093,6 +11643,7 @@ DEP_CPP_DYNUN=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -11116,7 +11667,6 @@ DEP_CPP_DYNUN=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -11358,6 +11908,7 @@ DEP_CPP_DYNUN=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -11381,7 +11932,6 @@ DEP_CPP_DYNUN=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -11634,6 +12184,7 @@ DEP_CPP_ENCOD=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -11654,7 +12205,6 @@ DEP_CPP_ENCOD=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -11896,6 +12446,7 @@ DEP_CPP_ENCOD=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -11916,7 +12467,6 @@ DEP_CPP_ENCOD=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -12169,6 +12719,7 @@ DEP_CPP_ENVIR=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -12189,7 +12740,6 @@ DEP_CPP_ENVIR=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -12431,6 +12981,7 @@ DEP_CPP_ENVIR=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -12451,7 +13002,6 @@ DEP_CPP_ENVIR=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -12704,6 +13254,7 @@ DEP_CPP_EXCEP=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -12724,7 +13275,6 @@ DEP_CPP_EXCEP=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -12966,6 +13516,7 @@ DEP_CPP_EXCEP=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -12986,7 +13537,6 @@ DEP_CPP_EXCEP=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -13239,6 +13789,7 @@ DEP_CPP_FORWA=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -13260,7 +13811,6 @@ DEP_CPP_FORWA=\
 	".\Forwarding_Servant.h"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -13502,6 +14052,7 @@ DEP_CPP_FORWA=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -13523,7 +14074,6 @@ DEP_CPP_FORWA=\
 	".\Forwarding_Servant.h"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -13782,6 +14332,7 @@ DEP_CPP_GIOP_=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -13802,7 +14353,6 @@ DEP_CPP_GIOP_=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -14051,6 +14601,7 @@ DEP_CPP_GIOP_=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -14071,7 +14622,6 @@ DEP_CPP_GIOP_=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -14175,541 +14725,6 @@ SOURCE=.\IIOP_Connector.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\CDR_Interpreter.cpp
-
-!IF  "$(CFG)" == "TAO - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
-
-DEP_CPP_IIOP_=\
-	"..\..\ace\Acceptor.cpp"\
-	"..\..\ace\Acceptor.h"\
-	"..\..\ace\Acceptor.i"\
-	"..\..\ace\ACE.h"\
-	"..\..\ace\ACE.i"\
-	"..\..\ace\Addr.h"\
-	"..\..\ace\Addr.i"\
-	"..\..\ace\Atomic_Op.i"\
-	"..\..\ace\Auto_Ptr.cpp"\
-	"..\..\ace\Auto_Ptr.h"\
-	"..\..\ace\Auto_Ptr.i"\
-	"..\..\ace\Basic_Types.h"\
-	"..\..\ace\Basic_Types.i"\
-	"..\..\ace\config-win32-borland.h"\
-	"..\..\ace\config-win32-common.h"\
-	"..\..\ace\config-win32.h"\
-	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
-	"..\..\ace\Connector.cpp"\
-	"..\..\ace\Connector.h"\
-	"..\..\ace\Connector.i"\
-	"..\..\ace\Containers.h"\
-	"..\..\ace\Containers.i"\
-	"..\..\ace\Containers_T.cpp"\
-	"..\..\ace\Containers_T.h"\
-	"..\..\ace\Containers_T.i"\
-	"..\..\ace\Dynamic.h"\
-	"..\..\ace\Dynamic.i"\
-	"..\..\ace\Dynamic_Service.cpp"\
-	"..\..\ace\Dynamic_Service.h"\
-	"..\..\ace\Event_Handler.h"\
-	"..\..\ace\Event_Handler.i"\
-	"..\..\ace\Free_List.cpp"\
-	"..\..\ace\Free_List.h"\
-	"..\..\ace\Free_List.i"\
-	"..\..\ace\Functor.h"\
-	"..\..\ace\Functor.i"\
-	"..\..\ace\Functor_T.cpp"\
-	"..\..\ace\Functor_T.h"\
-	"..\..\ace\Functor_T.i"\
-	"..\..\ace\Get_Opt.h"\
-	"..\..\ace\Get_Opt.i"\
-	"..\..\ace\Handle_Set.h"\
-	"..\..\ace\Handle_Set.i"\
-	"..\..\ace\Hash_Map_Manager.h"\
-	"..\..\ace\Hash_Map_Manager.i"\
-	"..\..\ace\Hash_Map_Manager_T.cpp"\
-	"..\..\ace\Hash_Map_Manager_T.h"\
-	"..\..\ace\Hash_Map_Manager_T.i"\
-	"..\..\ace\inc_user_config.h"\
-	"..\..\ace\INET_Addr.h"\
-	"..\..\ace\INET_Addr.i"\
-	"..\..\ace\IO_Cntl_Msg.h"\
-	"..\..\ace\iosfwd.h"\
-	"..\..\ace\IPC_SAP.h"\
-	"..\..\ace\IPC_SAP.i"\
-	"..\..\ace\Log_Msg.h"\
-	"..\..\ace\Log_Priority.h"\
-	"..\..\ace\Log_Record.h"\
-	"..\..\ace\Log_Record.i"\
-	"..\..\ace\Malloc.h"\
-	"..\..\ace\Malloc.i"\
-	"..\..\ace\Malloc_Base.h"\
-	"..\..\ace\Malloc_T.cpp"\
-	"..\..\ace\Malloc_T.h"\
-	"..\..\ace\Malloc_T.i"\
-	"..\..\ace\Managed_Object.cpp"\
-	"..\..\ace\Managed_Object.h"\
-	"..\..\ace\Managed_Object.i"\
-	"..\..\ace\Map_Manager.cpp"\
-	"..\..\ace\Map_Manager.h"\
-	"..\..\ace\Map_Manager.i"\
-	"..\..\ace\Mem_Map.h"\
-	"..\..\ace\Mem_Map.i"\
-	"..\..\ace\Memory_Pool.h"\
-	"..\..\ace\Memory_Pool.i"\
-	"..\..\ace\Message_Block.h"\
-	"..\..\ace\Message_Block.i"\
-	"..\..\ace\Message_Block_T.cpp"\
-	"..\..\ace\Message_Block_T.h"\
-	"..\..\ace\Message_Block_T.i"\
-	"..\..\ace\Message_Queue.h"\
-	"..\..\ace\Message_Queue.i"\
-	"..\..\ace\Message_Queue_T.cpp"\
-	"..\..\ace\Message_Queue_T.h"\
-	"..\..\ace\Message_Queue_T.i"\
-	"..\..\ace\Module.cpp"\
-	"..\..\ace\Module.h"\
-	"..\..\ace\Module.i"\
-	"..\..\ace\Object_Manager.h"\
-	"..\..\ace\Object_Manager.i"\
-	"..\..\ace\OS.h"\
-	"..\..\ace\OS.i"\
-	"..\..\ace\Reactor.h"\
-	"..\..\ace\Reactor.i"\
-	"..\..\ace\Reactor_Impl.h"\
-	"..\..\ace\Service_Config.h"\
-	"..\..\ace\Service_Config.i"\
-	"..\..\ace\Service_Object.h"\
-	"..\..\ace\Service_Object.i"\
-	"..\..\ace\Service_Repository.h"\
-	"..\..\ace\Service_Repository.i"\
-	"..\..\ace\Service_Types.h"\
-	"..\..\ace\Service_Types.i"\
-	"..\..\ace\Shared_Object.h"\
-	"..\..\ace\Shared_Object.i"\
-	"..\..\ace\Signal.h"\
-	"..\..\ace\Signal.i"\
-	"..\..\ace\Singleton.cpp"\
-	"..\..\ace\Singleton.h"\
-	"..\..\ace\Singleton.i"\
-	"..\..\ace\SOCK.h"\
-	"..\..\ace\SOCK.i"\
-	"..\..\ace\SOCK_Acceptor.h"\
-	"..\..\ace\SOCK_Acceptor.i"\
-	"..\..\ace\SOCK_Connector.h"\
-	"..\..\ace\SOCK_Connector.i"\
-	"..\..\ace\SOCK_IO.h"\
-	"..\..\ace\SOCK_IO.i"\
-	"..\..\ace\SOCK_Stream.h"\
-	"..\..\ace\SOCK_Stream.i"\
-	"..\..\ace\SString.h"\
-	"..\..\ace\SString.i"\
-	"..\..\ace\Strategies.h"\
-	"..\..\ace\Strategies.i"\
-	"..\..\ace\Strategies_T.cpp"\
-	"..\..\ace\Strategies_T.h"\
-	"..\..\ace\Strategies_T.i"\
-	"..\..\ace\Stream_Modules.cpp"\
-	"..\..\ace\Stream_Modules.h"\
-	"..\..\ace\Stream_Modules.i"\
-	"..\..\ace\streams.h"\
-	"..\..\ace\SV_Semaphore_Complex.h"\
-	"..\..\ace\SV_Semaphore_Complex.i"\
-	"..\..\ace\SV_Semaphore_Simple.h"\
-	"..\..\ace\SV_Semaphore_Simple.i"\
-	"..\..\ace\Svc_Conf_Tokens.h"\
-	"..\..\ace\Svc_Handler.cpp"\
-	"..\..\ace\Svc_Handler.h"\
-	"..\..\ace\Svc_Handler.i"\
-	"..\..\ace\Synch.h"\
-	"..\..\ace\Synch.i"\
-	"..\..\ace\Synch_Options.h"\
-	"..\..\ace\Synch_Options.i"\
-	"..\..\ace\Synch_T.cpp"\
-	"..\..\ace\Synch_T.h"\
-	"..\..\ace\Synch_T.i"\
-	"..\..\ace\Task.h"\
-	"..\..\ace\Task.i"\
-	"..\..\ace\Task_T.cpp"\
-	"..\..\ace\Task_T.h"\
-	"..\..\ace\Task_T.i"\
-	"..\..\ace\Thread.h"\
-	"..\..\ace\Thread.i"\
-	"..\..\ace\Thread_Manager.h"\
-	"..\..\ace\Thread_Manager.i"\
-	"..\..\ace\Time_Value.h"\
-	"..\..\ace\Timer_Queue.h"\
-	"..\..\ace\Timer_Queue_T.cpp"\
-	"..\..\ace\Timer_Queue_T.h"\
-	"..\..\ace\Timer_Queue_T.i"\
-	"..\..\ace\Trace.h"\
-	"..\..\ace\WFMO_Reactor.h"\
-	"..\..\ace\WFMO_Reactor.i"\
-	"..\..\ace\ws2tcpip.h"\
-	".\Active_Object_Map.h"\
-	".\Active_Object_Map.i"\
-	".\any.h"\
-	".\any.i"\
-	".\cdr.h"\
-	".\cdr.i"\
-	".\Client_Strategy_Factory.h"\
-	".\connect.h"\
-	".\connect.i"\
-	".\corba.h"\
-	".\CurrentC.h"\
-	".\CurrentC.i"\
-	".\debug.h"\
-	".\default_client.h"\
-	".\default_client.i"\
-	".\default_server.h"\
-	".\default_server.i"\
-	".\DynAny_i.h"\
-	".\DynAnyC.h"\
-	".\DynAnyC.i"\
-	".\Environment.h"\
-	".\Environment.i"\
-	".\Exception.h"\
-	".\Exception.i"\
-	".\giop.h"\
-	".\giop.i"\
-	".\CDR_Interpreter.h"\
-	".\IIOP_ORB.h"\
-	".\IIOP_ORB.i"\
-	".\InconsistentTypeCodeC.h"\
-	".\Invocation.h"\
-	".\Invocation.i"\
-	".\Managed_Types.h"\
-	".\Managed_Types.i"\
-	".\marshal.h"\
-	".\marshal.i"\
-	".\nvlist.h"\
-	".\NVList.i"\
-	".\object.h"\
-	".\object.i"\
-	".\Object_KeyC.h"\
-	".\Object_KeyC.i"\
-	".\Operation_Table.h"\
-	".\orb.h"\
-	".\ORB.i"\
-	".\orb_core.h"\
-	".\orb_core.i"\
-	".\ORB_Strategies_T.cpp"\
-	".\ORB_Strategies_T.h"\
-	".\ORB_Strategies_T.i"\
-	".\orbconf.h"\
-	".\params.h"\
-	".\params.i"\
-	".\poa.h"\
-	".\POA.i"\
-	".\POA_CORBA.h"\
-	".\poa_macros.h"\
-	".\poaC.h"\
-	".\poaC.i"\
-	".\poaS.h"\
-	".\poaS.i"\
-	".\PolicyC.h"\
-	".\PolicyC.i"\
-	".\Principal.h"\
-	".\Principal.i"\
-	".\request.h"\
-	".\Request.i"\
-	".\sequence.h"\
-	".\sequence.i"\
-	".\Sequence_T.cpp"\
-	".\Sequence_T.h"\
-	".\Sequence_T.i"\
-	".\servant_base.h"\
-	".\Servant_Base.i"\
-	".\Server_Request.h"\
-	".\Server_Request.i"\
-	".\Server_Strategy_Factory.h"\
-	".\singletons.h"\
-	".\stub.h"\
-	".\stub.i"\
-	".\try_macros.h"\
-	".\typecode.h"\
-	".\typecode.i"\
-	".\Union.h"\
-	".\varout.cpp"\
-	".\varout.h"\
-	".\varout.i"\
-	
-NODEP_CPP_IIOP_=\
-	".\align.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
-	
-
-!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
-
-DEP_CPP_IIOP_=\
-	"..\..\ace\Acceptor.cpp"\
-	"..\..\ace\Acceptor.h"\
-	"..\..\ace\Acceptor.i"\
-	"..\..\ace\ACE.h"\
-	"..\..\ace\ACE.i"\
-	"..\..\ace\Addr.h"\
-	"..\..\ace\Addr.i"\
-	"..\..\ace\Atomic_Op.i"\
-	"..\..\ace\Auto_Ptr.cpp"\
-	"..\..\ace\Auto_Ptr.h"\
-	"..\..\ace\Auto_Ptr.i"\
-	"..\..\ace\Basic_Types.h"\
-	"..\..\ace\Basic_Types.i"\
-	"..\..\ace\config-win32-borland.h"\
-	"..\..\ace\config-win32-common.h"\
-	"..\..\ace\config-win32.h"\
-	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
-	"..\..\ace\Connector.cpp"\
-	"..\..\ace\Connector.h"\
-	"..\..\ace\Connector.i"\
-	"..\..\ace\Containers.h"\
-	"..\..\ace\Containers.i"\
-	"..\..\ace\Containers_T.cpp"\
-	"..\..\ace\Containers_T.h"\
-	"..\..\ace\Containers_T.i"\
-	"..\..\ace\Dynamic.h"\
-	"..\..\ace\Dynamic.i"\
-	"..\..\ace\Dynamic_Service.cpp"\
-	"..\..\ace\Dynamic_Service.h"\
-	"..\..\ace\Event_Handler.h"\
-	"..\..\ace\Event_Handler.i"\
-	"..\..\ace\Free_List.cpp"\
-	"..\..\ace\Free_List.h"\
-	"..\..\ace\Free_List.i"\
-	"..\..\ace\Functor.h"\
-	"..\..\ace\Functor.i"\
-	"..\..\ace\Functor_T.cpp"\
-	"..\..\ace\Functor_T.h"\
-	"..\..\ace\Functor_T.i"\
-	"..\..\ace\Get_Opt.h"\
-	"..\..\ace\Get_Opt.i"\
-	"..\..\ace\Handle_Set.h"\
-	"..\..\ace\Handle_Set.i"\
-	"..\..\ace\Hash_Map_Manager.h"\
-	"..\..\ace\Hash_Map_Manager.i"\
-	"..\..\ace\Hash_Map_Manager_T.cpp"\
-	"..\..\ace\Hash_Map_Manager_T.h"\
-	"..\..\ace\Hash_Map_Manager_T.i"\
-	"..\..\ace\inc_user_config.h"\
-	"..\..\ace\INET_Addr.h"\
-	"..\..\ace\INET_Addr.i"\
-	"..\..\ace\IO_Cntl_Msg.h"\
-	"..\..\ace\iosfwd.h"\
-	"..\..\ace\IPC_SAP.h"\
-	"..\..\ace\IPC_SAP.i"\
-	"..\..\ace\Log_Msg.h"\
-	"..\..\ace\Log_Priority.h"\
-	"..\..\ace\Log_Record.h"\
-	"..\..\ace\Log_Record.i"\
-	"..\..\ace\Malloc.h"\
-	"..\..\ace\Malloc.i"\
-	"..\..\ace\Malloc_Base.h"\
-	"..\..\ace\Malloc_T.cpp"\
-	"..\..\ace\Malloc_T.h"\
-	"..\..\ace\Malloc_T.i"\
-	"..\..\ace\Managed_Object.cpp"\
-	"..\..\ace\Managed_Object.h"\
-	"..\..\ace\Managed_Object.i"\
-	"..\..\ace\Map_Manager.cpp"\
-	"..\..\ace\Map_Manager.h"\
-	"..\..\ace\Map_Manager.i"\
-	"..\..\ace\Mem_Map.h"\
-	"..\..\ace\Mem_Map.i"\
-	"..\..\ace\Memory_Pool.h"\
-	"..\..\ace\Memory_Pool.i"\
-	"..\..\ace\Message_Block.h"\
-	"..\..\ace\Message_Block.i"\
-	"..\..\ace\Message_Block_T.cpp"\
-	"..\..\ace\Message_Block_T.h"\
-	"..\..\ace\Message_Block_T.i"\
-	"..\..\ace\Message_Queue.h"\
-	"..\..\ace\Message_Queue.i"\
-	"..\..\ace\Message_Queue_T.cpp"\
-	"..\..\ace\Message_Queue_T.h"\
-	"..\..\ace\Message_Queue_T.i"\
-	"..\..\ace\Module.cpp"\
-	"..\..\ace\Module.h"\
-	"..\..\ace\Module.i"\
-	"..\..\ace\Object_Manager.h"\
-	"..\..\ace\Object_Manager.i"\
-	"..\..\ace\OS.h"\
-	"..\..\ace\OS.i"\
-	"..\..\ace\Reactor.h"\
-	"..\..\ace\Reactor.i"\
-	"..\..\ace\Reactor_Impl.h"\
-	"..\..\ace\Service_Config.h"\
-	"..\..\ace\Service_Config.i"\
-	"..\..\ace\Service_Object.h"\
-	"..\..\ace\Service_Object.i"\
-	"..\..\ace\Service_Repository.h"\
-	"..\..\ace\Service_Repository.i"\
-	"..\..\ace\Service_Types.h"\
-	"..\..\ace\Service_Types.i"\
-	"..\..\ace\Shared_Object.h"\
-	"..\..\ace\Shared_Object.i"\
-	"..\..\ace\Signal.h"\
-	"..\..\ace\Signal.i"\
-	"..\..\ace\Singleton.cpp"\
-	"..\..\ace\Singleton.h"\
-	"..\..\ace\Singleton.i"\
-	"..\..\ace\SOCK.h"\
-	"..\..\ace\SOCK.i"\
-	"..\..\ace\SOCK_Acceptor.h"\
-	"..\..\ace\SOCK_Acceptor.i"\
-	"..\..\ace\SOCK_Connector.h"\
-	"..\..\ace\SOCK_Connector.i"\
-	"..\..\ace\SOCK_IO.h"\
-	"..\..\ace\SOCK_IO.i"\
-	"..\..\ace\SOCK_Stream.h"\
-	"..\..\ace\SOCK_Stream.i"\
-	"..\..\ace\SString.h"\
-	"..\..\ace\SString.i"\
-	"..\..\ace\Strategies.h"\
-	"..\..\ace\Strategies.i"\
-	"..\..\ace\Strategies_T.cpp"\
-	"..\..\ace\Strategies_T.h"\
-	"..\..\ace\Strategies_T.i"\
-	"..\..\ace\Stream_Modules.cpp"\
-	"..\..\ace\Stream_Modules.h"\
-	"..\..\ace\Stream_Modules.i"\
-	"..\..\ace\streams.h"\
-	"..\..\ace\SV_Semaphore_Complex.h"\
-	"..\..\ace\SV_Semaphore_Complex.i"\
-	"..\..\ace\SV_Semaphore_Simple.h"\
-	"..\..\ace\SV_Semaphore_Simple.i"\
-	"..\..\ace\Svc_Conf_Tokens.h"\
-	"..\..\ace\Svc_Handler.cpp"\
-	"..\..\ace\Svc_Handler.h"\
-	"..\..\ace\Svc_Handler.i"\
-	"..\..\ace\Synch.h"\
-	"..\..\ace\Synch.i"\
-	"..\..\ace\Synch_Options.h"\
-	"..\..\ace\Synch_Options.i"\
-	"..\..\ace\Synch_T.cpp"\
-	"..\..\ace\Synch_T.h"\
-	"..\..\ace\Synch_T.i"\
-	"..\..\ace\Task.h"\
-	"..\..\ace\Task.i"\
-	"..\..\ace\Task_T.cpp"\
-	"..\..\ace\Task_T.h"\
-	"..\..\ace\Task_T.i"\
-	"..\..\ace\Thread.h"\
-	"..\..\ace\Thread.i"\
-	"..\..\ace\Thread_Manager.h"\
-	"..\..\ace\Thread_Manager.i"\
-	"..\..\ace\Time_Value.h"\
-	"..\..\ace\Timer_Queue.h"\
-	"..\..\ace\Timer_Queue_T.cpp"\
-	"..\..\ace\Timer_Queue_T.h"\
-	"..\..\ace\Timer_Queue_T.i"\
-	"..\..\ace\Trace.h"\
-	"..\..\ace\WFMO_Reactor.h"\
-	"..\..\ace\WFMO_Reactor.i"\
-	"..\..\ace\ws2tcpip.h"\
-	".\Active_Object_Map.h"\
-	".\Active_Object_Map.i"\
-	".\any.h"\
-	".\any.i"\
-	".\cdr.h"\
-	".\cdr.i"\
-	".\Client_Strategy_Factory.h"\
-	".\connect.h"\
-	".\connect.i"\
-	".\corba.h"\
-	".\CurrentC.h"\
-	".\CurrentC.i"\
-	".\debug.h"\
-	".\default_client.h"\
-	".\default_client.i"\
-	".\default_server.h"\
-	".\default_server.i"\
-	".\DynAny_i.h"\
-	".\DynAnyC.h"\
-	".\DynAnyC.i"\
-	".\Environment.h"\
-	".\Environment.i"\
-	".\Exception.h"\
-	".\Exception.i"\
-	".\giop.h"\
-	".\giop.i"\
-	".\CDR_Interpreter.h"\
-	".\IIOP_ORB.h"\
-	".\IIOP_ORB.i"\
-	".\InconsistentTypeCodeC.h"\
-	".\Invocation.h"\
-	".\Invocation.i"\
-	".\Managed_Types.h"\
-	".\Managed_Types.i"\
-	".\marshal.h"\
-	".\marshal.i"\
-	".\nvlist.h"\
-	".\NVList.i"\
-	".\object.h"\
-	".\object.i"\
-	".\Object_KeyC.h"\
-	".\Object_KeyC.i"\
-	".\Operation_Table.h"\
-	".\orb.h"\
-	".\ORB.i"\
-	".\orb_core.h"\
-	".\orb_core.i"\
-	".\ORB_Strategies_T.cpp"\
-	".\ORB_Strategies_T.h"\
-	".\ORB_Strategies_T.i"\
-	".\orbconf.h"\
-	".\params.h"\
-	".\params.i"\
-	".\poa.h"\
-	".\POA.i"\
-	".\POA_CORBA.h"\
-	".\poa_macros.h"\
-	".\poaC.h"\
-	".\poaC.i"\
-	".\poaS.h"\
-	".\poaS.i"\
-	".\PolicyC.h"\
-	".\PolicyC.i"\
-	".\Principal.h"\
-	".\Principal.i"\
-	".\request.h"\
-	".\Request.i"\
-	".\sequence.h"\
-	".\sequence.i"\
-	".\Sequence_T.cpp"\
-	".\Sequence_T.h"\
-	".\Sequence_T.i"\
-	".\servant_base.h"\
-	".\Servant_Base.i"\
-	".\Server_Request.h"\
-	".\Server_Request.i"\
-	".\Server_Strategy_Factory.h"\
-	".\singletons.h"\
-	".\stub.h"\
-	".\stub.i"\
-	".\try_macros.h"\
-	".\typecode.h"\
-	".\typecode.i"\
-	".\Union.h"\
-	".\varout.cpp"\
-	".\varout.h"\
-	".\varout.i"\
-	
-NODEP_CPP_IIOP_=\
-	".\align.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
-	
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=.\IIOP_ORB.cpp
 
 !IF  "$(CFG)" == "TAO - Win32 Release"
@@ -14718,7 +14733,7 @@ SOURCE=.\IIOP_ORB.cpp
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
 
-DEP_CPP_IIOP_O=\
+DEP_CPP_IIOP_=\
 	"..\..\ace\Acceptor.cpp"\
 	"..\..\ace\Acceptor.h"\
 	"..\..\ace\Acceptor.i"\
@@ -14890,6 +14905,7 @@ DEP_CPP_IIOP_O=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -14910,7 +14926,6 @@ DEP_CPP_IIOP_O=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -14972,7 +14987,7 @@ DEP_CPP_IIOP_O=\
 	".\varout.h"\
 	".\varout.i"\
 	
-NODEP_CPP_IIOP_O=\
+NODEP_CPP_IIOP_=\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -14980,7 +14995,7 @@ NODEP_CPP_IIOP_O=\
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
 
-DEP_CPP_IIOP_O=\
+DEP_CPP_IIOP_=\
 	"..\..\ace\Acceptor.cpp"\
 	"..\..\ace\Acceptor.h"\
 	"..\..\ace\Acceptor.i"\
@@ -15152,6 +15167,7 @@ DEP_CPP_IIOP_O=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -15172,7 +15188,6 @@ DEP_CPP_IIOP_O=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -15234,7 +15249,7 @@ DEP_CPP_IIOP_O=\
 	".\varout.h"\
 	".\varout.i"\
 	
-NODEP_CPP_IIOP_O=\
+NODEP_CPP_IIOP_=\
 	".\align.h"\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
@@ -15455,6 +15470,7 @@ DEP_CPP_INCON=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -15475,7 +15491,6 @@ DEP_CPP_INCON=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -15717,6 +15732,7 @@ DEP_CPP_INCON=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -15737,7 +15753,6 @@ DEP_CPP_INCON=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -15996,6 +16011,7 @@ DEP_CPP_INVOC=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -16016,7 +16032,6 @@ DEP_CPP_INVOC=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -16265,6 +16280,7 @@ DEP_CPP_INVOC=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -16285,7 +16301,6 @@ DEP_CPP_INVOC=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -16539,6 +16554,7 @@ DEP_CPP_MANAG=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -16559,7 +16575,6 @@ DEP_CPP_MANAG=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -16801,6 +16816,7 @@ DEP_CPP_MANAG=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -16821,7 +16837,6 @@ DEP_CPP_MANAG=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -17074,6 +17089,7 @@ DEP_CPP_MARSH=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -17094,7 +17110,6 @@ DEP_CPP_MARSH=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -17336,6 +17351,7 @@ DEP_CPP_MARSH=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -17356,7 +17372,6 @@ DEP_CPP_MARSH=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -17624,6 +17639,7 @@ DEP_CPP_NVLIS=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -17644,7 +17660,6 @@ DEP_CPP_NVLIS=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -17886,6 +17901,7 @@ DEP_CPP_NVLIS=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -17906,7 +17922,6 @@ DEP_CPP_NVLIS=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -18159,6 +18174,7 @@ DEP_CPP_OBJEC=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -18179,7 +18195,6 @@ DEP_CPP_OBJEC=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -18421,6 +18436,7 @@ DEP_CPP_OBJEC=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -18441,7 +18457,6 @@ DEP_CPP_OBJEC=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -18694,6 +18709,7 @@ DEP_CPP_OBJECT=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -18714,7 +18730,6 @@ DEP_CPP_OBJECT=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -18956,6 +18971,7 @@ DEP_CPP_OBJECT=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -18976,7 +18992,6 @@ DEP_CPP_OBJECT=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -19235,6 +19250,7 @@ DEP_CPP_OPERA=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -19255,7 +19271,6 @@ DEP_CPP_OPERA=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -19504,6 +19519,7 @@ DEP_CPP_OPERA=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -19524,7 +19540,6 @@ DEP_CPP_OPERA=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -19788,6 +19803,7 @@ DEP_CPP_ORB_C=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -19808,7 +19824,6 @@ DEP_CPP_ORB_C=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -20062,6 +20077,7 @@ DEP_CPP_ORB_C=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -20082,7 +20098,6 @@ DEP_CPP_ORB_C=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -20357,6 +20372,7 @@ DEP_CPP_ORB_CO=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -20377,7 +20393,6 @@ DEP_CPP_ORB_CO=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -20640,6 +20655,7 @@ DEP_CPP_ORB_CO=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -20660,7 +20676,6 @@ DEP_CPP_ORB_CO=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -20914,6 +20929,7 @@ DEP_CPP_PARAM=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -20934,7 +20950,6 @@ DEP_CPP_PARAM=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -21176,6 +21191,7 @@ DEP_CPP_PARAM=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -21196,7 +21212,6 @@ DEP_CPP_PARAM=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -21470,6 +21485,7 @@ DEP_CPP_POA_C=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -21491,7 +21507,6 @@ DEP_CPP_POA_C=\
 	".\Forwarding_Servant.h"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -21740,6 +21755,7 @@ DEP_CPP_POA_C=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -21761,7 +21777,6 @@ DEP_CPP_POA_C=\
 	".\Forwarding_Servant.h"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -22015,6 +22030,7 @@ DEP_CPP_POAC_=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -22035,7 +22051,6 @@ DEP_CPP_POAC_=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -22277,6 +22292,7 @@ DEP_CPP_POAC_=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -22297,7 +22313,6 @@ DEP_CPP_POAC_=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -22565,6 +22580,7 @@ DEP_CPP_POAS_=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -22585,7 +22601,6 @@ DEP_CPP_POAS_=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -22827,6 +22842,7 @@ DEP_CPP_POAS_=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -22847,7 +22863,6 @@ DEP_CPP_POAS_=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -23100,6 +23115,7 @@ DEP_CPP_POLIC=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -23120,7 +23136,6 @@ DEP_CPP_POLIC=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -23362,6 +23377,7 @@ DEP_CPP_POLIC=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -23382,7 +23398,6 @@ DEP_CPP_POLIC=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -23635,6 +23650,7 @@ DEP_CPP_POLICY=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -23655,7 +23671,6 @@ DEP_CPP_POLICY=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -23897,6 +23912,7 @@ DEP_CPP_POLICY=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -23917,7 +23933,6 @@ DEP_CPP_POLICY=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -24170,6 +24185,7 @@ DEP_CPP_PRINC=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -24190,7 +24206,6 @@ DEP_CPP_PRINC=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -24432,6 +24447,7 @@ DEP_CPP_PRINC=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -24452,7 +24468,6 @@ DEP_CPP_PRINC=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -24705,6 +24720,7 @@ DEP_CPP_REQUE=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -24725,7 +24741,6 @@ DEP_CPP_REQUE=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -24967,6 +24982,7 @@ DEP_CPP_REQUE=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -24987,7 +25003,6 @@ DEP_CPP_REQUE=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -25240,6 +25255,7 @@ DEP_CPP_SEQUE=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -25260,7 +25276,6 @@ DEP_CPP_SEQUE=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -25502,6 +25517,7 @@ DEP_CPP_SEQUE=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -25522,7 +25538,6 @@ DEP_CPP_SEQUE=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -25781,6 +25796,7 @@ DEP_CPP_SERVA=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -25801,7 +25817,6 @@ DEP_CPP_SERVA=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -26050,6 +26065,7 @@ DEP_CPP_SERVA=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -26070,7 +26086,6 @@ DEP_CPP_SERVA=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -26330,6 +26345,7 @@ DEP_CPP_SERVE=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -26350,7 +26366,6 @@ DEP_CPP_SERVE=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -26599,6 +26614,7 @@ DEP_CPP_SERVE=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -26619,7 +26635,6 @@ DEP_CPP_SERVE=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -26873,6 +26888,7 @@ DEP_CPP_SERVER=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -26893,7 +26909,6 @@ DEP_CPP_SERVER=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -27135,6 +27150,7 @@ DEP_CPP_SERVER=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -27155,7 +27171,6 @@ DEP_CPP_SERVER=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -27408,6 +27423,7 @@ DEP_CPP_SKIP_=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -27428,7 +27444,6 @@ DEP_CPP_SKIP_=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -27670,6 +27685,7 @@ DEP_CPP_SKIP_=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -27690,7 +27706,6 @@ DEP_CPP_SKIP_=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -27943,6 +27958,7 @@ DEP_CPP_STUB_=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -27963,7 +27979,6 @@ DEP_CPP_STUB_=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -28205,6 +28220,7 @@ DEP_CPP_STUB_=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -28225,7 +28241,6 @@ DEP_CPP_STUB_=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -28478,6 +28493,7 @@ DEP_CPP_TAO_C=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -28498,7 +28514,6 @@ DEP_CPP_TAO_C=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -28741,6 +28756,7 @@ DEP_CPP_TAO_C=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -28761,7 +28777,6 @@ DEP_CPP_TAO_C=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -29015,6 +29030,7 @@ DEP_CPP_TAO_I=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -29035,7 +29051,6 @@ DEP_CPP_TAO_I=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -29278,6 +29293,7 @@ DEP_CPP_TAO_I=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -29298,7 +29314,6 @@ DEP_CPP_TAO_I=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -29552,6 +29567,7 @@ DEP_CPP_TYPEC=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -29572,7 +29588,6 @@ DEP_CPP_TYPEC=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -29814,6 +29829,7 @@ DEP_CPP_TYPEC=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -29834,7 +29850,6 @@ DEP_CPP_TYPEC=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -30087,6 +30102,7 @@ DEP_CPP_TYPECO=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -30107,7 +30123,6 @@ DEP_CPP_TYPECO=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -30349,6 +30364,7 @@ DEP_CPP_TYPECO=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -30369,7 +30385,6 @@ DEP_CPP_TYPECO=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -30622,6 +30637,7 @@ DEP_CPP_UNION=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -30642,7 +30658,6 @@ DEP_CPP_UNION=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -30884,6 +30899,7 @@ DEP_CPP_UNION=\
 	".\any.i"\
 	".\cdr.h"\
 	".\cdr.i"\
+	".\CDR_Interpreter.h"\
 	".\Client_Strategy_Factory.h"\
 	".\connect.h"\
 	".\connect.i"\
@@ -30904,7 +30920,6 @@ DEP_CPP_UNION=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -30997,11 +31012,19 @@ SOURCE=.\cdr.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\CDR_Interpreter.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Client_Strategy_Factory.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\connect.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Context.h
 # End Source File
 # Begin Source File
 
@@ -31074,10 +31097,6 @@ SOURCE=.\IIOP_Acceptor.h
 # Begin Source File
 
 SOURCE=.\IIOP_Connector.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\CDR_Interpreter.h
 # End Source File
 # Begin Source File
 
@@ -31258,6 +31277,10 @@ SOURCE=.\cdr.i
 # Begin Source File
 
 SOURCE=.\connect.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Context.i
 # End Source File
 # Begin Source File
 

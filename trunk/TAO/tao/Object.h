@@ -29,6 +29,8 @@
 
 class TAO_ServantBase;
 class STUB_Object;
+class TAO_Context;
+typedef TAO_Context *TAO_Context_ptr;
 
 class TAO_Export CORBA_Object
 {
@@ -73,7 +75,8 @@ public:
 
   virtual CORBA::Boolean _non_existent (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
-  virtual void _create_request (const CORBA::Char *operation,
+  virtual void _create_request (CORBA::Context_ptr ctx,
+                                const CORBA::Char *operation,
                                 CORBA::NVList_ptr arg_list,
                                 CORBA::NamedValue_ptr result,
                                 CORBA::Request_ptr &request,

@@ -43,6 +43,7 @@
 #include "tao/Request.h"
 #include "tao/Server_Request.h"
 #include "tao/Object.h"
+#include "tao/Context.h"
 #include "tao/Typecode.h"
 
 #include "tao/varout.h"

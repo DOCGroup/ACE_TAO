@@ -130,7 +130,7 @@ CORBA_Request::return_value (void )
 }
 
 // *************************************************************
-// Inline operations for class CORBA_NVList_var
+// Inline operations for class CORBA_Request_var
 // *************************************************************
 
 ACE_INLINE
