@@ -1,3 +1,13 @@
+Mon Nov  8 09:41:34 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/config-sunos5.5.h: Added a #define for 
+	  ACE_LACKS_PLACEMENT_OPERATOR_DELETE to handle problems with
+ 	  SunC++ 4.2.
+
+	* ace/Svc_Handler: Not all C++ compilers support placement
+	  operator delete, so we need to #ifdef for it.  Thanks to Andy
+ 	  Gokhale for reporting this.
+
 Sun Nov 07 23:36:51 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/run_tests.bat:
