@@ -6,6 +6,48 @@ Mon Jul 12 14:41:14 1999  David L. Levine  <levine@cs.wustl.edu>
 
 Mon Jul 12 13:54:34 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
+	* ace/Cache_Map_Manager_T.{h,i,cpp}:
+	  Defined ACE_T1 and ACE_T2 which contain the template parameter
+	  list and added ACE_HAS_BROKEN_EXTENDED_TEMPLATES macro where
+	  needed. This takes care of the template list for compilers which
+	  cant accept a long template list, for example: GCC 2.7.2.
+	  Also changed the purge() to now call the <caching_utility> for
+	  purging entries form the cache.
+
+	* ace/Hash_Cache_Map_Manager_T.h: 
+	  Added ACE_HAS_BROKEN_EXTENDED_TEMPLATES to complement the
+	  Cache_Map_Manager class changes.
+		
+	* ace/Cached_Connect_Strategy_T.cpp:
+	  Changed dtor to take care of the
+	  ACE_HAS_BROKEN_EXTENDED_TEMPLATES definition.
+
+	* ace/Cached_Connect_Strategy_T.h:
+	  Removed CONNECTION_CACHE_ITERATOR typedef.
+
+	* ace/Caching_Strategies_T.{h,i,cpp}:
+	  Changed template parameter list and removed dependency on the
+	  CONTAINER. Removed clear_cache() method.
+		 
+	* ace/Caching_Utility_T.{h,i,cpp}:
+	  Added default cleanup strategies to every kind of
+	  caching_utiltity. ACE_Recyclable_Hanlder_Caching_Utility no
+	  longer derives form ACE_Pair_Caching_Utility.
+
+	* ace/Cleanup_Strategies_T.{h,i,cpp}:
+	  Changed ACE_Svc_Cleanup_Strategy to
+	  ACE_Recyclable_Handler_Cleanup_Strategy.
+
+	* tests/Cache_Map_Manager_Test.cpp:
+	* tests/Map_Manager_Test.cpp:
+	  Made changes to template instantiations.
+
+	* tests/Cached_Conn_Test.cpp:
+	  Added out_of_sockets_handler() which will do the purging.
+	  Added a check for ENOBUFS which arose on NT and ENOENT which
+	  arose on Linux + Solaris. Defined
+	  ACE_HAS_BROKEN_EXTENDED_TEMPLATES for GCC versions < GCC 2.8.
+	
 Mon Jul 12 12:14:45 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * docs/ACE-development-process.html: added this page, as
