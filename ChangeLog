@@ -1,3 +1,8 @@
+Tue Mar 12 15:32:46 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* PROBLEM-REPORT-FORM (Subject): Added a request for the version
+	  of winsock on Windows based OS's. 
+
 Tue Mar 12 15:22:29 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/OS.i (sendv): When using winsock1, we transfer data by
