@@ -506,12 +506,28 @@ be_visitor_union_branch_cdr_op_ci::visit_sequence (be_sequence *node)
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
-      *os << node->name () << " _tao_union_tmp;" << be_nl
-          << "result = strm >> _tao_union_tmp;" << be_nl
-          << "if (result)" << be_idt_nl
-          << "_tao_union."
-          << f->local_name () << " (_tao_union_tmp);" << be_uidt;
-      return 0;
+      {
+        // If the typedef'd sequence is included from another
+        // file, node->name() won't work. The following works
+        // for all typedefs, external or not.
+        be_typedef *td = this->ctx_->alias ();
+
+        if (td)
+          {
+            *os << td->name ();
+          }
+        else
+          {
+            *os << node->name ();
+          }
+
+        *os << " _tao_union_tmp;" << be_nl
+            << "result = strm >> _tao_union_tmp;" << be_nl
+            << "if (result)" << be_idt_nl
+            << "_tao_union."
+            << f->local_name () << " (_tao_union_tmp);" << be_uidt;
+        return 0;
+      }
 
     case TAO_CodeGen::TAO_CDR_OUTPUT:
       *os << "result = strm << _tao_union."
