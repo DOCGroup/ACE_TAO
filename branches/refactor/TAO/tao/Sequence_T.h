@@ -1370,7 +1370,7 @@ public:
 
   /// Free a buffer allocated by allocbuf() and release each element on
   /// it.
-  static void freebuf (T *buffer);
+  static void freebuf (T * buffer);
 
   static void _tao_any_destructor (void *);
 

@@ -18,7 +18,7 @@ TAO_Array_Var_Base_T<T_slice,T_life>::TAO_Array_Var_Base_T (
     const TAO_Array_Var_Base_T & p
   )
 {
-  this->ptr_ = T_life::tao_dup (p.in ()));
+  this->ptr_ = T_life::tao_dup (p.in ());
 }
 
 template<typename T_slice, typename T_life>
@@ -121,7 +121,7 @@ ACE_INLINE
 TAO_FixedArray_Var_T<T_slice,T_life>::TAO_FixedArray_Var_T (
     const TAO_FixedArray_Var_T & p
   )
-  : TAO_Array_Var_Base_T<T_slice,T_life (p)
+  : TAO_Array_Var_Base_T<T_slice,T_life> (p)
 {}
 
 // *************************************************************
@@ -134,7 +134,7 @@ TAO_VarArray_Var_T<T_slice,T_life>::TAO_VarArray_Var_T (void)
 template<typename T_slice, typename T_life>
 ACE_INLINE
 TAO_VarArray_Var_T<T_slice,T_life>::TAO_VarArray_Var_T (T_slice * p)
-  : TAO_VarArray_Var_T<T_slice,T_life (p)
+  : TAO_VarArray_Var_T<T_slice,T_life> (p)
 {}
 
 template<typename T_slice, typename T_life>
@@ -142,7 +142,7 @@ ACE_INLINE
 TAO_VarArray_Var_T<T_slice,T_life>::TAO_VarArray_Var_T (
     const TAO_VarArray_Var_T & p
   )
-  : TAO_Array_Var_Base_T<T_slice,T_life (p)
+  : TAO_Array_Var_Base_T<T_slice,T_life> (p)
 {}
 
 template<typename T_slice, typename T_life>

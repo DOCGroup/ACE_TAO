@@ -1,3 +1,15 @@
+Sun Mar 30 12:32:33 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_type.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * tao/Array_VarOut_T.cpp:
+        * tao/Array_VarOut_T.inl:
+        * tao/ORB.cpp:
+        * tao/Sequence_T.cpp:
+        * tao/Sequence_T.h:
+
+          Fixed typos and cut and paste errors.
+
 Sun Mar 30 02:50:01 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_type.cpp:

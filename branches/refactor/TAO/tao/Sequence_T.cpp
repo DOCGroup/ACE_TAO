@@ -2280,7 +2280,7 @@ TAO_Bounded_Abstract_Sequence<T,T_var,T_life,MAX>::
 TAO_Bounded_Abstract_Sequence (void)
   : TAO_Bounded_Base_Sequence (
         MAX,
-        TAO_Bounded_Abstract_Sequence<T, T_var, MAX>::allocbuf (MAX)
+        TAO_Bounded_Abstract_Sequence<T,T_var,T_life,MAX>::allocbuf (MAX)
       )
 {
 }
@@ -2584,7 +2584,7 @@ TAO_Unbounded_Array_Sequence<T,T_life>::get_buffer (CORBA::Boolean orphan)
           if (this->length_ > 0)
             {
               result = 
-	        TAO_Unbounded_Array_Sequence<T,T_lifev>::allocbuf (
+	        TAO_Unbounded_Array_Sequence<T,T_life>::allocbuf (
                     this->length_
                   );
               this->buffer_ = result;
@@ -2828,6 +2828,18 @@ TAO_Bounded_Array_Sequence<T,T_life,MAX>::get_buffer (CORBA::Boolean orphan)
 
 template <typename T, typename T_life, size_t MAX> 
 void
+TAO_Bounded_Array_Sequence<T,T_life,MAX>::freebuf (T * buffer)
+{
+  if (buffer == 0)
+    {
+      return;
+    }
+
+  delete [] buffer;
+}
+
+template <typename T, typename T_life, size_t MAX> 
+void
 TAO_Bounded_Array_Sequence<T,T_life,MAX>::_allocate_buffer (
     CORBA::ULong length
   )
@@ -2846,18 +2858,6 @@ TAO_Bounded_Array_Sequence<T,T_life,MAX>::_deallocate_buffer (void)
     {
       return;
     }
-
-template <typename T, typename T_life, size_t MAX> 
-void
-TAO_Bounded_Array_Sequence<T,T_life,MAX>::freebuf (T * buffer)
-{
-  if (buffer == 0)
-    {
-      return;
-    }
-
-  delete [] buffer;
-}
 
 #if defined (__SUNPRO_CC) && (__SUNPRO_CC < 0x500)
   T * tmp = (T *) this->buffer_;
