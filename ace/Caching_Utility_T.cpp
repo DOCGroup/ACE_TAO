@@ -96,28 +96,42 @@ ACE_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUT
                                                                                               VALUE *&value_to_remove)
 {
   // Starting values.
-  ITERATOR iter = container.begin ();
   ITERATOR end = container.end ();
+  ITERATOR iter = container.begin ();
   ATTRIBUTES min = (*iter).int_id_.second ();
   key_to_remove = &(*iter).ext_id_;
   value_to_remove = &(*iter).int_id_;
-
+  
   // The iterator moves thru the container searching for the entry
   // with the lowest ATTRIBUTES.
   for (++iter;
        iter != end;
        ++iter)
     {
-      if ((*iter).ext_id_.state () == ACE_Recyclable::IDLE_AND_PURGABLE)
+      // If the <min> entry isnt IDLE_AND_PURGABLE continue until you reach
+      // the first entry which can be purged.
+      if (key_to_remove->state () != ACE_Recyclable::IDLE_AND_PURGABLE)
         {
-          if (min > (*iter).int_id_.second ())
-            {
-              // Ah! an item with lower ATTTRIBUTES...
-              min = (*iter).int_id_.second ();
-              key_to_remove = &(*iter).ext_id_;
-              value_to_remove = &(*iter).int_id_;
-            }
+           if ((*iter).ext_id_.state () == ACE_Recyclable::IDLE_AND_PURGABLE)
+             {
+               min = (*iter).int_id_.second ();
+               key_to_remove = &(*iter).ext_id_;
+               value_to_remove = &(*iter).int_id_;              
+             }  
         }
+       else
+         { 
+           if ((*iter).ext_id_.state () == ACE_Recyclable::IDLE_AND_PURGABLE)
+             {
+               if (min > (*iter).int_id_.second ())
+                 {
+                   // Ah! an entry with lower ATTTRIBUTES...
+                   min = (*iter).int_id_.second ();
+                   key_to_remove = &(*iter).ext_id_;
+                   value_to_remove = &(*iter).int_id_;
+                 }
+             }
+         }
     }
 }
 
