@@ -23,7 +23,7 @@ sub new {
   my(@creators) = @_;
   my($self)     = bless {'path'     => $path,
                          'name'     => $name,
-                         'version'  => 0.7,
+                         'version'  => 0.8,
                          'types'    => {},
                          'creators' => \@creators,
                         }, $class;
@@ -45,16 +45,18 @@ sub usageAndExit {
                "[-ti <dll | lib | dll_exe | lib_exe>:<file>]\n" .
                (" " x (length($base) + 8)) . "[-template <file>] " .
                "[-dynamic_only] [-static_only]\n" .
+               (" " x (length($base) + 8)) . "[-relative NAME=VAR]\n" .
                (" " x (length($base) + 8)) . "[-type <";
-  my($t)    = $self->{'types'};
-  my(@keys) = sort keys %$t;
+
+  my(@keys) = sort keys %{$self->{'types'}};
   for(my $i = 0; $i <= $#keys; $i++) {
     print STDERR "$keys[$i]";
     if ($i != $#keys) {
       print STDERR " | ";
     }
   }
-  print STDERR ">] [files]\n\n";
+  print STDERR ">]\n" .
+               (" " x (length($base) + 8)) . "[files]\n\n";
 
   print STDERR
 "       -global       Specifies the global input file.  Values stored\n" .
@@ -68,6 +70,9 @@ sub usageAndExit {
 "       -template     Specifies the template name (with no extension).\n" .
 "       -dynamic_only Specifies that only dynamic projects will be generated.\n" .
 "       -static_only  Specifies that only static projects will be generated.\n" .
+"       -relative     Any \$() variable in an mpc that is matched to NAME\n" .
+"                     is replaced by VAR only if VAR can be made into a\n" .
+"                     relative path based on the current working directory.\n" .
 "       -type         Specifies the type of project file to generate.  This\n" .
 "                     option can be used multiple times to generate multiple\n" .
 "                     types.\n";
@@ -79,11 +84,12 @@ sub usageAndExit {
 sub completion_command {
   my($self) = shift;
   my($str)  = "complete $self->{'name'} " .
-              "'c/-/(global include type template ti)/' " .
+              "'c/-/(global include type template relative " .
+              "ti dynamic_only static_only)/' " .
               "'c/dll:/f/' 'c/dll_exe:/f/' 'c/lib_exe:/f/' 'c/lib:/f/' " .
               "'n/-ti/(dll lib dll_exe lib_exe)/:' 'n/-type/(";
-  my($t)    = $self->{'types'};
-  my(@keys) = sort keys %$t;
+
+  my(@keys) = sort keys %{$self->{'types'}};
   for(my $i = 0; $i <= $#keys; $i++) {
     $str .= $keys[$i];
     if ($i != $#keys) {
@@ -109,6 +115,7 @@ sub run {
   my($dynamic)    = 1;
   my($static)     = 1;
   my($signif)     = 3;
+  my(%relative)   = ();
 
   ## Dynamically load in each perl module and set up
   ## the type tags and project creators
@@ -165,6 +172,25 @@ sub run {
         $self->usageAndExit("-template requires a file name argument");
       }
     }
+    elsif ($arg eq '-relative') {
+      $i++;
+      my($rel) = $args[$i];
+      if (!defined $rel) {
+        $self->usageAndExit("-relative requires a variable assignment argument");
+      }
+      else {
+        if ($rel =~ /(\w+)\s*=\s*(.*)/) {
+          my($name) = $1;
+          my($val)  = $2;
+          $val =~ s/^\s+//;
+          $val =~ s/\s+$//;
+          $relative{$name} = $val;
+        }
+        else {
+          $self->usageAndExit("Invalid option to -relative");
+        }
+      }
+    }
     elsif ($arg eq '-ti') {
       $i++;
       my($tmpi) = $args[$i];
@@ -212,12 +238,23 @@ sub run {
     push(@include, $self->{'path'} . "/config");
     push(@include, $self->{'path'} . "/templates");
   }
+  if (!defined $relative{'ACE_ROOT'} && defined $ENV{ACE_ROOT}) {
+    $relative{'ACE_ROOT'} = $ENV{ACE_ROOT};
+  }
+  if (!defined $relative{'TAO_ROOT'}) {
+    if (defined $ENV{TAO_ROOT}) {
+      $relative{'TAO_ROOT'} = $ENV{TAO_ROOT};
+    }
+    else {
+      $relative{'TAO_ROOT'} = "$relative{TAO_ROOT}/TAO";
+    }
+  }
 
   ## Generate the files
   foreach my $file (@input) {
     foreach my $name (@generators) {
       my($generator) = $name->new($global, \@include, $template,
-                                  \%ti, $dynamic, $static);
+                                  \%ti, $dynamic, $static, \%relative);
       print "Generating output using " .
             ($file eq "" ? "default input" : $file) . "\n";
       print "Start Time: " . scalar(localtime(time())) . "\n";

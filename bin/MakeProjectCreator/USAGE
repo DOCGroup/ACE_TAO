@@ -12,7 +12,8 @@ projects for each one found.
 Usage: mwc.pl [-global <file>] [-include <directory>]
               [-ti <dll | lib | dll_exe | lib_exe>:<file>]
               [-template <file>] [-dynamic_only] [-static_only]
-              [-type <gnu | nma | vc6 | vc7>] [files]
+              [-type <bor | em3 | gnu | nma | va4 | vc6 | vc7>]
+              [files]
 
        -global       Specifies the global input file.  Values stored
                      within this file are applied to all projects.
@@ -72,7 +73,8 @@ project in the directory from which the script was started.
 Usage: mpc.pl [-global <file>] [-include <directory>]
               [-ti <dll | lib | dll_exe | lib_exe>:<file>]
               [-template <file>] [-dynamic_only] [-static_only]
-              [-type <bor | ghs | gnu | nma | vc6 | vc7>] [files]
+              [-type <bor | em3 | ghs | gnu | nma | va4 | vc6 | vc7>]
+              [files]
 
        -global       Specifies the global input file.  Values stored
                      within this file are applied to all projects.

@@ -25,12 +25,7 @@ use vars qw(@ISA);
 
 sub crlf {
   my($self) = shift;
-  if ($^O eq 'MSWin32') {
-    return "\n";
-  }
-  else {
-    return "\r\n";
-  }
+  return $self->windows_crlf();
 }
 
 
@@ -133,17 +128,6 @@ sub write_comps {
             "\tGlobalSection(ExtensibilityAddIns) = postSolution$crlf" .
             "\tEndGlobalSection$crlf" .
             "EndGlobal$crlf";
-}
-
-
-sub project_creator {
-  my($self) = shift;
-  return new VC7ProjectCreator($self->get_global_cfg(),
-                               $self->get_include_path(),
-                               $self->get_template_override(),
-                               $self->get_ti_override(),
-                               $self->get_dynamic(),
-                               $self->get_static());
 }
 
 

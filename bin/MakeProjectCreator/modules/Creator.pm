@@ -30,9 +30,11 @@ sub new {
   my($inc)      = shift;
   my($template) = shift;
   my($ti)       = shift;
+  my($relative) = shift;
   my($type)     = shift;
   my($self)     = Parser::new($class);
 
+  $self->{'relative'}     = $relative;
   $self->{'template'}     = $template;
   $self->{'ti'}           = $ti;
   $self->{'global_cfg'}   = $global;
@@ -274,14 +276,40 @@ sub get_ti_override {
 }
 
 
-sub crlf {
+sub get_relative {
   my($self) = shift;
-  return "\n";
+  return $self->{'relative'};
+}
+
+
+sub windows_crlf {
+  my($self) = shift; 
+  if ($^O eq 'MSWin32') {
+    return "\n";
+  }
+  else {
+    return "\r\n";
+  }
+}
+
+
+sub transform_file_name {
+  my($self) = shift;
+  my($name) = shift;
+
+  $name =~ s/\s/_/g;
+  return $name;
 }
 
 # ************************************************************
 # Virtual Methods To Be Overridden
 # ************************************************************
+
+sub crlf {
+  my($self) = shift;
+  return "\n";
+}
+
 
 sub reset_values {
   my($self) = shift;
@@ -290,7 +318,7 @@ sub reset_values {
 
 sub sort_files {
   my($self) = shift;
-  return 0;
+  return 1;
 }
 
 

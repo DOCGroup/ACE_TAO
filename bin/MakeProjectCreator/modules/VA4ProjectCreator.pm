@@ -1,9 +1,9 @@
-package NMakeProjectCreator;
+package VA4ProjectCreator;
 
 # ************************************************************
-# Description   : An NMake Project Creator
+# Description   : A VA4 Project Creator
 # Author        : Chad Elliott
-# Create Date   : 5/31/2002
+# Create Date   : 7/8/2002
 # ************************************************************
 
 # ************************************************************
@@ -18,6 +18,12 @@ use vars qw(@ISA);
 @ISA = qw(ProjectCreator);
 
 # ************************************************************
+# Data Section
+# ************************************************************
+
+my($sname) = "_Static";
+
+# ************************************************************
 # Subroutine Section
 # ************************************************************
 
@@ -27,14 +33,22 @@ sub translate_value {
   my($val)  = shift;
 
   if ($key eq 'depends' && $val ne "") {
+    my($wt)  = $self->get_writing_type();
     my($arr) = $self->create_array($val);
     $val = "";
     foreach my $entry (@$arr) {
-      $val .= "\"" . $self->project_file_name($entry) . "\" ";
+      $val .= "\"" . ($wt == 1 ? $self->static_project_file_name($entry) :
+                                 $self->project_file_name($entry)) . "\" ";
     }
     $val =~ s/\s+$//;
   }
   return $val;
+}
+
+
+sub convert_slashes {
+  my($self) = shift;
+  return 0;
 }
 
 
@@ -52,6 +66,12 @@ sub crlf {
 }
 
 
+sub separate_static_project {
+  my($self) = shift;
+  return 1;
+}
+
+
 sub project_file_name {
   my($self) = shift;
   my($name) = shift;
@@ -60,25 +80,49 @@ sub project_file_name {
     $name = $self->project_name();
   }
 
-  return "$name.mak";
+  return "$name.icc";
+}
+
+
+sub static_project_file_name {
+  my($self) = shift;
+  my($name) = shift;
+
+  if (!defined $name) {
+    $name = $self->project_name();
+  }
+
+  return "$name$sname.icc";
 }
 
 
 sub get_dll_exe_template_input_file {
   my($self) = shift;
-  return "nmakeexe";
+  return "va4iccdllexe";
+}
+
+
+sub get_lib_exe_template_input_file {
+  my($self) = shift;
+  return "va4icclibexe";
+}
+
+
+sub get_lib_template_input_file {
+  my($self) = shift;
+  return "va4icclib";
 }
 
 
 sub get_dll_template_input_file {
   my($self) = shift;
-  return "nmakedll";
+  return "va4iccdll";
 }
 
 
 sub get_template {
   my($self) = shift;
-  return "nmake";
+  return "va4icc";
 }
 
 

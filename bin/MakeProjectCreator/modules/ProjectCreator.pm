@@ -51,6 +51,7 @@ my(%validNames) = ('exename'         => 1,
                    'libout'          => 1,
                    'dllflags'        => 1,
                    'libflags'        => 1,
+                   'version'         => 1,
                   );
 
 ## Deal with these components in a special way
@@ -68,11 +69,11 @@ sub new {
   my($ti)        = shift;
   my($dynamic)   = shift;
   my($static)    = shift;
+  my($relative)  = shift;
   my($self)      = Creator::new($class, $global, $inc,
-                                $template, $ti, 'project');
-  my($typecheck) = $self->{'type_check'};
+                                $template, $ti, $relative, 'project');
 
-  $self->{$typecheck}              = 0;
+  $self->{$self->{'type_check'}}   = 0;
   $self->{'global_assign'}         = {};
   $self->{'files_written'}         = [];
   $self->{'project_info'}          = [];
@@ -113,16 +114,15 @@ sub new {
 
 
 sub read_global_configuration {
-  my($self)        = shift;
-  my($input)       = $self->get_global_cfg();
-  my($status)      = 0;
-  my($errorString) = "";
+  my($self)   = shift;
+  my($input)  = $self->get_global_cfg();
+  my($status) = 1;
 
-  $self->{'reading_global'} = 1;
   if (defined $input) {
+    $self->{'reading_global'} = 1;
     $status = $self->parse_file($input);
+    $self->{'reading_global'} = 0;
   }
-  $self->{'reading_global'} = 0;
 
   return $status;
 }
@@ -556,7 +556,6 @@ sub generate_default_target_names {
 
 sub generate_default_pch_filenames {
   my($self)   = shift;
-  my($base)   = shift;
   my($files)  = shift;
   my($vc)     = $self->{'valid_components'};
   my($gc)     = $$vc{'header_files'};
@@ -638,6 +637,7 @@ sub sift_files {
 
   foreach my $file (@$files) {
     foreach my $ext (@$exts) {
+      ## Always exclude the precompiled header and cpp
       if ($file =~ /$ext$/ && (!defined $pchh || $file ne $pchh) &&
                               (!defined $pchc || $file ne $pchc)) {
         my($exclude) = 0;
@@ -651,7 +651,9 @@ sub sift_files {
           }
         }
         elsif ($tag eq 'resource_files') {
-          ## Save these files for later
+          ## Save these files for later.  There may
+          ## be more than one and we want to try and
+          ## find the one that corresponds to this project
           $exclude = 1;
           push(@saved, $file);
         }
@@ -789,7 +791,7 @@ sub generate_default_idl_generated {
 
   if ($self->{'idl_defaulted'}) {
     ## After all source and headers have been defaulted, see if we
-    ## need to add the idl generated .h, .inl and .cpp files
+    ## need to add the idl generated .h, .i and .cpp files
     if (defined $self->{'idl_files'}) {
       ## Build up the list of idl files
       my(@idl) = ();
@@ -819,20 +821,23 @@ sub generate_default_idl_generated {
 sub add_source_corresponding_component_files {
   my($self)  = shift;
   my($tag)   = shift;
-  my($names) = $self->{'source_files'};
+#  my($names) = $self->{'source_files'};
   my(@all)   = ();
   my($vc)    = $self->{'valid_components'};
 
-  foreach my $name (keys %$names) {
-    my($comps) = $$names{$name};
-    foreach my $comp (keys %$comps) {
-      push(@all, @{$$comps{$comp}});
+  foreach my $filetag ('source_files', 'template_files') {
+    my($names) = $self->{$filetag};
+    foreach my $name (keys %$names) {
+      my($comps) = $$names{$name};
+      foreach my $comp (keys %$comps) {
+        push(@all, @{$$comps{$comp}});
+      }
     }
   }
 
   ## for each cpp file, we add a corresponding header or inline file
   ## if it exists and is not already in the list of headers
-  $names = $self->{$tag};
+  my($names) = $self->{$tag};
   foreach my $name (keys %$names) {
     my($comps) = $$names{$name};
     foreach my $comp (keys %$comps) {
@@ -860,7 +865,7 @@ sub add_source_corresponding_component_files {
             my($ext) = $e;
             $ext =~ s/\\//g;
 
-            ## If the file is readable or
+            ## If the file is readable
             if (-r "$c$ext") {
               push(@$array, "$c$ext");
               $added = 1;
@@ -900,7 +905,7 @@ sub generate_defaults {
   $self->generate_default_target_names($base);
 
   my(@files) = $self->generate_default_file_list();
-  $self->generate_default_pch_filenames($base, \@files);
+  $self->generate_default_pch_filenames(\@files);
 
   ## Generate default components, but @specialComponents
   ## are skipped in the initial default components generation
@@ -1049,7 +1054,7 @@ sub write_project {
   my($self)     = shift;
   my($status)   = 1;
   my($error)    = "";
-  my($name)     = $self->project_file_name();
+  my($name)     = $self->transform_file_name($self->project_file_name());
   my($prjname)  = $self->get_assignment('project_name');
 
   ## Writing the non-static file so set it to 0
@@ -1064,7 +1069,7 @@ sub write_project {
       $self->separate_static_project()) {
     ## Set the project name back to what it originally was
     $self->process_assignment('project_name', $prjname);
-    $name = $self->static_project_file_name();
+    $name = $self->transform_file_name($self->static_project_file_name());
 
     ## Writing the static file so set it to 1
     $self->{'writing_type'} = 1;
@@ -1145,15 +1150,6 @@ sub get_template_input {
   else {
     return $self->{'dexe_template_input'};
   }
-}
-
-
-sub transform_file_name {
-  my($self) = shift;
-  my($name) = shift;
-
-  $name =~ s/\s/_/g;
-  return $name;
 }
 
 

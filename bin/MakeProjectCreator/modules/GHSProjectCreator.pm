@@ -11,6 +11,7 @@ package GHSProjectCreator;
 # ************************************************************
 
 use strict;
+
 use ProjectCreator;
 
 use vars qw(@ISA);
@@ -20,10 +21,40 @@ use vars qw(@ISA);
 # Subroutine Section
 # ************************************************************
 
+sub translate_value {
+  my($self) = shift;
+  my($key)  = shift;
+  my($val)  = shift;
+
+  if ($key eq 'depends' && $val ne "") {
+    my($arr) = $self->create_array($val);
+    $val = "";
+    foreach my $entry (@$arr) {
+      $val .= "\"" . $self->project_file_name($entry) . "\" ";
+    }
+    $val =~ s/\s+$//;
+  }
+  return $val;
+}
+
+
+sub file_sorter {
+  my($self)  = shift;
+  my($left)  = shift;
+  my($right) = shift;
+  return lc($left) cmp lc($right);
+}
+
+
 sub project_file_name {
   my($self) = shift;
-  return $self->transform_file_name("ghs/" .
-                                    $self->project_name() . ".bld");
+  my($name) = shift;
+
+  if (!defined $name) {
+    $name = $self->project_name();
+  }
+
+  return "ghs/$name.bld";
 }
 
 

@@ -26,9 +26,13 @@ require Driver;
 # ************************************************************
 
 my(@creators) = ('GNUWorkspaceCreator',
+                 'NMakeWorkspaceCreator',
                  'VC6WorkspaceCreator',
                  'VC7WorkspaceCreator',
-                 'NMakeWorkspaceCreator',
+                 'BorlandWorkspaceCreator',
+                 'GHSWorkspaceCreator',
+                 'EM3WorkspaceCreator',
+                 'VA4WorkspaceCreator',
                 );
 
 # ************************************************************

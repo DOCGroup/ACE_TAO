@@ -25,10 +25,40 @@ my($dynamiclib) = "DLL";
 my($staticlib)  = "LIB";
 my($dynamicexe) = "EXE";
 my($staticexe)  = "Static EXE";
+my($sname)      = "_Static";
 
 # ************************************************************
 # Subroutine Section
 # ************************************************************
+
+sub remove_type_append {
+  my($self) = shift;
+  my($str)  = shift;
+
+  foreach my $type ($staticexe, $dynamicexe, $staticlib, $dynamiclib) {
+    if ($str =~ /(.*)\s+$type$/) {
+      $str = $1;
+      last;
+    }
+  }
+
+  return $str;
+}
+
+
+sub base_project_name {
+  my($self) = shift;
+  return $self->transform_file_name(
+               $self->remove_type_append($self->project_name()) .
+               ($self->get_writing_type() == 1 ? $sname : ""));
+}
+
+
+sub get_static_append {
+  my($self) = shift;
+  return $sname;
+}
+
 
 sub get_type_append {
   my($self) = shift;
@@ -93,12 +123,6 @@ sub translate_value {
 }
 
 
-sub sort_files {
-  my($self) = shift;
-  return 1;
-}
-
-
 sub file_sorter {
   my($self)  = shift;
   my($left)  = shift;
@@ -109,12 +133,7 @@ sub file_sorter {
 
 sub crlf {
   my($self) = shift;
-  if ($^O eq 'MSWin32') {
-    return "\n";
-  }
-  else {
-    return "\r\n";
-  }
+  return $self->windows_crlf();
 }
 
 
@@ -124,7 +143,7 @@ sub fill_value {
   my($value) = undef;
 
   if ($name eq "make_file_name") {
-    $value = $self->transform_file_name($self->project_name() . ".mak");
+    $value = $self->base_project_name() . ".mak";
   }
 
   return $value;
@@ -139,13 +158,13 @@ sub separate_static_project {
 
 sub project_file_name {
   my($self) = shift;
-  return $self->transform_file_name($self->project_name() . ".dsp");
+  return $self->project_name() . ".dsp";
 }
 
 
 sub static_project_file_name {
   my($self) = shift;
-  return $self->transform_file_name($self->project_name() . "_Static.dsp");
+  return $self->project_name() . "$sname.dsp";
 }
 
 
