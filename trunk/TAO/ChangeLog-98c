@@ -1,3 +1,41 @@
+Mon Jul 20 10:57:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
+
+      * tao/Connect.cpp: Changed the handle_locate method completely
+        to try to upcall to the non_existent method. This method
+        is not part of the standard, is TAO internal. We know
+        that this method is supported by each TAO Object. So
+        if we fail we know the object is not there. If we succeed,
+        the object is available and if we get forward_request
+        exception we will forward the call.
+
+      * tao/IIOP_Object.{h,i,cpp}: Added code to branch to do a conditonal
+        locate request, depending on two flags. One tells to 
+        use it at all the other tells if it is the first call- 
+        because we want to do it only on the first call.
+
+      * tao/Invocation.{h,i,cpp}: Added code to the start method,
+        which branches into different CDR stream generation,
+        depending on the kind of message we want to send. The two
+        options right now are: Request and LocateRequest.
+        A new subclass has been introduces: TAO_GIOP_
+        LocateRequest_Invocation, which is similar to the
+        Twoway subclass but does a locate request. It has its own
+        invoke method and does not call the common invoke method.
+        Closing of a connection is the same in all the three cases
+        (oneway, twoway, locate_request), I factored the code out
+        into a close_connection method.
+
+      * tao/Object.{h,cpp}: Added a method call to activate
+        the locate request on the first call after the activation.
+        The locate request will be done only once unless it is activated
+        a second time.
+
+      * TAO_IDL/be/be_visitor_interface/interface_ss.cpp: Changed
+        the code generation of the non_existent method. It accepts
+        only one parameter, not two. So I changed the param_count 
+        from 2 to 1.
+
+
 Mon Jul 20 10:35:33 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Trader/Constraint_Interpreter.{h,cpp},

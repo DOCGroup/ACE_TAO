@@ -124,6 +124,10 @@ public:
   virtual STUB_Object *_stubobj (void);
   // get the underlying stub object
 
+  virtual void _use_locate_requests (CORBA::Boolean use_it);
+  // the the object to use a locate request for the first call to 
+  // the object
+
 protected:
   TAO_ServantBase *servant_;
   // Servant pointer.  It is 0 except for collocated objects.

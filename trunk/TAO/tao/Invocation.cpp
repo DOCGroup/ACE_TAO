@@ -27,6 +27,7 @@ enum
   TAO_GIOP_INVOCATION_START_REQUEST_HDR
 };
 
+
 // Setup Timeprobes
 ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Invocation_Timeprobe_Description,
                                   TAO_GIOP_SEND_REQUEST_START);
@@ -88,7 +89,8 @@ TAO_GIOP_Invocation::~TAO_GIOP_Invocation (void)
 
 void
 TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
-			    CORBA::Environment &env)
+                            TAO_GIOP::Message_Type message_type,
+                  			    CORBA::Environment &env)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_GIOP_INVOCATION_START_ENTER);
 
@@ -232,7 +234,7 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
 
   // Build the outgoing message, starting with generic GIOP header.
 
-  CORBA::Boolean bt = TAO_GIOP::start_message (TAO_GIOP::Request,
+  CORBA::Boolean bt = TAO_GIOP::start_message (message_type,
                                                this->out_stream_);
 
   if (bt != CORBA::B_TRUE)
@@ -256,22 +258,34 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
   // unverified user ID, and then verifying the message (i.e. a dummy
   // service context entry is set up to hold a digital signature for
   // this message, then patched shortly before it's sent).
-
   static CORBA::Principal_ptr anybody = 0;
   static TAO_GIOP_ServiceContextList svc_ctx;   // all zeroes
 
-  this->out_stream_ << svc_ctx;
-  this->out_stream_.write_ulong (this->my_request_id_);
-  this->out_stream_.write_boolean (is_roundtrip);
-  this->out_stream_ << *key;
-  this->out_stream_.write_string (this->opname_);
-  this->out_stream_ << anybody;
-
+  switch (message_type)
+    {
+    case TAO_GIOP::Request:
+  
+      this->out_stream_ << svc_ctx;
+      this->out_stream_.write_ulong (this->my_request_id_);
+      this->out_stream_.write_boolean (is_roundtrip);
+      this->out_stream_ << *key;
+      this->out_stream_.write_string (this->opname_);
+      this->out_stream_ << anybody;
+      break;
+    case TAO_GIOP::LocateRequest:
+      this->out_stream_.write_ulong (this->my_request_id_);
+      this->out_stream_ << *key;
+      break;
+    default:
+      env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
+      return;
+  }
   if (!this->out_stream_.good_bit ())
-    env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
+     env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
 
   ACE_TIMEPROBE (TAO_GIOP_INVOCATION_START_REQUEST_HDR);
 }
+
 
 // Send request, block until any reply comes back, and unmarshal reply
 // parameters as appropriate.
@@ -306,6 +320,103 @@ TAO_GIOP_Invocation::invoke (CORBA::Boolean is_roundtrip,
       return TAO_GIOP_SYSTEM_EXCEPTION;
     }
   return TAO_GIOP_NO_EXCEPTION;
+}
+
+// ****************************************************************
+
+TAO_GIOP_ReplyStatusType
+TAO_GIOP_Invocation::close_connection (void)
+{
+  // Special case of forwarding -- server was closing the
+  // connection, which just indicates resource constraints, not an
+  // error.  The client is effectively "forwarded" to the same
+  // server!
+  //
+  // However, we must reinitialize the forwarding chain, since the
+  // resource being reclaimed might also have been the process,
+  // not just the connection.  Without reinitializing, we'd give
+  // false error reports to applications.
+  {
+    ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
+                              guard,
+                              data_->get_fwd_profile_lock (),
+                              TAO_GIOP_SYSTEM_EXCEPTION));
+
+    IIOP::Profile *old = data_->set_fwd_profile (0);
+    delete old;
+    // sets the forwarding profile to 0 and deletes the old one;
+
+    data_->reset_first_locate_request ();
+    // resets the flag of the first call locate request to true
+  }
+   
+  this->handler_->close ();
+  this->handler_ = 0;
+  return TAO_GIOP_LOCATION_FORWARD;
+}
+
+
+// Handle the GIOP Reply with status = LOCATION_FORWARD
+// Replace the IIOP Profile. The call is then automatically
+// reinvoked by the IIOP_Object::do_static_call method.
+
+TAO_GIOP_ReplyStatusType
+TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
+                                       CORBA::Environment &env)
+{
+  // It can be assumed that the GIOP header and the reply header
+  // are already handled. Further it can be assumed that the
+  // reply body contains an object reference to the new object.
+  // This object pointer will be now extracted.
+
+  CORBA::Object_ptr object_ptr = 0;
+
+  if (inp_stream.decode (CORBA::_tc_Object,
+                         &(object_ptr),
+                         0,
+                         env) != CORBA::TypeCode::TRAVERSE_CONTINUE)
+    { 
+      dexc (env, "invoke, location forward (decode)");
+      TAO_GIOP::send_error (this->handler_);
+      return TAO_GIOP_SYSTEM_EXCEPTION;
+    }
+
+  // The object pointer has to be changed to a IIOP_Object pointer
+  // in order to extract the profile.
+
+  IIOP_Object *iiopobj =
+    ACE_dynamic_cast (IIOP_Object*, object_ptr->_stubobj ());
+  
+  if (iiopobj == 0)
+    {
+      TAO_GIOP::send_error (this->handler_);
+      return TAO_GIOP_SYSTEM_EXCEPTION;
+    }
+
+  // Make a copy of the IIOP profile in the forwarded objref,
+  // reusing memory where practical.  Then delete the forwarded
+  // objref, retaining only its profile.
+  //
+  // @@ add and use a "forward count", to prevent loss of data
+  // in forwarding chains during concurrent calls -- only a
+  // forward that's a response to the current fwd_profile should
+  // be recorded here. (This is just an optimization, and is not
+  // related to correctness.)
+
+  // the copy method on IIOP::Profile will be used to copy the content
+  data_->set_fwd_profile (&iiopobj->profile);
+  // store the new profile in the forwarding profile
+  // note: this has to be and is thread safe
+
+  // The object is no longer needed, because we have now the IIOP_Object
+  CORBA::release (object_ptr); 
+
+  env.clear ();
+
+  // We may not need to do this since TAO_GIOP_Invocations
+  // get created on a per-call basis. For now we'll play it safe.
+
+  return TAO_GIOP_LOCATION_FORWARD;
 }
 
 // ****************************************************************
@@ -369,29 +480,7 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
       break;
 
     case TAO_GIOP::CloseConnection:
-      // Special case of forwarding -- server was closing the
-      // connection, which just indicates resource constraints, not an
-      // error.  The client is effectively "forwarded" to the same
-      // server!
-      //
-      // However, we must reinitialize the forwarding chain, since the
-      // resource being reclaimed might also have been the process,
-      // not just the connection.  Without reinitializing, we'd give
-      // false error reports to applications.
-      {
-        ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
-                                  guard,
-                                  data_->get_fwd_profile_lock (),
-                                  TAO_GIOP_SYSTEM_EXCEPTION));
-
-
-        IIOP::Profile *old = data_->set_fwd_profile (0);
-        delete old;
-        // sets the forwarding profile to 0 and deletes the old one;
-      }
-      this->handler_->close ();
-      this->handler_ = 0;
-      return TAO_GIOP_LOCATION_FORWARD;
+      return (TAO_GIOP_Invocation::close_connection ());
 
     case TAO_GIOP::Request:
     case TAO_GIOP::CancelRequest:
@@ -581,7 +670,7 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
     // NOTREACHED
 
     case TAO_GIOP_LOCATION_FORWARD:
-      return (this->location_forward (env));
+      return (this->location_forward (this->inp_stream_, env));
     }
 
   // All standard exceptions from here on in the call path know for
@@ -657,30 +746,7 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
       break;
 
     case TAO_GIOP::CloseConnection:
-      // Special case of forwarding -- server was closing the
-      // connection, which just indicates resource constraints, not an
-      // error.  The client is effectively "forwarded" to the same
-      // server!
-      //
-      // However, we must reinitialize the forwarding chain, since the
-      // resource being reclaimed might also have been the process,
-      // not just the connection.  Without reinitializing, we'd give
-      // false error reports to applications.
-      {
-        ACE_MT (ACE_GUARD_RETURN (ACE_Lock, 
-                                  guard, 
-                                  data_->get_fwd_profile_lock (), 
-                                  TAO_GIOP_SYSTEM_EXCEPTION));
-
-
-        IIOP::Profile *old = data_->set_fwd_profile (0);
-        delete old;
-        // sets the forwarding profile to 0 and deletes the old one;
-      }
-
-      this->handler_->close ();
-      this->handler_ = 0;
-      return TAO_GIOP_LOCATION_FORWARD;
+      return (TAO_GIOP_Invocation::close_connection ());
 
     case TAO_GIOP::Request:
     case TAO_GIOP::CancelRequest:
@@ -903,7 +969,7 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
     // NOTREACHED
 
     case TAO_GIOP_LOCATION_FORWARD:
-        return (this->location_forward (env));
+        return (this->location_forward (this->inp_stream_, env));
     }
 
   // All standard exceptions from here on in the call path know for
@@ -914,66 +980,96 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
   return (TAO_GIOP_ReplyStatusType) reply_status;
 }
 
-// Handle the GIOP Reply with status = LOCATION_FORWARD
-// Replace the IIOP Profile. The call is then automatically
-// reinvoked by the IIOP_Object::do_static_call method.
+
+
+// ****************************************************************
+
+
+// Send request, block until any reply comes back
 
 TAO_GIOP_ReplyStatusType
-TAO_GIOP_Twoway_Invocation::location_forward (CORBA::Environment &env)
+TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &env)
 {
-  // It can be assumed that the GIOP header and the reply header
-  // are already handled. Further it can be assumed that the
-  // reply body contains and object reference to the new object.
-  // This object pointer will be now extracted.
+  // Send Request, return on error or if we're done
 
-  CORBA::Object_ptr object_ptr = 0;
-
-  if (this->inp_stream_.decode (CORBA::_tc_Object,
-                                &(object_ptr),
-                                0,
-                                env) != CORBA::TypeCode::TRAVERSE_CONTINUE)
-  {
-    dexc (env, "invoke, location forward (decode)");
-    TAO_GIOP::send_error (this->handler_);
-    return TAO_GIOP_SYSTEM_EXCEPTION;
-  }
-
-  // The object pointer has to be changed to a IIOP_Object pointer
-  // in order to extract the profile.
-
-  IIOP_Object *iiopobj =
-    ACE_dynamic_cast (IIOP_Object*, object_ptr->_stubobj ());
-  
-  if (iiopobj == 0)
+  if (this->handler_->send_request (this->out_stream_,
+                                    CORBA::B_TRUE) == -1)
     {
+      // send_request () closed the connection; we just set the
+      // handler to 0 here.
+      this->handler_ = 0;
+      env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE));
+      return TAO_GIOP_SYSTEM_EXCEPTION;
+    }
+
+  TAO_SVC_HANDLER *handler = this->handler_;
+  TAO_GIOP::Message_Type m = TAO_GIOP::recv_request (handler,
+                                                     this->inp_stream_);
+
+  TAO_ORB_Core_instance ()->reactor ()->resume_handler (this->handler_);
+  // suspend was called in TAO_Client_Connection_Handler::handle_input
+  
+  switch (m)
+    {
+    case TAO_GIOP::CloseConnection:
+      return (this->close_connection ());
+
+    case TAO_GIOP::LocateReply:
+      // Handle the reply
+      // Especially set the new location
+
+      CORBA::ULong request_id;
+      CORBA::ULong locate_status;      // TAO_GIOP_LocateStatusType 
+
+      if (!this->inp_stream_.read_ulong (request_id)
+          || request_id != this->my_request_id_
+          || !this->inp_stream_.read_ulong (locate_status))
+      {
+        TAO_GIOP::send_error (this->handler_);
+        env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE));
+        ACE_DEBUG ((LM_DEBUG, 
+                    "(%P|%t) bad Response header\n"));
+
+        return TAO_GIOP_SYSTEM_EXCEPTION;
+      }
+      switch (locate_status)
+      {
+        case TAO_GIOP_UNKNOWN_OBJECT:
+          env.exception (new CORBA::OBJECT_NOT_EXIST (CORBA::COMPLETED_YES));
+          return TAO_GIOP_SYSTEM_EXCEPTION;
+          /* not reached */
+        case TAO_GIOP_OBJECT_HERE:
+          return TAO_GIOP_NO_EXCEPTION;
+          /* not reached */
+        case TAO_GIOP_OBJECT_FORWARD:
+          return (this->location_forward (this->inp_stream_, env));
+          /* not reached */
+      }
+      /* not reached */
+    case TAO_GIOP::Reply:
+    case TAO_GIOP::Request:
+    case TAO_GIOP::CancelRequest:
+    case TAO_GIOP::LocateRequest:
+    default:
+      // These are all illegal messages to find.  If found, they could
+      // be indicative of client bugs (lost track of input stream) or
+      // server bugs; maybe the request was acted on, maybe not, we
+      // can't tell.
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) illegal GIOP message (%s) in response to my Request!\n",
+                  TAO_GIOP::message_name (m)));
+      env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE));
+      // FALLTHROUGH ...
+
+    case TAO_GIOP::MessageError:
+      // Couldn't read it for some reason ... exception's set already,
+      // so just tell the other end about the trouble (closing the
+      // connection) and return.
       TAO_GIOP::send_error (this->handler_);
       return TAO_GIOP_SYSTEM_EXCEPTION;
     }
 
-  // Make a copy of the IIOP profile in the forwarded objref,
-  // reusing memory where practical.  Then delete the forwarded
-  // objref, retaining only its profile.
-  //
-  // @@ add and use a "forward count", to prevent loss of data
-  // in forwarding chains during concurrent calls -- only a
-  // forward that's a response to the current fwd_profile should
-  // be recorded here. (This is just an optimization, and is not
-  // related to correctness.)
-
-  // the copy method on IIOP::Profile will be used to copy the content
-  data_->set_fwd_profile (&iiopobj->profile);
-  // store the new profile in the forwarding profile
-  // note: this has to be and is thread safe
-
-  // The object is no longer needed, because we have now the IIOP_Object
-  CORBA::release (object_ptr); 
-
-  env.clear ();
-
-  // We may not need to do this since TAO_GIOP_Invocations
-  // get created on a per-call basis. For now we'll play it safe.
-
-  return TAO_GIOP_LOCATION_FORWARD;
+  return TAO_GIOP_NO_EXCEPTION;
 }
 
 // ****************************************************************

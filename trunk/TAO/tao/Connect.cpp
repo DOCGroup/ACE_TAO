@@ -247,62 +247,6 @@ TAO_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
 {
   // This will extract the request header, set <response_required> as
   // appropriate.
-  TAO_GIOP_LocateRequestHeader req;
-
-  env.clear ();
-  if (! req.init (input, env))
-    {
-      // @@ FIXME! Need to set <env>.
-      request_id = req.request_id;
-      response_required = 0;
-      return -1;
-    }
-  // Copy the request ID to be able to respond in case of an exception
-  request_id = req.request_id;
-
-  response_required = 1; // Be optimistic
-
-  // So, we read a request, now handle it using something more
-  // primitive than a CORBA2 ServerRequest pseudo-object.
-  TAO_POA *the_poa = TAO_ORB_Core_instance ()->root_poa ();
-  TAO_GIOP_LocateStatusType status;
-
-  if ((the_poa->locate_servant (req.object_key, env) == 0)
-      && (env.exception() == 0))
-    // We found it!
-    status = TAO_GIOP_OBJECT_HERE;
-  else
-    {
-      // not found, report unknown
-      status = TAO_GIOP_UNKNOWN_OBJECT;
-
-      // the locate_servant call might have thrown an exception
-      // but we don't want to marshal it because it is no failure.
-      // The proper Locacte_Reply will tell the client what is going on.
-
-      // // Remove the exception
-      env.clear ();
-    }
-
-  // Create the response.
-  TAO_GIOP::start_message (TAO_GIOP::LocateReply, output);
-  output.write_ulong (req.request_id);
-  output.write_ulong (status);
-
-  if (env.exception () != 0)
-    // An exception was thrown
-    return -1;
-  else
-    // Everything is ok.
-    return 0;
-
-  /*
-  This code is compiling, I did not want to commit it,
-  because we were not able to test it yet
-
-
-  // This will extract the request header, set <response_required> as
-  // appropriate.
   TAO_GIOP_LocateRequestHeader locateRequestHeader;
 
   env.clear ();
@@ -324,6 +268,7 @@ TAO_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
   TAO_OutputCDR dummy_output (repbuf, sizeof(repbuf));
   // this output CDR is not used!
 
+  
   IIOP_ServerRequest serverRequest (locateRequestHeader.request_id,
                                     (unsigned char &) response_required,
                                     locateRequestHeader.object_key,
@@ -332,14 +277,35 @@ TAO_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
                                     TAO_ORB_Core_instance ()->orb (),
                                     the_poa,
                                     env);
-  // We use a special constructor to bypass the input CDR
+  /*
 
+  // This is code, which could be used alternatively,
+  // we have to discuss that, though there
+  // are Input/Output CDR conversion problems.
 
-  if (env.exception ())
-  {
-    response_required = 0;
-    return -1;
-  }
+  TAO_OutputCDR out_stream (repbuf, sizeof(repbuf));
+  TAO_GIOP::start_message (TAO_GIOP::Request,
+                           out_stream);
+
+  CORBA::Principal_ptr anybody = 0;
+  TAO_GIOP_ServiceContextList svc_ctx;   // all zeroes
+
+  out_stream << svc_ctx;
+  out_stream.write_ulong (locateRequestHeader.request_id);
+  out_stream.write_boolean (CORBA::B_TRUE);
+  out_stream << locateRequestHeader.object_key;
+  out_stream.write_string ("_non_existent");
+  out_stream << anybody;
+  out_stream.good_bit ();
+
+  // marshall all the parameters
+
+  IIOP_ServerRequest serverRequest (out_stream,
+                                    dummy_output,
+                                    TAO_ORB_Core_instance ()->orb (),
+                                    the_poa,
+                                    env);
+  */
 
   the_poa->dispatch_servant (serverRequest.object_key (),
                              serverRequest,
@@ -366,10 +332,14 @@ TAO_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
     {
       status = TAO_GIOP_OBJECT_FORWARD;
       forward_location_var = forward_request_ptr->forward_reference;
+      //ACE_DEBUG ((LM_DEBUG, "handle_locate has been called: forwarding\n"));
     }
     else
+    {
       // Normal exception, so the object is not here
       status = TAO_GIOP_UNKNOWN_OBJECT;
+      //ACE_DEBUG ((LM_DEBUG, "handle_locate has been called: not here\n"));
+    }
 
     // the locate_servant call might have thrown an exception
     // but we don't want to marshal it because it is no failure.
@@ -379,8 +349,11 @@ TAO_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
     env.clear ();
   } 
   else 
+  {
     // we got no exception, so the object is here
     status = TAO_GIOP_OBJECT_HERE;
+    //ACE_DEBUG ((LM_DEBUG, "handle_locate has been called: found\n"));
+  }
 
   // Create the response.
   TAO_GIOP::start_message (TAO_GIOP::LocateReply, output);
@@ -407,7 +380,6 @@ TAO_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
   }
 
   return 0;
-  */
 }
 
 void

@@ -223,6 +223,12 @@ public:
   ACE_Lock &get_fwd_profile_lock (void);
   // Gives reference to the lock guarding the forwarding profile.
 
+  void reset_first_locate_request (void);
+  // reset the flag telling that the locate request should be used
+
+  void use_locate_requests (CORBA::Boolean use_it);
+  // set the flags to use locate_requests.
+
 private:
   void put_params (CORBA::Environment &env,
 		   const TAO_Call_Data *info,
@@ -249,6 +255,12 @@ private:
 
   u_int refcount_;
   // Number of outstanding references to this object.
+
+  CORBA::Boolean use_locate_request_;
+  // set if locate request should be used
+
+  CORBA::Boolean first_locate_request_;
+  // distinguishes the first from following calls
 
   ~IIOP_Object (void);
   // Destructor is to be called only through _decr_refcnt()

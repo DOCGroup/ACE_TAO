@@ -433,6 +433,22 @@ IIOP_Object::do_static_call (CORBA::Environment &env,   // exception reporting
 
   TAO_Synchronous_Cancellation_Required NOT_USED;
 
+  // Do a locate_request if necessary/wanted.
+  if (this->use_locate_request_ && this->first_locate_request_)
+  {
+    TAO_GIOP_Locate_Request_Invocation call (this);
+
+    call.start (env);
+         
+    TAO_GIOP_ReplyStatusType  status = call.invoke (env);
+
+    this->first_locate_request_ = CORBA::B_FALSE;
+
+    if (status == TAO_GIOP_SYSTEM_EXCEPTION)
+      return;
+  }
+
+
   if (info->is_roundtrip)
     {
       TAO_GIOP_Twoway_Invocation call (this, info->opname);
@@ -455,6 +471,7 @@ IIOP_Object::do_static_call (CORBA::Environment &env,   // exception reporting
         {
           // Start the call by constructing the request message header.
           call.start (env);
+
           ACE_TIMEPROBE (TAO_IIOP_OBJECT_DO_STATIC_CALL_INVOCATION_START);
           if (env.exception () != 0) return;
 

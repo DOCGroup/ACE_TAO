@@ -46,7 +46,9 @@ ACE_INLINE
 IIOP_Object::IIOP_Object (char *repository_id)
   : STUB_Object (repository_id),
     fwd_profile_ (0),
-    refcount_ (0)
+    refcount_ (0),
+    use_locate_request_ (CORBA::B_FALSE),
+    first_locate_request_ (CORBA::B_FALSE)
 {
   this->fwd_profile_lock_ptr_ =  TAO_ORB_Core_instance ()
                                 ->client_factory ()
@@ -59,7 +61,9 @@ IIOP_Object::IIOP_Object (char *repository_id,
   : STUB_Object (repository_id),
     profile (a_profile),
     fwd_profile_ (0),
-    refcount_ (0)
+    refcount_ (0),
+    use_locate_request_ (CORBA::B_FALSE),
+    first_locate_request_ (CORBA::B_FALSE)
 {
   this->fwd_profile_lock_ptr_ =  TAO_ORB_Core_instance ()
                                 ->client_factory ()
@@ -96,14 +100,14 @@ IIOP_Object::set_fwd_profile (IIOP::Profile *new_profile)
                             0));
   IIOP::Profile *old = this->fwd_profile_;
   if (new_profile != 0)
-  {
-    delete this->fwd_profile_;
-    ACE_NEW_RETURN (this->fwd_profile_,
-                    IIOP::Profile(),
-                    0);
-    *this->fwd_profile_ = *new_profile;
-    // use the copy operator on IIOP_Profile
-  }
+    {
+      delete this->fwd_profile_;
+      ACE_NEW_RETURN (this->fwd_profile_,
+                      IIOP::Profile(),
+                      0);
+      *this->fwd_profile_ = *new_profile;
+      // use the copy operator on IIOP_Profile
+    }
   return old;
 }
 
@@ -113,3 +117,27 @@ IIOP_Object::get_fwd_profile_lock (void)
 {
   return *this->fwd_profile_lock_ptr_;
 }
+
+ACE_INLINE
+void 
+IIOP_Object::reset_first_locate_request (void)
+{
+  first_locate_request_ = CORBA::B_TRUE;
+}
+
+ACE_INLINE
+void 
+IIOP_Object::use_locate_requests (CORBA::Boolean use_it)
+{
+  if (use_it)
+    {
+      this->first_locate_request_ = CORBA::B_TRUE;
+      this->use_locate_request_ = CORBA::B_TRUE;
+    }
+  else 
+    // don't use it
+    {
+      this->first_locate_request_ = CORBA::B_TRUE;
+      this->use_locate_request_ = CORBA::B_TRUE;
+    }   
+} 
