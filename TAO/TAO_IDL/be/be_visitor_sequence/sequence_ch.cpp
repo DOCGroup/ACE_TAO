@@ -308,9 +308,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
     }
 
   *os << "class " << node->local_name () << ";" << be_nl;
-  *os << "class " << node->local_name () << "_var;" << be_nl;
-  *os << "typedef " << node->local_name () << "* "
-      << node->local_name () << "_ptr;" << be_nl << be_nl;
+  *os << "class " << node->local_name () << "_var;" << be_nl << be_nl;
 
   *os << "// *************************************************************"
       << be_nl
@@ -379,8 +377,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
   // but we must protect against certain versions of g++
   *os << "#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)\n";
   os->indent ();
-  *os << "typedef " << node->local_name () << "_ptr _ptr_type;" << be_nl
-      << "typedef " << node->local_name () << "_var _var_type;\n"
+  *os << "typedef " << node->local_name () << "_var _var_type;\n"
       << "#endif /* ! __GNUC__ || g++ >= 2.8 */\n\n";
   os->decr_indent ();
 
@@ -390,17 +387,19 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
   if (bt->base_node_type () == AST_Type::NT_pre_defined)
     {
       be_typedef* alias =
-	be_typedef::narrow_from_decl (bt);
+	    be_typedef::narrow_from_decl (bt);
 
       if (alias == 0)
-	{
-	  predef = be_predefined_type::narrow_from_decl (bt);
-	}
+	      {
+	        predef = be_predefined_type::narrow_from_decl (bt);
+	      }
       else
-	{
-	  predef = be_predefined_type::narrow_from_decl
-	    (alias->primitive_base_type ());
-	}
+	      {
+	        predef = 
+            be_predefined_type::narrow_from_decl (
+                alias->primitive_base_type ()
+              );
+	      }
     }
   // Now generate the extension...
   if (predef != 0 && predef->pt () == AST_PredefinedType::PT_octet
