@@ -17,10 +17,10 @@
 #include "portableserver_export.h"
 #include "PortableServerC.h"
 #include "Policy_Strategy.h"
+#include "Creation_Time.h"
 #include "ace/Service_Config.h"
 
-// zap this for creation time
-#include "POA.h"
+#include "tao/Object_KeyC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -41,6 +41,8 @@ namespace CORBA
   class PolicyError;
   class PolicyList;
 }
+
+class ServerObject_i;
 
 namespace TAO
 {
@@ -102,7 +104,7 @@ namespace TAO
       }
 
     private:
-      TAO_Creation_Time creation_time_;
+      TAO::Portable_Server::Creation_Time creation_time_;
     };
 
     class TAO_PortableServer_Export Persistent_Lifespan_Strategy :

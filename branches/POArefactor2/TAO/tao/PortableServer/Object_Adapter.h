@@ -54,6 +54,7 @@ namespace TAO
     class Non_Servant_Upcall;
     class Servant_Upcall;
     class POA_Current_Impl;
+    class Temporary_Creation_Time;
   }
 }
 
@@ -72,7 +73,6 @@ enum TAO_SERVANT_LOCATION
 // Forward declaration
 class TAO_POA;
 class TAO_POA_Manager;
-class TAO_Temporary_Creation_Time;
 class TAO_TSS_Resources;
 class TAO_Transport;
 class TAO_Servant_Dispatcher;
@@ -116,7 +116,7 @@ public:
   int find_poa (const poa_name &system_name,
                 CORBA::Boolean activate_it,
                 CORBA::Boolean root,
-                const TAO_Temporary_Creation_Time &poa_creation_time,
+                const TAO::Portable_Server::Temporary_Creation_Time &poa_creation_time,
                 TAO_POA *&poa
                 ACE_ENV_ARG_DECL);
 
@@ -209,7 +209,7 @@ protected:
 
   int find_transient_poa (const poa_name &system_name,
                           CORBA::Boolean root,
-                          const TAO_Temporary_Creation_Time &poa_creation_time,
+                          const TAO::Portable_Server::Temporary_Creation_Time &poa_creation_time,
                           TAO_POA *&poa
                           ACE_ENV_ARG_DECL);
 

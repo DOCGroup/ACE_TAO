@@ -2235,7 +2235,7 @@ TAO_POA::reference_to_servant_i (CORBA::Object_ptr reference
       CORBA::Boolean is_root = 0;
       CORBA::Boolean is_persistent = 0;
       CORBA::Boolean is_system_id = 0;
-      TAO_Temporary_Creation_Time poa_creation_time;
+      TAO::Portable_Server::Temporary_Creation_Time poa_creation_time;
 
       int parse_result =
         this->parse_key (key.in (),
@@ -2364,7 +2364,7 @@ TAO_POA::reference_to_id (CORBA::Object_ptr reference
   CORBA::Boolean is_root = 0;
   CORBA::Boolean is_persistent = 0;
   CORBA::Boolean is_system_id = 0;
-  TAO_Temporary_Creation_Time poa_creation_time;
+  TAO::Portable_Server::Temporary_Creation_Time poa_creation_time;
 
   int result = this->parse_key (key.in (),
                                 poa_system_name,
@@ -2858,7 +2858,7 @@ TAO_POA::parse_key (const TAO::ObjectKey &key,
                     CORBA::Boolean &is_root,
                     CORBA::Boolean &is_persistent,
                     CORBA::Boolean &is_system_id,
-                    TAO_Temporary_Creation_Time &poa_creation_time)
+                    TAO::Portable_Server::Temporary_Creation_Time &poa_creation_time)
 {
   // Start at zero.
   CORBA::ULong starting_at = 0;
@@ -2935,7 +2935,7 @@ TAO_POA::parse_key (const TAO::ObjectKey &key,
       poa_creation_time.creation_time (key_data + starting_at);
 
       // Skip past the timestamp
-      starting_at += TAO_Creation_Time::creation_time_length ();
+      starting_at += TAO::Portable_Server::Creation_Time::creation_time_length ();
     }
 #else
   ACE_UNUSED_ARG (poa_creation_time);
@@ -3060,7 +3060,7 @@ TAO_POA::set_id (void)
   CORBA::ULong creation_time = this->persistent_key_type_length ();
 #if (POA_NO_TIMESTAMP == 0)
   // Calculate the space required for the timestamp.
-  CORBA::ULong creation_time_length = TAO_Creation_Time::creation_time_length ();
+  CORBA::ULong creation_time_length = TAO::Portable_Server::Creation_Time::creation_time_length ();
   if (!this->active_policy_strategies_.lifespan_strategy()->persistent ())
     {
       creation_time += creation_time_length;
@@ -3320,7 +3320,7 @@ TAO_POA::parse_ir_object_key (const TAO::ObjectKey &object_key,
   CORBA::Boolean is_root = 0;
   CORBA::Boolean is_persistent = 0;
   CORBA::Boolean is_system_id = 0;
-  TAO_Temporary_Creation_Time poa_creation_time;
+  TAO::Portable_Server::Temporary_Creation_Time poa_creation_time;
 
   return TAO_POA::parse_key (object_key,
                              poa_system_name,

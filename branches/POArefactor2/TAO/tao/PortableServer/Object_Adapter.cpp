@@ -5,6 +5,7 @@
 #include "Non_Servant_Upcall.h"
 #include "Servant_Upcall.h"
 #include "POA.h"
+#include "Creation_Time.h"
 #include "POA_Guard.h"
 #include "ServerRequestInfo.h"
 #include "Default_Servant_Dispatcher.h"
@@ -417,7 +418,7 @@ TAO_Object_Adapter::locate_poa (const TAO::ObjectKey &key,
   CORBA::Boolean is_root = 0;
   CORBA::Boolean is_persistent = 0;
   CORBA::Boolean is_system_id = 0;
-  TAO_Temporary_Creation_Time poa_creation_time;
+  TAO::Portable_Server::Temporary_Creation_Time poa_creation_time;
 
   int result = 0;
 
@@ -519,7 +520,7 @@ TAO_Object_Adapter::activate_poa (const poa_name &folded_name,
 int
 TAO_Object_Adapter::find_transient_poa (const poa_name &system_name,
                                         CORBA::Boolean root,
-                                        const TAO_Temporary_Creation_Time &poa_creation_time,
+                                        const TAO::Portable_Server::Temporary_Creation_Time &poa_creation_time,
                                         TAO_POA *&poa
                                         ACE_ENV_ARG_DECL_NOT_USED)
 {

@@ -23,6 +23,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "Creation_Time.h"
+
 // Object Adapter
 #include "Object_Adapter.h"
 
@@ -65,68 +67,6 @@
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
-
-class TAO_Temporary_Creation_Time;
-
-class TAO_Creation_Time
-{
-public:
-  TAO_Creation_Time (const ACE_Time_Value &creation_time);
-
-  TAO_Creation_Time (void);
-
-  void creation_time (const void *creation_time);
-
-  const void *creation_time (void) const;
-
-  static CORBA::ULong creation_time_length (void);
-
-  bool operator== (const TAO_Creation_Time &rhs) const;
-
-  bool operator!= (const TAO_Creation_Time &rhs) const;
-
-  bool operator== (const TAO_Temporary_Creation_Time &rhs) const;
-
-  bool operator!= (const TAO_Temporary_Creation_Time &rhs) const;
-
-protected:
-
-  enum
-  {
-    SEC_FIELD = 0,
-    USEC_FIELD = 1
-  };
-
-  /// Timestamp
-  CORBA::ULong time_stamp_[2];
-
-};
-
-//
-/**
- * @class TAO_Temporary_Creation_Time
- *
- * @brief Special creation time only useful in the lifetime of the
- *        upcall.
- *
- * Special creation time only useful in the lifetime of the upcall.
- */
-class TAO_Temporary_Creation_Time
-{
-public:
-
-  TAO_Temporary_Creation_Time (void);
-
-  void creation_time (const void *creation_time);
-
-  bool operator== (const TAO_Creation_Time &rhs) const;
-
-  bool operator!= (const TAO_Creation_Time &rhs) const;
-
-protected:
-
-  void *time_stamp_;
-};
 
 // Forward Declaration
 class ServerObject_i;
@@ -822,7 +762,7 @@ protected:
                         CORBA::Boolean &is_root,
                         CORBA::Boolean &is_persistent,
                         CORBA::Boolean &is_system_id,
-                        TAO_Temporary_Creation_Time &poa_creation_time);
+                        TAO::Portable_Server::Temporary_Creation_Time &poa_creation_time);
 
   /// Access the list of default POA policies.  This list is used as a
   /// prototype for creating new POA's.  It should
@@ -878,7 +818,7 @@ protected:
 
   TAO::ORT_Adapter_Factory *ORT_adapter_factory (void);
 
-  const TAO_Creation_Time &creation_time (void);
+  const TAO::Portable_Server::Creation_Time &creation_time (void);
 
   CORBA::Boolean persistent (void);
 
@@ -985,7 +925,7 @@ protected:
 
   ACE_Lock &lock_;
 
-  TAO_Creation_Time creation_time_;
+  TAO::Portable_Server::Creation_Time creation_time_;
 
   TAO_ORB_Core &orb_core_;
 

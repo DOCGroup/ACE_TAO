@@ -79,7 +79,7 @@ ACE_INLINE int
 TAO_Object_Adapter::find_poa (const poa_name &system_name,
                               CORBA::Boolean activate_it,
                               CORBA::Boolean root,
-                              const TAO_Temporary_Creation_Time &poa_creation_time,
+                              const TAO::Portable_Server::Temporary_Creation_Time &poa_creation_time,
                               TAO_POA *&poa
                               ACE_ENV_ARG_DECL)
 {

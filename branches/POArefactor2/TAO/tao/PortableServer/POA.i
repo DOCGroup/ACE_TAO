@@ -19,116 +19,6 @@ TAO_POA::lock (void)
   return this->lock_;
 }
 
-ACE_INLINE CORBA::ULong
-TAO_Creation_Time::creation_time_length (void)
-{
-  return 2 * sizeof (CORBA::ULong);
-}
-
-ACE_INLINE
-TAO_Creation_Time::TAO_Creation_Time (const ACE_Time_Value &creation_time)
-{
-  this->time_stamp_[TAO_Creation_Time::SEC_FIELD]  = (CORBA::ULong) creation_time.sec ();
-  this->time_stamp_[TAO_Creation_Time::USEC_FIELD] = (CORBA::ULong) creation_time.usec ();
-}
-
-ACE_INLINE
-TAO_Creation_Time::TAO_Creation_Time (void)
-{
-  this->time_stamp_[TAO_Creation_Time::SEC_FIELD]  = 0;
-  this->time_stamp_[TAO_Creation_Time::USEC_FIELD] = 0;
-}
-
-ACE_INLINE void
-TAO_Creation_Time::creation_time (const void *creation_time)
-{
-  ACE_OS::memcpy (&this->time_stamp_,
-                  creation_time,
-                  TAO_Creation_Time::creation_time_length ());
-}
-
-ACE_INLINE const void *
-TAO_Creation_Time::creation_time (void) const
-{
-  return &this->time_stamp_;
-}
-
-ACE_INLINE bool
-TAO_Creation_Time::operator== (const TAO_Creation_Time &rhs) const
-{
-#if (POA_NO_TIMESTAMP == 1)
-  ACE_UNUSED_ARG (rhs);
-  return true;
-#else
-  return ACE_OS::memcmp (&this->time_stamp_,
-                         &rhs.time_stamp_,
-                         TAO_Creation_Time::creation_time_length ()) == 0;
-#endif /* POA_NO_TIMESTAMP */
-}
-
-ACE_INLINE bool
-TAO_Creation_Time::operator!= (const TAO_Creation_Time &rhs) const
-{
-#if (POA_NO_TIMESTAMP == 1)
-  ACE_UNUSED_ARG (rhs);
-  return false;
-#else
-  return ACE_OS::memcmp (&this->time_stamp_,
-                         &rhs.time_stamp_,
-                         TAO_Creation_Time::creation_time_length ()) != 0;
-#endif /* POA_NO_TIMESTAMP */
-}
-
-ACE_INLINE bool
-TAO_Temporary_Creation_Time::operator== (const TAO_Creation_Time &rhs) const
-{
-#if (POA_NO_TIMESTAMP == 1)
-  ACE_UNUSED_ARG (rhs);
-  return true;
-#else
-  return ACE_OS::memcmp (this->time_stamp_,
-                         rhs.creation_time (),
-                         TAO_Creation_Time::creation_time_length ()) == 0;
-#endif /* POA_NO_TIMESTAMP */
-}
-
-ACE_INLINE bool
-TAO_Temporary_Creation_Time::operator!= (const TAO_Creation_Time &rhs) const
-{
-#if (POA_NO_TIMESTAMP == 1)
-  ACE_UNUSED_ARG (rhs);
-  return false;
-#else
-  return ACE_OS::memcmp (this->time_stamp_,
-                         rhs.creation_time (),
-                         TAO_Creation_Time::creation_time_length ()) != 0;
-#endif /* POA_NO_TIMESTAMP */
-}
-
-ACE_INLINE bool
-TAO_Creation_Time::operator== (const TAO_Temporary_Creation_Time &rhs) const
-{
-  return rhs == *this;
-}
-
-ACE_INLINE bool
-TAO_Creation_Time::operator!= (const TAO_Temporary_Creation_Time &rhs) const
-{
-  return rhs != *this;
-}
-
-ACE_INLINE
-TAO_Temporary_Creation_Time::TAO_Temporary_Creation_Time (void)
-  : time_stamp_ (0)
-{
-}
-
-ACE_INLINE void
-TAO_Temporary_Creation_Time::creation_time (const void *creation_time)
-{
-  this->time_stamp_ = (void *) creation_time;
-}
-
 ACE_INLINE PortableServer::POA_ptr
 TAO_POA::create_POA (const char *adapter_name,
                      PortableServer::POAManager_ptr poa_manager,
@@ -446,7 +336,7 @@ TAO_POA::get_obj_ref_factory (ACE_ENV_SINGLE_ARG_DECL)
   return 0;
 }
 
-ACE_INLINE const TAO_Creation_Time &
+ACE_INLINE const TAO::Portable_Server::Creation_Time &
 TAO_POA::creation_time (void)
 {
   return this->creation_time_;
