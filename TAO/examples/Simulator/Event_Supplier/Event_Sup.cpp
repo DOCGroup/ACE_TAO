@@ -301,19 +301,19 @@ Event_Supplier::insert_event_data (CORBA::Any &data,
 
         weapons_.number_of_weapons = 2;
         weapons_.weapon1_identifier = CORBA::string_alloc (30);
-        strcpy (weapons_.weapon1_identifier,"Photon Torpedoes");
+        strcpy (weapons_.weapon1_identifier.inout (),"Photon Torpedoes");
         weapons_.weapon1_status =(ACE_OS::rand() % 4) == 0 ? 0 : 1 ;
         weapons_.weapon2_identifier = CORBA::string_alloc (30);
-        strcpy (weapons_.weapon2_identifier,"Quantum Torpedoes");
+        strcpy (weapons_.weapon2_identifier.inout (),"Quantum Torpedoes");
         weapons_.weapon2_status = (ACE_OS::rand() % 4) == 0 ? 0 : 1;
         weapons_.weapon3_identifier = CORBA::string_alloc (1);
-        strcpy (weapons_.weapon3_identifier, "");
+        strcpy (weapons_.weapon3_identifier.inout (), "");
         weapons_.weapon3_status = 0;
         weapons_.weapon4_identifier = CORBA::string_alloc (1);
-        strcpy (weapons_.weapon4_identifier, "");
+        strcpy (weapons_.weapon4_identifier.inout (), "");
         weapons_.weapon4_status = 0;
         weapons_.weapon5_identifier = CORBA::string_alloc (1);
-        strcpy (weapons_.weapon5_identifier, "");
+        strcpy (weapons_.weapon5_identifier.inout (), "");
         weapons_.weapon5_status = 0;
         weapons_.utilization =      (*sched_data)->utilitzation;
         weapons_.overhead =         (*sched_data)->overhead;
@@ -345,7 +345,7 @@ Event_Supplier::insert_event_data (CORBA::Any &data,
       if ((*sched_data)->completion_time >= last_completion)
       {
               ACE_Time_Value pause (0,
-                                    (*sched_data)->completion_time - 
+                                    (*sched_data)->completion_time -
                                       last_completion);
               ACE_OS::sleep (pause);
               last_completion = (*sched_data)->completion_time;
