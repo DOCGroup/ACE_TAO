@@ -1,6 +1,7 @@
 //$Id$
 
 #include "Grid_Client_i.h"
+#include "ace/CORBA_macros.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 
@@ -80,7 +81,7 @@ Grid_Client_i::run (char *name,
   ACE_TRY
     {
       // Make the Grid.
-      
+
       Grid_ptr grid = client->make_grid (width_,
                                          height_,
                                          ACE_TRY_ENV);
@@ -105,7 +106,7 @@ Grid_Client_i::run (char *name,
       ACE_TRY_CHECK;
 
       ACE_ASSERT (ret_val == value_);
-  
+
       if (client.shutdown () == 1)
         client->shutdown (ACE_TRY_ENV);
       ACE_UNUSED_ARG (ret_val);
