@@ -1,9 +1,9 @@
 // $Id$
 
-#include "ace/Obstack_T.h"
+#include "ace/Memory/Obstack_T.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Obstack_T.i"
+#include "ace/Memory/Obstack_T.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Obstack_T, "$Id$")

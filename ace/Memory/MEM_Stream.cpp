@@ -1,11 +1,11 @@
 // MEM_Stream.cpp
 // $Id$
 
-#include "ace/MEM_Stream.h"
+#include "ace/Memory/MEM_Stream.h"
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/MEM_Stream.i"
+#include "ace/Memory/MEM_Stream.i"
 #endif
 
 ACE_RCSID(ace, MEM_Stream, "$Id$")

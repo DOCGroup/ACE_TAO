@@ -1,11 +1,11 @@
 // $Id$
 
-#include "ace/MEM_SAP.h"
+#include "ace/Memory/MEM_SAP.h"
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/MEM_SAP.i"
+#include "ace/Memory/MEM_SAP.i"
 #endif
 
 ACE_RCSID(ace, MEM_SAP, "$Id$")

@@ -1,10 +1,13 @@
 // $Id$
 
-#include "ace/Process_Semaphore.h"
-#include "ace/Log_Msg.h"
+#include "ace/Threads/Process_Semaphore.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Process_Semaphore.inl"
+#include "ace/Threads/Process_Semaphore.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Process_Semaphore, "$Id$")

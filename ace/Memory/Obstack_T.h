@@ -14,7 +14,7 @@
 #define ACE_OBSTACK_T_H
 #include "ace/pre.h"
 
-#include "ace/Obchunk.h"
+#include "ace/Memory/Obchunk.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -99,11 +99,11 @@ protected:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Obstack_T.i"
+#include "ace/Memory/Obstack_T.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Obstack_T.cpp"
+#include "ace/Memory/Obstack_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

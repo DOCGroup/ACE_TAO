@@ -14,14 +14,14 @@
 #include "ace/pre.h"
 
 #include "ace/ACE.h"
-#include "Malloc.h"
+#include "ace/Memory/Malloc.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
-#include "ace/Based_Pointer_T.h"
+#include "ace/Memory/Based_Pointer_T.h"
 
 // prepare for position independent malloc
 /**
@@ -202,12 +202,12 @@ private:
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 
 #if defined (__ACE_INLINE__)
-#include "ace/PI_Malloc.i"
+#include "ace/Memory/PI_Malloc.i"
 #endif /* __ACE_INLINE__ */
 
 // Include the ACE_Malloc templates and ACE_Memory_Pool classes at this point.
-#include "ace/Malloc_T.h"
-#include "ace/Memory_Pool.h"
+#include "ace/Memory/Malloc_T.h"
+#include "ace/Memory/Memory_Pool.h"
 
 #include "ace/post.h"
 #endif /* ACE_PI_MALLOC_H */

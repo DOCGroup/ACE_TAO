@@ -15,7 +15,7 @@
 #define ACE_MEM_STREAM_H
 #include "ace/pre.h"
 
-#include "ace/MEM_IO.h"
+#include "ace/Memory/MEM_IO.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,7 +23,7 @@
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 
-#include "ace/INET_Addr.h"
+#include "ace/IPC/INET_Addr.h"
 
 class ACE_MEM_Acceptor;
 class ACE_MEM_Connector;
@@ -133,7 +133,7 @@ public:
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/MEM_Stream.i"
+#include "ace/Memory/MEM_Stream.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */

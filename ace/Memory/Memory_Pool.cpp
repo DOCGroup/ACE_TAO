@@ -1,18 +1,21 @@
 // $Id$
 
 // Memory_Pool.cpp
-#include "ace/Memory_Pool.h"
-#include "ace/Log_Msg.h"
+#include "ace/Memory/Memory_Pool.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Memory_Pool.i"
+#include "ace/Memory/Memory_Pool.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Auto_Ptr.h"
+#include "ace/Utils/Templates/Auto_Ptr.h"
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
-#include "ace/Based_Pointer_T.h"
-#include "ace/Based_Pointer_Repository.h"
+#include "ace/Memory/Based_Pointer_T.h"
+#include "ace/Memory/Based_Pointer_Repository.h"
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1  */
 
 ACE_RCSID(ace, Memory_Pool, "$Id$")

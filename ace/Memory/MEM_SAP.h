@@ -15,7 +15,7 @@
 #define ACE_MEM_SAP_H
 #include "ace/pre.h"
 
-#include "ace/PI_Malloc.h"
+#include "ace/Memory/PI_Malloc.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,7 +24,7 @@
 // MEM_SAP requries position independent pointers to work
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 
-#include "ace/Process_Mutex.h"
+#include "ace/Threads/Process_Mutex.h"
 
 class ACE_MEM_SAP;
 class ACE_Reactive_MEM_IO;
@@ -152,7 +152,7 @@ protected:
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/MEM_SAP.i"
+#include "ace/Memory/MEM_SAP.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */

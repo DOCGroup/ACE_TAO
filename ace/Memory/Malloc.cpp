@@ -3,14 +3,14 @@
 #if !defined (ACE_MALLOC_CPP)
 #define ACE_MALLOC_CPP
 
-#include "ace/Malloc.h"
-#include "ace/Object_Manager.h"
+#include "ace/Memory/Malloc.h"
+#include "ace/Utils/Object_Manager.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Malloc.i"
+#include "ace/Memory/Malloc.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Synch_T.h"
+#include "ace/Threads/Synch_T.h"
 
 ACE_RCSID(ace, Malloc, "$Id$")
 

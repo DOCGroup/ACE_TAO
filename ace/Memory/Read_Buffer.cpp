@@ -1,10 +1,10 @@
 // $Id$
 
-#include "ace/Read_Buffer.h"
-#include "ace/Service_Config.h"
+#include "ace/Memory/Read_Buffer.h"
+#include "ace/Svcconf/Service_Config.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Read_Buffer.i"
+#include "ace/Memory/Read_Buffer.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Read_Buffer, "$Id$")

@@ -1,7 +1,7 @@
 // $Id$
 
-#include "ace/Map_Manager.h"
-#include "ace/Based_Pointer_Repository.h"
+#include "ace/Utils/Templates/Map_Manager.h"
+#include "ace/Memory/Based_Pointer_Repository.h"
 
 class ACE_Based_Pointer_Repository_Rep
 {

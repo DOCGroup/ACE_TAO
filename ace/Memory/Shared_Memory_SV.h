@@ -15,13 +15,13 @@
 #define ACE_SHARED_MALLOC_SV_H
 #include "ace/pre.h"
 
-#include "ace/Shared_Memory.h"
+#include "ace/Memory/Shared_Memory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SV_Shared_Memory.h"
+#include "ace/IPC/SV_Shared_Memory.h"
 
 /**
  * @class ACE_Shared_Memory_SV
@@ -90,7 +90,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Shared_Memory_SV.i"
+#include "ace/Memory/Shared_Memory_SV.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

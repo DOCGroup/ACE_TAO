@@ -16,7 +16,7 @@
 #define ACE_BASED_POINTER_REPOSITORY_H
 #include "ace/pre.h"
 
-#include "ace/OS.h"                  // Need ACE_Export
+#include "ace/OS/OS.h"                  // Need ACE_Export
 
 // Forward decl., using the "Cheshire Cat" technique.
 class ACE_Based_Pointer_Repository_Rep;
@@ -60,7 +60,7 @@ private:
   ACE_Based_Pointer_Repository_Rep *rep_;
 };
 
-#include "ace/Singleton.h"
+#include "ace/Utils/Templates/Singleton.h"
 
 /// Provide a Singleton access point to the based pointer repository.
 typedef ACE_Singleton<ACE_Based_Pointer_Repository, ACE_SYNCH_RW_MUTEX>

@@ -14,7 +14,7 @@
 #define ACE_OBCHUNK_H
 #include "ace/pre.h"
 
-#include "ace/Malloc.h"
+#include "ace/Memory/Malloc.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -65,7 +65,7 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Obchunk.i"
+#include "ace/Memory/Obchunk.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

@@ -23,7 +23,7 @@
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 
-#include "ace/INET_Addr.h"
+#include "ace/IPC/INET_Addr.h"
 
 /**
  * @class ACE_MEM_Addr
@@ -144,7 +144,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/MEM_Addr.i"
+#include "ace/Memory/MEM_Addr.i"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */

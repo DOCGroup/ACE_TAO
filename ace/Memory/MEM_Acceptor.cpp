@@ -1,12 +1,12 @@
 // MEM_Acceptor.cpp
 // $Id$
 
-#include "ace/MEM_Acceptor.h"
+#include "ace/Memory/MEM_Acceptor.h"
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/MEM_Acceptor.i"
+#include "ace/Memory/MEM_Acceptor.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 ACE_RCSID(ace, MEM_Acceptor, "$Id$")

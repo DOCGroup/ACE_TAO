@@ -148,6 +148,7 @@ ACE_Static_Allocator_Base::calloc (size_t n_elem,
   return this->calloc (n_elem * elem_size, initial_value);
 }
 
+#ifdef ACE_SUBSET_0
 ACE_INLINE void
 ACE_Static_Allocator_Base::free (void *ptr)
 {
@@ -155,6 +156,14 @@ ACE_Static_Allocator_Base::free (void *ptr)
   ACE_UNUSED_ARG (ptr);
   ACE_ASSERT (ptr >= this->buffer_ && ptr < this->buffer_ + this->size_);
 }
+#else
+ACE_INLINE void
+ACE_Static_Allocator_Base::free (void *ptr)
+{
+  // Check to see if ptr is within our pool?!
+  ACE_UNUSED_ARG (ptr);
+}
+#endif
 
 ACE_INLINE int
 ACE_Static_Allocator_Base::remove (void)

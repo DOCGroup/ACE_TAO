@@ -2,8 +2,11 @@
 
 // Defines the member functions for the memory mapping facility.
 
-#include "ace/Mem_Map.h"
-#include "ace/Log_Msg.h"
+#include "ace/Memory/Mem_Map.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
 
 #if defined (ACE_WIN32) \
     && (!defined(ACE_HAS_WINNT4) || (ACE_HAS_WINNT4 == 0))
@@ -11,11 +14,11 @@
 #endif /* ACE_WIN32 */
 
 #if defined (ACE_USE_MAPPING_NAME)
-#include "ace/SString.h"
+#include "ace/Utils/SString.h"
 #endif /* ACE_USE_MAPPING_NAME */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Mem_Map.i"
+#include "ace/Memory/Mem_Map.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Mem_Map, "$Id$")
@@ -51,6 +54,7 @@ to_mapping_name (ACE_TCHAR *mapobjname,
 }
 #endif /* ACE_USE_MAPPING_NAME */
 
+#ifdef ACE_SUBSET_0
 void
 ACE_Mem_Map::dump (void) const
 {
@@ -65,6 +69,7 @@ ACE_Mem_Map::dump (void) const
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nclose_handle_ = %d"), this->close_handle_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
+#endif
 
 int
 ACE_Mem_Map::close (void)
@@ -317,6 +322,8 @@ ACE_Mem_Map::ACE_Mem_Map (const ACE_TCHAR *file_name,
     close_handle_ (0)
 {
   ACE_TRACE ("ACE_Mem_Map::ACE_Mem_Map");
+
+#ifdef ACE_SUBSET_0
   if (this->map (file_name,
                  len,
                  flags,
@@ -329,6 +336,17 @@ ACE_Mem_Map::ACE_Mem_Map (const ACE_TCHAR *file_name,
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("%p\n"),
                 ACE_LIB_TEXT ("ACE_Mem_Map::ACE_Mem_Map")));
+#else
+  this->map (file_name,
+                 len,
+                 flags,
+                 mode,
+                 prot,
+                 share,
+                 addr,
+                 offset,
+                 sa);
+#endif
 }
 
 // Map a file from an open file descriptor HANDLE.  This function will
@@ -352,6 +370,7 @@ ACE_Mem_Map::ACE_Mem_Map (ACE_HANDLE handle,
   ACE_OS::memset (this->filename_,
                   0,
                   sizeof this->filename_);
+#ifdef ACE_SUBSET_0
   if (this->map (handle,
                  len,
                  prot,
@@ -362,6 +381,15 @@ ACE_Mem_Map::ACE_Mem_Map (ACE_HANDLE handle,
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("%p\n"),
                 ACE_LIB_TEXT ("ACE_Mem_Map::ACE_Mem_Map")));
+#else
+  this->map (handle,
+                 len,
+                 prot,
+                 share,
+                 addr,
+                 offset,
+                 sa);
+#endif
 }
 
 // Close down and remove the file from the file system.

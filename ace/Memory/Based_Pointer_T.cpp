@@ -3,14 +3,17 @@
 #ifndef ACE_BASED_POINTER_T_CPP
 #define ACE_BASED_POINTER_T_CPP
 
-#include "ace/Based_Pointer_T.h"
-#include "ace/Based_Pointer_Repository.h"
-#include "ace/Log_Msg.h"
+#include "ace/Memory/Based_Pointer_T.h"
+#include "ace/Memory/Based_Pointer_Repository.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
 
 #   define ACE_TRACEX(X) ACE_Trace ____ (ACE_LIB_TEXT (X), __LINE__, ACE_LIB_TEXT (__FILE__))
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Based_Pointer_T.i"
+#include "ace/Memory/Based_Pointer_T.i"
 #endif /* __ACE_INLINE__ */
 
 template <class CONCRETE>

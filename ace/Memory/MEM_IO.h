@@ -15,12 +15,12 @@
 #define ACE_MEM_IO_H
 #include "ace/pre.h"
 
-#include "ace/SOCK.h"
-#include "ace/MEM_SAP.h"
-#include "ace/Memory_Pool.h"
-#include "ace/Message_Block.h"
-#include "ace/Process_Semaphore.h"
-#include "ace/Process_Mutex.h"
+#include "ace/Sockets/SOCK.h"
+#include "ace/Memory/MEM_SAP.h"
+#include "ace/Memory/Memory_Pool.h"
+#include "ace/Utils/Message_Block.h"
+#include "ace/Threads/Process_Semaphore.h"
+#include "ace/Threads/Process_Mutex.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -287,12 +287,12 @@ private:
   /// Record the current total buffer size of <recv_buffer_>.
   ssize_t buf_size_;
 
-  /// Record the current read pointer location in <recv_buffer_>.
+  //i Record the current read pointer location in <recv_buffer_>.
   ssize_t cur_offset_;
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/MEM_IO.i"
+#include "ace/Memory/MEM_IO.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */

@@ -3,7 +3,7 @@
 
 // MEM_Stream.i
 
-#include "ace/MEM_Stream.h"
+#include "ace/Memory/MEM_Stream.h"
 
 ASYS_INLINE
 ACE_MEM_Stream::ACE_MEM_Stream (void)
