@@ -46,6 +46,8 @@ public:
 
   virtual ~TAO_POA_Hooks (void);
 
+#if (TAO_HAS_MINIMUM_POA == 0)
+
   virtual PortableServer::ObjectId * create_id_for_reference (
       TAO_POA &the_poa,
       CORBA::Object_ptr the_ref
@@ -88,7 +90,11 @@ public:
       PortableServer::NotAGroupObject
     ));
 
+#endif  /* TAO_HAS_MINIMUM_POA == 0 */
+
 protected:
+
+#if (TAO_HAS_MINIMUM_POA == 0)
 
   int find_group_component (const CORBA::Object_ptr the_ref,
                             PortableGroup::TagGroupTaggedComponent &group);
@@ -111,9 +117,12 @@ protected:
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableServer::NotAGroupObject));
 
+#endif  /* TAO_HAS_MINIMUM_POA == 0 */
 
 private:
+
   PortableGroup_Request_Dispatcher &request_dispatcher_;
+
 };
 
 
