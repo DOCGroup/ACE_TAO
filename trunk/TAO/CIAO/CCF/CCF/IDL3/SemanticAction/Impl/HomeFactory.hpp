@@ -68,7 +68,7 @@ namespace CCF
             struct Predicate : public DeclarationTable::ResolvePredicate
             {
               virtual bool
-              test (DeclarationPtr const& d) throw ()
+              test (DeclarationPtr const& d) const throw ()
               {
                 return d->is_a<TypeDecl> ();
               }

@@ -311,6 +311,8 @@ namespace CCF
       KeywordParser OUT;
       KeywordParser SINCLUDE;
       KeywordParser SUPPORTS;
+      KeywordParser TYPEID;
+      KeywordParser TYPEPREFIX;
 
       // Punctuation parsers (alphabetic group order).
       PunctuationParser COLON;
@@ -341,6 +343,9 @@ namespace CCF
 
       Rule include_decl;
       Rule system_include_decl;
+
+      Rule type_id;
+      Rule type_prefix;
 
       Rule module_decl;
 
@@ -384,8 +389,8 @@ namespace CCF
       NoArgAction<SemanticAction::Scope>
       ScopeAction;
 
-      //
       // Include
+      //
       //
       OneArgAction<StringLiteralPtr, SemanticAction::Include>
       act_include_begin;
@@ -393,8 +398,30 @@ namespace CCF
       NoArgAction<SemanticAction::Include>
       act_include_end;
 
+      // TypeId
       //
+      //
+      TwoArgAction<IdentifierPtr,
+                   StringLiteralPtr,
+                   SemanticAction::TypeId>
+      act_type_id_begin;
+
+      NoArgAction<SemanticAction::TypeId>
+      act_type_id_end;
+
+      // TypePrefix
+      //
+      //
+      TwoArgAction<IdentifierPtr,
+                   StringLiteralPtr,
+                   SemanticAction::TypePrefix>
+      act_type_prefix_begin;
+
+      NoArgAction<SemanticAction::TypePrefix>
+      act_type_prefix_end;
+
       // Module
+      //
       //
 
       OneArgAction<SimpleIdentifierPtr, SemanticAction::Module>
@@ -409,8 +436,8 @@ namespace CCF
       NoArgAction<SemanticAction::Module>
       act_module_end;
 
-      //
       // Interface
+      //
       //
 
       OneArgAction<SimpleIdentifierPtr, SemanticAction::Interface>
@@ -434,8 +461,8 @@ namespace CCF
       NoArgAction<SemanticAction::Interface>
       act_interface_end;
 
-      //
       // Attribute
+      //
       //
       OneArgAction<IdentifierPtr, SemanticAction::Attribute>
       act_attribute_type;
@@ -443,8 +470,8 @@ namespace CCF
       OneArgAction<SimpleIdentifierPtr, SemanticAction::Attribute>
       act_attribute_name;
 
-      //
       // Operation
+      //
       //
       TwoArgAction<IdentifierPtr,
                    SimpleIdentifierPtr,

@@ -32,16 +32,15 @@ namespace CCF
           {
           }
 
-          bool
-          lookup_type (SyntaxTree::Name const& name,
-                       SyntaxTree::ScopedName& result)
+          SyntaxTree::ScopedName
+          lookup_type (SyntaxTree::Name const& name)
           {
             using namespace SyntaxTree;
 
             struct Predicate : public DeclarationTable::ResolvePredicate
             {
               virtual bool
-              test (DeclarationPtr const& d) throw ()
+              test (DeclarationPtr const& d) const throw ()
               {
                 return d->is_a<TypeDecl> ();
               }
@@ -49,13 +48,11 @@ namespace CCF
 
             try
             {
-              result = scope_->table ().resolve (
+              return scope_->table ().resolve (
                 name,
                 scope_->name (),
                 scope_->peek_order (),
                 p);
-
-              return true;
             }
             catch (DeclarationTable::NameNotFound const&)
             {
@@ -63,6 +60,7 @@ namespace CCF
               cerr << "no type with name \'"
                    << name << "\' visible from scope \'"
                    << scope_->name () << "\'" << endl;
+              throw;
             }
             catch (DeclarationTable::PredicateNotMet const&)
             {
@@ -73,9 +71,8 @@ namespace CCF
               cerr << "using non-type as operation parameter type "
                    << " or return type is illegal"
                    << endl;
+              throw;
             }
-
-            return false;
           }
 
 
@@ -88,14 +85,17 @@ namespace CCF
 
             using namespace SyntaxTree;
 
-            ScopedName type_name;
-
-            if (lookup_type (Name (type_id->lexeme ()), type_name))
+            try
             {
+              ScopedName type_name = lookup_type (Name (type_id->lexeme ()));
+
               operation_ = OperationDeclPtr (
                 new OperationDecl (SimpleName (name_id->lexeme ()),
                                    type_name,
                                    scope_));
+            }
+            catch (...)
+            {
             }
           }
 
@@ -111,11 +111,12 @@ namespace CCF
 
             using namespace SyntaxTree;
 
-            ScopedName type_name ("");
+            if (operation_ == 0) return;
 
-            if (lookup_type (Name (type_id->lexeme ()), type_name) &&
-                operation_ != 0)
+            try
             {
+              ScopedName type_name = lookup_type (Name (type_id->lexeme ()));
+
               OperationParameter::Direction::Value d =
                 OperationParameter::Direction::INOUT;
 
@@ -134,6 +135,9 @@ namespace CCF
                                         SimpleName (name_id->lexeme ()),
                                         scope_->table ()));
               operation_->insert (p);
+            }
+            catch (...)
+            {
             }
           }
 

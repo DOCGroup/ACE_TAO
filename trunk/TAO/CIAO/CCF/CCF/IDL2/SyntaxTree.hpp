@@ -6,6 +6,7 @@
 #define CCF_IDL2_SYNTAX_TREE_HPP
 
 #include "CCF/IDL2/SyntaxTree/Elements.hpp"
+#include "CCF/IDL2/SyntaxTree/TypeId.hpp"
 #include "CCF/IDL2/SyntaxTree/BuiltIn.hpp"
 #include "CCF/IDL2/SyntaxTree/Interface.hpp"
 #include "CCF/IDL2/SyntaxTree/Module.hpp"

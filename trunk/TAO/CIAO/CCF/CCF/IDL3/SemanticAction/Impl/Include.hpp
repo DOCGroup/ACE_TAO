@@ -46,7 +46,7 @@ namespace CCF
           virtual void
           begin (StringLiteralPtr const& sl)
           {
-            if (trace_) cerr << "include \"" << sl << "\"" << endl;
+            if (trace_) cerr << "include " << sl << endl;
 
             using namespace SyntaxTree;
 

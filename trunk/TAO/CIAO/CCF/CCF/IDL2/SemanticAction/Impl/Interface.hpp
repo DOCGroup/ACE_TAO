@@ -31,7 +31,7 @@ namespace CCF
                      SyntaxTree::ScopePtr& scope)
               : ScopeBase<SyntaxTree::InterfaceDeclPtr> (scope),
                 trace_ (trace),
-                name_ ("")
+                name_ ("::") //@@ this is dirty
           {
           }
 
@@ -84,7 +84,7 @@ namespace CCF
               };
 
               virtual bool
-              test (DeclarationPtr const& d) throw (IncompatibleType)
+              test (DeclarationPtr const& d) const throw (IncompatibleType)
               {
                 bool passed = false;
 
@@ -215,7 +215,7 @@ namespace CCF
             push (def);
             scope_ = def;
 
-            name_ = SimpleName (""); //indicate that we are done
+            name_ = SimpleName ("::"); //indicate that we are done
             inherits_.clear ();
           }
 
@@ -233,7 +233,7 @@ namespace CCF
 
             if (trace_) cerr << "end" << endl;
 
-            if (name_ != SimpleName (""))
+            if (name_ != SimpleName ("::"))
             {
               InterfaceDeclPtr decl;
 

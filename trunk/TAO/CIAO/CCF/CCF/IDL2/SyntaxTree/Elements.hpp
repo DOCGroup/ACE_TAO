@@ -5,10 +5,11 @@
 #ifndef CCF_IDL2_SYNTAX_TREE_ELEMENTS_HPP
 #define CCF_IDL2_SYNTAX_TREE_ELEMENTS_HPP
 
-#include <vector>
 #include <map>
 #include <set>
+#include <vector>
 #include <string>
+#include <memory>
 
 //@@ this should go to .cpp
 #include <iostream>
@@ -16,6 +17,7 @@
 #include "CCF/CompilerElements/FileSystem.hpp"
 #include "CCF/CompilerElements/ReferenceCounting.hpp"
 #include "CCF/CompilerElements/Introspection.hpp"
+#include "CCF/CompilerElements/Context.hpp"
 
 namespace CCF
 {
@@ -26,18 +28,27 @@ namespace CCF
       using ReferenceCounting::StrictPtr;
 
 
+      // Can be scoped or simple. "::" refers to file-scope.
       //
-      // Can be scoped or simple.
       //
       class Name
       {
       public:
-        Name () : name_ () {}
+        class InvalidArgument {};
 
+      public:
         explicit
-        Name (std::string const& name)
+        Name (std::string const& name) throw (InvalidArgument)
             : name_ (name)
         {
+          if (name.empty ())
+          {
+            throw InvalidArgument ();
+          }
+          else if (name == "::")
+          {
+            name_ = "";
+          }
         }
 
         bool
@@ -55,10 +66,8 @@ namespace CCF
         bool
         operator!= (Name const& other) const
         {
-          return name_ == other.name_;
+          return name_ != other.name_;
         }
-
-
 
       protected:
         std::string name_;
@@ -73,16 +82,15 @@ namespace CCF
       };
 
 
-      //
+      // Simple name (i.e. without "::") or just "::"
+      // (which denotes a file-scope).
       //
       //
       class SimpleName : public Name
       {
       public:
-        SimpleName () : Name () {}
-
         explicit
-        SimpleName (std::string const& name)
+        SimpleName (std::string const& name) throw (InvalidArgument)
             : Name (name)
         {
           //@@ need some checking
@@ -106,39 +114,35 @@ namespace CCF
           return name_ != other.name_;
         }
 
-      private:
-        std::string
-        str () const
-        {
-          return name_;
-        }
+      protected:
+
+        using Name::name_;
 
         friend SimpleName
         operator+ (SimpleName const& s1, std::string const& s2)
         {
-          return SimpleName (s1.str () + s2);
+          return SimpleName (s1.name_ + s2);
         }
 
         friend SimpleName
         operator+ (std::string const& s1, SimpleName const& s2)
         {
-          return SimpleName (s1 + s2.str ());
+
+          return SimpleName (s1 + s2.name_);
         }
       };
 
 
-      //
+      // Shuld always start with "::". Can be just "::" which
+      // means it's a file-scope.
       //
       //
       class ScopedName : public Name
       {
-      public:
+      private:
         class InconsistentState {};
-        class InvalidArgument {};
 
       public:
-        ScopedName () : Name () {}
-
         explicit
         ScopedName (std::string const& name) throw (InvalidArgument)
             : Name (name)
@@ -206,32 +210,35 @@ namespace CCF
           std::string::size_type pos =  name_.rfind ("::");
           if (pos == std::string::npos)
           {
-            if (name_.empty ()) return SimpleName(""); //file scope name
-            else throw InconsistentState ();
+            if (name_.empty ()) return SimpleName("::"); //file scope name
+            else throw InconsistentState (); //@@ this should never happen
           }
 
           return SimpleName(std::string (name_.begin () + pos + 2,
                                          name_.end ()));
         }
 
-        class AtRoot {};
+        class FileScope {};
 
         ScopedName
-        scope () const throw (AtRoot)
+        scope () const throw (FileScope)
         {
           std::string::size_type pos =  name_.rfind ("::");
           if (pos == std::string::npos)
           {
-            throw AtRoot ();
+            throw FileScope ();
           }
 
-          return ScopedName(std::string (name_.begin (),
-                                         name_.begin () + pos));
+          std::string tmp (name_.begin (), name_.begin () + pos);
+
+          return ScopedName(tmp.empty () ? std::string ("::") : tmp);
         }
 
         Name
-        in_file_scope () const
+        in_file_scope () const throw (FileScope)
         {
+          if (name_.empty ()) throw FileScope ();
+
           return Name(std::string (name_.begin () + 2, name_.end ()));
         }
 
@@ -264,7 +271,6 @@ namespace CCF
             }
           }
         }
-
       };
 
       typedef
@@ -274,6 +280,34 @@ namespace CCF
       typedef
       std::set<ScopedName>
       ScopedNameSet;
+
+
+      //
+      //
+      //
+      class StringLiteral
+      {
+      public:
+        StringLiteral (std::string literal)
+            : literal_ (literal)
+        {
+        }
+
+        std::string
+        str () const
+        {
+          return literal_;
+        }
+
+        friend std::ostream&
+        operator << (std::ostream& o, StringLiteral const& lit)
+        {
+          return o << '\"' << lit.str () << '\"';
+        }
+
+      private:
+        std::string literal_;
+      };
 
 
       //
@@ -369,7 +403,7 @@ namespace CCF
                i != order.list_.end ();
                i++)
           {
-            if (i != order.list_.begin ()) o << ':';
+            if (i != order.list_.begin ()) o << '.';
             o << *i;
           }
 
@@ -417,9 +451,37 @@ namespace CCF
           return ReferenceCounting::strict_cast<Type>(self);
         }
 
+        // Context
+      public:
+
+        CompilerElements::Context&
+        context ()
+        {
+          if (context_.get () == 0)
+          {
+            context_.reset (new CompilerElements::Context);
+          }
+
+          return *context_;
+        }
+
+        CompilerElements::Context const&
+        context () const
+        {
+          if (context_.get () == 0)
+          {
+            context_.reset (new CompilerElements::Context);
+          }
+
+          return *context_;
+        }
+
       public:
         static Introspection::TypeInfo const&
         static_type_info ();
+
+      private:
+        mutable std::auto_ptr<CompilerElements::Context> context_;
       };
 
 
@@ -545,6 +607,10 @@ namespace CCF
         ~Declaration () throw () {}
 
         Declaration (SimpleName const& name, ScopePtr const& scope);
+
+        Declaration (SimpleName const& name,
+                     Order const& order,
+                     ScopePtr const& scope);
 
         // This c-tor is here for Declarations that are not in scope
         // e.g. FileScope
@@ -708,14 +774,18 @@ namespace CCF
         struct ResolvePredicate
         {
           virtual bool
-          test (DeclarationPtr const& d) throw (ResolutionFailure) = 0;
+          test (DeclarationPtr const&) const throw (ResolutionFailure)
+          {
+            return true;
+          }
         };
 
         ScopedName
         resolve (Name const& name,
                  ScopedName const& from,
                  Order const& before,
-                 ResolvePredicate& p) const throw (ResolutionFailure);
+                 ResolvePredicate const& p = ResolvePredicate ())
+          const throw (ResolutionFailure);
 
       private:
         DeclarationSet decl_set_;
