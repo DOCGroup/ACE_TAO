@@ -1,3 +1,16 @@
+Tue Oct 24 07:38:45 2000  Chad Elliott  <elliott_c@ociweb.com>
+
+        * examples/Simulator/Event_Supplier/Event_Sup.cpp
+        * examples/Simulator/Event_Supplier/Logging_Sup.cpp
+        * examples/Simulator/Event_Supplier/DualEC_Sup.cpp
+        * examples/Simulator/Event_Supplier/Event_Con.cpp
+
+          Move the include of <limits.h> below the includes for TAO.  HP-UX
+          needs the _HPUX_SOURCE macro defined before the inclusion of
+          <sys/stdsyms.h> to get the proper prototypes.  limits.h includes
+          <sys/stdsyms.h>, but the HP config header in ACE sets the macro.
+          So, include limits.h after the ace config header.
+
 Mon Oct 23 21:39:22 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORB.cpp (ORB_init):
