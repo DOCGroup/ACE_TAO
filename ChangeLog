@@ -1,3 +1,10 @@
+Thu Aug  7 06:18:57 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * include/makeinclude/rules.local.GNU:
+
+          Added a dash in front of the include for the dependency file to
+          suppress warnings about missing files.
+
 Thu Aug  7 00:12:50 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/Handle_Set.i:
@@ -71,7 +78,7 @@ Wed Aug  6 03:29:03 UTC 2003  Don Hinton  <dhinton@dresystems.com>
         * apps/JAWS2/JAWS/Parse_Headers.h: Synch_Traits.h.
         * apps/soreduce/Library.h: streams.h.
 
-        * apps/JAWS2/JAWS/Server.cpp: 
+        * apps/JAWS2/JAWS/Server.cpp:
           Added #ifdef around ACE_Trace calls to turn on/off tracing.
 
 Wed Aug  6 02:27:32 UTC 2003  Don Hinton  <dhinton@dresystems.com>
@@ -121,7 +128,7 @@ Tue Aug  5 17:25:35 UTC 2003  Don Hinton  <dhinton@dresystems.com>
         * tests/Proactor_Test.cpp:
           Added #include of Thread_Semaphore needed due to recent
           subsetting changes.
-        
+
 Tue Aug  5 15:16:54 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/os_include/os_errno.h:
@@ -213,52 +220,52 @@ Mon Aug  4 09:31:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Aug  4 23:47:33 2003  <Ossama Othman <ossama@dre.vanderbilt.edu>
 
-	* ace/Array_Base.cpp:
+        * ace/Array_Base.cpp:
 
-	  For MSVC++ 6, include standard C++ <new> header to pull in
-	  placement new() operator prototype.  Addresses template
-	  instantiation errors.
+          For MSVC++ 6, include standard C++ <new> header to pull in
+          placement new() operator prototype.  Addresses template
+          instantiation errors.
 
 Mon Aug  4 22:41:24 2003  <Ossama Othman <ossama@dre.vanderbilt.edu>
 
-	* ace/DLL_Manager.cpp:
+        * ace/DLL_Manager.cpp:
 
-	  Include "ace/Guard_T.h" to pull in ACE_Guard template
-	  declaration.
+          Include "ace/Guard_T.h" to pull in ACE_Guard template
+          declaration.
 
-	* ace/MEM_Addr.cpp:
+        * ace/MEM_Addr.cpp:
 
-	  Include "ace/OS.h" to pull in ACE_OS::strtoul() static function
-	  prototype.
+          Include "ace/OS.h" to pull in ACE_OS::strtoul() static function
+          prototype.
 
-	* ace/Process_Semaphore.h:
+        * ace/Process_Semaphore.h:
 
-	  Include "ace/Semaphore.h" to pull in the ACE_Semaphore class
-	  declaration for the (ACE_WIN32 || ACE_HAS_POSIX_SEM || ACE_PSOS)
-	  case.
+          Include "ace/Semaphore.h" to pull in the ACE_Semaphore class
+          declaration for the (ACE_WIN32 || ACE_HAS_POSIX_SEM || ACE_PSOS)
+          case.
 
-	* ace/Service_Object.cpp:
+        * ace/Service_Object.cpp:
 
-	  Include "ace/ACE.h" to pull in ACE::strnew() function prototype.
+          Include "ace/ACE.h" to pull in ACE::strnew() function prototype.
 
-	* ace/Service_Repository.cpp:
+        * ace/Service_Repository.cpp:
 
-	  Include "ace/ACE.h" to pull in ACE::debug() function prototype.
+          Include "ace/ACE.h" to pull in ACE::debug() function prototype.
 
-	* ace/Token.h:
+        * ace/Token.h:
 
-	  Fixed compile-time problems in MSVC++ builds.  Some headers must
-	  still be included for the ACE_TOKEN_USES_SEMAPHORE case.
+          Fixed compile-time problems in MSVC++ builds.  Some headers must
+          still be included for the ACE_TOKEN_USES_SEMAPHORE case.
 
-	* ace/WIN32_Asynch_IO.h:
+        * ace/WIN32_Asynch_IO.h:
 
-	  Include "ace/Null_Mutex.h" to pull in ACE_Null_Mutex class
-	  declaration.
+          Include "ace/Null_Mutex.h" to pull in ACE_Null_Mutex class
+          declaration.
 
-	* ace/WIN32_Proactor.h:
+        * ace/WIN32_Proactor.h:
 
-	  Include "ace/Auto_Event.h" to pull in ACE_Auto_Event class
-	  declaration.
+          Include "ace/Auto_Event.h" to pull in ACE_Auto_Event class
+          declaration.
 
 Mon Aug  4 04:28:59 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -442,29 +449,29 @@ Mon Aug  4 03:26:30 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Sun Aug  3 20:55:24 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/RMCast/RMCast_Reassembly_Test.cpp:
-	* tests/RMCast/RMCast_UDP_Best_Effort_Test.cpp: #included ACE.h to
-	  get rid of compile errors in the full reactor build.
+        * tests/RMCast/RMCast_Reassembly_Test.cpp:
+        * tests/RMCast/RMCast_UDP_Best_Effort_Test.cpp: #included ACE.h to
+          get rid of compile errors in the full reactor build.
 
 Sat Aug  2 17:50:30 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/WIN32_Asynch_IO.h:
 
-	  Added #include of ace/Handle_Set.h.
+          Added #include of ace/Handle_Set.h.
 
 Fri Aug  1 17:23:32 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/Cache_Map_Manager_T.cpp:
-	* ace/Functor.i:
-	* ace/Hash_Map_Manager_T.cpp:
-	* ace/Map_Manager.cpp:
-	* ace/POSIX_Asynch_IO.h:
-	* ace/RB_Tree.i:
-	* ace/String_Base.cpp: Changed all the includes of OS.h and
-	  Malloc.h to OS_String.h and Malloc_Base.h, since that is
-	  sufficient. Thanks to Carlos O'Ryan for providing the
-	  patches. This helps to improve the compilation time of ACE and
-	  its applications that use the above features.
+        * ace/Cache_Map_Manager_T.cpp:
+        * ace/Functor.i:
+        * ace/Hash_Map_Manager_T.cpp:
+        * ace/Map_Manager.cpp:
+        * ace/POSIX_Asynch_IO.h:
+        * ace/RB_Tree.i:
+        * ace/String_Base.cpp: Changed all the includes of OS.h and
+          Malloc.h to OS_String.h and Malloc_Base.h, since that is
+          sufficient. Thanks to Carlos O'Ryan for providing the
+          patches. This helps to improve the compilation time of ACE and
+          its applications that use the above features.
 
 Fri Aug  1 14:55:00 2003  Dan Troesser  <troesser_d@ociweb.com>
 
@@ -477,10 +484,10 @@ Fri Aug  1 14:52:17 2003  Justin Michel  <michel_j@ociweb.com>
 
         * bin/MakeProjectCreator/config/acedefaults.mpb:
 
-	  Removed the legacy libpaths. They make the log output too long, and
-	seem to cause a problem with some nightly builds for some
-	unknown reason. We'll just have to be careful not to check in
-	mpc-generated files without editing for reverse compatibility.
+          Removed the legacy libpaths. They make the log output too long, and
+        seem to cause a problem with some nightly builds for some
+        unknown reason. We'll just have to be careful not to check in
+        mpc-generated files without editing for reverse compatibility.
 
 Fri Aug  1 12:37:59 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 

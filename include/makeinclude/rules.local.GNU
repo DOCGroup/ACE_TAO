@@ -274,7 +274,7 @@ ifneq ($(MAKEFILE),$(DEPENDENCY_FILE))
 $(DEPENDENCY_FILE):
 	touch $(DEPENDENCY_FILE)
 depend.local: $(DEPENDENCY_FILE)
-include $(DEPENDENCY_FILE)
+-include $(DEPENDENCY_FILE)
 endif
 
 depend.local: $(MAKEFILE)
