@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef CACHED_CONNECT_STRATEGY_T_H
 #define CACHED_CONNECT_STRATEGY_T_H
 #include "ace/pre.h"
@@ -46,9 +45,7 @@
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class ATTRIBUTES, class MUTEX>
 class ACE_Cached_Connect_Strategy_Ex : public ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>
 {
-
 public:
-
   /// Constructor
   ACE_Cached_Connect_Strategy_Ex (CACHING_STRATEGY &caching_s,
                                   ACE_Creation_Strategy<SVC_HANDLER> *cre_s = 0,

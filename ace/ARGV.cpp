@@ -141,7 +141,7 @@ ACE_ARGV::ACE_ARGV (ACE_TCHAR *argv[],
 
       // Replace the null char that strecpy copies with white space as
       // a separator.
-      *(end-1) = ACE_LIB_TEXT (' ');
+      *(end - 1) = ACE_LIB_TEXT (' ');
     }
 
   // Remember how many arguments there are
