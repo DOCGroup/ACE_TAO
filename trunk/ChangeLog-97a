@@ -1,3 +1,11 @@
+Wed Jul  2 16:46:59 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
+
+	* performance-tests/Misc/childbirth_time.cpp: Added this program
+	  to measure child process/thread creation mechanisms on various
+ 	  platforms.  Native thread creation test only supports Solaris
+ 	  and NT threads so far. But you can still use ACE_OS::thr_create
+ 	  method on your platform if not supported.
+
 Wed Jul  2 15:59:53 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* ace/High_Res_Timer.cpp: Created a function get_registry_scale_factor
