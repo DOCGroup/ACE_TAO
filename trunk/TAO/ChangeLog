@@ -1,3 +1,13 @@
+Sun Nov 14 21:57:38 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* tests/Bug_1535_Regression/Bug_1535_Regression.mpc:
+
+	  Do not build the test when minimum_corba is enabled.
+
+Sun Nov 14 21:38:21 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* tao/PortableServer/Object_Adapter.cpp:
+
 Sun Nov 14 09:50:37 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:
