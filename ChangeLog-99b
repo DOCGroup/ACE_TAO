@@ -8,8 +8,8 @@ Fri Jul 09 19:16:07 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/Conn_Test.cpp: Since timed accept is implemented using
 	  select(), and we use timed accepts with threads, we need a real
-	  lock even if the OS has thread-safe accept when using timed
-	  accepts.
+	  lock when using timed accepts even if the OS has thread-safe
+	  accept.
 
 	  Also changed the default number of clients to 5.  Hopefully,
 	  this won't overrun the backlog on the listen socket.
