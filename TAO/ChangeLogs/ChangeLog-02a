@@ -1,3 +1,15 @@
+Mon Jan 14 13:09:31 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/tests/InterfaceRepo/Application_Test/ifr_dii_client.cpp:
+
+          Added .in() to instances of TAO_String_Manager and 
+          TAO_Object_Manager when used in the rhs of an expression,
+          and made other cosmetic changes.
+
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_obv_ch.cpp:
+
+          Removed unused local variable in visit_valuetype().
+
 Mon Jan 14 10:01:12 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PortableServer/PortableServerC.i
