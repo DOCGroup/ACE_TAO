@@ -151,7 +151,7 @@ TAO_SecurityManager::remove_own_credentials (
   for (CORBA::ULong i = 0; i < len; ++i)
     if (this->own_credentials_[i] == creds)
       {
-        if (i = len - 1)
+        if (i == len - 1)
           this->own_credentials_.length (len - 1);
         else
           {
