@@ -1,12 +1,17 @@
+Thu Jul 13 10:10:54 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Makefile: move ssl check to after include of wrapper_macros.GNU,
+          so that ssl=1 can be set in platform_macros.GNU.
+
 Thu Jul 13 09:33:45 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/SSL/SSL_SOCK_Stream.i (send, recv):
+        * ace/SSL/SSL_SOCK_Stream.i (send, recv):
 
-	  Fixed typos where size of buffer being sent/received was passed
-	  to the OpenSSL SSL_get_error() function, instead of the return
-	  status of the SSL_write()/SSL_read() call.  This will fix
-	  some broken error handling.
-	  Reported by Craig Perras <cperras@watchguard.com>
+          Fixed typos where size of buffer being sent/received was passed
+          to the OpenSSL SSL_get_error() function, instead of the return
+          status of the SSL_write()/SSL_read() call.  This will fix
+          some broken error handling.
+          Reported by Craig Perras <cperras@watchguard.com>
 
 Thu Jul 13 07:55:41 2000  David L. Levine  <levine@cs.wustl.edu>
 
