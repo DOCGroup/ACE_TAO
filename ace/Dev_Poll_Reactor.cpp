@@ -1668,7 +1668,7 @@ ACE_Dev_Poll_Reactor::register_handler (const ACE_Sig_Set &sigset,
 #if (ACE_NSIG > 0)  &&  !defined (CHORUS)
 
   for (int s = 1; s < ACE_NSIG; ++s)
-    if (sigset.is_member (s)
+    if ((sigset.is_member (s) == 1)
         && this->signal_handler_->register_handler (s,
                                                     new_sh,
                                                     new_disp) == -1)
@@ -1786,7 +1786,7 @@ ACE_Dev_Poll_Reactor::remove_handler (const ACE_Sig_Set &sigset)
 #if (ACE_NSIG > 0)  &&  !defined (CHORUS)
 
   for (int s = 1; s < ACE_NSIG; ++s)
-    if (sigset.is_member (s)
+    if ((sigset.is_member (s) == 1)
         && this->signal_handler_->remove_handler (s) == -1)
       result = -1;
 
