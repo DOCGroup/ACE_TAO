@@ -101,10 +101,6 @@ TAO_SSLIOP_Connector::open (TAO_ORB_Core *orb_core)
 
   ACE_Reactor *r = this->orb_core ()->reactor ();
 
-  // Set the reactor in the underlying ACE_SSL_SOCK_Connector to force
-  // it to use the one the ORB was configured to use.
-  this->base_connector_.connector ().reactor (r);
-
   return this->base_connector_.open (r,
                                      connect_creation_strategy,
                                      &this->connect_strategy_,
