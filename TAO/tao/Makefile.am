@@ -193,6 +193,7 @@ ORB_Core = \
   Synch_Queued_Message.cpp \
   Synch_Refcountable.cpp \
   Synch_Reply_Dispatcher.cpp \
+  SystemException.cpp \
   TAOA.cpp \
   TAOC.cpp \
   TAO_Internal.cpp \
@@ -219,6 +220,7 @@ ORB_Core = \
   UShortSeqC.cpp \
   UTF16_BOM_Factory.cpp \
   UTF16_BOM_Translator.cpp \
+  UserException.cpp \
   Valuetype_Adapter.cpp \
   WCharSeqA.cpp \
   WCharSeqC.cpp \
@@ -578,6 +580,7 @@ nobase_include_HEADERS = \
   Synch_Queued_Message.h \
   Synch_Refcountable.h \
   Synch_Reply_Dispatcher.h \
+  SystemException.h \
   TAOC.h \
   TAOS.h \
   TAOS_T.h \
@@ -619,6 +622,7 @@ nobase_include_HEADERS = \
   UShortSeqS.h \
   UTF16_BOM_Factory.h \
   UTF16_BOM_Translator.h \
+  UserException.h \
   Valuetype_Adapter.h \
   VarOut_T.h \
   Var_Array_Argument_T.h \
@@ -817,6 +821,7 @@ nobase_include_HEADERS = \
   Sync_Strategies.i \
   Synch_Invocation.inl \
   Synch_Refcountable.inl \
+  SystemException.inl \
   TAOC.i \
   TAOS.i \
   TAOS_T.i \
@@ -840,6 +845,7 @@ nobase_include_HEADERS = \
   ULongLongSeqC.inl \
   ULongSeqC.i \
   UShortSeqC.i \
+  UserException.inl \
   VarOut_T.inl \
   Var_Array_Argument_T.inl \
   Var_Array_SArgument_T.inl \
