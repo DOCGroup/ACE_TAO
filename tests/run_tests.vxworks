@@ -174,9 +174,9 @@ ld < Map_Manager_Test
 write 2, "Map_Manager_Test ", 17
 ace_main; unld "Map_Manager_Test"
 
-ld < Message_Queue_Notifications_Test.cpp
-write 2, "Message_Queue_Notifications_Test.cpp ", 33
-ace_main; unld "Message_Queue_Notifications_Test.cpp"
+ld < Message_Queue_Notifications_Test
+write 2, "Message_Queue_Notifications_Test ", 33
+ace_main; unld "Message_Queue_Notifications_Test"
 
 ld < Simple_Message_Block_Test
 write 2, "Simple_Message_Block_Test ", 26
