@@ -1,3 +1,9 @@
+Tue Oct  8 11:15:04 2002  D A Hanvey  <dhanvey@qub.ac.uk>
+
+	* orbsvcs/examples/Log/Notify/Makefile: 
+
+	  Added missing library link - DsEventLogAdmin.
+
 Mon Oct  7 17:35:28 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/DsLogAdmin.dsp:
