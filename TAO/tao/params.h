@@ -6,7 +6,7 @@
 //    TAO
 // 
 // = FILENAME
-//    params.hh
+//    params.h
 //
 // = AUTHOR
 //    Chris Cleeland

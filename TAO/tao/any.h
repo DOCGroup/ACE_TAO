@@ -255,6 +255,96 @@ private:
   CORBA::Boolean operator>>= (unsigned char&) const;
 };
 
+// The CORBA::Any_var class
+
+class ACE_Svc_Export CORBA_Any_var
+{
+  // =TITLE
+  // CORBA_Any_var
+  // =DESCRIPTION
+  // provide for automatic storage deallocation on going out of scope
+public:
+  CORBA_Any_var (void);
+  // default constructor
+
+  CORBA_Any_var (CORBA_Any *a);
+  // construct from an Any pointer
+
+  CORBA_Any_var (const CORBA_Any_var &a);
+  // copy constructor
+
+  ~CORBA_Any_var (void);
+  // destructor
+
+  CORBA_Any_var &operator= (CORBA_Any *a);
+  // assignment from a pointer to Any
+
+  CORBA_Any_var &operator= (const CORBA_Any_var &a);
+  // assignment from an Any_var
+
+  CORBA_Any *operator-> (void);
+  // arrow operator (smart pointer)
+
+  operator const CORBA_Any *() const;
+  // cast
+
+  operator CORBA_Any *&();
+  // cast
+
+  const CORBA_Any &in (void) const;
+  // for in Any parameter
+
+  CORBA_Any &inout (void);
+  // for inout Any parameter
+
+  CORBA_Any *&out (void);
+  // for out Any parameter
+
+  CORBA_Any *_retn (void);
+  // for Any return types
+
+private:
+  CORBA_Any *ptr_;
+};
+
+// class Any_out
+class ACE_Svc_Export CORBA_Any_out
+{
+public:
+  // =operations
+
+  CORBA_Any_out (CORBA_Any *&p);
+  // construction from a reference to a CORBA_Any
+
+  CORBA_Any_out (CORBA_Any_var &p);
+  // construction from a var
+
+  CORBA_Any_out (CORBA_Any_out &s);
+  // copy constructor
+
+  CORBA_Any_out &operator= (CORBA_Any_out &s);
+  // assignment from a CORBA_Any_out
+
+  CORBA_Any_out &operator= (CORBA_Any *p);
+  // assignment from a CORBA_Any
+
+  CORBA_Any_out &operator= (const CORBA_Any *p);
+  // assignment from a const CORBA_Any
+
+  operator CORBA_Any *&();
+  // cast
+
+  CORBA_Any *& ptr (void);
+  // return underlying instance
+   
+private:
+  CORBA_Any *&ptr_;
+  // instance
+
+  // assignment from _var disallowed
+  void operator= (const CORBA_Any_var &);
+};
+
 #endif /* TAO_ANY_H */
 
 

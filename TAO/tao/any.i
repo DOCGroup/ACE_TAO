@@ -1,3 +1,5 @@
+// This may look like C, but it's really -*- C++ -*-
+
 ACE_INLINE void *
 CORBA_Any::operator new (size_t, const void *p)
 {
@@ -174,3 +176,135 @@ CORBA_Any::operator>>= (CORBA::Short &s) const
   else
     return CORBA::B_FALSE;
 }
+
+
+// ----------------------------------------------------------------------
+// CORBA_Any_var type
+// ----------------------------------------------------------------------
+
+ACE_INLINE 
+CORBA_Any_var::CORBA_Any_var (void)
+  : ptr_ (0)
+{
+}
+
+ACE_INLINE 
+CORBA_Any_var::CORBA_Any_var (CORBA_Any *p)
+  : ptr_ (p)
+{
+}
+
+ACE_INLINE
+CORBA_Any_var::CORBA_Any_var (const CORBA_Any_var& r)
+  : ptr_ (new CORBA::Any (*r.ptr_))
+{
+}
+
+ACE_INLINE 
+CORBA_Any_var::~CORBA_Any_var (void)
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE
+CORBA_Any_var::operator CORBA_Any *&()
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+CORBA_Any_var::operator const CORBA_Any *() const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE CORBA::Any *
+CORBA_Any_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE const CORBA_Any &
+CORBA_Any_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE CORBA_Any &
+CORBA_Any_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE CORBA_Any *&
+CORBA_Any_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE CORBA_Any *
+CORBA_Any_var::_retn (void)
+{
+  CORBA_Any *temp = this->ptr_;
+  this->ptr_ = 0;
+  return temp;
+}
+
+// ----------------------------------------------------------------------
+// CORBA_Any_out type
+// ----------------------------------------------------------------------
+
+ACE_INLINE
+CORBA_Any_out::CORBA_Any_out (CORBA_Any *&s)
+  : ptr_ (s)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+CORBA_Any_out::CORBA_Any_out (CORBA_Any_var &s)
+  : ptr_ (s.out ()) 
+{
+}
+
+ACE_INLINE
+CORBA_Any_out::CORBA_Any_out (CORBA_Any_out &s)
+  : ptr_ (s.ptr_)
+{
+}
+
+ACE_INLINE CORBA_Any_out &
+CORBA_Any_out::operator= (CORBA_Any_out &s)
+{
+  this->ptr_ = s.ptr_;
+  return *this;
+}
+
+ACE_INLINE CORBA_Any_out &
+CORBA_Any_out::operator= (CORBA_Any *s)
+{
+  this->ptr_ = s;
+  return *this;
+}
+
+ACE_INLINE CORBA_Any_out &
+CORBA_Any_out::operator= (const CORBA_Any *s)
+{
+  this->ptr_ = new CORBA::Any (*s);
+  return *this;
+}
+
+ACE_INLINE
+CORBA_Any_out::operator CORBA_Any *&()
+{
+  return this->ptr_;
+}
+
+ACE_INLINE CORBA_Any *&
+CORBA_Any_out::ptr (void)
+{
+  return this->ptr_;
+}
+
