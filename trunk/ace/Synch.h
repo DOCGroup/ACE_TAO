@@ -105,7 +105,8 @@ class ACE_Export ACE_Adaptive_Lock : public ACE_Lock
   //    This class, as ACE_Lock, provide a set of general locking APIs.
   //    However, it defers our decision of what kind of lock to use
   //    to the run time and delegates all locking operations to the actual
-  //    lock.  Users must overwrite the constructor to initialize <lock_>.
+  //    lock.  Users must define a constructor in their subclass to
+  //    initialize <lock_>.
 public:
   virtual ~ACE_Adaptive_Lock (void);
   // You must also override the destructor function to match with how

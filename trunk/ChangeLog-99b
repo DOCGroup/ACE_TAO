@@ -1,3 +1,9 @@
+Tue Mar 30 11:03:31 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Synch.h (ACE_Adaptive_Lock): Clarified a comment about how
+ 	  to define a constructor in a subclass that initializes the
+ 	  lock_.  Thanks to Michael Kircher for reporting this.
+
 Tue Mar 30 10:37:43 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* ace/OS.i (getpwnam_r): Added patch contributed by Roland Gigler
