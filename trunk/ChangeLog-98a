@@ -16,7 +16,8 @@ Sat May  2 14:35:04 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 Sat May 02  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
 	* tests/Aio_Platform_Test.cpp: Included this test program for
- 	  testing an OS platform for Asynchronous I/O options.
+	testing a platform for Asynchronous I/O options.
+	* tests/Makefile (BIN): Added Aio_Platform_Test.
 
 Fri May 01 17:52:32 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
