@@ -220,7 +220,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::svc (void)
 
    // Thread cancellation point, if ACE supports it.
 #if !defined (ACE_LACKS_PTHREAD_CANCEL)
-  ACE_PTHREAD_CLEANUP_POP (1);
+  ACE_PTHREAD_CLEANUP_POP (0);
 #endif /* ACE_LACKS_PTHREAD_CANCEL */
 
   ACE_DEBUG ((LM_DEBUG, "terminating dispatching thread\n"));
