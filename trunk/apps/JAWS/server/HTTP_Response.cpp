@@ -15,6 +15,7 @@
 
 
 #include "ace/Process.h"
+#include "ace/Mem_Map.h"
 
 #include "apps/JAWS/server/HTTP_Response.h"
 #include "apps/JAWS/server/HTTP_Request.h"
@@ -79,8 +80,19 @@ HTTP_Response::error_response (int status_code, const char *log_message)
               this->request_.version() ? this->request_.version () : "-",
               log_message ? log_message : "-"));
 
-  static char const error_header[] =
+  static char const error_header1[] =
     "%s %d %s\r\n"
+    "Server: JAWS/1.0prebeta\r\n"
+    "Content-type: text/html\r\n"
+    "Content-length: %d\r\n"
+    "\r\n"
+    "%s"
+    ;
+
+  static char const error_header2[] =
+    "%s %d %s\r\n"
+    "Server: JAWS/1.0prebeta\r\n"
+    "WWW-Authenticate: Basic realm=\"JAWS_authorization\"\r\n"
     "Content-type: text/html\r\n"
     "Content-length: %d\r\n"
     "\r\n"
@@ -103,6 +115,10 @@ HTTP_Response::error_response (int status_code, const char *log_message)
   char buf2[BUFSIZ];
 
   int length;
+  const char *error_header = error_header1;
+
+  if (status_code == HTTP_Status_Code::STATUS_UNAUTHORIZED)
+    error_header = error_header2;
 
   length =
     ACE_OS::sprintf (buf2, error_message,
@@ -131,6 +147,8 @@ HTTP_Response::error_response (int status_code, const char *log_message)
 void
 HTTP_Response::normal_response (void)
 {
+  const char *hv = 0;;
+
   ACE_DEBUG ((LM_DEBUG, " (%t) %s request for %s [%s], version %s\n",
               request_.method (), request_.uri (), request_.path (),
               (request_.version () ? request_.version () : "HTTP/0.9")));
@@ -162,17 +180,41 @@ HTTP_Response::normal_response (void)
       // What to do here?
       // Standard says this is implementation dependent.
       // Examples: annotations, page updates, etc.
-      // They may be a good place to stick CORBA stuff,
+      // This may be a good place to stick CORBA stuff,
       // and mobile code.
       this->error_response (HTTP_Status_Code::STATUS_NOT_IMPLEMENTED,
                             "Requested method is not implemented.");
       break;
 
     case HTTP_Request::PUT :
-      this->io_.receive_file (this->request_.path (),
-                              this->request_.data (),
-                              this->request_.data_length (),
-                              this->request_.content_length ());
+      // Only commit to this if we can authenticate it
+
+      // if there is no Authentication: header on the incoming request,
+      // deny it
+      hv = this->request_.headers ()["Authorization"];
+      if (hv == 0 || *hv == '\0')
+        this->error_response (HTTP_Status_Code::STATUS_UNAUTHORIZED,
+                              "Unauthorized to use PUT method");
+      else if (ACE_OS::strncmp (hv, "Basic ", 6) != 0)
+        this->error_response (HTTP_Status_Code::STATUS_UNAUTHORIZED,
+                              "Unknown authroization method");
+      else
+        {
+          ACE_Mem_Map mmapfile;
+          const char * hvv = hv + 6;
+          char * buf = new char [ACE_OS::strlen (hv)];
+          HTTP_Helper::HTTP_decode_base64(ACE_OS::strcpy (buf, hvv));
+          if (mmapfile.map ("jaws.auth") != -1
+              && ACE_OS::strstr((const char *) mmapfile.addr (), buf) != 0)
+            this->io_.receive_file (this->request_.path (),
+                                    this->request_.data (),
+                                    this->request_.data_length (),
+                                    this->request_.content_length ());
+          else
+            this->error_response (HTTP_Status_Code::STATUS_UNAUTHORIZED,
+                                  "Invalid authorization attempt");
+          delete buf;
+        }
       break;
 
     default :
