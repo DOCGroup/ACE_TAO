@@ -2,6 +2,7 @@
 
 #include "ace/Profile_Timer.h"
 #include "ace/Env_Value_T.h"
+#include "ace/Read_Buffer.h"
 #include "client.h"
 #include "orbsvcs/CosNamingC.h"
 
@@ -40,47 +41,20 @@ Cubit_Client::read_ior (char *filename)
 
   // Open the file for reading.
   this->f_handle_ = ACE_OS::open (filename,0);
-
+  
   if (this->f_handle_ == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
 		       "Unable to open %s for writing: %p\n",
 		       filename),
                       -1);
-
-  int result = ACE_OS::fstat (this->f_handle_,
-                              &f_stat);
-  if (result == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to stat %s for file size: %p\n",
-                       filename),
-                      -1);
-  int ior_size = f_stat.st_size + 1;
-
-  ACE_NEW_RETURN (this->cubit_factory_key_,
-                  char [ior_size],
-                  -1);
+  ACE_Read_Buffer ior_buffer (this->f_handle_);
+  this->cubit_factory_key_ = ior_buffer.read ();
 
   if (this->cubit_factory_key_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Unable to allocate memory to read ior: %p\n"),
                       -1);
-  cubit_factory_ior_file_ = ACE_OS::fdopen (this->f_handle_,
-					    "r");
-  if (this->cubit_factory_ior_file_ == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-		       "Unable to open %s for writing: %p\n",
-		       filename),
-                      -1);
-
-  char *gets_result = ACE_OS::fgets (this->cubit_factory_key_,
-                                     ior_size,
-                                     this->cubit_factory_ior_file_);
-  if (gets_result == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-		       "Unable to read cubit_factory_ior from file %s: %p\n",
-		       filename),
-                      -1);
-  return 0;
+   return 0;
 }
 
 // Parses the command line arguments and returns an error status.
