@@ -1,0 +1,77 @@
+<HTML>
+<!-- $Id$ -->
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="Ambreen Ilyas">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.05 [en] (X11; I; SunOS 5.5.1 sun4u) [Netscape]">
+   <TITLE>Example 6</TITLE>
+</HEAD>
+<BODY>
+<FONT COLOR="#CC0000">/////////////////////////////////////////////////////////////////////////////////////////////////////////////////</FONT>
+<BR><FONT COLOR="#CC0000">//// This example is from the ACE Programmers
+Guide.</FONT>
+<BR><FONT COLOR="#CC0000">////&nbsp; Chapter: "IPC SAP" (Interprocess Communication
+Mechanisms in ACE).</FONT>
+<BR><FONT COLOR="#CC0000">//// For details please see the guide at</FONT>
+<BR><FONT COLOR="#CC0000">//// http://www.cs.wustl.edu/~schmidt/ACE.html</FONT>
+<BR><FONT COLOR="#CC0000">////&nbsp; AUTHOR: Umar Syyid (usyyid@hns.com)</FONT>
+<BR><FONT COLOR="#CC0000">//// and Ambreen Ilyas (ambreen@bitsmart.com)</FONT>
+<BR><FONT COLOR="#CC0000">/////////////////////////////////////////////////////////////////////////////////////////////////////////////</FONT>
+
+<P><FONT COLOR="#CC0000">//Example 6</FONT>
+<BR><FONT COLOR="#000099">#define</FONT> <FONT COLOR="#663366">DEFAULT_MULTICAST_ADDR
+"224.9.9.2"</FONT>
+<BR><FONT COLOR="#000099">#define</FONT> <FONT COLOR="#663366">TIMEOUT
+5</FONT>
+<BR><FONT COLOR="#000099">#include</FONT><FONT COLOR="#006600"> "ace/SOCK_Dgram_Mcast.h"</FONT>
+<BR><FONT COLOR="#000099">#include</FONT> <FONT COLOR="#006600">"ace/OS.h"</FONT>
+
+<P>class Sender_Multicast{
+<BR>public:
+<BR>Sender_Multicast(int port):
+<BR>&nbsp;local_addr_((u_short)0),dgram_(local_addr_),
+<BR>&nbsp;multicast_addr_(port,DEFAULT_MULTICAST_ADDR){}
+
+<P><FONT COLOR="#FF0000">//Method which uses a simple datagram component
+to send data to the multicast group.</FONT>
+<BR>int send_to_multicast_group(){
+<BR>&nbsp;&nbsp; <FONT COLOR="#FF0000">//Convert the information we wish
+to send into network byte order</FONT>
+<BR>&nbsp;mcast_info= htons (1000);
+
+<P><FONT COLOR="#FF0000">&nbsp;// Send multicast</FONT>
+<BR>&nbsp;if(dgram_.send
+<BR>&nbsp;&nbsp;&nbsp; (&amp;mcast_info, sizeof (mcast_info), multicast_addr_)==-1)
+<BR>&nbsp;&nbsp;&nbsp; return -1;
+
+<P>&nbsp;ACE_DEBUG ((LM_DEBUG,
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+"%s; Sent multicast to group.&nbsp; Number sent is %d.\n",
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+__FILE__,
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+mcast_info));
+<BR>&nbsp; return 0;
+<BR>}
+
+<P>private:
+<BR>&nbsp;ACE_INET_Addr multicast_addr_;
+<BR>&nbsp;ACE_INET_Addr local_addr_;
+<BR>&nbsp;ACE_SOCK_Dgram dgram_;
+<BR>&nbsp;int mcast_info;
+<BR>};
+<BR>&nbsp;
+
+<P>int main(int argc, char*argv[]){
+<BR>Sender_Multicast m(2000);
+<BR>if(m.send_to_multicast_group()==-1) {
+<BR>&nbsp;ACE_DEBUG((LM_ERROR,"Send to Multicast group failed \n"));
+<BR>&nbsp;exit(-1);
+<BR>&nbsp;}
+<BR>else
+<BR>&nbsp;ACE_DEBUG((LM_DEBUG,"Send to Multicast group succesful \n"));
+<BR>}
+
+<P>&nbsp;<A HREF="../Chap_3/ex01.html">Next Example</A>
+</BODY>
+</HTML>
