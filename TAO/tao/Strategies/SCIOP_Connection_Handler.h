@@ -26,6 +26,7 @@
 
 #if TAO_HAS_SCIOP == 1
 
+#include "strategies_export.h"
 #include "tao/Connection_Handler.h"
 #include "tao/IIOPC.h"
 
@@ -38,7 +39,7 @@ typedef ACE_Svc_Handler<ACE_SOCK_SEQPACK_ASSOCIATION, ACE_NULL_SYNCH>
         TAO_SCIOP_SVC_HANDLER;
 
 #if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
-template class TAO_Export ACE_Svc_Handler<ACE_SOCK_SEQPACK_ASSOCIATION, ACE_NULL_SYNCH>;
+template class TAO_Strategies_Export ACE_Svc_Handler<ACE_SOCK_SEQPACK_ASSOCIATION, ACE_NULL_SYNCH>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
 
 
@@ -57,7 +58,7 @@ class TAO_Pluggable_Messaging;
 
 #define IPDSFIELD_DSCP_DEFAULT  0x00
 
-class TAO_Export TAO_SCIOP_Properties
+class TAO_Strategies_Export TAO_SCIOP_Properties
 {
 
 public:
@@ -95,8 +96,8 @@ public:
  */
 
 
-class TAO_Export TAO_SCIOP_Connection_Handler : public TAO_SCIOP_SVC_HANDLER,
-                                               public TAO_Connection_Handler
+class TAO_Strategies_Export TAO_SCIOP_Connection_Handler : public TAO_SCIOP_SVC_HANDLER,
+                                                           public TAO_Connection_Handler
 {
 
 public:

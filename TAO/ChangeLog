@@ -1,3 +1,21 @@
+Mon Jun  9 10:09:52 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Strategies/Makefile.bor:
+          Added SCIOP files.
+
+        * tao/Strategies/SCIOP_Acceptor.h:
+        * tao/Strategies/SCIOP_Connection_Handler.h:
+        * tao/Strategies/SCIOP_Connector.h:
+        * tao/Strategies/SCIOP_Endpoint.h:
+        * tao/Strategies/sciop_endpoints.h:
+        * tao/Strategies/SCIOP_Factory.h:
+        * tao/Strategies/SCIOP_Lite_Factory.h:
+        * tao/Strategies/SCIOP_Profile.h:
+        * tao/Strategies/SCIOP_Transport.h:
+          Changed TAO_Export to TAO_Strategies_Export to correctly
+          export/import these classes from a DLL. Added missing includes
+          to pickup these defines.
+
 Sun Jun  8 23:21:45 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/ComponentDef_i.cpp:
@@ -19,7 +37,7 @@ Sun Jun  8 18:50:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* performance-tests/Sequence_Latency/Single_Threaded: New test for
 	  tracking performance of sequence<basic types>. Our code
-	  generatiom for sequence<> were broken for 1.3.2. 
+	  generatiom for sequence<> were broken for 1.3.2.
 
 	* performance-tests/Makefile:
 	* performance-tests/Makefile.bor: Added the new test directory

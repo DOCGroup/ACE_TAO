@@ -21,15 +21,15 @@
 
 #include "tao/Endpoint.h"
 
-#if TAO_HAS_SCIOP == 1
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if TAO_HAS_SCIOP == 1
+
+#include "strategies_export.h"
 #include "tao/CORBA_String.h"
 #include "ace/INET_Addr.h"
-
 
 class TAO_SCIOP_Connection_Handler;
 
@@ -40,7 +40,7 @@ class TAO_SCIOP_Connection_Handler;
  *
  * SCIOP-specific implementation of PP Framework Endpoint interface.
  */
-class TAO_Export TAO_SCIOP_Endpoint : public TAO_Endpoint
+class TAO_Strategies_Export TAO_SCIOP_Endpoint : public TAO_Endpoint
 {
 public:
 

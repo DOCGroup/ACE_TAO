@@ -42,7 +42,7 @@
  *
  * The SCIOP-specific bridge class for the concrete acceptor.
  */
-class TAO_Export TAO_SCIOP_Acceptor : public TAO_Acceptor
+class TAO_Strategies_Export TAO_SCIOP_Acceptor : public TAO_Acceptor
 {
 public:
   /// Constructor.
