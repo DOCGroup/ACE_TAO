@@ -1,6 +1,6 @@
-#include "ace/Service_Config.h"
 // $Id$
 
+#include "ace/Service_Config.h"
 #include "TS_Clerk_Handler.h"
 #include "TS_Server_Handler.h"
 #include "Client_Logging_Handler.h"
@@ -68,6 +68,17 @@ main (int argc, char *argv[])
 	    ACE_ERROR ((LM_ERROR, "%p\n%a", "Thr_Logging_Service", 1));
 	}
     }
+
+  // Create an adapter to end the event loop.
+  ACE_Sig_Adapter sa ((ACE_Sig_Handler_Ex) ACE_Service_Config::end_reactor_event_loop);
+
+  ACE_Sig_Set sig_set;
+  sig_set.sig_add (SIGINT);
+  sig_set.sig_add (SIGQUIT);
+
+  // Register ourselves to receive SIGINT and SIGQUIT so we can shut
+  // down gracefully via signals.
+  ACE_Service_Config::reactor ()->register_handler (sig_set, &sa);
 
   // Run forever, performing the configured services until we are shut
   // down by a SIGINT/SIGQUIT signal.

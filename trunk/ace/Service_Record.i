@@ -18,15 +18,6 @@ ACE_Service_Object_Type::resume (void) const
 }
 
 ACE_INLINE int
-ACE_Service_Object_Type::fini (void) const
-{
-  ACE_TRACE ("ACE_Service_Object_Type::fini");
-  ACE_Service_Object *so = (ACE_Service_Object *) this->object ();
-  so->fini ();
-  return ACE_Service_Type::fini ();
-}
-
-ACE_INLINE int
 ACE_Service_Object_Type::info (char **str, size_t len) const
 {
   ACE_TRACE ("ACE_Service_Object_Type::info");

@@ -22,11 +22,11 @@
 
 class Connection_Config_File_Entry
   // = TITLE
-  //     Stores the IO_Handler entry for connection configuration.
+  //     Stores the Proxy_Handler entry for connection configuration.
 {
 public:
   int conn_id_;
-  // Connection id for this IO_Handler.
+  // Connection id for this Proxy_Handler.
 
   char host_[BUFSIZ];
   // Host to connect with.
@@ -46,7 +46,7 @@ public:
 
 class Connection_Config_File_Parser : public File_Parser<Connection_Config_File_Entry>
   // = TITLE
-  //     Parser for the IO_Handler Connection file.
+  //     Parser for the Proxy_Handler Connection file.
 {
 public:
   virtual FP::Return_Type
@@ -65,10 +65,10 @@ public:
   int conn_id_;
   // Connection id for this channel.
 
-  int logical_id_;
+  int supplier_id_;
   // Logical routing id for this channel.
   
-  int payload_type_;
+  int type_;
   // Type of payload in the message.
 
   int destinations_[MAX_DESTINATIONS];

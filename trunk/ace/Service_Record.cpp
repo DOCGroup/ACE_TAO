@@ -103,15 +103,20 @@ int
 ACE_Module_Type::fini (void) const
 {
   ACE_TRACE ("ACE_Module_Type::fini");
+
   const void *obj = this->object ();
   MT_Module *mod = (MT_Module *) obj;
   MT_Task *reader = mod->reader ();
   MT_Task *writer = mod->writer ();
 
-  reader->fini ();
-  writer->fini ();
-  delete reader;
-  delete writer;
+  if (reader != 0)
+    reader->fini ();
+
+  if (writer != 0)
+    writer->fini ();
+
+  // Close the module and delete the memory.
+  mod->close (MT_Module::M_DELETE);
   return ACE_Service_Type::fini ();     
 }
 
@@ -227,7 +232,7 @@ ACE_Stream_Type::fini (void) const
   return ACE_Service_Type::fini ();
 }
 
-// Locate and remove MOD_NAME from the ACE_Stream.
+// Locate and remove <mod_name> from the ACE_Stream.
 
 int
 ACE_Stream_Type::remove (ACE_Module_Type *mod)
@@ -335,6 +340,15 @@ ACE_Service_Record::resume (void) const
   ACE_TRACE ("ACE_Service_Record::resume");
   ((ACE_Service_Record *) this)->active_ = 1;
   this->type_->resume ();
+}
+
+int
+ACE_Service_Object_Type::fini (void) const
+{
+  ACE_TRACE ("ACE_Service_Object_Type::fini");
+  ACE_Service_Object *so = (ACE_Service_Object *) this->object ();
+  so->fini ();
+  return ACE_Service_Type::fini ();
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)

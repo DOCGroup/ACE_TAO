@@ -57,7 +57,6 @@ protected:
 
   FP::Return_Type readword (char buf[]);
   int delimiter (char ch);
-  int endofline (char ch);
   int comments (char ch);
   int skipline (void);
 

@@ -446,6 +446,7 @@ ACE_Proactor::cancel_io (ACE_Event_Handler *handler)
 #if defined (ACE_WIN32) && defined (ACE_HAS_CANCEL_IO)
   return ::CancelIO (handler->get_handle ()) ? -1 : 0;
 #else
+  ACE_UNUSED_ARG(handler);
   return 0;
 #endif /* ACE_WIN32 */
 }

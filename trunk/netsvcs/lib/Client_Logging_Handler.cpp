@@ -1,10 +1,10 @@
-// Client_Logging_Handler.cpp
 // $Id$
+
+// Client_Logging_Handler.cpp
 
 #define ACE_BUILD_SVC_DLL
 #include "ace/Service_Config.h"
 #include "ace/Connector.h"
-
 #include "ace/Get_Opt.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Stream.h"
@@ -16,9 +16,6 @@ class ACE_Svc_Export ACE_Client_Logging_Handler : public ACE_Svc_Handler<ACE_SOC
   //    This client logging daemon is a mediator that receives logging
   //    records from local applications processes and forwards them to
   //    the server logging daemon running on another host. 
-  //
-  // = DESCRIPTION
-  //
 {
 public:
   // = Initialization and termination.
@@ -34,11 +31,11 @@ public:
   // Return the handle of the message_fifo_;
 
   virtual int close (u_long);
-  // Called when object is removed from the ACE_Reactor
+  // Called when object is removed from the ACE_Reactor.
 
 protected:
   virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
-  // Handle SIGINT.
+  // Handle SIGPIPE.
 
   virtual int handle_input (ACE_HANDLE);
   // Receive logging records from applications.
@@ -69,10 +66,13 @@ ACE_Client_Logging_Handler::ACE_Client_Logging_Handler (const char rendezvous[])
 {
   if (ACE_OS::unlink (rendezvous) == -1 && errno == EACCES)
     ACE_ERROR ((LM_ERROR, "%p\n", "unlink"));
+
   else if (this->message_fifo_.open (rendezvous) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "open"));
-  // Register message FIFO to receive input from clients.  Note that we need to
-  // put the EXCEPT_MASK here to deal with SVR4 MSG_BAND data correctly...
+
+  // Register message FIFO to receive input from clients.  Note that
+  // we need to put the EXCEPT_MASK here to deal with SVR4 MSG_BAND
+  // data correctly...
   else if (ACE_Service_Config::reactor ()->register_handler
 	   (this->message_fifo_.get_handle (), this,
 	    ACE_Event_Handler::READ_MASK | ACE_Event_Handler::EXCEPT_MASK) == -1)
@@ -90,7 +90,6 @@ int
 ACE_Client_Logging_Handler::handle_signal (int, siginfo_t *, ucontext_t *)
 {
   ACE_TRACE ("ACE_Client_Logging_Connector::handle_signal");
-//  return 0;
   return -1;
 }
 
@@ -125,7 +124,6 @@ ACE_Client_Logging_Handler::get_handle (void) const
   ACE_TRACE ("ACE_Client_Logging_Handler::get_handle");
   return this->message_fifo_.get_handle ();
 }
-
 
 // Receive a logging record from an application.
 
@@ -170,7 +168,15 @@ int
 ACE_Client_Logging_Handler::close (u_long)
 {
   ACE_DEBUG ((LM_DEBUG, "shutting down!!!\n"));
+
+  if (ACE_Service_Config::reactor ()->remove_handler
+      (this->message_fifo_.get_handle (), 
+       ACE_Event_Handler::READ_MASK | ACE_Event_Handler::EXCEPT_MASK | ACE_Event_Handler::DONT_CALL) == -1)
+    ACE_ERROR ((LM_ERROR, "%n: %p\n", 
+		"remove_handler (message_fifo)"));
+  
   this->message_fifo_.close ();
+  this->destroy ();
   return 0;
 }
 
@@ -207,7 +213,6 @@ ACE_Client_Logging_Handler::send (ACE_Log_Record &log_record)
   return 0;
 }
 
-
 class ACE_Client_Logging_Connector : public ACE_Connector<ACE_Client_Logging_Handler, ACE_SOCK_CONNECTOR>
   // = TITLE
   //     This class contains the service-specific methods that can't
@@ -228,9 +233,6 @@ protected:
   virtual int suspend (void);
   virtual int resume (void);
   
-  virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
-  // Handle SIGINT.
-
 private:
   int parse_args (int argc, char *argv[]);
   // Parse svc.conf arguments.
@@ -256,7 +258,7 @@ private:
 int 
 ACE_Client_Logging_Connector::fini (void)
 {
-  this->handler_->destroy ();
+  this->handler_->close (0);
   return 0;
 }
 
@@ -284,12 +286,6 @@ ACE_Client_Logging_Connector::init (int argc, char *argv[])
   // Use the options hook to parse the command line arguments and set
   // options.
   this->parse_args (argc, argv);
-
-  // Register ourselves to receive SIGINT so we can shutdown
-  // gracefully.
-  if (ACE_Service_Config::reactor ()->register_handler (SIGINT, this) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%n: %p\n", 
-		       "register_handler (SIGINT)"), -1);
 
   ACE_NEW_RETURN (this->handler_, 
 		  ACE_Client_Logging_Handler (this->rendezvous_key_),
@@ -349,16 +345,6 @@ int
 ACE_Client_Logging_Connector::resume (void)
 {
   // To be done...
-  return 0;
-}
-
-// Signal the server to shutdown gracefully.
-
-int
-ACE_Client_Logging_Connector::handle_signal (int, siginfo_t *, ucontext_t *)
-{
-  ACE_TRACE ("ACE_Client_Logging_Connector::handle_signal");
-  ACE_Service_Config::end_reactor_event_loop ();
   return 0;
 }
 

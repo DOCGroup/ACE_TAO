@@ -174,19 +174,10 @@ public:
   int parse_args (int argc, char *argv[]);
   // Parse svc.conf arguments.
 
-  int handle_signal (int, siginfo_t *, ucontext_t *);
-  
 private:
   ACE_Schedule_All_Reactive_Strategy<ACE_Name_Handler> scheduling_strategy_;
   // The scheduling strategy is designed for Reactive services.
 };
-
-int
-ACE_Name_Acceptor::handle_signal (int, siginfo_t *, ucontext_t *)
-{
-  ACE_DEBUG ((LM_DEBUG, "ACE_Name_Acceptor::handle_signal got called\n"));
-  return 0;
-}
 
 int
 ACE_Name_Acceptor::parse_args (int argc, char *argv[])
@@ -236,12 +227,6 @@ ACE_Name_Acceptor::init (int argc, char *argv[])
     ACE_ERROR_RETURN ((LM_ERROR, "%n: %p on port %d\n", 
 		       "acceptor::open failed", 
 		       this->service_addr_.get_port_number ()), -1);
-
-  // Register ourselves to receive SIGINT so we can shutdown
-  // gracefully.
-  if (this->reactor ()->register_handler (SIGINT, this) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%n: %p\n", 
-		      "register_handler (SIGINT)"), -1);
 
   // Ignore SIGPIPE so that each <SVC_HANDLER> can handle this on its
   // own.

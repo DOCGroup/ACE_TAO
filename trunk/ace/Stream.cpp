@@ -23,7 +23,9 @@ ACE_Stream<ACE_SYNCH_2>::dump (void) const
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_2>::dump");
   ACE_DEBUG ((LM_DEBUG, "-------- module links --------\n"));
 
-  for (ACE_Module<ACE_SYNCH_2> *mp = this->stream_head_; ; mp = mp->next ())
+  for (ACE_Module<ACE_SYNCH_2> *mp = this->stream_head_; 
+       ; 
+       mp = mp->next ())
     {
       ACE_DEBUG ((LM_DEBUG, "module name = %s\n", mp->name ()));
       if (mp == this->stream_tail_)
@@ -34,13 +36,16 @@ ACE_Stream<ACE_SYNCH_2>::dump (void) const
 
   ACE_Task<ACE_SYNCH_2> *tp;
 
-  for (tp = this->stream_head_->writer (); ; tp = tp->next ())
+  for (tp = this->stream_head_->writer (); 
+       ; 
+       tp = tp->next ())
     {
       ACE_DEBUG ((LM_DEBUG, "writer queue name = %s\n", tp->name ()));
       tp->dump ();
       ACE_DEBUG ((LM_DEBUG, "-------\n"));
       if (tp == this->stream_tail_->writer ()
-	  || (this->linked_us_ && tp == this->linked_us_->stream_head_->reader ()))
+	  || (this->linked_us_ 
+	      && tp == this->linked_us_->stream_head_->reader ()))
 	break;
     }
 
@@ -51,7 +56,8 @@ ACE_Stream<ACE_SYNCH_2>::dump (void) const
       tp->dump ();
       ACE_DEBUG ((LM_DEBUG, "-------\n"));
       if (tp == this->stream_head_->reader ()
-	  || (this->linked_us_ && tp == this->linked_us_->stream_head_->writer ()))
+	  || (this->linked_us_ 
+	      && tp == this->linked_us_->stream_head_->writer ()))
 	break;
     }
 }
@@ -157,12 +163,13 @@ ACE_Stream<ACE_SYNCH_2>::remove (const char *name,
 	else
 	  prev->link (mod->next ());
 
-	// Close down the module and release the memory.
-	mod->close (flags);
-
 	// Don't delete the Module unless the flags request this.
 	if (flags != ACE_Module<ACE_SYNCH_2>::M_DELETE_NONE)
-	  delete mod;
+	  {
+	    // Close down the module and release the memory.
+	    mod->close (flags);
+	    delete mod;
+	  }
 
 	return 0;
       }
@@ -228,8 +235,8 @@ ACE_Stream<ACE_SYNCH_2>::push_module (ACE_Module<ACE_SYNCH_2> *new_top,
 #if 0
 int
 ACE_Stream<ACE_SYNCH_2>::open (void *a, 
-			   ACE_Multiplexor &muxer, 
-			   ACE_Module<ACE_SYNCH_2> *head)
+			       ACE_Multiplexor &muxer, 
+			       ACE_Module<ACE_SYNCH_2> *head)
 {
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_2>::open");
   this->stream_head_ = head == 0
