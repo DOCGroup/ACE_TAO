@@ -1,3 +1,10 @@
+Fri Apr 26 16:32:53 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp:
+
+          Inserted byte order to GroupID CDR stream.  This fixes a MIOP
+          bug seen on Solaris.
+
 Fri Apr 26 13:32:04 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ClientRequestInfo_i.cpp (TAO_ClientRequestInfo_i):
@@ -164,7 +171,7 @@ Fri Apr 26 13:48:22 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 Fri Apr 26 17:15:07 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* docs/interfacerepo/index.html:
-	* docs/interfacerepo/tao_ifr.html: 
+	* docs/interfacerepo/tao_ifr.html:
 	  Add documentation for getting reference to Interface Repository via
 	  Interoperable Naming.
 
@@ -238,13 +245,13 @@ Thu Apr 25 16:42:04 2002  Jeff Parsons <parsons@cs.wustl.edu>
         * tao/PortableServer/PortableServerC.i:
         * tao/RTCORBA/RTCORBAC.cpp:
 
-          Added missing methods _rep_id() and _name() to class 
+          Added missing methods _rep_id() and _name() to class
           CORBA::Exception, as well as a new member name_ to hold the
           char* local name. Also changed the constructor signatures
           to pass in the new local name argument, and IDL compiler
           hand-crafted code and other exception code to use the new
           signatures. Thanks to Andy Alvarez <andy_alvarez@baxter.com>
-          for pointing out the lack of these spec-required methods. 
+          for pointing out the lack of these spec-required methods.
 
 Thu Apr 25 16:37:28 2002 Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -277,10 +284,10 @@ Thu Apr 25 14:25:28 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_i.h:
 	* performance-tests/Cubit/TAO/IDL_Cubit/client.cpp:
 	* performance-tests/Cubit/TAO/IDL_Cubit/cubit.idl:
-	
-	* tests/RTCORBA/Client_Protocol/test.idl: 
+
+	* tests/RTCORBA/Client_Protocol/test.idl:
 	* tests/RTCORBA/Client_Protocol/client.cpp:
-	* tests/RTCORBA/Client_Protocol/server.cpp: 
+	* tests/RTCORBA/Client_Protocol/server.cpp:
 
 	  Work around to for the nasty [BUG 1197] problem. The client
 	  makes yet another two way invocation before shutting down the
@@ -293,7 +300,7 @@ Thu Apr 25 05:36:48 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/tests/Security/SecurityLevel1/Makefile:
 	* orbsvcs/examples/Security/Send_File/Makefile: Updated
-	  dependencies.  
+	  dependencies.
 
 Thu Apr 25 05:25:33 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -302,7 +309,7 @@ Thu Apr 25 05:25:33 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 Wed Apr 24 19:06:50 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/MT_Cubit/Makefile: Updated
-	  dependencies.  
+	  dependencies.
 
 Tue Apr 23 15:44:46 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
@@ -321,9 +328,9 @@ Mon Apr 22 15:20:50 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 	* orbsvcs/tests/AVStreams/Multicast/server.cpp:
 	* orbsvcs/tests/AVStreams/Pluggable/server.cpp:
 
-	  Clean up termination: 
+	  Clean up termination:
 	  - do not call orb->shutdown() in a CORBA method
-	  - change orb->run() to work_pending()/perform_work() 
+	  - change orb->run() to work_pending()/perform_work()
 	  - put the orb->shutdown() after the perform_work()
 
 Mon Apr 22 09:00:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
@@ -334,7 +341,7 @@ Mon Apr 22 09:00:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 Sun Apr 21 10:07:25 EDT 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* TAO_IDL/tao_idl_static.dsp: Add user32.lib and advapi32.lib to
-	  link line. 
+	  link line.
 
 Sat Apr 20 21:12:10 EDT 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
@@ -344,7 +351,7 @@ Sat Apr 20 21:12:10 EDT 2002  Craig Rodrigues  <crodrigu@bbn.com>
 Sat Apr 20 18:51:41 EDT 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* orbsvcs/IFR_Service/IFR_Service.h: Use _DECL_WITH_DEFAULTS
-	  macros. 
+	  macros.
 
 Fri Apr 19 18:13:40 2002  Ossama Othman  <ossama@uci.edu>
 
@@ -1832,7 +1839,7 @@ Tue Apr  2 13:41:38 UTC 2002  Don Hinton <dhinton@ieee.org>
 	* tao/Connector_Registry.cpp:
 	* tao/default_resource.cpp:
 	  Wrapped calls to ACE_CString::c_str() in ACE_TEXT_CHAR_TO_TCHAR,
-	  changed ACE_TEXT to ACE_LIB_TEXT, and added missing ACE_LIB_TEXT 
+	  changed ACE_TEXT to ACE_LIB_TEXT, and added missing ACE_LIB_TEXT
 	  in ACE_DEBUG/ACE_ERROR calls.
 
 Mon Apr  1 18:05:22 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
@@ -1845,7 +1852,7 @@ Mon Apr  1 18:05:22 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 	* orbsvcs/Concurrency_Service/Makefile:
 	* orbsvcs/tests/Concurrency/Makefile:
 	  Made changes to dynamically load or unload the Concurrency
-	  service. Added the new files in the Makefile and updated 
+	  service. Added the new files in the Makefile and updated
 	  the dependencies.
 
 Mon Apr 01 07:38:45 2002  Ossama Othman  <ossama@uci.edu>
@@ -2011,7 +2018,7 @@ Wed Mar 27 17:51:19 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
           Moved a string compare to follow a block where one of the
           string compare args is checked for NULL. Thanks to Kevin
-          Heifner <heifner_k@ociweb.com> and Chad Elliott 
+          Heifner <heifner_k@ociweb.com> and Chad Elliott
           <elliott_c@ociweb.com> for pointing out the oversight.
 
 Wed Mar 27 12:31:33 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
