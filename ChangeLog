@@ -1,3 +1,8 @@
+Sat Sep  2 15:13:59 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/CDR_Stream.h:
+          Fixed typo in macro name.
+
 Sat Sep  2 12:22:59 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* ace/CDR_Stream.h:
