@@ -24,7 +24,6 @@
 #include "ace/Profile_Timer.h"
 #include "ace/ARGV.h"
 #include "ace/Sched_Params.h"
-#include "ace/Task.h"
 #include "ace/High_Res_Timer.h"
 
 #include "orbsvcs/CosNamingC.h"
@@ -250,35 +249,5 @@ private:
   CosNaming::NamingContext_var mt_cubit_context_;
   // Object reference to the cubit context "MT_Cubit".
 };
-
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-// class Yield_Test
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
-class Yield_Test : public ACE_Task<ACE_MT_SYNCH>
-{
-public:
-  Yield_Test (const unsigned long iterations);
-  virtual ~Yield_Test ();
-
-  virtual int svc ();
-
-  ACE_hrtime_t elapsed_time () const { return elapsed_time_; }
-private:
-  const unsigned long iterations_;
-  ACE_Barrier timer_barrier_;
-  ACE_High_Res_Timer timer_;
-  ACE_hrtime_t elapsed_time_;
-
-  // force proper construction of independent instances
-  Yield_Test ();
-  Yield_Test (const Yield_Test &);
-  Yield_Test &operator= (const Yield_Test &);
-};
-
-double
-context_switch_time (void);
 
 #endif /* !defined (TASK_CLIENT_H) */
