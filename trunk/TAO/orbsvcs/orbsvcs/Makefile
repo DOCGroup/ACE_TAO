@@ -33,17 +33,18 @@ ifndef TAO_ORBSVCS
                 Sched \
                 RTOLDEvent \
 		RTSchedEvent \
-                Concurrency
+                Concurrency \
+		Trader
 
   ifeq ($(minimum_corba),0)
 
     # Trader uses DynAny which is disabled when compiling with minimum
     # CORBA support.  LifeCycle, Log, AV and Notify depend on Trader
     # so don't build them either, with minimum CORBA.
-    TAO_ORBSVCS += Trader Log AV
+    TAO_ORBSVCS += Log AV
 
     ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
-      TAO_ORBSVCS += LifeCycle Notify
+      TAO_ORBSVCS += LifeCycle
     endif # ACE_HAS_GNUG_PRE_2_8
 
     # The Load Balancer requires POA ServantLocator support, which
@@ -55,6 +56,10 @@ ifndef TAO_ORBSVCS
   ifeq ($(ssl),1)
     TAO_ORBSVCS += Security SSLIOP
   endif # ssl
+
+  ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
+    TAO_ORBSVCS += Notify
+  endif # ACE_HAS_GNUG_PRE_2_8
 
 endif # TAO_ORBSVCS
 

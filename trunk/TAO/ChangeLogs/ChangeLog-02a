@@ -1,3 +1,21 @@
+Mon Aug 28 11:49:46 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/Notify_Service/Makefile:
+        * orbsvcs/Trading_Service/Makefile:
+        * orbsvcs/examples/Notify/Filter/Makefile:
+        * orbsvcs/examples/Notify/Subscribe/Makefile:
+        * orbsvcs/orbsvcs/Makefile:
+        * orbsvcs/tests/Notify/Basic/Makefile:
+        * orbsvcs/tests/Notify/lib/Makefile:
+        * orbsvcs/tests/Trading/Makefile:
+          The Trading service is using DynamicAnys to implement parts of
+          the TCL evaluation code.  With the separation of DynamicAnys
+          into a different library it is now possible to compile the
+          Trading service even under minimum CORBA configurations.
+          Since the Notification Service also requires parts of the
+          Trading Service it was also disabled for minimum CORBA builds,
+          but we can enable it now.
+
 Mon Aug 28 11:21:01 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/tests/Notify/Basic/Makefile:

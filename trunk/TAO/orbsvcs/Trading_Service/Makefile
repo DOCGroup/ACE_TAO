@@ -28,9 +28,7 @@ include $(TAO_ROOT)/rules.tao.GNU
 #### don't try to build here.
 TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq (Trader,$(findstring Trader,$(TAO_ORBSVCS)))
-  ifeq ($(minimum_corba),0)
-    BIN = $(BIN2)
-  endif # minimum_corba
+  BIN = $(BIN2)
 endif # Trader
 
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
