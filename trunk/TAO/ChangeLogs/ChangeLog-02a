@@ -1,3 +1,10 @@
+Mon Nov  5 13:53:21 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * TAO_IDL/include/idl_defines.h:
+        * orbsvcs/orbsvcs/AV/RTCP.cpp:
+
+          Remove warnings for 64-bit HP-UX builds.
+
 Mon Nov  5 13:08:29 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * docs/tutorials/Quoter/AMI/Stock_i.h:
