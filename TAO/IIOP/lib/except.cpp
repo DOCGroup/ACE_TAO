@@ -12,31 +12,18 @@
 #include	<limits.h>
 #include	<string.h>
 #include	<stdio.h>
+#include <ace/Log_Msg.h>
+
 #include	<orb.hh>
 
 #include	"cdr.hh"
 #include	"debug.hh"
-#include	"thread.hh"
 
 #include	<initguid.h>
 
 #if	defined (HAVE_WIDEC_H)
 #		include <widec.h>
 #endif
-
-#ifdef	_POSIX_THREADS
-//
-// If POSIX threads are available, set up lock covering refcounts.
-//
-static pthread_mutex_t		except_lock = PTHREAD_MUTEX_INITIALIZER;
-
-#else
-
-	// stub out these _POSIX_THREAD_SAFE_FUNCTIONS
-#	define	flockfile(f)
-#	define	funlockfile(f)
-#endif	// _POSIX_THREADS
-
 
 
 
@@ -132,38 +119,32 @@ ULONG
 __stdcall
 CORBA_Exception::AddRef ()
 {
-#ifdef	_POSIX_THREADS
-    Critical		region (&except_lock);
-#endif
+  ACE_GUARD_RETURN(ACE_Thread_Mutex, guard, lock_, 0);
 
-    assert (_refcnt > 0);
-    return ++_refcnt;
+  assert (_refcnt > 0);
+  return ++_refcnt;
 }
 
 ULONG
 __stdcall
 CORBA_Exception::Release ()
 {
-#ifdef	_POSIX_THREADS
-    Critical		region (&except_lock);
-#endif
+  ACE_GUARD_RETURN(ACE_Thread_Mutex, guard, lock_, 0);
 
-    assert (_refcnt > 0);
-    _refcnt--;
-    if (_refcnt != 0)
-	return _refcnt;
+  assert (_refcnt > 0);
+  _refcnt--;
+  if (_refcnt != 0)
+    return _refcnt;
 
-#ifdef	_POSIX_THREADS
-    region.leave ();
-#endif
+  guard.release ();
 
-    // CORBA_TypeCode_ptr		tc = _type->_duplicate ();
+  // CORBA_TypeCode_ptr		tc = _type->_duplicate ();
 
-    { CORBA_Any		free_it_all (_type, this, CORBA_B_TRUE); }
+  { CORBA_Any		free_it_all (_type, this, CORBA_B_TRUE); }
 
-    // tc->Release ();
+  // tc->Release ();
 
-    return 0;
+  return 0;
 }
 
 HRESULT
@@ -484,8 +465,7 @@ print_exception (
 {
     CORBA_String	id = x->id ();
 
-    flockfile (stream);
-    ACE_OS::fprintf (stream, "EXCEPTION, %s\n", info);
+    ACE_DEBUG((LM_ERROR, "EXCEPTION, %s\n", info));
 
     //
     // XXX get rid of this logic, and rely on some member function
@@ -507,8 +487,8 @@ print_exception (
 	// the exception value so it can be queried.
 	//
 
-	ACE_OS::fprintf (stream, "ACE_OS::system exception, ID '%s'\n", id);
-	ACE_OS::fprintf (stream, "minor code = %#lx, completed = ", x2->minor ());
+	ACE_DEBUG((LM_ERROR, "ACE_OS::system exception, ID '%s'\n", id));
+	ACE_DEBUG((LM_ERROR, "minor code = %#lx, completed = ", x2->minor ()));
 	switch (x2->completion ()) {
 	  case COMPLETED_YES:
 	      fputs ("YES", stream);
@@ -529,7 +509,6 @@ print_exception (
 	// XXX we can use the exception's typecode to dump all the data
 	// held within it ...
 	//
-	ACE_OS::fprintf (stream, "user exception, ID '%s'\n", id);
+	ACE_DEBUG((LM_ERROR, "user exception, ID '%s'\n", id));
     }
-    funlockfile (stream);
 }

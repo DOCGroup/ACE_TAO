@@ -71,18 +71,6 @@
 #define	GIOP_HDR_LEN	12		// defined by GIOP 1.0 protocol
 
 
-#ifdef	_POSIX_THREADS
-// #ifdef	ACE_HAS_THREADS
-//
-// This lock covers the mutable info in all IIOP objref data,
-// namely the forwarded-to objref.  It must be held when a client
-// thread is reading or modifying that data, to prevent one from
-// overwriting data the other's reading or writing.
-//
-static pthread_mutex_t	fwd_info_lock = PTHREAD_MUTEX_INITIALIZER;
-#endif	// ACE_HAS_THREADS
-
-
 //
 // Apart from the length word, headers are specified to be arrays of
 // bytes.  They're dealt with as such, rather than using CDR routines,
@@ -535,20 +523,18 @@ GIOP::Invocation::Invocation (
     do_rsvp			(is_roundtrip),
     stream			(&buffer [0], sizeof buffer)
 {
+  // The assumption that thread ids are ints is false and horribly
+  // implementation-dependent, so this code just sucks.  But, at least
+  // it will compile on multiple platforms through the magic of ACE :-/
 
-#ifdef	_POSIX_THREADS  // Leave for NT until POSIX calls removed
-// #ifdef	ACE_HAS_THREADS 
-    //
-    // POSIX does not require this to be true, it's an implementation
-    // assumption that will at some point be removed but is true on
-    // many current POSIX.1c implementations.
-    //
-    assert (sizeof (CORBA_ULong) == sizeof (pthread_t));
-
-    my_request_id = (CORBA_ULong) pthread_self ();
-#else
-    my_request_id = 0;
-#endif	// ACE_HAS_THREADS
+  //assert (sizeof (CORBA_ULong) == sizeof (ACE_thread_t));
+  ACE_thread_t me = ACE_OS::thr_self();
+  my_request_id = 0;
+  
+  // Copy in only as many bytes are valid, or only as many as we have
+  // room for, whichever is less.
+  // ------->  What a friggin' HACK!?!?!
+  memcpy(&my_request_id, &me, ACE_MIN(sizeof(me), sizeof(my_request_id)));
 }
 
 GIOP::Invocation::~Invocation ()
@@ -670,10 +656,7 @@ GIOP::Invocation::start (
     assert (endpoint == 0);
     assert (_data != 0);
 
-#ifdef	_POSIX_THREADS
-// #ifdef	ACE_HAS_THREADS
-    Critical	section (&fwd_info_lock);
-#endif	// ACE_HAS_THREADS
+    ACE_GUARD(ACE_Thread_Mutex, guard, lock_);
 
     if (_data->fwd_profile != 0) {
 	key = &_data->fwd_profile->object_key;
@@ -844,18 +827,15 @@ GIOP::Invocation::invoke (
 	// error reports to applications.
 	//
 	{
-#ifdef	_POSIX_THREADS
-// #ifdef	ACE_HAS_THREADS
-	    Critical	section (&fwd_info_lock);
-#endif	// ACE_HAS_THREADS
+	  ACE_GUARD(ACE_Thread_Mutex, guard, lock_);
 
-	    delete _data->fwd_profile;
-	    _data->fwd_profile = 0;
+	  delete _data->fwd_profile;
+	  _data->fwd_profile = 0;
 
-	    (void) ACE_OS::closesocket (endpoint->fd);
-	    endpoint->fd = ACE_INVALID_HANDLE;
-	    endpoint = 0;
-	    return LOCATION_FORWARD;
+	  (void) ACE_OS::closesocket (endpoint->fd);
+	  endpoint->fd = ACE_INVALID_HANDLE;
+	  endpoint = 0;
+	  return LOCATION_FORWARD;
 	}
 
       case Request:
@@ -1066,15 +1046,13 @@ GIOP::Invocation::invoke (
 	    // that one of the facets of this object will be an IIOP
 	    // invocation profile.
 	    //
-	    if (CDR::decoder (_tc_CORBA_Object, &obj, 0, &stream, env)
-			!= CORBA_TypeCode::TRAVERSE_CONTINUE
-		    || obj->QueryInterface (IID_IIOP_Object, (void **)&obj2)
-			!= NOERROR
-		    ) {
+	    if (CDR::decoder (_tc_CORBA_Object, &obj, 0, &stream, env) != CORBA_TypeCode::TRAVERSE_CONTINUE
+		|| obj->QueryInterface (IID_IIOP_Object, (void **)&obj2) != NOERROR)
+	      {
 		dexc (env, "invoke, location forward");
 		send_error (endpoint->fd);
 		return SYSTEM_EXCEPTION;
-	    }
+	      }
 	    CORBA_release (obj);
 
 	    //
@@ -1088,10 +1066,7 @@ GIOP::Invocation::invoke (
 	    // be recorded here.  (This is just an optimization, and is
 	    // not related to correctness.)
 	    //
-#ifdef	_POSIX_THREADS
-// #ifdef	ACE_HAS_THREADS
-	    Critical	section (&fwd_info_lock);
-#endif	// ACE_HAS_THREADS
+	    ACE_GUARD(ACE_Thread_Mutex, guard, lock_);
 
 	    delete _data->fwd_profile;
 	    _data->fwd_profile = new IIOP::ProfileBody (obj2->profile);

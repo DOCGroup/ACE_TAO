@@ -25,20 +25,15 @@ DEFINE_GUID(IID_CORBA_ServerRequest,
 
 
 
-#ifdef	_POSIX_THREADS
-static pthread_mutex_t	svrqst_lock = PTHREAD_MUTEX_INITIALIZER;
-#endif	// _POSIX_THREADS
- 
-
 IIOP_ServerRequest::~IIOP_ServerRequest ()
 {
-    assert (_refcount == 0);
-    if (_params)
-	CORBA_release (_params);
-    if (_retval)
-	delete _retval;
-    if (_exception)
-	delete _exception;
+  assert (_refcount == 0);
+  if (_params)
+    CORBA_release (_params);
+  if (_retval)
+    delete _retval;
+  if (_exception)
+    delete _exception;
 }
 
  
@@ -46,30 +41,28 @@ ULONG
 __stdcall
 IIOP_ServerRequest::AddRef ()
 {
-#ifdef  _POSIX_THREADS
-    Critical            region (&svrqst_lock);
-#endif
+  ACE_GUARD_RETURN(ACE_Thread_Mutex, guard, lock_, 0);
  
-    assert (_refcount > 0);
-    return _refcount++;
+  assert (_refcount > 0);
+  return _refcount++;
 }
  
 ULONG
 __stdcall
 IIOP_ServerRequest::Release ()
 {
-#ifdef  _POSIX_THREADS
-    Critical            region (&svrqst_lock);
-#endif
+  ACE_GUARD_RETURN(ACE_Thread_Mutex, guard, lock_, 0);
  
-    assert (this != 0);
-    assert (_refcount > 0);
+  assert (this != 0);
+  assert (_refcount > 0);
  
-    if (--_refcount != 0)
-        return _refcount;
+  if (--_refcount != 0)
+    return _refcount;
 
-    delete this;
-    return 0;
+  guard.release();
+
+  delete this;
+  return 0;
 }
  
 HRESULT

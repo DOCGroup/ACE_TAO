@@ -5,6 +5,11 @@
 // administration framework.  Identities are used to control acccess
 // (authorization) as well as in audit trails (accountability).
 //
+#if !defined(ACE_ROA_PRINCIPAL_H)
+#  define ACE_ROA_PRINCIPAL_H
+
+#  include <ace/Synch.h>
+
 typedef class CORBA_Principal	*CORBA_Principal_ptr;
 
 void				CORBA_release (CORBA_Principal_ptr principal);
@@ -14,39 +19,41 @@ extern const IID		IID_CORBA_Principal;
 
 class _EXPCLASS CORBA_Principal : public IUnknown
 {
-  public:
-    //
-    // To applications, the identifier is an opaque ID.
-    //
-    CORBA_SEQUENCE <CORBA_Octet>	id;
+public:
+  //
+  // To applications, the identifier is an opaque ID.
+  //
+  CORBA_SEQUENCE <CORBA_Octet>	id;
 
-    // XXX add "==", "<", ">" operators
+  // XXX add "==", "<", ">" operators
 
-    //
-    // Stuff required for COM IUnknown support
-    //
-    ULONG __stdcall		AddRef ();
-    ULONG __stdcall		Release ();
-    HRESULT __stdcall          	QueryInterface (
-				    REFIID	riid,
-				    void	**ppv
-				);
+  //
+  // Stuff required for COM IUnknown support
+  //
+  ULONG __stdcall		AddRef ();
+  ULONG __stdcall		Release ();
+  HRESULT __stdcall          	QueryInterface (
+						REFIID	riid,
+						void	**ppv
+						);
 
-				CORBA_Principal ();
-  private:
-    unsigned			_refcount;
+  CORBA_Principal ();
+private:
+  ACE_Thread_Mutex principal_lock_;
+  unsigned			_refcount;
 
-				virtual ~CORBA_Principal ();
+  virtual ~CORBA_Principal ();
 
-    // these are not provided
-    CORBA_Principal		&operator = (const CORBA_Principal_ptr &);
-				CORBA_Principal (const CORBA_Principal_ptr &);
+  // these are not provided
+  CORBA_Principal		&operator = (const CORBA_Principal_ptr &);
+  CORBA_Principal (const CORBA_Principal_ptr &);
 
 #if	defined (__GNUG__)
-    //
-    // G++ (even 2.6.3) stupidly thinks instances can't be
-    // created.  This de-warns.
-    //
-    friend class everyone_needs_a_friend;
+  //
+  // G++ (even 2.6.3) stupidly thinks instances can't be
+  // created.  This de-warns.
+  //
+  friend class everyone_needs_a_friend;
 #endif
 };
+#endif
