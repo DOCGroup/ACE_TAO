@@ -1,90 +1,98 @@
+Sun Aug 30 07:44:54 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-sunos5.5.h.README,
+          include/makeinclude/platform_sunos5_sunc++.GNU:
+          use ACE_LACKS_RTTI instead of ACE_HAS_RTTI without rtti,
+          with Sun CC on SunOS 5.5.  That removes all use of ACE_HAS_RTTI
+          from ACE.
+
 Sun Aug 30 00:14:29 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Service_Object.cpp (fini): Make sure to check the
- 	  <fini_already_called_> flag before proceeding. Also
- 	  ~ACE_Service_Type() now calls this->fini().
-	
-	* ace/Svc_Handler: 
-	* ace/Dynamic: 
+        * ace/Service_Object.cpp (fini): Make sure to check the
+          <fini_already_called_> flag before proceeding. Also
+          ~ACE_Service_Type() now calls this->fini().
 
-	  Patrick J. McNerthney <pat@cartia.com> described this problem:
-	  ________________________________________
+        * ace/Svc_Handler:
+        * ace/Dynamic:
 
-	  ACE_Svc_Handler creates an
- 	  ACE_TSS_Singleton<ACE_Dynamic,ACE_SYNCH_NULL_MUTEX> singleton
- 	  object to determine if the ACE_Svc_Handler is a dynamically
- 	  created object or not.  ACE_TSS_Singleton declares the internal
- 	  single instance of the ACE_Dynamic object as a
- 	  ACE_TSS<ACE_Dynamic> data type.
+          Patrick J. McNerthney <pat@cartia.com> described this problem:
+          ________________________________________
 
-	  The first time this object is "referenced",
- 	  ACE_TSS<ACE_Dynamic>::ts_init() is called, which in turn calls
- 	  ACE_Thread::keycreate and registers
- 	  ACE_TSS<ACE_Dynamic>::cleanup with it.  Since ACE_TSS is a
- 	  template class, the vtable and the code of this object resides
- 	  in the dynamically loaded service DLL.
+          ACE_Svc_Handler creates an
+          ACE_TSS_Singleton<ACE_Dynamic,ACE_SYNCH_NULL_MUTEX> singleton
+          object to determine if the ACE_Svc_Handler is a dynamically
+          created object or not.  ACE_TSS_Singleton declares the internal
+          single instance of the ACE_Dynamic object as a
+          ACE_TSS<ACE_Dynamic> data type.
 
-	  During termination, the Object Manager closes down the Service
- 	  Configurator, causing all services to be shutdown, and their
- 	  DLLs are unloaded.
+          The first time this object is "referenced",
+          ACE_TSS<ACE_Dynamic>::ts_init() is called, which in turn calls
+          ACE_Thread::keycreate and registers
+          ACE_TSS<ACE_Dynamic>::cleanup with it.  Since ACE_TSS is a
+          template class, the vtable and the code of this object resides
+          in the dynamically loaded service DLL.
 
-	  The Object Manager then calls ACE_OS::cleanup_tss which attempts
- 	  to call the above registered ACE_TSS<ACE_Dynamic>::cleanup
- 	  method.  Since the DLL has already been unloaded, the
- 	  application faults trying to access the vtable.
-	  ________________________________________
-	
-	  My earlier solution addressed this problem but only in
- 	  ~Object_Manager(), i.e., at the end of the application, by
- 	  carefully ordering the cleanup of singletons, tss, and the
- 	  unlinking of libraries. To solve this more generically and to
- 	  address this problem when DLLs are unlinked arbitrarily (and not
- 	  only at the end of applications), I moved the typedef of
- 	  ACE_TSS_Singleton<ACE_Dynamic> from Svc_Handler.h to
- 	  Dynamic.h. Then the access to this singleton was changed from
- 	  DYNAMIC::instance() to ACE_Dynamic::instance().
+          During termination, the Object Manager closes down the Service
+          Configurator, causing all services to be shutdown, and their
+          DLLs are unloaded.
 
-  	  This will force the generation of the code for this class to be
- 	  in the ACE library rather than in a user's DLL.  Hence when TSS
- 	  cleanup hooks and Object Manager are trying to clean this object
- 	  up from ~Object_Manager, it won't crash as the code for this
- 	  class is in ACE and not in the unlinked DLL.
+          The Object Manager then calls ACE_OS::cleanup_tss which attempts
+          to call the above registered ACE_TSS<ACE_Dynamic>::cleanup
+          method.  Since the DLL has already been unloaded, the
+          application faults trying to access the vtable.
+          ________________________________________
 
-	  This issue raised a couple of interesting observations about
- 	  ACE_Singleton and ACE_TSS_Singleton and DLLs:
-	  
-	  It is ok to use ACE_Singleton and ACE_TSS_Singleton in DLLs that
- 	  are going to be unlinked at the end of the program.  For DLLs
- 	  that may get unlinked *before* the end of the program, they must
- 	  not use ACE_Singleton or ACE_TSS_Singleton. ACE_Singleton
- 	  registers with the Object_Manager for deletion and therefore is
- 	  accessed at the end of the application.  ACE_TSS_Singleton is
- 	  very similar to ACE_Singleton.  Moreover, it uses tss cleanup
- 	  hooks to clean up the thread specific storage.  Therefore, if
- 	  the DLL lives shorter than the thread and/or the application, it
- 	  must *not* use ACE_Singleton and ACE_TSS_Singleton.
+          My earlier solution addressed this problem but only in
+          ~Object_Manager(), i.e., at the end of the application, by
+          carefully ordering the cleanup of singletons, tss, and the
+          unlinking of libraries. To solve this more generically and to
+          address this problem when DLLs are unlinked arbitrarily (and not
+          only at the end of applications), I moved the typedef of
+          ACE_TSS_Singleton<ACE_Dynamic> from Svc_Handler.h to
+          Dynamic.h. Then the access to this singleton was changed from
+          DYNAMIC::instance() to ACE_Dynamic::instance().
 
-	  This motivates the need for ACE_DLL_Singleton<T>.  As usual,
- 	  contributions to ACE are always welcome ;-) Many, many thanks to
- 	  Patrick J. McNerthney <pat@cartia.com> for all his help!
+          This will force the generation of the code for this class to be
+          in the ACE library rather than in a user's DLL.  Hence when TSS
+          cleanup hooks and Object Manager are trying to clean this object
+          up from ~Object_Manager, it won't crash as the code for this
+          class is in ACE and not in the unlinked DLL.
+
+          This issue raised a couple of interesting observations about
+          ACE_Singleton and ACE_TSS_Singleton and DLLs:
+
+          It is ok to use ACE_Singleton and ACE_TSS_Singleton in DLLs that
+          are going to be unlinked at the end of the program.  For DLLs
+          that may get unlinked *before* the end of the program, they must
+          not use ACE_Singleton or ACE_TSS_Singleton. ACE_Singleton
+          registers with the Object_Manager for deletion and therefore is
+          accessed at the end of the application.  ACE_TSS_Singleton is
+          very similar to ACE_Singleton.  Moreover, it uses tss cleanup
+          hooks to clean up the thread specific storage.  Therefore, if
+          the DLL lives shorter than the thread and/or the application, it
+          must *not* use ACE_Singleton and ACE_TSS_Singleton.
+
+          This motivates the need for ACE_DLL_Singleton<T>.  As usual,
+          contributions to ACE are always welcome ;-) Many, many thanks to
+          Patrick J. McNerthney <pat@cartia.com> for all his help!
 
 Sat Aug 29 19:22:22 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/Service_Configurator/Misc/main.cpp (main): Fixed a stray
-	  l_argv[3] =  0;  I'm not sure why this was here...
+        * examples/Service_Configurator/Misc/main.cpp (main): Fixed a stray
+          l_argv[3] =  0;  I'm not sure why this was here...
 
 Sat Aug 29 17:31:06 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* examples/IPC_SAP/SOCK_SAP/CPP-in{client,server,server-fancy}.cpp:
- 	  Updated these tests to be more robust and better designed.
+        * examples/IPC_SAP/SOCK_SAP/CPP-in{client,server,server-fancy}.cpp:
+          Updated these tests to be more robust and better designed.
 
-	* examples/IPC_SAP/SOCK_SAP/Makefile: Added the
- 	  CPP-inserver-fancy.cpp file.  I'm not sure why I'd omitted it
- 	  for so long...
+        * examples/IPC_SAP/SOCK_SAP/Makefile: Added the
+          CPP-inserver-fancy.cpp file.  I'm not sure why I'd omitted it
+          for so long...
 
-	* examples/IPC_SAP/SOCK_SAP/CPP-in{client,server}.cpp: Cleaned up
- 	  the code a bit to avoid warnings.  Thanks to David Levine for
- 	  reporting these.
+        * examples/IPC_SAP/SOCK_SAP/CPP-in{client,server}.cpp: Cleaned up
+          the code a bit to avoid warnings.  Thanks to David Levine for
+          reporting these.
 
 Sat Aug 29 14:11:25 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -95,25 +103,25 @@ Sat Aug 29 14:11:25 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Fri Aug 28 23:29:51 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/IPC_SAP/SOCK_SAP/CPP-in{client,server}.cpp: Enhanced
- 	  the client and server test so that it'll be a good benchmark for
- 	  the "best case" to compare TAO against.
+        * examples/IPC_SAP/SOCK_SAP/CPP-in{client,server}.cpp: Enhanced
+          the client and server test so that it'll be a good benchmark for
+          the "best case" to compare TAO against.
 
 Fri Aug 28 21:53:13 1998  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS.h: Conditionalize setting of ACE_INFINITE on non-Win32
-	  to allow the platform config to define a value.
+        * ace/OS.h: Conditionalize setting of ACE_INFINITE on non-Win32
+          to allow the platform config to define a value.
 
-	* ace/config-hpux11.h: Define ACE_INFINITE as 10000000.  This value
-	  was empirically determined by John Mulhern.  Until we know why
-	  this had to be done, you may need to set a different value in
-	  your own config.h file.
+        * ace/config-hpux11.h: Define ACE_INFINITE as 10000000.  This value
+          was empirically determined by John Mulhern.  Until we know why
+          this had to be done, you may need to set a different value in
+          your own config.h file.
 
 Fri Aug 28 13:14:34 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* examples/Service_Configurator/Misc/main.cpp: Made the file CE
- 	  friendly.  Added "-y" to service configurator so we can still
- 	  test static services.
+        * examples/Service_Configurator/Misc/main.cpp: Made the file CE
+          friendly.  Added "-y" to service configurator so we can still
+          test static services.
 
 Fri Aug 28 13:45:28 1998  David L. Levine  <levine@cs.wustl.edu>
 
