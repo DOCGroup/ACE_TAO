@@ -16,14 +16,14 @@ code for AMI callbacks.
 Usage:
 =====
 $ server -o ior
-$ simple_client -ORBSvcConf simple_client_muxed.conf -k file://ior -i 10
+$ simple_client -ORBSvcConf muxed.conf -k file://ior -i 10
 
 simple-client:
 =============
 
 $ simple_client -k file://test_ior [-i <niterations] [-x] [-d] \
-     -ORBSvcConf {simple-client-muxed.conf,
-                  simple-client-exclusive.conf}
+     -ORBSvcConf {muxed.conf,
+                  exclusive.conf}
 
 -d Enable debug messages.
 -i Number of iterations.
