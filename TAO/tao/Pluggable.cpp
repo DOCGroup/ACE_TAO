@@ -163,7 +163,8 @@ TAO_Connector::make_mprofile (const char *string,
     }
 
   // Tell the MProfile object how many Profiles it should hold.
-  if (mprofile.set (profile_count) != 0)
+  // Mprofile::set(size) returns the number profiles it can hold.
+  if (mprofile.set (profile_count) != ACE_static_cast (int,profile_count))
     {
       ACE_THROW_RETURN (CORBA::INITIALIZE (), -1);
       // Error while setting the MProfile size!
