@@ -546,7 +546,7 @@ Video_Control_Play_State::stop (CORBA::Long cmdsn)
 
 
 CORBA::Boolean
-Video_Control_Play_State::speed (Video_Control::SPEEDpara &para)
+Video_Control_Play_State::speed (const Video_Control::SPEEDpara &para)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Video_Control_Play_State::speed ()\n"));

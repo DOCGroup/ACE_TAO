@@ -48,7 +48,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #----------------------------------------------------------------------------
 
 LDFLAGS +=  -L/project/doc/pkg/X11/lib/ -lXm -lXt -lXext -lSM -lICE -lX11 -L/project/doc/pkg/X11/lib -lsocket -lnsl -ldl
-CPPFLAGS += -DSH_MEM -DNDEBUG -DSTAT -I/project/doc/pkg/X11/include
+CPPFLAGS += -DSH_MEM -DNDEBUG  -I/project/doc/pkg/X11/include
 
 clean:
 	-/bin/rm -rf *.o Log $(BIN) obj.* core Templates.DB .make.state

@@ -634,17 +634,16 @@ AV_Server::~AV_Server (void)
 int
 main (int argc, char **argv)
 {
-  AV_Server *vcr_server 
-    = new AV_Server;
+  AV_Server vcr_server 
 
   TAO_TRY
     {
       // Parses the arguments, and initializes the server.
-      if (vcr_server->init (argc, argv, TAO_TRY_ENV) == -1)
+      if (vcr_server.init (argc, argv, TAO_TRY_ENV) == -1)
         return 1;
   
       // Runs the reactor event loop.
-      vcr_server->run (TAO_TRY_ENV);
+      vcr_server.run (TAO_TRY_ENV);
     }
   TAO_CATCHANY
     {
