@@ -1,5 +1,5 @@
 project(Disconnect): orbsvcsexe, messaging {
-  depends  += "CosEvent Test Lib" CosEvent CosNaming Svc_Utils IORTable
+  depends  += CosEvent_Test_Lib CosEvent CosNaming Svc_Utils IORTable
   libs     += CECTests TAO_CosEvent TAO_CosNaming TAO_Svc_Utils TAO_IORTable
   includes += ../lib
   exename   = Disconnect
@@ -11,7 +11,7 @@ project(Disconnect): orbsvcsexe, messaging {
 }
 
 project(MT_Disconnect): orbsvcsexe, messaging {
-  depends  += "CosEvent Test Lib" CosEvent CosNaming Svc_Utils IORTable
+  depends  += CosEvent_Test_Lib CosEvent CosNaming Svc_Utils IORTable
   libs     += CECTests TAO_CosEvent TAO_CosNaming TAO_Svc_Utils TAO_IORTable
   includes += ../lib
   exename   = MT_Disconnect
@@ -23,7 +23,7 @@ project(MT_Disconnect): orbsvcsexe, messaging {
 }
 
 project(Push_Event): orbsvcsexe, messaging {
-  depends  += "CosEvent Test Lib" CosEvent CosNaming Svc_Utils IORTable
+  depends  += CosEvent_Test_Lib CosEvent CosNaming Svc_Utils IORTable
   libs     += CECTests TAO_CosEvent TAO_CosNaming TAO_Svc_Utils TAO_IORTable
   includes += ../lib
   exename   = Push_Event
@@ -35,7 +35,7 @@ project(Push_Event): orbsvcsexe, messaging {
 }
 
 project(Pull_Push_Event): orbsvcsexe, messaging {
-  depends  += "CosEvent Test Lib" CosEvent CosNaming Svc_Utils IORTable
+  depends  += CosEvent_Test_Lib CosEvent CosNaming Svc_Utils IORTable
   libs     += CECTests TAO_CosEvent TAO_CosNaming TAO_Svc_Utils TAO_IORTable
   includes += ../lib
   exename   = Pull_Push_Event
@@ -47,7 +47,7 @@ project(Pull_Push_Event): orbsvcsexe, messaging {
 }
 
 project(Shutdown): orbsvcsexe, messaging {
-  depends  += "CosEvent Test Lib" CosEvent CosNaming Svc_Utils IORTable
+  depends  += CosEvent_Test_Lib CosEvent CosNaming Svc_Utils IORTable
   libs     += CECTests TAO_CosEvent TAO_CosNaming TAO_Svc_Utils TAO_IORTable
   includes += ../lib
   exename   = Shutdown
@@ -59,7 +59,7 @@ project(Shutdown): orbsvcsexe, messaging {
 }
 
 project(Random): orbsvcsexe, messaging {
-  depends  += "CosEvent Test Lib" CosEvent CosNaming Svc_Utils IORTable
+  depends  += CosEvent_Test_Lib CosEvent CosNaming Svc_Utils IORTable
   libs     += CECTests TAO_CosEvent TAO_CosNaming TAO_Svc_Utils TAO_IORTable
   includes += ../lib
   exename   = Random

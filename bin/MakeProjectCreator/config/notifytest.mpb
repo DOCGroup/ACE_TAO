@@ -1,5 +1,5 @@
 project: orbsvcsexe, notify {
-  depends  += "Notify Lib"
+  depends  += Notify_Lib
   libs     += NotifyTests
   libpaths += $(TAO_ROOT)/orbsvcs/tests/Notify/lib
   includes += $(TAO_ROOT)/orbsvcs/tests/Notify/lib

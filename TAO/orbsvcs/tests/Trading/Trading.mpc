@@ -14,7 +14,7 @@ project(Trading Test Lib): orbsvcslib {
 }
 
 project(export test): namingexe {
-  depends += "Trading Test Lib" CosTrading DynamicAny
+  depends += Trading_Test_Lib CosTrading DynamicAny
   libs    += TTest TAO_CosTrading TAO_DynamicAny
   exename  = export_test
   comps   += Trader
@@ -28,7 +28,7 @@ project(export test): namingexe {
 }
 
 project(import test): namingexe {
-  depends += "Trading Test Lib" CosTrading DynamicAny
+  depends += Trading_Test_Lib CosTrading DynamicAny
   libs    += TTest TAO_CosTrading TAO_DynamicAny
   exename  = import_test
   comps   += Trader
@@ -42,7 +42,7 @@ project(import test): namingexe {
 }
 
 project(colocated test): namingexe {
-  depends += "Trading Test Lib" CosTrading DynamicAny
+  depends += Trading_Test_Lib CosTrading DynamicAny
   libs    += TTest TAO_CosTrading TAO_DynamicAny
   exename  = colocated_test
   comps   += Trader

@@ -39,8 +39,6 @@ project(TAO_IFR_EXE) : taoexe {
 
   Source_Files {
     tao_ifr.cpp
-    drv_init_ifr.cpp
-    drv_private_ifr.cpp
     drv_args_ifr.cpp
     drv_preproc_ifr.cpp
   }
