@@ -1,3 +1,8 @@
+Fri Oct 31 08:34:11 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Messaging/Makefile.bor:
+          Added missing files
+
 Fri Oct 31 07:36:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/DynamicInterface/Makefile.bor:
