@@ -27,9 +27,8 @@
 
 // Forward decls.
 class TAO_UIOP_Handler_Base;
-class TAO_Client_Connection_Handler;
-class TAO_Server_Connection_Handler;
-class TAO_ORB_Core;
+class TAO_UIOP_Client_Connection_Handler;
+class TAO_UIOP_Server_Connection_Handler;
 
 class TAO_Export TAO_UIOP_Transport : public TAO_Transport
 {

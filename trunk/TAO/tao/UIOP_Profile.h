@@ -35,7 +35,7 @@ class TAO_Export TAO_UIOP_Profile : public TAO_Profile
 {
   // = TITLE
   //   This class defines the protocol specific attributes required
-  //   for locating ORBs over a Unix Domain Sockets.
+  //   for locating ORBs over Unix Domain Sockets.
   //
   // = DESCRIPTION
   //   This class defines the UIOP profile.
