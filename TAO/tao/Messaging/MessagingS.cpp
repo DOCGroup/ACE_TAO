@@ -280,7 +280,7 @@ Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_function (CORBA::Object_ptr obj
 }
 
 int
-Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_Initializer (long)
+Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_Initializer (size_t)
 {
   Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_function_pointer = 
     Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_function;
@@ -289,7 +289,7 @@ Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_Initializer (long)
 }
 
 static int Messaging__TAO_ReplyHandler_Proxy_Broker_Stub_Factory_Initializer_Scarecrow = 
-  Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_Initializer));
+  Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (size_t, Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_Initializer));
 
 
 ///////////////////////////////////////////////////////////////////////

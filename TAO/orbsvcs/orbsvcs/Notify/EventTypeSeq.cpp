@@ -20,7 +20,7 @@ TAO_NS_EventTypeSeq::TAO_NS_EventTypeSeq (const CosNotification::EventTypeSeq& e
 void
 TAO_NS_EventTypeSeq::populate (CosNotification::EventTypeSeq& event_type_seq) const
 {
-  event_type_seq.length (this->size ());
+  event_type_seq.length (ACE_static_cast (CORBA::ULong, this->size ()));
 
   inherited::CONST_ITERATOR iter (*this);
 
@@ -39,10 +39,10 @@ TAO_NS_EventTypeSeq::populate_no_special (CosNotification::EventTypeSeq& event_t
 
   if (this->find (special) == 0)
     {
-      event_type_seq.length (this->size () - 1);
+      event_type_seq.length (ACE_static_cast (CORBA::ULong, this->size () - 1));
     }
   else
-      event_type_seq.length (this->size ());
+      event_type_seq.length (ACE_static_cast (CORBA::ULong, this->size ()));
 
   inherited::CONST_ITERATOR iter (*this);
 

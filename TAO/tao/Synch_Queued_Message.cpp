@@ -65,7 +65,7 @@ TAO_Synch_Queued_Message::fill_iov (int iovcnt_max,
         {
               // Collect the data in the iovec.
           iov[iovcnt].iov_base = message_block->rd_ptr ();
-          iov[iovcnt].iov_len  = message_block_length;
+          iov[iovcnt].iov_len  = ACE_static_cast (u_long, message_block_length);
 
           // Increment iovec counter.
           iovcnt++;

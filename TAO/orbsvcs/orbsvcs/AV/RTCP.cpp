@@ -47,7 +47,7 @@ int
 TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
                                              const ACE_Addr &peer_address)
 {
-  int length = data->length ();
+  int length = ACE_static_cast (int, data->length ());
   int more = length;
   char *buf_ptr = data->rd_ptr ();
   char first_rtcp_packet = 1;
@@ -667,7 +667,8 @@ TAO_AV_RTCP_Callback::send_report (int bye)
 
   sdes.add_item (my_ssrc,
                  RTCP_SDES_CNAME,
-                 strlen(this->output_.cname()),
+                 ACE_static_cast (unsigned char,
+                                  ACE_OS::strlen(this->output_.cname())),
                  this->output_.cname());
   if (bye)
     {
@@ -782,7 +783,7 @@ TAO_AV_RTCP_Callback::receive_frame (ACE_Message_Block *frame,
 {
   RTCP_Channel_In *c;
 
-  RTP_Packet packet (frame->rd_ptr(), frame->length());
+  RTP_Packet packet (frame->rd_ptr(), ACE_static_cast (int, frame->length()));
 
   if (this->inputs_.find (packet.ssrc(), c) < 0)
     {
@@ -801,7 +802,7 @@ TAO_AV_RTCP_Callback::receive_frame (ACE_Message_Block *frame,
 int
 TAO_AV_RTCP_Callback::send_frame (ACE_Message_Block *frame)
 {
-  RTP_Packet packet (frame->rd_ptr(), frame->length());
+  RTP_Packet packet (frame->rd_ptr(), ACE_static_cast (int, frame->length()));
   this->output_.updateStatistics (&packet);
 
   return 0;

@@ -335,17 +335,19 @@ AST_Type::nested_name (const char* local_name,
       if (def_next != 0)
         {
           len_to_match =
-            ACE_OS::strlen (def_curr) - ACE_OS::strlen (def_next);
+            ACE_static_cast (int, ACE_OS::strlen (def_curr)) -
+            ACE_static_cast (int, ACE_OS::strlen (def_next));
         }
       else
         {
-          len_to_match = ACE_OS::strlen (def_curr);
+          len_to_match = ACE_static_cast (int, ACE_OS::strlen (def_curr));
         }
 
       if (use_next != 0)
         {
           int len =
-            ACE_OS::strlen (use_curr) - ACE_OS::strlen (use_next);
+            ACE_static_cast (int, ACE_OS::strlen (use_curr)) -
+            ACE_static_cast (int, ACE_OS::strlen (use_next));
 
           if (len > len_to_match)
             {
@@ -354,7 +356,7 @@ AST_Type::nested_name (const char* local_name,
         }
       else
         {
-          int len = ACE_OS::strlen (use_curr);
+          int len = ACE_static_cast (int, ACE_OS::strlen (use_curr));
 
           if (len > len_to_match)
             {
@@ -391,17 +393,20 @@ AST_Type::nested_name (const char* local_name,
               if (def_next != 0)
                 {
                   len_to_match =
-                    ACE_OS::strlen (def_curr) - ACE_OS::strlen (def_next);
+                    ACE_static_cast (int, ACE_OS::strlen (def_curr)) -
+                    ACE_static_cast (int, ACE_OS::strlen (def_next));
                 }
               else
                 {
-                  len_to_match = ACE_OS::strlen (def_curr);
+                  len_to_match = ACE_static_cast (int,
+                                                  ACE_OS::strlen (def_curr));
                 }
 
               if (use_next != 0)
                 {
                   int len  =
-                    ACE_OS::strlen (use_curr) - ACE_OS::strlen (use_next);
+                    ACE_static_cast (int, ACE_OS::strlen (use_curr)) -
+                    ACE_static_cast (int, ACE_OS::strlen (use_next));
 
                   if (len > len_to_match)
                     {
@@ -410,7 +415,7 @@ AST_Type::nested_name (const char* local_name,
                 }
               else
                 {
-                  int len = ACE_OS::strlen (use_curr);
+                  int len = ACE_static_cast (int, ACE_OS::strlen (use_curr));
 
                   if (len > len_to_match)
                     {

@@ -286,7 +286,7 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list
   Messaging::PolicyValue pv;
   Messaging::PolicyValueSeq policy_value_seq;
 
-  CORBA::ULong length;
+  size_t length;
   CORBA::Octet *buf = 0;
 
   policy_value_seq.length (policy_list->length ());
@@ -294,7 +294,7 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list
   // This loop iterates through CORBA::PolicyList to convert
   // each CORBA::Policy into a CORBA::PolicyValue
   const size_t plen = policy_list->length ();
-  for (size_t i = 0; i < plen; ++i)
+  for (CORBA::ULong i = 0; i < plen; ++i)
     {
       TAO_OutputCDR out_CDR;
       policy_value_seq[i].ptype =
@@ -305,7 +305,8 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list
       (*policy_list)[i]->_tao_encode (out_CDR);
 
       length = out_CDR.total_length ();
-      policy_value_seq[i].pvalue.length (length);
+      policy_value_seq[i].pvalue.length (ACE_static_cast (CORBA::ULong,
+                                                          length));
 
       buf = policy_value_seq[i].pvalue.get_buffer ();
 
@@ -332,14 +333,15 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list
 
   length = out_cdr.total_length ();
 
-  tagged_component.component_data.length (length);
+  tagged_component.component_data.length (ACE_static_cast (CORBA::ULong,
+                                                           length));
   buf = tagged_component.component_data.get_buffer ();
 
   for (const ACE_Message_Block *iterator = out_cdr.begin ();
        iterator != 0;
        iterator = iterator->cont ())
     {
-      CORBA::ULong i_length = iterator->length ();
+      size_t i_length = iterator->length ();
       ACE_OS::memcpy (buf, iterator->rd_ptr (), i_length);
 
       buf += i_length;
@@ -640,7 +642,7 @@ TAO_Unknown_Profile::endpoint (void)
   return 0;
 }
 
-size_t
+CORBA::ULong
 TAO_Unknown_Profile::endpoint_count (void)
 {
   return 0;

@@ -76,11 +76,11 @@ TAO_Trader_Base::is_valid_identifier_name (const char* ident)
   if (ident == 0)
     return return_value;
 
-  int length = ACE_OS::strlen (ident);
+  size_t length = ACE_OS::strlen (ident);
   if (length >= 1 && isalpha (ident[0]))
     {
       return_value = 1;
-      for (int i = 0; i < length; i++)
+      for (size_t i = 0; i < length; i++)
         {
           if (! (isalnum (ident[i]) || ident[i] == '_'))
             {

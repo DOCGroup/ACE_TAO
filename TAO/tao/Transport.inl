@@ -68,14 +68,14 @@ TAO_Transport::purging_order (unsigned long value)
   this->purging_order_ = value;
 }
 
-ACE_INLINE int
+ACE_INLINE size_t
 TAO_Transport::id (void) const
 {
   return this->id_;
 }
 
 ACE_INLINE void
-TAO_Transport::id (int id)
+TAO_Transport::id (size_t id)
 {
   this->id_ = id;
 }

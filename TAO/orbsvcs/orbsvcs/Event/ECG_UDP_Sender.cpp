@@ -240,7 +240,8 @@ TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events
       ACE_TRY
         {
           Index_Set &index_set = (*j).int_id_;
-          CORBA::ULong length = index_set.size ();
+          CORBA::ULong length = ACE_static_cast (CORBA::ULong,
+                                                 index_set.size ());
 
           TAO_OutputCDR cdr;
           cdr.write_ulong (length);
@@ -338,7 +339,7 @@ TAO_ECG_UDP_Sender::send_cdr_stream (const RtecUDPAdmin::UDP_Addr& udp_addr,
        b != cdr.end ();
        b = b->cont ())
     {
-      CORBA::ULong l = b->length ();
+      CORBA::ULong l = ACE_static_cast (CORBA::ULong, b->length ());
 
       char* rd_ptr = b->rd_ptr ();
 
@@ -478,7 +479,7 @@ TAO_ECG_UDP_Sender::send_fragment (const RtecUDPAdmin::UDP_Addr& udp_addr,
   cdr.write_octet_array (padding, 4);
 
   iov[0].iov_base = cdr.begin ()->rd_ptr ();
-  iov[0].iov_len  = cdr.begin ()->length ();
+  iov[0].iov_len  = ACE_static_cast (u_long, cdr.begin ()->length ());
 
   ACE_INET_Addr inet_addr (udp_addr.port,
                            udp_addr.ipaddr);
@@ -527,7 +528,7 @@ TAO_ECG_UDP_Sender::compute_fragment_count (const ACE_Message_Block* begin,
        b != end;
        b = b->cont ())
     {
-      CORBA::ULong l = b->length ();
+      CORBA::ULong l = ACE_static_cast (CORBA::ULong, b->length ());
       total_length += l;
       fragment_size += l;
       iovcnt++;

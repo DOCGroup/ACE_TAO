@@ -144,7 +144,7 @@ TAO_IIOP_Connection_Handler::open (void*)
 
   // Set the id in the transport now that we're active.
   // Use C-style cast b/c otherwise we get warnings on lots of compilers
-  this->transport ()->id ((int) this->get_handle ());
+  this->transport ()->id ((size_t) this->get_handle ());
 
   this->state_changed (TAO_LF_Event::LFS_SUCCESS);
 
@@ -173,7 +173,7 @@ TAO_IIOP_Connection_Handler::activate (long flags,
 
   // Set the id in the transport now that we're active.
   // Use C-style cast b/c otherwise we get warnings on lots of compilers
-  this->transport ()->id ((int) this->get_handle ());
+  this->transport ()->id ((size_t) this->get_handle ());
 
   return TAO_IIOP_SVC_HANDLER::activate (flags,
                                          n_threads,

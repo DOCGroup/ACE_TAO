@@ -53,7 +53,7 @@ TAO_EC_Disjunction_Filter::end (void) const
 int
 TAO_EC_Disjunction_Filter::size (void) const
 {
-  return this->n_;
+  return ACE_static_cast (int, this->n_);
 }
 
 int

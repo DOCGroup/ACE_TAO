@@ -971,7 +971,8 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
   const char suffix[] = ":1.0";
   char * full_id =
     CORBA::string_alloc (sizeof prefix
-                         + ACE_OS_String::strlen (name)
+                         + ACE_static_cast (CORBA::ULong,
+                                            ACE_OS_String::strlen (name))
                          + sizeof suffix);
 
   CORBA::String_var safe_full_id = full_id;

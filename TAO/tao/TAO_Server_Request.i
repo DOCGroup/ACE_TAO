@@ -37,7 +37,7 @@ TAO_ServerRequest::operation (const char *operation,
     this->operation_.set (operation, length, release);
 }
 
-ACE_INLINE unsigned int
+ACE_INLINE size_t
 TAO_ServerRequest::operation_length (void) const
 {
   return this->operation_.length ();

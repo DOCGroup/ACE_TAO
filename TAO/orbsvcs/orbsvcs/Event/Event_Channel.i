@@ -115,7 +115,7 @@ ACE_INLINE void
 operator += (TAO_EC_Event_Array &dest,
              const TAO_EC_Event &item)
 {
-  int length = dest.size ();
+  size_t length = dest.size ();
   dest.size (length + 1);
   dest[length] = item;
 }

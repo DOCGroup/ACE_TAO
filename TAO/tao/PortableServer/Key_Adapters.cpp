@@ -50,7 +50,7 @@ TAO_Ignore_Original_Key_Adapter::encode (const PortableServer::ObjectId &origina
   size_t active_key_size = active_key.size ();
 
   // Resize to accommodate both the original data and the new active key.
-  modified_key.length (active_key_size);
+  modified_key.length (ACE_static_cast (CORBA::ULong, active_key_size));
 
   // Copy active key data into user key.
   active_key.encode (modified_key.get_buffer ());
@@ -96,7 +96,9 @@ TAO_Preserve_Original_Key_Adapter::encode (const PortableServer::ObjectId &origi
   size_t active_key_size = active_key.size ();
 
   // Resize to accommodate both the original data and the new active key.
-  modified_key.length (active_key_size + original_key.length ());
+  modified_key.length (ACE_static_cast (CORBA::ULong,
+                                        active_key_size)
+                         + original_key.length ());
 
   // Copy active key data into user key.
   active_key.encode (modified_key.get_buffer ());
@@ -129,8 +131,10 @@ TAO_Preserve_Original_Key_Adapter::decode (const PortableServer::ObjectId &modif
   size_t active_key_size = ACE_Active_Map_Manager_Key::size ();
 
   // Smartly copy all the data; <original_key does not own the data>.
-  original_key.replace (modified_key.maximum () - active_key_size,
-                        modified_key.length () - active_key_size,
+  original_key.replace (ACE_static_cast (CORBA::ULong,
+                            modified_key.maximum () - active_key_size),
+                        ACE_static_cast (CORBA::ULong,
+                            modified_key.length () - active_key_size),
                         ACE_const_cast (CORBA::Octet *,
                                         modified_key.get_buffer ()) + active_key_size,
                         0);

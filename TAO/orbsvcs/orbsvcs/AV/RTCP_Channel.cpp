@@ -226,7 +226,7 @@ RTCP_Channel_In::recv_rtp_packet(ACE_Message_Block *mb,
     ACE_DEBUG ((LM_DEBUG,
                 "RTCP_Channel_In::recv_rtp_packet - possible loop/collision detected"));
 
-  RTP_Packet data_packet(mb->rd_ptr (), mb->length ());
+  RTP_Packet data_packet(mb->rd_ptr (), ACE_static_cast (int, mb->length ()));
 
   // make sure the packet is valid
   if (data_packet.is_valid ())

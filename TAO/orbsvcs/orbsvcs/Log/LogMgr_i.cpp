@@ -23,7 +23,7 @@ TAO_LogMgr_i::list_logs (ACE_ENV_SINGLE_ARG_DECL)
   DsLogAdmin::LogList* list;
 
   // Figure out the length of the list.
-  CORBA::ULong len = hash_map_.current_size ();
+  CORBA::ULong len = ACE_static_cast (CORBA::ULong, hash_map_.current_size ());
 
   // Allocate the list of <len> length.
   ACE_NEW_THROW_EX (list,

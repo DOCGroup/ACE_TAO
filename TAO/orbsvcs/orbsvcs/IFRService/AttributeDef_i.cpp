@@ -283,7 +283,7 @@ TAO_AttributeDef_i::get_exceptions (ACE_ENV_SINGLE_ARG_DECL)
         }
     }
 
-  size_t size = path_queue.size ();
+  CORBA::ULong size = ACE_static_cast (CORBA::ULong, path_queue.size ());
 
   CORBA::ExceptionDefSeq *get_ed_seq = 0;
   ACE_NEW_THROW_EX (get_ed_seq,
@@ -360,7 +360,7 @@ TAO_AttributeDef_i::put_exceptions (ACE_ENV_SINGLE_ARG_DECL)
         }
     }
 
-  size_t size = path_queue.size ();
+  CORBA::ULong size = ACE_static_cast (CORBA::ULong, path_queue.size ());
 
   CORBA::ExceptionDefSeq *put_ed_seq = 0;
   ACE_NEW_THROW_EX (put_ed_seq,

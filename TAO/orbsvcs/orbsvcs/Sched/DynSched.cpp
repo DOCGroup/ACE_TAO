@@ -289,9 +289,8 @@ ACE_DynScheduler::register_task (RT_Info *rt_info, handle_t &handle)
 
           if (output_level () >= 5)
             {
-              ACE_OS::printf ("registered task \"%s\" with RT_Info at %lX\n",
-                              (const char*)(rt_info->entry_point),
-                              (unsigned long)rt_info);
+              ACE_OS::printf ("registered task \"%s\" with RT_Info at %p\n",
+                              (const char*)(rt_info->entry_point), rt_info);
             }
         }
         break;
@@ -710,7 +709,7 @@ ACE_DynScheduler::schedule (
   else
   {
     // save the total number of registered RT_Infos
-    tasks (rt_info_entries_.size ());
+    tasks (ACE_static_cast (u_int, rt_info_entries_.size ()));
   }
 
   // set up the task entry data structures
@@ -1316,7 +1315,7 @@ ACE_DynScheduler::status_t
 ACE_DynScheduler::setup_task_entries (void)
 {
   // store number of tasks, based on registrations
-  tasks (rt_info_entries_.size ());
+  tasks (ACE_static_cast (u_int, rt_info_entries_.size ()));
 
   // bail out if there are no tasks registered
   if (tasks () <= 0)
@@ -1724,7 +1723,7 @@ ACE_DynScheduler::schedule_threads (ACE_Unbounded_Set<RtecScheduler::Scheduling_
 ACE_DynScheduler::status_t
 ACE_DynScheduler::schedule_dispatches (ACE_Unbounded_Set<RtecScheduler::Scheduling_Anomaly *> &anomaly_set)
 {
-  dispatch_entry_count_ = dispatch_entries_->size ();
+  dispatch_entry_count_ = ACE_static_cast (u_int, dispatch_entries_->size ());
 
   ACE_NEW_RETURN (ordered_dispatch_entries_,
                   Dispatch_Entry * [dispatch_entry_count_],

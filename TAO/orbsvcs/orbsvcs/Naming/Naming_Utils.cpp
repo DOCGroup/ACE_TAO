@@ -147,7 +147,15 @@ TAO_Naming_Server::parse_args (int argc,
 
   int c;
   int size, result;
-  long address;
+
+  // This is declared this way to avoid warnings from
+  // some compilers that complain about mismatching types
+  // in the sscanf.
+#if ACE_SIZEOF_VOID_P == ACE_SIZEOF_LONG_LONG
+  ptr_arith_t address;
+#else
+  long int address;
+#endif /* ACE_SIZEOF_VOID_P */
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -177,7 +185,11 @@ TAO_Naming_Server::parse_args (int argc,
         break;
       case 'b':
         result = ::sscanf (ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()),
+#if ACE_SIZEOF_VOID_P == ACE_SIZEOF_LONG_LONG
+                           ACE_UINT64_FORMAT_SPECIFIER,
+#else
                            "%ld",
+#endif /* ACE_SIZEOF_VOID_P */
                            &address);
         if (result == 0 || result == EOF)
           ACE_ERROR_RETURN ((LM_ERROR,

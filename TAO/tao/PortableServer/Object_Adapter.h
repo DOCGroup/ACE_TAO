@@ -541,7 +541,7 @@ public:
 
 protected:
 
-  static size_t transient_poa_name_size_;
+  static CORBA::ULong transient_poa_name_size_;
 
   static void set_transient_poa_name_size (const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters);
 

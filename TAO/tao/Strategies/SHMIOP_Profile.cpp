@@ -88,7 +88,7 @@ TAO_SHMIOP_Profile::endpoint (void)
   return &this->endpoint_;
 }
 
-size_t
+CORBA::ULong
 TAO_SHMIOP_Profile::endpoint_count (void)
 {
   return this->count_;
@@ -310,21 +310,21 @@ TAO_SHMIOP_Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   TAO::ObjectKey::encode_sequence_to_string (key.inout(),
                                              this->object_key_);
 
-  u_int buflen = (8 /* corbaloc */ +
-                  1 /* colon separator */ +
-                  ACE_OS::strlen (::prefix_) +
-                  1 /* colon separator */ +
-                  1 /* major version */ +
-                  1 /* decimal point */ +
-                  1 /* minor version */ +
-                  1 /* `@' character */ +
-                  ACE_OS::strlen (this->endpoint_.host ()) +
-                  1 /* colon separator */ +
-                  5 /* port number */ +
-                  1 /* object key separator */ +
-                  ACE_OS::strlen (key.in ()));
+  size_t buflen = (8 /* corbaloc */ +
+                   1 /* colon separator */ +
+                   ACE_OS::strlen (::prefix_) +
+                   1 /* colon separator */ +
+                   1 /* major version */ +
+                   1 /* decimal point */ +
+                   1 /* minor version */ +
+                   1 /* `@' character */ +
+                   ACE_OS::strlen (this->endpoint_.host ()) +
+                   1 /* colon separator */ +
+                   5 /* port number */ +
+                   1 /* object key separator */ +
+                   ACE_OS::strlen (key.in ()));
 
-  char * buf = CORBA::string_alloc (buflen);
+  char * buf = CORBA::string_alloc (ACE_static_cast (CORBA::ULong, buflen));
 
   static const char digits [] = "0123456789";
 
@@ -382,7 +382,7 @@ TAO_SHMIOP_Profile::encode_endpoints (void)
   endpoints.length (this->count_);
 
   TAO_SHMIOP_Endpoint *endpoint = &this->endpoint_;
-  for (size_t i = 0;
+  for (CORBA::ULong i = 0;
        i < this->count_;
        ++i)
     {
@@ -399,11 +399,12 @@ TAO_SHMIOP_Profile::encode_endpoints (void)
        == 0)
       || (out_cdr << endpoints) == 0)
     return -1;
-  CORBA::ULong length = out_cdr.total_length ();
+  size_t length = out_cdr.total_length ();
 
   IOP::TaggedComponent tagged_component;
   tagged_component.tag = TAO_TAG_ENDPOINTS;
-  tagged_component.component_data.length (length);
+  tagged_component.component_data.length (ACE_static_cast (CORBA::ULong,
+                                                           length));
   CORBA::Octet *buf =
     tagged_component.component_data.get_buffer ();
 
@@ -411,7 +412,7 @@ TAO_SHMIOP_Profile::encode_endpoints (void)
        iterator != 0;
        iterator = iterator->cont ())
     {
-      CORBA::ULong i_length = iterator->length ();
+      size_t i_length = iterator->length ();
       ACE_OS::memcpy (buf, iterator->rd_ptr (), i_length);
 
       buf += i_length;

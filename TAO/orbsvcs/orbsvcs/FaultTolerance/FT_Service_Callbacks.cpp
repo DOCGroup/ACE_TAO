@@ -272,7 +272,7 @@ TAO_FT_Service_Callbacks::request_service_context (
   service_list[l].context_id = IOP::FT_REQUEST;
 
   // Make a *copy* of the CDR stream...
-  CORBA::ULong length = cdr.total_length ();
+  CORBA::ULong length = ACE_static_cast (CORBA::ULong, cdr.total_length ());
   service_list[l].context_data.length (length);
   CORBA::Octet *buf = service_list[l].context_data.get_buffer ();
 
@@ -314,7 +314,7 @@ TAO_FT_Service_Callbacks::group_version_service_context (
   service_list[l].context_id = IOP::FT_GROUP_VERSION;
 
   // Make a *copy* of the CDR stream...
-  CORBA::ULong length = cdr.total_length ();
+  CORBA::ULong length = ACE_static_cast (CORBA::ULong, cdr.total_length ());
   service_list[l].context_data.length (length);
   CORBA::Octet *buf = service_list[l].context_data.get_buffer ();
 

@@ -65,7 +65,7 @@ TAO_CDR_Encaps_Codec::encode (const CORBA::Any & data
 
       CORBA::OctetSeq_var safe_octet_seq = octet_seq;
 
-      octet_seq->length (cdr.total_length ());
+      octet_seq->length (ACE_static_cast (CORBA::ULong, cdr.total_length ()));
       CORBA::Octet *buf = octet_seq->get_buffer ();
 
       for (const ACE_Message_Block *i = cdr.begin ();
@@ -208,7 +208,7 @@ TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data
 
       CORBA::OctetSeq_var safe_octet_seq = octet_seq;
 
-      octet_seq->length (cdr.total_length ());
+      octet_seq->length (ACE_static_cast (CORBA::ULong, cdr.total_length ()));
       CORBA::Octet *buf = octet_seq->get_buffer ();
 
       for (const ACE_Message_Block *i = cdr.begin ();

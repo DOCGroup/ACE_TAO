@@ -158,7 +158,7 @@ protected:
 
   /// The number of host names cached in the hosts_ array (equivalent
   /// to the number of endpoints opened by this Acceptor).
-  size_t endpoint_count_;
+  CORBA::ULong endpoint_count_;
 
   /**
    * The GIOP version for this endpoint

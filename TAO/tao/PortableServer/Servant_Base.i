@@ -3,7 +3,8 @@
 ACE_INLINE u_long
 TAO_Servant_Hash::operator () (PortableServer::Servant servant) const
 {
-  return u_long (servant);
+  return ACE_static_cast (u_long,
+                          ACE_reinterpret_cast (ptr_arith_t, servant));
 }
 
 ACE_INLINE TAO_Stub *

@@ -41,7 +41,8 @@ TAO_DynStruct_i::init_common (void)
   this->container_is_destroying_ = 0;
   this->has_components_ = 1;
   this->destroyed_ = 0;
-  this->component_count_ = this->da_members_.size ();
+  this->component_count_ = ACE_static_cast (CORBA::ULong,
+                                            this->da_members_.size ());
   this->current_position_ = this->component_count_ ? 0 : -1;
 }
 

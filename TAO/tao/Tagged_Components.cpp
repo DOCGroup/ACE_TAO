@@ -77,8 +77,8 @@ TAO_Tagged_Components::set_component_i (IOP::ComponentId tag,
   component.tag = tag;
 
   // Make a *copy* of the CDR stream...
-  CORBA::ULong length = cdr.total_length ();
-  component.component_data.length (length);
+  size_t length = cdr.total_length ();
+  component.component_data.length (ACE_static_cast (CORBA::ULong, length));
   CORBA::Octet *buf = component.component_data.get_buffer ();
 
   for (const ACE_Message_Block *i = cdr.begin ();

@@ -73,7 +73,7 @@ public:
   virtual char * to_string (ACE_ENV_SINGLE_ARG_DECL);
   virtual int encode_endpoints (void);
   virtual TAO_Endpoint *endpoint (void);
-  virtual size_t endpoint_count (void);
+  virtual CORBA::ULong endpoint_count (void);
   virtual CORBA::Boolean is_equivalent (const TAO_Profile *other_profile);
   virtual CORBA::ULong hash (CORBA::ULong max
                              ACE_ENV_ARG_DECL);
@@ -113,7 +113,7 @@ protected:
   TAO_IIOP_Endpoint endpoint_;
 
   /// Number of endpoints in the list headed by <endpoint_>.
-  size_t count_;
+  CORBA::ULong count_;
 };
 
 #if defined (__ACE_INLINE__)

@@ -116,7 +116,8 @@ TAO_CORBALOC_Parser::assign_key_string (char *& cloc_name_ptr,
                                        + 1  // Object key separator
                                        + 3  // "://"
                                        + sizeof (def_port) - 1
-                                       + key_string.length ());
+                                       + ACE_static_cast (CORBA::ULong,
+                                             key_string.length ()));
 
       // Copy the default <iiop> prefix.
       ACE_OS::strcpy (end_point.inout (),
@@ -137,7 +138,8 @@ TAO_CORBALOC_Parser::assign_key_string (char *& cloc_name_ptr,
                                        + 1  // Object key separator
                                        + 3  // "://"
                                        + sizeof (def_port) - 1
-                                       + key_string.length ());
+                                       + ACE_static_cast (CORBA::ULong,
+                                             key_string.length ()));
 
       ACE_CString prot_name = cloc_name_cstring.substring (0,
                                                            pos_colon);
@@ -229,7 +231,7 @@ TAO_CORBALOC_Parser::parse_string_assign_helper (
   CORBA::ULong length;
   while (cloc_name_ptr != 0)
     {
-      length = ACE_OS::strlen (cloc_name_ptr);
+      length = ACE_static_cast (CORBA::ULong, ACE_OS::strlen (cloc_name_ptr));
       // Forms the endpoint and calls the mprofile_helper.
       this->assign_key_string (cloc_name_ptr,
                                key_string,

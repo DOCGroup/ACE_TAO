@@ -374,7 +374,9 @@ TAO_ClientRequestInfo_i::request_id (ACE_ENV_SINGLE_ARG_DECL)
 
   // 32 bit address
   if (sizeof (this) == 4)
-    id = ACE_reinterpret_cast (unsigned long, this->invocation_);
+    id = ACE_static_cast (CORBA::ULong,
+                          ACE_reinterpret_cast (ptr_arith_t,
+                                                this->invocation_));
 
   // 64 bit address -- bits 8 through 39  (see notes above!)
   // In this case, we make sure this object is large enough to safely
@@ -383,13 +385,16 @@ TAO_ClientRequestInfo_i::request_id (ACE_ENV_SINGLE_ARG_DECL)
   else if (sizeof (this) == 8
            && sizeof (*(this->invocation_)) > 256 /* 2 << 8 */)
     id =
-      (ACE_reinterpret_cast (unsigned long,
-                             this->invocation_) >> 8) & 0xFFFFFFFFu;
+      (ACE_static_cast (CORBA::ULong,
+       ACE_reinterpret_cast (ptr_arith_t,
+                             this->invocation_)) >> 8) & 0xFFFFFFFFu;
 
   // 64 bit address -- lower 32 bits
   else if (sizeof (this) == 8)
-    id = ACE_reinterpret_cast (unsigned long,
-                               this->invocation_) & 0xFFFFFFFFu;
+    id = ACE_static_cast (CORBA::ULong,
+                          ACE_reinterpret_cast (ptr_arith_t,
+                                                this->invocation_)) &
+                         0xFFFFFFFFu;
 
   // @@ The following request ID generator prevents the
   //    PortableInterceptor::ClientRequestInterceptor::send_request()

@@ -382,7 +382,7 @@ fill_receptacles (const char* /* type */,
   ACE_CHECK_RETURN (0);
 
   CORBA::ULong i = 0;
-  CORBA::ULong size = pref_inter.num_offers ();
+  CORBA::ULong size = ACE_static_cast (CORBA::ULong, pref_inter.num_offers ());
   CORBA::ULong offers_in_sequence = (how_many < size) ? how_many : size;
   CORBA::ULong offers_in_iterator = size - offers_in_sequence;
 
@@ -442,8 +442,8 @@ fill_receptacles (const char* /* type */,
     }
 
   // Clear the preference intrerpreter of superfluous items.
-  CORBA::ULong num_offers = pref_inter.num_offers ();
-  for (i = 0; i < num_offers; i++)
+  size_t num_offers = pref_inter.num_offers ();
+  for (size_t j = 0; j < num_offers; j++)
     {
       CosTrading::Offer* offer = 0;
       CosTrading::OfferId offer_id = 0;
@@ -1790,9 +1790,10 @@ TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::list_links (ACE_ENV_SINGLE_ARG_DECL_NO
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Allocate space for the link names.
-  CORBA::ULong size = this->links_.current_size (), i = 0;
+  size_t size = this->links_.current_size ();
+  CORBA::ULong i = 0;
   CosTrading::LinkName* link_seq =
-    CosTrading::LinkNameSeq::allocbuf (size);
+    CosTrading::LinkNameSeq::allocbuf (ACE_static_cast (CORBA::ULong, size));
 
   // Copy the link names into the buffer.
   for (ACE_TYPENAME Links::iterator links_iter (this->links_);

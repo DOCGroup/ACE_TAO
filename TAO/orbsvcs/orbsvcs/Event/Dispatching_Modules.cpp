@@ -80,7 +80,7 @@ ACE_ES_Dispatch_Request::make_copy (RtecEventComm::EventSet &dest) const
     }
   else
     {
-      dest.length (this->event_set_.size ());
+      dest.length (ACE_static_cast (CORBA::ULong, this->event_set_.size ()));
 
       int c = 0;
       for (CORBA::ULong i = 0; i < this->event_set_.size (); ++i)

@@ -88,7 +88,7 @@ TAO_UIOP_Profile::endpoint (void)
   return &this->endpoint_;
 }
 
-size_t
+CORBA::ULong
 TAO_UIOP_Profile::endpoint_count (void)
 {
   return this->count_;

@@ -209,7 +209,7 @@ public:
   virtual TAO_Endpoint *endpoint (void) = 0;
 
   /// Return how many endpoints this profile contains.
-  virtual size_t endpoint_count (void) = 0;
+  virtual CORBA::ULong endpoint_count (void) = 0;
 
   /**
    * Return true if this profile is equivalent to other_profile.  Two
@@ -360,7 +360,7 @@ public:
   virtual const TAO::ObjectKey &object_key (void) const;
   virtual TAO::ObjectKey *_key (void) const;
   virtual TAO_Endpoint *endpoint (void);
-  virtual size_t endpoint_count (void);
+  virtual CORBA::ULong endpoint_count (void);
   virtual CORBA::Boolean is_equivalent (const TAO_Profile* other_profile);
   virtual CORBA::ULong hash (CORBA::ULong max
                              ACE_ENV_ARG_DECL);

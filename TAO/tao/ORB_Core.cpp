@@ -310,7 +310,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
   long snd_sock_size = -1;
 
   // Use TCP_NODELAY.
-  size_t nodelay = 1;
+  int nodelay = 1;
 
   // Use dotted decimal addresses
   // @@ This option will be treated as a suggestion to each loaded
@@ -971,7 +971,8 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
                            10);
 
       CORBA::String_var ns_port_ptr =
-        CORBA::string_alloc (ACE_OS::strlen ((const char *) ns_port_char));
+        CORBA::string_alloc (ACE_static_cast (CORBA::ULong,
+                               ACE_OS::strlen ((const char *) ns_port_char)));
 
       ns_port_ptr = (const char *) ns_port_char;
 
@@ -979,7 +980,8 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
 
       CORBA::String_var def_init_ref =
         CORBA::string_alloc (sizeof (prefix) +
-                             ACE_OS::strlen (ns_port_ptr.in ()) +
+                             ACE_static_cast (CORBA::ULong,
+                                    ACE_OS::strlen (ns_port_ptr.in ())) +
                              2);
 
       ACE_OS::strcpy (def_init_ref.inout (), prefix);
@@ -2217,12 +2219,13 @@ TAO_ORB_Core::list_initial_references (ACE_ENV_SINGLE_ARG_DECL)
   CORBA::ORB::ObjectIdList *tmp = 0;
 
   ACE_NEW_THROW_EX (tmp,
-                    CORBA::ORB::ObjectIdList (total_size),
+                    CORBA::ORB::ObjectIdList (
+                      ACE_static_cast (CORBA::ULong, total_size)),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
   CORBA::ORB::ObjectIdList_var list = tmp;
-  list->length (total_size);
+  list->length (ACE_static_cast (CORBA::ULong, total_size));
 
   CORBA::ULong index = 0;
   // Index for ObjectIdList members.

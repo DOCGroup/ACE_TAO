@@ -82,7 +82,7 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Object_Adapter_Timeprobe_Description,
 #endif /* ACE_ENABLE_TIMEPROBES */
 
 /* static */
-size_t TAO_Object_Adapter::transient_poa_name_size_ = 0;
+CORBA::ULong TAO_Object_Adapter::transient_poa_name_size_ = 0;
 
 void
 TAO_Object_Adapter::set_transient_poa_name_size (const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters)
@@ -104,7 +104,8 @@ TAO_Object_Adapter::set_transient_poa_name_size (const TAO_Server_Strategy_Facto
         case TAO_ACTIVE_DEMUX:
         default:
           TAO_Object_Adapter::transient_poa_name_size_ =
-            ACE_Active_Map_Manager_Key::size ();
+            ACE_static_cast (CORBA::ULong,
+                             ACE_Active_Map_Manager_Key::size ());
           break;
         }
     }

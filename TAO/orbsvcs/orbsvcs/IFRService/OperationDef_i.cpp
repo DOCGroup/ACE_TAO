@@ -202,7 +202,7 @@ TAO_OperationDef_i::params_i (ACE_ENV_SINGLE_ARG_DECL)
         }
     }
 
-  size_t size = key_queue.size ();
+  CORBA::ULong size = ACE_static_cast (CORBA::ULong, key_queue.size ());
 
   CORBA::ParDescriptionSeq *pd_seq = 0;
   ACE_NEW_THROW_EX (pd_seq,
@@ -426,7 +426,7 @@ TAO_OperationDef_i::contexts_i (ACE_ENV_SINGLE_ARG_DECL)
         }
     }
 
-  size_t size = context_queue.size ();
+  CORBA::ULong size = ACE_static_cast (CORBA::ULong, context_queue.size ());
 
   CORBA::ContextIdSeq *ci_seq = 0;
   ACE_NEW_THROW_EX (ci_seq,
@@ -536,7 +536,7 @@ TAO_OperationDef_i::exceptions_i (ACE_ENV_SINGLE_ARG_DECL )
         }
     }
 
-  size_t size = path_queue.size ();
+  CORBA::ULong size = ACE_static_cast (CORBA::ULong, path_queue.size ());
 
   CORBA::ExceptionDefSeq *ed_seq = 0;
   ACE_NEW_THROW_EX (ed_seq,
@@ -695,7 +695,7 @@ TAO_OperationDef_i::make_description (
             }
         }
 
-      size_t size = path_queue.size ();
+      CORBA::ULong size = ACE_static_cast (CORBA::ULong, path_queue.size ());
 
       od.exceptions.length (size);
 

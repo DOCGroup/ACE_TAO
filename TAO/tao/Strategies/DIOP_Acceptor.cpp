@@ -558,9 +558,9 @@ TAO_DIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
   // in the list of interfaces to query for a hostname, otherwise
   // exclude it from the list.
   if (if_cnt == lo_cnt)
-    this->endpoint_count_ = if_cnt;
+    this->endpoint_count_ = ACE_static_cast (CORBA::ULong, if_cnt);
   else
-    this->endpoint_count_ = if_cnt - lo_cnt;
+    this->endpoint_count_ = ACE_static_cast (CORBA::ULong, if_cnt - lo_cnt);
 
   ACE_NEW_RETURN (this->addrs_,
                   ACE_INET_Addr[this->endpoint_count_],
@@ -707,7 +707,8 @@ TAO_DIOP_Acceptor::parse_options (const char *str)
       if (j < option_count - 1)
         end = options.find (option_delimiter, begin);
       else
-        end = len - begin;  // Handle last endpoint differently
+        end = ACE_static_cast (int,
+                               len - begin); // Handle last endpoint differently
 
       if (end == begin)
         ACE_ERROR_RETURN ((LM_ERROR,

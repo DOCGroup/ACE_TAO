@@ -3523,12 +3523,13 @@ be_visitor_typecode_defn::repoID_encap_len (be_decl *node)
     }
   else
     {
-      ACE_CDR::ULong slen = ACE_OS::strlen (node->repoID ()) + 1;
+      size_t slen = ACE_OS::strlen (node->repoID ()) + 1;
       // + 1 for NULL terminating char
 
       // the number of bytes to hold the string must be a multiple of 4 since this
       // will be represented as an array of longs
-      return 4 + 4 * (slen/4 + (slen%4 ? 1:0));
+      return ACE_static_cast (ACE_CDR::ULong,
+                              4 + 4 * (slen/4 + (slen%4 ? 1:0)));
     }
 }
 
@@ -3544,12 +3545,13 @@ be_visitor_typecode_defn::name_encap_len (be_decl *node)
     }
   else
     {
-      ACE_CDR::ULong slen =
+      size_t slen =
         ACE_OS::strlen (node->original_local_name ()->get_string ()) + 1;
 
       // the number of bytes to hold the string must be a multiple of 4 since this
       // will be represented as an array of longs
-      return 4 + 4 * (slen/4 + (slen%4 ? 1:0));
+      return ACE_static_cast (ACE_CDR::ULong,
+                              4 + 4 * (slen/4 + (slen%4 ? 1:0)));
     }
 }
 
@@ -3561,18 +3563,18 @@ be_visitor_typecode_defn::tc_name2long (const char *name,
 {
   const int bytes_per_word = sizeof (ACE_CDR::ULong);
   static ACE_CDR::ULong buf [NAMEBUFSIZE];
-  ACE_CDR::ULong i, slen;
-
-  slen = ACE_OS::strlen (name) + 1; // 1 for NULL terminating
+  size_t slen = ACE_OS::strlen (name) + 1; // 1 for NULL terminating
 
   // compute the number of bytes necessary to hold the name rounded to
   // the next multiple of 4 (i.e., size of long)
-  arrlen = slen / bytes_per_word + (slen % bytes_per_word ? 1 : 0);
+  arrlen = ACE_static_cast (
+              ACE_CDR::ULong,
+              slen / bytes_per_word + (slen % bytes_per_word ? 1 : 0));
 
   ACE_OS::memset (buf, 0, sizeof (buf));
   larr = buf;
   ACE_OS::memcpy (buf, name, slen);
-  for (i = 0; i < arrlen; i++)
+  for (size_t i = 0; i < arrlen; i++)
     larr [i] = ACE_HTONL (larr [i]);
   return 0;
 }

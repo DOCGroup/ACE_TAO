@@ -135,7 +135,7 @@ TAO_UIPMC_Connection_Handler::open (void*)
   }
 
   // Set the id in the transport now that we're active.
-  this->transport ()->id ((int) this->udp_socket_.get_handle ());
+  this->transport ()->id ((size_t) this->udp_socket_.get_handle ());
   this->using_mcast_ = 0;
 
   return 0;
@@ -155,7 +155,7 @@ TAO_UIPMC_Connection_Handler::open_server (void)
                ));
   }
 
-  this->transport ()->id ((int) this->mcast_socket_.get_handle ());
+  this->transport ()->id ((size_t) this->mcast_socket_.get_handle ());
   this->using_mcast_ = 1;
 
   return 0;
@@ -184,7 +184,7 @@ TAO_UIPMC_Connection_Handler::activate (long flags,
   // @@ Frank: Not disabled yet...
 
   // Set the id in the transport now that we're active.
-  this->transport ()->id ((int) this->get_handle ());
+  this->transport ()->id ((size_t) this->get_handle ());
 
   return TAO_UIPMC_SVC_HANDLER::activate (flags,
                                           n_threads,

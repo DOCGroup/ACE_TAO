@@ -119,7 +119,7 @@ ACE_ES_Dispatch_Request::number_of_events (void) const
   if (this->use_single_event_)
     return 1;
   else
-    return this->event_set_.size ();
+    return ACE_static_cast (CORBA::ULong, this->event_set_.size ());
 }
 
 ACE_INLINE RtecScheduler::OS_Priority

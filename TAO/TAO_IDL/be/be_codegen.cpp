@@ -1317,7 +1317,7 @@ TAO_CodeGen::gen_ifndef_string (const char *fname,
 
   ACE_OS::sprintf (macro_name, prefix);
 
-  int offset = ACE_OS::strlen (prefix);
+  size_t offset = ACE_OS::strlen (prefix);
 
   // Convert letters in fname to upper case.
   for (int i = 0; i < (extension - fname); i++)

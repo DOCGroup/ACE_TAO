@@ -180,7 +180,7 @@ be_interface::compute_full_skel_name (const char *prefix,
     }
   else
     {
-      long namelen = ACE_OS::strlen (prefix);
+      size_t namelen = ACE_OS::strlen (prefix);
       long first = I_TRUE;
       long second = I_FALSE;
       char *item_name = 0;
