@@ -1,3 +1,20 @@
+Wed Mar 18 15:50:30 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Log_Msg.cpp (ACE_Log_Msg): Added codes to grab 
+	  ACE_Log_Msg_Manager's lock while updating the instance_count_.
+	  There was a race condition without the change.  Thanks to Detlef
+	  Becker's <Detlef.Becker@med.siemens.de> thread creation stress
+	  test to reveal the bug.
+
+Tue Mar 17 17:20:00 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/Threads/test.dsw:
+	* examples/Threads/task_five.cpp:
+	* examples/Threads/task_five.dsp:
+	* examples/Threads/Makefile: Added a new ACE_Task testing
+ 	  program. Thanks to Detlef Becker <Detlef.Becker@med.siemens.de>
+ 	  for providing the source.
+
 Wed Mar 18 11:00:11 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
         * ace/Hash_Map_Manager.cpp (map): This method has been added to
