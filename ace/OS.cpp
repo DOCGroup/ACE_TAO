@@ -4535,7 +4535,7 @@ ACE_OS::writev_emulation (ACE_HANDLE handle, ACE_WRITEV_TYPE iov[], int n)
 // "Fake" readv for operating systems without it.  Note that this is
 // thread-safe.
 
-int
+ssize_t
 ACE_OS::readv_emulation (ACE_HANDLE handle,
                          ACE_READV_TYPE *iov,
                          int n)
@@ -4714,7 +4714,11 @@ ACE_OS::socket_fini (void)
 }
 
 # if defined (ACE_LACKS_SYS_NERR)
-int sys_nerr = ERRMAX + 1;
+# if defined (__rtems__)
+int sys_nerr = EWOULDBLOCK + 1;  // definitely a hack.
+# else
+ int sys_nerr = ERRMAX + 1;
+# endif /* __rtems__ */
 # endif /* ACE_LACKS_SYS_NERR */
 
 # if defined (VXWORKS)

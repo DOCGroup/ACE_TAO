@@ -1763,6 +1763,13 @@ struct strrecvfd {};
 #   include /**/ <sys/procfs.h>
 # endif /* ACE_HAS_PROC_FS */
 
+# if defined(__rtems__)
+struct iovec {
+  char *iov_base; // Base address.
+  size_t iov_len; // Length.
+};
+# endif
+
 # if defined (ACE_HAS_BROKEN_WRITEV)
 typedef struct iovec ACE_WRITEV_TYPE;
 # else
@@ -3715,6 +3722,20 @@ typedef void (*__sighandler_t)(int); // keep Signal compilation happy
 #     if !defined (howmany)
 #       define howmany(x, y)   (((x)+((y)-1))/(y))
 #     endif /* ! howmany */
+#   elif defined(__rtems__)
+#     include /**/ <sys/file.h>
+#     include /**/ <sys/resource.h>
+#     include /**/ <sys/fcntl.h>
+#     include /**/ <sys/time.h>
+#     include /**/ <sys/utsname.h>
+#     include /**/ <sys/wait.h>
+#     include /**/ <pwd.h>
+
+extern "C"
+{
+  int select (int n, fd_set *readfds, fd_set *writefds, 
+              fd_set *exceptfds, const struct timeval *timeout);
+};
 #   elif ! defined (VXWORKS)
 #     include /**/ <sys/uio.h>
 #     include /**/ <sys/ipc.h>
@@ -3767,6 +3788,8 @@ typedef void (*__sighandler_t)(int); // keep Signal compilation happy
 #     if !defined (ACE_LACKS_SIGINFO_H)
 #       if defined (__QNX__)
 #         include /**/ <sys/siginfo.h>
+#       elif defined(__rtems__)
+#         include /**/ <signal.h>
 #       else  /* ! __QNX__ */
 #         include /**/ <siginfo.h>
 #       endif /* ! __QNX__ */
@@ -3809,7 +3832,11 @@ typedef void (*__sighandler_t)(int); // keep Signal compilation happy
           { return _Psigwait (set, sig); }
 #     endif /* __DECCXX_VER */
 #   elif !defined (ACE_HAS_SIGWAIT)
-  extern "C" int sigwait (sigset_t *set);
+#      if defined(__rtems__)
+  extern "C" int sigwait (const sigset_t *set, int *sig);
+#      else
+   extern "C" int sigwait (sigset_t *set);
+#      endif /* __rtems__ */
 #   endif /* ! DIGITAL_UNIX && ! ACE_HAS_SIGWAIT */
 
 #   if defined (ACE_HAS_SELECT_H)
@@ -4275,6 +4302,8 @@ struct sigaction
 # if defined (__Lynx__)
     // LynxOS Neutrino sets NSIG to the highest-numbered signal.
 #   define ACE_NSIG (NSIG + 1)
+# elif defined (__rtems__)
+#   define ACE_NSIG (SIGRTMAX)
 # else
   // All other platforms set NSIG to one greater than the
   // highest-numbered signal.
@@ -4543,9 +4572,10 @@ typedef int ACE_Sched_Priority;
 class ACE_Sched_Params;
 
 # if defined (ACE_LACKS_FILELOCKS)
-#   if ! defined (VXWORKS) && ! defined (ACE_PSOS)
+#   if ! defined (VXWORKS) && ! defined (ACE_PSOS) && ! defined (__rtems__)
 // VxWorks defines struct flock in sys/fcntlcom.h.  But it doesn't
-// appear to support flock ().
+// appear to support flock ().  RTEMS defines struct flock but
+// currently does not support locking.
 struct flock
 {
   short l_type;

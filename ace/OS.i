@@ -9668,7 +9668,7 @@ ACE_OS::tzset (void)
 {
 #if defined (ACE_HAS_PACE)
   ::pace_tzset ();
-# elif !defined (ACE_HAS_WINCE) && !defined (VXWORKS) && !defined (ACE_PSOS)
+# elif !defined (ACE_HAS_WINCE) && !defined (VXWORKS) && !defined (ACE_PSOS) && ! defined(__rtems__)
 #   if defined (ACE_WIN32)
   ::_tzset ();  // For Win32.
 #   else
