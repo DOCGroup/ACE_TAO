@@ -32,12 +32,11 @@
 #include "ace/pre.h"
 
 #include "ace/Select_Reactor.h"
-
+#include "ace/Log_Msg.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
 
 /**
  * @class ACE_EH_Dispatch_Info
@@ -126,7 +125,6 @@ private:
   ACE_UNIMPLEMENTED_FUNC (ACE_TP_Token_Guard (void))
 };
 
-
 /**
  * @class ACE_TP_Reactor
  *
@@ -183,10 +181,6 @@ public:
                   ACE_Sig_Handler * = 0,
                   ACE_Timer_Queue * = 0,
                   int mask_signals = 1);
-
-  // = Reactor calls
-  virtual void max_notify_iterations (int iter);
-  virtual int max_notify_iterations (void);
 
   // = Event loop drivers.
 
@@ -247,14 +241,24 @@ public:
 protected:
   // = Internal methods that do the actual work.
 
-  /// Get the event that needs dispatching.It could be either a
-  /// signal, timer, notification handlers or return possibly 1 I/O
-  /// handler for dispatching. In the most common use case, this would
-  /// return 1 I/O handler for dispatching
-  int get_event_for_dispatching (ACE_Time_Value *max_wait_time);
+  /**
+   * Dispatch signal, timer, notification handlers and return possibly
+   * 1 I/O handler for dispatching. Ideally, it would dispatch nothing,
+   * and return dispatch information for only one of (signal, timer,
+   * notification, I/O); however, the reactor mechanism is too enmeshed
+   * in the timer queue expiry functions and the notification class to
+   * do this without some significant redesign.
+   */
+  int dispatch_i (ACE_Time_Value *max_wait_time,
+                  ACE_EH_Dispatch_Info &event);
+
+  int dispatch_i_protected (ACE_Time_Value *max_wait_time,
+  /// Only really does anything for Win32. Wraps a call to dispatch_i in an
+  /// ACE_SEH_TRY block.
+                            ACE_EH_Dispatch_Info &event);
 
   int handle_signals (int &event_count,
-                      ACE_TP_Token_Guard &g);
+                           ACE_TP_Token_Guard &g);
 
   int handle_timer_events (int &event_count,
                            ACE_TP_Token_Guard &g);
@@ -262,7 +266,7 @@ protected:
   int handle_notify_events (int &event_count,
                             ACE_TP_Token_Guard &g);
 
-  int handle_socket_events (int &event_count,
+  int handle_socket_events (ACE_Time_Value *max_wait_time,
                             ACE_TP_Token_Guard &g);
 
   /// This method shouldn't get called.
@@ -271,13 +275,13 @@ protected:
                               ACE_Handle_Set &,
                               ACE_Event_Handler *eh,
                               ACE_EH_PTMF callback);
+
+  /// Notify the appropriate <callback> in the context of the <eh>
+  /// associated with <handle> that a particular event has occurred.
+  virtual int notify_handle (ACE_EH_Dispatch_Info &dispatch_info);
+
 private:
-
   ACE_HANDLE get_notify_handle (void);
-
-  int get_socket_event_info (ACE_EH_Dispatch_Info &info);
-
-  int dispatch_socket_events (ACE_EH_Dispatch_Info &info);
 
 private:
   /// Deny access since member-wise won't work...
