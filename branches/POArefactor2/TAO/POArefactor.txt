@@ -1,3 +1,8 @@
+Mon Oct 11 09:51:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Everything has now been moved to the POArefactor2 branch that I
+        created fresh this morning
+
 Mon Oct 11 08:07:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/IdAssignmentPolicyFactory.h
