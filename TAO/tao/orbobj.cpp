@@ -278,7 +278,38 @@ CORBA::ORB_init (int &argc,
     return 0;
 
   // Initialize the Service Configurator
+#if !defined (VXWORKS)
   ACE_Service_Config::open (svc_config_argc, svc_config_argv);
+#else
+  // Statically stick in the appropriate abstract factories for now.
+
+  // This is such a hack!  Blech!
+  const char* service_name[2] = {
+    "Client_Strategy_Factory",
+    "Server_Strategy_Factory"
+  };
+  u_int flags = ACE_Service_Type::DELETE_OBJ | ACE_Service_Type::DELETE_THIS;
+  ACE_Service_Record* service[2];
+  ACE_Service_Type* type[2];
+  const ACE_SHLIB_HANDLE noShlib = 0;
+  ACE_Service_Object* obj;
+
+  char* client_args[] = { 0 };
+  obj = _make_TAO_Default_Client_Strategy_Factory();
+  obj->init(sizeof(client_args)/sizeof(client_args[0]), client_args);
+  type[0] = new ACE_Service_Object_Type (obj, service_name[0], flags);
+  service[0] = new ACE_Service_Record (service_name[0], type[0], noShlib, 1);
+  
+  char* server_args[] = { "-T", "-L", "dynamic", "-o", "128", 0 };
+  obj = _make_TAO_Default_Server_Strategy_Factory();
+  obj->init(sizeof(server_args)/sizeof(server_args[0]), server_args);
+  type[1] = new ACE_Service_Object_Type (obj, service_name[1], flags);
+  service[1] = new ACE_Service_Record (service_name[1], type[1], noShlib, 1);
+
+  ACE_Service_Repository *svc_rep = ACE_Service_Repository::instance();
+  svc_rep->insert(service[0]);
+  svc_rep->insert(service[1]);
+#endif
 
   // Inititalize the "ORB" pseudo-object now.
   IIOP_ORB_ptr the_orb = TAO_ORB::instance ();
