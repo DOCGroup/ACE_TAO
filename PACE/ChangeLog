@@ -1,8 +1,43 @@
+Tue Aug 22 17:58:38 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* PACE/ChangeLog:
+
+	  Updated.
+
 Tue Aug 22 17:52:02 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* (?)
+	* PACE_POSIX_support.txt:
 
-	  Lots of files.
+	  Updated emulation records.
+
+	* pace/fcntl.h:
+	* pace/win32/fcntl.h:
+	* pace/win32/fcntl.c:
+
+	  Updated creat func to pace_win32_create to eliminate compile probs.
+
+	* TODO:
+
+	  Updated.
+
+	* pace/config/utility.h:
+
+	  Updated to work with multithreaded errno correctly.
+
+	* pace/win32/pthread.h:
+	* pace/win32/pthread.inl:	
+	* pace/win32/pthread.c:	
+
+	  Update emulations!
+
+	* pace/win32/time.inl:
+
+	  Updated/hacked to compile correctly!
+
+	* pace/win32/pace_dll.dsp:
+	* pace/win32/pace_lib.dsp:
+
+	  Updated project settings to use proper multithreaded DLL / LIB.
 
 Tue Aug 22 12:44:09 2000  Luther J Baker  <luther@cs.wustl.edu>
 
