@@ -135,12 +135,19 @@ public:
 
   virtual void define_property (const char *property_name,
                                 const CORBA::Any &property_value,
-                                CORBA::Environment &env);
+                                CORBA::Environment &env)
+    ACE_THROW_SPEC ((CosPropertyService::InvalidPropertyName,
+                     CosPropertyService::ConflictingProperty,
+                     CosPropertyService::UnsupportedTypeCode,
+                     CosPropertyService::UnsupportedProperty,
+                     CosPropertyService::ReadOnlyProperty));
+  
   // Store the property in the hash after checking for validity of the
   // property name, duplicate name, type code over writing etc.
 
   virtual void define_properties (const CosPropertyService::Properties &nproperties,
-                                  CORBA::Environment &env);
+                                  CORBA::Environment &env)
+    ACE_THROW_SPEC (CosPropertyService::MultipleExceptions ());
   // Define a sequence of properties at a time.
 
   virtual CORBA::ULong get_number_of_properties (CORBA::Environment &env);
@@ -155,7 +162,9 @@ public:
   // the property set.
 
   virtual CORBA::Any *get_property_value (const char *property_name,
-                                          CORBA::Environment &env);
+                                          CORBA::Environment &env)
+    ACE_THROW_SPEC ((CosPropertyService::PropertyNotFound,
+                     CosPropertyService::InvalidPropertyName));
   // Get the value of the property, given the name.
 
   virtual CORBA::Boolean get_properties (const CosPropertyService::PropertyNames &property_names,
@@ -172,18 +181,23 @@ public:
   // property names, then the remaining property names are put into the PropertyNamesIterator.
 
   virtual void delete_property (const char *property_name,
-                                CORBA::Environment &env);
+                                CORBA::Environment &env)
+    ACE_THROW_SPEC ((CosPropertyService::PropertyNotFound,
+                     CosPropertyService::InvalidPropertyName,
+                     CosPropertyService::FixedProperty));
   // Delete a property given a name.
 
   virtual void delete_properties (const CosPropertyService::PropertyNames &property_names,
-                                  CORBA::Environment &env);
+                                  CORBA::Environment &env)
+    ACE_THROW_SPEC ((CosPropertyService::MultipleExceptions));
   // Delete all the these properties from this property set.
 
   virtual CORBA::Boolean delete_all_properties (CORBA::Environment &env);
   // Delete everything from this property set.
 
   virtual CORBA::Boolean is_property_defined (const char *property_name,
-                                              CORBA::Environment &env);
+                                              CORBA::Environment &env)
+    ACE_THROW_SPEC ((CosPropertyService::InvalidPropertyName));
   // Tell whether this property is defined or no. Forget about the
   // value.
 
@@ -330,7 +344,13 @@ public:
   virtual void define_property_with_mode (const char *property_name,
                                           const CORBA::Any &property_value,
                                           CosPropertyService::PropertyModeType property_mode,
-                                          CORBA::Environment &env);
+                                          CORBA::Environment &env)
+    ACE_THROW_SPEC ((CosPropertyService::InvalidPropertyName,
+                     CosPropertyService::ConflictingProperty,
+                     CosPropertyService::UnsupportedTypeCode,
+                     CosPropertyService::UnsupportedProperty,
+                     CosPropertyService::UnsupportedMode,
+                     CosPropertyService::ReadOnlyProperty));
   // This operation will modify or add a property to the
   // PropertySet. If the property already exists, then the property
   // type is checked before the value is overwritten. The property
@@ -340,18 +360,23 @@ public:
   // exception is thrown.
 
   virtual void define_properties_with_modes (const CosPropertyService::PropertyDefs &property_defs,
-                                             CORBA::Environment &env);
+                                             CORBA::Environment &env)
+    ACE_THROW_SPEC ((CosPropertyService::MultipleExceptions));
   // This operation will modify or add each of the properties in the
   // Properties parameter to the PropertySet.
 
   virtual CosPropertyService::PropertyModeType get_property_mode (const char *property_name,
-                                                                  CORBA::Environment &env);
+                                                                  CORBA::Environment &env)
+    ACE_THROW_SPEC ((CosPropertyService::PropertyNotFound,
+                     CosPropertyService::InvalidPropertyName));
   // Get the mode of a property. Raises InvalidpropertyName,
   // PropertyNotFound exceptions.
 
   virtual CORBA::Boolean get_property_modes (const CosPropertyService::PropertyNames &property_names,
                                              CosPropertyService::PropertyModes_out property_modes,
-                                             CORBA::Environment &env);
+                                             CORBA::Environment &env)
+    ACE_THROW_SPEC ((CosPropertyService::PropertyNotFound,
+                     CosPropertyService::InvalidPropertyName));
   // Batch operation for getting the property. Invoke
   // get_property_mode for each name.  Return value False indicates
   // that properties with *undefined* modes have failed due to
@@ -362,7 +387,10 @@ public:
 
   virtual void set_property_mode (const char *property_name,
                                   CosPropertyService::PropertyModeType property_mode,
-                                  CORBA::Environment &env);
+                                  CORBA::Environment &env)
+    ACE_THROW_SPEC ((CosPropertyService::InvalidPropertyName,
+                     CosPropertyService::PropertyNotFound,
+                     CosPropertyService::UnsupportedMode));
   // Set the mode of a property. Watch the following. The change of
   // mode is allowed introduce more constraints, but it should not
   // relax the constraints. The following decisions have been made, in
@@ -375,7 +403,8 @@ public:
   // raised.
 
   virtual void set_property_modes (const CosPropertyService::PropertyModes &property_modes,
-                                   CORBA::Environment &env);
+                                   CORBA::Environment &env)
+    ACE_THROW_SPEC ((CosPropertyService::MultipleExceptions));
   // Batch operation for setting the property. Raises
   // MultipleExceptions.
 };
@@ -404,13 +433,15 @@ public:
   virtual CosPropertyService::PropertySet_ptr
   create_constrained_propertyset (const CosPropertyService::PropertyTypes &allowed_property_types,
                                   const CosPropertyService::Properties &allowed_properties,
-                                  CORBA::Environment &env);
-  // Allows a client to create a new TAO_PropertySet with specific
-  // constraints. "All the properties will have *fixed-normal* modes".
+                                  CORBA::Environment &env)
+    ACE_THROW_SPEC ((CosPropertyService::ConstraintNotSupported));
+    // Allows a client to create a new TAO_PropertySet with specific
+    // constraints. "All the properties will have *fixed-normal* modes".
 
   virtual CosPropertyService::PropertySet_ptr
   create_initial_propertyset (const CosPropertyService::Properties &initial_properties,
-                              CORBA::Environment &env);
+                              CORBA::Environment &env)
+    ACE_THROW_SPEC ((CosPropertyService::MutlipleExceptions));
   // Allows a client to create a new TAO_PropertySet with specific
   // initial properties."All the properties will have *fixed-normal"
   // modes".
@@ -437,19 +468,22 @@ public:
   virtual ~TAO_PropertySetDefFactory (void);
   // Destructor.
 
-  virtual CosPropertyService::PropertySetDef_ptr create_propertysetdef (CORBA::Environment &env);
+  virtual CosPropertyService::PropertySetDef_ptr
+  create_propertysetdef (CORBA::Environment &env);
   // Returns a new TAO_PropertySetDef object.
 
   virtual CosPropertyService::PropertySetDef_ptr
   create_constrained_propertysetdef (const CosPropertyService::PropertyTypes &allowed_property_types,
                                      const CosPropertyService::PropertyDefs &allowed_property_defs,
-                                     CORBA::Environment &env);
+                                     CORBA::Environment &env)
+    ACE_THROW_SPEC ((CosPropertyService::ConstraintNotSupported));
   // Allows a client to create a new TAO_PropertySetDef with specific
   // constraints.
 
   virtual CosPropertyService::PropertySetDef_ptr
   create_initial_propertysetdef (const CosPropertyService::PropertyDefs &initial_property_defs,
-                                 CORBA::Environment &env);
+                                 CORBA::Environment &env)
+    ACE_THROW_SPEC ((CosPropertyService::MultipleExceptions));
   // Allows a client to create a new TAO_PropertySetDef with specific
   // initial properties.
 
