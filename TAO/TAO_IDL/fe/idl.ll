@@ -270,6 +270,9 @@ oneway		return IDL_ONEWAY;
                     if (isspace(tmp[i])) {
                       tmp[i] = '\0';
                     }
+                    else {
+                      break;
+                    }
                   }
 		  tmp[strlen (tmp) - 1] = '\0';
 		  ACE_NEW_RETURN (yylval.sval,

@@ -1,20 +1,29 @@
+Fri Oct 31 10:14:56 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/lex.yy.cpp:
+
+          Added a missing break from the loop to remove trailing whitespace
+          from constant strings.  The result from the missing break is that
+          the string would get chopped in the middle if it had a space.
+
 Fri Oct 31 08:50:00 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* TAO_IDL/ast/ast_string.cpp:
-	* TAO_IDL/be/be_visitor_array/array_ci.cpp:
-	* TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp:
-	* TAO_IDL/be/be_visitor_tmplinst/tmplinst_cs.cpp:
+        * TAO_IDL/ast/ast_string.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ci.cpp:
+        * TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_tmplinst/tmplinst_cs.cpp:
 
-	  Fixes for warnings in minimum static builds. The warnings were
-	  due to wrong format specifiers in sprintf.
+          Fixes for warnings in minimum static builds. The warnings were
+          due to wrong format specifiers in sprintf.
 
 Fri Oct 31 07:59:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* examples/Buffered_Oneways/Makefile:
-	* examples/Content_Server/AMI_Iterator/Content_Iterator_i.cpp:
-	* examples/Content_Server/SMI_Iterator/Content_Iterator_i.cpp:
+        * examples/Buffered_Oneways/Makefile:
+        * examples/Content_Server/AMI_Iterator/Content_Iterator_i.cpp:
+        * examples/Content_Server/SMI_Iterator/Content_Iterator_i.cpp:
 
-	  Fixed simple compilation errors in static builds.
+          Fixed simple compilation errors in static builds.
 
 Fri Oct 31 13:47:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -23,9 +32,9 @@ Fri Oct 31 13:47:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Oct 31 07:39:04 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Special_Basic_Argument_T.h:
+        * tao/Special_Basic_Argument_T.h:
 
-	  Removed export declarations.
+          Removed export declarations.
 
 Fri Oct 31 08:34:11 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -50,45 +59,45 @@ Fri Oct 31 07:34:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Oct 30 23:23:05 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* performance-tests/Cubit/TAO/DII_Cubit/Makefile:
-	* performance-tests/Latency/DII/Makefile:
-	* performance-tests/Latency/DSI/Makefile:
-	* performance-tests/Latency/Deferred/Makefile:
-	* performance-tests/RTCorba/Oneways/Reliable/Makefile:
-	* performance-tests/Sequence_Latency/DII/Makefile:
-	* performance-tests/Sequence_Latency/DSI/Makefile:
-	* performance-tests/Sequence_Latency/Deferred/Makefile:
+        * performance-tests/Cubit/TAO/DII_Cubit/Makefile:
+        * performance-tests/Latency/DII/Makefile:
+        * performance-tests/Latency/DSI/Makefile:
+        * performance-tests/Latency/Deferred/Makefile:
+        * performance-tests/RTCorba/Oneways/Reliable/Makefile:
+        * performance-tests/Sequence_Latency/DII/Makefile:
+        * performance-tests/Sequence_Latency/DSI/Makefile:
+        * performance-tests/Sequence_Latency/Deferred/Makefile:
 
-	  Added missing libraries to the link line. This is necessary
-	  since the DynamicInterface library depends on the Messaging
-	  library.
+          Added missing libraries to the link line. This is necessary
+          since the DynamicInterface library depends on the Messaging
+          library.
 
-	* tests/OBV/Supports/Supports_Test_impl.cpp:
-	* tests/Xt_Stopwatch/Stopwatch_display.h:
+        * tests/OBV/Supports/Supports_Test_impl.cpp:
+        * tests/Xt_Stopwatch/Stopwatch_display.h:
 
-	  Fixed compilation problems. These showed up only in builds which
-	  used MPC.
+          Fixed compilation problems. These showed up only in builds which
+          used MPC.
 
-	* tao/Messaging/Asynch_Timeout_Handler.cpp:
-	* tao/Messaging/Asynch_Timeout_Handler.h:
-	* tao/Messaging/Messaging.cpp:
-	* tao/Messaging/Messaging.h:
+        * tao/Messaging/Asynch_Timeout_Handler.cpp:
+        * tao/Messaging/Asynch_Timeout_Handler.h:
+        * tao/Messaging/Messaging.cpp:
+        * tao/Messaging/Messaging.h:
 
-	  Cosmetic fixes to get them compiling in minimum_corba builds.
+          Cosmetic fixes to get them compiling in minimum_corba builds.
 
-	* tao/Messaging/Messaging.mpc:
+        * tao/Messaging/Messaging.mpc:
 
-	  Added the list of files in the project.
+          Added the list of files in the project.
 
 Thu Oct 30 22:57:43 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/examples/ORT/Makefile:
+        * orbsvcs/examples/ORT/Makefile:
 
-	  Added misisng libraries.
+          Added misisng libraries.
 
-	* orbsvcs/tests/EC_Throughput/ECT_Driver.h:
+        * orbsvcs/tests/EC_Throughput/ECT_Driver.h:
 
-	  Added a forward declaration.
+          Added a forward declaration.
 
 Thu Oct 30 22:09:17 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -103,22 +112,22 @@ Thu Oct 30 22:09:17 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu Oct 30 15:01:43 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp:
-	* orbsvcs/tests/Notify/Blocking/Notify_Structured_Push_Consumer.cpp:
-	* orbsvcs/tests/Notify/Discarding/Notify_Sequence_Push_Consumer.cpp:
-	* orbsvcs/tests/Notify/Discarding/Notify_Structured_Push_Consumer.cpp:
-	* orbsvcs/tests/Notify/Ordering/Notify_Sequence_Push_Consumer.cpp:
-	* orbsvcs/tests/Notify/Ordering/Notify_Structured_Push_Consumer.cpp:
-	* orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Notify_Sequence_Push_Consumer.cpp:
-	* orbsvcs/tests/Notify/Sequence_Multi_Filter/Notify_Sequence_Push_Consumer.cpp:
-	* orbsvcs/tests/Notify/Structured_Multi_Filter/Notify_Push_Consumer.cpp:
-	* orbsvcs/tests/Notify/Structured_Multi_Filter/Notify_Push_Supplier.cpp:
-	* orbsvcs/tests/Notify/lib/Command.cpp:
-	* orbsvcs/tests/Notify/lib/Command.h:
-	* orbsvcs/tests/Notify/performance-tests/Filter/Notify_Sequence_Push_Consumer.cpp:
-	* orbsvcs/tests/Notify/performance-tests/Filter/Notify_Structured_Push_Consumer.cpp:
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp:
+        * orbsvcs/tests/Notify/Blocking/Notify_Structured_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Discarding/Notify_Sequence_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Discarding/Notify_Structured_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Ordering/Notify_Sequence_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Ordering/Notify_Structured_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Notify_Sequence_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Notify_Sequence_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Notify_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Notify_Push_Supplier.cpp:
+        * orbsvcs/tests/Notify/lib/Command.cpp:
+        * orbsvcs/tests/Notify/lib/Command.h:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Notify_Sequence_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Notify_Structured_Push_Consumer.cpp:
 
-	  Fixed compilation on platforms where exceptions are turned off.
+          Fixed compilation on platforms where exceptions are turned off.
 
 Thu Oct 30 20:45:00 UTC 2003  Gautam Thaker  <gthaker@atl.lmco.com>
 
@@ -145,21 +154,21 @@ Thu Oct 30 20:30:00 UTC 2003  Gautam Thaker  <gthaker@atl.lmco.com>
 
 Thu Oct 30 13:50:50 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/DynamicInterface/DII_Invocation.cpp:
-	* TAO_IDL/ast/ast_string.cpp:
+        * tao/DynamicInterface/DII_Invocation.cpp:
+        * TAO_IDL/ast/ast_string.cpp:
 
-	  Fixed warnings with g++ 2.95.3.
+          Fixed warnings with g++ 2.95.3.
 
 Thu Oct 30 11:47:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Portable_Interceptors/Bug_1559/Client_ORBInitializer.h:
-	* tests/Portable_Interceptors/Bug_1559/Makefile:
-	* tests/Portable_Interceptors/Bug_1559/Server_ORBInitializer.h:
-	* tests/Portable_Interceptors/Bug_1559/client.cpp:
-	* tests/Portable_Interceptors/Bug_1559/interceptors.cpp:
-	* tests/Portable_Interceptors/Bug_1559/server.cpp:
+        * tests/Portable_Interceptors/Bug_1559/Client_ORBInitializer.h:
+        * tests/Portable_Interceptors/Bug_1559/Makefile:
+        * tests/Portable_Interceptors/Bug_1559/Server_ORBInitializer.h:
+        * tests/Portable_Interceptors/Bug_1559/client.cpp:
+        * tests/Portable_Interceptors/Bug_1559/interceptors.cpp:
+        * tests/Portable_Interceptors/Bug_1559/server.cpp:
 
-	  Get the above files compiling on g++.
+          Get the above files compiling on g++.
 
 Thu Oct 30 10:21:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -170,28 +179,28 @@ Thu Oct 30 10:21:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu Oct 30 22:02:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP.dsp:
+        * orbsvcs/orbsvcs/SSLIOP.dsp:
 
-	  Turned on RTTI for a few files.
+          Turned on RTTI for a few files.
 
 Thu Oct 30 09:44:11 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/examples/RtEC/Kokyu/Makefile:
+        * orbsvcs/examples/RtEC/Kokyu/Makefile:
 
-	  Updated dependencies. Not sure how Venkita got this into the
-	  main trunk without usingthe Makefile.
+          Updated dependencies. Not sure how Venkita got this into the
+          main trunk without usingthe Makefile.
 
 Thu Oct 30 09:38:01 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* orbsvcs/examples/RtEC/Kokyu/Makefile: Updated dependencies.
+        * orbsvcs/examples/RtEC/Kokyu/Makefile: Updated dependencies.
 
 Thu Oct 30 09:28:20 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/Notify/Method_Request_Updates_T.h:
-	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_Acceptor_Registry.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Updates_T.h:
+        * orbsvcs/orbsvcs/PortableGroup/PortableGroup_Acceptor_Registry.h:
 
-	  Forward declared CORBA::Environment to get around build problems
-	  in static builds.
+          Forward declared CORBA::Environment to get around build problems
+          in static builds.
 
 Thu Oct 30 10:44:58 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -226,51 +235,51 @@ Thu Oct 30 07:00:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Oct 29 21:35:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp: Fixed compilation
-	  errors in Win32 core builds. Strange that g++ missed this.
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp: Fixed compilation
+          errors in Win32 core builds. Strange that g++ missed this.
 
 Wed Oct 29 21:10:08 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/RTCORBA/Multi_Priority_Mapping.cpp:
+        * tao/RTCORBA/Multi_Priority_Mapping.cpp:
 
-	  Added ace/Log_Msg.h to get this compiling on one of RH8 builds.
+          Added ace/Log_Msg.h to get this compiling on one of RH8 builds.
 
 Wed Oct 29 20:39:32 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_visitor_tmplinst/tmplinst_cs.cpp:
-	* TAO_IDL/be/be_visitor_tmplinst/tmplinst_ss.cpp:
-	* TAO_IDL/be_include/be_visitor_tmplinst/tmplinst_cs.h:
-	* TAO_IDL/be_include/be_visitor_tmplinst/tmplinst_ss.h:
+        * TAO_IDL/be/be_visitor_tmplinst/tmplinst_cs.cpp:
+        * TAO_IDL/be/be_visitor_tmplinst/tmplinst_ss.cpp:
+        * TAO_IDL/be_include/be_visitor_tmplinst/tmplinst_cs.h:
+        * TAO_IDL/be_include/be_visitor_tmplinst/tmplinst_ss.h:
 
-	  Fixed fuzz errors.
+          Fixed fuzz errors.
 
 Wed Oct 29 20:36:08 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Initializer.h:
-	* orbsvcs/orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Interceptor.cpp:
-	* orbsvcs/orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Interceptor.h:
-	* orbsvcs/orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Loader.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Initializer.h:
+        * orbsvcs/orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Interceptor.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Interceptor.h:
+        * orbsvcs/orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Loader.cpp:
 
-	  Remved #include of corbafwd.h and added other includes necessray
-	  to get them compiling on builds with MPC.
+          Remved #include of corbafwd.h and added other includes necessray
+          to get them compiling on builds with MPC.
 
 Wed Oct 29 19:41:14 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/ESF/ESF_Worker.h:
-	* orbsvcs/orbsvcs/Event/ECG_ConsumerEC_Control.h:
-	* orbsvcs/orbsvcs/Event/EC_ConsumerControl.h:
-	* orbsvcs/orbsvcs/Event/EC_SupplierControl.h:
-	* orbsvcs/orbsvcs/Notify/Factory.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Worker.h:
+        * orbsvcs/orbsvcs/Event/ECG_ConsumerEC_Control.h:
+        * orbsvcs/orbsvcs/Event/EC_ConsumerControl.h:
+        * orbsvcs/orbsvcs/Event/EC_SupplierControl.h:
+        * orbsvcs/orbsvcs/Notify/Factory.h:
 
-	  Forward declared CORBA::Environment in all these header files.
+          Forward declared CORBA::Environment in all these header files.
 
-	* orbsvcs/orbsvcs/FaultTolerance/FT_Endpoint_Selector_Factory.cpp:
-	* orbsvcs/orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Endpoint_Selector_Factory.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.cpp:
 
-	  #included Environment.h.
+          #included Environment.h.
 
-	  The above fixes should take care of the build problems with
-	  SuSE static builds.
+          The above fixes should take care of the build problems with
+          SuSE static builds.
 
 Wed Oct 29 17:31:16 2003  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
@@ -313,7 +322,7 @@ Wed Oct 29 15:03:58 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Oct 29 14:14:15 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* orbsvcs/examples/RtEC/Makefile: Added Kokyu subdirectory.
+        * orbsvcs/examples/RtEC/Makefile: Added Kokyu subdirectory.
 
 Wed Oct 29 12:57:51 2003  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
@@ -344,15 +353,15 @@ Wed Oct 29 12:16:57 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Oct 29 12:15:35 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/IIOP_Transport.cpp: Cosmetic fix.
+        * tao/IIOP_Transport.cpp: Cosmetic fix.
 
-	* tao/Strategies/SCIOP_Endpoint.cpp:
-	* tao/Strategies/SCIOP_Endpoint.h:
-	* tao/Strategies/SCIOP_Factory.h:
-	* tao/Strategies/SCIOP_Transport.cpp:
+        * tao/Strategies/SCIOP_Endpoint.cpp:
+        * tao/Strategies/SCIOP_Endpoint.h:
+        * tao/Strategies/SCIOP_Factory.h:
+        * tao/Strategies/SCIOP_Transport.cpp:
 
-	  Fixes for the compilation errors in lksctp build. Since I have o
-	  clue on what the problem could be, this is just a guess.
+          Fixes for the compilation errors in lksctp build. Since I have o
+          clue on what the problem could be, this is just a guess.
 
 Wed Oct 29 12:09:09 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -374,12 +383,12 @@ Wed Oct 29 11:28:36 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Oct 29 11:14:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Portable_Interceptors/PICurrent/ClientRequestInterceptor.cpp:
-	* tests/Portable_Interceptors/PICurrent/ClientRequestInterceptor2.cpp:
-	* tests/Portable_Interceptors/PICurrent/ServerRequestInterceptor.cpp:
+        * tests/Portable_Interceptors/PICurrent/ClientRequestInterceptor.cpp:
+        * tests/Portable_Interceptors/PICurrent/ClientRequestInterceptor2.cpp:
+        * tests/Portable_Interceptors/PICurrent/ServerRequestInterceptor.cpp:
 
-	  #include OS.h in the above files to get them compiling in single
-	  threaded builds.
+          #include OS.h in the above files to get them compiling in single
+          threaded builds.
 
 Wed Oct 29 11:00:56 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -392,8 +401,8 @@ Wed Oct 29 11:00:56 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Oct 29 10:50:36 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/RTCORBA/RT_Transport_Descriptor.cpp: Added a missing
-	  include.
+        * tao/RTCORBA/RT_Transport_Descriptor.cpp: Added a missing
+          include.
 
 Wed Oct 29 10:23:42 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -411,7 +420,7 @@ Wed Oct 29 10:23:42 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Oct 29 09:53:09 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/TypeCodeFactory_Adapter.h: Added a missing inclusion.
+        * tao/TypeCodeFactory_Adapter.h: Added a missing inclusion.
 
 Tue Oct 28 23:19:18 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -455,64 +464,64 @@ Tue Oct 28 22:22:29 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Tue Oct 28 22:12:23 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* performance-tests/RTCorba/Multiple_Endpoints/Common/Makefile:
-	* docs/tutorials/Quoter/AMI/Makefile:
-	* docs/tutorials/Quoter/Event_Service/Makefile:
-	* docs/tutorials/Quoter/Naming_Service/Makefile:
-	* docs/tutorials/Quoter/On_Demand_Activation/Makefile:
-	* docs/tutorials/Quoter/RT_Event_Service/Makefile:
-	* docs/tutorials/Quoter/Simple/Client/Makefile:
-	* docs/tutorials/Quoter/Simple/Impl-Repo/Makefile:
-	* docs/tutorials/Quoter/Simple/ImprovedServer/Makefile:
-	* docs/tutorials/Quoter/Simple/Persistent/Makefile:
-	* docs/tutorials/Quoter/Simple/Server/Makefile:
-	* docs/tutorials/Quoter/idl/Makefile:
+        * performance-tests/RTCorba/Multiple_Endpoints/Common/Makefile:
+        * docs/tutorials/Quoter/AMI/Makefile:
+        * docs/tutorials/Quoter/Event_Service/Makefile:
+        * docs/tutorials/Quoter/Naming_Service/Makefile:
+        * docs/tutorials/Quoter/On_Demand_Activation/Makefile:
+        * docs/tutorials/Quoter/RT_Event_Service/Makefile:
+        * docs/tutorials/Quoter/Simple/Client/Makefile:
+        * docs/tutorials/Quoter/Simple/Impl-Repo/Makefile:
+        * docs/tutorials/Quoter/Simple/ImprovedServer/Makefile:
+        * docs/tutorials/Quoter/Simple/Persistent/Makefile:
+        * docs/tutorials/Quoter/Simple/Server/Makefile:
+        * docs/tutorials/Quoter/idl/Makefile:
 
-	  Updated dependencies.
+          Updated dependencies.
 
-	* docs/tutorials/Quoter/On_Demand_Activation/Stock_Factory_Locator_i.h:
-	  #included ORB.h instead of corba.h.
+        * docs/tutorials/Quoter/On_Demand_Activation/Stock_Factory_Locator_i.h:
+          #included ORB.h instead of corba.h.
 
 Tue Oct 28 22:04:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/examples/CosEC/Factory/FactoryClient.cpp:
-	* orbsvcs/examples/Log/Basic/TLS_Client.cpp:
-	* orbsvcs/examples/ORT/Server_IORInterceptor.h:
-	* orbsvcs/examples/ORT/Server_IORInterceptor_ORBInitializer.cpp:
-	* orbsvcs/examples/ORT/server.cpp:
-	* orbsvcs/tests/InterfaceRepo/Latency_Test/Latency_Query_Client.h:
-	* orbsvcs/tests/LoadBalancing/LoadMonitor/CPU/Makefile:
-	* orbsvcs/tests/Log/Basic_Log_Test/client.cpp:
-	* orbsvcs/tests/RTCosScheduling/client.cpp:
+        * orbsvcs/examples/CosEC/Factory/FactoryClient.cpp:
+        * orbsvcs/examples/Log/Basic/TLS_Client.cpp:
+        * orbsvcs/examples/ORT/Server_IORInterceptor.h:
+        * orbsvcs/examples/ORT/Server_IORInterceptor_ORBInitializer.cpp:
+        * orbsvcs/examples/ORT/server.cpp:
+        * orbsvcs/tests/InterfaceRepo/Latency_Test/Latency_Query_Client.h:
+        * orbsvcs/tests/LoadBalancing/LoadMonitor/CPU/Makefile:
+        * orbsvcs/tests/Log/Basic_Log_Test/client.cpp:
+        * orbsvcs/tests/RTCosScheduling/client.cpp:
 
-	  All those simple mistakes that were left behind. Changing
-	  corba.h to ORB.h, including additional header files like
-	  ace/Log_Msg.h were done to get these files compiling.
+          All those simple mistakes that were left behind. Changing
+          corba.h to ORB.h, including additional header files like
+          ace/Log_Msg.h were done to get these files compiling.
 
 Tue Oct 28 21:53:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
 
-	  Removed #include of Invocation.h. We need to remove this from
-	  the repo. We will do that once things stabilize a bit.
+          Removed #include of Invocation.h. We need to remove this from
+          the repo. We will do that once things stabilize a bit.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.h: Removed the
-	  declaratrion of _tao_QueryInterface () since it is no longer
-	  required.
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.h: Removed the
+          declaratrion of _tao_QueryInterface () since it is no longer
+          required.
 
-	* orbsvcs/tests/Security/MT_IIOP_SSL/Makefile:
+        * orbsvcs/tests/Security/MT_IIOP_SSL/Makefile:
 
-	  Updated dependecies.
+          Updated dependecies.
 
-	* orbsvcs/tests/Security/MT_IIOP_SSL/Server_Worker.h:
-	* orbsvcs/tests/Security/MT_SSLIOP/Server_Worker.h:
+        * orbsvcs/tests/Security/MT_IIOP_SSL/Server_Worker.h:
+        * orbsvcs/tests/Security/MT_SSLIOP/Server_Worker.h:
 
-	  Changed the #include of corba.h to ORB.h. This (corba.h)
-	  is another file that needs to be removed from the repo.
+          Changed the #include of corba.h to ORB.h. This (corba.h)
+          is another file that needs to be removed from the repo.
 
-	* orbsvcs/tests/Security/Secure_Invocation/server.cpp: Fixed a
-	  unused variable warning.
+        * orbsvcs/tests/Security/Secure_Invocation/server.cpp: Fixed a
+          unused variable warning.
 
 Tue Oct 28 21:51:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -535,55 +544,55 @@ Tue Oct 28 21:51:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Tue Oct 28 20:56:41 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_sequence.cpp:
-	* TAO_IDL/be/be_visitor_arg_traits.cpp:
-	* TAO_IDL/be_include/be_sequence.h:
-	* TAO_IDL/be_include/be_visitor_arg_traits.h:
-	* TAO_IDL/util/utl_scope.cpp:
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_visitor_arg_traits.cpp:
+        * TAO_IDL/be_include/be_sequence.h:
+        * TAO_IDL/be_include/be_visitor_arg_traits.h:
+        * TAO_IDL/util/utl_scope.cpp:
 
-	  Fixed warnings that arose due to a conversion of string to a
-	  non-const pointers.
+          Fixed warnings that arose due to a conversion of string to a
+          non-const pointers.
 
 Tue Oct 28 15:53:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Invocation_Adapter.h:
-	* tao/Invocation_Adapter.inl:
-	* tao/Invocation_Adapter.h:
-	* tao/Invocation_Adapter.inl:
-	* tao/DynamicInterface/DII_Invocation_Adapter.cpp:
-	* tao/DynamicInterface/DII_Invocation_Adapter.h:
-	* tao/Messaging/Asynch_Invocation_Adapter.cpp:
-	* tao/Messaging/Asynch_Invocation_Adapter.h
+        * tao/Invocation_Adapter.h:
+        * tao/Invocation_Adapter.inl:
+        * tao/Invocation_Adapter.h:
+        * tao/Invocation_Adapter.inl:
+        * tao/DynamicInterface/DII_Invocation_Adapter.cpp:
+        * tao/DynamicInterface/DII_Invocation_Adapter.h:
+        * tao/Messaging/Asynch_Invocation_Adapter.cpp:
+        * tao/Messaging/Asynch_Invocation_Adapter.h
 
-	  Added const qualifier to the operation names. Not sure how this
-	  got missed. Thought I had done this once before!
+          Added const qualifier to the operation names. Not sure how this
+          got missed. Thought I had done this once before!
 
 Tue Oct 28 14:06:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/AVStreams/Latency/pong.cpp:
+        * orbsvcs/tests/AVStreams/Latency/pong.cpp:
 
-	  #included ORB.h and removed corba.h
+          #included ORB.h and removed corba.h
 
-	* tao/Invocation_Adapter.h: Cosmetic fixes.
+        * tao/Invocation_Adapter.h: Cosmetic fixes.
 
-	* TAO_IDL/be/be_visitor_valuetype/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/any_op_cs.cpp:
 
-	  Implementation of the insertion operators for the valuetypes
-	  generated the ACE_INLINE macro. Removed generation of the
-	  ACE_INLINE macro.
+          Implementation of the insertion operators for the valuetypes
+          generated the ACE_INLINE macro. Removed generation of the
+          ACE_INLINE macro.
 
 Tue Oct 28 13:48:50 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Invocation_Adapter.h:
+        * tao/Invocation_Adapter.h:
 
-	  Added some documentation. More stuff needs to be added.
+          Added some documentation. More stuff needs to be added.
 
-	* tao/Profile_Transport_Resolver.cpp:
+        * tao/Profile_Transport_Resolver.cpp:
 
-	  Cosmetic fix.
+          Cosmetic fix.
 
-	* tao/Messaging/MessagingC.cpp:
-	* tao/ObjRefTemplate/ObjectReferenceTemplateC.cpp:
+        * tao/Messaging/MessagingC.cpp:
+        * tao/ObjRefTemplate/ObjectReferenceTemplateC.cpp:
 
           Fixed a couple of fuzz errors that slipped.
 
@@ -615,164 +624,164 @@ Tue Oct 28 13:21:43 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Tue Oct 28 13:11:03 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/ORB.cpp:
-	* tao/Service_Callbacks.cpp:
+        * tao/ORB.cpp:
+        * tao/Service_Callbacks.cpp:
 
-	  Fixed compilation errors due to a wrong casting of an int as an
-	  enum. VC6.o doesn't like this.
+          Fixed compilation errors due to a wrong casting of an int as an
+          enum. VC6.o doesn't like this.
 
 Tue Oct 28 12:47:54 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_visitor_typedef/typedef_ch.cpp
-	  (visit_interface_fwd):
+        * TAO_IDL/be/be_visitor_typedef/typedef_ch.cpp
+          (visit_interface_fwd):
 
-	  Unused variable warning.
+          Unused variable warning.
 
 Tue Oct 28 12:39:01 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Any.cpp (operator>>):
+        * tao/Any.cpp (operator>>):
 
-	  Inspite of numerous compilations we seemed to have missed a
-	  warning. The fix is to use .in () on a Typecode_var while
-	  passing the pointer to another object.
+          Inspite of numerous compilations we seemed to have missed a
+          warning. The fix is to use .in () on a Typecode_var while
+          passing the pointer to another object.
 
 Tue Oct 28 12:02:47 2003  Balachandran Natarajan <bala@dre.vanderbilt.edu>
                           Jeff Parsons  <parsons@dre.vanderbilt.edu>
 
-	This checkin is aimed at revamping the invocation code path
-	including the generated code. The design is outlined in the
+        This checkin is aimed at revamping the invocation code path
+        including the generated code. The design is outlined in the
         bugzilla. Please see
 
-	http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1369
+        http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1369
 
-	This checkin only concentrates on the stub path. During the work
-	we tried addressing the following additional problems
+        This checkin only concentrates on the stub path. During the work
+        we tried addressing the following additional problems
 
-	- Header inclusions. Now IDL compiler generates just enough
-	  headers for the applications. There is no need to include
-	  corba.h or corbafwd.h anymore.
+        - Header inclusions. Now IDL compiler generates just enough
+          headers for the applications. There is no need to include
+          corba.h or corbafwd.h anymore.
 
-	- Wide range of problems with PortableInterceptors. Please see the
-	  dependencies in the above bug list.
+        - Wide range of problems with PortableInterceptors. Please see the
+          dependencies in the above bug list.
 
-	- We have tried reducing the inter-header dependencies quite a
-	  bit within the TAO library. Other libraries need more
-	  work. There are more places in TAO where this can be done
-	  effectively. We will address all of them with time.
+        - We have tried reducing the inter-header dependencies quite a
+          bit within the TAO library. Other libraries need more
+          work. There are more places in TAO where this can be done
+          effectively. We will address all of them with time.
 
-	- We have changed most of the tests and examples including the ORB
-	  services to include thelight weight headers.
+        - We have changed most of the tests and examples including the ORB
+          services to include thelight weight headers.
 
-	- The generated code has gone down by more than 50%
-	  everywhere. This work also clearly demarcates the responsibility
-	  of the IDL compiler from the ORB. More work is needed on the
-	  skeleton side.
+        - The generated code has gone down by more than 50%
+          everywhere. This work also clearly demarcates the responsibility
+          of the IDL compiler from the ORB. More work is needed on the
+          skeleton side.
 
-	More gory details of the changes can be found in
-	$TAO_ROOT/ChangeLogs/ChangeLog-03d. The documentation for all the
-	new interfaces are not complete yet. We will do them as we
-	cleanup the scoreboard.
+        More gory details of the changes can be found in
+        $TAO_ROOT/ChangeLogs/ChangeLog-03d. The documentation for all the
+        new interfaces are not complete yet. We will do them as we
+        cleanup the scoreboard.
 
         * ChangeLogs/ChangeLog-03d: New changelog entry for the changes.
 
 Tue Oct 28 12:01:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ChangeLogs/ChangeLog-03c: Moved a bunch of ChangeLog entries
-	  right untril 1.3.5 to this new file.
+        * ChangeLogs/ChangeLog-03c: Moved a bunch of ChangeLog entries
+          right untril 1.3.5 to this new file.
 
 Tue Oct 28 07:05:46 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	The following changes are designed to make profile equivalance
-	checking code consistent between all pluggable protocol
-	implementations.
+        The following changes are designed to make profile equivalance
+        checking code consistent between all pluggable protocol
+        implementations.
 
-	* tao/Profile.h (is_equivalent):
+        * tao/Profile.h (is_equivalent):
 
-	  This method is no longer virtual since it relies on template
-	  methods implemented by subclasses to perform pluggable
-	  protocol-specific profile equivalence check processing.
+          This method is no longer virtual since it relies on template
+          methods implemented by subclasses to perform pluggable
+          protocol-specific profile equivalence check processing.
 
-	  (do_is_equivalent):
+          (do_is_equivalent):
 
-	  New protected template method that subclasses must implement in
-	  order to allow pluggable protocols to apply their own definition
-	  of profile equivalance.
+          New protected template method that subclasses must implement in
+          order to allow pluggable protocols to apply their own definition
+          of profile equivalance.
 
-	  (endpoint_count):
+          (endpoint_count):
 
-	  Made this method const to address "discards const qualifier"
-	  errors.  This is now necessary since some equivalence checking
-	  code that calls this method has been refactored to the
-	  is_equivalence() method.
+          Made this method const to address "discards const qualifier"
+          errors.  This is now necessary since some equivalence checking
+          code that calls this method has been refactored to the
+          is_equivalence() method.
 
-	* tao/Profile.cpp (is_equivalent):
+        * tao/Profile.cpp (is_equivalent):
 
-	  Check for a zero pointer to avoid potential a seg fault.
+          Check for a zero pointer to avoid potential a seg fault.
 
-	  Invoke the new do_is_equivalent() template method and the new
-	  is_equivalent_hook() hook method.
+          Invoke the new do_is_equivalent() template method and the new
+          is_equivalent_hook() hook method.
 
-	  (is_profile_equivalent_i, is_equivalent_hook):
+          (is_profile_equivalent_i, is_equivalent_hook):
 
-	  Renamed is_profile_equivalent_i() method to is_equivalent_hook()
-	  to better reflect the purpose of this method.  Note that
-	  is_equivalent_hook() is virtual to allow subclasses to override
-	  the default behavior.
+          Renamed is_profile_equivalent_i() method to is_equivalent_hook()
+          to better reflect the purpose of this method.  Note that
+          is_equivalent_hook() is virtual to allow subclasses to override
+          the default behavior.
 
-	  (is_equivalent_hook):
+          (is_equivalent_hook):
 
-	  The TAO_Unknown_Profile::is_equivalent() method does not need to
-	  allow some services (e.g. FT) to apply their own definition of
-	  profile equivalence.  Override this method so that it always
-	  return true.  Note that this behavior is consistent with the
-	  behavior that existed prior to these changes.
+          The TAO_Unknown_Profile::is_equivalent() method does not need to
+          allow some services (e.g. FT) to apply their own definition of
+          profile equivalence.  Override this method so that it always
+          return true.  Note that this behavior is consistent with the
+          behavior that existed prior to these changes.
 
-	* tao/IIOP_Profile.h (endpoint_count):
+        * tao/IIOP_Profile.h (endpoint_count):
 
-	  Now a "const" method to address "discards const qualifier"
-	  errors.
+          Now a "const" method to address "discards const qualifier"
+          errors.
 
-	  (is_equivalent, do_is_equivalent):
+          (is_equivalent, do_is_equivalent):
 
-	  Renamed this public method to the new protected
-	  do_is_equivalent() template method.
+          Renamed this public method to the new protected
+          do_is_equivalent() template method.
 
-	* tao/IIOP_Profile.cpp (is_equivalent):
+        * tao/IIOP_Profile.cpp (is_equivalent):
 
-	  Refactored common profile equivalence checking code to the
-	  TAO_Profile base class.
+          Refactored common profile equivalence checking code to the
+          TAO_Profile base class.
 
-	  (do_is_equivalent):
+          (do_is_equivalent):
 
-	  Moved protocol-specific profile equivalence checks to this
-	  template method.
+          Moved protocol-specific profile equivalence checks to this
+          template method.
 
-	  (endpoint_count):
+          (endpoint_count):
 
-	  Now a "const" method to address "discards const qualifier"
-	  errors.
+          Now a "const" method to address "discards const qualifier"
+          errors.
 
-	* tao/Strategies/DIOP_Profile.h:
-	* tao/Strategies/DIOP_Profile.cpp:
-	* tao/Strategies/SCIOP_Profile.h:
-	* tao/Strategies/SCIOP_Profile.cpp:
-	* tao/Strategies/SHMIOP_Profile.h:
-	* tao/Strategies/SHMIOP_Profile.cpp:
-	* tao/Strategies/UIOP_Profile.h:
-	* tao/Strategies/UIOP_Profile.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.h:
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp:
+        * tao/Strategies/DIOP_Profile.h:
+        * tao/Strategies/DIOP_Profile.cpp:
+        * tao/Strategies/SCIOP_Profile.h:
+        * tao/Strategies/SCIOP_Profile.cpp:
+        * tao/Strategies/SHMIOP_Profile.h:
+        * tao/Strategies/SHMIOP_Profile.cpp:
+        * tao/Strategies/UIOP_Profile.h:
+        * tao/Strategies/UIOP_Profile.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp:
 
-	  Likewise.
+          Likewise.
 
-	* orbsvcs/tests/Security/Secure_Invocation/server.cpp:
+        * orbsvcs/tests/Security/Secure_Invocation/server.cpp:
 
-	  Added a sanity check for properly functioning SSLIOP object
-	  reference equivalence checks.  Thanks to Sebastien Lalonde
-	  <SLalonde@interstarinc.com> for pointing out that SSLIOP object
-	  reference equivalence was not working properly.
+          Added a sanity check for properly functioning SSLIOP object
+          reference equivalence checks.  Thanks to Sebastien Lalonde
+          <SLalonde@interstarinc.com> for pointing out that SSLIOP object
+          reference equivalence was not working properly.
 
 Sat Oct 25 13:19:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
