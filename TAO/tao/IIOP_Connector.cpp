@@ -547,11 +547,11 @@ template class ACE_Auto_Basic_Array_Ptr<TAO_IIOP_Connection_Handler*>;
 #pragma instantiate ACE_Auto_Basic_Array_Ptr<ACE_INET_Addr>
 #pragma instantiate ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >
 
-#pragma instantiate TAO_Connect_Concurrency_Strategy<TAO_IIOP_Connection_Handler>;
-#pragma instantiate TAO_Connect_Creation_Strategy<TAO_IIOP_Connection_Handler>;
+#pragma instantiate TAO_Connect_Concurrency_Strategy<TAO_IIOP_Connection_Handler>
+#pragma instantiate TAO_Connect_Creation_Strategy<TAO_IIOP_Connection_Handler>
 #pragma instantiate ACE_Strategy_Connector<TAO_IIOP_Connection_Handler, ACE_SOCK_CONNECTOR>
 #pragma instantiate ACE_Connect_Strategy<TAO_IIOP_Connection_Handler, ACE_SOCK_CONNECTOR>
-#pragma instantiate ACE_Connector<TAO_IIOP_Connection_Handler, ACE_SOCK_Connector>
+#pragma instantiate ACE_Connector<TAO_IIOP_Connection_Handler, ACE_SOCK_CONNECTOR>
 #pragma instantiate ACE_Svc_Tuple<TAO_IIOP_Connection_Handler>
 
 #pragma instantiate ACE_Map_Manager<int, ACE_Svc_Tuple<TAO_IIOP_Connection_Handler> *, ACE_SYNCH_RW_MUTEX>

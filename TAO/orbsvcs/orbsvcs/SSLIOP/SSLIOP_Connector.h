@@ -32,44 +32,11 @@
 
 #include "ace/SSL/SSL_SOCK_Connector.h"
 #include "IIOP_SSL_Connector.h"
-#include "SSLIOP_Connect.h"
+#include "SSLIOP_Connection_Handler.h"
 #include "tao/Resource_Factory.h"
 
 
 class TAO_Base_Connection_Property;
-// ****************************************************************
-
-class TAO_SSLIOP_Export TAO_SSLIOP_Connect_Creation_Strategy
-  : public ACE_Creation_Strategy<TAO_SSLIOP_Client_Connection_Handler>
-{
-  // = TITLE
-  //   Helper creation strategy
-  //
-  // = DESCRIPTION
-  //   Creates SSLIOP_Client_Connection_Handler objects but satisfies
-  //   the interface required by the
-  //   ACE_Creation_Strategy<TAO_SSLIOP_Client_Connection_Handler>.
-  //
-public:
-  TAO_SSLIOP_Connect_Creation_Strategy (ACE_Thread_Manager * = 0,
-                                        TAO_ORB_Core* orb_core = 0,
-                                        void *arg = 0);
-  // Constructor. <arg> parameter is used to pass any special
-  // state/info to the service handler upon creation.  Currently used
-  // to pass protocol configuration properties.
-
-  virtual int make_svc_handler (TAO_SSLIOP_Client_Connection_Handler *&sh);
-  // Makes TAO_SSLIOP_Client_Connection_Handlers
-
-private:
-  TAO_ORB_Core* orb_core_;
-  // The ORB
-
-  void *arg_;
-  // Some info/state to be passed to the service handler we create.
-};
-
-// ****************************************************************
 
 class TAO_SSLIOP_Export TAO_SSLIOP_Connector : public TAO_IIOP_SSL_Connector
 {
@@ -107,16 +74,20 @@ protected:
 
 public:
 
-  typedef ACE_NOOP_Concurrency_Strategy<TAO_SSLIOP_Client_Connection_Handler>
-        TAO_SSLIOP_NULL_ACTIVATION_STRATEGY;
 
-  typedef ACE_Connect_Strategy<TAO_SSLIOP_Client_Connection_Handler,
-                               ACE_SSL_SOCK_CONNECTOR>
-        TAO_SSLIOP_CONNECT_STRATEGY;
+  typedef TAO_Connect_Concurrency_Strategy<TAO_SSLIOP_Connection_Handler>
+          TAO_SSLIOP_CONNECT_CONCURRENCY_STRATEGY;
 
-  typedef ACE_Strategy_Connector<TAO_SSLIOP_Client_Connection_Handler,
-                                 ACE_SSL_SOCK_CONNECTOR>
-        TAO_SSLIOP_BASE_CONNECTOR;
+  typedef TAO_Connect_Creation_Strategy<TAO_SSLIOP_Connection_Handler>
+          TAO_SSLIOP_CONNECT_CREATION_STRATEGY;
+
+  typedef ACE_Connect_Strategy<TAO_SSLIOP_Connection_Handler,
+                               ACE_SOCK_CONNECTOR>
+          TAO_SSLIOP_CONNECT_STRATEGY ;
+
+  typedef ACE_Strategy_Connector<TAO_SSLIOP_Connection_Handler,
+                                 ACE_SOCK_CONNECTOR>
+          TAO_SSLIOP_BASE_CONNECTOR;
 
 private:
 
@@ -124,14 +95,11 @@ private:
   // If zero, connect to IIOP over SSL port by default.
   // Otherwise, connect to the insecure IIOP port.
 
-  TAO_SSLIOP_NULL_ACTIVATION_STRATEGY null_activation_strategy_;
-  // Our activation strategy
-
+  /// Our connect strategy
   TAO_SSLIOP_CONNECT_STRATEGY connect_strategy_;
-  // Our connect strategy
 
+  /// The connector initiating connection requests for IIOP.
   TAO_SSLIOP_BASE_CONNECTOR base_connector_;
-  // The connector initiating connection requests for IIOP.
 };
 
 

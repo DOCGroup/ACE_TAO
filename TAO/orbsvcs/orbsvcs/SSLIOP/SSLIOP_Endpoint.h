@@ -72,7 +72,7 @@ public:
   const SSLIOP::SSL &ssl_component (void) const;
   // Return SSL component corresponding to this endpoint.
 
-  TAO_SSLIOP_Client_Connection_Handler *&ssl_hint (void);
+  // TAO_SSLIOP_Client_Connection_Handler *&ssl_hint (void);
   // Access to our <hint_>.
 
   CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint);
@@ -97,7 +97,7 @@ private:
   // Cache the SSL tagged component in a decoded format. Notice that
   // we do not need to marshal this object!
 
-  TAO_SSLIOP_Client_Connection_Handler *ssl_hint_;
+  // TAO_SSLIOP_Client_Connection_Handler *ssl_hint_;
   // Hint indicating the last successfully used connection handler for
   // a connection established through this endpoint's acceptor.
 

@@ -15,8 +15,9 @@ TAO_SSLIOP_Endpoint::ssl_component (void) const
   return this->ssl_component_;
 }
 
-ACE_INLINE TAO_SSLIOP_Client_Connection_Handler *&
+/*ACE_INLINE TAO_SSLIOP_Client_Connection_Handler *&
 TAO_SSLIOP_Endpoint::ssl_hint(void)
 {
   return this->ssl_hint_;
 }
+*/
