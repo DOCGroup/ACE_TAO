@@ -1,30 +1,3 @@
-                        TNF client-side profile for MT-Orbix for 20000 calls
-
-Function name         %      self+desc.          mean     max      min     std.
-                     time       ms       calls  ms/call ms/call  ms/call   err
-________________________________________________________________________________
-cond_wait            6.23     4250.242   1824    2.330  106.171    1.205   0.091
-mutex_lock           0.23      159.830  56662    0.003    1.215    0.002   0.000
-mutex_unlock         0.22      146.756  56663    0.003    0.326    0.002   0.000
-cond_signal          0.09       61.030   1825    0.033    0.475    0.009   0.000
-rw_rdlock            0.01        7.179   1826    0.004    0.014    0.003   0.000
-rw_unlock            0.01        6.548   1827    0.004    0.014    0.003   0.000
-rw_wrlock            0.00        0.004      1    0.004    0.004    0.004   0.000
-
-                        TNF server-side profile for MT-Orbix for 20000 calls
-
-
-Function name         %      self+desc.          mean     max      min     std.
-                     time       ms       calls  ms/call ms/call  ms/call   err
-________________________________________________________________________________
-cond_timedwait       1.25      923.527    797    1.159   20.219    0.324   0.028
-mutex_lock           0.21      153.839  56435    0.003    4.342    0.002   0.000
-mutex_unlock         0.20      149.208  56433    0.003    3.559    0.002   0.000
-cond_signal          0.03       21.506    809    0.027    1.826    0.003   0.002
-rw_unlock            0.02       16.058   3224    0.005    2.915    0.003   0.001
-rw_rdlock            0.02       11.924   3221    0.004    0.087    0.003   0.000
-rw_wrlock            0.00        0.010      2    0.005    0.005    0.004   0.000
-
 Cubit results over Ethernet with 20,000 calls
 ---------------------------------------------
 
@@ -68,3 +41,71 @@ MT-Orbix Thread-Pool (25)      1        1.913                   522
 MT-Orbix Thread-Per-Session    1        1.959                   510
                                2        3.29                    303
                                3        5.15                    194
+
+
+Prime_Factor results over ATM with 20,000 calls
+-----------------------------------------------
+
+                               Clients  Latency (ms)            Calls/Sec
+
+MT-Orbix without filters       1         7.918                  126
+                               2        14.300                   70                    
+                               3        21.000                   47
+
+
+MT-Orbix Thread-Per-Request    1         8.302                  120
+                               2        10.128                   98
+                               3        13.722                   72
+
+MT-Orbix Thread-Pool (25)      1         8.442                  118
+                               2        15.764                   63  
+                               3        22.595                   44
+
+MT-Orbix Thread-Per-Session    1         8.956                  111
+                               2         9.581                  104
+                               3        16.702                   59
+
+      TNF client-side profile for MT-Orbix without filters for 20000 calls
+
+Function name         %      self+desc.          mean     max      min     std.
+                     time       ms       calls  ms/call ms/call  ms/call   err
+________________________________________________________________________________
+cond_wait            6.23     4250.242   1824    2.330  106.171    1.205   0.091
+mutex_lock           0.23      159.830  56662    0.003    1.215    0.002   0.000
+mutex_unlock         0.22      146.756  56663    0.003    0.326    0.002   0.000
+cond_signal          0.09       61.030   1825    0.033    0.475    0.009   0.000
+rw_rdlock            0.01        7.179   1826    0.004    0.014    0.003   0.000
+rw_unlock            0.01        6.548   1827    0.004    0.014    0.003   0.000
+rw_wrlock            0.00        0.004      1    0.004    0.004    0.004   0.000
+
+       TNF server-side profile for MT-Orbix without filters for 20000 calls
+
+
+Function name         %      self+desc.          mean     max      min     std.
+                     time       ms       calls  ms/call ms/call  ms/call   err
+________________________________________________________________________________
+cond_timedwait       1.25      923.527    797    1.159   20.219    0.324   0.028
+mutex_lock           0.21      153.839  56435    0.003    4.342    0.002   0.000
+mutex_unlock         0.20      149.208  56433    0.003    3.559    0.002   0.000
+cond_signal          0.03       21.506    809    0.027    1.826    0.003   0.002
+rw_unlock            0.02       16.058   3224    0.005    2.915    0.003   0.001
+rw_rdlock            0.02       11.924   3221    0.004    0.087    0.003   0.000
+rw_wrlock            0.00        0.010      2    0.005    0.005    0.004   0.000
+
+       TNF server-side profile for MT-Orbix with thread-per-request for 20000 calls
+
+
+Function name         %      self+desc.          mean     max      min     std.
+                     time       ms       calls  ms/call ms/call  ms/call   err
+________________________________________________________________________________
+mutex_lock           0.55      797.890  57618    0.014    4.624    0.002   0.000
+cond_timedwait       0.52      748.560    478    1.566    3.918    0.222   0.019
+mutex_unlock         0.36      514.627  57616    0.009    3.975    0.002   0.000
+cond_signal          0.02       24.216   1151    0.021    1.161    0.002   0.001
+rw_rdlock            0.01       13.120   2301    0.006    1.180    0.003   0.001
+rw_unlock            0.01       10.575   2307    0.005    0.316    0.003   0.000
+thr_sigsetmask       0.00        1.949     30    0.065    1.064    0.013   0.035
+rw_wrlock            0.00        0.033      6    0.006    0.008    0.004   0.001
+
+
+
