@@ -1031,8 +1031,8 @@ TAO_SFP_Object::send_frame (const iovec * /*iov*/,
 }
 
 int
-TAO_SFP_Object::send_frame (const char*buf,
-                               size_t len)
+TAO_SFP_Object::send_frame (const char* /*buf*/,
+                               size_t /*len*/)
 {
   return 0;
 }
