@@ -1,3 +1,10 @@
+Fri Mar  2 07:51:04 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * tests/makefile.bor:
+        * tests/Forwarding/*.bor:
+
+          Added BCB specific makefiles for this TAO test
+
 Thu Mar  1 18:24:32 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * examples/POA/Adapter_Activator/server.dsp:
@@ -42,8 +49,8 @@ Thu Mar  1 18:51:45 2001  Jeff Parsons <parsons@cs.wustl.edu>
         * TAO_IDL/be/be_visitor_sequence/sequence_ci.cpp:
 
           Disabled generation of _var and _out classes for
-          anonymous sequences and arrays (those not declared in an 
-          IDL file via a typedef), as required by the spec. 
+          anonymous sequences and arrays (those not declared in an
+          IDL file via a typedef), as required by the spec.
           This closes [BUGID:677].
 
 Thu Mar  1 15:54:54 2001  Ossama Othman  <ossama@uci.edu>
@@ -57,10 +64,10 @@ Thu Mar  1 15:54:54 2001  Ossama Othman  <ossama@uci.edu>
 
 Thu Mar  1 17:49:51 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/Protocol_Factory.cpp: 
-	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp: 
-	* orbsvcs/orbsvcs/AV/AV_Core.cpp: 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: 
+	* orbsvcs/orbsvcs/AV/Protocol_Factory.cpp:
+	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp:
+	* orbsvcs/orbsvcs/AV/AV_Core.cpp:
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
 
 	  Removed unncessary ACE_DEBUGS and ensconced the others with
 	  TAO_debug_level checks. This should fix the tests from failing.
@@ -69,15 +76,15 @@ Thu Mar  1 14:14:38 2001  Darrell Brunsch <brunsch@uci.edu>
 
         And today's quote is.....
 
-        "What we call progress is the exchange of one Nuisance for another 
+        "What we call progress is the exchange of one Nuisance for another
          Nuisance."
                      - Havelock Ellis
 
         This is the first in a set of updates to the run_test.pl scripts.
         The goal is to start running the tests for the Release configuration
-        and for Borland.  These setups output the executables into sub- 
+        and for Borland.  These setups output the executables into sub-
         directories, which wasn't handled too well by the old ACEutils.pm
-        perl module.  PerlACE::Run_Test contains an updated Process class 
+        perl module.  PerlACE::Run_Test contains an updated Process class
         which does a much better job of handling this (among other things).
 
         * performance-tests/Latency/deferred_synch_client.dsp:
@@ -116,12 +123,12 @@ Thu Mar  1 14:14:38 2001  Darrell Brunsch <brunsch@uci.edu>
         * performance-tests/RTCorba/Oneways/Reliable/client_test.pl:
         * performance-tests/RTCorba/Oneways/Reliable/run_test.pl:
 
-          Updated to use PerlACE::Run_Test.  
+          Updated to use PerlACE::Run_Test.
 
 Tue Feb 27 17:45:55 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Latency/control.cpp: 	
-	* orbsvcs/tests/AVStreams/Latency/pong.cpp: 
+	* orbsvcs/tests/AVStreams/Latency/control.cpp:
+	* orbsvcs/tests/AVStreams/Latency/pong.cpp:
 
 Thu Mar  1 15:21:53 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -187,7 +194,7 @@ Thu Mar  1 10:39:49 2001  Ossama Othman  <ossama@uci.edu>
 Thu Mar 01 12:18:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* tests/AMI_Timeouts/client.cpp:
-	
+
 	  Added a ".in ()" when passing a _var as _ptr.
 
 	* tests/AMI_Timeouts/Makefile:
@@ -300,7 +307,7 @@ Thu Mar 01 09:38:28 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORB_Core.h:
 	* tao/ORB_Core.cpp (destroy_interceptors):
-  
+
 	  New helper method that invokes Interceptor::destroy() on all
 	  registered interceptors when ORB::destroy() is called.
 
@@ -361,7 +368,7 @@ Thu Mar 01 09:38:28 2001  Ossama Othman  <ossama@uci.edu>
 	  Updated current status of TAO's interceptor support
 	  (e.g. addition of the CodecFactory and CDR encapsulation Codec),
 	  and the reference list (URL for the adopted Portable Interceptor
-	  specification). 
+	  specification).
 
 Thu Mar  1 09:30:14 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -377,13 +384,13 @@ Thu Mar  1 09:30:14 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Wed Feb 28 20:44:37 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Pluggable/ftp.cpp: 
-	* orbsvcs/tests/AVStreams/Latency/pong.h: 
-	* orbsvcs/tests/AVStreams/Latency/ping.h: 
-	* orbsvcs/tests/AVStreams/Latency/ping.cpp: 
+	* orbsvcs/tests/AVStreams/Pluggable/ftp.cpp:
+	* orbsvcs/tests/AVStreams/Latency/pong.h:
+	* orbsvcs/tests/AVStreams/Latency/ping.h:
+	* orbsvcs/tests/AVStreams/Latency/ping.cpp:
 
 	  Fixed compile errors and warnings.
-	
+
 Wed Feb 28 15:43:54 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/orbconf.h: Fixed a small mistake for the default case.
@@ -391,12 +398,12 @@ Wed Feb 28 15:43:54 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 Wed Feb 28 15:23:46 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* docs/Options.html: Added documentation for the option
-	  "-ORBConnectionCacheLock". 
+	  "-ORBConnectionCacheLock".
 
 Wed Feb 28 15:20:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/orbconf.h: Added a check to notify the users that compiling
-	  RT CORBA without CORBA Messaging support is an error. 
+	  RT CORBA without CORBA Messaging support is an error.
 
 Wed Feb 28 14:23:41 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -408,7 +415,7 @@ Wed Feb 28 14:23:41 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  deallocation for every call along the critical path. We now rip
 	  open the GIOP::IORAddressingInfo structure and store the
 	  information that is just required like the <type_id> and the
-	  <IOP::TaggedProfile>. 
+	  <IOP::TaggedProfile>.
 
 	* tao/GIOP_Message_Generator_Parser.cpp: Added code to do a lazy
 	  evaluation of GIOP::IORAddressingInfo structure that we may
@@ -416,7 +423,7 @@ Wed Feb 28 14:23:41 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Wed Feb 28 14:17:46 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Makefile: Added AMI_Timeouts to the list of directories.  
+	* tests/Makefile: Added AMI_Timeouts to the list of directories.
 
 Wed Feb 28 14:16:00 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
