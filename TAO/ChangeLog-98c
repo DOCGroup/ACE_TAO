@@ -9,6 +9,10 @@ Wed Apr 29 14:06:35 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 	Sergio, and Sumedh who were trying in vain to understand why
 	things were failing.
 
+	* TAO_IDL/be/be_visitor_interface.cpp: Moved the code generation
+	of static Param_Data tables for the _is_a_skel from the outer
+	global scope to inside the skeleton for _is_a_skel.
+
 Wed Apr 29 12:26:12 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/tests/EC_Multiple/Makefile:
