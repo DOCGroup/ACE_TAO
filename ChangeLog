@@ -16,6 +16,7 @@ Fri May  7 09:11:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
           Removed this file, with the rework in ACE_OS the ACE_OS_Export has
           been deprecated and not used. This file is only used in the ACE
           library itself and not by users, so it is safe to remove this.
+          This fixes bugid 1700.
 
         * ace/ace.mpc:
         * ace/config-win32-ghs.h:
