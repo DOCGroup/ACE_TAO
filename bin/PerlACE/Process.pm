@@ -4,8 +4,32 @@ package PerlACE::Process;
 
 use strict;
 use English;
+use POSIX qw(:time_h);
 
 $PerlACE::Process::ExeSubDir = './';
+
+sub delay_factor {
+  my($lps)    = 128;
+  my($factor) = 1;
+
+  ## Keep increasing the loops per second until the amount of time
+  ## exceeds the number of clocks per second.  The original code
+  ## did not multiply $ticks by 8 but, for faster machines, it doesn't
+  ## seem to return false values.  The multiplication is done to minimize
+  ## the amount of time it takes to determine the correct factor.
+  while(($lps <<= 1)) {
+    my($ticks) = clock();
+    for(my $i = $lps; $i >= 0; $i--) {
+    }
+    $ticks = clock() - $ticks;
+    if ($ticks * 8 >= CLOCKS_PER_SEC) {
+      $factor = 500000 / (($lps / $ticks) * CLOCKS_PER_SEC);
+      last;
+    }
+  }
+
+  return $factor;
+}
 
 ### Check for -ExeSubDir commands, store the last one
 my @new_argv = ();
