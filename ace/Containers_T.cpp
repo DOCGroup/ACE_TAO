@@ -2229,11 +2229,12 @@ ACE_DLList<T>::delete_tail (void)
   return temp2;
 }
 
+// ****************************************************************
 
 // Dynamically initialize an array.
 
 template <class T>
-ACE_Array<T>::ACE_Array (size_t size)
+ACE_Array_Base<T>::ACE_Array_Base (size_t size)
   : max_size_ (size),
     cur_size_ (size)
 {
@@ -2244,8 +2245,8 @@ ACE_Array<T>::ACE_Array (size_t size)
 }
 
 template <class T>
-ACE_Array<T>::ACE_Array (size_t size,
-                         const T &default_value)
+ACE_Array_Base<T>::ACE_Array_Base (size_t size,
+                                   const T &default_value)
   : max_size_ (size),
     cur_size_ (size)
 {
@@ -2258,7 +2259,7 @@ ACE_Array<T>::ACE_Array (size_t size,
 // The copy constructor (performs initialization).
 
 template <class T>
-ACE_Array<T>::ACE_Array (const ACE_Array<T> &s)
+ACE_Array_Base<T>::ACE_Array_Base (const ACE_Array_Base<T> &s)
    : max_size_ (s.size ()),
      cur_size_ (s.size ())
 {
@@ -2270,18 +2271,18 @@ ACE_Array<T>::ACE_Array (const ACE_Array<T> &s)
 
 // Assignment operator (performs assignment).
 
-template <class T> void
-ACE_Array<T>::operator= (const ACE_Array<T> &s)
+template <class T> ACE_Array_Base<T>&
+ACE_Array_Base<T>::operator= (const ACE_Array_Base<T> &s)
 {
   // Check for "self-assignment".
 
   if (this == &s)
-    return;
+    return *this;
   else if (this->max_size_ < s.size ())
     {
       delete [] this->array_;
 
-      ACE_NEW (this->array_, T[s.size ()]);
+      ACE_NEW_RETURN (this->array_, T[s.size ()], *this);
 
       this->max_size_ = s.size ();
     }
@@ -2290,12 +2291,14 @@ ACE_Array<T>::operator= (const ACE_Array<T> &s)
 
   for (size_t i = 0; i < this->size (); i++)
     this->array_[i] = s.array_[i];
+
+  return *this;
 }
 
 // Set an item in the array at location index.
 
 template <class T> int
-ACE_Array<T>::set (const T &new_item, size_t index)
+ACE_Array_Base<T>::set (const T &new_item, size_t index)
 {
   if (this->in_range (index))
     {
@@ -2309,7 +2312,7 @@ ACE_Array<T>::set (const T &new_item, size_t index)
 // Get an item in the array at location index.
 
 template <class T> int
-ACE_Array<T>::get (T &item, size_t index) const
+ACE_Array_Base<T>::get (T &item, size_t index) const
 {
    if (this->in_range (index))
      {
@@ -2324,7 +2327,7 @@ ACE_Array<T>::get (T &item, size_t index) const
 }
 
 template<class T> int
-ACE_Array<T>::size (size_t new_size)
+ACE_Array_Base<T>::max_size (size_t new_size)
 {
   if (new_size >= this->max_size_)
     {
@@ -2338,10 +2341,20 @@ ACE_Array<T>::size (size_t new_size)
       this->array_ = tmp;
       this->max_size_ = new_size;
     }
-  this->cur_size_ = new_size;
-
   return 0;
 }
+
+template<class T> int
+ACE_Array_Base<T>::size (size_t new_size)
+{
+  int r = this->max_size (new_size);
+  if (r != 0)
+    return r;
+  this->cur_size_ = new_size;
+  return 0;
+}
+
+// ****************************************************************
 
 // Compare this array with <s> for equality.
 
@@ -2350,15 +2363,18 @@ ACE_Array<T>::operator== (const ACE_Array<T> &s) const
 {
   if (this == &s)
     return 1;
-  else if (this->cur_size_ != s.cur_size_)
+  else if (this->size () != s.size ())
     return 0;
 
-  for (size_t index = 0; index < s.cur_size_; index++)
-    if (this->array_[index] != s.array_[index])
+  for (size_t index = 0; index < s.size (); index++)
+    if ((*this)[index] != s[index])
       return 0;
 
   return 1;
 }
+
+// ****************************************************************
+
 
 template <class T> int
 ACE_Array_Iterator<T>::next (T *&item)
