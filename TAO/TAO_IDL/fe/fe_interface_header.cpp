@@ -355,7 +355,10 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
       if (idl_global->scopes ().top () == 0)
         {
           idl_global->err ()->lookup_error (item);
-          return;
+      
+          // This is probably the result of bad IDL.
+          // We will crash if we continue from here.
+          exit (99);
         }
 
       // Look it up.
@@ -380,7 +383,10 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
       if (d == 0)
         {
           idl_global->err ()->lookup_error (item);
-          return;
+      
+          // This is probably the result of bad IDL.
+          // We will crash if we continue from here.
+          exit (99);
         }
 
       // Not an appropriate interface?
@@ -641,7 +647,10 @@ FE_OBVHeader::compile_supports (UTL_NameList *supports)
       if (idl_global->scopes ().top () == 0)
         {
           idl_global->err ()->lookup_error (item);
-          return;
+      
+          // This is probably the result of bad IDL.
+          // We will crash if we continue from here.
+          exit (99);
         }
 
       // Look it up.
@@ -666,7 +675,10 @@ FE_OBVHeader::compile_supports (UTL_NameList *supports)
       if (d == 0)
         {
           idl_global->err ()->lookup_error (item);
-          return;
+      
+          // This is probably the result of bad IDL.
+          // We will crash if we continue from here.
+          exit (99);
         }
 
       // Remove typedefs, if any.
@@ -841,12 +853,15 @@ FE_ComponentHeader::compile_inheritance (UTL_ScopedName *base_component)
     
   UTL_Scope *s = idl_global->scopes ().top_non_null ();
   AST_Decl *d = s->lookup_by_name (base_component,
-                                    I_TRUE);
+                                   I_TRUE);
 
   if (d == 0)
     {
       idl_global->err ()->lookup_error (base_component);
-      return;
+      
+      // This is probably the result of bad IDL.
+      // We will crash if we continue from here.
+      exit (99);
     }
  
   if (d->node_type () == AST_Decl::NT_typedef)
@@ -899,7 +914,10 @@ FE_ComponentHeader::compile_supports (UTL_NameList *supports)
       if (idl_global->scopes ().top () == 0)
         {
           idl_global->err ()->lookup_error (item);
-          return;
+      
+          // This is probably the result of bad IDL.
+          // We will crash if we continue from here.
+          exit (99);
         }
 
       // Look it up.
@@ -924,7 +942,10 @@ FE_ComponentHeader::compile_supports (UTL_NameList *supports)
       if (d == 0)
         {
           idl_global->err ()->lookup_error (item);
-          return;
+          
+          // This is probably the result of bad IDL.
+          // We will crash if we continue from here.
+          exit (99);
         }
 
       // Not an appropriate interface?
@@ -1057,7 +1078,10 @@ FE_HomeHeader::compile_inheritance (UTL_ScopedName *base_home)
   if (d == 0)
     {
       idl_global->err ()->lookup_error (base_home);
-      return;
+      
+      // This is probably the result of bad IDL.
+      // We will crash if we continue from here.
+      exit (99);
     }
 
   if (d->node_type () == AST_Decl::NT_typedef)
@@ -1089,7 +1113,10 @@ FE_HomeHeader::compile_managed_component (UTL_ScopedName *managed_component)
   if (d == 0)
     {
       idl_global->err ()->lookup_error (managed_component);
-      return;
+      
+      // This is probably the result of bad IDL.
+      // We will crash if we continue from here.
+      exit (99);
     }
 
   if (d->node_type () == AST_Decl::NT_typedef)
@@ -1118,23 +1145,25 @@ FE_HomeHeader::compile_primary_key (UTL_ScopedName *primary_key)
   AST_Decl *d = s->lookup_by_name (primary_key,
                                    I_TRUE);
 
-  d = s->lookup_by_name (primary_key,
-                         I_TRUE);
-
   if (d == 0)
     {
       idl_global->err ()->lookup_error (primary_key);
-      return;
+      
+      // This is probably the result of bad IDL.
+      // We will crash if we continue from here.
+      exit (99);
     }
+    
+  AST_Decl::NodeType nt = d->node_type ();
 
-  if (d->node_type () == AST_Decl::NT_typedef)
+  if (nt == AST_Decl::NT_typedef)
     {
       d = AST_Typedef::narrow_from_decl (d)->primitive_base_type ();
     }
 
   this->pd_primary_key = AST_ValueType::narrow_from_decl (d);
 
-  if (this->pd_primary_key == 0 || d->node_type () != AST_Decl::NT_valuetype)
+  if (this->pd_primary_key == 0 || nt != AST_Decl::NT_valuetype)
     {
       idl_global->err ()->valuetype_expected (d);
     }
