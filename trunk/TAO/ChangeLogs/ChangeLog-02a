@@ -1,6 +1,14 @@
+Sun Apr 14 19:51:52 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/TAO_Static.dsp: Added new files like Transport_Acceptor.*
+	  and Transport_Connector.* and removed old ones, namely
+	  Pluggable.* 
+
 Sun Apr 14 19:43:56 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/TAO.dsp: Added new files and removed old ones. 
+	* tao/TAO.dsp: Added new files like Transport_Acceptor.*
+	  and Transport_Connector.* and removed old ones, namely
+	  Pluggable.*.
 
 Sun Apr 14 19:05:52 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
