@@ -33,9 +33,9 @@ ACE_SOCK_Dgram_Bcast::close (void)
   // Release the dynamically allocated memory.
   while (temp != 0)
     {
-       ACE_Bcast_Node *hold = temp->next_;
-       delete temp;
-       temp = hold;
+      ACE_Bcast_Node *hold = temp->next_;
+      delete temp;
+      temp = hold;
     }
 
   // Shut down the descriptor.
@@ -56,13 +56,14 @@ ACE_SOCK_Dgram_Bcast::ACE_SOCK_Dgram_Bcast (void)
 ACE_SOCK_Dgram_Bcast::ACE_SOCK_Dgram_Bcast (const ACE_Addr &local, 
 					    int protocol_family, 
 					    int protocol,
-					    int reuse_addr)
+					    int reuse_addr,
+                                            const char *host_name)
   : ACE_SOCK_Dgram (local, protocol_family, protocol, reuse_addr), 
     if_list_ (0)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Bcast::ACE_SOCK_Dgram_Bcast");
 
-  if (this->mk_broadcast () == -1)
+  if (this->mk_broadcast (host_name) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "ACE_SOCK_Dgram_Bcast"));
 }
 
@@ -72,20 +73,21 @@ int
 ACE_SOCK_Dgram_Bcast::open (const ACE_Addr &local, 
 			    int protocol_family, 
 			    int protocol,
-			    int reuse_addr)
+			    int reuse_addr,
+                            const char *host_name)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Bcast::open");
   if (this->ACE_SOCK_Dgram::open (local, protocol_family, 
 				  protocol, reuse_addr) == -1)
     return -1;
 
-  return this->mk_broadcast ();
+  return this->mk_broadcast (host_name);
 }
 
 // Make broadcast available for Datagram socket.
 
 int
-ACE_SOCK_Dgram_Bcast::mk_broadcast (void)
+ACE_SOCK_Dgram_Bcast::mk_broadcast (const char *host_name)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Bcast::mk_broadcast");
 
@@ -100,8 +102,11 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (void)
   struct ifconf ifc;
   struct ifreq *ifr;
 
-  struct ifreq  flags;
-  struct ifreq  if_req;
+  struct ifreq flags;
+  struct ifreq if_req;
+
+  struct sockaddr_in host_addr, if_addr;
+  hostent *hp;
 
   int s = this->get_handle ();
 
@@ -116,12 +121,30 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (void)
 
   ifr = ifc.ifc_req;
 
+  //Get host ip address
+  if (host_name)
+    {
+      hp = ACE_OS::gethostbyname (host_name);
+      ACE_OS::memcpy ((char *) &host_addr.sin_addr.s_addr, 
+		      (char *) hp->h_addr, 
+		      hp->h_length);
+    }
+
   for (int n = ifc.ifc_len / sizeof (struct ifreq) ; n > 0; n--, ifr++) 
     {
-    
+      // Compare host ip address with interface ip address.
+      if (host_name)
+        {
+          ACE_OS::memcpy (&if_addr, &ifr->ifr_addr, sizeof if_addr);
+
+          if (host_addr.sin_addr.s_addr != if_addr.sin_addr.s_addr)
+	    continue;
+        }
+
       if (ifr->ifr_addr.sa_family != AF_INET) 
 	{
-	  ACE_ERROR ((LM_ERROR, "%p\n", "ACE_SOCK_Dgram_Bcast::mk_broadcast: Not AF_INET"));
+	  ACE_ERROR ((LM_ERROR, "%p\n", 
+		      "ACE_SOCK_Dgram_Bcast::mk_broadcast: Not AF_INET"));
 	  continue;
 	}
 

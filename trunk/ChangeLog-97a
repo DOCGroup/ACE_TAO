@@ -1,3 +1,13 @@
+Tue Mar 18 21:53:03 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/SOCK_Dgram_Bcast.cpp (mk_broadcast): Modified the
+ 	  SOCK_Dgram_Bcast class by adding a const char *host_name to the
+ 	  contructor, and open, and mk_broadcast methods.  If the user
+ 	  passes in the host_name, then only the broadcast address of an
+ 	  interface that has a matching ip address with the host will be
+ 	  added to the if_list_.  Otherwise, nothing changes.  Thanks to
+ 	  Paul <phan@CCGATE.HAC.COM> for this feature.
+
 Tue Mar 18 13:20:59 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 	* netsvcs/lib/Client_Logging_Handler.cpp: Added a check in fini()
@@ -85,14 +95,6 @@ Mon Mar 17 12:59:56 1997  David L. Levine  <levine@cs.wustl.edu>
 	* examples/Mem_Map/IO-tests/{IO_Test.cpp,test_io.cpp):
 	  LM_ERROR instead of ACE_ERROR, and fixed call to ACE::basename ().
 
-Sun Mar 16 11:31:46 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-	* ace/Timer_{List,Queue,Heap}.h: Defined copy constructors and
- 	  assignment operators in the private part of the class so that
- 	  users won't accidentally make mistakes.
-
-Mon Mar 17 06:58:18 1997  David L. Levine  <levine@cs.wustl.edu>
-
 	* ace/OS.cpp (sched_params): return -1 if not supported,
 	  instead of ENOTSUP.
 
@@ -108,6 +110,12 @@ Mon Mar 17 06:58:18 1997  David L. Levine  <levine@cs.wustl.edu>
 	  local variable "i" to (signed) int to avoid signed/unsigned
 	  comparison, and eventual seg fault because a loop would never
 	  terminate.
+
+Sun Mar 16 11:31:46 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Timer_{List,Queue,Heap}.h: Defined copy constructors and
+ 	  assignment operators in the private part of the class so that
+ 	  users won't accidentally make mistakes.
 
 Sat Mar 15 21:44:45 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
