@@ -91,7 +91,7 @@ Sender::parse_args (int argc,
                     char **argv)
 {
   // Parse command line arguments
-  ACE_Get_Opt opts (argc, argv, "f:p:r:a:d");
+  ACE_Get_Opt opts (argc, argv, "f:p:r:v:s:d");
 
   int c;
   while ((c= opts ()) != -1)
@@ -107,11 +107,19 @@ Sender::parse_args (int argc,
         case 'r':
           this->frame_rate_ = (double)ACE_OS::atoi (opts.opt_arg ());
           break;
-        case 'd':
+        case 'v':
           TAO_debug_level++;
           break;
-        case 'a':
+	case 's':
+	  ACE_NEW_RETURN (this->src_addr_,
+			  ACE_INET_Addr (opts.opt_arg ()),
+			  0);
+	  break;
+        case 'd':
           this->address_ = opts.opt_arg ();
+	  ACE_NEW_RETURN (this->dest_addr_,
+			  ACE_INET_Addr (opts.opt_arg ()),
+			  0);
           break;
         default:
           ACE_DEBUG ((LM_DEBUG, "Unknown Option\n"));
@@ -243,9 +251,7 @@ Sender::init (int argc,
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) Error binding to the naming service\n"),
                       -1);
-
-  ACE_INET_Addr addr (this->address_.c_str ());
-
+  
   this->flowname_ = "Data_Receiver";
   // Create the forward flow specification to describe the flow.
   TAO_Forward_FlowSpec_Entry entry (this->flowname_.c_str (),
@@ -253,7 +259,10 @@ Sender::init (int argc,
                                     "USER_DEFINED",
                                     "",
                                     this->protocol_.c_str (),
-                                    0);
+                                    this->src_addr_);
+
+  if (this->dest_addr_ != 0)
+    entry.set_peer_addr (this->dest_addr_);
 
   AVStreams::flowSpec flow_spec (1);
   flow_spec.length (1);
@@ -502,6 +511,13 @@ main (int argc,
   ACE_CHECK_RETURN (-1);
   return 0;
 }
+
+Sender::~Sender (void)
+{
+  delete this->src_addr_;
+  delete this->dest_addr_;
+}
+
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Singleton <Sender,ACE_Null_Mutex>;

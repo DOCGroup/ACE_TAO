@@ -67,6 +67,9 @@ public:
   Sender (void);
   // Constructor
 
+  ~Sender (void);
+  // Destructor
+
   int init (int argc,
             char **argv
             ACE_ENV_ARG_DECL_NOT_USED);
@@ -128,4 +131,8 @@ private:
   // Destination Address.
 
   ACE_CString flowname_;
+
+  ACE_INET_Addr *src_addr_;
+  ACE_INET_Addr *dest_addr_;
+
 };
