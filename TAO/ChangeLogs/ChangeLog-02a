@@ -1,13 +1,26 @@
+Sat Feb 24 10:16:42 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/RTCORBA/Client_Protocol/svc.conf:
+        * tests/RTCORBA/Explicit_Binding/svc.conf:
+        * tests/RTCORBA/Server_Protocol/server_reverse.conf:
+        * tests/RTCORBA/Server_Protocol/server_reverse_nt.conf:
+        * tests/RTCORBA/Server_Protocol/server_shmiop.conf:
+        * performance-tests/Cubit/TAO/IDL_Cubit/server_shmiop.conf:
+          The SHMIOP protocol was configured using dynamic loading,
+          but that does not work on static builds.  Furthermore, there is
+          no need to dynamically load the protocol because it is
+          statically linked into the application.
+
 Sat Feb 24 11:13:02 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/Makefile:
-	* tests/Collocation/README:
-	* tests/Collocation/Makefile:
-	* tests/Collocation/Makefile.impl:
-	* tests/Collocation/Makefile.test:
-	* tests/Collocation/Makefile.stub: Added the missing UNIX
-	  Makefiles for collocation test.  Thanks to Steve Hespelt
-	  <shespelt@bear.com> for reporting this.
+        * tests/Makefile:
+        * tests/Collocation/README:
+        * tests/Collocation/Makefile:
+        * tests/Collocation/Makefile.impl:
+        * tests/Collocation/Makefile.test:
+        * tests/Collocation/Makefile.stub: Added the missing UNIX
+          Makefiles for collocation test.  Thanks to Steve Hespelt
+          <shespelt@bear.com> for reporting this.
 
 Fri Feb 23 19:48:08 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
@@ -15,11 +28,11 @@ Fri Feb 23 19:48:08 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
 Thu Feb 22 03:07:46 2001  Krishnakumar B  <kitty@ace.cs.wustl.edu>
 
-	* VERSION:
-	* PROBLEM-REPORT-FORM:
-	* tao/Version.h:
+        * VERSION:
+        * PROBLEM-REPORT-FORM:
+        * tao/Version.h:
 
-	Revert of the changes done by the release script.
+        Revert of the changes done by the release script.
 
 Wed Feb 21 20:32:42 2001  Darrell Brunsch <brunsch@uci.edu>
 
