@@ -4,6 +4,13 @@ Fri Jul 02 11:11:47 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  Fixed bug in the EC_Dispatching_Task, one of the variables was
 	  not initialized in the constructor.
 
+	* orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+	  The options are case insensitive, but we use intercapts to make
+	  them more readable.
+
+	* docs/ec_options.html:
+	  Added new document describing the EC options.
+
 Fri Jul  2 11:00:45 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp:
