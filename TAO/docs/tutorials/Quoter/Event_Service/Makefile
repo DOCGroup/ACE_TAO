@@ -66,17 +66,20 @@ realclean: clean
 
 .obj/QuoterC.o .obj/QuoterC.so .shobj/QuoterC.o .shobj/QuoterC.so: QuoterC.cpp QuoterC.h QuoterC.i
 
-.obj/QuoterS.o .obj/QuoterS.so .shobj/QuoterS.o .shobj/QuoterS.so: QuoterS.cpp QuoterS.h QuoterC.h QuoterC.i QuoterS_T.h \
- QuoterS_T.i QuoterS_T.cpp QuoterS.i
+.obj/QuoterS.o .obj/QuoterS.so .shobj/QuoterS.o .shobj/QuoterS.so: QuoterS.cpp QuoterS.h QuoterC.h QuoterS_T.h QuoterS_T.cpp \
+ QuoterS_T.i QuoterS.i
 
-.obj/Stock_Consumer.o .obj/Stock_Consumer.so .shobj/Stock_Consumer.o .shobj/Stock_Consumer.so: Stock_Consumer.cpp Stock_Consumer.h QuoterC.h \
- QuoterC.i
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp Stock_Consumer.h
 
-.obj/Stock_i.o .obj/Stock_i.so .shobj/Stock_i.o .shobj/Stock_i.so: Stock_i.cpp Stock_i.h QuoterS.h QuoterC.h QuoterC.i \
- QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i
+.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp Stock_Factory_i.h QuoterS.h QuoterC.h QuoterS_T.h \
+ QuoterS_T.cpp QuoterS_T.i
+
+.obj/Stock_Consumer.o .obj/Stock_Consumer.so .shobj/Stock_Consumer.o .shobj/Stock_Consumer.so: Stock_Consumer.cpp Stock_Consumer.h QuoterC.h
+
+.obj/Stock_i.o .obj/Stock_i.so .shobj/Stock_i.o .shobj/Stock_i.so: Stock_i.cpp Stock_i.h QuoterS.h QuoterC.h QuoterS_T.h \
+ QuoterS_T.cpp QuoterS_T.i
 
 .obj/Stock_Factory_i.o .obj/Stock_Factory_i.so .shobj/Stock_Factory_i.o .shobj/Stock_Factory_i.so: Stock_Factory_i.cpp Stock_Factory_i.h QuoterS.h \
- QuoterC.h QuoterC.i QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i \
- Stock_i.h
+ QuoterC.h QuoterS_T.h QuoterS_T.cpp QuoterS_T.i Stock_i.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
