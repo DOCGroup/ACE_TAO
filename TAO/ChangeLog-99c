@@ -1,3 +1,10 @@
+Tue Mar  9 16:40:03 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Makefile:
+	* tao/TAO[_Static].dsp:
+	* tao/POAManager.{h,i,cpp}: Moved POA_Manager implementation to
+	  separate files.
+
 Tue Mar  9 15:40:06 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/tests/Param_Test/big_union.cpp:
@@ -8,7 +15,7 @@ Tue Mar  9 15:35:31 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
         * examples/Quoter/Factory_Finder.cpp:
         * examples/Quoter/Generic_Factory.cpp:
         * examples/Quoter/server.cpp:
-          Fixed null-pointer usage in the server destructors when the 
+          Fixed null-pointer usage in the server destructors when the
           naming service wasn't resolved.
 
         * examples/Quoter/server.cpp:
@@ -22,7 +29,7 @@ Tue Mar  9 13:42:49 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Tue Mar  9 13:05:49 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* docs/releasenotes/index.html: 
+	* docs/releasenotes/index.html:
 	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp: Fixed all the
  	  Sequence_out parameters to get created even though their length
  	  may be zero. This is according to the CORBA spec.
