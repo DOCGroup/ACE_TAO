@@ -1,3 +1,9 @@
+(not committed)  Steve Huston  <shuston@riverace.com>
+
+	* apps/JAWS/clients/Caching/http_handler.cpp:
+	* apps/JAWS/clients/Caching/http_client.cpp:
+	* apps/JAWS/server/IO.cpp: Add missing includes.
+
 Tue Sep  7 15:45:00 UTC 2004  Simon Massey  <simon.massey@prismtechnologies.com>
 
         * examples/IOStream/server/iostream_server.cpp
@@ -2130,7 +2136,7 @@ Mon Aug  9 23:13:48 2004  J.T. Conklin  <jtc@acorntoolworks.com>
           of the problem below.
 
         * ace/OS_NS_ctype.h:
-        * ace/OS_NS_ctyle.inl:
+        * ace/OS_NS_ctype.inl:
         * ace/OS_NS_strings.cpp:
         * ace/OS_NS_wchar.cpp:
         * examples/Service_Configurator/IPC-tests/server/Handle_L_Pipe.cpp:
