@@ -1,3 +1,9 @@
+Fri Aug 03 20:50:42 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tests/README:
+
+	  Added summary about the new DLL_ORB test.
+
 Fri Aug 03 20:33:51 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tests/DLL_ORB/Makefile (MAKEFLAGS):
