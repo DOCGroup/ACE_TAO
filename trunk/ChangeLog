@@ -1,14 +1,25 @@
+Mon Dec 13 10:16:40 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+        * bin/MakeProjectCreator/templates/gnudll.mpt:
+        * bin/MakeProjectCreator/templates/gnuexe.mpt:
+
+          Modifications to add a 'targetoutdir' template variable which
+          determines the output location of object files, exes and
+          libraries.  By default, this template variable is not set and does
+          not affect anything.
+
 Mon Dec 13 16:11:23 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/make_release:
+        * bin/make_release:
 
-	  Exclude ASNMP/asnmp.mwc during the release.
+          Exclude ASNMP/asnmp.mwc during the release.
 
 Mon Dec 13 06:33:42 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/config-netbsd.h:
+        * ace/config-netbsd.h:
 
-	  Provide ACE_INT64 typedef.
+          Provide ACE_INT64 typedef.
 
 Mon Dec 13 12:50:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -28,19 +39,19 @@ Mon Dec 13 12:26:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Dec 13 04:34:18 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* Release:
-	  Removed some old files from the release
+        * Release:
+          Removed some old files from the release
 
-	* bin/make_Release:
+        * bin/make_Release:
 
-	  Bootstrapped autoconf with TAO instead of just ACE.
+          Bootstrapped autoconf with TAO instead of just ACE.
 
 Mon Dec 13 04:25:24 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* Release:
+        * Release:
 
-	  Added protocols directory.  Thanks to JT for letting me know
-	  this.
+          Added protocols directory.  Thanks to JT for letting me know
+          this.
 
 Mon Dec 13 00:14:01 2004  Olli Savia  <ops@iki.fi>
 
