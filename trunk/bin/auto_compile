@@ -149,6 +149,7 @@ chdir('build/' . $BUILD)
 
 # This is needed for real make run....
 $ENV{'ACE_ROOT'} = $CHECKOUT . '/' . $MODULE . '/build/' . $BUILD;
+$ENV{'TAO_ROOT'} = $CHECKOUT . '/' . $MODULE . '/build/' . $BUILD . '/TAO';
 
 foreach $i (@BUILD_LIST) {
     $date = localtime;
