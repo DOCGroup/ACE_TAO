@@ -347,6 +347,9 @@ extern "C" pthread_t pthread_self (void);
 
 #  if !defined (ACE_HAS_STHREADS)
 #    if !defined (ACE_HAS_POSIX_SEM)
+
+// This needs to be moved out of here.
+#include "ace/OS_Export.h"
 /**
  * @class ACE_sema_t
  *

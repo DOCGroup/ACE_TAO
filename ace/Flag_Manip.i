@@ -3,6 +3,8 @@
 
 // Return flags currently associated with handle.
 
+#include "ace/OS.h"
+
 ASYS_INLINE int
 ACE_Flag_Manip::get_flags (ACE_HANDLE handle)
 {

@@ -21,6 +21,9 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/OS.h"
+#include "ace/os_include/os_signal.h"
+// need to fix THR_DETACHED, then we can get rid of OS.h
+#include "ace/os_include/os_pthread.h"
 
 // Forward declaration.
 class ACE_Message_Block;
@@ -28,7 +31,7 @@ class ACE_Reactor;
 class ACE_Thread_Manager;
 class ACE_Process;
 
-typedef u_long ACE_Reactor_Mask;
+typedef unsigned long ACE_Reactor_Mask;
 
 /**
  * @class ACE_Event_Handler

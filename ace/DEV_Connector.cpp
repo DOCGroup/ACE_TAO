@@ -7,6 +7,8 @@
 #include "ace/DEV_Connector.i"
 #endif
 
+#include "ace/Handle_Ops.h"
+
 ACE_RCSID(ace, DEV_Connector, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_DEV_Connector)

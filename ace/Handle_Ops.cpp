@@ -6,6 +6,8 @@
 #include "ace/Handle_Ops.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
+#include "ace/OS.h"
+
 ACE_RCSID(ace, Handle_Ops, "$Id$")
 
 ACE_HANDLE

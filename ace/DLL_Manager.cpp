@@ -10,6 +10,7 @@
 #include "ace/OS.h"
 #include "ace/Lib_Find.h"
 #include "ace/Object_Manager.h"
+#include "ace/SString.h"
 
 ACE_RCSID(ace, DLL, "$Id$")
 

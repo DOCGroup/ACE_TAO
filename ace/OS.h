@@ -1295,8 +1295,6 @@ static const ACE_UINT32 ACE_U_ONE_SECOND_IN_NSECS = 1000000000U;
 
 #     include "ace/os_include/os_fcntl.h"
 
-typedef OVERLAPPED ACE_OVERLAPPED;
-
 typedef DWORD ACE_thread_t;
 typedef HANDLE ACE_hthread_t;
 
@@ -1401,62 +1399,6 @@ protected:
   unsigned long waiting_threads_;
 };
 
-struct ACE_OVERLAPPED
-{
-  unsigned long Internal;
-  unsigned long InternalHigh;
-  unsigned long Offset;
-  unsigned long OffsetHigh;
-  ACE_HANDLE hEvent;
-};
-
-
-// Add some typedefs and macros to enhance Win32 conformance...
-#   if !defined (LPSECURITY_ATTRIBUTES)
-#     define LPSECURITY_ATTRIBUTES int
-#   endif /* !defined LPSECURITY_ATTRIBUTES */
-#   if !defined (GENERIC_READ)
-#     define GENERIC_READ 0
-#   endif /* !defined GENERIC_READ */
-#   if !defined (FILE_SHARE_READ)
-#     define FILE_SHARE_READ 0
-#   endif /* !defined FILE_SHARE_READ */
-#   if !defined (OPEN_EXISTING)
-#     define OPEN_EXISTING 0
-#   endif /* !defined OPEN_EXISTING */
-#   if !defined (FILE_ATTRIBUTE_NORMAL)
-#     define FILE_ATTRIBUTE_NORMAL 0
-#   endif /* !defined FILE_ATTRIBUTE_NORMAL */
-#   if !defined (MAXIMUM_WAIT_OBJECTS)
-#     define MAXIMUM_WAIT_OBJECTS 0
-#   endif /* !defined MAXIMUM_WAIT_OBJECTS */
-#   if !defined (FILE_FLAG_OVERLAPPED)
-#     define FILE_FLAG_OVERLAPPED 0
-#   endif /* !defined FILE_FLAG_OVERLAPPED */
-#   if !defined (FILE_FLAG_SEQUENTIAL_SCAN)
-#     define FILE_FLAG_SEQUENTIAL_SCAN 0
-#   endif   /* FILE_FLAG_SEQUENTIAL_SCAN */
-#   if !defined(FILE_FLAG_WRITE_THROUGH)
-#     define FILE_FLAG_WRITE_THROUGH 0
-#   endif /* !defined FILE_FLAG_WRITE_THROUGH */
-#   if !defined(PIPE_WAIT)
-#     define PIPE_WAIT 0
-#   endif /* !defined PIPE_WAIT */
-#   if !defined(PIPE_NOWAIT)
-#     define PIPE_NOWAIT 0
-#   endif /* !defined PIPE_WAIT */
-#   if !defined(PIPE_READMODE_BYTE)
-#     define PIPE_READMODE_BYTE 0
-#   endif /* !defined PIPE_READMODE_BYTE */
-#   if !defined(PIPE_READMODE_MESSAGE)
-#     define PIPE_READMODE_MESSAGE 0
-#   endif /* !defined PIPE_READMODE_MESSAGE */
-#   if !defined(PIPE_TYPE_BYTE)
-#     define PIPE_TYPE_BYTE 0
-#   endif /* !defined PIPE_TYPE_BYTE */
-#   if !defined(PIPE_TYPE_MESSAGE)
-#     define PIPE_TYPE_MESSAGE 0
-#   endif /* !defined PIPE_TYPE_MESSAGE */
 
 #   if defined (ACE_VXWORKS) && ACE_VXWORKS <= 0x540
       // Work around a lack of ANSI prototypes for these functions on VxWorks.
@@ -4456,41 +4398,6 @@ private:
 #   define ACE_KEY_INDEX(OBJ,KEY) u_int OBJ = KEY
 # endif /* ACE_HAS_NONSCALAR_THREAD_KEY_T */
 
-// Some useful abstrations for expressions involving
-// ACE_Allocator.malloc ().  The difference between ACE_NEW_MALLOC*
-// with ACE_ALLOCATOR* is that they call constructors also.
-
-# define ACE_ALLOCATOR_RETURN(POINTER,ALLOCATOR,RET_VAL) \
-   do { POINTER = ALLOCATOR; \
-     if (POINTER == 0) { errno = ENOMEM; return RET_VAL; } \
-   } while (0)
-# define ACE_ALLOCATOR(POINTER,ALLOCATOR) \
-   do { POINTER = ALLOCATOR; \
-     if (POINTER == 0) { errno = ENOMEM; return; } \
-   } while (0)
-# define ACE_ALLOCATOR_NORETURN(POINTER,ALLOCATOR) \
-   do { POINTER = ALLOCATOR; \
-     if (POINTER == 0) { errno = ENOMEM; } \
-   } while (0)
-
-# define ACE_NEW_MALLOC_RETURN(POINTER,ALLOCATOR,CONSTRUCTOR,RET_VAL) \
-   do { POINTER = ALLOCATOR; \
-     if (POINTER == 0) { errno = ENOMEM; return RET_VAL;} \
-     else { new (POINTER) CONSTRUCTOR; } \
-   } while (0)
-# define ACE_NEW_MALLOC(POINTER,ALLOCATOR,CONSTRUCTOR) \
-   do { POINTER = ALLOCATOR; \
-     if (POINTER == 0) { errno = ENOMEM; return;} \
-     else { new (POINTER) CONSTRUCTOR; } \
-   } while (0)
-# define ACE_NEW_MALLOC_NORETURN(POINTER,ALLOCATOR,CONSTRUCTOR) \
-   do { POINTER = ALLOCATOR; \
-     if (POINTER == 0) { errno = ENOMEM;} \
-     else { new (POINTER) CONSTRUCTOR; } \
-   } while (0)
-
-# define ACE_NOOP(x)
-
 # if defined (ACE_HAS_THR_C_FUNC)
 // This is necessary to work around nasty problems with MVS C++.
 extern "C" ACE_OS_Export void ace_mutex_lock_cleanup_adapter (void *args);
@@ -4694,35 +4601,6 @@ ace_main_i
 #   endif   /* ACE_PSOSIM */
 # endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER && !ACE_HAS_WINCE && !ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER */
 
-# if defined (ACE_WIN32) && ! defined (ACE_HAS_WINCE) \
-                         && ! defined (ACE_HAS_PHARLAP)
-typedef TRANSMIT_FILE_BUFFERS ACE_TRANSMIT_FILE_BUFFERS;
-typedef LPTRANSMIT_FILE_BUFFERS ACE_LPTRANSMIT_FILE_BUFFERS;
-typedef PTRANSMIT_FILE_BUFFERS ACE_PTRANSMIT_FILE_BUFFERS;
-
-#   define ACE_INFINITE INFINITE
-#   define ACE_STATUS_TIMEOUT STATUS_TIMEOUT
-#   define ACE_WAIT_FAILED WAIT_FAILED
-#   define ACE_WAIT_TIMEOUT WAIT_TIMEOUT
-# else /* ACE_WIN32 */
-struct ACE_TRANSMIT_FILE_BUFFERS
-{
-  void *Head;
-  size_t HeadLength;
-  void *Tail;
-  size_t TailLength;
-};
-typedef ACE_TRANSMIT_FILE_BUFFERS* ACE_PTRANSMIT_FILE_BUFFERS;
-typedef ACE_TRANSMIT_FILE_BUFFERS* ACE_LPTRANSMIT_FILE_BUFFERS;
-
-#   if !defined (ACE_INFINITE)
-#     define ACE_INFINITE LONG_MAX
-#   endif /* ACE_INFINITE */
-#   define ACE_STATUS_TIMEOUT LONG_MAX
-#   define ACE_WAIT_FAILED LONG_MAX
-#   define ACE_WAIT_TIMEOUT LONG_MAX
-# endif /* ACE_WIN32 */
-
 # if !defined (ACE_HAS_MINIMAL_ACE_OS)
 #   include "ace/Trace.h"
 # endif /* ! ACE_HAS_MINIMAL_ACE_OS */
@@ -4847,23 +4725,6 @@ typedef ACE_TRANSMIT_FILE_BUFFERS* ACE_LPTRANSMIT_FILE_BUFFERS;
  * in the wrong byte order.
  */
 // #define ACE_DISABLE_SWAP_ON_READ
-
-// Defining POSIX4 real-time signal range.
-#if defined(ACE_HAS_POSIX_REALTIME_SIGNALS)
-#define ACE_SIGRTMIN SIGRTMIN
-#define ACE_SIGRTMAX SIGRTMAX
-
-#else /* !ACE_HAS_POSIX_REALTIME_SIGNALS */
-
-#ifndef ACE_SIGRTMIN
-#define ACE_SIGRTMIN 0
-#endif /* ACE_SIGRTMIN */
-
-#ifndef ACE_SIGRTMAX
-#define ACE_SIGRTMAX 0
-#endif /* ACE_SIGRTMAX */
-
-#endif /* ACE_HAS_POSIX_REALTIME_SIGNALS */
 
 # if defined (ACE_LACKS_SYS_NERR)
 extern ACE_OS_Export int sys_nerr;

@@ -3,6 +3,8 @@
 
 // DEV_IO.i
 
+#include "ace/ACE.h"
+
 // Send exactly N bytes from BUF to this device.  Keeping trying until
 // this many bytes are sent.
 

@@ -243,6 +243,23 @@ extern "C"
    };
 #endif /* ACE_LACKS_SIGACTION */
 
+// Defining POSIX4 real-time signal range.
+#if defined(ACE_HAS_POSIX_REALTIME_SIGNALS)
+#define ACE_SIGRTMIN SIGRTMIN
+#define ACE_SIGRTMAX SIGRTMAX
+
+#else /* !ACE_HAS_POSIX_REALTIME_SIGNALS */
+
+#ifndef ACE_SIGRTMIN
+#define ACE_SIGRTMIN 0
+#endif /* ACE_SIGRTMIN */
+
+#ifndef ACE_SIGRTMAX
+#define ACE_SIGRTMAX 0
+#endif /* ACE_SIGRTMAX */
+
+#endif /* ACE_HAS_POSIX_REALTIME_SIGNALS */
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

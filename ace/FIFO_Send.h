@@ -22,7 +22,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/ACE.h"
+#include "ace/os_include/os_fcntl.h"
+#include "ace/Default_Constants.h"
 
 /**
  * @class ACE_FIFO_Send
