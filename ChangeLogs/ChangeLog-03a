@@ -1,3 +1,15 @@
+Sun Apr 09 00:04:25 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Malloc_T.cpp (remove): Removed invocation of destructor to
+	  <malloc_stats_>.  It is a member of Control_Block and does not
+	  require explicit initialization/destruction.  This was causing
+	  ACE not to compile when ACE_HAS_MALLOC_STATS was defined.
+	  Thanks to Ivan Murphy <Ivan.Murphy@med.siemens.de> for reporting
+	  the problem.
+
+	* ace/Malloc_T.cpp (open): Removed invocation of contructor to
+	  <malloc_stats_> for the same reason.
+
 Fri Apr 07 23:32:16 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/ace_dll.dsp:

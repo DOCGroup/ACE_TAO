@@ -950,6 +950,7 @@ Antti Valtokari <Antti.Valtokari@iocore.fi>
 John Smyder <jsmyder@salient.com>
 Mathew Samuel <Mathew.Samuel@msdw.com>
 Conrad Hughes <conrad@baltimore.ie>
+<jsmyder@salient.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that
