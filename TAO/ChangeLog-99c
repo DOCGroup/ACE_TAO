@@ -1,4 +1,4 @@
-Wed May 26 14:01:51 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+Wed May 26 15:50:00 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/POAManager:
 
@@ -25,8 +25,12 @@ Wed May 26 14:01:51 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  wait_for_completions(): Waits for outstanding requests on this
 	  POA to complete.
 
-	  cleanup_servant(): We need to let go of the lock before calling
-	  etherealize() on the servant activator.
+	  cleanup_servant(): We need to let go of the Object Adapter / POA
+	  lock before calling etherealize() on the servant activator.
+
+	  cleanup_servant(): Teardown of the servant lock must happen
+	  before the _remove_ref() or etherealize() calls since they might
+	  end up deleting the servant.
 
 	* tao/Object_Adapter:
 
@@ -38,6 +42,13 @@ Wed May 26 14:01:51 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  dispatching the client request to the target POA.  Only if the
 	  POA Manager state is active is the request dispatched to the
 	  servant.
+
+	  dispatch_servant_i(): The single threaded POA lock must be
+	  acquired *after* the POA lock has been released.  This is
+	  necessary since we cannot block waiting for the servant lock
+	  while holding the POA lock. Otherwise, the thread that wants to
+	  release this lock will not be able to do so since it can't
+	  acquire the POA lock.
 
 	* tao/ORB.cpp (shutdown): Fixed this function such that it
 	  properly deactivates all the POA Managers.
