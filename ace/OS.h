@@ -3937,7 +3937,7 @@ extern "C" ssize_t sendto_timedwait (ACE_HANDLE handle,
 				     const struct sockaddr *addr,
 				     int addrlen, 
 				     struct timespec *timeout);
-extern "C" sszie_t sendmsg_timedwait (ACE_HANDLE handle,
+extern "C" ssize_t sendmsg_timedwait (ACE_HANDLE handle,
 				      ACE_SENDMSG_TYPE *msg,
 				      int flags,
 				      struct timespec *timeout);
