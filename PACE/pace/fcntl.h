@@ -50,6 +50,9 @@ extern "C" {
    */
 #if (PACE_HAS_POSIX_FM_UOF)
   /* int fcntl (int fildes, int cmd, *//* arg *//* ... ); */
+# if defined (PACE_WIN32)
+  int fcntl (PACE_HANDLE fildes, int cmd, /* arg */ ... );
+# endif /* PACE_WIN32 */
 #  define pace_fcntl fcntl
 #endif /* PACE_HAS_POSIX_FM_UOF */
 
