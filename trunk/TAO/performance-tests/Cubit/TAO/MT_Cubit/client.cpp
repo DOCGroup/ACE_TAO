@@ -279,6 +279,7 @@ Client_i::output_latency (Task_State *ts)
                 : this->ts_->loop_count_) / this->ts_->granularity_;
            i++)
         {
+          JITTER_ARRAY jitter_array (*this->ts_->global_jitter_array_ [j]);
           ACE_OS::sprintf (buffer + ACE_OS::strlen (buffer),
 #if defined (CHORUS)
                           "\t%u\n",
@@ -286,6 +287,7 @@ Client_i::output_latency (Task_State *ts)
                           "\t%f\n",
 #endif /* !CHORUS */
                            this->ts_->global_jitter_array_[j][i]);
+                           //                           jitter_array [i]);
           ACE_OS::fputs (buffer,
                          latency_file_handle);
           buffer[0] = 0;

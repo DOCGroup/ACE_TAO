@@ -77,7 +77,7 @@ private:
   void init_low_priority (void);
   // sets the priority to be used for the low priority servants.
 
-  void write_iors (void);
+  int  write_iors (void);
   // Writes the iors of the servants to a file
 
   int activate_high_servant (ACE_Thread_Manager *serv_thr_mgr);
