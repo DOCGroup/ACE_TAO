@@ -1,3 +1,11 @@
+Wed Jul 14 09:40:37 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/wrapper_macros.GNU: when setting
+          ACE_HAS_GNUG_PRE_2_8, if not g++:  don't override
+          the value to null if it was non-null.  Also, clarified
+          use of ACE_HAS_GNUG_PRE_2_8:  1 for g++ < 2.8.0,
+          0 for g++ >= 2.8.0, undefined for non-g++.
+
 Wed Jul 14 09:29:57 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Makefile (realclean): remove log/compilations.log*.
