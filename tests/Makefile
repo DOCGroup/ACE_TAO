@@ -21,6 +21,7 @@ BIN = 	Barrier_Test \
 	Simple_Message_Block_Test \
 	Message_Block_Test \
 	Message_Queue_Test \
+	Message_Queue_Notifications_Test \
 	Mutex_Test \
 	Naming_Test \
 	Process_Mutex_Test \
