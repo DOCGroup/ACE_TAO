@@ -3677,6 +3677,35 @@ namespace TAO
   }
 }
 
+/*static*/ CORBA::TypeCode_ptr
+CORBA::TypeCode::_duplicate (CORBA::TypeCode_ptr tc)
+{
+  if (tc)
+    {
+      if (tc->orb_owns_)
+        {
+          tc->_incr_refcnt ();
+          return tc;
+        }
+      else
+        {
+          CORBA::TypeCode_ptr tmp = 0;
+          ACE_NEW_RETURN (tmp,
+              CORBA::TypeCode (static_cast<CORBA::TCKind> (tc->kind_),
+                               tc->length_,
+                               tc->buffer_,
+                               true,
+                               0,
+                               tc->parent_),
+                          0);
+
+          return tmp;
+        }
+    }
+
+  return 0;
+}
+
 // ****************************************************************
 
 CORBA::Boolean
