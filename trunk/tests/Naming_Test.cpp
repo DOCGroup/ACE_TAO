@@ -30,7 +30,9 @@ static char type[BUFSIZ];
 static void
 randomize (int array[], int size)
 {
-  for (int i = 0; i < size; i++)
+  int i;
+
+  for (i = 0; i < size; i++)
     array [i] = i;
   
   ACE_OS::srand (ACE_OS::time (0L));
