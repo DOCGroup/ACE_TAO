@@ -958,8 +958,8 @@ protected:
   // This flag is used to keep track of whether we are already closed.
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (ACE_WFMO_Reactor (const ACE_WFMO_Reactor &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_WFMO_Reactor &operator = (const ACE_WFMO_Reactor &))
+  ACE_WFMO_Reactor (const ACE_WFMO_Reactor &);
+  ACE_WFMO_Reactor &operator = (const ACE_WFMO_Reactor &);
   // Deny access since member-wise won't work...
 };
 

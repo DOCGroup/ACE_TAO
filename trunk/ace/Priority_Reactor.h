@@ -78,8 +78,8 @@ private:
   // The queues themselves use this allocator to minimize dynamic
   // memory usage.
 
-  ACE_UNIMPLEMENTED_FUNC (ACE_Priority_Reactor (const ACE_Select_Reactor &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Priority_Reactor &operator = (const ACE_Select_Reactor &))
+  ACE_Priority_Reactor (const ACE_Select_Reactor &);
+  ACE_Priority_Reactor &operator = (const ACE_Select_Reactor &);
   // Deny access since member-wise won't work...
 };
 

@@ -96,8 +96,8 @@ private:
   static void TimerCallbackProc (XtPointer closure, XtIntervalId *id);
   static void InputCallbackProc (XtPointer closure, int* source, XtInputId *id);
 
-  ACE_UNIMPLEMENTED_FUNC (ACE_XtReactor (const ACE_XtReactor &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_XtReactor &operator = (const ACE_XtReactor &))
+  ACE_XtReactor (const ACE_XtReactor &);
+  ACE_XtReactor &operator = (const ACE_XtReactor &);
   // Deny access since member-wise won't work...
 };
 #endif /* ACE_HAS_XT */

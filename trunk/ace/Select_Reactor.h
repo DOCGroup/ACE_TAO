@@ -865,8 +865,8 @@ private:
   int handle_events_i (ACE_Time_Value *max_wait_time = 0);
   // Stops the VC++ compiler from bitching about exceptions and destructors
 
-  ACE_UNIMPLEMENTED_FUNC (ACE_Select_Reactor (const ACE_Select_Reactor &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Select_Reactor &operator = (const ACE_Select_Reactor &))
+  ACE_Select_Reactor (const ACE_Select_Reactor &);
+  ACE_Select_Reactor &operator = (const ACE_Select_Reactor &);
   // Deny access since member-wise won't work...
 };
 

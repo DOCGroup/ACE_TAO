@@ -354,8 +354,8 @@ private:
   // actual memory buffer.
 
   // = Disallow these operations for now (use <clone> instead).
-  ACE_UNIMPLEMENTED_FUNC (ACE_Message_Block &operator= (const ACE_Message_Block &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Message_Block (const ACE_Message_Block &))
+  ACE_Message_Block &operator= (const ACE_Message_Block &);
+  ACE_Message_Block (const ACE_Message_Block &);
 };
 
 class ACE_Export ACE_Data_Block
@@ -484,8 +484,8 @@ private:
   // <ACE_Message_Block>s.
 
   // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (ACE_Data_Block &operator= (const ACE_Data_Block &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Data_Block (const ACE_Data_Block &))
+  ACE_Data_Block &operator= (const ACE_Data_Block &);
+  ACE_Data_Block (const ACE_Data_Block &);
 };
 
 #if defined (__ACE_INLINE__)

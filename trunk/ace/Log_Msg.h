@@ -389,8 +389,8 @@ private:
   friend void ACE_OS::cleanup_tss (const u_int);
 
   // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (ACE_Log_Msg &operator= (const ACE_Log_Msg &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Log_Msg (const ACE_Log_Msg &))
+  ACE_Log_Msg &operator= (const ACE_Log_Msg &);
+  ACE_Log_Msg (const ACE_Log_Msg &);
 };
 
 // #if defined (__ACE_INLINE__)

@@ -401,18 +401,18 @@ private:
 #endif
 
 #if defined (ACE_REQUIRES_FUNC_DEFINITIONS)
-  // Provide a null definition for the function.  Not pleasant.
-# define ACE_UNIMPLEMENTED_FUNC(f) f {}
+// It just evaporated ;-) Not pleasant.
+# define ACE_UNIMPLEMENTED_FUNC(f)
 #else
-# define ACE_UNIMPLEMENTED_FUNC(f) f;
+# define ACE_UNIMPLEMENTED_FUNC(f) f
 #endif /* ACE_REQUIRES_FUNC_DEFINITIONS */
 
 // Easy way to designate that a class is used as a pseudo-namespace.
 // Insures that g++ "friendship" anamolies are properly handled.
 #define ACE_CLASS_IS_NAMESPACE(CLASSNAME) \
 private: \
-ACE_UNIMPLEMENTED_FUNC (CLASSNAME (void)) \
-ACE_UNIMPLEMENTED_FUNC (CLASSNAME (const CLASSNAME&)) \
+CLASSNAME (void); \
+CLASSNAME (const CLASSNAME&); \
 friend class ace_dewarn_gplusplus
 
 // These hooks enable ACE to have all dynamic memory management
