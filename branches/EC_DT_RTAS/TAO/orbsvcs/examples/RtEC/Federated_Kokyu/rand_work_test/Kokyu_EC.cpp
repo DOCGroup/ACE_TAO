@@ -652,7 +652,7 @@ Kokyu_EC::init_gateway(CORBA::ORB_ptr orb,
   if (this->gateways.find(consumer_ec_ior) == 0)
     {
       //Already a gateway for that EC
-      ACE_DEBUG((LM_DEBUG,"Node1_EC (%P|%t) init_gateway(): Tried to create already-existing gateway for %s\n",
+      ACE_ERROR((LM_ERROR,"Node1_EC (%P|%t) init_gateway(): Tried to create already-existing gateway for %s\n",
                  consumer_ec_ior));
       return;
     }
@@ -677,7 +677,7 @@ Kokyu_EC::init_gateway(CORBA::ORB_ptr orb,
 
   if (CORBA::is_nil(obj.in()))
     {
-      ACE_DEBUG((LM_DEBUG,"Unable to read IOR file for remote EC; Object_var is nil.\n"));
+      ACE_ERROR((LM_ERROR,"Unable to read IOR file for remote EC; Object_var is nil.\n"));
       return;
     }
 
@@ -797,7 +797,7 @@ Reactor_Task::initialize(void)
   int err = reactor->open(ACE_Select_Reactor_Impl::DEFAULT_SIZE);
   if (err < 0)
     {
-      ACE_DEBUG((LM_DEBUG,"Reactor_Task could not open ACE_Reactor\n"));
+      ACE_ERROR((LM_ERROR,"Reactor_Task could not open ACE_Reactor\n"));
       return -1;
     }
   ACE_Reactor::instance(reactor);
@@ -834,7 +834,7 @@ Reactor_Task::svc (void)
   int err = this->react_->run_reactor_event_loop();
   if (err < 0)
     {
-      ACE_DEBUG((LM_ERROR,"Reactor_Task (%t) error running Reactor event loop\n"));
+      ACE_ERROR((LM_ERROR,"Reactor_Task (%t) error running Reactor event loop\n"));
     }
 
   ACE_DEBUG((LM_DEBUG,"Reactor_Task (%P|%t) svc(): LEAVE\n"));
@@ -963,7 +963,7 @@ Gateway_Initializer::handle_timeout (const ACE_Time_Value &,
            remote_gateways_connected < this->ec_->remote_ecs()->size();
            remote_gateways_connected = this->ec_->remote_gateways_connected())
         {
-          //while file doesn't exist
+          //while not all other gateways connected
           ACE_DEBUG((LM_DEBUG,"Gateway_Initializer (%P|%t): waiting for remote gateway connections (%d left)\n",(this->ec_->remote_ecs()->size()-remote_gateways_connected)));
           ACE_OS::sleep(sleeptime);
         }
