@@ -59,7 +59,6 @@ CONTROLLED_FILES = \
         PROBLEM-REPORT-FORM \
         README \
         THANKS \
-        TODO \
         VERSION \
 	ACEXML \
         ace \
@@ -70,6 +69,7 @@ CONTROLLED_FILES = \
         bin \
 	configure.ac \
         lib \
+	MPC \
         docs \
         etc \
         examples \

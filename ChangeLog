@@ -1,3 +1,11 @@
+Sun Jul 25 23:18:53 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* Release:
+	* bin/make_release:
+
+	  Tag and bundle ACE_MPC along with the release. This seems to
+	  work. Final stages of testing are on.
+
 Sun Jul 25 22:16:27 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/make_release:

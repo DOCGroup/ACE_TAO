@@ -268,6 +268,11 @@ if ($update_versions  &&  "$kit" ne 'ace+tao+ciao') {
       die "$0: failed make ACE-INSTALL in $stage_dir/ACE_wrappers\n";
   }
 
+  if ("$ace_tag") {
+    &ex ("$cvs -q export -r$ace_tag -kv ACE_MPC > /dev/null")  &&
+      die "$0: failed cvs export of ACE_MPC in $stage_dir\n";
+  }
+
   if ("$tao_tag") {
     &ex ("$cvs -q export -r$tao_tag -kv ACE_wrappers/TAO > /dev/null")  &&
       die "$0: failed cvs export of $tao_tag in $stage_dir\n";
@@ -275,6 +280,7 @@ if ($update_versions  &&  "$kit" ne 'ace+tao+ciao') {
       die "$0: failed make INSTALL in " .
           "$stage_dir/ACE_wrappers/TAO\n";
   }
+
   if ("$ciao_tag") {
     &ex ("$cvs -q export -r$ciao_tag -kv ACE_wrappers/TAO/CIAO > /dev/null")  &&
       die "$0: failed cvs export of $ciao_tag in $stage_dir\n";
@@ -367,7 +373,7 @@ sub check_workspace () {
   }
 
   my @out_of_date = ();
-  open (CVS, "$cvs -Q checkout -P $module 2>&1 |")  ||
+  open (CVS, "$cvs -q checkout -P $module 2>&1 |")  ||
     die "$0: unable to open $cvs\n";
   while (<CVS>) {
     next if m%^U %;    #### Allow others to update the repository.
