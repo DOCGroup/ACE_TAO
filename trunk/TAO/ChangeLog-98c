@@ -1,12 +1,10 @@
-Mon Oct 20 22:40:46 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
-
-	* TAO version 0.0.13, released Mon Oct 20 22:40:46 1997.
-
 MOn Oct 20 10:14:09 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* Improved version of the TAO IDL compiler. The executable has
-	been renamed to tao_idl. There are a number of improvements as
-	well as shortcomings. These are explained in the releasenotes. 
+ 	been renamed to tao_idl. There are a number of improvements as
+ 	well as shortcomings. These are explained in the
+ 	docs/releasenotes/index.html page, which can be viewed online at
+ 	http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/releasenotes/.
 
 Mon Oct 20 16:30:29 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
@@ -16,19 +14,17 @@ Mon Oct 20 16:30:29 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
  	eliminate the problems Boeing was seeing in the early rounds of
  	testing the most recent release of TAO.
 
-	* tao/{iiopobj.*,giop.h}: Moved a lock that had been in TAO_GIOP_Invocation
- 	(why?  I don't know) into IIOP_Object.  It protects the
- 	fwd_profile_ pointer, which has now become private.  Also added
- 	accessors for the data member as well as the lock.  Accessors come
- 	in two flavors--thead-safe (fwd_profile()) and non-thread-safe
- 	(fwd_profile_i()).  The non-thread-safe variety expect that the
- 	lock will be taken and held for the duration of their usage, but
- 	no checking is performed in this respect.
+	* tao/{iiopobj.*,giop.h}: Moved a lock that had been in
+ 	TAO_GIOP_Invocation (why?  I don't know) into IIOP_Object.  It
+ 	protects the fwd_profile_ pointer, which has now become private.
+  	Also added accessors for the data member as well as the lock.
+  	Accessors come in two flavors--thead-safe (fwd_profile()) and
+ 	non-thread-safe (fwd_profile_i()).  The non-thread-safe variety
+ 	expect that the lock will be taken and held for the duration of
+ 	their usage, but no checking is performed in this respect.
 
 	* tao/giop.cpp: Changed references to the IIOP_Object::fwd_profile
  	data member to go through the new accessors (see above).
-
-Mon Oct 20 10:51:29 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/stub.i: Created new file with inline methods for
  	STUB_Object.
