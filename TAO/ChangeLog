@@ -1,3 +1,8 @@
+Wed Aug 18 08:32:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.h:
+          Converted some old style documentation to doxygen style
+
 Wed Aug 18 06:44:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Strategies/SCIOP_Connector.{h,cpp}:
