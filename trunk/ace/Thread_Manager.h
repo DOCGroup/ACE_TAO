@@ -69,7 +69,7 @@ public:
   // array) to be destroyed.  Returns 0 on success, non-zero on
   // failure: -1 if virtual memory is exhausted or 1 if the object (or
   // arrayt) had already been registered.
-  
+
   ~ACE_Thread_Descriptor (void);
   // Do nothing destructor to keep some compilers happy
 
@@ -157,7 +157,7 @@ public:
   int open (size_t size = 0);
   // No-op.  Currently unused.
 
-  int close (int automatic_wait = 1);
+  int close ();
   // Release all resources.
   // By default, this method will wait till all threads
   // exit.  However, when called from <close_singleton>, most global resources
@@ -378,6 +378,11 @@ public:
   // thread manager and prevent it from accessing it thread descriptor
   // before it gets fully built.
 
+  void wait_on_exit (int dowait);
+  int  wait_on_exit (void);
+  // Access function to determine whether the Thread_Manager will
+  // wait for its thread to exit or not when being closing down.
+
   void dump (void);
   // Dump the state of an object.
 
@@ -428,12 +433,8 @@ protected:
   // Append a thread in the table (adds at the end, growing the table
   // if necessary).
 
-  void remove_thr (ACE_Thread_Descriptor *td);
+  void remove_thr (ACE_Thread_Descriptor *td, int close_handler);
   // Remove thread from the table.
-
-  void remove_thr_self(void);
-  // Same as above but must be called from the context of the thread
-  // that is to be removed.
 
   // = The following four methods implement a simple scheme for
   // operating on a collection of threads atomically.
@@ -483,6 +484,10 @@ protected:
 
   int grp_id_;
   // Keeps track of the next group id to assign.
+
+  int automatic_wait_;
+  // Set if we want the Thread_Manager to wait on all threads before
+  // being closed, reset otherwise.
 
   // = ACE_Thread_Mutex and condition variable for synchronizing termination.
 #if defined (ACE_HAS_THREADS)
