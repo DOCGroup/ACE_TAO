@@ -1,3 +1,8 @@
+Sun Aug 05 15:12:31 2001  Balachandran Natarajan <bala@cs.wustl.edu>
+
+	* tao/RTPortableServer/TAO_RTPortableServer.dsp: Fixed a build
+	  problem in Release builds.
+
 Sun Aug 05 15:03:31 2001  Balachandran Natarajan <bala@cs.wustl.edu>
 
 	* tao/TAO_Static.dsp: Added the new flushing strategies to the
