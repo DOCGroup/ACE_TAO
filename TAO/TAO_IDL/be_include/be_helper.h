@@ -1,3 +1,4 @@
+/* -*- c++ -*- */
 // ============================================================================
 //
 // = LIBRARY
@@ -7,78 +8,99 @@
 //    be_helper.h
 //
 // = DESCRIPTION
-//    Helper utilities and global singleton "params" class
+//    Defines the abstract class for outputting the C++ mapping. This is a
+//    helper class to the singleton TAO_CodeGen class
 //
 // = AUTHOR
 //    Aniruddha Gokhale
 // 
 // ============================================================================
 
-#if !defined (TAO_BE_HELPER_H)
-#define TAO_BE_HELPER_H
+#if !defined (TAO_BE_OUTSTRM_H)
+#define TAO_BE_OUTSTRM_H
 
-#include        "iostream.h"
-#include        "fstream.h"
-#include        "ace/ACE.h"
-#include        "ace/OS.h"
-#include        "ace/Singleton.h"
-#include        "ace/Synch.h"
-
-class TAO_BE_Params
-// = TITLE
-//   Holds global parameters for the Back End
-//
-// = DESCRIPTION
-//
+// a dummy structure to inform TAO_OutStream's << operator to  put a newline
+// and use the current indentation for the succeeding line
+struct TAO_NL
 {
 public:
-  TAO_BE_Params();
-  // Constructor
-
-  void client_header(streambuf *sbuf);
-  // set the client header stream
-
-  streambuf* client_header();
-  // get the client header stream
-
-  void client_stubs(streambuf* f);
-  // set the client stub stream
-
-  streambuf* client_stubs();
-  // get the client stubs stream
-
-  void server_header(streambuf* f);
-  // set the server header stream
-
-  streambuf* server_header();
-  // get the server header stream
-
-  void server_skeletons(streambuf* f);
-  // set the server skeletons stream
-
-  streambuf* server_skeletons();
-  // get the server skeletons stream
-private:
-  streambuf *pd_client_header;
-  // client header stream
-
-  streambuf *pd_client_stubs;
-  // client stub file stream
-
-  streambuf *pd_server_header;
-  // server header stream
-
-  streambuf *pd_server_skeletons;
-  // server skeleton stream
+  TAO_NL (void);
 };
 
-typedef ACE_Singleton<TAO_BE_Params,ACE_Thread_Mutex> TAO_BE_PARAMS;
-// Singleton instance of BE parameters
+class TAO_OutStream
+{
+  // =TITLE
+  /// TAO_OutStream
+  // =DESCRIPTION
+  //  Defines an interface by which the backend code generator can print its
+  //  output to the underlying I/O handle. This is a helper class that will be
+  //  used by the TAO_CodeGen class. However, this is an abstract class and
+  //  classes that understand specific front ends must derive from this
+  //  class.
+public:
+  TAO_OutStream (void);
+  // constructor. 
 
-const char* be_get_client_hdr_fname();
-const char* be_get_client_stub_fname();
-const char* be_get_server_hdr_fname();
-const char* be_get_server_skeleton_fname();
+  ~TAO_OutStream (void);
+  // destructor
 
+  int open (const char *fname);
+  // open the underlying low-level handle for output
 
-#endif
+  int incr_indent (unsigned short flag=1);
+  // increment the indentation level and by default actually indent the output
+  // accordingly 
+
+  int decr_indent (unsigned short flag=1);
+  // decrease the indentation level and by default actually indent the output
+  // accordingly 
+
+  int reset (void);
+  // reset indentation level to 0
+
+  int indent (void);
+  // indent starting next line
+
+  int nl (void);
+  // put a newline and indent on the next line
+
+  int print (const char *format, ...);
+  // "printf" style variable argument print
+
+  // =overloaded operators
+
+  TAO_OutStream &operator<< (const char *str);
+  // output the char string and return a reference to ourselves
+
+  TAO_OutStream &operator<< (const int num);
+  // output the integer and return a reference to ourselves
+
+  TAO_OutStream &operator<< (const TAO_NL nl);
+  // The following will be provided by specialized classes
+
+  TAO_OutStream &operator<< (Identifier *id);
+  // output an Identifier node
+
+  TAO_OutStream &operator<< (UTL_IdList *idl);
+  // output a scoped name
+
+  TAO_OutStream &operator<< (AST_Expression *expr);
+  // output an AST_Expression node
+
+  // provided by specialized classes
+  virtual TAO_OutStream &print (Identifier *id) = 0;
+
+  virtual TAO_OutStream &print (UTL_IdList *idl) = 0;
+
+  virtual TAO_OutStream &print (AST_Expression *idl) = 0;
+
+protected:
+  FILE *fp_;
+  // the underlying low-level I/O handle
+
+  int indent_level_;
+  // indentation level
+
+};
+
+#endif // if !defined
