@@ -83,8 +83,6 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
           << "_Proxy_Factory_Adapter" << be_nl
           << "{" << be_nl
           << "public:" << be_idt_nl << be_nl
-          << "friend class ACE_Singleton<TAO_" << node->flat_name ()
-          << "_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;" << be_nl
           << "friend class TAO_Singleton<TAO_" << node->flat_name ()
           << "_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;" << be_nl << be_nl
           << "int register_proxy_factory (" << be_idt << be_idt_nl

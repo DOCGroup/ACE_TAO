@@ -1,3 +1,14 @@
+Sun Aug  6 17:21:27 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ImplRepoC.h:
+	* tao/InterfaceC.h:
+	* tao/MessagingC.h:
+	* tao/ORB_Core.h:
+	* TAO_IDL/be/be_visitor_interface/smart_proxy_ch.cpp (visit_interface):
+
+	  Friend declaration for ACE_Singleton is no longer necessary
+	  since the TAO_Singletons no longer derive from it.
+
 Sun Aug  6 14:59:34 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/TAO_Singleton.h:

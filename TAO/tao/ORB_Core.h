@@ -844,7 +844,6 @@ public:
   // Return a unique instance
 
 protected:
-  friend class ACE_Singleton<TAO_ORB_Table, ACE_SYNCH_MUTEX>;
   friend class TAO_Singleton<TAO_ORB_Table, ACE_SYNCH_MUTEX>;
   TAO_ORB_Table (void);
   // Constructor
