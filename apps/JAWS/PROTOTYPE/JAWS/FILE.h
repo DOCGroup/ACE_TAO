@@ -18,6 +18,8 @@ public:
 
   JAWS_FILE (void);
 
+  ~JAWS_FILE (void);
+
   ACE_Mem_Map *mem_map (int length = -1,
                         int prot = PROT_RDWR,
                         int share = ACE_MAP_PRIVATE,

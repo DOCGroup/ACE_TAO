@@ -33,7 +33,7 @@ public:
   JAWS_Cache_Manager (ACE_Allocator *alloc = 0,
                      JAWS_Cache_Object_Factory *cof = 0,
 
-                     size_t hashsize = 2048,   // number of hash buckets
+                     size_t hashsize = 8192,   // number of hash buckets
                      size_t maxsize = 65535,   // max number of in memory
                                                // objects
 

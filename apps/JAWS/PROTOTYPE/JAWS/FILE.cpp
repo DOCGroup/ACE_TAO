@@ -11,6 +11,12 @@ JAWS_FILE::JAWS_FILE (void)
 {
 }
 
+JAWS_FILE::~JAWS_FILE (void)
+{
+  delete this->map_;
+  this->map_ = 0;
+}
+
 ACE_Mem_Map *
 JAWS_FILE::mem_map (int length,
                     int prot,
