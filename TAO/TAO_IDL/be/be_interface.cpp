@@ -77,15 +77,27 @@ be_interface::~be_interface (void)
 
 // compute stringified fully qualified collocated class name.
 void
-be_interface::compute_coll_name (void)
+be_interface::compute_coll_name (int type)
 {
-  if (this->full_coll_name_ != 0)
+// @@ not thread safe.
+  static cached_type = -1;
+  if (type == cached_type && this->full_coll_name_ != 0)
     return;
+  else
+    {
+      cached_type = type;
+// @@ this is causing segfault on NT, why?
+//        delete this->full_coll_name_;
+//        delete this->local_coll_name_;
+    }
 
-  const char collocated[] = "_tao_collocated_";
+  static const char *collocated_names[] = { "_tao_thru_poa_collocated_",
+                                            "_tao_direct_collocated_" };
   const char poa[] = "POA_";
   // Reserve enough room for the "POA_" prefix, the "_tao_collocated_"
   // prefix and the local name and the (optional) "::"
+  const char *collocated = collocated_names[type];
+
   int namelen = sizeof (collocated) + sizeof (poa);
 
   UTL_IdListActiveIterator *i;
@@ -151,19 +163,17 @@ be_interface::compute_coll_name (void)
 }
 
 const char *
-be_interface::full_coll_name (void)
+be_interface::full_coll_name (int type)
 {
-  if (this->full_coll_name_ == 0)
-    this->compute_coll_name ();
+  this->compute_coll_name (type);
 
   return this->full_coll_name_;
 }
 
 const char*
-be_interface::local_coll_name (void) const
+be_interface::local_coll_name (int type) const
 {
-  if (this->local_coll_name_ == 0)
-    ACE_const_cast (be_interface*, this)->compute_coll_name ();
+  ACE_const_cast (be_interface*, this)->compute_coll_name (type);
 
   return this->local_coll_name_;
 }
@@ -1896,31 +1906,6 @@ be_interface::gen_skel_helper (be_interface *derived,
 }
 
 int
-be_interface::collocated_ctor_helper (be_interface *derived,
-                                      be_interface *base,
-                                      TAO_OutStream *os)
-{
-  if (derived == base)
-    // we are the same. Don't do anything, otherwise we will end up calling
-    // ourself
-    return 0;
-
-  if (base->is_nested ())
-    {
-      be_decl *scope;
-      scope = be_scope::narrow_from_scope (base->defined_in ())->decl ();
-      *os << "  ACE_NESTED_CLASS (POA_" << scope->name () << ","
-          << base->local_coll_name () << ") (servant, stub)," << be_nl;
-    }
-  else
-    {
-      *os << "  " << base->full_coll_name () << " (servant, stub)," << be_nl;
-    }
-
-  return 0;
-}
-
-int
 be_interface::copy_ctor_helper (be_interface *derived,
                                 be_interface *base,
                                 TAO_OutStream *os)
@@ -1969,13 +1954,6 @@ be_interface::in_mult_inheritance_helper (be_interface *derived,
       derived->in_mult_inheritance (1);
     }
   return 0;
-}
-
-const char*
-be_interface::relative_coll_name (const char *collname)
-{
-  return be_interface::relative_name (this->full_coll_name (),
-                                      collname);
 }
 
 // return the relative skeleton name (needed due to NT compiler insanity)

@@ -38,6 +38,11 @@ class be_interface : public virtual AST_Interface,
   // = DESCRIPTION
   //
 public:
+  enum {
+    THRU_POA = 0,
+    DIRECT = 1
+  };
+  // Collocated stubs type value.
 
   // used to pass functions to the template method
   typedef int (*tao_code_emitter) (be_interface *, be_interface *, TAO_OutStream *);
@@ -69,7 +74,7 @@ public:
                             char *interface_full_name  = 0);
   // Generate the implementation for the _var class.
   // If any one of the argument is 0, then use the name in <this>,
-  // otherwise use the name given. Just making the class more useful. 
+  // otherwise use the name given. Just making the class more useful.
 
   virtual int gen_out_defn (char *interface_name = 0);
   // Generate the out class definition. If <interface_name> is not 0,
@@ -78,12 +83,12 @@ public:
 
   virtual int gen_out_impl (char *interface_local_name = 0,
                             char *interface_full_name = 0);
-  // Generate the out class implementation. 
+  // Generate the out class implementation.
   // If any one of the argument is 0, then use the name giin this
-  // node, else use the arguments. 
+  // node, else use the arguments.
 
   const char *full_skel_name (void);
-  // Retrieve the fully scoped skel class name. 
+  // Retrieve the fully scoped skel class name.
 
   //
   // Each interface (to fix names "T") also defines two help classes,
@@ -96,10 +101,10 @@ public:
   // defines the stubs (all operations in T are pure virtual).
   // @@ TODO currently the stub class is not implemented.
   //
-  const char *full_coll_name (void);
+  const char *full_coll_name (int);
   // retrieve the fully qualified collocated class name
 
-  const char *local_coll_name (void) const;
+  const char *local_coll_name (int) const;
   // retrieve the fully qualified collocated class name
 
   virtual int traverse_inheritance_graph (tao_code_emitter gen,
@@ -108,9 +113,6 @@ public:
 
   const char *relative_skel_name (const char *other_class_name);
   // relative skeleton name
-
-  const char *relative_coll_name (const char *other_class_name);
-  // relative name for collocated class.
 
   int in_mult_inheritance (void);
   // am I in some form of multiple inheritance
@@ -151,12 +153,6 @@ public:
   // helper method passed to the template method to generate code for the
   // skeletons in the inline file
 
-  static int collocated_ctor_helper (be_interface *,
-                                     be_interface *,
-                                     TAO_OutStream *os);
-  // helper method passed to the template method to invoke ctors of all the
-  // base classes.
-
   static int copy_ctor_helper (be_interface *,
                                be_interface *,
                                TAO_OutStream *os);
@@ -196,7 +192,7 @@ public:
   int gen_optable_entries (be_interface *);
   // generate the operation table entries.
 
-  void compute_coll_name (void);
+  void compute_coll_name (int);
   // compute the fully qualified collocated class name.
 
 private:

@@ -188,18 +188,39 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
 
   *os << be_uidt_nl << "};\n\n";
 
-  // generate the collocated class
   be_visitor_context ctx (*this->ctx_);
-  ctx.state (TAO_CodeGen::TAO_INTERFACE_COLLOCATED_SH);
-  be_visitor *visitor = tao_cg->make_visitor (&ctx);
-  if (!visitor || (node->accept (visitor) == -1))
+  be_visitor *visitor = 0;
+
+  // generate the collocated class
+  if (idl_global->gen_thru_poa_collocation ())
     {
-      delete visitor;
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_interface_sh::"
-                         "visit_interface - "
-                         "codegen for collocated class failed\n"),
-                        -1);
+      ctx.state (TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SH);
+      visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor || (node->accept (visitor) == -1))
+        {
+          delete visitor;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_interface_sh::"
+                             "visit_interface - "
+                             "codegen for thru_poa_collocated class failed\n"),
+                            -1);
+        }
+    }
+
+  if (idl_global->gen_direct_collocation ())
+    {
+      ctx = *this->ctx_;
+      ctx.state (TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SH);
+      visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor || (node->accept (visitor) == -1))
+        {
+          delete visitor;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_interface_sh::"
+                             "visit_interface - "
+                             "codegen for direct_collocated class failed\n"),
+                            -1);
+        }
     }
 
   // generate the TIE class.

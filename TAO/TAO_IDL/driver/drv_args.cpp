@@ -380,9 +380,9 @@ DRV_parse_args (long ac, char **av)
               idl_global->gperf_path (av[i+1]);
               i++;
               break;
-              
+
               // Option to generate the features regarding the
-              // Messaging Specification.  
+              // Messaging Specification.
 
               // Directory where all the IDL-Compiler-Generated files are to
               // be kept. Default is the current directory from which the
@@ -547,6 +547,16 @@ DRV_parse_args (long ac, char **av)
                   // suppress typecode support
                   idl_global->tc_support (0);
                 }
+              else if (av[i][2] == 'p')
+                {
+                  // suppress generating Thru_POA collocated stubs
+                  idl_global->gen_thru_poa_collocation (0);
+                }
+              else if (av[i][2] == 'd')
+                {
+                  // suppress generating Direct collocated stubs
+                  idl_global->gen_direct_collocation (0);
+                }
               else if (av[i][2] == 'v')
                 {
                   // disable OBV (Valuetype) support
@@ -602,7 +612,7 @@ DRV_parse_args (long ac, char **av)
               else if (av[i][2] == 'e')
                 {
                   int option = atoi (av[i+1]);
-                                    
+
                   // exception support
                   idl_global->exception_support (!option);
                   i++;
@@ -611,6 +621,16 @@ DRV_parse_args (long ac, char **av)
                 {
                   // optimized typecode support
                   idl_global->opt_tc (1);
+                }
+              else if (av[i][2] == 'p')
+                {
+                  // generating Thru_POA collocated stubs.
+                  idl_global->gen_thru_poa_collocation (1);
+                }
+              else if (av[i][2] == 'd')
+                {
+                  // generating Direct collocated stubs.
+                  idl_global->gen_direct_collocation (1);
                 }
               else if (av[i][2] == 'v')
                 {

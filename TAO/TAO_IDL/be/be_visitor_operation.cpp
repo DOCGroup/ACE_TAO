@@ -30,8 +30,10 @@
 #include "be_visitor_operation/argument.cpp"
 #include "be_visitor_operation/argument_invoke.cpp"
 #include "be_visitor_operation/argument_marshal.cpp"
-#include "be_visitor_operation/collocated_sh.cpp"
-#include "be_visitor_operation/collocated_ss.cpp"
+#include "be_visitor_operation/thru_poa_collocated_sh.cpp"
+#include "be_visitor_operation/thru_poa_collocated_ss.cpp"
+#include "be_visitor_operation/direct_collocated_sh.cpp"
+#include "be_visitor_operation/direct_collocated_ss.cpp"
 #include "be_visitor_operation/exceptlist_cs.cpp"
 #include "be_visitor_operation/operation_ch.cpp"
 #include "be_visitor_operation/operation_cs.cpp"
@@ -61,4 +63,3 @@
 #include "be_visitor_operation/ami_handler_arglist.cpp"
 
 ACE_RCSID(be, be_visitor_operation, "$Id$")
-

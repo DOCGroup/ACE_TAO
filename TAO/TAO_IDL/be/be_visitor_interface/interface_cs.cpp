@@ -75,8 +75,8 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   // This may be necessary to work around a GCC compiler bug!
 //  const char *skel_name = node->full_skel_name (); // unused at this time
-  const char *coll_name = node->full_coll_name ();
-  assert (coll_name != 0);
+//    const char *coll_name = node->full_coll_name ();
+//    assert (coll_name != 0);
 
   // The _unchecked_narrow method
   *os << node->name () << "_ptr " << node->name ()
