@@ -471,7 +471,7 @@ int CC_Wait_Cmd::execute(void)
   printf ("Executing wait command\n");
 
   printf ("%s", prompt_);
-  (void) ACE_OS::getchar ();
+  (void) ACE_OS::fgetc (stdin);
 
   return 1; // CC_SUCCESS
 }
