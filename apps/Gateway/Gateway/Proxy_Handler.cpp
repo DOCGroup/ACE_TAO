@@ -1,5 +1,6 @@
 // $Id$
 
+#define ACE_BUILD_SVC_DLL
 #include "Event_Channel.h"
 #include "Concrete_Proxy_Handlers.h"
 
@@ -153,13 +154,13 @@ Proxy_Handler::open (void *)
 	      this->proxy_role () == 'C' ? "Consumer" : "Supplier", 
 	      this->peer ().get_handle ()));
 
-  // Turn on non-blocking I/O.
-  if (this->peer ().enable (ACE_NONBLOCK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "enable"), -1);
-
   // Call back to the <Event_Channel> to complete our initialization.
-  else if (this->event_channel_->complete_proxy_connection (this) == -1)
+  if (this->event_channel_->complete_proxy_connection (this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "complete_proxy_connection"), -1);
+
+  // Turn on non-blocking I/O.
+  else if (this->peer ().enable (ACE_NONBLOCK) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "enable"), -1);
 
   // Register ourselves to receive input events.
   else if (ACE_Service_Config::reactor ()->register_handler 
