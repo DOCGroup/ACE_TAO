@@ -604,6 +604,7 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -630,10 +631,12 @@ endif # GHS
  OS.i \
  Template_Instantiations.cpp
 
-.obj/OS.o .obj/OS.so .shobj/OS.o .shobj/OS.so: OS.cpp OS.h \
+.obj/OS.o .obj/OS.so .shobj/OS.o .shobj/OS.so: OS.cpp \
+ OS.h \
  pre.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -665,13 +668,15 @@ endif # GHS
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
  Base_Thread_Adapter.inl \
- OS_Thread_Adapter.inl
+ OS_Thread_Adapter.inl \
+ OS_QoS.h
 
 .obj/OS_Dirent.o .obj/OS_Dirent.so .shobj/OS_Dirent.o .shobj/OS_Dirent.so: OS_Dirent.cpp \
  OS_Dirent.h \
  pre.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -708,6 +713,7 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -726,6 +732,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -756,6 +763,7 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -777,6 +785,7 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -793,6 +802,7 @@ endif # GHS
  OS_Errno.h \
  pre.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -810,6 +820,7 @@ endif # GHS
  OS_Log_Msg_Attributes.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -845,6 +856,7 @@ endif # GHS
  OS_Log_Msg_Attributes.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -880,6 +892,7 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -898,6 +911,7 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -930,6 +944,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -962,6 +977,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -994,11 +1010,13 @@ endif # GHS
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
-.obj/ACE.o .obj/ACE.so .shobj/ACE.o .shobj/ACE.so: ACE.cpp ACE.h \
+.obj/ACE.o .obj/ACE.so .shobj/ACE.o .shobj/ACE.so: ACE.cpp \
+ ACE.h \
  pre.h \
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -1041,6 +1059,7 @@ endif # GHS
  Auto_Ptr.cpp \
  SString.h \
  String_Base.h \
+ String_Base_Const.h \
  String_Base.i \
  Malloc_Base.h \
  String_Base.cpp \
@@ -1063,7 +1082,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Allocator.i \
@@ -1103,6 +1121,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -1154,7 +1173,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -1200,6 +1218,7 @@ endif # GHS
  Unbounded_Queue.cpp \
  SString.h \
  String_Base.h \
+ String_Base_Const.h \
  String_Base.i \
  String_Base.cpp \
  Auto_Ptr.h \
@@ -1229,6 +1248,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -1254,12 +1274,14 @@ endif # GHS
  Trace.h \
  OS.i
 
-.obj/ARGV.o .obj/ARGV.so .shobj/ARGV.o .shobj/ARGV.so: ARGV.cpp ARGV.h \
+.obj/ARGV.o .obj/ARGV.so .shobj/ARGV.o .shobj/ARGV.so: ARGV.cpp \
+ ARGV.h \
  pre.h \
  ACE.h \
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -1315,6 +1337,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -1363,7 +1386,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -1409,6 +1431,7 @@ endif # GHS
  Unbounded_Queue.cpp \
  SString.h \
  String_Base.h \
+ String_Base_Const.h \
  String_Base.i \
  String_Base.cpp \
  Auto_Ptr.h \
@@ -1454,6 +1477,7 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -1521,6 +1545,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -1558,6 +1583,7 @@ endif # GHS
  ACE.i \
  SString.h \
  String_Base.h \
+ String_Base_Const.h \
  String_Base.i \
  Malloc_Base.h \
  String_Base.cpp \
@@ -1580,7 +1606,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Allocator.i \
@@ -1654,6 +1679,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -1691,6 +1717,7 @@ endif # GHS
  ACE.i \
  SString.h \
  String_Base.h \
+ String_Base_Const.h \
  String_Base.i \
  Malloc_Base.h \
  String_Base.cpp \
@@ -1713,7 +1740,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Allocator.i \
@@ -1784,6 +1810,7 @@ endif # GHS
  OS_Dirent.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -1821,6 +1848,7 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -1855,6 +1883,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -1902,7 +1931,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -1923,6 +1951,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -1957,6 +1986,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -2003,6 +2033,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -2038,13 +2069,72 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
- Get_Opt.i \
+ SString.h \
+ String_Base.h \
+ String_Base_Const.h \
+ String_Base.i \
+ Malloc_Base.h \
+ String_Base.cpp \
+ Malloc.h \
  Log_Msg.h \
  Log_Record.h \
  Log_Priority.h \
  Log_Record.i \
  OS_Log_Msg_Attributes.h \
- OS_Log_Msg_Attributes.inl
+ OS_Log_Msg_Attributes.inl \
+ Malloc.i \
+ Malloc_T.h \
+ Synch.h \
+ Synch.i \
+ Synch_T.h \
+ Synch_T.i \
+ Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
+ Thread.i \
+ Synch_T.cpp \
+ Malloc_Allocator.h \
+ Malloc_Allocator.i \
+ Free_List.h \
+ Free_List.i \
+ Free_List.cpp \
+ Malloc_T.i \
+ Malloc_T.cpp \
+ Memory_Pool.h \
+ Event_Handler.h \
+ Event_Handler.i \
+ Signal.h \
+ Signal.i \
+ Mem_Map.h \
+ Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
+ Unbounded_Set.h \
+ Node.h \
+ Node.cpp \
+ Unbounded_Set.inl \
+ Unbounded_Set.cpp \
+ Memory_Pool.i \
+ Auto_Ptr.h \
+ Auto_Ptr.i \
+ Auto_Ptr.cpp \
+ SString.i \
+ Containers.h \
+ Containers.i \
+ Containers_T.h \
+ Array_Base.h \
+ Array_Base.inl \
+ Array_Base.cpp \
+ Unbounded_Queue.h \
+ Unbounded_Queue.inl \
+ Unbounded_Queue.cpp \
+ Containers_T.i \
+ Containers_T.cpp \
+ Get_Opt.i
 
 .obj/Hash_Map_Manager.o .obj/Hash_Map_Manager.so .shobj/Hash_Map_Manager.o .shobj/Hash_Map_Manager.so: Hash_Map_Manager.cpp \
  Hash_Map_Manager.h \
@@ -2052,6 +2142,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -2111,7 +2202,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Hash_Map_Manager_T.cpp \
  Service_Config.h \
@@ -2134,6 +2224,7 @@ endif # GHS
  Unbounded_Set.cpp \
  SString.h \
  String_Base.h \
+ String_Base_Const.h \
  String_Base.i \
  String_Base.cpp \
  Malloc.h \
@@ -2179,6 +2270,7 @@ endif # GHS
  Recyclable.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -2197,6 +2289,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -2231,6 +2324,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -2274,6 +2368,7 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -2291,6 +2386,7 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -2309,6 +2405,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -2341,6 +2438,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -2378,6 +2476,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -2417,6 +2516,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -2471,7 +2571,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Base.h \
@@ -2510,6 +2609,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -2541,6 +2641,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -2594,7 +2695,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -2641,6 +2741,7 @@ endif # GHS
  Unbounded_Queue.cpp \
  SString.h \
  String_Base.h \
+ String_Base_Const.h \
  String_Base.i \
  String_Base.cpp \
  Auto_Ptr.h \
@@ -2698,6 +2799,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -2723,6 +2825,23 @@ endif # GHS
  Trace.h \
  OS.i
 
+.obj/String_Base_Const.o .obj/String_Base_Const.so .shobj/String_Base_Const.o .shobj/String_Base_Const.so: String_Base_Const.cpp \
+ String_Base_Const.h \
+ pre.h \
+ config-all.h \
+ config.h \
+ config-linux.h \
+ config-linux-common.h \
+ config-g++-common.h \
+ post.h \
+ ACE_export.h \
+ svc_export.h \
+ ace_wchar.h \
+ ace_wchar.inl \
+ OS_Errno.h \
+ OS_Export.h \
+ OS_Errno.inl
+
 .obj/SString.o .obj/SString.so .shobj/SString.o .shobj/SString.so: SString.cpp \
  Malloc.h \
  pre.h \
@@ -2730,6 +2849,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -2783,7 +2903,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Base.h \
@@ -2820,6 +2939,7 @@ endif # GHS
  Unbounded_Queue.cpp \
  SString.h \
  String_Base.h \
+ String_Base_Const.h \
  String_Base.i \
  String_Base.cpp \
  Auto_Ptr.h \
@@ -2848,6 +2968,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -2906,6 +3027,7 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -2949,6 +3071,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -2997,7 +3120,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -3032,6 +3154,7 @@ endif # GHS
  Unbounded_Set.cpp \
  SString.h \
  String_Base.h \
+ String_Base_Const.h \
  String_Base.i \
  String_Base.cpp \
  Malloc.h \
@@ -3082,6 +3205,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -3127,7 +3251,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -3146,6 +3269,7 @@ endif # GHS
  config-all.h \
  pre.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -3196,7 +3320,6 @@ endif # GHS
  Synch.i \
  Synch_T.h \
  Synch_T.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -3257,6 +3380,7 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -3273,6 +3397,7 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -3290,6 +3415,7 @@ endif # GHS
  Log_Msg_Backend.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -3350,6 +3476,7 @@ endif # GHS
  config-all.h \
  pre.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -3365,6 +3492,7 @@ endif # GHS
  config-all.h \
  pre.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -3417,6 +3545,7 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -3466,6 +3595,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -3501,17 +3631,21 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
- Get_Opt.i \
+ SString.h \
+ String_Base.h \
+ String_Base_Const.h \
+ String_Base.i \
+ Malloc_Base.h \
+ String_Base.cpp \
+ Malloc.h \
  Log_Msg.h \
  Log_Record.h \
  Log_Priority.h \
  Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl \
- Reactor.h \
- Handle_Set.h \
- Handle_Set.i \
- Timer_Queue.h \
+ Malloc.i \
+ Malloc_T.h \
  Synch.h \
  Synch.i \
  Synch_T.h \
@@ -3522,21 +3656,57 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
- Timer_Queue_T.h \
+ Malloc_Allocator.h \
+ Malloc_Allocator.i \
  Free_List.h \
  Free_List.i \
  Free_List.cpp \
- Test_and_Set.h \
+ Malloc_T.i \
+ Malloc_T.cpp \
+ Memory_Pool.h \
  Event_Handler.h \
  Event_Handler.i \
+ Signal.h \
+ Signal.i \
+ Mem_Map.h \
+ Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
+ Unbounded_Set.h \
+ Node.h \
+ Node.cpp \
+ Unbounded_Set.inl \
+ Unbounded_Set.cpp \
+ Memory_Pool.i \
+ Auto_Ptr.h \
+ Auto_Ptr.i \
+ Auto_Ptr.cpp \
+ SString.i \
+ Containers.h \
+ Containers.i \
+ Containers_T.h \
+ Array_Base.h \
+ Array_Base.inl \
+ Array_Base.cpp \
+ Unbounded_Queue.h \
+ Unbounded_Queue.inl \
+ Unbounded_Queue.cpp \
+ Containers_T.i \
+ Containers_T.cpp \
+ Get_Opt.i \
+ Reactor.h \
+ Handle_Set.h \
+ Handle_Set.i \
+ Timer_Queue.h \
+ Timer_Queue_T.h \
+ Test_and_Set.h \
  Test_and_Set.i \
  Test_and_Set.cpp \
  Timer_Queue_T.i \
  Timer_Queue_T.cpp \
- Signal.h \
- Signal.i \
  Reactor.i \
  Reactor_Impl.h \
  Logging_Strategy.h \
@@ -3549,6 +3719,7 @@ endif # GHS
  config-all.h \
  pre.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -3590,6 +3761,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -3635,7 +3807,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -3690,6 +3861,7 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -3731,6 +3903,7 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
+ String_Base_Const.h \
  String_Base.i \
  Malloc_Base.h \
  String_Base.cpp \
@@ -3753,7 +3926,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Allocator.i \
@@ -3798,6 +3970,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -3843,7 +4016,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -3854,6 +4026,7 @@ endif # GHS
  Handle_Set.i \
  SString.h \
  String_Base.h \
+ String_Base_Const.h \
  String_Base.i \
  Malloc_Base.h \
  String_Base.cpp \
@@ -3914,6 +4087,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -3960,7 +4134,6 @@ endif # GHS
  Synch.h \
  Synch.i \
  Synch_T.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -3974,6 +4147,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -4019,6 +4193,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -4065,7 +4240,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -4082,6 +4256,7 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -4136,7 +4311,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -4150,6 +4324,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -4201,6 +4376,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -4240,6 +4416,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -4291,6 +4468,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -4336,7 +4514,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -4388,6 +4565,7 @@ endif # GHS
  OS_Log_Msg_Attributes.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -4435,7 +4613,6 @@ endif # GHS
  Synch.i \
  Synch_T.h \
  Synch_T.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -4480,6 +4657,7 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -4531,7 +4709,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -4547,6 +4724,7 @@ endif # GHS
  config-all.h \
  pre.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -4599,7 +4777,6 @@ endif # GHS
  Synch.i \
  Synch_T.h \
  Synch_T.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -4642,6 +4819,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -4689,7 +4867,6 @@ endif # GHS
  Synch.i \
  Synch_T.h \
  Synch_T.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -4704,6 +4881,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -4760,7 +4938,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Base.h \
@@ -4835,6 +5012,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -4881,7 +5059,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -4932,6 +5109,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -4978,7 +5156,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -5048,6 +5225,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -5101,7 +5279,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -5205,6 +5382,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -5252,6 +5430,7 @@ endif # GHS
  Node.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -5313,7 +5492,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Event_Handler.h \
  Event_Handler.i \
@@ -5368,6 +5546,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -5420,7 +5599,6 @@ endif # GHS
  Synch.i \
  Synch_T.h \
  Synch_T.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -5477,6 +5655,7 @@ endif # GHS
  Timer_Wheel_T.cpp \
  High_Res_Timer.h \
  High_Res_Timer.i \
+ Proactor.i \
  Proactor_Impl.h \
  Reactor.h \
  Handle_Set.h \
@@ -5528,6 +5707,7 @@ endif # GHS
  Service_Config.h \
  SString.h \
  String_Base.h \
+ String_Base_Const.h \
  String_Base.i \
  String_Base.cpp \
  Auto_Ptr.h \
@@ -5550,6 +5730,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -5600,7 +5781,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -5637,6 +5817,7 @@ endif # GHS
  Unbounded_Set.cpp \
  SString.h \
  String_Base.h \
+ String_Base_Const.h \
  String_Base.i \
  String_Base.cpp \
  Malloc.h \
@@ -5711,6 +5892,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -5757,7 +5939,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -5807,6 +5988,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -5853,7 +6035,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -5917,6 +6098,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -5970,7 +6152,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -6017,6 +6198,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -6063,7 +6245,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -6113,6 +6294,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -6158,7 +6340,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -6230,6 +6411,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -6276,7 +6458,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -6349,6 +6530,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -6394,7 +6576,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -6469,6 +6650,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -6515,7 +6697,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -6562,6 +6743,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -6614,7 +6796,6 @@ endif # GHS
  Synch.i \
  Synch_T.h \
  Synch_T.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -6671,6 +6852,7 @@ endif # GHS
  Timer_Wheel_T.cpp \
  High_Res_Timer.h \
  High_Res_Timer.i \
+ Proactor.i \
  Message_Block.h \
  Malloc.h \
  Malloc.i \
@@ -6701,6 +6883,7 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -6735,6 +6918,7 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -6790,7 +6974,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -6851,6 +7034,7 @@ endif # GHS
  Timer_Wheel_T.cpp \
  High_Res_Timer.h \
  High_Res_Timer.i \
+ Proactor.i \
  Message_Block.h \
  Malloc.h \
  Malloc.i \
@@ -6909,6 +7093,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -6934,11 +7119,13 @@ endif # GHS
  Trace.h \
  OS.i
 
-.obj/Addr.o .obj/Addr.so .shobj/Addr.o .shobj/Addr.so: Addr.cpp Addr.h \
+.obj/Addr.o .obj/Addr.so .shobj/Addr.o .shobj/Addr.so: Addr.cpp \
+ Addr.h \
  pre.h \
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -6978,6 +7165,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -7030,6 +7218,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -7071,6 +7260,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -7130,6 +7320,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -7198,6 +7389,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -7264,6 +7456,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -7333,6 +7526,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -7396,6 +7590,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -7452,12 +7647,14 @@ endif # GHS
  LSOCK.i \
  LSOCK_Stream.i
 
-.obj/SOCK.o .obj/SOCK.so .shobj/SOCK.o .shobj/SOCK.so: SOCK.cpp SOCK.h \
+.obj/SOCK.o .obj/SOCK.so .shobj/SOCK.o .shobj/SOCK.so: SOCK.cpp \
+ SOCK.h \
  pre.h \
  ACE.h \
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -7515,6 +7712,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -7578,7 +7776,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp
 
 .obj/SOCK_CODgram.o .obj/SOCK_CODgram.so .shobj/SOCK_CODgram.o .shobj/SOCK_CODgram.so: SOCK_CODgram.cpp \
@@ -7590,6 +7787,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -7647,6 +7845,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -7699,6 +7898,7 @@ endif # GHS
  Auto_Ptr.cpp \
  SString.h \
  String_Base.h \
+ String_Base_Const.h \
  String_Base.i \
  Malloc_Base.h \
  String_Base.cpp \
@@ -7715,7 +7915,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Allocator.i \
@@ -7753,6 +7952,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -7815,6 +8015,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -7872,7 +8073,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -7887,6 +8087,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -7948,6 +8149,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -8001,6 +8203,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -8054,6 +8257,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -8106,6 +8310,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -8158,6 +8363,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -8208,6 +8414,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -8261,6 +8468,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -8304,6 +8512,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -8348,6 +8557,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -8399,6 +8609,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -8448,13 +8659,15 @@ endif # GHS
  ATM_Addr.h \
  ATM_Addr.i
 
-.obj/DEV.o .obj/DEV.so .shobj/DEV.o .shobj/DEV.so: DEV.cpp DEV.h \
+.obj/DEV.o .obj/DEV.so .shobj/DEV.o .shobj/DEV.so: DEV.cpp \
+ DEV.h \
  pre.h \
  IO_SAP.h \
  Flag_Manip.h \
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -8497,6 +8710,7 @@ endif # GHS
  DEV_Addr.i \
  SString.h \
  String_Base.h \
+ String_Base_Const.h \
  String_Base.i \
  Malloc_Base.h \
  String_Base.cpp \
@@ -8519,7 +8733,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Allocator.i \
@@ -8558,6 +8771,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -8598,6 +8812,7 @@ endif # GHS
  DEV_Addr.i \
  SString.h \
  String_Base.h \
+ String_Base_Const.h \
  String_Base.i \
  Malloc_Base.h \
  String_Base.cpp \
@@ -8620,7 +8835,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Allocator.i \
@@ -8661,6 +8875,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -8703,6 +8918,7 @@ endif # GHS
  DEV_Addr.i \
  SString.h \
  String_Base.h \
+ String_Base_Const.h \
  String_Base.i \
  Malloc_Base.h \
  String_Base.cpp \
@@ -8725,7 +8941,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Allocator.i \
@@ -8768,6 +8983,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -8810,6 +9026,7 @@ endif # GHS
  DEV_Addr.i \
  SString.h \
  String_Base.h \
+ String_Base_Const.h \
  String_Base.i \
  Malloc_Base.h \
  String_Base.cpp \
@@ -8832,7 +9049,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Allocator.i \
@@ -8865,13 +9081,15 @@ endif # GHS
  DEV.i \
  DEV_IO.i
 
-.obj/FIFO.o .obj/FIFO.so .shobj/FIFO.o .shobj/FIFO.so: FIFO.cpp FIFO.h \
+.obj/FIFO.o .obj/FIFO.so .shobj/FIFO.o .shobj/FIFO.so: FIFO.cpp \
+ FIFO.h \
  pre.h \
  IPC_SAP.h \
  Flag_Manip.h \
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -8925,6 +9143,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -8980,6 +9199,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -9035,6 +9255,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -9090,6 +9311,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -9143,6 +9365,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -9183,6 +9406,7 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
+ String_Base_Const.h \
  String_Base.i \
  Malloc_Base.h \
  String_Base.cpp \
@@ -9205,7 +9429,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Allocator.i \
@@ -9236,13 +9459,15 @@ endif # GHS
  Auto_Ptr.cpp \
  SString.i
 
-.obj/FILE.o .obj/FILE.so .shobj/FILE.o .shobj/FILE.so: FILE.cpp FILE.h \
+.obj/FILE.o .obj/FILE.so .shobj/FILE.o .shobj/FILE.so: FILE.cpp \
+ FILE.h \
  pre.h \
  IO_SAP.h \
  Flag_Manip.h \
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -9285,6 +9510,7 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
+ String_Base_Const.h \
  String_Base.i \
  Malloc_Base.h \
  String_Base.cpp \
@@ -9307,7 +9533,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Allocator.i \
@@ -9349,6 +9574,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -9391,6 +9617,7 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
+ String_Base_Const.h \
  String_Base.i \
  Malloc_Base.h \
  String_Base.cpp \
@@ -9413,7 +9640,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Allocator.i \
@@ -9456,6 +9682,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -9498,6 +9725,7 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
+ String_Base_Const.h \
  String_Base.i \
  Malloc_Base.h \
  String_Base.cpp \
@@ -9520,7 +9748,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Allocator.i \
@@ -9560,6 +9787,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -9599,6 +9827,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -9645,12 +9874,14 @@ endif # GHS
  IOStream_T.i \
  IOStream_T.cpp
 
-.obj/Pipe.o .obj/Pipe.so .shobj/Pipe.o .shobj/Pipe.so: Pipe.cpp Pipe.h \
+.obj/Pipe.o .obj/Pipe.so .shobj/Pipe.o .shobj/Pipe.so: Pipe.cpp \
+ Pipe.h \
  pre.h \
  ACE.h \
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -9719,6 +9950,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -9764,7 +9996,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -9804,6 +10035,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -9844,6 +10076,7 @@ endif # GHS
  SPIPE_Addr.i \
  SString.h \
  String_Base.h \
+ String_Base_Const.h \
  String_Base.i \
  Malloc_Base.h \
  String_Base.cpp \
@@ -9866,7 +10099,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Allocator.i \
@@ -9905,6 +10137,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -9947,6 +10180,7 @@ endif # GHS
  SPIPE_Addr.i \
  SString.h \
  String_Base.h \
+ String_Base_Const.h \
  String_Base.i \
  Malloc_Base.h \
  String_Base.cpp \
@@ -9969,7 +10203,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Allocator.i \
@@ -10011,6 +10244,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -10053,6 +10287,7 @@ endif # GHS
  SPIPE_Addr.i \
  SString.h \
  String_Base.h \
+ String_Base_Const.h \
  String_Base.i \
  Malloc_Base.h \
  String_Base.cpp \
@@ -10075,7 +10310,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Allocator.i \
@@ -10118,6 +10352,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -10160,6 +10395,7 @@ endif # GHS
  SPIPE_Addr.i \
  SString.h \
  String_Base.h \
+ String_Base_Const.h \
  String_Base.i \
  Malloc_Base.h \
  String_Base.cpp \
@@ -10182,7 +10418,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Allocator.i \
@@ -10225,6 +10460,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -10267,6 +10503,7 @@ endif # GHS
  SPIPE_Addr.i \
  SString.h \
  String_Base.h \
+ String_Base_Const.h \
  String_Base.i \
  Malloc_Base.h \
  String_Base.cpp \
@@ -10289,7 +10526,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Allocator.i \
@@ -10329,6 +10565,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -10373,6 +10610,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -10426,6 +10664,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -10477,6 +10716,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -10527,6 +10767,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -10570,13 +10811,15 @@ endif # GHS
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
-.obj/TLI.o .obj/TLI.so .shobj/TLI.o .shobj/TLI.so: TLI.cpp TLI.h \
+.obj/TLI.o .obj/TLI.so .shobj/TLI.o .shobj/TLI.so: TLI.cpp \
+ TLI.h \
  pre.h \
  IPC_SAP.h \
  Flag_Manip.h \
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -10621,6 +10864,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -10676,6 +10920,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -10738,6 +10983,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -10785,6 +11031,7 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -10827,6 +11074,7 @@ endif # GHS
  DEV_Addr.i \
  SString.h \
  String_Base.h \
+ String_Base_Const.h \
  String_Base.i \
  Malloc_Base.h \
  String_Base.cpp \
@@ -10849,7 +11097,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Allocator.i \
@@ -10895,6 +11142,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -10949,6 +11197,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -11005,7 +11254,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Base.h \
@@ -11090,6 +11338,7 @@ endif # GHS
  SPIPE_Addr.i \
  SString.h \
  String_Base.h \
+ String_Base_Const.h \
  String_Base.i \
  String_Base.cpp \
  Auto_Ptr.h \
@@ -11113,6 +11362,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -11169,7 +11419,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Base.h \
@@ -11254,6 +11503,7 @@ endif # GHS
  SPIPE_Addr.i \
  SString.h \
  String_Base.h \
+ String_Base_Const.h \
  String_Base.i \
  String_Base.cpp \
  Auto_Ptr.h \
@@ -11275,6 +11525,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -11331,7 +11582,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Base.h \
@@ -11416,6 +11666,7 @@ endif # GHS
  SPIPE_Addr.i \
  SString.h \
  String_Base.h \
+ String_Base_Const.h \
  String_Base.i \
  String_Base.cpp \
  Auto_Ptr.h \
@@ -11437,6 +11688,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -11506,7 +11758,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Base.h \
@@ -11570,6 +11821,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -11628,6 +11880,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -11697,7 +11950,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Base.h \
@@ -11761,6 +12013,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -11822,7 +12075,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Base.h \
@@ -11884,6 +12136,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -11938,7 +12191,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Base.h \
@@ -11991,6 +12243,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -12052,7 +12305,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Base.h \
@@ -12112,6 +12364,7 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -12152,6 +12405,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -12214,7 +12468,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Object_Manager.h \
  Object_Manager.i \
@@ -12229,6 +12482,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -12281,6 +12535,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -12333,7 +12588,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -12371,6 +12625,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -12409,6 +12664,7 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
+ String_Base_Const.h \
  String_Base.i \
  Malloc_Base.h \
  String_Base.cpp \
@@ -12431,7 +12687,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Allocator.i \
@@ -12467,6 +12722,7 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -12501,6 +12757,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -12549,7 +12806,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -12589,6 +12845,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -12637,7 +12894,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -12671,6 +12927,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -12719,7 +12976,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -12744,6 +13000,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -12813,7 +13070,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Timer_Queue_T.h \
  Free_List.h \
@@ -12838,6 +13094,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -12886,7 +13143,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -12907,11 +13163,13 @@ endif # GHS
  High_Res_Timer.h \
  High_Res_Timer.i
 
-.obj/DLL.o .obj/DLL.so .shobj/DLL.o .shobj/DLL.so: DLL.cpp DLL.h \
+.obj/DLL.o .obj/DLL.so .shobj/DLL.o .shobj/DLL.so: DLL.cpp \
+ DLL.h \
  pre.h \
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -12961,6 +13219,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -13017,7 +13276,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -13035,6 +13293,7 @@ endif # GHS
  Unbounded_Set.cpp \
  SString.h \
  String_Base.h \
+ String_Base_Const.h \
  String_Base.i \
  String_Base.cpp \
  Malloc.h \
@@ -13087,6 +13346,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -13139,7 +13399,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -13157,6 +13416,7 @@ endif # GHS
  Unbounded_Set.cpp \
  SString.h \
  String_Base.h \
+ String_Base_Const.h \
  String_Base.i \
  String_Base.cpp \
  Malloc.h \
@@ -13255,6 +13515,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -13308,7 +13569,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Base.h \
@@ -13348,6 +13608,7 @@ endif # GHS
  Unbounded_Queue.cpp \
  SString.h \
  String_Base.h \
+ String_Base_Const.h \
  String_Base.i \
  String_Base.cpp \
  Auto_Ptr.h \
@@ -13374,6 +13635,14 @@ endif # GHS
  DLL.h \
  Parse_Node.i \
  Get_Opt.h \
+ Containers.h \
+ Containers.i \
+ Containers_T.h \
+ Array_Base.h \
+ Array_Base.inl \
+ Array_Base.cpp \
+ Containers_T.i \
+ Containers_T.cpp \
  Get_Opt.i \
  ARGV.h \
  ARGV.i \
@@ -13396,14 +13665,10 @@ endif # GHS
  Service_Manager.i \
  Service_Repository.h \
  Service_Repository.i \
- Containers.h \
- Containers.i \
- Containers_T.h \
- Array_Base.h \
- Array_Base.inl \
- Array_Base.cpp \
- Containers_T.i \
- Containers_T.cpp \
+ Proactor.h \
+ Asynch_IO.h \
+ Asynch_IO_Impl.h \
+ Asynch_IO_Impl.i \
  Thread_Manager.h \
  Singleton.h \
  Singleton.i \
@@ -13413,7 +13678,19 @@ endif # GHS
  Managed_Object.h \
  Managed_Object.i \
  Managed_Object.cpp \
- Thread_Manager.i
+ Thread_Manager.i \
+ Timer_List.h \
+ Timer_List_T.h \
+ Timer_List_T.cpp \
+ Timer_Heap.h \
+ Timer_Heap_T.h \
+ Timer_Heap_T.cpp \
+ Timer_Wheel.h \
+ Timer_Wheel_T.h \
+ Timer_Wheel_T.cpp \
+ High_Res_Timer.h \
+ High_Res_Timer.i \
+ Proactor.i
 
 .obj/Service_Manager.o .obj/Service_Manager.so .shobj/Service_Manager.o .shobj/Service_Manager.so: Service_Manager.cpp \
  Get_Opt.h \
@@ -13422,6 +13699,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -13457,15 +13735,21 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
- Get_Opt.i \
- Service_Repository.h \
- Service_Types.h \
- Service_Object.h \
- Shared_Object.h \
- Shared_Object.i \
- Event_Handler.h \
- Event_Handler.i \
- Service_Object.i \
+ SString.h \
+ String_Base.h \
+ String_Base_Const.h \
+ String_Base.i \
+ Malloc_Base.h \
+ String_Base.cpp \
+ Malloc.h \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
+ OS_Log_Msg_Attributes.h \
+ OS_Log_Msg_Attributes.inl \
+ Malloc.i \
+ Malloc_T.h \
  Synch.h \
  Synch.i \
  Synch_T.h \
@@ -13473,38 +13757,10 @@ endif # GHS
  Thread.h \
  Thread_Adapter.h \
  Base_Thread_Adapter.h \
- OS_Log_Msg_Attributes.h \
- OS_Log_Msg_Attributes.inl \
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
- Service_Types.i \
- Service_Repository.i \
- Service_Config.h \
- Signal.h \
- Signal.i \
- Unbounded_Queue.h \
- Node.h \
- Node.cpp \
- Unbounded_Queue.inl \
- Unbounded_Queue.cpp \
- Malloc_Base.h \
- Unbounded_Set.h \
- Unbounded_Set.inl \
- Unbounded_Set.cpp \
- SString.h \
- String_Base.h \
- String_Base.i \
- String_Base.cpp \
- Malloc.h \
- Malloc.i \
- Malloc_T.h \
  Malloc_Allocator.h \
  Malloc_Allocator.i \
  Free_List.h \
@@ -13513,17 +13769,47 @@ endif # GHS
  Malloc_T.i \
  Malloc_T.cpp \
  Memory_Pool.h \
+ Event_Handler.h \
+ Event_Handler.i \
+ Signal.h \
+ Signal.i \
  Mem_Map.h \
  Mem_Map.i \
  SV_Semaphore_Complex.h \
  SV_Semaphore_Simple.h \
  SV_Semaphore_Simple.i \
  SV_Semaphore_Complex.i \
+ Unbounded_Set.h \
+ Node.h \
+ Node.cpp \
+ Unbounded_Set.inl \
+ Unbounded_Set.cpp \
  Memory_Pool.i \
  Auto_Ptr.h \
  Auto_Ptr.i \
  Auto_Ptr.cpp \
  SString.i \
+ Containers.h \
+ Containers.i \
+ Containers_T.h \
+ Array_Base.h \
+ Array_Base.inl \
+ Array_Base.cpp \
+ Unbounded_Queue.h \
+ Unbounded_Queue.inl \
+ Unbounded_Queue.cpp \
+ Containers_T.i \
+ Containers_T.cpp \
+ Get_Opt.i \
+ Service_Repository.h \
+ Service_Types.h \
+ Service_Object.h \
+ Shared_Object.h \
+ Shared_Object.i \
+ Service_Object.i \
+ Service_Types.i \
+ Service_Repository.i \
+ Service_Config.h \
  Service_Config.i \
  Reactor.h \
  Handle_Set.h \
@@ -13582,6 +13868,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -13633,7 +13920,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -13651,6 +13937,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -13702,7 +13989,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -13725,6 +14011,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -13776,7 +14063,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -13870,6 +14156,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -13923,7 +14210,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Base.h \
@@ -13963,6 +14249,7 @@ endif # GHS
  Unbounded_Queue.cpp \
  SString.h \
  String_Base.h \
+ String_Base_Const.h \
  String_Base.i \
  String_Base.cpp \
  Auto_Ptr.h \
@@ -14041,6 +14328,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -14083,6 +14371,7 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -14147,7 +14436,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Base.h \
@@ -14187,6 +14475,7 @@ endif # GHS
  Unbounded_Queue.cpp \
  SString.h \
  String_Base.h \
+ String_Base_Const.h \
  String_Base.i \
  String_Base.cpp \
  Auto_Ptr.h \
@@ -14221,6 +14510,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -14286,7 +14576,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Allocator.i \
@@ -14320,6 +14609,7 @@ endif # GHS
  Service_Object.i \
  SString.h \
  String_Base.h \
+ String_Base_Const.h \
  String_Base.i \
  String_Base.cpp \
  Auto_Ptr.h \
@@ -14402,6 +14692,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -14455,7 +14746,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Base.h \
@@ -14495,6 +14785,7 @@ endif # GHS
  Unbounded_Queue.cpp \
  SString.h \
  String_Base.h \
+ String_Base_Const.h \
  String_Base.i \
  String_Base.cpp \
  Auto_Ptr.h \
@@ -14527,6 +14818,7 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -14584,7 +14876,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Base.h \
@@ -14623,6 +14914,7 @@ endif # GHS
  CDR_Base.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -14680,7 +14972,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Base.h \
@@ -14714,6 +15005,7 @@ endif # GHS
  CDR_Base.inl \
  SString.h \
  String_Base.h \
+ String_Base_Const.h \
  String_Base.i \
  String_Base.cpp \
  Auto_Ptr.h \
@@ -14727,6 +15019,7 @@ endif # GHS
  pre.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -14746,6 +15039,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -14800,7 +15094,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Base.h \
@@ -14848,6 +15141,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -14902,7 +15196,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -14922,7 +15215,8 @@ endif # GHS
  Reactor.i \
  Reactor_Impl.h
 
-.obj/Task.o .obj/Task.so .shobj/Task.o .shobj/Task.so: Task.cpp Task.h \
+.obj/Task.o .obj/Task.so .shobj/Task.o .shobj/Task.so: Task.cpp \
+ Task.h \
  pre.h \
  Service_Object.h \
  Shared_Object.h \
@@ -14930,6 +15224,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -14982,7 +15277,6 @@ endif # GHS
  Synch.i \
  Synch_T.h \
  Synch_T.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -15063,6 +15357,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -15111,7 +15406,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -15157,6 +15451,7 @@ endif # GHS
  Unbounded_Queue.cpp \
  SString.h \
  String_Base.h \
+ String_Base_Const.h \
  String_Base.i \
  String_Base.cpp \
  Auto_Ptr.h \
@@ -15194,6 +15489,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -15247,7 +15543,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Base.h \
@@ -15287,6 +15582,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -15341,7 +15637,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Base.h \
@@ -15391,6 +15686,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -15449,7 +15745,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp
 
 .obj/Malloc_Instantiations.o .obj/Malloc_Instantiations.so .shobj/Malloc_Instantiations.o .shobj/Malloc_Instantiations.so: Malloc_Instantiations.cpp \
@@ -15459,6 +15754,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -15512,7 +15808,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Base.h \
@@ -15547,6 +15842,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -15597,6 +15893,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -15647,7 +15944,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -15691,6 +15987,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -15744,7 +16041,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Base.h \
@@ -15783,6 +16079,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -15836,7 +16133,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Base.h \
@@ -15874,6 +16170,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -15928,7 +16225,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Base.h \
@@ -15966,6 +16262,7 @@ endif # GHS
  Unbounded_Queue.cpp \
  SString.h \
  String_Base.h \
+ String_Base_Const.h \
  String_Base.i \
  String_Base.cpp \
  Auto_Ptr.h \
@@ -15994,6 +16291,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -16038,6 +16336,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -16085,6 +16384,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -16131,6 +16431,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -16178,7 +16479,6 @@ endif # GHS
  Synch.h \
  Synch.i \
  Synch_T.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -16235,6 +16535,7 @@ endif # GHS
  Service_Object.i \
  SString.h \
  String_Base.h \
+ String_Base_Const.h \
  String_Base.i \
  String_Base.cpp \
  Auto_Ptr.h \
@@ -16267,6 +16568,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -16331,7 +16633,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -16386,6 +16687,7 @@ endif # GHS
  Service_Object.i \
  SString.h \
  String_Base.h \
+ String_Base_Const.h \
  String_Base.i \
  String_Base.cpp \
  Auto_Ptr.h \
@@ -16426,6 +16728,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -16474,7 +16777,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -16520,6 +16822,7 @@ endif # GHS
  Unbounded_Queue.cpp \
  SString.h \
  String_Base.h \
+ String_Base_Const.h \
  String_Base.i \
  String_Base.cpp \
  Auto_Ptr.h \
@@ -16562,6 +16865,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -16608,7 +16912,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -16655,6 +16958,7 @@ endif # GHS
  Unbounded_Queue.cpp \
  SString.h \
  String_Base.h \
+ String_Base_Const.h \
  String_Base.i \
  String_Base.cpp \
  Auto_Ptr.h \
@@ -16701,6 +17005,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -16747,7 +17052,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -16794,6 +17098,7 @@ endif # GHS
  Unbounded_Queue.cpp \
  SString.h \
  String_Base.h \
+ String_Base_Const.h \
  String_Base.i \
  String_Base.cpp \
  Auto_Ptr.h \
@@ -16843,6 +17148,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -16888,7 +17194,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -16945,6 +17250,7 @@ endif # GHS
  Service_Object.i \
  SString.h \
  String_Base.h \
+ String_Base_Const.h \
  String_Base.i \
  String_Base.cpp \
  Auto_Ptr.h \
@@ -16975,6 +17281,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -17013,6 +17320,7 @@ endif # GHS
  Local_Name_Space.h \
  SString.h \
  String_Base.h \
+ String_Base_Const.h \
  String_Base.i \
  Malloc_Base.h \
  String_Base.cpp \
@@ -17035,7 +17343,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Allocator.i \
@@ -17140,6 +17447,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -17209,7 +17517,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Log_Msg.h \
  Log_Record.h \
@@ -17227,6 +17534,7 @@ endif # GHS
  Unbounded_Set.cpp \
  SString.h \
  String_Base.h \
+ String_Base_Const.h \
  String_Base.i \
  String_Base.cpp \
  Malloc.h \
@@ -17276,6 +17584,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -17314,6 +17623,7 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
+ String_Base_Const.h \
  String_Base.i \
  Malloc_Base.h \
  String_Base.cpp \
@@ -17336,7 +17646,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Allocator.i \
@@ -17374,6 +17683,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -17411,6 +17721,7 @@ endif # GHS
  ACE.i \
  SString.h \
  String_Base.h \
+ String_Base_Const.h \
  String_Base.i \
  Malloc_Base.h \
  String_Base.cpp \
@@ -17433,7 +17744,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Allocator.i \
@@ -17512,6 +17822,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -17547,10 +17858,9 @@ endif # GHS
  Sock_Connect.h \
  Sock_Connect.i \
  ACE.i \
- Get_Opt.i \
- Naming_Context.h \
  SString.h \
  String_Base.h \
+ String_Base_Const.h \
  String_Base.i \
  Malloc_Base.h \
  String_Base.cpp \
@@ -17573,7 +17883,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Allocator.i \
@@ -17614,6 +17923,8 @@ endif # GHS
  Unbounded_Queue.cpp \
  Containers_T.i \
  Containers_T.cpp \
+ Get_Opt.i \
+ Naming_Context.h \
  Service_Object.h \
  Shared_Object.h \
  Shared_Object.i \
@@ -17678,6 +17989,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -17710,6 +18022,7 @@ endif # GHS
  OS.h \
  config-all.h \
  config.h \
+ config-linux.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
@@ -17747,6 +18060,7 @@ endif # GHS
  ACE.i \
  SString.h \
  String_Base.h \
+ String_Base_Const.h \
  String_Base.i \
  Malloc_Base.h \
  String_Base.cpp \
@@ -17769,7 +18083,6 @@ endif # GHS
  Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
  Thread.i \
- Atomic_Op.i \
  Synch_T.cpp \
  Malloc_Allocator.h \
  Malloc_Allocator.i \

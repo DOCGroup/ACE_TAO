@@ -1632,6 +1632,7 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i Base_Optimizer.cpp
+ $(ACE_ROOT)/ace/OS.i \
+ Base_Optimizer.cpp
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
