@@ -326,8 +326,6 @@ sub Wait ()
     my $self = shift;
 
     waitpid ($self->{PROCESS}, 0);
-
-    $self->{RUNNING} = 0;
 }
 
 sub TimedWait ($)
