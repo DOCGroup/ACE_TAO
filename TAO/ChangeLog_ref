@@ -1,3 +1,14 @@
+Thu Oct 16 12:42:59 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/LocateRequest_Invocation_Adapter.cpp:
+	  get_inconsistent_policies (), now returns _retn () instead of
+	  .out () on the PolicyList_var.
+
+	* tao/Profile_Transport_Resolver.h:
+	* tao/Profile_Transport_Resolver.inl: Added a new method
+	  steal_inconsistent_policies () which makes this object to loose
+	  ownership of the PolicyList pointer.
+
 Thu Oct 16 11:31:45 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/LocateRequest_Invocation_Adapter.cpp: Initialize the
