@@ -26,6 +26,7 @@ CFG=Synch_Tests - Win32 Release
 # Begin Project
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
+# PROP WCE_Configuration "H/PC Ver. 2.00"
 CPP=cl.exe
 MTL=midl.exe
 RSC=rc.exe
@@ -80,7 +81,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:windows /dll /debug /machine:I386 /libpath:"..\..\ace"
+# ADD LINK32 aced.lib /nologo /subsystem:windows /dll /debug /machine:I386 /out:"./Synch_Testsd.dll" /libpath:"..\..\ace"
 
 !ENDIF 
 
@@ -93,7 +94,11 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
 # Begin Source File
 
-SOURCE=.\Benchmark.cpp
+SOURCE=.\Benchmark_Base.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Benchmark_Performance.cpp
 # End Source File
 # Begin Source File
 
@@ -118,6 +123,10 @@ SOURCE=.\mutex_test.cpp
 # Begin Source File
 
 SOURCE=.\Options.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Performance_Test.cpp
 # End Source File
 # Begin Source File
 
