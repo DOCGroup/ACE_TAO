@@ -1,3 +1,50 @@
+Mon Oct  4 20:42:16 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/NVList.h:
+	* tao/NVList.i:
+	* tao/NVList.cpp:
+	  Implemented new optimizations in the NVList class:
+	  - When demarshaling a request (or reply) the CDR stream is not
+	    interpreted until it is required (i.e. one of the standard
+	    methods is invoked).
+	  - When marshaling an NVList if the CDR stream is available then
+	    we use that instead of the individual Anys.
+	  they are useful for DSI/DII based gateways.
+
+	* tao/GIOP_Server_Request.cpp:
+	* tao/Stub.cpp:
+	  Use the new _tao_incoming_cdr() to set the CDR of the NVList,
+	  delaying the dermashaling as much as possible.
+
+	* tao/Invocation.h:
+	* tao/Invocation.i:
+	  Removed obsolete methods, like put_param() and get_value().
+
+	* tests/Makefile:
+	* tests/DSI_Gateway/Makefile:
+	* tests/DSI_Gateway/README:
+	* tests/DSI_Gateway/test.idl:
+	* tests/DSI_Gateway/client.cpp:
+	* tests/DSI_Gateway/gateway.cpp:
+	* tests/DSI_Gateway/run_test.pl:
+	* tests/DSI_Gateway/server.cpp:
+	* tests/DSI_Gateway/test_dsi.h:
+	* tests/DSI_Gateway/test_dsi.i:
+	* tests/DSI_Gateway/test_dsi.cpp:
+	* tests/DSI_Gateway/test_i.h:
+	* tests/DSI_Gateway/test_i.i:
+	* tests/DSI_Gateway/test_i.cpp:
+	  A new test/example to check that the DSI/DII optimizations
+	  actually work.
+
+	* tao/append.cpp:
+	* tao/ORB.h:
+	* tao/Server_Request.h:
+	* tao/Asynch_Invocation.h:
+	* tao/Any.cpp:
+	* tao/CDR.cpp:
+	  Cosmetic fixes
+
 Mon Oct  4 17:08:03 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Naming/Naming_Context.{h,cpp}

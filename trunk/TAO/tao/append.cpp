@@ -153,8 +153,8 @@ TAO_Marshal_TypeCode::append (CORBA::TypeCode_ptr,
 
   // Decode the "kind" field of the typecode from the src for further
   // use. However, also write it back into the destination
-  continue_append = (CORBA::Boolean) (src->read_ulong (kind) 
-                                      ? dest->write_ulong (kind) 
+  continue_append = (CORBA::Boolean) (src->read_ulong (kind)
+                                      ? dest->write_ulong (kind)
                                       : 0);
 
   if (continue_append == 1)
@@ -270,8 +270,8 @@ TAO_Marshal_ObjRef::append (CORBA::TypeCode_ptr,
 
   // get the count of profiles that follow. This will tell us the length of the
   // sequence
-  continue_append = (CORBA::Boolean) (src->read_ulong (profiles) 
-                                      ? dest->write_ulong (profiles) 
+  continue_append = (CORBA::Boolean) (src->read_ulong (profiles)
+                                      ? dest->write_ulong (profiles)
                                       : 0);
 
   // No profiles means a NIL objref.
@@ -280,21 +280,21 @@ TAO_Marshal_ObjRef::append (CORBA::TypeCode_ptr,
       CORBA::ULong tag = 0;
 
       // get the profile ID tag
-      if ((continue_append = (CORBA::Boolean) (src->read_ulong (tag) 
-                                               ? dest->write_ulong (tag) 
+      if ((continue_append = (CORBA::Boolean) (src->read_ulong (tag)
+                                               ? dest->write_ulong (tag)
                                                : 0))  == 0)
         continue;
 
       CORBA::ULong length = 0;
       if ((continue_append = (CORBA::Boolean) (src->read_ulong (length)
-                              ? dest->write_ulong (length) 
+                              ? dest->write_ulong (length)
                               : 0)) == 0)
         continue;
 
       // @@ This can be optimized! Pre-allocating on the destination
       //    and then copying directly into that.
       CORBA::Octet* body = 0;
-      ACE_NEW_RETURN (body, 
+      ACE_NEW_RETURN (body,
                       CORBA::Octet[length],
                       CORBA::TypeCode::TRAVERSE_STOP);
       continue_append = (CORBA::Boolean) (src->read_octet_array (body, length)
@@ -567,8 +567,8 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
   // here, on the "be gracious in what you accept" principle.  We
   // don't generate illegal sequences (i.e. length > bounds).
 
-  continue_append = (CORBA::Boolean) (src->read_ulong (bounds) 
-                                      ? dest->write_ulong (bounds) 
+  continue_append = (CORBA::Boolean) (src->read_ulong (bounds)
+                                      ? dest->write_ulong (bounds)
                                       : 0);
 
   if (continue_append)

@@ -277,83 +277,13 @@ TAO_GIOP_ServerRequest::oa (void)
 
 void
 TAO_GIOP_ServerRequest::arguments (CORBA::NVList_ptr &list,
-                                   CORBA::Environment &ACE_TRY_ENV)
+                                   CORBA::Environment &)
 {
   // Save params for later use when marshaling the reply.
   this->params_ = list;
 
-  // Then unmarshal each "in" and "inout" parameter.
-  for (u_int i = 0; i < list->count (); i++)
-    {
-      CORBA::NamedValue_ptr nv = list->item (i, ACE_TRY_ENV);
-      ACE_CHECK;
-
-      // check if it is an in or inout parameter
-      if (ACE_BIT_DISABLED (nv->flags (), CORBA::ARG_IN | CORBA::ARG_INOUT))
-        continue;
-
-      CORBA::Any_ptr any = nv->value ();
-      CORBA::TypeCode_var tc = any->type ();
-
-      // @@ (JP) The following code depends on the fact that
-      // TO_InputCDR does not contain chained message blocks.
-      char *begin, *end;
-
-      // This will be the start of a new message block.
-      begin = this->incoming_->rd_ptr ();
-
-      // Skip over the next aregument.
-      CORBA::TypeCode::traverse_status status =
-        this->incoming_->skip (tc.in (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
-        {
-          const char* param_name = nv->name ();
-
-          if (param_name == 0)
-            param_name = "(no name given)";
-
-          ACE_ERROR ((LM_ERROR,
-                      "TAO_GIOP_ServerRequest::arguments - problem while"
-                      " decoding parameter %d <%s>\n", i, param_name));
-          return;
-        }
-
-      // This will be the end of the new message block.
-      end = this->incoming_->rd_ptr ();
-
-      // Allocate the new message block and set its endpoints.
-      ACE_Message_Block *cdr;
-
-      ACE_NEW (cdr,
-               ACE_Message_Block (end - begin));
-
-      cdr->rd_ptr (begin);
-
-      cdr->wr_ptr (end);
-
-      // Stick it into the Any. It gets duplicated there.
-      any->_tao_replace (tc.in (),
-                         cdr,
-                         ACE_TRY_ENV);
-      ACE_CHECK;
-
-      // Now we can release the original.
-      ACE_Message_Block::release (cdr);
-    }
-
-  // If any data is left over, it'd be context values ... else error.
-  // We don't support context values, so it's always an error.
-
-  // @@ (TAO) support for Contexts??
-  if (incoming_->length () != 0)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "TAO_GIOP_ServerRequest::arguments - "
-                  "%d bytes left in buffer\n", incoming_->length ()));
-      ACE_THROW (CORBA::BAD_PARAM ());
-    }
+  this->params_->_tao_incoming_cdr (*this->incoming_,
+                                    CORBA::ARG_IN | CORBA::ARG_INOUT);
 }
 
 // Store the result value.  There's either an exception, or a result,
@@ -386,12 +316,12 @@ TAO_GIOP_ServerRequest::set_exception (const CORBA::Any &value,
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
     // Try to narrow to ForwardRequest
-    PortableServer::ForwardRequest_ptr forward_request = 
+    PortableServer::ForwardRequest_ptr forward_request =
       (PortableServer::ForwardRequest_ptr)0;
 
     if (value.value ())
       {
-        forward_request = 
+        forward_request =
           PortableServer::ForwardRequest::_narrow (
               (CORBA::Exception *) value.value ()
             );
@@ -472,33 +402,10 @@ TAO_GIOP_ServerRequest::dsi_marshal (CORBA::Environment &ACE_TRY_ENV)
       // ... Followed by "inout" and "out" parameters, left to right
       if (this->params_)
         {
-          for (u_int i = 0;
-               i < this->params_->count ();
-               i++)
-            {
-              CORBA::NamedValue_ptr nv = this->params_->item (i, ACE_TRY_ENV);
-              ACE_CHECK;
-
-              if (!(nv->flags () & (CORBA::ARG_INOUT|CORBA::ARG_OUT)))
-                continue;
-
-              CORBA::Any_ptr any = nv->value ();
-              CORBA::TypeCode_var tc = any->type ();
-              if (any->any_owns_data ())
-                {
-                  (void) this->outgoing_->encode (tc.in (),
-                                                  any->value (),
-                                                  0, ACE_TRY_ENV);
-                  ACE_CHECK;
-                }
-              else
-                {
-                  TAO_InputCDR cdr (any->_tao_get_cdr ());
-                  (void) this->outgoing_->append (tc.in (),
-                                                  &cdr, ACE_TRY_ENV);
-                  ACE_CHECK;
-                }
-            }
+          this->params_->_tao_encode (*this->outgoing_,
+                                      this->orb_core_,
+                                      ACE_TRY_ENV);
+          ACE_CHECK;
         }
     }
 }
