@@ -66,6 +66,7 @@
 #include "tao/OctetSeqC.h"
 #include "tao/ShortSeqC.h"
 #include "tao/StringSeqC.h"
+#include "tao/ULongLongSeqC.h"
 #include "tao/ULongSeqC.h"
 #include "tao/UShortSeqC.h"
 #include "tao/WCharSeqC.h"
