@@ -1,3 +1,8 @@
+Sat Mar 10 02:33:13 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tests/Makefile:
+	  Add the new test to the recursive Makefiles
+
 Sat Mar 10 02:09:29 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/README:
