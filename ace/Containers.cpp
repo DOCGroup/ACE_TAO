@@ -347,7 +347,7 @@ ACE_Unbounded_Queue<T>::enqueue_head (const T &new_item)
   ACE_Node<T> *temp;
 
   // Create a new node that points to the original head.
-  ACE_NEW_RETURN (temp, ACE_Node<T> (new_item, this->head_->next_->next_), -1);
+  ACE_NEW_RETURN (temp, ACE_Node<T> (new_item, this->head_->next_), -1);
 
   // Link this pointer into the front of the list.
   this->head_->next_ = temp;
@@ -439,28 +439,43 @@ ACE_Unbounded_Queue<T>::set (const T &item,
 
   ACE_Node<T> *curr = this->head_->next_;
 
-  int result = 1;
   size_t i;
 
-  for (i = 0; i <= index; i++)
+  for (i = 0; 
+       i < index && i < this->cur_size_; 
+       i++)
+    curr = curr->next_;
+
+  if (i < this->cur_size_)
     {
-      if (i == this->cur_size_)
+      // We're in range, so everything's cool.
+      curr->item_ = item;
+      return 1;
+    }
+  else
+    {
+      // We need to expand the list.
+
+      // A common case will be increasing the set size by 1.
+      // Therefore, we'll optimize for this case.
+      if (i == index)
 	{
-	  // We need to expand the list.
-
-	  result = 0;
-
-	  // A common case will be increasing the set size by 1.
-	  // Therefore, we'll optimize for this case.
-	  if (i + i == index)
-	    // Try to expand the size of the set by 1.
-	    return this->enqueue_tail (item);
+	  // Try to expand the size of the set by 1.
+	  if (this->enqueue_tail (item) == -1)
+	    return -1;
 	  else
-	    {
-	      T dummy;
+	    return 0;
+	}
+      else 
+	{
+	  T dummy;
 
+	  // We need to expand the list by multiple (dummy) items.
+	  for (; i < index; i++)
+	    {
 	      // This head points to the existing dummy node, which is
-	      // about to be overwritten when we add the new dummy node.
+	      // about to be overwritten when we add the new dummy
+	      // node.
 	      curr = this->head_;
 
 	      // Try to expand the size of the set by 1, but don't
@@ -468,13 +483,11 @@ ACE_Unbounded_Queue<T>::set (const T &item,
 	      if (this->enqueue_tail (dummy) == -1)
 		return -1;
 	    }
-	}
-      else
-	curr = curr->next_;
-    }
 
-  curr->item_ = item;
-  return result;
+	  curr->item_ = item;
+	  return 0;
+	}
+    }
 }
 
 template <class T> void
@@ -934,6 +947,11 @@ ACE_Bounded_Set_Iterator<T>::next (T *&item)
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Node)
+
+template <class T>
+ACE_Node<T>::~ACE_Node (void)
+{
+}
 
 template <class T>
 ACE_Node<T>::ACE_Node (const T &i, ACE_Node<T> *n)
