@@ -20,6 +20,10 @@
 #define ACE_OS_DIRENT_H
 #include "ace/pre.h"
 
+#if defined (ACE_HAS_PACE)
+#include "pace/dirent.h"
+#endif /* ACE_HAS_PACE */
+
 #include "ace/config-all.h"
 #include "ace/OS_Export.h"
 

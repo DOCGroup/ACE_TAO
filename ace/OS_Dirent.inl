@@ -4,7 +4,9 @@
 ACE_INLINE DIR *
 ACE_OS_Dirent::opendir (const ACE_TCHAR *filename)
 {
-#if defined (ACE_HAS_DIRENT)
+#if defined (ACE_HAS_PACE)
+  return pace_opendir (filename);
+#elif defined (ACE_HAS_DIRENT)
 #  if defined (ACE_PSOS)
 
   // The pointer to the DIR buffer must be passed to ACE_OS_Dirent::closedir
@@ -35,13 +37,15 @@ ACE_OS_Dirent::opendir (const ACE_TCHAR *filename)
 #else
   ACE_UNUSED_ARG (filename);
   ACE_NOTSUP_RETURN (0);
-#endif /* ACE_HAS_DIRENT */
+#endif /* ACE_HAS_PACE */
 }
 
 ACE_INLINE void
 ACE_OS_Dirent::closedir (DIR *d)
 {
-#if defined (ACE_HAS_DIRENT)
+#if defined (ACE_HAS_PACE)
+  pace_closedir (d);
+#elif defined (ACE_HAS_DIRENT)
 # if defined (ACE_PSOS)
 
   u_long result;
@@ -67,13 +71,15 @@ ACE_OS_Dirent::closedir (DIR *d)
 # endif /* !ACE_PSOS */
 #else /* ACE_HAS_DIRENT */
   ACE_UNUSED_ARG (d);
-#endif /* ACE_HAS_DIRENT */
+#endif /* ACE_HAS_PACE */
 }
 
 ACE_INLINE struct dirent *
 ACE_OS_Dirent::readdir (DIR *d)
 {
-#if defined (ACE_HAS_DIRENT)
+#if defined (ACE_HAS_PACE)
+  return pace_readdir (d);
+#elif defined (ACE_HAS_DIRENT)
 #  if defined (ACE_PSOS)
   // The returned pointer to the dirent struct must be deleted by the
   // caller to avoid a memory leak.
@@ -107,7 +113,7 @@ ACE_OS_Dirent::readdir (DIR *d)
 #else
   ACE_UNUSED_ARG (d);
   ACE_NOTSUP_RETURN (0);
-#endif /* ACE_HAS_DIRENT */
+#endif /* ACE_HAS_PACE */
 }
 
 ACE_INLINE int
@@ -115,7 +121,9 @@ ACE_OS_Dirent::readdir_r (DIR *dirp,
                    struct dirent *entry,
                    struct dirent **result)
 {
-# if !defined (ACE_HAS_REENTRANT_FUNCTIONS)
+#if defined (ACE_HAS_PACE)
+  return pace_readdir_r (dirp, entry, result);
+# elif !defined (ACE_HAS_REENTRANT_FUNCTIONS)
   ACE_UNUSED_ARG (entry);
   // <result> has better not be 0!
   *result = ACE_OS_Dirent::readdir (dirp);
@@ -147,7 +155,7 @@ ACE_OS_Dirent::readdir_r (DIR *dirp,
   ACE_UNUSED_ARG (result);
   ACE_NOTSUP_RETURN (0);
 
-#endif /* !ACE_HAS_REENTRANT_FUNCTIONS */
+#endif /* ACE_HAS_PACE */
 }
 
 ACE_INLINE long
@@ -175,7 +183,9 @@ ACE_OS_Dirent::seekdir (DIR *d, long loc)
 ACE_INLINE void
 ACE_OS_Dirent::rewinddir (DIR *d)
 {
-#if defined (ACE_HAS_DIRENT)
+#if defined (ACE_HAS_PACE)
+  return pace_rewinddir (d);
+#elif defined (ACE_HAS_DIRENT)
 # if defined (ACE_LACKS_SEEKDIR)
 #  if defined (ACE_LACKS_REWINDDIR)
   ACE_UNUSED_ARG (d);
