@@ -3990,6 +3990,26 @@ extern "C"
 
 # endif /* !defined (ACE_WIN32) && !defined (ACE_PSOS) */
 
+// defined Win32 specific macros for UNIX platforms
+# if !defined (O_BINARY)
+#   define O_BINARY 0
+# endif /* O_BINARY */
+# if !defined (_O_BINARY)
+#   define _O_BINARY O_BINARY
+# endif /* _O_BINARY */
+# if !defined (O_TEXT)
+#   define O_TEXT 0
+# endif /* O_TEXT */
+# if !defined (_O_TEXT)
+#   define _O_TEXT O_TEXT
+# endif /* _O_TEXT */
+# if !defined (O_RAW)
+#   define O_RAW 0
+# endif /* O_RAW */
+# if !defined (_O_RAW)
+#   define _O_RAW O_RAW
+# endif /* _O_RAW */
+
 # if !defined (ACE_DEFAULT_SYNCH_TYPE)
 #   define ACE_DEFAULT_SYNCH_TYPE USYNC_THREAD
 # endif /* ! ACE_DEFAULT_SYNCH_TYPE */
