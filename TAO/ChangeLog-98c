@@ -1,3 +1,23 @@
+Sat May  3 22:45:23 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* IIOP/lib/boa.cpp: Added code temporarily that invokes the
+	skeleton that is looked up. We still need to add code that will
+	handle the case when no match is found on the operation names.
+
+	* IIOP/lib/boa.hh: The register_obj method on TAO_Object_Table
+	now returns an integer indicating status of registering (-1 =>
+	failure, 0 for success).
+
+	* IIOP/lib/object.hh: The register_op method on
+	TAO_Operation_Table now returns an integer code (O for success, -1
+	for failure).
+
+	* IIOP/lib/objtable.{hh,cpp}: The register_obj method returns an
+	integer code representing either success or failure.
+
+	* IIOP/lib/optable.{hh,cpp}: Added new files that implement
+	concrete strategies for operation name lookup.
+
 Fri May  2 08:48:29 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* IIOP/lib/object.hh: Modified the signature of register_op on
