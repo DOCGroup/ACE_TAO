@@ -1,3 +1,8 @@
+Wed Dec 28 22:55:55 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* ace/DLL.h: Prevent copying and assignment by putting these
+	  methods in the private part of the class.
+
 Mon Dec 28 17:57:25 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
 	* docs/tutorials/020/*: 
@@ -481,6 +486,7 @@ Fri Dec 11 08:51:07 1998  David L. Levine  <levine@cs.wustl.edu>
           with the changes in ACE_Message_Queue_Base.
           (create_NT_message_queue): A wrapper function to manufacture an
           ACE_Message_Queue_NT.
+
 
 Thu Dec 10 09:08:26 1998  David L. Levine  <levine@cs.wustl.edu>
 
