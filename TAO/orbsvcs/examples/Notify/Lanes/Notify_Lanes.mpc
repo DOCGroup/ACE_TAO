@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Supplier): notify, rtcorba, rtnotify, minimum_corba {
+project(*Supplier): notify, rtcorba, rtnotify, minimum_corba, naming {
   exename = Supplier
   Source_Files {
     Supplier.cpp
