@@ -3214,8 +3214,6 @@ public:
 
   // = A set of wrappers for semaphores.
   static int sema_destroy (ACE_sema_t *s);
-  static ACE_sema_t *sema_open (const char *name, int oflag, 
-			        u_long mode, u_int value);
   static int sema_init (ACE_sema_t *s, u_int count, int type = USYNC_THREAD,
                         LPCTSTR name = 0, void *arg = 0,
                         int max = 0x7fffffff);
