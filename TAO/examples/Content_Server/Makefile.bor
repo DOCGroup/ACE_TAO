@@ -1,9 +1,0 @@
-
-#
-# Makefile for building the Content_Server examples
-#
-
-DIRS =  \
-        SMI_Iterator
-
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
