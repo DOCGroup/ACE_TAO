@@ -51,8 +51,10 @@
 // Active Object Table
 #include "tao/Active_Object_Map.h"
 
+// POA Manager
+#include "tao/POAManager.h"
+
 class TAO_POA;
-class TAO_POA_Manager;
 
 class TAO_Export TAO_Thread_Policy : public POA_PortableServer::ThreadPolicy
 {
