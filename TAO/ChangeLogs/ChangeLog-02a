@@ -1,11 +1,11 @@
 Mon Feb 28 09:20:27 2000  Darrell Brunsch <brunsch@uci.edu>
 
-        * TAO/examples/POA/DSI/Database_i.cpp:
+        * examples/POA/DSI/Database_i.cpp:
           Removed the use of ACE_DEFAULT_BACKING_STORE, and now it should
           default correctly.  This is related to the change to the temporary
           directory location changes in ACE.
 
-        * TAO/TAO_IDL/driver/drv_args.cpp:
+        * TAO_IDL/driver/drv_args.cpp:
 
           Now uses the ACE::get_temp_dir () method.
 
