@@ -4,9 +4,9 @@
 #include "ace/OS.h"
 #include "ace/SV_Message.h"
 
-#define MSGSZ 	128
+#define MSGSZ 128
 #define SRV_KEY	ACE_DEFAULT_SHM_KEY
-#define SRV_ID	1
+#define SRV_ID 1
 
 class Message_Data
 {
@@ -31,12 +31,21 @@ protected:
   char	mtext_[MSGSZ];
 };
 
-/* Note, this may not be 100 percent portable on all C++ compilers... */
-class ACE_Message_Block : public ACE_SV_Message, public Message_Data
+class Message_Block : public ACE_SV_Message, public Message_Data
 {
+  // = TITLE
+  //   Stores message content.
+  // = DESCRIPTION
+  //   This may not be 100 percent portable on all C++ compilers since
+  //   it relies on inheritance to be "concatenation."
+  // 
 public:
-  ACE_Message_Block (long t, long p = 0, char login[] = "", char message[] = "")
-  : ACE_SV_Message (t), Message_Data (p, login, message)
+  Message_Block (long t,
+                 long p = 0,
+                 char login[] = "",
+                 char message[] = "")
+  : ACE_SV_Message (t),
+    Message_Data (p, login, message)
   {}
 };
 

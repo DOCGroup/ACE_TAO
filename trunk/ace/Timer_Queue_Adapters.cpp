@@ -44,12 +44,12 @@ ACE_Async_Timer_Queue_Adapter<TQ>::schedule_ualarm (void)
     - ACE_OS::gettimeofday ();
 
   // Beware of negative times and zero times (which cause problems for
-  // ualarm()).
+  // <ualarm>).
   if (tv < ACE_Time_Value::zero)
     tv = ACE_Time_Value (0, 1);
 
   // @@ This code should be clever enough to avoid updating the
-  // ualarm() if we haven't actually changed the earliest time.
+  // <ualarm> if we haven't actually changed the earliest time.
   // Schedule a new timer.
   ACE_OS::ualarm (tv);
   return 0;
@@ -72,9 +72,15 @@ ACE_Async_Timer_Queue_Adapter<TQ>::schedule (ACE_Event_Handler *eh,
   long tid = this->timer_queue_.schedule (eh, 0, delay);
 
   if (tid == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("schedule_timer")), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ASYS_TEXT ("%p\n"),
+                       ASYS_TEXT ("schedule_timer")),
+                      -1);
 
-  return this->schedule_ualarm ();
+  if (this->schedule_ualarm () == -1)
+    return 0;
+  else 
+    return tid;
 }
 
 template <class TQ>
@@ -92,7 +98,9 @@ ACE_Async_Timer_Queue_Adapter<TQ>::ACE_Async_Timer_Queue_Adapter (ACE_Sig_Set *m
                      SA_RESTART);
 
   if (this->sig_handler_.register_handler (SIGALRM, this, &sa) == -1)
-    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("register_handler")));
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("%p\n"),
+                ASYS_TEXT ("register_handler")));
 }
 
 // This is the signal handler function for the asynchronous timer
@@ -104,8 +112,9 @@ ACE_Async_Timer_Queue_Adapter<TQ>::handle_signal (int signum,
                                                   siginfo_t *,
                                                   ucontext_t *)
 {
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("handling signal %S\n"), signum));
-
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("handling signal %S\n"),
+              signum));
   switch (signum)
     {
     case SIGALRM:

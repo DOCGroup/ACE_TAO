@@ -1,3 +1,21 @@
+Fri May  1 13:52:32 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* examples/Connection/misc/Connection_Handler.cpp: Make sure to
+ 	  activate() each active object using THR_DETACHED so we don't run
+ 	  out of threading resources.  Thanks to Brad Walton
+ 	  <brad.walton@transnexus.com> for reporting this.
+
+	* ace/Timer_Queue_Adapters.cpp: Rather than returning the result
+ 	  of schedule_ualarm(), the
+ 	  ACE_Async_Timer_Queue_Adapter<TQ>::schedule() method should
+ 	  return the timer id.  Thanks to James Garrison
+ 	  <jhg@austx.tandem.com> for reporting this.
+
+	* examples/System_V_IPC/SV_Message_Queues: Renamed the so-called
+ 	  "ACE_Message_Block" to "Message_Block" so it wouldn't be as
+ 	  confusing.  Thanks to Ganapathi <guns@fs.IConNet.NET> for this
+ 	  suggestion.
+
 Fri May 01 14:09:21 1998  Steve Huston  <shuston@riverace.com>
 
 	* ace/OS.h: Changed ACE_hrtime_t from signed to unsigned on Win32

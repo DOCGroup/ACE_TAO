@@ -1,16 +1,20 @@
-#include "ace/SV_Message_Queue.h"
+/* -*- C++ -*- */
 // $Id$
 
+#include "ace/SV_Message_Queue.h"
 #include "test.h"
 #include "ace/streams.h"
 
 int 
 main (int, char *[])
 {
-  long          pid = long (ACE_OS::getpid ());
+  long pid = long (ACE_OS::getpid ());
   ACE_SV_Message_Queue msgque (SRV_KEY);
-  ACE_Message_Block send_msg (SRV_ID, pid, ACE_OS::cuserid (0), "did you get this?");
-  ACE_Message_Block recv_msg (pid);
+  Message_Block send_msg (SRV_ID,
+                          pid,
+                          ACE_OS::cuserid (0),
+                          "did you get this?");
+  Message_Block recv_msg (pid);
 
   if (msgque.send (send_msg, send_msg.length ()) < 0)
     ACE_OS::perror ("msgque.send"), ACE_OS::exit (1);
