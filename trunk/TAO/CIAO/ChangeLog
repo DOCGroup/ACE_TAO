@@ -1,3 +1,8 @@
+Tue Nov 25 09:34:10 2003  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * performance-tests/Benchmark/RoundTrip/run_test.pl
+          Changed the script to take the right svc.conf file
+
 Mon Nov 24 19:24:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* examples/OEP/BasicSP/BMClosedED/BMClosedED_exec.cpp:
@@ -9,14 +14,14 @@ Mon Nov 24 19:24:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 Mon Nov 24 16:37:12 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ciao/ComponentsC.h: 
-	  
+	* ciao/ComponentsC.h:
+
 	  Removed unneeded inclusion of ComponentsC.i
 
 Mon Nov 24 14:48:09 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ciao/ComponentsS.h:
-        
+
           Removed unneeded inclusion of ComponentsS_T.h.
 
 Mon Nov 24 14:41:22 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -29,7 +34,7 @@ Mon Nov 24 14:41:22 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tools/ServerActivator/ServerActivator.cpp:
         * tools/ServerActivator/ServerActivator_test_client.cpp:
         * tools/Simple_Component_Server/Simple_Component_Server.cpp:
-        
+
           Added missing ACE file includes.
 
 Mon Nov 24 14:21:58 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -37,40 +42,40 @@ Mon Nov 24 14:21:58 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * ciao/Container_Base.cpp:
         * ciao/ServerActivator_Impl.cpp:
         * ciao/Server_init.cpp:
-        
+
           Added missing ACE includes.
 
 Mon Nov 24 13:39:43 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/Collectors.hpp:
-        
+
           Cosmetic changes.
-          
+
         * CIDLC/Literals.hpp:
-        
+
           Added /*  */ in a string literal around an arg name which
           is never used in generated methods where it appears in the
           argument list.
-          
+
         * CIDLC/ServantSourceGenerator.cpp:
-        
+
           Commented out some unused arg names, and removed some extra
-          newlines. In the connect() operation generated for a 
+          newlines. In the connect() operation generated for a
           component, added ACE_UNUSED_ARG() for an argument which is
           unused if the component has no receptacles declared.
-          
+
         * CCF/CCF/IDL2/SyntaxTree/TranslationCtor.cpp:
-        
+
           New file with a dummy class and constructor, added as a workaround
           for errors related to the protected default constructor of the
-          real TranslationRegion class, simlar to what has already been 
+          real TranslationRegion class, simlar to what has already been
           added for the Elements, Interface and Valuetype classes in
           IDL2::SyntaxTree.
 
         * CCF/CCF/IDL2/SyntaxTree/IDL2.mpc:
-        
+
           Updated with recently added files.
-          
+
 Thu Nov 20 20:05:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ciao/ComponentsS.h:
@@ -87,7 +92,7 @@ Thu Nov 20 17:50:55 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 Thu Nov  6 07:55:20 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* Makefile:
-	  
+
 	  Added coreclean target for doing realclean on a core set of
 	  directories in the nightly build.
 
