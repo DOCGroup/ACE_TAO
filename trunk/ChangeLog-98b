@@ -1,3 +1,9 @@
+Fri Jun 12 14:29:40 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.i (sema_wait): Changed the code so that it always treats
+ 	  the time value argument in absolute time, even for Win32.
+  	  Thanks to Chuck Gehr for reporting this.
+
 Fri Jun 12 14:12:25 1998  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
 
 	* include/makeinclude/wrapper_macros.GNU: 
