@@ -1,5 +1,4 @@
-// Proactor.cpp
-// $Id: Proactor.cpp,v
+// $Id$
 
 #define ACE_BUILD_DLL
 #include "ace/Proactor.h"
@@ -28,22 +27,17 @@ int ACE_Proactor::delete_proactor_ = 0;
 sig_atomic_t ACE_Proactor::end_event_loop_ = 0;
 
 class ACE_Export ACE_Proactor_Timer_Handler : public ACE_Task <ACE_NULL_SYNCH>
-  //
   // = TITLE
-  //
   //     A Handler for timer. It helps in the management of timers
   //     registered with the Proactor.
   //
   // = DESCRIPTION
-  //
-  //     This object has a thread that will wait on the earliest
-  //     time in a list of timers and an event. When a timer
-  //     expires, the thread will post a completion event on the
-  //     port and go back to waiting on the timer queue and
-  //     event. If the event is signaled, the thread will refresh
-  //     the time it is currently waiting on (in case the earliest
-  //     time has changed)
-  //
+  //     This object has a thread that will wait on the earliest time
+  //     in a list of timers and an event. When a timer expires, the
+  //     thread will post a completion event on the port and go back
+  //     to waiting on the timer queue and event. If the event is
+  //     signaled, the thread will refresh the time it is currently
+  //     waiting on (in case the earliest time has changed)
 {
   friend class ACE_Proactor;
   // Proactor has special privileges
@@ -59,14 +53,14 @@ public:
 protected:
   virtual int svc (void);
   // Run by a daemon thread to handle deferred processing. In other
-  // words, this method will do the waiting on the earliest timer
-  // and event
+  // words, this method will do the waiting on the earliest timer and
+  // event.
 
   ACE_Auto_Event timer_event_;
-  // Event to wait on
+  // Event to wait on.
 
   ACE_Proactor &proactor_;
-  // Proactor
+  // Proactor.
 
   int shutting_down_;
   // Flag used to indicate when we are shutting down.
@@ -92,12 +86,14 @@ int
 ACE_Proactor_Timer_Handler::svc (void)
 {
 #if defined (ACE_HAS_AIO_CALLS)
+  // @@ Alex, can you please document why this is a "no-op" for the
+  // AIO calls?  
   return 0;
 #else /* ACE_HAS_AIO_CALLS */
   u_long time;
   ACE_Time_Value absolute_time;
 
-  for (; !this->shutting_down_;)
+  while (this->shutting_down_ == 0)
     {
       // default value
       time = ACE_INFINITE;
@@ -105,15 +101,15 @@ ACE_Proactor_Timer_Handler::svc (void)
       // If the timer queue is not empty
       if (!this->proactor_.timer_queue ()->is_empty ())
 	{
-	  // Get the earliest absolute time
+	  // Get the earliest absolute time.
 	  absolute_time
 	    = this->proactor_.timer_queue ()->earliest_time ()
 	    - this->proactor_.timer_queue ()->gettimeofday ();
 
-	  // time to wait
+	  // Time to wait.
 	  time = absolute_time.msec ();
 
-	  // Make sure the time is positive
+	  // Make sure the time is positive.
 	  if (time < 0)
 	    time = 0;
 	}
@@ -129,7 +125,9 @@ ACE_Proactor_Timer_Handler::svc (void)
 	  break;
 	case ACE_WAIT_FAILED:
 	  // error
-	  ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("WaitForSingleObject")), -1);
+	  ACE_ERROR_RETURN ((LM_ERROR,
+                             ASYS_TEXT ("%p\n"),
+                             ASYS_TEXT ("WaitForSingleObject")), -1);
 	}
     }
 
@@ -155,18 +153,18 @@ ACE_Proactor_Handle_Timeout_Upcall::timeout (TIMER_QUEUE &timer_queue,
 		       "(%t) No Proactor set in ACE_Proactor_Handle_Timeout_Upcall, no completion port to post timeout to?!@\n"),
 		      -1);
 
-  // Create the Asynch_Timer
+  // Create the Asynch_Timer.
   ACE_Proactor::Asynch_Timer *asynch_timer
     = new ACE_Proactor::Asynch_Timer (*handler,
 				      act,
 				      time);
-  // Post a completion
+  // Post a completion.
   if (this->proactor_->post_completion (asynch_timer) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "Failure in dealing with timers: PostQueuedCompletionStatus failed\n"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Failure in dealing with timers: PostQueuedCompletionStatus failed\n"), -1);
 
   return 0;
 }
-
 
 int
 ACE_Proactor_Handle_Timeout_Upcall::cancellation (TIMER_QUEUE &timer_queue,
@@ -206,24 +204,21 @@ ACE_Proactor_Handle_Timeout_Upcall::proactor (ACE_Proactor &proactor)
 		      -1);
 }
 
-
-
 ACE_Proactor::ACE_Proactor (size_t number_of_threads,
 			    Timer_Queue *tq,
 			    int used_with_reactor_event_loop)
   :
 #if defined (ACE_HAS_AIO_CALLS)
-  #if defined (AIO_LISTIO_MAX)
+#if defined (AIO_LISTIO_MAX)
   aiocb_list_max_size_ (AIO_LISTIO_MAX),
-  #else /* AIO_LISTIO_MAX */
+#else /* AIO_LISTIO_MAX */
   aiocb_list_max_size_ (2),
-  #endif /* AIO_LISTIO_MAX */
-
+#endif /* AIO_LISTIO_MAX */
   aiocb_list_cur_size_ (0),
 #else /* ACE_HAS_AIO_CALLS */
-   completion_port_ (0), // This *MUST* be 0, *NOT* ACE_INVALID_HANDLE!!!!
+  // This *MUST* be 0, *NOT* ACE_INVALID_HANDLE!!!!
+   completion_port_ (0), 
 #endif /* ACE_HAS_AIO_CALLS */
-
    number_of_threads_ (number_of_threads),
    timer_queue_ (0),
    delete_timer_queue_ (0),
@@ -236,8 +231,8 @@ ACE_Proactor::ACE_Proactor (size_t number_of_threads,
        ai < this->aiocb_list_max_size_;
        ai++)
     {
-      aiocb_list_ [ai] = 0;
-      result_list_ [ai] = 0;
+      aiocb_list_[ai] = 0;
+      result_list_[ai] = 0;
     }
   ACE_UNUSED_ARG (tq);
 #else /* ACE_HAS_AIO_CALLS */
@@ -247,17 +242,22 @@ ACE_Proactor::ACE_Proactor (size_t number_of_threads,
 						     0,
 						     this->number_of_threads_);
   if (this->completion_port_ == 0)
-    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("CreateIoCompletionPort")));
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("%p\n"),
+                ASYS_TEXT ("CreateIoCompletionPort")));
 
   // set the timer queue
   this->timer_queue (tq);
 
   // Create the timer handler
-  ACE_NEW (this->timer_handler_, ACE_Proactor_Timer_Handler (*this));
+  ACE_NEW (this->timer_handler_,
+           ACE_Proactor_Timer_Handler (*this));
 
   // activate <timer_handler>
   if (this->timer_handler_->activate (THR_NEW_LWP | THR_DETACHED) == -1)
-    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p Could not create thread\n"),  ASYS_TEXT ("Task::activate")));
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("%p Could not create thread\n"),
+                ASYS_TEXT ("Task::activate")));
 #endif /* ACE_HAS_AIO_CALLS */
 }
 
@@ -270,11 +270,14 @@ ACE_Proactor::instance (size_t threads)
     {
       // Perform Double-Checked Locking Optimization.
       ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
-				*ACE_Static_Object_Lock::instance (), 0));
+				*ACE_Static_Object_Lock::instance (),
+                                0));
 
       if (ACE_Proactor::proactor_ == 0)
 	{
-	  ACE_NEW_RETURN (ACE_Proactor::proactor_, ACE_Proactor (threads), 0);
+	  ACE_NEW_RETURN (ACE_Proactor::proactor_,
+                          ACE_Proactor (threads),
+                          0);
 	  ACE_Proactor::delete_proactor_ = 1;
 	}
     }
@@ -290,6 +293,7 @@ ACE_Proactor::instance (ACE_Proactor *r)
 			    *ACE_Static_Object_Lock::instance (), 0));
 
   ACE_Proactor *t = ACE_Proactor::proactor_;
+
   // We can't safely delete it since we don't know who created it!
   ACE_Proactor::delete_proactor_ = 0;
 
@@ -328,6 +332,7 @@ ACE_Proactor::run_event_loop (void)
       else if (result == -1)
 	return -1;
     }
+
   /* NOTREACHED */
   return 0;
 }
@@ -339,9 +344,11 @@ ACE_Proactor::run_event_loop (ACE_Time_Value &tv)
 {
   ACE_TRACE ("ACE_Proactor::run_event_loop");
 
-  while (ACE_Proactor::end_event_loop_ == 0 && tv != ACE_Time_Value::zero)
+  while (ACE_Proactor::end_event_loop_ == 0 
+         && tv != ACE_Time_Value::zero)
     {
       int result = ACE_Proactor::instance ()->handle_events (tv);
+
       if (ACE_Service_Config::reconfig_occurred ())
 	ACE_Service_Config::reconfigure ();
 
@@ -380,6 +387,8 @@ int
 ACE_Proactor::close (void)
 {
 #if defined (ACE_HAS_AIO_CALLS)
+  // @@ Alex, shouldn't we be handling the cleanup of the timer queue
+  // stuff for the POSIX version of the Proactor, as well?!
   return 0;
 #else /* ACE_HAS_AIO_CALLS */
   // Take care of the timer handler
@@ -418,7 +427,7 @@ ACE_Proactor::register_handle (ACE_HANDLE handle,
   ACE_UNUSED_ARG (completion_key);
   return 0;
 #else /* ACE_HAS_AIO_CALLS */
-  // No locking is needed here as no state changes
+  // No locking is needed here as no state changes.
   ACE_HANDLE cp = ::CreateIoCompletionPort (handle,
 					    this->completion_port_,
 					    (u_long) completion_key,
@@ -429,7 +438,9 @@ ACE_Proactor::register_handle (ACE_HANDLE handle,
       // If errno == ERROR_INVALID_PARAMETER, then this handle was
       // already registered.
       if (errno != ERROR_INVALID_PARAMETER)
-	ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("CreateIoCompletionPort")), -1);
+	ACE_ERROR_RETURN ((LM_ERROR,
+                           ASYS_TEXT ("%p\n"),
+                           ASYS_TEXT ("CreateIoCompletionPort")), -1);
     }
   return 0;
 #endif /* ACE_HAS_AIO_CALLS */
@@ -440,7 +451,10 @@ ACE_Proactor::schedule_timer (ACE_Handler &handler,
 			      const void *act,
 			      const ACE_Time_Value &time)
 {
-  return this->schedule_timer (handler, act, time, ACE_Time_Value::zero);
+  return this->schedule_timer (handler,
+                               act,
+                               time,
+                               ACE_Time_Value::zero);
 }
 
 long
@@ -448,7 +462,10 @@ ACE_Proactor::schedule_repeating_timer (ACE_Handler &handler,
 					const void *act,
 					const ACE_Time_Value &interval)
 {
-  return this->schedule_timer (handler, act, interval, interval);
+  return this->schedule_timer (handler,
+                               act,
+                               interval,
+                               interval);
 }
 
 long
@@ -457,8 +474,9 @@ ACE_Proactor::schedule_timer (ACE_Handler &handler,
 			      const ACE_Time_Value &time,
 			      const ACE_Time_Value &interval)
 {
-  // absolute time
-  ACE_Time_Value absolute_time = this->timer_queue_->gettimeofday () + time;
+  // absolute time.
+  ACE_Time_Value absolute_time = 
+    this->timer_queue_->gettimeofday () + time;
 
   // Only one guy goes in here at a time
   ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->timer_queue_->mutex (), -1);
@@ -491,16 +509,19 @@ ACE_Proactor::cancel_timer (long timer_id,
 {
   // No need to singal timer event here. Even if the cancel timer was
   // the earliest, we will have an extra wakeup.
-  return this->timer_queue_->cancel (timer_id, arg, dont_call_handle_close);
+  return this->timer_queue_->cancel (timer_id,
+                                     arg,
+                                     dont_call_handle_close);
 }
 
 int
 ACE_Proactor::cancel_timer (ACE_Handler &handler,
 			    int dont_call_handle_close)
 {
-  // No need to singal timer event here. Even if the cancel timer was
+  // No need to signal timer event here. Even if the cancel timer was
   // the earliest, we will have an extra wakeup.
-  return this->timer_queue_->cancel (&handler, dont_call_handle_close);
+  return this->timer_queue_->cancel (&handler,
+                                     dont_call_handle_close);
 }
 
 int
@@ -530,7 +551,6 @@ ACE_Proactor::handle_close (ACE_HANDLE handle,
   return this->close ();
 }
 
-
 // @@ get_handle () implementation.
 ACE_HANDLE
 ACE_Proactor::get_handle (void) const
@@ -544,7 +564,6 @@ ACE_Proactor::get_handle (void) const
     return 0;
 #endif /* ACE_HAS_AIO_CALLS */
 }
-
 
 int
 ACE_Proactor::handle_events (ACE_Time_Value &wait_time)
@@ -566,20 +585,26 @@ ACE_Proactor::handle_events (unsigned long milli_seconds)
 #if defined (ACE_HAS_AIO_CALLS)
   // Is there any entries in the list.
   if (this->aiocb_list_cur_size_ == 0)
-    {
-      ACE_DEBUG ((LM_DEBUG, "No AIO pending"));
-      return 0;
-    }
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "No AIO pending"),
+                      0);
 
   // Wait for asynch operation to complete.
   timespec timeout;
   timeout.tv_sec = milli_seconds;
   timeout.tv_nsec = 0;
+
+  // Alex, I think we want to revise this implementation so that it
+  // DOESN'T need to use aio_suspend, which is going to be
+  // non-scalable since we need to search the aiocb_list...  Instead,
+  // we need to use the sigtimedwait(3R) in conjunction with the POSIX
+  // real-time signal mechanism, which should be much more scalable.
+  // Let's talk about how to make this work.
   if (aio_suspend (this->aiocb_list_,
                    this->aiocb_list_max_size_,
                    &timeout) < 0)
-    // If failure is coz of timeout, then return *0* but set errno
-    // appropriately. This is what the Win proactor does.
+    // If failure occurs due to timeout, then return *0* but set errno
+    // appropriately. This is what the WinNT proactor does.
     if (errno ==  EINTR)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%p):aio_suspend"),
@@ -591,29 +616,37 @@ ACE_Proactor::handle_events (unsigned long milli_seconds)
 
   // Check which aio has finished.
   size_t ai;
+
   for (ai = 0; ai < this->aiocb_list_max_size_; ai++)
     // Analyze error and return values.
-    if (aio_error (aiocb_list_ [ai]) != EINPROGRESS)
+    if (aio_error (aiocb_list_[ai]) != EINPROGRESS)
       {
-        if (aio_return (aiocb_list_ [ai]) < 0)
+        // @@ Alex, should this be == -1 or < 0?
+        if (aio_return (aiocb_list_[ai]) < 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%p):AIO failed"),
                             -1);
         else
           {
-            ACE_DEBUG ((LM_DEBUG, "An aio has finished\n"));
+            ACE_DEBUG ((LM_DEBUG,
+                        "An aio has finished\n"));
             // This AIO is done.
             break;
           }
       }
+
   if (ai == this->aiocb_list_max_size_)
     // Nothing completed.
     return 0;
 
   // Get the values for the completed aio.
   size_t bytes_transferred = aiocb_list_[ai]->aio_nbytes;
-  void *completion_key = (void *)aiocb_list_[ai]->aio_sigevent.sigev_value.sival_ptr;
-  ACE_Asynch_Result *asynch_result = this->result_list_[ai];
+
+  void *completion_key = 
+    (void *) aiocb_list_[ai]->aio_sigevent.sigev_value.sival_ptr;
+
+  ACE_Asynch_Result *asynch_result =
+    this->result_list_[ai];
 
   // Invalidate entry in the aiocb list.
   delete this->aiocb_list_[ai];
@@ -640,7 +673,6 @@ ACE_Proactor::handle_events (unsigned long milli_seconds)
 					     &completion_key,
 					     &overlapped,
 					     milli_seconds);
-
   if (result == FALSE && overlapped == 0)
     {
       errno = ::GetLastError ();
@@ -816,15 +848,15 @@ ACE_Proactor::insert_to_aiocb_list (aiocb *aiocb_ptr,
   for (ai = 0;
        ai < this->aiocb_list_max_size_;
        ai++)
-    if (this->aiocb_list_ [ai] == 0)
+    if (this->aiocb_list_[ai] == 0)
       break;
 
   if (ai == this->aiocb_list_max_size_)
     return -1;
 
   // Store the pointers.
-  this->aiocb_list_ [ai] = aiocb_ptr;
-  this->result_list_ [ai] = result;
+  this->aiocb_list_[ai] = aiocb_ptr;
+  this->result_list_[ai] = result;
   this->aiocb_list_cur_size_ ++;
   return 0;
 }

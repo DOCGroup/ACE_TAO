@@ -10,15 +10,17 @@
 //    Asynch_IO.h
 //
 // = DESCRIPTION
-//    This only works on Win32 platforms.
+//    This only works on Win32 platforms or on POSIX platforms with
+//    aio_ routines.
 //
 //    The implementation of <ACE_Asynch_Transmit_File> and
 //    <ACE_Asynch_Accept> are only supported if ACE_HAS_WINSOCK2 is
 //    defined or you are on WinNT 4.0 or higher
 //
 // = AUTHOR
-//    Irfan Pyarali (irfan@cs.wustl.edu)
-//    Tim Harrison (harrison@cs.wustl.edu)
+//    Irfan Pyarali (irfan@cs.wustl.edu),
+//    Tim Harrison (harrison@cs.wustl.edu), and
+//    Alexander Babu Arulanthu <alex@cs.wustl.edu>
 //
 // ============================================================================
 

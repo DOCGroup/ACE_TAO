@@ -89,8 +89,6 @@ ACE_Asynch_Result::event (void) const
   return this->hEvent;
 }
 
-// ************************************************************
-
 ACE_Asynch_Operation::ACE_Asynch_Operation (void)
   : handler_ (0),
     handle_ (ACE_INVALID_HANDLE)
@@ -128,7 +126,8 @@ ACE_Asynch_Operation::open (ACE_Handler &handler,
 
 #if !defined (ACE_HAS_AIO_CALLS)
   // Register with the <proactor>
-  return this->proactor_->register_handle (this->handle_, completion_key);
+  return this->proactor_->register_handle (this->handle_,
+                                           completion_key);
 #else /* ACE_HAS_AIO_CALLS */
   // AIO stuff is present. So no registering business.
   return 1;
@@ -144,6 +143,8 @@ ACE_Asynch_Operation::cancel (void)
 #if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) && (defined (_MSC_VER) && (_MSC_VER > 1020))
   return (int) ::CancelIo (this->handle_);
 #else
+  // @@ Alex, there should be an API for cancelling this stuff on
+  // POSIX!
   ACE_NOTSUP_RETURN (-1);
 #endif /* (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) && (defined (_MSC_VER) && (_MSC_VER > 1020)) */
 }
@@ -179,9 +180,11 @@ ACE_Asynch_Read_Stream::shared_read (ACE_Asynch_Read_Stream::Result *result)
 #if defined (ACE_HAS_AIO_CALLS)
   // Make a new AIOCB and issue aio_read, if queueing is possible
   // store this with the Proactor, so that that can be used for
-  // aio_return6 and aio_error.
+  // <aio_return> and <aio_error>.
   aiocb *aiocb_ptr;
-  ACE_NEW_RETURN (aiocb_ptr, aiocb, -1);
+  ACE_NEW_RETURN (aiocb_ptr, 
+                  aiocb,
+                  -1);
 
   // Setup AIOCB.
   // @@ Priority always 0?
@@ -196,7 +199,9 @@ ACE_Asynch_Read_Stream::shared_read (ACE_Asynch_Read_Stream::Result *result)
   aiocb_ptr->aio_sigevent.sigev_value.sival_ptr =
     (void *) aiocb_ptr;
 
-  // Fire off the aio write.
+  // Fire off the aio write.  @@ Alex, should this be < 0 or -1?  In
+  // general, please try to use -1 for checking all return values if
+  // that's what the manual says will be returned...
   if (aio_read (aiocb_ptr) < 0)
     // Queuing failed.
     ACE_ERROR_RETURN ((LM_ERROR,
