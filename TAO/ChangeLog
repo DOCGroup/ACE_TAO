@@ -1,3 +1,15 @@
+Tue Apr 22 14:26:31 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tao\RTPortableServer\RT_Servant_Dispatcher.cpp: 
+
+	  In pre_invoke_remote_request(),
+	  get_thread_CORBA_and_native_priority() was getting called
+	  unconditionally, even for single-threaded configurations.
+	  Unfortunately, ACE_OS::thr_getprio() is not supported for
+	  single-threaded configurations.  Therefore, I had to restructure
+	  the code so that get_thread_CORBA_and_native_priority() was only
+	  called when needed.
+
 Tue Apr 22 12:39:23 2003  Chad Elliott  <elliott_c@ociweb.com>
 
 	* tao/Messaging/Messaging_No_ImplC.h:
