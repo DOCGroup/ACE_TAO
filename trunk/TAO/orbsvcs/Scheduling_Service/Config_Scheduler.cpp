@@ -26,10 +26,12 @@ ACE_Config_Scheduler::~ACE_Config_Scheduler (void)
 
 RtecScheduler::handle_t
 ACE_Config_Scheduler::create (const char * entry_point,
-			      CORBA::Environment &_env)
+                              CORBA::Environment &_env)
      TAO_THROW_SPEC ((CORBA::SystemException,
-		      RtecScheduler::DUPLICATE_NAME))
+                      RtecScheduler::DUPLICATE_NAME))
 {
+  ACE_UNUSED_ARG (_env);
+
   typedef RtecScheduler::RT_Info* RT_Info_ptr;
 
   RtecScheduler::RT_Info** rt_info;
@@ -49,7 +51,7 @@ ACE_Config_Scheduler::create (const char * entry_point,
   rt_info[0]->priority = 0;
   rt_info[0]->subpriority = 0;
   rt_info[0]->preemption_priority = 0;
-  
+
   RtecScheduler::handle_t handle = -1;
   switch (impl->register_task (rt_info, 1, handle))
     {
@@ -61,7 +63,7 @@ ACE_Config_Scheduler::create (const char * entry_point,
       delete rt_info[0];
       delete[] rt_info;
       ACE_ERROR ((LM_ERROR,
-		  "Config_Scheduler::create - register_task failed\n"));
+                  "Config_Scheduler::create - register_task failed\n"));
       // TODO: throw something.
       break;
     }
@@ -70,9 +72,11 @@ ACE_Config_Scheduler::create (const char * entry_point,
 
 RtecScheduler::handle_t
 ACE_Config_Scheduler::lookup (const char * entry_point,
-			      CORBA::Environment &_env)
+                              CORBA::Environment &_env)
     TAO_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_UNUSED_ARG (_env);
+
   RtecScheduler::RT_Info* rt_info = 0;
   switch (impl->get_rt_info (entry_point, rt_info))
     {
@@ -83,7 +87,7 @@ ACE_Config_Scheduler::lookup (const char * entry_point,
     case ACE_Scheduler::ST_UNKNOWN_TASK:
     default:
       ACE_ERROR ((LM_ERROR,
-		  "Config_Scheduler::lookup - get_rt_info failed\n"));
+                  "Config_Scheduler::lookup - get_rt_info failed\n"));
       // TODO: throw something.
       break;
     }
@@ -92,26 +96,28 @@ ACE_Config_Scheduler::lookup (const char * entry_point,
 
 RtecScheduler::RT_Info*
 ACE_Config_Scheduler::get (RtecScheduler::handle_t handle,
-			   CORBA::Environment &_env)
+                           CORBA::Environment &_env)
      TAO_THROW_SPEC((CORBA::SystemException,
-		     RtecScheduler::UNKNOWN_TASK))
+                     RtecScheduler::UNKNOWN_TASK))
 {
+  ACE_UNUSED_ARG (_env);
+
   RtecScheduler::RT_Info* rt_info = 0;
   switch (impl->lookup_rt_info (handle, rt_info))
     {
     case ACE_Scheduler::SUCCEEDED:
       {
-	// IDL memory managment semantics require the we return a copy
-	RtecScheduler::RT_Info* copy;
-	ACE_NEW_RETURN (copy, RtecScheduler::RT_Info (*rt_info), 0);
-	return copy;
+        // IDL memory managment semantics require the we return a copy
+        RtecScheduler::RT_Info* copy;
+        ACE_NEW_RETURN (copy, RtecScheduler::RT_Info (*rt_info), 0);
+        return copy;
       }
       break;
     case ACE_Scheduler::FAILED:
     case ACE_Scheduler::ST_UNKNOWN_TASK:
     default:
       ACE_ERROR ((LM_ERROR,
-		  "Config_Scheduler::get - lookup_rt_info failed\n"));
+                  "Config_Scheduler::get - lookup_rt_info failed\n"));
       // TODO: throw something.
       break;
     }
@@ -119,17 +125,19 @@ ACE_Config_Scheduler::get (RtecScheduler::handle_t handle,
 }
 
 void ACE_Config_Scheduler::set (RtecScheduler::handle_t handle,
-				RtecScheduler::Time time,
-				RtecScheduler::Time typical_time,
-				RtecScheduler::Time cached_time,
-				RtecScheduler::Period period,
-				RtecScheduler::Importance importance,
-				RtecScheduler::Quantum quantum,
-				CORBA::Long threads,
-				CORBA::Environment &_env)
+                                RtecScheduler::Time time,
+                                RtecScheduler::Time typical_time,
+                                RtecScheduler::Time cached_time,
+                                RtecScheduler::Period period,
+                                RtecScheduler::Importance importance,
+                                RtecScheduler::Quantum quantum,
+                                CORBA::Long threads,
+                                CORBA::Environment &_env)
      TAO_THROW_SPEC ((CORBA::SystemException,
-		      RtecScheduler::UNKNOWN_TASK))
+                      RtecScheduler::UNKNOWN_TASK))
 {
+  ACE_UNUSED_ARG (_env);
+
   RtecScheduler::RT_Info* rt_info = 0;
   switch (impl->lookup_rt_info (handle, rt_info))
     {
@@ -146,80 +154,86 @@ void ACE_Config_Scheduler::set (RtecScheduler::handle_t handle,
     case ACE_Scheduler::ST_UNKNOWN_TASK:
     default:
       ACE_ERROR ((LM_ERROR,
-		  "Config_Scheduler::set - lookup_rt_info failed\n"));
+                  "Config_Scheduler::set - lookup_rt_info failed\n"));
       // TODO: throw something.
       break;
     }
 }
 
 void ACE_Config_Scheduler::priority (RtecScheduler::handle_t handle,
-				     RtecScheduler::OS_Priority& priority,
-				     RtecScheduler::Sub_Priority& subpriority,
-				     RtecScheduler::Preemption_Priority& p_priority,
-				     CORBA::Environment &_env)
+                                     RtecScheduler::OS_Priority& priority,
+                                     RtecScheduler::Sub_Priority& subpriority,
+                                     RtecScheduler::Preemption_Priority& p_priority,
+                                     CORBA::Environment &_env)
      TAO_THROW_SPEC ((CORBA::SystemException,
-		      RtecScheduler::UNKNOWN_TASK,
-		      RtecScheduler::NOT_SCHEDULED))
+                      RtecScheduler::UNKNOWN_TASK,
+                      RtecScheduler::NOT_SCHEDULED))
 {
+  ACE_UNUSED_ARG (_env);
+
   if (impl->priority (handle, priority, subpriority, p_priority) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-		  "Config_Scheduler::priority - priority failed\n"));
+                  "Config_Scheduler::priority - priority failed\n"));
       // TODO: throw something.
     }
 }
-           
+
 void ACE_Config_Scheduler::entry_point_priority (const char * entry_point,
-						 RtecScheduler::OS_Priority& priority,
-						 RtecScheduler::Sub_Priority& subpriority,
-						 RtecScheduler::Preemption_Priority& p_priority,
-						 CORBA::Environment &_env)
+                                                 RtecScheduler::OS_Priority& priority,
+                                                 RtecScheduler::Sub_Priority& subpriority,
+                                                 RtecScheduler::Preemption_Priority& p_priority,
+                                                 CORBA::Environment &_env)
      TAO_THROW_SPEC((CORBA::SystemException,
-		     RtecScheduler::UNKNOWN_TASK,
-		     RtecScheduler::NOT_SCHEDULED))
+                     RtecScheduler::UNKNOWN_TASK,
+                     RtecScheduler::NOT_SCHEDULED))
 {
   this->priority (lookup (entry_point, _env),
-		  priority, subpriority, p_priority,
-		  _env);
+                  priority, subpriority, p_priority,
+                  _env);
 }
 
 void ACE_Config_Scheduler::add_dependency (RtecScheduler::handle_t handle,
-					   RtecScheduler::handle_t dependency,
-					   CORBA::Long number_of_calls,
-					   CORBA::Environment &_env)
+                                           RtecScheduler::handle_t dependency,
+                                           CORBA::Long number_of_calls,
+                                           CORBA::Environment &_env)
      TAO_THROW_SPEC ((CORBA::SystemException,
-		      RtecScheduler::UNKNOWN_TASK))
+                      RtecScheduler::UNKNOWN_TASK))
 {
+  ACE_UNUSED_ARG (_env);
+
   RtecScheduler::RT_Info* rt_info = 0;
   switch (impl->lookup_rt_info (handle, rt_info))
     {
     case ACE_Scheduler::SUCCEEDED:
       {
-	RtecScheduler::Dependency_Info dep;
-	dep.rt_info = dependency;
-	dep.number_of_calls = number_of_calls;
-	ACE_Scheduler::add_dependency(rt_info, dep);
+        RtecScheduler::Dependency_Info dep;
+        dep.rt_info = dependency;
+        dep.number_of_calls = number_of_calls;
+        ACE_Scheduler::add_dependency(rt_info, dep);
       }
       break;
     case ACE_Scheduler::FAILED:
     case ACE_Scheduler::ST_UNKNOWN_TASK:
     default:
       ACE_ERROR ((LM_ERROR,
-		  "cannot find %d to add dependency", handle));
+                  "cannot find %d to add dependency", handle));
       // TODO: throw something.
       break;
     }
 }
 
 void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
-					       CORBA::Long maximum_priority,
-					       RtecScheduler::RT_Info_Set_out infos,
-					       CORBA::Environment &_env)
+                                               CORBA::Long maximum_priority,
+                                               RtecScheduler::RT_Info_Set_out infos,
+                                               CORBA::Environment &_env)
      TAO_THROW_SPEC ((CORBA::SystemException,
-		      RtecScheduler::UTILIZATION_BOUND_EXCEEDED,
-		      RtecScheduler::INSUFFICIENT_THREAD_PRIORITY_LEVELS,
-		      RtecScheduler::TASK_COUNT_MISMATCH))
+                      RtecScheduler::UTILIZATION_BOUND_EXCEEDED,
+                      RtecScheduler::INSUFFICIENT_THREAD_PRIORITY_LEVELS,
+                      RtecScheduler::TASK_COUNT_MISMATCH))
 {
+  ACE_UNUSED_ARG (_env);
+
   impl->init (minimum_priority, maximum_priority);
   if (impl->schedule () != ACE_Scheduler::SUCCEEDED)
     {
@@ -233,24 +247,24 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
     }
   infos->length (impl->tasks ());
   for (RtecScheduler::handle_t handle = 1;
-       handle <= impl->tasks ();
+       handle <= (RtecScheduler::handle_t) impl->tasks ();
        ++handle)
     {
       RtecScheduler::RT_Info* rt_info = 0;
       switch (impl->lookup_rt_info (handle, rt_info))
-	{
-	case ACE_Scheduler::SUCCEEDED:
-	  // We know that handles start at 1.
-	  infos[CORBA::ULong(handle - 1)] = *rt_info;
-	  break;
-	case ACE_Scheduler::FAILED:
-	case ACE_Scheduler::ST_UNKNOWN_TASK:
-	default:
-	  ACE_ERROR ((LM_ERROR,
-		      "Config_Scheduler::schedule - lookup_rt_info failed\n"));
-	  // TODO: throw something.
-	  break;
-	}
+        {
+        case ACE_Scheduler::SUCCEEDED:
+          // We know that handles start at 1.
+          infos[CORBA::ULong(handle - 1)] = *rt_info;
+          break;
+        case ACE_Scheduler::FAILED:
+        case ACE_Scheduler::ST_UNKNOWN_TASK:
+        default:
+          ACE_ERROR ((LM_ERROR,
+                      "Config_Scheduler::schedule - lookup_rt_info failed\n"));
+          // TODO: throw something.
+          break;
+        }
     }
   ACE_DEBUG ((LM_DEBUG, "schedule prepared\n"));
 
