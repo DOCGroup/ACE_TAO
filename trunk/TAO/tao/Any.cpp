@@ -914,8 +914,6 @@ CORBA_Any_var::operator= (CORBA::Any *p)
 CORBA::Any_var &
 CORBA_Any_var::operator= (const CORBA::Any_var& r)
 {
-  // @@ Jeff, if this call can fail then maybe we shouldn't be returning
-  // Any_var & but instead be making this a "void" function?
   CORBA_Any_ptr tmp;
 
   ACE_NEW_RETURN (tmp,
