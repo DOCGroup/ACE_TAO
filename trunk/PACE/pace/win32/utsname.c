@@ -23,6 +23,7 @@
 int
 uname (pace_utsname * name)
 {
+  PACE_UNUSED_ARG (name);
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 
 #if 0  /* Emulation: Not bug free! :-/ */

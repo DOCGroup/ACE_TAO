@@ -808,9 +808,9 @@ ACE_Registry::Naming_Context::list (Binding_List &list)
 
 // Default constructor
 ACE_Registry::Binding_Iterator::Binding_Iterator ()
-  : iteration_complete_ (*this),
-    object_iteration_ (*this),
-    context_iteration_ (*this)
+  : object_iteration_ (*this),
+    context_iteration_ (*this),
+    iteration_complete_ (*this)
 {
   this->reset ();
 }
@@ -1122,5 +1122,21 @@ ACE_Predefined_Naming_Contexts::is_local_host (const ACE_TCHAR *machine_name)
     result = 0;
   return result;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Node<ACE_Registry::Binding>;
+template class ACE_Unbounded_Set<ACE_Registry::Binding>;
+template class ACE_Unbounded_Set_Iterator<ACE_Registry::Binding>;
+template class ACE_Node<ACE_Registry::Name_Component>;
+template class ACE_Unbounded_Set<ACE_Registry::Name_Component>;
+template class ACE_Unbounded_Set_Iterator<ACE_Registry::Name_Component>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Node<ACE_Registry::Binding>
+#pragma instantiate ACE_Unbounded_Set<ACE_Registry::Binding>
+#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Registry::Binding>
+#pragma instantiate ACE_Node<ACE_Registry::Name_Component>
+#pragma instantiate ACE_Unbounded_Set<ACE_Registry::Name_Component>
+#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Registry::Name_Component>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* ACE_WIN32 */

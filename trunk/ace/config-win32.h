@@ -5,10 +5,10 @@
  *
  *  $Id$
  *
- *  @brief  Microsoft Windows configuration file. 
+ *  @brief  Microsoft Windows configuration file.
  *
  *  This file is the ACE configuration file for all of Microsoft Windows
- *  platforms that ACE runs on.  Based on preprocessor definitions, it 
+ *  platforms that ACE runs on.  Based on preprocessor definitions, it
  *  includes other more specific configuration files.
  *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
@@ -44,6 +44,8 @@
 #    include "ace/config-win32-visualage.h"
 #elif defined (ghs)
 #    include "ace/config-win32-ghs.h"
+#elif defined (__MINGW32__)
+#    include "ace/config-win32-mingw.h"
 #else
 #    error Compiler is not supported
 #endif

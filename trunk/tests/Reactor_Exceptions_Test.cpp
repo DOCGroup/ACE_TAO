@@ -27,7 +27,7 @@ ACE_RCSID(tests, Reactor_Exceptions_Test, "$Id$")
 
 #if defined (ACE_HAS_EXCEPTIONS)
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
 static void
 throw_exception (void)
 {
@@ -48,7 +48,7 @@ throw_exception (void)
               ACE_TEXT ("(%P|%t) throw exception\n")));
   throw Except ();
 }
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 && ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
 
 class My_Handler : public ACE_Event_Handler, public ACE_SOCK_Dgram
 {

@@ -104,7 +104,7 @@ typedef ssize_t pace_ssize_t;
 
 #if (PACE_HAS_POSIX_DI_UOF)
   pace_ssize_t pace_win32_read (PACE_HANDLE fildes,
-                                const void * buf,
+                                void * buf,
                                 pace_size_t nbyte);
 #endif /* PACE_HAS_POSIX_DI_UOF */
 

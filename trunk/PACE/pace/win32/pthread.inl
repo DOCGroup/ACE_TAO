@@ -37,6 +37,11 @@ pace_pthread_create (pace_pthread_t * thread,
                      void * (*start_routine) (void*),
                      void * arg)
 {
+  PACE_UNUSED_ARG (thread);
+  PACE_UNUSED_ARG (attr);
+  PACE_UNUSED_ARG (start_routine);
+  PACE_UNUSED_ARG (arg);
+  
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */

@@ -147,16 +147,6 @@ extern "C" {
   PACE_INLINE int pace_toupper (int c);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
-#if defined (PACE_HAS_INLINE)
-#  if (PACE_HAS_POSIX)
-#    include "pace/posix/ctype.inl"
-#  elif (PACE_VXWORKS)
-#    include "pace/vxworks/ctype.inl"
-#  elif (PACE_WIN32)
-#    include "pace/win32/ctype.inl"
-#  endif
-#endif /* PACE_HAS_INLINE */
-
 #if defined (PACE_HAS_CPLUSPLUS)
 }
 #endif /* PACE_HAS_CPLUSPLUS */

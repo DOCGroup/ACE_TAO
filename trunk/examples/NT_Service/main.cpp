@@ -14,7 +14,7 @@
 //    runs on Win32.
 //
 // = AUTHOR
-//    Gonzalo Diethelm <gonzo@cs.wustl.edu> 
+//    Gonzalo Diethelm <gonzo@cs.wustl.edu>
 //    and Steve Huston <shuston@riverace.com>
 //
 // ============================================================================
@@ -72,7 +72,7 @@ Process::~Process (void)
   ACE::fini ();
 }
 
-void 
+void
 Process::print_usage_and_die (void)
 {
   ACE_DEBUG ((LM_INFO,
@@ -89,11 +89,11 @@ Process::print_usage_and_die (void)
   ACE_OS::exit(1);
 }
 
-void 
+void
 Process::parse_args (int argc, ACE_TCHAR* argv[])
 {
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("i:rskt:d"));
-  int c; 
+  int c;
 
   while ((c = get_opt ()) != -1)
     switch (c)
@@ -143,6 +143,7 @@ Process::parse_args (int argc, ACE_TCHAR* argv[])
 static BOOL __stdcall
 ConsoleHandler (DWORD ctrlType)
 {
+  ACE_UNUSED_ARG (ctrlType);
   SERVICE::instance ()->handle_control (SERVICE_CONTROL_STOP);
   return TRUE;
 }
@@ -151,7 +152,7 @@ ACE_NT_SERVICE_DEFINE (Beeper,
                        Service,
                        ACE_TEXT ("Annoying Beeper Service"));
 
-int 
+int
 Process::run (int argc, ACE_TCHAR* argv[])
 {
   SERVICE::instance ()->name (ACE_TEXT ("Beeper"),
@@ -195,12 +196,18 @@ Process::run (int argc, ACE_TCHAR* argv[])
                     "%p\n",
                     "Couldn't start service"));
     }
-  
+
   return 0;
 }
 
-int 
+int
 main (int argc, ACE_TCHAR* argv[])
 {
   return PROCESS::instance ()->run (argc, argv);
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Singleton<Process, ACE_Mutex>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Singleton<Process, ACE_Mutex>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

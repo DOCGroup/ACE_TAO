@@ -37,10 +37,12 @@ typedef ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> MALLOC;
 #define MMAP_FILENAME ACE_TEXT ("test_file")
 #define MUTEX_NAME ACE_TEXT ("test_lock")
 
-#if !defined (linux) && !(defined (ACE_WIN32) && defined (ghs))
+#if !defined (linux) && \
+    !(defined (ACE_WIN32) && (defined (ghs) || defined (__MINGW32__)))
 #define ACE_TEST_REMAP_ON_FAULT
 // Linux seems to have problem when calling mmap from the signal handler.
 // The Green Hills Native x86 compiler does not support structural exceptions.
+// Mingw's gcc does not support structural exceptions.
 // On these plarforms, we make sure the remapping will never occur.
 #endif /* linux && Win32 GHS*/
 
@@ -82,7 +84,9 @@ myallocator (const void *base_addr = 0)
 
   if (static_allocator.get () == 0)
     {
+
       ACE_MMAP_Memory_Pool_Options options (base_addr);
+
 #if !defined (ACE_TEST_REMAP_ON_FAULT)
       options.minimum_bytes_ = 512 * 1024;
 #endif /* ACE_TEST_REMAP_ON_FAULT */
@@ -273,9 +277,44 @@ child (void)
   return 0;
 }
 
+#if defined (ACE_WIN32) \
+    && (!defined (ACE_HAS_WINNT4) || (ACE_HAS_WINNT4 == 0))
+// On Win9x/Me, a shared address needs to be on the shared arena,
+// betweeen the second and third megabyte in the virtual address space
+// of the process. Also, a mapped view of a file is shared on the same
+// virtual address on every 32 bit process.
+// On WinNT/2k, memory above 2Gb is reserved for the system.
+// So, we need to check at runtime (we want an ACE_HAS_WINNT4 == 0 ace
+// to run on either).
+static void
+get_base_addrs()
+{
+  OSVERSIONINFO vinfo;
+  vinfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
+  if (::GetVersionEx(&vinfo) == 0)
+    return;
+
+  if (vinfo.dwPlatformId == VER_PLATFORM_WIN32_NT)
+    {
+      PARENT_BASE_ADDR = (char*) (64 * 1024*1024);
+    }
+  else
+    {
+      PARENT_BASE_ADDR = (char*) ((2048UL + 512UL)*(1024UL*1024UL));
+    }
+
+  CHILD_BASE_ADDR = 1024*1024 + (char*) PARENT_BASE_ADDR;
+}
+#endif
+
 int
 main (int argc, ACE_TCHAR *[])
 {
+#if defined (ACE_WIN32) \
+    && (!defined (ACE_HAS_WINNT4) || (ACE_HAS_WINNT4 == 0))
+  get_base_addrs();
+#endif
+
   if (argc == 1)
     {
       ACE_START_TEST (ACE_TEXT ("Malloc_Test"));

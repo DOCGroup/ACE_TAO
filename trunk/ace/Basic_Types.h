@@ -171,7 +171,6 @@
 #   endif /* ! ACE_WIN32 && ! ACE_LACKS_LONGLONG_T */
 # endif /* !defined (ACE_SIZEOF_LONG_LONG) */
 
-
 // The sizes of the commonly implemented types are now known.  Set up
 // typedefs for whatever we can.  Some of these are needed for certain cases
 // of ACE_UINT64, so do them before the 64-bit stuff.
@@ -447,6 +446,9 @@ typedef ACE_UINT16 ACE_USHORT16;
 #  if defined (__IBMCPP__) && (__IBMCPP__ >= 400)
 #   define ACE_UINT64_LITERAL(n) n ## LL
 #   define ACE_INT64_LITERAL(n) n ## LL
+#  elif defined (__MINGW32__)
+#   define ACE_UINT64_LITERAL(n) n ## ull
+#   define ACE_INT64_LITERAL(n) n ## ll
 #  else
 #   define ACE_UINT64_LITERAL(n) n ## ui64
 #   define ACE_INT64_LITERAL(n) n ## i64

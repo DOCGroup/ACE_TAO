@@ -37,6 +37,8 @@ ACE_RCSID(tests, SOCK_Send_Recv_Test, "$Id$")
 // Change to non-zero if test fails
 static int Test_Result = 0;
 
+#if !defined (ACE_LACKS_FORK) || defined (ACE_HAS_THREADS)
+
 // In test 3, a large amount of data is sent. The purpose is to overflow the
 // TCP send window, causing the sender to block (it's a send_n). This value
 // is the amount to send. The assumption is that no implementation has a
@@ -139,7 +141,7 @@ client (void *arg)
   if (len != 255)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p; len is %d, but should be 255!\n"), 
+                  ACE_TEXT ("(%P|%t) %p; len is %d, but should be 255!\n"),
                   len));
     }
   ACE_ASSERT (len == 255);
@@ -310,6 +312,8 @@ server (void *arg)
   return 0;
 }
 
+#endif /* !ACE_LACKS_FORK || ACE_HAS_THREADS */
+
 static void
 spawn (void)
 {
@@ -337,7 +341,8 @@ spawn (void)
         case -1:
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) %p\n%a"),
-                      ACE_TEXT ("fork failed")));
+                      ACE_TEXT ("fork failed"),
+                      1));
           /* NOTREACHED */
         case 0:
           client (&server_addr);
@@ -355,7 +360,8 @@ spawn (void)
            THR_NEW_LWP | THR_DETACHED) == -1)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) %p\n%a"),
-                    ACE_TEXT ("thread create failed")));
+                    ACE_TEXT ("thread create failed"),
+                    1));
 
       if (ACE_Thread_Manager::instance ()->spawn
           (ACE_THR_FUNC (client),
@@ -363,14 +369,16 @@ spawn (void)
            THR_NEW_LWP | THR_DETACHED) == -1)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) %p\n%a"),
-                    ACE_TEXT ("thread create failed")));
+                    ACE_TEXT ("thread create failed"),
+                    1));
 
       // Wait for the threads to exit.
       ACE_Thread_Manager::instance ()->wait ();
 #else
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) only one thread may be run in a process on this platform\n%a"),
-                  1));
+      ACE_ERROR ((LM_INFO,
+                  ACE_TEXT ("(%P|%t) ")
+                  ACE_TEXT ("only one thread may be run ")
+                  ACE_TEXT ("in a process on this platform\n")));
 #endif /* ACE_HAS_THREADS */
 
       peer_acceptor.close ();

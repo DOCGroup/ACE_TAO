@@ -24,6 +24,8 @@
 
 ACE_RCSID(tests, Mem_Map_Test, "$Id$")
 
+#if !defined (ACE_LACKS_MMAP)
+
 static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 static const int LINE_LENGTH = 10;
 static const int NUM_LINES = 15;
@@ -114,16 +116,20 @@ create_test_file (ACE_TCHAR *filename, int line_length, int num_lines)
   return 0;
 }
 
+#endif /* !ACE_LACKS_MMAP */
+
 int
 main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Mem_Map_Test"));
 
+#if !defined (ACE_LACKS_MMAP)
+
   // = Initialize the temporary variable names
 
-  ACE_TCHAR test_file[MAXPATHLEN + 1]; 
-  ACE_TCHAR temp_file1[MAXPATHLEN + 1]; 
-  ACE_TCHAR temp_file2[MAXPATHLEN + 1]; 
+  ACE_TCHAR test_file[MAXPATHLEN + 1];
+  ACE_TCHAR temp_file1[MAXPATHLEN + 1];
+  ACE_TCHAR temp_file2[MAXPATHLEN + 1];
 
   // Get the temporary directory
   // - 18 is for the filenames, ace_mem_map_temp_1 is the longest
@@ -222,6 +228,13 @@ main (int, ACE_TCHAR *[])
 
   // Delete ACE_TEMP_TEST_FILE_2
   temp_mmap2.remove ();
+
+#else /* !ACE_LACKS_MMAP */
+
+  ACE_ERROR ((LM_INFO,
+              ACE_TEXT ("mmap is not supported on this platform\n")));
+
+#endif /* !ACE_LACKS_MMAP */
 
   ACE_END_TEST;
   return 0;

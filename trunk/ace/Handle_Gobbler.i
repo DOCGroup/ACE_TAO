@@ -1,6 +1,6 @@
 // $Id$
 
-// Since this is only included in Handle_Gobbler.h, these should be 
+// Since this is only included in Handle_Gobbler.h, these should be
 // inline, not ACE_INLINE.
 // FUZZ: disable check_for_inline
 
@@ -53,8 +53,11 @@ ACE_Handle_Gobbler::consume_handles (size_t n_handles_to_keep_available)
 {
   int result = 0;
 
+#if defined(ACE_WIN32)
   // On Win32, this style of gobbling doesn't seem to work.
-#if !defined (ACE_WIN32)
+  ACE_UNUSED_ARG(n_handles_to_keep_available);
+
+#else
 
   while (1)
     {

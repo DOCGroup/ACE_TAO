@@ -65,8 +65,8 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
   int unmap_result = this->unmap ();
   if (unmap_result != 0)
     return unmap_result;
-#endif /* ACE_LACKS_AUTO_MMAP_REMAPPING */
-  
+#endif /* ACE_LACKS_AUTO_MMAP_REPLACEMENT */
+
   this->base_addr_ = addr;
   this->handle_ = handle;
 
@@ -100,7 +100,7 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
     {
       // File length implicitly requested by user
       requested_file_length = length_request + offset;
-        
+
       // Check to see if we need to extend the backing store
       if (requested_file_length > current_file_length)
         {
@@ -127,10 +127,10 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
       if (requested_file_length > 0)
         // This will make the file size <requested_file_length>
         null_byte_position = requested_file_length - 1;
-      else 
+      else
         // This will make the file size 1
         null_byte_position = 0;
-      
+
       if (ACE_OS::pwrite (this->handle_,
                           "",
                           1,
@@ -142,16 +142,16 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
       if (requested_file_length > 0)
         // This will make the file size <requested_file_length>
         actual_file_length = requested_file_length;
-      else 
+      else
         // This will make the file size 1
         actual_file_length = 1;
-      
+
       if (ACE_OS::ftruncate (this->handle_,
                              actual_file_length) == -1)
         return -1;
 #endif /* !CHORUS */
     }
-  
+
 #if defined (__Lynx__)
   // Set flag that indicates whether PROT_WRITE has been enabled.
   write_enabled_ = ACE_BIT_ENABLED (prot, PROT_WRITE);

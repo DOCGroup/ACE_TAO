@@ -179,6 +179,8 @@ Write_Handler::svc (void)
   return 0;
 }
 
+#if !defined (ACE_LACKS_FORK) || defined (ACE_HAS_THREADS)
+
 // Execute the client tests.
 static void *
 client (void *arg)
@@ -232,6 +234,8 @@ client (void *arg)
               max_retries));
   return 0;
 }
+
+#endif
 
 int
 main (int argc, ACE_TCHAR *argv[])
@@ -324,7 +328,8 @@ main (int argc, ACE_TCHAR *argv[])
            THR_NEW_LWP | THR_DETACHED) == -1)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) %p\n%a"),
-                    ACE_TEXT ("thread create failed")));
+                    ACE_TEXT ("thread create failed"),
+                    1));
     }
 #elif !defined (ACE_LACKS_FORK)
   for (i = 0; i < opt_nchildren; ++i)
@@ -333,7 +338,9 @@ main (int argc, ACE_TCHAR *argv[])
         {
         case -1:
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t) %p\n%a"), ACE_TEXT ("fork failed")));
+                      ACE_TEXT ("(%P|%t) %p\n%a"),
+                      ACE_TEXT ("fork failed"),
+                      1));
           exit (-1);
           /* NOTREACHED */
         case 0:
@@ -347,8 +354,10 @@ main (int argc, ACE_TCHAR *argv[])
         }
     }
 #else
-  ACE_ERROR ((LM_ERROR,
-              ACE_TEXT ("(%P|%t) only one thread may be run in a process on this platform\n%a"), 1));
+  ACE_ERROR ((LM_INFO,
+              ACE_TEXT ("(%P|%t) ")
+              ACE_TEXT ("only one thread may be run ")
+              ACE_TEXT ("in a process on this platform\n")));
 #endif /* ACE_HAS_THREADS */
 
   ACE_Time_Value tv (opt_max_duration);

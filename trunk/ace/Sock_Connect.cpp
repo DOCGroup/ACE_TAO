@@ -14,15 +14,65 @@
 ACE_RCSID(ace, Sock_Connect, "$Id$")
 
 #if defined (ACE_WIN32) && \
-(!defined (ACE_HAS_WINSOCK2) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 == 0)))
+    (!defined (ACE_HAS_WINSOCK2) \
+     || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 == 0)))
+
+static int
+get_reg_subkeys (const ACE_TCHAR *key,
+                 ACE_TCHAR *buffer,
+                 DWORD &buf_len)
+{
+  HKEY hk;
+  LONG rc = ACE_TEXT_RegOpenKeyEx (HKEY_LOCAL_MACHINE,
+                                   key,
+                                   0,
+                                   KEY_READ,
+                                   &hk);
+
+  if (rc != ERROR_SUCCESS)
+    return -1;
+
+  ACE_TCHAR subkeyname[ACE_MAX_FULLY_QUALIFIED_NAME_LEN + 1];
+  DWORD subkeyname_len = ACE_MAX_FULLY_QUALIFIED_NAME_LEN;
+  FILETIME update_dummy;
+
+  DWORD total = 0;
+
+  for (int i = 0;
+       (rc = ACE_TEXT_RegEnumKeyEx (hk, i,
+                                    subkeyname,
+                                    &subkeyname_len,
+                                    0, 0, 0,
+                                    &update_dummy)) != ERROR_NO_MORE_ITEMS;
+        ++i)
+    {
+      if (subkeyname_len < buf_len - total)
+        {
+          ACE_OS::strcpy(buffer + total, subkeyname);
+          total += subkeyname_len + 1;
+          // Reset: was changed by RegEnumKeyEx call.
+          subkeyname_len = ACE_MAX_FULLY_QUALIFIED_NAME_LEN + 1;
+        }
+      else
+        return -1;
+    }
+
+  buf_len = total;
+
+  ::RegCloseKey (hk);
+  return 0;
+}
+
 // Return value in buffer for a key/name pair from the Windows
 // Registry up to buf_len size.
+// If all_subkeys == 1, look for name under all subkeys of key.
 
 static int
 get_reg_value (const ACE_TCHAR *key,
                const ACE_TCHAR *name,
                ACE_TCHAR *buffer,
-               DWORD &buf_len)
+               DWORD &buf_len,
+               int all_subkeys = 0)
 {
   HKEY hk;
   DWORD buf_type;
@@ -31,27 +81,121 @@ get_reg_value (const ACE_TCHAR *key,
                                    0,
                                    KEY_READ,
                                    &hk);
-  // 1. open key that defines the interfaces used for TCP/IP?
+
   if (rc != ERROR_SUCCESS)
     // print_error_string(ACE_LIB_TEXT ("RegOpenKeyEx"), rc);
     return -1;
 
-  rc = ACE_TEXT_RegQueryValueEx (hk,
-                                 name,
-                                 0,
-                                 &buf_type,
-                                 (u_char *) buffer,
-                                 &buf_len);
-  if (rc != ERROR_SUCCESS)
+  if (all_subkeys)
     {
-      // print_error_string(ACE_LIB_TEXT ("RegEnumKeyEx"), rc);
-      RegCloseKey (hk);
-      return -2;
+      ACE_TCHAR ifname[ACE_MAX_FULLY_QUALIFIED_NAME_LEN + 1];
+      DWORD ifname_len = ACE_MAX_FULLY_QUALIFIED_NAME_LEN + 1;
+      FILETIME update_dummy;
+
+      DWORD total = 0;
+      DWORD size = buf_len;
+
+      for (int i = 0;
+           (rc = ACE_TEXT_RegEnumKeyEx (hk, i, ifname, &ifname_len,
+                                        0, 0, 0,
+                                        &update_dummy)) != ERROR_NO_MORE_ITEMS;
+           ++i)
+        {
+          HKEY ifkey;
+          if (rc != ERROR_SUCCESS
+              || ACE_TEXT_RegOpenKeyEx (hk, ifname, 0,
+                                        KEY_READ, &ifkey) != ERROR_SUCCESS)
+            continue;
+
+          if (ACE_TEXT_RegQueryValueEx (ifkey, name, 0, NULL,
+                                        (u_char*) (buffer + total),
+                                        &size) != ERROR_SUCCESS)
+            {
+              RegCloseKey(ifkey);
+              continue;
+            }
+          else
+            {
+              total += size;
+              size = buf_len - total;
+            }
+          // Needs to be reset.
+          ifname_len = ACE_MAX_FULLY_QUALIFIED_NAME_LEN + 1;
+        }
+
+      if (total == 0)
+        {
+          ::RegCloseKey (hk);
+          return -2;
+        }
+      else
+        {
+          buf_len = total;
+        }
+    }
+  else
+    {
+
+      rc = ACE_TEXT_RegQueryValueEx (hk,
+                                     name,
+                                     0,
+                                     &buf_type,
+                                     (u_char *) buffer,
+                                     &buf_len);
+      if (rc != ERROR_SUCCESS)
+        {
+          // print_error_string(ACE_LIB_TEXT ("RegEnumKeyEx"), rc);
+          RegCloseKey (hk);
+          return -2;
+        }
     }
 
   ::RegCloseKey (hk);
   return 0;
 }
+
+enum ACE_WINDOWS_VERSION {
+  ACE_WINDOWS_IS_UNKNOWN,
+  ACE_WINDOWS_IS_WIN95,
+  ACE_WINDOWS_IS_WIN98,
+  ACE_WINDOWS_IS_WINME,
+  ACE_WINDOWS_IS_WINNT,
+  ACE_WINDOWS_IS_WIN2K
+};
+
+static ACE_WINDOWS_VERSION
+get_windows_version()
+{
+  OSVERSIONINFO vinfo;
+  vinfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
+  if (::GetVersionEx(&vinfo) == 0)
+    {
+      return ACE_WINDOWS_IS_UNKNOWN;
+    }
+
+  switch (vinfo.dwPlatformId)
+    {
+    case VER_PLATFORM_WIN32_NT:
+      if (vinfo.dwMajorVersion <= 4)
+        return ACE_WINDOWS_IS_WINNT;
+      else
+        return ACE_WINDOWS_IS_WIN2K;
+    case VER_PLATFORM_WIN32_WINDOWS:
+      if (vinfo.dwMajorVersion == 4)
+        {
+          if (vinfo.dwMinorVersion == 0)
+            return ACE_WINDOWS_IS_WIN95;
+          else if (vinfo.dwMinorVersion == 10)
+            return ACE_WINDOWS_IS_WIN98;
+          else if (vinfo.dwMinorVersion == 90)
+            return ACE_WINDOWS_IS_WINME;
+        }
+      // If no match we fall throu.
+    default:
+      return ACE_WINDOWS_IS_UNKNOWN;
+    }
+}
+
 #endif //(ACE_WIN32) && !(ACE_HAS_WINSOCK2) || (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 == 0)
 
 // Bind socket to an unused port.
@@ -470,25 +614,114 @@ ACE_Sock_Connect::get_ip_interfaces (size_t &count,
 
 #  else /* ACE_HAS_PHARLAP */
 
-  const ACE_TCHAR *SVCS_KEY1 =
-    ACE_LIB_TEXT ("SYSTEM\\CurrentControlSet\\Services\\");
-  const ACE_TCHAR *LINKAGE_KEY1 =
-    ACE_LIB_TEXT ("SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Linkage");
-  const ACE_TCHAR *TCP_PARAM_SUBKEY = ACE_LIB_TEXT ("\\Parameters\\Tcpip");
-  const ACE_TCHAR *BIND_NAME_ID =  ACE_LIB_TEXT ("Bind");
-  const ACE_TCHAR *IPADDR_NAME_ID = ACE_LIB_TEXT ("IPAddress");
+  //
+  // No Winsock2.
+  // Get interface information from the registry.
+  // As this information is in different locations of the registry
+  // on different windows versions, we need to ask at runtime.
+  //
+
+  // Normally we have to look under one key for interfaces name,
+  // and under a second key for ip address of those interfaces.
+  // Exact values and the way to search depend on windows version.
+
+  // This is the first key we have to look for.
+  const ACE_TCHAR *BASE_KEY1;
+
+  // This is the name we have to look for under the first key.
+  // If this is == 0, we need to look for subkeys, not the values from
+  // a name.
+  const ACE_TCHAR *KEY1_NAME_ID;
+
+  // The second key is normally constructed concatenating a prefix,
+  // the value found on KEY1_NAME_ID stripped from the first s_offset
+  // characters, and a suffix.
+  unsigned int s_offset;
+  const ACE_TCHAR *PREFFIX_KEY2;
+  const ACE_TCHAR *SUFFIX_KEY2;
+
+  // If != 0, look for the value of KEY1_NAME_ID not directly under
+  // BASE_KEY1, but on every subkey of BASE_KEY1.
+  int use_subkeys;
+
+  // When we search for IP Addresses below, we look for a key with a
+  // name in this array (null terminated).
+  // For some windows versions, there is an
+  // aditional key for ppp interfaces that will be stored on [1].
+  const ACE_TCHAR *IPADDR_NAME_ID[3] = {
+    ACE_LIB_TEXT ("IPAddress"), 0, 0
+  };
+
+  // Skip addresses that match this.
   const ACE_TCHAR *INVALID_TCPIP_DEVICE_ADDR = ACE_LIB_TEXT ("0.0.0.0");
+
+  ACE_WINDOWS_VERSION winver = get_windows_version();
+
+  switch (winver)
+    {
+      case ACE_WINDOWS_IS_WINNT:
+        PREFFIX_KEY2 = ACE_LIB_TEXT ("SYSTEM\\CurrentControlSet\\Services\\");
+        BASE_KEY1 =
+          ACE_LIB_TEXT ("SYSTEM\\CurrentControlSet\\Services")
+          ACE_LIB_TEXT ("\\Tcpip\\Linkage");
+        SUFFIX_KEY2 = ACE_LIB_TEXT ("\\Parameters\\Tcpip");
+        KEY1_NAME_ID = ACE_LIB_TEXT ("Bind");
+        s_offset = 8;
+        use_subkeys = 0;
+        break;
+
+      case ACE_WINDOWS_IS_WIN2K:
+        BASE_KEY1 =
+          ACE_LIB_TEXT ("SYSTEM\\CurrentControlSet\\Services")
+          ACE_LIB_TEXT ("\\Tcpip\\Parameters\\Interfaces\\");
+        PREFFIX_KEY2 = BASE_KEY1;
+        SUFFIX_KEY2 = ACE_LIB_TEXT ("");
+        KEY1_NAME_ID = 0;
+        s_offset = 0;
+        use_subkeys = 1;
+        // PPP.
+        IPADDR_NAME_ID[1] = ACE_LIB_TEXT ("DhcpIPAddress");
+        break;
+
+      // If ACE_HAS_WINNT4 we can safely assume the ones below will
+      // not be needed.
+#   if !defined(ACE_HAS_WINNT4) || (ACE_HAS_WINNT4 == 0)
+      case ACE_WINDOWS_IS_WIN95:
+      case ACE_WINDOWS_IS_WIN98:
+      case ACE_WINDOWS_IS_WINME:
+        PREFFIX_KEY2 =
+          ACE_LIB_TEXT ("SYSTEM\\CurrentControlSet\\Services\\Class\\");
+        BASE_KEY1 = ACE_LIB_TEXT ("Enum\\Network\\MSTCP");
+        SUFFIX_KEY2 = ACE_LIB_TEXT ("");
+        KEY1_NAME_ID =  ACE_LIB_TEXT ("Driver");
+        use_subkeys = 1;
+        s_offset = 0;
+        break;
+#   endif /* !ACE_HAS_WINNT4 */
+
+      default:
+        return -1;
+    }
 
   ACE_TCHAR raw_buffer[ACE_MAX_FULLY_QUALIFIED_NAME_LEN + 1];
   DWORD raw_buflen = ACE_MAX_FULLY_QUALIFIED_NAME_LEN + 1;
-  ACE_TCHAR buffer[ACE_MAX_FULLY_QUALIFIED_NAME_LEN + 1];
-  DWORD buf_len = ACE_MAX_FULLY_QUALIFIED_NAME_LEN + 1;
 
-  if (::get_reg_value (LINKAGE_KEY1,
-                       BIND_NAME_ID,
-                       raw_buffer,
-                       raw_buflen))
-    return -1;
+  if (KEY1_NAME_ID == 0)
+    {
+      if (::get_reg_subkeys (BASE_KEY1,
+                             raw_buffer,
+                             raw_buflen))
+        return -1;
+    }
+  else
+    {
+      if (::get_reg_value (BASE_KEY1,
+                           KEY1_NAME_ID,
+                           raw_buffer,
+                           raw_buflen,
+                           use_subkeys))
+        return -1;
+    }
   // return buffer contains 0 delimited strings
 
   ACE_Tokenizer dev_names (raw_buffer);
@@ -506,28 +739,37 @@ ACE_Sock_Connect::get_ip_interfaces (size_t &count,
   ACE_NEW_RETURN (addrs,
                   ACE_INET_Addr[n_interfaces],
                   -2);
+
+  ACE_TCHAR buffer[ACE_MAX_FULLY_QUALIFIED_NAME_LEN + 1];
+  DWORD buf_len = ACE_MAX_FULLY_QUALIFIED_NAME_LEN + 1;
+
   count = 0;
   for (int i = 0; i < n_interfaces; i++)
     {
-      // a. construct name to access IPAddress for this interface
-      ACE_TString ifdevkey (SVCS_KEY1);
-      ACE_TString the_dev = dev_names.next ();
-
-      // chop off the "\Device" and keep last name.
-      if (the_dev.length() < 8)
-        return -3;              // Something's wrong
-      else
+      for (const ACE_TCHAR **ipaddr_name_id = IPADDR_NAME_ID;
+           *ipaddr_name_id != 0;
+           ++ipaddr_name_id)
         {
-          // rest of string from offset 8
-          the_dev = the_dev.substring (8);
+          // a. construct name to access IP Address for this interface
+          ACE_TString ifdevkey (PREFFIX_KEY2);
+          ACE_TString the_dev = dev_names.next ();
+
+          if (the_dev.length() < s_offset)
+            {
+              return -3;              // Something's wrong
+            }
+
+          // rest of string from offset.
+          the_dev = the_dev.substring (s_offset);
+
           ifdevkey += the_dev;
-          ifdevkey += TCP_PARAM_SUBKEY;
+          ifdevkey += SUFFIX_KEY2;
 
           // b. extract value
           // Gets overwritten on each call
           buf_len = sizeof (buffer);
           if (get_reg_value (ifdevkey.fast_rep (),
-                             IPADDR_NAME_ID,
+                             *ipaddr_name_id,
                              buffer,
                              buf_len))
             continue; // Skip unknown devices.
@@ -541,6 +783,7 @@ ACE_Sock_Connect::get_ip_interfaces (size_t &count,
             ACE_INET_Addr ((u_short) 0, buffer);
         }
     }
+
   return 0;
 #  endif /* ACE_HAS_PHARLAP */
 # endif /* Winsock 2 && MSVC 5 or later */

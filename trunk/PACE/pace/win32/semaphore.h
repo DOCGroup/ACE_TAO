@@ -40,7 +40,7 @@ extern "C" {
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  pace_sem_t * sem_open (const char * name, int oflag, ...);
+  PACE_INLINE pace_sem_t * sem_open (const char * name, int oflag, ...);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)

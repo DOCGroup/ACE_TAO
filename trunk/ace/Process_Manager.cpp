@@ -373,9 +373,11 @@ ACE_Process_Manager::handle_signal (int,
             ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, lock_, -1));
 
             ssize_t i = this->find_proc (proc);
+#if 0
             pid_t pid = i != -1
               ? process_table_[i].process_->getpid ()
               : ACE_INVALID_PID;
+#endif
             this->notify_proc_handler (i, status);
             this->remove_proc (i);
           }
@@ -812,7 +814,8 @@ ACE_Process_Manager::wait (pid_t pid,
           // Green Hills produces a warning that result >= WAIT_OBJECT_0 is
           // a pointless comparison because WAIT_OBJECT_0 is zero and DWORD is
           // unsigned long, so this test is skipped for Green Hills.
-# if defined (ghs)
+          // Same for mingw.
+# if defined (ghs) || defined (__MINGW32__)
           ACE_ASSERT (result < WAIT_OBJECT_0 + current_count_);
 # else
           ACE_ASSERT (result >= WAIT_OBJECT_0

@@ -54,7 +54,7 @@ run_test (SVC_HANDLER &svc_handler,
       cb2->copy ("doug\n",
                 ACE_OS::strlen ("doug\n"));
       cb1->cont (cb2);
-      
+
       // Note that this is a buffered call!
       if (svc_handler.put (mb) == -1)
         ACE_ERROR ((LM_ERROR,
@@ -93,17 +93,25 @@ main (int argc, ACE_TCHAR *argv[])
     // Open up the temp file.
     if (connector.connect (file_io,
                            file) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR, 
+      ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("connect failed for %p\n"),
                          file.get_path_name ()),
                         1);
+
+#if !defined (ACE_WIN32) \
+    || (defined (ACE_HAS_WINNT4) && ACE_HAS_WINNT4 == 1)
+# define TEST_CAN_UNLINK_IN_ADVANCE
+#endif
+
+#if defined(TEST_CAN_UNLINK_IN_ADVANCE)
     // Unlink this file right away so that it is automatically removed
     // when the process exits.
-    else if (file_io.unlink () == -1)
-      ACE_ERROR_RETURN ((LM_ERROR, 
+    if (file_io.unlink () == -1)
+      ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("unlink failed for %p\n"),
                          file.get_path_name ()),
                         1);
+#endif
 
     // Create the service handler and assign it <file_io> as its data
     // sink.
@@ -113,10 +121,21 @@ main (int argc, ACE_TCHAR *argv[])
                              max_buffer_size,
                              0);
     svc_handler.peer () = file_io;
-    
+
     // Run the test.
     run_test (svc_handler, iterations);
+
+#if !defined(TEST_CAN_UNLINK_IN_ADVANCE)
+    file_io.close();
+    if (file_io.unlink () == -1)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("unlink failed for %p\n"),
+                         file.get_path_name ()),
+                        1);
+#endif
+
   }
+
   ACE_END_TEST;
   return 0;
 }

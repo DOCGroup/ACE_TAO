@@ -32,6 +32,8 @@
 #include "ace/Svc_Handler.h"
 #include "ace/Synch.h"
 
+#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
+
 class Echo_Handler : public ACE_Svc_Handler<ACE_MEM_STREAM, ACE_MT_SYNCH>
 {
   // = TITLE
@@ -50,5 +52,7 @@ private:
   ACE_TCHAR name_[MAXPATHLEN];
   u_short connection_;
 };
+
+#endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS */
 
 #endif /* ACE_TESTS_MEM_STREAM_TEST_H */
