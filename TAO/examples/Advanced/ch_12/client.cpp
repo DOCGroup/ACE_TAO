@@ -19,12 +19,14 @@
 //
 // ============================================================================
 
-#include    "CCS.h"        // ORB-specific
+#include    "CCSC.h"        // ORB-specific
 
 // The following headers are #included automatically by ACE+TAO.
 // Therefore, they don't need to be included explicitly.
-// #include    <iostream.h>
+#include    <iostream>
 // #include    <fstream.h>
+
+using namespace std;
 
 // Generic ostream inserter for exceptions. Inserts the exception
 // name, if available, and the repository ID otherwise.
@@ -206,14 +208,14 @@ main (int argc, char * argv[])
       cout << endl;
 
       // Change the location of first device in the list
-      CCS::AssetType anum = list[0]->asset_num ();
+      CCS::AssetType anum = list[0u]->asset_num ();
       cout << "Changing location of device "
            << anum << "." << endl;
-      list[0]->location ("Earth");
+      list[0u]->location ("Earth");
       // Check that the location was updated
       cout << "New details for device "
            << anum << " are:" << endl;
-      cout << list[0] << endl;
+      cout << list[0u] << endl;
 
       // Find first thermostat in list.
       CCS::Thermostat_var tmstat;

@@ -26,6 +26,8 @@
 //#include    <stdlib.h>
 #include    "icp.h"
 
+using namespace std;
+
 //----------------------------------------------------------------
 
 enum DeviceType { thermometer, thermostat };

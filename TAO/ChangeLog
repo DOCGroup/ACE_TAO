@@ -1,3 +1,59 @@
+Sat Nov 22 17:20:13 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/Advanced/ch_12/client.cpp:
+        * examples/Advanced/ch_12/icp.cpp:
+        * examples/Advanced/ch_12/server.cpp:
+        * examples/Advanced/ch_12/server.h:
+        * examples/Advanced/ch_18/client.cpp:
+        * examples/Advanced/ch_18/icp.cpp:
+        * examples/Advanced/ch_18/server.cpp:
+        * examples/Advanced/ch_18/server.h:
+        * examples/Advanced/ch_21/client.cpp:
+        * examples/Advanced/ch_21/icp.cpp:
+        * examples/Advanced/ch_21/server.cpp:
+        * examples/Advanced/ch_21/server.h:
+        * examples/Advanced/ch_3/client.cpp:
+        * examples/Advanced/ch_3/server.cpp:
+        * examples/Advanced/ch_8_and_10/client.cpp:
+        * examples/Advanced/ch_8_and_10/icp.cpp:
+        * examples/Advanced/ch_8_and_10/server.h:
+
+          Added missing #includes, also added 'u' to some
+          integer literals used as sequence indices.
+
+        * examples/Kokyu_dsrt_schedulers/FP_SchedulingC.cpp:
+        * examples/Kokyu_dsrt_schedulers/FP_SchedulingC.h:
+        * examples/Kokyu_dsrt_schedulers/FP_SchedulingC.i:
+        * examples/Kokyu_dsrt_schedulers/Kokyu_qosC.cpp:
+        * examples/Kokyu_dsrt_schedulers/Kokyu_qosC.h:
+        * examples/Kokyu_dsrt_schedulers/Kokyu_qosC.i:
+        * examples/Kokyu_dsrt_schedulers/MIF_SchedulingC.cpp:
+        * examples/Kokyu_dsrt_schedulers/MIF_SchedulingC.h:
+        * examples/Kokyu_dsrt_schedulers/MIF_SchedulingC.i:
+        * examples/Kokyu_dsrt_schedulers/MUF_SchedulingC.cpp:
+        * examples/Kokyu_dsrt_schedulers/MUF_SchedulingC.h:
+        * examples/Kokyu_dsrt_schedulers/MUF_SchedulingC.i:
+        * examples/Kokyu_dsrt_schedulers/utils.h:
+        * examples/Kokyu_dsrt_schedulers/Kokyu_DSRT_Schedulers.mpc:
+
+          Modified MPC file and added #includes of RTCORBA.h to
+          allow the project to build automatically, without
+          needing a separate step for code generation.
+
+	    * examples/Kokyu_dsrt_schedulers/FP_Scheduling.idl:
+	    * examples/Kokyu_dsrt_schedulers/Kokyu_qos.idl:
+	    * examples/Kokyu_dsrt_schedulers/MIF_Scheduling.idl:
+	    * examples/Kokyu_dsrt_schedulers/MUF_Scheduling.idl:
+
+          New files renamed from the ones below.
+
+	    * examples/Kokyu_dsrt_schedulers/FP_Scheduling.pidl:
+	    * examples/Kokyu_dsrt_schedulers/Kokyu_qos.pidl:
+	    * examples/Kokyu_dsrt_schedulers/MIF_Scheduling.pidl:
+	    * examples/Kokyu_dsrt_schedulers/MUF_Scheduling.pidl:
+
+          Removed files, renamed to the ones above.
+
 Sat Nov 22 11:32:30 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/Bug_1330_Regression/server.cpp:
