@@ -50,7 +50,11 @@ WARN_FORMAT           = "$file:$line: $text"
 
 INPUT                 = docs \
                         ace \
-                        ace/os_include
+                        ace/os_include \
+                        ace/os_include/arpa \
+                        ace/os_include/net \
+                        ace/os_include/netinet \
+                        ace/os_include/sys
 FILE_PATTERNS         = *.h *.cpp *.inl *.i *.txt
 RECURSIVE             = NO
 EXCLUDE               = ace/config.h
