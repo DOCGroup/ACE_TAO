@@ -27,7 +27,6 @@ namespace CIAO
       SWapping_Container * c
     )
     : Swapping_Servant_Home_Impl_Base (c),
-      activator_ (),
       executor_ (EXEC::_duplicate (exe))
   {
   }
@@ -209,10 +208,7 @@ namespace CIAO
     Dynamic_Component_Servant_Base *svt =
       new Dynamic_Component_Servant<COMP_SVNT> ();
 
-    // @@ Jai, why is the <this> activator updated? Shouldn't it be in
-    // some other place, like the container so that all the servants
-    // could share this?
-    this->activator_.update_map (oid.in (), svt);
+    this->container_.update_map (oid.in (), svt);
 
     return ho._retn ();
   }
