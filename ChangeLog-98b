@@ -7,6 +7,10 @@ Mon Sep 21 21:47:12 1998  David L. Levine  <levine@cs.wustl.edu>
           In addition, added -I support for Purify and Quantify.
           This support should no longer appear in individual Makefiles.
 
+        * ACE-INSTALL.html: added paragraph on Purify/Quantify support
+          details, i.e., they must be on your PATH, and ACE puts the
+          instrumented libraries below /tmp by default.
+
 Mon Sep 21 20:46:00 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/Containers_T.cpp (ACE_Double_Linked_List): Changed
