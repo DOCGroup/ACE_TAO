@@ -90,7 +90,13 @@ TAO_UIOP_Acceptor::acceptor (void)
 int
 TAO_UIOP_Acceptor::close (void)
 {
-  // @@ Maybe this is a good place to unlink the rendezvous point?
+  ACE_UNIX_Addr addr;
+
+  if (base_acceptor_.acceptor ().get_local_addr (addr) == -1)
+    return -1;
+
+  (void) ACE_OS::unlink (addr.get_path_name ());
+
   return this->base_acceptor_.close ();
 }
 
@@ -106,7 +112,6 @@ TAO_UIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 int
 TAO_UIOP_Acceptor::open_default (TAO_ORB_Core *orb_core)
 {
-#if 0
   ACE_Auto_String_Free tempname (ACE_OS::tempnam (0, "TAO"));
 
   if (tempname.get () == 0)
@@ -115,17 +120,12 @@ TAO_UIOP_Acceptor::open_default (TAO_ORB_Core *orb_core)
   ACE_UNIX_Addr addr (tempname.get ());
 
   return this->open_i (orb_core, addr);
-#else
-  return -1;
-#endif
 }
 
 int
 TAO_UIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
                            const ACE_UNIX_Addr& addr)
 {
-  (void) ACE_OS::unlink (addr.get_path_name ());
-
   if (this->base_acceptor_.open (orb_core, addr) != 0)
     return -1;
 
