@@ -1,3 +1,12 @@
+Tue Dec 18 12:12:24 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* tests/ior_corbaloc/ior_corbaloc_client.dsp:
+	  tests/ior_corbaloc/ior_corbaloc_server.dsp:
+	  tests/ior_corbaloc/ior_corbaname_client.dsp:
+
+	  Changed the path for tao_idl for the Release build
+ 	  to fix build errors for Win2000 DLL Release
+
 Mon Dec 17 23:26:47 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
