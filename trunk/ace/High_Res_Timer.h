@@ -77,8 +77,8 @@ public:
   // not be set.  Careful, a <scale_factor> of 0 will cause division
   // by zero exceptions.
 
-  static ACE_UINT32 global_scale_factor ();
-  // Accesses the global_scale_factor.
+  static ACE_UINT32 global_scale_factor (void);
+  // Returns the global_scale_factor.
 
   static int get_env_global_scale_factor (const char *env = "ACE_SCALE_FACTOR");
   // Sets the global_scale_factor to the value in the <env>
@@ -135,12 +135,12 @@ public:
   // Stop incremental timing.
 
   void elapsed_time_incr (ACE_Time_Value &tv) const;
-  // Set <tv> to the number of microseconds elapsed between all
-  // calls to start_incr and stop_incr.
+  // Set <tv> to the number of microseconds elapsed between all calls
+  // to start_incr and stop_incr.
 
   void elapsed_time_incr (ACE_hrtime_t &nanoseconds) const;
-  // Set <nsec> to the number of nanoseconds elapsed between all
-  // calls to start_incr and stop_incr.
+  // Set <nsec> to the number of nanoseconds elapsed between all calls
+  // to start_incr and stop_incr.
 
 #if !defined (ACE_HAS_WINCE)
   // @@ These two functions are currently not supported on Windows CE.
@@ -182,14 +182,21 @@ public:
                             const ACE_hrtime_t hrt);
   // Converts an <hrt> to <tv> using global_scale_factor_.
 
+#if defined (linux)
+  static ACE_UINT32 get_cpuinfo (void);
+  // This is used to find out the Mhz of the machine for the scale
+  // factor.  If there are any problems getting it, we just return 1
+  // (the default).
+#endif /* defined (linux) */
+
 private:
   static ACE_hrtime_t gettime (const ACE_OS::ACE_HRTimer_Op =
                                  ACE_OS::ACE_HRTIMER_GETTIME);
-  // For internal use:  gets the high-resolution time using
-  // ACE_OS::gethrtime ().  Except on platforms that require
-  // that the global_scale_factor_ be set, such as ACE_WIN32,
-  // uses the low-resolution clock if the global_scale_factor_
-  // has not been set.
+  // For internal use: gets the high-resolution time using
+  // ACE_OS::gethrtime ().  Except on platforms that require that the
+  // global_scale_factor_ be set, such as ACE_WIN32, uses the
+  // low-resolution clock if the global_scale_factor_ has not been
+  // set.
 
   ACE_hrtime_t start_;
   // Starting time.

@@ -45,9 +45,111 @@ ACE_ALLOC_HOOK_DEFINE(ACE_High_Res_Timer)
 /* static */
 int ACE_High_Res_Timer::global_scale_factor_status_ = 0;
 
+#if defined (linux)
+// Determine the apparent CPU clock speed from /proc/cpuinfo
+ACE_UINT32
+ACE_High_Res_Timer::get_cpuinfo (void)
+{
+  ACE_UINT32 scale_factor = 1u;
+
+  // Get the BogoMIPS from /proc/cpuinfo.  It works fine on Alpha and
+  // Pentium Pro.  For other CPUs, it will be necessary to interpret
+  // the BogoMips, as described in the BogoMips mini-HOWTO.  Note that
+  // this code assumes an order to the /proc/cpuinfo contents.  The
+  // BogoMips rating had better come after CPU type and model info.
+  FILE *cpuinfo;
+#if !defined (__alpha__)
+  int supported = 0;
+#endif /* __alpha__ */
+
+  FILE *cpuinfo = ACE_OS::fopen ("/proc/cpuinfo", "r");
+
+  if (cpuinfo != 0)
+    {
+      char buf[128];
+
+      // ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nReading /proc/cpuinfo...")));
+
+      while (ACE_OS::fgets (buf, sizeof buf, cpuinfo))
+        {
+#if defined (__alpha__)
+          ACE_UINT32 whole;
+          ACE_UINT32 fractional;
+          if (::sscanf (buf,
+                        "BogoMIPS : %d.%d\n",
+                        &whole,
+                        &fractional) == 2 
+              || ::sscanf (buf,
+                           "bogomips : %d.%d\n",
+                           &whole,
+                           &fractional) == 2)
+            {
+              scale_factor = whole;
+              break;
+            }
+#else
+          double bmips = 1;
+          char arg[128];
+
+          // CPU type?
+          if (::sscanf (buf, "cpu : %s\n", arg) == 1)
+            {
+              // If this is an Alpha chip, then the BogoMips rating is
+              // usable...
+              if (ACE_OS::strncmp (arg,
+                                   "Alpha",
+                                   5) == 0)
+                {
+                  supported = 1;
+                  // ACE_DEBUG ((LM_DEBUG, ASYS_TEXT (" recognized Alpha chip...")));
+                }
+            }
+          // Pentium CPU model?
+          else if (supported == 0
+                   && ::sscanf (buf, "model : Pentium %s\n", arg) == 1)
+            {
+              // But if we don't have the right kind of Intel chip,
+              // just quit.
+              if (ACE_OS::strcmp (arg, "II") == 0
+                  || ACE_OS::strcmp (arg, "Pro") == 0)
+                {
+                  supported = 1;
+                  // ACE_DEBUG ((LM_DEBUG, ASYS_TEXT (" recognized Pentium Pro/II chip...")));
+                }
+            }
+          else if (::sscanf (buf, "bogomips : %lf\n", &bmips) == 1
+                   || ::sscanf (buf, "BogoMIPS : %lf\n", &bmips) == 1)
+            {
+              if (supported)
+                {
+                  scale_factor = (ACE_UINT32) (bmips + 0.5);
+                  // ACE_DEBUG ((LM_DEBUG, ASYS_TEXT (" setting the clock scale factor to %u"), scale_factor));
+                }
+#if 0
+              else
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              ASYS_TEXT ("\nThe BogoMIPS metric is not supported on this platform"
+                                         "\n\tReport the results of the clock calibration and"
+                                         "\n\tthe contents of /proc/cpuinfo to the ace-users mailing list")));
+                }
+#endif /* 0 */
+              break;
+            }
+#endif /* __alpha__ */
+        }
+
+      // ACE_DEBUG ((LM_DEBUG, ASYS_TEXT (" (done)\n")));
+
+      ACE_OS::fclose (cpuinfo);
+    }
+
+  return scale_factor;
+}
+#endif /* linux */
 
 ACE_UINT32
-ACE_High_Res_Timer::global_scale_factor ()
+ACE_High_Res_Timer::global_scale_factor (void)
 {
 #if (defined (ACE_HAS_PENTIUM) || defined (ACE_HAS_POWERPC_TIMER) || \
      defined (ACE_HAS_ALPHA_TIMER)) && \
@@ -78,29 +180,8 @@ ACE_High_Res_Timer::global_scale_factor ()
 
             return ACE_High_Res_Timer::global_scale_factor_;
 
-#         elif defined (linux) && (__alpha__)
-            // Get the BogoMIPS from /proc.  It works fine on Alpha,
-            // only.  For other CPUs, it will be necessary to
-            // interpret the BogoMips, as described in the BogoMips
-            // mini-HOWTO.
-            FILE *cpuinfo;
-            if ((cpuinfo = ACE_OS::fopen ("/proc/cpuinfo", "r")))
-              {
-                char buf[128];
-                while (ACE_OS::fgets (buf, sizeof buf, cpuinfo))
-                  {
-                    ACE_UINT32 whole, fractional;
-                    if (::sscanf (buf, "BogoMIPS : %d.%d\n",
-                                  &whole, &fractional) == 2 ||
-                        ::sscanf (buf, "bogomips : %d.%d\n",
-                                  &whole, &fractional) == 2)
-                      {
-                        ACE_High_Res_Timer::global_scale_factor (whole);
-                        break;
-                      }
-                  }
-                ACE_OS::fclose (cpuinfo);
-              }
+#         elif defined (linux)
+            ACE_High_Res_Timer::global_scale_factor (ACE_High_Res_Timer::get_cpuinfo ());
 #         endif /* ! ACE_WIN32 && ! (linux && __alpha__) */
 
           if (ACE_High_Res_Timer::global_scale_factor_ == 1u)
@@ -134,14 +215,20 @@ ACE_High_Res_Timer::calibrate (const ACE_UINT32 usec,
 {
   const ACE_Time_Value sleep_time (0, usec);
   ACE_Stats delta_hrtime;
-  ACE_Stats actual_sleeps; /* In units of 100 usec, to avoid overflow. */
+  // In units of 100 usec, to avoid overflow.
+  ACE_Stats actual_sleeps; 
 
-  for (u_int i = 0; i < iterations; ++i)
+  for (u_int i = 0;
+       i < iterations;
+       ++i)
     {
-      const ACE_Time_Value actual_start = ACE_OS::gettimeofday ();
-      const ACE_hrtime_t start = ACE_OS::gethrtime ();
+      const ACE_Time_Value actual_start =
+        ACE_OS::gettimeofday ();
+      const ACE_hrtime_t start =
+        ACE_OS::gethrtime ();
       ACE_OS::sleep (sleep_time);
-      const ACE_hrtime_t stop = ACE_OS::gethrtime ();
+      const ACE_hrtime_t stop =
+        ACE_OS::gethrtime ();
       const ACE_Time_Value actual_delta =
         ACE_OS::gettimeofday () - actual_start;
 
@@ -262,8 +349,8 @@ void
 ACE_High_Res_Timer::elapsed_time (ACE_hrtime_t &nanoseconds) const
 {
   // Please do _not_ rearrange this equation.  It is carefully
-  // designed and tested to avoid overflow on machines that
-  // don't have native 64-bit ints.
+  // designed and tested to avoid overflow on machines that don't have
+  // native 64-bit ints.
   nanoseconds = (this->end_ - this->start_) * (1000u / this->global_scale_factor ());
 }
 
@@ -298,16 +385,25 @@ ACE_High_Res_Timer::print_ave (const char *str,
   if (count > 1)
     {
       ACE_hrtime_t avg_nsecs = total_nanoseconds / (ACE_UINT32) count;
-      ACE_OS::sprintf (buf, " count = %d, total (secs %lu, usecs %u), avg usecs = %lu\n",
-             count, total_secs, (extra_nsecs + 500u) / 1000u,
-             (u_long) ((avg_nsecs + 500u) / 1000u));
+      ACE_OS::sprintf (buf,
+                       " count = %d, total (secs %lu, usecs %u), avg usecs = %lu\n",
+                       count,
+                       total_secs,
+                       (extra_nsecs + 500u) / 1000u,
+                       (u_long) ((avg_nsecs + 500u) / 1000u));
     }
   else
-    ACE_OS::sprintf (buf, " total %3lu.%06lu secs\n",
-             total_secs, (extra_nsecs + 500lu) / 1000lu);
+    ACE_OS::sprintf (buf,
+                     " total %3lu.%06lu secs\n",
+                     total_secs,
+                     (extra_nsecs + 500lu) / 1000lu);
 
-  ACE_OS::write (handle, str, ACE_OS::strlen (str));
-  ACE_OS::write (handle, buf, ACE_OS::strlen (buf));
+  ACE_OS::write (handle,
+                 str,
+                 ACE_OS::strlen (str));
+  ACE_OS::write (handle,
+                 buf,
+                 ACE_OS::strlen (buf));
 }
 
 void
@@ -322,23 +418,35 @@ ACE_High_Res_Timer::print_total (const char *str,
   this->elapsed_time (total_nanoseconds);
 
   // Separate to seconds and nanoseconds.
-  u_long total_secs  = (u_long) (total_nanoseconds / (ACE_UINT32) ACE_ONE_SECOND_IN_NSECS);
-  ACE_UINT32 extra_nsecs = (ACE_UINT32) (total_nanoseconds % (ACE_UINT32) ACE_ONE_SECOND_IN_NSECS);
+  u_long total_secs =
+    (u_long) (total_nanoseconds / (ACE_UINT32) ACE_ONE_SECOND_IN_NSECS);
+  ACE_UINT32 extra_nsecs =
+    (ACE_UINT32) (total_nanoseconds % (ACE_UINT32) ACE_ONE_SECOND_IN_NSECS);
 
   char buf[100];
   if (count > 1)
     {
-      ACE_hrtime_t avg_nsecs   = this->total_ / (ACE_UINT32) count;
-      ACE_OS::sprintf (buf, " count = %d, total (secs %lu, usecs %u), avg usecs = %lu\n",
-             count, total_secs, (extra_nsecs + 500u) / 1000u,
-             (u_long) ((avg_nsecs + 500u) / 1000u));
+      ACE_hrtime_t avg_nsecs = this->total_ / (ACE_UINT32) count;
+
+      ACE_OS::sprintf (buf, 
+                       " count = %d, total (secs %lu, usecs %u), avg usecs = %lu\n",
+                       count,
+                       total_secs,
+                       (extra_nsecs + 500u) / 1000u,
+                       (u_long) ((avg_nsecs + 500u) / 1000u));
     }
   else
-    ACE_OS::sprintf (buf, " total %3lu.%06u secs\n",
-             total_secs, (extra_nsecs + 500u) / 1000u);
+    ACE_OS::sprintf (buf,
+                     " total %3lu.%06u secs\n",
+                     total_secs,
+                     (extra_nsecs + 500u) / 1000u);
 
-  ACE_OS::write (handle, str, ACE_OS::strlen (str));
-  ACE_OS::write (handle, buf, ACE_OS::strlen (buf));
+  ACE_OS::write (handle,
+                 str,
+                 ACE_OS::strlen (str));
+  ACE_OS::write (handle,
+                 buf,
+                 ACE_OS::strlen (buf));
 }
 #endif /* !ACE_HAS_WINCE */
 
