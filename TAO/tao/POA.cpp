@@ -9,6 +9,7 @@
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/Environment.h"
 #include "tao/Exception.h"
+#include "tao/Stub.h"
 #include "tao/debug.h"
 
 //
