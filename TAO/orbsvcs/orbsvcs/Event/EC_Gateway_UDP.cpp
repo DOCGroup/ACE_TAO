@@ -674,23 +674,28 @@ TAO_ECG_UDP_Receiver::init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
   this->addr_server_ = 
     RtecUDPAdmin::AddrServer::_duplicate (addr_server);
   
-  this->lcl_info_ =
-    lcl_sched->create (lcl_name, _env);
+  this->lcl_info_ = lcl_sched->lookup (lcl_name, _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
+  if (this->lcl_info_ == -1)
+    {
+      this->lcl_info_ =
+        lcl_sched->create (lcl_name, _env);
+      TAO_CHECK_ENV_RETURN_VOID (_env);
 
-  ACE_Time_Value tv (0, 500);
-  TimeBase::TimeT time;
-  ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
-  lcl_sched->set (this->lcl_info_,
-                  RtecScheduler::VERY_HIGH_CRITICALITY,
-                  time, time, time,
-                  25000 * 10,
-                  RtecScheduler::VERY_LOW_IMPORTANCE,
-                  time,
-                  1,
-                  RtecScheduler::REMOTE_DEPENDANT,
-                  _env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+      ACE_Time_Value tv (0, 500);
+      TimeBase::TimeT time;
+      ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
+      lcl_sched->set (this->lcl_info_,
+                      RtecScheduler::VERY_HIGH_CRITICALITY,
+                      time, time, time,
+                      25000 * 10,
+                      RtecScheduler::VERY_LOW_IMPORTANCE,
+                      time,
+                      1,
+                      RtecScheduler::REMOTE_DEPENDANT,
+                      _env);
+      TAO_CHECK_ENV_RETURN_VOID (_env);
+    }
 
   this->reactor_ = reactor;
   this->max_timeout_ = max_timeout;
