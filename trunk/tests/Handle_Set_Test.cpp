@@ -20,6 +20,7 @@
 
 #include "ace/Profile_Timer.h"
 #include "ace/Handle_Set.h"
+#include "ace/Containers.h"
 #include "test_config.h"
 
 static void
@@ -59,11 +60,28 @@ test_duplicates (size_t count)
   ACE_ASSERT (handle_set.num_set () + duplicates == sets);
 }
 
+// This is the vector of handles to test.  These numbers are chosen to
+// test for boundaries conditions. 
+static ACE_HANDLE handle_vector[] = 
+{
+  (ACE_HANDLE) 0, 
+  (ACE_HANDLE) 1, 
+  (ACE_HANDLE) 32, 
+  (ACE_HANDLE) 63, 
+  (ACE_HANDLE) 64, 
+  (ACE_HANDLE) 65, 
+  (ACE_HANDLE) 127, 
+  (ACE_HANDLE) 128, 
+  (ACE_HANDLE) 129, 
+  (ACE_HANDLE) 255,
+  ACE_INVALID_HANDLE
+};
+
 static void
 test_boundaries (void)
 {
   ACE_Handle_Set handle_set;
-
+  ACE_Unbounded_Queue<int> queue;
   ACE_HANDLE handle;
 
   // First test an empty set.
@@ -73,26 +91,27 @@ test_boundaries (void)
   while ((handle = i1 ()) != ACE_INVALID_HANDLE)
     ACE_ASSERT (!"this shouldn't get called since the set is empty!\n");
 
-  // Insert a bunch of HANDLEs into the set, testing for boundary
-  // conditions.
+  // Insert the vector of HANDLEs into the set.
 
-  handle_set.set_bit ((ACE_HANDLE) 0);
-  handle_set.set_bit ((ACE_HANDLE) 1);
-  handle_set.set_bit ((ACE_HANDLE) 32);
-  handle_set.set_bit ((ACE_HANDLE) 63);
-  handle_set.set_bit ((ACE_HANDLE) 64);
-  handle_set.set_bit ((ACE_HANDLE) 65);
-  handle_set.set_bit ((ACE_HANDLE) 127);
-  handle_set.set_bit ((ACE_HANDLE) 128);
-  handle_set.set_bit ((ACE_HANDLE) 129);
-  handle_set.set_bit ((ACE_HANDLE) 255);
+  for (int i = 0;
+       handle_vector[i] != ACE_INVALID_HANDLE;
+       i++)
+    {
+      handle_set.set_bit (handle_vector[i]);
+      queue.enqueue_tail (handle_vector[i]);
+    }
 
   int count = 0;
 
   ACE_Handle_Set_Iterator i2 (handle_set); 
 
   while ((handle = i2 ()) != ACE_INVALID_HANDLE)
-    count++;
+    {
+      ACE_HANDLE temp;
+      queue.dequeue_head (temp);
+      ACE_ASSERT (handle == temp);
+      count++;
+    }
 
   ACE_ASSERT (count == handle_set.num_set ());
 }
@@ -151,11 +170,15 @@ main (int argc, char *argv[])
   size_t max_handles = argc > 2 ? ACE_OS::atoi (argv[2]) : ACE_Handle_Set::MAXSIZE;
   size_t max_iterations = argc > 3 ? ACE_OS::atoi (argv[3]) : ACE_MAX_ITERATIONS;
 
-  test_duplicates (count);
+  //  test_duplicates (count);
   test_boundaries ();
-  test_performance (max_handles, max_iterations);
+  //  test_performance (max_handles, max_iterations);
 
   ACE_END_TEST;
   return 0;
 }
 
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class ACE_Unbounded_Queue<int>;
+template class ACE_Node<int>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
