@@ -54,10 +54,12 @@ TAO_Object_Table* ROA_Factory::objlookup_strategy()
   switch(p->demux_strategy())
     {
     case ROA_Parameters::TAO_LINEAR:
+      this->objtable_ = new TAO_Linear_ObjTable (p->tablesize());
       break;
     case ROA_Parameters::TAO_USER_DEFINED:
-      // it is assumed that the user will use the hooks to supply a
+      // it is assumed that the user would have used the hooks to supply a
       // user-defined instance of the object table
+      ACE_ASSERT(this->objtable_ != 0);
       break;
     case ROA_Parameters::TAO_ACTIVE_DEMUX:
       break;
@@ -66,6 +68,11 @@ TAO_Object_Table* ROA_Factory::objlookup_strategy()
       this->objtable_ = new TAO_Dynamic_Hash_ObjTable (p->tablesize());
     }
   return this->objtable_;
+}
+
+void ROA_Factory::set_userdef_objtable(TAO_Object_Table *ot)
+{
+  this->objtable_ = ot;  // we assume ownership
 }
 
 ROA_Factory::ROA_Factory()
