@@ -802,7 +802,7 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_timeout
 
   if (this->svc_handler_->handle_timeout (tv, arg) == -1)
     this->svc_handler_->handle_close (this->svc_handler_->get_handle (),
-                                      ACE_Event_Handler::TIMER_MASK);;
+                                      ACE_Event_Handler::TIMER_MASK);
 
   // Since we aren't necessarily registered with the Reactor, don't
   // bother to check the return value here...

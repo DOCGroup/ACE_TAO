@@ -258,6 +258,13 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::recycler (void) const
   return this->recycler_;
 }
 
+template <PR_ST_1, ACE_SYNCH_DECL> const void *
+ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::recycling_act (void) const
+{
+  ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::recycling_act");
+  return this->recycling_act_;
+}
+
 template <PR_ST_1, ACE_SYNCH_DECL> int 
 ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::recycle (void *)
 {
