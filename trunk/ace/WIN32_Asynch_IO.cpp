@@ -374,12 +374,10 @@ ACE_WIN32_Asynch_Read_Stream::read (ACE_Message_Block &message_block,
     bytes_to_read = space;
 
   if (bytes_to_read == 0)
-    ACE_ERROR_RETURN 
-      ((LM_ERROR,
-        ACE_LIB_TEXT ("ACE_WIN32_Asynch_Read_Stream::read:")
-        ACE_LIB_TEXT ("Attempt to read 0 bytes or no space in the message block\n")),
-       -1);
-
+    {
+      errno = ENOSPC;
+      return -1;
+    }
 
   // Create the Asynch_Result.
   ACE_WIN32_Asynch_Read_Stream_Result *result = 0;

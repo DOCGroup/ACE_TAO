@@ -358,9 +358,9 @@ protected:
 
   /// Check AIO for completion, error and result status
   /// Return: 1 - AIO completed , 0 - not completed yet
-  virtual int get_result_status ( ACE_POSIX_Asynch_Result* asynch_result,
-                                   int & error_status,
-                                   int & return_status );
+  virtual int get_result_status (ACE_POSIX_Asynch_Result *asynch_result,
+                                 int &error_status,
+                                 size_t &transfer_count);
 
   /// Task to process pseudo-asynchronous operations
   ACE_Asynch_Pseudo_Task & get_asynch_pseudo_task();
@@ -392,13 +392,6 @@ protected:
    */
   virtual int handle_events (u_long milli_seconds);
 
-  /// We will call the base class's application_specific_code from
-  /// here.
-  void application_specific_code (ACE_POSIX_Asynch_Result *asynch_result,
-                                  size_t bytes_transferred,
-                                  const void *completion_key,
-                                  u_long error);
-
   virtual int register_and_start_aio (ACE_POSIX_Asynch_Result *result,
                                       int op);
 
@@ -413,12 +406,12 @@ protected:
 
   /// Extract the results of aio.
   ACE_POSIX_Asynch_Result *find_completed_aio (int &error_status,
-                                               int &return_status,
+                                               size_t &transfer_count,
                                                size_t &index,
                                                size_t &count);
 
   /// Find free slot to store result and aiocb pointer
-  virtual int allocate_aio_slot (ACE_POSIX_Asynch_Result *result);
+  virtual ssize_t allocate_aio_slot (ACE_POSIX_Asynch_Result *result);
 
 
   /// Notify queue of "post_completed" ACE_POSIX_Asynch_Results
@@ -573,7 +566,7 @@ protected:
    */
 
   /// Find free slot to store result and aiocb pointer
-  virtual int allocate_aio_slot (ACE_POSIX_Asynch_Result *result);
+  virtual ssize_t allocate_aio_slot (ACE_POSIX_Asynch_Result *result);
 
 
   /// Notify queue of "post_completed" ACE_POSIX_Asynch_Results
