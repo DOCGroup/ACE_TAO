@@ -1,46 +1,46 @@
 Wed Sep 16 21:43:07 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.i (open): Added SetFilePointer to move the file pointer
-	  of the opened file to end of file if _O_APPEND is specified on
-	  Win32.
+        * ace/OS.i (open): Added SetFilePointer to move the file pointer
+          of the opened file to end of file if _O_APPEND is specified on
+          Win32.
 
 Wed Sep 16 20:42:16 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS: Added a typedef for ACE_IO_Vector_Base so that it will
- 	  shield the differences between Win32 and UNIX.
+        * ace/OS: Added a typedef for ACE_IO_Vector_Base so that it will
+          shield the differences between Win32 and UNIX.
 
 Wed Sep 16 20:09:01 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/OS.h:
-	* ace/OS.i:
-	  ACE_OS::rand_r() is easier to use now. Just define a variable of
-	  that type and invoke ACE_OS::rand_r() with it, it even works on
-	  broken platforms that define it as a non-pointer.
-	  This is a brief example on how to use it:
-	  ACE_RANDR_TYPE seed;
-	  int r1 = ACE_OS::rand_r (seed);
-	  int r2 = ACE_OS::rand_r (seed);
+        * ace/OS.h:
+        * ace/OS.i:
+          ACE_OS::rand_r() is easier to use now. Just define a variable of
+          that type and invoke ACE_OS::rand_r() with it, it even works on
+          broken platforms that define it as a non-pointer.
+          This is a brief example on how to use it:
+          ACE_RANDR_TYPE seed;
+          int r1 = ACE_OS::rand_r (seed);
+          int r2 = ACE_OS::rand_r (seed);
 
 Wed Sep 16 17:46:23 PDT 1998  James Hu <jxh@entera.com>
 
-	* ace/Containers.{h,i}: Added comments to DLList as per Doug's
+        * ace/Containers.{h,i}: Added comments to DLList as per Doug's
           request.
 
 Wed Sep 16 19:23:21 1998  Steve Huston  <shuston@riverace.com>
 
-	* ace/config-hpux-11.x-hpc++.h: Moved ACE_HAS_DIRENT to config-hpux11.h
+        * ace/config-hpux-11.x-hpc++.h: Moved ACE_HAS_DIRENT to config-hpux11.h
 
 Wed Sep 16 18:21:45 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Containers.h: Reformatted the ACE_DLList* classes to conform
- 	  to ACE programming conventions.
+        * ace/Containers.h: Reformatted the ACE_DLList* classes to conform
+          to ACE programming conventions.
 
-	* ace/config-hpux-11.x-hpc++.h: Added ACE_HAS_DIRENT and
- 	  ACE_HAS_GPERF to appease John Mulhern.
+        * ace/config-hpux-11.x-hpc++.h: Added ACE_HAS_DIRENT and
+          ACE_HAS_GPERF to appease John Mulhern.
 
-	* ace/Asynch_Acceptor.cpp: Added ACE_reinterpret_cast()s to the
- 	  sockaddr *'s to appease aCC on HP/UX 11.  Thanks to John Mulhern
- 	  for reporting this.
+        * ace/Asynch_Acceptor.cpp: Added ACE_reinterpret_cast()s to the
+          sockaddr *'s to appease aCC on HP/UX 11.  Thanks to John Mulhern
+          for reporting this.
 
 Wed Sep 16 17:16:51 EDT 1998   James CE Johnson    <jcej@lads.com>
 
@@ -57,18 +57,18 @@ Wed Sep 16 17:16:51 EDT 1998   James CE Johnson    <jcej@lads.com>
           docs/tutorials/012/task.h
           docs/tutorials/index.html
 
-   	  Tutorial 12.  This corrects some of the nastyness
-   	  in number 11 by specializing the ACE_Message_Block
-   	  to carry around the data.
+          Tutorial 12.  This corrects some of the nastyness
+          in number 11 by specializing the ACE_Message_Block
+          to carry around the data.
 
 Wed Sep 16 16:01:53 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Select_Reactor_T.{h,i,cpp}: Disable inlining in
-	  Select_Reactor_T.i and always include them in .cpp file.  The
-	  latest version of SunCC can't grok this particular file and we
-	  just turn it off here.  We shall turn it back on once the
-	  problem gets fixed.  Thanks to Keith Brown
-	  <kalbrown@ix.netcom.com> for providing this temporary fix.
+        * ace/Select_Reactor_T.{h,i,cpp}: Disable inlining in
+          Select_Reactor_T.i and always include them in .cpp file.  The
+          latest version of SunCC can't grok this particular file and we
+          just turn it off here.  We shall turn it back on once the
+          problem gets fixed.  Thanks to Keith Brown
+          <kalbrown@ix.netcom.com> for providing this temporary fix.
 
 Wed Sep 16 13:41:50 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
@@ -93,6 +93,9 @@ Wed Sep 16 11:41:57 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Malloc_T.cpp (dump): fixed typo, cb_ptr instead of
           cp_ptr.  Thanks to Umar Syyid <usyyid@hns.com> for reporting this.
+
+        * tests/TSS_Test.cpp (worker): allow second group of TSS keys to
+          be allocated, with TSS emulation.
 
 Wed Sep 16 11:28:47 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
