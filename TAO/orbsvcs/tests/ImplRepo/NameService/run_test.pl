@@ -58,7 +58,7 @@ if (PerlACE::waitforfile_timed ($activator_ior, 10) == -1) {
 
 $TAO_IMR->Arguments("$imr_init_ref"
                     . " add NameService "
-                    ." -c \"" . $NS->Executable () 
+                    ." -c \"" . $NS->Executable ()
                        ." $imr_init_ref"
                        ." -ORBUseIMR 1 .\"");
 
@@ -111,7 +111,7 @@ if ($taoimr != 0) {
 ################################################################################
 ## Kill the IMR
 
-$iserver = $ACTIVATOR->TerminateWaitKill (5); 
+$iserver = $ACTIVATOR->TerminateWaitKill (5);
 
 if ($iserver != 0) {
     print STDERR "ERROR: ImR_Activator returned $iserver\n";

@@ -57,7 +57,7 @@ if (PerlACE::waitforfile_timed ($imr_activator_ior, 10) == -1) {
 print "===== Adding a server\n";
 
 $TAO_IMR->Arguments("-ORBInitRef ImplRepoService=file://$imr_locator_ior"
-		    . " add Foo -c foobarbaz");
+                  . " add Foo -c foobarbaz");
 
 $taoimr = $TAO_IMR->SpawnWaitKill (60);
 
