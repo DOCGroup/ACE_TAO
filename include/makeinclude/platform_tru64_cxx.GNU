@@ -13,7 +13,13 @@ ifeq (3.,$(findstring 3.,$(ACE_DU_VERSION)))
 else # ! 3.x
 ifeq (4.,$(findstring 4.,$(ACE_DU_VERSION)))
   include $(ACE_ROOT)/include/makeinclude/platform_osf1_4.0.GNU
-  CFLAGS += -DDIGITAL_UNIX=4
+
+  ifeq (4.0f,$(findstring 4.,$(shell /usr/sbin/sizer -v)))
+    CFLAGS += -DDIGITAL_UNIX=0x4F
+  else  # ! 4.0F
+    CFLAGS += -DDIGITAL_UNIX=0x40
+  endif # ! 4.0F
+
   ifneq ($(CXX_VER),CXX_5)
     # 9: nested comment not allowed.  But there's one in /usr/include/pdsc.h!
     WARNING_FLAGS += -msg_disable 9
@@ -22,7 +28,7 @@ ifeq (4.,$(findstring 4.,$(ACE_DU_VERSION)))
 else # ! 4.x
 ifeq (5.,$(findstring 5.,$(ACE_DU_VERSION)))
   include $(ACE_ROOT)/include/makeinclude/platform_osf1_4.0.GNU
-  CFLAGS += -DDIGITAL_UNIX=5
+  CFLAGS += -DDIGITAL_UNIX=0x50
   SOFLAGS = -shared -use_ld_input $(ACELIB)
 
 endif # 5.x
