@@ -202,6 +202,10 @@ dnl So, we have to add it manually.
                   ],)
     ])
 
+  dnl Sometimes thr_create is actually found with explicitly linking against
+  dnl -lthread, so try a more "exotic" function.
+  AC_CHECK_FUNC(rwlock_destroy, , AC_CHECK_LIB(thread, rwlock_destroy,,))dnl
+
 dnl Check for POSIX threads
 
     dnl Check if platform provides pthreads backward compatibility macros
