@@ -373,11 +373,9 @@
 /* OS/compiler uses void * arg 4 setsockopt() rather than const char * */
 #define ACE_HAS_VOIDPTR_SOCKOPT 1
 
-// Platform supports SVR4 dynamic linking semantics, in 64-bit mode only.
+// Platform supports SVR4 dynamic linking semantics.
 // When used, this requires -ldl on the ACE library link line.
-#ifdef __LP64__
 #define ACE_HAS_SVR4_DYNAMIC_LINKING
-#endif
 
 // Platform supports the getrusage() system call.
 #define ACE_HAS_GETRUSAGE
