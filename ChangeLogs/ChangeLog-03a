@@ -1,3 +1,11 @@
+Wed Apr 10 19:37:58 2002  Ossama Othman  <ossama@uci.edu>
+
+	* apps/gperf/src/Bool_Array.h:
+	* apps/gperf/src/Iterator.h:
+	* apps/gperf/src/List_Node.h:
+
+	  No need to include "ace/OS.h".  "ace/config-all.h" is enough.
+
 Wed Apr 10 19:25:39 2002  Ossama Othman  <ossama@uci.edu>
 
 	* apps/Gateway/Gateway/Config_Files.cpp (read_entry): 
