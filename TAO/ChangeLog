@@ -1,3 +1,9 @@
+Mon Aug 25 16:24:38 2003  George Edwards <g.edwards@vanderbilt.edu>
+
+        * tests/Portable_Interceptors/Collocated/Dynamic/*.*
+
+          Added new test for collocated portable interceptors.
+
 Mon Aug 25 13:56:22 2003  George Edwards <g.edwards@vanderbilt.edu>
 
         * tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/test_i.cpp:
