@@ -22,11 +22,12 @@ void
 usage (const ACE_TCHAR * cmd)
 {
   ACE_DEBUG ((LM_INFO,
-              ACE_TEXT ("Usage:  %s ")
-              ACE_TEXT ("-o <ior_output_file> ")
-              ACE_TEXT ("-s <RoundRobin|Random|LeastLoaded> ")
-              ACE_TEXT ("-h ")
-              ACE_TEXT ("\n\n")
+              ACE_TEXT ("Usage:\n")
+              ACE_TEXT ("  %s\n")
+              ACE_TEXT ("    -o <ior_output_file>\n")
+              ACE_TEXT ("    -s <RoundRobin | Random | LeastLoaded>\n")
+              ACE_TEXT ("    -h\n")
+              ACE_TEXT ("\n")
               ACE_TEXT (" NOTE: Standard default values will be used ")
               ACE_TEXT ("for \"LeastLoaded\" strategy.\n"),
               cmd));
@@ -67,6 +68,7 @@ parse_args (int argc,
 
         case 'h':
           ::usage (argv[0]);
+          ACE_OS::exit (0);
           break;
 
         default:
