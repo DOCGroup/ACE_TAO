@@ -1,9 +1,36 @@
+Sat Dec 11 14:12:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PI_Forward.pidl:
+          Updated regeneration instructions
+
+        * tao/PI_ForwardC.{h,cpp,inl}:
+          Regenerated
+
+        * tao/PI_ForwardA.cpp:
+          New generated file
+
+        * tao/Policy.pidl:
+          Updated regeneration instructions
+
+        * tao/PI_ForwardA.cpp:
+        * tao/PI_ForwardC.{h,cpp,i,inl}:
+          Regenerated and replace .i file with .inl variant
+
+        * tao/tao.mpc:
+          Added PI_ForwardA.cpp
+
+        * tao/diffs/Policy.diff:
+          Updated
+
+        * tao/Makefile.am:
+          Updated because of changes above
+
 Fri Dec 10 13:35:36 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/Contained_i.cpp:
-        
-          Put back exception throw removed in 
-          
+
+          Put back exception throw removed in
+
           Fri Dec 10 10:40:30 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
           since there is a use case where it is not redundant.
