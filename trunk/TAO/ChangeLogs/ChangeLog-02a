@@ -25,7 +25,8 @@ Sun Mar 18 16:28:03 2001  Ossama Othman  <ossama@uci.edu>
 
 	  Return the description of the OMG minor code for a given
 	  CORBA::SystemException.  Descriptions correspond to those found
-	  in the CORBA 2.4.2 spec.  [Bug 827]
+	  in the CORBA 2.4.2 spec and the recently adopted Portable
+	  Interceptors spec.  [Bug 827]
 
 Sun Mar 18 18:09:05 2001  Ossama Othman  <ossama@uci.edu>
 
