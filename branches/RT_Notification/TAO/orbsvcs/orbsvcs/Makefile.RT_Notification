@@ -1,0 +1,46 @@
+#----------------------------------------------------------------------------
+#       Macros
+#----------------------------------------------------------------------------
+ifndef TAO_ROOT
+  TAO_ROOT = $(ACE_ROOT)/TAO
+endif
+
+SOEXT         = so
+MAKEFILE      = Makefile.RT_Notification
+LIB           = libTAO_RT_Notification.a
+SHLIB         = libTAO_RT_Notification.$(SOEXT)
+CPPFLAGS     += -KPIC
+IDL_FILES     = AVStreams CosConcurrencyControl CosEventChannelAdmin CosEventComm CosLifeCycle CosLoadBalancing CosNaming CosNotification CosNotifyChannelAdmin CosNotifyComm CosNotifyFilter CosPropertyService CosTrading CosTradingRepos CosTradingDynamic DsEventLogAdmin DsLogAdmin DsLogNotification DsNotifyLogAdmin Event_Forwarder mgm FT_CORBA FT_CORBA_ORB LB_ORT LifeCycleService NotifyExt Null_MediaCtrl PortableGroup RTEventLogAdmin RtecBase RtecEventComm RtecDefaultEventData RtecEventChannelAdmin RtecScheduler RtecUDPAdmin SECIOP SSLIOP Security SecurityAdmin SecurityLevel1 SecurityLevel2 SecurityReplaceable TimeBase TimeService miop sfp
+IDL_SRC       = AVStreamsC.cpp AVStreamsS.cpp CosConcurrencyControlC.cpp CosConcurrencyControlS.cpp CosEventChannelAdminC.cpp CosEventChannelAdminS.cpp CosEventCommC.cpp CosEventCommS.cpp CosLifeCycleC.cpp CosLifeCycleS.cpp CosLoadBalancingC.cpp CosLoadBalancingS.cpp CosNamingC.cpp CosNamingS.cpp CosNotificationC.cpp CosNotificationS.cpp CosNotifyChannelAdminC.cpp CosNotifyChannelAdminS.cpp CosNotifyCommC.cpp CosNotifyCommS.cpp CosNotifyFilterC.cpp CosNotifyFilterS.cpp CosPropertyServiceC.cpp CosPropertyServiceS.cpp CosTradingC.cpp CosTradingS.cpp CosTradingReposC.cpp CosTradingReposS.cpp CosTradingDynamicC.cpp CosTradingDynamicS.cpp DsEventLogAdminC.cpp DsEventLogAdminS.cpp DsLogAdminC.cpp DsLogAdminS.cpp DsLogNotificationC.cpp DsLogNotificationS.cpp DsNotifyLogAdminC.cpp DsNotifyLogAdminS.cpp Event_ForwarderC.cpp Event_ForwarderS.cpp mgmC.cpp mgmS.cpp FT_CORBAC.cpp FT_CORBAS.cpp FT_CORBA_ORBC.cpp FT_CORBA_ORBS.cpp LB_ORTC.cpp LB_ORTS.cpp LifeCycleServiceC.cpp LifeCycleServiceS.cpp NotifyExtC.cpp NotifyExtS.cpp Null_MediaCtrlC.cpp Null_MediaCtrlS.cpp PortableGroupC.cpp PortableGroupS.cpp RTEventLogAdminC.cpp RTEventLogAdminS.cpp RtecBaseC.cpp RtecBaseS.cpp RtecEventCommC.cpp RtecEventCommS.cpp RtecDefaultEventDataC.cpp RtecDefaultEventDataS.cpp RtecEventChannelAdminC.cpp RtecEventChannelAdminS.cpp RtecSchedulerC.cpp RtecSchedulerS.cpp RtecUDPAdminC.cpp RtecUDPAdminS.cpp SECIOPC.cpp SECIOPS.cpp SSLIOPC.cpp SSLIOPS.cpp SecurityC.cpp SecurityS.cpp SecurityAdminC.cpp SecurityAdminS.cpp SecurityLevel1C.cpp SecurityLevel1S.cpp SecurityLevel2C.cpp SecurityLevel2S.cpp SecurityReplaceableC.cpp SecurityReplaceableS.cpp TimeBaseC.cpp TimeBaseS.cpp TimeServiceC.cpp TimeServiceS.cpp miopC.cpp miopS.cpp sfpC.cpp sfpS.cpp
+SRC           = AVStreamsC.cpp AVStreamsS.cpp CosConcurrencyControlC.cpp CosConcurrencyControlS.cpp CosEventChannelAdminC.cpp CosEventChannelAdminS.cpp CosEventCommC.cpp CosEventCommS.cpp CosLifeCycleC.cpp CosLifeCycleS.cpp CosLoadBalancingC.cpp CosLoadBalancingS.cpp CosNamingC.cpp CosNamingS.cpp CosNotificationC.cpp CosNotificationS.cpp CosNotifyChannelAdminC.cpp CosNotifyChannelAdminS.cpp CosNotifyCommC.cpp CosNotifyCommS.cpp CosNotifyFilterC.cpp CosNotifyFilterS.cpp CosPropertyServiceC.cpp CosPropertyServiceS.cpp CosTradingC.cpp CosTradingS.cpp CosTradingReposC.cpp CosTradingReposS.cpp CosTradingDynamicC.cpp CosTradingDynamicS.cpp DsEventLogAdminC.cpp DsEventLogAdminS.cpp DsLogAdminC.cpp DsLogAdminS.cpp DsLogNotificationC.cpp DsLogNotificationS.cpp DsNotifyLogAdminC.cpp DsNotifyLogAdminS.cpp Event_ForwarderC.cpp Event_ForwarderS.cpp mgmC.cpp mgmS.cpp FT_CORBAC.cpp FT_CORBAS.cpp FT_CORBA_ORBC.cpp FT_CORBA_ORBS.cpp LB_ORTC.cpp LB_ORTS.cpp LifeCycleServiceC.cpp LifeCycleServiceS.cpp NotifyExtC.cpp NotifyExtS.cpp Null_MediaCtrlC.cpp Null_MediaCtrlS.cpp PortableGroupC.cpp PortableGroupS.cpp RTEventLogAdminC.cpp RTEventLogAdminS.cpp RtecBaseC.cpp RtecBaseS.cpp RtecEventCommC.cpp RtecEventCommS.cpp RtecDefaultEventDataC.cpp RtecDefaultEventDataS.cpp RtecEventChannelAdminC.cpp RtecEventChannelAdminS.cpp RtecSchedulerC.cpp RtecSchedulerS.cpp RtecUDPAdminC.cpp RtecUDPAdminS.cpp SECIOPC.cpp SECIOPS.cpp SSLIOPC.cpp SSLIOPS.cpp SecurityC.cpp SecurityS.cpp SecurityAdminC.cpp SecurityAdminS.cpp SecurityLevel1C.cpp SecurityLevel1S.cpp SecurityLevel2C.cpp SecurityLevel2S.cpp SecurityReplaceableC.cpp SecurityReplaceableS.cpp TimeBaseC.cpp TimeBaseS.cpp TimeServiceC.cpp TimeServiceS.cpp miopC.cpp miopS.cpp sfpC.cpp sfpS.cpp Notify/RT_Builder.cpp Notify/RT_Factory.cpp Notify/RT_Notify_Service.cpp Notify/RT_POA_Helper.cpp Notify/RT_Properties.cpp
+OBJS          = AVStreamsC.o AVStreamsS.o CosConcurrencyControlC.o CosConcurrencyControlS.o CosEventChannelAdminC.o CosEventChannelAdminS.o CosEventCommC.o CosEventCommS.o CosLifeCycleC.o CosLifeCycleS.o CosLoadBalancingC.o CosLoadBalancingS.o CosNamingC.o CosNamingS.o CosNotificationC.o CosNotificationS.o CosNotifyChannelAdminC.o CosNotifyChannelAdminS.o CosNotifyCommC.o CosNotifyCommS.o CosNotifyFilterC.o CosNotifyFilterS.o CosPropertyServiceC.o CosPropertyServiceS.o CosTradingC.o CosTradingS.o CosTradingReposC.o CosTradingReposS.o CosTradingDynamicC.o CosTradingDynamicS.o DsEventLogAdminC.o DsEventLogAdminS.o DsLogAdminC.o DsLogAdminS.o DsLogNotificationC.o DsLogNotificationS.o DsNotifyLogAdminC.o DsNotifyLogAdminS.o Event_ForwarderC.o Event_ForwarderS.o mgmC.o mgmS.o FT_CORBAC.o FT_CORBAS.o FT_CORBA_ORBC.o FT_CORBA_ORBS.o LB_ORTC.o LB_ORTS.o LifeCycleServiceC.o LifeCycleServiceS.o NotifyExtC.o NotifyExtS.o Null_MediaCtrlC.o Null_MediaCtrlS.o PortableGroupC.o PortableGroupS.o RTEventLogAdminC.o RTEventLogAdminS.o RtecBaseC.o RtecBaseS.o RtecEventCommC.o RtecEventCommS.o RtecDefaultEventDataC.o RtecDefaultEventDataS.o RtecEventChannelAdminC.o RtecEventChannelAdminS.o RtecSchedulerC.o RtecSchedulerS.o RtecUDPAdminC.o RtecUDPAdminS.o SECIOPC.o SECIOPS.o SSLIOPC.o SSLIOPS.o SecurityC.o SecurityS.o SecurityAdminC.o SecurityAdminS.o SecurityLevel1C.o SecurityLevel1S.o SecurityLevel2C.o SecurityLevel2S.o SecurityReplaceableC.o SecurityReplaceableS.o TimeBaseC.o TimeBaseS.o TimeServiceC.o TimeServiceS.o miopC.o miopS.o sfpC.o sfpS.o Notify/RT_Builder.o Notify/RT_Factory.o Notify/RT_Notify_Service.o Notify/RT_POA_Helper.o Notify/RT_Properties.o
+CPPFLAGS     += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) -I$(TAO_ROOT)/tao -I$(ACE_ROOT)
+LDFLAGS      += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao -L$(ACE_ROOT)/ace
+LDLIBS        = -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -lTAO_PortableServer -lTAO -lACE
+SHFLAGS       = -G
+OUTPUT_OPTION = -o $@
+
+#----------------------------------------------------------------------------
+#       Local targets
+#----------------------------------------------------------------------------
+
+all: $(SHLIB)
+
+$(SHLIB): $(OBJS)
+	$(LINK.cc) $(SHFLAGS) $(OUTPUT_OPTION) $(OBJS) $(LDLIBS)
+
+$(LIB): $(OBJS)
+	$(AR) $(ARFLAGS) $(LIB) $(OBJS)
+
+%.o: %.cpp
+	$(COMPILE.cc) $< $(OUTPUT_OPTION)
+
+clean:
+	-$(RM) $(OBJS)
+
+realclean: clean
+	-$(RM) $(SHLIB) $(LIB)
+
+#----------------------------------------------------------------------------
+#       Dependencies
+#----------------------------------------------------------------------------

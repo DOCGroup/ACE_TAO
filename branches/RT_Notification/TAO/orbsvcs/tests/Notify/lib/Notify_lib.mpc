@@ -1,3 +1,99 @@
-project(Notify Lib): orbsvcslib, notify {
-  sharedname = NotifyTests  
+project(TAO_NotifyTests): orbsvcslib, notify {
+  depends += CosNotification
+  sharedname += TAO_NotifyTests
+
+  libs += TAO_CosNotification
+
+  libpaths += $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL
+  libpaths += $(TAO_ROOT)/tao/IORTable
+  libpaths += $(TAO_ROOT)/tao/DynamicAny
+  libpaths += $(TAO_ROOT)/tao/PortableServer
+
+  dllflags    = TAO_NOTIFY_TEST_BUILD_DLL
+
+  IDL_Files {  
+    Activation_Manager.idl
+  }
+
+  Source_Files{
+  Activation_Manager.cpp
+  Activation_ManagerC.cpp
+  Activation_ManagerS.cpp
+  Application_Command.cpp
+  Command.cpp
+  Command_Builder.cpp
+  Command_Factory.cpp
+  Command_Factory_T.cpp
+  ConsumerAdmin_Command.cpp
+  Driver.cpp
+  EventChannel_Command.cpp
+  Factories_Define.cpp
+  Filter_Command.cpp
+  LookupManager.cpp
+  Name.cpp
+  Notify_PushConsumer.cpp
+  Notify_PushSupplier.cpp
+  Notify_SequencePushConsumer.cpp
+  Notify_SequencePushSupplier.cpp
+  Notify_StructuredPushConsumer.cpp
+  Notify_StructuredPushSupplier.cpp
+  Notify_Test_Client.cpp
+  Options_Parser.cpp
+  Periodic_Consumer_Command.cpp
+  Periodic_Supplier_Command.cpp
+  Periodic_Consumer.cpp
+  Periodic_Supplier.cpp
+  Priority_Mapping.cpp
+  StructuredEvent.cpp
+  SupplierAdmin_Command.cpp
+  Task_Stats.cpp  
+  }
 }
+
+project(TAO_RT_NotifyTests_Filter): orbsvcslib, notify {
+  sharedname = TAO_RT_NotifyTests_Filter
+  libs       += TAO_CosNotification TAO_RTCORBA
+
+  dllflags    = TAO_RT_Test_Filter_BUILD_DLL
+
+  libpaths += $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL
+  libpaths += $(TAO_ROOT)/tao/DynamicAny
+  libpaths += $(TAO_ROOT)/tao/PortableServer
+  libpaths += $(TAO_ROOT)/tao/IORTable
+  libpaths += $(TAO_ROOT)/tao/RTCORBA
+
+  IDL_Files {  
+  }
+
+  Source_Files{
+    RT_Test_Filter.cpp
+    RT_Test_FilterFactory.cpp
+  }
+}
+
+project(TAO_RT_NotifyTests): orbsvcslib, notify {
+
+  depends    = NotifyTests RTCORBA RTPortableServer                
+  sharedname = TAO_RT_NotifyTests
+  libs       += TAO_NotifyTests TAO_RTCORBA TAO_RTPortableServer                
+
+  libpaths += $(TAO_ROOT)/tao/RTCORBA
+  libpaths += $(TAO_ROOT)/tao/RTPortableServer
+  libpaths += $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL
+  libpaths += $(TAO_ROOT)/tao/IORTable
+  libpaths += $(TAO_ROOT)/tao/DynamicAny
+  libpaths += $(TAO_ROOT)/tao/PortableServer
+
+  dllflags    = TAO_RT_NOTIFY_TEST_BUILD_DLL
+
+  IDL_Files {  
+  }
+
+  Source_Files{
+   RT_Application_Command.cpp
+   RT_POA_Command.cpp
+   RT_Priority_Mapping.cpp
+   RT_Factories_Define.cpp
+  }  
+}
+

@@ -10,13 +10,10 @@ ACE_RCSID(RT_Notify, TAO_NS_Proxy, "$Id$")
 
 #include "Peer.h"
 #include "Proxy.h"
-#include "Admin.h"
-#include "EventChannel.h"
-#include "EventChannelFactory.h"
-#include "Notify_Service.h"
 #include "Method_Request_Updates.h"
 #include "Worker_Task.h"
 #include "Properties.h"
+#include "POA_Helper.h"
 
 TAO_NS_Proxy::TAO_NS_Proxy (void)
   :updates_off_ (0)
@@ -25,6 +22,21 @@ TAO_NS_Proxy::TAO_NS_Proxy (void)
 
 TAO_NS_Proxy::~TAO_NS_Proxy ()
 {
+}
+
+CORBA::Object_ptr
+TAO_NS_Proxy::activate (PortableServer::Servant servant ACE_ENV_ARG_DECL)
+{
+  // Set the POA that we use to return our <ref>
+  this->poa_ = this->proxy_poa_;
+
+  return this->proxy_poa_->activate (servant, this->id_ ACE_ENV_ARG_PARAMETER);
+}
+
+void
+TAO_NS_Proxy::deactivate (ACE_ENV_SINGLE_ARG_DECL)
+{
+  this->proxy_poa_->deactivate (this->id_ ACE_ENV_ARG_PARAMETER);
 }
 
 void
@@ -55,16 +67,19 @@ TAO_NS_Proxy::types_changed (const TAO_NS_EventTypeSeq& added, const TAO_NS_Even
 }
 
 CORBA::Boolean
-TAO_NS_Proxy::check_filters (const TAO_NS_Event_var &event ACE_ENV_ARG_DECL)
+TAO_NS_Proxy::check_filters (const TAO_NS_Event_var &event
+                             , TAO_NS_FilterAdmin& parent_filter_admin
+                             , CosNotifyChannelAdmin::InterFilterGroupOperator filter_operator
+                             ACE_ENV_ARG_DECL)
 {
   // check if it passes the parent filter.
   CORBA::Boolean parent_val =
-    this->parent_->filter_admin ().match (event ACE_ENV_ARG_PARAMETER);
+    parent_filter_admin.match (event ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   CORBA::Boolean val = 0;
 
-  if (this->parent_->filter_operator () == CosNotifyChannelAdmin::AND_OP)
+  if (filter_operator == CosNotifyChannelAdmin::AND_OP)
     {
       val = parent_val && this->filter_admin_.match (event ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);

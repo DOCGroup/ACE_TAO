@@ -19,7 +19,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Object_T.h"
+#include "Object.h"
 #include "EventTypeSeq.h"
 #include "FilterAdmin.h"
 #include "Admin.h"
@@ -33,22 +33,34 @@ class TAO_NS_Peer;
  * @brief Base class proxy for all proxys in NS.
  *
  */
-class TAO_Notify_Export TAO_NS_Proxy : public virtual TAO_NS_Object_T <TAO_NS_Proxy, TAO_NS_Admin>
+class TAO_Notify_Export TAO_NS_Proxy : public virtual TAO_NS_Object
 {
   friend class TAO_NS_Peer;
 
 public:
+  typedef CosNotifyChannelAdmin::ProxyIDSeq SEQ;
+  typedef CosNotifyChannelAdmin::ProxyIDSeq_var SEQ_VAR;
+
   /// Constuctor
   TAO_NS_Proxy (void);
 
   /// Destructor
   ~TAO_NS_Proxy ();
 
+  /// Activate
+  virtual CORBA::Object_ptr activate (PortableServer::Servant servant ACE_ENV_ARG_DECL);
+
+  /// Deactivate
+  void deactivate (ACE_ENV_SINGLE_ARG_DECL);
+
   /// Obtain the Proxy's subscribed types.
   void subscribed_types (TAO_NS_EventTypeSeq& subscribed_types ACE_ENV_ARG_DECL);
 
   /// Check if this event passes the admin and proxy filters.
-  CORBA::Boolean check_filters (const TAO_NS_Event_var &event ACE_ENV_ARG_DECL);
+  CORBA::Boolean check_filters (const TAO_NS_Event_var &event
+                                , TAO_NS_FilterAdmin& parent_filter_admin
+                                , CosNotifyChannelAdmin::InterFilterGroupOperator filter_operator
+                                ACE_ENV_ARG_DECL);
 
   /// Inform this proxy that the following types are being advertised.
   void types_changed (const TAO_NS_EventTypeSeq& added, const TAO_NS_EventTypeSeq& removed ACE_ENV_ARG_DECL);
@@ -78,7 +90,6 @@ public:
   virtual void qos_changed (const TAO_NS_QoSProperties& qos_properties);
 
 protected:
-  typedef TAO_NS_Object_T <TAO_NS_Proxy, TAO_NS_Admin> inherited;
 
   /// Filter Administration
   TAO_NS_FilterAdmin filter_admin_;

@@ -21,7 +21,6 @@
 
 #include "orbsvcs/CosNotifyCommC.h"
 #include "../Consumer.h"
-#include "../Destroy_Callback.h"
 
 class TAO_NS_ProxySupplier;
 
@@ -43,7 +42,7 @@ public:
   /// Destructor
   ~TAO_NS_StructuredPushConsumer ();
 
-  /// TAO_NS_Destroy_Callback methods.
+  /// Release
   virtual void release (void);
 
   /// Push <event> to this consumer.

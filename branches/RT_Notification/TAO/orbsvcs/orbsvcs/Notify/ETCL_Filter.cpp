@@ -13,19 +13,28 @@ ACE_RCSID(Notify, TAO_ETCL_Filter, "$id$")
 #include "Notify_Constraint_Visitors.h"
 
 TAO_NS_ETCL_Filter::TAO_NS_ETCL_Filter (void)
+  :constraint_expr_ids_ (0)
 {
 }
 
 TAO_NS_ETCL_Filter::~TAO_NS_ETCL_Filter ()
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  this->remove_all_constraints (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-
-  if (TAO_debug_level > 0)
+  ACE_TRY_NEW_ENV
     {
-      ACE_DEBUG ((LM_DEBUG, "Filter Destroyed\n"));
+      this->remove_all_constraints (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
     }
+  ACE_CATCHANY
+    {
+      if (TAO_debug_level)
+        ACE_DEBUG ((LM_DEBUG, "Error in Filter dtor\n"));
+
+      // @@ eat exception.
+    }
+  ACE_ENDTRY;
+
+  if (TAO_debug_level > 1)
+      ACE_DEBUG ((LM_DEBUG, "Filter Destroyed\n"));
 }
 
 char*
@@ -39,55 +48,40 @@ TAO_NS_ETCL_Filter::constraint_grammar (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 void
 TAO_NS_ETCL_Filter::add_constraints_i (const CosNotifyFilter::ConstraintInfoSeq& constraint_info_seq
-                                  ACE_ENV_ARG_DECL
-                                  )
+                                       ACE_ENV_ARG_DECL
+                                       )
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosNotifyFilter::InvalidConstraint
                    ))
 {
-  for (CORBA::ULong index = 0;
-       index < constraint_info_seq.length ();
-       ++index)
+  for (CORBA::ULong index = 0; index < constraint_info_seq.length (); ++index)
     {
       TAO_NS_Constraint_Expr* notify_constr_expr;
 
-      ACE_TRY
-        {
-          ACE_NEW_THROW_EX (notify_constr_expr,
-                            TAO_NS_Constraint_Expr (),
-                            CORBA::NO_MEMORY ());
+      ACE_NEW_THROW_EX (notify_constr_expr,
+                        TAO_NS_Constraint_Expr (),
+                        CORBA::NO_MEMORY ());
+      auto_ptr <TAO_NS_Constraint_Expr> auto_expr (notify_constr_expr);
 
-          const CosNotifyFilter::ConstraintExp& expr =
-            constraint_info_seq[index].constraint_expression;
+      const CosNotifyFilter::ConstraintExp& expr =
+        constraint_info_seq[index].constraint_expression;
 
-          notify_constr_expr->interpreter.build_tree (
-                                                      expr.constraint_expr.in ()
-                                                      ACE_ENV_ARG_PARAMETER
-                                                      );
-          ACE_TRY_CHECK;
-
-          notify_constr_expr->constr_expr = expr;
-
-          CosNotifyFilter::ConstraintID cnstr_id = ++constraint_expr_ids_;
-
-          if (this->constraint_expr_list_.bind (cnstr_id, notify_constr_expr)
-              == -1)
-            {
-              ACE_THROW (CORBA::NO_RESOURCES ());
-            }
-
-          if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG, "Added constraint to filter %x\n", this, expr.constraint_expr.in ()));
-        }
-      ACE_CATCHANY
-        {
-          // Delete the one that failed us.
-          delete notify_constr_expr;
-          ACE_RE_THROW;
-        }
-      ACE_ENDTRY;
+      notify_constr_expr->interpreter.
+        build_tree (expr.constraint_expr.in () ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
+
+      notify_constr_expr->constr_expr = expr;
+
+      CosNotifyFilter::ConstraintID cnstr_id = ++constraint_expr_ids_;
+
+      if (this->constraint_expr_list_.bind (cnstr_id, notify_constr_expr) == -1)
+        ACE_THROW (CORBA::INTERNAL ());
+
+      if (TAO_debug_level > 1)
+        ACE_DEBUG ((LM_DEBUG, "Added constraint to filter %x\n", this, expr.constraint_expr.in ()));
+
+      auto_expr.release ();
     }
 }
 
@@ -100,30 +94,30 @@ TAO_NS_ETCL_Filter::add_constraints (const CosNotifyFilter::ConstraintExpSeq& co
                    CosNotifyFilter::InvalidConstraint
                    ))
 {
+  ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
+                      CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (0);
+
   CORBA::ULong constraint_length = constraint_list.length ();
 
   if (TAO_debug_level > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "constraint_length = %d\n",
+      ACE_DEBUG ((LM_DEBUG, "constraint_length = %d\n",
                   constraint_length));
-    }
 
   // Create the list that goes out.
-  CosNotifyFilter::ConstraintInfoSeq *infoseq;
-  ACE_NEW_THROW_EX (infoseq,
+  CosNotifyFilter::ConstraintInfoSeq* infoseq_ptr;
+  ACE_NEW_THROW_EX (infoseq_ptr,
                     CosNotifyFilter::ConstraintInfoSeq (constraint_length),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
+  CosNotifyFilter::ConstraintInfoSeq_var infoseq (infoseq_ptr);
   infoseq->length (constraint_length);
-
-  auto_ptr<CosNotifyFilter::ConstraintInfoSeq> auto_infoseq (infoseq);
 
   // Populate infoseq.
   for (CORBA::ULong pop_index = 0; pop_index < constraint_length; ++pop_index)
     {
-      (*infoseq)[pop_index].constraint_expression =
+      infoseq[pop_index].constraint_expression =
         constraint_list [pop_index];
 
       if (TAO_debug_level > 0)
@@ -135,13 +129,10 @@ TAO_NS_ETCL_Filter::add_constraints (const CosNotifyFilter::ConstraintExpSeq& co
         }
     }
 
-  this->add_constraints_i (*infoseq
-                           ACE_ENV_ARG_PARAMETER);
+  this->add_constraints_i (infoseq.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  auto_infoseq.release ();
-
-  return infoseq;
+  return infoseq._retn ();
 }
 
 void
@@ -155,6 +146,10 @@ TAO_NS_ETCL_Filter::modify_constraints (const CosNotifyFilter::ConstraintIDSeq &
                    CosNotifyFilter::ConstraintNotFound
                    ))
 {
+  ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
+                      CORBA::INTERNAL ());
+  ACE_CHECK;
+
   // First check if all the ids are valid.
   u_int index;
 
@@ -230,21 +225,25 @@ TAO_NS_ETCL_Filter::modify_constraints (const CosNotifyFilter::ConstraintIDSeq &
     }
 }
 
-CosNotifyFilter::ConstraintInfoSeq *
+CosNotifyFilter::ConstraintInfoSeq*
 TAO_NS_ETCL_Filter::get_constraints (const CosNotifyFilter::ConstraintIDSeq & id_list
                                 ACE_ENV_ARG_DECL
                                 )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosNotifyFilter::ConstraintNotFound))
 {
+  ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
+                      CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (0);
+
   // Create the list that goes out.
-  CosNotifyFilter::ConstraintInfoSeq *infoseq;
-  ACE_NEW_THROW_EX (infoseq,
+  CosNotifyFilter::ConstraintInfoSeq *infoseq_ptr;
+  ACE_NEW_THROW_EX (infoseq_ptr,
                     CosNotifyFilter::ConstraintInfoSeq (id_list.length ()),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
-  auto_ptr<CosNotifyFilter::ConstraintInfoSeq> auto_infoseq (infoseq);
+  CosNotifyFilter::ConstraintInfoSeq_var infoseq (infoseq_ptr);
 
   TAO_NS_Constraint_Expr *notify_constr_expr = 0;
 
@@ -255,33 +254,39 @@ TAO_NS_ETCL_Filter::get_constraints (const CosNotifyFilter::ConstraintIDSeq & id
         ACE_THROW_RETURN (CosNotifyFilter::ConstraintNotFound (id_list[index]),
                           0);
 
-      (*infoseq)[index].constraint_expression =
+      infoseq[index].constraint_expression =
         notify_constr_expr->constr_expr;
 
       // Get an id.
-      (*infoseq)[index].constraint_id = id_list[index];
+      infoseq[index].constraint_id = id_list[index];
     }
 
-  auto_infoseq.release ();
-  return infoseq;
+  return infoseq._retn ();
 }
 
 CosNotifyFilter::ConstraintInfoSeq *
 TAO_NS_ETCL_Filter::get_all_constraints (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
+                      CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (0);
+
   size_t current_size = this->constraint_expr_list_.current_size ();
 
   // Create the list that goes out.
-  CosNotifyFilter::ConstraintInfoSeq *infoseq;
-  ACE_NEW_THROW_EX (infoseq,
+  CosNotifyFilter::ConstraintInfoSeq *infoseq_ptr;
+  ACE_NEW_THROW_EX (infoseq_ptr,
                     CosNotifyFilter::ConstraintInfoSeq (current_size),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
+  CosNotifyFilter::ConstraintInfoSeq_var infoseq (infoseq_ptr);
+
   infoseq->length (current_size);
-  CONSTRAINT_EXPR_LIST_ITER iter (this->constraint_expr_list_);
-  CONSTRAINT_EXPR_ENTRY *entry;
+
+  CONSTRAINT_EXPR_LIST::ITERATOR iter (this->constraint_expr_list_);
+  CONSTRAINT_EXPR_LIST::ENTRY *entry;
 
   for (u_int index = 0; iter.done () == 0; iter.advance (), ++index)
     {
@@ -291,23 +296,34 @@ TAO_NS_ETCL_Filter::get_all_constraints (ACE_ENV_SINGLE_ARG_DECL)
           // We want to force the TAO_String_Manager to make a
           // copy of the string. It wouldn't unless we coax it to use
           // the correct assignment operator.
-          (*infoseq)[index].constraint_expression =
+          infoseq[index].constraint_expression =
             ACE_static_cast (const CosNotifyFilter::ConstraintExp,
                              entry->int_id_->constr_expr);
 
-          (*infoseq)[index].constraint_id = entry->ext_id_;
+          infoseq[index].constraint_id = entry->ext_id_;
         }
     }
 
-  return infoseq;
+  return infoseq._retn ();
 }
 
 void
-TAO_NS_ETCL_Filter::remove_all_constraints (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_NS_ETCL_Filter::remove_all_constraints (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CONSTRAINT_EXPR_LIST_ITER iter (this->constraint_expr_list_);
-  CONSTRAINT_EXPR_ENTRY *entry;
+  ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
+                      CORBA::INTERNAL ());
+  ACE_CHECK;
+
+  this->remove_all_constraints_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+}
+
+void
+TAO_NS_ETCL_Filter::remove_all_constraints_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  CONSTRAINT_EXPR_LIST::ITERATOR iter (this->constraint_expr_list_);
+  CONSTRAINT_EXPR_LIST::ENTRY *entry;
 
   u_int index;
 
@@ -326,7 +342,11 @@ void
 TAO_NS_ETCL_Filter::destroy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->remove_all_constraints (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
+                      CORBA::INTERNAL ());
+  ACE_CHECK;
+
+  this->remove_all_constraints_i (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   PortableServer::POA_var my_POA = _default_POA ();
@@ -338,7 +358,7 @@ TAO_NS_ETCL_Filter::destroy (ACE_ENV_SINGLE_ARG_DECL)
 
 CORBA::Boolean
 TAO_NS_ETCL_Filter::match (const CORBA::Any & /*filterable_data */
-                      ACE_ENV_ARG_DECL)
+                           ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosNotifyFilter::UnsupportedFilterableData))
 {
@@ -348,14 +368,18 @@ TAO_NS_ETCL_Filter::match (const CORBA::Any & /*filterable_data */
 
 CORBA::Boolean
 TAO_NS_ETCL_Filter::match_structured (const CosNotification::StructuredEvent & filterable_data
-                                 ACE_ENV_ARG_DECL_NOT_USED
+                                 ACE_ENV_ARG_DECL
                                  )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosNotifyFilter::UnsupportedFilterableData))
 {
+  ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
+                      CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (0);
+
   // We want to return true if at least one constraint matches.
-  CONSTRAINT_EXPR_LIST_ITER iter (this->constraint_expr_list_);
-  CONSTRAINT_EXPR_ENTRY *entry;
+  CONSTRAINT_EXPR_LIST::ITERATOR iter (this->constraint_expr_list_);
+  CONSTRAINT_EXPR_LIST::ENTRY *entry;
 
   TAO_NS_Constraint_Visitor visitor;
 
@@ -423,13 +447,13 @@ TAO_NS_ETCL_Filter::get_callbacks (ACE_ENV_SINGLE_ARG_DECL)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Hash_Map_Entry<CosNotifyFilter::ConstraintID,TAO_NS_ETCL_Filter::TAO_NS_Constraint_Expr *>;
-template class ACE_Hash_Map_Manager<CosNotifyFilter::ConstraintID,TAO_NS_ETCL_Filter::TAO_NS_Constraint_Expr*,TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Manager_Ex<CosNotifyFilter::ConstraintID,TAO_NS_ETCL_Filter::TAO_NS_Constraint_Expr*,ACE_Hash<CosNotifyFilter::ConstraintID>, ACE_Equal_To<CosNotifyFilter::ConstraintID>,TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator<CosNotifyFilter::ConstraintID,TAO_NS_ETCL_Filter::TAO_NS_Constraint_Expr*,TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Ex<CosNotifyFilter::ConstraintID,TAO_NS_ETCL_Filter::TAO_NS_Constraint_Expr*,ACE_Hash<CosNotifyFilter::ConstraintID>, ACE_Equal_To<CosNotifyFilter::ConstraintID>,TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Base_Ex<CosNotifyFilter::ConstraintID,TAO_NS_ETCL_Filter::TAO_NS_Constraint_Expr*,ACE_Hash<CosNotifyFilter::ConstraintID>, ACE_Equal_To<CosNotifyFilter::ConstraintID>,TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator<CosNotifyFilter::ConstraintID,TAO_NS_ETCL_Filter::TAO_NS_Constraint_Expr*,TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<CosNotifyFilter::ConstraintID,TAO_NS_ETCL_Filter::TAO_NS_Constraint_Expr*,ACE_Hash<CosNotifyFilter::ConstraintID>, ACE_Equal_To<CosNotifyFilter::ConstraintID>,TAO_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Manager<CosNotifyFilter::ConstraintID,TAO_NS_ETCL_Filter::TAO_NS_Constraint_Expr*,ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Hash_Map_Manager_Ex<CosNotifyFilter::ConstraintID,TAO_NS_ETCL_Filter::TAO_NS_Constraint_Expr*,ACE_Hash<CosNotifyFilter::ConstraintID>, ACE_Equal_To<CosNotifyFilter::ConstraintID>,ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Hash_Map_Iterator<CosNotifyFilter::ConstraintID,TAO_NS_ETCL_Filter::TAO_NS_Constraint_Expr*,ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Hash_Map_Iterator_Ex<CosNotifyFilter::ConstraintID,TAO_NS_ETCL_Filter::TAO_NS_Constraint_Expr*,ACE_Hash<CosNotifyFilter::ConstraintID>, ACE_Equal_To<CosNotifyFilter::ConstraintID>,ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Hash_Map_Iterator_Base_Ex<CosNotifyFilter::ConstraintID,TAO_NS_ETCL_Filter::TAO_NS_Constraint_Expr*,ACE_Hash<CosNotifyFilter::ConstraintID>, ACE_Equal_To<CosNotifyFilter::ConstraintID>,ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Hash_Map_Reverse_Iterator<CosNotifyFilter::ConstraintID,TAO_NS_ETCL_Filter::TAO_NS_Constraint_Expr*,ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<CosNotifyFilter::ConstraintID,TAO_NS_ETCL_Filter::TAO_NS_Constraint_Expr*,ACE_Hash<CosNotifyFilter::ConstraintID>, ACE_Equal_To<CosNotifyFilter::ConstraintID>,ACE_SYNCH_NULL_MUTEX>;
 
 #if !defined (ACE_HAS_STD_TEMPLATE_SPECIALIZATION)
 template class ACE_Equal_To<CosNotifyFilter::ConstraintID>;
@@ -444,13 +468,13 @@ template class ACE_Auto_Basic_Ptr<CosNotifyFilter::ConstraintInfoSeq>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Hash_Map_Entry<CosNotifyFilter::ConstraintID,TAO_NS_ETCL_Filter::TAO_NS_Constraint_Expr*>
-#pragma instantiate ACE_Hash_Map_Manager<CosNotifyFilter::ConstraintID,TAO_NS_ETCL_Filter::TAO_NS_Constraint_Expr*,TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<CosNotifyFilter::ConstraintID,TAO_NS_ETCL_Filter::TAO_NS_Constraint_Expr*,ACE_Hash<CosNotifyFilter::ConstraintID>, ACE_Equal_To<CosNotifyFilter::ConstraintID>,TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator<CosNotifyFilter::ConstraintID,TAO_NS_ETCL_Filter::TAO_NS_Constraint_Expr*,TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<CosNotifyFilter::ConstraintID,TAO_NS_ETCL_Filter::TAO_NS_Constraint_Expr*,ACE_Hash<CosNotifyFilter::ConstraintID>, ACE_Equal_To<CosNotifyFilter::ConstraintID>,TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<CosNotifyFilter::ConstraintID,TAO_NS_ETCL_Filter::TAO_NS_Constraint_Expr*,ACE_Hash<CosNotifyFilter::ConstraintID>, ACE_Equal_To<CosNotifyFilter::ConstraintID>,TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<CosNotifyFilter::ConstraintID,TAO_NS_ETCL_Filter::TAO_NS_Constraint_Expr*,TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<CosNotifyFilter::ConstraintID,TAO_NS_ETCL_Filter::TAO_NS_Constraint_Expr*,ACE_Hash<CosNotifyFilter::ConstraintID>, ACE_Equal_To<CosNotifyFilter::ConstraintID>,TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Manager<CosNotifyFilter::ConstraintID,TAO_NS_ETCL_Filter::TAO_NS_Constraint_Expr*,ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<CosNotifyFilter::ConstraintID,TAO_NS_ETCL_Filter::TAO_NS_Constraint_Expr*,ACE_Hash<CosNotifyFilter::ConstraintID>, ACE_Equal_To<CosNotifyFilter::ConstraintID>,ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator<CosNotifyFilter::ConstraintID,TAO_NS_ETCL_Filter::TAO_NS_Constraint_Expr*,ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<CosNotifyFilter::ConstraintID,TAO_NS_ETCL_Filter::TAO_NS_Constraint_Expr*,ACE_Hash<CosNotifyFilter::ConstraintID>, ACE_Equal_To<CosNotifyFilter::ConstraintID>,ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<CosNotifyFilter::ConstraintID,TAO_NS_ETCL_Filter::TAO_NS_Constraint_Expr*,ACE_Hash<CosNotifyFilter::ConstraintID>, ACE_Equal_To<CosNotifyFilter::ConstraintID>,ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<CosNotifyFilter::ConstraintID,TAO_NS_ETCL_Filter::TAO_NS_Constraint_Expr*,ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<CosNotifyFilter::ConstraintID,TAO_NS_ETCL_Filter::TAO_NS_Constraint_Expr*,ACE_Hash<CosNotifyFilter::ConstraintID>, ACE_Equal_To<CosNotifyFilter::ConstraintID>,ACE_SYNCH_NULL_MUTEX>
 
 #if !defined (ACE_HAS_STD_TEMPLATE_SPECIALIZATION)
 #pragma instantiate ACE_Equal_To<CosNotifyFilter::ConstraintID>

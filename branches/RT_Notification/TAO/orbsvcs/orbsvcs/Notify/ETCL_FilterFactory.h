@@ -48,7 +48,7 @@ public:
 
   ///= TAO_NS_FilterFactory methods.
 
-  virtual CosNotifyFilter::FilterFactory_ptr create (ACE_ENV_SINGLE_ARG_DECL);
+  virtual CosNotifyFilter::FilterFactory_ptr create (PortableServer::POA_var& filter_poa ACE_ENV_ARG_DECL);
 
   ///= CosNotifyFilter::FilterFactory methods
 
@@ -68,6 +68,10 @@ public:
                      CORBA::SystemException,
                      CosNotifyFilter::InvalidGrammar
                      ));
+
+protected:
+  /// The POA in which to activate the Filters.
+  PortableServer::POA_var filter_poa_;
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

@@ -20,13 +20,11 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/CosNotificationC.h"
-#include "Destroy_Callback.h"
 #include "EventTypeSeq.h"
 
 class TAO_NS_Proxy;
 class TAO_NS_QoSProperties;
 class TAO_NS_Peer;
-
 
 /**
  * @class TAO_NS_Peer
@@ -35,7 +33,7 @@ class TAO_NS_Peer;
  *        This object delegates its reference count to its creator proxy object.
  *
  */
-class TAO_Notify_Export TAO_NS_Peer : public TAO_NS_Destroy_Callback
+class TAO_Notify_Export TAO_NS_Peer
 {
 public:
   /// Constuctor
@@ -47,6 +45,9 @@ public:
   /// This method sigantures deliberately match the RefCounting methods required for ESF Proxy
   CORBA::ULong _incr_refcnt (void);
   CORBA::ULong _decr_refcnt (void);
+
+  /// Release
+  virtual void release (void) = 0;
 
   /// Shutdown the peer.
   virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL);

@@ -19,19 +19,20 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Service_Object.h"
 #include "ace/Service_Config.h"
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "tao/PortableServer/PortableServer.h"
 
 /**
- * @class TAO_NS_Service
+ * @class TAO_Notify_Service
  *
  * @brief Abstract ACE_Service_Object interface that is a
  * factory for creating a Notify EventChannelFactory.
  *        Note that a Service creates only 1 Factory object.
  *
  */
-class TAO_Notify_Export TAO_NS_Service : public ACE_Service_Object
+class TAO_Notify_Export TAO_Notify_Service : public ACE_Service_Object
 {
 public:
   /// Define Service_Object method otherwise SunCC compiler complains.
@@ -47,7 +48,12 @@ public:
 };
 
 #define TAO_NOTIFY_DEF_EMO_FACTORY_NAME "Notify_Default_Event_Manager_Objects_Factory"
-#define TAO_NS_COS_NOTIFICATION_SERVICE_NAME "CosNotify_Service"
+
+#define TAO_NS_NOTIFICATION_SERVICE_NAME "TAO_Notify_Service"
+
+#define TAO_NS_COS_NOTIFICATION_SERVICE_NAME "TAO_CosNotify_Service"
+
+#define TAO_NS_RT_NOTIFICATION_SERVICE_NAME "TAO_RT_Notify_Service"
 
 #include "ace/post.h"
 #endif /* TAO_NS_SERVICE_H */

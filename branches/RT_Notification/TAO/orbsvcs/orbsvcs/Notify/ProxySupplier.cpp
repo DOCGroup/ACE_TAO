@@ -12,27 +12,37 @@ ACE_RCSID(RT_Notify, TAO_NS_ProxySupplier, "$Id$")
 #include "Event_Manager.h"
 #include "AdminProperties.h"
 #include "Consumer.h"
-#include "Proxy.h"
-#include "Admin.h"
-#include "EventChannel.h"
-#include "EventChannelFactory.h"
-#include "Notify_Service.h"
 #include "Method_Request_Dispatch.h"
 #include "Worker_Task.h"
 #include "Buffering_Strategy.h"
+#include "Properties.h"
+#include "ConsumerAdmin.h"
 
 TAO_NS_ProxySupplier::TAO_NS_ProxySupplier (void)
-  :consumer_ (0)
+  : consumer_admin_ (0)
+  , consumer_ (0)
 {
 }
 
 TAO_NS_ProxySupplier::~TAO_NS_ProxySupplier ()
 {
+  this->consumer_admin_->_decr_refcnt ();
 }
 
 void
-TAO_NS_ProxySupplier::init_ps (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_NS_ProxySupplier::init (TAO_NS_ConsumerAdmin* consumer_admin ACE_ENV_ARG_DECL)
 {
+  TAO_NS_Proxy::init (consumer_admin ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  this->consumer_admin_ = consumer_admin;
+
+  this->consumer_admin_->_incr_refcnt ();
+
+  const CosNotification::QoSProperties &default_ps_qos =
+    TAO_NS_PROPERTIES::instance ()->default_proxy_supplier_qos_properties ();
+
+  this->set_qos (default_ps_qos ACE_ENV_ARG_PARAMETER);
 }
 
 TAO_NS_Peer*
@@ -68,7 +78,7 @@ TAO_NS_ProxySupplier::connect (TAO_NS_Consumer *consumer ACE_ENV_ARG_DECL)
 
     consumer_ = consumer;
 
-    this->parent_->subscribed_types (this->subscribed_types_ ACE_ENV_ARG_PARAMETER); // get the parents subscribed types.
+    this->consumer_admin_->subscribed_types (this->subscribed_types_ ACE_ENV_ARG_PARAMETER); // get the parents subscribed types.
     ACE_CHECK;
   }
 
@@ -104,7 +114,7 @@ TAO_NS_ProxySupplier::disconnect (ACE_ENV_SINGLE_ARG_DECL)
 int
 TAO_NS_ProxySupplier::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 {
-  if (this->inherited::shutdown (ACE_ENV_SINGLE_ARG_PARAMETER) == 1)
+  if (this->TAO_NS_Object::shutdown (ACE_ENV_SINGLE_ARG_PARAMETER) == 1)
     return 1;
 
   ACE_CHECK_RETURN (1);
@@ -116,6 +126,18 @@ TAO_NS_ProxySupplier::shutdown (ACE_ENV_SINGLE_ARG_DECL)
     this->consumer_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
 
   return 0;
+}
+
+void
+TAO_NS_ProxySupplier::destroy (ACE_ENV_SINGLE_ARG_DECL)
+{
+  if (this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER) == 1)
+    return;
+
+  ACE_CHECK;
+
+  this->consumer_admin_->remove (this ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 void

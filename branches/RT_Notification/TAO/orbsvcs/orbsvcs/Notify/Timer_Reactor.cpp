@@ -15,9 +15,7 @@ ACE_RCSID(Notify, TAO_NS_Timer_Reactor, "$id$")
 TAO_NS_Timer_Reactor::TAO_NS_Timer_Reactor (void)
   :reactor_ (0)
 {
-  this->destroy_callback (this);
-
-        // Get the ORB
+  // Get the ORB
   CORBA::ORB_var orb = TAO_NS_PROPERTIES::instance()->orb ();
 
   this->reactor_ =  orb->orb_core ()->reactor ();

@@ -41,7 +41,7 @@ TAO_NS_ProxySupplier_T<POA_Event_Forwarder::ProxyPushSupplier>;
  * @brief
  *
  */
-class TAO_Notify_Export TAO_NS_ProxyPushSupplier : public virtual TAO_NS_ProxySupplier_T <POA_Event_Forwarder::ProxyPushSupplier>, public TAO_NS_Destroy_Callback
+class TAO_Notify_Export TAO_NS_ProxyPushSupplier : public virtual TAO_NS_ProxySupplier_T <POA_Event_Forwarder::ProxyPushSupplier>
 {
   friend class TAO_NS_Builder;
 public:
