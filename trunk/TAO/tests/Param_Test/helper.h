@@ -33,14 +33,10 @@ public:
 
   CORBA::Short gen_short (void);
   CORBA::Long gen_long (void);
-#if 0
-  CORBA::Char gen_char (void);
-  CORBA::Octet gen_octet (void);
-  CORBA::Float gen_float (void);
-  CORBA::Double gen_double (void);
-#endif
   CORBA::String gen_string (void);
   CORBA::String gen_string (int maxlength);
+  CORBA::WString gen_wstring (void);
+  CORBA::WString gen_wstring (int maxlength);
   const Param_Test::Fixed_Struct gen_fixed_struct (void);
   const Param_Test::Step gen_step (void);
  private:

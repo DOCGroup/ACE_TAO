@@ -93,14 +93,22 @@ Options::parse_args (int argc, char **argv)
           this->test_type_ = Options::TEST_ULONGLONG;
         else if (!ACE_OS::strcmp (get_opts.optarg, "ubstring"))
           this->test_type_ = Options::TEST_UB_STRING;
+        else if (!ACE_OS::strcmp (get_opts.optarg, "ubwstring"))
+          this->test_type_ = Options::TEST_UB_WSTRING;
         else if (!ACE_OS::strcmp (get_opts.optarg, "bdstring"))
           this->test_type_ = Options::TEST_BD_STRING;
+        else if (!ACE_OS::strcmp (get_opts.optarg, "bdwstring"))
+          this->test_type_ = Options::TEST_BD_WSTRING;
         else if (!ACE_OS::strcmp (get_opts.optarg, "fixed_struct"))
           this->test_type_ = Options::TEST_FIXED_STRUCT;
         else if (!ACE_OS::strcmp (get_opts.optarg, "ub_strseq"))
           this->test_type_ = Options::TEST_UB_STRING_SEQUENCE;
         else if (!ACE_OS::strcmp (get_opts.optarg, "bd_strseq"))
           this->test_type_ = Options::TEST_BD_STRING_SEQUENCE;
+        else if (!ACE_OS::strcmp (get_opts.optarg, "ub_wstrseq"))
+          this->test_type_ = Options::TEST_UB_WSTRING_SEQUENCE;
+        else if (!ACE_OS::strcmp (get_opts.optarg, "bd_wstrseq"))
+          this->test_type_ = Options::TEST_BD_WSTRING_SEQUENCE;
         else if (!ACE_OS::strcmp (get_opts.optarg, "var_struct"))
           this->test_type_ = Options::TEST_VAR_STRUCT;
         else if (!ACE_OS::strcmp (get_opts.optarg, "nested_struct"))

@@ -56,8 +56,9 @@ sub run_test
 
 # Parse the arguments
 
-@types = ("short", "ulonglong", "ubstring", "bdstring", "fixed_struct",
-          "ub_strseq", "bd_strseq",
+@types = ("short", "ulonglong", "ubstring", "bdstring", 
+          "ubwstring", "bdwstring", "fixed_struct",
+          "ub_strseq", "bd_strseq", "ub_wstrseq", bd_wstrseq",
           "var_struct", "nested_struct", "recursive_struct",
           "ub_struct_seq", "bd_struct_seq",
           "any", "objref", "objref_sequence", "objref_struct",

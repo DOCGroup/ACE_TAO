@@ -35,7 +35,9 @@ CLI_FILES =	param_testCli	\
 		bd_long_seq	\
 		bd_short_seq	\
 		bd_str_seq	\
+		bd_wstr_seq	\
 		bd_string	\
+		bd_wstring	\
 		bd_struct_seq	\
 		fixed_array	\
 		fixed_struct	\
@@ -50,7 +52,9 @@ CLI_FILES =	param_testCli	\
 		ub_objref_seq	\
 		ub_short_seq	\
 		ub_str_seq	\
+		ub_wstr_seq	\
 		ub_string	\
+		ub_wstring	\
 		ub_struct_seq	\
 		var_array    	\
 		var_struct	\
