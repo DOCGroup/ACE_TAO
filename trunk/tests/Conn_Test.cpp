@@ -434,10 +434,6 @@ static void
 spawn_processes (ACCEPTOR *acceptor, 
 		 ACE_INET_Addr *server_addr)
 {
-  // Register a signal handler.
-  ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGTERM);
-  ACE_UNUSED_ARG (sa);
-
   // Spawn off a number of server processes all of which will listen
   // on the same port number for clients to connect.
   for (int i = 0; i < MAX_SERVERS; i++)
@@ -448,19 +444,31 @@ spawn_processes (ACCEPTOR *acceptor,
 	ACE_OS::_exit (-1);
 	/* NOTREACHED */
       case 0:
-	// In the child.
-	server ((void *) acceptor);
-	return;
-	/* NOTREACHED */
+	{
+	  // Register a signal handler to close down the child.
+	  ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGHUP);
+	  ACE_UNUSED_ARG (sa);
+
+	  // In the child.
+	  server ((void *) acceptor);
+	  return;
+	  /* NOTREACHED */
+	}
       default:
-	// In the parent.
-	break;
+	{
+	  // Ignore SIGHUP in the parent.
+	  ACE_Sig_Action sa ((ACE_SignalHandler) SIG_IGN, SIGHUP);
+	  ACE_UNUSED_ARG (sa);
+
+	  // In the parent.
+	  break;
+	}
       }
 
   client ((void *) server_addr);
 
   // Shutdown the servers.
-  ACE_OS::kill (0, SIGTERM);
+  ACE_OS::kill (0, SIGHUP);
 
   pid_t child;
 
