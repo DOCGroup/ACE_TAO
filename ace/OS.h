@@ -2869,6 +2869,13 @@ public:
 #   if !defined (USYNC_PROCESS)
 #     define USYNC_PROCESS 0
 #   endif /* ! USYNC_PROCESS */
+#   if !defined (THR_SCOPE_PROCESS)
+#     define THR_SCOPE_PROCESS 0
+#   endif /* ! THR_SCOPE_PROCESS */
+#   if !defined (THR_SCOPE_SYSTEM)
+#     define THR_SCOPE_SYSTEM 0
+#   endif /* ! THR_SCOPE_SYSTEM */
+
 // These are dummies needed for class OS.h
 typedef int ACE_cond_t;
 struct ACE_OS_Export ACE_condattr_t
