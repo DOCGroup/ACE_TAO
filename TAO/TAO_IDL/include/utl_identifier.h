@@ -103,6 +103,9 @@ public:
   long case_compare (Identifier *other);
   // also check for case-only difference
 
+  long case_compare_quiet (Identifier *other);
+  // Like the above but suppressing error or warning I/O
+
   // =Dumping
 
   virtual void  dump (ostream &o);

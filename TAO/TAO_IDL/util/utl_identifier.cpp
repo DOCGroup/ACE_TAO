@@ -122,6 +122,16 @@ Identifier::case_compare (Identifier *o)
   return member.compare (&other);
 }
 
+// Report no error if the two identifiers differ only in case.
+long
+Identifier::case_compare_quiet (Identifier *o)
+{
+  UTL_String member (this->pv_string);
+  UTL_String other (o->get_string ());
+
+  return member.compare_quiet (&other);
+}
+
 // Dumping
 
 void
