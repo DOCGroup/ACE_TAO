@@ -94,9 +94,9 @@ public:
 protected:
   typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> inherited;
 
-  void transmit (ACE_Message_Block *mb,
-                 size_t n,
-                 int event_type);
+  int transmit (ACE_Message_Block *mb,
+                size_t n,
+                int event_type);
   // Transmit <mb> to the gatewayd.
 
   virtual int recv (ACE_Message_Block *&mb);
