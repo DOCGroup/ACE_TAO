@@ -1,3 +1,9 @@
+Tue Nov 07 16:38:05 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Portable_Interceptors/Benchmark/client.dsp:
+        * tests/Portable_Interceptors/Benchmark/server.dsp:
+          Update the project files.
+
 Tue Nov  7 15:16:37 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * examples/POA/Forwarding/Servant_Activator.cpp:
