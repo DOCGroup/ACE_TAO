@@ -1,3 +1,18 @@
+Tue Apr 05 19:29:40 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+	* DAnCE/Plan_Launcher/Plan_Launcher.mpc
+
+	  Fixed project dependency.
+
+	* DAnCE/ciao/Container_Impl.cpp
+
+	  Fixed a compilation error caused by specifying a
+	  wrong exception name.
+
+	* DAnCE/examples/BasicSP/descriptors/NodeManagerMap.dat
+
+	  Fixed a wrong string to specify the vitual node name.
+
 Tue Apr  5 14:37:16 CDT 2005  Will Otte <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Config_Handlers/Any_Handler.cpp
