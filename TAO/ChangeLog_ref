@@ -26,7 +26,7 @@ Wed Sep 10 18:12:58 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/DynamicAny/DynSequence_i.cpp:
 	* tao/DynamicAny/DynStruct_i.cpp:
 	* tao/DynamicAny/DynUnion_i.cpp:
-	* tao/DynamicAny/DynamicAnyC.h:  Adde missing includes to get them
+	* tao/DynamicAny/DynamicAnyC.h:  Added missing includes to get them
 	  compiling with g++.
 
 Tue Sep  9 20:00:12 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
