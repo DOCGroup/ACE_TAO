@@ -1,3 +1,8 @@
+Sun Jun 27 20:40:30 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* src/Key_List.cpp: Added some initializers to keep EGCS from
+ 	  complaining.
+
 Wed Jun 23 07:24:58 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* src/Key_List.cpp (output_hash_function): Use conditional

@@ -34,6 +34,7 @@ Consumer_Handler::Consumer_Handler (void)
     unregistered_ (0),
     ior_ (0),
     shutdown_ (0),
+    use_naming_service_ (1),
     interactive_ (0)
 {
 

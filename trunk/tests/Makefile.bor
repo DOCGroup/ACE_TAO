@@ -1,0 +1,106 @@
+#
+# Makefile for building the ACE tests
+#
+
+TESTS = \
+	Aio_Platform_Test \
+	Atomic_Op_Test \
+	Barrier_Test \
+	Basic_Types_Test \
+	Buffer_Stream_Test \
+	CDR_Test \
+	Collection_Test \
+	Conn_Test \
+	DLList_Test \
+	DLL_Test \
+	Dynamic_Priority_Test \
+	Enum_Interfaces_Test \
+	Env_Value_Test \
+	Future_Test \
+	Handle_Set_Test \
+	High_Res_Timer_Test \
+	Hash_Map_Manager_Test \
+	IOStream_Test \
+	Map_Test \
+	Mem_Map_Test \
+	MM_Shared_Memory_Test \
+	MT_Reactor_Timer_Test \
+	MT_SOCK_Test \
+	Mem_Map_Test \
+	Message_Block_Test \
+	Message_Queue_Notifications_Test \
+	Message_Queue_Test \
+	Naming_Test \
+	New_Fail_Test \
+	Notify_Performance_Test \
+	OrdMultiSet_Test \
+	Pipe_Test \
+	Priority_Buffer_Test \
+	Priority_Reactor_Test \
+	Priority_Task_Test \
+	Process_Mutex_Test \
+	Process_Strategy_Test \
+	RB_Tree_Test \
+	Reactor_Exceptions_Test \
+	Reactor_Notify_Test \
+	Reactor_Performance_Test \
+	Reactor_Timer_Test \
+	Reactors_Test \
+	Reader_Writer_Test \
+	Recursive_Mutex_Test \
+	Reverse_Lock_Test \
+	SOCK_Connector_Test \
+	SOCK_Send_Recv_Test \
+	SOCK_Test \
+	SPIPE_Test \
+	SString_Test \
+	SV_Shared_Memory_Test \
+	Semaphore_Test \
+	Service_Config_Test \
+	Sigset_Ops_Test \
+	Simple_Message_Block_Test \
+	Svc_Handler_Test \
+	TSS_Test \
+	Task_Test \
+	Thread_Manager_Test \
+	Thread_Mutex_Test \
+	Thread_Pool_Test \
+	Time_Service_Test \
+	Time_Value_Test \
+	Timeprobe_Test \
+	Timer_Queue_Test \
+	Tokens_Test \
+	UPIPE_SAP_Test \
+	Upgradable_RW_Test \
+	XtReactor_Test
+
+#	Map_Manager_Test \
+
+all_tests: $(TESTS)
+
+!ifdef DEBUG
+DEBUGFLAG = -DDEBUG
+!endif
+
+!ifdef STATIC
+STATICFLAG = -DSTATIC
+!endif
+
+!ifdef PASCAL
+PASCALFLAG = -DPASCAL
+!endif
+
+$(TESTS):
+	$(MAKE) -fMakefile.bor -DNAME=$@ $(DEBUGFLAG) $(STATICFLAG) \
+		$(PASCALFLAG) $(BINDIR)\$@.exe
+
+OBJFILES = $(OBJDIR)\$(NAME).obj
+CFLAGS = -I.. $(ACE_CFLAGS)
+CPPDIR = .
+BINDIR=.\bor\bin
+BASE_OBJDIR=.\bor\obj
+LIBFILES = \
+        $(ACE_ROOT)\bin\ace$(LIB_DECORATOR).lib
+
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
+

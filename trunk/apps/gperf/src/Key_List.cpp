@@ -87,7 +87,7 @@ char *
 Key_List::special_input (char delimiter)
 {
   int size = 80;
-  char *buf;
+  char *buf = 0;
   ACE_NEW_RETURN (buf,
                   char[size],
                   0);
@@ -124,7 +124,7 @@ Key_List::special_input (char delimiter)
         {
           // Yikes, time to grow the buffer!
 
-          char *temp;
+          char *temp = 0;
           ACE_NEW_RETURN (temp,
                           char[size *= 2],
                           0);
@@ -1317,12 +1317,12 @@ Key_List::output_lookup_array (void)
     {
       const int DEFAULT_VALUE = -1;
 
-      Duplicate_Entry *duplicates;
+      Duplicate_Entry *duplicates = 0;
       ACE_NEW_RETURN (duplicates,
                       Duplicate_Entry[total_duplicates],
                       -1);
 
-      int *lookup_array;
+      int *lookup_array = 0;
       ACE_NEW_RETURN (lookup_array,
                       int[max_hash_value + 1],
                       -1);
