@@ -40,6 +40,12 @@ extern "C" {
         );
 }
 
+#if defined(_MSC_VAR) && (_MSC_VAR >= 1200)
+#pragma warning(pop)
+#endif/*_MSC_VAR*/
+
+size_t min(const size_t len1, const size_t len2);
+
 #endif /* _ICP_H */
 
 
