@@ -33,6 +33,9 @@
 #include "ace/WFMO_Reactor.h"
 #include "ace/Msg_WFMO_Reactor.h"
 #include "ace/TP_Reactor.h"
+#include "ace/Memory_Pool.h"
+#include "ace/Null_Mutex.h"
+#include "ace/Malloc.h"
 
 ACE_RCSID(Strategies, advanced_resource, "$Id$")
 
