@@ -73,8 +73,9 @@ ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
         this->handle_ = handle;
       else
         {
-          ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("ACE_DLL_Handle::open: calling dlopen on ")
-                                ACE_LIB_TEXT ("\"%s\"\n"), dll_name));
+          if (ACE::debug ())
+            ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("ACE_DLL_Handle::open: calling dlopen on ")
+                        ACE_LIB_TEXT ("\"%s\"\n"), dll_name));
           // Find out where the library is
           ACE_TCHAR dll_pathname[MAXPATHLEN + 1];
 
@@ -106,7 +107,7 @@ ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
           if (this->handle_ == ACE_SHLIB_INVALID_HANDLE)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_LIB_TEXT ("%s\n"), this->error ()->c_str ()),
+                                 ACE_LIB_TEXT ("ACE_DLL_Manager_Ex::open: Invalid handle: %s\n"), this->error ()->c_str ()),
                                 -1);
             }
         }
@@ -136,9 +137,10 @@ ACE_DLL_Handle::close (int unload)
       this->handle_ != ACE_SHLIB_INVALID_HANDLE &&
       unload == 1)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("ACE_DLL_Handle::close: unloading %s\n"),
-                  this->dll_name_));
+      if (ACE::debug ())
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_LIB_TEXT ("ACE_DLL_Handle::close: unloading %s\n"),
+                    this->dll_name_));
       // First remove any associated Framework Components.
       ACE_Framework_Repository::instance ()->remove_dll_components (this->dll_name_);
 
@@ -218,8 +220,8 @@ auto_ptr <ACE_TString>
 ACE_DLL_Handle::error (void)
 {
   ACE_TRACE ("ACE_DLL_Handle::error");
-
-  ACE_TString *str = new ACE_TString (ACE_OS::dlerror ());
+  const ACE_TCHAR *error = ACE_OS::dlerror ();
+  ACE_TString *str = new ACE_TString (error ? error : ACE_LIB_TEXT ("no error"));
   return auto_ptr <ACE_TString> (str);
 }
 
@@ -449,7 +451,7 @@ ACE_DLL_Manager_Ex::unload_dll (ACE_DLL_Handle *dll_handle, int force_unload)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Singleton< ACE_DLL_Manager_Ex, ACE_SYNCH_MUTEX >;
+template class ACE_Unmanaged_Singleton< ACE_DLL_Manager_Ex, ACE_SYNCH_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton< ACE_DLL_Manager_Ex, ACE_SYNCH_MUTEX >
+#pragma instantiate ACE_Unmanaged_Singleton< ACE_DLL_Manager_Ex, ACE_SYNCH_MUTEX >
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
