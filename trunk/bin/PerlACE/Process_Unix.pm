@@ -2,100 +2,230 @@
 
 package PerlACE::Process;
 
+use strict;
 use POSIX "sys_wait_h";
 use Cwd;
+use File::Basename;
 
-### @todo finish
+###############################################################################
 
-$EXEPREFIX = "./";
-$TARGETHOSTNAME = "localhost";
+### Chorus stuff
 
-$cwd = getcwd();
-PerlACE::checkForTarget($cwd);
+$PerlACE::Process::chorushostname = "localhost";
+$PerlACE::Process::chorus = 0;
 
-  for($i = 0; $i <= $#ARGV; $i++) {
+$PerlACE::Process::cwd = getcwd();
+
+for(my $i = 0; $i <= $#ARGV; $i++) {
     if ($ARGV[$i] eq '-chorus') {  
-      if (defined $ARGV[$i + 1]) {
-        $::TARGETHOSTNAME = $ARGV[$i + 1];
-        $::EXEPREFIX = "rsh $::TARGETHOSTNAME arun $cwd$::DIR_SEPARATOR";
-      }
-      else {
-        print STDERR "The -chorus option requires " .
-                     "the hostname of the target\n";
-        exit(1);
-      }
-      splice(@ARGV, $i, 2);
-      # Don't break from the loop just in case there
-      # is an accidental duplication of the -chorus option
+        if (defined $ARGV[$i + 1]) {
+            $PerlACE::Process::chorus = 1;
+            $PerlACE::Process::chorushostname = $ARGV[$1 + 1];
+        }
+        else {
+            print STDERR "The -chorus option requires " .
+                         "the hostname of the target\n";
+            exit(1);
+        }
+    
+        splice(@ARGV, $i, 2);
+        # Don't break from the loop just in case there
+        # is an accidental duplication of the -chorus option
     }
-  }
-
-
-sub Create
-{
-  my $name = shift;
-  my $args = shift;
-  my $self = [];
-
-  FORK:
-  {
-    if ($self->[0] = fork)
-    {
-      #parent here
-      bless $self;
-    }
-    elsif (defined $self->[0])
-    {
-      #child here
-      exec $name." ".$args;
-      die "ERROR: exec failed for <$name> <$args>";
-    }
-    elsif ($! =~ /No more process/)
-    {
-      #EAGAIN, supposedly recoverable fork error
-      sleep 5;
-      redo FORK;
-    }
-    else 
-    {
-      # weird fork error
-      print STDERR "ERROR: Can't fork: $!\n";
-    }
-  }
 }
 
-sub Terminate
+###############################################################################
+
+### Constructor
+
+sub new  
 {
-  my $self = shift;
-  kill ('TERM', $self->[0]);
-  # print STDERR "Process_Unix::Kill 'TERM' $self->[0]\n";
+    my $proto = shift;
+    my $class = ref ($proto) || $proto;
+    my $self = {};
+    
+    $self->{RUNNING} = 0;
+    $self->{PROCESS} = undef;
+    $self->{EXECUTABLE} = shift;
+    $self->{ARGUMENTS} = shift;
+    
+    bless ($self, $class);
+    return $self;
 }
 
-sub Kill
+###############################################################################
+
+### Some Accessors
+
+sub Executable
 {
-  my $self = shift;
-  kill ('KILL', $self->[0]);
-  # print STDERR "Process_Unix::Kill 'TERM' $self->[0]\n";
+    my $self = shift;
+
+    if (@_ != 0) {
+        $self->{EXECUTABLE} = shift;
+    }
+
+    my $executable = $self->{EXECUTABLE};
+
+    my $basename = basename ($executable);
+    my $dirname = dirname ($executable). '/';
+
+    $executable = $dirname.$PerlACE::Process::ExeSubDir.$basename;
+
+    return $executable;
 }
 
-sub Wait
+sub Arguments
 {
-  my $self = shift;
-  waitpid ($self->[0], 0);
+    my $self = shift;
+
+    if (@_ != 0) {
+        $self->{ARGUMENTS} = shift;
+    }
+	
+    return $self->{ARGUMENTS};
+}
+
+sub CommandLine ()
+{
+    my $self = shift;
+
+    my $commandline = $self->Executable ();
+
+    if (defined $self->{ARGUMENTS}) {
+        $commandline .= ' '.$self->{ARGUMENTS};
+    }
+	
+    if ($PerlACE::Process::chorus == 1) {
+        $commandline = "rsh " 
+                       . $PerlACE::Process::chorushostname 
+                       . " arun "
+                       . $PerlACE::Process::cwd 
+                       . "/"
+                       . $commandline;
+    }
+
+    return $commandline;
+}
+
+###############################################################################
+
+# Spawn the process and continue;
+
+sub Spawn ()
+{
+    my $self = shift;
+
+    if ($self->{RUNNING} == 1) {
+        print STDERR "ERROR: Cannot Spawn: <$self->{EXECUTABLE}> ",
+                     "already running\n";
+	return -1;
+    }
+
+    if (!defined $self->{EXECUTABLE}) {
+        print STDERR "ERROR: Cannot Spawn: No executable specified\n";
+	    return -1;
+    }
+
+    FORK:
+    {
+        if ($self->{PROCESS} = fork) {
+            #parent here
+            bless $self;
+        }
+        elsif (defined $self->{PROCESS}) {
+            #child here
+            exec $self->CommandLine ();
+            die "ERROR: exec failed for <" . $self->CommandLine () . ">";
+        }
+        elsif ($! =~ /No more process/) {
+            #EAGAIN, supposedly recoverable fork error
+            sleep 5;
+            redo FORK;
+        }
+        else {
+            # weird fork error
+            print STDERR "ERROR: Can't fork <" . $self->CommandLine () . ">: $!\n";
+        }
+    }
+}
+
+sub WaitKill ($)
+{
+    my $self = shift;
+    my $maxtime = shift;
+
+    my $status = $self->TimedWait ($maxtime);
+
+    if ($status == -1) {
+        print STDERR "ERROR: $self->{EXECUTABLE} timedout\n";
+        $self->Kill (); 
+        # Don't need to Wait since we are on Win32
+    }
+	
+    $self->{RUNNING} = 0;
+
+    return $status;
+}
+
+
+# Do a Spawn and immediately WaitKill
+
+sub SpawnWaitKill ($)
+{
+    my $self = shift;
+    my $maxtime = shift;
+
+    if ($self->Spawn () == -1) {
+        return -1;
+    }
+
+    return $self->WaitKill ($maxtime);
+}
+
+sub Terminate ()
+{
+    my $self = shift;
+  
+    if ($self->{RUNNING}) {
+        kill ('TERM', $self->{PROCESS});
+        # print STDERR "Process_Unix::Kill 'TERM' $self->{PROCESS}\n";
+    }
+}
+
+sub Kill ()
+{
+    my $self = shift;
+  
+    if ($self->{RUNNING}) {
+        kill ('KILL', $self->{PROCESS});
+        # print STDERR "Process_Unix::Kill 'TERM' $self->{PROCESS}\n";
+    }
+}
+
+sub Wait ()
+{
+    my $self = shift;
+    
+    if ($self->{RUNNING}) {
+       waitpid ($self->{PROCESS}, 0);
+    }
 }
 
 sub TimedWait
 {
-  my $self = shift;
-  my $maxtime = shift;
-  while ($maxtime-- != 0) {
-    my $pid = waitpid ($self->[0], &WNOHANG);
-    if ($pid != 0 && $? != -1) {
-      return $?;
+    my $self = shift;
+    my $maxtime = shift;
+    
+    while ($maxtime-- != 0) {
+        my $pid = waitpid ($self->{PROCESS}, &WNOHANG);
+        if ($pid != 0 && $? != -1) {
+            return $?;
+        }
+        sleep 1;
     }
-    sleep 1;
-  }
-  return -1;
+
+    return -1;
 }
 
 1;
