@@ -1560,6 +1560,9 @@ sub list_generated_file {
   if (defined $self->{'generated_exts'}->{$gentype}->{$tag}) {
     my(@gen)     = $self->get_component_list($gentype);
     my(@genexts) = $self->generated_extensions($gentype, $tag);
+
+    $file = $self->escape_regex_special($file);
+
     foreach my $gen (@gen) {
       ## If we are converting slashes, then we need to
       ## convert the component back to forward slashes
