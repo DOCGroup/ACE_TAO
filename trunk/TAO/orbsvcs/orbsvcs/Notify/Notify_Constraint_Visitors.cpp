@@ -272,6 +272,8 @@ TAO_Notify_Constraint_Visitor::visit_union_pos (
       return -1;
     }
   ACE_ENDTRY;
+
+  return 0;
 }
 
 int 

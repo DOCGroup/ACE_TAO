@@ -16,7 +16,7 @@ TAO_Notify_Constraint_Interpreter::~TAO_Notify_Constraint_Interpreter (void)
 void
 TAO_Notify_Constraint_Interpreter::build_tree (
     const char *constraints
-    TAO_ENV_ARG_PARAMETER
+    TAO_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CosNotifyFilter::InvalidConstraint,
                    CORBA::NO_MEMORY))
