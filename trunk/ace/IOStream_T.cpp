@@ -4,7 +4,7 @@
 #if !defined (ACE_IOSTREAM_T_C)
 #define ACE_IOSTREAM_T_C
 
-#if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION) && defined (__GNUC__)
+#if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION) && defined (__GNUG__)
 # if ! defined (ACE_IOSTREAM_T_H)
     // _Only_ define this when compiling this .cpp file standalone, not
     // when instantiating templates.  Its purpose is to provide something
@@ -12,9 +12,11 @@
     // they would be tied to the file(name).  With Cygnus g++ 2.7.2/VxWorks,
     // that name is used directly in variable names in the munched ctor/dtor
     // file.  That name contains a ".", so it's not a legal C variable name.
+    // The root of all this trouble is a static instance (of Iostream_init)
+    // declared in the iostream.h header file.
     int ACE_IOStream_T_global_of_builtin_type_to_avoid_munch_problems = 0;
 # endif /* ! ACE_IOSTREAM_T_H */
-#endif /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION && defined (__GNUC__) */
+#endif /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION && defined (__GNUG__) */
 
 #define ACE_BUILD_DLL
 #include "ace/IOStream_T.h"
