@@ -917,8 +917,8 @@ option available with
 <P><HR>
 <H3><A NAME="aceinstall">Building and Installing ACE</A></H3>
 
-The following explains how to build the ACE on <A
-HREF="#unix">UNIX</A> and <A HREF="#win32">Win32</A>.
+The following explains how to build ACE on <A HREF="#unix">UNIX</A>
+and <A HREF="#win32">Win32</A>.
 
 <h4>General Rules</h4>
 <UL>
@@ -929,8 +929,12 @@ HREF="#unix">UNIX</A> and <A HREF="#win32">Win32</A>.
   <li><p>However, if you want to undefine/redefine macros defined in the
       platform specific config file, these <code>#undef</code> should
       come <em><b>after</b></em> the config file.</p>
+  <LI> If you're planning to build ACE on multiple platforms, you may
+      want to consider <A HREF="#cloning">cloning the source tree</A>
+      before you start. <P>
 </UL>
 
+<hr align=left width="50%">
 <H4><A NAME="unix">Building and Installing ACE on UNIX</A></H4>
 
 Building and installing ACE on UNIX is relatively simple (the <A
@@ -1027,7 +1031,7 @@ need to do:<P>
 </OL>
 
 
-<P><HR><P>
+<P><hr align=left width="50%"><P>
 <H4><A NAME="win32">Building and Installing ACE on Win32</A></H4>
 
 First, if you are upgrading from an older release, clean up everything
@@ -1276,7 +1280,7 @@ x86, the Alpha configuration will be partially corrupted.  If this occurs, the
 easiest way to fix it is as above, recreate it.</P>
 
 
-<HR>
+<P><hr align=left width="50%"><P>
 <H4><A NAME="vxworks">Building and Installing ACE on VxWorks</A></H4>
 For the most part, you should be able to follow the instructions above
 to build ACE and applications that use it.  Start with the
@@ -1664,6 +1668,7 @@ The following explains how to build the ACE <A
 HREF="http://www.cs.wustl.edu/~schmidt/ACE-netsvcs.html">network services</A> on <A
 HREF="#unixsvcs">UNIX</A> and <A HREF="#win32svcs">Win32</A>.
 
+<P><hr align=left width="50%"><P>
 <H4><A NAME="unixsvcs">Building and Installing ACE Network Services on UNIX</A></H4>
 
 Building and installing ACE Network Services on UNIX is relatively
@@ -1709,6 +1714,7 @@ Here's what you need to do:<P>
       or rename the svc.conf file.<P>
 </OL>
 
+<P><hr align=left width="50%"><P>
 <H4><A NAME="win32svcs">Building and Installing ACE Network Services on Win32</A></H4>
 
 Once again, there are supplied project for MSVC 5.0 or later for
@@ -1810,6 +1816,7 @@ intact.<p>
       HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/docs/ACE-SSL.html">ACE SSL effort</a>
 </UL>
 
+<P><hr align=left width="50%"><P>
 <H4><A NAME="Non-static Object Manager">Non-static
 ACE_Object_Manager</A></H4> The ACE_Object_Manager can be instantiated
 as a static object, can be instantiated on the stack of the main
@@ -1863,12 +1870,15 @@ Or, see the <code>#define</code> of <code>main (int, char *[])</code>
 in <a href="ace/OS.h"><code>ace/OS.h</code></a> to see how ACE does
 that for entry points named <code>main</code>.<p>
 
+<P><hr align=left width="50%"><P>
 <H4><A NAME="cloning">Cloning the Source Tree</A></H4>
 
-On UNIX platforms, I typically like to support multiple platform
+On UNIX platforms, we typically like to support multiple platform
 builds using the same ACE source tree.  This idiom is supported by ACE
-using the $(ACE_ROOT)/bin/clone.c program.  To build clone,
-perform the following steps:<P>
+using the $ACE_ROOT/bin/create_ace_build script or
+$ACE_ROOT/bin/clone.cpp program.
+
+To use build and use the clone program, perform the following steps:<P>
 
 <pre>
 % cd $ACE_ROOT/bin
@@ -1877,25 +1887,26 @@ perform the following steps:<P>
 % rehash
 </pre><P>
 
-Then create a ./build subdirectory someplace, e.g., under
-$ACE_ROOT, and then invoke the top-level Makefile with the
-``clone'' target, e.g.:<P>
+Then create a ./build subdirectory someplace, e.g., under $ACE_ROOT
+make sure there's a file called platform_macros.GNU that contains the
+correct platform-specific Makefile configurations in the
+$ACE_ROOT/include/makeinclude/ directory, as well as making sure
+there's a $ACE_ROOT/ace/config.h file that includes the desired
+platform/compiler specific configuration header.  Once this is done,
+then invoke the top-level Makefile with the ``clone'' target, e.g.:<P>
 
 <pre>
 % cd $ACE_ROOT
 % mkdir build-SunOS5
 % cd build-SunOS5
 % make -f ../Makefile clone
-% (cd ace; echo "\#include "ace/config-sunos5.5-g++.h" &gt; config.h)
-% (cd include/makeincludes; ln -s platform_sunos5-g++.h platform_macros.GNU)
 % setenv ACE_ROOT $cwd
 % make
 </pre><P>
 
-This will establish a complete tree of links.  Note that you must
-build a config.h and platform_macros.GNU in cloned directory.  In
-addition, make sure you set your LD_LIBRARY_PATH to
-$ACE_ROOT/ace:$LD_LIBRARY_PATH on SVR4 UNIX platforms.<P>
+This will establish a complete tree of links.  In addition, make sure
+you set your LD_LIBRARY_PATH to $ACE_ROOT/ace:$LD_LIBRARY_PATH on SVR4
+UNIX platforms.<P>
 
 When you do a make in the $ACE_ROOT directory you will be producing
 object code that is not stored in the same place as the original
@@ -1923,8 +1934,7 @@ It filters out all but the necessary files, so the warning above does
 not apply.  See the comments at the top of the script itself for usage
 information.
 
-
-<HR><P>
+<P><hr align=left width="50%"><P>
 <H4><A NAME="corba">Building CORBA Versions of ACE</A></H4>
 
 Note that if you are compiling with IONA's Orbix implementation of
@@ -1939,7 +1949,7 @@ $ACE_ROOT/ace/config.h to use the config* and platform*
 files that have "-orbix" in them!
 
 
-<P><HR><P>
+<P><hr align=left width="50%"><P>
 <H4><A NAME="mvs">Additional Build Tips for MVS</A></H4>
 
 For all intents and purpose, MVS OpenEdition (OE) is another flavor of
@@ -1976,7 +1986,7 @@ from the binder (linkage editor).   You can get pre-link and link maps by
 uncommenting the PMAP and LMAP lines in the platform_mvs.GNU file.<P>
 
 
-<HR><P>
+<P><hr align=left width="50%"><P>
 <H4><A NAME="flags">Makefile Flags</A></H4>
 
 GNU make provides many options to customize its operation.  See its
