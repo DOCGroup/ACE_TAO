@@ -35,7 +35,7 @@ TAO_CDR_Encaps_Codec::encode (const CORBA::Any & data
                    IOP::Codec::InvalidTypeForEncoding))
 {
   this->check_type_for_encoding (data
-                                  ACE_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   // ----------------------------------------------------------------
