@@ -1,3 +1,16 @@
+Fri Oct 27 00:28:03 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/POA/Forwarding/run_test.pl (run_test): Added a missing
+	  print statement.
+
+	* examples/POA/Forwarding/client.cpp (main): 
+	* examples/POA/Forwarding/server.cpp: 
+	* examples/POA/Forwarding/Servant_Activator.cpp: 
+
+	  Fixed the use of TAO_ENV_ARG_DECL and ACE_CHECK.  These errors
+	  were there never found on NT because of the presence of native
+	  exception handling.
+
 Thu Oct 26 13:58:42 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	* orbsvcs/examples/Notify/Filter/Filter.cpp:
