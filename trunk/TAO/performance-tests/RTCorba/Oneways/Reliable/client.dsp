@@ -1,4 +1,4 @@
-# Microsoft Developer Studio Project File - Name="client" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="Reliable Oneways Client" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
@@ -13,12 +13,12 @@ CFG=client - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "client.mak" CFG="client - Win32 Debug"
+!MESSAGE NMAKE /f "client.mak" CFG="Reliable Oneways Client - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "client - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "client - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "Reliable Oneways Client - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "Reliable Oneways Client - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -28,7 +28,7 @@ CFG=client - Win32 Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "client - Win32 Release"
+!IF  "$(CFG)" == "Reliable Oneways Client - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -52,7 +52,7 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib  kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
 # ADD LINK32 ace.lib TAO.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 
-!ELSEIF  "$(CFG)" == "client - Win32 Debug"
+!ELSEIF  "$(CFG)" == "Reliable Oneways Client - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -80,8 +80,8 @@ LINK32=link.exe
 
 # Begin Target
 
-# Name "client - Win32 Release"
-# Name "client - Win32 Debug"
+# Name "Reliable Oneways Client - Win32 Release"
+# Name "Reliable Oneways Client - Win32 Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
@@ -117,9 +117,9 @@ SOURCE=.\testC.i
 
 SOURCE=.\test.idl
 
-!IF  "$(CFG)" == "client - Win32 Release"
+!IF  "$(CFG)" == "Reliable Oneways Client - Win32 Release"
 
-!ELSEIF  "$(CFG)" == "client - Win32 Debug"
+!ELSEIF  "$(CFG)" == "Reliable Oneways Client - Win32 Debug"
 
 USERDEP__TEST_="..\..\..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO IDL compiler on $(InputPath)
