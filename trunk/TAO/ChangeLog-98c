@@ -1,3 +1,7 @@
+Mon Nov 23 10:10:19 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/try_macros.h: Fixed a typo.
+
 Mon Nov 23 07:56:09 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* tao/try_macros.h:
@@ -19,7 +23,7 @@ Mon Nov 23 01:20:27 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.h: Changed
 	  the default argument of Cubit_Client to not using collocation so
 	  the client will not shutdown the server without being asked to
-	  do so.  
+	  do so.
 
 	* tao/IIOP_Object.cpp (do_static_call): Made the method native
 	  exception safe so it will not return prematurely and will try
@@ -36,7 +40,7 @@ Mon Nov 23 01:20:27 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  TAO's internal use.  The motivation is to reuse the
  	  CORBA_Environment passed in to TAO's internal function to avoid
 	  declaring more env variables and copying exceptions between
-	  these variables.  
+	  these variables.
 
 	* tao/GIOP.{h,cpp}: The following changes are needed to make sure
 	  we differentiate receiving a GIOP MessageError from something
@@ -56,7 +60,7 @@ Mon Nov 23 01:20:27 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  (parse_header_std): Changed from returning MessageError to -1.
 	  If something goes wrong here, it doesn't mean we received a
 	  MessageError message.
-	
+
 	* tao/Connect.cpp (handle_input): Made sure we differentiate the
 	  real GIOP MessageError and other cases when errors occur in
 	  receiving a request.  Also make sure the server won't throw
@@ -69,9 +73,9 @@ Sun Nov 22 18:20:11 1998 Torben Worm  <tworm@cumbia.cs.wustl.edu>
 	  Changed ACE_NEW_RETURN to ACE_NEW_THROW_RETURN in order to
 	  support exceptions
 
-	* orbsvcs/tests/Concurrency/test.basic: 
+	* orbsvcs/tests/Concurrency/test.basic:
 	  Changed the exception to reflect new exception type
-	
+
 Sat Nov 21 19:30:11 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/benchmark/{client,server}.cpp: Added
