@@ -1,3 +1,19 @@
+Fri Nov 17 000:46:37 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/orbsvcs/orbsvcs.dsw:
+
+          Added SSLIOP.
+
+        * orbsvcs/orbsvcs/SSLIOP.dsp:
+
+          Removed some unnecessary defines.
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+
+          Changed a couple of references to TAO_IIOP_Client_Transport
+          to TAO_SSLIOP_Client_Transport.
+
 Fri Nov 17 09:21:00 2000  Johnny Willemsen <jwillemsen@remedy.nl>
         * tests/*/*.bor:
           examples/*/*.bor:
