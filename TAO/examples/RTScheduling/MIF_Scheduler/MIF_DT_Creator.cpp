@@ -34,7 +34,7 @@ void
 MIF_DT_Creator::yield (int suspend_time,
 		       Thread_Task*)
 {
-  ACE_Time_Value suspend (suspend_time);
+ 
   ACE_Time_Value now (ACE_OS::gettimeofday ());
   while ((now - *base_time_) < suspend_time || suspend_time == 1)
     {
@@ -43,7 +43,7 @@ MIF_DT_Creator::yield (int suspend_time,
       const char * name = 0;
       CORBA::Policy_ptr implicit_sched_param = 0;
       current_->update_scheduling_segment (name,
-					   sched_param,
+					   sched_param.in (),
 					   implicit_sched_param
 					   ACE_ENV_ARG_DECL);
       ACE_CHECK;
