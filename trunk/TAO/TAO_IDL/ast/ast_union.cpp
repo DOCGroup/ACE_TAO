@@ -356,7 +356,6 @@ AST_Union::lookup_enum (AST_UnionBranch *b)
 {
   AST_UnionLabel *label = b->label();
   AST_Expression *lv = label->label_val ();
-  AST_Expression *v = 0;
   AST_Enum *e = AST_Enum::narrow_from_decl (this->pd_disc_type);
   AST_Decl *d = 0;
   AST_UnionBranch	*fb = 0;
