@@ -1,3 +1,10 @@
+Wed Mar  6 07:29:19 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i.h: Correctly push/pop
+	  the pragma that disables the annoying MSVC 4250 warning.  Thanks
+ 	  to Bruce McIntosh <Bruce.McIntosh@Australia.Boeing.com> for
+ 	  reporting this.
+
 Tue Mar  5 23:47:17 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Object.h:
