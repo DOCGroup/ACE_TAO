@@ -384,10 +384,10 @@ TAO_SSLIOP_Credentials::refresh (const CORBA::Any & /* refresh_data */
 CORBA::Boolean
 TAO_SSLIOP_Credentials::operator== (const TAO_SSLIOP_Credentials &rhs)
 {
-  const X509 *xa = this->x509_.in ();
-  const X509 *xb = rhs.x509_.in ();
-  //  const EVP_PKEY *ea = this->evp_.in ();
-  //const EVP_PKEY *eb = rhs.evp_.in ();
+  X509 *xa = this->x509_.in ();
+  X509 *xb = rhs.x509_.in ();
+  // EVP_PKEY *ea = this->evp_.in ();
+  // EVP_PKEY *eb = rhs.evp_.in ();
 
   return
     this->accepting_options_supported_ == rhs.accepting_options_supported_
