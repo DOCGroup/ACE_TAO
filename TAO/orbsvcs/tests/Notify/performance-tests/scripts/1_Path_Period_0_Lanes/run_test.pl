@@ -19,8 +19,8 @@ if ($opt_h)
     exit 0;
 }
 
-$experiment_timeout = 600;
-$startup_timeout = 600;
+$experiment_timeout = 240;
+$startup_timeout = 120;
 
 if ($opt_n)
 {
@@ -74,7 +74,7 @@ $Notify_Args = "-ORBInitRef NameService=file://$naming_ior -IORoutput $notify_io
 
 $Supplier = new PerlACE::Process ("../../../Driver/Notify_Tests_Driver");
 
-#$Supplier_Args = "-ORBInitRef NameService=file://$naming_ior -IORoutput $supplier_ior -ORBSvcConf $supplier_conf";
+$Supplier_Args = "-ORBInitRef NameService=file://$naming_ior -IORoutput $supplier_ior -ORBSvcConf $supplier_conf";
 
 #$Supplier_Args = "-ORBInitRef NameService=file://$naming_ior -IORoutput $supplier_ior -ORBSvcConf $supplier_conf -ORBDebugLevel 1";
 

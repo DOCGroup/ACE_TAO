@@ -1,3 +1,14 @@
+Tue Jun 24 18:40:08 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/run_test.pl:
+	  uncommented code that should have been enabled.
+
+	* orbsvcs/tests/Notify/Basic/run_test.pl:
+	  Added build option for RT Notification.
+
+	* orbsvcs/tests/Notify/Basic/notify.rt.conf:  
+	  Conf file for RT Notification.
+
 Tue June 24 16:26:06 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	* orbsvcs/orbsvcs/AV/AV_Core.cpp: Check if the peer address is

@@ -60,6 +60,7 @@ $status = 0;
 
 @default_test_configs =
   (
+   "notify.rt.conf",
    "notify.reactive.conf",
    "notify.mt.conf",
    );
@@ -109,7 +110,7 @@ for $config (@test_configs)
         ## configuration, so we skip this test for now.
         ## The Notification should actually throw an exception for the property not supported.
         if ($name->{name} eq "AdminProperties" 
-            && $config eq "notify.reactive.conf")
+            && ($config eq "notify.reactive.conf" || $config eq "notify.rt.conf"))
           {
             next;
           }
