@@ -34,15 +34,15 @@ The current release of TAO contains the following components:
      * Implementations of the CORBA Naming Service, Trading
        Service, Concurrency Service, Audio/Video Streaming Service,
        Property Service, and a Logging Service.
-       
+
      * Many tests illustrating how to use TAO and measuring
        TAO's performance.
-       
+
 We've gotten TAO to interoperate with other ORBs (e.g., Orbix,
 VisiBroker, miniCOOL, and CORBAplus), so we're confident that its
 implementation of IIOP is robust.  We're currently working on the
 following features for TAO:
-   
+
      * A highly extensible, highly optimized set of request
        demultiplexing strategies that provide constant time lookup of
        servants based on object keys and operation names contained in
@@ -63,8 +63,15 @@ enhancements, etc. and will strive to integrate correct bug fixes
 quickly!  The current release has been tested extensively, but if you
 find any bugs, please report them to the ACE mailing list
 ace-users@cs.wustl.edu using the $TAO_ROOT/BUG-REPORT-FORM.
+Please use the same form to submit questions, comments, etc.
+To ensure that you see responses, please do one of the following:
+
+    1) Subscribe to the ace-users mail list, by sending email with
+       contents "subscribe ace-users" to majordomo@cs.wustl.edu.
+
+    2) Or, monitor the comp.soft-sys.ace newsgroup for responses.
 
 Thanks,
 
-	Douglas C. Schmidt
-	schmidt@cs.wustl.edu
+        Douglas C. Schmidt
+        schmidt@cs.wustl.edu
