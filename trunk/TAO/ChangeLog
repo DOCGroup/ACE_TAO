@@ -1,3 +1,12 @@
+Fri Dec 10 08:42:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao_targets.GNU:
+        * taoconfig.mk:
+          Removed these files, not needed anymore
+
+        * Release
+          Removed the files above
+
 Fri Dec 10 08:36:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ParameterModeS.h:
