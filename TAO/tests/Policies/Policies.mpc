@@ -1,3 +1,0 @@
-project(Policies Manipulation): messaging, corba_messaging {
-  exename = Manipulation
-}

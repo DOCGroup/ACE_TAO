@@ -1,8 +1,0 @@
-project : taolib, core {
-  depends    += RTCORBA PortableServer Valuetype
-  sharedname  = TAO_RTPortableServer
-  libs       += TAO_RTCORBA TAO_PortableServer TAO_Valuetype TAO
-  dllflags    = TAO_RTPORTABLESERVER_BUILD_DLL
-  libout      = ..
-  include_dir = tao/RTPortableServer
-}
