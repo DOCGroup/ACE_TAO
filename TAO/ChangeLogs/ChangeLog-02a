@@ -1,203 +1,210 @@
+Tue Aug 08 09:52:52 2000  David L. Levine <levine@cs.wustl.edu>
+
+        * tests/Native_Exceptions/Makefile: regenerated dependencies.
+          The last make depend caused the Makefile to lose some of its
+          dependencies of the generated files, so make attempted to
+          compile client.cpp before generating them.
+
 Tue Aug 08 00:46:35 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/TAO_Singleton_Manager.cpp (init): 
+        * tao/TAO_Singleton_Manager.cpp (init):
 
-	  Do not invoke "ACE_Object_Manager::instance()->at_exit()."
-	  Instead, use "ACE_Object_Manager::at_exit()."
+          Do not invoke "ACE_Object_Manager::instance()->at_exit()."
+          Instead, use "ACE_Object_Manager::at_exit()."
 
-	* tao/ORB_Core.cpp:
-	* tao/ORB.cpp:
+        * tao/ORB_Core.cpp:
+        * tao/ORB.cpp:
 
-	  Added include of "ace/Object_Manager.h" once again.  It was
-	  needed to pull in the declaration of the ACE_Static_Object_Lock
-	  class on some platforms.
+          Added include of "ace/Object_Manager.h" once again.  It was
+          needed to pull in the declaration of the ACE_Static_Object_Lock
+          class on some platforms.
 
 Mon Aug  7 21:50:00 2000  Kirthika  Parameswaran  <kirthika@cs.wustl.edu>
 
-	* tests/Smart_Proxies/Makefile: Applied the patch sent by Craig 
-	  Rodrigues <rodrigc@mediaone.net> to resolve build problems on 
-	  Linux. Thanks Craig!
-		
+        * tests/Smart_Proxies/Makefile: Applied the patch sent by Craig
+          Rodrigues <rodrigc@mediaone.net> to resolve build problems on
+          Linux. Thanks Craig!
+
 Mon Aug  7 05:08:32 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/TAO_Singleton.cpp:
+        * tao/TAO_Singleton.cpp:
 
-	  Include "ace/Object_Manager.h" to explicitly pull in declaration
-	  of ACE_Object_Manager.
+          Include "ace/Object_Manager.h" to explicitly pull in declaration
+          of ACE_Object_Manager.
 
 Sun Aug  6 17:21:27 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/ImplRepoC.h:
-	* tao/InterfaceC.h:
-	* tao/MessagingC.h:
-	* tao/ORB_Core.h:
-	* TAO_IDL/be/be_visitor_interface/smart_proxy_ch.cpp (visit_interface):
+        * tao/ImplRepoC.h:
+        * tao/InterfaceC.h:
+        * tao/MessagingC.h:
+        * tao/ORB_Core.h:
+        * TAO_IDL/be/be_visitor_interface/smart_proxy_ch.cpp (visit_interface):
 
-	  Friend declaration for ACE_Singleton is no longer necessary
-	  since the TAO_Singletons no longer derive from it.
+          Friend declaration for ACE_Singleton is no longer necessary
+          since the TAO_Singletons no longer derive from it.
 
 Sun Aug  6 14:59:34 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/TAO_Singleton.h:
+        * tao/TAO_Singleton.h:
 
-	  Don't bother deriving from the ACE_Singleton classes.  They
-	  didn't provide anything useful.
+          Don't bother deriving from the ACE_Singleton classes.  They
+          didn't provide anything useful.
 
 Sun Aug 06 17:14:52 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/ORB.cpp (ORB_init, init_orb_globals):
+        * tao/ORB.cpp (ORB_init, init_orb_globals):
 
-	  Placed ORB initialization count back in
-	  CORBA::ORB::init_orb_globals() since the count variable is
-	  private within the context of CORBA::ORB_init().
+          Placed ORB initialization count back in
+          CORBA::ORB::init_orb_globals() since the count variable is
+          private within the context of CORBA::ORB_init().
 
 Sun Aug 06 17:01:53 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/TAO_Static.dsp:
+        * tao/TAO_Static.dsp:
 
-	  Added new files (e.g. TAO_Export.h, TAO_Singleton_Manager.*,
-	  TAO_Singleton.*, DLL_ORB.*) to list of sources.
+          Added new files (e.g. TAO_Export.h, TAO_Singleton_Manager.*,
+          TAO_Singleton.*, DLL_ORB.*) to list of sources.
 
 Sun Aug 06 16:46:31 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/TAO_Singleton.cpp:
-	* tao/TAO_Singleton.h:
-	* tao/TAO_Singleton.inl:
+        * tao/TAO_Singleton.cpp:
+        * tao/TAO_Singleton.h:
+        * tao/TAO_Singleton.inl:
 
-	  TAO-specific Singleton classes.  These classes registers with
-	  the TAO_Singleton_Manager instead of the ACE_Object_Manager to
-	  ensure that TAO Singletons are isolated within TAO.
+          TAO-specific Singleton classes.  These classes registers with
+          the TAO_Singleton_Manager instead of the ACE_Object_Manager to
+          ensure that TAO Singletons are isolated within TAO.
 
-	* tao/TAO_Singleton_Manager.cpp:
-	* tao/TAO_Singleton_Manager.h:
-	* tao/TAO_Singleton_Manager.inl:
+        * tao/TAO_Singleton_Manager.cpp:
+        * tao/TAO_Singleton_Manager.h:
+        * tao/TAO_Singleton_Manager.inl:
 
-	  TAO-specific singleton/object manager.  This is basically a
-	  stripped down version of the ACE_Object_Manager.  TAO_Singletons
-	  register with the TAO_Singleton_Manager.  The
-	  TAO_Singleton_Manager cleans up all registered
-	  singletons/objects upon destruction of the last ORB reference.
+          TAO-specific singleton/object manager.  This is basically a
+          stripped down version of the ACE_Object_Manager.  TAO_Singletons
+          register with the TAO_Singleton_Manager.  The
+          TAO_Singleton_Manager cleans up all registered
+          singletons/objects upon destruction of the last ORB reference.
 
-	* tao/DLL_ORB.cpp:
-	* tao/DLL_ORB.h:
-	* tao/DLL_ORB.inl:
+        * tao/DLL_ORB.cpp:
+        * tao/DLL_ORB.h:
+        * tao/DLL_ORB.inl:
 
-	  New helper class that can be used to ensure that the ORB is
-	  properly initialized and destroyed when dynamically loading and
-	  unloading the ORB.
-	
-	* tao/TAO_Export.h:
+          New helper class that can be used to ensure that the ORB is
+          properly initialized and destroyed when dynamically loading and
+          unloading the ORB.
 
-	  New header that contains the TAO-specific Win32 DLL
-	  export/import macros.
+        * tao/TAO_Export.h:
 
-	* tao/corbafwd.h:
+          New header that contains the TAO-specific Win32 DLL
+          export/import macros.
 
-	  Removed the TAO-specific Win32 DLL export/import macros.  They
-	  are now defined in `TAO_Export.h'.
+        * tao/corbafwd.h:
 
-	* tao/ORB.cpp (ORB_init):
+          Removed the TAO-specific Win32 DLL export/import macros.  They
+          are now defined in `TAO_Export.h'.
 
-	  Initialize the TAO_Singleton_Manager prior to initializing
-	  anything else.  If the TAO_Singleton_Manager hasn't already been
-	  explicitly initialized prior to this call, then this call to
-	  TAO_Singleton_Manager::init() will cause the
-	  TAO_Singleton_Manager to register a cleanup function with the
-	  ACE_Object_Manager.
+        * tao/ORB.cpp (ORB_init):
 
-	* tao/ORB_Core.h:
-	* tao/ORB_Core.i (instance):
+          Initialize the TAO_Singleton_Manager prior to initializing
+          anything else.  If the TAO_Singleton_Manager hasn't already been
+          explicitly initialized prior to this call, then this call to
+          TAO_Singleton_Manager::init() will cause the
+          TAO_Singleton_Manager to register a cleanup function with the
+          ACE_Object_Manager.
 
-	  The ORB table is now a TAO_Singleton, instead of an
-	  ACE_Singleton.
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i (instance):
 
-	* tao/ORB_Core.cpp:
+          The ORB table is now a TAO_Singleton, instead of an
+          ACE_Singleton.
 
-	  Removed unnecessary inclusion of "ace/Object_Manager.h."
+        * tao/ORB_Core.cpp:
 
-	  The ORB table is now a TAO_Singleton, instead of an
-	  ACE_Singleton.  Changed the template instantiations
-	  accordingly.
+          Removed unnecessary inclusion of "ace/Object_Manager.h."
 
-	  TAO's thread-specific storage resources are now accessed through
-	  a TAO_TSS_Singleton instead of an ACE_TSS_Singleton.
+          The ORB table is now a TAO_Singleton, instead of an
+          ACE_Singleton.  Changed the template instantiations
+          accordingly.
 
-	  (unbind):
+          TAO's thread-specific storage resources are now accessed through
+          a TAO_TSS_Singleton instead of an ACE_TSS_Singleton.
 
-	  Decrement reference count on ORB Core after check for equality
-	  to first_orb_.  This fixes an "expression uses dangling pointer"
-	  error.
+          (unbind):
 
-	  (TAO_ORB_Core_instance):
+          Decrement reference count on ORB Core after check for equality
+          to first_orb_.  This fixes an "expression uses dangling pointer"
+          error.
+
+          (TAO_ORB_Core_instance):
 
           The call to CORBA::ORB_init() in this function returns a
-	  duplicated ORB reference, so make sure that reference is stored
-	  in an ORB_var so that no leak occurs.  The return value was
-	  previously ignored.  The duplicate ORB reference isn't needed
-	  outside the scope of this function  since the corresponding ORB
-	  Core instance will still exist in the ORB table after the ORB
-	  reference is destroyed.
+          duplicated ORB reference, so make sure that reference is stored
+          in an ORB_var so that no leak occurs.  The return value was
+          previously ignored.  The duplicate ORB reference isn't needed
+          outside the scope of this function  since the corresponding ORB
+          Core instance will still exist in the ORB table after the ORB
+          reference is destroyed.
 
-	* tao/Typecode.cpp (~CORBA_TypeCode):
+        * tao/Typecode.cpp (~CORBA_TypeCode):
 
-	  Removed redundant zero pointer checks.  The standard C++
-	  delete() already performs such a check.
+          Removed redundant zero pointer checks.  The standard C++
+          delete() already performs such a check.
 
-	* tao/Exception.cpp (init):
-	* tao/Exception.h:
-	* tao/Typecode.h:
-	* tao/Typecode_Constants.cpp (init):
+        * tao/Exception.cpp (init):
+        * tao/Exception.h:
+        * tao/Typecode.h:
+        * tao/Typecode_Constants.cpp (init):
 
-	  Added static flag/variable that is used to denote when the
-	  CORBA Exceptions and TypeCode constants have been initialized.
-	  This is necessary to prevent multiple initializations from
-	  occuring, which in turn fixes a memory leak that was occuring
-	  due to pointer reassignment.
+          Added static flag/variable that is used to denote when the
+          CORBA Exceptions and TypeCode constants have been initialized.
+          This is necessary to prevent multiple initializations from
+          occuring, which in turn fixes a memory leak that was occuring
+          due to pointer reassignment.
 
-	* tao/IIOP_Factory.cpp:
-	* tao/SHMIOP_Factory.cpp:
-	* tao/UIOP_Factory.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
+        * tao/IIOP_Factory.cpp:
+        * tao/SHMIOP_Factory.cpp:
+        * tao/UIOP_Factory.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
 
-	  Removed unnecessary inclusion of "ace/Dynamic_Service.h."
+          Removed unnecessary inclusion of "ace/Dynamic_Service.h."
 
-	* tao/Makefile:
-	* tao/Makefile.am:
-	* tao/Makefile.bor:
-	* tao/TAO.dsp:
+        * tao/Makefile:
+        * tao/Makefile.am:
+        * tao/Makefile.bor:
+        * tao/TAO.dsp:
 
-	  Added new files (e.g. TAO_Export.h, TAO_Singleton_Manager.*,
-	  TAO_Singleton.*, DLL_ORB.*) to list of sources.
+          Added new files (e.g. TAO_Export.h, TAO_Singleton_Manager.*,
+          TAO_Singleton.*, DLL_ORB.*) to list of sources.
 
-	* tao/default_resource.h:
+        * tao/default_resource.h:
 
-	  Removed extraneous include of "ace/Singleton.h."
+          Removed extraneous include of "ace/Singleton.h."
 
-	* tao/ImplRepoC.cpp:
-	* tao/ImplRepoC.h:
-	* tao/InterfaceC.cpp:
-	* tao/InterfaceC.h:
-	* tao/MessagingC.cpp:
-	* tao/MessagingC.h:
-	* tao/Operation_Table.cpp:
-	* tao/Operation_Table.h:
-	* tao/ValueFactory_Map.cpp:
-	* tao/ValueFactory_Map.h:
+        * tao/ImplRepoC.cpp:
+        * tao/ImplRepoC.h:
+        * tao/InterfaceC.cpp:
+        * tao/InterfaceC.h:
+        * tao/MessagingC.cpp:
+        * tao/MessagingC.h:
+        * tao/Operation_Table.cpp:
+        * tao/Operation_Table.h:
+        * tao/ValueFactory_Map.cpp:
+        * tao/ValueFactory_Map.h:
 
-	  Use new TAO_Singleton class instead of ACE_Singleton to ensure
-	  resources are isolated to TAO.
+          Use new TAO_Singleton class instead of ACE_Singleton to ensure
+          resources are isolated to TAO.
 
-	* TAO_IDL/be/be_visitor_interface/smart_proxy_ch.cpp (visit_interface):
-	* TAO_IDL/be/be_visitor_interface/smart_proxy_cs.cpp (visit_interface):
+        * TAO_IDL/be/be_visitor_interface/smart_proxy_ch.cpp (visit_interface):
+        * TAO_IDL/be/be_visitor_interface/smart_proxy_cs.cpp (visit_interface):
 
-	  Generated code now uses TAO_Singletons instead of ACE_Singletons
-	  to ensure isolation of resources to TAO.
+          Generated code now uses TAO_Singletons instead of ACE_Singletons
+          to ensure isolation of resources to TAO.
 
 Fri Aug  4 18:50:00 2000  Kirthika  Parameswaran  <kirthika@cs.wustl.edu>
 
-	* tao/corba.h: Rectified spelling mistake in checking whether
-	  the smart proxy feature was available.
-	
+        * tao/corba.h: Rectified spelling mistake in checking whether
+          the smart proxy feature was available.
+
 Fri Aug  4 15:49:26 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * performance-tests/Latency/Makefile:
