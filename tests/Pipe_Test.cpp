@@ -18,44 +18,88 @@
 
 #include "ace/Pipe.h"
 #include "ace/Process.h"
+#include "ace/Get_Opt.h"
 #include "test_config.h"
+
+static int close_pipe = 1;
+static int child_process = 0;
+
+// Explain usage and exit.
+static void 
+print_usage_and_die (void)
+{
+  ACE_DEBUG ((LM_DEBUG, 
+	      "usage: %n [-d (don't close pipes)] [-c (child process)] \n"));
+  ACE_OS::exit (1);
+}
+
+// Parse the command-line arguments and set options.
+static void
+parse_args (int argc, char *argv[])
+{
+  ACE_Get_Opt get_opt (argc, argv, "dc");
+
+  int c; 
+
+  while ((c = get_opt ()) != -1)
+    switch (c)
+    {
+    case 'd':
+      ::close_pipe = 0;
+      break;
+    case 'c':
+      ::child_process = 1;
+      break;
+    default:
+      print_usage_and_die ();
+      break;
+  }
+}
 
 static void
 open (ACE_Pipe &pipe, 
-      const char *name, 
-      int close_pipe = 1)
+      const char *name)
 {
   ACE_DEBUG ((LM_DEBUG, "opening %s\n", name));
   ACE_ASSERT (pipe.open () != -1);
   ACE_ASSERT (pipe.read_handle () != ACE_INVALID_HANDLE
 	      && pipe.write_handle () != ACE_INVALID_HANDLE);
 
-  if (close_pipe)
+  if (::close_pipe)
     pipe.close ();
 }
 
 int 
 main (int argc, char *argv[])
 {
-  ACE_START_TEST ("Pipe_Test.cpp");
-
-  if (argc > 1)
-    {
+  ::parse_args (argc, argv);
+  if (::child_process)
+    {      
+      ACE_APPEND_LOG ("Pipe_Test-children");      
       ACE_Pipe a, b, c, d, e;
-
+      
       open (a, "a");
       open (b, "b");
       open (c, "c");
       open (d, "d");
       open (e, "e");
+
+      ACE_END_LOG;      
     }
   else
     {
-      char *s_argv[3];
+      ACE_START_TEST ("Pipe_Test.cpp");
+      ACE_INIT_LOG ("Pipe_Test-children");      
+  
+      char *s_argv[4];
       s_argv[0] = "Pipe_Test" ACE_PLATFORM_EXE_SUFFIX;
-      s_argv[1] = "-r"; // This is just a dummy.
-      s_argv[2] = 0;
-
+      s_argv[1] = "-c"; // child/slave process
+      if (::close_pipe == 0)	
+	s_argv[2] = "-d";
+      else
+	s_argv[2] = 0;
+      s_argv[3] = 0;
+      
       for (int i = 0; i < ACE_MAX_ITERATIONS; i++)
 	{
 	  ACE_Process server;
@@ -68,8 +112,8 @@ main (int argc, char *argv[])
 	  server.wait ();
 	  ACE_DEBUG ((LM_DEBUG, "Server %d finished\n", server.getpid ()));
 	}
+      ACE_END_TEST;      
     }
 
-  ACE_END_TEST;
   return 0;
 }

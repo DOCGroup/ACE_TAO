@@ -1,5 +1,9 @@
 Mon Dec  2 00:23:23 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
+	* tests/test_config.h: Added ACE_INIT_LOG, ACE_APPEND_LOG and
+ 	  ACE_APPEND_LOG to facilitate the appending of log messages to a
+ 	  file.  Also changed Pipe_Test to use this new mechanism.
+
 	* test/Naming_Test: Changed test to use "lite" implementation to
 	  speed things up. 
 
