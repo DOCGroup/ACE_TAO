@@ -543,51 +543,50 @@ be_visitor_interface::visit_operation (be_operation *node)
   // AMI Call back code generation.
   //
 
-  // Return if AMI call back is not enabled.
-  if (idl_global->ami_call_back () != I_TRUE)
+  // Only if AMI callbacks are enabled.
+  if (idl_global->ami_call_back () == I_TRUE)
     {
-      return 0;
-    }
   
-  // Generate AMI <sendc_> method, for this operation, if you are
-  // doing client header.
+      // Generate AMI <sendc_> method, for this operation, if you are
+      // doing client header.
 
-  switch (this->ctx_->state ())
-    {
-    case TAO_CodeGen::TAO_INTERFACE_CH:
-      ctx.state (TAO_CodeGen::TAO_AMI_OPERATION_CH);
-      break;
+      switch (this->ctx_->state ())
+        {
+        case TAO_CodeGen::TAO_INTERFACE_CH:
+          ctx.state (TAO_CodeGen::TAO_AMI_OPERATION_CH);
+          break;
 
-    case TAO_CodeGen::TAO_INTERFACE_CS:
-      ctx.state (TAO_CodeGen::TAO_AMI_OPERATION_CS);
-      break;
+        case TAO_CodeGen::TAO_INTERFACE_CS:
+          ctx.state (TAO_CodeGen::TAO_AMI_OPERATION_CS);
+          break;
 
-    default:
-      // We dont have to do anything for the other cases.
-      return 0;
+        default:
+          // We dont have to do anything for the other cases.
+          return 0;
+        }
+
+      // Grab the appropriate visitor.
+      visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_interface::"
+                             "visit_operation - "
+                             "NUL visitor\n"),
+                            -1);
+        }
+
+      // Visit the node using this visitor
+      if (node->accept (visitor) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_interface::"
+                             "visit_operation - "
+                             "failed to accept visitor\n"),
+                            -1);
+        }
+      delete visitor;
     }
-
-  // Grab the appropriate visitor.
-  visitor = tao_cg->make_visitor (&ctx);
-  if (!visitor)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_interface::"
-                         "visit_operation - "
-                         "NUL visitor\n"),
-                        -1);
-    }
-
-  // Visit the node using this visitor
-  if (node->accept (visitor) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_interface::"
-                         "visit_operation - "
-                         "failed to accept visitor\n"),
-                        -1);
-    }
-  delete visitor;
 
   return 0;
 }
