@@ -1,3 +1,11 @@
+Tue Dec 25 00:48:28 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Notify/Notify_AdminProperties.h: Added a
+	  #include. 
+	
+	* orbsvcs/orbsvcs/Notify/Notify_Filter_i.cpp: Removed a template
+	  instantiation. 
+
 Mon Dec 24 23:53:52 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Muxed_TMS.cpp: Removed a template instantiation of
