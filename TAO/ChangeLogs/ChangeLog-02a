@@ -1,3 +1,14 @@
+Thu Nov 16 18:38:12 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/orbconf.h:
+          Enable UIOP and SHMIOP even on minimum CORBA builds.  This is
+          not a footprint problem since they are on a separate library
+          now, plus this fixes a warning ;-)
+
+        * tests/IDL_Test/Makefile:
+          Use the global TAO_IDLFLAGS (plus the local flags), otherwise
+          cross-compilation fails.
+
 Thu Nov 16 17:30:04 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * Makefile:
