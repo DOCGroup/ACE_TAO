@@ -1,22 +1,27 @@
+Fri Jul 28 07:42:50 2000  David L. Levine <levine@cs.wustl.edu>
+
+        * tests/Makefile: build CDR_Array_Test, even on LynxOS.
+          It builds and runs successfully on LynxOS 3.1.0.
+
 Fri Jul 28 00:23:37 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
-	* ace/OS.h
-	  Slightly modified semaphore code for pace.
+        * ace/OS.h
+          Slightly modified semaphore code for pace.
 
-	* ace/OS.i
-	  Updated cond_timedwait in ACE_HAS_PACE to
-	  initialize name_ to null.
+        * ace/OS.i
+          Updated cond_timedwait in ACE_HAS_PACE to
+          initialize name_ to null.
 
-	  Linux uses native gettimeofday.
+          Linux uses native gettimeofday.
 
-	* docs/ACE-SSL.html
-	  Updated with new information about obtaining ACE+SSL.
+        * docs/ACE-SSL.html
+          Updated with new information about obtaining ACE+SSL.
 
 Thu Jul 27 18:03:24 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* include/makeinclude/platform_linux_lxpthread.GNU:
+        * include/makeinclude/platform_linux_lxpthread.GNU:
 
-	  Updated to include the current correct platform_linux.GNU.
+          Updated to include the current correct platform_linux.GNU.
 
 Thu Jul 27 18:17:36 2000  Steve Huston  <shuston@riverace.com>
 
@@ -29,25 +34,25 @@ Thu Jul 27 18:17:36 2000  Steve Huston  <shuston@riverace.com>
 
 Thu Jul 27 08:32:58 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
-	* ace/OS.i
-	  Qualified two pace functions with the correct
-	  pace_ name. Added preliminary pace implementation
-	  for ACE_OS::gettimeofday. See PACE/ChangeLog for
-	  other changes relevant to ACE_OS compiled with pace.
+        * ace/OS.i
+          Qualified two pace functions with the correct
+          pace_ name. Added preliminary pace implementation
+          for ACE_OS::gettimeofday. See PACE/ChangeLog for
+          other changes relevant to ACE_OS compiled with pace.
 
 Wed Jul 26 18:08:11 2000  Andrew G. Gilpin  <agg1@cs.wustl.edu>
 
-	* ace/Log_Record.cpp
-	* ace/ACE.cpp
-	* ace/Handle_Set.cpp
-	* ace/Capabilities.{cpp, h}
-	  Cosmetic changes required for split-cpp.
+        * ace/Log_Record.cpp
+        * ace/ACE.cpp
+        * ace/Handle_Set.cpp
+        * ace/Capabilities.{cpp, h}
+          Cosmetic changes required for split-cpp.
 
 Wed Jul 26 13:20:00 2000  Kirthika  Parameswaran  <kirthika@cs.wustl.edu>
 
-	* ace/Cached_Connect_Strategy_T.h
-	(ACE_Bounded_Cached_Connect_Strategy): Added a typedef member
-	which I assumed wrongly would be inherited from the superclass.
+        * ace/Cached_Connect_Strategy_T.h
+        (ACE_Bounded_Cached_Connect_Strategy): Added a typedef member
+        which I assumed wrongly would be inherited from the superclass.
 
 Tue Jul 25 22:41:53 2000  Steve Huston  <shuston@riverace.com>
 
@@ -62,96 +67,96 @@ Tue Jul 25 22:35:31 2000  Steve Huston  <shuston@riverace.com>
 
 Tue Jul 25 20:27:26 2000  Andrew G. Gilpin  <agg1@cs.wustl.edu>
 
-	* ace/Naming_Context.cpp:
-	  Cosmetic change required for split-cpp.
+        * ace/Naming_Context.cpp:
+          Cosmetic change required for split-cpp.
 
 Tue Jul 25 18:20:37 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
-	* include/makeinclude/wrapper_macros.GNU:
-	  Changed pace=1 code to check for inline=1, and
-	  include libPACE correctly.
+        * include/makeinclude/wrapper_macros.GNU:
+          Changed pace=1 code to check for inline=1, and
+          include libPACE correctly.
 
 Tue Jul 25 16:42:02 2000  Andrew G. Gilpin  <agg1@cs.wustl.edu>
 
-	* ace/Logging_Strategy.cpp:
-	  Changed #include "Logging_Strategy.h" to
-	          #include "ace/Logging_Strategy.h"
+        * ace/Logging_Strategy.cpp:
+          Changed #include "Logging_Strategy.h" to
+                  #include "ace/Logging_Strategy.h"
 
 Tue Jul 25 16:12:31 2000  Andrew G. Gilpin  <agg1@cs.wustl.edu>
 
-	* ace/Log_Msg.h:
-	  More cosmetic changes, similar to previous ChangeLog entry.
+        * ace/Log_Msg.h:
+          More cosmetic changes, similar to previous ChangeLog entry.
 
 Tue Jul 25 15:58:27 2000  Andrew G. Gilpin  <agg1@cs.wustl.edu>
 
-	* ace/Capabilities.{h, cpp}:
-	* ace/Filecache.cpp:
-	  More fixes to allow to be used by $ACE_ROOT/bin/split-cpp.
-	  These changes are merely cosmetic.
+        * ace/Capabilities.{h, cpp}:
+        * ace/Filecache.cpp:
+          More fixes to allow to be used by $ACE_ROOT/bin/split-cpp.
+          These changes are merely cosmetic.
 
 Tue Jul 25 13:30:00 2000  Kirthika  Parameswaran  <kirthika@cs.wustl.edu>
 
-	* ace/Cached_Connect_Strategy_T.{h, cpp}: Added
-	ACE_Bounded_Cached_Connect_Strategy which provides a bound on the
-	cache which is checked before creating new handlers. Thanks to
-	Edan Ayal  <edana@bandwiz.com> for contributing this class and
-	Susan Liebeskind  <shl@janis.gtri.gatech.edu> for brainstorming
-	about it.
+        * ace/Cached_Connect_Strategy_T.{h, cpp}: Added
+        ACE_Bounded_Cached_Connect_Strategy which provides a bound on the
+        cache which is checked before creating new handlers. Thanks to
+        Edan Ayal  <edana@bandwiz.com> for contributing this class and
+        Susan Liebeskind  <shl@janis.gtri.gatech.edu> for brainstorming
+        about it.
 
 Tue Jul 25 05:46:29 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Log_Msg.cpp (log): Optimized the check to make sure that
-	  ACE_Log_Msg isn't too long.  Now we can keep it in "non-debug" code!
-	  Thanks to Tomer for this suggestion.
+        * ace/Log_Msg.cpp (log): Optimized the check to make sure that
+          ACE_Log_Msg isn't too long.  Now we can keep it in "non-debug" code!
+          Thanks to Tomer for this suggestion.
 
 Mon Jul 24 22:49:09 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
-	* ace/OS_String.inl
+        * ace/OS_String.inl
 
-	  The emulation functions still need system libraries,
-	  which were not being included when ace was enabled.
+          The emulation functions still need system libraries,
+          which were not being included when ace was enabled.
 
 Mon Jul 24 21:22:03 2000  Andrew G. Gilpin  <agg1@cs.wustl.edu>
 
-	* ace/Remote_Tokens.cpp:
-	* ace/Signal.{cpp,h}:
-	* ace/Priority_Reactor.cpp:
-	* ace/Object_Manager.{cpp,h}:
-	* ace/OS.cpp:
-	* ace/Parse_Node.{cpp,h}:
+        * ace/Remote_Tokens.cpp:
+        * ace/Signal.{cpp,h}:
+        * ace/Priority_Reactor.cpp:
+        * ace/Object_Manager.{cpp,h}:
+        * ace/OS.cpp:
+        * ace/Parse_Node.{cpp,h}:
 
-	  The script $ACE_ROOT/bin/split-cpp makes some assumptions about the
-	  source code that it is working with. These changes allow split-cpp
-	  to be used with ACE. These fixes are all mostly code formatting changes.
-	  The functionality should not be changed in any case.
+          The script $ACE_ROOT/bin/split-cpp makes some assumptions about the
+          source code that it is working with. These changes allow split-cpp
+          to be used with ACE. These fixes are all mostly code formatting changes.
+          The functionality should not be changed in any case.
 
 Mon Jul 24 20:21:47 2000  Andrew G. Gilpin  <agg1@cs.wustl.edu>
 
-	* include/makeinclude/wrapper_macros.GNU
-	* include/makeinclude/rules.local.GNU
-	* include/makeinclude/rules.lib.GNU
-	  Added support for make split=1 which will use the split-cpp script
-	  when compiling. This should be considered an extremely beta,
-	  use-at-your-own-risk feature for the time being.
+        * include/makeinclude/wrapper_macros.GNU
+        * include/makeinclude/rules.local.GNU
+        * include/makeinclude/rules.lib.GNU
+          Added support for make split=1 which will use the split-cpp script
+          when compiling. This should be considered an extremely beta,
+          use-at-your-own-risk feature for the time being.
 
 Mon Jul 24 20:13:59 2000  Andrew G. Gilpin  <agg1@cs.wustl.edu>
 
-	* bin/split-cpp:
-	  Initial check-in. This script is used to split up C++ source files
-	  into smaller C++ source files, each containing one static data
-	  declaration or one function definition. For more information, see
-	  the comments at the top of the file.
+        * bin/split-cpp:
+          Initial check-in. This script is used to split up C++ source files
+          into smaller C++ source files, each containing one static data
+          declaration or one function definition. For more information, see
+          the comments at the top of the file.
 
 Mon Jul 24 20:02:03 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Process_Manager: Replaced ACE_Thread_Mutex with
- 	  ACE_Recursive_Thread_Mutex to avoid nasty self-deadlocks!
-  	  Thanks to Tom Arbuckle's <arbuckle@uran.informatik.uni-bonn.de>
-	  for reporting this.
+        * ace/Process_Manager: Replaced ACE_Thread_Mutex with
+          ACE_Recursive_Thread_Mutex to avoid nasty self-deadlocks!
+          Thanks to Tom Arbuckle's <arbuckle@uran.informatik.uni-bonn.de>
+          for reporting this.
 
-	* ace/Log_Msg.cpp (log): Added a sanity check to make sure that
- 	  long messages don't corrupt the memory.  Thanks to Tomer
-	  Amiaz <Tomer@bandwiz.com> for contributing this.
+        * ace/Log_Msg.cpp (log): Added a sanity check to make sure that
+          long messages don't corrupt the memory.  Thanks to Tomer
+          Amiaz <Tomer@bandwiz.com> for contributing this.
 
 Mon Jul 24 14:03:59 2000  Chad Elliott  <elliott_c@ociweb.com>
         * include/makeinclude/platform_vxworks5.x_g++.GNU
@@ -160,36 +165,36 @@ Mon Jul 24 14:03:59 2000  Chad Elliott  <elliott_c@ociweb.com>
 
 Mon Jul 24 10:30:35 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* OS_Dirent.inl: Added the deletion of the DIR.directory_name_
-	  and the DIR struct itself for the Win32 emulation.
+        * OS_Dirent.inl: Added the deletion of the DIR.directory_name_
+          and the DIR struct itself for the Win32 emulation.
 
 Sat Jul 22 22:10:35 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* config-win32-common.h
-	* config-win32-visualage.h:
+        * config-win32-common.h
+        * config-win32-visualage.h:
 
-	  By default WIN32 has FD_SETSIZE of 64, which places the limit
-	  between 61 and 64 on the number of clients a server using the
-	  Select Reactor can support at the same time (i.e., 64 - standard
-	  in, out, error).  Raised the limit to 1024.
+          By default WIN32 has FD_SETSIZE of 64, which places the limit
+          between 61 and 64 on the number of clients a server using the
+          Select Reactor can support at the same time (i.e., 64 - standard
+          in, out, error).  Raised the limit to 1024.
 
 Fri Jul 21 21:24:09 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Parse_Node.cpp: Updated the ACE_Object_Name and
-	  ACE_Function_Node constructors to use the new ACE::ldname()
-	  method rather than ACE::strnew().  Thanks to Chris Kohlhoff for
-	  this fix.
+        * ace/Parse_Node.cpp: Updated the ACE_Object_Name and
+          ACE_Function_Node constructors to use the new ACE::ldname()
+          method rather than ACE::strnew().  Thanks to Chris Kohlhoff for
+          this fix.
 
-	* ace/ACE.cpp: Added a new method called ACE::ldname() so that
-	  dynamic loading performed by the service configurator work the
- 	  same with BCB as with other compilers. With BCB, exported
- 	  functions from a DLL all have a "_" prepended. Previously you
- 	  had to explicitly add the "_" into the svc.conf or when you
- 	  called ACE_Service_Config::process_directive. This change
- 	  removes that need and makes BCB stuff source/config compatible
- 	  with other compilers. This change was prompted by Lothar
- 	  Werzinger <werzinger.lothar@krones.de> and was provided by
- 	  Christopher Kohlhoff <chris@kohlhoff.com>.
+        * ace/ACE.cpp: Added a new method called ACE::ldname() so that
+          dynamic loading performed by the service configurator work the
+          same with BCB as with other compilers. With BCB, exported
+          functions from a DLL all have a "_" prepended. Previously you
+          had to explicitly add the "_" into the svc.conf or when you
+          called ACE_Service_Config::process_directive. This change
+          removes that need and makes BCB stuff source/config compatible
+          with other compilers. This change was prompted by Lothar
+          Werzinger <werzinger.lothar@krones.de> and was provided by
+          Christopher Kohlhoff <chris@kohlhoff.com>.
 
 Fri Jul 21 19:22:20 2000  Carlos O'Ryan  <coryan@uci.edu>
 
