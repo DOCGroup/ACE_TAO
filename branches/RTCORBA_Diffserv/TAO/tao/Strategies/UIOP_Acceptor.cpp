@@ -550,6 +550,7 @@ TAO_UIOP_Acceptor::init_uiop_properties (void)
   int send_buffer_size = this->orb_core_->orb_params ()->sock_sndbuf_size ();
   int recv_buffer_size = this->orb_core_->orb_params ()->sock_rcvbuf_size ();
   int no_delay = 0;
+  int enable_network_priority = 0;
 
   TAO_Protocols_Hooks *tph = this->orb_core_->get_protocols_hooks (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
@@ -563,6 +564,7 @@ TAO_UIOP_Acceptor::init_uiop_properties (void)
         tph->call_server_protocols_hook (send_buffer_size,
                                          recv_buffer_size,
                                          no_delay,
+					 enable_network_priority,
                                          protocol_type);
 
       if(hook_result == -1)

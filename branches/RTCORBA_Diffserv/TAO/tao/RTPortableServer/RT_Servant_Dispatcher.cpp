@@ -5,6 +5,9 @@
 #include "tao/RTCORBA/Thread_Pool.h"
 #include "tao/ORB_Core.h"
 #include "tao/TAO_Server_Request.h"
+#include "tao/Transport.h"
+#include "tao/IIOP_Transport.h"
+#include "tao/IIOP_Connection_Handler.h"
 #include "tao/Service_Context.h"
 #include "tao/debug.h"
 
@@ -17,11 +20,13 @@ TAO_RT_Servant_Dispatcher::~TAO_RT_Servant_Dispatcher (void)
 void
 TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (TAO_POA &poa,
                                                       CORBA::Short servant_priority,
-                                                      TAO_Service_Context &request_service_context,
-                                                      TAO_Service_Context &reply_service_context,
+                                                      TAO_ServerRequest &req,
                                                       TAO_Object_Adapter::Servant_Upcall::Pre_Invoke_State &pre_invoke_state
                                                       ACE_ENV_ARG_DECL)
 {
+  TAO_Service_Context &request_service_context = req.request_service_context ();
+  TAO_Service_Context &reply_service_context = req.reply_service_context ();
+  	
   TAO_Thread_Pool *thread_pool =
     (TAO_Thread_Pool *) poa.thread_pool ();
 
@@ -57,11 +62,49 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (TAO_POA &poa,
       return;
     }
 
+  
+  
   // Remember current thread's priority.
   TAO_Protocols_Hooks *tph =
     poa.orb_core ().get_protocols_hooks (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
+  
+  
+  if (req.transport ()->tag () == TAO_TAG_IIOP_PROFILE)
+    {
+      /*
+	int send_buffer_size;
+	int recv_buffer_size;
+	int no_delay;
+	int enable_network_priority;
+      */
+      const char protocol [] = "iiop";
+      const char *protocol_type = protocol;
+      
+      TAO_RT_POA *rt_poa = ACE_dynamic_cast (TAO_RT_POA *,
+					     &poa);
 
+      TAO_IIOP_Transport *iiop_transport = ACE_dynamic_cast (TAO_IIOP_Transport *,
+							     req.transport ());
+      
+      CORBA::Policy* policy = rt_poa->server_protocol ();
+      
+      int result =
+	tph->update_server_protocol_properties (policy,
+						iiop_transport-> connection_handler (),
+						protocol_type);
+      if (result != 0)
+	ACE_ERROR((LM_ERROR,
+		   "Error in getting the effective protocol properties\n"));
+      
+      /*
+	iiop_transport ()->connection_handler ()->update_protocol_properties (send_buffer_size,
+	recv_buffer_size,
+	no_delay,
+	enable_network_priority);
+      */
+  }
+  
   if (tph->get_thread_CORBA_and_native_priority (pre_invoke_state.original_CORBA_priority_,
                                                  pre_invoke_state.original_native_priority_
                                                  ACE_ENV_ARG_PARAMETER)
