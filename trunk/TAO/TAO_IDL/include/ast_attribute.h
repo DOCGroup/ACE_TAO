@@ -109,6 +109,10 @@ public:
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
 
+  // Methods to add exceptions directly, used when copying node.
+  UTL_ExceptList *be_add_get_exceptions (UTL_ExceptList *t);
+  UTL_ExceptList *be_add_set_exceptions (UTL_ExceptList *t);
+
 private:
   // Data.
 
