@@ -189,27 +189,24 @@ client (void *arg)
   int i;
 
   // Automagic memory cleanup.
-  ACE_Auto_Basic_Array_Ptr <Write_Handler *> writers;
   Write_Handler **temp_writers;
   ACE_NEW_RETURN (temp_writers,
                   Write_Handler *[opt_nconnections],
                   0);
-  writers = temp_writers;
+  ACE_Auto_Basic_Array_Ptr <Write_Handler *> writers (temp_writers);
 
-  ACE_Auto_Basic_Array_Ptr <ASYS_TCHAR> failed_svc_handlers;
   ASYS_TCHAR *temp_failed;
   ACE_NEW_RETURN (temp_failed,
                   ASYS_TCHAR[opt_nconnections],
                   0);
-  failed_svc_handlers = temp_failed;
+  ACE_Auto_Basic_Array_Ptr <ASYS_TCHAR> failed_svc_handlers (temp_failed);
 
   // Automagic memory cleanup.
-  ACE_Auto_Array_Ptr <ACE_INET_Addr> addresses;
   ACE_INET_Addr *temp_addresses;
   ACE_NEW_RETURN (temp_addresses,
                   ACE_INET_Addr [opt_nconnections],
                   0);
-  addresses = temp_addresses;
+  ACE_Auto_Array_Ptr <ACE_INET_Addr> addresses (temp_addresses);
 
   // Initialize array.
   for (i = 0; i < opt_nconnections; i++)
