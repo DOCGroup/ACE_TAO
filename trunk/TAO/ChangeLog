@@ -1,3 +1,19 @@
+Tue Aug 27 10:03:57 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
+
+	* tests/ORB_shutdown/server.cpp:
+	* tests/ORB_shutdown/Foo_Bar.h:
+	* tests/ORB_shutdown/Foo_Bar.cpp:
+	* tests/ORB_shutdown/Makefile:
+	* tests/ORB_shutdown/run_test.pl:
+	* tests/ORB_shutdown/README:
+	* tests/ORB_shutdown/Foo_Bar.mpc:
+	* tests/ORB_shutdown/Test.idl:
+	* tests/ORB_shutdown/Foo_Bar.dsw:
+	* tests/ORB_shutdown/server.dsp (BuildCmds): A simple test to
+	  replicate the problem outlined in BUG 1265.
+
+	  Sorry folks, my mail id is long and I cant help it :(. 
+	
 Mon Aug 26 20:34:11 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/ast/ast_interface.cpp:
