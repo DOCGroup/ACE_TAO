@@ -66,8 +66,11 @@ public:
   /// assignment operator.
   CORBA_String_var &operator= (const CORBA_String_var &s);
 
-  /// access and modify.
+  /// @@@ (JP) TAO-specific, why is this here?
   operator char *();
+
+  /// Spec-defined read/write version.
+  operator char *&();
 
   /// only read privileges.
   operator const char *() const;
