@@ -1,3 +1,42 @@
+Fri Mar 14 14:08:08 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/cdr_op_ci.cpp:
+
+	  Moved generation of TAO::Any_*_Impl_T<>::(de)marshal_value()
+	  for local IDL declarations so the methods will appear before the
+	  guarded explicit template instantiation. ANSI requires
+	  that template specializations appear before an explicit
+	  instantiation, so compilers that require the explicit
+	  instantiation were reporting errors. Thanks to Phil
+	  Mesnier <mesnier_p@ociweb.com> for reporting the bug.
+
+        * tao/CurrentC.cpp:
+        * tao/IOPC.cpp:
+        * tao/PolicyC.cpp:
+        * tao/PortableInterceptorC.cpp:
+        * tao/TAOC.cpp:
+        * tao/IORManipulation/IORC.cpp:
+        * tao/Messaging/Messaging_No_ImplC.cpp:
+        * tao/Messaging/Messaging_RT_PolicyC.cpp:
+        * tao/Messaging/Messaging_SyncScope_PolicyC.cpp:
+        * tao/Messaging/TAO_ExtC.cpp:
+        * tao/PortableServer/PortableServerC.cpp:
+        * tao/RTCORBA/RTCORBAC.cpp:
+        * tao/RTCORBA/RTCORBAC.i:
+        * tao/RTPortableServer/RTPortableServerC.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactoryC.cpp:
+
+	  Edited hand-crafted files to conform to the changes above.
+
 Fri Mar 14 08:46:46 2003  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h:

@@ -495,18 +495,6 @@ TAO::Any_Impl_T<Messaging::SyncScopePolicy>::to_object (
   return 1;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
-    defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<Messaging::SyncScopePolicy,Messaging::SyncScopePolicy_var>;
-  template class TAO::Any_Impl_T<Messaging::SyncScopePolicy>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<Messaging::SyncScopePolicy, Messaging::SyncScopePolicy_var>
-# pragma instantiate TAO::Any_Impl_T<Messaging::SyncScopePolicy>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
-
 template<>
 CORBA::Boolean
 TAO::Any_Impl_T<Messaging::SyncScopePolicy>::marshal_value (TAO_OutputCDR &)
@@ -520,4 +508,13 @@ TAO::Any_Impl_T<Messaging::SyncScopePolicy>::demarshal_value (TAO_InputCDR &)
 {
   return 0;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+  template class TAO_Object_Manager<Messaging::SyncScopePolicy,Messaging::SyncScopePolicy_var>;
+  template class TAO::Any_Impl_T<Messaging::SyncScopePolicy>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate TAO_Object_Manager<Messaging::SyncScopePolicy, Messaging::SyncScopePolicy_var>
+# pragma instantiate TAO::Any_Impl_T<Messaging::SyncScopePolicy>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
