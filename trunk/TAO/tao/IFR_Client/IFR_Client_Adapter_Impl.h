@@ -41,26 +41,27 @@ public:
 
   virtual CORBA::Boolean interfacedef_cdr_insert (
       TAO_OutputCDR &cdr,
-      IR_InterfaceDef *object_type
+      CORBA_InterfaceDef_ptr object_type
     );
 
   virtual void interfacedef_any_insert (
       CORBA_Any &any,
-      IR_InterfaceDef *object_type
+      CORBA_InterfaceDef_ptr object_type
     );
 
-  virtual IR_InterfaceDef *get_interface (
-      CORBA::ORB_ptr orb,
-      const char *repo_id,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+  virtual void dispose (
+      CORBA_InterfaceDef_ptr orphan
     );
 
-  virtual CORBA_IRObject_ptr get_interface_def (
+  virtual CORBA_InterfaceDef_ptr get_interface (
       CORBA::ORB_ptr orb,
       const char *repo_id,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
+      CORBA::Environment &ACE_TRY_ENV
+    );
+
+  virtual CORBA_InterfaceDef_ptr get_interface_remote (
+      const CORBA::Object_ptr target,
+      CORBA_Environment &ACE_TRY_ENV
     );
 
   // Used to force the initialization of the ORB code.

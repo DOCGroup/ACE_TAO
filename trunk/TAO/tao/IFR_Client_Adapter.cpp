@@ -13,18 +13,23 @@ TAO_IFR_Client_Adapter::~TAO_IFR_Client_Adapter (void)
 
 CORBA::Boolean 
 TAO_IFR_Client_Adapter::interfacedef_cdr_insert (TAO_OutputCDR &,
-                                                 IR_InterfaceDef *)
+                                                 CORBA_InterfaceDef_ptr)
 {
   return 0;
 }
 
 void 
 TAO_IFR_Client_Adapter::interfacedef_any_insert (CORBA_Any &,
-                                                 IR_InterfaceDef *)
+                                                 CORBA_InterfaceDef_ptr)
 {
 }
 
-IR_InterfaceDef * 
+void
+TAO_IFR_Client_Adapter::dispose (CORBA_InterfaceDef_ptr)
+{
+}
+
+CORBA_InterfaceDef_ptr
 TAO_IFR_Client_Adapter::get_interface (CORBA::ORB_ptr,
                                        const char *,
                                        CORBA::Environment &)
@@ -32,10 +37,9 @@ TAO_IFR_Client_Adapter::get_interface (CORBA::ORB_ptr,
   return 0;
 }
 
-CORBA_IRObject_ptr
-TAO_IFR_Client_Adapter::get_interface_def (CORBA::ORB_ptr,
-                                           const char *,
-                                           CORBA::Environment &)
+CORBA_InterfaceDef_ptr
+TAO_IFR_Client_Adapter::get_interface_remote (const CORBA::Object_ptr,
+                                              CORBA_Environment &)
 {
   return 0;
 }

@@ -20,8 +20,6 @@
 #include "PolicyC.h"
 #include "ClientRequestInfo.h"
 
-class IR_InterfaceDef;
-
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
@@ -300,7 +298,7 @@ public:
   static void _tao_any_destructor (void*);
 
   virtual void make_domain_manager (
-      IR_InterfaceDef* object_type,
+      CORBA_InterfaceDef_ptr object_type,
       CORBA::Boolean constr_policy,
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()

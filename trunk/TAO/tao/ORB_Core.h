@@ -390,6 +390,12 @@ public:
   /// Gets the value of TAO_ORB_Core::ifr_client_adapter_name_.
   static const char *ifr_client_adapter_name (void);
 
+  /// Sets the value of TAO_ORB_Core::typecodefactory_adapter_name_.
+  static void typecodefactory_adapter_name (const char *name);
+
+  /// Gets the value of TAO_ORB_Core::typecodefactory_adapter_name_.
+  static const char *typecodefactory_adapter_name (void);
+
   /// See if we have a collocated address, if yes, return the POA
   /// associated with the address.
   int is_collocated (const TAO_MProfile& mprofile);
@@ -996,6 +1002,13 @@ protected:
   // If TAO_IFR_CLient is linked, ifr_client_adapter_name() will be
   // called to set the value to "Concrete_IFR_Client_Adapter".
   static const char *ifr_client_adapter_name_;
+
+  // Name of the service object used by the ORB create_*_tc functions.
+  // The default value is "TypeCodeFactory_Adapter". If the
+  // TypeCodeFactory library is linked, the corresponding accessor
+  // function typecodefactory_adapter_name() will be called to set
+  // the value to "Concrete_TypeCodeFactory_Adapter".
+  static const char *typecodefactory_adapter_name_;
 
   // @@ This is not needed since the default resource factory
   //    is staticaly added to the service configurator.

@@ -5,6 +5,9 @@
 #include "tao/Any.h"
 #include "tao/Stub.h"
 #include "tao/Invocation.h"
+#include "tao/IFR_Client_Adapter.h"
+
+#include "ace/Dynamic_Service.h"
 
 ACE_RCSID(tao, TAO_Remote_Object_Proxy_Impl, "$Id$")
 
@@ -90,8 +93,9 @@ TAO_Remote_Object_Proxy_Impl::_is_a (const CORBA::Object_ptr target,
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
-CORBA::Boolean TAO_Remote_Object_Proxy_Impl::_non_existent (const CORBA::Object_ptr target,
-                                                            CORBA_Environment &ACE_TRY_ENV)
+CORBA::Boolean 
+TAO_Remote_Object_Proxy_Impl::_non_existent (const CORBA::Object_ptr target,
+                                             CORBA_Environment &ACE_TRY_ENV)
 {
   CORBA::Boolean _tao_retval = 0;
 
@@ -158,6 +162,25 @@ CORBA::Boolean TAO_Remote_Object_Proxy_Impl::_non_existent (const CORBA::Object_
     }
   ACE_ENDTRY;
   return _tao_retval;
+}
+
+CORBA_InterfaceDef_ptr
+TAO_Remote_Object_Proxy_Impl::_get_interface (const CORBA::Object_ptr target,
+                                              CORBA_Environment &ACE_TRY_ENV)
+{
+  TAO_IFR_Client_Adapter *adapter =
+    ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
+        TAO_ORB_Core::ifr_client_adapter_name ()
+      );
+
+  if (adapter == 0)
+    {
+      ACE_THROW_RETURN (CORBA::INTF_REPOS (),
+                        0);
+    }
+
+  return adapter->get_interface_remote (target,
+                                        ACE_TRY_ENV);
 }
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
