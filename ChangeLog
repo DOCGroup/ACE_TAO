@@ -1,3 +1,11 @@
+Thu Feb 12 10:40:40 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* docs/ACE-categories.html:
+
+	  Fixed the url location. But the file names will not work since
+	  we have broken the  name generation in doxygen. We will fix that
+	  next. 
+
 Thu Feb 12 09:34:37 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/depgen.pl:
