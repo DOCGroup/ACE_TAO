@@ -1,7 +1,7 @@
 Mon Jan  6 18:31:09 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* bin/generate_topinfo_charts.sh: Removed the range for the
-	  Y-AXIS, for the graph to auto-adjust while plotting.
+	  Y-AXIS, for the graphs to auto-adjust while plotting.
 
 Mon Jan  6 16:56:04 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
