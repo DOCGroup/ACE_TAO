@@ -1,3 +1,9 @@
+Thu Dec  2 11:41:37 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.h:
+          Removed miscellaneous warnings caught by the nightly builds.
+
 Thu Dec  2 00:32:20 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/server.conf:
