@@ -5,8 +5,8 @@ Sun Apr 11 23:55:50 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tests/Param_Test/param_test.idl
 	* tests/Param_Test/param_test_i.cpp
 	* tests/Param_Test/param_test_i.h
-	Blanked of code for Multi dimensional arrays. We had a nasty stuff
-	compile problem on NT.
+	  Temporarily comments out test code for Multi-dimensional arrays
+ 	  due to nasty compile bugs on NT.
 
 Sun Apr 11 19:38:39 1999  Marina Spivak  <marina@cs.wustl.edu>
 
