@@ -34,13 +34,6 @@ template <class TYPE>
 class ACE_Timer_Node_Dispatch_Info_T
 {
 public:
-
-  /// Default Constructor
-  ACE_Timer_Node_Dispatch_Info_T (void);
-
-  /// Dtor
-  ~ACE_Timer_Node_Dispatch_Info_T (void);
-
   // The type of object held in the queue
   TYPE type_;
 
