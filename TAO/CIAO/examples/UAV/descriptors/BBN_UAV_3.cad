@@ -44,7 +44,7 @@
           </registercomponent>
         </componentinstantiation>
       </homeplacement>
-     <destination>SatelliteHost</destination>
+     <destination>CAOCHost</destination>
     </processcollocation>
 
 
