@@ -25,7 +25,7 @@ main (int argc, char *argv[])
 
       char key[MAX_KEY_LEN];
 
-      while (ACE_OS::fgets (key, sizeof key, ACE_STDIN))
+      while (ACE_OS::fgets (key, sizeof key, stdin))
         // stream ops are just too slow!!
         {
           ACE_CString string (key);
@@ -46,7 +46,7 @@ main (int argc, char *argv[])
       if (!freopen (argv[3], "r", stdin))
         perror (argv[0]), exit (1);
 
-      while (ACE_OS::fgets (key, sizeof key, ACE_STDIN))
+      while (ACE_OS::fgets (key, sizeof key, stdin))
         {
           ACE_CString name (key);
           ACE_CString value;
@@ -57,7 +57,7 @@ main (int argc, char *argv[])
       if (!freopen (argv[3], "r", stdin))
         perror (argv[0]), exit (1);
 
-      while (ACE_OS::fgets (key, sizeof key, ACE_STDIN))
+      while (ACE_OS::fgets (key, sizeof key, stdin))
         {
           ACE_CString string (key);
           assert (hash.unbind (string) != -1);
