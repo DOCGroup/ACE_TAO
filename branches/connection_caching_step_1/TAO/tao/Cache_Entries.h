@@ -134,6 +134,7 @@ public:
   // Make a deep copy of the underlying pointer
 
   CORBA::ULong index (void);
+  CORBA::ULong index (void) const;
   // Return the index value
 
   void index (CORBA::ULong index);
@@ -141,6 +142,8 @@ public:
   // but for the TAO_Connection_Cache_Manager class.
 
   // = Accessors
+  TAO_Base_Connection_Property *property (void) const;
+  // Get the underlying the property pointer
 
 private:
   // = Data members.
