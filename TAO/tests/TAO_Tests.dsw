@@ -51,7 +51,19 @@ Package=<4>
 
 ###############################################################################
 
-Project: "InterOperable Naming Service"=".\InterOp-Naming\InterOp_test.dsp" - Package Owner=<4>
+Project: "InterOp Naming Client"=".\InterOp-Naming\client.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "InterOp Naming Server"=".\InterOp-Naming\server.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
