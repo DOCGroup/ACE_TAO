@@ -200,7 +200,7 @@ private:
 
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace_Hash_Bucket_T.cpp"
+#include "ace/Hash_Bucket_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif /* ACE_HASH_BUCKET_T_H */
