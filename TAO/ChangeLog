@@ -1,7 +1,10 @@
 Wed Aug 28 06:06:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Invocation.h:
-          Fixed doxygen warnings
+          Fixed doxygen warnings.
+
+        * tao/AbstractBase.h:
+          Fixed doxygen command.
 
 Tue Aug 27 18:31:53 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
 
@@ -214,8 +217,8 @@ Sun Aug 25 16:36:53 2002  Jeff Parsons <parsons@cs.wustl.edu>
           includes where the same local filename appears in
           different subdiretories, and where a complete path
           name is a substring of another one. Thanks to
-          Robert Hancock <hancock@SEDSystems.ca>, Andy Olson 
-          <andrew.olson@lmco.com>, and to Terry Ware 
+          Robert Hancock <hancock@SEDSystems.ca>, Andy Olson
+          <andrew.olson@lmco.com>, and to Terry Ware
           <terry.ware@dc.alphatech.com> for reporting the bug.
           This fix applies to [BUGID:821] and [BUGID:1225], but
           I will wait to see if the fix works on all platforms
@@ -334,7 +337,7 @@ Fri Aug 23 18:52:46 2002  Ossama Othman  <ossama@uci.edu>
 	  (_tao_get_omg_exception_description):
 
 	  Updated a number of system exception minor code descriptions.
-	
+
 	* tao/CORBALOC_Parser.cpp:
 
 	  Nuked trailing whitespace.
