@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-
 // $Id$
 
 // ============================================================================
@@ -35,10 +34,12 @@ class TAO_ORBSVCS_Export NS_NamingContext : public POA_CosNaming::NamingContext
   enum
   {
     NS_MAP_SIZE = 23
+    // @@ Marina, why is this starting with such an odd value?
     // The size of hash map for a NS_NamingContext object.
   };
 
-  typedef ACE_Hash_Map_Manager<NS_ExtId, NS_IntId, ACE_Null_Mutex> HASH_MAP;
+  typedef ACE_Hash_Map_Manager<NS_ExtId, NS_IntId, ACE_Null_Mutex> 
+          HASH_MAP;
          
   NS_NamingContext (void);
   // default constructor.
@@ -46,6 +47,7 @@ class TAO_ORBSVCS_Export NS_NamingContext : public POA_CosNaming::NamingContext
   ~NS_NamingContext (void);
   // destructor.
 
+  // @@ Marina, can you please add comments to these methods?
   virtual void bind (const CosNaming::Name &n, 
 		     CORBA::Object_ptr obj, 
 		     CORBA::Environment &IT_env);
@@ -119,7 +121,7 @@ class TAO_ORBSVCS_Export NS_BindingIterator : public POA_CosNaming::BindingItera
   ~NS_BindingIterator (void);
   // destructor.
 
-  // Marina, please add comments.
+  // @@ Marina, please add comments.
   CORBA::Boolean next_one (CosNaming::Binding_out b, 
 			   CORBA::Environment &IT_env);
  
