@@ -1,3 +1,9 @@
+Mon Mar 13 12:55:14 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Faults/run_test.pl: Removed the core file that gets
+	  generated in the test. The client is crashed to test the
+	  robustness of the server. 
+
 Mon Mar 13 10:19:08 2000  Bala  <bala@cs.wustl.edu>
 
         * TAO version 1.0.16 released.
@@ -23,6 +29,7 @@ Sun Mar 12 18:42:26 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
         * orbsvcs/orbsvcs/orbsvcs_static.dsp:
           Updated Notify files.
 
+>>>>>>> 1.312
 Sun Mar 12 10:23:21 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Notify/Notify_Types.cpp:
