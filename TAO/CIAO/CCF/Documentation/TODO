@@ -72,7 +72,7 @@ Legend:
 
 @% IDL feature: attribute (completion) (left: exception spec)
 
-@@ IDL feature: valuetype (4)
+@% IDL feature: valuetype (4)
 
 @% IDL feature: event (completion); do after (4)
 

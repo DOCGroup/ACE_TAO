@@ -91,6 +91,12 @@ namespace CCF
 
           // EventType
           //
+          act_event_type_begin_abstract_def (
+            f.event_type (), &SemanticAction::EventType::begin_abstract_def),
+
+          act_event_type_begin_abstract_fwd (
+            f.event_type (), &SemanticAction::EventType::begin_abstract_fwd),
+
           act_event_type_begin_concrete_def (
             f.event_type (), &SemanticAction::EventType::begin_concrete_def),
 
@@ -99,6 +105,9 @@ namespace CCF
 
           act_event_type_inherits (
             f.event_type (), &SemanticAction::EventType::inherits),
+
+          act_event_type_supports (
+            f.event_type (), &SemanticAction::EventType::supports),
 
           act_event_type_open_scope (
             f.event_type (), &SemanticAction::EventType::open_scope),
@@ -160,9 +169,24 @@ namespace CCF
     {
       IDL2::Parser::extension =
            component_decl
-        |  eventtype_decl
+        |  concrete_event_type_decl
         |  home_decl
         |  extension
+        ;
+
+      IDL2::Parser::abstract_type_decl =
+           ABSTRACT
+        >> guard
+           (
+             assertion ("interface, valuetype or eventtype declaration expected")
+             (
+                 (INTERFACE >> assertion ()(abstract_interface_decl))
+               |
+                 (VALUETYPE >> assertion ()(abstract_value_type_decl))
+               |
+                 (EVENTTYPE >> assertion ()(abstract_event_type_decl))
+             )
+           )[error_handler]
         ;
 
       // component
@@ -271,51 +295,135 @@ namespace CCF
         >> SEMI
         ;
 
+      //@@ action name inconsistency: act_event_type_bagin_abstract_ftw
+      //   and act_abstract_value_type...
+
 
       // eventtype
       //
       //
-      eventtype_decl =
-           EVENTTYPE
-        >> (
-               (
-                    simple_identifier
-                 >> SEMI[act_event_type_begin_concrete_fwd][act_event_type_end]
-               )
-             |
-               (
-                    (
-                         simple_identifier
-                      >> COLON
-                    )[act_event_type_begin_concrete_def]
-                 >> eventtype_inheritance_spec
-                 >> LBRACE[act_event_type_open_scope]
-                 >> eventtype_def_trailer
-               )
-             |
-               (
-                    (
-                         simple_identifier
-                      >> LBRACE
-                    )[act_event_type_begin_concrete_def][act_event_type_open_scope]
-                 >> eventtype_def_trailer
-               )
-           )
+      abstract_event_type_decl =
+        guard
+        (
+            (
+                 simple_identifier
+              >> SEMI
+            )[act_event_type_begin_abstract_fwd][act_event_type_end]
+          |
+            (
+                 (
+                   simple_identifier
+                   >> COLON
+                 )[act_event_type_begin_abstract_def]
+
+              >> event_type_inheritance_spec
+              >> !(SUPPORTS >> event_type_supports_spec)
+              >> LBRACE[act_event_type_open_scope]
+              >> event_type_def_trailer
+            )
+          |
+            (
+                 (
+                           simple_identifier
+                        >> SUPPORTS
+                 )[act_event_type_begin_abstract_def]
+
+              >> event_type_supports_spec
+              >> LBRACE[act_event_type_open_scope]
+              >> event_type_def_trailer
+            )
+          |
+            (
+                 (
+                      simple_identifier
+                   >> LBRACE
+                 )[act_event_type_begin_abstract_def][act_event_type_open_scope]
+
+              >> event_type_def_trailer
+            )
+        )[error_handler]
+        ;
+
+      concrete_event_type_decl =
+        guard
+        (
+             EVENTTYPE
+          >> (
+                 (
+                      simple_identifier
+                   >> SEMI
+                 )[act_event_type_begin_concrete_fwd][act_event_type_end]
+               |
+                 (
+                      (
+                           simple_identifier
+                        >> COLON
+                      )[act_event_type_begin_concrete_def]
+
+                   >> event_type_inheritance_spec
+                   >> !(SUPPORTS >> event_type_supports_spec)
+                   >> LBRACE[act_event_type_open_scope]
+                   >> event_type_def_trailer
+                 )
+               |
+                 (
+                      (
+                           simple_identifier
+                        >> SUPPORTS
+                      )[act_event_type_begin_concrete_def]
+
+                   >> event_type_supports_spec
+                   >> LBRACE[act_event_type_open_scope]
+                   >> event_type_def_trailer
+                 )
+               |
+                 (
+                      (
+                           simple_identifier
+                        >> LBRACE
+                      )[act_event_type_begin_concrete_def][act_event_type_open_scope]
+
+                   >> event_type_def_trailer
+                 )
+             )
+        )[error_handler]
         ;
 
 
-      eventtype_def_trailer =
-//         eventtype_body
-           RBRACE[act_event_type_close_scope]
+      event_type_inheritance_spec =
+           identifier[act_event_type_inherits]
+        >> *(
+                 COMMA
+              >> identifier[act_event_type_inherits]
+            )
+        ;
+
+      event_type_supports_spec =
+           identifier[act_event_type_supports]
+        >> *(
+                 COMMA
+              >> identifier[act_event_type_supports]
+            )
+        ;
+
+      event_type_def_trailer =
+           event_type_body
+        >> RBRACE[act_event_type_close_scope]
         >> SEMI[act_event_type_end]
         ;
 
-      //@@ inconsistent usage of eventype/event_type.
-      //
+      event_type_body =
+        *(
+             const_decl
+           | type_decl
+           | type_id_decl
+           | type_prefix_decl
 
-      eventtype_inheritance_spec =
-           identifier[act_event_type_inherits]
-        >> *(COMMA >> identifier[act_event_type_inherits])
+           | attribute_decl
+           | operation_decl
+           | value_type_member_decl
+           | value_type_factory_decl
+        )
         ;
 
       //
@@ -348,7 +456,12 @@ namespace CCF
 
       home_body =
         *(
-             attribute_decl
+             const_decl
+           | type_decl
+           | type_id_decl
+           | type_prefix_decl
+
+           | attribute_decl
            | operation_decl
            | home_factory_decl
            | home_finder_decl

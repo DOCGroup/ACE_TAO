@@ -14,6 +14,7 @@
 #include "CCF/IDL2/Traversal/Interface.hpp"
 #include "CCF/IDL2/Traversal/Member.hpp"
 #include "CCF/IDL2/Traversal/Module.hpp"
+#include "CCF/IDL2/Traversal/Native.hpp"
 #include "CCF/IDL2/Traversal/Operation.hpp"
 #include "CCF/IDL2/Traversal/Struct.hpp"
 #include "CCF/IDL2/Traversal/Sequence.hpp"

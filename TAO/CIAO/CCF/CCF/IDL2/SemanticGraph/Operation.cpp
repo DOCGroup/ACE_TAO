@@ -77,21 +77,6 @@ namespace CCF
       // Parameter
       //
       //
-      Parameter::Direction const
-        Parameter::Direction::in (Parameter::Direction::in_),
-        Parameter::Direction::out (Parameter::Direction::out_),
-        Parameter::Direction::inout (Parameter::Direction::inout_);
-
-      namespace
-      {
-        char const* direction_labels_[] = {"in", "out", "inout"};
-      }
-
-      Parameter::Direction::operator char const* () const
-      {
-        return direction_labels_[v_];
-      }
-
       namespace
       {
         TypeInfo

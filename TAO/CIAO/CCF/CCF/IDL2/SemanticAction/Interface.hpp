@@ -13,9 +13,6 @@ namespace CCF
   {
     namespace SemanticAction
     {
-      //
-      //
-      //
       class Interface : public virtual Scope
       {
       public:
@@ -27,19 +24,19 @@ namespace CCF
 
         virtual void
         begin_abstract_fwd (SimpleIdentifierPtr const& id) = 0;
-        
+
         virtual void
         begin_local_def (SimpleIdentifierPtr const& id) = 0;
 
         virtual void
         begin_local_fwd (SimpleIdentifierPtr const& id) = 0;
-        
+
         virtual void
         begin_unconstrained_def (SimpleIdentifierPtr const& id) = 0;
 
         virtual void
         begin_unconstrained_fwd (SimpleIdentifierPtr const& id) = 0;
-        
+
         virtual void
         inherits (IdentifierPtr const& id) = 0;
 

@@ -18,8 +18,8 @@ module_suffix         :=
 
 CXX_PREPROCESS_FLAGS  += -I$(root) -I$(UTILITY_ROOT) -I$(BOOST_ROOT)
 
-#                         -L$(root)/CCF/CompilerElements  \
-#                         -lCompilerElements              \
+#                         -L$(UTILITY_ROOT)/Utility/Introspection \
+#                         -lIntrospection                         \
 
 CXX_LINK_LIBS         += -L$(root)/CCF/CIDL              \
                          -lCIDL                          \
@@ -29,8 +29,8 @@ CXX_LINK_LIBS         += -L$(root)/CCF/CIDL              \
                          -lIDL2                          \
                          -L$(root)/CCF/CodeGenerationKit \
                          -lCodeGenerationKit             \
-                         -L$(UTILITY_ROOT)/Utility/Introspection \
-                         -lIntrospection                         \
+                         -L$(root)/CCF/CompilerElements  \
+                         -lCompilerElements              \
                          -L$(BOOST_ROOT)/lib             \
                          -lboost_regex                   \
                          -lboost_filesystem

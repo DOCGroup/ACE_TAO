@@ -19,7 +19,6 @@ namespace CCF
       Node<SemanticGraph::FundamentalType>
       FundamentalType;
 
-
       typedef
       Node<SemanticGraph::Object>
       Object;

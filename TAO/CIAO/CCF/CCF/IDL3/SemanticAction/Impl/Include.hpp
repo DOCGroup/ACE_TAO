@@ -31,31 +31,36 @@ namespace CCF
         // Note: overriding IDL2 include to allow inclusion of IDL3 files
         //
         //
-        class IncludeImpl
+        class Include : public virtual IDL2::SemanticAction::Include
         {
-        protected:
+        public:
           virtual
-          ~IncludeImpl () throw ();
+          ~Include () throw ();
 
-          enum Type
-          {
-            system,
-            user
-          };
-
-          IncludeImpl (Context& c,
-                       CompilerElements::Context& context,
-                       Diagnostic::Stream& dout,
-                       SemanticAction::Factory& action_factory,
-                       Type type);
+          Include (Context& c,
+                   CompilerElements::Context& context,
+                   Diagnostic::Stream& dout,
+                   SemanticAction::Factory& action_factory);
 
           virtual void
-          begin_impl (StringLiteralPtr const& sl);
+          quote (StringLiteralPtr const& sl);
 
           virtual void
-          end_impl ();
+          bracket (StringLiteralPtr const& sl);
+
+          virtual void
+          end ();
 
         private:
+          enum Type_
+          {
+            quote_,
+            bracket_
+          };
+
+          virtual void
+          impl (StringLiteralPtr const& sl, Type_ type);
+
           bool
           handle_already_included (fs::path const& path,
                                    StringLiteralPtr const& sl);
@@ -65,8 +70,6 @@ namespace CCF
           CompilerElements::Context& context_;
           Diagnostic::Stream& dout_;
           SemanticAction::Factory& action_factory_;
-
-          Type type_;
 
           std::stack<SemanticGraph::TranslationRegion*> stack_;
           std::stack<fs::path> abs_path_stack_, rel_path_stack_;
@@ -80,84 +83,6 @@ namespace CCF
           };
 
           std::set<fs::path, FilePathComparator> include_file_set_;
-        };
-
-
-        //
-        //
-        //
-        struct Include : virtual IDL2::SemanticAction::Include, IncludeImpl
-        {
-          virtual
-          ~Include () throw ()
-          {
-          }
-
-          Include (Context& c,
-                   CompilerElements::Context& context,
-                   Diagnostic::Stream& dout,
-                   SemanticAction::Factory& action_factory)
-              : IncludeImpl (c,
-                             context,
-                             dout,
-                             action_factory,
-                             IncludeImpl::user)
-          {
-          }
-
-          virtual void
-          begin (StringLiteralPtr const& sl)
-          {
-            begin_impl (sl);
-          }
-
-          virtual void
-          end ()
-          {
-            end_impl ();
-          }
-        };
-
-        //
-        //
-        //
-        struct SystemInclude : virtual IDL2::SemanticAction::SystemInclude,
-                               IncludeImpl
-        {
-          virtual
-          ~SystemInclude () throw ()
-          {
-          }
-
-          SystemInclude (Context& c,
-                         CompilerElements::Context& context,
-                         Diagnostic::Stream& dout,
-                         SemanticAction::Factory& action_factory)
-              : IncludeImpl (c,
-                             context,
-                             dout,
-                             action_factory,
-                             IncludeImpl::system)
-          {
-          }
-
-          virtual void
-          begin (StringLiteralPtr const& sl)
-          {
-            //@@ This is a really dirty hack. Need to think of
-            //   a mechanism to address this issue.
-            //
-            if (sl->value () != "Components.idl")
-            {
-              begin_impl (sl);
-            }
-          }
-
-          virtual void
-          end ()
-          {
-            end_impl ();
-          }
         };
       }
     }

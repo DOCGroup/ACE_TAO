@@ -32,6 +32,69 @@ namespace CCF
 
       TypeInfo const& Attribute::
       static_type_info () { return attribute_; }
+
+
+      // ReadAttribute
+      //
+      //
+      namespace
+      {
+        TypeInfo
+        read_attribute_init_ ()
+        {
+          TypeInfo ti (typeid (ReadAttribute));
+          ti.add_base (Access::PUBLIC, true, Attribute::static_type_info ());
+          return ti;
+        }
+
+        TypeInfo read_attribute_ (read_attribute_init_ ());
+      }
+
+      TypeInfo const& ReadAttribute::
+      static_type_info () { return read_attribute_; }
+
+
+      // WriteAttribute
+      //
+      //
+      namespace
+      {
+        TypeInfo
+        write_attribute_init_ ()
+        {
+          TypeInfo ti (typeid (WriteAttribute));
+          ti.add_base (Access::PUBLIC, true, Attribute::static_type_info ());
+          return ti;
+        }
+
+        TypeInfo write_attribute_ (write_attribute_init_ ());
+      }
+
+      TypeInfo const& WriteAttribute::
+      static_type_info () { return write_attribute_; }
+
+
+      // ReadWriteAttribute
+      //
+      //
+      namespace
+      {
+        TypeInfo
+        read_write_attribute_init_ ()
+        {
+          TypeInfo ti (typeid (ReadWriteAttribute));
+          ti.add_base (
+            Access::PUBLIC, true, ReadAttribute::static_type_info ());
+          ti.add_base (
+            Access::PUBLIC, true, WriteAttribute::static_type_info ());
+          return ti;
+        }
+
+        TypeInfo read_write_attribute_ (read_write_attribute_init_ ());
+      }
+
+      TypeInfo const& ReadWriteAttribute::
+      static_type_info () { return read_write_attribute_; }
     }
   }
 }

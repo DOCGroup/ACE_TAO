@@ -32,7 +32,6 @@ namespace CCF
               include_ (ctx_, context, dout, *this),
               provides_ (ctx_),
               publishes_ (ctx_),
-              system_include_ (ctx_, context, dout, *this),
               uses_ (ctx_)
         {
         }

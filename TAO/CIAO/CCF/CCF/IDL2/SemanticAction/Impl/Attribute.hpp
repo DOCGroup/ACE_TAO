@@ -29,13 +29,22 @@ namespace CCF
           Attribute (Context& c);
 
           virtual void
+          begin_ro ();
+
+          virtual void
+          begin_rw ();
+
+          virtual void
           type (IdentifierPtr const& id);
 
           virtual void
           name (SimpleIdentifierPtr const& id);
 
+          virtual void
+          end ();
+
         private:
-          SemanticGraph::Type* type_;
+          SemanticGraph::Attribute* a_;
         };
       }
     }

@@ -19,7 +19,6 @@ using std::string;
 using std::ostream;
 using std::endl;
 
-
 using namespace CCF::CIDL;
 using namespace CCF::CIDL::SemanticGraph;
 
@@ -900,7 +899,10 @@ namespace
     }
   };
 
-  struct ParameterEmitter : Traversal::Parameter, public Emitter
+  struct ParameterEmitter : Traversal::InParameter,
+                            Traversal::OutParameter,
+                            Traversal::InOutParameter,
+                            public Emitter
   {
     ParameterEmitter (Context& c, ostream& os)
         : Emitter (c, os)
@@ -908,15 +910,39 @@ namespace
     }
 
     virtual void
-    pre (Type& p)
+    pre (InParameter& p)
     {
-      os << p.direction () << " ";
+      os << " in ";
     }
 
     virtual void
-    name (Type& p)
+    pre (OutParameter& p)
     {
-      os << " " << p.name ();
+      os << " out ";
+    }
+
+    virtual void
+    pre (InOutParameter& p)
+    {
+      os << " inout ";
+    }
+
+    virtual void
+    name (InParameter& p)
+    {
+      os << p.name ();
+    }
+
+    virtual void
+    name (OutParameter& p)
+    {
+      os << p.name ();
+    }
+
+    virtual void
+    name (InOutParameter& p)
+    {
+      os << p.name ();
     }
   };
 
