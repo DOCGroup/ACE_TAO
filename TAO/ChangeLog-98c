@@ -1,5 +1,8 @@
 Wed Jun 10 16:09:49 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
+        * tao/ORB.cpp: fixed template instantiations: ACE_SYNCH_MUTEX
+ 	  instead of ACE_SYNCH_RW_MUTEX.
+
 	* tao/POAS.h (POA_PortableServer): Added missing TAO_Exports.
 
 	* tests/POA/DSI: New test directory to show DSI features in TAO.
