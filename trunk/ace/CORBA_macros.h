@@ -154,9 +154,9 @@
        catch (...) \
          {
 
-#   if defined (ACE_HAS_DEPRICATED_ACE_RETHROW)
+#   if defined (ACE_HAS_DEPRECATED_ACE_RETHROW)
 #     define ACE_RETHROW throw
-#   endif /* ACE_HAS_DEPRICATED_ACE_RETHROW */
+#   endif /* ACE_HAS_DEPRECATED_ACE_RETHROW */
 
 // Rethrowing the exception from catch blocks.
 # define ACE_RE_THROW throw
@@ -313,12 +313,12 @@
 // support, we simply catch all CORBA exceptions for ACE_CATCHALL.
 # define ACE_CATCHALL ACE_CATCHANY
 
-#   if defined (ACE_HAS_DEPRICATED_ACE_RETHROW)
+#   if defined (ACE_HAS_DEPRECATED_ACE_RETHROW)
 #     define ACE_RETHROW \
         do \
           ACE_TRY_ENV = ACE_CAUGHT_ENV; \
         while (0)
-#   endif /* ACE_HAS_DEPRICATED_ACE_RETHROW */
+#   endif /* ACE_HAS_DEPRECATED_ACE_RETHROW */
 
 // Rethrowing exception within catch blocks.  Notice that we depends
 // on the ACE_CHECK/ACE_CHECK_RETURN following the ACE_ENDTRY, or
