@@ -110,7 +110,7 @@ POA_CORBA::_tao_collocated_Current::_tao_collocated_Current (
     POA_CORBA::Current_ptr  servant,
     STUB_Object *stub
   )
-  : ACE_NESTED_CLASS (CORBA,Current) (),
+  : CORBA_Current (),
     CORBA_Object (stub, servant, CORBA::B_TRUE),
     servant_ (servant)
 {

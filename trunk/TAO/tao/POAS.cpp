@@ -2859,7 +2859,7 @@ POA_PortableServer::_tao_collocated_Current::_tao_collocated_Current (
     STUB_Object *stub
   )
   : ACE_NESTED_CLASS (PortableServer, Current) (stub, servant, CORBA::B_TRUE),
-    POA_CORBA::_tao_collocated_Current (servant, stub),
+    ACE_NESTED_CLASS (POA_CORBA,_tao_collocated_Current) (servant, stub),
     CORBA_Object (stub, servant, CORBA::B_TRUE),
     servant_ (servant)
 {
