@@ -106,6 +106,12 @@ TAO_UIPMC_Profile::~TAO_UIPMC_Profile (void)
 }
 
 int
+TAO_UIPMC_Profile::decode_endpoints (void)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+int
 TAO_UIPMC_Profile::decode_profile (TAO_InputCDR& cdr)
 {
   CORBA::UShort port = 0;
