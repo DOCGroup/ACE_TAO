@@ -1244,29 +1244,6 @@ private:
   // pointer to actual lock
 };
 
-#if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
-class ACE_Export ACE_TSS_Cleanup_Lock
-  // = TITLE
-  //     Provide an interface to access TSS cleanup lock for
-  //     Win32 and emulated TSS.
-  //
-  // = DESCRIPTION
-  //     This class is used to serialize the access
-  //     of ACE_TSS_Cleanup object in OS.cpp.
-{
-public:
-  static ACE_Thread_Mutex *instance (void);
-  // static lock access point
-
-  static void cleanup (void *instance, void *);
-  // Cleanup method, used by ACE_Object_Manager to destroy the singleton.
-
-private:
-  static ACE_Thread_Mutex *mutex_;
-  // pointer to actual lock
-};
-#endif /* ACE_WIN32 || ACE_HAS_TSS_EMULATION */
-
 #endif /* ACE_HAS_THREADS */
 
 #if defined (__ACE_INLINE__)
