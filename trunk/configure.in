@@ -1,7 +1,7 @@
 dnl
 dnl $Id$
 
-AC_REVISION($Revision 0.69 $)dnl
+AC_REVISION($Revision 0.70 $)dnl
 
 dnl
 dnl An autoconf script to automatically configure ACE.
@@ -3964,25 +3964,55 @@ AC_CHECK_FUNC(sem_init,,) dnl
 AC_CHECK_FUNC(sem_destroy,,) dnl
 
 dnl We only enable POSIX semaphores if we are not using UNIX International
-dnl threads.  Enabling POSIX semaphores on Solaris seems to cause problems
-dnl for ACE, for example.
+dnl threads.
+dnl Enabling POSIX semaphores on Solaris seems to cause problems for
+dnl ACE. (NOTE: This may no longer be true after the updates/fixes 
+dnl I made.  The fixes corrected broken code in ACE_OS::sema_init().
+dnl -Ossama)
 if test "$ac_cv_func_sem_init" = yes &&
    test "$ac_cv_func_sem_destroy" = yes &&
    test "$ace_cv_type_sem_t" = yes &&
    test "$ace_has_sthreads" != yes; then
-  AC_DEFINE(ACE_HAS_POSIX_SEM)
 
-  AC_CHECK_FUNC(sem_open,
+dnl Only enable POSIX semaphore support if process shared semaphores
+dnl are supported.  Presumably process shared semaphores are only
+dnl available if the _POSIX_THREAD_PROCESS_SHARED macro is defined by
+dnl the platform.
+  AC_EGREP_CPP(WE_HAVE_SHARED_POSIX_SEMAPHORES,
     [
-     dnl Check if it works!  For example, in glibc 2.x sem_open exists
-     dnl but it appears to be a stub.  However, it isn't listed as a
-     dnl stub in <gnu/stubs.h> so the configure script thinks it is
-     dnl implemented!
-     ACE_CACHE_CHECK(if sem_open works,
-       ace_cv_sem_open_works,
+#ifndef _REENTRANT
+#define _REENTRANT
+#endif 
+
+#ifndef _THREAD_SAFE
+#define _THREAD_SAFE
+#endif
+
+#ifndef ACE_LACKS_UNISTD_H
+# include <unistd.h>  /* needed for _POSIX_THREAD_PROCESS_SHARED */
+#endif
+
+#include <pthread.h>
+#include <semaphore.h>
+
+#if defined (_POSIX_THREAD_PROCESS_SHARED)
+WE_HAVE_SHARED_POSIX_SEMAPHORES
+#endif
+    ],
+    [
+     AC_DEFINE(ACE_HAS_POSIX_SEM)
+
+     AC_CHECK_FUNC(sem_open,
        [
-        AC_TRY_RUN(
+        dnl Check if it works!  For example, in glibc 2.x sem_open exists
+        dnl but it appears to be a stub.  However, it isn't listed as a
+        dnl stub in <gnu/stubs.h> so the configure script thinks it is
+        dnl implemented!
+        ACE_CACHE_CHECK(if sem_open works,
+          ace_cv_sem_open_works,
           [
+           AC_TRY_RUN(
+             [
 #ifndef ACE_LACKS_SYS_TYPES_H
 #include <sys/types.h>
 #endif
@@ -4013,22 +4043,23 @@ main ()
 
   return 0;
 }
-          ],
-          [
-           ace_cv_sem_open_works=yes
-          ],
-          [
-           ace_cv_sem_open_works=no
-          ],
-          [
-           dnl action if cross-compiling
-           ace_cv_sem_open_works=yes
-          ])
-       ],, AC_DEFINE(ACE_LACKS_NAMED_POSIX_SEM))
-    ],
-    [
-     AC_DEFINE(ACE_LACKS_NAMED_POSIX_SEM)
-    ]) dnl
+             ],
+             [
+              ace_cv_sem_open_works=yes
+             ],
+             [
+              ace_cv_sem_open_works=no
+             ],
+             [
+              dnl action if cross-compiling
+              ace_cv_sem_open_works=yes
+             ])
+          ],, AC_DEFINE(ACE_LACKS_NAMED_POSIX_SEM))
+       ],
+       [
+        AC_DEFINE(ACE_LACKS_NAMED_POSIX_SEM)
+       ])
+    ],)
 
 fi dnl check for POSIX Semaphore functions
 
