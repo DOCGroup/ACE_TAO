@@ -27,7 +27,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 // inept compilers.
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template TAO::Utils::ServantMain<StubFaultNotifier>;
+  template class TAO::Utils::ServantMain<StubFaultNotifier>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 # pragma instantiate TAO::Utils::ServantMain<StubFaultNotifier>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

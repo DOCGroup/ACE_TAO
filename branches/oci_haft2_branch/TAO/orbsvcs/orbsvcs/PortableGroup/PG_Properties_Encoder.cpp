@@ -60,8 +60,8 @@ void TAO_PG::Properties_Encoder::encode (
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template ACE_Pair< ACE_CString, PortableGroup::Value>;
-  template ACE_Vector< TAO_PG::Properties_Encoder::NamedValue, 10 >;
+  template class ACE_Pair< ACE_CString, PortableGroup::Value>;
+  template class ACE_Vector< TAO_PG::Properties_Encoder::NamedValue, 10 >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 # pragma instantiate ACE_Pair< ACE_CString, PortableGroup::Value>
 # pragma instantiate ACE_Vector< TAO_PG::Properties_Encoder::NamedValue, 10 >

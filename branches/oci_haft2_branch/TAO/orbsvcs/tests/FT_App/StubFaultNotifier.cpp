@@ -486,8 +486,8 @@ int StubFaultNotifier::idle(int & result)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template instantiate ACE_Vector < const char * >;
-  template ACE_Vector < FT::PullMonitorable_var > ;
+  template class ACE_Vector < const char * >;
+  template class ACE_Vector < FT::PullMonitorable_var > ;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 # pragma instantiate ACE_Vector < const char * >
 # pragma instantiate ACE_Vector < FT::PullMonitorable_var >

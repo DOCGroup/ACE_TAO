@@ -26,7 +26,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 // inept compilers.
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template TAO::Utils::Server_Main<FactoryRegistry_i>;
+  template class TAO::Utils::Server_Main<FactoryRegistry_i>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 # pragma instantiate TAO::Utils::Server_Main<FactoryRegistry_i>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

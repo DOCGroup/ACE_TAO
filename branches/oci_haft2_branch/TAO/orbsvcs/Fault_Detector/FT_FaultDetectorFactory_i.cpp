@@ -797,9 +797,9 @@ CORBA::Boolean TAO::FT_FaultDetectorFactory_i::is_alive (ACE_ENV_SINGLE_ARG_DECL
 // competence-challenged compilers.
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template ACE_Vector<TAO::Fault_Detector_i *>;
-  template ACE_Guard<ACE_SYNCH_MUTEX>;
-  template auto_ptr<TAO::Fault_Detector_i>;
+  template class ACE_Vector<TAO::Fault_Detector_i *>;
+  template class ACE_Guard<ACE_SYNCH_MUTEX>;
+  template class auto_ptr<TAO::Fault_Detector_i>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 # pragma instantiate ACE_Vector<TAO::Fault_Detector_i *>
 # pragma instantiate ACE_Guard<ACE_SYNCH_MUTEX>
