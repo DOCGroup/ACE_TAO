@@ -453,96 +453,10 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
   ])
  AM_CONDITIONAL([BUILD_WINREGISTRY], [test X$ace_user_enable_winregistry = Xyes])
 
-
- AC_ARG_ENABLE([fl-reactor],
-  AS_HELP_STRING(--enable-fl-reactor,build support for the FlReactor [[[no]]]),
-  [
-   case "${enableval}" in
-    yes)
-      AC_MSG_ERROR([--enable-fl-reactor currently unimplemented])
-      ace_user_enable_fl_reactor=yes
-      ;;
-    no)
-      AC_MSG_ERROR([--enable-fl-reactor currently unimplemented])
-      ace_user_enable_fl_reactor=no
-      ;;
-    *)
-      AC_MSG_ERROR([bad value ${enableval} for --enable-fl-reactor])
-      ;;
-   esac
-  ],)
- AM_CONDITIONAL([BUILD_FL], [test X$ace_enable_fl_reactor = Xyes])
-
- AC_ARG_ENABLE([tk-reactor],
-  AS_HELP_STRING(--enable-tk-reactor,build support for the TkReactor [[[no]]]),
-  [
-   case "${enableval}" in
-    yes)
-      AC_MSG_ERROR([--enable-tk-reactor currently unimplemented])
-      ace_user_enable_tk_reactor=yes
-      ;;
-    no)
-      AC_MSG_ERROR([--enable-tk-reactor currently unimplemented])
-      ace_user_enable_tk_reactor=no
-      ;;
-    *)
-      AC_MSG_ERROR([bad value ${enableval} for --enable-tk-reactor])
-      ;;
-   esac
-  ],)
- AM_CONDITIONAL([BUILD_TK], [test X$ace_enable_tk_reactor = Xyes])
-
- AC_ARG_ENABLE([qt-reactor],
-  AS_HELP_STRING(--enable-qt-reactor,build support for the QtReactor [[[no]]]),
-  [
-   case "${enableval}" in
-    yes)
-      AC_MSG_ERROR([--enable-qt-reactor currently unimplemented])
-      ace_user_enable_qt_reactor=yes
-      ;;
-    no)
-      AC_MSG_ERROR([--enable-qt-reactor currently unimplemented])
-      ace_user_enable_qt_reactor=no
-      ;;
-    *)
-      AC_MSG_ERROR([bad value ${enableval} for --enable-qt-reactor])
-      ;;
-   esac
-  ],)
- AM_CONDITIONAL([BUILD_QT], [test X$ace_enable_qt_reactor = Xyes])
-
- AC_ARG_ENABLE([xt-reactor],
-  AS_HELP_STRING(--enable-xt-reactor,build support for the XtReactor [[[no]]]),
-  [
-   case "${enableval}" in
-    yes)
-      AC_PATH_XTRA
-dnl Here, if X isn't found or the user sets "--without-x" on the command
-dnl line, then "no_x" is set to "yes."
-      AS_IF([test "$no_x" != yes],
-        [
-         ACE_XLIBS="-lX11 -lXt"
-         ace_user_enable_xt_reactor=yes
-        ],
-        [
-         ACE_XLIBS=""
-         ace_user_enable_xt_reactor=no
-         AC_MSG_WARN([X was not found or it was disabled.])
-         AC_MSG_WARN([ACE_XtReactor will not be enabled.])
-        ])
-      ;;
-    no)
-      ACE_XLIBS=""
-      ace_user_enable_xt_reactor=no
-      ;;
-    *)
-      AC_MSG_ERROR([bad value ${enableval} for --enable-xt-reactor])
-      ;;
-   esac
-  ],)
- AM_CONDITIONAL([BUILD_X11], [test X$ace_enable_xt_reactor = Xyes])
- AM_CONDITIONAL([BUILD_XT], [test X$ace_enable_xt_reactor = Xyes])
-
+ ACE_ENABLE_FL_REACTOR
+ ACE_ENABLE_QT_REACTOR
+ ACE_ENABLE_TK_REACTOR
+ ACE_ENABLE_XT_REACTOR
 
  AC_ARG_WITH([gperf],
   AS_HELP_STRING(--with-gperf,compile the gperf program [[[yes]]]),
@@ -1024,4 +938,113 @@ AC_DEFUN([ACE_WITH_ACEXML],
 AC_CACHE_CHECK([whether to compile/use the ACEXML library],
                [ace_user_with_acexml], [ace_user_with_acexml=yes])
 AM_CONDITIONAL([BUILD_ACEXML], [test X$ace_user_with_acexml = Xyes])
+])
+
+
+AC_DEFUN([ACE_ENABLE_FL_REACTOR],
+[AC_ARG_ENABLE([fl-reactor],
+  	       AS_HELP_STRING([--enable-fl-reactor],
+		              [build support for the FlReactor [[no]]]),
+               [case "${enableval}" in
+                 yes)
+		  AC_MSG_ERROR([--enable-fl-reactor currently unimplemented])
+		  ace_user_enable_fl_reactor=yes
+		  ;;
+		no)
+		  AC_MSG_ERROR([--enable-fl-reactor currently unimplemented])
+		  ace_user_enable_fl_reactor=no
+		  ;;
+		*)
+		  AC_MSG_ERROR([bad value ${enableval} for --enable-fl-reactor])
+		  ;;
+	        esac],
+                [
+                 ace_user_enable_fl_reactor=no
+                ])
+AM_CONDITIONAL([BUILD_FL], [test X$ace_enable_fl_reactor = Xyes])
+])
+
+
+AC_DEFUN([ACE_ENABLE_QT_REACTOR],
+[AC_ARG_ENABLE([qt-reactor],
+  	       AS_HELP_STRING([--enable-qt-reactor],
+		              [build support for the QtReactor [[no]]]),
+               [case "${enableval}" in
+                 yes)
+		  AC_MSG_ERROR([--enable-qt-reactor currently unimplemented])
+		  ace_user_enable_qt_reactor=yes
+		  ;;
+		no)
+		  AC_MSG_ERROR([--enable-qt-reactor currently unimplemented])
+		  ace_user_enable_qt_reactor=no
+		  ;;
+		*)
+		  AC_MSG_ERROR([bad value ${enableval} for --enable-qt-reactor])
+		  ;;
+	        esac],
+                [
+                 ace_user_enable_qt_reactor=no
+                ])
+AM_CONDITIONAL([BUILD_QT], [test X$ace_enable_qt_reactor = Xyes])
+])
+
+
+AC_DEFUN([ACE_ENABLE_TK_REACTOR],
+[AC_ARG_ENABLE([tk-reactor],
+  	       AS_HELP_STRING([--enable-tk-reactor],
+		              [build support for the TkReactor [[no]]]),
+               [case "${enableval}" in
+                 yes)
+		  AC_MSG_ERROR([--enable-tk-reactor currently unimplemented])
+		  ace_user_enable_tk_reactor=yes
+		  ;;
+		no)
+		  AC_MSG_ERROR([--enable-tk-reactor currently unimplemented])
+		  ace_user_enable_tk_reactor=no
+		  ;;
+		*)
+		  AC_MSG_ERROR([bad value ${enableval} for --enable-tk-reactor])
+		  ;;
+	        esac],
+                [
+                 ace_user_enable_tk_reactor=no
+                ])
+AM_CONDITIONAL([BUILD_TK], [test X$ace_enable_tk_reactor = Xyes])
+])
+
+
+AC_DEFUN([ACE_ENABLE_XT_REACTOR],
+[AC_ARG_ENABLE([xt-reactor],
+               AS_HELP_STRING([--enable-xt-reactor],
+                              [build support for the XtReactor [[no]]]),
+               [case "${enableval}" in
+                 yes)
+                  AC_PATH_XTRA
+dnl Here, if X isn't found or the user sets "--without-x" on the command
+dnl line, then "no_x" is set to "yes."
+                  AS_IF([test "$no_x" != yes],
+                        [
+		          ACE_XLIBS="-lX11 -lXt"
+                          ace_user_enable_xt_reactor=yes
+                        ],[
+                          ACE_XLIBS=""
+                          ace_user_enable_xt_reactor=no
+                          AC_MSG_WARN([X was not found or it was disabled.])
+                          AC_MSG_WARN([ACE_XtReactor will not be enabled.])
+                        ])
+                  ;;
+                 no)
+                  ACE_XLIBS=""
+                  ace_user_enable_xt_reactor=no
+                  ;;
+                 *)
+		  AC_MSG_ERROR([bad value ${enableval} for --enable-xt-reactor])
+		  ;;
+                esac],
+		[
+                  ACE_XLIBS=""
+                  ace_user_enable_xt_reactor=no
+		])
+AM_CONDITIONAL([BUILD_X11], [test X$ace_enable_xt_reactor = Xyes])
+AM_CONDITIONAL([BUILD_XT], [test X$ace_enable_xt_reactor = Xyes])
 ])
