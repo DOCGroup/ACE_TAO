@@ -10,7 +10,6 @@
 #define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
-#define ACE_HAS_BROKEN_EXPLICIT_TEMPLATE_DESTRUCTOR
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 
@@ -52,6 +51,8 @@
 
 // Compiler doesn't support static data member templates.
 #define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
+
+#define ACE_HAS_BROKEN_EXPLICIT_TEMPLATE_DESTRUCTOR
 
 // Compiler/platform uses old malloc()/free() prototypes (ugh).
 #define ACE_HAS_OLD_MALLOC
