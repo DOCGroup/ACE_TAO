@@ -1125,7 +1125,7 @@ typedef TAO_POA *value;
 typedef ACE_Reverse_Lock<ACE_Lock> REVERSE_LOCK;
 
 typedef ACE_Pair<key, value> expanded_value;
-typedef ACE_Reference_Pair<const key, value> value_type;
+typedef ACE_Reference_Pair<const key, value> tao_value_type;
 typedef ACE_Equal_To<key> compare_keys;
 typedef TAO_ObjectId_Hash hash_key;
 typedef ACE_Noop_Key_Generator<key> noop_key_generator;
@@ -1146,19 +1146,19 @@ template class ACE_Reference_Pair<const key, value>;
 
 // Map and iterator classes.
 template class ACE_Map<key, value>;
-template class ACE_Iterator<value_type>;
-template class ACE_Reverse_Iterator<value_type>;
+template class ACE_Iterator<tao_value_type>;
+template class ACE_Reverse_Iterator<tao_value_type>;
 
 // Iterator base classes.
-template class ACE_Iterator_Impl<value_type>;
-template class ACE_Reverse_Iterator_Impl<value_type>;
+template class ACE_Iterator_Impl<tao_value_type>;
+template class ACE_Reverse_Iterator_Impl<tao_value_type>;
 
 // Active Map Manager related.
 template class ACE_Pair<key, value>;
 template class ACE_Active_Map_Manager_Adapter<key, value, TAO_Ignore_Original_Key_Adapter>;
 template class ACE_Active_Map_Manager_Adapter<key, value, TAO_Preserve_Original_Key_Adapter>;
-template class ACE_Active_Map_Manager_Iterator_Adapter<value_type, expanded_value>;
-template class ACE_Active_Map_Manager_Reverse_Iterator_Adapter<value_type, expanded_value>;
+template class ACE_Active_Map_Manager_Iterator_Adapter<tao_value_type, expanded_value>;
+template class ACE_Active_Map_Manager_Reverse_Iterator_Adapter<tao_value_type, expanded_value>;
 template class ACE_Active_Map_Manager<expanded_value>;
 template class ACE_Map_Manager<ACE_Active_Map_Manager_Key, expanded_value, ACE_Null_Mutex>;
 template class ACE_Map_Iterator_Base<ACE_Active_Map_Manager_Key, expanded_value, ACE_Null_Mutex>;
@@ -1169,8 +1169,8 @@ template class ACE_Map_Entry<ACE_Active_Map_Manager_Key, expanded_value>;
 // Hash Map Manager related.
 template class ACE_Hash_Map_Manager_Ex_Adapter<key, value, hash_key, compare_keys, TAO_Incremental_Key_Generator>;
 template class ACE_Hash_Map_Manager_Ex_Adapter<key, value, hash_key, compare_keys, noop_key_generator>;
-template class ACE_Hash_Map_Manager_Ex_Iterator_Adapter<value_type, key, value, hash_key, compare_keys>;
-template class ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<value_type, key, value, hash_key, compare_keys>;
+template class ACE_Hash_Map_Manager_Ex_Iterator_Adapter<tao_value_type, key, value, hash_key, compare_keys>;
+template class ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<tao_value_type, key, value, hash_key, compare_keys>;
 template class ACE_Hash_Map_Manager_Ex<key, value, hash_key, compare_keys, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Base_Ex<key, value, hash_key, compare_keys, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Ex<key, value, hash_key, compare_keys, ACE_Null_Mutex>;
@@ -1181,8 +1181,8 @@ template class ACE_Hash_Map_Entry<key, value>;
 // template class ACE_Equal_To<key>;
 
 // Map Manager related.
-template class ACE_Map_Manager_Iterator_Adapter<value_type, key, value>;
-template class ACE_Map_Manager_Reverse_Iterator_Adapter<value_type, key, value>;
+template class ACE_Map_Manager_Iterator_Adapter<tao_value_type, key, value>;
+template class ACE_Map_Manager_Reverse_Iterator_Adapter<tao_value_type, key, value>;
 template class ACE_Map_Manager_Adapter<key, value, TAO_Incremental_Key_Generator>;
 template class ACE_Map_Manager_Adapter<key, value, noop_key_generator>;
 template class ACE_Map_Manager<key, value, ACE_Null_Mutex>;
@@ -1203,7 +1203,7 @@ typedef TAO_POA *value;
 typedef ACE_Reverse_Lock<ACE_Lock> REVERSE_LOCK;
 
 typedef ACE_Pair<key, value> expanded_value;
-typedef ACE_Reference_Pair<const key, value> value_type;
+typedef ACE_Reference_Pair<const key, value> tao_value_type;
 typedef ACE_Equal_To<key> compare_keys;
 typedef TAO_ObjectId_Hash hash_key;
 typedef ACE_Noop_Key_Generator<key> noop_key_generator;
@@ -1224,19 +1224,19 @@ typedef ACE_Noop_Key_Generator<key> noop_key_generator;
 
 // Map and iterator classes.
 #pragma instantiate ACE_Map<key, value>
-#pragma instantiate ACE_Iterator<value_type>
-#pragma instantiate ACE_Reverse_Iterator<value_type>
+#pragma instantiate ACE_Iterator<tao_value_type>
+#pragma instantiate ACE_Reverse_Iterator<tao_value_type>
 
 // Iterator base classes.
-#pragma instantiate ACE_Iterator_Impl<value_type>
-#pragma instantiate ACE_Reverse_Iterator_Impl<value_type>
+#pragma instantiate ACE_Iterator_Impl<tao_value_type>
+#pragma instantiate ACE_Reverse_Iterator_Impl<tao_value_type>
 
 // Active Map Manager related.
 #pragma instantiate ACE_Pair<key, value>
 #pragma instantiate ACE_Active_Map_Manager_Adapter<key, value, TAO_Ignore_Original_Key_Adapter>
 #pragma instantiate ACE_Active_Map_Manager_Adapter<key, value, TAO_Preserve_Original_Key_Adapter>
-#pragma instantiate ACE_Active_Map_Manager_Iterator_Adapter<value_type, expanded_value>
-#pragma instantiate ACE_Active_Map_Manager_Reverse_Iterator_Adapter<value_type, expanded_value>
+#pragma instantiate ACE_Active_Map_Manager_Iterator_Adapter<tao_value_type, expanded_value>
+#pragma instantiate ACE_Active_Map_Manager_Reverse_Iterator_Adapter<tao_value_type, expanded_value>
 #pragma instantiate ACE_Active_Map_Manager<expanded_value>
 #pragma instantiate ACE_Map_Manager<ACE_Active_Map_Manager_Key, expanded_value, ACE_Null_Mutex>
 #pragma instantiate ACE_Map_Iterator_Base<ACE_Active_Map_Manager_Key, expanded_value, ACE_Null_Mutex>
@@ -1247,8 +1247,8 @@ typedef ACE_Noop_Key_Generator<key> noop_key_generator;
 // Hash Map Manager related.
 #pragma instantiate ACE_Hash_Map_Manager_Ex_Adapter<key, value, hash_key, compare_keys, TAO_Incremental_Key_Generator>
 #pragma instantiate ACE_Hash_Map_Manager_Ex_Adapter<key, value, hash_key, compare_keys, noop_key_generator>
-#pragma instantiate ACE_Hash_Map_Manager_Ex_Iterator_Adapter<value_type, key, value, hash_key, compare_keys>
-#pragma instantiate ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<value_type, key, value, hash_key, compare_keys>
+#pragma instantiate ACE_Hash_Map_Manager_Ex_Iterator_Adapter<tao_value_type, key, value, hash_key, compare_keys>
+#pragma instantiate ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<tao_value_type, key, value, hash_key, compare_keys>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<key, value, hash_key, compare_keys, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<key, value, hash_key, compare_keys, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Ex<key, value, hash_key, compare_keys, ACE_Null_Mutex>
@@ -1259,8 +1259,8 @@ typedef ACE_Noop_Key_Generator<key> noop_key_generator;
 // #pragma instantiate ACE_Equal_To<key>
 
 // Map Manager related.
-#pragma instantiate ACE_Map_Manager_Iterator_Adapter<value_type, key, value>
-#pragma instantiate ACE_Map_Manager_Reverse_Iterator_Adapter<value_type, key, value>
+#pragma instantiate ACE_Map_Manager_Iterator_Adapter<tao_value_type, key, value>
+#pragma instantiate ACE_Map_Manager_Reverse_Iterator_Adapter<tao_value_type, key, value>
 #pragma instantiate ACE_Map_Manager_Adapter<key, value, TAO_Incremental_Key_Generator>
 #pragma instantiate ACE_Map_Manager_Adapter<key, value, noop_key_generator>
 #pragma instantiate ACE_Map_Manager<key, value, ACE_Null_Mutex>
