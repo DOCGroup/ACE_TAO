@@ -8,13 +8,13 @@ project(*Notify ConnectDisconnect): notifytest {
 }
 
 
-project(*Notify LifeCycle): notifytest, naming {
+project(*Notify LifeCycle): notifytest {
   Source_Files {
     LifeCycle.cpp
   }
 }
 
-project(*Notify IdAssignment): notifytest, naming {
+project(*Notify IdAssignment): notifytest {
   Source_Files {
     IdAssignment.cpp
   }
