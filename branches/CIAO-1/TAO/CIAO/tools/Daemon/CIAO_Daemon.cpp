@@ -140,37 +140,6 @@ main (int argc, char *argv[])
       // Implicit activation
       CIAO::Daemon_var daemon = daemon_servant->_this ();
 
-      // Create and install the ServerActivator servant
-
-      CIAO::ServerActivator_Impl *activator_servant = 0;
-
-      ACE_NEW_RETURN (activator_servant,
-                      CIAO::ServerActivator_Impl (orb.in (),
-                                                  poa.in ()),
-                      -1);
-
-      activator_servant->init (comserv_path_,
-                               spawn_wait_
-                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      PortableServer::ServantBase_var safe_activator (activator_servant);
-
-      Components::Deployment::ServerActivator_ptr activator
-        = activator_servant->_ciao_get_objref ();
-
-      CORBA::String_var str = orb->object_to_string (activator
-                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      adapter->bind ("ServerActivator", str.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      if (daemon_servant->bind ("ServerActivator", activator) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Failed to register ServerActivator with CIAO Daemon\n"),
-                          -1);
-
       // Create and install the ComponentInstallation servant
 
       CIAO::ComponentInstallation_Impl *installation_servant = 0;
@@ -190,8 +159,8 @@ main (int argc, char *argv[])
       Components::Deployment::ComponentInstallation_var installation
         = installation_servant->_this ();
 
-      str = orb->object_to_string (installation.in ()
-                                   ACE_ENV_ARG_PARAMETER);
+      CORBA::String_var str = orb->object_to_string (installation.in ()
+                                                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       adapter->bind ("ComponentInstallation", str.in () ACE_ENV_ARG_PARAMETER);
@@ -202,11 +171,43 @@ main (int argc, char *argv[])
                            "Failed to register ComponentInstallation with CIAO Daemon\n"),
                           -1);
 
+      // Create and install the ServerActivator servant
+
+      CIAO::ServerActivator_Impl *activator_servant = 0;
+
+      ACE_NEW_RETURN (activator_servant,
+                      CIAO::ServerActivator_Impl (orb.in (),
+                                                  poa.in ()),
+                      -1);
+
+      activator_servant->init (comserv_path_,
+                               spawn_wait_,
+                               str.in ()
+                               ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      PortableServer::ServantBase_var safe_activator (activator_servant);
+
+      Components::Deployment::ServerActivator_ptr activator
+        = activator_servant->_ciao_get_objref ();
+
+      str = orb->object_to_string (activator
+                                   ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      adapter->bind ("ServerActivator", str.in () ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (daemon_servant->bind ("ServerActivator", activator) != 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Failed to register ServerActivator with CIAO Daemon\n"),
+                          -1);
+
+      // Now register daemon with IOR table and write its IOR.
       str = orb->object_to_string (daemon.in ()
                                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      // Now register daemon with IOR table and write its IOR.
       adapter->bind ("CIAO-Daemon", str.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

@@ -1,3 +1,27 @@
+Thu Feb 27 22:15:48 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ciao/ComponentServer_Impl.h: Fixed a cut-n-paste error in a comment.
+
+	* ciao/ServerActivator_Impl.cpp:
+	* ciao/ServerActivator_Impl.h:  Changed to cache an IOR to
+	  the ComponentInstallation interface and pass the IOR with
+	  -ORBInitRef option to the ComponentServer.  We will need it when
+	  installing a component home in the container.
+
+	* examples/handcrafted/Hello/hello_servants.cpp:
+	* examples/handcrafted/Hello/hello_servants.h: Removed inheriting
+	  the component specific context from the SessionContext local
+	  interface.  This component example should be run as Service
+	  component, not Session component.
+
+	* tools/ServerActivator/README:
+	* tools/Daemon/CIAO_Daemon.cpp:
+	* tools/ServerActivator/ServerActivator.cpp: Changed to propagate
+	  the ComponentInstallation somehow.
+
+	* tools/ServerActivator/ServerActivator_test_client.cpp: Removed a
+	  redundant $Id$ tag.
+
 Sat Feb 22 23:45:52 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* docs/releasenotes.html:

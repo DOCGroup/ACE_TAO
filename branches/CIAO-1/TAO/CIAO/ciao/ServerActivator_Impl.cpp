@@ -46,7 +46,8 @@ CIAO::ServerActivator_Impl::_default_POA (void)
 
 int
 CIAO::ServerActivator_Impl::init (const char *server_location,
-                                  CORBA::ULong spawn_delay
+                                  CORBA::ULong spawn_delay,
+                                  const char *installation_ior
                                   ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -57,6 +58,8 @@ CIAO::ServerActivator_Impl::init (const char *server_location,
     ACE_THROW_RETURN (CORBA::BAD_PARAM (), -1);
 
   this->server_path_ = CORBA::string_dup (server_location);
+
+  this->installation_ior_ = CORBA::string_dup (installation_ior);
 
   PortableServer::POAManager_var mgr
     = this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -146,9 +149,10 @@ CIAO::ServerActivator_Impl::create_component_server (const Components::ConfigVal
       ACE_TRY_CHECK;
 
       // spawn the new ComponentServer.
-      options.command_line ("%s -k %s",
+      options.command_line ("%s -k %s -ORBInitRef ComponentInstallation=%s",
                             this->server_path_.in (),
-                            cb_ior.in ());
+                            cb_ior.in (),
+                            this->installation_ior_.in ());
       options.avoid_zombies (1);
 
       if (component_server.spawn (options) == -1)

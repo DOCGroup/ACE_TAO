@@ -55,7 +55,7 @@ namespace CIAO
     /// increase the reference count of the POA.
     virtual PortableServer::POA_ptr _default_POA (void);
 
-    /// Initialize the container with a name.
+    /// Initialize the ComponentServer with a name.
     int init (::Components::ConfigValues &options
               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
