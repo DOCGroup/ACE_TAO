@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
 
-#include "ace/SOCK_Stream.h"
+#include "ace/Sockets/SOCK_Stream.h"
 
 ASYS_INLINE
 ACE_SOCK_Stream::ACE_SOCK_Stream (void)

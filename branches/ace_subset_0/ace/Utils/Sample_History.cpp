@@ -1,11 +1,14 @@
 // $Id$
 
-#include "ace/Sample_History.h"
-#include "ace/Basic_Stats.h"
-#include "ace/Log_Msg.h"
+#include "ace/Utils/Sample_History.h"
+#include "ace/Timer/Basic_Stats.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Sample_History.inl"
+#include "ace/Utils/Sample_History.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Sample_History, "$Id$")
@@ -34,6 +37,7 @@ ACE_Sample_History::sample_count (void) const
   return this->sample_count_;
 }
 
+#ifdef ACE_SUBSET_0
 void
 ACE_Sample_History::dump_samples (const ACE_TCHAR *msg,
                                   ACE_UINT32 scale_factor) const
@@ -45,6 +49,7 @@ ACE_Sample_History::dump_samples (const ACE_TCHAR *msg,
       ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT("%s: %d %u\n"), msg, i, val));
     }
 }
+#endif
 
 void
 ACE_Sample_History::collect_basic_stats (ACE_Basic_Stats &stats) const

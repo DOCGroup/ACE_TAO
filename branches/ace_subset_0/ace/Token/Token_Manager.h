@@ -14,14 +14,14 @@
 #define ACE_TOKEN_MANAGER_H
 #include "ace/pre.h"
 
-#include "ace/Synch.h"
+#include "ace/Threads/Synch.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Map_Manager.h"
-#include "ace/Local_Tokens.h"
+#include "ace/Utils/Templates/Map_Manager.h"
+#include "ace/Token/Local_Tokens.h"
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)
 
@@ -128,7 +128,7 @@ private:
 #endif /* ACE_HAS_TOKENS_LIBRARY */
 
 #if defined (__ACE_INLINE__)
-#include "ace/Token_Manager.i"
+#include "ace/Token/Token_Manager.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

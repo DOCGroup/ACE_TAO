@@ -14,11 +14,11 @@
 #define ACE_MAP_T_H
 #include "ace/pre.h"
 
-#include "ace/Map.h"
-#include "ace/Pair.h"
-#include "ace/Map_Manager.h"
-#include "ace/Hash_Map_Manager.h"
-#include "ace/Active_Map_Manager.h"
+#include "ace/Utils/Map.h"
+#include "ace/Utils/Pair.h"
+#include "ace/Utils/Templates/Map_Manager.h"
+#include "ace/Utils/Hash_Map_Manager.h"
+#include "ace/Utils/Active_Map_Manager.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -1587,11 +1587,11 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Map_T.i"
+#include "ace/Utils/Templates/Map_T.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Map_T.cpp"
+#include "ace/Utils/Templates/Map_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

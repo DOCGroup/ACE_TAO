@@ -14,10 +14,10 @@
 #define ACE_FUTURE_SET_H
 #include "ace/pre.h"
 
-#include "ace/Thread.h"
-#include "ace/Message_Queue.h"
-#include "ace/Future.h"
-#include "ace/Hash_Map_Manager.h"
+#include "ace/Threads/Thread.h"
+#include "ace/Streams/Message_Queue.h"
+#include "ace/Utils/Future.h"
+#include "ace/Utils/Hash_Map_Manager.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -111,7 +111,7 @@ private:
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Future_Set.cpp"
+#include "ace/Utils/Future_Set.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

@@ -1,13 +1,13 @@
 // $Id$
 
-#include "ace/Message_Block.h"
-#include "ace/Synch_T.h"
+#include "ace/Utils/Message_Block.h"
+#include "ace/Threads/Synch_T.h"
 
 //#define ACE_ENABLE_TIMEPROBES
-#include "ace/Timeprobe.h"
+#include "ace/Timer/Timeprobe.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Message_Block.i"
+#include "ace/Utils/Message_Block.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Message_Block, "$Id$")

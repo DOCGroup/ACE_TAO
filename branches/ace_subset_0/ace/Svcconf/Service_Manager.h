@@ -14,15 +14,15 @@
 #define ACE_SERVICE_MANAGER_H
 #include "ace/pre.h"
 
-#include "ace/SOCK_Stream.h"
+#include "ace/Sockets/SOCK_Stream.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SOCK_Acceptor.h"
-#include "ace/INET_Addr.h"
-#include "ace/Service_Object.h"
+#include "ace/Sockets/SOCK_Acceptor.h"
+#include "ace/IPC/INET_Addr.h"
+#include "ace/Svcconf/Service_Object.h"
 
 /**
  * @class ACE_Service_Manager
@@ -113,7 +113,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Service_Manager.i"
+#include "ace/Svcconf/Service_Manager.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

@@ -15,7 +15,7 @@
 #define ACE_REGISTRY_H
 #include "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/OS/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,8 +24,8 @@
 #if defined (ACE_WIN32)
 // This only works on Win32 platforms
 
-#include "ace/Containers.h"
-#include "ace/SString.h"
+#include "ace/Utils/Containers.h"
+#include "ace/Utils/SString.h"
 
 /**
  * @class ACE_Registry

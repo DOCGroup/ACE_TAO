@@ -99,7 +99,7 @@ class ACE_Export ACE_Lib_Find
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "Lib_Find.i"
+#include "ace/Utils/Lib_Find.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #include "ace/post.h"

@@ -2,11 +2,14 @@
 
 // Defines the Internet domain address family address format.
 
-#include "ace/INET_Addr.h"
-#include "ace/Log_Msg.h"
+#include "ace/IPC/INET_Addr.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
 
 #if !defined (__ACE_INLINE__)
-#include "ace/INET_Addr.i"
+#include "ace/IPC/INET_Addr.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, INET_Addr, "$Id$")
@@ -52,6 +55,7 @@ ACE_INET_Addr::addr_to_string (ACE_TCHAR s[],
     }
 }
 
+#ifdef ACE_SUBSET_0
 void
 ACE_INET_Addr::dump (void) const
 {
@@ -64,6 +68,7 @@ ACE_INET_Addr::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("%s"), s));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
+#endif
 
 // Compare two addresses for inequality.
 

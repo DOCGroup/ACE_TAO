@@ -14,13 +14,13 @@
 #define ACE_SOCK_STREAM_H
 #include "ace/pre.h"
 
-#include "ace/SOCK_IO.h"
+#include "ace/Sockets/SOCK_IO.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/INET_Addr.h"
+#include "ace/IPC/INET_Addr.h"
 
 // Forward declarations.
 class ACE_Message_Block;
@@ -160,7 +160,7 @@ public:
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/SOCK_Stream.i"
+#include "ace/Sockets/SOCK_Stream.i"
 #endif
 
 #include "ace/post.h"

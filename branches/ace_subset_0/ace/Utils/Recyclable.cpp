@@ -1,9 +1,9 @@
 //$Id$
-#include "ace/Recyclable.h"
+#include "ace/Utils/Recyclable.h"
 
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Recyclable.inl"
+#include "ace/Utils/Recyclable.inl"
 #endif /* __ACE_INLINE __ */
 
 ACE_RCSID(ace, Recyclable, "$Id$")

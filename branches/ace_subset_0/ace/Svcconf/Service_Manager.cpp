@@ -1,14 +1,14 @@
 // $Id$
 
-#include "ace/Get_Opt.h"
-#include "ace/Service_Repository.h"
-#include "ace/Service_Config.h"
-#include "ace/Service_Manager.h"
-#include "ace/Reactor.h"
-#include "ace/WFMO_Reactor.h"
+#include "ace/Utils/Get_Opt.h"
+#include "ace/Svcconf/Service_Repository.h"
+#include "ace/Svcconf/Service_Config.h"
+#include "ace/Svcconf/Service_Manager.h"
+#include "ace/Demux/Reactor.h"
+#include "ace/Demux/WFMO_Reactor.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Service_Manager.i"
+#include "ace/Svcconf/Service_Manager.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Service_Manager, "$Id$")

@@ -1,15 +1,15 @@
 // $Id$
 
-#include "ace/OS.h"
+#include "ace/OS/OS.h"
 
 ACE_RCSID(ace, Timeprobe, "$Id$")
 
 #if defined (ACE_COMPILE_TIMEPROBES)
 
-#include "ace/Timeprobe.h"
+#include "ace/Timer/Timeprobe.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Timeprobe.i"
+#include "ace/Timer/Timeprobe.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

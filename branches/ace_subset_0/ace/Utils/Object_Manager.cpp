@@ -1,28 +1,31 @@
 // $Id$
 
-#include "ace/Object_Manager.h"
+#include "ace/Utils/Object_Manager.h"
 #if !defined (ACE_LACKS_ACE_TOKEN)
-# include "ace/Token_Manager.h"
+# include "ace/Token/Token_Manager.h"
 #endif /* ! ACE_LACKS_ACE_TOKEN */
 #if defined (ACE_LACKS_ACE_SVCCONF)
 #  if !defined (ACE_HAS_WINCE)
-#    include "ace/Proactor.h"
+#    include "ace/Demux/Proactor.h"
 #  endif /* !ACE_HAS_WINCE */
-#  include "ace/Reactor.h"
-#  include "ace/Thread_Manager.h"
+#  include "ace/DemuxReactor.h"
+#  include "ace/Threads/Thread_Manager.h"
 #else  /* ! ACE_LACKS_ACE_SVCCONF */
-#  include "ace/Service_Manager.h"
-#  include "ace/Service_Config.h"
+#  include "ace/Svcconf/Service_Manager.h"
+#  include "ace/Svcconf/Service_Config.h"
 #endif /* ! ACE_LACKS_ACE_SVCCONF */
-#include "ace/Signal.h"
-#include "ace/Log_Msg.h"
-#include "ace/Containers.h"
-#include "ace/Synch.h"
-#include "ace/Malloc.h"
-#include "ace/Signal.h"
+#include "ace/IPC/Signal.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
+
+#include "ace/Utils/Containers.h"
+#include "ace/Threads/Synch.h"
+#include "ace/Memory/Malloc.h"
 
 #if !defined (__ACE_INLINE__)
-# include "ace/Object_Manager.i"
+# include "ace/Utils/Object_Manager.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Object_Manager, "$Id$")
@@ -148,6 +151,7 @@ ACE_Object_Manager::shutting_down (void)
   return ACE_Object_Manager::instance_  ?  instance_->shutting_down_i ()  :  1;
 }
 
+#ifdef ACE_SUBSET_0
 #if defined (ACE_DISABLE_WIN32_ERROR_WINDOWS)
 // Instead of popping up a window for exceptions, just print something out
 LONG _stdcall ACE_UnhandledExceptionFilter (PEXCEPTION_POINTERS pExceptionInfo)
@@ -162,6 +166,7 @@ LONG _stdcall ACE_UnhandledExceptionFilter (PEXCEPTION_POINTERS pExceptionInfo)
   return EXCEPTION_EXECUTE_HANDLER;
 }
 #endif /* ACE_DISABLE_WIN32_ERROR_WINDOWS */
+#endif /* ACE_SUBSET_0 */
 
 // Initialize an ACE_Object_Manager.  There can be instances of this object
 // other than The Instance.  This can happen if a user creates one for some
@@ -604,7 +609,9 @@ ACE_Object_Manager::fini (void)
       preallocations_ = 0;
 #endif /* ! ACE_LACKS_ACE_SVCCONF */
 
+#ifdef ACE_SUBSET_0
       ACE_Trace::stop_tracing ();
+#endif
 
 #if defined (ACE_LACKS_ACE_SVCCONF)
 

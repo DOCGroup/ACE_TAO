@@ -1,16 +1,20 @@
 // $Id$
 
-#include "ace/IPC_SAP.h"
-#include "ace/Log_Msg.h"
+#include "ace/Sockets/IPC_SAP.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/IPC_SAP.i"
+#include "ace/Sockets/IPC_SAP.i"
 #endif
 
 ACE_RCSID(ace, IPC_SAP, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_IPC_SAP)
 
+#ifdef ACE_SUBSET_0
 void
 ACE_IPC_SAP::dump (void) const
 {
@@ -21,6 +25,7 @@ ACE_IPC_SAP::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\npid_ = %d"), this->pid_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
+#endif
 
 // Cache for the process ID.
 pid_t ACE_IPC_SAP::pid_ = 0;
