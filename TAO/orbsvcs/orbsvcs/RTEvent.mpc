@@ -9,9 +9,6 @@ project(RTEvent) : orbsvcslib, core, svc_utils, messaging, portableserver {
   // Add this include path for precompiled headers
   includes    += $(TAO_ROOT)/orbsvcs/orbsvcs $(DATASTREAM_ROOT)/include
 
-  libs += dsui
-  libpaths += $(DATASTREAM_ROOT)/lib
-
   IDL_Files {
     RtecDefaultEventData.idl
     RtecEventComm.idl
