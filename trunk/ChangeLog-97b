@@ -1,3 +1,19 @@
+Thu Oct 30 03:03:41 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
+
+	* ace/Hash_Map_Manager.cpp (close_i): Changed to use ACE_DES* macros.
+
+	* ace/OS.h: Moved ACE_Allocator related macros to Malloc_T.h
+
+	* ace/Malloc_T.h: Moved ACE_Allocator related macros from OS.h.
+	  Added two macros ACE_DES_NOFREE and ACE_DES_NOFREE_TEMPLATE to
+	  call objects' destructors explicitly.  This is required to
+	  take care of some "broken" compilers.  Thanks to Stephen Coy
+	  <stevec@magna.com.au> for providing the fix for HP-UX aCC.
+
+	* ace/README:
+	* ace/config-hpux-10.x-hpc++.h: Added flag
+	  ACE_HAS_HPUX_ACC_BROKEN_TEMPLATE_DESTRUCTOR.
+
 Thu Oct 30 02:56:25 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.3.33, released Thu Oct 30 02:56:25 1997.
