@@ -37,7 +37,7 @@ private:
 class Logrec_Reader : public ACE_Task<ACE_MT_SYNCH>
 {
 private:
-  ACE_TString filename_; // Name of logfile. 
+  ACE_TString filename_; // Name of logfile.
   ACE_FILE_IO logfile_;  // File containing log records.
 
 public:
@@ -57,7 +57,7 @@ public:
   virtual int svc () {
     const size_t FileReadSize = 8 * 1024;
     ACE_Message_Block mblk (FileReadSize);
- 
+
     for (;; mblk.crunch ()) {
       // Read as much as will fit in the message block.
       ssize_t bytes_read = logfile_.recv (mblk.wr_ptr (),
@@ -83,10 +83,11 @@ public:
                              (mblk.rd_ptr (), mblk.length ());
         if (name_len == mblk.length ()) break;
 
+        char *name_p = mblk.rd_ptr ();
         ACE_Message_Block *rec, *head, *temp;
         ACE_NEW_RETURN
           (head, ACE_Message_Block (name_len, MB_CLIENT), 0);
-        head->copy (mblk.rd_ptr (), name_len);
+        head->copy (name_p, name_len);
         mblk.rd_ptr (name_len + 1);   // Skip nul also
 
         size_t need = mblk.length () + ACE_CDR::MAX_ALIGNMENT;
@@ -97,8 +98,10 @@ public:
         // Now rec contains the remaining data we've read so far from
         // the file. Create an ACE_InputCDR to start demarshaling the
         // log record, header first to find the length, then the data.
+        // Since the ACE_InputCDR constructor increases the reference count
+        // on rec, we release it upon return to prevent leaks.
         // The cdr 'read' methods return 0 on failure, 1 on success.
-        ACE_InputCDR cdr (rec);
+        ACE_InputCDR cdr (rec); rec->release ();
         ACE_CDR::Boolean byte_order;
         if (!cdr.read_boolean (byte_order)) {
           head->release (); rec->release (); break;
@@ -109,10 +112,10 @@ public:
         // if rec contains the complete record or not.
         ACE_CDR::ULong length;
         if (!cdr.read_ulong (length)) {
-          head->release (); rec->release (); break;
+          head->release (); mblk.rd_ptr (name_p); break;
         }
         if (length > cdr.length ()) {
-          head->release (); rec->release (); break;
+          head->release (); mblk.rd_ptr (name_p); break;
         }
 
         // The complete record is in rec... grab all the fields into
@@ -170,7 +173,7 @@ public:
         if (put_next (head) == -1) break;
 
         // Move the file-content block's read pointer up past whatever
-        // was just processed. Although the rec's rd_ptr has not been
+        // was just processed. Although the mblk's rd_ptr has not been
         // moved, cdr's has.  Therefore, use its length() to determine
         // how much is left.
         mblk.rd_ptr (mblk.length () - cdr.length ());
@@ -209,7 +212,7 @@ public:
   // Initialization hook method.
   virtual int open (void *) { return activate (); }
 
-  virtual int put (ACE_Message_Block *mblk, ACE_Time_Value *to) 
+  virtual int put (ACE_Message_Block *mblk, ACE_Time_Value *to)
   { return putq (mblk, to); }
 
   virtual int svc () {
