@@ -1,3 +1,12 @@
+Thu Feb 11 03:48:50 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/CORBA_macros.h: Added #pragma once and ACE_CORBA_MACROS_H to
+	  prevent duplicate inclusion of this file.
+
+	  Added a new macro ACE_ANY_EXCEPTION to denote the name of the
+	  CORBA exception caught by the ACE_CATCHANY.  Thanks to Lothar
+	  Werzinger <lwerzinger@krones.de> for suggesting this.
+
 Wed Feb 10 23:01:16 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * ace/config-win32-common.h: Made a better effort at finding out
@@ -16,7 +25,7 @@ Wed Feb 10 22:19:33 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
 
 	* docs/tutorials/014/stream.cpp : Removed the __LINE__ displays.
 	* docs/tutorials/014/page01.html : Added Kirthika's abstract
-	
+
 	* docs/tutorials/015/page01.html : Added Kirthika's abstract
 	* docs/tutorials/015/page12.html : Oops... Wrong intro text.
 	* docs/tutorials/015/Protocol_Stream.cpp : Typos fixed
@@ -43,7 +52,7 @@ Wed Feb 10 14:02:46 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 Wed Feb 10 10:53:59 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* examples/IPC_SAP/TLI_SAP/ftp-server.cpp: 
+	* examples/IPC_SAP/TLI_SAP/ftp-server.cpp:
 	  Fixed several minor syntax errors.
 
 Tue Feb 09 16:54:10 1999  Jeff Parsons  <parsons@cs.wustl.edu>
