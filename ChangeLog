@@ -1,3 +1,8 @@
+Tue Feb 17 19:55:56 UTC 2004  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* ace/SOCK_SEQPACK_Connector.cpp:
+	  Add #include <ace/OS_NS_string.h> to get ACE_OS::memcpy().
+
 Tue Feb 17 10:29:34 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/USAGE:
