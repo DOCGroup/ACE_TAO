@@ -1,3 +1,12 @@
+Mon Jul 13 18:35:22 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp: 
+	* TAO_IDL/be/be_sequence.cpp: 
+	  Code generation for sequences of octets was incorrect in
+	  platforms that do not support automatic template
+	  instantiation. Thanks to Eric Powers <powerg@deltanet.com> for
+	  pointing this out.
+
 Mon Jul 13 17:50:35 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/TAO.dsp:  Added Invocation.cpp into project.
