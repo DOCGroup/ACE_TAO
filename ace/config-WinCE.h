@@ -10,7 +10,9 @@
 #define ACE_HAS_NON_STATIC_OBJECT_MANAGER
 #define ACE_HAS_STRICT 1
 
+#if defined (SH3) && defined (DEBUG)
 #define ACE_LACKS_INLINE_FUNCTIONS
+#endif /* SH3 && _DEBUG */
 
 // @@ Need to remap every function that uses any of these flags to
 //    Win32 API.  These are for ANSI styled function and are not
