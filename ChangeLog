@@ -1,3 +1,12 @@
+Wed Jan  5 09:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.inl (sigwait):
+          On Solaris it seems we have two versions of sigwait, one with one
+          argument, another with two arguments. Added a check to detect which
+          one to use and implemented both variants. I tested this on Solaris 8
+          and there it works, is should fix the compile problems in the
+          Solaris 10 x86 isis build
+
 Wed Jan  5 09:10:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Dev_Poll_Reactor.cpp:
