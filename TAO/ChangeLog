@@ -14,13 +14,14 @@ Tue Dec  3 18:13:42 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 
 	* tao/Transport.cpp (process_parsed_messages): Just before
 	  resuming the handle, increment the refcount of TAO_Transport and
-	  decrement it when exiting the scope where request and reply
+	  decrement it when exiting the scope once request and reply
 	  processing is done. 
 
 	* tao/TAO_Server_Request.cpp: Removed incrementing and
 	  decrementing the TAO_Transport. It has now been moved to
 	  TAO_Transport::process_parsed_messages () which is a safer and
-	  the right place to do refcounting.
+	  the right place to do refcounting. Manipulating refcounts here
+	  is too late between which world of bad things could strike.
 	
 
 Mon Dec  2 18:42:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
