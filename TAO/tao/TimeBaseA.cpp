@@ -35,7 +35,7 @@
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/alias_typecode.cpp:31
+// be\be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
                             TAO::Null_RefCount_Policy>
@@ -53,7 +53,7 @@ namespace TimeBase
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/alias_typecode.cpp:31
+// be\be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
                             TAO::Null_RefCount_Policy>
@@ -71,7 +71,7 @@ namespace TimeBase
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/alias_typecode.cpp:31
+// be\be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
                             TAO::Null_RefCount_Policy>
@@ -89,9 +89,9 @@ namespace TimeBase
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/struct_typecode.cpp:34
+// be\be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> _tao_fields_TimeBase_UtcT[] =
+static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_TimeBase_UtcT[] =
   {
     { "time", &TimeBase::_tc_TimeT },
     { "inacclo", &CORBA::_tc_ulong },
@@ -118,9 +118,9 @@ namespace TimeBase
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/struct_typecode.cpp:34
+// be\be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> _tao_fields_TimeBase_IntervalT[] =
+static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_TimeBase_IntervalT[] =
   {
     { "lower_bound", &TimeBase::_tc_TimeT },
     { "upper_bound", &TimeBase::_tc_TimeT }
@@ -145,7 +145,7 @@ namespace TimeBase
 
 
 // TAO_IDL - Generated from 
-// be/be_visitor_structure/any_op_cs.cpp:54
+// be\be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -203,7 +203,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_structure/any_op_cs.cpp:54
+// be\be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (

@@ -52,13 +52,6 @@
 #endif
 #define TAO_EXPORT_MACRO TAO_Export
 
-#if defined (TAO_EXPORT_NESTED_CLASSES)
-#  if defined (TAO_EXPORT_NESTED_MACRO)
-#    undef TAO_EXPORT_NESTED_MACRO
-#  endif /* defined (TAO_EXPORT_NESTED_MACRO) */
-#  define TAO_EXPORT_NESTED_MACRO TAO_Export
-#endif /* TAO_EXPORT_NESTED_CLASSES */
-
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
@@ -84,7 +77,7 @@ namespace PortableInterceptor
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_ServerId;
+  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_ServerId;
   
   // TAO_IDL - Generated from
   // be\be_visitor_typedef/typedef_ch.cpp:413
@@ -96,7 +89,7 @@ namespace PortableInterceptor
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_ORBId;
+  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_ORBId;
   
   // TAO_IDL - Generated from
   // be\be_visitor_typedef/typedef_ch.cpp:472
@@ -108,7 +101,7 @@ namespace PortableInterceptor
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_AdapterName;
+  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_AdapterName;
   
   // TAO_IDL - Generated from
   // be\be_visitor_typedef/typedef_ch.cpp:472
@@ -120,7 +113,7 @@ namespace PortableInterceptor
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_ObjectId;
+  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_ObjectId;
   
   // TAO_IDL - Generated from
   // be\be_visitor_typedef/typedef_ch.cpp:379
@@ -131,7 +124,7 @@ namespace PortableInterceptor
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_AdapterManagerId;
+  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_AdapterManagerId;
   
   // TAO_IDL - Generated from
   // be\be_visitor_typedef/typedef_ch.cpp:379
@@ -142,7 +135,7 @@ namespace PortableInterceptor
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_AdapterState;
+  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_AdapterState;
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:66
@@ -158,7 +151,7 @@ namespace TAO
 }
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:969
+// be\be_codegen.cpp:947
 
 #if defined (__ACE_INLINE__)
 #include "PI_ForwardC.inl"
