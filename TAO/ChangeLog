@@ -1,3 +1,12 @@
+Tue Dec 23 12:53:59 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* docs/tutorials/Quoter/RT_Event_Service/Quoter_RT_Event_Service.mpc:
+	* docs/tutorials/Quoter/Naming_Service/Quoter_Naming_Service.mpc:
+	* docs/tutorials/Quoter/Event_Service/Quoter_Event_Service.mpc:
+	  Because these tutorials using orbsvcs, base the projects on
+          orbsvcsexe instead of taoexe because with taoexe we lack the
+	  $(TAO_ROOT)/orbsvcs include path
+
 Tue Dec 23 12:42:45 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* docs/tutorials/Quoter/Simple/Impl-Repo/Quoter_Simple_Impl_Repo.mpc:
