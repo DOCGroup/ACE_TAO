@@ -252,8 +252,6 @@ realclean: clean
 
 .obj/Aio_Platform_Test.o .obj/Aio_Platform_Test.so .shobj/Aio_Platform_Test.o .shobj/Aio_Platform_Test.so: Aio_Platform_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -325,12 +323,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Arg_Shifter.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- test_config.h $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl test_config.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.h \
@@ -393,12 +389,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp
 
-.obj/ARGV_Test.o .obj/ARGV_Test.so .shobj/ARGV_Test.o .shobj/ARGV_Test.so: ARGV_Test.cpp \
- $(ACE_ROOT)/ace/ARGV.h \
+.obj/ARGV_Test.o .obj/ARGV_Test.so .shobj/ARGV_Test.o .shobj/ARGV_Test.so: ARGV_Test.cpp $(ACE_ROOT)/ace/ARGV.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -473,10 +466,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Framework_Component_T.cpp
 
 .obj/Atomic_Op_Test.o .obj/Atomic_Op_Test.so .shobj/Atomic_Op_Test.o .shobj/Atomic_Op_Test.so: Atomic_Op_Test.cpp \
- $(ACE_ROOT)/tests/test_config.h \
+ test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -550,8 +541,6 @@ realclean: clean
 .obj/Auto_IncDec_Test.o .obj/Auto_IncDec_Test.so .shobj/Auto_IncDec_Test.o .shobj/Auto_IncDec_Test.so: Auto_IncDec_Test.cpp \
  $(ACE_ROOT)/ace/Auto_IncDec_T.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -645,12 +634,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Atomic_Op.h \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Atomic_Op.cpp \
- $(ACE_ROOT)/tests/test_config.h
+ test_config.h
 
 .obj/Barrier_Test.o .obj/Barrier_Test.so .shobj/Barrier_Test.o .shobj/Barrier_Test.so: Barrier_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -743,8 +730,6 @@ realclean: clean
 .obj/Basic_Types_Test.o .obj/Basic_Types_Test.so .shobj/Basic_Types_Test.o .shobj/Basic_Types_Test.so: Basic_Types_Test.cpp \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -770,8 +755,7 @@ realclean: clean
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Version.h \
- test_config.h \
+ $(ACE_ROOT)/ace/Version.h test_config.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
@@ -815,8 +799,6 @@ realclean: clean
 
 .obj/Bound_Ptr_Test.o .obj/Bound_Ptr_Test.so .shobj/Bound_Ptr_Test.o .shobj/Bound_Ptr_Test.so: Bound_Ptr_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -947,8 +929,6 @@ realclean: clean
 
 .obj/Buffer_Stream_Test.o .obj/Buffer_Stream_Test.so .shobj/Buffer_Stream_Test.o .shobj/Buffer_Stream_Test.so: Buffer_Stream_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1075,8 +1055,6 @@ realclean: clean
 .obj/Cache_Map_Manager_Test.o .obj/Cache_Map_Manager_Test.so .shobj/Cache_Map_Manager_Test.o .shobj/Cache_Map_Manager_Test.so: Cache_Map_Manager_Test.cpp \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1216,7 +1194,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Cache_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Pair_T.h \
- $(ACE_ROOT)/ace/Pair.h \
  $(ACE_ROOT)/ace/Pair_T.i \
  $(ACE_ROOT)/ace/Pair_T.cpp \
  $(ACE_ROOT)/ace/Cache_Map_Manager_T.i \
@@ -1244,13 +1221,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
- $(ACE_ROOT)/ace/Get_Opt.i \
- Cache_Map_Manager_Test.h
+ $(ACE_ROOT)/ace/Get_Opt.i Cache_Map_Manager_Test.h
 
 .obj/Cached_Accept_Conn_Test.o .obj/Cached_Accept_Conn_Test.so .shobj/Cached_Accept_Conn_Test.o .shobj/Cached_Accept_Conn_Test.so: Cached_Accept_Conn_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1473,7 +1447,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Cache_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Cache_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Pair_T.h \
- $(ACE_ROOT)/ace/Pair.h \
  $(ACE_ROOT)/ace/Pair_T.i \
  $(ACE_ROOT)/ace/Pair_T.cpp \
  $(ACE_ROOT)/ace/Cache_Map_Manager_T.i \
@@ -1491,8 +1464,6 @@ realclean: clean
 
 .obj/Cached_Allocator_Test.o .obj/Cached_Allocator_Test.so .shobj/Cached_Allocator_Test.o .shobj/Cached_Allocator_Test.so: Cached_Allocator_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1592,8 +1563,6 @@ realclean: clean
 
 .obj/Cached_Conn_Test.o .obj/Cached_Conn_Test.so .shobj/Cached_Conn_Test.o .shobj/Cached_Conn_Test.so: Cached_Conn_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1660,8 +1629,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Framework_Component_T.h \
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
- Cached_Conn_Test.h \
- $(ACE_ROOT)/ace/SOCK_Stream.h \
+ Cached_Conn_Test.h $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
  $(ACE_ROOT)/ace/Addr.h \
@@ -1818,7 +1786,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Cache_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Cache_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Pair_T.h \
- $(ACE_ROOT)/ace/Pair.h \
  $(ACE_ROOT)/ace/Pair_T.i \
  $(ACE_ROOT)/ace/Pair_T.cpp \
  $(ACE_ROOT)/ace/Cache_Map_Manager_T.i \
@@ -1835,8 +1802,6 @@ realclean: clean
 .obj/Capabilities_Test.o .obj/Capabilities_Test.so .shobj/Capabilities_Test.o .shobj/Capabilities_Test.so: Capabilities_Test.cpp \
  $(ACE_ROOT)/ace/Capabilities.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1970,8 +1935,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
- $(ACE_ROOT)/ace/Capabilities.i \
- test_config.h \
+ $(ACE_ROOT)/ace/Capabilities.i test_config.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
@@ -1990,8 +1954,6 @@ realclean: clean
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -2113,8 +2075,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
- $(ACE_ROOT)/ace/Get_Opt.i \
- test_config.h \
+ $(ACE_ROOT)/ace/Get_Opt.i test_config.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
@@ -2131,8 +2092,6 @@ realclean: clean
 
 .obj/CDR_Test.o .obj/CDR_Test.so .shobj/CDR_Test.o .shobj/CDR_Test.so: CDR_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -2261,8 +2220,6 @@ realclean: clean
 
 .obj/Collection_Test.o .obj/Collection_Test.so .shobj/Collection_Test.o .shobj/Collection_Test.so: Collection_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -2345,13 +2302,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp \
- Collection_Test.h
+ $(ACE_ROOT)/ace/Containers_T.cpp Collection_Test.h
 
 .obj/Config_Test.o .obj/Config_Test.so .shobj/Config_Test.o .shobj/Config_Test.so: Config_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -2418,8 +2372,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Framework_Component_T.h \
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
- Config_Test.h \
- $(ACE_ROOT)/ace/Configuration.h \
+ Config_Test.h $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/String_Base_Const.h \
@@ -2499,8 +2452,6 @@ realclean: clean
 
 .obj/Conn_Test.o .obj/Conn_Test.so .shobj/Conn_Test.o .shobj/Conn_Test.so: Conn_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -2719,15 +2670,12 @@ realclean: clean
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/Process_Mutex.h \
- $(ACE_ROOT)/ace/Process_Mutex.inl \
- Conn_Test.h
+ $(ACE_ROOT)/ace/Process_Mutex.inl Conn_Test.h
 
 .obj/Date_Time_Test.o .obj/Date_Time_Test.so .shobj/Date_Time_Test.o .shobj/Date_Time_Test.so: Date_Time_Test.cpp \
  $(ACE_ROOT)/ace/Date_Time.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -2753,8 +2701,7 @@ realclean: clean
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Date_Time.i \
- test_config.h \
+ $(ACE_ROOT)/ace/Date_Time.i test_config.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
@@ -2798,8 +2745,6 @@ realclean: clean
 
 .obj/Dev_Poll_Reactor_Test.o .obj/Dev_Poll_Reactor_Test.so .shobj/Dev_Poll_Reactor_Test.o .shobj/Dev_Poll_Reactor_Test.so: Dev_Poll_Reactor_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -2869,8 +2814,6 @@ realclean: clean
 
 .obj/Dirent_Test.o .obj/Dirent_Test.so .shobj/Dirent_Test.o .shobj/Dirent_Test.so: Dirent_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -2944,8 +2887,6 @@ realclean: clean
 
 .obj/DLList_Test.o .obj/DLList_Test.so .shobj/DLList_Test.o .shobj/DLList_Test.so: DLList_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -3063,8 +3004,6 @@ realclean: clean
 
 .obj/DLL_Test.o .obj/DLL_Test.so .shobj/DLL_Test.o .shobj/DLL_Test.so: DLL_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -3173,8 +3112,6 @@ realclean: clean
 
 .obj/Enum_Interfaces_Test.o .obj/Enum_Interfaces_Test.so .shobj/Enum_Interfaces_Test.o .shobj/Enum_Interfaces_Test.so: Enum_Interfaces_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -3248,8 +3185,6 @@ realclean: clean
 
 .obj/Env_Value_Test.o .obj/Env_Value_Test.so .shobj/Env_Value_Test.o .shobj/Env_Value_Test.so: Env_Value_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -3363,8 +3298,6 @@ realclean: clean
 
 .obj/Future_Test.o .obj/Future_Test.so .shobj/Future_Test.o .shobj/Future_Test.so: Future_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -3562,8 +3495,6 @@ realclean: clean
 
 .obj/Future_Set_Test.o .obj/Future_Set_Test.so .shobj/Future_Set_Test.o .shobj/Future_Set_Test.so: Future_Set_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -3761,11 +3692,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Atomic_Op.cpp
 
-.obj/Get_Opt_Test.o .obj/Get_Opt_Test.so .shobj/Get_Opt_Test.o .shobj/Get_Opt_Test.so: Get_Opt_Test.cpp \
- $(ACE_ROOT)/ace/OS.h \
+.obj/Get_Opt_Test.o .obj/Get_Opt_Test.so .shobj/Get_Opt_Test.o .shobj/Get_Opt_Test.so: Get_Opt_Test.cpp $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -3870,7 +3798,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/ARGV.h \
  $(ACE_ROOT)/ace/ARGV.i \
- $(ACE_ROOT)/tests/test_config.h \
+ test_config.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
@@ -3887,8 +3815,6 @@ realclean: clean
 
 .obj/Handle_Set_Test.o .obj/Handle_Set_Test.so .shobj/Handle_Set_Test.o .shobj/Handle_Set_Test.so: Handle_Set_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -3981,8 +3907,6 @@ realclean: clean
 
 .obj/High_Res_Timer_Test.o .obj/High_Res_Timer_Test.so .shobj/High_Res_Timer_Test.o .shobj/High_Res_Timer_Test.so: High_Res_Timer_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -4106,8 +4030,6 @@ realclean: clean
 
 .obj/Hash_Map_Manager_Test.o .obj/Hash_Map_Manager_Test.so .shobj/Hash_Map_Manager_Test.o .shobj/Hash_Map_Manager_Test.so: Hash_Map_Manager_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -4248,10 +4170,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Reactor_Impl.h
 
 .obj/Hash_Map_Bucket_Iterator_Test.o .obj/Hash_Map_Bucket_Iterator_Test.so .shobj/Hash_Map_Bucket_Iterator_Test.o .shobj/Hash_Map_Bucket_Iterator_Test.so: Hash_Map_Bucket_Iterator_Test.cpp \
- test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -4403,8 +4322,6 @@ realclean: clean
 
 .obj/INET_Addr_Test.o .obj/INET_Addr_Test.so .shobj/INET_Addr_Test.o .shobj/INET_Addr_Test.so: INET_Addr_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -4478,8 +4395,6 @@ realclean: clean
 
 .obj/IOStream_Test.o .obj/IOStream_Test.so .shobj/IOStream_Test.o .shobj/IOStream_Test.so: IOStream_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -4695,8 +4610,6 @@ realclean: clean
 
 .obj/Lazy_Map_Manager_Test.o .obj/Lazy_Map_Manager_Test.so .shobj/Lazy_Map_Manager_Test.o .shobj/Lazy_Map_Manager_Test.so: Lazy_Map_Manager_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -4838,8 +4751,6 @@ realclean: clean
 .obj/Log_Msg_Test.o .obj/Log_Msg_Test.so .shobj/Log_Msg_Test.o .shobj/Log_Msg_Test.so: Log_Msg_Test.cpp \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -4943,8 +4854,7 @@ realclean: clean
  $(ACE_ROOT)/ace/FILE_Connector.i \
  $(ACE_ROOT)/ace/Log_Msg_Callback.h \
  $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Record.i \
- test_config.h \
+ $(ACE_ROOT)/ace/Log_Record.i test_config.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
@@ -4962,8 +4872,6 @@ realclean: clean
 .obj/Logging_Strategy_Test.o .obj/Logging_Strategy_Test.so .shobj/Logging_Strategy_Test.o .shobj/Logging_Strategy_Test.so: Logging_Strategy_Test.cpp \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -5103,13 +5011,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/Get_Opt.i \
- test_config.h
+ $(ACE_ROOT)/ace/Get_Opt.i test_config.h
 
 .obj/Malloc_Test.o .obj/Malloc_Test.so .shobj/Malloc_Test.o .shobj/Malloc_Test.so: Malloc_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -5224,13 +5129,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
  $(ACE_ROOT)/ace/Based_Pointer_Repository.h \
- $(ACE_ROOT)/ace/PI_Malloc.i \
- Malloc_Test.h
+ $(ACE_ROOT)/ace/PI_Malloc.i Malloc_Test.h
 
 .obj/Map_Test.o .obj/Map_Test.so .shobj/Map_Test.o .shobj/Map_Test.so: Map_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -5296,8 +5198,7 @@ realclean: clean
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Framework_Component_T.h \
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
- $(ACE_ROOT)/ace/Framework_Component_T.cpp \
- Map_Test.h \
+ $(ACE_ROOT)/ace/Framework_Component_T.cpp Map_Test.h \
  $(ACE_ROOT)/ace/Active_Map_Manager.h \
  $(ACE_ROOT)/ace/Active_Map_Manager.i \
  $(ACE_ROOT)/ace/Active_Map_Manager_T.h \
@@ -5378,8 +5279,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Map_T.h \
- $(ACE_ROOT)/ace/Map.h \
- $(ACE_ROOT)/ace/Pair.h \
  $(ACE_ROOT)/ace/Pair_T.h \
  $(ACE_ROOT)/ace/Pair_T.i \
  $(ACE_ROOT)/ace/Pair_T.cpp \
@@ -5401,8 +5300,6 @@ realclean: clean
 
 .obj/Map_Manager_Test.o .obj/Map_Manager_Test.so .shobj/Map_Manager_Test.o .shobj/Map_Manager_Test.so: Map_Manager_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -5556,7 +5453,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Cache_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Cache_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Pair_T.h \
- $(ACE_ROOT)/ace/Pair.h \
  $(ACE_ROOT)/ace/Pair_T.i \
  $(ACE_ROOT)/ace/Pair_T.cpp \
  $(ACE_ROOT)/ace/Cache_Map_Manager_T.i \
@@ -5576,8 +5472,6 @@ realclean: clean
 .obj/Max_Default_Port_Test.o .obj/Max_Default_Port_Test.so .shobj/Max_Default_Port_Test.o .shobj/Max_Default_Port_Test.so: Max_Default_Port_Test.cpp \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -5697,13 +5591,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Thread_Manager.i \
  Max_Default_Port_Test.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
- $(ACE_ROOT)/ace/SOCK_Acceptor.i \
- test_config.h
+ $(ACE_ROOT)/ace/SOCK_Acceptor.i test_config.h
 
 .obj/MEM_Stream_Test.o .obj/MEM_Stream_Test.so .shobj/MEM_Stream_Test.o .shobj/MEM_Stream_Test.so: MEM_Stream_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -5961,13 +5852,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Process.h \
  $(ACE_ROOT)/ace/Process.i \
  $(ACE_ROOT)/ace/Process_Manager.h \
- $(ACE_ROOT)/ace/Process_Manager.i \
- MEM_Stream_Test.h
+ $(ACE_ROOT)/ace/Process_Manager.i MEM_Stream_Test.h
 
 .obj/Mem_Map_Test.o .obj/Mem_Map_Test.so .shobj/Mem_Map_Test.o .shobj/Mem_Map_Test.so: Mem_Map_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -6039,8 +5927,6 @@ realclean: clean
 
 .obj/MM_Shared_Memory_Test.o .obj/MM_Shared_Memory_Test.so .shobj/MM_Shared_Memory_Test.o .shobj/MM_Shared_Memory_Test.so: MM_Shared_Memory_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -6115,6 +6001,8 @@ realclean: clean
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
  $(ACE_ROOT)/ace/Process_Semaphore.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
  $(ACE_ROOT)/ace/Process_Semaphore.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -6141,8 +6029,6 @@ realclean: clean
 
 .obj/MT_Reactor_Timer_Test.o .obj/MT_Reactor_Timer_Test.so .shobj/MT_Reactor_Timer_Test.o .shobj/MT_Reactor_Timer_Test.so: MT_Reactor_Timer_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -6209,8 +6095,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Framework_Component_T.h \
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
- MT_Reactor_Timer_Test.h \
- $(ACE_ROOT)/ace/Reactor.h \
+ MT_Reactor_Timer_Test.h $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/Handle_Set.i \
  $(ACE_ROOT)/ace/Timer_Queue.h \
@@ -6282,8 +6167,6 @@ realclean: clean
 
 .obj/MT_Reactor_Upcall_Test.o .obj/MT_Reactor_Upcall_Test.so .shobj/MT_Reactor_Upcall_Test.o .shobj/MT_Reactor_Upcall_Test.so: MT_Reactor_Upcall_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -6377,16 +6260,19 @@ realclean: clean
  $(ACE_ROOT)/ace/Token.i \
  $(ACE_ROOT)/ace/Pipe.h \
  $(ACE_ROOT)/ace/Pipe.i \
+ $(ACE_ROOT)/ace/Unbounded_Queue.h \
+ $(ACE_ROOT)/ace/Node.h \
+ $(ACE_ROOT)/ace/Node.cpp \
+ $(ACE_ROOT)/ace/Unbounded_Queue.inl \
+ $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Select_Reactor_Base.i \
  $(ACE_ROOT)/ace/Select_Reactor_T.cpp \
  $(ACE_ROOT)/ace/Timer_Heap.h \
  $(ACE_ROOT)/ace/Timer_Heap_T.h \
  $(ACE_ROOT)/ace/Unbounded_Set.h \
- $(ACE_ROOT)/ace/Node.h \
- $(ACE_ROOT)/ace/Node.cpp \
  $(ACE_ROOT)/ace/Unbounded_Set.inl \
  $(ACE_ROOT)/ace/Unbounded_Set.cpp \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
  $(ACE_ROOT)/ace/Select_Reactor_T.i \
  $(ACE_ROOT)/ace/TP_Reactor.i \
@@ -6399,9 +6285,6 @@ realclean: clean
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
  $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Unbounded_Queue.h \
- $(ACE_ROOT)/ace/Unbounded_Queue.inl \
- $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -6462,8 +6345,6 @@ realclean: clean
 
 .obj/MT_SOCK_Test.o .obj/MT_SOCK_Test.so .shobj/MT_SOCK_Test.o .shobj/MT_SOCK_Test.so: MT_SOCK_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -6573,8 +6454,6 @@ realclean: clean
 
 .obj/Message_Block_Test.o .obj/Message_Block_Test.so .shobj/Message_Block_Test.o .shobj/Message_Block_Test.so: Message_Block_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -6718,8 +6597,6 @@ realclean: clean
 
 .obj/Message_Queue_Test.o .obj/Message_Queue_Test.so .shobj/Message_Queue_Test.o .shobj/Message_Queue_Test.so: Message_Queue_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -6828,8 +6705,6 @@ realclean: clean
 
 .obj/Message_Queue_Test_Ex.o .obj/Message_Queue_Test_Ex.so .shobj/Message_Queue_Test_Ex.o .shobj/Message_Queue_Test_Ex.so: Message_Queue_Test_Ex.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -6940,8 +6815,6 @@ realclean: clean
 .obj/Message_Queue_Notifications_Test.o .obj/Message_Queue_Notifications_Test.so .shobj/Message_Queue_Notifications_Test.o .shobj/Message_Queue_Notifications_Test.so: \
  Message_Queue_Notifications_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -7083,8 +6956,6 @@ realclean: clean
 
 .obj/Notify_Performance_Test.o .obj/Notify_Performance_Test.so .shobj/Notify_Performance_Test.o .shobj/Notify_Performance_Test.so: Notify_Performance_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -7239,8 +7110,6 @@ realclean: clean
 
 .obj/Object_Manager_Test.o .obj/Object_Manager_Test.so .shobj/Object_Manager_Test.o .shobj/Object_Manager_Test.so: Object_Manager_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -7308,11 +7177,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp
 
-.obj/Obstack_Test.o .obj/Obstack_Test.so .shobj/Obstack_Test.o .shobj/Obstack_Test.so: Obstack_Test.cpp \
- $(ACE_ROOT)/ace/OS.h \
+.obj/Obstack_Test.o .obj/Obstack_Test.so .shobj/Obstack_Test.o .shobj/Obstack_Test.so: Obstack_Test.cpp $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -7398,8 +7264,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Obchunk.i \
  $(ACE_ROOT)/ace/Obstack_T.i \
- $(ACE_ROOT)/ace/Obstack_T.cpp \
- test_config.h \
+ $(ACE_ROOT)/ace/Obstack_T.cpp test_config.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
@@ -7416,12 +7281,10 @@ realclean: clean
 
 .obj/OrdMultiSet_Test.o .obj/OrdMultiSet_Test.so .shobj/OrdMultiSet_Test.o .shobj/OrdMultiSet_Test.so: OrdMultiSet_Test.cpp \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- test_config.h $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl test_config.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.h \
@@ -7502,11 +7365,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp
 
-.obj/OS_Test.o .obj/OS_Test.so .shobj/OS_Test.o .shobj/OS_Test.so: OS_Test.cpp \
- $(ACE_ROOT)/ace/OS.h \
+.obj/OS_Test.o .obj/OS_Test.so .shobj/OS_Test.o .shobj/OS_Test.so: OS_Test.cpp $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -7574,10 +7434,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Framework_Component_T.cpp
 
 .obj/Proactor_Scatter_Gather_Test.o .obj/Proactor_Scatter_Gather_Test.so .shobj/Proactor_Scatter_Gather_Test.o .shobj/Proactor_Scatter_Gather_Test.so: Proactor_Scatter_Gather_Test.cpp \
- test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -7647,8 +7504,6 @@ realclean: clean
 
 .obj/Proactor_Test.o .obj/Proactor_Test.so .shobj/Proactor_Test.o .shobj/Proactor_Test.so: Proactor_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -7869,14 +7724,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Select_Reactor_T.i \
  $(ACE_ROOT)/ace/POSIX_Proactor.i \
  $(ACE_ROOT)/ace/POSIX_CB_Proactor.h \
- $(ACE_ROOT)/ace/SUN_Proactor.h \
- \
- $(ACE_ROOT)/ace/SUN_Proactor.i
+ $(ACE_ROOT)/ace/SUN_Proactor.h
 
 .obj/Proactor_Timer_Test.o .obj/Proactor_Timer_Test.so .shobj/Proactor_Timer_Test.o .shobj/Proactor_Timer_Test.so: Proactor_Timer_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -7995,8 +7846,6 @@ realclean: clean
 
 .obj/Process_Mutex_Test.o .obj/Process_Mutex_Test.so .shobj/Process_Mutex_Test.o .shobj/Process_Mutex_Test.so: Process_Mutex_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -8122,8 +7971,6 @@ realclean: clean
 
 .obj/Process_Strategy_Test.o .obj/Process_Strategy_Test.so .shobj/Process_Strategy_Test.o .shobj/Process_Strategy_Test.so: Process_Strategy_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -8335,13 +8182,10 @@ realclean: clean
  $(ACE_ROOT)/ace/SOCK_Connector.h \
  $(ACE_ROOT)/ace/SOCK_Connector.i \
  $(ACE_ROOT)/ace/File_Lock.h \
- $(ACE_ROOT)/ace/File_Lock.inl \
- Process_Strategy_Test.h
+ $(ACE_ROOT)/ace/File_Lock.inl Process_Strategy_Test.h
 
 .obj/Priority_Buffer_Test.o .obj/Priority_Buffer_Test.so .shobj/Priority_Buffer_Test.o .shobj/Priority_Buffer_Test.so: Priority_Buffer_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -8448,8 +8292,6 @@ realclean: clean
 
 .obj/Dynamic_Priority_Test.o .obj/Dynamic_Priority_Test.so .shobj/Dynamic_Priority_Test.o .shobj/Dynamic_Priority_Test.so: Dynamic_Priority_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -8560,8 +8402,6 @@ realclean: clean
 
 .obj/Priority_Task_Test.o .obj/Priority_Task_Test.so .shobj/Priority_Task_Test.o .shobj/Priority_Task_Test.so: Priority_Task_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -8686,8 +8526,6 @@ realclean: clean
 
 .obj/Priority_Reactor_Test.o .obj/Priority_Reactor_Test.so .shobj/Priority_Reactor_Test.o .shobj/Priority_Reactor_Test.so: Priority_Reactor_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -8921,8 +8759,6 @@ realclean: clean
 
 .obj/Process_Manager_Test.o .obj/Process_Manager_Test.so .shobj/Process_Manager_Test.o .shobj/Process_Manager_Test.so: Process_Manager_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -9058,8 +8894,6 @@ realclean: clean
 
 .obj/Pipe_Test.o .obj/Pipe_Test.so .shobj/Pipe_Test.o .shobj/Pipe_Test.so: Pipe_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -9185,8 +9019,6 @@ realclean: clean
 
 .obj/RB_Tree_Test.o .obj/RB_Tree_Test.so .shobj/RB_Tree_Test.o .shobj/RB_Tree_Test.so: RB_Tree_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -9297,13 +9129,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
- $(ACE_ROOT)/ace/SString.i \
- RB_Tree_Test.h
+ $(ACE_ROOT)/ace/SString.i RB_Tree_Test.h
 
 .obj/Reactors_Test.o .obj/Reactors_Test.so .shobj/Reactors_Test.o .shobj/Reactors_Test.so: Reactors_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -9446,8 +9275,6 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -9558,13 +9385,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Framework_Component_T.h \
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
- $(ACE_ROOT)/ace/Thread_Manager.i \
- test_config.h
+ $(ACE_ROOT)/ace/Thread_Manager.i test_config.h
 
 .obj/Reactor_Notify_Test.o .obj/Reactor_Notify_Test.so .shobj/Reactor_Notify_Test.o .shobj/Reactor_Notify_Test.so: Reactor_Notify_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -9716,10 +9540,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Select_Reactor_T.i
 
 .obj/Reactor_Dispatch_Order_Test.o .obj/Reactor_Dispatch_Order_Test.so .shobj/Reactor_Dispatch_Order_Test.o .shobj/Reactor_Dispatch_Order_Test.so: Reactor_Dispatch_Order_Test.cpp \
- test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -9812,24 +9633,25 @@ realclean: clean
  $(ACE_ROOT)/ace/Token.i \
  $(ACE_ROOT)/ace/Pipe.h \
  $(ACE_ROOT)/ace/Pipe.i \
+ $(ACE_ROOT)/ace/Unbounded_Queue.h \
+ $(ACE_ROOT)/ace/Node.h \
+ $(ACE_ROOT)/ace/Node.cpp \
+ $(ACE_ROOT)/ace/Unbounded_Queue.inl \
+ $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Select_Reactor_Base.i \
  $(ACE_ROOT)/ace/Select_Reactor_T.cpp \
  $(ACE_ROOT)/ace/Timer_Heap.h \
  $(ACE_ROOT)/ace/Timer_Heap_T.h \
  $(ACE_ROOT)/ace/Unbounded_Set.h \
- $(ACE_ROOT)/ace/Node.h \
- $(ACE_ROOT)/ace/Node.cpp \
  $(ACE_ROOT)/ace/Unbounded_Set.inl \
  $(ACE_ROOT)/ace/Unbounded_Set.cpp \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
  $(ACE_ROOT)/ace/Select_Reactor_T.i \
  $(ACE_ROOT)/ace/WFMO_Reactor.h
 
 .obj/Reactor_Performance_Test.o .obj/Reactor_Performance_Test.so .shobj/Reactor_Performance_Test.o .shobj/Reactor_Performance_Test.so: Reactor_Performance_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -10066,8 +9888,6 @@ realclean: clean
 
 .obj/Reactor_Timer_Test.o .obj/Reactor_Timer_Test.so .shobj/Reactor_Timer_Test.o .shobj/Reactor_Timer_Test.so: Reactor_Timer_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -10158,8 +9978,6 @@ realclean: clean
 
 .obj/Reader_Writer_Test.o .obj/Reader_Writer_Test.so .shobj/Reader_Writer_Test.o .shobj/Reader_Writer_Test.so: Reader_Writer_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -10284,8 +10102,6 @@ realclean: clean
 
 .obj/Recursive_Condition_Test.o .obj/Recursive_Condition_Test.so .shobj/Recursive_Condition_Test.o .shobj/Recursive_Condition_Test.so: Recursive_Condition_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -10422,8 +10238,6 @@ realclean: clean
 
 .obj/Recursive_Mutex_Test.o .obj/Recursive_Mutex_Test.so .shobj/Recursive_Mutex_Test.o .shobj/Recursive_Mutex_Test.so: Recursive_Mutex_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -10545,8 +10359,6 @@ realclean: clean
 
 .obj/Refcounted_Auto_Ptr_Test.o .obj/Refcounted_Auto_Ptr_Test.so .shobj/Refcounted_Auto_Ptr_Test.o .shobj/Refcounted_Auto_Ptr_Test.so: Refcounted_Auto_Ptr_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -10678,8 +10490,6 @@ realclean: clean
 
 .obj/Reverse_Lock_Test.o .obj/Reverse_Lock_Test.so .shobj/Reverse_Lock_Test.o .shobj/Reverse_Lock_Test.so: Reverse_Lock_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -10749,8 +10559,6 @@ realclean: clean
 
 .obj/Semaphore_Test.o .obj/Semaphore_Test.so .shobj/Semaphore_Test.o .shobj/Semaphore_Test.so: Semaphore_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -10872,8 +10680,6 @@ realclean: clean
 
 .obj/Signal_Test.o .obj/Signal_Test.so .shobj/Signal_Test.o .shobj/Signal_Test.so: Signal_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -11001,8 +10807,6 @@ realclean: clean
 
 .obj/Sigset_Ops_Test.o .obj/Sigset_Ops_Test.so .shobj/Sigset_Ops_Test.o .shobj/Sigset_Ops_Test.so: Sigset_Ops_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -11071,10 +10875,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Framework_Component_T.cpp
 
 .obj/Simple_Message_Block_Test.o .obj/Simple_Message_Block_Test.so .shobj/Simple_Message_Block_Test.o .shobj/Simple_Message_Block_Test.so: Simple_Message_Block_Test.cpp \
- test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -11149,8 +10950,6 @@ realclean: clean
 
 .obj/SOCK_Test.o .obj/SOCK_Test.so .shobj/SOCK_Test.o .shobj/SOCK_Test.so: SOCK_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -11260,8 +11059,6 @@ realclean: clean
 
 .obj/SOCK_Connector_Test.o .obj/SOCK_Connector_Test.so .shobj/SOCK_Connector_Test.o .shobj/SOCK_Connector_Test.so: SOCK_Connector_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -11345,8 +11142,6 @@ realclean: clean
 
 .obj/SOCK_Send_Recv_Test.o .obj/SOCK_Send_Recv_Test.so .shobj/SOCK_Send_Recv_Test.o .shobj/SOCK_Send_Recv_Test.so: SOCK_Send_Recv_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -11454,8 +11249,6 @@ realclean: clean
 
 .obj/SPIPE_Test.o .obj/SPIPE_Test.so .shobj/SPIPE_Test.o .shobj/SPIPE_Test.so: SPIPE_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -11588,8 +11381,6 @@ realclean: clean
 
 .obj/SString_Test.o .obj/SString_Test.so .shobj/SString_Test.o .shobj/SString_Test.so: SString_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -11696,8 +11487,6 @@ realclean: clean
 
 .obj/SV_Shared_Memory_Test.o .obj/SV_Shared_Memory_Test.so .shobj/SV_Shared_Memory_Test.o .shobj/SV_Shared_Memory_Test.so: SV_Shared_Memory_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -11795,8 +11584,6 @@ realclean: clean
 
 .obj/Svc_Handler_Test.o .obj/Svc_Handler_Test.so .shobj/Svc_Handler_Test.o .shobj/Svc_Handler_Test.so: Svc_Handler_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -11983,8 +11770,6 @@ realclean: clean
 
 .obj/Task_Test.o .obj/Task_Test.so .shobj/Task_Test.o .shobj/Task_Test.so: Task_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -12108,8 +11893,6 @@ realclean: clean
 
 .obj/Thread_Manager_Test.o .obj/Thread_Manager_Test.so .shobj/Thread_Manager_Test.o .shobj/Thread_Manager_Test.so: Thread_Manager_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -12234,8 +12017,6 @@ realclean: clean
 
 .obj/Thread_Mutex_Test.o .obj/Thread_Mutex_Test.so .shobj/Thread_Mutex_Test.o .shobj/Thread_Mutex_Test.so: Thread_Mutex_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -12333,8 +12114,6 @@ realclean: clean
 
 .obj/Thread_Pool_Test.o .obj/Thread_Pool_Test.so .shobj/Thread_Pool_Test.o .shobj/Thread_Pool_Test.so: Thread_Pool_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -12456,10 +12235,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Stream_Modules.cpp
 
 .obj/Timeprobe_Test.o .obj/Timeprobe_Test.so .shobj/Timeprobe_Test.o .shobj/Timeprobe_Test.so: Timeprobe_Test.cpp \
- $(ACE_ROOT)/tests/test_config.h \
+ test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -12530,8 +12307,6 @@ realclean: clean
 
 .obj/Time_Service_Test.o .obj/Time_Service_Test.so .shobj/Time_Service_Test.o .shobj/Time_Service_Test.so: Time_Service_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -12642,12 +12417,10 @@ realclean: clean
 
 .obj/Time_Value_Test.o .obj/Time_Value_Test.so .shobj/Time_Value_Test.o .shobj/Time_Value_Test.so: Time_Value_Test.cpp \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- test_config.h $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl test_config.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.h \
@@ -12656,7 +12429,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/ACE_export.h \
- $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/OS_String.inl \
  $(ACE_ROOT)/ace/OS_Memory.h \
@@ -12668,6 +12440,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Default_Constants.h \
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Singleton.h \
@@ -12713,8 +12486,6 @@ realclean: clean
 
 .obj/Timer_Queue_Test.o .obj/Timer_Queue_Test.so .shobj/Timer_Queue_Test.o .shobj/Timer_Queue_Test.so: Timer_Queue_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -12823,8 +12594,6 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/ACE_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -12957,12 +12726,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Basic_Stats.h \
  $(ACE_ROOT)/ace/Basic_Stats.inl \
  $(ACE_ROOT)/ace/Stats.i \
- $(ACE_ROOT)/tests/test_config.h
+ test_config.h
 
 .obj/TP_Reactor_Test.o .obj/TP_Reactor_Test.so .shobj/TP_Reactor_Test.o .shobj/TP_Reactor_Test.so: TP_Reactor_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -13029,8 +12796,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Framework_Component_T.h \
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
- TP_Reactor_Test.h \
- $(ACE_ROOT)/ace/INET_Addr.h \
+ TP_Reactor_Test.h $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \
  $(ACE_ROOT)/ace/INET_Addr.i \
@@ -13197,8 +12963,6 @@ realclean: clean
 
 .obj/TSS_Test.o .obj/TSS_Test.so .shobj/TSS_Test.o .shobj/TSS_Test.so: TSS_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -13290,13 +13054,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Event_Handler.h \
  $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/Signal.i \
- TSS_Test_Errno.h
+ $(ACE_ROOT)/ace/Signal.i TSS_Test_Errno.h
 
 .obj/Vector_Test.o .obj/Vector_Test.so .shobj/Vector_Test.o .shobj/Vector_Test.so: Vector_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -13387,8 +13148,6 @@ realclean: clean
 
 .obj/UPIPE_SAP_Test.o .obj/UPIPE_SAP_Test.so .shobj/UPIPE_SAP_Test.o .shobj/UPIPE_SAP_Test.so: UPIPE_SAP_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -13557,10 +13316,7 @@ realclean: clean
  $(ACE_ROOT)/ace/UPIPE_Connector.i
 
 .obj/Upgradable_RW_Test.o .obj/Upgradable_RW_Test.so .shobj/Upgradable_RW_Test.o .shobj/Upgradable_RW_Test.so: Upgradable_RW_Test.cpp Upgradable_RW_Test.h \
- test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -13718,8 +13474,6 @@ realclean: clean
 
 .obj/Naming_Test.o .obj/Naming_Test.so .shobj/Naming_Test.o .shobj/Naming_Test.so: Naming_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -13883,10 +13637,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Profile_Timer.i
 
 .obj/Thread_Pool_Reactor_Test.o .obj/Thread_Pool_Reactor_Test.so .shobj/Thread_Pool_Reactor_Test.o .shobj/Thread_Pool_Reactor_Test.so: Thread_Pool_Reactor_Test.cpp \
- $(ACE_ROOT)/tests/test_config.h \
+ test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -14112,13 +13864,11 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
  $(ACE_ROOT)/ace/Select_Reactor_T.i \
  $(ACE_ROOT)/ace/TP_Reactor.i \
- $(ACE_ROOT)/tests/Thread_Pool_Reactor_Test.h
+ Thread_Pool_Reactor_Test.h
 
 .obj/Thread_Pool_Reactor_Resume_Test.o .obj/Thread_Pool_Reactor_Resume_Test.so .shobj/Thread_Pool_Reactor_Resume_Test.o .shobj/Thread_Pool_Reactor_Resume_Test.so: Thread_Pool_Reactor_Resume_Test.cpp \
- $(ACE_ROOT)/tests/test_config.h \
+ test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -14344,12 +14094,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
  $(ACE_ROOT)/ace/Select_Reactor_T.i \
  $(ACE_ROOT)/ace/TP_Reactor.i \
- $(ACE_ROOT)/tests/Thread_Pool_Reactor_Resume_Test.h
+ Thread_Pool_Reactor_Resume_Test.h
 
 .obj/XtReactor_Test.o .obj/XtReactor_Test.so .shobj/XtReactor_Test.o .shobj/XtReactor_Test.so: XtReactor_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -14419,8 +14167,6 @@ realclean: clean
 
 .obj/FlReactor_Test.o .obj/FlReactor_Test.so .shobj/FlReactor_Test.o .shobj/FlReactor_Test.so: FlReactor_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -14490,8 +14236,6 @@ realclean: clean
 
 .obj/TkReactor_Test.o .obj/TkReactor_Test.so .shobj/TkReactor_Test.o .shobj/TkReactor_Test.so: TkReactor_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -14561,8 +14305,6 @@ realclean: clean
 
 .obj/Codecs_Test.o .obj/Codecs_Test.so .shobj/Codecs_Test.o .shobj/Codecs_Test.so: Codecs_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -14636,8 +14378,6 @@ realclean: clean
 
 .obj/Tokens_Test.o .obj/Tokens_Test.so .shobj/Tokens_Test.o .shobj/Tokens_Test.so: Tokens_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -14812,8 +14552,6 @@ realclean: clean
 
 .obj/CDR_Array_Test.o .obj/CDR_Array_Test.so .shobj/CDR_Array_Test.o .shobj/CDR_Array_Test.so: CDR_Array_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -14944,8 +14682,6 @@ realclean: clean
 
 .obj/Service_Config_Test.o .obj/Service_Config_Test.so .shobj/Service_Config_Test.o .shobj/Service_Config_Test.so: Service_Config_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -15091,8 +14827,6 @@ realclean: clean
 .obj/Framework_Component_Test.o .obj/Framework_Component_Test.so .shobj/Framework_Component_Test.o .shobj/Framework_Component_Test.so: Framework_Component_Test.cpp \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -15210,7 +14944,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/ARGV.h \
  $(ACE_ROOT)/ace/ARGV.i \
- $(ACE_ROOT)/tests/test_config.h \
+ test_config.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \

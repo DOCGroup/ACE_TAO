@@ -50,8 +50,6 @@ endif
 
 .obj/RMCast_Fragment_Test.o .obj/RMCast_Fragment_Test.so .shobj/RMCast_Fragment_Test.o .shobj/RMCast_Fragment_Test.so: RMCast_Fragment_Test.cpp ../test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -181,8 +179,6 @@ endif
 
 .obj/RMCast_Reassembly_Test.o .obj/RMCast_Reassembly_Test.so .shobj/RMCast_Reassembly_Test.o .shobj/RMCast_Reassembly_Test.so: RMCast_Reassembly_Test.cpp ../test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -363,10 +359,7 @@ endif
  $(ACE_ROOT)/ace/RMCast/RMCast_Reassembly.i
 
 .obj/RMCast_UDP_Best_Effort_Test.o .obj/RMCast_UDP_Best_Effort_Test.so .shobj/RMCast_UDP_Best_Effort_Test.o .shobj/RMCast_UDP_Best_Effort_Test.so: RMCast_UDP_Best_Effort_Test.cpp \
- ../test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -570,8 +563,6 @@ endif
 
 .obj/RMCast_Membership_Test.o .obj/RMCast_Membership_Test.so .shobj/RMCast_Membership_Test.o .shobj/RMCast_Membership_Test.so: RMCast_Membership_Test.cpp ../test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -702,10 +693,7 @@ endif
  $(ACE_ROOT)/ace/Stream_Modules.cpp
 
 .obj/RMCast_Retransmission_Test.o .obj/RMCast_Retransmission_Test.so .shobj/RMCast_Retransmission_Test.o .shobj/RMCast_Retransmission_Test.so: RMCast_Retransmission_Test.cpp \
- ../test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -877,8 +865,6 @@ endif
 
 .obj/RMCast_Reordering_Test.o .obj/RMCast_Reordering_Test.so .shobj/RMCast_Reordering_Test.o .shobj/RMCast_Reordering_Test.so: RMCast_Reordering_Test.cpp ../test_config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
