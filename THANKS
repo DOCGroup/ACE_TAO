@@ -18,7 +18,7 @@ Priyanka Gontla <pgontla@ece.uci.edu>
 Pradeep Gore <pradeep@cs.wustl.edu>
 Shawn Hannan <hannan@cs.wustl.edu>
 Tim Harrison <harrison@cs.wustl.edu>
-John Heitmann  <jwh1@cs.wustl.edu>
+John Heitmann <jwh1@cs.wustl.edu>
 James Hu <jxh@cs.wustl.edu>
 Prashant Jain <pjain@cs.wustl.edu>
 Vishal Kachroo <vishal@cs.wustl.edu>
@@ -1155,6 +1155,9 @@ Scott Gunn <gunns@tvratings.com>
 Mason Deaver <mason.deaver@tripointglobal.com>
 Richard Huber <rhuber@amadeus.net>
 Glen Osterhout <gosterho@elronsw.com>
+YingLi <taoace@sina.com>
+Haka <newhaka@21cn.com>
+Sam Chong <sam@i2i-inc.com> 
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile

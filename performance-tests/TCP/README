@@ -6,7 +6,7 @@ simply echos packets back to the client.
 
 To run:
   1) On server host:
-     % ./tcp_test -c
+     % ./tcp_test -s
 
   2) On client host:
      % ./tcp_test -i 10000 <server host>
