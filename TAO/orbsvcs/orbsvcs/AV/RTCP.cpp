@@ -766,6 +766,7 @@ TAO_AV_RTCP_Callback::get_timeout (ACE_Time_Value *&tv,
 int
 TAO_AV_RTCP_Callback::handle_destroy (void)
 {
+  return 0;
 }
 
 int

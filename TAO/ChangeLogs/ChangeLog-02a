@@ -1,3 +1,8 @@
+Tue Jan 15 02:51:04 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* orbsvcs/orbsvcs/AV/RTCP.cpp: Return 0 in
+	  TAO_AV_RTCP_Callback::handle_destroy().
+
 Tue Jan 15 07:35:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tao/Makefile.bor:
