@@ -8,20 +8,16 @@ project(NavDisplayGUI_exec) : ciao_server {
   dllflags   = NAVDISPLAY_EXEC_BUILD_DLL QT_DLL QT_THREAD_SUPPORT
   includes  += ../NavDisplay $(QTDIR)/include
   idlflags  +=  -I ../NavDisplay -Wb,export_macro=NAVDISPLAY_EXEC_Export -Wb,export_include=NavDisplay_exec_export.h
+  idlgendir = ./
 
   IDL_Files {
-    NavDisplayEI.idl
+    ../NavDisplay/NavDisplayEI.idl
   }
 
   Source_Files {
-        NavDisplayEIC.cpp
         AddNavUnitCmd.cpp
         DetailView.cpp
         MapView.cpp
-        moc_DetailView.cpp
-        moc_MapView.cpp
-        moc_NodeItem.cpp
-        moc_RootPanel.cpp
         NavUnit.cpp
         NodeItem.cpp
         QuitCmd.cpp
@@ -31,18 +27,25 @@ project(NavDisplayGUI_exec) : ciao_server {
         NavDisplayGUI_exec.cpp
   }
 
-  verbatim(gnuace, local) {
-    moc_DetailView.cpp: DetailView.h
-     "	$(QTDIR)/bin/moc DetailView.h -o moc_DetailView.cpp"
-
-    moc_MapView.cpp: MapView.h
-     "	$(QTDIR)/bin/moc MapView.h -o moc_MapView.cpp"
-
-    moc_NodeItem.cpp: NodeItem.h
-     "	$(QTDIR)/bin/moc NodeItem.h -o moc_NodeItem.cpp"
-
-    moc_RootPanel.cpp: RootPanel.h
-     "	$(QTDIR)/bin/moc RootPanel.h -o moc_RootPanel.cpp"
+  Define_Custom(MOC) {
+    automatic = 0
+    command = $(QTDIR)/bin/moc
+    output_option = -o
+    inputext = .h
+    pre_extension = _moc
+    source_outputext = .cpp
+  }
+  MOC_Files {
+    DetailView.h
+    MapView.h
+    NodeItem.h
+    RootPanel.h
+  }
+  Source_Files {
+    DetailView_moc.cpp
+    MapView_moc.cpp
+    NodeItem_moc.cpp
+    RootPanel_moc.cpp
   }
 
 }
