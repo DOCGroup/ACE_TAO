@@ -20,14 +20,29 @@ TAO_Connection_Handler::TAO_Connection_Handler (TAO_ORB_Core *orb_core)
    is_registered_ (0)
 {
 }
+
+
+TAO_Connection_Handler::~TAO_Connection_Handler (void)
+{
+  // Set some of the pointers that we hold to zero explicitly, so that
+  // nobody tries to access these
+  this->orb_core_ = 0;
+  this->tss_resources_ = 0;
+  this->cache_map_entry_ = 0;
+}
+
+
 int
 TAO_Connection_Handler::purge_entry (void)
 {
-  // Decerment our reference count before we remove ourselves from the
-  // map as our references are not held by the map
-  this->decr_ref_count ();
-  return
+  int retval =
     this->orb_core_->connection_cache ().purge_entry (this->cache_map_entry_);
+
+  // Decrement our reference count as we have been removed from the
+  // cache map.
+  this->decr_ref_count ();
+
+  return retval;
 }
 
 int

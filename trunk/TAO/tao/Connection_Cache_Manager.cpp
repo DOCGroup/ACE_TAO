@@ -277,7 +277,12 @@ int
 TAO_Connection_Cache_Manager::purge_entry_i (HASH_MAP_ENTRY *&entry)
 {
   // Remove the enrty from the Map
-  return this->cache_map_.unbind (entry);
+  int retval =  this->cache_map_.unbind (entry);
+
+  // Set the entry pointer to zero
+  entry = 0;
+
+  return retval;
 }
 
 

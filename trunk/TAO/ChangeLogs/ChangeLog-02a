@@ -1,3 +1,21 @@
+Sat Nov 25 21:09:54 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Connection_Cache_Manager.cpp:
+	* tao/Connection_Handler.cpp:
+	* tao/Connection_Handler.inl:
+	* tao/IIOP_Transport.cpp:
+	* tao/IIOP_Connect.cpp:
+	* tao/Strategies/UIOP_Transport.cpp:
+	* tao/Strategies/UIOP_Connect.cpp:
+	* tao/Strategies/SHMIOP_Connect.cpp:
+	* tao/Strategies/SHMIOP_Transport.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.cpp: Fixed an FMR
+	  problem. The problem was the wrong order in which we were
+	  destroying the handlers and purging the handler from the cache
+	  map. We need to purgethe handler first and then destroy the
+	  handlers. 
+	
 Sat Nov 25 20:59:07 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	* orbsvcs/tests/Notify/lib/Notify_Test_Client.{h, cpp}:

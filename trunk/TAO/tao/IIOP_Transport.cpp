@@ -111,12 +111,14 @@ TAO_IIOP_Server_Transport::service_handler (void)
 void
 TAO_IIOP_Server_Transport::close_connection (void)
 {
+  // Now close the handler
+  this->handler_->handle_close ();
+
   // Purge the entry from the Cache map first and then close the
   // handler
   this->handler_->purge_entry ();
 
-  // Now close the handler
-  this->handler_->handle_close ();
+
 }
 
 
@@ -411,12 +413,12 @@ TAO_IIOP_Client_Transport::send_request_header (TAO_Operation_Details &opdetails
 void
 TAO_IIOP_Client_Transport::close_connection (void)
 {
+  // Now close the handler
+  this->handler_->handle_close ();
+
   // Purge the entry from the Cache map first and then close the
   // handler
   this->handler_->purge_entry ();
-
-  // Now close the handler
-  this->handler_->handle_close ();
 }
 
 // *********************************************************************
