@@ -1,3 +1,12 @@
+Tue Oct 12 07:59:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.cpp:
+          Changed get_servant_i and set_servant_i methods to use the
+          Request_Processing_Strategy
+
+        * tao/PortableServer/Active_Policy_Strategies.{h,cpp}:
+          Added Id_Assignment_Strategy
+
 Tue Oct 12 07:37:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Active_Policy_Strategies.cpp:
