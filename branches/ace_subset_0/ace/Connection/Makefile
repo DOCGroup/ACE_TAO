@@ -1,13 +1,27 @@
 # $Id$
 
 #----------------------------------------------------------------------------
-#       Makefile for the libACE_Demux
+#       Makefile for the libACE_Connection
 #----------------------------------------------------------------------------
 
 MAKEFILE = Makefile
-LIBNAME   = libACE_Demux
+LIBNAME   = libACE_Connection
 LIB      = $(LIBNAME).a
 SHLIB    = $(LIBNAME).$(SOEXT)
+
+
+LIB_FILES = \
+	Acceptor\
+	Asynch_Acceptor\
+	Asynch_IO\
+	Asynch_IO_Impl\
+	Caching_Strategies_T\
+	Connector\
+	LOCK_SOCK_Acceptor\
+	POSIX_Asynch_IO\
+	Sock_Connect\
+	Strategies_T\
+	WIN32_Asynch_IO
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -18,23 +32,7 @@ include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 ####
 #### ACE_COMPONENTS support.
 ####
-FILES += \
-	Event_Handler\
-	Event_Handler_T\
-	FlReactor\
-	POSIX_Proactor\
-	Priority_Reactor\
-	Proactor\
-	QtReactor\
-	Reactor\
-	Reactor_Notification_Strategy\
-	Select_Reactor_Base\
-	Select_Reactor\
-	Select_Reactor_T\
-	SUN_Proactor\
-	TkReactor\
-	WFMO_Reactor\
-	WIN32_Proactor
+FILES += $(LIB_FILES)
 
 LSRC  = $(addsuffix .cpp,$(FILES))
 
@@ -48,12 +46,6 @@ INSTALL =
 
 clean:
 	$(RM) -f $(LIBNAME).a $(LIBNAME).so
-
-#----------------------------------------------------------------------------
-#       Local targets
-#----------------------------------------------------------------------------
-
-
 
 #----------------------------------------------------------------------------
 #       Dependencies

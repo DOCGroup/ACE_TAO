@@ -19,7 +19,7 @@
 #define ACE_FLREACTOR_H
 #include "ace/pre.h"
 
-#include "ace/Select_Reactor.h"
+#include "ace/Demux/Select_Reactor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -102,7 +102,7 @@ private:
 };
 
 #if defined(__ACE_INLINE__)
-#include "ace/FlReactor.i"
+#include "ace/Demux/FlReactor.i"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_FL */

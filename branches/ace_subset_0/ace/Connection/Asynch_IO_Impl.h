@@ -31,7 +31,7 @@
 // This only works on Win32 platforms and on Unix platforms supporting
 // aio calls.
 
-#include "ace/Asynch_IO.h"
+#include "ace/Connection/Asynch_IO.h"
 
 // Forward declaration.
 class ACE_Proactor_Impl;
@@ -676,7 +676,7 @@ protected:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Asynch_IO_Impl.i"
+#include "ace/Connection/Asynch_IO_Impl.i"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_AIO_CALLS  || !ACE_HAS_WINCE && ACE_WIN32 */

@@ -4,7 +4,7 @@
 #ifndef EVENT_HANDLER_T_C
 #define EVENT_HANDLER_T_C
 
-#include "ace/Event_Handler_T.h"
+#include "ace/Demux/Event_Handler_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -15,7 +15,7 @@ ACE_RCSID(ace, Event_Handler_T, "$Id$")
 #if defined (ACE_HAS_TEMPLATE_TYPEDEFS)
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Event_Handler_T.i"
+#include "ace/Demux/Event_Handler_T.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Event_Handler_T)

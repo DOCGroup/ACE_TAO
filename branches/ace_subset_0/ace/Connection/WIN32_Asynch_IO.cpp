@@ -1,16 +1,16 @@
 // $Id$
 
-#include "ace/WIN32_Asynch_IO.h"
+#include "ace/Connection/WIN32_Asynch_IO.h"
 
 // ACE_RCSID(ace, Asynch_IO, "$Id$")
 
 #if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
 
-#include "ace/WIN32_Proactor.h"
-#include "ace/Message_Block.h"
-#include "ace/Service_Config.h"
-#include "ace/INET_Addr.h"
-#include "ace/Task_T.h"
+#include "ace/Demux/WIN32_Proactor.h"
+#include "ace/Utils/Message_Block.h"
+#include "ace/Svcconf/Service_Config.h"
+#include "ace/IPC/INET_Addr.h"
+#include "ace/Threads/Task_T.h"
 
 u_long
 ACE_WIN32_Asynch_Result::bytes_transferred (void) const

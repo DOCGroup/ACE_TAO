@@ -20,7 +20,7 @@
 #ifndef ACE_POSIX_ASYNCH_IO_H
 #define ACE_POSIX_ASYNCH_IO_H
 
-#include "ace/OS.h"
+#include "ace/OS/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -28,8 +28,8 @@
 
 #if defined (ACE_HAS_AIO_CALLS)
 
-#include "ace/Asynch_IO_Impl.h"
-#include "ace/Reactor.h"
+#include "ace/Connection/Asynch_IO_Impl.h"
+#include "ace/Demux/Reactor.h"
 
 // Forward declarations
 class ACE_POSIX_SIG_Proactor;
@@ -1725,7 +1725,7 @@ protected:
 
 
 #if defined (__ACE_INLINE__)
-#include "ace/POSIX_Asynch_IO.i"
+#include "ace/Connection/POSIX_Asynch_IO.i"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_AIO_CALLS */

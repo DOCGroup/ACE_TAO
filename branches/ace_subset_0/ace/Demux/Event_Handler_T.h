@@ -14,7 +14,7 @@
 #define ACE_EVENT_HANDLER_T_H
 #include "ace/pre.h"
 
-#include "ace/Event_Handler.h"
+#include "ace/Demux/Event_Handler.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -171,11 +171,11 @@ protected:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Event_Handler_T.i"
+#include "ace/Demux/Event_Handler_T.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Event_Handler_T.cpp"
+#include "ace/Demux/Event_Handler_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

@@ -14,13 +14,13 @@
 #define ACE_PRIORITY_REACTOR_H
 #include "ace/pre.h"
 
-#include "ace/Unbounded_Queue.h"
+#include "ace/Utils/Unbounded_Queue.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Select_Reactor.h"
+#include "ace/Demux/Select_Reactor.h"
 
 /**
  * @class ACE_Priority_Reactor

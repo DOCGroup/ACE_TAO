@@ -1,7 +1,7 @@
 // $Id$
 
-#include "ace/Priority_Reactor.h"
-#include "ace/Malloc_T.h"
+#include "ace/Demux/Priority_Reactor.h"
+#include "ace/Memory/Malloc_T.h"
 
 ACE_RCSID(ace, Priority_Reactor, "$Id$")
 

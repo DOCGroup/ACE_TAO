@@ -5,9 +5,9 @@
 #----------------------------------------------------------------------------
 
 MAKEFILE = Makefile
-LIBOS   = libACE_ATM
-LIB      = $(LIBOS).a
-SHLIB    = $(LIBOS).$(SOEXT)
+LIBNAME   = libACE_ATM
+LIB      = $(LIBNAME).a
+SHLIB    = $(LIBNAME).$(SOEXT)
 
 
 LIB_FILES = \
@@ -40,7 +40,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 INSTALL =
 
 clean:
-	$(RM) -f $(LIBOS).a $(LIBOS).so
+	$(RM) -f $(LIBNAME).a $(LIBNAME).so
 
 #----------------------------------------------------------------------------
 #       Dependencies

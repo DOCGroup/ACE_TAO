@@ -14,7 +14,7 @@
 #define ACE_ASYNCH_ACCEPTOR_H
 #include "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/OS/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,7 +23,7 @@
 #if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
 // This only works on platforms that support async i/o.
 
-#include "ace/Asynch_IO.h"
+#include "ace/Connection/Asynch_IO.h"
 
 // Forward declarations
 class ACE_Message_Block;
@@ -190,7 +190,7 @@ private:
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Asynch_Acceptor.cpp"
+#include "ace/Connection/Asynch_Acceptor.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
