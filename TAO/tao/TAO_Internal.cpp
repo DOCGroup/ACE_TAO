@@ -7,11 +7,16 @@
 #include "tao/default_server.h"
 #include "tao/default_client.h"
 #include "tao/default_resource.h"
+
 #include "tao/IIOP_Factory.h"
 #include "tao/UIOP_Factory.h"
 #include "tao/SHMIOP_Factory.h"
+
+#include "tao/CORBANAME_Parser.h"
+#include "tao/CORBALOC_Parser.h"
 #include "tao/FILE_Parser.h"
 #include "tao/DLL_Parser.h"
+
 #include "tao/Object_Loader.h"
 
 ACE_RCSID(tao, TAO_Internal, "$Id$")
@@ -57,7 +62,7 @@ TAO_Internal::open_services (int &argc,
         insert (&ace_svc_desc_TAO_Default_Client_Strategy_Factory);
       ACE_Service_Config::static_svcs ()->
         insert (&ace_svc_desc_TAO_Default_Server_Strategy_Factory);
-     
+
       // Configure the IIOP and UIOP factories. You do *NOT*
       // need modify this code to add your own protocol, instead
       // simply add the following to your svc.conf file:
@@ -78,6 +83,10 @@ TAO_Internal::open_services (int &argc,
         insert (&ace_svc_desc_TAO_SHMIOP_Protocol_Factory);
 #endif /* TAO_HAS_UIOP == 1 */
       // add descriptor to list of static objects.
+      ACE_Service_Config::static_svcs ()->
+        insert (&ace_svc_desc_TAO_CORBANAME_Parser);
+      ACE_Service_Config::static_svcs ()->
+        insert (&ace_svc_desc_TAO_CORBALOC_Parser);
       ACE_Service_Config::static_svcs ()->
         insert (&ace_svc_desc_TAO_FILE_Parser);
       ACE_Service_Config::static_svcs ()->

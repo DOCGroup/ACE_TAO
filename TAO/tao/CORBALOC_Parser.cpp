@@ -268,7 +268,7 @@ TAO_CORBALOC_Parser::parse_string_rir_helper (const char *
   // "rir" protocol. Pass the key string as an
   // argument to the resolve_initial_references.
   const char *key_string = corbaloc_name + sizeof ("rir:/") -1;
-  
+
   if (ACE_OS::strcmp (key_string, "") == 0)
     {
       // If the key string is empty, assume the default
@@ -279,7 +279,7 @@ TAO_CORBALOC_Parser::parse_string_rir_helper (const char *
   rir_obj = this->orb_->resolve_initial_references (key_string,
                                                     ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
-  
+
   return rir_obj;
 }
 
@@ -378,6 +378,13 @@ TAO_CORBALOC_Parser::parse_string (const char *ior,
   return object;
 }
 
+ACE_STATIC_SVC_DEFINE (TAO_CORBALOC_Parser,
+                       ACE_TEXT ("CORBALOC_Parser"),
+                       ACE_SVC_OBJ_T,
+                       &ACE_SVC_NAME (TAO_CORBALOC_Parser),
+                       ACE_Service_Type::DELETE_THIS |
+                                  ACE_Service_Type::DELETE_OBJ,
+                       0)
 
 ACE_FACTORY_DEFINE (TAO, TAO_CORBALOC_Parser)
 
