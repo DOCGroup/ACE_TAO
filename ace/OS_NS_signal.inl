@@ -21,8 +21,9 @@ ACE_INLINE int
 ACE_OS::pthread_sigmask (int how, const sigset_t *nsp, sigset_t *osp)
 {
 #if defined (ACE_HAS_PTHREADS_STD)  &&  !defined (ACE_LACKS_PTHREAD_SIGMASK)
+  int result;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_sigmask (how, nsp, osp),
-                                       ace_result_),
+                                       result),
                      int,
                      -1);
 #else /* !ACE_HAS_PTHREADS_STD && !ACE_LACKS_PTHREAD_SIGMASK */

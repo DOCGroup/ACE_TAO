@@ -1,3 +1,41 @@
+Mon Jun 21 13:37:57 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/config-lite.h:
+
+	  Removed versions of ACE_OSCALL and ACE_OSCALL_RETURN macros that
+	  restarted the given operation when ACE_HAS_SIGNAL_SAFE_OS_CALLS
+	  was defined.  That capability was never enabled by any of our
+	  supported platforms.  In fact, some parts of ACE would not
+	  function properly when that ability was enabled.  Furthermore,
+	  they assumed that ability to restart system calls was determined
+	  statically.  That assumption does not hold for modern platforms,
+	  where that ability is determined dynamically at run-time.
+	  Thanks to J.T. Conklin for pointing out the problems with
+	  defining ACE_HAS_SIGNAL_SAFE_OS_CALLS.
+
+	  These changes also fixe a problem with self-assignment of the
+	  variable used to store the return value of an operation wrapped
+	  within an ACE_ADAPT_RETVAL macro (e.g. ACE_OSCALL_RETURN
+	  (ACE_ADAPT_RETVAL (..., ace_result_),...).  Thanks to Andrew
+	  G. Harvey <agh@cisco.com> for poiniting out the
+	  self-assignment.
+
+	* ace/OS_NS_Thread.cpp:
+	* ace/OS_NS_Thread.inl:
+	* ace/OS_NS_macros.h:
+	* ace/OS_NS_signal.inl:
+	* ace/OS_NS_unistd.inl:
+
+	  Updated ACE_OSCALL_RETURN(ACE_ADAPT_RETVAL()) macro calls to use
+	  a locally declared result variable instead of the one that
+	  existed in the ACE_OSCALL_RETURN macro.  The latter no longer
+	  exists.
+
+	* ace/README:
+
+	  Removed documentation for ACE_HAS_SIGNAL_SAFE_OS_CALLS macro.
+	  It is no longer used.
+
 Mon Jun 21 13:13:09 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:
@@ -27,7 +65,7 @@ Mon Jun 21 09:17:56 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 Mon Jun 21 11:56:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/run_test.pl:
-          Enabled leak check and tracing of child processes for Valgrind
+          Enabled leak check and tracing of child processes for Valgrind.
 
 Mon Jun 21 10:19:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
