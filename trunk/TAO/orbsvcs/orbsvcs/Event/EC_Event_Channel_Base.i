@@ -7,8 +7,6 @@ TAO_EC_Event_Channel_Attributes (PortableServer::POA_ptr s_poa,
   :  consumer_reconnect (TAO_EC_DEFAULT_CONSUMER_RECONNECT),
      supplier_reconnect (TAO_EC_DEFAULT_SUPPLIER_RECONNECT),
      disconnect_callbacks (TAO_EC_DEFAULT_DISCONNECT_CALLBACKS),
-     busy_hwm (TAO_EC_DEFAULT_BUSY_HWM),
-     max_write_delay (TAO_EC_DEFAULT_MAX_WRITE_DELAY),
      scheduler (CORBA::Object::_nil ()),
      supplier_poa (s_poa),
      consumer_poa (c_poa)
@@ -192,18 +190,6 @@ ACE_INLINE CORBA::Object_ptr
 TAO_EC_Event_Channel_Base::scheduler (void)
 {
   return CORBA::Object::_duplicate (this->scheduler_.in ());
-}
-
-ACE_INLINE int
-TAO_EC_Event_Channel_Base::busy_hwm (void) const
-{
-  return this->busy_hwm_;
-}
-
-ACE_INLINE int
-TAO_EC_Event_Channel_Base::max_write_delay (void) const
-{
-  return this->max_write_delay_;
 }
 
 ACE_INLINE int

@@ -7,8 +7,6 @@ TAO_CEC_EventChannel_Attributes (PortableServer::POA_ptr s_poa,
   :  consumer_reconnect (TAO_CEC_DEFAULT_CONSUMER_RECONNECT),
      supplier_reconnect (TAO_CEC_DEFAULT_SUPPLIER_RECONNECT),
      disconnect_callbacks (TAO_CEC_DEFAULT_DISCONNECT_CALLBACKS),
-     busy_hwm (TAO_CEC_DEFAULT_BUSY_HWM),
-     max_write_delay (TAO_CEC_DEFAULT_MAX_WRITE_DELAY),
      supplier_poa (s_poa),
      consumer_poa (c_poa)
 {
@@ -194,14 +192,3 @@ TAO_CEC_EventChannel::disconnect_callbacks (void) const
   return this->disconnect_callbacks_;
 }
 
-ACE_INLINE int
-TAO_CEC_EventChannel::busy_hwm (void) const
-{
-  return this->busy_hwm_;
-}
-
-ACE_INLINE int
-TAO_CEC_EventChannel::max_write_delay (void) const
-{
-  return this->max_write_delay_;
-}

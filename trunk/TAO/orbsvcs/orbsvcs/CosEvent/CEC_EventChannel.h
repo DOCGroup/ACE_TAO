@@ -74,10 +74,6 @@ public:
    */
   int disconnect_callbacks;
 
-  /// Flags for the Consumer Admin
-  int busy_hwm;
-  int max_write_delay;
-
 private:
   /// Only the EC can read the private fields.
   friend class TAO_CEC_EventChannel;
@@ -223,11 +219,6 @@ public:
   /// disconnected by the client
   int disconnect_callbacks (void) const;
 
-  /// Control the concurrency of the delayed connect/disconnect
-  /// operations.
-  int busy_hwm (void) const;
-  int max_write_delay (void) const;
-
   // = The CosEventChannelAdmin::EventChannel methods...
   /// The default implementation is:
   ///    this->consumer_admin ()->_this (env);
@@ -279,11 +270,6 @@ private:
 
   /// If not zero we send callbacks when a proxy is disconnected
   int disconnect_callbacks_;
-
-  /// Control the level of concurrency in the supplier sets with
-  /// delayed operations
-  int busy_hwm_;
-  int max_write_delay_;
 
   /// Strategies to disconnect misbehaving or destroyed consumers and
   /// suppliers

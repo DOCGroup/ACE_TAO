@@ -18,11 +18,6 @@ TAO_CEC_ConsumerAdmin::TAO_CEC_ConsumerAdmin (TAO_CEC_EventChannel *ec)
      push_admin_ (ec),
      pull_admin_ (ec)
 {
-  // @@
-  // @@ this->collection_->busy_hwm (this->event_channel_->busy_hwm ());
-  // @@ this->collection_->max_write_delay (
-  // @@           this->event_channel_->max_write_delay ()
-  // @@ );
   this->default_POA_ =
     this->event_channel_->consumer_poa ();
 }
