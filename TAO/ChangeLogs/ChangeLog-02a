@@ -1,3 +1,15 @@
+Mon Jan 31 20:13:58 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Concrete_Proxy_Set.h:
+	  Added missing ACE_TYPENAME macros, only HP/aCC seems to detect
+	  the problem.  
+
+	* orbsvcs/orbsvcs/Event/EC_QOS_Info.h:
+	* orbsvcs/orbsvcs/Event/EC_QOS_Info.i:
+	  Workaround a bug in the HP/aCC compiler, unless the copy
+	  constructor is explicitly defined the compiler crashes when
+	  trying to generate the code for it.
+	
 Mon Jan 31 13:21:48 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/tests/ImplRepo/run_test.pl:

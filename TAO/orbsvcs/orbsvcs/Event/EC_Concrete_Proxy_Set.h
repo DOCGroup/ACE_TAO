@@ -60,7 +60,7 @@ class TAO_EC_RB_Tree_Based_Proxy_Set_Iterator
 {
 public:
   typedef ACE_RB_Tree<PROXY*,int,ACE_Less_Than<PROXY*>,ACE_Null_Mutex> Collection;
-  typedef Collection::ITERATOR Implementation;
+  typedef ACE_TYPENAME Collection::ITERATOR Implementation;
 
   TAO_EC_RB_Tree_Based_Proxy_Set_Iterator (const Implementation &i);
 
