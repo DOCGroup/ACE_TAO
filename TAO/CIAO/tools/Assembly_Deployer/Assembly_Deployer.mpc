@@ -1,0 +1,9 @@
+project(Assembly_Manager): server, ciao_server {
+
+  libs += TAO_IORTable
+  libpaths += $(TAO_ROOT)/tao/IORTable
+
+  Source_Files {
+    Deployment_Configuration.cpp
+  }
+}
