@@ -1,3 +1,22 @@
+Tue Sep 14 21:00:45 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	* ace/OS.h: Added a typedef for ACE_Protocol_Info for non-Win32
+ 	  platforms. Defined it as a struct (with limited fields) instead 
+	  of u_long because applications using ACE_Protocol_Info on 
+	  non-Win32 platforms expect this to be a structure instead of a 
+	  u_long.
+
+	* ACE_wrappers/examples/QOS/Makefile: Added this for the test to
+	  compile on non-Win32 platforms.
+
+	* ACE_wrappers/examples/QOS/server.cpp:
+	* ACE_wrappers/examples/QOS/client.cpp:
+	* ACE_wrappers/examples/QOS/QosEvent.h:
+	* ACE_wrappers/examples/QOS/Sender_QOS_Event_Handler.cpp:
+
+	  Removed the last remains of win32isms from the test. The QoS
+	  test now compiles clean on non-Win32 platforms.
+	
 Tue Sep 14 17:49:33 1999  Luther J Baker  <ljb1@cs.wustl.edu>
 
 	* ace/Arg_Shifter.cpp (get_the_parameter): removed an errant
