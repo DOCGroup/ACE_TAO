@@ -40,10 +40,15 @@ int
 TAO_IIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
                                     TAO_MProfile  *&mprofile)
 {
-  ACE_INET_Addr new_address;
 
-  if (base_acceptor_.acceptor ().get_local_addr (new_address) == -1)
-    return 0;
+  // @@ For now we use teh IIOP address that has been
+  // stored away in the ORB core.  This is an optimization to get
+  // around DNS lookups!
+  // ACE_INET_Addr new_address;
+  // if (base_acceptor_.acceptor ().get_local_addr (new_address) == -1)
+  //  return 0;
+  ACE_INET_Addr new_address (orb_params->addr ().get_port_number (),
+                             orb_params->host ());
 
   // we only make one
   int count = mprofile->profile_count ();
