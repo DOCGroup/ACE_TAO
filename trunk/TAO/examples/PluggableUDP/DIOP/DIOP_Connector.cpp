@@ -14,7 +14,9 @@
 #include "tao/Protocols_Hooks.h"
 #include "ace/Strategies_T.h"
 
-ACE_RCSID(tao, DIOP_Connector, "$Id$")
+ACE_RCSID (DIOP,
+           DIOP_Connector,
+           "$Id$")
 
 TAO_DIOP_Connector::TAO_DIOP_Connector (CORBA::Boolean flag)
   : TAO_Connector (TAO_TAG_UDP_PROFILE),
@@ -158,23 +160,25 @@ TAO_DIOP_Connector::create_profile (TAO_InputCDR& cdr)
   return pfile;
 }
 
-void
-TAO_DIOP_Connector::make_profile (const char *endpoint,
-                                  TAO_Profile *&profile,
-                                  CORBA::Environment &ACE_TRY_ENV)
+TAO_Profile *
+TAO_DIOP_Connector::make_profile (CORBA::Environment &ACE_TRY_ENV)
 {
   // The endpoint should be of the form:
   //    N.n@host:port/object_key
   // or:
   //    host:port/object_key
 
+  TAO_Profile *profile = 0;
   ACE_NEW_THROW_EX (profile,
-                    TAO_DIOP_Profile (endpoint,
-                                      this->orb_core (),
-                                      ACE_TRY_ENV),
-                    CORBA::NO_MEMORY ());
+                    TAO_DIOP_Profile (this->orb_core ()),
+                    CORBA::NO_MEMORY (
+                      CORBA::SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOMEM),
+                      CORBA::COMPLETED_NO));
+  ACE_CHECK_RETURN (0);
 
-  ACE_CHECK;
+  return profile;
 }
 
 int
@@ -184,7 +188,7 @@ TAO_DIOP_Connector::check_prefix (const char *endpoint)
   if (!endpoint || !*endpoint)
     return -1;  // Failure
 
-  const char *protocol[] = { "iiop", "iioploc" };
+  const char *protocol[] = { "diop", "dioploc" };
 
   size_t slot = ACE_OS::strchr (endpoint, ':') - endpoint;
 
