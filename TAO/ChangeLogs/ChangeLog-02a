@@ -4,7 +4,7 @@ Fri Mar 02 09:32:33 2001  Ossama Othman  <ossama@uci.edu>
 
 	  Moved release of the forward object references from the
 	  destructor to the destroy() method.  There was a strange problem
-	  interdependent object life cycles.  The forward object
+	  with interdependent object life cycles.  The forward object
 	  references wouldn't be released unless the server request
 	  interceptor was destroyed (destructor called), and the
 	  interceptor wouldn't be destroyed unless the object references
