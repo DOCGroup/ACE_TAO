@@ -55,7 +55,10 @@ namespace TAO_PG
    * templated methods.
    */
   template <typename TYPE>
-  int find (Properties_Decoder & decoder, const ACE_CString & key, TYPE & value)
+  int find (const Properties_Decoder & decoder, const ACE_CString & key, TYPE & value);
+
+  template <typename TYPE>
+  int find (const Properties_Decoder & decoder, const ACE_CString & key, TYPE & value)
   {
     int result = 0;
     PortableGroup::Value * any;

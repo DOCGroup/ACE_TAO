@@ -28,7 +28,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 // inept compilers.
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template TAO::Utils::Server_Main<FT_FaultDetectorFactory_i>;
+  template TAO::Utils::Server_Main<TAO::FT_FaultDetectorFactory_i>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO::Utils::Server_Main<FT_FaultDetectorFactory_i>
+# pragma instantiate TAO::Utils::Server_Main<TAO::FT_FaultDetectorFactory_i>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
