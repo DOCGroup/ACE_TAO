@@ -1,3 +1,9 @@
+Sat Aug 23 04:28:54 UTC 2003  Don Hinton <dhinton@dresystems.com>
+
+        * orbsvcs/orbsvcs/CosEvent.mpc:
+          Made the case of CosEvent match that of the file CosEvent.mpb,
+          since the Unix file system is case sensative.
+
 Fri Aug 22 20:10:41 UTC 2003  Justin Michel <michel_j@ociweb.com>
 
         * TAOACE.mwc
