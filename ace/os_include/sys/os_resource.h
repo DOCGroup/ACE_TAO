@@ -61,12 +61,6 @@ extern "C"
 #  endif /* defined (linux) || defined (AIX) || defined (SCO) */
 #endif /* RLIMIT_NOFILE */
 
-#if defined (ACE_HAS_BROKEN_SETRLIMIT)
-   typedef struct rlimit ACE_SETRLIMIT_TYPE;
-#else
-   typedef const struct rlimit ACE_SETRLIMIT_TYPE;
-#endif /* ACE_HAS_BROKEN_SETRLIMIT */
-
 #if defined (ACE_WIN32)
 #  define RUSAGE_SELF 1
    /// Fake the UNIX rusage structure.  Perhaps we can add more to this

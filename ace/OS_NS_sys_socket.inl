@@ -531,11 +531,13 @@ ACE_OS::sendmsg (ACE_HANDLE handle,
     }
   else
     return (ssize_t) bytes_sent;
-# elif defined (ACE_PSOS)
-  ACE_SOCKCALL_RETURN (::sendmsg (handle, (struct msghdr *) msg, flags), int, -1);
+# elif defined (ACE_HAS_NONCONST_SENDMSG)
+  ACE_SOCKCALL_RETURN (::sendmsg (handle, 
+				  const_cast<struct msghdr *>(msg), 
+				  flags), int, -1);
 # else
-  ACE_SOCKCALL_RETURN (::sendmsg (handle, (ACE_SENDMSG_TYPE *) msg, flags), int, -1);
-# endif /* ACE_PSOS */
+  ACE_SOCKCALL_RETURN (::sendmsg (handle, msg, flags), int, -1);
+# endif
 #else
   ACE_UNUSED_ARG (flags);
   ACE_UNUSED_ARG (msg);

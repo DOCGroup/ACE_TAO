@@ -369,18 +369,8 @@ AH_TEMPLATE([ACE_HAS_BROKEN_RANDR],
 [OS/compiler's header files are inconsistent with libC definition of
 rand_r().])
 
-AH_TEMPLATE([ACE_HAS_BROKEN_READV],
-[OS/Compiler's header files are not consistent with readv() definition.])
-
 AH_TEMPLATE([ACE_HAS_BROKEN_SAP_ANY],
 [Compiler can't handle the static ACE_Addr::sap_any construct.])
-
-AH_TEMPLATE([ACE_HAS_BROKEN_SENDMSG],
-[OS/compiler omits the const from the sendmsg() prototype.])
-
-AH_TEMPLATE([ACE_HAS_BROKEN_SETRLIMIT],
-[OS/compiler omits the const from the rlimit parameter in the
-setrlimit() prototype.])
 
 AH_TEMPLATE([ACE_HAS_BROKEN_T_ERROR],
 [Compiler/platform has the wrong prototype for t_error(), i.e.,
@@ -390,10 +380,6 @@ AH_TEMPLATE([ACE_HAS_BROKEN_TIMESPEC_MEMBERS],
 [Platform defines struct timespec members as ts_sec and ts_nsec
 instead of tv_sec and tv_nsec.  This is highly non-portable.
 Currently only FreeBSD 2.1.x uses it.])
-
-AH_TEMPLATE([ACE_HAS_BROKEN_WRITEV],
-[OS/compiler omits the const from the iovec parameter in the
-writev() prototype.])
 
 AH_TEMPLATE([ACE_HAS_BSTRING],
 [Platform has <bstring.h> (which contains bzero() prototype)])
@@ -524,9 +510,23 @@ AH_TEMPLATE([ACE_HAS_NONCONST_GETBY],
 AH_TEMPLATE([ACE_HAS_NONCONST_MSGSND],
 [Platform has a non-const parameter to msgsnd() (e.g., SCO).])
 
+AH_TEMPLATE([ACE_HAS_NONCONST_READV],
+[Platform omits const qualifier from iovec parameter in readv() prototype.])
+
 AH_TEMPLATE([ACE_HAS_NONCONST_SELECT_TIMEVAL],
 [Platform's select() uses non-const timeval* (only found on Linux
    right now)])
+
+AH_TEMPLATE([ACE_HAS_NONCONST_SENDMSG],
+[Platform omits const qualifier from msghdr parameter in sendmsg()
+ prototype.])
+
+AH_TEMPLATE([ACE_HAS_NONCONST_SETRLIMIT],
+[Platform omits const qualifier from rlimit parameter in setrlimit()
+ prototype.])
+
+AH_TEMPLATE([ACE_HAS_NONCONST_WRITEV],
+[Platform omits const qualifier from iovec parameter in writev() prototype.])
 
 AH_TEMPLATE([ACE_HAS_GNUG_PRE_2_8],
 [Platform has "old" GNU compiler,  i.e. does not completely support

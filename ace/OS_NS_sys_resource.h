@@ -46,7 +46,7 @@ namespace ACE_OS {
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int setrlimit (int resource,
-                 ACE_SETRLIMIT_TYPE *rl);
+                 const struct rlimit *rl);
 
 } /* namespace ACE_OS */
 

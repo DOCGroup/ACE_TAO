@@ -61,13 +61,13 @@ extern "C" pid_t getpgid (pid_t);
 #define ACE_HAS_LONG_MAP_FAILED
 
 // Platform's implementation of sendmsg() has a non-const msgheader parameter.
-#define ACE_HAS_BROKEN_SENDMSG
+#define ACE_HAS_NONCONST_SENDMSG
 
 // Platform's implementation of writev() has a non-const iovec parameter.
-#define ACE_HAS_BROKEN_WRITEV
+#define ACE_HAS_NONCONST_WRITEV
 
 // Platform's implementation of setlrmit() has a non-const rlimit parameter.
-#define ACE_HAS_BROKEN_SETRLIMIT
+#define ACE_HAS_NONCONST_SETRLIMIT
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
 #define ACE_HAS_SYSV_IPC

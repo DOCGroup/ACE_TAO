@@ -37,7 +37,7 @@
 #define ACE_HAS_SYSV_IPC
 
 // OS/compiler omits the const from the sendmsg() prototype.
-#define ACE_HAS_BROKEN_SENDMSG
+#define ACE_HAS_NONCONST_SENDMSG
 
 //OS/compiler's header files are inconsistent with libC definition of rand_r().
 //#define ACE_HAS_BROKEN_RANDR          // Defines it the same way as sunos5.4
@@ -272,9 +272,9 @@
 // files with extern "C".
 //ACE_HAS_BROKEN_POSIX_TIME             Platform defines struct timespec in
 // <sys/timers.h>
-//ACE_HAS_BROKEN_SETRLIMIT             OS/compiler omits the const from the
+//ACE_HAS_NONCONST_SETRLIMIT             OS/compiler omits the const from the
 // rlimit parameter in the setrlimit() prototype.
-//ACE_HAS_BROKEN_WRITEV                OS/compiler omits the const from the
+//ACE_HAS_NONCONST_WRITEV                OS/compiler omits the const from the
 // iovec parameter in the writev() prototype.
 // There is a bstring in the Tandem but where man bstring OK, find bstring NOK
 // ? ACE_HAS_BSTRING                     Platform has <bstring.h> (which contains bzero() prototype)
