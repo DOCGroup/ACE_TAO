@@ -355,7 +355,7 @@ TAO_NAMESPACE  CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
-    virtual void *_tao_QueryInterface (ptr_arith_t type);
+    virtual void *_tao_QueryInterface (ptrdiff_t type);
 
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
@@ -674,7 +674,7 @@ TAO_NAMESPACE  CORBA
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:211
 
-    virtual void *_tao_QueryInterface (ptr_arith_t type);
+    virtual void *_tao_QueryInterface (ptrdiff_t type);
 
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
@@ -767,7 +767,7 @@ TAO_NAMESPACE  CORBA
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:211
 
-    virtual void *_tao_QueryInterface (ptr_arith_t type);
+    virtual void *_tao_QueryInterface (ptrdiff_t type);
 
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);

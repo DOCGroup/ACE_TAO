@@ -77,10 +77,10 @@ namespace CORBA
 
     virtual CORBA::Boolean _is_a (const char * type_id
                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-    virtual void * _tao_QueryInterface (ptr_arith_t type);
+    virtual void * _tao_QueryInterface (ptrdiff_t type);
     virtual const char * _interface_repository_id (void) const;
     virtual const char * _tao_obv_repository_id (void) const;
-    virtual void * _tao_obv_narrow (ptr_arith_t type_id);
+    virtual void * _tao_obv_narrow (ptrdiff_t type_id);
     virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR & strm);
     virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR & strm);
 

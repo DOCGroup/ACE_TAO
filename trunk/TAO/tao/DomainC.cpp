@@ -647,7 +647,7 @@ CORBA::DomainManager::_unchecked_narrow (
           DomainManager_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &DomainManager::_tao_class_id
                 )
             )
@@ -693,19 +693,19 @@ CORBA::DomainManager::_is_a (
     }
 }
 
-void *CORBA::DomainManager::_tao_QueryInterface (ptr_arith_t type)
+void *CORBA::DomainManager::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
 
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::CORBA, DomainManager)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {
@@ -1381,7 +1381,7 @@ CORBA::ConstructionPolicy::_unchecked_narrow (
           ConstructionPolicy_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &ConstructionPolicy::_tao_class_id
                 )
             )
@@ -1431,19 +1431,19 @@ CORBA::ConstructionPolicy::_is_a (
     }
 }
 
-void *CORBA::ConstructionPolicy::_tao_QueryInterface (ptr_arith_t type)
+void *CORBA::ConstructionPolicy::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
 
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::CORBA, ConstructionPolicy)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::CORBA::Policy::_tao_class_id)
             )
     {
@@ -1457,7 +1457,7 @@ void *CORBA::ConstructionPolicy::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {

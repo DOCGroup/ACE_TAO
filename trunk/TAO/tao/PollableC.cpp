@@ -160,7 +160,7 @@ CORBA::Pollable::_unchecked_narrow (
           Pollable_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &Pollable::_tao_class_id
                 )
             )
@@ -178,19 +178,19 @@ CORBA::Pollable::_duplicate (Pollable_ptr obj)
   return obj;
 }
 
-void *CORBA::Pollable::_tao_QueryInterface (ptr_arith_t type)
+void *CORBA::Pollable::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
   
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::CORBA, Pollable)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {
@@ -335,7 +335,7 @@ CORBA::DIIPollable::_unchecked_narrow (
           DIIPollable_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &DIIPollable::_tao_class_id
                 )
             )
@@ -353,19 +353,19 @@ CORBA::DIIPollable::_duplicate (DIIPollable_ptr obj)
   return obj;
 }
 
-void *CORBA::DIIPollable::_tao_QueryInterface (ptr_arith_t type)
+void *CORBA::DIIPollable::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
   
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::CORBA, DIIPollable)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::CORBA, Pollable)::_tao_class_id)
             )
     {
@@ -379,7 +379,7 @@ void *CORBA::DIIPollable::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {
@@ -524,7 +524,7 @@ CORBA::PollableSet::_unchecked_narrow (
           PollableSet_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &PollableSet::_tao_class_id
                 )
             )
@@ -542,19 +542,19 @@ CORBA::PollableSet::_duplicate (PollableSet_ptr obj)
   return obj;
 }
 
-void *CORBA::PollableSet::_tao_QueryInterface (ptr_arith_t type)
+void *CORBA::PollableSet::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
   
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::CORBA, PollableSet)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {

@@ -64,7 +64,7 @@ public:
 
   /// Info required for DSI optimization that pads the outgoing
   /// CDR stream according to the alignment of the NVList.
-  ptr_arith_t dsi_nvlist_align_;
+  ptrdiff_t dsi_nvlist_align_;
 
   /**
    * Get and Set methods for the service context list that we dont

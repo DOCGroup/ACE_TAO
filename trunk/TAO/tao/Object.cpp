@@ -124,7 +124,7 @@ CORBA::Object::_unchecked_narrow (CORBA::Object_ptr obj
           CORBA::Object_ptr,
           obj->_tao_QueryInterface (
                    ACE_reinterpret_cast (
-                       ptr_arith_t,
+                       ptrdiff_t,
                        &CORBA::Object::_tao_class_id
                      )
                  )
@@ -294,7 +294,7 @@ CORBA::Object::_hash (CORBA::ULong maximum
       // large enough to hold an address to avoid compile-time
       // warnings on some 64-bit platforms.
       CORBA::ULong hash = ACE_static_cast (CORBA::ULong,
-                            ACE_reinterpret_cast (ptr_arith_t, this));
+                            ACE_reinterpret_cast (ptrdiff_t, this));
 
       return hash % maximum;
     }
@@ -342,11 +342,11 @@ CORBA::Object::_key (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void *
-CORBA::Object::_tao_QueryInterface (ptr_arith_t type)
+CORBA::Object::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
 
-  if (type == ACE_reinterpret_cast (ptr_arith_t,
+  if (type == ACE_reinterpret_cast (ptrdiff_t,
                                     &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *, this);
 

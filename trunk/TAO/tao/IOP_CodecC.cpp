@@ -171,7 +171,7 @@ IOP::Codec::_unchecked_narrow (
           Codec_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &Codec::_tao_class_id
                 )
             )
@@ -189,19 +189,19 @@ IOP::Codec::_duplicate (Codec_ptr obj)
   return obj;
 }
 
-void *IOP::Codec::_tao_QueryInterface (ptr_arith_t type)
+void *IOP::Codec::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
   
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::IOP, Codec)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {
@@ -943,7 +943,7 @@ IOP::CodecFactory::_unchecked_narrow (
           CodecFactory_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &CodecFactory::_tao_class_id
                 )
             )
@@ -961,19 +961,19 @@ IOP::CodecFactory::_duplicate (CodecFactory_ptr obj)
   return obj;
 }
 
-void *IOP::CodecFactory::_tao_QueryInterface (ptr_arith_t type)
+void *IOP::CodecFactory::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
   
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::IOP, CodecFactory)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {

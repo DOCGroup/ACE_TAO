@@ -25,7 +25,7 @@
 #include "tao/corbafwd.h"
 #include "tao/Pseudo_Value_VarOut_T.h"
 
-#include "ace/Basic_Types.h"           /* for ptr_arith_t */
+#include "ace/Basic_Types.h"           /* for ptrdiff_t */
 #include "ace/Synch_T.h"
 
 
@@ -81,7 +81,7 @@ namespace CORBA
     /// how it is called)
     static CORBA::Boolean _tao_marshal (TAO_OutputCDR &strm,
                                         ValueBase *_this,
-                                        ptr_arith_t formal_type_id = 0);
+                                        ptrdiff_t formal_type_id = 0);
 
     /// Unmarshal a valuetype, if formal type is a pointer to
     /// ValueBase
@@ -102,7 +102,7 @@ namespace CORBA
 
   public:  // otherwise these cannot be called from a static function
 
-    virtual void *_tao_obv_narrow (ptr_arith_t) = 0;
+    virtual void *_tao_obv_narrow (ptrdiff_t) = 0;
 
     /// during marshal jump to the most derived part
     virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) = 0;

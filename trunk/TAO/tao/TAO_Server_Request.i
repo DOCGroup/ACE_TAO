@@ -172,7 +172,7 @@ TAO_ServerRequest::is_dsi (void)
 }
 
 ACE_INLINE void
-TAO_ServerRequest::dsi_nvlist_align (ptr_arith_t alignment)
+TAO_ServerRequest::dsi_nvlist_align (ptrdiff_t alignment)
 {
   this->dsi_nvlist_align_ = alignment;
 }

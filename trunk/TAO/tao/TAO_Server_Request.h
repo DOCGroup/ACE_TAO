@@ -200,7 +200,7 @@ public:
   void is_dsi (void);
 
   /// Set the member.
-  void dsi_nvlist_align (ptr_arith_t alignment);
+  void dsi_nvlist_align (ptrdiff_t alignment);
 
   /// Get/Set operations for the argument_flag
   void argument_flag (CORBA::Boolean flag);
@@ -279,7 +279,7 @@ private:
   CORBA::Boolean is_dsi_;
 
   /// Used to pad CDR stream if we have used DSI.
-  ptr_arith_t dsi_nvlist_align_;
+  ptrdiff_t dsi_nvlist_align_;
 
   /**
    * An argument flag to indicate whether there is any data that is

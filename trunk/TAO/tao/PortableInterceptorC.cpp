@@ -165,7 +165,7 @@ PortableInterceptor::Interceptor::_unchecked_narrow (
           Interceptor_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &Interceptor::_tao_class_id
                 )
             )
@@ -183,19 +183,19 @@ PortableInterceptor::Interceptor::_duplicate (Interceptor_ptr obj)
   return obj;
 }
 
-void *PortableInterceptor::Interceptor::_tao_QueryInterface (ptr_arith_t type)
+void *PortableInterceptor::Interceptor::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
 
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::PortableInterceptor, Interceptor)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {
@@ -819,7 +819,7 @@ PortableInterceptor::Current::_unchecked_narrow (
           Current_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &Current::_tao_class_id
                 )
             )
@@ -837,19 +837,19 @@ PortableInterceptor::Current::_duplicate (Current_ptr obj)
   return obj;
 }
 
-void *PortableInterceptor::Current::_tao_QueryInterface (ptr_arith_t type)
+void *PortableInterceptor::Current::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
 
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::PortableInterceptor, Current)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::CORBA::Current::_tao_class_id)
             )
     {
@@ -863,7 +863,7 @@ void *PortableInterceptor::Current::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {
@@ -1055,7 +1055,7 @@ PortableInterceptor::RequestInfo::_unchecked_narrow (
           RequestInfo_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &RequestInfo::_tao_class_id
                 )
             )
@@ -1073,19 +1073,19 @@ PortableInterceptor::RequestInfo::_duplicate (RequestInfo_ptr obj)
   return obj;
 }
 
-void *PortableInterceptor::RequestInfo::_tao_QueryInterface (ptr_arith_t type)
+void *PortableInterceptor::RequestInfo::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
 
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::PortableInterceptor, RequestInfo)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {
@@ -1279,7 +1279,7 @@ PortableInterceptor::ClientRequestInfo::_unchecked_narrow (
           ClientRequestInfo_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &ClientRequestInfo::_tao_class_id
                 )
             )
@@ -1297,19 +1297,19 @@ PortableInterceptor::ClientRequestInfo::_duplicate (ClientRequestInfo_ptr obj)
   return obj;
 }
 
-void *PortableInterceptor::ClientRequestInfo::_tao_QueryInterface (ptr_arith_t type)
+void *PortableInterceptor::ClientRequestInfo::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
 
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::PortableInterceptor, ClientRequestInfo)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::PortableInterceptor, RequestInfo)::_tao_class_id)
             )
     {
@@ -1323,7 +1323,7 @@ void *PortableInterceptor::ClientRequestInfo::_tao_QueryInterface (ptr_arith_t t
           );
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {
@@ -1521,7 +1521,7 @@ PortableInterceptor::ServerRequestInfo::_unchecked_narrow (
           ServerRequestInfo_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &ServerRequestInfo::_tao_class_id
                 )
             )
@@ -1539,19 +1539,19 @@ PortableInterceptor::ServerRequestInfo::_duplicate (ServerRequestInfo_ptr obj)
   return obj;
 }
 
-void *PortableInterceptor::ServerRequestInfo::_tao_QueryInterface (ptr_arith_t type)
+void *PortableInterceptor::ServerRequestInfo::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
 
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::PortableInterceptor, ServerRequestInfo)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::PortableInterceptor, RequestInfo)::_tao_class_id)
             )
     {
@@ -1565,7 +1565,7 @@ void *PortableInterceptor::ServerRequestInfo::_tao_QueryInterface (ptr_arith_t t
           );
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {
@@ -1763,7 +1763,7 @@ PortableInterceptor::ClientRequestInterceptor::_unchecked_narrow (
           ClientRequestInterceptor_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &ClientRequestInterceptor::_tao_class_id
                 )
             )
@@ -1781,19 +1781,19 @@ PortableInterceptor::ClientRequestInterceptor::_duplicate (ClientRequestIntercep
   return obj;
 }
 
-void *PortableInterceptor::ClientRequestInterceptor::_tao_QueryInterface (ptr_arith_t type)
+void *PortableInterceptor::ClientRequestInterceptor::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
 
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::PortableInterceptor, ClientRequestInterceptor)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::PortableInterceptor, Interceptor)::_tao_class_id)
             )
     {
@@ -1807,7 +1807,7 @@ void *PortableInterceptor::ClientRequestInterceptor::_tao_QueryInterface (ptr_ar
           );
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {
@@ -2009,7 +2009,7 @@ PortableInterceptor::ServerRequestInterceptor::_unchecked_narrow (
           ServerRequestInterceptor_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &ServerRequestInterceptor::_tao_class_id
                 )
             )
@@ -2027,19 +2027,19 @@ PortableInterceptor::ServerRequestInterceptor::_duplicate (ServerRequestIntercep
   return obj;
 }
 
-void *PortableInterceptor::ServerRequestInterceptor::_tao_QueryInterface (ptr_arith_t type)
+void *PortableInterceptor::ServerRequestInterceptor::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
 
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::PortableInterceptor, ServerRequestInterceptor)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::PortableInterceptor, Interceptor)::_tao_class_id)
             )
     {
@@ -2053,7 +2053,7 @@ void *PortableInterceptor::ServerRequestInterceptor::_tao_QueryInterface (ptr_ar
           );
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {
@@ -2255,7 +2255,7 @@ PortableInterceptor::IORInfo::_unchecked_narrow (
           IORInfo_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &IORInfo::_tao_class_id
                 )
             )
@@ -2273,19 +2273,19 @@ PortableInterceptor::IORInfo::_duplicate (IORInfo_ptr obj)
   return obj;
 }
 
-void *PortableInterceptor::IORInfo::_tao_QueryInterface (ptr_arith_t type)
+void *PortableInterceptor::IORInfo::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
 
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::PortableInterceptor, IORInfo)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {
@@ -2477,7 +2477,7 @@ PortableInterceptor::IORInterceptor::_unchecked_narrow (
           IORInterceptor_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &IORInterceptor::_tao_class_id
                 )
             )
@@ -2495,19 +2495,19 @@ PortableInterceptor::IORInterceptor::_duplicate (IORInterceptor_ptr obj)
   return obj;
 }
 
-void *PortableInterceptor::IORInterceptor::_tao_QueryInterface (ptr_arith_t type)
+void *PortableInterceptor::IORInterceptor::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
 
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::PortableInterceptor, IORInterceptor)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::PortableInterceptor, Interceptor)::_tao_class_id)
             )
     {
@@ -2521,7 +2521,7 @@ void *PortableInterceptor::IORInterceptor::_tao_QueryInterface (ptr_arith_t type
           );
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {
@@ -2717,7 +2717,7 @@ PortableInterceptor::PolicyFactory::_unchecked_narrow (
           PolicyFactory_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &PolicyFactory::_tao_class_id
                 )
             )
@@ -2747,19 +2747,19 @@ PortableInterceptor::PolicyFactory::_create_policy (CORBA::PolicyType
                     CORBA::Policy::_nil ());
 }
 
-void *PortableInterceptor::PolicyFactory::_tao_QueryInterface (ptr_arith_t type)
+void *PortableInterceptor::PolicyFactory::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
 
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::PortableInterceptor, PolicyFactory)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {
@@ -2955,7 +2955,7 @@ PortableInterceptor::ORBInitInfo::_unchecked_narrow (
           ORBInitInfo_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &ORBInitInfo::_tao_class_id
                 )
             )
@@ -2973,19 +2973,19 @@ PortableInterceptor::ORBInitInfo::_duplicate (ORBInitInfo_ptr obj)
   return obj;
 }
 
-void *PortableInterceptor::ORBInitInfo::_tao_QueryInterface (ptr_arith_t type)
+void *PortableInterceptor::ORBInitInfo::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
 
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::PortableInterceptor, ORBInitInfo)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {
@@ -3514,7 +3514,7 @@ PortableInterceptor::ORBInitializer::_unchecked_narrow (
           ORBInitializer_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &ORBInitializer::_tao_class_id
                 )
             )
@@ -3532,19 +3532,19 @@ PortableInterceptor::ORBInitializer::_duplicate (ORBInitializer_ptr obj)
   return obj;
 }
 
-void *PortableInterceptor::ORBInitializer::_tao_QueryInterface (ptr_arith_t type)
+void *PortableInterceptor::ORBInitializer::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
 
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::PortableInterceptor, ORBInitializer)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {

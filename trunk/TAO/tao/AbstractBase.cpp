@@ -73,12 +73,12 @@ CORBA::AbstractBase::_is_a (const char *type_id
 }
 
 void *
-CORBA::AbstractBase::_tao_QueryInterface (ptr_arith_t type)
+CORBA::AbstractBase::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
 
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &CORBA::AbstractBase::_tao_class_id)
             )
     {
