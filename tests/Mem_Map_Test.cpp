@@ -57,8 +57,8 @@ create_test_file (int size, int num_lines)
   char *mybuf;
   
   ACE_NEW_RETURN (mybuf, char[size + 1], -1);
-  char c = 'a';
-  char d = c;
+  char *c = ACE_ALPHABET;
+  char *d = c;
 
   ACE_HANDLE file_handle = ACE_OS::open (ACE_DEFAULT_TEST_FILE, 
 					 O_RDWR | O_CREAT | O_TRUNC,
@@ -71,7 +71,7 @@ create_test_file (int size, int num_lines)
     {
       for (int i = 0; i < size; i++)
 	{
-	  mybuf[i] = c;
+	  mybuf[i] = *c;
 	  c++;
 	}
 
