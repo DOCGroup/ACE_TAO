@@ -1,3 +1,7 @@
+Thu Oct 22 23:28:52 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * TAO version 0.2.32 released.
+
 Thu Oct 22 21:35:17 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* TAO-INSTALL.html: Since we've been successfully using MSVC 6.0
