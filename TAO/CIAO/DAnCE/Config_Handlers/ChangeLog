@@ -1,3 +1,11 @@
+Wed Sep 22 12:41:23 2004  Jules White <jules@dre.vanderbilt.edu>
+
+  * BaseTypes_Handler.h:
+  * BaseTypes_Handler.cpp:
+  * Config_Handlers.mpc
+  
+    Removed BaseTypes_Handler and updated the MPC file. 
+    
 Wed Sep 22 12:29:52 2004  Jules White <jules@dre.vanderbilt.edu>
 
   * Any_Handler.h:
