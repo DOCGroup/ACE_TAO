@@ -5,6 +5,14 @@ Fri Oct 17 06:31:20 1997  David L. Levine  <levine@cs.wustl.edu>
 	  # operator, so ACE_VERSION supplies the concatenated version
 	  string.  Thanks to Matthias for suggesting this.
 
+	* ace/Svc_Handler.{h,cpp},Object_Manager.{h,cpp}: moved
+	  ace_svc_handler_lock_ to Object_Manager.  This lock was
+	  created once per Svc_Handler instantiation.  It has been
+	  replaced by a single lock for all instantiations.  That
+	  shouldn't be a problem because there are so few Svc_Handler
+	  instantiations, and the lock is only used for singleton
+	  creation using double-checked locking.
+
 Fri Oct 17 00:05:55 1997    <irfan@TWOSTEP>
 
 	* ace/OS: Added ACE_Export to declarations to:
