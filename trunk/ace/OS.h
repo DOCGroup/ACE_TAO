@@ -28,10 +28,10 @@
 # define ACE_reinterpret_cast(TYPE, EXPR)  reinterpret_cast<TYPE> (EXPR)
 # define ACE_dynamic_cast(TYPE, EXPR)      dynamic_cast<TYPE> (EXPR)
 #else
-# define ACE_static_cast(TYPE, EXPR)       ((TYPE) (EXPR))
-# define ACE_const_cast(TYPE, EXPR)        ((TYPE) (EXPR))
-# define ACE_reinterpret_cast(TYPE, EXPR)  ((TYPE) (EXPR))
-# define ACE_dynamic_cast(TYPE, EXPR)      ((TYPE) (EXPR))
+# define ACE_static_cast(TYPE, EXPR)       (TYPE) (EXPR)
+# define ACE_const_cast(TYPE, EXPR)        (TYPE) (EXPR)
+# define ACE_reinterpret_cast(TYPE, EXPR)  (TYPE) (EXPR)
+# define ACE_dynamic_cast(TYPE, EXPR)      (TYPE) (EXPR)
 #endif /* ACE_HAS_ANSI_CASTS */
 
 // Deal with MSVC++ insanity for CORBA...
@@ -2003,12 +2003,12 @@ typedef HANDLE ACE_sema_t;
 
 class ACE_sema_t
 {
-  // = TITLE 
+  // = TITLE
   // Semaphore simulation for Windows CE.
 public:
   ACE_thread_mutex_t lock_;
   // Serializes access to <count_>.
-  
+
   ACE_event_t count_nonzero_;
   // This event is signaled whenever the count becomes non-zero.
 
@@ -2901,6 +2901,12 @@ unsigned long inet_network(const char *);
 # ifndef howmany
 #   define howmany(x, y)   (((x)+((y)-1))/(y))
 # endif /* howmany */
+
+  // LynxOS sets NSIG to the highest-numbered signal.  We assume that
+  // it is one greater than that; redefine it here based on the
+  // knowledge that SIGRTMAX is the highest-numbered signal.
+# undef NSIG
+# define NSIG (SIGRTMAX + 1)
 #endif /* __Lynx__ */
 
 #if defined (CHORUS)
