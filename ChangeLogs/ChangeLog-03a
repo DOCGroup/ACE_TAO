@@ -22,6 +22,12 @@ Thu Feb  8 14:11:36 2001  Darrell Brunsch <brunsch@uci.edu>
 
           Removed references to ws2tcpip.h.
 
+        * ace/SOCK_Connect.cpp:
+
+          Changed get_ip_interfaces to remove a memory error.  Thanks to 
+          Viatcheslav Batenine <slavikb@infra2000.com> for helping out with
+          this.
+
         * ace/SOCK_Dgram_Mcast.cpp:
 
           It looks like the change made on:
