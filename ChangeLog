@@ -1,3 +1,21 @@
+Sat Jul 28 14:58:30 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* netsvcs/clients/Tokens/collection/Makefile,
+	  netsvcs/clients/Tokens/deadlock/Makefile,
+	  netsvcs/clients/Tokens/invariant/Makefile,
+	  netsvcs/clients/Tokens/mutex/Makefile,
+	  netsvcs/clients/Tokens/rw_lock/Makefile,
+	  examples/ASX/CCM_App/Makefile,
+	  examples/Logger/Acceptor-server/Makefile,
+	  examples/Reactor/Multicast/Makefile,
+	  examples/Reactor/Ntalker/Makefile,
+	  examples/Shared_Malloc/Makefile,
+	  performance-tests/TCP/Makefile,
+	  performance-tests/UDP/Makefile: Removed the line 
+	  include $(ACE_ROOT)/include/makeinclude/rules.LIB.GNU
+	  so that these projects will build correctly on VxWorks with
+	  Make 3.79.1.  Thanks to Frank Wolf for reporting this.
+
 Fri Jul 27 11:24:50 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Svc_Conf.y: Allow quoted strings as the pathname.  Thanks
