@@ -1,3 +1,10 @@
+Wed Aug  5 22:14:39 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp,
+ 	  orbsvcs/orbsvcs/Trader/Offer_Database.cpp: removed unnecessary
+ 	  typenames.  Thanks to John Mulhern <9107@mn3.lawson.lawson.com>
+ 	  for reporting this.
+
 Wed Aug 05 17:34:52 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Invocation.h (TAO_GIOP_Invocation): Removed the
@@ -1654,7 +1661,7 @@ Fri Jul 24 21:44:09 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
           more detail.
 
         * orbsvcs/orbsvcs/Event/Event_Channel.cpp:
-          Fixed delete of (void*). Thanks to John Mulhern
+          Fixed delete of (void*).  Thanks to John Mulhern
           <9107@mn3.lawson.lawson.com> for reporting this.
 
         * tests/Param_Test/any.cpp:

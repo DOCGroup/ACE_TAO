@@ -17,7 +17,7 @@ TAO_Offer_Database<LOCK_TYPE>::~TAO_Offer_Database (void)
 {
   ACE_WRITE_GUARD (LOCK_TYPE, ace_mon, this->db_lock_);
 
-  for (ACE_TYPENAME Offer_Database::iterator type_iter (this->offer_db_);
+  for (Offer_Database::iterator type_iter (this->offer_db_);
        ! type_iter.done ();
        type_iter++)
     {
