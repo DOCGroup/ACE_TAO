@@ -262,7 +262,7 @@ main (int argc, char *argv[])
                 if (TAO_debug_level > 0)
                   {
                     ACE_DEBUG ((LM_DEBUG, "Output CDR: \n"));
-                    ACE_HEX_DUMP ((LM_DEBUG, input.rd_ptr(), 64));
+                    ACE_HEX_DUMP ((LM_DEBUG, output.rd_ptr(), 64));
                     ACE_DEBUG ((LM_DEBUG, "Input CDR: \n"));
                     ACE_HEX_DUMP ((LM_DEBUG, input.rd_ptr(), 64));
                   }
