@@ -1,4 +1,8 @@
-Fri Jun 18 12:17:23 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Fri Jun 18 14:26:27 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Naming/Persistent_Context_Index.cpp (init):
+	  Released the servant pointer before returning.  Actually, Carlos
+	  and Marina fixed this.
 
 	* *.{mdp,mak}: Removed all MSVC 4 workspaces and makefiles.  We
  	  are no longer supporting this version of MSVC++.  If you need
