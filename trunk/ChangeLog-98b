@@ -4,6 +4,9 @@ Fri Sep 25 12:40:45 1998  David L. Levine  <levine@cs.wustl.edu>
           ACE_THR_PRI_FIFO_DEF.  They're no longer needed with the
           hard-coded ACE_THR_PRI_* values for Solaris in ace/OS.h.
 
+        * ace/OS.i: removed carriage returns.  Thanks to Darrell
+          for noticing it.
+
 Fri Sep 25 12:15:00 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * ace: The following ACE_TRACE calls being made during the
