@@ -94,7 +94,9 @@ static const CORBA::Long _oc_CORBA_OctetSeq[] =
 
 };
 static CORBA::TypeCode _tc_TAO_tc_CORBA_OctetSeq (CORBA::tk_alias, sizeof (_oc_CORBA_OctetSeq), (char *) &_oc_CORBA_OctetSeq, 0, sizeof (CORBA_OctetSeq));
-CORBA::TypeCode_ptr _tc_CORBA_OctetSeq = &_tc_TAO_tc_CORBA_OctetSeq;
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_CORBA_OctetSeq, &_tc_TAO_tc_CORBA_OctetSeq)
+
 void operator<<= (
     CORBA::Any &_tao_any,
     const CORBA_OctetSeq &_tao_elem
