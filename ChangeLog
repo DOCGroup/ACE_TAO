@@ -1,9 +1,16 @@
+Sun Aug 22 21:49:14 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/config-netbsd.h:
+
+	  Update with autoconf generated results.  While not perfect, the
+	  old version would be difficult to update by hand.
+
 Mon Aug 23 01:04:34 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/Select_Reactor_T.cpp:
 
 	  Made some slight changes to the BUG 1890 patch after receiving
-	  some clarifications from Kobi. 
+	  some clarifications from Kobi.
 
 Sun Aug 22 11:11:00 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
