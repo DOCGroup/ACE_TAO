@@ -221,8 +221,6 @@
   /* End of threading #defines */
 #endif /* _REENTRANT */
 
-#define ACE_HAS_ONEARG_SIGWAIT
-
 // Platform supports ACE_TLI timod STREAMS module.
 #define ACE_HAS_TIMOD_H
 

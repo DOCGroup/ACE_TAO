@@ -27,26 +27,26 @@
 #define HPUX_VERS 1020
 #endif
 
-#if (HPUX_VERS < 1020)			// 10.10
+#if (HPUX_VERS < 1020)                  // 10.10
 #  define ACE_HAS_BROKEN_MMAP_H
 #  define ACE_LACKS_T_ERRNO
 #  define ACE_LACKS_TIMESPEC_T
-#elif (HPUX_VERS < 1030)		// 10.20
+#elif (HPUX_VERS < 1030)                // 10.20
 
    // Platform supports reentrant functions (all the POSIX *_r functions).
 #  define ACE_HAS_REENTRANT_FUNCTIONS
    // But this one is not like other platforms
 #  define ACE_CTIME_R_RETURNS_INT
 
-#else					// 10.30
+#else                                   // 10.30
 // Don't know yet... probably will be 10.20 but with some different thread
 // settings.
 #endif /* HPUX_VERS tests */
 
 #include /**/ <sys/stdsyms.h>
-#include /**/ <sched.h>		/*  pthread.h doesn't include this */
+#include /**/ <sched.h>         /*  pthread.h doesn't include this */
 
-extern int h_errno;	/* This isn't declared in a header file on HP-UX */
+extern int h_errno;     /* This isn't declared in a header file on HP-UX */
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -183,19 +183,16 @@ extern int h_errno;	/* This isn't declared in a header file on HP-UX */
 
 #ifdef ACE_HAS_THREADS
 #  if !defined (ACE_MT_SAFE)
-	#define ACE_MT_SAFE 1
+        #define ACE_MT_SAFE 1
 #  endif
 #  define ACE_HAS_PTHREADS
 #  define ACE_HAS_PTHREADS_DRAFT4
 // POSIX real-time semaphore definitions are in the header files, and it
-// will compile and link with this in place, but will not run.  HP says 
+// will compile and link with this in place, but will not run.  HP says
 // the functions are not implemented.
 //#  define ACE_HAS_POSIX_SEM
 #  define ACE_HAS_PTHREAD_T
 #  define ACE_HAS_PTHREAD_EQUAL
-
-// Platform's sigwait() has one arg
-#  define ACE_HAS_ONEARG_SIGWAIT
 
 #  define ACE_HAS_THREAD_SPECIFIC_STORAGE
 // ... and it's looked up via an argument
