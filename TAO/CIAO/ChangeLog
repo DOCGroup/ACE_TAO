@@ -1,7 +1,14 @@
+Tue Nov 25 15:39:51 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CCF/CCF/CompilerElements/FileSystem.hpp:
+
+	  Made normalize() function use 'native' path type when 
+	  constructing the path.
+
 Tue Nov 25 15:06:02 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CIDLC/cidlc.cpp:
-	
+
 	  Some code to support #include handling.
 
 Tue Nov 25 14:47:18 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
