@@ -2,10 +2,9 @@
 
 # For MVS OpenEdition platform
 
-debug = 1
+debug = 0
  
 CXX           = cxx
-CCFLAGS       += $(CFLAGS)
 DCFLAGS	      += -g
 CPPFLAGS      = -+
 DEFFLAGS      = -D_ALL_SOURCE -DNDEBUG
@@ -31,3 +30,4 @@ ACELIB        = $(ACELIB_DLL)
  
 SOFLAGS       = -W l,dll
 PIC           = -W c,exportall
+static_libs   = 1

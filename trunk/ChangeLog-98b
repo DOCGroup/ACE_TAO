@@ -1,3 +1,22 @@
+Mon Sep 14 17:09:04 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* include/makeinclude/platform_mvs.GNU: Updated the MVS
+	  platform configuration as follows:
+
+	  changed:
+	    debug = 1
+	  to:
+	    debug = 0
+
+	  added:
+	    static_libs = 1
+
+	  and deleted the line:
+	    CCFLAGS       += $(CFLAGS)
+
+	  Thanks to Chuck Gehr <GehrCR@LOUISVILLE.STORTEK.COM> for these
+	  changes.
+
 Mon Sep 14 14:34:32 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* apps/gperf/src/gperf.dsp:
