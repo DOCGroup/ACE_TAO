@@ -14,8 +14,9 @@
 //     and reverse iterators.
 //
 // = AUTHOR
-//    Irfan Pyarali and Douglas C. Schmidt
-//
+//    Irfan Pyarali <irfan@cs.wustl.edu>,
+//    Douglas C. Schmidt <schmidt@cs.wustl.edu>, and
+//    Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 // ============================================================================
 
 #include "test_config.h"
@@ -37,19 +38,31 @@ USELIB("..\ace\aced.lib");
 
 typedef ACE_Null_Mutex MUTEX;
 typedef size_t TYPE;
-typedef ACE_Active_Map_Manager_Key ACTIVE_KEY;
-typedef ACE_Hash<TYPE> HASH_KEY;
-typedef ACE_Equal_To<TYPE> COMPARE_KEYS;
+typedef ACE_Active_Map_Manager_Key 
+        ACTIVE_KEY;
+typedef ACE_Hash<TYPE> 
+        HASH_KEY;
+typedef ACE_Equal_To<TYPE> 
+        COMPARE_KEYS;
 
-typedef ACE_Map_Manager <TYPE, TYPE, MUTEX> MAP_MANAGER;
-typedef ACE_Map_Iterator <TYPE, TYPE, MUTEX> ITERATOR;
-typedef ACE_Map_Reverse_Iterator <TYPE, TYPE, MUTEX> REVERSE_ITERATOR;
-typedef ACE_Map_Entry <TYPE, TYPE> ENTRY;
-typedef ACE_Hash_Map_Manager_Ex <TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX> HASH_MAP_MANAGER;
-typedef ACE_Hash_Map_Iterator_Ex <TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX> HASH_ITERATOR;
-typedef ACE_Hash_Map_Reverse_Iterator_Ex <TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX> HASH_REVERSE_ITERATOR;
-typedef ACE_Hash_Map_Entry <TYPE, TYPE> HASH_ENTRY;
-typedef ACE_Active_Map_Manager <TYPE> ACTIVE_MAP_MANAGER;
+typedef ACE_Map_Manager <TYPE, TYPE, MUTEX> 
+        MAP_MANAGER;
+typedef ACE_Map_Iterator <TYPE, TYPE, MUTEX> 
+        ITERATOR;
+typedef ACE_Map_Reverse_Iterator <TYPE, TYPE, MUTEX> 
+        REVERSE_ITERATOR;
+typedef ACE_Map_Entry <TYPE, TYPE> 
+        ENTRY;
+typedef ACE_Hash_Map_Manager_Ex <TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX> 
+        HASH_MAP_MANAGER;
+typedef ACE_Hash_Map_Iterator_Ex <TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX> 
+        HASH_ITERATOR;
+typedef ACE_Hash_Map_Reverse_Iterator_Ex <TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX> 
+        HASH_REVERSE_ITERATOR;
+typedef ACE_Hash_Map_Entry <TYPE, TYPE> 
+        HASH_ENTRY;
+typedef ACE_Active_Map_Manager <TYPE> 
+        ACTIVE_MAP_MANAGER;
 
 typedef ACE_Hash_Map_Manager_Ex<TYPE, ACE_Pair<TYPE, int>, HASH_KEY, COMPARE_KEYS, MUTEX>
         CACHE_MAP_IMPL;
