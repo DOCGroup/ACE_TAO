@@ -291,6 +291,7 @@ public:
     ACE_UINT64 pseudo_seq_seen_;
     ACE_UINT64 string_seq_seen_;
     ACE_UINT64 wstring_seq_seen_;
+    ACE_UINT64 octet_seq_seen_;
 
     ACE_UINT64 basic_arg_seen_;
     ACE_UINT64 bd_string_arg_seen_;

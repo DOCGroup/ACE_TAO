@@ -1,3 +1,29 @@
+Wed Sep 17 18:31:28 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_array/array_ci.cpp:
+        * TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp:
+
+          Added #ifdef guards around generation of the Array_Traits
+          specialization and the CDR operator definitions, to avoid
+          duplicate definition compile errors when we have duplicate
+          anonymous arrays of the same type and bound(s). The guard
+          uses a flat string constructed from the flat name of the
+          unaliased array element type, and a size for each dimension.
+          The guards for the CDR operators are now necessary because
+          the operators are overloaded on the array forany class,
+          which is now a typedef of a template class.
+
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_sequence.cpp:
+
+          Added #include of tao/ORB_Core.h predicated on the presence of an
+          IDL octet sequence declaration. The TAO_NO_COPY_OCTET_SEQUENCES
+          flag calls ORB core functions. If, instead of an IDL declaration,
+          a reference to CORBA::OctetSeq is used, an #include of
+          tao/OctetSeqC.h will replace the tao/ORB_Core.h #include.
+
 Wed Sep 17 16:04:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Synch_Invocation.h (TAO):  Added TAO_Export for the
