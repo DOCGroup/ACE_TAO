@@ -102,7 +102,7 @@ private:
 
   /// Tokenizes the <obj_addr_list> using "," as the seperator. Assigns
   /// individual endpoints to the elements of the ACE_Array_Base.
-  virtual void parse_string_assign_helper (CORBA::ULong &addr_list_length,
+  virtual void parse_string_assign_helper (
                                            ACE_CString &key_string,
                                            ACE_CString &cloc_name,
                                            CORBA::ORB_ptr orb,
