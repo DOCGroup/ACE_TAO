@@ -1,3 +1,46 @@
+Tue Sep 21 22:11:10 2004  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* tests/Sequence_Unit_Tests/unbounded_string_sequence.hpp:
+	  New file, this will implement (obviously enough) unbounded
+	  sequences of strings.  The implementation is incomplete, but
+	  enough is there to show the main ideas and start the cycle:
+	  write test -> get test to compile + fail -> get test to pass
+	  -> rinse and repeat.
+
+	* tests/Sequence_Unit_Tests/Sequence_Unit_Tests.mpc:
+	* tests/Sequence_Unit_Tests/unbounded_string_sequence_ut.cpp:
+	  Initial unit test for unbounded string sequences.
+
+	* tests/Sequence_Unit_Tests/testing_counters.hpp:
+	  Helper classes to implement some common testing idioms, namely,
+	  count how many times a function is called and raise an exception
+	  after a prescribed number of calls.
+
+	* tests/Sequence_Unit_Tests/string_traits.hpp:
+	  Implement the element manipulation traits for strings (and wide
+	  strings.)
+
+	* tests/Sequence_Unit_Tests/string_traits_base.hpp:
+	  Isolate most of the string element manipulation traits from the
+	  silly CORBA names for string vs. wstring functions.  Apparently
+	  they forgot that C++ has overloading.
+
+	* tests/Sequence_Unit_Tests/testing_string_traits.hpp:
+	  More helper classes to write unit tests related to string
+	  sequences.
+
+	* tests/Sequence_Unit_Tests/testing_allocation_traits.hpp:
+	* tests/Sequence_Unit_Tests/value_sequence_tester.hpp:
+	* tests/Sequence_Unit_Tests/bounded_value_sequence_ut.cpp:
+	* tests/Sequence_Unit_Tests/unbounded_value_sequence_ut.cpp:
+	  Refactored the code to use the testing_counters.hpp helpers.
+
+	* tests/Sequence_Unit_Tests/testing_allocation_traits_ut.cpp:
+	  Wrote a unit test for the allocation traits used in testing.
+	  Normally I would not "test the test" but the helpers in
+	  testing_counters.hpp made it desirable to have this extra layer
+	  of checking.
+
 Tue Sep 21 20:15:01 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* tests/Sequence_Unit_Tests/generic_sequence.hpp:
