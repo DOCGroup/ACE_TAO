@@ -115,7 +115,7 @@ Connection_Handler::svc (void)
     }
 
   // Cancel all pending timeouts.
-  ACE_Reactor::instance ()->cancel_timer (this);
+  this->reactor ()->cancel_timer (this);
 
   // Remove ourselves from the Reactor.
   this->reactor ()->remove_handler

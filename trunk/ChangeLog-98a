@@ -1,3 +1,10 @@
+Thu Jan 22 16:34:18 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/Connection/misc/Connection_Handler.cpp (svc): Fixed a
+ 	  bug in the example where the global Singleton Reactor was being
+ 	  used rather than the object's Reactor.  Thanks to Peter Gross
+ 	  <pag@kokako.probita.com> for reporting this.  
+
 Thu Jan 22 09:04:13 1998  David L. Levine  <@cs.wustl.edu>
 
         * ace/Hash_Map_Manager.cpp (ACE_Hash_Map_Iterator_Base ctor):
