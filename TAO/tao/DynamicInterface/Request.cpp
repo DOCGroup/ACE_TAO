@@ -172,6 +172,9 @@ CORBA_Request::invoke (CORBA::Environment &ACE_TRY_ENV)
                                 ACE_TRY_ENV);
       ACE_CHECK;
 
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("errno is %p\n")));
+
       if (status == TAO_INVOKE_RESTART)
         {
           continue;
@@ -219,7 +222,8 @@ CORBA_Request::invoke (CORBA::Environment &ACE_TRY_ENV)
 void
 CORBA_Request::send_oneway (CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA::Boolean argument_flag = this->args_->count () ? 1 : 0;
+  CORBA::Boolean argument_flag = this->args_->_lazy_has_arguments ();
+
   TAO_GIOP_Oneway_Invocation call (this->target_->_stubobj (),
                                    this->opname_,
                                    ACE_OS::strlen (this->opname_),
