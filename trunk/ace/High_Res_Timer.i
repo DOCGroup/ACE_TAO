@@ -45,7 +45,7 @@ ACE_High_Res_Timer::stop_incr (void)
 }
 
 ACE_INLINE void
-ACE_High_Res_Timer::elapsed_microseconds (hrtime_t &usecs) const;
+ACE_High_Res_Timer::elapsed_microseconds (hrtime_t &usecs) const
 {
   usecs = (this->end_ - this->start_) / 1000;
 }
