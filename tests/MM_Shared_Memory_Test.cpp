@@ -9,20 +9,21 @@
 //    Shared_Memory_MM_Test.cpp
 //
 // = DESCRIPTION
-//     This is a simple test of ACE_Shared_Memory_MM. The test forks
-//     two processes or spawns two threads (depending upon the
-//     platform) and then executes client and server allowing them to
+//     This is a simple test of <ACE_Shared_Memory_MM>.  The test
+//     forks two processes or spawns two threads (depending upon the
+//     platform) and then executes child and parent allowing them to
 //     exchange data using shared memory. No user input is required as
 //     far as command line arguments are concerned.
 //
 // = AUTHOR
-//    Prashant Jain and Doug Schmidt
+//    Prashant Jain <pjain@cs.wustl.edu> 
+//    and Douglas C. Schmidt <schmidt@cs.wustl.edu>
 //
 // ============================================================================
 
 #include "test_config.h"
 #include "ace/Shared_Memory_MM.h"
-#include "ace/Thread.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 
 ACE_RCSID(tests, MM_Shared_Memory_Test, "$Id$")
@@ -35,28 +36,25 @@ USELIB("..\ace\aced.lib");
 const int SHMSZ = 27;
 static TCHAR shm_key[] = ACE_TEMP_FILE_NAME ACE_TEXT ("XXXXXX");
 
+// Synchronize the start of the parent and the child.
+static ACE_Process_Semaphore *process_synchronizer = 0;
+
 static void *
-client (void * = 0)
+child (void * = 0)
 {
-  ACE_OS::sleep (ACE_DEFAULT_TIMEOUT);
+  // Wait for the parent process to 
+  int result = process_synchronizer->acquire ();
+  ACE_ASSERT (result != -1);
+
   char *t = ACE_ALPHABET;
-  ACE_Shared_Memory_MM shm_client;
+  ACE_Shared_Memory_MM shm_child;
 
-  if (shm_client.open (shm_key) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("(%P|%t) %p\n%a"),
-                ASYS_TEXT ("ACE_Shared_Memory_MM::open() failed in client"),
-                1));
-    /* NOTREACHED */
+  result = shm_child.open (shm_key);
+  ACE_ASSERT (result != -1);
 
-  char *shm = (char *) shm_client.malloc ();
+  char *shm = (char *) shm_child.malloc ();
 
-  if (shm == 0)
-    ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("(%P|%t) %p\n%a"),
-                ASYS_TEXT ("ACE_Shared_Memory_MM::malloc () failed in client"),
-                1));
-    /* NOTREACHED */
+  ACE_ASSERT (shm != 0);
 
   for (char *s = shm; *s != '\0'; s++)
     {
@@ -64,31 +62,24 @@ client (void * = 0)
       t++;
     }
 
+  // Indicate to the parent that we're done.
   *shm = '*';
 
   return 0;
 }
 
 static void *
-server (void * = 0)
+parent (void * = 0)
 {
-  ACE_Shared_Memory_MM shm_server;
+  int result;
+  ACE_Shared_Memory_MM shm_parent;
 
-  if (shm_server.open (shm_key, SHMSZ) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("(%P|%t) %p\n%a"),
-                ASYS_TEXT ("ACE_Shared_Memory_MM::open () failed in server"),
-                1));
-    /* NOTREACHED */
+  result = shm_parent.open (shm_key, SHMSZ);
+  ACE_ASSERT (result != -1);
 
-  char *shm = (char *) shm_server.malloc ();
+  char *shm = (char *) shm_parent.malloc ();
 
-  if (shm == 0)
-    ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("(%P|%t) %p\n%a"),
-                ASYS_TEXT ("ACE_Shared_Memory_MM::malloc () failed in server"),
-                1));
-    /* NOTREACHED */
+  ACE_ASSERT (shm != 0);
 
   char *s = shm;
 
@@ -97,61 +88,78 @@ server (void * = 0)
 
   *s = '\0';
 
-  // Perform a busy wait (ugh).
-  while (*shm != '*')
-    ACE_OS::sleep (1);
+  // Allow the child process to proceed.
+  result = process_synchronizer->release ();
+  ACE_ASSERT (result != -1);
 
-  if (shm_server.remove () == -1)
-    ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("(%P|%t) %p\n"),
-                ASYS_TEXT ("remove")));
+  // Perform a "busy wait" until the child sets the character to '*'.
+  while (*shm != '*')
+    ACE_DEBUG ((LM_DEBUG,
+                ASYS_TEXT ("(%P) spinning in parent!\n")));
+
+  result = shm_parent.remove ();
+  ACE_ASSERT (result != -1);
 
   ACE_OS::unlink (shm_key);
   return 0;
 }
 
-static void
+static int
 spawn (void)
 {
 #if !defined (ACE_LACKS_FORK)
+  // Create the synchronizer before spawning the child process, to
+  // avoid race condition between the creation in the parent and use
+  // in the child.
+  ACE_NEW_RETURN (process_synchronizer,
+                  ACE_Process_Semaphore (0), // Locked by default...
+                  -1);
+
   switch (ACE_OS::fork (ASYS_TEXT ("child")))
     {
     case -1:
-      ACE_ERROR ((LM_ERROR,
-                  ASYS_TEXT ("(%P|%t) %p\n%a"),
-                  ASYS_TEXT ("fork failed"),
-                  1));
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ASYS_TEXT ("(%P|%t) %p\n"),
+                         ASYS_TEXT ("fork failed")),
+                        1);
       /* NOTREACHED */
     case 0:
-      server ();
+      parent ();
+      delete process_synchronizer;
       break;
+      /* NOTREACHED */
     default:
-      client ();
+      child ();
+      // We don't want to return to <main> because this prints out an
+      // extra "ending" message.
+      ACE_OS::exit (0);
       break;
+      /* NOTREACHED */
     }
 #elif defined (ACE_HAS_THREADS)
   if (ACE_Thread_Manager::instance ()->spawn
-      (ACE_THR_FUNC (client),
+      (ACE_THR_FUNC (child),
        (void *) 0,
        THR_NEW_LWP | THR_DETACHED) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("(%P|%t) %p\n%a"),
-                ASYS_TEXT ("thread create failed"),
-                1));
-
-  if (ACE_Thread_Manager::instance ()->spawn
-      (ACE_THR_FUNC (server),
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ASYS_TEXT ("(%P|%t) %p\n"),
+                       ASYS_TEXT ("thread create failed")),
+                      1);
+  else if (ACE_Thread_Manager::instance ()->spawn
+      (ACE_THR_FUNC (parent),
        (void *) 0,
        THR_NEW_LWP | THR_DETACHED) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("(%P|%t) %p\n%a"),
-                ASYS_TEXT ("thread create failed"),
-               1));
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ASYS_TEXT ("(%P|%t) %p\n"),
+                       ASYS_TEXT ("thread create failed")),
+                      1);
   ACE_Thread_Manager::instance ()->wait ();
 #else
-  ACE_ERROR ((LM_ERROR,
-              ASYS_TEXT ("only one thread may be run in a process on this platform\n%a"), 1));
+  ACE_ERROR_RETURN ((LM_ERROR,
+                     ASYS_TEXT ("only one thread may be run in a process on this platform\n")),
+                    1);
 #endif /* ACE_HAS_THREADS */
+  return 0;
 }
 
 int
