@@ -83,21 +83,23 @@ Thu May  3 11:55:42 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
 	Tue Apr 10 17:25:18 2001)
 
 	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
-	   Modified the TAO_CodeGen::TAO_CDR_INPUT case to perform octet
-	   sequence optimization only if its safe. This check was absent
-	   previously, forcing us to always use locked input cdr allocators.
+	  Modified the TAO_CodeGen::TAO_CDR_INPUT case to perform octet
+	  sequence optimization only if its safe. This check was absent
+	  previously, forcing us to always use locked input cdr allocators.
+	
 	* tao/IOPC.cpp:
 	* tao/MessagingC.cpp:
 	* tao/Services.cpp:
 	* tao/PortableServer/PortableServerC.cpp:
-	  Files affected by the IDL compiler changes had to be redone.
+	  Files affected by the IDL compiler changes had to be redone. 
+	
 	* tao/diffs/IOPC.cpp.diff:
 	* tao/diffs/MessagingC.cpp.diff:
 	* tao/diffs/PortableServerC.cpp.diff:
 	* tao/diffs/OctetSeqC.cpp.diff:
 	  Regenerated the diff files. Note that i have added
-	OctetSeqC.cpp.diff. This should be used to patch the IDL generated
-	stub file instead of OctetSeq.diff.
+	  OctetSeqC.cpp.diff. This should be used to patch the IDL
+	  generated stub file instead of OctetSeq.diff.
 
 Thu May  3 10:11:08 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
