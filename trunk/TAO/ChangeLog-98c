@@ -1,3 +1,11 @@
+Wed Aug  5 16:43:38 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* docs/implrepo.html: Added information on the new POA policy where 
+	  the format of the persistent IOR can be changed from that of both 
+	  the last-known-server-IOR and Implementation Repository to that
+          just of the Implementation Repository.  Also added a note on the
+	  use of CLOEXEC to make TAO fork-safe.
+
 Wed Aug  5 16:04:21 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* orbsvcs/Naming_Service/Naming_Service.dsp:
