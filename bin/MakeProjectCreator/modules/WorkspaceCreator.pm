@@ -485,7 +485,7 @@ sub write_workspace {
       ## VC6 is the only tool that currently cannot work with duplicate names, but
       ## duplicates really don't make sense for anything but Makefile-style projects.
       my(%names) = ();
-      foreach my $project (@{$self->{'projects'}}) { 
+      foreach my $project (@{$self->{'projects'}}) {
         my($name) = $self->{'project_info'}->{$project}->[0];
         if (defined $names{$name}) {
           ++$duplicates;
@@ -503,20 +503,20 @@ sub write_workspace {
     my($name) = $self->transform_file_name($self->workspace_file_name());
 
     my($abort_creation) = 0;
-
-    if ($duplicates > 0 && ! $self->allow_duplicates()) {
+    if ($duplicates > 0 && !$self->allow_duplicates()) {
       print "WARNING: Duplicates not allowed.\n";
       $abort_creation = 1;
-    } else {
-      if (! defined $self->{'projects'}->[0]) {
-          print "WARNING: No projects were created.\n";
-          $abort_creation = 1;
+    }
+    else {
+      if (!defined $self->{'projects'}->[0]) {
+        print "WARNING: No projects were created.\n";
+        $abort_creation = 1;
       }
     }
 
-    if (! $abort_creation) {
-      my($fh)   = new FileHandle();
-      my($dir)  = dirname($name);
+    if (!$abort_creation) {
+      my($fh)  = new FileHandle();
+      my($dir) = dirname($name);
 
       ## Verify and possibly modify the dependencies
       if ($addfile) {
@@ -568,7 +568,8 @@ sub write_workspace {
           }
         }
       }
-    } else {
+    }
+    else {
       print "         Workspace $name has not been created.\n";
     }
     if (!$addfile) {
@@ -739,7 +740,7 @@ sub generate_project_files {
           my($bps) = $generator->get_baseprojs();
           push(@$bps, split(/\s+/, $impl));
           $restore = 1;
-          $self->{'cacheok'} = 0;  
+          $self->{'cacheok'} = 0;
         }
       }
 
@@ -857,19 +858,24 @@ sub sort_dependencies {
   my($self)     = shift;
   my($projects) = shift;
   my($pjs)      = shift;
+  my($prepref)  = shift;
   my(@list)     = @$projects;
   my(%prepend)  = ();
 
   foreach my $project (@list) {
     my($dname) = dirname($project);
     if ($dname ne '.') {
-      $prepend{basename($project)} = dirname($project);
+      $prepend{basename($project)} = $dname;
     }
+  }
+
+  if (defined $prepref) {
+    %$prepref = %prepend;
   }
 
   ## Put the projects in the order specified
   ## by the project dpendencies.
-  for(my $i = 0; $i <= $#list; $i++) {
+  for(my $i = 0; $i <= $#list; ++$i) {
     my($project) = $list[$i];
     my($name) = $$pjs{$project}->[0];
     my($deps) = $self->get_validated_ordering($project);
@@ -883,7 +889,7 @@ sub sort_dependencies {
                        "$prepend{$base}/" : '') . $base;
         if ($project ne $full) {
           ## See if the dependency is listed after this project
-          for(my $j = $i; $j <= $#list; $j++) {
+          for(my $j = $i; $j <= $#list; ++$j) {
             if ($list[$j] eq $full && $i != $j) {
               ## If so, move it in front of the current project.
               ## The original code, which had splices, didn't always
@@ -905,6 +911,51 @@ sub sort_dependencies {
       }
     }
   }
+  return @list;
+}
+
+
+sub number_target_deps {
+  my($self)     = shift;
+  my($projects) = shift;
+  my($pjs)      = shift;
+  my($targets)  = shift;
+  my(%prepend)  = ();
+  my(@list)     = $self->sort_dependencies($projects, $pjs, \%prepend);
+
+  ## This block of code must be done after the list of dependencies
+  ## has been sorted in order to get the correct project numbers.
+  for(my $i = 0; $i <= $#list; ++$i) {
+    my($project) = $list[$i];
+    my($deps) = $self->get_validated_ordering($project);
+
+    if ($deps ne '') {
+      my(%targetnumbers) = ();
+      my($darr) = $self->create_array($deps);
+
+      ## For each dependency, search in the sorted list
+      ## up to the point of this project for the projects
+      ## that this one depends on.  When the project is
+      ## found, we put the target number in a hash map (to avoid
+      ## duplicates).
+      foreach my $dep (@$darr) {
+        my($base) = basename($dep);
+        my($full) = (defined $prepend{$base} ?
+                       "$prepend{$base}/" : '') . $base;
+        for(my $j = 0; $j < $i; ++$j) {
+          if ($list[$j] eq $full) {
+            $targetnumbers{$j} = 1;
+          }
+        }
+      }
+
+      ## Get the keys of the hash map and store the
+      ## array in the hash keyed on the project file.
+      my(@numbers) = sort { $a <=> $b } keys %targetnumbers;
+      $$targets{$project} = \@numbers;
+    }
+  }
+
   return @list;
 }
 
@@ -1152,7 +1203,7 @@ sub get_validated_ordering {
 # ************************************************************
 
 sub allow_duplicates {
-  my($self) = shift;
+  #my($self) = shift;
   return 1;
 }
 

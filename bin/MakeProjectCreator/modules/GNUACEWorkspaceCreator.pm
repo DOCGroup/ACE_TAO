@@ -20,6 +20,15 @@ use vars qw(@ISA);
 @ISA = qw(WorkspaceCreator);
 
 # ************************************************************
+# Data Section
+# ************************************************************
+
+my(@targets)  = ('all', 'debug', 'profile', 'optimize',
+                 'install', 'deinstall', 'clean', 'realclean',
+                 'clobber', 'depend', 'rcs_info', 'idl_stubs',
+                );
+
+# ************************************************************
 # Subroutine Section
 # ************************************************************
 
@@ -43,7 +52,7 @@ sub pre_workspace {
   print $fh "#----------------------------------------------------------------------------$crlf" .
             "#       GNU ACE Workspace$crlf" .
             "#$crlf" .
-            "# \@file Makefile$crlf" .                 
+            "# \@file Makefile$crlf" .
             "#$crlf" .
             "# \$Id\$$crlf" .
             "#$crlf" .
@@ -60,53 +69,64 @@ sub write_comps {
   my($fh)       = shift;
   my($projects) = $self->get_projects();
   my($pjs)      = $self->get_project_info();
-  my(@list)     = $self->sort_dependencies($projects, $pjs);
+  my(%targnum)  = ();
+  my(@list)     = $self->number_target_deps($projects, $pjs, \%targnum);
   my($crlf)     = $self->crlf();
-
-  ## Print out the projet Makefile
-  print $fh "include \$(ACE_ROOT)/include/makeinclude/macros.GNU$crlf" .
-            "TARGETS_NESTED := \$(TARGETS_NESTED:.nested=)$crlf";
 
   ## Only use the list if there is more than one project
   if ($#list > 0) {
-    print $fh "MFILES = \\$crlf";
-    for(my $i = 0; $i <= $#list; $i++) {
-      print $fh "         $list[$i]";
-      if ($i != $#list) {
-        print $fh ' \\';
-      }
-      print $fh $crlf;
-    }
+    my(@dirs)  = ();
+    my(%added) = ();
+    my($count) = 0;
+
+    ## Print out the info for using -k
     print $fh $crlf .
               "MAKE_OPTIONS=\$(shell echo \$(MAKEFLAGS) | sed 's/--unix *//; s/ .*//')$crlf" .
               "ifeq (\$(findstring k,\$(MAKE_OPTIONS)),k)$crlf" .
               "  KEEP_GOING = 1$crlf" .
               "else$crlf" .
               "  KEEP_GOING = 0$crlf" .
-              "endif$crlf";
-  }
+              "endif$crlf$crlf";
 
-  print $fh $crlf .
-            "\$(TARGETS_NESTED):$crlf";
-
-  ## If there is more than one project, use a for loop
-  if ($#list > 0) {
-    my(@dirs)  = ();
-    my(%added) = ();
-    print $fh "ifeq (\$(KEEP_GOING),1)$crlf" .
-              "\t\@for file in \$(MFILES); do \\$crlf" .
-              "\t\$(MAKE) -f `basename \$\$file` -C `dirname \$\$file` \$(\@); \\$crlf" .
-              "\tdone$crlf" .
-              "else$crlf";
+    ## Print out each of the individual targets
     foreach my $project (@list) {
-      print $fh "\t\@\$(MAKE) -f " . basename($project) . ' -C ' . dirname($project) . " \$(\@);$crlf";
+      print $fh "\%.tgt$count:";
+      if (defined $targnum{$project}) {
+        foreach my $number (@{$targnum{$project}}) {
+          print $fh " %.tgt$number";
+        }
+      }
+      my($cmd) = "\@\$(MAKE) -f " . basename($project) . ' -C ' . dirname($project) . " \$(*);$crlf";
+      print $fh $crlf .
+                "ifeq (\$(KEEP_GOING),1)$crlf" .
+                "\t-$cmd" .
+                "else$crlf" .
+                "\t$cmd" .
+                "endif$crlf";
       my($dname) = dirname($project);
       if ($dname ne '.' && !defined $added{$dname}) {
         push(@dirs, $dname);
         $added{$dname} = 1;
       }
+      ++$count;
     }
-    print $fh "endif$crlf";
+
+    ## Print the targets for each of the above projects
+    foreach my $target (@targets) {
+      my($tlen) = length($target);
+      my($cutoff) = int((80 - ($tlen + 1)) / ($tlen + 8));
+      my($splitter) = 0;
+      print $fh "$crlf$crlf$target:";
+      for(my $i = 0; $i < $count; ++$i) {
+        print $fh " $target.tgt$i";
+        ++$splitter;
+        if ($i != $count - 1 && $splitter == $cutoff) {
+          print $fh " \\$crlf " . (' ' x $tlen);
+          $splitter = 0;
+        }
+      }
+    }
+    print $fh $crlf;
 
     ## Print out the reverseclean target
     if (defined $dirs[0]) {
@@ -124,7 +144,10 @@ sub write_comps {
     ## Otherwise, just list the call to make without a for loop
     my($dir)  = dirname($list[0]);
     my($base) = basename($list[0]);
-    print $fh "\t\@\$(MAKE) -f $base " . ($dir ne '.' ? "-C $dir " : '') .
+    print $fh "TARGETS_NESTED = @targets$crlf" .
+              $crlf .
+              "\$(TARGETS_NESTED):$crlf" .
+              "\t\@\$(MAKE) -f $base " . ($dir ne '.' ? "-C $dir " : '') .
               "\$(\@);$crlf$crlf" .
               "reverseclean:$crlf" .
               "\t\@\$(MAKE) -f $base " . ($dir ne '.' ? "-C $dir " : '') .

@@ -1,23 +1,34 @@
+Thu Sep  4 09:56:28 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Modified the GNUACEWorkspaceCreator to generate a workspace that
+          will work with the -j option of GNU Make.  Each project in the
+          workspace has an individual target with dependencies on the
+          necessary targets which allows GNU Make to determine which
+          projects can be built in parallel.
+
 Thu Sep  4 09:30:26 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/Log_Msg.h: Reverted this change "Wed Sep 3 17:42:00 2003
-	  Justin Michel <michel_j@ociweb.com>". This caused builds to
-	  break so easily. 
+        * ace/Log_Msg.h: Reverted this change "Wed Sep 3 17:42:00 2003
+          Justin Michel <michel_j@ociweb.com>". This caused builds to
+          break so easily.
 
 Wed Sep 3 17:42:00 2003 Justin Michel <michel_j@ociweb.com>
 
         * ace/Log_Msg.h:
 
           An empty ACE_ASSERT now uses ACE_UNUSED_ARG. This prevents
-	  warnings by compilers that aren't smart enough to recognize that
-	  the code *is* used, but only by the preprocessor.
+          warnings by compilers that aren't smart enough to recognize that
+          the code *is* used, but only by the preprocessor.
 
 Wed Sep  3 17:01:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/UUID.cpp (ACE_Utils): 
-	* examples/Web_Crawler/Mem_Map_Stream.h: 
-	* examples/Web_Crawler/URL_Visitor.h : Fixed warnings in g++
-	  builds.  
+        * ace/UUID.cpp (ACE_Utils):
+        * examples/Web_Crawler/Mem_Map_Stream.h:
+        * examples/Web_Crawler/URL_Visitor.h : Fixed warnings in g++
+          builds.
 
 Wed Sep  3 11:53:53 2003  Chad Elliott  <elliott_c@ociweb.com>
 
