@@ -14,6 +14,7 @@
 // ============================================================================
 
 #include "tao/corba.h"
+#include "ace/Auto_Ptr.h"
 #include "cubit_i.h"
 
 // Constructor
@@ -55,10 +56,12 @@ Cubit_Factory_i::make_cubit (const char *key, CORBA::Environment &env)
 {
   for (size_t i = 0; i < this->numobjs_; i++)
     {
-      const char *obj_str = (char *) &this->my_cubit_[i]->key (env)[0];
+      auto_ptr<TAO::ObjectKey> the_key = this->my_cubit_[i]->key (env);
+      
+      const char *obj_str = (char *) &((*the_key)[0]);
 
       // Keys matched.
-      if (!ACE_OS::strcmp (obj_str, key))
+      if (ACE_OS::memcmp (obj_str, key, the_key->length()) == 0)
         return Cubit::_duplicate (this->my_cubit_ [i]);
     }
 
