@@ -542,6 +542,9 @@ AH_TEMPLATE([ACE_HAS_POSIX_GETPWNAM_R],
 AH_TEMPLATE([ACE_HAS_POSIX_NONBLOCK],
 [Platform supports POSIX O_NONBLOCK semantics])
 
+AH_TEMPLATE([ACE_HAS_POSIX_REALTIME_SIGNALS],
+[Platform supports POSIX realtime signals])
+
 AH_TEMPLATE([ACE_HAS_POSIX_SEM],
 [Platform supports POSIX real-time semaphores (e.g., VxWorks and
    Solaris)])

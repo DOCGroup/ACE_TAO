@@ -275,10 +275,37 @@ main ()
   return 0;
 }
        ]])],[
-        dnl Now try another test
+        ace_cv_feature_aio_calls=yes
+       ],[
+        ace_cv_feature_aio_calls=no
+       ],[
+        dnl Asynchronous IO test for cross-compiled platforms
+        dnl This test is weaker than the above run-time tests but it will
+        dnl have to do.
+        AC_COMPILE_IFELSE(
+          [AC_LANG_PROGRAM([[
+#include <aio.h>
+          ]],
+          [[
+           aiocb* aiocb_ptr (void);
+          ]])],
+          [
+           ace_cv_feature_aio_calls=yes
+          ],
+          [
+           ace_cv_feature_aio_calls=no
+          ])
+       ])
+    ],[AC_DEFINE([ACE_HAS_AIO_CALLS])],[LIBS="$ace_save_LIBS"])
+fi dnl test "$ace_has_aio_funcs" = yes
 
-        dnl Create a file for the test program to read.
-        cat > test_aiosig.txt <<EOF
+
+if test "$ace_cv_feature_aio_calls" = yes; then
+  ACE_CACHE_CHECK([for working POSIX realtime signals],
+    [ace_cv_feature_posix_rt_sigs],
+    [
+      dnl Create a file for the test program to read.
+      cat > test_aiosig.txt <<EOF
 
 *******************************************************
 FOO BAR FOO BAR FOO BAR FOO BAR FOO BAR FOO BAR FOO BAR
@@ -286,8 +313,8 @@ FOO BAR FOO BAR FOO BAR FOO BAR FOO BAR FOO BAR FOO BAR
 EOF
 
 
-        AC_RUN_IFELSE(
-          [AC_LANG_SOURCE([[
+      AC_RUN_IFELSE(
+        [AC_LANG_SOURCE([[
 #ifndef ACE_LACKS_UNISTD_H
 #include <unistd.h>
 #endif
@@ -583,41 +610,22 @@ main ()
   return -1;
 
 }
-         ]])],
-         [
-          ace_cv_feature_aio_calls=yes
-         ],
-         [
-          ace_cv_feature_aio_calls=no
-         ],
-         [
+        ]])],
+        [
+          ace_cv_feature_posix_rt_sigs=yes
+        ],
+        [
+          ace_cv_feature_posix_rt_sigs=no
+        ],
+        [
           dnl Don't bother doing anything for cross-compiling here
-          dnl since the outer run-time test will prevent this
-          dnl inner run-time test from ever running when cross-compiling.
+          dnl since the basic aio run-time test will prevent this
+          dnl rt sig run-time test from ever running when cross-compiling.
           dnl We just put something in here to prevent autoconf
           dnl from complaining.
           ace_just_a_place_holder=ignoreme
-         ])
-       ],[
-        ace_cv_feature_aio_calls=no
-       ],[
-        dnl Asynchronous IO test for cross-compiled platforms
-        dnl This test is weaker than the above run-time tests but it will
-        dnl have to do.
-        AC_COMPILE_IFELSE(
-          [AC_LANG_PROGRAM([[
-#include <aio.h>
-          ]],
-          [[
-           aiocb* aiocb_ptr (void);
-          ]])],
-          [
-           ace_cv_feature_aio_calls=yes
-          ],
-          [
-           ace_cv_feature_aio_calls=no
-          ])
-       ])
-    ],[AC_DEFINE([ACE_HAS_AIO_CALLS])],[LIBS="$ace_save_LIBS"])
-fi dnl test "$ace_has_aio_funcs" = yes
+        ])
+    ],[AC_DEFINE([ACE_HAS_POSIX_REALTIME_SIGNALS])],[])
+fi dnl test "$ace_cv_feature_aio_calls" = yes
+
 ])
