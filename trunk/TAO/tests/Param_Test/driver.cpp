@@ -51,13 +51,13 @@ main (int argc, char **argv)
 
 // constructor
 Driver::Driver (void)
-  : orb_ptr_ (0),
-    objref_ (Param_Test::_nil ())
+  : orb_ptr_ (0)
 {
 }
 
 Driver::~Driver (void)
 {
+  CORBA::release (this->orb_ptr_);
 }
 
 // initialize the driver
@@ -92,26 +92,28 @@ Driver::init (int argc, char **argv)
     }
 
   // Retrieve a Param_Test object reference
-  this->objref_ = Param_Test::_bind (opt->hostname (),
-                                     opt->portnum (),
-                                     opt->param_test_key (),
-                                     env);
-
+  CORBA::Object_var temp =
+    this->orb_ptr_->string_to_object (opt->param_test_ior (), env);
   if (env.exception () != 0)
     {
-      env.print_exception ("Param_Test::_bind");
+      env.print_exception ("ORB::string_to_object() failed.");
       return -1;
     }
 
-  if (CORBA::is_nil (this->objref_))
+  if (CORBA::is_nil (temp.in()))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         " _bind returned null object for "
-                         "key (%s), host (%s), port (%d)\n",
-                         opt->param_test_key (),
-                         opt->hostname (),
-                         opt->portnum ()),
+                         "ORB::string_to_object() returned null object for IOR <%s>\n",
+                         opt->param_test_ior ()),
                         -1);
+    }
+
+  
+  this->objref_ = Param_Test::_narrow (temp.in(), env);
+  if (env.exception () != 0)
+    {
+      env.print_exception ("Param_Test::_narrow failed");
+      return -1;
     }
 
   return 0;
@@ -132,7 +134,7 @@ Driver::run (void)
       {
         Param_Test_Client<Test_Short> *client = new
           Param_Test_Client<Test_Short> (this->orb_ptr_,
-                                         this->objref_,
+                                         this->objref_.in(),
                                          new Test_Short);
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
@@ -145,7 +147,7 @@ Driver::run (void)
       {
         Param_Test_Client<Test_Unbounded_String> *client = new
           Param_Test_Client<Test_Unbounded_String> (this->orb_ptr_,
-                                                    this->objref_,
+                                                    this->objref_.in(),
                                                     new Test_Unbounded_String);
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
@@ -158,7 +160,7 @@ Driver::run (void)
       {
         Param_Test_Client<Test_Fixed_Struct> *client = new
           Param_Test_Client<Test_Fixed_Struct> (this->orb_ptr_,
-                                                this->objref_,
+                                                this->objref_.in(),
                                                 new Test_Fixed_Struct);
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
@@ -171,7 +173,7 @@ Driver::run (void)
       {
         Param_Test_Client<Test_String_Sequence> *client = new
           Param_Test_Client<Test_String_Sequence> (this->orb_ptr_,
-                                                   this->objref_,
+                                                   this->objref_.in(),
                                                    new Test_String_Sequence);
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
@@ -184,7 +186,7 @@ Driver::run (void)
       {
         Param_Test_Client<Test_Var_Struct> *client = new
           Param_Test_Client<Test_Var_Struct> (this->orb_ptr_,
-                                              this->objref_,
+                                              this->objref_.in(),
                                               new Test_Var_Struct);
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
@@ -197,7 +199,7 @@ Driver::run (void)
       {
         Param_Test_Client<Test_Nested_Struct> *client = new
           Param_Test_Client<Test_Nested_Struct> (this->orb_ptr_,
-                                                 this->objref_,
+                                                 this->objref_.in(),
                                                  new Test_Nested_Struct);
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
@@ -210,7 +212,7 @@ Driver::run (void)
       {
         Param_Test_Client<Test_Struct_Sequence> *client = new
           Param_Test_Client<Test_Struct_Sequence> (this->orb_ptr_,
-                                                 this->objref_,
+                                                 this->objref_.in(),
                                                  new Test_Struct_Sequence);
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
@@ -223,7 +225,7 @@ Driver::run (void)
       {
         Param_Test_Client<Test_ObjRef> *client = new
           Param_Test_Client<Test_ObjRef> (this->orb_ptr_,
-                                          this->objref_,
+                                          this->objref_.in(),
                                           new Test_ObjRef);
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();

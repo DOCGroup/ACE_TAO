@@ -1,4 +1,5 @@
-// $Id:
+// -*- c++ -*-
+// $Id$
 
 // ============================================================================
 //
@@ -53,14 +54,8 @@ public:
   int parse_args (int argc, char **argv);
   // Parses the arguments passed on the command line.
 
-  char *param_test_key (void);
-  // return the key
-
-  char *hostname (void);
-  // return the hostname
-
-  CORBA::UShort portnum (void);
-  // return the port number
+  char *param_test_ior (void);
+  // return the IOR for the servant
 
   TEST_TYPE test_type (void);
   // what test to run
@@ -74,14 +69,8 @@ public:
   CORBA::Boolean debug (void) const;
   // whether debug option is on or not
 private:
-  char *param_test_key_;
-  // Key of the obj ref to be retrieved
-
-  char *hostname_;
-  // Hostname of server.
-
-  CORBA::UShort portnum_;
-  // port number of server.
+  char *ior_;
+  // IOR for the servant
 
   TEST_TYPE test_type_;
   // what test to run

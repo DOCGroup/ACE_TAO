@@ -54,21 +54,24 @@ main (int argc, char *argv[])
   TAO_TRY
     {
       char *orb_name = "internet"; // unused by TAO
+      CORBA::Object_var temp; // holder for the myriad of times we get
+                              // an object which we then have to narrow.
 
       // get the underlying ORB
       CORBA::ORB_var orb_ptr = CORBA::ORB_init (argc, argv, orb_name, TAO_TRY_ENV);
       TAO_CHECK_ENV;
   
       // Get the Root POA
-      CORBA::Object_var obj = orb_ptr->resolve_initial_references ("RootPOA");
-      if (CORBA::is_nil (obj.in()))
+      
+      temp = orb_ptr->resolve_initial_references ("RootPOA");
+      if (CORBA::is_nil (temp.in()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%P|%t) Unable to get root poa reference.\n"),
                             1);
         }
   
-      oa_ptr = PortableServer::POA::_narrow (obj.in(), TAO_TRY_ENV);
+      oa_ptr = PortableServer::POA::_narrow (temp.in(), TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       PortableServer::POAManager_var poa_manager =
@@ -79,18 +82,18 @@ main (int argc, char *argv[])
       policies.length (2);  
       policies[0] =
 	oa_ptr->create_id_assignment_policy (PortableServer::USER_ID,
-					       TAO_TRY_ENV);
+                                             TAO_TRY_ENV);
       policies[1] =
 	oa_ptr->create_lifespan_policy (PortableServer::PERSISTENT,
-					  TAO_TRY_ENV);
+                                        TAO_TRY_ENV);
 
       // We use a different POA, otherwise the user would have to
       // change the object key each time it invokes the server.
       PortableServer::POA_var good_poa =
 	oa_ptr->create_POA ("RootPOA_is_BAD",
-			      poa_manager.in (),
-			      policies,
-			      TAO_TRY_ENV);  
+                            poa_manager.in (),
+                            policies,
+                            TAO_TRY_ENV);  
       TAO_CHECK_ENV;
 
       // Parse remaining command line and verify parameters.
@@ -110,22 +113,18 @@ main (int argc, char *argv[])
                                          TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      if (TAO_debug_level > 0)
-        {
-          // Stringify the objref we'll be implementing, and print it to
-          // stdout.  Someone will take that string and give it to a
-          // client.  Then release the object.
+      // Stringify the objref we'll be implementing, and print it to
+      // stdout.  Someone will take that string and give it to a
+      // client.  Then release the object.
 
-          CORBA::Object_var obj = 
-            good_poa->id_to_reference (id.in (), TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+      temp = good_poa->id_to_reference (id.in (), TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-          CORBA::String_var str =
-            orb_ptr->object_to_string (obj.in (),
-                                       TAO_TRY_ENV);
+      CORBA::String_var str =
+        orb_ptr->object_to_string (temp.in (),
+                                   TAO_TRY_ENV);
 
-          ACE_DEBUG ((LM_DEBUG, "(%P|%t) The IOR is <%s>\n", str.in ()));
-        }
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) The IOR is <%s>\n", str.in ()));
 
       // Make the POAs controlled by this manager active
       poa_manager->activate (TAO_TRY_ENV);

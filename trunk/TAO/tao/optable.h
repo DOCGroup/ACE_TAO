@@ -60,8 +60,9 @@ class TAO_Export TAO_Dynamic_Hash_OpTable : public TAO_Operation_Table
   // Dynamic Hashing scheme for CORBA IDL operation name lookup
 {
 public:
-  TAO_Dynamic_Hash_OpTable (const TAO_operation_db_entry *db, CORBA::ULong
-			    dbsize, CORBA::ULong hashtblsize = 0);
+  TAO_Dynamic_Hash_OpTable (const TAO_operation_db_entry *db,
+                            CORBA::ULong dbsize,
+                            CORBA::ULong hashtblsize = 0);
   // Constructor.
   // Initialize the dynamic hash operation table with a database of operation
   // names. The hash table size may be different from the size of the
