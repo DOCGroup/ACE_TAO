@@ -1,3 +1,14 @@
+Mon Jul 21 13:41:54 2003  George Edwards <g.edwards@vanderbilt.edu>
+
+        * tao/Makefile.bor:
+        * tao/Makefile.tao:
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
+        
+          Updated makefiles to include new files
+          tao/IORInterceptor_Adapter_Factory.h and
+          tao/IORInterceptor_Adapter_Factory.cpp.
+
 Mon Jul 21 10:16:23 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * TAO_IDL/Makefile.EXE:

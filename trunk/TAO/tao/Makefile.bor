@@ -109,6 +109,7 @@ OBJFILES = \
 	$(OBJDIR)\IIOP_Transport.obj \
 	$(OBJDIR)\IOPC.obj \
 	$(OBJDIR)\IORInterceptor_Adapter.obj \
+  $(OBJDIR)\IORInterceptor_Adapter_Factory.obj \
 	$(OBJDIR)\IOR_Parser.obj \
 	$(OBJDIR)\Incoming_Message_Queue.obj \
 	$(OBJDIR)\Interceptor_List.obj \
