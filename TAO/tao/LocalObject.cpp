@@ -43,16 +43,6 @@ CORBA::LocalObject::_remove_ref (void)
   // Do nothing as per CCM spec.
 }
 
-// IS_A ... ask the object if it's an instance of the type whose
-// logical type ID is passed as a parameter.
-
-CORBA::Boolean
-CORBA::LocalObject::_is_a (const CORBA::Char * /* type_id */,
-                           CORBA::Environment &ACE_TRY_ENV)
-{
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
-}
-
 // Quickly hash an object reference's representation data.  Used to
 // create hash tables.
 
