@@ -42,6 +42,8 @@ main (int argc, char* argv[])
   TAO_EC_Kokyu_Factory::init_svcs ();
 
   //@BT
+  //  EC_Event_Counter::event_id eid = EC_EVENT_COUNTER->increment();
+  //  DSUI_EVENT_LOG(MAIN_GROUP_FAM, START, 1, sizeof(EC_Event_Counter::event_id), (char*)&eid);
   DSUI_EVENT_LOG(MAIN_GROUP_FAM, START, 0, 0, NULL);
 
   ACE_DECLARE_NEW_CORBA_ENV;
@@ -163,7 +165,7 @@ main (int argc, char* argv[])
       ACE_OS::thr_setprio (thr_handle, prio);
 
       //@BT: Timeouts start when orb starts, similar to starting the DT worker thread
-      DSUI_EVENT_LOG (MAIN_GROUP_FAM, WORKER_ACTIVATED, 1, 0, NULL);
+      DSUI_EVENT_LOG (MAIN_GROUP_FAM, WORKER_ACTIVATED, 0, 0, NULL);
 
       EC_Event_Limit* e_limit = new EC_Event_Limit (TAO_ORB_Core_instance(), ds_cntl);
       ACE_Time_Value ticker (25);

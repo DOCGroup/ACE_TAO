@@ -40,6 +40,30 @@ module RtecEventComm
 
   typedef long EventSourceID;
   typedef long _EventType;
+  typedef long EventID_Type;
+  typedef long EventTID_Type;
+
+  /**
+   * @struct EventID
+   *
+   * @brief Defined the structure of an event ID
+   *
+   * The event ID is the portion of the event used to uniquely
+   * identify an event from others for the purpose of data
+   * collection
+   */
+  struct EventID
+  {
+    /**
+     * Unique Event id
+     */
+    EventID_Type id;
+
+    /**
+     * Thread ID of the thread which created the Event
+     */
+    EventTID_Type tid;
+  };
 
   /**
    * @struct EventID

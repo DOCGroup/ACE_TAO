@@ -75,8 +75,7 @@ endif
 
 
 .obj/EC_Kokyu_Filter.o .obj/EC_Kokyu_Filter.so .shobj/EC_Kokyu_Filter.o .shobj/EC_Kokyu_Filter.so: Event/EC_Kokyu_Filter.cpp Event/EC_Kokyu_Filter.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Event/EC_Filter.h \
+  $(ACE_ROOT)/ace/pre.h Event/EC_Filter.h \
   RtecEventCommC.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
@@ -169,12 +168,6 @@ endif
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -190,6 +183,12 @@ endif
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -254,7 +253,6 @@ endif
   $(TAO_ROOT)/tao/ORB.i \
   Event/event_export.h \
   TimeBaseC.h \
-  svc_utils_export.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
   $(TAO_ROOT)/tao/TimeBaseC.i \
   TimeBaseC.i \
@@ -301,14 +299,13 @@ endif
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i \
-  Event/EC_Kokyu_Filter.i Event/EC_QOS_Info.h Event/EC_QOS_Info.i \
+  $(ACE_ROOT)/ace/SString.i Event/EC_Kokyu_Filter.i \
+  Event/EC_QOS_Info.h Event/EC_QOS_Info.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/Log_Priority.h
 
 .obj/EC_Kokyu_Filter_Builder.o .obj/EC_Kokyu_Filter_Builder.so .shobj/EC_Kokyu_Filter_Builder.o .shobj/EC_Kokyu_Filter_Builder.so: Event/EC_Kokyu_Filter_Builder.cpp \
-  Event/EC_Kokyu_Filter.h \
-  $(ACE_ROOT)/ace/pre.h \
+  Event/EC_Kokyu_Filter.h $(ACE_ROOT)/ace/pre.h \
   Event/EC_Filter.h \
   RtecEventCommC.h \
   $(TAO_ROOT)/tao/ORB.h \
@@ -402,12 +399,6 @@ endif
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -423,6 +414,12 @@ endif
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -487,7 +484,6 @@ endif
   $(TAO_ROOT)/tao/ORB.i \
   Event/event_export.h \
   TimeBaseC.h \
-  svc_utils_export.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
   $(TAO_ROOT)/tao/TimeBaseC.i \
   TimeBaseC.i \
@@ -534,10 +530,10 @@ endif
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i \
-  Event/EC_Kokyu_Filter.i \
+  $(ACE_ROOT)/ace/SString.i Event/EC_Kokyu_Filter.i \
   Event_Service_Constants.h \
   Time_Utilities.h \
+  svc_utils_export.h \
   $(ACE_ROOT)/ace/OS_NS_time.h \
   $(ACE_ROOT)/ace/OS_NS_time.inl \
   Time_Utilities.i \
@@ -550,8 +546,7 @@ endif
   Event/EC_Disjunction_Filter.h Event/EC_Disjunction_Filter.i \
   Event/EC_Timeout_Filter.h Event/EC_QOS_Info.h Event/EC_QOS_Info.i \
   Event/EC_Timeout_Filter.i Event/EC_Event_Channel_Base.h \
-  Event/EC_Factory.h \
-  $(ACE_ROOT)/ace/Service_Object.h \
+  Event/EC_Factory.h $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
@@ -566,8 +561,8 @@ endif
   $(ACE_ROOT)/ace/Event_Handler.i \
   $(ACE_ROOT)/ace/DLL.h \
   $(ACE_ROOT)/ace/os_include/os_dlfcn.h \
-  $(ACE_ROOT)/ace/Service_Object.i \
-  Event/EC_Factory.i Event/EC_Defaults.h \
+  $(ACE_ROOT)/ace/Service_Object.i Event/EC_Factory.i \
+  Event/EC_Defaults.h \
   RtecEventChannelAdminS.h \
   RtecEventCommS.h \
   TimeBaseS.h \
@@ -610,8 +605,7 @@ endif
   Event/EC_Event_Channel_Base.i
 
 .obj/EC_Kokyu_Scheduling.o .obj/EC_Kokyu_Scheduling.so .shobj/EC_Kokyu_Scheduling.o .shobj/EC_Kokyu_Scheduling.so: Event/EC_Kokyu_Scheduling.cpp \
-  Event/EC_Kokyu_Scheduling.h \
-  $(ACE_ROOT)/ace/pre.h \
+  Event/EC_Kokyu_Scheduling.h $(ACE_ROOT)/ace/pre.h \
   Event/EC_Scheduling_Strategy.h Event/event_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
@@ -705,12 +699,6 @@ endif
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -726,6 +714,12 @@ endif
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -788,10 +782,9 @@ endif
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(TAO_ROOT)/tao/ORB.i \
-  svc_utils_export.h \
+  Event/event_export.h \
   RtecBaseC.i \
   RtecEventCommC.h \
-  Event/event_export.h \
   TimeBaseC.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
   $(TAO_ROOT)/tao/TimeBaseC.i \
@@ -861,8 +854,7 @@ endif
   Event/EC_Supplier_Filter.i
 
 .obj/EC_Kokyu_Dispatching.o .obj/EC_Kokyu_Dispatching.so .shobj/EC_Kokyu_Dispatching.o .shobj/EC_Kokyu_Dispatching.so: Event/EC_Kokyu_Dispatching.cpp \
-  Event/EC_Kokyu_Dispatching.h \
-  $(ACE_ROOT)/ace/pre.h \
+  Event/EC_Kokyu_Dispatching.h $(ACE_ROOT)/ace/pre.h \
   Event/EC_Dispatching.h \
   RtecEventCommC.h \
   $(TAO_ROOT)/tao/ORB.h \
@@ -956,12 +948,6 @@ endif
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -977,6 +963,12 @@ endif
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -1041,7 +1033,6 @@ endif
   $(TAO_ROOT)/tao/ORB.i \
   Event/event_export.h \
   TimeBaseC.h \
-  svc_utils_export.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
   $(TAO_ROOT)/tao/TimeBaseC.i \
   TimeBaseC.i \
@@ -1194,8 +1185,7 @@ endif
   $(ACE_ROOT)/Kokyu/Dispatcher_Impl.i \
   $(ACE_ROOT)/Kokyu/Kokyu.i \
   Event/EC_Kokyu_Dispatching.i Event/EC_Event_Channel_Base.h \
-  Event/EC_Factory.h \
-  $(ACE_ROOT)/ace/Service_Object.h \
+  Event/EC_Factory.h $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
@@ -1203,19 +1193,20 @@ endif
   $(ACE_ROOT)/ace/Event_Handler.i \
   $(ACE_ROOT)/ace/DLL.h \
   $(ACE_ROOT)/ace/os_include/os_dlfcn.h \
-  $(ACE_ROOT)/ace/Service_Object.i \
-  Event/EC_Factory.i Event/EC_Defaults.h Event/EC_Event_Channel_Base.i \
-  Event/EC_QOS_Info.h Event/EC_QOS_Info.i \
+  $(ACE_ROOT)/ace/Service_Object.i Event/EC_Factory.i \
+  Event/EC_Defaults.h Event/EC_Event_Channel_Base.i Event/EC_QOS_Info.h \
+  Event/EC_QOS_Info.i \
   Event_Service_Constants.h \
   Time_Utilities.h \
+  svc_utils_export.h \
   $(ACE_ROOT)/ace/OS_NS_time.h \
   $(ACE_ROOT)/ace/OS_NS_time.inl \
   Time_Utilities.i \
   $(TAO_ROOT)/tao/ORB_Constants.h
 
 .obj/EC_Kokyu_Factory.o .obj/EC_Kokyu_Factory.so .shobj/EC_Kokyu_Factory.o .shobj/EC_Kokyu_Factory.so: Event/EC_Kokyu_Factory.cpp Event/EC_Kokyu_Factory.h \
-  $(ACE_ROOT)/ace/pre.h \
-  Event/EC_Default_Factory.h Event/EC_Factory.h Event/event_export.h \
+  $(ACE_ROOT)/ace/pre.h Event/EC_Default_Factory.h \
+  Event/EC_Factory.h Event/event_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -1327,9 +1318,8 @@ endif
   $(ACE_ROOT)/ace/Event_Handler.i \
   $(ACE_ROOT)/ace/DLL.h \
   $(ACE_ROOT)/ace/os_include/os_dlfcn.h \
-  $(ACE_ROOT)/ace/Service_Object.i \
-  Event/EC_Factory.i Event/EC_Defaults.h \
-  $(ACE_ROOT)/ace/Service_Config.h \
+  $(ACE_ROOT)/ace/Service_Object.i Event/EC_Factory.i \
+  Event/EC_Defaults.h $(ACE_ROOT)/ace/Service_Config.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -1424,12 +1414,6 @@ endif
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -1439,6 +1423,12 @@ endif
   $(ACE_ROOT)/ace/Message_Block_T.cpp \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
@@ -1463,7 +1453,6 @@ endif
   $(TAO_ROOT)/tao/ORB.i \
   Event/event_export.h \
   TimeBaseC.h \
-  svc_utils_export.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
   $(TAO_ROOT)/tao/TimeBaseC.i \
   TimeBaseC.i \

@@ -1,5 +1,3 @@
-# $Id$
-
 DSTRM_FAMILY    DSRT_DISPATCH           4       "DSRT Dispatcher Events"
 DSTRM_FAMILY    DSRT_CV_DISPATCH        5       "DSRT CV Dispatcher Events"
 DSTRM_FAMILY    DSRT_DIRECT_DISPATCH    6       "DSRT Direct Dispatcher Events"
