@@ -15,15 +15,15 @@ namespace TAO
     {
     }
 
-    #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-    template class ACE_Dynamic_Service<PolicyFactory>;
+template class ACE_Dynamic_Service<PolicyFactory>;
 
-    #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-    #pragma instantiate ACE_Dynamic_Service<PolicyFactory>
+#pragma instantiate ACE_Dynamic_Service<PolicyFactory>
 
-    #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
   } /* namespace Portable_Server */
 } /* namespace TAO */
-

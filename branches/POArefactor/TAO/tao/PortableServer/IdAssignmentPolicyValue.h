@@ -27,6 +27,9 @@ namespace TAO
 {
   namespace Portable_Server
   {
+    // @@ Johnny, I would think pushing the concrete types to
+    // different files  would be better. Any reason that you feel
+    // against it?
     class TAO_PortableServer_Export IdAssignmentPolicyValue
       : public virtual ACE_Service_Object
     {
@@ -67,4 +70,3 @@ namespace TAO
 
 #include /**/ "ace/post.h"
 #endif /* TAO_PORTABLESERVER_IDASSIGNMENTPOLICYVALUE_H */
-

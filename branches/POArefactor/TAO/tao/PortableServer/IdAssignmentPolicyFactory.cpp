@@ -61,26 +61,23 @@ namespace TAO
       return TAO_POLICY_POA_SCOPE;
     }
 
-    ACE_STATIC_SVC_DEFINE (
-        IdAssignmentPolicyFactory,
-        ACE_TEXT ("IdAssignmentPolicyFactory"),
-        ACE_SVC_OBJ_T,
-        &ACE_SVC_NAME (IdAssignmentPolicyFactory),
-        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
-        0
-      )
+ACE_STATIC_SVC_DEFINE (IdAssignmentPolicyFactory,
+                       ACE_TEXT ("IdAssignmentPolicyFactory"),
+                       ACE_SVC_OBJ_T,
+                       &ACE_SVC_NAME (IdAssignmentPolicyFactory),
+                       ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
+                       0)
 
-    ACE_FACTORY_DEFINE (TAO_PortableServer, IdAssignmentPolicyFactory)
+ACE_FACTORY_DEFINE (TAO_PortableServer, IdAssignmentPolicyFactory)
 
-    #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-    template class ACE_Dynamic_Service<IdAssignmentPolicyFactory>;
+  template class ACE_Dynamic_Service<IdAssignmentPolicyFactory>;
 
-    #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
     #pragma instantiate ACE_Dynamic_Service<IdAssignmentPolicyFactory>
 
-    #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
   }
 }
-
