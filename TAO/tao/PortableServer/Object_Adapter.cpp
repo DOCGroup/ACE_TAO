@@ -862,8 +862,7 @@ TAO_Object_Adapter::initialize_collocated_object (TAO_Stub *stub,
 }
 
 TAO_ServantBase *
-TAO_Object_Adapter::get_collocated_servant (const TAO_MProfile &mp
-                                            ACE_ENV_ARG_DECL)
+TAO_Object_Adapter::get_collocated_servant (const TAO_MProfile &mp)
 {
   for (TAO_PHandle j = 0;
        j != mp.profile_count ();
