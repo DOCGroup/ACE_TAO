@@ -77,9 +77,9 @@ Param_Test_i::test_short (CORBA::Short s1,
                           CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  s2 = s1 * 2;
-  s3 = s1 * 3;
-  return s1 * 4;
+  s2 = (CORBA::Short) (s1 * 2);
+  s3 = (CORBA::Short) (s1 * 3);
+  return (CORBA::Short) (s1 * 4);
 }
 
 // test long long
@@ -698,7 +698,7 @@ Param_Test_i::test_any (const CORBA::Any &a1,
           ACE_DEBUG ((LM_DEBUG, "\n"));
         }
       for (size_t i = 0; i < ub_short_sequence->length (); i++)
-        (*ub_short_sequence)[i] = i * i;
+        (*ub_short_sequence)[i] = (CORBA::Short) (i * i);
       a2   <<= *ub_short_sequence;
       *ret <<= *ub_short_sequence;
     }
@@ -712,7 +712,7 @@ Param_Test_i::test_any (const CORBA::Any &a1,
           ACE_DEBUG ((LM_DEBUG, "\n"));
         }
       for (size_t i = 0; i < bd_short_sequence->length (); i++)
-        (*bd_short_sequence)[i] = i * i;
+        (*bd_short_sequence)[i] = (CORBA::Short) (i * i);
       a2 <<= *bd_short_sequence;
       *ret <<= *bd_short_sequence;
     }
