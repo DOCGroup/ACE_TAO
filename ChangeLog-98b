@@ -1,3 +1,9 @@
+Tue Jul 14 09:27:48 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * Makefile: added STL back in, because TAO's AVStreams still uses it.
+          Thanks to Hans Rohnert <hans.rohnert@mchp.siemens.de> for
+          reporting this.
+
 Mon Jul 13 22:29:20 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * Dynamic_Priority_Test.cpp: swapped "const" and "static"
