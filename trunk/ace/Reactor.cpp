@@ -100,9 +100,8 @@ ACE_Reactor::close_singleton (void)
     }
 }
 
-// Run the event loop until the <ACE_Reactor::handle_events>
-// method returns -1 or the <end_event_loop> method
-// is invoked.
+// Run the event loop until the <ACE_Reactor::handle_events> method
+// returns -1 or the <end_event_loop> method is invoked.
 
 int
 ACE_Reactor::run_event_loop (void)
@@ -146,10 +145,19 @@ ACE_Reactor::run_event_loop (ACE_Time_Value &tv)
   return 0;
 }
 
+void
+ACE_Reactor::reset_event_loop (void)
+{
+  ACE_TRACE ("ACE_Reactor::reset_event_loop");
+
+  ACE_Reactor::end_event_loop_ = 0;
+}
+
 int
 ACE_Reactor::end_event_loop (void)
 {
   ACE_TRACE ("ACE_Reactor::end_event_loop");
+
   ACE_Reactor::end_event_loop_ = 1;
 
   // Send a notification, but don't block if there's no one to receive

@@ -76,12 +76,16 @@ public:
   // <ACE_Time_Value> expires.
 
   static int end_event_loop (void);
-  // Instruct the <ACE_Reactor::instance> to terminate its event loop and
-  // notifies the <ACE_Reactor::instance> so that it can wake up
+  // Instruct the <ACE_Reactor::instance> to terminate its event loop
+  // and notifies the <ACE_Reactor::instance> so that it can wake up
   // and close down gracefully.
 
   static int event_loop_done (void);
   // Report if the <ACE_Reactor::instance>'s event loop is finished.
+
+  static int reset_event_loop (void);
+  // Resets the <ACE_Reactor::end_event_loop_> static so that the
+  // <run_event_loop> method can be restarted.
 
   ACE_Reactor (ACE_Reactor_Impl *implementation = 0);
   // Create the Reactor using <implementation>
@@ -417,26 +421,25 @@ public:
   // Declare the dynamic allocation hooks.
 
 protected:
-
   virtual void implementation (ACE_Reactor_Impl *implementation);
-  // Set the implementation class
+  // Set the implementation class.
 
   ACE_Reactor_Impl *implementation_;
   // Delegation/implementation class that all methods will be
-  // forwarded to
+  // forwarded to.
 
   int delete_implementation_;
   // Flag used to indicate whether we are responsible for cleaning up
   // the implementation instance
 
   static ACE_Reactor *reactor_;
-  // Pointer to a process-wide <ACE_Reactor>.
+  // Pointer to a process-wide <ACE_Reactor> singleton.
 
   static int delete_reactor_;
-  // Must delete the <reactor_> if non-0.
+  // Must delete the <reactor_> singleton if non-0.
 
   static sig_atomic_t end_event_loop_;
-  // Terminate the event loop.
+  // Terminate the event loop of the singleton Reactor.
 
   ACE_Reactor (const ACE_Reactor &);
   ACE_Reactor &operator = (const ACE_Reactor &);

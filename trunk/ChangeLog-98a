@@ -1,3 +1,14 @@
+Tue Mar 10 15:07:00 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Reactor.h (ACE_Reactor): Added a "reset_event_loop" method
+ 	  so that it's possible to reset the loop again once the
+ 	  end_event_loop() method is called.  Thanks to Eric Hopper
+ 	  <ehopper@globalmt.com> for reporting this.
+
+	* ace/IOStream_T.cpp (ACE_IOStream): Moved some code to work
+ 	  around some bugs with MSVC++ 5.0.  Thanks to James CE Johnson
+ 	  <ace-users@lads.com> for reporting this.
+
 Tue Mar 10 15:57:54 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Handle_Set.cpp (dump):  Cast mask_.fd_count to size_t.
