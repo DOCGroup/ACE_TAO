@@ -1,3 +1,16 @@
+Wed May 28 14:10:50 2003  Simon McQueen  <sm@prismtechnologies.com>
+
+        * orbsvcs/tests/Notify/Driver/Driver.dsp:
+        * orbsvcs/tests/Security/Crash_Test/Crash_Test_Client.dsp:
+        * orbsvcs/tests/Security/Crash_Test/Crash_Test_Server.dsp:
+        * tests/MT_Timeout/MT_Timeout_Client.dsp:
+        * tests/MT_Timeout/MT_Timeout_Server.dsp:
+        * tests/OBV/TC_Alignment/client.dsp:
+        * tests/OBV/TC_Alignment/server.dsp:
+
+          Executables were ending up in the wrong place causing test errors
+          in release configuration.
+
 Wed May 28 11:09:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/AMI_Buffering/client.bor:
