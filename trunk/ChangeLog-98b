@@ -14,6 +14,9 @@ Sat Jun 13 13:10:05 1998  David L. Levine  <levine@cs.wustl.edu>
           symlinks to their corresponding .tar.gz files.  Thanks to
           Gonzo and Darrell for suggesting this.
 
+        * ace/RB_Tree.i (clear): removed extraneous ";" following the
+          function definition.
+
 Fri Jun 12 17:04:14 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
         * ace/OS.h: Moved the #define's and typedef's (related to Proactor
