@@ -1,5 +1,15 @@
 Wed Sep  1 15:51:41 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* examples/Timer_Queue/Thread_Timer_Queue_Test.cpp: Fixed a typo
+	  where ACE_reinterpret_cast() was misspelled.	Thanks to
+	  David for reporting this.
+
+	* examples/QOS/server.cpp: "ACE"-ified this example.
+
+	* tests: Added a new test called CDR_File_Test, which 
+	  exercises the ACE_CDR_Stream features in conjunction with file
+ 	  I/O.  Thanks to Giga Giguashvili <gregoryg@ParadigmGeo.com>.
+
 	* ace/OS: Added a new method called ACE_OS::filesize() that
 	  takes a LPCTSTR so that we can pass a file name to this.
 
