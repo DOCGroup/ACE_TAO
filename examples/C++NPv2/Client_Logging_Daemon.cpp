@@ -175,7 +175,6 @@ void *CLD_Handler::forward () {
          >= FLUSH_TIMEOUT)) {
       if (send (blocks, message_index) == -1) break;
       time_of_last_send = ACE_OS::gettimeofday ();
-      message_index = 0;
     }
   }
 
@@ -186,7 +185,7 @@ void *CLD_Handler::forward () {
 }
 
 
-int CLD_Handler::send (ACE_Message_Block *blocks[], size_t count) {
+int CLD_Handler::send (ACE_Message_Block *blocks[], size_t &count) {
   iovec iov[ACE_IOV_MAX];
   size_t iov_size;
   int result = 0;
