@@ -22,6 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Containers_T.h"
+#include "ACE_QoS_Export.h"
 
 /**
  * @class ACE_QoS_Session;
@@ -38,7 +39,7 @@ class ACE_QoS_Session;
  * objects are currently either RAPI session objects or GQoS session
  * objects. It stores the sessions in an unbounded set.
  */
-class ACE_Export ACE_QoS_Session_Factory
+class ACE_QoS_Export ACE_QoS_Session_Factory
 {
 
 public :

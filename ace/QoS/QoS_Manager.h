@@ -23,6 +23,7 @@
 
 #include "ace/IPC_SAP.h"
 #include "ace/Containers_T.h"
+#include "ACE_QoS_Export.h"
 
 class ACE_QoS_Session;
 
@@ -37,7 +38,7 @@ class ACE_QoS_Session;
  * manager is used to manage the QoS session set. It will handle more
  * responsibilities in the future.
  */
-class ACE_Export ACE_QoS_Manager
+class ACE_QoS_Export ACE_QoS_Manager
 {
 
 public:

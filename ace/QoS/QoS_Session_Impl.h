@@ -35,7 +35,7 @@
  * This class is a RAPI (RSVP API, an implementation of RSVP on UNIX)
  * implementation of the ACE_QoS_Session interface.
  */
-class ACE_Export ACE_RAPI_Session : public ACE_QoS_Session
+class ACE_QoS_Export ACE_RAPI_Session : public ACE_QoS_Session
 {
 
 public:
@@ -142,7 +142,7 @@ private:
  * This class is a GQoS (Generic QoS, an implementation of RSVP on
  * Win2K) implementation of the ACE_QoS_Session interface.
  */
-class ACE_Export ACE_GQoS_Session : public ACE_QoS_Session
+class ACE_QoS_Export ACE_GQoS_Session : public ACE_QoS_Session
 {
 
 public:
@@ -224,7 +224,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/QoS_Session_Impl.i"
+#include "QoS_Session_Impl.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
