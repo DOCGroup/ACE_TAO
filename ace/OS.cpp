@@ -4808,13 +4808,13 @@ void
 ACE_Thread_ID::to_string (char* thr_id)
 {
   
-  ACE_TCHAR format[128]; // Converted format string
-  ACE_TCHAR *fp;         // Current format pointer
+  char format[128]; // Converted format string
+  char *fp;         // Current format pointer
   fp = format;
   *fp++ = '%';   // Copy in the %
   
 #if defined (ACE_WIN32)
-  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("u"));
+  ACE_OS::strcpy (fp, "u");
   ACE_OS::sprintf (thr_id,
 		   format,
 		   ACE_static_cast(unsigned,
@@ -4830,10 +4830,10 @@ ACE_Thread_ID::to_string (char* thr_id)
                   // 2. OSF/1 V3.2 has that def, and I'm not sure what affect
                   //   this would have on that.
                   // -Steve Huston, 19-Aug-97
-                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("u"));
+                  ACE_OS::strcpy (fp, "u");
                   ACE_OS::sprintf (thr_id, format, thread_self());
 #elif defined (DIGITAL_UNIX)
-                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("u"));
+                  ACE_OS::strcpy (fp, "u");
                   ACE_OS::sprintf (thr_id, format,
 #  if defined (ACE_HAS_THREADS)
                                    pthread_getselfseq_np ()
@@ -4846,7 +4846,7 @@ ACE_Thread_ID::to_string (char* thr_id)
                   ACE_OS::thr_self (t_id);
 
 #  if defined (ACE_HAS_PTHREADS_DRAFT4) && defined (HPUX_10)
-                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("u"));
+                  ACE_OS::strcpy (fp, "u");
                   // HP-UX 10.x DCE's thread ID is a pointer.  Grab the
                   // more meaningful, readable, thread ID.  This will match
                   // the one seen in the debugger as well.
@@ -4855,7 +4855,7 @@ ACE_Thread_ID::to_string (char* thr_id)
 #  elif defined (ACE_MVS)
                   // MVS's pthread_t is a struct... yuck. So use the ACE 5.0
                   // code for it.
-                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("u"));
+                  ACE_OS::strcpy (fp, "u");
                   ACE_OS::sprintf (thr_id, format, t_id);
 #  else
                   // Yes, this is an ugly C-style cast, but the correct
@@ -4863,7 +4863,7 @@ ACE_Thread_ID::to_string (char* thr_id)
                   // is an integral type or a pointer type. FreeBSD uses
                   // a pointer type, but doesn't have a _np function to
                   // get an integral type, like the OSes above.
-                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("lu"));
+                  ACE_OS::strcpy (fp, "lu");
                   ACE_OS::sprintf (thr_id, format, (unsigned long)t_id);
 #  endif /* ACE_HAS_PTHREADS_DRAFT4 && HPUX_10 */
 
