@@ -1,3 +1,11 @@
+Wed Dec  3 21:37:47 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* netsvcs/lib/Server_Logging_Handler_T.cpp (handle_logging_record),
+	  netsvcs/lib/Client_Logging_Handler.cpp (send):
+	  Changed the code so that we now always send ACE_UINT32 bytes
+ 	  worth of data for the length field.  This ensures we're portable
+ 	  across platforms.  Thanks to Steven Coy for noticing this.
+
 Wed Dec 03 18:02:09 1997    <irfan@TWOSTEP>
 
 	* performance-tests/Synch-Benchmarks/Benchmark.cpp: Added template
