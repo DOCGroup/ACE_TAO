@@ -34,7 +34,7 @@
 #include <sys/system.h>
 #endif
 
-#include "../include/common.h"
+#include "common.h"
 #include "decoders.h"
 #include "video.h"
 #include "util.h"
