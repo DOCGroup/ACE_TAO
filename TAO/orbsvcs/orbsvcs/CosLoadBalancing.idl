@@ -38,7 +38,7 @@
  */
 module CosLoadBalancing
 {
-  const IOP::ServiceId LB_GROUP_REF = 123456;  // @todo TBA by OMG
+  const IOP::ServiceId LOAD_MANAGED = 123456;  // @todo TBA by OMG
 
   typedef PortableGroup::Location Location;
   typedef PortableGroup::Properties Properties;
@@ -147,7 +147,7 @@ module CosLoadBalancing
 
     // Return the raw loads at the given location, as opposed to the
     // potentially different effective loads returned by the
-    // Strategy::get_loads() method. 
+    // Strategy::get_loads() method.
     LoadList get_loads (in PortableGroup::Location the_location)
       raises (LocationNotFound);
 

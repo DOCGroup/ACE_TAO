@@ -1,3 +1,10 @@
+Thu Aug  1 13:26:40 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/CosLoadBalancing.idl:
+
+	  Changed name of load shedding related ServiceContext's ServiceId
+	  to "LOAD_MANAGED" to better match its purpose as a flag.
+
 Thu Aug  1 13:24:21 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/LoadBalancing/LB_ClientRequestInterceptor.h:
