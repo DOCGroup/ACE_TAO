@@ -6997,6 +6997,10 @@ ACE_OS::sigwait (sigset_t *sset, int *sig)
         return *sig;
 #     elif defined(ACE_HAS_FSU_PTHREADS)
         return ::sigwait (sset, sig);
+#     elif defined(CYGWIN32)
+        // Cygwin has sigwait definition, but it is not implemented
+        ACE_UNUSED_ARG (sset);
+        ACE_NOTSUP_RETURN (-1);
 #     else   /* this is draft 7 or std */
         errno = ::sigwait (sset, sig);
         return errno == 0  ?  *sig  :  -1;

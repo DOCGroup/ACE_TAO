@@ -1,3 +1,9 @@
+Fri May 23 08:08:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS.i (sigwait):
+          Cygwin has sigwait but it is not implemented, so for cygwin
+          make sigwait a notsup.
+
 Fri May 23 03:04:01 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/Configuration.h:
