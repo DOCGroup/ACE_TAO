@@ -197,7 +197,13 @@ ACE_OS::gets (char *str, int n)
   if (n == 0) str = 0;
   else n--;
 
+#   if defined (DIGITAL_UNIX)
+  // On Tru64 getchar is a macro which calls fgetc, in that case we must explicit
+  // use the global namespace, because fgetc is also in the ACE_OS namespace
+  while ((c = ::getchar ()) != '\n')
+#   else
   while ((c = getchar ()) != '\n')
+#   endif
     {
 
       if (c == EOF && errno == EINTR)
