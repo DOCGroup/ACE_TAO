@@ -16,6 +16,9 @@ Wed Jul 23 23:47:52 UTC 2003  Don Hinton  <dhinton@dresystems.com>
         * tests/DLL_Test_Impl.cpp:
           Added a dynamic_cast test to the existing DLL_Test.
 
+        * THANKS:
+          Added Milan Cvetkovic <mcvetkovic@mpathix.com> to the hall of fame.
+
 Wed Jul 23 12:43:48 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/UUID.cpp:
