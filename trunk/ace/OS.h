@@ -2854,6 +2854,7 @@ public:
   static void *dlopen (ACE_WIDE_DL_TYPE filename, int mode);
   static wchar_t *mktemp (wchar_t *t);
   static int mkdir (const wchar_t *path, mode_t mode = ACE_DEFAULT_DIR_PERMS);
+  static int chdir (const wchar_t *path);
 
 #endif /* ACE_WIN32 */
 #endif /* ACE_HAS_UNICODE */
