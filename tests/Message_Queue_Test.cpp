@@ -69,7 +69,7 @@ struct Queue_Wrapper
   // Pointer to messages blocks for sender to send to reciever.
 
   Queue_Wrapper (void)
-    : q_ (0), send_block_ (0) 
+    : q_ (0), send_block_ (0)
   {
   }
   // Default constructor.
@@ -83,8 +83,9 @@ iterator_test (void)
 {
   const int ITERATIONS = 5;
   ASYS_TCHAR buffer[ITERATIONS][BUFSIZ];
-  // @@ David, can you please replace these magic #'s with constants
-  // or explain what 32 * 1024 means?
+  // Use queue size from of 32 Kb, instead of the default of 16 Kb
+  // (defined by ACE_Message_Queue_Base::DEFAULT_HWM), so that the
+  // test runs on machines with 8Kb pagesizes.
   QUEUE queue (32 * 1024);
   int i;
 
