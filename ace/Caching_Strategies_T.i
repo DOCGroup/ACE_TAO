@@ -21,8 +21,10 @@ ACE_LRU_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTI
 
 template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY> ACE_INLINE int 
 ACE_LRU_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::notify_bind (int result, 
-                                                                                                    const ATTRIBUTES &attributes)
+                                                                                                    const ATTRIBUTES &attr)
 {
+  ACE_UNUSED_ARG (attr);
+  
   if (result == 0)
     {
       ++this->timer_;
@@ -49,6 +51,7 @@ template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHIN
 ACE_LRU_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::notify_unbind (int result, 
                                                                                                       const ATTRIBUTES &attr)
 {
+  ACE_UNUSED_ARG (attr);
   return result;
 }
 
@@ -56,6 +59,8 @@ template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHIN
 ACE_LRU_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::notify_trybind (int result, 
                                                                                                        ATTRIBUTES &attr)
 {
+  ACE_UNUSED_ARG (attr);
+  
   return result;
 }
 
@@ -63,6 +68,8 @@ template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHIN
 ACE_LRU_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::notify_rebind (int result, 
                                                                                                       const ATTRIBUTES &attr)
 { 
+  ACE_UNUSED_ARG (attr);
+  
   if (result == 0)
     ++this->timer_;
 
@@ -103,6 +110,8 @@ template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHIN
 ACE_LFU_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::notify_bind (int result, 
                                                                                                     const ATTRIBUTES &attr)
 {
+  ACE_UNUSED_ARG (attr);
+  
   if (result == 0)
     ++this->entries_;
 
@@ -113,6 +122,8 @@ template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHIN
 ACE_LFU_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::notify_find (int result, 
                                                                                                     ATTRIBUTES &attr)
 {
+  ACE_UNUSED_ARG (attr);
+  
   if (result == 0)
     ++attr;
 
@@ -123,6 +134,8 @@ template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHIN
 ACE_LFU_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::notify_trybind (int result, 
                                                                                                        ATTRIBUTES &attr)
 {
+  ACE_UNUSED_ARG (attr);
+  
   return result;
 }
 
@@ -130,6 +143,8 @@ template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHIN
 ACE_LFU_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::notify_rebind (int result, 
                                                                                                       const ATTRIBUTES &attr)
 {
+  ACE_UNUSED_ARG (attr);
+  
   if (result == 0)
     ++this->entries_;
 
@@ -139,6 +154,8 @@ template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHIN
 ACE_LFU_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::notify_unbind (int result, 
                                                                                                       const ATTRIBUTES &attr)
 {
+  ACE_UNUSED_ARG (attr);
+  
   return result;
 }
 
@@ -174,6 +191,8 @@ template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHIN
 ACE_FIFO_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::notify_bind (int result, 
                                                                                                      const ATTRIBUTES &attr)
 {
+  ACE_UNUSED_ARG (attr);
+  
   if (result == 0)
     {
       ++this->order_;
@@ -188,6 +207,8 @@ template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHIN
 ACE_FIFO_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::notify_find (int result, 
                                                                                                      ATTRIBUTES &attr)
 {
+  ACE_UNUSED_ARG (attr);
+  
   return result;
 }
 
@@ -195,6 +216,8 @@ template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHIN
 ACE_FIFO_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::notify_unbind (int result, 
                                                                                                        const ATTRIBUTES &attr)
 {
+  ACE_UNUSED_ARG (attr);
+  
   return result;
 }
 
@@ -202,6 +225,8 @@ template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHIN
 ACE_FIFO_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::notify_trybind (int result, 
                                                                                                         ATTRIBUTES &attr)
 {
+  ACE_UNUSED_ARG (attr);
+  
   return result;
 }
 
@@ -209,6 +234,8 @@ template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHIN
 ACE_FIFO_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::notify_rebind (int result, 
                                                                                                        const ATTRIBUTES &attr)  
 {
+  ACE_UNUSED_ARG (attr);
+  
   if (result == 0)
     {
       ++this->order_;
@@ -246,18 +273,23 @@ ACE_Null_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UT
 template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY> ACE_INLINE void
 ACE_Null_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::purge_percent (unsigned int percentage)
 {
+  ACE_UNUSED_ARG (percentage);
 }
 
 template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY> ACE_INLINE int
 ACE_Null_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::notify_bind (int result, 
                                                                                                      const ATTRIBUTES &attr)
 {
+  ACE_UNUSED_ARG (attr);
+  
   return result;
 }
 template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY> ACE_INLINE int 
 ACE_Null_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::notify_find (int result, 
                                                                                                      ATTRIBUTES &attr)
 {
+  ACE_UNUSED_ARG (attr);
+  
   return result;
 }
 
@@ -265,6 +297,8 @@ template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHIN
 ACE_Null_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::notify_unbind (int result, 
                                                                                                        const ATTRIBUTES &attr)
 {
+  ACE_UNUSED_ARG (attr);
+  
   return result;
 }
 
@@ -272,6 +306,8 @@ template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHIN
 ACE_Null_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::notify_trybind (int result, 
                                                                                                         ATTRIBUTES &attr)
 {
+  ACE_UNUSED_ARG (attr);
+  
   return result;
 }
 
@@ -279,6 +315,8 @@ template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHIN
 ACE_Null_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::notify_rebind (int result, 
                                                                                                        const ATTRIBUTES &attr)  
 {
+  ACE_UNUSED_ARG (attr);
+  
   return result;
 }    
 
