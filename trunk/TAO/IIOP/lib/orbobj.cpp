@@ -113,10 +113,10 @@ CORBA_ORB_init (int &argc,
 
     if (value != 0) 
       {
-	debug_level = ACE_OS::atoi (value);
-	if (debug_level <= 0)
-	  debug_level = 1;
-	dmsg1 ("debug_level == %d", debug_level);
+	TAO_debug_level = ACE_OS::atoi (value);
+	if (TAO_debug_level <= 0)
+	  TAO_debug_level = 1;
+	dmsg1 ("TAO_debug_level == %d", TAO_debug_level);
       }
   }
 #endif	/* DEBUG */

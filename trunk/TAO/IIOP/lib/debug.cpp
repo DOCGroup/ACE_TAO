@@ -169,7 +169,7 @@ dmsg_filter (u_int level,
 	     const char *_FAR fmt, 
 	     ...)
 {
-  if (level > debug_level)
+  if (level > TAO_debug_level)
     return;
 
   va_list ap;
