@@ -192,7 +192,7 @@ produce (Thread_Pool &thread_pool)
 int 
 main (int argc, char *argv[])
 {
-  ACE_START_TEST ("Thread_Pool_Test.cpp");
+  ACE_START_TEST ("Thread_Pool_Test");
 #if defined (ACE_HAS_THREADS)
   int n_threads = ACE_MAX_THREADS;
   

@@ -29,7 +29,7 @@
 int
 main (int, char *argv[])
 {
-  ACE_START_TEST ("Time_Service_Test.cpp");
+  ACE_START_TEST ("Time_Service_Test");
 
   char app[BUFSIZ];
   char server_conf[BUFSIZ];

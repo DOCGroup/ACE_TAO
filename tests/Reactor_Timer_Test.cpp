@@ -52,7 +52,7 @@ public:
 int
 main (int, char *argv[])
 {
-  ACE_START_TEST ("Time_Handler_Test.cpp");
+  ACE_START_TEST ("Reactor_Timer_Test");
 
   ACE_Reactor reactor;
 

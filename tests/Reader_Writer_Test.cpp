@@ -178,7 +178,7 @@ template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
 
 int main (int, char *argv[])
 {
-  ACE_START_TEST ("Reader_Writer_Test.cpp");
+  ACE_START_TEST ("Reader_Writer_Test");
 
 #if defined (ACE_HAS_THREADS)
   current_readers = 0; // Possibly already done

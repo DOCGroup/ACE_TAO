@@ -252,7 +252,7 @@ spawn (void)
 int
 main (int, char *argv[])
 {
-  ACE_START_TEST ("CPP_Test.cpp");
+  ACE_START_TEST ("CPP_Test");
 
   spawn ();
 

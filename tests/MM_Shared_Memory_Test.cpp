@@ -122,7 +122,7 @@ spawn (void)
 int
 main (int, char *argv[])
 {
-  ACE_START_TEST ("Shared_Memory_MM_Test.cpp");
+  ACE_START_TEST ("MM_Shared_Memory_Test");
 
   if (ACE_OS::mktemp (shm_key) == 0 || (ACE_OS::unlink (shm_key) == -1 && errno == EPERM))
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", shm_key), 1);

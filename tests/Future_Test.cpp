@@ -313,7 +313,7 @@ template class ACE_Atomic_Op<ACE_Thread_Mutex, u_long>;
 int
 main (int, char *argv[]) 
 {
-  ACE_START_TEST ("Future_Test.cpp");
+  ACE_START_TEST ("Future_Test");
 
 #if defined (ACE_HAS_THREADS)
   Scheduler *andres, *peter, *helmut, *matias;

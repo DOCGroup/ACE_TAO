@@ -136,7 +136,7 @@ spawn (void)
 int
 main (int, char *argv[])
 {
-  ACE_START_TEST ("SPIPE_Test.cpp");
+  ACE_START_TEST ("SPIPE_Test");
 
 #if defined (ACE_HAS_STREAM_PIPES) || defined (ACE_WIN32) || defined (VXWORKS)
   spawn ();

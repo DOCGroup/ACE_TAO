@@ -37,7 +37,7 @@ public:
 int
 main (int, char *argv[])
 {
-  ACE_START_TEST ("Timer_Queue_Test.cpp");
+  ACE_START_TEST ("Timer_Queue_Test");
 
   ACE_Timer_Queue tq;
   Example_Handler eh;

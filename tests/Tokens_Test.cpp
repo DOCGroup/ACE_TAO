@@ -177,7 +177,7 @@ run_test (ACE_Token_Proxy *A,
 int
 main (int, char* argv[])
 {
-  ACE_START_TEST ("Tokens_Test.cpp");
+  ACE_START_TEST ("Tokens_Test");
 #if defined (ACE_HAS_THREADS)
   ACE_Token_Proxy *A, *B, *R, *W;
 

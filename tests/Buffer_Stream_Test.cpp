@@ -199,7 +199,7 @@ Consumer::svc (void)
 int 
 main (int, char *argv[])
 {
-  ACE_START_TEST ("Buffer_Stream_Test.cpp");
+  ACE_START_TEST ("Buffer_Stream_Test");
 
 #if defined (ACE_HAS_THREADS)
   // Control hierachically-related active objects

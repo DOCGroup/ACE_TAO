@@ -137,7 +137,7 @@ producer (void *args)
 int 
 main (int, char *argv[])
 {
-  ACE_START_TEST ("Priority_Buffer_Test.cpp");
+  ACE_START_TEST ("Priority_Buffer_Test");
 
 #if defined (ACE_HAS_THREADS)
   // Message queue.
