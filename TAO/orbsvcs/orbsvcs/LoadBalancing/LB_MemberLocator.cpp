@@ -40,7 +40,7 @@ TAO_LB_MemberLocator::preinvoke (
       ACE_ASSERT (!CORBA::is_nil (member.in ()));
       // Throw a forward exception to force the client to redirect its
       // requests to the member chosen by the LoadBalancer.
-      //ACE_TRY_THROW (PortableServer::ForwardRequest (member.in ()));
+      ACE_TRY_THROW (PortableServer::ForwardRequest (member.in ()));
     }
   ACE_CATCH (PortableGroup::ObjectGroupNotFound, ex)
     {
