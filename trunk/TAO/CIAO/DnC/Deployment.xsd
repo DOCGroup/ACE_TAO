@@ -628,7 +628,7 @@
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
       <xsd:element name="resourceType" type="xsd:string" />
      <xsd:element name="property" type="Deployment:Property" />
-      <xsl:element name="name" type="xsd:string"/>
+      <xsd:element name="name" type="xsd:string"/>
       <xsd:element ref="xmi:Extension" />
     </xsd:choice>
     <xsd:attribute ref="xmi:id" use="optional" />
