@@ -1,3 +1,12 @@
+Tue Mar 12 11:07:31 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.h:
+
+          Changed the private functions and members to protected,
+          to make for easier subclassing of the visitor. Thanks to
+          Lothat Werzinger <Werzinger.Lothar@krones.de> for the
+          suggestion.
+
 Tue Mar 12 13:45:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/CosEvent_Service/Makefile.bor:
