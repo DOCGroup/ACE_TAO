@@ -88,7 +88,6 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
 
   // Step 2 : Generate the params of the method
   be_visitor_context ctx (*this->ctx_);
-  ctx.state (TAO_CodeGen::TAO_OPERATION_ARGLIST_OTHERS);
 
   // Set the substate because response handler operations without
   // parameters don't use the environment parameter in the body.

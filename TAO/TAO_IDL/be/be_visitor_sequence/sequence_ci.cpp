@@ -399,7 +399,6 @@ be_visitor_sequence_ci::gen_var_impl (be_sequence *node)
   *os << "ACE_INLINE" << be_nl;
 
   be_visitor_context ctx (*this->ctx_);
-  ctx.state (TAO_CodeGen::TAO_SEQELEM_RETTYPE_CI);
   be_visitor_sequence_elemtype sr_visitor (&ctx);
 
   if (bt->accept (&sr_visitor) == -1)
@@ -650,7 +649,6 @@ be_visitor_sequence_ci::gen_out_impl (be_sequence *node)
   *os << "ACE_INLINE" << be_nl;
 
   be_visitor_context ctx (*this->ctx_);
-  ctx.state (TAO_CodeGen::TAO_SEQELEM_RETTYPE_CI);
   be_visitor_sequence_elemtype sr_visitor (&ctx);
 
   if (bt->accept (&sr_visitor) == -1)

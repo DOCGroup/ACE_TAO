@@ -80,7 +80,7 @@ be_visitor_interface_si::visit_interface (be_interface *node)
     {
       // Generate the TIE class.
       be_visitor_context ctx (*this->ctx_);
-      ctx.state (TAO_CodeGen::TAO_INTERFACE_TIE_SI);
+      ctx.state (TAO_CodeGen::TAO_ROOT_TIE_SI);
       ctx.stream (tao_cg->server_template_inline ());
       be_visitor_interface_tie_si visitor (&ctx);
 

@@ -66,26 +66,8 @@ be_visitor_valuetype_init_arglist_ch::visit_argument (be_argument *node)
   // Get the visitor that will dump the argument's mapping in the operation
   // signature.
   be_visitor_context ctx (*this->ctx_);
-  int status = 0;
-
-  switch (this->ctx_->state ())
-    {
-    case TAO_CodeGen::TAO_VALUETYPE_INIT_ARGLIST_CH:
-      {
-        ctx.state (TAO_CodeGen::TAO_ARGUMENT_ARGLIST_CH);
-        be_visitor_args_arglist visitor (&ctx);
-        status = node->accept (&visitor);
-        break;
-      }
-    default:
-      {
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%N:%l) be_visitor_valuetype_init_arglist_ch::"
-                           "visit_argument - "
-                           "Bad context\n"),
-                          -1);
-      }
-    }
+  be_visitor_args_arglist visitor (&ctx);
+  int status = node->accept (&visitor);
 
   if (status == -1)
     {

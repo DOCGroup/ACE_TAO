@@ -74,7 +74,6 @@ int be_visitor_operation_smart_proxy_cs::visit_operation (be_operation *node)
 
       // STEP 2: generate the return type mapping (same as in the header file).
       be_visitor_context ctx (*this->ctx_);
-      ctx.state (TAO_CodeGen::TAO_OPERATION_RETTYPE_OTHERS);
       be_visitor_operation_rettype oro_visitor (&ctx);
 
       if (bt->accept (&oro_visitor) == -1)
@@ -106,7 +105,6 @@ int be_visitor_operation_smart_proxy_cs::visit_operation (be_operation *node)
       // STEP 4: generate the argument list with the appropriate mapping (same as
       // in the header file)
       ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_OPERATION_ARGLIST_OTHERS);
       be_visitor_operation_arglist oao_visitor (&ctx);
 
       if (node->accept (&oao_visitor) == -1)

@@ -175,7 +175,6 @@ be_visitor_union_branch_cdr_op_ci::visit_array (be_array *node)
       ctx.node (node);
 
       // First generate the declaration.
-      ctx.state (TAO_CodeGen::TAO_ARRAY_CDR_OP_CI);
       be_visitor_array_cdr_op_ci visitor (&ctx);
 
       if (visitor.visit_array (node) == -1)
@@ -250,7 +249,6 @@ be_visitor_union_branch_cdr_op_ci::visit_enum (be_enum *node)
       // will be modified based on what type of node we are visiting.
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
-      ctx.state (TAO_CodeGen::TAO_ENUM_CDR_OP_CI);
       be_visitor_enum_cdr_op_ci visitor (&ctx);
 
       if (visitor.visit_enum (node) == -1)
@@ -288,20 +286,40 @@ be_visitor_union_branch_cdr_op_ci::visit_interface (be_interface *node)
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
-      *os << node->name () << "_var _tao_union_tmp;" << be_nl
-          << "result = strm >> _tao_union_tmp.inout ();" << be_nl << be_nl
-          << "if (result)" << be_idt_nl
-          << "{" << be_idt_nl
-          << "_tao_union."
-          << f->local_name () << " (_tao_union_tmp.in ());" << be_nl
-          << "_tao_union._d (_tao_discriminant);" << be_uidt_nl
-          << "}" << be_uidt;
+      if (node->is_local ())
+        {
+          *os << "result = 0;";
+        }
+      else
+        {
+          *os << node->name () << "_var _tao_union_tmp;" << be_nl
+              << "result = strm >> _tao_union_tmp.inout ();" << be_nl << be_nl
+              << "if (result)" << be_idt_nl
+              << "{" << be_idt_nl
+              << "_tao_union."
+              << f->local_name () << " (_tao_union_tmp.in ());" << be_nl
+              << "_tao_union._d (_tao_discriminant);" << be_uidt_nl
+              << "}" << be_uidt;
+        }
 
       break;
 
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "result = strm << _tao_union."
-          << f->local_name () << " ();";
+      if (node->is_defined ())
+        {
+          *os << "result = _tao_union."
+              << f->local_name () << " ()->marshal (strm);";
+        }
+      else
+        {
+          *os << "result =" << be_idt_nl
+              << "tao_" << node->flat_name () << "_marshal ("
+              << be_idt << be_idt_nl
+              << "_tao_union." << f->local_name () << " ()," << be_nl
+              << "strm" << be_uidt_nl
+              << ");" << be_uidt << be_uidt;
+        }
+
       break;
 
     case TAO_CodeGen::TAO_CDR_SCOPE:
@@ -343,20 +361,27 @@ be_visitor_union_branch_cdr_op_ci::visit_interface_fwd (be_interface_fwd *node)
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
-      *os << node->name () << "_var _tao_union_tmp;" << be_nl
-          << "result = strm >> _tao_union_tmp.inout ();" << be_nl << be_nl
-          << "if (result)" << be_idt_nl
-          << "{" << be_idt_nl
-          << "_tao_union."
-          << f->local_name () << " (_tao_union_tmp.in ());" << be_nl
-          << "_tao_union._d (_tao_discriminant);" << be_uidt_nl
-          << "}" << be_uidt;
+      if (node->is_local ())
+        {
+          *os << "result = 0;";
+        }
+      else
+        {
+          *os << node->name () << "_var _tao_union_tmp;" << be_nl
+              << "result = strm >> _tao_union_tmp.inout ();" << be_nl << be_nl
+              << "if (result)" << be_idt_nl
+              << "{" << be_idt_nl
+              << "_tao_union."
+              << f->local_name () << " (_tao_union_tmp.in ());" << be_nl
+              << "_tao_union._d (_tao_discriminant);" << be_uidt_nl
+              << "}" << be_uidt;
+        }
 
       break;
 
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "result  = strm << _tao_union."
-          << f->local_name () << " ();";
+      *os << "result = _tao_union."
+          << f->local_name () << " ()->marshal (strm);";
       break;
 
     case TAO_CodeGen::TAO_CDR_SCOPE:
@@ -717,7 +742,6 @@ be_visitor_union_branch_cdr_op_ci::visit_sequence (be_sequence *node)
       // will be modified based on what type of node we are visiting.
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
-      ctx.state (TAO_CodeGen::TAO_SEQUENCE_CDR_OP_CI);
       be_visitor_sequence_cdr_op_ci visitor (&ctx);
 
       if (visitor.visit_sequence (node) == -1)
@@ -852,7 +876,6 @@ be_visitor_union_branch_cdr_op_ci::visit_structure (be_structure *node)
       // will be modified based on what type of node we are visiting.
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
-      ctx.state (TAO_CodeGen::TAO_STRUCT_CDR_OP_CI);
       be_visitor_structure_cdr_op_ci visitor (&ctx);
 
       if (visitor.visit_structure (node) == -1)
@@ -948,7 +971,6 @@ be_visitor_union_branch_cdr_op_ci::visit_union (be_union *node)
       // will be modified based on what type of node we are visiting
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
-      ctx.state (TAO_CodeGen::TAO_UNION_CDR_OP_CI);
       be_visitor_union_cdr_op_ci visitor (&ctx);
 
       if (visitor.visit_union (node) == -1)

@@ -84,7 +84,6 @@ be_visitor_valuetype_ami_exception_holder_ch::visit_operation (
   )
 {
   be_visitor_context ctx (*this->ctx_);
-  ctx.state (TAO_CodeGen::TAO_OPERATION_IH);
   be_visitor_operation_ih visitor (&ctx);
 
   if (node->accept (&visitor) == -1)

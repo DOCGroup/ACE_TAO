@@ -37,7 +37,6 @@ be_visitor_interface_proxy_brokers_ch::visit_interface (be_interface *node)
 
   // Code Generation for the proxy brokers base class.
   be_visitor_context ctx (*this->ctx_);
-  ctx.state (TAO_CodeGen::TAO_INTERFACE_BASE_PROXY_BROKER_CH);
   be_visitor_interface_base_proxy_broker_ch bpb_visitor (&ctx);
 
   if (node->accept (&bpb_visitor) == -1)
@@ -50,7 +49,6 @@ be_visitor_interface_proxy_brokers_ch::visit_interface (be_interface *node)
     }
 
   ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_INTERFACE_REMOTE_PROXY_BROKER_CH);
   be_visitor_interface_remote_proxy_broker_ch rpb_visitor (&ctx);
 
   if (node->accept (&rpb_visitor) == -1)

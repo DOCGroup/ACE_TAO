@@ -39,7 +39,6 @@ int
 be_visitor_eventtype_si::visit_eventtype (be_eventtype *node)
 {
   be_visitor_context ctx (*this->ctx_);
-  ctx.state (TAO_CodeGen::TAO_VALUETYPE_SI);
   be_visitor_valuetype_si visitor (&ctx);
   return visitor.visit_valuetype (node);
 }

@@ -427,7 +427,6 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
 
   // Generate the _init -related declarations.
   be_visitor_context ctx (*this->ctx_);
-  ctx.state (TAO_CodeGen::TAO_VALUETYPE_INIT_CH);
   be_visitor_valuetype_init_ch visitor (&ctx);
 
   if (visitor.visit_valuetype (node) == -1)
@@ -443,7 +442,6 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   if (be_global->tc_support ())
     {
       be_visitor_context ctx (*this->ctx_);
-      ctx.state (TAO_CodeGen::TAO_TYPECODE_DECL);
       be_visitor_typecode_decl visitor (&ctx);
 
       if (node->accept (&visitor) == -1)
@@ -488,7 +486,6 @@ be_visitor_valuetype_ch::visit_operation (be_operation *node)
 
   // Grab the right visitor to generate the return type.
   be_visitor_context ctx (*this->ctx_);
-  ctx.state (TAO_CodeGen::TAO_OPERATION_RETTYPE_CH);
   be_visitor_operation_rettype or_visitor (&ctx);
 
   if (bt->accept (&or_visitor) == -1)
@@ -532,7 +529,6 @@ be_visitor_valuetype_ch::visit_field (be_field *node)
     }
 
   be_visitor_context ctx (*this->ctx_);
-  ctx.state (TAO_CodeGen::TAO_FIELD_OBV_CH);
   be_visitor_valuetype_field_ch visitor (&ctx);
 
   if (vt->opt_accessor ())

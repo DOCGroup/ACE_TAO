@@ -68,7 +68,6 @@ be_visitor_operation_thru_poa_proxy_impl_ss::visit_operation (
 
   // STEP 2: generate the return type mapping (same as in the header file)
   be_visitor_context ctx (*this->ctx_);
-  ctx.state (TAO_CodeGen::TAO_OPERATION_RETTYPE_OTHERS);
   be_visitor_operation_rettype oro_visitor (&ctx);
 
   if (bt->accept (&oro_visitor) == -1)
@@ -107,7 +106,6 @@ be_visitor_operation_thru_poa_proxy_impl_ss::visit_operation (
     {
       // Declare a return type
       ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_SS);
       be_visitor_operation_rettype_vardecl_ss ord_visitor (&ctx);
 
       if (bt->accept (&ord_visitor) == -1)
@@ -137,7 +135,8 @@ be_visitor_operation_thru_poa_proxy_impl_ss::visit_operation (
       << ");" << be_uidt_nl
       << "CORBA::Object_var forward_to;" << be_nl
       << "servant_upcall.prepare_for_upcall (" << be_idt << be_idt_nl
-      << "_collocated_tao_target_->_object_key ()," << be_nl
+      << "_collocated_tao_target_->_stubobj ()->"
+      << "profile_in_use ()->object_key ()," << be_nl
       << "\"";
       
   // Check if we are an attribute node in disguise.

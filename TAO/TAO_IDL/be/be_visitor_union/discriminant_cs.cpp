@@ -62,7 +62,6 @@ be_visitor_union_discriminant_cs::visit_enum (be_enum *node)
       ctx.node (node);
 
       // generate the typecode for the enum
-      ctx.state (TAO_CodeGen::TAO_ENUM_CS);
       be_visitor_enum_cs visitor (&ctx);
 
       if (node->accept (&visitor) == -1)

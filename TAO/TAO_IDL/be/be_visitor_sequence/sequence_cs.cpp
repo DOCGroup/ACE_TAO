@@ -154,9 +154,8 @@ be_visitor_sequence_cs::gen_base_sequence_class (be_sequence *node)
     }
 
   be_visitor_context ctx (*this->ctx_);
-  be_visitor_sequence_base_template_args visitor (&ctx, 
+  be_visitor_sequence_base_template_args visitor (&ctx,
                                                   node);
-  ctx.state (TAO_CodeGen::TAO_SEQUENCE_BASE_CS);
 
   if (bt->accept (&visitor) == -1)
     {
@@ -296,7 +295,6 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
 
   // generate the base type for the buffer
   be_visitor_context ctx (*this->ctx_);
-  ctx.state (TAO_CodeGen::TAO_SEQUENCE_BUFFER_TYPE_CS);
   be_visitor_sequence_buffer_type bt_visitor (&ctx);
 
   if (bt->accept (&bt_visitor) == -1)
