@@ -2243,6 +2243,9 @@ extern "C" int sigwait (sigset_t *set);
 #if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
 # include /**/ <dlfcn.h>
   typedef void *ACE_SHLIB_HANDLE;
+#if !defined (RTLD_LAZY)
+#define RTLD_LAZY 1
+#endif /* !RTLD_LAZY */
   const int ACE_DEFAULT_SHLIB_MODE = RTLD_LAZY;
 #elif defined (__hpux)
 # if __cplusplus >= 199707L
