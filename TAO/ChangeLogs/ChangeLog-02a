@@ -1,3 +1,28 @@
+Fri Mar 30 19:04:47 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/TypeCodeFactory/Makefile:
+
+          Fixed typo.
+
+        * orbsvcs/IFR_Service/AliasDef_i.cpp:
+        * orbsvcs/IFR_Service/ArrayDef_i.cpp:
+        * orbsvcs/IFR_Service/ComponentDef_i.cpp:
+        * orbsvcs/IFR_Service/EventDef_i.cpp:
+        * orbsvcs/IFR_Service/HomeDef_i.cpp:
+        * orbsvcs/IFR_Service/IFR_Service.bor:
+        * orbsvcs/IFR_Service/InterfaceDef_i.cpp:
+        * orbsvcs/IFR_Service/Makefile.BE:
+        * orbsvcs/IFR_Service/Makefile.EX:
+        * orbsvcs/IFR_Service/Makefile.IFR_Service:
+        * orbsvcs/IFR_Service/PrimaryKeyDef_i.cpp:
+        * orbsvcs/tests/IFR_Test/Makefile:
+        * orbsvcs/tests/IFR_Test/Admin_Client.cpp:
+        * orbsvcs/tests/Persistence_Test/Makefile:
+        * orbsvcs/tests/Application_Test/Makefile:
+
+          Fixed scoped name errors reported by egcs and update
+          makefile dependencies.
+
 Fri Mar 30 18:16:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/BiDir_GIOP/BiDirGIOP.cpp (parse_policy): Fixed a compile
