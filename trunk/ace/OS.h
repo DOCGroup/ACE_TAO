@@ -1461,6 +1461,7 @@ protected:
 #define THR_CANCEL_DEFERRED     0
 #define THR_CANCEL_ASYNCHRONOUS 0
 #define THR_DETACHED    0       /* ?? ignore in most places */
+#define THR_DAEMON      0       /* ?? ignore in most places */
 #define THR_BOUND       0       /* ?? ignore in most places */
 #define THR_NEW_LWP     0       /* ?? ignore in most places */
 #define THR_SUSPENDED   0       /* ?? ignore in most places */
