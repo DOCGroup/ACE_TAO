@@ -319,6 +319,7 @@ template class ACE_Map_Reverse_Iterator<RtecEventChannelAdmin::Observer_Handle,T
 template class ACE_Map_Entry<RtecEventChannelAdmin::Observer_Handle,TAO_EC_Basic_ObserverStrategy::Observer_Entry>;
 
 template class ACE_RB_Tree<RtecEventComm::EventHeader,int,TAO_EC_Basic_ObserverStrategy::Header_Compare,ACE_Null_Mutex>;
+template class ACE_RB_Tree_Iterator_Base<RtecEventComm::EventHeader,int,TAO_EC_Basic_ObserverStrategy::Header_Compare,ACE_Null_Mutex>;
 template class ACE_RB_Tree_Iterator<RtecEventComm::EventHeader,int,TAO_EC_Basic_ObserverStrategy::Header_Compare,ACE_Null_Mutex>;
 template class ACE_RB_Tree_Node<RtecEventComm::EventHeader,int>;
 
@@ -331,6 +332,7 @@ template class ACE_RB_Tree_Node<RtecEventComm::EventHeader,int>;
 #pragma instantiate ACE_Map_Entry<RtecEventChannelAdmin::Observer_Handle,TAO_EC_Basic_ObserverStrategy::Observer_Entry>
 
 #pragma instantiate ACE_RB_Tree<RtecEventComm::EventHeader,int,TAO_EC_Basic_ObserverStrategy::Header_Compare,ACE_Null_Mutex>
+#pragma instantiate ACE_RB_Tree_Iterator_Base<RtecEventComm::EventHeader,int,TAO_EC_Basic_ObserverStrategy::Header_Compare,ACE_Null_Mutex>
 #pragma instantiate ACE_RB_Tree_Iterator<RtecEventComm::EventHeader,int,TAO_EC_Basic_ObserverStrategy::Header_Compare,ACE_Null_Mutex>
 #pragma instantiate ACE_RB_Tree_Node<RtecEventComm::EventHeader,int>
 
