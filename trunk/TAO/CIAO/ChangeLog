@@ -1,3 +1,17 @@
+Sat Mar 19 15:02:03 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DAnCE/DomainApplicationManager/Deployment_Configuration.h:
+        * DAnCE/DomainApplicationManager/DomainApplicationManager.mpc:
+        *
+          DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+
+          Made changes to reflect changes made to the CIAO
+          infrastructure to support NodeApplication instantiate
+          multiple containers.
+
+          Thanks to Gan Deng <dengg@dre.vanderbilt.edu> for making this
+          change.
+
 Sat Mar 19 14:54:15 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DAnCE/examples/BasicSP/descriptors/BasicSP.cdp:
