@@ -1,3 +1,28 @@
+Sat Apr 24 18:18:35 1999  Ossama Othman  <othman@cs.wustl.edu>
+	
+	* gperf.1:
+	* gperf.info:
+	* gperf.texi:
+
+	  Added missing quote, cosmetic fix, regenerated gperf.info.
+	
+	* src/Key_List.cpp
+	* src/Options.h: 
+	* src/Options.cpp: 
+
+	  Merged Cygnus patch that allows the user to specify a default
+	  fill expression/value in the keyword table.  Updated help
+	  message with new `-F' option.  Made some cosmetic fixes to the
+	  help message, too.
+
+	* tests/test.cpp: 
+
+	  Minor spelling correction in comment
+
+	* tests/test-6.exp:
+
+	  Updated with new expected gperf output.
+	
 Mon Nov  9 23:37:09 1998  Vishal Kachroo <vishal@cs.wustl.edu>
 
 	* src/Key_List.cpp: Fixed the problem with Binary and Linear
