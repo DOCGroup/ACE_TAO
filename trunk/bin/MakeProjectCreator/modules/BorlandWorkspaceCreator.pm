@@ -29,6 +29,12 @@ sub workspace_file_name {
 }
 
 
+sub workspace_per_project {
+  my($self) = shift;
+  return 1;
+}
+
+
 sub pre_workspace {
   my($self) = shift;
   my($fh)   = shift;
@@ -70,7 +76,7 @@ sub write_comps {
           }
         }
       }
-      
+
       ## These commands will work.  In practicality, only the
       ## default configuration can be built at the top level.
       print $fh ($chdir ? "\t\@cd $dir$crlf" : "") .
