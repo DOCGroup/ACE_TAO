@@ -447,7 +447,7 @@ Rich Wellner <rw2@wellner.org>
 Fernando D. Mato Mira <matomira@acm.org>
 Jonathan Reis <reis@minniemouse.cemax.com>
 Seung-Lee Hoon <tarjan@lgsoft.com>
-Russell L. Carter <rcarter@dnstoo.consys.com>
+Russell L. Carter <rcarter@pinyon.org>
 Bill Hall <hts@gte.net>
 Brian Gilstrap <gilstrap_b@ociweb.com>
 Balaji Srinivasan <balaji@cplane.com>
@@ -875,7 +875,7 @@ Raj Narayanaswamy <rnarayanaswamy@hologic.com>
 Iain Melville <Iain.Melville@opentrade.co.uk>
 Daniel Lang <dl@leo.org>
 Chris Leishman <chris_leishman@freeonline.com.au>
-Russell L. Carter <rcarter@pinyon.org>
+Klemen Zagar <klemen.zagar@irj.si>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that
