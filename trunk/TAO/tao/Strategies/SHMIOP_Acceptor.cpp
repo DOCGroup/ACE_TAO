@@ -73,7 +73,20 @@ TAO_SHMIOP_Acceptor::~TAO_SHMIOP_Acceptor (void)
 //    3) Create multiple profiles for wild carded endpoints (may be multiple
 //       interfaces over which we can receive requests.  Thus a profile
 //       must be made for each one.
-
+int
+TAO_SHMIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
+                                      TAO_MProfile &mprofile,
+                                      CORBA::Boolean share_profile)
+{
+  // Check if multiple endpoints should be put in one profile or
+  // if they should be spread across multiple profiles.
+  if (share_profile == 1)
+    return this->create_shared_profile (object_key,
+                                        mprofile);
+  else
+    return this->create_profile (object_key,
+                                 mprofile);
+}
 
 int
 TAO_SHMIOP_Acceptor::create_profile (const TAO_ObjectKey &object_key,
@@ -120,34 +133,8 @@ TAO_SHMIOP_Acceptor::create_profile (const TAO_ObjectKey &object_key,
 }
 
 int
-TAO_SHMIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
-                                      TAO_MProfile &mprofile)
-{
-  // If RT_CORBA is enabled, only one SHMIOP profile is created per
-  // <mprofile> and all SHMIOP endpoints are added into that profile.
-  // If RT_CORBA is not enabled, we create a separate profile for each
-  // endpoint.
-
-#if (TAO_HAS_RT_CORBA == 1)
-  ACE_UNUSED_ARG (object_key);
-  ACE_UNUSED_ARG (mprofile);
-
-  // @@ RTCORBA_SUBSETTING
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("This method is deprecated for RTCORBA, \ncreate_endpoint_for_mprofile should be called instead")));
-  // This method should not be called anymore
-  return -1;
-
-#else
-
-  return create_profile (object_key, mprofile);
-
-#endif  /* TAO_HAS_RT_CORBA == 1 */
-}
-
-int
-TAO_SHMIOP_Acceptor::create_endpoint_for_mprofile (const TAO_ObjectKey &object_key,
-                                                   TAO_MProfile &mprofile)
+TAO_SHMIOP_Acceptor::create_shared_profile (const TAO_ObjectKey &object_key,
+                                            TAO_MProfile &mprofile)
 {
   TAO_Profile *pfile = 0;
   TAO_SHMIOP_Profile *shmiop_profile = 0;

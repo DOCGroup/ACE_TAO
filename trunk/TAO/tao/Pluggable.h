@@ -96,16 +96,15 @@ public:
   /// Closes the acceptor
   virtual int close (void) = 0;
 
-  /// Create the corresponding profile for this endpoint.
+  /** Create the corresponding profile for this endpoint.
+   * If share_profile is set to true, the pluggable protocol
+   * implementation should try to add the endpoint to a profile
+   * in the mprofile that is of the same type.  Currently, this
+   * is used when RT CORBA is enabled.
+   */
   virtual int create_mprofile (const TAO_ObjectKey &object_key,
-                               TAO_MProfile &mprofile) = 0;
-
-
-  /// Create an endpoint for a profile, and if the profile does not
-  /// exist it creates the profile and then adds the endpoint.
-  virtual int create_endpoint_for_mprofile (const TAO_ObjectKey &object_key,
-                                            TAO_MProfile &mprofile) = 0;
-
+                               TAO_MProfile &mprofile,
+                               CORBA::Boolean share_profile) = 0;
 
   /// Return 1 if the <endpoint> has the same address as the acceptor.
   virtual int is_collocated (const TAO_Endpoint* endpoint) = 0;
