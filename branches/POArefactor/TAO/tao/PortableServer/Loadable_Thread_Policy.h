@@ -16,6 +16,7 @@
 
 #include "portableserver_export.h"
 #include "POA_Policy.h"
+#include "PortableServerC.h"
 #include "ace/Service_Config.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -33,15 +34,7 @@
 
 namespace CORBA
 {
-  class Any;
   class PolicyError;
-}
-
-namespace PortableServer
-{
-  enum ThreadPolicyValue;
-  class ThreadPolicy;
-  typedef ThreadPolicy* ThreadPolicy_ptr;
 }
 
 namespace TAO
@@ -59,10 +52,11 @@ namespace TAO
     virtual TAO_Policy_Scope _tao_scope (void) const;
 
     /// Create a new thread policy
-    // @@ Johnny, how nice would it be if all the compilers supported
-    //covariant return types. Grr..
-    //
-    // CORBA::
+    /**
+     * @note If all the compilers supportedcovariant return types we could
+     * change this to a CORBA::Policy_ptr create() call, which is defined
+     * as pure virtual in the base. This is something for the future.
+     */
     PortableServer::ThreadPolicy_ptr create (
       PortableServer::ThreadPolicyValue value);
 
