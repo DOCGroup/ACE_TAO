@@ -846,7 +846,15 @@ DRV_parse_args (long ac, char **av)
               if (av[i][2] == '\0')
                 {
                   idl_global->append_idl_flag (av[i + 1]);
-                  idl_global->gperf_path (av[i + 1]);
+                  ACE_CString tmp (av[i + 1], 0, 0);
+#if defined (ACE_WIN32)
+                  // WIN32's CreateProcess needs the full executable name
+                  // when the gperf path is modified, but not for the default
+                  // path given above. Other platforms don't need the
+                  // executable name at all.
+                  tmp += "\\gperf.exe";
+#endif                 
+                  idl_global->gperf_path (tmp.fast_rep ());
                   i++;
                 }
               else
