@@ -1,5 +1,19 @@
 Tue Nov 23 12:47:39 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Malloc.h: Modified the definition and use of
+	  ACE_MALLOC_PADDING_SIZE so that it works correctly and the code
+ 	  that uses it compiles...  Thanks to Alexander Belopolsky
+ 	  <belopolsky@my-deja.com> for reporting this.
+
+	* ace/Malloc: Replaced the AMS macro, which polluted the global
+ 	  namespace, with ACE_MALLOC_STATS, which doesn't...  Thanks to
+ 	  Alexander Belopolsky <belopolsky@my-deja.com> for reporting
+ 	  this.
+
+	* ace/OS.h: Modified ACE_MIN macro so that it uses the > operator to 
+	  be consistent with the ACE_MAX macro.  Thanks to Derek Dominish
+ 	  <Derek.Dominish@Australia.Boeing.com> for reporting this.
+
 	* tests/Malloc_Test: Updated the Malloc_Test so that it'll
 	  allocate and test doubles to make sure they work correctly.
 

@@ -56,9 +56,9 @@ struct ACE_Export ACE_Malloc_Stats
   ACE_INT ninuse_;
   // Number of blocks in use
 };
-#define AMS(X) X
+#define ACE_MALLOC_STATS(X) X
 #else
-#define AMS(X)
+#define ACE_MALLOC_STATS(X)
 #endif /* ACE_HAS_MALLOC_STATS */
 
 #if !defined (ACE_MALLOC_PADDING)
@@ -75,7 +75,7 @@ struct ACE_Export ACE_Malloc_Stats
 //
 // #define ACE_MALLOC_PADDING ((int) 4096)
 
-#define ACE_MALLOC_PADDING 1
+#define ACE_MALLOC_PADDING 4096
 #endif /* ACE_MALLOC_PADDING */
 
 #if !defined (ACE_MALLOC_ALIGN)
@@ -112,9 +112,10 @@ public:
 
 #if (ACE_MALLOC_PADDING > 1)
 #define ACE_MALLOC_PADDING_SIZE ((ACE_MALLOC_PADDING - \
-                                  (sizeof (ACE_Malloc_Header)) / ACE_MALLOC_ALIGN))
-  long padding_[ACE_MALLOC_PADDING_SIZE < 1 : ACE_MALLOC_PADDING_SIZE];
-#endif /* ACE_MALLOC_PADDING > 0 */
+                                  (sizeof (ACE_MALLOC_HEADER_PTR) + sizeof (size_t)) \
+                                  / sizeof (long)))
+  long padding_[ACE_MALLOC_PADDING_SIZE < 1 ? 1 : ACE_MALLOC_PADDING_SIZE];
+#endif /* ACE_MALLOC_PADDING > 1 */
 
   void dump (void) const;
   // Dump the state of the object.
@@ -201,21 +202,29 @@ public:
   // Keep statistics about ACE_Malloc state and performance.
   ACE_Malloc_Stats malloc_stats_;
 #define ACE_CONTROL_BLOCK_SIZE ((int)(sizeof (ACE_NAME_NODE_PTR) \
-                                      + sizeof (ACE_Malloc_Header *) \
+                                      + sizeof (ACE_MALLOC_HEADER_PTR) \
                                       + MAXNAMELEN  \
                                       + sizeof (ACE_Malloc_Stats)))
 #else
 #define ACE_CONTROL_BLOCK_SIZE ((int)(sizeof (ACE_NAME_NODE_PTR) \
-                                      + sizeof (ACE_Malloc_Header *) \
+                                      + sizeof (ACE_MALLOC_HEADER_PTR) \
                                       + MAXNAMELEN))
 #endif /* ACE_HAS_MALLOC_STATS */
 
+  // We have to assert that base_'s offset is a multiple of
+  // ACE_MALLOC_ALIGN so if ACE_CONTROL_BLOCK_SIZE % ACE_MALLOC_ALIGN
+  // != 0 we have to add padding of X longs so that
+  // ACE_CONTROL_BLOCK_SIZE + X * sizeof (long) % ACE_MALLOC_ALIGN ==
+  // 0.  This predicate can be satisfied by the following macro:
 #define ACE_CONTROL_BLOCK_ALIGN ((ACE_CONTROL_BLOCK_SIZE % ACE_MALLOC_ALIGN != 0 \
-                                        ? ACE_MALLOC_ALIGN - (ACE_CONTROL_BLOCK_SIZE) \
-                                        : ACE_MALLOC_ALIGN) / ACE_MALLOC_ALIGN)
+                                        ? ACE_MALLOC_ALIGN - (ACE_CONTROL_BLOCK_SIZE % \
+                                                              ACE_MALLOC_ALIGN) \
+                                        : ACE_MALLOC_ALIGN) / int (sizeof (long)))
 
   long align_[ACE_CONTROL_BLOCK_ALIGN < 1 ? 1 : ACE_CONTROL_BLOCK_ALIGN];
-  // Force alignment.
+  // Force alignment.  Ideally we would want to have nothing here when
+  // ACE_CONTROL_BLOCK_ALIGN == 0, but standard C++ does not allow
+  // zero length arrays.
 
   ACE_Malloc_Header base_;
   // Dummy node used to anchor the freelist.  This needs to come last...
