@@ -224,7 +224,7 @@ global.features</a> file.
       interface.  To disable use of the Solaris thread interface, add
       <code>-D_POSIX_PTHREAD_SEMANTICS</code> to the
       <code>CFLAGS</code> in your
-      <code>ACE_wrappers/include/makeinclude/platform_macros.GNU</code>.
+      <code>$(ACE_ROOT)/include/makeinclude/platform_macros.GNU</code>.
       See the Solaris Intro (3) man page for more information.</p><p>
 
       To disable ACE thread support completely, build with the
@@ -294,7 +294,8 @@ global.features</a> file.
       without any modifications on RedHat 5.1 and later, and on
       Debian 2.1 on both Intel and Alpha.  Use the
       <code>platform_linux.GNU</code> and <code>ace/config-linux.h</code>
-      in your platform_macros.GNU and config.h files, respectively.  The same
+      in your <code>platform_macros.GNU</code> and 
+      <code>config.h</code> files, respectively.  The same
       files can be used on PowerPC, with LinuxPPC
       1999 (R5), with glibc 2.1.1.</p><p>
 
@@ -410,7 +411,7 @@ global.features</a> file.
 
       CXX 6.0 and 6.1 are much improved over 5.x: V6.0-020, V6.1-025,
       and later build all of ACE cleanly.  All of the tests in
-      ACE_wrappers/tests run successfully with CXX 6.0 and CXX 6.1.
+      $(ACE_ROOT)/tests run successfully with CXX 6.0 and CXX 6.1.
       Please note that problems have been reported with some versions
       of CXX 6.1, notably versions -021 and earlier.  It's best to use
       V6.1-022 or later.</p><p>
@@ -2437,7 +2438,7 @@ renice the 'make' process to the highest priority, -20... ;-)
 To save time and space, I set
 <pre>    TAO_ORBSVCS = Naming Time Trader ImplRepo
 </pre>
-in $ACE_ROOT/include/makeinclude/platform_macros.GNU also.  See
+in <code>$ACE_ROOT/include/makeinclude/platform_macros.GNU</code> also.  See
 <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/TAO/docs/configurations.html#orbsvcs">TAO's orbsvcs
 library customization instructions</a> for more information.<p>
 
@@ -2650,8 +2651,8 @@ using the $ACE_ROOT/bin/create_ace_build script or
 $ACE_ROOT/bin/clone.cpp program.
 
 To use build and use the clone program, first make sure there's a file
-called platform_macros.GNU that contains the correct platform-specific
-Makefile configurations in the $ACE_ROOT/include/makeinclude/
+called <code>platform_macros.GNU</code> that contains the correct platform-specific
+Makefile configurations in the <code>$ACE_ROOT/include/makeinclude/</code>
 directory, as well as making sure there's a $ACE_ROOT/ace/config.h
 file that includes the desired platform/compiler specific
 configuration header.  Then perform the following steps:<p>
@@ -2759,7 +2760,8 @@ faster even on single-CPU UNIX machines with <code>make -j
 
 ACE further supports the following flags.  They can be enabled either
 on the command line, e.g., "make purify=1", or added to your
-platform_macros.GNU.  To disable the option, set the flag to null,
+<code>platform_macros.GNU</code>.  To disable the option, 
+set the flag to null,
 e.g., "make debug=".  Some flags support setting to 0 disable, e.g.,
 "make debug=0".  debug=1 is enabled in the platform files that are
 released with ACE.</p><p>
