@@ -45,6 +45,12 @@
 
 #define SHASH(a) ((int)((((a) >> 20) ^ ((a) >> 10) ^ (a)) & (TAO_AV_SOURCE_HASH-1)))
 
+extern "C" int 
+compare_func (const void* v0, const void* v1)
+{
+  return TAO_AV_SourceManager::compare (v0, v1);
+}
+
 TAO_AV_Source::TAO_AV_Source (ACE_UINT32 srcid, ACE_UINT32 ssrc, ACE_UINT32 addr)
   : next_ (0),
     hlink_ (0),
@@ -524,7 +530,7 @@ TAO_AV_SourceManager::sortactive (char* cp) const
     *cp = 0;
     return;
   }
-  ACE_OS::qsort (srctab, n, sizeof (*srctab), compare);
+  ACE_OS::qsort (srctab, n, sizeof (*srctab), compare_func);
   for  (int i = 0; i < n; ++i) {
     strcpy (cp, srctab[i]->name ());
     cp += strlen (cp);

@@ -43,7 +43,14 @@
 
 #include "ace/OS.h"
 #include "tao/TAO.h"
+
 class TAO_AV_SourceManager;
+
+extern "C" 
+{
+  int compare_func (const void* v0, const void* v1);
+}
+
 
 #define TAO_AV_SOURCE_HASH 1024
 
@@ -201,8 +208,8 @@ public:
   void keep_sites (int keep);
   void site_drop_time (int time);
   TAO_AV_Source* enter (TAO_AV_Source* s);
-protected:
   static int compare (const void*, const void*);
+protected:
   void remove_from_hashtable (TAO_AV_Source* s);
 
   TAO_AV_Source* lookup_duplicate (ACE_UINT32 srcid, ACE_UINT32 addr);
