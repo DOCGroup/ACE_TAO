@@ -1,0 +1,20 @@
+// $Id$
+# platform_macosx.GNU
+# preliminry support for Mac OS X DP4, some stuff still doesn't work.
+
+thread = 1
+
+CC              = cc
+CXX             = c++
+CFLAGS          += -Wall -Wpointer-arith -pipe
+CCFLAGS         += $(CFLAGS) -fno-implicit-templates -fcheck-new
+DCFLAGS         += -g
+DLD             = libtool
+LD              = $(CXX)
+LDFLAGS		+=
+LIBS            += -lcc_dynamic -lstdc++ -lpcap
+OCFLAGS         += -O3
+RANLIB          = ranlib
+SOEXT		= dylib
+SOFLAGS = -dynamic
+SOBUILD = -o $(VSHDIR)$*.dylib $<
