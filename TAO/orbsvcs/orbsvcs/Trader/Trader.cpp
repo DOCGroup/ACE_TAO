@@ -127,7 +127,7 @@ TAO_Trader_Base::is_valid_identifier_name (const char* ident)
     size_t length =
       pos ? pos - ident : ACE_OS::strlen (ident);
 
-    if (length >= 1 && isalpha (ident[0]))
+    if (length >= 1 && ACE_OS::ace_isalpha (ident[0]))
       {
         // First character must be alpha
         for (size_t i = 0; i < length; ++i)
