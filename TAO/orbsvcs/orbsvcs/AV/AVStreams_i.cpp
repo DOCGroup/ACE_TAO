@@ -103,6 +103,7 @@ TAO_Basic_StreamCtrl::push_event (const struct CosPropertyService::Property & th
 {
   ACE_DEBUG ((LM_DEBUG,
               "\n(%P|%t) Recieved event \""));
+  ACE_UNUSED_ARG (the_event);
   ACE_UNUSED_ARG (env);
 }
 
@@ -458,6 +459,9 @@ TAO_Server_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
                                     const AVStreams::flowSpec &the_spec,
                                     CORBA::Environment &env)
 {
+  ACE_UNUSED_ARG (responder);
+  ACE_UNUSED_ARG (qos_spec);
+  ACE_UNUSED_ARG (the_spec);
   ACE_ERROR_RETURN ((LM_ERROR,
                      "(%P|%t) Calling TAO_Server_StreamEndPoint::connect"
                      " is not compatible with the spec!"
@@ -474,6 +478,10 @@ TAO_StreamEndPoint::request_connection (AVStreams::StreamEndPoint_ptr initiator,
                                         AVStreams::flowSpec &the_spec,
                                         CORBA::Environment &env)
 {
+  ACE_UNUSED_ARG (initiator);
+  ACE_UNUSED_ARG (is_mcast);
+  ACE_UNUSED_ARG (qos);
+
   ACE_DEBUG ((LM_DEBUG, "\n(%P|%t) TAO_StreamEndPoint::request_connection called"));
   ACE_DEBUG ((LM_DEBUG,
               "\n(%P|%t) TAO_StreamEndPoint::request_connection: "
@@ -770,6 +778,9 @@ TAO_Server_StreamEndPoint::multiconnect (AVStreams::streamQoS &the_qos,
                                          AVStreams::flowSpec &the_spec,
                                          CORBA::Environment &env)
 {
+  ACE_UNUSED_ARG (the_qos);
+  ACE_UNUSED_ARG (the_spec);
+  ACE_UNUSED_ARG (env);
   return 0;
 }
 
@@ -796,6 +807,9 @@ TAO_VDev::set_peer (AVStreams::StreamCtrl_ptr the_ctrl,
                     const AVStreams::flowSpec &the_spec,
                     CORBA::Environment &env)
 {
+  ACE_UNUSED_ARG (the_qos);
+  ACE_UNUSED_ARG (the_spec);
+  
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) TAO_VDev::set_peer: called"));
 
@@ -952,6 +966,7 @@ TAO_MMDevice::bind (AVStreams::MMDevice_ptr peer_device,
                     const AVStreams::flowSpec &the_spec,
                     CORBA::Environment &env)
 {
+  ACE_UNUSED_ARG (is_met);
   TAO_StreamCtrl *stream_ctrl;
   ACE_NEW_RETURN (stream_ctrl,
                   TAO_StreamCtrl,
@@ -990,6 +1005,11 @@ TAO_MMDevice::create_A (AVStreams::StreamCtrl_ptr the_requester,
                                    const AVStreams::flowSpec &the_spec,
                                    CORBA::Environment &env)
 {
+  ACE_UNUSED_ARG (the_requester);
+  ACE_UNUSED_ARG (the_qos);
+  ACE_UNUSED_ARG (met_qos);
+  ACE_UNUSED_ARG (named_vdev);
+  ACE_UNUSED_ARG (the_spec);
   // In full profile application can override this to use FDevs.
   AVStreams::StreamEndPoint_A_ptr ptr;
   if (this->endpoint_strategy_->create_A (ptr,
@@ -1014,6 +1034,12 @@ TAO_MMDevice::create_B (AVStreams::StreamCtrl_ptr the_requester,
                         const AVStreams::flowSpec &the_spec,
                         CORBA::Environment &env)
 {
+  ACE_UNUSED_ARG (the_requester);
+  ACE_UNUSED_ARG (the_qos);
+  ACE_UNUSED_ARG (met_qos);
+  ACE_UNUSED_ARG (named_vdev);
+  ACE_UNUSED_ARG (the_spec);
+
   // In full profile application can override this to use FDevs.
   AVStreams::StreamEndPoint_B_ptr ptr;
   if (this->endpoint_strategy_->create_B (ptr,
@@ -1087,6 +1113,8 @@ CORBA::Object_ptr
 TAO_MMDevice::get_fdev (const char *flow_name,
                         CORBA::Environment &env)
 {
+  ACE_UNUSED_ARG (env);
+
   TAO_String_Hash_Key fdev_name_key (flow_name);
   FDev_Map::ENTRY *fdev_entry = 0;
   if (this->fdev_map_.find (fdev_name_key,fdev_entry) == 0)
@@ -1185,6 +1213,7 @@ TAO_FlowConnection::push_event (const AVStreams::streamEvent & the_event,
                                 CORBA::Environment &env)
 {
   ACE_UNUSED_ARG (the_event);
+  ACE_UNUSED_ARG (env);
 }
 
 CORBA::Boolean 
@@ -1367,6 +1396,7 @@ TAO_FlowEndPoint::use_flow_protocol (const char * fp_name,
                                      const CORBA::Any & fp_settings,
                                      CORBA::Environment &env)
 {
+  ACE_UNUSED_ARG (fp_settings);
   // Define the property called FlowProtocol
   CORBA::Any flowname_property;
   flowname_property <<= fp_name;
@@ -1476,6 +1506,11 @@ TAO_FlowEndPoint::set_peer (AVStreams::FlowConnection_ptr the_fc,
                             AVStreams::QoS & the_qos,
                             CORBA::Environment &env)
 {
+  ACE_UNUSED_ARG (the_fc);
+  ACE_UNUSED_ARG (the_peer_fep);
+  ACE_UNUSED_ARG (the_qos);
+  ACE_UNUSED_ARG (env);
+
   this->peer_fep_ = the_peer_fep;
   return 1;
 }
@@ -1489,6 +1524,7 @@ TAO_FlowEndPoint::set_Mcast_peer (AVStreams::FlowConnection_ptr the_fc,
   ACE_UNUSED_ARG (the_fc);
   ACE_UNUSED_ARG (a_mcastconfigif);
   ACE_UNUSED_ARG (the_qos);
+  ACE_UNUSED_ARG (env);
   return 0;
 }
 
@@ -1522,6 +1558,10 @@ TAO_FlowProducer::handle_connect_to_peer (AVStreams::QoS & the_qos,
                                           const char * use_flow_protocol,
                                           CORBA::Environment &env)
 {
+  ACE_UNUSED_ARG (the_qos);
+  ACE_UNUSED_ARG (address);
+  ACE_UNUSED_ARG (use_flow_protocol);
+  ACE_UNUSED_ARG (env);
   return 0;
 }
 
@@ -1570,6 +1610,7 @@ void
 TAO_FlowProducer::set_source_id (CORBA::Long source_id,
                                  CORBA::Environment &env)
 {
+  ACE_UNUSED_ARG (env);
   this->source_id_ = source_id;
 }
 
@@ -1600,7 +1641,13 @@ TAO_FlowConsumer::handle_go_to_listen (AVStreams::QoS & the_qos,
                                char *& flowProtocol,
                                CORBA::Environment &env)
 {
-return 0;
+  ACE_UNUSED_ARG (the_qos);
+  ACE_UNUSED_ARG (is_mcast);
+  ACE_UNUSED_ARG (peer);
+  ACE_UNUSED_ARG (flowProtocol);
+  ACE_UNUSED_ARG (env);
+
+  return 0;
 }
 
 // ------------------------------------------------------------
@@ -1638,6 +1685,11 @@ TAO_FDev::make_producer (AVStreams::FlowConnection_ptr the_requester,
                            char *& named_fdev,
                            CORBA::Environment &env)
 {
+  ACE_UNUSED_ARG (the_requester);
+  ACE_UNUSED_ARG (the_qos);
+  ACE_UNUSED_ARG (met_qos);
+  ACE_UNUSED_ARG (named_fdev);
+
   // memory leak??
   TAO_FlowProducer *producer;
   ACE_NEW_RETURN (producer,
@@ -1654,6 +1706,11 @@ TAO_FDev::make_consumer (AVStreams::FlowConnection_ptr the_requester,
                          char *& named_fdev,
                          CORBA::Environment &env)
 {
+  ACE_UNUSED_ARG (the_requester);
+  ACE_UNUSED_ARG (the_qos);
+  ACE_UNUSED_ARG (met_qos);
+  ACE_UNUSED_ARG (named_fdev);
+
   // memory leak??
   TAO_FlowConsumer *consumer;
   ACE_NEW_RETURN (consumer,
