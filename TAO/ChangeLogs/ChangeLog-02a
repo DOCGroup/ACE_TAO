@@ -1,3 +1,16 @@
+Tue Jun 06 22:12:39 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Server_Request.h:
+	* tao/GIOP_Server_Request.h: Removed method oa () which is
+	  basically useless.
+
+	* tao/GIOP_Server_Request.cpp: Removed method implementation
+	  oa ().
+
+	  (objref): Changed to aquire POA from POA_Current and reconstruct
+	  the object reference using id_to_reference ().  Thanks to Irfan
+	  for noticing this and suggesting the fix.
+
 Tue Jun 06 21:21:03 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/POA.cpp (parse_policy): Added code to handle
@@ -209,27 +222,27 @@ Mon Jun  5 13:39:00 2000  Chris Gill  <cdgill@cs.wustl.edu>
 
 Mon Jun  5 09:54:54 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-        * TAO_IDL/fe/idl.yy:
-        * TAO_IDL/fe/y.tab.h:
-        * TAO_IDL/fe/y.tab.cpp:
-          Added a null pointer check to module definition code in the yacc
-          file, so that bad IDL inside the module will not cause a crash
-          after the error message is output.  Thanks to Greg Hall
-          <Greg.Hall@Australia.Boeing.com> for reporting this.
+	* TAO_IDL/fe/idl.yy:
+	* TAO_IDL/fe/y.tab.h:
+	* TAO_IDL/fe/y.tab.cpp:
+	  Added a null pointer check to module definition code in the yacc
+ 	  file, so that bad IDL inside the module will not cause a crash
+ 	  after the error message is output.  Thanks to Greg Hall
+ 	  <Greg.Hall@Australia.Boeing.com> for reporting this.
 
 Sun Jun  4 18:00:07 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-        * tao/TypeCode.cpp:
-          Applied a patch sent in by
-          Aniruddha Gokhale <gokhale@research.bell-labs.com>
-          for _tao_decode(). It seems that at one point in
-          the function a TAO_InputCDR is created without
-          passing along the byte order argument, leading
-          to a crash in some mixed-endian use cases.
+	* tao/TypeCode.cpp:
+	  Applied a patch sent in by
+	  Aniruddha Gokhale <gokhale@research.bell-labs.com>
+	  for _tao_decode(). It seems that at one point in
+	  the function a TAO_InputCDR is created without
+	  passing along the byte order argument, leading
+	  to a crash in some mixed-endian use cases.
 
 Sun Jun  4 15:09:11 2000  Darrell Brunsch <brunsch@uci.edu>
 
-        * docs/implrepo.html:
+	* docs/implrepo.html:
 
           Fuzz.pl reported that this file didn't end with a
           newline.  Added one.
@@ -245,14 +258,14 @@ Sun Jun  4 14:48:32 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Sun Jun  4 13:33:43 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-        * orbsvcs/tests/Notify/Basic/Updates.cpp:
-          renamed #defines to fix compile errors on Compaq Tru64 UNIX.
+	* orbsvcs/tests/Notify/Basic/Updates.cpp:
+	  renamed #defines to fix compile errors on Compaq Tru64 UNIX.
 
 
 Sun Jun  4 11:07:50 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-        * tao/RT_Policy_i.cpp
-        Removed (temporarily) unused argument.
+	* tao/RT_Policy_i.cpp
+	Removed (temporarily) unused argument.
 
 
 Sat Jun  3 20:56:46 2000  Darrell Brunsch <brunsch@uci.edu>
@@ -264,152 +277,152 @@ Sat Jun  3 20:56:46 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Sat Jun 03 17:08:34 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-        * orbsvcs/orbsvcs/Event/EC_Bitmask_Filter.cpp:
-        * orbsvcs/orbsvcs/Event/EC_Disjunction_Filter.cpp:
-        * orbsvcs/orbsvcs/Event/EC_Masked_Type_Filter.cpp:
-        * orbsvcs/orbsvcs/Event/EC_Negation_Filter.cpp:
-        * orbsvcs/orbsvcs/Event/EC_Sched_Filter.cpp:
-          Remove ACE_INLINE macros in the .cpp files.
+	* orbsvcs/orbsvcs/Event/EC_Bitmask_Filter.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Disjunction_Filter.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Masked_Type_Filter.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Negation_Filter.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Sched_Filter.cpp:
+	  Remove ACE_INLINE macros in the .cpp files.
 
-        * examples/Simulator/Event_Supplier/DualEC_Sup.dsp:
-        * examples/Simulator/Event_Supplier/Event_Sup.dsp:
-        * examples/Simulator/Event_Supplier/Logging_Sup.dsp:
-          Add missing libraries to the project file
+	* examples/Simulator/Event_Supplier/DualEC_Sup.dsp:
+	* examples/Simulator/Event_Supplier/Event_Sup.dsp:
+	* examples/Simulator/Event_Supplier/Logging_Sup.dsp:
+	  Add missing libraries to the project file
 
 Sat Jun  3 15:51:44 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-        * tao/PolicyC.cpp:
-          Removed unused arguments in the new _tao_encode methods
-          and made some cosmetic changes.
+	* tao/PolicyC.cpp:
+	  Removed unused arguments in the new _tao_encode methods
+	  and made some cosmetic changes.
 
 Sat Jun  3 13:30:28 2000  Ossama Othman  <ossama@uci.edu>
 
-        * tao/Profile.i (TAO_Profile):
+	* tao/Profile.i (TAO_Profile):
 
-          Fixed misordered variables in base member initializer list.
-          This fixes a warning about reordered initialization of class
-          members.
+	  Fixed misordered variables in base member initializer list.
+	  This fixes a warning about reordered initialization of class
+	  members.
 
 Sat Jun 03 11:55:23 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-        * tao/Policy_Factory.h
-        * tao/Policy_Factory.i
+	* tao/Policy_Factory.h
+	* tao/Policy_Factory.i
 
-        - Added guard to selecttively import and instantiate
-        RT-Corba related stuff.
+	- Added guard to selecttively import and instantiate
+	RT-Corba related stuff.
 
-        * tao/Profile.i
+	* tao/Profile.i
 
-        - Modified constructor of Profile class.
+	- Modified constructor of Profile class.
 
 
 Sat Jun 03 04:17:38 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-        * tao/POA:
+	* tao/POA:
 
-          - Renamed get_client_exposed_policies() to
-          client_exposed_policies() and inlined it.  Also, made it
-          available outside TAO_HAS_RT_CORBA.
+	  - Renamed get_client_exposed_policies() to
+	  client_exposed_policies() and inlined it.  Also, made it
+	  available outside TAO_HAS_RT_CORBA.
 
-          - Added priority_model policy to the POA.
+	  - Added priority_model policy to the POA.
 
-          - Made some ThreadPolicy related methods available outside
-          TAO_HAS_MINIMUM_POA.
+	  - Made some ThreadPolicy related methods available outside
+	  TAO_HAS_MINIMUM_POA.
 
-        * tao/ORB_Core: Added new accessors to the priority_model policy:
-          priority_model() and default_priority_model().
+	* tao/ORB_Core: Added new accessors to the priority_model policy:
+	  priority_model() and default_priority_model().
 
-        * tao/GIOP_Server_Request.cpp (objref): Minor style fixes.
+	* tao/GIOP_Server_Request.cpp (objref): Minor style fixes.
 
 Sat Jun 3 00:06:25 2000 Angelo Corsaro <corsaro@cs.wustl.edu>
 
-        * tao/RT_Policy_i.h
-        * tao/RT_Policy_i.i
-        * tao/RT_Policy_i.cpp
+	* tao/RT_Policy_i.h
+	* tao/RT_Policy_i.i
+	* tao/RT_Policy_i.cpp
 
-        Added support for serialization to client exposed
-        Policies servant.
-
-
-        * tao/POA.h
-        * tao/POA.cpp
-
-        Added modification to support Policies propagation,
-        and exactly the method:
-          - const CORBA::PolicyList& get_client_exposed_policies()
-        was added, together with the member variable:
-          - CORBA::PolicyList client_exposed_policies_
-        Also the method:
-          - TAO_POA::key_to_object
-        was modified.
+	Added support for serialization to client exposed
+	Policies servant.
 
 
-        * tao/ORB_Core.h
-        * tao/ORB_Core.cpp
+	* tao/POA.h
+	* tao/POA.cpp
 
-        Modified the signature of the method:
-           - TAO_ORB_Core::create_stub_object()
-        to receive the PolicyList from the POA.
-
-
-        * tao/Servant_Base.cpp
-
-        Changed Methods to support  policies propagation
-          - TAO_ServantBase::_create_stub()
-          - TAO_DynamicImplementation::_create_stub
+	Added modification to support Policies propagation,
+	and exactly the method:
+	  - const CORBA::PolicyList& get_client_exposed_policies()
+	was added, together with the member variable:
+	  - CORBA::PolicyList client_exposed_policies_
+	Also the method:
+	  - TAO_POA::key_to_object
+	was modified.
 
 
-        * tao/GIOP_Server_Request.i
-        * tao/GIOP_Server_Request.cpp
+	* tao/ORB_Core.h
+	* tao/ORB_Core.cpp
 
-        Changed method to support client exposed policies,
-        and the following mehtod:
-          - TAO_GIOP_ServerRequest::objref
-        has been moved from GIOP_Server_Request.i to GIOP_Server_Request.cpp.
-        Added (in GIOP_Server_Request.cpp) #include "tao/POA.h"  for
-        supporting method invocation on POA.
+	Modified the signature of the method:
+	   - TAO_ORB_Core::create_stub_object()
+	to receive the PolicyList from the POA.
 
 
-        * tao/Profile.h
-        * tao/Profile.cpp
+	* tao/Servant_Base.cpp
 
-        Added Methods:
-          -  virtual void set_policies(const CORBA::PolicyList *policy_list);
-          -  virtual const CORBA::PolicyList * policy_list get_policies();
-        Added Member Variable:
-          - CORBA::PolicyList *policy_list_;
-        Modified Constructor TAO_Profile::TAO_Profile to suppor the
-        new member variabel initialization.
+	Changed Methods to support  policies propagation
+	  - TAO_ServantBase::_create_stub()
+	  - TAO_DynamicImplementation::_create_stub
 
 
-        * tao/PolicyC.h
-        * tao/PolicyC.cpp
+	* tao/GIOP_Server_Request.i
+	* tao/GIOP_Server_Request.cpp
 
-        Now CORBA::Policy inherits from Encodable.
-
-        * tao/Encodable.h
-        * tao/Encodable.cpp
-
-        Interface that defines the methods to serialize an object
-        into a CDR.
-
-
-        * tao/Policy_Factory.h
-        * tao/Policy_Factory.i
-        * tao/Policy_Factory.cpp
-
-        Factory used to create the policy while extracting
-        them form the IOR.
+	Changed method to support client exposed policies,
+	and the following mehtod:
+	  - TAO_GIOP_ServerRequest::objref
+	has been moved from GIOP_Server_Request.i to GIOP_Server_Request.cpp.
+	Added (in GIOP_Server_Request.cpp) #include "tao/POA.h"  for
+	supporting method invocation on POA.
 
 
-        * tao/TAO.dsp
+	* tao/Profile.h
+	* tao/Profile.cpp
 
-        Updated VC++ Project File.
+	Added Methods:
+	  -  virtual void set_policies(const CORBA::PolicyList *policy_list);
+	  -  virtual const CORBA::PolicyList * policy_list get_policies();
+	Added Member Variable:
+	  - CORBA::PolicyList *policy_list_;
+	Modified Constructor TAO_Profile::TAO_Profile to suppor the
+	new member variabel initialization.
 
 
-        * tao/Makefile
+	* tao/PolicyC.h
+	* tao/PolicyC.cpp
 
-        Update Makefile to include the new files.
+	Now CORBA::Policy inherits from Encodable.
+
+	* tao/Encodable.h
+	* tao/Encodable.cpp
+
+	Interface that defines the methods to serialize an object
+	into a CDR.
+
+
+	* tao/Policy_Factory.h
+	* tao/Policy_Factory.i
+	* tao/Policy_Factory.cpp
+
+	Factory used to create the policy while extracting
+	them form the IOR.
+
+
+	* tao/TAO.dsp
+
+	Updated VC++ Project File.
+
+
+	* tao/Makefile
+
+	Update Makefile to include the new files.
 
 Fri Jun  2 20:39:14 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -442,14 +455,14 @@ Fri Jun  2 20:39:14 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Fri Jun  2 20:31:45 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-        * orbsvcs/tests/Notify/lib/Makefile:
-          added -lTAO_CosNotification -lTAO_CosNaming in Makefile to fix
-          linking errors on Compaq Tru64 UNIX
+	* orbsvcs/tests/Notify/lib/Makefile:
+	  added -lTAO_CosNotification -lTAO_CosNaming in Makefile to fix
+	  linking errors on Compaq Tru64 UNIX
 
 Fri Jun  2 15:33:08 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-        * docs/releasenotes/index.html: Updated the Notify section with
-          information on project schedule.
+	* docs/releasenotes/index.html: Updated the Notify section with
+	  information on project schedule.
 
 Fri Jun  2 10:57:04 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -459,82 +472,82 @@ Fri Jun  2 10:57:04 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Fri Jun 02 02:23:42 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-        * tao/Sync_Strategies.cpp (TAO_Delayed_Buffering_Sync_Strategy::send):
-        * tao/Pluggable.cpp (TAO_Transport::send_buffered_messages):
+	* tao/Sync_Strategies.cpp (TAO_Delayed_Buffering_Sync_Strategy::send):
+	* tao/Pluggable.cpp (TAO_Transport::send_buffered_messages):
 
-        * tao/Pluggable.h (TAO_Transport::send):
-        * tao/UIOP_Transport.cpp (TAO_UIOP_Transport::send):
-        * tao/SHMIOP_Transport.cpp (TAO_SHMIOP_Transport::send):
-        * tao/IIOP_Transport.cpp (TAO_IIOP_Transport::send):
+	* tao/Pluggable.h (TAO_Transport::send):
+	* tao/UIOP_Transport.cpp (TAO_UIOP_Transport::send):
+	* tao/SHMIOP_Transport.cpp (TAO_SHMIOP_Transport::send):
+	* tao/IIOP_Transport.cpp (TAO_IIOP_Transport::send):
 
-          The recent changes to the send_n()/recv_n() methods in ACE was
-          causing a problem in tests/Timed_Buffered_Oneways.  The problem
-          was that the code was expecting information about partial
-          transfers to come through the return value.  Information about
-          partial transfers now comes through the <bytes_transferred>
-          parameter.  So the fix included expanding send() methods in TAO
-          to have the additional <bytes_transferred> parameter and
-          changing the algorithm to look at the correct place for partial
-          bytes transfers.
+	  The recent changes to the send_n()/recv_n() methods in ACE was
+	  causing a problem in tests/Timed_Buffered_Oneways.  The problem
+	  was that the code was expecting information about partial
+	  transfers to come through the return value.  Information about
+	  partial transfers now comes through the <bytes_transferred>
+	  parameter.  So the fix included expanding send() methods in TAO
+	  to have the additional <bytes_transferred> parameter and
+	  changing the algorithm to look at the correct place for partial
+	  bytes transfers.
 
 Thu Jun  1 18:42:29 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-        * tao/Interface.pidl:
-        * tao/InterfaceC.h:
-        * tao/InterfaceC.cpp:
-          Fixed a typo in the OMG IDL listing for Interface
-          Repository (in Components vol. III). The operation
-          Container::create_interface is missing a parameter.
+	* tao/Interface.pidl:
+	* tao/InterfaceC.h:
+	* tao/InterfaceC.cpp:
+	  Fixed a typo in the OMG IDL listing for Interface
+	  Repository (in Components vol. III). The operation
+	  Container::create_interface is missing a parameter.
 
-        * tao/TAO.dsp:
-        * tao/TAO_Static.dsp:
-          Added IORC.i to these project files.
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp:
+	  Added IORC.i to these project files.
 
 Thu Jun 01 03:04:20 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-        * tests/POA/Identity/run_test.pl: Added -ORBobjrefstyle url to
-          make the IORs readable.
+	* tests/POA/Identity/run_test.pl: Added -ORBobjrefstyle url to
+	  make the IORs readable.
 
 Thu Jun 01 01:06:01 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-        * tao/POA.i: Repositioned two inline methods in order to avoid
-          declared after use warnings: cleanup_in_progress() and lock()
+	* tao/POA.i: Repositioned two inline methods in order to avoid
+	  declared after use warnings: cleanup_in_progress() and lock()
 
 Wed May 31 16:35:05 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-        * tao/CurrentC.cpp:
-        * tao/CurrentC.h:
-        * tao/CurrentC.i:
-        * tao/DomainC.cpp:
-        * tao/DomainC.h:
-        * tao/DomainC.i:
-        * tao/ImplRepoC.cpp:
-        * tao/ImplRepoC.i:
-        * tao/InterfaceC.cpp:
-        * tao/InterfaceC.i:
-        * tao/MessagingC.cpp:
-        * tao/MessagingC.i:
-          Changes to hand-crafted code corresponding to the
-          changes made in generated code to the >>= and >>
-          operators for interfaces.
+	* tao/CurrentC.cpp:
+	* tao/CurrentC.h:
+	* tao/CurrentC.i:
+	* tao/DomainC.cpp:
+	* tao/DomainC.h:
+	* tao/DomainC.i:
+	* tao/ImplRepoC.cpp:
+	* tao/ImplRepoC.i:
+	* tao/InterfaceC.cpp:
+	* tao/InterfaceC.i:
+	* tao/MessagingC.cpp:
+	* tao/MessagingC.i:
+	  Changes to hand-crafted code corresponding to the
+	  changes made in generated code to the >>= and >>
+	  operators for interfaces.
 
 Wed May 31 12:34:54 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-        * tao/Any.h:
-        * tao/Any.i:
-          Changed the insertion/extraction operators for Any_var
-          to pass a reference to the Any_var as the lhs.
-          Otherwise a copy of the Any_var is made, which is
-          inefficient at best and, when the rhs is a pointer
-          type, the operation would fail.
+	* tao/Any.h:
+	* tao/Any.i:
+	  Changed the insertion/extraction operators for Any_var
+	  to pass a reference to the Any_var as the lhs.
+	  Otherwise a copy of the Any_var is made, which is
+	  inefficient at best and, when the rhs is a pointer
+	  type, the operation would fail.
 
 Wed May 31 12:17:20 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-        * examples/POA/Explicit_Activation/Alt_Resources/Resource_Factory.cpp:
+	* examples/POA/Explicit_Activation/Alt_Resources/Resource_Factory.cpp:
 
-          The implementation of this alternative resource factory had
-          become obsolete with recent changes.  The new method to
-          override is allocate_reactor_impl().
+	  The implementation of this alternative resource factory had
+	  become obsolete with recent changes.  The new method to
+	  override is allocate_reactor_impl().
 
 Wed May 31 10:04:18 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -546,54 +559,54 @@ Wed May 31 10:04:18 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Wed May 31 09:50:34 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
-          Cosmetic cleanup I forgot to do on my last checkin.
+	* TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+	  Cosmetic cleanup I forgot to do on my last checkin.
 
 Tue May 30 22:47:16 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-        * examples/Buffered_Oneways/client.cpp
-        * examples/Buffered_Oneways/test_i.cpp
-        * examples/POA/Default_Servant/server.cpp
-        * tests/POA/Identity/Identity.cpp
-        * tests/Timed_Buffered_Oneways/client.cpp
-        * tests/Timed_Buffered_Oneways/test_i.cpp
+	* examples/Buffered_Oneways/client.cpp
+	* examples/Buffered_Oneways/test_i.cpp
+	* examples/POA/Default_Servant/server.cpp
+	* tests/POA/Identity/Identity.cpp
+	* tests/Timed_Buffered_Oneways/client.cpp
+	* tests/Timed_Buffered_Oneways/test_i.cpp
 
-          Using <TAO_debug_level> to control the application level
-          debugging output is not a good idea since turning on
-          <TAO_debug_level> results in the TAO library also producing
-          unnecessary debugging output.
+	  Using <TAO_debug_level> to control the application level
+	  debugging output is not a good idea since turning on
+	  <TAO_debug_level> results in the TAO library also producing
+	  unnecessary debugging output.
 
-          As far as the auto compile output being too noisy is concerned,
-          note that the auto compile output is immaterial in determining
-          the success of an execution.  Execution success is determined by
-          a script that looks for process crashes, exceptions, etc.
-          Actually it is useful to have the execution output since
-          execution might be OS/compiler/host-load specific which might be
-          hard to reproduce specially for MT programs.
+	  As far as the auto compile output being too noisy is concerned,
+	  note that the auto compile output is immaterial in determining
+	  the success of an execution.  Execution success is determined by
+	  a script that looks for process crashes, exceptions, etc.
+	  Actually it is useful to have the execution output since
+	  execution might be OS/compiler/host-load specific which might be
+	  hard to reproduce specially for MT programs.
 
-          Owners of other tests and examples may want to revert Carlos's
-          changes if application level debugging output is important to
-          them.
+	  Owners of other tests and examples may want to revert Carlos's
+	  changes if application level debugging output is important to
+	  them.
 
 Tue May 30 20:58:17 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-        * TAO_IDL/be/be_visitor_interface/cdr_op_ci.cpp:
-        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
-          In the CDR extraction operator for interfaces,
-          replaced _narrow with _unchecked_narrow, to
-          eliminate remote calls to _is_a when foo's
-          child is marshaled as a foo_ptr. Also eliminated
-          the call to _narrow in the Any extraction operator.
-          The temporary CORBA::Object_var was eliminated as
-          well - the stream now extracts directly into the
-          rhs argument. All this is safe because, in a
-          marshaling situation, the type of the object must
-          be either the type specified in IDL or a derived
-          type, else there would have been a compile-time
-          error. And the Any extractor checks for typecode
-          equivalency before proceeding with the extration.
-          Thanks to Francois Bernier <fbernier@gel.ulaval.ca>
-          for pointing out this use case.
+	* TAO_IDL/be/be_visitor_interface/cdr_op_ci.cpp:
+	* TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+	  In the CDR extraction operator for interfaces,
+	  replaced _narrow with _unchecked_narrow, to
+	  eliminate remote calls to _is_a when foo's
+	  child is marshaled as a foo_ptr. Also eliminated
+	  the call to _narrow in the Any extraction operator.
+	  The temporary CORBA::Object_var was eliminated as
+	  well - the stream now extracts directly into the
+	  rhs argument. All this is safe because, in a
+	  marshaling situation, the type of the object must
+	  be either the type specified in IDL or a derived
+	  type, else there would have been a compile-time
+	  error. And the Any extractor checks for typecode
+	  equivalency before proceeding with the extration.
+	  Thanks to Francois Bernier <fbernier@gel.ulaval.ca>
+	  for pointing out this use case.
 
 Tue May 30 11:14:51 2000  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -604,121 +617,121 @@ Tue May 30 11:14:51 2000  Chad Elliott  <elliott_c@ociweb.com>
 
 Tue May 30 10:25:29 2000  Michael Kircher <Michael.Kircher@mchp.siemens.de>
 
-        * tao/POA.pidl: Removed a dupliate declaration of CORBA::Policy,
-          CORBA::PolicyType and CORBA::PolicyList. It is duplicated because
-          orb.idl includes Policy.pidl, which declares these already besides
-          other things.
+	* tao/POA.pidl: Removed a dupliate declaration of CORBA::Policy,
+	  CORBA::PolicyType and CORBA::PolicyList. It is duplicated because
+	  orb.idl includes Policy.pidl, which declares these already besides
+	  other things.
 
 Mon May 29 22:38:29 2000  Ossama Othman  <ossama@uci.edu>
 
-        * examples/Simple/time-date/server.cpp:
+	* examples/Simple/time-date/server.cpp:
 
-          Added missing "ace/Log_Msg.h" include.  This fixes a compile
-          error with Sun C++.
+	  Added missing "ace/Log_Msg.h" include.  This fixes a compile
+	  error with Sun C++.
 
 Mon May 29 16:56:24 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-        * utils/NamingViewer: Added some fixes to the NamingObject.{h,cpp}
-          and NamingTreeCtrl.cpp files.  Thansk to Thaddeus Olczyk
-          <olczyk@interaccess.com> and Chris Hafey <chafey@stentor.com>
-          for reporting/fixing this.
+	* utils/NamingViewer: Added some fixes to the NamingObject.{h,cpp}
+	  and NamingTreeCtrl.cpp files.  Thansk to Thaddeus Olczyk
+ 	  <olczyk@interaccess.com> and Chris Hafey <chafey@stentor.com>
+ 	  for reporting/fixing this.
 
 Mon May 29 14:21:24 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-        * tao/POA.cpp:
+	* tao/POA.cpp:
 
-          - All calls to add_ref() and remove_ref() on the servant must be
-          treated as a non-servant upcall since the user can override
-          these methods.  The POA must be ready to handle recursive calls
-          from these methods.
+	  - All calls to add_ref() and remove_ref() on the servant must be
+	  treated as a non-servant upcall since the user can override
+	  these methods.  The POA must be ready to handle recursive calls
+	  from these methods.
 
-          - Added TAO_POA_Guard, a new helper class.  This class makes
-          sure that the lock is properly acquired, that the POA is not
-          being destroyed, and the no non-servant upcalls are currently in
-          progress.
+	  - Added TAO_POA_Guard, a new helper class.  This class makes
+	  sure that the lock is properly acquired, that the POA is not
+	  being destroyed, and the no non-servant upcalls are currently in
+	  progress.
 
-        * tao/Object_Adapter.cpp:
+	* tao/Object_Adapter.cpp:
 
-          - Moved wait_for_non_servant_upcalls_to_complete() to the
-          Object_Adapter from Servant_Upcall.  This way other classes
-          (e.g., the POA) can also call this method.
+	  - Moved wait_for_non_servant_upcalls_to_complete() to the
+	  Object_Adapter from Servant_Upcall.  This way other classes
+	  (e.g., the POA) can also call this method.
 
-          - Changed the use of TAO_POA_GUARD to TAO_OBJECT_ADAPTER_GUARD.
-          TAO_POA_GUARD is now exclusively reserved for the POA.
+	  - Changed the use of TAO_POA_GUARD to TAO_OBJECT_ADAPTER_GUARD.
+	  TAO_POA_GUARD is now exclusively reserved for the POA.
 
-          - In servant_cleanup(), <servant_deactivation_condition>
-          broadcast should be done after the servant cleanup is complete.
-          Otherwise, the an awaiting thread may get to check for servant
-          deactivation when the POA lock is temporarily released for
-          _remove_ref() in the servant cleanup.  At this time the servant
-          entry is still in the active object map and the awoken thread
-          will get an untimely wakeup.  However, if the broadcast if done
-          afterward the servant cleanup, the awaiting thread will get the
-          correct and timely wakeup.
+	  - In servant_cleanup(), <servant_deactivation_condition>
+	  broadcast should be done after the servant cleanup is complete.
+	  Otherwise, the an awaiting thread may get to check for servant
+	  deactivation when the POA lock is temporarily released for
+	  _remove_ref() in the servant cleanup.  At this time the servant
+	  entry is still in the active object map and the awoken thread
+	  will get an untimely wakeup.  However, if the broadcast if done
+	  afterward the servant cleanup, the awaiting thread will get the
+	  correct and timely wakeup.
 
-        * tao/Exception.cpp: Added TAO_GUARD_FAILURE and
-          TAO_POA_BEING_DESTROYED for exception location encoding.
+	* tao/Exception.cpp: Added TAO_GUARD_FAILURE and
+	  TAO_POA_BEING_DESTROYED for exception location encoding.
 
-        * tests/POA/Non_Servant_Upcalls: New test to check the users
-          ability to make calls on a POA during non-servant upcalls.  In
-          this example, a servant which is being destroyed during because
-          of a deactivate_object() call, tries to deactivate another
-          object in its destructor.
+	* tests/POA/Non_Servant_Upcalls: New test to check the users
+	  ability to make calls on a POA during non-servant upcalls.  In
+	  this example, a servant which is being destroyed during because
+	  of a deactivate_object() call, tries to deactivate another
+	  object in its destructor.
 
 Mon May 29 09:56:45 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-        * docs/releasenotes/index.html:
-          Put a date back into the 'current status:' line. The
-          section itself is up to date - it's only the date that's
-          out of date ;-). Thanks to William Horn
-          <whorn1984@my-deja.com> for bringing this to our attention.
+	* docs/releasenotes/index.html:
+	  Put a date back into the 'current status:' line. The
+	  section itself is up to date - it's only the date that's
+	  out of date ;-). Thanks to William Horn
+ 	  <whorn1984@my-deja.com> for bringing this to our attention.
 
 Sun May 28 16:46:19 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-        * orbsvcs/tests/Notify/Basic/Updates.cpp:
-          fixed minor compile error on Irix.
+	* orbsvcs/tests/Notify/Basic/Updates.cpp:
+	  fixed minor compile error on Irix.
 
 Sat May 27 23:27:50 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-        * orbsvcs/tests/Notify/Basic/Updates.cpp:
-        * orbsvcs/tests/Notify/Basic/Updates.h:
-          This tests if offer_change and subscription_change received updates
-          correctly.
-        * orbsvcs/tests/Notify/lib/Notify_PushConsumer.h:
-        * orbsvcs/tests/Notify/lib/Notify_PushSupplier.h:
-        * orbsvcs/tests/Notify/lib/Notify_StructuredPushConsumer.cpp:
-        * orbsvcs/tests/Notify/lib/Notify_StructuredPushConsumer.h:
-        * orbsvcs/tests/Notify/lib/Notify_StructuredPushSupplier.cpp:
-        * orbsvcs/tests/Notify/lib/Notify_StructuredPushSupplier.h:
-        * orbsvcs/tests/Notify/lib/notify_test_export.h:
-          Minor restructuring of the test helper classes.
-        * orbsvcs/tests/Makefile:
-          Added "Notify" to the list of directories.
+ 	* orbsvcs/tests/Notify/Basic/Updates.cpp:
+	* orbsvcs/tests/Notify/Basic/Updates.h:
+ 	  This tests if offer_change and subscription_change received updates
+	  correctly.
+	* orbsvcs/tests/Notify/lib/Notify_PushConsumer.h:
+	* orbsvcs/tests/Notify/lib/Notify_PushSupplier.h:
+	* orbsvcs/tests/Notify/lib/Notify_StructuredPushConsumer.cpp:
+	* orbsvcs/tests/Notify/lib/Notify_StructuredPushConsumer.h:
+	* orbsvcs/tests/Notify/lib/Notify_StructuredPushSupplier.cpp:
+	* orbsvcs/tests/Notify/lib/Notify_StructuredPushSupplier.h:
+	* orbsvcs/tests/Notify/lib/notify_test_export.h:
+	  Minor restructuring of the test helper classes.
+	* orbsvcs/tests/Makefile:
+	  Added "Notify" to the list of directories.
 
 Sat May 27 20:59:11 2000  Ossama Othman  <ossama@uci.edu>
 
-        * performance-tests/Cubit/TAO/MT_Cubit/Globals.cpp:
+	* performance-tests/Cubit/TAO/MT_Cubit/Globals.cpp:
 
-          Added missing "ace/Log_Msg.h" include.
+	  Added missing "ace/Log_Msg.h" include.
 
 Sat May 27 18:58:01 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-        * orbsvcs/orbsvcs/Naming/Naming_Utils.h
-        * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp
-        * orbsvcs/orbsvcs/Naming/Persistent_Context_Index.h
-        * orbsvcs/Naming/Naming_Service.h
-        * orbsvcs/Naming/Naming_Service.cpp
-        * orbsvcs/Naming/README
-        * tao/orbconf.h:
-          Added ways to control the memory address used by TAO's
-          persistent Naming Service to map its file:
-          1) "-b" command line option to the Naming Service
-          2) TAO_NAMING_BASE_ADDR in orbconf.h
-          Both are described in the README file mentioned above.  Thanks
-          to Detlef Becker for pointing out the need for control.
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.h
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp
+	* orbsvcs/orbsvcs/Naming/Persistent_Context_Index.h
+	* orbsvcs/Naming/Naming_Service.h
+	* orbsvcs/Naming/Naming_Service.cpp
+	* orbsvcs/Naming/README
+	* tao/orbconf.h:
+	  Added ways to control the memory address used by TAO's
+	  persistent Naming Service to map its file:
+	  1) "-b" command line option to the Naming Service
+	  2) TAO_NAMING_BASE_ADDR in orbconf.h
+	  Both are described in the README file mentioned above.  Thanks
+	  to Detlef Becker for pointing out the need for control.
 
-        * tao/IOP.pidl:
-          Updated comment.
+	* tao/IOP.pidl:
+	  Updated comment.
 
 Sat May 27 01:07:01 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -730,27 +743,27 @@ Sat May 27 01:07:01 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Fri May 26 21:04:38 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-        * docs/releasenotes/index.html: Removed the mention of the
-          specific date for the IDL compiler updates since it's not really
-          up to date anymore.  Thanks to William Horn
-          <whorn1984@my-deja.com> for reporting this.
+	* docs/releasenotes/index.html: Removed the mention of the
+	  specific date for the IDL compiler updates since it's not really
+ 	  up to date anymore.  Thanks to William Horn
+ 	  <whorn1984@my-deja.com> for reporting this.
 
 Fri May 26 11:09:45 2000  Ossama Othman  <ossama@uci.edu>
 
-        * utils/IOR-parser/ior-handler.cpp:
-        * utils/IOR-parser/ior-parser.cpp:
+	* utils/IOR-parser/ior-handler.cpp:
+	* utils/IOR-parser/ior-parser.cpp:
 
-          Include "ace/Log_Msg.h" to pull in the appropriate definition of
-          the ACE logging macros.
+	  Include "ace/Log_Msg.h" to pull in the appropriate definition of
+	  the ACE logging macros.
 
 Fri May 26 12:13:23 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-        * tao/Any.cpp:
-          Fixed two leaks in the CDR << operator for Anys. Both
-          cases were calls to Any::type() without putting the
-          result into a _var. Thanks to Lothar Werzinger
-          <werzinger.lothar@krones.de> for sending in the example
-          that helped track this down.
+	* tao/Any.cpp:
+	  Fixed two leaks in the CDR << operator for Anys. Both
+	  cases were calls to Any::type() without putting the
+	  result into a _var. Thanks to Lothar Werzinger
+	  <werzinger.lothar@krones.de> for sending in the example
+	  that helped track this down.
 
 Fri May 26 08:31:52 2000  Carlos O'Ryan  <coryan@uci.edu>
 
