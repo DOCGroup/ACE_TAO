@@ -16,7 +16,9 @@
 #endif /* HPUX */
 #define HPUX_10
 
+#ifndef _HPUX_SOURCE
 #define _HPUX_SOURCE
+#endif
 
 #include /**/ <sys/stdsyms.h>
 #include /**/ <sched.h>		/*  pthread.h doesn't include this */
@@ -71,11 +73,6 @@ extern int h_errno;	/* This isn't declared in a header file on HP-UX */
 
 // Platform supports the POSIX struct timespec type
 #define ACE_HAS_POSIX_TIME
-
-// Platform supports reentrant functions (i.e., all the POSIX *_r functions).
-#define ACE_HAS_REENTRANT_FUNCTIONS
-// But this one is not like other platforms
-#define ACE_CTIME_R_RETURNS_INT
 
 // Compiler/platform defines the sig_atomic_t typedef
 #define ACE_HAS_SIG_ATOMIC_T
@@ -158,6 +155,11 @@ extern int h_errno;	/* This isn't declared in a header file on HP-UX */
 // the functions are not implemented.
 //#  define ACE_HAS_POSIX_SEM
 #  define ACE_HAS_PTHREAD_T
+
+// Platform supports reentrant functions (i.e., all the POSIX *_r functions).
+#define ACE_HAS_REENTRANT_FUNCTIONS
+// But this one is not like other platforms
+#define ACE_CTIME_R_RETURNS_INT
 
 // Platform has pthread_attr_delete instead of pthread_attr_destroy
 // ACE needs to define PRIORITY_MAX
