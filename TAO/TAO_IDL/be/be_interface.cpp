@@ -1356,6 +1356,11 @@ be_interface::gen_collocated_skel_body (be_interface *derived,
 void
 be_interface::analyze_parentage (void)
 {
+  if (this->has_mixed_parentage_ != -1)
+    {
+      return;
+    }
+  
   this->has_mixed_parentage_ = 0;
 
   for (long i = 0; i < this->pd_n_inherits; ++i)
@@ -1369,9 +1374,13 @@ be_interface::analyze_parentage (void)
           break;
         }
     }
+    
+  AST_Decl::NodeType nt = this->node_type ();
+  idl_bool can_be_mixed = nt == AST_Decl::NT_interface 
+                          || nt == AST_Decl::NT_component
+                          || nt == AST_Decl::NT_home;
 
-  if (this->has_mixed_parentage_ == 1
-      && this->node_type () == AST_Decl::NT_interface)
+  if (this->has_mixed_parentage_ == 1 && can_be_mixed)
     {
       be_global->mixed_parentage_interfaces.enqueue_tail (this);
     }

@@ -1,3 +1,22 @@
+Tue Aug 17 17:56:23 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_component/component.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ch.cpp:
+        * TAO_IDL/be/be_visitor_component/component_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/fe/fe_interface_header.cpp:
+        * TAO_IDL/include/utl_err.h:
+        * TAO_IDL/util/utl_err.cpp:
+        
+          Eliminated the error message generated when a component is
+          supporting an abstract interface - it was mistakenly assumed
+          that such a thing was barred by the spec. Once this error
+          was eliminated, other changes were required to support the
+          new 'feature'.
+
 Tue Aug 17 15:48:28 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_interface.cpp:

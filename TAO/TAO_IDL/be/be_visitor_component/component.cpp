@@ -45,16 +45,11 @@ be_visitor_component::visit_attribute (be_attribute *node)
 
   switch (this->ctx_->state ())
     {
-    case TAO_CodeGen::TAO_ROOT_CH:
-      break;
+    case TAO_CodeGen::TAO_INTERFACE_CH:
     case TAO_CodeGen::TAO_ROOT_CS:
-      break;
     case TAO_CodeGen::TAO_ROOT_SH:
-      break;
     case TAO_CodeGen::TAO_ROOT_IH:
-      break;
     case TAO_CodeGen::TAO_ROOT_SS:
-      break;
     case TAO_CodeGen::TAO_ROOT_IS:
       break;
     default:

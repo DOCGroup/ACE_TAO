@@ -213,8 +213,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
     }
 
   // If we inherit from both CORBA::Object and CORBA::AbstractBase,
-  // we have to override _add_ref() to avoid ambiguity, because it is
-  // called in _tao_Queryinterface().
+  // we have to override _add_ref() to avoid ambiguity.
   if (node->has_mixed_parentage ())
     {
       *os << "virtual void _add_ref (void);" << be_nl << be_nl;

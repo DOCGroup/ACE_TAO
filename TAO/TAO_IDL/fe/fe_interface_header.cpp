@@ -950,14 +950,6 @@ FE_ComponentHeader::compile_supports (UTL_NameList *supports)
           continue;
         }
 
-      // Abstract interface? (illegal for components to support).
-      if (i->is_abstract ())
-        {
-          idl_global->err ()->concrete_interface_expected (this->name (),
-                                                           i->name ());
-          continue;
-        }
-
       // Local interface? (illegal for components to support).
       if (i->is_local ())
         {
