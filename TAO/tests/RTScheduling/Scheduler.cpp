@@ -6,7 +6,10 @@
 
 TAO_Scheduler::TAO_Scheduler (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 {
-  CORBA::Object_ptr current_obj = orb->resolve_initial_references ("RTScheduler_Current");
+  CORBA::Object_ptr current_obj =
+    orb->resolve_initial_references ("RTScheduler_Current"
+                                     ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
   current_ = RTScheduling::Current::_narrow (current_obj
                                              ACE_ENV_ARG_PARAMETER);
