@@ -7,7 +7,11 @@ TAO_BUILDDIR = $(top_builddir)
 
 ## Makefile.FTRTEC_Factory_Service.am 
 
+if BUILD_ACE_UUID
+if !BUILD_MINIMUM_CORBA
 noinst_PROGRAMS = ftrtec_factory_service
+endif
+endif
 
 ftrtec_factory_service_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -18,7 +22,8 @@ ftrtec_factory_service_CPPFLAGS = \
 
 ftrtec_factory_service_SOURCES = \
   EventChannelFactory_i.cpp \
-  FTRTEC_Factory_Service.cpp
+  FTRTEC_Factory_Service.cpp \
+  EventChannelFactory_i.h
 
 ftrtec_factory_service_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FaultTolerance.la \
@@ -41,8 +46,6 @@ ftrtec_factory_service_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-noinst_HEADERS = \
-  EventChannelFactory_i.h
 
 ## Clean up template repositories, etc.
 clean-local:

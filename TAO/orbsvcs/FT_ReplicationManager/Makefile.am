@@ -7,7 +7,11 @@ TAO_BUILDDIR = $(top_builddir)
 
 ## Makefile.FT_ReplicationManager_Lib.am 
 
+if BUILD_ACE_UUID
+if !BUILD_MINIMUM_CORBA
 lib_LTLIBRARIES = libTAO_ReplicationManagerLib.la
+endif
+endif
 
 libTAO_ReplicationManagerLib_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -18,13 +22,10 @@ libTAO_ReplicationManagerLib_la_CPPFLAGS = \
   -DTAO_REPLICATIONMANAGERLIB_BUILD_DLL
 
 libTAO_ReplicationManagerLib_la_SOURCES = \
-  FT_FaultAnalyzer.cpp \
   FT_DefaultFaultAnalyzer.cpp \
-  FT_FaultEventDescriptor.cpp \
-  FT_FaultConsumer.cpp
-
-libTAO_ReplicationManagerLib_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+  FT_FaultAnalyzer.cpp \
+  FT_FaultConsumer.cpp \
+  FT_FaultEventDescriptor.cpp
 
 libTAO_ReplicationManagerLib_la_LIBADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FaultTolerance.la \
@@ -48,15 +49,19 @@ libTAO_ReplicationManagerLib_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 noinst_HEADERS = \
-  FT_FaultAnalyzer.h \
-  FT_FaultEventDescriptor.h \
   FT_DefaultFaultAnalyzer.h \
-  FT_FaultConsumer.h
+  FT_FaultAnalyzer.h \
+  FT_FaultConsumer.h \
+  FT_FaultEventDescriptor.h
 
 
 ## Makefile.FT_ReplicationManager.am 
 
+if BUILD_ACE_UUID
+if !BUILD_MINIMUM_CORBA
 noinst_PROGRAMS = FT_ReplicationManager
+endif
+endif
 
 FT_ReplicationManager_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -66,37 +71,36 @@ FT_ReplicationManager_CPPFLAGS = \
   -I$(TAO_ROOT)/orbsvcs/orbsvcs
 
 FT_ReplicationManager_SOURCES = \
-  FT_ReplicationManager.cpp \
-  FT_ReplicationManager_Main.cpp \
   FT_Property_Validator.cpp \
-  FT_ReplicationManagerFaultAnalyzer.cpp
+  FT_ReplicationManager.cpp \
+  FT_ReplicationManagerFaultAnalyzer.cpp \
+  FT_ReplicationManager_Main.cpp \
+  FT_Property_Validator.h \
+  FT_ReplicationManager.h \
+  FT_ReplicationManagerFaultAnalyzer.h
 
 FT_ReplicationManager_LDADD = \
- libTAO_ReplicationManagerLib.la \
- $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FaultTolerance.la \
- $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FT_ServerORB.la \
- $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FT_ClientORB.la \
- $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FTORB_Utils.la \
- $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_PortableGroup.la \
- $(TAO_BUILDDIR)/tao/libTAO_IORManip.la \
- $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification.la \
- $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
- $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
- $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
- $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
- $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
- $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
- $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
- $(TAO_BUILDDIR)/tao/libTAO_IORInterceptor.la \
- $(TAO_BUILDDIR)/tao/libTAO_ObjRefTemplate.la \
- $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
- $(TAO_BUILDDIR)/tao/libTAO.la \
- $(ACE_BUILDDIR)/ace/libACE.la
+  libTAO_ReplicationManagerLib.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FaultTolerance.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FT_ServerORB.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FT_ClientORB.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FTORB_Utils.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_PortableGroup.la \
+  $(TAO_BUILDDIR)/tao/libTAO_IORManip.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification.la \
+  $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_IORInterceptor.la \
+  $(TAO_BUILDDIR)/tao/libTAO_ObjRefTemplate.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-noinst_HEADERS += \
-  FT_ReplicationManagerFaultAnalyzer.h \
-  FT_Property_Validator.h \
-  FT_ReplicationManager.h
 
 ## Clean up template repositories, etc.
 clean-local:

@@ -7,7 +7,9 @@ TAO_BUILDDIR = $(top_builddir)
 
 ## Makefile.Event_Service.am 
 
+if !BUILD_MINIMUM_CORBA
 noinst_PROGRAMS = Event_Service
+endif
 
 Event_Service_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -18,7 +20,8 @@ Event_Service_CPPFLAGS = \
   -DTAO_HAS_TYPED_EVENT_CHANNEL
 
 Event_Service_SOURCES = \
-  Event_Service.cpp
+  Event_Service.cpp \
+  Event_Service.h
 
 Event_Service_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_BiDirGIOP.la \
@@ -40,8 +43,6 @@ Event_Service_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-noinst_HEADERS = \
-  Event_Service.h
 
 ## Clean up template repositories, etc.
 clean-local:

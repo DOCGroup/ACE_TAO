@@ -7,7 +7,9 @@ TAO_BUILDDIR = $(top_builddir)
 
 ## Makefile.IFR_Service.am 
 
+if !BUILD_MINIMUM_CORBA
 noinst_PROGRAMS = IFR_Service
+endif
 
 IFR_Service_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -17,27 +19,28 @@ IFR_Service_CPPFLAGS = \
 
 IFR_Service_SOURCES = \
   IFR_Server.cpp \
-  IFR_Service.cpp
+  IFR_Service.cpp \
+  IFR_Service.h
 
 IFR_Service_LDADD = \
- $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_IFRService.la \
- $(TAO_BUILDDIR)/tao/libTAO_TypeCodeFactory.la \
- $(TAO_BUILDDIR)/tao/libTAO_IFR_Client.la \
- $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
- $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
- $(TAO_BUILDDIR)/tao/libTAO_IORInterceptor.la \
- $(TAO_BUILDDIR)/tao/libTAO_ObjRefTemplate.la \
- $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
- $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
- $(TAO_BUILDDIR)/tao/libTAO.la \
- $(ACE_BUILDDIR)/ace/libACE.la
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_IFRService.la \
+  $(TAO_BUILDDIR)/tao/libTAO_TypeCodeFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_IFR_Client.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_IORInterceptor.la \
+  $(TAO_BUILDDIR)/tao/libTAO_ObjRefTemplate.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-noinst_HEADERS = \
-  IFR_Service.h
 
 ## Makefile.TAO_IFR_BE.am 
 
+if !BUILD_MINIMUM_CORBA
 lib_LTLIBRARIES = libTAO_IFR_BE.la
+endif
 
 libTAO_IFR_BE_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -64,26 +67,28 @@ libTAO_IFR_BE_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_IFR_BE_la_LIBADD = \
- $(TAO_BUILDDIR)/TAO_IDL/libTAO_IDL_FE.la \
- $(TAO_BUILDDIR)/tao/libTAO_IFR_Client.la \
- $(TAO_BUILDDIR)/tao/libTAO.la \
- $(ACE_BUILDDIR)/ace/libACE.la
+  $(TAO_BUILDDIR)/TAO_IDL/libTAO_IDL_FE.la \
+  $(TAO_BUILDDIR)/tao/libTAO_IFR_Client.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-noinst_HEADERS += \
+noinst_HEADERS = \
   be_extern.h \
   be_global.h \
-  ifr_adding_visitor_union.h \
-  ifr_adding_visitor_exception.h \
-  ifr_adding_visitor_structure.h \
-  ifr_adding_visitor_operation.h \
   ifr_adding_visitor.h \
-  ifr_visitor.h \
-  ifr_removing_visitor.h
+  ifr_adding_visitor_exception.h \
+  ifr_adding_visitor_operation.h \
+  ifr_adding_visitor_structure.h \
+  ifr_adding_visitor_union.h \
+  ifr_removing_visitor.h \
+  ifr_visitor.h
 
 
 ## Makefile.TAO_IFR_EXE.am 
 
+if !BUILD_MINIMUM_CORBA
 bin_PROGRAMS = tao_ifr
+endif
 
 tao_ifr_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -97,7 +102,8 @@ tao_ifr_CPPFLAGS = \
 tao_ifr_SOURCES = \
   $(TAO_ROOT)/TAO_IDL/driver/drv_args.cpp \
   $(TAO_ROOT)/TAO_IDL/driver/drv_preproc.cpp \
-  $(TAO_ROOT)/TAO_IDL/tao_idl.cpp
+  $(TAO_ROOT)/TAO_IDL/tao_idl.cpp \
+  $(TAO_ROOT)/TAO_IDL/include/drv_extern.h
 
 tao_ifr_LDADD = \
   libTAO_IFR_BE.la \
@@ -106,8 +112,6 @@ tao_ifr_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-noinst_HEADERS += \
-  $(TAO_ROOT)/TAO_IDL/include/drv_extern.h
 
 ## Clean up template repositories, etc.
 clean-local:

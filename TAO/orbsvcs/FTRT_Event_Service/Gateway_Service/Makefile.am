@@ -7,7 +7,11 @@ TAO_BUILDDIR = $(top_builddir)
 
 ## Makefile.FTRTEC_Gateway_Service.am 
 
+if BUILD_ACE_UUID
+if !BUILD_MINIMUM_CORBA
 noinst_PROGRAMS = ftrtec_gateway_service
+endif
+endif
 
 ftrtec_gateway_service_CPPFLAGS = \
   -I$(ACE_ROOT) \

@@ -7,7 +7,9 @@ TAO_BUILDDIR = $(top_builddir)
 
 ## Makefile.Event_Logging_Service.am 
 
+if !BUILD_MINIMUM_CORBA
 noinst_PROGRAMS = Event_Logging_Service
+endif
 
 Event_Logging_Service_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -18,9 +20,10 @@ Event_Logging_Service_CPPFLAGS = \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_ROOT)/orbsvcs/orbsvcs \
   -DTAO_HAS_TYPED_EVENT_CHANNEL
- 
+
 Event_Logging_Service_SOURCES = \
-  Event_Logging_Service.cpp
+  Event_Logging_Service.cpp \
+  Event_Logging_Service.h
 
 Event_Logging_Service_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_DsEventLogAdmin.la \
@@ -41,8 +44,6 @@ Event_Logging_Service_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-noinst_HEADERS = \
-  Event_Logging_Service.h
 
 ## Clean up template repositories, etc.
 clean-local:

@@ -7,7 +7,9 @@ TAO_BUILDDIR = $(top_builddir)
 
 ## Makefile.LifeCycle_Service.am 
 
+if !BUILD_MINIMUM_CORBA
 noinst_PROGRAMS = LifeCycle_Service
+endif
 
 LifeCycle_Service_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -17,31 +19,30 @@ LifeCycle_Service_CPPFLAGS = \
   -I$(TAO_ROOT)/orbsvcs/orbsvcs
 
 LifeCycle_Service_SOURCES = \
-  Factory_Trader.cpp \
   Criteria_Evaluator.cpp \
+  Factory_Trader.cpp \
   LifeCycle_Service.cpp \
-  LifeCycle_Service_i.cpp
+  LifeCycle_Service_i.cpp \
+  Criteria_Evaluator.h \
+  Factory_Trader.h \
+  LifeCycle_Service.h \
+  LifeCycle_Service_i.h
 
 LifeCycle_Service_LDADD = \
- $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosTrading.la \
- $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
- $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosLifeCycle.la \
- $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
- $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
- $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
- $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
- $(TAO_BUILDDIR)/tao/libTAO_IORInterceptor.la \
- $(TAO_BUILDDIR)/tao/libTAO_ObjRefTemplate.la \
- $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
- $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
- $(TAO_BUILDDIR)/tao/libTAO.la \
- $(ACE_BUILDDIR)/ace/libACE.la
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosTrading.la \
+  $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosLifeCycle.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_IORInterceptor.la \
+  $(TAO_BUILDDIR)/tao/libTAO_ObjRefTemplate.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-noinst_HEADERS = \
-  LifeCycle_Service_i.h \
-  Factory_Trader.h \
-  Criteria_Evaluator.h \
-  LifeCycle_Service.h
 
 ## Clean up template repositories, etc.
 clean-local:
