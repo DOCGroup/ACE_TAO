@@ -37,7 +37,7 @@ while ($line = <fp>)
         }
         else
         {
-            print "$sin_begin $line $sin_end<BR>";
+            print "$in_sin_b $line $in_sin_e<BR>";
         }
     }
 
