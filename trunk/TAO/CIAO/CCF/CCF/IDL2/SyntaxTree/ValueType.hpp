@@ -19,14 +19,11 @@ namespace CCF
       //
       class ValueTypeDecl : public virtual TypeDecl
       {
-      public:
+      protected:
         virtual
         ~ValueTypeDecl () throw () {}
 
-        ValueTypeDecl (SimpleName const& name,
-                       ScopePtr const& scope)
-            : Declaration (name, scope),
-              TypeDecl (name, scope)
+        ValueTypeDecl ()
         {
           type_info (static_type_info ());
         }
@@ -82,10 +79,13 @@ namespace CCF
 
         ValueTypeForwardDecl (SimpleName const& name,
                               ScopePtr const& scope)
-            : Declaration (name, scope),
-              TypeDecl (name, scope),
-              ValueTypeDecl (name, scope),
-              TypeForwardDecl (name, scope)
+            : Declaration (name, scope)
+        {
+          type_info (static_type_info ());
+        }
+
+      protected:
+        ValueTypeForwardDecl ()
         {
           type_info (static_type_info ());
         }
@@ -136,11 +136,7 @@ namespace CCF
         ValueTypeDef (SimpleName const& name,
                       ScopePtr const& scope,
                       ScopedNameSet const& inherits)
-            : Declaration (name, scope),
-              TypeDecl (name, scope),
-              ValueTypeDecl (name, scope),
-              TypeDef (name, scope),
-              Scope (name, scope)
+            : Declaration (name, scope)
         {
           type_info (static_type_info ());
 
@@ -148,9 +144,27 @@ namespace CCF
                i != inherits.end ();
                i++)
           {
-            inherits_.insert (ValueTypeDefRef (scope->table (), *i));
+            inherits_.insert (ValueTypeDefRef (table (), *i));
           }
         }
+
+      protected:
+        ValueTypeDef (ScopedNameSet const& inherits)
+        {
+          type_info (static_type_info ());
+
+          for (ScopedNameSet::const_iterator i = inherits.begin ();
+               i != inherits.end ();
+               i++)
+          {
+            inherits_.insert (ValueTypeDefRef (table (), *i));
+          }
+        }
+
+        // This c-tor is never called.
+        //
+        ValueTypeDef ();
+
 
         // Runtime declaration type information
       public:
@@ -183,7 +197,6 @@ namespace CCF
       typedef
       std::set<ValueTypeDefRef, ValueTypeDefRefOrderComparator>
       ValueTypeDefRefSet;
-
     }
   }
 }

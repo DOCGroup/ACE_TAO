@@ -77,10 +77,11 @@ namespace CCF
           map (typeid (SyntaxTree::FileScope), this);
         }
 
-        virtual void
+        virtual bool
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::FileScope> ());
+	  return true;
         }
 
         virtual void
@@ -112,10 +113,11 @@ namespace CCF
           map (typeid (SyntaxTree::TranslationRegion), this);
         }
 
-        virtual void
+        virtual bool
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::TranslationRegion> ());
+          return true;
         }
 
         virtual void
@@ -150,10 +152,11 @@ namespace CCF
           map (typeid (SyntaxTree::IncludeTranslationRegion), this);
         }
 
-        virtual void
+        virtual bool
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::IncludeTranslationRegion> ());
+          return true;
         }
 
         virtual void
@@ -188,11 +191,12 @@ namespace CCF
           map (typeid (SyntaxTree::UserIncludeTranslationRegion), this);
         }
 
-        virtual void
+        virtual bool
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (
             n->dynamic_type<SyntaxTree::UserIncludeTranslationRegion> ());
+          return true;
         }
 
         virtual void
@@ -227,11 +231,12 @@ namespace CCF
           map (typeid (SyntaxTree::SysIncludeTranslationRegion), this);
         }
 
-        virtual void
+        virtual bool
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (
             n->dynamic_type<SyntaxTree::SysIncludeTranslationRegion> ());
+          return true;
         }
 
         virtual void
@@ -266,11 +271,12 @@ namespace CCF
           map (typeid (SyntaxTree::ImpliedIncludeTranslationRegion), this);
         }
 
-        virtual void
+        virtual bool
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (
             n->dynamic_type<SyntaxTree::ImpliedIncludeTranslationRegion> ());
+          return true;
         }
 
         virtual void
@@ -305,10 +311,11 @@ namespace CCF
           map (typeid (SyntaxTree::PrincipalTranslationRegion), this);
         }
 
-        virtual void
+        virtual bool
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::PrincipalTranslationRegion> ());
+          return true;
         }
 
         virtual void
@@ -342,10 +349,11 @@ namespace CCF
           map (typeid (SyntaxTree::TranslationUnit), this);
         }
 
-        virtual void
+        virtual bool
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::TranslationUnit> ());
+          return true;
         }
 
         virtual void

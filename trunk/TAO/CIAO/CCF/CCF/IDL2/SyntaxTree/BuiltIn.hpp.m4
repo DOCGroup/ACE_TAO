@@ -20,10 +20,7 @@ define(`built_in_type_impl', `
         ~$1 () throw () {}
 
         $1 (ScopePtr const& scope)
-            : Declaration (SimpleName ("$2"), scope),
-              TypeDecl (SimpleName ("$2"), scope),
-              TypeDef (SimpleName ("$2"), scope),
-              BuiltInTypeDef (SimpleName ("$2"), scope)
+            : Declaration (SimpleName ("$2"), scope)
         {
           type_info (static_type_info ());
         }
@@ -75,11 +72,7 @@ namespace CCF
         virtual
         ~BuiltInTypeDef () throw () {}
 
-        BuiltInTypeDef (SimpleName const& name,
-                        ScopePtr const& scope)
-            : Declaration (name, scope),
-              TypeDecl (name, scope),
-              TypeDef (name, scope)
+        BuiltInTypeDef ()
         {
           type_info (static_type_info ());
         }

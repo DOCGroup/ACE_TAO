@@ -11,6 +11,7 @@
 #include "CCF/IDL2/SemanticAction/Interface.hpp"
 #include "CCF/IDL2/SemanticAction/Module.hpp"
 #include "CCF/IDL2/SemanticAction/Operation.hpp"
+#include "CCF/IDL2/SemanticAction/Typedef.hpp"
 #include "CCF/IDL2/SemanticAction/TypeId.hpp"
 
 #include "CCF/IDL2/SemanticAction/Factory.hpp"

@@ -30,8 +30,7 @@ namespace CCF
                       ScopedName implements,
                       SimpleName manages)
             : Declaration (name, scope),
-              Scope (name, scope),
-              implements_ (scope->table (), implements),
+              implements_ (table (), implements),
               manages_ (manages)
         {
           type_info (static_type_info ());

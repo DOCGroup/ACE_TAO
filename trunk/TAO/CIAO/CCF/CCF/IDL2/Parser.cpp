@@ -44,6 +44,7 @@ namespace CCF
           OUT        ("out"),
           SINCLUDE   ("sinclude"),
           SUPPORTS   ("supports"),
+          TYPEDEF    ("typedef"),
           TYPEID     ("typeid"),
           TYPEPREFIX ("typeprefix"),
 
@@ -55,39 +56,22 @@ namespace CCF
           RPAREN (")"),
           SEMI   (";"),
 
+
+          // Attribute
+          //
+          //
+          act_attribute_type (
+            f.attribute (), &SemanticAction::Attribute::type),
+
+          act_attribute_name (
+            f.attribute (), &SemanticAction::Attribute::name),
+
+
           // Include
           //
           //
           act_include_begin (f.include (), &SemanticAction::Include::begin),
           act_include_end (f.include (), &SemanticAction::Include::end),
-
-          // TypeId
-          //
-          //
-          act_type_id_begin (f.type_id (), &SemanticAction::TypeId::begin),
-          act_type_id_end (f.type_id (), &SemanticAction::TypeId::end),
-
-          // TypePrefix
-          //
-          //
-          act_type_prefix_begin (f.type_prefix (),
-                                 &SemanticAction::TypePrefix::begin),
-
-          act_type_prefix_end (f.type_prefix (),
-                               &SemanticAction::TypePrefix::end),
-
-          // Module
-          //
-          //
-          act_module_begin (f.module (), &SemanticAction::Module::begin),
-
-          act_module_open_scope (
-            f.module (), &SemanticAction::Scope::open_scope),
-
-          act_module_close_scope (
-            f.module (), &SemanticAction::Scope::close_scope),
-
-          act_module_end (f.module (), &SemanticAction::Module::end),
 
 
           // Interface
@@ -113,14 +97,20 @@ namespace CCF
 
           act_interface_end (f.interface (), &SemanticAction::Interface::end),
 
-          // Attribute
-          //
-          //
-          act_attribute_type (
-            f.attribute (), &SemanticAction::Attribute::type),
 
-          act_attribute_name (
-            f.attribute (), &SemanticAction::Attribute::name),
+          // Module
+          //
+          //
+          act_module_begin (f.module (), &SemanticAction::Module::begin),
+
+          act_module_open_scope (
+            f.module (), &SemanticAction::Scope::open_scope),
+
+          act_module_close_scope (
+            f.module (), &SemanticAction::Scope::close_scope),
+
+          act_module_end (f.module (), &SemanticAction::Module::end),
+
 
           // Operation
           //
@@ -131,8 +121,37 @@ namespace CCF
           act_operation_parameter (
             this, &Parser::act_operation_parameter_core),
 
-          act_operation_end (f.operation (), &SemanticAction::Operation::end)
+          act_operation_end (f.operation (), &SemanticAction::Operation::end),
 
+
+          // Typedef
+          //
+          //
+          act_typedef_begin (
+            f.typedef_ (), &SemanticAction::Typedef::begin),
+
+          act_typedef_declarator (
+            f.typedef_ (), &SemanticAction::Typedef::declarator),
+
+          act_typedef_end (
+            f.typedef_ (), &SemanticAction::Typedef::end),
+
+
+          // TypeId
+          //
+          //
+          act_type_id_begin (f.type_id (), &SemanticAction::TypeId::begin),
+          act_type_id_end (f.type_id (), &SemanticAction::TypeId::end),
+
+
+          // TypePrefix
+          //
+          //
+          act_type_prefix_begin (f.type_prefix (),
+                                 &SemanticAction::TypePrefix::begin),
+
+          act_type_prefix_end (f.type_prefix (),
+                               &SemanticAction::TypePrefix::end)
     {
       language =
         guard
@@ -161,12 +180,13 @@ namespace CCF
 
       declaration =
           abstract_type_decl
+        | extension
         | local_type_decl
         | module_decl
-        | unconstrained_interface_decl
-        | extension
+        | typedef_
         | type_id
         | type_prefix
+        | unconstrained_interface_decl
         ;
 
       type_id =
@@ -402,6 +422,30 @@ namespace CCF
            >> identifier
            >> simple_identifier
         )[act_operation_parameter]
+        ;
+
+
+      // typedef
+      //
+      //
+
+      typedef_ =
+           TYPEDEF
+        >> identifier[act_typedef_begin]
+        >> typedef_declarator_list
+        >> SEMI[act_typedef_end]
+        ;
+
+      typedef_type_spec =
+           identifier[act_typedef_begin]
+        ;
+
+      typedef_declarator_list =
+           identifier[act_typedef_declarator]
+        >> *(
+                 COMMA
+              >> identifier[act_typedef_declarator]
+            )
         ;
     }
   }
