@@ -43,6 +43,7 @@
 #include "tao/PolicyC.h"
 #include "tao/OctetSeqC.h"
 #include "tao/CurrentC.h"
+#include "tao.CDR.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
