@@ -400,8 +400,7 @@ ACE_INLINE
 Messaging::PriorityRange_var::PriorityRange_var (const Messaging::PriorityRange_var &p) // copy constructor
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_, 
-             Messaging::PriorityRange(*p.ptr_));
+    this->ptr_ = new Messaging::PriorityRange(*p.ptr_);
   else
     this->ptr_ = 0;
 }
@@ -426,9 +425,7 @@ Messaging::PriorityRange_var::operator= (const Messaging::PriorityRange_var &p)
   if (this != &p)
   {
     delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    Messaging::PriorityRange (*p.ptr_),
-		    *this);
+    this->ptr_ = new Messaging::PriorityRange (*p.ptr_);
   }
   return *this;
 }
@@ -2008,8 +2005,7 @@ ACE_INLINE
 Messaging::RoutingTypeRange_var::RoutingTypeRange_var (const Messaging::RoutingTypeRange_var &p) // copy constructor
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_, 
-             Messaging::RoutingTypeRange(*p.ptr_));
+    this->ptr_ = new Messaging::RoutingTypeRange(*p.ptr_);
   else
     this->ptr_ = 0;
 }
@@ -2034,9 +2030,7 @@ Messaging::RoutingTypeRange_var::operator= (const Messaging::RoutingTypeRange_va
   if (this != &p)
   {
     delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    Messaging::RoutingTypeRange (*p.ptr_), 
-		    *this);
+    this->ptr_ = new Messaging::RoutingTypeRange (*p.ptr_);
   }
   return *this;
 }
@@ -2681,8 +2675,7 @@ ACE_INLINE
 Messaging::PolicyValue_var::PolicyValue_var (const Messaging::PolicyValue_var &p) // copy constructor
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_, 
-             Messaging::PolicyValue(*p.ptr_));
+    this->ptr_ = new Messaging::PolicyValue(*p.ptr_);
   else
     this->ptr_ = 0;
 }
@@ -2707,9 +2700,7 @@ Messaging::PolicyValue_var::operator= (const Messaging::PolicyValue_var &p)
   if (this != &p)
   {
     delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    Messaging::PolicyValue (*p.ptr_), 
-		    *this);
+    this->ptr_ = new Messaging::PolicyValue (*p.ptr_);
   }
   return *this;
 }
@@ -2853,8 +2844,7 @@ ACE_INLINE
 Messaging::PolicyValueSeq_var::PolicyValueSeq_var (const Messaging::PolicyValueSeq_var &p) // copy constructor
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_, 
-             Messaging::PolicyValueSeq (*p.ptr_));
+    this->ptr_ = new Messaging::PolicyValueSeq(*p.ptr_);
   else
     this->ptr_ = 0;
 }
@@ -2879,9 +2869,7 @@ Messaging::PolicyValueSeq_var::operator= (const Messaging::PolicyValueSeq_var &p
   if (this != &p)
   {
     delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    Messaging::PolicyValueSeq (*p.ptr_), 
-		    *this);
+    this->ptr_ = new Messaging::PolicyValueSeq (*p.ptr_);
   }
   return *this;
 }
@@ -3019,7 +3007,7 @@ Messaging::PolicyValueSeq_out::operator[] (CORBA::ULong slot)
   return this->ptr_->operator[] (slot);
 }
 
-#if defined(TAO_HAS_AMI_POLLER)
+#if defined(TAO_POLLER)
 // *************************************************************
 // Inline operations for class Messaging::ExceptionHolder_var
 // *************************************************************
@@ -3038,8 +3026,7 @@ ACE_INLINE
 Messaging::ExceptionHolder_var::ExceptionHolder_var (const Messaging::ExceptionHolder_var &p) // copy constructor
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_, 
-             Messaging::ExceptionHolder (*p.ptr_));
+    this->ptr_ = new Messaging::ExceptionHolder(*p.ptr_);
   else
     this->ptr_ = 0;
 }
@@ -3064,9 +3051,7 @@ Messaging::ExceptionHolder_var::operator= (const Messaging::ExceptionHolder_var 
   if (this != &p)
   {
     delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    Messaging::ExceptionHolder (*p.ptr_),
-		    *this);
+    this->ptr_ = new Messaging::ExceptionHolder (*p.ptr_);
   }
   return *this;
 }
@@ -3192,11 +3177,7 @@ Messaging::ExceptionHolder_out::operator-> (void)
   return this->ptr_;
 }
 
-#endif /* TAO_HAS_AMI_POLLER */
-
 // ****************************************************************
-
-#if defined (TAO_HAS_AMI_CALLBACK) || defined (TAO_HAS_AMI_POLLER)
 
 ACE_INLINE
 Messaging::ReplyHandler::ReplyHandler (void) // default constructor
@@ -3385,10 +3366,7 @@ Messaging::ReplyHandler_out::operator-> (void)
   return this->ptr_;
 }
 
-#endif /* TAO_HAS_AMI_CALLBACK || TAO_HAS_AMI_POLLER */
-
-#if defined(TAO_HAS_AMI_POLLER)
-
+#if defined(TAO_POLLER)
 ACE_INLINE
 Messaging::Poller::Poller (void) // default constructor
 {}
@@ -3575,6 +3553,7 @@ Messaging::Poller_out::operator-> (void)
 {
   return this->ptr_;
 }
+#endif
 
 // ****************************************************************
 
@@ -3834,10 +3813,6 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, Messaging::ExceptionHo
 
 }
 
-#endif /* TAO_HAS_AMI_POLLER */
-
-#if defined (TAO_HAS_AMI_CALLBACK)
-
 // ****************************************************************
 
 ACE_INLINE CORBA::Boolean
@@ -3889,11 +3864,7 @@ operator>> (
   return 0;
 }
 
-#endif /* TAO_HAS_AMI_CALLBACK */
-
 // ****************************************************************
-
-#if defined (TAO_HAS_AMI_POLLER)
 
 ACE_INLINE CORBA::Boolean
 operator<< (
@@ -3943,5 +3914,4 @@ operator>> (
   ACE_ENDTRY;
   return 0;
 }
-
-#endif /* TAO_HAS_AMI_POLLER */
+#endif

@@ -60,7 +60,7 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
                         -1);
     }
 
-  // generate the CORBA::Environment parameter for the alternative mapping
+  // generate the CORBA::Environment parameter for the alternative mapping 
   if (!idl_global->exception_support ())
     {
       // if the operation node has parameters, then we need to insert a comma
@@ -104,14 +104,6 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_CH:
-      // User defined operations are pure virtual if the interface
-      // is locality constraint.
-      if (idl_global->gen_locality_constraint ())
-        {
-          *os << " = 0;\n\n";
-          break;
-        }
-      // Fall thru.
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_COLLOCATED_SH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_IH:
       *os << ";\n\n";
@@ -226,3 +218,4 @@ be_visitor_operation_arglist::post_process (be_decl *bd)
     }
   return 0;
 }
+

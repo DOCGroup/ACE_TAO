@@ -1,21 +1,11 @@
 # $Id$
 
 Description:
+
 This is a simple test for AMI callback model.
 
-
-Note:
-Use TAO_HAS_CORBA_MESSAGING
-and TAO_HAS_AMI_CALLBACK
-to compile TAO. This enables the AMI code in it.
-
-Also use -GC on the TAO IDL compiler if you want to generate
-code for AMI callbacks.
-
-Usage:
-=====
-$ server -o ior
-$ simple_client -ORBSvcConf simple_client_muxed.conf -k file://ior -i 10
+$ server -o test.ior
+$ client -k file://test.ior -n 4 -i 1000
 
 simple-client:
 =============

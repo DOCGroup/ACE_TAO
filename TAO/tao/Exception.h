@@ -265,9 +265,9 @@ TAO_SYSTEM_EXCEPTION(INTF_REPOS);       // interface repository unavailable
 TAO_SYSTEM_EXCEPTION(BAD_CONTEXT);      // error processing context object
 TAO_SYSTEM_EXCEPTION(OBJ_ADAPTER);      // object adapter failure
 TAO_SYSTEM_EXCEPTION(DATA_CONVERSION);  // data conversion error
-TAO_SYSTEM_EXCEPTION(INV_POLICY);       // invalid policies present
-TAO_SYSTEM_EXCEPTION(REBIND);           // rebind needed
-TAO_SYSTEM_EXCEPTION(TIMEOUT);          // operation timed out
+TAO_SYSTEM_EXCEPTION(INV_POLICY);       // invalid policy override
+TAO_SYSTEM_EXCEPTION(REBIND);
+TAO_SYSTEM_EXCEPTION(TIMEOUT);
 TAO_SYSTEM_EXCEPTION(TRANSACTION_UNAVAILABLE);
 TAO_SYSTEM_EXCEPTION(TRANSACTION_MODE);
 TAO_SYSTEM_EXCEPTION(TRANSACTION_REQUIRED);   // operation needs transaction

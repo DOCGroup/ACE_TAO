@@ -24,16 +24,6 @@
 
 ACE_RCSID(EC_Multiple, EC_Multiple, "$Id$")
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Auto_Basic_Ptr<POA_RtecScheduler::Scheduler>;
-template class ACE_PushConsumer_Adapter<Test_Supplier>;
-template class auto_ptr<POA_RtecScheduler::Scheduler>;
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Auto_Basic_Ptr<POA_RtecScheduler::Scheduler>
-#pragma instantiate ACE_PushConsumer_Adapter<Test_Supplier>
-#pragma instantiate auto_ptr<POA_RtecScheduler::Scheduler>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 Test_ECG::Test_ECG (void)
   : lcl_name_ ("Test_ECG"),
     rmt_name_ (0),
@@ -65,6 +55,8 @@ Test_ECG::Test_ECG (void)
     ready_cnd_ (ready_mtx_)
 {
 }
+
+
 
 void
 print_priority_info (const char *const name)
@@ -1284,6 +1276,8 @@ Test_ECG::parse_args (int argc, char *argv [])
   return 0;
 }
 
+// ****************************************************************
+
 Test_Supplier::Test_Supplier (Test_ECG *test,
                               void *cookie)
   :  test_ (test),
@@ -1530,6 +1524,8 @@ int Test_Supplier::supplier_id (void) const
   return this->supplier_id_;
 }
 
+// ****************************************************************
+
 Test_Consumer::Test_Consumer (Test_ECG *test,
                               void *cookie)
   : test_ (test),
@@ -1617,19 +1613,28 @@ Test_Consumer::disconnect_push_consumer (CORBA::Environment &)
 {
 }
 
+// ****************************************************************
+
 int
 main (int argc, char *argv [])
 {
   Test_ECG *test;
-
   // Dynamically allocate the Test_ECG instance so that we don't have
   // to worry about running out of stack space if it's large.
-  ACE_NEW_RETURN (test,
-                  Test_ECG,
-                  -1);
+  ACE_NEW_RETURN (test, Test_ECG, -1);
 
   const int status = test->run (argc, argv);
 
   delete test;
   return status;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Auto_Basic_Ptr<POA_RtecScheduler::Scheduler>;
+template class ACE_PushConsumer_Adapter<Test_Supplier>;
+template class auto_ptr<POA_RtecScheduler::Scheduler>;
+#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Auto_Basic_Ptr<POA_RtecScheduler::Scheduler>
+#pragma instantiate ACE_PushConsumer_Adapter<Test_Supplier>
+#pragma instantiate auto_ptr<POA_RtecScheduler::Scheduler>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

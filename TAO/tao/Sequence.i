@@ -170,7 +170,7 @@ TAO_Bounded_Base_Sequence::length (CORBA::ULong length)
 
 // ****************************************************************
 
-//default constructors
+//default constructor
 ACE_INLINE
 TAO_Unbounded_String_Sequence::TAO_Unbounded_String_Sequence (void)
 {
@@ -181,21 +181,6 @@ TAO_Unbounded_String_Sequence::
 TAO_Unbounded_String_Sequence (CORBA::ULong maximum,
                                CORBA::ULong length,
                                char* *value,
-                               CORBA::Boolean release)
-  : TAO_Unbounded_Base_Sequence (maximum, length, value, release)
-{
-}
-
-ACE_INLINE
-TAO_Unbounded_WString_Sequence::TAO_Unbounded_WString_Sequence (void)
-{
-}
-
-ACE_INLINE
-TAO_Unbounded_WString_Sequence::
-TAO_Unbounded_WString_Sequence (CORBA::ULong maximum,
-                               CORBA::ULong length,
-                               CORBA::WChar* *value,
                                CORBA::Boolean release)
   : TAO_Unbounded_Base_Sequence (maximum, length, value, release)
 {

@@ -34,13 +34,11 @@
 #include "tao/UIOP_Connect.h"
 #include "tao/Resource_Factory.h"
 
-#if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
 #if defined(__GNUC__) && __GNUC__ == 2 && __GNUC_MINOR__ < 8
 #define ACE_HAS_BROKEN_EXTENDED_TEMPLATES
 #endif /* __GNUC__ */
 
 #include "ace/Cached_Connect_Strategy_T.h"
-#endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
 
 typedef ACE_Strategy_Connector<TAO_UIOP_Client_Connection_Handler,
                                ACE_LSOCK_CONNECTOR>
@@ -100,10 +98,8 @@ public:
 
   virtual char object_key_delimiter (void) const;
 
-#if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
   virtual int purge_connections (void);
   // Purge "old" connections.
-#endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
 
 protected:
   // = More TAO_Connector methods, please check the documentation on
@@ -112,75 +108,71 @@ protected:
                              TAO_Profile *&,
                              CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
 
-#if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
   virtual int make_caching_strategy (void);
   // According to the option specified, create the appropriate caching
   // strategy used for purging unused connections from the connection
   // cache.
-#endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
 
 public:
 
-#if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
   // = Connection Caching Strategy.
-  typedef size_t TAO_ATTRIBUTES;
+  typedef size_t ATTRIBUTES;
   typedef ACE_Pair<TAO_UIOP_Client_Connection_Handler *,
-                   TAO_ATTRIBUTES>
-          TAO_CACHED_HANDLER;
+                   ATTRIBUTES>
+          CACHED_HANDLER;
   typedef ACE_Refcounted_Hash_Recyclable<ACE_UNIX_Addr>
-          TAO_IADDR;
-  typedef ACE_Hash<TAO_IADDR> TAO_HASH_KEY;
-  typedef ACE_Equal_To<TAO_IADDR> TAO_COMPARE_KEYS;
+          ADDR;
+  typedef ACE_Hash<ADDR> HASH_KEY;
+  typedef ACE_Equal_To<ADDR> COMPARE_KEYS;
 
-  typedef ACE_Hash_Map_Manager_Ex<TAO_IADDR,
-                                  TAO_CACHED_HANDLER,
-                                  TAO_HASH_KEY,
-                                  TAO_COMPARE_KEYS,
+  typedef ACE_Hash_Map_Manager_Ex<ADDR,
+                                  CACHED_HANDLER,
+                                  HASH_KEY,
+                                  COMPARE_KEYS,
                                   ACE_Null_Mutex>
-          TAO_HASH_MAP;
-  typedef ACE_Hash_Map_Iterator_Ex<TAO_IADDR,
-                                   TAO_CACHED_HANDLER,
-                                   TAO_HASH_KEY,
-                                   TAO_COMPARE_KEYS,
+          HASH_MAP;
+  typedef ACE_Hash_Map_Iterator_Ex<ADDR,
+                                   CACHED_HANDLER,
+                                   HASH_KEY,
+                                   COMPARE_KEYS,
                                    ACE_Null_Mutex>
-          TAO_HASH_MAP_ITERATOR;
-  typedef ACE_Hash_Map_Reverse_Iterator_Ex<TAO_IADDR,
-                                           TAO_CACHED_HANDLER,
-                                           TAO_HASH_KEY,
-                                           TAO_COMPARE_KEYS,
+          HASH_MAP_ITERATOR;
+  typedef ACE_Hash_Map_Reverse_Iterator_Ex<ADDR,
+                                           CACHED_HANDLER,
+                                           HASH_KEY,
+                                           COMPARE_KEYS,
                                            ACE_Null_Mutex>
-          TAO_HASH_MAP_REVERSE_ITERATOR;
+          HASH_MAP_REVERSE_ITERATOR;
 
-  typedef ACE_Refcounted_Recyclable_Handler_Caching_Utility<TAO_IADDR,
-                                                            TAO_CACHED_HANDLER,
-                                                            TAO_HASH_MAP,
-                                                            TAO_HASH_MAP_ITERATOR,
-                                                            TAO_ATTRIBUTES>
-          TAO_CACHING_UTILITY;
+  typedef ACE_Refcounted_Recyclable_Handler_Caching_Utility<ADDR,
+                                                 CACHED_HANDLER,
+                                                 HASH_MAP,
+                                                 HASH_MAP_ITERATOR,
+                                                 ATTRIBUTES>
+          CACHING_UTILITY;
 
 #if defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
-  typedef ACE_LRU_Caching_Strategy<TAO_ATTRIBUTES,
-                                   TAO_CACHING_UTILITY>
-          TAO_CACHING_STRATEGY;
+  typedef ACE_LRU_Caching_Strategy<ATTRIBUTES,
+                                   CACHING_UTILITY>
+          CACHING_STRATEGY;
 #else
-  typedef ACE_Caching_Strategy<TAO_ATTRIBUTES,
-                               TAO_CACHING_UTILITY>
-          TAO_CACHING_STRATEGY;
+  typedef ACE_Caching_Strategy<ATTRIBUTES,
+                               CACHING_UTILITY>
+          CACHING_STRATEGY;
 #endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
 
   typedef ACE_Cached_Connect_Strategy_Ex<TAO_UIOP_Client_Connection_Handler,
                                          ACE_LSOCK_CONNECTOR,
-                                         TAO_CACHING_STRATEGY,
-                                         TAO_ATTRIBUTES,
+                                         CACHING_STRATEGY,
+                                         ATTRIBUTES,
                                          TAO_Cached_Connector_Lock>
-          TAO_CACHED_CONNECT_STRATEGY;
-#endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
+          CACHED_CONNECT_STRATEGY;
 
   typedef ACE_NOOP_Creation_Strategy<TAO_UIOP_Client_Connection_Handler>
-          TAO_NULL_CREATION_STRATEGY;
+        TAO_NULL_CREATION_STRATEGY;
 
   typedef ACE_NOOP_Concurrency_Strategy<TAO_UIOP_Client_Connection_Handler>
-          TAO_NULL_ACTIVATION_STRATEGY;
+        TAO_NULL_ACTIVATION_STRATEGY;
 
 private:
   TAO_NULL_CREATION_STRATEGY null_creation_strategy_;
@@ -192,15 +184,12 @@ private:
   TAO_ORB_Core *orb_core_;
   // ORB Core.
 
-#if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
-  TAO_CACHED_CONNECT_STRATEGY *cached_connect_strategy_;
+  CACHED_CONNECT_STRATEGY *cached_connect_strategy_;
   // Cached connect strategy.
 
-  TAO_CACHING_STRATEGY *caching_strategy_;
+  CACHING_STRATEGY *caching_strategy_;
   // Caching strategy which decides the order of removal of entries
   // from the connection cache.
-#endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
-
 };
 
 # endif  /* TAO_HAS_UIOP */

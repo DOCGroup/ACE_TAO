@@ -47,9 +47,7 @@ questions</A> or have a problem compiling the ACE wrappers on the
 platforms shown above please send email to either <A
 HREF="news:comp.soft-sys.ace">ACE Newsgroup</A> or the <A
 HREF="mailto:ace-users@cs.wustl.edu">ACE mailing list</A> and we'll
-try to help you fix the problems.  You can also submit bug reports and
-enhancement requests in our 
-<a href="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/docs/usage-bugzilla.html">bug tracking system</a>.<P>
+try to help you fix the problems. <P>
 
 TAO can be obtained <A
 HREF="http://www.cs.wustl.edu/~schmidt/TAO-obtain.html">electronically</A>
@@ -184,16 +182,12 @@ target.<p>
 <HR><P>
 <H3>On Windows NT</H3>
 
-<P><CODE>TAO_IDL</CODE>, as of 5.02, will use the ACE_CC_COMPILER macro
-as the default compiler program on Win32.  For example, when compiling 
-<CODE>TAO_IDL</CODE> on MSVC, it will default to &quot;CL.EXE&quot;. In
-the setup where MSVC was installed and the compiler is in the path, no
-extra work needs to be done, since the default will work. But if the 
-compiler isn't in the path, you will need to add the variable 
-<CODE>CPP_LOCATION</CODE> to your environment and set it to the compiler 
-you want to use (for example, with MSVC 5 installed in its default directory,
-CPP_LOCATION should be "C:\Program Files\DevStudio\VC\bin\CL.EXE").  
-This variable will override the default. </P>
+<P><CODE>TAO_IDL</CODE> on NT will look for the Microsoft Visual C++
+compiler as <CODE>"C:\Program Files\DevStudio\VC\bin\CL.EXE"</CODE>.
+If this compiler is located elsewhere (or if using a different
+compiler) add a variable <CODE>CPP_LOCATION</CODE> to your environment
+and set it to the compiler you want to use.  This variable will
+override the default.  </P>
 
 <P>Set <CODE>ACE_ROOT</CODE> environment variable as outlined in the <a
 href="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ACE-INSTALL.html"> ACE
@@ -249,14 +243,6 @@ The dependencies are set up to correctly between the projects so for
 example, ACE will be built automatically when TAO is built.  An easy
 way to compile everything is to just compile the debug or release
 version of the Naming Service.</P>
-
-<H4>Borland C++ Builder</H4> <P>
-
-For information on how to build TAO using Borland's C++ Builder
-environment, please see the <A
-HREF="http://www.tenermerx.com/tao_bcb/index.html">online</A> help
-provided by <A HREF="mailto:chris@kohlhoff.com">Christopher
-Kohlhoff</A>. <P>
 
 <H4>Upgrading From Older Releases</H4>
 
@@ -385,34 +371,6 @@ by using <CODE>make minimum_corba=1</CODE> when you compile TAO.</P>
 
 <HR>
 <P>
-
-<H3>Connection Caching feature</H3>
-
-<p>By default, TAO includes the connection caching and purging feature
-   which reuses "old" connections by purging them according to the
-   caching strategy opted for (Least Recently Used, Least Frequently
-   Used, First In First Out). This way socket descriptors are reused
-   thereby increasing scalability.<p>
-
-   This feature can be controlled by defining or commenting out
-   TAO_USES_ROBUST_CONNECTION_MGMT in $TAO_ROOT/tao/orbconf.h.<p>
-
-   But the code related to this feature consists of classes with large
-   template lists and can cause problems with linkers and assemblers
-   which cant grok long names.<p>
-
-   Tips:<p>
-
-   Check on SunOS5.6 (and above) whether the assembler used is of the Sun
-   Workshop 5 version else you could get linker errors due to huge
-   symbols.<p>
-
-   If using egcs2.95 as the compiler the <code>-fsquangle</code>
-   option could be used which shortens the symbol names. 
-   Thanks to <a href="mailto:ssweeney@sanders.com">Skye Sweeney</a>
-   for trying it out and <a href="mailto:othman@cs.wustl.edu">Ossama
-   Othman</a> for discovering the option with egcs. Note: Both the ACE
-   library and TAO library need to built using this option.</p>
 
 <HR><P>
 <H3><A NAME="resource_requirements">System Resource Requirements</A></H3>

@@ -122,11 +122,6 @@ public:
   virtual idl_bool is_abstract_valuetype ();
   virtual void set_abstract_valuetype ();
 
-  // Check if any member's name clashes with a parent's
-  // member's name, or if any parents' members' names
-  // clash with each other.
-  void inherited_name_clash ();
-
   // Narrowing
   DEF_NARROW_METHODS2(AST_Interface, AST_Type, UTL_Scope);
   DEF_NARROW_FROM_DECL(AST_Interface);

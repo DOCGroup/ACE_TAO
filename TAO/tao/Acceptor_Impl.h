@@ -81,10 +81,8 @@ public:
   // process runs out of handles, purge some "old" connections.
 
 protected:
-#if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
   int out_of_sockets_handler (void);
   // Handler which deals with purging "old" connections.
-#endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
 
   typedef ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2> ACCEPT_STRATEGY_BASE;
   // Base class.

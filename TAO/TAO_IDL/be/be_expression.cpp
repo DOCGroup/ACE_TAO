@@ -67,11 +67,6 @@ be_expression::be_expression (UTL_String *s)
 {
 }
 
-be_expression::be_expression (char *s)
-  : AST_Expression (s)
-{
-}
-
 be_expression::be_expression (char c)
   : AST_Expression (c)
 {

@@ -26,6 +26,42 @@ ACE_RCSID(tao, Pluggable, "$Id$")
 TAO_Profile::~TAO_Profile (void)
 {
 }
+
+// Generic Profile
+CORBA::ULong
+TAO_Profile::tag (void) const
+{
+  return this->tag_;
+}
+
+CORBA::ULong
+TAO_Profile::_incr_refcnt (void)
+{
+  // OK, think I got it.  When this object is created (guard) the
+  // lock is automatically acquired (refcount_lock_).  Then when
+  // we leave this method the destructir for guard is called which
+  // releases the lock!
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->refcount_lock_, 0);
+
+  return this->refcount_++;
+}
+
+CORBA::ULong
+TAO_Profile::_decr_refcnt (void)
+{
+  {
+    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->refcount_lock_, 0);
+    this->refcount_--;
+    if (this->refcount_ != 0)
+      return this->refcount_;
+  }
+
+  // refcount is 0, so delete us!
+  // delete will call our ~ destructor which in turn deletes stuff.
+  delete this;
+  return 0;
+}
+
 // ****************************************************************
 
 TAO_Unknown_Profile::TAO_Unknown_Profile (CORBA::ULong tag)
@@ -102,7 +138,7 @@ int
 TAO_Unknown_Profile::addr_to_string (char * /* buffer */,
                                      size_t /* length */)
 {
-  return -1;
+  return 0;
 }
 
 void
@@ -134,6 +170,56 @@ TAO_Transport::~TAO_Transport (void)
   this->ws_ = 0;
   delete this->tms_;
   this->tms_ =0;
+}
+
+CORBA::ULong
+TAO_Transport::tag (void) const
+{
+  return this->tag_;
+}
+
+// Get it.
+TAO_ORB_Core *
+TAO_Transport::orb_core (void) const
+{
+  return this->orb_core_;
+}
+
+TAO_Transport_Mux_Strategy *
+TAO_Transport::tms (void) const
+{
+  return tms_;
+}
+
+// Return the Wait strategy used by the Transport.
+TAO_Wait_Strategy *
+TAO_Transport::wait_strategy (void) const
+{
+  return this->ws_;
+}
+
+// Get request id for the current invocation from the TMS object.
+CORBA::ULong
+TAO_Transport::request_id (void)
+{
+  return this->tms ()->request_id ();
+}
+
+// Bind the reply dispatcher with the TMS object.
+int
+TAO_Transport::bind_reply_dispatcher (CORBA::ULong request_id,
+                                      TAO_Reply_Dispatcher *rd)
+{
+  return this->tms_->bind_dispatcher (request_id,
+                                      rd);
+}
+
+int
+TAO_Transport::wait_for_reply (ACE_Time_Value *max_wait_time,
+                               int &reply_received)
+{
+  return this->ws_->wait (max_wait_time,
+                          reply_received);
 }
 
 // Read and handle the reply. Returns 0 when there is Short Read on
@@ -213,6 +299,12 @@ TAO_Connector::TAO_Connector (CORBA::ULong tag)
 
 TAO_Connector::~TAO_Connector (void)
 {
+}
+
+CORBA::ULong
+TAO_Connector::tag (void) const
+{
+  return this->tag_;
 }
 
 int
@@ -388,11 +480,16 @@ TAO_Connector::make_mprofile (const char *string,
 
 // Acceptor
 TAO_Acceptor::TAO_Acceptor (CORBA::ULong tag)
-  :  priority_ (0),
-     tag_ (tag)
+  :  tag_ (tag)
 {
 }
 
 TAO_Acceptor::~TAO_Acceptor (void)
 {
+}
+
+CORBA::ULong
+TAO_Acceptor::tag (void) const
+{
+  return this->tag_;
 }

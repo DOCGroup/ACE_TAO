@@ -45,10 +45,6 @@ public:
   static int method_helper (be_interface *,
                             be_interface *,
                             TAO_OutStream *os);
-
-  static int ami_handler_method_helper (be_interface *,
-                                        be_interface *,
-                                        TAO_OutStream *os); 
   // helper method to generate method declaration in the TIE classes.
 };
 

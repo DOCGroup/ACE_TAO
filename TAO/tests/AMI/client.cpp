@@ -1,28 +1,10 @@
 // $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/AMI
-//
-// = FILENAME
-//    server.cpp
-//
-// = DESCRIPTION
-//    A client, which uses the AMI callback model.
-//
-// = AUTHOR
-//    Alexander Babu Arulanthu <alex@cs.wustl.edu>,
-//    Michael Kircher <Michael.Kircher@mchp.siemens.de>
-//
-// ============================================================================
-
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
-#include "ami_testC.h"
-#include "ami_testS.h"
+#include "testC.h"
 
-ACE_RCSID(AMI, client, "$Id$")
+ACE_RCSID(MT_Client, client, "$Id$")
 
 const char *ior = "file://test.ior";
 int nthreads = 5;
@@ -76,29 +58,29 @@ class Client : public ACE_Task_Base
   //   Use the ACE_Task_Base class to run the client threads.
   //
 public:
-  Client (A::AMI_Test_ptr server, int niterations);
+  Client (Simple_Server_ptr server, int niterations);
   // ctor
 
   virtual int svc (void);
   // The thread entry point.
 
   // private:
-  A::AMI_Test_var ami_test_var_;
-  // Var for the AMI_Test object.
+  Simple_Server_var server_;
+  // The server.
 
   int niterations_;
   // The number of iterations on each client thread.
 
-  A::AMI_AMI_Test_Handler_var the_handler_var_;
-  // Var for AMI_AMI_Test_ReplyHandler object.
+  AMI_Simple_Server_Handler_var the_handler_;
+  // Var for ReplyHandler object.
 };
 
-class Handler : public POA_A::AMI_AMI_Test_Handler
+class Handler : public POA_AMI_Simple_Server_Handler
 {
 public:
   Handler (void) {};
 
-  void foo (CORBA::Long result,
+  void get_put_number (CORBA::Long result,
                        CORBA::Long out_l,
                        CORBA::Environment&)
     {
@@ -112,7 +94,6 @@ public:
 
       number_of_replies--;
     };
-
  
   ~Handler (void) {};
 };
@@ -136,8 +117,8 @@ main (int argc, char *argv[])
         orb->string_to_object (ior, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      A::AMI_Test_var server =
-        A::AMI_Test::_narrow (object.in (), ACE_TRY_ENV);
+      Simple_Server_var server =
+        Simple_Server::_narrow (object.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
@@ -204,7 +185,7 @@ main (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "threads finished\n"));
 
-      //client.ami_test_var_->shutdown ();
+      client.server_->shutdown ();
     }
   ACE_CATCHANY
     {
@@ -219,12 +200,12 @@ main (int argc, char *argv[])
 
 // ****************************************************************
 
-Client::Client (A::AMI_Test_ptr server,
+Client::Client (Simple_Server_ptr server,
                 int niterations)
-                :  ami_test_var_ (A::AMI_Test::_duplicate (server)),
+  :  server_ (Simple_Server::_duplicate (server)),
      niterations_ (niterations)
 {
-  the_handler_var_ = handler._this (/* ACE_TRY_ENV */);
+  the_handler_ = handler._this (/* ACE_TRY_ENV */);
 }
 
 int
@@ -232,11 +213,21 @@ Client::svc (void)
 {
   ACE_TRY_NEW_ENV
     {
+#if 0
+      // If we are using a global ORB this is a nop, otherwise it
+      // initializes the ORB resources for this thread.
+      int argc = 0;
+      char* argv[] = { "" };
+      CORBA::ORB_var orb =
+        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+#endif
+
       CORBA::Long number = 931232;
 
       for (int i = 0; i < this->niterations_; ++i)
         {
-          ami_test_var_->sendc_foo (the_handler_var_.in (),
+          server_->sendc_get_put_number (the_handler_.in (),
                                          number,
                                          ACE_TRY_ENV);
           ACE_TRY_CHECK;

@@ -100,19 +100,10 @@ be_visitor_sequence_buffer_type::visit_interface_fwd (be_interface_fwd *node)
 }
 
 int
-be_visitor_sequence_buffer_type::visit_string (be_string *node)
+be_visitor_sequence_buffer_type::visit_string (be_string *)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-
-  if (node->width () == sizeof (char))
-    {
-      *os << "char *";
-    }
-  else
-    {
-      *os << "CORBA::WChar *";
-    }
-
+  *os << "char *";
   return 0;
 }
 

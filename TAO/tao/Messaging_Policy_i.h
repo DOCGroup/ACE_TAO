@@ -80,6 +80,11 @@ private:
 
 #if defined (__ACE_INLINE__)
 #include "tao/Messaging_Policy_i.i"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #endif /* __ACE_INLINE__ */
 
 #if defined(_MSC_VER)

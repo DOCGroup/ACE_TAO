@@ -119,54 +119,53 @@ be_visitor_sequence_ci::instantiate_sequence (be_sequence *node)
       // else
       //   inheriting from the right class is enough
       break;
-    case be_sequence::MNG_WSTRING: // sequence of strings
-      if (!node->unbounded ())
-        this->gen_bounded_wstr_sequence (node);
-      // else
-      //   inheriting from the right class is enough
-      break;
     default: // not a managed type
       if (node->unbounded ())
-	      {
-	        // TAO provides extensions for octet sequences, first find out
-	        // if the base type is an octet (or an alias for octet)
-	        be_predefined_type *predef = 0;
-	        if (bt->base_node_type () == AST_Type::NT_pre_defined)
-	          {
-	            be_typedef* alias =
-		            be_typedef::narrow_from_decl (bt);
+	{
+#if 1
+	  // TAO provides extensions for octet sequences, first find out
+	  // if the base type is an octet (or an alias for octet)
+	  be_predefined_type *predef = 0;
+	  if (bt->base_node_type () == AST_Type::NT_pre_defined)
+	    {
+	      be_typedef* alias =
+		be_typedef::narrow_from_decl (bt);
 
-	            if (alias == 0)
-		            {
-		              predef =
-		                be_predefined_type::narrow_from_decl (bt);
-		            }
-	            else
-		            {
-		              predef = 
-                    be_predefined_type::narrow_from_decl (
-                        alias->primitive_base_type ()
-                      );
-		            }
-	          }
-	        if (predef != 0)
-	          {
-	            if (predef->pt() != AST_PredefinedType::PT_octet)
-                {
-		              this->gen_unbounded_sequence (node);
-                }
-	          }
-	        else
-            {
-	            this->gen_unbounded_sequence (node);
-            }
-	      }
+	      if (alias == 0)
+		{
+		  predef =
+		    be_predefined_type::narrow_from_decl (bt);
+		}
+	      else
+		{
+		  predef = be_predefined_type::narrow_from_decl
+		    (alias->primitive_base_type ());
+		}
+	    }
+	  if (predef != 0)
+	    {
+	      if (predef->pt() != AST_PredefinedType::PT_octet)
+		this->gen_unbounded_sequence (node);
+	    }
+	  else
+	    this->gen_unbounded_sequence (node);
+#else
+	  // @@ This needs to be fixed. (Michael)
+	  be_predefined_type * bpt =
+	    be_predefined_type::narrow_from_decl (node->base_type());
+	  if (bpt)
+	    {
+	      if (bpt->pt() != AST_PredefinedType::PT_octet)
+		this->gen_unbounded_sequence (node);
+	    }
+	  else
+	    this->gen_unbounded_sequence (node);
+#endif
+	}
       else
-        {
-          this->gen_bounded_sequence (node);
-        }
+        this->gen_bounded_sequence (node);
       break;
-    } // end of switch
+    }
 
   return 0;
 }
@@ -227,8 +226,8 @@ be_visitor_sequence_ci::gen_var_impl (be_sequence *node)
     " &p) // copy constructor" << be_nl;
   *os << "{\n";
   os->incr_indent ();
-  *os << "if (p.ptr_)" << be_idt_nl;
-  *os << "ACE_NEW (this->ptr_, " << node->name () << " (*p.ptr_));" << be_uidt_nl;
+  *os << "if (p.ptr_)" << be_nl;
+  *os << "  this->ptr_ = new " << node->name () << "(*p.ptr_);" << be_nl;
   *os << "else" << be_nl;
   *os << "  this->ptr_ = 0;\n";
   os->decr_indent ();
@@ -268,8 +267,7 @@ be_visitor_sequence_ci::gen_var_impl (be_sequence *node)
   *os << "{\n";
   os->incr_indent ();
   *os << "delete this->ptr_;" << be_nl;
-  *os << "ACE_NEW_RETURN (this->ptr_, " 
-      << node->name () << " (*p.ptr_), *this);\n";
+  *os << "this->ptr_ = new " << node->name () << " (*p.ptr_);\n";
   os->decr_indent ();
   *os << "}" << be_nl;
   *os << "return *this;\n";

@@ -66,24 +66,13 @@ be_visitor_operation_ami_ch::visit_operation (be_operation *node)
   
   // First the sendc prefix.
   *os << "sendc_";
-
-    // check if we are an attribute node in disguise
-  if (this->ctx_->attribute ())
-    {
-      // now check if we are a "get" or "set" operation
-      if (node->nmembers () == 1) // set
-        *os << "set_";
-      else
-        *os << "get_";
-    }
-
   *os << node->local_name ();
 
   // STEP 3: generate the argument list with the appropriate
   //         mapping. For these we grab a visitor that generates the
   //         parameter listing.
   be_visitor_context ctx (*this->ctx_);
-  ctx.state (TAO_CodeGen::TAO_AMI_OPERATION_ARGLIST_CH);
+  ctx.state (TAO_CodeGen::TAO_OPERATION_AMI_ARGLIST_CH);
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
   if (!visitor)
     {
@@ -104,8 +93,6 @@ be_visitor_operation_ami_ch::visit_operation (be_operation *node)
                         -1);
     }
   delete visitor;
-
-  *os << "\n";
 
   return 0;
 }

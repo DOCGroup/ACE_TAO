@@ -88,20 +88,6 @@ public:
       ACE_THROW_SPEC ((CORBA::SystemException));
   // test for bounded strings
 
-  virtual CORBA::WChar *test_unbounded_wstring (const CORBA::WChar *ws1,
-                                                CORBA::WChar *&ws2,
-                                                CORBA::WString_out ws3,
-                                                CORBA::Environment &env)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-  // test for unbounded wstrings
-
-  virtual CORBA::WChar *test_bounded_wstring (const CORBA::WChar *ws1,
-                                              CORBA::WChar *&ws2,
-                                              CORBA::WString_out ws3,
-                                              CORBA::Environment &env)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-  // test for bounded wstrings
-
   virtual Param_Test::Fixed_Struct
   test_fixed_struct (const Param_Test::Fixed_Struct &s1,
                      Param_Test::Fixed_Struct &s2,
@@ -145,18 +131,6 @@ public:
       const Param_Test::Bounded_StrSeq & s1,
       Param_Test::Bounded_StrSeq & s2,
       Param_Test::Bounded_StrSeq_out s3,
-      CORBA::Environment &env)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual Param_Test::WStrSeq * test_wstrseq (
-      const Param_Test::WStrSeq & ws1,
-      Param_Test::WStrSeq & ws2,
-      Param_Test::WStrSeq_out ws3,
-      CORBA::Environment &env)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual Param_Test::Bounded_WStrSeq * test_bounded_wstrseq (
-      const Param_Test::Bounded_WStrSeq & ws1,
-      Param_Test::Bounded_WStrSeq & ws2,
-      Param_Test::Bounded_WStrSeq_out ws3,
       CORBA::Environment &env)
     ACE_THROW_SPEC ((CORBA::SystemException));
   virtual Param_Test::StructSeq * test_struct_sequence (

@@ -645,29 +645,13 @@ int be_visitor_args_compiled_marshal_cs::visit_string (be_string *node)
             case AST_Argument::dir_IN:
               break;
             case AST_Argument::dir_INOUT:
-              if (node->width () == sizeof (char))
-                {
-                  *os << "CORBA::Any::to_string (";
-                }
-              else
-                {
-                  *os << "CORBA::Any::to_wstring (";
-                }
-
-              *os << arg->local_name () << ", "
+              *os << "CORBA::Any::to_string ("
+                  << arg->local_name () << ", "
                   << node->max_size ()->ev ()->u.ulval - 1 << ")";
               break;
             case AST_Argument::dir_OUT:
-              if (node->width () == sizeof (char))
-                {
-                  *os << "CORBA::Any::to_string (";
-                }
-              else
-                {
-                  *os << "CORBA::Any::to_wstring (";
-                }
-
-              *os << arg->local_name () << ".ptr (), "
+              *os << "CORBA::Any::to_string ("
+                  << arg->local_name () << ".ptr (), "
                   << node->max_size ()->ev ()->u.ulval - 1 << ")";
               break;
             }

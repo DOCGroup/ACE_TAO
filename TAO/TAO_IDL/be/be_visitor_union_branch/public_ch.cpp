@@ -491,18 +491,6 @@ be_visitor_union_branch_public_ch::visit_sequence (be_sequence *node)
                              ), -1);
         }
       delete visitor;
-
-  // Generate the anonymous sequence member typedef
-  // but we must protect against certain versions of g++.
-  // This provides a consistent name to use instead of the
-  // implementation-specific name.
-  os->decr_indent (0);
-  *os << "#if !defined (__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)"
-      << be_idt_nl
-      << "typedef " << bt->nested_type_name (bu) 
-      << " _" << ub->local_name () << "_seq;" << be_uidt_nl;
-  *os << "#endif /* ! __GNUC__ || ACE_HAS_GNUG_PRE_2_8 */\n" << be_nl;
-  os->incr_indent ();
     }
   os->indent ();
   // set method
@@ -521,7 +509,7 @@ be_visitor_union_branch_public_ch::visit_sequence (be_sequence *node)
 
 // visit string type
 int
-be_visitor_union_branch_public_ch::visit_string (be_string *node)
+be_visitor_union_branch_public_ch::visit_string (be_string *)
 {
   TAO_OutStream *os; // output stream
   be_decl *ub = this->ctx_->node (); // get union branch
@@ -539,31 +527,15 @@ be_visitor_union_branch_public_ch::visit_string (be_string *node)
   os = this->ctx_->stream ();
 
   os->indent ();
-
   // three methods to set the string value
-  if (node->width () == sizeof (char))
-    {
-      *os << "void " << ub->local_name () << " (char *); // set" << be_nl;
-      *os << "void " << ub->local_name () << " (const char *); // set"
-          << be_nl;
-      *os << "void " << ub->local_name () << " (const CORBA::String_var&); // set"
-          << be_nl;
-      //get method
-      *os << "const char *" << ub->local_name ()
-          << " (void) const; // get method\n\n";
-    }
-  else
-    {
-      *os << "void " << ub->local_name () << " (CORBA::WChar *); // set" << be_nl;
-      *os << "void " << ub->local_name () << " (const CORBA::WChar *); // set"
-          << be_nl;
-      *os << "void " << ub->local_name () << " (const CORBA::WString_var&); // set"
-          << be_nl;
-      //get method
-      *os << "const CORBA::WChar *" << ub->local_name ()
-          << " (void) const; // get method\n\n";
-    }
-
+  *os << "void " << ub->local_name () << " (char *); // set" << be_nl;
+  *os << "void " << ub->local_name () << " (const char *); // set"
+      << be_nl;
+  *os << "void " << ub->local_name () << " (const CORBA::String_var&); // set"
+      << be_nl;
+  //get method
+  *os << "const char *" << ub->local_name ()
+      << " (void) const; // get method\n\n";
   return 0;
 }
 

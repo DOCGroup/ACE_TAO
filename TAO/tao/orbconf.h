@@ -7,7 +7,7 @@
 //     TAO
 //
 // = FILENAME
-//     orbconf.h
+//     default_server.h
 //
 // = DESCRIPTION
 //     Build configuration file for the Inter-ORB Engine, and application
@@ -147,10 +147,6 @@
 #if !defined (TAO_MAXIMUM_NATIVE_TYPE_SIZE)
 # define TAO_MAXIMUM_NATIVE_TYPE_SIZE 128
 #endif /* TAO_MAXIMUM_NATIVE_TYPE_SIZE */
-
-// By default connection purging and recycling are done to provide robust
-// connection management in TAO.
-#define TAO_USES_ROBUST_CONNECTION_MGMT
 
 // This deals with the strategies for connection caching. By default
 // it is the Null Strategy. Although it shall be Least Recently Used
@@ -378,17 +374,7 @@ and should not be set by the user. Please use TAO_HAS_REMOTE_POLICIES instead.
 #  define TAO_HAS_REMOTE_POLICIES 0
 # endif /* TAO_HAS_REMOTE_POLICIES */
 
-#else
-
-// Interceptors is supported by default if we are not building
-// for MinimumCORBA.
-#define TAO_HAS_INTERCEPTORS
-
 #endif /* TAO_HAS_MINIMUM_CORBA */
-
-#if !defined (TAO_DISABLE_RT_CORBA) && !defined (TAO_HAS_MINIMUM_CORBA)
-#  define TAO_HAS_RT_CORBA
-#endif /* !TAO_HAS_RT_CORBA && !TAO_HAS_MINIMUM_CORBA */
 
 // If the user has not already specified TAO_HAS_UIOP, and the
 // platform supports UNIX domain sockets, and minimum CORBA is not

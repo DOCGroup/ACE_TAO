@@ -262,18 +262,6 @@ SOURCE=.\InconsistentTypeCodeC.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Interceptor.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\InterceptorC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\InterceptorS.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\InterfaceC.cpp
 # End Source File
 # Begin Source File
@@ -307,10 +295,6 @@ SOURCE=.\IORS.cpp
 # Begin Source File
 
 SOURCE=.\Key_Adapters.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Leader_Follower.cpp
 # End Source File
 # Begin Source File
 
@@ -414,27 +398,11 @@ SOURCE=.\PollableS.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Pool_Per_Endpoint.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Principal.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Priority_Mapping.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Protocol_Factory.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Reactor_Per_Priority.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Reactor_Registry.cpp
 # End Source File
 # Begin Source File
 
@@ -447,14 +415,6 @@ SOURCE=.\Request.cpp
 # Begin Source File
 
 SOURCE=.\Resource_Factory.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Current.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\rtcorbafwd.cpp
 # End Source File
 # Begin Source File
 
@@ -475,10 +435,6 @@ SOURCE=.\Server_Strategy_Factory.cpp
 # Begin Source File
 
 SOURCE=.\Services.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Single_Reactor.cpp
 # End Source File
 # Begin Source File
 
@@ -734,18 +690,6 @@ SOURCE=.\InconsistentTypeCodeC.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Interceptor.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\InterceptorC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\InterceptorS.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\InterfaceC.h
 # End Source File
 # Begin Source File
@@ -775,10 +719,6 @@ SOURCE=.\IORManipulation.h
 # Begin Source File
 
 SOURCE=.\IORS.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Leader_Follower.h
 # End Source File
 # Begin Source File
 
@@ -898,27 +838,11 @@ SOURCE=.\PollableS.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Pool_Per_Endpoint.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Principal.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Priority_Mapping.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Protocol_Factory.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Reactor_Per_Priority.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Reactor_Registry.h
 # End Source File
 # Begin Source File
 
@@ -931,14 +855,6 @@ SOURCE=.\request.h
 # Begin Source File
 
 SOURCE=.\Resource_Factory.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Current.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\rtcorbafwd.h
 # End Source File
 # Begin Source File
 
@@ -963,10 +879,6 @@ SOURCE=.\Server_Strategy_Factory.h
 # Begin Source File
 
 SOURCE=.\Services.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Single_Reactor.h
 # End Source File
 # Begin Source File
 
@@ -1134,14 +1046,6 @@ SOURCE=.\IIOP_ORB.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Interceptor.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\InterceptorC.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\InterfaceC.i
 # End Source File
 # Begin Source File
@@ -1151,10 +1055,6 @@ SOURCE=.\IOPC.i
 # Begin Source File
 
 SOURCE=.\IOPS.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Leader_Follower.i
 # End Source File
 # Begin Source File
 
@@ -1230,31 +1130,7 @@ SOURCE=.\PolicyC.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Pool_Per_Endpoint.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Priority_Mapping.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Reactor_Per_Priority.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Reactor_Registry.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\Request.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Current.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\rtcorbafwd.i
 # End Source File
 # Begin Source File
 
@@ -1271,10 +1147,6 @@ SOURCE=.\Server_Request.i
 # Begin Source File
 
 SOURCE=.\Services.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Single_Reactor.i
 # End Source File
 # Begin Source File
 

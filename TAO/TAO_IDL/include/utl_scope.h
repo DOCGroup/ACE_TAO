@@ -179,8 +179,6 @@ public:
 
   // How many entries are used?
   virtual unsigned long         nmembers();
-  // Scoped name completely matched
-  idl_bool                      matched;
 
 protected:
   // UTL_Scope protected addition protocol. This protocol is

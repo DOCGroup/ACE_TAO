@@ -24,13 +24,10 @@
 #include "tao/Invocation.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#  pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (TAO_HAS_CORBA_MESSAGING) 
-
-#  if defined (TAO_HAS_AMI_CALLBACK) || (TAO_HAS_AMI_POLLER)
-
+#if defined (TAO_HAS_CORBA_MESSAGING) && defined (TAO_POLLER)
 #include "tao/MessagingC.h"
 
 class TAO_Export TAO_GIOP_Twoway_Asynch_Invocation : public TAO_GIOP_Invocation
@@ -97,11 +94,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#  include "tao/Asynch_Invocation.i"
+# include "tao/Asynch_Invocation.i"
 #endif /* __ACE_INLINE__ */
-
-#  endif /* TAO_HAS_AMI_CALLBACK || TAO_HAS_AMI_POLLER */
-
-#endif /* TAO_HAS_CORBA_MESSAGING */
-
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_POLLER */
 #endif /* TAO_ASYNCH_INVOCATION_H */

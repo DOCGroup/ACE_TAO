@@ -48,6 +48,7 @@ be_visitor_operation_rettype_marshal_ss::visit_array (be_array *)
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
 
   os->indent ();
+  //*os << "_tao_ptr_retval";
   *os << "_tao_retval.inout ()";
   return 0;
 }
@@ -69,6 +70,7 @@ be_visitor_operation_rettype_marshal_ss::visit_interface (be_interface *)
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
 
   os->indent ();
+  //  *os << "&_tao_ptr_retval";
   *os << "&_tao_retval.inout ()";
 
   return 0;
@@ -81,6 +83,7 @@ visit_interface_fwd (be_interface_fwd *)
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
 
   os->indent ();
+  //  *os << "&_tao_ptr_retval";
   *os << "&_tao_retval.inout ()";
 
   return 0;
@@ -94,6 +97,7 @@ be_visitor_operation_rettype_marshal_ss::visit_valuetype (be_valuetype *)
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
 
   os->indent ();
+  //  *os << "&_tao_ptr_retval";
   *os << "&_tao_retval.inout ()";
 
   return 0;
@@ -106,6 +110,7 @@ visit_valuetype_fwd (be_valuetype_fwd *)
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
 
   os->indent ();
+  //  *os << "&_tao_ptr_retval";
   *os << "&_tao_retval.inout ()";
 
   return 0;
@@ -127,10 +132,12 @@ visit_predefined_type (be_predefined_type *node)
       break;
     case AST_PredefinedType::PT_pseudo:
       os->indent ();
+      //*os << "&_tao_ptr_retval";
       *os << "&_tao_retval.inout ()";
       break;
     case AST_PredefinedType::PT_any:
       os->indent ();
+      //      *os << "_tao_ptr_retval";
       *os << "&_tao_retval.inout ()";
       break;
     default:
@@ -147,17 +154,19 @@ be_visitor_operation_rettype_marshal_ss::visit_sequence (be_sequence *)
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
 
   os->indent ();
+  //  *os << "_tao_ptr_retval";
   *os << "&_tao_retval.inout ()";
 
   return 0;
 }
 
 int
-be_visitor_operation_rettype_marshal_ss::visit_string (be_string *)
+be_visitor_operation_rettype_marshal_ss::visit_string (be_string * /* node*/)
 {
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
 
   os->indent ();
+  //  *os << "&_tao_ptr_retval";
   *os << "&_tao_retval.inout ()";
 
   return 0;
@@ -170,6 +179,7 @@ be_visitor_operation_rettype_marshal_ss::visit_structure (be_structure *node)
 
   os->indent ();
   if (node->size_type () == be_type::VARIABLE)
+    //*os << "_tao_ptr_retval";
     *os << "&_tao_retval.inout ()";
   else
     *os << "&_tao_retval";
@@ -200,6 +210,7 @@ be_visitor_operation_rettype_marshal_ss::visit_union (be_union *node)
 
   os->indent ();
   if (node->size_type () == be_type::VARIABLE)
+    //  *os << "_tao_ptr_retval";
     *os << "&_tao_retval.inout ()";
   else
     *os << "&_tao_retval";

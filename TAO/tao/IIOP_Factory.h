@@ -41,10 +41,6 @@ public:
   virtual const char *prefix (void) const;
   // Returns the prefix used by the protocol.
 
-  virtual char options_delimiter (void) const;
-  // Return the character used to mark where an endpoint ends and
-  // where its options begin.
-
   // = Check Protocol_Factory.h for a description of these methods.
   virtual TAO_Acceptor  *make_acceptor (void);
   virtual TAO_Connector *make_connector  (void);

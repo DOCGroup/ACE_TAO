@@ -5,10 +5,8 @@
 
 ACE_RCSID(Trader, Constraint_Interpreter, "$Id$")
 
-ACE_SYNCH_MUTEX TAO_Interpreter::parserMutex__;
-
 TAO_Interpreter::TAO_Interpreter (void)
-  : root_ (0)
+  : root_ (0) 
 {
 }
 
@@ -20,11 +18,6 @@ TAO_Interpreter::~TAO_Interpreter (void)
 int
 TAO_Interpreter::build_tree (const char* constraints)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
-                    guard,
-                    TAO_Interpreter::parserMutex__,
-                    -1);
-
   TAO_Lex_String_Input::reset ((char*)constraints);
   int return_value = 0;
 
@@ -222,8 +215,8 @@ order_offer (TAO_Constraint_Evaluator& evaluator,
           // correct place in the queue.
           TAO_Expression_Type expr_type = this->root_->expr_type ();
 
-          if (expr_type == TAO_FIRST
-              || (expr_type == TAO_WITH
+          if (expr_type == TAO_FIRST 
+              || (expr_type == TAO_WITH 
                   && ! ACE_static_cast (CORBA::Boolean, pref_info.value_)))
             this->offers_.enqueue_tail (pref_info);
           else
@@ -246,10 +239,10 @@ order_offer (TAO_Constraint_Evaluator& evaluator,
                   offer_iter.next (current_offer);
 
                   // Maintain the sorted order in the first partition.
-                  if (current_offer->evaluated_ == 1
-                      && ((expr_type == TAO_MIN
-                        && pref_info.value_ > current_offer->value_)
-                       || (expr_type == TAO_MAX
+                  if (current_offer->evaluated_ == 1 
+                      && ((expr_type == TAO_MIN 
+                        && pref_info.value_ > current_offer->value_) 
+                       || (expr_type == TAO_MAX 
                            && pref_info.value_ < current_offer->value_)))
                     {
                       // Swap the out of order pair

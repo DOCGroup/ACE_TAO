@@ -65,10 +65,9 @@ ACE_INLINE
 TAO_ObjectKey_var::TAO_ObjectKey_var (const TAO_ObjectKey_var &p) // copy constructor
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_, 
-             TAO_ObjectKey(*p.ptr_));
+  	this->ptr_ = new TAO_ObjectKey(*p.ptr_);
   else
-    this->ptr_ = 0;
+  	this->ptr_ = 0;
 }
 
 ACE_INLINE
@@ -91,9 +90,7 @@ TAO_ObjectKey_var::operator= (const TAO_ObjectKey_var &p) // deep copy
   if (this != &p)
   {
     delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    TAO_ObjectKey (*p.ptr_), 
-		    *this);
+    this->ptr_ = new TAO_ObjectKey (*p.ptr_);
   }
   return *this;
 }

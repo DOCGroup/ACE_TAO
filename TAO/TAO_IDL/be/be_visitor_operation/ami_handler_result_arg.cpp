@@ -116,19 +116,10 @@ be_visitor_operation_ami_handler_result_arg::visit_sequence (be_sequence *node)
 }
 
 int
-be_visitor_operation_ami_handler_result_arg::visit_string (be_string *node)
+be_visitor_operation_ami_handler_result_arg::visit_string (be_string *)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get the stream
-
-  if (node->width () == sizeof (char))
-    {
-      *os << "const char *" << " _tao_ami_result";
-    }
-  else
-    {
-      *os << "const CORBA::WChar *" << " _tao_ami_result";
-    }
-
+  *os << "const char *" << " _tao_ami_result";
   return 0;
 }
 

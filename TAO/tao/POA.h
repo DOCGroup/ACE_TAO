@@ -45,6 +45,9 @@
 // POA Manager
 #include "tao/POAManager.h"
 
+// Object Adapter
+#include "tao/Object_Adapter.h"
+
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
 #if defined (_MSC_VER)

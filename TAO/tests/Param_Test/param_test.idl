@@ -54,22 +54,10 @@ interface Param_Test
                                 inout string s2,
                                 out string s3);
 
-  // strings bounded
   typedef string<128> short_string;
   short_string test_bounded_string (in short_string s1,
                                     inout short_string s2,
                                     out short_string s3);
-
-  // wstrings unbounded
-  wstring test_unbounded_wstring (in wstring ws1,
-                                  inout wstring ws2,
-                                  out wstring ws3);
-
-  // wstrings bounded
-  typedef wstring<128> short_wstring;
-  short_wstring test_bounded_wstring (in short_wstring ws1,
-                                      inout short_wstring ws2,
-                                      out short_wstring ws3);
 
   // structures (fixed size)
   struct Fixed_Struct
@@ -138,16 +126,6 @@ interface Param_Test
   Bounded_StrSeq test_bounded_strseq (in Bounded_StrSeq s1,
                                       inout Bounded_StrSeq s2,
                                       out Bounded_StrSeq s3);
-
-  typedef sequence<wstring> WStrSeq;
-  WStrSeq test_wstrseq (in WStrSeq ws1,
-                        inout WStrSeq ws2,
-                        out WStrSeq ws3);
-
-  typedef sequence<wstring,32> Bounded_WStrSeq;
-  Bounded_WStrSeq test_bounded_wstrseq (in Bounded_WStrSeq ws1,
-                                        inout Bounded_WStrSeq ws2,
-                                        out Bounded_WStrSeq ws3);
 
   typedef sequence<Fixed_Struct> StructSeq;
   StructSeq test_struct_sequence (in StructSeq s1,

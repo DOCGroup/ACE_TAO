@@ -269,7 +269,7 @@ be_union::gen_var_impl (char *, char *)
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "if (p.ptr_)" << nl;
-  *ci << "  ACE_NEW (this->ptr_, " << this->name () << " (*p.ptr_));" << nl;
+  *ci << "  this->ptr_ = new " << this->name () << "(*p.ptr_);" << nl;
   *ci << "else" << nl;
   *ci << "  this->ptr_ = 0;\n";
   ci->decr_indent ();
@@ -309,7 +309,7 @@ be_union::gen_var_impl (char *, char *)
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "delete this->ptr_;" << nl;
-  *ci << "ACE_NEW_RETURN (this->ptr_, " << this->name () << " (*p.ptr_), *this);\n";
+  *ci << "this->ptr_ = new " << this->name () << " (*p.ptr_);\n";
   ci->decr_indent ();
   *ci << "}" << nl;
   *ci << "return *this;\n";
@@ -364,7 +364,7 @@ be_union::gen_var_impl (char *, char *)
   ci->decr_indent ();
   *ci << "}\n\n";
 
-  // in, inout, out, _retn, and ptr
+  // in, inout, out, and _retn
   ci->indent ();
   *ci << "ACE_INLINE const " << name () << " &" << nl;
   *ci << fname << "::in (void) const" << nl;
@@ -383,7 +383,7 @@ be_union::gen_var_impl (char *, char *)
   ci->decr_indent ();
   *ci << "}\n\n";
 
-  // the out and _retn are handled differently based on our size type
+  // the out is handled differently based on our size type
   ci->indent ();
   if (this->size_type () == be_decl::VARIABLE)
     {
@@ -429,17 +429,18 @@ be_union::gen_var_impl (char *, char *)
       *ci << "return *this->ptr_;\n";
       ci->decr_indent ();
       *ci << "}\n\n";
-    }
 
-  // the additional ptr () member function
-  ci->indent ();
-  *ci << "ACE_INLINE " << name () << " *" << nl;
-  *ci << fname << "::ptr (void) const" << nl;
-  *ci << "{\n";
-  ci->incr_indent ();
-  *ci << "return this->ptr_;\n";
-  ci->decr_indent ();
-  *ci << "}\n\n";
+      // the additional ptr () member function
+      ci->indent ();
+      *ci << "ACE_INLINE " << name () << " *" << nl;
+      *ci << fname << "::ptr (void) const" << nl;
+      *ci << "{\n";
+      ci->incr_indent ();
+      *ci << "return this->ptr_;\n";
+      ci->decr_indent ();
+      *ci << "}\n\n";
+
+    }
 
   return 0;
 }

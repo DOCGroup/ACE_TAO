@@ -57,19 +57,9 @@ be_visitor_operation_ami_handler_operation_ch::visit_operation (be_operation *no
 
   // STEP I: generate the return type. Return type is simpy void. 
   *os << "void ";
-
-  // check if we are an attribute node in disguise
-  if (this->ctx_->attribute ())
-    {
-      // now check if we are a "get" or "set" operation
-      if (node->nmembers () == 1) // set
-        *os << "set_";
-      else
-        *os << "get_";
-    }  
-
+  
   // STEP 2: generate the operation name.
-  *os << node->local_name ();
+  *os << " " << node->local_name ();
 
   // STEP 3: generate the argument list with the appropriate
   //         mapping. For these we grab a visitor that generates the
@@ -100,9 +90,8 @@ be_visitor_operation_ami_handler_operation_ch::visit_operation (be_operation *no
   // Generating the skeleton method.
 
   // Skeleton not necessary for collocated class.
-  if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_THRU_POA_COLLOCATED_SH
-      || this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_DIRECT_COLLOCATED_SH
-      || this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_TIE_SH)
+  if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_THRU_POA_COLLOCATED_CH
+      || this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_DIRECT_COLLOCATED_CH)
     {
       return 0;
       /* NOT REACHED */
@@ -112,14 +101,13 @@ be_visitor_operation_ami_handler_operation_ch::visit_operation (be_operation *no
   // operation only if there was no "native" type.
   if (!node->has_native ())
     {
-     
+      // Next line.
+      *os << be_nl;
+      
       // Indent.
       os->indent ();
       
-      // Next line.
-      *os << be_nl
-          << "static void ";
-
+      *os << "static void ";
       // Check if we are an attribute node in disguise
       if (this->ctx_->attribute ())
         {
@@ -129,14 +117,14 @@ be_visitor_operation_ami_handler_operation_ch::visit_operation (be_operation *no
           else
             *os << "_get_";
         }
-      *os << node->local_name () 
-          << "_skel (" << be_idt << be_idt_nl;
+      *os << node->local_name () <<
+        "_skel (" << be_idt << be_idt_nl;
       
       // Different skeletons for the AMI Handler class and the servant
       // class.  
       switch (this->ctx_->state ())
         {
-        case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_SH:
+        case TAO_CodeGen::TAO_AMI_HANDLER_SERVANT_OPERATION_CH:
           *os << "CORBA::ServerRequest &_tao_req, " << be_nl
               << "void *_tao_obj, " << be_nl
               << "void *_tao_context, " << be_nl
@@ -146,7 +134,7 @@ be_visitor_operation_ami_handler_operation_ch::visit_operation (be_operation *no
               << ");" << be_uidt << "\n\n"; 
           break;
        
-        case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_CH:
+        case TAO_CodeGen::TAO_AMI_HANDLER_STUB_OPERATION_CH:
           *os << "TAO_InputCDR &_tao_reply_cdr, " << be_nl
               << "Messaging::ReplyHandler_ptr _tao_reply_handler, " << be_nl
               << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl

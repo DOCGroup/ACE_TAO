@@ -65,10 +65,16 @@ TAO_GIOP_ServerRequest::object_key (void) const
   return this->object_key_;
 }
 
-ACE_INLINE IOP::ServiceContextList &
-TAO_GIOP_ServerRequest::service_info (void)
+ACE_INLINE const IOP::ServiceContextList &
+TAO_GIOP_ServerRequest::request_service_info (void) const
 {
-  return this->service_info_;
+  return this->request_service_info_;
+}
+
+ACE_INLINE const IOP::ServiceContextList &
+TAO_GIOP_ServerRequest::reply_service_info (void)
+{
+  return this->reply_service_info_;
 }
 
 ACE_INLINE CORBA::ULong

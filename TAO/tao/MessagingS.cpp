@@ -115,16 +115,7 @@ POA_Messaging::RebindPolicy::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-
-  Messaging::RebindPolicy *retval = 
-    Messaging::RebindPolicy::_nil ();
-
-  ACE_NEW_RETURN (retval,
-                  POA_Messaging::_tao_collocated_RebindPolicy (this, 
-                                                               stub),
-                  Messaging::RebindPolicy::_nil ());
-
-  return retval;
+  return new POA_Messaging::_tao_collocated_RebindPolicy (this, stub);
 }
 
 // ****************************************************************
@@ -221,16 +212,7 @@ POA_Messaging::SyncScopePolicy::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-
-  Messaging::SyncScopePolicy *retval = 
-    Messaging::SyncScopePolicy::_nil ();
-
-  ACE_NEW_RETURN (retval,
-                  POA_Messaging::_tao_collocated_SyncScopePolicy (this, 
-                                                                  stub),
-                  Messaging::SyncScopePolicy::_nil ());
-
-  return retval;
+  return new POA_Messaging::_tao_collocated_SyncScopePolicy (this, stub);
 }
 
 // ****************************************************************
@@ -327,16 +309,7 @@ POA_Messaging::RequestPriorityPolicy::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-
-  Messaging::RequestPriorityPolicy *retval = 
-    Messaging::RequestPriorityPolicy::_nil ();
-
-  ACE_NEW_RETURN (retval,
-                  POA_Messaging::_tao_collocated_RequestPriorityPolicy (this, 
-                                                                        stub),
-                  Messaging::RequestPriorityPolicy::_nil ());
-
-  return retval;
+  return new POA_Messaging::_tao_collocated_RequestPriorityPolicy (this, stub);
 }
 
 // ****************************************************************
@@ -433,16 +406,7 @@ POA_Messaging::ReplyPriorityPolicy::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-
-  Messaging::ReplyPriorityPolicy *retval = 
-    Messaging::ReplyPriorityPolicy::_nil ();
-
-  ACE_NEW_RETURN (retval,
-                  POA_Messaging::_tao_collocated_ReplyPriorityPolicy (this, 
-                                                                      stub),
-                  Messaging::ReplyPriorityPolicy::_nil ());
-
-  return retval;
+  return new POA_Messaging::_tao_collocated_ReplyPriorityPolicy (this, stub);
 }
 
 // ****************************************************************
@@ -539,16 +503,7 @@ POA_Messaging::RequestStartTimePolicy::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-
-  Messaging::RequestStartTimePolicy *retval = 
-    Messaging::RequestStartTimePolicy::_nil ();
-
-  ACE_NEW_RETURN (retval,
-                  POA_Messaging::_tao_collocated_RequestStartTimePolicy (this, 
-                                                                         stub),
-                  Messaging::RequestStartTimePolicy::_nil ());
-
-  return retval;
+  return new POA_Messaging::_tao_collocated_RequestStartTimePolicy (this, stub);
 }
 
 // ****************************************************************
@@ -645,16 +600,7 @@ POA_Messaging::RequestEndTimePolicy::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-
-  Messaging::RequestEndTimePolicy *retval = 
-    Messaging::RequestEndTimePolicy::_nil ();
-
-  ACE_NEW_RETURN (retval,
-                  POA_Messaging::_tao_collocated_RequestEndTimePolicy (this, 
-                                                                       stub),
-                  Messaging::RequestEndTimePolicy::_nil ());
-
-  return retval;
+  return new POA_Messaging::_tao_collocated_RequestEndTimePolicy (this, stub);
 }
 
 // ****************************************************************
@@ -751,16 +697,7 @@ POA_Messaging::ReplyStartTimePolicy::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-
-  Messaging::ReplyStartTimePolicy *retval = 
-    Messaging::ReplyStartTimePolicy::_nil ();
-
-  ACE_NEW_RETURN (retval,
-                  POA_Messaging::_tao_collocated_ReplyStartTimePolicy (this, 
-                                                                       stub),
-                  Messaging::ReplyStartTimePolicy::_nil ());
-
-  return retval;
+  return new POA_Messaging::_tao_collocated_ReplyStartTimePolicy (this, stub);
 }
 
 // ****************************************************************
@@ -857,16 +794,7 @@ POA_Messaging::ReplyEndTimePolicy::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-
-  Messaging::ReplyEndTimePolicy *retval = 
-    Messaging::ReplyEndTimePolicy::_nil ();
-
-  ACE_NEW_RETURN (retval,
-                  POA_Messaging::_tao_collocated_ReplyEndTimePolicy (this, 
-                                                                     stub),
-                  Messaging::ReplyEndTimePolicy::_nil ());
-
-  return retval;
+  return new POA_Messaging::_tao_collocated_ReplyEndTimePolicy (this, stub);
 }
 
 // ****************************************************************
@@ -963,18 +891,7 @@ POA_Messaging::RelativeRequestTimeoutPolicy::_this (CORBA_Environment &ACE_TRY_E
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-
-  Messaging::RelativeRequestTimeoutPolicy *retval = 
-    Messaging::RelativeRequestTimeoutPolicy::_nil ();
-
-  ACE_NEW_RETURN (
-      retval,
-      POA_Messaging::_tao_collocated_RelativeRequestTimeoutPolicy (this, 
-                                                                   stub),
-      Messaging::RelativeRequestTimeoutPolicy::_nil ()
-    );
-
-  return retval;
+  return new POA_Messaging::_tao_collocated_RelativeRequestTimeoutPolicy (this, stub);
 }
 
 // ****************************************************************
@@ -1071,18 +988,7 @@ POA_Messaging::RelativeRoundtripTimeoutPolicy::_this (CORBA_Environment &ACE_TRY
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-
-  Messaging::RelativeRoundtripTimeoutPolicy *retval = 
-    Messaging::RelativeRoundtripTimeoutPolicy::_nil ();
-
-  ACE_NEW_RETURN (
-      retval,
-      POA_Messaging::_tao_collocated_RelativeRoundtripTimeoutPolicy (this, 
-                                                                     stub),
-      Messaging::RelativeRoundtripTimeoutPolicy::_nil ()
-    );
-
-  return retval;
+  return new POA_Messaging::_tao_collocated_RelativeRoundtripTimeoutPolicy (this, stub);
 }
 
 // ****************************************************************
@@ -1179,18 +1085,7 @@ POA_Messaging::RoutingPolicy::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-
-  Messaging::RoutingPolicy *retval = 
-    Messaging::RoutingPolicy::_nil ();
-
-  ACE_NEW_RETURN (
-      retval,
-      POA_Messaging::_tao_collocated_RoutingPolicy (this, 
-                                                    stub),
-      Messaging::RoutingPolicy::_nil ()
-    );
-
-  return retval;
+  return new POA_Messaging::_tao_collocated_RoutingPolicy (this, stub);
 }
 
 // ****************************************************************
@@ -1287,18 +1182,7 @@ POA_Messaging::MaxHopsPolicy::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-
-  Messaging::MaxHopsPolicy *retval = 
-    Messaging::MaxHopsPolicy::_nil ();
-
-  ACE_NEW_RETURN (
-      retval,
-      POA_Messaging::_tao_collocated_MaxHopsPolicy (this, 
-                                                    stub),
-      Messaging::MaxHopsPolicy::_nil ()
-    );
-
-  return retval;
+  return new POA_Messaging::_tao_collocated_MaxHopsPolicy (this, stub);
 }
 
 // ****************************************************************
@@ -1396,23 +1280,11 @@ POA_Messaging::QueueOrderPolicy::_this (CORBA_Environment &ACE_TRY_ENV)
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
   return new POA_Messaging::_tao_collocated_QueueOrderPolicy (this, stub);
-
-  Messaging::QueueOrderPolicy *retval = 
-    Messaging::QueueOrderPolicy::_nil ();
-
-  ACE_NEW_RETURN (
-      retval,
-      POA_Messaging::_tao_collocated_QueueOrderPolicy (this, 
-                                                       stub),
-      Messaging::QueueOrderPolicy::_nil ()
-    );
-
-  return retval;
 }
 
 // ****************************************************************
 
-#if defined (TAO_HAS_AMI_CALLBACK)
+#if defined (TAO_POLLER)
 POA_Messaging::ReplyHandler::ReplyHandler (void)
 {
 }
@@ -1491,25 +1363,10 @@ POA_Messaging::ReplyHandler::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-
-  Messaging::ReplyHandler *retval = 
-    Messaging::ReplyHandler::_nil ();
-
-  ACE_NEW_RETURN (
-      retval,
-      POA_Messaging::_tao_collocated_ReplyHandler (this, 
-                                                   stub),
-      Messaging::ReplyHandler::_nil ()
-    );
-
-  return retval;
+  return new POA_Messaging::_tao_collocated_ReplyHandler (this, stub);
 }
 
-#endif /* TAO_HAS_AMI_CALLBACK */
-
 // ****************************************************************
-
-#if defined (TAO_HAS_AMI_POLLER)
 
 class TAO_Messaging_Poller_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
 {
@@ -1988,19 +1845,8 @@ POA_Messaging::Poller::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-
-  Messaging::Poller *retval = 
-    Messaging::Poller::_nil ();
-
-  ACE_NEW_RETURN (
-      retval,
-      POA_Messaging::_tao_collocated_Poller (this, 
-                                             stub),
-      Messaging::Poller::_nil ()
-    );
-
-  return retval;
+  return new POA_Messaging::_tao_collocated_Poller (this, stub);
 }
-#endif /* TAO_HAS_AMI_POLLER */
+#endif /* TAO_POLLER */
 
 #endif /* TAO_HAS_CORBA_MESSAGING */

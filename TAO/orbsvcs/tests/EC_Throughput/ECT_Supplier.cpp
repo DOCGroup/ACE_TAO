@@ -14,12 +14,6 @@
 
 ACE_RCSID(EC_Throughput, ECT_Supplier, "$Id$")
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_PushSupplier_Adapter<Test_Supplier>;
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_PushSupplier_Adapter<Test_Supplier>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 Test_Supplier::Test_Supplier (ECT_Driver *driver)
   :  driver_ (driver),
      supplier_ (this),
@@ -250,3 +244,11 @@ Test_Supplier::accumulate (ACE_Throughput_Stats& stats) const
 {
   stats.accumulate (this->throughput_);
 }
+
+// ****************************************************************
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_PushSupplier_Adapter<Test_Supplier>;
+#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_PushSupplier_Adapter<Test_Supplier>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -36,28 +36,22 @@ CORBA_Current_ptr CORBA_Current::_narrow (
 {
   if (CORBA::is_nil (obj))
     return CORBA_Current::_nil ();
-  CORBA::Boolean check =
-    !obj->_is_a ("IDL:omg.org/CORBA/Current:1.0", ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA_Current::_nil ());
-  if (check)
+  if (!obj->_is_a ("IDL:omg.org/CORBA/Current:1.0", ACE_TRY_ENV))
     return CORBA_Current::_nil ();
-  void *servant = 0;
+  TAO_Stub *stub = obj->_stubobj ();
+  stub->_incr_refcnt ();
   if (!obj->_is_collocated ()
          || !obj->_servant()
-         || (servant = obj->_servant()->_downcast ("IDL:omg.org/CORBA/Current:1.0")) == 0
+         || obj->_servant()->_downcast ("IDL:omg.org/CORBA/Current:1.0") == 0
       )
-    ACE_THROW_RETURN (CORBA::MARSHAL (), CORBA_Current::_nil ());
-  CORBA_Current_ptr retval = CORBA_Current::_nil ();
-  ACE_NEW_RETURN (
-      retval,
-      POA_CORBA::_tao_collocated_Current (
-          ACE_reinterpret_cast (POA_CORBA::Current_ptr, 
-                                servant),
-          0
-        ),
-      CORBA_Current::_nil ()
+  {
+    return new CORBA_Current(stub);
+  }
+  void* servant = obj->_servant ()->_downcast ("IDL:omg.org/CORBA/Current:1.0");
+  return new POA_CORBA::_tao_collocated_Current(
+      ACE_reinterpret_cast(POA_CORBA::Current_ptr, servant),
+      stub
     );
-  return retval;
 }
 
 CORBA_Current_ptr CORBA_Current::_nil (void)

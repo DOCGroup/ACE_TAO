@@ -215,11 +215,6 @@ public:
                 TAO_ORB_Core* orb_core = 0);
   // Create an input CDR from an output CDR.
 
-  TAO_InputCDR (ACE_InputCDR::Transfer_Contents rhs,
-                TAO_ORB_Core* orb_core = 0);
-  // Initialize the contents of one CDR from another, without data
-  // copying and with minimimum locking overhead.
-
   ~TAO_InputCDR (void);
   // destructor
 

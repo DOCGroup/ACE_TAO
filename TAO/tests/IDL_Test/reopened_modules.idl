@@ -96,25 +96,3 @@ interface OpHolder
                      inout ::Outside::Reopened::Newdef p3);
   };
 
-// This particular combination used to cause IDL compiler
-// to go into an infinite loop looking for return type to
-// getInfo(). Partial solution got rid of infinite loop, 
-// but erroneously returned ::com from lookup.
-module com {};
-
-module com 
-{
-  module mr 
-    {
-      typedef short info;
-    };
-};
-
-module com 
-{
-  interface IFace
-    {
-      com::mr::info getInfo ();
-    };
-};
-

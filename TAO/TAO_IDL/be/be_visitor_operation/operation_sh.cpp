@@ -119,8 +119,8 @@ be_visitor_operation_sh::visit_operation (be_operation *node)
   delete visitor;
 
   // generate the corresponding static skeleton method for this operation only
-  // if there was no "native" type and the interface is not locality constraint.
-  if (!node->has_native () && !idl_global->gen_locality_constraint ())
+  // if there was no "native" type
+  if (!node->has_native ())
     {
       os->indent ();
       *os << "static void ";

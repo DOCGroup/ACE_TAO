@@ -146,6 +146,11 @@ public:
       CORBA_Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
+  static CORBA_Policy_ptr _unchecked_narrow (
+      CORBA::Object_ptr obj,
+      CORBA_Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    );
   static CORBA_Policy_ptr _nil (void);
 
 #if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
@@ -398,6 +403,11 @@ public:
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
+  static CORBA_PolicyManager_ptr _unchecked_narrow (
+        CORBA::Object_ptr obj,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
   static CORBA_PolicyManager_ptr _nil (void);
 
   virtual CORBA_PolicyList * get_policy_overrides (
@@ -484,6 +494,11 @@ public:
   // the static operations
   static CORBA_PolicyCurrent_ptr _duplicate (CORBA_PolicyCurrent_ptr obj);
   static CORBA_PolicyCurrent_ptr _narrow (
+        CORBA::Object_ptr obj,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+  static CORBA_PolicyCurrent_ptr _unchecked_narrow (
         CORBA::Object_ptr obj,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()

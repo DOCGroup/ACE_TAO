@@ -75,6 +75,32 @@ be_visitor_sequence_ci::gen_bounded_str_sequence (be_sequence *node)
 
   os->indent ();
 
+#if 0 /* Why is this here? ASG */
+  // generate the class name
+  be_type  *pt; // base types
+
+  if (bt->node_type () == AST_Decl::NT_typedef)
+  {
+    // get the primitive base type of this typedef node
+    be_typedef *t = be_typedef::narrow_from_decl (bt);
+    pt = t->primitive_base_type ();
+  }
+  else
+    pt = bt;
+
+  // the accept is here the first time used and if an
+  // error occurs, it will occur here. Later no check
+  // for errors will be done.
+  if (pt->accept (visitor) == -1)
+  {
+     ACE_ERROR_RETURN ((LM_ERROR,
+                        "(%N:%l) be_visitor_sequence_ci::"
+                        "visit_sequence - "
+                        "base type visit failed\n"),
+                        -1);
+  }
+#endif /* 0 */
+
   // first generate the static methods since they are used by others. Since
   // they are inlined, their definition needs to come before their use else
   // some compilers (e.g., g++) produce lots of warnings.
@@ -131,8 +157,6 @@ be_visitor_sequence_ci::gen_bounded_str_sequence (be_sequence *node)
       << full_class_name << "::" << class_name << " (const " << full_class_name << " &rhs)" << be_idt_nl
       << ": TAO_Bounded_Base_Sequence (rhs)" << be_uidt_nl
       << "{" << be_idt_nl
-      << "if (rhs.buffer_ != 0)" << be_nl
-      << "{" << be_idt_nl
       << "char **tmp1 = " << full_class_name << "::allocbuf (this->maximum_);" << be_nl
       << "char ** const tmp2 = ACE_reinterpret_cast (char ** ACE_CAST_CONST, rhs.buffer_);" << be_nl
       << be_nl
@@ -140,11 +164,6 @@ be_visitor_sequence_ci::gen_bounded_str_sequence (be_sequence *node)
       << "tmp1[i] = CORBA::string_dup (tmp2[i]);" << be_uidt_nl
       << be_nl
       << "this->buffer_ = tmp1;" << be_uidt_nl
-      << "}" << be_nl
-      << "else" << be_nl
-      << "{" << be_idt_nl
-      << "this->buffer_ = 0;" << be_uidt_nl
-      << "}" << be_uidt_nl
       << "}" << be_nl
       << be_nl;
 

@@ -510,7 +510,7 @@ be_visitor_field_cdr_op_ci::visit_string (be_string *)
                          ), -1);
     }
 
-  // check what is the code generation's substate. Are we generating code for
+  // check what is the code generations substate. Are we generating code for
   // the in/out operators for our parent or for us?
   switch (this->ctx_->sub_state ())
     {
@@ -528,7 +528,7 @@ be_visitor_field_cdr_op_ci::visit_string (be_string *)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_field_cdr_op_ci::"
                          "visit_array - "
-                         "bad substate\n"
+                         "bad sub state\n"
                          ), -1);
     }
 

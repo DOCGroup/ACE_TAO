@@ -401,15 +401,6 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
         was compiled with support for the FL toolkit
     </TD>
   </TR>
-  <TR>
-    <TD><CODE>-ORBReactorMaskSignals</CODE> <EM>0/1</EM></TD>
-    <TD>ACE select reactors mask signals during upcalls to the event
-	handlers.  This is only useful if the application is going to
-        trap those signals and handle them in any way.
-        Disabling the mask can improve performance by reducing the
-	number of kernel level locks.
-    </TD>
-  </TR>
 </TR>
 <TR><TD><CODE>wfmo<CODE></TD>
 <TD>Use the
@@ -469,10 +460,10 @@ The default is <code>select_mt</code></TD>
   <TD><a name="-ORBConnectionCachingStrategy"></a>
       Specify the strategy to use for caching and purging connections.
       By default, TAO_CONNECTION_CACHING_STRATEGY is used which has
-      been set to Least Recently Used (LRU).
+      been set to Least Recently Used (LRU).      
       For example, for choosing the First In First Out option just add
       <code>-ORBConnectionCachingStrategy fifo</code> to the service
-      configurator file.
+      configurator file. 
   </TD>
 </TR>
 <TR>
@@ -512,7 +503,7 @@ The default is <code>select_mt</code></TD>
         service each connection. The default is reactive.
 	      <P>
 		TAO also supports the thread-pool concurrency model
-		but this is implemented by the user, creating multiple
+		but this is implemented by the user, creating multiple 
 		threads that call <CODE>ORB::run()</CODE> and using
 		the <CODE>-ORBReactorType tp</CODE> option.
 	      </P>
@@ -533,7 +524,7 @@ The default is <code>select_mt</code></TD>
 	      shutdown.
 	      This option controls the period of the polling,
 	      expressed in milliseconds.
-	      Applications that do not shutdown, or that can otherwise
+	      Applications that do not shutdown, or that can otherwise 
 	      ensure that no server threads will be running at
 	      shutdown (for example if all the clients terminate
 	      before the server) can disable the polling using  the
@@ -546,7 +537,7 @@ The default is <code>select_mt</code></TD>
 		this flag also expresses the time in milliseconds (as
 		a string constant) and the magic value
 		<CODE>"INFINITE"</CODE> can be used to disable polling
-		entirely. This yields a slight performance improvement
+		entirely. This yields a slight performance improvement 
 		(around 1%).
 	      </P>
 	    </TD>
@@ -655,8 +646,7 @@ The default is <code>select_mt</code></TD>
     <TD>Specify the flags used for thread creation. Flags can be any
         logical-OR combination of <CODE>THR_DETACHED</CODE>,
         <CODE>THR_BOUND</CODE>, <CODE>THR_NEW_LWP</CODE>,
-        <CODE>THE_SUSPENDED</CODE>. The default is <CODE>THR_BOUND |
-        THR_DETACHED</CODE> . </TD>
+        <CODE>THE_SUSPENDED</CODE>. The default is <CODE>THR_BOUND </CODE>. </TD>
   </TR>
   <TR>
 
@@ -679,7 +669,7 @@ The default is <code>select_mt</code></TD>
 -->
     <TD><CODE>-ORBConnectorLock</CODE> <EM>lock type</EM></TD>
     <TD><a
-        name="-ORBConnectorLock"></a>This option has been moved to the
+        name="-ORBConnectorLock"></a>This option has been moved to the 
 	    client strategy factory.</TD>
   </TR>
 

@@ -74,7 +74,6 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
   op = new be_operation (node->field_type (), AST_Operation::OP_noflags,
                          node->name (), 0);
   op->set_name (node->name ());
-  op->set_defined_in (node->defined_in ());
   be_visitor_context ctx (*this->ctx_);
 
   // this switch statement eliminates the need for different classes that have
@@ -117,34 +116,6 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
     case TAO_CodeGen::TAO_ATTRIBUTE_TIE_SI:
       ctx.state (TAO_CodeGen::TAO_OPERATION_TIE_SI);
       break;
-    // AMI Reply Handler code generation
-    case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_CH:
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_CH);
-      break;
-    case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_CS:
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_CS);
-      break;
-    case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_SH:
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_SH);
-      break;
-    case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_SS:
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_SS);
-      break;
-    case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_THRU_POA_COLLOCATED_SH:
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_THRU_POA_COLLOCATED_SH);
-      break;
-    case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_THRU_POA_COLLOCATED_SS:
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_THRU_POA_COLLOCATED_SS);
-      break;
-    case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_DIRECT_COLLOCATED_SH:
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_DIRECT_COLLOCATED_SH);
-      break;
-    case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_DIRECT_COLLOCATED_SS:
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_DIRECT_COLLOCATED_SS);
-      break;
-    case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_TIE_SH:
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_TIE_SH);
-      break;
     default:
       // error
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -165,69 +136,10 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
                          "codegen for get_attribute failed\n"),
                         -1);
     }
-
+  delete op;
   delete visitor;
-
-  //
-  // AMI Call back code generation.
-  //
-
-  // Only if AMI callbacks are enabled.
-  if (idl_global->ami_call_back () == I_TRUE)
-    {
-      // Generate AMI <sendc_> method, for this operation, if you are
-      // doing client header.
-
-      switch (this->ctx_->state ())
-        {
-        case TAO_CodeGen::TAO_ATTRIBUTE_CH:
-          ctx.state (TAO_CodeGen::TAO_AMI_OPERATION_CH);
-          break;
-
-        case TAO_CodeGen::TAO_ATTRIBUTE_CS:
-          ctx.state (TAO_CodeGen::TAO_AMI_OPERATION_CS);
-          break;
-
-        default:
-          break;
-        }
-
-      // Only if we set new states generate code.
-      if (ctx.state () == TAO_CodeGen::TAO_AMI_OPERATION_CH
-          || ctx.state () == TAO_CodeGen::TAO_AMI_OPERATION_CS)
-        {
-          // Grab the appropriate visitor.
-          visitor = tao_cg->make_visitor (&ctx);
-          if (!visitor)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_interface::"
-                                 "visit_operation - "
-                                 "NUL visitor\n"),
-                                -1);
-            }
-
-          // Visit the node using this visitor
-          if (op->accept (visitor) == -1)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_interface::"
-                                 "visit_operation - "
-                                 "failed to accept visitor\n"),
-                                -1);
-            }
-          delete visitor;
-      }
-    }
-  if (op)
-    {
-      delete op;
-      op = 0;
-    }
-
-  // Do nothing for readonly attributes.
   if (node->readonly ())
-    return 0;  
+    return 0;  // nothing else to do
 
   // the set method.
   // the return type  is "void"
@@ -246,7 +158,6 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
   op = new be_operation (rt, AST_Operation::OP_noflags,
                          node->name (), 0);
   op->set_name (node->name ());
-  op->set_defined_in (node->defined_in ());
   op->add_argument_to_scope (arg);
 
   ctx = *this->ctx_;
@@ -290,34 +201,6 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
     case TAO_CodeGen::TAO_ATTRIBUTE_TIE_SI:
       ctx.state (TAO_CodeGen::TAO_OPERATION_TIE_SI);
       break;
-    // AMI Reply Handler code generation
-    case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_CH:
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_CH);
-      break;
-    case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_CS:
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_CS);
-      break;
-    case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_SH:
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_SH);
-      break;
-    case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_SS:
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_SS);
-      break;
-    case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_THRU_POA_COLLOCATED_SH:
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_THRU_POA_COLLOCATED_SH);
-      break;
-    case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_THRU_POA_COLLOCATED_SS:
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_THRU_POA_COLLOCATED_SS);
-      break;
-    case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_DIRECT_COLLOCATED_SH:
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_DIRECT_COLLOCATED_SH);
-      break;
-    case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_DIRECT_COLLOCATED_SS:
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_DIRECT_COLLOCATED_SS);
-      break;
-    case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_TIE_SH:
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_TIE_SH);
-      break;
     default:
       // error
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -340,60 +223,8 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
                          "codegen for set_attribute failed\n"),
                         -1);
     }
-  delete visitor;
-  //
-  // AMI Call back code generation.
-  //
-
-  // Only if AMI callbacks are enabled.
-  if (idl_global->ami_call_back () == I_TRUE)
-    {
-      // Generate AMI <sendc_> method, for this operation, if you are
-      // doing client header.
-
-      switch (this->ctx_->state ())
-        {
-        case TAO_CodeGen::TAO_ATTRIBUTE_CH:
-          ctx.state (TAO_CodeGen::TAO_AMI_OPERATION_CH);
-          break;
-
-        case TAO_CodeGen::TAO_ATTRIBUTE_CS:
-          ctx.state (TAO_CodeGen::TAO_AMI_OPERATION_CS);
-          break;
-
-        default:
-          break;
-        }
-
-      // Only if we set new states generate code.
-      if (ctx.state () == TAO_CodeGen::TAO_AMI_OPERATION_CH
-          || ctx.state () == TAO_CodeGen::TAO_AMI_OPERATION_CS)
-        {
-          // Grab the appropriate visitor.
-          visitor = tao_cg->make_visitor (&ctx);
-          if (!visitor)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_interface::"
-                                 "visit_operation - "
-                                 "NUL visitor\n"),
-                                -1);
-            }
-
-          // Visit the node using this visitor
-          if (op->accept (visitor) == -1)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_interface::"
-                                 "visit_operation - "
-                                 "failed to accept visitor\n"),
-                                -1);
-            }
-          delete visitor;
-        }
-    }
-  
   delete op;
+  delete visitor;
   delete rt;
   delete arg;
   return 0;

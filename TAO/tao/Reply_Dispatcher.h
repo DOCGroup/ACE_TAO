@@ -53,13 +53,20 @@ public:
                               TAO_GIOP_Message_State* message_state) = 0;
   // Dispatch the reply. Return 1 on sucess, -1 on error.
 
-  virtual TAO_GIOP_Message_State *message_state (void);
+  virtual TAO_GIOP_Message_State *message_state (void) const;
   // Get the Message State into which the reply has been read.
+
+  const IOP::ServiceContextList& reply_service_info () const;
+  // Accessing the reply service context list.
 
   virtual int leader_follower_condition_variable (TAO_Transport *);
   // Obtain the condition variable used in the Leader Follower Wait
   // Strategy. This is valid only for the synchronous reply dispatcher
   // and only when the Leader Follower wait strategy is used.
+
+protected:
+  IOP::ServiceContextList reply_service_info_;
+  // The service context list
 };
 
 // *********************************************************************
@@ -74,8 +81,7 @@ class TAO_Export TAO_Synch_Reply_Dispatcher : public TAO_Reply_Dispatcher
   //
 
 public:
-  TAO_Synch_Reply_Dispatcher (TAO_ORB_Core *orb_core,
-                              IOP::ServiceContextList &sc);
+  TAO_Synch_Reply_Dispatcher (TAO_ORB_Core *orb_core);
   // Constructor.
 
   virtual ~TAO_Synch_Reply_Dispatcher (void);
@@ -96,7 +102,7 @@ public:
   // stack.
   // Return 1 on sucess, -1 on error.
 
-  virtual TAO_GIOP_Message_State *message_state (void);
+  virtual TAO_GIOP_Message_State *message_state (void) const;
   // Return the message state of this invocation.
 
   virtual TAO_InputCDR &reply_cdr (void);
@@ -112,10 +118,6 @@ public:
   // Obtain the condition variable used in the Leader Follower Wait
   // Strategy.
 
-protected:
-  IOP::ServiceContextList &reply_service_info_;
-  // The service context list
-
 private:
   CORBA::ULong reply_status_;
   // Reply or LocateReply status.
@@ -123,8 +125,13 @@ private:
   TAO_GIOP_Version version_;
   // The version
 
-  TAO_GIOP_Message_State message_state_;
-  // All the state required to receive the input...
+  TAO_GIOP_Message_State *message_state_;
+  // CDR stream for reading the input.
+  // @@ Carlos : message_state should go away. All we need is the
+  //    reply cdr. Is that rite? (Alex).
+
+  TAO_InputCDR reply_cdr_;
+  // CDR where the reply message is placed.
 
   int reply_received_;
   // Flag that indicates the reply  has been received.
@@ -138,11 +145,7 @@ private:
 };
 
 // *********************************************************************
-
-#if defined (TAO_HAS_CORBA_MESSAGING)
-
-#  if defined (TAO_HAS_AMI_CALLBACK) || defined (TAO_HAS_AMI_POLLER)
-
+#if defined (TAO_HAS_CORBA_MESSAGING) && defined (TAO_POLLER)
 class TAO_Export TAO_Asynch_Reply_Dispatcher : public TAO_Reply_Dispatcher
 {
   // = TITLE
@@ -154,9 +157,8 @@ class TAO_Export TAO_Asynch_Reply_Dispatcher : public TAO_Reply_Dispatcher
 
 public:
   TAO_Asynch_Reply_Dispatcher (const TAO_Reply_Handler_Skeleton &reply_handler_skel,
-                               Messaging::ReplyHandler_ptr reply_handler_ptr,
-                               IOP::ServiceContextList &sc);
- // Constructor.
+                               Messaging::ReplyHandler_ptr reply_handler_ptr);
+  // Constructor.
 
   virtual ~TAO_Asynch_Reply_Dispatcher (void);
   // Destructor.
@@ -176,12 +178,8 @@ public:
   // handler.
   // Return 1 on sucess, -1 on error.
 
-  virtual TAO_GIOP_Message_State *message_state (void);
+  virtual TAO_GIOP_Message_State *message_state (void) const;
   // Return the message state.
-
-protected:
-  IOP::ServiceContextList &reply_service_info_;
-  // The service context list
 
 private:
   CORBA::ULong reply_status_;
@@ -201,11 +199,7 @@ private:
   Messaging::ReplyHandler_ptr reply_handler_;
   // Reply Handler passed in the Asynchronous Invocation.
 };
-
-#  endif /* TAO_HAS_AMI_CALLBACK || TAO_HAS_AMI_POLLER */
-
-#endif /* TAO_HAS_CORBA_MESSAGING  */
-
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_POLLER */
 // *********************************************************************
 
 #if defined (__ACE_INLINE__)

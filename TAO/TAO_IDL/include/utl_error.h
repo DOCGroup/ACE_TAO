@@ -126,12 +126,6 @@ public:
   void  error2(ErrorCode e, AST_Decl *t1, AST_Decl *t2);
   void  error3(ErrorCode e, AST_Decl *t1, AST_Decl *t2, AST_Decl *t3);
 
-  // Report warnings with varying numbers of arguments
-  void  warning0(ErrorCode e);
-  void  warning1(ErrorCode e, AST_Decl *t);
-  void  warning2(ErrorCode e, AST_Decl *t1, AST_Decl *t2);
-  void  warning3(ErrorCode e, AST_Decl *t1, AST_Decl *t2, AST_Decl *t3);
-
   // Report a syntax error in IDL input
   void  syntax_error(IDL_GlobalData::ParseState ps);
 

@@ -1,7 +1,6 @@
 // $Id$
 
 #define ACE_BUILD_SVC_DLL
-#define Alt_Resource_Factory_BUILD_DLL
 #include "ace/Get_Opt.h"
 #include "ace/Dynamic_Service.h"
 #include "Time_Date.h"

@@ -281,15 +281,6 @@ TAO_WString_Manager::_retn (void)
 
 // ****************************************************************
 
-// copy ctor
-ACE_INLINE
-TAO_SeqElem_WString_Manager::
-TAO_SeqElem_WString_Manager (const TAO_SeqElem_WString_Manager &rhs)
-  :  ptr_ (rhs.ptr_),
-     release_ (rhs.release_)
-{
-}
-
 ACE_INLINE
 TAO_SeqElem_WString_Manager::
     TAO_SeqElem_WString_Manager (CORBA::WChar **buffer,

@@ -96,24 +96,16 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   else
     {
       // We don't inherit from another user defined object, hence our
-      // base class is the ServantBase class (or, Local_ServantBase for
-      // locality constraint interface.)
-      if (!idl_global->gen_locality_constraint ())
-        *os << " public virtual PortableServer::ServantBase";
-      else
-        *os << " public virtual TAO_Local_ServantBase";
+      // base class is the ServantBase class.
+      *os << " public virtual PortableServer::ServantBase";
     }
-
   *os << be_nl
       << "{" << be_nl
       << "protected:" << be_idt_nl
       << namebuf << " (void);\n" << be_uidt_nl
-      << "public:" << be_idt_nl;
-
-  // No copy constructor for locality constraint interface.
-  if (!idl_global->gen_locality_constraint ())
-    *os << namebuf << " (const " << namebuf << "& rhs);" << be_nl;
-  *os << "virtual ~" << namebuf << " (void);\n\n";
+      << "public:" << be_idt_nl
+      << namebuf << " (const " << namebuf << "& rhs);" << be_nl
+      << "virtual ~" << namebuf << " (void);\n\n";
 
   *os << be_nl
       << "virtual CORBA::Boolean _is_a (" << be_idt << be_idt_nl
@@ -127,39 +119,34 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       << "const char* logical_type_id" << be_uidt_nl
       << ");\n" << be_uidt_nl;
 
-  // No static skeleton methods and the _dispatch operation for
-  // locality constraint interface.
-  if (!idl_global->gen_locality_constraint ())
-    {
-      // add a skeleton for our _is_a method
-      *os << "static void _is_a_skel (" << be_idt << be_idt_nl
-          << "CORBA::ServerRequest &req," << be_nl
-          << "void *obj," << be_nl
-          << "void *context," << be_nl
-          << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
-          << "TAO_default_environment ()"
-          << be_uidt << be_uidt_nl
-          << ");\n" << be_uidt_nl;
+  // add a skeleton for our _is_a method
+  *os << "static void _is_a_skel (" << be_idt << be_idt_nl
+      << "CORBA::ServerRequest &req," << be_nl
+      << "void *obj," << be_nl
+      << "void *context," << be_nl
+      << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
+      << "TAO_default_environment ()"
+      << be_uidt << be_uidt_nl
+      << ");\n" << be_uidt_nl;
 
-      // add a skeleton for our _non_existent method
-      *os << "static void _non_existent_skel (" << be_idt << be_idt_nl
-          << "CORBA::ServerRequest &req," << be_nl
-          << "void *obj," << be_nl
-          << "void *context," << be_nl
-          << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
-          << "TAO_default_environment ()"
-          << be_uidt << be_uidt_nl
-          << ");\n" << be_uidt_nl;
+  // add a skeleton for our _non_existent method
+  *os << "static void _non_existent_skel (" << be_idt << be_idt_nl
+      << "CORBA::ServerRequest &req," << be_nl
+      << "void *obj," << be_nl
+      << "void *context," << be_nl
+      << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
+      << "TAO_default_environment ()"
+      << be_uidt << be_uidt_nl
+      << ");\n" << be_uidt_nl;
 
-      // add the dispatch method
-      *os << "virtual void _dispatch (" << be_idt << be_idt_nl
-          << "CORBA::ServerRequest &_tao_req," << be_nl
-          << "void *_tao_context," << be_nl
-          << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
-          << "TAO_default_environment ()"
-          << be_uidt << be_uidt_nl
-          << ");\n" << be_uidt_nl;
-    }
+  // add the dispatch method
+  *os << "virtual void _dispatch (" << be_idt << be_idt_nl
+      << "CORBA::ServerRequest &_tao_req," << be_nl
+      << "void *_tao_context," << be_nl
+      << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
+      << "TAO_default_environment ()"
+      << be_uidt << be_uidt_nl
+      << ");\n" << be_uidt_nl;
 
   // Print out the _this() method.
   *os << node->full_name () << " *_this (" << be_idt << be_idt_nl
@@ -182,21 +169,15 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
                         -1);
     }
 
-  // Skip the generation of static skeletons for locality constraint
-  // interface.
-  if (!idl_global->gen_locality_constraint ())
+  // generate skeletons for operations of our base classes. These skeletons
+  // just cast the pointer to the appropriate type before invoking the call.
+  if (node->traverse_inheritance_graph (be_interface::gen_skel_helper, os) == -1)
     {
-      // generate skeletons for operations of our base classes. These
-      // skeletons just cast the pointer to the appropriate type
-      // before invoking the call.
-      if (node->traverse_inheritance_graph (be_interface::gen_skel_helper, os) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_interface_sh::"
-                             "visit_interface - "
-                             "inheritance graph traversal failed\n"),
-                            -1);
-        }
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_interface_sh::"
+                         "visit_interface - "
+                         "inheritance graph traversal failed\n"),
+                        -1);
     }
 
   *os << be_uidt_nl << "};\n\n";
@@ -204,12 +185,12 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
 
   be_visitor_context ctx (*this->ctx_);
   be_visitor *visitor = 0;
-
+  
   // generate the collocated class
   if (idl_global->gen_thru_poa_collocation ())
     {
-      if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_SH)
-        ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_THRU_POA_COLLOCATED_SH);
+      if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_SERVANT_CH)
+        ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_THRU_POA_COLLOCATED_CH);
       else
         ctx.state (TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SH);
       visitor = tao_cg->make_visitor (&ctx);
@@ -229,8 +210,8 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   if (idl_global->gen_direct_collocation ())
     {
       ctx = *this->ctx_;
-      if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_SH)
-        ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_DIRECT_COLLOCATED_SH);
+      if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_SERVANT_CH)
+        ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_DIRECT_COLLOCATED_CH);
       else
         ctx.state (TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SH);
       visitor = tao_cg->make_visitor (&ctx);
@@ -247,64 +228,21 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       visitor = 0;
     }
 
-  // No need to generate TIE class for locality constraint interface.
-  if (!idl_global->gen_locality_constraint ())
+  // generate the TIE class.
+  ctx = *this->ctx_;
+  ctx.state (TAO_CodeGen::TAO_INTERFACE_TIE_SH);
+  visitor = tao_cg->make_visitor (&ctx);
+  if (!visitor || (node->accept (visitor) == -1))
     {
-      // generate the TIE class.
-      ctx = *this->ctx_;
-      if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_SH)
-        ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_TIE_SH);
-      else
-        ctx.state (TAO_CodeGen::TAO_INTERFACE_TIE_SH);
-      visitor = tao_cg->make_visitor (&ctx);
-      if (!visitor || (node->accept (visitor) == -1))
-        {
-          delete visitor;
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_interface_sh::"
-                             "visit_interface - "
-                             "codegen for TIE class failed\n"),
-                            -1);
-        }
       delete visitor;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_interface_sh::"
+                         "visit_interface - "
+                         "codegen for TIE class failed\n"),
+                        -1);
     }
+  delete visitor;
 
-  // Only if AMI code generation is activated and we 
-  // are not calling ourselves already
-  if (idl_global->ami_call_back () == I_TRUE
-      && this->ctx_->state () == TAO_CodeGen::TAO_INTERFACE_SH)
-    {
-      // Set the AMI Strategy for code generation
-      be_interface_type_strategy *old_strategy =
-        node->set_strategy (new be_interface_ami_handler_strategy (node));
-
-      //  = Generate the Servant Skeleton code.
-      ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_SH);
-      visitor = tao_cg->make_visitor (&ctx);
-      if (!visitor)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_interface_sh::"
-                             "visit_interface - "
-                             "Bad visitor\n"),
-                            -1);
-        }
-
-      // call the visitor on this interface.
-      if (node->accept (visitor) == -1)
-        {
-          delete visitor;
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_interface_sh::"
-                             "visit_interface - "
-                             "code gen for ami handler failed\n"),
-                            -1);
-        }
-      delete visitor;
-
-      delete node->set_strategy (old_strategy);
-    }
   *os << "\n";
   ctx.stream (tao_cg->server_template_header ());
 

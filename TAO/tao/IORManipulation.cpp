@@ -51,7 +51,7 @@ TAO_IOR_Manipulation_impl::merge_iors (
   CORBA::ULong i, count=0;
   for (i = 0; i < iors.length (); i++)
     {
-      count += iors[i]->_stubobj ()->base_profiles ().profile_count ();
+      count += iors[i]->_stubobj ()->get_base_profiles ().profile_count ();
     }
 
   // make sure we have some profiles
@@ -65,7 +65,7 @@ TAO_IOR_Manipulation_impl::merge_iors (
   // get the profile lists, start by initialize the composite reference
   // by using the first Object.  Then for each subsequent Object verify
   // they are the same type and they do not have duplicate profiles.
-  auto_ptr<TAO_MProfile> tmp_pfiles (iors[0]->_stubobj ()->make_profiles ());
+  auto_ptr<TAO_MProfile> tmp_pfiles (iors[0]->_stubobj ()->get_profiles ());
   if (Merged_Profiles.add_profiles (tmp_pfiles.get ())< 0)
     ACE_THROW_RETURN (TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR (),
                       CORBA::Object::_nil ());
@@ -73,12 +73,12 @@ TAO_IOR_Manipulation_impl::merge_iors (
 
   for (i = 1; i < iors.length () ; i++)
     {
-      // this gets a copy of the MProfile, hense the auto_ptr;
+      // this gets a copy of the MProfile, hense ther auto_ptr;
 
       // @@ This is ugly, it is a work around MS C++ auto_ptr which
       // does not implement reset ()!!
-      auto_ptr<TAO_MProfile> XXtemp (iors[i]->_stubobj ()->make_profiles ());
-      // tmp_pfiles.reset (iors[i]->_stubobj ()->make_profiles ());
+      auto_ptr<TAO_MProfile> XXtemp (iors[i]->_stubobj ()->get_profiles ());
+      // tmp_pfiles.reset (iors[i]->_stubobj ()->get_profiles ());
       tmp_pfiles = XXtemp;
 
       // check to see if any of the profile in tmp_pfiles are already
@@ -100,14 +100,11 @@ TAO_IOR_Manipulation_impl::merge_iors (
 
     }
 
-  // MS C++ knows nothing about reset!
+  // MS C++ knows nothing abouyt reset!
   // tmp_pfiles.reset (0); // get rid of last MProfile
 
   TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
-
-  // @@ We could use an auto_ptr here but the fact that
-  // TAO_Stub::~TAO_Stub() is private and should only be called
-  // through TAO_Stub::_decr_refcnt() prevents this.
+  // @@ need some sort of auto_ptr here
   TAO_Stub *stub;
   ACE_NEW_THROW_EX (stub,
                     TAO_Stub (id,  // give the id string to stub
@@ -123,21 +120,15 @@ TAO_IOR_Manipulation_impl::merge_iors (
                     CORBA_Object (stub),
                     CORBA::NO_MEMORY ());
 
-  auto_ptr<CORBA_Object> safe_new_obj (new_obj);
-
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   // Clean up in case of errors.
-  if (CORBA::is_nil (safe_new_obj.get ()))
+  if (CORBA::is_nil (new_obj))
     {
       stub->_decr_refcnt ();
       ACE_THROW_RETURN (TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR (),
                         CORBA::Object::_nil ());
     }
-
-  // Release ownership of the pointers protected by the auto_ptrs since they
-  // no longer need to be protected by this point.
-  safe_new_obj.release ();
 
   return new_obj;
 }
@@ -183,27 +174,27 @@ TAO_IOR_Manipulation_impl::remove_profiles (
                       CORBA::Object::_nil ());
 
   // Since we are removing from ior1 ...
-  CORBA::ULong count = ior1->_stubobj ()->base_profiles ().profile_count ();
+  CORBA::ULong count = ior1->_stubobj ()->get_base_profiles ().profile_count ();
 
   // make sure we have some profiles
   if (count == 0 ||
-      ior2->_stubobj ()->base_profiles ().profile_count () == 0)
+      ior2->_stubobj ()->get_base_profiles ().profile_count () == 0)
     ACE_THROW_RETURN (TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList (),
                       CORBA::Object::_nil ());
 
   // initialize with estimated pfile count.
   TAO_MProfile Diff_Profiles (count);
 
-  auto_ptr<TAO_MProfile> tmp_pfiles (ior1->_stubobj ()->make_profiles ());
+  auto_ptr<TAO_MProfile> tmp_pfiles (ior1->_stubobj ()->get_profiles ());
   if (Diff_Profiles.add_profiles (tmp_pfiles.get ()) < 0)
     ACE_THROW_RETURN (TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR (),
                       CORBA::Object::_nil ());
 
   // @@ This is ugly, it is a work around MS C++ auto_ptr which
   // does not implement reset ()!!
-  auto_ptr<TAO_MProfile> XXtemp (ior2->_stubobj ()->make_profiles ());
+  auto_ptr<TAO_MProfile> XXtemp (ior2->_stubobj ()->get_profiles ());
   tmp_pfiles = XXtemp;
-  // tmp_pfiles.reset (ior2->_stubobj ()->make_profiles ());
+  // tmp_pfiles.reset (ior2->_stubobj ()->get_profiles ());
 
   if (Diff_Profiles.remove_profiles (tmp_pfiles.get ()) < 0)
     ACE_THROW_RETURN (TAO_IOP::TAO_IOR_Manipulation::NotFound (),
@@ -254,8 +245,8 @@ TAO_IOR_Manipulation_impl::is_in_ior (
 {
   CORBA::ULong count=0;
   TAO_Profile *pfile1, *pfile2;
-  auto_ptr<TAO_MProfile> tmp_pfiles1 (ior1->_stubobj ()->make_profiles ());
-  auto_ptr<TAO_MProfile> tmp_pfiles2 (ior2->_stubobj ()->make_profiles ());
+  auto_ptr<TAO_MProfile> tmp_pfiles1 (ior1->_stubobj ()->get_profiles ());
+  auto_ptr<TAO_MProfile> tmp_pfiles2 (ior2->_stubobj ()->get_profiles ());
 
   tmp_pfiles1->rewind ();
   while ((pfile1 = tmp_pfiles1->get_next ()) > 0)
@@ -285,7 +276,7 @@ TAO_IOR_Manipulation_impl::get_profile_count (
       ))
 {
   CORBA::ULong count;
-  count = ior->_stubobj ()->base_profiles ().profile_count ();
+  count = ior->_stubobj ()->get_base_profiles ().profile_count ();
 
   if (count == 0)
     ACE_THROW_RETURN (TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList (),
@@ -296,16 +287,10 @@ TAO_IOR_Manipulation_impl::get_profile_count (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class auto_ptr<CORBA_Object>;
-template class ACE_Auto_Basic_Ptr<CORBA_Object>;
-
 template class TAO_Object_Manager<CORBA_Object,CORBA_Object_var>;
 template class TAO_Unbounded_Object_Sequence<CORBA_Object,CORBA_Object_var>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate auto_ptr<CORBA_Object>
-#pragma instantiate ACE_Auto_Basic_Ptr<CORBA_Object>
 
 #pragma instantiate TAO_Object_Manager<CORBA_Object,CORBA_Object_var>
 #pragma instantiate TAO_Unbounded_Object_Sequence<CORBA_Object,CORBA_Object_var>

@@ -253,6 +253,11 @@ public:
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
+  static CORBA_ConstructionPolicy_ptr _unchecked_narrow (
+      CORBA::Object_ptr obj,
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    );
   static CORBA_ConstructionPolicy_ptr _nil (void);
 
   virtual void make_domain_manager (

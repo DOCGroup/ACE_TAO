@@ -257,6 +257,22 @@ TAO_Object_Manager<T,T_var>::inout (void)
   return *this->ptr_;
 }
 
+template <class T, class T_var> ACE_INLINE T *&
+TAO_Object_Manager<T,T_var>::out (void)
+{
+  CORBA::release (*this->ptr_);
+  *this->ptr_ = T::_nil ();
+  return *this->ptr_;
+}
+
+template <class T, class T_var> ACE_INLINE T *
+TAO_Object_Manager<T,T_var>::_retn (void)
+{
+  T *temp = *this->ptr_;
+  *this->ptr_ = T::_nil ();
+  return temp;
+}
+
 // *************************************************************
 // Inline operations for class TAO_Pseudo_Object_Manager<T>
 // *************************************************************
@@ -455,25 +471,6 @@ TAO_Bounded_String_Sequence<MAX>::
 TAO_Bounded_String_Sequence (CORBA::ULong length,
                              char **value,
                              CORBA::Boolean release)
-  : TAO_Bounded_Base_Sequence (MAX, length, value, release)
-{
-}
-
-// *************************************************************
-// class TAO_Bounded_WString_Sequence
-// *************************************************************
-
-template<size_t MAX> ACE_INLINE
-TAO_Bounded_WString_Sequence<MAX>::~TAO_Bounded_WString_Sequence (void)
-{
-  this->_deallocate_buffer ();
-}
-
-template<size_t MAX> ACE_INLINE
-TAO_Bounded_WString_Sequence<MAX>::
-TAO_Bounded_WString_Sequence (CORBA::ULong length,
-                              CORBA::WChar **value,
-                              CORBA::Boolean release)
   : TAO_Bounded_Base_Sequence (MAX, length, value, release)
 {
 }

@@ -36,6 +36,9 @@ Client::init (int argc,
                  ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
+  // Open the ORB.
+  manager_.orb ()->open ();
+
   // Initialize the naming services
   if (my_name_client_.init (manager_.orb()) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -167,7 +170,7 @@ Client::test_define_property (CORBA::Environment &ACE_TRY_ENV)
                                 anyval,
                                 ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
-
+  
   // Prepare a Float and "define" that in the PropertySet.
   CORBA::Float f = 3.14F;
   anyval <<= f;
@@ -233,13 +236,13 @@ Client::test_get_all_property_names (CORBA::Environment &ACE_TRY_ENV)
       if (names_var.ptr () != 0)
         {
           CORBA::ULong len = names_var->length ();
-
+          
           for (CORBA::ULong ni = 0; ni < len; ni++)
             ACE_DEBUG ((LM_DEBUG,
                         "%s\n",
                         (const char *) names_var [ni]));
         }
-
+      
       // Iterate thru and print out the names in the iterator, if any.
       if (iterator_var.ptr () != 0)
         {
@@ -247,25 +250,25 @@ Client::test_get_all_property_names (CORBA::Environment &ACE_TRY_ENV)
           // ().
           CosPropertyService::PropertyName  name_ptr = 0;
           CosPropertyService::PropertyName_out name_out (name_ptr);
-
+          
           // Call the function.
           CORBA::Boolean next_one_result = iterator_var->next_one (name_out, ACE_TRY_ENV);
-
+          
           // Get the values back on a _var variable.
           CosPropertyService::PropertyName_var name_var = name_out.ptr ();
-
+          
           while (next_one_result == 1)
             {
               ACE_CHECK_RETURN (-1);
               ACE_DEBUG ((LM_DEBUG, "%s\n", name_var.in ()));
-
+              
               // Call the function to iterate again.
               next_one_result = iterator_var->next_one (name_out, ACE_TRY_ENV);
-
+              
               // Get the values back on a _var variable.
               name_var = name_out.ptr ();
             }
-
+          
           ACE_CHECK_RETURN (-1);
         }
     }
@@ -307,25 +310,25 @@ Client::test_get_properties (CORBA::Environment &ACE_TRY_ENV)
   ACE_UNUSED_ARG (return_val);
   ACE_CHECK_RETURN (-1);
 
-
+  
   if (TAO_debug_level > 0)
     {
       // Get the value to the _var.
       CosPropertyService::Properties_var properties = properties_out.ptr ();
-
+      
       if (properties.ptr () != 0)
         {
           // Go thru the properties and print them out, if they are not
           // _tc_void typed values.
           CORBA::ULong len = properties->length ();
-
+          
           for (CORBA::ULong pi = 0; pi < len; pi++)
             {
               // Print the name.
               ACE_DEBUG ((LM_DEBUG,
                           "%s : ",
                           (const char *) properties [pi].property_name.in ()));
-
+              
               // Print the value.
               CORBA::Any::dump (properties [pi].property_value);
             }
@@ -341,7 +344,7 @@ Client::test_get_number_of_properties (CORBA::Environment &ACE_TRY_ENV)
 {
   CORBA::ULong nproperties = this->propsetdef_->get_number_of_properties (ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
-
+  
   if (TAO_debug_level > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -362,14 +365,14 @@ Client::test_delete_property (const char *property_name,
   ACE_TRY
     {
       CORBA::String_var property_name_var (property_name);
-
+      
       this->propsetdef_->delete_property (property_name_var.in (),
                                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::UserException, ex)
     {
-      // For no property, it is ok to get the user exception.
+      // For no property, it is ok to get the user exception.  
       return 0;
     }
   ACE_CATCHANY
@@ -487,32 +490,32 @@ Client::test_get_all_properties (CORBA::Environment &ACE_TRY_ENV)
       if (properties.ptr () != 0)
         {
           CORBA::ULong len = properties->length ();
-
+          
           for (CORBA::ULong pi = 0; pi < len; pi++)
             {
               // Print the property_name.
               ACE_DEBUG ((LM_DEBUG,
                           "%s : ",
                           properties [pi].property_name.in ()));
-
+              
               // Print the value if type is not tk_void.
               if (properties [pi].property_value.type () == CORBA::_tc_void)
                 ACE_DEBUG ((LM_DEBUG,"Void\n"));
-
+              
               if (properties [pi].property_value.type () == CORBA::_tc_float)
                 {
                   CORBA::Float f;
                   properties [pi].property_value >>= f;
                   ACE_DEBUG ((LM_DEBUG,"%f\n", f));
                 }
-
+              
               if (properties [pi].property_value.type () == CORBA::_tc_string)
                 {
                   CORBA::String str;
                   properties [pi].property_value >>= str;
                   ACE_DEBUG ((LM_DEBUG,"%s\n", str));
                 }
-
+              
               if (properties [pi].property_value.type () == CORBA::_tc_long)
                 {
                   CORBA::Long l;
@@ -521,28 +524,28 @@ Client::test_get_all_properties (CORBA::Environment &ACE_TRY_ENV)
                 }
             }
         }
-
+      
       // Pass thru the iterator.
       if (iterator.ptr () != 0)
         {
           // Helper variables to avoid warnings with .out () in SunCC.
           CosPropertyService::Property* property_ptr = 0;
           CosPropertyService::Property_out property_out (property_ptr);
-
+          
           // Call the funtion.
           CORBA::Boolean next_one_result = iterator->next_one (property_out,
                                                                ACE_TRY_ENV);
-
+          
           // Get the value to the _var variable.
           CosPropertyService::Property_var property = property_out.ptr ();
-
+          
           while (next_one_result != 0)
             {
               ACE_CHECK_RETURN ( -1);
               ACE_DEBUG ((LM_DEBUG,
                           "%s : ",
                           property->property_name.in ()));
-
+              
               // Print the property_value.
               if (property->property_value.type () == CORBA::_tc_char)
                 {
@@ -550,39 +553,39 @@ Client::test_get_all_properties (CORBA::Environment &ACE_TRY_ENV)
                   property->property_value >>= CORBA::Any::to_char (c);
                   ACE_DEBUG ((LM_DEBUG,"%c\n", c));
                 }
-
+              
               if (property->property_value.type () == CORBA::_tc_short)
                 {
                   CORBA::Short s;
                   property->property_value >>= s;
                   ACE_DEBUG ((LM_DEBUG,"%d\n", s));
                 }
-
+              
               if (property->property_value.type () == CORBA::_tc_float)
                 {
                   CORBA::Float f;
                   property->property_value >>= f;
                   ACE_DEBUG ((LM_DEBUG,"%f\n", f));
                 }
-
+              
               if (property->property_value.type () == CORBA::_tc_string)
                 {
                   CORBA::String str;
                   property->property_value >>= str;
                   ACE_DEBUG ((LM_DEBUG,"%s\n", str));
                 }
-
+              
               if (property->property_value.type () == CORBA::_tc_long)
                 {
                   CORBA::Long l;
                   property->property_value >>= l;
                   ACE_DEBUG ((LM_DEBUG,"%d\n", l));
                 }
-
+              
               // Call the function for the next iteraton.
               next_one_result = iterator->next_one (property_out,
                                                     ACE_TRY_ENV);
-
+          
               // Get the value to the _var variable.
               property = property_out.ptr ();
             }

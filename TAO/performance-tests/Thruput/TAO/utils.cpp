@@ -295,9 +295,9 @@ void PrintStats (void)
   if (verbose)
     {
       ACE_OS::fprintf (stdout,
-                       "ttcp%s: buffer address %#lx\n",
-                       trans ? "-t" : "-r",
-                       ACE_reinterpret_cast (long, buf));
+               "ttcp%s: buffer address %#x\n",
+               trans ? "-t" : "-r",
+               buf);
     }
 }
 

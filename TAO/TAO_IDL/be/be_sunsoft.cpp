@@ -152,7 +152,6 @@ TAO_SunSoft_OutStream::print (AST_Expression *expr)
           this->TAO_OutStream::print ("\"%s\"", ev->u.strval->get_string ());
           break;
         case AST_Expression::EV_wstring:
-          this->TAO_OutStream::print ("L\"%s\"", ev->u.wstrval);
           break;
         default:
           break;

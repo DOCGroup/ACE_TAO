@@ -11,7 +11,7 @@ ACE_RCSID(tao, default_server, "$Id$")
 
 TAO_Default_Server_Strategy_Factory::TAO_Default_Server_Strategy_Factory (void)
   : activate_server_connections_ (0),
-    thread_flags_ (THR_BOUND | THR_DETACHED),
+    thread_flags_ (THR_BOUND),
     poa_lock_type_ (TAO_THREAD_LOCK),
     event_loop_lock_type_ (TAO_NULL_LOCK),
     thread_per_connection_use_timeout_ (-1)

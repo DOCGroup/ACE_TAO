@@ -87,24 +87,13 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
   // Generate the scope::operation name.
   *os << parent->full_name ()
       << "::"
-      << "sendc_";
-
-    // check if we are an attribute node in disguise
-  if (this->ctx_->attribute ())
-    {
-      // now check if we are a "get" or "set" operation
-      if (node->nmembers () == 1) // set
-        *os << "set_";
-      else
-        *os << "get_";
-    }
-
-   *os << node->local_name ()->get_string ();
+      << "sendc_"
+      << node->local_name ()->get_string ();
 
   // Generate the argument list with the appropriate mapping (same as
   // in the header file)
   ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_AMI_OPERATION_ARGLIST_CS);
+  ctx.state (TAO_CodeGen::TAO_OPERATION_AMI_ARGLIST_CS);
   visitor = tao_cg->make_visitor (&ctx);
   if ((!visitor) || (node->accept (visitor) == -1))
     {
@@ -668,18 +657,15 @@ be_compiled_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node
   *os << "(" << be_idt << be_idt_nl
       << "istub," << be_nl;
 
-  *os << "\"";
-
   if (this->ctx_->attribute ())
     {
       // now check if we are a "get" or "set" operation
       if (node->nmembers () == 1) // set
-        *os << "_set_";
+        *os << "\"_set_\"";
       else
-        *os << "_get_";
+        *os << "\"_get_\"";
     }
-
-  *os << node->local_name ()
+  *os << "\"" << node->local_name ()
       << "\"," << be_nl
       << "istub->orb_core ()," << be_nl;
   
@@ -695,18 +681,8 @@ be_compiled_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node
                                   "_Handler",
                                   full_name);
 
-    *os << "&" << full_name << "::";
-
-  if (this->ctx_->attribute ())
-    {
-      // now check if we are a "get" or "set" operation
-      if (node->nmembers () == 1) // set
-        *os << "_set_";
-      else
-        *os << "_get_";
-    }
-    
-    *os << node->local_name () << "_skel," << be_nl;
+    *os << "&" << full_name << "::"
+        << node->local_name () << "_skel," << be_nl;
 
     delete full_name;
   }
@@ -796,6 +772,8 @@ be_compiled_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node
   *os << be_nl
       << "if (_invoke_status == TAO_INVOKE_RESTART)" << be_idt_nl
       << "continue;" << be_uidt_nl
+      << "// if (_invoke_status == TAO_INVOKE_EXCEPTION)" << be_idt_nl
+      << "// cannot happen" << be_uidt_nl
       << "if (_invoke_status != TAO_INVOKE_OK)" << be_nl
       << "{" << be_idt_nl;
 

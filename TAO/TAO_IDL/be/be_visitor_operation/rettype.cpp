@@ -196,20 +196,12 @@ be_visitor_operation_rettype::visit_sequence (be_sequence *node)
 }
 
 int
-be_visitor_operation_rettype::visit_string (be_string *node)
+be_visitor_operation_rettype::visit_string (be_string * /* node*/)
 {
 
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
 
-  if (node->width () == sizeof (char))
-    {
-      *os << "char *";
-    }
-  else
-    {
-      *os << "CORBA::WChar *";
-    }
-
+  *os << "char *";
   return 0;
 }
 

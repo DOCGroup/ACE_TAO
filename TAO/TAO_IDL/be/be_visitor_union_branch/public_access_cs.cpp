@@ -280,8 +280,8 @@ be_visitor_union_branch_public_access_cs::visit_predefined_type (be_predefined_t
       break;
     case AST_PredefinedType::PT_any:
       *os << "if (alloc_flag)" << be_idt_nl
-          << "ACE_NEW_RETURN (this->u_." << ub->local_name () 
-          << "_, " << bt->name () << ", 0);" << be_uidt_nl
+          << "this->u_." << ub->local_name () << "_ = new " << bt->name ()
+          << ";" << be_uidt_nl
           << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl;
       break;
     case AST_PredefinedType::PT_void:
@@ -320,8 +320,8 @@ be_visitor_union_branch_public_access_cs::visit_sequence (be_sequence *node)
     }
   os = this->ctx_->stream ();
   *os << "if (alloc_flag)" << be_idt_nl
-      << "ACE_NEW_RETURN (this->u_." << ub->local_name () 
-      << "_, " << bt->name () << ", 0);" << be_uidt_nl
+      << "this->u_." << ub->local_name () << "_ = new " << bt->name ()
+      << ";" << be_uidt_nl
       << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl;
 
   return 0;
@@ -379,8 +379,8 @@ be_visitor_union_branch_public_access_cs::visit_structure (be_structure *node)
       || node->has_constructor ())
     {
       *os << "if (alloc_flag)" << be_idt_nl
-          << "ACE_NEW_RETURN (this->u_." << ub->local_name () 
-          << "_, " << bt->name () << ", 0);" << be_uidt_nl
+          << "this->u_." << ub->local_name () << "_ = new " << bt->name ()
+          << ";" << be_uidt_nl
           << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl;
     }
   else
@@ -439,9 +439,9 @@ be_visitor_union_branch_public_access_cs::visit_union (be_union *node)
     }
   os = this->ctx_->stream ();
   *os << "if (alloc_flag)" << be_idt_nl
-      << "ACE_NEW_RETURN (this->u_." << ub->local_name () 
-      << "_, " << bt->name () << ", 0);" << be_uidt_nl
-      << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl;
+      << "this->u_." << ub->local_name () << "_ = new " << bt->name ()
+      << ";" << be_uidt_nl
+      << "return this->u_." << ub->local_name () << "_;" << be_uidt;
 
   return 0;
 }

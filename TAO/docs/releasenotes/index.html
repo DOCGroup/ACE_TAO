@@ -88,9 +88,6 @@ release</a> of <a href="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a>:
 <a href="#locate">Locate requests</a></li>
 
 <li>
-<a href="#ami">Asynchronous Method Invocation</a></li>
-
-<li>
 <a href="TODO.html">Our TODO list</a></li>
 </ul>
 A complete list of all modifications to TAO is available in the <a href="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/ChangeLog">ChangeLog</a>.
@@ -242,20 +239,6 @@ declaration.</li>
 <li>
 The IDL Compiler generates templates for servant implementations. The options
 are -GI [ h | s | b | e | c ]</li>
-
-<li>
-The IDL compiler generates source code for the management and (de)marshaling
-of wide characters and wide strings, enabling the sending and receiving of
-Unicode over the wire. However, wide character and wide string literals are
-not yet portable to Unix platforms (see entry under Future Work below).</li>
-
-<li>
-Since the CORBA spec requires that all enums be 32 bits, and some compilers
-will try to use less space if the enum values are small enough, the IDL
-compiler now appends <enum name>_TAO_ENUM_32BIT_ENFORCER = 0xFFFFFFFF to
-every enum. This appended enum value is not part of the IDL compiler's
-internal representation of the enum, so unions that use the enum as a
-discriminator will not have incorrect _default() code generated for them.
 </ul>
 
 <p><br>Known bugs/unimplemented constructs:
@@ -283,15 +266,11 @@ to generalize the changes necessary to generated code.</li>
 The generated sequence classes should not be generated per sequence, but
 per type and parent scope. Which means, that the overhead of having the
 source code generated serveral times should be reduced. To do this, an
-extra pass over the internal representation of the IDL file has to be done.</li>
-
-<li>
-Unix's native wchar_t type is not compatible with Unicode. CORBA wide string
-implementations are required to support Unicode, but are not restricted to
-it, so the IDL compiler should ultimately support Unix's wchar_t as well.
+extra pass over the internal representation of the IDL file has to be done.<P>
 </ul>
 
 
+<hr>
 
 <br><!--#include virtual="orbcore.html" -->
 <hr>
@@ -1291,27 +1270,6 @@ Point of contact: <a href="mailto:irfan@cs.wustl.edu">Irfan Pyarali</a>,
 <a href="mailto:mk1@mk1.wustl.edu">Michael
 Kircher</a>.
 <p>For more information see <a href="../locate_request.html">Locate request</a>
-<p>
-<hr>
-<h3>
-<a NAME="ami"></a>Asynchronous Method Invocation</h3>
-Points of contact: <a href="mailto:alex@cs.wustl.edu">Alexander Arulanthu</a>
-, <a href="mailto:Michael.Kircher@mchp.siemens.de">Michael Kircher</a> and
-<a href="mailto:coryan@cs.wustl.edu">Carlos O'Ryan</a>
-<p>Status:
-<ul>
-Currently only the callback model of the Messaging Specification is implemented. 
-To activate the AMI for TAO and the TAO IDL
-compiler define <tt>TAO_HAS_CORBA_MESSAGING</tt> and <tt>TAO_HAS_AMI_CALLBACK</tt>
-in your config.h file.
-The TAO IDL compiler can generate the stubs and client-side skeletons
-using the -GC switch.</ul>
-<p> Future Work:
-<ul>
-<li>Support for exceptions</li>
-<li>Implementation of the poller model.</li>
-<li>Supporting deferred synchronous invocations.</li>
-</ul>
 <p>
 <hr>
 <p>Back to the TAO <a href="../index.html">documentation index</a>.<!--#include virtual="/~schmidt/cgi-sig.html" -->

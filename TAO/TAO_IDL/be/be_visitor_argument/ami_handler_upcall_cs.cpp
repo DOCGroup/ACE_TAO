@@ -81,6 +81,11 @@ int be_visitor_args_ami_handler_upcall_cs::visit_array (be_array *node)
       break;
     case AST_Argument::dir_OUT:
     case AST_Argument::dir_INOUT:
+      /*if (this->ctx_->state ()
+          == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_upcall_cs)
+        *os << arg->local_name ();
+      else
+      */
       os->indent ();
       if (node->size_type () == be_decl::VARIABLE)
         *os << arg->local_name () << ".in ()";
@@ -121,6 +126,11 @@ int be_visitor_args_ami_handler_upcall_cs::visit_interface (be_interface *)
       break;
     case AST_Argument::dir_INOUT:
     case AST_Argument::dir_OUT:
+      /*if (this->ctx_->state ()
+          == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_upcall_cs)
+        *os << arg->local_name ();
+      else
+      */
       os->indent ();
       *os << arg->local_name () << ".in ()";
       break;
@@ -139,6 +149,11 @@ int be_visitor_args_ami_handler_upcall_cs::visit_interface_fwd (be_interface_fwd
       break;
     case AST_Argument::dir_INOUT:
     case AST_Argument::dir_OUT:
+      /*if (this->ctx_->state ()
+          == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_upcall_cs)
+        *os << arg->local_name ();
+      else
+      */
       os->indent ();
       *os << arg->local_name () << ".in ()";
       break;
@@ -159,6 +174,11 @@ int be_visitor_args_ami_handler_upcall_cs::visit_valuetype (be_valuetype *)
       break;
     case AST_Argument::dir_INOUT:
     case AST_Argument::dir_OUT:
+      /*if (this->ctx_->state ()
+          == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_upcall_cs)
+        *os << arg->local_name ();
+      else
+      */
       os->indent ();
       *os << arg->local_name () << ".in ()";
       break;
@@ -177,6 +197,11 @@ int be_visitor_args_ami_handler_upcall_cs::visit_valuetype_fwd (be_valuetype_fwd
       break;
     case AST_Argument::dir_INOUT:
     case AST_Argument::dir_OUT:
+      /*if (this->ctx_->state ()
+          == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_upcall_cs)
+        *os << arg->local_name ();
+      else
+      */
       os->indent ();
       *os << arg->local_name () << ".in ()";
       break;
@@ -201,6 +226,12 @@ int be_visitor_args_ami_handler_upcall_cs::visit_predefined_type (be_predefined_
           break;
         case AST_Argument::dir_INOUT:
         case AST_Argument::dir_OUT:
+          /*
+          if (this->ctx_->state ()
+              == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_upcall_cs)
+            *os << arg->local_name ();
+          else
+          */
           os->indent ();
           *os << arg->local_name () << ".in ()";
           break;
@@ -214,6 +245,11 @@ int be_visitor_args_ami_handler_upcall_cs::visit_predefined_type (be_predefined_
           break;
         case AST_Argument::dir_INOUT:
         case AST_Argument::dir_OUT:
+          /*if (this->ctx_->state ()
+              == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_upcall_cs)
+            *os << arg->local_name ();
+          else
+          */
           os->indent ();
           *os << arg->local_name () << ".in ()";
           break;
@@ -247,6 +283,11 @@ int be_visitor_args_ami_handler_upcall_cs::visit_sequence (be_sequence *)
       break;
     case AST_Argument::dir_INOUT:
     case AST_Argument::dir_OUT:
+      /*if (this->ctx_->state ()
+          == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_upcall_cs)
+        *os << arg->local_name ();
+      else
+      */
       os->indent ();
       *os << arg->local_name () << ".in ()";
       break;
@@ -271,6 +312,12 @@ int be_visitor_args_ami_handler_upcall_cs::visit_string (be_string *)
       break;
     case AST_Argument::dir_INOUT:
     case AST_Argument::dir_OUT:
+      /*
+      if (this->ctx_->state ()
+          == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_upcall_cs)
+        *os << arg->local_name ();
+      else
+      */
       os->indent ();
       *os << arg->local_name () << ".in ()";
     }

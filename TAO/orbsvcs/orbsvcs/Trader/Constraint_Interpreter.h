@@ -46,9 +46,6 @@ protected:
   TAO_Constraint* root_;
   // The root of the expression tree, not equal to null if build_tree
   // successfully builds a tree from the constraints.
-private:
-  static ACE_SYNCH_MUTEX parserMutex__;
-  // This mutex protects the <build_tree> method from reentrance.
 };
 
 class TAO_Constraint_Interpreter : public TAO_Interpreter

@@ -607,16 +607,8 @@ int be_visitor_args_compiled_marshal_ss::visit_string (be_string *node)
             }
           else
             {
-              if (node->width () == sizeof (char))
-                {
-                  *os << "CORBA::Any::to_string (";
-                }
-              else
-                {
-                  *os << "CORBA::Any::to_wstring (";
-                }
-
-              *os << arg->local_name () << ".out (), "
+              *os << "CORBA::Any::to_string ("
+                  << arg->local_name () << ".out (), "
                   << node->max_size ()->ev ()->u.ulval - 1
                   << ")";
             }
@@ -650,16 +642,8 @@ int be_visitor_args_compiled_marshal_ss::visit_string (be_string *node)
               break;
             case AST_Argument::dir_INOUT:
             case AST_Argument::dir_OUT:
-              if (node->width () == sizeof (char))
-                {
-                  *os << "CORBA::Any::from_string ((char *)";
-                }
-              else
-                {
-                  *os << "CORBA::Any::from_wstring ((CORBA::WChar *)";
-                }
-
-              *os << arg->local_name () << ".in (), "
+              *os << "CORBA::Any::from_string ((char *)"
+                  << arg->local_name () << ".in (), "
                   << node->max_size ()->ev ()->u.ulval - 1 << ")";
               break;
             }

@@ -617,19 +617,6 @@ DRV_parse_args (long ac, char **av)
                   idl_global->exception_support (!option);
                   i++;
                 }
-              else if (av[i][2] == 'l')
-                {
-                  // optimized typecode support
-                  idl_global->gen_locality_constraint (1);
-
-                  // Automatically switch on the generation of
-                  // direct collocated stubs and supress the generation
-                  // of thru_poa collocated stubs and ami_call_back stuff
-                  // if we are building for locality constraint interfaces.
-                  idl_global->gen_thru_poa_collocation (0);
-                  idl_global->gen_direct_collocation (1);
-                  idl_global->ami_call_back (0);
-                }
               else if (av[i][2] == 't')
                 {
                   // optimized typecode support
@@ -856,7 +843,7 @@ DRV_check_gperf (void)
   // Just call gperf in silent mode. It will come and immly exit.
 
   // Using ACE_Process.
-  ACE_Process process;
+  ACE_Process process_manager;
   ACE_Process_Options process_options;
 
   // Set the command line for the gperf program.
@@ -866,7 +853,7 @@ DRV_check_gperf (void)
                                 idl_global->gperf_path ());
 
   // Spawn a process for gperf.
-  if (process.spawn (process_options) == -1)
+  if (process_manager.spawn (process_options) == -1)
     return -1;
 
 #if defined (ACE_WIN32)
@@ -876,7 +863,7 @@ DRV_check_gperf (void)
 
   // Wait for gperf to complete.
   int wait_status = 0;
-  if (process.wait (&wait_status) == -1)
+  if (process_manager.wait (&wait_status) == -1)
     return -1;
   else
     {

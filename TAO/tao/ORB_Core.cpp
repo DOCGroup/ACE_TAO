@@ -12,17 +12,15 @@
 #include "tao/default_resource.h"
 #include "tao/debug.h"
 #include "tao/IOR_LookupTable.h"
-#include "tao/MProfile.h"
-#include "tao/Stub.h"
-#include "tao/Reactor_Registry.h"
-#include "tao/Leader_Follower.h"
+
+#if !defined (__ACE_INLINE__)
+# include "tao/ORB_Core.i"
+#endif /* ! __ACE_INLINE__ */
 
 #include "tao/Connector_Registry.h"
 #include "tao/Acceptor_Registry.h"
 
 #include "tao/POA.h"
-
-#include "tao/Priority_Mapping.h"
 
 #include "ace/Object_Manager.h"
 #include "ace/Env_Value_T.h"
@@ -33,10 +31,6 @@
 #if defined(ACE_MVS)
 #include "ace/Codeset_IBM1047.h"
 #endif /* ACE_MVS */
-
-#if !defined (__ACE_INLINE__)
-# include "tao/ORB_Core.i"
-#endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(tao, ORB_Core, "$Id$")
 
@@ -80,17 +74,9 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     from_unicode_ (0),
     to_unicode_ (0),
     use_tss_resources_ (0),
-    reactor_registry_ (0),
-    reactor_ (0),
-    has_shutdown_ (1),
-    // Start the ORB in a  "shutdown" state.  The only way to
-    // (re)start the ORB is to call CORBA::ORB_init(), which calls
-    // TAO_ORB_Core::init().  For that reason, only
-    // TAO_ORB_Core::init() should change the ORB shutdown state to
-    // has_shutdown_ = 0, i.e. not shutdown.
-    thread_per_connection_use_timeout_ (1),
-    open_called_ (0),
-    priority_mapping_ (0)
+    leader_follower_ (this),
+    has_shutdown_ (0),
+    thread_per_connection_use_timeout_ (1)
 {
   ACE_NEW (this->poa_current_,
            TAO_POA_Current);
@@ -226,9 +212,9 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   int skip_service_config_open = 0;
 
   // Use dotted decimal addresses
-  // @@ This option will be treated as a suggestion to each loaded
-  //    protocol to use a character representation for the numeric
-  //    address, otherwise use a logical name. fredk
+  // @@ This option will be treated as a suggestion to each loaded protocol to
+  // @@ use a character representation for the numeric address, otherwise
+  // @@ use a logical name. fredk
 #if defined (TAO_USE_DOTTED_DECIMAL_ADDRESSES)
   int dotted_decimal_addresses = 1;
 #else
@@ -863,16 +849,9 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   else
     this->use_tss_resources_ = use_tss_resources;
 
-  this->reactor_registry_ =
-    trf->get_reactor_registry ();
-  this->reactor_registry_->open (this);
-
-  this->priority_mapping_ =
-    trf->get_priority_mapping ();
-
-  // @@ ????
-  // Make sure the reactor is initialized...
   ACE_Reactor *reactor = this->reactor ();
+
+  // Make sure the reactor is initialized...
   if (reactor == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) %p\n",
@@ -918,14 +897,14 @@ TAO_ORB_Core::init (int &argc, char *argv[])
     }
 
   // Inititalize the "ORB" pseudo-object now.
-  ACE_NEW_RETURN (this->orb_, CORBA_ORB (this), -1);
+  ACE_NEW_RETURN (this->orb_, CORBA_ORB (this), 0);
 
   // This should probably move into the ORB Core someday rather then
   // being done at this level.
   this->orb_->_use_omg_ior_format (use_ior);
 
   // @@ Michael: I don't know if this is the best spot,
-  //    we might have to discuss that.
+  // we might have to discuss that.
   //this->leader_follower_lock_ptr_ =  this->client_factory ()
   //                                       ->create_leader_follower_lock ();
 
@@ -988,19 +967,15 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   // Now that we have a complete list of available protocols and their
   // related factory objects, initial;ize the registries!
 
-  // Initialize the connector registry and create a connector for each
+  // Init the connector registry and create a connector for each
   // configured protocol.
   if (this->connector_registry ()->open (this) != 0)
     return -1;
 
-  // Have the connector registry parse the preconnects.
+  // Have registry parse the preconnects
   if (this->orb_params ()->preconnects ().is_empty () == 0)
     this->connector_registry ()->preconnect (this,
                                              this->orb_params ()->preconnects ());
-
-  // The ORB has been initialized, meaning that the ORB is no longer
-  // in the shutdown state.
-  this->has_shutdown_ = 0;
 
   return 0;
 }
@@ -1099,8 +1074,6 @@ TAO_ORB_Core::fini (void)
                               *ACE_Static_Object_Lock::instance (), 0));
     TAO_ORB_Table::instance ()->unbind (this->orbid_);
   }
-
-  delete this->reactor_registry_;
 
   delete this;
 
@@ -1222,6 +1195,16 @@ TAO_ORB_Core::server_factory (void)
   return this->server_factory_;
 }
 
+CORBA::ORB_ptr
+TAO_ORB_Core::orb (CORBA::ORB_ptr op)
+{
+  // Shouldn't need to check for ptr validity at this point b/c we
+  // already did in ::init()
+  CORBA::ORB_ptr old_orb = this->orb_;
+  this->orb_ = op;
+  return old_orb;
+}
+
 int
 TAO_ORB_Core::inherit_from_parent_thread (TAO_ORB_Core_TSS_Resources *tss_resources)
 {
@@ -1232,35 +1215,40 @@ TAO_ORB_Core::inherit_from_parent_thread (TAO_ORB_Core_TSS_Resources *tss_resour
   // each ORB spawned thread must use the resources of the spawning
   // thread...
 
-  if (tss_resources == 0)
-    return -1;
-#if 0
-  if (tss_resources->reactor_ != 0)
+  if (tss_resources)
     {
-      // We'll use the spawning thread's reactor.
-      TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
-      if (tss->reactor_ != 0 && TAO_debug_level > 0)
+      if (tss_resources->reactor_ != 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) non nil reactor on thread startup!\n"));
+          // We'll use the spawning thread's reactor.
+          TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
+          if (tss->reactor_ != 0 && TAO_debug_level > 0)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "TAO (%P|%t) non nil reactor on thread startup!\n"));
 
-          if (tss == 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "(%P|%t) %p\n",
-                               "TAO_ORB_Core::inherit_from_parent_thread"
-                               " (); no more TSS keys"),
-                              -1);
+              if (tss == 0)
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "(%P|%t) %p\n",
+                                   "TAO_ORB_Core::inherit_from_parent_thread"
+                                   " (); no more TSS keys"),
+                                  -1);
 
-          if (tss->owns_resources_ != 0 && !tss->inherited_reactor_)
-            delete tss->reactor_;
+              if (tss->owns_resources_ != 0 && !tss->inherited_reactor_)
+                delete tss->reactor_;
+            }
+          tss->reactor_ = tss_resources->reactor_;
+          tss->inherited_reactor_ = 1;
         }
-      tss->reactor_ = tss_resources->reactor_;
-      tss->inherited_reactor_ = 1;
+
+      // this->connection_cache (tss_resources->connection_cache_);
+      // Inherit connection cache?
+
+      return 0;
     }
-#endif /* 0 */
-  // this->connection_cache (tss_resources->connection_cache_);
-  // Inherit connection cache?
-  return 0;
+  else
+    {
+      return -1;
+    }
 }
 
 PortableServer::POA_ptr
@@ -1377,38 +1365,6 @@ TAO_ORB_Core::leader_follower_condition_variable (void)
   return tss->leader_follower_condition_variable_;
 }
 
-TAO_Stub *
-TAO_ORB_Core::create_stub_object (const TAO_ObjectKey &key,
-                                  const char *type_id,
-                                  CORBA::Environment &ACE_TRY_ENV)
-{
-  (void) this->open (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-
-  CORBA::String id = 0;
-
-  if (type_id)
-    id = CORBA::string_dup (type_id);
-
-  TAO_Stub *stub = 0;
-
-  size_t pfile_count =
-    this->acceptor_registry ()->endpoint_count ();
-
-  // First we create a profile list, well actually the empty container
-  TAO_MProfile mp (pfile_count);
-
-  this->acceptor_registry ()->make_mprofile (key, mp);
-
-  ACE_NEW_THROW_EX (stub,
-                    TAO_Stub (id, mp, this),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
-                                      CORBA::COMPLETED_MAYBE));
-  ACE_CHECK_RETURN (stub);
-
-  return stub;
-}
-
 int
 TAO_ORB_Core::is_collocated (const TAO_MProfile& mprofile)
 {
@@ -1431,26 +1387,12 @@ TAO_ORB_Core::is_collocated (const TAO_MProfile& mprofile)
 
 // ****************************************************************
 
-TAO_Leader_Follower &
-TAO_ORB_Core::leader_follower (void)
-{
-  return this->reactor_registry_->leader_follower ();
-}
-
 int
 TAO_ORB_Core::run (ACE_Time_Value *tv, int break_on_timeouts)
 {
   if (TAO_debug_level >= 3)
     ACE_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - start of run\n"));
-
-#if defined (ACE_HAS_RT_CORBA)
-  if (this->bind_endpoints () == -1)
-    return -1;
-
-  if (this->bind_thread () == -1)
-    return -1;
-#endif /* ACE_HAS_RT_CORBA */
 
   TAO_Leader_Follower &leader_follower = this->leader_follower ();
   {
@@ -1471,21 +1413,8 @@ TAO_ORB_Core::run (ACE_Time_Value *tv, int break_on_timeouts)
 
   // This method should only be called by servers, so now we set up
   // for listening!
-
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
-    {
-      int ret = this->open (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      if (ret == -1)
-        return -1;
-    }
-  ACE_CATCHANY
-    {
-      return -1;
-    }
-  ACE_ENDTRY;
+  if (this->orb ()->open () == -1)
+    return -1;
 
   int result = 1;
   // 1 to detect that nothing went wrong
@@ -1557,14 +1486,37 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion,
   // to deactivate will be the same as the similarly named parameter
   // of ORB::shutdown.
   this->object_adapter ()->deactivate (wait_for_completion,
-                                       ACE_TRY_ENV);
+                                                  ACE_TRY_ENV);
   ACE_CHECK;
 
   // Set the shutdown flag
-  this->has_shutdown_ = 1;
+  {
+    TAO_Leader_Follower &leader_follower =
+      this->leader_follower ();
 
-  // Shutdown all the reactors....
-  this->reactor_registry_->shutdown_all ();
+    ACE_GUARD_THROW_EX (ACE_SYNCH_MUTEX,
+                        ace_mon,
+                        leader_follower.lock (),
+                        CORBA::INTERNAL ());
+    ACE_CHECK;
+    this->has_shutdown_ = 1;
+
+    // Wakeup all the threads waiting blocked in the event loop, this
+    // does not guarantee that they will all go away, but reduces the
+    // load on the POA....
+    this->reactor ()->wakeup_all_threads ();
+
+    // If there are some client threads running we have to wait until
+    // they finish, when the last one does it will shutdown the
+    // reactor for us.  Meanwhile no new requests will be accepted
+    // because the POA will not process them.
+
+    if (!leader_follower.has_clients ())
+      {
+        // Wake up all waiting threads in the reactor.
+        this->reactor ()->end_reactor_event_loop ();
+      }
+  }
 
   // Grab the thread manager
   ACE_Thread_Manager *tm = this->thr_mgr ();
@@ -1577,61 +1529,39 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion,
     tm->wait ();
 }
 
-void
-TAO_ORB_Core::destroy (CORBA_Environment &ACE_TRY_ENV)
+// ****************************************************************
+
+ACE_SYNCH_CONDITION*
+TAO_Leader_Follower::get_next_follower (void)
 {
-  // This method is currently unimplemented.
-  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
-                                  CORBA::COMPLETED_NO));
+  ACE_Unbounded_Set_Iterator<ACE_SYNCH_CONDITION *> iterator (
+    this->follower_set_);
 
-  // Shutdown the ORB and block until the shutdown is complete.
-  // this->shutdown (1, ACE_TRY_ENV);
-}
+  if (iterator.first () == 0)
+    // means set is empty
+    return 0;
 
-// Set up listening endpoints.
+  ACE_SYNCH_CONDITION *cond = *iterator;
 
-int
-TAO_ORB_Core::open (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Double check pattern
-  if (this->open_called_ == 1)
-    return 1;
+#if defined (TAO_DEBUG_LEADER_FOLLOWER)
+  ACE_DEBUG ((LM_DEBUG,
+              "TAO (%P|%t) LF::get_next_follower - "
+              "follower is %x\n",
+              cond));
+#endif /* TAO_DEBUG_LEADER_FOLLOWER */
 
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, tao_mon, this->open_lock_, -1);
+  // We *must* remove it when we signal it so the same condition is
+  // not signalled for both wake up as a follower and as the next
+  // leader.
+  // The follower may not be there if the reply is received while the
+  // consumer is not yet waiting for it (i.e. it send the request but
+  // has not blocked to receive the reply yet)
+  (void) this->remove_follower (cond); // Ignore errors..
 
-  if (this->open_called_ == 1)
-    return 1;
-
-  TAO_Acceptor_Registry *ar = this->acceptor_registry ();
-  // get a reference to the acceptor_registry!
-
-  int ret = ar->open (this, ACE_TRY_ENV);
-  // Need to return an error somehow!!  Maybe set do_exit?
-
-  ACE_CHECK_RETURN (-1);
-
-  if (ret == -1)
-    return -1;
-
-  this->open_called_ = 1;
-
-  return 0;
+  return cond;
 }
 
 // ****************************************************************
-
-ACE_Allocator*
-TAO_ORB_Core::input_cdr_dblock_allocator_i (TAO_ORB_Core_TSS_Resources *tss)
-{
-  if (tss->input_cdr_dblock_allocator_ == 0)
-    {
-      tss->input_cdr_dblock_allocator_ =
-        this->resource_factory ()->input_cdr_dblock_allocator ();
-      tss->owns_resources_ = 1;
-    }
-  return tss->input_cdr_dblock_allocator_;
-}
 
 ACE_Allocator*
 TAO_ORB_Core::input_cdr_dblock_allocator (void)
@@ -1645,7 +1575,13 @@ TAO_ORB_Core::input_cdr_dblock_allocator (void)
                            "TAO_ORB_Core::input_cdr_dblock_allocator (); "
                              "no more TSS keys"),
                           0);
-      return this->input_cdr_dblock_allocator_i (tss);
+
+      if (tss->input_cdr_dblock_allocator_ == 0)
+        {
+          tss->input_cdr_dblock_allocator_ = this->resource_factory ()->input_cdr_dblock_allocator ();
+          tss->owns_resources_ = 1;
+        }
+      return tss->input_cdr_dblock_allocator_;
     }
 
   if (this->orb_resources_.input_cdr_dblock_allocator_ == 0)
@@ -1663,18 +1599,6 @@ TAO_ORB_Core::input_cdr_dblock_allocator (void)
 }
 
 ACE_Allocator*
-TAO_ORB_Core::input_cdr_buffer_allocator_i (TAO_ORB_Core_TSS_Resources *tss)
-{
-  if (tss->input_cdr_buffer_allocator_ == 0)
-    {
-      tss->input_cdr_buffer_allocator_ =
-        this->resource_factory ()->input_cdr_buffer_allocator ();
-      tss->owns_resources_ = 1;
-    }
-  return tss->input_cdr_buffer_allocator_;
-}
-
-ACE_Allocator*
 TAO_ORB_Core::input_cdr_buffer_allocator (void)
 {
   if (this->use_tss_resources_)
@@ -1687,7 +1611,12 @@ TAO_ORB_Core::input_cdr_buffer_allocator (void)
                              "no more TSS keys"),
                           0);
 
-      return this->input_cdr_buffer_allocator_i (tss);
+      if (tss->input_cdr_buffer_allocator_ == 0)
+        {
+          tss->input_cdr_buffer_allocator_ = this->resource_factory ()->input_cdr_buffer_allocator ();
+          tss->owns_resources_ = 1;
+        }
+      return tss->input_cdr_buffer_allocator_;
     }
 
   if (this->orb_resources_.input_cdr_buffer_allocator_ == 0)
@@ -1787,50 +1716,44 @@ TAO_ORB_Core::create_input_cdr_data_block (size_t size)
 {
   ACE_Data_Block *nb = 0;
 
-  ACE_Allocator *dblock_allocator;
-  ACE_Allocator *buffer_allocator;
+  ACE_Allocator *dblock_allocator =
+    this->input_cdr_dblock_allocator ();
+  ACE_Allocator *buffer_allocator =
+    this->input_cdr_buffer_allocator ();
 
-  if (this->use_tss_resources_)
+  if (this->resource_factory ()->use_locked_data_blocks ())
     {
-      TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
-      if (tss == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%P|%t) %p\n",
-                           "TAO_ORB_Core::create_input_cdr_data_block (); "
-                             "no more TSS keys"),
-                          0);
+      typedef
+        ACE_Locked_Data_Block<ACE_Lock_Adapter<ACE_SYNCH_MUTEX> >
+        Locked_Data_Block;
 
-      dblock_allocator =
-        this->input_cdr_dblock_allocator_i (tss);
-      buffer_allocator =
-        this->input_cdr_buffer_allocator_i (tss);
+      ACE_NEW_MALLOC_RETURN (
+            nb,
+            ACE_static_cast (Locked_Data_Block *,
+                             dblock_allocator->malloc (sizeof (Locked_Data_Block))),
+            Locked_Data_Block (size,
+                               ACE_Message_Block::MB_DATA,
+                               0,
+                               buffer_allocator,
+                               0,
+                               dblock_allocator),
+            0);
     }
   else
     {
-      dblock_allocator =
-        this->input_cdr_dblock_allocator ();
-      buffer_allocator =
-        this->input_cdr_buffer_allocator ();
+      ACE_NEW_MALLOC_RETURN (
+            nb,
+            ACE_static_cast(ACE_Data_Block*,
+                            dblock_allocator->malloc (sizeof (ACE_Data_Block))),
+            ACE_Data_Block (size,
+                            ACE_Message_Block::MB_DATA,
+                            0,
+                            buffer_allocator,
+                            0,
+                            0,
+                            dblock_allocator),
+            0);
     }
-
-  ACE_Lock* lock_strategy = 0;
-  if (this->resource_factory ()->use_locked_data_blocks ())
-    {
-      lock_strategy = &this->data_block_lock_;
-    }
-
-  ACE_NEW_MALLOC_RETURN (
-      nb,
-      ACE_static_cast(ACE_Data_Block*,
-                      dblock_allocator->malloc (sizeof (ACE_Data_Block))),
-      ACE_Data_Block (size,
-                      ACE_Message_Block::MB_DATA,
-                      0,
-                      buffer_allocator,
-                      lock_strategy,
-                      0,
-                      dblock_allocator),
-      0);
 
   return nb;
 }
@@ -1838,40 +1761,36 @@ TAO_ORB_Core::create_input_cdr_data_block (size_t size)
 ACE_Reactor *
 TAO_ORB_Core::reactor (void)
 {
-  if (this->reactor_registry_ != 0)
-    return this->reactor_registry_->reactor ();
+  if (this->use_tss_resources_)
+    {
+      TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
 
-  if (this->reactor_ == 0)
+      if (tss == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%P|%t) %p\n",
+                           "TAO_ORB_Core::reactor (); no more TSS keys"),
+                          0);
+
+      if (tss->reactor_ == 0)
+        {
+          tss->reactor_ = this->resource_factory ()->get_reactor ();
+          tss->owns_resources_ = 1;
+        }
+      return tss->reactor_;
+    }
+
+  if (this->orb_resources_.reactor_ == 0)
     {
       // Double checked locking
       ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0);
-      if (this->reactor_ == 0)
+      if (this->orb_resources_.reactor_ == 0)
         {
-          this->reactor_ =
+          this->orb_resources_.reactor_ =
             this->resource_factory ()->get_reactor ();
+          this->orb_resources_.owns_resources_ = 1;
         }
     }
-  return this->reactor_;
-}
-
-ACE_Reactor *
-TAO_ORB_Core::reactor (TAO_Acceptor *acceptor)
-{
-  if (this->reactor_registry_ != 0)
-    return this->reactor_registry_->reactor (acceptor);
-
-  // @@ ????
-  if (this->reactor_ == 0)
-    {
-      // Double checked locking
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0);
-      if (this->reactor_ == 0)
-        {
-          this->reactor_ =
-            this->resource_factory ()->get_reactor ();
-        }
-    }
-  return this->reactor_;
+  return this->orb_resources_.reactor_;
 }
 
 TAO_POA_Current &
@@ -1902,75 +1821,12 @@ TAO_ORB_Core::policy_current (void)
 
 #endif /* TAO_HAS_CORBA_MESSAGING */
 
-#if defined (TAO_HAS_RT_CORBA)
-TAO_Priority_Mapping *
-TAO_ORB_Core::priority_mapping (void)
-{
-  return this->priority_mapping_;
-}
-#endif /* TAO_HAS_RT_CORBA */
-
-int
-TAO_ORB_Core::get_thread_priority (CORBA::Short &priority)
-{
-#if !defined (TAO_HAS_RT_CORBA)
-  priority = 0;
-  return 0;
-#else
-  ACE_hthread_t current;
-  ACE_Thread::self (current);
-
-  int native_priority;
-  if (ACE_Thread::getprio (current, native_priority) == -1)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - ORB_Core::get_thread_priority: "
-                  " ACE_Thread::get_prio\n"));
-      return -1;
-    }
-
-  TAO_Priority_Mapping *priority_mapping =
-    this->priority_mapping ();
-
-  if (priority_mapping->to_CORBA (native_priority, priority) == 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - ORB_Core::get_thread_priority: "
-                  " Priority_Mapping::to_CORBA\n"));
-      return -1;
-    }
-
-  return 0;
-#endif /* TAO_HAS_RT_CORBA */
-}
-
-int
-TAO_ORB_Core::set_thread_priority (CORBA::Short priority)
-{
-#if !defined (TAO_HAS_RT_CORBA)
-  ACE_UNUSED_ARG (priority);
-  return 0;
-#else
-  TAO_Priority_Mapping *priority_mapping =
-    this->priority_mapping ();
-
-  CORBA::Short native_priority;
-  if (priority_mapping->to_native (priority, native_priority) == 0)
-    return -1;
-  ACE_hthread_t current;
-  ACE_Thread::self (current);
-
-  if (ACE_Thread::setprio (current, native_priority) == -1)
-    return -1;
-
-  return 0;
-#endif /* TAO_HAS_RT_CORBA */
-}
-
 // ****************************************************************
 
 TAO_ORB_Core_TSS_Resources::TAO_ORB_Core_TSS_Resources (void)
   :  owns_resources_ (0),
+     reactor_ (0),
+     inherited_reactor_ (0),
      output_cdr_dblock_allocator_ (0),
      output_cdr_buffer_allocator_ (0),
      output_cdr_msgblock_allocator_ (0),
@@ -1979,14 +1835,19 @@ TAO_ORB_Core_TSS_Resources::TAO_ORB_Core_TSS_Resources (void)
      connection_cache_ (0),
      is_server_thread_ (0),
      is_leader_thread_ (0),
-     leader_follower_condition_variable_ (0),
-     reactor_registry_ (0),
-     reactor_registry_cookie_ (0)
+     leader_follower_condition_variable_ (0)
 {
 }
 
 TAO_ORB_Core_TSS_Resources::~TAO_ORB_Core_TSS_Resources (void)
 {
+  if (!this->owns_resources_)
+    return;
+
+  if (!this->inherited_reactor_)
+    delete this->reactor_;
+  this->reactor_ = 0;
+
   if (this->output_cdr_dblock_allocator_ != 0)
     this->output_cdr_dblock_allocator_->remove ();
   delete this->output_cdr_dblock_allocator_;
@@ -2007,14 +1868,11 @@ TAO_ORB_Core_TSS_Resources::~TAO_ORB_Core_TSS_Resources (void)
     this->input_cdr_buffer_allocator_->remove ();
   delete this->input_cdr_buffer_allocator_;
 
-  // UNIMPLEMENTED delete this->connection_cache_;
+  // unimplemented delete this->connection_cache_;
   this->connection_cache_ = 0;
 
   delete this->leader_follower_condition_variable_;
   this->leader_follower_condition_variable_ = 0;
-
-  if (this->reactor_registry_ != 0)
-    this->reactor_registry_->destroy_tss_cookie (this->reactor_registry_cookie_);
 }
 
 // ****************************************************************
@@ -2142,12 +2000,18 @@ TAO_ORB_Core_instance (void)
 template class ACE_Reverse_Lock<ACE_SYNCH_MUTEX>;
 template class ACE_Guard<ACE_Reverse_Lock<ACE_SYNCH_MUTEX> >;
 
+template class ACE_Locked_Data_Block<ACE_Lock_Adapter<ACE_SYNCH_MUTEX> >;
+
 template class ACE_Env_Value<int>;
 template class ACE_Env_Value<u_int>;
 
 template class ACE_TSS_Singleton<TAO_TSS_Resources, ACE_SYNCH_MUTEX>;
 template class ACE_TSS<TAO_TSS_Resources>;
 template class ACE_TSS<TAO_ORB_Core_TSS_Resources>;
+
+template class ACE_Node<ACE_SYNCH_CONDITION*>;
+template class ACE_Unbounded_Set<ACE_SYNCH_CONDITION*>;
+template class ACE_Unbounded_Set_Iterator<ACE_SYNCH_CONDITION*>;
 
 template class ACE_Singleton<TAO_ORB_Table,ACE_SYNCH_MUTEX>;
 template class ACE_Map_Entry<ACE_CString,TAO_ORB_Core*>;
@@ -2161,12 +2025,18 @@ template class ACE_Map_Reverse_Iterator<ACE_CString,TAO_ORB_Core*,ACE_Null_Mutex
 #pragma instantiate ACE_Reverse_Lock<ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_Guard<ACE_Reverse_Lock<ACE_SYNCH_MUTEX> >
 
+#pragma instantiate ACE_Locked_Data_Block<ACE_Lock_Adapter<ACE_SYNCH_MUTEX> >
+
 #pragma instantiate ACE_Env_Value<int>
 #pragma instantiate ACE_Env_Value<u_int>
 
 #pragma instantiate ACE_TSS_Singleton<TAO_TSS_Resources, ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_TSS<TAO_TSS_Resources>
 #pragma instantiate ACE_TSS<TAO_ORB_Core_TSS_Resources>
+
+#pragma instantiate ACE_Node<ACE_SYNCH_CONDITION*>
+#pragma instantiate ACE_Unbounded_Set<ACE_SYNCH_CONDITION*>
+#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_SYNCH_CONDITION*>
 
 #pragma instantiate ACE_Singleton<TAO_ORB_Table,ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_Map_Entry<ACE_CString,TAO_ORB_Core*>

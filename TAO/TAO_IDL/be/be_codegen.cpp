@@ -328,9 +328,10 @@ TAO_CodeGen::start_client_stubs (const char *fname)
   *this->client_stubs_ << "#include \"" <<
     idl_global->be_get_client_hdr_fname (1) << "\"\n\n";
 
-  if (idl_global->gen_locality_constraint ())
-    *this->client_stubs_ << "#include \"" <<
-      idl_global->be_get_server_hdr_fname (1) << "\"\n\n";
+#if 0 // Nanbor's collocation change
+  *this->client_stubs_ << "#include \"" <<
+    idl_global->be_get_server_hdr_fname (1) << "\"\n\n";
+#endif /* Nanbor */
 
   // generate the code that includes the inline file if not included in the
   // header file
@@ -425,40 +426,6 @@ TAO_CodeGen::start_server_header (const char *fname)
 
       this->server_header_->print ("#ifndef %s\n", macro_name);
       this->server_header_->print ("#define %s\n\n", macro_name);
-
-      // Include the Messaging files if AMI is enabled.
-      if (idl_global->ami_call_back () == I_TRUE)
-        {
-          // Include Messaging skeleton file.
-          *this->server_header_ << "#include ";
-
-          if (idl_global->changing_standard_include_files () == 1)
-            *this->server_header_ << "\"";
-          else
-            *this->server_header_ << "<";
-
-          *this->server_header_ << "tao/MessagingS.h";
-
-          if (idl_global->changing_standard_include_files () == 1)
-            *this->server_header_ << "\"\n";
-          else
-            *this->server_header_ << ">\n";
-
-          // Including Asynch Invocation file.
-          *this->server_header_ << "#include ";
-
-          if (idl_global->changing_standard_include_files () == 1)
-            *this->server_header_ << "\"";
-          else
-            *this->server_header_ << "<";
-
-          *this->server_header_ << "tao/Asynch_Invocation.h";
-
-          if (idl_global->changing_standard_include_files () == 1)
-            *this->server_header_ << "\"\n";
-          else
-            *this->server_header_ << ">\n";
-        }
 
       // We must include all the skeleton headers corresponding to
       // IDL files included by the current IDL file.

@@ -185,11 +185,7 @@ TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events,
       cdr.encode (RtecEventComm::_tc_EventData, &e.data, 0, ACE_TRY_ENV);
       ACE_CHECK;
 
-#if defined (ACE_HAS_BROKEN_DGRAM_SENDV)
-      const int TAO_WRITEV_MAX = IOV_MAX - 1;
-#else
       const int TAO_WRITEV_MAX = IOV_MAX;
-#endif /* ACE_HAS_BROKEN_DGRAM_SENDV */
       iovec iov[TAO_WRITEV_MAX];
 
       CORBA::ULong total_length;
@@ -819,10 +815,10 @@ TAO_ECG_UDP_Receiver::handle_input (ACE_SOCK_Dgram& dgram)
   //              from.get_ip_address (), from.get_port_number (),
   //              fragment_id, fragment_count));
 
-  TAO_ECG_UDP_Request_Index map_index (from, request_id);
+  TAO_ECG_UDP_Request_Index index (from, request_id);
   Request_Map_Entry* entry;
 
-  if (this->request_map_.find (map_index, entry) == -1)
+  if (this->request_map_.find (index, entry) == -1)
     {
       //      ACE_DEBUG ((LM_DEBUG,
       //                  "ECG_UDP_Receiver (%P|%t): new entry\n"
@@ -848,7 +844,7 @@ TAO_ECG_UDP_Receiver::handle_input (ACE_SOCK_Dgram& dgram)
                                       request_size,
                                       fragment_count);
       if (request_entry == 0
-          || this->request_map_.bind (map_index,
+          || this->request_map_.bind (index,
                                       request_entry,
                                       entry) == -1)
         {

@@ -85,16 +85,18 @@ void
 DRV_fork()
 {
   // This will not work on NT, but I can hardly think of some way to
-  // make it work.  The idea is to make it compile, and always use the
-  // compiler with just one file, that works because then there is no
-  // fork involved.
+  // make it work.
+  // The idea is to make it compile, and always use the compiler with
+  // just one file, that works because then there is no fork
+  // involved.
   for (DRV_file_index = 0;
        DRV_file_index < DRV_nfiles;
        ++DRV_file_index)
     {
       ACE_Process_Options options;
       options.creation_flags (ACE_Process_Options::NO_EXEC);
-      ACE_Process manager;
+
+      ACE_Process_Manager manager;
       pid_t child_pid = manager.spawn (options);
       if (child_pid == 0)
         {

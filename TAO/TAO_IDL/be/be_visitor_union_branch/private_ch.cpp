@@ -309,7 +309,7 @@ be_visitor_union_branch_private_ch::visit_sequence (be_sequence *node)
 }
 
 int
-be_visitor_union_branch_private_ch::visit_string (be_string *node)
+be_visitor_union_branch_private_ch::visit_string (be_string *)
 {
   TAO_OutStream *os; // output stream
   be_decl *ub = this->ctx_->node (); // get union branch
@@ -327,16 +327,7 @@ be_visitor_union_branch_private_ch::visit_string (be_string *node)
   os = this->ctx_->stream ();
 
   os->indent ();
-
-  if (node->width () == sizeof (char))
-    {
-      *os << "char *" << ub->local_name () << "_;\n";
-    }
-  else
-    {
-      *os << "CORBA::WChar *" << ub->local_name () << "_;\n";
-    }
-
+  *os << "char *" << ub->local_name () << "_;\n";
   return 0;
 }
 

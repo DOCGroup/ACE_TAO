@@ -133,7 +133,7 @@ be_visitor_operation_ami_handler_operation_ch::visit_operation (be_operation *no
               << ");" << be_uidt << "\n\n"; 
           break;
        
-        case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_CH:
+        case TAO_CodeGen::TAO_AMI_HANDLER_STUB_OPERATION_CH:
           *os << "TAO_InputCDR &_tao_reply_cdr, " << be_nl
               << "Messaging::ReplyHandler_ptr _tao_reply_handler, " << be_nl
               << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
