@@ -47,15 +47,10 @@ BIN2 = factory \
 #### don't try to build here.
 TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq (CosEvent,$(findstring CosEvent,$(TAO_ORBSVCS)))
-  BIN = $(BIN2)
+  ifeq (Naming,$(findstring Naming,$(TAO_ORBSVCS)))
+    BIN = $(BIN2)
+  endif # Naming
 endif # CosEvent
-
-#### If the TAO orbsvcs library wasn't built with sufficient components,
-#### don't try to build here.
-TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq (Naming,$(findstring Naming,$(TAO_ORBSVCS)))
-  BIN = $(BIN2)
-endif # Naming
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
