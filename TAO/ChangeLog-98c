@@ -1,3 +1,15 @@
+Thu Nov 19 14:51:29 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp: 
+	  The CDR insertion and extraction operators for interfaces must
+	  be declared inline before we emit the code for the members of
+	  the interface. Otherwise code like this:
+	  // IDL
+	  interface Foo {
+	    exception Bar {Foo where_it_failed;};
+	  };
+	  fails on some platforms.
+
 Thu Nov 19 10:15:28 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/Timer_Module.h: 

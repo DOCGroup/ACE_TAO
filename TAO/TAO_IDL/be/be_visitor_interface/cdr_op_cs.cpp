@@ -52,7 +52,33 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
 
   // First generate code for our children. The reason we do this first is
   // because the inlined code for our children must be available before we use
-  // it in our parent
+  // it in our parent, but we must forward declare the parent
+  // operators, so code like this:
+  //
+  // // IDL
+  // interface Foo {
+  //   exception Bar {Foo foo_member; };
+  // };
+  //
+  // can work properly (the Foo::Bar operators need the Foo operators
+  // defined).
+  //
+
+  // generate the CDR << and >> operator declarations
+  os->indent ();
+  *os << "ACE_INLINE CORBA::Boolean" << be_nl
+      << "operator<< (" << be_idt << be_idt_nl
+      << "TAO_OutputCDR &," << be_nl
+      << "const " << node->name () << "_ptr" << be_uidt_nl
+      << ");" << be_uidt_nl;
+  *os << "ACE_INLINE CORBA::Boolean" << be_nl
+      << "operator>> (" << be_idt << be_idt_nl
+      << "TAO_InputCDR &," << be_nl
+      << node->name () << "_ptr &" << be_uidt_nl
+      << ");" << be_uidt << "\n";
+
+  // Now it really the type to generate the operators for the members
+  // of the interface... 
 
   // set the substate as generating code for the types defined in our scope
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_SCOPE);
