@@ -37,10 +37,23 @@ TAO_AV_QoS::get_flow_qos (const char *flowname,
 				    flow_qos);
 
   if (result < 0)
-    ACE_ERROR_RETURN ((LM_DEBUG,
-		       "(%N,%l) TAO_AV_QOS::get_flow_qos qos_map::find failed for %s\n",
-		       flowname),
-		      -1);
+    {
+      ACE_DEBUG((LM_DEBUG, "(%N,%l) qos_map contains the flows:\n"));
+
+      ACE_Hash_Map_Manager<ACE_CString,AVStreams::QoS,ACE_Null_Mutex>::ITERATOR iter
+        = qos_map_.begin();
+
+      while( iter != qos_map_.end() )
+        {
+          ACE_DEBUG((LM_DEBUG, "  %s\n", (*iter).ext_id_.c_str() ));
+          ++iter; 
+        }
+
+      ACE_ERROR_RETURN ((LM_DEBUG,
+                         "(%N,%l) TAO_AV_QOS::get_flow_qos qos_map::find failed for %s\n",
+                         flowname),
+                        -1);
+    }
   return 0;
 }
 

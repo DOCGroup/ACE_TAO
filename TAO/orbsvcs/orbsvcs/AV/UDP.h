@@ -90,6 +90,7 @@ public:
   virtual ssize_t recv (iovec *iov,
                         int iovcnt,
                         ACE_Time_Value *s = 0);
+
 protected:
   TAO_AV_UDP_Flow_Handler *handler_;
   ACE_Addr *addr_;
@@ -117,6 +118,9 @@ public:
   virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg = 0);
   const ACE_SOCK_Dgram *get_socket (void) const;
   virtual ACE_Event_Handler* event_handler (void){ return this; }
+  /// Change the QoS
+  virtual int change_qos (AVStreams::QoS);  
+
 protected:
   TAO_AV_Core *av_core_;
   ACE_INET_Addr peer_addr_;
