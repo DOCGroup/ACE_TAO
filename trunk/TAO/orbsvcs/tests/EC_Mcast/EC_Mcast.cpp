@@ -10,6 +10,7 @@
 #include "orbsvcs/Time_Utilities.h"
 
 #include "orbsvcs/Event/EC_Event_Channel.h"
+#include "orbsvcs/Event/EC_Default_Factory.h"
 
 #include "EC_Mcast.h"
 
@@ -787,7 +788,8 @@ ECM_Consumer::connect (ACE_RANDR_TYPE &seed,
   const ECM_Federation* federation = this->federation_->federation ();
   for (int i = 0; i < federation->consumer_types (); ++i)
     {
-      if (ACE_OS::rand_r (seed) < RAND_MAX / 2)
+      unsigned int x = ACE_OS::rand_r (seed);
+      if (x < RAND_MAX / 2)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Federation %s leaves group %s\n",
@@ -957,14 +959,15 @@ ECM_Local_Federation::supplier_timeout (RtecEventComm::PushConsumer_ptr consumer
   ACE_Time_Value delta = ACE_OS::gettimeofday () -
     this->last_subscription_change_;
 
-  double p = double (ACE_OS::rand_r (this->seed_)) / RAND_MAX;
+  unsigned int x = ACE_OS::rand_r (this->seed_);
+  double p = double (x) / RAND_MAX;
   double maxp = double (delta.msec ()) / this->subscription_change_period_;
 
   if (4 * p < maxp)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Reconfiguring federation %s: %f %f\n",
-                  this->name (), p, maxp));
+                  "Reconfiguring federation %s: %f %f [%d]\n",
+                  this->name (), p, maxp, x));
       this->consumer_.disconnect (TAO_IN_ENV);
       TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
       this->consumer_.connect (this->seed_, TAO_IN_ENV);
@@ -1118,6 +1121,8 @@ ECM_Local_Federation::subscribed_bit (int i) const
 int
 main (int argc, char *argv [])
 {
+  TAO_EC_Default_Factory::init_svcs ();
+
   ECM_Driver driver;
   return driver.run (argc, argv);
 }

@@ -113,6 +113,13 @@ public:
   // Locking strategies for the ProxyPushConsumer and
   // ProxyPushSupplier objects
 
+  ACE_Lock* create_consumer_admin_lock (void);
+  void destroy_consumer_admin_lock (ACE_Lock*);
+  ACE_Lock* create_supplier_admin_lock (void);
+  void destroy_supplier_admin_lock (ACE_Lock*);
+  // Locking strategies for the ConsumerAdmin and SupplierAdmin
+  // objects
+
   virtual void connected (TAO_EC_ProxyPushConsumer*,
                           CORBA::Environment&);
   virtual void disconnected (TAO_EC_ProxyPushConsumer*,

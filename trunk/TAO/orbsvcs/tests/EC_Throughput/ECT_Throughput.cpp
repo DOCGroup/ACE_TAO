@@ -291,6 +291,8 @@ ECT_Throughput::run (int argc, char* argv[])
         TAO_CHECK_ENV;
       }
 
+      ACE_DEBUG ((LM_DEBUG, "EC deactivated\n"));
+
       {
         // Deactivate the Scheduler
         PortableServer::POA_var poa =
@@ -303,14 +305,22 @@ ECT_Throughput::run (int argc, char* argv[])
         TAO_CHECK_ENV;
       }
 
+      ACE_DEBUG ((LM_DEBUG, "scheduler deactivated\n"));
+
       this->disconnect_consumers (TAO_TRY_ENV);
       TAO_CHECK_ENV;
+
+      ACE_DEBUG ((LM_DEBUG, "consumers disconnected\n"));
 
       this->disconnect_suppliers (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
+      ACE_DEBUG ((LM_DEBUG, "suppliers disconnected\n"));
+
       channel->destroy (TAO_TRY_ENV);
       TAO_CHECK_ENV;
+
+      ACE_DEBUG ((LM_DEBUG, "channel destroyed\n"));
     }
   TAO_CATCHANY
     {
@@ -477,7 +487,7 @@ ECT_Throughput::parse_args (int argc, char *argv [])
 {
   ACE_Get_Opt get_opt (argc, argv, "rdc:s:u:n:t:b:h:l:p:m:w:");
   int opt;
-  
+
   while ((opt = get_opt ()) != EOF)
     {
       switch (opt)

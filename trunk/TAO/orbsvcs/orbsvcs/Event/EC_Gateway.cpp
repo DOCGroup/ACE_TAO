@@ -182,7 +182,7 @@ TAO_EC_Gateway_IIOP::update_consumer (const RtecEventChannelAdmin::ConsumerQOS& 
            ++j)
         {
           RtecEventChannelAdmin::SupplierQOS pub;
-          pub.publications.length (sub.dependencies.length () - 1);
+          pub.publications.length (sub.dependencies.length ());
           pub.is_gateway = 1;
           int c = 0;
 
