@@ -125,7 +125,7 @@ dnl MVS specific configuration parameters
 dnl Nothing yet
 
 dnl NetBSD specific configuration parameters
-AH_TEMPLATE([ACE_NETBSD],[Configure for use on NetBSD])
+dnl Nothing yet
 
 dnl OSF/1 and Digital Unix specific configuration parameters
 AH_TEMPLATE([DEC_CXX],[])
