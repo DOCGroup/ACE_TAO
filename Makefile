@@ -104,6 +104,7 @@ clone:
 
 CONTROLLED_FILES = \
         ACE-INSTALL.html \
+        ACE-configuration.txt \
         ACE-install.sh \
         ASNMP \
         AUTHORS \
@@ -123,6 +124,7 @@ CONTROLLED_FILES = \
         FAQ \
         Makefile \
         Makefile.am \
+        Makefile.in \
         NEWS \
         PROBLEM-REPORT-FORM \
         README \
@@ -147,6 +149,8 @@ CONTROLLED_FILES = \
         examples \
         include \
         install-sh \
+        ltcf-c.sh \
+        ltcf-cxx.sh \
         ltconfig \
         ltmain.sh \
         m4 \
@@ -195,6 +199,7 @@ ZIP_FILES          =
 
 #### The release target creates the ACE (only) kit.
 release: $(APPLY_NEW_TAG)
+	@$(ACE_ROOT)/bin/bootstrap workspace  # Temporary ACE+autoconf hack.
 	@$(ACE_ROOT)/bin/make_release -k ace $(ACE_TAG) \
          $(INSTALL_KIT) $(GENERATE_MAN_PAGES) $(ZIP_FILES) $(CHECK)
 
@@ -215,6 +220,7 @@ releasetao:
 ####      The make then recursively invokes make releasetao in this
 ####      directory to create the combined ACE-TAO kit.
 releaseall: $(APPLY_NEW_TAG)
+	@$(ACE_ROOT)/bin/bootstrap  # Temporary ACE+autoconf hack.
 	@cd TAO  &&  $(MAKE) -s release REL=$(REL)
 
 .PHONY: show_controlled_files show_release_files show_release_lib_files
