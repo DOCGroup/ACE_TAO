@@ -79,8 +79,7 @@ CORBA_Any::CORBA_Any (void)
 {
 }
 
-CORBA_Any::CORBA_Any (CORBA::TypeCode_ptr tc,
-                      CORBA::Environment &)
+CORBA_Any::CORBA_Any (CORBA::TypeCode_ptr tc)
   : type_ (CORBA::TypeCode::_duplicate (tc)),
     byte_order_ (TAO_ENCAP_BYTE_ORDER),
     cdr_ (0),
@@ -162,11 +161,11 @@ CORBA_Any::operator= (const CORBA_Any &src)
 
   this->byte_order_ = src.byte_order_;
 
-  ACE_NEW_RETURN (this->cdr_, 
-                  ACE_Message_Block, 
+  ACE_NEW_RETURN (this->cdr_,
+                  ACE_Message_Block,
                   *this);
 
-  ACE_CDR::consolidate (this->cdr_, 
+  ACE_CDR::consolidate (this->cdr_,
                         src.cdr_);
 
   return *this;
@@ -205,10 +204,10 @@ CORBA_Any::_tao_replace (CORBA::TypeCode_ptr tc,
 
   this->byte_order_ = byte_order;
 
-  ACE_NEW (this->cdr_, 
+  ACE_NEW (this->cdr_,
            ACE_Message_Block);
 
-  ACE_CDR::consolidate (this->cdr_, 
+  ACE_CDR::consolidate (this->cdr_,
                         mb);
   // We can save the decode operation if there's no need to extract
   // the object.
@@ -329,8 +328,8 @@ CORBA_Any::_tao_decode (TAO_InputCDR &cdr,
   mb.rd_ptr (offset);
   mb.wr_ptr (offset + size);
 
-  ACE_OS::memcpy (mb.rd_ptr (), 
-                  begin, 
+  ACE_OS::memcpy (mb.rd_ptr (),
+                  begin,
                   size);
 
   // Stick it into the Any. It gets duplicated there.
