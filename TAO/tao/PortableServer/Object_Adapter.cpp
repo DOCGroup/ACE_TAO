@@ -814,41 +814,26 @@ CORBA::Object_ptr
 TAO_Object_Adapter::create_collocated_object (TAO_Stub *stub,
                                               const TAO_MProfile &mp)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
-    {
-      TAO_ServantBase *sb =
-        this->get_collocated_servant (mp
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+  TAO_ServantBase *sb = this->get_collocated_servant (mp);
 
-      // Set the servant ORB.  Do not duplicate the ORB here since
-      // TAO_Stub::servant_orb() duplicates it.
-      stub->servant_orb (this->orb_core_.orb ());
+  // Set the servant ORB.  Do not duplicate the ORB here since
+  // TAO_Stub::servant_orb() duplicates it.
+  stub->servant_orb (this->orb_core_.orb ());
 
-      // It is ok to create a collocated object even when <sb> is
-      // zero.
-      CORBA::Object_ptr x;
-      ACE_NEW_RETURN (x,
-                      CORBA::Object (stub,
-                                     1,
-                                     sb),
-                      CORBA::Object::_nil ());
+  // It is ok to create a collocated object even when <sb> is
+  // zero.
+  CORBA::Object_ptr x;
+  ACE_NEW_RETURN (x,
+      CORBA::Object (stub,
+          1,
+          sb),
+      CORBA::Object::_nil ());
 
-      // Here we set the strategized Proxy Broker.
-      x->_proxy_broker (the_tao_collocated_object_proxy_broker ());
+  // Here we set the strategized Proxy Broker.
+  x->_proxy_broker (the_tao_collocated_object_proxy_broker ());
 
-      // Success.
-      return x;
-    }
-  ACE_CATCHANY
-    {
-      // Ignore the exception and continue with the next one.
-    }
-  ACE_ENDTRY;
-
-  // Failure.
-  return CORBA::Object::_nil ();
+  // Success.
+  return x;
 }
 
 CORBA::Long
@@ -857,40 +842,23 @@ TAO_Object_Adapter::initialize_collocated_object (TAO_Stub *stub,
 {
   // @@ What about forwarding.  With this approach we are never
   //    forwarded  when we use collocation!
-  const TAO_MProfile &mp =
-    stub->base_profiles ();
+  const TAO_MProfile &mp = stub->base_profiles ();
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ServantBase *sb = this->get_collocated_servant (mp);
 
-  ACE_TRY
-    {
-      TAO_ServantBase *sb =
-        this->get_collocated_servant (mp
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+  // Set the servant ORB.  Do not duplicate the ORB here since
+  // TAO_Stub::servant_orb() duplicates it.
+  stub->servant_orb (this->orb_core_.orb ());
 
-      // Set the servant ORB.  Do not duplicate the ORB here since
-      // TAO_Stub::servant_orb() duplicates it.
-      stub->servant_orb (this->orb_core_.orb ());
+  // It is ok to set the object as a collocated object even when
+  // <sb> is zero.
+  obj->set_collocated_servant (sb);
 
-      // It is ok to set the object as a collocated object even when
-      // <sb> is zero.
-      obj->set_collocated_servant (sb);
+  // Here we set the strategized Proxy Broker.
+  obj->_proxy_broker (the_tao_collocated_object_proxy_broker ());
 
-      // Here we set the strategized Proxy Broker.
-      obj->_proxy_broker (the_tao_collocated_object_proxy_broker ());
-
-     // Success.
-     return 0;
-    }
-  ACE_CATCHANY
-    {
-      // Ignore exceptions..
-    }
-  ACE_ENDTRY;
-
-  // Failure.
-  return -1;
+  // Success.
+  return 0;
 }
 
 TAO_ServantBase *
@@ -911,10 +879,18 @@ TAO_Object_Adapter::get_collocated_servant (const TAO_MProfile &mp
 
       TAO_ServantBase *servant = 0;
 
-      this->find_servant (objkey.in (),
-                          servant
-                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      ACE_DECLARE_NEW_CORBA_ENV;
+      ACE_TRY
+        {
+          this->find_servant (objkey.in (),
+              servant
+              ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+      ACE_CATCHANY
+        {
+        }
+      ACE_ENDTRY;
 
       return servant;
     }

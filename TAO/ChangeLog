@@ -1,3 +1,21 @@
+Sun Nov 14 05:01:28 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* tao/PortableServer/Object_Adapter.cpp:
+	* tao/PortableServer/Object_Adapter.h:
+
+	  Fix for Bug 1535. Please see 
+
+	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1535
+
+	  for details.
+	
+	* tests/Bug_1535_Regression/Bug_1535_Regression.mpc:
+	* tests/Bug_1535_Regression/Test.idl:
+	* tests/Bug_1535_Regression/bug_1535_regression.cpp:
+	* tests/Bug_1535_Regression/run_test.pl:
+
+	  Regression test for Bug 1535.
+
 Fri Nov 12 14:51:19 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
