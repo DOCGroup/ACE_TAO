@@ -270,7 +270,7 @@ ACE_TSS<TYPE>::ts_init (void) const
   // once!
   if (this->once_ == 0)
     {
-      if (ACE_Thread::keycreate (&this->key_,
+      if (ACE_Thread::keycreate (ACE_const_cast (ACE_thread_key_t *, &this->key_),
 #if defined (ACE_HAS_THR_C_DEST)
                                  &ACE_TSS_C_cleanup,
 #else
@@ -282,9 +282,7 @@ ACE_TSS<TYPE>::ts_init (void) const
         {
           // This *must* come last to avoid race conditions!  Note that
           // we need to "cast away const..."
-          // BTW, if this code doesn't compile, please try the following instead. 
-          // *(int *) &this->once_ = 1;
-          ACE_const_cast (int, this->once_) = 1;
+          * ACE_const_cast (int*, &this->once_) = 1;
           return 0;
         }
     }
@@ -414,7 +412,7 @@ ACE_TSS<TYPE>::ts_get (void) const
 
 #if defined (ACE_HAS_THR_C_DEST)
   // Return the underlying ts object.
-  return (TYPE *) tss_adapter->ts_obj_;   
+  return (TYPE *) tss_adapter->ts_obj_;
 #else
   return ts_obj;
 #endif /* ACE_HAS_THR_C_DEST */
