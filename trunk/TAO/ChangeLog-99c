@@ -1,3 +1,9 @@
+Mon Mar  8 13:44:23 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tao/ORB.cpp: Added a superfast implementation of CORBA::string_copy().
+	  Thanks to Terry Rosenbaum <Terry.Rosenbaum@Radiology.MSU.edu>
+	  for suggesting this.
+
 Mon Mar  8 11:08:02 EST 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* TAO_IDL/include/utl_scope.h:
