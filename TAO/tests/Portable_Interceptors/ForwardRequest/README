@@ -69,3 +69,4 @@ CLIENT (1376|1540) Received LOCATION_FORWARD reply.
 CLIENT: Request 4 handled by object 2.
 Server is shutting down via object 2.
 Event loop finished.
+PortableInterceptor::ForwardRequest test passed.
