@@ -1,0 +1,38 @@
+Wed Sep  8 08:14:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/PortableServer.pidl:
+          Splitted this file into the new files below to be able to refactor
+          things
+
+        * tao/PortableServer/POAManager.pidl:
+          PortableServer::POAManager
+
+        * tao/PortableServer/PS_Current.pidl:
+          PortableServer::Current
+
+        * tao/PortableServer/PS_Forward.pidl:
+          Some forward declarations and typedefs needed in several files
+
+        * tao/PortableServer/AdapterActivator.pidl:
+        * tao/PortableServer/IdAssignmentPolicy.pidl:
+        * tao/PortableServer/IdUniquenessPolicy.pidl:
+        * tao/PortableServer/ImplicitActivationPolicy.pidl:
+        * tao/PortableServer/LifespanPolicy.pidl:
+        * tao/PortableServer/RequestProcessingPolicy.pidl:
+        * tao/PortableServer/ServantRetentionPolicy.pidl:
+        * tao/PortableServer/ThreadPolicy.pidl:
+          All available policies, each in its own file
+
+        * tao/PortableServer/ServantActivator.pidl:
+          PortableServer::ServantActivator
+
+        * tao/PortableServer/ServantLocator.pidl:
+          PortableServer::ServantLocator
+
+        * tao/PortableServer/ServantManager.pidl:
+          PortableServer::ServantManager
+
+        * tao/PortableServer/GOA.pidl:
+          The MIOP related methods, in the latest spec, these are in the GOA
+          interface (Group Object Adapter), which is derived from the POA,
+          this GOA will be moved later to PortableGroup.
