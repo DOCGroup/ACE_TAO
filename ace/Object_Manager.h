@@ -93,14 +93,10 @@ class ACE_Export ACE_Object_Manager
   //         can be used to register an ACE_Cleanup object
   //         for any cleanup activity at program termination.
   //
-  //      3) ACE_Managed_Object::get_object (int &id, TYPE *&object);
-  //         can be used to dynamically allocate an object of any TYPE.
-  //         The object is deleted at program termination.
-  //
   //      The final mechanism is not general purpose, but can only
   //      be used to allocate objects and arrays at program startup:
   //
-  //      4) ACE_Managed_Object::get_preallocated_object
+  //      3) ACE_Managed_Object::get_preallocated_object
   //           (ACE_Object_Manager::Preallocated_Object id);
   //         and
   //         ACE_Managed_Object::get_preallocated_array
