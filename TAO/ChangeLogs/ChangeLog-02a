@@ -1,3 +1,9 @@
+Fri Jun 30 00:57:06 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp:
+
+	  Fixed RTCORBA #ifdef.
+
 Thu Jun 29 14:42:06 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/UIOP_Profile.cpp (create_tagged_profile):
