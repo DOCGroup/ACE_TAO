@@ -35,6 +35,8 @@ sub new {
   my($inc)       = shift;
   my($template)  = shift;
   my($ti)        = shift;
+  my($dynamic)   = shift;
+  my($static)    = shift;
   my($self)      = Creator::new($class, $global, $inc,
                                 $template, $ti, 'workspace');
   my($typecheck) = $self->{'type_check'};
@@ -45,6 +47,8 @@ sub new {
   $self->{'project_info'}   = {};
   $self->{'reading_parent'} = [];
   $self->{'project_files'}  = [];
+  $self->{'dynamic'}        = $dynamic;
+  $self->{'static'}         = $static;
 
   return $self;
 }
@@ -297,6 +301,18 @@ sub get_projects {
 sub get_project_info {
   my($self) = shift;
   return $self->{'project_info'};
+}
+
+
+sub get_dynamic {
+  my($self) = shift;
+  return $self->{'dynamic'};
+}
+
+
+sub get_static {
+  my($self) = shift;
+  return $self->{'static'};
 }
 
 

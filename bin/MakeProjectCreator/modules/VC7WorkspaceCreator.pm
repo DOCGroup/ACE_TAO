@@ -125,7 +125,9 @@ sub project_creator {
   return new VC7ProjectCreator($self->get_global_cfg(),
                                $self->get_include_path(),
                                $self->get_template_override(),
-                               $self->get_ti_override());
+                               $self->get_ti_override(),
+                               $self->get_dynamic(),
+                               $self->get_static());
 }
 
 
