@@ -1,3 +1,9 @@
+Fri Jan 28 05:32:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Name_Request_Reply.h:
+          Removed private copy constructor and assignment operator, in the
+          netsvcs library this gave problems.
+
 Thu Jan 27 18:28:19 2005  Steve Huston  <shuston@riverace.com>
 
 	* tests/Proactor_Test.{h cpp}:
