@@ -123,7 +123,7 @@ be_visitor_arg_traits::visit_interface (be_interface *node)
       os->gen_ifdef_macro (node->flat_name (), guard_suffix.c_str ());
 
       *os << be_nl << be_nl
-          << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
+          << "template<>" << be_nl
           << "class "
           << (stub ? b->stub_export_macro () : b->skel_export_macro ())
           << " " << this->S_ << "Arg_Traits<"
@@ -205,7 +205,7 @@ be_visitor_arg_traits::visit_valuetype (be_valuetype *node)
       os->gen_ifdef_macro (node->flat_name (), guard_suffix.c_str ());
 
       *os << be_nl << be_nl
-          << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
+          << "template<>" << be_nl
           << "class " << be_global->stub_export_macro () << " "
           << this->S_ << "Arg_Traits<"
           << node->name () << ">" << be_idt_nl
