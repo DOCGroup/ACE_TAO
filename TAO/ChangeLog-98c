@@ -1,5 +1,10 @@
 Sat Jun 20 01:39:35 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* tao/TAO4.{mdp,mak}: Defined TAO_BUILD_DLL, undefined
+	  TAO_NO_COPY_OCTET_SEQUENCES.  Added Current{C,S}.cpp and
+	  Forward_Servant.cpp into project.  Removed timeprobe.cpp from
+	  project. 
+
 	* tao/Forwarding_Servant.h:
 	* tao/POA{C,S,_CORBA}.h: Changed to use the underbar class names
 	  for better portability.  Thanks to Ernesto Guisado
