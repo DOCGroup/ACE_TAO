@@ -1,3 +1,9 @@
+Thu May 27 17:45:26 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* DnC/tests/Config_Handlers/handler_test.mpb:
+
+	  Added reqires dnc to stop the noise on the scoreboard.
+
 Thu May 27 22:10:27 2004  Emre Turkay <turkaye@dre.vanderbilt.edu>
 	* DnC/Core/Deployment.idl:
 
@@ -8269,4 +8275,3 @@ Mon Jun 17 17:35:31 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
         * docs/imgs/deployment.png:
         * docs/imgs/extended-container.png:
         * docs/imgs/home-config.png: Added CIAO documentation.
-
