@@ -18,7 +18,7 @@ module M1
     ::M::CCM_I get_i ();
   };
 
-  local interface CCM_C1_Context : ::Components::CCMContext
+  local interface CCM_C1_Context : ::Components::SessionContext
   {
   };
 

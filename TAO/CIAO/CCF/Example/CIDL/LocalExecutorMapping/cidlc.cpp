@@ -113,8 +113,8 @@ int main (int argc, char* argv[])
     //   get after eof.
     ifs.exceptions (ios_base::iostate (0));
 
-    std::istream& is = ifs.is_open () 
-    ? static_cast<std::istream&> (ifs) 
+    std::istream& is = ifs.is_open ()
+    ? static_cast<std::istream&> (ifs)
     : static_cast<std::istream&> (std::cin);
 
     InputStreamAdapter isa (is);
@@ -146,10 +146,11 @@ int main (int argc, char* argv[])
     for (TokenPtr token = lexer.next ();; token = lexer.next ())
     {
       token_stream.push_back (token);
+      cerr << token << endl;
       if (ReferenceCounting::strict_cast<EndOfStream> (token) != 0) break;
     }
 
-    if (token_stream.size () == 1)
+    if (token_stream.size () < 2)
     {
       cerr << "no tokens produced so nothing to parse" << endl;
       return 0;
@@ -173,13 +174,26 @@ int main (int argc, char* argv[])
 
       ScopePtr s = builtin->scope ();
 
-      // Note: I know what I am doing here (and if you don't then
-      //       read MExC++#17 again).
+      s->insert (BuiltInTypeDefPtr (new Object           (s)));
+      s->insert (BuiltInTypeDefPtr (new ValueBase        (s)));
+      s->insert (BuiltInTypeDefPtr (new Any              (s)));
+      s->insert (BuiltInTypeDefPtr (new Boolean          (s)));
+      s->insert (BuiltInTypeDefPtr (new Char             (s)));
+      s->insert (BuiltInTypeDefPtr (new Double           (s)));
+      s->insert (BuiltInTypeDefPtr (new Float            (s)));
+      s->insert (BuiltInTypeDefPtr (new Long             (s)));
+      s->insert (BuiltInTypeDefPtr (new LongDouble       (s)));
+      s->insert (BuiltInTypeDefPtr (new LongLong         (s)));
+      s->insert (BuiltInTypeDefPtr (new Octet            (s)));
+      s->insert (BuiltInTypeDefPtr (new Short            (s)));
+      s->insert (BuiltInTypeDefPtr (new String           (s)));
+      s->insert (BuiltInTypeDefPtr (new UnsignedLong     (s)));
+      s->insert (BuiltInTypeDefPtr (new UnsignedLongLong (s)));
+      s->insert (BuiltInTypeDefPtr (new UnsignedShort    (s)));
+      s->insert (BuiltInTypeDefPtr (new Void             (s)));
+      s->insert (BuiltInTypeDefPtr (new Wchar            (s)));
+      s->insert (BuiltInTypeDefPtr (new Wstring          (s)));
 
-      s->insert (BuiltInTypeDefPtr (new Void (s)));
-      s->insert (BuiltInTypeDefPtr (new Long (s)));
-      s->insert (BuiltInTypeDefPtr (new Boolean (s)));
-      s->insert (BuiltInTypeDefPtr (new String (s)));
     }
 
     //Create implied #include <Components.idl>

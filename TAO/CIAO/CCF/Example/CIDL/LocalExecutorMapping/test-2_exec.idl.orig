@@ -14,7 +14,7 @@ module M1
     ::M::CCM_I get_i ();
   };
 
-  local interface CCM_C1_Context : ::Components::CCMContext
+  local interface CCM_C1_Context : ::Components::SessionContext
   {
   };
 
@@ -57,7 +57,7 @@ module M2
   {
     attribute long l;
     attribute ::M::I i;
-    void foo (in long l, inout boolean b, out long ol, in ::M::I i);
+    void foo (in long l, inout boolean b, out long ol, in ::M::I i, out unsigned long long ull);
     ::Components::EnterpriseComponent new (in long l);
   };
 

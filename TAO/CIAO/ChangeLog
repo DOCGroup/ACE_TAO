@@ -1,3 +1,23 @@
+Fri Oct 10 15:54:00 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CCF/CCF/IDL2/LexicalAnalyzer.hpp:
+	* CCF/CCF/IDL2/LexicalAnalyzer.cpp:
+	* CCF/CCF/IDL2/SyntaxTree/BuildIn.m4:
+	* CCF/CCF/IDL2/SyntaxTree/BuildIn.hpp:
+	* CCF/CCF/IDL2/SyntaxTree/BuildIn.hpp.m4:
+	* CCF/CCF/IDL2/SyntaxTree/BuildIn.cpp:
+	* CCF/CCF/IDL2/SyntaxTree/BuildIn.cpp.m4:
+	* CCF/CCF/IDL2/Traversal/BuildIn.hpp:
+	* CCF/CCF/IDL2/Traversal/BuildIn.hpp.m4:
+	* CCF/Example/CIDL/LocalExecutorMapping/cidlc.cpp:
+	* CCF/Example/CIDL/LocalExecutorMapping/test-2.idl:
+	* CCF/Example/CIDL/LocalExecutorMapping/test-1_exec.idl.orig:
+	* CCF/Example/CIDL/LocalExecutorMapping/test-2_exec.idl.orig:
+	* CIDLC/cidlc.cpp: Added support for all built-in types (spec
+	calls them 'base types') in CCF and in CIDL compiler driver.
+
+	* CCF/Documentation/TODO: marked corresponding item as done.
+
 Thu Oct 09 00:50:24 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* bin/generate_component_mpc.pl: Minor enhancement to the previous
