@@ -8,23 +8,20 @@
 // = FILENAME
 //    http_client.cpp
 //
+// = DESCRIPTION
+//    This is a very simple client.  It accepts URLs from a prompt, and
+//    will try to fetch them.  Also accepts shell escapes.
+//
 // = AUTHOR
 //    James Hu
 // 
 // ============================================================================
 
-// = DESCRIPTION
-//    This is a very simple client.  It accepts URLs from a prompt, and
-//    will try to fetch them.  Also accepts shell escapes.
-
 #include "http_handler.h"
 
 int
-main (int argc, char *argv[])
+main (int, char *[])
 {
-  argc = argc;
-  argv = argv;
-
   // Present a command line.
   // * Accept a URL.
   //     Pass it to the HTTP_Connector.
