@@ -1,3 +1,5 @@
+// $Id$
+
 #include "ace/WIN32_Asynch_IO.h"
 
 ACE_RCSID (ace,
@@ -852,17 +854,13 @@ ACE_WIN32_Asynch_Write_Stream::writev (ACE_Message_Block &message_block,
 
   for (const ACE_Message_Block* msg = &message_block;
        msg != 0 && bytes_to_write > 0 && iovcnt < ACE_IOV_MAX;
-       msg = msg->cont () , ++iovcnt)
+       msg = msg->cont ())
   {
     size_t msg_len = msg->length ();
 
-    // OS should process zero length block correctly
-    // if ( msg_len == 0 )
-    //   ACE_ERROR_RETURN ((LM_ERROR,
-    //                      ACE_LIB_TEXT ("ACE_WIN32_Asynch_Write_Stream::writev:")
-    //                      ACE_LIB_TEXT ("Zero-length message block\n")),
-    //                     -1);
-
+    // Skip 0-length blocks.
+    if (msg_len == 0)
+      continue;
     if (msg_len > bytes_to_write)
       msg_len = bytes_to_write;
     bytes_to_write -= msg_len;
@@ -891,6 +889,7 @@ ACE_WIN32_Asynch_Write_Stream::writev (ACE_Message_Block &message_block,
         errno = ERANGE;
         return -1;
       }
+    ++iovcnt;
   }
 
   // Re-calculate number bytes to write

@@ -1,9 +1,16 @@
+Mon May 17 11:58:33 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/WIN32_Asynch_IO.cpp (writev): If the passed-in chain of
+	  ACE_Message_Blocks contains a 0-length block, it would cause
+	  a iovec to be uninitialized and still passed to WSASend(). This is
+	  fixed. Thanks to Ken Kane <kkane@livevault.com> for reporting this.
+
 Mon May 17 17:00:00 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
 	* ace/Time_Value.inl:
-	  Fixed a bug in operator *=( double ) which caused overflow for results
-	  greater than 2 seconds. Thanks to Mirek Pabich <miropabich@tenbit.pl>
-	  for this patch.
+	  Fixed a bug in operator *=( double ) which caused overflow for
+	  results greater than 2 seconds. Thanks to Mirek Pabich
+	  <miropabich@tenbit.pl> for this patch.
 
 Mon May 17 08:45:18 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
