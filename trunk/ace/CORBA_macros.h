@@ -338,21 +338,6 @@
      do { try { POINTER = new CONSTRUCTOR; } \
        catch (ACE_bad_alloc) { errno = ENOMEM; ACE_THROW_INT (EXCEPTION); } \
      } while (0)
-// The following ACE_NEW_THROW* macros are to be deprecated soon.
-// -------------------- Start Deprecated --------------------
-#   define ACE_NEW_THROW(POINTER,CONSTRUCTOR,EXCEPTION) \
-     do { try { POINTER = new CONSTRUCTOR; } \
-       catch (ACE_bad_alloc) { errno = ENOMEM; TAO_THROW (EXCEPTION); } \
-     } while (0)
-#   define ACE_NEW_THROW_RETURN(POINTER,CONSTRUCTOR,EXCEPTION,RET_VAL) \
-     do { try { POINTER = new CONSTRUCTOR; } \
-        catch (ACE_bad_alloc) { errno = ENOMEM; TAO_THROW_RETURN (EXCEPTION,RET_VAL); } \
-     } while (0)
-#   define ACE_NEW_TRY_THROW(POINTER,CONSTRUCTOR,EXCEPTION) \
-  do { try { POINTER = new CONSTRUCTOR; } \
-       catch (ACE_bad_alloc) { errno = ENOMEM; TAO_TRY_THROW (EXCEPTION); } \
-     } while (0)
-// -------------------- End Deprecated --------------------
 
 #else
 
@@ -360,22 +345,6 @@
      do { POINTER = new CONSTRUCTOR; \
        if (POINTER == 0) { errno = ENOMEM; ACE_THROW_INT (EXCEPTION); } \
      } while (0)
-// The following ACE_NEW_THROW* macros are to be deprecated soon.
-// -------------------- Start Deprecated --------------------
-#   define ACE_NEW_THROW(POINTER,CONSTRUCTOR,EXCEPTION) \
-     do { POINTER = new CONSTRUCTOR; \
-       if (POINTER == 0) { errno = ENOMEM; TAO_THROW (EXCEPTION); } \
-     } while (0)
-#   define ACE_NEW_THROW_RETURN(POINTER,CONSTRUCTOR,EXCEPTION,RET_VAL) \
-     do { POINTER = new CONSTRUCTOR; \
-        if (POINTER == 0)\
-        { errno = ENOMEM; TAO_THROW_RETURN (EXCEPTION,RET_VAL); } \
-     } while (0)
-#   define ACE_NEW_TRY_THROW(POINTER,CONSTRUCTOR,EXCEPTION) \
-     do { POINTER = new CONSTRUCTOR; \
-       if (POINTER == 0) { errno = ENOMEM; TAO_TRY_THROW (EXCEPTION); } \
-     } while (0)
-// -------------------- End Deprecated --------------------
 
 #endif /* ACE_NEW_THROWS_EXCEPTIONS */
 
@@ -391,15 +360,106 @@
   ACE_Write_Guard< MUTEX > OBJ (LOCK); \
     if (OBJ.locked () == 0) ACE_THROW_INT (EXCEPTION);
 
-// The following ACE_GUARD_THROW* macros are to be deprecated soon.
-// -------------------- Start Deprecated --------------------
-# define ACE_GUARD_THROW(MUTEX,OBJ,LOCK,EXCEPTION) \
-  ACE_Guard< MUTEX > OBJ (LOCK); \
-    if (OBJ.locked () == 0) TAO_THROW (EXCEPTION);
-# define ACE_GUARD_THROW_RETURN(MUTEX,OBJ,LOCK,EXCEPTION,RETURN) \
-  ACE_Guard< MUTEX > OBJ (LOCK); \
-    if (OBJ.locked () == 0) TAO_THROW_RETURN (EXCEPTION, RETURN);
-// -------------------- End Deprecation --------------------
+//@{
+/**
+ * @name Native C++ exceptions portability macros.
+ *
+ * The following macros are used to write code portable between
+ * platforms with and without native C++ exception support.  Their
+ * main goal is to hide the presence of the CORBA::Environment
+ * argument, but they collaborate with the ACE_TRY_* macros to emulate
+ * the try/catch blocks.
+ */
+
+/// Define a macro to emit code only when CORBA::Environment is used
+#if !defined (ACE_CORBA_HAS_EXCEPTIONS) || defined (ACE_ENV_BKWD_COMPAT)
+#  define ACE_ENV_EMIT_CODE(X) X
+#else
+#  define ACE_ENV_EMIT_CODE(X)
+#endif /* ACE_CORBA_HAS_EXCEPTIONS && !ACE_ENV_BKWD_COMPAT */
+
+/// Another macro to emit code only when CORBA::Environment is used
+#if !defined (ACE_CORBA_HAS_EXCEPTIONS) || defined (ACE_ENV_BKWD_COMPAT)
+#  define ACE_ENV_EMIT_CODE2(X,Y) X,Y
+#else
+#  define ACE_ENV_EMIT_CODE2(X,Y)
+#endif /* ACE_CORBA_HAS_EXCEPTIONS && !ACE_ENV_BKWD_COMPAT */
+
+/// Helper macro
+#define ACE_ENV_EMIT_DUMMY
+
+/// Declare a CORBA::Environment argument as the last argument of a
+/// function
+/**
+ * Normally this macro is used as follows:
+ *
+ * <CODE>void my_funct (int x, int y ACE_ENV_ARG_DECL);</CODE>
+ *
+ * Its purpose is to provide CORBA developers (and users) with a
+ * mechanism to write code that is portable to platforms with and
+ * without native C++ exceptions.
+ */
+#define ACE_ENV_ARG_DECL \
+    ACE_ENV_EMIT_CODE2(ACE_ENV_EMIT_DUMMY, \
+                       CORBA::Environment &ACE_TRY_ENV)
+
+/// Declare a CORBA::Environment argument with the default value
+/// obtained from the ORB.  Similar to ACE_ENV_ARG_DECL.
+/// The name of the default environment getter method needs
+/// to be changed when switching ORBs.
+#define ACE_ENV_ARG_DECL_WITH_DEFAULTS \
+    ACE_ENV_EMIT_CODE2(ACE_ENV_EMIT_DUMMY, \
+                       CORBA::Environment &ACE_TRY_ENV = \
+                           TAO_default_environment ())
+
+/// Declare a CORBA::Environment argument that is not used by the
+/// function definition.
+/**
+ * Similar to ACE_ENV_ARG_DECL, but the formal parameter name is
+ * dropped to avoid warnings about unused parameters
+ */
+#define ACE_ENV_ARG_DECL_NOT_USED \
+    ACE_ENV_EMIT_CODE2(ACE_ENV_EMIT_DUMMY, \
+                       CORBA::Environment &)
+
+/// Declare a CORBA::Environment argument for methods that do not take
+/// any other parameters
+#define ACE_ENV_SINGLE_ARG_DECL \
+    ACE_ENV_EMIT_CODE(CORBA::Environment &ACE_TRY_ENV)
+
+/// Declare a CORBA::Environment argument with a default value for
+/// methods that do not take any other parameters.
+/// The name of the default environment getter method needs
+/// to be changed when switching ORBs.
+#define ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS \
+    ACE_ENV_EMIT_CODE(CORBA::Environment &ACE_TRY_ENV = \
+                          TAO_default_environment ())
+
+/// Declare a CORBA::Environment argument for for ethods
+#define ACE_ENV_SINGLE_ARG_DECL_NOT_USED \
+    ACE_ENV_EMIT_CODE(CORBA::Environment &)
+
+/// Use the CORBA::Environment argument is a nested call
+#define ACE_ENV_ARG_PARAMETER \
+    ACE_ENV_EMIT_CODE2(ACE_ENV_EMIT_DUMMY, \
+                       ACE_TRY_ENV)
+
+/// Use the CORBA::Environment argument is a nested call, assuming the
+/// called function take only the ACE_TRY_ENV argument.
+#define ACE_ENV_SINGLE_ARG_PARAMETER \
+    ACE_ENV_EMIT_CODE(ACE_TRY_ENV)
+
+/// Eliminate unused argument warnings about ACE_TRY_ENV
+#define ACE_ENV_ARG_NOT_USED \
+    ACE_ENV_EMIT_CODE(ACE_UNUSED_ARG(ACE_TRY_ENV))
+//@}
+
+#if !defined (ACE_CORBA_HAS_EXCEPTIONS)
+// This thing can be moved into the above when we drop ACE_ENV_BKWD_COMPAT.
+#  define ACE_ENV_RAISE(ex) ACE_TRY_ENV.exception (ex)
+#else
+#  define ACE_ENV_RAISE(ex) (ex)->_raise ()
+#endif /* ACE_CORBA_HAS_EXCEPTIONS */
 
 // ============================================================
 
