@@ -93,6 +93,12 @@ public:
   DEF_NARROW_METHODS3 (be_sequence, AST_Sequence, be_scope, be_type);
   DEF_NARROW_FROM_DECL (be_sequence);
 
+  const char *instance_name ();
+  // report the instance name for instantiation
+
+  const char *object_manager_name ();
+  // report the object manager name for the sequence of objects
+
 protected:
   virtual char *gen_name (void);
   // helper to create_name
