@@ -934,7 +934,7 @@ Wada Hiroshi <syu-@yhb.att.ne.jp>
 Sal Amander <virgis@megagis.lt>
 Bill Tonseth <tonseth@shamra.mv.com>
 Torsten Pfuetzenreuter <torsten_pf@geocities.com>
-John M. Mills <jmills@tga.com> 
+John M. Mills <jmills@tga.com>
 David McWeeny <davemcw@tr.comm.mot.com>
 Florian Lackerbauer <florian.lackerbauer@mchp.siemens.de>
 Manuel Benche <mbenche@jazz.cs.utsa.edu>
@@ -943,6 +943,7 @@ Roger Tragin <rtragin@wpine.com>
 Alex Bangs <bangs@entelos.com>
 Yangfen Qiu <yqiu@thomas.com>
 Johnny Chen <jchen@informatica.com>
+John Foresteire <John_J_Foresteire@res.raytheon.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that
