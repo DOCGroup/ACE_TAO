@@ -26,12 +26,11 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "Messaging_PolicyValueC.h"
-#include "Messaging_PolicyValueA.h"
 #include "tao/Typecode.h"
 #include "tao/Any_Dual_Impl_T.h"
 
-// TAO_IDL - Generated from 
-// be/be_visitor_structure/any_op_cs.cpp:54
+// TAO_IDL - Generated from
+// be\be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -88,8 +87,8 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
-// be/be_visitor_sequence/any_op_cs.cpp:54
+// TAO_IDL - Generated from
+// be\be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -172,5 +171,5 @@ CORBA::Boolean operator>>= (
         Messaging::PolicyValueSeq \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

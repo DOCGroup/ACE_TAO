@@ -26,21 +26,3 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:81
-
-#if !defined _TAO_CDR_OP_TAO_ObjectKey_I_
-#define _TAO_CDR_OP_TAO_ObjectKey_I_
-
-CORBA::Boolean TAO_Export operator<< (
-    TAO_OutputCDR &,
-    const TAO::ObjectKey &
-  );
-
-CORBA::Boolean TAO_Export operator>> (
-    TAO_InputCDR &,
-    TAO::ObjectKey &
-  );
-
-#endif /* _TAO_CDR_OP_TAO_ObjectKey_I_ */
-
