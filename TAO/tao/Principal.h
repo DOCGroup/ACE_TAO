@@ -57,4 +57,10 @@ private:
 #endif /* __GNUG__ */
 };
 
+extern TAO_Export TAO_OutputCDR&
+operator<<(TAO_OutputCDR&, CORBA_Principal*);
+
+extern TAO_Export TAO_InputCDR&
+operator>>(TAO_InputCDR&, CORBA_Principal*&);
+
 #endif /* TAO_PRINCIPAL_H */

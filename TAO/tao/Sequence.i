@@ -290,4 +290,16 @@ TAO_Unbounded_Sequence<CORBA::Octet>::mb (void) const
   return ACE_Message_Block::duplicate (this->mb_);
 }
 
+ACE_INLINE void
+TAO_Unbounded_Sequence<CORBA::Octet>::replace (CORBA::ULong length,
+                                               const ACE_Message_Block* mb)
+{
+  this->_deallocate_buffer ();
+  this->mb_ = ACE_Message_Block::duplicate (mb);
+  this->buffer_ = this->mb_->rd_ptr ();
+  this->maximum_ = length;
+  this->length_ = length;
+  this->release_ = CORBA::B_FALSE;
+}
+
 #endif /* defined (TAO_NO_COPY_OCTET_SEQUENCES) */

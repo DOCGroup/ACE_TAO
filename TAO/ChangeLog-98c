@@ -1,3 +1,39 @@
+Sat Jun 20 00:00:56 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/GIOP.h: 
+	* tao/GIOP.cpp: 
+	* tao/Server_Request.cpp: 
+	  Used compiled encoding and decoding for the GIOP and Request
+	  headers, thus reducing the time on the critical path.
+	  Removed a memory allocation on the server side by using ad-hoc
+	  marshalling for the object key: it does not need to increase the
+	  reference count on the CDR message block because its lifetime is
+	  shorter that the CDR stream.
+	  Added compiled marshalling methods for the ServiceContextList,
+	  this is mostly a waste because the context list is always
+	  empty.
+
+	* tao/CDR.h: 
+	* tao/CDR.i: 
+	  Enabled >> and << operators for CDR and basic types, added new
+	  operators for strings.
+
+	* tao/corba.h: 
+	* tao/ORB.cpp: 
+	  Added operators to marshal octet sequences.
+
+	* tao/decode.cpp: 
+	  Use the new replace() method to set the message block on octet
+	  sequences. 
+
+	* tao/Sequence.h: 
+	* tao/Sequence.i: 
+	  Added new replace() method that set the internal message block
+	  in an octet sequence.
+
+	* orbsvcs/tests/start_services: 
+	  Recommend the $USER instead of the $login macro for bash.
+
 Fri Jun 19 21:30:22 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO version 0.1.30 released.

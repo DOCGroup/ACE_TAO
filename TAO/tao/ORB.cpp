@@ -766,6 +766,43 @@ CORBA::ORB_init (int &argc,
   return TAO_ORB_Core_instance()->orb ();
 }
 
+// *************************************************************
+// Inline operators for TAO_opaque encoding and decoding
+// *************************************************************
+
+TAO_OutputCDR&
+operator<<(TAO_OutputCDR& cdr, const TAO_opaque& x)
+{
+  CORBA::ULong length = x.length ();
+  cdr.write_ulong (length);
+#if !defined (TAO_NO_COPY_OCTET_SEQUENCES)
+  cdr.write_octet_array (x.get_buffer (), length);
+#else
+  if (x.mb_ == 0)
+    cdr.write_octet_array (x.get_buffer (), length);
+  else
+    cdr.write_octet_array_mb (x.mb_);
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES */
+  return cdr;
+}
+
+TAO_InputCDR&
+operator>>(TAO_InputCDR& cdr, TAO_opaque& x)
+{
+  CORBA::ULong length;
+  cdr.read_ulong (length);
+#if !defined (TAO_NO_COPY_OCTET_SEQUENCES)
+  x.length (length);
+  cdr.read_octet_array (x.get_buffer (), length);
+#else
+  x.replace (length, cdr.start ());
+  cdr.skip_bytes (length);
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES */
+  return cdr;
+}
+
+// ****************************************************************
+
 #define TAO_HASH_ADDR ACE_Hash_Addr<ACE_INET_Addr>
 #define TAO_RECYCLABLE_ADDR ACE_Recyclable<TAO_HASH_ADDR>
 #define TAO_HASH_RECYCLABLE_ADDR ACE_Hash_Recyclable<TAO_HASH_ADDR>
