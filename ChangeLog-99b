@@ -1,3 +1,7 @@
+Sat Sep 25 17:09:57 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+        * ACE version 5.0.5 released.
+
 Fri Sep 24 17:20:41 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/config-kcc-common.h: KCC does support auto_ptr<T>::reset
