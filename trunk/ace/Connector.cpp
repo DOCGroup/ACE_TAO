@@ -574,6 +574,11 @@ template <class SH, PR_CO_1> int
 ACE_Connector<SH, PR_CO_2>::fini (void)
 {
   ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::fini");
+
+  // Make sure to call close here since our destructor might not be
+  // called if we're being dynamically linked via the svc.conf.
+  this->handler_map_.close ();
+
   // Make sure we call our handle_close(), not a subclass's!
   return ACE_Connector<SH, PR_CO_2>::handle_close ();
 }

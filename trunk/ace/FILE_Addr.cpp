@@ -30,6 +30,7 @@ ACE_FILE_Addr::set (const ACE_FILE_Addr &sa)
     (void) ACE_OS::memcpy ((void *) &this->filename_,
                            (void *) &sa.filename_,
                            sa.get_size ());
+  return 0;
 }
 
 // Copy constructor.
