@@ -137,7 +137,7 @@ Logger_Client::init_loggers (CORBA::Environment &env)
 					   env);
   this->logger_2_ = factory_->make_logger ("key2",
 					   env);
-  
+	  
   if (CORBA::is_nil (this->logger_1_.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
 		       "nil logger1"),
@@ -151,7 +151,22 @@ Logger_Client::init_loggers (CORBA::Environment &env)
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
 		"Created two loggers\n"));      
-  return 0;
+
+    if (TAO_debug_level > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+		  "\nTrying to resolve already created logger..."));
+      Logger_var logger_3 = factory_->make_logger ("key1",
+						   env);
+      if (CORBA::is_nil (logger_3.in ()))
+	ACE_DEBUG ((LM_DEBUG,
+		    "\nResolution failed."));
+      else
+	ACE_DEBUG ((LM_DEBUG,
+		    "\nResolution succeeded.")); 
+    }
+    
+    return 0;
 }
 
 
@@ -180,11 +195,11 @@ Logger_Client::run (void)
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "First Log_Record created. Contents:\n"));
+                      "\nFirst Log_Record created. Contents:\n"));
           this->show_record (rec1);
 
           ACE_DEBUG ((LM_DEBUG,
-                      "Second Log_Record created. Contents:\n"));
+                      "\nSecond Log_Record created. Contents:\n"));
           this->show_record (rec2);
         }
 
