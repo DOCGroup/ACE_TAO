@@ -1,3 +1,8 @@
+Fri Jul 17 17:42:27 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tao/skip.cpp: Replaced uses of old-style C casts with a
+ 	  static_cast.
+
 Fri Jul 17 17:58:37 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * docs/implrepo.html: Addressed some more comments.
