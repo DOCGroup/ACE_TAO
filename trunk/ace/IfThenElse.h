@@ -30,6 +30,8 @@ namespace ACE
    *
    * Usage example:
    *
+   * \code
+   *
    *   template <typename T>
    *   class Foo
    *   {
@@ -40,7 +42,8 @@ namespace ACE
    *                                 int>::result_type TheType;
    *   };
    *
-   * You will of course need to
+   * \endcode
+   *
    * @note This merely a forward declaration since we really only care
    *       about the partial specializations below.
    */
