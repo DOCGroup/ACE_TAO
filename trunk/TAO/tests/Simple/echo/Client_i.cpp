@@ -216,6 +216,7 @@ Client_i::via_naming_service(void)
   return 0;
 }
 
+// Init function.
 int
 Client_i::init (int argc, char **argv)
 {

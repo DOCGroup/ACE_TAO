@@ -1,21 +1,35 @@
+1998-09-15  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* tests/Simple/echo : Checked in the following files.
+	/Client_i.cpp
+	/Client_i.h
+	/Echo_i.cpp
+	/Echo_i.h
+	/Makefile
+	/Server_i.cpp
+	/Server_i.h
+	/client.cpp
+	/run_test.pl
+	/server.cpp
+
 Tue Sep 15 18:00:55 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
 	* tests/POA/DSI/README: A few caveats for the users. Nothing major.
 
 	* tests/POA/DSI/run_test.pl: New test script. Runs the client and
-	  server. 
+	  server.
 
 	* tests/POA/DSI/server.cpp: Added a parse_args method and changed
 	  to output the IOR to a file. Added an argument to set the
 	  TAO_debug_level
 
-	* tests/POA/DSI/client.cpp: Altered to get the IOR from a file and 
+	* tests/POA/DSI/client.cpp: Altered to get the IOR from a file and
 	  added an argument to set the TAO_debug_level
 
 Tue Sep 15 17:47:07 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
 	* tests/POA/Default_Servant/client.cpp: Added TAO_debug_level
-	  option to the arguments list  
+	  option to the arguments list
 
 Tue Sep 15 17:07:19 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
@@ -28,47 +42,47 @@ Tue Sep 15 17:07:19 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
 	* tests/POA/Default_Servant/server.cpp: Changed the syntax for
 	  writing the IOR to a file to be more in line with the syntax of
-	  the new test scripts. 
+	  the new test scripts.
 
 	* tests/POA/Default_Servant/client.cpp: Added support for reading
 	  the IOR from a file, a requirement for the new test script.
 
 Tue Sep 15 16:23:31 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
-	
+
 	* tests/Cubit/TAO/MT_Cubit/client.cpp(~Client_i) :
 	  Used delete [] instead of delete for this->low_priority_client_.
-		
+
 	* tests/Cubit/TAO/MT_Cubit/Task_Client.cpp (~Task_State):
           Used delete [] for this->iors_ in place of the wrong delete.
 	  Thanks to David and Sergio for reporting this.
-	
+
 Tue Sep 15 15:35:31 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* TAO_IDL/util/utl_global.cpp (IDL_GlobalData): Replaced "\"s with
-	"\\"s. 
+	"\\"s.
 
 Tue Sep 15 14:34:04 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/CDR.h: 
-	* tao/CDR.i: 
+	* tao/CDR.h:
+	* tao/CDR.i:
 	  Removed the << and >> operators involving the Boolean, Octet,
 	  Char or WChar. The helper classes from_boolean/char/wchar/octet
 	  or to_boolean/char/wchar/octet have to be used.
 
-	* TAO_IDL/be/be_visitor_field/cdr_op_cs.cpp: 
+	* TAO_IDL/be/be_visitor_field/cdr_op_cs.cpp:
 	  The generated code now uses the from_boolean/char/wchar/octet
 	  helpers for the << operators and the corresponding to_* form
 	  for the >> operators
 
-	* tao/Invocation.cpp: 
+	* tao/Invocation.cpp:
 	  Use the from_boolean and to_boolean helpers.
 
-	* TAO_IDL/be/be_visitor_root/cdr_op.cpp: 
+	* TAO_IDL/be/be_visitor_root/cdr_op.cpp:
 	  Cosmetic changes.
 
 Tue Sep 15 13:51:36 1998  Marina Igorevna Spivak  <marina@mambo.cs.wustl.edu>
 
-	* TAO/orbsvcs/tests/Simple_Naming/client.cpp : 
+	* TAO/orbsvcs/tests/Simple_Naming/client.cpp :
 	  Added return values to all <execute> methods.
 
 Tue Sep 15 13:10:51 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
@@ -79,12 +93,12 @@ Tue Sep 15 13:10:51 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 Tue Sep 15 12:54:22 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* TAO_IDL/driver/drv_args.cpp (DRV_parse_args): Added a new line
-	after the warning. 
+	after the warning.
 
 Tue Sep 15 10:26:45 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* TAO_IDL/be/be_visitor_array/{cdr_op_ch, cdr_op_cs}.cpp:
-	  
+
 	  The CDR <<, >> operators now use the <array>_forany type as
 	  parameter. This was necessary to distinguish between a
 	  degenerate pointer versus an array. We use the same strategy as
@@ -106,7 +120,7 @@ Tue Sep 15 10:26:45 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-lab
 	  Reactivated the CDR operator code generation. This was
 	  temporarily commented out.
 
-	* tao/CDR>{h, i}: 
+	* tao/CDR>{h, i}:
 
 	  Added << and >> operators that take the Any's helper classes
 	  like from_boolean, to_boolean and others. This is necessary to
@@ -119,7 +133,7 @@ Tue Sep 15 10:26:45 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-lab
 
 Tue Sep 15 10:11:03 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_root/cdr_op.cpp: 
+	* TAO_IDL/be/be_visitor_root/cdr_op.cpp:
 	  Disabled generation of << and >> operators for InputCDR and
 	  OutputCDR.
 
@@ -151,12 +165,12 @@ Mon Sep 14 20:44:56 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 Mon Sep 14 20:33:46 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* TAO_IDL/util/utl_global.cpp : 
+	* TAO_IDL/util/utl_global.cpp :
 	* TAO_IDL/driver/drv_args.cpp :
 		Some more robust handling for failure on running
 	<gperf>. Also updated the warning message when failure on
 	running.
-			
+
 		We try to run the $ACE_ROOT/bin/gperf. If $ACE_ROOT doesnt
 		exist then we try to execute "gperf" hoping that PATH is
 		set correctly. If -g option is used, we use that path to
@@ -167,19 +181,19 @@ Mon Sep 14 20:33:46 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
         "\t-Build the <gperf> program at $ACE_ROOT/apps/gperf\n"
         "\t-Set the environment variable $ACE_ROOT appropriately or add $ACE_ROOT/bin to the PATH\n"
         "\t-Refer to Operation Lookup section in the TAO IDL User Guide ($TAO_ROOT/docs/compiler.html) for more details"
- 	
+
 
 Mon Sep 14 17:47:41 1998  Chris Gill <cdgill@cs.wustl.edu>
                           Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.cpp: 
+	* orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.cpp:
 	  Changed ownership of data to 0 in reused any so the
 	  any does not try to delete the data out from under us
 
 Mon Sep 14 17:47:41 1998  Chris Gill <cdgill@cs.wustl.edu>
 
-	* orbsvcs/tests/Simulator/DOVEBrowser/PushConsumer.java: 
-	  converted nested struct memberwise initializations into 
+	* orbsvcs/tests/Simulator/DOVEBrowser/PushConsumer.java:
+	  converted nested struct memberwise initializations into
 	  new calls to nested class ctors.
 
 Mon Sep 14 14:33:41 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
