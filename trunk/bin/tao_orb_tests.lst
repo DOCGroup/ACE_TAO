@@ -164,3 +164,4 @@ TAO/tests/Servant_To_Reference_Test/run_test.pl: !MINIMUM !ST
 TAO/tests/Sequence_Unit_Tests/run_test.pl
 TAO/tests/Typedef_String_Array/run_test.pl
 TAO/tests/Bug_1535_Regression/run_test.pl: !MINIMUM
+TAO/tests/GIOP_Fragments/PMB_With_Fragments/run_test.pl
