@@ -28,6 +28,7 @@
 #include "tao/Invocation_Endpoint_Selectors.h"
 
 class TAO_GIOP_Invocation;
+class TAO_Profile;
 
 /**
  * @class TAO_FT_Invocation_Endpoint_Selector

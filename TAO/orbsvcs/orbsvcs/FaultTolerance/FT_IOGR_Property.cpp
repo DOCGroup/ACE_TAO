@@ -1,10 +1,16 @@
 #include "FT_Service_Activate.h"
+
 #include "tao/MProfile.h"
+#include "tao/Profile.h"
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"
+#include "tao/Tagged_Components.h"
+
 #include "ace/Auto_Ptr.h"
 
-ACE_RCSID(FaultTolerance, TAO_FT_IOGR_Property, "$Id$")
+ACE_RCSID (FaultTolerance,
+           TAO_FT_IOGR_Property,
+           "$Id$")
 
 #if !defined (__ACE_INLINE__)
 # include "FT_IOGR_Property.i"
