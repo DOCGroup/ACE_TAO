@@ -1,3 +1,9 @@
+Sun May 27 21:01:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+ 	* performance-tests/POA/Create_Reference/create_reference.cpp:
+
+	  Fixed a warning with KCC.
+
 Sun May 27 12:04:18 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* performance-tests/POA/Create_Reference/run_test.pl: This
