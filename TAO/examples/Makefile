@@ -10,7 +10,8 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-DIRS  = POA \
+DIRS  = Callback_Quoter \
+        POA \
 	Quoter \
 	Simple
 
