@@ -1,3 +1,21 @@
+Sat Jun 03 04:17:38 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/POA:
+
+	  - Renamed get_client_exposed_policies() to
+	  client_exposed_policies() and inlined it.  Also, made it
+	  available outside TAO_HAS_RT_CORBA.
+
+	  - Added priority_model policy to the POA.
+
+	  - Made some ThreadPolicy related methods available outside
+	  TAO_HAS_MINIMUM_POA.
+
+	* tao/ORB_Core: Added new accessors to the priority_model policy:
+	  priority_model() and default_priority_model().
+
+	* tao/GIOP_Server_Request.cpp (objref): Minor style fixes.
+
 Sat Jun 3 00:06:25 2000 Angelo Corsaro <corsaro@cs.wustl.edu>
 
 	* tao/RT_Policy_i.h

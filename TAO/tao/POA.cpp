@@ -12,6 +12,8 @@
 #include "tao/Stub.h"
 #include "tao/debug.h"
 
+#include "tao/RT_Policy_i.h"
+
 //
 // ImplRepo related.
 //
@@ -138,7 +140,8 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
     wait_for_completion_pending_ (0),
     waiting_destruction_ (0),
     servant_deactivation_condition_ (thread_lock),
-    waiting_servant_deactivation_ (0)
+    waiting_servant_deactivation_ (0),
+    client_exposed_policies_ ()
 {
   // Set the folded name of this POA.
   this->set_folded_name ();
@@ -230,7 +233,10 @@ TAO_POA::create_POA_i (const char *adapter_name,
   // administrative action that has not been performed, an
   // InvalidPolicy exception is raised containing the index in the
   // policies parameter value of the first offending policy object.
-  TAO_POA_Policies tao_policies;
+  TAO_POA_Policies tao_policies (this->orb_core_,
+                                 ACE_TRY_ENV);
+  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
+
   tao_policies.parse_policies (policies,
                                ACE_TRY_ENV);
   ACE_CHECK_RETURN (PortableServer::POA::_nil ());
@@ -2005,12 +2011,6 @@ TAO_POA::validate_priority_and_policies (RTCORBA::Priority priority,
   // observed.
 }
 
-
-const CORBA::PolicyList& TAO_POA::get_client_exposed_policies()
-{
-  return this->client_exposed_policies_;
-}
-
 #endif /* TAO_HAS_RT_CORBA */
 
 //
@@ -3628,15 +3628,42 @@ TAO_Request_Processing_Policy::_default_POA (CORBA::Environment & /* ACE_TRY_ENV
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
-TAO_POA_Policies::TAO_POA_Policies (void)
+TAO_POA_Policies::TAO_POA_Policies (TAO_ORB_Core &orb_core,
+                                    CORBA::Environment &ACE_TRY_ENV)
   :  thread_ (PortableServer::ORB_CTRL_MODEL),
      lifespan_ (PortableServer::TRANSIENT),
      id_uniqueness_ (PortableServer::UNIQUE_ID),
      id_assignment_ (PortableServer::SYSTEM_ID),
      implicit_activation_ (PortableServer::NO_IMPLICIT_ACTIVATION),
      servant_retention_ (PortableServer::RETAIN),
-     request_processing_ (PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY)
+     request_processing_ (PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY),
+     priority_model_ (TAO_POA_Policies::CLIENT_PROPAGATED),
+     server_priority_ (-1)
 {
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+  TAO_PriorityModelPolicy *priority_model =
+    orb_core.priority_model ();
+
+  if (priority_model != 0)
+    {
+      RTCORBA::PriorityModel rt_priority_model =
+        priority_model->priority_model (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      if (rt_priority_model == RTCORBA::CLIENT_PROPAGATED)
+        this->priority_model_ = TAO_POA_Policies::CLIENT_PROPAGATED;
+      else
+        this->priority_model_ = TAO_POA_Policies::SERVER_DECLARED;
+
+      this->server_priority_ =
+        priority_model->server_priority (ACE_TRY_ENV);
+      ACE_CHECK;
+    }
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
 }
 
 void
@@ -3791,6 +3818,33 @@ TAO_POA_Policies::parse_policy (const CORBA::Policy_ptr policy,
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
+#if (TAO_HAS_RT_CORBA == 1)
+
+  RTCORBA::PriorityModelPolicy_var priority_model
+    = RTCORBA::PriorityModelPolicy::_narrow (policy,
+                                             ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (!CORBA::is_nil (priority_model.in ()))
+    {
+      RTCORBA::PriorityModel rt_priority_model =
+        priority_model->priority_model (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      if (rt_priority_model == RTCORBA::CLIENT_PROPAGATED)
+        this->priority_model_ = TAO_POA_Policies::CLIENT_PROPAGATED;
+      else
+        this->priority_model_ = TAO_POA_Policies::SERVER_DECLARED;
+
+      this->server_priority_ =
+        priority_model->server_priority (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      return;
+    }
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
   ACE_THROW (PortableServer::POA::InvalidPolicy ());
 }
 
@@ -3913,14 +3967,12 @@ TAO_POA::key_to_object (const TAO_ObjectKey &key,
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-
-  
-  obj = this->orb_core_.orb()->key_to_object (key,
-                                              type_id,
-                                              this->get_client_exposed_policies(),
-                                              servant,
-                                              collocated,
-                                              ACE_TRY_ENV);
+  obj = this->orb_core_.orb ()->key_to_object (key,
+                                               type_id,
+                                               this->client_exposed_policies (),
+                                               servant,
+                                               collocated,
+                                               ACE_TRY_ENV);
   ACE_CHECK_RETURN (obj);
 
   return obj;
