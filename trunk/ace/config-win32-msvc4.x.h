@@ -132,6 +132,7 @@
 #define ACE_LACKS_SEMBUF_T
 #define ACE_LACKS_MSGBUF_T
 #define ACE_LACKS_SYSV_SHMEM
+#define ACE_NEEDS_DEV_IO_CONVERSION
 
 // Build as as a DLL.  Zap this line if you want to build a static
 // lib.

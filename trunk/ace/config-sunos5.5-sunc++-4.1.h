@@ -4,14 +4,13 @@
 // The following configuration file is designed to work for SunOS 5.5
 // platforms using the SunC++ 4.1 compiler.
 
-// NOTE:  if you have link problems with undefined inline template
-// functions, try building with __ACE_INLINE__ (add it to the CXX
-// macro include/makeinclude/platform_macros.h).
-
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
 #if ! defined (__ACE_INLINE__)
+// NOTE:  if you have link problems with undefined inline template
+// functions, be sure that the #define of __ACE_INLINE__ below is
+// not commented out.
 #define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 

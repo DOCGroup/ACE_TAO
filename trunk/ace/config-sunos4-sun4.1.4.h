@@ -79,6 +79,8 @@
 #define ACE_LACKS_LINEBUFFERED_STREAMBUF
 #define ACE_LACKS_SIGNED_CHAR
 
+#define ACE_NEEDS_DEV_IO_CONVERSION
+
 // 10 millisecond fudge factor to account for Solaris timers...
 #if !defined (ACE_TIMER_SKEW)
 #define ACE_TIMER_SKEW 1000 * 10

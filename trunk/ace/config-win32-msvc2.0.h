@@ -131,6 +131,7 @@
 #define ACE_LACKS_SEMBUF_T
 #define ACE_LACKS_MSGBUF_T
 #define ACE_LACKS_SYSV_SHMEM
+#define ACE_NEEDS_DEV_IO_CONVERSION
 
 // Platform supports POSIX O_NONBLOCK semantics.
 //define ACE_HAS_POSIX_NONBLOCK

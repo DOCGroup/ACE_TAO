@@ -196,6 +196,8 @@
 // Compile using multi-threaded libraries
 #define ACE_MT_SAFE
 
+#define ACE_NEEDS_DEV_IO_CONVERSION
+
 // <time.h> doesn't automatically #include <sys/time.h>
 #define ACE_NEEDS_SYSTIME_H
 

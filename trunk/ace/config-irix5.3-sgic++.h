@@ -106,6 +106,8 @@
 // Platform supports IP multicast
 #define ACE_HAS_IP_MULTICAST
 
+#define ACE_NEEDS_DEV_IO_CONVERSION
+
 // Turns off the tracing feature.
 #if !defined (ACE_NTRACE)
 #define ACE_NTRACE 1
