@@ -1,3 +1,38 @@
+Sun Nov 30 17:49:12 CST 1997 Mike MacFaden  <mrm@tango.cs.wustl.edu>
+      * Thanks to Eric Newton's <ecn@smart.net> apply patches: 
+     Removed G++ warnings:
+        Removed unused variables
+        Cleaned up unused args to functions
+        Initialized variables
+        Inserted casts in *printf* functions
+        Added int return types to function definitions
+        Converted some variables from int to size_t to cut down on
+                sign comparison warnings
+        Reordered constructor initializer lists
+        Added return statements to functions returning int
+
+    Modified for G++ language differences:
+        Modified for loops for ANSI scoping rules
+
+    Fixed Bugs:
+        Deleted incorrect (cut-n-pasted) header to transaction.h
+        Removed "assignment in if condition" error
+        Added missing "break;" in switch statement in wpdu
+
+    Features:
+        Added async interface.
+
+    Noise:
+        Modified makefiles for g++ on Linux RedHat 4.1 
+
+     * The new async interface has a test example in examples/get/get_async.cpp
+       that is useful if you are extending the get application. 
+
+     * Fixed makefile to include -lasnmp when building tests/examples
+
+     * Compile and test with ACE 4.4 on Solaris 2.5.1 using Sun CC 4.2
+       no warnings/errors. get_async will sigbus however in destructors.
+      
 Thu Sep  4 18:56:12 1997  Mike MacFaden  <mrm@tango.cs.wustl.edu>
    
       * commit agent/ mibs/ and update asnmp/ with sagent.h, cpp
