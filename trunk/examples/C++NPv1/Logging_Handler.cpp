@@ -44,7 +44,13 @@ int Logging_Handler::recv_log_record (ACE_Message_Block *&mblk)
   peer_addr.get_host_name (mblk->wr_ptr (), MAXHOSTNAMELEN);
   mblk->wr_ptr (strlen (mblk->wr_ptr ()) + 1); // Go past name
 
-  ACE_Message_Block *payload = new ACE_Message_Block (8);
+  // Allocate a message block for the payload; initially at least
+  // large enough to hold the header, but needs some room for
+  // alignment.
+  ACE_Message_Block *payload =
+    new ACE_Message_Block (ACE_DEFAULT_CDR_BUFSIZE);
+  // Align the Message Block for a CDR stream
+  ACE_CDR::mb_align (payload);
   if (logging_peer_.recv_n (payload->wr_ptr (), 8) == 8) {
     payload->wr_ptr (8);               // Reflect addition of 8 bytes
 
