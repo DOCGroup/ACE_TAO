@@ -221,7 +221,7 @@ client (void *arg = 0)
         }
       else
         {
-          ACE_DEBUG ((LM_DEBUG, "(%P|%t) Recoverable stream error (timeout)\n"));
+          ACE_DEBUG ((LM_DEBUG, "(%P|%t) Recoverable stream error/timed out)\n"));
           server.clear (0);
         }
     }
