@@ -1,21 +1,31 @@
+Mon Mar 22 14:16:04 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.{h,cpp} (cleanup_tss): added tss_close (), to enable
+          deleting the native key on program termination.  That's not
+          implemented yet, because it requires a separate
+          ACE_OS::thr_keyfree (ACE_OS_thread_key_t).
+
+        * ace/OS.cpp (fini), README, ace/config-linux-lxpthreads.h:
+          removed ACE_FINI_HOOK support.  It wasn't helping.
+
 Mon Mar 22 11:14:16 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* Makefile.am:
-	Various minor updates.
-	
-	* configure.in:
-	* m4/platform.m4
-	Moved known platform specific macro checks from `configure.in'
-	to `platform.m4'.
+        * Makefile.am:
+        Various minor updates.
 
-	* tests/Makefile.am:
-	Updated to build the DLL_Test shared library.  Support for the
-	test is still broken (my fault :).
+        * configure.in:
+        * m4/platform.m4
+        Moved known platform specific macro checks from `configure.in'
+        to `platform.m4'.
 
-	* aclocal.m4:
-	* configure:
-	These are automatically generated so they shouldn't be under
-	CVS control.  I Removed them from the CVS repository.
+        * tests/Makefile.am:
+        Updated to build the DLL_Test shared library.  Support for the
+        test is still broken (my fault :).
+
+        * aclocal.m4:
+        * configure:
+        These are automatically generated so they shouldn't be under
+        CVS control.  I Removed them from the CVS repository.
 
 Mon Mar 22 09:42:26 1999  David L. Levine  <levine@cs.wustl.edu>
 
