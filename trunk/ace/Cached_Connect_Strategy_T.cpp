@@ -42,9 +42,8 @@ ACE_Cached_Connect_Strategy_Ex<ACE_T2>::ACE_Cached_Connect_Strategy_Ex
 template <ACE_T1>
 ACE_Cached_Connect_Strategy_Ex<ACE_T2>::~ACE_Cached_Connect_Strategy_Ex (void)
 {
-#if defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
   cleanup ();
-#else
+
   // Close down all cached service handlers.
   for (ACE_TYPENAME CONNECTION_CACHE::ITERATOR iter = this->connection_cache_.begin ();
        iter != this->connection_cache_.end ();
@@ -56,7 +55,6 @@ ACE_Cached_Connect_Strategy_Ex<ACE_T2>::~ACE_Cached_Connect_Strategy_Ex (void)
           (*iter).second ()->close ();
         }
     }
-#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
 }
 
 template <ACE_T1> int
@@ -507,10 +505,14 @@ ACE_Cached_Connect_Strategy_Ex<ACE_T2>::find (ACE_Refcounted_Hash_Recyclable<ACE
   return -1;
 }
 
-#if defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
 template <ACE_T1> void
 ACE_Cached_Connect_Strategy_Ex<ACE_T2>::cleanup (void)
 {
+  // Excluded other threads from changing the cache while we cleanup
+  ACE_GUARD (MUTEX, ace_mon, *this->lock_);
+  // Close down all cached service handlers.
+#if defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
+
   typedef ACE_Hash_Map_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDRESS,
                                    ACE_Pair<SVC_HANDLER *, ATTRIBUTES>,
                                    ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>,
@@ -518,21 +520,66 @@ ACE_Cached_Connect_Strategy_Ex<ACE_T2>::cleanup (void)
                                    ACE_Null_Mutex>
     CONNECTION_MAP_ITERATOR;
 
-  CONNECTION_MAP_ITERATOR end = this->connection_cache_.map ().end ();
+  // CONNECTION_MAP_ITERATOR end = this->connection_cache_.map ().end ();
   CONNECTION_MAP_ITERATOR iter = this->connection_cache_.map ().begin ();
 
-  for (;
-       iter != end;
-       ++iter)
+
+  while (iter != this->connection_cache_.map ().end ())
+   {
+     if ((*iter).int_id_.first () != 0)
+       {
+         // save entry for future use
+         CONNECTION_CACHE_ENTRY *entry = (CONNECTION_CACHE_ENTRY *)
+           (*iter).int_id_.first ()->recycling_act ();
+
+         // close handler
+         (*iter).int_id_.first ()->recycler (0, 0);
+         (*iter).int_id_.first ()->close ();
+
+         // remember next iter
+         CONNECTION_MAP_ITERATOR next_iter = iter;
+         ++next_iter;
+
+         // purge the item from the hash
+         this->purge_i (entry);
+
+         // assign next iter
+         iter  = next_iter;
+     }
+     else
+       ++iter;
+   }
+#else  /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
+  ACE_TYPENAME CONNECTION_CACHE::ITERATOR iter =
+    this->connection_cache_.begin ();
+  while (iter != this->connection_cache_.end ())
     {
-      if ((*iter).int_id_.first () != 0)
+      if ((*iter).second () != 0)
         {
-          (*iter).int_id_.first ()->recycler (0, 0);
-          (*iter).int_id_.first ()->close ();
+          // save entry for future use
+          CONNECTION_CACHE_ENTRY *entry = (CONNECTION_CACHE_ENTRY *)
+            (*iter).second ()->recycling_act ();
+
+          // close handler
+          (*iter).second ()->recycler (0, 0);
+          (*iter).second ()->close ();
+
+          // remember next iter
+          ACE_TYPENAME CONNECTION_CACHE::ITERATOR next_iter = iter;
+          ++next_iter;
+
+          // purge the item from the hash
+          this->purge_i (entry);
+
+          // assign next iter
+          iter  = next_iter;
         }
+     else
+       ++iter;
     }
-}
 #endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
+
+}
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Cached_Connect_Strategy_Ex)
 /////////////////////////////////////////////////////////////////////////
@@ -556,7 +603,7 @@ ACE_Bounded_Cached_Connect_Strategy<ACE_T2>::~ACE_Bounded_Cached_Connect_Strateg
 {
 }
 
-template <ACE_T1> 
+template <ACE_T1>
 int
 ACE_Bounded_Cached_Connect_Strategy<ACE_T2>::find_or_create_svc_handler_i
 (SVC_HANDLER *&sh,
@@ -571,30 +618,30 @@ ACE_Bounded_Cached_Connect_Strategy<ACE_T2>::find_or_create_svc_handler_i
  int &found)
 {
   REFCOUNTED_HASH_RECYCLABLE_ADDRESS search_addr (remote_addr);
-  
+
   // Try to find the address in the cache.  Only if we don't find it
   // do we create a new <SVC_HANDLER> and connect it with the server.
   if (this->find (search_addr, entry) == -1)
     {
       // Set the flag
       found = 0;
-      
+
       // Check the limit of handlers...
-      if ((this->max_size_ > 0) && 
+      if ((this->max_size_ > 0) &&
           (this->connection_cache_.current_size () >= this->max_size_))
         {
           // Try to purge idle connections
           if (this->purge_connections () == -1)
             return -1;
-          
+
           // Check limit again.
           if (this->connection_cache_.current_size () >= this->max_size_)
             // still too much!
             return -1;
- 
+
           // OK, we have room now...
         }
-      
+
       // We need to use a temporary variable here since we are not
       // allowed to change <sh> because other threads may use this
       // when we let go of the lock during the OS level connect.
@@ -603,11 +650,11 @@ ACE_Bounded_Cached_Connect_Strategy<ACE_T2>::find_or_create_svc_handler_i
       // binding to the map, and assigning of the hint and recycler
        // should be atomic to the outside world.
       SVC_HANDLER *potential_handler = 0;
-      
+
       // Create a new svc_handler
       if (this->make_svc_handler (potential_handler) == -1)
         return -1;
-      
+
       // Connect using the svc_handler.
       if (this->cached_connect (potential_handler,
                                 remote_addr,
@@ -619,7 +666,7 @@ ACE_Bounded_Cached_Connect_Strategy<ACE_T2>::find_or_create_svc_handler_i
         {
           // Close the svc handler.
           potential_handler->close (0);
-          
+
           return -1;
         }
       else
@@ -631,14 +678,14 @@ ACE_Bounded_Cached_Connect_Strategy<ACE_T2>::find_or_create_svc_handler_i
             {
               // Close the svc handler and reset <sh>.
               potential_handler->close (0);
-              
+
               return -1;
             }
-          
+
           // Everything succeeded as planned. Assign <sh> to
           // <potential_handler>.
           sh = potential_handler;
-          
+
           // Set the recycler and the recycling act
           this->assign_recycler (sh, this, entry);
         }
@@ -647,20 +694,20 @@ ACE_Bounded_Cached_Connect_Strategy<ACE_T2>::find_or_create_svc_handler_i
     {
       // Set the flag
       found = 1;
-      
+
       // Get the cached <svc_handler>
       sh = entry->int_id_.first ();
-      
+
       // Tell the <svc_handler> that it should prepare itself for
       // being recycled.
       this->prepare_for_recycling (sh);
     }
-  
+
   return 0;
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Bounded_Cached_Connect_Strategy)
-      
+
 #undef ACE_T1
 #undef ACE_T2
 
