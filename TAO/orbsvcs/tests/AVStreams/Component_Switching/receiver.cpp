@@ -4,6 +4,8 @@
 #include "ace/Get_Opt.h"
 #include "tao/debug.h"
 
+#include "tao/Strategies/advanced_resource.h"
+
 static FILE *output_file = 0;
 /// File handle of the file into which received data is written.
 
