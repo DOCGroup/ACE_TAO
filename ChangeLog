@@ -1,3 +1,11 @@
+Thu Jun 17 09:43:49 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* docs/ACE-porting.html: Updated this file so that it mentions
+	  CIAO and also provides additional information on porting
+ 	  logistics for people who want to contribute a port back to the
+ 	  DOC group.  Thanks to Thomas Rohner <thomas.rohner@hp.com>
+	  for motivating this.
+
 Thu Jun 17 09:20:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Bounded_Packet_Relay/BPR_Drivers_T.cpp:
