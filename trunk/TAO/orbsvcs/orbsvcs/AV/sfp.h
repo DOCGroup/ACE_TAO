@@ -4,7 +4,6 @@
 #if !defined (TAO_AV_SFP_H)
 #define TAO_AV_SFP_H
 
-#include "ace/SOCK_CODgram.h"
 #include "orbsvcs/sfpC.h"
 
 // default arguments to pass to use for the ORB
