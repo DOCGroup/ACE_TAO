@@ -1,3 +1,9 @@
+Fri Feb 28 18:17:28 CST 2003 <pradeep@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Notify/Makefile.CosNotification:
+	* orbsvcs/orbsvcs/Notify/Makefile:
+	  Updated.
+
 Fri Feb 28 14:20:57 2003  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Environment.h:
