@@ -1,3 +1,10 @@
+Sat Jan 19 14:15:37 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.h: Not sure why this
+	  was lying in workspace for a long time. Fixed a compile error
+	  with g++. Exceptions were not specified in the signature and
+	  hence the error. 
+
 Sat Jan 19 10:58:53 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PortableServer/ServerRequestInfo.cpp (server_id, orb_id):
