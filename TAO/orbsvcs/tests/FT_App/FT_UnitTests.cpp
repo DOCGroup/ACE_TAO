@@ -876,7 +876,8 @@ int FT_UnitTests::readIORFile(const char * fileName, CORBA::String_var & ior)
   {
     ACE_TRY
     {
-      test_iogr_ = rm_->create_test_iogr();
+      // create_test_iogr() has been removed from ReplicationManager.
+      // test_iogr_ = rm_->create_test_iogr();
     }
     ACE_CATCHANY
       {

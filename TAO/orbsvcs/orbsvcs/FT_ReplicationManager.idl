@@ -29,7 +29,8 @@ module FT
   // Specification of ReplicationManager Interface
   interface ReplicationManager : PropertyManager,
                                  FTObjectGroupManager,
-                                 GenericFactory {
+                                 GenericFactory
+  {
 
     /**
     * Registers the Fault Notifier with the Replication Manager.
@@ -47,13 +48,16 @@ module FT
      /**
      * Find a registry for factories that create fault tolerant replicas.
      *
-     * TAO-specific method
+     * TAO-specific operation
      *
-     * Factories in this registry will be used by the ReplicationManager's implementation
-     * of GenericFactory::create_object when infrastructure controlled membership is specified.
+     * Factories in this registry will be used by the
+     * ReplicationManager's implementation of
+     * GenericFactory::create_object when infrastructure controlled
+     * membership is specified.
      *
-     * The factory registry may also be used by applications that control their own
-     * membership but don't wish to address the issue of finding factories for replicas.
+     * The factory registry may also be used by applications that
+     * control their own membership but don't wish to address the
+     * issue of finding factories for replicas.
      *
      * @param selection_criteria to be used to choose among alternate registries (future enhancement.)
      * @returns an implementation of FactoryRegistry

@@ -16,17 +16,14 @@
 #include "FT_Property_Validator.h"
 
 #include "ace/Get_Opt.h"
-#include "orbsvcs/PortableGroup/PG_Properties_Decoder.h"
-#include "orbsvcs/PortableGroup/PG_Properties_Encoder.h"
-
-#include "orbsvcs/PortableGroup/PG_Property_Utils.h"
-#include "orbsvcs/PortableGroup/PG_conf.h"
-
 #include "tao/Messaging/Messaging.h"
 #include "tao/debug.h"
-
+#include "orbsvcs/PortableGroup/PG_Properties_Decoder.h"
+#include "orbsvcs/PortableGroup/PG_Properties_Encoder.h"
+#include "orbsvcs/PortableGroup/PG_Property_Utils.h"
+#include "orbsvcs/PortableGroup/PG_conf.h"
 #include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
-
+#include "orbsvcs/FT_ReplicationManager/FT_ReplicationManagerFaultAnalyzer.h"
 
 ACE_RCSID (FT_ReplicationManager,
            FT_ReplicationManager,
@@ -45,9 +42,8 @@ TAO::FT_ReplicationManager::FT_ReplicationManager ()
   , property_manager_ (this->object_group_manager_)
   , generic_factory_ (this->object_group_manager_, this->property_manager_)
   , fault_notifier_(FT::FaultNotifier::_nil())
-  , fault_notifier_ior_file_(0)
+  , fault_notifier_ior_(0)
   , fault_consumer_()
-  , test_iogr_(CORBA::Object::_nil())
 {
   //@@Note: this->init() is not called here (in the constructor)
   // since it may throw an exception.  Throwing an exception in
@@ -83,7 +79,7 @@ int TAO::FT_ReplicationManager::parse_args (int argc, char * argv[])
         break;
 
       case 'f':
-        this->fault_notifier_ior_file_ = get_opts.opt_arg ();
+        this->fault_notifier_ior_ = get_opts.opt_arg ();
         break;
 
       case '?':
@@ -179,30 +175,18 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   ACE_CHECK_RETURN (-1);
 
   // If we were given an initial IOR string for a Fault Notifier on the
-  // command line, convert it to an IOR.
-  if (this->fault_notifier_ior_file_ != 0)
+  // command line, convert it to an IOR, then register the fault
+  // notifier.
+  if (this->fault_notifier_ior_ != 0)
   {
-    CORBA::String_var notifierIOR;
-    if (this->readIORFile (this->fault_notifier_ior_file_, notifierIOR))
-    {
-      CORBA::Object_var notifier_obj = this->orb_->string_to_object (
-        notifierIOR.in() ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
-      FT::FaultNotifier_var notifier = FT::FaultNotifier::_narrow (
-        notifier_obj.in() ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
-      this->register_fault_notifier_i (notifier.in() ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
-    }
-    else
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-        ACE_TEXT (
-          "TAO::FT_ReplicationManager::init: "
-          "Could not read %s.\n"),
-        this->fault_notifier_ior_file_),
-        -1);
-    }
+    CORBA::Object_var notifier_obj = this->orb_->string_to_object (
+      this->fault_notifier_ior_ ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (-1);
+    FT::FaultNotifier_var notifier = FT::FaultNotifier::_narrow (
+      notifier_obj.in() ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (-1);
+    this->register_fault_notifier_i (notifier.in() ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (-1);
   }
 
   // Activate the RootPOA.
@@ -415,12 +399,30 @@ TAO::FT_ReplicationManager::register_fault_notifier_i (
       ));
     }
 
-    result = this->fault_consumer_.init (
-      this->poa_.in(),
-      this->fault_notifier_.in(),
-      this->replication_manager_ref_.in()
-      ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    // Create a fault analyzer.
+    TAO::FT_FaultAnalyzer * analyzer = 0;
+    ACE_NEW_NORETURN (
+      analyzer,
+      TAO::FT_ReplicationManagerFaultAnalyzer (this));
+    if (analyzer == 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+        ACE_TEXT (
+          "TAO::FT_ReplicationManager::register_fault_notifier_i: "
+          "Error creating FaultAnalyzer.\n"
+          )
+      ));
+      result = -1;
+    }
+    if (result == 0)
+    {
+      result = this->fault_consumer_.init (
+        this->poa_.in(),
+        this->fault_notifier_.in(),
+        analyzer
+        ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
   }
   ACE_CATCHANY
   {
@@ -904,6 +906,7 @@ TAO::FT_ReplicationManager::create_test_iogr (ACE_ENV_SINGLE_ARG_DECL)
 }
 #endif
 
+#if 0
 int TAO::FT_ReplicationManager::readIORFile (
   const char * filename,
   CORBA::String_var & ior)
@@ -929,4 +932,5 @@ int TAO::FT_ReplicationManager::readIORFile (
   }
   return result;
 }
+#endif
 

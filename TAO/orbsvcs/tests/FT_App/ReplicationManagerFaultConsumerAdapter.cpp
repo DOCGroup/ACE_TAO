@@ -3,10 +3,9 @@
 // $Id$
 
 #include "ReplicationManagerFaultConsumerAdapter.h"
-
-#include <ace/Get_Opt.h>
-#include <tao/PortableServer/ORB_Manager.h>
-#include <orbsvcs/orbsvcs/PortableGroup/PG_Properties_Encoder.h>
+#include "ace/Get_Opt.h"
+#include "orbsvcs/orbsvcs/PortableGroup/PG_Properties_Encoder.h"
+#include "orbsvcs/FT_ReplicationManager/FT_DefaultFaultAnalyzer.h"
 #include <iostream>
 #include <fstream>
 
@@ -271,27 +270,13 @@ int ReplicationManagerFaultConsumerAdapter::init (
     poa_obj.in() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  // Fake out the ReplicationManager IOR.
-  CORBA::Object_var obj = this->orb_->string_to_object (
-    "corbaloc::localhost:1900/ReplicationManager"
-    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
-  FT::ReplicationManager_var repl_mgr =
-    FT::ReplicationManager::_unchecked_narrow (
-      obj.in() ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
-  if (CORBA::is_nil (repl_mgr.in())) {
-    ACE_ERROR_RETURN ((
-      LM_ERROR,
-      ACE_TEXT ("ReplicationManagerFaultConsumerAdapter::init: ")
-      ACE_TEXT ("Unable to narrow the fake ReplicationManager IOR.\n")),
-      -1);
-  }
+  // Create a fault analyzer.
+  TAO::FT_FaultAnalyzer * analyzer = 0;
+  ACE_NEW_RETURN (analyzer, TAO::FT_DefaultFaultAnalyzer (), -1);
 
   // Initialize the FaultConsumer.
   // It will activate itself in the POA we pass it and connect to the
-  // Fault Notifier we pass it.  It uses the Replication Manager we
-  // pass it for dealing with fault reports.
+  // Fault Notifier we pass it.
   ACE_DEBUG ((
     LM_DEBUG,
     ACE_TEXT ("ReplicationManagerFaultConsumerAdapter::init: ")
@@ -301,7 +286,7 @@ int ReplicationManagerFaultConsumerAdapter::init (
   result = this->p_fault_consumer_->init (
     poa.in(),
     this->notifier_.in(),
-    repl_mgr.in()
+    analyzer
     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
   if (result != 0)
