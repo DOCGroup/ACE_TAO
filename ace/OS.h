@@ -6424,6 +6424,19 @@ public:
   static int priority_control (ACE_idtype_t, ACE_id_t, int, void *);
   // Low-level interface to <priocntl>(2).
 
+#if defined (ACE_HAS_STRPTIME)
+  static char *strptime (char *buf,
+                         const char *format,
+                         struct tm *tm);
+
+# if defined (ACE_LACKS_NATIVE_STRPTIME)
+  static int strptime_getnum (char *buf, int *num, int *bi, 
+                              int *fi, int min, int max);
+# endif /* ACE_LACKS_NATIVE_STRPTIME */
+#endif /* ACE_HAS_STRPTIME */
+
+
+
 private:
   static ACE_EXIT_HOOK exit_hook_;
   // Function that is called by <ACE_OS::exit>, if non-null.
