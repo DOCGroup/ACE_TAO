@@ -1,3 +1,17 @@
+Thu Sep  7 16:09:30 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORB.cpp (string_copy):
+	* tao/corbafwd.cpp (string_dup):
+	* tao/corbafwd.i (string_alloc, string_free):
+
+	  Changed usage of "CORBA::Char *" to "char *."  Both are
+	  equivalent, but the latter is consistent with the CORBA C++
+	  mapping.
+
+	  (string_alloc, wstring_alloc):
+
+	  Use "ACE_NEW_RETURN" macro instead "new" operator.
+
 Thu Sep  7 15:59:23 2000  Ossama Othman  <ossama@uci.edu>
 
 	* TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp
