@@ -219,6 +219,54 @@ TAO_Thread_Lane_Resources::transport_message_buffer_allocator (void)
   return this->transport_message_buffer_allocator_;
 }
 
+
+ACE_Allocator*
+TAO_Thread_Lane_Resources::output_cdr_dblock_allocator (void)
+{
+  if (this->output_cdr_dblock_allocator_ == 0)
+    {
+      // Double checked locking
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+      if (this->output_cdr_dblock_allocator_ == 0)
+        this->output_cdr_dblock_allocator_ =
+          this->resource_factory ()->output_cdr_dblock_allocator ();
+    }
+
+  return this->output_cdr_dblock_allocator_;
+}
+
+
+ACE_Allocator*
+TAO_Thread_Lane_Resources::output_cdr_buffer_allocator (void)
+{
+  if (this->output_cdr_buffer_allocator_ == 0)
+    {
+      // Double checked locking
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+      if (this->output_cdr_buffer_allocator_ == 0)
+        this->output_cdr_buffer_allocator_ =
+          this->resource_factory ()->output_cdr_buffer_allocator ();
+    }
+
+  return this->output_cdr_buffer_allocator_;
+}
+
+
+ACE_Allocator*
+TAO_Thread_Lane_Resources::output_cdr_msgblock_allocator (void)
+{
+  if (this->output_cdr_msgblock_allocator_ == 0)
+    {
+      // Double checked locking
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+      if (this->output_cdr_msgblock_allocator_ == 0)
+        this->output_cdr_msgblock_allocator_ =
+          this->resource_factory ()->output_cdr_msgblock_allocator ();
+    }
+
+  return this->output_cdr_msgblock_allocator_;
+}
+
 int
 TAO_Thread_Lane_Resources::open_acceptor_registry (int ignore_address
                                                    ACE_ENV_ARG_DECL)
@@ -307,6 +355,18 @@ TAO_Thread_Lane_Resources::finalize (void)
   if (this->transport_message_buffer_allocator_ != 0)
     this->transport_message_buffer_allocator_->remove ();
   delete this->transport_message_buffer_allocator_;
+
+  if (this->output_cdr_dblock_allocator_ != 0)
+    this->output_cdr_dblock_allocator_->remove ();
+  delete this->output_cdr_dblock_allocator_;
+
+  if (this->output_cdr_buffer_allocator_ != 0)
+    this->output_cdr_buffer_allocator_->remove ();
+  delete this->output_cdr_buffer_allocator_;
+
+  if (this->output_cdr_msgblock_allocator_ != 0)
+    this->output_cdr_msgblock_allocator_->remove ();
+  delete this->output_cdr_msgblock_allocator_;
 }
 
 void

@@ -24,7 +24,7 @@ TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
                                               size_t /*input_cdr_size*/)
   : orb_core_ (orb_core)
     , message_state_ (orb_core,
-                    this)
+                      this)
     , out_stream_ (this->buffer_,
                    sizeof this->buffer_, /* ACE_CDR::DEFAULT_BUFSIZE */
                    TAO_ENCAP_BYTE_ORDER,

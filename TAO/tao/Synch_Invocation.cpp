@@ -50,6 +50,8 @@ namespace TAO
       {
         // @@ What is the right way to handle this error? Do we need
         // to call the interceptors in this case?
+        this->resolver_.transport ()->close_connection ();
+
         ACE_THROW_RETURN (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE,
                                            CORBA::COMPLETED_NO),
                           TAO_INVOKE_FAILURE);
@@ -62,7 +64,9 @@ namespace TAO
 
     Invocation_Status s = TAO_INVOKE_FAILURE;
 
+
 #if TAO_HAS_INTERCEPTORS == 1
+    // Start the interception point here..
     s =
       this->send_request_interception (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
@@ -98,10 +102,28 @@ namespace TAO
                               ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
+#if TAO_HAS_INTERCEPTORS == 1
+        // If the above call returns a restart due to connection
+        // failure then call the receive_other interception point
+        // before we leave.
+        if (s == TAO_INVOKE_RESTART)
+          {
+            s =
+              this->receive_other_interception (ACE_ENV_SINGLE_ARG_PARAMETER);
+            ACE_TRY_CHECK;
+          }
+#endif /*TAO_HAS_INTERCEPTORS */
+
         if (s != TAO_INVOKE_SUCCESS)
           return s;
 
         countdown.update ();
+
+        // For some strategies one may want to release the transport
+        // back to  cache. If the idling is successfull let the
+        // resolver about that.
+        if (this->resolver_.transport ()->idle_after_send ())
+          this->resolver_.transport_released ();
 
         // @@ In all MT environments, there's a cancellation point lurking
         // here; need to investigate.  Client threads would frequently be
@@ -131,6 +153,12 @@ namespace TAO
         s = this->check_reply_status (rd
                                       ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
+
+        // For some strategies one may want to release the transport
+        // back to  cache after receiving the reply. If the idling is
+        // successfull let the resolver about that.
+        if (this->resolver_.transport ()->idle_after_reply ())
+          this->resolver_.transport_released ();
 
 #if TAO_HAS_INTERCEPTORS == 1
         if (s == TAO_INVOKE_SUCCESS)

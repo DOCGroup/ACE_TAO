@@ -173,20 +173,22 @@ TAO_Muxed_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
   return result;
 }
 
-int
+bool
 TAO_Muxed_TMS::idle_after_send (void)
 {
+  // Irrespective of whether we are successful or not we need to
+  // return true. If *this* class is not successfull in idling the
+  // transport no one can.
   if (this->transport_ != 0)
-    return this->transport_->make_idle ();
+    (void) this->transport_->make_idle ();
 
-  return 0;
+  return true;
 }
 
-int
+bool
 TAO_Muxed_TMS::idle_after_reply (void)
 {
-  // No op.
-  return 0;
+  return false;
 }
 
 void

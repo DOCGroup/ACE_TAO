@@ -2313,6 +2313,9 @@ ACE_Allocator*
 TAO_ORB_Core::output_cdr_dblock_allocator (void)
 {
 
+  return this->lane_resources ().output_cdr_dblock_allocator ();
+
+#if 0
   // Allocating memory here confuses purify a bit. We do delete this
   // memory when TSS delete
   TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
@@ -2328,11 +2331,15 @@ TAO_ORB_Core::output_cdr_dblock_allocator (void)
       this->resource_factory ()->output_cdr_dblock_allocator ();
 
   return tss->output_cdr_dblock_allocator_;
+#endif /* if 0*/
 }
 
 ACE_Allocator*
 TAO_ORB_Core::output_cdr_buffer_allocator (void)
 {
+  return this->lane_resources ().output_cdr_buffer_allocator ();
+
+#if 0
   TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
   if (tss == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -2346,12 +2353,15 @@ TAO_ORB_Core::output_cdr_buffer_allocator (void)
       this->resource_factory ()->output_cdr_buffer_allocator ();
 
   return tss->output_cdr_buffer_allocator_;
+#endif /*if 0*/
 }
 
 
 ACE_Allocator*
 TAO_ORB_Core::output_cdr_msgblock_allocator (void)
 {
+  return this->lane_resources ().output_cdr_msgblock_allocator ();
+#if 0
   TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
   if (tss == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -2365,6 +2375,7 @@ TAO_ORB_Core::output_cdr_msgblock_allocator (void)
       this->resource_factory ()->output_cdr_msgblock_allocator ();
 
   return tss->output_cdr_msgblock_allocator_;
+#endif /*if 0*/
 }
 
 
@@ -2833,14 +2844,11 @@ TAO_ORB_Core::ior_interceptor_adapter (void)
 // ****************************************************************
 
 TAO_ORB_Core_TSS_Resources::TAO_ORB_Core_TSS_Resources (void)
-  : output_cdr_dblock_allocator_ (0),
-    output_cdr_buffer_allocator_ (0),
-    output_cdr_msgblock_allocator_ (0),
-    event_loop_thread_ (0),
-    client_leader_thread_ (0),
-    lane_ (0),
-    ts_objects_ (),
-    orb_core_ (0)
+  : event_loop_thread_ (0)
+  , client_leader_thread_ (0)
+  , lane_ (0)
+  , ts_objects_ ()
+  , orb_core_ (0)
 #if TAO_HAS_INTERCEPTORS == 1
     , pi_current_ ()
     , client_request_info_ (0)
@@ -2854,17 +2862,6 @@ TAO_ORB_Core_TSS_Resources::TAO_ORB_Core_TSS_Resources (void)
 
 TAO_ORB_Core_TSS_Resources::~TAO_ORB_Core_TSS_Resources (void)
 {
-  if (this->output_cdr_dblock_allocator_ != 0)
-    this->output_cdr_dblock_allocator_->remove ();
-  delete this->output_cdr_dblock_allocator_;
-
-  if (this->output_cdr_buffer_allocator_ != 0)
-    this->output_cdr_buffer_allocator_->remove ();
-  delete this->output_cdr_buffer_allocator_;
-
-  if (this->output_cdr_msgblock_allocator_ != 0)
-    this->output_cdr_msgblock_allocator_->remove ();
-  delete this->output_cdr_msgblock_allocator_;
 
 #if TAO_HAS_INTERCEPTORS == 1
   CORBA::release (this->client_request_info_);

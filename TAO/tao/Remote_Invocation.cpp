@@ -151,6 +151,7 @@ namespace TAO
       }
 
     this->resolver_.stub ()->set_valid_profile ();
+
     return TAO_INVOKE_SUCCESS;
   }
 }

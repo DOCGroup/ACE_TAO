@@ -848,5 +848,9 @@ enum TAO_Policy_Scope
 #  define TAO_USE_LAZY_RESOURCE_USAGE_STRATEGY 0
 #endif /* TAO_USE_LAZY_RESOURCE_USAGE_STRATEGY*/
 
+#if !defined (TAO_USE_LOCAL_MEMORY_POOL)
+#  define TAO_USE_LOCAL_MEMORY_POOL 1
+#endif /* TAO_USE_LOCAL_MEMORY_POOL */
+
 #include /**/ "ace/post.h"
 #endif  /* TAO_ORBCONF_H */

@@ -153,7 +153,7 @@ TAO_SCIOP_Transport::send_request (TAO_Stub *stub,
 
           int result =
             tph->update_client_protocol_properties (stub,
-						    this,
+                                                    this,
                                                     "sciop");
 
           if (result == -1)
@@ -185,7 +185,7 @@ TAO_SCIOP_Transport::send_request (TAO_Stub *stub,
 
   this->first_request_sent();
 
-  return this->idle_after_send ();
+  return 0;
 }
 
 int

@@ -100,19 +100,22 @@ TAO_Exclusive_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
   return rd->dispatch_reply (params);
 }
 
-int
+bool
 TAO_Exclusive_TMS::idle_after_send (void)
 {
-  return 0;
+  return false;
 }
 
-int
+bool
 TAO_Exclusive_TMS::idle_after_reply (void)
 {
+  // Irrespective of whether we are successful or not we need to
+  // return true. If *this* class is not successfull in idling the
+  // transport no one can.
   if (this->transport_ != 0)
-    return this->transport_->make_idle ();
+    (void) this->transport_->make_idle ();
 
-  return 0;
+  return true;
 }
 
 void

@@ -102,6 +102,22 @@ public:
    * Transport object. This allocator has locks.
    */
   ACE_Allocator *transport_message_buffer_allocator (void);
+
+  /* Allocator is intended for allocating the ACE_Data_Blocks used in
+   * outgoing CDR streams.  This allocator has locks.
+   */
+  ACE_Allocator *output_cdr_dblock_allocator (void);
+
+  /* Allocator is intended for allocating the buffers in the outgoing
+   * CDR streams.  This allocator has locks.
+   */
+  ACE_Allocator *output_cdr_buffer_allocator (void);
+
+  /* Allocator is intended for allocating the ACE_Message_Blocks used
+   * in the outgoing CDR streams.  This allocator is global, and has
+   * locks.
+   */
+  ACE_Allocator *output_cdr_msgblock_allocator (void);
   // @}
 
 private:
@@ -146,6 +162,13 @@ private:
   /// The allocators for the buffering messages in the transport.
   //@{
   ACE_Allocator *transport_message_buffer_allocator_;
+  //@}
+
+  /// The allocators for the output CDR streams.
+  //@{
+  ACE_Allocator *output_cdr_dblock_allocator_;
+  ACE_Allocator *output_cdr_buffer_allocator_;
+  ACE_Allocator *output_cdr_msgblock_allocator_;
   //@}
 };
 

@@ -180,7 +180,7 @@ TAO_IIOP_Transport::send_request (TAO_Stub *stub,
 
   this->first_request_sent();
 
-  return this->idle_after_send ();
+  return 0;
 }
 
 int
