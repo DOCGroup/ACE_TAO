@@ -1,3 +1,9 @@
+Thu Jan 27 16:52:40 2000
+        * ace/Message_Block.*:
+          Added a ACE_Message_Block::reset() method that puts the
+          rd_ptr() and wr_ptr() back to the beginning of the message
+          block.
+
 Thu Jan 27 16:38:03 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/Asynch_IO.h: Updated comments for ACE_Asynch_Read_Stream::read
