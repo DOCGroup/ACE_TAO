@@ -1,5 +1,5 @@
 // This short program copies stdin to stdout via the use of an ASX
-// @(#)bounded_buffer.cpp	1.1	10/18/96
+// $Id$
 
 // Message_Queue.  It illustrates an implementation of the classic
 // "bounded buffer" program.

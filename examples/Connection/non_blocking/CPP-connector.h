@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-// @(#)CPP-connector.h	1.1	10/18/96
+// $Id$
 
 #if !defined (CPP_CONNECTOR_H)
 #define CPP_CONNECTOR_H

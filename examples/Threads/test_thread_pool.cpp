@@ -1,5 +1,5 @@
 // This test program illustrates how the ACE task synchronization
-// @(#)test_thread_pool.cpp	1.1	10/18/96
+// $Id$
 
 // mechanisms work in conjunction with the ACE_Task and the
 // ACE_Thread_Manager.  If the manual flag is not set input comes from

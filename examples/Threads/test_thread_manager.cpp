@@ -1,5 +1,5 @@
 // Test out the group management mechanisms provided by the
-// @(#)test_thread_manager.cpp	1.1	10/18/96
+// $Id$
 
 // ACE_Thread_Manager, including the group signal handling, group
 // suspension and resumption, and cooperative thread cancellation

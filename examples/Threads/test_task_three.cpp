@@ -1,5 +1,5 @@
 // Exercise more tests for the ACE Tasks.  This also shows off some
-// @(#)test_task_three.cpp	1.1	10/18/96
+// $Id$
 
 // interesting uses of the ACE Log_Msg's ability to print to ostreams.
 // BTW, make sure that you set the out_stream in *every* thread that

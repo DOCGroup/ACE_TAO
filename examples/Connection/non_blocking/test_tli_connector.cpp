@@ -1,5 +1,5 @@
 // ACE_TLI Client.
-// @(#)test_tli_connector.cpp	1.1	10/18/96
+// $Id$
 
 
 #include "ace/TLI_Connector.h"

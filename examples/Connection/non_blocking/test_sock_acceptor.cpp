@@ -1,5 +1,5 @@
 // ACE_SOCK Server.
-// @(#)test_sock_acceptor.cpp	1.1	10/18/96
+// $Id$
 
 
 #include "ace/SOCK_Acceptor.h"

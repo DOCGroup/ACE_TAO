@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-// @(#)Handle_R_Dgram.h	1.1	10/18/96
+// $Id$
 
 /* Handles INET datagram messages from remote hosts. */
 

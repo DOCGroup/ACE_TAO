@@ -1,5 +1,5 @@
 // This tests the non-blocking features of the ACE_SOCK_Connector class.
-// @(#)CPP-inclient.cpp	1.1	10/18/96
+// $Id$
 
 
 #include "ace/Log_Msg.h"

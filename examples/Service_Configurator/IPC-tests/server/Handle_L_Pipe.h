@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-// @(#)Handle_L_Pipe.h	1.1	10/18/96
+// $Id$
 
 /* Handle connections from local UNIX domain sockets that are sending 
    end-points from a pipe! */

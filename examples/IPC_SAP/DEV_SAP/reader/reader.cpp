@@ -1,5 +1,5 @@
 #include "ace/Log_Msg.h"
-// @(#)reader.cpp	1.1	10/18/96
+// $Id$
 
 #include "ace/OS.h"
 #include "ace/DEV_Addr.h"

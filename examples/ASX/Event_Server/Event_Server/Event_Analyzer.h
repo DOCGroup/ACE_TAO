@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-// @(#)Event_Analyzer.h	1.1	10/18/96
+// $Id$
 
 /* Signal router */
 

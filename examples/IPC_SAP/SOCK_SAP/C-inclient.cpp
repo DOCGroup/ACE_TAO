@@ -1,5 +1,5 @@
 #include "ace/OS.h"
-// @(#)C-inclient.cpp	1.1	10/18/96
+// $Id$
 
                                                                     
 /* BSD socket client */

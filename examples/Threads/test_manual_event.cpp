@@ -1,5 +1,5 @@
 // The test shows the use of an ACE_Manual_Event to create a
-// @(#)test_manual_event.cpp	1.1	10/18/96
+// $Id$
 
 // Pseudo_Barrier. Multiple threads are created which do the
 // following:

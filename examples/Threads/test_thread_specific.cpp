@@ -1,5 +1,5 @@
 #include "ace/Service_Config.h"
-// @(#)test_thread_specific.cpp	1.1	10/18/96
+// $Id$
 
 #include "ace/Synch.h"
 #include "ace/Log_Msg.h"

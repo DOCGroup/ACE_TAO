@@ -1,5 +1,5 @@
 /* This may look like C code, but it is really -*- C++ -*- */
-// @(#)Vectors.cpp	1.1	10/18/96
+// $Id$
 
 
 /* Static class data members that are shared between several classes via

@@ -1,5 +1,5 @@
 #include "ace/ACE.h"
-// @(#)test_time_value.cpp	1.1	10/18/96
+// $Id$
 
 
 inline int my_abs (int d) { return d > 0 ? d : -d; }

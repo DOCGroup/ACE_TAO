@@ -1,5 +1,5 @@
 #include "ace/OS.h"
-// @(#)IO_Test.cpp	1.1	10/18/96
+// $Id$
 
 #include "ace/Mem_Map.h"
 #include "IO_Test.h"

@@ -1,5 +1,5 @@
 // This program sends logging records directly to the server, rather
-// @(#)logging_app.cpp	1.1	10/18/96
+// $Id$
 
 // than going through the client logging daemon.
 

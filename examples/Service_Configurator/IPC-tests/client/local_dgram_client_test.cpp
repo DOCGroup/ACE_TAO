@@ -1,5 +1,5 @@
 /* Tests out the UNIX domain IPC-SAP abstraction. */
-// @(#)local_dgram_client_test.cpp	1.1	10/18/96
+// $Id$
 
 
 #include "ace/LSOCK_CODgram.h"

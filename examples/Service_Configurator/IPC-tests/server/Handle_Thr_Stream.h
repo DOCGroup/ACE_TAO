@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-// @(#)Handle_Thr_Stream.h	1.1	10/18/96
+// $Id$
 
 /* Handle connections from remote INET connections. */
 

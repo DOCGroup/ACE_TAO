@@ -1,5 +1,5 @@
 #include "ace/Log_Msg.h"
-// @(#)CPP-client.cpp	1.1	10/18/96
+// $Id$
 
 #include "ace/TLI_Connector.h"
 #include "ace/INET_Addr.h"                              

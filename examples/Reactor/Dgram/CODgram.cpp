@@ -1,5 +1,5 @@
 /* Exercise the ACE_SOCK_CODgram wrapper along with the ACE_Reactor.
-// @(#)CODgram.cpp	1.1	10/18/96
+// $Id$
 
 
    Typical invocation sequence is:

@@ -1,5 +1,5 @@
 /* Driver program for the Gen_Perf hash function generator Copyright
-// @(#)gperf.cpp	1.1	10/18/96
+// $Id$
 
    (C) 1989 Free Software Foundation, Inc.  written by Douglas
    C. Schmidt (schmidt@ics.uci.edu)

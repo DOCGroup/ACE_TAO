@@ -1,5 +1,5 @@
 #include "ace/OS.h"
-// @(#)clone.cpp	1.1	10/18/96
+// $Id$
 
 
 #if 0

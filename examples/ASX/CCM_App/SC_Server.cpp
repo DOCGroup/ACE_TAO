@@ -1,5 +1,5 @@
 // Simple driver program for the server.
-// @(#)SC_Server.cpp	1.1	10/18/96
+// $Id$
 
 
 #include "ace/Service_Config.h"

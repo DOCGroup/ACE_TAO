@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-// @(#)SPIPE-acceptor.h	1.1	10/18/96
+// $Id$
 
 #if !defined (SP_ACCEPTOR_H)
 #define SP_ACCEPTOR_H

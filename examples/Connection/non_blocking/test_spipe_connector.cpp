@@ -1,5 +1,5 @@
 // ACE_SPIPE Client.
-// @(#)test_spipe_connector.cpp	1.1	10/18/96
+// $Id$
 
 
 #include "ace/SPIPE_Connector.h"

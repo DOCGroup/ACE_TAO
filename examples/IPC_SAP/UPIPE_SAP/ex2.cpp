@@ -1,5 +1,5 @@
 // Example for using ACE_UPIPE_SAP and ACE_Thread for intra-process
-// @(#)ex2.cpp	1.1	10/18/96
+// $Id$
 
 // communication.
 //

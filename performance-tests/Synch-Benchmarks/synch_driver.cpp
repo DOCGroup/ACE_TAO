@@ -1,5 +1,5 @@
 // Driver program that measures the performance of synchronization
-// @(#)synch_driver.cpp	1.1	10/18/96
+// $Id$
 
 // mechanisms provided by ACE and the underlying OS.
 

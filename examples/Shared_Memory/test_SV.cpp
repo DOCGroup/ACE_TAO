@@ -1,5 +1,5 @@
 #include "ace/Log_Msg.h"
-// @(#)test_SV.cpp	1.1	10/18/96
+// $Id$
 
 #include "ace/Shared_Memory_SV.h"
 

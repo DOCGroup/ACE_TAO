@@ -1,5 +1,5 @@
 /* Simple multi-threaded database server example. */
-// @(#)db-server.cpp	1.1	10/18/96
+// $Id$
 
 #include "ace/Log_Msg.h"
 #include "ace/TLI_Acceptor.h"

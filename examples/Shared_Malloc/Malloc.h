@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-// @(#)Malloc.h	1.1	10/18/96
+// $Id$
 
 #if !defined (MY_MALLOC_H)
 #define MY_MALLOC_H

@@ -1,5 +1,5 @@
 // Main driver program for the Gateway.  This file is completely
-// @(#)gatewayd.cpp	1.1	10/18/96
+// $Id$
 
 // generic code due to the ACE Service Configurator framework!
 

@@ -1,5 +1,5 @@
 // Test the ability of the Reactor/Signal_Handler to register multiple
-// @(#)test_signals.cpp	1.1	10/18/96
+// $Id$
 
 // handler per-signal.
 

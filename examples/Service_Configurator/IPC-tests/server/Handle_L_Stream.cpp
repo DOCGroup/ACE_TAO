@@ -1,5 +1,5 @@
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
-// @(#)Handle_L_Stream.cpp	1.1	10/18/96
+// $Id$
 
 #include "Handle_L_Stream.h"
 

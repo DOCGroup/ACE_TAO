@@ -1,5 +1,5 @@
 /* Send a file through ACE_SPIPE communication channel by
-// @(#)local_spipe_client_test.cpp	1.1	10/18/96
+// $Id$
 
    break it (the file) into pieces. */
 

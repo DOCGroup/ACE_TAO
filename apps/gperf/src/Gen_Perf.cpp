@@ -1,5 +1,5 @@
 /* Provides high-level routines to manipulate the keywork list 
-// @(#)Gen_Perf.cpp	1.1	10/18/96
+// $Id$
 
    structures the code generation output.
    Copyright (C) 1989 Free Software Foundation, Inc.

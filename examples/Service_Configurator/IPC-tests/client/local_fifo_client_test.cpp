@@ -1,5 +1,5 @@
 /* Send a file through ACE_FIFO communication channel by
-// @(#)local_fifo_client_test.cpp	1.1	10/18/96
+// $Id$
 
    break it (the file) into pieces. */
 

@@ -1,5 +1,5 @@
 // Enable tracing
-// @(#)test_trace.cpp	1.1	10/18/96
+// $Id$
 
 #define ACE_NTRACE 0
 #include "ace/Log_Msg.h"

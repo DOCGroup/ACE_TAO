@@ -1,5 +1,5 @@
 // Exercise the ACE_SOCK_Dgram wrapper along with the ACE_Reactor.
-// @(#)Dgram.cpp	1.1	10/18/96
+// $Id$
 
 // Typical invocation sequence is:
 //

@@ -1,5 +1,5 @@
 #include "ace/Log_Msg.h"
-// @(#)NPClient.cpp	1.1	10/18/96
+// $Id$
 
 #include "ace/SPIPE_Addr.h"
 #include "ace/SPIPE_Connector.h"

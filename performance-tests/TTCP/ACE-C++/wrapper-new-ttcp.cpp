@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-// @(#)wrapper-new-ttcp.cpp	1.1	10/18/96
+// $Id$
 
 /*
  *    T T C P . C

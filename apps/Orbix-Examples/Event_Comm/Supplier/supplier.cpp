@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-// @(#)supplier.cpp	1.1	10/18/96
+// $Id$
 
 // Supplier driver for the Orbix Publish/Subscribe example.
 

@@ -1,5 +1,5 @@
 #include "ace/Service_Config.h"
-// @(#)main.cpp	1.1	10/18/96
+// $Id$
 
 #include "Timer_Service.h"
 

@@ -1,5 +1,5 @@
 #include "ace/Signal.h"
-// @(#)TMQ_Server.cpp	1.1	10/18/96
+// $Id$
 
 #include "ace/Typed_SV_Message_Queue.h"
 #include "ace/Log_Msg.h"

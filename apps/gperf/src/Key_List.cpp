@@ -1,5 +1,5 @@
 /* Routines for building, ordering, and printing the keyword list.
-// @(#)Key_List.cpp	1.1	10/18/96
+// $Id$
 
    Copyright (C) 1989 Free Software Foundation, Inc.
    written by Douglas C. Schmidt (schmidt@ics.uci.edu)

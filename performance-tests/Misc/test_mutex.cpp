@@ -1,5 +1,5 @@
 // This test program illustrates the performance difference between
-// @(#)test_mutex.cpp	1.1	10/18/96
+// $Id$
 
 // three versions of wrappers for thread mutexes.  These three
 // versions exercise various combinations of the following classes:

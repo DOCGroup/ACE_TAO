@@ -1,5 +1,5 @@
 #include "ace/SString.h"
-// @(#)test_sstring.cpp	1.1	10/18/96
+// $Id$
 
 
 int 

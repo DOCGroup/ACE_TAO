@@ -1,5 +1,5 @@
 #include "ace/OS.h"
-// @(#)rw_locks.cpp	1.1	10/18/96
+// $Id$
 
 #include "ace/Log_Msg.h"
 #include "ace/Get_Opt.h"

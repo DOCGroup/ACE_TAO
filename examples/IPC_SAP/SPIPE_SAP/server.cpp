@@ -1,5 +1,5 @@
 #include "ace/SPIPE_Addr.h"
-// @(#)server.cpp	1.1	10/18/96
+// $Id$
 
 #include "ace/SPIPE_Acceptor.h"
 #include "shared.h"

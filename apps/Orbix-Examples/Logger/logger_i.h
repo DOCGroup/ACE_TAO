@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-// @(#)logger_i.h	1.1	10/18/96
+// $Id$
 
 
 #include "ace/Profile_Timer.h"

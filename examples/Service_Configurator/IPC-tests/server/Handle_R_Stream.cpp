@@ -1,5 +1,5 @@
 #include "Handle_R_Stream.h"
-// @(#)Handle_R_Stream.cpp	1.1	10/18/96
+// $Id$
 
 
 #if defined (SunOS4)

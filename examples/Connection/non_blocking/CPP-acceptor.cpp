@@ -1,5 +1,5 @@
 #if !defined (CPP_ACCEPTOR_C)
-// @(#)CPP-acceptor.cpp	1.1	10/18/96
+// $Id$
 
 #define CPP_ACCEPTOR_C
 

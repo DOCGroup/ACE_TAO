@@ -1,5 +1,5 @@
 // Exercise more tests for the ACE Tasks.  This test can spawn off
-// @(#)test_task_two.cpp	1.1	10/18/96
+// $Id$
 
 // zillions of tasks and then wait for them using both polling and the
 // ACE Thread Manager.

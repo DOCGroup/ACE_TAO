@@ -1,5 +1,5 @@
 // This example illustrates the performance impact of using the
-// @(#)test_singleton.cpp	1.1	10/18/96
+// $Id$
 
 // Double-Checked Locking pattern compared with using the "standard"
 // practice of acquiring and releasing a lock on every instance()

@@ -1,5 +1,5 @@
 #include "ace/Log_Msg.h"
-// @(#)Logging_Acceptor.cpp	1.1	10/18/96
+// $Id$
 
 #include "Logging_Acceptor.h"
 #include "Logging_Handler.h"

@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-// @(#)nametest.h	1.1	10/18/96
+// $Id$
 
 #include "ace/Service_Object.h"
 

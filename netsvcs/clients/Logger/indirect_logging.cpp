@@ -1,5 +1,5 @@
 // This is a simple test that sends logging records to the Client
-// @(#)indirect_logging.cpp	1.1	10/18/96
+// $Id$
 
 // Logging Daemon running on the localhost.  This daemon then forwards
 // them to the Server Logging Daemon.  If there is no Server Logging

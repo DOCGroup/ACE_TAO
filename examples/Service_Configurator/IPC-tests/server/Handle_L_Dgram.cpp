@@ -1,5 +1,5 @@
 #include "Handle_L_Dgram.h"
-// @(#)Handle_L_Dgram.cpp	1.1	10/18/96
+// $Id$
 
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)

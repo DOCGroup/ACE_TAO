@@ -1,5 +1,5 @@
 /* Simple file transfer example */
-// @(#)ftp-server.cpp	1.1	10/18/96
+// $Id$
 
 #include "ace/Log_Msg.h"
 #include "ace/Thread_Manager.h"

@@ -1,5 +1,5 @@
 // Perform an extensive test of the ACE_Reactor's event dispatching
-// @(#)signal_tester.cpp	1.1	10/18/96
+// $Id$
 
 // mechanisms.  These mechanisms illustrate how signals, I/O, and
 // timeout events can all be handled within the same framework.  In

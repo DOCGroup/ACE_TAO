@@ -1,5 +1,5 @@
 /* Current program version number.
-// @(#)Version.cpp	1.1	10/18/96
+// $Id$
 
 
    Copyright (C) 1989 Free Software Foundation, Inc.

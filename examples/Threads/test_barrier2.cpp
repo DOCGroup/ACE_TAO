@@ -1,5 +1,5 @@
 // generic_worker_task.cpp
-// @(#)test_barrier2.cpp	1.1	10/18/96
+// $Id$
 
 //
 // This test program illustrates how the ACE task workers/barrier

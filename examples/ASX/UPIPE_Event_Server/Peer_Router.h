@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-// @(#)Peer_Router.h	1.1	10/18/96
+// $Id$
 
 // The interface between one or more peers and a stream.  A peer
 // typically runs remotely on another machine.

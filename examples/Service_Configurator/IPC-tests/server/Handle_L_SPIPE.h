@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-// @(#)Handle_L_SPIPE.h	1.1	10/18/96
+// $Id$
 
 /* Handle connections from local UNIX ACE_SPIPE */
 /* Read from a well known ACE_SPIPE and write to stdout. */

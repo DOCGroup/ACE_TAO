@@ -1,5 +1,5 @@
 #include "Thr_Channel.h"
-// @(#)Thr_Channel.cpp	1.1	10/18/96
+// $Id$
 
 #include "Channel_Connector.h"
 

@@ -1,5 +1,5 @@
 // Test out the ACE Token class.
-// @(#)test_token.cpp	1.1	10/18/96
+// $Id$
 
 #include "ace/Token.h"
 #include "ace/Task.h"

@@ -1,5 +1,5 @@
 // IPC_SAP/poll server, which illustrates how to integrate the ACE
-// @(#)CPP-inserver-poll.cpp	1.1	10/18/96
+// $Id$
 
 // socket wrappers with the SVR4 poll() system call to create a
 // single-threaded concurrent server.

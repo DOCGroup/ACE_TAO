@@ -1,5 +1,5 @@
 #include "Options.h"
-// @(#)Malloc.cpp	1.1	10/18/96
+// $Id$
 
 #include "Malloc.h"
 

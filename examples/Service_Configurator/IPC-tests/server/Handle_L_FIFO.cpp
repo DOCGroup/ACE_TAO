@@ -1,5 +1,5 @@
 #include "Handle_L_FIFO.h"
-// @(#)Handle_L_FIFO.cpp	1.1	10/18/96
+// $Id$
 
 
 #if defined (SunOS4)

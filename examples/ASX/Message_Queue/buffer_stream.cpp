@@ -1,5 +1,5 @@
 // This short program copies stdin to stdout via the use of an ASX
-// @(#)buffer_stream.cpp	1.1	10/18/96
+// $Id$
 
 // STREAM.  It illustrates an implementation of the classic "bounded
 // buffer" program using an ASX STREAM containing two Modules.  Each

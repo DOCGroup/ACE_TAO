@@ -1,5 +1,5 @@
 /* Defines a buffered memory allocation abstraction that reduces calls to
-// @(#)new.cpp	1.1	10/18/96
+// $Id$
 
    malloc.
    Copyright (C) 1989 Free Software Foundation, Inc.

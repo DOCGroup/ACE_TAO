@@ -1,5 +1,5 @@
 #include "ace/SV_Message_Queue.h"
-// @(#)MQ_Client.cpp	1.1	10/18/96
+// $Id$
 
 #include "test.h"
 

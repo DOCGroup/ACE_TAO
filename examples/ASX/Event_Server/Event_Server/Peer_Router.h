@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-// @(#)Peer_Router.h	1.1	10/18/96
+// $Id$
 
 
 #if !defined (_PEER_ROUTER_H)

@@ -1,5 +1,5 @@
 /* Tests out the UNIX domain IPC-SAP abstraction. */
-// @(#)local_stream_client_test.cpp	1.1	10/18/96
+// $Id$
 
 #include "ace/LSOCK_Connector.h"
 #include "ace/UNIX_Addr.h"

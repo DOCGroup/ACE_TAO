@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-// @(#)consumer.cpp	1.1	10/18/96
+// $Id$
 
 // Consumer driver for the Orbix Notification example.
 

@@ -1,5 +1,5 @@
 // Test the client-side of the ACE Name Server...
-// @(#)main.cpp	1.1	10/18/96
+// $Id$
 
 #include "ace/Service_Config.h"
 #include "Dump_Restore.h"

@@ -1,5 +1,5 @@
 #include "ace/Naming_Context.h"
-// @(#)nametest.cpp	1.1	10/18/96
+// $Id$
 
 #include "ace/Name_Options.h"
 #include "nametest.h"
