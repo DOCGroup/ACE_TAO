@@ -65,6 +65,8 @@ ACE_High_Res_Timer::get_registry_scale_factor (void)
   // ACE_High_Res_Timer instance construction will override this
   // value.
   ACE_UINT32 ACE_High_Res_Timer::global_scale_factor_ = 1u;
+# else
+  ACE_UINT32 ACE_High_Res_Timer::global_scale_factor_ = 1u;
 # endif /* ! ACE_WIN32 && ! ghs && ! __GNUG__ */
 #elif defined (ACE_HAS_HI_RES_TIMER) || defined (ACE_HAS_AIX_HI_RES_TIMER) || \
   defined (ACE_HAS_CLOCK_GETTIME) || defined (ACE_PSOS) || \
