@@ -23,7 +23,8 @@ Mon Mar 24 14:22:17 1997  David L. Levine  <levine@cs.wustl.edu>
 	* ace/OS.cpp (thr_create): For VxWorks, fixed call to ::taskSpawn ().
 	  ACE's arguments are in an array, not individual arguments.
 	  Also, set flags to VX_FP_TASK if it's 0, to match behavior
-	  of ::sp ().
+	  of ::sp ().  Thanks to Dave Mayerhoefer <m210229@svappl36.mdc.com>
+	  for reporting these and providing the fix.
 
 	* ace/High_Res_Timer.cpp (elapsed_time (struct timespec &):
 	  fixed, using same approach as in elapsed_time
