@@ -140,13 +140,6 @@ TAO_ServantBase::_find (const char *opname,
   return optable_->find (opname, skelfunc, st, length);
 }
 
-/*int
-TAO_ServantBase::_bind (const char *opname,
-                        const TAO_Skeleton skel_ptr)
-{
-  return optable_->bind (opname, skel_ptr);
-}
-*/
 TAO_Stub *
 TAO_ServantBase::_create_stub (ACE_ENV_SINGLE_ARG_DECL)
 {
