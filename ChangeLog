@@ -1,3 +1,15 @@
+Sat Jan  3 16:14:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* bin/MakeProjectCreator/templates/bor.mpd:
+	  Removed the usage of IDL_DIR. There where problems when generating
+	  Borland makefiles for projects where the idl file is in a different
+	  directory than the project file. In that case the IDL_DIR should
+	  not be . but the directory where the idl files are. Because this is
+	  a hard thing to do, just removed IDL_DIR and take the path of the
+	  IDL file that is in the MPC file. This way Borland works just like the
+	  other environments and this way we can also handle IDL files in
+	  other directories.
+
 Sat Jan  3 13:11:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	Added needed includes to compile the APG examples using the Borland
