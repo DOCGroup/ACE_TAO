@@ -39,11 +39,12 @@ ACE_gethrtime ()
 #if defined (ACE_LACKS_LONGLONG_T)
   // ACE_U_LongLong doesn't have the same layout as now, so construct
   // it "properly".
-  unsigned int least, most;
-  ACE_OS::memcpy (&least, &now, sizeof (unsigned int));
-  ACE_OS::memcpy (&most, &now + sizeof (unsigned int), sizeof (unsigned int));
+  ACE_UINT32 least, most;
+  ACE_OS::memcpy (&least, &now, sizeof (ACE_UINT32));
+  ACE_OS::memcpy (&most, (unsigned char *) &now + sizeof (ACE_UINT32),
+                  sizeof (ACE_UINT32));
 
-  ACE_hrtime_t ret (least, most);
+  const ACE_hrtime_t ret (least, most);
   return ret;
 #else  /* ! ACE_LACKS_LONGLONG_T */
   return now;

@@ -6654,12 +6654,12 @@ ACE_OS::dlerror (void)
   ACE_OSCALL_RETURN (::strerror(errno), char *, 0);
 # elif defined (ACE_WIN32)
   static char buf[128];
-  FormatMessageA (FORMAT_MESSAGE_FROM_SYSTEM, 
-                  NULL, 
-                  GetLastError (), 
-                  0, 
+  FormatMessageA (FORMAT_MESSAGE_FROM_SYSTEM,
+                  NULL,
+                  GetLastError (),
+                  0,
                   buf,
-                  sizeof buf, 
+                  sizeof buf,
                   NULL);
   return buf;
 # else
@@ -8122,9 +8122,10 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
   asm volatile ("rdtsc" : "=A" (now) : : "memory");
 
 # if defined (ACE_LACKS_LONGLONG_T)
-  unsigned int least, most;
-  ACE_OS::memcpy (&least, &now, sizeof (unsigned int));
-  ACE_OS::memcpy (&most, &now + sizeof (unsigned int), sizeof (unsigned int));
+  ACE_UINT32 least, most;
+  ACE_OS::memcpy (&least, &now, sizeof (ACE_UINT32));
+  ACE_OS::memcpy (&most, (unsigned char *) &now + sizeof (ACE_UINT32),
+                  sizeof (ACE_UINT32));
 
   ACE_hrtime_t ret (least, most);
   return ret;
