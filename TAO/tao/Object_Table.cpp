@@ -255,19 +255,13 @@ TAO_Active_Demux_ObjTable::create_object_id (PortableServer::Servant servant,
   // Increment generation count
   id_data[TAO_Active_Demux_ObjTable::GENERATION_FIELD] = ++this->table_[index].generation_;
 
-#if 0
-  ACE_OS::sprintf (buffer,
-                   "%08.8x%08.8x",
-                   index,
-                   this->table_[index].generation_);
-#else
   PortableServer::ObjectId &id = 
     *(new PortableServer::ObjectId (TAO_POA::MAX_SPACE_REQUIRED_FOR_TWO_CORBA_ULONG_TO_HEX));
   id.length (TAO_POA::MAX_SPACE_REQUIRED_FOR_TWO_CORBA_ULONG_TO_HEX);
+
   ACE_OS::memcpy (id.get_buffer (), 
                   &id_data, 
                   TAO_POA::MAX_SPACE_REQUIRED_FOR_TWO_CORBA_ULONG_TO_HEX);
-#endif
 
   // Set the new values
   this->table_[index].id_ = id;
