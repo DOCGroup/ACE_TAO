@@ -67,7 +67,10 @@ public:
   // return the default index used
 
   virtual idl_bool in_recursion (be_type *node = 0);
-  // ar we or the parameter node involved in some kind of recursion
+  // Are we or the parameter node involved in some kind of recursion?
+
+  virtual idl_bool has_duplicate_case_labels (void);
+  // Do we have at least one member with multiple case labels?
 
   // Visiting
   virtual int accept (be_visitor *visitor);
