@@ -89,7 +89,7 @@ static ACE_CDR::WChar   idl_wchar_escape_reader (char *);
 static char             idl_escape_reader (char *);
 static double           idl_atof (char *);
 static long             idl_atoi (char *, long);
-static unsigned long	idl_atoui (char *, long);
+static ACE_UINT64	idl_atoui (char *, long);
 static void		idl_parse_line_and_file (char *);
 static void		idl_store_pragma (char *);
 static char *           idl_get_pragma_string (char *);
@@ -687,10 +687,10 @@ idl_atoi(char *s, long b)
 /*
  * idl_atoui - Convert a string of digits into an unsigned integer according to base b
  */
-static unsigned long
+static ACE_UINT64
 idl_atoui(char *s, long b)
 {
-	long	r = 0;
+	ACE_UINT64	r = 0;
 
 	if (b == 8 && *s == '0')
 	  s++;

@@ -722,6 +722,17 @@ AST_Generator::create_expr (unsigned long v)
 }
 
 AST_Expression *
+AST_Generator::create_expr (ACE_UINT64 v)
+{
+  AST_Expression *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Expression (v),
+                  0);
+
+  return retval;
+}
+
+AST_Expression *
 AST_Generator::create_expr (UTL_String *s)
 {
   AST_Expression *retval = 0;
