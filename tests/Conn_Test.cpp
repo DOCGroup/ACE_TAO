@@ -676,11 +676,13 @@ template class ACE_Double_Linked_List<ACE_Thread_Descriptor>;
 template class ACE_Unbounded_Queue<ACE_Thread_Descriptor_Base>;
 template class ACE_Unbounded_Queue<ACE_Thread_Descriptor*>;
 #endif /* defined (__BORLANDC__) */
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
 #pragma instantiate ACE_Cached_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_MUTEX>
-#pragma instantiate HASH_ADDR;
-#pragma instantiate RECYCLABLE_ADDR;
-#pragma instantiate HASH_RECYCLABLE_ADDR;
+#pragma instantiate HASH_ADDR
+#pragma instantiate RECYCLABLE_ADDR
+#pragma instantiate HASH_RECYCLABLE_ADDR
 #pragma instantiate ACE_NOOP_Creation_Strategy<Svc_Handler>
 #pragma instantiate ACE_Concurrency_Strategy<Svc_Handler>
 #pragma instantiate ACE_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR>
