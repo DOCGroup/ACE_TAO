@@ -1,3 +1,13 @@
+Wed Apr 10 19:53:01 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Argv_Type_Converter.cpp:
+
+	  Include "ace/OS_Errno.h" to pull in ENOMEM definition.
+
+	  (align_char_with_wchar):
+
+	  Fixed remaining ACE_OS::strcmp() to be ACE_OS_String::strcmp().
+
 Wed Apr 10 19:37:58 2002  Ossama Othman  <ossama@uci.edu>
 
 	* apps/gperf/src/Bool_Array.h:
