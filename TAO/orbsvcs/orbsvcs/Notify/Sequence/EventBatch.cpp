@@ -41,7 +41,7 @@ TAO_NS_EventBatch::insert (const TAO_NS_Event_Collection& event_collection)
 void
 TAO_NS_EventBatch::extract (TAO_NS_Event_Collection& event_collection)
 {
-  int copy_length = this->event_collection_.size () <= this->batch_size_ ?
+  int copy_length = this->event_collection_.size () <= (unsigned)this->batch_size_ ?
     this->event_collection_.size () : this->batch_size_;
 
   for (int i = 0; i < copy_length; ++i)
