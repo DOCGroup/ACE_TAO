@@ -119,7 +119,7 @@ Async_Timer_Queue::cancel (long timer_id)
 {
   ACE_DEBUG ((LM_DEBUG, "canceling %d\n", timer_id));
 
-  const void *act;
+  const void *act = 0;
 
   if (this->tq_.cancel (timer_id, &act) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "cancel_timer"));
