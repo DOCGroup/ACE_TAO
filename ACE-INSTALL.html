@@ -48,67 +48,94 @@ an enhancement, then use our
 
 
 <P><HR><P>
-<H3><A NAME="platforms">Supported Platforms and C++ Compilers</A></H3>
+<H3><A NAME="platforms">Platforms, C++ Compilers, and Support</A></H3>
 
-<!--#include virtual="/~schmidt/ACE-versions-i.html" -->
+<p>ACE has been ported to a large number of platforms, using many
+different compilers over the years. The
+<A HREF="http://www.cs.wustl.edu/~doc/">DOC group</A>,
+<A HREF="http://www.riverace.com/">Riverace</A>,
+<A HREF="http://www.theaceorb.com">OCI</A>, and members of the
+ACE user community have all contributed ports to make ACE the
+successful and far-reaching toolkit it is today.</p>
 
-<p>The following tables summarize platforms on which ACE runs and
-indicates the level of support provided by the <A
-HREF="http://www.cs.wustl.edu/~doc/">DOC group</A>, <A
-HREF="http://www.riverace.com/">Riverace</A>, and <A
-HREF="http://www.theaceorb.com">OCI</A>.<P>
+<p>The responsibility for maintaining ACE across this wide range of
+platforms is divided among a few different groups: the DOC group,
+Riverace, OCI, and the ACE user community itself.
+The table below summarizes each group's role
+and where you can get more detailed information.
+For information on TAO's platform coverage and support, please also see
+<A HREF="TAO/TAO-INSTALL.html">TAO's install document</A>.
+
+<p>Although the DOC group has provided outstanding, world-class support
+for ACE over the years, ACE's success has greatly increased the amount
+of effort required to keep up with its maintenance, answer users'
+questions, and give design guidance. Riverace offers world-class
+commercial services to support ACE users (and OCI offers similar services
+for TAO), allowing the DOC group's primary focus to shift back to their
+main goal: research. The DOC group is fundamentally focused on (and <A
+HREF="http://www.cs.wustl.edu/~schmidt/resume-grants.html">funded
+by</A>) advanced R&D projects. The group continues to be intimately involved
+in ACE+TAO development and maintenance, but with revised priorities
+for maintenance. The
+<A HREF="docs/ACE-bug-process.html">bug fixing
+policies</A> followed by the DOC group are designed to strike a
+balance between their many <A
+HREF="http://www.cs.wustl.edu/~schmidt/research.html">research
+projects</A> and their commitment to the ACE+TAO <A
+HREF="http://www.cs.wustl.edu/~schmidt/ACE-users.html">user
+community</A>.
 
 <table width="75%" border=1>
+<caption>Groups Involved in ACE Development and Support</caption>
+<thead>
   <tr valign=top>
-    <td><b><A HREF="http://ringil.ece.uci.edu/scoreboard/">Tested</A> and used daily by
-        the DOC group</b></td>
-    <td>Solaris 2.5, 2.6, 7 and 8 (many compilers excluding SunC++ 4.x)<BR>
+    <th>Group
+    <th>Platforms
+    <th>For more information
+  </tr>
+<tbody>
+  <tr>
+    <th>DOC Group</th>
+    <td><A HREF="http://ringil.ece.uci.edu/scoreboard/">Tested</A> and used
+        daily by the DOC group:
+        Solaris 2.5, 2.6, 7 and 8 (many compilers excluding SunC++ 4.x)<BR>
         Windows NT 4.0 and Windows 2000 (MSVC++ 5.x, 6.x, and 7.x, and
         Borland C++ Builder 5.0)<BR>
         Linux/Intel (many compilers).
     </td>
-  </tr>
-</table><P>
-
-These are the platforms that the DOC group uses for their daily R&D
-activities.  The <A HREf="docs/ACE-bug-process.html">bug fixing
-policies</A> followed by the DOC group are designed to strike a
-balance between our many <A
-HREF="http://www.cs.wustl.edu/~schmidt/research.html">research
-projects</A> and our commitment to the ACE+TAO <A
-HREF="http://www.cs.wustl.edu/~schmidt/ACE-users.html">user
-community</A>.  The DOC group is fundamentally focused on (and <A
-HREF="http://www.cs.wustl.edu/~schmidt/resume-grants.html">funded
-by</A>) advanced R&D projects.
-
-Fortunately, ACE and TAO are solidly supported by <A
-HREF="http://www.riverace.com">Riverace</A> and <A
-HREF="http://www.theaceorb.com">OCI</A>, respectively.  In response to
-user demand, they will continue to expand their support of the
-following platforms that ACE+TAO run on: <P>
-
-<table width="75%" border=1>
-  <tr valign=top bgcolor="#AFAFAF">
-   <td><b>Windows platforms</b></td>
-   <td>Windows 95/98, Windows CE, Windows NT and Windows 2000 with the following compilers:
-	  Borland C++ Builder 4.0, IBM VisualAge C++, and GNU g++ on
-	  MinGW.
-   </td>
-  </tr>
-  <tr valign=top>
-    <td><b>Other versions of UNIX</b></td>
-    <td> 
-        Digital UNIX 4.0 and 5.0, HP/UX 10.x and 11.x,
-        AIX 4.x, IRIX 6.x, and UnixWare 7.1.0, Solaris with SunC++
-          4.x, Linux/Alpha, Linux/PPC, and OpenMVS.
-	  Tandem, SCO, SunOS 4.x, FreeBSD, and NetBSD
+    <td>DOC sites at <A HREF="http://doc.ece.uci.edu/">UCI</A> and
+        <A HREF="http://tao.doc.wustl.edu/">Washington University</A>
     </td>
   </tr>
-  <tr valign=top bgcolor="#AFAFAF">
-    <td><b>Real-time and embedded OS platforms</b></td>
-    <td> 
-      Chorus, OS/9, PharLap TNT Embedded ToolSuite 9.1,
-       QNX RTP, QNX Neutrino 2.0, VxWorks, LynxOS, and RTEMS.
+  <tr>
+    <th>Riverace</th>
+    <td>Offers support services for many platforms including those
+        above, HP-UX, and AIX.
+    </td>
+    <td>Riverace's <A HREF="http://www.riverace.com/">web site</A></td>
+  </tr>
+  <tr>
+    <th>OCI</th>
+    <td>Maintains ACE on certain platforms required for their TAO
+        software and service offerings.
+    </td>
+    <td>OCI's <A HREF="http://www.theaceorb.com">web site</A> and
+        the TAO <A HREF="TAO/TAO-INSTALL.html">install document</A></td>
+  </tr>
+  <tr>
+    <th>ACE user community</th>
+    <td>Responsible for continued maintenance and testing of platforms
+        to which ACE has been ported, but aren't supported by the
+        above groups. These include
+        Windows 95/98/CE using Borland C++ Builder 4.0, IBM VisualAge C++,
+        and GNU g++ on MinGW;
+        Digital UNIX (Compaq Tru64) 4.0 and 5.0;
+        IRIX 6.x; UnixWare 7.1.0; SunOS 4.x and Solaris with SunC++ 4.x;
+        Linux on Alpha and PPC; OpenMVS;
+        Tandem; SCO; FreeBSD; NetBSD
+        Chorus, OS/9, PharLap TNT Embedded ToolSuite 9.1,
+        QNX RTP and Neutrino 2.0; VxWorks; LynxOS; RTEMS
+    </td>
     <td></td>
   </tr>
 </table><P>
@@ -118,12 +145,13 @@ ACE+TAO user community for any platforms that aren't supported by the
 DOC group, Riverace, or OCI. <P>
 
 <P>Any UNIX/POSIX/Win32 variation is a potential target platform for
-TAO.  If you have <A HREF="docs/ACE-porting.html">porting
-questions</A> or have a problem compiling the ACE wrappers on the
-platforms shown above please send email to either <A
-HREF="news:comp.soft-sys.ace">ACE Newsgroup</A> or the <A
-HREF="mailto:ace-users@cs.wustl.edu">ACE mailing list</A> and we'll
-try to help you fix the problems.
+ACE.  If you have <A HREF="docs/ACE-porting.html">porting
+questions</A> or have a problem compiling the ACE source distribution,
+please contact one of the commercial support companies, or send a
+copy of the PROBLEM-REPORT-FORM to either the
+<A HREF="news:comp.soft-sys.ace">ACE Newsgroup</A> or the <A
+HREF="mailto:ace-users@cs.wustl.edu">ACE mailing list</A> and someone
+will try to help you fix the problems.
 
 <P><HR><P>
 <H3><A NAME="installnotes">Installation Notes</A></H3>
@@ -153,13 +181,14 @@ try to help you fix the problems.
       Take a look at (<a href="docs/CE-status.txt">CE-status.txt</a>) for
       up-to-date information about ACE on CE.  <P>
 
-  <LI><B> Sun OS 5.x/4.x (a.k.a. Solaris 2.x/1.x, Solaris 7) using Sun
-      CC 3.0.1, Sun C++ 4.2 and 5.x, Centerline C++ 2.x, GNU gcc 2.7.x
+  <LI><B> SunOS 4.x, Solaris 2.x, 7 and 8 using Sun
+      Sun C++ 4.2 and 5.x, Forte 6, Centerline C++ 2.x, GNU gcc 2.7.x
       and later (except 2.8.x), and KAI C++ 3.3/3.4.</B><P>
 
       All the source code and tests should build and run without any
       problems on Solaris 2.5.1, 2.6, 7, and 8 platforms using the Sun C++
-      compiler.  We use this version/patchlevel of Sun C++:<p> <pre>
+      compilers.  For Sun C++ 4.2, we recomend using this patch version
+      at a minimum:<p> <pre>
       CC: WorkShop Compilers 4.2 21 Apr 1997 C++ 4.2 patch 104631-02
       </pre><p>
 
@@ -275,7 +304,8 @@ make: *** [libACE.so] Error 8
       install patched versions of the C++ libraries, which correctly
       define this symbol.<p>
 
-      To build ACE on AIX with Visual Age C++ 5, use the
+      To build ACE on AIX with Visual Age C++ 5 in incremental mode
+      (i.e. with the IDE), use the
       $ACE_ROOT/ace/ace.icc configuration along with the appropriate
       version-specific config file (e.g. config-aix-4.3.x.h). All of the
       version-specific config files set the version number macros and
@@ -414,8 +444,8 @@ make: *** [libACE.so] Error 8
             if not later.
 
         <LI>HP aC++ - this is aCC, HP's new, ANSI compiler.  It handles ACE
-            pretty well.  You should use version A.01.18 (or higher) on
-            HP-UX 10.x and version A.03.13 (or higher) on HP-UX 11.00.
+            very well.  You should use version A.01.27 (or higher) on
+            HP-UX 10.x and version A.03.27 (or higher) on HP-UX 11.00.
 
       </UL>
       <P>
