@@ -1,3 +1,8 @@
+Fri May 23 17:53:59 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/IORInterceptor_Adapter.h (TAO_IORInterceptor_Adapter): Fixed
+	  compilation errors in builds where exceptions are turned off. 
+
 Fri May 23 17:49:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/ORB_Core.cpp (destroy_interceptors): Fixed warning in builds
