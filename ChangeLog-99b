@@ -17,6 +17,10 @@ Fri Jan 08 13:24:12 1999  David L. Levine  <levine@cs.wustl.edu>
           ACE_thread_t.  And, it's not necessary, because all
           access of the shared_thr_id is guarded.
 
+        * include/makeinclude/platform_chorus_ghs.GNU: added gnuch68
+          to -alttools, and removed bin from AR; use libedgnoe.a instead
+          of libedg.a with GHS 1.8.9.1.
+
 Thu Jan 07 09:05:27 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-sunos5.5.h: added ACE_HAS_SIG_C_FUNC with
