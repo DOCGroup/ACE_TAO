@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ECM_Data.h"
+#include "tao/CDR.h"
 
 ACE_RCSID(EC_Custom_Marshal, ECM_Data, "$Id$")
 
