@@ -75,7 +75,7 @@ void StartLocalServer(void)
 /* hostname == "" defaults to local host */
 static void StartFile(char *hostname, char *filename)
 {
-  char *title = (char *)malloc(strlen(hostname) + strlen(filename) + 10);
+  char *title = (char *)ACE_OS::malloc(strlen(hostname) +ACE_OS::strlen (filename) + 10);
   char buf[BUFSIZE];
   int len;
 
@@ -88,7 +88,7 @@ static void StartFile(char *hostname, char *filename)
     strncpy(buf, filename, BUFSIZE);
     buf[BUFSIZE-1] = 0;
   }
-  len = strlen(buf);
+  len =ACE_OS::strlen (buf);
 
   if (title == NULL) title = filename;
   else sprintf(title, "%s:%s", hostname, filename);
@@ -100,7 +100,7 @@ static void StartFile(char *hostname, char *filename)
   else
     fprintf(stderr, "Error: type of file %s not known (know only .mpeg .mpg, .au).\n",
 	    filename);
-  if (title != filename) free(title);
+  if (title != filename) ACE_OS::free (title);
 }
 
 static void dismissCB(Widget W, XtPointer closure, XtPointer call_data)

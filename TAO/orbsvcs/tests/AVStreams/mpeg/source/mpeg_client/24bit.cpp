@@ -80,10 +80,10 @@ InitColorDither()
 {
     int CR, CB, i;
 
-    Cr_b_tab = (int *)malloc(256*sizeof(int));
-    Cr_g_tab = (int *)malloc(256*sizeof(int));
-    Cb_g_tab = (int *)malloc(256*sizeof(int));
-    Cb_r_tab = (int *)malloc(256*sizeof(int));
+    Cr_b_tab = (int *)ACE_OS::malloc(256*sizeof(int));
+    Cr_g_tab = (int *)ACE_OS::malloc(256*sizeof(int));
+    Cb_g_tab = (int *)ACE_OS::malloc(256*sizeof(int));
+    Cb_r_tab = (int *)ACE_OS::malloc(256*sizeof(int));
 
     for (i=0; i<256; i++) {
 	CB = CR = i;

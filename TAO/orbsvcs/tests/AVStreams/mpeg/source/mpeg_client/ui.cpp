@@ -103,8 +103,8 @@ static void CmdWrite(char * buf, int size)
   while (ACE_OS::write(cmdSocket, (buf), (size)) == -1)
   {
     if (errno == EINTR) continue;
-    perror("UI write to cmdSocket");
-    exit(1);
+   ACE_OS::perror ("UI write to cmdSocket");
+    ACE_OS::exit (1);
   }
   //  ACE_DEBUG ((LM_DEBUG,"(%P|%t)After writing cmd\n"));
 }
@@ -529,7 +529,7 @@ void UIMinsize(int x, int y)
 
 static void exit_callback(Widget w, XtPointer data, XmAnyCallbackStruct *cbs)
 {
-  exit(0);
+  ACE_OS::exit (0);
 }
 
 
@@ -778,8 +778,8 @@ static void cmdSocket_callback(Widget w, XtPointer data, XmAnyCallbackStruct *cb
   while (read(cmdSocket, &cmd, 1) <= 0) 
   {
     if (errno == EINTR) return;
-    perror("UI by callback read from CmdSocket");
-    exit(1);
+   ACE_OS::perror ("UI by callback read from CmdSocket");
+    ACE_OS::exit (1);
   }
   //  ACE_DEBUG ((LM_DEBUG,"(%P)cmdSocket_callback:cmd= %d",cmd));
   if (cmd == CmdDONE || cmd == CmdFAIL)
@@ -824,7 +824,7 @@ static void cmdSocket_callback(Widget w, XtPointer data, XmAnyCallbackStruct *cb
     char * ptr;
 
     if (cmd == CmdVPdisplayFrame) {
-      read(cmdSocket, (char *)&ptr, sizeof(char *));
+      ACE_OS::read (cmdSocket, (char *)&ptr, sizeof(char *));
     }
     VPcommand((int)cmd, ptr);
 
@@ -877,7 +877,7 @@ void UIprocess(int cmdSock)
   title = vh = vf = vb = ah = af = ab = NULL;
 
   for (i = 1; i < argc_share; i++) {
-    if (strcmp(argv_share[i], "-v") == 0) {
+    if (ACE_OS::strcmp (argv_share[i], "-v") == 0) {
       if (argc_share > i + 1) {
 	i ++;
 	vh = argv_share[i];
@@ -885,7 +885,7 @@ void UIprocess(int cmdSock)
       }
       else break;
     }
-    else if (strcmp(argv_share[i], "-a") == 0) {
+    else if (ACE_OS::strcmp (argv_share[i], "-a") == 0) {
       if (argc_share > i + 1) {
 	i ++;
 	ah = argv_share[i];
@@ -893,7 +893,7 @@ void UIprocess(int cmdSock)
       }
       else break;
     }
-    else if (strcmp(argv_share[i], "-p") == 0) {
+    else if (ACE_OS::strcmp (argv_share[i], "-p") == 0) {
       if (argc_share > i + 1) {
 	i ++;
 	title = argv_share[i];
@@ -945,13 +945,13 @@ void UIprocess(int cmdSock)
 
     /* form the title */
     if (vh != NULL) {
-      title = (char *)malloc(strlen(vh) + 1);
+      title = (char *)ACE_OS::malloc(strlen(vh) + 1);
       if (title != NULL) {
 	strcpy(title, vh);
       }
     }
     else {
-      title = (char *)malloc(strlen(ah) + 1);
+      title = (char *)ACE_OS::malloc(strlen(ah) + 1);
       if (title != NULL) {
 	strcpy(title, ah);
       }
@@ -969,11 +969,6 @@ void UIprocess(int cmdSock)
       else {
 	vf = vh;
 	vh = "";
-	// vb = (char *)malloc(BUFSIZE);
-// 	if (vb != NULL) {
-// 	  get_full_path(vf, vb, BUFSIZE);
-// 	  vf = vb;
-//	}
       }
     }
     else vh = vf = "";
@@ -987,11 +982,6 @@ void UIprocess(int cmdSock)
       else {
 	af = ah;
 	ah = "";
-// 	ab = (char *)malloc(BUFSIZE);
-// 	if (ab != NULL) {
-// 	  get_full_path(af, ab, BUFSIZE);
-// 	  af = ab;
-// 	}
       }
     }
     else ah = af = "";
@@ -999,9 +989,9 @@ void UIprocess(int cmdSock)
     fprintf(stderr, "Init program: title %s, vh %s, vf %s, ah %s, af %s\n",
 	    title, vh, vf, ah, af);
     StartProgram(title, vh, vf, ah, af);
-    free(title);
-    if (ab != NULL) free(ab);
-    if (vb != NULL) free(vb);
+    ACE_OS::free (title);
+    if (ab != NULL) ACE_OS::free (ab);
+    if (vb != NULL) ACE_OS::free (vb);
   }
   
   XtAppMainLoop(App);

@@ -140,12 +140,12 @@ FS2FastDitherImage (
 
     if (first) {
       first = 0;
-      yerr1 = (int *) malloc((w+5)*sizeof(int));
-      yerr2 = (int *) malloc((w+5)*sizeof(int));
-      uerr1 = (int *) malloc((w+5)*sizeof(int));
-      uerr2 = (int *) malloc((w+5)*sizeof(int));
-      verr1 = (int *) malloc((w+5)*sizeof(int));
-      verr2 = (int *) malloc((w+5)*sizeof(int));
+      yerr1 = (int *) ACE_OS::malloc((w+5)*sizeof(int));
+      yerr2 = (int *) ACE_OS::malloc((w+5)*sizeof(int));
+      uerr1 = (int *) ACE_OS::malloc((w+5)*sizeof(int));
+      uerr2 = (int *) ACE_OS::malloc((w+5)*sizeof(int));
+      verr1 = (int *) ACE_OS::malloc((w+5)*sizeof(int));
+      verr2 = (int *) ACE_OS::malloc((w+5)*sizeof(int));
     }
 
     /*

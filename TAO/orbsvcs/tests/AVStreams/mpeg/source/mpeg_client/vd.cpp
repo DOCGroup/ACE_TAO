@@ -25,6 +25,8 @@
  *         email: scen@cse.ogi.edu
  */
 
+extern int vdsp[2];
+
 #include <stdio.h>
 #include <errno.h>
 #include <signal.h>
@@ -43,6 +45,7 @@
 #include "dither.h"
 #include "video.h"
 #include "proto.h"
+#include "vb.h"
 
 ACE_RCSID(mpeg_client, vd, "$Id$")
 
@@ -56,6 +59,7 @@ static int ecountid, ccountid;
 static int sid;
 
 extern VidStream * curVidStream;
+extern VideoBuffer *vbuffer;
 
 static struct shared_mem_block
 {
@@ -96,7 +100,7 @@ static void put_block(FrameBlock * bptr, int tag)
     if (shm->sptr > MAX_VDBLOCK_NUM)
     {
       fprintf(stderr, "VD weird error: ESTACK full.\n");
-      exit(1);
+      ACE_OS::exit (1);
     }
   }
   else
@@ -165,8 +169,8 @@ void VDresizeBuf(int height, int width)
 
   if (get_semval(ecountid) < 0) {
     fprintf(stderr, "Error<weird>: pid %d get (ecountid) = %d < 0\n",
-	    getpid(), get_semval(ecountid));
-    exit(1);
+	   ACE_OS::getpid (), get_semval(ecountid));
+    ACE_OS::exit (1);
   }
   /*
   fprintf(stderr, "VD before resizeBuf(): get_semval(ecountid) = %d\n",
@@ -195,7 +199,7 @@ void VDresizeBuf(int height, int width)
   {
     fprintf(stderr,
 	    "VD error: VDbuf fails to hold at least 3(three) block.\n");
-    exit(1);
+    ACE_OS::exit (1);
   }
   shm->sptr = 0;  /* empty stack */
   shm->qhead = shm->qtail = 0;  /* empty cqueue */
@@ -228,7 +232,7 @@ FrameBlock * VDgetBuf(void)     /* block version, return with interrupt */
     fprintf(stderr, "VD error: VDgetBuf should not return NULL.\n");
   /*
   fprintf(stderr, "pid %d VDgetBuf() %u, ref %d, ecount %d\n",
-	  getpid(), (unsigned)ptr, ptr->refcount, get_semval(ecountid));
+	 ACE_OS::getpid (), (unsigned)ptr, ptr->refcount, get_semval(ecountid));
   */
   return ptr;
 }
@@ -249,7 +253,7 @@ void VDputMsg(FrameBlock * msgPtr)
   leave_cs(sid);
   /*
   fprintf(stderr, "pid %d VDputMsg() %u, ref %d, ccount %d\n",
-	  getpid(), (unsigned)msgPtr, msgPtr->refcount, get_semval(ccountid));
+	 ACE_OS::getpid (), (unsigned)msgPtr, msgPtr->refcount, get_semval(ccountid));
   */
 }
 
@@ -264,7 +268,7 @@ FrameBlock * VDgetMsg(void)     /* block version, return with interrupt */
     fprintf(stderr, "VD error: VDgetMsg should not return NULL.\n");
   /*
   fprintf(stderr, "pid %d VDgetMsg() %u, ref %d, ccount %d\n",
-	  getpid(), (unsigned)ptr, ptr->refcount, get_semval(ccountid));
+	 ACE_OS::getpid (), (unsigned)ptr, ptr->refcount, get_semval(ccountid));
   */
   return ptr;
 }
@@ -297,7 +301,7 @@ FrameBlock * VDpeekMsg(void)
   /*
   if (ptr != NULL) {
     fprintf(stderr, "pid %d VDpeekMsg() = %u, ref=%d\n",
-	    getpid(), (unsigned)ptr, ptr->refcount);
+	   ACE_OS::getpid (), (unsigned)ptr, ptr->refcount);
   }
   */
   return ptr;
@@ -310,7 +314,7 @@ void VDreferMsg(FrameBlock * msgPtr)
   leave_cs(sid);
   /*
   fprintf(stderr, "pid %d VDreferMsg() %u, ccount %d\n",
-	  getpid(), (unsigned)msgPtr, get_semval(ccountid));
+	 ACE_OS::getpid (), (unsigned)msgPtr, get_semval(ccountid));
   */
 }
 
@@ -329,11 +333,11 @@ void VDreclaimMsg(FrameBlock * msgPtr)
   leave_cs(sid);
   /*
   fprintf(stderr, "pid %d VDreclaimMsg() %u, ref %d, ecount %d\n",
-	  getpid(), (unsigned)msgPtr, ref, get_semval(ecountid));
+	 ACE_OS::getpid (), (unsigned)msgPtr, ref, get_semval(ecountid));
   */
   if (ref <= 0) {
     Fprintf(stderr, "pid %d VDreclaimMsg() %u WEIRD, :ref %d:, ecount %d\n",
-	    getpid(), (unsigned)msgPtr, ref, get_semval(ecountid));
+	   ACE_OS::getpid (), (unsigned)msgPtr, ref, get_semval(ecountid));
   }
 }
 
@@ -357,7 +361,7 @@ get_more_data(unsigned int *buf_start, int max_length,
 	  "Fatel error: vd.c get_more_data() should not be called, bufLength = %d.!\n",
 	  *length_ptr);
   fprintf(stderr, "  **** Please report this bug. ****\n");
-  //  exit(1);
+  //  ACE_OS::exit (1);
   return 0;
 }
 
@@ -370,17 +374,8 @@ static void printPacket(VideoPacket *p)
           p->past, p->dataBytes);
 }
 
-static void usr1_handler(int sig)
-{
-  fprintf(stderr, "VD void usr1_handler.\n");
-}
 
-static void usr2_handler(int sig)
-{
-  fprintf(stderr, "VD void usr2_handler\n");
-}
-
-void VDprocess(int CTRpid)
+void VDprocess (int CTRpid)
 {
   FrameBlock * curBlk = NULL;
   PictImage * curPict = NULL;
@@ -391,11 +386,9 @@ void VDprocess(int CTRpid)
   if (curVidStream == NULL)
   {
     fprintf(stderr, "VD: unable to allocat curVidStream.\n");
-    exit(1);
+    ACE_OS::exit (1);
   }
-  setsignal(SIGUSR1, usr1_handler);
-  setsignal(SIGUSR2, usr2_handler);
-  
+
   for(;;)
   {
     int curcmd, curcmdsn;
@@ -407,24 +400,21 @@ void VDprocess(int CTRpid)
       VDreclaimMsg(curBlk);
       curBlk = NULL;
     }
-    p = (VideoPacket*)VBgetMsg();   /* guarranteed to get a Packet */
+    p = (VideoPacket*)vbuffer->VBgetMsg();   /* guarranteed to get a Packet */
 
-    //printPacket(p);
-
-
+    //    printPacket(p);
     //    fprintf(stderr, "VD: got frame %d\n", p->frame);
 
     curcmd = shared->cmd;
     curcmdsn = shared->cmdsn;
-    if (p->cmdsn != shared->cmdsn || p->cmdsn != curcmdsn)
+    if (p->cmdsn != shared->cmdsn)
     {
-      
       /*
-      fprintf(stderr, "VD: frame not for current Cmd, discard it\n");
-      
+      fprintf(stderr, "VD: frame not for current Cmd, discard it:p->cmdsn:%d,shared->cmdsn:%d\n",
+              p->cmdsn,shared->cmdsn);
       printPacket(p);
       */
-      VBreclaimMsg((char*)p);
+      vbuffer->VBreclaimMsg((char*)p);
       continue;
     }
     if (curcmd == CmdINIT)
@@ -477,18 +467,24 @@ void VDprocess(int CTRpid)
 	fprintf(stderr,
 	        "VD: unable to decode packet -- future and/or past frame no available.\n");
 	printPacket(p);
-	*/
+        */
 	if (curcmd == CmdSTEP && curcmdsn == shared->cmdsn) {
 	  /*
 	  Fprintf(stderr, "VD failed to decode f%d, USR1 to CTR for STEP\n", p->frame);
 	  */
-	  kill(getppid(), SIGUSR1);  /* notify CTR anyway if STEP */
+          char message[BUFSIZ];
+          message [0]= DECODED;
+          int result = ACE_OS::write (vdsp[1],&message,BUFSIZ);
+          if (result == -1)
+              perror ("VD:Decode Notify");
+          if (result == 0)
+            perror ("VD:Socket Closed");
 	}
 #ifdef STAT
 	else if (shared->collectStat && curcmd == CmdPLAY)
 	  shared->stat.VDnoRef ++;
 #endif
-	VBreclaimMsg((char*)p);
+	vbuffer->VBreclaimMsg((char*)p);
 	continue;
       }
     }
@@ -510,7 +506,7 @@ void VDprocess(int CTRpid)
 	        (shared->patternSize * shared->sendPatternGops);
 	if (shared->sendPattern[i] == 0)
 	{
-	  VBreclaimMsg((char*)p);
+	  vbuffer->VBreclaimMsg((char*)p);
 #ifdef STAT
 	  if (shared->collectStat)
 	    shared->stat.VDagainstSendPattern ++;
@@ -520,7 +516,7 @@ void VDprocess(int CTRpid)
       }
 #endif
 
-      if (VBcheckMsg() > 0) { /* a frame is to be dropped only if
+      if (vbuffer->VBcheckMsg() > 0) { /* a frame is to be dropped only if
 				 there are more frames in VB */
 	if (p->past >= 0) { /* 'B' */
 	  if (p->display <= shared->nextFrame) {
@@ -551,7 +547,7 @@ void VDprocess(int CTRpid)
 	    frameTooLate:
 	      if (shared->rtplay)  /* too late, drop the frame */
 	      {
-		VBreclaimMsg((char*)p);
+		vbuffer->VBreclaimMsg((char*)p);
 		/*
 		Fprintf(stderr, "VD: frame %d too late, shared->nextFrame %d.\n",
 			p->frame, shared->nextFrame);
@@ -562,7 +558,7 @@ void VDprocess(int CTRpid)
 	  }
 	  else {  /* live video */
 	    if (p->display < shared->nextFrame) {
-	      VBreclaimMsg((char*)p);
+	      vbuffer->VBreclaimMsg((char*)p);
 	      /*
 	      Fprintf(stderr, "VD live video frame %d too late, nextFrame=%d\n",
 		      p->frame, shared->nextFrame);
@@ -581,7 +577,7 @@ void VDprocess(int CTRpid)
 	fprintf(stderr, "VD: a frame too late and dropped when FF.\n");
 	printPacket(p);
 	*/
-	VBreclaimMsg((char*)p);
+	vbuffer->VBreclaimMsg((char*)p);
 	continue;
       }
     }
@@ -593,7 +589,7 @@ void VDprocess(int CTRpid)
 	fprintf(stderr, "VD: a frame too late and dropped when FB.\n");
 	printPacket(p);
 	*/
-	VBreclaimMsg((char*)p);
+	vbuffer->VBreclaimMsg((char*)p);
 	continue;
       }
     }
@@ -749,10 +745,9 @@ void VDprocess(int CTRpid)
     }
     else  /* decoding failed */
     {
-      /*
+      
       fprintf(stderr, "VD error -- tried but failed decoding the packet.\n");
       printPacket(p);
-      */
     }
 
   end_decode_loop:
@@ -760,27 +755,32 @@ void VDprocess(int CTRpid)
     /* signal CTR for singlular operation: STEP, POSITION, INIT */
     if (single_tag && p->cmd != CmdREF && curcmdsn == shared->cmdsn)
     {
-      /*
-      Fprintf(stderr, "VD decoded f%d, USR1 to CTR\n", p->frame);
-      */
-      kill(getppid(), SIGUSR1);
+      
+      fprintf(stderr, "VD decoded f%d, USR1 to CTR\n", p->frame);
+      char message[BUFSIZ];
+      message[0]= DECODED;
+      int result = ACE_OS::write (vdsp[1],&message,BUFSIZ);
+      if (result == -1)
+        perror ("VD:Decode Notify");
+      if (result == 0)
+        perror ("VD:Socket Closed");
     }
-    VBreclaimMsg((char*)p);
+    vbuffer->VBreclaimMsg((char*)p);
   }
 }
 
 
 static void InitDitherEnv(void)
 {
-  lum_values = (int *) malloc(LUM_RANGE*sizeof(int));
-  cr_values = (int *) malloc(CR_RANGE*sizeof(int));
-  cb_values = (int *) malloc(CB_RANGE*sizeof(int));
+  lum_values = (int *) ACE_OS::malloc(LUM_RANGE*sizeof(int));
+  cr_values = (int *) ACE_OS::malloc(CR_RANGE*sizeof(int));
+  cb_values = (int *) ACE_OS::malloc(CB_RANGE*sizeof(int));
   init_tables();
 
   while (!shared->pixelValid) {
     usleep(10000);
   }
-  memcpy(pixel, shared->pixel, 256);
+  ACE_OS::memcpy (pixel, shared->pixel, 256);
 
   switch (ditherType) {
     

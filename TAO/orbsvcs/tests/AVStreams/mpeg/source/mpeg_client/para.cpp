@@ -125,7 +125,7 @@ static void InitBuf(void)
     goto InitBuf_exit1;
   }
   buf[strlen(buf)-1] = 0;
-  if (strcmp(buf, BANNER))
+  if (ACE_OS::strcmp (buf, BANNER))
   {
     fprintf(stderr, "BANNER in %s not expected, use default parameter value\n",
 	    PARAMETER_FILE);
@@ -153,7 +153,7 @@ static void SaveBuf(void)
   if (fp == NULL)
   {
     fprintf(stderr, "Fail to open %s for saving para", buf);
-    perror("");
+   ACE_OS::perror ("");
     return;
   }
   Fputs(BANNER);
@@ -318,13 +318,13 @@ Widget CreateParameterWindow(Widget parent)
     {
       fprintf(stderr, "Error in para.c: fewer titles than parameters, %d out of %d.\n",
 	      items, ITEMS);
-      exit(1);
+      ACE_OS::exit (1);
     }
-    item = (XmString *)malloc(sizeof(*item) * items);
+    item = (XmString *)ACE_OS::malloc(sizeof(*item) * items);
     if (item == NULL)
     {
-      perror("UI allocate parameter list item(XmString)");
-      exit(1);
+     ACE_OS::perror ("UI allocate parameter list item(XmString)");
+      ACE_OS::exit (1);
     }
     for (i = 0; i < items; i ++)
     {
@@ -343,7 +343,7 @@ Widget CreateParameterWindow(Widget parent)
     XtManageChild(wparalist);
     for (i = 0; i < items; i++)
       XmStringFree(item[i]);
-    free(item);
+    ACE_OS::free (item);
   }
   XmFontListFree(fontlist);
 

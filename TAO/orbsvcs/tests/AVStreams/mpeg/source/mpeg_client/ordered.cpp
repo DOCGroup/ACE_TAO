@@ -65,7 +65,7 @@ InitOrderedDither()
   unsigned char *lmark, *cmark;
 
   for (i=0; i<DITH_SIZE; i++) {
-    lmark = l_darrays[i] = (unsigned char *) malloc(256);
+    lmark = l_darrays[i] = (unsigned char *) ACE_OS::malloc(256);
 
     for (j=0; j<lum_values[0]; j++) {
       *lmark++ = 0;
@@ -87,7 +87,7 @@ InitOrderedDither()
   }
 
   for (i=0; i<DITH_SIZE; i++) {
-    cmark = cr_darrays[i] = (unsigned char *) malloc(256);
+    cmark = cr_darrays[i] = (unsigned char *) ACE_OS::malloc(256);
 
     for (j=0; j<cr_values[0]; j++) {
       *cmark++ = 0;
@@ -109,7 +109,7 @@ InitOrderedDither()
   }
 
   for (i=0; i<DITH_SIZE; i++) {
-    cmark = cb_darrays[i] = (unsigned char *) malloc(256);
+    cmark = cb_darrays[i] = (unsigned char *) ACE_OS::malloc(256);
 
     for (j=0; j<cb_values[0]; j++) {
       *cmark++ = 0;
