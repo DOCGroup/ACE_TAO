@@ -30,10 +30,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Singleton.h"
+#include "ace/OS.h"
 
 template <class TYPE, class ACE_LOCK>
-class TAO_Singleton : public ACE_Singleton <TYPE, ACE_LOCK>
+class TAO_Singleton : public ACE_Cleanup
 {
   // = TITLE
   //     TAO-specific Singleton class
@@ -60,6 +60,9 @@ protected:
   TAO_Singleton (void);
   // Default constructor.
 
+  TYPE instance_;
+  // Contained instance.
+
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
   static TAO_Singleton<TYPE, ACE_LOCK> *singleton_;
   // Pointer to the Singleton (ACE_Cleanup) instance.
@@ -70,7 +73,7 @@ protected:
 };
 
 template <class TYPE, class ACE_LOCK>
-class TAO_TSS_Singleton : public ACE_TSS_Singleton <TYPE, ACE_LOCK>
+class TAO_TSS_Singleton : public ACE_Cleanup
 {
   // = TITLE
   //     TAO-specific Singleton class
@@ -96,6 +99,9 @@ public:
 protected:
   TAO_TSS_Singleton (void);
   // Default constructor.
+
+  ACE_TSS_TYPE (TYPE) instance_;
+  // Contained instance.
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
   static TAO_TSS_Singleton<TYPE, ACE_LOCK> *singleton_;
