@@ -1,3 +1,7 @@
+Wed Apr 21 03:41:51 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * TAO version 0.3.20 released.
+
 Wed Apr 21 01:24:26 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/default_resource.cpp: Removed extra #pragma instantiates for
