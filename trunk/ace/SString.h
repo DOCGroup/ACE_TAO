@@ -116,6 +116,9 @@ public:
             size_t len,
             int release);
 
+  /// Clear this string. Memory is _not_ freed is <release> is 0.
+  void clear (int release = 0);
+
   /**
    * Return a substring given an offset and length, if length == -1
    * use rest of str.  Return empty substring if offset or
@@ -288,6 +291,9 @@ public:
   /// Copy <len> bytes of <s> (will NUL terminate the result)
   void set (const ACE_WSTRING_TYPE *s,
             size_t len);
+
+  /// Clear this string.
+  void clear ();
 
   /**
    * Return a substring given an offset and length, if length == -1
