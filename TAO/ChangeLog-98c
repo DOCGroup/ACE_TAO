@@ -1,5 +1,16 @@
 Tue May 20 10:55:09 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
+	* IIOP/lib/optable.cpp (TAO_Linear_OpTable_Entry): Removed setting
+ 	of opname and skel_ptr to zero in CTOR since the CTOR for those
+ 	already insures this.  Moreover, NT's compiler was complaining
+ 	about ambiguous resolutions.
+
+	* IIOP/lib/{orbobj,giop,debug,boa}.cpp: Fixed reference to
+ 	debug_level so it's TAO_debug_level.
+
+	* IIOP/lib/object.h: Replaced inclusion of optable.h with forward
+ 	decl of TAO_Operation_Table.
+
 	* IIOP/lib/optable.cpp: Fixed names of methods that were changed
  	in the header but never changed in the source.  Amazing that
  	neither g++ nor Sun C++ caught these gaffs!  (Finally, the NT
