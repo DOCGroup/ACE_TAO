@@ -1,3 +1,4 @@
+
 // @ (#)iiopobj.cpp     1.9 95/11/04
 // Copyright 1995 by Sun Microsystems Inc.
 // All Rights Reserved
@@ -46,7 +47,7 @@ IIOP::Profile::set (const char *h,
 {
   if (this->set (h, p, addr) == -1)
     return -1;
-      
+
   // Enough room as to print a <void*>
   const int bufs = 32;
   char buffer[bufs];
@@ -96,7 +97,7 @@ IIOP::Profile::set (const ACE_INET_Addr &addr,
                     const char *key)
 {
   // Set up an IIOP Profile to hold the host name.
-  
+
   if (addr.get_ip_address () == INADDR_ANY)
     {
       // Special case
@@ -127,7 +128,7 @@ IIOP::Profile::set (const ACE_INET_Addr &addr,
                     const TAO_opaque &key)
 {
   // Set up an IIOP Profile to hold the host name.
-  
+
   if (addr.get_ip_address () == INADDR_ANY)
     {
       // Special case

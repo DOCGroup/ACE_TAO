@@ -91,6 +91,10 @@ be_type::tc_name (void)
   return this->tc_name_;
 }
 
+// XXXASG - This code works. However, whether we should generate the
+// ACE_NESTED_CLASS macro or not should be based on an option to the
+// compiler. In this version, we choose to generate a relative path.
+
 // return the type name using the ACE_NESTED_CLASS macro
 char *
 be_type::nested_type_name (be_decl *use_scope, char *suffix)
@@ -155,8 +159,8 @@ be_type::nested_type_name (be_decl *use_scope, char *suffix)
           // initial prefix matches i.e., they have a common root
           // start by initializing the macro
 
-          ACE_OS::sprintf (macro, "ACE_NESTED_CLASS (");
-          ACE_OS::strcat (macro, def_curr); // initialize the first argument
+          //@@          ACE_OS::sprintf (macro, "ACE_NESTED_CLASS (");
+          //@@          ACE_OS::strcat (macro, def_curr); // initialize the first argument
 
           def_curr = (def_next ? (def_next+2) : 0); // skip the ::
           use_curr = (use_next ? (use_next+2) : 0); // skip the ::
@@ -176,8 +180,8 @@ be_type::nested_type_name (be_decl *use_scope, char *suffix)
               if (!ACE_OS::strcmp (def_curr, use_curr))
                 {
                   // they have same prefix, append to arg1
-                  ACE_OS::strcat (macro, "::");
-                  ACE_OS::strcat (macro, def_curr);
+                  //@@    ACE_OS::strcat (macro, "::");
+                  //@@ ACE_OS::strcat (macro, def_curr);
                   def_curr = (def_next ? (def_next+2) : 0); // skip the ::
                   use_curr = (use_next ? (use_next+2) : 0); // skip the ::
                 }
@@ -190,7 +194,7 @@ be_type::nested_type_name (be_decl *use_scope, char *suffix)
             }
 
           // start the 2nd argument of the macro
-          ACE_OS::strcat (macro, ", ");
+          //@@          ACE_OS::strcat (macro, ", ");
 
           // copy the remaining def_name (if any left)
           if (def_curr)
@@ -200,7 +204,7 @@ be_type::nested_type_name (be_decl *use_scope, char *suffix)
           ACE_OS::strcat (macro, this->local_name ()->get_string ());
           if (suffix)
             ACE_OS::strcat (macro, suffix);
-          ACE_OS::strcat (macro, ")");
+          //@@          ACE_OS::strcat (macro, ")");
           return macro;
         } // end of if the root prefixes match
     }

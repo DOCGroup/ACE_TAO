@@ -122,6 +122,9 @@ public:
       , NT_sequence				// Denotes an IDL sequence
       , NT_typedef				// Denotes a typedef
       , NT_pre_defined				// Denotes a predefined type
+        , NT_native                             // Denotes a native type
+                                                // dependent on the programming
+                                                // language
   };
 
   // Operations

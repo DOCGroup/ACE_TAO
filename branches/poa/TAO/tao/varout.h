@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    TAO
-// 
+//
 // = FILENAME
 //    varout.h
 //
@@ -13,7 +13,7 @@
 //
 // = AUTHOR
 //
-//   Aniruddha Gokhale 
+//   Aniruddha Gokhale
 // ============================================================================
 
 #if !defined (TAO_VAROUT_H)
@@ -207,7 +207,7 @@ private:
   // seq instance
 };
 
-template <class T_ptr>
+template <class T, class T_ptr>
 class TAO_Object_var
   // = TITLE
   //   template<class T, class T_ptr> TAO_Object_var
@@ -622,4 +622,3 @@ private:
 };
 
 #endif /* TAO_VAROUT_H */
-

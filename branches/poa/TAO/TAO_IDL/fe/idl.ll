@@ -128,6 +128,7 @@ wchar_t		return IDL_WCHAR;
 boolean		return IDL_BOOLEAN;
 octet		return IDL_OCTET;
 void		return IDL_VOID;
+native          return IDL_NATIVE;
 
 TRUE		return IDL_TRUETOK;
 FALSE		return IDL_FALSETOK;
@@ -269,13 +270,13 @@ idl_parse_line_and_file(char *buf)
   UTL_String	*nm;
 
   /* Skip initial '#' */
-  if (*r != '#') 
+  if (*r != '#')
     return;
   else
     r++;
 
   /* Check to see if we're running under the screwy Microsoft scheme */
-  /* of putting #line num instead of #num. */ 
+  /* of putting #line num instead of #num. */
 
   if (ACE_OS::strncmp (r, "line", 4) == 0)
     r += 5;
@@ -290,7 +291,7 @@ idl_parse_line_and_file(char *buf)
   idl_global->set_lineno(idl_atoi(h, 10));
 
   /* Find file name, if present */
-  for (; *r != '"'; r++) 
+  for (; *r != '"'; r++)
     if (*r == '\n' || *r == '\0')
       return;
 
