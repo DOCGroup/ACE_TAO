@@ -7,18 +7,18 @@ Mon Apr 28 14:12:04 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 Mon Apr 28 11:17:26 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* tests/Conn_Test.cpp,Message_{Block,Queue}_Test.cpp,
-	  Process_Strategy_Test.cpp:
-	  fixed template specializations for platforms without threads.
-	  Thanks to Nanbor Wang <nw1@cs.wustl.edu> for pointing out this
-	  problem.
+	  Process_Strategy_Test.cpp: fixed template specializations
+	  for platforms without threads.  Thanks to Nanbor Wang
+	  <nw1@cs.wustl.edu> for pointing out this problem.
 
-	* ace/Connector.h: use ACE_SYNCH_RW_MUTEX in Map typedefs instead
-          of old ACE_RW_Mutex (which should have been ACE_Thread_RW_Mutex)
-	  and ACE_Null_Mutex (depending on whether the platform has threads).
+	* ace/Connector.h: use ACE_SYNCH_RW_MUTEX in Map typedefs
+	  instead of old ACE_RW_Mutex (which should have been
+	  ACE_Thread_RW_Mutex) and ACE_Null_Mutex (depending on
+	  whether the platform has threads). 
 
 	* ace/Service_Record.cpp: added ACE_NULL_SYNCH template
 	  specializations with threads, because they're still needed even
-	  with threads.	  This way, individual programs don't have to
+	  with threads.	 This way, individual programs don't have to
 	  specialize these.
 
 	* ace/Task.cpp: added ACE_TSS<ACE_Task_Exit> and
@@ -45,11 +45,31 @@ Mon Apr 28 11:17:26 1997  David L. Levine  <levine@cs.wustl.edu>
 	* examples/ASX/UPIPE_Event_Server/Supplier_Router.cpp: fixed
 	  typos in template specializations.
 
-Mon Apr 28 02:16:19 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+Mon Apr 28 10:33:36 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/IOStream.h: Added a new macro called
+ 	  ACE_LACKS_IOSTREAM_SETGET, which works around bugs with SGI C++
+ 	  on IRIX 6.2.  Thanks to Torbjorn Lindgren <tl@funcom.com> for
+ 	  reporting this.
+
+	* ace/Timer_List_T.h: Replaced the use of 
+	  ITERATOR with ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR> to
+	  work around problems with SGI C++.  Thanks to 
+	  Torbjorn Lindgren <tl@funcom.com> for reporting this.
+
+	* ace/Timer_List_T.cpp: Removed the use of NODE * and replaced it
+ 	  with ACE_Timer_Node_T<TYPE, FUNCTOR> in order to work around
+ 	  bugs with certain C++ compilers (i.e., SGI).  Thanks to Torbjorn
+ 	  Lindgren <tl@funcom.com> for reporting this.
 
 	* tests/Conn_Test.cpp: Removed some extraneous template
  	  specializations.  Thanks to Nanbor Wang <nw1@cs.wustl.edu> for
  	  reporting these.
+
+Mon Apr 28 11:17:26 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* examples/ASX/UPIPE_Event_Server/Supplier_Router.cpp: fixed
+	  typos in template specializations.
 
 Mon Apr 28 00:25:17 1997    <irfan@TWOSTEP>
 

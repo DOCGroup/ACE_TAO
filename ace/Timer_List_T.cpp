@@ -59,13 +59,11 @@ ACE_Timer_List_T<TYPE, FUNCTOR>::is_empty (void) const
   return this->head_ == 0;
 }
 
-
 template <class TYPE, class FUNCTOR> ACE_Timer_Node_T<TYPE, FUNCTOR> *
 ACE_Timer_List_T<TYPE, FUNCTOR>::alloc_node (void)
 {
-  return new NODE;
+  return new ACE_Timer_Node_T<TYPE, FUNCTOR>;
 }
-
 
 template <class TYPE, class FUNCTOR> void
 ACE_Timer_List_T<TYPE, FUNCTOR>::free_node (ACE_Timer_Node_T<TYPE, FUNCTOR> *node)
@@ -91,11 +89,11 @@ ACE_Timer_List_T<TYPE, FUNCTOR>::~ACE_Timer_List_T (void)
   ACE_TRACE ("ACE_Timer_List::~ACE_Timer_List");
   ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_));
   
-  NODE *curr = this->head_;
+  ACE_Timer_Node_T<TYPE, FUNCTOR> *curr = this->head_;
   
   while (curr != 0)
     {
-      NODE *next = curr->next_;
+      ACE_Timer_Node_T<TYPE, FUNCTOR> *next = curr->next_;
       this->free_node (curr);
       curr = next;
     }
@@ -128,8 +126,8 @@ ACE_Timer_List_T<TYPE, FUNCTOR>::reschedule (ACE_Timer_Node_T<TYPE, FUNCTOR> *ex
     }
   else
     {
-      NODE *prev = this->head_;
-      NODE *after = this->head_->next_;
+      ACE_Timer_Node_T<TYPE, FUNCTOR> *prev = this->head_;
+      ACE_Timer_Node_T<TYPE, FUNCTOR> *after = this->head_->next_;
 
       // Locate the proper position in the queue. 
 
@@ -164,15 +162,15 @@ ACE_Timer_List_T<TYPE, FUNCTOR>::schedule (const TYPE &type,
   if (this->is_empty () || future_time < this->earliest_time ())
     {
       // Place at the beginning of the list.
-      NODE *temp = this->alloc_node ();
+      ACE_Timer_Node_T<TYPE, FUNCTOR> *temp = this->alloc_node ();
       
       // Use operator placement new.
-      this->head_ = new (temp) NODE (type, 
-				     act, 
-				     future_time,
-				     interval, 
-				     this->head_,
-				     timer_id);
+      this->head_ = new (temp) ACE_Timer_Node_T<TYPE, FUNCTOR> (type, 
+								act, 
+								future_time,
+								interval, 
+								this->head_,
+								timer_id);
       return timer_id;
     }
   
@@ -180,8 +178,8 @@ ACE_Timer_List_T<TYPE, FUNCTOR>::schedule (const TYPE &type,
   // ascending order of absolute time to expire).
   else 
     {
-      NODE *prev = this->head_;
-      NODE *after = this->head_->next_;
+      ACE_Timer_Node_T<TYPE, FUNCTOR> *prev = this->head_;
+      ACE_Timer_Node_T<TYPE, FUNCTOR> *after = this->head_->next_;
 	  
       while (after != 0 && future_time > after->timer_value_)
 	{
@@ -189,15 +187,15 @@ ACE_Timer_List_T<TYPE, FUNCTOR>::schedule (const TYPE &type,
 	  after = after->next_;
 	}
 
-      NODE *temp = this->alloc_node ();
+      ACE_Timer_Node_T<TYPE, FUNCTOR> *temp = this->alloc_node ();
 
       // Use operator placement new.
-      prev->next_ = new (temp) NODE (type, 
-				     act, 
-				     future_time,
-				     interval, 
-				     after,
-				     timer_id);
+      prev->next_ = new (temp) ACE_Timer_Node_T<TYPE, FUNCTOR> (type, 
+								act, 
+								future_time,
+								interval, 
+								after,
+								timer_id);
       return timer_id;
     }
 }
@@ -227,8 +225,8 @@ ACE_Timer_List_T<TYPE, FUNCTOR>::cancel (int timer_id,
   ACE_TRACE ("ACE_Timer_List::cancel");
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
 
-  NODE *prev = 0;
-  NODE *curr = 0;
+  ACE_Timer_Node_T<TYPE, FUNCTOR> *prev = 0;
+  ACE_Timer_Node_T<TYPE, FUNCTOR> *curr = 0;
 
   // Try to locate the ACE_Timer_Node that matches the timer_id.
 
@@ -268,8 +266,8 @@ ACE_Timer_List_T<TYPE, FUNCTOR>::cancel (const TYPE &type,
   ACE_TRACE ("ACE_Timer_List::cancel");
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
 
-  NODE *prev = 0;
-  NODE *curr = this->head_;
+  ACE_Timer_Node_T<TYPE, FUNCTOR> *prev = 0;
+  ACE_Timer_Node_T<TYPE, FUNCTOR> *curr = this->head_;
 
   int number_of_cancellations = 0;
 
