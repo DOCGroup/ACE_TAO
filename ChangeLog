@@ -1,435 +1,444 @@
+Mon Jan 19 07:24:16 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * examples/Misc/test_XtReactor1.cpp:
+        * examples/Misc/test_XtReactor2.cpp:
+
+          Removed #define for String (added back in '96).  The workaround is
+          apparently no longer needed.  Also fixed some build errors and
+          warnings.
+
 Mon Jan 19 10:00:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* bin/msvc_auto_compile.pl:
+        * bin/msvc_auto_compile.pl:
           Fixed typo in file path
 
 Sun Jan 18 15:32:59 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ACE-INSTALL.html:
+        * ACE-INSTALL.html:
 
-	  Added patches from Viktor Ransmayr<viktor.ransmayr@t-online.de>
-	  for a documentation patch, which describes how to build ACE
-	  using	only the MinGW and MSYS package.
+          Added patches from Viktor Ransmayr<viktor.ransmayr@t-online.de>
+          for a documentation patch, which describes how to build ACE
+          using only the MinGW and MSYS package.
 
 Sun Jan 18 10:27:11 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* performance-tests/Server_Concurrency/Leader_Follower/RT_CORBA_Leader_Follower.cpp:
+        * performance-tests/Server_Concurrency/Leader_Follower/RT_CORBA_Leader_Follower.cpp:
 
-	  Used ACE_UINT64_DBLCAST_ADAPTER  instead of direct casting to a
-	  double to be more portable.
+          Used ACE_UINT64_DBLCAST_ADAPTER  instead of direct casting to a
+          double to be more portable.
 
 Sun Jan 18 10:13:16 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* Logging/LogManager.h:
-	* Logging/Use_Multiple_Sinks.cpp:
-	* Logging/Use_Ostream.cpp:
-	* Naming/Name_Binding.h:
+        * Logging/LogManager.h:
+        * Logging/Use_Multiple_Sinks.cpp:
+        * Logging/Use_Ostream.cpp:
+        * Naming/Name_Binding.h:
 
-	  #included fstream conditionally on VC6. This should fix the
-	  remaining compile errors on VC6 with MPC builds.
+          #included fstream conditionally on VC6. This should fix the
+          remaining compile errors on VC6 with MPC builds.
 
 Sun Jan 18 09:48:03 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* examples/TMCast/member.cpp:
+        * examples/TMCast/member.cpp:
 
           Fixed a compilation errors with VC6 which stemmed due to the
-	  fact that a unsigned long long was used. We use ACE_UINT64
-	  instead. 
+          fact that a unsigned long long was used. We use ACE_UINT64
+          instead.
 
 Sun Jan 18 09:40:04 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* tests/SOCK_Send_Recv_Test_IPV6.cpp:
-	* tests/SOCK_Test_IPv6.cpp:
+        * tests/SOCK_Send_Recv_Test_IPV6.cpp:
+        * tests/SOCK_Test_IPv6.cpp:
 
-	  More warnings from unused functions.
+          More warnings from unused functions.
 
 Sun Jan 18 09:55:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* bin/msvc_auto_compile.pl:
-	  Added tests/Test_Output.dsp to the list of libs to be build first
-	  when building statically. Removed the code for the non-MPC static
-	  build, the projects for this are removed before the 1.4 release.
+        * bin/msvc_auto_compile.pl:
+          Added tests/Test_Output.dsp to the list of libs to be build first
+          when building statically. Removed the code for the non-MPC static
+          build, the projects for this are removed before the 1.4 release.
 
-	* bin/msvc_static_order.lst:
-	  Added tests/Test_Output.dsp to the list of libs to be build first.
+        * bin/msvc_static_order.lst:
+          Added tests/Test_Output.dsp to the list of libs to be build first.
 
 Sun Jan 18 08:52:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ASNMP/asnmp/ctr64.h:
-	  Added include of ace/Basic_Types.h to get ACE_UINT64 definition.
+        * ASNMP/asnmp/ctr64.h:
+          Added include of ace/Basic_Types.h to get ACE_UINT64 definition.
 
 Sun Jan 18 08:45:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tests/Tests.bor:
-	  Fixed this makefile
+        * tests/Tests.bor:
+          Fixed this makefile
 
 Sun Jan 18 00:00:07 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Max_Default_Port_Test_IPV6.cpp:
-	* tests/SOCK_Send_Recv_Test_IPV6.cpp:
-	* tests/SOCK_Test_IPv6.cpp:
+        * tests/Max_Default_Port_Test_IPV6.cpp:
+        * tests/SOCK_Send_Recv_Test_IPV6.cpp:
+        * tests/SOCK_Test_IPv6.cpp:
 
-	  Fixed unused function warnings in the daily builds.
+          Fixed unused function warnings in the daily builds.
 
 Sat Jan 17 23:52:38 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/SOCK_Dgram_Test.cpp:
+        * tests/SOCK_Dgram_Test.cpp:
 
-	  Fixed a compile error in Full_Reactor builds.
+          Fixed a compile error in Full_Reactor builds.
 
 Sat Jan 17 19:38:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tests/INET_Addr_Test_IPV6.cpp:
-	* tests/Proactor_Test_IPV6.cpp:
-	* tests/SOCK_Send_Recv_Test_IPV6.cpp:
-	  Fixed incorrect doxygen file tag.
+        * tests/INET_Addr_Test_IPV6.cpp:
+        * tests/Proactor_Test_IPV6.cpp:
+        * tests/SOCK_Send_Recv_Test_IPV6.cpp:
+          Fixed incorrect doxygen file tag.
 
 Sat Jan 17 19:35:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* examples/C++NPv2/AC_CLD_export.h:
-	* examples/C++NPv2/AIO_CLD_export.h:
-	* examples/C++NPv2/CLD_export.h:
-	* examples/C++NPv2/SLD_export.h:
-	* examples/C++NPv2/SLDEX_export.h:
-	* examples/C++NPv2/TPCLS_export.h:
-	* examples/C++NPv2/TPLS_export.h:
+        * examples/C++NPv2/AC_CLD_export.h:
+        * examples/C++NPv2/AIO_CLD_export.h:
+        * examples/C++NPv2/CLD_export.h:
+        * examples/C++NPv2/SLD_export.h:
+        * examples/C++NPv2/SLDEX_export.h:
+        * examples/C++NPv2/TPCLS_export.h:
+        * examples/C++NPv2/TPLS_export.h:
           Added check for ACE_AS_STATIC_LIBS for setting the export flags for
           proper building of static libraries.
 
 Sat Jan 17 19:19:33 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ASNMP/asnmp/ASNMP_Export.h:
+        * ASNMP/asnmp/ASNMP_Export.h:
           Added check for ACE_AS_STATIC_LIBS for setting the export flags for
           proper building of static libraries.
 
-	* ASNMP/asnmp/ctr64.cpp:
-	* ASNMP/asnmp/ctr64.h:
-	  Changed unsigned long long to ACE_UINT64
+        * ASNMP/asnmp/ctr64.cpp:
+        * ASNMP/asnmp/ctr64.h:
+          Changed unsigned long long to ACE_UINT64
 
-	* ASNMP/asnmp/address.h:
-	* ASNMP/asnmp/octet.h:
-	* ASNMP/asnmp/oid.h:
-	* ASNMP/asnmp/pdu.h:
-	* ASNMP/asnmp/vb.h:
-	  Added missing ASNMP_Export macro.
+        * ASNMP/asnmp/address.h:
+        * ASNMP/asnmp/octet.h:
+        * ASNMP/asnmp/oid.h:
+        * ASNMP/asnmp/pdu.h:
+        * ASNMP/asnmp/vb.h:
+          Added missing ASNMP_Export macro.
 
-	  This fixes several build problems on Win32. Thanks to
+          This fixes several build problems on Win32. Thanks to
           Michelangelo Nottoli <m.nottoli@acsys.it> for reporting this
-	  and supplying the ideas how to fix this.
+          and supplying the ideas how to fix this.
 
 Sat Jan 17 18:43:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* bin/msvc_static_compile.pl:
-	* bin/msvc_static_order.lst:
-	  When using static projects we cannot use the dependencies between
-	  different libraries. Therefor we have to explicitly define the
-	  build order. The existing msvc_auto_compile.pl script was getting
-	  to complex, so added a new msvc_static_compile.pl script that will
-	  be used for building statically. In the msvc_static_order.lst the
-	  order of building can be specified.
+        * bin/msvc_static_compile.pl:
+        * bin/msvc_static_order.lst:
+          When using static projects we cannot use the dependencies between
+          different libraries. Therefor we have to explicitly define the
+          build order. The existing msvc_auto_compile.pl script was getting
+          to complex, so added a new msvc_static_compile.pl script that will
+          be used for building statically. In the msvc_static_order.lst the
+          order of building can be specified.
 
 Sat Jan 17 09:46:38 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/TMCast/Group.cpp:
+        * ace/TMCast/Group.cpp:
 
-	  Fixed compile errors with VC++ 6.
+          Fixed compile errors with VC++ 6.
 
 Sat Jan 17 15:29:01 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ASNMP/asnmp/asn1.cpp:
-	  Removed not needed ;
+        * ASNMP/asnmp/asn1.cpp:
+          Removed not needed ;
 
 Sat Jan 17 15:05:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* bin/MakeProjectCreator/config/ec_typed_events.mpb:
-	* bin/MakeProjectCreator/config/ec_use_typed_events.mpb:
-	* bin/MakeProjectCreator/config/event.mpb:
-	  The fix for the ec_typed_events feature. Thanks to Chad Elliot for
-	  explaining that MPC inheritance is based on file name. So CosEvent.mpc
-	  inherits from ec_typed_events in the orbsvcs directory, projects using
-	  event inherit from event which inherits from ec_use_typed_events
-	  which then sets the needed compiler flags and adds the needed
-	  libraries to the linker.
+        * bin/MakeProjectCreator/config/ec_typed_events.mpb:
+        * bin/MakeProjectCreator/config/ec_use_typed_events.mpb:
+        * bin/MakeProjectCreator/config/event.mpb:
+          The fix for the ec_typed_events feature. Thanks to Chad Elliot for
+          explaining that MPC inheritance is based on file name. So CosEvent.mpc
+          inherits from ec_typed_events in the orbsvcs directory, projects using
+          event inherit from event which inherits from ec_use_typed_events
+          which then sets the needed compiler flags and adds the needed
+          libraries to the linker.
 
 Sat Jan 17 00:56:54 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         * tests/Proactor_Test_IPV6.cpp
-	* tests/SOCK_Send_Recv_Test_IPV6.cpp:
-	* tests/SOCK_Test_IPv6.cpp:
+        * tests/SOCK_Send_Recv_Test_IPV6.cpp:
+        * tests/SOCK_Test_IPv6.cpp:
 
-	  Fixed compilation errors in builds that don't have IPV6 enabled.
+          Fixed compilation errors in builds that don't have IPV6 enabled.
 
 Sat Jan 17 00:45:40 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Multihomed_INET_Addr_Test_IPV6.dsp:
-	* tests/INET_Addr_Test_IPV6.dsp:
-	* tests/Max_Default_Port_Test_IPV6.dsp:
-	* tests/Multicast_Test_IPV6.dsp:
-	* tests/Proactor_Test_IPV6.dsp:
-	* tests/SOCK_Send_Recv_Test_IPV6.dsp:
-	* tests/SOCK_Test_IPv6.dsp:
+        * tests/Multihomed_INET_Addr_Test_IPV6.dsp:
+        * tests/INET_Addr_Test_IPV6.dsp:
+        * tests/Max_Default_Port_Test_IPV6.dsp:
+        * tests/Multicast_Test_IPV6.dsp:
+        * tests/Proactor_Test_IPV6.dsp:
+        * tests/SOCK_Send_Recv_Test_IPV6.dsp:
+        * tests/SOCK_Test_IPv6.dsp:
 
-	  New dsp files for the tests
+          New dsp files for the tests
 
-	* tests/tests.dsw:
+        * tests/tests.dsw:
 
-	  Workspace file with the mods.
+          Workspace file with the mods.
 
 Sat Jan 17 00:12:21 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/run_test.lst:
-	* tests/tests.mpc:
+        * tests/run_test.lst:
+        * tests/tests.mpc:
 
-	  Added missing tests.
+          Added missing tests.
 
 Fri Jan 16 23:57:08 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/INET_Addr_Test_IPV6.cpp:
-	* tests/Max_Default_Port_Test_IPV6.cpp:
-	* tests/Multicast_Test_IPV6.cpp:
-	* tests/Multihomed_INET_Addr_Test_IPV6.cpp:
-	* tests/Proactor_Test_IPV6.cpp:
-	* tests/SOCK_Send_Recv_Test_IPV6.cpp:
+        * tests/INET_Addr_Test_IPV6.cpp:
+        * tests/Max_Default_Port_Test_IPV6.cpp:
+        * tests/Multicast_Test_IPV6.cpp:
+        * tests/Multihomed_INET_Addr_Test_IPV6.cpp:
+        * tests/Proactor_Test_IPV6.cpp:
+        * tests/SOCK_Send_Recv_Test_IPV6.cpp:
 
-	  Fixed a typo in the name of the files that are printed out for
-	  logging and error checking.
+          Fixed a typo in the name of the files that are printed out for
+          logging and error checking.
 
 Fri Jan 16 23:25:03 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Tests.bor:
+        * tests/Tests.bor:
 
-	  New test to the borland makefiles.
+          New test to the borland makefiles.
 
 Fri Jan 16 23:21:10 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/run_test.lst:
+        * tests/run_test.lst:
 
-	  Added the new tests to the daily build.
+          Added the new tests to the daily build.
 
 Fri Jan 16 23:19:17 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/tests.mpc:
+        * tests/tests.mpc:
 
-	  Added the new tests to the MPC.
+          Added the new tests to the MPC.
 
 Fri Jan 16 23:01:11 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Multihomed_INET_Addr_Test_IPV6.cpp:
-	* tests/Proactor_Test_IPV6.cpp:
-	* tests/SOCK_Send_Recv_Test_IPV6.cpp:
-	* tests/SOCK_Test_IPv6.cpp:
+        * tests/Multihomed_INET_Addr_Test_IPV6.cpp:
+        * tests/Proactor_Test_IPV6.cpp:
+        * tests/SOCK_Send_Recv_Test_IPV6.cpp:
+        * tests/SOCK_Test_IPv6.cpp:
 
           More IPV6 tests from Brian Bruesker.
 
-	* tests/Makefile.tests:
+        * tests/Makefile.tests:
 
-	  Added these new tests.
+          Added these new tests.
 
 Fri Jan 16 21:38:59 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/INET_Addr_Test_IPV6.cpp:
-	* tests/Max_Default_Port_Test_IPV6.cpp:
-	* tests/Multicast_Test_IPV6.cpp:
-	* tests/Multihomed_INET_Addr_Test_IPV6.cpp:
+        * tests/INET_Addr_Test_IPV6.cpp:
+        * tests/Max_Default_Port_Test_IPV6.cpp:
+        * tests/Multicast_Test_IPV6.cpp:
+        * tests/Multihomed_INET_Addr_Test_IPV6.cpp:
 
           New test for IPV6. These tests were donated by Brian Bruesker.
 
-	* tests/SOCK_Dgram_Test.cpp:
+        * tests/SOCK_Dgram_Test.cpp:
 
-	  Cosmetic fix.
+          Cosmetic fix.
 
-	* tests/Makefile.tests:
+        * tests/Makefile.tests:
 
-	  Added the new tests.
+          Added the new tests.
 
 Fri Jan 16 18:44:04 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/INET_Addr_Test.cpp:
-	* tests/Max_Default_Port_Test.cpp:
-	* tests/Multicast_Test.cpp:
-	* tests/Multihomed_INET_Addr_Test.cpp:
-	* tests/Proactor_Test.cpp:
-	* tests/SOCK_Send_Recv_Test.cpp:
-	* tests/SOCK_Test.cpp:
+        * tests/INET_Addr_Test.cpp:
+        * tests/Max_Default_Port_Test.cpp:
+        * tests/Multicast_Test.cpp:
+        * tests/Multihomed_INET_Addr_Test.cpp:
+        * tests/Proactor_Test.cpp:
+        * tests/SOCK_Send_Recv_Test.cpp:
+        * tests/SOCK_Test.cpp:
 
-	  Reverted changes from "Fri Jan 16 17:25:50 2004  Balachandran
-	  Natarajan  <bala@dre.vanderbilt.edu>" since the IPV6 needs to be
-	  placed seperately.
+          Reverted changes from "Fri Jan 16 17:25:50 2004  Balachandran
+          Natarajan  <bala@dre.vanderbilt.edu>" since the IPV6 needs to be
+          placed seperately.
 
 Fri Jan 16 17:25:50 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/INET_Addr_Test.cpp:
-	* tests/Max_Default_Port_Test.cpp:
-	* tests/Multicast_Test.cpp:
-	* tests/Multihomed_INET_Addr_Test.cpp:
-	* tests/Proactor_Test.cpp:
-	* tests/SOCK_Send_Recv_Test.cpp:
-	* tests/SOCK_Test.cpp:
+        * tests/INET_Addr_Test.cpp:
+        * tests/Max_Default_Port_Test.cpp:
+        * tests/Multicast_Test.cpp:
+        * tests/Multihomed_INET_Addr_Test.cpp:
+        * tests/Proactor_Test.cpp:
+        * tests/SOCK_Send_Recv_Test.cpp:
+        * tests/SOCK_Test.cpp:
 
-	  Thanks to Brian Bruesker <bbuesker@qualcomm.com>, we now have
-	  tests for IPV6 features in the above tests
+          Thanks to Brian Bruesker <bbuesker@qualcomm.com>, we now have
+          tests for IPV6 features in the above tests
 
-	* tests/SOCK_Dgram_Test.cpp:
+        * tests/SOCK_Dgram_Test.cpp:
 
-	  A simple test based on SOCK_Test for Datagrams. Thanks once
-	  again to Brian Bruesker.
+          A simple test based on SOCK_Test for Datagrams. Thanks once
+          again to Brian Bruesker.
 
-	* tests/Makefile.tests:
+        * tests/Makefile.tests:
 
-	  Added the new test.
+          Added the new test.
 
 Fri Jan 16 15:04:17 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/SOCK_Dgram_Bcast.cpp (close): Set the this->if_list_
-	  field to 0 to let applications close and re-open the socket.
-  	  Without it, a second close will delete already delete'd memory.
-  	  Thanks to Shannon Barber <shannon.barber@myrealbox.com> for
-	  this fix.
+        * ace/SOCK_Dgram_Bcast.cpp (close): Set the this->if_list_
+          field to 0 to let applications close and re-open the socket.
+          Without it, a second close will delete already delete'd memory.
+          Thanks to Shannon Barber <shannon.barber@myrealbox.com> for
+          this fix.
 
 Fri Jan 16 12:29:48 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* configure.ac (AC_CONFIG_AUX_DIR):
+        * configure.ac (AC_CONFIG_AUX_DIR):
 
-	  Changed auxiliary directory filename from "aux" to
-	  "aux_config".  The former is not an allowed/valid name on
-	  Windows.  Thanks to Greg Mulyar <greg_mu@yahoo.com> for pointing
-	  out the problem.
+          Changed auxiliary directory filename from "aux" to
+          "aux_config".  The former is not an allowed/valid name on
+          Windows.  Thanks to Greg Mulyar <greg_mu@yahoo.com> for pointing
+          out the problem.
 
 Fri Jan 16 14:19:14 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/tests.mpc:
+        * tests/tests.mpc:
 
-	  Fixed the project names in MPC to be similar to the ones used in
-	  default distribution. Thanks to Boris Kaminer
-	  <boris_kaminer@mail.ru> for motivating this fix.
+          Fixed the project names in MPC to be similar to the ones used in
+          default distribution. Thanks to Boris Kaminer
+          <boris_kaminer@mail.ru> for motivating this fix.
 
 Fri Jan 16 16:09:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* bin/MakeProjectCreator/config/event.mpb:
-	  Removed ec_typed_events as base. This resulted in problems in
+        * bin/MakeProjectCreator/config/event.mpb:
+          Removed ec_typed_events as base. This resulted in problems in
           building other orbsvcs which then use the ec_typed_events.mpb
-	  which is located in $(TAO_ROOT)/orbsvcs/orbsvcs. This restores
-	  the situation to the previous situation and in meantime we can
-	  figure out a better solution.
+          which is located in $(TAO_ROOT)/orbsvcs/orbsvcs. This restores
+          the situation to the previous situation and in meantime we can
+          figure out a better solution.
 
 Fri Jan 16 15:01:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tests/Logging_Strategy_Test.cpp:
-	  For checking if we are building statically use ACE_AS_STATIC_LIBS and
-	  not ACE_HAS_STATIC_LIBS. With this fix this tests runs again in the
-	  BCB6 static build.
+        * tests/Logging_Strategy_Test.cpp:
+          For checking if we are building statically use ACE_AS_STATIC_LIBS and
+          not ACE_HAS_STATIC_LIBS. With this fix this tests runs again in the
+          BCB6 static build.
 
 Fri Jan 16 11:27:01 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tests/Service_Config_DLL_Export.h:
+        * tests/Service_Config_DLL_Export.h:
           Added check for ACE_AS_STATIC_LIBS for setting the export flags for
           proper building of static libraries.
 
 Fri Jan 16 11:25:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* examples/APG/Svc_Config/HASTATUS_export.h
+        * examples/APG/Svc_Config/HASTATUS_export.h
           Added check for ACE_AS_STATIC_LIBS for setting the export flags for
           proper building of static libraries.
 
 Fri Jan 16 09:57:45 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tests/DLL_Test.bor:
-	* tests/DLL_Test.cpp:
-	  Changed this test so that it works in MPC and non-MPC builds.
-	  We use always the decorator string for the dll name.
+        * tests/DLL_Test.bor:
+        * tests/DLL_Test.cpp:
+          Changed this test so that it works in MPC and non-MPC builds.
+          We use always the decorator string for the dll name.
 
 Fri Jan 16 08:56:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* bin/MakeProjectCreator/config/ec_typed_events.mpb:
-	  Added this file. When the feature ec_typed_events is available,
-	  we must link with the IFRClient and DynamicInterface library.
+        * bin/MakeProjectCreator/config/ec_typed_events.mpb:
+          Added this file. When the feature ec_typed_events is available,
+          we must link with the IFRClient and DynamicInterface library.
 
-	* bin/MakeProjectCreator/config/event.mpb:
-	  Add ec_typed_events as parent project. When ec_typed_events is
-	  available projects using event should link with the extra needed
-	  libraries. This fixes the link errors in the BCB6 Static build.
+        * bin/MakeProjectCreator/config/event.mpb:
+          Add ec_typed_events as parent project. When ec_typed_events is
+          available projects using event should link with the extra needed
+          libraries. This fixes the link errors in the BCB6 Static build.
 
 Thu Jan 15 20:54:38 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* configure.ac:
+        * configure.ac:
 
-	  Require GNU Autoconf 2.58 or better, not 2.57g or better.
-	  Version 2.57g was a testing release not a stable release.
+          Require GNU Autoconf 2.58 or better, not 2.57g or better.
+          Version 2.57g was a testing release not a stable release.
 
-	  Use more comprehensive (custom) test for detecting shm_open()
-	  support instead of AC_CHECK_FUNC.  In particular, use
-	  AC_LINK_IFELSE so that we can detect missing function prototype
-	  errors.  Addresses a problem on Solaris builds where shm_open()
-	  support was incorrectly detected as available despite the fact
-	  POSIX.1b support was not enabled.
+          Use more comprehensive (custom) test for detecting shm_open()
+          support instead of AC_CHECK_FUNC.  In particular, use
+          AC_LINK_IFELSE so that we can detect missing function prototype
+          errors.  Addresses a problem on Solaris builds where shm_open()
+          support was incorrectly detected as available despite the fact
+          POSIX.1b support was not enabled.
 
-	  Removed ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION test.  This macro is
-	  no longer used.
+          Removed ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION test.  This macro is
+          no longer used.
 
-	* ace/os_include/sys/os_resource.h:
+        * ace/os_include/sys/os_resource.h:
 
-	  Include <sys/procfs.h> in the ACE_HAS_PROC_FS case.  It is
-	  necessary to pull in the "prusage_t" typedef.  That typedef is
-	  used later in this header.  Addresses an ACE+autoconf build
-	  problem on Solaris.
+          Include <sys/procfs.h> in the ACE_HAS_PROC_FS case.  It is
+          necessary to pull in the "prusage_t" typedef.  That typedef is
+          used later in this header.  Addresses an ACE+autoconf build
+          problem on Solaris.
 
-	* m4/ace.m4:
+        * m4/ace.m4:
 
-	  Corrected quoting problem that caused "--enable-fast" help
-	  string to be echoed incorrectly.
+          Corrected quoting problem that caused "--enable-fast" help
+          string to be echoed incorrectly.
 
-	* m4/acinclude.m4:
+        * m4/acinclude.m4:
 
-	  Corrected typo in warning message.
+          Corrected typo in warning message.
 
-	* m4/compiler.m4:
+        * m4/compiler.m4:
 
-	  Updated Sun C++ 5.0 configuration settings to match those in the
-	  latest platform_sunos5_sunc++.GNU file.
+          Updated Sun C++ 5.0 configuration settings to match those in the
+          latest platform_sunos5_sunc++.GNU file.
 
-	* m4/config_h.m4 (AH_BOTTOM):
+        * m4/config_h.m4 (AH_BOTTOM):
 
-	  Added empty line to text appended to generated `config.h' file
-	  to correct a "non-empty ending line" warning exhibited by Sun
-	  C++ 5.0.
+          Added empty line to text appended to generated `config.h' file
+          to correct a "non-empty ending line" warning exhibited by Sun
+          C++ 5.0.
 
-	  (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION):
+          (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION):
 
-	  Removed template for this preprocessor macro.  It is no longer
-	  used.
+          Removed template for this preprocessor macro.  It is no longer
+          used.
 
 Thu Jan 15 20:33:09 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* docs/ACE-development-process.html (HREF):
+        * docs/ACE-development-process.html (HREF):
 
-	  Added a small writeup about the features of BFO.
+          Added a small writeup about the features of BFO.
 
 Thu Jan 15 19:47:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* bin/MakeProjectCreator/config/avstreams.mpb:
-	  Avstreams uses the feature qos, so when qos=1 is set in the
-	  default.features file we use the ACE_QoS library. Projects
-	  using avstreams should also use this feature, so that they also
-	  link with ACE_QoS when qos=1. This fixes link errors in the
-	  BCB6 Static Build.
+        * bin/MakeProjectCreator/config/avstreams.mpb:
+          Avstreams uses the feature qos, so when qos=1 is set in the
+          default.features file we use the ACE_QoS library. Projects
+          using avstreams should also use this feature, so that they also
+          link with ACE_QoS when qos=1. This fixes link errors in the
+          BCB6 Static Build.
 
 Thu Jan 15 18:50:42 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tests/ACE_Init_Test.cpp:
-	  Fixed compile problem in BCB6 Unicode build
+        * tests/ACE_Init_Test.cpp:
+          Fixed compile problem in BCB6 Unicode build
 
 Thu Jan 15 18:42:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* bin/MakeProjectCreator/config/portablegroup.mpb:
-	  PortableGroup uses iormanip, so also projects using portablegroup
-	  need this. This fixes the compile problems in the BCB6 Static
-	  build.
+        * bin/MakeProjectCreator/config/portablegroup.mpb:
+          PortableGroup uses iormanip, so also projects using portablegroup
+          need this. This fixes the compile problems in the BCB6 Static
+          build.
 
 Thu Jan 15 18:33:16 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* examples/C++NPv1/Process_Per_Connection_Logging_Server.cpp:
-	  Use ACE_OS::strcpy instead of strcpy to fix compile problem in
-	  BCB6 Static build.
+        * examples/C++NPv1/Process_Per_Connection_Logging_Server.cpp:
+          Use ACE_OS::strcpy instead of strcpy to fix compile problem in
+          BCB6 Static build.
 
 Thu Jan 15 11:12:45 2004  Chad Elliott  <elliott_c@ociweb.com>
 
