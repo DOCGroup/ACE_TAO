@@ -1,8 +1,8 @@
 /* -*- C++ -*- */
 // $Id$
 
-/* Handle connections from local UNIX domain sockets that are sending
-   end-points from a pipe! */
+// Handle connections from local UNIX domain sockets that are sending
+// end-points from a pipe!
 
 #ifndef _HANDLE_L_PIPE_H
 #define _HANDLE_L_PIPE_H
@@ -16,6 +16,8 @@
 #include "ace/Service_Types.h"
 #include "ace/UNIX_Addr.h"
 #include "ace/LSOCK_Acceptor.h"
+
+#if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
 class Handle_L_Pipe : public ACE_Service_Object, public ACE_LSOCK_Acceptor
 {
@@ -32,6 +34,8 @@ private:
   virtual int handle_input (ACE_HANDLE fd);
   virtual int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask);
 
+  char *upper_case (char s[], int n);
+
   char rendezvous[MAXPATHLEN + 1];
   static const char *DEFAULT_RENDEZVOUS;
 };
@@ -45,5 +49,6 @@ extern ACE_Service_Object_Type lp;
 #define ACE_INLINE
 #endif /* __ACE_INLINE__ */
 
+#endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */
 #endif /* _HANDLE_L_PIPE_H */
 

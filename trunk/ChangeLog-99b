@@ -1,3 +1,20 @@
+Fri Jul 23 14:51:48 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/Service_Configurator/IPC-tests/Handle_L_CODgram,
+  	  examples/Service_Configurator/IPC-tests/Handle_L_Dgram,
+    	  examples/Service_Configurator/IPC-tests/Handle_L_Pipe:
+	  Cleaned this stuff up so that it builds correctly when
+	  ACE_LACKS_UNIX_DOMAIN_SOCKETS is enabled.  Thanks to
+	  David for reporting this.
+
+	* examples/Service_Configurator/IPC-tests/server/Handle_L_Pipe:
+	  Made upper_case() a method in the Handle_L_Pipe class.
+
+	* examples/Service_Configurator/IPC-tests/server/Handle_L_Pipe.cpp,
+	  examples/Service_Configurator/IPC-tests/server/Handle_L_CODgram.cpp: 
+	  Removed the bizarre hacks for SunOS4.  This stuff probably
+ 	  hasn't been tested since 1992!
+
 Fri Jul 23 14:16:22 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.i (ACE_OS::read): (only non-Win32), if call fails and
