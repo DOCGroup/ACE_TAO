@@ -1,8 +1,11 @@
 Wed Jan 08 10:26:45 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Message_Block.cpp (~ACE_Data_Block): assigned 0 to
-	  allocator_strategry_ after deleting it; also, fixed template
-	  specializations (for g++) by using macros instead of class names
+	  allocator_strategry_ after deleting it; fixed template
+	  specializations (for g++) by using macros instead of class names;
+	  commented out template specializations because Service_Record.cpp
+	  already has them, and they should only appear once in the library
+	  in order to avoid link clashes
 
 	* ace/Service_Object.cpp (ACE_Service_Object): reordered
 	  initializations in constructor
