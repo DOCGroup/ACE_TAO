@@ -169,8 +169,16 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ASYS_TCHAR *host_name)
 
       if (ifr->ifr_addr.sa_family != AF_INET)
         {
-          ACE_ERROR ((LM_ERROR, "%p\n",
-                      "ACE_SOCK_Dgram_Bcast::mk_broadcast: Not AF_INET"));
+          // Note that some systems seem to generate 0 (AF_UNDEF) for
+          // the sa_family, even when there are no errors!  Thus, we
+          // only print an error if this is not the case, or if we're
+          // in "debugging" mode.
+          if (ifr->ifr_addr.sa_family != 0
+              || ACE::debug () > 0)
+          ACE_DEBUG ((LM_DEBUG,
+                      "warning %p: sa_family: %d\n",
+                      "ACE_SOCK_Dgram_Bcast::mk_broadcast: Not AF_INET",
+                      ifr->ifr_addr.sa_family));
           continue;
         }
 
