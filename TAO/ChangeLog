@@ -1,3 +1,10 @@
+Wed Aug 27 16:28:32 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Makefile:
+          Changed Sched to RTSched, this should fix the Debian Minimum static
+          builds. Thanks to Venkita Subramonian for noticing that I forgot to
+          update this.
+
 Wed Aug 27 06:22:21 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/tests/InterfaceRepo/IDL3_Test/InterfaceRepo_IDL3_Test.mpc:

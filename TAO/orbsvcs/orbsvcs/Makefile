@@ -29,7 +29,7 @@ ifndef TAO_ORBSVCS
   TAO_ORBSVCS = Naming \
                 Time \
                 Property \
-                Sched
+                RTSched
 
   ifeq ($(corba_messaging),1)
     TAO_ORBSVCS += RTEvent \
