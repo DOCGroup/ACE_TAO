@@ -1,3 +1,12 @@
+Sun Dec 19 16:35:34 2004  Olli Savia  <ops@iki.fi>
+
+        * ace/README:
+          Updated ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO description.
+
+        * ace/config-lynxos.h:
+          Added ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO and removed
+          ACE_POLL_IS_BROKEN.
+
 Sun Dec 19 10:45:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/QOS/Change_Receiver_FlowSpec/sender.cpp:
