@@ -1,3 +1,17 @@
+Fri Dec 19 23:05:27 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+	  
+	  Cosmetic change - removed an extra newline.
+
+	* TAO_IDL/be/be_visitor_traits.cpp:
+
+         Removed generation of semicolon at the closing brace of the TAO
+	  namespace that encloses the traits specialization
+	  declarations. Thanks to Johnny Willemsen <jwillemsen@remedy.nl>
+	  for pointing out that this trailing semicolon causes problems
+	  with TRU64, CC compiler.
+
 Fri Dec 19 10:27:46 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/Concurrency_Service/Makefile:

@@ -72,7 +72,7 @@ be_visitor_traits::visit_root (be_root *node)
     }
 
   *os << be_uidt_nl
-      << "};";
+      << "}";
 
   return 0;
 }
