@@ -86,6 +86,7 @@ protected:
 };
 
 // Video_Control_i instance singleton.
-typedef ACE_Singleton <Video_Control_i, ACE_SYNCH_MUTEX> VIDEO_CONTROL_I;
+// %%
+typedef ACE_Singleton <Video_Control_i, ACE_NULL_SYNCH> VIDEO_CONTROL_I;
 
 #endif /* if !defined (AV_VIDEO_CONTROL_H) */

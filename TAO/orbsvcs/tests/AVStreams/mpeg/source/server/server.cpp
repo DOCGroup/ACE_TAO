@@ -67,29 +67,55 @@ AV_Svc_Handler::handle_connection (ACE_HANDLE)
                             1) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%P|%t, Command recieve failed: %p"),
-                       -1);
+                      -1);
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) Command recieved is %d",
+              cmd));
   // Change these CMD's to enums and put them in a "appropriate" namespace
   switch (cmd)
     {
     case CmdINITvideo:
       {
+        ACE_DEBUG ((LM_DEBUG,
+                    "(%P|%t) Spawning the video server process\n"));
+        
         // %% what does this do ?!!
         if (Mpeg_Global::live_audio) LeaveLiveAudio ();
         /* result = VideoServer (this->peer ().get_handle (), 
-                              this->dgram_.get_handle (), 
-                              Mpeg_Global::rttag, 
-                              -INET_SOCKET_BUFFER_SIZE); 
+           this->dgram_.get_handle (), 
+           Mpeg_Global::rttag, 
+           -INET_SOCKET_BUFFER_SIZE); 
         */
 
         ACE_Process_Options video_process_options;
         video_process_options.command_line ("./vs -ORBport 0");
+
+        // Create the semaphore
+        ACE_SV_Semaphore_Simple semaphore (4242,
+                                           ACE_SV_Semaphore_Simple::ACE_CREATE,
+                                           0);
+ 
         
         ACE_Process video_process;
         video_process.spawn (video_process_options);
-        this->destroy ();
         // %% need to close down the orb fd's
         // in the child process!!
+
+        // %% wait until the child finishes booting
+        semaphore.acquire ();
+        // Wait until a ACE_SV_Semaphore's value is greater than 0, the
+        // decrement it by 1 and return. Dijkstra's P operation, Tannenbaums
+        // DOWN operation.
+        ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
+        int ack = 42;
+        if (this->peer ().send_n (&ack,
+                                  sizeof (ack)) == -1)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%P|%t), ACK send failed: %p",
+                             "AV_Svc_Handler::handle_connection"),
+                            -1);
       }
+      this->destroy ();
       break;
     default:
       // %% need to fork here
@@ -152,7 +178,6 @@ AV_Server_Sig_Handler::register_handler (void)
   // keep the ACE_Reactor from calling us back on the "/dev/null"
   // descriptor.
 
-  //  if (ACE_Reactor::instance ()->register_handler 
   if (TAO_ORB_Core_instance ()->reactor ()->register_handler
       (this, ACE_Event_Handler::NULL_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, 
@@ -167,7 +192,6 @@ AV_Server_Sig_Handler::register_handler (void)
   this->sig_set.sig_add (SIGTERM);
 
   // Register the signal handler object to catch the signals.  if
-  // (ACE_Reactor::instance ()->register_handler (this->sig_set,
   if (TAO_ORB_Core_instance ()->reactor ()->register_handler 
       (this->sig_set, this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, 
@@ -289,7 +313,7 @@ AV_Server_Sig_Handler::int_handler (int sig)
 {
   TAO_ORB_Core_instance ()->orb ()->shutdown ();
   ACE_DEBUG ((LM_DEBUG, 
-              "(%P|%t) killed by signal %d",
+              "(%P|%t) killed by signal %d\n",
               sig));
 }
 
@@ -303,10 +327,6 @@ AV_Server_Sig_Handler::~AV_Server_Sig_Handler (void)
 // Default Constructor
 AV_Server::AV_Server (void)
 {
-  // @@ Sumedh, why are these allocated dynamically?
-  //  this->signal_handler_ = new AV_Server_Sig_Handler ;
-  //  this->orb_manager_ = new TAO_ORB_Manager ;
-  //  this->video_control_ = new Video_Control_i;
 }
 
 // %% move to the destructor or sig handler
@@ -388,78 +408,31 @@ AV_Server::init (int argc,
                                      env);
   TAO_CHECK_ENV_RETURN (env,
                         -1);
-
-  //  this->orb_manager_.activate_under_child_poa ("Video_Control",
-  //                                              &this->video_control_,
-  //                                              env);
-  // TAO_CHECK_ENV_RETURN (env,-1);
-
+  
   CORBA::ORB_var orb = 
     this->orb_manager_.orb ();
+
   PortableServer::POA_var child_poa = 
     this->orb_manager_.child_poa ();
   // Initialize the Naming Server
-  this->naming_server_.init (orb,child_poa);
-
-  // Create a name for the video control object
-  //  CosNaming::Name video_control_name (1);
-  //  video_control_name.length (1);
-  //  video_control_name[0].id = CORBA::string_dup ("Video_Control");
-  // Register the video control object with the naming server.
-  //  this->naming_server_->bind (video_control_name,
-  //                              this->video_control_._this (env),
-  //                              env);
-  //  TAO_CHECK_ENV_RETURN (env, -1);
+  this->naming_server_.init (orb,
+                             child_poa);
 
   result = this->parse_args (argc, argv);
   if (result < 0)
-    return result;
-
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%P|%t) Error parsing arguments"),
+                      -1);
+  
   // Register the various signal handlers with the reactor.
   result = this->signal_handler_.register_handler ();
 
   if (result < 0)
-    return result;
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%P|%t) Error registering signal handler"),
+                      -1);
 
-  //  Mpeg_Global::parentpid = ACE_OS::getpid ();
-  
   ::atexit (on_exit_routine);
-
-  // %%
-  //  if (Mpeg_Global::live_audio) 
-  // {
-  //    if (InitLiveAudio (argc, argv) == -1)
-  //      Mpeg_Global::live_audio = 0;
-  //    else
-  //      Mpeg_Global::live_audio = 2;
-  //  }
-
-  //if (Mpeg_Global::live_video) 
-  // {
-  //    if (InitLiveVideo (argc, argv) == -1)
-  //      Mpeg_Global::live_video = 0;
-  //    else
-  //      Mpeg_Global::live_video = 2;
-  //  }
-  
-  // open LOG_DIR/vcrsSession.log as the stdout
-  // if not, use /dev/null
-//   {
-//     char buf [100];
-//     ACE_OS::sprintf (buf, 
-//                      "%s%s", 
-//                      LOG_DIR, 
-//                      "vcrsSession.log");
-//    
-//     if (::freopen (buf, 
-//                    "a", 
-//                    stdout) == NULL) 
-//       {
-//         ::freopen ("/dev/null", 
-//                    "w", 
-//                    stdout);
-//       }
-//   }
   return 0;
 }
 
@@ -474,6 +447,7 @@ AV_Server::run (CORBA::Environment& env)
   if (this->acceptor_.open (this->server_control_addr_,
                             TAO_ORB_Core_instance ()->reactor ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
+
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) acceptor_handler == %d\n",
               this->acceptor_.get_handle ()));
@@ -482,15 +456,19 @@ AV_Server::run (CORBA::Environment& env)
   this->orb_manager_.run (env);
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P)AV_Server::run () "
+              "(%P|%t) AV_Server::run () "
               "came out of the (acceptor) "
               "event loop %p\n",
-              "run_event_loop\n"));
+              "run_event_loop"));
+  return 0;
+  
 }
 
 AV_Server::~AV_Server (void)
 {
-
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) AV_Server: Removing handlers from the Reactor\n"));
+  
   TAO_ORB_Core_instance ()->reactor ()->remove_handler 
     (this->acceptor_.get_handle (),
      ACE_Event_Handler::ACCEPT_MASK);
@@ -498,13 +476,6 @@ AV_Server::~AV_Server (void)
   TAO_ORB_Core_instance ()->reactor ()->remove_handler
     (&this->signal_handler_,
      ACE_Event_Handler::NULL_MASK);
-
-
-  //  if (this->signal_handler_ != 0)
-  //    delete this->signal_handler_;
-
-  // @@ Shouldn't you delete the orb_manager_ and other objects you
-  // allocated dynamically?
 }
 
 int

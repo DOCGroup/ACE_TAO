@@ -146,7 +146,6 @@ private:
   // Initialize the orb using the orb_manager_
   // Also registers the video_control_ object in the poa
   // and in the naming service
-
   TAO_ORB_Manager orb_manager_;
   // the TAO ORB manager.
 
