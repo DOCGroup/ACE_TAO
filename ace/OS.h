@@ -4537,10 +4537,6 @@ ace_main_i
 #   endif   /* ACE_PSOSIM */
 # endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER && !ACE_HAS_WINCE && !ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER */
 
-# if !defined (ACE_HAS_MINIMAL_ACE_OS)
-#   include "ace/Trace.h"
-# endif /* ! ACE_HAS_MINIMAL_ACE_OS */
-
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)
 #     undef ACE_INLINE

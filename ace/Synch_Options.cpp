@@ -4,7 +4,7 @@
 #include "ace/Synch_Options.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Trace.h"
+#include "ace/Global_Macros.h"
 
 ACE_RCSID (ace,
            Synch_Options,

@@ -21,6 +21,7 @@
 // ============================================================================
 
 #include "test_config.h"
+#include "ace/Trace.h"
 
 ACE_RCSID (tests,
            Proactor_Timer_Test,

@@ -3,6 +3,8 @@
 
 // Auto_Ptr.i
 
+#include "ace/Global_Macros.h"
+
 template<class X> ACE_INLINE void
 ACE_Auto_Basic_Ptr<X>::dump (void) const
 {
