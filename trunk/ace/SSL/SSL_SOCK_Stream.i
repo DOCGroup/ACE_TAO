@@ -2,6 +2,8 @@
 //
 // $Id$
 
+#include "ace/OS_NS_errno.h"
+
 ASYS_INLINE void
 ACE_SSL_SOCK_Stream::set_handle (ACE_HANDLE fd)
 {

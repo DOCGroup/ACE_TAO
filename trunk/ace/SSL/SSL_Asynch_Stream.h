@@ -7,7 +7,6 @@
  *  $Id$
  *
  *  @author Alexander Libman <alibman@baltimore.com>
- *
  */
 //=============================================================================
 
@@ -23,10 +22,12 @@
 
 #if OPENSSL_VERSION_NUMBER > 0x0090581fL && ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS)))
 
+#include "SSL_Asynch_BIO.h"
+
 #include "ace/Asynch_IO_Impl.h"
 #include "ace/Message_Block.h"
-
-#include "SSL_Asynch_BIO.h"
+#include "ace/Synch_Traits.h"
+#include "ace/Thread_Mutex.h"
 
 extern "C"
 {
