@@ -212,7 +212,7 @@ TAO_Connection_Handler::handle_input_eh (
   ACE_HANDLE h, ACE_Event_Handler *eh)
 {
   if (this->transport ()->acts_as_server () && 
-      this->tss_resources_->upcalls_temporarily_suspended_on_this_thread_)
+      this->orb_core_->get_tss_resources ()->upcalls_temporarily_suspended_on_this_thread_)
     {
 #if 0 // DON'T IMPLEMENT YET, BUT RECORD THE IDEA FOR POSTERITY
       // ACE_Time_Value this->spin_prevention_backoff_delay_;
