@@ -1,3 +1,7 @@
+Thu Jul 15 11:47:08 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * TAO version 0.4.2 released.
+
 Wed Jul 14 12:34:46 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/Callback_Quoter/Makefile: reverted
