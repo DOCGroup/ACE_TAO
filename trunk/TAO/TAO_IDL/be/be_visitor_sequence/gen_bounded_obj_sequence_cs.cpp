@@ -165,7 +165,7 @@ be_visitor_sequence_cs::gen_bounded_obj_sequence (be_sequence *node)
           << full_class_name << "::_downcast (" << be_idt << be_idt_nl
 	  << "void* target," << be_nl
 	  << "CORBA_Object *src," << be_nl
-	  << "CORBA::Environment &_env" << be_uidt_nl
+	  << "CORBA::Environment &TAO_IN_ENV" << be_uidt_nl
 	  << ")" << be_uidt_nl
 	  << "{" << be_idt_nl;
       pt->accept (visitor);
@@ -174,7 +174,7 @@ be_visitor_sequence_cs::gen_bounded_obj_sequence (be_sequence *node)
       *os << "**, target);" << be_nl
 	  << "*tmp = ";
       pt->accept (visitor);
-      *os << "::_narrow (src, _env);" << be_uidt_nl
+      *os << "::_narrow (src, TAO_IN_ENV);" << be_uidt_nl
 	  << "}\n" << be_nl;
 
       *os << "CORBA_Object*" << be_nl

@@ -327,11 +327,11 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   // the _this () operation
   *os << node->name () << "*" << be_nl
       << node->full_skel_name ()
-      << "::_this (CORBA_Environment &_env)" << be_nl
+      << "::_this (CORBA_Environment &TAO_IN_ENV)" << be_nl
       << "{" << be_idt_nl
-      << "STUB_Object *stub = this->_create_stub (_env);" << be_nl
-      << "TAO_CHECK_ENV_RETURN (_env, 0);" << be_nl
-    //      << "if (_env.exception () != 0)" << be_idt_nl
+      << "STUB_Object *stub = this->_create_stub (TAO_IN_ENV);" << be_nl
+      << "TAO_CHECK_ENV_RETURN (TAO_IN_ENV, 0);" << be_nl
+    //      << "if (TAO_IN_ENV.exception () != 0)" << be_idt_nl
     //      << "return 0;" << be_uidt_nl
       << "return new " << node->full_coll_name ()
       << " (this, stub);" << be_uidt << be_nl;
