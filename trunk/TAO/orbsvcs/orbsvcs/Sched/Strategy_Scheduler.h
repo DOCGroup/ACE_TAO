@@ -18,8 +18,8 @@
 // ============================================================================
 
 #ifndef STRATEGY_SCHEDULER_H
-#include "ace/pre.h"
 #define STRATEGY_SCHEDULER_H
+#include "ace/pre.h"
 
 #include "DynSched.h"
 

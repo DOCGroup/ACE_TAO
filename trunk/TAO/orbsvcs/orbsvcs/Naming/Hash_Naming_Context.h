@@ -14,8 +14,8 @@
 // ============================================================================
 
 #ifndef TAO_HASH_NAMING_CONTEXT_H
-#include "ace/pre.h"
 #define TAO_HASH_NAMING_CONTEXT_H
+#include "ace/pre.h"
 
 #include "Naming_Context_Interface.h"
 #include "naming_export.h"

@@ -18,8 +18,8 @@
 // ================================================================
 
 #ifndef TAO_CONV_FRAMES_T_H
-#include "ace/pre.h"
 #define TAO_CONV_FRAMES_T_H
+#include "ace/pre.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)

@@ -18,8 +18,8 @@
 // ================================================================
 
 #ifndef TAO_IOPS_T_H
-#include "ace/pre.h"
 #define TAO_IOPS_T_H
+#include "ace/pre.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)

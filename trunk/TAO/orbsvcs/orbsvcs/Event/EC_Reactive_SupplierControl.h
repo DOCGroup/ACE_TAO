@@ -18,8 +18,8 @@
 // ============================================================================
 
 #ifndef TAO_EC_REACTIVE_SUPPLIERCONTROL_H
-#include "ace/pre.h"
 #define TAO_EC_REACTIVE_SUPPLIERCONTROL_H
+#include "ace/pre.h"
 
 #include "EC_SupplierControl.h"
 #include "EC_Worker.h"

@@ -27,8 +27,8 @@
 // ============================================================================
 
 #ifndef TAO_INTERCEPTOR_H
-#include "ace/pre.h"
 #define TAO_INTERCEPTOR_H
+#include "ace/pre.h"
 
 #include "tao/InterceptorS.h"
 

@@ -19,8 +19,8 @@
 
 
 #ifndef TAO_AV_ENDPOINT_STRATEGY_T_H
-#include "ace/pre.h"
 #define TAO_AV_ENDPOINT_STRATEGY_T_H
+#include "ace/pre.h"
 
 #include "Endpoint_Strategy.h"
 

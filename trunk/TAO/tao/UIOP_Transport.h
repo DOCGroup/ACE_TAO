@@ -20,8 +20,8 @@
 // ============================================================================
 
 #ifndef TAO_UIOP_TRANSPORT_H
-#include "ace/pre.h"
 #define TAO_UIOP_TRANSPORT_H
+#include "ace/pre.h"
 
 #include "tao/Pluggable.h"
 

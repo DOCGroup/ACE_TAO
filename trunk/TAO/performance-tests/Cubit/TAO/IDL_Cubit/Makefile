@@ -53,7 +53,7 @@ BIN = server \
       client \
       collocation/collocation_test
 
-TAO_IDLFLAGS += -Ge 1
+TAO_IDLFLAGS += -Ge 1 -Gd
 
 #----------------------------------------------------------------------------
 #	Include macros and targets

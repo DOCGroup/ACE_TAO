@@ -29,8 +29,8 @@
 // ========================================================================
 
 #ifndef TAO_TRADER_UTILS_H
-#include "ace/pre.h"
 #define TAO_TRADER_UTILS_H
+#include "ace/pre.h"
 
 #include "Trader.h"
 

@@ -18,8 +18,8 @@
 // ============================================================================
 
 #ifndef TAO_POA_H
-#include "ace/pre.h"
 #define TAO_POA_H
+#include "ace/pre.h"
 
 // String
 #include "ace/SString.h"

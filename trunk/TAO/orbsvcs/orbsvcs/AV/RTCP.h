@@ -49,8 +49,8 @@
 // ============================================================================
 
 #ifndef TAO_AV_RTCP_H
-#include "ace/pre.h"
 #define TAO_AV_RTCP_H
+#include "ace/pre.h"
 
 #include "ace/OS.h"
 #include "source.h"

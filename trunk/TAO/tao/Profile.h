@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef TAO_PROFILE_H
-#include "ace/pre.h"
 #define TAO_PROFILE_H
+#include "ace/pre.h"
 
 #include "tao/corbafwd.h"
 

@@ -9,8 +9,8 @@
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #ifndef _TAO_IDL_POLLABLES_T_H_
-#include "ace/pre.h"
 #define _TAO_IDL_POLLABLES_T_H_
+#include "ace/pre.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)

@@ -9,8 +9,8 @@
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #ifndef TAO_IDL_INTERFACES_H
-#include "ace/pre.h"
 #define TAO_IDL_INTERFACES_H
+#include "ace/pre.h"
 
 #include "tao/POA_CORBA.h"
 #include "tao/Operation_Table.h"

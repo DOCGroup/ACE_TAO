@@ -16,8 +16,8 @@
 // ============================================================================
 
 #ifndef TAO_AV_TRANSPORT_H
-#include "ace/pre.h"
 #define TAO_AV_TRANSPORT_H
+#include "ace/pre.h"
 
 #include "ace/Acceptor.h"
 #include "ace/SOCK_Acceptor.h"

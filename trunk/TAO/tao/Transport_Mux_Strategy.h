@@ -20,8 +20,8 @@
 // ============================================================================
 
 #ifndef TAO_TRANSPORT_MUX_STRATEGY_H
-#include "ace/pre.h"
 #define TAO_TRANSPORT_MUX_STRATEGY_H
+#include "ace/pre.h"
 
 // BALA should not be here But for the time being
 #include "tao/GIOP_Message_State.h"

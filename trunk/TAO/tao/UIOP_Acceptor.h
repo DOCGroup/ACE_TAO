@@ -20,8 +20,8 @@
 // ============================================================================
 
 #ifndef TAO_UIOP_ACCEPTOR_H
-#include "ace/pre.h"
 #define TAO_UIOP_ACCEPTOR_H
+#include "ace/pre.h"
 
 #include "tao/Pluggable.h"
 

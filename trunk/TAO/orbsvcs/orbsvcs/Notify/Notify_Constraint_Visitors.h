@@ -17,8 +17,8 @@
 // ==========================================================================
 
 #ifndef NOTIFY_CONSTRAINT_VISITORS_H
-#include "ace/pre.h"
 #define NOTIFY_CONSTRAINT_VISITORS_H
+#include "ace/pre.h"
 
 #include "ace/Hash_Map_Manager.h"
 #include "orbsvcs/orbsvcs/Trader/Constraint_Visitors.h"

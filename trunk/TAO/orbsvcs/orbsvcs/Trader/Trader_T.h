@@ -17,8 +17,8 @@
 // ========================================================================
 
 #ifndef TAO_TRADER_H
-#include "ace/pre.h"
 #define TAO_TRADER_H
+#include "ace/pre.h"
 
 #include "Trader.h"
 #include "Offer_Database.h"

@@ -27,8 +27,8 @@
 // ============================================================================
 
 #ifndef TAO_INVOCATION_H
-#include "ace/pre.h"
 #define TAO_INVOCATION_H
+#include "ace/pre.h"
 
 #include "tao/CDR.h"
 

@@ -18,8 +18,8 @@
 // ============================================================================
 
 #ifndef SCHEDULER_INTERNAL_H
-#include "ace/pre.h"
 #define SCHEDULER_INTERNAL_H
+#include "ace/pre.h"
 
 #include "Scheduler.h"
 

@@ -20,8 +20,8 @@
 // ================================================================
 
 #ifndef TAO_IOPC_H
-#include "ace/pre.h"
 #define TAO_IOPC_H
+#include "ace/pre.h"
 
 #include "tao/CDR.h"
 #include "tao/Sequence.h"

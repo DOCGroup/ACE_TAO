@@ -16,8 +16,8 @@
 // ========================================================================
 
 #ifndef TAO_SERVICE_TYPE_REPOSITORY_H
-#include "ace/pre.h"
 #define TAO_SERVICE_TYPE_REPOSITORY_H
+#include "ace/pre.h"
 
 #include "Trader.h"
 #include "ace/Hash_Map_Manager.h"

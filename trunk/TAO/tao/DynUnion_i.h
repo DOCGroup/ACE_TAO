@@ -15,8 +15,8 @@
 // ========================================================================
 
 #ifndef TAO_DYNUNION_I_H
-#include "ace/pre.h"
 #define TAO_DYNUNION_I_H
+#include "ace/pre.h"
 
 #include "tao/orbconf.h"
 

@@ -156,13 +156,13 @@ TAO_CodeGen::start_client_header (const char *fname)
 
       // generate the #ifndef ... #define statements
       this->client_header_->print ("#ifndef %s\n", macro_name);
+      this->client_header_->print ("#define %s\n\n", macro_name);
       if (idl_global->pre_include () != 0)
         {
           *this->client_header_ << "#include \""
                                 << idl_global->pre_include ()
                                 << "\"\n";
         }
-      this->client_header_->print ("#define %s\n\n", macro_name);
 
       // Including standard files
 
@@ -452,13 +452,13 @@ TAO_CodeGen::start_server_header (const char *fname)
       ACE_OS::strcat (macro_name, "_H_");
 
       this->server_header_->print ("#ifndef %s\n", macro_name);
+      this->server_header_->print ("#define %s\n\n", macro_name);
       if (idl_global->pre_include () != 0)
         {
           *this->server_header_ << "#include \""
                                 << idl_global->pre_include ()
                                 << "\"\n";
         }
-      this->server_header_->print ("#define %s\n\n", macro_name);
 
       // Include the Messaging files if AMI is enabled.
       if (idl_global->ami_call_back () == I_TRUE)
@@ -615,13 +615,13 @@ TAO_CodeGen::start_server_template_header (const char *fname)
       ACE_OS::strcat (macro_name, "_H_");
 
       this->server_template_header_->print ("#ifndef %s\n", macro_name);
+      this->server_template_header_->print ("#define %s\n\n", macro_name);
       if (idl_global->pre_include () != 0)
         {
           *this->server_template_header_ << "#include \""
                                          << idl_global->pre_include ()
                                          << "\"\n";
         }
-      this->server_template_header_->print ("#define %s\n\n", macro_name);
 
       *this->server_template_header_ << "#if defined(_MSC_VER)\n"
                                      << "#if (_MSC_VER >= 1200)\n"

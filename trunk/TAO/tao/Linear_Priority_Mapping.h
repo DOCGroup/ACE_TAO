@@ -18,8 +18,8 @@
 // ============================================================================
 
 #ifndef TAO_LINEAR_PRIORITY_MAPPING_H
-#include "ace/pre.h"
 #define TAO_LINEAR_PRIORITY_MAPPING_H
+#include "ace/pre.h"
 
 #include "tao/orbconf.h"
 

@@ -28,8 +28,8 @@
 // ============================================================================
 
 #ifndef ACE_EVENT_CHANNEL_H
-#include "ace/pre.h"
 #define ACE_EVENT_CHANNEL_H
+#include "ace/pre.h"
 
 #include "ace/Containers.h"
 

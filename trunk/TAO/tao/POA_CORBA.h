@@ -28,8 +28,8 @@
 // ============================================================================
 
 #ifndef TAO_IDL_POA_CORBA_H
-#include "ace/pre.h"
 #define TAO_IDL_POA_CORBA_H
+#include "ace/pre.h"
 
 #include "tao/CurrentC.h"
 

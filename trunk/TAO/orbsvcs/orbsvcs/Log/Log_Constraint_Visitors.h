@@ -14,8 +14,8 @@
 // ========================================================================
 
 #ifndef TAO_LOG_CONSTRAINT_VISITOR_H
-#include "ace/pre.h"
 #define TAO_LOG_CONSTRAINT_VISITOR_H
+#include "ace/pre.h"
 
 #include "orbsvcs/orbsvcs/Trader/Constraint_Visitors.h"
 #include "orbsvcs/DsLogAdminC.h"

@@ -18,8 +18,8 @@
 // ============================================================================
 
 #ifndef TAO_EXCEPTION_H
-#include "ace/pre.h"
 #define TAO_EXCEPTION_H
+#include "ace/pre.h"
 
 #include "tao/corbafwd.h"
 

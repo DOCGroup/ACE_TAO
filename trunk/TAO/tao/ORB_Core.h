@@ -14,8 +14,8 @@
 // ============================================================================
 
 #ifndef TAO_ORB_CORE_H
-#include "ace/pre.h"
 #define TAO_ORB_CORE_H
+#include "ace/pre.h"
 
 #include "tao/corbafwd.h"
 

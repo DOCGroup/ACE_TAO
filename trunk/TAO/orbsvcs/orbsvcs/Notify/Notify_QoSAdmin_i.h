@@ -16,8 +16,8 @@
 //
 // ==========================================================================
 #ifndef TAO_NOTIFY_QOSADMIN_I_H
-#include "ace/pre.h"
 #define TAO_NOTIFY_QOSADMIN_I_H
+#include "ace/pre.h"
 
 #include "orbsvcs/CosNotificationS.h"
 #include "notify_export.h"

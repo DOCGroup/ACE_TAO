@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef TAO_SHMIOP_CONNECT_H
-#include "ace/pre.h"
 #define TAO_SHMIOP_CONNECT_H
+#include "ace/pre.h"
 
 #include "tao/corbafwd.h"
 

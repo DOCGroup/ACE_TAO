@@ -23,8 +23,8 @@
 // ============================================================================
 
 #ifndef TAO_CEC_SUPPLIERADMIN_H
-#include "ace/pre.h"
 #define TAO_CEC_SUPPLIERADMIN_H
+#include "ace/pre.h"
 
 #include "orbsvcs/CosEventChannelAdminS.h"
 

@@ -16,8 +16,8 @@
 // ==========================================================================
 
 #ifndef TAO_NOTIFY_LISTENERS_H
-#include "ace/pre.h"
 #define TAO_NOTIFY_LISTENERS_H
+#include "ace/pre.h"
 
 #include "Notify_Types.h"
 

@@ -21,8 +21,8 @@
 // ============================================================================
 
 #ifndef ACE_DISPATCHING_MODULES_H
-#include "ace/pre.h"
 #define ACE_DISPATCHING_MODULES_H
+#include "ace/pre.h"
 
 #include "tao/Timeprobe.h"
 #include "orbsvcs/Event/ReactorTask.h"

@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef TAO_RECONFIG_SCHEDULER_H
-#include "ace/pre.h"
 #define TAO_RECONFIG_SCHEDULER_H
+#include "ace/pre.h"
 
 #include "ace/inc_user_config.h"
 

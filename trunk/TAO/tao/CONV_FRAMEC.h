@@ -18,8 +18,8 @@
 // ================================================================
 
 #ifndef TAO_CONV_FRAMEC_H
-#include "ace/pre.h"
 #define TAO_CONV_FRAMEC_H
+#include "ace/pre.h"
 
 #include "tao/CDR.h"
 #include "tao/Sequence.h"

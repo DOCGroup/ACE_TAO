@@ -17,8 +17,8 @@
 // ============================================================================
 
 #ifndef TAO_AV_ENDPOINT_STRATEGY_H
-#include "ace/pre.h"
 #define TAO_AV_ENDPOINT_STRATEGY_H
+#include "ace/pre.h"
 
 #include "AVStreams_i.h"
 #include "tao/TAO.h"

@@ -18,8 +18,8 @@
 // ============================================================================
 
 #ifndef TAO_TIO_H
-#include "ace/pre.h"
 #define TAO_TIO_H
+#include "ace/pre.h"
 
 #include "tao/TAO.h"
 #include "orbsvcs/TimeServiceS.h"

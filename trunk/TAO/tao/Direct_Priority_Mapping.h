@@ -18,8 +18,8 @@
 // ============================================================================
 
 #ifndef TAO_DIRECT_PRIORITY_MAPPING_H
-#include "ace/pre.h"
 #define TAO_DIRECT_PRIORITY_MAPPING_H
+#include "ace/pre.h"
 
 #include "tao/orbconf.h"
 

@@ -51,8 +51,8 @@
 // ============================================================================
 
 #ifndef TAO_EC_GATEWAY_UDP_H
-#include "ace/pre.h"
 #define TAO_EC_GATEWAY_UDP_H
+#include "ace/pre.h"
 
 #include "ace/SOCK_CODgram.h"
 

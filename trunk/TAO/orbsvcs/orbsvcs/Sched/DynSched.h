@@ -18,8 +18,8 @@
 // ============================================================================
 
 #ifndef DYNSCHED_H
-#include "ace/pre.h"
 #define DYNSCHED_H
+#include "ace/pre.h"
 
 #include "ace/ACE.h"
 

@@ -18,8 +18,8 @@
 // ============================================================================
 
 #ifndef AVSTREAMS_I_H
-#include "ace/pre.h"
 #define AVSTREAMS_I_H
+#include "ace/pre.h"
 
 #include "ace/OS.h"
 #include "ace/SOCK_Dgram_Mcast.h"

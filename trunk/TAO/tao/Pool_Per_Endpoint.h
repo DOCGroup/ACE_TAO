@@ -14,8 +14,8 @@
 // ============================================================================
 
 #ifndef TAO_POOL_PER_ENDPOINT_H
-#include "ace/pre.h"
 #define TAO_POOL_PER_ENDPOINT_H
+#include "ace/pre.h"
 
 #include "tao/corbafwd.h"
 #include "tao/ORB.h"

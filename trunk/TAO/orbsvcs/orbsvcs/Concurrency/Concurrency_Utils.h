@@ -21,8 +21,8 @@
 // ============================================================================
 
 #ifndef _CONCURRENCY_SERVER_H
-#include "ace/pre.h"
 #define _CONCURRENCY_SERVER_H
+#include "ace/pre.h"
 
 #include "tao/corba.h"
 #include "orbsvcs/CosConcurrencyControlC.h"

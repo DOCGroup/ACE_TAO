@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef TAO_PERSISTENT_ENTRIES_H
-#include "ace/pre.h"
 #define TAO_PERSISTENT_ENTRIES_H
+#include "ace/pre.h"
 
 #include "ace/Hash_Map_With_Allocator_T.h"
 #include "tao/corba.h"

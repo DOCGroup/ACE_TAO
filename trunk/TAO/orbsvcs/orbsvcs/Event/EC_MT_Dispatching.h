@@ -23,8 +23,8 @@
 // ============================================================================
 
 #ifndef TAO_EC_MT_DISPATCHING_H
-#include "ace/pre.h"
 #define TAO_EC_MT_DISPATCHING_H
+#include "ace/pre.h"
 
 #include "EC_Dispatching.h"
 

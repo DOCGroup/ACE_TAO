@@ -15,8 +15,8 @@
 // ========================================================================
 
 #ifndef TAO_CONSTRAINT_INTERPRETER_H
-#include "ace/pre.h"
 #define TAO_CONSTRAINT_INTERPRETER_H
+#include "ace/pre.h"
 
 #include "Constraint_Nodes.h"
 #include "Constraint_Visitors.h"

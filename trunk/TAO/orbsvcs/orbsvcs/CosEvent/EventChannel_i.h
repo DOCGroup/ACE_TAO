@@ -19,8 +19,8 @@
 // ============================================================================
 
 #ifndef EVENTCHANNEL_I_H
-#include "ace/pre.h"
 #define EVENTCHANNEL_I_H
+#include "ace/pre.h"
 
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/CosEventChannelAdminC.h"

@@ -16,8 +16,8 @@
 // ============================================================================
 
 #ifndef TAO_OFFER_ITERATORS_H
-#include "ace/pre.h"
 #define TAO_OFFER_ITERATORS_H
+#include "ace/pre.h"
 
 #include "Trader_Utils.h"
 

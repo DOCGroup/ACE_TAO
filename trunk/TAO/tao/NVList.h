@@ -17,8 +17,8 @@
 // ============================================================================
 
 #ifndef TAO_NVLIST_H
-#include "ace/pre.h"
 #define TAO_NVLIST_H
+#include "ace/pre.h"
 
 #include "tao/orbconf.h"
 

@@ -17,8 +17,8 @@
 // ==========================================================================
 
 #ifndef TAO_NOTIFY_STRUCTUREDPUSHSUPPLIER_H
-#include "ace/pre.h"
 #define TAO_NOTIFY_STRUCTUREDPUSHSUPPLIER_H
+#include "ace/pre.h"
 
 #include "orbsvcs/orbsvcs/CosNotifyChannelAdminS.h"
 #include "notify_export.h"

@@ -18,8 +18,8 @@
 // ============================================================================
 
 #ifndef TAO_EC_CONCRETE_PROXY_SET_H
-#include "ace/pre.h"
 #define TAO_EC_CONCRETE_PROXY_SET_H
+#include "ace/pre.h"
 
 #include "tao/corba.h"
 

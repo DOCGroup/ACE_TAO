@@ -18,8 +18,8 @@
 // ============================================================================
 
 #ifndef TAO_GIOP_MESSAGE_CONNECTORS_H
-#include "ace/pre.h"
 #define TAO_GIOP_MESSAGE_CONNECTORS_H
+#include "ace/pre.h"
 
 #include "tao/GIOP_Message_Base.h"
 

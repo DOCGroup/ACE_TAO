@@ -16,8 +16,8 @@
 //
 // ==========================================================================
 #ifndef TAO_NOTIFY_SEQUENCEPROXYPUSHSUPPLIER_I_H
-#include "ace/pre.h"
 #define TAO_NOTIFY_SEQUENCEPROXYPUSHSUPPLIER_I_H
+#include "ace/pre.h"
 
 #include "Notify_ProxySupplier_T.h"
 #include "orbsvcs/CosNotifyChannelAdminS.h"

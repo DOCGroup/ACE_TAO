@@ -18,8 +18,8 @@
 // ============================================================================
 
 #ifndef TAO_WAIT_STRATEGY_H
-#include "ace/pre.h"
 #define TAO_WAIT_STRATEGY_H
+#include "ace/pre.h"
 
 #include "tao/corbafwd.h"
 

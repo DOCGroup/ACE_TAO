@@ -17,8 +17,8 @@
 // ============================================================================
 
 #ifndef TLS_LOGMGR_I_H
-#include "ace/pre.h"
 #define TLS_LOGMGR_I_H
+#include "ace/pre.h"
 
 #include "orbsvcs/DsLogAdminS.h"
 #include "orbsvcs/Log/BasicLog_i.h"

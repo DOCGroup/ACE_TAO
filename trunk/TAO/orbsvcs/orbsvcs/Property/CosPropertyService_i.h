@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef COSPROPERTYSERVICE_I_H
-#include "ace/pre.h"
 #define COSPROPERTYSERVICE_I_H
+#include "ace/pre.h"
 
 #include "ace/OS.h"
 

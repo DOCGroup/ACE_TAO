@@ -24,8 +24,8 @@
 // ============================================================================
 
 #ifndef TAO_EC_REACTIVE_TIMEOUT_GENERATOR_H
-#include "ace/pre.h"
 #define TAO_EC_REACTIVE_TIMEOUT_GENERATOR_H
+#include "ace/pre.h"
 
 #include "EC_Timeout_Generator.h"
 

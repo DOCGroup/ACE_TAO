@@ -18,8 +18,8 @@
 // ==========================================================================
 
 #ifndef NOTIFY_STRUCTUREDPUSHCONSUMER_H
-#include "ace/pre.h"
 #define NOTIFY_STRUCTUREDPUSHCONSUMER_H
+#include "ace/pre.h"
 
 #include "orbsvcs/orbsvcs/CosNotifyChannelAdminS.h"
 #include "notify_export.h"

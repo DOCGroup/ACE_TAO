@@ -8,8 +8,8 @@
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #ifndef _TAO_IDL_INTERCEPTORS_H_
-#include "ace/pre.h"
 #define _TAO_IDL_INTERCEPTORS_H_
+#include "ace/pre.h"
 
 #include "tao/InterceptorC.h"
 #include "tao/Servant_Base.h"

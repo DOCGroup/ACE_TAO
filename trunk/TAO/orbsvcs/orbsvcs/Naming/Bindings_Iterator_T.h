@@ -14,8 +14,8 @@
 // ============================================================================
 
 #ifndef TAO_BINDINGS_ITERATOR_T_H
-#include "ace/pre.h"
 #define TAO_BINDINGS_ITERATOR_T_H
+#include "ace/pre.h"
 
 #include "Hash_Naming_Context.h"
 

@@ -16,8 +16,8 @@
 // ============================================================================
 
 #ifndef TAO_AV_POLICY_H
-#include "ace/pre.h"
 #define TAO_AV_POLICY_H
+#include "ace/pre.h"
 
 #include "ace/Addr.h"
 #include "tao/TAO.h"

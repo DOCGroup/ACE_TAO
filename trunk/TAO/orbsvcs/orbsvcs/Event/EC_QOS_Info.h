@@ -22,8 +22,8 @@
 // ============================================================================
 
 #ifndef TAO_EC_QOS_INFO_H
-#include "ace/pre.h"
 #define TAO_EC_QOS_INFO_H
+#include "ace/pre.h"
 
 #include "orbsvcs/RtecSchedulerC.h"
 #include "event_export.h"

@@ -17,8 +17,8 @@
 // ============================================================================
 
 #ifndef TAO_AV_FLOWS_T_H
-#include "ace/pre.h"
 #define TAO_AV_FLOWS_T_H
+#include "ace/pre.h"
 
 #include "AVStreams_i.h"
 

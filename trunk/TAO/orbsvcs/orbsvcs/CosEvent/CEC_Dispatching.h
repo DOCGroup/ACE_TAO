@@ -17,8 +17,8 @@
 // ============================================================================
 
 #ifndef TAO_CEC_DISPATCHING_H
-#include "ace/pre.h"
 #define TAO_CEC_DISPATCHING_H
+#include "ace/pre.h"
 
 #include "orbsvcs/CosEventCommC.h"
 #include "event_export.h"

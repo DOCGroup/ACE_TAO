@@ -23,8 +23,8 @@
 // ============================================================================
 
 #ifndef TAO_EC_NULL_SCHEDULING_H
-#include "ace/pre.h"
 #define TAO_EC_NULL_SCHEDULING_H
+#include "ace/pre.h"
 
 #include "EC_Scheduling_Strategy.h"
 #include "event_export.h"

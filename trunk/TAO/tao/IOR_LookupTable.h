@@ -19,8 +19,8 @@
 // ============================================================================
 
 #ifndef TAO_IOR_LOOKUPTABLE_H
-#include "ace/pre.h"
 #define TAO_IOR_LOOKUPTABLE_H
+#include "ace/pre.h"
 
 #include "ace/Synch_T.h"
 #include "ace/Hash_Map_Manager.h"

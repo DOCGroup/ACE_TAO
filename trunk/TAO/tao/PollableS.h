@@ -18,8 +18,8 @@
 // ================================================================
 
 #ifndef TAO_IDL_POLLABLES_H
-#include "ace/pre.h"
 #define TAO_IDL_POLLABLES_H
+#include "ace/pre.h"
 
 #include "tao/PollableC.h"
 

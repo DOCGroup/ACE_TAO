@@ -18,8 +18,8 @@
 // ============================================================================
 
 #ifndef TAO_CEC_SUPPLIERCONTROL_H
-#include "ace/pre.h"
 #define TAO_CEC_SUPPLIERCONTROL_H
+#include "ace/pre.h"
 
 #include "orbsvcs/CosEvent/event_export.h"
 

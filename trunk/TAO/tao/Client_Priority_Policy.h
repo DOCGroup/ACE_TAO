@@ -20,8 +20,8 @@
 // ============================================================================
 
 #ifndef TAO_CLIENT_PRIORITY_POLICY_H
-#include "ace/pre.h"
 #define TAO_CLIENT_PRIORITY_POLICY_H
+#include "ace/pre.h"
 
 #include "tao/orbconf.h"
 

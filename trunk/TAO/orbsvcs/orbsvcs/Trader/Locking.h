@@ -16,8 +16,8 @@
 //
 // ==========================================================================
 #ifndef TAO_LOCKING_H
-#include "ace/pre.h"
 #define TAO_LOCKING_H
+#include "ace/pre.h"
 
 #include "tao/corba.h"
 

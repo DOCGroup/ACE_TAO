@@ -16,8 +16,8 @@
 // ============================================================================
 
 #ifndef TAO_ANY_H
-#include "ace/pre.h"
 #define TAO_ANY_H
+#include "ace/pre.h"
 
 #include "tao/CDR.h"
 
