@@ -38,7 +38,7 @@ class TAO_Export TAO_String_Manager
 public:
 
   TAO_String_Manager (void);
-  // default CTOR will initialize the underlying ptr_ to empty string.
+  // default CTOR will initialize the underlying ptr_ to empty string. 
 
   TAO_String_Manager (const TAO_String_Manager &);
   // copy constructor
@@ -170,7 +170,8 @@ private:
 
 };
 
-// ****************************************************************
+#if 0 /* WString_var not implemented in TAO yet - 01/03/1999 */
+/****************************************************************/
 
 class TAO_Export TAO_WString_Manager
 {
@@ -179,18 +180,16 @@ class TAO_Export TAO_WString_Manager
   //
   // = DESCRIPTION
   //
-  //   This class implements the generic wstring manager and is used
-  //   in the C++ mapping of "struct" members that are of type
-  //   "wstring".
-  //   The difference between this class and the CORBA::WString_var
-  //   class is that the default constructor initializes the
-  //   underlying wstring to an empty string in this class whereas it
-  //   is a NUL wstring for the _var class.
+  //   This class implements the generic wstring manager and is used in the C++
+  //   mapping of "struct" members that are of type "wstring". The difference
+  //   between this class and the CORBA::WString_var class is that the default
+  //   conctructor initializes the underlying wstring to an empty string in this
+  //   class whereas it is a NUL wstring for the _var class.
   //
 public:
 
   TAO_WString_Manager (void);
-  // default CTOR will initialize the underlying ptr_ to empty string.
+  // default CTOR will initialize the underlying ptr_ to empty string. 
 
   TAO_WString_Manager (const TAO_WString_Manager &);
   // copy constructor
@@ -208,8 +207,8 @@ public:
   // assignment from a constant wchar* will make a copy
 
   TAO_WString_Manager &operator= (CORBA::WChar *);
-  // assignment from wchar* will not make a copy. The WString_Manager
-  // will now own the string.
+  // assignment from wchar* will not make a copy. The WString_Manager will now
+  // own the string.
 
   operator const CORBA::WChar*() const;
   // cast  (read-only)
@@ -256,10 +255,10 @@ class TAO_Export TAO_SeqElem_WString_Manager
   //   This class implements the generic string manager and is used to
   //   instantiate the proper sequence types.
   //
-  //   This class will have the same semantics as the string manager
-  //   classes defined earlier with respect to the various assignment
-  //   operators. However, the freeing of old storage will be
-  //   dependent on the "release" value of the parent sequence class.
+  //   This class will have the same semantics as the string manager classes
+  //   defined earlier with respect to the various assignment
+  //   operators. However, the freeing of old storage will be dependent on the
+  //   "release" value of the parent sequence class.
   //
 public:
   friend class TAO_Unbounded_WString_Sequence;
@@ -269,8 +268,7 @@ public:
   // friend template<CORBA::ULong MAX>
   //   class TAO_Bounded_WString_Sequence<TAO_SeqElem_WString_Manager,MAX>;
 
-  TAO_SeqElem_WString_Manager (CORBA::WChar **buffer,
-                               CORBA::Boolean release);
+  TAO_SeqElem_WString_Manager (char **buffer, CORBA::Boolean release);
   // constructor from address of an element
 
   ~TAO_SeqElem_WString_Manager (void);
@@ -282,30 +280,30 @@ public:
   TAO_SeqElem_WString_Manager &operator= (const CORBA::WString_var&);
   // assignment from var type will make a copy
 
-  TAO_SeqElem_WString_Manager &operator= (const CORBA::WChar *);
+  TAO_SeqElem_WString_Manager &operator= (const char *);
   // assignment from a constant char* will make a copy
 
-  TAO_SeqElem_WString_Manager &operator= (CORBA::WChar *);
-  // assignment from char* will not make a copy. The
-  // SeqElem_WString_Manager will now own the string.
+  TAO_SeqElem_WString_Manager &operator= (char *);
+  // assignment from char* will not make a copy. The SeqElem_WString_Manager will now
+  // own the string.
 
-  operator const CORBA::WChar*() const;
+  operator const char*() const;
   // cast  (read-only)
 
-  const CORBA::WChar *in (void) const;
+  const char *in (void) const;
   // for in parameter.
 
-  CORBA::WChar *&inout (void);
+  char *&inout (void);
   // for inout parameter.
 
-  CORBA::WChar *&out (void);
+  char *&out (void);
   // for out parameter.
 
-  CORBA::WChar *_retn (void);
+  char *_retn (void);
   // for string of return type.
 
 private:
-  CORBA::WChar **ptr_;
+  char **ptr_;
   // Address of string element from the parent's buffer.
 
   CORBA::Boolean release_;
@@ -322,6 +320,7 @@ private:
   // copy constructor
 
 };
+#endif /* 0 */
 
 #if defined (__ACE_INLINE__)
 #include "tao/Managed_Types.i"

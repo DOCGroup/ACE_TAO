@@ -83,18 +83,6 @@ TAO_EC_Trivial_Supplier_Filter::push (const RtecEventComm::EventSet& event,
     }
 }
 
-CORBA::ULong
-TAO_EC_Trivial_Supplier_Filter::_incr_refcnt (void)
-{
-  return 1;
-}
-
-CORBA::ULong
-TAO_EC_Trivial_Supplier_Filter::_decr_refcnt (void)
-{
-  return 1;
-}
-
 // ****************************************************************
 
 TAO_EC_Trivial_Supplier_Filter_Builder::

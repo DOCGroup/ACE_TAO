@@ -12,7 +12,6 @@
 #include "tao/Operation_Table.h"
 #include "tao/Server_Request.h"
 #include "tao/POA_CORBA.h"
-#include "tao/ORB.h"
 
 class TAO_CORBA_DomainManager_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
 {
@@ -62,11 +61,11 @@ TAO_CORBA_DomainManager_Perfect_Hash_OpTable::lookup (const char *str, unsigned 
 
   static const class TAO_operation_db_entry  wordlist[] =
     {
-      {"",}, {"",}, {"",}, {"",}, {"",},
+      {"",}, {"",}, {"",}, {"",}, {"",}, 
       {"_is_a",  &POA_CORBA::DomainManager::_is_a_skel},
-      {"",}, {"",}, {"",}, {"",}, {"",}, {"",}, {"",},
+      {"",}, {"",}, {"",}, {"",}, {"",}, {"",}, {"",}, 
       {"_non_existent",  &POA_CORBA::DomainManager::_non_existent_skel},
-      {"",}, {"",}, {"",},
+      {"",}, {"",}, {"",}, 
       {"get_domain_policy", 	&POA_CORBA::DomainManager::get_domain_policy_skel},
     };
 
@@ -104,9 +103,9 @@ POA_CORBA::DomainManager::~DomainManager (void)
 }
 
 void POA_CORBA::DomainManager::get_domain_policy_skel (
-    CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference,
-    void * /* context */,
+    CORBA::ServerRequest &_tao_server_request, 
+    void *_tao_object_reference, 
+    void * /* context */, 
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -135,7 +134,7 @@ void POA_CORBA::DomainManager::get_domain_policy_skel (
 }
 
 void POA_CORBA::DomainManager::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    CORBA::ServerRequest &_tao_server_request, 
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -147,10 +146,10 @@ void POA_CORBA::DomainManager::_is_a_skel (
   CORBA::String_var value;
   if (!((_tao_in >> value.out ())))
     ACE_THROW (CORBA::MARSHAL ());
-
+  
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-
+  
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -159,7 +158,7 @@ void POA_CORBA::DomainManager::_is_a_skel (
 }
 
 void POA_CORBA::DomainManager::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    CORBA::ServerRequest &_tao_server_request, 
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -168,7 +167,7 @@ void POA_CORBA::DomainManager::_non_existent_skel (
   POA_CORBA::DomainManager *_tao_impl = (POA_CORBA::DomainManager *) _tao_object_reference;
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
-
+  
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -304,11 +303,11 @@ TAO_CORBA_ConstructionPolicy_Perfect_Hash_OpTable::lookup (const char *str, unsi
 
   static const class TAO_operation_db_entry  wordlist[] =
     {
-      {"",}, {"",}, {"",}, {"",}, {"",},
+      {"",}, {"",}, {"",}, {"",}, {"",}, 
       {"_is_a",  &POA_CORBA::ConstructionPolicy::_is_a_skel},
-      {"",}, {"",}, {"",}, {"",}, {"",}, {"",}, {"",},
+      {"",}, {"",}, {"",}, {"",}, {"",}, {"",}, {"",}, 
       {"_non_existent",  &POA_CORBA::ConstructionPolicy::_non_existent_skel},
-      {"",}, {"",}, {"",}, {"",}, {"",},
+      {"",}, {"",}, {"",}, {"",}, {"",}, 
       {"make_domain_manager", 	&POA_CORBA::ConstructionPolicy::make_domain_manager_skel},
     };
 
@@ -347,9 +346,9 @@ POA_CORBA::ConstructionPolicy::~ConstructionPolicy (void)
 }
 
 void POA_CORBA::ConstructionPolicy::make_domain_manager_skel (
-    CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference,
-    void * /* context */,
+    CORBA::ServerRequest &_tao_server_request, 
+    void *_tao_object_reference, 
+    void * /* context */, 
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -387,7 +386,7 @@ void POA_CORBA::ConstructionPolicy::make_domain_manager_skel (
 }
 
 void POA_CORBA::ConstructionPolicy::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    CORBA::ServerRequest &_tao_server_request, 
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -399,10 +398,10 @@ void POA_CORBA::ConstructionPolicy::_is_a_skel (
   CORBA::String_var value;
   if (!((_tao_in >> value.out ())))
     ACE_THROW (CORBA::MARSHAL ());
-
+  
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-
+  
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -411,7 +410,7 @@ void POA_CORBA::ConstructionPolicy::_is_a_skel (
 }
 
 void POA_CORBA::ConstructionPolicy::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request,
+    CORBA::ServerRequest &_tao_server_request, 
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -420,7 +419,7 @@ void POA_CORBA::ConstructionPolicy::_non_existent_skel (
   POA_CORBA::ConstructionPolicy *_tao_impl = (POA_CORBA::ConstructionPolicy *) _tao_object_reference;
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
-
+  
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -524,3 +523,5 @@ CORBA::Boolean POA_CORBA::_tao_collocated_ConstructionPolicy::_is_a (
 }
 
 #endif /* ! defined (TAO_HAS_MINIMUM_CORBA) */
+
+

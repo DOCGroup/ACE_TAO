@@ -2,7 +2,7 @@
 // $Id$
 
 #include "CosEventChannelFactory_i.h"
-#include "orbsvcs/CosEvent_Utilities.h"
+#include "FactoryCosEventChannel_i.h"
 #include "ace/Auto_Ptr.h"
 #include "tao/POA.h"
 
@@ -31,9 +31,6 @@ TAO_CosEventChannelFactory_i::init (PortableServer::POA_ptr poa,
   // Check if we have a parent poa.
   if (CORBA::is_nil (poa))
     return -1;
-
-  this->naming_ = CosNaming::NamingContext::_duplicate (naming);
-  // Save the naming context.
 
   // Create a UNIQUE_ID and USER_ID policy because we want the POA
   // to detect duplicates for us.
@@ -89,14 +86,15 @@ TAO_CosEventChannelFactory_i::create (const char * channel_id,
       PortableServer::ObjectId_var oid =
         TAO_POA::string_to_ObjectId (channel_id);
 
-      CosEC_ServantBase *_ec = 0;
+      FactoryCosEventChannel_i *_ec = 0;
 
       ACE_NEW_THROW_EX (_ec,
-                        CosEC_ServantBase (),
+                        FactoryCosEventChannel_i,
                         CORBA::NO_MEMORY ());
       ACE_TRY_CHECK;
 
-      auto_ptr <CosEC_ServantBase> ec (_ec);
+      auto_ptr <FactoryCosEventChannel_i> ec (_ec);
+
       // @@ Pradeep: could we pass the POA used to activate the
       //    EC-generated objects as an argument?  The point is that
       //    the user must be aware that we require a POA with the
@@ -122,41 +120,51 @@ TAO_CosEventChannelFactory_i::create (const char * channel_id,
       // mean that duplicates were detected, so i thought that
       // it made sense to translate them to DuplicateChannel.
 
-      // @@ Pradeep: right, but you want to report those only if they
-      //    are raised during the activation of the EC, the problem is
-      //    that you are raising the same error if the EC makes a
-      //    mistake and activates the same object twice.
-
-      ec->init (this->poa_.in(),
-                defPOA,
-                0,0,0,
-                ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      int retval = ec->activate (channel_id,
-                                 ACE_TRY_ENV);
+      int retval = ec->init (defPOA,
+                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (retval == -1)
         ACE_THROW_RETURN (CosEventChannelFactory::DuplicateChannel (),
                           ec_nil);
 
+      ACE_CString str_channel_id (channel_id);
+
+      retval = ec->activate (str_channel_id,
+                             ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (retval == -1)
+        ACE_THROW_RETURN (CosEventChannelFactory::DuplicateChannel (),
+                          ec_nil);
+
+      this->poa_->activate_object_with_id (oid,
+                                           ec.get (),
+                                           ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // Give the ownership to the POA.
+      ec->_remove_ref (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       ec.release (); // release the ownership from the auto_ptr.
 
       CORBA::Object_var obj =
-        this->poa_->servant_to_reference (_ec, ACE_TRY_ENV);
+        this->poa_->id_to_reference (oid,
+                                     ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+
       if (store_in_naming_service &&
-          !CORBA::is_nil (this->naming_.in ()))
+          this->naming_ != CosNaming::NamingContext::_nil ())
         {
           CosNaming::Name name (1);
           name.length (1);
           name[0].id = CORBA::string_dup (channel_id);
 
           this->naming_->rebind (name,
-                                 obj.in (),
-                                 ACE_TRY_ENV);
+                               obj.in (),
+                               ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
 
@@ -237,9 +245,14 @@ TAO_CosEventChannelFactory_i::destroy
       fact_ec->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      // deactivate from the poa.
+      this->poa_->deactivate_object (oid,
+                                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       // Remove from the naming service.
       if (unbind_from_naming_service &&
-          !CORBA::is_nil (this->naming_.in ()))
+          this->naming_ != CosNaming::NamingContext::_nil ())
         {
           CosNaming::Name name (1);
           name.length (1);
@@ -249,6 +262,7 @@ TAO_CosEventChannelFactory_i::destroy
                                  ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
+
     }
   ACE_CATCH (CosNaming::NamingContext::NotFound, nf_ex)
     {
@@ -332,16 +346,3 @@ TAO_CosEventChannelFactory_i::find_channel_id
 
   ACE_NOTREACHED (return 0);
 }
-
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class auto_ptr <CosEC_ServantBase>;
-template class ACE_Auto_Basic_Ptr <CosEC_ServantBase>;
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate auto_ptr <CosEC_ServantBase>
-#pragma instantiate  ACE_Auto_Basic_Ptr <CosEC_ServantBase>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -18,9 +18,9 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
+#include	"idl.h"
+#include	"idl_extern.h"
+#include	"be.h"
 
 #include "be_visitor_typecode.h"
 
@@ -100,6 +100,7 @@ int
 be_visitor_typecode_defn::visit_type (be_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
+  const be_visitor_typecode_defn::QNode *qnode;
 
   // reset the queue
   this->queue_reset (this->tc_queue_);
@@ -110,7 +111,7 @@ be_visitor_typecode_defn::visit_type (be_type *node)
   if (idl_global->opt_tc () ||
       node->in_recursion ())
     {
-      if (this->queue_insert (this->tc_queue_, node, this->tc_offset_) == 0)
+      if ((qnode = this->queue_insert (this->tc_queue_, node, this->tc_offset_)) == 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typecode_defn::"
@@ -2925,3 +2926,4 @@ queue_reset (ACE_Unbounded_Queue <be_visitor_typecode_defn::QNode *> &queue)
     }
   return;
 }
+

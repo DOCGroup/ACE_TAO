@@ -295,6 +295,7 @@ public:
 
   void _tao_replace (CORBA::TypeCode_ptr,
                      const ACE_Message_Block *mb,
+                     CORBA::Boolean any_owns_data,
                      CORBA::Environment &TAO_IN_ENV =
                        CORBA::default_environment ());
   // Replace via message block instead of <value_>.
