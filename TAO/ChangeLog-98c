@@ -2,6 +2,13 @@ Wed May 13 21:48:08 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Quoter/Makefile: define TAO_ROOT if it's not defined.
 
+        * TAO/orbsvcs/tests/Concurrency/tmplinst.cpp,
+          TAO/tests/Cubit/TAO/{IDL,MT}_Cubit/tmplinst.cpp,
+          TAO/tests/Param_Test/tmplinst.cpp,
+          TAO/tests/Thruput/TAO/tmplinst.cpp:
+          removed TAO_Unbounded_Sequence<CORBA::Long> instantiation
+          because it's now in libTAO.
+
 Wed May 13 18:18:56 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.1.20 released.
