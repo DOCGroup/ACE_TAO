@@ -44,7 +44,7 @@ MyFooServantLocator::preinvoke (const PortableServer::ObjectId &oid,
                                 PortableServer::POA_ptr /* poa_ptr */,
                                 const char *operation,
                                 PortableServer::ServantLocator::Cookie & /* cookie */,
-                                CORBA::Environment &env)
+                                CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_UNUSED_ARG (operation);
 
@@ -78,35 +78,24 @@ MyFooServantLocator::preinvoke (const PortableServer::ObjectId &oid,
         }
       else
         {
-          CORBA::Exception *exception = new CORBA::OBJECT_NOT_EXIST (CORBA::COMPLETED_NO);
-          env.exception (exception);
-          return 0;
+          ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (CORBA::COMPLETED_NO), 0);
         }
     }
   else // now forward, in throwing the ForwardRequest Exception
   {
     // Throw forward exception
-    env.exception (new PortableServer::ForwardRequest (this->forward_to_var_.in ()));
-
-    ACE_DEBUG ((LM_DEBUG,"MyFooServantLocator::preinvoke: Threw the ForwardRequest exception.\n"));
-    return 0;
+    ACE_THROW_RETURN (PortableServer::ForwardRequest (), 0);
   }
 }
 
 void
-MyFooServantLocator::postinvoke (const PortableServer::ObjectId &oid,
-                                 PortableServer::POA_ptr poa,
-                                 const char *operation,
-                                 PortableServer::ServantLocator::Cookie cookie,
-                                 PortableServer::Servant p_servant,
-                                 CORBA::Environment &env)
+MyFooServantLocator::postinvoke (const PortableServer::ObjectId &,
+                                 PortableServer::POA_ptr ,
+                                 const char *,
+                                 PortableServer::ServantLocator::Cookie ,
+                                 PortableServer::Servant ,
+                                 CORBA::Environment &)
 {
-  ACE_UNUSED_ARG (oid);
-  ACE_UNUSED_ARG (poa);
-  ACE_UNUSED_ARG (operation);
-  ACE_UNUSED_ARG (cookie);
-  ACE_UNUSED_ARG (p_servant);
-  ACE_UNUSED_ARG (env);
 }
 
 void

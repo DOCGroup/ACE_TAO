@@ -61,24 +61,20 @@ MyFirstFooServant::shutdown (CORBA::Environment &/*env*/)
 
 
 void 
-MyFirstFooServant::forward (CORBA::Environment &env)
+MyFirstFooServant::forward (CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_DEBUG ((LM_DEBUG,
               "MyFirstFooServant::forward: being called\n"));
   if (!CORBA::is_nil (this->forward_to_var_.in ()))
     {
       PortableServer::ObjectId_var oid =
-        this->poa_var_->servant_to_id (this, env);
-      
-      if (env.exception () != 0)
-        return;
+        this->poa_var_->servant_to_id (this, ACE_TRY_ENV);
+      ACE_CHECK;
 
       PortableServer::Servant servant = this->poa_var_->_servant ();
       if (servant == 0)
         {
-          CORBA::Exception *exception = new Foo::Cannot_Forward;
-          env.exception (exception);
-          return;
+          ACE_THROW (Foo::Cannot_Forward ());
         }
       
       void *ptr = servant->_downcast ("IDL:PortableServer/POA:1.0");
@@ -87,15 +83,13 @@ MyFirstFooServant::forward (CORBA::Environment &env)
       
       tao_poa->forward_object (oid.in (),
                                this->forward_to_var_.in (),
-                               env);
+                               ACE_TRY_ENV);
     }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
                   "POA approach: Forward_to refenence is nil.\n"));
-      CORBA::Exception *exception = new Foo::Cannot_Forward;
-      env.exception (exception);
-      return;
+      ACE_THROW (Foo::Cannot_Forward ());
     }
 }
 
@@ -125,12 +119,13 @@ MySecondFooServant::doit (CORBA::Environment &/*env*/)
 }
 
 void 
-MySecondFooServant::forward (CORBA::Environment &env)
+MySecondFooServant::forward (CORBA::Environment &ACE_TRY_ENV)
 {
   // forward the forwarding request to the Servant Locator :-) This is
   // kind of a loop back, but it is correct only the IDL interface can
   // be assumed !!
-  this->locator_ptr_->forward (env);  
+  this->locator_ptr_->forward (ACE_TRY_ENV);
+  ACE_CHECK;
 }
 
 

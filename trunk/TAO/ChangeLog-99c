@@ -1,3 +1,10 @@
+Sun Apr  4 00:33:20 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/POA/Forwarding/client.cpp (do_calls): 
+	* examples/POA/Forwarding/Servant_Locator.cpp:
+	* examples/POA/Forwarding/MyFooServant.cpp:
+	Made some aesthetic changes and the way exception is thrown.
+	
 Sat Apr  3 23:55:32 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/POA/DSI/Database_i.cpp (destroy_entry): 
