@@ -808,11 +808,13 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::connect_s
 {
   ACE_Hash_Addr<ACE_PEER_CONNECTOR_ADDR, SVC_HANDLER> search_addr (remote_addr);
 
-  // Try to find the addres in the cache.  Only if we don't find it do
-  // we create a new <SVC_HANDLER> and connect it with the server.
-  
+  // Synchronization is required here as the setting of the in_use bit
+  // in the service handler must be done atomically with the finding
+  // and binding of the service handler in the cache.
   ACE_GUARD_RETURN (MUTEX, ace_mon, this->lock_, -1);
 
+  // Try to find the addres in the cache.  Only if we don't find it do
+  // we create a new <SVC_HANDLER> and connect it with the server.  
   if (this->connection_cache_.find (search_addr, sh) == -1)
     {
       ACE_NEW_RETURN (sh, SVC_HANDLER, -1);
