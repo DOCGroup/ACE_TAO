@@ -1,3 +1,10 @@
+Sat Jan 30 13:34:00 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/Connection/non_blocking/test_sock_connector.cpp (main):
+	  Prevent the program from executing if compiled on non-NT Win32
+	  platform without Winsock2 installed.  Thanks to Greg Harrison
+	  <harrisog@erinet.com> for reporting ths problem.
+
 1999-01-29  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Mem_Map.cpp (map_it): NT makes no claims about replacing
@@ -10,12 +17,12 @@
 
 Fri Jan 29 17:40:34 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* websvcs/lib/URL_Addr.h: 
-	* websvcs/lib/URL_Addr.cpp: 
+	* websvcs/lib/URL_Addr.h:
+	* websvcs/lib/URL_Addr.cpp:
 	  We were not checking against nil strings in several places, also
 	  fixed some uninitialized members in the HTTP_Addr constructors.
 
-	* bin/auto_compile: 
+	* bin/auto_compile:
 	  Added protection against simultaneous executions of the script;
 	  it checks for .disable file on the $LOGDIR directory, if present
 	  it does not execute; if not present it creates one; the file is
@@ -44,24 +51,24 @@ Fri Jan 29 16:25:22 1999  Steve Huston  <shuston@riverace.com>
 
 Fri Jan 29 14:49:37 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/ACE.cpp: 
-	* ace/Basic_Types.h: 
-	* ace/INET_Addr.cpp: 
-	* ace/Memory_Pool.cpp: 
-	* ace/OS.cpp: 
-	* ace/OS.h: 
-	* ace/OS.i: 
-	* ace/SOCK_Dgram_Bcast.cpp: 
-	* ace/config-cray.h: 
-	* examples/IPC_SAP/SOCK_SAP/C-inserver.cpp: 
-	* examples/System_V_IPC/SV_Semaphores/Semaphores_1.cpp: 
-	* examples/System_V_IPC/SV_Semaphores/Semaphores_2.cpp: 
-	* include/makeinclude/platform_cray.GNU: 
-	* tests/Basic_Types_Test.cpp: 
-	* tests/Handle_Set_Test.cpp: 
-	* tests/Message_Queue_Test.cpp: 
-	* tests/SV_Shared_Memory_Test.cpp: 
-	* tests/run_tests.sh: 
+	* ace/ACE.cpp:
+	* ace/Basic_Types.h:
+	* ace/INET_Addr.cpp:
+	* ace/Memory_Pool.cpp:
+	* ace/OS.cpp:
+	* ace/OS.h:
+	* ace/OS.i:
+	* ace/SOCK_Dgram_Bcast.cpp:
+	* ace/config-cray.h:
+	* examples/IPC_SAP/SOCK_SAP/C-inserver.cpp:
+	* examples/System_V_IPC/SV_Semaphores/Semaphores_1.cpp:
+	* examples/System_V_IPC/SV_Semaphores/Semaphores_2.cpp:
+	* include/makeinclude/platform_cray.GNU:
+	* tests/Basic_Types_Test.cpp:
+	* tests/Handle_Set_Test.cpp:
+	* tests/Message_Queue_Test.cpp:
+	* tests/SV_Shared_Memory_Test.cpp:
+	* tests/run_tests.sh:
 	  Thanks to Doug Anderson <doug@clark.net> for this port of ACE to
 	  Cray machines.
 
