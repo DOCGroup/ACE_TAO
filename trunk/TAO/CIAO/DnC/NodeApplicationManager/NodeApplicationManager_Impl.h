@@ -23,9 +23,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "DeploymentS.h"
+#include "ciao/DeploymentS.h"
 #include "CIAO_NAM_Export.h"
-#include "NodeApp_CB_Impl.h"
+#include "ciao/NodeApp_CB_Impl.h"
+#include "ciao/ImplementationInfo.h"
 
 namespace CIAO
 {
@@ -39,8 +40,7 @@ namespace CIAO
   public:
     // Constructor
     NodeApplicationManager_Impl (CORBA::ORB_ptr o,
-				 PortableServer::POA_ptr p,
-				 const Deployment::DeploymentPlan & plan);
+				 PortableServer::POA_ptr p);
 
     // Destructor
     virtual ~NodeApplicationManager_Impl (void);
@@ -89,7 +89,8 @@ namespace CIAO
      **/
     virtual CIAO::NodeApplicationManager_Impl *
     init (const char *nodeapp_location,
-	  CORBA::ULong delay
+	  CORBA::ULong delay,
+	  const Deployment::DeploymentPlan & plan
 	  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
 		       Deployment::InvalidProperty));
@@ -145,7 +146,7 @@ namespace CIAO
 
     // Cached plan (This should be the part of the whole plan local to this node)
     // The plan will be initialized when init is called.
-    const Deployment::DeploymentPlan & plan_;
+    Deployment::DeploymentPlan plan_;
 
     // Specify the time in second NodeApplicationManager will wait for a
     // child NodeApplication to callback.  Default is 5 second.
