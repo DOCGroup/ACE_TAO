@@ -130,6 +130,7 @@ namespace CIAO
       if (node->hasAttributes ())
         {
           DOMNamedNodeMap* named_node_map = node->getAttributes ();
+          //auto_ptr<DOMNamedNodeMap> cleanup_map (named_node_map);
           int length = named_node_map->getLength ();
           CORBA::ULong i (domain.sharedResource.length ());
           domain.sharedResource.length (i + 1);
@@ -156,6 +157,7 @@ namespace CIAO
       if (node->hasAttributes ())
         {
           DOMNamedNodeMap* named_node_map = node->getAttributes ();
+          //auto_ptr<DOMNamedNodeMap> cleanup_map (named_node_map);
           int length = named_node_map->getLength ();
           CORBA::ULong i (domain.node.length ());
           domain.node.length (i + 1);
@@ -183,6 +185,7 @@ namespace CIAO
       if (node->hasAttributes ())
         {
           DOMNamedNodeMap* named_node_map = node->getAttributes ();
+          //auto_ptr<DOMNamedNodeMap> cleanup_map (named_node_map);
           int length = named_node_map->getLength ();
           CORBA::ULong i (domain.interconnect.length ());
           domain.interconnect.length (i + 1);
@@ -209,6 +212,7 @@ namespace CIAO
       if (node->hasAttributes ())
         {
           DOMNamedNodeMap* named_node_map = node->getAttributes ();
+          //auto_ptr<DOMNamedNodeMap> cleanup_map (named_node_map);
           int length = named_node_map->getLength ();
           CORBA::ULong i (domain.interconnect.length ());
           domain.interconnect.length (i + 1);
@@ -235,6 +239,7 @@ namespace CIAO
       if (node->hasAttributes ())
         {
           DOMNamedNodeMap* named_node_map = node->getAttributes ();
+          //auto_ptr<DOMNamedNodeMap> cleanup_map (named_node_map);
           int length = named_node_map->getLength ();
           CORBA::ULong i (domain.interconnect.length ());
           domain.interconnect.length (i + 1);
@@ -300,6 +305,7 @@ namespace CIAO
               if (node->hasAttributes ())
                 {
                   DOMNamedNodeMap* named_node_map = node->getAttributes ();
+                  //auto_ptr<DOMNamedNodeMap> cleanup_map (named_node_map);
                   int length = named_node_map->getLength ();
                   CORBA::ULong resource_length 
                      (domain_node.resource.length ());
@@ -327,6 +333,7 @@ namespace CIAO
               if (node->hasAttributes ())
                 {
                   DOMNamedNodeMap* named_node_map = node->getAttributes ();
+                  //auto_ptr<DOMNamedNodeMap> cleanup_map (named_node_map);
                   this->process_refs (named_node_map);
                 }
             }
@@ -340,6 +347,7 @@ namespace CIAO
               if (node->hasAttributes ())
                 {
                   DOMNamedNodeMap* named_node_map = node->getAttributes ();
+                  //auto_ptr<DOMNamedNodeMap> cleanup_map (named_node_map);
                   this->process_refs (named_node_map);
                 }
             }
@@ -382,6 +390,7 @@ namespace CIAO
               if (node->hasAttributes ())
                 {
                   DOMNamedNodeMap* named_node_map = node->getAttributes ();
+                  //auto_ptr<DOMNamedNodeMap> cleanup_map (named_node_map);
                   int length = named_node_map->getLength ();
                   CORBA::ULong sp_length 
                      (domain_resource.property.length ());
@@ -505,6 +514,7 @@ namespace CIAO
               if (node->hasAttributes ())
                 {
                   DOMNamedNodeMap* named_node_map = node->getAttributes ();
+                  //auto_ptr<DOMNamedNodeMap> cleanup_map (named_node_map);
                   int length = named_node_map->getLength ();
                   if (length == 1)
                     {
@@ -569,6 +579,7 @@ namespace CIAO
               if (node->hasAttributes ())
                 {
                   DOMNamedNodeMap* named_node_map = node->getAttributes ();
+                  //auto_ptr<DOMNamedNodeMap> cleanup_map (named_node_map);
                   int length = named_node_map->getLength ();
                   if (length == 1)
                     {
@@ -655,6 +666,7 @@ namespace CIAO
               if (node->hasAttributes ())
                 {
                   DOMNamedNodeMap* named_node_map = node->getAttributes ();
+                  //auto_ptr<DOMNamedNodeMap> cleanup_map (named_node_map);
                   int length = named_node_map->getLength ();
                   CORBA::ULong sp_length 
                      (domain_sr.property.length ());

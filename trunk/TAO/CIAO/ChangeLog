@@ -1,3 +1,10 @@
+Fri May 14 15:13:17 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/DnC_Dump.cpp:
+        * DnC/Config_Handlers/DnC_Dump.h:
+
+          Added the dump functions for the Domain Handler.
+
 Fri May 14 12:17:55 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * DnC/Config_Handlers/Requirement_Handler.cpp:
