@@ -1004,9 +1004,9 @@ ACE_Log_Msg::dump (void) const
   ACE_DEBUG ((LM_DEBUG, "\trace_active_ = %d\n", this->trace_active_));
   ACE_DEBUG ((LM_DEBUG, "\tracing_enabled_ = %d\n", this->tracing_enabled_));
   ACE_DEBUG ((LM_DEBUG, "\npriority_mask_ = %d\n", this->priority_mask_));
-  if (this->thr_desc ()->state () != 0)
+  if (this->thr_desc_ != 0 && this->thr_desc_->state () != 0)
     ACE_DEBUG ((LM_DEBUG, "\thr_state_ = %d\n",
-                this->thr_desc ()->state ()));
+                this->thr_desc_->state ()));
   ACE_DEBUG ((LM_DEBUG, "\nmsg_off_ = %d\n", this->msg_off_));
   ACE_Log_Msg_message_queue->dump ();
 
