@@ -992,8 +992,9 @@ be_valuetype::abstract_supports_helper (be_interface *,
                                         TAO_OutStream *os)
 {
   *os << "," << be_nl
-      << "public virtual ";
-
+      << "public virtual "
+      << base->name ();
+/*
   if (base->is_nested ())
     {
       UTL_Scope *parent_scope = base->defined_in ();
@@ -1007,7 +1008,7 @@ be_valuetype::abstract_supports_helper (be_interface *,
     {
       *os << base->local_name ();
     }
-
+*/
   return 0;
 }
 

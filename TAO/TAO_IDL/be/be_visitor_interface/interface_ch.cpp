@@ -163,7 +163,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
         }
     }
 
-  if (node->is_abstract ())
+  if (node->is_abstract () && nparents == 0)
     {
       *os << "public virtual CORBA::AbstractBase" << be_uidt_nl;
     }
@@ -293,7 +293,11 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   if (node->is_abstract ())
     {
       *os << be_nl << be_nl
-          << "virtual void *_tao_obv_narrow (ptr_arith_t type_id);";
+          << "virtual void *_tao_obv_narrow (ptr_arith_t type_id);"
+          << "\n#if defined (_MSC_VER)" << be_nl
+          << "virtual void *" << node->flat_name ()
+          << "_tao_obv_narrow (ptr_arith_t type_id);"
+          << "\n#endif /* _MSC_VER */";
     }
 
   if (! node->is_local () && ! node->is_abstract ())
