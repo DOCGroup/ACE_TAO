@@ -1,9 +1,9 @@
---- Kokyu_qosC.h.orig	Mon Sep  1 11:01:16 2003
-+++ Kokyu_qosC.h	Mon Sep  1 11:01:28 2003
-@@ -39,7 +39,7 @@
- #endif /* ACE_LACKS_PRAGMA_ONCE */
+--- Kokyu_qosC.h.orig	2003-12-04 00:40:48.000000000 -0600
++++ Kokyu_qosC.h	2003-12-04 00:41:10.000000000 -0600
+@@ -45,7 +45,7 @@
+ #include "tao/VarOut_T.h"
  
- 
+ #include "TimeBaseC.h"
 -#include "tao/RTCORBA/RTCORBAC.h"
 +#include "tao/RTCORBA/RTCORBA.h"
  

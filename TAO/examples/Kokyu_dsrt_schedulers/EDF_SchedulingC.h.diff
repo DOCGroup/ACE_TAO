@@ -1,5 +1,5 @@
---- EDF_SchedulingC.h.orig	2003-11-11 11:20:37.000000000 -0600
-+++ EDF_SchedulingC.h	2003-11-11 11:22:34.000000000 -0600
+--- EDF_SchedulingC.h.orig	2003-12-04 00:55:30.000000000 -0600
++++ EDF_SchedulingC.h	2003-12-04 00:55:53.000000000 -0600
 @@ -44,8 +44,8 @@
  #include "tao/Objref_VarOut_T.h"
  #include "tao/VarOut_T.h"

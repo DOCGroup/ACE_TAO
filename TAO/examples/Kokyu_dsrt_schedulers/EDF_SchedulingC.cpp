@@ -75,7 +75,7 @@ static const CORBA::Long _oc_EDF_Scheduling_SchedulingParameter[] =
   ACE_NTOHL (0x6e675061), 
   ACE_NTOHL (0x72616d65), 
   ACE_NTOHL (0x74657200),  // name = SchedulingParameter
-  2, // member count
+  4, // member count
     9,
   ACE_NTOHL (0x64656164), 
   ACE_NTOHL (0x6c696e65), 
@@ -102,6 +102,32 @@ static const CORBA::Long _oc_EDF_Scheduling_SchedulingParameter[] =
   ACE_NTOHL (0x696d706f), 
   ACE_NTOHL (0x7274616e), 
   ACE_NTOHL (0x63650000),  // name = importance
+    CORBA::tk_long,
+
+  7,
+  ACE_NTOHL (0x70657269), 
+  ACE_NTOHL (0x6f640000),  // name = period
+    CORBA::tk_alias, // typecode kind for typedefs
+  56, // encapsulation length
+    TAO_ENCAP_BYTE_ORDER, // byte order
+    31,
+    ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
+    ACE_NTOHL (0x54696d65), 
+    ACE_NTOHL (0x42617365), 
+    ACE_NTOHL (0x2f54696d), 
+    ACE_NTOHL (0x65543a31), 
+    ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/TimeBase/TimeT:1.0
+        6,
+    ACE_NTOHL (0x54696d65), 
+    ACE_NTOHL (0x54000000),  // name = TimeT
+        CORBA::tk_ulonglong,
+
+
+  8,
+  ACE_NTOHL (0x7461736b), 
+  ACE_NTOHL (0x5f696400),  // name = task_id
     CORBA::tk_long,
 
 };

@@ -265,13 +265,17 @@ EDF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
 
   CORBA::Long importance;
   TimeBase::TimeT deadline;
+  TimeBase::TimeT period;
+  int task_id;
 
   if (CORBA::is_nil (sched_policy))
     {
       //24 hrs from now - infinity
       ACE_Time_Value deadline_tv = ACE_OS::gettimeofday () + ACE_Time_Value (24*60*60,0);
-      deadline = deadline_tv.sec () * 1000000 + deadline_tv.usec () * 10; //100s of nanoseconds for TimeBase::TimeT
+      deadline = deadline_tv.sec () * 10000000 + deadline_tv.usec () * 10; //100s of nanoseconds for TimeBase::TimeT
       importance = 0;
+      period = 0; //set period 0 as default.
+      task_id = ID_BEGIN ++;
     }
   else
     {
@@ -281,6 +285,8 @@ EDF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
       EDF_Scheduling::SchedulingParameter_var sched_param = sched_param_policy->value ();
       deadline = sched_param->deadline;
       importance = sched_param->importance;
+      period = sched_param->period;
+      task_id = sched_param->task_id;
 
 #ifdef KOKYU_DSRT_LOGGING
       int int_guid;
@@ -297,6 +303,8 @@ EDF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
   guid_copy (sc_qos.guid, *(this->current_->id ()));
   sc_qos.deadline = deadline;
   sc_qos.importance = importance;
+  sc_qos.task_id = task_id;
+  sc_qos.period = period;
   CORBA::Any sc_qos_as_any;
   sc_qos_as_any <<= sc_qos;
 
@@ -379,13 +387,18 @@ EDF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
 
   CORBA::Long importance;
   TimeBase::TimeT deadline;
+  TimeBase::TimeT period;
+  CORBA::Long task_id;
 
   if (sc.ptr () == 0)
     {
+      //Since send_request will add an QoS for any request, why can this case happen?
       //24 hrs from now - infinity
       ACE_Time_Value deadline_tv = ACE_OS::gettimeofday () + ACE_Time_Value (24*60*60,0);
       deadline = deadline_tv.sec ()*1000000 + deadline_tv.usec ()*10; //100s of nanoseconds for TimeBase::TimeT
       importance = 0;
+      period = 0;
+      task_id = ID_BEGIN ++;
     }
   else
     {
@@ -401,6 +414,8 @@ EDF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
 
       deadline  = sc_qos_ptr->deadline;
       importance = sc_qos_ptr->importance;
+      period = sc_qos_ptr->period;
+      task_id = sc_qos_ptr->task_id;
 
       guid.length (sc_qos_ptr->guid.length ());
       guid_copy (guid, sc_qos_ptr->guid);
@@ -424,15 +439,32 @@ EDF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
       EDF_Scheduling::SchedulingParameter sched_param;
       sched_param.importance = importance;
       sched_param.deadline = deadline;
+      sched_param.period = period;
+      sched_param.task_id = task_id;
       sched_param_out = this->create_scheduling_parameter (sched_param);
     }
 
   EDF_Scheduler_Traits::QoSDescriptor_t qos;
   qos.importance_ = importance;
   qos.deadline_ = deadline;
+  qos.period_ = period;
+  qos.task_id_ = task_id;
 
   DSUI_EVENT_LOG (EDF_SCHED_FAM, ENTER_SERVER_DISPATCH_SCHEDULE, 0,0,NULL);
+
+/*DTTIME:
+  record the entering dispatcher time on the server side.
+  Tenth Time.
+*/
+#ifdef KOKYU_HAS_RELEASE_GUARD 
+  this->kokyu_dispatcher_->release_guard (guid, qos);
+#else
   this->kokyu_dispatcher_->schedule (guid, qos);
+#endif
+/*DTTIME:
+  record the leaving dispatcher time on the server side.
+  Eleventh Time.
+*/
   DSUI_EVENT_LOG (EDF_SCHED_FAM, LEAVE_SERVER_DISPATCH_SCHEDULE, 0,0,NULL);
 
 #ifdef KOKYU_DSRT_LOGGING
@@ -644,9 +676,10 @@ EDF_Scheduler::receive_other (PortableInterceptor::ClientRequestInfo_ptr ri
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  /*  receive_reply (ri ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-  */
+//Otherwise Segmentation fault when oneway call happens.
+/*  receive_reply (ri ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+*/
 }
 
 void

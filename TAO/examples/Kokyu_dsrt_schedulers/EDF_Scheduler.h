@@ -8,6 +8,8 @@
 #include "Kokyu_dsrt.h"
 #include "Kokyu_dsrt_schedulers_export.h"
 #include "tao/LocalObject.h"
+#include "ace/Reactor.h"
+#include "tao/ORB_Core.h"
 
 struct EDF_Scheduler_Traits
 {
@@ -23,6 +25,8 @@ struct EDF_Scheduler_Traits
 
     Importance_t importance_;
     Time_t deadline_;
+    Time_t period_;
+    int task_id_;
   };
 
   typedef _QoSDescriptor_t QoSDescriptor_t;
@@ -201,4 +205,5 @@ public TAO_Local_RefCounted_Object
   int ace_sched_scope_;
 };
 
+static int ID_BEGIN = 0;
 #endif //EDF_SCHEDULER_H
