@@ -1,3 +1,8 @@
+Tue May  1 09:40:08 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/AMI_Buffering/Makefile: Made a check for ami instead of
+	  corba_messaging. 
+	
 Mon Apr 30 22:50:27 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/CORBALOC_Parser.h: 
