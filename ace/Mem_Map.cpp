@@ -158,7 +158,7 @@ ACE_Mem_Map::map (LPCTSTR file_name,
 }
 
 ACE_Mem_Map::ACE_Mem_Map (void)
-  : base_addr_ (0), 
+  : base_addr_ (MAP_FAILED), 
     length_ (0),
     handle_ (ACE_INVALID_HANDLE),
     file_mapping_ (ACE_INVALID_HANDLE),
@@ -178,7 +178,9 @@ ACE_Mem_Map::ACE_Mem_Map (LPCTSTR file_name,
 			  int share, 
 			  void *addr, 
 			  off_t pos)
-  : base_addr_ (0),
+  : base_addr_ (MAP_FAILED), 
+    length_ (0),
+    handle_ (ACE_INVALID_HANDLE),
     file_mapping_ (ACE_INVALID_HANDLE),
     close_handle_ (0)
 {
@@ -196,7 +198,10 @@ ACE_Mem_Map::ACE_Mem_Map (ACE_HANDLE handle,
 			  int share, 
 			  void *addr, 
 			  off_t pos)
-  : file_mapping_ (ACE_INVALID_HANDLE),
+  : base_addr_ (MAP_FAILED), 
+    length_ (0),
+    handle_ (ACE_INVALID_HANDLE),
+    file_mapping_ (ACE_INVALID_HANDLE),
     close_handle_ (0)
 {
   ACE_TRACE ("ACE_Mem_Map::ACE_Mem_Map");

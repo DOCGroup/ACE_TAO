@@ -364,6 +364,12 @@ ACE_Event::handle (void) const
   return this->handle_;
 }
 
+void
+ACE_Event::handle (ACE_event_t new_handle) 
+{
+  this->handle_ = new_handle;
+}
+
 int 
 ACE_Event::wait (void)
 {

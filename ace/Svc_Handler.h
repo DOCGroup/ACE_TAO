@@ -108,6 +108,9 @@ public:
   // Overloaded new operator.  This is used to unobtrusively detect
   // when a Svc_Handler is allocated dynamically.
 
+  void shutdown (void);
+  // Close down the descriptor and unregister from the Reactor
+
   void dump (void) const;
   // Dump the state of an object.
 
@@ -119,9 +122,6 @@ public:
   // to be a public new and a private delete.
 
 private:  
-  void shutdown (void);
-  // Close down the descriptor
-
   ACE_PEER_STREAM peer_; 
   // Maintain connection with client.
 
