@@ -1,4 +1,4 @@
-$Id$:
+//$Id$:
 /**
  * @file ReceiverEI.idl
  *
@@ -21,5 +21,5 @@ module Hello
     {
     };
 
-}; 
+};
 #endif /*RECEIVEREI_IDL*/

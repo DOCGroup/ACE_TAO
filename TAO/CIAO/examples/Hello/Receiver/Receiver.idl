@@ -1,7 +1,7 @@
-$Id$:
+//$Id$:
 /**
  * @file Receiver.idl
- * 
+ *
  * @author Tao Lu <lu@dre.vanderbilt.edu>
  */
 
@@ -17,10 +17,10 @@ module Hello
     uses message read_message;
     consumes timeout click_in;
   };
-  
+
   home ReceiverHome manages Receiver
   {
   };
 
-}; 
+};
 #endif /*RECEIVER_IDL*/

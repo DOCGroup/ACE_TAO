@@ -1,3 +1,9 @@
+Sun Nov 30 11:47:29 2003  Tao Lu  <lu@dre.vanderbilt.edu>
+
+        * examples/Hello:
+          Moved the starter.cpp into the Sender project to so the
+          dependency will be set correctly.
+
 Sat Nov 29 15:57:54 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* examples/handcrafted/BasicSP/*.mpc:
