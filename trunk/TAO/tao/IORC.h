@@ -277,90 +277,6 @@ TAO_NAMESPACE  TAO_IOP
 
 #endif /* end #if !defined */
 
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-
-#if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_TAO_IOP_TAO_IOR_MANIPULATION_IORLIST_CH_)
-#define __TAO_UNBOUNDED_OBJECT_SEQUENCE_TAO_IOP_TAO_IOR_MANIPULATION_IORLIST_CH_
-
-      class _TAO_Object_Manager_TAO_IOP_TAO_IOR_Manipulation_CORBA_Object;
-
-      class TAO_Export  _TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList : public TAO_Unbounded_Base_Sequence
-      {
-      public:
-        // = Initialization and termination methods.
-
-        _TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList (void);
-        _TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList (CORBA::ULong maximum);
-        _TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList (CORBA::ULong maximum,
-          CORBA::ULong length,
-          CORBA::Object* *value,
-          CORBA::Boolean release = 0);
-        _TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList(const _TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList &rhs);
-        virtual ~_TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList (void);
-        _TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList &operator= (const _TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList &rhs);
-        _TAO_Object_Manager_TAO_IOP_TAO_IOR_Manipulation_CORBA_Object operator[] (CORBA::ULong index) const;
-        static CORBA::Object **allocbuf (CORBA::ULong nelems);
-        static void freebuf (CORBA::Object **buffer);
-        // The Base_Sequence functions, please see tao/Sequence.h
-        virtual void _allocate_buffer (CORBA::ULong length);
-        virtual void _deallocate_buffer (void);
-        CORBA::Object* *get_buffer (CORBA::Boolean orphan = 0);
-        const CORBA::Object* *get_buffer (void) const;
-        virtual void _shrink_buffer (CORBA::ULong nl, CORBA::ULong ol);
-        virtual void _downcast (
-            void* target,
-            CORBA_Object *src,
-            CORBA_Environment &ACE_TRY_ENV =
-              TAO_default_environment ()
-          );
-        virtual CORBA_Object* _upcast (void *src) const;
-
-      };
-
-#endif /* end #if !defined */
-
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-
-#if !defined (__TAO_OBJECT_MANAGER_TAO_IOP_TAO_IOR_MANIPULATION_CORBA_OBJECT_CH_)
-#define __TAO_OBJECT_MANAGER_TAO_IOP_TAO_IOR_MANIPULATION_CORBA_OBJECT_CH_
-
-      class TAO_Export _TAO_Object_Manager_TAO_IOP_TAO_IOR_Manipulation_CORBA_Object
-      {
-        friend class _TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList;
-      public:
-
-        // = Initialization and termination methods.
-        _TAO_Object_Manager_TAO_IOP_TAO_IOR_Manipulation_CORBA_Object (const _TAO_Object_Manager_TAO_IOP_TAO_IOR_Manipulation_CORBA_Object &rhs);
-        _TAO_Object_Manager_TAO_IOP_TAO_IOR_Manipulation_CORBA_Object (CORBA::Object** buffer, CORBA::Boolean release);
-        ~_TAO_Object_Manager_TAO_IOP_TAO_IOR_Manipulation_CORBA_Object (void);
-        _TAO_Object_Manager_TAO_IOP_TAO_IOR_Manipulation_CORBA_Object &operator= (const _TAO_Object_Manager_TAO_IOP_TAO_IOR_Manipulation_CORBA_Object &rhs);
-        _TAO_Object_Manager_TAO_IOP_TAO_IOR_Manipulation_CORBA_Object &operator= (CORBA::Object *p);
-        _TAO_Object_Manager_TAO_IOP_TAO_IOR_Manipulation_CORBA_Object &operator= (CORBA::Object_var &p);
-        CORBA::Object* operator-> (void) const;
-        operator const CORBA::Object *() const; // Cast (read-only).
-        operator CORBA::Object *&(); // Cast.
-        CORBA::Object *in (void) const; // in
-        CORBA::Object *&inout (void); // inout
-        CORBA::Object *&out (void); // out
-        CORBA::Object *_retn (void); // retn
-      private:
-        CORBA::Object **ptr_;
-        // data member, notice that it is a pointer, to implement the
-        // reference behavior for assignment.
-
-        CORBA::Boolean release_;
-        // release flag based on parent's flag
-      };
-
-#endif /* end #if !defined */
-
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
-
 #if !defined (_TAO_IOP_TAO_IOR_MANIPULATION_IORLIST_CH_)
 #define _TAO_IOP_TAO_IOR_MANIPULATION_IORLIST_CH_
 
@@ -369,11 +285,7 @@ TAO_NAMESPACE  TAO_IOP
     // *************************************************************
 
     class TAO_Export IORList : public
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-      _TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
       TAO_Unbounded_Object_Sequence<CORBA::Object,CORBA::Object_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
     {
     public:
       IORList (void); // default ctor
@@ -416,12 +328,7 @@ TAO_NAMESPACE  TAO_IOP
       operator IORList &();
       operator IORList &() const;
 
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-        _TAO_Object_Manager_TAO_IOP_TAO_IOR_Manipulation_CORBA_Object
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-        TAO_Object_Manager<CORBA::Object,CORBA::Object_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
-      operator[] (CORBA::ULong index);
+      TAO_Object_Manager<CORBA::Object,CORBA::Object_var> operator[] (CORBA::ULong index);
       // in, inout, out, _retn
       const IORList &in (void) const;
       IORList &inout (void);
@@ -452,12 +359,7 @@ TAO_NAMESPACE  TAO_IOP
       IORList *&ptr (void);
       IORList *operator-> (void);
 
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-        _TAO_Object_Manager_TAO_IOP_TAO_IOR_Manipulation_CORBA_Object
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-        TAO_Object_Manager<CORBA::Object,CORBA::Object_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
-      operator[] (CORBA::ULong index);
+      TAO_Object_Manager<CORBA::Object,CORBA::Object_var> operator[] (CORBA::ULong index);
 
     private:
       IORList *&ptr_;

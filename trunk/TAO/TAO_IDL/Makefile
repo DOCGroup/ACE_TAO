@@ -873,7 +873,9 @@ tags:
  $(ACE_ROOT)/ace/Process_Manager.i \
  $(ACE_ROOT)/ace/Env_Value_T.h \
  $(ACE_ROOT)/ace/Env_Value_T.i \
- $(ACE_ROOT)/ace/Env_Value_T.cpp
+ $(ACE_ROOT)/ace/Env_Value_T.cpp \
+ $(ACE_ROOT)/ace/ARGV.h \
+ $(ACE_ROOT)/ace/ARGV.i
 .obj/fe_declarator.o .obj/fe_declarator.so .shobj/fe_declarator.o .shobj/fe_declarator.so: fe/fe_declarator.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -11786,15 +11788,11 @@ tags:
  be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp \
  be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp \
  be/be_visitor_sequence/gen_bounded_str_sequence_ch.cpp \
- be/be_visitor_sequence/gen_object_manager_ch.cpp \
- be/be_visitor_sequence/gen_unbounded_sequence_ci.cpp \
  be/be_visitor_sequence/gen_bounded_sequence_ci.cpp \
  be/be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp \
  be/be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp \
  be/be_visitor_sequence/gen_bounded_str_sequence_ci.cpp \
- be/be_visitor_sequence/gen_object_manager_ci.cpp \
  be/be_visitor_sequence/gen_unbounded_sequence_cs.cpp \
- be/be_visitor_sequence/gen_bounded_sequence_cs.cpp \
  be/be_visitor_sequence/gen_unbounded_obj_sequence_cs.cpp \
  be/be_visitor_sequence/gen_bounded_obj_sequence_cs.cpp \
  be/be_visitor_sequence/gen_bounded_str_sequence_cs.cpp

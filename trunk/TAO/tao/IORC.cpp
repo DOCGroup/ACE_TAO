@@ -304,87 +304,6 @@ static CORBA::TypeCode _tc_TAO_tc_TAO_IOP_TAO_IOR_Manipulation_Invalid_IOR (CORB
 CORBA::TypeCode_ptr TAO_IOP::TAO_IOR_Manipulation::_tc_Invalid_IOR = &_tc_TAO_tc_TAO_IOP_TAO_IOR_Manipulation_Invalid_IOR;
 
 
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-
-#if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_TAO_IOP_TAO_IOR_MANIPULATION_IORLIST_CS_)
-#define __TAO_UNBOUNDED_OBJECT_SEQUENCE_TAO_IOP_TAO_IOR_MANIPULATION_IORLIST_CS_
-
-  // The Base_Sequence functions, please see tao/Sequence.h
-  void
-  TAO_IOP::TAO_IOR_Manipulation::_TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList::_allocate_buffer (CORBA::ULong length)
-  {
-    CORBA::Object **tmp = TAO_IOP::TAO_IOR_Manipulation::_TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList::allocbuf (length);
-
-    if (this->buffer_ != 0)
-    {
-      CORBA::Object **old = ACE_reinterpret_cast (CORBA::Object**, this->buffer_);
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-        if (!this->release_)
-          tmp[i] = CORBA::Object::_duplicate (old[i]);
-        else
-          tmp[i] = old[i];
-
-      if (this->release_)
-        delete[] old;
-
-    }
-    this->buffer_ = tmp;
-  }
-
-  void
-  TAO_IOP::TAO_IOR_Manipulation::_TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList::_deallocate_buffer (void)
-  {
-    if (this->buffer_ == 0 || this->release_ == 0)
-      return;
-    CORBA::Object **tmp = ACE_reinterpret_cast (CORBA::Object**, this->buffer_);
-    for (CORBA::ULong i = 0; i < this->length_; ++i)
-    {
-      CORBA::release (tmp[i]);
-      tmp[i] = CORBA::Object::_nil ();
-    }
-    TAO_IOP::TAO_IOR_Manipulation::_TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList::freebuf (tmp);
-    this->buffer_ = 0;
-  }
-
-  TAO_IOP::TAO_IOR_Manipulation::_TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList::~_TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList (void)
-  {
-    this->_deallocate_buffer ();
-  }
-
-  void
-  TAO_IOP::TAO_IOR_Manipulation::_TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)
-  {
-    CORBA::Object **tmp = ACE_reinterpret_cast (CORBA::Object**, this->buffer_);
-
-    for (CORBA::ULong i = nl; i < ol; ++i)
-    {
-      CORBA::release (tmp[i]);
-      tmp[i] = CORBA::Object::_nil ();
-    }
-  }
-  void
-  TAO_IOP::TAO_IOR_Manipulation::_TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList::_downcast (
-      void* target,
-      CORBA_Object *src,
-      CORBA_Environment &ACE_TRY_ENV
-    )
-  {
-    CORBA::Object **tmp = ACE_static_cast (CORBA::Object**, target);
-    *tmp = CORBA::Object::_narrow (src, ACE_TRY_ENV);
-  }
-
-  CORBA_Object*
-  TAO_IOP::TAO_IOR_Manipulation::_TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList::_upcast (void *src) const
-  {
-    CORBA::Object **tmp = ACE_static_cast (CORBA::Object**, src);
-    return *tmp;
-  }
-
-#endif /* end #if !defined */
-
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
-
 #if !defined (_TAO_IOP_TAO_IOR_MANIPULATION_IORLIST_CS_)
 #define _TAO_IOP_TAO_IOR_MANIPULATION_IORLIST_CS_
 
@@ -396,30 +315,15 @@ TAO_IOP::TAO_IOR_Manipulation::IORList::IORList (void)
 {}
 TAO_IOP::TAO_IOR_Manipulation::IORList::IORList (CORBA::ULong max) // uses max size
   :
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  _TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Object_Sequence<CORBA::Object,CORBA::Object_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
- (max)
+  TAO_Unbounded_Object_Sequence<CORBA::Object,CORBA::Object_var> (max)
 {}
 TAO_IOP::TAO_IOR_Manipulation::IORList::IORList (CORBA::ULong max, CORBA::ULong length, CORBA::Object_ptr *buffer, CORBA::Boolean release)
   :
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  _TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Object_Sequence<CORBA::Object,CORBA::Object_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
- (max, length, buffer, release)
+  TAO_Unbounded_Object_Sequence<CORBA::Object,CORBA::Object_var> (max, length, buffer, release)
 {}
 TAO_IOP::TAO_IOR_Manipulation::IORList::IORList (const IORList &seq) // copy ctor
   :
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  _TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Object_Sequence<CORBA::Object,CORBA::Object_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
- (seq)
+  TAO_Unbounded_Object_Sequence<CORBA::Object,CORBA::Object_var> (seq)
 {}
 TAO_IOP::TAO_IOR_Manipulation::IORList::~IORList (void) // dtor
 {}
@@ -862,9 +766,11 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, TAO_IOP::TAO_IOR_Manipul
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class TAO_Object_Field_T<TAO_IOP::TAO_IOR_Manipulation>;
+  template class TAO_Object_Field_T<TAO_IOP::TAO_IOR_Manipulation,TAO_IOP::TAO_IOR_Manipulation_var>;
+  template class TAO_Object_Manager<TAO_IOP::TAO_IOR_Manipulation,TAO_IOP::TAO_IOR_Manipulation_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<TAO_IOP::TAO_IOR_Manipulation>
+#  pragma instantiate TAO_Object_Field_T<TAO_IOP::TAO_IOR_Manipulation,TAO_IOP::TAO_IOR_Manipulation_var>
+#  pragma instantiate TAO_Object_Manager<TAO_IOP::TAO_IOR_Manipulation,TAO_IOP::TAO_IOR_Manipulation_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 void operator<<= (CORBA::Any &_tao_any, const TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList &_tao_elem) // copying

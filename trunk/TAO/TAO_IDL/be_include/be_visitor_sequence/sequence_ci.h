@@ -63,9 +63,6 @@ public:
   virtual int instantiate_sequence (be_sequence *node);
   // determine which sequence to instantiate
 
-  virtual int gen_object_manager (be_sequence *node);
-  // generate a instance of the object manager
-
   virtual int gen_var_impl (be_sequence *node);
   // generate the var impl
 
