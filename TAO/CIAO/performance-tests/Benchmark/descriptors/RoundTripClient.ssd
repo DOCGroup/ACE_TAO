@@ -2,9 +2,7 @@
 
 <!-- If this file is moved to a different directory, make sure to change the
      path to the DTD below. Otherwise the examples won't work. -->
-<!--
-<!DOCTYPE softpkg SYSTEM "../../../../../docs/XML/softpkg.dtd">
--->
+<!DOCTYPE softpkg SYSTEM "http://www.dre.vanderbilt.edu/CIAO/DTD/softpkg.dtd">
 <!-- RoundTripClient's Servant Software Descriptor  -->
 <!-- This file describes various RoundTripClient servant -->
 <!-- implementations. -->
@@ -26,7 +24,7 @@
     <fileinarchive name="RoundTripClient.ccd"/>
   </descriptor>
 
-  <implementation id="DCE:568a3872-f7bb-4b3f-baba-44c6824d966d">
+  <implementation id="DCE:cf88cb97-b5a8-4522-9fa3-e626c75c5470">
 
     <dependency type="ORB">
       <name>TAO</name>

@@ -15,6 +15,11 @@
 
   <partitioning>
 
+<homeplacement id="a_RoundTripHome">
+        <componentfileref idref="com-RoundTrip"/>
+        <componentinstantiation id="a_RoundTrip"/>
+      </homeplacement>
+
 <homeplacement id="a_RoundTripClientHome">
         <componentfileref idref="com-RoundTripClient"/>
         <componentinstantiation id="a_RoundTripClient">
@@ -25,10 +30,6 @@
 	</componentinstantiation>
      </homeplacement>
   <!-- A plain vanilla partition. We don't even need the processcollocation tag here. -->
-      <homeplacement id="a_RoundTripHome">
-        <componentfileref idref="com-RoundTrip"/>
-        <componentinstantiation id="a_RoundTrip"/>
-      </homeplacement>
 
      </partitioning>
 

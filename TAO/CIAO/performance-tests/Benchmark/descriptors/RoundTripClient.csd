@@ -30,7 +30,7 @@
     <softpkgref>
     <!-- .ssd stands for Servant Software Descriptors which is a CIAO extension -->
     <fileinarchive name="RoundTripClient.ssd"/>
-    <implref idref="DEC:cf88cb97-b5a8-4522-9fa3-e626c75c5470"/>
+    <implref idref="DCE:cf88cb97-b5a8-4522-9fa3-e626c75c5470"/>
     </softpkgref>
   </dependency>
 
