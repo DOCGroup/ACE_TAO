@@ -1,3 +1,11 @@
+Wed Jan 27 19:12:48 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
+
+	* docs/tutorials/008/*:
+	* docs/tutorials/009/*:
+	* docs/tutorials/011/*:
+	* docs/tutorials/012/*:
+	  Updates from the reviewers.
+
 Wed Jan 27 17:06:38 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Makefile: removed some unprintable characters.

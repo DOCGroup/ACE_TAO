@@ -3,7 +3,7 @@
 # To extract the files from this archive, save it to some FILE, remove
 # everything before the `!/bin/sh' line above, then type `sh FILE'.
 #
-# Made on 1999-01-24 16:08 EST by <jcej@chiroptera.tragus.org>.
+# Made on 1999-01-26 20:15 EST by <jcej@chiroptera.tragus.org>.
 # Source directory was `/var/home/jcej/projects/ACE_wrappers/docs/tutorials/012'.
 #
 # Existing files will *not* be overwritten unless `-c' is specified.
@@ -13,7 +13,7 @@
 # ------ ---------- ------------------------------------------
 #    430 -rw-rw-r-- hdr
 #     56 -rw-rw-r-- bodies
-#    487 -rw-rw-r-- page01.pre
+#   1093 -rw-rw-r-- page01.pre
 #    263 -rw-rw-r-- page02.pre
 #    397 -rw-rw-r-- page03.pre
 #    154 -rw-rw-r-- page04.pre
@@ -69,7 +69,7 @@ else
 fi
 rm -f 1231235999 $$.touch
 #
-if mkdir _sh25217; then
+if mkdir _sh31139; then
   $echo 'x -' 'creating lock directory'
 else
   $echo 'failed to create lock directory'
@@ -156,20 +156,35 @@ What we'll do in this tutorial is specialize the ACE_Message_Block
 object so that it can carry our data more efficiently.  As you'll see, 
 this isn't very difficult at all.
 <P>
+Kirthika's abstract:
+<UL>
+Here, a Message_Block class is derived from ACE_Message_Block and is
+used to hold a pointer to the object of class Work. Also, the block has
+a header containing text. This example simply illustrates a cleaner way
+of utilizing Message_Blocks to store objects rather than copying their
+contents.
+<P>
+The ACE_Barrier class has been used in the Task class which blocks the
+threads until all of them are rearing to go and grab a block from the
+queue and process it.
+<P>
+Thus a message queue can be used to accomplish a variety of tasks by
+storing a object pointer in the blocks.
+</UL>
 SHAR_EOF
-  $shar_touch -am 0124160599 'page01.pre' &&
+  $shar_touch -am 0126201599 'page01.pre' &&
   chmod 0664 'page01.pre' ||
   $echo 'restore of' 'page01.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page01.pre:' 'MD5 check failed'
-9c50f824bc7cf43d3c8c33fe007a9288  page01.pre
+5e7f58b50e75c303325b71866a2a4a4a  page01.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page01.pre'`"
-    test 487 -eq "$shar_count" ||
-    $echo 'page01.pre:' 'original size' '487,' 'current size' "$shar_count!"
+    test 1093 -eq "$shar_count" ||
+    $echo 'page01.pre:' 'original size' '1093,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page02.pre ==============
@@ -447,5 +462,5 @@ SHAR_EOF
     $echo 'page05.pst:' 'original size' '449,' 'current size' "$shar_count!"
   fi
 fi
-rm -fr _sh25217
+rm -fr _sh31139
 exit 0

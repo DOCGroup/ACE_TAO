@@ -49,10 +49,16 @@ static const u_short PORT = ACE_DEFAULT_SERVER_PORT;
 int main(int argc,char *argv[] )
 {
 	<font color=red>/*
-	   All datagrams have to have a point of origin.  Since we intend to
+	   All datagrams must have a point of origin.  Since we intend to
 	   transmit instead of receive, we initialize an address with zero
 	   and let the OS choose a port for us.  We could have chosen our
-	   own value between 1025 and 65535 as long as it isn't already in use.
+	   own value between 1025 and 65535 as long as it isn't already in
+       use.
+
+       The biggest difference between client and server when datagrams 
+       are used is the fact that servers tend to have a known/fixed
+       address at which they listen and clients tend to have arbitrary 
+       addresses assigned by the OS.
 	 */</font>
 	ACE_INET_Addr  local((u_short)0);
 

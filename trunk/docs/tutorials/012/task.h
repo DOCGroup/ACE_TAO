@@ -24,16 +24,24 @@ class Task : public ACE_Task < ACE_MT_SYNCH >
 {
 public:
 
-  typedef ACE_Task < ACE_MT_SYNCH > inherited;
+    typedef ACE_Task < ACE_MT_SYNCH > inherited;
 
     Task (void);
-   ~Task (void);
+    ~Task (void);
 
-  int open (int threads = 1);
+        // Some compilers complain when we don't overload all
+        // baseclass signatures of a method.  <sigh>
+    virtual int open ( void * args )
+        {
+            return -1;
+        }
 
-  int svc (void);
+        // This is the open() we really want our clients to use.
+    int open (int threads = 1);
 
-  int close (u_long flags = 0);
+    virtual int svc (void);
+
+    virtual int close (u_long flags = 0);
 
 protected:
     ACE_Barrier * barrier_;
