@@ -80,7 +80,6 @@ TAO_IIOP_Handler_Base::resume_handler (ACE_Reactor *)
   return -1;
 }
 
-// @@ For pluggable protocols, added a reference to the corresponding transport obj.
 TAO_Server_Connection_Handler::TAO_Server_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_IIOP_Handler_Base (t ? t : TAO_ORB_Core_instance()->thr_mgr ()),
     orb_core_ (TAO_ORB_Core_instance ())
@@ -88,12 +87,20 @@ TAO_Server_Connection_Handler::TAO_Server_Connection_Handler (ACE_Thread_Manager
   iiop_transport_ = new TAO_IIOP_Server_Transport(this);
 }
 
-// @@ For pluggable protocols, added a reference to the corresponding transport obj.
 TAO_Server_Connection_Handler::TAO_Server_Connection_Handler (TAO_ORB_Core *orb_core)
   : TAO_IIOP_Handler_Base (orb_core),
     orb_core_ (orb_core)
 {
   iiop_transport_ = new TAO_IIOP_Server_Transport(this);
+}
+
+TAO_Server_Connection_Handler::~TAO_Server_Connection_Handler (void)
+{
+  if (iiop_transport_)
+    {
+      delete iiop_transport_;
+      iiop_transport_ = 0;
+    }
 }
 
 TAO_Transport *
@@ -807,8 +814,11 @@ TAO_Client_Connection_Handler::TAO_Client_Connection_Handler (ACE_Thread_Manager
 // @@ Need to get rid of the Transport Objects!
 TAO_Client_Connection_Handler::~TAO_Client_Connection_Handler (void)
 {
-  delete this->iiop_transport_;
-  this->iiop_transport_ = 0;
+  if (iiop_transport_)
+    {
+      delete this->iiop_transport_;
+      this->iiop_transport_ = 0;
+    }
 }
 
 TAO_Transport *
