@@ -1,3 +1,10 @@
+Sat Oct 26 15:55:02 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* ace/OS.h: We determined that MSVC++ is capable of supporting
+ 	  template typedefs.  Therefore, we can enable the
+	  ACE_HAS_TEMPLATE_TYPEDEFS flag, which makes life much easier for
+	  end users!
+
 Fri Oct 25 23:16:16 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 	* ace/Memory_Pool: Fixed this stuff so that it works even when C++
