@@ -13,6 +13,8 @@
 
 #include <string>
 
+#include "SLDEX_export.h"
+
 #if defined (ACE_WIN32) && (!defined (ACE_HAS_STANDARD_CPP_LIBRARY) || \
                             (ACE_HAS_STANDARD_CPP_LIBRARY == 0))
 #  error "Must add to config.h: #define ACE_HAS_STANDARD_CPP_LIBRARY 1"

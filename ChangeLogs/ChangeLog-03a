@@ -1,3 +1,20 @@
+Sun May 26 21:48:49 2002  Steve Huston  <shuston@riverace.com>
+
+        * examples/C++NPv2/Reactor_Logging_Server_Adapter.cpp: Added
+          include guard.
+
+        * examples/C++NPv2/SLD.dsp: Define SLD_BUILD_DLL, not ACE_BUILD_DLL,
+          to set up the export stuff correctly.
+
+        * examples/C++NPv2/SLDex.dsp:
+        * examples/C++NPV2/examples.dsw: Add new project for second part
+          of chap 5 example.
+
+        * examples/C++NPv2/SLD.cpp:
+        * examples/C++NPv2/SLDex.cpp:
+        * examples/C++NPv2/Server_Shutdown.cpp: Add ACE_FACTORY_DECLARE to
+          get correct export declaration for factory.
+
 Sun May 26 13:20:15 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/config-macosx.h: Added #define ACE_LACKS_SYSTIME_H.
