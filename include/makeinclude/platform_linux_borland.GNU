@@ -70,7 +70,7 @@ endif
 #
 
 ifdef debug
-DCFLAGS = -v -y -Od -r- -vi- -D_DEBUG 
+DCFLAGS = -v -y -Od -r- -vi- -D_DEBUG
 DCCFLAGS = #-v -y -Od -r- -vi- -k -D_DEBUG
 else
 DCFLAGS = -DNDEBUG
@@ -90,16 +90,14 @@ DLD     = $(BCB)/bin/ilink
 LD      = $(BCB)/bin/ilink
 
 WARNINGS_CFLAGS = -w-rvl -w-rch -w-ccc -w-obs -w-aus -w-pia -w-inl
-BUILDSOFLAGS = -DACE_BUILD_DLL -DACE_OS_BUILD_DLL -DTAO_IDL_FE_BUILD_DLL -DTAO_IDL_BE_BUILD_DLL \
-	-DTAO_BUILD_DLL -DTAO_EVENT_BUILD_DLL -DTAO_AV_BUILD_DLL
 
-CFLAGS = $(BUILDSOFLAGS) $(WARNINGS_CFLAGS) -q -VP -Vx -a8 -b- -k $(DCFLAGS) \
-	-c -I$(INCLUDEPATH) 
+CFLAGS = $(WARNINGS_CFLAGS) -q -VP -Vx -a8 -b- -k $(DCFLAGS) \
+	-c -I$(INCLUDEPATH)
 
-CPPFLAGS += #$(CFLAGS) 
+CPPFLAGS += #$(CFLAGS)
 CCFLAGS += $(CFLAGS)
 BORLDFLAGS = -c -L$(LIBPATH):$(ACELIBPATH) -x -Gn -v -L$(LIBPATH):$(ACELIBPATH)
-BORINITOBJ = borinitso.o borinit.o crt1.o 
+BORINITOBJ = borinitso.o borinit.o crt1.o
 BORSHAREDOBJ += libborcrtl.so libborstl.so libborunwind.so \
 	libpthread.so libc.so libm.so libdl.so
 
@@ -108,11 +106,11 @@ SOFLAGS= $(BORSHAREDOBJ) borinitso.o -Tpd
 #ACELIB= libACE.so
 #TAO_IDL_FE_LIB= libTAO_IDL_FE_DLL.so
 
-SOLINK.cc = $(LD) $(BORINITOBJ) -Tpd 
+SOLINK.cc = $(LD) $(BORINITOBJ) -Tpd
 LINK.cc = override
-LINK.cc.override = $(LD) $(LDFLAGS) $(VLDLIBS) $(BORINITOBJ) $(BORSHAREDOBJ) $(BORLDFLAGS) $(POSTLINK)  
+LINK.cc.override = $(LD) $(LDFLAGS) $(VLDLIBS) $(BORINITOBJ) $(BORSHAREDOBJ) $(BORLDFLAGS) $(POSTLINK)
 
-SONAME= 
+SONAME=
 SOVERSION=
 #  ARFLAGS      Flags for the archive utility (ar)
 #  CC           C compiler command
