@@ -1,3 +1,10 @@
+Sun Apr  8 13:12:54 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/SString.{h,i,cpp}: Added various optimizations to ACE_WString
+	  so it will perform certain operations as efficiently as
+ 	  ACE_CString.  Thanks to Eric Zuur <Eric.Zuur@meco.nl> for
+ 	  contributing these enhancements.
+
 Sun Apr 08 12:10:30 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/IPC_SAP/SOCK_SAP/CPP-memclient.cpp:
