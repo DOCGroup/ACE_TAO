@@ -1,3 +1,9 @@
+Mon Sep 13 06:50:46 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* bin/MakeProjectCreator/config/dslogadmin_serv.mpb:
+
+	  Changed to inherit from svc_utils.
+
 Mon Sep 13 12:02:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/msvc_static_order.lst:
