@@ -19,6 +19,7 @@
 #define PROCESS_STRATEGY_TEST_H
 
 #include "ace/Event_Handler.h"
+#include "ace/SOCK_Stream.h"
 #include "ace/Svc_Handler.h"
 class ACE_Thread_Manager;
 
