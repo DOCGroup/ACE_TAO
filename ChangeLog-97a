@@ -1,5 +1,9 @@
 Thu Mar 27 11:25:38 1997  David L. Levine  <levine@cs.wustl.edu>
 
+	* netsvcs/servers/Makefile: removed SHOBJ so that main.so is not
+	  built, because it wasn't needed.  Thanks to Sandro Doro
+	  <alex@aureus.sublink.org> for this fix.
+
 	* apps/Gateway/Gateway/{Event_Channel.cpp,Gateway.cpp,
 	                        Proxy_Handler.cpp,Proxy_Handler_Acceptor.cpp,
 	                        Proxy_Handler_Connector.cpp,
