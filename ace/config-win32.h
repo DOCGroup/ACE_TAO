@@ -161,6 +161,8 @@
 # undef ACE_HAS_NONSTATIC_OBJECT_MANAGER
 #endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
 
+#define ACE_HAS_GPERF
+
 // ----------------------- platform specific defines --------------------
 
 #include <ace/config-win32-common.h>
