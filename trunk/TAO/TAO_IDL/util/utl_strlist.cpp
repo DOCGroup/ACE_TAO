@@ -74,7 +74,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "utl_strlist.h"
 #include "utl_string.h"
+
+// FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
+
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_string.h"
 

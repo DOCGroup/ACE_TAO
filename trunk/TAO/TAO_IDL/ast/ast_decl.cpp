@@ -770,6 +770,14 @@ AST_Decl::dump (ACE_OSTREAM_TYPE &o)
   this->pd_local_name->dump (o);
 }
 
+void
+AST_Decl::dump_i (ACE_OSTREAM_TYPE &o, const char *s) const
+{
+  // Have to use ACE_CString here to avoid ambiguous overload error, see
+  // SString.h for an the overloaded operator << () methods.
+  o << ACE_CString(s);
+}
+
 int
 AST_Decl::ast_accept (ast_visitor *visitor)
 {

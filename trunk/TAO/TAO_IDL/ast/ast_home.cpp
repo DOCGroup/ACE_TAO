@@ -8,7 +8,6 @@
 #include "utl_identifier.h"
 #include "utl_indenter.h"
 #include "global_extern.h"
-#include "ace/streams.h"
 
 ACE_RCSID (ast, 
            ast_home, 
@@ -111,38 +110,38 @@ AST_Home::destroy (void)
 void
 AST_Home::dump (ACE_OSTREAM_TYPE &o)
 {
-  o << "home ";
+  this->dump_i (o, "home ");
 
   this->local_name ()->dump (o);
 
-  o << " ";
+  this->dump_i (o, " ");
 
   if (this->pd_base_home != 0)
     {
-      o << ": ";
+      this->dump_i (o, ": ");
       this->pd_base_home->local_name ()->dump (o);
     }
 
   if (this->pd_managed_component != 0)
     {
-      o << "\n";
-      o << "manages ";
+      this->dump_i (o, "\n");
+      this->dump_i (o, "manages ");
       this->pd_managed_component->local_name ()->dump (o);
     }
 
   if (this->pd_primary_key != 0)
     {
-      o << "\n";
-      o << "primary key ";
+      this->dump_i (o, "\n");
+      this->dump_i (o, "primary key ");
       this->pd_primary_key->local_name ()->dump (o);
     }
 
-  o << " {\n";
+  this->dump_i (o, " {\n");
 
   UTL_Scope::dump (o);
   idl_global->indent ()->skip_to (o);
 
-  o << "}";
+  this->dump_i (o, "}");
 }
 
 int

@@ -4,6 +4,8 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_wchar.h"
 #include "ace/OS_Memory.h"
+
+// FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
 #if !defined (__ACE_INLINE__)

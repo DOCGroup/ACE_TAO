@@ -77,6 +77,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_string.h"
 
+// FUZZ: disable check_for_streams_include
+#include "ace/streams.h"
+
 ACE_RCSID (util, 
            utl_idlist, 
            "$Id$")

@@ -30,7 +30,7 @@ ACE_SV_Message_Queue::control (int option, void *arg)
 {
   ACE_TRACE ("ACE_SV_Message_Queue::control");
   return ACE_OS::msgctl (this->internal_id_, option, 
-			 (msqid_ds *) arg);
+			 (struct msqid_ds *) arg);
 }
 
 ASYS_INLINE int

@@ -9,7 +9,6 @@
 #include "ast_union.h"
 #include "ast_visitor.h"
 #include "utl_identifier.h"
-#include "ace/streams.h"
 
 ACE_RCSID (ast, 
            ast_union_fwd, 
@@ -45,7 +44,7 @@ AST_UnionFwd::~AST_UnionFwd (void)
 void
 AST_UnionFwd::dump (ACE_OSTREAM_TYPE &o)
 {
-  o << "union ";
+  this->dump_i (o, "union ");
   this->local_name ()->dump (o);
 }
 

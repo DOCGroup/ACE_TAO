@@ -72,7 +72,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_string.h"
 #include "ast_expression.h"
 #include "ast_visitor.h"
-#include "ace/streams.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "utl_identifier.h"
@@ -169,9 +168,9 @@ AST_String::~AST_String (void)
 void
 AST_String::dump (ACE_OSTREAM_TYPE &o)
 {
-  o << "string <";
+  this->dump_i (o, "string <");
   this->pd_max_size->dump (o);
-  o << ">";
+  this->dump_i (o, ">");
 }
 
 int
