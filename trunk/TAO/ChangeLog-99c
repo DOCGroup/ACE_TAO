@@ -1,26 +1,30 @@
+Wed May 05 13:07:49 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * all Makefiles: replaced /bin/rm with $(RM) and /bin/mv with mv.
+
 Wed May  5 12:58:14 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp: 
-	  Calibrate the High_Res_Timer before starting the test.
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
+          Calibrate the High_Res_Timer before starting the test.
 
-	* orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp:
-	  The last shutdown event was not properly initialized.
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp:
+          The last shutdown event was not properly initialized.
 
-	* orbsvcs/tests/EC_Throughput/ECT_Driver.cpp:
-	  Corrected variance computation and use the
-	  ACE_High_Res_Timer::global_scale_factor() to map from
-	  ACE_hrtime_t to microseconds.
+        * orbsvcs/tests/EC_Throughput/ECT_Driver.cpp:
+          Corrected variance computation and use the
+          ACE_High_Res_Timer::global_scale_factor() to map from
+          ACE_hrtime_t to microseconds.
 
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
-	  Minor cosmetic fixes.
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+          Minor cosmetic fixes.
 
-	* orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.cpp:
-	  For experimentation purposes the dispatching thread runs at a
-	  higher priority that the supplier threads. This minimizes the
-	  latency because the dispatching thread becomes runnable as soon
-	  as there is data available.
-	  Of course this will be controlled by the scheduler in production 
-	  code.
+        * orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.cpp:
+          For experimentation purposes the dispatching thread runs at a
+          higher priority that the supplier threads. This minimizes the
+          latency because the dispatching thread becomes runnable as soon
+          as there is data available.
+          Of course this will be controlled by the scheduler in production
+          code.
 
 Wed May 05 12:20:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
