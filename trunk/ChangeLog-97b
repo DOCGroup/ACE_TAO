@@ -1,19 +1,28 @@
+Sun Oct 26 11:04:21 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Hash_Map_Manager.cpp (unbind): added ACE_UNUSED_ARG (int_id).
+
+        * tests/Conn_Test (server): added ACE_UNUSED_ARG (options).  I'm
+          not sure if we can just remove "options", because I don't know if
+          its construction has any side effects.  And, added template
+          instantations.
+
 Sun Oct 26 10:01:01 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
-	* ace/Connector.cpp (open):  The original fix failed to replace
-	  strategies under some circumstances.
+        * ace/Connector.cpp (open):  The original fix failed to replace
+          strategies under some circumstances.
 
 Sun Oct 26 00:23:20 1997    <nw1@COYOTE>
 
-	* ace/OS.{h,cpp} (sprintf): Removed ACE_OS::sprintf (wchat_t, char).
-	  It didn't ever work.
+        * ace/OS.{h,cpp} (sprintf): Removed ACE_OS::sprintf (wchat_t, char).
+          It didn't ever work.
 
-	* ace/Connector.cpp (open): Added check if we had previously
-	  allocated various strategies and deleted these objects before
-	  allocating new objects.  The original codes caused memory leaks
-	  and possible segmentation faults if it got called twice.  We
-	  probably need a do-nothing constructor (the current constructor
-	  calls open.)  However, this may break other codes.
+        * ace/Connector.cpp (open): Added check if we had previously
+          allocated various strategies and deleted these objects before
+          allocating new objects.  The original codes caused memory leaks
+          and possible segmentation faults if it got called twice.  We
+          probably need a do-nothing constructor (the current constructor
+          calls open.)  However, this may break other codes.
 
 Sun Oct 26 01:00:07 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -21,16 +30,16 @@ Sun Oct 26 01:00:07 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Sun Oct 26 00:50:00 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* tests/Conn_Test.cpp (close): Since the connect() method on
- 	  ACE_Connector closes the svc_handler if failure occurs, we
- 	  shouldn't do that again unless we succeed in connecting.
+        * tests/Conn_Test.cpp (close): Since the connect() method on
+          ACE_Connector closes the svc_handler if failure occurs, we
+          shouldn't do that again unless we succeed in connecting.
 
-	* ace/OS.h: Moved the CORBA portability macros from
- 	  CORBA_Handler.h into OS.h so they will be accessible from TAO.
+        * ace/OS.h: Moved the CORBA portability macros from
+          CORBA_Handler.h into OS.h so they will be accessible from TAO.
 
-	* ace/Filecache.cpp (finish): Replaced filename_ with filename()
- 	  so that "const correctness" would work with template
- 	  specialization.  Go figure!
+        * ace/Filecache.cpp (finish): Replaced filename_ with filename()
+          so that "const correctness" would work with template
+          specialization.  Go figure!
 
         * TAO/tests/IDL_Cubit/Makefile: Enhanced the "realclean" target to
           remove the generated IDL stubs and skeletons.
@@ -41,110 +50,110 @@ Sun Oct 26 00:50:00 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 Sun Oct 26 00:06:17 1997    <irfan@TWOSTEP>
 
-	* ace/Strategies_T.cpp (~ACE_Cached_Connect_Strategy): Must set
- 	  recycler to 0 before calling close, else the svc_handler will
- 	  try to purge itself from the cache.
+        * ace/Strategies_T.cpp (~ACE_Cached_Connect_Strategy): Must set
+          recycler to 0 before calling close, else the svc_handler will
+          try to purge itself from the cache.
 
-	* tests/Conn_Test.cpp (client): Updated to use the new connection
- 	  recycling scheme.
+        * tests/Conn_Test.cpp (client): Updated to use the new connection
+          recycling scheme.
 
-	* ace/Hash_Map_Manager:
+        * ace/Hash_Map_Manager:
 
-	- ACE_Hash_Map_Reverse_Iterator: Added reverse iterator.
+        - ACE_Hash_Map_Reverse_Iterator: Added reverse iterator.
 
-	- ACE_Hash_Map_Entry: Added a prev pointer to the entry.  Thus
- 	  changing the bucket chains into doubly linked lists.  Because of
- 	  this, it was necessary to change the way the list was being
- 	  managed.  Sentinels were created for each bucket.
+        - ACE_Hash_Map_Entry: Added a prev pointer to the entry.  Thus
+          changing the bucket chains into doubly linked lists.  Because of
+          this, it was necessary to change the way the list was being
+          managed.  Sentinels were created for each bucket.
 
-	  This also changed (a) the way the iterators worked, (b) made it
- 	  easy to delete entries when you have one (this scheme allows the
- 	  entries to be easily used as ACTs).
+          This also changed (a) the way the iterators worked, (b) made it
+          easy to delete entries when you have one (this scheme allows the
+          entries to be easily used as ACTs).
 
-	- New methods (bind, trybind, rebind, find): These methods allow
- 	  the users to get access to ACE_Hash_Map_Entry of the node in
- 	  question.  This allows the user to treat the entry as an ACT and
- 	  get access to the key (in case the user is interested in
- 	  changing the key).  These methods are only valid since the
- 	  implementation of Hash_Map_Manager uses linked lists where nodes
- 	  are never copied.  These methods cannot be added to Map_Manager
- 	  since it uses an array of nodes, where the your data may get
- 	  copied to another node when the size of the Map_Manager changes.
+        - New methods (bind, trybind, rebind, find): These methods allow
+          the users to get access to ACE_Hash_Map_Entry of the node in
+          question.  This allows the user to treat the entry as an ACT and
+          get access to the key (in case the user is interested in
+          changing the key).  These methods are only valid since the
+          implementation of Hash_Map_Manager uses linked lists where nodes
+          are never copied.  These methods cannot be added to Map_Manager
+          since it uses an array of nodes, where the your data may get
+          copied to another node when the size of the Map_Manager changes.
 
-	* ace/Strategies (ACE_Connection_Recycling_Strategy): Added a new
- 	  abstract strategy for recycling connections.
+        * ace/Strategies (ACE_Connection_Recycling_Strategy): Added a new
+          abstract strategy for recycling connections.
 
-	* ace/Strategies_T:
+        * ace/Strategies_T:
 
- 	- ACE_Cached_Connect_Strategy: ACE_Cached_Connect_Strategy now
- 	  implements the ACE_Connection_Recycling_Strategy interface.
-  	  This allows Svc_Handlers to cache themselves with
- 	  ACE_Cached_Connect_Strategy when they become idle.  It also
- 	  allows them to purge themselves from the connection cache when
- 	  the Svc_Handlers close down.
+        - ACE_Cached_Connect_Strategy: ACE_Cached_Connect_Strategy now
+          implements the ACE_Connection_Recycling_Strategy interface.
+          This allows Svc_Handlers to cache themselves with
+          ACE_Cached_Connect_Strategy when they become idle.  It also
+          allows them to purge themselves from the connection cache when
+          the Svc_Handlers close down.
 
-	  Also added ~ACE_Cached_Connect_Strategy that will cleanup up the
-	  connection cache.
+          Also added ~ACE_Cached_Connect_Strategy that will cleanup up the
+          connection cache.
 
-	- ACE_Hash_Addr: ACE_Hash_Addr is the key for the hash map used by
- 	  ACE_Cached_Connect_Strategy.  Previously it kept the Svc_Handler
- 	  pointer in the key in order to find out if it was busy or not.
-  	  Now the <in_use> flag has been moved from the Svc_Handler into
- 	  the key.  The also saves the Hash_Addr from requiring
- 	  Svc_Handler as a template parameter.
+        - ACE_Hash_Addr: ACE_Hash_Addr is the key for the hash map used by
+          ACE_Cached_Connect_Strategy.  Previously it kept the Svc_Handler
+          pointer in the key in order to find out if it was busy or not.
+          Now the <in_use> flag has been moved from the Svc_Handler into
+          the key.  The also saves the Hash_Addr from requiring
+          Svc_Handler as a template parameter.
 
-	  Also updated ACE_Hash_Addr::operator== such that if the
- 	  Svc_Handler is busy, it does not bother to check compare the
- 	  addresses but simply returns false.
+          Also updated ACE_Hash_Addr::operator== such that if the
+          Svc_Handler is busy, it does not bother to check compare the
+          addresses but simply returns false.
 
-	* ace/Svc_Handler.cpp: Added the ability for a Svc_Handler to
- 	  recycle itself.  idle() can be called when the Svc_Handler is
- 	  done serving a particular connection and can how be recycled.
-  	  The Svc_Handler now also has a pointer to a recycler that is
- 	  responsible for managing the connections.  The recycler is
- 	  usually a Cached_Connector.
+        * ace/Svc_Handler.cpp: Added the ability for a Svc_Handler to
+          recycle itself.  idle() can be called when the Svc_Handler is
+          done serving a particular connection and can how be recycled.
+          The Svc_Handler now also has a pointer to a recycler that is
+          responsible for managing the connections.  The recycler is
+          usually a Cached_Connector.
 
-	* ace/Filecache.cpp (ACE_Hash_Map_Entry): Added a new constructor
- 	  specialization as the ACE_Hash_Map_Entry now has two
- 	  constructors.
+        * ace/Filecache.cpp (ACE_Hash_Map_Entry): Added a new constructor
+          specialization as the ACE_Hash_Map_Entry now has two
+          constructors.
 
-	* tests/Hash_Map_Manager_Test.cpp (ACE_Hash_Map_Entry): Added a
- 	  new constructor specialization as the ACE_Hash_Map_Entry now has
- 	  two constructors.
+        * tests/Hash_Map_Manager_Test.cpp (ACE_Hash_Map_Entry): Added a
+          new constructor specialization as the ACE_Hash_Map_Entry now has
+          two constructors.
 
-	* tests/Reactor_Exceptions_Test.cpp (class My_Reactor): Added the
- 	  other handle_events method.  Thanks to Stephen Coy
- 	  (coys@mail.ns.wsa.com.au) for pointing this out.
+        * tests/Reactor_Exceptions_Test.cpp (class My_Reactor): Added the
+          other handle_events method.  Thanks to Stephen Coy
+          (coys@mail.ns.wsa.com.au) for pointing this out.
 
-	* ace/Strategies_T.cpp (hash_i): This default routine is no good.
-  	  It uses a complicated scheme that calculate a hash value.
-  	  Unfortunately, there is no guarantee that this hash algorithm
- 	  will produce the same hash value for the same address.
-  	  Therefore, it is better just to return a consistent hash value
- 	  rather than an erroneous one.  I have choosen 0 of the return
- 	  value.  Even though this will cause all the entries to be hashed
- 	  to the 0 bucket, atleast they will be found.  Users should
- 	  override this to provide better hashing.
+        * ace/Strategies_T.cpp (hash_i): This default routine is no good.
+          It uses a complicated scheme that calculate a hash value.
+          Unfortunately, there is no guarantee that this hash algorithm
+          will produce the same hash value for the same address.
+          Therefore, it is better just to return a consistent hash value
+          rather than an erroneous one.  I have choosen 0 of the return
+          value.  Even though this will cause all the entries to be hashed
+          to the 0 bucket, atleast they will be found.  Users should
+          override this to provide better hashing.
 
-	  (compare_i): Memcmp is not the correct default action.
-  	  !(b1==b2) is the correct comparison, though this will assume
- 	  that the addresses will have a comparison operation.
+          (compare_i): Memcmp is not the correct default action.
+          !(b1==b2) is the correct comparison, though this will assume
+          that the addresses will have a comparison operation.
 
-	* ace/Mem_Map.cpp (close and close_handle): close() is doing too
- 	  much.  It is closing the handle and unmapping the file.
-  	  Changing this method might effect code that depends on this
- 	  behavior.  Therefore, we create a seperated method
- 	  close_handle() that only closes down the handle, and does not
- 	  unmap the file.  Thanks to Jeff Richards (jrichard@OhioEE.com)
- 	  for pointing this out.
+        * ace/Mem_Map.cpp (close and close_handle): close() is doing too
+          much.  It is closing the handle and unmapping the file.
+          Changing this method might effect code that depends on this
+          behavior.  Therefore, we create a seperated method
+          close_handle() that only closes down the handle, and does not
+          unmap the file.  Thanks to Jeff Richards (jrichard@OhioEE.com)
+          for pointing this out.
 
-	* ace/Strategies_T.cpp (connect_svc_handler): If connect() failed
- 	  because of timeouts, we have to reject the connection entirely.
-  	  This is necessary since currently there is no way for the
- 	  non-blocking connects to complete and for the <Connector> to
- 	  notify the cache of the completion of connect().  Therefore if
- 	  errno is EWOULDBLOCK, it is changed to ENOTSUP and -1 is
- 	  returned.
+        * ace/Strategies_T.cpp (connect_svc_handler): If connect() failed
+          because of timeouts, we have to reject the connection entirely.
+          This is necessary since currently there is no way for the
+          non-blocking connects to complete and for the <Connector> to
+          notify the cache of the completion of connect().  Therefore if
+          errno is EWOULDBLOCK, it is changed to ENOTSUP and -1 is
+          returned.
 
 Sat Oct 25 17:41:57 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
 
