@@ -169,10 +169,12 @@ RELEASE_LIB_FILES = \
 
 .PHONY: release releasetao releaseall tag
 
-ACE_TAG = -ta `head -1 VERSION | perl -ne \
-               's/.* ([\d\.]+),.*\n/$$1/; tr/./_/; print "ACE-$$_";'`
-TAO_TAG = -tt `head -1 TAO/VERSION | perl -ne \
-               's/.* ([\d\.]+),.*\n/$$1/; tr/./_/; print "TAO-$$_";'`
+ACE_TAG_VALUE = $(shell head -1 VERSION | perl -ne \
+               's/.* ([\d\.]+),.*\n/$$1/; tr/./_/; print "ACE-$$_";')
+ACE_TAG = -ta $(ACE_TAG_VALUE)
+TAO_TAG_VALUE = $(shell head -1 TAO/VERSION | perl -ne \
+               's/.* ([\d\.]+),.*\n/$$1/; tr/./_/; print "TAO-$$_";') 
+TAO_TAG = -tt $(TAO_TAG_VALUE)
 APPLY_NEW_TAG = tag
 CHECK =
 GENERATE_MAN_PAGES = -g
