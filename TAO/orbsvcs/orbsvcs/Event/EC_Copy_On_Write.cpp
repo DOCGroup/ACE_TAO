@@ -68,7 +68,7 @@ TAO_EC_Copy_On_Write<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
   for (ITERATOR i = ace_mon.collection->collection.begin (); i != end; ++i)
     {
       worker->work (*i, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      ACE_CHECK;
     }
 }
 

@@ -1,13 +1,19 @@
+Mon Mar 20 19:59:45 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Event/EC_Copy_On_Write.cpp:
+          Fixed problem on exceptions without native C++ exception
+          support.
+
 Mon Mar 20 18:16:20 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/UIOP_Acceptor.h:
+        * tao/UIOP_Acceptor.h:
 
-	  Removed inclusion of `tao/GIOP_Message_State.h'.  It isn't
-	  needed by the TAO_UIOP_Acceptor class.
+          Removed inclusion of `tao/GIOP_Message_State.h'.  It isn't
+          needed by the TAO_UIOP_Acceptor class.
 
-	* tao/Makefile:
+        * tao/Makefile:
 
-	  Updated dependencies.
+          Updated dependencies.
 
 Mon Mar 20 17:27:58 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -21,37 +27,37 @@ Mon Mar 20 17:27:58 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Mon Mar 20 16:54:20 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* orbsvcs/tests/Event/Performance/Makefile:
-	* orbsvcs/tests/Event/Performance/Inversion.h:
-	* orbsvcs/tests/Event/Performance/Inversion.cpp:
-	* orbsvcs/tests/Event/Performance/Inversion.dsp:
+        * orbsvcs/tests/Event/Performance/Makefile:
+        * orbsvcs/tests/Event/Performance/Inversion.h:
+        * orbsvcs/tests/Event/Performance/Inversion.cpp:
+        * orbsvcs/tests/Event/Performance/Inversion.dsp:
 
-	* orbsvcs/tests/Event/Event.dsw:
-	* orbsvcs/tests/Event/Performance/Throughput.dsp:
-	* orbsvcs/tests/Event/Performance/Connect.dsp:
-	* orbsvcs/tests/Event/Performance/ECPerformance.dsw:
-	  Add the new test to the project files.
-	  Some older project files were updated simultaneously, to make
-	  them all consistent.
+        * orbsvcs/tests/Event/Event.dsw:
+        * orbsvcs/tests/Event/Performance/Throughput.dsp:
+        * orbsvcs/tests/Event/Performance/Connect.dsp:
+        * orbsvcs/tests/Event/Performance/ECPerformance.dsw:
+          Add the new test to the project files.
+          Some older project files were updated simultaneously, to make
+          them all consistent.
 
-	* orbsvcs/orbsvcs/Event/EC_Dispatching_Task.h:
-	  Fixed the export macro to fit the new standard set by Darrell.
+        * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.h:
+          Fixed the export macro to fit the new standard set by Darrell.
 
 Mon Mar 20 17:03:54 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_exception/exception_ch.cpp:
-	* TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_cs.cpp:
-	  Removed more of the unnecessary generation of code using
-	  'foo_ptr' if foo is an exception.
+        * TAO_IDL/be/be_visitor_exception/exception_ch.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_cs.cpp:
+          Removed more of the unnecessary generation of code using
+          'foo_ptr' if foo is an exception.
 
 Mon Mar 20 15:11:56 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/TAO.dsp:
-	* tao/TAO_static.dsp:
-	  Removed target_identifier.* and GIOP_Assorted_Headers.*,
-	  and added target_specification.*, GIOP_Message_Headers.*
-	  and GIOP_Message_State.*, as per Balas ChangeLog entry of
-	  Sun Mar 19 19:22:34 2000.
+        * tao/TAO.dsp:
+        * tao/TAO_static.dsp:
+          Removed target_identifier.* and GIOP_Assorted_Headers.*,
+          and added target_specification.*, GIOP_Message_Headers.*
+          and GIOP_Message_State.*, as per Balas ChangeLog entry of
+          Sun Mar 19 19:22:34 2000.
 
 Mon Mar 20 12:36:29 2000  Carlos O'Ryan  <coryan@uci.edu>
 
