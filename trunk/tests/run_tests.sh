@@ -115,6 +115,7 @@ run UPIPE_SAP_Test                      # uses UPIPE, Thread, Thread_Manager
 run Barrier_Test                        # uses Service_Config, Barrier
 run Buffer_Stream_Test                  # uses Service_Config, Module (Stream,Task, Message_Queue)
 run Priority_Buffer_Test                # uses Service_Config, Message_Queue
+run Dynamic_Priority_Test               # uses ACE_Message_Queue, ACE_Dynamic_Message_Queue 
 run Recursive_Mutex_Test                # uses Service_Config, Recursive_Thread_Mutex
 
 test $chorus || test $LynxOS || run Time_Service_Test # uses libnetsvcs

@@ -365,7 +365,7 @@ ACE_Message_Block::locking_strategy (ACE_Lock *nls)
 }
 
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_Dynamic_Message_Strategy::is_pending (const ACE_Message_Block & mb, 
                                           const ACE_Time_Value & tv)
 {

@@ -555,13 +555,19 @@ public:
   // updates the synamic priority bit field but does not
   // alter the static priority bit field
 
-  int is_pending (const ACE_Message_Block & mb,     
+  int is_pending (const ACE_Message_Block & mb,
                   const ACE_Time_Value & tv);
   // returns true if the message has a pending (not late) priority value
 
   virtual int is_beyond_late (const ACE_Message_Block & mb, 
                               const ACE_Time_Value & tv) = 0;
   // returns true if the message is later than can can be represented
+
+  virtual int drop_message (ACE_Message_Block * &mb);
+  // cleanup policy for a message that is later than can be represented,
+  // and is being dropped from a dynamic message queue (this is a default
+  // method definition that does nothing, which derived classes may override
+  // to do things like deleting the message block object, etc).
 
   u_long static_bit_field_mask (void);
   // get static bit field mask
@@ -639,6 +645,27 @@ public:
   // returns true if the message is later than can can be represented  
 };
 
+
+class ACE_Export ACE_Deadline_Cleanup_Message_Strategy : public ACE_Deadline_Message_Strategy
+{
+public:
+
+  ACE_Deadline_Cleanup_Message_Strategy (u_long static_bit_field_mask = 0x3FFUL,  // 2^(10) - 1
+                                         u_long static_bit_field_shift = 10,      // 10 low order bits
+                                         u_long pending_threshold = 0x200000UL,        // 2^(22-1)
+                                         u_long dynamic_priority_max = 0x3FFFFFUL,     // 2^(22)-1
+                                         u_long dynamic_priority_offset = 0x200000UL); // 2^(22-1)
+  // ctor, with all arguments defaulted
+
+  virtual ~ACE_Deadline_Cleanup_Message_Strategy ();
+  // virtual dtor
+
+  virtual int drop_message (ACE_Message_Block * &mb);
+  // deletion cleanup policy for a message that is later than can be 
+  // represented, and is being dropped from a dynamic message queue
+};
+
+
 class ACE_Export ACE_Laxity_Message_Strategy : public ACE_Dynamic_Message_Strategy
 {
 public:
@@ -663,6 +690,26 @@ public:
   int is_beyond_late (const ACE_Message_Block & mb,
                       const ACE_Time_Value & tv);
   // returns true if the message is later than can can be represented  
+};
+
+
+class ACE_Export ACE_Laxity_Cleanup_Message_Strategy : public ACE_Laxity_Message_Strategy
+{
+public:
+
+  ACE_Laxity_Cleanup_Message_Strategy (u_long static_bit_field_mask = 0x3FFUL,  // 2^(10) - 1
+                                       u_long static_bit_field_shift = 10,      // 10 low order bits
+                                       u_long pending_threshold = 0x200000UL,        // 2^(22-1)
+                                       u_long dynamic_priority_max = 0x3FFFFFUL,     // 2^(22)-1
+                                       u_long dynamic_priority_offset = 0x200000UL); // 2^(22-1)
+  // ctor, with all arguments defaulted
+
+  virtual ~ACE_Laxity_Cleanup_Message_Strategy ();
+  // virtual dtor
+
+  virtual int drop_message (ACE_Message_Block * &mb);
+  // deletion cleanup policy for a message that is later than can be 
+  // represented, and is being dropped from a dynamic message queue
 };
 
 

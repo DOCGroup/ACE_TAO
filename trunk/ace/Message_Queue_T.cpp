@@ -733,7 +733,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::notify (void)
 /////////////////////////////////////
 
   // = Initialization and termination methods.
-template <ACE_SYNCH_DECL>
+template <ACE_SYNCH_DECL> 
 ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::ACE_Dynamic_Message_Queue (
                                                       ACE_Dynamic_Message_Strategy & message_strategy,
                                                       size_t hwm,
@@ -743,56 +743,32 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::ACE_Dynamic_Message_Queue (
   , message_strategy_ (message_strategy)
 {
   // note, the ACE_Dynamic_Message_Queue assumes full responsibility for the
-  // passed ACE_Dynamic_Message_Strategy object, and deletes it in its own dtor
+  // passed ACE_Dynamic_Message_Strategy object, and deletes it in its own dtor 
 }
 
-template <ACE_SYNCH_DECL>
+template <ACE_SYNCH_DECL> 
 ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::~ACE_Dynamic_Message_Queue (void)
 {
   delete &message_strategy_;
 }
 // dtor: free message strategy and let base class dtor do the rest
 
-template <ACE_SYNCH_DECL> int
+template <ACE_SYNCH_DECL> int 
 ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::enqueue_i (ACE_Message_Block *new_item)
 {
   ACE_TRACE ("ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::enqueue_i");
 
   int result = 0;
-  ACE_Time_Value tv(0);
+
+  // get the current time
+  ACE_Time_Value current_time = ACE_OS::gettimeofday ();  
 
   // refresh dynamic priority of the new message
-  result = this->message_strategy_.update_priority (*new_item, tv);
-
-  // get the current time
-  ACE_Time_Value current_time = ACE_OS::gettimeofday ();
-
-  // refresh dynamic priorities of messages in the queue
-  this->refresh_priorities (current_time);
-
-  // reorganize the queue according to the new priorities
-  this->refresh_queue (current_time);
-
-  // invoke the base class method
-  result = ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_i (new_item);
-
-  return result;
-}
-  // Enqueue an <ACE_Message_Block *> in accordance with its priority.
-  // priority may be *dynamic* or *static* or a combination or *both*
-  // It calls the priority evaluation function passed into the Dynamic
-  // Message Queue constructor to update the priorities of all enqueued
-  // messages.
-
-template <ACE_SYNCH_DECL> int
-ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::dequeue_head_i (ACE_Message_Block *&first_item)
-{
-  ACE_TRACE ("ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::dequeue_head_i");
-
-  int result = 0;
-
-  // get the current time
-  ACE_Time_Value current_time = ACE_OS::gettimeofday ();
+  result = message_strategy_.update_priority (*new_item, current_time);
+  if (result < 0)
+  {
+    return result;
+  }
 
   // refresh dynamic priorities of messages in the queue
   result = this->refresh_priorities (current_time);
@@ -808,28 +784,66 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::dequeue_head_i (ACE_Message_Block *&fi
     return result;
   }
 
-  // if there is only one message in the pending list,
-  // the pending list will be empty after a *successful*
-  // dequeue operation
-  int empty_pending =
-      (ACE_Message_Queue<ACE_SYNCH_USE>::head_ == pending_list_tail_) ? 1 : 0;
-
   // invoke the base class method
-  result = ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_head_i (first_item);
-
-  // null out the pending list tail pointer if
-  // the pending list is now empty
-  if ((empty_pending) && (result > 0))
-  {
-    pending_list_tail_ = 0;
-  }
+  result = ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_i (new_item);
 
   return result;
+}
+  // Enqueue an <ACE_Message_Block *> in accordance with its priority.
+  // priority may be *dynamic* or *static* or a combination or *both*
+  // It calls the priority evaluation function passed into the Dynamic
+  // Message Queue constructor to update the priorities of all enqueued 
+  // messages.
+
+template <ACE_SYNCH_DECL> int 
+ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::dequeue_head (ACE_Message_Block *&first_item, 
+                                                        ACE_Time_Value *tv)
+{
+  ACE_TRACE ("ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::dequeue_head");
+
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
+
+  if (this->deactivated_)
+    {
+      errno = ESHUTDOWN;
+      return -1;
+    }
+
+  int result = 0;
+
+  // get the current time
+  ACE_Time_Value current_time = ACE_OS::gettimeofday ();
+  
+  // refresh dynamic priorities of messages in the queue
+  result = this->refresh_priorities (current_time);
+  if (result < 0)
+  {
+    return result;
+  }
+
+  // reorganize the queue according to the new priorities,
+  // possibly dropping messages which are later than can
+  // be represented by the range of priority values
+  result = this->refresh_queue (current_time);
+  if (result < 0)
+  {
+    return result;
+  }
+
+  // *now* it's appropriate to wait for an enqueued item
+  result = this->wait_not_empty_cond (ace_mon, tv);
+  if (result == -1)
+  {
+    return result;
+  }
+
+  // invoke the internal virtual method
+  return this->dequeue_head_i (first_item);
 }
   // Dequeue and return the <ACE_Message_Block *> at the head of the
   // queue.
 
-template <ACE_SYNCH_DECL> int
+template <ACE_SYNCH_DECL> int 
 ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::refresh_priorities (const ACE_Time_Value & tv)
 {
   int result = 0;
@@ -839,12 +853,12 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::refresh_priorities (const ACE_Time_Val
   ACE_Message_Block *temp = ACE_Message_Queue<ACE_SYNCH_USE>::head_;
   while (temp)
   {
-    result = this->message_strategy_.update_priority (*temp, tv);
+    result = message_strategy_.update_priority (*temp, tv);
     if (result < 0)
     {
       break;
     }
-
+    
     temp = temp->next ();
   }
 
@@ -853,58 +867,238 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::refresh_priorities (const ACE_Time_Val
   // refresh the priorities in the queue according
   // to a specific priority assignment function
 
-template <ACE_SYNCH_DECL> int
+template <ACE_SYNCH_DECL> int 
 ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::refresh_queue (const ACE_Time_Value & tv)
 {
-  // first, drop any messages from the queue and delete them:
-  // reference counting at the data block level means that the
-  // underlying data block will not be deleted if another
-  // message block is still pointing to it.
-  ACE_Message_Block *temp = (pending_list_tail_)
-                            ? pending_list_tail_->next ()
-                            : ACE_Message_Queue<ACE_SYNCH_USE>::head_;
-
-  while (temp)
+  // Remove messages that are later than the priority range can represent
+  int result = remove_stale_messages (tv);
+  if (result < 0)
   {
-    // messages that have overflowed the given time bounds must be removed
-    if (message_strategy_.is_beyond_late (*temp, tv))
-    {
-      // find the end of the chain of overflowed messages
-      ACE_Message_Block *remove_tail = temp;
-      while ((remove_tail) && (remove_tail->next ()) &&
-             message_strategy_.is_beyond_late (*(remove_tail->next ()), tv))
-      {
-        remove_tail = remove_tail->next ();
-      }
-
-      temp = remove_tail->next ();
-      if (remove_tail->next ())
-      {
-        remove_tail->next ()->prev (0);
-      }
-      else if (remove_tail->prev ())
-      {
-        remove_tail->prev ()->next (0);
-      }
-      else
-      {
-        ACE_Message_Queue<ACE_SYNCH_USE>::head_ = 0;
-        ACE_Message_Queue<ACE_SYNCH_USE>::tail_ = 0;
-      }
-      remove_tail->prev (0);
-      remove_tail->next (0);
-
-      temp = remove_tail->next ();
-
-    }
-    else
-    {
-      temp = temp->next ();
-    }
+    return result;
   }
+
+  // Refresh the order of messages in the queue, 
+  // putting pending messages ahead of late messages
+  return reorder_queue (tv);
 }
   // refresh the order of messages in the queue
   // after refreshing their priorities
+
+
+template <ACE_SYNCH_DECL> int 
+ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::remove_stale_messages (const ACE_Time_Value & tv)
+{
+  int result = 0;
+
+  // start at the beginning of the list
+  ACE_Message_Block *current = head_;
+
+  // maintain a list of dropped messages to
+  // be appended to the end of the list after
+  // the sweep is complete
+  ACE_Message_Block *append_list_head = 0;
+  ACE_Message_Block *append_list_tail = 0;
+
+  while (current)
+  {
+    // messages that have overflowed the given time bounds must be removed
+    if (message_strategy_.is_beyond_late (*current, tv))
+    {
+      // find the end of the chain of overflowed messages
+      ACE_Message_Block *remove_head = current;
+      ACE_Message_Block *remove_tail = current;
+      while ((remove_tail) && (remove_tail->next ()) &&
+             message_strategy_.is_beyond_late (*(remove_tail->next ()), tv))
+      {
+        // extend the chain of messages to be removed
+        remove_tail = remove_tail->next ();
+      }
+
+      // fix up list pointers to bypass the overflowed message chain
+
+      if (remove_tail->next ())
+      {
+        remove_tail->next ()->prev (remove_head->prev ());
+      }
+      else
+      {
+        tail_ = remove_head->prev ();
+      }
+
+      if (remove_head->prev ())
+      {
+        remove_head->prev ()->next (remove_tail->next ());
+      }
+      else
+      {
+        head_ = remove_tail->next ();
+      }
+
+      // move the current pointer past the end of the chain
+      current = remove_tail->next ();
+
+      // Cut the chain of overflowed messages out of the list
+      remove_head->prev (0);
+      remove_tail->next (0);
+      
+      // Call strategy's drop_message method on each overflowed message. 
+      // Cannot just delete each message even though reference counting
+      // at the data bloc level means that the underlying data block will
+      // not be deleted if another message block is still pointing to it. 
+      // If the entire set of message blocks is known in advance, they may
+      // be allocated on the stack instead of the heap (to speed performance),
+      // and the caller *cannot* surrender ownership of the memory to the
+      // list. Putting this policy in the strategy allows the correct memory
+      // management scheme to be configured in either case.
+      ACE_Message_Block *temp1 = remove_head;
+      ACE_Message_Block *temp2 = remove_head->next ();
+      ACE_Message_Block *size_temp = 0;
+      size_t msg_size = 0;
+      while (temp1)
+      {
+        // Make sure to count *all* the bytes in a composite message!!!
+        for (size_temp = temp1, msg_size = 0;
+             size_temp != 0;
+             size_temp = size_temp->cont ())
+        {
+          msg_size += size_temp->size ();
+        }
+
+        result = message_strategy_.drop_message (temp1);
+        if (result < 0)
+        {
+          return result;
+        }
+
+        if (temp1)
+        {
+          // if the message was not destroyed, zero out its priority and
+          // put it on the list to append to the back of the queue
+          temp1->msg_priority (0);
+          temp1->next (0);
+          if (append_list_tail)
+          {
+            temp1->prev (append_list_tail);
+            append_list_tail->next (temp1);
+          }
+          else
+          {
+            temp1->prev (0);
+            append_list_head = temp1;
+          }
+          append_list_tail = temp1;
+        }
+        else
+        {
+          // if the message was destroyed, decrease the message
+          // count and byte count in the message queue
+          this->cur_count_--;
+          this->cur_bytes_ -= msg_size;
+        }
+
+        temp1 = temp2;
+        temp2 = temp2 ? temp2->next () : temp2;
+      }
+    }
+    else 
+    {
+      current = current->next ();    
+    }
+  }
+
+  // append any saved dropped messages to the end of the queue
+  if (append_list_tail)
+  {
+    if (tail_)
+    {
+      tail_->next (append_list_head);
+      append_list_head->prev (tail_);
+      tail_ = append_list_tail;
+    }
+    else
+    {
+      head_ = append_list_head;
+      tail_ = append_list_tail;
+    }
+  }
+
+  return result;
+}
+  // Remove messages that are later than the priority range can represent.
+
+template <ACE_SYNCH_DECL> int 
+ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::reorder_queue (const ACE_Time_Value & tv)
+{
+  // if the queue is not empty, and the first message is late, need to reorder
+  if ((head_) && (! message_strategy_.is_pending (*head_, tv)))
+  {
+    // find the end of the chain of newly late messages 
+    // (since the last time the queue was reordered)
+    ACE_Message_Block *reorder_head = head_;
+    ACE_Message_Block *reorder_tail = head_;
+    while ((reorder_tail) && (reorder_tail->next ()) &&
+            reorder_tail->next ()->msg_priority () <= reorder_head->msg_priority ())
+    {
+      // extend the chain of messages to be removed
+      reorder_tail = reorder_tail->next ();
+    }
+
+    // if a proper subset of the queue is out of order, reorganize the queue
+    if (reorder_tail != tail_)
+    {
+      // fix up list pointers to bypass the overflowed message chain
+      if (reorder_tail->next ())
+      {
+        reorder_tail->next ()->prev (reorder_head->prev ());
+      }
+      else
+      {
+        tail_ = reorder_head->prev ();
+      }
+      if (reorder_head->prev ())
+      {
+        reorder_head->prev ()->next (reorder_tail->next ());
+      }
+      else
+      {
+        head_ = reorder_tail->next ();
+      }
+    }
+  }
+
+  return 0;
+}
+  // Refresh the order of messages in the queue.
+
+
+template <ACE_SYNCH_DECL> int 
+ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::peek_dequeue_head (
+  ACE_Message_Block *&first_item,
+  ACE_Time_Value *tv)
+{
+  return ACE_Message_Queue<ACE_SYNCH_USE>::peek_dequeue_head (first_item, tv);
+}
+  // private method to hide public base class method: just calls base class method
+
+template <ACE_SYNCH_DECL> int 
+ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::enqueue_tail (
+  ACE_Message_Block *new_item,
+  ACE_Time_Value *timeout)
+{
+  return ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_tail (new_item, timeout);
+}
+  // private method to hide public base class method: just calls base class method
+
+
+template <ACE_SYNCH_DECL> int 
+ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::enqueue_head (
+  ACE_Message_Block *new_item,
+  ACE_Time_Value *timeout)
+{
+  return ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::enqueue_head (new_item, timeout);
+}
+  // private method to hide public base class method: just calls base class method
+
 
 
 /////////////////////////////////////
