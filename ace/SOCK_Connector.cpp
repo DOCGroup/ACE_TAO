@@ -32,27 +32,25 @@ ACE_SOCK_Connector::connect (ACE_SOCK_Stream &new_stream,
   int result = 0;
 
   // Only open a new socket if we don't already have a valid handle.
-  if (new_stream.get_handle () == ACE_INVALID_HANDLE)
-    {
-      if (ACE_SOCK::open (SOCK_STREAM, protocol_family, 
-			  protocol, reuse_addr) == -1)
-	return -1;
-    }
-  else // Borrow the handle from the NEW_STREAM. 
-    this->set_handle (new_stream.get_handle ());
+  if (new_stream.get_handle () == ACE_INVALID_HANDLE
+      && new_stream.open (SOCK_STREAM,
+			  protocol_family, 
+			  protocol,
+			  reuse_addr) == -1)
+    return -1;
 
   sockaddr *raddr = (sockaddr *) remote_sap.get_addr ();
-  size_t rsize  = remote_sap.get_size ();
+  size_t rsize = remote_sap.get_size ();
 
   if (&local_sap != &ACE_Addr::sap_any)
     {
       sockaddr *laddr = (sockaddr *) local_sap.get_addr ();
       size_t size = local_sap.get_size ();
-      result = ACE_OS::bind (this->get_handle (), laddr, size);
+      result = ACE_OS::bind (new_stream.get_handle (), laddr, size);
 
       if (result == -1)
 	{
-	  this->close ();
+	  new_stream.close ();
 	  return -1;
 	}
     }
@@ -60,10 +58,10 @@ ACE_SOCK_Connector::connect (ACE_SOCK_Stream &new_stream,
   // Enable non-blocking, if required.
   if (timeout != 0)
     {
-      if (this->enable (ACE_NONBLOCK) == -1)
+      if (new_stream.enable (ACE_NONBLOCK) == -1)
 	result = -1;
       
-      if (ACE_OS::connect (this->get_handle (), raddr, rsize) == -1)
+      if (ACE_OS::connect (new_stream.get_handle (), raddr, rsize) == -1)
 	{
 	  result = -1;
 
@@ -80,29 +78,22 @@ ACE_SOCK_Connector::connect (ACE_SOCK_Stream &new_stream,
 	}
     }
   // Do a blocking connect.
-  else if (ACE_OS::connect (this->get_handle (), raddr, rsize) == -1)
+  else if (ACE_OS::connect (new_stream.get_handle (), raddr, rsize) == -1)
     result = -1;
 
-  // EISCONN is treated specially since this routine may be used to check 
-  // if we are already connected.
+  // EISCONN is treated specially since this routine may be used to
+  // check if we are already connected.
   if (result != -1 || errno == EISCONN)
-    {
-      // If everything succeeded transfer ownership to <new_stream>.
-      new_stream.set_handle (this->get_handle ());
-
-      // Start out with non-blocking disabled on the <new_stream>.
-      new_stream.disable (ACE_NONBLOCK);
-
-      this->set_handle (ACE_INVALID_HANDLE);
-    }
+    // Start out with non-blocking disabled on the <new_stream>.
+    new_stream.disable (ACE_NONBLOCK);
   else if (!(errno == EWOULDBLOCK || errno == ETIMEDOUT))
     {
       // If things have gone wrong, close down and return an error.
       int saved_errno = errno;
-      this->close ();
-      new_stream.set_handle (ACE_INVALID_HANDLE);
+      new_stream.close ();
       errno = saved_errno;
     }
+    
   return result;
 }
 
@@ -121,11 +112,11 @@ ACE_SOCK_Connector::complete (ACE_SOCK_Stream &new_stream,
   ACE_Time_Value time (0, 1000);
   ACE_OS::sleep (time);
 #endif /* ACE_HAS_BROKEN_NON_BLOCKING_CONNECTS */
-  ACE_HANDLE h = ACE::handle_timed_complete (this->get_handle (), tv);
+  ACE_HANDLE h = ACE::handle_timed_complete (new_stream.get_handle (), tv);
 
   if (h == ACE_INVALID_HANDLE)
     {
-      this->close ();
+      new_stream.close ();
       return -1;
     }
   else 	  // We've successfully connected!
@@ -139,18 +130,14 @@ ACE_SOCK_Connector::complete (ACE_SOCK_Stream &new_stream,
 
 	  if (ACE_OS::getpeername (h, addr, &len) == -1)
 	    {
-	      this->close ();
+	      new_stream.close ();
 	      return -1;
 	    }
 	}
 
-      // Transfer ownership.
-      new_stream.set_handle (this->get_handle ());
-
       // Start out with non-blocking disabled on the <new_stream>.
       new_stream.disable (ACE_NONBLOCK);
 
-      this->set_handle (ACE_INVALID_HANDLE);
       return 0;
     }
 }
