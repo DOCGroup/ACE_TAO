@@ -1370,6 +1370,8 @@ TAO_GIOP_Message_Base::make_queued_data (size_t sz)
   TAO_Queued_Data *qd =
     TAO_Queued_Data::get_queued_data ();
 
+  // @@todo: We have a similar method in Transport.cpp. Need to see how
+  // we can factor them out..
   // Make a datablock for the size requested + something. The
   // "something" is required because we are going to align the data
   // block in the message block. During alignment we could loose some
