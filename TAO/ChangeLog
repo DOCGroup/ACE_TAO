@@ -1,3 +1,12 @@
+Thu Oct 16 08:24:12 UTC  2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/RTCosScheduling/Makefile.bor:
+          Added missing makefile
+
+        * orbsvcs/tests/RTCosScheduling/RTCosScheduling_Client.bor:
+        * orbsvcs/tests/RTCosScheduling/RTCosScheduling_Server.bor:
+          Corrected these makefiles
+
 Thu Oct 16 08:05:33 UTC  2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/AMI_Primary_Replication_Strategy.cpp:
