@@ -71,7 +71,7 @@ libs_l=false
 
 # These values are only valid for TAO.
 the_compiler="@CXX@"
-the_libs="$the_libs @TAO_LIBDIR@ @TAO_LIBS@"
+the_libs="$the_libs @TAO_LIBDIR@ -lTAO @TAO_LIBS@"
 the_flags="$the_flags @TAO_INCLUDEDIR@ @CXXFLAGS@"
 
 while test $# -gt 0; do
