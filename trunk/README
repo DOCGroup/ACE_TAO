@@ -205,7 +205,7 @@ that describe the ACE wrappers and the ADAPTIVE system in more detail.
 
 The current release has been tested extensively, but if you find any
 bugs, please report them to the ACE mailing list
-ace-users@cs.wustl.edu using the $ACE_ROOT/BUG_REPORT_FORM.
+ace-users@cs.wustl.edu using the $ACE_ROOT/BUG-REPORT-FORM.
 
 ACKNOWLEDGEMENTS
 
