@@ -642,8 +642,8 @@ ACE::ldfind (const ASYS_TCHAR filename[],
   // Make sure we've got enough space in searchfilename.
   if (ACE_OS::strlen (searchfilename) 
       + ACE_OS::strlen (ACE_DLL_PREFIX) 
-      + got_suffix ? 0 ACE_OS::strlen (dll_suffix) >= (sizeof searchfilename / 
-                                                       sizeof (ASYS_TCHAR)))
+      + got_suffix ? 0 : ACE_OS::strlen (dll_suffix) >= (sizeof searchfilename / 
+                                                         sizeof (ASYS_TCHAR)))
     {
       errno = ENOMEM;
       return -1;

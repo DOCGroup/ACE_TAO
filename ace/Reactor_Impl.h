@@ -17,8 +17,6 @@
 #if !defined (ACE_REACTOR_IMPL_H)
 #define ACE_REACTOR_IMPL_H
 
-class ACE_Handle_Set;
-
 // Timer Queue is a complicated template class. A simple forward
 // declaration will not work
 #include "ace/Timer_Queue.h"
@@ -30,6 +28,39 @@ class ACE_Handle_Set;
 // them.... But Timer_Queue_T.h includes Signal.h, so I don't think
 // forward declaration will be useful here
 #include "ace/Signal.h"
+
+// Forward decls
+class ACE_Handle_Set;
+class ACE_Reactor_Impl;
+
+class ACE_Export ACE_Reactor_Notify : public ACE_Event_Handler
+{
+  // = TITLE
+  //     Unblock an <ACE_Reactor_Impl> from its event loop.
+public:
+  // = Initialization and termination methods.
+  virtual int open (ACE_Reactor_Impl *,
+                    ACE_Timer_Queue *timer_queue = 0,
+                    int disable_notify = 0) = 0;
+  virtual int close (void) = 0;
+
+  virtual ssize_t notify (ACE_Event_Handler * = 0,
+                          ACE_Reactor_Mask = ACE_Event_Handler::EXCEPT_MASK,
+                          ACE_Time_Value * = 0) = 0;
+  // Called by a thread when it wants to unblock the <Reactor_Impl>.
+  // This wakeups the <Reactor_Impl> if currently blocked.  Pass over
+  // both the <Event_Handler> *and* the <mask> to allow the caller to
+  // dictate which <Event_Handler> method the <Reactor_Impl> will
+  // invoke.  The <ACE_Time_Value> indicates how long to blocking
+  // trying to notify the <Reactor_Impl>.  If <timeout> == 0, the
+  // caller will block until action is possible, else will wait until
+  // the relative time specified in *<timeout> elapses).
+
+  virtual int dispatch_notifications (int &number_of_active_handles,
+                                      const ACE_Handle_Set &rd_mask) = 0;
+  // Handles pending threads (if any) that are waiting to unblock the
+  // <Reactor_Impl>.
+};
 
 class ACE_Export ACE_Reactor_Impl
 {
@@ -45,6 +76,11 @@ public:
                     ACE_Timer_Queue * = 0,
                     int disable_notify_pipe = 0) = 0;
   // Initialization.
+
+  virtual int current_info (ACE_HANDLE, size_t & /* size */) = 0;
+  // Returns 0, if the size of the current message has been put in
+  // <size> Returns -1, if not.  ACE_HANDLE allows the reactor to
+  // check if the caller is valid.
 
   virtual int set_sig_handler (ACE_Sig_Handler *signal_handler) = 0;
   // Use a user specified signal handler instead.

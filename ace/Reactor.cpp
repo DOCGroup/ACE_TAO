@@ -18,23 +18,35 @@
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Reactor)
 
-ACE_Reactor::ACE_Reactor (ACE_Reactor_Impl *impl)
+ACE_Reactor::ACE_Reactor (ACE_Reactor_Impl *impl,
+                          int delete_implementation)
   : implementation_ (0),
-    delete_implementation_ (0)
+    delete_implementation_ (delete_implementation)
 {
   this->implementation (impl);
 
   if (this->implementation () == 0)
     {
-#if !defined (ACE_WIN32) || !defined (ACE_HAS_WINSOCK2) || (ACE_HAS_WINSOCK2 == 0) || defined (ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL)
-      ACE_NEW (impl, ACE_Select_Reactor);
-#else /* We are on Win32 and we have winsock and ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL is not defined */
+#if !defined (ACE_WIN32) 
+    || !defined (ACE_HAS_WINSOCK2) 
+    || (ACE_HAS_WINSOCK2 == 0) 
+    || defined (ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL)
+      ACE_NEW (impl,
+               ACE_Select_Reactor);
+#else 
+    // We are on Win32 and we have winsock and
+    // ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL is not defined.
   #if defined (ACE_USE_MSG_WFMO_REACTOR_FOR_REACTOR_IMPL)
-      ACE_NEW (impl, ACE_Msg_WFMO_Reactor);
+      ACE_NEW (impl,
+               ACE_Msg_WFMO_Reactor);
   #else
-      ACE_NEW (impl, ACE_WFMO_Reactor);
+      ACE_NEW (impl,
+               ACE_WFMO_Reactor);
   #endif /* ACE_USE_MSG_WFMO_REACTOR_FOR_REACTOR_IMPL */
-#endif /* !defined (ACE_WIN32) || !defined (ACE_HAS_WINSOCK2) || (ACE_HAS_WINSOCK2 == 0) || defined (ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL) */
+#endif /* !defined (ACE_WIN32) 
+          || !defined (ACE_HAS_WINSOCK2) 
+          || (ACE_HAS_WINSOCK2 == 0) 
+          || defined (ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL) */
       this->implementation (impl);
       this->delete_implementation_ = 1;
     }
@@ -77,15 +89,19 @@ ACE_Reactor::instance (void)
 }
 
 ACE_Reactor *
-ACE_Reactor::instance (ACE_Reactor *r)
+ACE_Reactor::instance (ACE_Reactor *r,
+                       int delete_reactor)
 {
   ACE_TRACE ("ACE_Reactor::instance");
 
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
                             *ACE_Static_Object_Lock::instance (), 0));
   ACE_Reactor *t = ACE_Reactor::reactor_;
-  // We can't safely delete it since we don't know who created it!
-  ACE_Reactor::delete_reactor_ = 0;
+  if (delete_reactor != 0)
+    ACE_Reactor::delete_reactor_ = 1;
+  else
+    // We can't safely delete it since we don't know who created it!
+    ACE_Reactor::delete_reactor_ = 0;
 
   ACE_Reactor::reactor_ = r;
   return t;
