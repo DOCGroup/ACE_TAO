@@ -1,6 +1,6 @@
---- PolicyC.i	Tue Jul 11 00:38:13 2000
-+++ PolicyC.i.mod	Tue Jul 11 00:29:58 2000
-@@ -1475,176 +1475,6 @@
+--- orig/PolicyC.i	Tue Apr  3 14:08:51 2001
++++ patched/PolicyC.i	Tue Apr  3 14:10:45 2001
+@@ -1335,176 +1335,6 @@
  #endif /* end #if !defined */
  
  
