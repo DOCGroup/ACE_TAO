@@ -16,7 +16,7 @@ LDLIBS = -lorbsvcs -lTAO
 
 IDL_SRC = TimeServiceC.cpp TimeServiceS.cpp
 
-DIRS = ../../ImplRepo_Service
+DIRS = ../ImplRepo_Service
 
 PROG_SRCS = \
 	server.cpp \
@@ -56,6 +56,7 @@ include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.nested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
@@ -71,8 +72,9 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
 .PRECIOUS: TimeServiceC.cpp TimeServiceC.i TimeServiceC.h
 .PRECIOUS: TimeServiceS.cpp TimeServiceS.i TimeServiceS.h
 .PRECIOUS: TimeServiceS_T.cpp TimeServiceS_T.i TimeServiceS_T.h
-.PRECIOUS: PingC.cpp PinC.h PingS.cpp PingS.h
-.PRECIOUS: ImplRepoC.cpp ImplRepoC.h ImplrepoS.cpp ImplRepoS.h
+#.PRECIOUS: PingC.cpp PinC.h PingS.cpp PingS.h
+#.PRECIOUS: ImplRepoC.cpp ImplRepoC.h ImplrepoS.cpp ImplRepoS.h
+.SECONDARY: $(IMPLREPO_SERVICE_OBJS)
 
 server:	$(addprefix $(VDIR),$(SIMPLE_SVR_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(IMPLREPO_SERVICE_OBJS) $(POSTLINK)
