@@ -990,7 +990,7 @@ Gateway_Initializer::handle_timeout (const ACE_Time_Value &,
       //start self once we know that all the gateways are connected
       this->ec_->start(ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
+      /*
       //DEBUG: print out schedule
       RtecScheduler::RT_Info_Set_var infos;
       RtecScheduler::Config_Info_Set_var configs;
@@ -1025,7 +1025,7 @@ Gateway_Initializer::handle_timeout (const ACE_Time_Value &,
                                             configs.in (),
                                             anomalies.in (),
                                             sched_out.str().c_str());
-
+      */
     }
   ACE_CATCHANY
     {
