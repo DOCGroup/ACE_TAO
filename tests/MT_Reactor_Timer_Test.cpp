@@ -292,7 +292,7 @@ main (int, ASYS_TCHAR *[])
                         1);
 
   ACE_Time_Value no_waiting (0);
-  int events = 0;
+  ssize_t events = 0;
 
   while (1)
     {
