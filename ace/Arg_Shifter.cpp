@@ -59,51 +59,31 @@ ACE_Arg_Shifter::get_current (void) const
 }
 
 char*
-ACE_Arg_Shifter::get_current_parameter (int offset)
+ACE_Arg_Shifter::get_the_parameter (const char* flag)
 {
-  if (this->is_anything_left())
+  // the return 0's abound because this method
+  // would otherwise be a deep if { } else { }
+
+  // check to see if any arguments still exist
+  if (!this->is_anything_left())
+    return 0;
+
+  // check to see if the flag is the argument
+  int offset = this->cur_arg_strncasecmp (flag);
+  if (offset == -1)
+    return 0;
+
+  if (offset == 0)
     {
-      unsigned int margin = 0;
+      this->consume_arg ();
 
-      if (offset < 0)
+      if (!this->is_parameter_next())
 	{
-	  int difference = ACE_OS::strlen(this->temp_[current_index_]) + offset;
-                                                   
-          if (difference < 0)
-            {
-	      return 0;
-	    }
-	  else
-	    {
-	      margin = ++difference;
-	    }
+	  return 0;
 	}
-      else if (offset > 0)
-	{
-	  int difference = ACE_OS::strlen(this->temp_[current_index_]) - offset;
-          
-	  if (difference < 0)
-	    {
-	      return 0;
-	    }
-	  else
-	    {
-	      margin = offset;
-	    }
-	}
-      else
-	{
-	  this->consume_arg ();
-
-	  if (!this->is_parameter_next())
-	    {
-	      return 0;
-	    }
-	}
-      return this->temp_[current_index_] + margin;
     }
-  
-  return 0;
+  // the paramter is in the middle somewhere...
+  return this->temp_[current_index_] + offset;  return 0;
 }
 
 int
