@@ -1,0 +1,5 @@
+project (XML_Svc_Conf_Parser) : acelib {
+   depends = XML_Parser
+   sharedname = ACEXML_XML_Svc_Conf_Parser
+   libs       = ACEXML_Parser ACEXML
+}

@@ -33,12 +33,12 @@ ACEXML_StreamFactory::create_stream (const ACEXML_Char* uri)
       ACE_NEW_RETURN (fstream, ACEXML_FileCharStream, 0);
       if (fstream->open (uri) != -1)
         return fstream;
-    }
-  else
-    {
-      ACE_NEW_RETURN (zstream, ACEXML_ZipCharStream, 0);
-      if (zstream->open (uri) != -1)
-        return zstream;
+      else
+        {
+          ACE_NEW_RETURN (zstream, ACEXML_ZipCharStream, 0);
+          if (zstream->open (uri) != -1)
+            return zstream;
+        }
     }
   return 0;
 }

@@ -1,0 +1,6 @@
+project (Parser) : acelib {
+    depends = XML_Common
+    sharedname = ACEXML_Parser
+    dllflags = ACEXML_PARSER_BUILD
+    libs = ACEXML
+}

@@ -1,0 +1,8 @@
+project (Svcconf) : aceexe {
+   exename = Svcconf
+   libs = ACEXML_XML_Svc_Conf_Parser ACEXML_Parser ACEXML
+   Source_Files {
+      main.cpp
+      Svcconf_Handler.cpp
+   }
+}
