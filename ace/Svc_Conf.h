@@ -90,9 +90,10 @@ extern int ace_yyleng;
 extern ACE_Obstack *ace_obstack;
 // Efficient memory allocation technique
 
-ACE_Service_Type_Impl *ace_create_service_type (const ACE_TCHAR *, int,
-                                                void *, unsigned int,
-                                                ACE_Service_Object_Exterminator = 0);
+extern ACE_Export ACE_Service_Type_Impl *
+    ace_create_service_type (const ACE_TCHAR *, int,
+                             void *, unsigned int,
+                             ACE_Service_Object_Exterminator = 0);
 // Factory that creates a new ACE_Service_Type_Impl.
 
 typedef union
