@@ -25,6 +25,7 @@
 
 #include "ace/Addr.h"
 #include "ace/IPC_SAP.h"
+#include "ace/QoS_Session.h"
 
 class ACE_Export ACE_SOCK : public ACE_IPC_SAP
 {
@@ -87,6 +88,16 @@ public:
             int reuse_addr);
   // Wrapper around the QoS-enabled <WSASocket> function.
 
+  int join_qos_session (ACE_QoS_Session *qos_session);
+  // Join the given QoS session. A socket can join multiple QoS sessions. 
+  // This call adds the given QoS session to the list of QoS sessions 
+  // that the socket has already joined.
+
+  typedef ACE_Unbounded_Set <ACE_QoS_Session *> ACE_QOS_SESSION_SET;
+
+  ACE_QOS_SESSION_SET qos_session_set (void);
+  // Get the QoS session set.
+  
 protected:
   ACE_SOCK (int type,
             int protocol_family,
@@ -100,7 +111,7 @@ protected:
             int protocol,
             ACE_Protocol_Info *protocolinfo,
             ACE_SOCK_GROUP g,
-            u_long flags,
+             u_long flags,
             int reuse_addr);
   // Constructor with arguments to call the QoS-enabled <WSASocket>
   // function.
@@ -108,6 +119,10 @@ protected:
   ACE_SOCK (void);
   // Default constructor is private to prevent instances of this class
   // from being defined.
+
+  ACE_QOS_SESSION_SET qos_session_set_;
+  // Set of QoS sessions that this socket has joined.
+
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
@@ -115,3 +130,7 @@ protected:
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #endif /* ACE_SOCK_H */
+
+
+
+
