@@ -55,7 +55,7 @@ while (<VERSION>) {
 
 close (VERSIONOUT);
 close (VERSION);
-
+chmod 0644 $VERSION;
 
 $message = $date."  ".$ENV{"SIGNATURE"}."  <".$ENV{"LOGNAME"}."\@cs.wustl.edu>\n\n\t* ".$TAO_VERSION."\n";
 $message_printed = 0;
@@ -72,6 +72,7 @@ while (<CHANGELOG>) {
 
 close (CHANGELOG);
 close (CHANGELOGOUT);
+chmod 0644, $CHANGELOG;
 
 # Morph the version number
 chop $version_number;
