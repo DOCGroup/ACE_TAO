@@ -1,3 +1,19 @@
+2001-04-14  Yamuna Krishnamurthy  <yamuna@localhost.localdomain>
+
+	* orbsvcs/tests/AVStreams/Modify_QoS/Makefile: 
+	* orbsvcs/tests/AVStreams/Modify_QoS/Modify_QoS.dsw: 	
+	* orbsvcs/tests/AVStreams/Modify_QoS/run_test.pl: 
+	* orbsvcs/tests/AVStreams/Modify_QoS/input: 	
+	* orbsvcs/tests/AVStreams/Modify_QoS/receiver.h: 	
+	* orbsvcs/tests/AVStreams/Modify_QoS/receiver.cpp: 		
+	* orbsvcs/tests/AVStreams/Modify_QoS/receiver.dsp: 		
+	* orbsvcs/tests/AVStreams/Modify_QoS/sender.h: 	
+	* orbsvcs/tests/AVStreams/Modify_QoS/sender.cpp: 		
+	* orbsvcs/tests/AVStreams/Modify_QoS/sender.dsp: 	
+
+	  Added a new test Modify_QoS to demonstrate how the qos of
+	  the flows can be changed during run-time.
+	
 Sat Apr 14 19:31:56 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: 
