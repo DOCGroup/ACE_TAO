@@ -39,18 +39,6 @@ module RtecEventChannelAdmin {
       raises(AlreadyConnected);
   };
 
-  interface ProxyPullSupplier: RtecEventComm::PullSupplier {
-    void connect_pull_consumer(
-		in RtecEventComm::PullConsumer pull_consumer)
-      raises(AlreadyConnected);
-  };
-
-  interface ProxyPullConsumer: RtecEventComm::PullConsumer {
-    void connect_pull_supplier(
-		in RtecEventComm::PullSupplier pull_supplier)
-      raises(AlreadyConnected,TypeError);
-  };
-
   interface ProxyPushSupplier: RtecEventComm::PushSupplier {
     void connect_push_consumer(
 		in RtecEventComm::PushConsumer push_consumer,

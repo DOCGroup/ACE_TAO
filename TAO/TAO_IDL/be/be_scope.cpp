@@ -323,15 +323,13 @@ be_scope::gen_encapsulation (void)
 	{
 	  // get the next AST decl node
 	  d = si->item ();
-	  if (!d->imported ()) 
+	  
+	  bd = be_decl::narrow_from_decl (d);
+	  if (bd->gen_encapsulation () == -1)
 	    {
-              bd = be_decl::narrow_from_decl (d);
-              if (bd->gen_encapsulation () == -1)
-                {
-                  // failure
-                  return -1;
-                }
-            }
+	      // failure
+	      return -1;
+	    }
           si->next ();
         } // end of while
       delete si; // free the iterator object
@@ -358,25 +356,21 @@ be_scope::tc_encap_len (void)
 	{
 	  // get the next AST decl node
 	  d = si->item ();
-	  if (!d->imported ()) 
+
+	  // NOTE: Our assumptin here is that whatever scope we are in, the
+	  // node type that shows up here *MUST* be valid according to the
+	  // IDL grammar. We do not check for this since the front end must
+	  // have taken care of weeding out such errors
+
+	  bd = be_decl::narrow_from_decl (d);
+	  if (bd != 0)
 	    {
-	      // we are not imported.
-
-              // NOTE: Our assumptin here is that whatever scope we are in, the
-              // node type that shows up here *MUST* be valid according to the
-              // IDL grammar. We do not check for this since the front end must
-              // have taken care of weeding out such errors
-
-              bd = be_decl::narrow_from_decl (d);
-	      if (bd != 0)
-		{
-		  encap_len += bd->tc_encap_len ();
-		}
-	      else
-		{
-		  ACE_DEBUG ((LM_DEBUG, "WARNING (%N:%l): "
-			      "narrow_from_decl returned 0\n"));
-		}
+	      encap_len += bd->tc_encap_len ();
+	    }
+	  else
+	    {
+	      ACE_DEBUG ((LM_DEBUG, "WARNING (%N:%l): "
+			  "narrow_from_decl returned 0\n"));
             }
           si->next ();
         } // end of while

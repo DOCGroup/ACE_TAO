@@ -1,3 +1,39 @@
+Mon Nov 17 01:48:17 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* TAO_IDL/be/be_scope.cpp: 
+	  TypeCode generation was failing for imported members.
+
+	* TAO_IDL/be/be_structure.cpp: 
+	  Member count must include all members, imported or not.
+
+	* TAO_IDL/be/be_typedef.cpp: 
+	  Added missing decr_indent() in the typecode generation which was
+	  making the generated code completely unreadable.
+
+	* orbsvcs/lib/RtecEventChannelAdmin.idl: 
+	* orbsvcs/lib/RtecEventComm.idl: 
+	  Removed the PullConsumer and PullSupplier classes, they are not
+	  supported.
+
+	* orbsvcs/lib/CosNamingC.cpp: 
+	* orbsvcs/lib/CosNamingS.cpp: 
+	* orbsvcs/lib/RtecEventChannelAdminC.cpp: 
+	* orbsvcs/lib/RtecEventChannelAdminC.h: 
+	* orbsvcs/lib/RtecEventChannelAdminC.i: 
+	* orbsvcs/lib/RtecEventChannelAdminS.cpp: 
+	* orbsvcs/lib/RtecEventChannelAdminS.h: 
+	* orbsvcs/lib/RtecEventChannelAdminS.i: 
+	* orbsvcs/lib/RtecEventCommC.cpp: 
+	* orbsvcs/lib/RtecEventCommC.h: 
+	* orbsvcs/lib/RtecEventCommC.i: 
+	* orbsvcs/lib/RtecEventCommS.cpp: 
+	* orbsvcs/lib/RtecEventCommS.h: 
+	* orbsvcs/lib/RtecEventCommS.i: 
+	* orbsvcs/lib/RtecSchedulerC.cpp: 
+	* orbsvcs/lib/RtecSchedulerS.cpp: 
+	  New version of the generated files, this last version is almost
+	  making in it, but still needs hand crafting.
+
 Sun Nov 16 23:30:26 1997  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
 	* orbsvcs/tests/Logger/svr.cpp (main): 

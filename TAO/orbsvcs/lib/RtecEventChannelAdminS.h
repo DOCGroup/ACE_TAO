@@ -30,36 +30,6 @@ public:
 
   };
 
-  class ProxyPullSupplier;
-  typedef ProxyPullSupplier *ProxyPullSupplier_ptr;
-  class ProxyPullSupplier : public virtual RtecEventChannelAdmin::ProxyPullSupplier, public virtual POA_RtecEventComm::PullSupplier
-  {
-  protected:
-    ProxyPullSupplier (const char *obj_name = 0);
-    virtual ~ProxyPullSupplier (void);
-  public:
-    virtual void connect_pull_consumer (RtecEventComm::PullConsumer_ptr  pull_consumer,  CORBA::Environment &env) = 0; // pure virtual
-    static void connect_pull_consumer_skel (CORBA::ServerRequest &req, CORBA::Object_ptr obj, CORBA::Environment &env);
-
-    static void _is_a_skel (CORBA::ServerRequest &req, CORBA::Object_ptr obj, CORBA::Environment &env);
-
-  };
-
-  class ProxyPullConsumer;
-  typedef ProxyPullConsumer *ProxyPullConsumer_ptr;
-  class ProxyPullConsumer : public virtual RtecEventChannelAdmin::ProxyPullConsumer, public virtual POA_RtecEventComm::PullConsumer
-  {
-  protected:
-    ProxyPullConsumer (const char *obj_name = 0);
-    virtual ~ProxyPullConsumer (void);
-  public:
-    virtual void connect_pull_supplier (RtecEventComm::PullSupplier_ptr  pull_supplier,  CORBA::Environment &env) = 0; // pure virtual
-    static void connect_pull_supplier_skel (CORBA::ServerRequest &req, CORBA::Object_ptr obj, CORBA::Environment &env);
-
-    static void _is_a_skel (CORBA::ServerRequest &req, CORBA::Object_ptr obj, CORBA::Environment &env);
-
-  };
-
   class ProxyPushSupplier;
   typedef ProxyPushSupplier *ProxyPushSupplier_ptr;
   class ProxyPushSupplier : public virtual RtecEventChannelAdmin::ProxyPushSupplier, public virtual POA_RtecEventComm::PushSupplier
