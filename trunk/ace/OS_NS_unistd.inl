@@ -1054,8 +1054,8 @@ ACE_OS::sleep (const ACE_Time_Value &tv)
 }
 
 ACE_INLINE void
-ACE_OS::swab (const unsigned char *src, 
-              unsigned char *dest, 
+ACE_OS::swab (const unsigned char *src,
+              unsigned char *dest,
               ssize_t length)
 {
 #if defined (ACE_LACKS_SWAB)
@@ -1071,7 +1071,8 @@ ACE_OS::swab (const unsigned char *src,
     }
   if (ptr == length) /* I.e., if length is odd, */
     to[ptr-1] = 0;   /* then pad with a NUL. */
-
+#elif defined (ACE_HAS_NONCONST_SWAB)
+  ::swab (ACE_const_cast (unsigned char *, src), dest, length);
 #else
   ::swab (src, dest, length);
 #endif /* ACE_LACKS_SWAB */
