@@ -16,7 +16,7 @@ DIRS    = ../IDL_Cubit
 
 LDLIBS = ../IDL_Cubit/.obj/cubitC.o \
          ../IDL_Cubit/.obj/cubitS.o \
-         -lorbsvcs -lTAO
+         -lTAO
 
 PROG_SRCS = client.cpp
 
