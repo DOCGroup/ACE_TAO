@@ -8,6 +8,8 @@ OBJFILES = \
 	$(OBJDIR)\Active_Object_Map.obj \
 	$(OBJDIR)\Collocated_Object.obj \
 	$(OBJDIR)\Default_Acceptor_Filter.obj \
+	$(OBJDIR)\Default_Policy_Validator.obj \
+	$(OBJDIR)\Default_Servant_Dispatcher.obj \
 	$(OBJDIR)\Direct_Object_Proxy_Impl.obj \
 	$(OBJDIR)\ImplRepoC.obj \
 	$(OBJDIR)\ImplRepoS.obj \
@@ -19,16 +21,17 @@ OBJFILES = \
 	$(OBJDIR)\ImplRepo_i.obj \
 	$(OBJDIR)\POA.obj \
 	$(OBJDIR)\POAManager.obj \
+	$(OBJDIR)\POA_Cached_Policies.obj \
+	$(OBJDIR)\POA_Policies.obj \
+	$(OBJDIR)\POA_Policy_Set.obj \
 	$(OBJDIR)\PolicyS.obj \
+	$(OBJDIR)\Policy_Validator.obj \
 	$(OBJDIR)\PortableServer.obj \
 	$(OBJDIR)\PortableServerC.obj \
 	$(OBJDIR)\Servant_Base.obj \
-        $(OBJDIR)\Servant_Dispatcher.obj \
+	$(OBJDIR)\Servant_Dispatcher.obj \
 	$(OBJDIR)\ServerInterceptorAdapter.obj \
 	$(OBJDIR)\ServerRequestInfo.obj \
-	$(OBJDIR)\RT_Acceptor_Filters.obj \
-        $(OBJDIR)\RT_Servant_Dispatcher.obj \
-	$(OBJDIR)\RTPortableServerC.obj \
 	$(OBJDIR)\Strategized_Object_Proxy_Broker.obj \
 	$(OBJDIR)\ThruPOA_Object_Proxy_Impl.obj
 
