@@ -1,3 +1,12 @@
+Fri May 26 14:27:02 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/OS_String.inl:
+
+          Changed the strncasecmp methods to not use ssize_t inside of them.
+          This required a reworking of the loop, since it depended on negative
+          values.  This was needed since ssize_t is more difficult to get defined
+          than size_t, so it seemed less obtrusive to do it this way.
+
 Fri May 26 12:30:56 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace/TLI_Connector.h:
@@ -223,6 +232,8 @@ Fri May 26 09:16:21 2000  Darrell Brunsch <brunsch@uci.edu>
           I shall not put ACE_INLINE's in a .cpp file.
           I shall not put ACE_INLINE's in a .cpp file.
           I shall not put ACE_INLINE's in a .cpp file.
+
+          :-)
 
 Thu May 25 20:23:45 2000  Darrell Brunsch <brunsch@uci.edu>
 
