@@ -1,3 +1,9 @@
+Fri Aug 31 22:07:57 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/WFMO_Reactor.h:
+	* ace/WFMO_Reactor.cpp: Added the method read_notify_pipe () to
+	  the WFMO_Notify_Handler.
+
 Fri Aug 31 19:14:52 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Reactor_Impl.h: Added a new method by name read_notify_pipe
