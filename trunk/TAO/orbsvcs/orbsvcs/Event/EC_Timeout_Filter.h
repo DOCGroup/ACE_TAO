@@ -107,7 +107,10 @@ private:
   RtecEventComm::EventType type_;
   // The type of timeout event...
 
-  int id_;
+  RtecEventComm::Time period_;
+  // The period for deadline timeouts...
+
+  long id_;
   // The ID of the timeout in the Timeout_Generator, for
   // cancellation.
 };

@@ -1,3 +1,27 @@
+Wed Aug  4 20:35:06 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+	* orbsvcs/orbsvcs/Event/EC_QOS_Info.h:
+	* orbsvcs/orbsvcs/Event/EC_QOS_Info.i:
+	* orbsvcs/orbsvcs/Event/EC_Timeout_Filter.h:
+	* orbsvcs/orbsvcs/Event/EC_Timeout_Filter.cpp:
+	  Fixed deadline timeouts and timeouts in conjunction groups, this 
+	  fixes both [BUGID:94] and [BUGID:95]
+
+	* orbsvcs/orbsvcs/Event/EC_Sched_Filter_Builder.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Basic_Filter_Builder.cpp:
+	  Fixed problem when building conjunction groups that contain
+	  timeout events too.
+
+	* orbsvcs/tests/Event/Basic/Makefile:
+	* orbsvcs/tests/Event/Basic/run_test.pl:
+	* orbsvcs/tests/Event/Basic/Timeout.h:
+	* orbsvcs/tests/Event/Basic/Timeout.cpp:
+	  Added a new test to verify that the EC timeout events work
+	  correctly.  Thanks to Paul Calabrese <calabrese_p@ociweb.com>
+	  for providing the use and reporting the bugs.
+
 Wed Aug  4 17:40:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Sched/DynSched.cpp

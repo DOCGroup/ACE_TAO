@@ -22,7 +22,9 @@ TAO_EC_Timeout_Filter::TAO_EC_Timeout_Filter (
   : event_channel_ (event_channel),
     supplier_ (supplier),
     qos_info_ (qos_info),
-    type_ (type)
+    type_ (type),
+    period_ (period),
+    id_ (-1)
 {
   ACE_Time_Value tv_delta;
   ORBSVCS_Time::TimeT_to_Time_Value (tv_delta, period);
@@ -30,10 +32,11 @@ TAO_EC_Timeout_Filter::TAO_EC_Timeout_Filter (
   TAO_EC_Timeout_Generator *tg =
     this->event_channel_->timeout_generator ();
 
-  if (type == ACE_ES_EVENT_INTERVAL_TIMEOUT)
+  if (this->type_ == ACE_ES_EVENT_INTERVAL_TIMEOUT
+      || this->type_ == ACE_ES_EVENT_DEADLINE_TIMEOUT)
     {
       ACE_Time_Value tv_interval;
-      ORBSVCS_Time::TimeT_to_Time_Value (tv_interval, period);
+      ORBSVCS_Time::TimeT_to_Time_Value (tv_interval, this->period_);
 
       this->id_ =
         tg->schedule_timer (this,
@@ -65,49 +68,76 @@ TAO_EC_Timeout_Filter::push_to_proxy (const RtecEventComm::EventSet& event,
                                       TAO_EC_QOS_Info& qos_info,
                                       CORBA::Environment& ACE_TRY_ENV)
 {
-  this->supplier_->push_timeout (this,
-                                 event,
-                                 qos_info,
-                                 ACE_TRY_ENV);
+  qos_info.timer_id_ = this->id_;
+
+  if (this->supplier_ != 0)
+    this->supplier_->filter (event,
+                             qos_info,
+                             ACE_TRY_ENV);
 }
 
 int
-TAO_EC_Timeout_Filter::filter (const RtecEventComm::EventSet&,
-                               TAO_EC_QOS_Info&,
-                               CORBA::Environment&)
+TAO_EC_Timeout_Filter::filter (const RtecEventComm::EventSet &event,
+                               TAO_EC_QOS_Info &qos_info,
+                               CORBA::Environment &ACE_TRY_ENV)
 {
+  if (qos_info.timer_id_ == this->id_
+      && this->parent () != 0)
+    {
+      this->parent ()->push (event, qos_info, ACE_TRY_ENV);
+      return 1;
+    }
   return 0;
 }
 
 int
-TAO_EC_Timeout_Filter::filter_nocopy (RtecEventComm::EventSet&,
-                                      TAO_EC_QOS_Info&,
-                                      CORBA::Environment&)
+TAO_EC_Timeout_Filter::filter_nocopy (RtecEventComm::EventSet &event,
+                                      TAO_EC_QOS_Info &qos_info,
+                                      CORBA::Environment &ACE_TRY_ENV)
 {
+  if (qos_info.timer_id_ == this->id_
+      && this->parent () != 0)
+    {
+      this->parent ()->push_nocopy (event, qos_info, ACE_TRY_ENV);
+      return 1;
+    }
   return 0;
 }
 
 void
-TAO_EC_Timeout_Filter::push (const RtecEventComm::EventSet& event,
-                          TAO_EC_QOS_Info& qos_info,
-                          CORBA::Environment& ACE_TRY_ENV)
+TAO_EC_Timeout_Filter::push (const RtecEventComm::EventSet&,
+                          TAO_EC_QOS_Info&,
+                          CORBA::Environment&)
 {
-  if (this->parent () != 0)
-    this->parent ()->push (event, qos_info, ACE_TRY_ENV);
 }
 
 void
-TAO_EC_Timeout_Filter::push_nocopy (RtecEventComm::EventSet& event,
-                                 TAO_EC_QOS_Info& qos_info,
-                                 CORBA::Environment& ACE_TRY_ENV)
+TAO_EC_Timeout_Filter::push_nocopy (RtecEventComm::EventSet&,
+                                    TAO_EC_QOS_Info&,
+                                    CORBA::Environment&)
 {
-  if (this->parent () != 0)
-    this->parent ()->push_nocopy (event, qos_info, ACE_TRY_ENV);
 }
 
 void
 TAO_EC_Timeout_Filter::clear (void)
 {
+  if (this->type_ == ACE_ES_EVENT_DEADLINE_TIMEOUT)
+    {
+      TAO_EC_Timeout_Generator *tg =
+        this->event_channel_->timeout_generator ();
+
+      tg->cancel_timer (this->qos_info_,
+                        this->id_);
+
+      ACE_Time_Value tv_interval;
+      ORBSVCS_Time::TimeT_to_Time_Value (tv_interval, this->period_);
+      ACE_Time_Value tv_delta = tv_interval;
+
+      this->id_ =
+        tg->schedule_timer (this,
+                            tv_delta,
+                            tv_interval);
+    }
 }
 
 CORBA::ULong
