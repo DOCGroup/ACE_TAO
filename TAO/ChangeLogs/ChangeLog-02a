@@ -1,3 +1,26 @@
+Fri Apr 19 16:43:34 2002  Dmitry Goldshtain <dmitry@goldshtain.com>
+
+	* tao/PICurrent.cpp (copy):
+
+	  Mark the destination PICurrent dirty upon shallow copying a
+	  source PICurrent.  Fixes a problem where a RSC->TSC->RSC
+	  sequence of shallow copies didn't work.  For example, the
+	  following sequence of operations didn't work:
+
+	  - ServerRequestInterceptor::receive_request_service_contexts()
+		- ServerRequestInfo::set_slot()  -- set RSC
+		- RSC->TSC shallow copy 
+	  - servant implementation invokes method on another server
+		- TSC->RSC shallow copy
+		- ClientRequestInterceptor::send_request()
+			- ClientRequestInfo::get_slot()  --- FAILS!
+
+	* tao/PICurrent.inl (slot_table):
+
+	  If the logically copied slot table pointer is not zero, then
+	  return a reference to that table.  This is part of the above
+	  fix.
+
 Fri Apr 19 13:30:00 2002  Dan Troesser <troesser_d@ociweb.com>
         * docs/Options.html
 
@@ -11,8 +34,7 @@ Fri Apr 19 12:13:17 2002  Ossama Othman  <ossama@uci.edu>
 	  Include "ace/OS.h" to pull in "ACE_OS" methods.  Necessitated by
 	  recent inter-header dependency reductions.
 
-	* tests/Smart_Proxies/Collocation/Smart_Proxy_Impl.h
-	  (TAO_Diamond_Top_Default_Proxy_Factory):
+	* tests/Smart_Proxies/Collocation/Smart_Proxy_Impl.h:
 
 	  Include "ace/svc_export.h" to pull definition of ACE_Svc_Export
 	  macro.
