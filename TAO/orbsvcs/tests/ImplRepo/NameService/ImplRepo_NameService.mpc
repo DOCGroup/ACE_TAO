@@ -1,0 +1,4 @@
+project(ImplRepo NameService) : namingexe {
+  exename  = test
+}
+

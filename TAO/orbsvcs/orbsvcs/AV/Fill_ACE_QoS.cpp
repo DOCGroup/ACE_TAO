@@ -3,6 +3,8 @@
 
 #include "Fill_ACE_QoS.h"
 
+#if defined (ACE_HAS_RAPI) || defined (ACE_HAS_WINSOCK2_GQOS)
+
 ACE_RCSID(QOS, Fill_ACE_QoS,"$Id$")
 
 const iovec Fill_ACE_QoS::iov_ = {0,0};
@@ -84,3 +86,5 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, ACE_Flow_Spec *, AC
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_CString, ACE_Flow_Spec *, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, ACE_Flow_Spec *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#endif /* ACE_HAS_RAPI || ACE_HAS_WINSOCK2_GQOS */

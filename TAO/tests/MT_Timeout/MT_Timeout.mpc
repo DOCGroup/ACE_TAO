@@ -1,0 +1,18 @@
+project: messaging {
+  Source_Files {
+    Sleep_Service.cpp
+    Server_Task.cpp
+    server.cpp
+  }
+}
+
+project(client): messaging {
+  exename  = client
+
+  Source_Files {
+    TestC.cpp
+    Client_Task.cpp
+    client.cpp
+  }
+}
+

@@ -1,0 +1,178 @@
+project(TAO_IDL_EXE) : aceexe, taoversion {
+  exename   = tao_idl
+  libs     += TAO_IDL_BE TAO_IDL_FE
+  includes += include be_include fe
+  install   = ../../bin
+  libflags += TAO_AS_STATIC_LIBS
+  depends  += TAO_IDL_BE TAO_IDL_FE
+  idlpreprocessor = 1
+
+  Source_Files {
+    tao_idl.cpp
+    driver/drv_init.cpp
+    driver/drv_private.cpp
+    driver/drv_args.cpp
+    driver/drv_preproc.cpp
+  }
+
+  Header_Files {
+    include/drv_extern.h
+    include/drv_private.h
+  }
+}
+
+
+project(TAO_IDL_BE) : acelib, taoversion {
+  sharedname = TAO_IDL_BE
+  libs      += TAO_IDL_FE
+  includes  += include be_include fe
+  dllflags   = TAO_IDL_BE_BUILD_DLL
+  libflags  += TAO_AS_STATIC_LIBS
+  depends   += TAO_IDL_FE
+
+  Source_Files {
+    be/be_array.cpp
+    be/be_argument.cpp
+    be/be_attribute.cpp
+    be/be_constant.cpp
+    be/be_enum.cpp
+    be/be_enum_val.cpp
+    be/be_exception.cpp
+    be/be_expression.cpp
+    be/be_factory.cpp
+    be/be_field.cpp
+    be/be_global.cpp
+    be/be_interface.cpp
+    be/be_interface_strategy.cpp
+    be/be_interface_fwd.cpp
+    be/be_valuetype.cpp
+    be/be_valuetype_fwd.cpp
+    be/be_module.cpp
+    be/be_native.cpp
+    be/be_operation.cpp
+    be/be_operation_strategy.cpp
+    be/be_predefined_type.cpp
+    be/be_root.cpp
+    be/be_sequence.cpp
+    be/be_string.cpp
+    be/be_structure.cpp
+    be/be_type.cpp
+    be/be_typedef.cpp
+    be/be_union.cpp
+    be/be_union_branch.cpp
+    be/be_union_label.cpp
+    be/be_generator.cpp
+    be/be_produce.cpp
+    be/be_helper.cpp
+    be/be_codegen.cpp
+    be/be_sunsoft.cpp
+    be/be_decl.cpp
+    be/be_scope.cpp
+    be/be_stream_factory.cpp
+    be/be_visitor_factory.cpp
+    be/be_visitor.cpp
+    be/be_visitor_ami_pre_proc.cpp
+    be/be_visitor_amh_pre_proc.cpp
+    be/be_visitor_argument.cpp
+    be/be_visitor_array.cpp
+    be/be_visitor_attribute.cpp
+    be/be_visitor_constant.cpp
+    be/be_visitor_context.cpp
+    be/be_visitor_decl.cpp
+    be/be_visitor_enum.cpp
+    be/be_visitor_exception.cpp
+    be/be_visitor_field.cpp
+    be/be_visitor_interface.cpp
+    be/be_visitor_interface_fwd.cpp
+    be/be_visitor_valuetype.cpp
+    be/be_visitor_valuetype_fwd.cpp
+    be/be_visitor_module.cpp
+    be/be_visitor_operation.cpp
+    be/be_visitor_root.cpp
+    be/be_visitor_scope.cpp
+    be/be_visitor_sequence.cpp
+    be/be_visitor_structure.cpp
+    be/be_visitor_typecode.cpp
+    be/be_visitor_typedef.cpp
+    be/be_visitor_union.cpp
+    be/be_visitor_union_branch.cpp
+    be/be_tmplinst.cpp
+  }
+
+  Header_Files {
+    be_include
+  }
+}
+
+
+project(TAO_IDL_FE) : acelib, taoversion {
+  sharedname = TAO_IDL_FE
+  includes  += include fe
+  dllflags   = TAO_IDL_FE_BUILD_DLL
+  libflags  += TAO_AS_STATIC_LIBS
+
+  Source_Files {
+    fe/fe_declarator.cpp
+    fe/fe_lookup.cpp
+    fe/fe_private.cpp
+    fe/fe_init.cpp
+    fe/fe_extern.cpp
+    fe/fe_global.cpp
+    fe/fe_interface_header.cpp
+    fe/fe_tmplinst.cpp
+    fe/y.tab.cpp
+    fe/lex.yy.cpp
+    ast/ast_array.cpp
+    ast/ast_argument.cpp
+    ast/ast_attribute.cpp
+    ast/ast_check.cpp
+    ast/ast_concrete_type.cpp
+    ast/ast_constant.cpp
+    ast/ast_decl.cpp
+    ast/ast_enum.cpp
+    ast/ast_enum_val.cpp
+    ast/ast_exception.cpp
+    ast/ast_expression.cpp
+    ast/ast_factory.cpp
+    ast/ast_field.cpp
+    ast/ast_interface.cpp
+    ast/ast_interface_fwd.cpp
+    ast/ast_module.cpp
+    ast/ast_native.cpp
+    ast/ast_operation.cpp
+    ast/ast_predefined_type.cpp
+    ast/ast_root.cpp
+    ast/ast_sequence.cpp
+    ast/ast_string.cpp
+    ast/ast_structure.cpp
+    ast/ast_type.cpp
+    ast/ast_typedef.cpp
+    ast/ast_union.cpp
+    ast/ast_union_branch.cpp
+    ast/ast_union_label.cpp
+    ast/ast_generator.cpp
+    ast/ast_redef.cpp
+    ast/ast_recursive.cpp
+    ast/ast_visitor.cpp
+    util/utl_scope.cpp
+    util/utl_stack.cpp
+    util/utl_string.cpp
+    util/utl_decllist.cpp
+    util/utl_labellist.cpp
+    util/utl_namelist.cpp
+    util/utl_exceptlist.cpp
+    util/utl_strlist.cpp
+    util/utl_list.cpp
+    util/utl_exprlist.cpp
+    util/utl_err.cpp
+    util/utl_indenter.cpp
+    util/utl_identifier.cpp
+    util/utl_idlist.cpp
+    util/utl_global.cpp
+    narrow/narrow.cpp
+  }
+
+  Header_Files {
+    include
+  }
+}

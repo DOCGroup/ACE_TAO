@@ -63,7 +63,7 @@ public:
   //@}
 
   /// Return the list of mechanism types associated with this policy.
-  virtual Security::MechanismTypeList mechanisms (
+  virtual Security::MechanismTypeList* mechanisms (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
