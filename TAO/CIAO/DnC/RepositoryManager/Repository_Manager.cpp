@@ -59,24 +59,26 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   try
     {
-      DOMDocument* doc = CIAO::Config_Handler::Utils::
-                         create_document (plan_url);
-      CIAO::Config_Handler::Plan_Handler plan_handler (doc,
+      DOMBuilder* parser = CIAO::Config_Handler::Utils::
+                           create_parser (plan_url);
+      DOMDocument* dup_doc = parser->parseURI (plan_url);
+      auto_ptr<DOMBuilder> cleanup_parser (parser);
+      CIAO::Config_Handler::Plan_Handler plan_handler (dup_doc,
                                                 DOMNodeFilter::SHOW_ELEMENT |
                                                 DOMNodeFilter::SHOW_TEXT);
       Deployment::DeploymentPlan plan;
       plan_handler.process_plan (plan);
-      //Deployment::DnC_Dump::dump (plan);
+      Deployment::DnC_Dump::dump (plan);
       Deployment::PackageConfiguration* pc;
       CIAO::RepositoryManager_Impl rep_impl;
       rep_impl.installPackage ("PC", package_url);
       pc = rep_impl.findPackageByName ("PC");
-      //Deployment::DnC_Dump::dump (*pc);
+      Deployment::DnC_Dump::dump (*pc);
 
-      /**********************************************************
-       Pass the parsed plan to the Execution Manager to start the
-       Deployment Process.
-      ************************************************************/
+      /*
+
+       // Pass the parsed plan to the Execution Manager to start the
+       // Deployment Process.
       CORBA::Object_var obj = orb->string_to_object (exec_ior
                                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -135,6 +137,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Executor: destroy the manager....."));
       exec_mgr->destroyManager (dapp_mgr.in ());
+      */
       ACE_DEBUG ((LM_DEBUG, "[success]\n"));
 
     }

@@ -28,6 +28,7 @@ using xercesc::XMLURL;
 using xercesc::DOMNodeIterator;
 using xercesc::DOMNode;
 using xercesc::DOMText;
+using xercesc::DOMBuilder;
 using xercesc::XMLString;
 using xercesc::DOMDocument;
 using Config_Handler::XStr;
@@ -80,8 +81,11 @@ namespace CIAO {
       static CORBA::Octet parse_octet (DOMNodeIterator * iter);
       // Parse octect type
 
-      static DOMDocument * create_document (const char * url);
+      static DOMDocument* create_document (const char * url);
       // Create a document from the URL
+
+      static DOMBuilder* create_parser (const char * url);
+      // Create a parser from the URL
 
       static DOMNodeIterator * parse_href_tag (XMLURL xml_url,
                                                DOMDocument * doc);
