@@ -56,51 +56,12 @@ public:
 
       // Emitting code for arguments of an operation. No distinction between
       // headers, inlines, stubs.
-      TAO_ARGUMENT_ARGLIST_CH,                  // argument in op signature of
-      // ... client header
-      TAO_ARGUMENT_ARGLIST_SH,                  // argument in op signature of
-      // ... server header
-      TAO_ARGUMENT_INVOKE_ARG_LIST,
-
-      TAO_ARGUMENT_INTERCEPTORS_ARGLIST_CH,     // ... client header
       TAO_ARGUMENT_INTERCEPTORS_ARGLIST_CS,     // ... client source
-      TAO_ARGUMENT_INTERCEPTORS_INFO_ARGLIST_CH,    // ... client header
       TAO_ARGUMENT_INTERCEPTORS_INFO_ARGLIST_CS,    // ... client source
-      TAO_ARGUMENT_INTERCEPTORS_PARAMLIST,      // ... client source
-      TAO_ARGUMENT_INTERCEPTORS_RESULT,         // ... client source
-      TAO_ARGUMENT_INTERCEPTORS_ARGLIST_SH,     // ... server header
       TAO_ARGUMENT_INTERCEPTORS_ARGLIST_SS,     // ... server source
       TAO_ARGUMENT_INTERCEPTORS_INFO_ARGLIST_SS,    // ... server source
-      TAO_ARGUMENT_ARGLIST_OTHERS,              // ... in other cases
-      TAO_ARGUMENT_PRE_INVOKE_CS,               // preprocessing of argument
-      // variable before passing to
-      // do_static_call  (in stub)
-      TAO_ARGUMENT_INVOKE_CS,                   // passing argument variable to do_static_call
-      TAO_ARGUMENT_POST_INVOKE_CS,              // postprocessing of argument
-      // variable after do_static_call
-      TAO_ARGUMENT_VARDECL_SS,                  // declaration of argument
-      // variable in skeleton (server)
-      TAO_ARGUMENT_MARSHAL_SS,                  // passing argument node to the
-      TAO_ARGUMENT_DEMARSHAL_SS,                // demarshal and marshal
-      // operations
-      TAO_ARGUMENT_UPCALL_SS,                   // passing argument variable to upcall
       TAO_ARGUMENT_COLLOCATED_UPCALL_SS,        // passing argument
       // variable to upcall
-
-      // emitting code for attributes.
-      TAO_ATTRIBUTE_BASE_PROXY_IMPL_CH,         // Proxy Impl Related Attribute visitors.
-
-      TAO_ATTRIBUTE_PROXY_IMPL_XH,
-
-      TAO_ATTRIBUTE_REMOTE_PROXY_IMPL_CS,
-      TAO_ATTRIBUTE_THRU_POA_PROXY_IMPL_SS,
-      TAO_ATTRIBUTE_DIRECT_PROXY_IMPL_SS,
-
-      TAO_ATTRIBUTE_SMART_PROXY_CH,             // in client header
-      TAO_ATTRIBUTE_SMART_PROXY_CS,             // in client source
-      TAO_ATTRIBUTE_INTERCEPTORS_CS,            // in client source
-      TAO_ATTRIBUTE_INTERCEPTORS_SH,            // in server header
-      TAO_ATTRIBUTE_INTERCEPTORS_SS,            // in server source
 
       // Emitting code for array defn.
       TAO_ARRAY_CH,
@@ -108,7 +69,6 @@ public:
       // Emitting code for exceptions.
       TAO_EXCEPTION_CTOR_CH,
       TAO_EXCEPTION_CTOR_CS,
-      TAO_EXCEPTION_CTOR_ASSIGN_CS,
 
       // Emitting code for the interface.
       TAO_INTERFACE_CH,
@@ -118,24 +78,8 @@ public:
       TAO_INTERFACE_INTERCEPTORS_CS,
       TAO_INTERFACE_INTERCEPTORS_SH,
       TAO_INTERFACE_INTERCEPTORS_SS,
-      TAO_INTERFACE_PROXY_BROKERS_CH,
-      TAO_INTERFACE_PROXY_BROKERS_CS,
-      TAO_INTERFACE_PROXY_BROKERS_SH,
-      TAO_INTERFACE_PROXY_BROKERS_SS,
-      TAO_INTERFACE_BASE_PROXY_BROKER_CH,
-      TAO_INTERFACE_BASE_PROXY_BROKER_CS,
-      TAO_INTERFACE_REMOTE_PROXY_BROKER_CH,
-      TAO_INTERFACE_REMOTE_PROXY_BROKER_CS,
-      TAO_INTERFACE_STRATEGIZED_PROXY_BROKER_SH,
-      TAO_INTERFACE_STRATEGIZED_PROXY_BROKER_SS,
-      TAO_INTERFACE_PROXY_IMPLS_CH,
-      TAO_INTERFACE_PROXY_IMPLS_CS,
 
-      TAO_INTERFACE_PROXY_IMPLS_SH,
-
-      TAO_INTERFACE_PROXY_IMPLS_SS,
       TAO_INTERFACE_BASE_PROXY_IMPL_CH,
-      TAO_INTERFACE_BASE_PROXY_IMPL_CS,
       TAO_INTERFACE_REMOTE_PROXY_IMPL_CH,
       TAO_INTERFACE_REMOTE_PROXY_IMPL_CS,
       TAO_INTERFACE_THRU_POA_PROXY_IMPL_SH,
@@ -144,7 +88,6 @@ public:
       TAO_INTERFACE_DIRECT_PROXY_IMPL_SS,
 
       // Emitting code for the AMH ResponseHandlers.
-      TAO_INTERFACE_AMH_RH_CH,
       TAO_INTERFACE_AMH_RH_SH,
       TAO_INTERFACE_AMH_RH_SS,
 
@@ -152,14 +95,6 @@ public:
       TAO_VALUETYPE_OBV_CH,                 // OBV_ class
       TAO_VALUETYPE_OBV_CI,
       TAO_VALUETYPE_OBV_CS,
-      TAO_VALUETYPE_COLLOCATED_SH,
-      TAO_VALUETYPE_COLLOCATED_SS,
-      TAO_VALUETYPE_MARSHAL_CH,     // the actual generation of CDR in header
-      TAO_VALUETYPE_MARSHAL_CS,     // and the implementation, activated from:
-      TAO_VALUETYPE_INIT_CH,        // _init -related generation
-      TAO_VALUETYPE_INIT_CI,        //
-      TAO_VALUETYPE_INIT_CS,        //
-      TAO_VALUETYPE_INIT_ARGLIST_CH,// unfortunately there are no CI and CS
 
       TAO_EVENTTYPE_OBV_CH,
       TAO_EVENTTYPE_OBV_CS,
@@ -173,38 +108,14 @@ public:
       TAO_OPERATION_CH,                       // in client header
       TAO_OPERATION_CS,                       // in client stubs
 
-      TAO_OPERATION_BASE_PROXY_IMPL_CH,       // Proxy_Impl operation gen.
-      // in client header
-      TAO_OPERATION_PROXY_IMPL_XH,
-      TAO_OPERATION_REMOTE_PROXY_IMPL_CS,
-      TAO_OPERATION_THRU_POA_PROXY_IMPL_SS,
-      TAO_OPERATION_DIRECT_PROXY_IMPL_SS,
-
-      TAO_OPERATION_SMART_PROXY_CH,           // in client header
-      TAO_OPERATION_SMART_PROXY_CS,           // in client stubs
-      TAO_OPERATION_INTERCEPTORS_CH,          // in client header
-      TAO_OPERATION_INTERCEPTORS_CS,          // in client source
-      TAO_OPERATION_INTERCEPTORS_SH,          // in server header
-      TAO_OPERATION_INTERCEPTORS_SS,          // in server source
-
-      TAO_OPERATION_RETTYPE_CH,               // return type in client header op
-      // signature
-      TAO_OPERATION_INTERCEPTORS_INFO_RETTYPE_CH, // return type in client header op
-      // signature for RequestInfo class
-      TAO_OPERATION_RETTYPE_SH,               // return type in server header op
-      // signature
-      TAO_OPERATION_RETTYPE_IS,               // return type in client header op
-      TAO_OPERATION_RETTYPE_OTHERS,           // ... in other cases
-
       TAO_OPERATION_ARGLIST_CH,               // parameter list in op signature
-      // ... for client header
       TAO_OPERATION_ARGLIST_SH,               // ... for server header
+
       TAO_OPERATION_INTERCEPTORS_ARGLIST_CH,  // private member list list for request info
       TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_CH,   // private member list list for request info
       TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_CS,   // arglist for request info obj instantiation
       TAO_OPERATION_INTERCEPTORS_ARGLIST_CS,   // private member list list for request info                                                                         // ... for client source
       TAO_OPERATION_INTERCEPTORS_PARAMLIST,   // create the paramlist on demand
-      TAO_OPERATION_INTERCEPTORS_RESULT,      // create the result on demand
       TAO_OPERATION_INTERCEPTORS_EXCEPTLIST,  // create the exceptionlist on demand
       TAO_OPERATION_INTERCEPTORS_ARGLIST_SH,  // private member list list for request info
       TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SH,   // private member list list for request info
@@ -220,36 +131,21 @@ public:
       TAO_OPERATION_ARGLIST_IH,               // ... for implementation header
       TAO_OPERATION_ARGLIST_IS,               // ... for implementation header
       TAO_OPERATION_ARGLIST_COLLOCATED_SH,    // ... for collocated server
-      TAO_OPERATION_ARGLIST_OTHERS,           // ... for all other cases
-      TAO_OPERATION_RETVAL_DECL_CS,           // return value variable declaration
-      TAO_OPERATION_RETVAL_PRE_INVOKE_CS,     // preprocessing for return value
       // before sending over the wire
       TAO_OPERATION_ARG_PRE_INVOKE_CS,        // preprocessing of arguments
-      //   before do_static_call
-      TAO_OPERATION_RETVAL_INVOKE_CS,         // passing the return type
       //   variable to do_static_call
       TAO_OPERATION_ARG_INVOKE_CS,            // passing argument variable to do_static_call
       //   after do_static_call
       TAO_OPERATION_ARG_POST_INVOKE_CS,       // processing of arg after do_static_call
-      TAO_OPERATION_RETVAL_RETURN_CS,         // returning the return type
-      // variable
-      TAO_OPERATION_EXCEPTLIST_CS,            // generating the exception list
-      TAO_OPERATION_RETVAL_DECL_SS,           // return type decl in skeleton
       TAO_OPERATION_ARG_DECL_SS,              // argument decl in skeleton
       TAO_OPERATION_ARG_DEMARSHAL_SS,         //   and argument variables to the
-      TAO_OPERATION_RETVAL_MARSHAL_SS,        //   marshal and demarshal operations
       TAO_OPERATION_ARG_MARSHAL_SS,
-      TAO_OPERATION_RETVAL_ASSIGN_SS,         // assigning to return type
       // variable
       TAO_OPERATION_ARG_UPCALL_SS,            // variables to upcall
       TAO_OPERATION_COLLOCATED_ARG_UPCALL_SS, // variables to upcall for
       // collocated op
-      TAO_OPERATION_ARG_POST_UPCALL_SS,       //   return and argument variables
       TAO_OPERATION_INTERCEPTORS_ARG_INFO_CS, // Interceptor args
       TAO_OPERATION_INTERCEPTORS_ARG_INFO_SS, // Interceptor args
-      TAO_OPERATION_RESULT_SS,                // XXXASG rm?
-      TAO_OPERATION_TIE_SH,
-      TAO_OPERATION_TIE_SI,
 
       TAO_OBV_OPERATION_ARGLIST_CH,           // parameter list in obv op signature
       // ... for client header
@@ -257,7 +153,6 @@ public:
       TAO_OBV_OPERATION_ARGLIST_SH,           // ... for server header
       TAO_OBV_OPERATION_ARGLIST_IH,           // ... for implementation header
       TAO_OBV_OPERATION_ARGLIST_IS,           // ... for implementation header
-      TAO_OBV_OPERATION_ARGLIST_COLLOCATED_SH,   // ... for collocated server
       TAO_OBV_OPERATION_ARGLIST_OTHERS,          // ... for all other cases
       TAO_OBV_OPERATION_ARGLIST_IMPL_CH,      // for implementations, e.g. exception holders
       TAO_OBV_OPERATION_ARGLIST_IMPL_CS,      // for implementations, e.g. exception holders
@@ -271,10 +166,6 @@ public:
       TAO_AMI_EXCEPTION_HOLDER_VALUETYPE_CH,
       TAO_AMI_EXCEPTION_HOLDER_VALUETYPE_CS,
       TAO_AMI_EXCEPTION_HOLDER_RAISE_OPERATION_CS,
-
-      // AMH next state generation
-      TAO_OPERATION_AMH_RH_SH,
-      TAO_OPERATION_AMH_RH_SS,
 
       // Emitting code for root.
       TAO_ROOT_CH,
@@ -295,23 +186,12 @@ public:
 
       // Emitting code for sequence base type.
       TAO_SEQUENCE_BASE_CH,
-      TAO_SEQUENCE_BASE_CI,
-      TAO_SEQUENCE_BASE_CS,
 
       // For special sequnce elements.
       TAO_SEQELEM_RETTYPE_CH,
-      TAO_SEQELEM_RETTYPE_CI,
-      TAO_SEQELEM_RETTYPE_CS,
 
       // For sequence buffer types.
       TAO_SEQUENCE_BUFFER_TYPE_CH,
-      TAO_SEQUENCE_BUFFER_TYPE_CI,
-      TAO_SEQUENCE_BUFFER_TYPE_CS,
-
-      // Emitting code for the discriminant.
-      TAO_UNION_DISCTYPEDEFN_CH,
-      TAO_UNION_DISCTYPEDEFN_CI,
-      TAO_UNION_DISCTYPEDEFN_CS,
 
       // Emitting code for the public members of the union.
       TAO_UNION_PUBLIC_CH,
@@ -322,13 +202,6 @@ public:
 
       // Emitting code for private members of the union.
       TAO_UNION_PRIVATE_CH,
-
-      // Emitting code for typecodes.
-      TAO_TYPECODE_DECL,
-      TAO_TYPECODE_DEFN,
-
-      // Always must be last.
-      TAO_UNKNOWN
     };
 
   enum LOOKUP_STRATEGY
@@ -356,7 +229,6 @@ public:
       TAO_TC_DEFN_TYPECODE_NESTED,            // nested tc
 
       TAO_TC_DEFN_ENCAPSULATION,              // encapsulation
-      TAO_AMI_HANDLER_TC_DEFN_ENCAPSULATION,  // encapsulation
 
       TAO_TC_DEFN_SCOPE,                      // scope
       TAO_TC_DEFN_TC_SIZE,                    // tc size computation

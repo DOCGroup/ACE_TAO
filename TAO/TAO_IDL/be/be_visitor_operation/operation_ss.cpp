@@ -149,7 +149,6 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
 
   // Declare a return type variable.
   be_visitor_context ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_SS);
   be_visitor_operation_rettype_vardecl_ss ord_visitor (&ctx);
 
   // Do we have any arguments in the operation that needs marshalling?
@@ -297,7 +296,6 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
 
   // Make the upcall and assign to the return val.
   ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_ASSIGN_SS);
   be_visitor_operation_rettype_assign_ss ora_visitor (&ctx);
 
   if (bt->accept (&ora_visitor) == -1)
@@ -379,7 +377,6 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
       // causing any problems.
       // Generate the return type mapping (same as in the header file)
       ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_OPERATION_RETTYPE_OTHERS);
       be_visitor_operation_rettype oro_visitor (&ctx);
 
       if (bt->accept (&oro_visitor) == -1)
@@ -697,7 +694,6 @@ be_visitor_operation_ss::gen_marshal_params (be_operation *node,
     {
       // Demarshal the return val and each inout and out argument.
       ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_MARSHAL_SS);
       ctx.sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
       be_visitor_operation_rettype_marshal_ss orm_visitor (&ctx);
 

@@ -172,31 +172,6 @@ be_visitor_operation_arglist::visit_argument (be_argument *node)
   // Set new scope.
   ctx.scope (intf);
 
-  switch (this->ctx_->state ())
-    {
-    case TAO_CodeGen::TAO_OPERATION_ARGLIST_CH:
-      ctx.state (TAO_CodeGen::TAO_ARGUMENT_ARGLIST_CH);
-      break;
-    case TAO_CodeGen::TAO_OPERATION_ARGLIST_OTHERS:
-    case TAO_CodeGen::TAO_OPERATION_ARGLIST_SH:
-    case TAO_CodeGen::TAO_OPERATION_ARGLIST_IH:
-    case TAO_CodeGen::TAO_OPERATION_ARGLIST_IS:
-    case TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XH:
-    case TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XS:
-    case TAO_CodeGen::TAO_OPERATION_ARGLIST_BASE_PROXY_IMPL_CH:
-    case TAO_CodeGen::TAO_OPERATION_ARGLIST_COLLOCATED_SH:
-      ctx.state (TAO_CodeGen::TAO_ARGUMENT_ARGLIST_OTHERS);
-      break;
-    default:
-      {
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%N:%l) be_visitor_arglist::"
-                           "visit_argument - "
-                           "Bad context\n"),
-                          -1);
-      }
-    }
-
   // Create a visitor.
   be_visitor_args_arglist visitor (&ctx);
 

@@ -75,7 +75,6 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
   if (be_global->tc_support ())
     {
       be_visitor_context ctx (*this->ctx_);
-      ctx.state (TAO_CodeGen::TAO_TYPECODE_DEFN);
       ctx.sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE);
       be_visitor_typecode_defn tc_visitor (&ctx);
 
@@ -370,7 +369,6 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
 
   // Generate the _init-related code.
   be_visitor_context ctx (*this->ctx_);
-  ctx.state (TAO_CodeGen::TAO_VALUETYPE_INIT_CS);
   be_visitor_valuetype_init_cs vi_visitor (&ctx);
 
   if (vi_visitor.visit_valuetype (node) == -1)

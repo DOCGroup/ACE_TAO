@@ -56,7 +56,6 @@ be_visitor_operation_is::visit_operation (be_operation *node)
     }
 
   be_visitor_context ctx (*this->ctx_);
-  ctx.state (TAO_CodeGen::TAO_OPERATION_RETTYPE_OTHERS);
   be_visitor_operation_rettype oro_visitor (&ctx);
 
   if (bt->accept (&oro_visitor) == -1)

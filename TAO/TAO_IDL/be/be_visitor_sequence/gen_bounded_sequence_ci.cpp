@@ -97,7 +97,6 @@ be_visitor_sequence_ci::gen_bounded_sequence (be_sequence *node)
 
 
   be_visitor_context ctx (*this->ctx_);
-  ctx.state (TAO_CodeGen::TAO_SEQUENCE_BASE_CI);
   be_visitor_sequence_base visitor (&ctx);
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl

@@ -62,7 +62,7 @@ be_visitor_union_cdr_op_ch::visit_union (be_union *node)
 
 
   // Set the substate as generating code for the types defined in our scope.
-  this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_SCOPE);
+  this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_SCOPE);
 
   if (this->visit_scope (node) == -1)
     {

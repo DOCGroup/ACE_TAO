@@ -92,9 +92,7 @@ be_visitor_sequence_base::visit_sequence (be_sequence *node)
 int
 be_visitor_sequence_base::visit_interface (be_interface *node)
 {
-
   return this->visit_node (node);
-
 }
 
 int

@@ -256,7 +256,6 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
     {
       ctx = *this->ctx_;
       // Generate strategized proxy broker.
-      ctx.state (TAO_CodeGen::TAO_INTERFACE_STRATEGIZED_PROXY_BROKER_SH);
       be_visitor_interface_strategized_proxy_broker_sh ispb_visitor (&ctx);
 
       if (node->accept (&ispb_visitor) == -1)

@@ -132,7 +132,6 @@ be_visitor_interface_interceptors_cs::gen_abstract_ops_helper (
           be_visitor_interface::add_abstract_op_args (op,
                                                       new_op);
           new_op.set_name (base);
-          ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_CS);
           be_visitor_operation_interceptors_cs op_visitor (&ctx);
           op_visitor.visit_operation (&new_op);
 
