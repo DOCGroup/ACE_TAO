@@ -38,7 +38,7 @@ class Notify_Service
   int parse_args (int argc, char *argv []);
   // Parses the command line arguments.
 
-  void startup (int argc, char *argv[],
+  int startup (int argc, char *argv[],
                CORBA::Environment &ACE_TRY_ENV);
   // Initializes the Service.
   // Returns 0 on success, -1 on error.
@@ -55,11 +55,11 @@ class Notify_Service
   CosNotifyChannelAdmin::EventChannelFactory_var obj;
   // temp hack.
 protected:
-  void init_ORB (int& argc, char *argv [],
-                 CORBA::Environment &ACE_TRY_ENV);
+  int init_ORB (int& argc, char *argv [],
+                CORBA::Environment &ACE_TRY_ENV);
   // initialize the ORB.
 
-  void resolve_naming_service (CORBA::Environment &ACE_TRY_ENV);
+  int resolve_naming_service (CORBA::Environment &ACE_TRY_ENV);
   // Resolve the naming service.
 
   // = Data members
