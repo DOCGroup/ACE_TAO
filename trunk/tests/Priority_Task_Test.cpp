@@ -121,15 +121,20 @@ main (int, char *[])
   // NOTE:  on Solaris, for example, this requests the min FIFO
   // priority.  But, this test doesn't use the Realtime scheduling
   // class.  The FIFO priorities are used because they're all nonnegative.
-  int priority = ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
-                                                 ACE_SCOPE_THREAD);
+
+  ACE_Sched_Priority_Iterator priority (ACE_SCHED_FIFO,
+					ACE_SCOPE_THREAD);
 
   for (i = 0; i < ACE_MAX_ITERATIONS; i++)
     {
-      tasks[i].open ((void *) &priority);
-      priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
-                                                  priority,
-                                                  ACE_SCOPE_THREAD);
+      int p = priority.priority ();
+      tasks[i].open ((void *) &p);
+
+      // If there are more priorities get the next one...
+      if (priority.more ())
+	{
+	  priority.next ();
+	}
     }
 
   ACE_DEBUG ((LM_DEBUG, "(%t) %d tasks spawned, wait for them to exit . . .\n",

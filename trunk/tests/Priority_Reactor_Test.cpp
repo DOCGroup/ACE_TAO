@@ -121,7 +121,9 @@ Read_Handler::handle_input (ACE_HANDLE h)
                     "Read_Handler::handle_input"));
       waiting_--;
       if (waiting_ == 0)
-        ACE_Reactor::instance()->end_event_loop();
+	{
+	  ACE_Reactor::instance()->end_event_loop();
+	}
       
       ACE_DEBUG ((LM_DEBUG, 
                   "(%P|%t) Read_Handler::handle_input closing down\n"));
@@ -254,7 +256,7 @@ main (int argc, char *argv[])
 	ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "thread create failed"));
     }
 #elif !defined (ACE_WIN32) && !defined (VXWORKS) 
-  for (i = 0; i < nchildren; ++i)
+  for (i = 0; i < opt_nchildren; ++i)
     {
       switch (ACE_OS::fork ("child"))
 	{
@@ -286,7 +288,7 @@ main (int argc, char *argv[])
 #if defined (ACE_HAS_THREADS)
   ACE_Thread_Manager::instance ()->wait ();
 #elif !defined (ACE_WIN32) && !defined (VXWORKS)
-  for (i = 0; i < nchildren; ++i)
+  for (i = 0; i < opt_nchildren; ++i)
     {
       pid_t pid = ACE_OS::wait();
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) child %d terminated\n", pid));
@@ -325,4 +327,3 @@ template class ACE_Svc_Tuple<Write_Handler>;
 #pragma instantiate ACE_Map_Entry<int,ACE_Svc_Tuple<Write_Handler>*>
 #pragma instantiate ACE_Svc_Tuple<Write_Handler>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
