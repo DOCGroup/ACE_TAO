@@ -148,7 +148,7 @@ Server<Servant>::register_name (void)
   bindName[0].id = CORBA::string_dup (name);
 
   // (re)Bind the object.
-  ACE_TRY
+  ACE_TRY_NEW_ENV
     {
       CORBA::Object_var object = servant_._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -167,7 +167,7 @@ Server<Servant>::register_name (void)
       ACE_TRY_ENV.clear ();
     }
   ACE_ENDTRY;
-  ACE_CHECK;
+
 
 }
 
