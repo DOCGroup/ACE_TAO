@@ -1,3 +1,29 @@
+Thu Jun 26 16:31:51 2003  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* ace/QtReactor.h:
+	* ace/QtReactor.cpp:
+
+	  The QtReactor works by semi-unifying the Qt Event loop with the
+	  Reactor event loop.  Most of the time, the Qt Event loop is the
+	  dominant loop, but occasionally, when wait_for_multiple_events
+	  gets called, the reactor loop becomes the dominant loop.
+
+	  Previous QtReactor implementations only overloaded
+	  register_handler, caused them to never notice when an
+	  application changed the mask on a previously-registered handler,
+	  e.g., via ACE_Reactor::schedule_wakeup.  Thus, the Qt event loop
+	  never knew about the new interest or lack thereof, and didn't
+	  call it back.
+
+	  This newer version overloads ACE_Reactor::bit_ops, and tweaks
+	  the registrations with the Qt event loop according to bit_ops'
+	  arguments' mask operations.  This *should* allow us to catch
+	  every twiddling of masks, although there is no comprehensive
+	  regression test for this for any kind of reactor.
+
+	  From inspection, it appears as if the XtReactor might need
+	  similar changes.
+
 Thu Jun 26 02:22:42 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * etc/ace.doxygen:

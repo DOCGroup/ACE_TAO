@@ -15,22 +15,21 @@
 #define ACE_QTREACTOR_H
 #include "ace/pre.h"
 
-#include "ace/config-all.h"
+
+#include "ace/Select_Reactor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_HAS_QT)
-
-#include "ace/Select_Reactor.h"
 #include "ace/Map_Manager.h"
 
 // Qttoolkit specific includes.
-#include /**/ <qapplication.h>
-#include /**/ <qobject.h>
-#include /**/ <qsocketnotifier.h>
-#include /**/ <qtimer.h>
+#include <qapplication.h>
+#include <qobject.h>
+#include <qsocketnotifier.h>
+#include <qtimer.h>
 
 /**
  * @class ACE_QtReactor
@@ -60,9 +59,9 @@ class ACE_Export ACE_QtReactor : public QObject, public ACE_Select_Reactor
   void qapplication (QApplication *qapp);
 
   // = Timer operations.
-  virtual long schedule_timer (ACE_Event_Handler *event_handler,
+  virtual long schedule_timer (ACE_Event_Handler *handler,
                                const void *arg,
-                               const ACE_Time_Value &delay,
+                               const ACE_Time_Value &delay_time,
                                const ACE_Time_Value &interval);
 
   virtual int  cancel_timer (ACE_Event_Handler *handler,
@@ -102,6 +101,15 @@ class ACE_Export ACE_QtReactor : public QObject, public ACE_Select_Reactor
   virtual int QtWaitForMultipleEvents (int width,
                                        ACE_Select_Reactor_Handle_Set &wait_set,
                                        ACE_Time_Value *max_wait_time);
+
+  virtual int bit_ops (ACE_HANDLE handle,
+                       ACE_Reactor_Mask mask,
+                       ACE_Select_Reactor_Handle_Set &handle_set,
+                       int ops);
+
+  int set_enable_flag_by_mask (int flag_value, ACE_HANDLE handle, ACE_Reactor_Mask mask);
+  void create_notifiers_for_handle (ACE_HANDLE handle);
+  void destroy_notifiers_for_handle (ACE_HANDLE handle);
 
   // Wait for Qt events to occur
 
