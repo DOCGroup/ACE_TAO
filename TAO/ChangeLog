@@ -1,3 +1,14 @@
+Wed Dec 24 11:58:35 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/Buffered_AMI/client.cpp:
+	* examples/Buffered_Oneways/client.cpp:
+	* performance-tests/RTCorba/Oneways/Reliable/client.cpp:
+	* tests/AMI_Buffering/client.cpp:
+	* tests/Oneway_Buffering/client.cpp:
+	* tests/Policies/Manipulation.cpp:
+
+          All of the above needed a #include of TAOA.h.
+
 Wed Dec 24 17:10:45 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * TAO/orbsvcs/IFR_Service/Makefile.dependencies:
