@@ -8,6 +8,9 @@
 
 #define FLEX_SCANNER
 
+#if defined (HPUX) || defined (VXWORKS)
+#include "ace/OS.h"
+#endif /* HPUX || VXWORKS */
 #include <stdio.h>
 
 
