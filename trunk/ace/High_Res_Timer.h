@@ -81,6 +81,17 @@ public:
   static ACE_UINT32 global_scale_factor (void);
   // Returns the global_scale_factor.
 
+  // On Win32, QueryPerformanceFrequency is used as a base for the global
+  // scale factor. The value this returns is often too small to be usefully
+  // converted to "ticks"/second - it loses unacceptably high levels of
+  // precision. So on Win32, global_scale_factor_ is in ticks/msec, not
+  // ticks/usec as on all others.
+#if defined (ACE_WIN32)
+#  define ACE_HR_SCALE_CONVERSION (ACE_ONE_SECOND_IN_MSECS)
+#else
+#  define ACE_HR_SCALE_CONVERSION (ACE_ONE_SECOND_IN_USECS)
+#endif /* ACE_WIN32 */
+
   static int get_env_global_scale_factor (const ACE_TCHAR *env 
                                           = ACE_TEXT ("ACE_SCALE_FACTOR"));
   // Sets the global_scale_factor to the value in the <env>
