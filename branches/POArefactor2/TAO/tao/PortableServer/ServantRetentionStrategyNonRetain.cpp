@@ -356,6 +356,13 @@ namespace TAO
     {
       return 0;
     }
+
+    ::PortableServer::ServantRetentionPolicyValue
+    ServantRetentionStrategyNonRetain::type() const
+    {
+      return ::PortableServer::NON_RETAIN;
+    }
+
   }
 }
 

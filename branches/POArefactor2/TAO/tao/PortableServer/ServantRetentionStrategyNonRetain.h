@@ -152,6 +152,8 @@ namespace TAO
       virtual int unbind_using_user_id (
         const PortableServer::ObjectId &user_id);
 
+        virtual ::PortableServer::ServantRetentionPolicyValue type() const;
+
     protected:
       TAO_Root_POA *poa_;
     };

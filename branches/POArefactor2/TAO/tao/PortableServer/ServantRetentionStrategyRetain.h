@@ -143,6 +143,8 @@ namespace TAO
           ACE_THROW_SPEC ((CORBA::SystemException,
                            PortableServer::POA::WrongPolicy));
 
+      virtual ::PortableServer::ServantRetentionPolicyValue type() const;
+
     protected:
       int
       is_user_id_in_map (const PortableServer::ObjectId &id,

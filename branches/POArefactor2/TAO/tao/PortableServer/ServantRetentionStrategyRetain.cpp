@@ -1003,6 +1003,13 @@ namespace TAO
     {
       return this->active_object_map_->remaining_activations (servant);
     }
+
+    ::PortableServer::ServantRetentionPolicyValue
+    ServantRetentionStrategyRetain::type() const
+    {
+      return ::PortableServer::RETAIN;
+    }
+
   }
 }
 

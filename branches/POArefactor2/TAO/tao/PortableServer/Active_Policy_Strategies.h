@@ -39,6 +39,7 @@ namespace TAO
     class ServantRetentionStrategy;
 
     class ThreadStrategyFactory;
+    class ServantRetentionStrategyFactory;
 
     /**
      * This class stores the active policy strategies used for a certain POA.
@@ -78,6 +79,7 @@ namespace TAO
       ServantRetentionStrategy *servant_retention_strategy_;
 
       ThreadStrategyFactory *thread_strategy_factory_;
+      ServantRetentionStrategyFactory *servant_retention_strategy_factory_;
     };
   }
 }

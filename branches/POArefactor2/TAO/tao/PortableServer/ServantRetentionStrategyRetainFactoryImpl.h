@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file ServantRetentionStrategyFactoryImpl.h
+ *  @file ThreadStrategyFactoryImpl.h
  *
  *  $Id$
  *
@@ -10,8 +10,8 @@
  */
 //=============================================================================
 
-#ifndef TAO_PORTABLESERVER_SERVANTRETENTIONSTRATEGYFACTORYIMPL_H
-#define TAO_PORTABLESERVER_SERVANTRETENTIONSTRATEGYFACTORYIMPL_H
+#ifndef TAO_PORTABLESERVER_SERVANTRETENTIONSTRATEGYRETAIN_FACTORYIMPL_H
+#define TAO_PORTABLESERVER_SERVANTRETENTIONSTRATEGYRETAIN_FACTORYIMPL_H
 #include /**/ "ace/pre.h"
 
 #include "tao/PortableServer/portableserver_export.h"
@@ -27,11 +27,11 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export ServantRetentionStrategyFactoryImpl
+    class TAO_PortableServer_Export ServantRetentionStrategyRetainFactoryImpl
        : public virtual ServantRetentionStrategyFactory
     {
     public:
-      virtual ~ServantRetentionStrategyFactoryImpl (void);
+      virtual ~ServantRetentionStrategyRetainFactoryImpl (void);
 
       /// Create a new servant retention strategy
       virtual ServantRetentionStrategy* create (
@@ -40,10 +40,10 @@ namespace TAO
       virtual void destroy (ServantRetentionStrategy *strategy);
     };
 
-    ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, ServantRetentionStrategyFactoryImpl)
-    ACE_FACTORY_DECLARE (TAO_PortableServer, ServantRetentionStrategyFactoryImpl)
+    ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, ServantRetentionStrategyRetainFactoryImpl)
+    ACE_FACTORY_DECLARE (TAO_PortableServer, ServantRetentionStrategyRetainFactoryImpl)
   }
 }
 
 #include /**/ "ace/post.h"
-#endif /* TAO_PORTABLESERVER_SERVANTRETENTIONSTRATEGYFACTORYIMPL_H */
+#endif /* TAO_PORTABLESERVER_SERVANTRETENTIONSTRATEGYRETAIN_FACTORYIMPL_H*/

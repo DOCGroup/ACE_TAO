@@ -1,9 +1,8 @@
 // $Id$
 
 #include "ServantRetentionStrategyFactoryImpl.h"
+#include "ServantRetentionStrategy.h"
 #include "ace/Dynamic_Service.h"
-#include "ServantRetentionStrategyRetain.h"
-#include "ServantRetentionStrategyNonRetain.h"
 
 ACE_RCSID (PortableServer,
            ServantRetentionStrategyFactoryImpl,
@@ -26,19 +25,79 @@ namespace TAO
       {
         case ::PortableServer::RETAIN :
         {
-          ACE_NEW_RETURN (strategy, ServantRetentionStrategyRetain, 0);
+          ServantRetentionStrategyFactory *servantretention_strategy_factory =
+            ACE_Dynamic_Service<ServantRetentionStrategyFactory>::instance ("ServantRetentionStrategyRetainFactory");
+
+          if (servantretention_strategy_factory == 0)
+            {
+              ACE_Service_Config::process_directive (
+                ACE_TEXT("dynamic ServantRetentionStrategyFactory Service_Object *")
+                ACE_TEXT("TAO_PortableServer:_make_ServantRetentionStrategyRetainFactoryImpl()"));
+
+              servantretention_strategy_factory =
+                ACE_Dynamic_Service<ServantRetentionStrategyFactory>::instance ("ServantRetentionStrategyRetainFactory");
+            }
+
+          if (servantretention_strategy_factory != 0)
+            {
+              strategy = servantretention_strategy_factory->create (value);
+            }
           break;
         }
         case ::PortableServer::NON_RETAIN :
         {
-#if (TAO_HAS_MINIMUM_POA == 0)
-          ACE_NEW_RETURN (strategy, ServantRetentionStrategyNonRetain, 0);
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
+          ServantRetentionStrategyFactory *servantretention_strategy_factory =
+            ACE_Dynamic_Service<ServantRetentionStrategyFactory>::instance ("ServantRetentionStrategyNonRetainFactory");
+
+          if (servantretention_strategy_factory == 0)
+            {
+              ACE_Service_Config::process_directive (
+                ACE_TEXT("dynamic ServantRetentionStrategyFactory Service_Object *")
+                ACE_TEXT("TAO_PortableServer:_make_ServantRetentionStrategyNonRetainFactoryImpl()"));
+
+              servantretention_strategy_factory =
+                ACE_Dynamic_Service<ServantRetentionStrategyFactory>::instance ("ServantRetentionStrategyNonRetainFactory");
+            }
+
+          if (servantretention_strategy_factory != 0)
+            {
+              strategy = servantretention_strategy_factory->create (value);
+            }
           break;
         }
       }
 
       return strategy;
+    }
+
+    void
+    ServantRetentionStrategyFactoryImpl::destroy (ServantRetentionStrategy *strategy)
+    {
+      switch (strategy->type ())
+      {
+        case ::PortableServer::RETAIN :
+        {
+          ServantRetentionStrategyFactory *servantretention_strategy_factory =
+            ACE_Dynamic_Service<ServantRetentionStrategyFactory>::instance ("ServantRetentionStrategyRetainFactory");
+
+          if (servantretention_strategy_factory != 0)
+            {
+              servantretention_strategy_factory->destroy (strategy);
+            }
+          break;
+        }
+        case ::PortableServer::NON_RETAIN :
+        {
+          ServantRetentionStrategyFactory *servantretention_strategy_factory =
+            ACE_Dynamic_Service<ServantRetentionStrategyFactory>::instance ("ServantRetentionStrategyNonRetainFactory");
+
+          if (servantretention_strategy_factory != 0)
+            {
+              servantretention_strategy_factory->destroy (strategy);
+            }
+          break;
+        }
+      }
     }
 
     ACE_STATIC_SVC_DEFINE (

@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file ServantRetentionStrategyFactoryImpl.h
+ *  @file ThreadStrategyFactoryImpl.h
  *
  *  $Id$
  *
@@ -10,8 +10,8 @@
  */
 //=============================================================================
 
-#ifndef TAO_PORTABLESERVER_SERVANTRETENTIONSTRATEGYFACTORYIMPL_H
-#define TAO_PORTABLESERVER_SERVANTRETENTIONSTRATEGYFACTORYIMPL_H
+#ifndef TAO_PORTABLESERVER_SERVANTRETENTIONSTRATEGYNONRETAIN_FACTORYIMPL_H
+#define TAO_PORTABLESERVER_SERVANTRETENTIONSTRATEGYNONRETAIN_FACTORYIMPL_H
 #include /**/ "ace/pre.h"
 
 #include "tao/PortableServer/portableserver_export.h"
@@ -23,15 +23,17 @@
 #include "ace/Service_Config.h"
 #include "tao/PortableServer/ServantRetentionStrategyFactory.h"
 
+#if (TAO_HAS_MINIMUM_POA == 0)
+
 namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export ServantRetentionStrategyFactoryImpl
+    class TAO_PortableServer_Export ServantRetentionStrategyNonRetainFactoryImpl
        : public virtual ServantRetentionStrategyFactory
     {
     public:
-      virtual ~ServantRetentionStrategyFactoryImpl (void);
+      virtual ~ServantRetentionStrategyNonRetainFactoryImpl (void);
 
       /// Create a new servant retention strategy
       virtual ServantRetentionStrategy* create (
@@ -40,10 +42,12 @@ namespace TAO
       virtual void destroy (ServantRetentionStrategy *strategy);
     };
 
-    ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, ServantRetentionStrategyFactoryImpl)
-    ACE_FACTORY_DECLARE (TAO_PortableServer, ServantRetentionStrategyFactoryImpl)
+    ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, ServantRetentionStrategyNonRetainFactoryImpl)
+    ACE_FACTORY_DECLARE (TAO_PortableServer, ServantRetentionStrategyNonRetainFactoryImpl)
   }
 }
 
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
+
 #include /**/ "ace/post.h"
-#endif /* TAO_PORTABLESERVER_SERVANTRETENTIONSTRATEGYFACTORYIMPL_H */
+#endif /* TAO_PORTABLESERVER_SERVANTRETENTIONSTRATEGYNONRETAIN_FACTORYIMPL_H*/

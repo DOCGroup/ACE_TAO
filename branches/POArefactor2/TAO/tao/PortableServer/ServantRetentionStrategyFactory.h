@@ -36,6 +36,8 @@ namespace TAO
       /// Create a new servant retention strategy
       virtual ServantRetentionStrategy* create (
         ::PortableServer::ServantRetentionPolicyValue value) = 0;
+
+      virtual void destroy (ServantRetentionStrategy *strategy) = 0;
     };
   }
 }

@@ -32,10 +32,10 @@
 
 #include "tao/PortableServer/ThreadPolicyValueORBControl.h"
 #include "tao/PortableServer/ThreadPolicyValueSingle.h"
-#include "tao/PortableServer/ThreadStrategySingleFactoryImpl.h"
 
 #include "tao/PortableServer/ThreadStrategyORBControl.h"
 #include "tao/PortableServer/ThreadStrategySingle.h"
+#include "tao/PortableServer/ThreadStrategySingleFactoryImpl.h"
 
 #include "tao/PortableServer/LifespanPolicyValueTransient.h"
 #include "tao/PortableServer/LifespanPolicyValuePersistent.h"
@@ -67,6 +67,9 @@
 
 #include "tao/PortableServer/ServantRetentionPolicyValueRetain.h"
 #include "tao/PortableServer/ServantRetentionPolicyValueNonRetain.h"
+
+#include "tao/PortableServer/ServantRetentionStrategyNonRetainFactoryImpl.h"
+#include "tao/PortableServer/ServantRetentionStrategyRetainFactoryImpl.h"
 
 ACE_RCSID (PortableServer,
            PortableServer,
@@ -254,6 +257,16 @@ TAO_POA_Initializer::init (void)
   ACE_Service_Config::process_directive (
       TAO::Portable_Server::ace_svc_desc_ServantRetentionStrategyFactoryImpl
     );
+
+  ACE_Service_Config::process_directive (
+      TAO::Portable_Server::ace_svc_desc_ServantRetentionStrategyRetainFactoryImpl
+    );
+
+#if (TAO_HAS_MINIMUM_POA == 0)
+  ACE_Service_Config::process_directive (
+      TAO::Portable_Server::ace_svc_desc_ServantRetentionStrategyNonRetainFactoryImpl
+    );
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   // Strategy implementations
 

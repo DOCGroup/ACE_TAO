@@ -48,7 +48,8 @@ namespace TAO
       id_uniqueness_strategy_ (0),
       implicit_activation_strategy_ (0),
       servant_retention_strategy_ (0),
-      thread_strategy_factory_ (0)
+      thread_strategy_factory_ (0),
+      servant_retention_strategy_factory_ (0)
     {
     }
 
@@ -105,21 +106,21 @@ namespace TAO
 
       /**/
 
-      ServantRetentionStrategyFactory *servant_retention_strategy_factory =
+      servant_retention_strategy_factory_ =
         ACE_Dynamic_Service<ServantRetentionStrategyFactory>::instance ("ServantRetentionStrategyFactory");
 
-      if (servant_retention_strategy_factory == 0)
+      if (servant_retention_strategy_factory_ == 0)
         {
           ACE_Service_Config::process_directive (ACE_TEXT("dynamic ServantRetentionStrategyFactory Service_Object *")
                                                  ACE_TEXT("TAO_PortableServer:_make_ServantRetentionStrategyFactoryImpl()"));
-          servant_retention_strategy_factory =
+          servant_retention_strategy_factory_ =
             ACE_Dynamic_Service<ServantRetentionStrategyFactory>::instance ("ServantRetentionStrategyFactory");
         }
 
 
-      if (servant_retention_strategy_factory != 0)
+      if (servant_retention_strategy_factory_ != 0)
         servant_retention_strategy_ =
-          servant_retention_strategy_factory->create (policies.servant_retention());
+          servant_retention_strategy_factory_->create (policies.servant_retention());
 
       /**/
 
@@ -258,6 +259,9 @@ namespace TAO
         {
           servant_retention_strategy_->strategy_cleanup (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
+
+          servant_retention_strategy_factory_->destroy (servant_retention_strategy_);
+          servant_retention_strategy_ = 0;
         }
 
       if (id_assignment_strategy_ != 0)

@@ -19,6 +19,7 @@
 #include "ace/Service_Config.h"
 #include "Servant_Location.h"
 #include "Servant_Upcall.h"
+#include "ServantRetentionPolicyC.h"
 
 #define TAO_PORTABLESERVER_SAFE_INCLUDE
 #include "PortableServerC.h"
@@ -150,6 +151,8 @@ namespace TAO
 
       virtual CORBA::Boolean servant_has_remaining_activations (
         PortableServer::Servant servant) = 0;
+
+      virtual ::PortableServer::ServantRetentionPolicyValue type() const = 0;
     };
   }
 }
