@@ -1,3 +1,21 @@
+Wed Feb  5 13:50:09 2003  Ossama Othman  <ossama@uci.edu>
+
+	* configure.ac:
+
+	  Added check for snprintf().
+
+	  Added check for mutex timeouts (e.g. pthread_mutex_timedlock()).
+
+	  Updated STL map and queue conflict tests to take into account
+	  the "std" namespace, if necessary.
+
+	  Updated "new() throws bad_alloc" test to take into account the
+	  "std" namespace, if necessary.
+
+	* m4/config_h.m4 (ACE_HAS_SNPRINTF, ACE_HAS_MUTEX_TIMEOUTS):
+
+	  Added autoheader templates for these macros.
+
 Wed Feb  5 11:54:22 2003  Ossama Othman  <ossama@uci.edu>
 
 	* Makefile.am:

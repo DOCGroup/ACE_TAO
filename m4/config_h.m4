@@ -788,6 +788,8 @@ AH_TEMPLATE([ACE_HAS_SIN_LEN],[Platform supports new BSD inet_addr len field.])
 AH_TEMPLATE([ACE_HAS_SIZET_SOCKET_LEN],
 [OS/compiler uses size_t * rather than int * for socket lengths])
 
+AH_TEMPLATE([ACE_HAS_SNPRINTF],[Platform offers snprintf().])
+
 AH_TEMPLATE([ACE_HAS_SOCKADDR_MSG_NAME],
 [Platform requires (struct sockaddr *) for msg_name field of
    struct msghdr.])
@@ -1104,6 +1106,9 @@ AH_TEMPLATE([ACE_LACKS_MUTEXATTR_PSHARED],
 
 AH_TEMPLATE([ACE_LACKS_NULL_PTHREAD_STATUS],
 [OS requires non-null status pointer for pthread_join ()])
+
+AH_TEMPLATE([ACE_HAS_MUTEX_TIMEOUTS],
+[Compiler supports timed mutex acquisitions (e.g. pthread_mutex_timedlock()).])
 
 AH_TEMPLATE([ACE_LACKS_PARAM_H],[Platform lacks <sys/param.h> (e.g., MVS)])
 
