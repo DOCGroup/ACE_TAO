@@ -104,9 +104,9 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 CPP=cl.exe
-# ADD BASE CPP /nologo /MT /Gt0 /W3 /GX /O2 /I "..\\" /I "..\..\\" /I "..\..\..\\" /D "NDEBUG" /D "_WINDOWS" /D TAO_ORBSVCS_HAS_DLL=1 /D "TAO_ORBSVCS_BUILD_DLL" /FD /c
+# ADD BASE CPP /nologo /MT /Gt0 /W3 /GX /O2 /I "..\\ /I "..\..\\ /I "..\..\..\\ /D "NDEBUG" /D "_WINDOWS" /D TAO_ORBSVCS_HAS_DLL=1 /D "TAO_ORBSVCS_BUILD_DLL" /FD /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MD /Gt0 /W3 /GX /O2 /I "..\\" /I"..\..\\" /I "..\..\..\\" /D "NDEBUG" /D "_WINDOWS" /D TAO_ORBSVCS_HAS_DLL=1 /D "TAO_ORBSVCS_BUILD_DLL" /FD /c
+# ADD CPP /nologo /MD /Gt0 /W3 /GX /O2 /I "..\\ /I"..\..\\" /I "..\..\..\\ /D "NDEBUG" /D "_WINDOWS" /D TAO_ORBSVCS_HAS_DLL=1 /D "TAO_ORBSVCS_BUILD_DLL" /FD /c
 # SUBTRACT CPP /YX
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
@@ -136,9 +136,9 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 CPP=cl.exe
-# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\\" /I "..\..\\" /I "..\..\..\\" /D "_DEBUG" /D "_WINDOWS" /D TAO_ORBSVCS_HAS_DLL=1 /D "TAO_ORBSVCS_BUILD_DLL" /FD /MTd /c
+# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\\ /I "..\..\\ /I "..\..\..\\ /D "_DEBUG" /D "_WINDOWS" /D TAO_ORBSVCS_HAS_DLL=1 /D "TAO_ORBSVCS_BUILD_DLL" /FD /MTd /c
 # SUBTRACT BASE CPP /WX /YX
-# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\\" /I "..\..\\" /I "..\..\..\\" /D "_DEBUG" /D "_WINDOWS" /D TAO_ORBSVCS_HAS_DLL=1 /D "TAO_ORBSVCS_BUILD_DLL" /FD /MDd /c
+# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\\ /I "..\..\\ /I "..\..\..\\ /D "_DEBUG" /D "_WINDOWS" /D TAO_ORBSVCS_HAS_DLL=1 /D "TAO_ORBSVCS_BUILD_DLL" /FD /MDd /c
 # SUBTRACT CPP /WX /YX
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
@@ -12611,6 +12611,36 @@ SOURCE=.\CosEvent\EventChannel_i.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ImplRepoC.cpp
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\ImplRepoS.cpp
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\IOR_Multicast.cpp
 
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
@@ -18129,6 +18159,36 @@ DEP_CPP_OFFER=\
 NODEP_CPP_OFFER=\
 	"..\..\..\ace\sys_conf.h"\
 	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\PingC.cpp
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\PingS.cpp
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
 !ENDIF 
 
@@ -26648,6 +26708,18 @@ SOURCE=.\Event_Utilities.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\ImplRepoC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ImplRepoS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ImplRepoS_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\IOR_Multicast.h
 # End Source File
 # Begin Source File
@@ -26697,6 +26769,18 @@ SOURCE=.\Trader\Offer_Iterators.h
 # Begin Source File
 
 SOURCE=.\Trader\Offer_Iterators_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\PingC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\PingS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\PingS_T.h
 # End Source File
 # Begin Source File
 
@@ -26884,6 +26968,18 @@ SOURCE=.\Event_Utilities.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\ImplRepoC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\ImplRepoS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\ImplRepoS_T.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\LifeCycleServiceC.i
 # End Source File
 # Begin Source File
@@ -26893,6 +26989,18 @@ SOURCE=.\LifeCycleServiceS.i
 # Begin Source File
 
 SOURCE=.\Event\Memory_Pools.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\PingC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\PingS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\PingS_T.i
 # End Source File
 # Begin Source File
 
@@ -28228,6 +28336,93 @@ BuildCmds= \
 # End Source File
 # Begin Source File
 
+SOURCE=.\ImplRepo.idl
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO_IDL Compiler
+InputPath=.\ImplRepo.idl
+InputName=ImplRepo
+
+BuildCmds= \
+	..\..\..\bin\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                    -Wb,export_include=orbsvcs_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO_IDL Compiler
+InputPath=.\ImplRepo.idl
+InputName=ImplRepo
+
+BuildCmds= \
+	..\..\..\bin\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                    -Wb,export_include=orbsvcs_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\LifeCycleService.idl
 
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
@@ -28546,6 +28741,165 @@ BuildCmds= \
    $(BuildCmds)
 
 "$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Ping.idl
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO_IDL Compiler
+InputPath=.\Ping.idl
+InputName=Ping
+
+BuildCmds= \
+	..\..\..\bin\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                    -Wb,export_include=orbsvcs_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO_IDL Compiler
+InputPath=.\Ping.idl
+InputName=Ping
+
+BuildCmds= \
+	..\..\..\bin\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                    -Wb,export_include=orbsvcs_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Running the TAO IDL Compiler on $(InputPath)...
+InputPath=.\Ping.idl
+InputName=Ping
+
+BuildCmds= \
+	%ACE_ROOT%\bin\tao_idl.exe -ci C.inl -si S.inl -st S_T.inl D:\brunsch\ACE_wrappers\TAO\orbsvcs\orbsvcs\Ping.idl
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.inl" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.inl" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.inl" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Running the TAO IDL Compiler on $(InputPath)...
+InputPath=.\Ping.idl
+InputName=Ping
+
+BuildCmds= \
+	%ACE_ROOT%\bin\tao_idl.exe -ci C.inl -si S.inl -st S_T.inl D:\brunsch\ACE_wrappers\TAO\orbsvcs\orbsvcs\Ping.idl
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.inl" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.inl" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.inl" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 # End Custom Build
 
@@ -29377,7 +29731,11 @@ SOURCE=.\CosPropertyServiceS_T.cpp
 
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
 
+# PROP Exclude_From_Build 1
+
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+# PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
@@ -29392,16 +29750,13 @@ SOURCE=.\CosTradingS_T.cpp
 
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
 
+# PROP Exclude_From_Build 1
+
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
 
 # PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-NODEP_CPP_COSTRADI=\
-	".\CosTradingS_T.h"\
-	".\CosTradingS_T.i"\
-	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
@@ -29413,9 +29768,11 @@ NODEP_CPP_COSTRADI=\
 # End Source File
 # Begin Source File
 
-SOURCE=.\Trader\Offer_Database.cpp
+SOURCE=.\ImplRepoS_T.cpp
 
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
+# PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
 
@@ -29423,256 +29780,24 @@ SOURCE=.\Trader\Offer_Database.cpp
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
-DEP_CPP_OFFER_=\
-	"..\..\..\ace\Acceptor.cpp"\
-	"..\..\..\ace\Acceptor.h"\
-	"..\..\..\ace\Acceptor.i"\
-	"..\..\..\ace\ACE.h"\
-	"..\..\..\ace\ACE.i"\
-	"..\..\..\ace\Addr.h"\
-	"..\..\..\ace\Addr.i"\
-	"..\..\..\ace\Atomic_Op.i"\
-	"..\..\..\ace\Auto_Ptr.cpp"\
-	"..\..\..\ace\Auto_Ptr.h"\
-	"..\..\..\ace\Auto_Ptr.i"\
-	"..\..\..\ace\Basic_Types.h"\
-	"..\..\..\ace\Basic_Types.i"\
-	"..\..\..\ace\config-win32-borland.h"\
-	"..\..\..\ace\config-win32-common.h"\
-	"..\..\..\ace\config-win32.h"\
-	"..\..\..\ace\config-WinCE.h"\
-	"..\..\..\ace\config.h"\
-	"..\..\..\ace\Connector.cpp"\
-	"..\..\..\ace\Connector.h"\
-	"..\..\..\ace\Connector.i"\
-	"..\..\..\ace\Containers.cpp"\
-	"..\..\..\ace\Containers.h"\
-	"..\..\..\ace\Containers.i"\
-	"..\..\..\ace\Dynamic.h"\
-	"..\..\..\ace\Dynamic.i"\
-	"..\..\..\ace\Dynamic_Service.cpp"\
-	"..\..\..\ace\Dynamic_Service.h"\
-	"..\..\..\ace\Event_Handler.h"\
-	"..\..\..\ace\Event_Handler.i"\
-	"..\..\..\ace\Free_List.cpp"\
-	"..\..\..\ace\Free_List.h"\
-	"..\..\..\ace\Free_List.i"\
-	"..\..\..\ace\Get_Opt.h"\
-	"..\..\..\ace\Get_Opt.i"\
-	"..\..\..\ace\Handle_Set.h"\
-	"..\..\..\ace\Handle_Set.i"\
-	"..\..\..\ace\Hash_Map_Manager.cpp"\
-	"..\..\..\ace\Hash_Map_Manager.h"\
-	"..\..\..\ace\inc_user_config.h"\
-	"..\..\..\ace\INET_Addr.h"\
-	"..\..\..\ace\INET_Addr.i"\
-	"..\..\..\ace\IO_Cntl_Msg.h"\
-	"..\..\..\ace\iosfwd.h"\
-	"..\..\..\ace\IPC_SAP.h"\
-	"..\..\..\ace\IPC_SAP.i"\
-	"..\..\..\ace\Log_Msg.h"\
-	"..\..\..\ace\Log_Priority.h"\
-	"..\..\..\ace\Log_Record.h"\
-	"..\..\..\ace\Log_Record.i"\
-	"..\..\..\ace\Malloc.h"\
-	"..\..\..\ace\Malloc.i"\
-	"..\..\..\ace\Malloc_Base.h"\
-	"..\..\..\ace\Malloc_T.cpp"\
-	"..\..\..\ace\Malloc_T.h"\
-	"..\..\..\ace\Malloc_T.i"\
-	"..\..\..\ace\Managed_Object.cpp"\
-	"..\..\..\ace\Managed_Object.h"\
-	"..\..\..\ace\Managed_Object.i"\
-	"..\..\..\ace\Map_Manager.cpp"\
-	"..\..\..\ace\Map_Manager.h"\
-	"..\..\..\ace\Map_Manager.i"\
-	"..\..\..\ace\Mem_Map.h"\
-	"..\..\..\ace\Mem_Map.i"\
-	"..\..\..\ace\Memory_Pool.h"\
-	"..\..\..\ace\Memory_Pool.i"\
-	"..\..\..\ace\Message_Block.h"\
-	"..\..\..\ace\Message_Block.i"\
-	"..\..\..\ace\Message_Queue.h"\
-	"..\..\..\ace\Message_Queue.i"\
-	"..\..\..\ace\Message_Queue_T.cpp"\
-	"..\..\..\ace\Message_Queue_T.h"\
-	"..\..\..\ace\Message_Queue_T.i"\
-	"..\..\..\ace\Module.cpp"\
-	"..\..\..\ace\Module.h"\
-	"..\..\..\ace\Module.i"\
-	"..\..\..\ace\Object_Manager.h"\
-	"..\..\..\ace\Object_Manager.i"\
-	"..\..\..\ace\OS.h"\
-	"..\..\..\ace\OS.i"\
-	"..\..\..\ace\Reactor.h"\
-	"..\..\..\ace\Reactor.i"\
-	"..\..\..\ace\Reactor_Impl.h"\
-	"..\..\..\ace\Service_Config.h"\
-	"..\..\..\ace\Service_Config.i"\
-	"..\..\..\ace\Service_Object.h"\
-	"..\..\..\ace\Service_Object.i"\
-	"..\..\..\ace\Service_Repository.h"\
-	"..\..\..\ace\Service_Repository.i"\
-	"..\..\..\ace\Service_Types.h"\
-	"..\..\..\ace\Service_Types.i"\
-	"..\..\..\ace\Shared_Object.h"\
-	"..\..\..\ace\Shared_Object.i"\
-	"..\..\..\ace\Signal.h"\
-	"..\..\..\ace\Signal.i"\
-	"..\..\..\ace\Singleton.cpp"\
-	"..\..\..\ace\Singleton.h"\
-	"..\..\..\ace\Singleton.i"\
-	"..\..\..\ace\SOCK.h"\
-	"..\..\..\ace\SOCK.i"\
-	"..\..\..\ace\SOCK_Acceptor.h"\
-	"..\..\..\ace\SOCK_Acceptor.i"\
-	"..\..\..\ace\SOCK_Connector.h"\
-	"..\..\..\ace\SOCK_Connector.i"\
-	"..\..\..\ace\SOCK_IO.h"\
-	"..\..\..\ace\SOCK_IO.i"\
-	"..\..\..\ace\SOCK_Stream.h"\
-	"..\..\..\ace\SOCK_Stream.i"\
-	"..\..\..\ace\SString.h"\
-	"..\..\..\ace\SString.i"\
-	"..\..\..\ace\Strategies.h"\
-	"..\..\..\ace\Strategies.i"\
-	"..\..\..\ace\Strategies_T.cpp"\
-	"..\..\..\ace\Strategies_T.h"\
-	"..\..\..\ace\Strategies_T.i"\
-	"..\..\..\ace\Stream_Modules.cpp"\
-	"..\..\..\ace\Stream_Modules.h"\
-	"..\..\..\ace\Stream_Modules.i"\
-	"..\..\..\ace\streams.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.i"\
-	"..\..\..\ace\SV_Semaphore_Simple.h"\
-	"..\..\..\ace\SV_Semaphore_Simple.i"\
-	"..\..\..\ace\Svc_Conf_Tokens.h"\
-	"..\..\..\ace\Svc_Handler.cpp"\
-	"..\..\..\ace\Svc_Handler.h"\
-	"..\..\..\ace\Svc_Handler.i"\
-	"..\..\..\ace\Synch.h"\
-	"..\..\..\ace\Synch.i"\
-	"..\..\..\ace\Synch_Options.h"\
-	"..\..\..\ace\Synch_Options.i"\
-	"..\..\..\ace\Synch_T.cpp"\
-	"..\..\..\ace\Synch_T.h"\
-	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\Task.h"\
-	"..\..\..\ace\Task.i"\
-	"..\..\..\ace\Task_T.cpp"\
-	"..\..\..\ace\Task_T.h"\
-	"..\..\..\ace\Task_T.i"\
-	"..\..\..\ace\Thread.h"\
-	"..\..\..\ace\Thread.i"\
-	"..\..\..\ace\Thread_Manager.h"\
-	"..\..\..\ace\Thread_Manager.i"\
-	"..\..\..\ace\Time_Value.h"\
-	"..\..\..\ace\Timer_Queue.h"\
-	"..\..\..\ace\Timer_Queue_T.cpp"\
-	"..\..\..\ace\Timer_Queue_T.h"\
-	"..\..\..\ace\Timer_Queue_T.i"\
-	"..\..\..\ace\Trace.h"\
-	"..\..\..\ace\WFMO_Reactor.h"\
-	"..\..\..\ace\WFMO_Reactor.i"\
-	"..\..\..\ace\ws2tcpip.h"\
-	"..\..\tao\align.h"\
-	"..\..\tao\any.h"\
-	"..\..\tao\any.i"\
-	"..\..\tao\cdr.h"\
-	"..\..\tao\cdr.i"\
-	"..\..\tao\Client_Strategy_Factory.h"\
-	"..\..\tao\connect.h"\
-	"..\..\tao\connect.i"\
-	"..\..\tao\corba.h"\
-	"..\..\tao\CurrentC.h"\
-	"..\..\tao\CurrentC.i"\
-	"..\..\tao\debug.h"\
-	"..\..\tao\default_client.h"\
-	"..\..\tao\default_client.i"\
-	"..\..\tao\default_server.h"\
-	"..\..\tao\default_server.i"\
-	"..\..\tao\Environment.h"\
-	"..\..\tao\Environment.i"\
-	"..\..\tao\Exception.h"\
-	"..\..\tao\Exception.i"\
-	"..\..\tao\giop.h"\
-	"..\..\tao\giop.i"\
-	"..\..\tao\IIOP_Interpreter.h"\
-	"..\..\tao\IIOP_Object.h"\
-	"..\..\tao\IIOP_Object.i"\
-	"..\..\tao\IIOP_ORB.h"\
-	"..\..\tao\IIOP_ORB.i"\
-	"..\..\tao\Invocation.h"\
-	"..\..\tao\Invocation.i"\
-	"..\..\tao\marshal.h"\
-	"..\..\tao\marshal.i"\
-	"..\..\tao\nvlist.h"\
-	"..\..\tao\NVList.i"\
-	"..\..\tao\object.h"\
-	"..\..\tao\object.i"\
-	"..\..\tao\Object_KeyC.h"\
-	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Operation_Table.h"\
-	"..\..\tao\orb.h"\
-	"..\..\tao\ORB.i"\
-	"..\..\tao\orb_core.h"\
-	"..\..\tao\orb_core.i"\
-	"..\..\tao\ORB_Strategies_T.cpp"\
-	"..\..\tao\ORB_Strategies_T.h"\
-	"..\..\tao\ORB_Strategies_T.i"\
-	"..\..\tao\orbconf.h"\
-	"..\..\tao\params.h"\
-	"..\..\tao\params.i"\
-	"..\..\tao\poa.h"\
-	"..\..\tao\POA.i"\
-	"..\..\tao\POA_CORBA.h"\
-	"..\..\tao\poa_macros.h"\
-	"..\..\tao\poaC.h"\
-	"..\..\tao\poaC.i"\
-	"..\..\tao\poaS.h"\
-	"..\..\tao\poaS.i"\
-	"..\..\tao\PolicyC.h"\
-	"..\..\tao\PolicyC.i"\
-	"..\..\tao\Principal.h"\
-	"..\..\tao\Principal.i"\
-	"..\..\tao\request.h"\
-	"..\..\tao\Request.i"\
-	"..\..\tao\sequence.h"\
-	"..\..\tao\sequence.i"\
-	"..\..\tao\Sequence_T.cpp"\
-	"..\..\tao\Sequence_T.h"\
-	"..\..\tao\Sequence_T.i"\
-	"..\..\tao\servant_base.h"\
-	"..\..\tao\Server_Request.h"\
-	"..\..\tao\Server_Request.i"\
-	"..\..\tao\Server_Strategy_Factory.h"\
-	"..\..\tao\singletons.h"\
-	"..\..\tao\stub.h"\
-	"..\..\tao\stub.i"\
-	"..\..\tao\typecode.h"\
-	"..\..\tao\typecode.i"\
-	"..\..\tao\Union.h"\
-	"..\..\tao\varout.cpp"\
-	"..\..\tao\varout.h"\
-	"..\..\tao\varout.i"\
-	".\orbsvcs_export.h"\
-	".\Trader\Offer_Database.h"\
-	".\Trader\Offer_Iterators.h"\
-	".\Trader\Trader.h"\
-	".\Trader\Trader_Utils.h"\
-	
-NODEP_CPP_OFFER_=\
-	"..\..\..\ace\sys_conf.h"\
-	"..\..\tao\Object_Table.h"\
-	".\CosTradingC.h"\
-	".\CosTradingC.i"\
-	".\CosTradingS.h"\
-	".\CosTradingS.i"\
-	".\CosTradingS_T.cpp"\
-	".\CosTradingS_T.h"\
-	".\CosTradingS_T.i"\
-	
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Trader\Offer_Database.cpp
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
@@ -29688,264 +29813,13 @@ SOURCE=.\Trader\Offer_Iterators_T.cpp
 
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
 
+# PROP Exclude_From_Build 1
+
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
 
 # PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-DEP_CPP_OFFER_I=\
-	"..\..\..\ace\Acceptor.cpp"\
-	"..\..\..\ace\Acceptor.h"\
-	"..\..\..\ace\Acceptor.i"\
-	"..\..\..\ace\ACE.h"\
-	"..\..\..\ace\ACE.i"\
-	"..\..\..\ace\Addr.h"\
-	"..\..\..\ace\Addr.i"\
-	"..\..\..\ace\Atomic_Op.i"\
-	"..\..\..\ace\Auto_Ptr.cpp"\
-	"..\..\..\ace\Auto_Ptr.h"\
-	"..\..\..\ace\Auto_Ptr.i"\
-	"..\..\..\ace\Basic_Types.h"\
-	"..\..\..\ace\Basic_Types.i"\
-	"..\..\..\ace\config-win32-borland.h"\
-	"..\..\..\ace\config-win32-common.h"\
-	"..\..\..\ace\config-win32.h"\
-	"..\..\..\ace\config-WinCE.h"\
-	"..\..\..\ace\config.h"\
-	"..\..\..\ace\Connector.cpp"\
-	"..\..\..\ace\Connector.h"\
-	"..\..\..\ace\Connector.i"\
-	"..\..\..\ace\Containers.cpp"\
-	"..\..\..\ace\Containers.h"\
-	"..\..\..\ace\Containers.i"\
-	"..\..\..\ace\Dynamic.h"\
-	"..\..\..\ace\Dynamic.i"\
-	"..\..\..\ace\Dynamic_Service.cpp"\
-	"..\..\..\ace\Dynamic_Service.h"\
-	"..\..\..\ace\Event_Handler.h"\
-	"..\..\..\ace\Event_Handler.i"\
-	"..\..\..\ace\Free_List.cpp"\
-	"..\..\..\ace\Free_List.h"\
-	"..\..\..\ace\Free_List.i"\
-	"..\..\..\ace\Get_Opt.h"\
-	"..\..\..\ace\Get_Opt.i"\
-	"..\..\..\ace\Handle_Set.h"\
-	"..\..\..\ace\Handle_Set.i"\
-	"..\..\..\ace\Hash_Map_Manager.cpp"\
-	"..\..\..\ace\Hash_Map_Manager.h"\
-	"..\..\..\ace\inc_user_config.h"\
-	"..\..\..\ace\INET_Addr.h"\
-	"..\..\..\ace\INET_Addr.i"\
-	"..\..\..\ace\IO_Cntl_Msg.h"\
-	"..\..\..\ace\iosfwd.h"\
-	"..\..\..\ace\IPC_SAP.h"\
-	"..\..\..\ace\IPC_SAP.i"\
-	"..\..\..\ace\Log_Msg.h"\
-	"..\..\..\ace\Log_Priority.h"\
-	"..\..\..\ace\Log_Record.h"\
-	"..\..\..\ace\Log_Record.i"\
-	"..\..\..\ace\Malloc.h"\
-	"..\..\..\ace\Malloc.i"\
-	"..\..\..\ace\Malloc_Base.h"\
-	"..\..\..\ace\Malloc_T.cpp"\
-	"..\..\..\ace\Malloc_T.h"\
-	"..\..\..\ace\Malloc_T.i"\
-	"..\..\..\ace\Managed_Object.cpp"\
-	"..\..\..\ace\Managed_Object.h"\
-	"..\..\..\ace\Managed_Object.i"\
-	"..\..\..\ace\Map_Manager.cpp"\
-	"..\..\..\ace\Map_Manager.h"\
-	"..\..\..\ace\Map_Manager.i"\
-	"..\..\..\ace\Mem_Map.h"\
-	"..\..\..\ace\Mem_Map.i"\
-	"..\..\..\ace\Memory_Pool.h"\
-	"..\..\..\ace\Memory_Pool.i"\
-	"..\..\..\ace\Message_Block.h"\
-	"..\..\..\ace\Message_Block.i"\
-	"..\..\..\ace\Message_Queue.h"\
-	"..\..\..\ace\Message_Queue.i"\
-	"..\..\..\ace\Message_Queue_T.cpp"\
-	"..\..\..\ace\Message_Queue_T.h"\
-	"..\..\..\ace\Message_Queue_T.i"\
-	"..\..\..\ace\Module.cpp"\
-	"..\..\..\ace\Module.h"\
-	"..\..\..\ace\Module.i"\
-	"..\..\..\ace\Object_Manager.h"\
-	"..\..\..\ace\Object_Manager.i"\
-	"..\..\..\ace\OS.h"\
-	"..\..\..\ace\OS.i"\
-	"..\..\..\ace\Reactor.h"\
-	"..\..\..\ace\Reactor.i"\
-	"..\..\..\ace\Reactor_Impl.h"\
-	"..\..\..\ace\Service_Config.h"\
-	"..\..\..\ace\Service_Config.i"\
-	"..\..\..\ace\Service_Object.h"\
-	"..\..\..\ace\Service_Object.i"\
-	"..\..\..\ace\Service_Repository.h"\
-	"..\..\..\ace\Service_Repository.i"\
-	"..\..\..\ace\Service_Types.h"\
-	"..\..\..\ace\Service_Types.i"\
-	"..\..\..\ace\Shared_Object.h"\
-	"..\..\..\ace\Shared_Object.i"\
-	"..\..\..\ace\Signal.h"\
-	"..\..\..\ace\Signal.i"\
-	"..\..\..\ace\Singleton.cpp"\
-	"..\..\..\ace\Singleton.h"\
-	"..\..\..\ace\Singleton.i"\
-	"..\..\..\ace\SOCK.h"\
-	"..\..\..\ace\SOCK.i"\
-	"..\..\..\ace\SOCK_Acceptor.h"\
-	"..\..\..\ace\SOCK_Acceptor.i"\
-	"..\..\..\ace\SOCK_Connector.h"\
-	"..\..\..\ace\SOCK_Connector.i"\
-	"..\..\..\ace\SOCK_IO.h"\
-	"..\..\..\ace\SOCK_IO.i"\
-	"..\..\..\ace\SOCK_Stream.h"\
-	"..\..\..\ace\SOCK_Stream.i"\
-	"..\..\..\ace\SString.h"\
-	"..\..\..\ace\SString.i"\
-	"..\..\..\ace\Strategies.h"\
-	"..\..\..\ace\Strategies.i"\
-	"..\..\..\ace\Strategies_T.cpp"\
-	"..\..\..\ace\Strategies_T.h"\
-	"..\..\..\ace\Strategies_T.i"\
-	"..\..\..\ace\Stream_Modules.cpp"\
-	"..\..\..\ace\Stream_Modules.h"\
-	"..\..\..\ace\Stream_Modules.i"\
-	"..\..\..\ace\streams.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.i"\
-	"..\..\..\ace\SV_Semaphore_Simple.h"\
-	"..\..\..\ace\SV_Semaphore_Simple.i"\
-	"..\..\..\ace\Svc_Conf_Tokens.h"\
-	"..\..\..\ace\Svc_Handler.cpp"\
-	"..\..\..\ace\Svc_Handler.h"\
-	"..\..\..\ace\Svc_Handler.i"\
-	"..\..\..\ace\Synch.h"\
-	"..\..\..\ace\Synch.i"\
-	"..\..\..\ace\Synch_Options.h"\
-	"..\..\..\ace\Synch_Options.i"\
-	"..\..\..\ace\Synch_T.cpp"\
-	"..\..\..\ace\Synch_T.h"\
-	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\Task.h"\
-	"..\..\..\ace\Task.i"\
-	"..\..\..\ace\Task_T.cpp"\
-	"..\..\..\ace\Task_T.h"\
-	"..\..\..\ace\Task_T.i"\
-	"..\..\..\ace\Thread.h"\
-	"..\..\..\ace\Thread.i"\
-	"..\..\..\ace\Thread_Manager.h"\
-	"..\..\..\ace\Thread_Manager.i"\
-	"..\..\..\ace\Time_Value.h"\
-	"..\..\..\ace\Timer_Queue.h"\
-	"..\..\..\ace\Timer_Queue_T.cpp"\
-	"..\..\..\ace\Timer_Queue_T.h"\
-	"..\..\..\ace\Timer_Queue_T.i"\
-	"..\..\..\ace\Trace.h"\
-	"..\..\..\ace\WFMO_Reactor.h"\
-	"..\..\..\ace\WFMO_Reactor.i"\
-	"..\..\..\ace\ws2tcpip.h"\
-	"..\..\tao\align.h"\
-	"..\..\tao\any.h"\
-	"..\..\tao\any.i"\
-	"..\..\tao\cdr.h"\
-	"..\..\tao\cdr.i"\
-	"..\..\tao\Client_Strategy_Factory.h"\
-	"..\..\tao\connect.h"\
-	"..\..\tao\connect.i"\
-	"..\..\tao\corba.h"\
-	"..\..\tao\CurrentC.h"\
-	"..\..\tao\CurrentC.i"\
-	"..\..\tao\debug.h"\
-	"..\..\tao\default_client.h"\
-	"..\..\tao\default_client.i"\
-	"..\..\tao\default_server.h"\
-	"..\..\tao\default_server.i"\
-	"..\..\tao\Environment.h"\
-	"..\..\tao\Environment.i"\
-	"..\..\tao\Exception.h"\
-	"..\..\tao\Exception.i"\
-	"..\..\tao\giop.h"\
-	"..\..\tao\giop.i"\
-	"..\..\tao\IIOP_Interpreter.h"\
-	"..\..\tao\IIOP_Object.h"\
-	"..\..\tao\IIOP_Object.i"\
-	"..\..\tao\IIOP_ORB.h"\
-	"..\..\tao\IIOP_ORB.i"\
-	"..\..\tao\Invocation.h"\
-	"..\..\tao\Invocation.i"\
-	"..\..\tao\marshal.h"\
-	"..\..\tao\marshal.i"\
-	"..\..\tao\nvlist.h"\
-	"..\..\tao\NVList.i"\
-	"..\..\tao\object.h"\
-	"..\..\tao\object.i"\
-	"..\..\tao\Object_KeyC.h"\
-	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Operation_Table.h"\
-	"..\..\tao\orb.h"\
-	"..\..\tao\ORB.i"\
-	"..\..\tao\orb_core.h"\
-	"..\..\tao\orb_core.i"\
-	"..\..\tao\ORB_Strategies_T.cpp"\
-	"..\..\tao\ORB_Strategies_T.h"\
-	"..\..\tao\ORB_Strategies_T.i"\
-	"..\..\tao\orbconf.h"\
-	"..\..\tao\params.h"\
-	"..\..\tao\params.i"\
-	"..\..\tao\poa.h"\
-	"..\..\tao\POA.i"\
-	"..\..\tao\POA_CORBA.h"\
-	"..\..\tao\poa_macros.h"\
-	"..\..\tao\poaC.h"\
-	"..\..\tao\poaC.i"\
-	"..\..\tao\poaS.h"\
-	"..\..\tao\poaS.i"\
-	"..\..\tao\PolicyC.h"\
-	"..\..\tao\PolicyC.i"\
-	"..\..\tao\Principal.h"\
-	"..\..\tao\Principal.i"\
-	"..\..\tao\request.h"\
-	"..\..\tao\Request.i"\
-	"..\..\tao\sequence.h"\
-	"..\..\tao\sequence.i"\
-	"..\..\tao\Sequence_T.cpp"\
-	"..\..\tao\Sequence_T.h"\
-	"..\..\tao\Sequence_T.i"\
-	"..\..\tao\servant_base.h"\
-	"..\..\tao\Server_Request.h"\
-	"..\..\tao\Server_Request.i"\
-	"..\..\tao\Server_Strategy_Factory.h"\
-	"..\..\tao\singletons.h"\
-	"..\..\tao\stub.h"\
-	"..\..\tao\stub.i"\
-	"..\..\tao\typecode.h"\
-	"..\..\tao\typecode.i"\
-	"..\..\tao\Union.h"\
-	"..\..\tao\varout.cpp"\
-	"..\..\tao\varout.h"\
-	"..\..\tao\varout.i"\
-	".\orbsvcs_export.h"\
-	".\Trader\Offer_Database.cpp"\
-	".\Trader\Offer_Database.h"\
-	".\Trader\Offer_Iterators.h"\
-	".\Trader\Offer_Iterators_T.h"\
-	".\Trader\Trader.h"\
-	".\Trader\Trader_Utils.h"\
-	
-NODEP_CPP_OFFER_I=\
-	"..\..\..\ace\sys_conf.h"\
-	"..\..\tao\Object_Table.h"\
-	".\CosTradingC.h"\
-	".\CosTradingC.i"\
-	".\CosTradingS.h"\
-	".\CosTradingS.i"\
-	".\CosTradingS_T.cpp"\
-	".\CosTradingS_T.h"\
-	".\CosTradingS_T.i"\
-	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
@@ -29961,7 +29835,11 @@ SOURCE=.\TimeServiceS_T.cpp
 
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
 
+# PROP Exclude_From_Build 1
+
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+# PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
@@ -29976,272 +29854,13 @@ SOURCE=.\Trader\Trader_Interfaces.cpp
 
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
 
+# PROP Exclude_From_Build 1
+
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
 
 # PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-DEP_CPP_TRADER_=\
-	"..\..\..\ace\Acceptor.cpp"\
-	"..\..\..\ace\Acceptor.h"\
-	"..\..\..\ace\Acceptor.i"\
-	"..\..\..\ace\ACE.h"\
-	"..\..\..\ace\ACE.i"\
-	"..\..\..\ace\Addr.h"\
-	"..\..\..\ace\Addr.i"\
-	"..\..\..\ace\Atomic_Op.i"\
-	"..\..\..\ace\Auto_Ptr.cpp"\
-	"..\..\..\ace\Auto_Ptr.h"\
-	"..\..\..\ace\Auto_Ptr.i"\
-	"..\..\..\ace\Basic_Types.h"\
-	"..\..\..\ace\Basic_Types.i"\
-	"..\..\..\ace\config-win32-borland.h"\
-	"..\..\..\ace\config-win32-common.h"\
-	"..\..\..\ace\config-win32.h"\
-	"..\..\..\ace\config-WinCE.h"\
-	"..\..\..\ace\config.h"\
-	"..\..\..\ace\Connector.cpp"\
-	"..\..\..\ace\Connector.h"\
-	"..\..\..\ace\Connector.i"\
-	"..\..\..\ace\Containers.cpp"\
-	"..\..\..\ace\Containers.h"\
-	"..\..\..\ace\Containers.i"\
-	"..\..\..\ace\Dynamic.h"\
-	"..\..\..\ace\Dynamic.i"\
-	"..\..\..\ace\Dynamic_Service.cpp"\
-	"..\..\..\ace\Dynamic_Service.h"\
-	"..\..\..\ace\Event_Handler.h"\
-	"..\..\..\ace\Event_Handler.i"\
-	"..\..\..\ace\Free_List.cpp"\
-	"..\..\..\ace\Free_List.h"\
-	"..\..\..\ace\Free_List.i"\
-	"..\..\..\ace\Get_Opt.h"\
-	"..\..\..\ace\Get_Opt.i"\
-	"..\..\..\ace\Handle_Set.h"\
-	"..\..\..\ace\Handle_Set.i"\
-	"..\..\..\ace\Hash_Map_Manager.cpp"\
-	"..\..\..\ace\Hash_Map_Manager.h"\
-	"..\..\..\ace\inc_user_config.h"\
-	"..\..\..\ace\INET_Addr.h"\
-	"..\..\..\ace\INET_Addr.i"\
-	"..\..\..\ace\IO_Cntl_Msg.h"\
-	"..\..\..\ace\iosfwd.h"\
-	"..\..\..\ace\IPC_SAP.h"\
-	"..\..\..\ace\IPC_SAP.i"\
-	"..\..\..\ace\Log_Msg.h"\
-	"..\..\..\ace\Log_Priority.h"\
-	"..\..\..\ace\Log_Record.h"\
-	"..\..\..\ace\Log_Record.i"\
-	"..\..\..\ace\Malloc.h"\
-	"..\..\..\ace\Malloc.i"\
-	"..\..\..\ace\Malloc_Base.h"\
-	"..\..\..\ace\Malloc_T.cpp"\
-	"..\..\..\ace\Malloc_T.h"\
-	"..\..\..\ace\Malloc_T.i"\
-	"..\..\..\ace\Managed_Object.cpp"\
-	"..\..\..\ace\Managed_Object.h"\
-	"..\..\..\ace\Managed_Object.i"\
-	"..\..\..\ace\Map_Manager.cpp"\
-	"..\..\..\ace\Map_Manager.h"\
-	"..\..\..\ace\Map_Manager.i"\
-	"..\..\..\ace\Mem_Map.h"\
-	"..\..\..\ace\Mem_Map.i"\
-	"..\..\..\ace\Memory_Pool.h"\
-	"..\..\..\ace\Memory_Pool.i"\
-	"..\..\..\ace\Message_Block.h"\
-	"..\..\..\ace\Message_Block.i"\
-	"..\..\..\ace\Message_Queue.h"\
-	"..\..\..\ace\Message_Queue.i"\
-	"..\..\..\ace\Message_Queue_T.cpp"\
-	"..\..\..\ace\Message_Queue_T.h"\
-	"..\..\..\ace\Message_Queue_T.i"\
-	"..\..\..\ace\Module.cpp"\
-	"..\..\..\ace\Module.h"\
-	"..\..\..\ace\Module.i"\
-	"..\..\..\ace\Object_Manager.h"\
-	"..\..\..\ace\Object_Manager.i"\
-	"..\..\..\ace\OS.h"\
-	"..\..\..\ace\OS.i"\
-	"..\..\..\ace\Reactor.h"\
-	"..\..\..\ace\Reactor.i"\
-	"..\..\..\ace\Reactor_Impl.h"\
-	"..\..\..\ace\Service_Config.h"\
-	"..\..\..\ace\Service_Config.i"\
-	"..\..\..\ace\Service_Object.h"\
-	"..\..\..\ace\Service_Object.i"\
-	"..\..\..\ace\Service_Repository.h"\
-	"..\..\..\ace\Service_Repository.i"\
-	"..\..\..\ace\Service_Types.h"\
-	"..\..\..\ace\Service_Types.i"\
-	"..\..\..\ace\Shared_Object.h"\
-	"..\..\..\ace\Shared_Object.i"\
-	"..\..\..\ace\Signal.h"\
-	"..\..\..\ace\Signal.i"\
-	"..\..\..\ace\Singleton.cpp"\
-	"..\..\..\ace\Singleton.h"\
-	"..\..\..\ace\Singleton.i"\
-	"..\..\..\ace\SOCK.h"\
-	"..\..\..\ace\SOCK.i"\
-	"..\..\..\ace\SOCK_Acceptor.h"\
-	"..\..\..\ace\SOCK_Acceptor.i"\
-	"..\..\..\ace\SOCK_Connector.h"\
-	"..\..\..\ace\SOCK_Connector.i"\
-	"..\..\..\ace\SOCK_IO.h"\
-	"..\..\..\ace\SOCK_IO.i"\
-	"..\..\..\ace\SOCK_Stream.h"\
-	"..\..\..\ace\SOCK_Stream.i"\
-	"..\..\..\ace\SString.h"\
-	"..\..\..\ace\SString.i"\
-	"..\..\..\ace\Strategies.h"\
-	"..\..\..\ace\Strategies.i"\
-	"..\..\..\ace\Strategies_T.cpp"\
-	"..\..\..\ace\Strategies_T.h"\
-	"..\..\..\ace\Strategies_T.i"\
-	"..\..\..\ace\Stream_Modules.cpp"\
-	"..\..\..\ace\Stream_Modules.h"\
-	"..\..\..\ace\Stream_Modules.i"\
-	"..\..\..\ace\streams.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.i"\
-	"..\..\..\ace\SV_Semaphore_Simple.h"\
-	"..\..\..\ace\SV_Semaphore_Simple.i"\
-	"..\..\..\ace\Svc_Conf_Tokens.h"\
-	"..\..\..\ace\Svc_Handler.cpp"\
-	"..\..\..\ace\Svc_Handler.h"\
-	"..\..\..\ace\Svc_Handler.i"\
-	"..\..\..\ace\Synch.h"\
-	"..\..\..\ace\Synch.i"\
-	"..\..\..\ace\Synch_Options.h"\
-	"..\..\..\ace\Synch_Options.i"\
-	"..\..\..\ace\Synch_T.cpp"\
-	"..\..\..\ace\Synch_T.h"\
-	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\Task.h"\
-	"..\..\..\ace\Task.i"\
-	"..\..\..\ace\Task_T.cpp"\
-	"..\..\..\ace\Task_T.h"\
-	"..\..\..\ace\Task_T.i"\
-	"..\..\..\ace\Thread.h"\
-	"..\..\..\ace\Thread.i"\
-	"..\..\..\ace\Thread_Manager.h"\
-	"..\..\..\ace\Thread_Manager.i"\
-	"..\..\..\ace\Time_Value.h"\
-	"..\..\..\ace\Timer_Queue.h"\
-	"..\..\..\ace\Timer_Queue_T.cpp"\
-	"..\..\..\ace\Timer_Queue_T.h"\
-	"..\..\..\ace\Timer_Queue_T.i"\
-	"..\..\..\ace\Trace.h"\
-	"..\..\..\ace\WFMO_Reactor.h"\
-	"..\..\..\ace\WFMO_Reactor.i"\
-	"..\..\..\ace\ws2tcpip.h"\
-	"..\..\tao\align.h"\
-	"..\..\tao\any.h"\
-	"..\..\tao\any.i"\
-	"..\..\tao\cdr.h"\
-	"..\..\tao\cdr.i"\
-	"..\..\tao\Client_Strategy_Factory.h"\
-	"..\..\tao\connect.h"\
-	"..\..\tao\connect.i"\
-	"..\..\tao\corba.h"\
-	"..\..\tao\CurrentC.h"\
-	"..\..\tao\CurrentC.i"\
-	"..\..\tao\debug.h"\
-	"..\..\tao\default_client.h"\
-	"..\..\tao\default_client.i"\
-	"..\..\tao\default_server.h"\
-	"..\..\tao\default_server.i"\
-	"..\..\tao\Environment.h"\
-	"..\..\tao\Environment.i"\
-	"..\..\tao\Exception.h"\
-	"..\..\tao\Exception.i"\
-	"..\..\tao\giop.h"\
-	"..\..\tao\giop.i"\
-	"..\..\tao\IIOP_Interpreter.h"\
-	"..\..\tao\IIOP_Object.h"\
-	"..\..\tao\IIOP_Object.i"\
-	"..\..\tao\IIOP_ORB.h"\
-	"..\..\tao\IIOP_ORB.i"\
-	"..\..\tao\Invocation.h"\
-	"..\..\tao\Invocation.i"\
-	"..\..\tao\marshal.h"\
-	"..\..\tao\marshal.i"\
-	"..\..\tao\nvlist.h"\
-	"..\..\tao\NVList.i"\
-	"..\..\tao\object.h"\
-	"..\..\tao\object.i"\
-	"..\..\tao\Object_KeyC.h"\
-	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Operation_Table.h"\
-	"..\..\tao\orb.h"\
-	"..\..\tao\ORB.i"\
-	"..\..\tao\orb_core.h"\
-	"..\..\tao\orb_core.i"\
-	"..\..\tao\ORB_Strategies_T.cpp"\
-	"..\..\tao\ORB_Strategies_T.h"\
-	"..\..\tao\ORB_Strategies_T.i"\
-	"..\..\tao\orbconf.h"\
-	"..\..\tao\params.h"\
-	"..\..\tao\params.i"\
-	"..\..\tao\poa.h"\
-	"..\..\tao\POA.i"\
-	"..\..\tao\POA_CORBA.h"\
-	"..\..\tao\poa_macros.h"\
-	"..\..\tao\poaC.h"\
-	"..\..\tao\poaC.i"\
-	"..\..\tao\poaS.h"\
-	"..\..\tao\poaS.i"\
-	"..\..\tao\PolicyC.h"\
-	"..\..\tao\PolicyC.i"\
-	"..\..\tao\Principal.h"\
-	"..\..\tao\Principal.i"\
-	"..\..\tao\request.h"\
-	"..\..\tao\Request.i"\
-	"..\..\tao\sequence.h"\
-	"..\..\tao\sequence.i"\
-	"..\..\tao\Sequence_T.cpp"\
-	"..\..\tao\Sequence_T.h"\
-	"..\..\tao\Sequence_T.i"\
-	"..\..\tao\servant_base.h"\
-	"..\..\tao\Server_Request.h"\
-	"..\..\tao\Server_Request.i"\
-	"..\..\tao\Server_Strategy_Factory.h"\
-	"..\..\tao\singletons.h"\
-	"..\..\tao\stub.h"\
-	"..\..\tao\stub.i"\
-	"..\..\tao\typecode.h"\
-	"..\..\tao\typecode.i"\
-	"..\..\tao\Union.h"\
-	"..\..\tao\varout.cpp"\
-	"..\..\tao\varout.h"\
-	"..\..\tao\varout.i"\
-	".\orbsvcs_export.h"\
-	".\Trader\Constraint_Interpreter.h"\
-	".\Trader\Constraint_Nodes.h"\
-	".\Trader\Constraint_Tokens.h"\
-	".\Trader\Constraint_Visitors.h"\
-	".\Trader\Offer_Database.cpp"\
-	".\Trader\Offer_Database.h"\
-	".\Trader\Offer_Iterators.h"\
-	".\Trader\Offer_Iterators_T.cpp"\
-	".\Trader\Offer_Iterators_T.h"\
-	".\Trader\Trader.h"\
-	".\Trader\Trader_Interfaces.h"\
-	".\Trader\Trader_T.cpp"\
-	".\Trader\Trader_T.h"\
-	".\Trader\Trader_Utils.h"\
-	
-NODEP_CPP_TRADER_=\
-	"..\..\..\ace\sys_conf.h"\
-	"..\..\tao\Object_Table.h"\
-	".\CosTradingC.h"\
-	".\CosTradingC.i"\
-	".\CosTradingS.h"\
-	".\CosTradingS.i"\
-	".\CosTradingS_T.cpp"\
-	".\CosTradingS_T.h"\
-	".\CosTradingS_T.i"\
-	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
@@ -30257,272 +29876,13 @@ SOURCE=.\Trader\Trader_T.cpp
 
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
 
+# PROP Exclude_From_Build 1
+
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
 
 # PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
-
-DEP_CPP_TRADER_T=\
-	"..\..\..\ace\Acceptor.cpp"\
-	"..\..\..\ace\Acceptor.h"\
-	"..\..\..\ace\Acceptor.i"\
-	"..\..\..\ace\ACE.h"\
-	"..\..\..\ace\ACE.i"\
-	"..\..\..\ace\Addr.h"\
-	"..\..\..\ace\Addr.i"\
-	"..\..\..\ace\Atomic_Op.i"\
-	"..\..\..\ace\Auto_Ptr.cpp"\
-	"..\..\..\ace\Auto_Ptr.h"\
-	"..\..\..\ace\Auto_Ptr.i"\
-	"..\..\..\ace\Basic_Types.h"\
-	"..\..\..\ace\Basic_Types.i"\
-	"..\..\..\ace\config-win32-borland.h"\
-	"..\..\..\ace\config-win32-common.h"\
-	"..\..\..\ace\config-win32.h"\
-	"..\..\..\ace\config-WinCE.h"\
-	"..\..\..\ace\config.h"\
-	"..\..\..\ace\Connector.cpp"\
-	"..\..\..\ace\Connector.h"\
-	"..\..\..\ace\Connector.i"\
-	"..\..\..\ace\Containers.cpp"\
-	"..\..\..\ace\Containers.h"\
-	"..\..\..\ace\Containers.i"\
-	"..\..\..\ace\Dynamic.h"\
-	"..\..\..\ace\Dynamic.i"\
-	"..\..\..\ace\Dynamic_Service.cpp"\
-	"..\..\..\ace\Dynamic_Service.h"\
-	"..\..\..\ace\Event_Handler.h"\
-	"..\..\..\ace\Event_Handler.i"\
-	"..\..\..\ace\Free_List.cpp"\
-	"..\..\..\ace\Free_List.h"\
-	"..\..\..\ace\Free_List.i"\
-	"..\..\..\ace\Get_Opt.h"\
-	"..\..\..\ace\Get_Opt.i"\
-	"..\..\..\ace\Handle_Set.h"\
-	"..\..\..\ace\Handle_Set.i"\
-	"..\..\..\ace\Hash_Map_Manager.cpp"\
-	"..\..\..\ace\Hash_Map_Manager.h"\
-	"..\..\..\ace\inc_user_config.h"\
-	"..\..\..\ace\INET_Addr.h"\
-	"..\..\..\ace\INET_Addr.i"\
-	"..\..\..\ace\IO_Cntl_Msg.h"\
-	"..\..\..\ace\iosfwd.h"\
-	"..\..\..\ace\IPC_SAP.h"\
-	"..\..\..\ace\IPC_SAP.i"\
-	"..\..\..\ace\Log_Msg.h"\
-	"..\..\..\ace\Log_Priority.h"\
-	"..\..\..\ace\Log_Record.h"\
-	"..\..\..\ace\Log_Record.i"\
-	"..\..\..\ace\Malloc.h"\
-	"..\..\..\ace\Malloc.i"\
-	"..\..\..\ace\Malloc_Base.h"\
-	"..\..\..\ace\Malloc_T.cpp"\
-	"..\..\..\ace\Malloc_T.h"\
-	"..\..\..\ace\Malloc_T.i"\
-	"..\..\..\ace\Managed_Object.cpp"\
-	"..\..\..\ace\Managed_Object.h"\
-	"..\..\..\ace\Managed_Object.i"\
-	"..\..\..\ace\Map_Manager.cpp"\
-	"..\..\..\ace\Map_Manager.h"\
-	"..\..\..\ace\Map_Manager.i"\
-	"..\..\..\ace\Mem_Map.h"\
-	"..\..\..\ace\Mem_Map.i"\
-	"..\..\..\ace\Memory_Pool.h"\
-	"..\..\..\ace\Memory_Pool.i"\
-	"..\..\..\ace\Message_Block.h"\
-	"..\..\..\ace\Message_Block.i"\
-	"..\..\..\ace\Message_Queue.h"\
-	"..\..\..\ace\Message_Queue.i"\
-	"..\..\..\ace\Message_Queue_T.cpp"\
-	"..\..\..\ace\Message_Queue_T.h"\
-	"..\..\..\ace\Message_Queue_T.i"\
-	"..\..\..\ace\Module.cpp"\
-	"..\..\..\ace\Module.h"\
-	"..\..\..\ace\Module.i"\
-	"..\..\..\ace\Object_Manager.h"\
-	"..\..\..\ace\Object_Manager.i"\
-	"..\..\..\ace\OS.h"\
-	"..\..\..\ace\OS.i"\
-	"..\..\..\ace\Reactor.h"\
-	"..\..\..\ace\Reactor.i"\
-	"..\..\..\ace\Reactor_Impl.h"\
-	"..\..\..\ace\Service_Config.h"\
-	"..\..\..\ace\Service_Config.i"\
-	"..\..\..\ace\Service_Object.h"\
-	"..\..\..\ace\Service_Object.i"\
-	"..\..\..\ace\Service_Repository.h"\
-	"..\..\..\ace\Service_Repository.i"\
-	"..\..\..\ace\Service_Types.h"\
-	"..\..\..\ace\Service_Types.i"\
-	"..\..\..\ace\Shared_Object.h"\
-	"..\..\..\ace\Shared_Object.i"\
-	"..\..\..\ace\Signal.h"\
-	"..\..\..\ace\Signal.i"\
-	"..\..\..\ace\Singleton.cpp"\
-	"..\..\..\ace\Singleton.h"\
-	"..\..\..\ace\Singleton.i"\
-	"..\..\..\ace\SOCK.h"\
-	"..\..\..\ace\SOCK.i"\
-	"..\..\..\ace\SOCK_Acceptor.h"\
-	"..\..\..\ace\SOCK_Acceptor.i"\
-	"..\..\..\ace\SOCK_Connector.h"\
-	"..\..\..\ace\SOCK_Connector.i"\
-	"..\..\..\ace\SOCK_IO.h"\
-	"..\..\..\ace\SOCK_IO.i"\
-	"..\..\..\ace\SOCK_Stream.h"\
-	"..\..\..\ace\SOCK_Stream.i"\
-	"..\..\..\ace\SString.h"\
-	"..\..\..\ace\SString.i"\
-	"..\..\..\ace\Strategies.h"\
-	"..\..\..\ace\Strategies.i"\
-	"..\..\..\ace\Strategies_T.cpp"\
-	"..\..\..\ace\Strategies_T.h"\
-	"..\..\..\ace\Strategies_T.i"\
-	"..\..\..\ace\Stream_Modules.cpp"\
-	"..\..\..\ace\Stream_Modules.h"\
-	"..\..\..\ace\Stream_Modules.i"\
-	"..\..\..\ace\streams.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.h"\
-	"..\..\..\ace\SV_Semaphore_Complex.i"\
-	"..\..\..\ace\SV_Semaphore_Simple.h"\
-	"..\..\..\ace\SV_Semaphore_Simple.i"\
-	"..\..\..\ace\Svc_Conf_Tokens.h"\
-	"..\..\..\ace\Svc_Handler.cpp"\
-	"..\..\..\ace\Svc_Handler.h"\
-	"..\..\..\ace\Svc_Handler.i"\
-	"..\..\..\ace\Synch.h"\
-	"..\..\..\ace\Synch.i"\
-	"..\..\..\ace\Synch_Options.h"\
-	"..\..\..\ace\Synch_Options.i"\
-	"..\..\..\ace\Synch_T.cpp"\
-	"..\..\..\ace\Synch_T.h"\
-	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\Task.h"\
-	"..\..\..\ace\Task.i"\
-	"..\..\..\ace\Task_T.cpp"\
-	"..\..\..\ace\Task_T.h"\
-	"..\..\..\ace\Task_T.i"\
-	"..\..\..\ace\Thread.h"\
-	"..\..\..\ace\Thread.i"\
-	"..\..\..\ace\Thread_Manager.h"\
-	"..\..\..\ace\Thread_Manager.i"\
-	"..\..\..\ace\Time_Value.h"\
-	"..\..\..\ace\Timer_Queue.h"\
-	"..\..\..\ace\Timer_Queue_T.cpp"\
-	"..\..\..\ace\Timer_Queue_T.h"\
-	"..\..\..\ace\Timer_Queue_T.i"\
-	"..\..\..\ace\Trace.h"\
-	"..\..\..\ace\WFMO_Reactor.h"\
-	"..\..\..\ace\WFMO_Reactor.i"\
-	"..\..\..\ace\ws2tcpip.h"\
-	"..\..\tao\align.h"\
-	"..\..\tao\any.h"\
-	"..\..\tao\any.i"\
-	"..\..\tao\cdr.h"\
-	"..\..\tao\cdr.i"\
-	"..\..\tao\Client_Strategy_Factory.h"\
-	"..\..\tao\connect.h"\
-	"..\..\tao\connect.i"\
-	"..\..\tao\corba.h"\
-	"..\..\tao\CurrentC.h"\
-	"..\..\tao\CurrentC.i"\
-	"..\..\tao\debug.h"\
-	"..\..\tao\default_client.h"\
-	"..\..\tao\default_client.i"\
-	"..\..\tao\default_server.h"\
-	"..\..\tao\default_server.i"\
-	"..\..\tao\Environment.h"\
-	"..\..\tao\Environment.i"\
-	"..\..\tao\Exception.h"\
-	"..\..\tao\Exception.i"\
-	"..\..\tao\giop.h"\
-	"..\..\tao\giop.i"\
-	"..\..\tao\IIOP_Interpreter.h"\
-	"..\..\tao\IIOP_Object.h"\
-	"..\..\tao\IIOP_Object.i"\
-	"..\..\tao\IIOP_ORB.h"\
-	"..\..\tao\IIOP_ORB.i"\
-	"..\..\tao\Invocation.h"\
-	"..\..\tao\Invocation.i"\
-	"..\..\tao\marshal.h"\
-	"..\..\tao\marshal.i"\
-	"..\..\tao\nvlist.h"\
-	"..\..\tao\NVList.i"\
-	"..\..\tao\object.h"\
-	"..\..\tao\object.i"\
-	"..\..\tao\Object_KeyC.h"\
-	"..\..\tao\Object_KeyC.i"\
-	"..\..\tao\Operation_Table.h"\
-	"..\..\tao\orb.h"\
-	"..\..\tao\ORB.i"\
-	"..\..\tao\orb_core.h"\
-	"..\..\tao\orb_core.i"\
-	"..\..\tao\ORB_Strategies_T.cpp"\
-	"..\..\tao\ORB_Strategies_T.h"\
-	"..\..\tao\ORB_Strategies_T.i"\
-	"..\..\tao\orbconf.h"\
-	"..\..\tao\params.h"\
-	"..\..\tao\params.i"\
-	"..\..\tao\poa.h"\
-	"..\..\tao\POA.i"\
-	"..\..\tao\POA_CORBA.h"\
-	"..\..\tao\poa_macros.h"\
-	"..\..\tao\poaC.h"\
-	"..\..\tao\poaC.i"\
-	"..\..\tao\poaS.h"\
-	"..\..\tao\poaS.i"\
-	"..\..\tao\PolicyC.h"\
-	"..\..\tao\PolicyC.i"\
-	"..\..\tao\Principal.h"\
-	"..\..\tao\Principal.i"\
-	"..\..\tao\request.h"\
-	"..\..\tao\Request.i"\
-	"..\..\tao\sequence.h"\
-	"..\..\tao\sequence.i"\
-	"..\..\tao\Sequence_T.cpp"\
-	"..\..\tao\Sequence_T.h"\
-	"..\..\tao\Sequence_T.i"\
-	"..\..\tao\servant_base.h"\
-	"..\..\tao\Server_Request.h"\
-	"..\..\tao\Server_Request.i"\
-	"..\..\tao\Server_Strategy_Factory.h"\
-	"..\..\tao\singletons.h"\
-	"..\..\tao\stub.h"\
-	"..\..\tao\stub.i"\
-	"..\..\tao\typecode.h"\
-	"..\..\tao\typecode.i"\
-	"..\..\tao\Union.h"\
-	"..\..\tao\varout.cpp"\
-	"..\..\tao\varout.h"\
-	"..\..\tao\varout.i"\
-	".\orbsvcs_export.h"\
-	".\Trader\Constraint_Interpreter.h"\
-	".\Trader\Constraint_Nodes.h"\
-	".\Trader\Constraint_Tokens.h"\
-	".\Trader\Constraint_Visitors.h"\
-	".\Trader\Offer_Database.cpp"\
-	".\Trader\Offer_Database.h"\
-	".\Trader\Offer_Iterators.h"\
-	".\Trader\Offer_Iterators_T.cpp"\
-	".\Trader\Offer_Iterators_T.h"\
-	".\Trader\Trader.h"\
-	".\Trader\Trader_Interfaces.cpp"\
-	".\Trader\Trader_Interfaces.h"\
-	".\Trader\Trader_T.h"\
-	".\Trader\Trader_Utils.h"\
-	
-NODEP_CPP_TRADER_T=\
-	"..\..\..\ace\sys_conf.h"\
-	"..\..\tao\Object_Table.h"\
-	".\CosTradingC.h"\
-	".\CosTradingC.i"\
-	".\CosTradingS.h"\
-	".\CosTradingS.i"\
-	".\CosTradingS_T.cpp"\
-	".\CosTradingS_T.h"\
-	".\CosTradingS_T.i"\
-	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
