@@ -1,3 +1,8 @@
+Mon Nov 23 17:45:16 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/IIOP_Object.cpp (do_static_call): <status> cannot be
+	  initialized to zero.  
+
 Wed Nov 25 18:20:55 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * tao/Invocation.cpp:  Added a couple of TAO_CHECK_ENV_SYS macros
