@@ -484,6 +484,7 @@ static void
 idl_store_pragma (char *buf)
 {
   char *sp = buf + 1;
+  int crunched = 0;
 
   // Remove all the blanks between the '#' and the 'pragma'.
   if (*sp != 'p')
@@ -491,6 +492,7 @@ idl_store_pragma (char *buf)
       while (*sp != 'p')
         {
           ++sp;
+          ++crunched;
         }
 
       char *tp = buf + 1;
@@ -498,21 +500,9 @@ idl_store_pragma (char *buf)
       while (*sp != '\n')
         {
           *tp = *sp;
-	        ++tp; 
+          ++tp;
           ++sp;
         }
-    }
-
-  if (ACE_OS::strstr (buf + 8, "import") != 0) 
-    {
-      idl_global->set_import (I_TRUE);
-      return;
-    }
-
-  if (ACE_OS::strstr (buf + 8, "include") != 0) 
-    {
-      idl_global->set_import (I_FALSE);
-      return;
     }
 
   // Remove the final '\n'.
@@ -521,7 +511,22 @@ idl_store_pragma (char *buf)
       ++sp;
     }
 
+  // The '\n' is still <crunched> spaces too far away, with
+  // garbage characters in between.
+  sp -= crunched;
   *sp = '\0';
+
+  if (ACE_OS::strstr (buf + 8, "import") != 0)
+    {
+      idl_global->set_import (I_TRUE);
+      return;
+    }
+
+  if (ACE_OS::strstr (buf + 8, "include") != 0)
+    {
+      idl_global->set_import (I_FALSE);
+      return;
+    }
 
   if (ACE_OS::strncmp (buf + 8, "prefix", 6) == 0)
     {
