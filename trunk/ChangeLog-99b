@@ -1,5 +1,12 @@
 Mon Jan 18 16:19:56 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* ace/OS.cpp (open): If a file is open with _O_TEMPORARY flag set
+	  on Win32, we also set the FILE_ATTRIBUTE_TEMPORARY so OS will
+	  try to cache it in memory to speed up access.
+
+	* ace/ACE.cpp (open_temp_file): On Win32, temporary file should be
+	  opened with _O_TEMPORARY flag set, not FILE_DELETE_ON_CLOSE.
+
 	* include/makeinclude/wrapper_macros.GNU: My previous fix of
 	  avoiding multiple definition of ACE_NDEBUG was not correct.  Now
 	  the macro check where should the definition go to.  Thanks to
