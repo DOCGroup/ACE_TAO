@@ -1,3 +1,9 @@
+Fri Sep 18 11:27:00 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.{h,cpp}: Moved all the
+	  template code from Endpoint_Strategy.{h,cpp} into these separate
+	  files.
+
 Fri Sep 18 08:39:13 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/EC_Mcast/EC_Mcast.i
