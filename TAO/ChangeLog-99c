@@ -1,3 +1,18 @@
+Sun Sep 26 16:37:33 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+
+	* orbsvcs/tests/AVStreams/Pluggable/server.cpp: 
+	* orbsvcs/tests/AVStreams/Pluggable/ftp.cpp: 
+	* orbsvcs/tests/AVStreams/Multicast/server.cpp: 
+	* orbsvcs/tests/AVStreams/Multicast/ftp.cpp: 
+	* orbsvcs/tests/AVStreams/Full_Profile/server.cpp: 
+	* orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp: 
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp: 
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.cpp: 
+	Removed unused variables and added missing template instantiations	
+	
+
+
 Sun Sep 26 04:20:00 1999  Michael Kircher  <Michael.Kicher@mchp.siemens.de>
 
 	* TAO_IDL/Makefile
@@ -212,6 +227,7 @@ Thu Sep 23 21:53:23 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
           Some makefiles used TAO_ROOT but did not define the macro,
           others defined the macro in terms of ACE_ROOT if it was not
           defined already; changed all to use the second approach.
+
 
 Thu Sep 23 19:26:02 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
