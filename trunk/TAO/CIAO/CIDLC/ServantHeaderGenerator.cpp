@@ -1541,17 +1541,6 @@ namespace
          << STRS[ENV_SNGL_HDR] << ")" << endl
          << STRS[EXCP_SNGL] << ";" << endl << endl;
 
-      os << "protected:" << endl << endl
-         << t.scoped_name ().scope_name () << "::CCM_" << t.name ()
-         << "_var" << endl
-         << "executor_;" << endl << endl;
-
-      os << t.name () << "_Context *" << endl
-         << "context_;" << endl << endl;
-
-      os << "::CIAO::Session_Container *" << endl
-         << "container_;" << endl << endl;
-
       // Generate protected operations for facets and event sinks.
       {
         Traversal::Component component_emitter;
