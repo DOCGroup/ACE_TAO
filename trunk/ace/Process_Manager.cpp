@@ -28,40 +28,6 @@ ACE_Process_Manager::cleanup (void *, void *)
   ACE_Process_Manager::close_singleton ();
 }
 
-class ACE_Managed_Process : public ACE_Process
-{
-  // = TITLE
-  //   <ACE_Managed_Process> is just an <ACE_Process> with an
-  //   <unmanage> method that deletes the instance.
-public:
-  ACE_Managed_Process (void);
-  // Constructor.
-
-  virtual void unmanage (void);
-  // Cleanup by deleting <this>.
-
-private:
-  virtual ~ACE_Managed_Process (void);
-  // Make sure that we're allocated dynamically!
-
-  friend class ace_dewarn_gplusplus;
-  // Keep G++ happy...
-};
-
-ACE_Managed_Process::ACE_Managed_Process (void)
-{
-}
-
-ACE_Managed_Process::~ACE_Managed_Process (void)
-{
-}
-
-void
-ACE_Managed_Process::unmanage (void)
-{
-  delete this;
-}
-
 ACE_ALLOC_HOOK_DEFINE(ACE_Process_Manager)
 
 // Singleton instance.
