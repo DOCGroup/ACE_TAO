@@ -1,3 +1,28 @@
+Fri Dec 19 11:25:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Abstract_Servant_Base.h:
+        * tao/Any.h:
+        * tao/Any_SystemException.h:
+        * tao/Arg_Traits_T.h:
+        * tao/Argument.h:
+        * tao/Basic_Types.h:
+        * tao/Collocation_Resolver.h:
+        * tao/Dynamic_Adapter.h:
+        * tao/Invocation_Utils.h:
+        * tao/IORInterceptor_Adapter.h:
+        * tao/Object.h:
+        * tao/Object_Argument_T.h:
+        * tao/Object_Loader.h:
+        * tao/Objref_VarOut_T.h:
+        * tao/Special_Basic_Arguments.h:
+        * tao/Var_Size_Argument_T.h:
+        * tao/PortableServer/POA.h:
+        * tao/RTCORBA/RT_Endpoint_Utils.h:
+        * tao/Valuetype/Value_VarOut_T.h:
+        * tao/Valuetype/ValueBase.h:
+          Removed not needed ; after the c++ namespace closure to fix Tru64
+          CC compiler warning.
+
 Thu Dec 18 09:54:36 2003  Balachandran  <bala@dre.vanderbilt.edu>
 
         * TAO version 1.3.6 released.
@@ -39,13 +64,13 @@ Wed Dec 17 09:26:14 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 Tue Dec 16 07:52:43 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* tao/default_resource.cpp (get_reactor): Changed
-	
+
 	  if (ACE_LOG_MSG->errnum ())
-	  
-	  to 
-	  
+
+	  to
+
 	  if (!reactor->initialized ())
-	  
+
 	  since the latter is more robust.  Thanks to John Fletcher
  	  <john.fletcher@rd.bbc.co.uk> and Johnny Willemsen for motivating
  	  this.
@@ -76,10 +101,10 @@ Mon Dec 15 09:30:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* orbsvcs/tests/RTCosScheduling/RTCosScheduling.mpc:
 	* performance-tests/RTCorba/Thread_Pool/Thread_Pool.mpc:
 	* tests/RTCORBA/Priority_Inversion_With_Bands/Priority_Inversion_With_Bands.mpc:
-          Do not build these tests when minimum_corba is enabled.	  
+          Do not build these tests when minimum_corba is enabled.
 
 Mon Dec 15 09:24:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
-        
+
         * examples/POA/Forwarding/POA_Forwarding.mpc:
           The server doesn't need the Generic_Servant library. This fixes the
           linker warnings in the SunOS Forte8 build we see.
@@ -117,7 +142,7 @@ Sun Dec 14 09:56:37 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  but it slowed down the ORB considerably due to the two
 	  allocations along the critical path. We will try to get these
 	  fixes in later once we have a way to get around the
-	  allocations. 
+	  allocations.
 
 Sun Dec 14 08:47:03 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -163,7 +188,7 @@ Sat Dec 13 08:36:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 Sat Dec 13 08:29:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Log/Log_i.cpp:
-     
+
 	  Reverted a change that was made accidentally with no ChangeLog
 	  entry. This should fix VC6.0 problems in the daily builds.
 
