@@ -164,16 +164,7 @@ TAO_PropertySetFactory::create_constrained_propertyset (const CosPropertyService
       // Throw the exception.
       TAO_RETHROW_RETURN (0);
     }
-  TAO_ENDTRY;
-
-  // % levine 9 nov 98 % It would probably be worth modifying the
-  // % levine 9 nov 98 % TAO_THROW* macros so that this wouldn't be
-  // % levine 9 nov 98 % necessary, but I don't see how to do that . . .
-#if defined (TAO_HAS_EXCEPTIONS)
-  ACE_NOTREACHED (return 0);
-#else  /* ! TAO_HAS_EXCEPTIONS */
-  return 0;
-#endif /* ! TAO_HAS_EXCEPTIONS */
+  TAO_ENDTRY_RETURN (0);
 }
 
 // Allows a client to create a new TAO_PropertySet with specific
