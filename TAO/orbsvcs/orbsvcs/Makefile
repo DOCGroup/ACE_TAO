@@ -398,6 +398,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 LDFLAGS += -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs \
+	-I$(TAO_ROOT)/orbsvcs/orbsvcs/Event \
         $(foreach svc, $(TAO_ORBSVCS), -DTAO_ORBSVCS_HAS_$(svc))
 
 #
