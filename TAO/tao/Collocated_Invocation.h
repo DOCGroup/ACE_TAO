@@ -39,7 +39,7 @@ namespace TAO
    *
    * @brief Class for Collocated invocations
    *
-   * @NOTE: Reliable oneways are not handled properly including use of
+   * @note Reliable oneways are not handled properly including use of
    * interceptors. This class should technically serve as the base
    * for all invocation types. But now, this is the only class that
    * handles collocated invocations and that too in a brain dead way.

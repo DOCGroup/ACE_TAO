@@ -247,7 +247,7 @@ namespace CORBA
     void create_list (CORBA::Long count,
                       CORBA::NVList_ptr &new_list
                       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-                      
+
     void create_operation_list(CORBA::OperationDef_ptr,
                              CORBA::NVList_ptr&
                              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
@@ -583,7 +583,7 @@ namespace CORBA
 
     /// Set collocation optimization status.
     /// Get collocation optimization status.
-    /// @@todo: Who is calling this?
+    /// @todo Who is calling this?
     void _optimize_collocation_objects (CORBA::Boolean opt);
     CORBA::Boolean _optimize_collocation_objects (void) const;
 

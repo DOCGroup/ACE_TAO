@@ -1,18 +1,13 @@
 /* -*- C++ -*- */
-// $Id$
-
-// ============================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    RT_Object_Adapter_Factory.h
-//
-// = AUTHOR
-//    Frank Hunleth
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    RT_Object_Adapter_Factory.h
+ *
+ *  $Id$
+ *
+ *  @author  Frank Hunleth
+ */
+// ===================================================================
 
 #ifndef TAO_RT_OBJECT_ADAPTER_FACTORY_H
 #define TAO_RT_OBJECT_ADAPTER_FACTORY_H
@@ -34,8 +29,8 @@
 class TAO_RTPortableServer_Export TAO_RT_Object_Adapter_Factory : public TAO_Object_Adapter_Factory
 {
 public:
+  /// Constructor
   TAO_RT_Object_Adapter_Factory (void);
-  // Constructor
 
   /// Create adapter.
   virtual TAO_Adapter *create (TAO_ORB_Core *orb_core);

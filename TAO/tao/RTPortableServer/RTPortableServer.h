@@ -1,19 +1,13 @@
 /* -*- C++ -*- */
-
-// $Id$
-
-// =========================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    RTPortableserver.h
-//
-// = AUTHOR
-//    Frank Hunleth <fhunleth@cs.wustl.edu>
-//
-// =========================================================================
+//=============================================================================
+/**
+ *  @file    RTPortableserver.h
+ *
+ *  $Id$
+ *
+ *  @author  Frank Hunleth  <fhuntleth@cs.wustl.edu>
+ */
+//=============================================================================
 
 #ifndef TAO_RT_PORTABLESERVER_H
 #define TAO_RT_PORTABLESERVER_H
@@ -34,7 +28,7 @@
 class TAO_RTPortableServer_Export TAO_RTPortableServer_Initializer
 {
 public:
-  // Constructor.
+  /// Constructor.
   TAO_RTPortableServer_Initializer (void);
 };
 
