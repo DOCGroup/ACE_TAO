@@ -1,7 +1,7 @@
 #----------------------------------------------------------------------------
 #	$Id$
 #
-#	Top-level Makefile for the Logging Service test
+#	Top-level Makefile for the Logging Service of the TAO ORB
 #
 #----------------------------------------------------------------------------
 
@@ -9,20 +9,17 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-ifndef TAO_ROOT
-  TAO_ROOT = $(ACE_ROOT)/TAO
-endif # ! TAO_ROOT
+BIN 	= Logging_Service
 
-LDLIBS     =  -lorbsvcs -lTAO
+SRC	= Logging_Service_i.cpp Logging_Service.cpp 
 
-SRC = 	Logging_Test.cpp \
-	Logging_Test_i.cpp
+LDLIBS	= -lorbsvcs -lTAO
 
-LOGGING_TEST_OBJS = Logging_Test_i.o Logging_Test.o
-
-BIN = Logging_Test
-BUILD = $(BIN)
 VLDLIBS = $(LDLIBS:%=%$(VAR))
+
+BUILD 	= $(BIN)
+
+LOGGING_OBJS = 	Logging_Service_i.o Logging_Service.o 
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
@@ -36,24 +33,27 @@ include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 #include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
+ifndef TAO_ROOT
+  TAO_ROOT = $(ACE_ROOT)/TAO
+endif # ! TAO_ROOT
+
 TSS_ORB_FLAG = #-DTAO_HAS_TSS_ORBCORE
+
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) $(TSS_ORB_FLAG)#-H
 
-Logging_Test:	$(addprefix $(VDIR),$(LOGGING_TEST_OBJS))
-		$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
+Logging_Service: $(addprefix $(VDIR),$(LOGGING_OBJS))
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
- $(TAO_ROOT)/tao/corba.h \
- $(TAO_ROOT)/tao/orbconf.h \
+.obj/Logging_Service_i.o .obj/Logging_Service_i.so .shobj/Logging_Service_i.o .shobj/Logging_Service_i.so: Logging_Service_i.cpp Logging_Service_i.h \
+ $(ACE_ROOT)/ace/Get_Opt.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -62,12 +62,13 @@ Logging_Test:	$(addprefix $(VDIR),$(LOGGING_TEST_OBJS))
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
+ $(TAO_ROOT)/tao/TAO.h \
+ $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
@@ -211,6 +212,7 @@ Logging_Test:	$(addprefix $(VDIR),$(LOGGING_TEST_OBJS))
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -268,8 +270,22 @@ Logging_Test:	$(addprefix $(VDIR),$(LOGGING_TEST_OBJS))
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/singletons.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Utils.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/IOR_Multicast.h \
+ $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
+ $(ACE_ROOT)/ace/SOCK_Dgram.h \
+ $(ACE_ROOT)/ace/SOCK_Dgram.i \
+ $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/CosNaming_i.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Entries.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Log/Logger_i.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LoggerS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LoggerC.h \
@@ -278,13 +294,12 @@ Logging_Test:	$(addprefix $(VDIR),$(LOGGING_TEST_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/LoggerS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LoggerS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LoggerS.i
-.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp \
- $(ACE_ROOT)/ace/INET_Addr.h \
+.obj/Logging_Service.o .obj/Logging_Service.so .shobj/Logging_Service.o .shobj/Logging_Service.so: Logging_Service.cpp Logging_Service_i.h \
+ $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -296,25 +311,21 @@ Logging_Test:	$(addprefix $(VDIR),$(LOGGING_TEST_OBJS))
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Get_Opt.i \
+ $(TAO_ROOT)/tao/TAO.h \
+ $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(ACE_ROOT)/ace/SOCK_Stream.h \
+ $(ACE_ROOT)/ace/SOCK_IO.h \
+ $(ACE_ROOT)/ace/SOCK.h \
  $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
- $(ACE_ROOT)/ace/SOCK_Dgram.h \
- $(ACE_ROOT)/ace/SOCK.h \
  $(ACE_ROOT)/ace/IPC_SAP.h \
  $(ACE_ROOT)/ace/IPC_SAP.i \
  $(ACE_ROOT)/ace/SOCK.i \
- $(ACE_ROOT)/ace/SOCK_Dgram.i \
- $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
- $(TAO_ROOT)/tao/corba.h \
- $(TAO_ROOT)/tao/orbconf.h \
- $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/Get_Opt.i \
- $(ACE_ROOT)/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK_IO.i \
+ $(ACE_ROOT)/ace/INET_Addr.h \
+ $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK_Stream.i \
  $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Event_Handler.h \
@@ -447,6 +458,7 @@ Logging_Test:	$(addprefix $(VDIR),$(LOGGING_TEST_OBJS))
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -504,9 +516,29 @@ Logging_Test:	$(addprefix $(VDIR),$(LOGGING_TEST_OBJS))
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/singletons.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Utils.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/IOR_Multicast.h \
+ $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
+ $(ACE_ROOT)/ace/SOCK_Dgram.h \
+ $(ACE_ROOT)/ace/SOCK_Dgram.i \
+ $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/CosNaming_i.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Entries.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Log/Logger_i.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoggerS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LoggerC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LoggerC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoggerS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoggerS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoggerS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoggerS.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
