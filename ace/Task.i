@@ -60,3 +60,30 @@ ACE_Task_Base::svc (void)
   ACE_TRACE ("ACE_Task_Base::svc");
   return 0;
 }
+
+// Default ACE_Task open routine
+
+ACE_INLINE int
+ACE_Task_Base::open (void *)
+{
+  ACE_TRACE ("ACE_Task_Base::open");
+  return 0;
+}
+
+// Default ACE_Task close routine
+
+ACE_INLINE int
+ACE_Task_Base::close (u_long)
+{
+  ACE_TRACE ("ACE_Task_Base::close");
+  return 0;
+}
+
+// Default ACE_Task put routine.
+
+ACE_INLINE int
+ACE_Task_Base::put (ACE_Message_Block *, ACE_Time_Value *)
+{
+  ACE_TRACE ("ACE_Task_Base::put");
+  return 0;
+}

@@ -14,9 +14,6 @@ class ACE_Svc_Export Test_Task : public MT_Task
 public:
   virtual int open (void *);
   virtual int close (u_long);
-  virtual int put (ACE_Message_Block *, ACE_Time_Value * = 0);
-  virtual int svc (void);
-  virtual int info (char **, size_t) const;
   virtual int init (int, char *[]);
   virtual int fini (void);
   virtual int suspend (void);
@@ -48,24 +45,6 @@ int
 Test_Task::resume (void) 
 {
   ACE_DEBUG ((LM_DEBUG, "resuming in %s\n", this->name () ? this->name () : "task"));
-  return 0;
-}
-
-int 
-Test_Task::put (ACE_Message_Block *, ACE_Time_Value *)
-{
-  return 0;
-}
-
-int 
-Test_Task::svc (void)
-{
-  return 0;
-}
-
-int
-Test_Task::info (char **, size_t) const
-{
   return 0;
 }
 

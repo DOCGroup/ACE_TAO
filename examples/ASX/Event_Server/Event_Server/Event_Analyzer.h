@@ -19,7 +19,6 @@ public:
   virtual int open (void *a = 0);
   virtual int close (u_long flags = 0);
   virtual int put (ACE_Message_Block *msg, ACE_Time_Value * = 0);
-  virtual int svc (void) { return 0; }
 
   /* Dynamic linking hooks */
   virtual int init (int argc, char *argv[]);

@@ -46,12 +46,6 @@ public:
   // ACE_Task hooks
   virtual int open (void * = 0);
   virtual int close (u_long = 0);
-  virtual int put (ACE_Message_Block *, ACE_Time_Value * = 0) { return 0; }
-
-  // ACE_Service_Object hooks
-  virtual int init (int, char **) { return 0; }
-  virtual int fini (void) { return 0; }
-  virtual int info (char **, size_t) const { return 0; }
 };
 
 // Define the Producer interface. 

@@ -8,25 +8,23 @@
 typedef FP::Return_Type FP_RETURN_TYPE;
 
 FP_RETURN_TYPE
-RT_Config_File_Parser::read_entry (RT_Config_File_Entry &entry, 
-				   int &line_number) 
+Consumer_Config_File_Parser::read_entry (Consumer_Config_File_Entry &entry, 
+					 int &line_number) 
 {
   FP_RETURN_TYPE read_result;
-  // increment the line count
+
+  // Increment the line count.
   line_number++;
 
-  // Ignore comments, check for EOF and EOLINE
-  // if this succeeds, we have our connection id
+  // Ignore comments, check for EOF and EOLINE if this succeeds, we
+  // have our connection id.
   while ((read_result = this->getint (entry.conn_id_)) != FP::SUCCESS) 
     {
       if (read_result == FP::EOFILE) 
 	return FP::EOFILE;
       else if (read_result == FP::EOLINE 
 	       || read_result == FP::COMMENT)
-	{
-	  // increment the line count
-	  line_number++;
-	}
+	line_number++;
     }
 
   // Get the logic id.
@@ -51,8 +49,8 @@ RT_Config_File_Parser::read_entry (RT_Config_File_Entry &entry,
 }
 
 FP_RETURN_TYPE
-CC_Config_File_Parser::read_entry (CC_Config_File_Entry &entry, 
-				   int &line_number) 
+Connection_Config_File_Parser::read_entry (Connection_Config_File_Entry &entry, 
+					   int &line_number) 
 {
   char buf[BUFSIZ];
   FP_RETURN_TYPE read_result;
@@ -67,10 +65,7 @@ CC_Config_File_Parser::read_entry (CC_Config_File_Entry &entry,
 	return FP::EOFILE;
       else if (read_result == FP::EOLINE || 
 	       read_result == FP::COMMENT) 
-	{
-	  // increment the line count
-	  line_number++;
-	}
+	line_number++;
     }
 
   // get the hostname
@@ -83,7 +78,7 @@ CC_Config_File_Parser::read_entry (CC_Config_File_Entry &entry,
   if ((read_result = this->getint (port)) != FP::SUCCESS)
     return read_result;
   else
-    entry.remote_port_ = (u_short) port;
+    entry.remote_poconsumer_ = (u_short) port;
 
   // Get the direction.
   if ((read_result = this->getword (buf)) != FP::SUCCESS)
@@ -99,7 +94,7 @@ CC_Config_File_Parser::read_entry (CC_Config_File_Entry &entry,
   if ((read_result = this->getint (port)) != FP::SUCCESS)
     return read_result;
   else
-    entry.local_port_ = (u_short) port;
+    entry.local_poconsumer_ = (u_short) port;
 
   return FP::SUCCESS;
 }
@@ -113,8 +108,8 @@ int main (int argc, char *argv[])
     exit (1);
   }
   FP_RETURN_TYPE result;
-  CC_Config_File_Entry CCentry;
-  CC_Config_File_Parser CCfile;
+  Connection_Config_File_Entry CCentry;
+  Connection_Config_File_Parser CCfile;
   
   CCfile.open (argv[1]);
 
@@ -130,13 +125,13 @@ int main (int argc, char *argv[])
 	cerr << "Error at line " << line_number << endl;
       else 
 	printf ("%d\t%s\t%d\t%c\t%d\t%c\t%d\n",
-	       CCentry.conn_id_, CCentry.host_, CCentry.remote_port_, CCentry.direction_,
-	       CCentry.max_retry_delay_, CCentry.transform_, CCentry.local_port_);
+	       CCentry.conn_id_, CCentry.host_, CCentry.remote_poconsumer_, CCentry.direction_,
+	       CCentry.max_retry_delay_, CCentry.transform_, CCentry.local_poconsumer_);
     }
   CCfile.close();
 
-  RT_Config_File_Entry RTentry;
-  RT_Config_File_Parser RTfile;
+  Consumer_Config_File_Entry RTentry;
+  Consumer_Config_File_Parser RTfile;
 
   RTfile.open (argv[2]);
 
@@ -165,6 +160,6 @@ int main (int argc, char *argv[])
 #endif /* DEBUGGING */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class File_Parser<CC_Config_File_Entry>;
-template class File_Parser<RT_Config_File_Entry>;
+template class File_Parser<Connection_Config_File_Entry>;
+template class File_Parser<Consumer_Config_File_Entry>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

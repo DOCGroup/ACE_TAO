@@ -73,10 +73,6 @@ private:
   virtual int close (u_long flags = 0);
   // Should not be accessible from outside...  (use end () instead).
 
-  virtual int put (ACE_Message_Block *, ACE_Time_Value * = 0)
-    { return 0; };
-  // Doesn't have any use for this example.
-
   virtual int svc (void);
   // Here the actual servicing of all requests is happening..
 

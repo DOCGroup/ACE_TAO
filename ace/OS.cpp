@@ -1455,3 +1455,47 @@ ace_mutex_lock_cleanup_adapter (void *args)
 {
   ACE_OS::mutex_lock_cleanup (args);
 }
+
+ACE_Thread_ID::ACE_Thread_ID (ACE_thread_t thread_id,
+			      ACE_hthread_t thread_handle)
+  : thread_id_ (thread_id),
+    thread_handle_ (thread_handle)
+{
+}
+
+ACE_thread_t 
+ACE_Thread_ID::id (void)
+{
+  return this->thread_id_;
+}
+
+void 
+ACE_Thread_ID::id (ACE_thread_t thread_id)
+{
+  this->thread_id_ = thread_id;
+}
+
+ACE_hthread_t 
+ACE_Thread_ID::handle (void)
+{
+  return this->thread_handle_;
+}
+
+void 
+ACE_Thread_ID::handle (ACE_hthread_t thread_handle)
+{
+  this->thread_handle_ = thread_handle;
+}
+
+int 
+ACE_Thread_ID::operator == (const ACE_Thread_ID &rhs)
+{
+  return this->thread_handle_ == rhs.thread_handle_
+    && this->thread_id_ == rhs.thread_id_;
+}
+
+int 
+ACE_Thread_ID::operator != (const ACE_Thread_ID &rhs)
+{
+  return !((*this) == rhs);
+}

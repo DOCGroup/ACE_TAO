@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -38,8 +37,8 @@ public:
 template <class ENTRY>
 class File_Parser
   // = TITLE
-  //     Class used to parse the configuration file for the routing 
-  //     table.  
+  //     Class used to parse the configuration file for the Consumer
+  //     Map.
 {
 public:
   // = Open and Close the file specified

@@ -96,9 +96,6 @@ public:
 
   virtual int open (void *theArgs = 0);
   virtual int close (u_long theArg = 0);
-  virtual int put (ACE_Message_Block *theMsgBlock,
-		   ACE_Time_Value *theTimeVal = 0);
-  virtual int svc (void);
 };
 
 template <ACE_SYNCH_1> int 
@@ -116,18 +113,6 @@ int Tester<ACE_SYNCH_2>::close (u_long)
   ACE_DEBUG ((LM_DEBUG, "close: trying to log error code 7!\n"));
   TSS_Error->error (7);
   ACE_DEBUG ((LM_DEBUG, "close: logging succeeded!\n"));
-  return 0;
-}
-
-template <ACE_SYNCH_1> int 
-Tester<ACE_SYNCH_2>::put (ACE_Message_Block *, ACE_Time_Value *)
-{
-  return 0;
-}
-
-template <ACE_SYNCH_1> int 
-Tester<ACE_SYNCH_2>::svc (void)
-{
   return 0;
 }
 

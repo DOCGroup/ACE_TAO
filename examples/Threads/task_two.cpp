@@ -31,7 +31,6 @@ class Task_Test : public ACE_Task<ACE_MT_SYNCH>
 public:
   virtual int open (void *args = 0);
   virtual int close (u_long flags = 0);
-  virtual int put (ACE_Message_Block *, ACE_Time_Value *tv = 0);
   virtual int svc (void);
 
 private:
@@ -62,13 +61,6 @@ Task_Test::close (u_long)
 	      (u_long) task_count));
   wait_count--;
 // delete this;
-  return 0;
-}
-
-int 
-Task_Test::put (ACE_Message_Block *,
-		ACE_Time_Value *)
-{
   return 0;
 }
 

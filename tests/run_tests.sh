@@ -66,7 +66,7 @@ run Reader_Writer_Test		# uses Thread_Manager, Mutex
 
 # ifdef ACE_HAS_STREAM_PIPES
 run SPIPE_Test			# uses SPIPE_Acceptor/Connector, Thread_Manager
-# run UPIPE_SAP_Test		# uses UPIPE, Thread, Thread_Manager
+run UPIPE_SAP_Test		# uses UPIPE, Thread, Thread_Manager
 
 run Barrier_Test		# uses Service_Config, Barrier
 run Buffer_Stream_Test		# uses Service_Config, Module (Stream,Task, Message_Queue)

@@ -36,7 +36,6 @@ public:
 
   virtual int open (void *args = 0);
   virtual int close (u_long flags = 0);
-  virtual int put (ACE_Message_Block *, ACE_Time_Value *tv = 0);
   virtual int svc (void);
 
   virtual int handle_input (ACE_HANDLE handle);
@@ -93,12 +92,6 @@ Test_Task::close (u_long)
   ACE_DEBUG ((LM_DEBUG, 
 	      "(%t) close Test_Task::task_count_ = %d\n", 
 	      Test_Task::task_count_));
-  return 0;
-}
-
-int 
-Test_Task::put (ACE_Message_Block *, ACE_Time_Value *)
-{
   return 0;
 }
 

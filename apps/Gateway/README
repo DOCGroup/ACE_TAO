@@ -2,8 +2,12 @@ OVERVIEW
 
 This directory contains source code for a prototype application-level
 gateway implemented with ACE.  This prototype was developed in my
-cs422 grad OS class at Washington University.  You can get a paper
-that explains the patterns used in this implementation at URL
+cs422 OS class at Washington University.  It illustrates the use of
+Event Channels to forward events from Suppliers to Consumers in a
+distributed system.
+
+You can get a paper that explains the patterns used in this
+implementation at the following WWW URL:
 
 http://www.cs.wustl.edu/~schmidt/TAPOS-95.ps.gz
 
@@ -15,28 +19,33 @@ Gateway
 
         -- The application Gateway, which must be started *after* all
            the Peers described below).  This process reads the
-           cc_config and rt_config files.  The cc_config file tells
-           the Gateway what connections to establish with which hosts
-           on which ports, etc.  The rt_config file tells the Gateway
-           how to route data coming from "sources" to the appropriate
-           "destinations."
-
+           connection_config and consumer_config files:
+	   
+	   1. The connection_config file is used to establish the "physical 
+	      configuration."  It tells the Gateway what connections
+	      to establish with particular hosts using particular
+	      ports.
+           
+	   2. The consumer_config file is used to establish the "logical
+	      configuration."  It tells the Gateway how to forward
+	      data coming from "sources" to the appropriate
+	      "destinations."
 Peer
 
         -- The test driver programs that must be started *before* the
-           Gateway.  To do anything interesting you'll need at 
-	   least two Peers: one for supplying events and one for consuming
-	   them.  In the configuration files, these two types of Peers 
-	   are designated as follows:
+           Gateway.  To do anything interesting you'll need at least
+           two Peers: one to supply events and one to consume events.
+           In the configuration files, these two types of Peers are
+           designated as follows:
 
-                (1) Input Peers (designated by an "I" in the Gateway's
-                    cc_config configuration file).  These Peers are "sources" 
-                    of messages to the Gateway.
+	   1. Supplier Peers (designated by an 'S' in the Gateway's
+	      connection_config configuration file).  These Peers are
+	      "suppliers" of events to the Gateway.
 
-                (2) Output Peers (designated by an "O" in the Gateway's
-                    cc_config file).  These Peers are "destinations" of
-                    messages routed by the Gateway (routing is based on
-                    the settings in the rt_config configuration file).
+	   2. Consumer Peers (designated by an 'C' in the Gateway's
+	      connection_config file).  These Peers are "consumers" of
+	      events forwarded by the Gateway (forwarding is based on
+	      the settings in the consumer_config configuration file).
 
 RUNNING THE TESTS
 
@@ -45,39 +54,39 @@ To run the tests do the following:
 1. Compile everything (i.e., first compile the ACE libraries, then
    compile the the Gateway directories).
 
-2. Edit the rt_config and cc_config files as discussed above.
+2. Edit the consumer_config and connection_config files as discussed
+   above to indicate the desired physical and logical mappings.
    
 3. Start up the Peers (peerd).  You can start up as many as you
-   like, as per the cc_config file, but you'll need at least
-   two (one for supplying input and one for consuming output).  I
-   typically start up each peer in a different window on a different
-   machine.  The peers should print out some diagnostic info and then
-   block awaiting connections from the Gateway.
+   like, as per the connection_config file, but you'll need at least
+   two (one to supply and one to consume).  I typically start up each
+   Peer in a different window on a different machine.  The Peers
+   should print out some diagnostic info and then block awaiting
+   connections from the Gateway.
 
-4. Start up the Gateway (gatewayd).  This will print out
-   a bunch of messages as it reads the config files and connects
-   to all the Peers.  Assuming everything works, then all the
-   Peers will be connected.  If some of the Peers aren't set up
-   correctly then the Gateway will use an exponential backoff
-   algorithm to attempt to reestablish those connections.
+4. Start up the Gateway (gatewayd).  This will print out a bunch of
+   events as it reads the config files and connects to all the Peers.
+   Assuming everything works, then all the Peers will be connected.
+   If some of the Peers aren't set up correctly then the Gateway will
+   use an exponential backoff algorithm to attempt to reestablish
+   those connections.
 
 5. Once the Gateway has connected with all the Peers you can send
-   messages from Input Peers by typing commands in the Peer window.  
-   This input will be sent to the Gateway, which will forward
-   the message to all Output Peers that have "subscribed" to receive
-   these messages.
+   events from Supplier Peers by typing commands in the Peer window.
+   This Supplier will be sent to the Gateway, which will forward the
+   event to all Consumer Peers that have "subscribed" to receive these
+   events.
 
    Note that if you type ^C in a Peer window the Peer will shutdown
-   its handlers and exit.  The Gateway will detect this and will
-   start trying to reestablish the connection using the same
-   exponential backoff algorithm it used for the initial connection
-   establishment.
+   its handlers and exit.  The Gateway will detect this and will start
+   trying to reestablish the connection using the same exponential
+   backoff algorithm it used for the initial connection establishment.
 
-7. When you want to terminate a Gateway, just type ^C
-   and the process will shut down gracefully.
+7. When you want to terminate a Gateway, just type ^C and the process
+   will shut down gracefully.
 
 Please let me know if there are any questions.
 
         Doug
 
-schmidt@cs.wustl.edu
+	schmidt@cs.wustl.edu

@@ -31,11 +31,6 @@ private:
 
   int n_iterations_;
   // Number of iterations to run.
-
-  // = Not needed for this test.
-  virtual int open (void *) { return 0; }
-  virtual int close (u_long) { return 0; }
-  virtual int put (ACE_Message_Block *, ACE_Time_Value *) { return 0; }
 };
 
 Barrier_Task::Barrier_Task (ACE_Thread_Manager *thr_mgr, 

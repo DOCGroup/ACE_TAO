@@ -41,7 +41,7 @@ public:
   // Iterate <n_iterations> time printing off a message and "waiting"
   // for all other threads to complete this iteration.
 
-  virtual int put (ACE_Message_Block *mb, ACE_Time_Value *tv=0);
+  virtual int put (ACE_Message_Block *mb, ACE_Time_Value *tv = 0);
   // This allows the producer to pass messages to the <Thread_Pool>.
 
 private:

@@ -3069,20 +3069,26 @@ ACE_OS::thr_getconcurrency (void)
 }
 
 ACE_INLINE int 
-ACE_OS::thr_getprio (ACE_hthread_t thr_id, int *prio)
+ACE_OS::thr_getprio (ACE_hthread_t thr_id, int &prio)
 {
   // ACE_TRACE ("ACE_OS::thr_getprio");
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_STHREADS)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_getprio (thr_id, prio), ace_result_), int, -1);
-#elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
-  ACE_NOTSUP_RETURN (-1);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_getprio (thr_id, &prio), ace_result_), int, -1);
+#elif (defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)) && !defined (ACE_LACKS_SETSCHED)
+  struct sched_param param;
+  int result;
+  int policy = 0;
+
+  ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_getschedparam (thr_id, &policy, &param), result), int, -1, result);
+  prio = param.sched_priority;
+  return result;
 #elif defined (ACE_HAS_WTHREADS)
   ACE_UNUSED_ARG(prio);
   // why is the thread prio not dropped into prio ?
 
-  int result = ::GetThreadPriority (thr_id);
-  return result == THREAD_PRIORITY_ERROR_RETURN ? -1 : result;
+  prio = ::GetThreadPriority (thr_id);
+  return prio == THREAD_PRIORITY_ERROR_RETURN ? -1 : 0;
 #elif defined (VXWORKS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::taskPriorityGet (thr_id, prio), ace_result_), int, -1);
 #endif /* ACE_HAS_STHREADS */
@@ -3159,9 +3165,11 @@ ACE_OS::thr_join (ACE_hthread_t thr_handle, void **status)
   status = status;
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_STHREADS)
-  ACE_NOTSUP_RETURN (-1);
-#elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
-  ACE_NOTSUP_RETURN (-1);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_join (thr_handle, 0, status), ace_result_),
+		     int, -1);
+#elif (defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)) && !defined (ACE_HAS_THREAD_SELF)
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_join (thr_handle, status), ace_result_), 
+		     int, -1);
 #elif defined (ACE_HAS_WTHREADS)
   void *local_status = 0;
 
@@ -3259,12 +3267,12 @@ ACE_OS::thr_setcanceltype (int new_type, int *old_type)
 }
 
 ACE_INLINE int
-ACE_OS::thr_cancel (ACE_thread_t t_id)
+ACE_OS::thr_cancel (ACE_thread_t thr_id)
 {
   // ACE_TRACE ("ACE_OS::thr_cancel");
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_DCETHREADS) || (defined (ACE_HAS_PTHREADS) && defined (ACE_HAS_STHREADS))
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_cancel(t_id), 
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_cancel (thr_id), 
 				       ace_result_), 
 		     int, -1);
 #elif defined (ACE_HAS_PTHREADS)
@@ -3275,7 +3283,7 @@ ACE_OS::thr_cancel (ACE_thread_t t_id)
 #elif defined (ACE_HAS_STHREADS)
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_HAS_WTHREADS)
-  ACE_UNUSED_ARG(t_id);
+  ACE_UNUSED_ARG(thr_id);
   
   ACE_NOTSUP_RETURN (-1);
 #elif defined (VXWORKS)
@@ -3554,7 +3562,13 @@ ACE_OS::thr_setprio (ACE_hthread_t thr_id, int prio)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_setprio (thr_id, prio), 
 				       ace_result_), 
 		     int, -1);
-#elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+#elif (defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)) && !defined (ACE_LACKS_SETSCHED)
+  struct sched_param param;
+  int result;
+
+  ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_setschedparam (thr_id, policy, &param), result), int, -1, result);
+  prio = param.sched_priority;
+  return result;
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_HAS_WTHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::SetThreadPriority (thr_id, prio), 
@@ -5842,3 +5856,91 @@ ACE_OS::mkdir (const wchar_t *path, mode_t mode)
 
 #endif /* ACE_WIN32 */
 #endif /* ACE_HAS_UNICODE */
+
+#if 0
+ACE_INLINE int 
+ACE_OS::thr_continue (const ACE_Thread_ID &thr_id)
+{
+  // ACE_TRACE ("ACE_OS::thr_continue");
+  return ACE_OS::thr_continue (thr_id.id ());
+}
+
+ACE_INLINE int 
+ACE_OS::thr_create (ACE_THR_FUNC func,
+		    void *args, 
+		    long flags, 
+		    ACE_Thread_ID *thr_id = 0,
+		    u_int priority = 0,
+		    void *stack = 0,
+		    size_t stacksize = 0);
+{
+  // ACE_TRACE ("ACE_OS::thr_create");
+  ACE_thread_t thread_id;
+  ACE_hthread_t thread_handle;
+
+  int result = ACE_OS::thr_create (func, args, flags, 
+				   &thread_id, &thread_handle,
+				   priority, stack, stacksize);
+  if (result == -1)
+    return -1;
+  else if (thr_id != 0)
+    {
+      thr_id->id (thread_id);
+      thr_id->handle (thread_handle);
+      return result;
+    }
+}
+
+ACE_INLINE int 
+ACE_OS::thr_getprio (const ACE_Thread_ID &thr_id, int &prio)
+{
+  // ACE_TRACE ("ACE_OS::thr_getprio");
+  return ACE_OS::thr_getprio (thr_id.handle (), prio);
+}
+
+ACE_INLINE int 
+ACE_OS::thr_join (const ACE_Thread_ID &thr_id, void **status)
+{
+#if defined (ACE_WIN32)
+  return ACE_OS::join (thr_id.id (), status);
+#else
+  return ACE_OS::join (thr_id.handle (), status);
+#endif /* ACE_WIN32 */
+}
+
+ACE_INLINE int 
+ACE_OS::thr_cancel (const ACE_Thread_ID &thr_id)
+{
+  return ACE_OS::thr_cancel (thr_id.id ());
+}
+
+ACE_INLINE int
+ACE_OS::thr_kill (const ACE_Thread_ID &thr_id, int signum)
+{
+  return ACE_OS::thr_kill (thr_id.id (), signum);
+}
+
+ACE_INLINE ACE_Thread_ID
+ACE_OS::thr_self (void)
+{
+  ACE_hthread_t thr_handle;
+  ACE_OS::thr_self (thr_handle);
+  ACE_thread_t thr_id = ACE_OS::thr_self ();
+
+  return ACE_Thread_ID (thr_id, thr_handle);
+}
+
+ACE_INLINE int 
+ACE_OS::thr_setprio (const ACE_Thread_ID &thr_id, int prio)
+{
+  // ACE_TRACE ("ACE_OS::thr_getprio");
+  return ACE_OS::thr_setprio (thr_id.handle (), prio);
+}
+
+ACE_INLINE int 
+ACE_OS::thr_suspend (const ACE_Thread_ID &thr_id)
+{
+  return ACE_OS::thr_suspend (thr_id.handle ());
+}
+
+#endif /* 0 */

@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -21,42 +20,42 @@
 #include "ace/OS.h"
 #include "File_Parser.h"
 
-class CC_Config_File_Entry
+class Connection_Config_File_Entry
   // = TITLE
-  //     Stores the information in a Channel Connection entry.
+  //     Stores the IO_Handler entry for connection configuration.
 {
 public:
   int conn_id_;
-  // Connection id for this Channel.
+  // Connection id for this IO_Handler.
 
   char host_[BUFSIZ];
   // Host to connect with.
 
-  u_short remote_port_;
+  u_short remote_poconsumer_;
   // Port to connect with.
 
   char direction_;
-  // 'I' (input) or 'O' (output)
+  // 'S' (supplier) or 'C' (consumer).
 
   int max_retry_delay_;
   // Maximum amount of time to wait for reconnecting.
   
-  u_short local_port_;
+  u_short local_poconsumer_;
   // Our local port number.
 };
 
-class CC_Config_File_Parser : public File_Parser<CC_Config_File_Entry>
+class Connection_Config_File_Parser : public File_Parser<Connection_Config_File_Entry>
   // = TITLE
-  //     Parser for the Channel Connection file.
+  //     Parser for the IO_Handler Connection file.
 {
 public:
   virtual FP::Return_Type
-    read_entry (CC_Config_File_Entry &entry, int &line_number);
+    read_entry (Connection_Config_File_Entry &entry, int &line_number);
 };
 
-class RT_Config_File_Entry
+class Consumer_Config_File_Entry
   // = TITLE
-  //     Stores the information in a Routing Table entry.
+  //     Stores the information in a Consumer Map entry.
 {
 public:
   enum {
@@ -79,13 +78,13 @@ public:
   // Total number of these destinations.
 };  
 
-class RT_Config_File_Parser : public File_Parser<RT_Config_File_Entry>
+class Consumer_Config_File_Parser : public File_Parser<Consumer_Config_File_Entry>
   // = TITLE
-  //     Parser for the Routing Table file.
+  //     Parser for the Consumer Map file.
 {
 public:
   virtual FP::Return_Type
-    read_entry (RT_Config_File_Entry &entry, int &line_number);
+    read_entry (Consumer_Config_File_Entry &entry, int &line_number);
 };
 
 #endif /* _CONFIG_FILES */
