@@ -1,8 +1,9 @@
 // $Id$
 
 // server.C (written by Tim Harrison)
-// listens to multicast address.  after first message received, will
-// listen for 5 more seconds.  prints Mbits/sec received from client.
+
+// Listens to multicast address for client log messages.  Prints
+// Mbits/sec received from client.
 
 #include "ace/SOCK_Dgram.h"
 #include "ace/INET_Addr.h"
@@ -26,13 +27,14 @@ public:
   virtual ACE_HANDLE get_handle (void) const;
 
   ACE_Time_Value *wait_time (void);
-    
+
 private:
   char *message_;
   Log_Wrapper::ACE_Log_Record *log_record_;
   char buf_[4 * BUFSIZ];
+  char hostname_[MAXHOSTNAMELEN];
 
-  int initialize_;
+  int initialized_;
   int count_;
   int interval_;
   // time interval to log messages
@@ -48,6 +50,10 @@ private:
   int total_messages_received_;
   int last_sequence_number_;
 };
+
+static const char MCAST_ADDR[] = ACE_DEFAULT_MULTICAST_ADDR;
+static const int UDP_PORT = ACE_DEFAULT_MULTICAST_PORT;
+static const int DURATION = 5;
 
 ACE_HANDLE
 Server_Events::get_handle (void) const
@@ -65,21 +71,27 @@ Server_Events::Server_Events (u_short port,
                               const char *mcast_addr,
                               long time_interval)
   : total_bytes_received_ (0),
-    count_(-1), 
-    initialize_ (0),
+    count_ (1), 
+    initialized_ (0),
     interval_ (time_interval),
     mcast_addr_ (port, mcast_addr)
 {
   // Use ACE_SOCK_Dgram_Mcast factory to subscribe to multicast group.
     
-  if (this->mcast_dgram_.subscribe (this->mcast_addr_) == -1)
-    perror("can't subscribe to multicast group"), exit(1);
+  if (ACE_OS::hostname (this->hostname_, MAXHOSTNAMELEN) == -1)
+    ACE_ERROR ((LM_ERROR, "%p\n", "hostname"));
+
+  else if (this->mcast_dgram_.subscribe (this->mcast_addr_) == -1)
+    ACE_ERROR ((LM_ERROR, "%p\n", "subscribe"));
+
+  else
+    {
+      // Point to NULL so that we block in the beginning.
+      this->how_long_ = 0;
     
-  // Point to NULL so that we block in the beginning.
-  this->how_long_ = 0;
-    
-  this->log_record_ = (Log_Wrapper::ACE_Log_Record *) &buf_;
-  this->message_ = &buf_[sizeof (Log_Wrapper::ACE_Log_Record)];
+      this->log_record_ = (Log_Wrapper::ACE_Log_Record *) &buf_;
+      this->message_ = &buf_[sizeof (Log_Wrapper::ACE_Log_Record)];
+    }
 }
 
 // A destructor that emacs refuses to color blue ;-)
@@ -102,74 +114,77 @@ Server_Events::~Server_Events (void)
 }
 
 int
-Server_Events::handle_timeout (const ACE_Time_Value &tv,
+Server_Events::handle_timeout (const ACE_Time_Value &,
                                const void *arg)
 {
-  ACE_DEBUG ((LM_DEBUG, "\t%d timeout occurred for %s.\n",
-	      ++count_,
+  ACE_DEBUG ((LM_DEBUG, "\t%d timeout%s occurred for %s.\n",
+	      this->count_,
+	      this->count_ == 1 ? "" : "s",
 	      (char *) arg));
+
+  // Don't let the timeouts continue if there's no activity since
+  // otherwise we use up a lot of CPU time unnecessarily.
   if (this->count_ == 5)
     {
-      reactor()->cancel_timer (this);
-      this->initialize_ = 0;
+      reactor ()->cancel_timer (this);
+      this->initialized_ = 0;
 
-      ACE_DEBUG ((LM_DEBUG, "\t%d canceled timeout occurred for %s.\n",
-		  count_, (char *) arg));
+      ACE_DEBUG ((LM_DEBUG, 
+		  "\t%cancelled timeout for %s to avoid busy waiting.\n",
+		  (char *) arg));
     }
 
+  this->count_++;
   return 0;
 }
 
 int
 Server_Events::handle_input (ACE_HANDLE)
 {
-  // receive message from multicast group
+  // Receive message from multicast group.
   iovec iovp[2];
   iovp[0].iov_base = buf_;
   iovp[0].iov_len  = sizeof log_record_;
   iovp[1].iov_base = &buf_[sizeof (log_record_)];
   iovp[1].iov_len  = 4 * BUFSIZ - sizeof log_record_;
 
-  int retcode = this->mcast_dgram_.recv (iovp, 
-					 2, 
-					 this->remote_addr_);
+  ssize_t retcode = 
+    this->mcast_dgram_.recv (iovp, 2, this->remote_addr_);
+
   if (retcode != -1)
     {
       total_messages_received_++;
       total_bytes_received_ += retcode;
-      last_sequence_number_ = ntohl(log_record_->sequence_number);
+      last_sequence_number_ = ntohl (log_record_->sequence_number);
+
       ACE_DEBUG ((LM_DEBUG, "sequence number = %d\n", 
 		  last_sequence_number_));
       ACE_DEBUG ((LM_DEBUG, "message = '%s'\n", 
 		  this->message_));
 
-      if (!this->initialize_)
+      if (this->initialized_ == 0)
         {
+	  // Restart the timer since we've received events again.
 	  reactor()->schedule_timer (this,
-				     (void *) "Foo",
+				     (void *) this->hostname_,
 				     ACE_Time_Value::zero,
-				     ACE_Time_Value(5));
-	  initialize_ = 1;
+				     ACE_Time_Value (DURATION));
+	  this->initialized_ = 1;
         }
-        
-      count_ = -1;
 
+      this->count_ = 1;
       return 0;
     }
   else
     return -1;
 }
 
-static const char MCAST_ADDR[] = ACE_DEFAULT_MULTICAST_ADDR;
-static const int UDP_PORT = ACE_DEFAULT_MULTICAST_PORT;
-
 int 
-main(int, char *[])
+main (int, char *[])
 {
-  int duration = 5;
-
-  // Instantiate a server which will receive messages for 5 seconds.
-  Server_Events server_events (UDP_PORT, MCAST_ADDR, duration);
+  // Instantiate a server which will receive messages for DURATION
+  // seconds.
+  Server_Events server_events (UDP_PORT, MCAST_ADDR, DURATION);
 
   // Instance of the ACE_Reactor.
   ACE_Reactor reactor;
@@ -178,6 +193,8 @@ main(int, char *[])
 				ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n%a", "register_handler", 1));
     
+  ACE_DEBUG ((LM_DEBUG, "starting up server\n"));
+
   for (;;)
     reactor.handle_events (server_events.wait_time ());
     

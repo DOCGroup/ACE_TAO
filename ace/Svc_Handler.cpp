@@ -66,17 +66,11 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::destroy (void)
 
   // Only delete ourselves if we've been allocated dynamically.
   if (this->dynamic_ && this->closing_ == 0)
-    {
-      // We're closing down now, so make sure not to call ourselves
-      // recursively...
-      this->closing_ = 1;
-
-      // Will call the destructor, which automatically calls <shutdown>.
-      // Note that if we are *not* allocated dynamically then the
-      // destructor will call <shutdown> automatically when it gets run
-      // during cleanup.
-      delete this; 
-    }
+    // Will call the destructor, which automatically calls <shutdown>.
+    // Note that if we are *not* allocated dynamically then the
+    // destructor will call <shutdown> automatically when it gets run
+    // during cleanup.
+    delete this; 
 }
 
 template <PR_ST_1, ACE_SYNCH_1> void
@@ -197,7 +191,16 @@ template <PR_ST_1, ACE_SYNCH_1>
 ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::~ACE_Svc_Handler (void)
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::~ACE_Svc_Handler");
-  this->shutdown ();
+
+  if (this->closing_ == 0)
+    {
+      // We're closing down now, so make sure not to call ourselves
+      // recursively via other calls to handle_close() (e.g., from the
+      // Timer_Queue).
+      this->closing_ = 1;
+
+      this->shutdown ();
+    }
 }
 
 template <PR_ST_1, ACE_SYNCH_1> int

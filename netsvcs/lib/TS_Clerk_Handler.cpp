@@ -1,5 +1,6 @@
-// TS_Clerk_Handler.cpp
 // $Id$
+
+// TS_Clerk_Handler.cpp
 
 #define ACE_BUILD_SVC_DLL
 #include "ace/Service_Config.h"
@@ -342,10 +343,11 @@ ACE_TS_Clerk_Handler::get_handle (void) const
 
 int 
 ACE_TS_Clerk_Handler::handle_close (ACE_HANDLE,
-				    ACE_Reactor_Mask)
+				    ACE_Reactor_Mask mask)
 {
   ACE_TRACE ("ACE_TS_Clerk_Handler::handle_close");
   ACE_DEBUG ((LM_DEBUG, "(%t) shutting down on handle %d\n", this->get_handle ()));
+
   return this->reinitiate_connection ();
 }
 
