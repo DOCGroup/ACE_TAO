@@ -14,7 +14,8 @@ doc:
 
 files =	 MutexTest.java \
 	 SemaphoreTest.java \
-	 RWMutexTest.java
+	 RWMutexTest.java \
+	 TokenTest.java
 
 packages = tests.Concurrency
 
