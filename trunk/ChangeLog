@@ -1,3 +1,10 @@
+Tue Jul 22 05:44:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS.i:
+          Added an implementation for rand_r() on Win32. Thanks to
+          Kees van Marle <kvmarle@remedy.nl> for noticing the lack of this
+          implementation.
+
 Tue Jul 22 00:19:39 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * examples/C++NPv2/Logging_Handler.cpp:
@@ -19,30 +26,30 @@ Mon Jul 21 22:57:54 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Mon Jul 21 22:52:46 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* ace/OS.h: 	
-	* ace/OS.cpp: 		
+	* ace/OS.h:
+	* ace/OS.cpp:
 
 	  Moved #include <net/if_arp.h> from OS.h to OS.cpp. This
 	  should resolve the compile errors on solaris.
-	
+
 Mon Jul 21 08:59:14 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* ace/UUID.cpp (get_systemtime): 
+	* ace/UUID.cpp (get_systemtime):
 
 	  Temporary fix to get the compiles rolling again.
 
 Mon Jul 21 01:56:44 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* ace/OS.h: 	
-	* ace/OS.cpp: 		
-	  
+	* ace/OS.h:
+	* ace/OS.cpp:
+
 	  Added method getmacaddress () to get the mac address of the host
 	  for generating UUIDs
 
 	  Added to_string () method to ACE_Thread_ID class to create a
 	  string representation of ACE_Thread_ID.
 
-	* ace/config-win32-common.h: 	
+	* ace/config-win32-common.h:
 
 	  Included file nb30.h and library netapi32.lib required for
 	  obtaining MACaddress on windows.
@@ -59,11 +66,11 @@ Mon Jul 21 01:56:44 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 	  the time variant version of the UUID as defined by the spec is
 	  generated.
 
-	* tests/Makefile.tests: 	
+	* tests/Makefile.tests:
 	* tests/UUIDTest.cpp:
 
 	  Simple test added to verify ACE UUID generation.
-	
+
 Sun Jul 20 14:14:46 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/NT_Service.i (ACE_NT_Service): Set dwWaitHint to 0 in the
