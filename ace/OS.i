@@ -9120,7 +9120,7 @@ ACE_OS::timezone (void)
 && !defined (CHORUS)
 #   if defined (ACE_WIN32)
   return _timezone;  // For Win32.
-#   elif defined (__Lynx__) || defined (__FreeBSD__)
+#   elif defined (__Lynx__) || defined (__FreeBSD__) || defined (ACE_HAS_SUNOS4_GETTIMEOFDAY)
   long result = 0;
   struct timeval time;
   struct timezone zone;
