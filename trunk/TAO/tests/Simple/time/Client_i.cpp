@@ -103,6 +103,9 @@ Client_i::time (void)
   // Make the RMI.
   CORBA::Long timedate = this->server_->time (this->env_);
 
+  // @@ Darrell, please rewrite this using the TAO_TRY/TAO_CATCH
+  // macros!
+
   if (this->env_.exception () != 0)
     this->env_.print_exception ("from time");
   else
