@@ -1,3 +1,7 @@
+Fri Nov 14 17:08:00 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
+
+	* ace/OS.* (strsplit_r): Added fix by Scott * for this.
+
 Fri Nov 14 17:06:39 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/OS.h: Moved the ACE_ALLOCATOR* stuff from Malloc_T.h to
