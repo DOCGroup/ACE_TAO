@@ -2,7 +2,7 @@
 
 #include "server.h"
 
-Cubit_Server::Cubit_Server ()
+Cubit_Server::Cubit_Server (void)
   :num_of_objs_ (1),
    use_naming_service_ (0),
    ior_output_file_ (0)
@@ -42,7 +42,9 @@ Cubit_Server::parse_args (void)
                            " [-n] <num of cubit objects>"
                            " [-o] <ior_output_file>"
                            " [-s]"
-                           "\n", argv_ [0]), 1);
+                           "\n",
+                           argv_ [0]),
+                          1);
       }
 
   // Indicates successful parsing of command line.
@@ -52,9 +54,13 @@ Cubit_Server::parse_args (void)
 int
 Cubit_Server::init (int argc,char **argv,CORBA::Environment& env)
 {
-  // call the init of TAO_ORB_Manager to create a good poa
-  // under the root poa.
-  TAO_ORB_Manager::init (argc,argv,"good_poa",env);
+  // Call the init of TAO_ORB_Manager to create a good POA
+  // under the root POA.
+  TAO_ORB_Manager::init (argc,
+                         argv,
+                         "child_poa",
+                         env);
+
   TAO_CHECK_ENV_RETURN (env,-1);
   this->argc_ = argc;
   this->argv_ = argv;
@@ -63,54 +69,60 @@ Cubit_Server::init (int argc,char **argv,CORBA::Environment& env)
 
   CORBA::String_var str  =
     this->activate ("factory",
-		  &this->factory_impl_,
-		  env);
+                    &this->factory_impl_,
+                    env);
   ACE_DEBUG ((LM_DEBUG,
-	      "The IOR is: <%s>\n", str.in ()));
+	      "The IOR is: <%s>\n",
+              str.in ()));
+
   if (this->ior_output_file_)
     {
-      ACE_OS::fprintf (this->ior_output_file_, "%s", str.in());
+      ACE_OS::fprintf (this->ior_output_file_,
+                       "%s",
+                       str.in ());
       ACE_OS::fclose (this->ior_output_file_);
     }
+
   if (this->use_naming_service_)
-    {
-      return this->init_naming_service (env);
-    }
+    return this->init_naming_service (env);
+
   return 0;
 }
 
+// Initialisation of Naming Service and register IDL_Cubit Context and
+// cubit_factory object.
+
 int
 Cubit_Server::init_naming_service (CORBA::Environment& env)
-  // Initialisation of Naming Service and register IDL_Cubit Context
-  // and cubit_factory object.
 {
-      this->my_name_server_.init (this->orb_,this->my_poa_);
-      //      this->naming_context_ =
-      //	this->my_name_server_->GetNamingContext ()._this (env);
-      //      TAO_CHECK_ENV_RETURN (env,-1);
+  this->my_name_server_.init (this->orb_,this->my_poa_);
+  //      this->naming_context_ =
+  //	this->my_name_server_->GetNamingContext ()._this (env);
+  //      TAO_CHECK_ENV_RETURN (env,-1);
 
-      factory = this->factory_impl_._this (env);
-      TAO_CHECK_ENV_RETURN (env,-1);
+  factory = this->factory_impl_._this (env);
+  TAO_CHECK_ENV_RETURN (env,-1);
 
-      CosNaming::Name cubit_context_name (1);
-      cubit_context_name.length (1);
-      cubit_context_name[0].id = CORBA::string_dup ("IDL_Cubit");
-       this->cubit_context_ =
-	 //	this->naming_context_->bind_new_context
-	 //(cubit_context_name,
-	 //					  env);
-	 this->my_name_server_->bind_new_context (cubit_context_name, env);
-       TAO_CHECK_ENV_RETURN (env,-1);
+  CosNaming::Name cubit_context_name (1);
+  cubit_context_name.length (1);
+  cubit_context_name[0].id = CORBA::string_dup ("IDL_Cubit");
+  this->cubit_context_ =
+    this->my_name_server_->bind_new_context (cubit_context_name,
+                                             env);
+    //	this->naming_context_->bind_new_context
+    //(cubit_context_name,
+    //					  env);
+  TAO_CHECK_ENV_RETURN (env,-1);
 
-      //Register the cubit_factory name with the IDL_Cubit Naming
-      //Context...
-      CosNaming::Name factory_name (1);
-      factory_name.length (1);
-      factory_name[0].id = CORBA::string_dup ("cubit_factory");
-      this->cubit_context_->bind (factory_name,
-				  factory.in(),
-				  env);
-      TAO_CHECK_ENV_RETURN (env,-1);
+  //Register the cubit_factory name with the IDL_Cubit Naming
+  //Context...
+  CosNaming::Name factory_name (1);
+  factory_name.length (1);
+  factory_name[0].id = CORBA::string_dup ("cubit_factory");
+  this->cubit_context_->bind (factory_name,
+                              factory.in (),
+                              env);
+  TAO_CHECK_ENV_RETURN (env,-1);
 }
 
 int
@@ -119,20 +131,19 @@ Cubit_Server::run (CORBA::Environment& env)
   this->poa_manager_->activate (env);
   TAO_CHECK_ENV_RETURN (env,1);
 
-  if (this->orb_->run ()== -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-			 "%p\n",
-			 "run"), -1);      
-    }
+  if (this->orb_->run () == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "run"),
+                      -1);      
   return 0;
 }
 
-Cubit_Server::~Cubit_Server ()
+Cubit_Server::~Cubit_Server (void)
 {
   TAO_TRY
     {
-      // unbind cubit factory context and name
+      // Unbind cubit factory context and name.
       CosNaming::Name factory_name (2);
       factory_name.length (2);
       factory_name[0].id = CORBA::string_dup ("IDL_Cubit");
@@ -145,7 +156,7 @@ Cubit_Server::~Cubit_Server ()
       //      (factory_name,TAO_TRY_ENV);
       this->my_name_server_->unbind (factory_name,TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      // Destroy all the poas.
+      // Destroy all the POAs.
       this->root_poa_->destroy (CORBA::B_TRUE,
 				CORBA::B_TRUE,
 				TAO_TRY_ENV);
@@ -153,12 +164,12 @@ Cubit_Server::~Cubit_Server ()
     }
   TAO_CATCH (CORBA::SystemException, sysex)
     {
-      ACE_UNUSED_ARG(sysex);
+      ACE_UNUSED_ARG (sysex);
       TAO_TRY_ENV.print_exception ("System Exception");
     }
   TAO_CATCH (CORBA::UserException, userex)
     {
-      ACE_UNUSED_ARG(userex);
+      ACE_UNUSED_ARG (userex);
       TAO_TRY_ENV.print_exception ("User Exception");
     }
   TAO_ENDTRY;
@@ -180,18 +191,17 @@ main (int argc, char** argv)
     }
   TAO_CATCH (CORBA::SystemException, sysex)
     {
-      ACE_UNUSED_ARG(sysex);
+      ACE_UNUSED_ARG (sysex);
       TAO_TRY_ENV.print_exception ("System Exception");
       return -1;
     }
   TAO_CATCH (CORBA::UserException, userex)
     {
-      ACE_UNUSED_ARG(userex);
+      ACE_UNUSED_ARG (userex);
       TAO_TRY_ENV.print_exception ("User Exception");
       return -1;
     }
   TAO_ENDTRY;
-
 }
 
 
