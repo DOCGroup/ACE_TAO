@@ -33,7 +33,7 @@
 //
 //      * The decoder is used when retrieving typecode parameters from
 //        encapsulations.  This means it must deal with "CORBA::tk_indirect",
-//        the magic value (~0) signifying typecode indirection.
+//        the magic value (~0u) signifying typecode indirection.
 //
 // This second case is identified by a bit of a hack: the second
 // "data" value is used to hold the parent typecode, rather than being
@@ -271,7 +271,7 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
           && (*tcp = __tc_consts [(u_int) kind]) != 0)
         // parent is ignored
         *tcp = CORBA::TypeCode::_duplicate (__tc_consts [(u_int) kind]);
-      else if (kind == ~(CORBA::ULong)0 || kind < CORBA::TC_KIND_COUNT)
+      else if (kind == ~0u || kind < CORBA::TC_KIND_COUNT)
         {
           // Either a non-constant typecode or an indirected typecode.
           switch (kind)
@@ -326,7 +326,7 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
             // code to read "off the wire" (where they're illegal) and
             // to read out of an encapsulation stream.  We distinguish
             // the case where this is legal as described above.
-            case ~0:
+            case ~0u:
               {
                 if (parent_typecode == 0)
                   {
@@ -356,7 +356,7 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
 
                 TAO_InputCDR indir_stream (*stream, 8, offset);
 
-		continue_decoding = indir_stream.good_bit ();
+                continue_decoding = indir_stream.good_bit ();
 
                 // Get "kind" and length of target typecode
                 //
@@ -475,7 +475,7 @@ TAO_Marshal_Principal::decode (CORBA::TypeCode_ptr,
       (*pp)->id.length (len);
 
       continue_decoding =
-	stream->read_octet_array ((*pp)->id.get_buffer (), len);
+        stream->read_octet_array ((*pp)->id.get_buffer (), len);
     }
 
   if (continue_decoding == CORBA::B_TRUE)
@@ -534,15 +534,15 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
   else
     while (profiles-- != 0 && objdata == 0)
       {
-	// We keep decoding until we find a valid IIOP profile.
+        // We keep decoding until we find a valid IIOP profile.
         CORBA::ULong tag;
 
         // get the profile ID tag
         if ( (continue_decoding = stream->read_ulong (tag)) == CORBA::B_FALSE)
-	  {
+          {
             ACE_DEBUG ((LM_DEBUG, "cannot read profile tag\n"));
-	    continue;
-	  }
+            continue;
+          }
 
         if (tag != TAO_IOP_TAG_INTERNET_IOP || objdata != 0)
           {
@@ -556,30 +556,30 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
         // context for it, and tell the "parent" stream that this data
         // isn't part of it any more.
 
-	CORBA::ULong encap_len;
+        CORBA::ULong encap_len;
         // ProfileData is encoded as a sequence of octet. So first get
         // the length of the sequence.
-	if ( (continue_decoding = stream->read_ulong (encap_len)) == CORBA::B_FALSE)
-	  {
+        if ( (continue_decoding = stream->read_ulong (encap_len)) == CORBA::B_FALSE)
+          {
             ACE_DEBUG ((LM_DEBUG, "cannot read encap length\n"));
-	    continue;
-	  }
+            continue;
+          }
 
         // Create the decoding stream from the encapsulation in the
         // buffer, and skip the encapsulation.
         TAO_InputCDR str (*stream, encap_len);
 
-	continue_decoding =
-	  str.good_bit ()
-	  && stream->skip_bytes(encap_len);
+        continue_decoding =
+          str.good_bit ()
+          && stream->skip_bytes(encap_len);
 
-	if (!continue_decoding)
-	  {
+        if (!continue_decoding)
+          {
             ACE_DEBUG ((LM_DEBUG,
-			"problem decoding encapsulated stream, "
-			"len = %d\n", encap_len));
-	    continue;
-	  }
+                        "problem decoding encapsulated stream, "
+                        "len = %d\n", encap_len));
+            continue;
+          }
 
         // Ownership of type_hint is given to IIOP_Object
         ACE_NEW_RETURN (objdata,
@@ -599,8 +599,8 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
               && profile->iiop_version.minor <= IIOP::MY_MINOR))
           {
             ACE_DEBUG ((LM_DEBUG, "detected new v%d.%d IIOP profile",
-			profile->iiop_version.major,
-			profile->iiop_version.minor));
+                        profile->iiop_version.major,
+                        profile->iiop_version.minor));
             objdata->type_id = (const char *) 0;
             objdata->Release ();
             objdata = 0;
@@ -633,8 +633,8 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
           {
             env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
             ACE_DEBUG ((LM_DEBUG,
-			"%d bytes out of %d left after IIOP profile data\n",
-			str.length (), encap_len));
+                        "%d bytes out of %d left after IIOP profile data\n",
+                        str.length (), encap_len));
             objdata->Release ();
             return CORBA::TypeCode::TRAVERSE_STOP;
           }
@@ -644,8 +644,8 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
       ACE_DEBUG ((LM_DEBUG, "objdata is 0, maybe because "
-		  "no IIOP v%d.%d (or earlier) profile in IOR!\n",
-		  IIOP::MY_MAJOR, IIOP::MY_MINOR ));
+                  "no IIOP v%d.%d (or earlier) profile in IOR!\n",
+                  IIOP::MY_MAJOR, IIOP::MY_MINOR ));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
   else
@@ -653,7 +653,7 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
       // Create a new CORBA_Object and give it the IIOP_Object just
       // created.
       TAO_ServantBase *servant =
-	TAO_ORB_Core_instance ()->orb ()->_get_collocated_servant (objdata);
+        TAO_ORB_Core_instance ()->orb ()->_get_collocated_servant (objdata);
       CORBA_Object *corba_proxy = 0;
 
       ACE_NEW_RETURN (corba_proxy,
@@ -1074,22 +1074,22 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
               if (env.exception () == 0)
                 {
 #if defined (TAO_NO_COPY_OCTET_SEQUENCES)
-		  // The treatment of octet sequences is completely
-		  // different.
-		  if (tc2->kind_ == CORBA::tk_octet
-		      && ACE_BIT_DISABLED (stream->start ()->flags (),
-					   ACE_Message_Block::DONT_DELETE))
-		    {
-		      TAO_Unbounded_Sequence<CORBA::Octet>* seq2 = 
-			ACE_dynamic_cast(TAO_Unbounded_Sequence<CORBA::Octet>*, seq);
-		      seq2->_deallocate_buffer ();
-		      seq2->mb_ = stream->start ()->duplicate ();
-		      seq2->buffer_ = seq2->mb_->rd_ptr ();
-		      seq2->maximum_ = bounds;
-		      seq2->length_ = bounds;
-		      stream->skip_bytes (bounds);
-		      return CORBA::TypeCode::TRAVERSE_CONTINUE;
-		    }
+                  // The treatment of octet sequences is completely
+                  // different.
+                  if (tc2->kind_ == CORBA::tk_octet
+                      && ACE_BIT_DISABLED (stream->start ()->flags (),
+                                           ACE_Message_Block::DONT_DELETE))
+                    {
+                      TAO_Unbounded_Sequence<CORBA::Octet>* seq2 =
+                        ACE_dynamic_cast(TAO_Unbounded_Sequence<CORBA::Octet>*, seq);
+                      seq2->_deallocate_buffer ();
+                      seq2->mb_ = stream->start ()->duplicate ();
+                      seq2->buffer_ = seq2->mb_->rd_ptr ();
+                      seq2->maximum_ = bounds;
+                      seq2->length_ = bounds;
+                      stream->skip_bytes (bounds);
+                      return CORBA::TypeCode::TRAVERSE_CONTINUE;
+                    }
 #endif /* defined (TAO_NO_COPY_OCTET_SEQUENCES) */
 
                   // Allocate the buffer using the virtual
@@ -1097,17 +1097,17 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
                   // constructors are invoked and size for the array
                   // is OK.  The sequence will release it, since its
                   // release_ field is 1.
-		  if (seq->maximum_ < bounds)
-		    {
-		      seq->_deallocate_buffer ();
-		      seq->maximum_ = bounds;
-		      seq->release_ = 1;
-		      seq->buffer_ = 0;
-		      seq->_allocate_buffer (bounds);
-		    }
-		  // In any case the sequence length is changed.
-		  seq->length_ = bounds;
-		   
+                  if (seq->maximum_ < bounds)
+                    {
+                      seq->_deallocate_buffer ();
+                      seq->maximum_ = bounds;
+                      seq->release_ = 1;
+                      seq->buffer_ = 0;
+                      seq->_allocate_buffer (bounds);
+                    }
+                  // In any case the sequence length is changed.
+                  seq->length_ = bounds;
+                
 
                   value = (char *) seq->buffer_;
 
@@ -1120,9 +1120,9 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
                     case CORBA::tk_short:
                     case CORBA::tk_ushort:
                       // For primitives, compute the size only once
-		      continue_decoding = continue_decoding &&
-			stream->read_short_array
-			((CORBA::Short *) value, bounds);
+                      continue_decoding = continue_decoding &&
+                        stream->read_short_array
+                        ((CORBA::Short *) value, bounds);
                       if (continue_decoding == CORBA::B_TRUE)
                         return CORBA::TypeCode::TRAVERSE_CONTINUE;
                       break;
@@ -1132,9 +1132,9 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
                     case CORBA::tk_float:
                     case CORBA::tk_enum:
                       // For primitives, compute the size only once
-		      continue_decoding = continue_decoding &&
-			stream->read_long_array
-			((CORBA::Long *) value, bounds);
+                      continue_decoding = continue_decoding &&
+                        stream->read_long_array
+                        ((CORBA::Long *) value, bounds);
                       if (continue_decoding == CORBA::B_TRUE)
                         return CORBA::TypeCode::TRAVERSE_CONTINUE;
                       break;
@@ -1143,54 +1143,54 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
                     case CORBA::tk_longlong:
                     case CORBA::tk_ulonglong:
                       // For primitives, compute the size only once
-		      continue_decoding = continue_decoding &&
-			stream->read_longlong_array
-			((CORBA::LongLong *) value, bounds);
+                      continue_decoding = continue_decoding &&
+                        stream->read_longlong_array
+                        ((CORBA::LongLong *) value, bounds);
                       if (continue_decoding == CORBA::B_TRUE)
                         return CORBA::TypeCode::TRAVERSE_CONTINUE;
                       break;
 
                     case CORBA::tk_boolean:
                       // For primitives, compute the size only once
-		      continue_decoding = continue_decoding &&
-			stream->read_octet_array
-			((CORBA::Octet *) value, bounds);
+                      continue_decoding = continue_decoding &&
+                        stream->read_octet_array
+                        ((CORBA::Octet *) value, bounds);
                       if (continue_decoding == CORBA::B_TRUE)
                         return CORBA::TypeCode::TRAVERSE_CONTINUE;
                       break;
 
                     case CORBA::tk_char:
                       // For primitives, compute the size only once
-		      continue_decoding = continue_decoding &&
-			stream->read_char_array
-			((CORBA::Char *) value, bounds);
+                      continue_decoding = continue_decoding &&
+                        stream->read_char_array
+                        ((CORBA::Char *) value, bounds);
                       if (continue_decoding == CORBA::B_TRUE)
                         return CORBA::TypeCode::TRAVERSE_CONTINUE;
                       break;
 
                     case CORBA::tk_octet:
                       // For primitives, compute the size only once
-		      continue_decoding = continue_decoding &&
-			stream->read_octet_array
-			((CORBA::Octet *) value, bounds);
+                      continue_decoding = continue_decoding &&
+                        stream->read_octet_array
+                        ((CORBA::Octet *) value, bounds);
                       if (continue_decoding == CORBA::B_TRUE)
                         return CORBA::TypeCode::TRAVERSE_CONTINUE;
                       break;
 
                     case CORBA::tk_longdouble:
                       // For primitives, compute the size only once
-		      continue_decoding = continue_decoding &&
-			stream->read_longdouble_array
-			((CORBA::LongDouble *) value, bounds);
+                      continue_decoding = continue_decoding &&
+                        stream->read_longdouble_array
+                        ((CORBA::LongDouble *) value, bounds);
                       if (continue_decoding == CORBA::B_TRUE)
                         return CORBA::TypeCode::TRAVERSE_CONTINUE;
                       break;
 
                     case CORBA::tk_wchar:
                       // For primitives, compute the size only once
-		      continue_decoding = continue_decoding &&
-			stream->read_wchar_array
-			((CORBA::WChar *) value, bounds);
+                      continue_decoding = continue_decoding &&
+                        stream->read_wchar_array
+                        ((CORBA::WChar *) value, bounds);
                       if (continue_decoding == CORBA::B_TRUE)
                         return CORBA::TypeCode::TRAVERSE_CONTINUE;
                       break;
@@ -1276,75 +1276,75 @@ TAO_Marshal_Array::decode (CORBA::TypeCode_ptr  tc,
                 case CORBA::tk_void:
                   return CORBA::TypeCode::TRAVERSE_CONTINUE;
 
-		case CORBA::tk_short:
-		case CORBA::tk_ushort:
-		  // For primitives, compute the size only once
-		  continue_decoding = continue_decoding &&
-		    stream->read_short_array
-		    ((CORBA::Short *) value, bounds);
-		  if (continue_decoding == CORBA::B_TRUE)
-		    return CORBA::TypeCode::TRAVERSE_CONTINUE;
-		  break;
+                case CORBA::tk_short:
+                case CORBA::tk_ushort:
+                  // For primitives, compute the size only once
+                  continue_decoding = continue_decoding &&
+                    stream->read_short_array
+                    ((CORBA::Short *) value, bounds);
+                  if (continue_decoding == CORBA::B_TRUE)
+                    return CORBA::TypeCode::TRAVERSE_CONTINUE;
+                  break;
 
-		case CORBA::tk_long:
-		case CORBA::tk_ulong:
-		case CORBA::tk_float:
-		case CORBA::tk_enum:
-		  // For primitives, compute the size only once
-		  continue_decoding = continue_decoding &&
-		    stream->read_long_array
-		    ((CORBA::Long *) value, bounds);
-		  if (continue_decoding == CORBA::B_TRUE)
-		    return CORBA::TypeCode::TRAVERSE_CONTINUE;
-		  break;
+                case CORBA::tk_long:
+                case CORBA::tk_ulong:
+                case CORBA::tk_float:
+                case CORBA::tk_enum:
+                  // For primitives, compute the size only once
+                  continue_decoding = continue_decoding &&
+                    stream->read_long_array
+                    ((CORBA::Long *) value, bounds);
+                  if (continue_decoding == CORBA::B_TRUE)
+                    return CORBA::TypeCode::TRAVERSE_CONTINUE;
+                  break;
 
-		case CORBA::tk_double:
-		case CORBA::tk_longlong:
-		case CORBA::tk_ulonglong:
-		  // For primitives, compute the size only once
-		  continue_decoding = continue_decoding &&
-		    stream->read_longlong_array
-		    ((CORBA::LongLong *) value, bounds);
-		  if (continue_decoding == CORBA::B_TRUE)
-		    return CORBA::TypeCode::TRAVERSE_CONTINUE;
-		  break;
+                case CORBA::tk_double:
+                case CORBA::tk_longlong:
+                case CORBA::tk_ulonglong:
+                  // For primitives, compute the size only once
+                  continue_decoding = continue_decoding &&
+                    stream->read_longlong_array
+                    ((CORBA::LongLong *) value, bounds);
+                  if (continue_decoding == CORBA::B_TRUE)
+                    return CORBA::TypeCode::TRAVERSE_CONTINUE;
+                  break;
 
-		case CORBA::tk_boolean:
-		  // For primitives, compute the size only once
-		  continue_decoding = continue_decoding &&
-		    stream->read_octet_array
-		    ((CORBA::Octet *) value, bounds);
-		  if (continue_decoding == CORBA::B_TRUE)
-		    return CORBA::TypeCode::TRAVERSE_CONTINUE;
-		  break;
+                case CORBA::tk_boolean:
+                  // For primitives, compute the size only once
+                  continue_decoding = continue_decoding &&
+                    stream->read_octet_array
+                    ((CORBA::Octet *) value, bounds);
+                  if (continue_decoding == CORBA::B_TRUE)
+                    return CORBA::TypeCode::TRAVERSE_CONTINUE;
+                  break;
 
-		case CORBA::tk_char:
-		case CORBA::tk_octet:
-		  // For primitives, compute the size only once
-		  continue_decoding = continue_decoding &&
-		    stream->read_octet_array
-		    ((CORBA::Octet *) value, bounds);
-		  if (continue_decoding == CORBA::B_TRUE)
-		    return CORBA::TypeCode::TRAVERSE_CONTINUE;
-		  break;
+                case CORBA::tk_char:
+                case CORBA::tk_octet:
+                  // For primitives, compute the size only once
+                  continue_decoding = continue_decoding &&
+                    stream->read_octet_array
+                    ((CORBA::Octet *) value, bounds);
+                  if (continue_decoding == CORBA::B_TRUE)
+                    return CORBA::TypeCode::TRAVERSE_CONTINUE;
+                  break;
 
-		case CORBA::tk_longdouble:
-		  // For primitives, compute the size only once
-		  continue_decoding = continue_decoding &&
-		    stream->read_longdouble_array
-		    ((CORBA::LongDouble *) value, bounds);
-		  if (continue_decoding == CORBA::B_TRUE)
-		    return CORBA::TypeCode::TRAVERSE_CONTINUE;
-		  break;
+                case CORBA::tk_longdouble:
+                  // For primitives, compute the size only once
+                  continue_decoding = continue_decoding &&
+                    stream->read_longdouble_array
+                    ((CORBA::LongDouble *) value, bounds);
+                  if (continue_decoding == CORBA::B_TRUE)
+                    return CORBA::TypeCode::TRAVERSE_CONTINUE;
+                  break;
 
-		case CORBA::tk_wchar:
-		  // For primitives, compute the size only once
-		  continue_decoding = continue_decoding &&
-		    stream->read_wchar_array
-		    ((CORBA::WChar *) value, bounds);
-		  if (continue_decoding == CORBA::B_TRUE)
-		    return CORBA::TypeCode::TRAVERSE_CONTINUE;
-		  break;
+                case CORBA::tk_wchar:
+                  // For primitives, compute the size only once
+                  continue_decoding = continue_decoding &&
+                    stream->read_wchar_array
+                    ((CORBA::WChar *) value, bounds);
+                  if (continue_decoding == CORBA::B_TRUE)
+                    return CORBA::TypeCode::TRAVERSE_CONTINUE;
+                  break;
 
                   // handle all aggregate types here
                 case CORBA::tk_any:

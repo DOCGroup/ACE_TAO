@@ -120,14 +120,14 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind,
       // @@ The typecode buffer contain the encapsulation byte order
       // in the first byte...
       const CORBA::Octet* ptr =
-	ACE_reinterpret_cast(const CORBA::Octet*,buffer);
+        ACE_reinterpret_cast(const CORBA::Octet*,buffer);
       this->byte_order_ = *ptr;
 
       ACE_NEW (this->non_aligned_buffer_,
-	       char [this->length_ + CDR::MAX_ALIGNMENT]);
+               char [this->length_ + CDR::MAX_ALIGNMENT]);
 
       char* start = ptr_align_binary (this->non_aligned_buffer_,
-				      CDR::MAX_ALIGNMENT);
+                                      CDR::MAX_ALIGNMENT);
 
       (void) ACE_OS::memcpy (start, buffer, this->length_);
 
@@ -139,7 +139,7 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind,
       // with our parent. We know that our parent's buffer was
       // properly aligned.
       const CORBA::Octet* ptr =
-	ACE_reinterpret_cast(const CORBA::Octet*,buffer);
+        ACE_reinterpret_cast(const CORBA::Octet*,buffer);
       this->byte_order_ = *ptr;
 
       this->buffer_ = buffer;
@@ -191,11 +191,11 @@ CORBA_TypeCode::~CORBA_TypeCode (void)
 
           // Delete any private state we have and thus free up the
           // children.
-	  if (this->private_state_)
-	    {
-	      delete this->private_state_;
-	      this->private_state_ = 0;
-	    }
+          if (this->private_state_)
+            {
+              delete this->private_state_;
+              this->private_state_ = 0;
+            }
 
           // We share the buffer octets of our parent. Hence we don't
           // deallocate it.
@@ -404,7 +404,7 @@ CORBA_TypeCode::skip_typecode (TAO_InputCDR &stream)
   CORBA::ULong temp;
 
   if (stream.read_ulong (kind)
-      && (kind < CORBA::TC_KIND_COUNT || kind == ~CORBA::ULong(0)))
+      && (kind < CORBA::TC_KIND_COUNT || kind == ~0u))
     {
 
       switch (kind)
@@ -417,7 +417,7 @@ CORBA_TypeCode::skip_typecode (TAO_InputCDR &stream)
           // preallocated constants that could be used.
         case CORBA::tk_string:
         case CORBA::tk_wstring:
-        case ~0:
+        case ~0u:
           return stream.read_ulong (temp);
 
           // The rest have "complex" parameter lists that are
@@ -675,7 +675,7 @@ CORBA_TypeCode::private_equal (CORBA::TypeCode_ptr tc,
       return this->private_equal_alias (tc, env);
     case CORBA::tk_except:
       return this->private_equal_except (tc, env);
-    case ~0: // indirection
+    case ~0u: // indirection
       {
         // indirection offset must be same
         return CORBA::B_TRUE;
@@ -1216,7 +1216,7 @@ CORBA_TypeCode::private_name (CORBA::Environment &env) const
       {
         // setup an encapsulation
         TAO_InputCDR stream (this->buffer_+4, this->length_-4,
-			     this->byte_order_);
+                             this->byte_order_);
 
         // skip the typecode ID
         if (stream.skip_string ())  // ID
@@ -1263,7 +1263,7 @@ CORBA_TypeCode::private_member_count (CORBA::Environment &env) const
         CORBA::ULong members;
         // setup an encapsulation
         TAO_InputCDR stream (this->buffer_+4, this->length_-4,
-			     this->byte_order_);
+                             this->byte_order_);
 
         // skip rest of header (type ID and name) and collect the
         // number of struct members
@@ -1284,7 +1284,7 @@ CORBA_TypeCode::private_member_count (CORBA::Environment &env) const
         CORBA::ULong members;
         // setup an encapsulation
         TAO_InputCDR stream (this->buffer_+4, this->length_-4,
-			     this->byte_order_);
+                             this->byte_order_);
 
         // skip rest of header (type ID, name, etc...) and collect the
         // number of struct members
@@ -1328,7 +1328,7 @@ CORBA_TypeCode::private_member_type (CORBA::ULong index,
   // alignment tests (we're a bit looser in what we need here, and we
   // _know_ we're OK).  Then skip the byte order code.
   TAO_InputCDR stream (this->buffer_+4, this->length_-4,
-		       this->byte_order_);
+                       this->byte_order_);
   CORBA::TypeCode_ptr tc = 0;
 
   switch (kind_)
@@ -1495,7 +1495,7 @@ CORBA_TypeCode::private_member_name (CORBA::ULong index,
   // alignment tests (we're a bit looser in what we need here, and we
   // _know_ we're OK).  Then skip the byte order code.
   TAO_InputCDR stream (this->buffer_+4, this->length_-4,
-		       this->byte_order_);
+                       this->byte_order_);
   CORBA::TypeCode_ptr tc = 0;
 
   switch (kind_)
@@ -1706,7 +1706,7 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n,
   if (this->kind_ == CORBA::tk_union)
     {
       TAO_InputCDR stream (this->buffer_+4, this->length_-4,
-			   this->byte_order_);
+                           this->byte_order_);
 
       // skip ID and name, and then get the discriminant TC
       CORBA::TypeCode_ptr    tc = 0;
@@ -1788,7 +1788,7 @@ CORBA::TypeCode_ptr
 CORBA_TypeCode::private_discriminator_type (CORBA::Environment &env) const
 {
   TAO_InputCDR stream (this->buffer_+4, this->length_-4,
-		       this->byte_order_);
+                       this->byte_order_);
 
   // skip ID and name, and then get the discriminant TC
 
@@ -1812,7 +1812,7 @@ CORBA::Long
 CORBA_TypeCode::private_default_index (CORBA::Environment &env) const
 {
   TAO_InputCDR stream (this->buffer_+4, this->length_-4,
-		       this->byte_order_);
+                       this->byte_order_);
 
   // skip ID and name, and then get the discriminant TC
 
@@ -1835,7 +1835,7 @@ CORBA::Long
 CORBA_TypeCode::private_length (CORBA::Environment &env) const
 {
   TAO_InputCDR stream (this->buffer_+4, this->length_-4,
-		       this->byte_order_);
+                       this->byte_order_);
   switch (this->kind_)
     {
     case CORBA::tk_sequence:
@@ -1878,7 +1878,7 @@ CORBA::TypeCode_ptr
 CORBA_TypeCode::private_content_type (CORBA::Environment &env) const
 {
   TAO_InputCDR stream (this->buffer_+4, this->length_-4,
-		       this->byte_order_);
+                       this->byte_order_);
 
   switch (kind_)
     {
@@ -1927,7 +1927,7 @@ CORBA::ULong
 CORBA_TypeCode::private_discrim_pad_size (CORBA::Environment &env)
 {
   TAO_InputCDR stream (this->buffer_+4, this->length_-4,
-		       this->byte_order_);
+                       this->byte_order_);
 
   size_t discrim_size;
   size_t overall_align;
@@ -1982,7 +1982,7 @@ CORBA_TypeCode::param_count (CORBA::Environment &env) const
       {
         CORBA::ULong members;
         TAO_InputCDR stream (this->buffer_+4, this->length_-4,
-			     this->byte_order_);
+                             this->byte_order_);
 
         // skip rest of header (type ID and name) and collect the
         // number of struct members
@@ -2000,7 +2000,7 @@ CORBA_TypeCode::param_count (CORBA::Environment &env) const
       {
         CORBA::ULong members;
         TAO_InputCDR stream (this->buffer_+4, this->length_-4,
-			     this->byte_order_);
+                             this->byte_order_);
 
         // skip rest of header (type ID and name) and collect the
         // number of struct members
@@ -2018,7 +2018,7 @@ CORBA_TypeCode::param_count (CORBA::Environment &env) const
       {
         CORBA::ULong members;
         TAO_InputCDR stream (this->buffer_+4, this->length_-4,
-			     this->byte_order_);
+                             this->byte_order_);
 
         // skip rest of header (type ID, name, etc...) and collect the
         // number of struct members
@@ -2075,7 +2075,7 @@ CORBA_TypeCode::ulong_param (CORBA::ULong n,
         // Build CDR stream for encapsulated params, and skip the
         // typecode up front.
         TAO_InputCDR stream (this->buffer_+4, this->length_-4,
-			     this->byte_order_);
+                             this->byte_order_);
 
         if (!skip_typecode (stream))
           {
@@ -2130,7 +2130,7 @@ CORBA_TypeCode::typecode_param (CORBA::ULong n,
   // _know_ we're OK).  Then skip the byte order code.
 
   TAO_InputCDR stream (this->buffer_+4, this->length_-4,
-		       this->byte_order_);
+                       this->byte_order_);
   CORBA::TypeCode_ptr tc = 0;
 
   switch (this->kind_)
@@ -2299,7 +2299,7 @@ CORBA::TypeCode::private_size (CORBA::Environment &env)
 
   size_t alignment;
   TAO_InputCDR stream (this->buffer_+4, this->length_-4,
-		       this->byte_order_);
+                       this->byte_order_);
 
   private_state_->tc_size_known_ = CORBA::B_TRUE;
   private_state_->tc_size_ =
@@ -2331,7 +2331,7 @@ CORBA::TypeCode::private_alignment (CORBA::Environment &env)
 
   size_t alignment;
   TAO_InputCDR stream (this->buffer_+4, this->length_-4,
-		       this->byte_order_);
+                       this->byte_order_);
 
   (void) TAO_IIOP_Interpreter::table_[kind_].calc_ (&stream,
                                                     alignment,

@@ -143,7 +143,7 @@ TAO_Marshal_TypeCode::append (CORBA::TypeCode_ptr,
       // constants.  We use those to reduce memory consumption and
       // heap access ... also, to speed things up!
       if ((kind < CORBA::TC_KIND_COUNT)
-          || (kind == ~(CORBA::ULong)0))
+          || (kind == ~0u))
         {
           // Either a non-constant typecode or an indirected typecode.
           switch (kind)
@@ -162,7 +162,7 @@ TAO_Marshal_TypeCode::append (CORBA::TypeCode_ptr,
             break;
 
             // Indirected typecodes, illegal at "top level"
-            case ~0:
+            case ~0u:
               {
                 // read and write the negative offset
                 retval = dest->append (CORBA::_tc_long, src, env);
