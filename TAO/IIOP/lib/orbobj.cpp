@@ -24,7 +24,6 @@
 
 #include	<initguid.h>
 
-
 extern void __TC_init_table ();
 extern void __TC_init_standard_exceptions (CORBA_Environment &env);
 
@@ -182,6 +181,7 @@ CORBA_ORB_init (
     //
     // NOTE:  we still "just" assume that native floating point is IEEE.
     //
+
     if (sizeof (CORBA_Short) != 2
 	|| sizeof (CORBA_Long) != 4
 	|| sizeof (CORBA_LongLong) != 8

@@ -45,7 +45,7 @@
 
 #include <ace/SOCK_Stream.h>
 
-#if	unix
+#if	(unix) || defined (VXWORKS)
 #	include	<sys/types.h>
 #	include	<sys/socket.h>
 

@@ -50,7 +50,7 @@ CORBA_string_free (CORBA_Char *const str)
 //
 
 extern "C" unsigned
-wslen (const wchar_t *str)
+wslen (const CORBA_WChar *str)
 {
     unsigned len = 0;
 
@@ -59,10 +59,10 @@ wslen (const wchar_t *str)
     return len;
 }
 
-extern "C" wchar_t *
-wscpy (wchar_t *dest, const wchar_t *src)
+extern "C" CORBA_WChar *
+wscpy (CORBA_WChar *dest, const CORBA_WChar *src)
 {
-    wchar_t	*retval = dest;
+    CORBA_WChar	*retval = dest;
 
     while ((*dest++ = *src++) != 0)
 	continue;

@@ -12,6 +12,8 @@
 
 #if	unix
 #	include <sys/time.h>
+#elif defined (VXWORKS)
+#	include <time.h>
 #else	// __WIN32__
 #	include <winsock.h>
 #endif

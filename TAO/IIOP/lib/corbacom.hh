@@ -5,8 +5,9 @@
 // CORBA C/C++/COM mapping for Win32
 //
 
-#ifndef CORBACOM_INC
-#  define CORBACOM_INC
+#ifndef _CORBACOM_HH
+#define _CORBACOM_HH
+
 #include <objbase.h>		// Win32 name for "compobj.h"
 
 #if	SIZEOF_BOOL != 0
@@ -62,7 +63,7 @@ typedef unsigned __int64	CORBA_ULongLong;
 #   define	NONNATIVE_LONGLONG
 #if	defined (WORDS_BIGENDIAN)
 struct CORBA_LongLong { CORBA_Long h, l; };
-struct CORBA_ULongLong { UCORBA_Long h, l; };
+struct CORBA_ULongLong { CORBA_Long h, l; };
 #else
 struct CORBA_LongLong { CORBA_Long l, h; };
 struct CORBA_ULongLong { CORBA_ULong l, h; };
@@ -101,7 +102,11 @@ void			CORBA_string_free (CORBA_Char *const);
 //
 // NOTE:  those are IDL extensions, not yet standard.
 //
+#if	SIZEOF_WCHAR_T < 2
+typedef short		CORBA_WChar;
+#else
 typedef wchar_t		CORBA_WChar;
+#endif
 typedef CORBA_WChar	*CORBA_WString;
 
 CORBA_WString		CORBA_wstring_alloc (CORBA_ULong len);
