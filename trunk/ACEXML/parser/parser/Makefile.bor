@@ -1,6 +1,6 @@
 # Makefile for building the parser
 
-NAME = Parser
+NAME = ACEXML_Parser
 
 OBJFILES = \
         $(OBJDIR)\Parser.obj \
