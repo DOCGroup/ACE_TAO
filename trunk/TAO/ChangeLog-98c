@@ -1,3 +1,9 @@
+Sat Jan  2 17:32:35 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/tests/CosEC_Basic/CosEC_Basic.cpp:
+	  split the <init> method over 3 other  methods -
+	  <init_ORB>, <init_RtEC> and <init_CosEC>.
+
 Sat Jan 02 11:15:48 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/CosEvent/ConsumerAdmin_i.cpp (obtain_push_supplier):
