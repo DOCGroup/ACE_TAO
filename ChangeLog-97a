@@ -1,3 +1,8 @@
+Tue Feb 25 21:19:57 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/OS.h,config-sunos*.h: default ACE_TIMER_QUEUE to 0,
+	  and override to 10 ms in all Solaris config files.
+
 Tue Feb 25 19:57:54 1997    <harrison@samba.cs.wustl.edu>
 
 	* ace/Timer_Queue.cpp (gettimeofday): Added gettimeofday accessors
