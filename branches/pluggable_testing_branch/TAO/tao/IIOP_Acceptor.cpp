@@ -47,12 +47,6 @@ int
 TAO_IIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
                                     TAO_MProfile &mprofile)
 {
-
-  ACE_INET_Addr addr;
-  // do a getsockname () to get the address
-  if (base_acceptor_.acceptor ().get_local_addr (addr) == -1)
-    return 0;
-
   // @@ we only make one for now
   int count = mprofile.profile_count ();
   if ((mprofile.size () - count) < 1)
@@ -64,9 +58,9 @@ TAO_IIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
   TAO_IIOP_Profile *pfile;
   ACE_NEW_RETURN (pfile,
                   TAO_IIOP_Profile (this->host_.c_str (),
-                                    this->port_,
+                                    this->address_.get_port_number (),
                                     object_key,
-                                    addr),
+                                    this->address_),
                   -1);
 
   if (mprofile.give_profile (pfile) == -1)
@@ -131,13 +125,10 @@ TAO_IIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
   if (this->base_acceptor_.open (orb_core, addr) == -1)
     return -1;
 
-  ACE_INET_Addr address;
-
   // @@ Should this be a catastrophic error???
-  if (this->base_acceptor_.acceptor ().get_local_addr (address) != 0)
+  if (this->base_acceptor_.acceptor ().get_local_addr (this->address_) != 0)
     return -1;
 
-  this->port_ = address.get_port_number ();
   if (orb_core->orb_params ()->use_dotted_decimal_addresses ())
     {
       const char *tmp;
@@ -157,7 +148,8 @@ TAO_IIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
     {
       ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) listening on: <%s:%u>\n",
-                  this->host_.c_str (), this->port_));
+                  this->host_.c_str (),
+                  this->address_.get_port_number ()));
     }
 
   return 0;

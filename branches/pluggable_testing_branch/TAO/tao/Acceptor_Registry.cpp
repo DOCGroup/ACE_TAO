@@ -55,7 +55,7 @@ TAO_Acceptor_Registry::make_mprofile (const TAO_ObjectKey &object_key,
     {
       if ((*acceptor)->create_mprofile (object_key, mprofile) == -1)
         return -1;
-            }
+    }
 
   return 0;
 }

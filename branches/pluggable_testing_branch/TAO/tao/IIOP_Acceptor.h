@@ -74,14 +74,15 @@ private:
   TAO_IIOP_BASE_ACCEPTOR base_acceptor_;
   // the concrete acceptor, as a pointer to it's base class.
 
+  ACE_INET_Addr address_;
   ACE_CString host_;
-  // the host name for this endpoint
-  // @@ there may in fact be multiple hostnames for this endpoint.
-  // @@ for example it the IP address is INADDR_ANY (0.0.0.0) then
-  // @@ there will be possibly a different hostname for each interface.
-
-  CORBA::UShort port_;
-  // port number for this host.  This should be non-zero.
+  u_short port_;
+  // Cache the information about the endpoint serviced by this
+  // acceptor.
+  // @@ TODO there may in fact be multiple hostnames for this
+  //    endpoint. For example it the IP address is INADDR_ANY
+  //    (0.0.0.0) then there will be possibly a different hostname for
+  //    each interface.
 };
 
 #endif  /* TAO_IIOP_ACCEPTOR_H */
