@@ -252,7 +252,7 @@ public:
   CORBA_ORB_RequestSeq (void);
 
   // Constructor using a maximum length value.
-  CORBA_ORB_RequestSeq (CORBA::ULong maximum); 
+  CORBA_ORB_RequestSeq (CORBA::ULong maximum);
 
   // Constructor with all the sequence parameters.
   CORBA_ORB_RequestSeq (CORBA::ULong maximum,
@@ -267,12 +267,12 @@ public:
   CORBA_ORB_RequestSeq &operator= (const CORBA_ORB_RequestSeq &rhs);
 
   // Dtor.
-  ~CORBA_ORB_RequestSeq (void); 
+  ~CORBA_ORB_RequestSeq (void);
 
   // = Accessors.
   CORBA::Request_ptr operator[] (CORBA::ULong i);
 
-  const CORBA::Request_ptr operator[] (CORBA::ULong i) const;
+  const CORBA::Request* operator[] (CORBA::ULong i) const;
 
   // = Static operations.
 
