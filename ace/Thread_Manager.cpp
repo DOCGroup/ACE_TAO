@@ -137,8 +137,8 @@ ACE_Thread_Descriptor::terminate ()
 
          if (this->thr_state_ != ACE_THR_JOINING)
            {
-             if (ACE_BIT_DISABLED (this->flags_, (THR_DETACHED | THR_DAEMON))
-                 || (ACE_BIT_ENABLED (this->flags_, THR_JOINABLE)))
+             if (ACE_BIT_DISABLED (this->flags_, THR_DETACHED | THR_DAEMON)
+                 || ACE_BIT_ENABLED (this->flags_, THR_JOINABLE))
                {
                  // Mark thread as terminated.
                  this->thr_state_ = ACE_THR_TERMINATED;
@@ -1445,7 +1445,7 @@ ACE_Thread_Manager::join (ACE_thread_t tid, void **status)
       // If threads are created as THR_DETACHED or THR_DAEMON, we
       // can't help much.
       if (ACE_OS::thr_equal (iter.next ()->thr_id_,tid) &&
-          (ACE_BIT_DISABLED (iter.next ()->flags_, (THR_DETACHED | THR_DAEMON))
+          (ACE_BIT_DISABLED (iter.next ()->flags_, THR_DETACHED | THR_DAEMON)
            || ACE_BIT_ENABLED (iter.next ()->flags_, THR_JOINABLE)))
         {
           tdb = *iter.next ();
@@ -1524,7 +1524,7 @@ ACE_Thread_Manager::wait_grp (int grp_id)
       // If threads are created as THR_DETACHED or THR_DAEMON, we
       // can't help much.
       if (iter.next ()->grp_id_ == grp_id &&
-          (ACE_BIT_DISABLED (iter.next ()->flags_, (THR_DETACHED | THR_DAEMON))
+          (ACE_BIT_DISABLED (iter.next ()->flags_, THR_DETACHED | THR_DAEMON)
            || ACE_BIT_ENABLED (iter.next ()->flags_, THR_JOINABLE)))
         {
           iter.next ()->thr_state_ = ACE_THR_JOINING;
@@ -1638,8 +1638,8 @@ ACE_Thread_Manager::exit (void *status, int do_thr_exit)
         // just to be safe, let's put it here.
 
         if (td->thr_state != ACE_THR_JOINING)
-          if (ACE_BIT_DISABLED (td->flags_, (THR_DETACHED | THR_DAEMON))
-              || (ACE_BIT_ENABLED (td->flags_, THR_JOINABLE)))
+          if (ACE_BIT_DISABLED (td->flags_, THR_DETACHED | THR_DAEMON)
+              || ACE_BIT_ENABLED (td->flags_, THR_JOINABLE))
             {
               // Mark thread as terminated.
               td->thr_state_ = ACE_THR_TERMINATED;
@@ -1724,8 +1724,9 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
                    iter (this->thr_list_);
                  !iter.done ();
                  iter.advance ())
-              if (ACE_BIT_ENABLED (iter.next ()->flags_, (THR_DETACHED | THR_DAEMON)) &&
-                  ACE_BIT_DISABLED (iter.next ()->flags_, THR_JOINABLE))
+              if (ACE_BIT_ENABLED (iter.next ()->flags_,
+                                   THR_DETACHED | THR_DAEMON)
+                  && ACE_BIT_DISABLED (iter.next ()->flags_, THR_JOINABLE))
                 {
                   this->thr_to_be_removed_.enqueue_tail (iter.next ());
                   iter.next ()->thr_state_ = ACE_THR_JOINING;
@@ -1761,7 +1762,7 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
 #endif /* CHORUS */
       while ((item = this->terminated_thr_list_.delete_head ()) != 0)
         {
-          if (ACE_BIT_DISABLED (item->flags_, (THR_DETACHED | THR_DAEMON))
+          if (ACE_BIT_DISABLED (item->flags_, THR_DETACHED | THR_DAEMON)
               || ACE_BIT_ENABLED (item->flags_, THR_JOINABLE))
             // Detached handles shouldn't reached here.
               ACE_Thread::join (item->thr_handle_);
