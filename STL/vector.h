@@ -85,16 +85,17 @@ public:
     /*
      *  This is cause the VC++ compiler sucks
      *  and does not recognize nested classes properly
+     *
+     *  Here is the original:
+     *  vector(size_type n, const T& value = T()) {
      *       
      */
-#if !defined (VC_PLUS_PLUS_NESTED_CLASS_PROBLEM)
-    vector(size_type n, const T& value = T()) {
+    vector(size_type n, const T& value /* = T() */) {
 	start = static_allocator.allocate(n);
 	uninitialized_fill_n(start, n, value);
 	finish = start + n;
 	end_of_storage = finish;
     }
-#endif /* VC_PLUS_PLUS_NESTED_CLASS_PROBLEM */
     vector(const vector<T>& x) {
 	start = static_allocator.allocate(x.end() - x.begin());
 	finish = uninitialized_copy(x.begin(), x.end(), start);

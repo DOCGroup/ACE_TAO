@@ -7,6 +7,12 @@
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
+// We are using STL's min and max (in algobase.h).  Therefore the
+// macros in window.h are extra
+#if !defined NOMINMAX
+#define NOMINMAX
+#endif /* NOMINMAX */
+
 #if defined (_MSC_VER)
 // "C4355: 'this' : used in base member initializer list"
 #pragma warning(disable:4355) // disable C4514 warning
