@@ -10,7 +10,7 @@
 //     Pluggable.h
 //
 // = DESCRIPTION
-//     Interface for the TAO pluggable protocol frameowrk.
+//     Interface for the TAO pluggable protocol framework.
 //
 // = AUTHOR
 //     Fred Kuhns <fredk@cs.wustl.edu>
@@ -34,9 +34,9 @@ class TAO_Profile;
 class TAO_MProfile;
 class TAO_Resource_Factory;
 
-class TAO_IIOP_Reply_Dispatcher;
-class TAO_IIOP_Request_Multiplexing_Strategy;
-class TAO_IIOP_Wait_Strategy;
+class TAO_Reply_Dispatcher;
+class TAO_Request_Mux_Strategy;
+class TAO_Wait_Strategy;
 
 class TAO_Export TAO_Transport
 {
@@ -48,8 +48,8 @@ class TAO_Export TAO_Transport
   //   constructor and deleted in the service handlers destructor!!
 
 public:
-  TAO_Transport (TAO_IIOP_Request_Multiplexing_Strategy *rms = 0,
-                 TAO_IIOP_Wait_Strategy *ws = 0);
+  TAO_Transport (TAO_Request_Mux_Strategy *rms = 0,
+                 TAO_Wait_Strategy *ws = 0);
   // Constrcutor.
 
   virtual ~TAO_Transport (void);
@@ -179,17 +179,17 @@ public:
 
   // = Get and set methods for thr RMS object.
 
-  void rms (TAO_IIOP_Request_Multiplexing_Strategy *rms);
+  void rms (TAO_Request_Mux_Strategy *rms);
   // Set the RMS object.
   
-  TAO_IIOP_Request_Multiplexing_Strategy * rms (void) const;
+  TAO_Request_Mux_Strategy * rms (void) const;
   // Get the RMS used by this Transport object.
   
   CORBA::ULong request_id (void);
   // Get request id for the current invocation from the RMS object. 
   
   int bind_reply_dispatcher (CORBA::ULong request_id,
-                              TAO_IIOP_Reply_Dispatcher *rd);
+                              TAO_Reply_Dispatcher *rd);
   // Bind the reply dispatcher with the RMS object.
                  
   virtual int wait_for_reply (void);
@@ -213,11 +213,11 @@ protected:
   CORBA::ULong message_offset_;
   // Current offset of the input message.
     
-  TAO_IIOP_Request_Multiplexing_Strategy *rms_;
+  TAO_Request_Mux_Strategy *rms_;
   // Strategy to decide whether multiple requests can be sent over the
   // same connection or the connection is exclusive for a request.
   
-  TAO_IIOP_Wait_Strategy *ws_;
+  TAO_Wait_Strategy *ws_;
   // Strategy for waiting for the reply after sending the request. 
 
   TAO_ORB_Core *orb_core_;
