@@ -88,7 +88,11 @@ HTTP_Parse_URL::parse_url (void)
   p += 2;
 
   this->parse_host (p);
-  if (*p == '/' || *p == '\0')
+
+  while (*p == '/')
+    p++;
+
+  if (*p == '\0')
     return;
 
   this->url_path_ = p;
