@@ -4,6 +4,7 @@
 #include "FtEventServiceInterceptor.h"
 #include "Request_Context_Repository.h"
 #include "../Utils/Log.h"
+#include "../Utils/Safe_InputCDR.h"
 
 ACE_RCSID (EventChannel,
            FtEventServiceInterceptor,
@@ -87,7 +88,7 @@ retrieve_ft_request_context(
     ACE_reinterpret_cast (const char *,
     service_context->context_data.get_buffer ());
 
-  TAO_InputCDR cdr (buf,
+  Safe_InputCDR cdr (buf,
     service_context->context_data.length ());
 
   CORBA::Boolean byte_order;
@@ -124,7 +125,7 @@ get_transaction_depth_context(
   const char * buf =
     ACE_reinterpret_cast (const char *,
     service_context->context_data.get_buffer ());
-  TAO_InputCDR cdr (buf,
+  Safe_InputCDR cdr (buf,
     service_context->context_data.length ());
 
   CORBA::Boolean byte_order;
@@ -155,7 +156,7 @@ get_sequence_number_context(
   const char * buf =
     ACE_reinterpret_cast (const char *,
     service_context->context_data.get_buffer ());
-  TAO_InputCDR cdr (buf,
+  Safe_InputCDR cdr (buf,
     service_context->context_data.length ());
 
   CORBA::Boolean byte_order;

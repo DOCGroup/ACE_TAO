@@ -4,9 +4,10 @@
 #include "ForwardCtrlServerInterceptor.h"
 #include "GroupInfoPublisher.h"
 #include "IOGR_Maker.h"
+#include "orbsvcs/FTRTC.h"
 #include "../Utils/resolve_init.h"
 #include "../Utils/Log.h"
-#include "orbsvcs/FTRTC.h"
+#include "../Utils/Safe_InputCDR.h"
 
 ACE_RCSID (EventChannel,
            ForwardCtrlServerInterceptor,
@@ -132,7 +133,7 @@ void ForwardCtrlServerInterceptor::receive_request_service_contexts (
 FT::ObjectGroupRefVersion get_ft_group_version(IOP::ServiceContext_var service_context
                                                ACE_ENV_ARG_DECL)
 {
-  TAO_InputCDR cdr (ACE_reinterpret_cast (const char*,
+  Safe_InputCDR cdr (ACE_reinterpret_cast (const char*,
                                             service_context->context_data.get_buffer ()
                                             ),
                       service_context->context_data.length ());

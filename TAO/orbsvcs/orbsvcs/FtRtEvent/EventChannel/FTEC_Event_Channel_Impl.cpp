@@ -6,12 +6,13 @@
 #include "FTEC_ConsumerAdmin.h"
 #include "FTEC_ProxyConsumer.h"
 #include "FTEC_ProxySupplier.h"
-#include "../Utils/ScopeGuard.h"
 #include "FtEventServiceInterceptor.h"
 #include "FT_ProxyAdmin_Base.h"
 #include "IOGR_Maker.h"
 #include "Replication_Service.h"
+#include "../Utils/ScopeGuard.h"
 #include "../Utils/Log.h"
+#include "../Utils/Safe_InputCDR.h"
 
 ACE_RCSID (EventChannel,
            FTEC_Event_Channel_Impl,
@@ -521,7 +522,7 @@ void TAO_FTEC_Event_Channel_Impl::set_state (const FTRT::State & stat
   FTRTEC_TRACE("TAO_FTEC_Event_Channel_Impl::set_state");
   FtRtecEventChannelAdmin::EventChannelState state;
 
-  TAO_InputCDR cdr((const char*)stat.get_buffer(), stat.length());
+  Safe_InputCDR cdr((const char*)stat.get_buffer(), stat.length());
   cdr >> state;
 
   FtEventServiceInterceptor::instance()->set_state(state.cached_operation_results);
@@ -540,17 +541,17 @@ void TAO_FTEC_Event_Channel_Impl::set_update (const FTRT::State & s
   FTRTEC::Replication_Service::instance()->check_validity(ACE_ENV_SINGLE_ARG_PARAMETER);
 
   if (!Request_Context_Repository().is_executed_request()) {
-    TAO_InputCDR cdr((const char*)s.get_buffer(), s.length());
+    Safe_InputCDR cdr((const char*)s.get_buffer(), s.length());
 
-    FtRtecEventChannelAdmin::Operation_var op(new FtRtecEventChannelAdmin::Operation);
+    FtRtecEventChannelAdmin::Operation op;
 
-    if (!(cdr >> *op)) {
-      TAO_FTRTEC::Log::hexdump(4, (const char*)s.get_buffer(), s.length(), "  receiving state ");
-      TAO_FTRTEC::Log(3, "Throwing FTRT::InvalidUpdate\n");
+    if (!(cdr >> op)) {
+      TAO_FTRTEC::Log::hexdump(1, (const char*)s.get_buffer(), s.length(), "  receiving state ");
+      TAO_FTRTEC::Log(1, "Throwing FTRT::InvalidUpdate\n");
       ACE_THROW(FTRT::InvalidUpdate() );
     }
 
-    (update_table[op->param._d()])(this, *op ACE_ENV_ARG_PARAMETER);
+    (update_table[op.param._d()])(this, op ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
   }
 }
