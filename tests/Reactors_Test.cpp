@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    tests
-// 
+//
 // = FILENAME
 //    Reactors_Test.cpp
 //
@@ -14,7 +14,7 @@
 //
 // = AUTHOR
 //    Prashant Jain, Detlef Becker, and Douglas C. Schmidt
-// 
+//
 // ============================================================================
 
 #include "test_config.h"
@@ -43,8 +43,8 @@ public:
 
   // = Event Handler hooks.
   virtual int handle_input (ACE_HANDLE handle);
-  virtual int handle_close (ACE_HANDLE fd, 
-			    ACE_Reactor_Mask close_mask);
+  virtual int handle_close (ACE_HANDLE fd,
+                            ACE_Reactor_Mask close_mask);
 
 private:
   int handled_;
@@ -68,38 +68,38 @@ Test_Task::Test_Task (void)
 
   Test_Task::task_count_++;
 
-  ACE_DEBUG ((LM_DEBUG, 
-	      "(%t) TT+ Test_Task::task_count_ = %d\n", 
-	      Test_Task::task_count_));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) TT+ Test_Task::task_count_ = %d\n",
+              Test_Task::task_count_));
 }
 
 Test_Task::~Test_Task (void)
 {
   ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon, recursive_lock);
 
-  ACE_DEBUG ((LM_DEBUG, 
-	      "(%t) TT- Test_Task::task_count_ = %d\n", 
-	      Test_Task::task_count_));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) TT- Test_Task::task_count_ = %d\n",
+              Test_Task::task_count_));
 
   ACE_ASSERT (Test_Task::task_count_ == 0);
 }
 
-int 
+int
 Test_Task::open (void *args)
 {
   this->reactor ((ACE_Reactor *) args);
   return this->activate (THR_NEW_LWP);
 }
 
-int 
+int
 Test_Task::close (u_long)
 {
   ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, recursive_lock, -1);
 
   Test_Task::task_count_--;
-  ACE_DEBUG ((LM_DEBUG, 
-	      "(%t) close Test_Task::task_count_ = %d\n", 
-	      Test_Task::task_count_));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) close Test_Task::task_count_ = %d\n",
+              Test_Task::task_count_));
 
   if (Test_Task::task_count_ < 0)
     abort ();
@@ -107,7 +107,7 @@ Test_Task::close (u_long)
   return 0;
 }
 
-int 
+int
 Test_Task::svc (void)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) svc\n"));
@@ -120,26 +120,26 @@ Test_Task::svc (void)
       ACE_Time_Value timeout (0, 10 * 1000);
 
       if (this->reactor ()->notify (this,
-				    ACE_Event_Handler::READ_MASK,
-				    &timeout) == -1)
-	{
-	  if (errno == ETIME)
-	    ACE_DEBUG ((LM_DEBUG, "(%t) %p\n", "notify() timed out"));
-	  else
-	    ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "notify"), -1);
-	}
+                                    ACE_Event_Handler::READ_MASK,
+                                    &timeout) == -1)
+        {
+          if (errno == ETIME)
+            ACE_DEBUG ((LM_DEBUG, "(%t) %p\n", "notify() timed out"));
+          else
+            ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "notify"), -1);
+        }
     }
 
   return 0;
 }
 
-int 
+int
 Test_Task::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
   return 0;
 }
 
-int 
+int
 Test_Task::handle_input (ACE_HANDLE)
 {
   this->handled_++;
@@ -147,9 +147,9 @@ Test_Task::handle_input (ACE_HANDLE)
   if (this->handled_ == ACE_MAX_ITERATIONS)
     {
       done_count--;
-      ACE_DEBUG ((LM_DEBUG, 
-		  "(%t) handle_input, handled_ = %d, done_count = %d\n",
-		  this->handled_, done_count.value ()));
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%t) handle_input, handled_ = %d, done_count = %d\n",
+                  this->handled_, done_count.value ()));
     }
 
   ACE_OS::thr_yield ();
@@ -170,22 +170,29 @@ worker (void *args)
   for (;;)
     {
       switch (reactor->handle_events (timeout))
-	{
-	case -1:
-	  ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "reactor"), 0);
-	  /* NOTREACHED */
-	case 0:
-	  ACE_ERROR_RETURN ((LM_ERROR, "(%t) Reactor shutdown\n"), 0);
-	  /* NOTREACHED */
-	}
+        {
+        case -1:
+          ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "reactor"), 0);
+          /* NOTREACHED */
+        case 0:
+          ACE_ERROR_RETURN ((LM_ERROR, "(%t) Reactor shutdown\n"), 0);
+          /* NOTREACHED */
+        }
     }
 
   ACE_NOTREACHED (return 0);
 }
 
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, int>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 #endif /* ACE_HAS_THREADS */
 
-int 
+int
 main (int, char *[])
 {
   ACE_START_TEST ("Reactors_Test");
@@ -217,8 +224,8 @@ main (int, char *[])
        THR_BOUND | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), -1);
 
-  else if (ACE_Thread_Manager::instance ()->spawn 
-      (ACE_THR_FUNC (worker), (void *) &reactor, 
+  else if (ACE_Thread_Manager::instance ()->spawn
+      (ACE_THR_FUNC (worker), (void *) &reactor,
        THR_BOUND | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), -1);
 
