@@ -14,7 +14,7 @@ template class ACE_Hash_Map_Manager_Ex<TAO_Persistent_Index_ExtId, TAO_Persisten
 template class ACE_Hash_Map_Entry<TAO_Persistent_Index_ExtId, TAO_Persistent_Index_IntId>;
 template class ACE_Hash<TAO_Persistent_Index_ExtId>;
 template class ACE_Equal_To<TAO_Persistent_Index_ExtId>;
-template class ACE_Hash_Map_Iterator_Base_Ex<TAO_ExtId, TAO_Persistent_Index_IntId, ACE_Hash<TAO_Persistent_Index_ExtId>, ACE_Equal_To<TAO_Persistent_Index_ExtId>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<TAO_Persistent_Index_ExtId, TAO_Persistent_Index_IntId, ACE_Hash<TAO_Persistent_Index_ExtId>, ACE_Equal_To<TAO_Persistent_Index_ExtId>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator<TAO_Persistent_Index_ExtId, TAO_Persistent_Index_IntId, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Ex<TAO_Persistent_Index_ExtId, TAO_Persistent_Index_IntId, ACE_Hash<TAO_Persistent_Index_ExtId>, ACE_Equal_To<TAO_Persistent_Index_ExtId>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator<TAO_Persistent_Index_ExtId, TAO_Persistent_Index_IntId, ACE_Null_Mutex>;
