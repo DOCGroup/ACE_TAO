@@ -7,6 +7,7 @@ DIRS = Buffered_Oneways \
        Callback_Quoter Simple \
        Event_Comm \
        Load_Balancing \
+       Load_Balancing_persistent \
        POA \
        Simple
 
