@@ -256,8 +256,8 @@ CORBA::Boolean
 Command_Handler::init_video (void)
 {
 
-  :: init ();
-  return 0;
+  //  :: init ();
+  //  return 0;
 
   int i, j;
 
