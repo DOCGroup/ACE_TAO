@@ -1,3 +1,33 @@
+Sun Apr  4 18:19:05 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* configure.in:
+	
+	  Changed ANSI C++ cast test to fail on warnings.  Currently,
+	  only g++ and Sun C++ warning/error conversion is supported.
+
+	  Moved the ACE_SET_COMPILER_FLAGS macro after the AC_ARG_ENABLE
+	  and AC_ARG_WITH calls so that user settings can influence what
+	  compiler flags get set.
+
+	  Removed some M4 comments (`dnl') that were inside of the
+	  template specialization test header block.  The test was failing
+	  since `dnl' was being quoted by M4 and actually placed inside
+	  the test program source during test source compilation.  Also
+	  corrected a typo in the same test.
+
+	  Changed test for ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION so
+	  that it attempts to link instead of just compile.  Hopefully
+	  this will make the test "tougher."
+
+	* m4/compilers.m4:
+
+	  Added `-features=castop' compiler flag and completed support for
+ 	  `-features=rtti' via `--enable-rtti'.  These flags only work for
+	  Sun C++ 4.2.  Added support for the `-noex' Sun C++ compiler flag
+	  when the user disables exception handling.
+
+	* m4/platform.m4: Minor comment updates.
+	
 Sat Apr  3 19:41:36 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/TTY_IO.cpp (control): Disabled support for higher baudrate
