@@ -1,4 +1,6 @@
-Fri Feb 12 16:06:31 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Fri Feb 12 16:16:19 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/POA.cpp: Added missing parens.
 
 	* docs/configurations.html: Changed the pointer to multi-thread,
 	  thread-per-connection example back to IDL_Cubit.
