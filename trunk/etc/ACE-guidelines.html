@@ -122,7 +122,7 @@ bgcolor="#ffffff">
   <ul>
     <li><strong><code>for</code></strong> loops should look like:
         <pre>
-        for (size_t i = 0; i &lt; Options::instance ()-&gt;spawn_count (); i++)
+        for (size_t i = 0; i &lt; Options::instance ()-&gt;spawn_count (); ++i)
           spawn ();
         </pre>
         (though I prefer to always wrap the body of the loop in braces,
@@ -130,7 +130,7 @@ bgcolor="#ffffff">
          added, and to maintain sanity when the body consists of a macro,
          such as ACE_ASSERT:)
         <pre>
-        for (size_t i = 0; i &lt; Options::instance ()-&gt;spawn_count (); i++)
+        for (size_t i = 0; i &lt; Options::instance ()-&gt;spawn_count (); ++i)
           {
             ACE_ASSERT (spawn () == 0);
           }
@@ -139,6 +139,23 @@ bgcolor="#ffffff">
         Similarly, <strong><code>if</code></strong> statements should have
         a space after the ``<strong>if</strong>'', and no spaces just after
         the opening parenthesis and just before the closing parenthesis.<p>
+
+    <li>If a loop index is used after the body of the loop, it
+        <strong>must</strong> be declared before the loop.  For example,
+
+        <pre>
+        size_t i = 0;
+        for (size_t j = 0; file_name [j] != '\0'; ++i, ++j)
+          {
+            if (file_name [j] == '\\' && file_name [j + 1] == '\\')
+              ++j;
+
+            file_name [i] = file_name [j];
+          }
+
+        // Terminate this string.
+        file_name [i] = '\0';
+        </pre>
 
     <li>Avoid unnecessary parenthesis.  We're not writing Lisp :-)<p>
 
@@ -402,106 +419,106 @@ bgcolor="#ffffff">
 
         <pre>
         #include "iostream.h"
-        
-        class exe_foo 
-        { 
+
+        class exe_foo
+        {
         public:
           exe_foo (int data) : data_ (data)
-            { cerr << "constructor of exception called" << endl; }
-          ~exe_foo () 
-            { cerr << "destructor of exception called" << endl; }
+            { cerr &lt;&lt; "constructor of exception called" &lt;&lt; endl; }
+          ~exe_foo ()
+            { cerr &lt;&lt; "destructor of exception called" &lt;&lt; endl; }
           exe_foo (const exe_foo& foo) : data_ (foo.data_)
-            { cerr << "copy constructor of exception called" << endl; }
+            { cerr &lt;&lt; "copy constructor of exception called" &lt;&lt; endl; }
           int data_;
         };
-        
-        
-        void 
+
+
+        void
         good (int a)
         {
           throw exe_foo (a);
         };
-        
-        void 
+
+        void
         bad (int a)
         {
           exe_foo foo (a);
           throw foo;
         };
-        
+
         int main ()
         {
-          cout << endl << "First exception" << endl << endl;
+          cout &lt;&lt; endl &lt;&lt; "First exception" &lt;&lt; endl &lt;&lt; endl;
           try
             {
               good (0);
             }
           catch (exe_foo &foo)
             {
-              cerr << "execption caught: " << foo.data_ << endl;
+              cerr &lt;&lt; "execption caught: " &lt;&lt; foo.data_ &lt;&lt; endl;
             }
-        
-          cout << endl << "Second exception" << endl << endl;
+
+          cout &lt;&lt; endl &lt;&lt; "Second exception" &lt;&lt; endl &lt;&lt; endl;
           try
             {
               good (0);
             }
           catch (exe_foo foo)
             {
-              cerr << "execption caught: " << foo.data_ << endl;
+              cerr &lt;&lt; "execption caught: " &lt;&lt; foo.data_ &lt;&lt; endl;
             }
-        
-          cout << endl << "Third exception" << endl << endl;
+
+          cout &lt;&lt; endl &lt;&lt; "Third exception" &lt;&lt; endl &lt;&lt; endl;
           try
             {
               bad (1);
             }
           catch (exe_foo &foo)
             {
-              cerr << "execption caught: " << foo.data_ << endl;
+              cerr &lt;&lt; "execption caught: " &lt;&lt; foo.data_ &lt;&lt; endl;
             }
-        
-          cout << endl << "Forth exception" << endl << endl;
+
+          cout &lt;&lt; endl &lt;&lt; "Fourth exception" &lt;&lt; endl &lt;&lt; endl;
           try
             {
               bad (1);
             }
           catch (exe_foo foo)
             {
-              cerr << "execption caught: " << foo.data_ << endl;
+              cerr &lt;&lt; "execption caught: " &lt;&lt; foo.data_ &lt;&lt; endl;
             }
-          
+
           return 0;
         }
         </pre>
 
      Output is: <p>
-   
+
         <pre>
         First exception
-        
+
         constructor of exception called
         execption caught: 0
         destructor of exception called
-        
+
         Second exception
-        
+
         constructor of exception called
         copy constructor of exception called
         execption caught: 0
         destructor of exception called
         destructor of exception called
-        
+
         Third exception
-        
+
         constructor of exception called
         copy constructor of exception called
         destructor of exception called
         execption caught: 1
         destructor of exception called
-        
-        Forth exception
-        
+
+        Fourth exception
+
         constructor of exception called
         copy constructor of exception called
         destructor of exception called
@@ -509,8 +526,8 @@ bgcolor="#ffffff">
         execption caught: 1
         destructor of exception called
         destructor of exception called
-           
-        </pre>        
+
+        </pre>
 
       </ul><p>
 
