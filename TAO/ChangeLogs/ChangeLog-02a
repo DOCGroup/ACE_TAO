@@ -1,15 +1,21 @@
+Mon Mar 05 20:29:00 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Collocation/Coll_Tester.cpp (init): Adding missing
+	  ACE_TRY_ENV to resolve_initial_reference().  Thanks to Ossama
+	  for pointing this out.
+
 Mon Mar  5 19:54:25 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Simple/ftp.h: 
-	* orbsvcs/tests/AVStreams/Simple/ftp.cpp: 	
+	* orbsvcs/tests/AVStreams/Simple/ftp.h:
+	* orbsvcs/tests/AVStreams/Simple/ftp.cpp:
 
 	  Removed unused client callbacks. Replaced char* with ACE_CString.
 
 Mon Mar  5 14:21:15 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tests/Strategies/server.cpp : 
+	* tests/Strategies/server.cpp :
 	  Added ACE_TRY_ENV parameter to resolve_initial_references call.
-	
+
 Mon Mar  5 14:21:05 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/IFR_Service/Container_i.cpp:
@@ -28,7 +34,7 @@ Mon Mar  5 14:21:05 2001  Jeff Parsons <parsons@cs.wustl.edu>
 Mon Mar  5 11:37:18 2001  Fuzz Master D <brunsch@uci.edu>
 
         * tests/Leader_Followers/run_test_mt.pl: (added)
-        * tests/Param_Test/run_test_dii.pl: 
+        * tests/Param_Test/run_test_dii.pl:
 
           Fixed to work on both Windows and Linux (and Solaris
           should follow Linux).
