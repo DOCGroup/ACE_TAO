@@ -17,6 +17,7 @@
 #ifndef TAO_CONSTRAINT_EVALUATOR_H
 #define TAO_CONSTRAINT_EVALUATOR_H
 
+#include "Trader_T.h"
 #include "Property_Evaluator.h"
 #include "Constraint_Visitor.h"
 #include "Constraint_Nodes.h"
@@ -168,8 +169,6 @@ private:
   // The result of a non_boolean operation.
 };
 
-template <class SEQ, class OPERAND_TYPE>
-CORBA::Boolean TAO_find (SEQ& sequence, const OPERAND_TYPE operand);
 CORBA::Boolean TAO_find_string (TAO_Sequences::StringSeq& sequence, const char* element);
 
 #endif /* CONSTRAINT_EVALUATOR_H */
