@@ -1,3 +1,25 @@
+Wed Jan 16 22:46:12 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h (ssliop_connect):
+
+	  Updated this method to accept a "no protection" parameter.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp
+	  (connect, ssliop_connect):
+
+	  In the "NoProtection/EstablishTrust" case, establish a
+	  connection using the "eNULL" cipher.  This disables encryption
+	  but allows certificate authentication to occur.  Previously two
+	  connections were used, one to authenticate over SSL and the
+	  other to invoke requests over plain IIOP, which is clearly
+	  undesirable.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp (init):
+
+	  If "NoProtection" is enabled, then add the "eNULL" cipher to the
+	  default cipher list.  This allows encryption to be disabled
+	  while allowing certificate authentication to occur.
+
 Wed Jan 16 20:08:39 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Security/PrincipalAuthenticator.h:
