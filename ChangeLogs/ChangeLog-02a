@@ -1,5 +1,10 @@
 Sat Dec 15 09:30:31 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
+	* tests/Message_Queue_Test_Ex.cpp: Improved the example to use
+	  a user-defined class parameter for ACE_Message_Queue_Ex rather
+ 	  than ACE_Message_Block.  Thanks to Bill Fulton
+ 	  <Bill_A_Fulton@raytheon.com> for reporting this.
+
 	* ace/Configuration.cpp: Make the return code of enumerate_values()
 	  consistent with enumerate_sections().  Thanks to Kevin Burge
  	  <kevin.burge@systemware.com> for reporting this.
