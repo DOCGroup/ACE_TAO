@@ -450,7 +450,7 @@ CORBA_Policy::_nil (void)
 CORBA::Boolean 
 CORBA_Policy::_tao_encode (TAO_OutputCDR &)
 {
-  return 0;
+  return 0; 
 }
 
 CORBA::Boolean 

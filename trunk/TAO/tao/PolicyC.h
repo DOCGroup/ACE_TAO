@@ -215,10 +215,10 @@ public:
   // interface, but are used by the ORB to ship the policy between
   // client and server and vice-versa.
 
-  virtual CORBA::Boolean _tao_encode(TAO_OutputCDR &out_cdr);
+  virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
   //  Encode the Policy into a CDR representation. 
 
-  virtual CORBA::Boolean _tao_decode(TAO_InputCDR &in_cdr);
+  virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
   //  Decode the Policy from a CDR representation. If the CDR
   //  given has the wrong format than the method will return
   //  false.
