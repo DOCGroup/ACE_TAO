@@ -1,3 +1,9 @@
+Wed Sep 29 18:13:31 2004  Steve Huston  <shuston@riverace.com>
+
+	* tests/tests.mpc: Added 'script' as a base project for Test_Output
+	  and set Script_Files to run_test.pl and run_test.lst. This is to
+	  pull the testing files to the build area for tests.
+
 Wed Sep 29 17:50:27 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/OS_Memory.h: If ACE_HAS_NEW_NOTHROW is defined, then make sure
