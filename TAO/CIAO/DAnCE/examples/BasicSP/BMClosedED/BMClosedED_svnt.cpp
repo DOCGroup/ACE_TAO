@@ -161,7 +161,7 @@ namespace BMClosedED_Impl
 
       ACE_CString my_uuid = this->servant_->component_UUID (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
-      my_uuid += "_prepare_capture_publisher";
+      my_uuid += "_out_avail_publisher";
 
       ACE_DEBUG ((LM_DEBUG, "======== connection_uuid is: %s =============\n", my_uuid.c_str ()));
       this->container_->push_event (ev,
