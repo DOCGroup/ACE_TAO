@@ -262,6 +262,8 @@ run_test (ACE_THR_FUNC worker,
   else
 #endif /* ACE_HAS_THREADS */
     {
+      ACE_UNUSED_ARG (handle_signals_in_separate_thread);
+      ACE_UNUSED_ARG (synchronous_signal_handler);
       // Arrange to handle signals asynchronously.
       asynchronous_signal_handler (0);
       (*worker) (ACE_reinterpret_cast (void *,

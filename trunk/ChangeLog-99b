@@ -1,3 +1,16 @@
+Sun Sep  5 10:59:18 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Log_Msg.cpp: Added a new explicit template instantiation
+	  for template class
+  
+ 	  ACE_Guard<ACE_Reverse_Lock<ACE_Recursive_Thread_Mutex> >;
+  
+          to fix compiler errors that showed up with EGCS.
+  
+	* tests/Signal_Test.cpp (run_test): Added ACE_UNUSED_ARG macros
+	  for several symbols that aren't used when the test is compiled
+	  single threaded.
+
 Sat Sep 05 02:05:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* ace/OS.cpp: Fixed a missing "#else".
