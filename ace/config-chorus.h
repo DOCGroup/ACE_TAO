@@ -11,10 +11,6 @@
 #define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
-#if defined (__ACE_INLINE__)
-#define ACE_HAS_INLINED_OSCALLS
-#endif /* __ACE_INLINE__ */
-
 #define CHORUS 3.1b
 #if defined (linux)
 #undef linux
