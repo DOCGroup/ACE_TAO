@@ -168,7 +168,7 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
 	  CORBA::Object_var default_ns =
 	    orb->resolve_initial_references ("NameService");
 
-	  if (CORBA::is_nil (default_ns))
+	  if (CORBA::is_nil (default_ns.in ()))
 	    ACE_ERROR ((LM_ERROR,
                         "%p\n",
                         "NameService"));
