@@ -2,7 +2,8 @@ Mon Dec 17 17:15:55 2001  Justin Michel  <michel_j@ociweb.com>
 
 	* tao/tests/ORB_init/Portspan/Portspan.dsp:
 
-	  Removed dependency on tao_idl.exe to get rid of warning in Debug Build.
+	  Removed dependency on tao_idl.exe to get rid of warning in Debug
+	  build.
 
 Mon Dec 17 15:13:52 2001  Ossama Othman  <ossama@uci.edu>
 
