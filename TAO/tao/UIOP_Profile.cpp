@@ -516,7 +516,7 @@ TAO_UIOP_Profile::hash (CORBA::ULong max,
 char *
 TAO_UIOP_Profile::addr_to_string(void)
 {
-  static char s[MAXPATHLEN + MAXPATHLEN];
+  static char s[MAXPATHLEN];
   ACE_OS::sprintf (s, "%s",
                    this->rendezvous_point_);
   return s;
