@@ -1,3 +1,8 @@
+Wed May 15 11:26:15 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* orbsvcs/tests/Security/Big_Request/Makefile: 
+	  Updated dependencies.
+
 Wed May 15 16:39:36 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* docs/tutorials/Quoter/Makefile: Only add On_Demand_Activation to
@@ -218,12 +223,21 @@ Thu May  2 01:44:35 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 Thu May  2 00:39:48 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
+<<<<<<< ChangeLog
+	* orbsvcs/tests/Security/*/Makefile: Updated dependencies. This
+	  should fix a lot of SunCC51 errors.
+=======
         * orbsvcs/tests/Security/*/Makefile: Updated dependencies. This
           should fix a lot of SunCC51 errors.
+>>>>>>> 1.5524
 
 Thu May  2 00:28:25 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
+<<<<<<< ChangeLog
+	* orbsvcs/orbsvcs/PortableGroup/miopconf.h: Fixed fuzz errors.
+=======
         * orbsvcs/orbsvcs/PortableGroup/miopconf.h: Fixed fuzz errors.
+>>>>>>> 1.5524
 
 Thu May  2 00:26:46 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -238,19 +252,125 @@ Thu May  2 00:23:14 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Thu May  2 00:18:34 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
+<<<<<<< ChangeLog
+	* tests/Connection_Timeout/client.cpp: Grr! The piece of code that
+	  sets the policy had been commented out. The policy needs to be
+	  applied for the test to work. This should fix the errors in the
+	  builds.
+=======
         * tests/Connection_Timeout/client.cpp: Grr! The piece of code that
           sets the policy had been commented out. The policy needs to be
           applied for the test to work. This should fix the errors in the
           builds.
+>>>>>>> 1.5524
 
 Thu May 02 00:23:08 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
+<<<<<<< ChangeLog
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp: Removed reserved_ports.h and added
+	  default_ports.h.
+=======
         * tao/TAO.dsp:
         * tao/TAO_Static.dsp: Removed reserved_ports.h and added
           default_ports.h.
+>>>>>>> 1.5524
 
 Wed May 01 22:54:13 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
 
+<<<<<<< ChangeLog
+	* tao/PortableServer/Servant_Dispatcher:
+	* tao/RTPortableServer/RT_Servant_Dispatcher:
+	* tao/PortableServer/Default_Servant_Dispatcher:
+
+	  The way these classes were being used was that in
+	  TAO_Object_Adapter::dispatch_servant, the dispatcher would take
+	  over, call pre_invoke using the request to change the priority
+	  of the upcall thread, make the upcall, and then call post_invoke
+	  to reset the priority of the upcall thread.  This worked fine
+	  for remote requests since all the request parameters are
+	  represented by the TAO_ServerRequest object.
+
+	  However, this scheme would not work for collocated cases as the
+	  request parameters are not represented in a single object.
+
+	  Therefore, the dispatch() call on the dispatchers was replaced
+	  by pre_invoke_remote_request(), pre_invoke_collocated_request(),
+	  and post_invoke().  pre_invoke_remote_request() and
+	  pre_invoke_collocated_request() are different since in the
+	  remote case we need to do more, i.e., extract the
+	  client-propagated priority from the ServiceContextList of the
+	  request.  In the collocated case, the priority of the client is
+	  the priority of the request thread.
+
+	  Default_Servant_Dispatcher still is a no-op.  The state for
+	  resetting the priority of the thread had to be moved from
+	  RT_Priority_Model_Processing to the Servant_Upcall.  Therefore,
+	  the RT_Priority_Model_Processing was no longer needed and was
+	  removed.
+
+	  pre_invoke_collocated_request() check for a thread pool without
+	  lanes and the SERVER_DECLARED policy.  If this combination
+	  exists, it may need to change the priority of the upcall thread
+	  if the target server declared priority is different.
+
+	* tao/RTPortableServer/RT_Collocation_Resolver.cpp
+	  (is_collocated): If the target POA does not have a dedicated
+	  thread pool, then all calls to it are collocated.
+
+	* tao/PortableServer/Object_Adapter.cpp (dispatch_servant):
+	  Pre_Invoke_State was removed from RT_Priority_Model_Processing
+	  and added to the Servant_Upcall.
+
+	* tests/RTCORBA/Collocation: Extended this test to do more
+	  extensive and precise testing and cover all collocation uses
+	  cases. The new test now has the following structure:
+
+	  - One servant is in the Root POA which is service by the default
+	  thread pool.
+
+	  - One servant is in a POA with the CLIENT_PROPAGATED policy and
+	  is serviced by a thread pool without lanes.
+
+	  - Two servants are in a POA with the SERVER_DECLARED policy and
+	  is serviced by a thread pool without lanes.  One of the servant
+	  is at default priority and the other is at default + 1 priority.
+
+	  - One servant is in a POA without a priority model policy and is
+	  serviced by a thread pool without lanes.
+
+	  - One servants is in a POA with the CLIENT_PROPAGATED policy and
+	  is serviced by a thread pool with lanes.  Depending on the
+	  priority of the caller, either one of the lanes processes the
+	  request.
+
+	  - Two servants are in a POA with the SERVER_DECLARED policy and
+	  is serviced by a thread pool with lanes.  One of the servant is
+	  at default priority and the other is at default + 1 priority.
+
+	  The main thread still uses both the default priority and the
+	  default + 1 priority.  The test checks that the correct pool,
+	  lane, and priority is being used to run the upcall.  For
+	  servants in POAs without RT thread pools, made sure that all
+	  upcalls on these servants are collocated. Also, added additional
+	  assertion checks and abstracted out common code.
+
+	* TAO_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp
+	  (visit_operation): Added a call to
+	  servant_upcall.pre_invoke_collocated_request() to
+	  ThruPOA_Proxy_Impl collocated methods.
+
+	* tao/PortableServer/ThruPOA_Object_Proxy_Impl.cpp:
+	* tao/PortableServer/Collocated_Object.cpp:
+	  Added a call to servant_upcall.pre_invoke_collocated_request()
+	  to _non_existent() and _is_a().
+
+	* tao/PortableServer/ImplRepoS.cpp:
+	* tao/Domain/DomainS.cpp:
+	* tao/PortableServer/PolicyS.cpp:
+	  Added calls to servant_upcall.pre_invoke_collocated_request()
+	  for hand generated collocated upcall code.
+=======
         * tao/PortableServer/Servant_Dispatcher:
         * tao/RTPortableServer/RT_Servant_Dispatcher:
         * tao/PortableServer/Default_Servant_Dispatcher:
@@ -342,14 +462,34 @@ Wed May 01 22:54:13 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
         * tao/PortableServer/PolicyS.cpp:
           Added calls to servant_upcall.pre_invoke_collocated_request()
           for hand generated collocated upcall code.
+>>>>>>> 1.5524
 
 Wed May  1 23:42:14 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
+<<<<<<< ChangeLog
+	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp: #included
+	  default_ports.h.
+=======
         * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp: #included
           default_ports.h.
+>>>>>>> 1.5524
 
 Wed May  1 23:21:00 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
+<<<<<<< ChangeLog
+	* tao/default_ports.h: Renamed tao/reserved_ports.h as per
+	  Ossama's suggestion.  He opines that the ports are not reserved
+	  but just defaults in TAO.
+
+	* tao/reserved_ports.h: Removed file from the repo.
+
+	* tao/ORB.cpp:
+	* tao/MCAST_Parser.cpp:
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp:
+	* orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
+	* orbsvcs/orbsvcs/Trader/Trading_Loader.cpp: Changed the includes
+	  to the new file.
+=======
         * tao/default_ports.h: Renamed tao/reserved_ports.h as per
           Ossama's suggestion.  He opines that the ports are not reserved
           but just defaults in TAO.
@@ -362,6 +502,7 @@ Wed May  1 23:21:00 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
         * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
         * orbsvcs/orbsvcs/Trader/Trading_Loader.cpp: Changed the includes
           to the new file.
+>>>>>>> 1.5524
 
 Wed May  1 21:01:43 2002  Ossama Othman  <ossama@uci.edu>
 
@@ -420,6 +561,16 @@ Wed May  1 21:01:43 2002  Ossama Othman  <ossama@uci.edu>
 
 Wed May 01 22:56:44 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
+<<<<<<< ChangeLog
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp:
+	* orbsvcs/Naming_Service/Naming_Server_static.dsp:
+	* orbsvcs/Naming_Service/Naming_Server.dsp:
+	* orbsvcs/orbsvcs/FT_ORB.dsp:
+	* orbsvcs/orbsvcs/PortableGroup.dsp: Added the new files in to the
+	  respective project files.
+
+=======
         * tao/TAO.dsp:
         * tao/TAO_Static.dsp:
         * orbsvcs/Naming_Service/Naming_Server_static.dsp:
@@ -428,8 +579,11 @@ Wed May 01 22:56:44 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
         * orbsvcs/orbsvcs/PortableGroup.dsp: Added the new files in to the
           respective project files.
 
+>>>>>>> 1.5524
 Wed May  1 22:12:04 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
+<<<<<<< ChangeLog
+<<<<<<< ChangeLog
 	This checkin is to reduce the size of orbconf.h. I see all
 	similarities between this and ace/OS.h. Looks like it is an OS.h
 	in the making. Trying to learn and avert the crisis before.
@@ -472,6 +626,93 @@ Wed May  1 22:12:04 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* orbsvcs/orbsvcs/Trader/Trading_Loader.cpp: Additional includes
 	  because of the above changes.
 
+=======
+        This checkin is to reduce the size of orbconf.h. I see all
+        similarities between this and ace/OS.h. Looks like it is an OS.h
+        in the making. Trying to learn and avert the crisis before.
+
+        * tao/orbconf.h: Removed a few definitions and moved it other
+          files. Please see below for the names of the new files and the
+          details of the contents removed from this file. The idea is to
+          keep the contents of this file very very ORB specific. No
+          service level details should be included. All the policies need
+          to be moved out, but that is the next round.
+
+        * tao/objectid.h: ObjectIds redefined by TAO for internal use have
+          been moved here. Symbols recognized by resolveinitial_references
+          () and list_initial_services () have been placed here.
+
+        * tao/reserved_ports.h: All the reserved ports for TAO's services
+          are defind here.
+
+        * tao/Transport.cpp: Used TAO_MAXBUFSIZE instead of
+          TAO_CONNECTION_HANDLER_STACK_BUF_SIZE which needs to be
+          deprecated.
+
+        * tao/MCAST_Parser.cpp:
+        * tao/ORB.h:
+        * tao/ORB.cpp:
+        * tao/params.h: Additional includes because of the above changes.
+
+        * orbsvcs/orbsvcs/FaultTolerance/ftconf.h:
+        * orbsvcs/orbsvcs/Naming/nsconf.h:
+        * orbsvcs/orbsvcs/PortableGroup/miopconf.h: New service specific
+          configuration files. IMHO, they dont have any business to be in
+          the ORB core.
+
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
+        * orbsvcs/orbsvcs/Naming/Hash_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.h:
+        * orbsvcs/orbsvcs/Naming/Persistent_Context_Index.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp:
+        * orbsvcs/orbsvcs/Trader/Trading_Loader.cpp: Additional includes
+          because of the above changes.
+=======
+	This checkin is to reduce the size of orbconf.h. I see all
+	similarities between this and ace/OS.h. Looks like it is an OS.h
+	in the making. Trying to learn and avert the crisis before.
+
+	* tao/orbconf.h: Removed a few definitions and moved it other
+	  files. Please see below for the names of the new files and the
+	  details of the contents removed from this file. The idea is to
+	  keep the contents of this file very very ORB specific. No
+	  service level details should be included. All the policies need
+	  to be moved out, but that is the next round.
+
+	* tao/objectid.h: ObjectIds redefined by TAO for internal use have
+	  been moved here. Symbols recognized by resolveinitial_references
+	  () and list_initial_services () have been placed here.
+
+	* tao/reserved_ports.h: All the reserved ports for TAO's services
+	  are defind here.
+
+	* tao/Transport.cpp: Used TAO_MAXBUFSIZE instead of
+	  TAO_CONNECTION_HANDLER_STACK_BUF_SIZE which needs to be
+	  deprecated.
+
+	* tao/MCAST_Parser.cpp:
+	* tao/ORB.h:
+	* tao/ORB.cpp:
+	* tao/params.h: Additional includes because of the above changes.
+
+	* orbsvcs/orbsvcs/FaultTolerance/ftconf.h:
+	* orbsvcs/orbsvcs/Naming/nsconf.h:
+	* orbsvcs/orbsvcs/PortableGroup/miopconf.h: New service specific
+	  configuration files. IMHO, they dont have any business to be in
+	  the ORB core.
+
+	* orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
+	* orbsvcs/orbsvcs/Naming/Hash_Naming_Context.cpp:
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp:
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.h:
+	* orbsvcs/orbsvcs/Naming/Persistent_Context_Index.h:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp:
+	* orbsvcs/orbsvcs/Trader/Trading_Loader.cpp: Additional includes
+	  because of the above changes.
+>>>>>>> 1.5544
+
+>>>>>>> 1.5524
 Wed May  1 18:49:10 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
         * tests/Big_Oneways/Coordinator.h:
@@ -483,8 +724,13 @@ Wed May  1 18:49:10 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 Tue Apr 30 23:17:04 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
+<<<<<<< ChangeLog
+	* tao/orbconf.h: Fixed some typos and removed duplicate
+	  definitions.
+=======
         * tao/orbconf.h: Fixed some typos and removed duplicate
           definitions.
+>>>>>>> 1.5524
 
 Tue Apr 30 23:06:22 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -550,15 +796,49 @@ Wed May  1 00:59:39 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 Tue Apr 30 17:39:37 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
+<<<<<<< ChangeLog
+<<<<<<< ChangeLog
 	* tao/default_resource.cpp (init): Removed support for
 	  "-ORBConnectionLock" and "-ORBConnectorLock". They had been in
 	  the deperecated mode for sometime now.
 
+	* docs/Ooptions.html: Removed documentation for the above two
+	  ORB options and added documentation for "-ORBConnectStrategy".
+
+=======
+        * tao/default_resource.cpp (init): Removed support for
+          "-ORBConnectionLock" and "-ORBConnectorLock". They had been in
+          the deperecated mode for sometime now.
+
+        * docs/Ooptions.html: Removed documentation for the above two
+          ORB options and added documentation for "-ORBConnectStrategy".
+=======
+	* tao/default_resource.cpp (init): Removed support for
+	  "-ORBConnectionLock" and "-ORBConnectorLock". They had been in
+	  the deperecated mode for sometime now.
+>>>>>>> 1.5544
+
+<<<<<<< ChangeLog
+>>>>>>> 1.5524
+=======
 	* docs/Options.html: Removed documentation for the above two
 	  ORB options and added documentation for "-ORBConnectStrategy".
+>>>>>>> 1.5544
 
 Tue Apr 30 17:03:49 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
+<<<<<<< ChangeLog
+	* tao/Resource_Factory.h:
+	* tao/Resource_Factory.cpp: Changed the name of the enum
+	  Connection_Strategy to Purging_Strategy. Removed
+	  connection_caching_strategy_type () from the interface since it
+	  is no longer used.
+
+	* tao/default_resource.cpp:
+	* tao/default_resource.h: Changed all references of
+	  TAO_Resource_Factory::Connection_strategy to
+	  TAO_Resource_Factory::Purging_Strategy. Added a new -ORB option,
+=======
         * tao/Resource_Factory.h:
         * tao/Resource_Factory.cpp: Changed the name of the enum
           Connection_Strategy to Purging_Strategy. Removed
@@ -569,7 +849,20 @@ Tue Apr 30 17:03:49 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
         * tao/default_resource.h: Changed all references of
           TAO_Resource_Factory::Connection_strategy to
           TAO_Resource_Factory::Purging_Strategy. Added a new -ORB option,
+>>>>>>> 1.5524
           -ORBConnectionPurgingStrategy. This would replace the option
+<<<<<<< ChangeLog
+	  -ORBConnectionCachingStrategy which will be deprecated in the
+	  future. The new option has the same functionality of the
+	  -ORBConnectionCachingStrategy but with a more meaningful name.
+
+	* tao/orbconf.h: Added a new #define
+	  TAO_CONNECTION_PURGING_STRATEGY that will replace the existing
+	  TAO_CONNECTION_CACHING_STRATEGY. The latter will be deprecated.
+
+	* tao/Strategies/advanced_resource.cpp: Changed references of
+	  Connection_Strategy to Purging_Strategy.
+=======
           -ORBConnectionCachingStrategy which will be deprecated in the
           future. The new option has the same functionality of the
           -ORBConnectionCachingStrategy but with a more meaningful name.
@@ -580,6 +873,7 @@ Tue Apr 30 17:03:49 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * tao/Strategies/advanced_resource.cpp: Changed references of
           Connection_Strategy to Purging_Strategy.
+>>>>>>> 1.5524
 
         * docs/Options.html: Added documentation for the new ORB option,
           -ORBConnectionPurgingStrategy.
@@ -589,6 +883,25 @@ Tue Apr 30 17:03:49 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Tue Apr 30 21:41:12 UTC 2002  Craig Rodrigues
 
+<<<<<<< ChangeLog
+	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/run_test.pl:
+	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/sender.cpp:
+	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/sender.h:
+	* orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.cpp:
+	* orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.h:
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.cpp:
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.h:
+	  Make frame_rate_ a double value.
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+	* orbsvcs/orbsvcs/AV/AVStreams_i.h:
+	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp:
+	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.h:
+	  - Remove extraneous calls to _remove_ref() which were causing crashes
+	  - Add additional is_nil() checks before calling
+	  - Remove extraneous calls to string_to_object()
+	  - Various attempts at memory management fixes
+=======
         * orbsvcs/tests/AVStreams/Asynch_Three_Stage/run_test.pl:
         * orbsvcs/tests/AVStreams/Asynch_Three_Stage/sender.cpp:
         * orbsvcs/tests/AVStreams/Asynch_Three_Stage/sender.h:
@@ -606,15 +919,35 @@ Tue Apr 30 21:41:12 UTC 2002  Craig Rodrigues
           - Add additional is_nil() checks before calling
           - Remove extraneous calls to string_to_object()
           - Various attempts at memory management fixes
+>>>>>>> 1.5524
 
 Tue Apr 30 14:51:58 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
+<<<<<<< ChangeLog
+	* tests/Makefile:
+	* tests/Makefile.bor: Added the Connection_Timeout test to the
+	  list of directories.
+=======
         * tests/Makefile:
         * tests/Makefile.bor: Added the Connection_Timeout test to the
           list of directories.
+>>>>>>> 1.5524
 
 Tue Apr 30 14:46:26 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
+<<<<<<< ChangeLog
+	* tests/Connection_Timeout/client.cpp:
+	* tests/Connection_Timeout/README:
+	* tests/Connection_Timeout/run_test.pl:
+	* tests/Connection_Timeout/Connection_Timeout.dsw:
+	* tests/Connection_Timeout/Test.idl:
+	* tests/Connection_Timeout/client.dsp:
+	* tests/Connection_Timeout/client.bor:
+	* tests/Connection_Timeout/Makefile.bor: A simple test for
+	  connection timeouts. The client tries connecting to a
+	  non-existing server and times out based on the policy value
+	  set.
+=======
         * tests/Connection_Timeout/client.cpp:
         * tests/Connection_Timeout/README:
         * tests/Connection_Timeout/run_test.pl:
@@ -626,6 +959,7 @@ Tue Apr 30 14:46:26 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
           connection timeouts. The client tries connecting to a
           non-existing server and times out based on the policy value
           set.
+>>>>>>> 1.5524
 
 Tue Apr 30 14:20:55 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -633,6 +967,7 @@ Tue Apr 30 14:20:55 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
           Connection_Timeout_Policy.*  to the project file.
 
 Tue Apr 30 13:50:55 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+<<<<<<< ChangeLog
 
 	* tao/IIOP_Connector.cpp: Checked to see if the connection timeout
 	  policy is set by the application and if so, gets the value.
@@ -678,6 +1013,86 @@ Tue Apr 30 13:50:55 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Messaging/Messaging_Policy_i.h: Doxygenized the
 	  documentation of the classes.
+=======
+
+	* tao/IIOP_Connector.cpp: Checked to see if the connection timeout
+	  policy is set by the application and if so, gets the value.
+
+	* tao/ORB_Core.cpp:
+	* tao/ORB_Core.h: Added new hook methods connection_timeout_hook
+	  (), connection_timeout () and stubless_connection_timeout
+	  (). They are used for setting the connection timeout hook and
+	  querying the timeout values on the ORB and thread levels.
+
+	* tao/Stub.cpp:
+	* tao/Stub.h: Added a new method connection_timeout () that
+	  queries the policy list at the object level for a
+	  connection timeout policy and returns the policy.
+
+	* tao/orbconf.h:
+	  Removed TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY since it has
+	  no meaning now. Added a new #define
+	  TAO_HAS_CONNECTION_TIMEOUT_POLICY that can be configured into
+	  the ORB. Added TAO_CACHED_POLICY_CONNECTION_TIMEOUT to the list
+	  of cached policies in the ORB.
+
+	* tao/Messaging/Connection_Timeout_Policy_i.cpp:
+	* tao/Messaging/Connection_Timeout_Policy_i.h: New files
+	  containing the implementation of the new proprietary connection
+	  timeout policy.
+
+	* tao/Messaging/TAO_Messaging.dsp:
+	* tao/Messaging/Makefile: Added the new file.
+
+	* tao/Messaging/Messaging.h: #included TAO_ExtC.h
+
+	* tao/Messaging/Messaging_ORBInitializer.cpp: Initialized the hook
+	  for the connection timeout.
+
+	* tao/Messaging/Messaging_PolicyFactory.cpp: Added a call to
+	  create the connection timeout policy.
+
+	* tao/Messaging/Messaging_Policy_i.cpp: Moved the inline inclusion
+	  to the global scope. The inline inclusion was within the #if
+	  defined of RELATIVE_RT_TIMEOUT_POLICY and it doesnt sound
+	  right.
+
+<<<<<<< ChangeLog
+        * tao/orbconf.h:
+          Removed TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY since it has
+          no meaning now. Added a new #define
+          TAO_HAS_CONNECTION_TIMEOUT_POLICY that can be configured into
+          the ORB. Added TAO_CACHED_POLICY_CONNECTION_TIMEOUT to the list
+          of cached policies in the ORB.
+
+        * tao/Messaging/Connection_Timeout_Policy_i.cpp:
+        * tao/Messaging/Connection_Timeout_Policy_i.h: New files
+          containing the implementation of the new proprietary connection
+          timeout policy.
+
+        * tao/Messaging/TAO_Messaging.dsp:
+        * tao/Messaging/Makefile: Added the new file.
+
+        * tao/Messaging/Messaging.h: #included TAO_ExtC.h
+
+        * tao/Messaging/Messaging_ORBInitializer.cpp: Initialized the hook
+          for the connection timeout.
+
+        * tao/Messaging/Messaging_PolicyFactory.cpp: Added a call to
+          create the connection timeout policy.
+
+        * tao/Messaging/Messaging_Policy_i.cpp: Moved the inline inclusion
+          to the global scope. The inline inclusion was within the #if
+          defined of RELATIVE_RT_TIMEOUT_POLICY and it doesnt sound
+          right.
+
+        * tao/Messaging/Messaging_Policy_i.h: Doxygenized the
+          documentation of the classes.
+>>>>>>> 1.5524
+=======
+	* tao/Messaging/Messaging_Policy_i.h: Doxygenized the
+	  documentation of the classes.
+>>>>>>> 1.5544
 
 Tue Apr 30 09:36:37 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
@@ -704,6 +1119,18 @@ Mon Apr 29 15:00:59 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
         * tao/orbconf.h: Added a proprietary policy type for managing
           connection timeouts.
 
+<<<<<<< ChangeLog
+	* tao/Messaging/TAO_Ext.pidl:
+	* tao/Messaging/TAO_ExtC.h:
+	* tao/Messaging/TAO_ExtC.i:
+	* tao/Messaging/TAO_ExtC.cpp: An extension to the TAO's
+	  proprietary messaging policy. We define the new policy for
+	  connection timeouts here.
+
+	* tao/Messaging/Makefile: Added the new file to the makefile.
+	* tao/Messaging/diffs/TAO_Ext.diff: The diffs between the
+	  generated code and code that is being checked in.
+=======
         * tao/Messaging/TAO_Ext.pidl:
         * tao/Messaging/TAO_ExtC.h:
         * tao/Messaging/TAO_ExtC.i:
@@ -714,6 +1141,7 @@ Mon Apr 29 15:00:59 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
         * tao/Messaging/Makefile: Added the new file to the makefile.
         * tao/Messaging/diffs/TAO_Ext.diff: The diffs between the
           generated code and code that is being checked in.
+>>>>>>> 1.5524
 
 Mon Apr 29 14:42:07 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -722,6 +1150,15 @@ Mon Apr 29 14:42:07 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Mon Apr 29 11:28:59 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
+<<<<<<< ChangeLog
+	* orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
+	* orbsvcs/IFR_Service/IFR_Service.cpp:
+	* orbsvcs/IFR_Service/Makefile.IFR_Service:
+	* orbsvcs/orbsvcs/IFRService/Makefile.IFRService:
+	  Fixed the compilation errors for unused environment
+	  variables.
+	  Also updated the dependencies.
+=======
         * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
         * orbsvcs/IFR_Service/IFR_Service.cpp:
         * orbsvcs/IFR_Service/Makefile.IFR_Service:
@@ -729,6 +1166,7 @@ Mon Apr 29 11:28:59 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
           Fixed the compilation errors for unused environment
           variables.
           Also updated the dependencies.
+>>>>>>> 1.5524
 
 Mon Apr 29 06:41:53 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
