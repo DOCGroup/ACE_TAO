@@ -1,0 +1,28 @@
+// -*- MPC -*-
+//
+// $Id$
+
+project(*Server): taoexe, naming, iortable, portableserver {
+  Source_Files {
+    Test_Output.cpp
+    TestS.cpp
+    TestC.cpp
+    Hello.cpp
+    server.cpp
+  }
+  Header_Files {
+	../test_config.h
+  }
+}
+
+project(*Client): taoexe {
+
+  Source_Files {
+    Test_Output.cpp
+    TestC.cpp
+    client.cpp
+  }
+  Header_Files {
+	../test_config.h
+  }
+}

@@ -1,0 +1,8 @@
+// -*- MPC -*-
+// $Id$
+
+project : acelib {
+  after    += HTBP
+  libs     += ACE_HTBP
+  includes += $(ACE_ROOT)/protocols
+}

@@ -1,0 +1,27 @@
+//
+// $Id$
+//
+
+interface Callback
+{
+  oneway void shutdown (in boolean is_clean);
+  // A safe way to shutdown the client, using either clean shutdowns
+  // or "catastrophic failures".
+};
+
+interface Simple_Server
+{
+  long test_method (in boolean do_callback,
+                    in boolean is_clean,
+                    in Callback cb);
+  // Just call a method on the server, we can pass a callback object
+  // so the server can be tested for client shutdowns.
+
+  void shutdown_now (in boolean is_clean);
+  // An unsafe way to shutdown the server, we can even ask for a
+  // "catastrophic crash" (implemented using abort())
+
+  oneway void shutdown ();
+  // A safe way to shutdown the server, it is a oneway function so we
+  // will never get a COMM_FAILURE error
+};

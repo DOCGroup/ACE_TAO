@@ -1,0 +1,24 @@
+--- orig/TimeBaseS.cpp	Mon Apr  2 10:04:55 2001
++++ TimeBaseS.cpp	Mon Apr  2 10:07:40 2001
+@@ -23,21 +23,6 @@
+ #define _TAO_IDL_ORIG_TIMEBASES_CPP_
+ 
+ #include "TimeBaseS.h"
+-#include "tao/PortableServer/Object_Adapter.h"
+-#include "tao/PortableServer/Operation_Table.h"
+-#include "tao/TAO_Server_Request.h"
+-#include "tao/ORB_Core.h"
+-#include "tao/Stub.h"
+-#include "tao/IFR_Client_Adapter.h"
+-#include "ace/Dynamic_Service.h"
+-
+-#if TAO_HAS_INTERCEPTORS == 1
+-#include "tao/RequestInfo_Util.h"
+-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
+-
+-#if defined (__BORLANDC__)
+-#pragma option -w-rvl -w-rch -w-ccc -w-aus
+-#endif /* __BORLANDC__ */
+ 
+ #if !defined (__ACE_INLINE__)
+ #include "TimeBaseS.i"

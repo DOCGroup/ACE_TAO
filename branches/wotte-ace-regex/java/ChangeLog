@@ -1,0 +1,143 @@
+Wed Dec  5 14:35:07 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* EAC/System Manual.doc:
+	* EAC/System_Manual.doc:
+	  Another file with spaces in the name, awful for scripts!
+
+Fri Mar 16 16:17:24 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * java/EAC/User Manual.doc:
+        * java/EAC/User_Manual.doc:
+          Renamed documentation file, many a script gets confused with
+          names that have spaces in them.
+
+Sun Jun  4 14:53:05 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ImageProcessing/framework/MedJava.html:
+        * ImageProcessing/framework/test.html:
+        * apps/NexusII/start.html:
+
+          Added in missing CVS Id strings.
+
+Tue Aug 24 13:09:15 1999  Everett Anderson  <eea1@cs.wustl.edu>
+
+        * src/*, tests/*, netsvcs/*: Implemented major changes to the
+          package system.  Now all files descend from the JACE directory
+          under the main archive level.  All files are further grouped by
+          their subpackage names.  This is the way Java usually wants it,
+          and makes JACE javadoc friendly.
+
+          Rewrote and added javadoc comments throughout JACE.
+
+          Changed all concurrency mechanisms to inherit from AbstractLock,
+          obeying all its requirements such as not releasing the lock
+          unless the accessing thread is the owner.
+
+          Added the token service.
+
+          Added and rewrote tests for Concurrency mechs and ServiceConfig.
+
+          Rewrote network services to inherit from JACE.netsvcs.Server and
+          JACE.netsvcs.Handler, abstracting much of the work out to these
+          base classes.
+
+          Debugging is now OFF by default.
+
+Wed Aug 18 19:43:23 1999  Everett Anderson  <eea1@cs.wustl.edu>
+
+        * src/GetOpt.java: Added another constructor to GetOpt with an
+          option to return args even if not in the optstring.  This is
+          useful for the default case in a switch (for printUsage
+          and exit).
+
+Wed Aug 18 13:35:46 1999  Everett Anderson  <eea1@cs.wustl.edu>
+
+        * src/TimerQueue.java: Now when createInternalThread is specified
+          in the constructor, it is set to be a daemon thread.  Thus, if a
+          TimerQueue thread is the only one executing, the VM exits.
+
+Wed Jul 14 11:27:47 1999  Everett Anderson  <eea1@cs.wustl.edu>
+
+        * src/StrategyAcceptor.java, AcceptStrategy.java
+          StrategyAcceptor now inherits from Acceptor.  AcceptStrategy
+          can now delegate to an Acceptor, rather than having its own
+          SOCKAcceptor.  Its default is to delegate to a generic
+          Acceptor instance (that uses a SOCKAcceptor).
+
+Fri Jul 09 13:58:42 1999  Everett Anderson  <eea1@cs.wustl.edu>
+
+        * src/Acceptor.java, TimeValue.java
+          Solved a few javadoc warnings.
+
+Fri Jul 09 11:08:32 1999  Everett Anderson  <eea1@cs.wustl.edu>
+
+        * src/TimedWait.java, Stream*.java, Token.java
+          Fixed a bug in TimedWait from the recent changes.  Made
+          Streams (and Modules) use absolute times for timeouts.
+
+Thu Jul 08 14:54:36 1999  Everett Anderson  <eea1@cs.wustl.edu>
+
+        * src/Condition.java, TimedWait.java, EventHandler.java,
+          MessageQueue.java, ServiceObject.java, SvcHandler.java,
+          Task.java, Mutex.java, Semaphore.java, Token.java,
+          TimerQueue.java
+
+          Changed the semantics of Condition, TimedWait, MessageQueue,
+          Task, Mutex, Semaphore, and Token to use absolute times for
+          their timeouts.
+
+          Changed the semantics of EventHandler, ServiceObject, and
+          SvcHandler such that handleTimeout receives a TimeValue
+          representing when the event occured.
+
+          Changed TimerQueue internally to reflect the above changes.
+
+          Also made better checks in Token and Mutex so that non-owners
+          can call release without adverse effects.  I plan to try to
+          do this with Semaphore and RWMutex as well.
+
+Thu Jul 08 11:20:17 1999  Everett Anderson  <eea1@cs.wustl.edu>
+
+        * src/TimeValue.java: Added relativeTimeOfDay(offsets)
+          methods which return TimeValues.  These should help people
+          since many classes will be changed to use
+          absolute TimeValues shortly to correspond to ACE's versions.
+
+Wed Jul 07 22:42:27 1999  Everett Anderson  <eea1@cs.wustl.edu>
+
+        * src/Token.java: Fixed several bugs in tryacquire and renew.
+        Specifying a null TimeValue in acquire or renew now means to wait
+        until the lock is obtained.  Specifying TimeValue.zero in acquire
+        means just to poll and don't call sleepHook().  In renew, it is
+        the same as specifying a requePosition of 0 -- doesn't give up
+        the token.
+
+Wed Jul 07 21:54:35 1999  Everett Anderson  <eea1@cs.wustl.edu>
+
+        * src/TimedWait.java: Fixed the semantics of
+          timedWait(TimeValue tv).  Now when tv represents zero, it has
+          polling semantics, checking the condition once and returning
+          on success or throwing a TimeoutException on failure.  Before,
+          it blocked until notified.  (Also affects synch mechanisms)
+
+Wed May 20 14:37:48 CDT 1998  Everett Anderson <eea1@cs.wustl.edu>
+
+Reset the ChangeLog file for future users.  If anyone wants more complete
+file by file changes, they can be provided with the CVS log command.
+
+Updated the JACE page at http://www.cs.wustl.edu/~eea1/JACE.html to reflect
+the Version 1.4.4 changes, which included:
+
+* Removed CUP and JLex from JACE.  The java_cup directory is still in CVS,
+  but won't be included in future versions.  This means that the option to
+  load C++ ACE ServiceConfigurator files is gone.
+
+* Changed the SOCKStream system so it uses DataInputStream and DataOutputStream
+  to maintain compatibility with other languages and remove the deprecation
+  warnings from using PrintStream.  (Can't use Reader/Writers since they
+  write 16-bit chars not 8-bit bytes)
+
+* Made lots of modifications to comments and code to remove javadoc warnings
+  and deprecation warnings.  They were all straight-forward changes such as
+  making sure a @throws line was in the comments for all exceptions a method
+  had, etc.
