@@ -49,7 +49,7 @@ Default_Dispatcher_Impl::init_i (const Dispatcher_Attributes& attrs)
     {
       //ACE_DEBUG ((LM_DEBUG, "iter = %d\n", i));
       Dispatcher_Task* task=0;
-      ACE_NEW_RETURN (task, Dispatcher_Task (*config), -1);
+      ACE_NEW_RETURN (task, Dispatcher_Task (*config, ACE_Thread_Manager::instance ()), -1);
       auto_ptr<Dispatcher_Task> tmp_task_auto_ptr (task);
       tasks_[i++] = tmp_task_auto_ptr;
       //I couldn't use reset because MSVC++ auto_ptr does not have reset method.
@@ -77,14 +77,14 @@ Default_Dispatcher_Impl::activate_i ()
 
   for(i=0; i<ntasks_; ++i)
     {
-      long flags = THR_BOUND | THR_SCHED_FIFO;
+      long flags = THR_NEW_LWP | THR_BOUND | THR_SCHED_FIFO | THR_JOINABLE;
 
       Priority_t priority =
         tasks_[i]->get_curr_config_info ().thread_priority_;
 
       if (this->tasks_[i]->activate (flags, 1, 1, priority) == -1)
         {
-          flags = THR_BOUND;
+          flags = THR_BOUND | THR_JOINABLE;
           priority = ACE_Sched_Params::priority_min (ACE_SCHED_OTHER,
                                                      ACE_SCOPE_THREAD);
           if (this->tasks_[i]->activate (flags, 1, 1, priority) == -1)
@@ -147,7 +147,19 @@ Default_Dispatcher_Impl::shutdown_i ()
       tasks_[i]->enqueue (shutdown_cmd, qos_info);
     }
 
+  //wait for all tasks to exit
+  for (i=0; i<ntasks_; ++i)
+    {
+      tasks_[i]->wait ();
+    }
+
   return 0;
+}
+
+int
+Shutdown_Task_Command::execute ()
+{
+  return -1;
 }
 
 }

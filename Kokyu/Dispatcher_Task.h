@@ -13,15 +13,13 @@
 #ifndef DISPATCHER_TASK_H
 #define DISPATCHER_TASK_H
 #include /**/ "ace/pre.h"
-
 #include "ace/Task.h"
-
+#include "ace/Lock_Adapter_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Lock_Adapter_T.h"
 #include "Kokyu_defs.h"
 
 namespace Kokyu
@@ -41,6 +39,7 @@ public:
         const Dispatch_Command* cmd,
         const QoSDescriptor& qos_info,
         ACE_Data_Block* data_block,
+        int flags,
         ACE_Allocator* mb_allocator =0);
 
   Dispatch_Command* command ();

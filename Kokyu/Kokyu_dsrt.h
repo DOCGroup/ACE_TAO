@@ -10,29 +10,18 @@
 
 #ifndef KOKYU_DSRT_H
 #define KOKYU_DSRT_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 #include "ace/Copy_Disabled.h"
 
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
+//#if !defined (ACE_LACKS_PRAGMA_ONCE)
+//# pragma once
+//#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "kokyu_export.h"
 #include "Kokyu_defs.h"
 
 namespace Kokyu
 {
-  enum DSRT_Sched_Type_t
-    {
-      DSRT_FP,
-      DSRT_MUF,
-      DSRT_MIF
-    };
-
-  struct DSRT_ConfigInfo
-  {
-    DSRT_Sched_Type_t sched_strategy_;
-  };
 
   template <class DSRT_Scheduler_Traits> class DSRT_Dispatcher_Impl;
 
@@ -131,7 +120,7 @@ namespace Kokyu
     typedef typename QoSDesc::Importance_t Importance_t;
 
     int operator ()(const QoSDesc& qos1,
-                    const QoSDesc& qos2);
+		    const QoSDesc& qos2);
   };
 
   /**
@@ -148,7 +137,7 @@ namespace Kokyu
     typedef typename QoSDesc::Priority_t Priority_t;
 
     int operator ()(const QoSDesc& qos1,
-                    const QoSDesc& qos2);
+		    const QoSDesc& qos2);
   };
 
   /**
@@ -166,7 +155,7 @@ namespace Kokyu
     typedef typename QoSDesc::Time_t Time_t;
 
     int operator ()(const QoSDesc& qos1,
-                    const QoSDesc& qos2);
+		    const QoSDesc& qos2);
   };
 
 
@@ -184,5 +173,5 @@ namespace Kokyu
 #pragma implementation ("Kokyu_dsrt.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* KOKYU_DSRT_H */

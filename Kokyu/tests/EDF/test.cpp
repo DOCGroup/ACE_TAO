@@ -93,7 +93,11 @@ int main (int,char**)
   disp->dispatch (&cmd3, qos3);
   printf("inserted 3\n");
 
-  while(1){}
+  disp->activate ();
+
+  disp->shutdown ();
+
+  ACE_DEBUG ((LM_DEBUG, "after shutdown\n"));
 
   return 0;
 }
