@@ -134,47 +134,44 @@ Roadmap</h3>
 <h3>
 <a NAME="comp"></a>Configuring Key ORB Components</h3>
 
-<!-- Nanbor, can you please give a brief 1 or 2 sentence overview -->
-<!-- explaining that the following configurations are supported by TAO -->
-<!-- using command-line options, svc.conf options, and general usage -->
-<!-- patterns.  In particular, can you please clarify which of the -->
-<!-- following component configurations is controlled by options -->
-<!-- vs. controlled by applying certain patterns. -->
-
 <ul>
   <li><a name="orb"><b>Number of ORBs</b> -- </a></li>
       TAO can assign multiple endpoints to an ORB.  Therefore,
       it is not necessary to create multiple ORBs to accept
       requests from multiple endpoints.  However, multiple ORBs can be
       used to support different policies within the same process,
-      <EM>e.g.</EM>, handling requests in different thread priorities.<p>
+      <EM>e.g.</EM>, handling requests in different thread
+      priorities.  Multiple ORBs are most commonly used in the "ORB
+      per-priority" pattern to avoid priority inversion in real-time
+      system. <p>
 
   <li><a NAME="concurrency"></a><b>Server concurrency strategy</b> --
-      This specifies
-      the concurrency strategy an ORB uses.  This strategy is
-      orthogonal the the number of ORBs or threads that are configured
-      in a server process.</li><P> 
+      The default server strategy factory provided by down support two
+      different concurrency strategy.  It can be specified by adding
+      the "<tt>-ORBconcurrency</tt>" flag in the <code><a
+      href="Options.html#orb_concurrency"> Server_Strategy_Factory
+      </a></code> entry of the <code>svc.conf</code> file. This
+      specifies the concurrency strategy an ORB uses.  This strategy
+      is orthogonal the the number of ORBs or threads that are
+      configured in a server process.  </li><P>
 
       <ul>
         <li><tt>reactive</tt>: The ORB handles requests reactively,
             i.e., the ORB runs in one thread and service multiple
             requests/connections simultaneously using the
             <A
-HREF="http://www.cs.wustl.edu/~schmidt/ACE-papers.html#reactor">ACE_Reactor</A>,
-which uses <tt>select</TT> or a similar event demultiplexing
-            mechanism supported by the platform. </li> <P>
+            HREF="http://www.cs.wustl.edu/~schmidt/ACE-papers.html#reactor">
+            ACE_Reactor</A>, which uses <tt>select</TT> or a similar
+            event demultiplexing mechanism supported by the
+            platform. </li> <P>
 
         <li><tt>thread-per-connection</tt>: The ORB handles new
             connections by spawning a new thread whose job is to
-            service requests coming from the connection. The new
-            thread inherits all properties from the ORB threads 
-<!-- Nanbor, since this is an HTML document please put a link to the -->
-<!-- material below, rather than just saying "see below! -->
-     (see below.)</li>
+            service requests coming from the connection.</li>
       </UL><P>
 
   <li><a name="orb"><b>Thread Pools</b></a></li> --
-  TAO supports several types of thread pools. <P>
+      TAO supports several types of thread pools. <P>
 
       <ul>
         <li><tt>reactive</tt>: In this approach, each thread
@@ -186,7 +183,7 @@ which uses <tt>select</TT> or a similar event demultiplexing
 	  <CODE>ORB::run</CODE>, the ORB will select one of the threads
 	  to wait for incoming requests.
 	  This thread is called the leader thread and will process the
-	  first request that arrives to the ORB, but before 
+	  first request that arrives to the ORB, but before
 	  doing so the ORB will selects another thread in the pool to
 	  become the leader.
 	  In other words the threads in the pool take turns to
@@ -199,7 +196,7 @@ which uses <tt>select</TT> or a similar event demultiplexing
 	  configuration file.
 	</p>
 	</li>
-	
+
       </UL><P>
 
   <!--
@@ -223,10 +220,10 @@ which uses <tt>select</TT> or a similar event demultiplexing
       process and a global collocation table is used, then all objects
       in the same process are considered collocated.  If not, only
       objects reside in the same <em>ORB</em> are considered
-      collocated.<p>
-      <!-- Nanbor, this is an example of a discussion that should -->
-      <!-- point to the relevant options that controls the user's -->
-      <!-- choice -->
+      collocated.  You can control the usage of global collocation
+      table by passing the <code><a href="Options.html#-ORBCollocation">
+      -ORBCollocation </a></code> flag as an argument of <code>
+      ORB_init </code> (most often thru the command line flags.) <p>
 
   <li> <a NAME="profile"></a><b>Forwarding Profile</b> --
       When multiple threads using the same
@@ -235,7 +232,8 @@ which uses <tt>select</TT> or a similar event demultiplexing
       CORBA::Object, against multiple access. Therefore a mutex lock
       is used by default to ensure proper access. <P>
 
-      Using the switch <tt>-ORBprofilelock</tt> this policy can be deactivated
+      Using the switch <tt><a href="Options.html#-ORBProfileLock">
+      -ORBprofilelock </a></tt> this policy can be deactivated
       specifying <tt>-ORBprofilelock null</tt>.
       The primary reason for doing this is to improve performance
       when no forwarding is used or no multithreading with access to
