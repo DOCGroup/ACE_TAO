@@ -5,6 +5,10 @@ Wed Jun 30 16:18:03 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  profiles. Thanks to "alvarez" <alvarez@nagra-kudelski.ch> for
 	  reporting this problem.
 
+	* tests/MT_Client/run_test.pl:
+	  Fixed error status, it was reporting problems when there were
+	  none.
+
 Wed Jun 30 15:46:32 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* docs/releasenotes/index.html:

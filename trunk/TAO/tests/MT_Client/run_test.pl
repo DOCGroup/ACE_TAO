@@ -12,6 +12,7 @@ $client_conf="client.global.conf";
 $client_process="client";
 $debug_level='0';
 $threads='10';
+$status = 0;
 
 foreach $i (@ARGV) {
   if ($i eq '-tss') {
@@ -45,18 +46,16 @@ $client = $CL->TimedWait (60);
 if ($client == -1) {
   print STDERR "ERROR: client timedout\n";
   $CL->Kill (); $CL->TimedWait (1);
+  $status = 1;
 }
 
 $server = $SV->TimedWait (5);
 if ($server == -1) {
   print STDERR "ERROR: server timedout\n";
   $SV->Kill (); $SV->TimedWait (1);
+  $status = 1;
 }
 
 unlink $iorfile;
 
-if ($server != 0 || $client != 0) {
-  exit 1;
-}
-
-exit 0;
+exit $status;
