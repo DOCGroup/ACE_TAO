@@ -125,7 +125,7 @@ namespace TMCast
             if (!control_.empty ()) break;
           }
 
-          ACE_Addr junk;
+          ACE_INET_Addr junk;
           ssize_t n = sock_.recv (msg,
                                   Protocol::MAX_MESSAGE_SIZE,
                                   junk,

@@ -84,7 +84,7 @@ namespace TMCast
                               &thread_) != 0) ::abort ();
     }
 
-    ~Scheduler ()
+    virtual ~Scheduler ()
     {
       {
         MessageQueueAutoLock lock (in_control_);
@@ -109,7 +109,6 @@ namespace TMCast
     thread_thunk (void* arg)
     {
       Scheduler* obj = reinterpret_cast<Scheduler*> (arg);
-
       obj->execute ();
       return 0;
     }
@@ -120,7 +119,6 @@ namespace TMCast
       try
       {
         sock_.join (addr_);
-
         auto_ptr<LinkListener> ll (new LinkListener (sock_, in_link_data_));
 
         {
@@ -149,7 +147,6 @@ namespace TMCast
                 break;
               }
 
-
               // outsync
               //
               //
@@ -160,7 +157,6 @@ namespace TMCast
                 outsync ();
 
                 // schedule next outsync
-
                 sync_schedule =
                   ACE_OS::gettimeofday () +
                   ACE_Time_Value (0, Protocol::SYNC_PERIOD);
@@ -227,7 +223,6 @@ namespace TMCast
       catch (...)
       {
         // cerr << "Exception in scheduler loop." << endl;
-
         MessageQueueAutoLock lock (out_control_);
         out_control_.push (MessagePtr (new Failure));
       }
@@ -272,7 +267,6 @@ namespace TMCast
       fault_detector_.outsync ();
 
       // sock_.send (buf, hdr->length, addr_);
-
       sock_.send (buf, hdr->length);
     }
 
@@ -331,7 +325,7 @@ namespace TMCast
   class Group::GroupImpl
   {
   public:
-    ~GroupImpl ()
+    virtual ~GroupImpl ()
     {
     }
 
