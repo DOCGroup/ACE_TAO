@@ -315,7 +315,7 @@ The following are common ORB configurations used by TAO applications.<P>
 
           <td>The default settings should work just fine.  However,
               you can apply the following options to improve performance:<br>
-              <tt>TAO_Resource_Factory</tt>: <tt>-ORBReactorType
+              <tt>TAO_Advanced_Resource_Factory</tt>: <tt>-ORBReactorType
               select_st</tt>, <tt>-ORBInputCDRAllocator null</tt>
               <br><tt>TAO_Server_Strategy_Factory</tt>:
               <tt>-ORBconcurrency reactive</tt> (default),
@@ -370,7 +370,7 @@ The following are common ORB configurations used by TAO applications.<P>
       <tr>
         <th align=left>Options</th>
 
-        <td><tt>TAO_Resource_Factory</tt>: <tt>-ORBReactorType
+        <td><tt>TAO_Advanced_Resource_Factory</tt>: <tt>-ORBReactorType
             select_mt</tt> (default) or other thread-safe platform specific
             reactors.<br>
             <br><tt>TAO_Server_Strategy_Factory</tt>:
@@ -416,7 +416,7 @@ The following are common ORB configurations used by TAO applications.<P>
       <tr>
         <th align=left>Options</th>
 
-        <td><tt>TAO_Resource_Factory</tt>: <tt>-ORBReactorType
+        <td><tt>TAO_Advanced_Resource_Factory</tt>: <tt>-ORBReactorType
             select_mt</tt> (default) or other thread-safe platform specific
             reactors.<br>
             <br><tt>TAO_Server_Strategy_Factory</tt>:
@@ -461,7 +461,7 @@ The following are common ORB configurations used by TAO applications.<P>
     <tr>
       <th align=left>Options</th>
 
-      <td><tt>TAO_Resource_Factory</tt>: <tt>-ORBReactorType
+      <td><tt>TAO_Advanced_Resource_Factory</tt>: <tt>-ORBReactorType
             select_mt</tt> (default) or other thread-safe platform specific
             reactors.<br>
           <br><tt>TAO_Server_Strategy_Factory</tt>:
@@ -510,7 +510,7 @@ multiple ORBs, and thread-per-connection</i> configuration.<P>
       <tr>
         <th align=left>Options</th>
 
-        <td><tt>TAO_Resource_Factory</tt>: <tt>-ORBReactorType
+        <td><tt>TAO_Advanced_Resource_Factory</tt>: <tt>-ORBReactorType
             tp</tt>.<br>
             <br><tt>TAO_Server_Strategy_Factory</tt>:
             <tt>-ORBConcurrency reactive</tt></td>
@@ -554,7 +554,7 @@ multiple ORBs, and thread-per-connection</i> configuration.<P>
       <tr>
         <th align=left>Options</th>
 
-        <td><tt>TAO_Resource_Factory</tt>: <tt>-ORBReactorType
+        <td><tt>TAO_Advanced_Resource_Factory</tt>: <tt>-ORBReactorType
             tp</tt>.<br>
             <br><tt>TAO_Server_Strategy_Factory</tt>:
             <tt>-ORBConcurrency reactive</tt></td>
@@ -624,13 +624,13 @@ components. <P>
       in-stock <code>Client_Strategy_Factory</code> that TAO defines. <P>
 
   <li><p>Some platforms do not support reading of <code>svc.conf</code>
-      files or you would rather not to use the feature.  In this case,
-      you must define <code>TAO_PLATFORM_SVC_CONF_FILE_NOTSUP</code>
-      in your ACE <code>config.h</code> file and recompile TAO
-      library.  In this case, a TAO program will not try to search for
-      the default <code>svc.conf</code> file.  However, if platform
-      support, you can still use <code>-ORBSvcConf</code> to change
-      the program behavior temporarily.</p>
+      files or perhaps you would rather not to use this feature.  In these cases,
+      you can define <code>TAO_PLATFORM_SVC_CONF_FILE_NOTSUP</code>
+      in your ACE <code>config.h</code> file and recompile the TAO
+      libraries.  When this flag is set, TAO programs will not try to search for
+      the default <code>svc.conf</code> file.  You can still use
+      <code>-ORBSvcConf</code> to initialize the components (assuming
+      the platform supports it).</p>
 
       <p>On these platform, you can alter the default settings for
       TAO components by defining the following macros in your
@@ -638,6 +638,7 @@ components. <P>
 
       <ul>
         <li><code>TAO_DEFAULT_RESOURCE_FACTORY_ARGS</code>
+        <li><code>TAO_ADVANCED_RESOURCE_FACTORY_ARGS</code>
         <li><code>TAO_DEFAULT_SERVER_STRATEGY_FACTORY_ARGS</code>
         <li><code>TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS</code>
       </ul>
@@ -666,7 +667,7 @@ Configuration for Homogenous Systems<a NAME="homogenous"></a></h3>
       check the timestamps in the POA, another macro (<tt>POA_NO_TIMESTAMP</tt>)
       can be used for this purpose.
       <p>Users running in embebbed systems may also need to modify the default
-      options for TAO, the macros <tt>TAO_DEFAULT_RESOURCE_FACTORY_ARGS</tt>,
+      options for TAO, the macros <tt>TAO_DEFAULT_RESOURCE_FACTORY_ARGS</tt>, <tt>TAO_ADVANCED_RESOURCE_FACTORY_ARGS</tt>,
       <tt>TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS</tt> and <tt>TAO_DEFAULT_SERVER_STRATEGY_FACTORY_ARGS</tt>
       can be used for those purposes. If the footprint size is an issue users
       may consider writing custom strategy factories that only create the right
