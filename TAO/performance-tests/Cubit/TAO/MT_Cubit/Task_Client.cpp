@@ -5,8 +5,19 @@
 #include "ace/Stats.h"
 
 #if defined (NO_ACE_QUANTIFY)
-#include "quantify.h"
+# include "quantify.h"
 #endif /* NO_ACE_QUANTIFY */
+
+inline
+ACE_UINT32
+ACE_round (ACE_timer_t t)
+{
+#if defined (ACE_LACKS_FLOATING_POINT)
+  return t;
+#else
+  return ACE_static_cast (ACE_UINT32, t);
+#endif
+}
 
 ACE_RCSID(MT_Cubit, Task_Client, "$Id$")
 
@@ -332,8 +343,7 @@ Client::get_high_priority_jitter (void)
 {
   ACE_timer_t jitter = 0.0;
   ACE_timer_t average = get_high_priority_latency ();
-  u_int number_of_samples =
-    this->ts_->high_priority_loop_count_ / this->ts_->granularity_;
+  u_int number_of_samples = 0;
 
   // Compute the standard deviation, i.e., jitter, from the values
   // stored in the global_jitter_array_.
@@ -349,17 +359,17 @@ Client::get_high_priority_jitter (void)
   // latency in usecs.
   ACE_timer_t *latency = 0;
 
-  u_int i = 0;
-
   for (iterator.first ();
-       i < number_of_samples && iterator.next (latency) == 1;
-       i++,iterator.advance ())
+       iterator.next (latency) == 1;
+       iterator.advance ())
     {
+      ++number_of_samples;
+
       ACE_timer_t difference = *latency - average;
       jitter += difference * difference;
-      ACE_DEBUG ((LM_DEBUG, "high sample: %u\n",
-                  ACE_static_cast (ACE_UINT32, *latency))); // ????
-      stats.sample (ACE_static_cast (ACE_UINT32, *latency));
+
+      ACE_DEBUG ((LM_DEBUG, "high sample: %12.4f\n", *latency)); // ????
+      stats.sample (ACE_round (*latency));
     }
 
   // Return the square root of the sum of the differences computed
@@ -369,7 +379,7 @@ Client::get_high_priority_jitter (void)
               "high priority jitter (%u samples):\n", number_of_samples));
 
   ACE_DEBUG ((LM_DEBUG,"Latency stats (time in usec)\n"));
-  stats.print_summary (0, 1, stderr);
+  stats.print_summary (1, 1, stderr);
 
   return sqrt (jitter / (number_of_samples - 1));
 }
@@ -399,7 +409,6 @@ Client::get_low_priority_jitter (void)
        j++)
     {
       ACE_DEBUG ((LM_DEBUG, "count: %u\n", ts_->count_[j])); // ????
-      number_of_samples += this->ts_->count_[j];
 
       JITTER_ARRAY_ITERATOR iterator =
         this->ts_->global_jitter_array_ [j]->begin ();
@@ -415,18 +424,18 @@ Client::get_low_priority_jitter (void)
            i < number_of_calls && iterator.next (latency) == 1;
            iterator.advance ())
         {
+          ++number_of_samples;
           ACE_timer_t difference = *latency - average;
           jitter += difference * difference;
-          ACE_DEBUG ((LM_DEBUG, "low sample: %u\n",
-                      ACE_static_cast (ACE_UINT32, *latency))); // ????
-          stats.sample (ACE_static_cast (ACE_UINT32, *latency));
+          ACE_DEBUG ((LM_DEBUG, "low sample: %12.4f\n", *latency)); // ????
+          stats.sample (ACE_round (*latency));
         }
     }
 
   ACE_DEBUG ((LM_DEBUG,
               "low priority jitter (%u samples):\n", number_of_samples));
   ACE_DEBUG ((LM_DEBUG,"Latency stats (time in usec)\n"));
-  stats.print_summary (0, 1, stderr);
+  stats.print_summary (1, 1, stderr);
 
   // Return the square root of the sum of the differences computed
   // above, i.e. jitter.
@@ -438,8 +447,7 @@ Client::get_jitter (u_int id)
 {
   ACE_timer_t jitter = 0.0;
   ACE_timer_t average = get_latency (id);
-  u_int number_of_samples =
-    this->ts_->count_[id]  / this->ts_->granularity_;
+  u_int number_of_samples = 0;
 
   // Compute the standard deviation, i.e., jitter, from the values
   // stored in the global_jitter_array_.
@@ -463,17 +471,17 @@ Client::get_jitter (u_int id)
        i < number_of_calls && iterator.next (latency) == 1;
        i ++,iterator.advance ())
     {
+      ++number_of_samples;
       ACE_timer_t difference = *latency - average;
       jitter += difference * difference;
-      ACE_DEBUG ((LM_DEBUG, "thread %d latency: %u\n", id,
-                  ACE_static_cast (ACE_UINT32, *latency))); // ????
-      stats.sample (ACE_static_cast (ACE_UINT32, *latency));
+      ACE_DEBUG ((LM_DEBUG, "thread %d latency: %12.4f\n", id, *latency)); // ????
+      stats.sample (ACE_round (*latency * 10));
     }
 
   ACE_DEBUG ((LM_DEBUG,
              "jitter for thread id %u:\n", id));
   ACE_DEBUG ((LM_DEBUG,"Latency stats (time in usec)\n"));
-  stats.print_summary (0, 1, stderr);
+  stats.print_summary (1, 1, stderr);
 
   // Return the square root of the sum of the differences computed
   // above, i.e. jitter.
@@ -1146,7 +1154,8 @@ Client::do_test (void)
   u_int low_priority_client_count = this->ts_->thread_count_ - 1;
   ACE_timer_t sleep_time = // usec
     (ACE_ONE_SECOND_IN_USECS * this->ts_->granularity_)/this->frequency_;
-  for (u_int i = 0;
+  u_int i;
+  for (i = 0;
        // keep running for loop count, OR
        i < this->ts_->loop_count_
        // keep running if we are the highest priority thread and at
@@ -1216,6 +1225,8 @@ Client::do_test (void)
           }
 
     } /* end of for () */
+  ACE_DEBUG ((LM_DEBUG, "(%t) do_test executed %u iterations\n", i));
+
   return 0;
 }
 
