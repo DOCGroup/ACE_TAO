@@ -133,7 +133,7 @@ public:
   virtual RTCORBA::ThreadpoolId threadpool (CORBA::Environment
                                             &ACE_TRY_ENV =
                                             TAO_default_environment ())
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::PolicyType policy_type (CORBA::Environment
                                          &ACE_TRY_ENV =
@@ -442,49 +442,49 @@ public:
   virtual CORBA::Long send_buffer_size (CORBA::Environment
                                         &ACE_TRY_ENV =
                                         TAO_default_environment ())
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void send_buffer_size (CORBA::Long send_buffer_size,
                                  CORBA::Environment &ACE_TRY_ENV =
                                  TAO_default_environment ())
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Long recv_buffer_size (CORBA::Environment
                                         &ACE_TRY_ENV =
                                         TAO_default_environment ())
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void recv_buffer_size (CORBA::Long recv_buffer_size,
                                  CORBA::Environment &ACE_TRY_ENV =
                                  TAO_default_environment ())
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Boolean keep_alive (CORBA::Environment &ACE_TRY_ENV =
                                      TAO_default_environment ())
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void keep_alive (CORBA::Boolean keep_alive,
                            CORBA::Environment &ACE_TRY_ENV =
                            TAO_default_environment ())
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Boolean dont_route (CORBA::Environment &ACE_TRY_ENV =
                                      TAO_default_environment ())
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void dont_route (CORBA::Boolean dont_route,
                            CORBA::Environment &ACE_TRY_ENV =
                            TAO_default_environment ())
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Boolean no_delay (CORBA::Environment &ACE_TRY_ENV =
                                    TAO_default_environment ())
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void no_delay (CORBA::Boolean no_delay,
                          CORBA::Environment &ACE_TRY_ENV =
                          TAO_default_environment ())
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 
   /// This method writes a CDR representation of TCPProtocolProperties.
@@ -534,22 +534,22 @@ public:
   virtual CORBA::Long send_buffer_size (CORBA::Environment
                                         &ACE_TRY_ENV =
                                         TAO_default_environment ())
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void send_buffer_size (CORBA::Long send_buffer_size,
                                  CORBA::Environment &ACE_TRY_ENV =
                                  TAO_default_environment ())
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Long recv_buffer_size (CORBA::Environment
                                         &ACE_TRY_ENV =
                                         TAO_default_environment ())
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void recv_buffer_size (CORBA::Long recv_buffer_size,
                                  CORBA::Environment &ACE_TRY_ENV =
                                  TAO_default_environment ())
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
    * This method writes the CDR encapsulation of an instance of
@@ -607,31 +607,31 @@ public:
                                                &ACE_TRY_ENV =
                                                TAO_default_environment
                                                ())
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void preallocate_buffer_size (CORBA::Long preallocate_buffer_size,
                                         CORBA::Environment
                                         &ACE_TRY_ENV = TAO_default_environment
                                         ())
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual char * mmap_filename (CORBA::Environment &ACE_TRY_ENV =
                                 TAO_default_environment ())
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void mmap_filename (const char * mmap_filename,
                               CORBA::Environment &ACE_TRY_ENV =
                               TAO_default_environment ())
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual char * mmap_lockname (CORBA::Environment &ACE_TRY_ENV =
                                 TAO_default_environment ())
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void mmap_lockname (const char * mmap_lockname,
                               CORBA::Environment &ACE_TRY_ENV =
                               TAO_default_environment ())
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
    * This method writes the CDR encapsulation of an instance of
