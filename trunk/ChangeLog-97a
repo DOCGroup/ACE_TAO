@@ -1,3 +1,9 @@
+Tue Apr  1 15:27:28 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* bin/g++dep: Removed the "/bin" prefix so that this won't fail on
+ 	  platforms that don't have sed in /bin.  Thanks to Sandro Doro
+ 	  <alex@aureus.sublink.org> for this fix.
+
 Tue Apr 01 09:55:07 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.h: protected definition of struct flock on VxWorks,
