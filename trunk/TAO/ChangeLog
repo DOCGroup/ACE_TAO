@@ -1,3 +1,11 @@
+Wed Jul 23 19:35:27 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * orbsvcs/orbsvcs/IOR_Multicast.cpp:
+          Changed dtor to use ACE_SOCK_Dgram_Mcast::leave() instead of
+          ACE_SOCK_Dgram_Mcast::unsubscribe(), which gets rid of a
+          warning.  Thanks to Serkan Unsal <serkan_u2000@yahoo.com> for
+          reporting the problem.
+
 Wed Jul 23 18:40:00 UTC 2003  Gautam Thaker  <gthaker@atl.lmco.com>
 
         * tao/Strategies/SCIOP_Connection_Handler.cpp:
@@ -81,7 +89,9 @@ Wed Jul 23 18:03:21 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           Added #include "ace/streams.h" due to refactoring in ACE that
           removed "ace/streams.h" from "ace/String_Base.cpp" which is a
           template file indirectly included in every file using
-          ACE_[C|T|W]String, which turns out to most in TAO.
+          ACE_[C|T|W]String, which turns out to most in TAO.  Thanks to
+          Bala Natarajan <bala@dre.vanderbilt.edu> for motivating this
+          change.
 
 Wed Jul 23 09:04:06 2003  Gan Deng  <gan.deng@vanderbilt.edu>
 
