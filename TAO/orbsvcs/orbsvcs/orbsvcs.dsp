@@ -165,6 +165,10 @@ SOURCE=.\Event\EC_Gateway.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Event\EC_Gateway_UDP.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Naming\Entries.cpp
 # End Source File
 # Begin Source File
@@ -350,6 +354,10 @@ SOURCE=.\Sched\DynSched.h
 # Begin Source File
 
 SOURCE=.\Event\EC_Gateway.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\EC_Gateway_UDP.h
 # End Source File
 # Begin Source File
 
@@ -552,7 +560,7 @@ InputName=CosConcurrencyControl
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -581,7 +589,7 @@ InputName=CosConcurrencyControl
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -618,7 +626,7 @@ InputName=CosLifeCycle
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -647,7 +655,7 @@ InputName=CosLifeCycle
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -684,7 +692,7 @@ InputName=CosNaming
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -713,7 +721,7 @@ InputName=CosNaming
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -750,7 +758,7 @@ InputName=CosTimeBase
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -779,7 +787,7 @@ InputName=CosTimeBase
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -816,7 +824,7 @@ InputName=LifeCycleService
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -845,7 +853,7 @@ InputName=LifeCycleService
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -882,7 +890,7 @@ InputName=Logger
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -911,7 +919,7 @@ InputName=Logger
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -948,7 +956,7 @@ InputName=RtecEventChannelAdmin
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -979,7 +987,7 @@ InputName=RtecEventChannelAdmin
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1016,7 +1024,7 @@ InputName=RtecEventComm
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1045,7 +1053,7 @@ InputName=RtecEventComm
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1082,7 +1090,7 @@ InputName=RtecScheduler
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1111,7 +1119,7 @@ InputName=RtecScheduler
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                  -Wb,export_include=orbsvcs_export.h $(InputName).idl
+                   -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
