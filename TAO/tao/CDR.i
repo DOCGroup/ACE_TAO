@@ -228,13 +228,13 @@ TAO_OutputCDR::good_bit (void) const
   return this->good_bit_;
 }
 
-ACE_INLINE ACE_Message_Block*
+ACE_INLINE const ACE_Message_Block*
 TAO_OutputCDR::begin (void) const
 {
-  return this->start_;
+  return &this->start_;
 }
 
-ACE_INLINE ACE_Message_Block*
+ACE_INLINE const ACE_Message_Block*
 TAO_OutputCDR::end (void) const
 {
   return this->current_->cont ();
@@ -243,13 +243,13 @@ TAO_OutputCDR::end (void) const
 ACE_INLINE const char*
 TAO_OutputCDR::buffer (void) const
 {
-  return this->start_->rd_ptr ();
+  return this->start_.rd_ptr ();
 }
 
 ACE_INLINE size_t
 TAO_OutputCDR::length (void) const
 {
-  return this->start_->length ();
+  return this->start_.length ();
 }
 
 ACE_INLINE CORBA::TypeCode::traverse_status

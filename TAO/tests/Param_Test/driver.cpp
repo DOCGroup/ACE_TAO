@@ -47,7 +47,6 @@ main (int argc, char **argv)
 
 // constructor
 Driver::Driver (void)
-  : orb_ptr_ (0)
 {
 }
 
@@ -66,10 +65,10 @@ Driver::init (int argc, char **argv)
   Options *opt = OPTIONS::instance ();
 
   // Retrieve the underlying ORB
-  this->orb_ptr_ = CORBA::ORB_init (argc,
-                                    argv,
-                                    "internet",
-                                    env);
+  this->orb_ = CORBA::ORB_init (argc,
+				argv,
+				"internet",
+				env);
 
   if (env.exception () != 0)
     {
@@ -86,7 +85,7 @@ Driver::init (int argc, char **argv)
 
   // Retrieve a Param_Test object reference
   CORBA::Object_var temp =
-    this->orb_ptr_->string_to_object (opt->param_test_ior (), env);
+    this->orb_->string_to_object (opt->param_test_ior (), env);
   if (env.exception () != 0)
     {
       env.print_exception ("ORB::string_to_object() failed.");
@@ -123,7 +122,7 @@ Driver::run (void)
     case Options::TEST_SHORT:
       {
         Param_Test_Client<Test_Short> *client = new
-          Param_Test_Client<Test_Short> (this->orb_ptr_,
+          Param_Test_Client<Test_Short> (this->orb_.in (),
                                          this->objref_.in(),
                                          new Test_Short);
         if (opt->invoke_type () == Options::SII)
@@ -136,7 +135,7 @@ Driver::run (void)
     case Options::TEST_UNBOUNDED_STRING:
       {
         Param_Test_Client<Test_Unbounded_String> *client = new
-          Param_Test_Client<Test_Unbounded_String> (this->orb_ptr_,
+          Param_Test_Client<Test_Unbounded_String> (this->orb_.in (),
                                                     this->objref_.in(),
                                                     new Test_Unbounded_String);
         if (opt->invoke_type () == Options::SII)
@@ -149,7 +148,7 @@ Driver::run (void)
     case Options::TEST_FIXED_STRUCT:
       {
         Param_Test_Client<Test_Fixed_Struct> *client = new
-          Param_Test_Client<Test_Fixed_Struct> (this->orb_ptr_,
+          Param_Test_Client<Test_Fixed_Struct> (this->orb_.in (),
                                                 this->objref_.in(),
                                                 new Test_Fixed_Struct);
         if (opt->invoke_type () == Options::SII)
@@ -162,7 +161,7 @@ Driver::run (void)
     case Options::TEST_STRING_SEQUENCE:
       {
         Param_Test_Client<Test_String_Sequence> *client = new
-          Param_Test_Client<Test_String_Sequence> (this->orb_ptr_,
+          Param_Test_Client<Test_String_Sequence> (this->orb_.in (),
                                                    this->objref_.in(),
                                                    new Test_String_Sequence);
         if (opt->invoke_type () == Options::SII)
@@ -175,7 +174,7 @@ Driver::run (void)
 	case Options::TEST_BOUNDED_STRING_SEQUENCE:
       {
         Param_Test_Client<Test_Bounded_String_Sequence> *client = new
-          Param_Test_Client<Test_Bounded_String_Sequence> (this->orb_ptr_,
+          Param_Test_Client<Test_Bounded_String_Sequence> (this->orb_.in (),
                                                            this->objref_.in(),
                                                            new Test_Bounded_String_Sequence);
         if (opt->invoke_type () == Options::SII)
@@ -188,7 +187,7 @@ Driver::run (void)
     case Options::TEST_VAR_STRUCT:
       {
         Param_Test_Client<Test_Var_Struct> *client = new
-          Param_Test_Client<Test_Var_Struct> (this->orb_ptr_,
+          Param_Test_Client<Test_Var_Struct> (this->orb_.in (),
                                               this->objref_.in(),
                                               new Test_Var_Struct);
         if (opt->invoke_type () == Options::SII)
@@ -201,7 +200,7 @@ Driver::run (void)
     case Options::TEST_NESTED_STRUCT:
       {
         Param_Test_Client<Test_Nested_Struct> *client = new
-          Param_Test_Client<Test_Nested_Struct> (this->orb_ptr_,
+          Param_Test_Client<Test_Nested_Struct> (this->orb_.in (),
                                                  this->objref_.in(),
                                                  new Test_Nested_Struct);
         if (opt->invoke_type () == Options::SII)
@@ -214,7 +213,7 @@ Driver::run (void)
     case Options::TEST_STRUCT_SEQUENCE:
       {
         Param_Test_Client<Test_Struct_Sequence> *client = new
-          Param_Test_Client<Test_Struct_Sequence> (this->orb_ptr_,
+          Param_Test_Client<Test_Struct_Sequence> (this->orb_.in (),
                                                  this->objref_.in(),
                                                  new Test_Struct_Sequence);
         if (opt->invoke_type () == Options::SII)
@@ -227,7 +226,7 @@ Driver::run (void)
     case Options::TEST_BOUNDED_STRUCT_SEQUENCE:
       {
         Param_Test_Client<Test_Bounded_Struct_Sequence> *client = new
-          Param_Test_Client<Test_Bounded_Struct_Sequence> (this->orb_ptr_,
+          Param_Test_Client<Test_Bounded_Struct_Sequence> (this->orb_.in (),
 												           this->objref_.in(),
 														   new Test_Bounded_Struct_Sequence);
         if (opt->invoke_type () == Options::SII)
@@ -240,7 +239,7 @@ Driver::run (void)
     case Options::TEST_OBJREF:
       {
         Param_Test_Client<Test_ObjRef> *client = new
-          Param_Test_Client<Test_ObjRef> (this->orb_ptr_,
+          Param_Test_Client<Test_ObjRef> (this->orb_.in (),
                                           this->objref_.in(),
                                           new Test_ObjRef);
         if (opt->invoke_type () == Options::SII)
@@ -253,7 +252,7 @@ Driver::run (void)
     case Options::TEST_TYPECODE:
       {
         Param_Test_Client<Test_TypeCode> *client = new
-          Param_Test_Client<Test_TypeCode> (this->orb_ptr_,
+          Param_Test_Client<Test_TypeCode> (this->orb_.in (),
                                             this->objref_.in(),
                                             new Test_TypeCode);
         if (opt->invoke_type () == Options::SII)
@@ -266,7 +265,7 @@ Driver::run (void)
     case Options::TEST_ANY:
       {
         Param_Test_Client<Test_Any> *client = new
-          Param_Test_Client<Test_Any> (this->orb_ptr_,
+          Param_Test_Client<Test_Any> (this->orb_.in (),
                                        this->objref_.in(),
                                        new Test_Any);
         if (opt->invoke_type () == Options::SII)
@@ -279,7 +278,7 @@ Driver::run (void)
 	case Options::TEST_OBJREF_SEQUENCE:
 		{
 		  Param_Test_Client<Test_ObjRef_Sequence> *client = new
-		    Param_Test_Client<Test_ObjRef_Sequence> (this->orb_ptr_,
+		    Param_Test_Client<Test_ObjRef_Sequence> (this->orb_.in (),
 													 this->objref_.in(),
 													 new Test_ObjRef_Sequence);
         if (opt->invoke_type () == Options::SII)
@@ -292,7 +291,7 @@ Driver::run (void)
     case Options::TEST_ANYSEQ:
       {
         Param_Test_Client<Test_AnySeq> *client = new
-          Param_Test_Client<Test_AnySeq> (this->orb_ptr_,
+          Param_Test_Client<Test_AnySeq> (this->orb_.in (),
                                           this->objref_.in(),
                                           new Test_AnySeq);
         if (opt->invoke_type () == Options::SII)
@@ -305,7 +304,7 @@ Driver::run (void)
 	case Options::TEST_SHORTSEQ:
       {
         Param_Test_Client<Test_Short_Sequence> *client = new
-          Param_Test_Client<Test_Short_Sequence> (this->orb_ptr_,
+          Param_Test_Client<Test_Short_Sequence> (this->orb_.in (),
                                                   this->objref_.in(),
                                                   new Test_Short_Sequence);
         if (opt->invoke_type () == Options::SII)
@@ -318,7 +317,7 @@ Driver::run (void)
   	case Options::TEST_BOUNDED_SHORTSEQ:
       {
         Param_Test_Client<Test_Bounded_Short_Sequence> *client = new
-          Param_Test_Client<Test_Bounded_Short_Sequence> (this->orb_ptr_,
+          Param_Test_Client<Test_Bounded_Short_Sequence> (this->orb_.in (),
                                                           this->objref_.in(),
 	                                                      new Test_Bounded_Short_Sequence);
         if (opt->invoke_type () == Options::SII)
@@ -331,7 +330,7 @@ Driver::run (void)
 	case Options::TEST_LONGSEQ:
       {
         Param_Test_Client<Test_Long_Sequence> *client = new
-          Param_Test_Client<Test_Long_Sequence> (this->orb_ptr_,
+          Param_Test_Client<Test_Long_Sequence> (this->orb_.in (),
                                                  this->objref_.in(),
                                                  new Test_Long_Sequence);
         if (opt->invoke_type () == Options::SII)
@@ -344,7 +343,7 @@ Driver::run (void)
   	case Options::TEST_BOUNDED_LONGSEQ:
       {
         Param_Test_Client<Test_Bounded_Long_Sequence> *client = new
-          Param_Test_Client<Test_Bounded_Long_Sequence> (this->orb_ptr_,
+          Param_Test_Client<Test_Bounded_Long_Sequence> (this->orb_.in (),
                                                          this->objref_.in(),
 	                                                     new Test_Bounded_Long_Sequence);
         if (opt->invoke_type () == Options::SII)
@@ -357,6 +356,21 @@ Driver::run (void)
     default:
       break;
     }
+
+  TAO_TRY
+    {
+      if (opt->shutdown ())
+	{
+	  this->objref_->shutdown (TAO_TRY_ENV);
+	  TAO_CHECK_ENV;
+	}
+    }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("during shutdown");
+    }
+  TAO_ENDTRY;
+
   return retstatus;
 }
 

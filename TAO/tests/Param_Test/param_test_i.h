@@ -185,6 +185,8 @@ public:
             CORBA::Environment &env);
   // test for Anys
 
+  void shutdown (CORBA::Environment &env);
+
 private:
   Coffee_i obj_;
   // the coffee object reference we maintain

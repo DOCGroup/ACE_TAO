@@ -78,6 +78,10 @@ public:
 
   CORBA::Boolean debug (void) const;
   // whether debug option is on or not
+
+  CORBA::Boolean shutdown (void) const;
+  // If we should request the server to shutdown.
+
 private:
   char *ior_;
   // IOR for the servant
@@ -93,6 +97,9 @@ private:
 
   CORBA::Boolean debug_;
   // debugging output values
+
+  CORBA::Boolean shutdown_;
+  // server shutdown flag.
 };
 
 typedef ACE_Singleton<Options, ACE_SYNCH_RECURSIVE_MUTEX> OPTIONS;
