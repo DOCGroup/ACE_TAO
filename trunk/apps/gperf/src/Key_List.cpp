@@ -1700,8 +1700,8 @@ Key_List::Key_List (void)
     struct_tag (Key_List::default_array_type),
     max_key_len (INT_MIN),
     min_key_len (INT_MAX),
-    additional_code (0),
     key_sort (0),
+    additional_code (0),
     total_keys (1)
 {
 }
