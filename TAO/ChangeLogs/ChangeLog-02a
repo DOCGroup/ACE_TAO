@@ -1,3 +1,14 @@
+Thu Dec 13 15:06:54 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * docs/compiler.html:
+
+          Corrected table entry for -GIc command line option, which
+          generates copy constructors in the servant implementation 
+          template files. It does not take an argument as was indicated 
+          in the original table entry. Also added an entry for the -GIa
+          option, which generates assignment operators in the servant
+          implementation template files.
+
 Thu Dec 13 11:41:38 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/DynamicAny/DynCommon.cpp:
