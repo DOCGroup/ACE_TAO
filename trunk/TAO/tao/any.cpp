@@ -544,7 +544,7 @@ CORBA_Any::operator<<= (from_string s)
     0			    // ... unbounded string to start with
   };
 
-  CORBA::TypeCode_ptr tc;
+  CORBA::TypeCode_ptr tc = 0;
   if (s.bound_ > 0)
     {
       // bounded string
