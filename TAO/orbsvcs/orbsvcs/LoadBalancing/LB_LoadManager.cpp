@@ -144,6 +144,12 @@ TAO_LB_LoadManager::enable_alert (const PortableGroup::Location & the_location
       // Use AMI to make the following operation
       // "non-blocking," allowing the caller to continue
       // without being forced to wait for a response.
+      //
+      // AMI is used to improve member selection times and overall
+      // throughput since the LoadAlert object need not be alerted
+      // synchronously.  In particular, the load alert can and
+      // should be performed in parallel to other tasks, such as
+      // member selection.
       load_alert->sendc_enable_alert (this->load_alert_handler_.in ()
                                       ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
@@ -192,6 +198,12 @@ TAO_LB_LoadManager::disable_alert (const PortableGroup::Location & the_location
       // Use AMI to make the following operation
       // "non-blocking," allowing the caller to continue
       // without being forced to wait for a response.
+      //
+      // AMI is used to improve member selection times and overall
+      // throughput since the LoadAlert object need not be alerted
+      // synchronously.  In particular, the load alert can and
+      // should be performed in parallel to other tasks, such as
+      // member selection.
       load_alert->sendc_disable_alert (this->load_alert_handler_.in ()
                                        ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
