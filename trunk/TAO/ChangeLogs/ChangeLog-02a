@@ -1,3 +1,16 @@
+Sun Nov 12 17:31:40 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/ImplRepo_Service/ImplRepo.bor:
+
+          Removed rogue backslash.
+
+        * tao/tao_ce.dsp: (removed)
+        * tao/tao_ce.dsw: (removed)
+
+          Until we put some serious effort into porting TAO to
+          Windows CE, these files are misleading and most likely
+          very out of date.  
+
 Sun Nov 12 12:41:19 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/ImplRepo_Service/Iterator.cpp:
