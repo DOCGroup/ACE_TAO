@@ -1,29 +1,42 @@
+Mon May  7 20:30:17 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/LongUpcalls/ami_server.cpp:
+          Fixed RCSID
+
+        * tests/LongUpcalls/run_test.pl:
+          Fixed timeout, it was way too long
+
+        * tests/AMI_Buffering/svc.conf:
+        * tests/LongUpcalls/svc.conf:
+          Made flushing strategy blocking, until bug 886 gets fixed this
+          is the only workaround.
+
 Mon May  7 21:35:40 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Component_Switching/receiver.cpp:
-	  Fixed a compile error with SunCC4.2.	
+        * orbsvcs/tests/AVStreams/Component_Switching/receiver.cpp:
+          Fixed a compile error with SunCC4.2.
 
 Mon May  7 17:45:01 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/BiDirectional_NestedUpcall/test_i.cpp:
-	* tests/BiDirectional/test_i.cpp: Made some print statements less
-	  verbose.  
+        * tests/BiDirectional_NestedUpcall/test_i.cpp:
+        * tests/BiDirectional/test_i.cpp: Made some print statements less
+          verbose.
 
 Mon May  7 15:21:43 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Object_Ref_Table.h:
-	* tao/Object_Ref_Table.cpp (destroy):
+        * tao/Object_Ref_Table.h:
+        * tao/Object_Ref_Table.cpp (destroy):
 
-	  Added a new destroy() method to explicity release the object
-	  references held in the object reference table.  This method will
-	  be called on ORB shutdown.
+          Added a new destroy() method to explicity release the object
+          references held in the object reference table.  This method will
+          be called on ORB shutdown.
 
-	* tao/ORB_Core.cpp (shutdown):
+        * tao/ORB_Core.cpp (shutdown):
 
-	  Explicitly destroy the object reference table since it contains
-	  references to objects, which themselves may contain reference to
-	  this ORB.  This fixes some problems with cyclic ORB lifetime
-	  dependency problems.
+          Explicitly destroy the object reference table since it contains
+          references to objects, which themselves may contain reference to
+          this ORB.  This fixes some problems with cyclic ORB lifetime
+          dependency problems.
 
 Mon May  7 14:54:48 2001  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -41,7 +54,7 @@ Mon May  7 14:54:48 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 Mon May 07 10:47:11 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-        * tao/GIOP_Message_Base.cpp (write_protocol_header): 
+        * tao/GIOP_Message_Base.cpp (write_protocol_header):
           Optimize the implementation of this function.  Insted of
           marshaling each field of the GIOP header individually we create
           one big octet array, store all the fields there (they are octets
