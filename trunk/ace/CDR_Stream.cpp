@@ -343,12 +343,15 @@ ACE_OutputCDR::write_octet_array_mb (const ACE_Message_Block* mb)
           continue;
         }
 
-      ACE_Message_Block* cont = ACE_Message_Block::duplicate (i);
+      ACE_Message_Block* cont =
+        new ACE_Message_Block (i->data_block ()->duplicate ());
       if (cont != 0)
         {
           cont->cont (this->current_->cont ());
           this->current_->cont (cont);
           this->current_ = cont;
+          cont->rd_ptr (i->rd_ptr ());
+          cont->wr_ptr (i->rd_ptr ());
         }
       else
         {
