@@ -1,3 +1,15 @@
+Sun Feb 29 20:00:02 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/ObjectKey_Table.cpp:
+
+	  The TAO::ObjectKey_Table uses ACE_RB_Tree as the container of
+	  the object  keys for TAO. RB_Tree uses ordering functor
+	  TAO::Less_Than_ObjectKey. However, the functor was not strictly 
+	  ordered. Thanks to Milan Cvetkovic <milan.cvetkovic@mpathix.com>
+	  for finding this problem. The bad ordering lead to some of the
+	  object keys being left in the tree which caused huge growth in
+	  runtime memory.
+
 Sun Feb 29 17:43:09 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* performance-tests/Latency/Thread_Per_Connection/Roundtrip.cpp:
