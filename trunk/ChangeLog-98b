@@ -1,3 +1,7 @@
+Fri Jul 10 23:11:36 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/make_release: redirect rdiff error messages to /dev/null.
+
 Fri Jul 10 22:15:04 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE version 4.5.21 released.
