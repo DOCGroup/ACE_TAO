@@ -231,13 +231,14 @@ public:
   // DO NOT USE THIS METHOD. It may be unsupported in future releases.
   // Use ACE_Allocator::instance() instead.
 
-  // = Member functions used by various other parts
-  //   of the Service Configurator class category.
-  static int initialize (const ACE_Service_Type *, ASYS_TCHAR parameters[]);
-  // Dynamically link the shared object file and retrieve
-  // a pointer to the designated shared object in this file.
+  // = Utility methods.
+  static int initialize (const ACE_Service_Type *,
+                         ASYS_TCHAR parameters[]);
+  // Dynamically link the shared object file and retrieve a pointer to
+  // the designated shared object in this file.
 
-  static int initialize (const ASYS_TCHAR svc_name[], ASYS_TCHAR parameters[]);
+  static int initialize (const ASYS_TCHAR svc_name[],
+                         ASYS_TCHAR parameters[]);
   // Initialize and activate a statically <svc_name> service.
 
   static int resume (const ASYS_TCHAR svc_name[]);
