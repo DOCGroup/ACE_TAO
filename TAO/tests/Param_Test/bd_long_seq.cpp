@@ -25,7 +25,7 @@
 // ************************************************************************
 
 Test_Bounded_Long_Sequence::Test_Bounded_Long_Sequence (void)
-  : opname_ (CORBA::string_dup ("test_bounded_longseq")),
+  : opname_ (CORBA::string_dup ("test_bounded_long_sequence")),
     in_ (new Param_Test::Bounded_Long_Seq),
     inout_ (new Param_Test::Bounded_Long_Seq),
     out_ (0),
@@ -132,7 +132,6 @@ Test_Bounded_Long_Sequence::check_validity (void)
 CORBA::Boolean
 Test_Bounded_Long_Sequence::check_validity (CORBA::Request_ptr req)
 {
-#if 0
   CORBA::Environment env;
 
   Param_Test::Bounded_Long_Seq *out, *ret;
@@ -142,7 +141,7 @@ Test_Bounded_Long_Sequence::check_validity (CORBA::Request_ptr req)
 
   this->out_ = out;
   this->ret_ = ret;
-#endif
+
   return this->check_validity ();
 }
 
