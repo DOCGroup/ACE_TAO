@@ -1,3 +1,16 @@
+Sat Apr 12 10:48:13 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/templates/CIAO_Glue_Session_Template.cpp:
+	* docs/templates/CIAO_Glue_Session_Template.inl: Incorporated
+	  changes for fixing gcc compilation warnings.
+
+	* tools/Assembly_Deployer/Assembly_Manager.cpp:
+	* tools/ComponentServer/ComponentServer.cpp:
+	* tools/ComponentServer/ComponentServer_test_client.cpp:
+	* tools/Daemon/CIAO_Daemon.cpp:
+	* tools/Simple_Component_Server/Simple_Component_Server.cpp: Added
+	  misiing newlines in usage messages.
+
 Sat Apr 12 01:25:35 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* CIDLC/parser_examples/README:

@@ -37,13 +37,13 @@ CORBA::Object_ptr
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ::Components::SessionContext_var sc =
-      ::Components::SessionContext::_narrow (this->ctx_);
+      ::Components::SessionContext::_narrow (this->ctx_.in ());
 
   if (! CORBA::is_nil(sc.in ()))
     return sc->get_CCM_object (ACE_ENV_SINGLE_ARG_PARAMETER);
 
   ::Components::EntityContext_var ec =
-      ::Components::EntityContext::_narrow (this->ctx_);
+      ::Components::EntityContext::_narrow (this->ctx_.in ());
 
   if (! CORBA::is_nil(ec.in ()))
     return ec->get_CCM_object (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -401,15 +401,15 @@ void
   if (CORBA::is_nil (this->consumes_[consumer name]_.in ()))
     {
       [ciao module name]::[component name]_Servant::[eventtype]Consumer_[consumer name]_Servant *svt =
-        new [ciao module name]::[component name]_Servant::[eventtype]Consumer_[consumer name]_Servant (this->executor_,
-                                                                             this->context_);
+        new [ciao module name]::[component name]_Servant::[eventtype]Consumer_[consumer name]_Servant (this->executor_.in (),
+                                                                                                       this->context_);
       PortableServer::ServantBase_var safe_servant (svt);
 
       CORBA::Object_var obj = this->container_->install_servant (svt
                                                                  ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
-      [eventtype]Consumer_var eco = [eventtype]Consumer::_narrow (obj
+      [eventtype]Consumer_var eco = [eventtype]Consumer::_narrow (obj.in ()
                                                                  ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 

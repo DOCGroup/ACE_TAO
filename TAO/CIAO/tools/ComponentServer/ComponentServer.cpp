@@ -43,10 +43,10 @@ parse_args (int argc, char *argv[])
       case '?':  // display help for use of the server.
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s"
-                           "-n Don't not try to callback ServerActivator (testing)"
-                           "-o <ior_output_file>"
-                           "-k <activator_callback_ior>"
+                           "usage:  %s\n"
+                           "-n Don't not try to callback ServerActivator (testing)\n"
+                           "-o <ior_output_file>\n"
+                           "-k <activator_callback_ior>\n"
                            "\n",
                            argv [0]),
                           -1);
