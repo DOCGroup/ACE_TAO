@@ -3093,9 +3093,9 @@ CORBA::Boolean IR::ComponentRepository::_is_a (const CORBA::Char *value, CORBA::
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/IR/ComponentRepository:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_Repository:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_Container:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_IRObject:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Repository:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Container:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/IRObject:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
@@ -3904,8 +3904,8 @@ CORBA::Boolean IR::ProvidesDef::_is_a (const CORBA::Char *value, CORBA::Environm
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/IR/ProvidesDef:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_Contained:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_IRObject:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Contained:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/IRObject:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
@@ -5067,8 +5067,8 @@ CORBA::Boolean IR::UsesDef::_is_a (const CORBA::Char *value, CORBA::Environment 
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/IR/UsesDef:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_Contained:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_IRObject:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Contained:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/IRObject:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
@@ -6816,8 +6816,8 @@ CORBA::Boolean IR::EventDef::_is_a (const CORBA::Char *value, CORBA::Environment
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/IR/EventDef:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_Contained:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_IRObject:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Contained:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/IRObject:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
@@ -7489,8 +7489,8 @@ CORBA::Boolean IR::EmitsDef::_is_a (const CORBA::Char *value, CORBA::Environment
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/IR/EmitsDef:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/IR/EventDef:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_Contained:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_IRObject:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Contained:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/IRObject:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
@@ -7986,8 +7986,8 @@ CORBA::Boolean IR::PublishesDef::_is_a (const CORBA::Char *value, CORBA::Environ
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/IR/PublishesDef:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/IR/EventDef:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_Contained:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_IRObject:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Contained:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/IRObject:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
@@ -8485,8 +8485,8 @@ CORBA::Boolean IR::ConsumesDef::_is_a (const CORBA::Char *value, CORBA::Environm
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/IR/ConsumesDef:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/IR/EventDef:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_Contained:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_IRObject:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Contained:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/IRObject:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
@@ -12833,10 +12833,10 @@ CORBA::Boolean IR::ComponentDef::_is_a (const CORBA::Char *value, CORBA::Environ
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/IR/ComponentDef:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_InterfaceDef:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_Container:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_Contained:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_IDLType:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_IRObject:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Container:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Contained:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/IDLType:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/IRObject:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
@@ -14722,8 +14722,8 @@ CORBA::Boolean IR::PrimaryKeyDef::_is_a (const CORBA::Char *value, CORBA::Enviro
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/IR/PrimaryKeyDef:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_Contained:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_IRObject:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Contained:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/IRObject:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
@@ -15402,8 +15402,8 @@ CORBA::Boolean IR::FactoryDef::_is_a (const CORBA::Char *value, CORBA::Environme
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/IR/FactoryDef:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_OperationDef:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_Contained:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_IRObject:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Contained:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/IRObject:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
@@ -15900,8 +15900,8 @@ CORBA::Boolean IR::FinderDef::_is_a (const CORBA::Char *value, CORBA::Environmen
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/IR/FinderDef:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_OperationDef:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_Contained:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_IRObject:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Contained:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/IRObject:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
@@ -18881,10 +18881,10 @@ CORBA::Boolean IR::HomeDef::_is_a (const CORBA::Char *value, CORBA::Environment 
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/IR/HomeDef:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_InterfaceDef:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_Container:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_Contained:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_IDLType:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_IRObject:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Container:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Contained:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/IDLType:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/IRObject:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
@@ -19670,7 +19670,7 @@ static const CORBA::Long _oc_IR_HomeDescription[] =
                 ACE_NTOHL (0x415f4944), 
                 ACE_NTOHL (0x4c547970), 
                 ACE_NTOHL (0x653a312e), 
-                ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CORBA_IDLType:1.0
+                ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CORBA/IDLType:1.0
                 14,
                 ACE_NTOHL (0x434f5242), 
                 ACE_NTOHL (0x415f4944), 
