@@ -46,12 +46,12 @@ public class PushConsumer extends RtecEventComm._PushConsumerImplBase
   private RtecEventChannelAdmin.ConsumerAdmin consumer_admin_;
   private RtecEventChannelAdmin.ProxyPushSupplier suppliers_;
 
-  public PushConsumer (org.omg.CORBA.ORB orb, 
+  public PushConsumer (org.omg.CORBA.ORB orb,
                        DataHandler dataHandler,
                        boolean use_queueing)
     {
       orb_ = orb;
-      dataHandlerAdapter_ = 
+      dataHandlerAdapter_ =
         new MTDataHandlerAdapter (dataHandler, use_queueing);
       if (use_queueing)
         {
@@ -63,7 +63,7 @@ public class PushConsumer extends RtecEventComm._PushConsumerImplBase
   public void push (RtecEventComm.Event[] events)
     {
       if (total_received_ < 5)
-        System.out.println ("Demo Consumer: Received an event set! ->Number: " 
+        System.out.println ("Demo Consumer: Received an event set! ->Number: "
                             + total_received_);
       else if (total_received_ == 5)
         System.out.println ("Demo Consumer: Everything is fine. " +
@@ -112,16 +112,12 @@ public class PushConsumer extends RtecEventComm._PushConsumerImplBase
         byte payload[] = new byte[1];
         payload[0] = 0;
         RtecEventComm.Event notification_event_ = new RtecEventComm.Event ();
-        notification_event_.header = 
+        notification_event_.header =
           new RtecEventComm.EventHeader (ACE_ES_EVENT_NOTIFICATION,
                                          0, 1, 0, 0, 0);
 
-	//        notification_event_.data = 
-	//          new RtecEventComm.EventData (0, 0, 0.0, 0, 
-	//                                       payload, orb_.create_any());
-
-        notification_event_.data = 
-          new RtecEventData (0.0, 0, payload, orb_.create_any());
+        notification_event_.data =
+          new RtecEventData (0, payload, orb_.create_any());
 
         RtecEventChannelAdmin.Dependency dependencies_[] = new RtecEventChannelAdmin.Dependency[1];
         dependencies_[0] = new RtecEventChannelAdmin.Dependency (notification_event_, rt_info_.value);
@@ -186,13 +182,3 @@ public class PushConsumer extends RtecEventComm._PushConsumerImplBase
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
