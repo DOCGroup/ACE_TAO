@@ -51,6 +51,25 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       return 0;
     }
 
+  // by using a visitor to declare and define the TypeCode, we have the
+  // added advantage to conditionally not generate any code. This will be
+  // based on the command line options. This is still TO-DO
+  {
+    be_visitor *visitor;
+    be_visitor_context ctx (*this->ctx_);
+    ctx.state (TAO_CodeGen::TAO_TYPECODE_DEFN);
+    ctx.sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE);
+    visitor = tao_cg->make_visitor (&ctx);
+    if (!visitor || (node->accept (visitor) == -1))
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%N:%l) be_visitor_valuetype_cs::"
+                           "visit_valuetype - "
+                           "TypeCode definition failed\n"
+                           ), -1);
+      }
+  }
+  
   os = this->ctx_->stream ();
 
   os->indent (); // start with whatever indentation level we are at
@@ -131,6 +150,17 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
 
   *os <<    "return rval;" << be_uidt_nl
       <<  "}\n\n";
+
+  // Ugly TAO any support routine
+  *os << "void" << be_nl
+      << node->name () 
+      << "::_tao_any_destructor (void *_tao_void_pointer)" << be_nl
+      << "{" << be_idt_nl
+      << node->local_name () << " *tmp = ACE_static_cast ("
+      << node->local_name () << "*, _tao_void_pointer);" << be_nl
+      << "delete tmp;" << be_uidt_nl
+      << "}" << be_nl << be_nl;
+
 
   // Nothing to marshal if abstract valuetype.
   if (!node->is_abstract_valuetype ())

@@ -196,8 +196,19 @@ CORBA_ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
       return 0;
     }
 
-  factory = strm.orb_core ()->orb ()
-    ->lookup_value_factory (repo_id_stream.in());
+  TAO_ORB_Core *orb_core = strm.orb_core ();
+  if (orb_core == 0)
+    {
+      orb_core = TAO_ORB_Core_instance ();
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_WARNING,
+                      "TAO (%P|%t) WARNING: extracting valuetype using "
+                      "default ORB_Core\n"));
+        }
+    }
+
+  factory = orb_core->orb ()->lookup_value_factory (repo_id_stream.in());
   if (factory == 0) // %! except.!
     {
       ACE_DEBUG ((LM_ERROR, ACE_TEXT ("(%N:%l) OBV factory is null !!!\n")));
