@@ -1481,9 +1481,6 @@ Test_Supplier::push (const RtecEventComm::EventSet& events,
       s.header.ec_recv_time = ORBSVCS_Time::zero ();
       s.header.ec_send_time = ORBSVCS_Time::zero ();
 
-      s.data.x = 0;
-      s.data.y = 0;
-
       this->message_count_--;
 
       if (this->message_count_ < 0)

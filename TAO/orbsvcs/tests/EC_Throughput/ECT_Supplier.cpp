@@ -155,9 +155,6 @@ Test_Supplier::svc ()
       event[0].header.ec_recv_time = ORBSVCS_Time::zero ();
       event[0].header.ec_send_time = ORBSVCS_Time::zero ();
 
-      event[0].data.x = 0;
-      event[0].data.y = 0;
-
       // We use replace to minimize the copies, this should result
       // in just one memory allocation;
       event[0].data.payload.replace (this->event_size_,

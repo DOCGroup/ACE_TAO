@@ -255,9 +255,6 @@ ECMS_Driver::supplier_task (Test_Supplier *supplier,
           else
             event[0].header.type = this->event_b_;
 
-          event[0].data.x = 0;
-          event[0].data.y = 0;
-
           // We use replace to minimize the copies, this should result
           // in just one memory allocation;
           event[0].data.payload.replace (mblen, mb);

@@ -47,7 +47,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 DCFLAGS = -g
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV \
-            -I$(TAO_ROOT) $(TSS_ORB_FLAG)
+            -I$(TAO_ROOT)
 
 
 server:$(addprefix $(VDIR),$(SERVER_OBJS))

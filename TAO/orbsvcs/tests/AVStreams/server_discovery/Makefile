@@ -31,7 +31,7 @@ LDFLAGS += -L$(JAVA_ROOT)/jre/lib/sparc -L$(JAVA_ROOT)/jre/lib/sparc/native_thre
 
 LDLIBS = -lorbsvcs -lTAO -lACE -lmpeg_shared -lavdemo -ljava -ljvm
 CPPFLAGS +=  -I$(JAVA_ROOT)/include-old -I$(JAVA_ROOT)/include-old/solaris \
-	    -I$(TAO_ROOT)/orbsvcs -I$(MPEG_ROOT) -I$(TAO_ROOT) $(TSS_ORB_FLAG) -I$(TAO_ROOT)/orbsvcs/orbsvcs
+	    -I$(TAO_ROOT)/orbsvcs -I$(MPEG_ROOT) -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs/orbsvcs
 
 BIN2 = main
 
@@ -77,7 +77,7 @@ TAO_VR.module: Video_Repository.idl
 
 realclean: clean
 	-$(RM) Video_Repository.idl $(addsuffix .h, $(IDL_FILES)) $(addsuffix .i, $(IDL_FILES)) $(addsuffix .cpp, $(IDL_FILES)) \
-	$(addsuffix _T.h, $(IDL_FILES)) $(addsuffix _T.i, $(IDL_FILES)) $(addsuffix _T.cpp, $(IDL_FILES)) 
+	$(addsuffix _T.h, $(IDL_FILES)) $(addsuffix _T.i, $(IDL_FILES)) $(addsuffix _T.cpp, $(IDL_FILES))
 
 IDL_EXT=C.h C.i C.cpp S.h S.i S.cpp S_T.h S_T.i S_T.cpp
 

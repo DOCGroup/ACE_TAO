@@ -8,7 +8,7 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-LDLIBS     	= -lACE -lbenchmark 
+LDLIBS     	= -lACE -lbenchmark
 
 PROG_SRCS 	= marshalC.cpp marshalS.cpp orbix_marshal_client.cpp orbix_marshal_server.cpp \
 		  orbix_marshal_impl.cpp client.cpp server.cpp
@@ -29,11 +29,16 @@ BIN = client server
 CLIENT_LIBS	= -liiop -lorbix
 SERVER_LIBS	= -liiop -lDSI -lorbix -lIRclt
 
+ifndef TAO_ROOT
+TAO_ROOT = $(ACE_ROOT)/TAO
+endif
+
 #----------------------------------------------------------------------------
 #	Include macros and targets
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
@@ -47,10 +52,6 @@ include /project/mambo/gokhale/CONFIG/orbixsol2s4.mk
 # Local modifications to variables imported by includes above.
 #----------------------------------------------------------------------------
 
-ifndef TAO_ROOT
-TAO_ROOT = $(ACE_ROOT)/TAO
-endif
-
 CPPFLAGS += -I$(TAO_ROOT)/Benchmark
 
 server:	$(addprefix $(VDIR),$(MARSHAL_SERVER_OBJS))
@@ -60,12 +61,8 @@ client:	$(addprefix $(VDIR),$(MARSHAL_CLIENT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(CLIENT_LIBS) $(POSTLINK)
 
 marshal.h marshalC.cpp marshalS.cpp: marshal.idl
-	$(IDL) $(IDLFLAGS) $< 
+	$(IDL) $(IDLFLAGS) $<
 
 clean:
 	$(RM) core *.o *~ client server *C.cpp *S.cpp *S.h *C.h
 	$(MAKE) realclean
-
-
-
-
