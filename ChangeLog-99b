@@ -1,3 +1,10 @@
+Sun Mar  7 17:00:51 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* doc/papers/PfHSN/pluggable_protocol.tex:
+	  Fixed some minor things, commas, plurals, etc. There are
+	  a couple of sentence fragments where I'm not sure what is
+	  meant - I'll email Fred and Doug about those.
+
 Fri Mar 05 14:15:46 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.cpp (ACE_TSS_Cleanup (),free_all_keys_left ()):
