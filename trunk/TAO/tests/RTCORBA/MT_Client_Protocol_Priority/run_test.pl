@@ -10,15 +10,13 @@ require ACEutils;
 use Cwd;
 
 $cwd = getcwd();
-$iorfile1 = "$cwd$DIR_SEPARATOR" . "test1.ior";
-$iorfile2 = "$cwd$DIR_SEPARATOR" . "test2.ior";
+$iorfile = "$cwd$DIR_SEPARATOR" . "test.ior";
 
 ACE::checkForTarget($cwd);
 
-print STDERR "\n********** RTCORBA SERVER_DECLARED Priority Unit Test\n\n";
+print STDERR "\n********** MT Client Protocol & CLIENT_PROPAGATED combo Test\n\n";
 
-unlink $iorfile1;
-unlink $iorfile2;
+unlink $iorfile;
 
 # CORBA priorities 65, 70 and 75 are for the SCHED_OTHER class on
 # Solaris.  May need to use different values for other platforms
@@ -26,27 +24,32 @@ unlink $iorfile2;
 # available range.
 
 $server_args =
-    "-p $iorfile1 -o $iorfile2 -a 65 -b 75 -c 70 -ORBSvcConf server.conf "
+    "-o $iorfile "
     ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=65 "
     ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=75 "
-    ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=70 ";
+    ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=70 "
+    ."-ORBendpoint shmiop://$TARGETHOSTNAME:0/priority=65 "
+    ."-ORBendpoint shmiop://$TARGETHOSTNAME:0/priority=75 "
+    ."-ORBendpoint shmiop://$TARGETHOSTNAME:0/priority=70 ";
+
+$client_args =
+    "-o file://$iorfile -ORBdebuglevel 1 "
+    ."-a 65 -b 70 -e 1413566210 -f 0";
 
 if ($^O eq "MSWin32")
 {
     $server_args =
-        "-p $iorfile1 -o $iorfile2 -a 3 -b 5 -c 2 -ORBSvcConf server.conf "
+        "-o $iorfile1 -o $iorfile2 -a 3 -b 5 -c 2 -ORBSvcConf server.conf "
             ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=3 "
                 ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=5 "
                     ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=1 ";
 }
 
-$client_args = "-p file://$iorfile1 -o file://iorfile2";
-
 $SV = Process::Create ($EXEPREFIX."server$EXE_EXT ",
                        $server_args);
 
-if (ACE::waitforfile_timed ($iorfile2, 10) == -1) {
-  print STDERR "ERROR: cannot find file <$iorfile2>\n";
+if (ACE::waitforfile_timed ($iorfile, 10) == -1) {
+  print STDERR "ERROR: cannot find file <$iorfile>\n";
   $SV->Kill (); $SV->TimedWait (1);
   exit 1;
 }
@@ -66,8 +69,7 @@ if ($server == -1) {
   $SV->Kill (); $SV->TimedWait (1);
 }
 
-unlink $iorfile1;
-unlink $iorfile2;
+unlink $iorfile;
 
 if ($server != 0 || $client != 0) {
   exit 1;

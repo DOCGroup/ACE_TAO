@@ -35,11 +35,6 @@ sub client
 {
   my $args = " -k file://$iorfile -ORBdebuglevel 1";
 
-  if ($^O eq "MSWin32")
-  {
-     my $args = " -k file://$iorfile -ORBdebuglevel 1 -ORBSvcconf client_nt.conf ";
-  }
-
   $CL = Process::Create ($EXEPREFIX."client$EXE_EXT ", $args);
 
   $client = $CL->TimedWait (60);
@@ -52,24 +47,32 @@ sub client
 # Configurations for all tests to be run.
 @server_opts =
     ("-ORBendpoint iiop://",
+
      "-ORBsvcconf server_reverse.conf "
      ."-ORBEndpoint uiop:// -ORBendpoint shmiop:// -ORBendpoint iiop://",
+
      "-ORBsvcconf server_shmiop.conf -ORBendpoint shmiop://",
-     "-ORBsvcconf server.conf -ORBEndpoint uiop:// "
+
+     "-ORBEndpoint uiop:// "
      ." -ORBendpoint shmiop:// -ORBendpoint iiop://"
      ." -p 1413566208",
-     "-ORBsvcconf server.conf -ORBEndpoint uiop:// "
+
+     "-ORBEndpoint uiop:// "
      ." -ORBendpoint shmiop:// -ORBendpoint iiop://"
      ." -p 1413566210 ");
 
 @comments = ("* ORB Default Server Protocol Policy Test\n          "
              ."(TAO's default behavior without config files): \n",
+
              "* ORB Default Server Protocol Policy Test\n          "
              ."(All TAO protocols are loaded, but in reverse order): \n",
+
              "* ORB Default Server Protocol Policy Test\n          "
             ."(Only SHMIOP loaded): \n",
+
              "* Overriding ORB Default Server Protocol Policy in the POA\n"
              ."          (POA Server Protocol set to UIOP only): \n",
+
              "* Overriding ORB Default Server Protocol Policy in the POA\n"
              ."          (POA Server Protocol set to SHMIOP only): \n");
 
@@ -78,13 +81,18 @@ if ($^O eq "MSWin32")
 {
     @server_opts =
         ("-ORBendpoint iiop://",
+
          "-ORBsvcconf server_reverse_nt.conf "
          ."-ORBEndpoint shmiop:// -ORBendpoint iiop://",
+
          "-ORBsvcconf server_shmiop.conf -ORBendpoint shmiop://",
-         "-ORBSvcconf server_nt.conf -ORBendpoint shmiop:// -ORBendpoint iiop://"
+
+         "-ORBendpoint shmiop:// -ORBendpoint iiop://"
          ." -p 0",
-         "-ORBSvcconf server_nt.conf -ORBendpoint shmiop:// -ORBendpoint iiop://"
+
+         "-ORBendpoint shmiop:// -ORBendpoint iiop://"
          ." -p 1413566210");
+
     $comments[3] =
         "Overriding ORB Default Server Protocol Policy in the POA "
             ."(POA Server Protocol set to IIOP only): \n";
