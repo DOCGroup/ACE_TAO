@@ -1,3 +1,19 @@
+Wed Apr 25 07:56:51 2001  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* tao/ORB.h:
+ 	* tao/ORB.cpp:
+
+	Added a new, non-standard, work_pending() where you can specify a
+ 	timeout.  This essentially works as a idle timeout.  See DOC bug
+ 	868 for details on the motivation.  There is currently no test for
+ 	this--I wanted to get this in before the next beta so people could
+ 	try it out if they want.  It compiles, and, since there are no
+ 	dependencies on it, it should be okay.
+
+	Thanks to Steve Totten, Paul Calabrese, Phil Mesnier, Irfan
+	Pyarali, and Doug Schmidt for helping work out the details of the
+	use case and possible solutions.  [Bug 868]
+
 Wed Apr 25 10:51:18 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tests/Big_Oneways/*.bor

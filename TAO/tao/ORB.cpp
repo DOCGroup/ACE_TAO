@@ -277,6 +277,23 @@ CORBA_ORB::perform_work (ACE_Time_Value *tv,
 }
 
 CORBA::Boolean
+CORBA_ORB::work_pending (ACE_Time_Value &tv, CORBA_Environment &ACE_TRY_ENV)
+{
+  // This method should not be called if the ORB has been shutdown.
+  this->check_shutdown (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
+  int result = this->orb_core_->reactor ()->work_pending (tv);
+  if (result == 0 || (result == -1 && errno == ETIME))
+    return 0;
+
+  if (result == -1)
+    ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+
+  return 1;
+}
+
+CORBA::Boolean
 CORBA_ORB::work_pending (CORBA_Environment &ACE_TRY_ENV)
 {
   // This method should not be called if the ORB has been shutdown.
