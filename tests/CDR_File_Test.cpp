@@ -62,7 +62,7 @@ public:
             ACE_CDR::Double d);
   // Constructor.
 
-  int operator == (const CDR_Test &rhs) const;
+  bool operator == (const CDR_Test &rhs) const;
   // Compare <rhs> for equality with <this>.
 
 private:
@@ -145,24 +145,24 @@ operator >> (ACE_InputCDR &is, CDR_Test &t)
   is >> t.dprec_;
 }
 
-int
+bool
 CDR_Test::operator == (const CDR_Test &rhs) const
 {
   // @@ Workaround bug in egcs-1.1.1 using a single && expression
   // results in UMR errors in purify.
   if (this->char_ != rhs.char_)
-    return 0;
+    return false;
   if (this->word2_ != rhs.word2_)
-    return 0;
+    return false;
   if (this->word4_ != rhs.word4_)
-    return 0;
+    return false;
   if (this->word8_ != rhs.word8_)
-    return 0;
+    return false;
   if (this->fpoint_ != rhs.fpoint_)
-    return 0;
+    return false;
   if (this->dprec_ != rhs.dprec_)
-    return 0;
-  return 1;
+    return false;
+  return true;
 }
 
 static int
