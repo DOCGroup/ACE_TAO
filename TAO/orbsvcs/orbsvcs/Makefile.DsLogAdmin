@@ -14,7 +14,7 @@ SHLIB    = $(LIBNAME).$(SOEXT)
 
 VPATH=.:Log
 
-ACE_SHLIBS = -lTAO_DynamicAny -lTAO_Svc_Utils -lTAO -lACE -lTAO_PortableServer -lTAO_ETCL
+ACE_SHLIBS = -lTAO_ETCL -lTAO_Svc_Utils -lTAO_DynamicAny -lTAO_PortableServer -lTAO -lACE
 
 #----------------------------------------------------------------------------
 #       Include macros and targets

@@ -1,3 +1,12 @@
+Mon Oct 07 16:49:28 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Makefile.DsLogAdmin (ACE_SHLIBS):
+	* orbsvcs/orbsvcs/Makefile.DsEventLogAdmin (ACE_SHLIBS):
+	* orbsvcs/orbsvcs/Makefile.DsNotifyLogAdmin (ACE_SHLIBS):
+	* orbsvcs/orbsvcs/Makefile.RTEventLogAdmin (ACE_SHLIBS):
+
+	  More library link order corrections.
+
 Mon Oct 07 15:18:52 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/PluggableUDP/tests/SimplePerformance/client.dsp:
