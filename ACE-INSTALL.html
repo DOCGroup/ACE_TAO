@@ -31,7 +31,6 @@ Mistakes page</a>.  If you encounter any problems or would like to request
 an enhancement, then use our
 <a href="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/docs/usage-bugzilla.html">bug tracking system</a> to submit a report.<P>
 
-<P>
 
 <H4>Document Index</H4>
 
@@ -42,9 +41,11 @@ an enhancement, then use our
   <LI><A HREF="#egcs">Compiling ACE with egcs</A>
   <LI><A HREF="#aceinstall">Building and Installing ACE</A>
   <LI><A HREF="#svcsinstall">Building and Installing ACE Network Services</A>
+  <LI><A HREF="#minimum_build">What Do I Need to Build for TAO?</A>
   <LI><A HREF="#resource_requirements">System Resource Requirements</A>
   <LI><A HREF="#advanced">Advanced Topics</A>
 </UL>
+
 
 <P><HR><P>
 <H3><A NAME="platforms">Supported Platforms and C++ Compilers</A></H3>
@@ -87,6 +88,7 @@ platforms shown above please send email to either <A
 HREF="news:comp.soft-sys.ace">ACE Newsgroup</A> or the <A
 HREF="mailto:ace-users@cs.wustl.edu">ACE mailing list</A> and we'll
 try to help you fix the problems.
+
 
 <P><HR><P>
 <H3><A NAME="installnotes">Installation Notes for Supported Platforms</A></H3>
@@ -637,6 +639,7 @@ make: *** [libACE.so] Error 8
       href="mailto:shuston@riverace.com">Steve Huston</a>.
 </UL>
 
+
 <HR>
 <H4><A NAME="g++">Compiling ACE with GNU g++</A></H4>
 
@@ -976,6 +979,7 @@ need to do:<P>
 
 </OL>
 
+
 <P><HR><P>
 <H4><A NAME="win32">Building and Installing ACE on Win32</A></H4>
 
@@ -1200,6 +1204,7 @@ configurations from the x86 versions.</P>
 <P><B>Note:</B> MSVC 6 has a bug where if a .dsp is converted from version 5 to 6 on
 x86, the Alpha configuration will be partially corrupted.  If this occurs, the
 easiest way to fix it is as above, recreate it.</P>
+
 
 <HR>
 <H4><A NAME="vxworks">Building and Installing ACE on VxWorks</A></H4>
@@ -1630,6 +1635,32 @@ the Network Services.<P>
 
 
 <HR><P>
+<H3><A NAME="#minimum_build">What Do I Need to Build for TAO?</A></H3>
+Toshio Hori &lttoshi@etl.go.jp&gt provided these suggestions on building
+just what's needed for (a subset of) TAO:<p>
+
+I usually make:
+<pre>
+    $ACE_ROOT/ace,
+    $ACE_ROOT/apps/gperf,
+    $TAO_ROOT/tao,
+    $TAO_ROOT/TAO_IDL, and
+    $TAO_ROOT/orbsvcs/orbsvcs
+</pre>
+and the whole make takes less than an hour on my Solaris 7 for intel,
+Pentium-III/550MHz, 256MB memory, 512MB swap machine.  (Top secret: I
+renice the 'make' process to the highest priority, -20... ;-)
+
+To save time and space, I set
+<pre>
+    TAO_ORBSVCS = Naming Time Trader ImplRepo
+</pre>
+in $ACE_ROOT/include/makeinclude/platform_macros.GNU also.  See
+<a href="TAO/docs/configurations.html#orbsvcs">TAO's orbsvcs
+library customization instructions</a> for more information.<p>
+
+
+<HR><P>
 <H3><A NAME="resource_requirements">System Resource Requirements</A></H3>
 The amount of system resources required to build ACE and TAO varies
 greatly.  Platform, build options, and components built primarily
@@ -1664,6 +1695,18 @@ some or all of these suggestions:<p>
 If disk space is a problem, disabling debugging should greatly
 reduce object code, and therefore, library size.  This is especially
 true with g++.<p>
+
+Toshio Hori &lttoshi@etl.go.jp&gt provided these tips for reducing
+disk space usage:<p>
+
+To save space on a Unix machine, I usually run
+    find . -name \*.dsw -o -name \*.dsp -o -name \*.bor | xargs rm -f
+in $ACE_ROOT at first after untar the distribution.  They are
+meaningless in my environment.<p>
+
+Finally, to save space, may want to run 'make clean' after 'make'.  It
+removes generated object files and leaves libraries/exectables
+intact.<p>
 </ul>
 
 
@@ -1797,6 +1840,7 @@ It filters out all but the necessary files, so the warning above does
 not apply.  See the comments at the top of the script itself for usage
 information.
 
+
 <HR><P>
 <H4><A NAME="corba">Building CORBA Versions of ACE</A></H4>
 
@@ -1810,6 +1854,7 @@ ORBeline, make sure that you set up
 $ACE_ROOT/include/makeinclude/platform_macros.GNU and
 $ACE_ROOT/ace/config.h to use the config* and platform*
 files that have "-orbix" in them!
+
 
 <P><HR><P>
 <H4><A NAME="mvs">Additional Build Tips for MVS</A></H4>
@@ -1846,6 +1891,7 @@ warnings about unresolved references which should get resolved during the
 link step.  Note, however, there shouldn't be any unresolved references
 from the binder (linkage editor).   You can get pre-link and link maps by
 uncommenting the PMAP and LMAP lines in the platform_mvs.GNU file.<P>
+
 
 <HR><P>
 <H4><A NAME="flags">Makefile Flags</A></H4>
