@@ -1,3 +1,22 @@
+Wed Apr 30 14:59:07 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+
+          Changed internal checks and generated guards to handle
+          use case of generating explicit template instantiation
+          for bounded sequence base classes, and to avoid duplication
+          if the same element type appears in a sequence with the
+          same bound but in a different scope.
+
+        * TAO_IDL/be/be_visitor_typedef.cpp:
+        * TAO_IDL/be/be_visitor_typedef/typedef_ch.cpp:
+        * TAO_IDL/be_include/be_visitor_typedef/typedef_ch.h:
+
+          Fixed code generation for interface and valuetype typdefs
+          to be consistent with recent changes to code generation
+          for the corresponding base types.
+
 Wed Apr 30 13:19:21 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_sequence.cpp:
