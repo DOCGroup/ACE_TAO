@@ -1,3 +1,9 @@
+Fri Dec 12 03:00:21 1997  James C Hu  <jxh@cs.wustl.edu>
+
+	* ace/OS.i: Re-implemented strcasecmp methods.  Thought bad
+	  implementations were related to a JAWS bug, but the the hand
+	  implementations are not used on Solaris.
+
 Thu Dec 11 23:20:57 1997    <irfan@TWOSTEP>
 
 	* ace/Strategies_T.cpp (activate_svc_handler): Changed the
