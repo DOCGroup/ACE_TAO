@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(DLList) : aceexe {
   exename = DLList
   Source_Files {
@@ -33,7 +36,7 @@ project(Sets) : aceexe {
   }
 }
 
-project(Map Manager) : aceexe {
+project(*Map Manager) : aceexe {
   exename = Map_Manager
   Source_Files {
     Map_Manager.cpp

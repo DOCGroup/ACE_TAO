@@ -23,6 +23,7 @@ LIBFILES = \
    TAO_IORInterceptor$(LIB_DECORATOR).lib \
    TAO_Valuetype$(LIB_DECORATOR).lib \
    TAO_ObjRefTemplate$(LIB_DECORATOR).lib \
+   TAO_Messaging$(LIB_DECORATOR).lib \
    TAO_IORManip$(LIB_DECORATOR).lib \
    TAO$(LIB_DECORATOR).lib \
    ACE$(LIB_DECORATOR).lib \

@@ -1,3 +1,9 @@
+Sun Jan  4 08:19:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* examples/APG/Containers/containers.mpc:
+          Prefixed the project name Map Manager with the '*' operator to
+          avoid project name conflicts. Added Id tag
+
 Sat Jan  3 23:45:38 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* examples/APG/Makefile:
@@ -65,7 +71,7 @@ Sat Jan  3 11:02:32 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	  Removed ASG for the timebeing from the daily builds. I want to
 	  seperate the chaff from wheat and the noise form this is making
-	  things hard. Will let Steve know about this. 
+	  things hard. Will let Steve know about this.
 
 Sat Jan  3 16:14:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
