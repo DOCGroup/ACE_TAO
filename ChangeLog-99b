@@ -1,3 +1,10 @@
+Thu Jul 08 22:15:50 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * docs/ACE-guidelines.html: changed the perl magic that
+          goes at the top of every perl script, to pick up perl
+          from the users path.  This new version works on HP/UX.
+          Thanks to Carlos for divining it.
+
 Thu Jul 08 22:05:31 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-linux-common.h: added #define of
