@@ -1,3 +1,8 @@
+Mon Sep 14 13:50:25 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* tests/Cubit/TAO/MT_Cubit/client.cpp: Fixed memory problems
+	  reported by purify.
+
 Mon Sep 14 11:06:00 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Cubit/TAO/MT_Cubit/{Globals.cpp,Task_Client.cpp}:
