@@ -22,6 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/SOCK_Connector.h"
+#include "ace/Svc_Handler.h"
 #include "ace/Connector.h"
 #include "ace/Malloc.h"
 #include "ace/Time_Request_Reply.h"

@@ -1,3 +1,25 @@
+Thu Feb 27 10:46:01 2003  Ossama Othman  <ossama@uci.edu>
+
+	Changes necessitated by inter-header dependency reductions.
+
+	* apps/Gateway/Peer/Peer.h:
+	* examples/ASX/Event_Server/Event_Server/Peer_Router.h:
+	* examples/Connection/non_blocking/CPP-connector.h:
+	* netsvcs/lib/Name_Handler.h:
+	* netsvcs/lib/Server_Logging_Handler_T.h:
+	* netsvcs/lib/TS_Clerk_Handler.h:
+	* netsvcs/lib/TS_Server_Handler.h:
+
+	  Include "ace/Svc_Handler.h" to pull in ACE_Svc_Handler template
+	  declaration.  Necessitated by inter-header dependency
+	  reductions.
+
+	* examples/Connection/non_blocking/test_sock_acceptor.cpp:
+	* examples/Connection/non_blocking/test_spipe_acceptor.cpp:
+
+	  Include "ace/Service_Config.h" to pull in ACE_Service_Config
+	  class declaration.
+
 Thu Feb 27 11:24:14 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * apps/gperf/src/gperf.mpc:
