@@ -126,8 +126,10 @@ Supplier::svc (void)
       d[0] = *c;
       d[1] = '\0';
 
-      ACE_NEW_RETURN (mb, ACE_Message_Block (2), -1);
-      ACE_OS::strcpy (mb->rd_ptr (), d);
+      ACE_NEW_RETURN (mb,
+                      ACE_Message_Block (2),
+                      -1);
+      ACE_OS::strcpy (mb->wr_ptr (), d);
 
       mb->wr_ptr (2);
 
