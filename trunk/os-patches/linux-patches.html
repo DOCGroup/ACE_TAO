@@ -1,5 +1,5 @@
-<html> <head>
-<title></title>
+<html><head>
+  <title>Linux patches to support ACE</title>
 </head>
 
 <BODY text = "#000000"
@@ -10,51 +10,42 @@ bgcolor="#ffffff">
 With RedHat 5.0 distributions of Linux, it's best to upgrade the
 distribution with these:
 <ul>
-  <li>egcs 1.0.1
-  <li>glibc-2.0.6 (from ftp://sunsite.unc.edu/pub/gnu plus Torbjörn's patch)
-  <li>linuxthreads 0.7? for the glibc-2.0.6 above
+  <li>egcs 1.0.2
+  <li>glibc-2.0.7-7 (from ftp://sunsite.unc.edu/pub/gnu)
+  <li>linuxthreads 0.71, which is included with the glibc-2.0.7-7 above
 </ul>
-
-In addition, you'll need to apply Torbjörn Lindgren's
-&lt;tl@funcom.com&gt; patch to glibc-2.0.6's LinuxThread:<p>
-
-<pre>
---- signals.c.old	Wed Jan 14 01:09:02 1998
-+++ signals.c	Wed Jan 14 01:11:37 1998
-@@ -82,7 +82,7 @@
-   pthread_mutex_lock(&sigwaited_mut);
-   /* Make sure no other thread is waiting on our signals */
- test_again:
--  for (s = 0; s &lt; NSIG; s++) {
-+  for (s = 1; s &lt; NSIG; s++) {
-     if (sigismember(set, s) && sigismember(&sigwaited, s)) {
-       pthread_cond_wait(&sigwaited_changed, &sigwaited_mut);
-       goto test_again;
-@@ -96,7 +96,7 @@
-   /* Install our signal handler on all signals in set,
-      and unblock them in mask.
-      Also mark those signals as being sigwaited on */
--  for (s = 1; s &lt;= NSIG; s++) {
-+  for (s = 1; s &lt; NSIG; s++) {
-     if (sigismember(set, s) && s != PTHREAD_SIG_CANCEL) {
-       sigdelset(&mask, s);
-       action.sa_handler = __pthread_sighandler;
-@@ -121,7 +121,7 @@
-   self-&gt;p_cancel_jmp = NULL;
-   /* The signals are now reblocked. Restore the sighandlers. */
-   pthread_mutex_lock(&sigwaited_mut);
--  for (s = 1; s &lt;= NSIG; s++) {
-+  for (s = 1; s &lt; NSIG; s++) {
-     if (sigismember(set, s) && s != PTHREAD_SIG_CANCEL) {
-       sigaction(s, &(saved_signals[s]), NULL);
-       sigdelset(&sigwaited, s);
-</pre>
 
 Thanks to James CE Johnson &lt;jjohnson@lads.com&gt;, Torbjörn
 Lindgren &lt;tl@funcom.com&gt;, and Oleg Krivosheev
-&lt;kriol@fnal.gov&gt; for this information; Torbjörn supplied the
-above patch.  With the above configuration, Jame and Torbjörn report
-that only ACE Thread_Manager_Test seg faults on Intel platforms!
+&lt;kriol@fnal.gov&gt; for this information.  With the above
+configuration, ACE compiles on runs cleanly on Intel platforms.  It
+compiles and runs cleanly on Alpha platforms with the patches listed
+below.<p>
+
+<strong><blink><font color="#ff0000">WARNING:</font></blink></strong>
+There is a bug in <code>getsockname ()</code> on versions of Linux
+through 2.0.30, at least.  <code>getsockname ()</code> returns an
+Internet host address of 127.0.0.1 (localhost) instead of 0.0.0.0 for
+sockets that aren't connected.  This bug prevents TAO servers from
+working correctly.  To fix it, comment out these two lines in function
+<code>inet_getname ()</code> in
+<code>/usr/src/linux/net/ipv4/af_inet.c</code>:
+
+<pre>
+	} else {
+		__u32 addr = sk-&gt;rcv_saddr;
+		if (!addr) {
+			addr = sk-&gt;saddr;
+/* comment out this line:  if (!addr) */
+/* comment out this line:  	addr = ip_my_addr(); */
+		}
+		sin-&gt;sin_port = sk-&gt;dummy_th.source;
+		sin-&gt;sin_addr.s_addr = addr;
+	}
+</pre>
+
+and rebuild your kernel.  This fix has been implemented in 2.1.x
+versions of the kernel.<p>
 
 Without the following patch from Scott Snyder &lt;sss@d0linux01.fnal.gov&gt;,
 egcs 1.0.1 on Linux won't be able to compile
@@ -162,29 +153,42 @@ library by patching linuxthreads/Makefile:
 With that and the above configuration/pathes, all ACE tests run
 perfectly cleanly on Alpha!<p>
 
-<strong><blink><font color="#ff0000">WARNING:</font></blink></strong>
-There is a bug in <code>getsockname ()</code> on versions of Linux
-through 2.0.30, at least.  <code>getsockname ()</code> returns an
-Internet host address of 127.0.0.1 (localhost) instead of 0.0.0.0 for
-sockets that aren't connected.  This bug prevents TAO servers from
-working correctly.  To fix it, comment out these two lines in function
-<code>inet_getname ()</code> in
-<code>/usr/src/linux/net/ipv4/af_inet.c</code>:
+<hr>
+<h3>Old patches</h3>
+
+If you use glibc-2.0.6, you'll need to apply Torbjörn Lindgren's
+&lt;tl@funcom.com&gt; patch to glibc-2.0.6's LinuxThreads:<p>
 
 <pre>
-	} else {
-		__u32 addr = sk-&gt;rcv_saddr;
-		if (!addr) {
-			addr = sk-&gt;saddr;
-/* comment out this line:  if (!addr) */
-/* comment out this line:  	addr = ip_my_addr(); */
-		}
-		sin-&gt;sin_port = sk-&gt;dummy_th.source;
-		sin-&gt;sin_addr.s_addr = addr;
-	}
+--- signals.c.old	Wed Jan 14 01:09:02 1998
++++ signals.c	Wed Jan 14 01:11:37 1998
+@@ -82,7 +82,7 @@
+   pthread_mutex_lock(&sigwaited_mut);
+   /* Make sure no other thread is waiting on our signals */
+ test_again:
+-  for (s = 0; s &lt; NSIG; s++) {
++  for (s = 1; s &lt; NSIG; s++) {
+     if (sigismember(set, s) && sigismember(&sigwaited, s)) {
+       pthread_cond_wait(&sigwaited_changed, &sigwaited_mut);
+       goto test_again;
+@@ -96,7 +96,7 @@
+   /* Install our signal handler on all signals in set,
+      and unblock them in mask.
+      Also mark those signals as being sigwaited on */
+-  for (s = 1; s &lt;= NSIG; s++) {
++  for (s = 1; s &lt; NSIG; s++) {
+     if (sigismember(set, s) && s != PTHREAD_SIG_CANCEL) {
+       sigdelset(&mask, s);
+       action.sa_handler = __pthread_sighandler;
+@@ -121,7 +121,7 @@
+   self-&gt;p_cancel_jmp = NULL;
+   /* The signals are now reblocked. Restore the sighandlers. */
+   pthread_mutex_lock(&sigwaited_mut);
+-  for (s = 1; s &lt;= NSIG; s++) {
++  for (s = 1; s &lt; NSIG; s++) {
+     if (sigismember(set, s) && s != PTHREAD_SIG_CANCEL) {
+       sigaction(s, &(saved_signals[s]), NULL);
+       sigdelset(&sigwaited, s);
 </pre>
-
-and rebuild your kernel.  This fix has been implemented in 2.1.x
-versions of the kernel.<p>
 
 </body> </html>
