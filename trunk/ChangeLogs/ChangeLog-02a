@@ -1,5 +1,10 @@
 Sun Jan 28 08:32:07 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
+	* netsvcs/lib/Client_Logging_Handler.cpp: Fixed the order in which
+	  the iostream messages are logged so that we don't bomb out when
+ 	  the VERBOSE option is enabled.  Thanks to Craig Rodrigues
+ 	  <crodrigu@bbn.com> for helping find this problem.
+
 	* ace/Message_Queue_T.h: Make sure the lock() forwarding method
 	  forwards to queue_.lock().
 

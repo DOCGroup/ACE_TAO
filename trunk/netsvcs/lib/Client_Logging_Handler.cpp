@@ -285,6 +285,16 @@ ACE_Client_Logging_Handler::handle_output (ACE_HANDLE)
 int
 ACE_Client_Logging_Handler::send (ACE_Log_Record &log_record)
 {
+  ostream *orig_ostream = ACE_Log_Msg::instance ()->msg_ostream ();
+
+  // This logic must occur before we do the encode() on <log_record>
+  // since otherwise the values of the <log_record> fields will be in
+  // network byte order.
+  if (orig_ostream)
+    log_record.print ("<localhost>",
+                      ACE_Log_Msg::instance ()->flags (),
+                      *orig_ostream);
+
   if (this->logging_output_ == ACE_STDERR)
     log_record.print ("<localhost>",
                       ACE_Log_Msg::instance ()->flags (),
@@ -307,12 +317,6 @@ ACE_Client_Logging_Handler::send (ACE_Log_Record &log_record)
           this->logging_output_ = ACE_STDERR;
     }
 
-  ostream *orig_ostream = ACE_Log_Msg::instance ()->msg_ostream ();
-
-  if (orig_ostream)
-    log_record.print ("<localhost>",
-                      ACE_Log_Msg::instance ()->flags (),
-                      *orig_ostream);
   return 0;
 }
 
