@@ -1,6 +1,7 @@
 // $Id$
 
 #include "test_i.h"
+#include "ace/ACE.h"
 
 #if !defined(__ACE_INLINE__)
 #include "test_i.i"
