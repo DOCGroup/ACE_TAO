@@ -49,6 +49,11 @@
 	  specially generate the strategies and changes required to
 	  support hard real-time behavior.
           <BR>[ASSIGNED TO:] Carlos
+	</P>
+	<P>The new EC does not update the dependencies in
+	  the scheduling service. We should be able to strategize this 
+	  by the appropiate use of a <CODE>Filter_Builder</CODE> and
+	  decorators for the regular filters.
         </P>
       </LI>
 
@@ -248,17 +253,6 @@
 
     <H4>New features and Bug fixes</H4>
     <OL>
-      <LI><P><B>EC:</B>The new implementation of the EC does not send
-	  <CODE>disconnect</CODE> messages on shutdown, this has to be 
-	  implemented.
-        </P>
-      </LI>
-      <LI><P><B>EC:</B>The new EC does not update the dependencies in
-	  the scheduling service. We should be able to strategize this 
-	  by the appropiate use of a <CODE>Filter_Builder</CODE> and
-	  decorators for the regular filters.
-        </P>
-      </LI>
       <LI><P><B>EC:</B>The <CODE>Priority_Dispatching</CODE> strategy
 	  is incomplete.
         </P>
@@ -316,6 +310,11 @@
 	  consumers that are not accepting events (risking a
 	  dead-lock);
 	  etc.
+        </P>
+      </LI>
+
+      <LI><P><B>EC:</B>The observer in the <CODE>TAO_EC_Gateway</CODE> 
+	  class is not properly deactivated.
         </P>
       </LI>
 
@@ -1101,13 +1100,19 @@ encapsulation format.
       <H3>Completed Tasks</H3>
 
     <OL>
+      <LI><P><B>EC:</B>The new implementation of the EC does not send
+	  <CODE>disconnect</CODE> messages on shutdown, this has to be 
+	  implemented.
+	  <BR>[DONE]
+        </P>
+      </LI>
       <LI><P><B>EC:</B> Use the Service_Configurator to dynamically load
 	  the EC Module_Factory thus making it really configurable.
 	  The same feature is needed for the new
 	  <CODE>EC_Factory</CODE> class.
 	  <BR>[STATUS] Notice that this is fairly easy to implement,
 	  there doesn't seem to be much demand for it.
-	  <BR>[STATUS] In the new EC it is possible to load the
+	  <BR>[DONE] In the new EC it is possible to load the
 	  strategy factory.
 	</P>
       </LI>
@@ -1115,7 +1120,7 @@ encapsulation format.
       <LI><P><B>EC:</B> The supplier filters could depend on the QoS
 	  data, as consumer filters do. We should provide a factory
 	  for them too.
-	  <BR>[STATUS] Done
+	  <BR>[DONE]
         </P>
       </LI>
 
@@ -1124,7 +1129,7 @@ encapsulation format.
 	  of a supplier, the current scheme (disconnecting and
 	  connecting again) is inefficient.
           <BR>[ASSIGNED TO:] Carlos
-	  <BR>[STATUS] Done
+	  <BR>[DONE]
         </P>
       </LI>
 
