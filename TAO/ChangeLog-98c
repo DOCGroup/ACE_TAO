@@ -9,8 +9,8 @@ Wed Oct 14 12:05:37 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 	* tests/Param_Test/helper.cpp
 	* tests/Param_Test/driver.cpp 
 	  Added test for unbounded sequence of structs. This is in
-	  response to a bug report from Mr. Hoon. Thanks to Andy and
-	  Carlos for help.  
+ 	  response to a bug report from Seung-Lee Hoon
+ 	  <tarjan@lgsoft.com>.  Thanks to Andy and Carlos for help.
 	
 Wed Oct 14 11:20:26 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
