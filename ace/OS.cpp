@@ -499,11 +499,12 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params)
 
   // Get the priority class ID and attributes.
   pcinfo_t pcinfo;
-  ACE_OS::strcpy (pcinfo.pc_clname,
-                  sched_params.policy() == ACE_SCHED_OTHER  ?  "TS"  :  "RT");
   // The following is just to avoid Purify warnings about unitialized
   // memory reads.
-  ACE_OS::memset (pcinfo.pc_clinfo, 0, PC_CLINFOSZ);
+  ACE_OS::memset (&pcinfo, 0, sizeof pcinfo);
+
+  ACE_OS::strcpy (pcinfo.pc_clname,
+                  sched_params.policy() == ACE_SCHED_OTHER  ?  "TS"  :  "RT");
 
   if (::priocntl (P_ALL /* ignored */,
                   P_MYID /* ignored */,
@@ -518,6 +519,10 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params)
   // pcinfo.pc_clinfo)->rt_maxpri.
 
   pcparms_t pcparms;
+  // The following is just to avoid Purify warnings about unitialized
+  // memory reads.
+  ACE_OS::memset (&pcparms, 0, sizeof pcparms);
+
   pcparms.pc_cid = pcinfo.pc_cid;
 
   if (sched_params.policy () == ACE_SCHED_OTHER  &&
@@ -526,6 +531,10 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params)
       // real-time class instead.
     {
       tsparms_t tsparms;
+      // The following is just to avoid Purify warnings about unitialized
+      // memory reads.
+      ACE_OS::memset (&tsparms, 0, sizeof tsparms);
+
       // Don't change ts_uprilim (user priority limit)
       tsparms.ts_uprilim = TS_NOCHANGE;
       tsparms.ts_upri = sched_params.priority ();
@@ -542,6 +551,10 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params)
            // means infinite time quantum, i.e., run-to-completion.
     {
       rtparms_t rtparms;
+      // The following is just to avoid Purify warnings about unitialized
+      // memory reads.
+      ACE_OS::memset (&rtparms, 0, sizeof rtparms);
+
       rtparms.rt_pri = sched_params.priority ();
 
       if (sched_params.quantum () == ACE_Time_Value::zero)
