@@ -685,8 +685,11 @@ private:
 
   CORBA::Object_ptr ior_string_to_object (const char* ior,
                                           CORBA::Environment &ACE_TRY_ENV);
-  // Read an IOR from a file and then parse it, returning the object
-  // reference.
+  // Convert an OMG IOR into an object reference.
+
+  CORBA::Object_ptr url_ior_string_to_object (const char* ior,
+                                              CORBA::Environment &ACE_TRY_ENV);
+  // Convert an URL style IOR into an object reference.
 
 private:
   ACE_SYNCH_MUTEX lock_;
