@@ -395,7 +395,9 @@ TAO_DynArray_i::current_component (CORBA::Environment &ACE_TRY_ENV)
       ACE_CHECK_RETURN (CORBA_DynAny::_nil ());
     }
 
-  return this->da_members_[this->current_index_].in ();
+  return CORBA_DynAny::_duplicate (
+            this->da_members_[this->current_index_].in ()
+          );
 }
 
 CORBA::Boolean
