@@ -136,6 +136,10 @@ public:
   static int is_a_helper (be_interface *, be_interface *, TAO_OutStream *os);
   // helper method passed to the template method
 
+  static int downcast_helper (be_interface *,
+			      be_interface *,
+			      TAO_OutStream *os);
+
   static int gen_optable_helper (be_interface *,
                                  be_interface *,
                                  TAO_OutStream *os);
