@@ -234,8 +234,9 @@ TAO_SHMIOP_Connection_Handler::add_transport_to_cache (void)
     return -1;
 
   // Construct an  SHMIOP_Endpoint object
-  TAO_SHMIOP_Endpoint endpoint (addr,
-                              0);
+  TAO_SHMIOP_Endpoint endpoint (
+      addr,
+      this->orb_core()->orb_params()->use_dotted_decimal_addresses ());
 
   // Construct a property object
   TAO_Base_Transport_Property prop (&endpoint);
