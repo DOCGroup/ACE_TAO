@@ -1,11 +1,22 @@
+Tue Nov 14 19:35:29 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Connection_Cache_Manager.cpp (close_i):
+	* tao/Connection_Handler.inl: Fixed a subtle bug that showed up
+	  only on NT. This has to do with marking the handler as closed
+	  when the handler gets destroyed. In many cases the Connection
+	  Cache would be closed before the handler gets destroyed. So, we
+	  can explicitly set the Cache Map Entry pointer to null when we
+	  shutdown the Connection Cache. This helps to make a check for a
+	  null before we go to mark the handler as closed.
+
 Tue Nov 14 16:29:20 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tests/RTCORBA/Server_Declared/server.conf: 
+	* tests/RTCORBA/Server_Declared/server.conf:
 	  Updated to have only one entry rather than two entries, one for
 	  default-resource and the other for advanced_resource. Thanks to
 	  Marina for pointing out.
-	
-	* tao/Strategies/advanced_resource.cpp (allocate_reactor_impl): 
+
+	* tao/Strategies/advanced_resource.cpp (allocate_reactor_impl):
 	  Made TAO_Reactor_TP as the default ReactorType to be consistent
 	  with the default_resource.cpp
 
@@ -20,10 +31,10 @@ Tue Nov 14 18:21:29 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* orbsvcs/orbsvcs/FaultTolerance/FT_PolicyFactory.h:
 	* orbsvcs/orbsvcs/FaultTolerance/FT_PolicyFactory.cpp: Changed the
 	  way FT policies were created. The procedure adopted now is in
-	  conformance with the PotableInteceptor spec. The model closely
+	  conformance with the PortableInteceptor spec. The model closely
 	  follows the creation of policies for RT CORBA and Messaging in
-	  TAO. 
-	
+	  TAO.
+
 	* tao/ORB_Core.h:
 	* tao/ORB_Core.i:
 	* tao/ORB_Core.cpp:
@@ -31,7 +42,7 @@ Tue Nov 14 18:21:29 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/PolicyFactory_Registry.cpp:
 	* tao/Service_Callbacks.h:
 	* tao/Service_Callbacks.cpp: Removed the hooks that were there for
-	  the creation of FT policies. 
+	  the creation of FT policies.
 
 Tue Nov 14 15:41:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -45,10 +56,10 @@ Tue Nov 14 14:59:47 2000  Darrell Brunsch <brunsch@uci.edu>
         * orbsvcs/ImplRepo_Service/Options.cpp:
         * orbsvcs/ImplRepo_Service/Options.h:
 
-          Added the ability to get some options from the registry 
+          Added the ability to get some options from the registry
           when running as a service.  Will be updating the docs
           soon to explain how this works.
-         
+
         * orbsvcs/tests/ImplRepo/run_test.pl:
 
           Fixed to run both_ir_test () instead of both_ir () by
@@ -56,13 +67,13 @@ Tue Nov 14 14:59:47 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Tue Nov 14 10:41:03 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tests/RTCORBA/Server_Protocol/client_nt.conf: 
-	* tests/RTCORBA/Client_Protocol/run_test.pl: 
+	* tests/RTCORBA/Server_Protocol/client_nt.conf:
+	* tests/RTCORBA/Client_Protocol/run_test.pl:
 
-	* tests/RTCORBA/Server_Protocol/client_nt.conf: 
-	* tests/RTCORBA/Server_Protocol/run_test.pl: 
+	* tests/RTCORBA/Server_Protocol/client_nt.conf:
+	* tests/RTCORBA/Server_Protocol/run_test.pl:
 	  Updated to make some minor changes to make them run on NT.
-		
+
 Tue Nov 14 12:36:31 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Asynch_Invocation.cpp:
@@ -76,25 +87,25 @@ Tue Nov 14 12:36:31 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 Tue Nov 14 09:30:36 2000  Priyanka Gontla <pgontla@ece.uci.edu>
 
 	* tests/RTCORBA/Server_Protocol/svc.conf :
-	  Added a deafault svc.conf for the client to use to 
-	  load the protocols.	
+	  Added a deafault svc.conf for the client to use to
+	  load the protocols.
 
 	* tests/RTCORBA/Server_Declared/server.conf :
 	  Corrected the conf file to remove the repetitive
 	  inclusion of the -ORBReactorType option.
-	
+
 	* tests/RTCORBA/Client_Propagated/server.cpp :
 	* tests/RTCORBA/Client_Propagated/client.cpp :
-	  Removed unncessary inclusion of header files.	
+	  Removed unncessary inclusion of header files.
 
 	  Thanks to Marina for pointing out.
-	
+
 Tue Nov 14 10:48:00 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/IIOP_Connector.cpp: 
+	* tao/IIOP_Connector.cpp:
 	* tao/IIOP_Connector.h : Added a default destructor for
 	  TAO_IIOP_Connector class. This should fix the g++ 2.7.2 problem
-	  in the builds. 
+	  in the builds.
 
 Tue Nov 14 08:50:56 2000  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -168,7 +179,7 @@ Mon Nov 13 18:14:35 2000  Priyanka Gontla <pgontla@ece.uci.edu>
         * tests/RTCORBA/Server_Declared/client.dsp
 	  Made minor changes to get the test running.
 	  Updated the project files to link TAO_Strategies.
- 
+
 Mon Nov 13 18:00:15 2000  Priyanka Gontla <pgontla@ece.uci.edu>
 
         * tests/RTCORBA/Client_Propagated/svc.conf:

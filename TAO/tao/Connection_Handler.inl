@@ -43,12 +43,20 @@ TAO_Connection_Handler::decr_ref_count (void)
 
   if (this->ref_count_ == 0)
     {
-      // So the handler is gone
-      delete this;
+      // This check is required. If the Cache map has been closed or
+      // vanishes, the entry that we have is invalid. So, do this
+      // check before we access the internals of the
+      // <cache_map_entry_>
+      if (cache_map_entry_)
+        {
 
-      // Now mark the Ext_Id for us as closed
-      this->cache_map_entry_->int_id_.recycle_state
-        (ACE_RECYCLABLE_CLOSED);
+          // Now mark the Ext_Id for us as closed
+          this->cache_map_entry_->int_id_.recycle_state
+            (ACE_RECYCLABLE_CLOSED);
+        }
+
+      // Now the handler is gone
+      delete this;
     }
 }
 
