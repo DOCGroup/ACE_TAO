@@ -144,7 +144,7 @@ in_word_set (str, len)
         {
           int slot = lookup[key];
 
-          if (slot >= 0 && slot < MAX_HASH_VALUE)
+          if (slot >= 0 && slot <= MAX_HASH_VALUE)
             {
               char *s = wordlist[slot].name;
 

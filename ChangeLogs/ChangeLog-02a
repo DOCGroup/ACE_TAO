@@ -1,3 +1,16 @@
+Sun Jul  1 11:49:13 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Synch_T.i: Changed the implementations of all the
+	  acquire*() method to call release().  Thanks to Edan Ayal
+ 	  <edana@bandwiz.com> for reporting this.
+
+Sat Jun 30 12:44:11 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* examples/Connection/blocking/SPIPE-acceptor.cpp: Added better
+	  support for shutting down the server when a signal occurs.
+  	  Thanks to Rich Newman <RNewman@directv.com> for this
+ 	  enhancement.
+  
 Sun Jul 01 11:16:34 2001  Balachandran  <bala@cs.wustl.edu>
 
         * ACE version 5.1.18 released.
@@ -532,7 +545,6 @@ Fri Jun 15 20:18:07 2001  Krishnakumar B  <kitty@cs.wustl.edu>
           maintaining a backward-compatible interface.
 
           Many thanks to Irfan for his help in finding a solution.
-
 
 Fri Jun 15 17:40:51 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 

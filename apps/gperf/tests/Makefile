@@ -32,6 +32,7 @@ PROG_SRCS = \
 	iinset.cpp \
 	iinset2.cpp \
 	tinset.cpp \
+	taoinset.cpp \
 	pinset.cpp \
 	m3inset.cpp \
 	adainset.cpp \
@@ -66,7 +67,10 @@ IOUT2_OBJS = test.o \
 TOUT_OBJS = test.o \
 	    tinset.o
 
-BIN2 =  cout \
+TAOOUT_OBJS = test.o \
+	      taoinset.o
+
+BIN  =  cout \
 	aout \
 	c++out \
 	preout \
@@ -74,7 +78,8 @@ BIN2 =  cout \
 	pout \
 	iout \
 	iout2 \
-	tout
+	tout \
+	taoout
 
 BUILD = $(BIN)
 BUILD+=runtests
@@ -90,7 +95,6 @@ include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
-
 
 #----------------------------------------------------------------------------
 #	Local targets
@@ -136,6 +140,9 @@ iinset2.cpp: $(srcdir)/idl.gperf $(GPERF)
 tinset.cpp:  $(srcdir)/corba.gperf $(GPERF)
 	$(GPERF) -a -o < $(srcdir)/corba.gperf > $@
 
+taoinset.cpp:  $(srcdir)/tao.gperf $(GPERF)
+	$(GPERF) -c -C -D -E -f 0 -a -o < $(srcdir)/tao.gperf > $@
+
 #rules to make the test executables
 
 cout:$(addprefix $(VDIR),$(COUT_OBJS))
@@ -163,6 +170,9 @@ iout2:$(addprefix $(VDIR),$(IOUT2_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 tout:$(addprefix $(VDIR),$(TOUT_OBJS))
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
+
+taoout:$(addprefix $(VDIR),$(TAOOUT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 runtests: cout aout c++out preout m3out pout iout iout2 tout
@@ -194,6 +204,9 @@ runtests: cout aout c++out preout m3out pout iout iout2 tout
 	#test tout
 	./tout -v < $(srcdir)/corba.gperf > corba.out
 	-diff -b $(srcdir)/corba.exp corba.out
+	#test taoout
+	./taoout -v < $(srcdir)/tao.gperf > tao.out
+	-diff -b $(srcdir)/tao.exp tao.out
 # these next 5 are demos that show off the generated code
 	$(GPERF) -p -j1 -o -t -N is_reserved_word -k1,3,'$$' < $(srcdir)/c-parse.gperf | egrep -v 'ing time is ' > test-1.out
 	-diff -b $(srcdir)/test-1.exp test-1.out
@@ -213,8 +226,8 @@ runtests: cout aout c++out preout m3out pout iout iout2 tout
 
 realclean:
 	$(RM) -rf *.out cinset.cpp c++inset.cpp iinset.cpp iinset2.cpp \
-	tinset.cpp pinset.cpp m3inset.cpp adainset.cpp preinset.cpp
-	$(RM) -rf c.out aout preout m3out pout cout c++out iout iout2 tout
+	tinset.cpp taoinset.cpp pinset.cpp m3inset.cpp adainset.cpp preinset.cpp
+	$(RM) -rf c.out aout preout m3out pout cout c++out iout iout2 tout toaout
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
@@ -245,23 +258,5 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i
-
-.obj/cinset.o .obj/cinset.so .shobj/cinset.o .shobj/cinset.so: cinset.cpp
-
-.obj/c++inset.o .obj/inset.so .shobj/inset.o .shobj/inset.so: c++inset.cpp
-
-.obj/iinset.o .obj/iinset.so .shobj/iinset.o .shobj/iinset.so: iinset.cpp
-
-.obj/iinset2.o .obj/iinset2.so .shobj/iinset2.o .shobj/iinset2.so: iinset2.cpp
-
-.obj/tinset.o .obj/tinset.so .shobj/tinset.o .shobj/tinset.so: tinset.cpp
-
-.obj/pinset.o .obj/pinset.so .shobj/pinset.o .shobj/pinset.so: pinset.cpp
-
-.obj/m3inset.o .obj/m3inset.so .shobj/m3inset.o .shobj/m3inset.so: m3inset.cpp
-
-.obj/adainset.o .obj/adainset.so .shobj/adainset.o .shobj/adainset.so: adainset.cpp
-
-.obj/preinset.o .obj/preinset.so .shobj/preinset.o .shobj/preinset.so: preinset.cpp
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

@@ -1496,7 +1496,7 @@ Key_List::output_lookup_function (void)
       int pointer_and_type_enabled = option[POINTER] && option[TYPE];
 
       ACE_OS::printf ("          int slot = lookup[key];\n\n"
-              "          if (slot >= 0 && slot < MAX_HASH_VALUE)\n");
+              "          if (slot >= 0 && slot <= MAX_HASH_VALUE)\n");
       if (option[OPTIMIZE])
         ACE_OS::printf ("            return %swordlist[slot];\n", option[TYPE] && option[POINTER] ? "&" : "");
       else
