@@ -1890,9 +1890,6 @@ struct iovec
 typedef DWORD ACE_id_t;
 typedef int ACE_pri_t;
 
-typedef HINSTANCE ACE_SHLIB_HANDLE;
-const int ACE_DEFAULT_SHLIB_MODE = 0;
-
 #else /* !defined (ACE_WIN32) */
 
 typedef const char *LPCTSTR;
@@ -2204,6 +2201,9 @@ const int ACE_DEFAULT_SHLIB_MODE = RTLD_LAZY;
 # endif /* HP aC++ vs. HP C++ */
 typedef shl_t ACE_SHLIB_HANDLE;
 const int ACE_DEFAULT_SHLIB_MODE = BIND_DEFERRED;
+#elif defined (ACE_WIN32)
+typedef HINSTANCE ACE_SHLIB_HANDLE;
+const int ACE_DEFAULT_SHLIB_MODE = 0;
 #endif /* ACE_HAS_SVR4_DYNAMIC_LINKING */
 
 #if defined (ACE_HAS_SOCKIO_H)
