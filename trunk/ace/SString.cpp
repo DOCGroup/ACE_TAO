@@ -826,6 +826,7 @@ ACE_WString::ACE_WString (const ACE_WSTRING_TYPE *s,
 ACE_WString::ACE_WString (const ACE_USHORT16 *s,
                           size_t len,
                           ACE_Allocator *alloc)
+  : allocator_ (alloc)
 {
   ACE_TRACE ("ACE_WString::ACE_WString");
 
