@@ -19,7 +19,7 @@
 u_long
 ACE_POSIX_Asynch_Result::bytes_transferred (void) const
 {
-  return this->AIO_SYSRETURN;
+  return this->bytes_transferred_;
 }
 
 const void *
@@ -43,7 +43,7 @@ ACE_POSIX_Asynch_Result::completion_key (void) const
 u_long
 ACE_POSIX_Asynch_Result::error (void) const
 {
-  return this->AIO_SYSERRNO;
+  return this->error_;
 }
 
 ACE_HANDLE
@@ -273,11 +273,10 @@ ACE_POSIX_Asynch_Read_Stream_Result::complete (u_long bytes_transferred,
                                                const void *completion_key,
                                                u_long error)
 {
-  // <bytes_transferred> is availble in the aiocb.
-  ACE_UNUSED_ARG (bytes_transferred);
-
+  this->bytes_transferred_ = bytes_transferred;
   this->success_ = success;
   this->completion_key_ = completion_key;
+  this->error_ = error;
 
   // <errno> is available in the aiocb.
   ACE_UNUSED_ARG (error);
@@ -602,12 +601,10 @@ ACE_POSIX_Asynch_Write_Stream_Result::complete (u_long bytes_transferred,
                                                 u_long error)
 {
   // Get all the data copied.
-
-  // <bytes_transferred> is availble in the aiocb.
-  ACE_UNUSED_ARG (bytes_transferred);
-
+  this->bytes_transferred_ = bytes_transferred;
   this->success_ = success;
   this->completion_key_ = completion_key;
+  this->error_ = error;
 
   // <errno> is available in the aiocb.
   ACE_UNUSED_ARG (error);
@@ -912,12 +909,10 @@ ACE_POSIX_Asynch_Read_File_Result::complete (u_long bytes_transferred,
                                              u_long error)
 {
   // Copy all the data.
-
-  // <bytes_transferred> is availble in the aiocb.
-  ACE_UNUSED_ARG (bytes_transferred);
-
+  this->bytes_transferred_ = bytes_transferred;
   this->success_ = success;
   this->completion_key_ = completion_key;
+  this->error_ = error;
 
   // <errno> is available in the aiocb.
   ACE_UNUSED_ARG (error);
@@ -1214,12 +1209,10 @@ ACE_POSIX_Asynch_Write_File_Result::complete (u_long bytes_transferred,
                                               u_long error)
 {
   // Copy the data.
-
-  // <bytes_transferred> is available in <AIO_SYSRETURN>
-  ACE_UNUSED_ARG (bytes_transferred);
-
+  this->bytes_transferred_ = bytes_transferred;
   this->success_ = success;
   this->completion_key_ = completion_key;
+  this->error_ = error;
 
   // <error> is available in <aio_resultp.aio_error>
   ACE_UNUSED_ARG (error);
@@ -1532,10 +1525,10 @@ ACE_POSIX_Asynch_Accept_Result::complete (u_long bytes_transferred,
                                           u_long error)
 {
   // Copy the data.
-  this->AIO_SYSRETURN = bytes_transferred;
+  this->bytes_transferred_ = bytes_transferred;
   this->success_ = success;
   this->completion_key_ = completion_key;
-  this->AIO_SYSERRNO = error;
+  this->error_ = error;
 
   // Appropriately move the pointers in the message block.
   this->message_block_.wr_ptr (bytes_transferred);
@@ -2261,10 +2254,10 @@ ACE_POSIX_Asynch_Transmit_File_Result::complete (u_long bytes_transferred,
                                                  u_long error)
 {
   // Copy the data.
-  this->AIO_SYSRETURN  = bytes_transferred;
+  this->bytes_transferred_ = bytes_transferred;
   this->success_ = success;
   this->completion_key_ = completion_key;
-  this->AIO_SYSERRNO = error;
+  this->error_ = error;
 
   // We will not do this because (a) the header and trailer blocks may
   // be the same message_blocks and (b) in cases of failures we have
