@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    Base_Thread_Adapter.h
@@ -8,7 +7,6 @@
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef ACE_BASE_THREAD_ADAPTER_H
 #define ACE_BASE_THREAD_ADAPTER_H

@@ -1,3 +1,12 @@
+Fri Nov 23 08:40:33 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* tests/Refcounted_Auto_Ptr_Test.cpp: Added some ACE_DEBUGs to
+	  print out the reference count.
+
+	* ace/Refcounted_Auto_Ptr.h: Added a count() accessor method to
+	  return the reference count.  Thanks to Andrea Bernicchia
+ 	  <a.bernicchia@acsys.it> for contributing this.
+
 Thu Nov 22 05:24:51 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* examples/QOS/Diffserv: Added a simple example to illustrate

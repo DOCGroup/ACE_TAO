@@ -6,6 +6,19 @@
 #include "Synch_T.h"
 
 template <class X, class ACE_LOCK> inline int
+ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>::count (void) const
+{
+  ACE_GUARD_RETURN (ACE_LOCK, guard, ACE_const_cast (ACE_LOCK &, this->lock_), 0);
+  return this->ref_count_;
+}
+
+template <class X, class ACE_LOCK> inline int
+ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::count (void) const
+{
+  return this->rep_->count ();
+}
+
+template <class X, class ACE_LOCK> inline int
 ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>::null (void) const
 {
   ACE_GUARD_RETURN (ACE_LOCK, guard,

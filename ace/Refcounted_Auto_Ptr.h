@@ -86,6 +86,9 @@ public:
   /// Get the pointer value.
   X *get (void);
 
+  /// Get the reference count value.
+  int count (void) const;
+
   // = Utility method.
   
   /// Allows us to check for NULL on all ACE_Refcounted_Auto_Ptr objects.
@@ -125,6 +128,9 @@ private:
 
   /// Get the pointer value.
   X *get (void);
+
+  /// Get the reference count value.
+  int count (void) const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
