@@ -8,23 +8,15 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-LDLIBS     =  -lTAO
+LDLIBS =  -lTAO
 
-PROG_SRCS =	svr.cpp client.cpp cubit_i.cpp \
-		test1.cpp test1_client.cpp test1_svr.cpp
+PROG_SRCS = svr.cpp client.cpp cubit_i.cpp 
 
 LSRC = $(PROG_SRCS)
 
-CUBIT_SVR_OBJS = svr.o cubit_i.o cubitS.o
 CUBIT_CLT_OBJS = client.o cubitC.o
 
-BASIC_SVR_OBJS = test1.o test1_svr.o
-BASIC_CLT_OBJS = test1.o test1_client.o
-
-ECHO_SVR_OBJS = test1.o
-ECHO_CLT_OBJS = test1.o
-
-BIN = svr client
+BIN = client
 BUILD = $(BIN)
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 VBIN = $(BIN:%=%$(VAR))
