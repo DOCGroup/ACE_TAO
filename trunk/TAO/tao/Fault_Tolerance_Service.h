@@ -41,7 +41,7 @@
 class TAO_Service_Callbacks;
 class TAO_ORB_Core;
 
-class TAO_Fault_Tolerance_Service
+class TAO_Export TAO_Fault_Tolerance_Service
 {
   // = TITLE
   //    TAO_Fault_Tolerant_Service
