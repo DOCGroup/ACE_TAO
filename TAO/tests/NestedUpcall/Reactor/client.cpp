@@ -118,6 +118,7 @@ NestedUpCalls_Client::run (void)
 
       // Now, we can invoke an operation on the remote side.
       CORBA::Long r = this->reactor_->register_handler (eh.in (), TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       // We ought to have a result!
       ACE_DEBUG ((LM_DEBUG,
