@@ -240,18 +240,24 @@ public:
   // construction.
 
   int enqueue (const TYPE &new_item);
-  // Addes <new_item> to the queue.  Returns 0 on success -1 on failure.
+  // Addes <new_item> to the queue.  Returns 0 on success, -1 on failure.
 
   int dequeue (TYPE &item);
   // Removes and returns the first <item> on the queue.  Returns 0 on
-  // success -1 if nothing was found.
+  // success, -1 if nothing was found.
 
-  int peek (TYPE &item);
+  int peek (TYPE &item) const;
   // Returns the first <item> on the queue without removing it.
-  // Returns 0 on success -1 if nothing was found.
+  // Returns 0 on success, -1 if nothing was found.
 
-  int size (void) const;
-  // The size of the queue
+  TYPE *peek (const u_int index = 0) const;
+  // Returns a pointer to the item indicated by index without removing it,
+  // or 0 if nothing was found because index is greater than the number of
+  // enqueued items, less one.  An index of 0 indicates the first item, and
+  // so on.
+
+  size_t size (void) const;
+  // The number of items in the queue.
 
   void dump (void) const;
   // Dump the state of an object.

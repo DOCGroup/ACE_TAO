@@ -98,3 +98,8 @@ ACE_Unbounded_Stack<T>::is_full (void) const
   return this->last_resort_ == 0;
 }
 
+template <class TYPE> ACE_INLINE size_t
+ACE_Unbounded_Queue<TYPE>::size (void) const
+{
+  return this->cur_size_;
+}
