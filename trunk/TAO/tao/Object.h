@@ -154,7 +154,7 @@ private:
   CORBA_Object &operator = (const CORBA_Object &);
 };
 
-class CORBA_Object_var
+class TAO_Export CORBA_Object_var
 {
 public:
   CORBA_Object_var (void); // default constructor
@@ -179,7 +179,7 @@ private:
   CORBA::Object_ptr ptr_;
 };
 
-class CORBA_Object_out
+class TAO_Export CORBA_Object_out
 {
 public:
   CORBA_Object_out (CORBA::Object_ptr &);
