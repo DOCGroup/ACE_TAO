@@ -14,6 +14,7 @@
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/Event/EC_Event_Limit.h"
+#include "tao/ORB_Core.h"
 
 #include "Kokyu_EC.h"
 #include "Consumer.h"
@@ -288,9 +289,9 @@ main (int argc, char* argv[])
 #endif //ACE_HAS_DSUI
 
 #ifdef ACE_HAS_DSUI
-      EC_Event_Limit* e_limit = new EC_Event_Limit (TAO_ORB_Core_instance(), ds_cntl);
+      EC_Event_Limit* e_limit = new EC_Event_Limit (orb, ds_cntl);
 #else
-      EC_Event_Limit* e_limit = new EC_Event_Limit (TAO_ORB_Core_instance());
+      EC_Event_Limit* e_limit = new EC_Event_Limit (orb);
 #endif //ACE_HAS_DSUI
       ACE_Time_Value ticker (125);
       long timer_id = rt.reactor()->schedule_timer(e_limit,0, ticker);
