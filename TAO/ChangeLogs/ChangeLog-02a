@@ -1,3 +1,32 @@
+Tue Jun  4 00:34:08 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* tao/PortableServer/AMH_Response_Handler.h: 
+	* tao/PortableServer/AMH_Response_Handler.cpp:
+	  Changed method signatures for platforms without native
+	  exceptions. Other notable changes include:
+	    - Making the destructor more intelligent.  If the AMH RH is
+	  being destroyed before a reply has been sent to the client, then
+	  a NO_RESPONSE SYSTEM_EXCEPTION is sent to the client.
+	    - Incorporate the new AMH minor-codes when raising exceptions.
+	    - Complete the _tao_rh_send_exception () method that Carlos
+	  wrote. The part remaining was the actual marshalling of the
+	  exception to the client.
+	    - Changed method signatures for platforms without native
+	  exceptions.
+	    - More documentation on why we are raising exceptions in
+	  operations and the logic for the minor codes in them.
+
+	* tao/PortableServer/Servant_Base.cpp (asynchronous_upcall_dispatch): 
+	  Removed condition that unnecessarily checked if we needed to
+	  send a reply.  Since this is an asynchronous upcall, we never
+	  need to marshall anything back to the client .. unless, :-), we
+	  encounter an exception.  This method has now been changed to
+	  accomade the above semantics.
+
+	* tao/corbafwd.h (TAO_AMH_RH_REPLY_LOCATION_CODE): 
+	* tao/Exception.cpp (_info): 
+	  Added new AMH exception minor code and description.
+
 Mon Jun 03 17:10:38 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/PG_Factory_Map.cpp:

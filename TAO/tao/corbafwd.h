@@ -1462,6 +1462,7 @@ TAO_NAMESPACE_CLOSE  // end of class (namespace) CORBA
 // Several OMG assigned numbers, for a complete list check:
 //
 // ftp://ftp.omg.org/pub/docs/ptc/99-05-02.txt
+
 //
 // For details on how to ask more numbers check:
 //
@@ -1563,30 +1564,31 @@ TAO_NAMESPACE_CLOSE  // end of class (namespace) CORBA
 #define TAO_POA_BEING_DESTROYED                    (0x11U << 7)
 #define TAO_POA_INACTIVE                           (0x12U << 7)
 #define TAO_CONNECTOR_REGISTRY_INIT_LOCATION_CODE  (0x13U << 7)
+#define TAO_AMH_REPLY_LOCATION_CODE                (0x14U << 7)
 // *Don't* use TAO_<location>_MINOR_CODE greater than 0x1FU!
 
 // errno encoding:  bottom 7 bits.
-#define TAO_UNSPECIFIED_MINOR_CODE  0x0U
-#define TAO_ETIMEDOUT_MINOR_CODE    0x1U
-#define TAO_ENFILE_MINOR_CODE       0x2U
-#define TAO_EMFILE_MINOR_CODE       0x3U
-#define TAO_EPIPE_MINOR_CODE        0x4U
-#define TAO_ECONNREFUSED_MINOR_CODE 0x5U
-#define TAO_ENOENT_MINOR_CODE       0x6U
-#define TAO_EBADF_MINOR_CODE        0x7U
-#define TAO_ENOSYS_MINOR_CODE       0x8U
-#define TAO_EPERM_MINOR_CODE        0x9U
-#define TAO_EAFNOSUPPORT_MINOR_CODE 0xAU
-#define TAO_EAGAIN_MINOR_CODE       0xBU
-#define TAO_ENOMEM_MINOR_CODE       0xCU
-#define TAO_EACCES_MINOR_CODE       0xDU
-#define TAO_EFAULT_MINOR_CODE       0xEU
-#define TAO_EBUSY_MINOR_CODE        0xFU
-#define TAO_EEXIST_MINOR_CODE       0x10U
-#define TAO_EINVAL_MINOR_CODE       0x11U
-#define TAO_ECOMM_MINOR_CODE        0x12U
-#define TAO_ECONNRESET_MINOR_CODE   0x13U
-#define TAO_ENOTSUP_MINOR_CODE      0x14U
+#define TAO_UNSPECIFIED_MINOR_CODE        0x0U
+#define TAO_ETIMEDOUT_MINOR_CODE          0x1U
+#define TAO_ENFILE_MINOR_CODE             0x2U
+#define TAO_EMFILE_MINOR_CODE             0x3U
+#define TAO_EPIPE_MINOR_CODE              0x4U
+#define TAO_ECONNREFUSED_MINOR_CODE       0x5U
+#define TAO_ENOENT_MINOR_CODE             0x6U
+#define TAO_EBADF_MINOR_CODE              0x7U
+#define TAO_ENOSYS_MINOR_CODE             0x8U
+#define TAO_EPERM_MINOR_CODE              0x9U
+#define TAO_EAFNOSUPPORT_MINOR_CODE       0xAU
+#define TAO_EAGAIN_MINOR_CODE             0xBU
+#define TAO_ENOMEM_MINOR_CODE             0xCU
+#define TAO_EACCES_MINOR_CODE             0xDU
+#define TAO_EFAULT_MINOR_CODE             0xEU
+#define TAO_EBUSY_MINOR_CODE              0xFU
+#define TAO_EEXIST_MINOR_CODE             0x10U
+#define TAO_EINVAL_MINOR_CODE             0x11U
+#define TAO_ECOMM_MINOR_CODE              0x12U
+#define TAO_ECONNRESET_MINOR_CODE         0x13U
+#define TAO_ENOTSUP_MINOR_CODE            0x14U
 // *Don't* use TAO_<errno>_MINOR_CODE greater than 0x7FU!
 
 // These numbers are assigned by the OpenGroup, a database is
