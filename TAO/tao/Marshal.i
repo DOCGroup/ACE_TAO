@@ -159,7 +159,7 @@ TAO_Marshal_Any::deep_free (CORBA::TypeCode_ptr,
 			    const void *,
 			    CORBA::Environment &)
 {
- ((CORBA::Any *) source)->~CORBA_Any ();
+  // ((CORBA::Any *) source)->~CORBA_Any ();
   return CORBA::TypeCode::TRAVERSE_CONTINUE;
 }
 
