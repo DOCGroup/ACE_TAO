@@ -1,16 +1,21 @@
-Mon Dec 22 23:06:00 CST 1997  Edward Everett Anderson <eea1@cs.wustl.edu>
+Wed May 20 14:37:48 CDT 1998  Everett Anderson <eea1@cs.wustl.edu>
 
-* java/examples/Logger/simple-server/LogRecord.java:
+Reset the ChangeLog file for future users.  If anyone wants more complete
+file by file changes, they can be provided with the CVS log command.  
 
-	* Made the message size constant a static so the client
-	will compile.
+Updated the JACE page at http://www.cs.wustl.edu/~eea1/JACE.html to reflect
+the Version 1.4.4 changes, which included:
 
-	* Made sure the netsvcs directory is in the release archive,
-	incremented the version number to 1.4.2 to clear up this mistake.
+* Removed CUP and JLex from JACE.  The java_cup directory is still in CVS,
+  but won't be included in future versions.  This means that the option to
+  load C++ ACE ServiceConfigurator files is gone.
 
-Mon Jan 19 13:45:04 CST 1998  Edward Everett Anderson <eea1@cs.wustl.edu>
+* Changed the SOCKStream system so it uses DataInputStream and DataOutputStream
+  to maintain compatibility with other languages and remove the deprecation
+  warnings from using PrintStream.  (Can't use Reader/Writers since they
+  write 16-bit chars not 8-bit bytes)
 
-* java/classes/README.TXT
-
-	* Added a readme file to the classes directory so WinZip
-	creates the directory correctly on NT.
+* Made lots of modifications to comments and code to remove javadoc warnings
+  and deprecation warnings.  They were all straight-forward changes such as
+  making sure a @throws line was in the comments for all exceptions a method
+  had, etc.
