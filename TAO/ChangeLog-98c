@@ -1,3 +1,10 @@
+Wed Oct 21 22:49:09 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* examples/POA/DSI/server.dsp:
+	* examples/POA/DSI/client.dsp:
+	  Just noticed that these were pointing to the old location
+	  of tao_idl.  Now fixed to look in /bin.
+
 Wed Oct 21 22:29:35 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* TAO_IDL/be/be_codegen.cpp (TAO_CodeGen): Fixed the problem with
