@@ -267,7 +267,9 @@
 #endif /* __ACE_INLINE__ */
 
 #ifdef _DEBUG
+#if !defined (ACE_HAS_WINCE)
 	#include /**/ <crtdbg.h>
+#endif /* ACE_HAS_WINCE */
 #else
         // If we are making a release, and the user has not specified
         // inline directives, we will default to inline
