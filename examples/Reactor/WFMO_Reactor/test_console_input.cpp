@@ -1,5 +1,5 @@
 // $Id$
-//
+
 // ============================================================================
 //
 // = LIBRARY
@@ -14,8 +14,8 @@
 //    are interested in console input.
 //
 // = AUTHOR
-//    Irfan Pyarali
-// 
+//    Irfan Pyarali <irfan@cs.wustl.edu>
+//
 // ============================================================================
 
 #include "ace/Reactor.h"
