@@ -1,0 +1,301 @@
+README,v 1.0 2003/08/21
+
+RTCORBA 1.0 Scheduling Service.
+
+Matt Murphy <murphym@cs.uri.edu>
+University of Rhode Island
+
+This is an implementation of the RTCORBA 1.0 Scheduling Service.
+Per section 3 of the RTCORBA 1.0 specification (OMG), the scheduling
+service is comprised of two local interfaces, a ClientScheduler and
+a ServerScheduler.
+
+
+Build Issues:
+---------
+Run tao_idl -I $TAO_ROOT/ RTCosScheduling.pidl
+Some versions of TAO incorrectly include the line
+#include "tao/PortableServer/PortableServerS.h"
+in RTCosSchedulingS.h when making the IDL.  Before running
+make on your program, please check if this line was included in
+RTCosSchedulingS.h, and if so, comment it out.
+Run make -f Makefile.RTCosScheduling from ../
+
+
+
+Synopsis:
+---------
+The RTCosScheduler allows clients to schedule tasks according to
+scheduling information determined a priori.  This scheduling information
+is stored in a config file so that both the client and the server has
+access to it.  (If the client and server exists on different nodes then
+place a copy of the config file on each node.)
+
+Per the RTCORBA 1.0 spec, clients use a ClientScheduler object and
+servers use a ServerScheduler object to schedule activities on the
+system.  Since each may or may not use its scheduler, there are four
+possible scenarios in which the system may run.  These are:
+
+1. Client uses ClientScheduler, Server uses ServerScheduler.
+   In this case the system follows the rules set forth in the
+   "Scheduling Service" section of this document below.
+
+2. Client uses ClientScheduler, Server does not use ServerScheduler.
+   In this case activities are scheduled on the client
+   and run at the mapped Real Time priority set forth in the config
+   file while executing on the client.  However, any activity on the
+   server does not run at a real time priority.  This means that
+   Multiprocessor Priority Ceiling Protocol does not manage activities
+   on the server.  Currently, the client has no way of knowing that
+   activity on the server did not follow the MPCP protocol.  Future
+   enhancements to the RTCORBA 1.0 scheduling service should notify
+   the client (perhaps through a flag to a client interceptor) that
+   the server did not use MPCP.  Please note that this scenario is generally
+   not recommended as there is a strong possibility for
+   priority inversion or unexpected blocking in this situation
+   since any and all server activity that uses the ServerScheduler
+   will run at a higher priority that server activity that does not.
+   Use scenario 1 above.  Here, the server's priority lowers from 
+   RTCORBA::maxPriority to RTCORBA::minPriority and things will
+   execute on a best effort basis.
+
+3. Client does not use ClientScheduler, Server uses ServerScheduler.
+   In this case the client does not use priorities set forth in the
+   config file.  The ServerScheduler, on the other hand, does use
+   MPCP to schedule execution on the server.  It uses the priority sent
+   to the server by the client, which is the default priority that the
+   client ran at (since the client priority was not changed by
+   schedule_activity().  This follows the scenario of the ServerScheduler
+   set forth below.  Please note that it is recommended that you use
+   scenario 1, above, instead so that the client sends appropriate priorities
+   to the server.
+
+4. Client does not use ClientScheduler, server does not use
+   ServerScheduler.
+   In this case neither the client nor the server take advantage of
+   the RTCORBA 1.0 Scheduler.
+
+
+
+Scheduling Service:
+------------------
+ClientScheduler:
+Clients wishing to use the ClientScheduler to schedule activities
+must first create a local ClientScheduler object reference.  The
+ClientScheduler is declared as:
+
+RTCosScheduling_ClientScheduler_i (
+   CORBA::ORB_var orb, /// Orb reference
+   char* node,         /// Node the client resides on
+   char* file);        /// Config file holding scheduling information
+
+
+The ClientScheduler constructor parses the config file and populates
+an ACE_MAP with the activity/priority associations for the node on
+which the client resides.  It also constructs a ClientScheduler_Interceptor
+that adds a service context the send_request interceptor that contains
+the priority the client is running at when the call is made.
+
+Once initialized, calls to the ClientScheduler schedule_activity(
+const char * activity_name) method will match the activity_name
+parameter to the CORBA priority value in the ACE_Map.  It linearly
+maps CORBA priority to a local OS priority and sets the local OS
+priority using RT Current.  If the activity name provided is not
+valid (i.e. not found in the config file), a
+RTCosScheduling::UnknownName exception is thrown.
+
+The ClientScheduler also registers an client side interceptor with the
+orb.  This ClientScheduler_Interceptor finds the CORBA priority that the
+client is running at when the remote method call is made and adds this priority
+to a service context for the ServerScheduler_Interceptor to use.  Initial
+tests find that this interceptor adds 0.00015 seconds of execution on an
+Intel 3.0 GHz processor.
+
+
+ServerScheduler:
+Servers that contain local objects that will accept CORBA calls must
+create a local ServerScheduler object.  The ServerScheduler uses
+TAO's PortableInterceptors to intercept incoming client requests and
+schedule execution on the server.  These interceptors are registered
+by the ORB_Core as explained in the create_POA method below.
+The ServerScheduler is defined as:
+
+  RTCosScheduling_ServerScheduler_i (
+    char *node,    /// Node the ServerScheduler resides on
+    char *file,    /// Config file holding scheduling information
+    char *shared_file,  /// File used for shared memory
+    int numthreads);   /// Number of threads to create in the threadpool
+
+During initialization, the ServerScheduler finds the appropriate node
+information in the config file and stores resources (key) on the node
+and the appropriate priority ceiling (value) in a map.  It also reads
+in the base priority for the resource.
+
+The ServerScheduler constructor then registers the PortableInterceptors
+necessary to scheduler execution on the server.  It also set up the
+linear mapping policy and a reference to the RT Current object, both
+of which are used for adjusting the server's local OS priority when
+using the priority ceiling control protocol.
+
+Once the ServerScheduler object is constructed, users may create an
+orb and establish any non real time POA policies they wish to install by
+calling the ServerScheduler's create_POA method.
+
+ServerScheduler's create_POA method creates a real time POA that will
+set and enforce all non-real time policies.  This method also sets the
+real time POA to enforce the Server Declared Priority Model Policy and
+creates a threadpool responsible for executing calls to the server.
+Server Declared Priority Model is used so that the server threads may run at
+a high enough priority to intercept requests as soon as they come in.
+If Client Propagated Priority Ceilings were used, incoming requests would not
+be intercepted until all existing servant execution is completed.  This is
+because MPCP elevates the priority of servant execution to be higher than
+the client priorities.
+
+Recall that the number of threads in the threadpool was supplied by the
+ServerScheduler constructor.  The create_POA method is defined as:
+
+  virtual ::PortableServer::POA_ptr create_POA (
+    PortableServer::POA_ptr parent,    /// Non RT POA parent
+    const char * adapter_name,    /// Name for the POA
+    PortableServer::POAManager_ptr a_POAManager,  /// Manager for the POA
+    const CORBA::PolicyList & policies  /// List of non RT policies
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+    , PortableServer::POA::AdapterAlreadyExists
+    , PortableServer::POA::InvalidPolicy
+  ));
+
+
+Once a RT POA has been created, schedule_object is called to store CORBA
+Object references (key) with a name (value) in an ACE_MAP.  An
+RTCosScheduling::UnknownName exception is thrown if the schedule_object
+name parameter is not found in the resource map (i.e. it was not in the
+config file.)
+The schedule_object method is declared as:
+  virtual void schedule_object (
+    CORBA::Object_ptr obj,  /// A CORBA object reference
+    const char * name    /// Name to associate with obj
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+    , RTCosScheduling::UnknownName
+  ));
+
+
+Once all objects that will receive client requests have been scheduled
+using schedule_object, clients are free to make calls on those objects.
+The scheduling service interceptors catch these calls and perform the
+necessary priority ceiling control measures to ensure that the calls
+are executed in the appropriate order.  The ServerScheduler_Interceptor
+receive_request method intercepts all incoming request immediately since it
+is set to run at RTCORBA::maxPriority (the highest priority on the server
+OS).  It then gets the client priority sent in the service context as well
+as the resource ceiling for the object and the base priority for the server.
+Initial tests indicate that the receive_request interceptor takes around
+0.002 seconds to complete on an Intel 3.0 GHz processor.
+
+Given these values it is able to use the Multiprocessor Priority Ceiling
+Protocol to schedule execution on the server to handle the request.  MPCP
+schedules all global critical sections at a higher priority than tasks on
+the local processor by adding the client priority to the base
+priority of the servant, then adding the resource ceiling of the resource
+to the base priority to find the appropriate priority ceiling. For more
+information about MPCP, please refer to the book "Real Time Systems",
+By Jane Liu (2000).
+
+Please not that the locking mechanisms are stored in shared memory
+on the server.  This means that the locks cannot be stored in linked lists
+and are therefore manipulated using memory offsets.  The total number of
+locks that may be stored in shared memory is currently set at 1024.
+
+When remote execution is complete the send_reply interceptor resets the thread
+to listen at RTCORBA::maxPriority and removes the task form the Invocation
+list.  Initial test indicate that the send_reply interceptor takes 0.000075
+seconds to complete on an Intel 3.0 GHz processor.
+
+
+Scheduling Service Config File:
+The scheduling service config file holds the information necessary to
+schedule the system.  Task and resource ceiling information is stored for
+each of the nodes as follows:
+
+Node 1    /// The node name is 1
+
+Resources:
+BP      6000  /// The base priority for the resource
+Server1 1000   /// A list of resources and their priority ceiling
+Server2 2000
+END    /// The end of the resource list
+
+Tasks:    /// A list of tasks that will execute on the node
+Client1 1000
+Client2 3000
+Client3 5000
+END    /// The end of the task list.
+
+Please note that these associations are tab delimited.  Please do not include
+comments in the scheduling service config file.  The priorities associated
+with each task and resource are considered to be CORBA priorities, and
+will be mapped to local OS level priorities using the Linear Mapping
+model.  Per the OMG RT CORBA spec, CORBA priorities have a valid range up
+to 32767, where a larger value indicates a higher priority.  The current
+config file assumes that the Multiprocessor Priority Ceiling Protocol is
+used.
+
+Known Issues:
+TAO does not currently support request buffering, and there are no immediate
+plans to do so.  Consequently, the RT CORBA 1.0 Scheduling Service is
+limited in that it will only function properly in systems that do not
+require request buffering on the servant side.
+
+There is a bug in TAO in which mapped priorities are mapped a second time
+when using Client Propagated Priority Ceiling Protocol.  This in effect
+lowers the priority that the servant receives.  This happens to each
+priority, so there should be no effect on the system.
+
+The config file assumes CORBA priorities in the range of 0 to 32767.
+The Linear Priority Mapping Manager will map these to valid local OS
+priorities.  Take care though, in determining the priority range in
+the config file, as low numbers or numbers very close in value may
+produce priority inversion and other issues.  For example, if the CORBA
+priorities used for three tasks are 100 200 300, these will all map to
+OS priority 1 in on some real time Linux systems. Please take this into
+account when determining the CORBA priority range to use.
+
+The 1.0 Scheduling service currently works with one orb and one POA.
+If someone tries to install more than one scheduling service (client or server
+side) on a single POA, then it should not add a second interceptor.  Please
+use a single scheduling service per POA.  Furthermore, there is a bug when
+more than one orb is created, an invalid policy exception is thrown during the
+second call to create_POA.  This bug is actively being investigated.  In the 
+meantime please use the scheduling service with one ORB.
+
+
+
+Future Enhancements:
+ACE_XML
+The current RT CORBA 1.0 Scheduling Service uses a private method to
+read the config file.  This will soon be replaced with a new XML based config
+file using ACE_XML to parse the config file.
+
+Priority Lanes
+Although not currently implemented, Priority Lanes and Thread Borrowing
+may increase performance as they would help to prevent lower priority
+tasks from exhausting all threads.  This is considered a possible future
+enhancement.
+
+Client Interceptor
+A client interceptor that sends a flag to notify the server interceptor if
+schedule_activity() was used to set the client priority.  If
+schedule_activity() was not used, then the server should probably not try
+and schedule server execution using MPCP.  Doing so adds competition to other
+method calls by other client requests that were scheduled with
+schedule_activity().
+
+References
+The Object Management Group, Real Time CORBA 1.0 Specification, www.omg.org
+Liu, Jane, Real Time Systems, Prentice Hall, 2000
+
+
