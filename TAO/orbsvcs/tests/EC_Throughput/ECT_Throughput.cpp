@@ -86,6 +86,9 @@ ECT_Throughput::run (int argc, char* argv[])
         root_poa->the_POAManager (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
+      poa_manager->activate (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
       if (this->parse_args (argc, argv))
         return 1;
 
@@ -166,6 +169,21 @@ ECT_Throughput::run (int argc, char* argv[])
                       "no real-time features\n"));
         }
 
+#if 1
+      ACE_Config_Scheduler scheduler_impl;
+#else
+#include "ECT_Scheduler_Info.h"
+      ACE_Runtime_Scheduler scheduler_impl (
+        runtime_configs_size,
+        runtime_configs,
+        runtime_infos_size,
+        runtime_infos);
+#endif
+      RtecScheduler::Scheduler_var scheduler =
+        scheduler_impl._this (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+#if 0
       CORBA::Object_var naming_obj =
         this->orb_->resolve_initial_references ("NameService");
       if (CORBA::is_nil (naming_obj.in ()))
@@ -183,21 +201,6 @@ ECT_Throughput::run (int argc, char* argv[])
       schedule_name.length (1);
       schedule_name[0].id = CORBA::string_dup ("ScheduleService");
 
-#if 1
-      ACE_Config_Scheduler scheduler_impl;
-#else
-#include "ECT_Scheduler_Info.h"
-      ACE_Runtime_Scheduler scheduler_impl (
-        runtime_configs_size,
-        runtime_configs,
-        runtime_infos_size,
-        runtime_infos);
-#endif
-      RtecScheduler::Scheduler_var scheduler =
-        scheduler_impl._this (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-#if 0
       CORBA::String_var str =
         this->orb_->object_to_string (scheduler.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
@@ -257,9 +260,6 @@ ECT_Throughput::run (int argc, char* argv[])
 
       RtecEventChannelAdmin::EventChannel_var channel =
         ec_impl->_this (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      poa_manager->activate (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       this->connect_consumers (scheduler.in (), channel.in (), TAO_TRY_ENV);

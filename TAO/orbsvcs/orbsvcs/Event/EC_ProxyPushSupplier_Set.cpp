@@ -67,7 +67,7 @@ template class ACE_Guard<TAO_EC_Busy_Lock_Adapter<TAO_EC_ProxyPushSupplier_Set> 
 template class TAO_EC_Busy_Lock_Adapter<TAO_EC_ProxyPushSupplier_Set>;
 template class TAO_EC_Connected_Command<TAO_EC_ProxyPushSupplier_Set,TAO_EC_ProxyPushSupplier>;
 template class TAO_EC_Disconnected_Command<TAO_EC_ProxyPushSupplier_Set,TAO_EC_ProxyPushSupplier>;
-template class TAO_EC_Shutdown_Command<TAO_EC_ProxyPushSupplier_Set>;
+template class TAO_EC_Shutdown_Command_T<TAO_EC_ProxyPushSupplier_Set>;
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -78,6 +78,6 @@ template class TAO_EC_Shutdown_Command<TAO_EC_ProxyPushSupplier_Set>;
 #pragma instantiate ACE_Guard<TAO_EC_Busy_Lock_Adapter<TAO_EC_ProxyPushSupplier_Set> >
 #pragma instantiate TAO_EC_Connected_Command<TAO_EC_ProxyPushSupplier_Set,TAO_EC_ProxyPushSupplier>
 #pragma instantiate TAO_EC_Disconnected_Command<TAO_EC_ProxyPushSupplier_Set,TAO_EC_ProxyPushSupplier>
-#pragma instantiate TAO_EC_Shutdown_Command<TAO_EC_ProxyPushSupplier_Set>
+#pragma instantiate TAO_EC_Shutdown_Command_T<TAO_EC_ProxyPushSupplier_Set>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -12,6 +12,10 @@ TAO_EC_Default_Factory::TAO_EC_Default_Factory (void)
      consumer_lock_ (TAO_EC_DEFAULT_CONSUMER_LOCK),
      supplier_lock_ (TAO_EC_DEFAULT_SUPPLIER_LOCK),
      consumer_admin_lock_ (TAO_EC_DEFAULT_CONSUMER_ADMIN_LOCK),
-     supplier_admin_lock_ (TAO_EC_DEFAULT_SUPPLIER_ADMIN_LOCK)
+     supplier_admin_lock_ (TAO_EC_DEFAULT_SUPPLIER_ADMIN_LOCK),
+     dispatching_threads_ (1),
+     dispatching_threads_flags_ (THR_NEW_LWP|THR_SCHED_FIFO),
+     dispatching_threads_priority_ (0),
+     dispatching_threads_force_active_ (1)
 {
 }

@@ -114,7 +114,7 @@ private:
 // ****************************************************************
 
 template<class Target>
-class TAO_EC_Shutdown_Command : public ACE_Command_Base
+class TAO_EC_Shutdown_Command_T : public ACE_Command_Base
 {
   // = TITLE
   //   EC_Shutdown_Command
@@ -136,7 +136,7 @@ class TAO_EC_Shutdown_Command : public ACE_Command_Base
   // = TODO
   //
 public:
-  TAO_EC_Shutdown_Command (Target *target);
+  TAO_EC_Shutdown_Command_T (Target *target);
   // constructor...
 
   virtual int execute (void *arg);

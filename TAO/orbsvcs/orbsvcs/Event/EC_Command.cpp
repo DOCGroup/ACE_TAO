@@ -38,7 +38,7 @@ TAO_EC_Disconnected_Command<Target,Object>::execute (void* arg)
 // ****************************************************************
 
 template<class Target> int
-TAO_EC_Shutdown_Command<Target>::execute (void* arg)
+TAO_EC_Shutdown_Command_T<Target>::execute (void* arg)
 {
   CORBA::Environment *env = &TAO_default_environment ();
   if (arg != 0)
