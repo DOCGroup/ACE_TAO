@@ -1583,7 +1583,7 @@ ACE_WIN32_Asynch_Connect::get_handle (void) const
 }
 
 void
-ACE_WIN32_Asynch_Connect::set_handle (ACE_HANDLE handle)
+ACE_WIN32_Asynch_Connect::set_handle (ACE_HANDLE)
 {
   ACE_ASSERT (0) ;
 }
@@ -2031,7 +2031,7 @@ ACE_WIN32_Asynch_Connect::handle_output (ACE_HANDLE fd)
 
 
 int
-ACE_WIN32_Asynch_Connect::handle_close (ACE_HANDLE fd, ACE_Reactor_Mask close_mask) 
+ACE_WIN32_Asynch_Connect::handle_close (ACE_HANDLE fd, ACE_Reactor_Mask)
 {
   ACE_TRACE(ACE_LIB_TEXT ("ACE_WIN32_Asynch_Connect::handle_close\n"));
 
