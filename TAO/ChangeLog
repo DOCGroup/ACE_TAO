@@ -1,3 +1,10 @@
+Wed Apr 28 10:41:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/AMH_Oneway/client.cpp:
+        * tests/AMH_Oneway/server.cpp:
+          Extended this test so that with -n the number of iterations can be
+          passed to client and server.
+
 Wed Apr 28 08:25:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/LocalObject.cpp:
