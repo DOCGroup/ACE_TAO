@@ -56,8 +56,6 @@ public:
 
       // Emitting code for arguments of an operation. No distinction between
       // headers, inlines, stubs.
-      TAO_ARGUMENT_INTERCEPTORS_ARGLIST_CS,     // ... client source
-      TAO_ARGUMENT_INTERCEPTORS_INFO_ARGLIST_CS,    // ... client source
       TAO_ARGUMENT_INTERCEPTORS_ARGLIST_SS,     // ... server source
       TAO_ARGUMENT_INTERCEPTORS_INFO_ARGLIST_SS,    // ... server source
       TAO_ARGUMENT_COLLOCATED_UPCALL_SS,        // passing argument
@@ -136,13 +134,9 @@ public:
       TAO_OBV_OPERATION_ARGLIST_CH,           // parameter list in obv op signature
       TAO_OBV_OPERATION_ARGLIST_CS,           // used only for AMH exceptions
       // ... for client header
-      TAO_OBV_OPERATION_ARGLIST_OBV_CH,       // ... for OBV_ class
       TAO_OBV_OPERATION_ARGLIST_SH,           // ... for server header
       TAO_OBV_OPERATION_ARGLIST_IH,           // ... for implementation header
       TAO_OBV_OPERATION_ARGLIST_IS,           // ... for implementation header
-      TAO_OBV_OPERATION_ARGLIST_OTHERS,          // ... for all other cases
-      TAO_OBV_OPERATION_ARGLIST_IMPL_CH,      // for implementations, e.g. exception holders
-      TAO_OBV_OPERATION_ARGLIST_IMPL_CS,      // for implementations, e.g. exception holders
 
       // AMI next generation states
       TAO_AMI_INTERFACE_CH,

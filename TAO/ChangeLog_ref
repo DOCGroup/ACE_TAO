@@ -1,3 +1,10 @@
+Tue Aug 12 11:14:29 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_valuetype/arglist.cpp:
+        * TAO_IDL/be_include/be_codegen.h:
+
+          Removed a few more unused context states.
+
 Tue Aug 12 10:53:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_argument.cpp:
