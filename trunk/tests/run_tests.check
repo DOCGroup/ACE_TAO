@@ -7,7 +7,7 @@ IFS="|"
 tmp=/tmp
 
 # These patterns must be contained in log file.
-SUCCESS_MSGS="starting|Ending"
+SUCCESS_MSGS="Starting|Ending"
 
 # These patterns should not be contained in log file.
 if [ "$1" != "log/Cached_Accept_Conn_Test.log" ]; then
