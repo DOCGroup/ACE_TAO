@@ -5,19 +5,25 @@
 #include "PTimerDispatcher.h"
 
 // Listing 2 code/ch20
+// The signature of this method changed at ACE 5.4. The 'recurring_timer'
+// parameter was added.
 int 
-UpcallHandler::timeout (PTimerQueue &timer_queue,
+UpcallHandler::timeout (PTimerQueue &,
                         PCB *handler,
                         const void *arg,
-                        const ACE_Time_Value &cur_time)
+                        int /* recurring_timer */,
+                        const ACE_Time_Value &)
 {
   ACE_TRACE (ACE_TEXT ("UpcallHandler::timeout"));
 
   return (*handler).handleEvent (arg);
 }
 
+#if 0
+// This method was removed at ACE 5.4. Replaced by cancel_type() and
+// cancel_timer().
 int
-UpcallHandler::cancellation (PTimerQueue &timer_queue,
+UpcallHandler::cancellation (PTimerQueue &,
                              PCB *handler)
 {
   ACE_TRACE (ACE_TEXT ("UpcallHandler::cancellation"));
@@ -28,12 +34,13 @@ UpcallHandler::cancellation (PTimerQueue &timer_queue,
 
   return handler->handleCancel ();
 }
+#endif /* 0 */
 
 // This method is called when the timer is canceled
 int
-UpcallHandler::deletion (PTimerQueue &timer_queue,
-                         PCB  *handler,
-                         const void *arg)
+UpcallHandler::deletion (PTimerQueue &,
+                         PCB *handler,
+                         const void *)
 {
   ACE_TRACE (ACE_TEXT ("UpcallHandler::deletion"));
 
@@ -44,6 +51,94 @@ UpcallHandler::deletion (PTimerQueue &timer_queue,
   return handler->handleClose ();
 }
 // Listing 2
+
+// *** The rest of the UpcallHandler methods were added for ACE 5.4 ***
+
+// This method is called when a timer is registered.
+int
+UpcallHandler::registration (PTimerQueue &,
+                             PCB *handler,
+                             const void *)
+{
+  ACE_TRACE (ACE_TEXT ("UpcallHandler::registration"));
+
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Handler %d has been registered.\n"),
+              handler->getID ()));
+  return 0;
+}
+
+// This method is called at expiration time, before the actual upcall
+// to the handler is made. ACE uses this to adjust reference counts
+// when needed.
+int
+UpcallHandler::preinvoke (PTimerQueue &,
+                          PCB *handler,
+                          const void *,
+                          int,
+                          const ACE_Time_Value &,
+                          const void *&)
+{
+  ACE_TRACE (ACE_TEXT ("UpcallHandler::preinvoke"));
+
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Handler %d is about to upcalled.\n"),
+              handler->getID ()));
+  return 0;
+}
+
+// This method is called at expiration time, after the actual upcall
+// to the handler returns. ACE uses this to adjust reference counts
+// when needed.
+int
+UpcallHandler::postinvoke (PTimerQueue &,
+                           PCB *handler,
+                           const void *,
+                           int,
+                           const ACE_Time_Value &,
+                           const void *)
+{
+  ACE_TRACE (ACE_TEXT ("UpcallHandler::postinvoke"));
+
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Handler %d returned from upcall.\n"),
+              handler->getID ()));
+  return 0;
+}
+
+// This method is called when a handler is cancelled
+int
+UpcallHandler::cancel_type (PTimerQueue &,
+                            PCB *handler,
+                            int dont_call,
+                            int &)
+{
+  ACE_TRACE (ACE_TEXT ("UpcallHandler::cancel_type"));
+
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Handler %d has been cancelled\n"),
+              handler->getID ()));
+  if (!dont_call)
+    return handler->handleCancel ();
+  return 0;
+}
+
+// This method is called when a timer is cancelled
+int
+UpcallHandler::cancel_timer (PTimerQueue &,
+                             PCB *handler,
+                             int dont_call,
+                             int)
+{
+  ACE_TRACE (ACE_TEXT ("UpcallHandler::cancel_timer"));
+
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Handler %d has been cancelled\n"),
+              handler->getID ()));
+  if (!dont_call)
+    return handler->handleCancel ();
+  return 0;
+}
 
 
 // Listing 3 code/ch20

@@ -55,88 +55,88 @@ void Temperature_Monitor2::reset_device (Name_Binding_Ptr &resetCount)
 
   if (resetCount.get ())
     {
-      number_of_resets = resetCount->int_value() + 1;
+      number_of_resets = resetCount->int_value () + 1;
 
-      if ( number_of_resets > this->opt_.excessive_resets())
+      if (number_of_resets > this->opt_.excessive_resets ())
         {
           EMail notification;
 
           char message[BUFSIZ];
-          ACE_OS::sprintf(message,
-                          "Thermometer: %s\n"
-                          "Reset Count: %d\n",
-                          this->thermometer_->address(),
-                          number_of_resets);
+          ACE_OS::sprintf (message,
+                           "Thermometer: %s\n"
+                           "Reset Count: %d\n",
+                           this->thermometer_->address (),
+                           number_of_resets);
           
-          notification.send(this->opt_.admin_email(),
-                            this->opt_.email_from(),
-                            "Excessive number of thermometer resets",
-                            message);
+          notification.send (this->opt_.admin_email (),
+                             this->opt_.email_from (),
+                             "Excessive number of thermometer resets",
+                             message);
         }
     }
 
-  this->thermometer_->reset();
+  this->thermometer_->reset ();
 
-  this->naming_context_.rebind( "lastReset", (int) ACE_OS::time());
-  this->naming_context_.rebind( "resetCount", number_of_resets );
+  this->naming_context_.rebind ("lastReset", (int)ACE_OS::time ());
+  this->naming_context_.rebind ("resetCount", number_of_resets);
 }
 
-void Temperature_Monitor2::record_failure()
+void Temperature_Monitor2::record_failure (void)
 {
-  Name_Binding_Ptr lastFailure( this->naming_context_.fetch("lastFailure"));
-  Name_Binding_Ptr lastReset( this->naming_context_.fetch("lastReset"));
-  Name_Binding_Ptr resetCount( this->naming_context_.fetch("resetCount"));
+  Name_Binding_Ptr lastFailure (this->naming_context_.fetch ("lastFailure"));
+  Name_Binding_Ptr lastReset (this->naming_context_.fetch ("lastReset"));
+  Name_Binding_Ptr resetCount (this->naming_context_.fetch ("resetCount"));
 
-  int now = ACE_OS::time();
+  int now = ACE_OS::time ();
 
   int lastFailureTime;
-  int lastResetTime;
+  int lastResetTime = 0;
 
-  if ( lastFailure.get())
+  if (lastFailure.get ())
     {
-      lastFailureTime = lastFailure->int_value();
+      lastFailureTime = lastFailure->int_value ();
     }
   else
     {
-      this->naming_context_.rebind( "firstFailure", now );
-      this->naming_context_.rebind( "lastReset", now );
+      this->naming_context_.rebind ("firstFailure", now);
+      this->naming_context_.rebind ("lastReset", now);
       lastFailureTime = now;
       lastResetTime = now;
     }
 
-  if ( lastReset.get())
+  if (lastReset.get ())
     {
-      lastResetTime = lastReset->int_value();
+      lastResetTime = lastReset->int_value ();
     }
 
-  if ( now - lastResetTime > this->opt_.reset_interval())
+  if (now - lastResetTime > this->opt_.reset_interval ())
     {
-      this->reset_device(resetCount);
+      this->reset_device (resetCount);
     }
 
-  this->naming_context_.rebind( "lastFailure", now );
+  this->naming_context_.rebind ("lastFailure", now);
 }
 
-void Temperature_Monitor2::monitor()
+void Temperature_Monitor2::monitor (void)
 {
-  this->thermometer_ = new Thermometer(this->opt_.thermometer_address());
+  this->thermometer_ = new Thermometer (this->opt_.thermometer_address ());
 
   for (;;)
     {
-      float temp = this->thermometer_->temperature();
+      float temp = this->thermometer_->temperature ();
 
-      ACE_DEBUG ((LM_INFO, ACE_TEXT ("Read temperature %.2f\n"), temp ));
+      ACE_DEBUG ((LM_INFO, ACE_TEXT ("Read temperature %.2f\n"), temp));
 
-      if ( temp >= 0)
+      if (temp >= 0)
         {
-          this->record_temperature(temp);
+          this->record_temperature (temp);
         }
       else
         {
-          this->record_failure();
+          this->record_failure ();
         }
 
-      ACE_OS::sleep( this->opt_.poll_interval());
+      ACE_OS::sleep (this->opt_.poll_interval ());
     }
 
   delete this->thermometer_;
