@@ -516,7 +516,7 @@ void TAO::PG_Object_Group::distribute_iogr (ACE_ENV_ARG_DECL)
   CORBA::String_var iogr = this->orb_->object_to_string (this->reference_.in() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  size_t n_rep = 0; // for dump_ior below
+//  size_t n_rep = 0; // for dump_ior below
   for ( MemberMap_Iterator it = this->members_.begin();
     it != this->members_.end();
     ++it)

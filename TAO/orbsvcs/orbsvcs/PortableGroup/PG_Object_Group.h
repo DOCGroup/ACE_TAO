@@ -106,7 +106,7 @@ namespace TAO
      * Private constructor -- use static create method.
      */
   private:
-    TAO::PG_Object_Group::PG_Object_Group (
+    PG_Object_Group (
       CORBA::ORB_ptr orb,
       TAO_IOP::TAO_IOR_Manipulation_ptr iorm,
       CORBA::Object_ptr empty_group,
