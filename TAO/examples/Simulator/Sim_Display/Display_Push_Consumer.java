@@ -21,7 +21,7 @@
 
 // The Consumer has to implement the Skeleton Consumer
 
-public class Display_Push_Consumer extends RtecEventComm._sk_PushConsumer
+public class Display_Push_Consumer extends RtecEventComm._PushConsumerImplBase
 {
   
   public static final int ACE_ES_EVENT_ANY = 0;
@@ -57,10 +57,10 @@ public class Display_Push_Consumer extends RtecEventComm._sk_PushConsumer
   
   public void push (RtecEventComm.Event[] events)
     {
-      if (total_received_ < 5)	  
-	System.out.println ("Demo Consumer: Received an event! ->Number: " + total_received_);
-      else if (total_received_ == 5)
-	System.out.println ("Demo Consumer: Everything is fine. Going to be mute.");
+      //if (total_received_ < 5)	  
+      //	System.out.println ("Demo Consumer: Received an event! ->Number: " + total_received_);
+      //else if (total_received_ == 5)
+      //	System.out.println ("Demo Consumer: Everything is fine. Going to be mute.");
       
       
       if (events.length == 0)
@@ -82,7 +82,7 @@ public class Display_Push_Consumer extends RtecEventComm._sk_PushConsumer
 	      if(events[i].type_ == ACE_ES_EVENT_NOTIFICATION) 
 		{
 		  try
-		    {
+		    {		
 		      if (events[i].data_.any_value.type().equal (NavigationHelper.type()))
 			{
 			    navigation_ = NavigationHelper.extract (events[i].data_.any_value);
@@ -106,9 +106,17 @@ public class Display_Push_Consumer extends RtecEventComm._sk_PushConsumer
 			    display_.update_simulation (Display_Object_Factory.WEAPONS_ENUM, this);			    
 			}
 		      else 
-			{
-			  System.out.println ("TypeCode in the any does not match!");
+			{		     
+			  System.out.println ("Demo Consumer: Received an event! ->Number: " + total_received_);
+			  System.out.println (">>TypeCode in the any does not match!");
+			  System.out.println ("Id: " + events[i].data_.any_value.type().id ());
+			  System.out.println ("Name: " + events[i].data_.any_value.type().name ());
+			  System.out.println ("Kind: " + events[i].data_.any_value.type().kind ());			
 			}		
+		    }
+		  catch (org.omg.CORBA.TypeCodePackage.BadKind e)
+		    {
+		      System.err.println (e);
 		    }
 		  catch(org.omg.CORBA.SystemException e) 
 		    {
