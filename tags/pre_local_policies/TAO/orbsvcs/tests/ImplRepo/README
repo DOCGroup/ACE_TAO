@@ -1,0 +1,10 @@
+$Id$
+
+Here are a few tests for the ImplRepo.  The best way to test is to
+use the run_test.pl passing it either airplane or airplane_ir to
+test out the airplane server.
+
+More information about the Implementation Repository can be found in 
+TAO/docs.
+
+-Darrell Brunsch <brunsch@cs.wustl.edu>
