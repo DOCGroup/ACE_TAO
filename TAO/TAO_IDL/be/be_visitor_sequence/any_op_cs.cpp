@@ -179,7 +179,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       << "else" << be_nl  // decode failed
       << "{" << be_idt_nl
       << "delete ACE_const_cast (" << node->name () 
-      << " *, _tao_elem);" << be_nl
+      << " *&, _tao_elem);" << be_nl
       << "_tao_elem = 0;" << be_uidt_nl
       << "}" << be_uidt_nl
       << "}" << be_uidt_nl

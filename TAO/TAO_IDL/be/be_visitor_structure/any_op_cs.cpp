@@ -174,7 +174,7 @@ be_visitor_structure_any_op_cs::visit_structure (be_structure *node)
       << "else" << be_nl
       << "{" << be_idt_nl
       << "delete ACE_const_cast (" << node->name () 
-      << " *, _tao_elem);" << be_nl
+      << " *&, _tao_elem);" << be_nl
       << "_tao_elem = 0;" << be_uidt_nl
       << "}" << be_uidt_nl
       << "}" << be_uidt_nl
