@@ -14,7 +14,7 @@ endif
 
 SRC = Naming_Server.cpp Naming_Service.cpp
 
-LDLIBS = -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_PortableServer -lTAO
+LDLIBS = -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_PortableServer -lTAO -lACE
 
 BIN2 = Naming_Service
 
@@ -40,8 +40,8 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
 
-#----------------------------------------------------------------------------
-#       Dependencies
+#---------------------------------------------------------------------------v
+:       Dependencies
 #----------------------------------------------------------------------------
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
