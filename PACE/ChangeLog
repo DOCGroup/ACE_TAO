@@ -1,3 +1,27 @@
+Tue Jun 27 14:32:40 2000  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * tests/Makefile (ACELIB):
+          Defining PACE_HAS_INLINE from the Makefile and adding the PACE
+          library if we are not inlining.
+
+        * pace/posix/stdio.inl:
+          Removed function since it's now a macro in the header file.
+
+        * pace/posix/stdio.h:
+          Changed pace_sprintf from a function to a macro because of
+          compilation warnings. Can be changed later.
+
+        * pace/config/compiler.h (PACE_INLINE):
+          Changed definition of PACE_INLINE depending on if PACE_HAS_INLINE
+          is defined.
+
+        * pace/config/features.h:
+          Removed PACE_HAS_INLINE from here since the Makefile now
+          defines it.
+
+        * pace/Makefile:
+          Defining PACE_HAS_INLINE from the Makefile.
+
 Tue Jun 27 11:23:41 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * pace/posix/pthread.{h,inl} (pthread_cleanup_{push,pop}):

@@ -322,17 +322,6 @@ pace_rewind (FILE * stream)
 }
 
 PACE_INLINE
-int
-pace_sprintf (char * buf, const char * format, ... )
-{
-  va_list ap;
-  va_start (ap, format);
-  vsprintf (buf, format, ap);
-  va_end (ap);
-  return 0;
-}
-
-PACE_INLINE
 void
 pace_setbuf (FILE * stream, char * buf)
 {
