@@ -18,7 +18,7 @@
 #define QOS_UTIL_H
 
 #include "ace/INET_Addr.h"
-#include "ace/QoS_Session.h"
+#include "ace/QoS/QoS_Session.h"
 
 class QoS_Util
 {

@@ -20,7 +20,7 @@
 #include "ace/Reactor.h"
 #include "ace/INET_Addr.h"
 #include "ace/Event_Handler.h"
-#include "ace/QoS_Session.h"
+#include "ace/QoS/QoS_Session.h"
 #include "ace/QoS/SOCK_Dgram_Mcast_QoS.h"
 
 ACE_RCSID(Receiver_QoS_Event_Handler, Receiver_QoS_Event_Handler, "$Id$")
