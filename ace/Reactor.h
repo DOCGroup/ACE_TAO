@@ -445,6 +445,9 @@ protected:
   static ACE_Reactor *reactor_;
   // Pointer to a process-wide <ACE_Reactor> singleton.
 
+  static int instantiated_;
+  // Flag indicating whether the singleton reactor has been instantiated or not.
+
   static int delete_reactor_;
   // Must delete the <reactor_> singleton if non-0.
 
