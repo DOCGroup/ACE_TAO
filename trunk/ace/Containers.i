@@ -6,7 +6,7 @@
 template <class T> ACE_INLINE int 
 ACE_Bounded_Stack<T>::is_empty (void) const
 {
-  //  ACE_TRACE ("ACE_Bounded_Stack<T>::is_empty");
+  ACE_TRACE ("ACE_Bounded_Stack<T>::is_empty");
   return this->top_ == 0;
 }
 
@@ -128,7 +128,7 @@ ACE_Fixed_Stack<T, SIZE>::size (void) const
 template <class T> ACE_INLINE int 
 ACE_Unbounded_Stack<T>::is_empty (void) const
 {
-  ACE_TRACE ("ACE_Unbounded_Stack<T>::is_empty");
+  //  ACE_TRACE ("ACE_Unbounded_Stack<T>::is_empty");
   return this->head_ == this->head_->next_;
 }
 
