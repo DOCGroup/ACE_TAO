@@ -1,3 +1,10 @@
+Fri Aug 16 10:25:07 2002  Ossama Othman  <ossama@uci.edu>
+
+	* include/makeinclude/ace_flags.bor:
+
+	  Corrected CosLoadBalancing library related variables.  They
+	  were still setup for use with the old load balancer prototype.
+
 Fri Aug 16 11:15:49 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* examples/Reactor/Proactor/test_aiosig_ace.cpp: Added
