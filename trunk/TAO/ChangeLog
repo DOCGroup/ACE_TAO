@@ -1,3 +1,20 @@
+Thu Jan 20 16:22:42 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_typedef.cpp:
+        * TAO_IDL/be/be_visitor_typedef/typedef_ch.cpp:
+        
+          In code generation for a typedef of an IDL array, added
+          a check for the case where the typedef is in the same
+          scope as the array. In such a case, we now generate the
+          local name for the declaration of the typedef's array
+          memory management functions, if it is declared in a
+          scope that is not global or a module (namespace). An
+          array + array typedef inside an interface (C++ class)
+          for example formerly generated static inline function
+          declarations which, when declared with the fully scoped
+          name inside the C++ class, caused a problem with some
+          compilers.
+
 Thu Jan 20 12:41:38 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tao/Makefile.am:

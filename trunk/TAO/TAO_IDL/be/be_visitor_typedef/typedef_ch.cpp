@@ -219,40 +219,45 @@ be_visitor_typedef_ch::visit_array (be_array *node)
         {
           static_decl = "static ";
         }
+        
+      const char *td_name = tdef->nested_type_name (scope);
+      
+      // If the array and the typedef are both declared inside
+      // an interface or valuetype, for example, nested_type_name()
+      // generates the scoped name, which, for the header file,
+      // causes problems with some compilers. If the array and
+      // the typedef are in different scopes of a reopened
+      // module, nested_type_name() will generate the local
+      // name for each, which is ok.
+      if (tdef->defined_in () == node->defined_in ())
+        {
+          td_name = tdef->local_name ()->get_string ();
+        }
 
       // _alloc
       *os << be_nl
           << "ACE_INLINE " << static_decl << be_nl
-          << tdef->nested_type_name (scope, "_slice") << " *" << be_nl;
-      *os << tdef->nested_type_name (scope, "_alloc") << " (void);"
-          << be_nl;
+          << td_name << "_slice *" << be_nl
+          << td_name << "_alloc (void);" << be_nl;
       // _dup
       *os << be_nl
           << "ACE_INLINE " << static_decl << be_nl
-          << tdef->nested_type_name (scope, "_slice") << " *" << be_nl;
-      *os << tdef->nested_type_name (scope, "_dup")
-          << " (" << be_idt << be_idt_nl
-          << "const ";
-      *os << tdef->nested_type_name (scope, "_slice")
-          << " *_tao_slice" << be_uidt_nl
+          << td_name << "_slice *" << be_nl
+          << td_name << "_dup (" << be_idt << be_idt_nl
+          << "const " << td_name << "_slice *_tao_slice" << be_uidt_nl
           << ");" << be_uidt_nl;
       // _copy
       *os << be_nl
           << "ACE_INLINE " << static_decl << be_nl
-          << "void " << tdef->nested_type_name (scope, "_copy") 
-          << " (" << be_idt << be_idt_nl;
-      *os << tdef->nested_type_name (scope, "_slice")
-          << " *_tao_to," << be_nl << "const ";
-      *os << tdef->nested_type_name (scope, "_slice")
-          << " *_tao_from" << be_uidt_nl
+          << "void " << td_name << "_copy (" << be_idt << be_idt_nl
+          << td_name << "_slice *_tao_to," << be_nl
+          << "const " << td_name << "_slice *_tao_from" << be_uidt_nl
           << ");" << be_uidt_nl;
       // _free
       *os << be_nl
           << "ACE_INLINE " << static_decl << be_nl
-          << "void " << tdef->nested_type_name (scope, "_free")
-          << " (" << be_idt << be_idt_nl;
-      *os << tdef->nested_type_name (scope, "_slice")
-          << " *_tao_slice" << be_uidt_nl
+          << "void " << td_name << "_free (" << be_idt << be_idt_nl
+          << td_name << "_slice *_tao_slice" << be_uidt_nl
           << ");" << be_uidt;
     }
 
