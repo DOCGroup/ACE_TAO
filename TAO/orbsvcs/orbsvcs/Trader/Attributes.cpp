@@ -114,8 +114,12 @@ TAO_Import_Attributes_Impl::def_search_card (void) const
 void
 TAO_Import_Attributes_Impl::def_search_card (CORBA::ULong new_value)
 {
-  ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->trader_.lock ());  
-  this->def_search_card_ = new_value;
+  ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->trader_.lock ());
+
+  if (new_value > this->max_search_card_)
+    this->def_search_card_ = this->max_search_card_;
+  else
+    this->def_search_card_ = new_value;
 }
 
 CORBA::ULong
@@ -128,8 +132,12 @@ TAO_Import_Attributes_Impl::max_search_card (void) const
 void
 TAO_Import_Attributes_Impl::max_search_card (CORBA::ULong new_value)
 {
-  ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->trader_.lock ());  
+  ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->trader_.lock ());
+
   this->max_search_card_ = new_value;
+
+  if (this->def_search_card_ > this->max_search_card_)
+    this->def_search_card_ = this->max_search_card_;
 }
 
 CORBA::ULong
@@ -142,8 +150,12 @@ TAO_Import_Attributes_Impl::def_match_card (void) const
 void
 TAO_Import_Attributes_Impl::def_match_card (CORBA::ULong new_value)
 {
-  ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->trader_.lock ());  
-  this->def_match_card_ = new_value;
+  ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->trader_.lock ());
+
+  if (new_value > this->max_match_card_)
+    this->def_match_card_ = this->max_match_card_;
+  else
+    this->def_match_card_ = new_value;  
 }
 
 CORBA::ULong
@@ -158,6 +170,9 @@ TAO_Import_Attributes_Impl::max_match_card (CORBA::ULong new_value)
 {
   ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->trader_.lock ());  
   this->max_match_card_ = new_value;
+
+  if (this->def_match_card_ > this->max_match_card_)
+    this->def_match_card_ = this->max_match_card_;
 }
 
 CORBA::ULong
@@ -170,8 +185,12 @@ TAO_Import_Attributes_Impl::def_return_card (void) const
 void
 TAO_Import_Attributes_Impl::def_return_card (CORBA::ULong new_value)
 {  
-  ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->trader_.lock ());  
-  this->def_return_card_ = new_value;
+  ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->trader_.lock ());
+
+  if (new_value > this->max_return_card_)
+    this->def_return_card_ = this->max_return_card_;
+  else
+    this->def_return_card_ = new_value;  
 }
 
 CORBA::ULong
@@ -186,6 +205,9 @@ TAO_Import_Attributes_Impl::max_return_card (CORBA::ULong new_value)
 {
   ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->trader_.lock ());  
   this->max_return_card_ = new_value;
+
+  if (this->def_return_card_ > this->max_return_card_)
+    this->def_return_card_ = this->max_return_card_;
 }
 
 CORBA::ULong
@@ -212,8 +234,12 @@ TAO_Import_Attributes_Impl::def_hop_count (void) const
 void
 TAO_Import_Attributes_Impl::def_hop_count (CORBA::ULong new_value)
 {
-  ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->trader_.lock ());  
-  this->def_hop_count_ = new_value;
+  ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->trader_.lock ());
+
+  if (new_value > this->max_hop_count_)
+    this->def_hop_count_ = this->max_hop_count_;
+  else
+    this->def_hop_count_ = new_value;  
 }
 
 CORBA::ULong
@@ -228,6 +254,9 @@ TAO_Import_Attributes_Impl::max_hop_count (CORBA::ULong new_value)
 {
   ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->trader_.lock ());  
   this->max_hop_count_ = new_value;
+
+  if (this->def_hop_count_ > this->max_hop_count_)
+    this->def_hop_count_ = this->max_hop_count_;
 }
 
 CosTrading::FollowOption
@@ -240,8 +269,12 @@ TAO_Import_Attributes_Impl::def_follow_policy (void) const
 void
 TAO_Import_Attributes_Impl::def_follow_policy (FollowOption new_value)
 {
-  ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->trader_.lock ());  
-  this->def_follow_policy_ = new_value;
+  ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->trader_.lock ());
+
+  if (new_value > this->max_follow_policy_)
+    this->def_follow_policy_ = this->max_follow_policy_;
+  else
+    this->def_follow_policy_ = new_value;  
 }
 
 FollowOption
@@ -256,6 +289,9 @@ TAO_Import_Attributes_Impl::max_follow_policy (FollowOption new_value)
 {
   ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->trader_.lock ());  
   this->max_follow_policy_ = new_value;
+
+  if (this->def_follow_policy_ > this->max_follow_policy_)
+    this->def_follow_policy_ = this->max_follow_policy_;
 }
 
 

@@ -42,9 +42,9 @@ TAO_Offer_Iterator::destroy (CORBA::Environment& env)
   TAO_TRY
     {
       PortableServer::POA_var poa = this->_default_POA (TAO_TRY_ENV);
-      TAO_CHECK_ENV_RETURN (env,);
+      TAO_CHECK_ENV;
       PortableServer::ObjectId_var id = poa->servant_to_id (this, TAO_TRY_ENV);
-      TAO_CHECK_ENV_RETURN (env,);
+      TAO_CHECK_ENV;
       
       poa->deactivate_object (id.in (), TAO_TRY_ENV);
     }

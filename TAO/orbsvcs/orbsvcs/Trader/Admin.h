@@ -177,8 +177,14 @@ public:
   static const char* NAME;
   
 private:
-  
+
   TRADER &trader_;
+
+  CosTrading::Admin::OctetSeq stem_id_;
+  // Unique prefix to create a sequence number space.
+  
+  CORBA::ULong sequence_number_;
+  // Current sequence number.
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

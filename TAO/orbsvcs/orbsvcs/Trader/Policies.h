@@ -19,7 +19,8 @@
 
 // STL fun stuff.
 #include <vector>
-#include <deque>
+#include <set>
+#include <string>
 
 #include "Trader_Base.h"
 
@@ -51,7 +52,8 @@ public:
     STARTING_TRADER,
     USE_DYNAMIC_PROPERTIES,
     USE_MODIFIABLE_PROPERTIES,
-    USE_PROXY_OFFERS
+    USE_PROXY_OFFERS,
+    REQUEST_ID
   };
   
   static const char * POLICY_NAMES[];
@@ -190,11 +192,17 @@ public:
   // interface held by the named link, but passing the
   // "starting_trader" policy with the first component removed.
   // END SPEC
+
+  CosTrading::FollowOption link_follow_rule (CORBA::Environment& _env)
+    TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
+  // Determine the link follow policy for this query overall.
   
   CosTrading::FollowOption link_follow_rule (const char* link_name,
 					     CORBA::Environment& _env)
     TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch,
-		    CosTrading::Lookup::InvalidPolicyValue));
+		     CosTrading::Lookup::InvalidPolicyValue));
+  // Determine the link follow policy for a given <link_name>.
+  
   // BEGIN SPEC
   //The "link_follow_rule" policy indicates how the client wishes
   //links to be followed in the resolution of its query. See the
@@ -223,10 +231,13 @@ public:
   // permitted. If it is greater than zero, then it must be
   // decremented before passing on to a federated trader. 
   // END SPEC
+
+  CosTrading::Admin::OctetSeq* request_id (CORBA::Environment& _env)
+    TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
+  // Return the request_id passed to the query method across a link to
+  // another trader. 
   
-  
-  // = Return the limits applied.
-  
+  // = Return the limits applied.  
   CosTrading::PolicyNameSeq* limits_applied (void);
   // BEGIN SPEC
   // If any cardinality or other limits were applied by one or more
@@ -237,10 +248,22 @@ public:
   // concatenated onto the names of limits applied locally and
   // returned. 
   // END SPEC
+
+  CosTrading::PolicySeq* policies_to_forward (void);
+  
+  CosTrading::PolicySeq*
+    policies_to_pass (CosTrading::FollowOption def_pass_on_follow_rule,
+		      CORBA::ULong offers_returned,
+		      CosTrading::Admin_ptr admin_if);
+  // Policies to pass on to the next generation of queries. Decrements 
+  // the hop counter, removes the first link of the starting_trader,
+  // adds a link_follow_rule if none exists, adjusts the return_card,
+  // and adds the stem_id if none exists.
+  
 private:
 
   typedef vector <CosTrading::Policy*> POL_VECTOR;
-  typedef deque <char*> POL_QUEUE;
+  typedef set <string, less<string> > POL_SET;
     
   CORBA::ULong ulong_prop (POLICY_TYPE pol,
 			   CORBA::Environment& _env)
@@ -252,7 +275,7 @@ private:
     TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
   // Reconcile a Boolean property with its debault.
  
-  POL_QUEUE limits_;
+  POL_SET limits_;
   // The policies employed to date.
   
   POL_VECTOR policies_;
