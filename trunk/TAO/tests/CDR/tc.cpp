@@ -95,7 +95,7 @@ main (int argc, char *argv[])
 
       static int n = sizeof (tcs) / sizeof (tcs[0]);
 
-      for (CORBA::TypeCode_ptr *i = tcs;
+      for (const CORBA::TypeCode_ptr *i = tcs;
            i != tcs + n;
            ++i)
 	{
