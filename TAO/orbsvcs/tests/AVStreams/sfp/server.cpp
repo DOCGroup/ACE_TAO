@@ -69,9 +69,9 @@ main (int argc, char **argv)
     return 1;
   
   result = orb_manager.run ();
-  if (result == 0)
-    ACE_DEBUG ((LM_DEBUG,"ORB run timed out\n"));
-  else if (result == -1)
-    ACE_DEBUG ((LM_DEBUG,"ORB run error\n"));
+//   if (result == 0)
+//     ACE_DEBUG ((LM_DEBUG,"ORB run timed out\n"));
+//   else if (result == -1)
+//     ACE_DEBUG ((LM_DEBUG,"ORB run error\n"));
   return 0;
 }
