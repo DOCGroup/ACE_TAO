@@ -35,7 +35,7 @@ class CC_naming_service
   //    This class declares an interface to the naming service for the
   //    concurrency service tests.
 public:
-  CC_naming_service (CORBA::ORB_var orb_);
+  CC_naming_service (CORBA::ORB_var orb_, CORBA::Environment &_env);
   // Default constructor
 
   ~CC_naming_service (void);
