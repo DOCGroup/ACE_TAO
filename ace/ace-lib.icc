@@ -36,6 +36,8 @@ option
                  source type(cpp) "Basic_Types.cpp"
                  source type(cpp) "CDR_Base.cpp"
                  source type(cpp) "CDR_Stream.cpp"
+                 source type(cpp) "Codeset_Registry.cpp"
+                 source type(cpp) "Codeset_Registry_db.cpp"
                  source type(cpp) "Containers.cpp"
                  source type(cpp) "Date_Time.cpp"
                  source type(cpp) "DEV.cpp"

@@ -1,3 +1,13 @@
+Wed Mar  5 07:05:11 2003  Phil Mesnier  <mesnier_p@ociweb.com>
+
+	* ace/ace-dll.icc:
+	* ace/ace-lib.icc:
+	* ace/ace.icc:
+	* ace/ace_dll64.mak:
+	* ace/ace_lib64.mak:
+
+	Added codeset registry files to more makefiles.
+	
 Wed Mar  5 06:32:40 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
 	* ace/Makefile.bor:
