@@ -1,5 +1,14 @@
 Tue Jan 19 16:15:26 1999  David L. Levine  <levine@cs.wustl.edu>
 
+        * OS.i,README,config-cygwin32-common.h,config-linux-common.h,
+          config-psos-diab.h,config-psos-tm.h,config-psosim-g++.h,
+          config-sco-5.0.0-mit-pthread.h,config-sco-5.0.0.h,
+          config-tandem.h: removed removed include of rpc/rpc.h, and
+          ACE_LACKS_RPC_H.  Thanks to Susan Liebeskind
+          <susan.liebeskind@gtri.gatech.edu> for initially suggesting this,
+          and to Russ Noseworthy for reporting another problem (on
+          SunOS 5.6 w/o threads) with it.  ACE doesn't need it.
+
         * bin/g++dep: removed /project/doc/pkg/gnu/bin from PATH so that
           I can run make depend on Linux.
 
