@@ -1,252 +1,262 @@
+Wed Sep 16 22:36:55 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.i
+          ({supplier,consumer}_{name,ipaddr}):  added static
+          casts to CORBA::ULong to avoid signed/unsigned comparisons.
+
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp (consumer_push):
+          added static cast to avoid signed/unsigned comparison.
+          Added ACE_UNUSED_ARG (_env).
+
 1998-09-16  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* examples/Simple/echo/Client_i.h (class Client_i):
-	initialized the use_naimg_service variable to 1.
+        * examples/Simple/echo/Client_i.h (class Client_i):
+        initialized the use_naimg_service variable to 1.
 
-	* examples/Simple/echo/Client_i.cpp:
-	changed the names of the variables needed for the naming_service.
+        * examples/Simple/echo/Client_i.cpp:
+        changed the names of the variables needed for the naming_service.
 
 Wed Sep 16 20:39:14 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp:
-	  Fixed template instantiation problem on IRIX, thanks to
-	  Margherita Vittone Wiersma <vittone@fndaub.fnal.gov> for
-	  reminding me of this.
+        * orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp:
+          Fixed template instantiation problem on IRIX, thanks to
+          Margherita Vittone Wiersma <vittone@fndaub.fnal.gov> for
+          reminding me of this.
 
-	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.h:
-	  Removed TAO_Register<>::find_property() it wasn't defined or
-	  used in any place and it caused problems on IRIX.
+        * orbsvcs/orbsvcs/Trader/Trader_Interfaces.h:
+          Removed TAO_Register<>::find_property() it wasn't defined or
+          used in any place and it caused problems on IRIX.
 
-	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
-	  Use the new ACE_OS::rand_r() interface.
+        * orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
+          Use the new ACE_OS::rand_r() interface.
 
-	* orbsvcs/orbsvcs/Sched/Scheduler.cpp:
-	* orbsvcs/orbsvcs/Sched/DynSched.cpp:
-	  Changed some debug messages so it would be easier to recognize
-	  the source.
+        * orbsvcs/orbsvcs/Sched/Scheduler.cpp:
+        * orbsvcs/orbsvcs/Sched/DynSched.cpp:
+          Changed some debug messages so it would be easier to recognize
+          the source.
 
 Wed Sep 16 20:30:53 1998  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	 * examples/Simple/bank/run_test.pl: Added this script
-	  with proper sleep time between server and client.
+         * examples/Simple/bank/run_test.pl: Added this script
+          with proper sleep time between server and client.
 
 1998-09-16  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* examples/Simple/echo/run_test.pl:
-	modified the script so that it works for the test
-	example with Naming service.
+        * examples/Simple/echo/run_test.pl:
+        modified the script so that it works for the test
+        example with Naming service.
 
 Wed Sep 16 18:47:55 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp (push): Added a cast to
- 	  (const ACE_IO_Vector_Base *) so that aCC can correctly
- 	  disambiguate the send() call.  Thanks to John Mulhern for
- 	  reporting this.
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp (push): Added a cast to
+          (const ACE_IO_Vector_Base *) so that aCC can correctly
+          disambiguate the send() call.  Thanks to John Mulhern for
+          reporting this.
 
 Wed Sep 16 15:25:01 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* performance-tests/Cubit/TAO/MT_Cubit/Globals.h (SCHED_PRIORITY):
-	  Changed the scheduling scheme in the macro to ACE_SCHED_FIFO on
-	  Win32.
+        * performance-tests/Cubit/TAO/MT_Cubit/Globals.h (SCHED_PRIORITY):
+          Changed the scheduling scheme in the macro to ACE_SCHED_FIFO on
+          Win32.
 
 Wed Sep 16 12:21:20 1998  Marina Igorevna Spivak  <marina@mambo.cs.wustl.edu>
 
-	* TAO/orbsvcs/tests/Simple_Naming/run-test.pl
-	  Updated perl script to run all client tests.
+        * TAO/orbsvcs/tests/Simple_Naming/run-test.pl
+          Updated perl script to run all client tests.
 
-	* TAO/orbsvcs/tests/Simple_Naming/client.cpp
-	  Updated Tree_Test to provide output in case a test is successful.
+        * TAO/orbsvcs/tests/Simple_Naming/client.cpp
+          Updated Tree_Test to provide output in case a test is successful.
 
 Wed Sep 16 09:14:16 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Connect.cpp:
-	  Fixed several portability problems, some ACE_thread_t variables
-	  were initialized to 0 instead of ACE_OS::NULL_thread and == was
-	  used to compare them, instead of ACE_OS::thr_equal.
+        * tao/Connect.cpp:
+          Fixed several portability problems, some ACE_thread_t variables
+          were initialized to 0 instead of ACE_OS::NULL_thread and == was
+          used to compare them, instead of ACE_OS::thr_equal.
 
-	* tao/CDR.cpp:
-	  A faster implementation of read_array() for the case were
-	  byteswapping is required. Thanks to "Anders W. Tell"
-	  <anderst@toolsmiths.se> for this patch.
+        * tao/CDR.cpp:
+          A faster implementation of read_array() for the case were
+          byteswapping is required. Thanks to "Anders W. Tell"
+          <anderst@toolsmiths.se> for this patch.
 
 Tue Sep 15 21:37:07 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/IIOP_Object.cpp:
-	  Fixed Sun/CC warning, a local variable named <host> was hiding
-	  the class field with the same name in IIOP::Profile::set()
+        * tao/IIOP_Object.cpp:
+          Fixed Sun/CC warning, a local variable named <host> was hiding
+          the class field with the same name in IIOP::Profile::set()
 
 Tue Sep 15 20:10:37 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* Makefile: Completely revised TAO's directory structure so that
- 	  there are now two new top-level directories: examples and
- 	  performance-tests.  This structure is designed to mimick the
- 	  directory structure in ACE.
+        * Makefile: Completely revised TAO's directory structure so that
+          there are now two new top-level directories: examples and
+          performance-tests.  This structure is designed to mimick the
+          directory structure in ACE.
 
 1998-09-15  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
-	* TAO/tests/Simple/bank : Added the client and server files for this test.
-	/Account_i.cpp
-	/Account_i.h
-	/AccountManager_i.cpp
-	/AccountManager_i.h
-	/Server_i.cpp
-	/Server_i.h
-	/Client_i.cpp
-	/Client_i.h
-	/server.cpp
-	/client.cpp
-	/Bank.idl
+        * TAO/tests/Simple/bank : Added the client and server files for this test.
+        /Account_i.cpp
+        /Account_i.h
+        /AccountManager_i.cpp
+        /AccountManager_i.h
+        /Server_i.cpp
+        /Server_i.h
+        /Client_i.cpp
+        /Client_i.h
+        /server.cpp
+        /client.cpp
+        /Bank.idl
 
 1998-09-15  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* tests/Simple/echo : Checked in the following files.
-	/Client_i.cpp
-	/Client_i.h
-	/Echo_i.cpp
-	/Echo_i.h
-	/Echo.idl
-	/Makefile
-	/Server_i.cpp
-	/Server_i.h
-	/client.cpp
-	/run_test.pl
-	/server.cpp
+        * tests/Simple/echo : Checked in the following files.
+        /Client_i.cpp
+        /Client_i.h
+        /Echo_i.cpp
+        /Echo_i.h
+        /Echo.idl
+        /Makefile
+        /Server_i.cpp
+        /Server_i.h
+        /client.cpp
+        /run_test.pl
+        /server.cpp
 
 Tue Sep 15 18:00:55 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
-	* tests/POA/DSI/README: A few caveats for the users. Nothing major.
+        * tests/POA/DSI/README: A few caveats for the users. Nothing major.
 
-	* tests/POA/DSI/run_test.pl: New test script. Runs the client and
-	  server.
+        * tests/POA/DSI/run_test.pl: New test script. Runs the client and
+          server.
 
-	* tests/POA/DSI/server.cpp: Added a parse_args method and changed
-	  to output the IOR to a file. Added an argument to set the
-	  TAO_debug_level
+        * tests/POA/DSI/server.cpp: Added a parse_args method and changed
+          to output the IOR to a file. Added an argument to set the
+          TAO_debug_level
 
-	* tests/POA/DSI/client.cpp: Altered to get the IOR from a file and
-	  added an argument to set the TAO_debug_level
+        * tests/POA/DSI/client.cpp: Altered to get the IOR from a file and
+          added an argument to set the TAO_debug_level
 
 Tue Sep 15 17:47:07 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
-	* tests/POA/Default_Servant/client.cpp: Added TAO_debug_level
-	  option to the arguments list
+        * tests/POA/Default_Servant/client.cpp: Added TAO_debug_level
+          option to the arguments list
 
 Tue Sep 15 17:07:19 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
-	* tests/POA/Default_Servant/test: Modified the permissions (they
-	  were breaking things). There were _no_ permissions set, so I
-	  added read and write access.
+        * tests/POA/Default_Servant/test: Modified the permissions (they
+          were breaking things). There were _no_ permissions set, so I
+          added read and write access.
 
-	* tests/POA/Default_Servant/run_test.pl: The wonderful new test
-	  script (huzzah!).
+        * tests/POA/Default_Servant/run_test.pl: The wonderful new test
+          script (huzzah!).
 
-	* tests/POA/Default_Servant/server.cpp: Changed the syntax for
-	  writing the IOR to a file to be more in line with the syntax of
-	  the new test scripts.
+        * tests/POA/Default_Servant/server.cpp: Changed the syntax for
+          writing the IOR to a file to be more in line with the syntax of
+          the new test scripts.
 
-	* tests/POA/Default_Servant/client.cpp: Added support for reading
-	  the IOR from a file, a requirement for the new test script.
+        * tests/POA/Default_Servant/client.cpp: Added support for reading
+          the IOR from a file, a requirement for the new test script.
 
 Tue Sep 15 16:23:31 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* tests/Cubit/TAO/MT_Cubit/client.cpp(~Client_i) :
-	  Used delete [] instead of delete for this->low_priority_client_.
+        * tests/Cubit/TAO/MT_Cubit/client.cpp(~Client_i) :
+          Used delete [] instead of delete for this->low_priority_client_.
 
-	* tests/Cubit/TAO/MT_Cubit/Task_Client.cpp (~Task_State):
+        * tests/Cubit/TAO/MT_Cubit/Task_Client.cpp (~Task_State):
           Used delete [] for this->iors_ in place of the wrong delete.
-	  Thanks to David and Sergio for reporting this.
+          Thanks to David and Sergio for reporting this.
 
 Tue Sep 15 15:35:31 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* TAO_IDL/util/utl_global.cpp (IDL_GlobalData): Replaced "\"s with
-	"\\"s.
+        * TAO_IDL/util/utl_global.cpp (IDL_GlobalData): Replaced "\"s with
+        "\\"s.
 
 Tue Sep 15 14:34:04 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/CDR.h:
-	* tao/CDR.i:
-	  Removed the << and >> operators involving the Boolean, Octet,
-	  Char or WChar. The helper classes from_boolean/char/wchar/octet
-	  or to_boolean/char/wchar/octet have to be used.
+        * tao/CDR.h:
+        * tao/CDR.i:
+          Removed the << and >> operators involving the Boolean, Octet,
+          Char or WChar. The helper classes from_boolean/char/wchar/octet
+          or to_boolean/char/wchar/octet have to be used.
 
-	* TAO_IDL/be/be_visitor_field/cdr_op_cs.cpp:
-	  The generated code now uses the from_boolean/char/wchar/octet
-	  helpers for the << operators and the corresponding to_* form
-	  for the >> operators
+        * TAO_IDL/be/be_visitor_field/cdr_op_cs.cpp:
+          The generated code now uses the from_boolean/char/wchar/octet
+          helpers for the << operators and the corresponding to_* form
+          for the >> operators
 
-	* tao/Invocation.cpp:
-	  Use the from_boolean and to_boolean helpers.
+        * tao/Invocation.cpp:
+          Use the from_boolean and to_boolean helpers.
 
-	* TAO_IDL/be/be_visitor_root/cdr_op.cpp:
-	  Cosmetic changes.
+        * TAO_IDL/be/be_visitor_root/cdr_op.cpp:
+          Cosmetic changes.
 
 Tue Sep 15 13:51:36 1998  Marina Igorevna Spivak  <marina@mambo.cs.wustl.edu>
 
-	* TAO/orbsvcs/tests/Simple_Naming/client.cpp :
-	  Added return values to all <execute> methods.
+        * TAO/orbsvcs/tests/Simple_Naming/client.cpp :
+          Added return values to all <execute> methods.
 
 Tue Sep 15 13:10:51 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* TAO_IDL/util/utl_global.cpp (IDL_GlobalData): Replaced "/"s with
-	"\"s while specifying absolute path for gperf on WIN32.
+        * TAO_IDL/util/utl_global.cpp (IDL_GlobalData): Replaced "/"s with
+        "\"s while specifying absolute path for gperf on WIN32.
 
 Tue Sep 15 12:54:22 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* TAO_IDL/driver/drv_args.cpp (DRV_parse_args): Added a new line
-	after the warning.
+        * TAO_IDL/driver/drv_args.cpp (DRV_parse_args): Added a new line
+        after the warning.
 
 Tue Sep 15 10:26:45 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* TAO_IDL/be/be_visitor_array/{cdr_op_ch, cdr_op_cs}.cpp:
+        * TAO_IDL/be/be_visitor_array/{cdr_op_ch, cdr_op_cs}.cpp:
 
-	  The CDR <<, >> operators now use the <array>_forany type as
-	  parameter. This was necessary to distinguish between a
-	  degenerate pointer versus an array. We use the same strategy as
-	  used by the Any <<= and >>= operators.
+          The CDR <<, >> operators now use the <array>_forany type as
+          parameter. This was necessary to distinguish between a
+          degenerate pointer versus an array. We use the same strategy as
+          used by the Any <<= and >>= operators.
 
-	  In addition, for types such as arrays of strings and object
-	  references, the generated implementation for the CDR operators
-	  use the "in" and "inout" types. Special handling is also
-	  necessary for arrays of arrays.
+          In addition, for types such as arrays of strings and object
+          references, the generated implementation for the CDR operators
+          use the "in" and "inout" types. Special handling is also
+          necessary for arrays of arrays.
 
-	* TAO_IDL/be/be_visitor_field/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_field/cdr_op_cs.cpp:
 
-	  Fields that are array types (typedefined or anonymous) must be
-	  passed using their forany types. Special care must be taken to
-	  distinguish between typedefed arrays and anonymous arrays.
+          Fields that are array types (typedefined or anonymous) must be
+          passed using their forany types. Special care must be taken to
+          distinguish between typedefed arrays and anonymous arrays.
 
-	* TAO_IDL/be/be_visitor_root/cdr_op.cpp:
+        * TAO_IDL/be/be_visitor_root/cdr_op.cpp:
 
-	  Reactivated the CDR operator code generation. This was
-	  temporarily commented out.
+          Reactivated the CDR operator code generation. This was
+          temporarily commented out.
 
-	* tao/CDR>{h, i}:
+        * tao/CDR>{h, i}:
 
-	  Added << and >> operators that take the Any's helper classes
-	  like from_boolean, to_boolean and others. This is necessary to
-	  distinguish between these types.
+          Added << and >> operators that take the Any's helper classes
+          like from_boolean, to_boolean and others. This is necessary to
+          distinguish between these types.
 
-	* tao/IIOP_Object.cpp:
+        * tao/IIOP_Object.cpp:
 
-	  There was a local variable called "host" that was hiding the
-	  data member "host". This is now fixed.
+          There was a local variable called "host" that was hiding the
+          data member "host". This is now fixed.
 
 Tue Sep 15 10:11:03 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_root/cdr_op.cpp:
-	  Disabled generation of << and >> operators for InputCDR and
-	  OutputCDR.
+        * TAO_IDL/be/be_visitor_root/cdr_op.cpp:
+          Disabled generation of << and >> operators for InputCDR and
+          OutputCDR.
 
 Tue Sep 15 10:08:05 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* TAO-INSTALL.html (NOTE): Revised adding IDL files into your MSVC
-	  project setion to all IDL generated files should be put into
-	  both client and server projects.
+        * TAO-INSTALL.html (NOTE): Revised adding IDL files into your MSVC
+          project setion to all IDL generated files should be put into
+          both client and server projects.
 
 Tue Sep 15 00:21:39 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp (init): Added new option
- 	  -ORBdotteddecimaladdresses.
+        * tao/ORB_Core.cpp (init): Added new option
+          -ORBdotteddecimaladdresses.
 
 Mon Sep 14 23:41:22 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -254,30 +264,30 @@ Mon Sep 14 23:41:22 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Mon Sep 14 22:23:15 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* orbsvcs/tests/Simple_Naming/client.cpp (class My_Test_Object):
- 	  Added a default value for the My_Test_Object constructor so that
- 	  it compiles properly.  Thanks to Hans Rohnert for reporting
- 	  this.
+        * orbsvcs/tests/Simple_Naming/client.cpp (class My_Test_Object):
+          Added a default value for the My_Test_Object constructor so that
+          it compiles properly.  Thanks to Hans Rohnert for reporting
+          this.
 
 Mon Sep 14 20:44:56 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* docs/compiler.html: Added a section about Operation Lookup Strategy.
+        * docs/compiler.html: Added a section about Operation Lookup Strategy.
 
 Mon Sep 14 20:33:46 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* TAO_IDL/util/utl_global.cpp :
-	* TAO_IDL/driver/drv_args.cpp :
-		Some more robust handling for failure on running
-	<gperf>. Also updated the warning message when failure on
-	running.
+        * TAO_IDL/util/utl_global.cpp :
+        * TAO_IDL/driver/drv_args.cpp :
+                Some more robust handling for failure on running
+        <gperf>. Also updated the warning message when failure on
+        running.
 
-		We try to run the $ACE_ROOT/bin/gperf. If $ACE_ROOT doesnt
-		exist then we try to execute "gperf" hoping that PATH is
-		set correctly. If -g option is used, we use that path to
-		execute gperf. If nothing works, we print the following
-		the note.
-	"TAO_IDL:Note:GPERF could not be executed. Using Dynamich Hashed OpLookup instead of Perfect Hashing\n"
-	"To make use of Perfect Hashing\n"
+                We try to run the $ACE_ROOT/bin/gperf. If $ACE_ROOT doesnt
+                exist then we try to execute "gperf" hoping that PATH is
+                set correctly. If -g option is used, we use that path to
+                execute gperf. If nothing works, we print the following
+                the note.
+        "TAO_IDL:Note:GPERF could not be executed. Using Dynamich Hashed OpLookup instead of Perfect Hashing\n"
+        "To make use of Perfect Hashing\n"
         "\t-Build the <gperf> program at $ACE_ROOT/apps/gperf\n"
         "\t-Set the environment variable $ACE_ROOT appropriately or add $ACE_ROOT/bin to the PATH\n"
         "\t-Refer to Operation Lookup section in the TAO IDL User Guide ($TAO_ROOT/docs/compiler.html) for more details"
@@ -286,24 +296,24 @@ Mon Sep 14 20:33:46 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 Mon Sep 14 17:47:41 1998  Chris Gill <cdgill@cs.wustl.edu>
                           Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.cpp:
-	  Changed ownership of data to 0 in reused any so the
-	  any does not try to delete the data out from under us
+        * orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.cpp:
+          Changed ownership of data to 0 in reused any so the
+          any does not try to delete the data out from under us
 
 Mon Sep 14 17:47:41 1998  Chris Gill <cdgill@cs.wustl.edu>
 
-	* orbsvcs/tests/Simulator/DOVEBrowser/PushConsumer.java:
-	  converted nested struct memberwise initializations into
-	  new calls to nested class ctors.
+        * orbsvcs/tests/Simulator/DOVEBrowser/PushConsumer.java:
+          converted nested struct memberwise initializations into
+          new calls to nested class ctors.
 
 Mon Sep 14 14:33:41 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* TAOACE.dsw: Added gperf to the projects here.
+        * TAOACE.dsw: Added gperf to the projects here.
 
 Mon Sep 14 13:50:25 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* tests/Cubit/TAO/MT_Cubit/client.cpp: Fixed memory problems
-	  reported by purify.
+        * tests/Cubit/TAO/MT_Cubit/client.cpp: Fixed memory problems
+          reported by purify.
 
 Mon Sep 14 11:06:00 1998  David L. Levine  <levine@cs.wustl.edu>
 
