@@ -1,3 +1,8 @@
+Thu Oct 17 21:04:49 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* orbsvcs/orbsvcs/Log/Log_i.cpp: Add missing template instantiation
+	  TAO_Unbounded_Sequence<DsLogAdmin::TimeInterval>.
+
 Thu Oct 17 12:19:32 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/Makefile: 
