@@ -3,6 +3,9 @@
 // Test the persistence capabilities of <ACE_Malloc> when configured
 // for mmap-based shared memory management.
 
+// This examples uses scanf to read user inputs from stdin into fixed
+// sized buffers.  This may cause buffers to overrun.
+
 #include "ace/Malloc.h"
 #include "ace/streams.h"
 
@@ -156,7 +159,7 @@ private:
   int delete_employee (const char *name);
 };
 
-int 
+int
 GUI_Handler::insert_employee (const char *name,
                               u_long id)
 {
@@ -179,7 +182,7 @@ GUI_Handler::insert_employee (const char *name,
   return 0;
 }
 
-int 
+int
 GUI_Handler::find_employee (const char *name)
 {
   void *temp;
@@ -202,7 +205,7 @@ GUI_Handler::find_employee (const char *name)
   return -1;
 }
 
-int 
+int
 GUI_Handler::list_employees (void)
 {
   MALLOC_ITERATOR iterator (*shmem_allocator);
@@ -224,7 +227,7 @@ GUI_Handler::list_employees (void)
   return 0;
 }
 
-int 
+int
 GUI_Handler::delete_employee (const char *name)
 {
   void *temp;
