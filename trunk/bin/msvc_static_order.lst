@@ -64,6 +64,10 @@ TAO/orbsvcs/tests/Event/Mcast/Common/ECMcastTests_lib.dsp
 TAO/orbsvcs/tests/Trading/Trading_Test_Lib.dsp
 TAO/orbsvcs/examples/CosEC/RtEC_Based/lib/CosEC_RtEC_Based_lib.dsp
 TAO/tests/Smart_Proxies/Collocation/Smart_Proxies_Collocation_TestStubsLib.dsp
+TAO/tests/Collocation/Collocation_Test_Stub.dsp
+TAO/examples/POA/Generic_Servant/POA_Generic_Servant_Lib.dsp
 TAO/docs/tutorials/Quoter/idl/Quoter_Idl_Lib.dsp
 TAO/performance-tests/RTCorba/Multiple_Endpoints/Common/RTCORBA_Common.dsp
 tests/Test_Output.dsp
+performance-tests/Synch-Benchmarks/Synch_Lib/Synch_Lib.dsp
+examples/Service_Configurator/Misc/Service_Configurator_Misc_Timer.dsp
