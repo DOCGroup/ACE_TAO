@@ -1,3 +1,14 @@
+Mon Dec 23 21:07:20 2002  Steve Huston  <shuston@riverace.com>
+
+        * bin/MakeProjectCreator/templates/em3vcpdll.mpt: Changed the Debug
+          define from DEBUG to _DEBUG, matching all others, and what the
+          ACE files expect. Fixes mismatch inlines in ACE tests.
+
+        * tests/tests.mpc: Added CE_fostream.cpp to the CDR_File_Test inputs.
+
+        * tests/CE_fostream.{cpp h}: Added #if defined (ACE_HAS_WINCE) to
+          prevent trying to compile this on non-CE systems.
+
 Mon Dec 23 17:26:42 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.h (main): For WinCE, eVC can't grok the #include within the

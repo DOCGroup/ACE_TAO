@@ -2,6 +2,8 @@
 
 #include "CE_fostream.h"
 
+// This is CE only.
+#if defined (ACE_HAS_WINCE)
 
 ACE_CE_fostream* ACE_CE_fostream::instance_ = 0;
 
@@ -143,3 +145,5 @@ ACE_CE_fostream& ACE_CE_fostream::operator << (const void* v)
     fwprintf(ostream_, ACE_TEXT("%d"), v);
     return *this;
 }
+
+#endif /* ACE_HAS_WINCE */
