@@ -59,7 +59,7 @@ namespace TAO
     ::PortableServer::IdUniquenessPolicyValue
     IdUniquenessStrategyUnique::type() const
     {
-      ::PortableServer::UNIQUE_ID;
+      return ::PortableServer::UNIQUE_ID;
     }
 
     ACE_FACTORY_DEFINE (TAO_PortableServer, IdUniquenessStrategyUnique)

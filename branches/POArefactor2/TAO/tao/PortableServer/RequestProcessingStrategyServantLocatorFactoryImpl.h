@@ -23,6 +23,8 @@
 #include "ace/Service_Config.h"
 #include "tao/PortableServer/RequestProcessingStrategyFactory.h"
 
+#if (TAO_HAS_MINIMUM_POA == 0)
+
 namespace TAO
 {
   namespace Portable_Server
@@ -47,6 +49,8 @@ namespace TAO
     ACE_FACTORY_DECLARE (TAO_PortableServer, RequestProcessingStrategyServantLocatorFactoryImpl)
   }
 }
+
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_PORTABLESERVER_REQUESTPROCESSINGSTRATEGYSERVANTLOCATORFACTORYIMPL_H */

@@ -46,7 +46,7 @@ namespace TAO
     ::PortableServer::IdUniquenessPolicyValue
     IdUniquenessStrategyMultiple::type() const
     {
-      ::PortableServer::MULTIPLE_ID;
+      return ::PortableServer::MULTIPLE_ID;
     }
 
     ACE_FACTORY_DEFINE (TAO_PortableServer, IdUniquenessStrategyMultiple)
