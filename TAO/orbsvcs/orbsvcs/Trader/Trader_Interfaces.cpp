@@ -90,8 +90,8 @@ query (const char *type,
   if (link_if != CosTrading::Link::_nil () && trader_name != 0)
     {
       CosTrading::PolicySeq policies_to_forward;
-      policies.copy_to_forward (policies_to_forward, trader_name);
-      this->forward_query (*trader_name,
+      policies.copy_to_forward (policies_to_forward, *trader_name);
+      this->forward_query (ACE_static_cast (const char*, (*trader_name)[0]),
 			   type,
 			   constraint,
 			   preferences,
@@ -197,7 +197,7 @@ query (const char *type,
       
       if (should_follow && links->length () != 0)
         {
-          // Perform the sequence of fedrated queries.
+          // Perform the sequence of federated queries.
           if (request_id == 0)
             {
               CosTrading::Admin_ptr admin_if =
@@ -716,7 +716,7 @@ order_merged_sequence (TAO_Preference_Interpreter& pref_inter,
 
 template <class TRADER, class TRADER_LOCK_TYPE> void
 TAO_Lookup<TRADER,TRADER_LOCK_TYPE>::
-forward_query (const CosTrading::TraderName& trader_name,
+forward_query (const CosTrading::LinkName next_hop,
                const char *type,
                const char *constr,
                const char *pref,
@@ -746,7 +746,7 @@ forward_query (const CosTrading::TraderName& trader_name,
   TAO_TRY
     {  
       CosTrading::Link::LinkInfo_var link_info =
-	link_interface->describe_link (trader_name[0], TAO_TRY_ENV);
+	link_interface->describe_link (next_hop, TAO_TRY_ENV);
       TAO_CHECK_ENV;
       
       CosTrading::Lookup_ptr remote_lookup;      
@@ -760,23 +760,49 @@ forward_query (const CosTrading::TraderName& trader_name,
       remote_lookup = link_info->target;
 #endif /* TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG */
 
+      CORBA::Object_var us = this->_this (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
       
-      // Perform forwarding query.
-      remote_lookup->query (type,
-                            constr,
-                            pref,
-                            policy_seq,
-                            desired_props,
-                            how_many,
-                            offers,
-                            offer_itr,
-                            limits_applied,
-                            _env);
-      TAO_CHECK_ENV_RETURN_VOID (_env);
+      CORBA::Boolean self_loop =
+        remote_lookup->_is_equivalent (us, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      
+      if (! self_loop)
+        {      
+          // Perform forwarding query.
+          remote_lookup->query (type,
+                                constr,
+                                pref,
+                                policy_seq,
+                                desired_props,
+                                how_many,
+                                offers,
+                                offer_itr,
+                                limits_applied,
+                                _env);
+          TAO_CHECK_ENV_RETURN_VOID (_env);
+        }
+      else
+        {
+          this->query (type,
+                       constr,
+                       pref,
+                       policy_seq,
+                       desired_props,
+                       how_many,
+                       offers,
+                       offer_itr,
+                       limits_applied,
+                       _env);
+          TAO_CHECK_ENV_RETURN_VOID (_env);
+        }
     }
   TAO_CATCHANY
     {
-      TAO_THROW (CosTrading::Lookup::InvalidPolicyValue ());
+      CosTrading::Policy policy;
+      policy.name = TAO_Policies::POLICY_NAMES[TAO_Policies::STARTING_TRADER];
+      policy.value <<= next_hop;
+      TAO_THROW (CosTrading::Lookup::InvalidPolicyValue (policy));
     }
   TAO_ENDTRY;
 }
