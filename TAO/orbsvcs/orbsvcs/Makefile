@@ -187,6 +187,9 @@ endif # MKLIST
 ORBSVCS_COMPONENTS:
 	@sh $(ACE_ROOT)/bin/ace_components --orbsvcs --set ' $(TAO_ORBSVCS) '
 
+realclean:
+	-$(RM) ORBSVCS_COMPONENTS.list
+
 #----------------------------------------------------------------------------
 #       Dependencies
 #----------------------------------------------------------------------------
