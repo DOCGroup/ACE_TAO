@@ -22,6 +22,13 @@ main (int argc, char **argv)
 
   ACE_TIMEPROBE_PRINT;
 
+#if defined (VXWORKS)
+  int status;
+  ACE_OS::thr_exit (&status);
+#else  /* ! VXWORKS */
+  // This causes a memPartFree on VxWorks.
+  this->shutdown_server (this->shutdown_);
+#endif /* ! VXWORKS */
+
   return retval;
 }
-
