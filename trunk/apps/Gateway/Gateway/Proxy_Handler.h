@@ -4,7 +4,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//    apps
+//    gateway
 // 
 // = FILENAME
 //    Proxy_Handler.h
@@ -21,6 +21,7 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/Svc_Handler.h"
 #include "Config_Files.h"
+#include "Options.h"
 #include "Event.h"
 
 // Forward declaration.

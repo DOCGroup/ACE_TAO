@@ -4,7 +4,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//    apps
+//    gateway
 // 
 // = FILENAME
 //    Event.h
@@ -18,6 +18,26 @@
 #define EVENT
 
 #include "ace/OS.h"
+
+// Used by Peers to create Consumers in a Gateway.
+#if !defined (DEFAULT_GATEWAY_CONSUMER_PORT)
+#define DEFAULT_GATEWAY_CONSUMER_PORT 10009
+#endif /* DEFAULT_GATEWAY_CONSUMER_PORT */
+
+// Used by Peers create Suppliers in a Gateway.
+#if !defined (DEFAULT_GATEWAY_SUPPLIER_PORT)
+#define DEFAULT_GATEWAY_SUPPLIER_PORT 10010
+#endif /* DEFAULT_GATEWAY_SUPPLIER_PORT */
+
+// Used by a Gateway to create Consumers in a Peer.
+#if !defined (DEFAULT_PEER_CONSUMER_PORT)
+#define DEFAULT_PEER_CONSUMER_PORT 10011
+#endif /* DEFAULT_PEER_CONSUMER_PORT */
+
+// Used by a Gateway to create Suppliers in a Peer.
+#if !defined (DEFAULT_PEER_SUPPLIER_PORT)
+#define DEFAULT_PEER_SUPPLIER_PORT 10012
+#endif /* DEFAULT_PEER_SUPPLIER_PORT */
 
 // This is the unique connection identifier that denotes a particular
 // Proxy_Handler in the Gateway.
