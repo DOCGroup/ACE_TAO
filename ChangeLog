@@ -1,17 +1,26 @@
+Sun May 16 11:31:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-cygwin32.h:
+          Added ACE_HAS_SYSV_IPC and removed defines that where needed for
+          older Cygwin versions. We are still working on getting things working
+          and even with the newest version we still don't have 100% working
+          tests, so we don't bother maintaining stuff for older versions that
+          are really broken
+
 Sat May 15 19:48:00 2004 Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
 	* ace/Sock_Connect.cpp (get_bcast_addr):
-	The loop over interfaces was buggy the same way as previously in mk_broadcast. 
-	Fixed. It seems sa_len is serious portability problem. Shall 
+	The loop over interfaces was buggy the same way as previously in mk_broadcast.
+	Fixed. It seems sa_len is serious portability problem. Shall
 	ACE_HAS_SA_LEN macro be defined and respected?
-	
-	* ace/SOCK_Dgram_Bcast.cpp (mk_broadcast): 
-	FreeBSD also has sockaddr.sa_len, hence the loop over interfaces shall 
+
+	* ace/SOCK_Dgram_Bcast.cpp (mk_broadcast):
+	FreeBSD also has sockaddr.sa_len, hence the loop over interfaces shall
 	work correctly.
 
 Sat May 15 19:48:00 2004 Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
-	* ace/SOCK_Dgram_Bcast.cpp (mk_broadcast): 
+	* ace/SOCK_Dgram_Bcast.cpp (mk_broadcast):
 	ACE_ERROR message modified to print the name of problematic interface.
 
 Sat May 15 19:17:00 2004 Marek Brudka  <mbrudka@elka.pw.edu.pl>
