@@ -1,3 +1,8 @@
+Tue Dec 23 12:42:45 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* docs/tutorials/Quoter/Simple/Impl-Repo/Quoter_Simple_Impl_Repo.mpc:
+	  Removed not existing cpp file in the client part of this MPC file.
+
 Tue Dec 23 11:29:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* Makefile.bor:
