@@ -996,8 +996,8 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
                    AVStreams::noSuchFlow,
                    AVStreams::QoSRequestFailed))
 {
-  this->sep_a_ = sep_a;
-  this->sep_b_ = sep_b;
+  this->sep_a_ = AVStreams::StreamEndPoint_A::_duplicate(sep_a);
+  this->sep_b_ = AVStreams::StreamEndPoint_B::_duplicate(sep_b);
 
   int result = 0;
   ACE_TRY
@@ -1900,6 +1900,7 @@ TAO_StreamEndPoint::start (const AVStreams::flowSpec &flow_spec,
     }
   else
     {
+      ACE_DEBUG ((LM_DEBUG, "It reached here ONE\n"));
       TAO_AV_FlowSpecSetItor end = this->forward_flow_spec_set.end ();
       for (TAO_AV_FlowSpecSetItor forwardbegin = this->forward_flow_spec_set.begin ();
            forwardbegin != end; ++forwardbegin)
@@ -1907,7 +1908,10 @@ TAO_StreamEndPoint::start (const AVStreams::flowSpec &flow_spec,
           TAO_FlowSpec_Entry *entry = *forwardbegin;
           //          entry->protocol_object ()->start ();
           if (entry->handler () != 0)
-            entry->handler ()->start (entry->role ());
+            {
+              entry->handler ()->start (entry->role ());
+              ACE_DEBUG ((LM_DEBUG, "It reached here TWO %s \n", entry->entry_to_string ()));
+            }
         }
       
       end = this->reverse_flow_spec_set.end ();
@@ -1917,7 +1921,11 @@ TAO_StreamEndPoint::start (const AVStreams::flowSpec &flow_spec,
           TAO_FlowSpec_Entry *entry = *reversebegin;
           //          entry->protocol_object ()->start ();
           if (entry->handler () != 0)
-            entry->handler ()->start (entry->role ());
+            {
+              entry->handler ()->start (entry->role ());
+              ACE_DEBUG ((LM_DEBUG, "It reached here THREE %s \n", entry->entry_to_string ()));
+            }
+
         }
 
     }
