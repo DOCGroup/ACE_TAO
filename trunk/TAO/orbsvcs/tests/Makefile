@@ -27,7 +27,6 @@ DIRS = \
   AVStreams \
   Notify \
   Interoperable_Naming \
-  LoadBalancing \
   ior_corbaname \
   tests_svc_loader \
   Security \
