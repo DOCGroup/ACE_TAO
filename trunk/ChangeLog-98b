@@ -1,74 +1,80 @@
+Wed Jun 10 11:05:39 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/make_release: replaced ACE_wrappers-repository/ with
+          ACE_wrappers/ in diffs.  Thanks to James Risinger <jrisinge@cgi.com>
+          for reporting this.
+
 Wed Jun 10 01:31:46 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
 
-	* tests/Tokens_Test.cpp: 
-	Changed how the Borland template instantiations are protected.
+        * tests/Tokens_Test.cpp:
+        Changed how the Borland template instantiations are protected.
 
-	* tests/XtReactor_Test.cpp: 
-	test_config.h must be included before asking for ACE_HAS_XT.
-	Was missing the Borland non-sense.
+        * tests/XtReactor_Test.cpp:
+        test_config.h must be included before asking for ACE_HAS_XT.
+        Was missing the Borland non-sense.
 
-	* tests/UPIPE_SAP_Test.cpp: 
-	Protected the Borland template instantiations.
+        * tests/UPIPE_SAP_Test.cpp:
+        Protected the Borland template instantiations.
 
-	* tests/Timeprobe_Test.cpp: 
-	* tests/Time_Value_Test.cpp: 
-	Added the Borland non-sense.
+        * tests/Timeprobe_Test.cpp:
+        * tests/Time_Value_Test.cpp:
+        Added the Borland non-sense.
 
-	* tests/Reactor_Timer_Test.cpp: 
-	Added a couple of casts to avoid warnings.
+        * tests/Reactor_Timer_Test.cpp:
+        Added a couple of casts to avoid warnings.
 
-	* tests/Priority_Buffer_Test.cpp: 
-	Got rid of a (seemingly) useless piece of code.
+        * tests/Priority_Buffer_Test.cpp:
+        Got rid of a (seemingly) useless piece of code.
 
-	* tests/Naming_Test.cpp: 
-	Modified a test so that it won't give warnings.
+        * tests/Naming_Test.cpp:
+        Modified a test so that it won't give warnings.
 
-	* tests/Conn_Test.cpp: 
-	Was missing the Borland non-sense.
-	Modified an #if-protected section to get rid of a warning.
-	Added a few extra Borland template instantiations.
+        * tests/Conn_Test.cpp:
+        Was missing the Borland non-sense.
+        Modified an #if-protected section to get rid of a warning.
+        Added a few extra Borland template instantiations.
 
-	* ace/WFMO_Reactor.cpp: 
-	* ace/SOCK_Dgram.cpp: 
-	Under Borland, a couple of comparisons were always true (with a
-	warning) because of unsignedness.
+        * ace/WFMO_Reactor.cpp:
+        * ace/SOCK_Dgram.cpp:
+        Under Borland, a couple of comparisons were always true (with a
+        warning) because of unsignedness.
 
-	* ace/Malloc.cpp: 
-	Assigned the consition of an assertion to a temporary variable to
-	avoid a misleading warning.
+        * ace/Malloc.cpp:
+        Assigned the consition of an assertion to a temporary variable to
+        avoid a misleading warning.
 
-	* ace/Get_Opt.cpp: 
-	Added an explicit comparison against 0 to avoid a warning.
+        * ace/Get_Opt.cpp:
+        Added an explicit comparison against 0 to avoid a warning.
 
-	* ace/ACED.cpp: 
-	* ace/ACER.cpp: 
-	These files had been commited with ^M at the end of lines.
+        * ace/ACED.cpp:
+        * ace/ACER.cpp:
+        These files had been commited with ^M at the end of lines.
 
-	* ace/ACE.cpp: 
-	Changed a couple of run time checks for
-	ACE_DIRECTORY_SEPARATOR_CHAR into compile time tests; that got rid
-	of a couple of warnings under BCB3 (Borland C++ Builder 3.0).
+        * ace/ACE.cpp:
+        Changed a couple of run time checks for
+        ACE_DIRECTORY_SEPARATOR_CHAR into compile time tests; that got rid
+        of a couple of warnings under BCB3 (Borland C++ Builder 3.0).
 
-	* ace/ACE.cpp: 
-	* tests/Conn_Test.cpp: 
-	Used ACE_NOTREACHED to avoid further warnings.
+        * ace/ACE.cpp:
+        * tests/Conn_Test.cpp:
+        Used ACE_NOTREACHED to avoid further warnings.
 
-	* ace/OS.h: 
-	Added Borland to the empty definition of ACE_NOTREACHED.
-	The definition of ACE_SEH_FINALLY for the case of Borland C++
-	Builder 3.0 now uses __finally. This allowed most of the tests
-	that were hanging to complete ok. Thanks to David Tallman
-	<tallman@acsys.com> for pointing this out.
+        * ace/OS.h:
+        Added Borland to the empty definition of ACE_NOTREACHED.
+        The definition of ACE_SEH_FINALLY for the case of Borland C++
+        Builder 3.0 now uses __finally. This allowed most of the tests
+        that were hanging to complete ok. Thanks to David Tallman
+        <tallman@acsys.com> for pointing this out.
 
 Tue Jun  9 19:35:26 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/XtReactor: Integrated the new XtReactor, which should now
- 	  work for Windows NT!  Thanks to Kirill Rybaltchenko
- 	  <Kirill.Rybaltchenko@cern.ch> for this.
+        * ace/XtReactor: Integrated the new XtReactor, which should now
+          work for Windows NT!  Thanks to Kirill Rybaltchenko
+          <Kirill.Rybaltchenko@cern.ch> for this.
 
-	* tests: Added the new XtReactor_Test.cpp to test the features of
- 	  the XtReactor.  Thanks to Kirill Rybaltchenko
- 	  <Kirill.Rybaltchenko@cern.ch> for this test.
+        * tests: Added the new XtReactor_Test.cpp to test the features of
+          the XtReactor.  Thanks to Kirill Rybaltchenko
+          <Kirill.Rybaltchenko@cern.ch> for this test.
 
 Tue Jun 09 16:18:54 1998  David L. Levine  <levine@cs.wustl.edu>
 
