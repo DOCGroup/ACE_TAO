@@ -23,6 +23,8 @@
 
 #include "test_config.h"
 #include <ace/Unbounded_Set_Ex.h>
+#include <ace/Auto_Ptr.h>
+#include <ace/SString.h>
 
 ACE_RCSID(tests, Unbounded_Set_Test_Ex, "$Id$")
 
@@ -146,4 +148,24 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_END_TEST;
   return 0;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class ACE_Node<MyNode>;
+template class ACE_Unbounded_Set_Ex<MyNode>;
+template class ACE_Unbounded_Set_Ex_Iterator<MyNode>;
+template class ACE_Unbounded_Set_Ex_Const_Iterator<MyNode>;
+template class ACE_Auto_Basic_Ptr<ACE_CString>;
+template class auto_ptr<ACE_CString>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Node<MyNode>
+#pragma instantiate ACE_Unbounded_Set_Ex<MyNode>
+#pragma instantiate ACE_Unbounded_Set_Ex_Iterator<MyNode>;
+#pragma instantiate ACE_Unbounded_Set_Ex_Const_Iterator<MyNode>;
+#pragma instantiate ACE_Auto_Basic_Ptr<ACE_CString>;
+#pragma instantiate auto_ptr<ACE_CString>;
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

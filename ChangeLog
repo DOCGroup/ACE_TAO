@@ -1,3 +1,9 @@
+Wed Apr  2 11:44:41 CEST 2003  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
+
+	* tests/Unbounded_Set_Test.cpp, tests/Unbounded_Set_Test_Ex.cpp:
+
+	  Add explicit template instantiations.
+
 Tue Apr  1 17:02:37 2003  Steve Huston  <shuston@riverace.com>
 
 	* tests/Process_Strategy_Test.cpp: Nul-terminate received command
