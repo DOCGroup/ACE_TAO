@@ -3,6 +3,7 @@
 #include "Options.h"
 #include "Rwho_DB_Manager.h"
 #include "PM_Server.h"
+#include "ace/ACE.h"
 
 // This is the main method for the server side of things.  It reads
 // the RWHO file on the local machine and inserts HOST_NAME
@@ -18,7 +19,7 @@ PM_Server::process (void)
 
   while (ru.get_next_user (protocol_record) > 0)
     this->insert_protocol_info (protocol_record);
-  
+
   return 1;
 }
 
@@ -70,7 +71,7 @@ PM_Server::handle_protocol_entries (char *buf_ptr,
     }
 
   return buf_ptr;
-}     
+}
 
 PM_Server::PM_Server (void)
 {

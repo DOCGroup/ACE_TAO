@@ -3,10 +3,10 @@
 #include "File_Manager.h"
 
 File_Manager::File_Manager (void)
-  : current_ptr (0),
-    number_of_friends (0),
+  : number_of_friends (0),
     max_key_length (0),
     buffer_ptr (0),
+    current_ptr (0),
     buffer_size (0)
 {
 }
@@ -15,7 +15,7 @@ File_Manager::File_Manager (void)
 // or opens up the password file.  In either case, the number of
 // entries in the file are returned, i.e., number of friends...
 
-int	
+int
 File_Manager::open_file (const char *filename)
 {
   return filename == 0
@@ -32,31 +32,31 @@ File_Manager::get_login_and_real_name (const char *&login_name, const char *&rea
 
   login_name = buf_ptr;
 
-  // Skip to the end of the login name. 
-  
+  // Skip to the end of the login name.
+
   while (isalnum (*buf_ptr))
     buf_ptr++;
-  
+
   *buf_ptr++ = '\0';
-  
+
   // Now skip over white space to *start* of real name!
-  
+
   while (isspace (*buf_ptr) || *buf_ptr == '\0')
     buf_ptr++;
-  
+
   real_name = buf_ptr;
-  
+
   while (*buf_ptr++ != '\n')
     continue;
-  
-  // Clear the trailing blanks and junk. 
-  
+
+  // Clear the trailing blanks and junk.
+
   for (char *tmp_ptr = buf_ptr - 1;
        isspace (*tmp_ptr);
        tmp_ptr--)
     *tmp_ptr = '\0';
-  
-  // Skip over consecutive blank lines. 
+
+  // Skip over consecutive blank lines.
 
   while (*buf_ptr == '\n')
     buf_ptr++;
@@ -74,9 +74,9 @@ File_Manager::open_passwd_file (void)
 
   if (fp == 0)
     return -1;
-  
+
   passwd *pwent;
-  
+
   for (ACE_OS::setpwent ();
        (pwent = ACE_OS::getpwent ()) != 0; )
     if (*pwent->pw_gecos != '\0')
@@ -92,11 +92,11 @@ File_Manager::open_passwd_file (void)
                          pwent->pw_gecos);
 	this->number_of_friends++;
       }
-  
+
   ACE_OS::endpwent ();
-  
+
   ACE_OS::fclose (fp);
-  
+
   if (this->mmap_.map (filename) == -1)
     return -1;
 
@@ -138,7 +138,7 @@ File_Manager::open_friends_file (const char *filename)
         }
       ACE_OS::strcat (directory, filename);
     }
-  
+
   // Do the mmap'ing.
 
   if (this->mmap_.map (pathname) == -1)
@@ -152,8 +152,8 @@ File_Manager::open_friends_file (const char *filename)
       this->current_ptr = this->buffer_ptr;
 
       // Determine how many friends there are by counting the newlines.
-  
-      for (char *cp = this->buffer_ptr + this->buffer_size; 
+
+      for (char *cp = this->buffer_ptr + this->buffer_size;
 	   cp > this->buffer_ptr
 	   ; )
 	if (*--cp == '\n')
@@ -171,3 +171,12 @@ File_Manager::open_friends_file (const char *filename)
   return -1;
 }
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class ACE_Singleton<File_Manager,ACE_Null_Mutex>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Singleton<File_Manager,ACE_Null_Mutex>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

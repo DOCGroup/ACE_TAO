@@ -4,6 +4,7 @@
 #include "Options.h"
 #include "HT_Client.h"
 #include "PMC_Ruser.h"
+#include "ace/ACE.h"
 
 // This function is pretty much a no-op that just sets up the
 // appropriate lookup function to use.
@@ -32,7 +33,7 @@ PMC_Ruser::encode (char *packet, int &packet_length)
 // This method is responsible for transforming the msg from the server
 // back into a form usable by the client.  Note that it reads the
 // REAL_NAME from the packet (since the server placed it there)...
-   
+
 int
 PMC_Ruser::decode (char *packet, int &packet_length)
 {
@@ -91,7 +92,7 @@ PMC_Ruser::insert_protocol_info (Protocol_Record &protocol_record)
 
   return prp;
 }
-  
+
 char *
 PMC_Ruser::handle_protocol_entries (const char *cp,
                                     const char *host_name,
@@ -99,7 +100,7 @@ PMC_Ruser::handle_protocol_entries (const char *cp,
 {
   static Protocol_Record protocol_record (1);
   Drwho_Node *current_node = protocol_record.get_drwho_list ();
-  
+
   protocol_record.set_host (host_name);
   current_node->set_inactive_count (atoi (cp));
   current_node->set_active_count (atoi (cp = ACE_OS::strchr (cp, ' ') + 1));
@@ -135,7 +136,7 @@ PMC_Ruser::process (void)
 	  ACE_DEBUG ((LM_DEBUG,
                       "%s",
                       (np->*get_name) ()));
-	  
+
 	  if (np->get_inactive_count () != 0)
 	    {
 	      if (np->get_active_count () != 0)
@@ -161,7 +162,7 @@ PMC_Ruser::process (void)
             ACE_DEBUG ((LM_DEBUG,
                         ", "));
 	}
-      
+
       ACE_DEBUG ((LM_DEBUG,
                   "\n"));
     }
@@ -170,4 +171,3 @@ PMC_Ruser::process (void)
 PMC_Ruser::PMC_Ruser (void)
 {
 }
-

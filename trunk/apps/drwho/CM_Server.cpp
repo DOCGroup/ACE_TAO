@@ -3,10 +3,11 @@
 #include "global.h"
 #include "Options.h"
 #include "CM_Server.h"
+#include "ace/ACE.h"
 
-// Creates and binds a UDP socket... 
+// Creates and binds a UDP socket...
 
-int 
+int
 CM_Server::open (short port_number)
 {
   int max_packet_size = UDP_PACKET_SIZE;
@@ -15,13 +16,13 @@ CM_Server::open (short port_number)
 
   if (this->sokfd_ < 0)
     return -1;
-  
+
   ACE_OS::memset (&this->sin_, sizeof this->sin_, 0);
   this->sin_.sin_family = AF_INET;
   this->sin_.sin_port = htons (port_number);
   this->sin_.sin_addr.s_addr = INADDR_ANY;
 
-  // This call fails if an rflo daemon is already running. 
+  // This call fails if an rflo daemon is already running.
   if (ACE_OS::bind (this->sokfd_,
                     (sockaddr *) &this->sin_,
                     sizeof this->sin_) < 0)
@@ -40,7 +41,7 @@ CM_Server::open (short port_number)
 int
 CM_Server::receive (int)
 {
-  int sin_len = sizeof this->sin_;
+  size_t sin_len = sizeof this->sin_;
 
   if (Options::get_opt (Options::DEBUG) != 0)
     ACE_DEBUG ((LM_DEBUG, "waiting for client to send...\n"));
@@ -69,7 +70,7 @@ int
 CM_Server::send (void)
 {
   int  packet_length = 0;
-  
+
   if (this->mux (this->send_packet_,
                  packet_length) < 0)
     return -1;

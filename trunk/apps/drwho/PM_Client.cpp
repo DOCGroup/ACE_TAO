@@ -1,7 +1,9 @@
 // $Id$
+
 #include "Options.h"
 #include "PM_Server.h"
 #include "PM_Client.h"
+#include "ace/ACE.h"
 
 // This function is used to merge the LOGIN_NAME from server HOST_NAME
 // into the userids kept on the client's side.  Note that we must
@@ -16,7 +18,7 @@ PM_Client::insert_protocol_info (Protocol_Record &protocol_record)
                                          prp->drwho_list_);
 
   // Update the active and inactive counts.
-  
+
   if (np->get_active_count () < current_node->get_active_count ())
     {
       np->set_active_count (current_node->get_active_count ());
@@ -35,8 +37,8 @@ PM_Client::insert_protocol_info (Protocol_Record &protocol_record)
 void
 PM_Client::process (void)
 {
-  char *(Protocol_Record::*get_name)(void);
-  
+  const char *(Protocol_Record::*get_name)(void);
+
   if (Options::get_opt (Options::PRINT_LOGIN_NAME))
     get_name = &Protocol_Record::get_login;
   else
@@ -47,30 +49,30 @@ PM_Client::process (void)
 
   ACE_DEBUG ((LM_DEBUG,
               "------------------------\n"));
-  
+
   if (Options::get_opt (Options::PRINT_LOGIN_NAME))
     this->max_key_length = MAXUSERIDNAMELEN;
 
   // Goes through the queue of all the logged in friends and prints
   // out the associated information.
-  
+
   for (Protocol_Record *prp = this->Protocol_Manager::get_each_friend ();
        prp != 0;
        prp = this->Protocol_Manager::get_each_friend ())
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "%c%-*s [", (prp->is_active_ != 0 ? '*' : ' '), 
+                  "%c%-*s [", (prp->is_active_ != 0 ? '*' : ' '),
                   this->max_key_length,
                   (prp->*get_name) ()));
-      
+
       for (Drwho_Node *np = prp->get_drwho_list (); ;)
 	{
 	  ACE_DEBUG ((LM_DEBUG,
                       np->get_host_name (),
                       stdout));
-	  
+
 	  active_friends += np->get_active_count ();
-	  
+
 	  if (np->get_inactive_count () != 0)
 	    {
 	      if (np->get_active_count () != 0)
@@ -85,7 +87,7 @@ PM_Client::process (void)
 	  else if (np->get_active_count () == 1)
 	    ACE_DEBUG ((LM_DEBUG,
                         "*"));
-	  
+
           np = np->next_;
 	  if (np == 0)
 	    break;
@@ -93,14 +95,14 @@ PM_Client::process (void)
             ACE_DEBUG ((LM_DEBUG,
                         " "));
 	}
-      
+
       ACE_DEBUG ((LM_DEBUG,
                   "]\n"));
     }
-  
+
   ACE_DEBUG ((LM_DEBUG,
               "------------------------\n"));
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               "friends: %d\tusers: %d\n",
               active_friends,
               users));
@@ -113,15 +115,15 @@ PM_Client::handle_protocol_entries (const char *cp,
 {
   static Protocol_Record protocol_record (1);
   Drwho_Node *current_node = protocol_record.get_drwho_list ();
-  
+
   protocol_record.set_login (login_name);
   protocol_record.set_real (real_name);
   current_node->set_inactive_count (atoi (cp));
   current_node->set_active_count (atoi (cp = ACE_OS::strchr (cp, ' ') + 1));
   current_node->set_host_name (cp = ACE_OS::strchr (cp, ' ') + 1);
-  
+
   this->insert_protocol_info (protocol_record);
-  
+
   return (char *) ACE::strend (cp);
 }
 
@@ -133,4 +135,3 @@ PM_Client::PM_Client (void)
 PM_Client::~PM_Client (void)
 {
 }
-

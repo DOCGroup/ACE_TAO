@@ -134,7 +134,9 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/Log_Record.i \
  SMR_Server.h SM_Server.h PM_Server.h Protocol_Manager.h \
  Search_Struct.h Protocol_Record.h Drwho_Node.h CM_Server.h \
- Comm_Manager.h Select_Manager.h
+ Comm_Manager.h Select_Manager.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i
 
 .obj/Protocol_Manager.o .obj/Protocol_Manager.so .shobj/Protocol_Manager.o .shobj/Protocol_Manager.so: Protocol_Manager.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -366,7 +368,9 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- Single_Lookup.h Search_Struct.h Protocol_Record.h Drwho_Node.h
+ Single_Lookup.h Search_Struct.h Protocol_Record.h Drwho_Node.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i
 
 .obj/SML_Server.o .obj/SML_Server.so .shobj/SML_Server.o .shobj/SML_Server.so: SML_Server.cpp SML_Server.h SM_Server.h PM_Server.h \
  Protocol_Manager.h \
@@ -425,7 +429,9 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  SL_Server.h Single_Lookup.h Search_Struct.h Protocol_Record.h \
- Drwho_Node.h PMS_Usr.h PM_Server.h Protocol_Manager.h
+ Drwho_Node.h PMS_Usr.h PM_Server.h Protocol_Manager.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i
 
 .obj/SL_Server.o .obj/SL_Server.so .shobj/SL_Server.o .shobj/SL_Server.so: SL_Server.cpp global.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -463,7 +469,9 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  BS_Server.h Binary_Search.h Search_Struct.h Protocol_Record.h \
- Drwho_Node.h PMS_Flo.h PM_Server.h Protocol_Manager.h
+ Drwho_Node.h PMS_Flo.h PM_Server.h Protocol_Manager.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i
 
 .obj/PM_Server.o .obj/PM_Server.so .shobj/PM_Server.o .shobj/PM_Server.so: PM_Server.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -485,7 +493,9 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/Dirent.h \
  $(ACE_ROOT)/ace/Dirent.i \
  Protocol_Record.h Drwho_Node.h PM_Server.h Protocol_Manager.h \
- Search_Struct.h
+ Search_Struct.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i
 
 .obj/HT_Server.o .obj/HT_Server.so .shobj/HT_Server.o .shobj/HT_Server.so: HT_Server.cpp HT_Server.h Hash_Table.h Search_Struct.h \
  Protocol_Record.h Drwho_Node.h global.h \
@@ -503,7 +513,9 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i
 
 .obj/BS_Server.o .obj/BS_Server.so .shobj/BS_Server.o .shobj/BS_Server.so: BS_Server.cpp BS_Server.h Binary_Search.h Search_Struct.h \
  Protocol_Record.h Drwho_Node.h global.h \
@@ -540,7 +552,9 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  HT_Server.h Hash_Table.h Search_Struct.h Protocol_Record.h \
- Drwho_Node.h PMS_All.h PM_Server.h Protocol_Manager.h
+ Drwho_Node.h PMS_All.h PM_Server.h Protocol_Manager.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i
 
 .obj/PMS_Ruser.o .obj/PMS_Ruser.so .shobj/PMS_Ruser.o .shobj/PMS_Ruser.so: PMS_Ruser.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -559,7 +573,9 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  HT_Server.h Hash_Table.h Search_Struct.h Protocol_Record.h \
- Drwho_Node.h PMS_Ruser.h PM_Server.h Protocol_Manager.h
+ Drwho_Node.h PMS_Ruser.h PM_Server.h Protocol_Manager.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i
 
 .obj/SMR_Server.o .obj/SMR_Server.so .shobj/SMR_Server.o .shobj/SMR_Server.so: SMR_Server.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -656,7 +672,9 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  PM_Server.h Protocol_Manager.h Search_Struct.h Protocol_Record.h \
- Drwho_Node.h PM_Client.h
+ Drwho_Node.h PM_Client.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i
 
 .obj/HT_Client.o .obj/HT_Client.so .shobj/HT_Client.o .shobj/HT_Client.so: HT_Client.cpp HT_Client.h Hash_Table.h Search_Struct.h \
  Protocol_Record.h Drwho_Node.h global.h \
@@ -674,7 +692,9 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i
 
 .obj/BS_Client.o .obj/BS_Client.so .shobj/BS_Client.o .shobj/BS_Client.so: BS_Client.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -739,7 +759,9 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  Options.h HT_Client.h Hash_Table.h Search_Struct.h Protocol_Record.h \
- Drwho_Node.h PMC_All.h PM_Client.h Protocol_Manager.h
+ Drwho_Node.h PMC_All.h PM_Client.h Protocol_Manager.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i
 
 .obj/PMC_Flo.o .obj/PMC_Flo.so .shobj/PMC_Flo.o .shobj/PMC_Flo.so: PMC_Flo.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -758,7 +780,9 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  BS_Client.h Binary_Search.h Search_Struct.h Protocol_Record.h \
- Drwho_Node.h PMC_Flo.h PM_Client.h Protocol_Manager.h
+ Drwho_Node.h PMC_Flo.h PM_Client.h Protocol_Manager.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i
 
 .obj/PMC_Usr.o .obj/PMC_Usr.so .shobj/PMC_Usr.o .shobj/PMC_Usr.so: PMC_Usr.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -777,7 +801,9 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  SL_Client.h Single_Lookup.h Search_Struct.h Protocol_Record.h \
- Drwho_Node.h PMC_Usr.h PM_Client.h Protocol_Manager.h
+ Drwho_Node.h PMC_Usr.h PM_Client.h Protocol_Manager.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i
 
 .obj/SL_Client.o .obj/SL_Client.so .shobj/SL_Client.o .shobj/SL_Client.so: SL_Client.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -815,7 +841,9 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  Options.h HT_Client.h Hash_Table.h Search_Struct.h Protocol_Record.h \
- Drwho_Node.h PMC_Ruser.h PM_Client.h Protocol_Manager.h
+ Drwho_Node.h PMC_Ruser.h PM_Client.h Protocol_Manager.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i
 
 .obj/SMR_Client.o .obj/SMR_Client.so .shobj/SMR_Client.o .shobj/SMR_Client.so: SMR_Client.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -874,7 +902,9 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- Options.h CM_Server.h Comm_Manager.h
+ Options.h CM_Server.h Comm_Manager.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i
 
 .obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -915,6 +945,8 @@ drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
  $(ACE_ROOT)/ace/Log_Record.i \
  SMR_Server.h SM_Server.h PM_Server.h Protocol_Manager.h \
  Search_Struct.h Protocol_Record.h Drwho_Node.h CM_Server.h \
- Comm_Manager.h Select_Manager.h
+ Comm_Manager.h Select_Manager.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

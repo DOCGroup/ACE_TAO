@@ -4,6 +4,7 @@
 #include "Options.h"
 #include "HT_Client.h"
 #include "PMC_All.h"
+#include "ace/ACE.h"
 
 // This function is pretty much a no-op that just sets up the
 // appropriate lookup function to use.
@@ -30,7 +31,7 @@ PMC_All::encode (char *packet, int &packet_length)
 // This method is responsible for transforming the msg from the server
 // back into a form usable by the client.  Note that it reads the
 // REAL_NAME from the packet (since the server placed it there)...
-   
+
 int
 PMC_All::decode (char *packet, int &packet_length)
 {
@@ -57,12 +58,12 @@ PMC_All::decode (char *packet, int &packet_length)
        *cp != '\n';
        cp++)
     {
-      // Skip over the LOGIN_NAME. 
+      // Skip over the LOGIN_NAME.
 
       char *login_name = cp;
       char *real_name = cp = (char *) ACE::strend (cp);
 
-      for (cp = (char *) ACE::strend (cp); 
+      for (cp = (char *) ACE::strend (cp);
 	   *(cp = this->handle_protocol_entries (cp, login_name, real_name)) != '\t';
            )
 	continue;
@@ -76,13 +77,13 @@ PMC_All::insert_protocol_info (Protocol_Record &protocol_record)
 {
   Protocol_Record *prp = PM_Client::insert_protocol_info (protocol_record);
   int length = ACE_OS::strlen (prp->set_real (ACE::strnew (protocol_record.get_real ())));
-	
+
   if (length > this->max_key_length)
     this->max_key_length = length;
 
   return prp;
 }
-  
+
 void
 PMC_All::process (void)
 {
