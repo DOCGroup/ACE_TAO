@@ -1,3 +1,9 @@
+Thu Feb 08 19:18:36 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* bin/auto_run_tests.lst:
+
+	  Removed comment from Exposed Policies test. The test has been fixed.
+
 Thu Feb  8 14:11:36 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/ws2tcpip.h:  [Removed]
@@ -19,11 +25,11 @@ Thu Feb  8 14:11:36 2001  Darrell Brunsch <brunsch@uci.edu>
         * ace/SOCK_Dgram_Mcast.cpp:
 
           It looks like the change made on:
-          
+
           Fri Jan 26 11:18:15 2001  Douglas C. Schmidt  ...
 
           doesn't work on Win32.  Reverted back to the old scheme for Win32
-          only.  
+          only.
 
 Thu Feb  8 00:34:57 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
@@ -43,13 +49,13 @@ Thu Feb  8 02:09:05 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
 	* examples/QOS/Makefile:
 	* examples/QOS/client.dsp:
 	* examples/QOS/server.dsp:
-	  Modified to use the ACE_QoS lib. 
+	  Modified to use the ACE_QoS lib.
 	* Receiver_QoS_Event_Handler.cpp:
 	* Sender_QoS_Event_Handler.cpp:
 	  Added missing Log_Msg.h for ACE_DEBUG.
 	  Other files were modified to reflect changed directory location
 	  of AQosA imclude files.
-	
+
 Thu Feb  8 00:17:43 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	* ace/QoS_Decorator.cpp:
@@ -63,7 +69,7 @@ Thu Feb  8 00:17:43 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
 	* ace/SOCK_Dgram_Mcast_QoS.i:
 	* ace/QoS_Manager.h:
 	* ace/QoS_Session_Impl.h:
-	* ace/QoS_Session_Impl.i: 
+	* ace/QoS_Session_Impl.i:
 	  Moved the AQoSA classes to ace/QoS directory.
 
 	* ace/Makefile:
@@ -73,11 +79,11 @@ Thu Feb  8 00:17:43 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	* ace/Qos/Makefile
 	* ace/QoS/ACE_QoS.dsw:
-	* ace/QoS/ACE_QoS.dsp:	
+	* ace/QoS/ACE_QoS.dsp:
 	* ace/QoS/ACE_QoS_Lib.dsp:
 	* ace/QoS/ACE_QoS_Export.h:
 	  Added Makefile and MSVC project files.
-	  Thanks to Craig Rodrigues <crodrigu@bbn.com> for suggesting this 
+	  Thanks to Craig Rodrigues <crodrigu@bbn.com> for suggesting this
 	  change and providing the patch.
 
 Wed Feb  7 11:34:56 2001  Carlos O'Ryan  <coryan@uci.edu>
