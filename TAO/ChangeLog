@@ -1,3 +1,9 @@
+Fri Jul 11 16:23:05 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tao\Strategies\DIOP_Acceptor.cpp (close): 
+
+	  Method should return 0.
+
 Fri Jul 11 01:08:41 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	* orbsvcs/orbsvcs/AV/TCP.cpp:
