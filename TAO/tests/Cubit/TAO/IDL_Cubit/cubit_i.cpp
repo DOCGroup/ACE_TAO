@@ -147,12 +147,16 @@ Cubit_i::cube_sequence(const Cubit::vector &input,
 
 // Shutdown.
 
-void Cubit_i::please_exit (CORBA::Environment &env)
+void Cubit_i::shutdown (CORBA::Environment &env)
 {
   // Macro to avoid "warning: unused parameter" type warning.
   ACE_UNUSED_ARG (env);
 
   dmsg ("I've been asked to shut down...");
   TAO_ORB_Core_instance ()->orb ()->shutdown ();
-  dexc (env, "please_exit, shutdown");
+  dexc (env, "shutdown, shutdown");
 }
+
+
+
+
