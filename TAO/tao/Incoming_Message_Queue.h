@@ -120,14 +120,15 @@ private:
 
   friend class TAO_Transport;
 
-#if 0
-  /// Make a node for the queue.
-  TAO_Queued_Data *get_node (void);
-#endif
-
 private:
-  /// A linked listof messages that await processing
-  TAO_Queued_Data *queued_data_;
+  /*!
+    \brief A circular linked list of messages awaiting processing.
+
+    \a last_message_added_ points to the most recent message added to
+    the list.  The earliest addition can be easily accessed via
+    \a last_message_added_->next_.
+   */
+  TAO_Queued_Data *last_added_;
 
   /// The size of the queue
   CORBA::ULong size_;

@@ -555,6 +555,7 @@ public:
   virtual int handle_input_i (TAO_Resume_Handle &rh,
                               ACE_Time_Value *max_wait_time = 0,
                               int block = 0);
+  void try_to_complete (ACE_Time_Value *max_wait_time);
 
 
   enum
@@ -648,56 +649,6 @@ protected:
    * in the Reactor would produce unpredictable results anyway.
    */
   virtual int register_handler_i (void) = 0;
-
-#if 0
-  /// Called by the handle_input_i  (). This method is used to parse
-  /// message read by the handle_input_i () call. It also decides
-  /// whether the message  needs consolidation before processing.
-  int parse_consolidate_messages (ACE_Message_Block &bl,
-                                  TAO_Resume_Handle &rh,
-                                  ACE_Time_Value *time = 0);
-
-
-  /// Method does parsing of the message if we have a fresh message in
-  /// the <message_block> or just returns if we have read part of the
-  /// previously stored message.
-  int parse_incoming_messages (ACE_Message_Block &message_block);
-
-  /// Return if we have any missing data in the queue of messages
-  /// or determine if we have more information left out in the
-  /// presently read message to make it complete.
-  size_t missing_data (ACE_Message_Block &message_block);
-
-  /// Consolidate the currently read message or consolidate the last
-  /// message in the queue. The consolidation of the last message in
-  /// the queue is done by calling consolidate_message_queue ().
-  virtual int consolidate_message (ACE_Message_Block &incoming,
-                                   ssize_t missing_data,
-                                   TAO_Resume_Handle &rh,
-                                   ACE_Time_Value *max_wait_time);
-
-  /// @@Bala: Docu???
-  int consolidate_fragments (TAO_Queued_Data *qd,
-                             TAO_Resume_Handle &rh);
-
-
-
-  /// First consolidate the message queue.  If the message is still not
-  /// complete, try to read from the handle again to make it
-  /// complete. If these dont help put the message back in the queue
-  /// and try to check the queue if we have message to process. (the
-  /// thread  needs to do some work anyway :-))
-  int consolidate_message_queue (ACE_Message_Block &incoming,
-                                 ssize_t missing_data,
-                                 TAO_Resume_Handle &rh,
-                                 ACE_Time_Value *max_wait_time);
-
-  /// Called by parse_consolidate_message () if we have more messages
-  /// in one read. Queue up the messages and try to process one of
-  /// them, atleast at the head of them.
-  int consolidate_extra_messages (ACE_Message_Block &incoming,
-                                  TAO_Resume_Handle &rh);
-#endif
 
   /// Process the message by sending it to the higher layers of the
   /// ORB.

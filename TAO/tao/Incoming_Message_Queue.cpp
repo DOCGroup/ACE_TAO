@@ -12,7 +12,7 @@ ACE_RCSID (tao, Incoming_Message_Queue, "$Id$")
 
 
 TAO_Incoming_Message_Queue::TAO_Incoming_Message_Queue (TAO_ORB_Core *orb_core)
-  : queued_data_ (0),
+  : last_added_ (0),
     size_ (0),
     orb_core_ (orb_core)
 {
@@ -42,21 +42,21 @@ TAO_Incoming_Message_Queue::copy_tail (ACE_Message_Block &block)
     {
       // Check to see if the length of the incoming block is less than
       // that of the <missing_data_> of the tail.
-      if (block.length () <= this->queued_data_->missing_data_bytes_)
+      if (block.length () <= this->last_added_->missing_data_bytes_)
         {
           n = block.length ();
         }
       else
         {
-          n = this->queued_data_->missing_data_bytes_;
+          n = this->last_added_->missing_data_bytes_;
         }
 
       // Do the copy
-      this->queued_data_->msg_block_->copy (block.rd_ptr (),
+      this->last_added_->msg_block_->copy (block.rd_ptr (),
                                             n);
 
       // Decerement the missing data
-      this->queued_data_->missing_data_bytes_ -= n;
+      this->last_added_->missing_data_bytes_ -= n;
     }
 
   return n;
@@ -65,17 +65,20 @@ TAO_Incoming_Message_Queue::copy_tail (ACE_Message_Block &block)
 TAO_Queued_Data *
 TAO_Incoming_Message_Queue::dequeue_head (void)
 {
+  if (this->size_ == 0)
+    return 0;
+
   // Get the node on the head of the queue...
-  TAO_Queued_Data *tmp =
-    this->queued_data_->next_;
+  TAO_Queued_Data *head = this->last_added_->next_;
 
   // Reset the head node..
-  this->queued_data_->next_ = tmp->next_;
+  this->last_added_->next_ = head->next_;
+  
+  // Decrease the size and reset last_added_ if empty
+  if (--this->size_ == 0)
+    this->last_added_ = 0;
 
-  // Decrease the size
-  --this->size_;
-
- return tmp;
+  return head;
 }
 
 TAO_Queued_Data *
@@ -86,23 +89,24 @@ TAO_Incoming_Message_Queue::dequeue_tail (void)
     return 0;
 
   // Get the node on the head of the queue...
-  TAO_Queued_Data *tmp =
-    this->queued_data_->next_;
+  TAO_Queued_Data *head =
+    this->last_added_->next_;
 
-  while (tmp->next_ != this->queued_data_)
+  while (head->next_ != this->last_added_)
     {
-      tmp = tmp->next_;
+      head = head->next_;
     }
 
   // Put the head in tmp.
-  tmp->next_ = this->queued_data_->next_;
+  head->next_ = this->last_added_->next_;
 
-  TAO_Queued_Data *ret_qd = this->queued_data_;
+  TAO_Queued_Data *ret_qd = this->last_added_;
 
-  this->queued_data_ = tmp;
+  this->last_added_ = head;
 
   // Decrease the size
-  --this->size_;
+  if (--this->size_ == 0)
+    this->last_added_ = 0;
 
  return ret_qd;
 }
@@ -113,14 +117,14 @@ TAO_Incoming_Message_Queue::enqueue_tail (TAO_Queued_Data *nd)
 {
   if (this->size_ == 0)
     {
-      this->queued_data_ = nd;
-      this->queued_data_->next_ = this->queued_data_;
+      this->last_added_ = nd;
+      this->last_added_->next_ = this->last_added_;
     }
   else
     {
-      nd->next_ = this->queued_data_->next_;
-      this->queued_data_->next_ = nd;
-      this->queued_data_ = nd;
+      nd->next_ = this->last_added_->next_;
+      this->last_added_->next_ = nd;
+      this->last_added_ = nd;
     }
 
   ++ this->size_;
@@ -226,10 +230,10 @@ clone_mb_nocopy_size (ACE_Message_Block *mb, size_t span_size)
 
   ACE_CDR::mb_align (nb);
 
-  // Do whatever with the flags
+  // Copy the flags over, but be SURE to clear the DONT_DELETE flag, since
+  // we just dynamically allocated the two things.
   nb->set_flags (mb->flags());
-  nb->set_self_flags (mb->self_flags());
-  //  nb->clr_flags (mask);
+  nb->clr_flags (ACE_Message_Block::DONT_DELETE);
 
   return nb;
 }
@@ -270,8 +274,9 @@ TAO_Queued_Data::make_uncompleted_message (ACE_Message_Block *mb,
                                            TAO_Pluggable_Messaging &msging_obj,
                                            ACE_Allocator *alloc)
 {
-  TAO_Queued_Data *new_qd = 0;
-  const size_t HDR_LEN = msging_obj.header_length ();
+  register TAO_Queued_Data *new_qd = 0;
+  register const size_t HDR_LEN = msging_obj.header_length (); /* COMPUTE ONCE! */
+  register const size_t MB_LEN = mb->length (); /* COMPUTE ONCE! */
 
   // Validate arguments.
   if (mb == 0)
@@ -282,7 +287,7 @@ TAO_Queued_Data::make_uncompleted_message (ACE_Message_Block *mb,
     goto failure;
 
   // do we have enough bytes to make a complete header?
-  if (mb->length() >= msging_obj.header_length ())
+  if (MB_LEN >= HDR_LEN)
     {
       // Since we have enough bytes to make a complete header,
       // the header needs to be valid.  Check that now, and punt
@@ -304,7 +309,7 @@ TAO_Queued_Data::make_uncompleted_message (ACE_Message_Block *mb,
           // Of course, we don't have the whole message (if we did, we
           // wouldn't be here!), so we copy only what we've got, i.e., whatever's
           // in the message block.
-          if (copy_mb_span (new_qd->msg_block_, mb, mb->length ()) == 0)
+          if (copy_mb_span (new_qd->msg_block_, mb, MB_LEN) == 0)
             goto failure;
 
           // missing_data_bytes_ now has the full GIOP message size, but
@@ -313,8 +318,8 @@ TAO_Queued_Data::make_uncompleted_message (ACE_Message_Block *mb,
           // payload bytes" in mb.
           //
           // "actual payload bytes" :== length of mb (which included the header) - header length
-          new_qd->missing_data_bytes_ -= (mb->length () - HDR_LEN);
-          mb->rd_ptr (mb->length ());
+          new_qd->missing_data_bytes_ -= (MB_LEN - HDR_LEN);
+          mb->rd_ptr (MB_LEN);
         }
     }
   else
@@ -322,10 +327,10 @@ TAO_Queued_Data::make_uncompleted_message (ACE_Message_Block *mb,
       new_qd->current_state_ = WAITING_TO_COMPLETE_HEADER;
       new_qd->msg_block_ = clone_mb_nocopy_size (mb, HDR_LEN);
       if (new_qd->msg_block_ == 0 ||
-          copy_mb_span (new_qd->msg_block_, mb, mb->length ()) == 0)
+          copy_mb_span (new_qd->msg_block_, mb, MB_LEN) == 0)
         goto failure;
-      new_qd->missing_data_bytes_ = msging_obj.header_length () - mb->length ();
-      mb->rd_ptr (mb->length ());
+      new_qd->missing_data_bytes_ = HDR_LEN - MB_LEN;
+      mb->rd_ptr (MB_LEN);
     }
 
   ACE_ASSERT (new_qd->current_state_ != INVALID);
@@ -359,130 +364,6 @@ failure:
   return 0;
 }
 
-#if 0
-/*!
-  \brief Act like ACE_Message_Block::clone, but only clone the part btw. rd_ptr and wr_ptr.
- */
-// Follow #def's swiped from Message_Block.cpp
-#if defined (ACE_HAS_TIMED_MESSAGE_BLOCKS)
-#define ACE_EXECUTION_TIME this->execution_time_
-#define ACE_DEADLINE_TIME this->deadline_time_
-#else
-#define ACE_EXECUTION_TIME ACE_Time_Value::zero
-#define ACE_DEADLINE_TIME ACE_Time_Value::max_time
-#endif /* ACE_HAS_TIMED_MESSAGE_BLOCKS */
-
-static ACE_Data_Block*
-clone_span_nocopy (/*const*/ ACE_Data_Block *the_db,
-                   const char* beg, size_t span,
-                   ACE_Message_Block::Message_Flags mask = 0)
-{
-  // Allocate a new data block through the same allocator as 'the_db'
-  const ACE_Message_Block::Message_Flags always_clear =
-    ACE_Message_Block::DONT_DELETE;
-
-  ACE_Data_Block *nb;
-  ACE_Allocator *db_allocator = the_db->data_block_allocator ();
-
-  ACE_NEW_MALLOC_RETURN (nb,
-                         ACE_static_cast(ACE_Data_Block*,
-                           db_allocator->malloc (sizeof (ACE_Data_Block))),
-                         ACE_Data_Block (span, // size
-                                         the_db->msg_type (),     // type
-                                         0,               // data
-                                         the_db->allocator_strategy (), // allocator
-                                         the_db->locking_strategy (), // locking strategy
-                                         the_db->flags (),  // flags
-                                         db_allocator),
-                         0);
-
-
-  // Set new flags minus the mask...
-  nb->clr_flags (mask | always_clear);
-  
-  // Copy in the data, and set the pointer
-  //  ACE_OS::memcpy (nb->base (), beg, span);
-
-  return nb;
-}
-
-static ACE_Message_Block*
-clone_span (/*const*/ ACE_Message_Block *the_mb, size_t span_size, ACE_Message_Block::Message_Flags mask = 0)
-{
-  // Get a pointer to a "cloned" <ACE_Data_Block> (will copy the
-  // values rather than increment the reference count).
-  size_t aligned_size = ACE_CDR::first_size (span_size + ACE_CDR::MAX_ALIGNMENT);
-  ACE_Data_Block *db = clone_span_nocopy (the_mb->data_block (), the_mb->rd_ptr (), aligned_size, mask);
-  if (db == 0)
-    return 0;
-
-  ACE_Message_Block *nb;
-
-  if(the_mb->message_block_allocator_ == 0)
-    {
-      ACE_NEW_RETURN (nb,
-                      ACE_Message_Block (0, // size
-                                         ACE_Message_Block::ACE_Message_Type (0), // type
-                                         0, // cont
-                                         0, // data
-                                         0, // allocator
-                                         0, // locking strategy
-                                         0, // flags
-                                         the_mb->priority_, // priority
-                                         ACE_EXECUTION_TIME, // execution time
-                                         ACE_DEADLINE_TIME, // absolute time to deadline
-                                         // Get a pointer to a
-                                         // "duplicated" <ACE_Data_Block>
-                                         // (will simply increment the
-                                         // reference count).
-                                         db,
-                                         db->data_block_allocator (),
-                                         the_mb->message_block_allocator_),
-                      0);
-    }
-  else
-    {
-      // This is the ACE_NEW_MALLOC macro with the return check removed.
-      // We need to do it this way because if it fails we need to release
-      // the cloned data block that was created above.  If we used
-      // ACE_NEW_MALLOC_RETURN, there would be a memory leak because the
-      // above db pointer would be left dangling.
-      nb = ACE_static_cast(ACE_Message_Block*,the_mb->message_block_allocator_->malloc (sizeof (ACE_Message_Block)));
-      if(nb != 0)
-        new (nb) ACE_Message_Block (0, // size
-                                    ACE_Message_Block::ACE_Message_Type (0), // type
-                                    0, // cont
-                                    0, // data
-                                    0, // allocator
-                                    0, // locking strategy
-                                    0, // flags
-                                    the_mb->priority_, // priority
-                                    ACE_EXECUTION_TIME, // execution time
-                                    ACE_DEADLINE_TIME, // absolute time to deadline
-                                    db,
-                                    db->data_block_allocator (),
-                                    the_mb->message_block_allocator_);
-    }
-
-  if (nb == 0)
-    {
-      db->release ();
-      return 0;
-    }
-
-  ACE_CDR::mb_align (nb);
-  nb->copy (the_mb->rd_ptr(), span_size);
-
-  // Clone all the continuation messages if necessary.
-  if (the_mb->cont () != 0
-      && (nb->cont_ = the_mb->cont ()->clone (mask)) == 0)
-    {
-      nb->release ();
-      return 0;
-    }
-  return nb;
-}
-#endif
 
 /*static*/
 TAO_Queued_Data *
@@ -490,18 +371,15 @@ TAO_Queued_Data::make_completed_message (ACE_Message_Block &mb,
                                          TAO_Pluggable_Messaging &msging_obj,
                                          ACE_Allocator *alloc)
 {
-  // THIS IMPLEMENTATION DOESN'T WORK THE SAME AS ITS USAGE!
-  // WE CAN'T JUST ADOPT mb, BECAUSE IT MAY CONTAIN MORE THAN
-  // ONE PROTOCOL MESSAGE.  WE THEREFORE NEED TO CLONE IT.  THIS
-  // MEANS UPDATING THE DOCUMENTATION, AND IT ALSO MEANS THAT IT
-  // BEHAVES DIFFERENTLY FROM make_uncompleted_message.
+  register const size_t HDR_LEN = msging_obj.header_length ();
+  register const size_t MB_LEN  = mb.length ();
 
   // Validate arguments.
-  if (mb.length() < msging_obj.header_length ())
+  if (MB_LEN < HDR_LEN)
     return 0;
 
   size_t total_msg_len = 0;
-  TAO_Queued_Data *new_qd = make_queued_data (alloc);
+  register TAO_Queued_Data *new_qd = make_queued_data (alloc);
   if (new_qd == 0)
     goto failure;
 
@@ -517,8 +395,8 @@ TAO_Queued_Data::make_completed_message (ACE_Message_Block &mb,
   // *at least* the length of the message.  Verify that we have that
   // many bytes in the message block and, if we don't, release the new
   // qd and fail.
-  total_msg_len = new_qd->missing_data_bytes_ + msging_obj.header_length ();
-  if (total_msg_len > mb.length ())
+  total_msg_len = new_qd->missing_data_bytes_ + HDR_LEN;
+  if (total_msg_len > MB_LEN)
     goto failure;
 
   // Make a copy of the relevant portion of mb and hang on to it
@@ -551,10 +429,10 @@ failure:
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) Queued_Data::make_complete_message: ")
                   ACE_TEXT ("failed to find complete message in mblk=%-08x; leaving %u bytes in block\n"),
-                  &mb, mb.length ()));
+                  &mb, MB_LEN));
       if (TAO_debug_level >= 10)
         ACE_HEX_DUMP ((LM_DEBUG,
-                       mb.rd_ptr (), mb.length (),
+                       mb.rd_ptr (), MB_LEN,
                        ACE_TEXT ("                residual bytes in buffer")));
 
     }

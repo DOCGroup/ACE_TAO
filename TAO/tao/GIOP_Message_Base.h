@@ -93,33 +93,6 @@ public:
   /// the message.
   virtual int format_message (TAO_OutputCDR &cdr);
 
-#if 0
-  /// Parse the incoming messages..
-  virtual int parse_incoming_messages (ACE_Message_Block &message_block);
-
-  /// Calculate the amount of data that is missing in the <incoming>
-  /// message block.
-  virtual ssize_t missing_data (ACE_Message_Block &message_block);
-
-  /* Extract the details of the next message from the <incoming>
-   * through <qd>. Returns 1 if there are more messages and returns a
-   * 0 if there are no more messages in <incoming>.
-   */
-  virtual int extract_next_message (ACE_Message_Block &incoming,
-                                    TAO_Queued_Data *&qd);
-
-  /// Check whether the node <qd> needs consolidation from <incoming>
-  virtual int consolidate_node (TAO_Queued_Data *qd,
-                                ACE_Message_Block &incoming);
-
-  /// Get the details of the message parsed through the <qd>.
-  virtual void get_message_data (TAO_Queued_Data *qd);
-
-  /// @@Bala:Docu??
-  virtual int consolidate_fragments (TAO_Queued_Data *dqd,
-                                     const TAO_Queued_Data *sqd);
-#endif
-
   /// Process the request message that we have received on the
   /// connection
   virtual int process_request_message (TAO_Transport *transport,

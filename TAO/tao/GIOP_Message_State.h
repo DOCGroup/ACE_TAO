@@ -47,11 +47,6 @@ public:
 
   int take_values_from_message_block (const ACE_Message_Block& mb);
 
-#if 0
-  /// Parse the message header.
-  int parse_message_header (ACE_Message_Block &incoming);
-#endif
-
   /// Return the message size
   CORBA::ULong message_size (void) const;
 
@@ -83,15 +78,6 @@ private:
 
   friend class TAO_GIOP_Message_Base;
 
-#if 0
-  /// Parse the message header.
-  int parse_message_header_i (ACE_Message_Block &incoming);
-
-  /// Checks for the magic word 'GIOP' in the start of the incoing
-  /// stream
-  int parse_magic_bytes (char *buf);
-#endif
-
   /// Extracts the version information from the incoming
   /// stream. Performs a check for  whether the version information is
   /// right and sets the information in the <state>
@@ -115,11 +101,6 @@ private:
   CORBA::ULong read_ulong (const char *buf);
 
 private:
-
-#if 0
-  /// The GIOP base class..
-  TAO_GIOP_Message_Base *base_;
-#endif
 
   // GIOP version information..
   TAO_GIOP_Message_Version giop_version_;
