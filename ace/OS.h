@@ -5201,9 +5201,12 @@ private:
 };
 
 # if defined (ACE_HAS_WINCE)
+
 //          **** Warning ****
 // You should not use the following functions under CE at all.
+// 
 //          **** Warning ****
+
 size_t fwrite (void *buf, size_t sz, size_t count, FILE *fp);
 size_t fread (void *buf, size_t sz, size_t count, FILE *fp);
 int getc (FILE *fp);
@@ -5216,6 +5219,9 @@ int fprintf (FILE *fp, char *format, const char *msg); // not a general purpose
                                                  // fprintf at all.
 int printf (const char *format, ...);
 int putchar (int c);
+
+//          **** End CE Warning ****
+
 # endif /* ACE_HAS_WINCE */
 
 # if defined (ACE_LACKS_TIMEDWAIT_PROTOTYPES)
