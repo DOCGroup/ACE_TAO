@@ -567,7 +567,6 @@ TAO_Compiled_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_visitor_operation_exceptlist_cs (new_ctx);
 
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_EXCEPTLIST:
-    case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_EXCEPTION_ID:
       return new be_visitor_operation_interceptors_exceptlist (new_ctx);
 
     case TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_SS:
