@@ -1,3 +1,10 @@
+Mon Jul 19 21:11:18 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tests/Dev_Poll_Reactor_Test.cpp:
+
+	  Added missing "ace/OS_NS_netdb.h" include directive.  Addresses
+	  compile-time errors on our Solaris 8 build.
+
 Mon Jul 19 17:40:15 2004  Irfan Pyarali  <irfan@oomworks.com>
 
 	* ace/WFMO_Reactor.cpp (bind_i):

@@ -15,7 +15,7 @@
  *  also said to be "edge triggered," versus "level triggered"
  *  mechanisms such as select().
  *
- *  @author Ossama Othman <ossama@uci.edu>
+ *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 //=============================================================================
 
@@ -40,6 +40,7 @@ ACE_RCSID (tests,
 #include "ace/SOCK_Stream.h"
 
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_netdb.h"
 
 
 typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> SVC_HANDLER;
