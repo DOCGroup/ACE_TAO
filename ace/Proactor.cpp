@@ -120,26 +120,11 @@ ACE_Proactor_Timer_Handler::svc (void)
 
       // Wait for event upto <absolute_time>.
       int result = 0;
-      // #if 0
-      ACE_DEBUG ((LM_DEBUG,
-                  "%N%l:(%t):Waiting %d sec, %d msec time\n",
-                  absolute_time.sec (),
-                  absolute_time.msec ()));
-      // #endif 
       if (empty_flag)
-        {
-          // #if 0
-          ACE_DEBUG ((LM_DEBUG, "%N%l:(%t):Wait for ever\n"));
-          // #endif
-          result = this->timer_event_.wait (0);
-        }
+        result = this->timer_event_.wait (0);
       else
-        {
-          // #if 0
-          ACE_DEBUG ((LM_DEBUG, "%N%l:(%t):wait for time\n"));
-          // #endif
-          result = this->timer_event_.wait (&absolute_time);
-        }
+        result = this->timer_event_.wait (&absolute_time);
+      
       if (result == -1)
         {
           switch (errno)
