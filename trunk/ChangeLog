@@ -1,3 +1,10 @@
+Mon Nov 17 20:34:27 2003  Tao Lu  <lu@dre.vanderbilt.edu>
+
+        * etc/ciao.doxygen:
+        * bin/generate_doxygen.pl:
+        Added doxygen configuration file for ciao.
+
+
 Mon Nov 17 20:12:53 2003  Tao Lu  <lu@dre.vanderbilt.edu>
 
         * etc/tao_ifr.doxygen:
