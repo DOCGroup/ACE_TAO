@@ -102,6 +102,14 @@ ACEXML_Parser::is_nonname (ACEXML_Char c)
     case '?':
     case '>':
     case '<':
+    case ')':
+    case '(':
+    case '+':
+    case '*':
+    case '\'':
+    case '"':
+    case ',':
+    case '|':
       return 1;
     default:
       return 0;
