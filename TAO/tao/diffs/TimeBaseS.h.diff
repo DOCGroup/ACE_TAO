@@ -1,6 +1,6 @@
 --- orig/TimeBaseS.h	Mon Apr  2 10:04:55 2001
-+++ TimeBaseS.h	Mon Apr  2 10:07:13 2001
-@@ -30,29 +30,6 @@
++++ TimeBaseS.h	Mon Apr  2 18:53:35 2001
+@@ -30,42 +30,11 @@
  # pragma once
  #endif /* ACE_LACKS_PRAGMA_ONCE */
  
@@ -30,3 +30,16 @@
  #include "TimeBaseS_T.h"
  
  #if defined (__ACE_INLINE__)
+ #include "TimeBaseS.i"
+ #endif /* defined INLINE */
+-
+-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+-#pragma warning(pop)
+-#endif /* _MSC_VER */
+-
+-#if defined (__BORLANDC__)
+-#pragma option pop
+-#endif /* __BORLANDC__ */
+ 
+ #include "ace/post.h"
+ #endif /* ifndef */
