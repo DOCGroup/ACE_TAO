@@ -998,8 +998,8 @@ threads periodically poll the ORB to find out if they should shutdown.
 This option controls the period of the polling, expressed in
 milliseconds. Applications that do not shutdown, or that can otherwise
 ensure that no server threads will be running at shutdown (for example
-if all the clients terminate before the server) can disable the polling
-using the magic value <code>INFINITE</code>.
+if all the clients terminate before the server) can disable the
+polling using the magic value <code>INFINITE</code>.
         <p>If the option is not provided then the ORB uses the
 compile-time flag <code>TAO_DEFAULT_THREAD_PER_CONNECTION_TIMEOUT</code>,
 this flag also expresses the time in milliseconds (as a string
