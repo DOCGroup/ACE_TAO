@@ -1,7 +1,7 @@
 /*************************************************
  *
  * = PACKAGE
- *    ACE.ASX
+ *    JACE.ASX
  *
  * = FILENAME
  *    Task.java
@@ -9,11 +9,11 @@
  *@author Prashant Jain
  *
  *************************************************/
-package ACE.ASX;
+package JACE.ASX;
 
-import ACE.OS.*;
-import ACE.Reactor.*;
-import ACE.Concurrency.*;
+import JACE.OS.*;
+import JACE.Reactor.*;
+import JACE.Concurrency.*;
 
 public abstract class Task implements Runnable, EventHandler
 {

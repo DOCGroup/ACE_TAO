@@ -12,9 +12,9 @@
 // ============================================================================
 package tests.Reactor;
 
-import ACE.OS.*;
-import ACE.ASX.*;
-import ACE.Reactor.*;
+import JACE.OS.*;
+import JACE.ASX.*;
+import JACE.Reactor.*;
 
 public class TimerQueueTest implements EventHandler
 {

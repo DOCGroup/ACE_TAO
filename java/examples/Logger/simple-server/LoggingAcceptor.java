@@ -1,6 +1,6 @@
 //package ACE.SimpleLogger;
 
-import ACE.SOCK_SAP.*;
+import JACE.SOCK_SAP.*;
 import java.io.IOException;
 
 public class LoggingAcceptor extends Thread

@@ -1,7 +1,7 @@
 /*************************************************
  *
  * = PACKAGE
- *    ACE.Connection
+ *    JACE.Connection
  *
  * = FILENAME
  *    StrategyAcceptor.java
@@ -9,12 +9,12 @@
  *@author Prashant Jain
  *
  *************************************************/
-package ACE.Connection;
+package JACE.Connection;
 
 import java.io.*;
 import java.net.*;
-import ACE.OS.*;
-import ACE.SOCK_SAP.*;
+import JACE.OS.*;
+import JACE.SOCK_SAP.*;
 
 public class StrategyAcceptor
 {

@@ -1,7 +1,7 @@
 /*************************************************
  *
  * = PACKAGE
- *    ACE.Concurrency
+ *    JACE.Concurrency
  *
  * = FILENAME
  *    Mutex.java
@@ -9,10 +9,10 @@
  *@author Prashant Jain
  *
  *************************************************/
-package ACE.Concurrency;
+package JACE.Concurrency;
 
 import java.util.*;
-import ACE.ASX.*;
+import JACE.ASX.*;
 
 class TimedWaitMAdapter extends TimedWait
 {

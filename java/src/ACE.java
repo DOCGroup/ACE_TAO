@@ -1,15 +1,15 @@
 /*************************************************
  *
  * = PACKAGE
- *    ACE.OS
+ *    JACE.OS
  *
  * = FILENAME
- *    ACE.java
+ *    JACE.java
  *
  *@author Prashant Jain
  *
  *************************************************/
-package ACE.OS;
+package JACE.OS;
 
 /**
  * <hr>

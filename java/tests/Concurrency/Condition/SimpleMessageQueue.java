@@ -1,8 +1,8 @@
 package tests.Concurrency.Condition;
 
-import ACE.ASX.TimeoutException;
-import ACE.ASX.TimeValue;
-import ACE.Concurrency.*;
+import JACE.ASX.TimeoutException;
+import JACE.ASX.TimeValue;
+import JACE.Concurrency.*;
 
 public class SimpleMessageQueue
 {

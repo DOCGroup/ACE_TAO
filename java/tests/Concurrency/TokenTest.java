@@ -12,8 +12,8 @@
 package tests.Concurrency;
 
 import java.io.*;
-import ACE.OS.*;
-import ACE.Concurrency.*;
+import JACE.OS.*;
+import JACE.Concurrency.*;
 
 class MyToken extends Token
 {
@@ -35,7 +35,7 @@ public class TokenTest implements Runnable
 	ACE.DEBUG (Thread.currentThread () + " acquired token");
 	Thread.sleep (100);
 
-	this.token_.renew (0);
+	this.token_.renew (1);
 
 	this.token_.release ();
 	ACE.DEBUG (Thread.currentThread () + " released token");

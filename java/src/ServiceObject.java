@@ -1,7 +1,7 @@
 /*************************************************
  *
  * = PACKAGE
- *    ACE.ServiceConfigurator
+ *    JACE.ServiceConfigurator
  *
  * = FILENAME
  *    ServiceObject.java
@@ -9,11 +9,11 @@
  *@author Prashant Jain
  *
  *************************************************/
-package ACE.ServiceConfigurator;
+package JACE.ServiceConfigurator;
 
 import java.io.*;
-import ACE.ASX.*;
-import ACE.Reactor.*;
+import JACE.ASX.*;
+import JACE.Reactor.*;
 
 public class ServiceObject implements EventHandler
 {

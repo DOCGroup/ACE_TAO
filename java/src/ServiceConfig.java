@@ -1,7 +1,7 @@
 /*************************************************
  *
  * = PACKAGE
- *    ACE.ServiceConfigurator
+ *    JACE.ServiceConfigurator
  *
  * = FILENAME
  *    ServiceConfig.java
@@ -9,12 +9,12 @@
  *@author Prashant Jain
  *
  *************************************************/
-package ACE.ServiceConfigurator;
+package JACE.ServiceConfigurator;
 
 import java.io.*;
 import java.net.*;
-import ACE.OS.*;
-import ACE.Misc.*;
+import JACE.OS.*;
+import JACE.Misc.*;
 
 /**
  * <hr>

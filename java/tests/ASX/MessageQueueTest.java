@@ -13,8 +13,8 @@
 package tests.ASX;
 
 import java.io.*;
-import ACE.OS.*;
-import ACE.ASX.*;
+import JACE.OS.*;
+import JACE.ASX.*;
 
 public class MessageQueueTest
 {

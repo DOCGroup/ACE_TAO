@@ -1,7 +1,7 @@
 /*************************************************
  *
  * = PACKAGE
- *    ACE.Connection
+ *    JACE.Connection
  *
  * = FILENAME
  *    SvcHandler.java
@@ -9,13 +9,13 @@
  *@author Prashant Jain
  *
  *************************************************/
-package ACE.Connection;
+package JACE.Connection;
 
 import java.io.*;
 import java.net.*;
-import ACE.SOCK_SAP.*;
-import ACE.ASX.*;
-import ACE.Reactor.*;
+import JACE.SOCK_SAP.*;
+import JACE.ASX.*;
+import JACE.Reactor.*;
 
 public abstract class SvcHandler extends Task
 {

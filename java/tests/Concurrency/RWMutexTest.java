@@ -11,8 +11,8 @@
  *************************************************/
 package tests.Concurrency;
 
-import ACE.OS.*;
-import ACE.Concurrency.*;
+import JACE.OS.*;
+import JACE.Concurrency.*;
 
 class TestThread extends Thread
 {
