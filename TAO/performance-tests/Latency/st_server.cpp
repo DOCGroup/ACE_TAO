@@ -120,6 +120,9 @@ main (int argc, char *argv[])
       orb->run ();
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
+
+      orb->destroy (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
