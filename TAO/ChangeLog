@@ -1,3 +1,10 @@
+Fri Jan  2 12:39:15 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Makefile.av:
+
+	  Updated dependancies. Moved a 'C' source to the CPP source list
+	  since it was decided to rname a C file as a CPP file.
+
 Fri Jan  2 11:56:04 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * orbsvcs/tests/LoadBalancing/GenericFactory/Makefile:
