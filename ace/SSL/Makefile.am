@@ -13,6 +13,9 @@ AM_CPPFLAGS = -I$(top_builddir) -I$(top_srcdir) @ACE_TLS_CPPFLAGS@
 lib_LTLIBRARIES = libACE_SSL.la
 libACE_SSL_la_LIBADD = $(top_builddir)/ace/libACE.la @ACE_TLS_LIBS@
 
+## ACE_SSL library version is same as ACE's version.
+libACE_SSL_la_LDFLAGS = -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
+
 libACE_SSL_la_SOURCES = \
   SSL_Asynch_BIO.cpp \
   SSL_Asynch_Stream.cpp \
