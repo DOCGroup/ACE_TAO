@@ -1,3 +1,6 @@
+#
+# $Id$
+#
 # Makefile for building the Kokyu library with Borland C++ Builder
 
 NAME = Kokyu

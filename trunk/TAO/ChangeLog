@@ -1,3 +1,8 @@
+Sun Dec 21 09:43:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* TAO_IDL/be/be_global.cpp:
+	  Removed not needed ; to fix Tru64 compiler warning
+
 Sat Dec 20 23:08:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/Security/Crash_Test/server.ior:
