@@ -1,5 +1,14 @@
 Fri Sep 12 12:53:20 1997  David L. Levine  <levine@cs.wustl.edu>
 
+	* ace/config-osf1-4.0.h: added
+	  ACE_HAS_BROKEN_EXPLICIT_TEMPLATE_DESTRUCTOR.
+
+	* ace/Managed_Object.cpp: added #include "ace/Synch.h".
+
+	* ace/Strategies_T.cpp: added #include "ace/Service_Types.h".
+
+	Thanks to James Johnson for the three fixes above.
+
 	* ace/Service_Types.cpp: #include Service_Types.i instead of
 	  Service_Record.i.
 
