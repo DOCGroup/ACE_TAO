@@ -1,3 +1,9 @@
+Fri Nov  5 14:53:23 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
+
+	* tao/ORB.h (CORBA_ORB): Clarified that the timeout values for
+	  the ORB::run() method are "relative", rather than "absolute".
+	  Thanks to Rob Gabbot <rgabbot@sandia.gov> for motivating this.
+
 Thu Nov  4 09:10:58 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tao/Active_Object_Map.h: Added TAO_Export to

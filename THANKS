@@ -815,6 +815,7 @@ Paulo Breda Vieira <breda@inesca.pt>
 Samuel Stickland <sps196@hotmail.com>
 Bryan Van de Ven <bryanv@arlut.utexas.edu>
 Greg Siebers <gsiebers@vignette.com>
+Rob Gabbot <rgabbot@sandia.gov>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that

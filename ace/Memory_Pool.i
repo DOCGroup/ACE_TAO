@@ -210,13 +210,13 @@ ACE_Pagefile_Memory_Pool::round_to_page_size (size_t nbytes)
 }
 
 ACE_INLINE int
-ACE_Pagefile_Memory_Pool::sync (ssize_t, int_SYNC) 
+ACE_Pagefile_Memory_Pool::sync (ssize_t, int) 
 { 
   return 0; 
 }
 
 ACE_INLINE int 
-ACE_Pagefile_Memory_Pool::sync (void *, size_t, int_SYNC) 
+ACE_Pagefile_Memory_Pool::sync (void *, size_t, int)
 { 
   return 0; 
 }
