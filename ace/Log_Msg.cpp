@@ -239,8 +239,9 @@ ACE_Log_Msg::instance (void)
 #else
   // We don't have threads, we cannot call
   // ACE_Log_Msg_Manager::get_lock() to initialize the message queue,
-  // we do it here.
-  ACE_NEW_RETURN (ACE_Log_Msg_message_queue, ACE_LOG_MSG_IPC_STREAM, 0);
+  // so instead we do it here.
+  if (ACE_Log_Msg_message_queue == 0)
+    ACE_NEW_RETURN (ACE_Log_Msg_message_queue, ACE_LOG_MSG_IPC_STREAM, 0);
 
   // Singleton implementation.
   static ACE_Log_Msg log_msg;
@@ -265,9 +266,6 @@ pid_t ACE_Log_Msg::pid_ = -1;
 // Current offset of msg_[].
 int ACE_Log_Msg::msg_off_ = 0;
 
-// Call after a fork to resynchronize the PID and PROGRAM_NAME
-// variables.
-
 void
 ACE_Log_Msg::close (void)
 {
@@ -278,6 +276,8 @@ ACE_Log_Msg::close (void)
   ACE_MT (ACE_Log_Msg_Manager::close ());
 }
 
+// Call after a fork to resynchronize the PID and PROGRAM_NAME
+// variables.
 void
 ACE_Log_Msg::sync (const char *prog_name)
 {
@@ -762,8 +762,8 @@ ACE_Log_Msg::log (const char *format_str,
                   {
                     type = SKIP_SPRINTF;
                     char day_and_time[35];
-                    ACE_OS::sprintf (bp, 
-                                     "%s", 
+                    ACE_OS::sprintf (bp,
+                                     "%s",
                                      ACE::timestamp (day_and_time,
                                                      sizeof day_and_time));
                     break;
@@ -895,14 +895,14 @@ ACE_Log_Msg::log (const char *format_str,
           // Try to use the <putpmsg> API if possible in order to
           // ensure correct message queueing according to priority.
           result = ACE_Log_Msg_message_queue->send ((const ACE_Str_Buf *) 0,
-						    &log_msg,
-						    int (log_record.priority ()),
-						    MSG_BAND);
+                                                    &log_msg,
+                                                    int (log_record.priority ()),
+                                                    MSG_BAND);
 #else
-	  // We're running over sockets, so we'll need to indicate the
-	  // number of bytes to send.
+          // We're running over sockets, so we'll need to indicate the
+          // number of bytes to send.
           result = ACE_Log_Msg_message_queue->send_n ((void *) &log_record,
-						      log_record.length ());
+                                                      log_record.length ());
 #endif /* ACE_HAS_STREAM_PIPES */
         }
       // Format the message and print it to stderr and/or ship it off
@@ -1104,7 +1104,7 @@ ACE_Log_Msg::thr_desc (void) const
 
 void
 ACE_Log_Msg::thr_desc (ACE_Thread_Descriptor *td,
-		       ACE_Thread_Manager *thr_mgr)
+                       ACE_Thread_Manager *thr_mgr)
 {
   this->thr_desc_ = td;
 
