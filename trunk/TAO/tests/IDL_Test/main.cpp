@@ -51,6 +51,14 @@ main (int argc , char *argv[])
         CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      CORBA::Object_var poa_object =
+        orb->resolve_initial_references ("RootPOA");
+
+      PortableServer::POA_var root_poa =
+        PortableServer::POA::_narrow (poa_object.in (), 
+                                      ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       // Test of pragma prefix handling.
 
       CORBA::ULong error_count = 0;
@@ -158,6 +166,11 @@ main (int argc , char *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "%s\n",
                   str));
+
+      root_poa->destroy (1,
+                         1,
+                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
