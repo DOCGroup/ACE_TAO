@@ -316,7 +316,7 @@ TAO_find (const CORBA::Any& sequence, const OPERAND_TYPE& element)
         {
           if (functor (dyn_seq, element))
             {
-              ACE_DEBUG ((LM_DEBUG, "TAO_find::success\n"));
+              //ACE_DEBUG ((LM_DEBUG, "TAO_find::success\n"));
               return_value = 1;
             }
         }

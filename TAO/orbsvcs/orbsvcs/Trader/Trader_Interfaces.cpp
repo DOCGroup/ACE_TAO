@@ -702,20 +702,26 @@ order_merged_sequence (TAO_Preference_Interpreter& pref_inter,
   // Order the sequence.
   for (j = 0; j < length; j++)
     pref_inter.order_offer (&target_buf[j]);
+  //pref_inter.order_offer (&offers[j]);
 
   // Reallocate the sequence.
   offers.length (length);
+
+  //  CosTrading::OfferSeq copy;
+  //  copy.length (length);
 
   // Copy in the ordered offers.
   for (j = 0; j < length; j++)
     {
       CosTrading::Offer* offer = 0;
       pref_inter.remove_offer (offer);
+      //copy[j] = *offer;
       offers[j] = *offer;
     }
 
   // Release the orphaned memory.
   CosTrading::OfferSeq::freebuf (target_buf);
+  //  offers = copy
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
