@@ -49,7 +49,8 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (PP_Test_Client_Timeprobe_Description,
 
 // Constructor.
 PP_Test_Client::PP_Test_Client (int shutdown)
-  : factory_key_ (0),
+  : orb_ (0),
+    factory_key_ (0),
     loop_count_ (1),
     shutdown_ (shutdown),
     objref_ (Pluggable_Test::_nil ()),
