@@ -1,5 +1,20 @@
 Sat May 17 00:06:04 1997    <irfan@TWOSTEP>
 
+	* examples/ASX/Event_Server/Transceiver/transceiver.cpp
+	  (Event_Transceiver): Corrected signal registration for Win32.
+
+	* apps/Gateway/Gateway/Gateway.cpp (parse_args): Since the
+ 	  Connector is now fixed, non-blocking is now working fine.
+
+	* ace/Connector.cpp (handle_close,create_AST): Made sure we close
+ 	  down the svc_handler on error.
+
+	* ace/{Acceptor.cpp,Connector.cpp} (activate_svc_handler): The
+	  if statement logic in these methods was incorrect.
+
+	* ace/SOCK_Connector.cpp (connect): Just like in complete(), we
+ 	  start out with non-blocking disabled on the <new_stream>.
+
 	* ace/OS.h: When ACE_LACKS_SIGSET is defined, changed the
  	  definition of sigset_t from void * to unsigned int.
 
