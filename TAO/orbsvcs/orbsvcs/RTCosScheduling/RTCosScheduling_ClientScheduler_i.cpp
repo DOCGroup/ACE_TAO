@@ -218,7 +218,9 @@ RTCosScheduling_ClientScheduler_i::tasks(
   ACE_OS::strcat(key, node_name);
 
   /// Skip to the appropriate node
+#ifndef ACE_LACKS_CLEARERR
   ACE_OS::clearerr(fp);
+#endif  /* !ACE_LACKS_CLEARERR */
   do
     {
       ACE_OS::fgets(line, BUF_MAX, fp);
@@ -235,7 +237,9 @@ RTCosScheduling_ClientScheduler_i::tasks(
   while (ACE_OS::strncmp(line, key, ACE_OS::strlen(key)) != 0);
 
   /// Skip to the appropriate task section of the node
+#ifndef ACE_LACKS_CLEARERR
   ACE_OS::clearerr(fp);
+#endif  /* !ACE_LACKS_CLEARERR */
   do
     {
       ACE_OS::fgets(line, BUF_MAX, fp);

@@ -1,3 +1,11 @@
+Wed Apr 28 22:17:03 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.cpp:
+	* orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.cpp:
+
+	  Do not call ACE_OS::clearerr() if ACE_LACKS_CLEARERR is
+	  defined.  Addresses build problems on OpenBSD.
+
 Wed Apr 28 06:32:15 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
