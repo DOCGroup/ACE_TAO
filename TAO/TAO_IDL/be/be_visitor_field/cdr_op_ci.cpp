@@ -321,10 +321,10 @@ be_visitor_field_cdr_op_ci::visit_interface_fwd (be_interface_fwd *)
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
-      *os << "(strm >> _tao_aggregate." << f->local_name () << ").out ()";
+      *os << "(strm >> _tao_aggregate." << f->local_name () << ".out ())";
       break;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "(strm << _tao_aggregate." << f->local_name () << ").in ()";
+      *os << "(strm << _tao_aggregate." << f->local_name () << ".in ())";
       break;
     case TAO_CodeGen::TAO_CDR_SCOPE:
       // nothing to be done because an interface cannit be declared inside a
