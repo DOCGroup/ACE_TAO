@@ -171,7 +171,7 @@ private:
 class ACE_Export ACE_Token
 {
 public:
-  int acquire (ACE_Time_Value *timeout = 0) { ACE_NOTSUP_RETURN (-1); }
+  int acquire (ACE_Time_Value * = 0) { ACE_NOTSUP_RETURN (-1); }
   int tryacquire (void) { ACE_NOTSUP_RETURN (-1); }
   int remove (void) { ACE_NOTSUP_RETURN (-1); }
   int release (void) { ACE_NOTSUP_RETURN (-1); }
