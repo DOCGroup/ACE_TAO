@@ -87,6 +87,8 @@ public:
   typedef ACE_DEV_IO   PEER_STREAM;
 };
 
+#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/DEV_Connector.i"
+#endif
 
 #endif /* ACE_DEV_CONNECTOR_H */

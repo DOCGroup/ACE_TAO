@@ -3,7 +3,7 @@
 
 // Miscellaneous static methods used throughout ACE.
 
-inline ssize_t
+ASYS_INLINE ssize_t
 ACE::send (ACE_HANDLE handle, const void *buf, size_t len)
 {
   ACE_TRACE ("ACE::send");
@@ -15,14 +15,14 @@ ACE::send (ACE_HANDLE handle, const void *buf, size_t len)
 #endif /* ACE_WIN32 */
 }
 
-inline ssize_t
+ASYS_INLINE ssize_t
 ACE::send (ACE_HANDLE handle, const void *buf, size_t len, int flags)
 {
   ACE_TRACE ("ACE::send");
   return ACE_OS::send (handle, (const char *) buf, len, flags);
 }
 
-inline ssize_t
+ASYS_INLINE ssize_t
 ACE::recv (ACE_HANDLE handle, void *buf, size_t len)
 {
   ACE_TRACE ("ACE::recv");
@@ -33,7 +33,7 @@ ACE::recv (ACE_HANDLE handle, void *buf, size_t len)
 #endif /* ACE_WIN32 */
 }
 
-inline ssize_t
+ASYS_INLINE ssize_t
 ACE::recv (ACE_HANDLE handle, void *buf, size_t len, int flags)
 {
   ACE_TRACE ("ACE::recv");
@@ -41,7 +41,7 @@ ACE::recv (ACE_HANDLE handle, void *buf, size_t len, int flags)
   return ACE_OS::recv (handle, (char *) buf, len, flags);
 }
 
-inline char *
+ASYS_INLINE char *
 ACE::strecpy (char *s, const char *t)
 {
   ACE_TRACE ("ACE::strecpy");
@@ -55,7 +55,7 @@ ACE::strecpy (char *s, const char *t)
 }
 
 #if defined (ACE_HAS_UNICODE)
-inline wchar_t *
+ASYS_INLINE wchar_t *
 ACE::strecpy (wchar_t *s, const wchar_t *t)
 {
   ACE_TRACE ("ACE::strecpy");
@@ -71,7 +71,7 @@ ACE::strecpy (wchar_t *s, const wchar_t *t)
 
 // Return flags currently associated with handle.
 
-inline int
+ASYS_INLINE int
 ACE::get_flags (ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE::get_flags");
@@ -87,7 +87,7 @@ ACE::get_flags (ACE_HANDLE handle)
 #endif /* ACE_LACKS_FCNTL */
 }
 
-inline u_long
+ASYS_INLINE u_long
 ACE::log2 (u_long num)
 {
   u_long log = 0;
@@ -100,13 +100,13 @@ ACE::log2 (u_long num)
   return log;
 }
 
-inline char 
+ASYS_INLINE char 
 ACE::nibble2hex (u_int n)
 {
   return ACE::hex_chars_[n & 0x0f];
 }
 
-inline u_char 
+ASYS_INLINE u_char 
 ACE::hex2byte (char c)
 {
   if (isdigit (c))

@@ -3,7 +3,7 @@
 
 // SOCK_Dgram_Mcast.i
 
-inline int
+ASYS_INLINE int
 ACE_SOCK_Dgram_Mcast::set_option (int option, 
 				  char optval) 
 { 
@@ -12,7 +12,7 @@ ACE_SOCK_Dgram_Mcast::set_option (int option,
 				     &optval, sizeof (char));
 }
 
-inline ssize_t
+ASYS_INLINE ssize_t
 ACE_SOCK_Dgram_Mcast::send (const void *buf, 
 			    size_t n, int flags) const
 {
@@ -21,7 +21,7 @@ ACE_SOCK_Dgram_Mcast::send (const void *buf,
 				     this->mcast_addr_, flags);
 }
 
-inline ssize_t
+ASYS_INLINE ssize_t
 ACE_SOCK_Dgram_Mcast::send (const iovec iov[], 
 			    size_t n, int flags) const
 {

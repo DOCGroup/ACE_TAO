@@ -6,6 +6,10 @@
 #define ACE_BUILD_DLL
 #include "ace/SV_Semaphore_Simple.h"
 
+#if defined (ACE_LACKS_INLINE_FUNCTIONS)
+#include "ace/SV_Semaphore_Simple.i"
+#endif
+
 ACE_ALLOC_HOOK_DEFINE(ACE_SV_Semaphore_Simple)
 
 void

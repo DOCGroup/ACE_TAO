@@ -6,6 +6,10 @@
 
 #if defined (ACE_HAS_THREADS)
 
+#if defined (ACE_LACKS_INLINE_FUNCTIONS)
+#include "ace/UPIPE_Connector.i"
+#endif
+
 ACE_ALLOC_HOOK_DEFINE(ACE_UPIPE_Connector)
 
 void

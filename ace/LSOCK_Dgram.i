@@ -3,7 +3,7 @@
 
 // LSOCK_Dgram.i
 
-inline void
+ASYS_INLINE void
 ACE_LSOCK_Dgram::set_handle (ACE_HANDLE h)
 {
   ACE_TRACE ("ACE_LSOCK_Dgram::set_handle");
@@ -11,7 +11,7 @@ ACE_LSOCK_Dgram::set_handle (ACE_HANDLE h)
   this->ACE_LSOCK::set_handle (h);
 }
 
-inline ACE_HANDLE
+ASYS_INLINE ACE_HANDLE
 ACE_LSOCK_Dgram::get_handle (void) const
 {
   ACE_TRACE ("ACE_LSOCK_Dgram::get_handle");

@@ -4,6 +4,10 @@
 #define ACE_BUILD_DLL
 #include "ace/SPIPE.h"
 
+#if defined (ACE_LACKS_INLINE_FUNCTIONS)
+#include "ace/SPIPE.i"
+#endif
+
 ACE_ALLOC_HOOK_DEFINE(ACE_SPIPE)
 
 // This is the do-nothing constructor. 

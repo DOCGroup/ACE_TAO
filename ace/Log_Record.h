@@ -169,5 +169,8 @@ private:
   // Symbolic names for the <ACE_Log_Priority> enums.
 };
 
+#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/Log_Record.i"
+#endif
+
 #endif /* ACE_LOG_RECORD_H */

@@ -3,7 +3,7 @@
 
 // DEV.i
 
-inline int
+ASYS_INLINE int
 ACE_DEV::disable (int signum) const
 {
 #if defined (ACE_WIN32)

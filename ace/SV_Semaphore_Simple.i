@@ -5,7 +5,7 @@
 
 #include "ace/Trace.h"
 
-inline int
+ASYS_INLINE int
 ACE_SV_Semaphore_Simple::control (int cmd, 
 				  semun arg, 
 				  u_short n) const
@@ -18,7 +18,7 @@ ACE_SV_Semaphore_Simple::control (int cmd,
 // Close a ACE_SV_Semaphore, marking it as invalid for subsequent
 // operations...
 
-inline int 
+ASYS_INLINE int 
 ACE_SV_Semaphore_Simple::close (void)
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::close");
@@ -27,7 +27,7 @@ ACE_SV_Semaphore_Simple::close (void)
 
 // General ACE_SV_Semaphore operation on an array of SV_Semaphores. 
      
-inline int 
+ASYS_INLINE int 
 ACE_SV_Semaphore_Simple::op (sembuf op_vec[], u_short n) const
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::op");
@@ -39,21 +39,21 @@ ACE_SV_Semaphore_Simple::op (sembuf op_vec[], u_short n) const
 // decrement it by 1 and return. Dijkstra's P operation, Tannenbaums
 // DOWN operation.
 
-inline int 
+ASYS_INLINE int 
 ACE_SV_Semaphore_Simple::acquire (u_short n, int flags) const
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::acquire");
   return this->op (-1, n, flags);
 }
 
-inline int 
+ASYS_INLINE int 
 ACE_SV_Semaphore_Simple::acquire_read (u_short n, int flags) const
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::acquire_read");
   return this->acquire (n, flags);
 }
 
-inline int 
+ASYS_INLINE int 
 ACE_SV_Semaphore_Simple::acquire_write (u_short n, int flags) const
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::acquire_write");
@@ -62,7 +62,7 @@ ACE_SV_Semaphore_Simple::acquire_write (u_short n, int flags) const
 
 // Non-blocking version of acquire(). 
 
-inline int 
+ASYS_INLINE int 
 ACE_SV_Semaphore_Simple::tryacquire (u_short n, int flags) const
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::tryacquire");
@@ -71,7 +71,7 @@ ACE_SV_Semaphore_Simple::tryacquire (u_short n, int flags) const
 
 // Non-blocking version of acquire(). 
 
-inline int 
+ASYS_INLINE int 
 ACE_SV_Semaphore_Simple::tryacquire_read (u_short n, int flags) const
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::tryacquire_read");
@@ -80,7 +80,7 @@ ACE_SV_Semaphore_Simple::tryacquire_read (u_short n, int flags) const
 
 // Non-blocking version of acquire(). 
 
-inline int 
+ASYS_INLINE int 
 ACE_SV_Semaphore_Simple::tryacquire_write (u_short n, int flags) const
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::tryacquire_write");
@@ -90,14 +90,14 @@ ACE_SV_Semaphore_Simple::tryacquire_write (u_short n, int flags) const
 // Increment ACE_SV_Semaphore by one. Dijkstra's V operation,
 // Tannenbaums UP operation.
 
-inline int 
+ASYS_INLINE int 
 ACE_SV_Semaphore_Simple::release (u_short n, int flags) const
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::release");
   return this->op (1, n, flags);
 }
 
-inline int
+ASYS_INLINE int
 ACE_SV_Semaphore_Simple::get_id (void) const
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::get_id");

@@ -89,6 +89,8 @@ public:
   typedef ACE_FILE_IO   PEER_STREAM;
 };
 
+#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/FILE_Connector.i"
+#endif
 
 #endif /* ACE_FILE_CONNECTOR_H */

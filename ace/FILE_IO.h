@@ -116,6 +116,8 @@ private:
   // File we are "connected" with...
 };
 
+#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/FILE_IO.i"
+#endif
 
 #endif /* ACE_FILE_IO_H */
