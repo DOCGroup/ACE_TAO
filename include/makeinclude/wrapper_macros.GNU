@@ -530,7 +530,7 @@ else  # exceptions
 #    #### it gets confused and reports too many bogus warnings.
 #    CCFLAGS += -Wno-uninitialized
 #  endif # g++ > 2.8.0
-#  endif # ! ACE_HAS_GNUG_PRE_2_8
+  endif # ! ACE_HAS_GNUG_PRE_2_8
 endif # exceptions
 
 ifeq ($(profile),0)
