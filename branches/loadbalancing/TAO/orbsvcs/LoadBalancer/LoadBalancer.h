@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 // ============================================================================
@@ -71,10 +72,10 @@ private:
   // generic load balancing service that can implement static,
   // per-request and dynamic load balancing?  If not, can we share the
   // current strategies among them?
-  Round_Robin_Strategy round_robin_;
-  Minimum_Dispersion_Strategy minimum_dispersion_;
+  TAO_LB_Round_Robin_Strategy round_robin_;
+  TAO_LB_Minimum_Dispersion_Strategy minimum_dispersion_;
 
-  LoadBalancer_Impl *balancer_;
+  TAO_LB_LoadBalancer *balancer_;
   // The load balancer
 
   CORBA::ORB_var orb_;

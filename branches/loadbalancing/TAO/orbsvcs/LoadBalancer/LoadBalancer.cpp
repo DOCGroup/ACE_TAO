@@ -92,15 +92,15 @@ TAO_LoadBalancer::init (int argc,
   ACE_CHECK;
 
   // Initialize the LoadBalancer servant.
-  Load_Balancing_Strategy *strategy =
+  TAO_LB_LoadBalancing_Strategy *strategy =
     &this->round_robin_;
   if (this->strategy_ == 1)
     strategy = &this->minimum_dispersion_;
 
   ACE_NEW (this->balancer_,
-           LoadBalancer_Impl (this->interface_repository_id_,
-                              strategy,
-                              this->root_poa_.in ()));
+           TAO_LB_LoadBalancer (this->interface_repository_id_,
+                                strategy,
+                                this->root_poa_.in ()));
 
   CORBA::Object_var obj =
     this->balancer_->_this (ACE_TRY_ENV);
