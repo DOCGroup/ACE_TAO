@@ -33,7 +33,7 @@
  */
 // $Id$
 #include "ace/OS.h"
-#include "RTP.h"
+#include "RTCP.h"
 #include "source.h"
 
 /* gray out src if no ctrl msgs for this many consecutive update intervals */
@@ -187,18 +187,14 @@ TAO_AV_Source::clear_counters ()
   lts_done_.tv_usec = 0;
 }
 
-TAO_AV_SourceManager::TAO_AV_SourceManager  (const char *flowname,
-                                             TAO_Base_StreamEndPoint *endpoint,
-                                             TAO_AV_RTCP_Flow_Handler *handler)
+TAO_AV_SourceManager::TAO_AV_SourceManager  (TAO_AV_RTCP_Callback *callback)
   :nsources_ (0),
    sources_ (0),
    clock_ (0),
    keep_sites_ (0),
    site_drop_time_ (0),
    localsrc_ (0),
-   flowname_ (flowname),
-   endpoint_ (endpoint),
-   handler_ (handler)
+   callback_ (callback)
 {
   memset ( (char*)hashtab_, 0, sizeof (hashtab_));
 }
@@ -224,13 +220,10 @@ TAO_AV_SourceManager::init (ACE_UINT32 localid, ACE_UINT32 localaddr)
    *  (we special case detection of our own loopbed back packets)
    */
   // Make an upcall to get the source.
-  this->endpoint_->get_rtp_source (localsrc_,
-                                   this->flowname_.in (),
+  this->callback_->get_rtp_source (localsrc_,
                                    localid,
                                    localid,
                                    localaddr);
-  //   ACE_NEW (localsrc_,
-  //            TAO_AV_Source (localid, localid, localaddr));
   enter (localsrc_);
   remove_from_hashtable (localsrc_);
   /*
@@ -239,7 +232,6 @@ TAO_AV_SourceManager::init (ACE_UINT32 localid, ACE_UINT32 localaddr)
          * because they are only created when a packet arrives.
          */
   localsrc_->lts_ctrl (ACE_OS::gettimeofday ());
-  this->handler_->init ();
 }
 
 TAO_AV_Source*
@@ -286,8 +278,7 @@ TAO_AV_SourceManager::lookup (ACE_UINT32 srcid, ACE_UINT32 ssrc, ACE_UINT32 addr
       s = lookup_duplicate (srcid, addr);
 
     if  (s == 0) {
-      this->endpoint_->get_rtp_source (s,
-                                       this->flowname_.in (),
+      this->callback_->get_rtp_source (s,
                                        srcid,
                                        ssrc,
                                        addr);
@@ -315,8 +306,7 @@ TAO_AV_SourceManager::demux (ACE_UINT32 srcid, ACE_UINT32 addr, ACE_UINT16 seq)
     if  (s == 0) {
       /* CSRC=SSRC for data stream */
 
-      this->endpoint_->get_rtp_source (s,
-                                       this->flowname_.in (),
+      this->callback_->get_rtp_source (s,
                                        srcid,
                                        srcid,
                                        addr);

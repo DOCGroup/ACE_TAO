@@ -16,11 +16,11 @@
 //
 // ============================================================================
 
-
 #ifndef TAO_AV_MCAST_H
 #define TAO_AV_MCAST_H
 
 #include "FlowSpec_Entry.h"
+#include "Protocol_Factory.h"
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Dgram_Mcast.h"
 
@@ -30,10 +30,10 @@ class TAO_AV_UDP_MCast_Transport
   :public TAO_AV_Transport
 {
   // = TITLE
-  //     A transport abstraction for socket streams.
+  //     A transport abstraction for Multicast dgram sockets.
   //
   // = DESCRIPTION
-  //     Uses the ACE_SOCK_Stream to send the data.
+  //     Uses the ACE_SOCK_Dgram_Mcast to send the data.
 public:
   TAO_AV_UDP_MCast_Transport (void);
 
@@ -84,65 +84,12 @@ protected:
   ACE_INET_Addr local_addr_;
 };
 
-class TAO_AV_UDP_MCast_Acceptor
-  :public TAO_AV_Acceptor
-{
-public:
-  TAO_AV_UDP_MCast_Acceptor (void);
-  virtual ~TAO_AV_UDP_MCast_Acceptor (void);
-  virtual int open (TAO_Base_StreamEndPoint *endpoint,
-                    TAO_AV_Core *av_core,
-                    TAO_FlowSpec_Entry *entry);
-  virtual int open_i (ACE_Reactor *reactor,
-                      ACE_INET_Addr *&address,
-                      TAO_AV_UDP_MCast_Flow_Handler *&handler);
-
-  virtual int open_default (TAO_Base_StreamEndPoint *endpoint,
-                            TAO_AV_Core *av_core,
-                            TAO_FlowSpec_Entry *entry);
-  virtual int close (void);
-  virtual int make_svc_handler (TAO_AV_UDP_MCast_Flow_Handler *&udp_handler);
-  virtual int activate_svc_handler (TAO_AV_UDP_MCast_Flow_Handler *handler);
-protected:
-  TAO_FlowSpec_Entry *entry_;
-  TAO_Base_StreamEndPoint *endpoint_;
-  TAO_AV_Core *av_core_;
-  TAO_AV_UDP_MCast_Flow_Handler *handler_;
-};
-
-class TAO_AV_UDP_MCast_Connector
-  :public TAO_AV_Connector
-{
-public:
-  TAO_AV_UDP_MCast_Connector (void);
-  virtual ~TAO_AV_UDP_MCast_Connector (void);
-  virtual int open (TAO_Base_StreamEndPoint *endpoint,
-                    TAO_AV_Core *av_core);
-
-  virtual int connect (TAO_FlowSpec_Entry *entry,
-                       TAO_AV_Transport *&transport);
-
-  int connect_i (ACE_Reactor *reactor,
-                 ACE_INET_Addr *&address,
-                 TAO_AV_UDP_MCast_Flow_Handler *&handler);
-
-  virtual int close (void);
-  virtual int make_svc_handler (TAO_AV_UDP_MCast_Flow_Handler *&udp_handler);
-  virtual int activate_svc_handler (TAO_AV_UDP_MCast_Flow_Handler *handler);
-protected:
-  ACE_CString flowname_;
-  TAO_Base_StreamEndPoint *endpoint_;
-  TAO_AV_Core *av_core_;
-  TAO_FlowSpec_Entry *entry_;
-  TAO_AV_UDP_MCast_Flow_Handler *handler_;
-};
-
 class TAO_AV_UDP_MCast_Flow_Handler
   :public virtual TAO_AV_Flow_Handler,
    public virtual ACE_Event_Handler
 {
 public:
-  TAO_AV_UDP_MCast_Flow_Handler (TAO_AV_Callback *callback);
+  TAO_AV_UDP_MCast_Flow_Handler (void);
   // Ctor
   ~TAO_AV_UDP_MCast_Flow_Handler (void);
   // Dtor
@@ -154,17 +101,6 @@ public:
 protected:
   ACE_INET_Addr peer_addr_;
   ACE_SOCK_Dgram_Mcast *dgram_mcast_;
-};
-
-class TAO_AV_UDP_MCast_Protocol_Factory
-  :public TAO_AV_Protocol_Factory
-{
-public:
-  TAO_AV_UDP_MCast_Protocol_Factory (void);
-  virtual ~TAO_AV_UDP_MCast_Protocol_Factory (void);
-  virtual int match_protocol (TAO_AV_Core::Protocol protocol);
-  virtual TAO_AV_Acceptor *make_acceptor (void);
-  virtual TAO_AV_Connector *make_connector (void);
 };
 
 #if defined(__ACE_INLINE__)

@@ -21,67 +21,25 @@
 
 #include "Policy.h"
 
-class TAO_ORBSVCS_Export TAO_AV_TCP_Object : public TAO_AV_Protocol_Object
-{
-public:
-  TAO_AV_TCP_Object (TAO_AV_Callback *callback,
-                     TAO_AV_Transport *transport = 0);
+// class TAO_ORBSVCS_Export TAO_AV_UDP_MCast_Object  : public TAO_AV_Protocol_Object
+// {
+// public:
+//   TAO_AV_UDP_MCast_Object (TAO_AV_Callback *callback,
+//                            TAO_AV_Transport *transport = 0);
 
-  virtual ~TAO_AV_TCP_Object (void);
-  // Dtor
+//   virtual ~TAO_AV_UDP_MCast_Object (void);
+//   // Dtor
 
-  virtual int send_frame (ACE_Message_Block *frame,
-                          TAO_AV_frame_info *frame_info = 0);
-  // send a data frame.
+//   virtual int send_frame (ACE_Message_Block *frame,
+//                           TAO_AV_frame_info *frame_info = 0);
+//   // send a data frame.
 
-  virtual int send_frame (const iovec *iov,
-                          int iovcnt,
-                          TAO_AV_frame_info *frame_info = 0);
+//   virtual int send_frame (const iovec *iov,
+//                           int iovcnt,
+//                           TAO_AV_frame_info *frame_info = 0);
 
-  virtual int end_stream (void);
-  // end the stream.
+//   virtual int end_stream (void);
+//   // end the stream.
+// };
 
-};
-
-class TAO_ORBSVCS_Export TAO_AV_UDP_Object  : public TAO_AV_Protocol_Object
-{
-public:
-  TAO_AV_UDP_Object (TAO_AV_Callback *callback,
-                     TAO_AV_Transport *transport = 0);
-
-  virtual ~TAO_AV_UDP_Object (void);
-  // Dtor
-
-  virtual int send_frame (ACE_Message_Block *frame,
-                          TAO_AV_frame_info *frame_info = 0);
-  // send a data frame.
-
-  virtual int send_frame (const iovec *iov,
-                          int iovcnt,
-                          TAO_AV_frame_info *frame_info = 0);
-
-  virtual int end_stream (void);
-  // end the stream.
-};
-
-class TAO_ORBSVCS_Export TAO_AV_UDP_MCast_Object  : public TAO_AV_Protocol_Object
-{
-public:
-  TAO_AV_UDP_MCast_Object (TAO_AV_Callback *callback,
-                           TAO_AV_Transport *transport = 0);
-
-  virtual ~TAO_AV_UDP_MCast_Object (void);
-  // Dtor
-
-  virtual int send_frame (ACE_Message_Block *frame,
-                          TAO_AV_frame_info *frame_info = 0);
-  // send a data frame.
-
-  virtual int send_frame (const iovec *iov,
-                          int iovcnt,
-                          TAO_AV_frame_info *frame_info = 0);
-
-  virtual int end_stream (void);
-  // end the stream.
-};
 #endif /* TAO_AV_NIL_H */

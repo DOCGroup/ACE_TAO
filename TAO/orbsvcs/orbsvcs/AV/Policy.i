@@ -55,22 +55,6 @@ TAO_AV_Timestamp_Policy::value (void)
   return this->timestamp_;
 }
 
-//--------------------------------------------------
-// TAO_AV_Protocol_Object
-//--------------------------------------------------
-
-ACE_INLINE TAO_AV_Transport*
-TAO_AV_Protocol_Object::transport (void)
-{
-  return this->transport_;
-}
-
-ACE_INLINE void
-TAO_AV_Protocol_Object::transport (TAO_AV_Transport *transport)
-{
-  this->transport_ = transport;
-}
-
 // TAO_AV_RTCP_Sdes_Policy
 ACE_INLINE TAO_AV_Policy::sdes &
 TAO_AV_RTCP_Sdes_Policy::value (void)

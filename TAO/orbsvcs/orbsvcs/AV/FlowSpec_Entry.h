@@ -142,7 +142,12 @@ public:
 
   int parse_address (char *format_string);
   // sets the address for this flow.
+
+  int is_multicast (void);
+  // returns true for a multicast address.
+
 protected:
+
   int parse_flow_protocol_string (char *flow_options_string);
   // parses the flow protocol string with tokens separated by :
 
@@ -184,6 +189,7 @@ protected:
   char *entry_;
   // The flowspec entry;
 
+  int is_multicast_;
   ACE_Addr *peer_addr_;
   ACE_Addr *local_addr_;
   TAO_AV_Transport *transport_;
