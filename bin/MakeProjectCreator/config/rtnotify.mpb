@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : notify, rtcorba {
+project : notification, rtcorba {
   after += RT_Notification
   libs  += TAO_RT_Notification
 }

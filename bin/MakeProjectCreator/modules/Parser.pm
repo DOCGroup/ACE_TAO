@@ -13,10 +13,11 @@ package Parser;
 use strict;
 use FileHandle;
 
+use OutputMessage;
 use StringProcessor;
 
 use vars qw(@ISA);
-@ISA = qw(StringProcessor);
+@ISA = qw(OutputMessage StringProcessor);
 
 # ************************************************************
 # Data Section
@@ -38,7 +39,11 @@ if ($^O eq 'cygwin' && $cwd !~ /[A-Za-z]:/) {
 sub new {
   my($class) = shift;
   my($inc)   = shift;
-  my($self)  = $class->SUPER::new();
+  my($info)  = (defined $ENV{MPC_SILENT} ||
+                !defined $ENV{MPC_INFORMATION} ? 0 : 1);
+  my($warn)  = (defined $ENV{MPC_SILENT} ? 0 : 1);
+  my($diag)  = (defined $ENV{MPC_SILENT} ? 0 : 1);
+  my($self)  = $class->SUPER::new($info, $warn, $diag);
 
   $self->{'line_number'} = 0;
   $self->{'include'}     = $inc;
@@ -71,7 +76,7 @@ sub cd {
        }
     }
     else {
-      if ($dir =~ /^\// || $dir =~ /^[A-Za-z]:/) {
+      if ($dir =~ /^(\/|[a-z]:)/i) {
         $cwd = $dir;
       }
       else {
@@ -102,14 +107,11 @@ sub strip_line {
 }
 
 
-sub collect_line {
-  my($self) = shift;
-  my($fh)   = shift;
-  my($lref) = shift;
-  my($line) = shift;
-
-  $$lref = $self->strip_line($line);
-  return $self->parse_line($fh, $$lref);
+sub preprocess_line {
+  #my($self) = shift;
+  #my($fh)   = shift;
+  #my($line) = shift;
+  return $_[0]->strip_line($_[2]);
 }
 
 
@@ -118,13 +120,13 @@ sub read_file {
   my($input)       = shift;
   my($ih)          = new FileHandle();
   my($status)      = 1;
-  my($errorString) = '';
+  my($errorString) = undef;
 
   $self->{'line_number'} = 0;
   if (open($ih, $input)) {
-    my($line) = '';
     while(<$ih>) {
-      ($status, $errorString) = $self->collect_line($ih, \$line, $_);
+      ($status, $errorString) = $self->parse_line(
+                                    $ih, $self->preprocess_line($ih, $_));
 
       if (!$status) {
         last;
@@ -133,7 +135,7 @@ sub read_file {
     close($ih);
   }
   else {
-    $errorString = 'ERROR: Unable to open for reading';
+    $errorString = "Unable to open \"$input\" for reading";
     $status = 0;
   }
 
