@@ -285,6 +285,8 @@ sub Wait ()
     if ($self->{RUNNING}) {
         Win32::Process::Wait ($self->{PROCESS}, INFINITE);
     }
+
+    $self->{RUNNING} = 0;
 }
 
 
