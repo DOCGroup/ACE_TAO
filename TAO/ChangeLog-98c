@@ -25,6 +25,13 @@ Wed Sep 23 10:02:20 1998  David L. Levine  <levine@cs.wustl.edu>
         * orbsvcs/tests/Sched/DynSched_Test.cpp: replaced quantify with
           ACE_HAS_QUANTIFY.
 
+        * orbsvcs/orbsvcs/Sched/Sched_Factory.cpp (preemption_priority,
+          set_preemption_priority):  for HPUX aCC only, added typedef
+          to replace direct use of RtecScheduler::Preemption_Priority
+          as an operator name.  It can't handle it.  Thanks to
+          Alan Scheinine <scheinin@crs4.it> for reporting this problem
+          and providing the fix.
+
 Wed Sep 23 02:39:29 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.2.14 released.
