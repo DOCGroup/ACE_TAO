@@ -59,7 +59,12 @@ Data::Data (CORBA::ORB_var orb)
   labels[15] = "type objref";
 
   // Getting the RootPOA so we can generate object references.
-  CORBA::Object_var obj = this->orb_->resolve_initial_references ("RootPOA");
+  CORBA::Object_var obj = 
+    this->orb_->resolve_initial_references ("RootPOA");
+
+  if (CORBA::is_nil (obj.in ()))
+    ACE_ERROR ((LM_ERROR,
+                "(%P|%t) Unable to get root poa reference.\n"));
 
   // Get the POA_var object from Object_var.
   PortableServer::POA_var root_poa =
@@ -82,11 +87,22 @@ Data::Data (CORBA::ORB_var orb)
                                 env);
 
   if (env.exception () != 0)
-    env.print_exception ("PortableServer::POA::create_reference_with_id"); 
+    env.print_exception ("PortableServer::POA::create_reference_with_id");
+  
+  // Clean up after the POA
+  root_poa->destroy (1,
+                     1,
+                     env);
+
+  if (env.exception () != 0)
+    env.print_exception ("PortableServer::POA::destroy");
 }
 
 Data::~Data (void)
 {
   CORBA::string_free (m_string1);
+  CORBA::string_free (m_string2);
+  CORBA::release (m_typecode1);
+  CORBA::release (m_typecode2);
 }
 

@@ -176,7 +176,7 @@ public:
 
 class DynAny;
 typedef DynAny *DynAny_ptr;
-class  DynAny : public virtual TAO_Local_ServantBase
+class TAO_Export DynAny : public virtual TAO_Local_ServantBase
 {
 protected:
   DynAny (void);
@@ -650,7 +650,7 @@ private:
 
 class DynEnum;
 typedef DynEnum *DynEnum_ptr;
-class  DynEnum : public virtual DynAny
+class TAO_Export DynEnum : public virtual DynAny
 {
 protected:
   DynEnum (void);
@@ -748,7 +748,7 @@ private:
 
 class DynStruct;
 typedef DynStruct *DynStruct_ptr;
-class  DynStruct : public virtual DynAny
+class TAO_Export DynStruct : public virtual DynAny
 {
 protected:
   DynStruct (void);
@@ -844,7 +844,7 @@ private:
 
 class DynUnion;
 typedef DynUnion *DynUnion_ptr;
-class  DynUnion : public virtual DynAny
+class TAO_Export DynUnion : public virtual DynAny
 {
 protected:
   DynUnion (void);
@@ -978,7 +978,7 @@ private:
 
 class DynSequence;
 typedef DynSequence *DynSequence_ptr;
-class  DynSequence : public virtual DynAny
+class TAO_Export DynSequence : public virtual DynAny
 {
 protected:
   DynSequence (void);
@@ -1084,7 +1084,7 @@ private:
 
 class DynArray;
 typedef DynArray *DynArray_ptr;
-class  DynArray : public virtual DynAny
+class TAO_Export DynArray : public virtual DynAny
 {
 protected:
   DynArray (void);

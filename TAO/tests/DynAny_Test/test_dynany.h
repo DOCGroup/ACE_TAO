@@ -16,10 +16,10 @@
 //
 // ============================================================================
 
-#include "tao/corba.h"
-
 #if !defined (TEST_DYNANY_H)
 #define TEST_DYNANY_H
+
+#include "tao/corba.h"
 
 class Test_DynAny
 {

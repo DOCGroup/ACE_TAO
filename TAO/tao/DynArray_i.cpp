@@ -36,11 +36,10 @@ TAO_DynArray_i::TAO_DynArray_i (const CORBA_Any& any)
                                                      env);
 
       // Resize the array.
-      this->da_members_ = ACE_Array<CORBA_DynAny_var> (numfields);
+      this->da_members_.size (numfields);
 
       // Get the CDR stream of the argument.
-      ACE_Message_Block* mb =
-        ACE_Message_Block::duplicate (any._tao_get_cdr ());
+      ACE_Message_Block* mb = any._tao_get_cdr ();
 
       TAO_InputCDR cdr (mb);
 
@@ -82,7 +81,7 @@ TAO_DynArray_i::TAO_DynArray_i (CORBA_TypeCode_ptr tc)
                                                      env);
 
       // Resize the array.
-      this->da_members_ = ACE_Array<CORBA_DynAny_var> (numfields);
+      this->da_members_.size (numfields);
 
       for (CORBA::ULong i = 0; i < numfields; i++)
 
@@ -137,10 +136,7 @@ TAO_DynArray_i::set_elements (const AnySeq& value,
   CORBA::ULong length = value.length ();
   CORBA::ULong size = this->da_members_.size ();
 
-  if (size == 0)
-    // Resize the array, it hasn't yet been initialized.
-    this->da_members_ = ACE_Array<CORBA_DynAny_var> (length);
-  else if (size != length)
+  if (size != length)
     {
       env.exception (new CORBA_DynAny::InvalidSeq);
       return;
@@ -151,11 +147,16 @@ TAO_DynArray_i::set_elements (const AnySeq& value,
   for (CORBA::ULong i = 0; i < length; i++)
     {
       // Check each arg element for type match.
-      if (value[i].type ()->equal (element_type, env))
+      if (value[i].type ()->equal (element_type,
+                                   env))
+        {
+          if (!CORBA::is_nil (this->da_members_[i].in ()))
+            this->da_members_[i]->destroy (env);
 
-        this->da_members_[i] =
-          TAO_DynAny_i::create_dyn_any (value[i],
-                                        env);
+          this->da_members_[i] =
+            TAO_DynAny_i::create_dyn_any (value[i],
+                                          env);
+        }
       else
         {
           env.exception (new CORBA_DynAny::InvalidSeq);
@@ -193,10 +194,11 @@ TAO_DynArray_i::destroy (CORBA::Environment &env)
 {
   // Do a deep destroy
   for (CORBA::ULong i = 0; i < this->da_members_.size (); i++)
-    this->da_members_[i]->destroy (env);
+    if (!CORBA::is_nil (this->da_members_[i].in ()))
+      this->da_members_[i]->destroy (env);
 
   // Free the top level
-  CORBA::release (this->_this (env));
+  delete this;
 }
 
 void
@@ -206,18 +208,14 @@ TAO_DynArray_i::from_any (const CORBA_Any& any,
   if (this->type_.in ()->equal (any.type (), env))
     {
       // Get the CDR stream of the argument.
-      ACE_Message_Block* mb =
-        ACE_Message_Block::duplicate (any._tao_get_cdr ());
+      ACE_Message_Block* mb = any._tao_get_cdr ();
       TAO_InputCDR cdr (mb);
 
       CORBA::ULong length = this->da_members_.size ();
       CORBA::ULong arg_length = this->get_arg_length (any.type (),
                                                       env);
 
-      if (length == 0)
-        // Resize the array, it hasn't yet been initialized.
-        this->da_members_ = ACE_Array<CORBA_DynAny_var> (arg_length);
-      else if (length != arg_length)
+      if (length != arg_length)
         {
           env.exception (new CORBA_DynAny::Invalid);
           return;
@@ -231,10 +229,10 @@ TAO_DynArray_i::from_any (const CORBA_Any& any,
           CORBA_Any field_any (field_tc,
                                cdr.start ());
 
-          // Actually a recursive step. Can't call from_any()
-          // recursively because maybe only the top level is created,
-          // but create_dyn_any will do the right thing.
-          this->da_members_[i] =
+          if (!CORBA::is_nil (this->da_members_[i].in ()))
+            this->da_members_[i]->destroy (env);
+
+          this->da_members_[i] = 
             TAO_DynAny_i::create_dyn_any (field_any,
                                           env);
 
@@ -265,12 +263,13 @@ TAO_DynArray_i::to_any (CORBA::Environment& _env)
       // Recursive step
       CORBA_Any_ptr field_any = this->da_members_[i]->to_any (_env);
 
-      ACE_Message_Block* field_mb =
-        ACE_Message_Block::duplicate (field_any->_tao_get_cdr ());
+      ACE_Message_Block* field_mb = field_any->_tao_get_cdr ();
 
       TAO_InputCDR field_cdr (field_mb);
 
-      out_cdr.append (field_tc, &field_cdr, _env);
+      out_cdr.append (field_tc, 
+                      &field_cdr, 
+                      _env);
 
       delete field_any;
     }

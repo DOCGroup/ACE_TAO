@@ -580,12 +580,6 @@ CORBA_Any::operator>>= (CORBA::TypeCode_ptr &tc) const
                             0,
                             env)
               == CORBA::TypeCode::TRAVERSE_CONTINUE) ? 1 : 0;
-	  if (flag)
-	    {
-	      CORBA::TypeCode_ptr *tmp = new CORBA::TypeCode_ptr;
-	      *tmp = tc;
-	      ACE_const_cast(CORBA_Any*,this)->value_ = tmp;
-	    }
           return flag;
         }
       else
@@ -597,6 +591,7 @@ CORBA_Any::operator>>= (CORBA::TypeCode_ptr &tc) const
   else
     return 0;
 }
+
 // = extraction into the special types
 
 CORBA::Boolean
@@ -700,13 +695,7 @@ CORBA_Any::operator>>= (to_string s) const
           if (this->any_owns_data_)
             {
               TAO_InputCDR stream ((ACE_Message_Block *) this->cdr_);
-	      if (stream.read_string (s.val_))
-	        {
-	          char **tmp = new char*;
-	          *tmp = s.val_;
-	          ACE_const_cast(CORBA_Any*,this)->value_ = tmp;
-	          return 1;
-	        }
+              return stream.read_string (s.val_);
             }
           else
             {

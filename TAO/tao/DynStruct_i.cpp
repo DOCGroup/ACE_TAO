@@ -37,8 +37,7 @@ TAO_DynStruct_i::TAO_DynStruct_i (const CORBA_Any& any)
       this->da_members_ = ACE_Array<CORBA_DynAny_var> (numfields);
 
       // Get the CDR stream of the argument.
-      ACE_Message_Block* mb =
-        ACE_Message_Block::duplicate (any._tao_get_cdr ());
+      ACE_Message_Block* mb = any._tao_get_cdr ();
 
       TAO_InputCDR cdr (mb);
 
@@ -79,7 +78,7 @@ TAO_DynStruct_i::TAO_DynStruct_i (CORBA_TypeCode_ptr tc)
       CORBA::ULong numfields = tc->member_count (env);
 
       // Resize the array.
-      this->da_members_ = ACE_Array<CORBA_DynAny_var> (numfields);
+      this->da_members_.size (numfields);
 
       for (CORBA::ULong i = 0; i < numfields; i++)
 
@@ -156,11 +155,14 @@ TAO_DynStruct_i::set_members (const NameValuePairSeq& value,
                                                                              env))
               && !ACE_OS::strcmp (value[i].id,
                                   this->type_.in ()->member_name (i)))
+            {
+              if (!CORBA::is_nil (this->da_members_[i].in ()))
+                this->da_members_[i]->destroy (env);
 
-            this->da_members_[i] =
-              TAO_DynAny_i::create_dyn_any (value[i].value,
-                                            env);
-
+              this->da_members_[i] =
+                TAO_DynAny_i::create_dyn_any (value[i].value,
+                                              env);
+            }
           else
             {
               env.exception (new CORBA_DynAny::InvalidSeq);
@@ -201,10 +203,11 @@ TAO_DynStruct_i::destroy (CORBA::Environment &env)
 {
   // Do a deep destroy
   for (CORBA::ULong i = 0; i < this->da_members_.size (); i++)
-    this->da_members_[i]->destroy (env);
+    if (!CORBA::is_nil (this->da_members_[i].in ()))
+      this->da_members_[i]->destroy (env);
 
   // Free the top level
-  CORBA::release (this->_this (env));
+  delete this;
 }
 
 void
@@ -215,8 +218,7 @@ TAO_DynStruct_i::from_any (const CORBA_Any& any,
                                 env))
     {
       // Get the CDR stream of the argument.
-      ACE_Message_Block* mb =
-        ACE_Message_Block::duplicate (any._tao_get_cdr ());
+      ACE_Message_Block* mb = any._tao_get_cdr ();
       TAO_InputCDR cdr (mb);
 
       for (CORBA::ULong i = 0; i < this->da_members_.size (); i++)
@@ -229,9 +231,9 @@ TAO_DynStruct_i::from_any (const CORBA_Any& any,
           CORBA_Any field_any (field_tc,
                                cdr.start ());
 
-          // Actually a recursive step. Can't call from_any()
-          // recursively because maybe only the top level is created,
-          // but create_dyn_any will do the right thing.
+          if (!CORBA::is_nil (this->da_members_[i].in ()))
+            this->da_members_[i]->destroy (env);
+
           this->da_members_[i] =
             TAO_DynAny_i::create_dyn_any (field_any,
                                           env);
@@ -245,7 +247,7 @@ TAO_DynStruct_i::from_any (const CORBA_Any& any,
 }
 
 CORBA::Any_ptr
-TAO_DynStruct_i::to_any (CORBA::Environment& env)
+TAO_DynStruct_i::to_any (CORBA::Environment& _env)
 {
   TAO_OutputCDR out_cdr;
 
@@ -254,31 +256,35 @@ TAO_DynStruct_i::to_any (CORBA::Environment& env)
       // Each component must have been initialied.
       if (!this->da_members_[i].in ())
         {
-          env.exception (new CORBA_DynAny::Invalid);
+          _env.exception (new CORBA_DynAny::Invalid);
           return 0;
         }
 
-      CORBA_TypeCode_ptr field_tc = this->da_members_[i]->type (env);
+      CORBA_TypeCode_ptr field_tc = this->da_members_[i]->type (_env);
 
       // Recursive step
-      CORBA_Any_ptr field_any = this->da_members_[i]->to_any (env);
+      CORBA_Any_ptr field_any = this->da_members_[i]->to_any (_env);
 
-      ACE_Message_Block* field_mb =
-        ACE_Message_Block::duplicate (field_any->_tao_get_cdr ());
+      ACE_Message_Block* field_mb = field_any->_tao_get_cdr ();
 
       TAO_InputCDR field_cdr (field_mb);
 
       out_cdr.append (field_tc,
                       &field_cdr,
-                      env);
+                      _env);
 
       delete field_any;
     }
 
   TAO_InputCDR in_cdr (out_cdr);
 
-  return new CORBA_Any (this->type (env),
-                        in_cdr.start ());
+  CORBA_Any* retval;
+  ACE_NEW_THROW_RETURN (retval,
+                        CORBA_Any (this->type (_env),
+                                   in_cdr.start ()),
+                        CORBA::NO_MEMORY (),
+                        0);
+  return retval;
 }
 
 CORBA::TypeCode_ptr

@@ -16,7 +16,6 @@
 //
 // ============================================================================
 
-#include "tao/DynAny_i.h"
 #include "test_dynany.h"
 #include "data.h"
 
@@ -55,11 +54,13 @@ Test_DynAny::run_test (void)
                  "testing: constructor(Any)/insert/get\n"));
 
       CORBA_Any in1 (CORBA::_tc_double);
-      TAO_DynAny_i fa1 (in1);
-      fa1.insert_double (data.m_double1, 
-                        TAO_TRY_ENV);
+      CORBA_DynAny_ptr fa1 = this->orb_->create_dyn_any (in1,
+                                                         TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      CORBA::Double d_out = fa1.get_double (TAO_TRY_ENV);
+      fa1->insert_double (data.m_double1, 
+                          TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      CORBA::Double d_out = fa1->get_double (TAO_TRY_ENV);
       TAO_CHECK_ENV;
       if (d_out == data.m_double1)
         ACE_DEBUG ((LM_DEBUG,
@@ -71,13 +72,16 @@ Test_DynAny::run_test (void)
                  "testing: constructor(TypeCode)/from_any/to_any\n"));
 
       d_out = data.m_double2;
-      TAO_DynAny_i ftc1 (CORBA::_tc_double);
+      CORBA_DynAny_ptr ftc1 = 
+        this->orb_->create_basic_dyn_any (CORBA::_tc_double,
+                                          TAO_TRY_ENV);
+      TAO_CHECK_ENV;
       CORBA::Any in_any1;
       in_any1 <<= data.m_double1;
-      ftc1.from_any (in_any1, 
-                    TAO_TRY_ENV);
+      ftc1->from_any (in_any1, 
+                      TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      CORBA::Any* out_any1 = ftc1.to_any (TAO_TRY_ENV);
+      CORBA::Any* out_any1 = ftc1->to_any (TAO_TRY_ENV);
       TAO_CHECK_ENV;
       *out_any1 >>= d_out;
 
@@ -90,10 +94,12 @@ Test_DynAny::run_test (void)
       else 
         ++this->error_count_;
 
-      fa1.destroy (TAO_TRY_ENV);
+      fa1->destroy (TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      ftc1.destroy (TAO_TRY_ENV);
+      CORBA::release (fa1);
+      ftc1->destroy (TAO_TRY_ENV);
       TAO_CHECK_ENV;
+      CORBA::release (ftc1);
 
       ACE_DEBUG ((LM_DEBUG,
                  "\t*=*=*=*= %s =*=*=*=*\n",
@@ -103,14 +109,17 @@ Test_DynAny::run_test (void)
                  "testing: constructor(Any)/insert/get\n"));
 
       CORBA_Any in (CORBA::_tc_TypeCode);
-      TAO_DynAny_i fa2 (in);
-      fa2.insert_typecode (data.m_typecode1, 
-                           TAO_TRY_ENV);
+      CORBA_DynAny_ptr fa2 = 
+        this->orb_->create_dyn_any (in,
+                                    TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      CORBA::TypeCode_ptr tc_out = fa2.get_typecode (TAO_TRY_ENV);
+      fa2->insert_typecode (data.m_typecode1, 
+                            TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      if (tc_out->equal(data.m_typecode1,
-                        TAO_TRY_ENV))
+      CORBA::TypeCode_ptr tc_out = fa2->get_typecode (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      if (tc_out->equal (data.m_typecode1,
+                         TAO_TRY_ENV))
         ACE_DEBUG ((LM_DEBUG,
                    "++ OK ++\n"));
       else 
@@ -122,13 +131,16 @@ Test_DynAny::run_test (void)
                  "testing: constructor(TypeCode)/from_any/to_any\n"));
 
       tc_out = data.m_typecode2;
-      TAO_DynAny_i ftc2 (CORBA::_tc_TypeCode);
+      CORBA_DynAny_ptr ftc2 = 
+        this->orb_->create_basic_dyn_any (CORBA::_tc_TypeCode,
+                                          TAO_TRY_ENV);
+      TAO_CHECK_ENV;
       CORBA::Any in_any2;
       in_any2 <<= data.m_typecode1;
-      ftc2.from_any (in_any2, 
-                    TAO_TRY_ENV);
+      ftc2->from_any (in_any2, 
+                      TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      CORBA::Any* out_any2 = ftc2.to_any (TAO_TRY_ENV);
+      CORBA::Any* out_any2 = ftc2->to_any (TAO_TRY_ENV);
       TAO_CHECK_ENV;
       *out_any2 >>= tc_out;
 
@@ -144,10 +156,13 @@ Test_DynAny::run_test (void)
 
       TAO_CHECK_ENV;
 
-      fa2.destroy (TAO_TRY_ENV);
+      fa2->destroy (TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      ftc2.destroy (TAO_TRY_ENV);
+      CORBA::release (fa2);
+      ftc2->destroy (TAO_TRY_ENV);
       TAO_CHECK_ENV;
+      CORBA::release (ftc2);
+      CORBA::release (tc_out);
     }
   TAO_CATCHANY
     {

@@ -111,7 +111,7 @@ private:
 #if !defined (_CORBA_DYNANY_CH_)
 #define _CORBA_DYNANY_CH_
 
-class  CORBA_DynAny : public virtual ACE_CORBA_1 (Object)
+class TAO_Export CORBA_DynAny : public virtual ACE_CORBA_1 (Object)
 {
 public:
   // the static operations
@@ -136,7 +136,7 @@ public:
 #if !defined (_CORBA_DYNANY_INVALID_CH_)
 #define _CORBA_DYNANY_INVALID_CH_
 
-  class  Invalid : public CORBA::UserException
+  class TAO_Export Invalid : public CORBA::UserException
   {
   public:
     Invalid (void); // default ctor
@@ -173,7 +173,7 @@ public:
 #if !defined (_CORBA_DYNANY_INVALIDVALUE_CH_)
 #define _CORBA_DYNANY_INVALIDVALUE_CH_
 
-  class  InvalidValue : public CORBA::UserException
+  class TAO_Export InvalidValue : public CORBA::UserException
   {
   public:
     InvalidValue (void); // default ctor
@@ -210,7 +210,7 @@ public:
 #if !defined (_CORBA_DYNANY_TYPEMISMATCH_CH_)
 #define _CORBA_DYNANY_TYPEMISMATCH_CH_
 
-  class  TypeMismatch : public CORBA::UserException
+  class TAO_Export TypeMismatch : public CORBA::UserException
   {
   public:
     TypeMismatch (void); // default ctor
@@ -247,7 +247,7 @@ public:
 #if !defined (_CORBA_DYNANY_INVALIDSEQ_CH_)
 #define _CORBA_DYNANY_INVALIDSEQ_CH_
 
-  class  InvalidSeq : public CORBA::UserException
+  class TAO_Export InvalidSeq : public CORBA::UserException
   {
   public:
     InvalidSeq (void); // default ctor
@@ -550,7 +550,7 @@ private:
 #if !defined (_CORBA_DYNENUM_CH_)
 #define _CORBA_DYNENUM_CH_
 
-class  CORBA_DynEnum: public virtual CORBA_DynAny
+class TAO_Export CORBA_DynEnum: public virtual CORBA_DynAny
 {
 public:
   // the static operations
@@ -1021,7 +1021,7 @@ private:
 #if !defined (_CORBA_DYNSTRUCT_CH_)
 #define _CORBA_DYNSTRUCT_CH_
 
-class  CORBA_DynStruct: public virtual CORBA_DynAny
+class TAO_Export CORBA_DynStruct: public virtual CORBA_DynAny
 {
 public:
   // the static operations
@@ -1142,7 +1142,7 @@ private:
 #if !defined (_CORBA_DYNUNION_CH_)
 #define _CORBA_DYNUNION_CH_
 
-class  CORBA_DynUnion: public virtual CORBA_DynAny
+class TAO_Export CORBA_DynUnion: public virtual CORBA_DynAny
 {
 public:
   // the static operations
@@ -1571,7 +1571,7 @@ private:
 #if !defined (_CORBA_DYNSEQUENCE_CH_)
 #define _CORBA_DYNSEQUENCE_CH_
 
-class  CORBA_DynSequence: public virtual CORBA_DynAny
+class TAO_Export CORBA_DynSequence: public virtual CORBA_DynAny
 {
 public:
   // the static operations
@@ -1693,7 +1693,7 @@ private:
 #if !defined (_CORBA_DYNARRAY_CH_)
 #define _CORBA_DYNARRAY_CH_
 
-class  CORBA_DynArray: public virtual CORBA_DynAny
+class TAO_Export CORBA_DynArray: public virtual CORBA_DynAny
 {
 public:
   // the static operations
