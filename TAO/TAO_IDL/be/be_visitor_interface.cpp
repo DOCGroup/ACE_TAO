@@ -240,11 +240,15 @@ int be_visitor_collocated_ss::visit_interface (be_interface *node)
   // the base class!
   // I wish I never have to know why the symbol table for
   // MSVC++ can get so confused ;-) (coryan)
-  *ss << ": " << node->local_name () << " (stub)," << be_nl;
+  *ss << ": " << node->local_name ()
+      << " (stub, servant, CORBA::B_TRUE)," << be_nl;
 #else
-  *ss << ": " << node->name () << " (stub)," << be_nl;
+  *ss << ": " << node->name ()
+      << " (stub, servant, CORBA::B_TRUE)," << be_nl;
 #endif /* ACE_WIN32 */
 
+  // @@ We should call the constructor for all base classes, since we
+  // are using multiple inheritance.
   if (this->current_interface_->n_inherits () > 0)
     {
       for (int i = 0; i < node->n_inherits (); ++i)
@@ -268,7 +272,8 @@ int be_visitor_collocated_ss::visit_interface (be_interface *node)
 	}
     }
 
-  *ss << "  servant_ (servant)";
+  *ss << "  CORBA::Object (stub, servant, CORBA::B_TRUE)," << be_nl
+      << "  servant_ (servant)";
 
   *ss << "\n";
   ss->decr_indent ();

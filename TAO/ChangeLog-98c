@@ -1,3 +1,16 @@
+Mon Jan 19 13:58:01 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface.cpp: 
+	* TAO_IDL/be/be_interface.cpp: 
+	  Fixed operation table initialization, also called proper
+	  constructor for CORBA::Object in collocated classes.
+
+	* tao/corba.h: 
+	  More include reordering.
+
+	* tao/servant_base.h: 
+	  The operation table was not properly initialized.
+
 Mon Jan 19 11:28:47 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* Merged changes from main_to_poa_merge_9 up to

@@ -86,11 +86,12 @@
 
 // Defines CORBA namespace
 #include "tao/corbacom.h"
-#include "tao/objkeyC.h"
 
 // individual CORBA classes
 #include "tao/sequence.h"
 #include "tao/sequence_T.h"
+
+#include "tao/objkeyC.h"
 
 typedef TAO_Unbounded_Sequence<CORBA::Octet> TAO_opaque;
 extern CORBA::TypeCode TC_opaque;
