@@ -1,3 +1,8 @@
+Thu Dec 18 15:37:36 1997  James C Hu  <jxh@cs.wustl.edu>
+
+	* server/IO.cpp: Modified to account for changes in ACE_Filecache
+	  to not map file on NT.
+
 Tue Dec 16 09:29:11 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * server/Makefile: expanded rules.bin.GNU, but without
