@@ -4,7 +4,7 @@
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=Simple Grid Server - Win32 Alpha Release
+CFG=Simple Grid Server - Win32 Release
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -13,7 +13,7 @@ CFG=Simple Grid Server - Win32 Alpha Release
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "server.mak" CFG="Simple Grid Server - Win32 Alpha Release"
+!MESSAGE NMAKE /f "server.mak" CFG="Simple Grid Server - Win32 Release"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
@@ -125,12 +125,13 @@ SOURCE=.\Grid.idl
 
 !IF  "$(CFG)" == "Simple Grid Server - Win32 Release"
 
+USERDEP__GRID_="..\..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\Grid.idl
 InputName=Grid
 
 BuildCmds= \
-	..\..\..\tao_idl\Release\tao_idl $(InputName).idl
+	..\..\..\..\bin\Release\tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -162,12 +163,13 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "Simple Grid Server - Win32 Debug"
 
+USERDEP__GRID_="..\..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\Grid.idl
 InputName=Grid
 
 BuildCmds= \
-	..\..\..\tao_idl\tao_idl $(InputName).idl
+	..\..\..\..\bin\tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
