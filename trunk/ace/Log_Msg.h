@@ -231,11 +231,17 @@ public:
 
   /**
    * Enable the bits in the logger's options flags.
-   * Disable the bits in the logger's options flags.
-   * Return the bits in the logger's options flags.
    */
   void set_flags (u_long f);
+
+  /**
+   * Disable the bits in the logger's options flags.
+   */
   void clr_flags (u_long f);
+
+  /**
+   * Return the bits in the logger's options flags.
+   */
   u_long flags (void);
 
   /** @name Allow apps to acquire and release internal synchronization
@@ -374,20 +380,30 @@ public:
   // These functions are disabled without ACE_LEGACY_MODE
   // because the *semantics* have changed (the objects are no longer
   // TSS).
-  /// Get/Set TSS exception action.
+  /// Get TSS exception action.
   /// NOTE: The action is no longer TSS, they are global!
   ACE_SEH_EXCEPT_HANDLER seh_except_selector (void);
+
+  /// Set TSS exception action.
+  /// NOTE: The action is no longer TSS, they are global!
   ACE_SEH_EXCEPT_HANDLER seh_except_selector (ACE_SEH_EXCEPT_HANDLER);
 
-  /// Get/Set TSS exception handler.
+  /// Get TSS exception handler.
   /// NOTE: The handler is no longer TSS, they are global!
   ACE_SEH_EXCEPT_HANDLER seh_except_handler (void);
+
+  /// Set TSS exception handler.
+  /// NOTE: The handler is no longer TSS, they are global!
   ACE_SEH_EXCEPT_HANDLER seh_except_handler (ACE_SEH_EXCEPT_HANDLER);
 #endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS && ACE_LEGACY_MODE */
 
-  // = Stop/start/query tracing status on a per-thread basis...
+  /// Stop tracing status on a per-thread basis...
   void stop_tracing (void);
+
+  /// Start tracing status on a per-thread basis...
   void start_tracing (void);
+
+  /// Query tracing status on a per-thread basis...
   int  tracing_enabled (void);
 
   typedef enum
@@ -633,14 +649,17 @@ private:
   /**
    * Number of existing Log_Msg instances; when 0, delete program/host
    * names
-   * Priority mask to use for each new instance
    */
   static int instance_count_;
+
+  /**
+   * Priority mask to use for each new instance
+   */
   static u_long default_priority_mask_;
 
-  // Anonymous struct since there will only be one instance.  This
-  // struct keeps information stored away in case we actually end up
-  // calling log() if the log priority is correct.
+  /// Anonymous struct since there will only be one instance.  This
+  /// struct keeps information stored away in case we actually end up
+  /// calling log() if the log priority is correct.
   struct
   {
     int is_set_;

@@ -1,3 +1,8 @@
+Thu Apr 25 07:34:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Log_Msg.h:
+          Doxygen-ized some of the comments
+
 Wed Apr 24 18:53:56 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* include/makeinclude/rules.local.GNU (clean.local): Reverted the
