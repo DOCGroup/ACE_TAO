@@ -1,3 +1,9 @@
+Thu May 18 20:40:37 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Makefile:
+          More tweaking to get CDR_Array_Test *not* to compile on LynxOS
+          but to compile in other platforms.
+
 Thu May 18 15:59:10 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * tests/CDR_File_Test.cpp:
