@@ -1,3 +1,8 @@
+Wed Oct 29 10:50:36 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/RTCORBA/RT_Transport_Descriptor.cpp: Added a missing
+	  include. 
+
 Wed Oct 29 10:23:42 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Object_Proxy_Broker.h:
