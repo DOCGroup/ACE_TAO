@@ -186,7 +186,7 @@ protected:
 
 typedef ACE_Singleton<TAO_AV_Core, ACE_Null_Mutex> TAO_AV_CORE;
 
-TAO_AV_SINGLETON_DECLARE (ACE_Singleton, TAO_AV_Core, ACE_Null_Mutex);
+TAO_AV_SINGLETON_DECLARE (ACE_Singleton, TAO_AV_Core, ACE_Null_Mutex)
 
 #include "ace/post.h"
 #endif /* TAO_AV_CORE_H */
