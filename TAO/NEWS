@@ -1,18 +1,17 @@
 PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 ===========================================================================
 
-
-PLANNED MAJOR CHANGES TARGETED FOR TAO-1.4.3
-============================================
-
 - (Johnny/Ossama) Bug 1420-Protocols in Transport Cache not amenable for
   strict policy enforcement
 
-  . Not started yet
-
 - (Johnny/Ossama) Location Forwarding fixes
 
-  . Not started yet
+- (Johnny/Ossama) POA refactoring/modularization
+
+  . ONGOING - ETA 10/10
+
+PLANNED MAJOR CHANGES TARGETED FOR TAO-1.4.3
+============================================
 
 - (Ossama) Typecode overhaul
 
@@ -25,10 +24,6 @@ PLANNED MAJOR CHANGES TARGETED FOR TAO-1.4.3
 - (Ossama/Jeff) Skeleton refactoring
 
   . ONGOING - ETA 10/30
-
-- (Johnny/Ossama) POA refactoring/modularization
-
-  . ONGOING - ETA 10/10
 
 - (JTC/Ossama) autoconf support for TAO
 
