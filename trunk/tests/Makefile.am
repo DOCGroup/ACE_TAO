@@ -22,7 +22,7 @@ AUTOMAKE_OPTIONS = 1.4
 
 INCLUDES = -I$(top_builddir) -I$(top_srcdir)
 
-## LDFLAGS = 
+## LDFLAGS =
 ## Libtool will automatically link against the "proper" library.
 ## Do not change the "libACE.la."  It is not a typographical error!
 ##
@@ -41,7 +41,7 @@ noinst_SCRIPTS = \
 if COMPILE_XTREACTOR_TEST
 XTREACTOR_TEST = XtReactor_Test
 else
-XTREACTOR_TEST = 
+XTREACTOR_TEST =
 endif
 
 ## Build the shared library needed for the DLL_Test
@@ -80,6 +80,7 @@ check_PROGRAMS = \
   MT_SOCK_Test \
   Map_Manager_Test \
   Map_Test \
+  MEM_Stream_Test \
   Mem_Map_Test \
   Message_Block_Test \
   Message_Queue_Notifications_Test \
@@ -317,7 +318,7 @@ TESTS = $(check_PROGRAMS)
 endif
 
 ## Set up the test environment
-##TESTS_ENVIRONMENT = 
+##TESTS_ENVIRONMENT =
 
 EXTRA_DIST = $(noinst_SCRIPTS) $(noinst_DATA)
 
