@@ -154,8 +154,8 @@ ACE_Reactor::run_reactor_event_loop (REACTOR_EVENT_HOOK eh)
       else if (result == -1)
         return -1;
     }
-  /* NOTREACHED */
-  return 0;
+
+  ACE_NOTREACHED (return 0;)
 }
 
 int
@@ -174,8 +174,8 @@ ACE_Reactor::run_alertable_reactor_event_loop (REACTOR_EVENT_HOOK eh)
       else if (result == -1)
         return -1;
     }
-  /* NOTREACHED */
-  return 0;
+
+  ACE_NOTREACHED (return 0;)
 }
 
 int
@@ -196,8 +196,7 @@ ACE_Reactor::run_reactor_event_loop (ACE_Time_Value &tv,
         return result;
     }
 
-  /* NOTREACHED */
-  return 0;
+  ACE_NOTREACHED (return 0;)
 }
 
 int
@@ -218,8 +217,7 @@ ACE_Reactor::run_alertable_reactor_event_loop (ACE_Time_Value &tv,
         return result;
     }
 
-  /* NOTREACHED */
-  return 0;
+  ACE_NOTREACHED (return 0;)
 }
 
 int

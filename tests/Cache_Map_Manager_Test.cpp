@@ -357,7 +357,7 @@ functionality_test_cache (MAP_CACHING_STRATEGY &caching_strategy)
       ACE_UNUSED_ARG (result);
 
       if (debug)
-        ACE_DEBUG ((LM_DEBUG, "keys[%d]=%d value=[%d]=%d\n",
+        ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("keys[%d]=%d value=[%d]=%d\n"),
                     i, i, j, j));
       ++counter;
       ACE_ASSERT (cache.current_size () == counter);
@@ -434,7 +434,7 @@ test_caching_strategy_type (void)
   switch (caching_strategy_type)
     {
     case ACE_NULL:
-      ACE_DEBUG ((LM_DEBUG, "\nNull_Caching_Strategy\n\n"));
+      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nNull_Caching_Strategy\n\n")));
       ACE_NEW (map_caching_strategy,
                MAP_NULL_ADAPTER);
       ACE_NEW (hash_map_caching_strategy,
@@ -442,7 +442,7 @@ test_caching_strategy_type (void)
       break;
 
     case ACE_LRU:
-      ACE_DEBUG ((LM_DEBUG, "\nLRU_Caching_Strategy\n\n"));
+      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nLRU_Caching_Strategy\n\n")));
       ACE_NEW (map_caching_strategy,
                MAP_LRU_ADAPTER);
       ACE_NEW (hash_map_caching_strategy,
@@ -450,7 +450,7 @@ test_caching_strategy_type (void)
       break;
 
     case ACE_LFU:
-      ACE_DEBUG ((LM_DEBUG, "\nLFU_Caching_Strategy\n\n"));
+      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nLFU_Caching_Strategy\n\n")));
       ACE_NEW (map_caching_strategy,
                MAP_LFU_ADAPTER);
       ACE_NEW (hash_map_caching_strategy,
@@ -458,7 +458,7 @@ test_caching_strategy_type (void)
       break;
 
     case ACE_FIFO:
-      ACE_DEBUG ((LM_DEBUG, "\nFIFO_Caching_Strategy\n\n"));
+      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nFIFO_Caching_Strategy\n\n")));
       ACE_NEW (map_caching_strategy,
                MAP_FIFO_ADAPTER);
       ACE_NEW (hash_map_caching_strategy,
@@ -490,13 +490,13 @@ parse_args (int argc, ASYS_TCHAR *argv[])
     switch (cc)
       {
       case 'c':
-        if (ACE_OS::strcmp (get_opt.optarg, "null") == 0)
+        if (ACE_OS::strcmp (get_opt.optarg, ASYS_TEXT ("null")) == 0)
           caching_strategy_type = ACE_NULL;
-        if (ACE_OS::strcmp (get_opt.optarg, "lru") == 0)
+        if (ACE_OS::strcmp (get_opt.optarg, ASYS_TEXT ("lru")) == 0)
           caching_strategy_type = ACE_LRU;
-        if (ACE_OS::strcmp (get_opt.optarg, "lfu") == 0)
+        if (ACE_OS::strcmp (get_opt.optarg, ASYS_TEXT ("lfu")) == 0)
           caching_strategy_type = ACE_LFU;
-        if (ACE_OS::strcmp (get_opt.optarg, "fifo") == 0)
+        if (ACE_OS::strcmp (get_opt.optarg, ASYS_TEXT ("fifo")) == 0)
           caching_strategy_type = ACE_FIFO;
         break;
       case 'i':

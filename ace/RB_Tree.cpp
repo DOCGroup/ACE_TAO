@@ -139,8 +139,8 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_rotate_right (ACE_RB_Tre
   if (! x)
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("\nerror: x is a null pointer in "
-                           "ACE_RB_Tree<EXT_ID, INT_ID>::RB_rotate_right\n")));
+                ASYS_TEXT ("\nerror: x is a null pointer in ")
+                ASYS_TEXT ("ACE_RB_Tree<EXT_ID, INT_ID>::RB_rotate_right\n")));
   else if (! (x->left()))
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("%p\n"),
@@ -178,8 +178,8 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_rotate_left (ACE_RB_Tree
   if (! x)
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("\nerror: x is a null pointer in "
-                           "ACE_RB_Tree<EXT_ID, INT_ID>::RB_rotate_left\n")));
+                ASYS_TEXT ("\nerror: x is a null pointer in ")
+                ASYS_TEXT ("ACE_RB_Tree<EXT_ID, INT_ID>::RB_rotate_left\n")));
   else if (! (x->right()))
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("%p\n"),
