@@ -36,7 +36,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 5.3.2.
    */
 #if (PACE_HAS_POSIX_FS_UOF)
-  PACE_INLINE int pace_creat (const char * path, pace_mode_t mode);
+  PACE_Export PACE_INLINE int pace_creat (const char * path, pace_mode_t mode);
   /* WIN32 doesn't correctly return a file desciptor. WIN32 doesn't use
      integers to represent file handles. Instead, we return 1 for success
      and -1 for failure.
@@ -55,7 +55,9 @@ extern "C" {
 # endif /* PACE_WIN32 */
 
 # if defined (PACE_VXWORKS) && PACE_VXWORKS
-  PACE_INLINE int pace_fcntl(PACE_HANDLE fildes, int cmd, long arg) { PACE_ERRNO_NO_SUPPORT_RETURN (-1); }
+  PACE_Export PACE_INLINE int pace_fcntl(PACE_HANDLE fildes,
+                                         int cmd,
+                                         long arg);
 # else
 #  define pace_fcntl fcntl
 # endif /* ! PACE_VXWORKS */

@@ -36,7 +36,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 12.1.2.
      */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_mlock (const void * addr, pace_size_t len);
+  PACE_Export PACE_INLINE int pace_mlock (const void * addr, pace_size_t len);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -45,7 +45,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 12.1.1.
      */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_mlockall (int flags);
+  PACE_Export PACE_INLINE int pace_mlockall (int flags);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -54,12 +54,12 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 12.2.1.
      */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE void * pace_mmap (void * addr,
-                                pace_size_t len,
-                                int prot,
-                                int flags,
-                                PACE_HANDLE fildes,
-                                pace_off_t off);
+  PACE_Export PACE_INLINE void * pace_mmap (void * addr,
+                                            pace_size_t len,
+                                            int prot,
+                                            int flags,
+                                            PACE_HANDLE fildes,
+                                            pace_off_t off);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -68,9 +68,9 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 12.2.3.
      */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_mprotect (void * addr,
-                                 pace_size_t len,
-                                 int prot);
+  PACE_Export PACE_INLINE int pace_mprotect (void * addr,
+                                             pace_size_t len,
+                                             int prot);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -79,9 +79,9 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 12.2.4.
      */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_msync (void * addr,
-                              pace_size_t len,
-                              int flags);
+  PACE_Export PACE_INLINE int pace_msync (void * addr,
+                                          pace_size_t len,
+                                          int flags);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -90,7 +90,8 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 12.1.2.
      */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_munlock (const void * addr, pace_size_t len);
+  PACE_Export PACE_INLINE int pace_munlock (const void * addr,
+                                            pace_size_t len);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -99,7 +100,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 12.1.1.
      */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_munlockall ();
+  PACE_Export PACE_INLINE int pace_munlockall ();
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -108,7 +109,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 12.2.2.
      */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_munmap (void * addr, pace_size_t len);
+  PACE_Export PACE_INLINE int pace_munmap (void * addr, pace_size_t len);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -117,9 +118,9 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 12.3.1.
      */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE PACE_HANDLE pace_shm_open (const char * name,
-                                         int oflag,
-                                         pace_mode_t mode);
+  PACE_Export PACE_INLINE PACE_HANDLE pace_shm_open (const char * name,
+                                                     int oflag,
+                                                     pace_mode_t mode);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
   /* Requires PACE_POSIX_C_SOURCE > 2. */
 
@@ -129,7 +130,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 12.3.2.
      */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_shm_unlink (const char * name);
+  PACE_Export PACE_INLINE int pace_shm_unlink (const char * name);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
   /* Requires PACE_POSIX_C_SOURCE > 2. */
 

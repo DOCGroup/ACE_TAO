@@ -36,7 +36,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_DI_UOF)
-  PACE_INLINE void pace_clearerr (PACE_FILE * stream);
+  PACE_Export PACE_INLINE void pace_clearerr (PACE_FILE * stream);
 #endif /* PACE_HAS_POSIX_DI_UOF */
 
   /**
@@ -45,7 +45,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 4.7.1.
      */
 #if (PACE_HAS_POSIX_DS_UOF)
-  PACE_INLINE char * pace_ctermid (char * s);
+  PACE_Export PACE_INLINE char * pace_ctermid (char * s);
 #endif /* PACE_HAS_POSIX_DS_UOF */
 
   /**
@@ -54,7 +54,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_DI_UOF)
-  PACE_INLINE int pace_fclose (PACE_FILE * stream);
+  PACE_Export PACE_INLINE int pace_fclose (PACE_FILE * stream);
 #endif /* PACE_HAS_POSIX_DI_UOF */
 
   /**
@@ -63,7 +63,8 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.2.2.
      */
 #if (PACE_HAS_POSIX_DI_UOF)
-  PACE_INLINE PACE_FILE * pace_fdopen (int fildes, const char * type);
+  PACE_Export PACE_INLINE PACE_FILE * pace_fdopen (int fildes,
+                                                   const char * type);
 #endif /* PACE_HAS_POSIX_DI_UOF */
 
   /**
@@ -72,7 +73,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_DI_UOF)
-  PACE_INLINE int pace_ferror (PACE_FILE * stream);
+  PACE_Export PACE_INLINE int pace_ferror (PACE_FILE * stream);
 #endif /* PACE_HAS_POSIX_DI_UOF */
 
   /**
@@ -81,7 +82,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_DI_UOF)
-  PACE_INLINE int pace_feof (PACE_FILE * stream);
+  PACE_Export PACE_INLINE int pace_feof (PACE_FILE * stream);
 #endif /* PACE_HAS_POSIX_DI_UOF */
 
   /**
@@ -90,7 +91,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_DI_UOF)
-  PACE_INLINE int pace_fflush (PACE_FILE * stream);
+  PACE_Export PACE_INLINE int pace_fflush (PACE_FILE * stream);
 #endif /* PACE_HAS_POSIX_DI_UOF */
 
   /**
@@ -99,7 +100,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.2.1.
      */
 #if (PACE_HAS_POSIX_DI_UOF)
-  PACE_INLINE int pace_fileno (PACE_FILE * stream);
+  PACE_Export PACE_INLINE int pace_fileno (PACE_FILE * stream);
 #endif /* PACE_HAS_POSIX_DI_UOF */
 
   /**
@@ -108,14 +109,14 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_DI_UOF)
-  PACE_INLINE int pace_fgetc (PACE_FILE * stream);
+  PACE_Export PACE_INLINE int pace_fgetc (PACE_FILE * stream);
 #endif /* PACE_HAS_POSIX_DI_UOF */
 
   /**
     C std 7.19.9.1
     */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_fgetpos(PACE_FILE * stream,
+  PACE_Export PACE_INLINE int pace_fgetpos(PACE_FILE * stream,
                                pace_fpos_t * pos);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
@@ -125,7 +126,8 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_DI_UOF)
-  PACE_INLINE char * pace_fgets (char * s, int n, PACE_FILE * stream);
+  PACE_Export PACE_INLINE char * pace_fgets (char * s, int n,
+                                             PACE_FILE * stream);
 #endif /* PACE_HAS_POSIX_DI_UOF */
 
   /**
@@ -134,7 +136,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.2.6.
      */
 #if (PACE_HAS_POSIX_FL_UOF)
-  PACE_INLINE void pace_flockfile (PACE_FILE * file);
+  PACE_Export PACE_INLINE void pace_flockfile (PACE_FILE * file);
 #endif /* PACE_HAS_POSIX_FL_UOF */
   /* Requires PACE_HAS_REENTRANT. */
 
@@ -144,7 +146,8 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_DI_UOF)
-  PACE_INLINE PACE_FILE * pace_fopen (const char * filename, const char * mode);
+  PACE_Export PACE_INLINE PACE_FILE * pace_fopen (const char * filename,
+                                                  const char * mode);
 #endif /* PACE_HAS_POSIX_DI_UOF */
 
   /**
@@ -163,7 +166,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_DI_UOF)
-  PACE_INLINE int pace_fputc (int c, PACE_FILE * stream);
+  PACE_Export PACE_INLINE int pace_fputc (int c, PACE_FILE * stream);
 #endif /* PACE_HAS_POSIX_DI_UOF */
 
   /**
@@ -172,7 +175,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_DI_UOF)
-  PACE_INLINE int pace_fputs (const char * s, PACE_FILE * stream);
+  PACE_Export PACE_INLINE int pace_fputs (const char * s, PACE_FILE * stream);
 #endif /* PACE_HAS_POSIX_DI_UOF */
 
   /**
@@ -181,10 +184,10 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_DI_UOF)
-  PACE_INLINE pace_size_t pace_fread (void * ptr,
-                                      pace_size_t size,
-                                      pace_size_t number_of_items,
-                                      PACE_FILE * stream);
+  PACE_Export PACE_INLINE pace_size_t pace_fread (void * ptr,
+                                                  pace_size_t size,
+                                                  pace_size_t number_of_items,
+                                                  PACE_FILE * stream);
 #endif /* PACE_HAS_POSIX_DI_UOF */
 
   /**
@@ -193,9 +196,9 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_DI_UOF)
-  PACE_INLINE FILE * pace_freopen (const char * filename,
-                                   const char * mode,
-                                   PACE_FILE * stream);
+  PACE_Export PACE_INLINE FILE * pace_freopen (const char * filename,
+                                               const char * mode,
+                                               PACE_FILE * stream);
 #endif /* PACE_HAS_POSIX_DI_UOF */
 
   /**
@@ -214,14 +217,17 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_FM_UOF)
-  PACE_INLINE int pace_fseek (PACE_FILE * stream, long offset, int whence);
+  PACE_Export PACE_INLINE int pace_fseek (PACE_FILE * stream,
+                                          long offset,
+                                          int whence);
 #endif /* PACE_HAS_POSIX_FM_UOF */
 
   /**
     C std 7.19.9.3
     */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_fsetpos(PACE_FILE *stream, const pace_fpos_t *pos);
+  PACE_Export PACE_INLINE int pace_fsetpos(PACE_FILE *stream,
+                                           const pace_fpos_t *pos);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -230,7 +236,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_FM_UOF)
-  PACE_INLINE long pace_ftell (PACE_FILE * stream);
+  PACE_Export PACE_INLINE long pace_ftell (PACE_FILE * stream);
 #endif /* PACE_HAS_POSIX_FM_UOF */
 
   /**
@@ -239,7 +245,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.2.6.
      */
 #if (PACE_HAS_POSIX_FL_UOF)
-  PACE_INLINE int pace_ftrylockfile (PACE_FILE * file);
+  PACE_Export PACE_INLINE int pace_ftrylockfile (PACE_FILE * file);
 #endif /* PACE_HAS_POSIX_FL_UOF */
   /* Requires PACE_HAS_REENTRANT. */
 
@@ -249,7 +255,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.2.6.
      */
 #if (PACE_HAS_POSIX_FL_UOF)
-  PACE_INLINE void pace_funlockfile (PACE_FILE * file);
+  PACE_Export PACE_INLINE void pace_funlockfile (PACE_FILE * file);
 #endif /* PACE_HAS_POSIX_FL_UOF */
   /* Requires PACE_HAS_REENTRANT. */
 
@@ -257,9 +263,10 @@ extern "C" {
     C std 7.19.8.2
     */
 #if (PACE_HAS_POSIX_DI_UOF)
-  PACE_INLINE pace_size_t pace_fwrite(const void * ptr,
-                       pace_size_t size, pace_size_t nmemb,
-                       PACE_FILE * stream);
+  PACE_Export PACE_INLINE pace_size_t pace_fwrite(const void * ptr,
+                                                  pace_size_t size,
+                                                  pace_size_t nmemb,
+                                                  PACE_FILE * stream);
 #endif /* PACE_HAS_POSIX_DI_UOF */
 
   /**
@@ -268,7 +275,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_DI_UOF)
-  PACE_INLINE int pace_getc (PACE_FILE * stream);
+  PACE_Export PACE_INLINE int pace_getc (PACE_FILE * stream);
 #endif /* PACE_HAS_POSIX_DI_UOF */
 
   /**
@@ -277,7 +284,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.2.7.
      */
 #if (PACE_HAS_POSIX_FL_UOF)
-  PACE_INLINE int pace_getc_unlocked (PACE_FILE * stream);
+  PACE_Export PACE_INLINE int pace_getc_unlocked (PACE_FILE * stream);
 #endif /* PACE_HAS_POSIX_FL_UOF */
   /* Requires PACE_HAS_REENTRANT. */
 
@@ -287,7 +294,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_DI_UOF)
-  PACE_INLINE int pace_getchar ();
+  PACE_Export PACE_INLINE int pace_getchar ();
 #endif /* PACE_HAS_POSIX_DI_UOF */
 
   /**
@@ -296,7 +303,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.2.7.
      */
 #if (PACE_HAS_POSIX_FL_UOF)
-  PACE_INLINE int pace_getchar_unlocked ();
+  PACE_Export PACE_INLINE int pace_getchar_unlocked ();
 #endif /* PACE_HAS_POSIX_FL_UOF */
   /* Requires PACE_HAS_REENTRANT. */
 
@@ -306,7 +313,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_DI_UOF)
-  PACE_INLINE char *pace_gets (char * s);
+  PACE_Export PACE_INLINE char *pace_gets (char * s);
 #endif /* PACE_HAS_POSIX_DI_UOF */
 
   /**
@@ -315,7 +322,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_DI_UOF)
-  PACE_INLINE void pace_perror (const char * s);
+  PACE_Export PACE_INLINE void pace_perror (const char * s);
 #endif /* PACE_HAS_POSIX_DI_UOF */
 
   /**
@@ -334,7 +341,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_DI_UOF)
-  PACE_INLINE int pace_putc (int c, PACE_FILE * stream);
+  PACE_Export PACE_INLINE int pace_putc (int c, PACE_FILE * stream);
 #endif /* PACE_HAS_POSIX_DI_UOF */
 
   /**
@@ -343,7 +350,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.2.7.
      */
 #if (PACE_HAS_POSIX_FL_UOF)
-  PACE_INLINE int pace_putc_unlocked (int c, PACE_FILE * stream);
+  PACE_Export PACE_INLINE int pace_putc_unlocked (int c, PACE_FILE * stream);
 #endif /* PACE_HAS_POSIX_FL_UOF */
   /* Requires PACE_HAS_REENTRANT. */
 
@@ -353,7 +360,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_DI_UOF)
-  PACE_INLINE int pace_putchar (int c);
+  PACE_Export PACE_INLINE int pace_putchar (int c);
 #endif /* PACE_HAS_POSIX_DI_UOF */
 
   /**
@@ -362,7 +369,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.2.7.
      */
 #if (PACE_HAS_POSIX_FL_UOF)
-  PACE_INLINE int pace_putchar_unlocked (int c);
+  PACE_Export PACE_INLINE int pace_putchar_unlocked (int c);
 #endif /* PACE_HAS_POSIX_FL_UOF */
   /* Requires PACE_HAS_REENTRANT. */
 
@@ -372,7 +379,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_DI_UOF)
-  PACE_INLINE int pace_puts (const char * s);
+  PACE_Export PACE_INLINE int pace_puts (const char * s);
 #endif /* PACE_HAS_POSIX_DI_UOF */
 
   /**
@@ -381,7 +388,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_FS_UOF)
-  PACE_INLINE int pace_remove (const char * path);
+  PACE_Export PACE_INLINE int pace_remove (const char * path);
 #endif /* PACE_HAS_POSIX_FS_UOF */
 
   /**
@@ -390,8 +397,8 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 5.5.3.
      */
 #if (PACE_HAS_POSIX_FS_UOF)
-  PACE_INLINE int pace_rename (const char * old_name,
-                               const char * new_name);
+  PACE_Export PACE_INLINE int pace_rename (const char * old_name,
+                                           const char * new_name);
 #endif /* PACE_HAS_POSIX_FS_UOF */
 
   /**
@@ -400,7 +407,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_FM_UOF)
-  PACE_INLINE void pace_rewind (PACE_FILE * stream);
+  PACE_Export PACE_INLINE void pace_rewind (PACE_FILE * stream);
 #endif /* PACE_HAS_POSIX_FM_UOF */
 
   /**
@@ -429,7 +436,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_DI_UOF)
-  PACE_INLINE void pace_setbuf (PACE_FILE * stream, char * buf);
+  PACE_Export PACE_INLINE void pace_setbuf (PACE_FILE * stream, char * buf);
 #endif /* PACE_HAS_POSIX_DI_UOF */
 
 
@@ -437,9 +444,9 @@ extern "C" {
     C std 7.19.5.6
     */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_setvbuf(PACE_FILE * stream,
-                               char * buf,
-                               int mode, pace_size_t size);
+  PACE_Export PACE_INLINE int pace_setvbuf(PACE_FILE * stream,
+                                           char * buf,
+                                           int mode, pace_size_t size);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
   /**
      PACE's implementation of the POSIX function sscanf.
@@ -457,7 +464,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_FS_UOF)
-  PACE_INLINE FILE * pace_tmpfile ();
+  PACE_Export PACE_INLINE FILE * pace_tmpfile ();
 #endif /* PACE_HAS_POSIX_FS_UOF */
 
   /**
@@ -466,7 +473,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_FS_UOF)
-  PACE_INLINE char * pace_tmpnam (char * s);
+  PACE_Export PACE_INLINE char * pace_tmpnam (char * s);
 #endif /* PACE_HAS_POSIX_FS_UOF */
 
   /**
@@ -475,33 +482,33 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_DI_UOF)
-  PACE_INLINE int pace_ungetc (int c, FILE * stream);
+  PACE_Export PACE_INLINE int pace_ungetc (int c, FILE * stream);
 #endif /* PACE_HAS_POSIX_DI_UOF */
 
   /**
     C std 7.19.6.8
     */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_vfprintf (PACE_FILE * stream,
-                                 const char * format,
-                                 va_list arg);
+  PACE_Export PACE_INLINE int pace_vfprintf (PACE_FILE * stream,
+                                             const char * format,
+                                             va_list arg);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
     C std 7.19.6.10
     */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_vprintf (const char * format,
-                                va_list arg);
+  PACE_Export PACE_INLINE int pace_vprintf (const char * format,
+                                            va_list arg);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
     C std 7.19.6.13
     */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_vsprintf (char * s,
-                                 const char * format,
-                                 va_list arg);
+  PACE_Export PACE_INLINE int pace_vsprintf (char * s,
+                                             const char * format,
+                                             va_list arg);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
 #if defined (PACE_HAS_INLINE)

@@ -36,7 +36,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE double pace_acos (double x);
+  PACE_Export PACE_INLINE double pace_acos (double x);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -45,7 +45,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE double pace_asin (double x);
+  PACE_Export PACE_INLINE double pace_asin (double x);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -54,7 +54,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE double pace_atan (double x);
+  PACE_Export PACE_INLINE double pace_atan (double x);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -63,7 +63,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE double pace_atan2 (double x, double y);
+  PACE_Export PACE_INLINE double pace_atan2 (double x, double y);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -72,7 +72,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE double pace_cos (double x);
+  PACE_Export PACE_INLINE double pace_cos (double x);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -81,7 +81,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE double pace_sin (double x);
+  PACE_Export PACE_INLINE double pace_sin (double x);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -90,7 +90,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE double pace_tan (double x);
+  PACE_Export PACE_INLINE double pace_tan (double x);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -99,7 +99,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE double pace_cosh (double x);
+  PACE_Export PACE_INLINE double pace_cosh (double x);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -108,7 +108,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE double pace_sinh (double x);
+  PACE_Export PACE_INLINE double pace_sinh (double x);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -117,7 +117,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE double pace_tanh (double x);
+  PACE_Export PACE_INLINE double pace_tanh (double x);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -126,7 +126,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE double pace_exp (double x);
+  PACE_Export PACE_INLINE double pace_exp (double x);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -135,7 +135,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE double pace_frexp (double x, int * exp);
+  PACE_Export PACE_INLINE double pace_frexp (double x, int * exp);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -144,7 +144,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE double pace_ldexp (double x, int exp);
+  PACE_Export PACE_INLINE double pace_ldexp (double x, int exp);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -153,7 +153,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE double pace_log (double x);
+  PACE_Export PACE_INLINE double pace_log (double x);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -162,7 +162,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE double pace_log10 (double x);
+  PACE_Export PACE_INLINE double pace_log10 (double x);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -171,7 +171,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE double pace_modf (double x, double * iptr);
+  PACE_Export PACE_INLINE double pace_modf (double x, double * iptr);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -180,7 +180,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE double pace_pow (double x, double y);
+  PACE_Export PACE_INLINE double pace_pow (double x, double y);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -189,7 +189,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE double pace_sqrt (double x);
+  PACE_Export PACE_INLINE double pace_sqrt (double x);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -198,7 +198,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE double pace_ceil (double x);
+  PACE_Export PACE_INLINE double pace_ceil (double x);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -207,7 +207,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE double pace_fabs (double x);
+  PACE_Export PACE_INLINE double pace_fabs (double x);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -216,7 +216,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE double pace_floor (double x);
+  PACE_Export PACE_INLINE double pace_floor (double x);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -225,7 +225,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE double pace_fmod (double x, double y);
+  PACE_Export PACE_INLINE double pace_fmod (double x, double y);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
 #if defined (PACE_HAS_INLINE)

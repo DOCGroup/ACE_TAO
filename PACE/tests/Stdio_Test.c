@@ -29,84 +29,7 @@ const char * success = "SUCCEEDED";
 const char * failure = "***FAILED***";
 
 #if defined (PACE_VXWORKS) && PACE_VXWORKS != 0
-
-# define main ace_main
-# define PACE_NEEDS_HUGE_THREAD_STACKSIZE 64000
-# include /**/ <usrLib.h>   /* for ::sp() */
-
-/* This global function can be used from the VxWorks shell to pass
- * arguments to a C main () function.
- *
- * usage: -> spa main, "arg1", "arg2"
- *
- * All arguments must be quoted, even numbers.
- */
-int
-spa (FUNCPTR entry, ...)
-{
-  const unsigned int MAX_ARGS = 10;
-  char *argv[MAX_ARGS];
-  va_list pvar;
-  unsigned int argc;
-  int ret;
-
-  /* Hardcode a program name because the real one isn't available
-   * through the VxWorks shell.
-   */
-  argv[0] = "ace_main";
-
-  /* Peel off arguments to spa () and put into argv.  va_arg () isn't
-   * necessarily supposed to return 0 when done, though since the
-   * VxWorks shell uses a fixed number (10) of arguments, it might 0
-   * the unused ones.  This function could be used to increase that
-   * limit, but then it couldn't depend on the trailing 0.  So, the
-   * number of arguments would have to be passed.
-   */
-  va_start (pvar, entry);
-
-  for (argc = 1; argc <= MAX_ARGS; ++argc)
-    {
-      argv[argc] = va_arg (pvar, char *);
-
-      if (argv[argc] == 0)
-        break;
-    }
-
-  if (argc > MAX_ARGS  &&  argv[argc-1] != 0)
-    {
-      /* try to read another arg, and warn user if the limit was exceeded */
-      if (va_arg (pvar, char *) != 0)
-        pace_fprintf (stderr, "spa(): number of arguments limited to %d\n",
-                      MAX_ARGS);
-    }
-  else
-    {
-      /* fill unused argv slots with 0 to get rid of leftovers
-       * from previous invocations
-       */
-      unsigned int i;
-      for (i = argc; i <= MAX_ARGS; ++i)
-        argv[i] = 0;
-    }
-
-  /* The hard-coded options are what ::sp () uses, except for the
-   * larger stack size (instead of ::sp ()'s 20000).
-   */
-  ret = taskSpawn (argv[0],    /* task name */
-                   100,        /* task priority */
-                   VX_FP_TASK, /* task options */
-                   PACE_NEEDS_HUGE_THREAD_STACKSIZE, /* stack size */
-                   entry,      /* entry point */
-                   argc,       /* first argument to main () */
-                   (int) argv, /* second argument to main () */
-                   0, 0, 0, 0, 0, 0, 0, 0);
-  va_end (pvar);
-
-  /* taskSpawn () returns the taskID on success: return 0 instead if
-   * successful
-   */
-  return ret > 0 ? 0 : ret;
-}
+#include "vxworks_stub.c"
 #endif /* VXWORKS */
 
 
@@ -179,12 +102,13 @@ main (int argc, char **argv)
       return -1;
     }
 
-
-  /* uncomment this line to pause the program to test the size
-   * of the exe Cntr-Alt-Del and then look at the task manager to
-   *  find the size
-  pace_sleep (20);
-   */
+  /* Test removing a file. */
+  retval = pace_unlink (filename);
+  if (retval != 0)
+    {
+      printf("pace_unlink %s\n", failure);
+      return -1;
+    }
 
   PACE_UNUSED_ARG (argc);
   PACE_UNUSED_ARG (argv);

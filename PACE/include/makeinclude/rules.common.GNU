@@ -111,3 +111,11 @@ ifeq ($(debug),)
     CFLAGS  += -DPACE_NDEBUG
   endif
 endif # debug
+
+ifeq ($(pace_tracing),1)
+  ifeq (,$(findstring $(CFLAGS),$(CCFLAGS)))
+    CCFLAGS += -DPACE_TRACING
+  else
+    CFLAGS  += -DPACE_TRACING
+  endif
+endif # debug

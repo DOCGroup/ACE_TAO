@@ -36,7 +36,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 3.2.2.
      */
 #if (PACE_HAS_POSIX_MP_UOF)
-  PACE_INLINE void pace__exit (int status);
+  PACE_Export PACE_INLINE void pace__exit (int status);
 #endif /* PACE_HAS_POSIX_MP_UOF */
 
   /**
@@ -45,7 +45,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 5.6.3.
      */
 #if (PACE_HAS_POSIX_FS_UOF)
-  PACE_INLINE int pace_access (const char * path, int amode);
+  PACE_Export PACE_INLINE int pace_access (const char * path, int amode);
 #endif /* PACE_HAS_POSIX_FS_UOF */
 
   /**
@@ -54,7 +54,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 3.4.1.
      */
 #if (PACE_HAS_POSIX_SIG_UOF)
-  PACE_INLINE unsigned int pace_alarm (unsigned int seconds);
+  PACE_Export PACE_INLINE unsigned int pace_alarm (unsigned int seconds);
 #endif /* PACE_HAS_POSIX_SIG_UOF */
 
   /**
@@ -63,7 +63,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 5.2.1.
      */
 #if (PACE_HAS_POSIX_FS_UOF)
-  PACE_INLINE int pace_chdir (const char * path);
+  PACE_Export PACE_INLINE int pace_chdir (const char * path);
 #endif /* PACE_HAS_POSIX_FS_UOF */
 
   /**
@@ -72,8 +72,9 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 5.6.5.
      */
 #if (PACE_HAS_POSIX_FA_UOF)
-  PACE_INLINE int pace_chown (const char * path, pace_uid_t owner,
-                              pace_gid_t group);
+  PACE_Export PACE_INLINE int pace_chown (const char * path,
+                                          pace_uid_t owner,
+                                          pace_gid_t group);
 #endif /* PACE_HAS_POSIX_FA_UOF */
 
   /**
@@ -82,7 +83,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 6.3.1.
      */
 #if (PACE_HAS_POSIX_DI_UOF)
-  PACE_INLINE int pace_close (PACE_HANDLE fildes);
+  PACE_Export PACE_INLINE int pace_close (PACE_HANDLE fildes);
 #endif /* PACE_HAS_POSIX_DI_UOF */
 
   /**
@@ -91,7 +92,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 6.2.1.
      */
 #if (PACE_HAS_POSIX_FM_UOF)
-  PACE_INLINE PACE_HANDLE pace_dup (PACE_HANDLE fildes);
+  PACE_Export PACE_INLINE PACE_HANDLE pace_dup (PACE_HANDLE fildes);
 #endif /* PACE_HAS_POSIX_FM_UOF */
 
   /**
@@ -100,7 +101,8 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 6.2.1.
      */
 #if (PACE_HAS_POSIX_FM_UOF)
-  PACE_INLINE PACE_HANDLE pace_dup2 (PACE_HANDLE fildes, PACE_HANDLE fildes2);
+  PACE_Export PACE_INLINE PACE_HANDLE pace_dup2 (PACE_HANDLE fildes,
+                                                 PACE_HANDLE fildes2);
 #endif /* PACE_HAS_POSIX_FM_UOF */
 
   /**
@@ -111,7 +113,8 @@ extern "C" {
 #if (PACE_HAS_POSIX_MP_UOF)
 # define pace_execl execl
 #endif /* PACE_HAS_POSIX_MP_UOF */
-  /*  PACE_INLINE int pace_execl (const char* path, const char* arg, ...); */
+  /*  PACE_Export PACE_INLINE int pace_execl (const char* path,
+      const char* arg, ...); */
 
   /**
      PACE's implementation of the POSIX function execle.
@@ -121,7 +124,8 @@ extern "C" {
 #if (PACE_HAS_POSIX_MP_UOF)
 # define pace_execle execle
 #endif /* PACE_HAS_POSIX_MP_UOF */
-  /*  PACE_INLINE int pace_execle (const char* path, const char* arg, ...);*/
+  /*  PACE_Export PACE_INLINE int pace_execle (const char* path,
+      const char* arg, ...);*/
 
   /**
      PACE's implementation of the POSIX function execlp.
@@ -131,7 +135,8 @@ extern "C" {
 #if (PACE_HAS_POSIX_MP_UOF)
 # define pace_execlp execlp
 #endif /* PACE_HAS_POSIX_MP_UOF */
-  /* PACE_INLINE int pace_execlp (const char* file, const char* arg,  ...);*/
+  /* PACE_Export PACE_INLINE int pace_execlp (const char* file,
+     const char* arg,  ...);*/
 
   /**
      PACE's implementation of the POSIX function execv.
@@ -139,7 +144,8 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 3.1.2.
      */
 #if (PACE_HAS_POSIX_MP_UOF)
-  PACE_INLINE int pace_execv (const char * path, char * const argv[]);
+  PACE_Export PACE_INLINE int pace_execv (const char * path,
+                                          char * const argv[]);
 #endif /* PACE_HAS_POSIX_MP_UOF */
 
   /**
@@ -148,8 +154,9 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 3.1.2.
      */
 #if (PACE_HAS_POSIX_MP_UOF)
-  PACE_INLINE int pace_execve (const char * path, char * const argv[],
-                               char * const envp[]);
+  PACE_Export PACE_INLINE int pace_execve (const char * path,
+                                           char * const argv[],
+                                           char * const envp[]);
 #endif /* PACE_HAS_POSIX_MP_UOF */
 
   /**
@@ -158,7 +165,8 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 3.1.2.
      */
 #if (PACE_HAS_POSIX_MP_UOF)
-  PACE_INLINE int pace_execvp (const char * file, char * const argv[]);
+  PACE_Export PACE_INLINE int pace_execvp (const char * file,
+                                           char * const argv[]);
 #endif /* PACE_HAS_POSIX_MP_UOF */
 
   /**
@@ -167,7 +175,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 6.6.2.
      */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_fdatasync (PACE_HANDLE fildes);
+  PACE_Export PACE_INLINE int pace_fdatasync (PACE_HANDLE fildes);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -176,7 +184,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 3.1.1.
      */
 #if (PACE_HAS_POSIX_MP_UOF)
-  PACE_INLINE pace_pid_t pace_fork ();
+  PACE_Export PACE_INLINE pace_pid_t pace_fork ();
 #endif /* PACE_HAS_POSIX_MP_UOF */
 
   /**
@@ -185,7 +193,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 5.7.1.
      */
 #if (PACE_HAS_POSIX_FS_UOF)
-  PACE_INLINE long pace_fpathconf (PACE_HANDLE fildes, int name);
+  PACE_Export PACE_INLINE long pace_fpathconf (PACE_HANDLE fildes, int name);
 #endif /* PACE_HAS_POSIX_FS_UOF */
 
   /**
@@ -194,7 +202,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 6.6.1.
      */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_fsync (PACE_HANDLE fildes);
+  PACE_Export PACE_INLINE int pace_fsync (PACE_HANDLE fildes);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -203,7 +211,8 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 5.6.7.
      */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_ftruncate (PACE_HANDLE fildes, pace_off_t length);
+  PACE_Export PACE_INLINE int pace_ftruncate (PACE_HANDLE fildes,
+                                              pace_off_t length);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -212,7 +221,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 5.2.2.
      */
 #if (PACE_HAS_POSIX_FS_UOF)
-  PACE_INLINE char * pace_getcwd (char * buf, size_t size);
+  PACE_Export PACE_INLINE char * pace_getcwd (char * buf, size_t size);
 #endif /* PACE_HAS_POSIX_FS_UOF */
 
   /**
@@ -221,7 +230,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 4.2.1.
      */
 #if (PACE_HAS_POSIX_UG_UOF)
-  PACE_INLINE pace_uid_t pace_getegid ();
+  PACE_Export PACE_INLINE pace_uid_t pace_getegid ();
 #endif /* PACE_HAS_POSIX_UG_UOF */
 
   /**
@@ -230,7 +239,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 4.2.1.
      */
 #if (PACE_HAS_POSIX_UG_UOF)
-  PACE_INLINE pace_uid_t pace_geteuid ();
+  PACE_Export PACE_INLINE pace_uid_t pace_geteuid ();
 #endif /* PACE_HAS_POSIX_UG_UOF */
 
   /**
@@ -239,7 +248,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 4.2.1.
      */
 #if (PACE_HAS_POSIX_UG_UOF)
-  PACE_INLINE pace_uid_t pace_getgid ();
+  PACE_Export PACE_INLINE pace_uid_t pace_getgid ();
 #endif /* PACE_HAS_POSIX_UG_UOF */
 
   /**
@@ -248,7 +257,8 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 4.2.3.
      */
 #if (PACE_HAS_POSIX_UG_UOF)
-  PACE_INLINE int pace_getgroups (int gidsetsize, pace_gid_t grouplist[]);
+  PACE_Export PACE_INLINE int pace_getgroups (int gidsetsize,
+                                              pace_gid_t grouplist[]);
 #endif /* PACE_HAS_POSIX_UG_UOF */
 
   /**
@@ -257,7 +267,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 4.2.4.
      */
 #if (PACE_HAS_POSIX_UG_UOF)
-  PACE_INLINE char * pace_getlogin ();
+  PACE_Export PACE_INLINE char * pace_getlogin ();
 #endif /* PACE_HAS_POSIX_UG_UOF */
 
   /**
@@ -266,7 +276,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 4.2.4.
      */
 #if (PACE_HAS_POSIX_UGR_UOF)
-  PACE_INLINE int pace_getlogin_r (char * name, size_t namesize);
+  PACE_Export PACE_INLINE int pace_getlogin_r (char * name, size_t namesize);
 #endif /* PACE_HAS_POSIX_UGR_UOF */
   /* Requires PACE_HAS_POSIX_PTHREAD_SEMANTICS. */
 
@@ -276,7 +286,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 4.3.1.
      */
 #if (PACE_HAS_POSIX_UG_UOF)
-  PACE_INLINE pace_pid_t pace_getpgrp ();
+  PACE_Export PACE_INLINE pace_pid_t pace_getpgrp ();
 #endif /* PACE_HAS_POSIX_UG_UOF */
 
   /**
@@ -285,7 +295,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 4.1.1.
      */
 #if (PACE_HAS_POSIX_MP_UOF)
-  PACE_INLINE pace_pid_t pace_getpid ();
+  PACE_Export PACE_INLINE pace_pid_t pace_getpid ();
 #endif /* PACE_HAS_POSIX_MP_UOF */
 
   /**
@@ -294,7 +304,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 4.1.1.
      */
 #if (PACE_HAS_POSIX_MP_UOF)
-  PACE_INLINE pace_pid_t pace_getppid ();
+  PACE_Export PACE_INLINE pace_pid_t pace_getppid ();
 #endif /* PACE_HAS_POSIX_MP_UOF */
 
   /**
@@ -303,7 +313,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 4.2.1.
      */
 #if (PACE_HAS_POSIX_UG_UOF)
-  PACE_INLINE pace_uid_t pace_getuid ();
+  PACE_Export PACE_INLINE pace_uid_t pace_getuid ();
 #endif /* PACE_HAS_POSIX_UG_UOF */
 
   /**
@@ -312,7 +322,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 4.7.2.
      */
 #if (PACE_HAS_POSIX_DS_UOF)
-  PACE_INLINE int pace_isatty (int fildes);
+  PACE_Export PACE_INLINE int pace_isatty (int fildes);
 #endif /* PACE_HAS_POSIX_DS_UOF */
 
   /**
@@ -321,7 +331,8 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 5.3.4.
      */
 #if (PACE_HAS_POSIX_FS_UOF)
-  PACE_INLINE int pace_link (const char * existing, const char * new_link);
+  PACE_Export PACE_INLINE int pace_link (const char * existing,
+                                         const char * new_link);
 #endif /* PACE_HAS_POSIX_FS_UOF */
 
   /**
@@ -330,8 +341,9 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 6.5.3.
      */
 #if (PACE_HAS_POSIX_FM_UOF)
-  PACE_INLINE pace_off_t pace_lseek (PACE_HANDLE fildes,
-                                     off_t offset, int whence);
+  PACE_Export PACE_INLINE pace_off_t pace_lseek (PACE_HANDLE fildes,
+                                                 off_t offset,
+                                                 int whence);
 #endif /* PACE_HAS_POSIX_FM_UOF */
 
   /**
@@ -340,7 +352,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 5.7.1.
      */
 #if (PACE_HAS_POSIX_FS_UOF)
-  PACE_INLINE long pace_pathconf (const char * path, int name);
+  PACE_Export PACE_INLINE long pace_pathconf (const char * path, int name);
 #endif /* PACE_HAS_POSIX_FS_UOF */
 
   /**
@@ -349,7 +361,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 3.4.2.
      */
 #if (PACE_HAS_POSIX_SIG_UOF)
-  PACE_INLINE int pace_pause ();
+  PACE_Export PACE_INLINE int pace_pause ();
 #endif /* PACE_HAS_POSIX_SIG_UOF */
 
   /**
@@ -358,7 +370,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 6.1.1.
      */
 #if (PACE_HAS_POSIX_P_UOF)
-  PACE_INLINE int pace_pipe (PACE_HANDLE fildes[2]);
+  PACE_Export PACE_INLINE int pace_pipe (PACE_HANDLE fildes[2]);
 #endif /* PACE_HAS_POSIX_P_UOF */
 
   /**
@@ -367,7 +379,9 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 6.4.1.
      */
 #if (PACE_HAS_POSIX_DI_UOF)
-  PACE_INLINE pace_ssize_t pace_read (PACE_HANDLE fildes, void * buf, size_t nbyte);
+  PACE_Export PACE_INLINE pace_ssize_t pace_read (PACE_HANDLE fildes,
+                                                  void * buf,
+                                                  size_t nbyte);
 #endif /* PACE_HAS_POSIX_DI_UOF */
 
   /**
@@ -376,7 +390,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 5.5.2.
      */
 #if (PACE_HAS_POSIX_FS_UOF)
-  PACE_INLINE int pace_rmdir (const char * path);
+  PACE_Export PACE_INLINE int pace_rmdir (const char * path);
 #endif /* PACE_HAS_POSIX_FS_UOF */
 
   /**
@@ -385,7 +399,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 4.2.2.
      */
 #if (PACE_HAS_POSIX_UG_UOF)
-  PACE_INLINE int pace_setgid (pace_gid_t gid);
+  PACE_Export PACE_INLINE int pace_setgid (pace_gid_t gid);
 #endif /* PACE_HAS_POSIX_UG_UOF */
 
   /**
@@ -394,7 +408,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 4.3.3.
      */
 #if (PACE_HAS_POSIX_JC_UOF)
-  PACE_INLINE int pace_setpgid (pace_pid_t pid, pace_pid_t pgid);
+  PACE_Export PACE_INLINE int pace_setpgid (pace_pid_t pid, pace_pid_t pgid);
 #endif /* PACE_HAS_POSIX_JC_UOF */
 
   /**
@@ -403,7 +417,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 4.3.2.
      */
 #if (PACE_HAS_POSIX_UG_UOF)
-  PACE_INLINE pace_pid_t pace_setsid ();
+  PACE_Export PACE_INLINE pace_pid_t pace_setsid ();
 #endif /* PACE_HAS_POSIX_UG_UOF */
 
   /**
@@ -412,7 +426,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 4.2.2.
      */
 #if (PACE_HAS_POSIX_UG_UOF)
-  PACE_INLINE int pace_setuid (pace_uid_t uid);
+  PACE_Export PACE_INLINE int pace_setuid (pace_uid_t uid);
 #endif /* PACE_HAS_POSIX_UG_UOF */
 
   /**
@@ -421,7 +435,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 3.4.3.
      */
 #if (PACE_HAS_POSIX_MP_UOF)
-  PACE_INLINE unsigned pace_sleep (unsigned int seconds);
+  PACE_Export PACE_INLINE unsigned pace_sleep (unsigned int seconds);
 #endif /* PACE_HAS_POSIX_MP_UOF */
 
   /**
@@ -430,7 +444,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 4.8.1.
      */
 #if (PACE_HAS_POSIX_SP_UOF)
-  PACE_INLINE long pace_sysconf (int name);
+  PACE_Export PACE_INLINE long pace_sysconf (int name);
 #endif /* PACE_HAS_POSIX_SP_UOF */
 
   /**
@@ -439,7 +453,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 7.2.3.1.
      */
 #if (PACE_HAS_POSIX_JC_UOF)
-  PACE_INLINE pace_pid_t pace_tcgetpgrp (PACE_HANDLE fildes);
+  PACE_Export PACE_INLINE pace_pid_t pace_tcgetpgrp (PACE_HANDLE fildes);
 #endif /* PACE_HAS_POSIX_JC_UOF */
 
   /**
@@ -448,7 +462,8 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 7.2.3.1.
      */
 #if (PACE_HAS_POSIX_JC_UOF)
-  PACE_INLINE int pace_tcsetpgrp (PACE_HANDLE fildes, pace_pid_t pgrp_id);
+  PACE_Export PACE_INLINE int pace_tcsetpgrp (PACE_HANDLE fildes,
+                                              pace_pid_t pgrp_id);
 #endif /* PACE_HAS_POSIX_JC_UOF */
 
   /**
@@ -457,7 +472,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 4.7.2.
      */
 #if (PACE_HAS_POSIX_DS_UOF)
-  PACE_INLINE char * pace_ttyname (PACE_HANDLE fildes);
+  PACE_Export PACE_INLINE char * pace_ttyname (PACE_HANDLE fildes);
 #endif /* PACE_HAS_POSIX_DS_UOF */
 
   /**
@@ -466,7 +481,9 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 4.7.2.
      */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_ttyname_r (PACE_HANDLE fildes, char * name, size_t namesize);
+  PACE_Export PACE_INLINE int pace_ttyname_r (PACE_HANDLE fildes,
+                                              char * name,
+                                              size_t namesize);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
   /* Requires PACE_HAS_POSIX_PTHREAD_SEMANTICS. */
 
@@ -476,7 +493,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 5.5.1.
      */
 #if (PACE_HAS_POSIX_FS_UOF)
-  PACE_INLINE int pace_unlink (const char * path);
+  PACE_Export PACE_INLINE int pace_unlink (const char * path);
 #endif /* PACE_HAS_POSIX_FS_UOF */
 
   /**
@@ -485,7 +502,9 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 6.4.2.
      */
 #if (PACE_HAS_POSIX_DI_UOF)
-  PACE_INLINE pace_ssize_t pace_write (PACE_HANDLE fildes, const void * buf, size_t nbyte);
+  PACE_Export PACE_INLINE pace_ssize_t pace_write (PACE_HANDLE fildes,
+                                                   const void * buf,
+                                                   size_t nbyte);
 #endif /* PACE_HAS_POSIX_DI_UOF */
 
 #if defined (PACE_HAS_INLINE)

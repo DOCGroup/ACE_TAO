@@ -186,7 +186,6 @@
 # define PACE_BUILD_DLL
 
 /* Tracing */
-# define PACE_TRACE(X) fprintf (stderr, X)
 # define PACE_DEBUG(X)
 # define PACE_LM_DEBUG PACE_stderr
 # define PACE_BEGIN_DUMP

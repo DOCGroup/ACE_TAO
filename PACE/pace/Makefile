@@ -451,7 +451,11 @@ include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
 INSTALL =
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
-include $(ACE_ROOT)/PACE/include/makeinclude/rules.common.GNU
+ifndef PACE_ROOT
+  PACE_ROOT = $(ACE_ROOT)/PACE
+endif # ! PACE_ROOT
+
+include $(PACE_ROOT)/include/makeinclude/rules.common.GNU
 
 ifndef static_libs_only
   ifndef shared_libs_only
