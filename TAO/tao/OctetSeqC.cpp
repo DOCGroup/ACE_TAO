@@ -21,17 +21,23 @@
 
 #include "OctetSeqC.h"
 
+#if defined (__BORLANDC__)
+#pragma option -w-rvl -w-rch -w-ccc -w-aus
+#endif /* __BORLANDC__ */
+
 #if !defined (__ACE_INLINE__)
 #include "OctetSeqC.i"
 #endif /* !defined INLINE */
 
-#include "tao/Any.h"
+#include "Any.h"
+#include "CDR.h"
+#include "TypeCode.h"
 
-#if !defined (TAO_OCTETSEQ_CS)
-#define TAO_OCTETSEQ_CS
+#if !defined (_CORBA_OCTETSEQ_CS_)
+#define _CORBA_OCTETSEQ_CS_
 
 // *************************************************************
-// CORBA_OctetSeq
+// CORBA::OctetSeq
 // *************************************************************
 
 CORBA_OctetSeq::CORBA_OctetSeq (void)
@@ -77,8 +83,8 @@ void CORBA_OctetSeq::_tao_any_destructor (void *x)
 static const CORBA::Long _oc_CORBA_OctetSeq[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
-  17, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x4f637465), ACE_NTOHL (0x74536571), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0x0),  // repository ID = IDL:CORBA_OctetSeq:1.0
-  9, ACE_NTOHL (0x4f637465), ACE_NTOHL (0x74536571), ACE_NTOHL (0x0),  // name = CORBA_OctetSeq
+  31, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x434f5242), ACE_NTOHL (0x412f4f63), ACE_NTOHL (0x74657453), ACE_NTOHL (0x65713a31), ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/OctetSeq:1.0
+  9, ACE_NTOHL (0x4f637465), ACE_NTOHL (0x74536571), ACE_NTOHL (0x0),  // name = OctetSeq
   CORBA::tk_sequence, // typecode kind
   12, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
@@ -89,7 +95,6 @@ static const CORBA::Long _oc_CORBA_OctetSeq[] =
 };
 static CORBA::TypeCode _tc_TAO_tc_CORBA_OctetSeq (CORBA::tk_alias, sizeof (_oc_CORBA_OctetSeq), (char *) &_oc_CORBA_OctetSeq, 0, sizeof (CORBA_OctetSeq));
 CORBA::TypeCode_ptr _tc_CORBA_OctetSeq = &_tc_TAO_tc_CORBA_OctetSeq;
-
 void operator<<= (
     CORBA::Any &_tao_any,
     const CORBA_OctetSeq &_tao_elem

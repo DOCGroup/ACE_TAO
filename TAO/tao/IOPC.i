@@ -8,7 +8,7 @@
 //       Washington University
 //       St. Louis, MO
 //       USA
-//       http://www.cs.wustl.edu/~schmidt/doc-group.html
+//       http://www.cs.wustl.edu/~schmidt/doc-center.html
 // and
 //       Distributed Object Computing Laboratory
 //       University of California at Irvine
@@ -68,12 +68,12 @@ IOP::TaggedProfile_var::operator= (const ::IOP::TaggedProfile_var &p)
         }
       else
         {
-          IOP::TaggedProfile *deep_copy = 
-            new IOP::TaggedProfile (*p.ptr_);
+          TaggedProfile *deep_copy =
+            new TaggedProfile (*p.ptr_);
           
           if (deep_copy != 0)
             {
-              IOP::TaggedProfile *tmp = deep_copy;
+              TaggedProfile *tmp = deep_copy;
               deep_copy = this->ptr_;
               this->ptr_ = tmp;
               delete deep_copy;
@@ -260,8 +260,8 @@ IOP::TaggedProfile::_tao_seq_Octet_var::operator= (_tao_seq_Octet *p)
   return *this;
 }
 
-ACE_INLINE IOP::TaggedProfile::_tao_seq_Octet_var &
-IOP::TaggedProfile::_tao_seq_Octet_var::operator= (const ::IOP::TaggedProfile::_tao_seq_Octet_var &p) // deep copy
+ACE_INLINE ::IOP::TaggedProfile::_tao_seq_Octet_var &
+IOP::TaggedProfile::_tao_seq_Octet_var::operator= (const ::IOP::TaggedProfile::_tao_seq_Octet_var &p)
 {
   if (this != &p)
     {
@@ -272,12 +272,12 @@ IOP::TaggedProfile::_tao_seq_Octet_var::operator= (const ::IOP::TaggedProfile::_
         }
       else
         {
-          IOP::TaggedProfile::_tao_seq_Octet *deep_copy = 
-            new IOP::TaggedProfile::_tao_seq_Octet (*p.ptr_);
+          _tao_seq_Octet *deep_copy =
+            new _tao_seq_Octet (*p.ptr_);
           
           if (deep_copy != 0)
             {
-              IOP::TaggedProfile::_tao_seq_Octet *tmp = deep_copy;
+              _tao_seq_Octet *tmp = deep_copy;
               deep_copy = this->ptr_;
               this->ptr_ = tmp;
               delete deep_copy;
@@ -334,6 +334,12 @@ ACE_INLINE CORBA::Octet &
 IOP::TaggedProfile::_tao_seq_Octet_var::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
+}
+
+ACE_INLINE const CORBA::Octet &
+IOP::TaggedProfile::_tao_seq_Octet_var::operator[] (CORBA::ULong index) const
+{
+  return ACE_const_cast (const CORBA::Octet &, this->ptr_->operator[] (index));
 }
 
 ACE_INLINE const ::IOP::TaggedProfile::_tao_seq_Octet &
@@ -485,12 +491,12 @@ IOP::IOR_var::operator= (const ::IOP::IOR_var &p)
         }
       else
         {
-          IOP::IOR *deep_copy = 
-            new IOP::IOR (*p.ptr_);
+          IOR *deep_copy =
+            new IOR (*p.ptr_);
           
           if (deep_copy != 0)
             {
-              IOP::IOR *tmp = deep_copy;
+              IOR *tmp = deep_copy;
               deep_copy = this->ptr_;
               this->ptr_ = tmp;
               delete deep_copy;
@@ -846,8 +852,8 @@ IOP::IOR::_tao_seq_TaggedProfile_var::operator= (_tao_seq_TaggedProfile *p)
   return *this;
 }
 
-ACE_INLINE IOP::IOR::_tao_seq_TaggedProfile_var &
-IOP::IOR::_tao_seq_TaggedProfile_var::operator= (const ::IOP::IOR::_tao_seq_TaggedProfile_var &p) // deep copy
+ACE_INLINE ::IOP::IOR::_tao_seq_TaggedProfile_var &
+IOP::IOR::_tao_seq_TaggedProfile_var::operator= (const ::IOP::IOR::_tao_seq_TaggedProfile_var &p)
 {
   if (this != &p)
     {
@@ -858,12 +864,12 @@ IOP::IOR::_tao_seq_TaggedProfile_var::operator= (const ::IOP::IOR::_tao_seq_Tagg
         }
       else
         {
-          IOP::IOR::_tao_seq_TaggedProfile *deep_copy = 
-            new IOP::IOR::_tao_seq_TaggedProfile (*p.ptr_);
+          _tao_seq_TaggedProfile *deep_copy =
+            new _tao_seq_TaggedProfile (*p.ptr_);
           
           if (deep_copy != 0)
             {
-              IOP::IOR::_tao_seq_TaggedProfile *tmp = deep_copy;
+              _tao_seq_TaggedProfile *tmp = deep_copy;
               deep_copy = this->ptr_;
               this->ptr_ = tmp;
               delete deep_copy;
@@ -915,6 +921,12 @@ ACE_INLINE IOP::TaggedProfile &
 IOP::IOR::_tao_seq_TaggedProfile_var::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
+}
+
+ACE_INLINE const IOP::TaggedProfile &
+IOP::IOR::_tao_seq_TaggedProfile_var::operator[] (CORBA::ULong index) const
+{
+  return ACE_const_cast (const IOP::TaggedProfile &, this->ptr_->operator[] (index));
 }
 
 ACE_INLINE const ::IOP::IOR::_tao_seq_TaggedProfile &
@@ -1066,12 +1078,12 @@ IOP::TaggedComponent_var::operator= (const ::IOP::TaggedComponent_var &p)
         }
       else
         {
-          IOP::TaggedComponent *deep_copy = 
-            new IOP::TaggedComponent (*p.ptr_);
+          TaggedComponent *deep_copy =
+            new TaggedComponent (*p.ptr_);
           
           if (deep_copy != 0)
             {
-              IOP::TaggedComponent *tmp = deep_copy;
+              TaggedComponent *tmp = deep_copy;
               deep_copy = this->ptr_;
               this->ptr_ = tmp;
               delete deep_copy;
@@ -1258,8 +1270,8 @@ IOP::TaggedComponent::_tao_seq_Octet_var::operator= (_tao_seq_Octet *p)
   return *this;
 }
 
-ACE_INLINE IOP::TaggedComponent::_tao_seq_Octet_var &
-IOP::TaggedComponent::_tao_seq_Octet_var::operator= (const ::IOP::TaggedComponent::_tao_seq_Octet_var &p) // deep copy
+ACE_INLINE ::IOP::TaggedComponent::_tao_seq_Octet_var &
+IOP::TaggedComponent::_tao_seq_Octet_var::operator= (const ::IOP::TaggedComponent::_tao_seq_Octet_var &p)
 {
   if (this != &p)
     {
@@ -1270,12 +1282,12 @@ IOP::TaggedComponent::_tao_seq_Octet_var::operator= (const ::IOP::TaggedComponen
         }
       else
         {
-          IOP::TaggedComponent::_tao_seq_Octet *deep_copy = 
-            new IOP::TaggedComponent::_tao_seq_Octet (*p.ptr_);
+          _tao_seq_Octet *deep_copy =
+            new _tao_seq_Octet (*p.ptr_);
           
           if (deep_copy != 0)
             {
-              IOP::TaggedComponent::_tao_seq_Octet *tmp = deep_copy;
+              _tao_seq_Octet *tmp = deep_copy;
               deep_copy = this->ptr_;
               this->ptr_ = tmp;
               delete deep_copy;
@@ -1332,6 +1344,12 @@ ACE_INLINE CORBA::Octet &
 IOP::TaggedComponent::_tao_seq_Octet_var::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
+}
+
+ACE_INLINE const CORBA::Octet &
+IOP::TaggedComponent::_tao_seq_Octet_var::operator[] (CORBA::ULong index) const
+{
+  return ACE_const_cast (const CORBA::Octet &, this->ptr_->operator[] (index));
 }
 
 ACE_INLINE const ::IOP::TaggedComponent::_tao_seq_Octet &
@@ -1651,8 +1669,8 @@ IOP::MultipleComponentProfile_var::operator= (MultipleComponentProfile *p)
   return *this;
 }
 
-ACE_INLINE IOP::MultipleComponentProfile_var &
-IOP::MultipleComponentProfile_var::operator= (const ::IOP::MultipleComponentProfile_var &p) // deep copy
+ACE_INLINE ::IOP::MultipleComponentProfile_var &
+IOP::MultipleComponentProfile_var::operator= (const ::IOP::MultipleComponentProfile_var &p)
 {
   if (this != &p)
     {
@@ -1663,12 +1681,12 @@ IOP::MultipleComponentProfile_var::operator= (const ::IOP::MultipleComponentProf
         }
       else
         {
-          IOP::MultipleComponentProfile *deep_copy = 
-            new IOP::MultipleComponentProfile (*p.ptr_);
+          MultipleComponentProfile *deep_copy =
+            new MultipleComponentProfile (*p.ptr_);
           
           if (deep_copy != 0)
             {
-              IOP::MultipleComponentProfile *tmp = deep_copy;
+              MultipleComponentProfile *tmp = deep_copy;
               deep_copy = this->ptr_;
               this->ptr_ = tmp;
               delete deep_copy;
@@ -1720,6 +1738,12 @@ ACE_INLINE IOP::TaggedComponent &
 IOP::MultipleComponentProfile_var::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
+}
+
+ACE_INLINE const IOP::TaggedComponent &
+IOP::MultipleComponentProfile_var::operator[] (CORBA::ULong index) const
+{
+  return ACE_const_cast (const IOP::TaggedComponent &, this->ptr_->operator[] (index));
 }
 
 ACE_INLINE const ::IOP::MultipleComponentProfile &
@@ -2039,8 +2063,8 @@ IOP::TaggedComponentList_var::operator= (TaggedComponentList *p)
   return *this;
 }
 
-ACE_INLINE IOP::TaggedComponentList_var &
-IOP::TaggedComponentList_var::operator= (const ::IOP::TaggedComponentList_var &p) // deep copy
+ACE_INLINE ::IOP::TaggedComponentList_var &
+IOP::TaggedComponentList_var::operator= (const ::IOP::TaggedComponentList_var &p)
 {
   if (this != &p)
     {
@@ -2051,12 +2075,12 @@ IOP::TaggedComponentList_var::operator= (const ::IOP::TaggedComponentList_var &p
         }
       else
         {
-          IOP::TaggedComponentList *deep_copy = 
-            new IOP::TaggedComponentList (*p.ptr_);
+          TaggedComponentList *deep_copy =
+            new TaggedComponentList (*p.ptr_);
           
           if (deep_copy != 0)
             {
-              IOP::TaggedComponentList *tmp = deep_copy;
+              TaggedComponentList *tmp = deep_copy;
               deep_copy = this->ptr_;
               this->ptr_ = tmp;
               delete deep_copy;
@@ -2108,6 +2132,12 @@ ACE_INLINE IOP::TaggedComponent &
 IOP::TaggedComponentList_var::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
+}
+
+ACE_INLINE const IOP::TaggedComponent &
+IOP::TaggedComponentList_var::operator[] (CORBA::ULong index) const
+{
+  return ACE_const_cast (const IOP::TaggedComponent &, this->ptr_->operator[] (index));
 }
 
 ACE_INLINE const ::IOP::TaggedComponentList &
@@ -2210,6 +2240,400 @@ IOP::TaggedComponentList_out::operator[] (CORBA::ULong index)
 
 #endif /* end #if !defined */
 
+
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+  
+#if !defined (__TAO_UNBOUNDED_SEQUENCE_IOP_TAGGEDCOMPONENTSEQ_CI_)
+#define __TAO_UNBOUNDED_SEQUENCE_IOP_TAGGEDCOMPONENTSEQ_CI_
+
+  // = Static operations.
+  ACE_INLINE IOP::TaggedComponent *
+  IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::allocbuf (CORBA::ULong size)
+  // Allocate storage for the sequence.
+  {
+    IOP::TaggedComponent *retval = 0;
+    ACE_NEW_RETURN (retval, IOP::TaggedComponent[size], 0);
+    return retval;
+  }
+  
+  ACE_INLINE void IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::freebuf (IOP::TaggedComponent *buffer)
+  // Free the sequence.
+  {
+    delete [] buffer;
+  }
+  
+  ACE_INLINE
+  IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq (void) // Default constructor.
+  {
+  }
+  
+  ACE_INLINE
+  IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
+    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::allocbuf (maximum))
+  {
+  }
+  
+  ACE_INLINE
+  IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq (CORBA::ULong maximum,
+    CORBA::ULong length,
+    IOP::TaggedComponent *data,
+    CORBA::Boolean release)
+  : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
+  {
+  }
+  
+  ACE_INLINE
+  IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq (const _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq &rhs)
+  // Copy constructor.
+    : TAO_Unbounded_Base_Sequence (rhs)
+  {
+    if (rhs.buffer_ != 0)
+    {
+      IOP::TaggedComponent *tmp1 = _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::allocbuf (this->maximum_);
+      IOP::TaggedComponent * const tmp2 = ACE_reinterpret_cast (IOP::TaggedComponent * ACE_CAST_CONST, rhs.buffer_);
+      
+      for (CORBA::ULong i = 0; i < this->length_; ++i)
+        tmp1[i] = tmp2[i];
+      
+      this->buffer_ = tmp1;
+    }
+    else
+    {
+      this->buffer_ = 0;
+    }
+  }
+  
+  ACE_INLINE IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq &
+  IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::operator= (const _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq &rhs)
+  // Assignment operator.
+  {
+    if (this == &rhs)
+      return *this;
+    
+    if (this->release_)
+    {
+      if (this->maximum_ < rhs.maximum_)
+      {
+        // free the old buffer
+        IOP::TaggedComponent *tmp = ACE_reinterpret_cast (IOP::TaggedComponent *, this->buffer_);
+        _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::freebuf (tmp);
+        this->buffer_ = _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::allocbuf (rhs.maximum_);
+      }
+    }
+    else
+      this->buffer_ = _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::allocbuf (rhs.maximum_);
+    
+    TAO_Unbounded_Base_Sequence::operator= (rhs);
+    
+    IOP::TaggedComponent *tmp1 = ACE_reinterpret_cast (IOP::TaggedComponent *, this->buffer_);
+    IOP::TaggedComponent * const tmp2 = ACE_reinterpret_cast (IOP::TaggedComponent * ACE_CAST_CONST, rhs.buffer_);
+    
+    for (CORBA::ULong i = 0; i < this->length_; ++i)
+      tmp1[i] = tmp2[i];
+    
+    return *this;
+  }
+  
+  // = Accessors.
+  ACE_INLINE IOP::TaggedComponent &
+  IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::operator[] (CORBA::ULong i)
+  // operator []
+  {
+    ACE_ASSERT (i < this->maximum_);
+    IOP::TaggedComponent* tmp = ACE_reinterpret_cast(IOP::TaggedComponent*,this->buffer_);
+    return tmp[i];
+  }
+  
+  ACE_INLINE const IOP::TaggedComponent &
+  IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::operator[] (CORBA::ULong i) const
+  // operator []
+  {
+    ACE_ASSERT (i < this->maximum_);
+    IOP::TaggedComponent * const tmp = ACE_reinterpret_cast (IOP::TaggedComponent* ACE_CAST_CONST, this->buffer_);
+    return tmp[i];
+  }
+  
+  // Implement the TAO_Base_Sequence methods (see Sequence.h)
+  
+  ACE_INLINE IOP::TaggedComponent *
+  IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::get_buffer (CORBA::Boolean orphan)
+  {
+    IOP::TaggedComponent *result = 0;
+    if (orphan == 0)
+    {
+      // We retain ownership.
+      if (this->buffer_ == 0)
+      {
+        result = _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::allocbuf (this->length_);
+        this->buffer_ = result;
+        this->release_ = 1;
+      }
+      else
+      {
+        result = ACE_reinterpret_cast (IOP::TaggedComponent*, this->buffer_);
+      }
+    }
+    else // if (orphan == 1)
+    {
+      if (this->release_ != 0)
+      {
+        // We set the state back to default and relinquish
+        // ownership.
+        result = ACE_reinterpret_cast(IOP::TaggedComponent*,this->buffer_);
+        this->maximum_ = 0;
+        this->length_ = 0;
+        this->buffer_ = 0;
+        this->release_ = 0;
+      }
+    }
+    return result;
+  }
+  
+  ACE_INLINE const IOP::TaggedComponent *
+  IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::get_buffer (void) const
+  {
+    return ACE_reinterpret_cast(const IOP::TaggedComponent * ACE_CAST_CONST, this->buffer_);
+  }
+  
+  ACE_INLINE void
+  IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::replace (CORBA::ULong max,
+  CORBA::ULong length,
+  IOP::TaggedComponent *data,
+  CORBA::Boolean release)
+  {
+    this->maximum_ = max;
+    this->length_ = length;
+    if (this->buffer_ && this->release_ == 1)
+    {
+      IOP::TaggedComponent *tmp = ACE_reinterpret_cast(IOP::TaggedComponent*,this->buffer_);
+      _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::freebuf (tmp);
+    }
+    this->buffer_ = data;
+    this->release_ = release;
+  }
+  
+#endif /* end #if !defined */
+
+
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+
+#if !defined (_IOP_TAGGEDCOMPONENTSEQ_CI_)
+#define _IOP_TAGGEDCOMPONENTSEQ_CI_
+
+// *************************************************************
+// Inline operations for class IOP::TaggedComponentSeq_var
+// *************************************************************
+
+ACE_INLINE
+IOP::TaggedComponentSeq_var::TaggedComponentSeq_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+IOP::TaggedComponentSeq_var::TaggedComponentSeq_var (TaggedComponentSeq *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+IOP::TaggedComponentSeq_var::TaggedComponentSeq_var (const ::IOP::TaggedComponentSeq_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, ::IOP::TaggedComponentSeq (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+ACE_INLINE
+IOP::TaggedComponentSeq_var::~TaggedComponentSeq_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE IOP::TaggedComponentSeq_var &
+IOP::TaggedComponentSeq_var::operator= (TaggedComponentSeq *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE ::IOP::TaggedComponentSeq_var &
+IOP::TaggedComponentSeq_var::operator= (const ::IOP::TaggedComponentSeq_var &p)
+{
+  if (this != &p)
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          TaggedComponentSeq *deep_copy =
+            new TaggedComponentSeq (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              TaggedComponentSeq *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
+  return *this;
+}
+
+ACE_INLINE const ::IOP::TaggedComponentSeq *
+IOP::TaggedComponentSeq_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IOP::TaggedComponentSeq *
+IOP::TaggedComponentSeq_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IOP::TaggedComponentSeq_var::operator const ::IOP::TaggedComponentSeq &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+IOP::TaggedComponentSeq_var::operator ::IOP::TaggedComponentSeq &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+IOP::TaggedComponentSeq_var::operator ::IOP::TaggedComponentSeq &() const // cast 
+{
+  return *this->ptr_;
+}
+
+// variable-size types only
+ACE_INLINE
+IOP::TaggedComponentSeq_var::operator ::IOP::TaggedComponentSeq *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE IOP::TaggedComponent &
+IOP::TaggedComponentSeq_var::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+ACE_INLINE const IOP::TaggedComponent &
+IOP::TaggedComponentSeq_var::operator[] (CORBA::ULong index) const
+{
+  return ACE_const_cast (const IOP::TaggedComponent &, this->ptr_->operator[] (index));
+}
+
+ACE_INLINE const ::IOP::TaggedComponentSeq &
+IOP::TaggedComponentSeq_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::IOP::TaggedComponentSeq &
+IOP::TaggedComponentSeq_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for variable size 
+ACE_INLINE ::IOP::TaggedComponentSeq *&
+IOP::TaggedComponentSeq_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE ::IOP::TaggedComponentSeq *
+IOP::TaggedComponentSeq_var::_retn (void)
+{
+  ::IOP::TaggedComponentSeq *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE ::IOP::TaggedComponentSeq *
+IOP::TaggedComponentSeq_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// *************************************************************
+// Inline operations for class IOP::TaggedComponentSeq_out
+// *************************************************************
+
+ACE_INLINE
+IOP::TaggedComponentSeq_out::TaggedComponentSeq_out (TaggedComponentSeq *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IOP::TaggedComponentSeq_out::TaggedComponentSeq_out (TaggedComponentSeq_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IOP::TaggedComponentSeq_out::TaggedComponentSeq_out (const ::IOP::TaggedComponentSeq_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (TaggedComponentSeq_out&, p).ptr_)
+{}
+
+ACE_INLINE ::IOP::TaggedComponentSeq_out &
+IOP::TaggedComponentSeq_out::operator= (const ::IOP::TaggedComponentSeq_out &p)
+{
+  this->ptr_ = ACE_const_cast (TaggedComponentSeq_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE ::IOP::TaggedComponentSeq_out &
+IOP::TaggedComponentSeq_out::operator= (TaggedComponentSeq *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IOP::TaggedComponentSeq_out::operator ::IOP::TaggedComponentSeq *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IOP::TaggedComponentSeq *&
+IOP::TaggedComponentSeq_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IOP::TaggedComponentSeq *
+IOP::TaggedComponentSeq_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE IOP::TaggedComponent &
+IOP::TaggedComponentSeq_out::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+
+#endif /* end #if !defined */
+
 // *************************************************************
 // Inline operations for class IOP::ServiceContext_var
 // *************************************************************
@@ -2259,12 +2683,12 @@ IOP::ServiceContext_var::operator= (const ::IOP::ServiceContext_var &p)
         }
       else
         {
-          IOP::ServiceContext *deep_copy = 
-            new IOP::ServiceContext (*p.ptr_);
+          ServiceContext *deep_copy =
+            new ServiceContext (*p.ptr_);
           
           if (deep_copy != 0)
             {
-              IOP::ServiceContext *tmp = deep_copy;
+              ServiceContext *tmp = deep_copy;
               deep_copy = this->ptr_;
               this->ptr_ = tmp;
               delete deep_copy;
@@ -2451,8 +2875,8 @@ IOP::ServiceContext::_tao_seq_Octet_var::operator= (_tao_seq_Octet *p)
   return *this;
 }
 
-ACE_INLINE IOP::ServiceContext::_tao_seq_Octet_var &
-IOP::ServiceContext::_tao_seq_Octet_var::operator= (const ::IOP::ServiceContext::_tao_seq_Octet_var &p) // deep copy
+ACE_INLINE ::IOP::ServiceContext::_tao_seq_Octet_var &
+IOP::ServiceContext::_tao_seq_Octet_var::operator= (const ::IOP::ServiceContext::_tao_seq_Octet_var &p)
 {
   if (this != &p)
     {
@@ -2463,12 +2887,12 @@ IOP::ServiceContext::_tao_seq_Octet_var::operator= (const ::IOP::ServiceContext:
         }
       else
         {
-          IOP::ServiceContext::_tao_seq_Octet *deep_copy = 
-            new IOP::ServiceContext::_tao_seq_Octet (*p.ptr_);
+          _tao_seq_Octet *deep_copy =
+            new _tao_seq_Octet (*p.ptr_);
           
           if (deep_copy != 0)
             {
-              IOP::ServiceContext::_tao_seq_Octet *tmp = deep_copy;
+              _tao_seq_Octet *tmp = deep_copy;
               deep_copy = this->ptr_;
               this->ptr_ = tmp;
               delete deep_copy;
@@ -2525,6 +2949,12 @@ ACE_INLINE CORBA::Octet &
 IOP::ServiceContext::_tao_seq_Octet_var::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
+}
+
+ACE_INLINE const CORBA::Octet &
+IOP::ServiceContext::_tao_seq_Octet_var::operator[] (CORBA::ULong index) const
+{
+  return ACE_const_cast (const CORBA::Octet &, this->ptr_->operator[] (index));
 }
 
 ACE_INLINE const ::IOP::ServiceContext::_tao_seq_Octet &
@@ -2844,8 +3274,8 @@ IOP::ServiceContextList_var::operator= (ServiceContextList *p)
   return *this;
 }
 
-ACE_INLINE IOP::ServiceContextList_var &
-IOP::ServiceContextList_var::operator= (const ::IOP::ServiceContextList_var &p) // deep copy
+ACE_INLINE ::IOP::ServiceContextList_var &
+IOP::ServiceContextList_var::operator= (const ::IOP::ServiceContextList_var &p)
 {
   if (this != &p)
     {
@@ -2856,12 +3286,12 @@ IOP::ServiceContextList_var::operator= (const ::IOP::ServiceContextList_var &p) 
         }
       else
         {
-          IOP::ServiceContextList *deep_copy = 
-            new IOP::ServiceContextList (*p.ptr_);
+          ServiceContextList *deep_copy =
+            new ServiceContextList (*p.ptr_);
           
           if (deep_copy != 0)
             {
-              IOP::ServiceContextList *tmp = deep_copy;
+              ServiceContextList *tmp = deep_copy;
               deep_copy = this->ptr_;
               this->ptr_ = tmp;
               delete deep_copy;
@@ -2913,6 +3343,12 @@ ACE_INLINE IOP::ServiceContext &
 IOP::ServiceContextList_var::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
+}
+
+ACE_INLINE const IOP::ServiceContext &
+IOP::ServiceContextList_var::operator[] (CORBA::ULong index) const
+{
+  return ACE_const_cast (const IOP::ServiceContext &, this->ptr_->operator[] (index));
 }
 
 ACE_INLINE const ::IOP::ServiceContextList &
@@ -3010,6 +3446,507 @@ ACE_INLINE IOP::ServiceContext &
 IOP::ServiceContextList_out::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
+}
+
+
+#endif /* end #if !defined */
+
+// *************************************************************
+// Inline operations for exception IOP::Codec::InvalidTypeForEncoding
+// *************************************************************
+
+// *************************************************************
+// Inline operations for exception IOP::Codec::FormatMismatch
+// *************************************************************
+
+// *************************************************************
+// Inline operations for exception IOP::Codec::TypeMismatch
+// *************************************************************
+
+
+#if !defined (_IOP_CODEC___VAR_CI_)
+#define _IOP_CODEC___VAR_CI_
+
+// *************************************************************
+// Inline operations for class IOP::Codec_var
+// *************************************************************
+
+ACE_INLINE
+IOP::Codec_var::Codec_var (void) // default constructor
+  : ptr_ (Codec::_nil ())
+{}
+
+ACE_INLINE ::IOP::Codec_ptr
+IOP::Codec_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IOP::Codec_var::Codec_var (const ::IOP::Codec_var &p) // copy constructor
+  : TAO_Base_var (),
+    ptr_ (Codec::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+IOP::Codec_var::~Codec_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE IOP::Codec_var &
+IOP::Codec_var::operator= (Codec_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IOP::Codec_var &
+IOP::Codec_var::operator= (const ::IOP::Codec_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::IOP::Codec::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+ACE_INLINE 
+IOP::Codec_var::operator const ::IOP::Codec_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IOP::Codec_var::operator ::IOP::Codec_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IOP::Codec_ptr
+IOP::Codec_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IOP::Codec_ptr
+IOP::Codec_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IOP::Codec_ptr &
+IOP::Codec_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IOP::Codec_ptr &
+IOP::Codec_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IOP::Codec::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE ::IOP::Codec_ptr
+IOP::Codec_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::IOP::Codec_ptr val = this->ptr_;
+  this->ptr_ = ::IOP::Codec::_nil ();
+  return val;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_IOP_CODEC___OUT_CI_)
+#define _IOP_CODEC___OUT_CI_
+
+// *************************************************************
+// Inline operations for class IOP::Codec_out
+// *************************************************************
+
+ACE_INLINE
+IOP::Codec_out::Codec_out (Codec_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::IOP::Codec::_nil ();
+}
+
+ACE_INLINE
+IOP::Codec_out::Codec_out (Codec_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IOP::Codec::_nil ();
+}
+
+ACE_INLINE
+IOP::Codec_out::Codec_out (const ::IOP::Codec_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (Codec_out &, p).ptr_)
+{}
+
+ACE_INLINE ::IOP::Codec_out &
+IOP::Codec_out::operator= (const ::IOP::Codec_out &p)
+{
+  this->ptr_ = ACE_const_cast (Codec_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IOP::Codec_out &
+IOP::Codec_out::operator= (const ::IOP::Codec_var &p)
+{
+  this->ptr_ = ::IOP::Codec::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE IOP::Codec_out &
+IOP::Codec_out::operator= (Codec_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IOP::Codec_out::operator ::IOP::Codec_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IOP::Codec_ptr &
+IOP::Codec_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IOP::Codec_ptr
+IOP::Codec_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#endif /* end #if !defined */
+
+// *************************************************************
+// Inline operations for class IOP::Encoding_var
+// *************************************************************
+
+ACE_INLINE
+IOP::Encoding_var::Encoding_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+IOP::Encoding_var::Encoding_var (Encoding *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+IOP::Encoding_var::Encoding_var (const ::IOP::Encoding_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, ::IOP::Encoding (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+// fixed-size types only
+ACE_INLINE
+IOP::Encoding_var::Encoding_var (const ::IOP::Encoding &p)
+{
+  ACE_NEW (this->ptr_, ::IOP::Encoding (p));
+}
+
+ACE_INLINE
+IOP::Encoding_var::~Encoding_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE IOP::Encoding_var &
+IOP::Encoding_var::operator= (Encoding *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE ::IOP::Encoding_var &
+IOP::Encoding_var::operator= (const ::IOP::Encoding_var &p)
+{
+  if (this != &p)
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          Encoding *deep_copy =
+            new Encoding (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              Encoding *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
+  return *this;
+}
+
+// fixed-size types only
+ACE_INLINE IOP::Encoding_var &
+IOP::Encoding_var::operator= (const ::IOP::Encoding &p)
+{
+  if (this->ptr_ != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, ::IOP::Encoding (p), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const ::IOP::Encoding *
+IOP::Encoding_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IOP::Encoding *
+IOP::Encoding_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IOP::Encoding_var::operator const ::IOP::Encoding &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+IOP::Encoding_var::operator ::IOP::Encoding &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+IOP::Encoding_var::operator ::IOP::Encoding &() const // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE const ::IOP::Encoding &
+IOP::Encoding_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::IOP::Encoding &
+IOP::Encoding_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for fixed size 
+ACE_INLINE ::IOP::Encoding &
+IOP::Encoding_var::out (void)
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::IOP::Encoding
+IOP::Encoding_var::_retn (void)
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::IOP::Encoding *
+IOP::Encoding_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// *************************************************************
+// Inline operations for exception IOP::CodecFactory::UnknownEncoding
+// *************************************************************
+
+
+#if !defined (_IOP_CODECFACTORY___VAR_CI_)
+#define _IOP_CODECFACTORY___VAR_CI_
+
+// *************************************************************
+// Inline operations for class IOP::CodecFactory_var
+// *************************************************************
+
+ACE_INLINE
+IOP::CodecFactory_var::CodecFactory_var (void) // default constructor
+  : ptr_ (CodecFactory::_nil ())
+{}
+
+ACE_INLINE ::IOP::CodecFactory_ptr
+IOP::CodecFactory_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IOP::CodecFactory_var::CodecFactory_var (const ::IOP::CodecFactory_var &p) // copy constructor
+  : TAO_Base_var (),
+    ptr_ (CodecFactory::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+IOP::CodecFactory_var::~CodecFactory_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE IOP::CodecFactory_var &
+IOP::CodecFactory_var::operator= (CodecFactory_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IOP::CodecFactory_var &
+IOP::CodecFactory_var::operator= (const ::IOP::CodecFactory_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::IOP::CodecFactory::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+ACE_INLINE 
+IOP::CodecFactory_var::operator const ::IOP::CodecFactory_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IOP::CodecFactory_var::operator ::IOP::CodecFactory_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IOP::CodecFactory_ptr
+IOP::CodecFactory_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IOP::CodecFactory_ptr
+IOP::CodecFactory_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IOP::CodecFactory_ptr &
+IOP::CodecFactory_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IOP::CodecFactory_ptr &
+IOP::CodecFactory_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IOP::CodecFactory::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE ::IOP::CodecFactory_ptr
+IOP::CodecFactory_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::IOP::CodecFactory_ptr val = this->ptr_;
+  this->ptr_ = ::IOP::CodecFactory::_nil ();
+  return val;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_IOP_CODECFACTORY___OUT_CI_)
+#define _IOP_CODECFACTORY___OUT_CI_
+
+// *************************************************************
+// Inline operations for class IOP::CodecFactory_out
+// *************************************************************
+
+ACE_INLINE
+IOP::CodecFactory_out::CodecFactory_out (CodecFactory_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::IOP::CodecFactory::_nil ();
+}
+
+ACE_INLINE
+IOP::CodecFactory_out::CodecFactory_out (CodecFactory_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IOP::CodecFactory::_nil ();
+}
+
+ACE_INLINE
+IOP::CodecFactory_out::CodecFactory_out (const ::IOP::CodecFactory_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (CodecFactory_out &, p).ptr_)
+{}
+
+ACE_INLINE ::IOP::CodecFactory_out &
+IOP::CodecFactory_out::operator= (const ::IOP::CodecFactory_out &p)
+{
+  this->ptr_ = ACE_const_cast (CodecFactory_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IOP::CodecFactory_out &
+IOP::CodecFactory_out::operator= (const ::IOP::CodecFactory_var &p)
+{
+  this->ptr_ = ::IOP::CodecFactory::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE IOP::CodecFactory_out &
+IOP::CodecFactory_out::operator= (CodecFactory_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IOP::CodecFactory_out::operator ::IOP::CodecFactory_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IOP::CodecFactory_ptr &
+IOP::CodecFactory_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IOP::CodecFactory_ptr
+IOP::CodecFactory_out::operator-> (void)
+{
+  return this->ptr_;
 }
 
 
@@ -3163,6 +4100,21 @@ CORBA::Boolean TAO_Export operator>> (
 #endif /* _TAO_CDR_OP_IOP_TaggedComponentList_I_ */
 
 
+#if !defined _TAO_CDR_OP_IOP_TaggedComponentSeq_I_
+#define _TAO_CDR_OP_IOP_TaggedComponentSeq_I_
+
+CORBA::Boolean TAO_Export operator<< (
+    TAO_OutputCDR &,
+    const IOP::TaggedComponentSeq &
+  );
+CORBA::Boolean TAO_Export operator>> (
+    TAO_InputCDR &,
+    IOP::TaggedComponentSeq &
+  );
+
+#endif /* _TAO_CDR_OP_IOP_TaggedComponentSeq_I_ */
+
+
 #if !defined _TAO_CDR_OP_IOP_ServiceContext__tao_seq_Octet_I_
 #define _TAO_CDR_OP_IOP_ServiceContext__tao_seq_Octet_I_
 
@@ -3215,4 +4167,30 @@ CORBA::Boolean TAO_Export operator>> (
   );
 
 #endif /* _TAO_CDR_OP_IOP_ServiceContextList_I_ */
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IOP::Encoding &_tao_aggregate)
+{
+  if (
+    (strm << _tao_aggregate.format) &&
+    (strm << CORBA::Any::from_octet (_tao_aggregate.major_version)) &&
+    (strm << CORBA::Any::from_octet (_tao_aggregate.minor_version))
+  )
+    return 1;
+  else
+    return 0;
+  
+}
+
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IOP::Encoding &_tao_aggregate)
+{
+  if (
+    (strm >> _tao_aggregate.format) &&
+    (strm >> CORBA::Any::to_octet (_tao_aggregate.major_version)) &&
+    (strm >> CORBA::Any::to_octet (_tao_aggregate.minor_version))
+  )
+    return 1;
+  else
+    return 0;
+  
+}
 

@@ -144,6 +144,11 @@ public:
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  virtual IOP::TaggedComponentSeq * get_effective_components (
+      IOP::ComponentId id,
+      CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   virtual CORBA::Policy_ptr get_request_policy (
       CORBA::PolicyType type,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
@@ -176,7 +181,7 @@ protected:
 
   TAO_GIOP_Invocation *invocation_;
 
-  CORBA::Object_var target_;
+  CORBA::Object_ptr target_;
   CORBA::Exception *caught_exception_;
 
   CORBA::Boolean response_expected_;

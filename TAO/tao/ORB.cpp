@@ -22,8 +22,10 @@
 #include "Priority_Mapping_Manager.h"
 #include "RT_Current.h"
 
-# include "ORBInitInfo.h"
-# include "ORBInitializer_Registry.h"
+#include "ORBInitInfo.h"
+#include "ORBInitializer_Registry.h"
+
+#include "CodecFactory_ORBInitializer.h"
 
 #if TAO_HAS_RT_CORBA == 1
 # include "RT_ORBInitializer.h"         /* @@ This should go away! */
@@ -1039,6 +1041,23 @@ CORBA_ORB::init_orb_globals (CORBA::Environment &ACE_TRY_ENV)
 
       ACE_THROW (CORBA::INITIALIZE ());
     }
+
+  // Register the CodecFactory ORBInitializer.
+  PortableInterceptor::ORBInitializer_ptr tmp_cf_initializer;
+  ACE_NEW_THROW_EX (tmp_cf_initializer,
+                    TAO_CodecFactory_ORBInitializer,
+                    CORBA::NO_MEMORY (
+                      CORBA_SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOMEM),
+                      CORBA::COMPLETED_NO));
+  ACE_CHECK;
+  PortableInterceptor::ORBInitializer_var cf_initializer =
+    tmp_cf_initializer;
+
+  PortableInterceptor::register_orb_initializer (cf_initializer.in (),
+                                                 ACE_TRY_ENV);
+  ACE_CHECK;
 
   // -------------------------------------------------------------
   // @@ These ORB initializer instantiations should go away.  They

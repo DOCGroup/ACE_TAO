@@ -24,7 +24,12 @@
 // This file contains the interface definitions for "Portable"
 // Interceptor support.
 // The following is from orbos/99-12-02 Portable Interceptors spec,
-// the full IDL is downloadable from orbos/99-12-02
+// the full IDL is downloadable from orbos/99-12-02.
+//
+// Additional updates from ptc/00-08-05 are also included.  Changes
+// include:
+//    - addition of the Interceptor::destroy() method
+//    - move of CodecFactory and Codec interfaces to the IOP module
 
 // File: PortableInterceptor.idl
 #ifndef _PORTABLE_INTERCEPTOR_IDL_
@@ -47,6 +52,7 @@ module PortableInterceptor {
 
   local interface Interceptor {
     readonly attribute string name;
+    void destroy ();
   };
 
   exception ForwardRequest {
@@ -97,10 +103,7 @@ module PortableInterceptor {
     readonly attribute any received_exception;
     readonly attribute CORBA::RepositoryId received_exception_id;
     IOP::TaggedComponent get_effective_component (in IOP::ComponentId id);
-
-    // Removed it for starters
-    // IOP_N::TaggedComponentSeq get_effective_components (in IOP::ComponentId id);
-
+    IOP::TaggedComponentSeq get_effective_components (in IOP::ComponentId id);
     CORBA::Policy get_request_policy (in CORBA::PolicyType type);
     void add_request_service_context (
       in IOP::ServiceContext service_context,
@@ -163,9 +166,7 @@ module PortableInterceptor {
 
     readonly attribute CORBA::StringSeq arguments;
     readonly attribute string orb_id;
-
-    // Shall not need this for starters
-    // readonly attribute IOP_N::CodecFactory codec_factory;
+    readonly attribute IOP::CodecFactory codec_factory;
 
     void register_initial_reference (in ObjectId id, in Object obj)
       raises (InvalidName);

@@ -24,6 +24,7 @@
 #include "PortableInterceptorC.h"
 #include "LocalObject.h"
 #include "StringSeqC.h"
+#include "CodecFactory.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
@@ -77,6 +78,12 @@ public:
 
   /// Return the ORBid for the ORB currently being initialized.
   virtual char * orb_id (
+      CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  /// Return the CodecFactory for the ORB currently being
+  /// initialized.
+  virtual IOP::CodecFactory_ptr codec_factory (
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -212,6 +219,9 @@ private:
   /// The argument vector passed to CORBA::ORB_init().
   char **argv_;
 
+  /// Instance of the IOP::CodecFactory.  Returned by
+  /// ORBInitInfo::codec_factory ().  
+  TAO_CodecFactory codec_factory_;
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

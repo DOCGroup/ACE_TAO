@@ -28,12 +28,7 @@ TAO_ServerRequestInfo::forward_reference (
   // Note that we're converting the ForwardRequest exception in to a
   // LOCATION_FORWARD reply, so we do not set the exception status.
 
-  if (exc.permanent)
-    this->reply_status_ =
-      PortableInterceptor::LOCATION_FORWARD_PERMANENT;
-  else
-    this->reply_status_ = 
-      PortableInterceptor::LOCATION_FORWARD;
+  this->reply_status_ = PortableInterceptor::LOCATION_FORWARD;
 
   this->forward_reference_ =
     CORBA::Object::_duplicate (exc.forward.in ());
@@ -45,10 +40,6 @@ TAO_ServerRequestInfo::forward_reference (CORBA::Object_ptr obj)
   // We only get here if a servant manager threw a
   // PortableServer::ForwardRequest exception.
 
-  // LOCATION_FORWARD_PERMANENT is not supported by TAO, so assume
-  // that a LOCATION_FORWARD reply will be sent.
-  // @@ LOCATION_FORWARD_PERMANENT will apparently be dropped from
-  // future GIOP specifications.
   this->reply_status_ = PortableInterceptor::LOCATION_FORWARD;
 
   this->forward_reference_ = CORBA::Object::_duplicate (obj);

@@ -29,13 +29,15 @@
 #include "StringSeqC.i"
 #endif /* !defined INLINE */
 
-#include "tao/Any.h"
+#include "Any.h"
+#include "CDR.h"
+#include "TypeCode.h"
 
-#if !defined (TAO_STRINGSEQ_CS)
-#define TAO_STRINGSEQ_CS
+#if !defined (_CORBA_STRINGSEQ_CS_)
+#define _CORBA_STRINGSEQ_CS_
 
 // *************************************************************
-// CORBA_StringSeq
+// CORBA::StringSeq
 // *************************************************************
 
 CORBA_StringSeq::CORBA_StringSeq (void)
@@ -81,8 +83,8 @@ void CORBA_StringSeq::_tao_any_destructor (void *x)
 static const CORBA::Long _oc_CORBA_StringSeq[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
-  18, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x53747269), ACE_NTOHL (0x6e675365), ACE_NTOHL (0x713a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:CORBA_StringSeq:1.0
-  10, ACE_NTOHL (0x53747269), ACE_NTOHL (0x6e675365), ACE_NTOHL (0x71000000),  // name = CORBA_StringSeq
+  32, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x434f5242), ACE_NTOHL (0x412f5374), ACE_NTOHL (0x72696e67), ACE_NTOHL (0x5365713a), ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/StringSeq:1.0
+  10, ACE_NTOHL (0x53747269), ACE_NTOHL (0x6e675365), ACE_NTOHL (0x71000000),  // name = StringSeq
   CORBA::tk_sequence, // typecode kind
   16, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
@@ -95,11 +97,11 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_StringSeq (CORBA::tk_alias, sizeof (_oc_
 CORBA::TypeCode_ptr _tc_CORBA_StringSeq = &_tc_TAO_tc_CORBA_StringSeq;
 
 
-#if !defined (TAO_WSTRINGSEQ_CS)
-#define TAO_WSTRINGSEQ_CS
+#if !defined (_CORBA_WSTRINGSEQ_CS_)
+#define _CORBA_WSTRINGSEQ_CS_
 
 // *************************************************************
-// CORBA_WStringSeq
+// CORBA::WStringSeq
 // *************************************************************
 
 CORBA_WStringSeq::CORBA_WStringSeq (void)
@@ -145,8 +147,8 @@ void CORBA_WStringSeq::_tao_any_destructor (void *x)
 static const CORBA::Long _oc_CORBA_WStringSeq[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
-  19, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x57537472), ACE_NTOHL (0x696e6753), ACE_NTOHL (0x65713a31), ACE_NTOHL (0x2e300000),  // repository ID = IDL:CORBA_WStringSeq:1.0
-  11, ACE_NTOHL (0x57537472), ACE_NTOHL (0x696e6753), ACE_NTOHL (0x65710000),  // name = CORBA_WStringSeq
+  33, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x434f5242), ACE_NTOHL (0x412f5753), ACE_NTOHL (0x7472696e), ACE_NTOHL (0x67536571), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/WStringSeq:1.0
+  11, ACE_NTOHL (0x57537472), ACE_NTOHL (0x696e6753), ACE_NTOHL (0x65710000),  // name = WStringSeq
   CORBA::tk_sequence, // typecode kind
   16, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
@@ -157,7 +159,6 @@ static const CORBA::Long _oc_CORBA_WStringSeq[] =
 };
 static CORBA::TypeCode _tc_TAO_tc_CORBA_WStringSeq (CORBA::tk_alias, sizeof (_oc_CORBA_WStringSeq), (char *) &_oc_CORBA_WStringSeq, 0, sizeof (CORBA_WStringSeq));
 CORBA::TypeCode_ptr _tc_CORBA_WStringSeq = &_tc_TAO_tc_CORBA_WStringSeq;
-
 void operator<<= (
     CORBA::Any &_tao_any,
     const CORBA_StringSeq &_tao_elem

@@ -20,11 +20,11 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
-#if !defined (TAO_STRINGSEQ_CI)
-#define TAO_STRINGSEQ_CI
+#if !defined (_CORBA_STRINGSEQ_CI_)
+#define _CORBA_STRINGSEQ_CI_
 
 // *************************************************************
-// Inline operations for class CORBA_StringSeq_var
+// Inline operations for class CORBA::StringSeq_var
 // *************************************************************
 
 ACE_INLINE
@@ -60,8 +60,8 @@ CORBA_StringSeq_var::operator= (CORBA_StringSeq *p)
   return *this;
 }
 
-ACE_INLINE CORBA_StringSeq_var &
-CORBA_StringSeq_var::operator= (const ::CORBA_StringSeq_var &p) // deep copy
+ACE_INLINE ::CORBA_StringSeq_var &
+CORBA_StringSeq_var::operator= (const ::CORBA_StringSeq_var &p)
 {
   if (this != &p)
     {
@@ -72,7 +72,7 @@ CORBA_StringSeq_var::operator= (const ::CORBA_StringSeq_var &p) // deep copy
         }
       else
         {
-          CORBA_StringSeq *deep_copy = 
+          CORBA_StringSeq *deep_copy =
             new CORBA_StringSeq (*p.ptr_);
           
           if (deep_copy != 0)
@@ -167,7 +167,7 @@ CORBA_StringSeq_var::ptr (void) const
 }
 
 // *************************************************************
-// Inline operations for class CORBA_StringSeq_out
+// Inline operations for class CORBA::StringSeq_out
 // *************************************************************
 
 ACE_INLINE
@@ -232,11 +232,11 @@ CORBA_StringSeq_out::operator[] (CORBA::ULong index)
 #endif /* end #if !defined */
 
 
-#if !defined (TAO_WSTRINGSEQ_CI)
-#define TAO_WSTRINGSEQ_CI
+#if !defined (_CORBA_WSTRINGSEQ_CI_)
+#define _CORBA_WSTRINGSEQ_CI_
 
 // *************************************************************
-// Inline operations for class CORBA_WStringSeq_var
+// Inline operations for class CORBA::WStringSeq_var
 // *************************************************************
 
 ACE_INLINE
@@ -272,14 +272,31 @@ CORBA_WStringSeq_var::operator= (CORBA_WStringSeq *p)
   return *this;
 }
 
-ACE_INLINE CORBA_WStringSeq_var &
-CORBA_WStringSeq_var::operator= (const ::CORBA_WStringSeq_var &p) // deep copy
+ACE_INLINE ::CORBA_WStringSeq_var &
+CORBA_WStringSeq_var::operator= (const ::CORBA_WStringSeq_var &p)
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::CORBA_WStringSeq (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          CORBA_WStringSeq *deep_copy =
+            new CORBA_WStringSeq (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              CORBA_WStringSeq *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -362,7 +379,7 @@ CORBA_WStringSeq_var::ptr (void) const
 }
 
 // *************************************************************
-// Inline operations for class CORBA_WStringSeq_out
+// Inline operations for class CORBA::WStringSeq_out
 // *************************************************************
 
 ACE_INLINE
@@ -427,23 +444,23 @@ CORBA_WStringSeq_out::operator[] (CORBA::ULong index)
 #endif /* end #if !defined */
 
 
-#if !defined TAO_TAO_CDR_OP_CORBA_StringSeq_I
-#define TAO_TAO_CDR_OP_CORBA_StringSeq_I
+#if !defined _TAO_CDR_OP_CORBA_StringSeq_I_
+#define _TAO_CDR_OP_CORBA_StringSeq_I_
 
 CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
-    const CORBA_StringSeq &
+    const CORBA::StringSeq &
   );
 CORBA::Boolean TAO_Export operator>> (
     TAO_InputCDR &,
-    CORBA_StringSeq &
+    CORBA::StringSeq &
   );
 
-#endif /* TAO_TAO_CDR_OP_CORBA_StringSeq_I */
+#endif /* _TAO_CDR_OP_CORBA_StringSeq_I_ */
 
 
-#if !defined TAO_TAO_CDR_OP_CORBA_WStringSeq_I
-#define TAO_TAO_CDR_OP_CORBA_WStringSeq_I
+#if !defined _TAO_CDR_OP_CORBA_WStringSeq_I_
+#define _TAO_CDR_OP_CORBA_WStringSeq_I_
 
 CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
@@ -454,5 +471,5 @@ CORBA::Boolean TAO_Export operator>> (
     CORBA_WStringSeq &
   );
 
-#endif /* TAO_TAO_CDR_OP_CORBA_WStringSeq_I */
+#endif /* _TAO_CDR_OP_CORBA_WStringSeq_I_ */
 
