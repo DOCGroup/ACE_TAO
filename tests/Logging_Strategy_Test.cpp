@@ -20,6 +20,11 @@
 //      of log_files, compare and verify if they are the same.
 //     -Verify the order of the files with the order argument.
 //
+//     When Dlls are used, we utilize the dynamic service configuration 
+//     mechanism to activate the logging strategy. This is not a must though,
+//     and you may activate the logging strategy as described in the non-DLL
+//     section below under DLL environments as well. 
+//
 // = AUTHOR
 //    Orlando Ribeiro <oribeiro@inescporto.pt>
 //
@@ -28,7 +33,9 @@
 #include "ace/OS.h"
 #include "ace/Service_Config.h"
 #include "ace/Thread_Manager.h"
-#include <ace/Get_Opt.h>
+#include "ace/Logging_Strategy.cpp"
+#include "ace/Auto_Ptr.cpp"
+#include "ace/Get_Opt.h"
 #include "test_config.h"
 
 ACE_RCSID(tests, Logging_Strategy_Test, "Logging_Strategy_Test.cpp,v 1.00 2001/02/19 05:17:39 oribeiro Exp")
@@ -75,7 +82,8 @@ static int num_files = 0;
 void
 run_reactor (void *)
 {
-  ACE_Reactor::instance ()->owner (ACE_Thread_Manager::instance ()->thr_self ());
+  ACE_Reactor::instance ()->owner (ACE_Thread_Manager::instance
+()->thr_self ());
   ACE_Reactor::instance ()->run_event_loop ();
 }
 
@@ -147,12 +155,12 @@ count_files (void)
     {
       if (max_num_files != num_files)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("Creating files...Failed! Imput value=%d, Checked value=%d"),
+                    ACE_TEXT ("Creating files...Failed! Input value=%d, Checked value=%d"),
                     max_num_files,
                     num_files));
       else
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("      Creating files...OK! Imput value=%d, Checked value=%d"),
+                    ACE_TEXT ("      Creating files...OK! Input value=%d, Checked value=%d"),
                     max_num_files,
                     num_files));
     }
@@ -283,7 +291,7 @@ remove_files (void)
   while (error != 1);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("-< removing existent files finished... \n\n")));
+              ACE_TEXT ("-< removing existent files finished...\n\n")));
 }
 
 static int
@@ -291,7 +299,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Specifications:\n")));
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("s:i:m:f:n:o"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("s:i:m:f:N:o"));
   int c;
 
   while ((c = get_opt ()) != EOF)
@@ -320,7 +328,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                       ACE_TEXT ("Modes: %s\n"),
                       get_opt.optarg));
           break;
-        case 'n':
+        case 'N':
           max_num_files = ACE_OS::atoi (get_opt.optarg);
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Maximum files number: %d\n"),
@@ -339,7 +347,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                              ACE_TEXT ("\t-i: Define the sample interval in secs.\n")
                              ACE_TEXT ("\t-m: Define the max size for the log_files in KB.\n")
                              ACE_TEXT ("\t-f: Indicates the Log_Msg flags.\n")
-                             ACE_TEXT ("\t-n: Define the maximum number of log_files.\n")
+                             ACE_TEXT ("\t-N: Define the maximum number of log_files.\n")
                              ACE_TEXT ("\t-o: If activated puts the log_files ordered.\n")),
                             -1);
           /* NOTREACHED */
@@ -353,10 +361,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int main (int argc, ACE_TCHAR *argv [])
 {
   ACE_START_TEST (ACE_TEXT ("Logging_Strategy_Test"));
-
-  // Protection against this test being run on platforms not supporting Dlls.
-#if defined (ACE_WIN32) || defined (ACE_HAS_SVR4_DYNAMIC_LINKING) || \
-  defined (__hpux)
 
   // Implement the dynamic entries via main arguments
   ACE_LOG_MSG->open (argv[0]);
@@ -385,6 +389,15 @@ int main (int argc, ACE_TCHAR *argv [])
       argc = 3;
     }
 
+  // When Dlls are used, we utilize the dynamic service configuration
+  // mechanism to activate the logging strategy. This is not a must
+  // though, and you may activate the logging strategy as described in
+  // the non-DLL section below under DLL environments as well.
+
+#if !defined (ACE_AS_STATIC_LIBS) && \
+  (defined (ACE_WIN32) || defined (ACE_HAS_SVR4_DYNAMIC_LINKING) || \
+   defined (__hpux))
+  // Platform support DLLs, and not configured to link statically
   ACE_TCHAR arg_str[250];
   ACE_OS::sprintf (arg_str,
                    ACE_TEXT ("dynamic Logger Service_Object *ACE:_make_ACE_Logging_Strategy() \""));
@@ -401,6 +414,19 @@ int main (int argc, ACE_TCHAR *argv [])
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error opening _make_ACE_Log_Strategy object.\n"),
                       1);
+#else // Platform doesn't support DLLs, or configured to link statically.
+  ACE_Logging_Strategy logging_strategy;
+  char ls_argc = argc - 1;
+  auto_ptr<ACE_TCHAR *> ls_argv (new ACE_TCHAR *[ls_argc]);
+
+  for (char c = 0; c < ls_argc; c++)
+    (ls_argv.get ())[c] = argv[c+1];
+
+  if (logging_strategy.init (ls_argc, ls_argv.get ()) == -1)
+     ACE_ERROR_RETURN ((LM_ERROR,
+                        "Error initializing the ACE_Logging_Strategy object.\n"),
+                       1);
+#endif /* !ACE_AS_STATIC_LIBS && (ACE_WIN32 || ACE_HAS_SVR4_DYNAMIC_LINKING || __hpux) */
 
   // launch a new Thread
   if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (run_reactor)) < 0)
@@ -424,18 +450,6 @@ int main (int argc, ACE_TCHAR *argv [])
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error ending reactor.\n"),
                       1);
-
-#else
-  ACE_ERROR ((LM_INFO,
-              ACE_TEXT ("DLLs not supported on this platform\n")));
-
-  ACE_UNUSED_ARG (argc);
-  ACE_UNUSED_ARG (argv);
-  ACE_UNUSED_ARG (print_till_death);
-  ACE_UNUSED_ARG (order);
-  ACE_UNUSED_ARG (remove_files);
-  ACE_UNUSED_ARG (parse_args);
-#endif /* ACE_WIN32 || ACE_HAS_SVR4_DYNAMIC_LINKING || __hpux */
 
   ACE_END_TEST;
   return 0;
