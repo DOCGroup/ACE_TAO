@@ -1,3 +1,27 @@
+Mon Nov  9 23:47:02 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* examples/Callback_Quoter/Notifier_i.cpp
+	examples/Callback_Quoter/Notifier_i.h
+	examples/Callback_Quoter/Notifier_Input_Handler.cpp
+	examples/Callback_Quoter/Notifier_Input_Handler.h		
+	examples/Callback_Quoter/Consumer_Input_Handler.cpp
+	examples/Callback_Quoter/Consumer_Input_Handler.h
+	examples/Callback_Quoter/Consumer_Signal_Handler.cpp
+	examples/Callback_Quoter/Consumer_Signal_Handler.h
+	examples/Callback_Quoter/Consumer_Handler.cpp
+	examples/Callback_Quoter/Consumer_Handler.h
+	examples/Callback_Quoter/Supplier_Signal_Handler.cpp
+	examples/Callback_Quoter/Supplier_Signal_Handler.h
+	examples/Callback_Quoter/Supplier_i.cpp
+	examples/Callback_Quoter/Supplier_i.h
+	examples/Callback_Quoter/supplier.cpp
+	examples/Callback_Quoter/consumer.cpp
+	examples/Callback_Quoter/notifier.cpp
+	examples/Callback_Quoter/README
+
+	 All the above files are added.
+	 This version is a working Callback_Quoter example.
+
 Mon Nov 09 23:06:55 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * BUG-REPORT-FORM: added phase (compilation/linking/execution/other),
@@ -55,6 +79,7 @@ Mon Nov 09 14:12:48 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
           'TAO_ENDTRY_RETURN(X)' to avoid compilation errors when a return
           statement goes right after the TAO_ENDTRY macro.  Thanks to
           David for pointing this out.
+
 
 Mon Nov  9 13:04:56 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
