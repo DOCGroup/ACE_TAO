@@ -26,7 +26,7 @@
 enum ACE_Filecache_Flag
 {
   NOMAP = 0,
-  MAPIT = 1,
+  MAPIT = 1
 };
 
 // = Forward declarations.
