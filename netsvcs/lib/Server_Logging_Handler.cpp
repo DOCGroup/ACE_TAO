@@ -106,24 +106,6 @@ template class ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, u_long, ACE_NUL
   template class ACE_Svc_Handler<LOGGING_PEER_STREAM, ACE_SYNCH>;
   #endif /* ACE_HAS_THREADS */
 
-#if defined (ACE_LINUX_EGCS)
-  // See the comments in the Makefile about not being able to compile
-  // this file on Linux with egcs 1.0.1.  The following are needed with
-  // the Server_Logging_Handler.so that is built by g++ 2.7.x, in order to
-  // link with the remainder of libnetsvcs.so built by egcs 1.0.1:
-  template class ACE_Svc_Handler<ACE_SOCK_Stream, ACE_INET_Addr, ACE_Null_Mutex, ACE_Null_Condition>;
-  template class ACE_Task<ACE_Null_Mutex, ACE_Null_Condition>;
-  template class ACE_Message_Queue<ACE_Null_Mutex, ACE_Null_Condition>;
-  template class ACE_Module<ACE_Null_Mutex, ACE_Null_Condition>;
-  template class ACE_Thru_Task<ACE_Null_Mutex, ACE_Null_Condition>;
-# if defined (ACE_HAS_THREADS)
-    template class ACE_Task<ACE_Thread_Mutex, ACE_Condition_Thread_Mutex>;
-    template class ACE_Message_Queue<ACE_Thread_Mutex, ACE_Condition_Thread_Mutex>;
-    template class ACE_Module<ACE_Thread_Mutex, ACE_Condition_Thread_Mutex>;
-    template class ACE_Thru_Task<ACE_Thread_Mutex, ACE_Condition_Thread_Mutex>;
-# endif /* ACE_HAS_THREADS */
-#endif /* ACE_LINUX_EGCS */
-
 template class ACE_Server_Logging_Handler<Synch_Static_Receiver>;
 template class ACE_Thr_Server_Logging_Handler<Synch_Static_Receiver>;
 template class ACE_Server_Logging_Handler<Synch_Receiver>;
