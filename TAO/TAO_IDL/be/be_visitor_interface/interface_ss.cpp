@@ -131,7 +131,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "be_visitor_interface_ss::visit_interface - "
-                         " copy ctor generation failed\n"), 
+                         " copy ctor generation failed\n"),
                         -1);
     }
 
@@ -180,13 +180,13 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl << be_nl;
     }
 
-  *os << "_tao_retval = _tao_impl->_is_a (value.in () TAO_ENV_ARG_PARAMETER);" 
+  *os << "_tao_retval = _tao_impl->_is_a (value.in () TAO_ENV_ARG_PARAMETER);"
       << be_nl;
   *os << "ACE_CHECK;" << be_nl << be_nl;
   *os << "_tao_server_request.init_reply ();" << be_nl;
-  *os << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();" 
+  *os << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();"
       << be_nl;
-  *os << "if (!(_tao_out << CORBA::Any::from_boolean (_tao_retval)))" 
+  *os << "if (!(_tao_out << CORBA::Any::from_boolean (_tao_retval)))"
       << be_idt_nl;
 
   if (be_global->use_raw_throw ())
@@ -213,13 +213,13 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << full_skel_name << " *_tao_impl = ("
       << full_skel_name << " *) _tao_object_reference;" << be_nl;
   *os << "CORBA::Boolean _tao_retval =" << be_idt_nl
-      << "_tao_impl->_non_existent (TAO_ENV_SINGLE_ARG_PARAMETER);" 
+      << "_tao_impl->_non_existent (TAO_ENV_SINGLE_ARG_PARAMETER);"
       << be_uidt_nl;
   *os << "ACE_CHECK;" << be_nl << be_nl;
   *os << "_tao_server_request.init_reply ();" << be_nl;
-  *os << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();" 
+  *os << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();"
       << be_nl;
-  *os << "if (!(_tao_out << CORBA::Any::from_boolean (_tao_retval)))" 
+  *os << "if (!(_tao_out << CORBA::Any::from_boolean (_tao_retval)))"
       << be_idt_nl;
 
   if (be_global->use_raw_throw ())
@@ -253,7 +253,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "ACE_TRY" << be_idt_nl
       << "{" << be_idt_nl
       << "_tao_retval = " << be_idt_nl
-      << "_tao_impl->_get_interface (TAO_ENV_SINGLE_ARG_PARAMETER);" 
+      << "_tao_impl->_get_interface (TAO_ENV_SINGLE_ARG_PARAMETER);"
       << be_uidt_nl
       << "ACE_TRY_CHECK;" << be_nl << be_nl
       << "_tao_server_request.init_reply ();" << be_nl << be_nl
@@ -310,14 +310,12 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << ")" << be_uidt_nl
       << "{" << be_idt_nl;
 
-  if (node->traverse_inheritance_graph (be_interface::downcast_helper,
-                                        os)
-       == -1)
+  if (this->generate_downcast_implementation (node, os) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "be_visitor_interface_ss::"
                          "visit_interface - "
-                         "traversal of inhertance graph failed\n"),
+                         "traverse for downcast implementation failed\n"),
                         -1);
     }
 
@@ -379,7 +377,7 @@ be_visitor_interface_ss::this_method (be_interface *node)
 
   *os << "(void) safe_stub.release ();" << be_nl << be_nl;
 
-  *os << "return " << "::" << node->full_name () 
+  *os << "return " << "::" << node->full_name ()
       << "::_unchecked_narrow (obj.in ());"
       << be_uidt_nl // idt = 0
       << "}" << be_nl;
@@ -391,7 +389,7 @@ be_visitor_interface_ss::dispatch_method (be_interface *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // now the dispatch method
-  *os << "void " << node->full_skel_name () 
+  *os << "void " << node->full_skel_name ()
       << "::_dispatch (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &req," << be_nl
       << "void *servant_upcall" << be_nl
@@ -401,7 +399,7 @@ be_visitor_interface_ss::dispatch_method (be_interface *node)
   *os << "this->synchronous_upcall_dispatch (req," << be_nl
       << "                                   servant_upcall," << be_nl
       << "                                   this" << be_nl
-      << "                                   TAO_ENV_ARG_PARAMETER);" 
+      << "                                   TAO_ENV_ARG_PARAMETER);"
       << be_uidt_nl;
   *os << "}" << be_nl << be_nl;
 }
@@ -463,7 +461,7 @@ be_visitor_interface_ss::generate_proxy_classes (be_interface *node)
       // Proxy Broker  Factory Function.
       *os << be_nl
           << node->full_base_proxy_broker_name () << " *" << be_nl
-          << node->flat_client_enclosing_scope () 
+          << node->flat_client_enclosing_scope ()
           << node->base_proxy_broker_name ()
           << "_Factory_function (CORBA::Object_ptr obj)" << be_nl
           << "{" << be_idt_nl // idt = 1
@@ -477,15 +475,15 @@ be_visitor_interface_ss::generate_proxy_classes (be_interface *node)
 
       // Proxy Broker Function Pointer Initializer.
       *os << "int" << be_nl
-          << node->flat_client_enclosing_scope () 
+          << node->flat_client_enclosing_scope ()
           << node->base_proxy_broker_name ()
           << "_Factory_Initializer (long)" << be_nl
           << "{" << be_idt_nl // idt = 1
-          << node->flat_client_enclosing_scope () 
+          << node->flat_client_enclosing_scope ()
           << node->base_proxy_broker_name ()
           << "_Factory_function_pointer = "
           << be_idt_nl  // idt = 2
-          << node->flat_client_enclosing_scope () 
+          << node->flat_client_enclosing_scope ()
           << node->base_proxy_broker_name ()
           << "_Factory_function;"
           << be_uidt_nl // idt = 1
@@ -497,10 +495,10 @@ be_visitor_interface_ss::generate_proxy_classes (be_interface *node)
       *os << "static int " <<  node->flat_client_enclosing_scope ()
           << node->base_proxy_broker_name ()
           << "_Stub_Factory_Initializer_Scarecrow = " << be_idt_nl
-          << node->flat_client_enclosing_scope () 
+          << node->flat_client_enclosing_scope ()
           << node->base_proxy_broker_name ()
           << "_Factory_Initializer (ACE_reinterpret_cast (long, "
-          << node->flat_client_enclosing_scope () 
+          << node->flat_client_enclosing_scope ()
           << node->base_proxy_broker_name ()
           << "_Factory_Initializer));"
           << be_uidt_nl << be_nl;
@@ -552,6 +550,14 @@ be_visitor_interface_ss::generate_proxy_classes (be_interface *node)
   return 0;
 }
 
+int
+be_visitor_interface_ss::generate_downcast_implementation (be_interface *node,
+                                                           TAO_OutStream *os)
+{
+  return node->traverse_inheritance_graph (be_interface::downcast_helper,
+                                           os);
+}
+
 ACE_CString
 be_visitor_interface_ss::generate_flat_name (be_interface *node)
 {
@@ -569,4 +575,3 @@ be_visitor_interface_ss::generate_full_skel_name (be_interface *node)
 {
   return ACE_CString (node->full_skel_name ());
 }
-
