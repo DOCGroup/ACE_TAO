@@ -1,3 +1,9 @@
+Tue Apr 20 13:30:51 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/ace.icc: Added a configuration file for creating a shared
+ 	  library with Visual Age C++.  Thanks to Rene Matteau
+ 	  <matteau@ca.ibm.com> for this.
+
 Mon Apr 19 23:50:25 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/Time_Service_Test.cpp (main): Fixed error message.
