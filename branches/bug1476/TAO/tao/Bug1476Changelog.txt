@@ -1,3 +1,9 @@
+Thu Jul 29 08:44:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Transport_Connector.cpp (connect):
+          Added more error handling to handle situations where connections
+          can't be established
+
 Wed Jul 28 15:24:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport_Connector.{h,cpp}
