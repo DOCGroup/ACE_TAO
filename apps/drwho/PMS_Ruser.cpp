@@ -31,8 +31,8 @@ PMS_Ruser::encode (char *packet, int &packet_length)
   for (;
        (prp = this->get_next_friend ()) != 0;
        *buf_ptr++ = '\t')
-    buf_ptr = this->handle_protocol_entries (ACE::strecpy (buf_ptr,
-                                                           prp->get_host ()),
+    buf_ptr = this->handle_protocol_entries (ACE_OS::strecpy (buf_ptr,
+                                                              prp->get_host ()),
                                              prp->get_drwho_list ());
 
   *buf_ptr++ = '\n';
@@ -115,8 +115,8 @@ PMS_Ruser::handle_protocol_entries (char *buf_ptr,
                np->get_active_count ());
       buf_ptr += ACE_OS::strlen (buf_ptr);
 
-      buf_ptr = ACE::strecpy (ACE::strecpy (buf_ptr,
-                                            np->get_login_name ()),
+      buf_ptr = ACE::strecpy (ACE_OS::strecpy (buf_ptr,
+                                               np->get_login_name ()),
                               np->get_real_name ());
     }
 

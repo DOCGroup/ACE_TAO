@@ -38,8 +38,8 @@ PMC_Flo::encode (char *packet, int &packet_length)
   // buffer.
 
   for (Protocol_Record *prp; (prp = this->get_next_friend ()) != 0; )
-    buf_ptr = ACE::strecpy (buf_ptr,
-                            prp->get_login ());
+    buf_ptr = ACE_OS::strecpy (buf_ptr,
+                               prp->get_login ());
 
   packet_length = buf_ptr - packet;
 

@@ -29,8 +29,8 @@ PMS_Usr::encode (char *packet, int &packet_length)
 
   if (prp)
     {
-      buf_ptr = this->handle_protocol_entries (ACE::strecpy (buf_ptr,
-                                                             prp->get_login ()),
+      buf_ptr = this->handle_protocol_entries (ACE_OS::strecpy (buf_ptr,
+                                                                prp->get_login ()),
                                                prp->get_drwho_list ());
       *buf_ptr++ = '\t';
     }

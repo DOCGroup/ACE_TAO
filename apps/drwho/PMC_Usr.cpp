@@ -20,8 +20,8 @@ PMC_Usr::encode (char *packet, int &packet_length)
 
   char *buf_ptr = SKIP_PACKET_TYPE (packet);
 
-  buf_ptr = ACE::strecpy (buf_ptr,
-                          this->get_next_friend ()->get_login ());
+  buf_ptr = ACE_OS::strecpy (buf_ptr,
+                             this->get_next_friend ()->get_login ());
 
   packet_length = buf_ptr - packet;
 
