@@ -1,6 +1,5 @@
 // $Id$
 // ACE_Init_TestDlg.h : header file
-//
 
 #if !defined(AFX_ACE_INIT_TESTDLG_H__64FDCA00_F7F9_11D2_89B6_00A024CC68DB__INCLUDED_)
 #define AFX_ACE_INIT_TESTDLG_H__64FDCA00_F7F9_11D2_89B6_00A024CC68DB__INCLUDED_
@@ -9,7 +8,6 @@
 #pragma once
 #endif // _MSC_VER >= 1000
 
-/////////////////////////////////////////////////////////////////////////////
 // CACE_Init_TestDlg dialog
 
 class CACE_Init_TestDlg : public CDialog
@@ -46,4 +44,4 @@ protected:
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Developer Studio will insert additional declarations immediately before the previous line.
 
-#endif // !defined(AFX_ACE_INIT_TESTDLG_H__64FDCA00_F7F9_11D2_89B6_00A024CC68DB__INCLUDED_)
+#endif /* !defined(AFX_ACE_INIT_TESTDLG_H__64FDCA00_F7F9_11D2_89B6_00A024CC68DB__INCLUDED_) */

@@ -53,241 +53,26 @@
 #pragma warning(disable:4503)
 #endif /* _MSC_VER */
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
-    defined (ACE_HAS_GNU_REPO)
-  // The explicit instantiations are necessary with g++ 2.91.66
-  // with -frepo, because it misses some of them.
-
-// = Handle Gobbler
-template class ACE_Node<ACE_HANDLE>;
-template class ACE_Unbounded_Set<ACE_HANDLE>;
-template class ACE_Unbounded_Set_Iterator<ACE_HANDLE>;
-
-template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
-template class ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>;
-template class ACE_NOOP_Creation_Strategy<Svc_Handler>;
-template class ACE_Concurrency_Strategy<Svc_Handler>;
-template class ACE_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR>;
-template class ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>;
-template class ACE_Creation_Strategy<Svc_Handler>;
-template class ACE_Hash_Map_Entry<ADDR, Svc_Handler *>;
-template class ACE_Hash<ADDR>;
-template class ACE_Equal_To<ADDR>;
-template class ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *>;
-template class ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Reverse_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_NOOP_Concurrency_Strategy<Svc_Handler>;
-template class ACE_Recycling_Strategy<Svc_Handler>;
-template class ACE_Strategy_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>;
-template class ACE_Svc_Tuple<Svc_Handler>;
-template class ACE_Oneshot_Acceptor<Svc_Handler, ACE_SOCK_ACCEPTOR>;
-
-template class ACE_Pair<Svc_Handler *, ATTRIBUTES>;
-template class ACE_Reference_Pair<ADDR, Svc_Handler *>;
-template class ACE_Hash_Map_Entry<ADDR, CACHED_HANDLER>;
-
-template class ACE_Hash_Map_Manager<ADDR, Svc_Handler *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator<ADDR, Svc_Handler *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator<ADDR, Svc_Handler *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager_Ex<ADDR, Svc_Handler *, H_KEY,  C_KEYS, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<ADDR, Svc_Handler *, H_KEY, C_KEYS, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<ADDR, Svc_Handler *, H_KEY, C_KEYS, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ADDR, Svc_Handler *, H_KEY, C_KEYS, ACE_Null_Mutex>;
-
-template class ACE_Hash_Map_Manager<ADDR, CACHED_HANDLER, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator<ADDR, CACHED_HANDLER, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator<ADDR, CACHED_HANDLER, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager_Ex<ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Bucket_Iterator<ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Bucket_Iterator<ADDR, Svc_Handler *, H_KEY, C_KEYS, ACE_Null_Mutex>;
-
-// = Caching_Strategy
-template class ACE_Hash_Cache_Map_Manager<ADDR, Svc_Handler *, H_KEY, C_KEYS, CACHING_STRATEGY, ATTRIBUTES>;
-
-template class ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>;
-
-#if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
-
-template class ACE_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>;
-template class ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>;
-template class ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>;
-template class ACE_Null_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>;
-
-template class ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, LRU_CACHING_STRATEGY>;
-template class ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, LFU_CACHING_STRATEGY>;
-template class ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, FIFO_CACHING_STRATEGY>;
-template class ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, NULL_CACHING_STRATEGY>;
-
-template class ACE_Cache_Map_Manager<ADDR, Svc_Handler *, HASH_MAP, HASH_MAP_ITERATOR, HASH_MAP_REVERSE_ITERATOR, CACHING_STRATEGY, ATTRIBUTES>;
-template class ACE_Cache_Map_Iterator<ADDR, Svc_Handler *, HASH_MAP_ITERATOR, CACHING_STRATEGY, ATTRIBUTES>;
-template class ACE_Cache_Map_Reverse_Iterator<ADDR, Svc_Handler *, HASH_MAP_REVERSE_ITERATOR, CACHING_STRATEGY, ATTRIBUTES>;
-
-#else
-
-template class ACE_Cache_Map_Manager<ADDR, Svc_Handler *, HASH_MAP, CACHING_STRATEGY, ATTRIBUTES>;
-
-#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
-
-template class ACE_Cached_Connect_Strategy_Ex<Svc_Handler, ACE_SOCK_CONNECTOR, CACHING_STRATEGY, ATTRIBUTES, ACE_SYNCH_NULL_MUTEX>;
-template class ACE_Cached_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_NULL_MUTEX>;
-
-template class ACE_Cleanup_Strategy<ADDR, CACHED_HANDLER, HASH_MAP>;
-template class ACE_Recyclable_Handler_Cleanup_Strategy<ADDR, CACHED_HANDLER, HASH_MAP>;
-template class ACE_Recyclable_Handler_Caching_Utility<ADDR, CACHED_HANDLER, HASH_MAP, HASH_MAP_ITERATOR, ATTRIBUTES>;
-
-template class ACE_Reverse_Lock<ACE_SYNCH_NULL_MUTEX>;
-template class ACE_Guard<ACE_Reverse_Lock<ACE_SYNCH_NULL_MUTEX> >;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-// = Handle Gobbler
-#pragma instantiate ACE_Node<ACE_HANDLE>
-#pragma instantiate ACE_Unbounded_Set<ACE_HANDLE>
-#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_HANDLE>
-
-#pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
-#pragma instantiate ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
-#pragma instantiate ACE_NOOP_Creation_Strategy<Svc_Handler>
-#pragma instantiate ACE_Concurrency_Strategy<Svc_Handler>
-#pragma instantiate ACE_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR>
-#pragma instantiate ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>
-#pragma instantiate ACE_Creation_Strategy<Svc_Handler>
-#pragma instantiate ACE_Hash_Map_Entry<ADDR, Svc_Handler *>
-#pragma instantiate ACE_Hash<ADDR>
-#pragma instantiate ACE_Equal_To<ADDR>
-#pragma instantiate ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *>
-#pragma instantiate ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Reverse_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_NOOP_Concurrency_Strategy<Svc_Handler>
-#pragma instantiate ACE_Recycling_Strategy<Svc_Handler>
-#pragma instantiate ACE_Strategy_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>
-#pragma instantiate ACE_Svc_Tuple<Svc_Handler>
-#pragma instantiate ACE_Oneshot_Acceptor<Svc_Handler, ACE_SOCK_ACCEPTOR>
-
-#pragma instantiate ACE_Pair<Svc_Handler *, ATTRIBUTES>
-#pragma instantiate ACE_Reference_Pair<ADDR, Svc_Handler *>
-#pragma instantiate ACE_Hash_Map_Entry<ADDR, CACHED_HANDLER>
-
-#pragma instantiate ACE_Hash_Map_Manager<ADDR, Svc_Handler *, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator<ADDR, Svc_Handler *, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ADDR, Svc_Handler *, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ADDR, Svc_Handler *, H_KEY,  C_KEYS, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<ADDR, Svc_Handler *, H_KEY, C_KEYS, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ADDR, Svc_Handler *, H_KEY, C_KEYS, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ADDR, Svc_Handler *, H_KEY, C_KEYS, ACE_Null_Mutex>
-
-#pragma instantiate ACE_Hash_Map_Manager<ADDR, CACHED_HANDLER, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator<ADDR, CACHED_HANDLER, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ADDR, CACHED_HANDLER, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Bucket_Iterator<ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Bucket_Iterator<ADDR, Svc_Handler *, H_KEY, C_KEYS, ACE_Null_Mutex>
-
-// = Caching_Strategy
-#pragma instantiate ACE_Hash_Cache_Map_Manager<ADDR, Svc_Handler *, H_KEY, C_KEYS, CACHING_STRATEGY, ATTRIBUTES>
-
-#pragma instantiate ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
-
-#if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
-
-#pragma instantiate ACE_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
-#pragma instantiate ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
-#pragma instantiate ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
-#pragma instantiate ACE_Null_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
-
-#pragma instantiate ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, LRU_CACHING_STRATEGY>
-#pragma instantiate ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, LFU_CACHING_STRATEGY>
-#pragma instantiate ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, FIFO_CACHING_STRATEGY>
-#pragma instantiate ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, NULL_CACHING_STRATEGY>
-
-#pragma instantiate ACE_Cache_Map_Manager<ADDR, Svc_Handler *, HASH_MAP, HASH_MAP_ITERATOR, HASH_MAP_REVERSE_ITERATOR, CACHING_STRATEGY, ATTRIBUTES>
-#pragma instantiate ACE_Cache_Map_Iterator<ADDR, Svc_Handler *, HASH_MAP_ITERATOR, CACHING_STRATEGY, ATTRIBUTES>
-#pragma instantiate ACE_Cache_Map_Reverse_Iterator<ADDR, Svc_Handler *, HASH_MAP_REVERSE_ITERATOR, CACHING_STRATEGY, ATTRIBUTES>
-
-#else
-
-#pragma instantiate ACE_Cache_Map_Manager<ADDR, Svc_Handler *, HASH_MAP, CACHING_STRATEGY, ATTRIBUTES>
-
-#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
-
-#pragma instantiate ACE_Cached_Connect_Strategy_Ex<Svc_Handler, ACE_SOCK_CONNECTOR, CACHING_STRATEGY, ATTRIBUTES, ACE_SYNCH_NULL_MUTEX>
-#pragma instantiate ACE_Cached_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_NULL_MUTEX>
-
-#pragma instantiate ACE_Cleanup_Strategy<ADDR, CACHED_HANDLER, HASH_MAP>
-#pragma instantiate ACE_Recyclable_Handler_Cleanup_Strategy<ADDR, CACHED_HANDLER, HASH_MAP>
-#pragma instantiate ACE_Recyclable_Handler_Caching_Utility<ADDR, CACHED_HANDLER, HASH_MAP, HASH_MAP_ITERATOR, ATTRIBUTES>
-
-#pragma instantiate ACE_Reverse_Lock<ACE_SYNCH_NULL_MUTEX>
-#pragma instantiate ACE_Guard<ACE_Reverse_Lock<ACE_SYNCH_NULL_MUTEX> >
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-#endif /* CACHED_CONNECT_TEST */
-
 ACE_RCSID(tests, Cached_Conn_Test, "$Id$")
-
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
-
-static int debug = 0;
-
-Svc_Handler::Svc_Handler (ACE_Thread_Manager *t)
-  : ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> (t)
-{
-}
-
-int
-Svc_Handler::open (void *)
-{
-  if (debug)
-    ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("opening Svc_Handler %d with handle %d\n"),
-                this,
-                this->peer ().get_handle ()));
-
-  return 0;
-}
-
-int
-Svc_Handler::close (u_long flags)
-{
-  ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("Closing Svc_Handler %d with handle %d\n"),
-              this,
-              this->peer ().get_handle ()));
-  return ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::close (flags);
-}
 
 typedef size_t ATTRIBUTES;
 typedef ACE_Pair<Svc_Handler *, ATTRIBUTES>
         CACHED_HANDLER;
 typedef ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
-        ADDR;
-typedef ACE_Hash<ADDR> H_KEY;
-typedef ACE_Equal_To<ADDR> C_KEYS;
+        ACE_ADDR;
+typedef ACE_Hash<ACE_ADDR> H_KEY;
+typedef ACE_Equal_To<ACE_ADDR> C_KEYS;
 
-typedef ACE_Hash_Map_Manager_Ex<ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>
+typedef ACE_Hash_Map_Manager_Ex<ACE_ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>
         HASH_MAP;
-typedef ACE_Hash_Map_Iterator_Ex<ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>
+typedef ACE_Hash_Map_Iterator_Ex<ACE_ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>
         HASH_MAP_ITERATOR;
-typedef ACE_Hash_Map_Reverse_Iterator_Ex<ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>
+typedef ACE_Hash_Map_Reverse_Iterator_Ex<ACE_ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>
         HASH_MAP_REVERSE_ITERATOR;
 
-typedef ACE_Recyclable_Handler_Cleanup_Strategy<ADDR, CACHED_HANDLER, HASH_MAP>
+typedef ACE_Recyclable_Handler_Cleanup_Strategy<ACE_ADDR, CACHED_HANDLER, HASH_MAP>
         CLEANUP_STRATEGY;
-typedef ACE_Recyclable_Handler_Caching_Utility<ADDR, CACHED_HANDLER, HASH_MAP, HASH_MAP_ITERATOR, ATTRIBUTES>
+typedef ACE_Recyclable_Handler_Caching_Utility<ACE_ADDR, CACHED_HANDLER, HASH_MAP, HASH_MAP_ITERATOR, ATTRIBUTES>
         CACHING_UTILITY;
 
 typedef ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
@@ -333,6 +118,221 @@ typedef ACE_NOOP_Concurrency_Strategy<Svc_Handler>
 
 typedef ACE_Cached_Connect_Strategy_Ex<Svc_Handler, ACE_SOCK_CONNECTOR, CACHING_STRATEGY, ATTRIBUTES, ACE_SYNCH_NULL_MUTEX>
         CACHED_CONNECT_STRATEGY;
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+  // The explicit instantiations are necessary with g++ 2.91.66
+  // with -frepo, because it misses some of them.
+
+// = Handle Gobbler
+template class ACE_Node<ACE_HANDLE>;
+template class ACE_Unbounded_Set<ACE_HANDLE>;
+template class ACE_Unbounded_Set_Iterator<ACE_HANDLE>;
+
+template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
+template class ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>;
+template class ACE_NOOP_Creation_Strategy<Svc_Handler>;
+template class ACE_Concurrency_Strategy<Svc_Handler>;
+template class ACE_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR>;
+template class ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>;
+template class ACE_Creation_Strategy<Svc_Handler>;
+template class ACE_Hash_Map_Entry<ACE_ADDR, Svc_Handler *>;
+template class ACE_Hash<ACE_ADDR>;
+template class ACE_Equal_To<ACE_ADDR>;
+template class ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *>;
+template class ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Reverse_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_NOOP_Concurrency_Strategy<Svc_Handler>;
+template class ACE_Recycling_Strategy<Svc_Handler>;
+template class ACE_Strategy_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>;
+template class ACE_Svc_Tuple<Svc_Handler>;
+template class ACE_Oneshot_Acceptor<Svc_Handler, ACE_SOCK_ACCEPTOR>;
+
+template class ACE_Pair<Svc_Handler *, ATTRIBUTES>;
+template class ACE_Reference_Pair<ACE_ADDR, Svc_Handler *>;
+template class ACE_Hash_Map_Entry<ACE_ADDR, CACHED_HANDLER>;
+
+template class ACE_Hash_Map_Manager<ACE_ADDR, Svc_Handler *, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<ACE_ADDR, Svc_Handler *, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator<ACE_ADDR, Svc_Handler *, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<ACE_ADDR, Svc_Handler *, H_KEY,  C_KEYS, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<ACE_ADDR, Svc_Handler *, H_KEY, C_KEYS, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_ADDR, Svc_Handler *, H_KEY, C_KEYS, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_ADDR, Svc_Handler *, H_KEY, C_KEYS, ACE_Null_Mutex>;
+
+template class ACE_Hash_Map_Manager<ACE_ADDR, CACHED_HANDLER, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<ACE_ADDR, CACHED_HANDLER, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator<ACE_ADDR, CACHED_HANDLER, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<ACE_ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<ACE_ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Bucket_Iterator<ACE_ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Bucket_Iterator<ACE_ADDR, Svc_Handler *, H_KEY, C_KEYS, ACE_Null_Mutex>;
+
+// = Caching_Strategy
+template class ACE_Hash_Cache_Map_Manager<ACE_ADDR, Svc_Handler *, H_KEY, C_KEYS, CACHING_STRATEGY, ATTRIBUTES>;
+
+template class ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>;
+
+#if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
+
+template class ACE_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>;
+template class ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>;
+template class ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>;
+template class ACE_Null_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>;
+
+template class ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, LRU_CACHING_STRATEGY>;
+template class ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, LFU_CACHING_STRATEGY>;
+template class ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, FIFO_CACHING_STRATEGY>;
+template class ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, NULL_CACHING_STRATEGY>;
+
+template class ACE_Cache_Map_Manager<ACE_ADDR, Svc_Handler *, HASH_MAP, HASH_MAP_ITERATOR, HASH_MAP_REVERSE_ITERATOR, CACHING_STRATEGY, ATTRIBUTES>;
+template class ACE_Cache_Map_Iterator<ACE_ADDR, Svc_Handler *, HASH_MAP_ITERATOR, CACHING_STRATEGY, ATTRIBUTES>;
+template class ACE_Cache_Map_Reverse_Iterator<ACE_ADDR, Svc_Handler *, HASH_MAP_REVERSE_ITERATOR, CACHING_STRATEGY, ATTRIBUTES>;
+
+#else
+
+template class ACE_Cache_Map_Manager<ACE_ADDR, Svc_Handler *, HASH_MAP, CACHING_STRATEGY, ATTRIBUTES>;
+
+#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
+
+template class ACE_Cached_Connect_Strategy_Ex<Svc_Handler, ACE_SOCK_CONNECTOR, CACHING_STRATEGY, ATTRIBUTES, ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Cached_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_NULL_MUTEX>;
+
+template class ACE_Cleanup_Strategy<ACE_ADDR, CACHED_HANDLER, HASH_MAP>;
+template class ACE_Recyclable_Handler_Cleanup_Strategy<ACE_ADDR, CACHED_HANDLER, HASH_MAP>;
+template class ACE_Recyclable_Handler_Caching_Utility<ACE_ADDR, CACHED_HANDLER, HASH_MAP, HASH_MAP_ITERATOR, ATTRIBUTES>;
+
+template class ACE_Reverse_Lock<ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Guard<ACE_Reverse_Lock<ACE_SYNCH_NULL_MUTEX> >;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+// = Handle Gobbler
+#pragma instantiate ACE_Node<ACE_HANDLE>
+#pragma instantiate ACE_Unbounded_Set<ACE_HANDLE>
+#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_HANDLE>
+
+#pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+#pragma instantiate ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
+#pragma instantiate ACE_NOOP_Creation_Strategy<Svc_Handler>
+#pragma instantiate ACE_Concurrency_Strategy<Svc_Handler>
+#pragma instantiate ACE_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR>
+#pragma instantiate ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>
+#pragma instantiate ACE_Creation_Strategy<Svc_Handler>
+#pragma instantiate ACE_Hash_Map_Entry<ACE_ADDR, Svc_Handler *>
+#pragma instantiate ACE_Hash<ACE_ADDR>
+#pragma instantiate ACE_Equal_To<ACE_ADDR>
+#pragma instantiate ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *>
+#pragma instantiate ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Reverse_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_NOOP_Concurrency_Strategy<Svc_Handler>
+#pragma instantiate ACE_Recycling_Strategy<Svc_Handler>
+#pragma instantiate ACE_Strategy_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>
+#pragma instantiate ACE_Svc_Tuple<Svc_Handler>
+#pragma instantiate ACE_Oneshot_Acceptor<Svc_Handler, ACE_SOCK_ACCEPTOR>
+
+#pragma instantiate ACE_Pair<Svc_Handler *, ATTRIBUTES>
+#pragma instantiate ACE_Reference_Pair<ACE_ADDR, Svc_Handler *>
+#pragma instantiate ACE_Hash_Map_Entry<ACE_ADDR, CACHED_HANDLER>
+
+#pragma instantiate ACE_Hash_Map_Manager<ACE_ADDR, Svc_Handler *, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<ACE_ADDR, Svc_Handler *, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_ADDR, Svc_Handler *, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_ADDR, Svc_Handler *, H_KEY,  C_KEYS, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_ADDR, Svc_Handler *, H_KEY, C_KEYS, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_ADDR, Svc_Handler *, H_KEY, C_KEYS, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_ADDR, Svc_Handler *, H_KEY, C_KEYS, ACE_Null_Mutex>
+
+#pragma instantiate ACE_Hash_Map_Manager<ACE_ADDR, CACHED_HANDLER, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<ACE_ADDR, CACHED_HANDLER, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_ADDR, CACHED_HANDLER, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Bucket_Iterator<ACE_ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Bucket_Iterator<ACE_ADDR, Svc_Handler *, H_KEY, C_KEYS, ACE_Null_Mutex>
+
+// = Caching_Strategy
+#pragma instantiate ACE_Hash_Cache_Map_Manager<ACE_ADDR, Svc_Handler *, H_KEY, C_KEYS, CACHING_STRATEGY, ATTRIBUTES>
+
+#pragma instantiate ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
+
+#if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
+
+#pragma instantiate ACE_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
+#pragma instantiate ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
+#pragma instantiate ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
+#pragma instantiate ACE_Null_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
+
+#pragma instantiate ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, LRU_CACHING_STRATEGY>
+#pragma instantiate ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, LFU_CACHING_STRATEGY>
+#pragma instantiate ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, FIFO_CACHING_STRATEGY>
+#pragma instantiate ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, NULL_CACHING_STRATEGY>
+
+#pragma instantiate ACE_Cache_Map_Manager<ACE_ADDR, Svc_Handler *, HASH_MAP, HASH_MAP_ITERATOR, HASH_MAP_REVERSE_ITERATOR, CACHING_STRATEGY, ATTRIBUTES>
+#pragma instantiate ACE_Cache_Map_Iterator<ACE_ADDR, Svc_Handler *, HASH_MAP_ITERATOR, CACHING_STRATEGY, ATTRIBUTES>
+#pragma instantiate ACE_Cache_Map_Reverse_Iterator<ACE_ADDR, Svc_Handler *, HASH_MAP_REVERSE_ITERATOR, CACHING_STRATEGY, ATTRIBUTES>
+
+#else
+
+#pragma instantiate ACE_Cache_Map_Manager<ACE_ADDR, Svc_Handler *, HASH_MAP, CACHING_STRATEGY, ATTRIBUTES>
+
+#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
+
+#pragma instantiate ACE_Cached_Connect_Strategy_Ex<Svc_Handler, ACE_SOCK_CONNECTOR, CACHING_STRATEGY, ATTRIBUTES, ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Cached_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_NULL_MUTEX>
+
+#pragma instantiate ACE_Cleanup_Strategy<ACE_ADDR, CACHED_HANDLER, HASH_MAP>
+#pragma instantiate ACE_Recyclable_Handler_Cleanup_Strategy<ACE_ADDR, CACHED_HANDLER, HASH_MAP>
+#pragma instantiate ACE_Recyclable_Handler_Caching_Utility<ACE_ADDR, CACHED_HANDLER, HASH_MAP, HASH_MAP_ITERATOR, ATTRIBUTES>
+
+#pragma instantiate ACE_Reverse_Lock<ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Guard<ACE_Reverse_Lock<ACE_SYNCH_NULL_MUTEX> >
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#endif /* CACHED_CONNECT_TEST */
+
+#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
+USELIB("..\ace\aced.lib");
+//---------------------------------------------------------------------------
+#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
+
+static int debug = 0;
+
+Svc_Handler::Svc_Handler (ACE_Thread_Manager *t)
+  : ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> (t)
+{
+}
+
+int
+Svc_Handler::open (void *)
+{
+  if (debug)
+    ACE_DEBUG ((LM_DEBUG,
+                ASYS_TEXT ("opening Svc_Handler %d with handle %d\n"),
+                this,
+                this->peer ().get_handle ()));
+
+  return 0;
+}
+
+int
+Svc_Handler::close (u_long flags)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("Closing Svc_Handler %d with handle %d\n"),
+              this,
+              this->peer ().get_handle ()));
+  return ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::close (flags);
+}
 
 enum Caching_Strategy_Type
 {

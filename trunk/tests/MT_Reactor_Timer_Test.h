@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-#ifndef __MT_REACTOR_TIMER_TEST_H
-#define __MT_REACTOR_TIMER_TEST_H
+#ifndef ACE_TESTS_MT_REACTOR_TIMER_TEST_H
+#define ACE_TESTS_MT_REACTOR_TIMER_TEST_H
 
 #include "ace/Reactor.h"
 
@@ -106,4 +106,4 @@ private:
 
 };
 
-#endif /* __MT_REACTOR_TIMER_TEST_H */
+#endif /* ACE_TESTS_MT_REACTOR_TIMER_TEST_H */

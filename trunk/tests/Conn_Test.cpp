@@ -36,6 +36,51 @@
 
 ACE_RCSID(tests, Conn_Test, "$Id$")
 
+// The following works around bugs with some operating systems, which
+// don't allow multiple threads/process to call accept() on the same
+// listen-mode port/socket.  Also, note that since timed accept is
+// implemented using select(), and we use timed accepts with threads,
+// we need a real lock when using timed accepts even if the OS has
+// thread-safe accept.
+//
+#if defined (ACE_LACKS_FORK)
+#  if defined (ACE_HAS_THREADS)
+     typedef ACE_Thread_Mutex ACCEPTOR_LOCKING;
+#  else
+     typedef ACE_Null_Mutex ACCEPTOR_LOCKING;
+#  endif /* ACE_HAS_THREADS */
+#else
+#  if defined (ACE_HAS_THREAD_SAFE_ACCEPT)
+     typedef ACE_Null_Mutex ACCEPTOR_LOCKING;
+#  else
+     typedef ACE_Process_Mutex ACCEPTOR_LOCKING;
+#  endif /* ACE_HAS_THREAD_SAFE_ACCEPT */
+#endif /* ACE_LACKS_FORK */
+
+#if defined (ACE_HAS_TEMPLATE_TYPEDEFS)
+#define LOCK_SOCK_ACCEPTOR ACE_LOCK_SOCK_Acceptor<ACCEPTOR_LOCKING>
+#else
+#define LOCK_SOCK_ACCEPTOR ACE_LOCK_SOCK_Acceptor<ACCEPTOR_LOCKING>, ACE_INET_Addr
+#endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
+
+typedef ACE_Oneshot_Acceptor<Svc_Handler,
+                             LOCK_SOCK_ACCEPTOR>
+        ACCEPTOR;
+typedef ACE_Connector<Svc_Handler,
+                      ACE_SOCK_CONNECTOR>
+        CONNECTOR;
+typedef ACE_Strategy_Connector<Svc_Handler,
+                               ACE_SOCK_CONNECTOR>
+        STRAT_CONNECTOR;
+typedef ACE_NOOP_Creation_Strategy<Svc_Handler>
+        NULL_CREATION_STRATEGY;
+typedef ACE_NOOP_Concurrency_Strategy<Svc_Handler>
+        NULL_ACTIVATION_STRATEGY;
+typedef ACE_Cached_Connect_Strategy<Svc_Handler,
+                                    ACE_SOCK_CONNECTOR,
+                                    ACE_SYNCH_MUTEX>
+        CACHED_CONNECT_STRATEGY;
+
 #define CACHED_CONNECT_STRATEGY ACE_Cached_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_MUTEX>
 #define REFCOUNTED_HASH_RECYCLABLE_ADDR ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
 
@@ -301,54 +346,6 @@ Svc_Handler::idle (u_long flags)
               this->peer ().get_handle ()));
   return ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::idle (flags);
 }
-
-//
-// The following works around bugs with some operating systems, which
-// don't allow multiple threads/process to call accept() on the same
-// listen-mode port/socket.  Also, note that since timed accept is
-// implemented using select(), and we use timed accepts with threads,
-// we need a real lock when using timed accepts even if the OS has
-// thread-safe accept.
-//
-#if defined (ACE_LACKS_FORK)
-#  if defined (ACE_HAS_THREADS)
-     typedef ACE_Thread_Mutex ACCEPTOR_LOCKING;
-#  else
-     typedef ACE_Null_Mutex ACCEPTOR_LOCKING;
-#  endif /* ACE_HAS_THREADS */
-#else
-#  if defined (ACE_HAS_THREAD_SAFE_ACCEPT)
-     typedef ACE_Null_Mutex ACCEPTOR_LOCKING;
-#  else
-     typedef ACE_Process_Mutex ACCEPTOR_LOCKING;
-#  endif /* ACE_HAS_THREAD_SAFE_ACCEPT */
-#endif /* ACE_LACKS_FORK */
-
-#if defined (ACE_HAS_TEMPLATE_TYPEDEFS)
-#define LOCK_SOCK_ACCEPTOR ACE_LOCK_SOCK_Acceptor<ACCEPTOR_LOCKING>
-#else
-#define LOCK_SOCK_ACCEPTOR ACE_LOCK_SOCK_Acceptor<ACCEPTOR_LOCKING>, ACE_INET_Addr
-#endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
-
-typedef ACE_Oneshot_Acceptor<Svc_Handler,
-                             LOCK_SOCK_ACCEPTOR>
-        ACCEPTOR;
-typedef ACE_Connector<Svc_Handler,
-                      ACE_SOCK_CONNECTOR>
-        CONNECTOR;
-typedef ACE_Strategy_Connector<Svc_Handler,
-                               ACE_SOCK_CONNECTOR>
-        STRAT_CONNECTOR;
-typedef ACE_NOOP_Creation_Strategy<Svc_Handler>
-        NULL_CREATION_STRATEGY;
-typedef ACE_NOOP_Concurrency_Strategy<Svc_Handler>
-        NULL_ACTIVATION_STRATEGY;
-typedef ACE_Cached_Connect_Strategy<Svc_Handler,
-                                    ACE_SOCK_CONNECTOR,
-                                    ACE_SYNCH_MUTEX>
-        CACHED_CONNECT_STRATEGY;
-
-// ****************************************
 
 static void
 timed_blocking_connect (CONNECTOR &con,

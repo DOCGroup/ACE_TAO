@@ -21,15 +21,19 @@
 #include "ace/SString.h"
 #include "ace/Malloc.h"
 
+typedef ASYS_TCHAR *ACE_STRING;
+typedef ACE_DLList<ACE_STRING> STRLIST;
+typedef ACE_DLList_Iterator<ACE_STRING> STRLIST_ITERATOR;
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_DLList<STRING>;
-template class ACE_DLList_Iterator<STRING>;
-template class ACE_DLList_Reverse_Iterator<STRING>;
+template class ACE_DLList<ACE_STRING>;
+template class ACE_DLList_Iterator<ACE_STRING>;
+template class ACE_DLList_Reverse_Iterator<ACE_STRING>;
 template class ACE_Static_Allocator<8192>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_DLList<STRING>
-#pragma instantiate ACE_DLList_Iterator<STRING>
-#pragma instantiate ACE_DLList_Reverse_Iterator<STRING>
+#pragma instantiate ACE_DLList<ACE_STRING>
+#pragma instantiate ACE_DLList_Iterator<ACE_STRING>
+#pragma instantiate ACE_DLList_Reverse_Iterator<ACE_STRING>
 #pragma instantiate ACE_Static_Allocator<8192>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -40,11 +44,7 @@ USELIB("..\ace\aced.lib");
 
 static ACE_Static_Allocator<8192> alloc;
 
-typedef ASYS_TCHAR * STRING;
-typedef ACE_DLList<STRING> STRLIST;
-typedef ACE_DLList_Iterator<STRING> STRLIST_ITERATOR;
-
-static STRING string_table[] =
+static ACE_STRING string_table[] =
 {
   // Note: all these casts are to appease SC 5.0 which is not pleased
   // with using string literals (i.e. const char *'s) as char
@@ -61,7 +61,7 @@ static STRING string_table[] =
 static void
 run_iterate (STRLIST &list)
 {
-  STRING *entry;
+  ACE_STRING *entry;
   size_t i = 0;
 
   for (STRLIST_ITERATOR iter (list);
@@ -86,13 +86,13 @@ run_test (void)
   for (i = 0; string_table[i] != 0; i++)
     {
       if (ACE_EVEN (i)
-          && list.insert_tail ((STRING *) &string_table[i]) == 0)
+          && list.insert_tail ((ACE_STRING *) &string_table[i]) == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ASYS_TEXT ("%p failed for %s \n"),
                            ASYS_TEXT ("insert"),
                            string_table[i]),
                           -1);
-      else if (list.insert_head ((STRING *) &string_table[i]) == 0)
+      else if (list.insert_head ((ACE_STRING *) &string_table[i]) == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ASYS_TEXT ("%p failed for %s \n"),
                            ASYS_TEXT ("insert"),

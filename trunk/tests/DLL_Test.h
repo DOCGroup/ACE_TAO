@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-#ifndef ACE_DLL_TEST_H
-#define ACE_DLL_TEST_H
+#ifndef ACE_TESTS_DLL_TEST_H
+#define ACE_TESTS_DLL_TEST_H
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -51,4 +51,4 @@ public:
     }
 };
 
-#endif /* ACE_MAP_TEST_H */
+#endif /* ACE_TESTS_MAP_TEST_H */
