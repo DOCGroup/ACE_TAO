@@ -1,3 +1,24 @@
+Thu Jun 28 15:25:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Reactor.h (ACE_Reactor):
+	* ace/Reactor.cpp: Added a new method resumable_handler () to the
+	  reactor interface. This would indicate whether the application
+	  can take advantage by resuming the handlers themselves or
+	  not. Not all reactors can allow this feature.
+
+	* ace/Reactor_Impl.h:
+	* ace/Reactor_Impl.cpp: Added a pure virtual function so that all
+	  the implementations can decide whether the handlers are
+	  resumable or not.
+
+	* ace/Select_Reactor_Base.h:
+	* ace/Select_Reactor_Base.cpp:
+	* ace/TP_Reactor.h:
+	* ace/TP_Reactor.cpp:
+	* ace/WFMO_Reactor.h:
+	* ace/WFMO_Reactor.cpp:Implemented resumable_handlers ().
+
+
 Sun Jun 24 11:25:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* Created this file. Got the whole stuff in ace to a new branch by

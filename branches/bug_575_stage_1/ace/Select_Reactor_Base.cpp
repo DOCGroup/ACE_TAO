@@ -578,7 +578,7 @@ ACE_Select_Reactor_Notify::open (ACE_Reactor_Impl *r,
 
   if (disable_notify_pipe == 0)
     {
-      this->select_reactor_ = 
+      this->select_reactor_ =
         ACE_dynamic_cast (ACE_Select_Reactor_Impl *, r);
 
       if (select_reactor_ == 0)
@@ -596,7 +596,7 @@ ACE_Select_Reactor_Notify::open (ACE_Reactor_Impl *r,
 
 #if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
       ACE_Notification_Buffer *temp;
-      
+
       ACE_NEW_RETURN (temp,
                       ACE_Notification_Buffer[ACE_REACTOR_NOTIFICATION_ARRAY_SIZE],
                       -1);
@@ -673,16 +673,16 @@ ACE_Select_Reactor_Notify::notify (ACE_Event_Handler *eh,
       ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->notify_queue_lock_, -1);
 
       // No pending notifications.
-      if (this->notify_queue_.is_empty ()) 
+      if (this->notify_queue_.is_empty ())
         notification_required = 1;
 
       ACE_Notification_Buffer *temp = 0;
 
-      if (free_queue_.dequeue_head (temp) == -1) 
+      if (free_queue_.dequeue_head (temp) == -1)
         {
           // Grow the queue of available buffers.
           ACE_Notification_Buffer *temp1;
-          
+
           ACE_NEW_RETURN (temp1,
                           ACE_Notification_Buffer[ACE_REACTOR_NOTIFICATION_ARRAY_SIZE],
                           -1);
@@ -693,11 +693,11 @@ ACE_Select_Reactor_Notify::notify (ACE_Event_Handler *eh,
           // Start at 1 and enqueue only
           // (ACE_REACTOR_NOTIFICATION_ARRAY_SIZE - 1) elements since
           // the first one will be used right now.
-          for (size_t i = 1; 
-               i < ACE_REACTOR_NOTIFICATION_ARRAY_SIZE; 
+          for (size_t i = 1;
+               i < ACE_REACTOR_NOTIFICATION_ARRAY_SIZE;
                i++)
             this->free_queue_.enqueue_head (temp1 + i);
-          
+
           temp = temp1;
         }
 
@@ -1002,6 +1002,15 @@ ACE_Select_Reactor_Impl::bit_ops (ACE_HANDLE handle,
       return -1;
     }
   return omask;
+}
+
+int
+ACE_Select_Reactor_Impl::resumable_handler (void)
+{
+  // The select reactor has no handlers that can be resumed by the
+  // application. So return 0;
+
+  return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

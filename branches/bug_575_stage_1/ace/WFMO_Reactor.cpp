@@ -2467,6 +2467,14 @@ ACE_WFMO_Reactor::purge_pending_notifications (ACE_Event_Handler *eh)
   return this->notify_handler_->purge_pending_notifications (eh);
 }
 
+int
+ACE_WFMO_Reactor::resumable_handler (void)
+{
+  ACE_TRACE ("ACE_WFMO_Reactor::resumable_handler");
+  return 0;
+}
+
+
 // No-op WinSOCK2 methods to help WFMO_Reactor compile
 #if !defined (ACE_HAS_WINSOCK2) || (ACE_HAS_WINSOCK2 == 0)
 int
