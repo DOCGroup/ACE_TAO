@@ -1,29 +1,36 @@
+Tue Sep 08 07:30:33 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * TAO_IDL/be/be_interface.cpp (cleanup_gperf_temp_file):
+          removed the #ifdef that prevented deletion of ss on linux.
+          It should be OK to delete it now, thanks to the recent
+          fix provided by Ravi Nagabhyru <ravi@future-minds.com>.
+
 Mon Sep  7 21:10:06 1998  Balachandran Natarajan  <bala@cumbia.cs.wustl.edu>
 
-	* tests/Simple/grid:  Made some changes to Constructors
+        * tests/Simple/grid:  Made some changes to Constructors
 
 Mon Sep  7 20:39:06 1998  Balachandran Natarajan  <bala@cumbia.cs.wustl.edu>
-	* tests/Simple/grid: Added the first implementation of the Grid
- 	  example.  This example is loosely modeled on the Grid demo that
- 	  is distributed with Orbix.
+        * tests/Simple/grid: Added the first implementation of the Grid
+          example.  This example is loosely modeled on the Grid demo that
+          is distributed with Orbix.
 
 Mon Sep  7 19:45:15 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
-	* orbsvcs/Trading_Service/README:
-	* orbsvcs/tests/Trading/README:
-	Added README files directing the user to the
-	docs/releasenotes/trader.html Trading Service documentation. 
+        * orbsvcs/Trading_Service/README:
+        * orbsvcs/tests/Trading/README:
+        Added README files directing the user to the
+        docs/releasenotes/trader.html Trading Service documentation.
 
 Mon Sep  7 19:31:28 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* tests/Simple/time/run_test.pl: Added require Process. Changed 
-	  ACE::waitforfile to waitforfile. Thanks to bala for reporting
-	  this.
+        * tests/Simple/time/run_test.pl: Added require Process. Changed
+          ACE::waitforfile to waitforfile. Thanks to bala for reporting
+          this.
 
 Mon Sep  7 10:22:19 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/Cubit/TAO/MT_Cubit: Fixed a bunch of warnings.  Thanks to
- 	  David Levine for reporting this.
+        * tests/Cubit/TAO/MT_Cubit: Fixed a bunch of warnings.  Thanks to
+          David Levine for reporting this.
 
 Mon Sep 07 09:37:07 1998  David L. Levine  <levine@cs.wustl.edu>
 
