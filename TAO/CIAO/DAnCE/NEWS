@@ -2,7 +2,7 @@ PLANNED MAJOR CHANGES TARGETED FOR DAnCE-0.4.5
 ====================================================
  . Split the current NodeApplication entity into
    ComponentServer(still bearing the name "NodeApplication" though)
-   and  Container. (Gan)
+   and Container. (Gan)
 
  . Allow colocated and non-colocated decisions within the schema
    (Gan)
@@ -26,7 +26,7 @@ PLANNED MAJOR CHANGES TARGETED FOR DAnCE-0.4.5
 
  . Tools for dynamic replacement of components (Jai)
 
- . Thread pools and the like. (Bala and Nanbor).
+ . Thread pools and the like. (Nanbor and Gan).
 
  . Dependencies during deployment.
 
@@ -36,3 +36,6 @@ PLANNED MAJOR CHANGES TARGETED FOR DAnCE-0.4.5
 
  . Tools and utilities for developing and debugging components and
    applications. (Kitty)
+
+ . support etting attribute values on Component through XML and
+   DAnCE configurator. (Gan and Kitty)
