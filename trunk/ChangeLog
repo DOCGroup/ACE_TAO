@@ -1,3 +1,29 @@
+Sat Aug 31 01:20:09 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+	                      Gary Duzan  <gduzan@bbn.com>
+
+	* include/makeinclude/rules.nested.GNU: Rewritten by Gary Duzan.
+	  If a list of directories is specified with DIRS= for a recursive
+	  make, make will halt immediately and propagate a non-zero 
+	  return code to the shell if an error is encountered in a 
+	  subdirectory.  The present behavior does not propagate any 
+	  errors to make if there is an error in a subdirectory.  If make -k 
+	  is specified, make will keep on going even if it encounters an 
+	  error in a subdirectory, but it will also propagate a non-zero 
+	  return code to make when the make finishes.  The current behavior 
+	  is to keep on going if an error is encountered in a subdirectory, 
+	  but NOT propagate a non-zero return code upon termination of make. 
+
+	* ace/Makefile.dirs: (Added) Specifies the DIRS= list of directories
+	  to invoke recursive makes on.
+
+	* ace/Makefile.ace: (Added).  This builds libACE, like the old Makefile
+	  did.
+
+	* ace/Makefile: Invoke Makefile.ace first, then Makefile,dirs.  It
+	  was necessary to split apart the DIRS= rule from the part of the
+	  Makefile which builds libACE in order to have parallel makes (-j 2)
+	  work on recursive makes.
+
 Fri Aug 30 17:34:00 2002  Justin Michel <michel_j@ociweb.com>
 
         * ace/Timer_List_T.cpp:
