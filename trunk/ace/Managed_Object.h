@@ -50,6 +50,9 @@ public:
   TYPE &object (void);
 
 private:
+  ACE_UNIMPLEMENTED_FUNC (ACE_Cleanup_Adapter (const ACE_Cleanup_Adapter<TYPE> &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Cleanup_Adapter& operator= (const ACE_Cleanup_Adapter<TYPE> &))
+
   /// Contained object.
   TYPE object_;
 };
