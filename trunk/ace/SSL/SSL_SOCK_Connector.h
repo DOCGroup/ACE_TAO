@@ -10,7 +10,7 @@
 //    SSL_SOCK_Connector.h
 //
 // = AUTHOR
-//    John Heitmann 
+//    John Heitmann
 //    Chris Zimman
 //    Carlos O'Ryan <coryan@cs.wustl.edu>
 //    Ossama Othman <othman@cs.wustl.edu>

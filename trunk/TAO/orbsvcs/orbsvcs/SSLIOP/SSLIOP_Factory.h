@@ -18,6 +18,8 @@
 
 #include "tao/Protocol_Factory.h"
 
+#include "SSL_Context.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -55,6 +57,9 @@ private:
   int minor_;
   // Changing the version number can be used to provide backwards
   // compatibility with old clients.
+
+  int use_ssl_;
+  // Use SSL when establishing connections
 };
 
 ACE_STATIC_SVC_DECLARE (TAO_SSLIOP_Protocol_Factory)
