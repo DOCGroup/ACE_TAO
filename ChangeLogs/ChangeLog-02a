@@ -1,3 +1,9 @@
+Thu Jan 31 13:06:12 2002  Boris Kolpackov <bosk@ipmce.ru>
+	
+	* THANKS:
+ 	
+	  Added Koushik Banerjee to the hall of fame.
+	
 Wed Jan 30 22:41:39 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * include/makeinclude/platform_linux.GNU (CXX_VERSION):
