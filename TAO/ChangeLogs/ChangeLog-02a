@@ -1,21 +1,27 @@
+Mon Jun 18 11:32:48 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Strategies/GIOP_Message_NonReactive_Handler.cpp
+	  (read_message): Removed a superfluous check that I added for
+	  debugging.
+
 Mon Jun 18 11:07:27 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
         * tao/Policy_Set.cpp:
-          
+
           Added code to clear out the policy cache when overriding
           policies using the SET_OVERRIDE option.  This fixes the
           segfaults in the AMI tests.
 
         * tao/Default_Protocols_Hooks.cpp:
         * tao/TAO_Internal.cpp:
-          
+
           Fixed default protocols service configurator name and
           statically added it in TAO_Internal.cpp.  This fixes
           a 16 byte memory leak.
 
         * tao/orbconf.h:
         * tao/ORB_Core.cpp:
-          
+
           Added guards around code that uses sync scope and
           relative roundtrip timeout policies so that they can
           be individually disabled without producing compiler
