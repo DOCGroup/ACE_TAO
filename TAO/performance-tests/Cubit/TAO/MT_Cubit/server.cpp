@@ -143,8 +143,14 @@ Cubit_Task::initialize_orb (void)
 
       this->naming_context_ = 
         CosNaming::NamingContext::_narrow (naming_obj.in (), TAO_TRY_ENV);
-      TAO_CHECK_ENV;
 
+      // Check the environment and return 1 if exception occurred or nil pointer.
+      if (TAO_TRY_ENV.exception () != 0 || 
+	  CORBA::is_nil (this->naming_context_.in ())==CORBA::B_TRUE )
+	{
+	  return 1;
+	}
+	
       // Register the servant with the Naming Context....
       CosNaming::Name cubit_context_name (1);
       cubit_context_name.length (1);
@@ -626,7 +632,7 @@ start_servants ()
 
   ACE_OS::sprintf (args, 
 		   "rate10 -ORBport %d -ORBhost %s -ORBobjrefstyle URL ", 
-		   base_port + 1 + i,
+		   base_port + num_of_objs,
 		   hostname);
 
   Cubit_Factory_Task * factory_task;
