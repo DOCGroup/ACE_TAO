@@ -1,3 +1,45 @@
+Tue Jan  8 14:52:46 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/ast/ast_typedef.cpp:
+        * TAO_IDL/be/be_array.cpp:
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_type.cpp:
+        * TAO_IDL/be/be_typedef.cpp:
+
+          Added explicit calls to base class constructors.
+
+        * TAO_IDL/be/be_decl.cpp:
+
+          Added explicit calls to base class constructors, and
+          added missing member initialization.
+
+        * TAO_IDL/be/be_visitor_array/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_typedef/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_typedef/cdr_op_ci.cpp:
+
+          Changed the logic for generating CDR operators for
+          named arrays of anonymous sequences. Some recent 
+          change broke this, and it was showing up in IDL_Test.
+          Also made cosmetic changes.
+
+        * TAO_IDL/be/be_visitor_sequence/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_typedef/any_op_ch.cpp:
+
+          Added line breaks to strings of output stream operators,
+          to avoid side effects when a method call is in the string.
+          Also made cosmetic changes.
+          
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ch.cpp:
+
+          Changed the logic of the code generation for forward
+          declared interfaces. The existing logic was a case of two
+          wrongs making a right, and was causing a problem with the
+          implementation of AMH in the IDL compiler. Thanks to
+          Carlos O'Ryan <coryan@uci.edu> and Mayur Deshpande
+          <mayur@ics.uci.edu> for pointing out the problem.
+
 Mon Jan  7 10:27:43 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/PortableServer/PolicyS_T.i:
