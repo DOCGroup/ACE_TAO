@@ -208,6 +208,7 @@ ACE_Process_Options::avoid_zombies (int avoid_zombies)
 ACE_INLINE int
 ACE_Process_Options::setreugid (const char* user)
 {
+#if !defined (ACE_LACKS_PWD_FUNCTIONS)  
   struct passwd *ent = ACE_OS::getpwnam (user);
 
   if (ent != 0) 
@@ -220,6 +221,9 @@ ACE_Process_Options::setreugid (const char* user)
     }
   else
     return -1;
+#else
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_LACKS_PWD_FUNCTIONS */
 }
 
 ACE_INLINE void
