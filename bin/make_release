@@ -796,6 +796,8 @@ sub generate_makefiles () {
         "// \$Id\$\n" .
         "// This is an automatically generated file.\n\n" .
         "ssl=1\n" .
+        "fl_reactor=1\n" .
+        "xt_reactor=1\n" .
         "cidl=1\n" .
         "sctp=1\n";
 
