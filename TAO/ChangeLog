@@ -1,3 +1,19 @@
+Sun Dec  7 14:24:06 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tests/AMH_Exceptions/server.dsp:
+	* performance-tests/Throughput/client.dsp:
+	* performance-tests/Throughput/server.dsp:
+	* performance-tests/Sequence_Latency/Thread_Pool/client.dsp:
+	* performance-tests/Sequence_Latency/Thread_Pool/server.dsp:
+	* performance-tests/Sequence_Latency/Thread_Per_Connection/client.dsp:
+	* performance-tests/Sequence_Latency/Thread_Per_Connection/server.dsp:
+	  Fixed release configuration
+
+	* performance-tests/Sequence_Latency/Thread_Per_Connection/Thread_Per_Connection_Latency.ncb:
+	* performance-tests/Sequence_Latency/Thread_Per_Connection/Thread_Per_Connection_Latency.opt:
+	  Removed these files from the repo, they are MSVC6 generated and
+	  don't need to be in the repo
+
 Sun Dec  7 10:03:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/FTRT_Event_Service/Event_Service/FT_EventService.cpp:
