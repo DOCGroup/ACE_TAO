@@ -241,7 +241,7 @@ be_type::nested_type_name (be_decl *use_scope, const char *suffix, const char *p
         }
       else
         {
-          int len = ACE_OS::strlen (def_curr);
+          int len = ACE_OS::strlen (use_curr);
           if (len > len_to_match)
             len_to_match = len;
         }
@@ -280,7 +280,7 @@ be_type::nested_type_name (be_decl *use_scope, const char *suffix, const char *p
                 }
               else
                 {
-                  int len = ACE_OS::strlen (def_curr);
+                  int len = ACE_OS::strlen (use_curr);
                   if (len > len_to_match)
                     len_to_match = len;
                 }
