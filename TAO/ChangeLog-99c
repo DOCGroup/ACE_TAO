@@ -1,3 +1,8 @@
+Wed Jun 23 17:19:52 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/ImplRepo_Service/tao_ir_i.cpp: Fixed some errors on
+	  g++. 
+
 Wed Jun 23 16:38:54 1999  John Heitmann  <jwh1@cs.wustl.edu>
 
 	* examples/Quoter/run_test.pl:
