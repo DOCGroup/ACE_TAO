@@ -4,6 +4,7 @@
 #include "ace/FILE_Connector.h"
 #include "ace/Message_Block.h"
 #include "ace/Singleton.h"
+#include "ace/Unbounded_Queue.h"
 
 #define JAWS_BUILD_DLL
 
