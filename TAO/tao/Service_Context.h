@@ -85,6 +85,14 @@ public:
   /// 0 if the component is not present.
   int get_context (IOP::ServiceId id, const IOP::ServiceContext **context) const;
 
+  /// Get a copy of the Service Context corresponding to the given
+  /// ServiceId.  The caller owns the returned Service Context.
+  /**
+   * @return 0 If a Service Context with the given ServiceId doesn't
+   *           exist.
+   */
+  int get_context (IOP::ServiceId id, IOP::ServiceContext_out context);
+
   /// Set the context from the CDR stream and add that to the service
   /// Context list
   void set_context (IOP::ServiceId id, TAO_OutputCDR &cdr);
