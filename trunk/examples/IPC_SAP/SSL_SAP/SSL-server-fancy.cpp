@@ -171,9 +171,9 @@ Options::Options (void)
 }
 
 int
-Options::parse_args (int argc, char *argv[])
+Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt getopt (argc, argv, "p:r:v", 1);
+  ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("p:r:v"), 1);
 
   for (int c; (c = getopt ()) != -1; )
     switch (c)
@@ -189,7 +189,7 @@ Options::parse_args (int argc, char *argv[])
         break;
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%P|%t) usage: %n [-p <port>] [-v]"),
+                           ACE_TEXT ("(%P|%t) usage: %n [-p <port>] [-v]")),
                           -1);
       }
 
@@ -215,12 +215,12 @@ Handler::open (void *)
   // Make sure we're not in non-blocking mode.
   if (this->ssl_stream_-> disable (ACE_NONBLOCK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "disable"),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("disable")),
                        0);
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) client %s connected from %d \n",
+              ACE_TEXT ("(%P|%t) client %C connected from %d \n"),
               cli_addr.get_host_name (),
               cli_addr.get_port_number ()));
 
@@ -231,7 +231,7 @@ int
 Handler::close (u_long)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) closing down %x\n",
+              ACE_TEXT ("(%P|%t) closing down %@\n"),
               this));
 
   delete this->ssl_stream_;
@@ -265,13 +265,13 @@ Handler::parse_header_and_allocate_buffer (char *&request,
   if (result == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) connected closed\n"));
+                  ACE_TEXT ("(%P|%t) connected closed\n")));
       return -1;
     }
   else if (result == -1 || result != sizeof (ACE_INT32))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) %p\n",
-                       "recv_n failed"),
+                       ACE_TEXT ("(%P|%t) %p\n"),
+                       ACE_TEXT ("recv_n failed")),
                       -1);
   else
     {
@@ -319,15 +319,15 @@ Twoway_Handler::run (void)
       if (r_bytes == -1)
         {
           ACE_ERROR ((LM_ERROR,
-                      "%p\n",
-                      "recv"));
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("recv")));
           break;
         }
       else if (r_bytes == 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t) reached end of input, connection closed "
-                      "by client\n"));
+                      ACE_TEXT ("(%P|%t) reached end of input, connection ")
+                      ACE_TEXT ("closed by client\n")));
           break;
         }
       else if (OPTIONS::instance ()->verbose ()
@@ -335,8 +335,8 @@ Twoway_Handler::run (void)
                                 request,
                                 r_bytes) != r_bytes)
         ACE_ERROR ((LM_ERROR,
-                    "%p\n",
-                    "ACE::write_n"));
+                    ACE_TEXT ("%p\n"),
+                    ACE_TEXT ("ACE::write_n")));
       else
         {
           ssize_t s_bytes =
@@ -349,8 +349,8 @@ Twoway_Handler::run (void)
           if (this->ssl_stream_ -> send_n (request,
                                            s_bytes) != s_bytes)
             ACE_ERROR ((LM_ERROR,
-                        "%p\n",
-                        "send_n"));
+                        ACE_TEXT ("%p\n"),
+                        ACE_TEXT ("send_n")));
         }
       this->total_bytes_ += size_t (r_bytes);
       this->message_count_++;
@@ -413,15 +413,15 @@ Oneway_Handler::run (void)
       if (r_bytes == -1)
         {
           ACE_ERROR ((LM_ERROR,
-                      "%p\n",
-                      "recv"));
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("recv")));
           break;
         }
       else if (r_bytes == 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t) reached end of input, connection closed "
-                      "by client\n"));
+                      ACE_TEXT ("(%P|%t) reached end of input, connection ")
+                      ACE_TEXT ("closed by client\n")));
           break;
         }
       else if (OPTIONS::instance ()->verbose ()
@@ -429,8 +429,8 @@ Oneway_Handler::run (void)
                                 request,
                                 r_bytes) != r_bytes)
         ACE_ERROR ((LM_ERROR,
-                    "%p\n",
-                    "ACE::write_n"));
+                    ACE_TEXT ("%p\n"),
+                    ACE_TEXT ("ACE::write_n")));
 
       this->total_bytes_ += size_t (r_bytes);
       this->message_count_++;
@@ -470,17 +470,17 @@ Handler_Factory::init_acceptors (void)
   if (this->twoway_acceptor_.open (twoway_server_addr, 1) == -1
       || this->oneway_acceptor_.open (oneway_server_addr, 1) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "open"),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("open")),
                       -1);
   else if (this->twoway_acceptor_.get_local_addr (twoway_server_addr) == -1
            || this->oneway_acceptor_.get_local_addr (oneway_server_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "get_local_addr"),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("get_local_addr")),
                       -1);
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) starting twoway server at port %d and oneway server at port %d\n",
+              ACE_TEXT ("(%P|%t) starting twoway server at port %d and oneway server at port %d\n"),
               twoway_server_addr.get_port_number (),
               oneway_server_addr.get_port_number ()));
   return 0;
@@ -498,8 +498,8 @@ Handler_Factory::create_handler (
 
   if (acceptor.accept (*new_stream) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "accept"),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("accept")),
                        -1);
 
   Handler *handler;
@@ -509,7 +509,7 @@ Handler_Factory::create_handler (
                         -1);
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) spawning %s handler\n",
+              ACE_TEXT ("(%P|%t) spawning %s handler\n"),
               handler_type));
 
   if (handler->open () == -1)
@@ -565,11 +565,11 @@ Handler_Factory::handle_events (void)
                         timeout);
       if (result == -1)
         ACE_ERROR ((LM_ERROR,
-                    "(%P|%t) %p\n",
-                    "select"));
+                    ACE_TEXT ("(%P|%t) %p\n"),
+                    ACE_TEXT ("select")));
       else if (result == 0 && OPTIONS::instance ()->verbose ())
         ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t) select timed out\n"));
+                    ACE_TEXT ("(%P|%t) select timed out\n")));
       else
         {
           if (FD_ISSET (this->twoway_acceptor_.get_handle (),
@@ -589,7 +589,7 @@ Handler_Factory::handle_events (void)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
 
   ACE_SSL_Context *context = ACE_SSL_Context::instance ();

@@ -31,20 +31,20 @@
 ACE_RCSID(Process, process, "$Id$")
 
 #if defined (ACE_WIN32)
-#define EXEC_NAME "MORE.COM"
-const char *DATE_PATH = "date.exe";
-const char *LS_PATH = "ls.exe";
-const char *SLEEP_PATH = "sleep.exe";
+#define EXEC_NAME ACE_TEXT ("MORE.COM")
+const ACE_TCHAR *DATE_PATH = ACE_TEXT ("date.exe");
+const ACE_TCHAR *LS_PATH = ACE_TEXT ("ls.exe");
+const ACE_TCHAR *SLEEP_PATH = ACE_TEXT ("sleep.exe");
 #else
-#define EXEC_NAME "less"
-const char *DATE_PATH = "date";
-const char *LS_PATH = "ls";
-const char *SLEEP_PATH = "sleep";
+#define EXEC_NAME ACE_TEXT ("less")
+const ACE_TCHAR *DATE_PATH = ACE_TEXT ("date");
+const ACE_TCHAR *LS_PATH = ACE_TEXT ("ls");
+const ACE_TCHAR *SLEEP_PATH = ACE_TEXT ("sleep");
 #endif /* ACE_WIN32 */
 
-static const char *executable = EXEC_NAME;
-static char *print_file = 0;
-static char *environment_string = 0;
+static const ACE_TCHAR *executable = EXEC_NAME;
+static ACE_TCHAR *print_file = 0;
+static ACE_TCHAR *environment_string = 0;
 static int get_env = 0;
 static int run_date = 0;
 static int run_ls = 0;
@@ -55,9 +55,9 @@ static int run_wait = 0;
 
 // Parse the command-line arguments and set options.
 static int
-parse_args (int argc, char **argv)
+parse_args (int argc, ACE_TCHAR **argv)
 {
-  ACE_Get_Opt get_opt (argc, argv, "dlx:p:e:gastuw");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("dlx:p:e:gastuw"));
   int c;
 
   while ((c = get_opt ()) != -1)
@@ -96,17 +96,18 @@ parse_args (int argc, char **argv)
         break;
       case 'u':
       default:
-        ACE_ERROR_RETURN ((LM_ERROR, "Usage:\n"
-                           "-d print date\n"
-                           "-l run ls\n"
-                           "-x <executable=more.com>\n"
-                           "-p print <file_name>\n"
-                           "-e <env variable message>\n"
-                           "-s setenv ACE_PROCESS_ENV and spawn -g\n"
-                           "-g get_env ACE_PROCESS_ENV\n"
-                           "-t test tokenizer\n"
-                           "-w test wait functions\n"
-                           "-a run all (d,l,e \"running\")\n"), -1);
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Usage:\n")
+                           ACE_TEXT ("-d print date\n")
+                           ACE_TEXT ("-l run ls\n")
+                           ACE_TEXT ("-x <executable=more.com>\n")
+                           ACE_TEXT ("-p print <file_name>\n")
+                           ACE_TEXT ("-e <env variable message>\n")
+                           ACE_TEXT ("-s setenv ACE_PROCESS_ENV and spawn -g\n")
+                           ACE_TEXT ("-g get_env ACE_PROCESS_ENV\n")
+                           ACE_TEXT ("-t test tokenizer\n")
+                           ACE_TEXT ("-w test wait functions\n")
+                           ACE_TEXT ("-a run all (d,l,e \"running\")\n")),
+                          -1);
         break;
       }
     }
@@ -122,7 +123,7 @@ test_more (void)
 
   if (infile == ACE_INVALID_HANDLE)
     {
-      ACE_ERROR ((LM_DEBUG, "%p\n", print_file));
+      ACE_ERROR ((LM_DEBUG, ACE_TEXT ("%p\n"), print_file));
       return;
     }
 
@@ -135,20 +136,20 @@ test_more (void)
     {
       int error = ACE_OS::last_error ();
       ACE_ERROR ((LM_ERROR,
-                  "%p errno = %d.\n",
-                  "test_more",
+                  ACE_TEXT ("%p errno = %d.\n"),
+                  ACE_TEXT ("test_more"),
                   error));
     }
 
   ACE_exitcode status;
   new_process.wait (&status);
   ACE_DEBUG ((LM_DEBUG,
-              "Process exit with status %d\n",
+              ACE_TEXT ("Process exit with status %d\n"),
               status));
   ACE_OS::close (infile);
 
   ACE_DEBUG ((LM_DEBUG,
-              "More succeeded.\n"));
+              ACE_TEXT ("More succeeded.\n")));
 }
 
 // This is a simple usage of ACE_Process.
@@ -165,8 +166,8 @@ test_date (void)
     {
       int error = ACE_OS::last_error ();
       ACE_ERROR ((LM_ERROR,
-                  "%p errno = %d.\n",
-                  "test_date",
+                  ACE_TEXT ("%p errno = %d.\n"),
+                  ACE_TEXT ("test_date"),
                   error));
       return;
     }
@@ -174,32 +175,35 @@ test_date (void)
   ACE_exitcode status;
   new_process.wait (&status);
   ACE_DEBUG ((LM_DEBUG,
-              "Process exit with status %d\n",
+              ACE_TEXT ("Process exit with status %d\n"),
               status));
   ACE_DEBUG ((LM_DEBUG,
-              "date succeeded.\n"));
+              ACE_TEXT ("date succeeded.\n")));
 }
 
 static void
 test_ls (void)
 {
   ACE_Process_Options options;
-  options.command_line ("%s -al", LS_PATH);
-
+#if defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
+  options.command_line (ACE_TEXT ("%s -al"), LS_PATH);
+#else
+  options.command_line (ACE_TEXT ("%ls -al"), LS_PATH);
+#endif
   ACE_Process new_process;
   if (new_process.spawn (options) == -1)
     {
       int error = ACE_OS::last_error ();
       ACE_ERROR ((LM_ERROR,
-                  "%p errno = %d.\n",
-                  "test_ls",
+                  ACE_TEXT ("%p errno = %d.\n"),
+                  ACE_TEXT ("test_ls"),
                   error));
     }
 
   ACE_exitcode status;
   new_process.wait (&status);
   ACE_DEBUG ((LM_DEBUG,
-              "Process exit with status %d\n",
+              ACE_TEXT ("Process exit with status %d\n"),
               status));
 }
 
@@ -207,15 +211,18 @@ static void
 test_wait (void)
 {
   ACE_Process_Options options;
-  options.command_line ("%s 10", SLEEP_PATH);
-
+#if defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
+  options.command_line (ACE_TEXT ("%s 10"), SLEEP_PATH);
+#else
+  options.command_line (ACE_TEXT ("%ls 10"), SLEEP_PATH);
+#endif
   ACE_Process process1;
   if (process1.spawn (options) == -1)
     {
       int error = ACE_OS::last_error ();
       ACE_ERROR ((LM_ERROR,
-                  "%p errno = %d.\n",
-                  "test_ls",
+                  ACE_TEXT ("%p errno = %d.\n"),
+                  ACE_TEXT ("test_ls"),
                   error));
     }
 
@@ -223,19 +230,18 @@ test_wait (void)
   ACE_exitcode status;
 
   ACE_DEBUG ((LM_DEBUG,
-              "[%T] New process sleeping 10; try wait(2)\n"));
+              ACE_TEXT ("[%T] New process sleeping 10; try wait(2)\n")));
 
-  result = process1.wait (ACE_Time_Value (2),
-                          &status);
+  result = process1.wait (ACE_Time_Value (2), &status);
 
   ACE_DEBUG ((LM_DEBUG,
-              "[%T] wait(2) returns %d(%d)...now try regular wait\n",
+              ACE_TEXT ("[%T] wait(2) returns %d(%d)...now try regular wait\n"),
               result,
               status));
 
   result = process1.wait (&status);
   ACE_DEBUG ((LM_DEBUG,
-              "[%T] wait() returns %d(%d)\n",
+              ACE_TEXT ("[%T] wait() returns %d(%d)\n"),
               result,
               status));
 
@@ -244,26 +250,25 @@ test_wait (void)
     {
       int error = ACE_OS::last_error ();
       ACE_ERROR ((LM_ERROR,
-                  "%p errno = %d.\n",
-                  "test_ls",
+                  ACE_TEXT ("%p errno = %d.\n"),
+                  ACE_TEXT ("test_ls"),
                   error));
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              "[%T] New process sleeping 10; try wait(12)\n",
+              ACE_TEXT ("[%T] New process sleeping 10; try wait(12)\n"),
               status));
 
-  result = process2.wait (ACE_Time_Value (12),
-                          &status);
+  result = process2.wait (ACE_Time_Value (12), &status);
 
   ACE_DEBUG ((LM_DEBUG,
-              "[%T] wait(12) returns %d(%d)...now try regular wait\n",
+              ACE_TEXT ("[%T] wait(12) returns %d(%d)...now try regular wait\n"),
               result,
               status));
 
   result = process2.wait (&status);
   ACE_DEBUG ((LM_DEBUG,
-              "[%T] wait returns %d(%d)\n",
+              ACE_TEXT ("[%T] wait returns %d(%d)\n"),
               result,
               status));
 }
@@ -296,14 +301,14 @@ win32_test_ls (void)
                           DUPLICATE_SAME_ACCESS))
     {
       ACE_ERROR ((LM_ERROR,
-                  "%p duplicate failed.\n",
-                  "test_ls"));
+                  ACE_TEXT ("%p duplicate failed.\n"),
+                  ACE_TEXT ("test_ls")));
       return;
     }
 
   BOOL fork_result =
-    ACE_TEXT_CreateProcess ("c:\\Utils\\bin\\ls.exe",
-                                   "-a",
+    ACE_TEXT_CreateProcess (ACE_TEXT ("c:\\Utils\\bin\\ls.exe"),
+                            ACE_TEXT ("-a"),
                             NULL, // No process attributes.
                             NULL, // No thread attributes.
                             TRUE, // Allow handle inheritance.
@@ -317,14 +322,13 @@ win32_test_ls (void)
 
   if (fork_result == 0)
     ACE_ERROR ((LM_ERROR,
-                "%p CreateProcess failed.\n",
-                "test_ls"));
+                ACE_TEXT ("%p CreateProcess failed.\n"),
+                ACE_TEXT ("test_ls")));
   else
     {
       ::WaitForSingleObject (process_info.hProcess,
                              INFINITE);
-      ACE_DEBUG ((LM_ERROR,
-                  "ls succeeded.\n"));
+      ACE_DEBUG ((LM_ERROR, ACE_TEXT ("ls succeeded.\n")));
     }
 }
 
@@ -360,7 +364,8 @@ win32_spawn_environment_process (void)
                           DUPLICATE_SAME_ACCESS))
     {
       ACE_ERROR ((LM_ERROR,
-                  "%p duplicate failed.\n", "spawn_environment_process"));
+                  ACE_TEXT ("%p duplicate failed.\n"),
+                  ACE_TEXT ("spawn_environment_process")));
       return;
     }
 
@@ -373,8 +378,8 @@ win32_spawn_environment_process (void)
                           DUPLICATE_SAME_ACCESS))
     {
       ACE_ERROR ((LM_ERROR,
-                  "%p duplicate failed.\n",
-                  "spawn_environment_process"));
+                  ACE_TEXT ("%p duplicate failed.\n"),
+                  ACE_TEXT ("spawn_environment_process")));
       return;
     }
 
@@ -387,8 +392,8 @@ win32_spawn_environment_process (void)
                           DUPLICATE_SAME_ACCESS))
     {
       ACE_ERROR ((LM_ERROR,
-                  "%p duplicate failed.\n",
-                  "spawn_environment_process"));
+                  ACE_TEXT ("%p duplicate failed.\n"),
+                  ACE_TEXT ("spawn_environment_process")));
       return;
     }
 
@@ -411,8 +416,8 @@ win32_spawn_environment_process (void)
   ACE_TEXT_FreeEnvironmentStrings (existing_environment);
 
   BOOL fork_result =
-    ACE_TEXT_CreateProcess ("d:\\harrison\\ACE_wrappers\\examples\\OS\\Process\\process.exe",
-                            "process -g",
+    ACE_TEXT_CreateProcess (ACE_TEXT ("d:\\harrison\\ACE_wrappers\\examples\\OS\\Process\\process.exe"),
+                            ACE_TEXT ("process -g"),
                             NULL, // No process attributes.
                             NULL, // No thread attributes.
                             TRUE, // Allow handle inheritance.
@@ -428,45 +433,50 @@ win32_spawn_environment_process (void)
 
   if (fork_result == 0)
     ACE_ERROR ((LM_ERROR,
-                "%p.\n",
-                "spawn_environment_process"));
+                ACE_TEXT ("%p.\n"),
+                ACE_TEXT ("spawn_environment_process")));
   else
     {
       ::WaitForSingleObject (process_info.hProcess,
                              INFINITE);
       ACE_DEBUG ((LM_ERROR,
-                  "spawn_environment_process succeeded.\n"));
+                  ACE_TEXT ("spawn_environment_process succeeded.\n")));
     }
 }
 #endif
 
 static void
-test_setenv (const char *argv0)
+test_setenv (const ACE_TCHAR *argv0)
 {
   ACE_Process_Options options;
   //  options.setenv ("ACE_PROCESS_TEST", "here's a really large number: %u", 0 - 1);
-  options.setenv ("ACE_PROCESS_TEST= here's a large number %u", 0 - 1);
-  options.setenv ("ACE_PROCESS_TEST2", "ophilli");
+  options.setenv (ACE_TEXT ("ACE_PROCESS_TEST= here's a large number %u"),
+                  0 - 1);
+  options.setenv (ACE_TEXT ("ACE_PROCESS_TEST2"), ACE_TEXT ("ophilli"));
+#if defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
   options.command_line ("%s -g", argv0);
+#else
+  options.command_line ("%ls -g", argv0);
+#endif
   ACE_Process process;
   if (process.spawn (options) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%p.\n",
-                  "test_setenv"));
+                  ACE_TEXT ("%p.\n"),
+                  ACE_TEXT ("test_setenv")));
       return;
     }
 
   ACE_exitcode status;
   process.wait (&status);
   ACE_DEBUG ((LM_DEBUG,
-              "Process exit with status %d\n",
+              ACE_TEXT ("Process exit with status %d\n"),
               status));
 }
 
 // Tests the ACE_Tokenizer.
 static void
-tokenize (char *buffer)
+tokenize (ACE_TCHAR *buffer)
 {
   // This tokenizer will replace all spaces with end-of-string
   // characters and will preserve text between "" and '' pairs.
@@ -475,46 +485,47 @@ tokenize (char *buffer)
   parser.preserve_designators ('\"', '\"'); // "  This quote is for emacs
   parser.preserve_designators ('\'', '\'');
 
-  for (const char *temp; ;)
+  for (const ACE_TCHAR *temp; ;)
     {
       temp = parser.next ();
       if (temp == 0)
         break;
-      ACE_DEBUG ((LM_DEBUG,
-                  temp));
-      ACE_DEBUG ((LM_DEBUG,
-                  "\n"));
+      ACE_DEBUG ((LM_DEBUG, temp));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
     }
 }
 
 int
-main (int argc, char *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
   if (ACE_LOG_MSG->open (argv[0]) == -1)
     ACE_ERROR ((LM_ERROR,
-                "cannot open logger!!!\n"));
+                ACE_TEXT ("cannot open logger!!!\n")));
 
-  ACE_DEBUG ((LM_DEBUG,
-              "starting...\n"));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("starting...\n")));
 
   if (::parse_args (argc, argv) == -1)
     return -1;
 
   if (run_all)
     {
+#if defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
+      const ACE_TCHAR *cmdline = ACE_TEXT ("%s -d -l -s -w");
+#else
+      const ACE_TCHAR *cmdline = ACE_TEXT ("%ls -d -l -s -w");
+#endif
       ACE_Process_Options options;
-      options.command_line ("%s -d -l -s -w",
-                            argv[0]);
+      options.command_line (cmdline, argv[0]);
       ACE_Process process;
       if (process.spawn (options) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p.\n",
-                           "main"),
+                           ACE_TEXT ("%p.\n"),
+                           ACE_TEXT ("main")),
                           -1);
       ACE_exitcode status;
       process.wait (&status);
       ACE_DEBUG ((LM_DEBUG,
-                  "Process exit with status %d\n",
+                  ACE_TEXT ("Process exit with status %d\n"),
                   status));
     }
 
@@ -526,12 +537,12 @@ main (int argc, char *argv[])
 
   if (get_env)
     {
-      ACE_DEBUG ((LM_DEBUG, "checking ACE_PROCESS_TEST\n"));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("checking ACE_PROCESS_TEST\n")));
       char *value = ACE_OS::getenv ("ACE_PROCESS_TEST");
       char *value2 = ACE_OS::getenv ("ACE_PROCESS_TEST2");
       ACE_DEBUG ((LM_DEBUG,
-                  "ACE_PROCESS_TEST = %s.\n"
-                  "ACE_PROCESS_TEST2 = %s.\n",
+                  "ACE_PROCESS_TEST = %C.\n"
+                  "ACE_PROCESS_TEST2 = %C.\n",
                   value == 0 ? "no value" : value,
                   value2 == 0 ? "no value" : value2));
     }
@@ -550,15 +561,15 @@ main (int argc, char *argv[])
   if (print_file != 0)
     test_more ();
 
-  char buf1[30];
-  char buf2[30];
-  ACE_OS::strcpy(buf1, " -f hi honey -g \"I\'m home\"");
-  ACE_OS::strcpy(buf2, "\"token 1\"\'token 2\'\"token 3\" ");
+  ACE_TCHAR buf1[30];
+  ACE_TCHAR buf2[30];
+  ACE_OS::strcpy(buf1, ACE_TEXT (" -f hi honey -g \"I\'m home\""));
+  ACE_OS::strcpy(buf2, ACE_TEXT ("\"token 1\"\'token 2\'\"token 3\" "));
 
   if (run_tokenizer)
     {
-      tokenize ( buf1 );
-      tokenize ( buf2 );
+      tokenize (buf1);
+      tokenize (buf2);
     }
 
   return 0;

@@ -1,3 +1,89 @@
+Wed Oct 27 16:22:49 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/UNIX_Addr.{h i}: Added wchar_t variants of the char-accepting
+	  constructor and set() methods. Changed addr_to_string() to accept
+	  ACE_TCHAR, not char, for the buffer. This unifies it with the other
+	  address classes, restoring the ability to interchange it in
+	  the Acceptor/Connector framework.
+	* ace/UNIX_Addr.cpp (set): Use strsncpy(), not memcpy(), to copy
+	  the rendezvous string in, assuring a null-terminated string.
+
+	* examples/IPC_SAP/DEV_SAP/reader/dev_sap_reader.mpc:
+	* examples/IPC_SAP/DEV_SAP/writer/dev_sap_writer.mpc:
+	  Added exename and Source_Files spec since there's no main().
+
+	* examples/Reactor/Misc/Reactor_Misc.mpc: Added pingpong program.
+
+	* examples/IPC_SAP/SOCK_SAP/sock_sap.mpc: Corrected names in
+	  CPP_unserver project and added CPP_unclient project.
+
+	* examples/Connection/blocking/SPIPE-acceptor.{h cpp}:
+	* examples/Connection/blocking/SPIPE-connector.{h cpp}:
+	* examples/Connection/blocking/test_spipe_acceptor.cpp:
+	* examples/Connection/blocking/test_spipe_connector.cpp:
+	* examples/Connection/misc/test_upipe.cpp:
+	* examples/Connection/misc/Connection_Handler.cpp:
+	* examples/Connection/non_blocking/CPP-acceptor.{h cpp}:
+	* examples/Connection/non_blocking/CPP-connector.{h cpp}:
+	* examples/Connection/non_blocking/test_lsock_acceptor.cpp:
+	* examples/Connection/non_blocking/test_lsock_connector.cpp:
+	* examples/Connection/non_blocking/test_sock_acceptor.cpp:
+	* examples/Connection/non_blocking/test_sock_connector.cpp:
+	* examples/Connection/non_blocking/test_spipe_acceptor.cpp:
+	* examples/Connection/non_blocking/test_spipe_connector.cpp:
+	* examples/IPC_SAP/DEV_SAP/reader/reader.cpp:
+	* examples/IPC_SAP/DEV_SAP/writer/writer.cpp:
+	* examples/IPC_SAP/FIFO_SAP/FIFO-test.cpp:
+	* examples/IPC_SAP/SOCK_SAP/CPP-memclient.cpp:
+	* examples/IPC_SAP/SOCK_SAP/CPP-unclient.cpp:
+	* examples/IPC_SAP/SOCK_SAP/CPP-unserver.cpp:
+	* examples/IPC_SAP/SOCK_SAP/FD-unserver.cpp:
+	* examples/IPC_SAP/SOCK_SAP/FD-unclient.cpp:
+	* examples/IPC_SAP/SPIPE_SAP/NPClient.cpp:
+	* examples/IPC_SAP/SPIPE_SAP/NPServer.cpp:
+	* examples/IPC_SAP/SSL_SAP/SSL-client-simple.{h cpp}:
+	* examples/IPC_SAP/SSL_SAP/SSL-client.{h cpp}:
+	* examples/IPC_SAP/SSL_SAP/SSL-sever-fancy.{h cpp}:
+	* examples/Logger/Acceptor-server/server_loggerd.{h cpp}:
+	* examples/Logger/client/logging_app.cpp:
+	* examples/Logger/simple-server/Logging_Handler.cpp:
+	* examples/Logger/simple-server/server_loggerd.cpp:
+	* examples/Mem_Map/IO-tests/IO_Test.cpp:
+	* examples/Mem_Map/IO-tests/test_io.cpp:
+	* examples/OS/Process/process.cpp
+	* examples/Reactor/FIFO/server.cpp:
+	* examples/Reactor/Misc/test_demuxing.cpp:
+	* examples/Reactor/Misc/notification.cpp:
+	* examples/Reactor/Misc/pingpong.cpp:
+	* examples/Reactor/Multicast/Log_Wrapper.cpp:
+	* examples/Service_Configurator/IPC-tests/client/local_dgram_client_test.cpp:
+	* examples/Service_Configurator/IPC-tests/client/local_stream_client_test.cpp:
+	* examples/Service_Configurator/IPC-tests/client/local_pipe_client_test.cpp:
+	* examples/Service_Configurator/IPC-tests/server/Handle_Broadcast.{h i cpp}:
+	* examples/Service_Configurator/IPC-tests/server/Handle_L_CODgram.{h i cpp}:
+	* examples/Service_Configurator/IPC-tests/server/Handle_L_Dgram.{h i cpp}:
+	* examples/Service_Configurator/IPC-tests/server/Handle_L_FIFO.{h i cpp}:
+	* examples/Service_Configurator/IPC-tests/server/Handle_L_Pipe.{h i cpp}:
+	* examples/Service_Configurator/IPC-tests/server/Handle_L_Stream.{h i cpp}:
+	* examples/Service_Configurator/IPC-tests/server/Handle_R_Dgram.{h i cpp}:
+	* examples/Service_Configurator/IPC-tests/server/Handle_R_Stream.{h i cpp}:
+	* examples/Service_Configurator/IPC-tests/server/Handle_Timeout.{h i cpp}:
+	* examples/Service_Configurator/IPC-tests/server/Handle_Thr_Stream.{h cpp}:
+	* examples/Service_Configurator/IPC-tests/server/server_test.cpp:
+	* examples/Shared_Memory/test_MM.cpp:
+	* examples/Shared_Memory/Options.{h cpp}:
+	* examples/Shared_Memory/test_malloc.cpp:
+	* performance-tests/SCTP/Options_Manager.cpp:
+	* performance-tests/SCTP/SOCK_STREAM_clt.cpp:
+	* performance-tests/SCTP/SOCK_STREAM_srv.cpp:
+	* performance-tests/SCTP/SOCK_SEQPACK_clt.cpp:
+	* performance-tests/SCTP/SOCK_SEQPACK_srv.cpp:
+	  Wide-char fixes.
+
+	* performance-tests/SCTP/SCTP.mpc: New - describes the projects in
+	  this directory. These will build ok without SCTP enabled, so they
+	  don't need to be "required" to have sctp.
+
 Wed Oct 27 14:33:42 2004  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/HTBP/HTBP_Addr.cpp:

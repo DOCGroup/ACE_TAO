@@ -9,7 +9,7 @@
 ACE_RCSID(Shared_Memory, test_MM, "$Id$")
 
 #define SHMSZ 27
-char shm_key[] = "/tmp/fooXXXXXX";
+ACE_TCHAR shm_key[] = ACE_TEXT ("/tmp/fooXXXXXX");
 
 static void
 client (void)
@@ -41,20 +41,20 @@ server (void)
     ACE_OS::sleep (1);
 
   if (shm_server->remove () < 0)
-    ACE_ERROR ((LM_ERROR, "%p\n", "remove"));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("remove")));
   ACE_OS::unlink (shm_key);
 }
 
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  if (ACE_OS::mktemp (ACE_TEXT_CHAR_TO_TCHAR (shm_key)) == 0 || (ACE_OS::unlink (shm_key) == -1 && errno == EPERM))
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", shm_key), 1);
+  if (ACE_OS::mkstemp (shm_key) == 0 || (ACE_OS::unlink (shm_key) == -1 && errno == EPERM))
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), shm_key), 1);
 
   switch (ACE_OS::fork ())
     {
     case -1:
-      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "fork"), 1);
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("fork")), 1);
     case 0:
       // Make sure the server starts up first.
       ACE_OS::sleep (1);

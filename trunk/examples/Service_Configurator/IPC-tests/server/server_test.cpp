@@ -10,15 +10,15 @@
 ACE_RCSID(server, server_test, "$Id$")
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (ACE_Service_Config::open (argc,
                                 argv,
                                 ACE_DEFAULT_LOGGER_KEY,
                                 0) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "ACE_Service_Config::open"),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("ACE_Service_Config::open")),
                       -1);
 
   // Create an adapter to end the event loop.
@@ -33,7 +33,7 @@ main (int argc, char *argv[])
   if (ACE_Reactor::instance ()->register_handler (sig_set,
                                                   &sa) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n"),
+                       ACE_TEXT ("%p\n"), ACE_TEXT ("register_handler")),
                       -1);
 
   // This makes the README demo even easier (for sighup).
@@ -44,7 +44,7 @@ main (int argc, char *argv[])
   // Run forever, performing the configured services until we are shut
   // down by a SIGINT/SIGQUIT signal.
 
-  ACE_Reactor::run_event_loop ();
+  ACE_Reactor::instance ()->run_reactor_event_loop ();
 
   return 0;
 }

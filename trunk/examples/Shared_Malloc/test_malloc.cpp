@@ -109,19 +109,19 @@ spawn (void)
 #endif /* ACE_HAS_THREADS */
     }
 #if !defined (ACE_WIN32)
-  else if (ACE_OS::fork (Options::instance ()->program_name ()) == 0)
+  else if (ACE_OS::fork (ACE_TEXT_CHAR_TO_TCHAR (Options::instance ()->program_name ())) == 0)
     {
       if (Options::instance ()->exec_slave ())
         {
           char iterations[20];
           char msg_size[20];
 
-          ACE_OS::sprintf (iterations,
-                           ACE_SIZE_T_FORMAT_SPECIFIER,
-                           Options::instance ()->iteration_count ());
-          ACE_OS::sprintf (msg_size,
-                           ACE_SIZE_T_FORMAT_SPECIFIER,
-                           Options::instance ()->max_msg_size ());
+          ACE_OS::sprintf (iterations, "%lu",
+                           (unsigned long)
+                             Options::instance ()->iteration_count ());
+          ACE_OS::sprintf (msg_size, "%lu",
+                           (unsigned long)
+                             Options::instance ()->max_msg_size ());
           const char *cp = 0;
 
           if (Options::instance ()->debug ())
@@ -131,14 +131,14 @@ spawn (void)
 
           const char *argv[] =
           {
-            (char *) Options::instance ()->slave_name (),
+            Options::instance ()->slave_name (),
             "-p",
             "-n",
             iterations,
             "-L",
             msg_size,
             cp,
-            (char *) 0
+            0
           };
 
           if (ACE_OS::execv (Options::instance ()->program_name (),
