@@ -69,7 +69,8 @@ public:
                      int resolve_for_existing_naming_service = 1,
                      const ACE_TCHAR *persistence_location = 0,
                      void *base_addr = TAO_NAMING_BASE_ADDR,
-                     int enable_multicast = 1);
+                     int enable_multicast = 1,
+                     int use_storable_context = 0);
   // Constructor.  Attempts to find an existing Naming Service if
   // <resolve_for_existing_naming_service> is set to true.  If it is
   // false, or no Naming Service was found during a <timeout> period,
@@ -90,7 +91,8 @@ public:
             int resolve_for_existing_naming_service = 1,
             const ACE_TCHAR *persistence_location = 0,
             void *base_addr = TAO_NAMING_BASE_ADDR,
-            int enable_multicast = 1);
+            int enable_multicast = 1,
+            int use_storable_context = 0);
   // Initializer.  Attempts to find an existing Naming Service if
   // <resolve_for_existing_naming_service> is set to true.  If it is
   // false, or no Naming Service was found during a <timeout> period,
@@ -128,7 +130,8 @@ protected:
                        const ACE_TCHAR *persistence_location,
                        void *base_addr,
                        size_t context_size,
-                       int enable_multicast);
+                       int enable_multicast,
+                       int use_storable_context);
   // Helper method: create Naming Service locally.
   // Make the root context of size
   // <context_size>, register it under the <root_poa>, and make the Naming
@@ -191,6 +194,8 @@ protected:
   int multicast_;
   // If not zero multicast is enabled.
 
+  int use_storable_context_;
+  // If not zero use flat file persistence
 };
 
 class TAO_Naming_Export TAO_Naming_Client
