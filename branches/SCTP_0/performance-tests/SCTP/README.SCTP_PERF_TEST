@@ -263,5 +263,97 @@ In contrast, SOCK_SEQPACK_srv always uses SCTP as its protocol.
 *    Test Walk-Through    *
 ***************************
 
-The SOCK_STREAM performance test
+This section shows a walk-through of a typical scenario using
+SOCK_STREAM_clt and SOCK_STREAM_srv to run an SCTP performance test.
+
+You can run the equivalent TCP performance test by adding "-t tcp" to
+the command line of both programs.  Alternately, you can run a
+SOCK_SEQPACK-based SCTP performance test by substituting
+SOCK_SEQPACK_clt and SOCK_SEQPACK_srv for SOCK_STREAM_clt and
+SOCK_STREAM_srv, respectively.
+
+In this scenario, both client and server run on the same machine.  We
+use a message size of 2^7 bytes and a relatively small number of
+iterations, 1000, in order to make the test go quickly.  The server's
+passive-mode socket binds to the default port, 45453, which is also
+the default port expected by the client.  We invoke no other special
+or unusual options.
+
+For clarity, we envision starting the client and server in two
+separate shells.
+
+The steps of the walk-through are as follows:
+
+1.  Start the server.
+
+    $ ./SOCK_STREAM_srv
+    (12761|1024) Accepting connections on port 45453 
+                 on interface INADDR_ANY using IPPROTO_SCTP
+    (12761|1024) starting server at port 45453
+    (12761|1024) select timed out
+    (12761|1024) select timed out
+    (12761|1024) select timed out
+    (12761|1024) select timed out
+    ...
+    
+    The server will continue to print, periodically, the message
+    "select timed out" as it waits for clients to connect.
+
+2.  Start the client.
+
+    $ ./SOCK_STREAM_clt -s 7 -c 1000
+
+3.  Observing the debugging output from the server, you should see
+    evidence that the client has connected.  
+
+    (12761|1024) select timed out
+    (12761|1024) select timed out
+    (12761|1024) select timed out
+    (12761|1024) spawning server
+    (12761|1024) client utica-b connected from 32768
+    (12761|1024) Test for 1100 iterations
+    (12761|1024) select timed out
+    (12761|1024) select timed out
+
+    Note that the server expects 1100 iterations, even though we
+    configured the client for only 1000 iterations.  The reason for
+    this discrepencany is that the client always runs 100 primer
+    iterations before the requested test iterations.
+
+4.  When the 1100 iterations are complete, observing the output from
+    the client, you should see the histogram:
+
+
+                                Histogram ACE Unmarshalled Msg Synchronous Latency Test
+                                        (Message Size 128l, Message Type octet)
+    version: 1.1
+    minimum: 41
+    maximum: 60182
+    mean: 106.858
+    variance: 3.62659e+06
+    num_points: 1000
+    num_bins: 1000 0 10000
+
+              Low     -          High     Count  Fraction  Cumulative
+             below    -         0.000  :      0    0.000    0.000
+               0.000  -        10.000  :      0    0.000    0.000
+              10.000  -        20.000  :      0    0.000    0.000
+              20.000  -        30.000  :      0    0.000    0.000
+              30.000  -        40.000  :      0    0.000    0.000
+              40.000  -        50.000  :    988    0.988    0.988
+              50.000  -        60.000  :      5    0.005    0.993
+              60.000  -        70.000  :      2    0.002    0.995
+              70.000  -        80.000  :      0    0.000    0.995
+              80.000  -        90.000  :      1    0.001    0.996
+              90.000  -       100.000  :      0    0.000    0.996
+             100.000  -       110.000  :      0    0.000    0.996
+    ...
+            9960.000  -      9970.000  :      0    0.000    0.999
+            9970.000  -      9980.000  :      0    0.000    0.999
+            9980.000  -      9990.000  :      0    0.000    0.999
+            9990.000  -     10000.000  :      0    0.000    0.999
+           10000.000  -       above    :      1    0.001    1.000
+
+    outliers:
+           60182.000
 
