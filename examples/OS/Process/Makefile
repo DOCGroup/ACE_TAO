@@ -8,9 +8,9 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-BIN   	= process
+BIN   	= process imore
 
-FILES 	= process
+FILES 	= process imore
 
 LSRC   	= $(addsuffix .cpp,$(FILES))
 LOBJ   	= $(LSRC:%.cpp=$(VDIR)%.o)
