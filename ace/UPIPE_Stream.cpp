@@ -13,6 +13,14 @@
 
 ACE_ALLOC_HOOK_DEFINE(ACE_UPIPE_Stream)
 
+ACE_UPIPE_Stream::ACE_UPIPE_Stream (void)
+  : remaining_ (0),
+    reference_count_ (0),
+    mb_last_ (0)
+{
+  ACE_TRACE ("ACE_UPIPE_Stream::ACE_UPIPE_STREAM");
+}
+
 int
 ACE_UPIPE_Stream::control (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds cmd, 
 			   void * val)
@@ -31,14 +39,22 @@ int
 ACE_UPIPE_Stream::close (void)
 {
   ACE_TRACE ("ACE_UPIPE_Stream::close");
-  // Since the UPIPE should have been closed earlier we won't bother
-  // checking to see if closing it now fails.
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
-  if (this->ACE_SPIPE::get_handle () != ACE_INVALID_HANDLE)
-    this->ACE_SPIPE::close ();
+  this->reference_count_--;
 
-  // Close down the ACE_stream.
-  return this->stream_.close (0);
+  if (this->reference_count_ == 0)
+    {
+      // Since the UPIPE should have been closed earlier we won't bother
+      // checking to see if closing it now fails.
+
+      if (this->ACE_SPIPE::get_handle () != ACE_INVALID_HANDLE)
+	this->ACE_SPIPE::close ();
+
+      // Close down the ACE_stream.
+      return this->stream_.close (0);
+    }
+  return 0;
 }
 
 int 
@@ -73,7 +89,6 @@ ACE_UPIPE_Stream::send (const char *buffer,
   ACE_TRACE ("ACE_UPIPE_Stream::send");
 
   ACE_Message_Block *mb_p;
-
   ACE_NEW_RETURN (mb_p, ACE_Message_Block (n), -1);
 
   mb_p->copy (buffer, n);

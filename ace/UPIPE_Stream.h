@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -36,7 +35,10 @@ class ACE_Export ACE_UPIPE_Stream : public ACE_SPIPE
   friend class ACE_UPIPE_Acceptor;
   friend class ACE_UPIPE_Connector;
 public:
-  // = Termination.
+
+  // = Initialization and Termination.
+
+  ACE_UPIPE_Stream (void);
 
   int close (void);
   // Shut down the UPIPE and release resources.
@@ -107,6 +109,15 @@ private:
   MT_Stream stream_;
   // Stream component used by the <UPIPE_Acceptor> and
   // <UPIPE_Connector> to link together two UPIPE_Streams.
+
+  int reference_count_;
+  // Keep track of whether the sender and receiver have both shut
+  // down.
+
+#if defined (ACE_MT_SAFE)
+  ACE_Thread_Mutex lock_;
+  // Ensure that we are thread-safe.
+#endif /* ACE_MT_SAFE */
 };
 
 #if defined (__ACE_INLINE__) 

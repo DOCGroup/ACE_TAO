@@ -23,7 +23,7 @@ ACE_Obstack *ace_obstack;
 
 %start svc_config_entries
 
-%type <ident_> ACE_IDENT ACE_STRING ACE_PATHNAME parameters_opt 
+%type <ident_> ACE_IDENT ACE_STRING ACE_PATHNAME pathname parameters_opt 
 %type <type_> type status
 %type <parse_node_> dynamic static suspend resume remove module_list stream
 %type <parse_node_> stream_modules module svc_config_entry 
@@ -207,11 +207,11 @@ status
   ;
 
 svc_initializer
-  : ACE_PATHNAME ACE_COLON ACE_IDENT
+  : pathname ACE_COLON ACE_IDENT
     {
       $$ = new ACE_Object_Node ($1, $3);
     }
-  | ACE_PATHNAME ACE_COLON ACE_IDENT ACE_LPAREN ACE_RPAREN
+  | pathname ACE_COLON ACE_IDENT ACE_LPAREN ACE_RPAREN
     {
       $$ = new ACE_Function_Node ($1, $3);
     }
@@ -235,6 +235,11 @@ type
 parameters_opt
   : ACE_STRING
   | /* EMPTY */ { $$ = 0; } 
+  ;
+
+pathname
+  : ACE_PATHNAME
+  | ACE_IDENT
   ;
 
 %%
