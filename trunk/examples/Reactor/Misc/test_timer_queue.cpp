@@ -56,10 +56,10 @@ test_functionality (ACE_Timer_Queue *tq)
   ACE_ASSERT (result != -1);
   ACE_NEW (timer_act, int (42));
   result = tq->schedule (&eh, timer_act, ACE_OS::gettimeofday ());
-  ACE_ASSERT (result != -1);  
+  ACE_ASSERT (result != -1);
 
   result = tq->cancel (timer_id1, &timer_act);
-  ACE_ASSERT (result == 1);  
+  ACE_ASSERT (result == 1);
   delete (int *) timer_act;
   result = tq->is_empty ();
   ACE_ASSERT (!result);
@@ -103,7 +103,7 @@ static Timer_Queues timer_queues[] =
 };
 
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   for (int i = 0; timer_queues[i].name_ != 0; i++)
     {

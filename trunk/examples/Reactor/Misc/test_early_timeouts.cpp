@@ -28,7 +28,7 @@
 ACE_RCSID(Misc, test_early_timeouts, "$Id$")
 
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   // Mumber of seconds this test should run
   int runtime_in_seconds = 10;
