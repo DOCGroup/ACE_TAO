@@ -5972,10 +5972,14 @@ protected:
 
 public:
   virtual int init (void) = 0;
-  // Explicitly initialize.
+  // Explicitly initialize.  Returns 0 on success, -1 on failure
+  // due to either already having been initialized, or dynamic
+  // allocation failure (in which case errno is set to ENOMEM).
 
   virtual int fini (void) = 0;
-  // Explicitly destroy.
+  // Explicitly destroy.  Returns 0 on success, -1 on failure due to
+  // already having been destroyed, or 1 because the number of fini ()
+  // calls hasn't reached the number of init () calls.
 
   enum Object_Manager_State
     {
@@ -6082,6 +6086,11 @@ private:
   friend class ACE_TSS_Emulation;
   friend void ACE_OS_Object_Manager_Internal_Exit_Hook ();
   // This class is for internal use by ACE_OS, etc., only.
+
+  static u_int init_fini_count_;
+  // Counter to match init ()/fini () calls.  init () must increment
+  // it; fini () must decrement it.  fini () then does nothing until
+  // it reaches 0.
 
   static ACE_OS_Object_Manager *instance (void);
   // Accessor to singleton instance.
