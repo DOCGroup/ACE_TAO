@@ -2,7 +2,7 @@
 
 #define  ACE_BUILD_SVC_DLL
 #include "ace/Token.h"
-#include "Options.h"
+#include "Performance_Test_Options.h"
 #include "Benchmark_Performance.h"
 
 ACE_RCSID(Synch_Benchmarks, token_test, "$Id$")

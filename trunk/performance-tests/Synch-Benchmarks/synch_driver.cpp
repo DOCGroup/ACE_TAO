@@ -6,7 +6,7 @@
 #include "ace/Service_Config.h"
 #include "ace/Service_Repository.h"
 #include "ace/Synch.h"
-#include "Options.h"
+#include "Performance_Test_Options.h"
 #include "Benchmark_Performance.h"
 
 ACE_RCSID(Synch_Benchmarks, synch_driver, "$Id$")

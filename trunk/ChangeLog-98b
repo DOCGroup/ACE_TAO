@@ -1,3 +1,10 @@
+Wed Aug 12 02:06:02 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/test_config.h (ACE_Test_Output): It seemed like redirecting
+	  the Log_Msg output back to stderr in close was a bit too early
+	  and some messages popped out after some tests ran successfully.
+	  Moved the redirecting code into the destructor.
+
 Tue Aug 11 22:47:49 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/TP_Reactor.cpp (dispatch_io_set): added
