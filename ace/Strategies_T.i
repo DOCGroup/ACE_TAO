@@ -54,18 +54,21 @@ ACE_Singleton_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
 }
 
 template <class SVC_HANDLER> ASYS_INLINE int
-ACE_Creation_Strategy<SVC_HANDLER>::open (ACE_Thread_Manager *thr_mgr)
+ACE_Creation_Strategy<SVC_HANDLER>::open (ACE_Thread_Manager *thr_mgr,
+                                          ACE_Reactor *reactor)
 {
   ACE_TRACE ("ACE_Creation_Strategy<SVC_HANDLER>::open");
   this->thr_mgr_ = thr_mgr;
+  this->reactor_ = reactor;
   return 0;
 }
 
 template <class SVC_HANDLER> ASYS_INLINE
-ACE_Creation_Strategy<SVC_HANDLER>::ACE_Creation_Strategy (ACE_Thread_Manager *thr_mgr)
+ACE_Creation_Strategy<SVC_HANDLER>::ACE_Creation_Strategy (ACE_Thread_Manager *thr_mgr,
+                                                           ACE_Reactor *reactor)
 {
   ACE_TRACE ("ACE_Creation_Strategy<SVC_HANDLER>::ACE_Creation_Strategy");
-  if (this->open (thr_mgr) == -1)
+  if (this->open (thr_mgr, reactor) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("%p\n"),
                 ACE_LIB_TEXT ("ACE_Creation_Strategy")));
@@ -81,6 +84,7 @@ ACE_Creation_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
 
   if (sh == 0)
     ACE_NEW_RETURN (sh, SVC_HANDLER (this->thr_mgr_), -1);
+  sh->reactor (this->reactor_);
   return 0;
 }
 

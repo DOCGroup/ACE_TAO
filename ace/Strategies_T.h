@@ -77,10 +77,13 @@ public:
   // = Initialization and termination methods.
 
   /// Default constructor.
-  ACE_Creation_Strategy (ACE_Thread_Manager * = 0);
+  ACE_Creation_Strategy (ACE_Thread_Manager * = 0,
+                         ACE_Reactor * = ACE_Reactor::instance ());
 
-  /// A <Thread_Manager> is useful when creating active objects.
-  int open (ACE_Thread_Manager * = 0);
+  /// A <Thread_Manager> is useful when creating active objects and
+  /// the <ACE_Reactor> is used to initialize the service handler's reactor.
+  int open (ACE_Thread_Manager * = 0,
+            ACE_Reactor * = ACE_Reactor::instance ());
 
   virtual ~ACE_Creation_Strategy (void);
 
@@ -102,6 +105,9 @@ public:
 protected:
   /// Pointer to a thread manager.
   ACE_Thread_Manager *thr_mgr_;
+
+  /// Pointer to an ACE_Reactor.
+  ACE_Reactor *reactor_;
 };
 
 /**
