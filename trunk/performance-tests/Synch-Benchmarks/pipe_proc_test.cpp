@@ -64,7 +64,7 @@ Pipe_Proc_Test::svc (void)
   ACE_HANDLE handle = this->pipe_handles[1];
   char *from; 
 
-  ACE_NEW (from, char[length]);
+  ACE_NEW_RETURN (from, char[length], -1);
 
   while (!this->done ())
     if (ACE_OS::write (handle, from, length) == length)

@@ -106,13 +106,17 @@ public:
   // = Initialization method.
   ACE_Shared_Memory_Pool_Options (char *base_addr = ACE_DEFAULT_BASE_ADDR,
 				  size_t max_segments = ACE_DEFAULT_MAX_SEGMENTS,
-				  size_t file_perms = ACE_DEFAULT_FILE_PERMS);
+				  size_t file_perms = ACE_DEFAULT_FILE_PERMS,
+				  off_t minimum_bytes = 0);
 
   char *base_addr_;
   // Base address of the memory-mapped backing store.
 
   size_t max_segments_;
   // Number of shared memory segments to allocate.
+
+  off_t minimum_bytes_;
+  // What the minimim bytes of the initial segment should be.
 
   size_t file_perms_;
   // File permissions to use when creating/opening a segment.
@@ -204,8 +208,15 @@ protected:
   size_t max_segments_;
   // Number of shared memory segments in the <SHM_TABLE> table.
 
+  off_t minimum_bytes_;
+  // What the minimim bytes of the initial segment should be.
+
   key_t base_shm_key_;
   // Base shared memory key for the segment.
+
+  int find_seg (const void*const searchPtr,
+		off_t &offset, size_t &counter);
+  // find the segment that contains the searchPtr
 
   virtual int in_use (off_t &offset, size_t &counter);
   // Determine how much memory is currently in use.
@@ -298,7 +309,7 @@ public:
   ACE_MMAP_Memory_Pool_Options (void *base_addr = ACE_DEFAULT_BASE_ADDR,
 				int use_fixed_addr = 1,
 				int write_each_page = 1,
-				int minimum_bytes = 0,
+				off_t minimum_bytes = 0,
 				u_int flags = 0,
 				int guess_on_fault = 1);
 
@@ -312,7 +323,7 @@ public:
   // Should each page be written eagerly to avoid surprises later
   // on?
 
-  int minimum_bytes_;
+  off_t minimum_bytes_;
   // What the minimim bytes of the initial segment should be.
 
   u_int flags_;
@@ -420,8 +431,8 @@ protected:
   // Should we write a byte to each page to forceably allocate memory
   // for this backing store?
 
-  int minimum_bytes_;
-  // What the minimim bytes of the initial segment should be.
+  off_t minimum_bytes_;
+  // What the minimum bytes of the initial segment should be.
 
   TCHAR backing_store_name_[MAXPATHLEN];
   // Name of the backing store where the shared memory pool is kept.
