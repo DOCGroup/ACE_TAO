@@ -36,14 +36,16 @@ ACE_TTY_IO::control (Control_Mode cmd,
 
   // Get default device parameters.
 
-#if defined(TCGETS)
+#if defined (TCGETS)
     if (this->ACE_IO_SAP::control (TCGETS, (void *) &devpar) == -1)
-#elif defined(TCGETA)
+#elif defined (TCGETA)
     if (this->ACE_IO_SAP::control (TCGETA, (void *) &devpar) == -1)
 #else
     errno = ENOSYS;
-#endif
+#endif /* TCGETS */
       return -1;
+
+  u_int newbaudrate = 0;
 
   switch (cmd)
     {
@@ -51,49 +53,59 @@ ACE_TTY_IO::control (Control_Mode cmd,
       switch (arg->baudrate)
         {
         case 300:
-          c_cflag |= B300;
+          newbaudrate = B300;
           break;
         case 600:
-          c_cflag |= B600;
+          newbaudrate = B600;
           break;
         case 1200:
-          c_cflag |= B1200;
+          newbaudrate = B1200;
           break;
         case 2400:
-          c_cflag |= B2400;
+          newbaudrate = B2400;
           break;
         case 4800:
-          c_cflag |= B4800;
+          newbaudrate = B4800;
           break;
         case 9600:
-          c_cflag |= B9600;
+          newbaudrate = B9600;
           break;
         case 19200:
-          c_cflag |= B19200;
+          newbaudrate = B19200;
           break;
         case 38400:
-          c_cflag |= B38400;
+          newbaudrate = B38400;
           break;
-#if 0
+#if defined (ACE_USES_HIGH_BAUD_RATES)
         case 56000:
-          c_cflag |= B56000;
+          newbaudrate = B56000;
           break;
         case 57600:
-          c_cflag |= B57600;
+          newbaudrate = B57600;
           break;
         case 115200:
-          c_cflag |= B115200;
+          newbaudrate = B115200;
           break;
         case 128000:
-          c_cflag |= B128000;
+          newbaudrate = B128000;
           break;
         case 256000:
-          c_cflag |= B256000;
+          newbaudrate = B256000;
           break;
-#endif /* 0 */
+#endif /* ACE_USES_HIGH_BAUD_RATES */
         default:
           return -1;
         }
+
+#if defined(ACE_USES_OLD_TERMIOS_STRUCT)
+      // @@ Can you really have different input and output baud
+      // rates?!
+      devpar.c_ispeed = newbaudrate;
+      devpar.c_ospeed = newbaudrate;
+#else
+      c_cflag |= newbaudrate;
+#endif /* ACE_USES_OLD_TERMIOS_STRUCT */
+
       switch (arg->databits)
         {
         case   5:

@@ -174,4 +174,10 @@ extern "C" { char * cuserid (char *s); }
 
 #define ACE_HAS_SIGWAIT
 
+#define ACE_HAS_TERM_IOCTLS
+#define ACE_USES_OLD_TERMIOS_STRUCT
+#define ACE_USES_HIGH_BAUD_RATES
+#define TCGETS TIOCGETA
+#define TCSETS TIOCSETA
+
 #endif /* ACE_CONFIG_H */
