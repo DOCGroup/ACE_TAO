@@ -296,7 +296,7 @@ test_poas (CORBA::ORB_ptr orb,
                                                                               ACE_TRY_ENV);
     ACE_CHECK;
 
-    ACE_ASSERT (id_from_servant == id);
+    ACE_ASSERT (id_from_servant.in () == id.in ());
 
     second_poa->deactivate_object (id.in (),
                                    ACE_TRY_ENV);
@@ -376,7 +376,7 @@ test_poas (CORBA::ORB_ptr orb,
     string = PortableServer::ObjectId_to_string (id_from_reference.in ());
     ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
 
-    ACE_ASSERT (id_from_reference == id);
+    ACE_ASSERT (id_from_reference.in () == id.in ());
 
     third_poa->activate_object_with_id (id.in (),
                                         &servant,
@@ -430,7 +430,7 @@ test_poas (CORBA::ORB_ptr orb,
     string = PortableServer::ObjectId_to_string (id_from_servant.in ());
     ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
 
-    ACE_ASSERT (id_from_servant == id);
+    ACE_ASSERT (id_from_servant.in () == id.in ());
 
     third_poa->deactivate_object (id.in (),
                                   ACE_TRY_ENV);
@@ -477,7 +477,7 @@ test_poas (CORBA::ORB_ptr orb,
     string = PortableServer::ObjectId_to_string (id_from_reference.in ());
     ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
 
-    ACE_ASSERT (id_from_reference == id);
+    ACE_ASSERT (id_from_reference.in () == id.in ());
 
     forth_poa->activate_object_with_id (id.in (),
                                         &servant,
@@ -622,7 +622,6 @@ main (int argc, char **argv)
                            "Exception!");
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 
   return 0;
 }
