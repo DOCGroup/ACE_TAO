@@ -107,9 +107,7 @@ main(int argc, char * argv[])
 
 
       PortableServer::ObjectId_var ServerId =
-        PortableServer::string_to_ObjectId ("TimeServer"
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::string_to_ObjectId ("TimeServer");
 
       // Create an object
       Time_impl *time_servant = new Time_impl;
