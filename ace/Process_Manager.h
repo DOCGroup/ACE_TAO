@@ -39,9 +39,6 @@ private:
   ~ACE_Process_Descriptor (void);
   // Default ctor/dtor.
 
-  int delete_process_;
-  // Do we need to delete the Process, or just close() it?
-
   ACE_Process *process_;
   // Describes the process itself.
 
@@ -264,6 +261,9 @@ public:
   // On OSs that support signals, send the signal to the specified
   // process.  Returns 0 on success and -1 on failure.
 
+  size_t managed (void) const;
+  // Return the number of managed Processes.
+
   void dump (void) const;
   // Dump the state of an object.
 
@@ -340,15 +340,14 @@ private:
   // <process_table_>.  Each entry is added at the end, growing the
   // table if necessary.
 
-  int remove_proc (pid_t pid);
-  // Actually removes the process <pid> from the table.  This method
+  int remove_proc (size_t n);
+  // Actually removes the process at index <n> from the table.  This method
   // must be called with locks held.
 
-  int notify_proc_handler (ACE_HANDLE proc,
-                           pid_t pid,
+  int notify_proc_handler (size_t n,
                            ACE_exitcode status);
-  // If there's a specific handler for <pid>'s exit, or a default
-  // handler, call it.
+  // If there's a specific handler for the Process at index <n> in the
+  // table, or there's a default handler, call it.
 
   ACE_Process_Descriptor *process_table_;
   // Vector that describes process state within the Process_Manager.

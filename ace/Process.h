@@ -310,11 +310,29 @@ public:
   virtual ~ACE_Process (void);
   // Destructor.
 
+  virtual int prepare (ACE_Process_Options &options);
+  // Called just before <ACE_OS::fork> in the <spawn>.  If this
+  // returns non-zero, the <spawn> is aborted (and returns
+  // ACE_INVALID_PID).  The default simply returns zero.
+
   virtual pid_t spawn (ACE_Process_Options &options);
   // Launch a new process as described by <options>.  Returns the
   // process id of the newly spawned child on success or -1 on
   // failure.
 
+  virtual void parent (pid_t child);
+  // Called just after <ACE_OS::fork> in the parent's context, if the
+  // <fork> succeeds.  The default is to do nothing.
+
+  virtual void child (pid_t parent);
+  // Called just after <ACE_OS::fork> in the child's context.  The
+  // default does nothing.  This function is *not* called on Win32
+  // because the process-creation scheme does not allow it.
+
+  virtual void unmanage (void);
+  // Called by a <Process_Manager> that is removing this Process from
+  // its table of managed Processes.  Default is to do nothing.
+  
   pid_t wait (ACE_exitcode *status = 0,
               int wait_options = 0);
   // Wait for the process we've created to exit.  If <status> != 0, it

@@ -219,9 +219,14 @@ ACE_MMAP_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
        cur_block < rounded_bytes;
        cur_block += seek_len)
     {
-      map_size = ACE_OS::lseek (this->mmap_.handle () , seek_len - 1, SEEK_END);
+      map_size = ACE_OS::lseek (this->mmap_.handle (),
+                                seek_len - 1,
+                                SEEK_END);
 
-      if (map_size == -1 || ACE_OS::write (this->mmap_.handle (), "", 1) == -1)
+      if (map_size == -1 
+          || ACE_OS::write (this->mmap_.handle (), 
+                            "",
+                            1) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ASYS_TEXT ("(%P|%t) %p\n"),
                            this->backing_store_name_),

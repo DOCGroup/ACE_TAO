@@ -117,6 +117,7 @@ public:
   // the default value of <ACE_Addr::sap_any> then the user is letting
   // the OS do the binding.  If <reuse_addr> == 1 then the
   // <local_addr> is reused, even if it hasn't been cleanedup yet.
+  // Note that the <new_stream> always starts out in blocking mode.
 
   int connect (ACE_SOCK_Stream &new_stream,
 	       const ACE_Addr &remote_sap,
