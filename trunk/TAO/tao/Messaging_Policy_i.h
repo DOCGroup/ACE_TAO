@@ -24,7 +24,7 @@
 
 #if defined (TAO_HAS_CORBA_MESSAGING)
 
-class TAO_Export TAO_RelativeRoundtripTimeoutPolicy_i : public POA_Messaging::RelativeRoundtripTimeoutPolicy, TAO_RefCountServantBase
+class TAO_Export TAO_RelativeRoundtripTimeoutPolicy_i : public POA_Messaging::RelativeRoundtripTimeoutPolicy, public TAO_RefCountServantBase
 {
   // = TITLE
   //   Messaging::RelativeRoundtripTimeoutPolicy implementation
@@ -38,8 +38,7 @@ public:
                                       const TimeBase::TimeT& relative_expiry);
   // Constructor
 
-  static CORBA::Policy_ptr
-  TAO_RelativeRoundtripTimeoutPolicy_i::create (
+  static CORBA::Policy_ptr create (
       PortableServer::POA_ptr poa,
       const CORBA::Any& val,
       CORBA::Environment &ACE_TRY_ENV =

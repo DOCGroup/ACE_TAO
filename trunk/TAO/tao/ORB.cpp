@@ -875,14 +875,8 @@ CORBA_ORB::resolve_initial_references (const char *name,
   else if (ACE_OS::strcmp (name, TAO_OBJID_POLICYCURRENT) == 0)
     return this->resolve_policy_current (ACE_TRY_ENV);
 
-  else if (ACE_OS::strcmp (name, TAO_OBJID_NAMESERVICE) == 0)
-    return this->resolve_service ("NameService", timeout, ACE_TRY_ENV);
-
-  else if (ACE_OS::strcmp (name, TAO_OBJID_TRADINGSERVICE) == 0)
-    return this->resolve_trading_service (timeout, ACE_TRY_ENV);
-
-  else
-    return this->resolve_service (name, timeout, ACE_TRY_ENV);
+  // Is not one of the well known services, try to find it in the
+  // InitRef table....
 
   // Get the table of initial references specified through
   // -ORBInitRef.
@@ -938,6 +932,19 @@ CORBA_ORB::resolve_initial_references (const char *name,
 
       delete default_init_ref;
     }
+
+  // Did not find it in the InitRef table, or in the DefaultInitRef
+  // entry.... Try the hard-coded ways to find the basic services...
+
+  if (ACE_OS::strcmp (name, TAO_OBJID_NAMESERVICE) == 0)
+    return this->resolve_service ("NameService", timeout, ACE_TRY_ENV);
+
+  else if (ACE_OS::strcmp (name, TAO_OBJID_TRADINGSERVICE) == 0)
+    return this->resolve_trading_service (timeout, ACE_TRY_ENV);
+
+  else
+    return this->resolve_service (name, timeout, ACE_TRY_ENV);
+
 
 }
 
@@ -1470,7 +1477,6 @@ CORBA_ORB::create_policy (CORBA::PolicyType type,
       return TAO_RelativeRoundtripTimeoutPolicy_i::create (root_poa.in (),
                                                            val,
                                                            ACE_TRY_ENV);
-      break;
 
     case TAO_MESSAGING_REBIND_POLICY_TYPE:
     case TAO_MESSAGING_SYNC_SCOPE_POLICY_TYPE:
@@ -1486,7 +1492,6 @@ CORBA_ORB::create_policy (CORBA::PolicyType type,
     case TAO_MESSAGING_QUEUE_ORDER_POLICY_TYPE:
       ACE_THROW_RETURN (CORBA::PolicyError (CORBA::UNSUPPORTED_POLICY),
                         CORBA::Policy::_nil ());
-      break;
 
     default:
       break;

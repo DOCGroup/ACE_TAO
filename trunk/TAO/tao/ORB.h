@@ -25,6 +25,9 @@
 #include "tao/IOR_LookupTable.h"
 #include "tao/Services.h"
 
+// IRIX needs this for the throw specs
+#include "tao/PolicyC.h"
+
 typedef enum
 {
   TAO_SERVICEID_NAMESERVICE,
