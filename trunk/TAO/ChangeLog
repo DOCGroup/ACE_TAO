@@ -1,3 +1,11 @@
+Thu Nov  6 13:17:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Synch_Invocation.cpp: 
+
+	  If the ORB prepares to throw a COMM_FAILURE exception with
+	  completed_maybe, just delegate to the ORB_Core to take the right
+	  decision.
+	
 Thu Nov  6 12:53:46 2003  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * orbsvcs/examples/LoadBalancing/server.cpp:
