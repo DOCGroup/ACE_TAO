@@ -51,7 +51,7 @@ EC_Consumer::EC_Consumer (CORBA::ORB_var orb,
 
 void
 EC_Consumer::push (const RtecEventComm::EventSet &events
-                   ACE_ENV_ARG_PARAMETER)
+                   ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   for (CORBA::ULong i = 0; i < events.length (); ++i)
