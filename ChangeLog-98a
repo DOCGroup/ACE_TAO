@@ -1,3 +1,9 @@
+Wed Feb 25 10:50:17 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_osf1_4.0.GNU: added suppression of
+          "no corresponding delete" warning, until that is fixed in libTAO.
+          Added -lm to LIBS for MT_Cubit client.
+
 Tue Feb 24 15:07:50 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/test.{mdp,mak}: Added Env_Value_Test and OrdMultiSet_Test
@@ -30,15 +36,15 @@ Tue Feb 24 05:08:31 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  Changed to use ASYS_TCHAR to differentiate this condition.
 
 	* ace/OS.h (ACE_OS): Undefined shm_{open,unlink} if
-	  ACE_HAS_MOSTLY_UNICODE_APIS. 
+	  ACE_HAS_MOSTLY_UNICODE_APIS.
 
 	* ace/OS.cpp (ctime,ctime_r): Added CE implementation.
 
 	* ace/streams.h: Added /**/ between #include and <..> in several
-	  places. 
+	  places.
 
 	* ace/*: Changed ACE_HAS_UNICODE_ONLY to
-	  ACE_HAS_MOSTLY_UNICODE_APIS. 
+	  ACE_HAS_MOSTLY_UNICODE_APIS.
 
 Mon Feb 23 19:41:53 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
