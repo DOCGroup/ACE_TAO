@@ -1,3 +1,8 @@
+Sun Nov 30 20:51:06 2003  Tao Lu  <lu@dre.vanderbilt.edu>
+
+        * examples/Hello/Sender/Makefile.Hello_Starter:
+          Added this makefile which will make the starter program.
+
 Sun Nov 30 11:47:29 2003  Tao Lu  <lu@dre.vanderbilt.edu>
 
         * examples/Hello:
