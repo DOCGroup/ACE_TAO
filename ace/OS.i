@@ -50,11 +50,15 @@ typedef const char *ACE_SOCKOPT_TYPE1;
 #endif /* ACE_HAS_VOIDPTR_SOCKOPT */
 
 #if defined (ACE_LACKS_SETREUID_PROTOTYPE)
+extern "C" {
 extern int setreuid (uid_t ruid, uid_t euid);
+}
 #endif /* ACE_LACKS_SETREUID_PROTOTYPE */
 
 #if defined (ACE_LACKS_SETREGID_PROTOTYPE)
+extern "C" {
 extern int setregid (gid_t rgid, gid_t egid);
+}
 #endif /* ACE_LACKS_SETREGID_PROTOTYPE */
 
 #if defined (ACE_LACKS_WRITEV)
