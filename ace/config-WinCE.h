@@ -83,6 +83,7 @@
 #define ACE_LACKS_FILELOCKS
 #define ACE_LACKS_EXEC
 #define ACE_LACKS_MKTEMP
+#define ACE_LACKS_STRRCHR
 #define ACE_HAS_MOSTLY_UNICODE_APIS
 
 // temporary workspace
