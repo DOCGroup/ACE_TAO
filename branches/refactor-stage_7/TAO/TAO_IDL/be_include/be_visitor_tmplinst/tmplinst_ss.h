@@ -28,11 +28,23 @@ public:
 
   virtual ~be_visitor_tmplinst_ss (void);
 
+  virtual int visit_array (be_array *node);
+
+  virtual int visit_enum (be_enum *node);
+
   virtual int visit_interface (be_interface *node);
 
   virtual int visit_valuetype (be_valuetype *node);
 
   virtual int visit_operation (be_operation *node);
+
+  virtual int visit_sequence (be_sequence *node);
+
+  virtual int visit_string (be_string *node);
+
+  virtual int visit_structure (be_structure *node);
+
+  virtual int visit_union (be_union *node);
 
 protected:
   virtual idl_bool this_mode_generated (be_decl *node) const;

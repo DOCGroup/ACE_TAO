@@ -154,19 +154,19 @@ TAO_Unbounded_Sequence<T>::get_buffer (CORBA::Boolean orphan)
             {
               result = TAO_Unbounded_Sequence<T>::allocbuf (this->length_);
               this->buffer_ = result;
-                    this->release_ = 1;
+              this->release_ = 1;
             }
         }
       else
         {
           result = ACE_reinterpret_cast (T *,
-                                               this->buffer_);
+                                         this->buffer_);
         }
     }
   else
     {
       result = ACE_reinterpret_cast (T *,
-                                           this->buffer_);
+                                     this->buffer_);
 
       if (this->release_ != 0)
         {

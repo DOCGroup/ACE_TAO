@@ -139,27 +139,6 @@ CORBA::AbstractBase::_unchecked_narrow (CORBA::AbstractBase_ptr obj
   return ret;
 }
 
-void *
-CORBA::AbstractBase::_tao_QueryInterface (ptrdiff_t type)
-{
-  void *retv = 0;
-
-  if (type == ACE_reinterpret_cast (
-              ptrdiff_t,
-              &CORBA::AbstractBase::_tao_class_id)
-            )
-    {
-      retv = ACE_reinterpret_cast (void*, this);
-    }
-
-  if (retv != 0)
-    {
-      this->_add_ref ();
-    }
-
-  return retv;
-}
-
 // These are non-pure virtual no-ops so we can instantiate the
 // class in the CDR extraction operator. The actual management
 // of the refcount will always be done in the derived class.

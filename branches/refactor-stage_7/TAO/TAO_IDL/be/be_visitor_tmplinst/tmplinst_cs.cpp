@@ -82,13 +82,11 @@ be_visitor_tmplinst_cs::visit_interface (be_interface *node)
   *os << be_nl << be_nl
       << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
       << "TAO_Objref_Var_T<" << this->linebreak_ << be_idt << be_idt_nl
-      << node->name () << be_nl
-      << be_uidt_nl
+      << node->name () << be_uidt_nl
       << ">" << this->suffix_ << be_uidt << be_uidt_nl << be_uidt_nl
       << this->prefix_<< this->linebreak_ << be_idt << be_idt_nl
       << "TAO_Objref_Out_T<" << this->linebreak_ << be_idt << be_idt_nl
-      << node->name () << be_nl
-      << be_uidt_nl
+      << node->name () << be_uidt_nl
       << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
 
   // Called by _narrow() for non-local interfaces.
@@ -170,6 +168,12 @@ be_visitor_tmplinst_cs::visit_valuetype (be_valuetype *node)
       os->gen_endif ();
     }
 
+  if (node->imported () || !node->is_defined ())
+    {
+      this->this_mode_generated (node, I_TRUE);
+      return 0;
+    }
+
   if (this->visit_scope (node) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -178,37 +182,22 @@ be_visitor_tmplinst_cs::visit_valuetype (be_valuetype *node)
                         -1);
     }
 
-  if (node->imported ())
-    {
-      this->this_mode_generated (node, I_TRUE);
-      return 0;
-    }
-
-  // For traits template class.
-  // @@@ (JP) This condition may change or go away once we
-  // regenerate the ORB hand-crafted code.
-  if (!node->is_defined ())
-    {
-      *os << be_nl << be_nl
-          << this->prefix_ << " TAO::Value_Traits<" << node->name ()
-          << ">" << this->suffix_;
-    }
-
   // For _var and _out template classes.
-  if (node->is_defined ())
-    {
-      *os << be_nl << be_nl
-          << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
-          << "TAO_Value_Var_T<" << this->linebreak_ << be_idt << be_idt_nl
-          << node->name () << this->linebreak_ << be_nl
-          << be_uidt_nl
-          << ">" << this->suffix_ << be_uidt << be_uidt_nl << be_uidt_nl
-          << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
-          << "TAO_Value_Out_T<" << this->linebreak_ << be_idt << be_idt_nl
-          << node->name () << this->linebreak_ << be_nl
-          << be_uidt_nl
-          << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
-    }
+  *os << be_nl << be_nl
+      << this->prefix_ << " TAO::Value_Traits<" << node->name ()
+      << ">" << this->suffix_;
+
+  *os << be_nl << be_nl
+      << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
+      << "TAO_Value_Var_T<" << this->linebreak_ << be_idt << be_idt_nl
+      << node->name () << this->linebreak_ << be_nl
+      << be_uidt_nl
+      << ">" << this->suffix_ << be_uidt << be_uidt_nl << be_uidt_nl
+      << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
+      << "TAO_Value_Out_T<" << this->linebreak_ << be_idt << be_idt_nl
+      << node->name () << this->linebreak_ << be_nl
+      << be_uidt_nl
+      << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
 
   // For Any impl template class.
   if (be_global->any_support ())
@@ -227,7 +216,7 @@ be_visitor_tmplinst_cs::visit_valuetype (be_valuetype *node)
 int
 be_visitor_tmplinst_cs::visit_operation (be_operation *node)
 {
-  if (node->imported ())
+  if (this->this_mode_generated (node) || node->imported ())
     {
       return 0;
     }
@@ -272,6 +261,7 @@ be_visitor_tmplinst_cs::visit_operation (be_operation *node)
         }
     }
 
+  this->this_mode_generated (node, I_TRUE);
   return 0;
 }
 
@@ -287,6 +277,8 @@ be_visitor_tmplinst_cs::visit_sequence (be_sequence *node)
   be_typedef *alias = this->ctx_->alias ();
 
   // For arg/return type helper template classes.
+  // If the node is anonymous, it can't have been seen in an operation,
+  // so no check is necessary for alias == 0.
   if (node->seen_in_operation ())
     {
       os->gen_ifdef_macro (node->flat_name (), "arg_traits_tmplinst");
