@@ -140,16 +140,21 @@ bgcolor="#ffffff">
         #endif /* ACE_HAS_THREADS */
         </pre><p>
 
+    <li>Be sure to put spaces around comment delimiters, e.g.,
+        <strong><code>char * /* foo */</code></strong> instead of
+        <strong><code>char */*foo*/</code></strong>.  MS VC++
+        complains otherwise.<p>
+
     <li>Always insert a <strong><code>/**/</code></strong> between an
         <strong><code>#include</code></strong> and
         <strong><code>filename</code></strong>, as shown in the above
         example.  This avoids dependency problems with Visual C++.<p>
 
-    <li>Be very careful with names of macros and enum values.  It's
-        always best to prefix them with something like <code>ACE_</code>
+    <li>Be very careful with names of macros, enum values, and variables
+        It's always best to prefix them with something like <code>ACE_</code>
         or <code>TAO_</code>.  There are too many system headers out
         there that #define <code>OK</code>, <code>SUCCESS</code>,
-        <code>ERROR</code>, and so on.<p>
+        <code>ERROR</code>, <code>index</code>, and so on.<p>
 
     <li>Try to centralize <code>#ifdefs</code> with <code>typedefs</code>
         and <code>#defines</code>.  For example, use this:
