@@ -1,3 +1,10 @@
+Wed Jul 24 10:07:24 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/README:
+        * bin/MakeProjectCreator/USAGE:
+
+          Update the documentation to reflect the current state.
+
 Wed Jul 24 08:13:48 2002  Christopher Kohlhoff  <chris@kohlhoff.com>
 
         * include/makeinclude/build_dll.bor:
