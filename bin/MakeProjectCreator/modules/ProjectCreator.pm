@@ -722,6 +722,37 @@ sub generate_default_target_names {
       $self->process_assignment('sharedname', $staticname);
       $sharedname = $staticname;
     }
+
+    ## If it's neither an exe or library target, we will search
+    ## through the source files for a main()
+    if (!$self->lib_target()) {
+      my($fh)      = new FileHandle();
+      my($exename) = undef;
+      foreach my $file ($self->get_component_list('source_files')) {
+        if (open($fh, $file)) {
+          while(<$fh>) {
+            ## Remove c++ comments (ignore c style comments for now)
+            $_ =~ s/\/\/.*//;
+
+            ## Check for main
+            if (/main\s*\(/) {
+              ## If we found a main, set the exename to the basename
+              ## of the cpp file with the extension removed
+              $exename = basename($file);
+              $exename =~ s/\.[^\.]+$//;
+              last;
+            }
+          }
+          close($fh);
+        }
+
+        ## Set the exename assignment
+        if (defined $exename) {
+          $self->process_assignment('exename', $exename);
+          last;
+        }
+      }
+    }
   }
 }
 
@@ -1129,8 +1160,6 @@ sub generate_defaults {
     $self->process_assignment('project_name', $self->base_directory());
   }
 
-  $self->generate_default_target_names();
-
   my(@files) = $self->generate_default_file_list();
   $self->generate_default_pch_filenames(\@files);
 
@@ -1164,6 +1193,9 @@ sub generate_defaults {
       }
     }
   }
+
+  ## Generate default target names after all source files are added
+  $self->generate_default_target_names();
 }
 
 
