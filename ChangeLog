@@ -1,3 +1,9 @@
+Fri Oct 31 14:29:07 2003  Edward R. Mulholland  <emulholl@atl.lmco.com>
+
+        * performance-tests/SCTP/run_spectrum.pl:
+
+          Eliminated spurious error messages.
+
 Fri Oct 31 14:09:37 2003  Edward R. Mulholland  <emulholl@atl.lmco.com>
 
         * ace/Multihomed_INET_Addr.cpp:
