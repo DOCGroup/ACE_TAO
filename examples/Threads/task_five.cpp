@@ -27,7 +27,7 @@ static const int DEFAULT_TASKS = 100;
 static const int DEFAULT_ITERATIONS = 10;
 
 // Default stack size
-static size_t default_stack_size =      
+static size_t default_stack_size =
 #if defined (ACE_WIN32)
     0;
 #else
@@ -97,7 +97,7 @@ Test_Task::synch (void)
   return thr_mgr_->wait_grp (grp_id_);
 }
 
-static void 
+static void
 work (ACE_Thread_Manager *thr_mgr,
       int n_tasks,
       size_t stack_size)
@@ -171,5 +171,5 @@ main (int argc, char *argv[])
           n_tasks,
           stack_size);
 
-  ACE_NOTREACHED (return 0);
+  return 0;
 }
