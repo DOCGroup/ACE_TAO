@@ -10,7 +10,7 @@
 #include "ace/Task.h"
 
 static const int DEFAULT_TASKS = 1000;
-static size_t stack_size =      // Default stack size
+static size_t default_stack_size =      // Default stack size
 #if defined (ACE_WIN32)
     0;
 #else
@@ -49,7 +49,7 @@ Test_Task::open (void *)
                          0,
                          0,
                          0,
-                         &stack_size);
+                         &default_stack_size);
 }
 
 int
@@ -134,7 +134,7 @@ void work (ACE_Thread_Manager *thr_mgr, int n_tasks, size_t stack_size)
 int
 main (int argc, char *argv[])
 {
-  size_t stack_size = argc > 1 ? ACE_OS::atoi (argv[1]) : stack_size;
+  size_t stack_size = argc > 1 ? ACE_OS::atoi (argv[1]) : default_stack_size;
   const int n_tasks = argc > 2 ? ACE_OS::atoi (argv[2]) : DEFAULT_TASKS;
 
   ACE_Thread_Manager *thr_mgr = ACE_Service_Config::thr_mgr ();
