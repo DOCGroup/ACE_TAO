@@ -1,3 +1,9 @@
+Wed Jan 14 16:13:33 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* Makefile:
+
+	  Added RELEASE_FILES to the AUTOCONF_RELEASE_FILES.
+
 Wed Jan 14 14:26:54 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/make_release: 
