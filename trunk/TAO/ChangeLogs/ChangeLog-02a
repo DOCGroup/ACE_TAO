@@ -1,3 +1,11 @@
+Sun Dec 16 10:33:47 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORB_Core.cpp (init):
+
+	  Made it possible to set send and receive buffer lengths to
+	  zero.  Thanks to Jonathan Reis <reis@stentor.com> for providing
+	  a fix.  [Bug 1100]
+
 Sun Dec 16 11:15:19 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* tao/Wait_On_Reactor.cpp : fixed compiler errors on TRU64

@@ -280,8 +280,8 @@ TAO_ORB_Core::init (int &argc, char *argv[] TAO_ENV_ARG_DECL)
   // @@ should be a default defined for each protocol implementation?
   //    since we may have protocols loaded which use shared memory of
   //    some form, fredk
-  size_t rcv_sock_size = 0;
-  size_t snd_sock_size = 0;
+  long rcv_sock_size = -1;
+  long snd_sock_size = -1;
 
   // Use TCP_NODELAY.
   size_t nodelay = 1;
@@ -1000,9 +1000,9 @@ TAO_ORB_Core::init (int &argc, char *argv[] TAO_ENV_ARG_DECL)
 
   this->orb_params ()->use_dotted_decimal_addresses (dotted_decimal_addresses);
   this->orb_params ()->nodelay (nodelay);
-  if (rcv_sock_size != 0)
+  if (rcv_sock_size >= 0)
     this->orb_params ()->sock_rcvbuf_size (rcv_sock_size);
-  if (snd_sock_size != 0)
+  if (snd_sock_size >= 0)
     this->orb_params ()->sock_sndbuf_size (snd_sock_size);
   if (cdr_tradeoff >= 0)
     this->orb_params ()->cdr_memcpy_tradeoff (cdr_tradeoff);
