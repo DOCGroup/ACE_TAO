@@ -1,3 +1,19 @@
+Mon May 12 14:00:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/handcrafted/BasicSP/BasicSP.idl
+	* examples/handcrafted/BasicSP/BasicSP.mpc
+	* examples/handcrafted/BasicSP/BasicSPE.idl
+	* examples/handcrafted/BasicSP/BasicSP_stub_export.h
+	* examples/handcrafted/BasicSP/BasicSP_svnt_export.h
+	* examples/handcrafted/BasicSP/README
+	* examples/handcrafted/BasicSP/BMClosedED/BMClosedED.idl
+	* examples/handcrafted/BasicSP/BMDevice/BMDevice.idl
+	* examples/handcrafted/BasicSP/BMDisplay/BMDisplay.idl
+	* examples/handcrafted/BasicSP/EC/EC.idl
+	* examples/handcrafted/BasicSP/EC/README
+
+	  A framework on which the new BasicSP would be developed. 
+
 Mon May 12 13:34:16 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* README: Updated the list of TAO librearies CIAO depends on.
