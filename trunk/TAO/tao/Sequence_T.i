@@ -47,15 +47,15 @@ TAO_Unbounded_Sequence<T>::get_buffer (CORBA::Boolean orphan)
       // We retain ownership.
 
       if (this->buffer_ == 0)
-	{
-	  result = TAO_Unbounded_Sequence<T>::allocbuf (this->length_);
-	  this->buffer_ = result;
-	}
+        {
+          result = TAO_Unbounded_Sequence<T>::allocbuf (this->length_);
+          this->buffer_ = result;
+        }
       else
-	{
-	  result = 
-	    ACE_reinterpret_cast (T*, this->buffer_);
-	}
+        {
+          result =
+            ACE_reinterpret_cast (T*, this->buffer_);
+        }
     }
   else // if (orphan == 1)
     {
@@ -63,15 +63,15 @@ TAO_Unbounded_Sequence<T>::get_buffer (CORBA::Boolean orphan)
         {
           // We set the state back to default and relinquish
           // ownership.
-	  result = ACE_reinterpret_cast(T*,this->buffer_);
+          result = ACE_reinterpret_cast(T*,this->buffer_);
           this->maximum_ = 0;
           this->length_ = 0;
           this->buffer_ = 0;
           this->release_ = 0;
         }
       /* else
-	 // Oops, it's not our buffer to relinquish...
-	 return 0;
+         // Oops, it's not our buffer to relinquish...
+         return 0;
       */
     }
   return result;
@@ -99,22 +99,6 @@ TAO_Unbounded_Sequence<T>::replace (CORBA::ULong max,
     TAO_Unbounded_Sequence<T>::freebuf ((T *) this->buffer_);
   this->buffer_ = data;
   this->release_ = release;
-}
-
-template <class T> ACE_INLINE T &
-TAO_Unbounded_Sequence<T>::operator[] (CORBA::ULong i)
-{
-  ACE_ASSERT (i < this->maximum_);
-  T* tmp = ACE_reinterpret_cast(T*,this->buffer_);
-  return tmp[i];
-}
-
-template <class T> ACE_INLINE const T &
-TAO_Unbounded_Sequence<T>::operator[] (CORBA::ULong i) const
-{
-  ACE_ASSERT (i < this->maximum_);
-  T * const tmp = ACE_reinterpret_cast (T* ACE_CAST_CONST, this->buffer_);
-  return tmp[i];
 }
 
 // ***************************************************
@@ -157,15 +141,15 @@ TAO_Bounded_Sequence<T, MAX>::get_buffer (CORBA::Boolean orphan)
       // We retain ownership.
 
       if (this->buffer_ == 0)
-	{
-	  result = TAO_Bounded_Sequence<T,MAX>::allocbuf (this->maximum_);
-	  this->buffer_ = result;
-	}
+        {
+          result = TAO_Bounded_Sequence<T,MAX>::allocbuf (this->maximum_);
+          this->buffer_ = result;
+        }
       else
-	{
-	  result = 
-	    ACE_reinterpret_cast (T*, this->buffer_);
-	}
+        {
+          result =
+            ACE_reinterpret_cast (T*, this->buffer_);
+        }
     }
   else // if (orphan == 1)
     {
@@ -173,7 +157,7 @@ TAO_Bounded_Sequence<T, MAX>::get_buffer (CORBA::Boolean orphan)
         {
           // We set the state back to default and relinquish
           // ownership.
-	  result = ACE_reinterpret_cast(T*,this->buffer_);
+          result = ACE_reinterpret_cast(T*,this->buffer_);
           this->maximum_ = 0;
           this->length_ = 0;
           this->buffer_ = 0;
@@ -413,4 +397,3 @@ TAO_Bounded_String_Sequence (CORBA::ULong length,
   : TAO_Bounded_Base_Sequence (MAX, length, value, release)
 {
 }
-

@@ -97,6 +97,26 @@ void TAO_Unbounded_Sequence<T>::_deallocate_buffer (void)
   this->buffer_ = 0;
 }
 
+// The following function is not inline, to avoid build (template
+// instantiation) problems with Sun C++ 4.2 patch 104631-07/SunOS 5.6.
+template <class T> T &
+TAO_Unbounded_Sequence<T>::operator[] (CORBA::ULong i)
+{
+  ACE_ASSERT (i < this->maximum_);
+  T* tmp = ACE_reinterpret_cast(T*,this->buffer_);
+  return tmp[i];
+}
+
+// The following function is not inline, to avoid build (template
+// instantiation) problems with Sun C++ 4.2 patch 104631-07/SunOS 5.6.
+template <class T> const T &
+TAO_Unbounded_Sequence<T>::operator[] (CORBA::ULong i) const
+{
+  ACE_ASSERT (i < this->maximum_);
+  T * const tmp = ACE_reinterpret_cast (T* ACE_CAST_CONST, this->buffer_);
+  return tmp[i];
+}
+
 // ****************************************************************
 // Bounded_Sequence
 // ****************************************************************
