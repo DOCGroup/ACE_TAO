@@ -1,8 +1,18 @@
+Mon Sep 21 00:40:00 CDT 1998  Chris Gill <cdgill@cs.wustl.edu>
+
+        * examples/Bounded_Packet_Relay/Thread_Bounded_Packet_Relay.{h,cpp}
+          examples/Bounded_Packet_Relay/BPR_Drivers.{h,cpp}
+          examples/Bounded_Packet_Relay/bpr_thread.cpp
+          examples/Bounded_Packet_Relay/README:
+
+          Reorganized construction of input and output device objects
+          and the relay object, cleaned up readme file.
+
 Sun Sep 20 22:01:00 CDT 1998  Chris Gill <cdgill@cs.wustl.edu>
 
         * examples/Bounded_Packet_Relay/BPR_Drivers.h:
 
-          Made Bounded_Packet_Relay_Driver::display_menu (void) pure virtual: 
+          Made Bounded_Packet_Relay_Driver::display_menu (void) pure virtual:
           now it all compiles *and* links.
 
 Sun Sep 20 21:49:00 CDT 1998  Chris Gill <cdgill@cs.wustl.edu>
