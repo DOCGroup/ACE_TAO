@@ -2,8 +2,8 @@ Fri Aug 16 14:22:43 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/LoadBalancer/LoadManager.bor (CFLAGS, LIBFILES):
 
-	  Added CosNaming and PortableGroup flags and libraries to address
-	  some build errors.
+	  Added Messaging, CosNaming and PortableGroup flags and libraries
+	  to address some build errors.
 
 	* orbsvcs/LoadBalancer/LoadMonitor.bor (CFLAGS, LIBFILES):
 
