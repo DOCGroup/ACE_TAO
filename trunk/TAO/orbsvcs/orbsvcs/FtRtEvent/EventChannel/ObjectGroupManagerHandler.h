@@ -50,7 +50,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 private:
   ACE_Auto_Event& evt_;
-  ACE_Atomic_Op< ACE_Thread_Mutex, int > num_backups_;
+  ACE_Atomic_Op< ACE_SYNCH_MUTEX, int > num_backups_;
 };
 
 #endif

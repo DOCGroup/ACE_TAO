@@ -18,7 +18,7 @@ ACE_RCSID (EventChannel,
            "$Id$")
 
 AMI_Primary_Replication_Strategy::AMI_Primary_Replication_Strategy(bool mt)
-: handler_(this), mutex_(mt ? new ACE_RW_Thread_Mutex : 0)
+: handler_(this), mutex_(mt ? new ACE_SYNCH_RW_MUTEX : 0)
 {
 }
 
@@ -215,4 +215,3 @@ AMI_Primary_Replication_Strategy::add_member(const FTRT::ManagerInfo & info,
 
   event.wait();
 }
-
