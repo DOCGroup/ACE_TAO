@@ -1,218 +1,223 @@
+Thu Dec 09 14:23:16 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/tests/start_services:  added -s option to start
+          Scheduling Service.
+
 Wed Dec 08 19:53:46 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/MessagingS.h (SyncScopePolicy::synchronization):
-	* tao/TAOS.h (BufferingConstraintPolicy::buffering_constraint):
+        * tao/MessagingS.h (SyncScopePolicy::synchronization):
+        * tao/TAOS.h (BufferingConstraintPolicy::buffering_constraint):
 
-	  Hacky TAO extension to bypass the call to
-	  CORBA::Environment::default_environment () since this method
-	  will never raise exceptions.
+          Hacky TAO extension to bypass the call to
+          CORBA::Environment::default_environment () since this method
+          will never raise exceptions.
 
-	* performance-tests/RTCorba/Oneways/Reliable/client.dsp:
-	* performance-tests/RTCorba/Oneways/Reliable/server.dsp:
+        * performance-tests/RTCorba/Oneways/Reliable/client.dsp:
+        * performance-tests/RTCorba/Oneways/Reliable/server.dsp:
 
-	  Fixed include and library paths.
+          Fixed include and library paths.
 
-	* version_tests.dsw: Added new performance test
-	  RTCorba/Oneways/Reliable.
+        * version_tests.dsw: Added new performance test
+          RTCorba/Oneways/Reliable.
 
 Wed Dec  8 15:03:07 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Invocation.{h,i,cpp}:
-	  Modified TAO_GIOP_Oneway_Invocation to create a Reply
-	  Dispatcher (and thus an ACE_InputCDR) only if the
-	  SyncScope policy dictates that a reply is required.
-	  Thanks to Carlos for this suggestion.
+        * tao/Invocation.{h,i,cpp}:
+          Modified TAO_GIOP_Oneway_Invocation to create a Reply
+          Dispatcher (and thus an ACE_InputCDR) only if the
+          SyncScope policy dictates that a reply is required.
+          Thanks to Carlos for this suggestion.
 
 Wed Dec 08 13:57:13 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/orbsvcs.dsp:
-	* orbsvcs/orbsvcs/orbsvcs_static.dsp: Added orbsvcs.rc.  Thanks to
-	  David Hauck <davidh@realtimeint.com> for reminding this.
+        * orbsvcs/orbsvcs/orbsvcs.dsp:
+        * orbsvcs/orbsvcs/orbsvcs_static.dsp: Added orbsvcs.rc.  Thanks to
+          David Hauck <davidh@realtimeint.com> for reminding this.
 
 Tue Dec 07 21:32:19 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/TAO.dsp:
-	* tao/TAO_Static.dsp: Per Bala, added GIOPC.*.
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp: Per Bala, added GIOPC.*.
 
-	  Added tao.rc to project files.  One can use GetFileVersionInfo
-	  on Win32 to get the TAO library version info now.  Thanks to
-	  David Hauck <davidh@realtimeint.com> for suggesting this.
+          Added tao.rc to project files.  One can use GetFileVersionInfo
+          on Win32 to get the TAO library version info now.  Thanks to
+          David Hauck <davidh@realtimeint.com> for suggesting this.
 
 Tue Dec  7 20:38:32 1999  Marina Spivak  <marina@cs.wustl.edu>
 
-	* performance-tests/RTCorba/Multipel_Endpoints/Endpoint_Per_Priority/client.cpp
-	* performance-tests/RTCorba/Multipel_Endpoints/Orb_Per_Priority/client.cpp
-	* performance-tests/RTCorba/Multipel_Endpoints/Single_Endpoint/client.cpp:
-	  Added Barriers to make sure all client threads sync before
-	  trying to establish a connection and before starting to invoke operations.
+        * performance-tests/RTCorba/Multipel_Endpoints/Endpoint_Per_Priority/client.cpp
+        * performance-tests/RTCorba/Multipel_Endpoints/Orb_Per_Priority/client.cpp
+        * performance-tests/RTCorba/Multipel_Endpoints/Single_Endpoint/client.cpp:
+          Added Barriers to make sure all client threads sync before
+          trying to establish a connection and before starting to invoke operations.
 
 Tue Dec  7 18:38:20 1999  Marina Spivak  <marina@cs.wustl.edu>
 
-	* performance-tests/RTCorba/Multipel_Endpoints/Endpoint_Per_Priority/client.cpp
-	* performance-tests/RTCorba/Multipel_Endpoints/Endpoint_Per_Priority/server.cpp
-	* performance-tests/RTCorba/Multipel_Endpoints/Endpoint_Per_Priority/run-test.pl
-	* performance-tests/RTCorba/Multipel_Endpoints/Orb_Per_Priority/client.cpp
-	* performance-tests/RTCorba/Multipel_Endpoints/Orb_Per_Priority/run-test.pl
-	* performance-tests/RTCorba/Multipel_Endpoints/Orb_Per_Priority/server.cpp
-	* performance-tests/RTCorba/Multipel_Endpoints/Single_Endpoint/client.cpp
-	* performance-tests/RTCorba/Multipel_Endpoints/Single_Endpoint/server.cpp
-	* performance-tests/RTCorba/Multipel_Endpoints/Single_Endpoint/run-test.pl:
-	  Improved debugging messages.
+        * performance-tests/RTCorba/Multipel_Endpoints/Endpoint_Per_Priority/client.cpp
+        * performance-tests/RTCorba/Multipel_Endpoints/Endpoint_Per_Priority/server.cpp
+        * performance-tests/RTCorba/Multipel_Endpoints/Endpoint_Per_Priority/run-test.pl
+        * performance-tests/RTCorba/Multipel_Endpoints/Orb_Per_Priority/client.cpp
+        * performance-tests/RTCorba/Multipel_Endpoints/Orb_Per_Priority/run-test.pl
+        * performance-tests/RTCorba/Multipel_Endpoints/Orb_Per_Priority/server.cpp
+        * performance-tests/RTCorba/Multipel_Endpoints/Single_Endpoint/client.cpp
+        * performance-tests/RTCorba/Multipel_Endpoints/Single_Endpoint/server.cpp
+        * performance-tests/RTCorba/Multipel_Endpoints/Single_Endpoint/run-test.pl:
+          Improved debugging messages.
 
 Tue Dec  7 13:30:20 1999  Marina Spivak  <marina@cs.wustl.edu>
 
-	* performance-tests/RTCorba/Multiple_Endpoints/Makefile
-	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Makefile
-	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/README
-	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/client.cpp
-	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/run-test.pl
-	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/server.conf
-	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Makefile
-	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/client.cpp
-	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/run-test.pl
-	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.cpp
-	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Makefile
-	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/client.cpp
-	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/run-test.pl:
-	  Added THR_BOUND flag whereever we spawned threads in the tests.
-	  Updated perl scripts.
+        * performance-tests/RTCorba/Multiple_Endpoints/Makefile
+        * performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Makefile
+        * performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/README
+        * performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/client.cpp
+        * performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/run-test.pl
+        * performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/server.conf
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Makefile
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/client.cpp
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/run-test.pl
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.cpp
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Makefile
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/client.cpp
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/run-test.pl:
+          Added THR_BOUND flag whereever we spawned threads in the tests.
+          Updated perl scripts.
 
 Tue Dec  7 17:56:55 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Pool_Per_Endpoint.h:
-	  Use the THR_BOUND flag to ensure that a new LWP is assigned in
-	  real-time configurations. Thanks to Marina for pointing this
-	  out.
+        * tao/Pool_Per_Endpoint.h:
+          Use the THR_BOUND flag to ensure that a new LWP is assigned in
+          real-time configurations. Thanks to Marina for pointing this
+          out.
 
-	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/server.conf:
-	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.conf:
-	  Don't use thread-per-connection as it is hard to control the
-	  priority of the ORB created threads.
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/server.conf:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.conf:
+          Don't use thread-per-connection as it is hard to control the
+          priority of the ORB created threads.
 
 Tue Dec  7 13:44:55 1999  Krishnakumar Elakkara Pathayapura  <krish@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Log/LogMgr_i.cpp: Fixed some template
-	  instantiations.
+        * orbsvcs/orbsvcs/Log/LogMgr_i.cpp: Fixed some template
+          instantiations.
 
 Tue Dec  7 12:17:08 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/UIOP_Transport.cpp:
-	  Fixed typos, it compiles now.
+        * tao/UIOP_Transport.cpp:
+          Fixed typos, it compiles now.
 
 Mon Dec  6 22:20:59 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/Makefile.am (ORB_CORE_FILES, pkginclude_HEADERS):
+        * tao/Makefile.am (ORB_CORE_FILES, pkginclude_HEADERS):
 
-	  Added GIOPC related files to the appropriate MAKE variable.
+          Added GIOPC related files to the appropriate MAKE variable.
 
-	* tao/Stub.cpp (~TAO_Stub):
+        * tao/Stub.cpp (~TAO_Stub):
 
-	  Instead of protecting all profile related calls with a nil ORB
-	  core check, only check for a nil ORB core when calling
-	  TAO_Profile::reset_hint() since it relies on connectors in an
-	  existing ORB core.  The call to TAO_Profile::_decr_refcnt(), on
-	  the other hand does not have to be protected.  It should always
-	  be called to perform any remaining profile clean up.  This fixes
-	  a memory leak.  Thanks to Irfan for reporting this leak.
+          Instead of protecting all profile related calls with a nil ORB
+          core check, only check for a nil ORB core when calling
+          TAO_Profile::reset_hint() since it relies on connectors in an
+          existing ORB core.  The call to TAO_Profile::_decr_refcnt(), on
+          the other hand does not have to be protected.  It should always
+          be called to perform any remaining profile clean up.  This fixes
+          a memory leak.  Thanks to Irfan for reporting this leak.
 
-	* tests/ORB_init/ORB_init.cpp (main):
+        * tests/ORB_init/ORB_init.cpp (main):
 
-	  Call CORBA::ORB::string_to_object() on a valid IOR, but don't
-	  narrow() the IOR, before calling CORBA::ORB::destroy().  This
-	  aids in verifying that the TAO_Stub internals work properly
-	  after a call to CORBA::ORB::destroy() has been made.  Thanks to
-	  Irfan for providing an example of this test case.
+          Call CORBA::ORB::string_to_object() on a valid IOR, but don't
+          narrow() the IOR, before calling CORBA::ORB::destroy().  This
+          aids in verifying that the TAO_Stub internals work properly
+          after a call to CORBA::ORB::destroy() has been made.  Thanks to
+          Irfan for providing an example of this test case.
 
-	  Debugging output updates.
+          Debugging output updates.
 
-	* tests/ORB_init/README:
+        * tests/ORB_init/README:
 
-	  Updated the documentation.
+          Updated the documentation.
 
 Mon Dec 06 21:16:53 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/IIOP_Transport.cpp (send/recv):
+        * tao/IIOP_Transport.cpp (send/recv):
         * tao/UIOP_Transport.cpp (send/recv):
 
-	  - Changed to use the new timed I/O APIs in ACE.
+          - Changed to use the new timed I/O APIs in ACE.
 
-	  - The <timeout> parameter was made const.
+          - The <timeout> parameter was made const.
 
-	  - Changed how the destructor handles buffered oneways.
+          - Changed how the destructor handles buffered oneways.
 
-	* tao/UIOP_Connect.cpp (handle_timeout):
-	* tao/IIOP_Connect.cpp (handle_timeout):
+        * tao/UIOP_Connect.cpp (handle_timeout):
+        * tao/IIOP_Connect.cpp (handle_timeout):
 
-	  Changed how timeouts handle buffered oneways.
+          Changed how timeouts handle buffered oneways.
 
-	* tao/Pluggable.cpp (send_buffered_messages): Some of the methods
-	  were moved from the sync strategies to the transport class.
-	  This makes them easier to use without the presence of the stub,
-	  e.g., during the destruction of the transport and when timeouts
-	  occur.
+        * tao/Pluggable.cpp (send_buffered_messages): Some of the methods
+          were moved from the sync strategies to the transport class.
+          This makes them easier to use without the presence of the stub,
+          e.g., during the destruction of the transport and when timeouts
+          occur.
 
-	* examples/Buffered_Oneways/client.cpp (main): Initialized all the
-	  fields of the <buffering_constraint> structure.  This will
-	  prevent UMRs from purify.  Thanks to Jeff for pointing out the
-	  source of the UMRs.
+        * examples/Buffered_Oneways/client.cpp (main): Initialized all the
+          fields of the <buffering_constraint> structure.  This will
+          prevent UMRs from purify.  Thanks to Jeff for pointing out the
+          source of the UMRs.
 
 Mon Dec  6 13:16:21 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP1_2.pidl (GIOP ):
-	* tao/GIOPC.h:
-	* tao/GIOPC.cpp:
-	* tao/GIOPC.i: Some new data types that have been added to GIOP
-	  1.2. They have their own name space GIOP and should not create a
-	  problem for the CORBA namespace.
+        * tao/GIOP1_2.pidl (GIOP ):
+        * tao/GIOPC.h:
+        * tao/GIOPC.cpp:
+        * tao/GIOPC.i: Some new data types that have been added to GIOP
+          1.2. They have their own name space GIOP and should not create a
+          problem for the CORBA namespace.
 
-	* tao/Makefile: Added GIOPC.cpp to the list of files and also
-	  updated the dependencies.
+        * tao/Makefile: Added GIOPC.cpp to the list of files and also
+          updated the dependencies.
 
 Sun Dec  5 14:43:42 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
-	* orbsvcs/orbsvcs/IR_Helper.cpp:
-	* utils/catior/catior.cpp:
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+        * orbsvcs/orbsvcs/IR_Helper.cpp:
+        * utils/catior/catior.cpp:
           Removed last uses of the TAO_IOP_TAG enums, thanks to Bala and
-	  Darrell for pointing this out.
+          Darrell for pointing this out.
 
 Sat Dec  4 17:19:43 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/fe/fe_interface_header.cpp:
-	  Added missing variable initialization that was causing
-	  bogus name clash errors. Thanks to Darrell for reporting
-	  this bug.
+        * TAO_IDL/fe/fe_interface_header.cpp:
+          Added missing variable initialization that was causing
+          bogus name clash errors. Thanks to Darrell for reporting
+          this bug.
 
 Sat Dec  4 17:18:59 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/Makefile:
+        * tao/Makefile:
 
-	  Updated dependencies.
+          Updated dependencies.
 
 Sat Dec  4 16:36:57 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* performance-tests/RTCorba/Oneways/Reliable/client.cpp:
-	* performance-tests/RTCorba/Oneways/Reliable/server.cpp:
-	  Added code to explicitly set the current thread's priority
-	  to the computed value, once RT priority class scheduling
-	  is enabled. Removed some unused variables to avoid kai
-	  and IRIX warnings.
+        * performance-tests/RTCorba/Oneways/Reliable/client.cpp:
+        * performance-tests/RTCorba/Oneways/Reliable/server.cpp:
+          Added code to explicitly set the current thread's priority
+          to the computed value, once RT priority class scheduling
+          is enabled. Removed some unused variables to avoid kai
+          and IRIX warnings.
 
-	  In the client, added code (commented out for now) to aid in
-	  making a histogram of the latency timings.
+          In the client, added code (commented out for now) to aid in
+          making a histogram of the latency timings.
 
 Sat Dec  4 16:38:26 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/ORB.h:
-	  Fixed broken throw spec that went undetected in the last
-	  commit.
+        * tao/ORB.h:
+          Fixed broken throw spec that went undetected in the last
+          commit.
 
 Sat Dec  4 15:57:36 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* docs/compiler.html:
-	  As far as i know, and i tried this out, the -Gt option is
-	  working now (Andy fixed this long time ago). I updated the
-	  documentation because it was listed as not implemented.
+        * docs/compiler.html:
+          As far as i know, and i tried this out, the -Gt option is
+          working now (Andy fixed this long time ago). I updated the
+          documentation because it was listed as not implemented.
 
 Sat Dec  4 15:47:55 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 

@@ -12,11 +12,13 @@
 #  if "clean" is specified as a parameter, then the old
 #  services are only killed and not restarted.
 
+usage="Usage: $0 [-s, to start Scheduling Service] | [clean]"
+
 #### ps options are platform-specific.
 if [ `uname -s` = 'SunOS' ]; then
   ps_opts=-ef
 else
-  ps_opts=aux
+  ps_opts=auxw
 fi
 
 #### Get the user name
@@ -41,9 +43,8 @@ fi
 #### Set up a signal handler.
 trap "/bin/rm -f /tmp/pids$login" 0 1 2 3 15
 
-echo // Killing the old services
-
 if [ -s /tmp/nameservicepid_$login ]; then
+  echo // Killing the old services
   kill `cat /tmp/nameservicepid_$login`
   /bin/rm /tmp/nameserviceior_$login /tmp/nameservicepid_$login
 fi
@@ -55,9 +56,15 @@ if [ -s /tmp/pids$login ]; then
   kill $pids
 fi
 
-#### stop here if "start_services clean" was called
-if [ "$1"  -a  "$1" = 'clean' ]; then
-  exit
+start_scheduling_service=0
+if [ "$1" ]; then
+  #### Stop here if "start_services clean" was called
+
+  case $1 in
+    '-?'  ) echo $usage; exit 0 ;;
+    clean ) exit 0 ;;
+    -s    ) start_scheduling_service=1 ;;
+  esac
 fi
 
 echo // Initializing the log file
@@ -80,13 +87,14 @@ echo // The IOR of the Naming Service: $IOR
 
 echo // Started Naming Service on port $nameserviceport
 
-# cd $TAO_ROOT/orbsvcs/Scheduling_Service
-#echo $ ./Scheduling_Service -ORBInitRef NameService=$IOR  >> /tmp/logfile_$login
-#./Scheduling_Service -ORBInitRef NameService=$IOR > /tmp/logfile_Scheduling_Service_$login  2>&1 &
+if [ $start_scheduling_service -eq 1 ]; then
+  cd $TAO_ROOT/orbsvcs/Scheduling_Service
+  echo $ ./Scheduling_Service -ORBInitRef NameService=$IOR  >> /tmp/logfile_$login
+  ./Scheduling_Service -ORBInitRef NameService=$IOR > /tmp/logfile_Scheduling_Service_$login  2>&1 &
+  sleep 5
 
-# sleep 5
-
-# echo // Started Scheduling Service on port $schedulerserviceport
+  echo // Started Scheduling Service on port $schedulerserviceport
+fi
 
 cd $TAO_ROOT/orbsvcs/Event_Service
 echo $ ./Event_Service -ORBInitRef NameService=$IOR >> /tmp/logfile_$login
