@@ -1,3 +1,9 @@
+Fri Oct 06 11:34:26 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/Based_Pointer_T.cpp:
+        * ace/Select_Reactor_T.cpp: Added #include "ace/Log_Msg.h" else IBM
+          C++ can't compile the template at instantiation time.
+
 Wed Oct 04 12:23:34 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/RMCast/RMCast_Copy_On_Write.h:
