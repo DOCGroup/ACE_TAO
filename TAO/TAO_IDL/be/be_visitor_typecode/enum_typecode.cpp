@@ -53,7 +53,7 @@ TAO::be_visitor_enum_typecode::visit_enum (be_enum * node)
   os
     << "static TAO::TypeCode::Enum<char const *," << be_nl
     << "                           TAO::TypeCode::Enumerator<char const *> const *," << be_nl
-    << "                           TAO::Null_RefCount_Policy> const"
+    << "                           TAO::Null_RefCount_Policy>"
     << be_idt_nl
     << "_tao_tc_" << node->flat_name () << " (" << be_idt_nl
     << "\"" << node->repoID () << "\"," << be_nl

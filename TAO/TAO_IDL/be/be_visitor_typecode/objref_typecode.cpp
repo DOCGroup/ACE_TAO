@@ -76,7 +76,7 @@ TAO::be_visitor_objref_typecode::visit_i (char const * kind,
   os
     << "static TAO::TypeCode::Objref<char const *," << be_nl
     << "                             CORBA::tk_" << kind << "," << be_nl
-    << "                             TAO::Null_RefCount_Policy> const"
+    << "                             TAO::Null_RefCount_Policy>"
     << be_idt_nl
     << "_tao_tc_" << flat_name << " (" << be_idt_nl
     << "\"" << repository_id << "\"," << be_nl

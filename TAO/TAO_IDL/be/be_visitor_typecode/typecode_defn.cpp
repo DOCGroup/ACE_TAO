@@ -756,7 +756,7 @@ be_visitor_typecode_defn::visit_sequence (be_sequence * node)
     }
 
   // Generate the TypeCode instantiation.
-  os << "static TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy> const"
+  os << "static TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>"
      << be_idt_nl
      << "_tao_tc_"
 //      << node->flat_name () << "_" << node->max_size()
@@ -793,7 +793,7 @@ be_visitor_typecode_defn::visit_string (be_string * node)
 
   // Generate the TypeCode instantiation.
   os
-    << "static TAO::TypeCode::String<TAO::Null_RefCount_Policy> const"
+    << "static TAO::TypeCode::String<TAO::Null_RefCount_Policy>"
     << be_idt_nl
     << "_tao_tc_" << node->flat_name () << " (" << be_idt_nl
     << "CORBA::tk_" << (node->width () == 1 ? "string" : "wstring") << ","

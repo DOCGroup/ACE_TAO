@@ -1424,6 +1424,12 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
       this->client_header_
     );
 
+  this->gen_cond_file_include (
+      idl_global->any_seen_
+      | idl_global->typecode_seen_,
+      "tao/TypeCode_Constants.h",
+      this->client_header_);
+
   // This is true if we have an 'any' in the IDL file.
   // If not included here, it will appear in *C.cpp, if Anys not suppressed.
   this->gen_cond_file_include (
