@@ -406,11 +406,11 @@
 
 #define ACE_OSCALL_RETURN(X,TYPE,FAILVALUE) \
   do \
-    return static_cast< TYPE > (X); \
+    return (TYPE) (X); \
   while (0)
 #define ACE_OSCALL(X,TYPE,FAILVALUE,RESULT) \
   do \
-    RESULT = static_cast< TYPE > (X); \
+    RESULT = (TYPE) (X); \
   while (0)
 
 #if defined (ACE_WIN32)

@@ -1,3 +1,13 @@
+Wed Jun 23 17:31:29 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/config-lite.h: For ACE_OSCALL[_RETURN] macros, changed the
+	  static_cast back to a C-style cast. Not enough type information
+	  was known in all cases. Particularly, on HP-UX, the return value
+	  from shl_load() is a pointer to a struct, and the struct internals
+	  aren't known. This caused aC++ to refuse to do the static_cast.
+	  Also see:
+	  Mon Jun 21 13:37:57 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
 Wed Jun 23 11:25:23 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:
