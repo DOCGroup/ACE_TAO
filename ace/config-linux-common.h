@@ -323,7 +323,7 @@
 
 #define ACE_HAS_DIRENT
 
-#if defined (__ia64)
+#if defined (__ia64) || defined(__alpha)
 // On 64 bit platforms, the "long" type is 64-bits.  Override the
 // default 32-bit platform-specific format specifiers appropriately.
 # define ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%lu")
