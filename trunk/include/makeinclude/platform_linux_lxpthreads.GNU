@@ -31,7 +31,9 @@ SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 # needed by the service configurator).
 # Marius Kjeldahl <mariusk@sn.no, marius@funcom.com>
 ESOBUILD = $(COMPILEESO.cc) $(PIC) -shared -o $(VSHDIR)$*.so $<
-PRELIB  = @true
+ifndef PRELIB
+  PRELIB = @true
+endif
 
 #### as appears to have a string limit of about 4096 characters.
 #### Suppressing the -g for a few files helps.  It really only
