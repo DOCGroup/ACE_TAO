@@ -1,3 +1,14 @@
+Tue Feb 22 14:28:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/component_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+          Removed generation of ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
+
+        * tao/Messaging/*C.{h,cpp,inl}:
+        * tao/Messaging/*A.cpp:
+        * tao/Messaging/*S.{h,cpp,inl}:
+          Regenerated
+
 Tue Feb 22 13:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/*C.{h,cpp,inl}:
