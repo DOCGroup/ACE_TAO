@@ -1,7 +1,6 @@
 #include "Echo_Handler.h"
 #include "Client_ORBInitializer.h"
 #include "Client_Interceptor.h"
-#include "tao/Utils/Servant_Var.h"
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 
@@ -163,9 +162,10 @@ static void test_ami (Test::Echo_ptr echo
 {
   Test::AMI_EchoHandler_var echo_handler;
   {
-    TAO::Utils::Servant_Var<Echo_Handler> echo_handler_impl (
-        new Echo_Handler);
-    echo_handler = echo_handler_impl->_this(ACE_ENV_SINGLE_ARG_PARAMETER);
+    Echo_Handler * echo_handler_impl = new Echo_Handler;
+    PortableServer::ServantBase_var safe_echo_handler = echo_handler_impl;
+
+    echo_handler = echo_handler_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
   }
 
@@ -236,7 +236,9 @@ static void test_ami_errors (CORBA::ORB_ptr orb,
 
   Test::AMI_EchoHandler_var echo_handler;
   {
-    TAO::Utils::Servant_Var<Echo_Handler> echo_handler_impl (new Echo_Handler);
+    Echo_Handler * echo_handler_impl = new Echo_Handler;
+    PortableServer::ServantBase_var safe_echo_handler = echo_handler_impl;
+
     echo_handler = echo_handler_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
   }
