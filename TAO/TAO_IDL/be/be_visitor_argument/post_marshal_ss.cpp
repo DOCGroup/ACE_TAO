@@ -41,7 +41,6 @@ be_visitor_args_post_marshal_ss::~be_visitor_args_post_marshal_ss (void)
 
 int be_visitor_args_post_marshal_ss::visit_argument (be_argument *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
   this->ctx_->node (node); // save the argument node
 
   // retrieve the type
@@ -72,8 +71,6 @@ int be_visitor_args_post_marshal_ss::visit_argument (be_argument *node)
 
 int be_visitor_args_post_marshal_ss::visit_array (be_array *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
-
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
@@ -88,8 +85,6 @@ int be_visitor_args_post_marshal_ss::visit_array (be_array *node)
 
 int be_visitor_args_post_marshal_ss::visit_enum (be_enum *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
-
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
@@ -104,10 +99,6 @@ int be_visitor_args_post_marshal_ss::visit_enum (be_enum *node)
 
 int be_visitor_args_post_marshal_ss::visit_interface (be_interface *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
-                                                         // node
-
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
@@ -120,10 +111,6 @@ int be_visitor_args_post_marshal_ss::visit_interface (be_interface *node)
 
 int be_visitor_args_post_marshal_ss::visit_interface_fwd (be_interface_fwd *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
-                                                         // node
-
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
@@ -136,8 +123,6 @@ int be_visitor_args_post_marshal_ss::visit_interface_fwd (be_interface_fwd *node
 
 int be_visitor_args_post_marshal_ss::visit_predefined_type (be_predefined_type *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
-
   // check if the type is an any
   if (node->pt () == AST_PredefinedType::PT_any)
     {
@@ -181,8 +166,6 @@ int be_visitor_args_post_marshal_ss::visit_predefined_type (be_predefined_type *
 
 int be_visitor_args_post_marshal_ss::visit_sequence (be_sequence *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get the stream
-
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
@@ -197,8 +180,6 @@ int be_visitor_args_post_marshal_ss::visit_sequence (be_sequence *node)
 
 int be_visitor_args_post_marshal_ss::visit_string (be_string *)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get the stream
-
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
@@ -213,8 +194,6 @@ int be_visitor_args_post_marshal_ss::visit_string (be_string *)
 
 int be_visitor_args_post_marshal_ss::visit_structure (be_structure *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get the stream
-
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
@@ -229,8 +208,6 @@ int be_visitor_args_post_marshal_ss::visit_structure (be_structure *node)
 
 int be_visitor_args_post_marshal_ss::visit_union (be_union *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get the stream
-
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:

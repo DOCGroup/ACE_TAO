@@ -145,8 +145,6 @@ Logger_i::logv (const Logger::Log_Record &log_rec,
                Logger::Verbosity_Level verbosity,
                CORBA::Environment &TAO_IN_ENV)
 {
-  ACE_Time_Value temp (log_rec.time);
-
   // Create an <ACE_Log_Record> to leverage existing logging
   // code. Since Logger::Log_Priority enum tags don't cleanly map to
   // ACE_Log_Priority tags, <priority_conversion> is used to coerce

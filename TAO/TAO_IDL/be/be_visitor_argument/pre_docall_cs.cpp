@@ -322,23 +322,6 @@ be_visitor_args_pre_docall_cs::visit_sequence (be_sequence *node)
 int
 be_visitor_args_pre_docall_cs::visit_string (be_string *)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
-                                                         // node
-
-  switch (this->direction ())
-    {
-    case AST_Argument::dir_OUT:
-      // caller should have allocated the pointer
-      os->indent ();
-#if 0
-      *os << "char *&_tao_base_" << arg->local_name ()
-          << " = " << arg->local_name () << ".ptr ();\n";
-#endif
-      break;
-    default:
-      break;
-    }
   return 0;
 }
 

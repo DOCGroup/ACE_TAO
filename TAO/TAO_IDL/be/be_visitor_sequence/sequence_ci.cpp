@@ -92,7 +92,6 @@ be_visitor_sequence_ci::visit_sequence (be_sequence *node)
 int
 be_visitor_sequence_ci::instantiate_sequence (be_sequence *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
   be_type *bt;
 
   bt = be_type::narrow_from_decl (node->base_type ());
