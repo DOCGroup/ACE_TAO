@@ -29,7 +29,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // deployment plan URL
   ACE_TCHAR* plan_url = 0;
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("p:d:k:t"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("p:d:k:t:"));
   int c;
 
   while ((c = get_opt ()) != EOF)
@@ -117,8 +117,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      Deployment::ExecutionManager_var exec_mgr =
-        Deployment::ExecutionManager::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+      CIAO::ExecutionManagerDaemon_var exec_mgr =
+        CIAO::ExecutionManagerDaemon::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (exec_mgr.in ()))
@@ -196,14 +196,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Executor: destroy the manager....."));
       exec_mgr->destroyManager (dapp_mgr.in ());
-      //exec_mgr->shutdown ();
-
       ACE_DEBUG ((LM_DEBUG, "[success]\n"));
 
       if (node_daemon_ior != 0)
         {
           ACE_DEBUG ((LM_DEBUG, "shutting down node manager \n"));
+          exec_mgr->shutdown (); // shut down execution manager.
+          ACE_DEBUG ((LM_DEBUG, "[success]\n"));
+
+          ACE_DEBUG ((LM_DEBUG, "shutting down node manager \n"));
           node_mgr->shutdown (); // shut down the node manager.
+          ACE_DEBUG ((LM_DEBUG, "[success]\n"));
         }
 
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
