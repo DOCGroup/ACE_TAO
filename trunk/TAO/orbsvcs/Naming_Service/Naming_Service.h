@@ -16,13 +16,13 @@
 //
 // ============================================================================
 
-#if !defined (_NAMING_SERVICE_H)
-#define _NAMING_SERVICE_H
+#if !defined (TAO_NAMING_SERVICE_H)
+#define TAO_NAMING_SERVICE_H
 
 #include "tao/TAO.h"
 #include "orbsvcs/Naming/Naming_Utils.h"
 
-class Naming_Service
+class TAO_Naming_Service
 {
   // = TITLE
   //   Defines a class that encapsulates the implementation of the
@@ -30,21 +30,21 @@ class Naming_Service
   //
   // = DESCRIPTION
   //   This class makes use of the <TAO_Naming_Server> and
-  //   <TAO_ORB_Manager> class to implement the COS <Naming_Service>.
+  //   <TAO_ORB_Manager> class to implement the COS Naming Service.
 public:
-  Naming_Service (void);
+  TAO_Naming_Service (void);
   // Default Constructor.
 
-  Naming_Service (int argc, char *argv[]);
+  TAO_Naming_Service (int argc, char *argv[]);
   // Constructor taking the command-line arguments.
 
   int init (int argc, char *argv[]);
   // Initialize the Naming Service with the arguments.
 
   int run (CORBA_Environment& env);
-  // Run the Naming_Service.
+  // Run the TAO_Naming_Service.
 
-  ~Naming_Service (void);
+  ~TAO_Naming_Service (void);
   // Destructor.
 	
 private:
@@ -64,4 +64,4 @@ private:
   // File to output the process id.
 };
 
-#endif /* _NAMING_SERVICE_H */
+#endif /* TAO_NAMING_SERVICE_H */

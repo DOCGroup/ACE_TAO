@@ -22,7 +22,7 @@ ACE_RCSID(Naming_Service, Naming_Service, "$Id$")
 
 // Default Constructor.
 
-Naming_Service::Naming_Service (void)
+TAO_Naming_Service::TAO_Naming_Service (void)
   : ior_output_file_ (0),
     pid_file_name_ (0)
 {
@@ -30,7 +30,7 @@ Naming_Service::Naming_Service (void)
 
 // Constructor taking command-line arguments.
 
-Naming_Service::Naming_Service (int argc,
+TAO_Naming_Service::TAO_Naming_Service (int argc,
                                 char* argv[])
   : ior_output_file_ (0),
     pid_file_name_ (0)
@@ -39,7 +39,7 @@ Naming_Service::Naming_Service (int argc,
 }
 
 int
-Naming_Service::parse_args (int argc,
+TAO_Naming_Service::parse_args (int argc,
                             char *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "o:p:");
@@ -74,9 +74,9 @@ Naming_Service::parse_args (int argc,
   return 0;
 }
 
-// Initialize the state of the Naming_Service object
+// Initialize the state of the TAO_Naming_Service object
 int
-Naming_Service::init (int argc,
+TAO_Naming_Service::init (int argc,
                       char* argv[])
 {
   int result;
@@ -104,7 +104,7 @@ Naming_Service::init (int argc,
     }
   TAO_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("Naming_Service::init");
+      TAO_TRY_ENV.print_exception ("TAO_Naming_Service::init");
       return -1;
     }
   TAO_ENDTRY;
@@ -140,14 +140,14 @@ Naming_Service::init (int argc,
 // Run the ORB event loop
 
 int
-Naming_Service::run (CORBA_Environment& env)
+TAO_Naming_Service::run (CORBA_Environment& env)
 {
   return this->orb_manager_.run (env);
 }
 
 // Destructor.
 
-Naming_Service::~Naming_Service (void)
+TAO_Naming_Service::~TAO_Naming_Service (void)
 {
 }
 
@@ -156,10 +156,11 @@ main (int argc, char* argv[])
 {
   int init_result;
 
-  Naming_Service naming_service;
+  TAO_Naming_Service naming_service;
 
   init_result = naming_service.init (argc,argv);
-  if (init_result < 0)
+
+  if (init_result == -1)
     return init_result;
 
   TAO_TRY
