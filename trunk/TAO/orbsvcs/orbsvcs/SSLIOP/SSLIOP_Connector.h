@@ -93,7 +93,7 @@ class TAO_SSLIOP_Export TAO_SSLIOP_Connector : public TAO_IIOP_Connector
   //
 public:
   // = Initialization and termination methods.
-  TAO_SSLIOP_Connector (int default_is_ssl = 0);
+  TAO_SSLIOP_Connector (int no_protection);
   // Constructor.
 
   // = The TAO_Connector methods, please check the documentation on
@@ -102,7 +102,8 @@ public:
   virtual int close (void);
   virtual int connect (TAO_Endpoint *endpoint,
 		       TAO_Transport *&transport,
-		       ACE_Time_Value *max_wait_time);
+		       ACE_Time_Value *max_wait_time,
+                       CORBA::Environment &ACE_TRY_ENV);
   virtual TAO_Profile *create_profile (TAO_InputCDR& cdr);
 
 #if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
@@ -189,8 +190,9 @@ public:
         TAO_NULL_CREATION_STRATEGY;
 
 private:
-  int default_is_ssl_;
-  // If not zero it tries to use SSL by default.
+  int no_protection_;
+  // If zero, connect to IIOP over SSL port by default.
+  // Otherwise, connect to the insecure IIOP port.
 
   TAO_NULL_ACTIVATION_STRATEGY null_activation_strategy_;
   TAO_NULL_CREATION_STRATEGY null_creation_strategy_;

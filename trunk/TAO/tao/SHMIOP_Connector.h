@@ -105,7 +105,8 @@ public:
   int close (void);
   int connect (TAO_Endpoint *endpoint,
                TAO_Transport *&transport,
-               ACE_Time_Value *max_wait_time);
+               ACE_Time_Value *max_wait_time,
+               CORBA::Environment &ACE_TRY_ENV);
   int preconnect (const char *preconnections);
   TAO_Profile *create_profile (TAO_InputCDR& cdr);
 

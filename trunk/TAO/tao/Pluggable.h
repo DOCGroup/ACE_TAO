@@ -365,7 +365,8 @@ public:
 
   virtual int connect (TAO_Endpoint *endpoint,
                        TAO_Transport *&,
-                       ACE_Time_Value *max_wait_time) = 0;
+                       ACE_Time_Value *max_wait_time,
+					   CORBA::Environment &ACE_TRY_ENV) = 0;
   // To support pluggable we need to abstract away the connect()
   // method so it can be called from the GIOP code independant of the
   // actual transport protocol in use.

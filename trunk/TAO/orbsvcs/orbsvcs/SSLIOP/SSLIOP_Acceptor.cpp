@@ -45,7 +45,7 @@ template class TAO_Accept_Strategy<TAO_SSLIOP_Server_Connection_Handler, ACE_SSL
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-TAO_SSLIOP_Acceptor::TAO_SSLIOP_Acceptor (void)
+TAO_SSLIOP_Acceptor::TAO_SSLIOP_Acceptor (int support_no_protection)
   : TAO_IIOP_Acceptor (),
     ssl_acceptor_ (),
     creation_strategy_ (0),
@@ -60,20 +60,23 @@ TAO_SSLIOP_Acceptor::TAO_SSLIOP_Acceptor (void)
   ACE_SET_BITS (this->ssl_component_.target_requires,
                 Security::Integrity
                 | Security::Confidentiality
-                | Security::DetectReplay
-                | Security::DetectMisordering
                 | Security::NoDelegation);
 
   // SSLIOP supports these Security::AssociationOptions by default.
   ACE_SET_BITS (this->ssl_component_.target_supports,
                 Security::Integrity
                 | Security::Confidentiality
-                | Security::DetectReplay
-                | Security::DetectMisordering
+                | Security::EstablishTrustInTarget
                 | Security::NoDelegation);
 
   // Initialize the default SSL port to zero (wild card port).
   this->ssl_component_.port = 0;
+
+  // @@ This should go away once we support setting security
+  //    association options through policies.
+  if (support_no_protection)
+    ACE_SET_BITS (this->ssl_component_.target_supports,
+                  Security::NoProtection);
 }
 
 TAO_SSLIOP_Acceptor::~TAO_SSLIOP_Acceptor (void)
@@ -119,6 +122,14 @@ TAO_SSLIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
   for (size_t i = 0; i < this->endpoint_count_; ++i)
     {
       TAO_SSLIOP_Profile *pfile = 0;
+
+      // @@ We need to create an SSLIOP::SSL component for the object
+      //    we're creating an MProfile for.  This will allow us to
+      //    properly embed secure invocation policies in the generated
+      //    IOR, i.e. secure invocation policies on a per-object
+      //    basis, rather than on a per-endpoint basis.  If no secure
+      //    invocation policies have been set then we should use the
+      //    below default SSLIOP::SSL component.
       ACE_NEW_RETURN (pfile,
                       TAO_SSLIOP_Profile (this->hosts_[i],
                                           this->addrs_[i].get_port_number (),
@@ -126,7 +137,7 @@ TAO_SSLIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
                                           this->addrs_[i],
                                           this->version_,
                                           this->orb_core_,
-                                          this->ssl_component_.port),
+                                          &(this->ssl_component_)),
                       -1);
 
       if (mprofile.give_profile (pfile) == -1)
@@ -211,6 +222,13 @@ TAO_SSLIOP_Acceptor::create_rt_mprofile (const TAO_ObjectKey &object_key,
   // one.
   if (ssliop_profile == 0)
     {
+      // @@ We need to create an SSLIOP::SSL component for the object
+      //    we're creating an MProfile for.  This will allow us to
+      //    properly embed secure invocation policies in the generated
+      //    IOR, i.e. secure invocation policies on a per-object
+      //    basis, rather than on a per-endpoint basis.  If no secure
+      //    invocation policies have been set then we should use the
+      //    below default SSLIOP::SSL component.
       ACE_NEW_RETURN (ssliop_profile,
                       TAO_SSLIOP_Profile (this->hosts_[0],
                                           this->addrs_[0].get_port_number (),
@@ -218,7 +236,7 @@ TAO_SSLIOP_Acceptor::create_rt_mprofile (const TAO_ObjectKey &object_key,
                                           this->addrs_[0],
                                           this->version_,
                                           this->orb_core_,
-                                          this->ssl_component_.port),
+                                          &(this->ssl_component_)),
                       -1);
 
       TAO_SSLIOP_Endpoint *ssliop_endp =
@@ -278,7 +296,7 @@ TAO_SSLIOP_Acceptor::create_rt_mprofile (const TAO_ObjectKey &object_key,
           ssliop_profile->tagged_components ().set_component (component);
         }
 
-          index = 1;
+      index = 1;
     }
 
   // Add any remaining endpoints to the SSLIOP_Profile.
@@ -296,7 +314,7 @@ TAO_SSLIOP_Acceptor::create_rt_mprofile (const TAO_ObjectKey &object_key,
       iiop_endp->priority (this->priority_);
 
       ACE_NEW_RETURN (ssl_endp,
-                      TAO_SSLIOP_Endpoint (this->ssl_component_.port,
+                      TAO_SSLIOP_Endpoint (&(this->ssl_component_),
                                            iiop_endp),
                       -1);
 
@@ -345,6 +363,13 @@ TAO_SSLIOP_Acceptor::open (TAO_ORB_Core *orb_core,
                            const char *address,
                            const char *options)
 {
+  // Ensure that neither the endpoint configuration nor the ORB
+  // configuration violate security measures.
+  if (this->verify_secure_configuration (orb_core,
+                                         major,
+                                         minor) != 0)
+    return -1;
+
   // Open the non-SSL enabled endpoints, then open the SSL enabled
   // endpoints.
   if (this->TAO_IIOP_Acceptor::open (orb_core,
@@ -368,6 +393,13 @@ TAO_SSLIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
                                    int minor,
                                    const char *options)
 {
+  // Ensure that neither the endpoint configuration nor the ORB
+  // configuration violate security measures.
+  if (this->verify_secure_configuration (orb_core,
+                                         major,
+                                         minor) != 0)
+    return -1;
+
   // Open the non-SSL enabled endpoints, then open the SSL enabled
   // endpoints.
   if (this->TAO_IIOP_Acceptor::open_default (orb_core,
@@ -587,6 +619,54 @@ TAO_SSLIOP_Acceptor::parse_options (const char *str)
                               -1);
         }
     }
+  return 0;
+}
+
+int
+TAO_SSLIOP_Acceptor::verify_secure_configuration (TAO_ORB_Core *orb_core,
+                                                  int major,
+                                                  int minor)
+{
+  // Sanity check.
+  if (major < 1)
+    {
+      // There is no such thing as IIOP 0.x.
+      errno = EINVAL;
+      return -1;
+    }
+
+  // In order to support a secure connection, the SSLIOP::SSL tagged
+  // component must be embedded in the IOR.  This isn't possible if
+  // the user elects to disable standard profile components.
+  // Similarly, IIOP 1.0 does not support tagged components, which it
+  // makes it impossible to embed the SSLIOP::SSL tagged component
+  // within the IOR.  If the given object explicitly disallows
+  // insecure invocations and standard profile components are
+  // disabled, then return with an error since secure invocations
+  // cannot be supported without standard profile components.
+  //
+  // Note that it isn't enough to support NoProtection.  NoProtection
+  // must be required since "support" does not preclude the secure
+  // port from being used.
+
+  if ((orb_core->orb_params ()->std_profile_components () == 0
+       || (major == 1 && minor == 0))
+      && ACE_BIT_DISABLED (this->ssl_component_.target_requires,
+                           Security::NoProtection))
+    {
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%P|%t) Cannot support secure ")
+                    ACE_TEXT ("IIOP over SSL connection if\n")
+                    ACE_TEXT ("(%P|%t) standard profile ")
+                    ACE_TEXT ("components are disabled\n")
+                    ACE_TEXT ("(%P|%t) or IIOP 1.0 endpoint is ")
+                    ACE_TEXT ("used.\n")));
+
+      errno = EINVAL;
+      return -1;
+    }
+
   return 0;
 }
 

@@ -47,7 +47,7 @@ class TAO_SSLIOP_Export TAO_SSLIOP_Acceptor : public TAO_IIOP_Acceptor
   //   The SSLIOP-specific bridge class for the concrete acceptor.
   //
 public:
-  TAO_SSLIOP_Acceptor (void);
+  TAO_SSLIOP_Acceptor (int support_no_protection);
   // Constructor.
 
   ~TAO_SSLIOP_Acceptor (void);
@@ -88,6 +88,12 @@ private:
   // version of <create_mprofile> method adds all endpoints to a
   // single SSLIOP profile, i.e., <mprofile> will not contain more than
   // one SSLIOP_Profile, no matter how many acceptors there are.
+
+  int verify_secure_configuration (TAO_ORB_Core *orb_core,
+                                   int major,
+                                   int minor);
+  // Ensure that neither the endpoint configuration nor the ORB
+  // configuration violate security measures.
 
 private:
   TAO_SSLIOP_BASE_ACCEPTOR ssl_acceptor_;

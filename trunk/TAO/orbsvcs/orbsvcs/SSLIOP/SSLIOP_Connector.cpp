@@ -350,9 +350,9 @@ typedef ACE_Cached_Connect_Strategy<TAO_SSLIOP_Client_Connection_Handler,
         TAO_CACHED_CONNECT_STRATEGY;
 #endif /* ! TAO_USES_ROBUST_CONNECTION_MGMT */
 
-TAO_SSLIOP_Connector::TAO_SSLIOP_Connector (int default_is_ssl)
+TAO_SSLIOP_Connector::TAO_SSLIOP_Connector (int no_protection)
   : TAO_IIOP_Connector (),
-    default_is_ssl_ (default_is_ssl),
+    no_protection_ (no_protection),
     base_connector_ ()
 #if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
     ,
@@ -453,7 +453,8 @@ TAO_SSLIOP_Connector::close (void)
 int
 TAO_SSLIOP_Connector::connect (TAO_Endpoint *endpoint,
                                TAO_Transport *&transport,
-                               ACE_Time_Value *max_wait_time)
+                               ACE_Time_Value *max_wait_time,
+                               CORBA::Environment &ACE_TRY_ENV)
 {
   if (endpoint->tag () != TAO_TAG_IIOP_PROFILE)
     return -1;
@@ -462,15 +463,59 @@ TAO_SSLIOP_Connector::connect (TAO_Endpoint *endpoint,
     ACE_dynamic_cast (TAO_SSLIOP_Endpoint *,
                       endpoint);
   if (endpoint == 0)
-    return -1;
+    return -1;  
+
+  const SSLIOP::SSL &ssl_component = ssl_endpoint->ssl_component ();
 
   // @@ Use the policies to decide if SSL is the right protocol...
-  if (!this->default_is_ssl_
-      || ssl_endpoint->ssl_port () == 0)
-    return this->TAO_IIOP_Connector::connect
-      (ssl_endpoint->iiop_endpoint (),
-       transport,
-       max_wait_time);
+  if (this->no_protection_)
+    {
+      // Only allow connection to the insecure IIOP port if the
+      // endpoint explicitly allows it, i.e. if the
+      // Security::NoProtection security association bit is set in the
+      // SSLIOP::SSL::target_supports field.  The server performs the
+      // same permission check, so this check is an optimization since
+      // a connection will not be established needlessly,
+      // i.e. rejected due to lack of permission.
+      //
+      // Note that it is still possible for the standard non-SSLIOP
+      // aware IIOP pluggable protocol to attempt to connect to the
+      // insecure port.  In that case, the server will have to prevent
+      // the connection, and subsequently the request, from
+      // completing.
+      if (ACE_BIT_DISABLED (ssl_component.target_supports,
+                            Security::NoProtection))
+        ACE_THROW_RETURN (CORBA::NO_PERMISSION (
+                            CORBA_SystemException::_tao_minor_code (
+                              TAO_DEFAULT_MINOR_CODE,
+                              EPERM),
+                            CORBA::COMPLETED_NO),
+                          -1);
+
+      return this->TAO_IIOP_Connector::connect (
+                     ssl_endpoint->iiop_endpoint (),
+                     transport,
+                     max_wait_time,
+                     ACE_TRY_ENV);
+    }
+
+  // @@ The following check for "required insecurity" seems odd, but
+  //    I haven't seen anything in the Security spec that says this
+  //    policy isn't possible.
+  //      -Ossama
+
+  // If the endpoint requires an insecure connection, i.e. the
+  // Security::NoProtection security association bit in the
+  // SSLIOP::SSL::target_requires field is enabled, then prevent an
+  // SSL connection from occuring.
+  if (ACE_BIT_ENABLED (ssl_component.target_requires,
+                       Security::NoProtection))
+    ACE_THROW_RETURN (CORBA::NO_PERMISSION (
+                        CORBA_SystemException::_tao_minor_code (
+                          TAO_DEFAULT_MINOR_CODE,
+                          EPERM),
+                        CORBA::COMPLETED_NO),
+                      -1);
 
   ACE_INET_Addr remote_address =
     ssl_endpoint->iiop_endpoint ()->object_addr ();
@@ -483,7 +528,7 @@ TAO_SSLIOP_Connector::connect (TAO_Endpoint *endpoint,
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) IIOP connection failed.\n")
+                      ACE_TEXT ("TAO (%P|%t) SSLIOP connection failed.\n")
                       ACE_TEXT ("TAO (%P|%t) This is most likely ")
                       ACE_TEXT ("due to a hostname lookup ")
                       ACE_TEXT ("failure.\n")));
@@ -492,7 +537,7 @@ TAO_SSLIOP_Connector::connect (TAO_Endpoint *endpoint,
       return -1;
     }
 
-  remote_address.set_port_number (ssl_endpoint->ssl_port ());
+  remote_address.set_port_number (ssl_component.port);
 
   TAO_SSLIOP_Client_Connection_Handler *svc_handler = 0;
   int result = 0;
@@ -528,14 +573,15 @@ TAO_SSLIOP_Connector::connect (TAO_Endpoint *endpoint,
       if (TAO_orbdebug)
         {
           char buffer [MAXHOSTNAMELEN + 6 + 1];
-          endpoint->addr_to_string (buffer,
+          ssl_endpoint->addr_to_string (buffer,
                                     sizeof (buffer) - 1);
           ACE_DEBUG ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) %s:%u, connection to ")
-                      ACE_TEXT ("%s failed (%p)\n"),
+                      ACE_TEXT ("%s, SSL port %d failed (%p)\n"),
                       __FILE__,
                       __LINE__,
                       buffer,
+                      remote_address.get_port_number (),
                       ACE_TEXT ("errno")));
         }
       return -1;

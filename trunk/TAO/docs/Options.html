@@ -217,24 +217,10 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
         TAO_DEFAULT_NAME_SERVICE_REQUEST_PORT, which is 10013 is used.</TD>
   </TR>
   <TR>
-    <TD><CODE>-ORBNameServiceIOR</CODE> <EM>ior</EM></TD>
-    <TD>Specifies the IOR for the Naming Service.  Note, this option
-        is deprecated since its functionality can be achieved with the
-        standard <CODE>-ORBInitRef</CODE> option defined by the <A
-        HREF="INS.html">Interoperable Naming Service</A>. </TD>
-  </TR>
-  <TR>
     <TD><CODE>-ORBTradingServicePort</CODE> <EM>portspec</EM></TD>
     <TD>Specifies to which port the Trading Service is listening on for
         multicast requests. By default,
         TAO_DEFAULT_TRADING_SERVICE_REQUEST_PORT which is 10016 is used.</TD>
-  </TR>
-  <TR>
-    <TD><CODE>-ORBTradingServiceIOR</CODE> <EM>ior</EM></TD>
-    <TD>Specifies the IOR for the Trading Service.    Note, this option
-        is deprecated since its functionality can be achieved with the
-        standard <CODE>-ORBInitRef</CODE> option defined by the <A
-        HREF="INS.html">Interoperable Naming Service</A>.</TD>
   </TR>
   <TR>
     <TD><CODE>-ORBImplRepoServicePort</CODE> <EM>portspec</EM></TD>
@@ -244,13 +230,6 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
         be used.</TD>
   </TR>
   <TR>
-    <TD><CODE>-ORBImplRepoServiceIOR</CODE> <EM>ior</EM></TD>
-    <TD>Specifies the IOR for the Implementation Repository.      Note, this option
-        is deprecated since its functionality can be achieved with the
-        standard <CODE>-ORBInitRef</CODE> option defined by the <A
-        HREF="INS.html">Interoperable Naming Service</A>.</TD>
-  </TR>
-    <TR>
     <TD><CODE>-ORBMulticastDiscoveryEndpoint</CODE> <EM>end_point</EM></TD>
     <TD>Specifies the endpoint that should be used for locating the
         Naming Service through multicast. <EM>end_point</EM> is of the
@@ -297,6 +276,14 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
         <CODE>-ORBEndpoint</CODE> option.
         <P>
         This is a client-side option.
+	<P>
+	<FONT COLOR=RED>-ORBPreconnect is <STRONG>deprecated</STRONG>.
+	The Real-Time CORBA standard
+	<CODE>validate_connection()</CODE> method should be used
+	instead.  See the section on <I>Implicit &amp; Explicit
+	Binding</I> in TAO's
+	<A HREF="releasenotes/RTCorba.html">Real-Time CORBA release
+        notes</A>.  This option will be removed in the near future.
     </TD>
   </TR>
   <TR>
