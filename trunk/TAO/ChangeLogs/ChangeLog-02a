@@ -1,19 +1,26 @@
+Fri Sep  1 08:18:27 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/DomainC.h:
+        * tao/DomainC.cpp:
+          The ConstructionP{olicy interceptors must be disabled if there
+          is no support for the interface repository.
+
 Fri Sep  1 00:21:41 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Notify/Notify_Default_Collection_Factory.cpp:
-	  Added missing template instantiation code to fix compile errors
-	  on SunCC5.
-	
+        * orbsvcs/orbsvcs/Notify/Notify_Default_Collection_Factory.cpp:
+          Added missing template instantiation code to fix compile errors
+          on SunCC5.
+
 Thu Sep 01 00:15:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	*  tests/Portable_Interceptors/Benchmark/interceptors.cpp:
-	*  tests/Portable_Interceptors/Dynamic/interceptors.cpp:
-	   Changed dynamic_cast to <_tao_QueryInterface> for casting
-	   TAO specifc RequestInfo from
-	   PortableInterceptor::ClientRequestInfo and
-	   PortableInterceptor::ServerRequestInfo. Thanks to Carlos and
-	   David for brainstorming on this issue.
-		
+        *  tests/Portable_Interceptors/Benchmark/interceptors.cpp:
+        *  tests/Portable_Interceptors/Dynamic/interceptors.cpp:
+           Changed dynamic_cast to <_tao_QueryInterface> for casting
+           TAO specifc RequestInfo from
+           PortableInterceptor::ClientRequestInfo and
+           PortableInterceptor::ServerRequestInfo. Thanks to Carlos and
+           David for brainstorming on this issue.
+
 Thu Aug 31 16:31:04 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * Merge the pluggable_poa change, the long description of the

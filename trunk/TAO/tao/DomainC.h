@@ -348,7 +348,8 @@ protected:
 private:
   CORBA_ConstructionPolicy (const CORBA_ConstructionPolicy &);
   void operator= (const CORBA_ConstructionPolicy &);
-#if (TAO_HAS_INTERCEPTORS == 1)
+#if (TAO_HAS_INTERCEPTORS == 1) && (TAO_HAS_INTERACE_REPOSITORY == 1)
+
     // Generation of interceptors related RequestInfo classes per operation.
   // This needed to be able to store the arguments, exceptiosn, constexts
   // and build the lists dynamically on demand so that unnecessary time overhead
@@ -388,7 +389,7 @@ IR_InterfaceDef* & object_type_;
 CORBA::Boolean & constr_policy_;
 };
 
-#endif /* TAO_HAS_INTERCEPTORS */
+#endif /* TAO_HAS_INTERCEPTORS && TAO_HAS_INTERACE_REPOSITORY */
 
 };
 
