@@ -1146,6 +1146,7 @@ sub check_for_non_bool_operators ()
         if (open (FILE, $file)) {
             print "Looking at file $file\n" if $opt_d;
             my $found_bool = 0;
+            my $found_return_type = 0;
             while (<FILE>) {
                 ++$line;
 
@@ -1155,11 +1156,11 @@ sub check_for_non_bool_operators ()
                     next;
                   }
 
-		if ($found_return_type == 0 && /((^\w+)|(\s+\w+))\s*$/)
-		  {
-		    $found_return_type = 1;
-		    next;
-		  }
+                if ($found_return_type == 0 && /((^\w+)|(\s+\w+))\s*$/)
+                  {
+                    $found_return_type = 1;
+                    next;
+                  }
 
                 if ($found_return_type == 1 && $found_bool == 0
                     && /(?<![^\w]bool)(\s+|\w+::)operator\s*(?:!|<|<=|>|>=|==|!=|&&|\|\|)\s*\(/
@@ -1167,7 +1168,7 @@ sub check_for_non_bool_operators ()
                     print_error ("non-bool return type for operator in $file on line $line");
                 }
 
-		$found_return_type = 0;
+                $found_return_type = 0;
                 $found_bool = 0;
             }
             close (FILE);
