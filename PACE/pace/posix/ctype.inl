@@ -105,4 +105,3 @@ pace_toupper (int c)
 {
   return toupper (c);
 }
-

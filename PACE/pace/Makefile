@@ -42,6 +42,7 @@ VPATH:=common:arpa:config:netinet:sys
 # Solaris is POSIX - change this when the platform directories get
 # squared away
 #ifeq ($(PACE_SYSNAME),SunOS || $(PACE_SYSNAME),Linux)
+
 ifeq ($(PACE_SYSNAME),SunOS)
 VPATH :=.:posix:$(VPATH)
 CFLAGS += -DPACE_SUNOS
@@ -94,7 +95,7 @@ PACE_FILES = \
   wait
 ARPA_FILES = \
   arpa/inet
-CONFIG_FILES = 
+CONFIG_FILES =
 NETINET_FILES = \
   netinet/in
 SYS_FILES = \

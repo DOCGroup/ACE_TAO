@@ -16,48 +16,6 @@
 #include <string.h>
 
 PACE_INLINE
-void *
-pace_memccpy (void * s1, const void * s2, int c, size_t n)
-{
-  return memccpy (s1, s2, c, n);
-}
-
-PACE_INLINE
-const void *
-pace_memchr (const void * s, int c, size_t n)
-{
-  return memchr (s, c, n);
-}
-
-PACE_INLINE
-int
-pace_memcmp (const void * s1, const void * s2, size_t n)
-{
-  return memcmp (s1, s2, n);
-}
-
-PACE_INLINE
-void *
-pace_memcpy (void * s1, const void * s2, size_t n)
-{
-  return memcpy (s1, s2, n);
-}
-
-PACE_INLINE
-void *
-pace_memmove (void * s1, const void * s2, size_t n)
-{
-  return memmove (s1, s2, n);
-}
-
-PACE_INLINE
-void *
-pace_memset (void * s, int c, size_t n)
-{
-  return memset (s, c, n);
-}
-
-PACE_INLINE
 char *
 pace_strcat (char * s1, const char * s2)
 {
@@ -128,13 +86,6 @@ pace_strspn (const char * s1, const char * s2)
 }
 
 PACE_INLINE
-char *
-pace_strdup (const char * s1)
-{
-  return strdup (s1);
-}
-
-PACE_INLINE
 size_t
 pace_strlen (const char * s)
 {
@@ -168,10 +119,8 @@ pace_strtok_r (char * s, const char * sep, char ** lasts)
 {
 # if defined (PACE_HAS_REENTRANT)
   return strtok_r (s, sep, lasts);
-# else  /* !PACE_HAS_REENTRANT */
-  PACE_SET_ERRNO (PACE_ERRNO_LACKS_POSIX_C_SOURCE);
+# else  /* ! PACE_HAS_REENTRANT */
+  PACE_ERRNO_NO_SUPPORT ();
   return 0;
-# endif /* !PACE_HAS_REENTRANT */
+# endif /* ! PACE_HAS_REENTRANT */
 }
-
-

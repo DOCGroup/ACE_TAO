@@ -94,12 +94,12 @@ PACE_INLINE
 void
 pace_flockfile (FILE * file)
 {
-# if defined (PACE_HAS_REENTRANT)
+#if defined (PACE_HAS_REENTRANT)
   flockfile (file);
-# else /* !PACE_HAS_REENTRANT */
+#else /* ! PACE_HAS_REENTRANT */
   PACE_UNUSED_ARG (file);
-  PACE_SET_ERRNO (PACE_ERRNO_LACKS_REENTRANT);
-# endif /* !PACE_HAS_REENTRANT */
+  PACE_ERRNO_NO_SUPPORT ();
+#endif /* ! PACE_HAS_REENTRANT */
   return;
 }
 
@@ -166,17 +166,6 @@ pace_fseek (FILE * stream,
 }
 
 PACE_INLINE
-int
-pace_fseeko (FILE * stream,
-             pace_off_t offset,
-             int whence)
-{
-  return fseeko (stream,
-                 offset,
-                 whence);
-}
-
-PACE_INLINE
 long
 pace_ftell (FILE * stream)
 {
@@ -184,48 +173,28 @@ pace_ftell (FILE * stream)
 }
 
 PACE_INLINE
-pace_off_t
-pace_ftello (FILE * stream)
-{
-  return ftello (stream);
-}
-
-PACE_INLINE
 int
 pace_ftrylockfile (FILE * file)
 {
-# if defined (PACE_HAS_REENTRANT)
+#if defined (PACE_HAS_REENTRANT)
   return ftrylockfile (file);
-# else /* !PACE_HAS_REENTRANT */
+#else /* ! PACE_HAS_REENTRANT */
   PACE_UNUSED_ARG(file);
-  PACE_RETURN_NO_SUPPORT (PACE_ERRNO_LACKS_REENTRANT);
-# endif /* !PACE_HAS_REENTRANT */
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
+#endif /* ! PACE_HAS_REENTRANT */
 }
 
 PACE_INLINE
 void
 pace_funlockfile (FILE * file)
 {
-# if defined (PACE_HAS_REENTRANT)
+#if defined (PACE_HAS_REENTRANT)
   funlockfile (file);
-# else /* !PACE_HAS_REENTRANT */
+#else /* ! PACE_HAS_REENTRANT */
   PACE_UNUSED_ARG(file);
-  /*PACE_RETURN_NO_SUPPORT (PACE_ERRNO_LACKS_REENTRANT);*/
-# endif /* !PACE_HAS_REENTRANT */
+  PACE_ERRNO_NO_SUPPORT ();
+#endif /* ! PACE_HAS_REENTRANT */
   return;
-}
-
-PACE_INLINE
-size_t
-pace_fwrite (const void * ptr,
-             size_t size,
-             size_t number_of_items,
-             FILE * stream)
-{
-  return fwrite (ptr,
-                 size,
-                 number_of_items,
-                 stream);
 }
 
 PACE_INLINE
@@ -239,12 +208,12 @@ PACE_INLINE
 int
 pace_getc_unlocked (FILE * stream)
 {
-# if defined (PACE_HAS_REENTRANT)
+#if defined (PACE_HAS_REENTRANT)
   return getc_unlocked (stream);
-# else /* !PACE_HAS_POSIX */
+#else /* ! PACE_HAS_POSIX */
   PACE_UNUSED_ARG(stream);
-  PACE_RETURN_NO_SUPPORT (PACE_ERRNO_LACKS_REENTRANT);
-# endif /* !PACE_HAS_POSIX */
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
+#endif /* ! PACE_HAS_POSIX */
 }
 
 PACE_INLINE
@@ -258,11 +227,11 @@ PACE_INLINE
 int
 pace_getchar_unlocked ()
 {
-# if defined (PACE_HAS_REENTRANT)
+#if defined (PACE_HAS_REENTRANT)
   return getchar_unlocked ();
-# else /* !PACE_HAS_REENTRANT */
-  PACE_RETURN_NO_SUPPORT (PACE_ERRNO_LACKS_REENTRANT);
-# endif /* !PACE_HAS_REENTRANT */
+#else /* ! PACE_HAS_REENTRANT */
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
+#endif /* ! PACE_HAS_REENTRANT */
 }
 
 PACE_INLINE
@@ -270,13 +239,6 @@ char *
 pace_gets (char * s)
 {
   return gets (s);
-}
-
-PACE_INLINE
-int
-pace_getw (FILE * stream)
-{
-  return getw (stream);
 }
 
 PACE_INLINE
@@ -300,14 +262,13 @@ int
 pace_putc_unlocked (int c,
                     FILE * stream)
 {
-# if defined (PACE_HAS_REENTRANT)
-  return putc_unlocked (c,
-                        stream);
-# else /* !PACE_HAS_REENTRANT */
+#if defined (PACE_HAS_REENTRANT)
+  return putc_unlocked (c, stream);
+#else /* ! PACE_HAS_REENTRANT */
   PACE_UNUSED_ARG(c);
   PACE_UNUSED_ARG(stream);
-  PACE_RETURN_NO_SUPPORT (PACE_ERRNO_LACKS_REENTRANT);
-# endif /* !PACE_HAS_REENTRANT */
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
+#endif /* ! PACE_HAS_REENTRANT */
 }
 
 PACE_INLINE
@@ -321,12 +282,12 @@ PACE_INLINE
 int
 pace_putchar_unlocked (int c)
 {
-# if defined (PACE_HAS_REENTRANT)
+#if defined (PACE_HAS_REENTRANT)
   return putchar_unlocked (c);
-# else /* !PACE_HAS_REENTRANT */
+#else /* ! PACE_HAS_REENTRANT */
   PACE_UNUSED_ARG(c);
-  PACE_RETURN_NO_SUPPORT (PACE_ERRNO_LACKS_REENTRANT);
-# endif /* !PACE_HAS_REENTRANT */
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
+#endif /* ! PACE_HAS_REENTRANT */
 }
 
 PACE_INLINE
@@ -334,15 +295,6 @@ int
 pace_puts (const char * s)
 {
   return puts (s);
-}
-
-PACE_INLINE
-int
-pace_putw (int w,
-           FILE * stream)
-{
-  return putw (w,
-               stream);
 }
 
 PACE_INLINE
