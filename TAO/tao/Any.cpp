@@ -22,7 +22,7 @@ Any_Basic_Impl_T<CORBA::LongLong>::create_empty (
     CORBA::TypeCode_ptr tc
   )
 {
-  CORBA::LongLong zero = ACE_CDR_LONGLONG_INITIALIZER;
+  const CORBA::LongLong zero = ACE_CDR_LONGLONG_INITIALIZER;
   Any_Basic_Impl_T<CORBA::LongLong> * retval = 0;
   ACE_NEW_RETURN (retval,
                   Any_Basic_Impl_T<CORBA::LongLong> (tc,
@@ -37,7 +37,7 @@ Any_Basic_Impl_T<CORBA::LongDouble>::create_empty (
     CORBA::TypeCode_ptr tc
   )
 {
-  CORBA::LongDouble zero = ACE_CDR_LONG_DOUBLE_INITIALIZER;
+  const CORBA::LongDouble zero = ACE_CDR_LONG_DOUBLE_INITIALIZER;
   Any_Basic_Impl_T<CORBA::LongDouble> * retval = 0;
   ACE_NEW_RETURN (retval,
                   Any_Basic_Impl_T<CORBA::LongDouble> (tc,
