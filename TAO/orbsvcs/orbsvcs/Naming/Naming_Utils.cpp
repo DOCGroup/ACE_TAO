@@ -142,7 +142,7 @@ int
 TAO_Naming_Server::parse_args (int argc,
                                ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_LIB_TEXT("b:do:p:s:f:m:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_LIB_TEXT("b:do:p:s:f:m:u:"));
 
   int c;
   int size, result;
