@@ -1,3 +1,9 @@
+Mon Jun 22 04:49:29 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* man/windex: Removed ACE_Service_Record from all the
+	  documentation since it is no longer relevant.  Thanks
+	  to Ivan Murphy for reporting this.	
+
 Mon Jun 22 02:59:42 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Process.cpp (setenv_i): Nedd to adjust the memory size to
