@@ -75,6 +75,14 @@ CORBA::String
 Cubit_Factory_i::create_cubit (CORBA::UShort orb_index, 
 			       CORBA::Environment &env)
 {
+  // if out of range, return a nil string.
+  if (orb_index >= num_of_objs_)
+    {
+      env.clear ();
+      env.exception (new CORBA::BAD_PARAM (CORBA::COMPLETED_NO));
+      return 0;
+    }
+
   ACE_DEBUG ((LM_DEBUG, 
 	      "(%P|%t) ior returned is [%d]:<%s>\n", 
 	      orb_index, 
