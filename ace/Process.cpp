@@ -236,6 +236,10 @@ ACE_Process::spawn (ACE_Process_Options &options)
   // Fork the new process.
   this->child_id_ = ACE_OS::fork (options.command_line_argv ()[0]);
 
+  // If we're not supposed to exec, return the process id.
+  if (ACE_BIT_ENABLED (options.creation_flags (), ACE_Process_Options::NO_EXEC))
+    return this->child_id_;
+
   switch (this->child_id_)
     {
     case -1:
@@ -316,10 +320,10 @@ ACE_Process::wait (const ACE_Time_Value &tv)
 ACE_Process_Options::ACE_Process_Options (int ie,
 					  int cobl)
   : inherit_environment_ (ie),
+    creation_flags_ (0),
 #if defined (ACE_WIN32)
     environment_inherited_ (0),
     handle_inheritence_ (TRUE),
-    creation_flags_ (0),
     process_attributes_ (NULL),
     thread_attributes_ (NULL),
 #else /* ACE_WIN32 */

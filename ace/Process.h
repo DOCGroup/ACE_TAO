@@ -28,7 +28,12 @@ class ACE_Export ACE_Process_Options
   //    and <exec>).
 {
 public:
-  enum { DEFAULT_COMMAND_LINE_BUF_LEN = 1024 };
+  enum 
+  { 
+    DEFAULT_COMMAND_LINE_BUF_LEN = 1024,
+    // UNIX process creation flags.
+    NO_EXEC = 1
+  };
 
   ACE_Process_Options (int inherit_environment = 1,
 		       int command_line_buf_len = DEFAULT_COMMAND_LINE_BUF_LEN);
@@ -83,6 +88,11 @@ public:
   int command_line (LPTSTR argv[]);
   // Same as above in argv format.  <argv> must be null terminated.
 
+  u_long creation_flags (void) const;
+  // Get.
+  void creation_flags (u_long);
+  // Set.
+
   // ************************************************************
   // = These operations are used by ACE_Process to retrieve options
   // values.
@@ -102,11 +112,6 @@ public:
 
 #if defined (ACE_WIN32)
   // = Non-portable accessors for when you "just have to use them."
-
-  u_long creation_flags (void) const;
-  // Get.
-  void creation_flags (u_long);
-  // Set.
 
   STARTUPINFO *startup_info (void);
   // Used for setting and getting.
@@ -163,6 +168,9 @@ protected:
   // Whether the child process inherits the current process
   // environment.
 
+  u_long creation_flags_;
+  // Default 0.
+
 #if defined (ACE_WIN32)
   void inherit_environment (void);
   // Helper function to grab win32 environment and stick it in
@@ -175,9 +183,6 @@ protected:
 
   BOOL handle_inheritence_;
   // Default TRUE.
-
-  u_long creation_flags_;
-  // Default 0.
 
   LPSECURITY_ATTRIBUTES process_attributes_;
   // Pointer to security_buf1_.
