@@ -10,7 +10,7 @@
 //
 // = DESCRIPTION
 //      This test exercises the <ACE_Asynch_Timer_Queue_Adapter> 
-//      using an <ACE_Timer_List>.
+//      using an <ACE_Timer_Heap>.
 //
 // = AUTHORS
 //    Douglas C. Schmidt
@@ -18,7 +18,7 @@
 // ============================================================================
 
 #include "ace/Signal.h"
-#include "ace/Timer_List.h"
+#include "ace/Timer_Heap.h"
 
 class Timer_Handler : public ACE_Event_Handler
   // = TITLE
@@ -77,8 +77,8 @@ private:
   static Async_Timer_Queue *instance_;
   // Pointer to the timer queue.
 
-  ACE_Async_Timer_Queue_Adapter<ACE_Timer_List> tq_;
-  // The adapter is instantiated by an <ACE_Timer_List>.
+  ACE_Async_Timer_Queue_Adapter<ACE_Timer_Heap> tq_;
+  // The adapter is instantiated by an <ACE_Timer_Heap>.
 };
 
 // Initialize the Singleton pointer.
@@ -119,7 +119,7 @@ Async_Timer_Queue::dump (void)
   // This iterator is implicitly protected since SIGINT and SIGALRM
   // signals cannot occur while it is running.
 
-  for (ACE_Timer_List_Iterator iter (this->tq_.timer_queue ());
+  for (ACE_Timer_Heap_Iterator iter (this->tq_.timer_queue ());
        iter.item () != 0;
        iter.next ())
     iter.item ()->dump ();
@@ -278,7 +278,7 @@ main (int, char *[])
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Async_Timer_Queue_Adapter<ACE_Timer_List>;
+template class ACE_Async_Timer_Queue_Adapter<ACE_Timer_Heap>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Async_Timer_Queue_Adapter<ACE_Timer_List>
+#pragma instantiate ACE_Async_Timer_Queue_Adapter<ACE_Timer_Heap>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
