@@ -1,3 +1,12 @@
+Sat Dec 27 23:40:41 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/FT_ClientORB.bor:
+	* orbsvcs/orbsvcs/FT_ServerORB.bor:
+	* orbsvcs/orbsvcs/Makefile.bor:
+
+	  Blind folded effort to fix some of the problems in the daily
+	  builds with borland.
+
 Sat Dec 27 16:15:57 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 	* TAO_IDL/be/be_codegen.cpp:

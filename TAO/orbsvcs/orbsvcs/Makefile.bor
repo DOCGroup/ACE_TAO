@@ -23,10 +23,10 @@ MAKEFILES = \
    CosLifeCycle.bor \
    CosTime.bor \
    DsLogAdmin.bor \
-   PortableGroup.bor \
    FTORB_Utils.bor \
    FT_ServerORB.bor \
    FT_ClientORB.bor \
+   PortableGroup.bor \
    FaultTolerance.bor \
    CosLoadBalancing.bor \
    IFRService.bor \
