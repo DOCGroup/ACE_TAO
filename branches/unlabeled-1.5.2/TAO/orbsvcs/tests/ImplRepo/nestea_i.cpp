@@ -60,7 +60,7 @@ Nestea_i::crush (CORBA::Long cans,
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "Nestea_i::crush %d cans\n", cans));
 
-  if (cans > this->cans_)
+  if (ACE_static_cast (ACE_UINT32, cans) > this->cans_)
     this->cans_ = 0;
   else
     this->cans_ -= cans;
