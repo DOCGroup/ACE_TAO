@@ -98,6 +98,12 @@ TAO_LoadBalancing_ReplicationManager_i::register_load_monitor (
                                     location_entry) != 0)
         ACE_THROW (CORBA::INTERNAL ());  // @@ Pick a better (user?)
                                          //    exception.
+
+      // No longer need to protect the location entry.
+      (void) safe_location_entry.release ();
+
+      location_entry->load_monitor =
+        LoadBalancing::LoadMonitor::_duplicate (load_monitor);
     }
   else if (CORBA::is_nil (location_entry->load_monitor.in ()))
     {

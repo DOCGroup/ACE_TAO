@@ -348,8 +348,10 @@ TAO_LB_GenericFactory::populate_object_group (
 
       replica_info->location_entry = location_entry;
 
-      // No longer need to protect the allocated Replica_Map.
-      safe_replica_info.release ();
+      // No longer need to protect the allocated Replica_Info or the
+      // Location map entry.
+      (void) safe_replica_info.release ();
+      (void) safe_location_entry.release ();
     }
 }
 
