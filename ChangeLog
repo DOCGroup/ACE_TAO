@@ -1,3 +1,36 @@
+Thu Nov  6 07:46:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ARGV.h:
+          Define a private copy constructor and assignment operator. The
+          compiler generated versions will not work correctly so prevent
+          copying of an instance.
+
+        * config-win32.h:
+          Moved the check for __BORLANDC__ above the check for _MSC_VER. The
+          preview Borland compilers defines both, but we must include in that
+          case the Borland config file.
+
+        * Connector.{h,cpp}:
+          Moved include of Handle_Set.h from cpp to h file. We really need
+          it in the header file.
+
+        * config-all.h:
+          Because ACE_OS is now a namespace we encountered a problem with the
+          Borland compilers. In ACE_OS::fclose() we did call ::fclose() but
+          the Borland compiler now gives an ambiguity between ACE_OS::fclose()
+          and std::fclose(). To fix this we added ACE_STD_NAMESPACE which
+          is set to std when ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB is defined
+          to 1. In other cases we let ACE_STD_NAMESPACE be nothing. In
+          ACE_OS::fclose() we program now ACE_STD_NAMESPACE::fclose() so that
+          when using Borland this expands to std::fclose(), in other cases to
+          ::fclose().
+
+        * OS_NS_stdio.inl:
+        * OS_NS_time.cpp:
+        * OS_NS_time.inl:
+        * OS_NS_wchar.inl:
+          Use ACE_STD_NAMESPACE for the method which appear in ACE_OS and std
+
 Wed Nov  5 05:33:44 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ACEXML/common/FileCharStream.cpp:
