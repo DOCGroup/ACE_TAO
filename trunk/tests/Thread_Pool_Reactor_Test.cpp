@@ -39,7 +39,6 @@
 // ============================================================================
 
 #include "tests/test_config.h"
-#include "tests/Thread_Pool_Reactor_Test.h"
 #include "ace/Get_Opt.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Acceptor.h"
@@ -57,6 +56,8 @@ USELIB("..\ace\aced.lib");
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
 #if defined (ACE_HAS_THREADS)
+
+#include "tests/Thread_Pool_Reactor_Test.h"
 
 static ASYS_TCHAR *rendezvous = ASYS_TEXT ("localhost:10010");
 static size_t svr_thrno = ACE_MAX_THREADS;
