@@ -1,3 +1,23 @@
+Fri Aug 25 12:12:40 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/OS.h:
+        * ace/OS.i:
+        * ace/OS.cpp:
+        * ace/Log_Msg.h:
+        * ace/Log_Msg.cpp:
+        * ace/config-all.h:
+          I removed the direct cyclic dependency between the OS layer and
+          Log_Msg.  The OS layer does not use Log_Msg anymore, but it does
+          use parts of ACE_Thread_Manager so there is some work left to
+          do.
+          There was a semantic change involved: the Win32 exception
+          handlers used to be TSS, now they are global.  There was not a
+          real use case for that feature.  Users that enable
+          ACE_HAS_ONLY_LATEST_AND_GREATEST will not get the TSS version of
+          the functions, I think it is better to make the change visible
+          than hide it behind a seemingly compatible interface that
+          actually breaks at run-time.
+
 Fri Aug 25 14:29:27 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/Select_Reactor_T.h: Added new method, is_suspended_i (ACE_HANDLE)
