@@ -57,7 +57,6 @@ void ServantGenerator::generate (TranslationUnitPtr const& u)
 
 
   ProvidedInterfaceCollector provides (declarations);
-  //  Traversal::InterfaceDecl provides (&i);
 
   ComponentCollector component (declarations);
   component.add_scope_delegate (&provides);

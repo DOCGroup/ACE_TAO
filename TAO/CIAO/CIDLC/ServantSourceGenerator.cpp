@@ -21,7 +21,7 @@ namespace
   std::string
   servant_name (DeclarationPtr const& d)
   {
-    std::stringstream os;
+    std::ostringstream os;
     os << "::CIAO_GLUE";
 
     if (d->scope ()->dynamic_type<IDL2::SyntaxTree::FileScope> () == 0)
@@ -2559,12 +2559,12 @@ namespace
   };
 }
 
+// ===========================================================
+
 SourceEmitterBase::SourceEmitterBase (ostream& os_)
   : os (os_)
 {
 }
-
-// ===========================================================
 
 ServantSourceEmitter::ServantSourceEmitter (
   ostream& os_,

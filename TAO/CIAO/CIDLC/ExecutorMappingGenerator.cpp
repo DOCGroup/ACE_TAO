@@ -171,7 +171,7 @@ namespace
           h->table ().exist (expl) ||
           h->table ().exist (impl)) return;
 
-      if(declarations_.add (h))
+      if (declarations_.add (h))
       {
         // Note that I don't go after components that inherited home manages
         // because it will be handled by component inheritance tree.
@@ -207,7 +207,7 @@ namespace
       if (c->table ().exist (context) ||
           c->table ().exist (monolith)) return;
 
-      if(declarations_.add (c))
+      if (declarations_.add (c))
       {
         if (c->inherits ())
         {

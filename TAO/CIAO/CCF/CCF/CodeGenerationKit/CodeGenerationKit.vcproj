@@ -141,6 +141,9 @@
 				RelativePath=".\IndentationImplanter.hpp">
 			</File>
 			<File
+				RelativePath=".\IndentationXML.hpp">
+			</File>
+			<File
 				RelativePath=".\Regex.hpp">
 			</File>
 		</Filter>
