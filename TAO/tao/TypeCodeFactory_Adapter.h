@@ -30,7 +30,7 @@ namespace CORBA
   class StructMemberSeq;
   class UnionMemberSeq;
   class ValueMemberSeq;
-};
+}
 
 /**
  * @class TAO_TypeCodeFactory_Adapter
