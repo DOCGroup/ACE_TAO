@@ -9,7 +9,7 @@ unshift @INC, '../../../bin';
 require Process;
 require ACEutils;
 
-print STDERR "\n\n==== Octet sequence passing test\n";
+print STDERR "\n\n==== Running interceptor test\n";
 
 $file="test.ior";
 
