@@ -39,24 +39,27 @@ TAO_BasicLogFactory_i::activate (PortableServer::POA_ptr poa
 DsLogAdmin::BasicLog_ptr
 TAO_BasicLogFactory_i::create (DsLogAdmin::LogFullActionType full_action,
                                CORBA::ULongLong max_rec_size,
-                               DsLogAdmin::LogId_out id
+                               DsLogAdmin::LogId_out id_out
                                ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    DsLogAdmin::InvalidLogFullAction
                    ))
 {
-  // Get an id for this Log.
-  this->max_id_++;
+  DsLogAdmin::LogId id;
+
+  // Get an unique/unused id for this Log.
+  while (hash_map_.find ((id = this->next_id_++)) == 0)
+    ;
 
   DsLogAdmin::BasicLog_ptr basiclog =
-    this->create_with_id (this->max_id_,
+    this->create_with_id (id,
                           full_action,
                           max_rec_size
                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsLogAdmin::BasicLog::_nil ());
 
   // Set the id to return..
-  id = this->max_id_;
+  id_out = id;
 
   return basiclog;
 }

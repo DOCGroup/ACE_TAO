@@ -83,8 +83,9 @@ protected:
   /// The map of Logs created.
   HASHMAP hash_map_;
 
-  /// The Max id assigned so far.
-  DsLogAdmin::LogId max_id_;
+  /// The next log id to be assigned (if it hasn't already been
+  /// taken by create_by_id().
+  DsLogAdmin::LogId next_id_;
 };
 
 #include /**/ "ace/post.h"
