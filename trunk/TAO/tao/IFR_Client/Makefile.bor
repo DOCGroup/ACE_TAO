@@ -22,7 +22,6 @@ INCLUDES = \
 	*.h *.i
 
 LIBFILES = \
-        $(TAO_DOMAIN_LIB) \
 	$(TAO_LIB) \
 	$(ACE_LIB)
 
