@@ -33,6 +33,14 @@ extern "C"
 }
 #endif
 
+TAO_Marshal_Factory* TAO_Marshal::DEFAULT_MARSHAL_FACTORY = 0;
+
+void
+TAO_Marshal::initialize (void)
+{
+  DEFAULT_MARSHAL_FACTORY = TAO_MARSHAL_FACTORY::instance();
+}
+
 // cosntructor for the factory
 TAO_Marshal_Factory::TAO_Marshal_Factory (void)
 #if 0
@@ -153,10 +161,8 @@ TAO_Marshal_Object* TAO_Marshal_Factory::make_marshal_object (CORBA_TypeCode_ptr
 }
 #endif
 
-// define a default factory
-TAO_Marshal_Factory *TAO_DEFAULT_MARSHAL_FACTORY = TAO_MARSHAL_FACTORY::instance ();
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Singleton<TAO_Marshal_Factory, ACE_SYNCH_MUTEX>;
 template class ACE_Singleton<TAO_Marshal_Primitive, ACE_SYNCH_MUTEX>;
 template class ACE_Singleton<TAO_Marshal_Any, ACE_SYNCH_MUTEX>;
@@ -171,4 +177,19 @@ template class ACE_Singleton<TAO_Marshal_Array, ACE_SYNCH_MUTEX>;
 template class ACE_Singleton<TAO_Marshal_Alias, ACE_SYNCH_MUTEX>;
 template class ACE_Singleton<TAO_Marshal_Except, ACE_SYNCH_MUTEX>;
 template class ACE_Singleton<TAO_Marshal_WString, ACE_SYNCH_MUTEX>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Singleton<TAO_Marshal_Factory, ACE_SYNCH_MUTEX>;
+#pragma instantiate ACE_Singleton<TAO_Marshal_Primitive, ACE_SYNCH_MUTEX>;
+#pragma instantiate ACE_Singleton<TAO_Marshal_Any, ACE_SYNCH_MUTEX>;
+#pragma instantiate ACE_Singleton<TAO_Marshal_TypeCode, ACE_SYNCH_MUTEX>;
+#pragma instantiate ACE_Singleton<TAO_Marshal_Principal, ACE_SYNCH_MUTEX>;
+#pragma instantiate ACE_Singleton<TAO_Marshal_ObjRef, ACE_SYNCH_MUTEX>;
+#pragma instantiate ACE_Singleton<TAO_Marshal_Struct, ACE_SYNCH_MUTEX>;
+#pragma instantiate ACE_Singleton<TAO_Marshal_Union, ACE_SYNCH_MUTEX>;
+#pragma instantiate ACE_Singleton<TAO_Marshal_String, ACE_SYNCH_MUTEX>;
+#pragma instantiate ACE_Singleton<TAO_Marshal_Sequence, ACE_SYNCH_MUTEX>;
+#pragma instantiate ACE_Singleton<TAO_Marshal_Array, ACE_SYNCH_MUTEX>;
+#pragma instantiate ACE_Singleton<TAO_Marshal_Alias, ACE_SYNCH_MUTEX>;
+#pragma instantiate ACE_Singleton<TAO_Marshal_Except, ACE_SYNCH_MUTEX>;
+#pragma instantiate ACE_Singleton<TAO_Marshal_WString, ACE_SYNCH_MUTEX>;
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

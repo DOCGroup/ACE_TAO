@@ -1363,8 +1363,21 @@ GIOP::incoming_message (ACE_SOCK_Stream &peer,
   return retval;
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class CORBA_SEQUENCE<GIOP::ServiceContext>;
 template class CORBA_SEQUENCE<CORBA_Octet>;
 template class CORBA_SEQUENCE<CORBA_TypeCode*>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ...
+#pragma instantiate CORBA_SEQUENCE<GIOP::ServiceContext>;
+#pragma instantiate CORBA_SEQUENCE<CORBA_Octet>;
+#pragma instantiate CORBA_SEQUENCE<CORBA_TypeCode*>;
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#if 0
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ...
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ...
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 #endif

@@ -102,9 +102,15 @@ private:
 typedef ACE_Singleton<TAO_Marshal_Factory, ACE_SYNCH_MUTEX> 
 	TAO_MARSHAL_FACTORY;
 
-// Define a default marshal factory to be used by the interpretive
-// marshaling engine.
-extern TAO_Marshal_Factory *TAO_DEFAULT_MARSHAL_FACTORY;
+class TAO_Marshal
+// = TITLE
+//    Namespace in which to put otherwise "global" methods like initialize, etc.
+{
+public:
+  static void initialize (void);
+
+  static TAO_Marshal_Factory* DEFAULT_MARSHAL_FACTORY;
+};
 
 class TAO_Marshal_Object
 {
