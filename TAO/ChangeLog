@@ -1,3 +1,13 @@
+Fri Oct 17 21:17:03 UTC 2003 Kevin Bryan <bryank@cs.uri.edu>
+    * orbsvcs/tests/RTCosScheduling/README
+    * orbsvcs/tests/RTCosScheduling/RTCosScheduling_Client.dsp
+    * orbsvcs/tests/RTCosScheduling/RTCosScheduling_Client_Static.dsp
+    * orbsvcs/tests/RTCosScheduling/RTCosScheduling_Server.dsp
+    * orbsvcs/tests/RTCosScheduling/RTCosScheduling_Server_Static.dsp
+    * orbsvcs/tests/RTCosScheduling/run_test.pl:
+    Fixed the Windows files so all the include and library directories are
+    there.  Update the README file.  Fixed a small bug in the run_test.pl.
+
 Fri Oct 17 12:32:53 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
         * CEC_DynamicImplementation.cpp
