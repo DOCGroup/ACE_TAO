@@ -13,11 +13,9 @@
 #include "tao/TAO_Internal.h"
 #include "tao/Timeprobe.h"
 
-#if 0
 #if !defined (__ACE_INLINE__)
 # include "tao/ORB.i"
 #endif /* ! __ACE_INLINE__ */
-#endif
 
 // COM's IUnknown support
 
@@ -101,6 +99,16 @@ CORBA_ORB::open (void)
   ocp->orb_params ()->addr (ocp->addr ());
 
   return 0;
+}
+
+void
+CORBA_ORB::shutdown (CORBA::Boolean wait_for_completion)
+{
+  ACE_UNUSED_ARG (wait_for_completion);
+
+  this->should_shutdown_ = CORBA::B_TRUE;
+  TAO_ORB_Core_instance ()->reactor ()->wakeup_all_threads ();
+  return;
 }
 
 ULONG
