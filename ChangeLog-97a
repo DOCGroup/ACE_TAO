@@ -1,3 +1,8 @@
+Fri Feb 28 12:13:09 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/OS.h: fixed definition of ACE_TIMER_SKEW.  Thanks
+	  to Chuck Gehr <gehr@sweng.stortek.com> for pointing this out.
+
 Fri Feb 28 02:22:33 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/config-mvs.h: Added #define ACE_LACKS_TCP_H for MVS.  Thanks
