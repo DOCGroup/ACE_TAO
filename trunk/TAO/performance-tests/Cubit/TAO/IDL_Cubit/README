@@ -21,9 +21,9 @@ NOTES: The IDL_Cubit server used to run a Naming Service so the client
         the factory IOR between the server and the client.
 
 server:
--------
+=======
 
-% server [-ORBendpoint <endpoint>]
+% server [-ORBEndpoint <endpoint>]
          [-d] [-o <ior_output_file>]
 
 Options:
@@ -48,17 +48,37 @@ Using -d turns on debugging messages.  It is additive, i.e., the more
 silently ignored.
 
 client:
--------
+=======
 
-% client [-d] [-x] <-f cubit_factory_ior_file> <-k cubit_factory_ior>  -n <iterations>
+% client [client options]
 
-Options:
--------
+IDL_Cubit Client Options:
+-------------------------
 -d      Debug flag
 -x      Tells the server to shutdown.
 -f      Reads the cubit factory IOR from the file
 -k      Reads the cubit factory IOR from commandline
 -n      no. of iterations
+-t      Enable a test   (see below for a list of valid tests)
+-z      Disable a test  (see below for a list of valid tests)
+
+Valid IDL_Cubit test arguments are:
+
+        void
+        octet
+        short
+        long
+        struct
+        union
+        small_octet_seq
+        small_long_seq
+        small_struct_seq
+        large_octet_seq
+        large_long_seq
+        large_struct_seq
+        mixin
+        rti_data
+        one_way
 
 The following are the three ways of giving the CubitFactory IOR to the
 client:
@@ -77,7 +97,7 @@ collocation_test:
         This test demonstrates how collocation optimization improve
 performance of collocated objects.  Run the test without any argument
 to see results with collocation optimization.  Run it with
-<-ORBcollocation no> to perform the same test without the
+<-ORBCollocation no> to perform the same test without the
 optimization.  Notice that the executable of collocation_test is
 generated in the subdirectory ./collocation/.
 
@@ -105,7 +125,7 @@ Sample Run, Using files to communicate IOR:
 
 1. Start the server.
 
-% server -ORBendpoint iiop://tango:20000 -ORBobjrefstyle url -o theior
+% server -ORBEndpoint iiop://tango:20000 -ORBObjRefStyle URL -o theior
 
         IDL_Cubit:SERVER
 
@@ -126,7 +146,7 @@ Factory received OK
 Sample Run, passing the IOR on the command line, on VxWorks:
 ------------------------------------------------------------
     -> ld < server
-    -> spa main, "-ORBobjrefstyle", "url"
+    -> spa main, "-ORBObjRefStyle", "URL"
             IDL_Cubit: server
 
     The IOR is: <iiop://1.0@samba:1028/U/child_poa/factory>
@@ -177,14 +197,14 @@ for ALL.
 
 server:
 ------
-$rsh host_name arun path_to_server -o path_to_ior_file -ORBdotteddecimaladdresses 1 <server_options>
+$rsh host_name arun path_to_server -o path_to_ior_file -ORBDottedDecimalAddresses 1 <server_options>
 
 You DONT have to use -ORBdotteddecimaladdresses 1 if you have
 TAO_USE_DOTTED_DECIMAL_ADDRESSES defined in your config.h file.
 
 e.g.,
 $rsh tambora1 arun /IDL_Cubit/server  -o /ior
--ORBdotteddecimaladdresses 1 -ORBobjrefstyle url
+-ORBDottedDecimalAddresses 1 -ORBObjRefStyle URL
 
 client:
 -------
