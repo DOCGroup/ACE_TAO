@@ -1,3 +1,8 @@
+Sun Feb 18 16:28:45 2001  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * examples/Simulator/DOVEBrowser/NS_Resolve.java: removed
+          dependency on com.infoglide package.
+
 Sun Feb 18 14:28:44 2001  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Naming/Naming_Context_Interface.h:

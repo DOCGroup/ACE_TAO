@@ -348,6 +348,13 @@ public:
   /// Return reverse iterator positioned at first node in tree.
   ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> rend (void);
 
+  /// Recursively tests the invariant red-black properties at each
+  /// node of the tree.  Returns 0 if invariant holds, else -1.
+  /// This method is computationally expensive, and should only be
+  /// called for testing purposes, and not in code that depends on the
+  /// algorithmic complexity bounds provided by the other methods.
+  int test_invariant (void);
+
   // = DEPRECATED methods.
   //   Please migrate your code to use the new methods instead
 
@@ -386,10 +393,6 @@ public:
   /// Destroys all nodes and sets the root pointer null.
   /// @deprecated
   void clear (void);
-
-  /// Recursively tests the invariant red-black properties at each
-  /// node of the tree.  Returns 0 if invariant holds, else -1.
-  int test_invariant (void);
 
 protected:
 
@@ -439,7 +442,8 @@ protected:
    * RIGHT if the node is to the right of the node to be inserted,
    * or EXACT if an exactly matching node already exists.
    */
-  ACE_RB_Tree_Node<EXT_ID, INT_ID> *find_node (const EXT_ID &k, RB_SearchResult &result);
+  ACE_RB_Tree_Node<EXT_ID, INT_ID> *find_node (const EXT_ID &k,
+                                               RB_SearchResult &result);
 
   /// Rebalance the tree after insertion of a node.
   void RB_rebalance (ACE_RB_Tree_Node<EXT_ID, INT_ID> * x);
