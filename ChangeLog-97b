@@ -1,3 +1,9 @@
+Mon Nov 10 18:11:05 1997  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
+
+	* ace/Singleton.h (ACE_TSS_Singleton): Changed ACE_TSS<TYPE> to
+	ACE_TSS_TYPE (TYPE), so that the ACE_TSS_TYPE macro (defined in
+	OS.h) gets used. (Irfan's suggestion.)
+
 Mon Nov 10 17:02:40 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/OS.h: Reformatted the #ifdef structure of the
