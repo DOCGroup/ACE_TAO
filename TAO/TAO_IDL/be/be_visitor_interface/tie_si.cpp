@@ -95,11 +95,6 @@ be_visitor_interface_tie_si::visit_interface (be_interface *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  if (node->is_nested ())
-    {
-      *os << "#if defined (ACE_HAS_USING_KEYWORD)" << be_nl << be_nl;
-    }
-
   *os << "template <class T> ACE_INLINE" << be_nl
       << fulltiename << "<T>::" << localtiename << " (T &t)" << be_nl
       << "\t: ptr_ (&t)," << be_nl
@@ -208,11 +203,6 @@ be_visitor_interface_tie_si::visit_interface (be_interface *node)
                          "visit_interface - "
                          "traversal of inhertance graph failed\n"),
                         -1);
-    }
-
-  if (node->is_nested ())
-    {
-      *os << "\n\n#endif /* ACE_HAS_USING_KEYWORD */";
     }
 
   return 0;
