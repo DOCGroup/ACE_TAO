@@ -1,5 +1,23 @@
-Fri Dec 19 17:16:52 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+Fri Dec 19 18:49:26 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/IOStream_T.i: Enhanced ACE_IOStream and its companions as
+   	  follows:
+
+          - ACE_Streambuf_T<> now distinguishes recv() timeout failure from
+            a "real" stream failure
+
+          - ACE_IOStream::eof() honors the streambuf's recv_timeout() value
+            and returns FALSE if the eof() check fails on timeout.
+
+          - IOStream_Test.cpp tests the streambuf timeout via the stream eof()
+            and retrys if possible.
+
+	  Thanks to James Johnson <jcej@lads.com> for these fixes.
+
+	* ace/Log_Record.i: Removed a no-op assignment to Time_Value 
+	  in the encode() method.    Thanks to Patrick J. McNerthney
+ 	  <pat@thememedia.com> for reporting this.
+	  
 	* ace/Log_Record.i: The time stamp put into the ACE_Log_Record
 	  gets all messed up when the ACE_Log_Record is transmitted to the
 	  Server_Logging_Handler and the client is run on a little-endian
