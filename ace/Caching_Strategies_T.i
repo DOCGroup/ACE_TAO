@@ -1,6 +1,114 @@
 /* -*-C++-*- */
 //$Id$
 
+//////////////////////////////////////////////////////////////////////////////////
+
+template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY, class IMPLEMENTATION>
+ACE_Caching_Strategy_Adapter<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY, IMPLEMENTATION>::ACE_Caching_Strategy_Adapter (IMPLEMENTATION *implementation,
+                                                                                                                                         int delete_implementation)
+  : implementation_ (implementation),
+    delete_implementation_ (delete_implementation)
+{
+  if (this->implementation_ == 0)
+    {
+      ACE_NEW (this->implementation_,
+               IMPLEMENTATION);
+      this->delete_implemenation_ = 1;
+    }
+}
+
+template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY, class IMPLEMENTATION>
+ACE_Caching_Strategy_Adapter<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY, IMPLEMENTATION>::~ACE_Caching_Strategy_Adapter (void)
+{
+  if (this->delete_implementation_)
+    delete this->implementation_;
+}
+
+template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY, class IMPLEMENTATION> int
+ACE_Caching_Strategy_Adapter<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY, IMPLEMENTATION>::open (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_s,
+                                                                                                                 int delete_cleanup_strategy,
+                                                                                                                 CACHING_STRATEGY_UTILITY *utility_s,
+                                                                                                                 int delete_caching_strategy_utility)
+{
+  return this->implementation_->open (cleanup_s,
+                                      delete_cleanup_strategy,
+                                      utility_s,
+                                      delete_caching_strategy_utility);
+}
+
+template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY, class IMPLEMENTATION> ATTRIBUTES
+ACE_Caching_Strategy_Adapter<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY, IMPLEMENTATION>::attributes (void)
+{
+  return this->implementation_->attributes ();
+}
+
+template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY, class IMPLEMENTATION> double
+ACE_Caching_Strategy_Adapter<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY, IMPLEMENTATION>::purge_percent (void)
+{
+  return this->implementation_->purge_percent ();
+}
+
+template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY, class IMPLEMENTATION> void
+ACE_Caching_Strategy_Adapter<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY, IMPLEMENTATION>::purge_percent (double percentage)
+{
+  return this->implementation_->purge_percent (percentage);
+}
+
+
+template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY, class IMPLEMENTATION> int
+ACE_Caching_Strategy_Adapter<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY, IMPLEMENTATION>::notify_bind (int result,
+                                                                                                                        const ATTRIBUTES &attr)
+{
+  return this->implementation_->notify_bind (result,
+                                             attr);
+}
+
+template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY, class IMPLEMENTATION> int
+ACE_Caching_Strategy_Adapter<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY, IMPLEMENTATION>::notify_find (int result,
+                                                                                                                        ATTRIBUTES &attr)
+{
+  return this->implementation_->notify_find (result,
+                                             attr);
+}
+
+template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY, class IMPLEMENTATION> int
+ACE_Caching_Strategy_Adapter<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY, IMPLEMENTATION>::notify_unbind (int result,
+                                                                                                                          const ATTRIBUTES &attr)
+{
+  return this->implementation_->notify_unbind (result,
+                                               attr);
+}
+
+template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY, class IMPLEMENTATION> int
+ACE_Caching_Strategy_Adapter<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY, IMPLEMENTATION>::notify_trybind (int result,
+                                                                                                                           ATTRIBUTES &attr)
+{
+  return this->implementation_->notify_trybind (result,
+                                                attr);
+}
+
+template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY, class IMPLEMENTATION> int
+ACE_Caching_Strategy_Adapter<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY, IMPLEMENTATION>::notify_rebind (int result,
+                                                                                                                          const ATTRIBUTES &attr)
+{
+  return this->implementation_->notify_rebind (result,
+                                               attr);
+}
+
+template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY, class IMPLEMENTATION> int
+ACE_Caching_Strategy_Adapter<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY, IMPLEMENTATION>::clear_cache (CONTAINER &container)
+{
+  return this->implementation_->clear_cache (container);
+}
+
+template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY, class IMPLEMENTATION> IMPLEMENTATION &
+ACE_Caching_Strategy_Adapter<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY, IMPLEMENTATION>::implementation (void)
+{
+  return *this->implementation_;
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+
 template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY> ACE_INLINE ATTRIBUTES
 ACE_LRU_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::attributes (void)
 {

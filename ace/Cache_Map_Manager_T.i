@@ -31,7 +31,7 @@ ACE_Cache_Map_Manager<T_2>::map (void)
 template <T_1> ACE_INLINE CACHING_STRATEGY &
 ACE_Cache_Map_Manager<T_2>::caching_strategy (void)
 {
-  return *this->caching_strategy_;
+  return this->caching_strategy_;
 }
 
 template <T_1> ACE_INLINE ACE_Cache_Map_Iterator<KEY, VALUE, ITERATOR_IMPL, CACHING_STRATEGY, ATTRIBUTES>
