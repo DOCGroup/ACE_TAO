@@ -1,3 +1,32 @@
+Tue Sep  5 12:12:49 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/be/be_visitor_argument/request_info_result.cpp:
+	* TAO_IDL/be/be_visitor_operation/interceptors_exceptlist.cpp:
+	  Removed warnings about unused variables and arugments.
+
+	* tao/ORB_Core.cpp:
+	  Removed warning about unreached statement.
+
+	* orbsvcs/tests/Notify/Basic/LifeCycleTest.cpp:
+	  Fixed warning about unreached catch clause
+
+	* orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp:
+	* orbsvcs/orbsvcs/Naming/Naming_Loader.cpp:
+	* orbsvcs/orbsvcs/Trader/Trading_Loader.cpp:
+	  Removed warnings about extra ';'
+
+	* orbsvcs/tests/Event/lib/Makefile:
+	  Add missing TAO_PortableServer library
+
+	* tests/Object_Loader/Makefile:
+	* tests/Object_Loader/svc.conf:
+	  Make the POA dynamically loadable
+
+	* tests/Portable_Interceptors/Benchmark/Makefile:
+	* tests/Portable_Interceptors/Dynamic/Makefile:
+	* tests/Portable_Interceptors/Service_Context_Manipulation/Makefile:
+	  Update dependencies
+
 Tue Sep 05 11:10:47 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * TAO_IDL/be/be_visitor_argument/request_info_result.cpp:

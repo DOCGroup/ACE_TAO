@@ -19,7 +19,7 @@
 
 #include "ace/Arg_Shifter.h"
 
-ACE_RCSID (Trader, Trading_Loader, "$Id$");
+ACE_RCSID (Trader, Trading_Loader, "$Id$")
 
 TAO_Trading_Loader::TAO_Trading_Loader (void)
   : federate_ (0),
@@ -451,7 +451,7 @@ TAO_Trading_Loader::parse_args (int &argc, char *argv [])
   return 0;
 }
 
-ACE_FACTORY_DEFINE (TAO_Trading, TAO_Trading_Loader);
+ACE_FACTORY_DEFINE (TAO_Trading, TAO_Trading_Loader)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Dynamic_Service<TAO_Trading_Loader>;

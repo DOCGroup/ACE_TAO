@@ -19,8 +19,8 @@ ifeq (RTEvent,$(findstring RTEvent,$(TAO_ORBSVCS)))
   SHLIB = $(SHLIB2)
 endif # RTEvent
 
-ACE_SHLIBS = -lTAO_RTEvent -lTAO -lACE
-LDLIBS  = -lTAO_RTEvent -lTAO
+ACE_SHLIBS = -lTAO_RTEvent -lTAO_PortableServer -lTAO -lACE
+LDLIBS  = -lTAO_RTEvent -lTAO_PortableServer -lTAO
 
 SRCS = Driver Consumer Supplier Counting_Consumer Counting_Supplier
 FILES = $(SRCS)

@@ -23,7 +23,7 @@
 
 #include "ace/Get_Opt.h"
 
-ACE_RCSID (CosEvent, Event_Loader, "$Id$");
+ACE_RCSID (CosEvent, Event_Loader, "$Id$")
 
 TAO_CEC_Event_Loader::TAO_CEC_Event_Loader (void)
 {
