@@ -3,22 +3,6 @@
 
 #include "ace/Malloc.h"
 
-ACE_INLINE ACE_WString
-operator+ (const ACE_WString &s, const ACE_WString &t)
-{
-  ACE_WString temp (s);
-  temp += t;
-  return temp;
-}
-
-ACE_INLINE ACE_CString
-operator+ (const ACE_CString &s, const ACE_CString &t)
-{
-  ACE_CString temp (s);
-  temp += t;
-  return temp;
-}
-
 // Default constructor.
 
 ACE_INLINE 
@@ -278,6 +262,22 @@ ACE_INLINE u_long
 ACE_CString::hash (void) const
 {
   return ACE::hash_pjw (this->rep_, this->len_);
+}
+
+ACE_INLINE ACE_WString
+operator+ (const ACE_WString &s, const ACE_WString &t)
+{
+  ACE_WString temp (s);
+  temp += t;
+  return temp;
+}
+
+ACE_INLINE ACE_CString
+operator+ (const ACE_CString &s, const ACE_CString &t)
+{
+  ACE_CString temp (s);
+  temp += t;
+  return temp;
 }
 
 ACE_INLINE

@@ -1,3 +1,13 @@
+Tue May 19 10:05:07 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/SString.cpp (strlen): Renamed ACE_WString::wstrlen to
+ 	  ACE_WString::strlen.
+
+	* ace/SString.i: Reordered functions to make g++ happy.
+
+	* ace/ACE.cpp (hash_pjw): Changed ACE_OS::strlen to
+ 	  ACE_WString::strlen.
+
 Tue May 19 09:52:08 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/config-irix6.x-g++.h: 

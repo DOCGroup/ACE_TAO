@@ -431,7 +431,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
-  static size_t wstrlen (const ACE_USHORT16 *);
+  static size_t strlen (const ACE_USHORT16 *);
   // Computes the length of a "0" terminated ACE_USHORT16 *.
   
   static const ACE_USHORT16 *strstr (const ACE_USHORT16 *s1, const ACE_USHORT16 *s2);

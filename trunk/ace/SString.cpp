@@ -241,7 +241,7 @@ ACE_CString::ACE_CString (const ACE_USHORT16 *s,
     {
       this->release_ = 1;
 
-      this->len_ = ACE_WString::wstrlen (s);      
+      this->len_ = ACE_WString::strlen (s);      
       this->rep_ = (char *) this->allocator_->malloc (this->len_ + 1);
 
       // Copy the ACE_USHORT16 * string byte-by-byte into the char *
@@ -561,9 +561,9 @@ ACE_WString::ACE_WString (ACE_Allocator *alloc)
 
 /* static */
 size_t
-ACE_WString::wstrlen (const ACE_USHORT16 *s)
+ACE_WString::strlen (const ACE_USHORT16 *s)
 {
-  ACE_TRACE ("ACE_WString::wstrlen");
+  ACE_TRACE ("ACE_WString::strlen");
   int i;
 
   for (i = 0; s[i] != 0; i++)
@@ -647,7 +647,7 @@ ACE_WString::ACE_WString (const ACE_USHORT16 *s,
     }
   else
     {
-      this->len_ = this->wstrlen (s);
+      this->len_ = ACE_WString::strlen (s);
       this->rep_ = (ACE_USHORT16 *) this->allocator_->malloc ((this->len_ + 1) * sizeof (ACE_USHORT16));
 
       ACE_OS::memcpy (this->rep_,
@@ -761,7 +761,7 @@ ACE_WString::operator= (const ACE_WString &s)
 void
 ACE_WString::set (const ACE_USHORT16 *s)
 {
-  this->set (s, ACE_WString::wstrlen (s));
+  this->set (s, ACE_WString::strlen (s));
 }
 
 void
@@ -861,8 +861,8 @@ ACE_WString::strstr (const ACE_USHORT16 *s1, const ACE_USHORT16 *s2)
 {
   ACE_TRACE ("ACE_WString::strstr");
 
-  size_t len1 = ACE_WString::wstrlen (s1);
-  size_t len2 = ACE_WString::wstrlen (s2);
+  size_t len1 = ACE_WString::strlen (s1);
+  size_t len2 = ACE_WString::strlen (s2);
 
   size_t len = len1 - len2;
 
