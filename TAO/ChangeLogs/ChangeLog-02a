@@ -1,3 +1,13 @@
+Thu Jul 12 20:21:36 2001  Ossama Othman  <ossama@uci.edu>
+
+	* docs/tutorials/Quoter/Makefile (DIRS):
+	* docs/tutorials/Quoter/Simple/Makefile (DIRS):
+
+	  Do not build certain directories if AMI is disabled or if
+	  Minimum CORBA is enabled.  Some tutorials require AMI, or
+	  features that are not available in the minimum CORBA
+	  configuration.
+
 Thu Jul 12 19:45:06 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/Naming_Service/NT_Naming_Server.cpp (ConsoleHandler):
