@@ -68,12 +68,12 @@ main (int argc, char *argv[])
 
   /* First send the name of the file as a datagram. */
 
-  iovec iov[2];
+  ACE_IO_Vector iov[2];
 
-  iov[0].iov_base = "filename: ";
-  iov[0].iov_len  = 11;
-  iov[1].iov_base = file_name;
-  iov[1].iov_len  = ACE_OS::strlen (file_name);
+  iov[0].buffer ("filename: ");
+  iov[0].length (11);
+  iov[1].buffer (file_name);
+  iov[1].length (ACE_OS::strlen (file_name));
 
   if (dc.send (iov, 2) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send"), -1);

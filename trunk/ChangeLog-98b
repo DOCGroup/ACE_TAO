@@ -1,3 +1,10 @@
+Wed Sep 16 22:52:44 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* examples/Reactor/Multicast/server.cpp: 
+	* examples/Reactor/Multicast/Log_Wrapper.cpp: 
+	* examples/Service_Configurator/IPC-tests/client/remote_stream_client_test.cpp: 
+	  Use ACE_IO_Vector instead of iovec because it is more portable.
+
 Wed Sep 16 22:17:54 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * ace/OS.h:

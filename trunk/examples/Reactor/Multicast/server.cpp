@@ -144,11 +144,11 @@ int
 Server_Events::handle_input (ACE_HANDLE)
 {
   // Receive message from multicast group.
-  iovec iovp[2];
-  iovp[0].iov_base = buf_;
-  iovp[0].iov_len  = sizeof log_record_;
-  iovp[1].iov_base = &buf_[sizeof (log_record_)];
-  iovp[1].iov_len  = 4 * BUFSIZ - sizeof log_record_;
+  ACE_IO_Vector iovp[2];
+  iovp[0].buffer (buf_);
+  iovp[0].length (sizeof log_record_);
+  iovp[1].buffer (&buf_[sizeof (log_record_)]);
+  iovp[1].length (4 * BUFSIZ - sizeof log_record_);
 
   ssize_t retcode =
     this->mcast_dgram_.recv (iovp, 2, this->remote_addr_);
