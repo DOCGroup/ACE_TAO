@@ -1,3 +1,9 @@
+Wed Sep  8 08:15:00 UTC 2004  Simon Massey  <simon.massey@prismtechnologies.com>
+
+        * tests/IOStream_Test.cpp
+          Sorry, I got the wrong header file yesterday; isspace() is defined in
+          ace/os_include/os_ctype.h  NOT  #include ace/OS_NS_ctype.h
+
 Tue Sep  7 16:39:28 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* bin/MakeProjectCreator/config/dseventlogadmin.mpb

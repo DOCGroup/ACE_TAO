@@ -29,7 +29,7 @@ ACE_RCSID (tests, IOStream_Test, "$Id$")
 
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
 #  include "ace/OS_NS_unistd.h"
-#  include "ace/OS_NS_ctype.h"  // Needed for isspace() function
+#  include "ace/os_include/os_ctype.h"  // Needed for isspace() function
 
 typedef ACE_IOStream<ACE_SOCK_Stream> ACE_SOCK_IOStream;
 
