@@ -1,3 +1,10 @@
+Thu Jun 10 16:51:02 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* examples/Simple/chat/Server_i.h:
+	* orbsvcs/orbsvcs/CosEvent_Utilities.cpp:
+	  fixed sunc++ 5.0 warning for initializing a non const char*
+	  with a string literal.
+
 Thu Jun 10 15:24:21 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp: Added the inclusion of ace/Object_Manager.h
