@@ -60,9 +60,39 @@
 #   define ACE_HAS_TEMPLATE_SPECIALIZATION
 #   define ACE_HAS_TEMPLATE_TYPEDEFS
 #   define ACE_HAS_TYPENAME_KEYWORD
+
+//    9: nested comment not allowed.  (/usr/include/pdsc.h!) (nestcomment)
+//  177: variable was declared but never referenced (declbutnotref)
+//  193: zero used for undefined preprocessing identifier (undpreid)
+//  236: controlling expression is constant (boolexprconst)
+//  401: base_class_with_nonvirtual_dtor (basclsnondto)
+//  835: unreferenced_function_param (unrfunprm)
+// 1016: expected type is incompatible with declared type of int (incint)
+// 1136: conversion to smaller size integer could lose data (intconlosbit)
+
+#   pragma message disable basclsnondto
+#   pragma message disable boolexprconst
+#   pragma message disable undpreid
+
+#   if (__DECCXX_VER >= 60190029)
+      // 6.1-029 and later support msg 1136.  Disable it because it
+      // causes warnings from ACE and/or TAO.
+#     pragma message disable intconlosbit
+#   endif /* __DECCXX_VER >= 60190029 */
+
+#   if defined (DIGITAL_UNIX)  &&  DIGITAL_UNIX == 5
+      // variable "PTHREAD_THIS_CATCH_NP" was declared but never referenced
+#     pragma message disable declbutnotref
+#   endif /* DIGITAL_UNIX 5 */
+
+#   if defined (ACE_HAS_EXCEPTIONS)
+#     pragma message disable unrfunprm
+#   endif /* ACE_HAS_EXCEPTIONS */
+
 # else  /* __DECCXX_VER < 60090010 */
 #   define ACE_LACKS_PRAGMA_ONCE
 # endif /* __DECCXX_VER < 60090010 */
+
 #elif defined (__rational__)
 # define ACE_HAS_REENTRANT_FUNCTIONS
 # define ACE_LACKS_LINEBUFFERED_STREAMBUF
