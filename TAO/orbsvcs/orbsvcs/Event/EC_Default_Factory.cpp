@@ -625,8 +625,8 @@ TAO_EC_Default_Factory::create_timeout_generator (TAO_EC_Event_Channel *)
       int argc = 0;
       char **argv = 0;
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv,
-                         this->orbid_);
+        CORBA::ORB_init (argc, argv, this->orbid_.c_str ());
+
       ACE_Reactor *reactor = orb->orb_core ()->reactor ();
       return new TAO_EC_Reactive_Timeout_Generator (reactor);
     }
@@ -926,7 +926,7 @@ TAO_EC_Default_Factory::create_consumer_control (TAO_EC_Event_Channel* ec)
       int argc = 0;
       char **argv = 0;
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, this->orbid_);
+        CORBA::ORB_init (argc, argv, this->orbid_.c_str ());
 
       ACE_Time_Value rate (0, this->consumer_control_period_);
       return new TAO_EC_Reactive_ConsumerControl (rate, ec, orb.in ());
@@ -950,7 +950,7 @@ TAO_EC_Default_Factory::create_supplier_control (TAO_EC_Event_Channel* ec)
       int argc = 0;
       char **argv = 0;
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, this->orbid_);
+        CORBA::ORB_init (argc, argv, this->orbid_.c_str ());
 
       ACE_Time_Value rate (0, this->supplier_control_period_);
       return new TAO_EC_Reactive_SupplierControl (rate, ec, orb.in ());

@@ -25,6 +25,7 @@
 #include "EC_Defaults.h"
 
 #include "ace/Service_Config.h"
+#include "ace/SString.h"
 
 /**
  * @class TAO_EC_Default_Factory
@@ -139,7 +140,7 @@ protected:
   int dispatching_threads_force_active_;
 
   /// Use this ORB to locate global resources.
-  const char *orbid_;
+  ACE_CString orbid_;
 
   /// The consumer and supplier control policies.
   int consumer_control_;
