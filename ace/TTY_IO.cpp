@@ -194,8 +194,8 @@ ACE_TTY_IO::control (Control_Mode cmd,
       devpar.c_oflag = c_oflag;
       devpar.c_cflag = c_cflag;
       devpar.c_lflag = c_lflag;
-      devpar.c_cc[VMIN] = ivmin_cc4;
-      devpar.c_cc[VMAX] = ivtime_cc5;
+      devpar.c_cc[ACE_VMIN] = ivmin_cc4;
+      devpar.c_cc[ACE_VTIME] = ivtime_cc5;
 
 #if defined(TIOCMGET)
       // ensure DTR is enabled
