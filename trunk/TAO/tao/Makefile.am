@@ -227,6 +227,10 @@ else
 TEMPLATE_FILES = 
 endif
 
+IDL_HEADERS = \
+  orb.idl \
+  Policy.pidl
+
 pkgincludedir = $(prefix)/include/tao
 pkginclude_HEADERS = \
   Acceptor_Impl.h \
@@ -470,8 +474,10 @@ pkginclude_HEADERS = \
   varout.i \
   xt_resource.h \
   xt_resource.i \
-  $(TEMPLATE_FILES)
-## Make sure $(TEMPLATE_FILES) is in the above header list!
+  $(TEMPLATE_FILES) \
+  $(IDL_HEADERS)
+## Make sure $(TEMPLATE_FILES) and $(IDL_HEADERS) are in the above
+## header list!
 
 
 ## noinst_PROGRAMS = t-sizes
