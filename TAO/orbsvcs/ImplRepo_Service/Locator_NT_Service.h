@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 //=============================================================================
 /**
- *  @file   NT_Service.h
+ *  @file   Locator_NT_Service.h
  *
  *  $Id$
  *
@@ -23,7 +23,6 @@
 
 #include "ace/NT_Service.h"
 #include "ace/Singleton.h"
-#include "ace/Synch.h"
 
 static const char * IMR_LOCATOR_SERVICE_NAME = "TAOIMRLocator";
 static const char * IMR_LOCATOR_DISPLAY_NAME = "TAO Implementation Repository Locator";
@@ -54,7 +53,7 @@ private:
   friend class ACE_Singleton<Locator_NT_Service, MUTEX>;
 };
 
-typedef ACE_Singleton<Locator_NT_Service, ACE_Mutex> SERVICE;
+typedef ACE_Singleton<Locator_NT_Service, Locator_NT_Service::MUTEX> SERVICE;
 
 #endif /* ACE_WIN32 */
 

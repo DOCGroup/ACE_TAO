@@ -1,4 +1,4 @@
-project(*Server): taoserver, minimum_corba, bidir_giop {
+project(*Server): taoexe, portableserver, minimum_corba, bidir_giop {
   Source_Files {
     ReceiverC.cpp
     SenderC.cpp
@@ -9,8 +9,7 @@ project(*Server): taoserver, minimum_corba, bidir_giop {
   }
 }
 
-project(*Client): taoserver, minimum_corba, bidir_giop {
-  exename  = client
+project(*Client): taoexe, portableserver, minimum_corba, bidir_giop {
   Source_Files {
     SenderC.cpp
     ReceiverC.cpp

@@ -1,4 +1,4 @@
-project(*Notify Structured Supplier): notifytest {
+project(*Notify Structured Supplier): notifytest, naming {
   exename = Structured_Supplier
 
   Source_Files {
@@ -6,7 +6,7 @@ project(*Notify Structured Supplier): notifytest {
   }
 }
 
-project(*Notify Structured Consumer): notifytest {
+project(*Notify Structured Consumer): notifytest, naming {
   exename = Structured_Consumer
 
   Source_Files {

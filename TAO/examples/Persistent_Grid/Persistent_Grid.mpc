@@ -1,4 +1,4 @@
-project(*server): taoserver {
+project(*server): taoexe, portableserver {
   Source_Files {
     Grid_i.cpp
     Simple_util.cpp
@@ -6,9 +6,7 @@ project(*server): taoserver {
   }
 }
 
-project(*client): taoserver {
-  exename = client
-
+project(*client): taoexe, portableserver {
   Source_Files {
     GridC.cpp
     Simple_util.cpp
@@ -17,9 +15,7 @@ project(*client): taoserver {
   }
 }
 
-project(*persistent client): taoserver {
-  exename = persistent_client
-
+project(*persistent client): taoexe, portableserver {
   Source_Files {
     GridC.cpp
     Simple_util.cpp

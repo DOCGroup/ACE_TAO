@@ -1,0 +1,12 @@
+project(*Client) : taoexe, messaging, portableserver {
+  source_files {
+    client.cpp
+  }
+}
+
+project(*Server) : taoexe, messaging, portableserver, dynamicinterface {
+  source_files {
+    Database_i.cpp
+    server.cpp
+  }
+}

@@ -1,4 +1,4 @@
-project(*latency server): taoserver, strategies {
+project(*latency server): taoexe, portableserver, strategies {
   Source_Files {
     Roundtrip.cpp
     Worker_Thread.cpp
@@ -6,7 +6,7 @@ project(*latency server): taoserver, strategies {
   }
 }
 
-project(*latency client): taoclient, strategies {
+project(*latency client): taoexe, strategies {
   Source_Files {
     TestC.cpp
     Client_Task.cpp

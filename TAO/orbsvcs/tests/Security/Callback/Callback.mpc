@@ -1,4 +1,4 @@
-project(*security server): taoserver, ssl {
+project(*security server): taoexe, portableserver, ssl {
   IDL_Files {
     server.idl
     client.idl
@@ -13,9 +13,7 @@ project(*security server): taoserver, ssl {
   }
 }
 
-project(*security client): taoserver, ssl {
-  exename   = client
-
+project(*security client): taoexe, portableserver, ssl {
   IDL_Files {
     server.idl
     client.idl

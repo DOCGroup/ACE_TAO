@@ -1,17 +1,13 @@
-project(CosLoadManager): namingexe, server, core, loadbalancing {
+project(CosLoadManager): namingexe, portableserver, core, loadbalancing {
   requires += ami interceptors
-  exename   = LoadManager
-
   Source_Files {
     LoadManager.cpp
     Signal_Handler.cpp
   }
 }
 
-project(CosLoadMonitor): namingexe, server, core, loadbalancing {
+project(CosLoadMonitor): namingexe, portableserver, core, loadbalancing {
   requires += ami interceptors
-  exename   = LoadMonitor
-
   Source_Files {
     LoadMonitor.cpp
     Push_Handler.cpp

@@ -1,3 +1,4 @@
-project : aceexe {
-  requires += wxwindows
+project : aceexe, wxwindows {
+  pch_header = stdafx.h
+  pch_source = stdafx.cpp
 }

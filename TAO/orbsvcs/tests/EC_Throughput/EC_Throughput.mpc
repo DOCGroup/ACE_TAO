@@ -1,4 +1,4 @@
-project(ECT Supplier): rteventexe, rtoldevent, rtsched, naming, iortable, messaging, corba_messaging {
+project(ECT Supplier): rteventexe, rtoldevent, rtsched, naming, iortable, messaging {
   exename  = ECT_Supplier
   comps   += Naming RTOLDEvent
 
@@ -9,7 +9,7 @@ project(ECT Supplier): rteventexe, rtoldevent, rtsched, naming, iortable, messag
   }
 }
 
-project(ECT Consumer): rteventexe, rtoldevent, rtsched, naming, iortable, messaging, corba_messaging {
+project(ECT Consumer): rteventexe, rtoldevent, rtsched, naming, iortable, messaging {
   exename  = ECT_Consumer
   comps   += Naming RTOLDEvent
 
@@ -20,7 +20,7 @@ project(ECT Consumer): rteventexe, rtoldevent, rtsched, naming, iortable, messag
   }
 }
 
-project(ECT Throughput): rteventexe, rtoldevent, rtsched, naming, iortable, messaging, corba_messaging {
+project(ECT Throughput): rteventexe, rtoldevent, rtsched, naming, iortable, messaging {
   exename  = ECT_Throughput
   comps   += Naming RTOLDEvent
 

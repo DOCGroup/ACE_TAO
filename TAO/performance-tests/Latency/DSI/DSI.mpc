@@ -1,4 +1,4 @@
-project(*latency server): taoserver, strategies, dynamicinterface {
+project(*latency server): taoexe, portableserver, strategies, dynamicinterface {
   avoids  += minimum_corba
 
   IDL_Files {
@@ -10,7 +10,7 @@ project(*latency server): taoserver, strategies, dynamicinterface {
   }
 }
 
-project(*latency client): taoclient, strategies {
+project(*latency client): taoexe, strategies {
   avoids += minimum_corba
 
   Source_Files {

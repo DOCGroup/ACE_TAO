@@ -1,4 +1,4 @@
-project: taoserver {
+project: taoexe, portableserver {
   exename = ORB_destroy
 }
 

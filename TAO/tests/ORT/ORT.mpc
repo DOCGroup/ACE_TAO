@@ -1,4 +1,4 @@
-project(*Server): taoserver {
+project(*Server): taoexe, portableserver {
   requires += interceptors
   idlflags += -I$(TAO_ROOT) -Gv
 
@@ -15,7 +15,7 @@ project(*Server): taoserver {
   }
 }
 
-project(*Client): taoclient {
+project(*Client): taoexe {
   requires += interceptors
   idlflags += -I$(TAO_ROOT) -Gv
 

@@ -15,8 +15,7 @@ project(*server): taoserver {
   }
 }
 
-project(*Client): taoserver {
-  exename = client
+project(*Client): taoclient, portableserver {
   avoids += repo
 
   IDL_Files {
@@ -31,7 +30,7 @@ project(*Client): taoserver {
   }
 }
 
-project(*Balancer): taoserver {
+project(*Balancer): taoexe, portableserver {
   exename = load_balancer
   avoids += repo
 

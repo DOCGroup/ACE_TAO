@@ -1,2 +1,2 @@
-project : taoclient, rtcorba {
+project : taoexe, rtcorba {
 }

@@ -1,4 +1,4 @@
-project(*Basic): taoserver, dynamicany {
+project(*Basic): taoexe, portableserver, dynamicany {
   exename  = basic_test
 
   Source_Files {

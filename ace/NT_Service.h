@@ -28,6 +28,7 @@
 #include "ace/OS_Log_Msg_Attributes.h"
 #include "ace/Service_Object.h"
 #include "ace/Task.h"
+#include "ace/OS_NS_errno.h" // needed for those using our macros
 
 // ACE_NT_SERVICE_START_TIMEOUT is an estimate of the number of
 // milliseconds your service will take to start.  Default is 5

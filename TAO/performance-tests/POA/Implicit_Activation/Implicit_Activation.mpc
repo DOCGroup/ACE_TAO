@@ -1,4 +1,4 @@
-project(*server): taoserver {
+project(*server): taoexe, portableserver {
   Source_Files {
     Factory.cpp
     Simple.cpp
@@ -6,16 +6,14 @@ project(*server): taoserver {
   }
 }
 
-project(*client): taoclient {
+project(*client): taoexe {
   Source_Files {
     TestC.cpp
     client.cpp
   }
 }
 
-project(*collocated): taoserver {
-  exename = collocated
-
+project(*collocated): taoexe, portableserver {
   Source_Files {
     Simple.cpp
     collocated.cpp

@@ -1,4 +1,4 @@
-project : orbsvcsexe, core, notification {
+project : orbsvcsexe, core, notification, naming {
   exename  = Notify_Service
   Source_Files {
     Notify_Server.cpp
@@ -9,7 +9,7 @@ project : orbsvcsexe, core, notification {
   }
 }
 
-project(NT_Notify_Service) : orbsvcsexe, core, notification {
+project(NT_Notify_Service) : orbsvcsexe, core, notification, naming {
   exename  = NT_Notify_Service
   Source_Files {
     Notify_Service.cpp

@@ -1,0 +1,14 @@
+project(*Client) : orbsvcsexe, event {
+  idlflags += -I ../../..
+  source_files {
+    FactoryClient.cpp
+  }
+}
+
+project(*Server) : orbsvcsexe, event {
+  idlflags += -I ../../..
+  source_files {
+    FactoryDriver.cpp
+    CosEventChannelFactory_i.cpp
+  }
+}

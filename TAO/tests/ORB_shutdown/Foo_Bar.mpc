@@ -1,4 +1,4 @@
-project(ORB Shutdown Server): taoserver {
+project(ORB Shutdown Server): taoexe, portableserver {
   Source_Files {
     Foo_Bar.cpp
     server.cpp

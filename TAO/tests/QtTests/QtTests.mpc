@@ -1,4 +1,4 @@
-project(*server): taoserver, qt_moc {
+project(*server): taoexe, portableserver, qt_moc {
   requires += qt
 
   MOC_Files {
@@ -12,7 +12,7 @@ project(*server): taoserver, qt_moc {
   }
 }
 
-project(*client): taoclient, qt_moc {
+project(*client): taoexe, qt_moc {
   requires += qt
 
   MOC_Files {
