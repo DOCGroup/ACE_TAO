@@ -1,3 +1,12 @@
+Wed Sep 16 16:01:53 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Select_Reactor_T.{h,i,cpp}: Disable inlining in
+	  Select_Reactor_T.i and always include them in .cpp file.  The
+	  latest version of SunCC can't grok this particular file and we
+	  just turn it off here.  We shall turn it back on once the
+	  problem gets fixed.  Thanks to Keith Brown
+	  <kalbrown@ix.netcom.com> for providing this temporary fix.
+
 Wed Sep 16 13:41:50 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/OS.h: Added more protection for the semun definition, i.e.,
