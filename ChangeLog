@@ -5,6 +5,19 @@ Thu May  8 18:50:24 2003  Steve Huston  <shuston@riverace.com>
 	  all available sockets and one after the other is a guaranteed fail
 	  on Windows XP due to socket starvation.
 
+Thu May  8 16:57:18 2003  Steve Huston  <shuston@riverace.com>
+
+	* ace/Date_Time.i (update): WinCE doesn't do localtime(), so extract
+	  the FILETIME value from ACE_Time_Value and convert it to system time.
+	  Fixes Bugzilla #1502.
+
+	* ace/OS.cpp (uname): Added proper sensing of Windows CE at runtime
+	  as well as the ARM processor type.
+
+	* tests/Enum_Interfaces_Test.cpp: Convert the interface address
+	  strings to ACE_TCHAR for logging. Makes them legible on wide-char
+	  builds. Fixes Bugzilla #1501.
+
 Thu May 08 15:03:17 2003  Simon McQueen  <sm@prismtechnologies.com>
 
         * bin/msvc_auto_compile.pl:

@@ -14,6 +14,22 @@ ACE_Date_Time::update (void)
 ASYS_INLINE void
 ACE_Date_Time::update (const ACE_Time_Value& timevalue)
 {
+#if defined (ACE_HAS_WINCE)
+  // CE doesn't do localtime().
+  FILETIME file_time = timevalue;
+  FILETIME local_file_time;
+  SYSTEMTIME sys_time;
+  ::FileTimeToLocalFileTime (&file_time, &local_file_time);
+  ::FileTimeToSystemTime (&local_file_time, &sys_time);
+  this->day_ = sys_time.wDay;
+  this->month_ = sys_time.wMonth;
+  this->year_ = sys_time.wYear;
+  this->hour_ = sys_time.wHour;
+  this->minute_ = sys_time.wMinute;
+  this->second_ = sys_time.wSecond;
+  this->microsec_ = sys_time.wMilliseconds * 1000;
+  this->wday_ = sys_time.wDayOfWeek;
+#else
   time_t time = timevalue.sec ();
   struct tm tm_time;
   ACE_OS::localtime_r (&time, &tm_time);
@@ -25,6 +41,7 @@ ACE_Date_Time::update (const ACE_Time_Value& timevalue)
   this->second_ = tm_time.tm_sec;
   this->microsec_ = timevalue.usec ();
   this->wday_ = tm_time.tm_wday;
+#endif /* ACE_HAS_WINCE */
 }
 
 ASYS_INLINE
