@@ -454,10 +454,6 @@ TAO_NAMESPACE CORBA
   typedef CORBA_ContextList_var ContextList_var;
   typedef CORBA_ContextList_out ContextList_out;
 
-  typedef char *CORBA_FieldName;
-  typedef CORBA_String_var CORBA_FieldName_var;
-  typedef CORBA_String_out CORBA_FieldName_out;
-
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
   typedef CORBA_Object Object;
@@ -826,11 +822,6 @@ TAO_NAMESPACE CORBA
   typedef CORBA_WrongTransaction WrongTransaction;
   typedef WrongTransaction *WrongTransaction_ptr;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_WrongTransaction;
-
-  typedef CORBA_FieldName FieldName;
-  typedef CORBA_FieldName_var FieldName_var;
-  typedef CORBA_FieldName_out FieldName_out;
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_FieldName;
 
 #endif /* ! defined (TAO_HAS_MINIMUM_CORBA) */
 

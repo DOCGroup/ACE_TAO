@@ -217,22 +217,10 @@ CORBA_Policy_ptr  result_;
 
 #endif /* end #if !defined */
 
-TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_CORBA_DomainManager;
-
-TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong SecConstruction;
-
-
-#if !defined (_CORBA_CONSTRUCTIONPOLICY___PTR_CH_)
-#define _CORBA_CONSTRUCTIONPOLICY___PTR_CH_
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
 class CORBA_ConstructionPolicy;
 typedef CORBA_ConstructionPolicy *CORBA_ConstructionPolicy_ptr;
-
-#endif /* end #if !defined */
-
-
-#if !defined (_CORBA_CONSTRUCTIONPOLICY___VAR_CH_)
-#define _CORBA_CONSTRUCTIONPOLICY___VAR_CH_
 
 class TAO_Export CORBA_ConstructionPolicy_var : public TAO_Base_var
 {
@@ -262,13 +250,6 @@ private:
   CORBA_ConstructionPolicy_var &operator= (const TAO_Base_var &rhs);
 };
 
-
-#endif /* end #if !defined */
-
-
-#if !defined (_CORBA_CONSTRUCTIONPOLICY___OUT_CH_)
-#define _CORBA_CONSTRUCTIONPOLICY___OUT_CH_
-
 class TAO_Export CORBA_ConstructionPolicy_out
 {
 public:
@@ -285,13 +266,6 @@ public:
 private:
   CORBA_ConstructionPolicy_ptr &ptr_;
 };
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_CORBA_CONSTRUCTIONPOLICY_CH_)
-#define _CORBA_CONSTRUCTIONPOLICY_CH_
 
 class TAO_Export CORBA_ConstructionPolicy: public virtual CORBA_Policy
 {
@@ -394,10 +368,7 @@ CORBA::Boolean & constr_policy_;
 };
 
 
-#endif /* end #if !defined */
-
-TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_CORBA_ConstructionPolicy;
-
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
 
@@ -547,21 +518,27 @@ private:
 
 #endif /* end #if !defined */
 
-TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_CORBA_DomainManagerList;
-
-
 extern TAO_Export CORBA_DomainManager_ptr (*_TAO_collocation_CORBA_DomainManager_Stub_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface CORBA_DomainManager
 TAO_Export void operator<<= (CORBA::Any &, CORBA_DomainManager_ptr);
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_DomainManager *&);
+
+#if (TAO_HAS_MINIMUM_CORBA == 0)
+
 extern TAO_Export CORBA_ConstructionPolicy_ptr (*_TAO_collocation_CORBA_ConstructionPolicy_Stub_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 // Any operators for interface CORBA_ConstructionPolicy
 TAO_Export void operator<<= (CORBA::Any &, CORBA_ConstructionPolicy_ptr);
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_ConstructionPolicy *&);
+
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA_ConstructionPolicy_ptr );
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA_ConstructionPolicy_ptr &);
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
 TAO_Export void operator<<= (CORBA::Any &, const CORBA_DomainManagerList &); // copying version
 TAO_Export void operator<<= (CORBA::Any &, CORBA_DomainManagerList*); // noncopying version
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_DomainManagerList *&); // deprecated
@@ -571,8 +548,6 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA_DomainMan
 
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA_DomainManager_ptr );
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA_DomainManager_ptr &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA_ConstructionPolicy_ptr );
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA_ConstructionPolicy_ptr &);
 
 #if !defined _TAO_CDR_OP_CORBA_DomainManagerList_H_
 #define _TAO_CDR_OP_CORBA_DomainManagerList_H_

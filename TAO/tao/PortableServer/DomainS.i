@@ -7,6 +7,8 @@
 // Information about TAO is available at:
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
+#if (TAO_HAS_MINIMUM_CORBA == 0)
+
 ACE_INLINE void POA_CORBA_ConstructionPolicy::_get_policy_type_skel (
     CORBA::ServerRequest &req,
     void *obj,
@@ -52,3 +54,5 @@ ACE_INLINE void POA_CORBA_ConstructionPolicy::destroy_skel (
        ACE_TRY_ENV
     );
 }
+
+#endif /* TAO_HAS_MINIMUM_CORBA */

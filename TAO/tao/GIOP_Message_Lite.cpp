@@ -607,7 +607,9 @@ TAO_GIOP_Message_Lite::
           // Sending back the same service context list we received in the
           // Request.  (Important for RT CORBA).
           reply_params.service_context_notowned (&request.service_info ());
+#if (TAO_HAS_MINIMUM_CORBA == 0)
           reply_params.params_ = 0;
+#endif /* TAO_HAS_MINIMUM_CORBA */
           // Make the GIOP header and Reply header
           this->write_reply_header (*this->output_,
                                     reply_params);

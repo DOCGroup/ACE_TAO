@@ -179,8 +179,8 @@ _tao_call.service_info (),
             (_tao_in >> _tao_safe_retval.inout ())
         ))
       TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
-CORBA::Policy_ptr  _tao_retval_info = _tao_safe_retval._retn ();
     TAO_INTERCEPTOR (
+        CORBA::Policy_ptr  _tao_retval_info = _tao_safe_retval._retn ();
 
          ri.result (_tao_retval_info);
         _tao_safe_retval = _tao_retval_info;
@@ -296,6 +296,8 @@ CORBA_DomainManager::TAO_ClientRequest_Info_CORBA_DomainManager_get_domain_polic
   }
 
 #endif /* TAO_HAS_INTERCEPTORS */
+
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
 // default constructor
 CORBA_ConstructionPolicy::CORBA_ConstructionPolicy (void)
@@ -579,6 +581,70 @@ CORBA_ConstructionPolicy::TAO_ClientRequest_Info_CORBA_ConstructionPolicy_make_d
 
 #endif /* TAO_HAS_INTERCEPTORS && TAO_HAS_INTERFACE_REPOSITORY */
 
+  CORBA_ConstructionPolicy_ptr (*_TAO_collocation_CORBA_ConstructionPolicy_Stub_Factory_function_pointer) (
+      CORBA::Object_ptr obj
+    ) = 0;
+    void operator<<= (CORBA::Any &_tao_any, CORBA_ConstructionPolicy_ptr _tao_elem)
+  {
+    TAO_OutputCDR stream;
+    if (stream << _tao_elem)
+    {
+      _tao_any._tao_replace (
+          CORBA::_tc_ConstructionPolicy,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
+          1,
+          CORBA_ConstructionPolicy::_duplicate (_tao_elem),
+          CORBA_ConstructionPolicy::_tao_any_destructor
+        );
+    }
+  }
+
+  CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_ConstructionPolicy_ptr &_tao_elem)
+  {
+    ACE_TRY_NEW_ENV
+    {
+      _tao_elem = CORBA_ConstructionPolicy::_nil ();
+      CORBA::TypeCode_var type = _tao_any.type ();
+      if (!type->equivalent (CORBA::_tc_ConstructionPolicy, ACE_TRY_ENV)) // not equal
+        {
+          return 0;
+        }
+      ACE_TRY_CHECK;
+      TAO_InputCDR stream (
+          _tao_any._tao_get_cdr (),
+          _tao_any._tao_byte_order ()
+        );
+      if (stream >> _tao_elem)
+      {
+        ((CORBA::Any *)&_tao_any)->_tao_replace (
+            CORBA::_tc_ConstructionPolicy,
+            1,
+            _tao_elem,
+            CORBA_ConstructionPolicy::_tao_any_destructor
+          );
+        return 1;
+      }
+    }
+    ACE_CATCHANY
+    {
+      _tao_elem = CORBA_ConstructionPolicy::_nil ();
+      return 0;
+    }
+    ACE_ENDTRY;
+    _tao_elem = CORBA_ConstructionPolicy::_nil ();
+    return 0;
+  }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+      defined (ACE_HAS_GNU_REPO)
+template class TAO_Object_Manager<CORBA_ConstructionPolicy,CORBA_ConstructionPolicy_var>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#  pragma instantiate TAO_Object_Manager<CORBA_ConstructionPolicy,CORBA_ConstructionPolicy_var>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
 
 #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_DOMAINMANAGERLIST_CS_)
@@ -768,68 +834,6 @@ CORBA_ConstructionPolicy::TAO_ClientRequest_Info_CORBA_ConstructionPolicy_make_d
       template class TAO_Object_Manager<CORBA_DomainManager,CORBA_DomainManager_var>;
     #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
     #  pragma instantiate TAO_Object_Manager<CORBA_DomainManager,CORBA_DomainManager_var>
-  #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-  CORBA_ConstructionPolicy_ptr (*_TAO_collocation_CORBA_ConstructionPolicy_Stub_Factory_function_pointer) (
-      CORBA::Object_ptr obj
-    ) = 0;
-    void operator<<= (CORBA::Any &_tao_any, CORBA_ConstructionPolicy_ptr _tao_elem)
-  {
-    TAO_OutputCDR stream;
-    if (stream << _tao_elem)
-    {
-      _tao_any._tao_replace (
-          CORBA::_tc_ConstructionPolicy,
-          TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          CORBA_ConstructionPolicy::_duplicate (_tao_elem),
-          CORBA_ConstructionPolicy::_tao_any_destructor
-        );
-    }
-  }
-
-  CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_ConstructionPolicy_ptr &_tao_elem)
-  {
-    ACE_TRY_NEW_ENV
-    {
-      _tao_elem = CORBA_ConstructionPolicy::_nil ();
-      CORBA::TypeCode_var type = _tao_any.type ();
-      if (!type->equivalent (CORBA::_tc_ConstructionPolicy, ACE_TRY_ENV)) // not equal
-        {
-          return 0;
-        }
-      ACE_TRY_CHECK;
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> _tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            CORBA::_tc_ConstructionPolicy,
-            1,
-            _tao_elem,
-            CORBA_ConstructionPolicy::_tao_any_destructor
-          );
-        return 1;
-      }
-    }
-    ACE_CATCHANY
-    {
-      _tao_elem = CORBA_ConstructionPolicy::_nil ();
-      return 0;
-    }
-    ACE_ENDTRY;
-    _tao_elem = CORBA_ConstructionPolicy::_nil ();
-    return 0;
-  }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
-      defined (ACE_HAS_GNU_REPO)
-      template class TAO_Object_Manager<CORBA_ConstructionPolicy,CORBA_ConstructionPolicy_var>;
-    #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-    #  pragma instantiate TAO_Object_Manager<CORBA_ConstructionPolicy,CORBA_ConstructionPolicy_var>
   #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
     void operator<<= (
