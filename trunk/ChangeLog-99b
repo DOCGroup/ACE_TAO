@@ -1,5 +1,13 @@
 Wed Jan 20 19:47:16 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* ace/OS.{h,i,cpp} (fopen): Reimplement fopen using Win32 APIs so
+	  ACE_OS::unlink behaves the same as it does on UNIX platforms.
+	  Both ACE_OS::open and ACE_OS::fopen have been corrected.
+	  There's also a ACE::open_temp_file which should be the prefered
+	  method to open temp files when ACE_HANDLE is used.  That's
+	  because Win32 tries to map the file opened by
+	  ACE::open_temp_file to memory.
+
 	* ace/Parse_Node.cpp (symbol): <func> need to be initialized.
 	  Thanks to David for reporting the bug.
 

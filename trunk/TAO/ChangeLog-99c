@@ -1,3 +1,8 @@
+Wed Jan 20 20:52:45 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc): Removed Win32
+	  specific code.
+
 Wed Jan 20 13:54:37 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/ORB_Core.cpp: removed explicit ACE_Convert instantiation.
