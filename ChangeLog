@@ -1,3 +1,43 @@
+Mon Nov 17 21:50:29 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * include/makeinclude/rules.local.GNU:
+        * include/makeinclude/wrapper_macros.GNU:
+          Renamed the CLEAN_* variables to CLEANUP_*, and moved them from
+          rules.local.GNU to wrapper_macros.GNU.
+
+        * include/makeinclude/all_in_one.GNU:
+        * include/makeinclude/component_check.GNU:
+          Added new files that simplify the makefile systems.
+          all_in_one.GNU replaces and conditionally includes all the other
+          standard makeinclude files.  It also includes the new
+          component_check.GNU file that handles all the conditional
+          compilation rules.  All you need to do is add a list of required
+          components needed for the particular project, e.g., rmcast,
+          shared_libs, Other, etc..., to REQUIRED_COMPONENTS and then
+          include all_in_one.GNU. These files will simplify MPC a great
+          deal.
+
+        * netsvcs/Makefile:
+        * netsvcs/clients/Makefile:
+        * netsvcs/clients/Logger/Makefile:
+        * netsvcs/clients/Naming/Makefile:
+        * netsvcs/clients/Naming/Client/Makefile:
+        * netsvcs/clients/Naming/Dump_Restore/Makefile:
+        * netsvcs/clients/Naming/Dump_Restore/Makefile.Dump_Restore:
+        * netsvcs/clients/Naming/Dump_Restore/Makefile.main:
+        * netsvcs/clients/Tokens/Makefile:
+        * netsvcs/clients/Tokens/collection/Makefile:
+        * netsvcs/clients/Tokens/deadlock/Makefile:
+        * netsvcs/clients/Tokens/invariant/Makefile:
+        * netsvcs/clients/Tokens/manual/Makefile:
+        * netsvcs/clients/Tokens/mutex/Makefile:
+        * netsvcs/clients/Tokens/rw_lock/Makefile:
+        * netsvcs/lib/Makefile:
+        * netsvcs/servers/Makefile:
+          Modified these Makefiles to use the new all_in_one.GNU file
+          above and updated dependencies.  This is mainly a test and
+          example for future MPC implementations.
+
 Mon Nov 17 16:37:49 2003  Steve Huston  <shuston@riverace.com>
 
 	* include/makeinclude/rules.lib.GNU: Moved the AIX shr.o-building stuff

@@ -1,3 +1,5 @@
+# -*- Makefile -*-
+
 #----------------------------------------------------------------------------
 #       $Id$
 #
@@ -22,40 +24,21 @@ LSRC    = $(addsuffix .cpp,$(FILES))
 # This is needed to add ACE to the libs for the shared library.
 ACE_SHLIBS    += $(ACELIB)
 
-#### If the ACE library wasn't built with sufficient components, don't
-#### try to build here.
-ACE_BUILD_COMPONENTS := $(shell sh $(ACE_ROOT)/bin/ace_components --ace)
-ifeq (Other,$(findstring Other,$(ACE_BUILD_COMPONENTS)))
-  BIN   = $(BIN_UNCHECKED)
-  LIB   = $(LIB_UNCHECKED)
-  SHLIB = $(SHLIB_UNCHECKED)
-endif # Other
-
-BUILD = $(VSHLIB) $(VLIB) $(VBIN)
+LDLIBS += -lClient_Test 
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
 
-include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-include $(ACE_ROOT)/include/makeinclude/macros.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
+REQUIRED_COMPONENTS = Other shared_libs
+include $(ACE_ROOT)/include/makeinclude/all_in_one.GNU
 
 #----------------------------------------------------------------------------
 #       Local targets
 #----------------------------------------------------------------------------
 
 ifneq ($(BIN),)
-  ifeq ($(SHLIB), $(findstring $(SHLIB), $(BUILD)))
-    $(BIN): $(SHLIB)
-  endif
-  ifeq ($(LIB), $(findstring $(LIB), $(BUILD)))
-    $(BIN): $(LIB)
-  endif
+  $(BIN): $(SHLIB)
 endif # BIN
 
 #----------------------------------------------------------------------------
