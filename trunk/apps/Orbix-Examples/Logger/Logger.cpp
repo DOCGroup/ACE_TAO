@@ -23,7 +23,7 @@ Logger::Logger (char *server, size_t max_message_size)
     ip_ (0), 
     pid_ (ACE_OS::getpid ())
 {
-  struct utsname name;
+  ACE_utsname name;
 
 #if 0
   // Could also use sysinfo(2)...

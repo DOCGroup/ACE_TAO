@@ -9,11 +9,11 @@ ACE_RCSID(ace, OS_Dirent, "$Id$")
 # include "ace/OS_Dirent.inl"
 #endif /* ACE_HAS_INLINED_OS_CALLS */
 
-DIR *
+ACE_DIR *
 ACE_OS_Dirent::opendir_emulation (const ACE_TCHAR *filename)
 {
 #if defined (ACE_WIN32)
-  DIR *dir;
+  ACE_DIR *dir;
   ACE_TCHAR extra[3] = {0,0,0};
 
 /*  
@@ -46,7 +46,7 @@ ACE_OS_Dirent::opendir_emulation (const ACE_TCHAR *filename)
         }
     }
     
-  ACE_NEW_RETURN (dir, DIR, 0);  
+  ACE_NEW_RETURN (dir, ACE_DIR, 0);  
   ACE_NEW_RETURN (dir->directory_name_,
                   ACE_TCHAR[lastchar + ACE_OS_String::strlen (extra) + 1],
                   0);
@@ -63,7 +63,7 @@ ACE_OS_Dirent::opendir_emulation (const ACE_TCHAR *filename)
 }
 
 void
-ACE_OS_Dirent::closedir_emulation (DIR *d)
+ACE_OS_Dirent::closedir_emulation (ACE_DIR *d)
 {
 #if defined (ACE_WIN32)
   if (d->current_handle_ != INVALID_HANDLE_VALUE)
@@ -77,7 +77,7 @@ ACE_OS_Dirent::closedir_emulation (DIR *d)
 }
 
 struct dirent *
-ACE_OS_Dirent::readdir_emulation (DIR *d)
+ACE_OS_Dirent::readdir_emulation (ACE_DIR *d)
 {
 #if defined (ACE_WIN32)
   if (!d->started_reading_)

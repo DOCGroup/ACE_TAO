@@ -756,7 +756,7 @@ typedef u_long ACE_pri_t;
 
 // pHILE+ calls the DIR struct XDIR instead
 #    if !defined (ACE_PSOS_DIAB_PPC)
-typedef XDIR DIR;
+typedef XDIR ACE_DIR;
 #    endif /* !defined (ACE_PSOS_DIAB_PPC) */
 
 // Use pSOS semaphores, wrapped . . .
@@ -4078,9 +4078,14 @@ extern "C"
 #   define ACE_MAP_FIXED MAP_FIXED
 # endif /* ! ACE_MAP_FIXED */
 
-# if defined (ACE_LACKS_UTSNAME_T)
-#   define _SYS_NMLN 257
-struct utsname
+#if defined (ACE_LACKS_UTSNAME_T)
+#   if !defined (SYS_NMLN)
+#     define SYS_NMLN 257
+#   endif /* SYS_NMLN */
+#   if !defined (_SYS_NMLN)
+#     define _SYS_NMLN SYS_NMLN
+#   endif /* _SYS_NMLN */
+struct ACE_utsname
 {
   ACE_TCHAR sysname[_SYS_NMLN];
   ACE_TCHAR nodename[_SYS_NMLN];
@@ -4090,6 +4095,7 @@ struct utsname
 };
 # else
 #   include /**/ <sys/utsname.h>
+typedef struct utsname ACE_utsname;
 # endif /* ACE_LACKS_UTSNAME_T */
 
 // Increase the range of "address families".  Please note that this
@@ -5433,7 +5439,7 @@ public:
   //@}
 
   //@{ @name Wrappers to obtain configuration info
-  static int uname (struct utsname *name);
+  static int uname (ACE_utsname *name);
   static long sysinfo (int cmd,
                        char *buf,
                        long count);

@@ -32,14 +32,14 @@
 # include /**/ <dirent.h>
 #endif /* !ACE_WIN32 && !ACE_PSOS */
 
-// At least compile on some of the platforms without DIR info yet.
+// At least compile on some of the platforms without <ACE_DIR> info yet.
 # if !defined (ACE_HAS_DIRENT)
-typedef int DIR;
+typedef int ACE_DIR;
 struct dirent {
 };
 # endif /* ACE_HAS_DIRENT */
 
-#if defined (ACE_WIN32)
+#if defined (ACE_LACKS_STRUCT_DIR)
 struct dirent {
   unsigned short d_ino;
   unsigned short d_off;
@@ -47,7 +47,7 @@ struct dirent {
   const ACE_TCHAR *d_name;
 };
 
-struct DIR {
+struct ACE_DIR {
   ACE_TCHAR *directory_name_;
   // The name of the directory we are looking into
 
@@ -63,12 +63,13 @@ struct DIR {
   int started_reading_;
   // A flag to remember if we started reading already.
 };
-#elif defined (ACE_PSOS)
+#elif defined (ACE_PSOS) && !defined (ACE_PSOS_DIAB_PPC)
 // pHILE+ calls the DIR struct XDIR instead
-# if !defined (ACE_PSOS_DIAB_PPC)
-typedef XDIR DIR;
-# endif /* !defined (ACE_PSOS_DIAB_PPC) */
-#endif /* ACE_WIN32 && ACE_PSOS */
+# 
+typedef XDIR ACE_DIR;
+#else
+typedef DIR ACE_DIR;
+# endif /* ACE_LACKS_STRUCT_DIR */
 
 #if defined rewinddir
 # undef rewinddir
@@ -83,22 +84,22 @@ typedef XDIR DIR;
 class ACE_OS_Export ACE_OS_Dirent
 {
 public:
-  static DIR *opendir (const ACE_TCHAR *filename);
-  static void closedir (DIR *);
-  static struct dirent *readdir (DIR *);
-  static int readdir_r (DIR *dirp,
+  static ACE_DIR *opendir (const ACE_TCHAR *filename);
+  static void closedir (ACE_DIR *);
+  static struct dirent *readdir (ACE_DIR *);
+  static int readdir_r (ACE_DIR *dirp,
                         struct dirent *entry,
                         struct dirent **result);
-  static long telldir (DIR *);
-  static void seekdir (DIR *,
+  static long telldir (ACE_DIR *);
+  static void seekdir (ACE_DIR *,
                        long loc);
-  static void rewinddir (DIR *);
+  static void rewinddir (ACE_DIR *);
 
 private:
   // Win32 emulation functions
   static DIR *opendir_emulation (const ACE_TCHAR *filename);
-  static void closedir_emulation (DIR *);
-  static struct dirent *readdir_emulation (DIR *);
+  static void closedir_emulation (ACE_DIR *);
+  static struct dirent *readdir_emulation (ACE_DIR *);
 };
 
 # if defined (ACE_HAS_INLINED_OSCALLS)

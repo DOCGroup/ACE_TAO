@@ -12,7 +12,7 @@ main (int, ACE_TCHAR *[])
        << ACE::minor_version() << "."
        << ACE::beta_version() << "\n";
 
-  struct utsname uname;
+  ACE_utsname uname;
   ACE_OS::uname(&uname);
   cerr << "OS: "
        << uname.sysname << " "

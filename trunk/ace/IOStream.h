@@ -358,7 +358,7 @@ typedef ostream& (*__omanip_)(ostream&);
 // operators.  Notice how the <ipfx> and <isfx> functions are used.
 
 #define GET_SIG(MT,DT)          inline virtual MT& operator>> (DT v)
-#if defined (__KCC)
+#if defined (__KCC) || (defined (__SUNPRO_CC) && __SUNPRO_CC > 0x510)
 #define GET_CODE {                      \
         if (ipfx (0))                                   \
         {                                               \
@@ -385,7 +385,7 @@ typedef ostream& (*__omanip_)(ostream&);
 // operators.  Notice how the <opfx> and <osfx> functions are used.
 
 #define PUT_SIG(MT,DT)          inline virtual MT& operator<< (DT v)
-#if defined (__KCC)
+#if defined (__KCC) || (defined (__SUNPRO_CC) && __SUNPRO_CC > 0x510)
 #define PUT_CODE {                      \
         if (opfx ())                                    \
         {                                               \

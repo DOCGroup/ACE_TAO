@@ -12,4 +12,10 @@
 
 #include "ace/config-sunos5.7.h"
 
+# if defined (_POSIX_PTHREAD_SEMANTICS)
+#ifdef ACE_LACKS_RWLOCK_T
+#undef ACE_LACKS_RWLOCK_T
+#endif /* ACE_LACKS_RWLOCK_T */
+#endif /* _POSIX_PTHREAD_SEMANTICS */
+
 #endif /* ACE_CONFIG_H */
