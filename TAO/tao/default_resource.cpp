@@ -16,6 +16,7 @@
 
 #include "ace/Select_Reactor.h"
 #include "ace/FlReactor.h"
+#include "ace/TkReactor.h"
 #include "ace/WFMO_Reactor.h"
 #include "ace/Msg_WFMO_Reactor.h"
 #include "ace/TP_Reactor.h"
@@ -156,6 +157,14 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
                           "TAO_Default_Factory - FlReactor"
                           " not supported on this platform\n"));
 #endif /* ACE_HAS_FL */
+            else if (ACE_OS::strcasecmp (name, "tk_reactor") == 0)
+#if defined(ACE_HAS_TK)
+              reactor_type_ = TAO_REACTOR_TK;
+#else
+              ACE_DEBUG ((LM_DEBUG,
+                          "TAO_Default_Factory - TkReactor"
+                          " not supported on this platform\n"));
+#endif /* ACE_HAS_TK */
             else if (ACE_OS::strcasecmp (name,
                                          "wfmo") == 0)
 #if defined(ACE_WIN32)
@@ -522,6 +531,12 @@ TAO_Default_Resource_Factory::allocate_reactor_impl (void) const
 #endif /* ACE_HAS_FL */
       break;
 
+    case TAO_REACTOR_TK:
+#if defined(ACE_HAS_TK)
+      ACE_NEW_RETURN (impl, ACE_TkReactor, 0);
+#endif /* ACE_HAS_TK */
+      break;
+
     case TAO_REACTOR_WFMO:
 #if defined(ACE_WIN32) && !defined (ACE_HAS_WINCE)
       ACE_NEW_RETURN (impl, ACE_WFMO_Reactor, 0);
@@ -611,7 +626,6 @@ TAO_Default_Resource_Factory::input_cdr_buffer_allocator (void)
                       0);
       break;
     }
-
   return allocator;
 }
 
