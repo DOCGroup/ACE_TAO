@@ -86,10 +86,10 @@ main (int argc, char *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      Ping_i server_impl (orb.in (),
+      PingObject_i server_impl (orb.in (),
                           persistent_poa.in ());
 
-      Ping_var server =
+      PingObject_var server =
         server_impl._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 

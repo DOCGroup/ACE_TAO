@@ -18,7 +18,7 @@
 
 #include "pingS.h"
 
-class Ping_i : public POA_Ping
+class PingObject_i : public POA_PingObject
 {
   // = TITLE
   //   A simple implementation of the <ping> interface
@@ -29,12 +29,12 @@ class Ping_i : public POA_Ping
   //   persistent object references after the crash.
   //
 public:
-  Ping_i (CORBA::ORB_ptr orb,
-          PortableServer::POA_ptr the_poa);
+  PingObject_i (CORBA::ORB_ptr orb,
+                PortableServer::POA_ptr the_poa);
   // ctor
 
-  // = The Ping interface methods
-  void ping (Ping_ptr callback,
+  // = The PingObject interface methods
+  void ping (PingObject_ptr callback,
              CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
   void pong (CORBA::Environment &ACE_TRY_ENV)

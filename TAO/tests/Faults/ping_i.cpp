@@ -9,30 +9,30 @@
 ACE_RCSID(Faults, test_i, "$Id$")
 
 void
-Ping_i::ping (Ping_ptr callback,
+PingObject_i::ping (PingObject_ptr callback,
       CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_DEBUG ((LM_DEBUG, "Ping_i::ping (%P|%t)\n"));
+  ACE_DEBUG ((LM_DEBUG, "PingObject_i::ping (%P|%t)\n"));
   callback->pong (ACE_TRY_ENV);
 }
 
 void
-Ping_i::pong (CORBA::Environment &)
+PingObject_i::pong (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_DEBUG ((LM_DEBUG, "Ping_i::pong (%P|%t)\n"));
+  ACE_DEBUG ((LM_DEBUG, "PingObject_i::pong (%P|%t)\n"));
 }
 
 void
-Ping_i::shutdown (CORBA::Environment &ACE_TRY_ENV)
+PingObject_i::shutdown (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0, ACE_TRY_ENV);
 }
 
 PortableServer::POA_ptr
-Ping_i::_default_POA (CORBA::Environment &)
+PingObject_i::_default_POA (CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
