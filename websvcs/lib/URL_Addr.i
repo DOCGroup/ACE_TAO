@@ -2,6 +2,8 @@
 
 // ****************************************************************
 
+#include "ace/OS.h"
+
 ACE_INLINE
 ACE_URL_Addr::ACE_URL_Addr (const ACE_URL_Addr& address)
   :  ACE_Addr (),

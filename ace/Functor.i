@@ -29,6 +29,9 @@
 //
 // ============================================================================
 
+#include "ace/ACE.h"
+#include "ace/OS.h"
+
 //////////////////////////////////////////////////////////////
 // GOF Command Pattern Classes and Template Specializations //
 //////////////////////////////////////////////////////////////
@@ -52,56 +55,56 @@ ACE_Command_Base::~ACE_Command_Base (void)
 ////////////////////////////////////////////////////////////
 
 //ACE_TEMPLATE_METHOD_SPECIALIZATION
-ACE_INLINE u_long
+ACE_INLINE unsigned long
 ACE_Hash<char>::operator () (char t) const
 {
   return t;
 }
 
 //ACE_TEMPLATE_METHOD_SPECIALIZATION
-ACE_INLINE u_long
+ACE_INLINE unsigned long
 ACE_Hash<signed char>::operator () (signed char t) const
 {
   return t;
 }
 
 //ACE_TEMPLATE_METHOD_SPECIALIZATION
-ACE_INLINE u_long
+ACE_INLINE unsigned long
 ACE_Hash<unsigned char>::operator () (unsigned char t) const
 {
   return t;
 }
 
 //ACE_TEMPLATE_METHOD_SPECIALIZATION
-ACE_INLINE u_long
+ACE_INLINE unsigned long
 ACE_Hash<ACE_INT16>::operator () (ACE_INT16 t) const
 {
   return t;
 }
 
 //ACE_TEMPLATE_METHOD_SPECIALIZATION
-ACE_INLINE u_long
+ACE_INLINE unsigned long
 ACE_Hash<ACE_UINT16>::operator () (ACE_UINT16 t) const
 {
   return t;
 }
 
 //ACE_TEMPLATE_METHOD_SPECIALIZATION
-ACE_INLINE u_long
+ACE_INLINE unsigned long
 ACE_Hash<ACE_INT32>::operator () (ACE_INT32 t) const
 {
   return t;
 }
 
 //ACE_TEMPLATE_METHOD_SPECIALIZATION
-ACE_INLINE u_long
+ACE_INLINE unsigned long
 ACE_Hash<ACE_UINT32>::operator () (ACE_UINT32 t) const
 {
   return t;
 }
 
 //ACE_TEMPLATE_METHOD_SPECIALIZATION
-ACE_INLINE u_long
+ACE_INLINE unsigned long
 ACE_Hash<ACE_UINT64>::operator () (ACE_UINT64 t) const
 {
   return ACE_U64_TO_U32 (t);
@@ -109,24 +112,24 @@ ACE_Hash<ACE_UINT64>::operator () (ACE_UINT64 t) const
 
 
 //ACE_TEMPLATE_METHOD_SPECIALIZATION
-ACE_INLINE u_long
+ACE_INLINE unsigned long
 ACE_Hash<const ACE_TCHAR *>::operator () (const ACE_TCHAR *t) const
 {
   return ACE::hash_pjw (t);
 }
 
 //ACE_TEMPLATE_METHOD_SPECIALIZATION
-ACE_INLINE u_long
+ACE_INLINE unsigned long
 ACE_Hash<ACE_TCHAR *>::operator () (const ACE_TCHAR *t) const
 {
   return ACE::hash_pjw (t);
 }
 
 //ACE_TEMPLATE_METHOD_SPECIALIZATION
-ACE_INLINE u_long
+ACE_INLINE unsigned long
 ACE_Hash<void *>::operator () (const void *t) const
 {
-  return (u_long)((ptrdiff_t) t);
+  return (unsigned long)((ptrdiff_t) t);
 }
 
 /***********************************************************************/
@@ -197,14 +200,14 @@ ACE_Less_Than<ACE_TCHAR *>::operator () (const ACE_TCHAR *lhs, const ACE_TCHAR *
 #if defined (ACE_USES_WCHAR)
 
 //ACE_TEMPLATE_METHOD_SPECIALIZATION
-ACE_INLINE u_long
+ACE_INLINE unsigned long
 ACE_Hash<const ACE_ANTI_TCHAR *>::operator () (const ACE_ANTI_TCHAR *t) const
 {
   return ACE::hash_pjw (t);
 }
 
 //ACE_TEMPLATE_METHOD_SPECIALIZATION
-ACE_INLINE u_long
+ACE_INLINE unsigned long
 ACE_Hash<ACE_ANTI_TCHAR *>::operator () (const ACE_ANTI_TCHAR *t) const
 {
   return ACE::hash_pjw (t);

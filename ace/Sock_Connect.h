@@ -22,7 +22,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS.h"
+#include "ace/Basic_Types.h"
+#include "ace/os_include/netinet/os_in.h"
 
 // Forward Declarations
 class ACE_INET_Addr;

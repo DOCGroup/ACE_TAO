@@ -20,7 +20,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS.h"
 #include "ace/Thread_Control.h"
 
 /**
@@ -69,7 +68,7 @@ private:
    * See bug #526.
    * We don't follow the singleton pattern due to dependency issues.
    */
-  static u_int is_constructed_;
+  static unsigned int is_constructed_;
 };
 
 /**

@@ -21,7 +21,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS.h"
 #include "ace/Unbounded_Queue.h"
 
 /**

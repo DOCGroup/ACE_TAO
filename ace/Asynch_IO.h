@@ -27,7 +27,7 @@
 #define ACE_ASYNCH_IO_H
 #include "ace/pre.h"
 
-#include "ace/config-all.h"
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -35,7 +35,37 @@
 
 #if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS))
 
-#include "ace/OS.h"
+#include "ace/os_include/os_signal.h"
+#include "ace/os_include/sys/os_socket.h"
+
+# if defined (ACE_WIN32) && ! defined (ACE_HAS_WINCE) \
+                         && ! defined (ACE_HAS_PHARLAP)
+typedef TRANSMIT_FILE_BUFFERS ACE_TRANSMIT_FILE_BUFFERS;
+typedef LPTRANSMIT_FILE_BUFFERS ACE_LPTRANSMIT_FILE_BUFFERS;
+typedef PTRANSMIT_FILE_BUFFERS ACE_PTRANSMIT_FILE_BUFFERS;
+
+#   define ACE_INFINITE INFINITE
+#   define ACE_STATUS_TIMEOUT STATUS_TIMEOUT
+#   define ACE_WAIT_FAILED WAIT_FAILED
+#   define ACE_WAIT_TIMEOUT WAIT_TIMEOUT
+# else /* ACE_WIN32 */
+struct ACE_TRANSMIT_FILE_BUFFERS
+{
+  void *Head;
+  size_t HeadLength;
+  void *Tail;
+  size_t TailLength;
+};
+typedef ACE_TRANSMIT_FILE_BUFFERS* ACE_PTRANSMIT_FILE_BUFFERS;
+typedef ACE_TRANSMIT_FILE_BUFFERS* ACE_LPTRANSMIT_FILE_BUFFERS;
+
+#   if !defined (ACE_INFINITE)
+#     define ACE_INFINITE LONG_MAX
+#   endif /* ACE_INFINITE */
+#   define ACE_STATUS_TIMEOUT LONG_MAX
+#   define ACE_WAIT_FAILED LONG_MAX
+#   define ACE_WAIT_TIMEOUT LONG_MAX
+# endif /* ACE_WIN32 */
 
 // Forward declarations
 class ACE_Proactor;
@@ -46,6 +76,7 @@ class ACE_Addr;
 
 // Forward declarations
 class ACE_Asynch_Result_Impl;
+class ACE_Time_Value;
 
 /**
  * @class ACE_Asynch_Result
@@ -85,7 +116,7 @@ public:
   const void *completion_key (void) const;
 
   /// Error value if the operation fails.
-  u_long error (void) const;
+  unsigned long error (void) const;
 
   /**
    * On WIN32, this returns the event associated with the OVERLAPPED
@@ -103,8 +134,8 @@ public:
    * @@ On POSIX4-Unix, offset_high should be supported using
    *    aiocb64.
    */
-  u_long offset (void) const;
-  u_long offset_high (void) const;
+  unsigned long offset (void) const;
+  unsigned long offset_high (void) const;
 
   /**
    * Priority of the operation.
@@ -1101,7 +1132,7 @@ public:
     size_t bytes_per_send (void) const;
 
     /// Flags which were passed into transmit file.
-    u_long flags (void) const;
+    unsigned long flags (void) const;
 
     /// Get the implementation class.
     ACE_Asynch_Transmit_File_Result_Impl *implementation (void) const;

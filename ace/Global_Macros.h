@@ -642,6 +642,88 @@ _make_##SERVICE_CLASS (ACE_Service_Object_Exterminator *gobbler) \
 # define ACE_SVC_FACTORY_DEFINE(X) ACE_FACTORY_DEFINE (ACE_Svc, X)
 //@}
 
+// Add some typedefs and macros to enhance Win32 conformance...
+#   if !defined (LPSECURITY_ATTRIBUTES)
+#     define LPSECURITY_ATTRIBUTES int
+#   endif /* !defined LPSECURITY_ATTRIBUTES */
+#   if !defined (GENERIC_READ)
+#     define GENERIC_READ 0
+#   endif /* !defined GENERIC_READ */
+#   if !defined (FILE_SHARE_READ)
+#     define FILE_SHARE_READ 0
+#   endif /* !defined FILE_SHARE_READ */
+#   if !defined (OPEN_EXISTING)
+#     define OPEN_EXISTING 0
+#   endif /* !defined OPEN_EXISTING */
+#   if !defined (FILE_ATTRIBUTE_NORMAL)
+#     define FILE_ATTRIBUTE_NORMAL 0
+#   endif /* !defined FILE_ATTRIBUTE_NORMAL */
+#   if !defined (MAXIMUM_WAIT_OBJECTS)
+#     define MAXIMUM_WAIT_OBJECTS 0
+#   endif /* !defined MAXIMUM_WAIT_OBJECTS */
+#   if !defined (FILE_FLAG_OVERLAPPED)
+#     define FILE_FLAG_OVERLAPPED 0
+#   endif /* !defined FILE_FLAG_OVERLAPPED */
+#   if !defined (FILE_FLAG_SEQUENTIAL_SCAN)
+#     define FILE_FLAG_SEQUENTIAL_SCAN 0
+#   endif   /* FILE_FLAG_SEQUENTIAL_SCAN */
+#   if !defined(FILE_FLAG_WRITE_THROUGH)
+#     define FILE_FLAG_WRITE_THROUGH 0
+#   endif /* !defined FILE_FLAG_WRITE_THROUGH */
+#   if !defined(PIPE_WAIT)
+#     define PIPE_WAIT 0
+#   endif /* !defined PIPE_WAIT */
+#   if !defined(PIPE_NOWAIT)
+#     define PIPE_NOWAIT 0
+#   endif /* !defined PIPE_WAIT */
+#   if !defined(PIPE_READMODE_BYTE)
+#     define PIPE_READMODE_BYTE 0
+#   endif /* !defined PIPE_READMODE_BYTE */
+#   if !defined(PIPE_READMODE_MESSAGE)
+#     define PIPE_READMODE_MESSAGE 0
+#   endif /* !defined PIPE_READMODE_MESSAGE */
+#   if !defined(PIPE_TYPE_BYTE)
+#     define PIPE_TYPE_BYTE 0
+#   endif /* !defined PIPE_TYPE_BYTE */
+#   if !defined(PIPE_TYPE_MESSAGE)
+#     define PIPE_TYPE_MESSAGE 0
+#   endif /* !defined PIPE_TYPE_MESSAGE */
+
+// Some useful abstrations for expressions involving
+// ACE_Allocator.malloc ().  The difference between ACE_NEW_MALLOC*
+// with ACE_ALLOCATOR* is that they call constructors also.
+
+# define ACE_ALLOCATOR_RETURN(POINTER,ALLOCATOR,RET_VAL) \
+   do { POINTER = ALLOCATOR; \
+     if (POINTER == 0) { errno = ENOMEM; return RET_VAL; } \
+   } while (0)
+# define ACE_ALLOCATOR(POINTER,ALLOCATOR) \
+   do { POINTER = ALLOCATOR; \
+     if (POINTER == 0) { errno = ENOMEM; return; } \
+   } while (0)
+# define ACE_ALLOCATOR_NORETURN(POINTER,ALLOCATOR) \
+   do { POINTER = ALLOCATOR; \
+     if (POINTER == 0) { errno = ENOMEM; } \
+   } while (0)
+
+# define ACE_NEW_MALLOC_RETURN(POINTER,ALLOCATOR,CONSTRUCTOR,RET_VAL) \
+   do { POINTER = ALLOCATOR; \
+     if (POINTER == 0) { errno = ENOMEM; return RET_VAL;} \
+     else { new (POINTER) CONSTRUCTOR; } \
+   } while (0)
+# define ACE_NEW_MALLOC(POINTER,ALLOCATOR,CONSTRUCTOR) \
+   do { POINTER = ALLOCATOR; \
+     if (POINTER == 0) { errno = ENOMEM; return;} \
+     else { new (POINTER) CONSTRUCTOR; } \
+   } while (0)
+# define ACE_NEW_MALLOC_NORETURN(POINTER,ALLOCATOR,CONSTRUCTOR) \
+   do { POINTER = ALLOCATOR; \
+     if (POINTER == 0) { errno = ENOMEM;} \
+     else { new (POINTER) CONSTRUCTOR; } \
+   } while (0)
+
+# define ACE_NOOP(x)
+
 #include "ace/post.h"
 
 #endif /*ACE_GLOBAL_MACROS_H*/

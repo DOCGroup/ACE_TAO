@@ -3,6 +3,9 @@
 
 // FIFO_Send.i
 
+#include "ace/OS.h"
+#include "ace/ACE.h"
+
 ASYS_INLINE ssize_t
 ACE_FIFO_Send::send (const void *buf, size_t len)
 {

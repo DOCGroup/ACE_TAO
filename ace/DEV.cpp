@@ -8,6 +8,8 @@
 #include "ace/DEV.i"
 #endif
 
+#include "ace/OS.h"
+
 ACE_RCSID(ace, DEV, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_DEV)

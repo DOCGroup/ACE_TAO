@@ -12,6 +12,8 @@ ACE_RCSID(ace, Message_Block_T, "$Id$")
 #include "ace/Message_Block_T.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/os_include/os_errno.h"
+
 template<class L>
 ACE_Locked_Data_Block<L>::~ACE_Locked_Data_Block (void)
 {

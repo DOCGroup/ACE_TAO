@@ -3,6 +3,9 @@
 
 // FIFO_Recv.i
 
+#include "ace/OS.h"
+#include "ace/ACE.h"
+
 ASYS_INLINE ssize_t
 ACE_FIFO_Recv::recv (void *buf, size_t len)
 {

@@ -21,7 +21,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // For size_t under Chorus
-#include "ace/OS_Memory.h"
+#include "ace/os_include/os_stddef.h"
 
 class ACE_Allocator;
 

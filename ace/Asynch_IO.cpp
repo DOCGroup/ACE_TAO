@@ -36,7 +36,7 @@ ACE_Asynch_Result::completion_key (void) const
   return this->implementation ()->completion_key ();
 }
 
-u_long
+unsigned long
 ACE_Asynch_Result::error (void) const
 {
   return this->implementation ()->error ();
@@ -48,13 +48,13 @@ ACE_Asynch_Result::event (void) const
   return this->implementation ()->event ();
 }
 
-u_long
+unsigned long
 ACE_Asynch_Result::offset (void) const
 {
   return this->implementation ()->offset ();
 }
 
-u_long
+unsigned long
 ACE_Asynch_Result::offset_high (void) const
 {
   return this->implementation ()->offset_high ();
@@ -438,8 +438,8 @@ ACE_Asynch_Read_File::open (ACE_Handler &handler,
 int
 ACE_Asynch_Read_File::read (ACE_Message_Block &message_block,
                             size_t bytes_to_read,
-                            u_long offset,
-                            u_long offset_high,
+                            unsigned long offset,
+                            unsigned long offset_high,
                             const void *act,
                             int priority,
                             int signal_number)
@@ -457,8 +457,8 @@ ACE_Asynch_Read_File::read (ACE_Message_Block &message_block,
 int
 ACE_Asynch_Read_File::readv (ACE_Message_Block &message_block,
                              size_t bytes_to_read,
-                             u_long offset,
-                             u_long offset_high,
+                             unsigned long offset,
+                             unsigned long offset_high,
                              const void *act,
                              int priority,
                              int signal_number)
@@ -550,8 +550,8 @@ ACE_Asynch_Write_File::open (ACE_Handler &handler,
 int
 ACE_Asynch_Write_File::write (ACE_Message_Block &message_block,
                               size_t bytes_to_write,
-                              u_long offset,
-                              u_long offset_high,
+                              unsigned long offset,
+                              unsigned long offset_high,
                               const void *act,
                               int priority,
                               int signal_number)
@@ -569,8 +569,8 @@ ACE_Asynch_Write_File::write (ACE_Message_Block &message_block,
 int
 ACE_Asynch_Write_File::writev (ACE_Message_Block &message_block,
                                size_t bytes_to_write,
-                               u_long offset,
-                               u_long offset_high,
+                               unsigned long offset,
+                               unsigned long offset_high,
                                const void *act,
                                int priority,
                                int signal_number)
@@ -876,10 +876,10 @@ int
 ACE_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
                                          Header_And_Trailer *header_and_trailer,
                                          size_t bytes_to_write,
-                                         u_long offset,
-                                         u_long offset_high,
+                                         unsigned long offset,
+                                         unsigned long offset_high,
                                          size_t bytes_per_send,
-                                         u_long flags,
+                                         unsigned long flags,
                                          const void *act,
                                          int priority,
                                          int signal_number)
@@ -942,7 +942,7 @@ ACE_Asynch_Transmit_File::Result::bytes_per_send (void) const
   return this->implementation ()->bytes_per_send ();
 }
 
-u_long
+unsigned long
 ACE_Asynch_Transmit_File::Result::flags (void) const
 {
   return this->implementation ()->flags ();

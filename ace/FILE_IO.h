@@ -23,10 +23,12 @@
 #include "ace/FILE_Addr.h"
 
 // Used in the FILE_IO.h file...
-#include "ace/ACE.h"
+#include "ace/os_include/os_stdio.h"
+#include "ace/os_include/sys/os_uio.h"
 
 // Forward decl.
 class ACE_Message_Block;
+class ACE_Time_Value;
 
 /**
  * @class ACE_FILE_IO

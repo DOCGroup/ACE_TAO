@@ -12,7 +12,8 @@
 #define ACE_LIB_FIND_H
 #include "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/config-all.h"
+#include "ace/ACE_export.h"
 
 /**
  * @class ACE_Lib_Find

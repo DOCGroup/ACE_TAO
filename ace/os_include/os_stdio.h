@@ -94,6 +94,19 @@ extern "C"
    int fileno(FILE *);
 #endif /* ACE_PSOS_SNARFS_HEADER_INFO */
 
+#if defined (ACE_WIN32)
+  typedef OVERLAPPED ACE_OVERLAPPED;
+#else
+  struct ACE_OVERLAPPED
+  {
+    unsigned long Internal;
+    unsigned long InternalHigh;
+    unsigned long Offset;
+    unsigned long OffsetHigh;
+    ACE_HANDLE hEvent;
+  };
+#endif /* ACE_WIN32 */
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

@@ -15,11 +15,14 @@
 #define ACE_FIFO_H
 #include "ace/pre.h"
 
-#include "ace/IPC_SAP.h"
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/IPC_SAP.h"
+#include "ace/os_include/os_limits.h"
 
 /**
  * @class ACE_FIFO
