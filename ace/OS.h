@@ -777,6 +777,11 @@ private:
 #   define ACE_SOCK_CONNECTOR ACE_SOCK_Connector
 #   define ACE_SOCK_STREAM ACE_SOCK_Stream
 
+// Handle ACE_SOCK_SEQPACK_*
+#   define ACE_SOCK_SEQPACK_ACCEPTOR ACE_SOCK_SEQPACK_Acceptor
+#   define ACE_SOCK_SEQPACK_CONNECTOR ACE_SOCK_SEQPACK_Connector
+#   define ACE_SOCK_SEQPACK_ASSOCIATION ACE_SOCK_SEQPACK_Association
+
 // Handle ACE_MEM_*
 #   define ACE_MEM_ACCEPTOR ACE_MEM_Acceptor
 #   define ACE_MEM_CONNECTOR ACE_MEM_Connector
@@ -857,6 +862,11 @@ private:
 #   define ACE_SOCK_ACCEPTOR ACE_SOCK_Acceptor, ACE_INET_Addr
 #   define ACE_SOCK_CONNECTOR ACE_SOCK_Connector, ACE_INET_Addr
 #   define ACE_SOCK_STREAM ACE_SOCK_Stream, ACE_INET_Addr
+
+// Handle ACE_SOCK_SEQPACK_*
+#   define ACE_SOCK_SEQPACK_ACCEPTOR ACE_SOCK_SEQPACK_Acceptor, ACE_INET_Addr
+#   define ACE_SOCK_SEQPACK_CONNECTOR ACE_SOCK_SEQPACK_Connector, ACE_INET_Addr
+#   define ACE_SOCK_SEQPACK_ASSOCIATION ACE_SOCK_SEQPACK_Association, ACE_INET_Addr
 
 // Handle ACE_MEM_*
 #   define ACE_MEM_ACCEPTOR ACE_MEM_Acceptor, ACE_MEM_Addr

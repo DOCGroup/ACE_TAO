@@ -117,6 +117,7 @@ CONNECTION_FILES = \
 SOCKETS_FILES = \
   Addr \
   INET_Addr \
+  Multihomed_INET_Addr \
   IPC_SAP \
   LSOCK \
   LSOCK_Acceptor \
@@ -133,6 +134,9 @@ SOCKETS_FILES = \
   SOCK_Dgram_Bcast \
   SOCK_Dgram_Mcast \
   SOCK_IO \
+  SOCK_SEQPACK_Acceptor \
+  SOCK_SEQPACK_Association \
+  SOCK_SEQPACK_Connector \
   SOCK_Stream
 IPC_FILES = \
   ATM_Addr \

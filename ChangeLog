@@ -1,3 +1,39 @@
+Mon Apr 21 21:20:00 UTC 2003  Gautam Thaker  <gthaker@atl.lmco.com>
+
+        Please direct all immediate build issues to jcohen@atl.lmco.com
+        if problems occur as a result of this check in.  Thank you.
+
+        * ace/OS.h:
+
+        Added #defines for SOCK_SEQPACK related objects.
+
+        * ace/SOCK_Connector.cpp:
+        * ace/SOCK_Connector.h:
+
+        Added extra parameter to constructor and connector (with a
+        default value) to enable selection of protocol.
+
+        * ace/Makefile.ace:
+
+        Added Multihomed_INET_Addr and SOCK_SEQPACK_* to ACE lib.
+
+        * bin/PerlACE/Process_Unix.pm:
+        * bin/PerlACE/Process_Win32.pm:
+
+        emulholl@atl.lmco.com comments:
+        I added a line to the Wait() method in the Process::Unix and
+        Process::Win32 Perl classes in order to enforce what appeared
+        to be an implied (although undocumented) invariant for the
+        class: that the "running" variable should have the value 0
+        whenever the process is not running.
+
+        * include/makeinclude/platform_linux.GNU:
+        * include/makeinclude/wrapper_macros.GNU:
+
+        Added build option 'sctp' to enable SCTP support in ACE.
+        Currently, the only SCTP implementation supported is from
+        OpenSS7 on the Linux platform.  Specify 'sctp=openss7' to enable.
+
 Mon Apr 21 12:16:20 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/em3vcpdll.mpt:
