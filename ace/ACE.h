@@ -492,7 +492,7 @@ public:
   // <delim> is '/'.
 
   static const char *dirname (const char *pathname,
-                              char delim);
+                              char delim = ACE_DIRECTORY_SEPARATOR_CHAR_A);
   // Returns the "dirname" of a <pathname>.  For instance, the
   // basename of "/tmp/foo.cpp" is "/tmp" when <delim> is '/'.  This
   // method does not modify <pathname> and is not reentrant.

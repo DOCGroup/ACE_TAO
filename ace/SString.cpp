@@ -789,7 +789,7 @@ ACE_WString::operator= (const ACE_WString &s)
 void
 ACE_WString::set (const ACE_USHORT16 *s)
 {
-  this->set (ACE_WString::strlen (s), s);
+  this->set (s, ACE_WString::strlen (s));
 }
 
 void
