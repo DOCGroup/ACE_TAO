@@ -604,29 +604,6 @@ ACE_Object_Manager::fini (void)
   // No mutex here.  Only the main thread should destroy the singleton
   // ACE_Object_Manager instance.
 
-  ////////////////////////////////////////////////////////////////////////
-  // Before setting the "shutting down" state, give any lingering threads
-  // a chance to exit.
-  ACE_Time_Value tv ( ACE_OS::gettimeofday ());
-  tv += ACE_Time_Value(1, 0); // add one second
-  if ( ACE_Thread_Manager::instance()->wait(&tv) != 0)
-    {
-      // A couple of bad things can result if this wait times out.
-      // The least serious is resouce leaks.  Fortunately end-of-process which
-      // is going to happen real soon now will clean up most of these.
-      // A more serious problem is the lingering threads could attempt to use
-      // the ACE infrastructure that we're just about to dismantle -- leading
-      // to program crashes at exit time.
-      // If this is unacceptable, we could add an option to the Object Manager
-      // to force it to wait here.  There may be applications for which a hang
-      // is better than a silent resource leak.
-#if 0
-      ACE_DEBUG ((LM_DEBUG,
-        ACE_TEXT ("(%P|%t) ACE_Object_Manager::fini wait for threads timed out.\n")
-        ));
-#endif
-    }
-
   // Indicate that this ACE_Object_Manager instance is being
   // shut down.
   object_manager_state_ = OBJ_MAN_SHUTTING_DOWN;
