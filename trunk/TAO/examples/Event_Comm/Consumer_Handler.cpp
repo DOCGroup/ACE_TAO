@@ -5,8 +5,8 @@
 ACE_RCSID(Consumer, Consumer_Handler, "$Id$")
 
 Consumer_Handler::Consumer_Handler (void)
-: receiver_ (0),
-  notifier_ (0)
+  : receiver_ (0),
+    notifier_ (0)
 {
   // No-Op.
 }
@@ -40,9 +40,11 @@ Consumer_Handler::init (int argc, char *argv[])
   char *filtering_criteria = "";
 
    // First see if we have any environment variables.
-  filtering_criteria = ACE_OS::getenv ("FILTERING_CRITERIA");
+  filtering_criteria =
+    ACE_OS::getenv ("FILTERING_CRITERIA");
 
-   // Then override these variables with command-line arguments.
+   // Then override these variables with command-line arguments if
+   // necessary.
   filtering_criteria = argc > 1 ? argv[1] : "";
 
   TAO_TRY
@@ -54,13 +56,13 @@ Consumer_Handler::init (int argc, char *argv[])
 				    TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      // start the servant.
+      // Start the servant.
       this->receiver_ =
 	this->receiver_i_._this (TAO_TRY_ENV);
 
       TAO_CHECK_ENV;
 
-      if (this->get_notifier() == -1)
+      if (this->get_notifier () == -1)
 	ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to get the notifier "
                            "the TAO_Naming_Client. \n"),
@@ -82,9 +84,9 @@ Consumer_Handler::init (int argc, char *argv[])
 }
 
 int
-Consumer_Handler::get_notifier(void)
+Consumer_Handler::get_notifier (void)
 {
- TAO_TRY
+  TAO_TRY
     {
       // Initialization of the naming service.
       if (naming_services_client_.init (orb_.in ()) != 0)
@@ -105,24 +107,24 @@ Consumer_Handler::get_notifier(void)
       // The CORBA::Object_var object is downcast to Notifier_var
       // using the <_narrow> method.
       this->notifier_ =
-         Event_Comm::Notifier::_narrow (notifier_obj.in (),
-					TAO_TRY_ENV);
+        Event_Comm::Notifier::_narrow (notifier_obj.in (),
+                                       TAO_TRY_ENV);
       TAO_CHECK_ENV;
     }
- TAO_CATCHANY
-   {
-     TAO_TRY_ENV.print_exception ("Consumer_Handler::get_notifier\n");
-     return -1;
-   }
- TAO_ENDTRY;
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("Consumer_Handler::get_notifier\n");
+      return -1;
+    }
+  TAO_ENDTRY;
 
- return 0;
+  return 0;
 }
 
 void
 Consumer_Handler:: close (void)
 {
-  this->orb_->shutdown();
+  this->orb_->shutdown ();
 }
 
 int
@@ -136,6 +138,8 @@ Consumer_Handler::run (void)
 ACE_Reactor*
 Consumer_Handler::reactor(void)
 {
+  // @@ Please see if there's a way to get to the Reactor without
+  // using the TAO_ORB_Core_instance().
   return TAO_ORB_Core_instance ()->reactor ();
 }
 

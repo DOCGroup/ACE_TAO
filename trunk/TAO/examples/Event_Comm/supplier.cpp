@@ -79,18 +79,21 @@ Supplier::init (int argc, char *argv[])
   if (this->nh_.init (argc, argv) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
 		       "%p\n",
-		       "Notifier_Handler did not init\n"), -1);
-
-   if (this->ih_.initialize (&nh_) == -1)
+		       "Notifier_Handler did not init\n"),
+                      -1);
+  else if (this->ih_.initialize (&nh_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
 		       "%p\n",
-		       "Supplier Input handler did not init\n"), -1);
-
-  if (ACE_Reactor::instance ()->register_handler (SIGINT,
-						  this) == -1)
+		       "Supplier Input handler did not init\n"),
+                      -1);
+  else if (ACE_Reactor::instance ()->register_handler (SIGINT,
+                                                       this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
 		       "%p\n",
-		       "register_handler"), -1);
+		       "register_handler"),
+                      -1);
+  ACE_DEBUG ((LM_DEBUG,
+              "Supplier initialized.. \n"));
   return 0;
 }
 
@@ -102,8 +105,9 @@ main (int argc, char *argv[])
 
   if (supplier.init (argc, argv) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                "%p\n",
-                "supplier init failed"), 1);
+                       "%p\n",
+                       "supplier init failed"),
+                      1);
 
   // Loop forever handling events.
   supplier.run ();

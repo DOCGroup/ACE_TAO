@@ -54,6 +54,7 @@ Notifier::run (void)
     }
   TAO_CATCHANY
     {
+      return;
     }
   TAO_ENDTRY;
 }

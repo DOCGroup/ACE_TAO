@@ -6,9 +6,9 @@
 ACE_RCSID(Consumer, Consumer_Input_Handler, "$Id$")
 
 Consumer_Input_Handler::Consumer_Input_Handler (void)
-  :handle_ (0),
-   receiver_handler_ (0),
-   consumer_initiated_shutdown_ (0)
+  : handle_ (0),
+    receiver_handler_ (0),
+    consumer_initiated_shutdown_ (0)
 {
   // No-Op.
 }
@@ -69,7 +69,7 @@ Consumer_Input_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
       TAO_ENDTRY;
     }
 
-  if (this->receiver_handler_->reactor()->remove_handler
+  if (this->receiver_handler_->reactor ()->remove_handler
       (this,
        // Don't execute a callback here otherwise we'll recurse
        // indefinitely!
@@ -77,7 +77,6 @@ Consumer_Input_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
     ACE_ERROR ((LM_ERROR,
                 "%p\n",
                 "remove_handler"));
-
   return 0;
 }
 

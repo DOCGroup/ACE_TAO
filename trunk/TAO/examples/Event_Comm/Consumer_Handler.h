@@ -22,7 +22,6 @@
 #ifndef _CONSUMER_HANDLER_H
 #define _CONSUMER_HANDLER_H
 
-//#include "ace/CORBA_Handler.h"
 #include "Event_Comm_i.h"
 #include "orbsvcs/Naming/Naming_Utils.h"
 #include "orbsvcs/CosNamingC.h"
@@ -42,7 +41,7 @@ public:
   // Constructor.
 
  virtual ~Consumer_Handler (void);
-  // Destructor
+  // Destructor.
 
   int init (int argc, char *argv[]);
   // Initializes the ORB, gets the Notifier reference from the Naming

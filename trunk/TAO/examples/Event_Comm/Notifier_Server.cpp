@@ -22,6 +22,11 @@ Notifier_Server::close (void)
 {
   TAO_TRY
     {
+      // disconnect all the consumers.
+      this->servant_.disconnect ("notifier shutdown.",
+                                 TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
       // Name the object.
       CosNaming::Name notifier_obj_name (1);
       notifier_obj_name.length (1);
@@ -102,10 +107,12 @@ Notifier_Server::init (int argc,
 {
   // Call the init of <TAO_ORB_Manager> to initialize the ORB and
   // create the child poa under the root POA.
-  if (this->orb_manager_.init_child_poa (argc,
-					 argv,
-					 "child_poa",
-					 TAO_TRY_ENV) == -1)
+
+ if (this->orb_manager_.init_child_poa (argc,
+                                        argv,
+                                        "child_poa",
+                                        TAO_TRY_ENV) == -1)
+
    ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "init_child_poa"),
@@ -113,14 +120,12 @@ Notifier_Server::init (int argc,
   TAO_CHECK_ENV_RETURN (TAO_TRY_ENV,
 			-1);
 
-  CORBA::ORB_var orb =
-    this->orb_manager_.orb ();
-
   // Activate the servant in the POA.
   CORBA::String_var str =
     this->orb_manager_.activate_under_child_poa (NOTIFIER_BIND_NAME,
 						 &this->servant_,
 						 TAO_TRY_ENV);
+
   return this->init_naming_service (TAO_TRY_ENV);
 }
 

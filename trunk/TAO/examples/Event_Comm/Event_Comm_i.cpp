@@ -109,7 +109,10 @@ Consumer_Entry::Consumer_Entry (Event_Comm::Consumer *consumer,
   ACE_ASSERT (compile_buffer != 0);
 
   this->regexp (compile_buffer);
-  ACE_ASSERT (this->regexp ());
+  ACE_ASSERT (this->regexp () != 0);
+
+  ACE_DEBUG ((LM_DEBUG, "criteria = %sm regexp = %s",
+              this->criteria(), this->regexp()));
 
   // Increment the reference count since we are keeping a copy of
   // this...
@@ -151,7 +154,7 @@ Notifier_i::subscribe (Event_Comm::Consumer_ptr consumer_ref,
   MAP_ITERATOR mi (this->map_);
 
   // Try to locate an entry checking if the object references are
-  // equivalent .  If we don't find the entry, or if the filtering
+  // equivalent.  If we don't find the entry, or if the filtering
   // criteria is different that is good news since we currently don't
   // allow duplicates...  @@ Should duplicates be allowed?
 
@@ -265,18 +268,24 @@ Notifier_i::disconnect (const char *reason,
   MAP_ITERATOR mi (this->map_);
   int count = 0;
 
-  // Notify all the consumers, taking into account the filtering criteria.
+  // Notify all the consumers, taking into account the filtering
+  // criteria.
 
-  for (MAP_ENTRY *me = 0; mi.next (me) != 0; mi.advance ())
+  for (MAP_ENTRY *me = 0;
+       mi.next (me) != 0;
+       mi.advance ())
     {
-      Event_Comm::Consumer_ptr consumer_ref = me->ext_id_; //int_id_->consumer ();
+      Event_Comm::Consumer_ptr consumer_ref =
+        me->ext_id_; //int_id_->consumer ();
+
       ACE_ASSERT (consumer_ref != 0);
       ACE_DEBUG ((LM_DEBUG,
                   "disconnecting client %x\n",
                   consumer_ref));
       TAO_TRY
         {
-          consumer_ref->disconnect (reason, TAO_TRY_ENV);
+          consumer_ref->disconnect (reason,
+                                    TAO_TRY_ENV);
         }
       TAO_CATCHANY
         {
@@ -289,6 +298,7 @@ Notifier_i::disconnect (const char *reason,
     }
 
   this->map_.close ();
+
   if (count == 1)
     ACE_DEBUG ((LM_DEBUG,
                 "there was 1 consumer\n"));
@@ -306,28 +316,24 @@ Notifier_i::push (const Event_Comm::Event &event,
 {
   ACE_DEBUG ((LM_DEBUG,
               "in Notifier_i::send_notification = %s\n",
-	      (const char *)event.tag_));
+	      (const char *) event.tag_));
   MAP_ITERATOR mi (this->map_);
   int count = 0;
 
   // Notify all the consumers.
 
-  // @@ Later on we need to consider the filtering_criteria!
-
   for (MAP_ENTRY *me = 0; mi.next (me) != 0; mi.advance ())
     {
       Event_Comm::Consumer_ptr consumer_ref = me->int_id_->consumer ();
       ACE_ASSERT (consumer_ref != 0);
-      ACE_CString regexp (me->int_id_->regexp ());
+      char *regexp = ACE_const_cast (char *, me->int_id_->regexp ());
+      ACE_ASSERT (regexp);
       const char *criteria = me->int_id_->criteria ();
-      ACE_ASSERT (regexp.fast_rep());
       ACE_ASSERT (criteria);
 
       // Do a regular expression comparison to determine matching.
       if (ACE_OS::strcmp ("", criteria) == 0 // Everything matches the wildcard.
-	  || ACE_OS::strcmp (event.tag_, criteria) == 0
-	  // || ACE_OS::strcmp (event.tag_, regexp.fast_rep ()) == 0
-	  || ACE_OS::step (event.tag_, regexp.rep ()) != 0)
+	  || ACE_OS::step (event.tag_, regexp) != 0)
 	{
 	  ACE_DEBUG ((LM_DEBUG,
                       "string %s matched regexp \"%s\" for client %x\n",
@@ -392,8 +398,13 @@ Consumer_i::disconnect (const char *reason,
               "**** got disconnected due to %s\n",
               reason));
 
-  // shutdown the orb.
-  TAO_ORB_Core_instance ()->orb()->shutdown ();
+  // @@ Pradeep, can you please revise this so that rather than using
+  // TAO_ORB_Core_instance() you instead keep a pointer to your ORB
+  // instance and do the shutdown that way?  The current approach
+  // won't be valid shortly when we add some new features to TAO.
+
+  // Shutdown the orb.
+  TAO_ORB_Core_instance ()->orb ()->shutdown ();
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

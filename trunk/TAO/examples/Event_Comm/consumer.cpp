@@ -46,12 +46,14 @@ Consumer::Consumer (void)
 Consumer::~Consumer (void)
 {
   // Allow the handlers to clean up.
-  this->ih_.handle_close();
-  this->ch_.handle_close();
+  this->ih_.handle_close ();
+  this->ch_.handle_close ();
 }
 
 int
-Consumer::handle_signal (int signum, siginfo_t *, ucontext_t *)
+Consumer::handle_signal (int signum,
+                         siginfo_t *,
+                         ucontext_t *)
 {
   ACE_DEBUG ((LM_DEBUG,
               "%S\n",
@@ -81,20 +83,22 @@ Consumer::initialize (int argc, char *argv[])
   if (this->ch_.init (argc, argv) == -1)
      ACE_ERROR_RETURN ((LM_ERROR,
 			"%p\n",
-			"Consumer_Handler failed to initialize\n"), -1);
-
+			"Consumer_Handler failed to initialize\n"),
+                       -1);
    // Initialize the <Consumer_Input_Handler>.
-  if (this->ih_.initialize (&this->ch_) == -1)
+  else if (this->ih_.initialize (&this->ch_) == -1)
      ACE_ERROR_RETURN ((LM_ERROR,
 			"%p\n",
-			"Consumer_Input_Handler failed to initialize\n"), -1);
-
-  if (this->ch_.reactor()->register_handler (SIGINT,
-					     this) == -1)
+			"Consumer_Input_Handler failed to initialize\n"),
+                       -1);
+  else if (this->ch_.reactor ()->register_handler (SIGINT,
+                                              this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
 		       "%p\n",
-		       "register_handler"), -1);
-  return 0;
+		       "register_handler"),
+                      -1);
+  else
+    return 0;
 }
 
 int
