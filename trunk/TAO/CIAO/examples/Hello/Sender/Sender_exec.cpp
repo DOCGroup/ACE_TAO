@@ -28,7 +28,7 @@ Sender_Impl::Sender_exec_i::~Sender_exec_i ()
 
 void
 Sender_Impl::Sender_exec_i::local_message (const char * local_message
-		                           ACE_ENV_ARG_DECL_NOT_USED)
+                                           ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   message_ = CORBA::string_dup (local_message);
@@ -84,12 +84,32 @@ Sender_Impl::Sender_exec_i::set_session_context (Components::SessionContext_ptr 
 }
 
 void
+Sender_Impl::Sender_exec_i::ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::CCMException))
+{
+  ACE_DEBUG ((LM_DEBUG,
+              "Sender_Impl::Sender_exec_i::ciao_preactivate\n"));
+}
+
+void
 Sender_Impl::Sender_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "Sender_Impl::Sender_exec_i::ccm_activate\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "Sender_Impl::Sender_exec_i::ccm_activate\n"));
 }
+
+void
+Sender_Impl::Sender_exec_i::ciao_postactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::CCMException))
+{
+  ACE_DEBUG ((LM_DEBUG,
+              "Sender_Impl::Sender_exec_i::ciao_postactivate\n"));
+}
+
 
 void
 Sender_Impl::Sender_exec_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)

@@ -50,6 +50,9 @@ namespace CIAO
                                     ACE_Hash<ACE_CString>,
                                     ACE_Equal_To<ACE_CString>,
                                     ACE_Null_Mutex> COMP_MAP;
+
+    typedef COMP_MAP::iterator COMP_MAP_ITER;
+
     COMP_MAP instantiated_components_;
 
     typedef ACE_Unbounded_Queue<Components::Deployment::ComponentServer_var> SERVER_QUEUE;
