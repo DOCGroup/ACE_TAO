@@ -1,15 +1,20 @@
+Sat Nov 15 12:19:55 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
+
+	* TAO_IDL/be/be_codegen.cpp: Changed two loop counters from type
+	  int to type size_t.
+
 Sat Nov 15 11:23:46 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* TAO_IDL/include/idl_global.h: 
-	* TAO_IDL/util/utl_global.cpp: 
+	* TAO_IDL/include/idl_global.h:
+	* TAO_IDL/util/utl_global.cpp:
 	  Added routines to obtain the generated names of any IDL file,
 	  not only the one we are processing.
 
-	* TAO_IDL/be/be_codegen.cpp: 
+	* TAO_IDL/be/be_codegen.cpp:
 	  The compiler now generate all the required include directives
 	  when the IDL file contains some.
 
-	* tao/params.cpp: 
+	* tao/params.cpp:
 	  Initialize name_service_port_ to zero in the constructor.
 
 Sat Nov 15 01:33:08 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
@@ -18,19 +23,19 @@ Sat Nov 15 01:33:08 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Fri Nov 14 19:45:01 1997  Sergio Flores  <sergio@polka.cs.wustl.edu>
 
-	* tests/Cubit/TAO/DII_Cubit/clnt.cpp : 
-	* tests/Cubit/TAO/DII_Cubit/clnt.h : 
-	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp : 
-	- Fixed the difference in latency problem from DII and IDL.  
+	* tests/Cubit/TAO/DII_Cubit/clnt.cpp :
+	* tests/Cubit/TAO/DII_Cubit/clnt.h :
+	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp :
+	- Fixed the difference in latency problem from DII and IDL.
 	- Changed the DII_Cubit client interface to be similar to IDL, now
  	you can specify hostname and port number, instead of the IOR.
 
 Fri Nov 14 17:48:14 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* orbsvcs/bin/Naming_Service/CosNaming_i.cpp: 
+	* orbsvcs/bin/Naming_Service/CosNaming_i.cpp:
 	  Fixed problem with the new Environment parameter for _narrow ().
 
-	* orbsvcs/bin/Naming_Service/Makefile: 
+	* orbsvcs/bin/Naming_Service/Makefile:
 	  No need to include rules.bin.GNU.
 
 Fri Nov 14 17:08:20 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
@@ -53,101 +58,101 @@ Fri Nov 14 16:42:21 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
 Fri Nov 14 14:11:47 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* orbsvcs/lib/Makefile: 
+	* orbsvcs/lib/Makefile:
 	  Added new library that contains the stubs and skeletons for the
 	  TAO services.
 
-	* orbsvcs/Makefile: 
-	* orbsvcs/bin/Makefile: 
-	* orbsvcs/tests/Makefile: 
+	* orbsvcs/Makefile:
+	* orbsvcs/bin/Makefile:
+	* orbsvcs/tests/Makefile:
 	  Added top level Makefiles.
 
-	* orbsvcs/bin/Naming_Service/Makefile: 
-	* orbsvcs/bin/Naming_Service/svr.cpp: 
-	* orbsvcs/bin/Naming_Service/svc.conf: 
-	* orbsvcs/bin/Naming_Service/NS_CosNaming.h: 
-	* orbsvcs/bin/Naming_Service/NS_CosNaming.cpp: 
-	* orbsvcs/bin/Naming_Service/CosNaming_i.h: 
-	* orbsvcs/bin/Naming_Service/CosNaming_i.cpp: 
+	* orbsvcs/bin/Naming_Service/Makefile:
+	* orbsvcs/bin/Naming_Service/svr.cpp:
+	* orbsvcs/bin/Naming_Service/svc.conf:
+	* orbsvcs/bin/Naming_Service/NS_CosNaming.h:
+	* orbsvcs/bin/Naming_Service/NS_CosNaming.cpp:
+	* orbsvcs/bin/Naming_Service/CosNaming_i.h:
+	* orbsvcs/bin/Naming_Service/CosNaming_i.cpp:
 	  Moved the naming service implementation from the TAO
 	  subdirectory to this place.
 
-	* orbsvcs/tests/Simple_Naming/Makefile: 
-	* orbsvcs/tests/Simple_Naming/svc.conf: 
-	* orbsvcs/tests/Simple_Naming/clnt.h: 
-	* orbsvcs/tests/Simple_Naming/clnt.cpp: 
+	* orbsvcs/tests/Simple_Naming/Makefile:
+	* orbsvcs/tests/Simple_Naming/svc.conf:
+	* orbsvcs/tests/Simple_Naming/clnt.h:
+	* orbsvcs/tests/Simple_Naming/clnt.cpp:
 	  A simple test program for the naming service, it simply tries to
 	  locate it and connect to it.
 
-	* orbsvcs/bin/Naming_Service/Orbix/Client.cpp: 
-	* orbsvcs/bin/Naming_Service/Orbix/CosNaming.idl: 
-	* orbsvcs/bin/Naming_Service/Orbix/Makefile: 
-	* orbsvcs/bin/Naming_Service/Orbix/NS_CosNaming.cpp: 
-	* orbsvcs/bin/Naming_Service/Orbix/NS_CosNaming.h: 
-	* orbsvcs/bin/Naming_Service/Orbix/logger-main.cpp: 
-	* orbsvcs/bin/Naming_Service/Orbix/logger.idl: 
-	* orbsvcs/bin/Naming_Service/Orbix/logger_tie.cpp: 
-	* orbsvcs/bin/Naming_Service/Orbix/logger_tie.h: 
-	* orbsvcs/bin/Naming_Service/Orbix/server-main.cpp: 
-	* orbsvcs/bin/Naming_Service/TAO/CosNaming.idl: 
-	* orbsvcs/bin/Naming_Service/TAO/CosNaming_i.cpp: 
-	* orbsvcs/bin/Naming_Service/TAO/CosNaming_i.h: 
-	* orbsvcs/bin/Naming_Service/TAO/Makefile: 
-	* orbsvcs/bin/Naming_Service/TAO/NS_CosNaming.cpp: 
-	* orbsvcs/bin/Naming_Service/TAO/NS_CosNaming.h: 
-	* orbsvcs/bin/Naming_Service/TAO/clnt.cpp: 
-	* orbsvcs/bin/Naming_Service/TAO/clnt.h: 
-	* orbsvcs/bin/Naming_Service/TAO/svc.conf: 
-	* orbsvcs/bin/Naming_Service/TAO/svr.cpp: 
+	* orbsvcs/bin/Naming_Service/Orbix/Client.cpp:
+	* orbsvcs/bin/Naming_Service/Orbix/CosNaming.idl:
+	* orbsvcs/bin/Naming_Service/Orbix/Makefile:
+	* orbsvcs/bin/Naming_Service/Orbix/NS_CosNaming.cpp:
+	* orbsvcs/bin/Naming_Service/Orbix/NS_CosNaming.h:
+	* orbsvcs/bin/Naming_Service/Orbix/logger-main.cpp:
+	* orbsvcs/bin/Naming_Service/Orbix/logger.idl:
+	* orbsvcs/bin/Naming_Service/Orbix/logger_tie.cpp:
+	* orbsvcs/bin/Naming_Service/Orbix/logger_tie.h:
+	* orbsvcs/bin/Naming_Service/Orbix/server-main.cpp:
+	* orbsvcs/bin/Naming_Service/TAO/CosNaming.idl:
+	* orbsvcs/bin/Naming_Service/TAO/CosNaming_i.cpp:
+	* orbsvcs/bin/Naming_Service/TAO/CosNaming_i.h:
+	* orbsvcs/bin/Naming_Service/TAO/Makefile:
+	* orbsvcs/bin/Naming_Service/TAO/NS_CosNaming.cpp:
+	* orbsvcs/bin/Naming_Service/TAO/NS_CosNaming.h:
+	* orbsvcs/bin/Naming_Service/TAO/clnt.cpp:
+	* orbsvcs/bin/Naming_Service/TAO/clnt.h:
+	* orbsvcs/bin/Naming_Service/TAO/svc.conf:
+	* orbsvcs/bin/Naming_Service/TAO/svr.cpp:
 	  We will only maintain the TAO version for the naming service, no
 	  need to keep this subdirectories.
 
-	* orbsvcs/lib/RtecScheduler.idl: 
+	* orbsvcs/lib/RtecScheduler.idl:
 	  The Real Time Scheduling Service. This module declares the QoS
 	  structures (RT_Info) and the interface for the global scheduler.
 
-	* orbsvcs/lib/RtecEventComm.idl: 
+	* orbsvcs/lib/RtecEventComm.idl:
 	  Part of the Real Time Event Services interface, this file
 	  contains the Event type, the basic interfaces for consumers and
 	  suppliers and some exceptions.
 
-	* orbsvcs/lib/RtecEventChannelAdmin.idl: 
+	* orbsvcs/lib/RtecEventChannelAdmin.idl:
 	  Part of the Real Time Event Services interface, in particular
 	  this module defines the event channel, the proxy interfaces and
 	  the QoS aware subscription and registration interfaces.
 
-	* orbsvcs/lib/Event_Service_Constants.h: 
+	* orbsvcs/lib/Event_Service_Constants.h:
 	  The Event Service implementation and the Scheduling Service
 	  implementation require this file, which defines some constants
 	  and static limits. For lack of a better place I putted it here.
 
-	* orbsvcs/lib/CosNaming.idl: 
+	* orbsvcs/lib/CosNaming.idl:
 	  Moved the IDL file to the library, otherwise it cannot be used
 	  by clients.
 
-	* tao/corba.h: 
+	* tao/corba.h:
 	  Added some macros that support portable exception handling,
 	  either through C++ exceptions or the CORBA::Enviroment
 	  parameter.
 
-	* orbsvcs/lib/RtecEventCommC.h: 
-	* orbsvcs/lib/RtecEventCommC.i: 
-	* orbsvcs/lib/RtecEventCommC.cpp: 
-	* orbsvcs/lib/RtecEventCommS.h: 
-	* orbsvcs/lib/RtecEventCommS.i: 
-	* orbsvcs/lib/RtecEventCommS.cpp: 
-	* orbsvcs/lib/RtecEventChannelAdminS.h: 
-	* orbsvcs/lib/RtecEventChannelAdminS.i: 
-	* orbsvcs/lib/RtecEventChannelAdminS.cpp: 
-	* orbsvcs/lib/RtecEventChannelAdminC.h: 
-	* orbsvcs/lib/RtecEventChannelAdminC.i: 
-	* orbsvcs/lib/RtecEventChannelAdminC.cpp: 
-	* orbsvcs/lib/CosNamingC.h: 
-	* orbsvcs/lib/CosNamingC.i: 
-	* orbsvcs/lib/CosNamingC.cpp: 
-	* orbsvcs/lib/CosNamingS.h: 
-	* orbsvcs/lib/CosNamingS.i: 
-	* orbsvcs/lib/CosNamingS.cpp: 
+	* orbsvcs/lib/RtecEventCommC.h:
+	* orbsvcs/lib/RtecEventCommC.i:
+	* orbsvcs/lib/RtecEventCommC.cpp:
+	* orbsvcs/lib/RtecEventCommS.h:
+	* orbsvcs/lib/RtecEventCommS.i:
+	* orbsvcs/lib/RtecEventCommS.cpp:
+	* orbsvcs/lib/RtecEventChannelAdminS.h:
+	* orbsvcs/lib/RtecEventChannelAdminS.i:
+	* orbsvcs/lib/RtecEventChannelAdminS.cpp:
+	* orbsvcs/lib/RtecEventChannelAdminC.h:
+	* orbsvcs/lib/RtecEventChannelAdminC.i:
+	* orbsvcs/lib/RtecEventChannelAdminC.cpp:
+	* orbsvcs/lib/CosNamingC.h:
+	* orbsvcs/lib/CosNamingC.i:
+	* orbsvcs/lib/CosNamingC.cpp:
+	* orbsvcs/lib/CosNamingS.h:
+	* orbsvcs/lib/CosNamingS.i:
+	* orbsvcs/lib/CosNamingS.cpp:
 	  I had to modify the IDL compiler generated files, I will keep
 	  the files in CVS until we no longer need to modify it.
 
@@ -192,7 +197,7 @@ Thu Nov 13 16:18:32 1997    <nw1@CHA-CHA>
 	* tao/default_client.h:
 	* tao/default_server.h:  Changed ACE_SVC_FACTORY_DECLARE to
 	  ACE_FACTORY_DECLARE.
-	
+
 	* tao/orb_core.cpp:
 	* tao/default_client.cpp:
 	* tao/default_server.cpp:  Changed ACE_SVC_FACTORY_DEFINE to
