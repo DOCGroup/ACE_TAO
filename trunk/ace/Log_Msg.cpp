@@ -765,7 +765,7 @@ ACE_Log_Msg::log (const ASYS_TCHAR *format_str,
                     else
 #endif /* ACE_HAS_WINCE */
                       {
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
                         LPTSTR lpMsgBuf = 0;
 
                         ::FormatMessage (FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
