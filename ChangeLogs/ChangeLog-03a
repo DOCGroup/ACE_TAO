@@ -1,10 +1,20 @@
+Fri Dec 14 14:05:09 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* ace/svc_export.h:
+	* netsvcs/clients/Naming/Dump_Restore/Dump_Restore.dsp:
+	  Found a better way to deal with the inconsistencies in the
+	  ACE_Svc_Export macro.
+
+	* netsvcs/clients/Naming/Dump_Restore/Dump_Restore_static.dsp:
+	  Fixed project file for static library.
+
 Fri Dec 14 11:35:01 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* ace/SSL/SSL_SOCK_Acceptor.h:
-	* ace/SSL/SSL_SOCK_Connector.h:  
+	* ace/SSL/SSL_SOCK_Connector.h:
 	* examples/QOS/Simple/Fill_ACE_QoS.h:
 	* examples/QOS/Change_Receiver_FlowSpec/Fill_ACE_QoS.h:
-	* examples/QOS/Change_Sender_TSpec/Fill_ACE_QoS.h: 
+	* examples/QOS/Change_Sender_TSpec/Fill_ACE_QoS.h:
 	  Add #include "ace/OS_QoS.h".
 
 Thu Dec 13 22:16:02 2001  Carlos O'Ryan  <coryan@uci.edu>
@@ -54,16 +64,16 @@ Thu Dec 13 18:11:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 	declare QoS data structures now contained in OS_QoS.h and
 	OS_QoS.cpp.
 
-	* ace/OS.i:  
+	* ace/OS.i:
 	* ace/OS.cpp:  Move QoS enabled socket API functions from OS.i to
 	OS.cpp.
 
-	* ace/OS_QoS.h (added):  
+	* ace/OS_QoS.h (added):
 	* ace/OS_QoS.cpp (added):  OS specific QoS data structures go here.
 
-	* ace/MEM_Acceptor.h:  
-	* ace/SOCK_Acceptor.cpp: 
-	* ace/SOCK_Connector.cpp: 
+	* ace/MEM_Acceptor.h:
+	* ace/SOCK_Acceptor.cpp:
+	* ace/SOCK_Connector.cpp:
 	* ace/QoS/QoS_Session.h: Add #include "ace/OS_QoS.h".
 
 	* ace/QoS/QoS_Session_Impl.cpp: Add u_long casts to eliminate
