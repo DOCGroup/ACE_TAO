@@ -3,7 +3,6 @@
 # Makefile for building the Pluggable UDP examples
 #
 
-DIRS = Diop \
-       tests
+DIRS = Diop
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
