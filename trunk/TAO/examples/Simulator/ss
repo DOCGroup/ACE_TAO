@@ -1,11 +1,11 @@
-#!/bin/ksh
+#!/bin/ksh 
 # $Id$
 
 #saving old working dir
 
 old_dir=$cwd
 login=`whoami`
-uid=`id -u`
+uid=`id | cut -c5-20 | cut -f1 -d"("`
 
 #### Set TAO_ROOT, if it wasn't set.
 if [ ! "$TAO_ROOT" ]; then
