@@ -386,7 +386,7 @@ James Michael Dwyer <jdwyer@knox.edu>
 Arun Katkere <katkere@praja.com>
 Bob Dunmire <bobd@titan.com>
 Sandro Doro <alex@aureus.sublink.org>
-Robert Lyng <<rlyng@synertech.highmark.com>
+Robert Lyng <rlyng@synertech.highmark.com>
 Phil Logan <phill@in.ot.com.au>
 John Cosby <John.D.Cosby@cpmx.saic.com>
 Wayne Vucenic <wvucenic@netgate.net>
@@ -609,6 +609,7 @@ Margherita Vittone Wiersma <vittone@fndaub.fnal.gov>
 Priya Narasimhan <priya@lambda.ece.ucsb.edu>
 Jeff Hopper <jhopper@nosc.mil>
 Mats Nilsson <mats.nilsson@xware.se>
+Dongwook Kim <baksoo@dbserver.kaist.ac.kr>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson and is now at ObjectSpace.  Paul devised the recursive
