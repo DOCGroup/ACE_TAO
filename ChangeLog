@@ -1,3 +1,29 @@
+Thu Nov  5 13:18:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-cygwin32.h:
+          Removed ACE_LACKS_SYS_MSG_H
+
+        * ace/config-win32-mingw.h:
+          Added ACE_LACKS_SYS_SHM_H
+
+        * ace/Flag_Manip.cpp:
+          Added os_include/os_termios.h for Cygwin build
+
+        * ace/IO_Cntl_Msg.h:
+          Added os_include/os_stddef.h to get size_t
+
+        * ace/OS_NS_stdio.h:
+          Added os_include/os_unistd.h for Cygwin build
+
+        * ace/Proactor.h:
+          Added os_include/os_stddef.h and os_include/os_signal.h for
+          Cygwin
+
+        * ace/os_include/os_signal.h:
+        * ace/OS_NS_signal.h
+          Moved ACE_SIGNAL_C_FUNC from os_signal.h to OS_NS_Signal.h because
+          with Cygwin siginfo_t is defined in OS_NS_Signal.h
+
 Thu Nov  5 10:04:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/README:
