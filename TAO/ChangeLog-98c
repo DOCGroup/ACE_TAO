@@ -1,4 +1,7 @@
-Wed Nov 19 00:15:33 1997  Sergio Flores  <sergio@polka.cs.wustl.edu>
+Wed Nov 19 05:53:42 1997  Sergio Flores  <sergio@tango.cs.wustl.edu>
+
+	* orbsvcs/lib/Makefile (realclean): Updated with realclean & clean
+ 	rules to delete CosNamingS.* and CosNamingC.*
 
 	* docs/releasenotes/index.html: Updated status of the naming
  	service to working implementation.
