@@ -1,3 +1,10 @@
+Mon Dec 23 22:57:18 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* ace/Argv_Type_Converter.h: Changed saved_argc_ to be of type int
+	  as opposed to int &. This seems to be necessitated by the change
+	  "Mon Dec 23 17:26:42 2002  Steve Huston  <shuston@riverace.com>"
+	  which gives compile errors on all platforms. 
+
 Mon Dec 23 21:07:20 2002  Steve Huston  <shuston@riverace.com>
 
         * bin/MakeProjectCreator/templates/em3vcpdll.mpt: Changed the Debug

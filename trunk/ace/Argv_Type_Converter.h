@@ -83,7 +83,7 @@ private:
 
 private:
   /// Original number of input paramter, same as 'argc'.
-  int& saved_argc_;
+  int saved_argc_;
 
   /// Data member pointer that contains converted argv in ACE_ANTI_TCHAR.
   char** char_argv_;
