@@ -18,10 +18,39 @@
 
 ACE_RCSID(tao, Transport, "$Id$")
 
+TAO_Synch_Refcountable::TAO_Synch_Refcountable (int refcount)
+  : ACE_Refcountable (refcount)
+{
+}
+
+TAO_Synch_Refcountable::~TAO_Synch_Refcountable (void)
+{
+}
+
+int
+TAO_Synch_Refcountable::increment (void)
+{
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
+  return ACE_Refcountable::increment ();
+}
+
+int
+TAO_Synch_Refcountable::decrement (void)
+{
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
+  return ACE_Refcountable::decrement ();
+}
+
+int
+TAO_Synch_Refcountable::refcount (void) const
+{
+  return ACE_Refcountable::refcount ();
+}
+
 // Constructor.
 TAO_Transport::TAO_Transport (CORBA::ULong tag,
                               TAO_ORB_Core *orb_core)
-  : ACE_Refcountable (1)
+  : TAO_Synch_Refcountable (1)
   , tag_ (tag)
   , orb_core_ (orb_core)
   , cache_map_entry_ (0)
