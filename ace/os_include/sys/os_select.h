@@ -31,6 +31,10 @@
 #  include /**/ <sys/select.h>
 #endif /* !ACE_LACKS_SYS_SELECT_H */
 
+#if defined (VXWORKS)
+#  include /**/ <selectLib.h>
+#endif /* VXWORKS */
+
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
 extern "C"

@@ -180,6 +180,20 @@
 # define ACE_VXWORKS_SPARE spare4
 #endif /* ! ACE_VXWORKS_SPARE */
 
+#define ACE_LACKS_STDINT_H
+#define ACE_LACKS_INTTYPS_H
+#define ACE_LACKS_UNISTD_H
+#define ACE_LACKS_SYS_SELECT_H
+#define ACE_LACKS_SYS_TIME_H
+#define ACE_LACKS_SYS_RESOURCE_H
+#define ACE_LACKS_DLFCN_H
+#define ACE_LACKS_SYS_UIO_H
+#define ACE_LACKS_SYS_IPC_H
+#define ACE_LACKS_SYS_SEM_H
+#define ACE_LACKS_STROPTS_H
+#define ACE_LACKS_SYS_MSG_H
+
+
 // Some string things
 #define ACE_LACKS_WCSCAT
 #define ACE_LACKS_WCSCHR

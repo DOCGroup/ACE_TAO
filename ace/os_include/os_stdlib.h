@@ -35,6 +35,10 @@
 #  include /**/ <stdlib.h>
 #endif /* !ACE_LACKS_STDLIB_H */
 
+#if defined (VXWORKS)
+#  include /**/ <envLib.h>
+#endif /* VXWORKS */
+
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
 extern "C"

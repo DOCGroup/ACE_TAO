@@ -1,3 +1,41 @@
+Wed Jun 18 15:19:17 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/OS.h:
+        * ace/os_include/os_fcntl.h:
+        * ace/os_include/os_netdb.h:
+        * ace/os_include/os_semaphore.h:
+        * ace/os_include/os_signal.h:
+        * ace/os_include/os_stdio.h:
+        * ace/os_include/os_stdlib.h:
+        * ace/os_include/os_stropts.h:
+        * ace/os_include/os_unistd.h:
+        * ace/os_include/arpa/os_inet.h:
+        * ace/os_include/sys/select.h:
+        * ace/os_include/sys/os_socket.h:
+          Moved the following VxWorks includes from OS.h as noted:
+          semLib.h to os_semaphore.h; ioLib.h to os_fcntl.h, os_stdio.h,
+          os_stropts.h, os_unistd.h; hostLib.h to os_netdb.h; sigLib.h to
+          os_signal.h; envLib.h to os_stdlib.h; inetLib.h to
+          arpa/os_inet.h; selectLib.h to sys/select.h; sockLib.h to
+          sys/socket.h.
+
+        * ace/OS.h:
+          Commented out remLib.h and sysLib.h since they don't appear to
+          be used by ACE at all.
+
+        * ace/OS.h:
+        * ace/os_include/sys/os_un.h:
+          Moved sockaddr_un declaration to sys/os_un.h.
+
+        * ace/OS.h:
+        * ace/os_include/os_signal.h:
+          Moved NSIG definition to os_signal.h.
+
+        * ace/config-vxworks5.x.h:
+          Added following ACE_LACKS_* defines: STDINT_H, INTTYPS_H,
+          UNISTD_H, SYS_SELECT_H, SYS_TIME_H, SYS_RESOURCE_H, DLFCN_H,
+          SYS_UIO_H, SYS_IPC_H, SYS_SEM_H, STROPTS_H, and SYS_MSG_H.
+
 Wed Jun 18 14:00:00 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/config-openbsd.h:
