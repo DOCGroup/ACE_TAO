@@ -13,6 +13,9 @@ Thu Mar 12 09:01:43 1998  David L. Levine  <levine@cs.wustl.edu>
           (be_visitor_sequence_ci::visit_sequence): made int return
           type explicit.
 
+        * tests/Cubit/TAO/IDL_Cubit/server.cpp (~Cubit_Server): changed
+          root_poa_ to poa_.
+
 Thu Mar 12 01:03:17 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * tests/POA/NewPOA/NewPOA.cpp (main): Updated the following files
