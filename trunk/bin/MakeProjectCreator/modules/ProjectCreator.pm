@@ -1890,19 +1890,18 @@ sub reset_values {
 
 
 sub reset_generating_types {
-  my($self) = shift;
+  my($self)  = shift;
+  my(%reset) = ('matching_assignments' => \%ma,
+                'valid_components'     => \%vc,
+                'generated_exts'       => \%genext,
+                'exclude_components'   => \%ec,
+               );
 
-  foreach my $key (keys %ma) {
-    $self->{'matching_assignments'}->{$key} = $ma{$key};
-  }
-  foreach my $key (keys %vc) {
-    $self->{'valid_components'}->{$key} = $vc{$key};
-  }
-  foreach my $key (keys %genext) {
-    $self->{'generated_exts'}->{$key} = $genext{$key};
-  }
-  foreach my $key (keys %ec) {
-    $self->{'exclude_components'}->{$key} = $ec{$key};
+  foreach my $r (keys %reset) {
+    $self->{$r} = {};
+    foreach my $key (keys %{$reset{$r}}) {
+      $self->{$r}->{$key} = $reset{$r}->{$key};
+    }
   }
 
   $self->{'custom_types'} = {};

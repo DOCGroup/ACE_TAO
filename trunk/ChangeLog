@@ -1,3 +1,11 @@
+Wed May 14 14:09:56 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Fixed a bug with custom types when processing multiple mpc files
+          that use a custom type.  The type definitions were not being
+          removed after processing.
+
 Wed May 14 13:52:37 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/README:
