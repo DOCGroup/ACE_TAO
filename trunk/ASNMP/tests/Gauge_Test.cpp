@@ -40,7 +40,9 @@ DAMAGES.
 #include "asnmp/gauge.h"
 #include "test_config.h"
 
-ACE_RCSID(tests, Gauge_Test, "$Id$")
+ACE_RCSID (tests,
+           Gauge_Test,
+           "$Id$")
 
 /*
    Gauge32( void);
@@ -56,10 +58,11 @@ ACE_RCSID(tests, Gauge_Test, "$Id$")
 
 --  What is a Gauge? According to RFC 1155 section: 3.2.3.4
    This  application-wide type represents a non-negative integer
-   which may increase or decreae, but which latches at a maximum
+   which may increase or decrease, but which latches at a maximum
    value of 2^32-1 (4294967295 dec) for gauges.
  */
-static void TestGuage()
+static void
+TestGuage (void)
 {
 #if !defined (ACE_WIN32)
    long l = LONG_MAX, nl = LONG_MIN;  // limits.h
@@ -73,15 +76,15 @@ static void TestGuage()
    Gauge32 g1;
    ACE_ASSERT(g1 == def);
    Gauge32 g2(l);
-   ACE_ASSERT(g2 == l);
+   ACE_ASSERT(g2 == ACE_static_cast (unsigned long, l));
    Gauge32 g3(nl);
-   ACE_ASSERT(g3 == nl);
+   ACE_ASSERT(g3 == ACE_static_cast (unsigned long, nl));
    Gauge32 g4(ul);
    ACE_ASSERT(g4 == ul);
    Gauge32 g5(i);
-   ACE_ASSERT(g5 == i);
+   ACE_ASSERT(g5 == ACE_static_cast (unsigned long, i));
    Gauge32 g6(ni);
-   ACE_ASSERT(g6 == ni);
+   ACE_ASSERT(g6 == ACE_static_cast (unsigned long, ni));
    Gauge32 g7(ui);
    ACE_ASSERT(g7 == ui);
    Gauge32 *g8 = new Gauge32(g5);
