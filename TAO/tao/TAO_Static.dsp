@@ -41,7 +41,7 @@ RSC=rc.exe
 # PROP Intermediate_Dir "LIB\Release"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\\" /I "..\\" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D TAO_HAS_DLL=0 /D ACE_NO_INLINE /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\\" /I "..\\" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D TAO_HAS_DLL=0 /D "ACE_NO_INLINE" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
@@ -143,6 +143,14 @@ SOURCE=.\default_resource.cpp
 # Begin Source File
 
 SOURCE=.\default_server.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\DomainC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\DomainS.cpp
 # End Source File
 # Begin Source File
 
@@ -442,6 +450,10 @@ SOURCE=.\default_server.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\DomainC.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\DynAny_i.h
 # End Source File
 # Begin Source File
@@ -614,10 +626,6 @@ SOURCE=.\PolicyC.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\PolicyS.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Principal.h
 # End Source File
 # Begin Source File
@@ -723,6 +731,14 @@ SOURCE=.\default_resource.i
 # Begin Source File
 
 SOURCE=.\default_server.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\DomainC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\DomainS_T.i
 # End Source File
 # Begin Source File
 
