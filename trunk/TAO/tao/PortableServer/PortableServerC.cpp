@@ -10298,7 +10298,15 @@ CORBA::Boolean operator<< (
   if (strm << _tao_seq_len)
     {
       // Encode all elements.
-      }
+      CORBA::Boolean _tao_marshal_flag = 1;
+      
+      for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
+        {
+          _tao_marshal_flag = (strm << _tao_sequence[i]);
+        }
+      
+      return _tao_marshal_flag;
+    }
     
   return 0;
 }
@@ -10329,7 +10337,15 @@ CORBA::Boolean operator<< (
           return 1;
         }
       
-    // Retrieve all the elements.
+      // Retrieve all the elements.
+      CORBA::Boolean _tao_marshal_flag = 1;
+      
+      for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
+        {
+          _tao_marshal_flag = (strm >> _tao_sequence[i]);
+        }
+      
+      return _tao_marshal_flag;
     }
   
   return 0;

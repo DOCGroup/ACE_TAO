@@ -42,6 +42,15 @@ be_visitor_sequence_cdr_op_cs::~be_visitor_sequence_cdr_op_cs (void)
 int
 be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
 {
+  if (this->ctx_->alias ())
+    {
+      // We are here because the base type of the sequence node is
+      // itself a typedef'd sequence i.e., this is nested call resulting
+      // from bt->accept(0 below. For the case of sequence of
+      // anonymous sequence, see comment below.
+      return this->visit_node (node);
+    }
+
   if (node->cli_stub_cdr_op_gen ()
       || node->imported ()
       || node->is_local ())
