@@ -819,7 +819,7 @@ TAO_AV_UDP_Transport::set_remote_address (const ACE_INET_Addr &address)
 }
 
 int
-TAO_AV_UDP_Transport::open (ACE_Addr *address)
+TAO_AV_UDP_Transport::open (ACE_Addr */*address*/)
 {
   return 0;
 }
@@ -837,7 +837,7 @@ TAO_AV_UDP_Transport::mtu (void)
 }
 
 int
-TAO_AV_UDP_Transport::get_peer_addr (ACE_Addr &addr)
+TAO_AV_UDP_Transport::get_peer_addr (ACE_Addr &/*addr*/)
 {
   return -1;
 }
@@ -948,7 +948,7 @@ TAO_AV_UDP_Transport::recv (char *buf,
 
 ssize_t
 TAO_AV_UDP_Transport::recv (iovec *iov,
-                            int iovcnt,
+                            int /*iovcnt*/,
                             ACE_Time_Value *timeout)
 {
   return handler_->get_socket ()->recv (iov,this->peer_addr_,0,timeout);
@@ -973,7 +973,7 @@ TAO_AV_TCP_Transport::~TAO_AV_TCP_Transport (void)
 }
 
 int
-TAO_AV_TCP_Transport::open (ACE_Addr *address)
+TAO_AV_TCP_Transport::open (ACE_Addr */*address*/)
 {
   return 0;
 }
@@ -991,7 +991,7 @@ TAO_AV_TCP_Transport::mtu (void)
 }
 
 int
-TAO_AV_TCP_Transport::get_peer_addr (ACE_Addr &addr)
+TAO_AV_TCP_Transport::get_peer_addr (ACE_Addr &/*addr*/)
 {
   return -1;
 }
@@ -1257,7 +1257,7 @@ int
 TAO_AV_Dgram_Acceptor::activate_svc_handler (TAO_AV_UDP_Flow_Handler *handler)
 {
   ACE_Event_Handler *event_handler = handler;
-  ACE_HANDLE fd = event_handler->get_handle ();
+  //  ACE_HANDLE fd = event_handler->get_handle ();
   int result = this->reactor_->register_handler (event_handler,
                                                  ACE_Event_Handler::READ_MASK);
   if (result < 0)
@@ -1367,7 +1367,7 @@ TAO_AV_UDP_Flow_Handler::transport (void)
 }
 
 int
-TAO_AV_UDP_Flow_Handler::handle_input (ACE_HANDLE fd)
+TAO_AV_UDP_Flow_Handler::handle_input (ACE_HANDLE /*fd*/)
 {
   size_t size = 2*this->transport_->mtu ();
   ACE_Message_Block *frame = 0;
@@ -1834,7 +1834,7 @@ TAO_AV_TCP_Flow_Handler::transport (void)
 }
 
 int
-TAO_AV_TCP_Flow_Handler::handle_input (ACE_HANDLE fd)
+TAO_AV_TCP_Flow_Handler::handle_input (ACE_HANDLE /*fd*/)
 {
   size_t size = BUFSIZ;
   ACE_Message_Block *frame = 0;
@@ -1860,8 +1860,8 @@ template class ACE_Unbounded_Set<TAO_AV_Connector*>;
 template class ACE_Unbounded_Set_Iterator<TAO_AV_Acceptor*>;
 template class ACE_Unbounded_Set_Iterator<TAO_AV_Connector*>;
 template class ACE_Singleton<TAO_AV_Core,ACE_Null_Mutex>;
-template class ACE_Acceptor<TAO_AV_TCP_Flow_Handler, ACE_SOCK_Acceptor, ACE_INET_Addr>;
-template class ACE_Connector<TAO_AV_TCP_Flow_Handler, ACE_SOCK_Connector, ACE_INET_Addr>;
+template class ACE_Acceptor<TAO_AV_TCP_Flow_Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_Connector<TAO_AV_TCP_Flow_Handler, ACE_SOCK_CONNECTOR>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Node <TAO_AV_Connector*>
 #pragma instantiate ACE_Node <TAO_AV_Acceptor*>

@@ -53,15 +53,15 @@
 #ifndef TAO_AV_RTP_H
 #define TAO_AV_RTP_H
 
-#ifndef WIN32
-#include <sys/param.h>
-#endif
-extern "C" {
-#include <sys/types.h>
-#ifndef WIN32
-#include <sys/time.h>
-#endif
-}
+//#ifndef WIN32
+//#include <sys/param.h>
+//#endif
+//extern "C" {
+  //#include <sys/types.h>
+//#ifndef WIN32
+  //#include <sys/time.h>
+//#endif
+//}
 
 #include "Policy.h"
 #include "Transport.h"
@@ -267,7 +267,7 @@ public:
     ACE_UINT16 blkno;
   };
 
-  static bad_version_;
+  static int  bad_version_;
   static int handle_input (TAO_AV_Transport *transport,
                            rtphdr &header,
                            ACE_Message_Block *&data,
@@ -337,6 +337,7 @@ class TAO_AV_RTP_Object
 public:
   TAO_AV_RTP_Object (TAO_AV_Callback *callback,
                      TAO_AV_Transport *transport = 0);
+
   int send_frame (ACE_Message_Block *frame,
                   ACE_UINT32 timestamp = 0);
   int end_stream (void);

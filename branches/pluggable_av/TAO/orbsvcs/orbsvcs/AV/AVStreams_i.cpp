@@ -259,7 +259,7 @@ TAO_Basic_StreamCtrl::modify_QoS (AVStreams::streamQoS & new_qos,
 // Used by StreamEndPoint and VDev to inform StreamCtrl of events.
 // E.g., loss of flow, reestablishment of flow, etc..
 void
-TAO_Basic_StreamCtrl::push_event (const struct CosPropertyService::Property &the_event,
+TAO_Basic_StreamCtrl::push_event (const struct CosPropertyService::Property &/*the_event*/,
                                   CORBA::Environment & /* ACE_TRY_ENV */)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -1263,7 +1263,7 @@ TAO_MCastConfigIf::configure (const CosPropertyService::Property & a_configurati
 
 void
 TAO_MCastConfigIf::set_initial_configuration (const CosPropertyService::Properties &initial,
-                                              CORBA::Environment &ACE_TRY_ENV)
+                                              CORBA::Environment &/*ACE_TRY_ENV*/)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->initial_configuration_ = initial;
@@ -1370,22 +1370,22 @@ TAO_Base_StreamEndPoint::handle_open (void)
 }
 
 int
-TAO_Base_StreamEndPoint::handle_stop (const AVStreams::flowSpec &the_spec,
-                                      CORBA::Environment &env)
+TAO_Base_StreamEndPoint::handle_stop (const AVStreams::flowSpec &,
+                                      CORBA::Environment &)
 {
   return 0;
 }
 
 int
-TAO_Base_StreamEndPoint::handle_start (const AVStreams::flowSpec &the_spec,
-                                       CORBA::Environment &env)
+TAO_Base_StreamEndPoint::handle_start (const AVStreams::flowSpec &,
+                                       CORBA::Environment &)
 {
   return 0;
 }
 
 int
-TAO_Base_StreamEndPoint::handle_destroy (const AVStreams::flowSpec &the_spec,
-                                         CORBA::Environment &env)
+TAO_Base_StreamEndPoint::handle_destroy (const AVStreams::flowSpec &,
+                                         CORBA::Environment &)
 {
   return 0;
 }
@@ -1413,15 +1413,15 @@ TAO_Base_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &,
 }
 
 int
-TAO_Base_StreamEndPoint::set_protocol_object (const char *flowname,
-                                              TAO_AV_Protocol_Object *sfp_object)
+TAO_Base_StreamEndPoint::set_protocol_object (const char */*flowname*/,
+                                              TAO_AV_Protocol_Object * /*sfp_object*/)
 {
   return -1;
 }
 
 int
-TAO_Base_StreamEndPoint::get_callback (const char *flowname,
-                                       TAO_AV_Callback *&sfp_callback)
+TAO_Base_StreamEndPoint::get_callback (const char */*flowname*/,
+                                       TAO_AV_Callback *&/*sfp_callback*/)
 {
   return -1;
 }
@@ -1662,9 +1662,9 @@ TAO_StreamEndPoint::destroy (const AVStreams::flowSpec &/* the_spec */,
 // Called by our peer endpoint, requesting us to establish
 // a connection
 CORBA::Boolean
-TAO_StreamEndPoint::request_connection (AVStreams::StreamEndPoint_ptr initiator,
+TAO_StreamEndPoint::request_connection (AVStreams::StreamEndPoint_ptr /*initiator*/,
                                         CORBA::Boolean is_mcast,
-                                        AVStreams::streamQoS &qos,
+                                        AVStreams::streamQoS &/*qos*/,
                                         AVStreams::flowSpec &flow_spec,
                                         CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -1770,10 +1770,10 @@ TAO_StreamEndPoint::disconnect (const AVStreams::flowSpec &the_spec,
 // Sets the status of the flow protocol.
 
 void
-TAO_StreamEndPoint::set_FPStatus (const AVStreams::flowSpec &the_spec,
+TAO_StreamEndPoint::set_FPStatus (const AVStreams::flowSpec &/*the_spec*/,
                                   const char *fp_name,
                                   const CORBA::Any &fp_settings,
-                                  CORBA::Environment &ACE_TRY_ENV)
+                                  CORBA::Environment &/*ACE_TRY_ENV*/)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    AVStreams::noSuchFlow,
                    AVStreams::FPError))
@@ -1972,9 +1972,9 @@ TAO_StreamEndPoint::set_source_id (CORBA::Long source_id,
 }
 
 CORBA::Boolean
-TAO_StreamEndPoint::multiconnect (AVStreams::streamQoS &the_qos,
-                                  AVStreams::flowSpec &flow_spec,
-                                  CORBA::Environment &ACE_TRY_ENV)
+TAO_StreamEndPoint::multiconnect (AVStreams::streamQoS &/*the_qos*/,
+                                  AVStreams::flowSpec &/*flow_spec*/,
+                                  CORBA::Environment &/*ACE_TRY_ENV*/)
 {
   return 0;
 }
@@ -2550,7 +2550,8 @@ TAO_MMDevice::TAO_MMDevice (TAO_AV_Endpoint_Strategy *endpoint_strategy)
 {
 }
 
-TAO_MMDevice::TAO_MMDevice (TAO_MMDevice const &)
+TAO_MMDevice::TAO_MMDevice (TAO_MMDevice const &mm_device)
+  :TAO_PropertySet (mm_device)
 {
   //no-op
 }
@@ -2622,7 +2623,7 @@ TAO_MMDevice::create_A_B (MMDevice_Type type,
                           AVStreams::VDev_out the_vdev,
                           AVStreams::streamQoS &the_qos,
                           CORBA::Boolean_out met_qos,
-                          char *&named_vdev,
+                          char *&/*named_vdev*/,
                           const AVStreams::flowSpec &flow_spec,
                           CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -2865,7 +2866,7 @@ TAO_MMDevice::create_B (AVStreams::StreamCtrl_ptr streamctrl,
 void
 TAO_MMDevice::destroy (AVStreams::StreamEndPoint_ptr /* the_ep */,
                        const char * /* vdev_name */,
-                       CORBA::Environment &ACE_TRY_ENV)
+                       CORBA::Environment &/*ACE_TRY_ENV*/)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    AVStreams::notSupported))
 {
@@ -3562,21 +3563,21 @@ TAO_FlowEndPoint::unlock (CORBA::Environment &ACE_TRY_ENV)
 
 // The start,stop and destroy are to be handled by the application.
 void
-TAO_FlowEndPoint::stop (CORBA::Environment &ACE_TRY_ENV)
+TAO_FlowEndPoint::stop (CORBA::Environment &/*ACE_TRY_ENV*/)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->protocol_object_->stop ();
 }
 
 void
-TAO_FlowEndPoint::start (CORBA::Environment &ACE_TRY_ENV)
+TAO_FlowEndPoint::start (CORBA::Environment &/*ACE_TRY_ENV*/)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->protocol_object_->start ();
 }
 
 void
-TAO_FlowEndPoint::destroy (CORBA::Environment &ACE_TRY_ENV)
+TAO_FlowEndPoint::destroy (CORBA::Environment &/*ACE_TRY_ENV*/)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   int result = deactivate_servant (this);
@@ -3849,7 +3850,7 @@ TAO_FlowEndPoint::set_Mcast_peer (AVStreams::FlowConnection_ptr /* the_fc */,
 }
 
 char *
-TAO_FlowEndPoint::go_to_listen (AVStreams::QoS & the_qos,
+TAO_FlowEndPoint::go_to_listen (AVStreams::QoS & /*the_qos*/,
                                 CORBA::Boolean is_mcast,
                                 AVStreams::FlowProducer_ptr peer_fep,
                                 char *& flowProtocol,
@@ -3931,10 +3932,10 @@ TAO_FlowEndPoint::go_to_listen (AVStreams::QoS & the_qos,
 
 
 CORBA::Boolean
-TAO_FlowEndPoint::connect_to_peer (AVStreams::QoS & the_qos,
+TAO_FlowEndPoint::connect_to_peer (AVStreams::QoS & /*the_qos*/,
                                    const char * address,
-                                   const char * use_flow_protocol,
-                                   CORBA::Environment &ACE_TRY_ENV)
+                                   const char * /*use_flow_protocol*/,
+                                   CORBA::Environment &/*ACE_TRY_ENV*/)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    AVStreams::failedToConnect,
                    AVStreams::FPError,
@@ -3960,7 +3961,7 @@ TAO_FlowEndPoint::connect_to_peer (AVStreams::QoS & the_qos,
 }
 
 int
-TAO_FlowEndPoint::set_protocol_object (const char *flowname,
+TAO_FlowEndPoint::set_protocol_object (const char */*flowname*/,
                                        TAO_AV_Protocol_Object *object)
 {
   ACE_DEBUG ((LM_DEBUG,"TAO_FlowEndPoint::set_protocol_object\n"));
@@ -3990,7 +3991,7 @@ TAO_FlowProducer::connect_mcast (AVStreams::QoS & /* the_qos */,
                                  CORBA::Boolean_out /* is_met */,
                                  const char *address,
                                  const char * use_flow_protocol,
-                                 CORBA::Environment &ACE_TRY_ENV)
+                                 CORBA::Environment &/*ACE_TRY_ENV*/)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    AVStreams::failedToConnect,
                    AVStreams::notSupported,
@@ -4252,7 +4253,7 @@ TAO_FDev::bind_mcast (AVStreams::FDev_ptr first_peer,
 void
 TAO_FDev::destroy (AVStreams::FlowEndPoint_ptr /* the_ep */,
                    const char * /* fdev_name */,
-                   CORBA::Environment &ACE_TRY_ENV)
+                   CORBA::Environment &/*ACE_TRY_ENV*/)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    AVStreams::notSupported))
 {
@@ -5014,7 +5015,7 @@ TAO_AV_QoS::get_flow_qos (const char *flowname,AVStreams::QoS &flow_qos)
 }
 
 int
-TAO_AV_QoS::convert (AVStreams::streamQoS &network_qos)
+TAO_AV_QoS::convert (AVStreams::streamQoS &/*network_qos*/)
 {
   return -1;
 }

@@ -66,9 +66,9 @@ TAO_AV_UDP_MCast_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
 }
 
 int
-TAO_AV_UDP_MCast_Acceptor::open_default (TAO_Base_StreamEndPoint *endpoint,
-                                         TAO_AV_Core *av_core,
-                                         TAO_FlowSpec_Entry *entry)
+TAO_AV_UDP_MCast_Acceptor::open_default (TAO_Base_StreamEndPoint */*endpoint*/,
+                                         TAO_AV_Core */*av_core*/,
+                                         TAO_FlowSpec_Entry */*entry*/)
 {
   ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_MCast_Acceptor::open_default\n"));
   return 0;
@@ -78,7 +78,7 @@ int
 TAO_AV_UDP_MCast_Acceptor::activate_svc_handler (TAO_AV_UDP_MCast_Flow_Handler *handler)
 {
   ACE_Event_Handler *event_handler = handler;
-  ACE_HANDLE fd = event_handler->get_handle ();
+  //  ACE_HANDLE fd = event_handler->get_handle ();
   int result = this->av_core_->reactor ()->register_handler (event_handler,
                                                  ACE_Event_Handler::READ_MASK);
   if (result < 0)
@@ -164,7 +164,7 @@ int
 TAO_AV_UDP_MCast_Connector::activate_svc_handler (TAO_AV_UDP_MCast_Flow_Handler *handler)
 {
   ACE_Event_Handler *event_handler = handler;
-  ACE_HANDLE fd = event_handler->get_handle ();
+  //  ACE_HANDLE fd = event_handler->get_handle ();
   int result = this->av_core_->reactor ()->register_handler (event_handler,
                                                  ACE_Event_Handler::READ_MASK);
   if (result < 0)
@@ -198,15 +198,9 @@ TAO_AV_UDP_MCast_Flow_Handler::~TAO_AV_UDP_MCast_Flow_Handler (void)
   delete this->dgram_mcast_;
 }
 
-ACE_HANDLE
-TAO_AV_UDP_MCast_Flow_Handler::get_handle (void) const
-{
-  ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_MCast_Flow_Handler::get_handle "));
-  return this->get_mcast_socket ()->get_handle () ;
-}
 
 int
-TAO_AV_UDP_MCast_Flow_Handler::handle_input (ACE_HANDLE fd)
+TAO_AV_UDP_MCast_Flow_Handler::handle_input (ACE_HANDLE /*fd*/)
 {
   size_t size = 2*this->transport_->mtu ();
   ACE_Message_Block *frame = 0;
@@ -224,10 +218,11 @@ TAO_AV_UDP_MCast_Flow_Handler::handle_input (ACE_HANDLE fd)
   return 0;
 }
 
-ACE_SOCK_Dgram_Mcast *
-TAO_AV_UDP_MCast_Flow_Handler::get_mcast_socket (void) const
+ACE_INLINE ACE_HANDLE
+TAO_AV_UDP_MCast_Flow_Handler::get_handle (void) const
 {
-  return this->dgram_mcast_;
+  ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_MCast_Flow_Handler::get_handle "));
+  return this->get_mcast_socket ()->get_handle () ;
 }
 
 
@@ -250,7 +245,7 @@ TAO_AV_UDP_MCast_Transport::~TAO_AV_UDP_MCast_Transport (void)
 }
 
 int
-TAO_AV_UDP_MCast_Transport::open (ACE_Addr *address)
+TAO_AV_UDP_MCast_Transport::open (ACE_Addr */*address*/)
 {
   return 0;
 }
@@ -261,14 +256,9 @@ TAO_AV_UDP_MCast_Transport::close (void)
   return 0;
 }
 
-int
-TAO_AV_UDP_MCast_Transport::mtu (void)
-{
-  return ACE_MAX_DGRAM_SIZE;
-}
 
 int
-TAO_AV_UDP_MCast_Transport::get_peer_addr (ACE_Addr &addr)
+TAO_AV_UDP_MCast_Transport::get_peer_addr (ACE_Addr &/*addr*/)
 {
   return -1;
 }
@@ -353,7 +343,25 @@ TAO_AV_UDP_MCast_Transport::send (const iovec *iov,
 
 }
 
-ssize_t
+ACE_INLINE int
+TAO_AV_UDP_MCast_Transport::mtu (void)
+{
+  return ACE_MAX_DGRAM_SIZE;
+}
+
+
+//ACE_INLINE ssize_t
+//TAO_AV_UDP_MCast_Transport::send (const iovec *iov,
+//                                  int iovcnt,
+//                                  ACE_Time_Value *)
+//{
+//  return this->handler_->get_mcast_socket ()->send (iov,
+//                                                    iovcnt,
+//                                                    0);
+//
+//}
+//
+ACE_INLINE ssize_t
 TAO_AV_UDP_MCast_Transport::recv (char *buf,
                                   size_t len,
                                   ACE_Time_Value *)
@@ -361,7 +369,7 @@ TAO_AV_UDP_MCast_Transport::recv (char *buf,
   return this->handler_->get_mcast_socket ()->recv (buf, len,this->peer_addr_);
 }
 
-ssize_t
+ACE_INLINE ssize_t
 TAO_AV_UDP_MCast_Transport::recv (char *buf,
                                   size_t len,
                                   int flags,
@@ -374,13 +382,15 @@ TAO_AV_UDP_MCast_Transport::recv (char *buf,
                                                     timeout);
 }
 
+
 ssize_t
 TAO_AV_UDP_MCast_Transport::recv (iovec *iov,
-                            int iovcnt,
+                                  int /*iovcnt*/,
                             ACE_Time_Value *timeout)
 {
   return handler_->get_mcast_socket ()->recv (iov,this->peer_addr_,0,timeout);
 }
+
 
 //------------------------------------------------------------
 // TAO_AV_UDP_MCast_Protocol_Factory
@@ -399,6 +409,7 @@ TAO_AV_UDP_MCast_Protocol_Factory::match_protocol (TAO_AV_Core::Protocol protoco
 {
   return (protocol == TAO_AV_Core::TAO_AV_UDP_MCAST);
 }
+
 
 TAO_AV_Acceptor*
 TAO_AV_UDP_MCast_Protocol_Factory::make_acceptor (void)

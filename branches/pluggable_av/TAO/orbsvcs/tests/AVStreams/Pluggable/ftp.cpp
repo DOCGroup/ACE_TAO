@@ -26,7 +26,7 @@ FTP_Client_StreamEndPoint::FTP_Client_StreamEndPoint (TAO_ORB_Manager *orb_manag
 }
 
 int
-FTP_Client_StreamEndPoint::get_callback (const char *flowname,
+FTP_Client_StreamEndPoint::get_callback (const char */*flowname*/,
                                          TAO_AV_Callback *&callback)
 {
   ACE_Time_Value timeout (2);
@@ -45,7 +45,7 @@ int
 FTP_Client_StreamEndPoint::set_protocol_object (const char *flowname,
                                                 TAO_AV_Protocol_Object *object)
 {
-  int result = this->handler_->set_protocol_object (object);
+  this->handler_->set_protocol_object (object);
   ACE_CString flow_string (flowname);
   if (flow_string.find ("RTP") != flow_string.npos)
     {
@@ -103,8 +103,8 @@ FTP_Client_Flow_Handler::set_protocol_object (TAO_AV_Protocol_Object *object)
   return 0;
 }
 int
-FTP_Client_Flow_Handler::handle_timeout (const ACE_Time_Value &tv,
-                                         const void *arg)
+FTP_Client_Flow_Handler::handle_timeout (const ACE_Time_Value &/*tv*/,
+                                         const void */*arg*/)
 {
   ACE_DEBUG ((LM_DEBUG,"FTP_Client_StreamEndPoint::handle_timeout"));
   ACE_Message_Block mb (BUFSIZ);

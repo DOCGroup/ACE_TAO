@@ -136,7 +136,7 @@ public:
   // Dtor
   virtual ACE_HANDLE get_handle (void) const;
   virtual int handle_input (ACE_HANDLE fd);
-  virtual ACE_SOCK_Dgram_Mcast *get_mcast_socket (void) const;
+  ACE_SOCK_Dgram_Mcast *get_mcast_socket (void) const;
 protected:
   ACE_INET_Addr peer_addr_;
   ACE_SOCK_Dgram_Mcast *dgram_mcast_;
@@ -153,5 +153,9 @@ public:
   virtual TAO_AV_Acceptor *make_acceptor (void);
   virtual TAO_AV_Connector *make_connector (void);
 };
+
+#if defined(__ACE_INLINE__)
+#include "MCast.i"
+#endif /* __ACE_INLINE__ */
 
 #endif /* TAO_AV_MCAST_H */
