@@ -31,6 +31,10 @@ void CompIntrDesc_Handler::process_ComponentInterfaceDescription
       XStr node_name (node->getNodeName());
 
       if (false);
+      else if (node_name == XStr
+               (ACE_TEXT ("Deployment:ComponentInterfaceDescription")))
+        {
+        }
       else if
         (process_string(this->iter_, node_name, "label", ccd.label));
       else if

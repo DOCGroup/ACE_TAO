@@ -47,6 +47,16 @@ public:
     return this->id_map_;
   }
 
+  void set_iter (DOMNodeIterator* iter)
+    {
+      iter_ = iter;
+    }
+
+  void set_doc (DOMDocument* doc)
+    {
+      doc_ = doc;
+    }
+
 protected:
   DOMDocumentTraversal* traverse_;
 

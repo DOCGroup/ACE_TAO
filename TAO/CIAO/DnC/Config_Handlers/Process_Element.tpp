@@ -9,6 +9,7 @@
 //=====================================================================
 
 #include "Process_Element.h"
+#include <iostream>
 
 template <typename VALUE, typename DATA>
 void process_element_attributes(DOMNamedNodeMap* named_node_map,
@@ -19,6 +20,8 @@ void process_element_attributes(DOMNamedNodeMap* named_node_map,
                                 Process_Function <DATA>* func,
                                 REF_MAP& id_map)
 {
+  std::cout << "i am here inside process_element_attributes" <<
+std::endl;
   // the number of attributes
   int length = named_node_map->getLength();
   // iterate the attributes
@@ -32,13 +35,15 @@ void process_element_attributes(DOMNamedNodeMap* named_node_map,
       // if xmi::id is given process the element and bind the value
       if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
         {
-          (*func) (iter, data);
+          (*func) (doc, iter, data);
           id_map.bind (aceattrnodevalue, value);
         }
       // if href is given find out the referenced position
       // and process the element
       else if (strattrnodename == XStr (ACE_TEXT ("href")))
         {
+  std::cout << "i am here inside href process_element_attributes" <<
+std::endl;
           XMLURL xml_url (aceattrnodevalue.c_str ());
           XMLURL result (aceattrnodevalue.c_str ());
           std::string url_string = aceattrnodevalue.c_str ();
@@ -53,15 +58,22 @@ void process_element_attributes(DOMNamedNodeMap* named_node_map,
 
           if (xml_url.isRelative ())
             {
+  std::cout << "i am here inside relative href process_element_attributes" <<
+std::endl;
+              std::cout << "the URL string is " << final_url << std::endl;
               href_doc = create_document(final_url.c_str ());
             }
           else
             {
+  std::cout << "i am here inside not relative href process_element_attributes" <<
+std::endl;
               href_doc = create_document (url_string.c_str ());
             }
 
           DOMDocumentTraversal* traverse (href_doc);
           DOMNode* root = (href_doc->getDocumentElement ());
+          std::cout << "Root name in TPP is " << XMLString::transcode
+(root->getNodeName()) << std::endl;
           unsigned long filter = DOMNodeFilter::SHOW_ELEMENT |
             DOMNodeFilter::SHOW_TEXT;
           DOMNodeIterator* href_iter = traverse->createNodeIterator
@@ -70,8 +82,7 @@ void process_element_attributes(DOMNamedNodeMap* named_node_map,
              0,
              true);
           href_iter->nextNode ();
-
-          (*func) (href_iter, data);
+          (*func) (href_doc, href_iter, data);
         }
     }
 }

@@ -28,7 +28,7 @@ BEGIN_DEPLOYMENT_NAMESPACE
 void CompImplDesc_Handler::process_ComponentImplementationDescription
 (::Deployment::ComponentImplementationDescription &cid)
 {
-  this->iter_->nextNode();
+  //this->iter_->nextNode();
   ACE_TString root_node_name;
 
   root_node_name = XMLString::transcode
@@ -42,7 +42,14 @@ void CompImplDesc_Handler::process_ComponentImplementationDescription
     {
       XStr node_name (node->getNodeName());
 
+      ACE_DEBUG ((LM_DEBUG, "node name is %s\n", 
+                  XMLString::transcode (node_name)));
+
       if (false);
+      else if (node_name == XStr
+          (ACE_TEXT ("Deployment:ComponentImplementationDescription")))
+        {
+        }
       else if
         (process_string (this->iter_, node_name, "label", cid.label));
       else if
@@ -88,6 +95,8 @@ void CompImplDesc_Handler::process_ComponentImplementationDescription
       else
         {
           // ??? How did we get here ???
+      ACE_DEBUG ((LM_DEBUG, "node name is %s\n", 
+                  XMLString::transcode (node_name)));
           ACE_THROW (CORBA::INTERNAL());
         }
     }
