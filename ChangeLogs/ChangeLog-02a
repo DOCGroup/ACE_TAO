@@ -1,3 +1,40 @@
+Mon May 15 15:14:41 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* ace/CDR_Stream.h:
+	* ace/CDR_Stream.i:
+	* ace/CDR_Stream.cpp:
+	  Cristian Ferretti <cristian_ferretti@yahoo.com> has contributed
+	  a number of optimizations to the but swapping code for CDR
+	  streams.  The optimizations include loop unrolling for 32-bit
+	  and 64-bit architectures, use of special assembly instructions
+	  for x86-based platforms and use of bit operations (instead of
+	  memory manipulation) for other processors.
+
+	* tests/Makefile:
+	* tests/Makefile.am:
+	* tests/Makefile.bor:
+	* tests/run_tests.bat:
+	* tests/run_tests.lst:
+	* tests/run_tests.vxworks:
+	* tests/tests.dsw:
+	* tests/CDR_Array_Test.cpp:
+	* tests/CDR_Array_Test.dsp:
+	* tests/CDR_Array_Test.icc:
+	  New test to verify that the array operations in the CDR classes
+	  actually work, this is specially critical because the new
+	  versions unroll loop, perform assembly instructions that work
+	  best when the alingment is right, etc.
+
+	* tests/CDR_File_Test.cpp:
+	  The test was extended.  Now we can save a file in one platform
+	  and load it (manually) in another platform, to verify that byte
+	  swapping actually works.
+	  Both tests were contributed by Cristian Ferretti
+	  <cristian_ferretti@yahoo.com>, which is good because all this
+	  voodoo programming needs testing.
+	  The changes were tested using PA-RISC, Alphas, Sparcs and
+	  finally Pentiums in various forms and using several compilers.
+
 Mon May 15 14:01:23 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace/OS.h:
