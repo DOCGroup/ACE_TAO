@@ -22,18 +22,18 @@ TAO::In_Basic_Argument_T<S>::marshal (TAO_OutputCDR & cdr)
 }
 
 template<typename S>
-CORBA::Boolean
-TAO::In_Basic_Argument_T<S>::demarshal (TAO_InputCDR &)
-{
-  return 1;
-}
-
-template<typename S>
 void
 TAO::In_Basic_Argument_T<S>::interceptor_param (Dynamic::Parameter & p)
 {
   p.argument <<= this->x_;
   p.mode = CORBA::PARAM_IN;
+}
+
+template<typename S>
+CORBA::Boolean
+TAO::In_Basic_Argument_T<S>::interceptor_replace (CORBA::Any & any)
+{
+  return any >>= this->x_;
 }
 
 // ===========================================================
@@ -65,19 +65,19 @@ TAO::Inout_Basic_Argument_T<S>::interceptor_param (Dynamic::Parameter & p)
   p.mode = CORBA::PARAM_INOUT;
 }
 
+template<typename S>
+CORBA::Boolean
+TAO::Inout_Basic_Argument_T<S>::interceptor_replace (CORBA::Any & any)
+{
+  return any >>= this->x_;
+}
+
 // ==============================================================
 
 template<typename S>
 TAO::Out_Basic_Argument_T<S>::Out_Basic_Argument_T (S & x)
   : x_ (x)
 {}
-
-template<typename S>
-CORBA::Boolean
-TAO::Out_Basic_Argument_T<S>::marshal (TAO_OutputCDR &)
-{
-  return 1;
-}
 
 template<typename S>
 CORBA::Boolean
@@ -95,13 +95,6 @@ TAO::Ret_Basic_Argument_T<S>::Ret_Basic_Argument_T (void)
 
 template<typename S>
 CORBA::Boolean
-TAO::Ret_Basic_Argument_T<S>::marshal (TAO_OutputCDR &)
-{
-  return 1;
-}
-
-template<typename S>
-CORBA::Boolean
 TAO::Ret_Basic_Argument_T<S>::demarshal (TAO_InputCDR & cdr)
 {
   return cdr >> this->x_;
@@ -115,7 +108,15 @@ TAO::Ret_Basic_Argument_T<S>::interceptor_result (CORBA::Any * any)
 }
 
 template<typename S>
-TAO::Ret_Basic_Argument_T<S>::operator S () const
+CORBA::Boolean
+TAO::Ret_Basic_Argument_T<S>::interceptor_replace (CORBA::Any & any)
+{
+  return any >>= this->x_;
+}
+
+template<typename S>
+S
+TAO::Ret_Basic_Argument_T<S>::excp (void)
 {
   return this->x_;
 }
@@ -135,13 +136,6 @@ TAO::In_Basic_SArgument_T<S>::In_Basic_SArgument_T (void)
 
 template<typename S>
 CORBA::Boolean
-TAO::In_Basic_SArgument_T<S>::marshal (TAO_OutputCDR &)
-{
-  return 1;
-}
-
-template<typename S>
-CORBA::Boolean
 TAO::In_Basic_SArgument_T<S>::demarshal (TAO_InputCDR &cdr)
 {
   return cdr >> this->x_;
@@ -156,7 +150,15 @@ TAO::In_Basic_SArgument_T<S>::interceptor_param (Dynamic::Parameter & p)
 }
 
 template<typename S>
-TAO::In_Basic_SArgument_T<S>::operator S () const
+CORBA::Boolean
+TAO::In_Basic_SArgument_T<S>::interceptor_replace (CORBA::Any & any)
+{
+  return any >>= this->x_;
+}
+
+template<typename S>
+S
+TAO::In_Basic_SArgument_T<S>::arg (void) const
 {
   return this->x_;
 }
@@ -190,7 +192,15 @@ TAO::Inout_Basic_SArgument_T<S>::interceptor_param (Dynamic::Parameter & p)
 }
 
 template<typename S>
-TAO::Inout_Basic_SArgument_T<S>::operator S & ()
+CORBA::Boolean
+TAO::Inout_Basic_SArgument_T<S>::interceptor_replace (CORBA::Any & any)
+{
+  return any >>= this->x_;
+}
+
+template<typename S>
+S &
+TAO::Inout_Basic_SArgument_T<S>::arg (void)
 {
   return this->x_;
 }
@@ -209,10 +219,10 @@ TAO::Out_Basic_SArgument_T<S>::marshal (TAO_OutputCDR &cdr)
 }
 
 template<typename S>
-CORBA::Boolean
-TAO::Out_Basic_SArgument_T<S>::demarshal (TAO_InputCDR &)
+S &
+TAO::Out_Basic_SArgument_T<S>::arg (void)
 {
-  return 1;
+  return this->x_;
 }
 
 // ============================================================
@@ -230,13 +240,6 @@ TAO::Ret_Basic_SArgument_T<S>::marshal (TAO_OutputCDR & cdr)
 }
 
 template<typename S>
-CORBA::Boolean
-TAO::Ret_Basic_SArgument_T<S>::demarshal (TAO_InputCDR &)
-{
-  return 1;
-}
-
-template<typename S>
 void
 TAO::Ret_Basic_SArgument_T<S>::interceptor_result (CORBA::Any * any)
 {
@@ -244,15 +247,15 @@ TAO::Ret_Basic_SArgument_T<S>::interceptor_result (CORBA::Any * any)
 }
 
 template<typename S>
-TAO::Ret_Basic_SArgument_T<S> &
-TAO::Ret_Basic_SArgument_T<S>::operator= (const S & rhs)
+CORBA::Boolean
+TAO::Ret_Basic_SArgument_T<S>::interceptor_replace (CORBA::Any & any)
 {
-  this->x_ = rhs;
-  return *this;
+  return any >>= this->x_;
 }
 
 template<typename S>
-TAO::Ret_Basic_SArgument_T<S>::operator S () const
+S &
+TAO::Ret_Basic_SArgument_T<S>::arg (void)
 {
   return this->x_;
 }

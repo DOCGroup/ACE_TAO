@@ -37,7 +37,9 @@ TAO::In_BD_String_Argument_T<S,to_S,from_S,BOUND>::interceptor_param (
 
 template<typename S, typename to_S, typename from_S, size_t BOUND>
 CORBA::Boolean
-TAO::In_BD_String_Argument_T<S,to_S,from_S,BOUND>::interceptor_replace (CORBA::Any & any)
+TAO::In_BD_String_Argument_T<S,to_S,from_S,BOUND>::interceptor_replace (
+    CORBA::Any & any
+  )
 {
   return any >>= to_S (this->x_, BOUND);
 }
@@ -80,21 +82,30 @@ TAO::Inout_BD_String_Argument_T<S,to_S,from_S,BOUND>::interceptor_param (
 
 template<typename S, typename to_S, typename from_S, size_t BOUND>
 CORBA::Boolean
-TAO::Inout_BD_String_Argument_T<S,to_S,from_S,BOUND>::interceptor_replace (CORBA::Any & any)
+TAO::Inout_BD_String_Argument_T<S,to_S,from_S,BOUND>::interceptor_replace (
+    CORBA::Any & any
+  )
 {
   return any >>= to_S (this->x_, BOUND);
 }
 
 // ==============================================================
 
-template<typename S, typename S_out, typename to_S, typename from_S, size_t BOUND>
-TAO::Out_BD_String_Argument_T<S,S_out,to_S,from_S,BOUND>::Out_BD_String_Argument_T (
-    S *& x
-  )
-  : x_ (x)
+template<typename S, 
+         typename S_out, 
+         typename to_S, 
+         typename from_S, 
+         size_t BOUND>
+TAO::Out_BD_String_Argument_T<S,S_out,to_S,from_S,BOUND>::
+Out_BD_String_Argument_T (S_out x)
+  : x_ (x.ptr ())
 {}
 
-template<typename S, typename S_out, typename to_S, typename from_S, size_t BOUND>
+template<typename S, 
+         typename S_out, 
+         typename to_S, 
+         typename from_S, 
+         size_t BOUND>
 CORBA::Boolean
 TAO::Out_BD_String_Argument_T<S,S_out,to_S,from_S,BOUND>::demarshal (
     TAO_InputCDR & cdr
@@ -105,46 +116,70 @@ TAO::Out_BD_String_Argument_T<S,S_out,to_S,from_S,BOUND>::demarshal (
 
 // ============================================================
 
-template<typename S, typename S_var,  typename to_S, typename from_S, size_t BOUND>
-TAO::Ret_BD_String_Argument_T<S,S_var,to_S,from_S,BOUND>::Ret_BD_String_Argument_T (
-    void
-  )
+template<typename S, 
+         typename S_var, 
+         typename to_S, 
+         typename from_S, 
+         size_t BOUND>
+TAO::Ret_BD_String_Argument_T<S,S_var,to_S,from_S,BOUND>::
+Ret_BD_String_Argument_T (void)
 {
 }
 
-template<typename S, typename S_var, typename to_S, typename from_S, size_t BOUND>
+template<typename S, 
+         typename S_var, 
+         typename to_S, 
+         typename from_S, 
+         size_t BOUND>
 CORBA::Boolean
 TAO::Ret_BD_String_Argument_T<S,S_var,to_S,from_S,BOUND>::demarshal (
     TAO_InputCDR & cdr
   )
 {
-  return cdr >> to_S (this->x_, BOUND);
+  return cdr >> to_S (this->x_.out (), BOUND);
 }
 
-template<typename S, typename S_var, typename to_S, typename from_S, size_t BOUND>
+template<typename S, 
+         typename S_var, 
+         typename to_S, 
+         typename from_S, 
+         size_t BOUND>
 void
 TAO::Ret_BD_String_Argument_T<S,S_var,to_S,from_S,BOUND>::interceptor_result (
     CORBA::Any * any
   )
 {
-  (*any) <<= from_S (this->x_, BOUND);
+  (*any) <<= from_S (this->x_.in (), BOUND);
 }
 
-template<typename S, typename S_var, typename to_S, typename from_S, size_t BOUND>
+template<typename S, 
+         typename S_var, 
+         typename to_S, 
+         typename from_S, 
+         size_t BOUND>
 CORBA::Boolean
-TAO::Ret_BD_String_Argument_T<S,S_var,to_S,from_S,BOUND>::interceptor_replace (CORBA::Any & any)
+TAO::Ret_BD_String_Argument_T<S,S_var,to_S,from_S,BOUND>::
+interceptor_replace (CORBA::Any & any)
 {
-  return any >>= to_S (this->x_, BOUND);
+  return any >>= to_S (this->x_.out (), BOUND);
 }
 
-template<typename S, typename S_var, typename to_S, typename from_S, size_t BOUND>
+template<typename S, 
+         typename S_var, 
+         typename to_S, 
+         typename from_S, 
+         size_t BOUND>
 S *
 TAO::Ret_BD_String_Argument_T<S,S_var,to_S,from_S,BOUND>::excp (void)
 {
   return this->x_.ptr ();
 }
 
-template<typename S, typename S_var, typename to_S, typename from_S, size_t BOUND>
+template<typename S, 
+         typename S_var, 
+         typename to_S, 
+         typename from_S, 
+         size_t BOUND>
 S *
 TAO::Ret_BD_String_Argument_T<S,S_var,to_S,from_S,BOUND>::retn (void)
 {
@@ -153,24 +188,31 @@ TAO::Ret_BD_String_Argument_T<S,S_var,to_S,from_S,BOUND>::retn (void)
 
 // ============================================================
 
-template<typename S, typename to_S, typename from_S, size_t BOUND>
-TAO::In_BD_String_SArgument_T<S,to_S,from_S,BOUND>::In_BD_String_SArgument_T (
-    void
-  )
+template<typename S, 
+         typename S_var, 
+         typename to_S, 
+         typename from_S, 
+         size_t BOUND>
+TAO::In_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::
+In_BD_String_SArgument_T (void)
 {}
 
 template<typename S, typename to_S, typename from_S, size_t BOUND>
 CORBA::Boolean
-TAO::In_BD_String_SArgument_T<S,to_S,from_S,BOUND>::demarshal (
+TAO::In_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::demarshal (
     TAO_InputCDR & cdr
   )
 {
   return cdr >> to_S (this->x_.out (), BOUND);
 }
 
-template<typename S, typename to_S, typename from_S, size_t BOUND>
+template<typename S, 
+         typename S_var, 
+         typename to_S, 
+         typename from_S, 
+         size_t BOUND>
 void
-TAO::In_BD_String_SArgument_T<S,to_S,from_S,BOUND>::interceptor_param (
+TAO::In_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::interceptor_param (
     Dynamic::Parameter & p
   )
 {
@@ -178,128 +220,196 @@ TAO::In_BD_String_SArgument_T<S,to_S,from_S,BOUND>::interceptor_param (
   p.mode = CORBA::PARAM_IN;
 }
 
-template<typename S, typename to_S, typename from_S, size_t BOUND>
+template<typename S, 
+         typename S_var, 
+         typename to_S, 
+         typename from_S, 
+         size_t BOUND>
 CORBA::Boolean
-TAO::In_BD_String_SArgument_T<S,to_S,from_S,BOUND>::interceptor_replace (CORBA::Any & any)
+TAO::In_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::
+interceptor_replace (CORBA::Any & any)
 {
   return any >>= to_S (this->x_.out (), BOUND);
 }
 
-template<typename S, typename to_S, typename from_S, size_t BOUND>
+template<typename S, 
+         typename S_var, 
+         typename to_S, 
+         typename from_S, 
+         size_t BOUND>
 const S *
-TAO::In_BD_String_SArgument_T<S,to_S,from_S,BOUND>::arg (void) const
+TAO::In_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::arg (void) const
 {
   return this->x_.in ();
 }
 
 // ===========================================================
 
-template<typename S, typename to_S, typename from_S, size_t BOUND>
-TAO::Inout_BD_String_SArgument_T<S,to_S,from_S,BOUND>::
+template<typename S, 
+         typename S_var, 
+         typename to_S, 
+         typename from_S, 
+         size_t BOUND>
+TAO::Inout_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::
 Inout_BD_String_SArgument_T (void)
 {}
 
-template<typename S, typename to_S, typename from_S, size_t BOUND>
+template<typename S, 
+         typename S_var, 
+         typename to_S, 
+         typename from_S, 
+         size_t BOUND>
 CORBA::Boolean
-TAO::Inout_BD_String_SArgument_T<S,to_S,from_S,BOUND>::marshal (
+TAO::Inout_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::marshal (
     TAO_OutputCDR & cdr
   )
 {
   return cdr << from_S (this->x_.in (), BOUND);
 }
 
-template<typename S, typename to_S, typename from_S, size_t BOUND>
+template<typename S, 
+         typename S_var, 
+         typename to_S, 
+         typename from_S, 
+         size_t BOUND>
 CORBA::Boolean
-TAO::Inout_BD_String_SArgument_T<S,to_S,from_S,BOUND>::demarshal (
+TAO::Inout_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::demarshal (
     TAO_InputCDR & cdr
   )
 {
   return cdr >> to_S (this->x_.out (), BOUND);
 }
 
-template<typename S, typename to_S, typename from_S, size_t BOUND>
+template<typename S, 
+         typename S_var, 
+         typename to_S, 
+         typename from_S, 
+         size_t BOUND>
 void
-TAO::Inout_BD_String_SArgument_T<S,to_S,from_S,BOUND>::interceptor_param (
-    Dynamic::Parameter & p
-  )
+TAO::Inout_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::
+interceptor_param (Dynamic::Parameter & p)
 {
   p.argument <<= from_S (this->x_.in (), BOUND);
   p.mode = CORBA::PARAM_INOUT;
 }
 
-template<typename S, typename to_S, typename from_S, size_t BOUND>
+template<typename S, 
+         typename S_var, 
+         typename to_S, 
+         typename from_S, 
+         size_t BOUND>
 CORBA::Boolean
-TAO::Inout_BD_String_SArgument_T<S,to_S,from_S,BOUND>::interceptor_replace (CORBA::Any & any)
+TAO::Inout_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::
+interceptor_replace (CORBA::Any & any)
 {
   return any >>= to_S (this->x_.in (), BOUND);
 }
 
-template<typename S, typename to_S, typename from_S, size_t BOUND>
+template<typename S, 
+         typename S_var, 
+         typename to_S, 
+         typename from_S, 
+         size_t BOUND>
 S *&
-TAO::Inout_BD_String_SArgument_T<S,to_S,from_S,BOUND>::arg (void)
+TAO::Inout_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::arg (void)
 {
   return this->x_.inout ();
 }
 
 // ==============================================================
 
-template<typename S, typename to_S, typename from_S, size_t BOUND>
-TAO::Out_BD_String_SArgument_T<S,to_S,from_S,BOUND>::
+template<typename S, 
+         typename S_var, 
+         typename S_out, 
+         typename to_S, 
+         typename from_S, 
+         size_t BOUND>
+TAO::Out_BD_String_SArgument_T<S,S_var,S_out,to_S,from_S,BOUND>::
 Out_BD_String_SArgument_T (void)
 {}
 
-template<typename S, typename to_S, typename from_S, size_t BOUND>
+template<typename S, 
+         typename S_var, 
+         typename S_out, 
+         typename to_S, 
+         typename from_S, 
+         size_t BOUND>
 CORBA::Boolean
-TAO::Out_BD_String_SArgument_T<S,to_S,from_S,BOUND>::marshal (
+TAO::Out_BD_String_SArgument_T<S,S_var,S_out,to_S,from_S,BOUND>::marshal (
     TAO_OutputCDR &cdr
   )
 {
   return cdr << from_S (this->x_.in (), BOUND);
 }
 
-template<typename S, typename to_S, typename from_S, size_t BOUND>
+template<typename S, 
+         typename S_var, 
+         typename S_out, 
+         typename to_S, 
+         typename from_S, 
+         size_t BOUND>
 S_out
-TAO::Out_BD_String_SArgument_T<S,to_S,from_S,BOUND>::arg (void)
+TAO::Out_BD_String_SArgument_T<S,S_var,S_out,to_S,from_S,BOUND>::arg (void)
 {
   return this->x_.out ();
 }
 
 // ============================================================
 
-template<typename S, typename to_S, typename from_S, size_t BOUND>
-TAO::Ret_BD_String_SArgument_T<S,to_S,from_S,BOUND>::
+template<typename S, 
+         typename S_var, 
+         typename to_S, 
+         typename from_S, 
+         size_t BOUND>
+TAO::Ret_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::
 Ret_BD_String_SArgument_T (void)
 {
 }
 
-template<typename S, typename to_S, typename from_S, size_t BOUND>
+template<typename S, 
+         typename S_var, 
+         typename to_S, 
+         typename from_S, 
+         size_t BOUND>
 CORBA::Boolean
-TAO::Ret_BD_String_SArgument_T<S,to_S,from_S,BOUND>::marshal (
+TAO::Ret_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::marshal (
     TAO_OutputCDR & cdr
   )
 {
   return cdr << from_S (this->x_.in (), BOUND);
 }
 
-template<typename S, typename to_S, typename from_S, size_t BOUND>
+template<typename S, 
+         typename S_var, 
+         typename to_S, 
+         typename from_S, 
+         size_t BOUND>
 void
-TAO::Ret_BD_String_SArgument_T<S,to_S,from_S,BOUND>::interceptor_result (
-    CORBA::Any * any
-  )
+TAO::Ret_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::
+interceptor_result (CORBA::Any * any)
 {
   (*any) <<= from_S (this->x_.in (), BOUND);
 }
 
-template<typename S, typename to_S, typename from_S, size_t BOUND>
+template<typename S, 
+         typename S_var, 
+         typename to_S, 
+         typename from_S, 
+         size_t BOUND>
 CORBA::Boolean
-TAO::Ret_BD_String_SArgument_T<S,to_S,from_S,BOUND>::interceptor_replace (CORBA::Any & any)
+TAO::Ret_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::
+interceptor_replace (CORBA::Any & any)
 {
   return any >>= to_S (this->x_.out (), BOUND);
 }
 
-template<typename S, typename to_S, typename from_S, size_t BOUND>
+template<typename S, 
+         typename S_var, 
+         typename to_S, 
+         typename from_S, 
+         size_t BOUND>
 S *&
-TAO::Ret_BD_String_SArgument_T<S,to_S,from_S,BOUND>::arg (void)
+TAO::Ret_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::arg (void)
 {
   return this->x_.out ();
 }
