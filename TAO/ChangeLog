@@ -1,3 +1,8 @@
+Mon Oct 28 16:55:11 2002  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tests\POA\MT_Servant_Locator\Makefile: Fixed and updated
+	  dependencies.
+
 Mon Oct 28 16:48:23 2002  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tests\POA\MT_Servant_Locator\MT_Servant_Locator.cpp: <Task::event_>
