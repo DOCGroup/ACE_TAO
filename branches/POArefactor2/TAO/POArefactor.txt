@@ -1,3 +1,15 @@
+Tue Feb  8 19:44:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/LifespanStrategy*.{h,cpp}:
+        * tao/PortableServer/Root_POA.cpp:
+          In the old POA there was a flag called use_imr_ that was set to
+          false before the imr was notified and set to the old value again
+          after the notify. Besided this flag it was checked whether
+          persistent was set or not. Reimplemented this in another way, added
+          use_imr() to the lifespan strategy, this returns always false for
+          transient and a member for persistent. This member is set to false
+          before we notify the imr and set back again after the notify.
+
 Fri Feb  4 12:20:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/LifespanStrategyTransientFactoryImpl.cpp:
