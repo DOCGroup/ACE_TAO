@@ -1,3 +1,15 @@
+Fri Oct 17 18:40:55 2003  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Log_Msg.cpp: Modify the ACE_Log_Msg::dec() method to avoid
+	  "going negative."  Thanks to Matthieu Vansteene
+ 	  <matthieu.vansteene@regis-dgac.net> for reporting this.
+
+Thu Oct 23 17:14:47 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/config-win32-common.h: Fixed a problem whereby ACE_IOV_MAX
+	  should have been 16 for Win 95/98/me.  Thanks to Enrico Detoma
+ 	  <enrico.detoma@email.it> for reporting this.
+
 Fri Oct 24 11:27:52 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
         * ACE version 5.3.5 released.
