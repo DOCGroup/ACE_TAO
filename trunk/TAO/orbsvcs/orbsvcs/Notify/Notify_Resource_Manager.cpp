@@ -125,7 +125,7 @@ CosNotifyFilter::FilterFactory_ptr
 TAO_Notify_Resource_Manager::get_default_filter_factory (void)
 {
   return CosNotifyFilter::FilterFactory::
-    _duplicate (this->default_filter_factory_);
+    _duplicate (this->default_filter_factory_.in ());
 }
 
 TAO_Notify_FilterFactory_i*
