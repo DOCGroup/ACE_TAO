@@ -1,3 +1,11 @@
+Fri Feb 18 12:53:13 2000  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/vs.cpp: 
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/as.cpp: 
+
+	  Fixed compile errors on Redhat Linux. Thanks to 
+	  Alex Luk <fluk7@ie.cuhk.edu.hk> for reporting this.
+
 Fri Feb 18 10:44:33 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/Trading_Service/Trading_Service.cpp:
