@@ -1,8 +1,3 @@
-Wed Jun 23 19:15:48 1999  Darrell Brunsch  <brunsch@cs.wustl.edu>
-
-        * docs/implrepo/index.html: Added persistence to future work
-          list.
-
 Wed Jun 23 15:27:48 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/libsize.pl: added this script, which provide a size
