@@ -211,7 +211,7 @@ TAO_Connection_Handler::handle_close_eh (
     {
       if (TAO_debug_level)
         ACE_DEBUG  ((LM_DEBUG,
-                     "TAO (%P|%t) - IIOP_Connection_Handler[%d]::"
+                     "TAO (%P|%t) - Connection_Handler[%d]::"
                      "handle_close, connection closing or already closed\n",
                      my_handle));
       return 0;
@@ -219,7 +219,7 @@ TAO_Connection_Handler::handle_close_eh (
 
   if (TAO_debug_level)
     ACE_DEBUG  ((LM_DEBUG,
-                 "TAO (%P|%t) - IIOP_Connection_Handler[%d]::"
+                 "TAO (%P|%t) - Connection_Handler[%d]::"
                  "handle_close, connection fully closed\n",
                  my_handle));
 
@@ -268,7 +268,7 @@ TAO_Connection_Handler::handle_input_eh (
     {
       ACE_HANDLE handle = eh->get_handle();
       ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - IIOP_Connection_Handler[%d]::handle_input, "
+                  "TAO (%P|%t) - Connection_Handler[%d]::handle_input, "
                   "handle = %d/%d, refcount = %d\n",
                   this->transport()->id(), handle, h, refcount));
     }
@@ -298,7 +298,7 @@ TAO_Connection_Handler::handle_input_eh (
     {
       ACE_HANDLE handle = eh->get_handle ();
       ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - IIOP_Connection_Handler[%d]::handle_input, "
+                  "TAO (%P|%t) Connection_Handler[%d]::handle_input, "
                   "handle = %d/%d, refcount = %d, retval = %d\n",
                   this->transport()->id(), handle, h, refcount, return_value));
     }
