@@ -313,7 +313,8 @@ Scoping and name resolution rules have changed in CORBA with version
 IDL compiler now supports the CORBA AMI callback model, generating code
 for reply handlers and reply stubs if the -GC command line option is
 used. The TAO library must be compiled with TAO_HAS_CORBA_MESSAGING and
-TAO_HAS_AMI_CALLBACK, the TAO IDL compiler with IDL_HAS_VALURTYPE defined.
+TAO_HAS_AMI_CALLBACK. IDL_HAS_VALUETYPE, which is also necessary, is
+defined by default by the TAO IDL compiler.
 </ul>
 
 <p><br>Known bugs/unimplemented constructs:
@@ -1625,8 +1626,7 @@ We've implemented the callback model of the <A
 HREF="http://www.cs.wustl.edu/~schmidt/CORBA-docs/98-05-05.pdf.gz">Messaging
 specification</a>.  To activate the AMI for TAO and the TAO IDL
 compiler define <tt>TAO_HAS_CORBA_MESSAGING</tt>,
-<tt>TAO_HAS_AMI_CALLBACK</tt>, <tt>TAO_HAS_VALUETYPE</tt> and
-<tt>IDL_HAS_VALUETYPE</tt> in your config.h file.  The TAO IDL
+<tt>TAO_HAS_AMI_CALLBACK</tt> in your config.h file.  The TAO IDL
 compiler can generate the AMI stubs, ReplyHandler und reply stubs
 using the -GC switch.
 <p>
