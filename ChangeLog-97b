@@ -1,3 +1,13 @@
+Fri Oct 22 13:27:47 1997  Douglas C. Schmidt  <schmidt@watusi.cs.wustl.edu>
+
+	* tests/Reactor_Performance_Test.cpp (client): Revised the
+ 	  connection portion of this test to use the newly revised
+ 	  connect_n() method on Connector.  
+
+	* ace/Connector.cpp (connect_n): Revised the connect_n() method so
+ 	  that it keeps track of which connections succeeded and which
+ 	  failed.
+
 Wed Oct 22 07:23:21 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.i (getpgid): fixed (commented) ACE_TRACE identifer.
@@ -564,6 +574,7 @@ Thu Oct 16 20:44:40 1997  James C Hu  <jxh@cs.wustl.edu>
 	  on NT.  Hopefully this will fix it.  Fix suggested by Rob Head
 	  (rhead@virtc.com).
 
+>>>>>>> 4.444
 Thu Oct 16 14:21:34 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* ace/Proactor.cpp: Replaced #include "ace/Servie_Config.h" with
