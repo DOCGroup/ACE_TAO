@@ -7571,6 +7571,8 @@ AC_CONFIG_FILES([
   protocols/Makefile
   protocols/ace/Makefile
   protocols/ace/HTBP/Makefile
+  protocols/ace/RMCast/Makefile
+  protocols/ace/TMCast/Makefile
   tests/Makefile
   tests/HTBP/Makefile
   tests/HTBP/Reactor_Tests/Makefile
