@@ -1,3 +1,10 @@
+Tue Mar  6 06:17:46 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Param_Test/client.cpp (run_sii_test): Make sure to
+	  call this->test_object_->print_values () before running each
+ 	  test.  Thanks to Johnny Willemsen <jwillemsen@mego.nl> for
+ 	  reporting this.
+
 Mon Mar  5 20:11:49 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/examples/Security/Send_File/server.cpp (main): 

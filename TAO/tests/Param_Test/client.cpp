@@ -88,7 +88,10 @@ Param_Test_Client<T>::run_sii_test (void)
         {
           this->results_.call_count (this->results_.call_count () + 1);
           if (opt->debug ())
-            ACE_DEBUG ((LM_DEBUG, "\n****** Before call values *****\n"));
+            {
+              ACE_DEBUG ((LM_DEBUG, "\n****** Before call values *****\n"));
+              this->test_object_->print_values ();
+            }
 
           // start the timing
           this->results_.start_timer ();
@@ -209,7 +212,10 @@ Param_Test_Client<T>::run_dii_test (void)
           ACE_TRY_CHECK;
 
           if (opt->debug ())
-            ACE_DEBUG ((LM_DEBUG, "\n****** Before call values *****\n"));
+            {
+              ACE_DEBUG ((LM_DEBUG, "\n****** Before call values *****\n"));
+              this->test_object_->print_values ();
+            }
 
           // Make the invocation, verify the result.
           this->test_object_->dii_req_invoke (req.in (),
