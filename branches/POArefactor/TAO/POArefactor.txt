@@ -1,3 +1,9 @@
+Mon Sep 20 09:19:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.{h,cpp}:
+          Zapped all code that was guarded with #ifdef 0, it is old, and
+          makes it a little bit more readable
+
 Fri Sep 17 14:07:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA_Thread_Policy.{h,cpp}:
