@@ -640,15 +640,6 @@ public:
                      PortableServer::POA::ServantNotActive,
                      PortableServer::POA::WrongPolicy));
 protected:
-  PortableServer::ObjectId *servant_to_system_id (
-      PortableServer::Servant p_servant,
-      CORBA::Short &priority
-      ACE_ENV_ARG_DECL
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::ServantNotActive,
-                     PortableServer::POA::WrongPolicy));
-
   PortableServer::ObjectId *servant_to_system_id_i (
       PortableServer::Servant p_servant,
       CORBA::Short &priority

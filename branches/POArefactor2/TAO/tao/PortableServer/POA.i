@@ -98,22 +98,6 @@ TAO_POA::servant_to_id (PortableServer::Servant servant
                                 ACE_ENV_ARG_PARAMETER);
 }
 
-ACE_INLINE PortableServer::ObjectId *
-TAO_POA::servant_to_system_id (PortableServer::Servant servant,
-                               CORBA::Short &priority
-                               ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::ServantNotActive,
-                   PortableServer::POA::WrongPolicy))
-{
-  // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (0);
-
-  return this->servant_to_system_id_i (servant,
-                                       priority
-                                       ACE_ENV_ARG_PARAMETER);
-}
-
 ACE_INLINE PortableServer::Servant
 TAO_POA::reference_to_servant (CORBA::Object_ptr reference
                                ACE_ENV_ARG_DECL)
