@@ -18,12 +18,12 @@
 #include "tao/Environment.h"
 #include "tao/GIOP.h"
 
-TAO_Connector_Registry::TAO_Connector_Registry()
-  : iiop_connector_(0)
+TAO_Connector_Registry::TAO_Connector_Registry (void)
+  : iiop_connector_ (0)
 {
 }
 
-TAO_Connector_Registry::~TAO_Connector_Registry()
+TAO_Connector_Registry::~TAO_Connector_Registry (void)
 {
 }
 
@@ -32,26 +32,28 @@ TAO_Connector_Registry::get_connector (CORBA::ULong tag)
 {
   // For now, only IIOP connectors.
   if (tag != TAO_IOP_TAG_INTERNET_IOP)
-  {
-    ACE_DEBUG ((LM_DEBUG, "Invalid connector tag %d\n", tag));
-    return 0;
-  }
-
-  return iiop_connector_;
+    ACE_ERROR_RETURN ((LM_ERROR,,
+                       "Invalid connector tag %d\n",
+                       tag),
+                      0);
+  else
+    return iiop_connector_;
 }
 
 CORBA::Boolean
 TAO_Connector_Registry::add_connector (TAO_Connector *connector)
 {
-
   if (connector->tag() == TAO_IOP_TAG_INTERNET_IOP)
-  {
-    // do not copy, but save the reference (i.e. pointer)
-    this->iiop_connector_ = connector;
-    return 1;
-  }
-  ACE_DEBUG ((LM_DEBUG, "Invalid connector tag %d\n", connector->tag()));
-  return 0;
+    {
+      // do not copy, but save the reference (i.e. pointer)
+      this->iiop_connector_ = connector;
+      return 1;
+    }
+  else
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Invalid connector tag %d\n",
+                       connector->tag ()),
+                      0);
 }
 
 int
@@ -60,7 +62,8 @@ TAO_Connector_Registry::open(TAO_Resource_Factory *trf, ACE_Reactor *reactor)
   // @@ Once again since we only accept 1 iiop connector, this is easy
   if (iiop_connector_)
     return this->iiop_connector_->open (trf, reactor);
-  return 0;
+  else
+    return 0;
 }
 
 int
@@ -74,53 +77,54 @@ TAO_Connector_Registry::close_all()
 }
 
 int
-TAO_Connector_Registry::preconnect (const char* the_preconnections)
+TAO_Connector_Registry::preconnect (const char *the_preconnections)
 {
   // It would be good to use auto_ptr<> to guard against premature
   // termination and, thus, leaks.
   int result=0;
   char *preconnections = ACE_OS::strdup (the_preconnections);
 
-  // @@ OK, what we should do is parse the string so that we can gather
-  // @@ together addresses of the same protocol together and pass to the
-  // @@ appropriate connector.  But, for now we ASSUME they are all
-  // @@ INET IP:Port!! HACK. fredk
+  // @@ OK, what we should do is parse the string so that we can
+  // gather @@ together addresses of the same protocol together and
+  // pass to the @@ appropriate connector.  But, for now we ASSUME
+  // they are all @@ INET IP:Port!! HACK. fredk
 
   if (this->iiop_connector_)
-    result = this->iiop_connector_->preconnect(preconnections);
+    result = this->iiop_connector_->preconnect (preconnections);
 
   ACE_OS::free (preconnections);
 
   return result;
-
 }
 
 TAO_Profile *
 TAO_Connector_Registry::connect (STUB_Object *&obj,
                                  CORBA::Environment &env)
 {
-  TAO_Profile *profile;
   CORBA::ULong req_tag = TAO_IOP_TAG_INTERNET_IOP;
+  TAO_Profile *profile = obj->get_fwd_profile ();
 
   // @@ FRED _ For now still only support ONE profile!
-  if (! (profile = obj->get_fwd_profile ()))
+  if (profile == 0)
     profile = obj->profile_in_use ();
 
-  // @@ And the profile selection policy is .... ONLY IIOP, and the
-  // @@ first one found!
+  // @@ And the profile selection policy is .... ONLY IIOP, and the @@
+  // first one found!
   if (profile->tag () != req_tag)
-  {
-    TAO_THROW_ENV_RETURN (CORBA::INTERNAL (CORBA::COMPLETED_NO), env, 0);
-  }
+    TAO_THROW_ENV_RETURN (CORBA::INTERNAL (CORBA::COMPLETED_NO),
+                          env,
+                          0);
 
   // obj->set_profile_in_use (profile);
 
-  // here is where we get the appropriate connector object
-  // but we are the Connector Registry so call get_connector(tag)
+  // here is where we get the appropriate connector object but we are
+  // the Connector Registry so call get_connector(tag)
 
-  TAO_Connector *connector = this->get_connector(req_tag);
+  TAO_Connector *connector =
+    this->get_connector (req_tag);
 
-  TAO_Transport *transport = connector->connect(profile, env);
+  TAO_Transport *transport =
+    connector->connect (profile, env);
   TAO_CHECK_ENV_RETURN (env, 0);
 
   if (transport == 0)
@@ -155,13 +159,13 @@ Version::set_version (CORBA::Octet maj, CORBA::Octet min)
 int
 Version::operator== (const Version *&src)
 {
-  return (this->major == src->major && this->minor == src->minor);
+  return this->major == src->major && this->minor == src->minor;
 }
 
 int
 Version::operator== (const Version &src)
 {
-  return (this->major == src.major && this->minor == src.minor);
+  return this->major == src.major && this->minor == src.minor;
 }
 
 Version &
