@@ -1,8 +1,20 @@
+Fri Feb  6 14:49:48 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* CIDLC/CIDLC.mpc:
+	* CCF/CCF/CIDL/CIDL.mpc
+	* CCF/CCF/IDL2/IDL2.mpc
+	* CCF/CCF/CodeGenerationKit/CodeGenerationKit.mpc
+	* CCF/CCF/CompilerElements/CompilerElements.mpc
+	* CCF/CCF/IDL3/IDL3.mpc
+
+	  Added reqires cidl in these mpc files. By default
+	  cidl is not turned on, so MPC won't generate makefiles.
+
 Thu Feb  5 12:58:14 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CCF/Documentation/Build.html:
 	* CIDLC/README.html:
-	 
+
 	  Updated all URLs to point to the 'central location'.
 
 Wed Feb  4 14:58:05 2004  Tao Lu  <lu@dre.vanderbilt.edu>
