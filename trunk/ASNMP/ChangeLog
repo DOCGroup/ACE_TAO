@@ -1,3 +1,9 @@
+Thu Aug 21 20:59:23 1997  Mike MacFaden  <mrm@tango.cs.wustl.edu>
+
+	* Added Netbios address support to GenAddress
+	  and added DecNetAddress, AppleTalkAddress classes per CISCO-TC.my
+	  (ftp://ftp.cisco.com/pub/mibs)
+
 Tue Aug 19 20:19:32 1997  Michael R. MacFaden  <mrm@mrm-ss20.cisco.com (Michael R. MacFaden)>
       * change IpAddress::is_arpa() to is_private() and update the comments 
          per RFC 1597. Add new test routine to verify this function in 
