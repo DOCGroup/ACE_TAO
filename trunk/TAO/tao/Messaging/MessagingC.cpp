@@ -424,7 +424,7 @@ OBV_Messaging::ExceptionHolder::marshaled_exception (void)
 }
 
 // TAO_IDL - Generated from
-// be\be_valuetype.cpp:488
+// be\be_valuetype.cpp:487
 
 void
 CORBA::add_ref (Messaging::ExceptionHolder * vt)
