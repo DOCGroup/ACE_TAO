@@ -96,8 +96,6 @@ namespace TAO
           ACE_THROW_SPEC ((CORBA::SystemException,
                            PortableServer::POA::ServantNotActive,
                            PortableServer::POA::WrongPolicy));
-    private:
-      TAO_POA* poa_;
     };
   }
 }
