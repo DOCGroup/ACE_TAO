@@ -42,13 +42,20 @@ namespace CIAO
                                                   ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (COMP::_nil ());
 
-    COMP_SVNT *svt;
+    
+    COMP_SVNT *svt = new COMP_SVNT(ciao_comp.in (), this->home_.in (),
+                                   this->container_);
+    
+
+    /*
+    COMP_SVNT *svt = 0;
     ACE_NEW_RETURN (svt,
-                    COMP_SVNT (ciao_comp,
-                               this->home_.in (),
-                               this->container_),
+                    COMP_SVNT(ciao_comp.in (), this->home_.in (),
+                              this->container_),
                     COMP::_nil ());
+    */
     PortableServer::ServantBase_var safe (svt);
+    return safe._retn ();
   }
 }
 
