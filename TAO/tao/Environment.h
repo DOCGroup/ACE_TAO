@@ -89,14 +89,15 @@ public:
   // exception.
 
   const char* exception_id (void) const;
-  // return the repository ID for the exception
+  // return the repository ID for the exception.
 
   void clear (void);
   // Clear the exception.
 
   void print_exception (const char *info,
                         FILE *f=stdout) const;
-  // print the exception to output determined by f
+  // Print the exception to output determined by f.
+  // This function is not CORBA compliant.
 
   // = Obtain a default environment to use with TAO.
   static CORBA_Environment &default_environment (void);
