@@ -3,7 +3,7 @@ Fri Jul 27 12:25:49 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/Transport.cpp: Reverted the change made in this Wed Jul 25
 	  22:10:21 2001  Balachandran Natarajan  <bala@cs.wustl.edu>. We
 	  need to resume the handle as soon the reply is ready for
-	  dispatching.  The situtaion where it can create problems can be
+	  dispatching.  The situation where it can create problems can be
 	  easily seen in $TAO_ROOT/tests/LongUpcalls/run_ami_test.pl. 
 
 	  Further, the fix that was done earlier was for a race
