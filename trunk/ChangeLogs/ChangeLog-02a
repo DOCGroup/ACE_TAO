@@ -1,5 +1,8 @@
 Fri Mar 30 11:12:53 2001  Carlos O'Ryan  <coryan@uci.edu>
 
+        * ace/*/Makefile:
+        * apps/*/Makefile:
+        * docs/*/Makefile:
         * examples/*/Makefile:
         * netsvcs/*/Makefile:
         * performance-tests/*/Makefile:

@@ -41,7 +41,8 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Blob.o .obj/Blob.so .shobj/Blob.o .shobj/Blob.so: Blob.cpp Blob.h $(ACE_ROOT)/ace/OS.h \
+.obj/Blob.o .obj/Blob.so .shobj/Blob.o .shobj/Blob.so: Blob.cpp Blob.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -233,7 +234,8 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/SOCK_IO.i \
  $(ACE_ROOT)/ace/SOCK_Stream.i \
  $(ACE_ROOT)/ace/Time_Value.h \
- $(ACE_ROOT)/ace/SOCK_Connector.i Blob_Handler.h
+ $(ACE_ROOT)/ace/SOCK_Connector.i \
+ Blob_Handler.h
 
 .obj/Blob_Handler.o .obj/Blob_Handler.so .shobj/Blob_Handler.o .shobj/Blob_Handler.so: Blob_Handler.cpp Blob_Handler.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -422,7 +424,8 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Dynamic.h \
  $(ACE_ROOT)/ace/Dynamic.i
 
-.obj/Options.o .obj/Options.so .shobj/Options.o .shobj/Options.so: Options.cpp $(ACE_ROOT)/ace/Get_Opt.h \
+.obj/Options.o .obj/Options.so .shobj/Options.o .shobj/Options.so: Options.cpp \
+ $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -473,7 +476,8 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
- $(ACE_ROOT)/ace/ARGV.i Blob.h \
+ $(ACE_ROOT)/ace/ARGV.i \
+ Blob.h \
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Object.h \
@@ -618,7 +622,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/SOCK_IO.i \
  $(ACE_ROOT)/ace/SOCK_Stream.i \
  $(ACE_ROOT)/ace/Time_Value.h \
- $(ACE_ROOT)/ace/SOCK_Connector.i Blob_Handler.h \
- Options.h
+ $(ACE_ROOT)/ace/SOCK_Connector.i \
+ Blob_Handler.h Options.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

@@ -113,7 +113,8 @@ endif #VxWorks
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp $(ACE_ROOT)/ace/Log_Msg.h \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp \
+ $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -142,11 +143,11 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
- $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl Options.h \
- global.h SML_Client.h SM_Client.h PM_Client.h Protocol_Manager.h \
- Search_Struct.h Protocol_Record.h Drwho_Node.h CM_Client.h \
- Comm_Manager.h Select_Manager.h SML_Server.h SM_Server.h PM_Server.h \
- CM_Server.h SMR_Client.h
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+ Options.h global.h SML_Client.h SM_Client.h PM_Client.h \
+ Protocol_Manager.h Search_Struct.h Protocol_Record.h Drwho_Node.h \
+ CM_Client.h Comm_Manager.h Select_Manager.h SML_Server.h SM_Server.h \
+ PM_Server.h CM_Server.h SMR_Client.h
 
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -172,9 +173,10 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i SMR_Server.h SM_Server.h \
- PM_Server.h Protocol_Manager.h Search_Struct.h Protocol_Record.h \
- Drwho_Node.h CM_Server.h Comm_Manager.h Select_Manager.h \
+ $(ACE_ROOT)/ace/OS.i \
+ SMR_Server.h SM_Server.h PM_Server.h Protocol_Manager.h \
+ Search_Struct.h Protocol_Record.h Drwho_Node.h CM_Server.h \
+ Comm_Manager.h Select_Manager.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/Flag_Manip.i \
@@ -224,9 +226,9 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
- $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl Options.h \
- global.h Protocol_Manager.h Search_Struct.h Protocol_Record.h \
- Drwho_Node.h
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+ Options.h global.h Protocol_Manager.h Search_Struct.h \
+ Protocol_Record.h Drwho_Node.h
 
 .obj/Drwho_Node.o .obj/Drwho_Node.so .shobj/Drwho_Node.o .shobj/Drwho_Node.so: Drwho_Node.cpp Drwho_Node.h global.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -278,7 +280,8 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i Options.h Rwho_DB_Manager.h \
+ $(ACE_ROOT)/ace/OS.i \
+ Options.h Rwho_DB_Manager.h \
  $(ACE_ROOT)/ace/Dirent.h \
  $(ACE_ROOT)/ace/Dirent.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -290,7 +293,8 @@ endif #VxWorks
  Protocol_Record.h Drwho_Node.h
 
 .obj/Multicast_Manager.o .obj/Multicast_Manager.so .shobj/Multicast_Manager.o .shobj/Multicast_Manager.so: Multicast_Manager.cpp Multicast_Manager.h \
- global.h $(ACE_ROOT)/ace/OS.h \
+ global.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -359,7 +363,8 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i Protocol_Record.h Drwho_Node.h \
+ $(ACE_ROOT)/ace/OS.i \
+ Protocol_Record.h Drwho_Node.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
@@ -391,7 +396,8 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i Multicast_Manager.h \
+ $(ACE_ROOT)/ace/OS.i \
+ Multicast_Manager.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
@@ -503,8 +509,8 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i Hash_Table.h Search_Struct.h \
- Protocol_Record.h Drwho_Node.h \
+ $(ACE_ROOT)/ace/OS.i \
+ Hash_Table.h Search_Struct.h Protocol_Record.h Drwho_Node.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
@@ -536,8 +542,8 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i Binary_Search.h Search_Struct.h \
- Protocol_Record.h Drwho_Node.h \
+ $(ACE_ROOT)/ace/OS.i \
+ Binary_Search.h Search_Struct.h Protocol_Record.h Drwho_Node.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
@@ -569,8 +575,9 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i Search_Struct.h Protocol_Record.h \
- Drwho_Node.h $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/OS.i \
+ Search_Struct.h Protocol_Record.h Drwho_Node.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
@@ -601,8 +608,9 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i Single_Lookup.h Search_Struct.h \
- Protocol_Record.h Drwho_Node.h $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.i \
+ Single_Lookup.h Search_Struct.h Protocol_Record.h Drwho_Node.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/Flag_Manip.i \
  $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -622,7 +630,8 @@ endif #VxWorks
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
 
 .obj/SML_Server.o .obj/SML_Server.so .shobj/SML_Server.o .shobj/SML_Server.so: SML_Server.cpp SML_Server.h SM_Server.h PM_Server.h \
- Protocol_Manager.h $(ACE_ROOT)/ace/OS.h \
+ Protocol_Manager.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -645,9 +654,9 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i Options.h global.h Search_Struct.h \
- Protocol_Record.h Drwho_Node.h CM_Server.h Comm_Manager.h \
- Select_Manager.h
+ $(ACE_ROOT)/ace/OS.i \
+ Options.h global.h Search_Struct.h Protocol_Record.h Drwho_Node.h \
+ CM_Server.h Comm_Manager.h Select_Manager.h
 
 .obj/SM_Server.o .obj/SM_Server.so .shobj/SM_Server.o .shobj/SM_Server.so: SM_Server.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -673,10 +682,10 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i PMS_All.h PM_Server.h \
- Protocol_Manager.h Search_Struct.h Protocol_Record.h Drwho_Node.h \
- PMS_Flo.h PMS_Usr.h PMS_Ruser.h SM_Server.h CM_Server.h \
- Comm_Manager.h Select_Manager.h \
+ $(ACE_ROOT)/ace/OS.i \
+ PMS_All.h PM_Server.h Protocol_Manager.h Search_Struct.h \
+ Protocol_Record.h Drwho_Node.h PMS_Flo.h PMS_Usr.h PMS_Ruser.h \
+ SM_Server.h CM_Server.h Comm_Manager.h Select_Manager.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
@@ -708,9 +717,10 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i SL_Server.h Single_Lookup.h \
- Search_Struct.h Protocol_Record.h Drwho_Node.h PMS_Usr.h PM_Server.h \
- Protocol_Manager.h $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.i \
+ SL_Server.h Single_Lookup.h Search_Struct.h Protocol_Record.h \
+ Drwho_Node.h PMS_Usr.h PM_Server.h Protocol_Manager.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/Flag_Manip.i \
  $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -729,7 +739,8 @@ endif #VxWorks
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
 
-.obj/SL_Server.o .obj/SL_Server.so .shobj/SL_Server.o .shobj/SL_Server.so: SL_Server.cpp global.h $(ACE_ROOT)/ace/OS.h \
+.obj/SL_Server.o .obj/SL_Server.so .shobj/SL_Server.o .shobj/SL_Server.so: SL_Server.cpp global.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -752,8 +763,9 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i SL_Server.h Single_Lookup.h \
- Options.h Search_Struct.h Protocol_Record.h Drwho_Node.h
+ $(ACE_ROOT)/ace/OS.i \
+ SL_Server.h Single_Lookup.h Options.h Search_Struct.h \
+ Protocol_Record.h Drwho_Node.h
 
 .obj/PMS_Flo.o .obj/PMS_Flo.so .shobj/PMS_Flo.o .shobj/PMS_Flo.so: PMS_Flo.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -779,9 +791,10 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i BS_Server.h Binary_Search.h \
- Search_Struct.h Protocol_Record.h Drwho_Node.h PMS_Flo.h PM_Server.h \
- Protocol_Manager.h $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.i \
+ BS_Server.h Binary_Search.h Search_Struct.h Protocol_Record.h \
+ Drwho_Node.h PMS_Flo.h PM_Server.h Protocol_Manager.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/Flag_Manip.i \
  $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -824,7 +837,8 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i Rwho_DB_Manager.h \
+ $(ACE_ROOT)/ace/OS.i \
+ Rwho_DB_Manager.h \
  $(ACE_ROOT)/ace/Dirent.h \
  $(ACE_ROOT)/ace/Dirent.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -834,7 +848,8 @@ endif #VxWorks
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
  Protocol_Record.h Drwho_Node.h PM_Server.h Protocol_Manager.h \
- Search_Struct.h $(ACE_ROOT)/ace/ACE.h \
+ Search_Struct.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/Flag_Manip.i \
  $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -937,9 +952,10 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i HT_Server.h Hash_Table.h \
- Search_Struct.h Protocol_Record.h Drwho_Node.h PMS_All.h PM_Server.h \
- Protocol_Manager.h $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.i \
+ HT_Server.h Hash_Table.h Search_Struct.h Protocol_Record.h \
+ Drwho_Node.h PMS_All.h PM_Server.h Protocol_Manager.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/Flag_Manip.i \
  $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -982,9 +998,10 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i HT_Server.h Hash_Table.h \
- Search_Struct.h Protocol_Record.h Drwho_Node.h PMS_Ruser.h \
- PM_Server.h Protocol_Manager.h $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.i \
+ HT_Server.h Hash_Table.h Search_Struct.h Protocol_Record.h \
+ Drwho_Node.h PMS_Ruser.h PM_Server.h Protocol_Manager.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/Flag_Manip.i \
  $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -1027,9 +1044,10 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i SMR_Server.h SM_Server.h \
- PM_Server.h Protocol_Manager.h Search_Struct.h Protocol_Record.h \
- Drwho_Node.h CM_Server.h Comm_Manager.h Select_Manager.h \
+ $(ACE_ROOT)/ace/OS.i \
+ SMR_Server.h SM_Server.h PM_Server.h Protocol_Manager.h \
+ Search_Struct.h Protocol_Record.h Drwho_Node.h CM_Server.h \
+ Comm_Manager.h Select_Manager.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
@@ -1061,8 +1079,9 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i Multicast_Manager.h CM_Client.h \
- Comm_Manager.h $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/OS.i \
+ Multicast_Manager.h CM_Client.h Comm_Manager.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
@@ -1093,10 +1112,10 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i PMC_All.h PM_Client.h \
- Protocol_Manager.h Search_Struct.h Protocol_Record.h Drwho_Node.h \
- PMC_Flo.h PMC_Usr.h PMC_Ruser.h SM_Client.h CM_Client.h \
- Comm_Manager.h Select_Manager.h \
+ $(ACE_ROOT)/ace/OS.i \
+ PMC_All.h PM_Client.h Protocol_Manager.h Search_Struct.h \
+ Protocol_Record.h Drwho_Node.h PMC_Flo.h PMC_Usr.h PMC_Ruser.h \
+ SM_Client.h CM_Client.h Comm_Manager.h Select_Manager.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
@@ -1128,10 +1147,10 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i PMC_All.h PM_Client.h \
- Protocol_Manager.h Search_Struct.h Protocol_Record.h Drwho_Node.h \
- PMC_Flo.h PMC_Usr.h PMC_Ruser.h SMR_Client.h SM_Client.h CM_Client.h \
- Comm_Manager.h Select_Manager.h \
+ $(ACE_ROOT)/ace/OS.i \
+ PMC_All.h PM_Client.h Protocol_Manager.h Search_Struct.h \
+ Protocol_Record.h Drwho_Node.h PMC_Flo.h PMC_Usr.h PMC_Ruser.h \
+ SMR_Client.h SM_Client.h CM_Client.h Comm_Manager.h Select_Manager.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
@@ -1163,8 +1182,9 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i PM_Server.h Protocol_Manager.h \
- Search_Struct.h Protocol_Record.h Drwho_Node.h PM_Client.h \
+ $(ACE_ROOT)/ace/OS.i \
+ PM_Server.h Protocol_Manager.h Search_Struct.h Protocol_Record.h \
+ Drwho_Node.h PM_Client.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/Flag_Manip.i \
@@ -1247,7 +1267,8 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i File_Manager.h \
+ $(ACE_ROOT)/ace/OS.i \
+ File_Manager.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -1287,10 +1308,12 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i BS_Client.h Binary_Search.h \
- Search_Struct.h Protocol_Record.h Drwho_Node.h
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ BS_Client.h Binary_Search.h Search_Struct.h Protocol_Record.h \
+ Drwho_Node.h
 
-.obj/PMC_All.o .obj/PMC_All.so .shobj/PMC_All.o .shobj/PMC_All.so: PMC_All.cpp global.h $(ACE_ROOT)/ace/OS.h \
+.obj/PMC_All.o .obj/PMC_All.so .shobj/PMC_All.o .shobj/PMC_All.so: PMC_All.cpp global.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -1313,9 +1336,10 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i Options.h HT_Client.h Hash_Table.h \
- Search_Struct.h Protocol_Record.h Drwho_Node.h PMC_All.h PM_Client.h \
- Protocol_Manager.h $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.i \
+ Options.h HT_Client.h Hash_Table.h Search_Struct.h Protocol_Record.h \
+ Drwho_Node.h PMC_All.h PM_Client.h Protocol_Manager.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/Flag_Manip.i \
  $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -1358,9 +1382,10 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i BS_Client.h Binary_Search.h \
- Search_Struct.h Protocol_Record.h Drwho_Node.h PMC_Flo.h PM_Client.h \
- Protocol_Manager.h $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.i \
+ BS_Client.h Binary_Search.h Search_Struct.h Protocol_Record.h \
+ Drwho_Node.h PMC_Flo.h PM_Client.h Protocol_Manager.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/Flag_Manip.i \
  $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -1403,9 +1428,10 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i SL_Client.h Single_Lookup.h \
- Search_Struct.h Protocol_Record.h Drwho_Node.h PMC_Usr.h PM_Client.h \
- Protocol_Manager.h $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.i \
+ SL_Client.h Single_Lookup.h Search_Struct.h Protocol_Record.h \
+ Drwho_Node.h PMC_Usr.h PM_Client.h Protocol_Manager.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/Flag_Manip.i \
  $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -1448,10 +1474,12 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i SL_Client.h Single_Lookup.h \
- Search_Struct.h Protocol_Record.h Drwho_Node.h
+ $(ACE_ROOT)/ace/OS.i \
+ SL_Client.h Single_Lookup.h Search_Struct.h Protocol_Record.h \
+ Drwho_Node.h
 
-.obj/PMC_Ruser.o .obj/PMC_Ruser.so .shobj/PMC_Ruser.o .shobj/PMC_Ruser.so: PMC_Ruser.cpp global.h $(ACE_ROOT)/ace/OS.h \
+.obj/PMC_Ruser.o .obj/PMC_Ruser.so .shobj/PMC_Ruser.o .shobj/PMC_Ruser.so: PMC_Ruser.cpp global.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -1474,9 +1502,10 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i Options.h HT_Client.h Hash_Table.h \
- Search_Struct.h Protocol_Record.h Drwho_Node.h PMC_Ruser.h \
- PM_Client.h Protocol_Manager.h $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.i \
+ Options.h HT_Client.h Hash_Table.h Search_Struct.h Protocol_Record.h \
+ Drwho_Node.h PMC_Ruser.h PM_Client.h Protocol_Manager.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/Flag_Manip.i \
  $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -1519,10 +1548,10 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i PMC_All.h PM_Client.h \
- Protocol_Manager.h Search_Struct.h Protocol_Record.h Drwho_Node.h \
- PMC_Flo.h PMC_Usr.h PMC_Ruser.h SMR_Client.h SM_Client.h CM_Client.h \
- Comm_Manager.h Select_Manager.h \
+ $(ACE_ROOT)/ace/OS.i \
+ PMC_All.h PM_Client.h Protocol_Manager.h Search_Struct.h \
+ Protocol_Record.h Drwho_Node.h PMC_Flo.h PMC_Usr.h PMC_Ruser.h \
+ SMR_Client.h SM_Client.h CM_Client.h Comm_Manager.h Select_Manager.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
@@ -1554,12 +1583,14 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i SML_Client.h SM_Client.h \
- PM_Client.h Protocol_Manager.h Search_Struct.h Protocol_Record.h \
- Drwho_Node.h CM_Client.h Comm_Manager.h Select_Manager.h SML_Server.h \
- SM_Server.h PM_Server.h CM_Server.h
+ $(ACE_ROOT)/ace/OS.i \
+ SML_Client.h SM_Client.h PM_Client.h Protocol_Manager.h \
+ Search_Struct.h Protocol_Record.h Drwho_Node.h CM_Client.h \
+ Comm_Manager.h Select_Manager.h SML_Server.h SM_Server.h PM_Server.h \
+ CM_Server.h
 
-.obj/CM_Server.o .obj/CM_Server.so .shobj/CM_Server.o .shobj/CM_Server.so: CM_Server.cpp global.h $(ACE_ROOT)/ace/OS.h \
+.obj/CM_Server.o .obj/CM_Server.so .shobj/CM_Server.o .shobj/CM_Server.so: CM_Server.cpp global.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -1582,8 +1613,9 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i Options.h CM_Server.h \
- Comm_Manager.h $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.i \
+ Options.h CM_Server.h Comm_Manager.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/Flag_Manip.i \
  $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -1602,7 +1634,8 @@ endif #VxWorks
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
 
-.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp $(ACE_ROOT)/ace/Log_Msg.h \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp \
+ $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -1631,11 +1664,11 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
- $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl Options.h \
- global.h SML_Client.h SM_Client.h PM_Client.h Protocol_Manager.h \
- Search_Struct.h Protocol_Record.h Drwho_Node.h CM_Client.h \
- Comm_Manager.h Select_Manager.h SML_Server.h SM_Server.h PM_Server.h \
- CM_Server.h SMR_Client.h
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+ Options.h global.h SML_Client.h SM_Client.h PM_Client.h \
+ Protocol_Manager.h Search_Struct.h Protocol_Record.h Drwho_Node.h \
+ CM_Client.h Comm_Manager.h Select_Manager.h SML_Server.h SM_Server.h \
+ PM_Server.h CM_Server.h SMR_Client.h
 
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp Options.h global.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1661,9 +1694,10 @@ endif #VxWorks
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i SMR_Server.h SM_Server.h \
- PM_Server.h Protocol_Manager.h Search_Struct.h Protocol_Record.h \
- Drwho_Node.h CM_Server.h Comm_Manager.h Select_Manager.h \
+ $(ACE_ROOT)/ace/OS.i \
+ SMR_Server.h SM_Server.h PM_Server.h Protocol_Manager.h \
+ Search_Struct.h Protocol_Record.h Drwho_Node.h CM_Server.h \
+ Comm_Manager.h Select_Manager.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/Flag_Manip.i \
