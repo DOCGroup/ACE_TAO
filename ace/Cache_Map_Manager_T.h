@@ -234,7 +234,10 @@ public:
 
   // = Iteration methods.
 
-  ACE_Cache_Map_Iterator &operator= (const ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs);
+  ACE_Cache_Map_Iterator <KEY, VALUE, IMPLEMENTATION, 
+                          CACHING_STRATEGY, ATTRIBUTES> &operator=
+      (const ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION,
+                                    CACHING_STRATEGY, ATTRIBUTES> &rhs);
   // assignment operator.
 
   int operator== (const ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs) const;
@@ -303,7 +306,10 @@ public:
 
   // = Iteration methods.
 
-  ACE_Cache_Map_Reverse_Iterator &operator= (const ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs);
+  ACE_Cache_Map_Reverse_Iterator <KEY, VALUE, REVERSE_IMPLEMENTATION,
+                                  CACHING_STRATEGY, ATTRIBUTES> &operator=
+     (const ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION,
+                                           CACHING_STRATEGY, ATTRIBUTES> &rhs);
   // Assignment operator.
 
   int operator== (const ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs) const;
