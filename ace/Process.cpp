@@ -178,17 +178,17 @@ int
 ACE_Process::wait (int *status)
 {
 #if defined (ACE_WIN32)
-  // Notice that status doesn't get updated.
-  int retv;
+  int result;
 
   // Don't try to get the process exit status if wait failed so we can
   // keep the original error code intact.
-  if ((retv = ::WaitForSingleObject (process_info_.hProcess, INFINITE))
-      != WAIT_FAILED && status != 0)
-    // The error status of GetExitCodeProcess is nontheless not tested.
-    // (Don't know how to return the value.)
+  result = ::WaitForSingleObject (process_info_.hProcess,
+                                INFINITE);
+  if (result != WAIT_FAILED && status != 0)
+    // The error status of GetExitCodeProcess is nonetheless not
+    // tested.  (Don't know how to return the value.)
     ::GetExitCodeProcess (process_info_.hProcess, (LPDWORD) status);
-  return retv;
+  return result;
 #else /* ACE_WIN32 */
   return ACE_OS::waitpid (this->child_id_, status, 0);
 #endif /* ACE_WIN32 */
@@ -198,7 +198,8 @@ int
 ACE_Process::wait (const ACE_Time_Value &tv)
 {
 #if defined (ACE_WIN32)
-  return ::WaitForSingleObject (process_info_.hProcess, tv.msec ());
+  return ::WaitForSingleObject (process_info_.hProcess,
+                                tv.msec ());
 #else /* ACE_WIN32 */
   ACE_UNUSED_ARG (tv);
   ACE_NOTSUP_RETURN (-1);
