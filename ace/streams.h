@@ -22,25 +22,25 @@
 // ============================================================================
 
 #ifndef ACE_STREAMS_H
-#define ACE_STREAMS_H
+# define ACE_STREAMS_H
 
-#include "ace/inc_user_config.h"
+# include "ace/inc_user_config.h"
 
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
+# endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
+#   if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
 
-#if defined (_MSC_VER)
+#     if defined (_MSC_VER)
 #pragma warning(disable: 4018 4114 4146 4245)
 #pragma warning(disable: 4663 4664 4665 4511 4512)
-#endif /* _MSC_VER */
+#     endif /* _MSC_VER */
 
-#if defined (ACE_USES_OLD_IOSTREAMS)
+#     if defined (ACE_USES_OLD_IOSTREAMS)
 #include /**/ <iostream.h>
 #include /**/ <fstream.h>
-#else
+#     else
 #include /**/ <iomanip>
 #include /**/ <ios>
 #include /**/ <iostream>
@@ -48,12 +48,12 @@
 #include /**/ <ostream>
 #include /**/ <fstream>
 #include /**/ <streambuf>
-#endif /* ACE_USES_OLD_IOSTREAMS */
+#     endif /* ACE_USES_OLD_IOSTREAMS */
 
-#if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) && \
+#     if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) && \
             (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0)
 
-#if !defined (ACE_USES_OLD_IOSTREAMS)
+#       if !defined (ACE_USES_OLD_IOSTREAMS)
 // Make these available in the global name space
 using std::ios;
 using std::streambuf;
@@ -85,33 +85,33 @@ using std::setw;
 using std::dec;
 using std::hex;
 using std::oct;
-#endif /* ! ACE_USES_OLD_IOSTREAMS */
+#       endif /* ! ACE_USES_OLD_IOSTREAMS */
 
-#endif /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
+#     endif /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
 
-#if defined (_MSC_VER)
+#     if defined (_MSC_VER)
 #pragma warning(4: 4018 4114 4146 4245)
 #pragma warning(4: 4663 4664 4665 4512 4511)
-#endif /* _MSC_VER */
+#     endif /* _MSC_VER */
 
-#else /* ACE_HAS_STANDARD_CPP_LIBRARY */
+#   else /* ACE_HAS_STANDARD_CPP_LIBRARY */
 
-#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
+#   if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 #include /**/ <fstream.h>
 #include /**/ <iostream.h>
 
-#if defined (ACE_WIN32)
-#if defined(_MSC_VER) // VSB
+#     if defined (ACE_WIN32)
+#       if defined(_MSC_VER) // VSB
 #include /**/ <ios.h>
 #include /**/ <streamb.h>
 #include /**/ <istream.h>
 #include /**/ <ostream.h>
 #include /**/ <iomanip.h>
-#endif /* _MSC_VER */
+#       endif /* _MSC_VER */
 #include /**/ <strstrea.h> // VSB
-#endif /* ACE_WIN32 */
-#endif /* ACE_LACKS_IOSTREAM_TOTALLY */
+#     endif /* ACE_WIN32 */
+#   endif /* ACE_LACKS_IOSTREAM_TOTALLY */
 
-#endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
+# endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
 
 #endif /* ACE_STREAMS_H */

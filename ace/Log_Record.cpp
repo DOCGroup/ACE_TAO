@@ -183,7 +183,7 @@ ACE_Log_Record::print (const ASYS_TCHAR *host_name,
     {
       if (log_window == 0)
         log_window = ACE_CE_Bridge::get_default_winbridge ();
-      
+
       CString *verbose_cstring = new CString (verbose_msg);
 
       // <verbose_cstring> will be deleted by <write_msg> function
@@ -212,7 +212,7 @@ ACE_Log_Record::print (const ASYS_TCHAR *host_name,
                                                  1,
                                                  verbose_msg_len,
                                                  fp);
-          
+
           // We should have written everything
           if (fwrite_result != verbose_msg_len)
             {
@@ -221,7 +221,7 @@ ACE_Log_Record::print (const ASYS_TCHAR *host_name,
           else
             {
               ACE_OS::fflush (fp);
-            }              
+            }
         }
     }
 
@@ -239,7 +239,7 @@ ACE_Log_Record::print (const ASYS_TCHAR host_name[],
   int result = this->format_msg (host_name, verbose_flag, verbose_msg);
 
   if (result == 0)
-    {      
+    {
       s << verbose_msg;
       s.flush ();
     }
@@ -248,4 +248,3 @@ ACE_Log_Record::print (const ASYS_TCHAR host_name[],
 }
 
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
-

@@ -423,7 +423,9 @@ operator - (const ACE_Time_Value &tv1,
 #   include /**/ <cstring>
 # else
 #   if defined (ACE_LACKS_MEMORY_H)
-#     include /**/ <string.h>
+#     if !defined (ACE_PSOS_DIAB_MIPS)
+#       include /**/ <string.h>
+#     endif /* ACE_PSOS_DIAB_MIPS */
 #   else
 #     include /**/ <memory.h>
 #   endif /* VXWORKS */
@@ -870,7 +872,7 @@ ACE_OS::clock_gettime (clockid_t clockid, struct timespec *ts)
   // ACE_TRACE ("ACE_OS::clock_gettime");
 #if defined (ACE_HAS_CLOCK_GETTIME)
   ACE_OSCALL_RETURN (::clock_gettime (clockid, ts), int, -1);
-#elif defined (ACE_PSOS)
+# elif defined (ACE_PSOS) && ! defined (ACE_PSOS_DIAB_MIPS)
   ACE_UNUSED_ARG (clockid);
   ACE_PSOS_Time_t pt;
   int result = ACE_PSOS_Time_t::get_system_time(pt);
@@ -966,7 +968,15 @@ ACE_OS::time (time_t *tloc)
 {
 #if !defined (ACE_HAS_WINCE)
   // ACE_TRACE ("ACE_OS::time");
+#  if defined (ACE_PSOS) && ! defined (ACE_PSOS_HAS_TIME)
+	unsigned long d_date, d_time, d_tick;
+	tm_get(&d_date, &d_time, &d_tick); // get current time
+	if (tloc)
+		*tloc = d_time; // set time as time_t
+	return d_time;
+#  else
   ACE_OSCALL_RETURN (::time (tloc), time_t, (time_t) -1);
+#  endif /* ACE_PSOS && ! ACE_PSOS_HAS_TIME */
 #else
   time_t retv = ACE_OS::gettimeofday ().sec ();
   if (tloc)
@@ -995,11 +1005,18 @@ ACE_OS::unlink (const char *path)
 {
   // ACE_TRACE ("ACE_OS::unlink");
 # if defined (VXWORKS)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::unlink ((char *) path), ace_result_),
-                     int, -1);
-# elif defined (ACE_PSOS)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::remove ((char *) path), ace_result_),
-                     int, -1);
+    ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::unlink ((char *) path),
+                                                   ace_result_),
+                       int, -1);
+# elif defined (ACE_PSOS) && ! defined (ACE_PSOS_LACKS_PHILE)
+    ACE_OSCALL_RETURN (::remove_f ((char *) path), int , -1);
+# elif defined (ACE_PSOS) && defined (ACE_PSOS_HAS_C_LIBRARY)
+    ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::remove ((char *) path),
+                                                   ace_result_),
+                       int, -1);
+# elif defined (ACE_LACKS_UNLINK)
+    ACE_UNUSED_ARG (path);
+    ACE_NOTSUP_RETURN (-1);
 # else
   ACE_OSCALL_RETURN (::unlink (path), int, -1);
 # endif /* VXWORKS */
@@ -3389,6 +3406,7 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
 # endif /* ACE_HAS_POSIX_SEM */
 }
 
+
 ACE_INLINE int
 ACE_OS::rw_tryrdlock (ACE_rwlock_t *rw)
 {
@@ -5130,7 +5148,11 @@ ACE_OS::signal (int signum, ACE_SignalHandler func)
   if (signum == 0)
     return 0;
   else
-#if defined (ACE_PSOS_TM)  //JINLU
+#if defined (ACE_PSOS) && !defined (ACE_PSOS_TM) && !defined (ACE_PSOS_DIAB_MIPS)
+    return (ACE_SignalHandler) ::signal (signum, (void (*)(void)) func);
+#elif defined (ACE_PSOS_DIAB_MIPS)
+    return 0;
+#elif defined (ACE_PSOS_TM)
     // @@ It would be good to rework this so the ACE_PSOS_TM specific
     //    branch is not needed, but prying it out of ACE_LACKS_UNIX_SIGNALS
     //    will take some extra work - deferred for now.
@@ -5153,7 +5175,7 @@ ACE_INLINE int
 ACE_OS::system (const char *s)
 {
   // ACE_TRACE ("ACE_OS::system");
-#if !defined (CHORUS) && !defined (ACE_HAS_WINCE)
+#if !defined (CHORUS) && !defined (ACE_HAS_WINCE) && !defined(ACE_PSOS)
     // ACE_TRACE ("ACE_OS::system");
     ACE_OSCALL_RETURN (::system (s), int, -1);
 #else
@@ -6663,6 +6685,10 @@ ACE_OS::creat (LPCTSTR filename, mode_t mode)
   // ACE_TRACE ("ACE_OS::creat");
 #if defined (ACE_WIN32)
   return ACE_OS::open (filename, mode);
+#elif defined(ACE_PSOS)
+   ACE_OSCALL_RETURN(::create_f((char *)filename, 1024,
+                              S_IRUSR | S_IWUSR | S_IXUSR),
+		     ACE_HANDLE, ACE_INVALID_HANDLE);
 #elif defined(ACE_PSOS_TM)
   ACE_UNUSED_ARG (filename);
   ACE_UNUSED_ARG (mode);
@@ -7028,6 +7054,7 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle, ACE_WIDE_DL_TYPE symbolname)
 }
 #endif /* ACE_HAS_WINCE */
 
+
 ACE_INLINE int
 ACE_OS::step (const char *str, char *expbuf)
 {
@@ -7080,6 +7107,8 @@ ACE_OS::write (ACE_HANDLE handle, const void *buf, size_t nbyte)
 #else
 # if defined (ACE_LACKS_POSIX_PROTOTYPES)
   ACE_OSCALL_RETURN (::write (handle, (const char *) buf, nbyte), ssize_t, -1);
+# elif defined (ACE_PSOS)
+  ACE_OSCALL_RETURN (::write_f(handle, (void *) buf, nbyte), ssize_t, -1);
 # elif defined (ACE_HAS_CHARPTR_SOCKOPT)
   ACE_OSCALL_RETURN (::write (handle, (char *) buf, nbyte), ssize_t, -1);
 # else
@@ -7717,11 +7746,16 @@ ACE_OS::timezone (void)
 ACE_INLINE double
 ACE_OS::difftime (time_t t1, time_t t0)
 {
+#if defined (ACE_PSOS) && ! defined (ACE_PSOS_HAS_TIME)
+  // simulate difftime ; just subtracting ; ACE_PSOS case
+  return ((double)t1) - ((double)t0);
+#else
 # if defined (ACE_DIFFTIME)
   return ACE_DIFFTIME (t1, t0);
 # else
   return ::difftime (t1, t0);
-# endif /* ACE_DIFFTIME */
+# endif /* ACE_DIFFTIME  && ! ACE_PSOS_HAS_TIME */
+#endif // ACE_PSOS
 }
 #endif /* ! ACE_LACKS_DIFFTIME */
 
@@ -7732,6 +7766,8 @@ ACE_OS::ctime (const time_t *t)
   // ACE_TRACE ("ACE_OS::ctime");
 # if defined (ACE_HAS_BROKEN_CTIME)
   ACE_OSCALL_RETURN (::asctime (::localtime (t)), char *, 0);
+#elif defined(ACE_PSOS) && ! defined (ACE_PSOS_HAS_TIME)
+  return "ctime-return";
 # else
   ACE_OSCALL_RETURN (::ctime (t), char *, 0);
 # endif    /* ACE_HAS_BROKEN_CTIME) */
@@ -7762,11 +7798,16 @@ ACE_OS::ctime_r (const time_t *t, char *buf, int buflen)
 
 #   endif /* defined (ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R) */
 # else
+#    if defined(ACE_PSOS) && ! defined (ACE_PSOS_HAS_TIME)
+   ::strncpy(buf, "ctime-return",buflen);
+   return buf;
+#    else
   char *result;
   ACE_OSCALL (::ctime (t), char *, 0, result);
   if (result != 0)
     ::strncpy (buf, result, buflen);
   return buf;
+#    endif // ACE_PSOS
 # endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) */
 }
 #endif /* !ACE_HAS_WINCE */
@@ -7774,7 +7815,7 @@ ACE_OS::ctime_r (const time_t *t, char *buf, int buflen)
 ACE_INLINE struct tm *
 ACE_OS::localtime (const time_t *t)
 {
-#if !defined (ACE_HAS_WINCE)
+#if !defined (ACE_HAS_WINCE) && !defined(ACE_PSOS) || defined (ACE_PSOS_HAS_TIME)
   // ACE_TRACE ("ACE_OS::localtime");
   ACE_OSCALL_RETURN (::localtime (t), struct tm *, 0);
 #else
@@ -7797,9 +7838,8 @@ ACE_OS::localtime_r (const time_t *t, struct tm *res)
 # else
   ACE_OSCALL_RETURN (::localtime_r (t, res), struct tm *, 0);
 # endif /* DIGITAL_UNIX */
-#elif !defined (ACE_HAS_WINCE)
+#elif !defined (ACE_HAS_WINCE) && !defined(ACE_PSOS) || defined (ACE_PSOS_HAS_TIME)
   ACE_UNUSED_ARG (res);
-
   ACE_OSCALL_RETURN (::localtime (t), struct tm *, 0);
 #else
   // @@ Same as ACE_OS::localtime (), you need to implement it
@@ -7813,7 +7853,7 @@ ACE_OS::localtime_r (const time_t *t, struct tm *res)
 ACE_INLINE struct tm *
 ACE_OS::gmtime (const time_t *t)
 {
-#if !defined (ACE_HAS_WINCE)
+#if !defined (ACE_HAS_WINCE) && !defined (ACE_PSOS) || defined (ACE_PSOS_HAS_TIME)
   // ACE_TRACE ("ACE_OS::localtime");
   ACE_OSCALL_RETURN (::gmtime (t), struct tm *, 0);
 #else
@@ -7835,7 +7875,7 @@ ACE_OS::gmtime_r (const time_t *t, struct tm *res)
 # else
   ACE_OSCALL_RETURN (::gmtime_r (t, res), struct tm *, 0);
 # endif /* DIGITAL_UNIX */
-#elif !defined (ACE_HAS_WINCE)
+#elif !defined (ACE_HAS_WINCE) && !defined(ACE_PSOS) || defined (ACE_PSOS_HAS_TIME)
   struct tm *result;
   ACE_OSCALL (::gmtime (t), struct tm *, 0, result) ;
   if (result != 0)
@@ -7853,7 +7893,7 @@ ACE_OS::gmtime_r (const time_t *t, struct tm *res)
 ACE_INLINE char *
 ACE_OS::asctime (const struct tm *t)
 {
-#if !defined (ACE_HAS_WINCE)
+#if !defined (ACE_HAS_WINCE) && !defined(ACE_PSOS) || defined (ACE_PSOS_HAS_TIME)
   // ACE_TRACE ("ACE_OS::asctime");
   ACE_OSCALL_RETURN (::asctime (t), char *, 0);
 #else
@@ -7884,7 +7924,7 @@ ACE_OS::asctime_r (const struct tm *t, char *buf, int buflen)
   ACE_OSCALL_RETURN (::asctime_r (t, buf, buflen), char *, 0);
 #   endif /* HPUX_10 */
 # endif /* ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R */
-#elif ! defined (ACE_HAS_WINCE)
+#elif ! defined (ACE_HAS_WINCE) && !defined(ACE_PSOS) || defined (ACE_PSOS_HAS_TIME)
   char *result;
   ACE_OSCALL (::asctime (t), char *, 0, result);
   ::strncpy (buf, result, buflen);
@@ -7903,7 +7943,7 @@ ACE_INLINE size_t
 ACE_OS::strftime (char *s, size_t maxsize, const char *format,
                   const struct tm *timeptr)
 {
-#if !defined (ACE_HAS_WINCE)
+#if !defined (ACE_HAS_WINCE) && !defined(ACE_PSOS) || defined (ACE_PSOS_HAS_TIME)
   return ::strftime (s, maxsize, format, timeptr);
 #else
   ACE_UNUSED_ARG (s);
@@ -9171,6 +9211,7 @@ ACE_OS::nanosleep (const struct timespec *requested,
   // require linking with -lposix4.
   return ::nanosleep ((ACE_TIMESPEC_PTR) requested, remaining);
 #elif defined (ACE_PSOS)
+#  if ! defined (ACE_PSOS_DIAB_MIPS)
   double ticks = KC_TICKS2SEC * requested->tv_sec +
                  ( ACE_static_cast (double, requested->tv_nsec) *
                    ACE_static_cast (double, KC_TICKS2SEC) ) /
@@ -9202,6 +9243,7 @@ ACE_OS::nanosleep (const struct timespec *requested,
   }
 
   // tm_wkafter always returns 0
+#  endif /* ACE_PSOS_DIAB_MIPS */
   return 0;
 #else
   ACE_UNUSED_ARG (remaining);
@@ -9245,7 +9287,7 @@ ACE_INLINE char *
 ACE_OS::getenv (const char *symbol)
 {
   // ACE_TRACE ("ACE_OS::getenv");
-#if !defined (ACE_HAS_WINCE)
+#if !defined (ACE_HAS_WINCE) && !defined(ACE_PSOS)
   ACE_OSCALL_RETURN (::getenv (symbol), char *, 0);
 #else
   // @@ WinCE doesn't have the concept of environment variables.
@@ -10037,7 +10079,7 @@ ACE_OS::sigaddset (sigset_t *s, int signum)
     errno = EINVAL ;
     return -1 ;                 // Invalid signum, return error
   }
-#   if defined (ACE_PSOS) && defined (__DIAB)
+#   if defined (ACE_PSOS) && defined (__DIAB) && ! defined(ACE_PSOS_DIAB_MIPS)
   // treat 0th u_long of sigset_t as high bits,
   // and 1st u_long of sigset_t as low bits.
   if (signum <= ACE_BITS_PER_ULONG)
@@ -10069,7 +10111,7 @@ ACE_OS::sigdelset (sigset_t *s, int signum)
     errno = EINVAL ;
     return -1 ;                 // Invalid signum, return error
   }
-#   if defined (ACE_PSOS) && defined (__DIAB)
+#   if defined (ACE_PSOS) && defined (__DIAB) && ! defined (ACE_PSOS_DIAB_MIPS)
   // treat 0th u_long of sigset_t as high bits,
   // and 1st u_long of sigset_t as low bits.
   if (signum <= ACE_BITS_PER_ULONG)
@@ -10097,7 +10139,7 @@ ACE_OS::sigemptyset (sigset_t *s)
     errno = EFAULT ;
     return -1 ;
   }
-#   if defined (ACE_PSOS) && defined (__DIAB)
+#   if defined (ACE_PSOS) && defined (__DIAB) && ! defined (ACE_PSOS_DIAB_MIPS)
   s->s[0] = 0 ;
   s->s[1] = 0 ;
 #   else
@@ -10117,7 +10159,7 @@ ACE_OS::sigfillset (sigset_t *s)
     errno = EFAULT ;
     return -1 ;
   }
-#   if defined (ACE_PSOS) && defined (__DIAB)
+#   if defined (ACE_PSOS) && defined (__DIAB) && ! defined (ACE_PSOS_DIAB_MIPS)
   s->s[0] = ~(u_long) 0 ;
   s->s[1] = ~(u_long) 0 ;
 #   else
@@ -10141,7 +10183,7 @@ ACE_OS::sigismember (sigset_t *s, int signum)
     errno = EINVAL ;
     return -1 ;                 // Invalid signum, return error
   }
-#   if defined (ACE_PSOS) && defined (__DIAB)
+#   if defined (ACE_PSOS) && defined (__DIAB) && ! defined (ACE_PSOS_DIAB_MIPS)
   // treat 0th u_long of sigset_t as high bits,
   // and 1st u_long of sigset_t as low bits.
   if (signum <= ACE_BITS_PER_ULONG)

@@ -8,7 +8,7 @@ ACE::send (ACE_HANDLE handle, const void *buf, size_t len)
 {
   ACE_TRACE ("ACE::send");
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) || defined (ACE_PSOS)
   return ACE_OS::send (handle, (const char *) buf, len);
 #else
   return ACE_OS::write (handle, (const char *) buf, len);
@@ -26,7 +26,7 @@ ASYS_INLINE ssize_t
 ACE::recv (ACE_HANDLE handle, void *buf, size_t len)
 {
   ACE_TRACE ("ACE::recv");
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) || defined (ACE_PSOS)
     return ACE_OS::recv (handle, (char *) buf, len);
 #else
     return ACE_OS::read (handle, (char *) buf, len);
