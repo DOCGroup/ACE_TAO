@@ -73,42 +73,46 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  * Constructors
  */
 
-Identifier::Identifier()
-	  : pv_string(NULL)
+Identifier::Identifier ()
+  : pv_string (NULL)
 {
 }
 
-Identifier::Identifier(char *s, long, long, long)
-	  : pv_string(s)
+Identifier::Identifier (char *s, long, long, long)
+  : pv_string (ACE_OS::strdup (s))
 {
 }
 
-Identifier::~Identifier() {}
+Identifier::~Identifier () 
+{
+  delete pv_string;
+}
 
 // Operations
 
 char *
-Identifier::get_string()
+Identifier::get_string ()
 {
   return pv_string;
 }
 
 // Compare two Identifier *
 long
-Identifier::compare(Identifier *o)
+Identifier::compare (Identifier *o)
 {
   if (o == NULL) return I_FALSE;
   if (pv_string == NULL || o->get_string() == NULL)
     return I_FALSE;
-  return (strcmp(pv_string, o->get_string()) == 0) ? I_TRUE : I_FALSE;
+  return (ACE_OS::strcmp (pv_string, o->get_string ()) == 0) ? I_TRUE : I_FALSE;
 }
 
 // Dumping
 
 void
-Identifier::dump(ostream &o)
+Identifier::dump (ostream &o)
 {
   if (pv_string == NULL) return;
 
   o << get_string();
 }
+

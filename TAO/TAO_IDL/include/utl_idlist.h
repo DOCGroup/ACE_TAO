@@ -95,28 +95,37 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include	"utl_identifier.h"
 #include	"utl_string.h"
 
-class	UTL_IdList : public UTL_List
+class UTL_IdList : public UTL_List
 {
-  public:
-    // Constructor(s)
-    UTL_IdList(Identifier *car, UTL_IdList *cdr);
-    virtual ~UTL_IdList() {}
+  // =TITLE
+  //  UTL_IdList
+  // =DESCRIPTION
+  //  Used to maintain a list of identifiers. The primary usage of this class
+  //  is to maintain a scoped name.
+public:
+  UTL_IdList (Identifier *car, UTL_IdList *cdr);
+  // Constructor(s)
+  
+  virtual ~UTL_IdList() {}
+  // destructor
 
-    // AST Dumping
-    virtual void	dump(ostream &o);
+  // =AST Dumping
+  
+  virtual void dump (ostream &o);
+  // dump to ostream
 
-    // Other operations
-
-    // Copy the list
-    UTL_List *copy();
-    
-    // get element
-    Identifier		*head();
-    
-    // Get last element in this list
-    Identifier		*last_component();
-  private:
-    Identifier *pd_car_data;
+  // Other operations
+  
+  UTL_List *copy ();
+  // Copy the list
+  
+  Identifier *head ();
+  // get element
+  
+  Identifier  *last_component ();
+  // Get last element in this list
+private:
+  Identifier *pd_car_data;
 };
 
 // Active iterator for UTL_IdList
@@ -124,11 +133,16 @@ class	UTL_IdList : public UTL_List
 class	UTL_IdListActiveIterator :
 	public UTL_ListActiveIterator
 {
-  public:
-    // Constructor(s)
-    UTL_IdListActiveIterator(UTL_IdList *s);
-
-    Identifier *item();
+  // =TITLE
+  //  UTL_IdListActiveIterator
+  // =DESCRIPTION
+  //  Iterator for the IDList
+public:
+  UTL_IdListActiveIterator (UTL_IdList *s);
+  // Constructor(s)
+  
+  Identifier *item ();
+  // retrieves the next item
 };
 
 #endif		// _UTL_IDLIST_UTL_IDLIST_HH

@@ -74,24 +74,32 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  * Constructors
  */
 
-UTL_String::UTL_String() : p_str(NULL), len(0), alloced(0) {}
-
-UTL_String::UTL_String(char *str)
+UTL_String::UTL_String (void) 
+  : p_str (NULL), 
+    len (0), 
+    alloced (0) 
 {
-  if (str == NULL) {
-    len = alloced = 0;
-    p_str = c_str = NULL;
-  } else {
-    len = strlen(str);
-    alloced = len + 1;
-    p_str = new char [alloced];
-    c_str = new char [alloced];
-    strcpy(p_str, str);
-    canonicalize();
-  }
 }
 
-UTL_String::UTL_String(unsigned long maxlen)
+UTL_String::UTL_String (char *str)
+{
+  if (str == NULL) 
+    {
+      len = alloced = 0;
+      p_str = c_str = NULL;
+    } 
+  else 
+    {
+      len = ACE_OS::strlen (str);
+      alloced = len + 1;
+      p_str = new char [alloced];
+      c_str = new char [alloced];
+      ACE_OS::strcpy (p_str, str);
+      canonicalize ();
+    }
+}
+
+UTL_String::UTL_String (unsigned long maxlen)
 {
   len = maxlen;
   alloced = maxlen + 1;
@@ -101,27 +109,33 @@ UTL_String::UTL_String(unsigned long maxlen)
   c_str[0] = '\0';
 }
 
-UTL_String::UTL_String(UTL_String *s)
+UTL_String::UTL_String (UTL_String *s)
 {
   char	*b;
 
-  if (s == NULL) {
-    p_str = c_str = NULL;
-    alloced = len = 0;
-  } else {
-    b = s->get_string();
-    if (b == NULL) {
-      p_str = c_str = NULL;
-      alloced = len = 0;
-    } else {
-      len = strlen(b);
-      alloced = len + 1;
-      p_str = new char [alloced];
-      c_str = new char [alloced];
-      strcpy(p_str, b);
-      canonicalize();
+  if (s == NULL) 
+    {
+     p_str = c_str = NULL;
+     alloced = len = 0;
+    } 
+  else 
+    {
+      b = s->get_string ();
+      if (b == NULL) 
+        {
+          p_str = c_str = NULL;
+          alloced = len = 0;
+        } 
+      else 
+        {
+          len = ACE_OS::strlen (b);
+          alloced = len + 1;
+          p_str = new char [alloced];
+          c_str = new char [alloced];
+          ACE_OS::strcpy (p_str, b);
+          canonicalize ();
+        }
     }
-  }
 }
 
 /*
@@ -132,12 +146,12 @@ UTL_String::UTL_String(UTL_String *s)
 // a corresponding string with all upper case characters where the
 // original has lower case characters, identical characters otherwise
 void
-UTL_String::canonicalize()
+UTL_String::canonicalize (void)
 {
   long	i;
 
   for (i = 0; i < len; i++)
-    c_str[i] = isalpha(p_str[i]) ? toupper(p_str[i]) : p_str[i];
+    c_str[i] = isalpha (p_str[i]) ? toupper (p_str[i]) : p_str[i];
   c_str[i] = '\0';
 }
 
@@ -147,40 +161,41 @@ UTL_String::canonicalize()
 
 // Compare two String *
 long
-UTL_String::compare(UTL_String *s)
+UTL_String::compare (UTL_String *s)
 {
   char	*s_c_str;
   long	result;
 
-  if (c_str == NULL || s == NULL || (s_c_str = s->get_canonical_rep()) == NULL)
+  if (c_str == NULL || s == NULL || (s_c_str = s->get_canonical_rep ()) == NULL)
     result = I_FALSE;
   else
-    result = (strcmp(c_str, s_c_str) == 0) ? I_TRUE : I_FALSE;
+    result = (ACE_OS::strcmp (c_str, s_c_str) == 0) ? I_TRUE : I_FALSE;
 
   /*
    * Check that the names are typed consistently
    */
-  if (result == I_TRUE && strcmp(p_str, s->get_string()) != 0)
-    idl_global->err()->name_case_error(p_str, s->get_string());
+  if (result == I_TRUE && ACE_OS::strcmp (p_str, s->get_string ()) != 0)
+    idl_global->err ()->name_case_error (p_str, s->get_string ());
 
   return result;
 }
 
 // Get the char * from a String
 char *
-UTL_String::get_string()
+UTL_String::get_string (void)
 {
   return p_str;
 }
 
 // Get the canonical representation from a String
 char *
-UTL_String::get_canonical_rep()
+UTL_String::get_canonical_rep (void)
 {
-  if (c_str == NULL) {
-    c_str = new char [alloced];
-    canonicalize();
-  }
+  if (c_str == NULL) 
+    {
+      c_str = new char [alloced];
+      canonicalize ();
+    }
   return c_str;
 }
 
@@ -190,7 +205,7 @@ UTL_String::get_canonical_rep()
 
 // AST Dumping
 void
-UTL_String::dump(ostream &o)
+UTL_String::dump (ostream &o)
 {
   o << p_str;
 }

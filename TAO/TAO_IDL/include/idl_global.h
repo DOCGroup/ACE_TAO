@@ -292,6 +292,16 @@ public:
 
   virtual void                  idl_src_file(String *);
   // set the source IDL file that is being parsed
+
+  // helper functions that generate the file names for the C++ mapping
+  // generated code
+  static const char  *be_get_client_hdr_fname ();
+  static const char  *be_get_client_stub_fname ();
+  static const char  *be_get_client_inline_fname ();
+  static const char  *be_get_server_hdr_fname ();
+  static const char  *be_get_server_skeleton_fname ();
+  static const char  *be_get_server_inline_fname ();
+
 private:
   // Data
   UTL_ScopeStack		*pd_scopes;		// Store scopes stack
