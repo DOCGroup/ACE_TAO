@@ -1,4 +1,4 @@
-2/ $Id$
+// $Id$
 
 #include "ftp.h"
 
@@ -55,7 +55,7 @@ FTP_Client_Callback::handle_timeout (void *)
     }
   if (n == 0)
     {
-      if (ACE_OSCALL_RETURN (::feof (CLIENT::instance ()->file ())))
+      if (feof (CLIENT::instance ()->file ()))
         {
           // wait for sometime for the data to be flushed to the other side.
           this->count_++;
@@ -391,11 +391,9 @@ main (int argc,
 template class ACE_Singleton <Client,ACE_Null_Mutex>;
 template class TAO_AV_Endpoint_Reactive_Strategy_A<TAO_StreamEndPoint_A,TAO_VDev,AV_Null_MediaCtrl>;
 template class TAO_AV_Endpoint_Reactive_Strategy<TAO_StreamEndPoint_A,TAO_VDev,AV_Null_MediaCtrl>;
-template class TAO_FDev <TAO_FlowProducer, FTP_Server_FlowEndPoint>;
 template class TAO_FDev <FTP_Client_Producer,TAO_FlowConsumer>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Singleton <Client,ACE_Null_Mutex>
 #pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_A<TAO_StreamEndPoint_A,TAO_VDev,AV_Null_MediaCtrl> 
 #pragma instantiate TAO_AV_Endpoint_Reactive_Strategy<TAO_StreamEndPoint_A,TAO_VDev,AV_Null_MediaCtrl> 
-#pragma instantiate TAO_FDev <FTP_Client_Producer,TAO_FlowConsumer> 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

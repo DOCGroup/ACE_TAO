@@ -642,7 +642,7 @@ cat_profile_helper (TAO_InputCDR& stream,
   if (! (str.read_octet (iiop_version_major)
          && iiop_version_major == 1
          && str.read_octet (iiop_version_minor)
-         && iiop_version_minor <= 1))
+         && iiop_version_minor <= 2))
     {
       ACE_DEBUG ((LM_DEBUG,
                   "%I detected new v%d.%d %s profile",
