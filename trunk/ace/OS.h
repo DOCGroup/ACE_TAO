@@ -6829,6 +6829,10 @@ public:
     };
   // Unique identifiers for preallocated objects.
 
+  static sigset_t *default_mask (void);
+  // Accesses a default signal set used, for example, in ACE_Sig_Guard
+  // methods.
+
 public:
   // Application code should not use these explicitly, so they're
   // hidden here.  They're public so that the ACE_Object_Manager can
@@ -6849,6 +6853,9 @@ private:
 
   static void *preallocated_object[ACE_OS_PREALLOCATED_OBJECTS];
   // Table of preallocated objects.
+
+  sigset_t *default_mask_;
+  // Default signal set used, for example, in ACE_Sig_Guard.
 
   ACE_OS_Exit_Info exit_info_;
   // For at_exit support.

@@ -238,9 +238,6 @@ ACE_Object_Manager::init (void)
           (void) ACE_LOG_MSG;
         }
 
-      ACE_NEW_RETURN (default_mask_,
-                      ACE_Sig_Set (1),
-                      -1);
       // Finally, indicate that the ACE_Object_Manager instance has
       // been initialized.
       object_manager_state_ = OBJ_MAN_INITIALIZED;
@@ -257,7 +254,6 @@ ACE_Object_Manager::ACE_Object_Manager (void)
   // ACE_OS::tss_open () in the function body.
   : exit_info_ ()
   , preallocations_ (0)
-  , default_mask_ (0)
   , ace_service_config_sig_handler_ (0)
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   , internal_lock_ (new ACE_Recursive_Thread_Mutex)
@@ -309,12 +305,6 @@ ACE_Object_Manager::instance (void)
     }
   else
     return instance_;
-}
-
-ACE_Sig_Set &
-ACE_Object_Manager::default_mask (void)
-{
-  return *ACE_Object_Manager::instance ()->default_mask_;
 }
 
 int
@@ -653,9 +643,6 @@ ACE_Object_Manager::fini (void)
       ACE_Static_Object_Lock::cleanup_lock ();
 #endif /* ACE_HAS_THREADS */
     }
-
-  delete default_mask_;
-  default_mask_ = 0;
 
   delete ace_service_config_sig_handler_;
   ace_service_config_sig_handler_ = 0;

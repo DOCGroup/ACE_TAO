@@ -23,3 +23,13 @@ ACE_Object_Manager::at_exit (void *object,
     cleanup_hook,
     param);
 }
+
+ACE_INLINE
+ACE_Sig_Set &
+ACE_Object_Manager::default_mask (void)
+{
+  // A safe cast, but this static method shouldn't be used anyways.
+  // Use ACE_Object_Manager::default_mask () instead.
+  return *ACE_reinterpret_cast (ACE_Sig_Set *,
+                                ACE_OS_Object_Manager::default_mask ());
+}
