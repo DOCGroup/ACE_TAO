@@ -1138,7 +1138,7 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
                       TAO_Unbounded_Sequence<CORBA::Octet>* seq2 =
                         ACE_dynamic_cast(TAO_Unbounded_Sequence<CORBA::Octet>*, seq);
                       seq2->replace (bounds, stream->start ());
-		      seq2->mb ()->wr_ptr (seq->mb ()->rd_ptr () + bounds);
+		      seq2->mb ()->wr_ptr (seq2->mb ()->rd_ptr () + bounds);
                       stream->skip_bytes (bounds);
                       return CORBA::TypeCode::TRAVERSE_CONTINUE;
                     }
