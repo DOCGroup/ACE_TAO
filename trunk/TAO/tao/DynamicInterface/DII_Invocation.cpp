@@ -10,6 +10,7 @@ ACE_RCSID(DynamicInterface, DII_Invocation, "$Id$")
 #include "tao/Object_KeyC.h"
 #include "tao/Transport_Mux_Strategy.h"
 #include "tao/debug.h"
+#include "tao/Transport.h"
 
 #if !defined (__ACE_INLINE__)
 # include "DII_Invocation.inl"

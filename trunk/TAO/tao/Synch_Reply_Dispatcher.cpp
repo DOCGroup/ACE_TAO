@@ -4,6 +4,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/Wait_Strategy.h"
 #include "tao/Pluggable_Messaging_Utils.h"
+#include "Transport.h"
 
 ACE_RCSID(tao, Synch_Reply_Dispatcher, "$Id$")
 

@@ -26,6 +26,7 @@ POA_FILES = \
 
 PLUGGABLE_PROTOCOLS_FILES = \
   Pluggable.cpp \
+  Transport.cpp \
   Profile.cpp \
   Connector_Registry.cpp \
   Acceptor_Registry.cpp \
@@ -335,6 +336,7 @@ HEADER_FILES = \
   POAManager.h \
   POA_CORBA.h \
   Pluggable.h \
+  Transport.h \
   PolicyC.h \
   Policy_Manager.h \
   PollableC.h \
@@ -473,6 +475,7 @@ INLINE_FILES = \
   PortableServerC.i \
   POAManager.i \
   Pluggable.i \
+  Transport.inl \
   PolicyC.i \
   Policy_Manager.i \
   PollableC.i \

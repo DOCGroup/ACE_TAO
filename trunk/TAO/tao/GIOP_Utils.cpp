@@ -1,14 +1,15 @@
-//$Id$
-#include "tao/debug.h"
-#include "tao/GIOP_Utils.h"
-#include "tao/ORB_Core.h"
+// $Id$
 
+#include "tao/GIOP_Utils.h"
+#include "tao/debug.h"
+#include "tao/ORB_Core.h"
+#include "Transport.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/GIOP_Utils.i"
 #endif /* __ACE_INLINE__ */
 
-// @@ Bala: what happened to the RCSID macro?
+ACE_RCSID(tao, GIOP_Utils, "$Id$")
 
 int
 TAO_GIOP_Utils::
@@ -77,5 +78,3 @@ TAO_GIOP_Utils::read_buffer (TAO_Transport *transport,
 
   return bytes_read;
 }
-
-

@@ -9,6 +9,7 @@ ACE_RCSID(tao, Asynch_Invocation, "$Id$")
 #include "tao/Stub.h"
 #include "tao/Object_KeyC.h"
 #include "tao/Transport_Mux_Strategy.h"
+#include "Transport.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Asynch_Invocation.i"
@@ -117,4 +118,3 @@ TAO_GIOP_Twoway_Asynch_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
 }
 
 #endif /* (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1) == 0 */
-

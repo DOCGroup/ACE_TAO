@@ -16,6 +16,8 @@
 // @@ Should not be included. But, for the timebeing.
 #include "tao/GIOP_Utils.h"
 
+#include "Transport.h"
+
 #if !defined (__ACE_INLINE__)
 # include "tao/TAO_Server_Request.i"
 #endif /* ! __ACE_INLINE__ */
