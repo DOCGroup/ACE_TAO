@@ -1,3 +1,9 @@
+Wed Dec 19 10:02:53 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* Makefile.bor: 
+	  Made changes for Borland ace-only builds as per 
+	  Johnny Willemsen <johnny.willemsen@meco.nl>.
+
 Wed Dec 19 09:39:03 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* tests/Message_Queue_Test_Ex.cpp:

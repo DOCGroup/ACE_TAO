@@ -1,36 +1,11 @@
-!ifdef DEBUG
-DEBUG_FLAG = -DDEBUG
-!endif
+#
+# Makefile for building ACE
+#
 
-!ifdef STATIC
-STATIC_FLAG = -DSTATIC
-!endif
+DIRS = \
+        ace \
+        netsvcs \
+        tests \
+        apps
 
-!ifdef PASCAL
-PASCAL_FLAG = -DPASCAL
-!endif
-
-FLAGS = $(DEBUG_FLAG) $(STATIC_FLAG) $(PASCAL_FLAG)
-
-all:
-        cd $(ACE_ROOT)\ace
-        $(MAKE) -f Makefile.bor $(FLAGS)
-        cd $(ACE_ROOT)\netsvcs
-        $(MAKE) -f Makefile.bor $(FLAGS)
-        cd $(ACE_ROOT)\tests
-        $(MAKE) -f Makefile.bor $(FLAGS)
-        cd $(ACE_ROOT)\apps
-        $(MAKE) -f Makefile.bor $(FLAGS)
-        cd $(ACE_ROOT)\TAO
-        $(MAKE) -f Makefile.bor $(FLAGS)
-
-
-ace_only:
-        cd $(ACE_ROOT)\ace
-        $(MAKE) -f Makefile.bor $(FLAGS)
-        cd $(ACE_ROOT)\netsvcs
-        $(MAKE) -f Makefile.bor $(FLAGS)
-        cd $(ACE_ROOT)\tests
-        $(MAKE) -f Makefile.bor $(FLAGS)
-        cd $(ACE_ROOT)\apps
-        $(MAKE) -f Makefile.bor $(FLAGS)
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
