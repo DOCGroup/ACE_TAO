@@ -32,13 +32,13 @@ size_t ACE::allocation_granularity_ = 0;
 int
 ACE::init (void)
 {
-  return ACE_Object_Manager::init ();
+  return ACE_Object_Manager::instance()->init ();
 }
 
 int
 ACE::fini (void)
 {
-  return ACE_Object_Manager::fini ();
+  return ACE_Object_Manager::instance()->fini ();
 }
 
 u_int
@@ -97,26 +97,6 @@ ACE::compiler_beta_version (void)
 #else
   return 0;
 #endif
-}
-
-void
-ACE::unique_name (const void *object,
-                  LPTSTR name,
-                  size_t length)
-{
-  // The process ID will provide uniqueness between processes on the
-  // same machine. The "this" pointer of the <object> will provide
-  // uniqueness between other "live" objects in the same process. The
-  // uniqueness of this name is therefore only valid for the life of
-  // <object>.
-  TCHAR temp_name[ACE_UNIQUE_NAME_LEN];
-  ACE_OS::sprintf (temp_name,
-                   ACE_TEXT ("%x%d"),
-                   object,
-                   ACE_OS::getpid ());
-  ACE_OS::strncpy (name,
-                   temp_name,
-                   length);
 }
 
 int
@@ -240,7 +220,7 @@ ACE::execname (const char *old_name)
                       -1);
       char *end = new_name;
 
-      end = ACE::strecpy (new_name, old_name);
+      end = ACE_OS::strecpy (new_name, old_name);
 
       // Concatenate the .exe suffix onto the end of the executable.
       ACE_OS::strcpy (end, ".exe");
@@ -320,7 +300,7 @@ ACE::execname (const wchar_t *old_name)
                       -1);
       wchar_t *end = new_name;
 
-      end = ACE::strecpy (new_name, old_name);
+      end = ACE_OS::strecpy (new_name, old_name);
 
       // Concatenate the .exe suffix onto the end of the executable.
       ACE_OS::strcpy (end, L".exe");

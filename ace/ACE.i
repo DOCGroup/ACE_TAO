@@ -44,30 +44,24 @@ ACE::recv (ACE_HANDLE handle, void *buf, size_t len, int flags)
 ASYS_INLINE char *
 ACE::strecpy (char *s, const char *t)
 {
-  ACE_TRACE ("ACE::strecpy");
-  register char *dscan = s;
-  register const char *sscan = t;
-
-  while ((*dscan++ = *sscan++) != '\0')
-    continue;
-
-  return dscan;
+  return ACE_OS::strecpy (s, t);
 }
 
 #if defined (ACE_HAS_UNICODE)
 ASYS_INLINE wchar_t *
 ACE::strecpy (wchar_t *s, const wchar_t *t)
 {
-  ACE_TRACE ("ACE::strecpy");
-  register wchar_t *dscan = s;
-  register const wchar_t *sscan = t;
-
-  while ((*dscan++ = *sscan++) != '\0')
-    continue;
-
-  return dscan;
+  return ACE_OS::strecpy (s, t);
 }
 #endif /* ACE_HAS_UNICODE */
+
+ASYS_INLINE void
+ACE::unique_name (const void *object,
+                  LPTSTR name,
+                  size_t length)
+{
+  ACE_OS::unique_name (object, name, length);
+}
 
 // Return flags currently associated with handle.
 
@@ -100,13 +94,13 @@ ACE::log2 (u_long num)
   return log;
 }
 
-ASYS_INLINE char 
+ASYS_INLINE char
 ACE::nibble2hex (u_int n)
 {
   return ACE::hex_chars_[n & 0x0f];
 }
 
-ASYS_INLINE u_char 
+ASYS_INLINE u_char
 ACE::hex2byte (char c)
 {
   if (isdigit (c))
