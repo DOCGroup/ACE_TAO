@@ -81,10 +81,6 @@ Mon Sep 07 09:52:12 1998  David L. Levine  <levine@cs.wustl.edu>
           to tell ACE_OS::readdir_r () to use the three-arg
           ::readdir_r ().
 
-        * ace/config-vxworks.h: added ACE_HAS_DIRENT, though
-          links will fail at this point.  VxWorks only has
-          a few opendir-related functions.
-
         * ace/config-lynxos.h: added ACE_HAS_DIRENT.
 
         * ace/Log_Msg.cpp (log): initialized local "c" to '\0' so that
@@ -95,7 +91,10 @@ Mon Sep 07 09:52:12 1998  David L. Levine  <levine@cs.wustl.edu>
           ACE_HAS_PTHREADS_STD instead of _POSIX_PTHREAD_SEMANTICS to
           select the three-arg ::readdir_r ().
 
-        * ace/OS.i,config-vxworks5.x.h (readdir_r,rewinddir,seekdir,telldir):
+        * ace/config-vxworks.h: added ACE_HAS_DIRENT.
+
+        * ace/OS.i,config-vxworks5.x.h (readdir_r,rewinddir,seekdir,telldir),
+          README:
           added support for ACE_LACKS_READDIR_R, ACE_LACKS_SEEKDIR, and
           ACE_LACKS_TELLDIR.
 
