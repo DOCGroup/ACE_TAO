@@ -1,3 +1,12 @@
+Sun Jun  1 19:07:49 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/README:
+        * examples/OEP?BasicSP/README:
+        * examples/OEP/Display/README:
+
+          Updated these files with info about the URL for downloading
+          CIDL compiler binaries.
+
 Sun Jun  1 14:30:53 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * docs/releasenotes.html:
