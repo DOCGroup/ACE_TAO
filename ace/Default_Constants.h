@@ -382,7 +382,7 @@
 #endif /* ACE_DEFAULT_CDR_MEMCPY_TRADEOFF */
 
 #if !defined (ACE_CONNECTOR_HANDLER_MAP_SIZE)
-const size_t ACE_CONNECTOR_HANDLER_MAP_SIZE = 16;
+const unsigned int ACE_CONNECTOR_HANDLER_MAP_SIZE = 16;
 #endif /*ACE_CONNECTOR_HANDLER_MAP_SIZE*/
 
 #include "ace/post.h"
