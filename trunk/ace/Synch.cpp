@@ -20,9 +20,6 @@ ACE_RCSID(ace, Synch, "$Id$")
 #endif /* __ACE_INLINE__ */
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Null_Mutex)
-ACE_ALLOC_HOOK_DEFINE(ACE_File_Lock)
-ACE_ALLOC_HOOK_DEFINE(ACE_RW_Process_Mutex)
-ACE_ALLOC_HOOK_DEFINE(ACE_Process_Mutex)
 
 ACE_Lock::~ACE_Lock (void)
 {
@@ -125,95 +122,6 @@ ACE_TSS_C_cleanup (void *object)
     }
 }
 
-void
-ACE_Process_Mutex::dump (void) const
-{
-// ACE_TRACE ("ACE_Process_Mutex::dump");
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  this->lock_.dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-}
-
-#if !defined (ACE_WIN32) && !defined (ACE_HAS_POSIX_SEM) && !defined (ACE_PSOS)
-const ACE_TCHAR *
-ACE_Process_Mutex::unique_name (void)
-{
-  // For all platforms other than Win32, we are going to create a
-  // machine wide unquie name if one is not provided by the user.  On
-  // Win32, unnamed synchronization objects are acceptable.
-  ACE::unique_name (this, this->name_, ACE_UNIQUE_NAME_LEN);
-  return this->name_;
-}
-#endif /* !ACE_WIN32 && !ACE_HAS_POSIX_SEM && !ACE_PSOS */
-
-ACE_Process_Mutex::ACE_Process_Mutex (const ACE_TCHAR *name, void *arg)
-#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
-  : lock_ (USYNC_PROCESS, name, (ACE_mutexattr_t *) arg)
-#else
-  : lock_ (name ? name : ACE_Process_Mutex::unique_name ())
-#endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM || ACE_PSOS */
-{
-#if !defined (ACE_WIN32) && !defined (ACE_HAS_POSIX_SEM) && !defined (ACE_PSOS)
-  ACE_UNUSED_ARG (arg);
-#endif /* !ACE_WIN32 && !ACE_HAS_POSIX_SEM && !ACE_PSOS */
-}
-
-ACE_Process_Mutex::~ACE_Process_Mutex (void)
-{
-}
-
-ACE_RW_Process_Mutex::ACE_RW_Process_Mutex (const ACE_TCHAR *name,
-                                            int flags)
-  : lock_ (name, flags
-#if defined (ACE_WIN32)
-           )
-#else
-           , S_IRUSR | S_IWUSR)
-#endif /* ACE_WIN32 */
-{
-// ACE_TRACE ("ACE_RW_Process_Mutex::ACE_RW_Process_Mutex");
-}
-
-ACE_RW_Process_Mutex::~ACE_RW_Process_Mutex (void)
-{
-// ACE_TRACE ("ACE_RW_Process_Mutex::ACE_RW_Process_Mutex");
-}
-
-void
-ACE_RW_Process_Mutex::dump (void) const
-{
-// ACE_TRACE ("ACE_RW_Process_Mutex::dump");
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  this->lock_.dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-}
-
-void
-ACE_RW_Mutex::dump (void) const
-{
-// ACE_TRACE ("ACE_RW_Mutex::dump");
-
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("\n")));
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-}
-
-ACE_RW_Mutex::ACE_RW_Mutex (int type, const ACE_TCHAR *name, void *arg)
-  : removed_ (0)
-{
-// ACE_TRACE ("ACE_RW_Mutex::ACE_RW_Mutex");
-  if (ACE_OS::rwlock_init (&this->lock_, type, name, arg) != 0)
-    ACE_ERROR ((LM_ERROR, 
-                ACE_TEXT("%p\n"), 
-                ACE_TEXT("ACE_RW_Mutex::ACE_RW_Mutex")));
-}
-
-ACE_RW_Mutex::~ACE_RW_Mutex (void)
-{
-// ACE_TRACE ("ACE_RW_Mutex::~ACE_RW_Mutex");
-  this->remove ();
-}
-
 ACE_ALLOC_HOOK_DEFINE(ACE_Semaphore)
 
 void
@@ -246,124 +154,6 @@ ACE_Semaphore::~ACE_Semaphore (void)
 // ACE_TRACE ("ACE_Semaphore::~ACE_Semaphore");
 
   this->remove ();
-}
-
-void
-ACE_File_Lock::dump (void) const
-{
-// ACE_TRACE ("ACE_File_Lock::dump");
-
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  this->lock_.dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-}
-
-ACE_File_Lock::ACE_File_Lock (ACE_HANDLE h)
-  : removed_ (0)
-{
-// ACE_TRACE ("ACE_File_Lock::ACE_File_Lock");
-  if (ACE_OS::flock_init (&this->lock_) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_File_Lock::ACE_File_Lock")));
-  this->set_handle (h);
-}
-
-ACE_File_Lock::ACE_File_Lock (const ACE_TCHAR *name,
-                              int flags,
-                              mode_t perms)
-{
-// ACE_TRACE ("ACE_File_Lock::ACE_File_Lock");
-
-  if (this->open (name, flags, perms) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p %s\n"),
-                ACE_TEXT ("ACE_File_Lock::ACE_File_Lock"),
-                name));
-}
-
-int
-ACE_File_Lock::open (const ACE_TCHAR *name,
-                     int flags,
-                     mode_t perms)
-{
-// ACE_TRACE ("ACE_File_Lock::open");
-  this->removed_ = 0;
-  return ACE_OS::flock_init (&this->lock_, flags, name, perms);
-}
-
-ACE_File_Lock::~ACE_File_Lock (void)
-{
-// ACE_TRACE ("ACE_File_Lock::~ACE_File_Lock");
-  this->remove ();
-}
-
-void
-ACE_Process_Semaphore::dump (void) const
-{
-// ACE_TRACE ("ACE_Process_Semaphore::dump");
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  this->lock_.dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-}
-
-ACE_Process_Semaphore::ACE_Process_Semaphore (u_int count,
-                                              const ACE_TCHAR *name,
-                                              void *arg,
-                                              int max)
-#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
-  : lock_ (count, USYNC_PROCESS, name, arg, max)
-#else
-  : lock_ (name, ACE_SV_Semaphore_Complex::ACE_CREATE, count)
-#endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM || ACE_PSOS */
-{
-  arg = arg;
-  max = max;
-// ACE_TRACE ("ACE_Process_Semaphore::ACE_Process_Semaphore");
-}
-
-ACE_Process_Semaphore::~ACE_Process_Semaphore (void)
-{
-  // ACE_TRACE ("ACE_Process_Semaphore::~ACE_Process_Semaphore");
-}
-
-// Explicitly destroy the semaphore.
-
-int
-ACE_Process_Semaphore::remove (void)
-{
-// ACE_TRACE ("ACE_Process_Semaphore::remove");
-  return this->lock_.remove ();
-}
-
-// Block the thread until the semaphore count becomes
-// greater than 0, then decrement it.
-
-int
-ACE_Process_Semaphore::acquire (void)
-{
-// ACE_TRACE ("ACE_Process_Semaphore::acquire");
-  return this->lock_.acquire ();
-}
-
-// Conditionally decrement the semaphore if count is greater
-// than 0 (i.e., won't block).
-
-int
-ACE_Process_Semaphore::tryacquire (void)
-{
-// ACE_TRACE ("ACE_Process_Semaphore::tryacquire");
-  return this->lock_.tryacquire ();
-}
-
-// Increment the semaphore, potentially unblocking
-// a waiting thread.
-
-int
-ACE_Process_Semaphore::release (void)
-{
-// ACE_TRACE ("ACE_Process_Semaphore::release");
-  return this->lock_.release ();
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Mutex)
@@ -1004,6 +794,32 @@ ACE_Thread_Mutex::ACE_Thread_Mutex (const ACE_TCHAR *name, ACE_mutexattr_t *arg)
                 ACE_TEXT ("ACE_Thread_Mutex::ACE_Thread_Mutex")));
 }
 
+void
+ACE_RW_Mutex::dump (void) const
+{
+// ACE_TRACE ("ACE_RW_Mutex::dump");
+
+  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+}
+
+ACE_RW_Mutex::ACE_RW_Mutex (int type, const ACE_TCHAR *name, void *arg)
+  : removed_ (0)
+{
+// ACE_TRACE ("ACE_RW_Mutex::ACE_RW_Mutex");
+  if (ACE_OS::rwlock_init (&this->lock_, type, name, arg) != 0)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT("%p\n"),
+                ACE_TEXT("ACE_RW_Mutex::ACE_RW_Mutex")));
+}
+
+ACE_RW_Mutex::~ACE_RW_Mutex (void)
+{
+// ACE_TRACE ("ACE_RW_Mutex::~ACE_RW_Mutex");
+  this->remove ();
+}
+
 ACE_ALLOC_HOOK_DEFINE(ACE_RW_Thread_Mutex)
 
 ACE_RW_Thread_Mutex::ACE_RW_Thread_Mutex (const ACE_TCHAR *name,
@@ -1045,11 +861,7 @@ template class ACE_Write_Guard<ACE_Thread_Mutex>;
 //
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Guard<ACE_Process_Mutex>;
-
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Guard<ACE_Process_Mutex>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

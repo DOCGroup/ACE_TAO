@@ -16,7 +16,7 @@
 //     far as command line arguments are concerned.
 //
 // = AUTHOR
-//    Prashant Jain <pjain@cs.wustl.edu> 
+//    Prashant Jain <pjain@cs.wustl.edu>
 //    and Douglas C. Schmidt <schmidt@cs.wustl.edu>
 //
 // ============================================================================
@@ -24,6 +24,8 @@
 #include "test_config.h"
 #include "ace/Shared_Memory_MM.h"
 #include "ace/Synch.h"
+#include "ace/SV_Semaphore_Simple.h"
+#include "ace/Process_Semaphore.h"
 #include "ace/Thread_Manager.h"
 
 ACE_RCSID(tests, MM_Shared_Memory_Test, "$Id$")
@@ -48,7 +50,7 @@ public:
   {}
 };
 #else
-typedef ACE_Process_Semaphore SYNCHRONIZER; 
+typedef ACE_Process_Semaphore SYNCHRONIZER;
 #endif /* !defined (ACE_LACKS_FORK) */
 
 // Synchronize the start of the parent and the child.
@@ -186,16 +188,16 @@ main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("MM_Shared_Memory_Test"));
 
-  ACE_TCHAR temp_file[MAXPATHLEN + 1]; 
+  ACE_TCHAR temp_file[MAXPATHLEN + 1];
 
-  // Get the temporary directory, 
+  // Get the temporary directory,
   // The - 24 is for the filename, mm_shared_mem_testXXXXXX
   if (ACE::get_temp_dir (temp_file, MAXPATHLEN - 24) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Temporary path too long\n")), -1);
 
   // Add the filename to the end
   ACE_OS::strcat (temp_file, ACE_TEXT ("mm_shared_mem_testXXXXXX"));
-  
+
   // Store in the global variable.
   shm_key = temp_file;
 

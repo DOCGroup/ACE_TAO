@@ -865,6 +865,8 @@ public:
 
 #if defined (ACE_HAS_THREADS)
 
+class ACE_Process_Mutex;
+
 class ACE_Export ACE_MT_SYNCH
 {
   // = TITLE

@@ -1,3 +1,50 @@
+Wed Sep 20 12:00:42 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/Makefile:
+        * ace/Makefile.am:
+        * ace/Makefile.bor:
+        * ace/ace-dll.icc:
+        * ace/ace-lib.icc:
+        * ace/File_Lock.h:
+        * ace/File_Lock.inl:
+        * ace/File_Lock.cpp:
+        * ace/Process_Mutex.h:
+        * ace/Process_Mutex.inl:
+        * ace/Process_Mutex.cpp:
+        * ace/Process_Semaphore.h:
+        * ace/Process_Semaphore.inl:
+        * ace/Process_Semaphore.cpp:
+        * ace/RW_Process_Mutex.h:
+        * ace/RW_Process_Mutex.inl:
+        * ace/RW_Process_Mutex.cpp:
+        * ace/Dynamic.cpp:
+        * ace/Local_Name_Space.cpp:
+        * ace/Local_Name_Space_T.cpp:
+        * ace/MEM_SAP.h:
+        * ace/Naming_Context.cpp:
+        * ace/Synch.h:
+        * ace/Synch.i:
+        * ace/Synch.cpp:
+        * ace/Synch_T.h:
+        * ace/Thread_Exit.cpp:
+        * ace/Thread_Manager.cpp:
+        * examples/Shared_Malloc/Malloc.cpp:
+        * examples/Shared_Malloc/test_multiple_mallocs.cpp:
+        * examples/Shared_Malloc/test_position_independent_malloc.cpp:
+        * examples/Threads/process_mutex.cpp:
+        * examples/Threads/process_semaphore.cpp:
+        * tests/Conn_Test.cpp:
+        * tests/MM_Shared_Memory_Test.cpp:
+        * tests/Malloc_Test.cpp:
+        * tests/Process_Mutex_Test.cpp:
+        * tests/Process_Strategy_Test.cpp:
+          Moved the implementation of ACE_File_Lock, ACE_Process_Mutex,
+          ACE_Process_Semaphore and ACE_RW_Process_Mutex to their own
+          files.
+          This removes some unwanted dependencies in the Synch file.
+          The ACE_ONLY_GREATEST_AND_LATEST macro was used to preserve
+          backwards compatibility.
+
 Wed Sep 20 14:51:27 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/Basic_Types.h: Added #include <sys/types.h> after the other
@@ -6,9 +53,9 @@ Wed Sep 20 14:51:27 2000  Steve Huston  <shuston@riverace.com>
 
 Wed Sep 20 11:44:46 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* tests/run_test.pl:
-	* tests/run_test.lst:
-	  Disable the ACE_Init_Test under UNIX, the test only works on NT.
+        * tests/run_test.pl:
+        * tests/run_test.lst:
+          Disable the ACE_Init_Test under UNIX, the test only works on NT.
 
 Wed Sep 20 12:55:16 2000  Steve Huston  <shuston@riverace.com>
 
@@ -22,74 +69,74 @@ Wed Sep 20 12:55:16 2000  Steve Huston  <shuston@riverace.com>
 
 Wed Sep 20 08:24:34 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Makefile.am (INLINE_FILES):
+        * ace/Makefile.am (INLINE_FILES):
 
-	  Corrected `CDR_Base.i' to `CDR_Base.inl'.
+          Corrected `CDR_Base.i' to `CDR_Base.inl'.
 
 Wed Sep 20 08:12:20 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tests/CDR_Test.cpp:
+        * tests/CDR_Test.cpp:
 
-	  Included missing `ace/SString.h' header.
+          Included missing `ace/SString.h' header.
 
 Tue Sep 19 17:12:29 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Basic_Types.h:
+        * ace/Basic_Types.h:
 
-	  Added missing include of `ace/config-all.h' and
-	  `ace/ACE_export.h'.
+          Added missing include of `ace/config-all.h' and
+          `ace/ACE_export.h'.
 
-	  Explicitly include `limits.h', `float.h' and `stdlib.h' to pull
-	  in basic type limits (e.g. UINT_MAX) and typedefs
-	  (e.g. ptr_arith_t).  This allows `ace/Basic_Types.h' to be
-	  included as a stand-alone header.  Previously, `ace/OS.h'
-	  must have been included at least indirectly before
-	  `ace/Basic_Types.h'.
+          Explicitly include `limits.h', `float.h' and `stdlib.h' to pull
+          in basic type limits (e.g. UINT_MAX) and typedefs
+          (e.g. ptr_arith_t).  This allows `ace/Basic_Types.h' to be
+          included as a stand-alone header.  Previously, `ace/OS.h'
+          must have been included at least indirectly before
+          `ace/Basic_Types.h'.
 
-	* ace/CDR_Base.h:
-	* ace/CDR_Base.i:
-	* ace/CDR_Base.cpp:
+        * ace/CDR_Base.h:
+        * ace/CDR_Base.i:
+        * ace/CDR_Base.cpp:
 
-	  Moved base ACE_CDR class to separate set of files.  This reduces
-	  inter-header dependencies for sources that only require the CDR
-	  types.
+          Moved base ACE_CDR class to separate set of files.  This reduces
+          inter-header dependencies for sources that only require the CDR
+          types.
 
-	* ace/CDR_Stream.h:
+        * ace/CDR_Stream.h:
 
-	  Forward declared ACE_CString, and moved inclusion of
-	  `ace/SString.h' to the `.cpp' file to reduce inter-header
-	  dependencies.
+          Forward declared ACE_CString, and moved inclusion of
+          `ace/SString.h' to the `.cpp' file to reduce inter-header
+          dependencies.
 
-	* ace/CDR_Stream.i:
-	* ace/CDR_Stream.cpp:
+        * ace/CDR_Stream.i:
+        * ace/CDR_Stream.cpp:
 
-	  Moved ACE_CString related methods to the `.cpp' file since the
-	  ACE_CString method is now forward declared in the
-	  `ace/CDR_Stream.h' header.
+          Moved ACE_CString related methods to the `.cpp' file since the
+          ACE_CString method is now forward declared in the
+          `ace/CDR_Stream.h' header.
 
 Tue Sep 19 17:40:04 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/config-win32-common.h,
-	  ace/config-sunos5.4-centerline-2.x.h: Removed the nonsensical
- 	  ACE_HAS_SVR5_GETTIMEOFDAY macro.  Thanks to Jeff Grief for
- 	  reporting this.
+        * ace/config-win32-common.h,
+          ace/config-sunos5.4-centerline-2.x.h: Removed the nonsensical
+          ACE_HAS_SVR5_GETTIMEOFDAY macro.  Thanks to Jeff Grief for
+          reporting this.
 
 Mon Sep 18 12:39:39 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/OS.i (cuserid):
+        * ace/OS.i (cuserid):
 
-	  When using ACE's alternate cuserid() implementation:
-	  - ensure that the maximum length argument is non-zero
-	    since it doesn't make sense to have a zero length user ID.
-	  - Return a static buffer if the buffer argument is zero.  This
-	    is not reentrant but nothing else can be done in such a case.
-	    [Bug 619]
+          When using ACE's alternate cuserid() implementation:
+          - ensure that the maximum length argument is non-zero
+            since it doesn't make sense to have a zero length user ID.
+          - Return a static buffer if the buffer argument is zero.  This
+            is not reentrant but nothing else can be done in such a case.
+            [Bug 619]
 
 Mon Sep 18 11:22:02 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/SUN_Proactor.cpp (handle_events): Fixed a problem arising
-	  on 64 bit Solaris platforms.  Thanks to Ganesh Pai
- 	  <gpai@voicetek.com> for reporting this.
+        * ace/SUN_Proactor.cpp (handle_events): Fixed a problem arising
+          on 64 bit Solaris platforms.  Thanks to Ganesh Pai
+          <gpai@voicetek.com> for reporting this.
 
 Sun Sep 17 19:17:53 2000  Carlos O'Ryan  <coryan@uci.edu>
 

@@ -2,6 +2,7 @@
 
 #include "Options.h"
 #include "Malloc.h"
+#include "ace/Process_Mutex.h"
 
 ACE_RCSID(Shared_Malloc, Malloc, "$Id$")
 
