@@ -68,7 +68,7 @@ main (int argc, char* argv [])
       ACE_CATCH (CORBA::BAD_INV_ORDER, thr_ex)
 	{
 	  ACE_DEBUG ((LM_DEBUG,
-		      "Spawn should be in the context of a Scheduling Segment\n"));
+		      "Spawn should be in the context of a Scheduling Segment - Expected Exception\n"));
 	}
       ACE_CATCHANY
 	{

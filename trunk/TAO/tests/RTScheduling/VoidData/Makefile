@@ -12,7 +12,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-BIN_UNCHECKED = test_client
+BIN_UNCHECKED = VoidData
 
 SRC = $(addsuffix .cpp, $(BIN_UNCHECKED))
 
@@ -46,7 +46,7 @@ include $(TAO_ROOT)/taoconfig.mk
 #       Local targets
 #----------------------------------------------------------------------------
 
-test_client: $(addprefix $(VDIR),$(CLIENT_OBJS))
+VoidData: $(addprefix $(VDIR),$(CLIENT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(RT_TAO_CLNT_LIBS) $(POSTLINK)
 
 realclean: clean

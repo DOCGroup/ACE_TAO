@@ -10,7 +10,7 @@ use PerlACE::Run_Test;
 
 $status = 0;
 
-$CL = new PerlACE::Process ("test_client", "");
+$CL = new PerlACE::Process ("VoidData", "");
 
 print STDERR "Starting Current Test\n";
 

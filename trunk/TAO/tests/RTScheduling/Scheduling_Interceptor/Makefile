@@ -15,7 +15,7 @@ endif # ! TAO_ROOT
 IDL_FILES = test
 IDL_SRC = testC.cpp testS.cpp 
 LIBS = -lTAO_RTScheduler
-BIN_UNCHECKED = test_client test_server
+BIN_UNCHECKED = Scheduler_Interceptor_Client Scheduler_Interceptor_Server
 
 SRC = $(addsuffix .cpp, $(BIN_UNCHECKED)) $(IDL_SRC) ../Scheduler.cpp
 
@@ -49,10 +49,10 @@ include $(TAO_ROOT)/taoconfig.mk
 
 .PRECIOUS: $(foreach ext, $(IDL_EXT), test$(ext))
 
-test_client: $(addprefix $(VDIR),$(CLIENT_OBJS))
+Scheduler_Interceptor_Client: $(addprefix $(VDIR),$(CLIENT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(RT_TAO_CLNT_LIBS) $(POSTLINK)
 
-test_server: $(addprefix $(VDIR),$(SERVER_OBJS))
+Scheduler_Interceptor_Server: $(addprefix $(VDIR),$(SERVER_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(RT_TAO_SRVR_LIBS) $(POSTLINK)
 
 realclean: clean

@@ -111,15 +111,22 @@ main (int argc, char* argv [])
       ACE_TRY_CHECK;
 
     }
+  ACE_CATCH (CORBA::THREAD_CANCELLED, thr_ex)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+		  "Distributable Thread Cancelled - Expected Exception\n"));
+      server->shutdown ();
+    }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Caught exception:");
-      server->shutdown ();
 
       return 0;
     }
   ACE_ENDTRY;
+
+  orb->destroy ();
 
   return 0;
 }

@@ -13,8 +13,8 @@ use PerlACE::Run_Test;
 $sleeptime = 2;
 $status = 0;
 
-$SV = new PerlACE::Process ("test_server", "-f test.ior");
-$CL = new PerlACE::Process ("test_client", "-f test.ior");
+$SV = new PerlACE::Process ("Scheduler_Interceptor_Server", "-f test.ior");
+$CL = new PerlACE::Process ("Scheduler_Interceptor_Client", "-f test.ior");
 
 print STDERR "Starting Server\n";
 
