@@ -24,6 +24,7 @@ Wed Jun 18 19:09:55 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tao/UB_String_Argument_T.h:
         * tao/UB_String_Arguments.cpp:
         * tao/UB_String_Arguments.h:
+        * tao/TAO.dsp:
 
           New files, for unbounded string and wstring arguments.
 
