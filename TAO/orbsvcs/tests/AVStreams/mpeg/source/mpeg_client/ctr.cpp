@@ -2980,17 +2980,10 @@ int CTRmain(int argc,
     if (SetRTpriority("CTR", 4)) realTimeFlag = 0;
   }
  
- 
   //  atexit(on_exit_routine);
- 
  
   // instantiate our command handler
   Command_Handler command_handler (cmdSocket);
-//   ACE_NEW_RETURN (command_handler,
-//                   Command_Handler (cmdSocket),
-//                   -1);
- 
-  //  if (command_handler->init () == -1)
    if (command_handler.init (argc,argv) == -1)
      ACE_ERROR_RETURN ((LM_ERROR,
                         "(%P|%t) command_handler: init returned -1"),
@@ -3005,10 +2998,6 @@ int CTRmain(int argc,
   
   // and now instantiate the sig_handler
   Client_Sig_Handler client_sig_handler (&command_handler);
-//   Client_Sig_Handler *client_sig_handler;
-//   ACE_NEW_RETURN (client_sig_handler,
-//                   Client_Sig_Handler (command_handler),
-//                   -1);
  
   // .. and ask it to register itself with the reactor
   if (client_sig_handler.register_handler () < 0)
