@@ -24,13 +24,15 @@ $CL = Process::Create ($EXEPREFIX."client$EXE_EXT ", "-x");
 
 $client = $CL->TimedWait (200);
 if ($client == -1) {
-  print STDERR "ERROR: client timedout\n";
+  $time = localtime;
+  print STDERR "ERROR: client timedout at $time\n";
   $CL->Kill (); $CL->TimedWait (1);
 }
 
-$server = $SV->TimedWait (100);
+$server = $SV->TimedWait (1);
 if ($server == -1) {
-  print STDERR "ERROR: server timedout\n";
+  $time = localtime;
+  print STDERR "ERROR: server timedout at $time\n";
   $SV->Kill (); $SV->TimedWait (1);
 }
 
