@@ -1,4 +1,15 @@
-Tue Feb 09 10:43:02 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Tue Feb 09 13:57:23 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/DLList_Test.cpp (main): The test should log the result to
+	  DLList_Test.log, not ACE_DLList_Test.log.
+
+	* tests/run_tests.{sh,vxworks,psosim}: Added DLList_Test.
+
+	* tests/run_tests.bat: Removed DLL_Test.
+
+	* ace/ACE.cpp (ldfind): Win32 only.  Made sure we always look for
+	  the DLL at the current directory first on Win32 which is the
+	  default behavior on Win32.
 
 	* ace/ace_{dll,lib}.dsp: Removed entries of Service_Record.{h,i}.
 	  Thanks to David for noticing this.
