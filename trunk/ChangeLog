@@ -551,9 +551,10 @@ Wed Jan  7 16:33:14 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 Wed Jan  7 15:55:41 2004  Steve Huston  <shuston@riverace.com>
 
         * ace/OS_NS_netdb.inl (getipnodebyaddr, getipnodebyname, ): Make
-          ACE_WIN32 go through the IPv4-only case. Even if ACE_HAS_IPV6
-          is enabled, the Windows IPv6 implementation (at this time)
-          doesn't offer getipnodebyname().
+          ACE_WIN32 go through the IPv4-only case. Since Windows IPv6
+	  implementation (at this time) doesn't offer
+	  getipnodebyname() we make the code to pass through IPV4 portion
+	  even if ACE_HAS_IPV6 is enabled.
 
         * ace/OS_NS_arpa_inet.inl (inet_ntop, inet_pton): Make these run
           through the IPv4-only section on Win32 as well. These may be doable
