@@ -707,7 +707,7 @@ be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
       // last line of this method, whether bt is a typedef or not.
       if (bound > 0)
         {
-          *os << "TAO::";
+          *os << "::TAO::";
       
           if (alias != 0)
             {
@@ -745,28 +745,24 @@ be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
       switch (pdt->pt ())
         {
           case AST_PredefinedType::PT_boolean:
-            *os << "ACE_InputCDR::to_boolean";
+            *os << "::ACE_InputCDR::to_boolean";
             return;
           case AST_PredefinedType::PT_octet:
-            *os << "ACE_InputCDR::to_octet";
+            *os << "::ACE_InputCDR::to_octet";
             return;
           case AST_PredefinedType::PT_char:
-            *os << "ACE_InputCDR::to_char";
+            *os << "::ACE_InputCDR::to_char";
             return;
           case AST_PredefinedType::PT_wchar:
-            *os << "ACE_InputCDR::to_wchar";
+            *os << "::ACE_InputCDR::to_wchar";
             return;
+          case AST_PredefinedType::PT_void:
+            break;
           default:
+            *os << "::";
             break;
         }
     }
-  else
-    {
-      // If it is not a basic type, then it is a scoped name, and
-      // we need this to possibly disambiguate.
-      *os << "::";
-    }
-
   // For types other than the 4 above, don't unalias the type name
   // in case it is a sequence or array.
   *os << bt->name ();
