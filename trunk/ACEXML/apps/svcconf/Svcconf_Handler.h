@@ -13,8 +13,10 @@
 #ifndef ACEXML_SVCCONF_HANDLER_H
 #define ACEXML_SVCCONF_HANDLER_H
 
-#include "common/DefaultHandler.h"
+#include "ACEXML/common/DefaultHandler.h"
 #include "ace/Service_Types.h"
+
+#if (ACE_USES_CLASSIC_SVC_CONF == 0)
 
 class ACE_Parsed_Info
 {
@@ -302,4 +304,7 @@ private:
 #if defined (__ACEXML_INLINE__)
 # include "Svcconf_Handler.i"
 #endif /* __ACEXML_INLINE__ */
+
+#endif /* ACE_USES_CLASSIC_SVC_CONF == 0 */
+
 #endif /* ACEXML_SVCCONF_HANDLER_H */
