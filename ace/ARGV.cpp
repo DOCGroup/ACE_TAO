@@ -49,57 +49,7 @@ ACE_ARGV::string_to_argv (void)
 int
 ACE_ARGV::argv_to_string (ASYS_TCHAR **argv, ASYS_TCHAR *&buf)
 {
-  if (argv == 0 || argv[0] == 0)
-    return 0;
-
-  int buf_len = 0;
-  
-  // Determine the length of the buffer.
-
-  for (int i = 0; argv[i] != 0; i++)
-    {
-      ASYS_TCHAR *temp;
-
-      // Account for environment variables.
-      if (this->substitute_env_args_
-	  && (argv[i][0] == '$'
-	  && (temp = ACE_OS::getenv (&argv[i][1])) != 0))
-	buf_len += ACE_OS::strlen (temp);	
-      else
-	buf_len += ACE_OS::strlen (argv[i]);
-
-      // Add one for the extra space between each string.
-      buf_len++;
-    }
-
-  // Step through all argv params and copy each one into buf; separate
-  // each param with white space.
-
-  ACE_NEW_RETURN (buf, ASYS_TCHAR[buf_len + 1],0);
-
-  // initial null charater to make it a null string.
-  buf[0] = '\0';
-  ASYS_TCHAR *end = buf;
-  int j;
-
-  for (j = 0; argv[j] != 0; j++)
-    {
-      ASYS_TCHAR *temp;
-
-      // Account for environment variables.
-      if (this->substitute_env_args_
-	  && (argv[j][0] == '$'
-	  && (temp = ACE_OS::getenv (&argv[j][1])) != 0))
-	end = ACE::strecpy (end, temp);
-      else
-	end = ACE::strecpy (end, argv[j]);
-
-      // Replace the null char that strecpy put there with white space.
-      *(end-1) = ' ';
-    }
-  // Null terminate the string.
-  *end = '\0';
-  return j;// the number of arguments.
+  return ACE_OS::argv_to_string (argv, buf);
 }
 
 ACE_ARGV::ACE_ARGV (const ASYS_TCHAR buf[],
