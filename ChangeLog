@@ -1,3 +1,9 @@
+Fri Jul 19 14:42:37 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/WFMO_Reactor.cpp (make_changes_in_suspension_infos,
+          make_changes_in_current_infos):
+          Fixed bug resulting from: Wed Jul 17 11:34:28 2002  Steve Huston
+
 Thu Jul 18 15:48:29 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Future.h: Doxygenation improvements.
