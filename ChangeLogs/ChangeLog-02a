@@ -1,3 +1,15 @@
+Thu Oct 26 22:18:42 2000  Alex Arulanthu <Alex.Arulanthu@sylantro.com>
+
+        * ace/Log_Msg.h:
+        * ace/Log_Msg.cpp:
+        * ace/Service_Config.h:
+        * ace/Service_Config.cpp:
+        * ace/Service_Config.i:	
+	
+	  Setting the right default values for process and thread level
+	  priority masks. I had already talk to Steve H about this
+	  change. I just forgot to get this in.
+	
 Thu Oct 26 14:04:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/OS.h:
