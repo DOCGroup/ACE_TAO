@@ -43,6 +43,15 @@ Mon Feb 18 09:14:47 2002  Jeff Parsons <parsons@cs.wustl.edu>
 	  inserted into CORBA policies, and for that we need
 	  the Any operators.
 
+        * tao/Any.h:
+        * tao/Any.i:
+        * tao/Any.cpp:
+
+          Added a new flag that is set by an insertion operator when
+          inserting a local type. Then the flag is checked when
+          marshaling the Any to return 0 if the Any contains a local
+          type at some level.
+
 Mon Feb 18 08:53:14 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/tao_idl_static.dsp:
