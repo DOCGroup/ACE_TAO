@@ -18,8 +18,10 @@ ACE_RCSID(ace, Event_Handler, "$Id$")
 
 ACE_Event_Handler::ACE_Event_Handler (ACE_Reactor *r,
                                       int p)
-  : priority_ (p),
-    reactor_ (r)
+  : reference_count_ (1)
+  , priority_ (p)
+  , reactor_ (r)
+  , reference_counting_policy_ (Reference_Counting_Policy::DISABLED)
 {
   // ACE_TRACE ("ACE_Event_Handler::ACE_Event_Handler");
 }
@@ -172,6 +174,58 @@ ACE_Event_Handler::reactor (void) const
   return this->reactor_;
 }
 
+ACE_Reactor_Timer_Interface *
+ACE_Event_Handler::reactor_timer_interface (void) const
+{
+  ACE_TRACE ("ACE_Event_Handler::reactor_timer_interface");
+  return this->reactor_;
+}
+
+ACE_Event_Handler::Reference_Count
+ACE_Event_Handler::add_reference (void)
+{
+  return ++this->reference_count_;
+}
+
+ACE_Event_Handler::Reference_Count
+ACE_Event_Handler::remove_reference (void)
+{
+  Reference_Count result =
+    --this->reference_count_;
+
+  if (result == 0)
+    delete this;
+
+  return result;
+}
+
+ACE_Event_Handler::Policy::~Policy (void)
+{
+}
+
+ACE_Event_Handler::Reference_Counting_Policy::Reference_Counting_Policy (Reference_Counting_Policy::Value value)
+  : value_ (value)
+{
+}
+
+ACE_Event_Handler::Reference_Counting_Policy::Value
+ACE_Event_Handler::Reference_Counting_Policy::value (void) const
+{
+  return this->value_;
+}
+
+void
+ACE_Event_Handler::Reference_Counting_Policy::value (ACE_Event_Handler::Reference_Counting_Policy::Value value)
+{
+  this->value_ = value;
+}
+
+ACE_Event_Handler::Reference_Counting_Policy &
+ACE_Event_Handler::reference_counting_policy (void)
+{
+  return this->reference_counting_policy_;
+}
+
 #if !defined (ACE_HAS_WINCE)
 
 ACE_THR_FUNC_RETURN
@@ -233,6 +287,92 @@ ACE_Event_Handler::remove_stdin_handler (ACE_Reactor *reactor,
 }
 
 #endif /* ACE_HAS_WINCE */
+
+ACE_Event_Handler_var::ACE_Event_Handler_var (void)
+  : ptr_ (0)
+{
+}
+
+ACE_Event_Handler_var::ACE_Event_Handler_var (ACE_Event_Handler *p)
+  : ptr_ (p)
+{
+}
+
+ACE_Event_Handler_var::ACE_Event_Handler_var (const ACE_Event_Handler_var &b)
+  : ptr_ (b.ptr_)
+{
+  if (this->ptr_ != 0)
+    {
+      this->ptr_->add_reference ();
+    }
+}
+
+ACE_Event_Handler_var::~ACE_Event_Handler_var (void)
+{
+  if (this->ptr_ != 0)
+    {
+      this->ptr_->remove_reference ();
+    }
+}
+
+ACE_Event_Handler_var &
+ACE_Event_Handler_var::operator= (ACE_Event_Handler *p)
+{
+  if (this->ptr_ == p)
+    return *this;
+
+  if (this->ptr_ != 0)
+    this->ptr_->remove_reference ();
+
+  this->ptr_ = p;
+
+  return *this;
+}
+
+ACE_Event_Handler_var &
+ACE_Event_Handler_var::operator= (const ACE_Event_Handler_var &b)
+{
+  if (this->ptr_ != b.ptr_)
+    {
+      if (this->ptr_ != 0)
+        {
+          this->ptr_->remove_reference ();
+        }
+
+      if ((this->ptr_ = b.ptr_) != 0)
+        {
+          this->ptr_->add_reference ();
+        }
+    }
+
+  return *this;
+}
+
+ACE_Event_Handler *
+ACE_Event_Handler_var::operator->() const
+{
+  return this->ptr_;
+}
+
+ACE_Event_Handler *
+ACE_Event_Handler_var::handler (void) const
+{
+  return this->ptr_;
+}
+
+ACE_Event_Handler *
+ACE_Event_Handler_var::release (void)
+{
+  ACE_Event_Handler *old = this->ptr_;
+  this->ptr_ = 0;
+  return old;
+}
+
+void
+ACE_Event_Handler_var::reset (ACE_Event_Handler *p)
+{
+  *this = p;
+}
 
 ACE_Notification_Buffer::ACE_Notification_Buffer (void)
 {

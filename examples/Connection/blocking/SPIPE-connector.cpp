@@ -32,32 +32,32 @@ Peer_Handler::open (void *)
   if (iterations_ == 0)
     {
       this->display_menu ();
-      if (ACE_Event_Handler::register_stdin_handler 
+      if (ACE_Event_Handler::register_stdin_handler
           (this,
            ACE_Reactor::instance (),
            ACE_Thread_Manager::instance ()) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR,
+        ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n",
                            "register_stdin_handler"),
                           -1);
       else
-	return 0;
+        return 0;
     }
   else // If iterations_ has been set, send iterations_ buffers.
     {
       char *buffer =
-	"Oh give me a home\n"
-	"Where the buffalo roam,\n"
-	"And the deer and the antelope play.\n"
-	"Where seldom is heard\n"
-	"A discouraging word,\n"
-	"And the skies are not cloudy all day.\n";
+        "Oh give me a home\n"
+        "Where the buffalo roam,\n"
+        "And the deer and the antelope play.\n"
+        "Where seldom is heard\n"
+        "A discouraging word,\n"
+        "And the skies are not cloudy all day.\n";
       int length = ACE_OS::strlen (buffer);
 
       while (iterations_-- > 0
-	     && this->peer ().send_n (buffer,
+             && this->peer ().send_n (buffer,
                                       length) == length)
-	continue;
+        continue;
 
       this->peer ().close ();
       ACE_Reactor::end_event_loop();
@@ -82,12 +82,12 @@ Peer_Handler::handle_input (ACE_HANDLE)
                         -1);
     else if (n == 0) // Explicitly close the connection.
       {
-	if (this->peer ().close () == -1)
-	  ACE_ERROR_RETURN ((LM_ERROR,
+        if (this->peer ().close () == -1)
+          ACE_ERROR_RETURN ((LM_ERROR,
                              "%p\n",
                              "close"),
                             1);
-	return -1;
+        return -1;
       }
     else
       this->display_menu ();
@@ -96,7 +96,7 @@ Peer_Handler::handle_input (ACE_HANDLE)
 
 int
 Peer_Handler::handle_close (ACE_HANDLE,
-			    ACE_Reactor_Mask)
+                            ACE_Reactor_Mask)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Shutting down\n"));
@@ -137,7 +137,7 @@ IPC_Client::init (int argc, char *argv[])
     return -1;
   // Handle signals through the ACE_Reactor.
   else if (ACE_Reactor::instance ()->register_handler
-	   (SIGINT,
+           (SIGINT,
             &this->done_handler_) == -1)
     return -1;
 
@@ -153,12 +153,12 @@ IPC_Client::init (int argc, char *argv[])
 
   // Connect to the peer, reusing the local addr if necessary.
   if (this->connect (ph,
-		     ACE_SPIPE_Addr (rendezvous_),
-		     ACE_Synch_Options::defaults,
-		     ACE_sap_any_cast (ACE_SPIPE_Addr &),
-		     0,
-		     O_RDWR | FILE_FLAG_OVERLAPPED,
-		     0) == -1)
+                     ACE_SPIPE_Addr (rendezvous_),
+                     ACE_Synch_Options::defaults,
+                     ACE_sap_any_cast (ACE_SPIPE_Addr &),
+                     0,
+                     O_RDWR | FILE_FLAG_OVERLAPPED,
+                     0) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "connect"),
@@ -197,23 +197,23 @@ IPC_Client::parse_args (int argc, char *argv[])
   for (int c; (c = get_opt ()) != -1; )
     {
       switch (c)
-	{
-	case 'r':
-	  ACE_OS::strncpy (rendezvous_,
-			   ACE_TEXT_CHAR_TO_TCHAR (get_opt.opt_arg ()),
-			   sizeof rendezvous_ / sizeof ACE_TCHAR);
-	  break;
-	case 'i':
-	  iterations_ = ACE_OS::atoi (get_opt.opt_arg ());
-	  break;
-	case 'u':
-	default:
-	  ACE_ERROR_RETURN ((LM_ERROR,
-			     "usage: %n -i <iterations>\n"
-			     "-r <rendezvous>\n"),
+        {
+        case 'r':
+          ACE_OS::strncpy (rendezvous_,
+                           ACE_TEXT_CHAR_TO_TCHAR (get_opt.opt_arg ()),
+                           sizeof rendezvous_ / sizeof ACE_TCHAR);
+          break;
+        case 'i':
+          iterations_ = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 'u':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "usage: %n -i <iterations>\n"
+                             "-r <rendezvous>\n"),
                             -1);
-	  break;
-	}
+          break;
+        }
     }
 
   return 0;
@@ -225,18 +225,10 @@ IPC_Client::parse_args (int argc, char *argv[])
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Connector<Peer_Handler, ACE_SPIPE_CONNECTOR>;
-template class ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<Peer_Handler> *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Peer_Handler> *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Reverse_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Peer_Handler> *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Peer_Handler> *, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Svc_Handler<ACE_SPIPE_STREAM, ACE_NULL_SYNCH>;
-template class ACE_Svc_Tuple<Peer_Handler>;
+template class ACE_NonBlocking_Connect_Handler<Peer_Handler>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Connector<Peer_Handler, ACE_SPIPE_CONNECTOR>
-#pragma instantiate ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<Peer_Handler> *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Peer_Handler> *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Reverse_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Peer_Handler> *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Peer_Handler> *, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Svc_Handler<ACE_SPIPE_STREAM, ACE_NULL_SYNCH>
-#pragma instantiate ACE_Svc_Tuple<Peer_Handler>
+#pragma instantiate ACE_NonBlocking_Connect_Handler<Peer_Handler>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
