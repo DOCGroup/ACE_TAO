@@ -1,3 +1,12 @@
+Wed Jul 21 23:38:28 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp
+	  (visit_interface): The generated _this method was producing
+	  collocated object references even when the collocation
+	  optimization in servant orb was disabled.  It should return
+	  regular (remote) stubs in this case.  Thanks to Irfan for
+	  pointing this out.
+
 Wed Jul 21 03:20:16 1999 Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* Connection Caching Feature
