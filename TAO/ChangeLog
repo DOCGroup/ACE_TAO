@@ -1,3 +1,7 @@
+Thu Oct 30 09:38:01 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* orbsvcs/examples/RtEC/Kokyu/Makefile: Updated dependencies.
+
 Thu Oct 30 09:28:20 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Notify/Method_Request_Updates_T.h:
