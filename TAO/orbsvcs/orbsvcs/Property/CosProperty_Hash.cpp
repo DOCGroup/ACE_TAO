@@ -15,43 +15,43 @@
 
 #include "CosProperty_Hash.h"
 
-EXT_ID::EXT_ID (void)
+CosProperty_Hash_Key::CosProperty_Hash_Key (void)
 {
 }
 
-EXT_ID::EXT_ID (const CosPropertyService::PropertyName &name)
+CosProperty_Hash_Key::CosProperty_Hash_Key (const CosPropertyService::PropertyName &name)
   : pname_ (name)
 {
 }
 
 int
-EXT_ID::operator == (const EXT_ID &ext_id) const   
+CosProperty_Hash_Key::operator == (const CosProperty_Hash_Key &CosProperty_Hash_Key) const   
 {
-  ACE_DEBUG ((LM_DEBUG, "EXT_ID::operator == : %s == %s \n",
-              this->pname_.in (), ext_id.pname_.in ()));
+  ACE_DEBUG ((LM_DEBUG, "CosProperty_Hash_Key::operator == : %s == %s \n",
+              this->pname_.in (), CosProperty_Hash_Key.pname_.in ()));
 
-  return ACE_OS::strcmp (this->pname_.in (), ext_id.pname_.in ()) == 0;
+  return ACE_OS::strcmp (this->pname_.in (), CosProperty_Hash_Key.pname_.in ()) == 0;
 }
 
 u_long
-EXT_ID::hash (void) const 
+CosProperty_Hash_Key::hash (void) const 
 {
   u_long ret = ACE::hash_pjw (this->pname_.in ());
 
-  ACE_DEBUG ((LM_DEBUG, "EXT_ID::hash : hasing %s : val : %d \n",
+  ACE_DEBUG ((LM_DEBUG, "CosProperty_Hash_Key::hash : hasing %s : val : %d \n",
               this->pname_.in (), ret));
   return ret;
 }
 
-EXT_ID::~EXT_ID (void) 
+CosProperty_Hash_Key::~CosProperty_Hash_Key (void) 
 {
 }
 
-INT_ID::INT_ID (void)
+CosProperty_Hash_Value::CosProperty_Hash_Value (void)
 {
 }
 
-INT_ID::INT_ID (const CORBA::Any &anyvalue)
+CosProperty_Hash_Value::CosProperty_Hash_Value (const CORBA::Any &anyvalue)
 {
   TAO_TRY
     {
@@ -70,6 +70,7 @@ INT_ID::INT_ID (const CORBA::Any &anyvalue)
   TAO_ENDTRY;
 }
 
-INT_ID::~INT_ID (void)
+CosProperty_Hash_Value::~CosProperty_Hash_Value (void)
 {
 }
+

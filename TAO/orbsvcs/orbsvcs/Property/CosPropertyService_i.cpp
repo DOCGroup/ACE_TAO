@@ -94,6 +94,7 @@ TAO_PropertySet::TAO_PropertySet (void)
               this->hash_table_.total_size ()));
 }
 
+// Destructor
 TAO_PropertySet::~TAO_PropertySet (void)
 {
 }
@@ -106,14 +107,14 @@ TAO_PropertySet::define_property (const char *property_name,
                                   const CORBA::Any &property_value,
                                   CORBA::Environment &env)
 {
-  EXT_ID ext_id ((CosPropertyService::PropertyName) property_name);
-  INT_ID int_id (property_value);
+  CosProperty_Hash_Key CosProperty_Hash_Key ((CosPropertyService::PropertyName) property_name);
+  CosProperty_Hash_Value CosProperty_Hash_Value (property_value);
 
   ACE_DEBUG ((LM_DEBUG,
               "define_property : property_name %s \n",
               property_name));
 
-  int ret = this->hash_table_.bind (ext_id, int_id);
+  int ret = this->hash_table_.bind (CosProperty_Hash_Key, CosProperty_Hash_Value);
 
   if (ret == 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -121,10 +122,18 @@ TAO_PropertySet::define_property (const char *property_name,
                 ret));
 }
 
+// Defining a sequence of properties ( Need to check for overwriting,
+// duplicate names, void names etc
 void 
 TAO_PropertySet::define_properties (const CosPropertyService::Properties &nproperties,
                                     CORBA::Environment &env)
 {
+  for (int pi = 0; pi < nproperties.length (); pi++) 
+    {
+      this->define_property (nproperties [pi].property_name,
+                             nproperties [pi].property_value.in (),
+                             env);
+    }
 }
   
 // Returns the current number of properties associated with this
@@ -135,12 +144,16 @@ TAO_PropertySet::get_number_of_properties ( CORBA::Environment &env)
   return this->hash_table_.current_size ();
 }
 
-void 
+//  Returns all of the property names currently defined in the
+//  PropertySet. If the PropertySet contains more than how_many
+//  property names, then the remaining property names are put into the
+//  PropertyNamesIterator. ( Interator not done)
+void
 TAO_PropertySet::get_all_property_names (CORBA::ULong how_many, 
                                          CosPropertyService::PropertyNames_out property_names, 
                                          CosPropertyService::PropertyNamesIterator_out rest,
                                          CORBA::Environment &env)
-{  
+{
 }
 
 // Returns the value of a property in the PropertySet.
@@ -149,81 +162,113 @@ CORBA::Any *
 TAO_PropertySet::get_property_value (const char *property_name,
                                      CORBA::Environment &env)
 {
-  EXT_ID ext_id ((CosPropertyService::PropertyName) property_name);
-  INT_ID int_id;
+  CosProperty_Hash_Key CosProperty_Hash_Key ((CosPropertyService::PropertyName) property_name);
+  CosProperty_Hash_Value CosProperty_Hash_Value;
   
-  ACE_DEBUG ((LM_DEBUG, " get_prop_value:  Input str : %s, ext_id.pname_.in () : %s \n",
+  ACE_DEBUG ((LM_DEBUG, " get_prop_value:  Input str : %s, CosProperty_Hash_Key.pname_.in () : %s \n",
               property_name,
-              ext_id.pname_.in ()));
+              CosProperty_Hash_Key.pname_.in ()));
 
-  if (this->hash_table_.find (ext_id, int_id) != 0)
+  if (this->hash_table_.find (CosProperty_Hash_Key, CosProperty_Hash_Value) != 0) 
     ACE_ERROR ((LM_ERROR, "Find failed: \n"));
-
+  
   ACE_DEBUG ( (LM_DEBUG, "find fn over \n") );
   
-  return &int_id.pvalue_;
+  return &CosProperty_Hash_Value.pvalue_;
 }
-  
+
+// Returns the values of the properties listed in property_names. When
+// the boolean flag is true, the Properties parameter contains valid
+// values for all requested property names. If false, then all
+// properties with a value of type tk_void may have failed due to
+// PropertyNotFound or InvalidPropertyName.
+// A separate invocation of get_property for each such property name
+// is necessary to determine the specific exception or to verify that
+// tk_void is the correct any TypeCode for that property name. This
+// approach was taken to avoid a complex, hard to program structure to
+// carry mixed results. 
 CORBA::Boolean
 TAO_PropertySet::get_properties (const CosPropertyService::PropertyNames &property_names,
                                  CosPropertyService::Properties_out nproperties,
                                  CORBA::Environment &env)
 {
-  CORBA::Boolean return_val = CORBA::B_FALSE;
-
-  return return_val;
+  return CORBA::B_FALSE;
+  
 }
- 
+
+// Returns all of the property names currently defined in the
+// PropertySet. If the PropertySet contains more than how_many
+// property names, then the remaining property names are put into the PropertyNamesIterator.
 void 
 TAO_PropertySet::get_all_properties (CORBA::ULong how_many,
                                      CosPropertyService::Properties_out nproperties, 
                                      CosPropertyService::PropertiesIterator_out rest,
                                      CORBA::Environment &env)
 {
+  
 }
 
 // Deletes the specified property if it exists from a PropertySet.
-
 void 
 TAO_PropertySet::delete_property (const char *property_name,
                                   CORBA::Environment &env)
 {
-  EXT_ID ext_id ((CosPropertyService::PropertyName) property_name);
+  CosProperty_Hash_Key CosProperty_Hash_Key ((CosPropertyService::PropertyName) property_name);
   
-  ACE_DEBUG ((LM_DEBUG, "delete_property : property_name %s, ext_id.pname_.in() %s \n", property_name,
-              ext_id.pname_.in()));
+  ACE_DEBUG ((LM_DEBUG, "delete_property : property_name %s, CosProperty_Hash_Key.pname_.in() %s \n", property_name,
+              CosProperty_Hash_Key.pname_.in()));
   
-  // alex: Doing unbinding.. Not getting INT_ID back... Problem if dynamic allocation is done
-  if (this->hash_table_.unbind (ext_id) != 0)
+  // alex: Doing unbinding.. Not getting CosProperty_Hash_Value back... Problem if dynamic allocation is done
+  if (this->hash_table_.unbind (CosProperty_Hash_Key) != 0)
     ACE_ERROR ((LM_ERROR,
                 "Unbind failed \n"));
 }
-  
+
+// Deletes the properties defined in the property_names
+// parameter. This  is a batch operation that returns the
+// MultipleExceptions  exception if any delete failed. 
 void 
 TAO_PropertySet::delete_properties (const CosPropertyService::PropertyNames &property_names,
                                     CORBA::Environment &env)
 {
+  for (size_t pi = 0; pi < property_names.length (); pi++)
+    delete_property (property_names[pi], env);
 }
 
+// Delete all the properties in the current ProperySet : Do it one by
+// one. close () and then open ()
 CORBA::Boolean
 TAO_PropertySet::delete_all_properties (CORBA::Environment &env)
 {
-  CORBA::Boolean return_val = CORBA::B_FALSE;
-
-  return return_val;
+  if (hash_table_.close () != 0) 
+    {
+      ACE_DEBUG ((LM_DEBUG, "delete_all_properties:Error Closing the Hash_Map_Manager"));
+      return CORBA::B_FALSE;
+    }
+  if (hash_table_.open () != 0) 
+    {
+      ACE_DEBUG ((LM_DEBUG, "Could not open Hash_Map_Manager"));
+      return CORBA::B_TRUE;
+    }
+  return CORBA::B_TRUE;
 }  
 
 // Returns TRUE if the property is defined in the PropertySet.
-
 CORBA::Boolean
 TAO_PropertySet::is_property_defined (const char *property_name,  CORBA::Environment &env)
 {
-  EXT_ID ext_id ((CosPropertyService::PropertyName) property_name);
- 
-  if (this->hash_table_.find (ext_id) == 0)
-    return CORBA::B_TRUE;
+  CosProperty_Hash_Key CosProperty_Hash_Key ((CosPropertyService::PropertyName) property_name);
+  
+  if (this->hash_table_.find (CosProperty_Hash_Key) == 0) 
+    {
+      ACE_DEBUG ((LM_DEBUG, "is_property_defined :find successfull \n"));
+      return CORBA::B_TRUE;
+    }
   else
-    return CORBA::B_FALSE;
+    {
+      ACE_DEBUG ((LM_DEBUG, "is_property_defined :find failed \n"));
+      return CORBA::B_FALSE;
+    }
 }  
 
 TAO_PropertySetDef::TAO_PropertySetDef (void)
