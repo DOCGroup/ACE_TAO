@@ -1,0 +1,18 @@
+project: server {
+  idlflags += -Gv
+
+  Source_Files {
+    AnyS_impl.cpp
+    server.cpp
+  }
+}
+
+project: client {
+  idlflags += -Gv
+
+  Source_Files {
+    AnyC.cpp
+    client.cpp
+  }
+}
+
