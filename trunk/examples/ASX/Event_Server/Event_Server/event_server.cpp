@@ -136,6 +136,8 @@ main (int argc, char *argv[])
   ACE_Service_Config::thr_mgr ()->wait ();
   ACE_DEBUG ((LM_DEBUG, "exiting main\n"));
 #else
+  ACE_UNUSED_ARG (argc);
+  ACE_UNUSED_ARG (argv);
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
 #endif /* ACE_HAS_THREADS */
   return 0;

@@ -1,3 +1,15 @@
+Mon Apr 28 17:26:15 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/OS.cpp: Implemented ACE_OS::pread() and ACE_OS::pwrite() for
+ 	  systems that lack this feature.  The implementation uses the new
+ 	  ACE_Thread_Mutex monitor lock in order to ensure atomicity
+ 	  between the lseek() and the read()/write().
+
+	* ace/OS.cpp: Finally broke down and added a ACE_Thread_Mutex
+ 	  monitor lock to the ACE_OS implementation file.  This is useful
+ 	  for situations where we need to serialize certain ACE_OS
+ 	  emulation calls (e.g., ACE_OS::{pwrite,pread}).
+
 Mon Apr 28 15:42:48 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* apps/JAWS/client/blobby.cpp: updated template specializations.
