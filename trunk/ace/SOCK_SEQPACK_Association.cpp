@@ -57,7 +57,7 @@ ACE_SOCK_SEQPACK_Association::get_local_addrs (ACE_INET_Addr *addrs, size_t &siz
   // which causes dynamically-allocated memory to be released as soon
   // as the ACE_Auto_Array_Ptr goes out of scope.
   ACE_Auto_Array_Ptr<sockaddr_in> addr_structs;
-  
+
   // Allocate memory for this array.  Return -1 if the memory cannot
   // be allocated.  (This activity requires a temporary variable---a
   // bare sockaddr_in* --- because ACE_NEW_RETURN cannot act directory on
@@ -126,7 +126,7 @@ ACE_SOCK_SEQPACK_Association::get_remote_addrs (ACE_INET_Addr *addrs, size_t &si
   // which causes dynamically-allocated memory to be released as soon
   // as the ACE_Auto_Array_Ptr goes out of scope.
   ACE_Auto_Array_Ptr<sockaddr_in> addr_structs;
-  
+
   // Allocate memory for this array.  Return -1 if the memory cannot
   // be allocated.  (This activity requires a temporary variable---a
   // bare sockaddr_in* --- because ACE_NEW_RETURN cannot act directory on

@@ -299,12 +299,12 @@ ACE_SOCK_SEQPACK_Acceptor::shared_open (const ACE_Multihomed_INET_Addr &local_sa
           if (ACE::bind_port (this->get_handle ()) == -1)
             error = 1;
         }
-      else 
+      else
         {
           // The total number of addresses is the number of secondary
           // addresses plus one.
           size_t num_addresses = local_sap.get_num_secondary_addresses() + 1;
-          
+
           // Create an array of sockaddr_in to hold the underlying
           // representations of the primary and secondary
           // addresses.
@@ -314,7 +314,7 @@ ACE_SOCK_SEQPACK_Acceptor::shared_open (const ACE_Multihomed_INET_Addr &local_sa
 
           if (!local_inet_addrs)
             error = 1;
-          else 
+          else
             {
               // Populate the array by invoking the get_addresses method
               // on the Multihomed_INET_Addr
@@ -336,7 +336,7 @@ ACE_SOCK_SEQPACK_Acceptor::shared_open (const ACE_Multihomed_INET_Addr &local_sa
                          (sockaddr *) local_sap.get_addr (),
                          local_sap.get_size ()) == -1)
     error = 1;
-  
+
   if (error != 0
       || ACE_OS::listen (this->get_handle (),
                          backlog) == -1)
