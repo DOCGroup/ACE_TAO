@@ -1,3 +1,15 @@
+Mon Jul  8 16:27:22 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/TAO_IDL_FE_DLL.dsp:
+        * TAO_IDL/TAO_IDL_FE_LIB.dsp:
+
+          A header file in FileView was from the wrong directory.
+          Just removed it and added it again.
+
+        * TAO_IDL/be/be_visitor_array/any_op_cs.cpp
+
+          Fixed indentation in code generation.
+
 Mon Jul  8 16:29:16 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* tao/Utils/Makefile:
