@@ -1,3 +1,10 @@
+Thu May 30 02:27:29 2002  Steve Huston  <shuston@riverace.com>
+
+        * examples/C++NPv2/AC_Client_Logging_Daemon.cpp:
+        * examples/C++NPv2/AC_CLD_export.h:
+        * examples/C++NPv2/AC_CLD.mak:
+        * examples/C++NPv2/Makefile: Added remaining Chapter 7 example.
+
 Thu May 30 08:04:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl
 
         * ace/Asynch_IO.h:
