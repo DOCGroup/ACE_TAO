@@ -1,3 +1,11 @@
+Sat Jul 14 00:33:28 2001  Paul Calabrese <calabrese_p@ociweb.com>
+
+        * examples/PluggableUDP/tests/SimplePerformance/svc.conf:
+
+          Switch this configuration file to use the
+          Advanced_Resource_Factory.  This way the options
+          actually do something.
+
 Fri Jul 13 16:07:04 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp: Make sure
