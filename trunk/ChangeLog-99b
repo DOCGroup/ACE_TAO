@@ -1,3 +1,13 @@
+Sun Aug  1 10:03:56 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.h: Moved the definition of ACE_IPPROTO_TCP down 
+	  further in this file so that the IPPROTO_TCP macro would be
+ 	  defined.
+
+	* ace/Based_Pointer_T.cpp: Removed an inappropriate use of 
+	  ACE_INLINE in the *.cpp file.  Thanks to DEC UNIX C++ for
+ 	  reporting this!
+
 Sun Aug 01 02:41:44 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/Shared_Malloc/Shared_Malloc.dsw

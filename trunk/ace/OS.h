@@ -26,12 +26,6 @@
 #   pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
-# if defined (ACE_HAS_PHARLAP_RT)
-#define ACE_IPPROTO_TCP SOL_SOCKET
-# else
-#define ACE_IPPROTO_TCP IPPROTO_TCP
-# endif /* ACE_HAS_PHARLAP_RT */
-
 #if !defined (ACE_MALLOC_ALIGN)
 #define ACE_MALLOC_ALIGN ((int) sizeof (long))
 #endif /* ACE_MALLOC_ALIGN */
@@ -4541,7 +4535,7 @@ typedef void (*ACE_CLEANUP_FUNC)(void *object, void *param) /* throw () */;
 }
 # endif /* ACE_HAS_SIG_C_FUNC */
 
-// For use by ACE_OS::exit ().
+// For use by <ACE_OS::exit>.
 extern "C"
 {
   typedef void (*ACE_EXIT_HOOK) ();
@@ -4830,6 +4824,12 @@ private:
   // Automatically add/remove the thread from the
   // <ACE_Thread_Manager>.
 };
+
+# if defined (ACE_HAS_PHARLAP_RT)
+#define ACE_IPPROTO_TCP SOL_SOCKET
+# else
+#define ACE_IPPROTO_TCP IPPROTO_TCP
+# endif /* ACE_HAS_PHARLAP_RT */
 
 # if defined (ACE_LACKS_FLOATING_POINT)
 typedef ACE_UINT32 ACE_timer_t;
