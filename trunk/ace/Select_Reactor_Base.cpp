@@ -930,18 +930,13 @@ ACE_Select_Reactor_Notify::handle_input (ACE_HANDLE handle)
   int result = 0;
   ACE_Notification_Buffer buffer;
 
-  while (this->read_notify_pipe (handle,
-                                 buffer) > 0)
+  while ((result = this->read_notify_pipe (handle,
+                                           buffer)) > 0)
     {
       // Dispatch the buffer
+      // NOTE: We count only if we made any dispatches ie. upcalls.
       if (this->dispatch_notify (buffer) > 0)
         number_dispatched++;
-      else
-        {
-          // If there are any errors in dispatching...
-          result = -1;
-          break;
-        }
 
       // Bail out if we've reached the <notify_threshold_>.  Note that
       // by default <notify_threshold_> is -1, so we'll loop until all

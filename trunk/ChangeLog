@@ -1,3 +1,13 @@
+Tue Sep  4 18:48:00 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Select_Reactor_Base.cpp: Changed the value returned from
+	  ACE_Select_Reactor_Notify_Handler::handle_input (). This now
+	  returns a 0 if we did not dispatch any handles or the number of
+	  handles dispatched. We were returning a -1 if we did not
+	  dispatch any handles, after reading the notification from the
+	  pipe. This should fix the Reactor_Notify_Test in the Implicit
+	  templates build.
+
 Tue Sep  4 12:46:50 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/ACE.cpp: Reverted this change "Tue Sep  4 07:37:17 2001
