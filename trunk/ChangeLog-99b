@@ -1,3 +1,9 @@
+Tue Apr  6 21:09:32 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/ATM_Addr: Added the ATM_Addr.* files into the CVS
+ 	  respository.  However, we're not going to enable this in the
+ 	  Makefile or project files until they are tested.
+
 Tue Apr  6 20:48:16 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* ace/Basic_Types.h:
