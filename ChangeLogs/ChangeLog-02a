@@ -1,3 +1,7 @@
+Sun Jan  9 00:25:58 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Pair_T.h: Reformatted to conform to the ACE style.
+
 Sat Jan  8 09:44:51 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/Threads/thread_pool.cpp: Revised the example to
