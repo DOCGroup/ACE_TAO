@@ -116,6 +116,10 @@ public:
   // Close down and release all resources.
 
   // = Event loop drivers.
+  virtual int work_pending (const ACE_Time_Value &max_wait_time =  ACE_Time_Value::zero)  = 0;
+  // Returns non-zero if there are I/O events "ready" for dispatching,
+  // but does not actually dispatch the event handlers.  By default,
+  // don't block while checking this, i.e., "poll".
 
   virtual int handle_events (ACE_Time_Value *max_wait_time = 0) = 0;
   virtual int alertable_handle_events (ACE_Time_Value *max_wait_time = 0) = 0;

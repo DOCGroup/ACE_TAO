@@ -135,6 +135,11 @@ public:
 
   // = Event loop drivers.
 
+  virtual int work_pending (const ACE_Time_Value &max_wait_time =  ACE_Time_Value::zero);
+  // Returns non-zero if there are I/O events "ready" for dispatching,
+  // but does not actually dispatch the event handlers.  By default,
+  // don't block while checking this, i.e., "poll".
+
   virtual int handle_events (ACE_Time_Value *max_wait_time = 0);
   virtual int alertable_handle_events (ACE_Time_Value *max_wait_time = 0);
   // This event loop driver blocks for up to <max_wait_time> before
