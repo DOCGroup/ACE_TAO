@@ -185,7 +185,10 @@ ACE_TP_Reactor::remove_handler (ACE_Event_Handler *eh,
     ACE_TP_Token_Guard guard (this->token_);
 
     // Acquire the token
-    guard.acquire_token ();
+    int result = guard.acquire_token ();
+
+    if (!guard.is_owner ())
+      return result;
 
     // Call the remove_handler_i () with a DONT_CALL mask. We dont
     // want to call the handle_close with the token held.
@@ -214,7 +217,10 @@ ACE_TP_Reactor::remove_handler (ACE_HANDLE handle,
     ACE_TP_Token_Guard guard (this->token_);
 
     // Acquire the token
-    guard.acquire_token ();
+    int result = guard.acquire_token ();
+
+    if (!guard.is_owner ())
+      return result;
 
     size_t slot = 0;
     eh =  this->handler_rep_.find (handle, &slot);
@@ -257,7 +263,10 @@ ACE_TP_Reactor::remove_handler (const ACE_Handle_Set &handles,
     ACE_TP_Token_Guard guard (this->token_);
 
     // Acquire the token
-    guard.acquire_token ();
+    int result = guard.acquire_token ();
+
+    if (!guard.is_owner ())
+      return result;
 
     ACE_HANDLE h;
 
