@@ -71,9 +71,18 @@ main (int argc, char *argv[])
 
       Visual_i server_impl (orb.in ());
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (&server_impl,
+                                   ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      CORBA::Object_var test_obj =
+        root_poa->id_to_reference (id.in (),
+                                    ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
 
       Test_Interceptors::Visual_var server =
-        server_impl._this (ACE_TRY_ENV);
+        Test_Interceptors::Visual::_narrow (test_obj, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       CORBA::String_var ior =
