@@ -444,11 +444,13 @@ TAO_Marshal_Struct::encode (CORBA::TypeCode_ptr tc,
                         case CORBA::tk_array:
                         case CORBA::tk_alias:
                         case CORBA::tk_except:
+                          retval = stream->encode (param, data, 0, env);
+                          break;
                         case CORBA::tk_string:
                         case CORBA::tk_wstring:
                         case CORBA::tk_TypeCode:
                         case CORBA::tk_objref:
-                          retval = stream->encode (param, data, 0, env);
+                          retval = stream->encode (param, &data, 0, env);
                           break;
                         default:
                           break;
