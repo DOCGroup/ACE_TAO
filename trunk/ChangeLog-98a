@@ -1,3 +1,9 @@
+Wed Dec 24 14:27:33 1997    <nw1@JIG>
+
+	* ace/Synch.{h,i,cpp} (ACE_Recursive_Thread_Mutex): Changed
+	  ACE_Recursive_Thread_Mutex to inherit from ACE_Thread_Mutex on
+ 	  Win32 because ACE_Thread_Mutex is already recusive on Win32.
+
 Wed Dec 24 08:14:32 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Log_Msg.cpp (instance): without threads, dynamically create
