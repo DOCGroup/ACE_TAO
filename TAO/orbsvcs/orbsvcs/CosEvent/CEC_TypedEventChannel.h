@@ -288,8 +288,10 @@ private:
   /// The SupplierAdmin implementation
   TAO_CEC_TypedSupplierAdmin *typed_supplier_admin_;
 
-  /// Consumer/Supplier reconnection flags
+  /// Consumer reconnection flags
   int consumer_reconnect_;
+
+  /// Supplier reconnection flags
   int supplier_reconnect_;
 
   /// If not zero we send callbacks when a proxy is disconnected
