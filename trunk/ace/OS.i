@@ -760,10 +760,6 @@ ACE_INLINE int
 ACE_OS::fstat (ACE_HANDLE handle, struct stat *stp)
 {
   // ACE_TRACE ("ACE_OS::fstat");
-ACE_INLINE int
-ACE_OS::fstat (ACE_HANDLE handle, struct stat *stp)
-{
-  // ACE_TRACE ("ACE_OS::fstat");
   int fd = ::_open_osfhandle ((long) handle, 0);
   ACE_OSCALL_RETURN (::_fstat (fd, (struct _stat *) stp), int, -1);
 }
