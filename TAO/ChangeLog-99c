@@ -1,3 +1,12 @@
+Wed Oct 13 16:34:11 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Reply_Dispatcher.cpp:
+	* tao/Request.cpp:
+	  Replace use of AMI reply error codes with GIOP reply
+	  error codes in deferred synchronous requests. Otherwise,
+	  if TAO_HAS_CORBA_MESSAGING is not defined, deferred
+	  synch can't be used.
+
 Wed Oct 13 15:48:40 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Policy_Manager: The policy manager now holds on directly to
