@@ -248,22 +248,27 @@ TAO_GIOP_Message_State::read_ulong (char *rd_ptr)
 {
   CORBA::ULong x = 0;
 
-  size_t msg_size = 4;
+  // @@todo: This is so funny.. I am not sure why and with what in
+  // mind I had aligned this to 4 byte boundary when I was reading
+  // from the stream. Maybe when I was a kid:-). This definitely
+  // creates problems. Maybe we should revisit this if there is a
+  // pellmell.
+  // size_t msg_size = 4;
 
-  char *buf = ACE_ptr_align_binary (rd_ptr,
-                                    msg_size);
+  // char *buf = ACE_ptr_align_binary (rd_ptr,
+  //                                msg_size);
 
 #if !defined (ACE_DISABLE_SWAP_ON_READ)
   if (!(this->byte_order_ != ACE_CDR_BYTE_ORDER))
     {
-      x = *ACE_reinterpret_cast (ACE_CDR::ULong*, buf);
+      x = *ACE_reinterpret_cast (ACE_CDR::ULong*, rd_ptr);
     }
   else
     {
-      ACE_CDR::swap_4 (buf, ACE_reinterpret_cast (char*, &x));
+      ACE_CDR::swap_4 (rd_ptr, ACE_reinterpret_cast (char*, &x));
     }
 #else
-  x = *ACE_reinterpret_cast(ACE_CDR::ULong*, buf);
+  x = *ACE_reinterpret_cast(ACE_CDR::ULong*, rd_ptr);
 #endif /* ACE_DISABLE_SWAP_ON_READ */
 
   return x;
