@@ -1,3 +1,9 @@
+Thu Dec  5 20:45:49 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event_Utilities.cpp (event_debug): Print out the 
+	  debugging info in hex as well as decimal.  Thanks to Oliver Kellog
+	  <oliver.kellogg@sysde.eads.net> for reporting this.
+
 Sat Dec  7 09:44:33 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/CosTime.dsp:

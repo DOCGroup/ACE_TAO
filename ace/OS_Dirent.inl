@@ -99,7 +99,10 @@ ACE_OS_Dirent::readdir_r (ACE_DIR *dirp,
   ACE_UNUSED_ARG (entry);
   // <result> has better not be 0!
   *result = ACE_OS_Dirent::readdir (dirp);
-  return 0;
+  if (*result)
+    return 0; // Keep iterating
+  else
+    return 1; // Oops, some type of error!
 #elif defined (ACE_HAS_DIRENT)  &&  !defined (ACE_LACKS_READDIR_R)
 #  if (defined (sun) && (defined (_POSIX_PTHREAD_SEMANTICS) || \
                         (_FILE_OFFSET_BITS == 64))) || \
