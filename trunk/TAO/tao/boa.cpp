@@ -38,14 +38,14 @@ DEFINE_GUID (IID_BOA,
 // A "Named BOA" is used in bootstrapping some part of the ORB since
 // it's name-to-address binding is managed by the OS.  Examples of
 // such bindings are /etc/services (for TCP) and /etc/rpc (for ONC
-// RPC) .  The nam" of a BOA is only guaranteed to be unique within
+// RPC) .  The name of a BOA is only guaranteed to be unique within
 // the domain of a single system, as a rule; two hosts would have
 // distinct "king" BOAs.
 //
 // For network endpoints, most such names are manually administered.
 // Some other namespaces (AF_UNIX filesystem names for example) have a
 // more formal underlying name service that can be dynamically updated
-// while not compromising sysem security.
+// while not compromising system security.
 //
 // The address family used by the BOA is found from the ORB passed in.
 //

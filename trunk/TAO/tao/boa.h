@@ -44,8 +44,8 @@ class CORBA_BOA : public IUnknown
   //    The <{TAO}> Basic Object Adapter.
 public:
   virtual CORBA::Object_ptr create (CORBA::OctetSeq& obj_id,
-				   CORBA::String type_id,
-				   CORBA::Environment& env) = 0;
+                                    CORBA::String type_id,
+                                    CORBA::Environment& env) = 0;
   // Create a reference to an object, using identifying information
   // that is fully exposed to applications. (An ORB may use additional
   // data internally, of course.)

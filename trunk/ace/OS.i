@@ -4294,10 +4294,15 @@ ACE_OS::thr_getspecific (ACE_thread_key_t key, void **data)
 #   endif	/*  ACE_HAS_FSU_PTHREADS */
       return 0;
 # elif defined (ACE_HAS_WTHREADS)
+    int error = errno;
     *data = ::TlsGetValue (key);
     if (*data == 0 && (errno = ::GetLastError ()) != NO_ERROR)
-        return -1;
-    return 0;
+      return -1;
+    else
+      {
+        errno = error;
+        return 0;
+      }
 # endif /* ACE_HAS_STHREADS */
 #else
   ACE_UNUSED_ARG (key);

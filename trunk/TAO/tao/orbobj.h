@@ -36,8 +36,8 @@ class ACE_Svc_Export CORBA_ORB : public IUnknown
   // ORB pseudo-objref
 public:
   CORBA::BOA_ptr BOA_init (int &argc, 
-			  char **argv, 
-			  const char *boa_identifier = 0);
+                           char **argv, 
+                           const char *boa_identifier = 0);
   static CORBA::ORB_ptr _duplicate (CORBA::ORB_ptr orb);
   static CORBA::ORB_ptr _nil (void);
 

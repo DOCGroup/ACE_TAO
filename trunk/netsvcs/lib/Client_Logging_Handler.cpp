@@ -269,7 +269,7 @@ private:
 int
 ACE_Client_Logging_Acceptor::fini (void)
 {
-  this->acceptor ().close ();
+  this->close ();
 
   if (this->handler_ != 0)
     this->handler_->close (0);
