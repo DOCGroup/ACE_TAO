@@ -236,8 +236,8 @@ ACE_Handle_Set::set_max (ACE_HANDLE current_max)
            maskp[i] == 0;
            i--)
         continue;
-
-#if defined (ACE_PSOS)
+#if defined (ACE_PSOS) || defined (ACE_TANDEM_NSK_BIT_ORDER)
+      // bits are in reverse order, MSB (sign bit) = bit 0.
       this->max_handle_ = ACE_MULT_BY_WORDSIZE (i);
       for (fd_mask val = maskp[i];
            (val & ACE_MSB_MASK) != 0;
@@ -322,7 +322,8 @@ ACE_Handle_Set_Iterator::operator () (void)
       // Increment the iterator and advance to the next bit in this
       // word.
       this->handle_index_++;
-#  if defined (ACE_PSOS)
+#if defined (ACE_PSOS) || defined (ACE_TANDEM_NSK_BIT_ORDER)
+      // bits are in reverse order, MSB (sign bit) = bit 0.
       this->word_val_ = (this->word_val_ << 1);
 #  else
       this->word_val_ = (this->word_val_ >> 1) & ACE_MSB_MASK;
@@ -363,7 +364,8 @@ ACE_Handle_Set_Iterator::operator () (void)
       // represents (this information is used by subsequent calls to
       // <operator()>).
 
-#  if defined (ACE_PSOS) // bits are in reverse order, MSB (sign bit) = bit 0.
+#if defined (ACE_PSOS) || defined (ACE_TANDEM_NSK_BIT_ORDER)
+      // bits are in reverse order, MSB (sign bit) = bit 0.
       for (;
            this->word_val_ > 0;
            this->word_val_ = (this->word_val_ << 1))
@@ -482,7 +484,8 @@ ACE_Handle_Set_Iterator::ACE_Handle_Set_Iterator (const ACE_Handle_Set &hs)
     // Loop until we get <word_val_> to have its least significant bit
     // enabled, keeping track of which <handle_index> this represents
     // (this information is used by <operator()>).
-#  if defined (ACE_PSOS) // bits are in reverse order, MSB (sign bit) = bit 0.
+#if defined (ACE_PSOS) || defined (ACE_TANDEM_NSK_BIT_ORDER)
+    // bits are in reverse order, MSB (sign bit) = bit 0.
     for (this->word_val_ = maskp[this->word_num_];
          this->word_val_ > 0;
          this->word_val_ = (this->word_val_ << 1))
@@ -549,7 +552,8 @@ ACE_Handle_Set_Iterator::reset_state (void)
     // Loop until we get <word_val_> to have its least significant bit
     // enabled, keeping track of which <handle_index> this represents
     // (this information is used by <operator()>).
-#  if defined (ACE_PSOS) // bits are in reverse order, MSB (sign bit) = bit 0.
+#if defined (ACE_PSOS) || defined (ACE_TANDEM_NSK_BIT_ORDER)
+    // bits are in reverse order, MSB (sign bit) = bit 0.
     for (this->word_val_ = maskp[this->word_num_];
          this->word_val_ > 0;
          this->word_val_ = (this->word_val_ << 1))

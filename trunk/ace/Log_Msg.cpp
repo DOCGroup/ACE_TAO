@@ -1618,7 +1618,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   else
                     this_len = ACE_OS::sprintf (bp, format,
                                                 pthread_getunique_np (&t_id));
-#  elif defined (ACE_MVS)
+#  elif defined (ACE_MVS) || defined (ACE_TANDEM_T1248_PTHREADS)
                   // MVS's pthread_t is a struct... yuck. So use the ACE 5.0
                   // code for it.
                   ACE_OS::strcpy (fp, ACE_LIB_TEXT ("u"));
