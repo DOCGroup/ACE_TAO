@@ -23,7 +23,7 @@ Options::Options (void)
     port_ (ACE_DEFAULT_SERVER_PORT),
     sleep_time_ (0, 0), // By default, don't sleep between calls.
     threads_ (10),
-    quit_string_ ("q"),
+    quit_string_ (ACE_TEXT("q")),
     message_len_ (0),
     message_buf_ (0),
     io_source_ (ACE_INVALID_HANDLE), // Defaults to using the generator.
@@ -111,9 +111,9 @@ Options::read (void *buf, size_t len, size_t &iteration)
 }
 
 int
-Options::parse_args (int argc, char *argv[])
+Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt getopt (argc, argv, "2h:i:m:p:q:st:T:", 1);
+  ACE_Get_Opt getopt (argc, argv, ACE_TEXT("2h:i:m:p:q:st:T:"), 1);
 
   for (int c; (c = getopt ()) != -1; )
     switch (c)
@@ -160,13 +160,13 @@ Options::port (void) const
   return this->port_;
 }
 
-const char *
+const ACE_TCHAR *
 Options::host (void) const
 {
   return this->host_;
 }
 
-const char *
+const ACE_TCHAR *
 Options::quit_string (void) const
 {
   return this->quit_string_;
@@ -402,7 +402,7 @@ run_client (void)
 }
 
 int
-main (int argc, char *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
   // Initialize the logger.
   ACE_LOG_MSG->open (argv[0]);

@@ -16,7 +16,7 @@ struct Tester_Args
   //     These arguments are passed into each test thread.
 {
   Tester_Args (ACE_Barrier &tb, int i)
-    : tester_barrier_ (tb), 
+    : tester_barrier_ (tb),
       n_iterations_ (i) {}
 
   ACE_Barrier &tester_barrier_;
@@ -33,7 +33,7 @@ struct Tester_Args
 static void *
 tester (Tester_Args *args)
 {
-  for (int iterations = 1; 
+  for (int iterations = 1;
        iterations <= args->n_iterations_;
        iterations++)
     {
@@ -49,8 +49,8 @@ tester (Tester_Args *args)
 // Default number of threads to spawn.
 static const int DEFAULT_ITERATIONS = 5;
 
-int 
-main (int argc, char *argv[])
+int
+main (int argc, ACE_TCHAR *argv[])
 {
   ACE_Service_Config daemon (argv[0]);
 
@@ -58,11 +58,11 @@ main (int argc, char *argv[])
   int n_iterations = argc > 2 ? ACE_OS::atoi (argv[2]) : DEFAULT_ITERATIONS;
 
   ACE_Barrier tester_barrier (n_threads);
-  
+
   Tester_Args args (tester_barrier, n_iterations);
 
-  if (ACE_Thread_Manager::instance ()->spawn_n 
-      (int(n_threads), ACE_THR_FUNC (tester), 
+  if (ACE_Thread_Manager::instance ()->spawn_n
+      (int(n_threads), ACE_THR_FUNC (tester),
        (void *) &args, THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn_n"), 1);
 
@@ -73,8 +73,8 @@ main (int argc, char *argv[])
   return 0;
 }
 #else
-int 
-main (int, char *[])
+int
+main (int, ACE_TCHAR *[])
 {
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
   return 0;

@@ -21,9 +21,9 @@ handler (int)
 }
 
 int
-main (int argc, char *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
-  const char *name = argc > 1 ? argv[1] : "hello";
+  const ACE_TCHAR *name = argc > 1 ? argv[1] : ACE_TEXT("hello");
   int iterations =  argc > 2 ? ACE_OS::atoi (argv[2]) : 100;
 
   ACE_Process_Mutex pm (name);
@@ -64,7 +64,7 @@ main (int argc, char *argv[])
 }
 #else
 int
-main (int, char *[])
+main (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
                      "ACE doesn't support support threads on this platform (yet)\n"),

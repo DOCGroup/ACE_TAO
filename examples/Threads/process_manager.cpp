@@ -33,7 +33,7 @@
 
 ACE_RCSID(Threads, process_manager, "$Id$")
 
-class ExitHandler : public ACE_Event_Handler 
+class ExitHandler : public ACE_Event_Handler
 {
 public:
   ExitHandler (const char *name);
@@ -107,7 +107,7 @@ worker (size_t iterations)
   for (size_t i = 0;
        i <= iterations;
        i++)
-    if (i && (i % 100) == 0) 
+    if (i && (i % 100) == 0)
       {
         ACE_DEBUG ((LM_DEBUG,
                     "(%P|%t@%T) worker spinning furiously... (%u)\n",
@@ -125,11 +125,11 @@ static int exit_code = 0;
 
 // Parse the command-line arguments and set options.
 static void
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "i:e:cu");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("i:e:cu"));
 
-  int c; 
+  int c;
 
   while ((c = get_opt ()) != -1)
     switch (c)
@@ -156,7 +156,7 @@ parse_args (int argc, char *argv[])
 // process.
 
 static pid_t
-respawn_self (const char *myname,
+respawn_self (const ACE_TCHAR *myname,
               int iter,
               int exit_code)
 {
@@ -169,7 +169,7 @@ respawn_self (const char *myname,
 }
 
 int
-main (int argc, char *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
   ACE_Service_Config daemon;
 
@@ -188,7 +188,7 @@ main (int argc, char *argv[])
               "(%P|%t@%T) Process_Manager test.  Expect output from"
               "2 or 3 processes...\n"));
 
-  ACE_Process_Manager::instance ()->register_handler 
+  ACE_Process_Manager::instance ()->register_handler
     (new ExitHandler ("default"));
 
   pid_t pid1 = respawn_self (argv[0],
@@ -201,7 +201,7 @@ main (int argc, char *argv[])
 #if !defined (ACE_WIN32)
   pid_t pid3 = ACE_OS::fork ();
 
-  if (!pid3) 
+  if (!pid3)
     {
       worker (n_iterations);
       return 999;
@@ -228,7 +228,7 @@ main (int argc, char *argv[])
               "(%P|%t@%T) Test parent: %d processes left\n",
               result));
 
-  if (result > 0) 
+  if (result > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t@%T) Test parent waiting (synchronously, "
@@ -256,14 +256,14 @@ main (int argc, char *argv[])
 #if !defined (ACE_WIN32)
   pid3 = ACE_OS::fork ();
 
-  if (!pid3) 
+  if (!pid3)
     {
       worker (n_iterations);
       return 888;
     }
 #endif /* ACE_WIN32 */
 
-  ExitHandler *main_thread_work;
+  ExitHandler *main_thread_work = 0;
   ACE_NEW_RETURN (main_thread_work,
                   ExitHandler ("main thread worker"),
                   1);

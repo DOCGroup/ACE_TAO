@@ -9,7 +9,7 @@
 ACE_RCSID(tests, RMCast_Examples_Sender, "$Id$")
 
 int
-main (int argc, char *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
   if (argc != 3)
     {
@@ -19,7 +19,7 @@ main (int argc, char *argv[])
                         1);
     }
 
-  const char *filename = argv[1];
+  const ACE_TCHAR *filename = argv[1];
   if (ACE_OS::access (filename, R_OK) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,

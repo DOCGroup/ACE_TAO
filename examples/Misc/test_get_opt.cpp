@@ -8,9 +8,9 @@
 ACE_RCSID(Misc, test_get_opt, "$Id$")
 
 int
-main (int argc, char *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "ab:cd:ef:gh:");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("ab:cd:ef:gh:"));
   int c;
 
   while ((c = get_opt ()) != EOF)
@@ -46,7 +46,7 @@ main (int argc, char *argv[])
       }
 
   for (int i = get_opt.optind; i < argc; i++)
-    ACE_DEBUG ((LM_DEBUG, "optind = %d, argv[optind] = %s\n", 
+    ACE_DEBUG ((LM_DEBUG, "optind = %d, argv[optind] = %s\n",
 		i, argv[i]));
 
   return 0;

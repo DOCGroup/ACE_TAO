@@ -18,9 +18,9 @@ class Barrier_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
   Barrier_Task (ACE_Thread_Manager *thr_mgr,
-		int n_threads, 
+		int n_threads,
 		int n_iterations);
-  
+
   virtual int svc (void);
   // Iterate <n_iterations> time printing off a message and "waiting"
   // for all other threads to complete this iteration.
@@ -34,28 +34,28 @@ private:
   // Number of iterations to run.
 };
 
-Barrier_Task::Barrier_Task (ACE_Thread_Manager *thr_mgr, 
-			    int n_threads, 
+Barrier_Task::Barrier_Task (ACE_Thread_Manager *thr_mgr,
+			    int n_threads,
 			    int n_iterations)
-  : ACE_Task<ACE_MT_SYNCH> (thr_mgr), 
-    barrier_ (n_threads), 
-    n_iterations_ (n_iterations) 
+  : ACE_Task<ACE_MT_SYNCH> (thr_mgr),
+    barrier_ (n_threads),
+    n_iterations_ (n_iterations)
 {
   // Create worker threads.
   if (this->activate (THR_NEW_LWP, n_threads) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "activate failed"));
 }
-  
+
 // Iterate <n_iterations> time printing off a message and "waiting"
 // for all other threads to complete this iteration.
 
-int 
-Barrier_Task::svc (void) 
-{  
+int
+Barrier_Task::svc (void)
+{
   // Note that the ACE_Task::svc_run() method automatically adds us to
   // the Thread_Manager when the thread begins.
 
-  for (int iterations = 1; 
+  for (int iterations = 1;
        iterations <= this->n_iterations_;
        iterations++)
     {
@@ -74,14 +74,14 @@ Barrier_Task::svc (void)
 // Default number of threads to spawn.
 static const int DEFAULT_ITERATIONS = 5;
 
-int 
-main (int argc, char *argv[])
+int
+main (int argc, ACE_TCHAR *argv[])
 {
   int n_threads = argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_DEFAULT_THREADS;
   int n_iterations = argc > 2 ? ACE_OS::atoi (argv[2]) : DEFAULT_ITERATIONS;
 
-  Barrier_Task barrier_task (ACE_Thread_Manager::instance (), 
-			     n_threads, 
+  Barrier_Task barrier_task (ACE_Thread_Manager::instance (),
+			     n_threads,
 			     n_iterations);
 
   // Wait for all the threads to reach their exit point.
@@ -91,7 +91,7 @@ main (int argc, char *argv[])
   return 0;
 }
 #else
-int 
+int
 main (int, char *[])
 {
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));

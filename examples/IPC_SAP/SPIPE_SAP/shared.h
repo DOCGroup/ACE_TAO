@@ -7,4 +7,4 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-static const char *rendezvous = ACE_DEFAULT_RENDEZVOUS;
+static const ACE_TCHAR *rendezvous = ACE_DEFAULT_RENDEZVOUS;

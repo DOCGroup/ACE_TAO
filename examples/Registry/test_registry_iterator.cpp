@@ -26,7 +26,7 @@ static void print_context (ACE_Registry::Naming_Context &parent,
 static void indent (u_long indentation);
 
 int
-main (int argc, char *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
   int result;
   ACE_Registry::Naming_Context naming_context;
@@ -37,7 +37,7 @@ main (int argc, char *argv[])
                                                     // HKEY_CLASSES_ROOT,
                                                     // HKEY_USERS,
                                                     // HKEY_CURRENT_USER,
-                                                    argc == 2 ? ACE_TEXT_CHAR_TO_TCHAR (argv[1]) : 0);
+                                                    argc == 2 ? argv[1] : 0);
 
   if (result != 0)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Predefined_Naming_Contexts::connect failed"), -1);

@@ -47,9 +47,9 @@ print_usage_and_die (void)
 
 // Parse the command-line arguments and set options.
 static void
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "r:w:n:l:");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("r:w:n:l:"));
 
   int c;
 
@@ -154,7 +154,7 @@ writer (void *)
 
 // Spawn off threads.
 
-int main (int argc, char *argv[])
+int main (int argc, ACE_TCHAR *argv[])
 {
   ACE_LOG_MSG->open (argv[0]);
   parse_args (argc, argv);
@@ -189,7 +189,7 @@ template class ACE_Write_Guard<ACE_RW_Mutex>;
 
 #else
 int
-main (int, char *[])
+main (int, ACE_TCHAR *[])
 {
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
   return 0;

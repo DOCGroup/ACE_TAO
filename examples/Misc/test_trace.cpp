@@ -50,9 +50,9 @@ private:
 int
 My_Task::recursive (size_t depth)
 {
-  ACE_Trace _ ("int recursive (size_t depth)",
+  ACE_Trace _ (ACE_TEXT("int recursive (size_t depth)"),
                __LINE__,
-               __FILE__);
+               ACE_TEXT(__FILE__));
 
   if (depth > 0)
     return recursive (depth - 1);
@@ -70,18 +70,18 @@ exithook (void)
 }
 
 int
-main (int argc, char *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
-  const size_t MAX_DEPTH = argc == 1 ? 10 : atoi (argv[1]);
+  const size_t MAX_DEPTH = argc == 1 ? 10 : ACE_OS::atoi (argv[1]);
 
   ACE_OS::atexit (exithook);
 
   if (argc > 2)
     ACE_Trace::set_nesting_indent (ACE_OS::atoi (argv[2]));
 
-  ACE_Trace _ ("int main (int argc, char *argv[])",
+  ACE_Trace _ (ACE_TEXT("int main (int argc, ACE_TCHAR *argv[])"),
                __LINE__,
-               __FILE__);
+               ACE_TEXT(__FILE__));
 
   // The following won't work on MVS OpenEdition...
   ACE_Sig_Action sig1 ((ACE_SignalHandler) ACE_Trace::start_tracing,

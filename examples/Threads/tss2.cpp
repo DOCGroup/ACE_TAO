@@ -114,9 +114,9 @@ Test_Task::open (void *arg)
 }
 
 int
-main (int argc, char *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
-  num_tasks = argc > 1 ? atoi (argv[1]) : MAX_TASKS;
+  num_tasks = argc > 1 ? ACE_OS::atoi (argv[1]) : MAX_TASKS;
 
   Test_Task **task_arr;
 
@@ -192,7 +192,7 @@ template class ACE_TSS_Singleton<TSS_Data, ACE_SYNCH_MUTEX>;
 #else
 
 int
-main (int, char *[])
+main (int, ACE_TCHAR *[])
 {
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
   return 0;

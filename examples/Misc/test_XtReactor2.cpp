@@ -38,15 +38,15 @@ public:
   }
 };
 
-static void 
+static void
 ActivateCB (Widget w, XtPointer, XtPointer)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Button pushed!\n"));
 }
 
-int 
-main (int argc, char**argv)
+int
+main (int argc, ACE_TCHAR**argv)
 {
   // The worlds most useless user interface
   Widget top_level = XtVaAppInitialize (NULL,
@@ -80,13 +80,13 @@ main (int argc, char**argv)
                             ACE_Event_Handler::READ_MASK);
 
   // Print a message every 10 seconds
-  if (reactor.schedule_timer (stdin_, 0, 
-			      ACE_Time_Value (10), 
+  if (reactor.schedule_timer (stdin_, 0,
+			      ACE_Time_Value (10),
 			      ACE_Time_Value (10)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "schedule_timer"), -1);
-  
+
   // Show the top_level widget
   XtRealizeWidget (top_level);
 
@@ -94,8 +94,8 @@ main (int argc, char**argv)
   XtAppMainLoop (XtWidgetToApplicationContext (top_level));
 }
 #else
-int 
-main (int, char *[])
+int
+main (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
                      "XT not configured for this platform\n"),

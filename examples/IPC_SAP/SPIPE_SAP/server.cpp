@@ -14,7 +14,7 @@ ACE_RCSID(SPIPE_SAP, server, "$Id$")
 const int MAX_HANDLES = 200;
 
 int
-main (int argc, char *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
   ACE_SPIPE_Acceptor peer_acceptor;
   ACE_SPIPE_Stream new_stream;
@@ -112,7 +112,7 @@ main (int argc, char *argv[])
 }
 #else
 #include <stdio.h>
-int main (int, char *[])
+int main (int, ACE_TCHAR *[])
 {
   ACE_OS::fprintf (stderr, "This feature is not supported\n");
   return 0;

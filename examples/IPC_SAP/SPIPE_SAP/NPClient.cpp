@@ -15,11 +15,11 @@ ACE_RCSID(SPIPE_SAP, NPClient, "$Id$")
 const int DEFAULT_SIZE = 8;
 const int DEFAULT_COUNT = 10000;
 
-int 
-main (int argc, char *argv[])
+int
+main (int argc, ACE_TCHAR *argv[])
 {
-  int  size = argc > 1 ? atoi (argv[1]) : DEFAULT_SIZE;
-  int  iterations = argc > 2 ? atoi (argv[2]) : DEFAULT_COUNT;
+  int  size = argc > 1 ? ACE_OS::atoi (argv[1]) : DEFAULT_SIZE;
+  int  iterations = argc > 2 ? ACE_OS::atoi (argv[2]) : DEFAULT_COUNT;
   char *buf;
 
   ACE_NEW_RETURN (buf,

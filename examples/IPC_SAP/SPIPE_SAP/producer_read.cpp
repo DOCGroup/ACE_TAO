@@ -13,13 +13,13 @@ ACE_RCSID(SPIPE_SAP, producer_read, "$Id$")
 const int DEFAULT_SIZE = 8 * 1024;
 const int DEFAULT_COUNT = 100;
 
-int 
-main (int argc, char *argv[])
+int
+main (int argc, ACE_TCHAR *argv[])
 {
-  int  size = argc > 1 ? atoi (argv[1]) : DEFAULT_SIZE;
-  int  iterations = argc > 2 ? atoi (argv[2]) : DEFAULT_COUNT;
+  int  size = argc > 1 ? ACE_OS::atoi (argv[1]) : DEFAULT_SIZE;
+  int  iterations = argc > 2 ? ACE_OS::atoi (argv[2]) : DEFAULT_COUNT;
   char *buf = new char[size];
-  
+
   if (argc > 3)
     rendezvous = argv[3];
 
@@ -44,7 +44,7 @@ main (int argc, char *argv[])
 }
 #else
 #include <stdio.h>
-int main (int, char *[])
+int main (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR, "this feature is not supported"), -1);
 }

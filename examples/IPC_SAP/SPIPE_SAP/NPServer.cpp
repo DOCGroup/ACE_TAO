@@ -13,7 +13,7 @@ ACE_RCSID(SPIPE_SAP, NPServer, "$Id$")
 #endif
 
 int
-main (int /* argc */, char * /* argv */ [])
+main (int /* argc */, ACE_TCHAR * /* argv */ [])
 {
   ACE_SPIPE_Acceptor acceptor;
   ACE_SPIPE_Stream new_stream;
@@ -34,7 +34,7 @@ main (int /* argc */, char * /* argv */ [])
     {
       ACE_DEBUG ((LM_DEBUG,
                   "waiting for connection\n"));
-      
+
       // Accept a client connection.
       if (acceptor.accept (new_stream, 0) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR,

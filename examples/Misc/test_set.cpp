@@ -2,8 +2,8 @@
 
 #include "ace/Containers.h"
 
-int 
-main (int, char *[])
+int
+main (int, ACE_TCHAR *[])
 {
   ACE_Unbounded_Set<int> s1;
 
