@@ -347,7 +347,7 @@ idl_parse_line_and_file(char *buf)
   for (; *r != '\0' && *r != ' ' && *r != '\t'; r++)
     continue;
   *r++ = 0;
-  idl_global->set_lineno(idl_atoi(h, 10));
+  idl_global->set_lineno(idl_atoui(h, 10));
 
   /* Find file name, if present */
   for (; *r != '"'; r++)
