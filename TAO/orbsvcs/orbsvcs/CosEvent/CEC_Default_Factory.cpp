@@ -721,11 +721,11 @@ ACE_FACTORY_DEFINE (TAO_ORBSVCS, TAO_CEC_Default_Factory)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-#if !defined(TAO_HAS_ORBSVCS_Event2)
+#if !defined(TAO_ORBSVCS_HAS_Event2)
 template class ACE_Node<ACE_Command_Base*>;
 template class ACE_Unbounded_Queue<ACE_Command_Base*>;
 template class ACE_Unbounded_Queue_Iterator<ACE_Command_Base*>;
-#endif /* ! TAO_HAS_ORBSVCS_Event2 */
+#endif /* ! TAO_ORBSVCS_HAS_Event2 */
 
 template class TAO_EC_Proxy_Collection<TAO_CEC_ProxyPushConsumer>;
 template class TAO_EC_List_Based_Proxy_Set<TAO_CEC_ProxyPushConsumer>;
