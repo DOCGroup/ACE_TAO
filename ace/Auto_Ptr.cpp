@@ -11,7 +11,7 @@
 #include "ace/Auto_Ptr.i"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_HAS_STANDARD_CPP_LIBRARY) 
+#if !defined (ACE_HAS_STANDARD_CPP_LIBRARY) 
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Auto_Basic_Ptr)
 
