@@ -62,11 +62,11 @@ int TAO::FT_FaultConsumer::init (
   ACE_ASSERT (!CORBA::is_nil (replication_manager));
 
   // Duplicate the object references passed in.
-  this->poa_ = 
+  this->poa_ =
     PortableServer::POA::_duplicate (poa);
-  this->fault_notifier_ = 
+  this->fault_notifier_ =
     FT::FaultNotifier::_duplicate (fault_notifier);
-  this->replication_manager_ = 
+  this->replication_manager_ =
     FT::ReplicationManager::_duplicate (replication_manager);
 
   //@@ Should this init() method activate the consumer in the POA, or
@@ -77,15 +77,15 @@ int TAO::FT_FaultConsumer::init (
   //@@ For now, let's try just activating it in the POA.
 
   // Activate this consumer in the POA.
-  PortableServer::ObjectId_var oid = 
+  PortableServer::ObjectId_var oid =
     this->poa_->activate_object (this ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
-  CORBA::Object_var obj = 
+  CORBA::Object_var obj =
     this->poa_->id_to_reference (oid.in() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Narrow it to CosNotifyComm::StructuredPushConsumer.
-  CosNotifyComm::StructuredPushConsumer_var consumer = 
+  CosNotifyComm::StructuredPushConsumer_var consumer =
     CosNotifyComm::StructuredPushConsumer::_nil ();
   consumer = CosNotifyComm::StructuredPushConsumer::_narrow (
     obj.in() ACE_ENV_ARG_PARAMETER);
@@ -117,12 +117,12 @@ int TAO::FT_FaultConsumer::fini (ACE_ENV_SINGLE_ARG_DECL)
   // should the application do that?
   //
   // Deactivate ourselves from the POA.
-  PortableServer::ObjectId_var oid = 
+  PortableServer::ObjectId_var oid =
     this->poa_->servant_to_id (this ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
   this->poa_->deactivate_object (oid.in() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
- 
+
   // Success.
   return 0;
 }
@@ -149,7 +149,7 @@ void TAO::FT_FaultConsumer::push_structured_event (
     ACE_static_cast (const char *, event.header.fixed_header.event_name)
     ));
 
-  const CosNotification::FilterableEventBody & filterable = 
+  const CosNotification::FilterableEventBody & filterable =
     event.filterable_data;
 
   size_t propertyCount = filterable.length ();
@@ -178,7 +178,7 @@ void TAO::FT_FaultConsumer::offer_change (
   )
   ACE_THROW_SPEC ((CORBA::SystemException, CosNotifyComm::InvalidEventType))
 {
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
     "TAO::FT_FaultConsumer::offer_change() call ignored.\n"
     ));
 }
@@ -189,7 +189,7 @@ void TAO::FT_FaultConsumer::disconnect_structured_push_consumer (
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   //TODO: For now, we are just ignoring the disconnect callback.
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
     "TAO::FT_FaultConsumer::disconnect_structured_push_consumer() call ignored.\n"
     ));
 }
