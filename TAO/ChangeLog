@@ -1,3 +1,10 @@
+Mon Feb 28 14:43:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Constants.h:
+          Added ifndef ACE_LACKS_DEPRECATED_MACROS around the deprecated
+          macros. This is used in a test build to check if these deprecated
+          macros aren't used anymore and prevent new usage
+
 Mon Feb 28 14:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/IDL_Test/main.cpp:
