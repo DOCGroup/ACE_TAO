@@ -1,7 +1,7 @@
 // INET_Addr.cpp
 // $Id$
 
-// Defines the Internet domain address family address format. 
+// Defines the Internet domain address family address format.
 
 #define ACE_BUILD_DLL
 #include "ace/INET_Addr.h"
@@ -20,8 +20,8 @@ ACE_INET_Addr::addr_to_string (char s[], size_t) const
   ACE_TRACE ("ACE_INET_Addr::addr_to_string");
   // This should check to make sure len is long enough...
   ACE_OS::sprintf (s, "%s:%d",
-		   this->get_host_addr (), 
-		   this->get_port_number ()); 
+		   this->get_host_addr (),
+		   this->get_port_number ());
   return 0;
 }
 
@@ -35,7 +35,7 @@ ACE_INET_Addr::dump (void) const
   char s[ACE_MAX_FULLY_QUALIFIED_NAME_LEN + 16];
   ACE_OS::sprintf (s, "%s:%d",
 		   this->get_host_addr (),
-		   this->get_port_number ()); 
+		   this->get_port_number ());
   ACE_DEBUG ((LM_DEBUG, "%s", s));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -57,8 +57,9 @@ ACE_INET_Addr::operator == (const ACE_Addr &sap) const
   ACE_TRACE ("ACE_INET_Addr::operator ==");
   const sockaddr_in &inet_sap = ((const ACE_INET_Addr &) sap).inet_addr_;
 
-  return this->inet_addr_.sin_port == inet_sap.sin_port
-    && ACE_OS::memcmp ((void *) &this->inet_addr_.sin_addr, 
+  return this->ACE_Addr::operator == (sap)
+    && this->inet_addr_.sin_port == inet_sap.sin_port
+    && ACE_OS::memcmp ((void *) &this->inet_addr_.sin_addr,
 		       (void *) &inet_sap.sin_addr,
 		       sizeof (this->inet_addr_.sin_addr)) == 0;
 }
@@ -67,8 +68,8 @@ ACE_INET_Addr::ACE_INET_Addr (void)
   : ACE_Addr (AF_INET, sizeof this->inet_addr_)
 {
   // ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
-  (void) ACE_OS::memset ((void *) &this->inet_addr_, 0, 
-			 sizeof this->inet_addr_);  
+  (void) ACE_OS::memset ((void *) &this->inet_addr_, 0,
+			 sizeof this->inet_addr_);
 }
 
 int
@@ -76,8 +77,8 @@ ACE_INET_Addr::set (const ACE_INET_Addr &sa)
 {
   ACE_TRACE ("ACE_INET_Addr::set");
   this->ACE_Addr::base_set (AF_INET, sizeof this->inet_addr_);
-  (void) ACE_OS::memcpy ((void *) &this->inet_addr_, 
-			 (void *) &sa.inet_addr_, 
+  (void) ACE_OS::memcpy ((void *) &this->inet_addr_,
+			 (void *) &sa.inet_addr_,
 			 sizeof this->inet_addr_);
   return 0;
 }
@@ -105,7 +106,7 @@ ACE_INET_Addr::string_to_addr (const char s[])
     {
       *ip_addr = '\0';
       u_short port = (u_short) ACE_OS::atoi (ip_addr + 1); // Skip over ':'
-      result = this->set (port, t); 
+      result = this->set (port, t);
     }
   ACE_OS::free (ACE_MALLOC_T (t));
   return result;
@@ -133,16 +134,16 @@ ACE_INET_Addr::ACE_INET_Addr (const ACE_INET_Addr &sa)
 }
 
 // Initializes a ACE_INET_Addr from a PORT_NUMBER and an Internet
-// address. 
+// address.
 
 int
-ACE_INET_Addr::set (u_short port_number, 
-		    ACE_UINT32 inet_address, 
-		    int encode) 
+ACE_INET_Addr::set (u_short port_number,
+		    ACE_UINT32 inet_address,
+		    int encode)
 {
   ACE_TRACE ("ACE_INET_Addr::set");
   this->ACE_Addr::base_set (AF_INET, sizeof this->inet_addr_);
-  (void) ACE_OS::memset ((void *) &this->inet_addr_, 
+  (void) ACE_OS::memset ((void *) &this->inet_addr_,
 			 0, sizeof this->inet_addr_);
   this->inet_addr_.sin_family = AF_INET;
 #if defined (ACE_HAS_SIN_LEN)
@@ -157,26 +158,26 @@ ACE_INET_Addr::set (u_short port_number,
   else
     this->inet_addr_.sin_port = port_number;
 
-  (void) ACE_OS::memcpy ((void *) &this->inet_addr_.sin_addr, 
+  (void) ACE_OS::memcpy ((void *) &this->inet_addr_.sin_addr,
 			 (void *) &inet_address,
 			 sizeof this->inet_addr_.sin_addr);
   return 0;
 }
 
 // Initializes a ACE_INET_Addr from a PORT_NUMBER and the remote
-// HOST_NAME. 
+// HOST_NAME.
 
 int
-ACE_INET_Addr::set (u_short port_number, 
-		    const char host_name[], 
+ACE_INET_Addr::set (u_short port_number,
+		    const char host_name[],
 		    int encode)
 {
   ACE_TRACE ("ACE_INET_Addr::set");
   ACE_UINT32 addr;
-  
+
   this->ACE_Addr::base_set (AF_INET, sizeof this->inet_addr_);
   (void) ACE_OS::memset ((void *) &this->inet_addr_, 0, sizeof
-			 this->inet_addr_); 
+			 this->inet_addr_);
 
   // Yow, someone gave us a NULL host_name!
   if (host_name == 0)
@@ -187,7 +188,7 @@ ACE_INET_Addr::set (u_short port_number,
   else if (ACE_OS::inet_aton (host_name, (struct in_addr *) &addr) == 1)
     return this->set (port_number, encode ? ntohl (addr) : addr, encode);
 
-  else 
+  else
     {
 #if defined (VXWORKS)
       hostent *hp = ACE_OS::gethostbyname (host_name);
@@ -199,7 +200,7 @@ ACE_INET_Addr::set (u_short port_number,
       hostent *hp = ACE_OS::gethostbyname_r (host_name, &hentry,
 					     buf, &error);
 #endif /* VXWORKS */
-  
+
       if (hp == 0)
 	{
 	  errno = EINVAL;
@@ -207,17 +208,17 @@ ACE_INET_Addr::set (u_short port_number,
 	}
       else
 	{
-	  (void) ACE_OS::memcpy ((void *) &addr, hp->h_addr, hp->h_length); 
+	  (void) ACE_OS::memcpy ((void *) &addr, hp->h_addr, hp->h_length);
 	  return this->set (port_number, encode ? ntohl (addr) : addr, encode);
 	}
     }
 }
- 
+
 // Initializes a ACE_INET_Addr from a <port_name> and the remote
-// <host_name>. 
+// <host_name>.
 
 int
-ACE_INET_Addr::set (const char port_name[], 
+ACE_INET_Addr::set (const char port_name[],
 		    const char host_name[])
 {
   ACE_TRACE ("ACE_INET_Addr::set");
@@ -230,7 +231,7 @@ ACE_INET_Addr::set (const char port_name[],
   servent sentry;
   ACE_SERVENT_DATA buf;
 
-  servent *sp = ACE_OS::getservbyname_r ((char *) port_name, 
+  servent *sp = ACE_OS::getservbyname_r ((char *) port_name,
 					 "tcp", &sentry, buf);
   if (sp == 0)
     return -1;
@@ -243,7 +244,7 @@ ACE_INET_Addr::set (const char port_name[],
 // address.
 
 int
-ACE_INET_Addr::set (const char port_name[], 
+ACE_INET_Addr::set (const char port_name[],
 		    ACE_UINT32 inet_address)
 {
   ACE_TRACE ("ACE_INET_Addr::set");
@@ -256,20 +257,20 @@ ACE_INET_Addr::set (const char port_name[],
   servent sentry;
   ACE_SERVENT_DATA buf;
 
-  servent *sp = ACE_OS::getservbyname_r ((char *) port_name, 
+  servent *sp = ACE_OS::getservbyname_r ((char *) port_name,
 					 "tcp", &sentry, buf);
   if (sp == 0)
-    return -1;  
+    return -1;
   else
     return this->set (sp->s_port, inet_address, 0);
 #endif /* VXWORKS */
 }
 
 // Creates a ACE_INET_Addr from a PORT_NUMBER and the remote
-// HOST_NAME. 
+// HOST_NAME.
 
 
-ACE_INET_Addr::ACE_INET_Addr (u_short port_number, 
+ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
 			      const char host_name[])
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
@@ -284,19 +285,19 @@ ACE_INET_Addr::set (const sockaddr_in *addr, int len)
 {
   ACE_TRACE ("ACE_INET_Addr::set");
   this->ACE_Addr::base_set (AF_INET, len);
-  ACE_OS::memcpy ((void *) &this->inet_addr_, 
+  ACE_OS::memcpy ((void *) &this->inet_addr_,
 		  (void *) addr, len);
   return 0;
 }
 
 // Set a pointer to the address.
-void 
+void
 ACE_INET_Addr::set_addr (void *addr, int len)
 {
   ACE_TRACE ("ACE_INET_Addr::set_addr");
 
   this->ACE_Addr::base_set (AF_INET, len);
-  ACE_OS::memcpy ((void *) &this->inet_addr_, 
+  ACE_OS::memcpy ((void *) &this->inet_addr_,
 		  (void *) addr, len);
 }
 
@@ -312,7 +313,7 @@ ACE_INET_Addr::ACE_INET_Addr (const sockaddr_in *addr, int len)
 // Creates a ACE_INET_Addr from a PORT_NUMBER and an Internet address.
 
 
-ACE_INET_Addr::ACE_INET_Addr (u_short port_number, 
+ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
 			      ACE_UINT32 inet_address)
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
@@ -323,7 +324,7 @@ ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
 // Creates a ACE_INET_Addr from a PORT_NAME and the remote
 // HOST_NAME.
 
-ACE_INET_Addr::ACE_INET_Addr (const char port_name[], 
+ACE_INET_Addr::ACE_INET_Addr (const char port_name[],
 			      const char host_name[])
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
@@ -334,7 +335,7 @@ ACE_INET_Addr::ACE_INET_Addr (const char port_name[],
 // Creates a ACE_INET_Addr from a PORT_NAME and an Internet address.
 
 
-ACE_INET_Addr::ACE_INET_Addr (const char* port_name, 
+ACE_INET_Addr::ACE_INET_Addr (const char* port_name,
 			      ACE_UINT32 inet_address)
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
@@ -349,17 +350,17 @@ ACE_INET_Addr::get_host_name (char hostname[], size_t len) const
 #if defined (VXWORKS)
   char name [MAXHOSTNAMELEN + 1];
   int error = ::hostGetByAddr ((int) this->inet_addr_.sin_addr.s_addr, name);
-  if (error == OK) 
+  if (error == OK)
     {
-      if (ACE_OS::strlen (name) >= len) 
+      if (ACE_OS::strlen (name) >= len)
         return -1;
-      else 
+      else
 	{
 	  ACE_OS::strcpy (hostname, name);
 	  return 0;
 	}
-    } 
-  else 
+    }
+  else
     {
       errno = error;
       return -1;
@@ -419,7 +420,7 @@ ACE_INET_Addr::get_host_name (void) const
 }
 
 void
-ACE_INET_Addr::set_port_number (u_short port_number, 
+ACE_INET_Addr::set_port_number (u_short port_number,
 				int encode)
 {
   ACE_TRACE ("ACE_INET_Addr::set_port_number");

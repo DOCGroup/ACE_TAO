@@ -13,17 +13,17 @@ ACE_INLINE
 ACE_FILE_Addr::ACE_FILE_Addr (void)
   : ACE_Addr (AF_FILE, sizeof this->filename_)
 {
-  (void) ACE_OS::memset ((void *) &this->filename_, 
+  (void) ACE_OS::memset ((void *) &this->filename_,
 			 0, sizeof this->filename_);
 }
 
-// Copy constructor. 
+// Copy constructor.
 
 ACE_INLINE
 ACE_FILE_Addr::ACE_FILE_Addr (const ACE_FILE_Addr &sa)
   : ACE_Addr (AF_FILE, ACE_OS::strlen (sa.filename_))
 {
-  (void) ACE_OS::memcpy ((void *) &this->filename_, 
+  (void) ACE_OS::memcpy ((void *) &this->filename_,
 			 (void *) &sa.filename_, sa.get_size ());
 }
 
@@ -31,13 +31,13 @@ ACE_INLINE ACE_FILE_Addr &
 ACE_FILE_Addr::operator= (const ACE_FILE_Addr &sa)
 {
   if (this != &sa)
-    (void) ACE_OS::memcpy ((void *) &this->filename_, 
-			   (void *) &sa.filename_, 
+    (void) ACE_OS::memcpy ((void *) &this->filename_,
+			   (void *) &sa.filename_,
 			   sa.get_size ());
   return *this;
 }
 
-ACE_INLINE void 
+ACE_INLINE void
 ACE_FILE_Addr::set (LPCTSTR filename)
 {
 
@@ -53,7 +53,7 @@ ACE_FILE_Addr::ACE_FILE_Addr (LPCTSTR filename)
   this->set (filename);
 }
 
-// Transform the current address into string format. 
+// Transform the current address into string format.
 
 #if defined (UNICODE)
 ACE_INLINE int
@@ -68,12 +68,12 @@ ACE_INLINE int
 ACE_FILE_Addr::addr_to_string (char *s, size_t len) const
 {
   ACE_OS::strncpy (s,
-		   ACE_MULTIBYTE_STRING (this->filename_), 
+		   ACE_MULTIBYTE_STRING (this->filename_),
 		   len);
   return 0;
 }
 
-// Return the address. 
+// Return the address.
 
 ACE_INLINE void *
 ACE_FILE_Addr::get_addr (void) const
@@ -86,8 +86,9 @@ ACE_FILE_Addr::get_addr (void) const
 ACE_INLINE int
 ACE_FILE_Addr::operator == (const ACE_Addr &sap) const
 {
-  return ACE_OS::strcmp (this->filename_,
-			 ((ACE_FILE_Addr &) sap).filename_) == 0;
+  return this->ACE_Addr::operator== (sap)
+    && ACE_OS::strcmp (this->filename_,
+                       ((ACE_FILE_Addr &) sap).filename_) == 0;
 }
 
 // Compare two addresses for inequality.
@@ -95,7 +96,7 @@ ACE_FILE_Addr::operator == (const ACE_Addr &sap) const
 ACE_INLINE int
 ACE_FILE_Addr::operator != (const ACE_Addr &sap) const
 {
-  return !((*this) == sap);	// This is lazy, of course... ;-) 
+  return !((*this) == sap);	// This is lazy, of course... ;-)
 }
 
 // Return the path name used for the rendezvous point.
@@ -105,4 +106,3 @@ ACE_FILE_Addr::get_path_name (void) const
 {
   return this->filename_;
 }
-

@@ -5,7 +5,7 @@
 
 #include "ace/SString.h"
 
-// Transform the current address into string format. 
+// Transform the current address into string format.
 
 #if defined (UNICODE)
 ACE_INLINE int
@@ -19,13 +19,13 @@ ACE_SPIPE_Addr::addr_to_string (wchar_t *s, size_t len) const
 ACE_INLINE int
 ACE_SPIPE_Addr::addr_to_string (char *s, size_t len) const
 {
-  ACE_OS::strncpy (s, 
-		   ACE_MULTIBYTE_STRING (this->SPIPE_addr_.rendezvous_), 
+  ACE_OS::strncpy (s,
+		   ACE_MULTIBYTE_STRING (this->SPIPE_addr_.rendezvous_),
 		   len);
   return 0;
 }
 
-// Return the address. 
+// Return the address.
 
 ACE_INLINE void *
 ACE_SPIPE_Addr::get_addr (void) const
@@ -33,16 +33,17 @@ ACE_SPIPE_Addr::get_addr (void) const
   return (void *) &this->SPIPE_addr_;
 }
 
-// Compare two addresses for equality. 
+// Compare two addresses for equality.
 
 ACE_INLINE int
 ACE_SPIPE_Addr::operator == (const ACE_Addr &sap) const
 {
-  return ACE_OS::strcmp (this->SPIPE_addr_.rendezvous_,
-			 ((ACE_SPIPE_Addr &) sap).SPIPE_addr_.rendezvous_) == 0;
+  return this->ACE_Addr::operator == (sap)
+    && ACE_OS::strcmp (this->SPIPE_addr_.rendezvous_,
+                       ((ACE_SPIPE_Addr &) sap).SPIPE_addr_.rendezvous_) == 0;
 }
 
-// Compare two addresses for inequality. 
+// Compare two addresses for inequality.
 
 ACE_INLINE int
 ACE_SPIPE_Addr::operator != (const ACE_Addr &sap) const
@@ -64,7 +65,7 @@ ACE_SPIPE_Addr::user_id (void) const
   return this->SPIPE_addr_.uid_;
 }
 
-ACE_INLINE void	         
+ACE_INLINE void
 ACE_SPIPE_Addr::user_id (uid_t uid)
 {
   this->SPIPE_addr_.uid_ = uid;
