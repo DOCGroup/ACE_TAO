@@ -1,3 +1,18 @@
+Thu Oct 21 17:10:17 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	* ace/OS.i (ioctl): Corrected the implementation of 
+	  ACE_OS::ioctl () call with ACE_SIO_GET_QOS io control
+	  code. Thanks to Vidya Narayanan <CVN065@lmpsil02.comm.mot.com>
+	  for reporting this.
+
+	* ACE_wrappers/examples/QOS/server.cpp:
+	* ACE_wrappers/examples/QOS/client.cpp:
+	* ACE_wrappers/examples/QOS/Sender_QOS_Event_Handler.cpp:
+	* ACE_wrappers/examples/QOS/Receiver_QOS_Event_Handler.cpp:
+	  Changed the QOS example to GET-QOS only on receipt of a QoS
+	  event. Also tested the changes made to the ioctl (GET_QOS) in
+	  OS.i. 
+
 Thu Oct 21 15:46:08 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/run_tests.lst: disabled Process_Manager_Test, for now,
