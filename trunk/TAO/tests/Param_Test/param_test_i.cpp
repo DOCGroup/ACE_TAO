@@ -777,6 +777,18 @@ Param_Test_i::test_big_union (const Param_Test::Big_Union& u1,
   return ret._retn ();
 }
 
+CORBA::Any*
+Param_Test_i::test_complex_any (const CORBA::Any &a1,
+                                CORBA::Any &a2,
+                                CORBA::Any_out a3,
+                                CORBA::Environment &ACE_TRY_ENV)
+{
+  CORBA::Any_var ret (new CORBA::Any (a1));
+  a2 = a1;
+  a3 = new CORBA::Any (a1);
+  return ret._retn ();
+}
+
 #if 0
 Param_Test::Multdim_Array_slice *
 Param_Test_i::test_multdim_array (const Param_Test::Multdim_Array a1,
