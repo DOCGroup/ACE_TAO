@@ -1,3 +1,7 @@
+Sat May 19 10:28:56 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* bin/make_pretty.pl: Ignore the mktemp () messages on Linux. 
+
 Fri May 18 20:58:59 2001  Ossama Othman  <ossama@uci.edu>
 
 	* bin/auto_run_tests.lst:
