@@ -41,7 +41,7 @@ main_SOURCES = \
   Dump_Restore.h
 
 main_LDADD = \
- $(top_builddir)/ace/libDump_Restore.la $(top_builddir)/ace/libACE.la
+  libDump_Restore.la $(top_builddir)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:

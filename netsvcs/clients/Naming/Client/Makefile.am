@@ -41,7 +41,7 @@ main_SOURCES = \
   Client_Test.h
 
 main_LDADD = \
- $(top_builddir)/ace/libClient_Test.la $(top_builddir)/ace/libACE.la
+ libClient_Test.la $(top_builddir)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:
