@@ -1,3 +1,70 @@
+Thu May  2 13:28:01 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Dev_Poll_Reactor.h:
+
+	  Updated some documentation.
+
+	* ace/Dev_Poll_Reactor.inl (upcall):
+
+	  New method containing common upcall operations for all types of
+	  IO events.
+
+	* ace/Dev_Poll_Reactor.cpp:
+
+	  Commented out "ready set" code since the upcall will simply loop
+	  until the event handler no longer desires callbacks.  This is
+	  okay since multiple threads may dispatch event handlers (similar
+	  to what the TP_Reactor does).
+
+	  (close):
+
+	  Cleaned up memory and resource leaks.
+
+	  (handle_events_i, work_pending_i):
+
+	  Moved "event polling" code to the new work_pending_i() method.
+	  handle_events_i() now calls that method to determine if any
+	  events must be dispatched.
+
+	  If the underlying ioctl() call was interrupted (e.g. via the
+	  INTR signal), i.e. returns -1 with errno set to EINTR, then
+	  automatically restart the event loop if so desired by the user.
+
+	  (work_pending):
+
+	  Implemented this method.  It simply grabs the reactor lock and
+	  calls the new work_pending_i() method.
+
+	  (dispatch_io_events):
+
+	  Call the remove_handler() method that acquires the lock instead
+	  of the one doesn't.  The lock must be reacquired since reactor
+	  state will potentially change during an upcall and since the
+	  lock was released prior to dispatching the upcall.  Fixes a race
+	  condition.
+
+	  Directly use pollfd pointers as the loop variables instead of an
+	  integer.  No need for the additional indirection.
+
+	  Since the underlying event demultiplexing mechansim (`/dev/poll'
+	  or '/dev/epoll') is stateful, and since only one result buffer
+	  is used, all pending events (i.e. those retrieved from a
+	  previous poll) must be dispatched before any additional event
+	  can be polled.  As such, the Dev_Poll_Reactor keeps track of the
+	  progress of events that have been dispatched.
+
+	  The semantics of the event loop in the presence of multiple
+	  threads is non-trivial.  The "start point" of the loop will be
+	  incremented each time an event handler is dispatched, which may
+	  be done across multiple threads.  Multiple threads may change
+	  the loop variables.  Care must be taken to only change those
+	  variables with the reactor lock held.
+
+	  (dispatch_timer_handlers):
+
+	  Release the reactor lock during the upcall.  Fixes a potential
+	  deadlock.
+
 Thu May  2 10:35:25 2002  Phil Mesnier  <mesnier_p@ociweb.com>
 
 	* ace/Log_Msg.cpp: ACE_Log_Msg::open() did not properly initialize a
