@@ -1,5 +1,15 @@
 Sat Jun 19 15:43:38 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
+	* Cubit/TAO/DII_Cubit/client.dsp:
+	* Cubit/TAO/IDL_Cubit/client.dsp:
+	* Cubit/TAO/IDL_Cubit/server.dsp:
+	* Cubit/TAO/IDL_Cubit/collocation_test.dsp:
+	* Cubit/TAO/MT_Cubit/client.dsp:
+	* Cubit/TAO/MT_Cubit/server.dsp:
+	* POA/Object_Creation_And_Registration/registration.dsp:
+	* Pluggable/client.dsp:
+	* Pluggable/server.dsp: Changed the tao_idl invocation options.
+	
 	* docs/compiler.html: Updated documentation.
 
 Sat Jun 19 14:54:38 1999  Jeff Parsons  <parsons@cs.wustl.edu>
