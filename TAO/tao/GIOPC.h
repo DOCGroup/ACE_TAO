@@ -40,7 +40,7 @@
 
 #include "tao/IOP_IORC.h"
 #include "tao/VarOut_T.h"
-#include "tao/Any_T.h"
+#include "Any_Dual_Impl_T.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO

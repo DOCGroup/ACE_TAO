@@ -21,6 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/IORInterceptor/IORInterceptorC.h"
 #include "tao/PortableInterceptorC.h"
 #include "tao/LocalObject.h"
 

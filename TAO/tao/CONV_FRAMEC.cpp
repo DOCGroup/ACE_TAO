@@ -23,8 +23,8 @@
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:314
 
 
-#include "CONV_FRAMEC.h"
-#include "tao/Any_T.h"
+#include "tao/CONV_FRAMEC.h"
+#include "tao/Any_Dual_Impl_T.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig

@@ -29,12 +29,11 @@ ACE_RCSID (tao,
 #include "CodecFactory_ORBInitializer.h"
 
 #include "TypeCodeFactory_Adapter.h"
+#include "Valuetype_Adapter.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 # include "PICurrent_ORBInitializer.h"  /* @@ This should go away! */
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-
-#include "ValueFactory_Map.h"
 
 #include "Object_KeyC.h"
 
@@ -2049,47 +2048,80 @@ CORBA::ORB::register_value_factory (const char *repository_id,
 // %! guard, and ACE_Null_Mutex in the map
 // do _add_ref here not in map->rebind
 
-  if (valuetype_factory_map_ == 0)
+  TAO_Valuetype_Adapter *adapter =
+    ACE_Dynamic_Service<TAO_Valuetype_Adapter>::instance (
+        TAO_ORB_Core::valuetype_adapter_name ()
+      );
+
+  if (adapter == 0)
+    {
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        0);
+    }
+
+  if (this->valuetype_factory_map_ == 0)
     {
       // currently the ValueFactory_Map is a singleton and not per ORB
       // as in the OMG specs
-      valuetype_factory_map_ = TAO_VALUEFACTORY_MAP::instance ();
-      if (valuetype_factory_map_ == 0)
-        ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+      this->valuetype_factory_map_ = 
+        adapter->valuefactory_map_instance ();
+
+      if (this->valuetype_factory_map_ == 0)
+        {
+          ACE_THROW_RETURN (CORBA::INTERNAL (), 
+                            0);
+        }
     }
 
-  int result = valuetype_factory_map_->rebind (repository_id, factory);
+  int result = adapter->vf_map_rebind (this->valuetype_factory_map_,
+                                       repository_id, 
+                                       factory);
+
   if (result == -1)
     {
       // Error on bind.
-      ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+      ACE_THROW_RETURN (CORBA::INTERNAL (), 
+                        0);
     }
+
   if (result == 1)
     {
       return factory;    // previous factory was found
     }
+
   return 0;
 }
 
 void
 CORBA::ORB::unregister_value_factory (const char * /* repository_id */
-                                      ACE_ENV_ARG_DECL_NOT_USED)
+                                      ACE_ENV_ARG_DECL)
 {
-  ACE_ERROR((LM_ERROR, ACE_TEXT ("(%N:%l) function not implemented\n")));
-  // %! TODO
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
 CORBA::ValueFactory
 CORBA::ORB::lookup_value_factory (const char *repository_id
-                                  ACE_ENV_ARG_DECL_NOT_USED)
+                                  ACE_ENV_ARG_DECL)
 {
 // %! guard
 // do _add_ref here not in map->find
-  if (valuetype_factory_map_)
+  if (this->valuetype_factory_map_)
     {
-      CORBA::ValueFactory factory;
-      int result = valuetype_factory_map_->find (repository_id,
-                                                 factory);
+      TAO_Valuetype_Adapter *adapter =
+        ACE_Dynamic_Service<TAO_Valuetype_Adapter>::instance (
+            TAO_ORB_Core::valuetype_adapter_name ()
+          );
+
+      if (adapter == 0)
+        {
+          ACE_THROW_RETURN (CORBA::INTERNAL (),
+                            0);
+        }
+
+      CORBA::ValueFactory factory = 0;
+      int result = adapter->vf_map_find (this->valuetype_factory_map_,
+                                         repository_id,
+                                         factory);
 
       if (result == -1)
         {

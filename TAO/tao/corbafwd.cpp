@@ -8,11 +8,9 @@
 
 #include "ace/OS.h"
 
-
-ACE_RCSID (tao,
-           corbafwd,
+ACE_RCSID (tao, 
+           corbafwd, 
            "$Id$")
-
 
 char *
 CORBA::string_dup (const char *str)

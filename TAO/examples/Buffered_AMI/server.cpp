@@ -3,7 +3,9 @@
 #include "ace/Get_Opt.h"
 #include "test_i.h"
 
-ACE_RCSID(Buffered_AMI, server, "$Id: ")
+ACE_RCSID (Buffered_AMI, 
+           server, 
+           "$Id$")
 
 const char *ior_output_file = "ior";
 

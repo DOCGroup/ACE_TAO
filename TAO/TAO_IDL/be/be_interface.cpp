@@ -87,6 +87,12 @@ be_interface::be_interface (UTL_ScopedName *n,
 {
   ACE_NEW (this->strategy_,
            be_interface_default_strategy (this));
+
+  if (abstract && this->is_defined ())
+    {
+      ACE_SET_BITS (idl_global->decls_seen_info_,
+                    idl_global->decls_seen_masks.abstract_iface_seen_);
+    }
 }
 
 be_interface::~be_interface (void)

@@ -3,7 +3,6 @@
 //
 
 #include "MT_AMH_Server.h"
-#include "Base_Server.h"
 
 #include "ace/Task.h"
 #include "ace/Get_Opt.h"

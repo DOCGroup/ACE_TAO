@@ -1,0 +1,25 @@
+#
+# Makefile for building the TAO ObjRefTemplate library
+#
+
+NAME = TAO_ObjRefTemplate
+
+OBJFILES = \
+	$(OBJDIR)\ObjectReferenceTemplateC.obj
+
+RESOURCE = $(OBJDIR)\TAO_ObjRefTemplate.res
+
+CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_ORT_CFLAGS) \
+	-DTAO_ORT_BUILD_DLL
+
+CPPDIR = .
+
+INCDIR_NAME = tao\ObjRefTemplate
+INCLUDES = \
+	*.h *.i \
+	 ObjectReferenceTemplate.pidl
+
+LIBFILES = $(TAO_VALUETYPE_LIB) $(TAO_LIB) $(ACE_LIB)
+
+!include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

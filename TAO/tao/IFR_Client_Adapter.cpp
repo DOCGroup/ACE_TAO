@@ -3,7 +3,9 @@
 #include "tao/IFR_Client_Adapter.h"
 #include "ace/Dynamic_Service.h"
 
-ACE_RCSID(tao, IFR_Client_Adapter, "$Id$")
+ACE_RCSID (tao, 
+           IFR_Client_Adapter, 
+           "$Id$")
 
 TAO_IFR_Client_Adapter::~TAO_IFR_Client_Adapter (void)
 {

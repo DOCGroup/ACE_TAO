@@ -33,6 +33,7 @@
 #include "tao/Stub.h"
 #include "tao/Invocation.h"
 #include "tao/PortableInterceptor.h"
+#include "Any_Dual_Impl_T.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 #include "tao/RequestInfo_Util.h"
@@ -48,9 +49,6 @@
 #if !defined (__ACE_INLINE__)
 #include "OctetSeqC.i"
 #endif /* !defined INLINE */
-
-// TAO_IDL - Generated from 
-// be/be_visitor_sequence/sequence_cs.cpp:70
 
 #if !defined (_CORBA_OCTETSEQ_CS_)
 #define _CORBA_OCTETSEQ_CS_
