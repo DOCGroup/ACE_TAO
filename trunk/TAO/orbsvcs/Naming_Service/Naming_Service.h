@@ -18,8 +18,7 @@
 #if !defined (_NAMING_SERVICE_H)
 #define _NAMING_SERVICE_H
 
-#include "ace/streams.h"
-#include "tao/tao_util.h"
+#include "tao/TAO.h"
 #include "orbsvcs/Naming/Naming_Utils.h"
 
 class Naming_Service:public TAO_ORB_Manager
