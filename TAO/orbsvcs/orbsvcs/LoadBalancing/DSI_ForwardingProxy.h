@@ -5,7 +5,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//    orbsvcs
+//    TAO_LoadBalancing
 //
 // = FILENAME
 //    DSI_ForwardingProxy.h
@@ -72,5 +72,7 @@ private:
   // The interface repository ID of the target object.
 
 };
+
+#include "ace/post.h"
 
 #endif  /* DSI_FORWARDING_PROXY_H */

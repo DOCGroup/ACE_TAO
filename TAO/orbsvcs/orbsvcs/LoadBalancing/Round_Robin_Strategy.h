@@ -5,7 +5,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//    orbsvcs
+//    TAO_LoadBalancing
 //
 // = FILENAME
 //    Round_Robin_Strategy.h
@@ -17,6 +17,8 @@
 
 #ifndef ROUND_ROBIN_STRATEGY_H
 #define ROUND_ROBIN_STRATEGY_H
+
+#include "ace/pre.h"
 
 #include "LoadBalancing_Strategy.h"
 #include "orbsvcs/LoadBalancingS.h"
@@ -68,5 +70,7 @@ private:
 
   ACE_Unbounded_Set_Iterator<TAO_LB_ReplicaProxy *> next_replica_;
 };
+
+#include "ace/post.h"
 
 #endif  /* ROUND_ROBIN_STRATEGY_H */

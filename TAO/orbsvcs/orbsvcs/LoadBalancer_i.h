@@ -5,7 +5,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//    orbsvcs
+//    TAO_LoadBalancing
 //
 // = FILENAME
 //    LoadBalancer_i.h
@@ -17,6 +17,8 @@
 
 #ifndef TAO_LOADBALANCER_I_H
 #define TAO_LOADBALANCER_I_H
+
+#include "ace/pre.h"
 
 #include "orbsvcs/LoadBalancingS.h"
 #include "ReplicaProxy.h"
@@ -105,5 +107,7 @@ private:
 #if defined (__ACE_INLINE__)
 #include "LoadBalancer_i.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/post.h"
 
 #endif  /* TAO_LOADBALANCER_I_H */
