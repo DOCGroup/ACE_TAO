@@ -40,8 +40,8 @@ ACE_URL_Property::operator= (const ACE_URL_Property &rhs)
 ACE_INLINE int
 ACE_URL_Property::operator== (const ACE_URL_Property &rhs) const
 {
-  if (this == &rhs || *this->name_ != *rhs.name () ||
-      *this->value_ != *rhs.value ())
+  if (this == &rhs || *this->name_ != *rhs.name_ ||
+      *this->value_ != *rhs.value_)
     return 1;
   else
     return 0;
@@ -124,19 +124,13 @@ ACE_URL_Offer::ACE_URL_Offer (const size_t size, const char *url)
   ACE_NEW (this->url_, ACE_WString (url));
 }
 
-ACE_INLINE
-ACE_URL_Offer::~ACE_URL_Offer (void)
-{
-  delete this->url_;
-}
-
 ACE_INLINE ACE_URL_Offer &
 ACE_URL_Offer::operator= (const ACE_URL_Offer &rhs)
 {
   if (this != &rhs)
     {
-      *this->url_ = *rhs.url ();
-      this->url_properties (rhs.prop_);
+      *this->url_ = *rhs.url_;
+      this->prop_ = rhs.prop_;
     }
   return *this;
 }
@@ -145,7 +139,7 @@ ACE_INLINE int
 ACE_URL_Offer::operator== (const ACE_URL_Offer &rhs) const
 {
   if (this == &rhs
-      && this->url () == rhs.url ()
+      && this->url_ == rhs.url_
       && this->prop_ == rhs.prop_)
     return 1;
   else
