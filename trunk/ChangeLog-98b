@@ -7,7 +7,8 @@ Thu Sep 24 13:30:00 CDT 1998  Chris Gill <cdgill@cs.wustl.edu>
 
 Thu Sep 24 12:48:58 1998  David L. Levine  <levine@cs.wustl.edu>
 
-        * ace/Containers_T.cpp (ACE_{Bounded,Fixed}_Set_Iterator::done):
+        * ace/Containers_T.cpp (ACE_{Bounded,Fixed}_Set_Iterator::done),
+          ace/Map_Manager.cpp (ACE_Map_Iterator_Base::done):
           added ACE_CAST_CONST to the static cast.  Thanks to Ossama for
           reporting a compilation failure on Sun C++ 4.2/Solaris 2.6
           without it.
