@@ -530,6 +530,22 @@ public:
     CORBA::Boolean is_persistent,
     const TAO::Portable_Server::Temporary_Creation_Time& creation_time) const;
 
+  PortableServer::ObjectId *activate_object_i (
+      PortableServer::Servant p_servant,
+      CORBA::Short priority,
+      int &wait_occurred_restart_call
+      ACE_ENV_ARG_DECL
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableServer::POA::ServantAlreadyActive,
+                     PortableServer::POA::WrongPolicy));
+
+  CORBA::Object_ptr id_to_reference_i (const PortableServer::ObjectId &oid
+                                       ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableServer::POA::ObjectNotActive,
+                     PortableServer::POA::WrongPolicy));
+
 protected:
 
 #if (TAO_HAS_MINIMUM_POA == 0)
@@ -634,16 +650,6 @@ protected:
                                 ACE_ENV_ARG_DECL);
 
 protected:
-  PortableServer::ObjectId *activate_object_i (
-      PortableServer::Servant p_servant,
-      CORBA::Short priority,
-      int &wait_occurred_restart_call
-      ACE_ENV_ARG_DECL
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::ServantAlreadyActive,
-                     PortableServer::POA::WrongPolicy));
-
   void activate_object_with_id_i (const PortableServer::ObjectId &id,
                                   PortableServer::Servant p_servant,
                                   CORBA::Short priority,
@@ -707,12 +713,6 @@ protected:
 
   PortableServer::Servant id_to_servant_i (const PortableServer::ObjectId &oid
                                            ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::ObjectNotActive,
-                     PortableServer::POA::WrongPolicy));
-
-  CORBA::Object_ptr id_to_reference_i (const PortableServer::ObjectId &oid
-                                       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::POA::ObjectNotActive,
                      PortableServer::POA::WrongPolicy));

@@ -1,3 +1,12 @@
+Mon Nov 29 10:45:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.h:
+          Made some methods public that are needed by the persistent lifespan
+          strategy.
+
+        * tao/PortableServer/LifespanStrategyPersistent.cpp:
+          Enabled ImR code
+
 Mon Nov 29 09:34:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/AVStreams/Full_Profile/server.h:
