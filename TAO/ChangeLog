@@ -1,3 +1,8 @@
+Tue Dec 16 12:08:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tests/Portable_Interceptors/Collocated/Dynamic/Portable_Interceptors_Dynamic.mpc:
+          Corrected exe name to match run_test.pl and removed not needed libpaths
+
 Mon Dec 15 19:46:30 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_T.inl:
