@@ -1,5 +1,10 @@
 Wed Oct 14 20:10:00 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
+	* orbsvcs/tests/EC_Mcast/EC_Mcast.cpp: 
+	  This test uses the Reactive version of the EC, just to show how
+	  to configure the EC in that mode (this test does not attempt to
+	  preserve priorities, so it is good place to put this).
+
 	* tao/encode.cpp: 
 	  Fixed encoding for Any when both cdr_ and value_ are zero
 	  (usually when the Any is holding a tk_null).
