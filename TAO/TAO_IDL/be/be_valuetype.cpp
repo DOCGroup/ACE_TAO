@@ -655,8 +655,11 @@ be_valuetype::gen_helper_inline (char* ,
   os = tao_cg->client_inline ();
 
   // There is a problem, here. Looks like the if defined __ACE_INLINE
-  // is not getting generated...
-  *os << "//@@ Boris: begin experimental" << be_nl
+  // is not getting generated... Actually this is a much bigger
+  // problem. Just hacking  it up for the timebeing..
+
+  *os << "#if defined (__ACE_INLINE__)" << be_nl
+      << "//@@ Boris: begin experimental" << be_nl
       << "TAO_NAMESPACE CORBA" << be_nl
       << "{"
       << be_idt_nl
@@ -665,7 +668,8 @@ be_valuetype::gen_helper_inline (char* ,
       <<  be_uidt_nl
       << "}" << be_nl
       << "TAO_NAMESPACE_CLOSE" << be_nl
-      << "//@@ Boris: end experimental" << be_nl << be_nl;
+      << "//@@ Boris: end experimental" << be_nl
+      << "#endif /*__ACE_INLINE__*/"<< be_nl;
 
   return 0;
 }
