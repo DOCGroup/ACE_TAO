@@ -18,6 +18,6 @@ for type in $TYPES
 do
   echo "BEGIN Testing type $type"
   sleep 2	# Give the server a chance to start up
-  ./client -f $IORFILE -i $INVOCATION -t $type 2>&1 | sed -e "s/^/CLIENT($type): /"
+  ./client -f $IORFILE  -i $INVOCATION -t $type 2>&1 | sed -e "s/^/CLIENT($type): /"
   echo "END   Testing type $type"
 done 

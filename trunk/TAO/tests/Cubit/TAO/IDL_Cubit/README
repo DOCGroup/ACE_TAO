@@ -45,4 +45,35 @@ client:
 	
 	2. Directly on the commandline using the -k option.
 
+Sample Run:
+----------
 
+1. Start the server.
+
+% server -ORBport 20000 -ORBobjrefstyle url -o theior
+
+starting up daemon <unknown>
+opening dynamic service Resource_Factory
+did dynamic on Resource_Factory, error = 0
+opening dynamic service Client_Strategy_Factory
+did dynamic on Client_Strategy_Factory, error = 0
+opening dynamic service Server_Strategy_Factory
+did dynamic on Server_Strategy_Factory, error = 0
+The IOR is: <iiop:1.0//tango:20000/Persistent/887665222/647179/RootPOA/RootPOA_is_BAD/factory\00\00>
+
+
+2.Start the client.
+
+%client -ORBport 19998 -f theior
+
+starting up daemon <unknown>
+opening dynamic service Resource_Factory
+did dynamic on Resource_Factory, error = 0
+opening dynamic service Client_Strategy_Factory
+did dynamic on Client_Strategy_Factory, error = 0
+opening dynamic service Server_Strategy_Factory
+did dynamic on Server_Strategy_Factory, error = 0
+Factory received OK
+.
+.
+.

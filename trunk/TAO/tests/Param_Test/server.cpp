@@ -21,6 +21,7 @@
 // Parses the command line arguments and returns an error status
 static FILE* ior_output_file = 0;
 
+
 static int
 parse_args (int argc, char *argv[])
 {
@@ -138,6 +139,7 @@ main (int argc, char *argv[])
           ACE_OS::fprintf (ior_output_file, "%s", str.in());
           ACE_OS::fclose (ior_output_file);
         }
+      
 
       // Make the POAs controlled by this manager active
       poa_manager->activate (TAO_TRY_ENV);
