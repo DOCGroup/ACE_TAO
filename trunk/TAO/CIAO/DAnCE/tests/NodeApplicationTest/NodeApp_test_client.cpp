@@ -166,16 +166,16 @@ main (int argc, char *argv[])
             (comp_list[i])->cube_long (input ACE_ENV_ARG_PARAMETER);
 
           if (input*input*input == output)
-	    {
-	      ACE_DEBUG ((LM_DEBUG,
-			  "Return values matched!! on Component: %d \n",
-			  i));
-	    }
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "Return values matched!! on Component: %d \n",
+                          i));
+            }
           else
             {
               ACE_DEBUG ((LM_DEBUG,
-			  "Return values did not match: on Component: %d \n",
-			  i));
+                          "Return values did not match: on Component: %d \n",
+                          i));
               exit (1);
             }
         }
