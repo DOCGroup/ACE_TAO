@@ -1,3 +1,11 @@
+Mon May 12 11:11:51 1997    <harrison@samba.cs.wustl.edu>
+
+	* ace/Process.*: Removed the old ACE_Process and replaced it with
+	  what was ACE_ProcessEx.
+
+	* ace/Process_Manager.{i,cpp}:  Updated to use the new ACE_Process
+	  API.
+
 Mon May 12 08:16:38 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/config-freebsd*.h: added support for FreeBSD 2.1.7R.
