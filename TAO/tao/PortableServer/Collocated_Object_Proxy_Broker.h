@@ -2,11 +2,11 @@
 
 //=============================================================================
 /**
- *  @file    Remote_Object_Proxy_Broker.h
+ *  @file    Collocated_Object_Proxy_Broker.h
  *
  *  $Id$
  *
- *  This files contains the Remote Proxy Broker implementation
+ *  This files contains the Collocated Proxy Broker implementation
  *  for the CORBA Object.
  *
  *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
@@ -14,8 +14,8 @@
  */
 //=============================================================================
 
-#ifndef TAO_REMOTE_OBJECT_PROXY_BROKER_H
-#define TAO_REMOTE_OBJECT_PROXY_BROKER_H
+#ifndef TAO_COLLOCATED_OBJECT_PROXY_BROKER_H
+#define TAO_COLLOCATED_OBJECT_PROXY_BROKER_H
 #include /**/ "ace/pre.h"
 
 #include "tao/Object_Proxy_Broker.h"
@@ -27,15 +27,15 @@
 namespace TAO
 {
   /**
-   * @class Remote_Object_Proxy_Broker
+   * @class Collocated_Object_Proxy_Broker
    *
-   * @brief Remote_Object_Proxy_Broker
+   * @brief Collocated_Object_Proxy_Broker
    *
    * A broker for standard CORBA::Object calls that needs to be made
    * on remote objects.
    */
 
-  class TAO_Export Remote_Object_Proxy_Broker : public Object_Proxy_Broker
+  class TAO_Export Collocated_Object_Proxy_Broker : public Object_Proxy_Broker
   {
   public:
     /// Please see the documentation in Object_Proxy_Broker.h for
@@ -55,7 +55,7 @@ namespace TAO
       ACE_ENV_ARG_DECL
     );
 
-  virtual CORBA::Object_ptr _get_component (const CORBA::Object_ptr target
+  virtual CORBA::Object_ptr _get_component (CORBA::Object_ptr target
                                             ACE_ENV_ARG_DECL);
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
@@ -64,9 +64,11 @@ namespace TAO
 
 // -----------------------------------------------------
 
-TAO::Remote_Object_Proxy_Broker *the_tao_remote_object_proxy_broker (void);
+/// This function is used to access the unique instance of strategized
+/// proxy broker. All the CORBA::Object share the proxy broker.
+TAO::Collocated_Object_Proxy_Broker *the_tao_collocated_object_proxy_broker (void);
 
 
 #include /**/ "ace/post.h"
 
-#endif /* TAO_REMOTE_OBJECT_PROXY_BROKER_H */
+#endif /* TAO_COLLOCATED_OBJECT_PROXY_BROKER_H*/

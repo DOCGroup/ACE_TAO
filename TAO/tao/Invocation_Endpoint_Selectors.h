@@ -17,7 +17,7 @@
 #define TAO_INVOCATION_ENDPOINT_SELECTOR_H
 #include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -27,7 +27,6 @@
 
 
 class TAO_MProfile;
-class TAO_GIOP_Invocation;
 class ACE_Time_Value;
 
 namespace TAO
@@ -35,6 +34,11 @@ namespace TAO
   class Profile_Transport_Resolver;
 }
 
+namespace CORBA
+{
+  class Exception;
+  class Environment;
+}
 /**
  * @class TAO_Invocation_Endpoint_Selector
  *
@@ -58,32 +62,11 @@ public:
   /// Destructor.
   virtual ~TAO_Invocation_Endpoint_Selector (void);
 
-  /// Select the endpoint and set @a invocation's @c profile_ and
-  /// @c endpoint_ data members accordingly.
-  virtual void select_endpoint (TAO_GIOP_Invocation *invocation
-                                ACE_ENV_ARG_DECL) = 0;
-
+  /// Select the endpoint and set @a r's @c profile_
   virtual void select_endpoint (TAO::Profile_Transport_Resolver *r,
                                 ACE_Time_Value *val
                                 ACE_ENV_ARG_DECL) = 0;
 
-  /**
-   * This method must be called if the invocation attempt on a
-   * selected endpoint resulted in location forward.  This method
-   * performs the necessary state updates, so that next @c
-   * select_endpoint call picks a new endpoint.
-   */
-  virtual void forward (TAO_GIOP_Invocation *invocation,
-                        const TAO_MProfile &mprofile
-                        ACE_ENV_ARG_DECL) = 0;
-
-  /// Update the state to indicate that the selected endpoint/profile
-  /// were used successfully.
-  virtual void success (TAO_GIOP_Invocation *invocation) = 0;
-
-  /// Update the state to reflect that the connection being used for
-  /// the invocation has been closed by the server.
-  virtual void close_connection (TAO_GIOP_Invocation *invocation) = 0;
 };
 
 // ****************************************************************
@@ -110,22 +93,9 @@ public:
   /// Destructor.
   virtual ~TAO_Default_Endpoint_Selector (void);
 
-  virtual void select_endpoint (TAO_GIOP_Invocation *invocation
-                                ACE_ENV_ARG_DECL);
   virtual void select_endpoint (TAO::Profile_Transport_Resolver *r,
                                 ACE_Time_Value *val
                                 ACE_ENV_ARG_DECL);
-  virtual void forward (TAO_GIOP_Invocation *invocation,
-                        const TAO_MProfile &mprofile
-                        ACE_ENV_ARG_DECL);
-  virtual void success (TAO_GIOP_Invocation *invocation);
-  virtual void close_connection (TAO_GIOP_Invocation *invocation);
-
-protected:
-  /// This method selects an endpoint from the profile in the
-  /// invocation object.
-  virtual int endpoint_from_profile (TAO_GIOP_Invocation *invocation
-                                     ACE_ENV_ARG_DECL);
 };
 
 #if defined (__ACE_INLINE__)

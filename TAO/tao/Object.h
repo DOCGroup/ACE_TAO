@@ -33,7 +33,6 @@
 
 class TAO_Stub;
 class TAO_Abstract_ServantBase;
-class TAO_Object_Proxy_Broker;
 class TAO_ORB_Core;
 
 class ACE_Lock;
@@ -41,6 +40,7 @@ class ACE_Lock;
 namespace TAO
 {
   class ObjectKey;
+  class Object_Proxy_Broker;
 }
 
 namespace CORBA
@@ -273,10 +273,11 @@ namespace CORBA
     virtual TAO_Stub *_stubobj (void);
 
     /// Set the proxy broker.
-    virtual void _proxy_broker (TAO_Object_Proxy_Broker *proxy_broker);
+    virtual void _proxy_broker (TAO::Object_Proxy_Broker *proxy_broker);
 
-    /// Get the proxy broker.
-    virtual TAO_Object_Proxy_Broker *_proxy_broker (void);
+
+
+  public:
 
     /// Allows us to forbid marshaling of local interfaces.
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
@@ -333,9 +334,13 @@ namespace CORBA
     /// Specify whether this is a local object or not.
     CORBA::Boolean is_local_;
 
-    /// Pointer to the Proxy Broker i.e. the instance that takes care of
-    /// getting the right proxy for performing a given call.
-    TAO_Object_Proxy_Broker *proxy_broker_;
+    /// Pointer to the Proxy Broker
+    /**
+     * This cached pointer instance takes care of routing the call for
+     * standard calls in CORBA::Object like _is_a (), _get_component
+     * () etc.
+     */
+    TAO::Object_Proxy_Broker *proxy_broker_;
 
     /// Flag to indicate whether the IOP::IOR has been evaluated fully.
     Boolean is_evaluated_;
@@ -397,12 +402,12 @@ namespace TAO
   };
 };
 
+
 /// This function pointer is set only when the Portable server
 /// library is present.
-extern TAO_Export TAO_Object_Proxy_Broker * (*_TAO_collocation_Object_Proxy_Broker_Factory_function_pointer) (
+extern TAO_Export TAO::Object_Proxy_Broker * (*_TAO_Object_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
     );
-
 
 TAO_Export CORBA::Boolean
 operator<< (TAO_OutputCDR&, const CORBA::Object*);

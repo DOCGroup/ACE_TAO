@@ -327,7 +327,7 @@ TAO_ORBInitInfo::check_validity (ACE_ENV_SINGLE_ARG_DECL)
 
 TAO_ORBInitInfo_ptr TAO_ORBInitInfo::_narrow (
     CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (_tao_objref))

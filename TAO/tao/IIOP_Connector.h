@@ -24,12 +24,14 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_IIOP_Endpoint;
-
-#include "ace/Connector.h"
-#include "Transport_Connector.h"
+#include "tao/Transport_Connector.h"
 #include "tao/Connector_Impl.h"
 #include "tao/IIOP_Connection_Handler.h"
+#include "ace/Connector.h"
+
+
+class TAO_IIOP_Endpoint;
+
 
 // ****************************************************************
 
@@ -83,10 +85,6 @@ protected:
   // = The TAO_Connector methods, please check the documentation on
   // Transport_Connector.h
   int set_validate_endpoint (TAO_Endpoint *ep);
-
-  int make_connection (TAO_GIOP_Invocation *invocation,
-                       TAO_Transport_Descriptor_Interface *desc,
-                       ACE_Time_Value *timeout = 0);
 
   TAO_Transport *make_connection (TAO::Profile_Transport_Resolver *r,
                                   TAO_Transport_Descriptor_Interface &desc,

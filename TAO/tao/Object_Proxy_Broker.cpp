@@ -6,7 +6,10 @@ ACE_RCSID (tao,
            "$Id$")
 
 
-TAO_Object_Proxy_Broker::~TAO_Object_Proxy_Broker (void)
+namespace TAO
 {
-  // No-Op.
+  Object_Proxy_Broker::~Object_Proxy_Broker (void)
+  {
+    // No-Op.
+  }
 }

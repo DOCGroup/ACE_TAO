@@ -72,20 +72,6 @@ public:
   /// Close all open connectors.
   int close_all (void);
 
-
-  /**
-   * @@ todo: This method needs to be removed. There should be no need
-   * for the registry to establish connections.
-   *
-   * This is where the transport protocol is selected based on some
-   * policy.  This member will call the connect member of the
-   * TAO_Connector class which in turn will call the concrete
-   * connector.
-   */
-  int connect (TAO_GIOP_Invocation *invocation,
-               TAO_Transport_Descriptor_Interface *desc
-               ACE_ENV_ARG_DECL);
-
   /// Parse a string containing a URL style IOR and return an
   /// MProfile.
   int make_mprofile (const char *ior,

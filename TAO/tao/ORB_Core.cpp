@@ -2825,10 +2825,9 @@ TAO_ORB_Core_instance (void)
 
 
 TAO::Collocation_Strategy
-TAO_ORB_Core::collocation_strategy_new (CORBA::Object_ptr object
-                                        ACE_ENV_ARG_DECL)
+TAO_ORB_Core::collocation_strategy (CORBA::Object_ptr object
+                                    ACE_ENV_ARG_DECL)
 {
-
   TAO_Stub *stub = object->_stubobj ();
   if (!CORBA::is_nil (stub->servant_orb_var ().in ()) &&
       stub->servant_orb_var ()->orb_core () != 0)
@@ -2864,48 +2863,6 @@ TAO_ORB_Core::collocation_strategy_new (CORBA::Object_ptr object
 
   // In this case the Object is a client.
   return TAO::TAO_CS_REMOTE_STRATEGY;
-}
-
-int
-TAO_ORB_Core::collocation_strategy (CORBA::Object_ptr object
-                                    ACE_ENV_ARG_DECL)
-{
-
-  TAO_Stub *stub = object->_stubobj ();
-  if (!CORBA::is_nil (stub->servant_orb_var ().in ()) &&
-      stub->servant_orb_var ()->orb_core () != 0)
-    {
-      TAO_ORB_Core *orb_core =
-        stub->servant_orb_var ()->orb_core ();
-
-      int collocated =
-        orb_core->collocation_resolver ().is_collocated (object
-                                                         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
-
-      if (collocated)
-        {
-          switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
-            {
-            case THRU_POA:
-              return TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY;
-
-            case DIRECT:
-              {
-                /////////////////////////////////////////////////////////////
-                // If the servant is null and you are collocated this means
-                // that the POA policy NON-RETAIN is set, and with that policy
-                // using the DIRECT collocation strategy is just insane.
-                /////////////////////////////////////////////////////////////
-                ACE_ASSERT (object->_servant () != 0);
-                return TAO_Collocation_Strategies::CS_DIRECT_STRATEGY;
-              }
-            }
-        }
-    }
-
-  // In this case the Object is a client.
-  return TAO_Collocation_Strategies::CS_REMOTE_STRATEGY;
 }
 
 TAO_ORB_Core::InitRefMap *

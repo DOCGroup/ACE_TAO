@@ -6,16 +6,16 @@
 //
 // ORB:         CORBA::Object operations
 
-#include "tao/Object.h"
-#include "tao/Stub.h"
-#include "tao/Profile.h"
-#include "tao/ORB_Core.h"
-#include "tao/Invocation.h"
-#include "tao/Connector_Registry.h"
-#include "tao/debug.h"
-#include "tao/Remote_Object_Proxy_Broker.h"
-#include "tao/Dynamic_Adapter.h"
-#include "tao/IFR_Client_Adapter.h"
+#include "Object.h"
+#include "Stub.h"
+#include "Profile.h"
+#include "ORB_Core.h"
+#include "Invocation.h"
+#include "Connector_Registry.h"
+#include "debug.h"
+#include "Dynamic_Adapter.h"
+#include "IFR_Client_Adapter.h"
+#include "Remote_Object_Proxy_Broker.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Synch.h"
 
@@ -77,7 +77,6 @@ CORBA::Object::Object (TAO_Stub * protocol_proxy,
   : servant_ (servant)
     , is_collocated_ (collocated)
     , is_local_ (0)
-    , proxy_broker_ (0)
     , is_evaluated_ (1)
     , ior_ (0)
     , orb_core_ (orb_core)
@@ -99,9 +98,9 @@ CORBA::Object::Object (TAO_Stub * protocol_proxy,
   // If the object is collocated then set the broker using the
   // factory otherwise use the remote proxy broker.
   if (this->is_collocated_ &&
-      _TAO_collocation_Object_Proxy_Broker_Factory_function_pointer != 0)
+      _TAO_Object_Proxy_Broker_Factory_function_pointer != 0)
     this->proxy_broker_ =
-      _TAO_collocation_Object_Proxy_Broker_Factory_function_pointer (this);
+      _TAO_Object_Proxy_Broker_Factory_function_pointer (this);
   else
     this->proxy_broker_ =
       the_tao_remote_object_proxy_broker ();
@@ -243,18 +242,9 @@ CORBA::Object::_is_a (const char *type_id
                          this->_stubobj ()->type_id.in ()) == 0)
     return 1;
 
-  CORBA::Boolean _tao_retval = 0;
-
-  // Get the right Proxy Implementation.
-  TAO_Object_Proxy_Impl &the_proxy =
-    this->proxy_broker_->select_proxy (this ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
-  // Preform the Call.
-  _tao_retval = the_proxy._is_a (this, type_id ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
-  return _tao_retval;
+  return this->proxy_broker_->_is_a (this,
+                                     type_id
+                                     ACE_ENV_ARG_PARAMETER);
 }
 
 const char*
@@ -347,15 +337,9 @@ CORBA::Object::_key (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-CORBA::Object::_proxy_broker (TAO_Object_Proxy_Broker *proxy_broker)
+CORBA::Object::_proxy_broker (TAO::Object_Proxy_Broker *proxy_broker)
 {
   this->proxy_broker_ = proxy_broker;
-}
-
-TAO_Object_Proxy_Broker *
-CORBA::Object::_proxy_broker (void)
-{
-  return this->proxy_broker_;
 }
 
 CORBA::Boolean
@@ -493,20 +477,8 @@ CORBA::Object::_non_existent (ACE_ENV_SINGLE_ARG_DECL)
 {
   TAO_OBJECT_IOR_EVALUATE_RETURN;
 
-  CORBA::Boolean _tao_retval = 0;
-
-  // Get the right Proxy.
-  TAO_Object_Proxy_Impl &the_proxy =
-    this->proxy_broker_->select_proxy (this
-                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
-  // Perform the Call.
-  _tao_retval = the_proxy._non_existent (this
-                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
-  return _tao_retval;
+  return this->proxy_broker_->_non_existent (this
+                                             ACE_ENV_ARG_PARAMETER);
 }
 
 
@@ -514,16 +486,8 @@ CORBA::InterfaceDef_ptr
 CORBA::Object::_get_interface (ACE_ENV_SINGLE_ARG_DECL)
 {
   TAO_OBJECT_IOR_EVALUATE_RETURN;
-
-  // Get the right Proxy.
-  TAO_Object_Proxy_Impl &the_proxy =
-    this->proxy_broker_->select_proxy (this
-                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
-  // Perform the Call.
-  return the_proxy._get_interface (this
-                                   ACE_ENV_ARG_PARAMETER);
+  return this->proxy_broker_->_get_interface (this
+                                              ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::ImplementationDef_ptr
@@ -536,16 +500,8 @@ CORBA::Object_ptr
 CORBA::Object::_get_component (ACE_ENV_SINGLE_ARG_DECL)
 {
   TAO_OBJECT_IOR_EVALUATE_RETURN;
-
-  // Get the right Proxy.
-  TAO_Object_Proxy_Impl &the_proxy =
-    this->proxy_broker_->select_proxy (this
-                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
-  // Perform the Call.
-  return the_proxy._get_component (this
-                                   ACE_ENV_ARG_PARAMETER);
+  return this->proxy_broker_->_get_component (this
+                                              ACE_ENV_ARG_PARAMETER);
 }
 
 
@@ -822,9 +778,9 @@ CORBA::Object::tao_object_initialize (CORBA::Object *obj)
   // If the object is collocated then set the broker using the
   // factory otherwise use the remote proxy broker.
   if (obj->is_collocated_ &&
-    _TAO_collocation_Object_Proxy_Broker_Factory_function_pointer != 0)
+    _TAO_Object_Proxy_Broker_Factory_function_pointer != 0)
     obj->proxy_broker_ =
-      _TAO_collocation_Object_Proxy_Broker_Factory_function_pointer (obj);
+      _TAO_Object_Proxy_Broker_Factory_function_pointer (obj);
     else
       obj->proxy_broker_ = the_tao_remote_object_proxy_broker ();
 
@@ -975,7 +931,7 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
   return (CORBA::Boolean) cdr.good_bit ();
 }
 
-TAO_Object_Proxy_Broker * (*_TAO_collocation_Object_Proxy_Broker_Factory_function_pointer) (
+TAO::Object_Proxy_Broker * (*_TAO_Object_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
     ) = 0;
 

@@ -38,8 +38,7 @@ be_visitor_interface_direct_proxy_impl_sh::visit_interface (
   // Generate Class Declaration.
   *os << "class " << be_global->skel_export_macro ()
       << " " << node->direct_proxy_impl_name ();
-  *os << be_idt_nl 
-      << ": public virtual TAO_Direct_Object_Proxy_Impl" << be_idt;
+  *os << be_idt_nl;
 
   if (node->n_inherits () > 0)
     {
