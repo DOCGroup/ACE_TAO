@@ -188,3 +188,14 @@ CORBA::String_out::ptr (void)
 {
   return this->ptr_;
 }
+
+// ----------------------------------------------------------------------
+// Wide strings
+// ----------------------------------------------------------------------
+
+ACE_INLINE TAO_Export CORBA::WString
+CORBA::wstring_dup (const WChar *const str)
+{
+  return CORBA::wstring_copy (str);
+}
+
