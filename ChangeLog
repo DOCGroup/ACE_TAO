@@ -1,3 +1,12 @@
+Mon Dec 15 10:06:17 2003  Steve Huston  <shuston@riverace.com>
+
+	* ace/OS_NS_stdio.cpp (gets): Reverted this change:
+	  Thu Dec 11 18:13:29 2003  Steve Huston  <shuston@riverace.com>
+	  It broke the Borland build and wasn't a very good fix for the
+	  AIX situation either. Since Riverace is dropping AIX 4.3 support
+	  at ACE 5.4, I'm not going to push this issue. It appears to be a
+	  compiler issue with Visual Age C++ version 5.
+
 Mon Dec 15 07:29:27 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:

@@ -197,7 +197,7 @@ ACE_OS::gets (char *str, int n)
   if (n == 0) str = 0;
   else n--;
 
-  while ((c = ACE_STD_NAMESPACE::getchar ()) != '\n')
+  while ((c = getchar ()) != '\n')
     {
 
       if (c == EOF && errno == EINTR)
