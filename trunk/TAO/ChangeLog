@@ -1,3 +1,8 @@
+Thu Mar 18 15:55:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tests/IDL_Test/Makefile.bor:
+	  Fixed the Makefile to exclude removed cpp files.
+
 Wed Mar 17 18:06:10 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/PortableServer/PICurrent_Guard.cpp:
@@ -9,8 +14,8 @@ Wed Mar 17 13:56:05 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/CORBA_String.cpp:
 
 	  Reverted the change "Tue Mar 16 09:36:42 2004  Balachandran
-	  Natarajan  <bala@dre.vanderbilt.edu>" since MSVC barfs. 
-	  
+	  Natarajan  <bala@dre.vanderbilt.edu>" since MSVC barfs.
+
 	* tao/ULongSeqS.cpp:
 	* tao/ULongSeqS.i:
 	* tao/UShortSeqS.cpp:
@@ -30,12 +35,12 @@ Wed Mar 17 05:44:03 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/IDL_Test/Makefile:
 
-	  Fixed the Makefile to exclude removed cpp files. 
+	  Fixed the Makefile to exclude removed cpp files.
 
 Tue Mar 16 17:01:22 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
-        
+
           In generating the body of the _downcast() method, added a
           space between the opening bracket of the template parameter
           to the call to dynamic_cast<> and the leading double colon
@@ -46,14 +51,14 @@ Tue Mar 16 17:01:22 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 Tue Mar 16 15:35:04 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_array/array.cpp:
-        
+
           Added check for array of typedef'd (w)string, in which case
           the slice type must be TAO_(W)String_Manager, instead of the
           typedef name. Thanks to Thomas Groth <groth.th@nord-com.net>
           for sending in an example IDL file.
-          
+
         * tests/IDL_Test/array.idl:
-        
+
           Added the example IDL above to the test IDL file.
 
 Tue Mar 16 14:01:18 2004  Amogh Kavimandan  <amoghk@dre.vanderbilt.edu>
