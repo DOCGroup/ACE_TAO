@@ -62,7 +62,7 @@ MyImpl::BMDisplay_exec_impl::set_session_context (
 {
   if (CIAO::debug_level () > 0)
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "MyImpl::BMDisplay_exec_impl::set_session_context\n"));
     }
 
@@ -86,16 +86,15 @@ MyImpl::BMDisplay_exec_impl::ciao_preactivate (
 }
 
 void
-MyImpl::BMDisplay_exec_impl::ccm_activate (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::BMDisplay_exec_impl::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "MyImpl::BMDisplay_exec_impl::ccm_activate\n"));
     }
-
 }
 
 void
@@ -116,7 +115,7 @@ MyImpl::BMDisplay_exec_impl::ccm_passivate (
 {
   if (CIAO::debug_level () > 0)
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "MyImpl::BMDisplay_exec_impl::ccm_passivate\n"));
     }
 }
@@ -128,7 +127,7 @@ MyImpl::BMDisplay_exec_impl::ccm_remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   if (CIAO::debug_level () > 0)
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "MyImpl::BMDisplay_exec_impl::ccm_remove\n"));
     }
 }

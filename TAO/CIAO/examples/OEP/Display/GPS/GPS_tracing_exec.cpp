@@ -24,7 +24,7 @@ MyImpl::GPS_tracing_exec_i::~GPS_tracing_exec_i ()
 // Operations from HUDisplay::GPS
 
 HUDisplay::CCM_position_ptr
-MyImpl::GPS_tracing_exec_i::get_MyLocation (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::GPS_tracing_exec_i::get_MyLocation (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return HUDisplay::CCM_position::_duplicate (this);
@@ -54,14 +54,14 @@ MyImpl::GPS_tracing_exec_i::push_Refresh (HUDisplay::tick *
 // Operations from HUDisplay::position
 
 CORBA::Long
-MyImpl::GPS_tracing_exec_i::posx (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::GPS_tracing_exec_i::posx (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->positionx_;
 }
 
 CORBA::Long
-MyImpl::GPS_tracing_exec_i::posy (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::GPS_tracing_exec_i::posy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->positiony_;
@@ -69,13 +69,15 @@ MyImpl::GPS_tracing_exec_i::posy (ACE_ENV_SINGLE_ARG_DECL)
 
 // Operations from Components::SessionComponent
 void
-MyImpl::GPS_tracing_exec_i::set_session_context (Components::SessionContext_ptr ctx
-                                                 ACE_ENV_ARG_DECL)
+MyImpl::GPS_tracing_exec_i::set_session_context (
+    Components::SessionContext_ptr ctx
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
-    ACE_DEBUG ((LM_DEBUG, "MyImpl::GPS_tracing_exec_i::set_session_context\n"));
+    ACE_DEBUG ((LM_DEBUG,
+                "MyImpl::GPS_tracing_exec_i::set_session_context\n"));
 
   this->context_ =
     HUDisplay::CCM_GPS_Context::_narrow (ctx
@@ -143,7 +145,7 @@ MyImpl::GPSHome_tracing_exec_i::~GPSHome_tracing_exec_i ()
 // Implicit home operations.
 
 ::Components::EnterpriseComponent_ptr
-MyImpl::GPSHome_tracing_exec_i::create (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::GPSHome_tracing_exec_i::create (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {

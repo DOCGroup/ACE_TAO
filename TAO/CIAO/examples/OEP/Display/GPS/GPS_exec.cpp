@@ -24,7 +24,7 @@ MyImpl::GPS_exec_i::~GPS_exec_i ()
 // Operations from HUDisplay::GPS
 
 HUDisplay::CCM_position_ptr
-MyImpl::GPS_exec_i::get_MyLocation (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::GPS_exec_i::get_MyLocation (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return HUDisplay::CCM_position::_duplicate (this);
@@ -49,14 +49,14 @@ MyImpl::GPS_exec_i::push_Refresh (HUDisplay::tick *
 // Operations from HUDisplay::position
 
 CORBA::Long
-MyImpl::GPS_exec_i::posx (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::GPS_exec_i::posx (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->positionx_;
 }
 
 CORBA::Long
-MyImpl::GPS_exec_i::posy (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::GPS_exec_i::posy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->positiony_;
@@ -138,7 +138,7 @@ MyImpl::GPSHome_exec_i::~GPSHome_exec_i ()
 // Implicit home operations.
 
 ::Components::EnterpriseComponent_ptr
-MyImpl::GPSHome_exec_i::create (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::GPSHome_exec_i::create (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {

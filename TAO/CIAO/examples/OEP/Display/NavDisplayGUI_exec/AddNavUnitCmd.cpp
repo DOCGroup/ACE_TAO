@@ -21,8 +21,8 @@ AddNavUnitCmd::create(RootPanel *form, NavUnit *unit)
 
 
 int
-AddNavUnitCmd::execute(void *context)
+AddNavUnitCmd::execute(void * /* context */)
 {
-  this->form_->addUnit(this->unit_);
+  this->form_->addUnit (this->unit_);
   return 0;
 }
