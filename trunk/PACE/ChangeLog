@@ -1,3 +1,9 @@
+Tue Aug 29 13:07:55 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/win32/fcntl.inl (pace_creat):
+
+	  Fixed a typo.
+
 Mon Aug 28 20:40:25 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/win32/stat.h (pace_win32_mkdir):
