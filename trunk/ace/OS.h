@@ -1062,9 +1062,7 @@ struct strrecvfd {};
 #  endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
 #elif defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
 #    include /**/ <wchar.h>
-#elif defined (VXWORKS)
-#include "types/vxTypesBase.h"
-#else
+#elif defined (ACE_LACKS_WCHAR_T)
 typedef long wchar_t;
 #endif /* ACE_HAS_UNICODE */
 
