@@ -417,8 +417,13 @@ void FTEC_Gateway_ProxyPushConsumer::push (const RtecEventComm::EventSet & data
                            data ACE_ENV_ARG_PARAMETER);
  */
 
-  impl_->ftec->push(**oid_ptr, data ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_TRY {
+    impl_->ftec->push(**oid_ptr, data ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+  }
+  ACE_CATCH(CORBA::COMM_FAILURE,ex) {
+  }
+  ACE_ENDTRY;
 }
 
 void FTEC_Gateway_ProxyPushConsumer::connect_push_supplier (

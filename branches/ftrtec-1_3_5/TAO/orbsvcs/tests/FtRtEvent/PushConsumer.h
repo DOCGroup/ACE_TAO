@@ -14,15 +14,17 @@
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/RtecEventCommS.h"
 
+struct Options;
+
 class PushConsumer_impl :
   public virtual POA_RtecEventComm::PushConsumer
 {
 public:
   PushConsumer_impl();
 
-  int init(CORBA::ORB_ptr orb, int num_iterations,
+  int init(CORBA::ORB_ptr orb,
     RtecEventChannelAdmin::EventChannel_ptr,
-    const ACE_Time_Value& timer_interval ACE_ENV_ARG_DECL);
+    const Options& options ACE_ENV_ARG_DECL);
 
   virtual void push (
     const RtecEventComm::EventSet & data
