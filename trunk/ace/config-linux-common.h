@@ -171,6 +171,10 @@
 #define ACE_LACKS_WCSICMP
 #define ACE_LACKS_WCSNICMP
 
+#if __GLIBC__ >= 2
+# define ACE_HAS_3_PARAM_WCSTOK
+#endif
+
 #if !defined (ACE_DEFAULT_BASE_ADDR)
 #  define ACE_DEFAULT_BASE_ADDR ((char *) 0x80000000)
 #endif /* ! ACE_DEFAULT_BASE_ADDR */
