@@ -76,11 +76,10 @@ namespace CIAO
   void
   Swapping_Container::update_servant_map
     (PortableServer::ObjectId &oid,
-     ::Components::CCMHome_ptr home,
      Dynamic_Component_Servant_Base* servant
      ACE_ENV_ARG_DECL)
   {
-    this->dsa_->update_servant_map (oid, home, servant);
+    this->dsa_->update_servant_map (oid, servant);
   }
 
   void

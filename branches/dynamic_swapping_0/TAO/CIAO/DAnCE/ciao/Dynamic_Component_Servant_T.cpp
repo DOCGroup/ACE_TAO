@@ -12,7 +12,7 @@ namespace CIAO
             typename COMP_EXEC_VAR,
             typename EXEC>
   Dynamic_Component_Servant<COMP_SERVANT, COMP_EXEC, COMP_EXEC_VAR, EXEC>
-    ::Dynamic_Component_Servant (EXEC *exe)
+    ::Dynamic_Component_Servant (EXEC *exe, Components::CCMHome_ptr home)
       :Dynamic_Component_Servant_Base (),
        executor_ (EXEC::_duplicate (exe))
   {
