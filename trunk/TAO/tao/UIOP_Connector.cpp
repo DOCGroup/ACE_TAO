@@ -307,26 +307,32 @@ TAO_UIOP_Connector::make_profile (const char *endpoint,
   ACE_CHECK;
 }
 
-
 int
 TAO_UIOP_Connector::check_prefix (const char *endpoint)
 {
-  // Parse the given URL style IOR and create an mprofile from it.
-
   // Check for a valid string
   if (!endpoint || !*endpoint)
     return -1;  // Failure
 
-  const char protocol[] = "uiop";
-  // This is valid for any protocol beginning with `uiop'.
+  const char *protocol[] = { "uiop", "uioploc" };
+
+  size_t slot = ACE_OS::strchr (endpoint, ':') - endpoint;
+
+  size_t len0 = ACE_OS::strlen (protocol[0]);
+  size_t len1 = ACE_OS::strlen (protocol[1]);
+
 
   // Check for the proper prefix in the IOR.  If the proper prefix isn't
   // in the IOR then it is not an IOR we can use.
-  if (ACE_OS::strncasecmp (endpoint,
-                           protocol,
-                           ACE_OS::strlen (protocol)) == 0)
+  if (slot == len0
+      && ACE_OS::strncasecmp (endpoint, protocol[0], len0) == 0)
     {
-      return 0;  // Success
+      return 0;
+    }
+  else if (slot == len1
+           && ACE_OS::strncasecmp (endpoint, protocol[1], len1) == 0)
+    {
+      return 0;
     }
 
   return -1;

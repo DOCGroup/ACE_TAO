@@ -335,7 +335,6 @@ TAO_IIOP_Connector::make_profile (const char *endpoint,
   ACE_CHECK;
 }
 
-
 int
 TAO_IIOP_Connector::check_prefix (const char *endpoint)
 {
@@ -343,16 +342,25 @@ TAO_IIOP_Connector::check_prefix (const char *endpoint)
   if (!endpoint || !*endpoint)
     return -1;  // Failure
 
-  const char protocol[] = "iiop";
-  // This is valid for any protocol beginning with `iiop'.
+  const char *protocol[] = { "iiop", "iioploc" };
+
+  size_t slot = ACE_OS::strchr (endpoint, ':') - endpoint;
+
+  size_t len0 = ACE_OS::strlen (protocol[0]);
+  size_t len1 = ACE_OS::strlen (protocol[1]);
+
 
   // Check for the proper prefix in the IOR.  If the proper prefix isn't
   // in the IOR then it is not an IOR we can use.
-  if (ACE_OS::strncasecmp (endpoint,
-                           protocol,
-                           ACE_OS::strlen (protocol)) == 0)
+  if (slot == len0
+      && ACE_OS::strncasecmp (endpoint, protocol[0], len0) == 0)
     {
-      return 0;  // Success
+      return 0;
+    }
+  else if (slot == len1
+           && ACE_OS::strncasecmp (endpoint, protocol[1], len1) == 0)
+    {
+      return 0;
     }
 
   return -1;
