@@ -19,6 +19,7 @@
 // ============================================================================
 
 #include "test_config.h"
+#include "Task_Ex_Test.h"
 #include "ace/Task_Ex_T.h"
 #include "ace/Log_Msg.h"
 #include "ace/Auto_Ptr.h"
@@ -31,19 +32,6 @@ ACE_RCSID(tests, Task_Test_Ex, "$Id$")
 const ACE_INT32 PRODUCER_THREADS_NO=20;
 const ACE_INT32 CONSUMER_THREADS_NO=20;
 const ACE_INT32 NUMBER_OF_MSGS=2000;
-
-class User_Defined_Msg
-{
-public:
-  /// c'tor sets the msg id
-  User_Defined_Msg (ACE_INT32 id) : msg_id_ (id)
-    {}
-  /// accessors to msg_id_
-  ACE_INT32 msg_id () const {return msg_id_;}
-private:
-  /// keep the msg id here
-  ACE_INT32 msg_id_;
-};
 
 /// @class Consumer consumes user defined Msgs
 class Consumer : public ACE_Task_Ex<ACE_MT_SYNCH, User_Defined_Msg>
