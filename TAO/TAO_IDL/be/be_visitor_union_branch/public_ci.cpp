@@ -449,53 +449,59 @@ be_visitor_union_branch_public_ci::visit_predefined_type (be_predefined_type *no
   *os << " val) // set" << be_nl
       << "{" << be_idt_nl;
   // set the discriminant to the appropriate label
+  *os << "// set the discriminant val" << be_nl;
+  *os << "this->_reset (";
+
   if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
     {
-      *os << "// set the discriminant val" << be_nl;
-      *os << "this->_reset (";
       ub->gen_label_value (os);
       *os << ", 0);" << be_nl
           << "this->disc_ = ";
       ub->gen_label_value (os);
-      *os << ";" << be_nl;
-
-      switch (node->pt ())
-        {
-        case AST_PredefinedType::PT_pseudo:
-          if (!ACE_OS::strcmp (node->local_name ()->get_string (), "Object"))
-            {
-              *os << "this->u_." << ub->local_name () << "_ = new "
-                  << "TAO_Object_Field_T<CORBA::Object,"
-                  << "CORBA::Object_var> (CORBA::Object::_duplicate (val));"
-                  << be_uidt_nl;
-            }
-          else
-            {
-              *os << "this->u_." << ub->local_name () << "_ = "
-                  << bt->name () << "::_duplicate (val);" << be_uidt_nl;
-            }
-          break;
-
-        case AST_PredefinedType::PT_any:
-          *os << "this->u_." << ub->local_name () << "_ = new "
-              << bt->name () << " (val);" << be_uidt_nl;
-          break;
-
-        case AST_PredefinedType::PT_void:
-          break;
-
-        default:
-          *os << "// set the value" << be_nl
-              << "this->u_." << ub->local_name ()
-              << "_ = val;" << be_uidt_nl;
-        }
     }
   else
+  // We have an explicit default case.
     {
-      // default label
-      // XXXASG - TODO
+      ub->gen_default_label_value (os, bu);
+      *os << ", 0);" << be_nl
+          << "this->disc_ = ";
+      ub->gen_default_label_value (os, bu);
     }
-  *os << "}" << be_nl;
+
+  *os << ";" << be_nl;
+
+  switch (node->pt ())
+    {
+      case AST_PredefinedType::PT_pseudo:
+        if (!ACE_OS::strcmp (node->local_name ()->get_string (), "Object"))
+          {
+            *os << "this->u_." << ub->local_name () << "_ = new "
+                << "TAO_Object_Field_T<CORBA::Object,"
+                << "CORBA::Object_var> (CORBA::Object::_duplicate (val));"
+                << be_uidt_nl;
+          }
+        else
+          {
+            *os << "this->u_." << ub->local_name () << "_ = "
+                << bt->name () << "::_duplicate (val);" << be_uidt_nl;
+          }
+        break;
+
+      case AST_PredefinedType::PT_any:
+        *os << "this->u_." << ub->local_name () << "_ = new "
+            << bt->name () << " (val);" << be_uidt_nl;
+        break;
+
+      case AST_PredefinedType::PT_void:
+        break;
+
+      default:
+        *os << "// set the value" << be_nl
+            << "this->u_." << ub->local_name ()
+            << "_ = val;" << be_uidt_nl;
+    }
+
+  *os << "}\n\n";
 
   switch (node->pt ())
     {
@@ -617,25 +623,31 @@ be_visitor_union_branch_public_ci::visit_sequence (be_sequence *node)
       << "{" << be_idt_nl;
 
   // set the discriminant to the appropriate label
+  *os << "// set the discriminant val" << be_nl;
+  *os << "this->_reset (";
+
   if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
     {
-      *os << "// set the discriminant val" << be_nl;
-      *os << "this->_reset (";
       ub->gen_label_value (os);
       *os << ", 0);" << be_nl
           << "this->disc_ = ";
       ub->gen_label_value (os);
-      *os << ";" << be_nl;
-
-      *os << "this->u_." << ub->local_name () << "_ = new "
-          << bt->name () << " (val);" << be_uidt_nl;
     }
   else
+  // We have an explicit default case.
     {
-      // default label
-      // XXXASG - TODO
+      ub->gen_default_label_value (os, bu);
+      *os << ", 0);" << be_nl
+          << "this->disc_ = ";
+      ub->gen_default_label_value (os, bu);
     }
-  *os << "}" << be_nl;
+
+  *os << ";" << be_nl;
+
+  *os << "this->u_." << ub->local_name () << "_ = new "
+      << bt->name () << " (val);" << be_uidt_nl;
+
+  *os << "}\n\n";
 
   // readonly get method
   *os << "// readonly get method " << be_nl
@@ -643,7 +655,7 @@ be_visitor_union_branch_public_ci::visit_sequence (be_sequence *node)
       << bu->name () << "::" << ub->local_name () << " (void) const" << be_nl
       << "{" << be_idt_nl
       << "return *this->u_." << ub->local_name () << "_;" << be_uidt_nl
-      << "}" << be_nl;
+      << "}\n\n";
 
   // read/write get method
   *os << "// read/write get method " << be_nl
@@ -684,25 +696,31 @@ be_visitor_union_branch_public_ci::visit_string (be_string *)
       << be_nl
       << "{" << be_idt_nl;
   // set the discriminant to the appropriate label
+  *os << "// set the discriminant val" << be_nl;
+  *os << "this->_reset (";
+
   if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
     {
-      *os << "// set the discriminant val" << be_nl;
-      *os << "this->_reset (";
       ub->gen_label_value (os);
       *os << ", 0);" << be_nl
           << "this->disc_ = ";
       ub->gen_label_value (os);
-      *os << ";" << be_nl;
-
-      *os << "// set the value" << be_nl
-          << "this->u_." << ub->local_name () << "_ = val;" << be_uidt_nl;
-   }
-  else
-    {
-      // default label
-      // XXXASG - TODO
     }
-  *os << "}" << be_nl;
+  else
+  // We have an explicit default case.
+    {
+      ub->gen_default_label_value (os, bu);
+      *os << ", 0);" << be_nl
+          << "this->disc_ = ";
+      ub->gen_default_label_value (os, bu);
+    }
+
+  *os << ";" << be_nl;
+
+  *os << "// set the value" << be_nl
+      << "this->u_." << ub->local_name () << "_ = val;" << be_uidt_nl;
+
+  *os << "}\n\n";
 
   // (2) set method from const char *
   *os << "// accessor to set the member" << be_nl
@@ -712,27 +730,31 @@ be_visitor_union_branch_public_ci::visit_string (be_string *)
       << "{\n";
   os->incr_indent ();
   // set the discriminant to the appropriate label
+  *os << "// set the discriminant val" << be_nl;
+  *os << "this->_reset (";
+
   if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
     {
-      *os << "// set the discriminant val" << be_nl;
-      *os << "this->_reset (";
       ub->gen_label_value (os);
       *os << ", 0);" << be_nl
           << "this->disc_ = ";
       ub->gen_label_value (os);
-      *os << ";" << be_nl;
-
-      *os << "// set the value" << be_nl
-          << "this->u_." << ub->local_name () << "_ = "
-          << "CORBA::string_dup (val);" << be_uidt_nl;
     }
   else
+  // We have an explicit default case.
     {
-      // default label
-      // XXXASG - TODO
+      ub->gen_default_label_value (os, bu);
+      *os << ", 0);" << be_nl
+          << "this->disc_ = ";
+      ub->gen_default_label_value (os, bu);
     }
 
-  *os << "}" << be_nl;
+  *os << ";" << be_nl;
+
+  *os << "// set the value" << be_nl
+      << "this->u_." << ub->local_name () << "_ = "
+      << "CORBA::string_dup (val);" << be_uidt_nl;
+  *os << "}\n\n";
 
   // (3) set from const String_var&
   *os << "// accessor to set the member" << be_nl
@@ -741,28 +763,33 @@ be_visitor_union_branch_public_ci::visit_string (be_string *)
       << " (const CORBA::String_var &val)" << be_nl
       << "{" << be_idt_nl;
   // set the discriminant to the appropriate label
+  *os << "// set the discriminant val" << be_nl;
+  *os << "this->_reset (";
+
   if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
     {
-      *os << "// set the discriminant val" << be_nl;
-      *os << "this->_reset (";
       ub->gen_label_value (os);
       *os << ", 0);" << be_nl
           << "this->disc_ = ";
       ub->gen_label_value (os);
-      *os << ";" << be_nl;
-
-      *os << "// set the value" << be_nl
-          << "CORBA::String_var " << ub->local_name ()
-          << "_var = val;" << be_nl
-          << "this->u_." << ub->local_name () << "_ = "
-          << ub->local_name () << "_var._retn ();" << be_uidt_nl;
     }
   else
+  // We have an explicit default case.
     {
-      // default label
-      // XXXASG - TODO
+      ub->gen_default_label_value (os, bu);
+      *os << ", 0);" << be_nl
+          << "this->disc_ = ";
+      ub->gen_default_label_value (os, bu);
     }
-  *os << "}" << be_nl;
+
+  *os << ";" << be_nl;
+
+  *os << "// set the value" << be_nl
+      << "CORBA::String_var " << ub->local_name ()
+      << "_var = val;" << be_nl
+      << "this->u_." << ub->local_name () << "_ = "
+      << ub->local_name () << "_var._retn ();" << be_uidt_nl;
+  *os << "}\n\n";
 
   // get method
   *os << "ACE_INLINE const char *" << be_nl
@@ -839,33 +866,39 @@ be_visitor_union_branch_public_ci::visit_structure (be_structure *node)
       << "{" << be_idt_nl;
 
   // set the discriminant to the appropriate label
+  *os << "// set the discriminant val" << be_nl;
+  *os << "this->_reset (";
+
   if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
     {
-      *os << "// set the discriminant val" << be_nl;
-      *os << "this->_reset (";
       ub->gen_label_value (os);
       *os << ", 0);" << be_nl
           << "this->disc_ = ";
       ub->gen_label_value (os);
-      *os << ";" << be_nl;
+    }
+  else
+  // We have an explicit default case.
+    {
+      ub->gen_default_label_value (os, bu);
+      *os << ", 0);" << be_nl
+          << "this->disc_ = ";
+      ub->gen_default_label_value (os, bu);
+    }
 
-      if (bt->size_type () == be_type::VARIABLE
-          || node->has_constructor ())
-        {
-          *os << "this->u_." << ub->local_name () << "_ = new "
-              << bt->name () << " (val);" << be_uidt_nl;
-        }
-      else
-        {
-          *os << "this->u_." << ub->local_name () << "_ = val;" << be_uidt_nl;
-        }
+  *os << ";" << be_nl;
+
+  if (bt->size_type () == be_type::VARIABLE
+      || node->has_constructor ())
+    {
+      *os << "this->u_." << ub->local_name () << "_ = new "
+          << bt->name () << " (val);" << be_uidt_nl;
     }
   else
     {
-      // default label
-      // XXXASG - TODO
+      *os << "this->u_." << ub->local_name () << "_ = val;" << be_uidt_nl;
     }
-  *os << "}" << be_nl;
+
+  *os << "}\n\n";
 
   // readonly get method
   *os << "// readonly get method " << be_nl
@@ -877,7 +910,7 @@ be_visitor_union_branch_public_ci::visit_structure (be_structure *node)
     *os << "return *this->u_." << ub->local_name () << "_;" << be_uidt_nl;
   else
     *os << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl;
-  *os << "}" << be_nl;
+  *os << "}\n\n";
 
   // read/write get method
   *os << "// read/write get method " << be_nl
@@ -978,26 +1011,31 @@ be_visitor_union_branch_public_ci::visit_union (be_union *node)
       << bu->name () << "::" << ub->local_name ()
       << " (const " << bt->name () << " &val)" << be_nl
       << "{" << be_idt_nl;
+  *os << "// set the discriminant val" << be_nl;
+  *os << "this->_reset (";
+
   if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
     {
-      *os << "// set the discriminant val" << be_nl;
-      *os << "this->_reset (";
       ub->gen_label_value (os);
       *os << ", 0);" << be_nl
           << "this->disc_ = ";
       ub->gen_label_value (os);
-      *os << ";" << be_nl;
-
-      *os << "this->u_."
-          << ub->local_name () << "_ = new " << bt->name ()
-          << " (val);" << be_nl;
     }
   else
+  // We have an explicit default case.
     {
-      // default label
-      // XXXASG - TODO
+      ub->gen_default_label_value (os, bu);
+      *os << ", 0);" << be_nl
+          << "this->disc_ = ";
+      ub->gen_default_label_value (os, bu);
     }
-  *os << "}" << be_nl;
+
+  *os << ";" << be_nl;
+
+  *os << "this->u_."
+      << ub->local_name () << "_ = new " << bt->name ()
+      << " (val);" << be_uidt_nl;
+  *os << "}\n\n";
 
   // readonly get method
   *os << "// readonly get method " << be_nl
@@ -1005,7 +1043,7 @@ be_visitor_union_branch_public_ci::visit_union (be_union *node)
       << bu->name () << "::" << ub->local_name () << " (void) const" << be_nl
       << "{" << be_idt_nl
       << "return *this->u_." << ub->local_name () << "_;" << be_uidt_nl
-      << "}" << be_nl;
+      << "}\n\n";
 
   // read/write get method
   *os << "// read/write get method " << be_nl
