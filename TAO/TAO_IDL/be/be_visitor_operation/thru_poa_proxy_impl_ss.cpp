@@ -71,7 +71,14 @@ be_visitor_operation_thru_poa_proxy_impl_ss::visit_operation (
   *os << node->local_name () << " (" << be_idt << be_idt_nl
       << "CORBA::Object_ptr obj," << be_nl
       << "CORBA::Object_out forward," << be_nl
-      << "TAO::Argument ** args," << be_nl
+      << "TAO::Argument **";
+
+  if (!node->void_return_type () || node->nmembers () > 0)
+    {
+      *os << " args";
+    }
+
+  *os << "," << be_nl
       << "int " << be_nl
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_uidt_nl
