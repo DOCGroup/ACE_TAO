@@ -17,6 +17,7 @@
 
 
 #include "ace/Select_Reactor.h"
+#include "ace/QtReactor_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -78,7 +79,7 @@
  * it is not clear if the leak is introduced by  QtReactor, or rather incorrect
  * memory management in QtReactor_Test.
  */
-class ACE_Export ACE_QtReactor : public QObject, public ACE_Select_Reactor
+class ACE_QtReactor_Export ACE_QtReactor : public QObject, public ACE_Select_Reactor
 {
 
     Q_OBJECT
