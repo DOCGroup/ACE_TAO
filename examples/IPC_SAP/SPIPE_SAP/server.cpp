@@ -50,65 +50,65 @@ main (int argc, char *argv[])
       // guaranteed to be lowest client descriptor).
 
       for (handle = s_handle + 1; handle < width; handle++)
-	if (ACE_BIT_ENABLED (poll_array[handle].revents, POLLIN)
-	    || ACE_BIT_ENABLED (poll_array[handle].revents, POLLHUP))
-	  {
-	    char buf[BUFSIZ];
-	    ssize_t n = ACE_OS::read (handle, buf, sizeof buf);
+        if (ACE_BIT_ENABLED (poll_array[handle].revents, POLLIN)
+            || ACE_BIT_ENABLED (poll_array[handle].revents, POLLHUP))
+          {
+            char buf[BUFSIZ];
+            ssize_t n = ACE_OS::read (handle, buf, sizeof buf);
 
-	    // recv will not block in this case!
-	    if (n == -1)
-	      ACE_DEBUG ((LM_DEBUG, "%p\n", "read failed"));
-	    else if (n == 0)
-	      {
-		// Handle client connection shutdown.
-		if (ACE_OS::close (poll_array[handle].fd) == -1)
-		  ACE_DEBUG ((LM_DEBUG, "%p\n", "close"));
-		poll_array[handle].fd = -1;
+            // recv will not block in this case!
+            if (n == -1)
+              ACE_DEBUG ((LM_DEBUG, "%p\n", "read failed"));
+            else if (n == 0)
+              {
+                // Handle client connection shutdown.
+                if (ACE_OS::close (poll_array[handle].fd) == -1)
+                  ACE_DEBUG ((LM_DEBUG, "%p\n", "close"));
+                poll_array[handle].fd = -1;
 
-		if (handle + 1 == width)
-		  {
-		    while (poll_array[handle].fd == -1)
-		      handle--;
-		    width = handle + 1;
-		  }
-	      }
-	    else
-	      ACE_DEBUG ((LM_DEBUG, "%*s\n", n, buf));
-	  }
+                if (handle + 1 == width)
+                  {
+                    while (poll_array[handle].fd == -1)
+                      handle--;
+                    width = handle + 1;
+                  }
+              }
+            else
+              ACE_DEBUG ((LM_DEBUG, "%*s\n", n, buf));
+          }
 
       if (ACE_BIT_ENABLED (poll_array[0].revents, POLLIN))
-	{
-	  if (peer_acceptor.accept (new_stream) == -1)
-	    ACE_DEBUG ((LM_DEBUG, "%p\n", "accept failed"));
+        {
+          if (peer_acceptor.accept (new_stream) == -1)
+            ACE_DEBUG ((LM_DEBUG, "%p\n", "accept failed"));
 
-	  ACE_SPIPE_Addr client;
-	  ACE_HANDLE n_handle = new_stream.get_handle ();
+          ACE_SPIPE_Addr client;
+          ACE_HANDLE n_handle = new_stream.get_handle ();
 
-	  if (new_stream.get_remote_addr (client) == -1)
-	    ACE_DEBUG ((LM_DEBUG, "%p\n",
-			"get_remote_addr failed"));
+          if (new_stream.get_remote_addr (client) == -1)
+            ACE_DEBUG ((LM_DEBUG, "%p\n",
+                        "get_remote_addr failed"));
 
-	  ACE_DEBUG ((LM_DEBUG,
-		      "n_handle = %d, uid = %d, gid = %d\n",
-		      n_handle,
-		      client.user_id (),
-		      client.group_id ()));
+          ACE_DEBUG ((LM_DEBUG,
+                      "n_handle = %d, uid = %d, gid = %d\n",
+                      n_handle,
+                      client.user_id (),
+                      client.group_id ()));
 
-	  int arg = RMSGN | RPROTDAT;
+          int arg = RMSGN | RPROTDAT;
 
-	  if (ACE_OS::ioctl (n_handle,
-			     I_SRDOPT, (void *) arg) == -1)
-	    ACE_DEBUG ((LM_DEBUG, "%p\n", "ioctl failed"));
+          if (ACE_OS::ioctl (n_handle,
+                             I_SRDOPT, (void *) arg) == -1)
+            ACE_DEBUG ((LM_DEBUG, "%p\n", "ioctl failed"));
 
-	  poll_array[n_handle].fd = n_handle;
+          poll_array[n_handle].fd = n_handle;
 
-	  if (n_handle >= width)
-	    width = n_handle + 1;
-	}
+          if (n_handle >= width)
+            width = n_handle + 1;
+        }
     }
 
-  return 0;
+  ACE_NOTREACHED (return 0;)
 }
 #else
 #include <stdio.h>
