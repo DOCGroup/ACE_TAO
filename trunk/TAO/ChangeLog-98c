@@ -65,7 +65,8 @@ Tue Nov 11 10:07:04 1997  David L. Levine  <levine@cs.wustl.edu>
           in VBIN definition.
 
         * tao/orbconf.h: added __i386 to TAO_WORDS_BIGENDIAN check,
-          because that's what g++/VxWorks uses.
+          because that's what g++/VxWorks uses.  Also added __alpha
+          to little endian CPUs.
 
         * tao/orb_core.i: fixed preprocessor test for using the
           ACE_Hash_Addr<ACE_INET_Addr>::hash_i specialization.
