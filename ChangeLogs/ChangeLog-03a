@@ -1,3 +1,11 @@
+Mon Sep 25 23:03:11 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* bin/run_all_list.pm:
+
+	  Added TAO/tests/RTCORBA/Client_Propagated and
+	  TAO/tests/RTCORBA/Server_Protocol to the list of auto daily
+	  tests.
+
 Mon Sep 25 16:58:22 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ltcf-c.sh:
@@ -43,13 +51,13 @@ Sat Sep 23 16:55:26 2000  Carlos O'Ryan  <coryan@uci.edu>
 	  New module to keep an explicit collection of all the peers,
 	  detecting join and leave messages and computing the messages
 	  successfully received by all the peers using the Ack
-	  information. 
+	  information.
 
         * ace/RMCast/RMCast_Retransmission.h:
         * ace/RMCast/RMCast_Retransmission.i:
         * ace/RMCast/RMCast_Retransmission.cpp:
 	  Buffer messages to allow retransmission.
-	
+
         * ace/RMCast/RMCast_UDP_Proxy.h:
         * ace/RMCast/RMCast_UDP_Proxy.i:
         * ace/RMCast/RMCast_UDP_Proxy.cpp:
@@ -60,7 +68,7 @@ Fri Sep 22 15:13:46 2000  Darrell Brunsch <brunsch@uci.edu>
         * ace/Atomic_Op.i:
 
           I was mistaken, inline was being used correctly here,
-          since on NT this is only included from Atomic_Op.h.  
+          since on NT this is only included from Atomic_Op.h.
           So I reverted the previous change and added a disable
           command for fuzz.
 
@@ -110,7 +118,7 @@ Fri Sep 22 12:27:42 2000  Darrell Brunsch <brunsch@uci.edu>
         * WindozeCE/WindozeCE.cpp:
         * WindozeCE/WindozeCE.h:
         * WindozeCE/WindozeCEDlg.cpp:
-        
+
           Disabled the fuzz tchar check, since these are WinCE only
           files and shouldn't have any problems with using the Win32
           specific character macros.
@@ -120,14 +128,14 @@ Fri Sep 22 12:27:42 2000  Darrell Brunsch <brunsch@uci.edu>
           Shouldn't be in the repository
 
         * ace/ACE.cpp:
-          
+
           There were some TEXT's (albeit in comments) that I changed
           to ACE_TEXT to make fuzz happy.
 
         * ace/Atomic_Op.i:
 
           Changed the inline's to ACE_INLINE to be consistent with the
-          rest of the file.  
+          rest of the file.
 
         * ace/Handle_Gobbler.i:
         * apps/JAWS/remora/app/Remora_Export.i:
@@ -137,7 +145,7 @@ Fri Sep 22 12:27:42 2000  Darrell Brunsch <brunsch@uci.edu>
         * performance-tests/Synch-Benchmarks/Perf_Test/Performance_Test_Options.i:
 
           Disabled the fuzz check for inline in these files, since
-          they are only included in .h files, so they should be 
+          they are only included in .h files, so they should be
           inline instead of ACE_INLINE.
 
         * apps/JAWS/clients/WebSTONE/src/bench.c:
@@ -148,10 +156,10 @@ Fri Sep 22 12:27:42 2000  Darrell Brunsch <brunsch@uci.edu>
         * apps/JAWS/clients/WebSTONE/src/webmaster.c:
         * apps/JAWS/clients/WebSTONE/src/nsapi-includes/base/eventlog.h:
         * apps/JAWS/stress_testing/global.h:
-        
-          Disabled checks for inline and math.h, since there probably 
+
+          Disabled checks for inline and math.h, since there probably
           isn't any problems with them here.
-        
+
         * performance-tests/TCP/tcp_test.cpp:
         * performance-tests/UDP/udp_test.cpp:
 

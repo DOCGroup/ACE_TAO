@@ -47,6 +47,8 @@ if ($^O eq "MSWin32") {
       'TAO/examples/Buffered_Oneways , run_test.pl',
 # REQUIRES AMI 'TAO/examples/Buffered_AMI , run_test.pl',
       'TAO/tests/InterOp-Naming , run_test.pl',
+      'TAO/tests/RTCORBA/Client_Propagated , run_test.pl',
+      'TAO/tests/RTCORBA/Server_Protocol , run_test.pl',
       'TAO/examples/POA/Adapter_Activator , run_test.pl',
       'TAO/examples/POA/DSI , run_test.pl',
       'TAO/examples/POA/Default_Servant , run_test.pl',
