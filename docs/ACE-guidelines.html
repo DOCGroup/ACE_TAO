@@ -711,8 +711,23 @@ Foo::bar ()
 
   <li><strong>WCHAR conformity</strong><p>
 
-  <!-- @@ UNICODE: update -->
-  For now, don't worry about it.
+  <ul>
+     <li>For ACE, use ACE_TCHAR instead of char for strings and ACE_TEXT () 
+         around string literals.  Exceptions are char arrays used for data
+         and strings that need to remain as 1 byte characters.
+
+     <li>If you have a char string that needs to be converted to ACE_TCHAR,
+         use the ACE_TEXT_CHAR_TO_TCHAR () macro.  If you have a ACE_TCHAR
+         string that needs to be converted to a char string, use the
+         ACE_TEXT_ALWAYS_CHAR () macro
+    
+     <li>Do not use the Win32 TCHAR macros.  The wide character-ness of ACE
+         is separate from UNICODE and _UNICODE.
+
+     <li>For TAO, don't use ACE_TCHAR or ACE_TEXT.  The CORBA specification
+         defines APIs as using char.  So most of the time there is no need
+         to use wide characters.
+  </ul>
 
   <li><strong>Exceptions</strong><p>
 
