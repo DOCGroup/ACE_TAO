@@ -701,7 +701,8 @@ ACE_Strategy_Connector<SH, PR_CO_2>::open
   if (this->concurrency_strategy_ == 0)
     if (con_s == 0)
       {
-        ACE_NEW_RETURN (con_s, CONCURRENCY_STRATEGY, -1);
+        ACE_NEW_RETURN (this->concurrency_strategy_,
+                        CONCURRENCY_STRATEGY, -1);
         this->delete_concurrency_strategy_ = 1;
       }
     else
