@@ -43,6 +43,9 @@ public:
   virtual int visit_typedef (be_typedef *node);
   virtual int visit_native (be_native *node);
 
+  void argument_direction (int direction);
+  void current_type_name (UTL_ScopedName* name);
+
 private:
   TAO_OutStream& stream (void) const;
 

@@ -195,14 +195,14 @@ public:
 
   IIOP_Object (const char *host = ACE_DEFAULT_SERVER_HOST,
                const CORBA::UShort p = TAO_DEFAULT_SERVER_PORT,
-               const char *objkey = "0",
+               const char *objkey = "0", // @@ (IRFAN) We may need to remove this def arg
                char *repository_id = 0);
   // This constructor will usually be used by a <_bind> call on the
   // client side.
 
   IIOP_Object (char *repository_id,
                const ACE_INET_Addr &addr, 
-               const char *objkey = "0");
+               const char *objkey /*= "0"*/); // @@ (IRFAN) We may need to remove this def arg
   // Constructor used typically by the server side.
 
   // = COM stuff
@@ -211,11 +211,9 @@ public:
   TAO_HRESULT  QueryInterface (REFIID type_id,
                                void **ppv);
 
-  virtual const char *_get_name (CORBA::Environment &env);
-  // Get the underlying object key, which is stored as a
-  // NUL-terminated character string.  Note that this does not
-  // allocate any new memory, so this return value should not be
-  // changed by the caller.
+  virtual TAO::ObjectKey *key (CORBA::Environment &env);
+  // Return the object key as an out parameter.  Caller should release
+  // return value when finished with it.
 
   IIOP::Profile profile;
   // Profile for this object.
@@ -238,7 +236,7 @@ private:
 
   IIOP::Profile *fwd_profile_;
   // This is a pointer to a profile used if the object is not
-  // colocated in the current process.
+  // collocated in the current process.
 
   ~IIOP_Object (void);
   // Destructor is to be called only through Release()

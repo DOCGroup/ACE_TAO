@@ -71,6 +71,9 @@ public:
   virtual void comma (unsigned short set);
   // set the comma producing state
 
+  int comma (void) const;
+  // get the comma producing state
+
   virtual be_decl *decl (void);
   // return the be_decl node corresponding to this scope node
 

@@ -68,9 +68,16 @@ RtecScheduler::Scheduler_ptr static_server ()
       info[i]->subpriority = rt_info[i].subpriority;
       info[i]->preemption_priority = rt_info[i].preemption_priority;
     }
-  server_ = new ACE_Runtime_Scheduler (entry_count, info);
+  static ACE_Runtime_Scheduler scheduler(entry_count, info);
+  TAO_TRY
+    {
+      server_ = scheduler._this (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-  if (server_ == 0)
+      ACE_DEBUG ((LM_DEBUG,
+		  "ACE_Scheduler_Factory - configured static server\n"));
+    }
+  TAO_CATCHANY
     {
       for (int i = 0; i < entry_count; ++i)
 	{
@@ -81,9 +88,7 @@ RtecScheduler::Scheduler_ptr static_server ()
 			 "ACE_Scheduler_Factory::config_runtime - "
 			 "cannot allocate server\n"), 0);
     }
-  ACE_DEBUG ((LM_DEBUG,
-	      "ACE_Scheduler_Factory - configured static server\n"));
-  CORBA::Object::_duplicate (server_);
+  TAO_ENDTRY;
   return server_;
 }
 

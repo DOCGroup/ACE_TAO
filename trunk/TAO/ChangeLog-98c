@@ -1,3 +1,1252 @@
+Sat Jan 24 10:30:40 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* The POA branch is merged back into the main trunk. For the
+	  record we reproduce the ChangeLog in the branch.
+
+	* ============ 
+	* ============ Start of POA branch changes.
+	* ============ 
+
+	Fri Jan 23 17:13:14 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* Merged changes from main_to_poa_merge_11 up to
+	  main_to_poa_merge_12
+
+	Fri Jan 23 17:08:45 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/Event_Service/Event_Channel.h: 
+	* orbsvcs/Event_Service/Event_Channel.i: 
+	  Fixed problem with Event Channel, it was using _this
+	  unproperly.
+
+	Fri Jan 23 16:49:19 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tests/Param_Test/{server.cpp,param_test_i.h,param_test_i.cpp}:
+ 	Updated to compile with new POA.
+
+	* tests/Param_Test/Makefile: Moved LDFLAGS up, included the
+ 	rules.tao.GNU, and removed the dependencies which were causing me
+ 	no end of grief.
+
+	* tests/Cubit/TAO/IDL_Cubit/svr.cpp (main): Changed the check on
+ 	return value from resolve_initial_references() to use the
+ 	CORBA::is_nil() check.
+
+	Fri Jan 23 16:43:12 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/Dump_Schedule/Dump_Schedule.cpp: 
+	* orbsvcs/Event_Service/Event_Channel.cpp: 
+	* orbsvcs/Event_Service/Event_Channel.i: 
+	* orbsvcs/Event_Service/Event_Service.cpp: 
+	* orbsvcs/Naming_Service/CosNaming_i.cpp: 
+	* orbsvcs/Naming_Service/CosNaming_i.h: 
+	* orbsvcs/Naming_Service/Naming_Service.cpp: 
+	* orbsvcs/Scheduling_Service/Config_Scheduler.cpp: 
+	* orbsvcs/Scheduling_Service/Scheduling_Service.cpp: 
+	* orbsvcs/orbsvcs/Runtime_Scheduler.cpp: 
+	* orbsvcs/orbsvcs/Scheduler_Factory.cpp: 
+	* orbsvcs/tests/Event_Latency/Event_Latency.cpp: 
+	* orbsvcs/tests/Event_Latency/Event_Latency.h: 
+	  "Ported" the orbsvcs and the Event_Latency test to POA, with
+	  little success though, things will compile and it seems that the
+	  Naming_Service and Scheduling_Services run properly, but
+	  Event_Service does not.
+	  We use a nested POA with "PERSISTENT" lifespan policy because it
+	  is easier to set an enviroment variable or command line to the
+	  NameService IOR.
+
+	* tests/Cubit/TAO/IDL_Cubit/svr.cpp: 
+	  Removed some extra (and unwanted) code.
+
+	Fri Jan 23 14:47:18 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tests/POA/{FindPOA,RootPOA,NewPOA}/Makefile: Added
+ 	-L$(TAO_ROOT)/tao to LDFLAGS.
+
+	* tests/POA/NewPOA/NewPOA.cpp: 
+	* tests/POA/RootPOA/RootPOA.cpp: 
+	* tests/POA/FindPOA/FindPOA.cpp: 
+	Used the ::in() method as first	argument to _narrow() calls.
+
+	* tests/{Makefile,README}: Updated for new tests.
+
+	* tao/poa.cpp: Added explicit template instantiations.
+
+	Fri Jan 23 14:30:19 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/poa.h: 
+	* tao/poa.cpp: 
+	* tao/servant_base.cpp: 
+	  _this() was using the object id for the current servant in *all*
+	  objects, now it only does so for the servant invoked.
+
+	* tests/Cubit/TAO/IDL_Cubit/Makefile: 
+	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp: 
+	* tests/Cubit/TAO/IDL_Cubit/clnt.h: 
+	* tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp: 
+	* tests/Cubit/TAO/IDL_Cubit/cubit_i.h: 
+	* tests/Cubit/TAO/IDL_Cubit/svr.cpp: 
+	  Ported the Cubit test to POA, including some funky persistent
+	  policies to simplify its use.
+
+	Sat Jan 24 01:24:24 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/poa.cpp (destroy_i): Changed etherealize objects to correct
+ 	  report remaining_activations.
+
+	Fri Jan 23 10:55:40 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/objtable.cpp: 
+	  Linear object tables were not using the initial size to
+	  pre-allocate a buffer.
+
+	* TAO_IDL/be/be_interface.cpp: 
+	* TAO_IDL/be/be_state_argument.cpp: 
+	  Fixed the mapping for native as OUT or INOUT parameters, also
+	  fixed the name for the _dispatch() method.
+
+	Fri Jan 23 01:12:28 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/poaS.cpp: Added ACE_NESTED_CLASS macro to constructors.
+
+	Thu Jan 22 23:57:31 1998  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
+
+	* tao/poa.cpp (wstring_to_ObjectId): Stuck the CORBA::WChar type
+ 	in parens for sizeof...g++ likes it better that way.
+
+	Fri Jan 23 00:14:03 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/poa: 
+
+	  - Added support for transient and persistent POAs by changing
+ 	    the ObjectKey.  From now on, each key will contain an
+ 	    identifier that will indicate whether the key came from a
+ 	    persistent or transient POA.  That way the dispatch method can
+ 	    decide the value of the activate_it flag while finding the
+ 	    POA.  If the key is from a persistent POA, the activate_it
+ 	    flag will be true, else the flag will be set to false.
+	    
+	  - All operations on the parent POA will check for a valid parent
+ 	    before executing the call.  Remember that the RootPOA does not
+ 	    have a parent POA.
+
+	  - Temporarily added export macros to the POA implementation
+ 	    classes, so that the implementations can directly be debugged
+ 	    (rather than going through the stubs/skeletons).  These should
+ 	    be removed once the debugging process is over.
+
+	  - Moved the registeration of the POA with its manager from the
+ 	    create_POA method to the POA constructor.  This is to insure
+ 	    that the registration of the RootPOA is not "missed" since the
+ 	    RootPOA is not created via the create_POA call.  Similarly,
+ 	    moved the removal of the POA from its manager from the destroy
+ 	    method to the POA destructor.
+
+	  - TAO_POA::delete_child and TAO_POA_Manager::remove_poa were
+ 	    changed such that when the object is closing down, we are
+ 	    currently iterating over our poa collection and there is not
+ 	    need to remove the item from our collection.
+	    
+	  - Changed use of substr from starting_at/ending_at to
+ 	    starting_at/now_many.
+
+	  - Methods that return duplicated values/objects, must first be
+ 	    assigned to a _var variable before being used.  This will
+ 	    avoid memory leaks.
+
+	  - For find methods, always use != -1 for success.
+	  
+	  - Added code to create_POA_i and find_POA_i_optimized to check
+ 	    when topmost_poa_name == this->name_.
+
+	  - Added the concept of creation time to a POA.  This way when a
+ 	    transient POA gets a object key from a previous incarnation,
+ 	    the OBJECT_NOT_EXISTS exception can be thrown.
+
+	  - Added a locator cookie field to TAO_POA_Current to keep track
+ 	    of the cookie produced by the servant locator.
+
+	  - Made all methods virtual.
+
+	  - Renamed active_object_table to active_object_map.
+
+	  - Added pre_invoke and post_invoke methods to setup the
+ 	    necessary state before doing the upcall to the servant.
+
+	  - Changed locate_servant to return 0 for success and -1 for
+ 	    failure instead of trying to return a servant.  This change is
+ 	    necessary since there may not be a servant available but there
+ 	    may be default servants or servant managers that could fill in
+ 	    for the servant.  Currently the locate_servant method takes an
+ 	    optimistic approach to return TRUE when the servant was not
+ 	    found but a default servant or servant manager was registered
+ 	    with the POA, hoping the default servant or servant manager
+ 	    will be able to fill in when the real request arrives.
+
+	  - Add a validity checks for POA policies.
+
+	  - Added support for servant managers (both servant locators and
+ 	    servant activators), default servants and DSI.
+	
+	* tao/poaC.h: Added DynamicImplementation class to the
+ 	  PortableServer.
+
+	* tao/poaS: Changed dispatch to _dispatch.
+
+	* tao/servant_base: 
+
+	  - Added TAO_DynamicImplementation class
+ 	    (a.k.a. PortableServer::DynamicImplementation).  Users will
+ 	    inherit from this to implement DSI.
+
+	  - Added prefix _ to all methods names in the ServantBase class
+ 	    to avoid potential crashes with user specified method names.
+	  
+	  - Made TAO_POA a friend of ServantBase.
+
+	* tao/connect.cpp (handle_locate): Changed to use latest version
+ 	  of TAO_POA::locate_servant.
+
+	* tao/servant_base.cpp (_default_POA): Changed to use
+ 	  TAO_ORB_Core_instance()->root_poa() instead of
+ 	  TAO_ORB_Core_instance()->orb()->resolve_initial_references("RootPOA").
+
+	* tao/poaC: Added string_to_ObjectId and ObjectId_to_string
+ 	  methods to PortableServer.
+
+	* tao/poa.cpp (TAO_Adapter_Activator::unknown_adapter): Changed
+ 	  the implementation of this object so that it does not depend on
+ 	  being friends with the POA and the POAManager.  Initially, this
+ 	  was done to avoid recursive locks.  However, since user may want
+ 	  to write their own implementations, recursive locks were deemed
+ 	  necessary.
+
+	* tao/default_server.cpp (create_poa_lock): Changed implementation
+ 	  to produce ACE_Recursive_Thread_Mutex instead of
+ 	  ACE_Thread_Mutex.
+
+	* tests/POA/RootPOA/RootPOA.cpp (main) and
+ 	  tests/POA/NewPOA/NewPOA.cpp (main): Added code to destroy the
+ 	  rootPOA.  I am not sure this is the responsibility of the user
+ 	  to destroy the rootPOA since they never really created it.  The
+ 	  responsibility probably lies with the ORB, but since the spec
+ 	  seems neutral about this, it is ok for now.
+
+	* tao/object.i (CORBA_Object::Release): We must delete the object
+ 	  when the parent_ refcount goes to zero.
+
+	Thu Jan 22 16:56:32 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be_include/be_interface.h: 
+	* TAO_IDL/be/be_interface.cpp: 
+	* TAO_IDL/be/be_visitor_interface.cpp: 
+	  Fixed some relative name problems for the server header file.
+
+	* TAO_IDL/be/be_visitor_sequence.cpp: 
+	* TAO_IDL/be/be_visitor_root.cpp: 
+	* TAO_IDL/be/be_visitor_args.cpp: 
+	  Get rid of some "unused arg" warnings.
+
+	Thu Jan 22 15:26:55 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/object.i: CORBA::Object --> CORBA_Object for internal stuff.
+	
+	* tao/object.i (CORBA_Object): Re-ordered member initialization to
+ 	match declaration order.
+
+	Thu Jan 22 14:40:01 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/corbacom.h: 
+	  Fixed multiple definitions of ORB_var and ORB_out due to a
+	  simplistic merge.
+
+	* TAO_IDL/be/be_interface.cpp: 
+	  Generate _find() to locate operations; using just find() is not
+	  complaint.
+
+	Thu Jan 22 10:40:13 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* Merged changes from main_to_poa_merge_10 up to
+	  main_to_poa_merge_11
+
+	Wed Jan 21 17:35:20 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface.cpp: 
+	  Generate CORBA_Object instead of CORBA::Object to keep NT
+	  happy.
+
+	* TAO_IDL/be/be_visitor_args.cpp: 
+	  Fixed mapping for strings as arguments, they should always be
+	  char*.
+
+	Mon Jan 19 22:03:38 1998    <coryan@MILONGA>
+
+	* tao/sequence_T.i: 
+	  Object_Manager constructor was calling _duplicate(). That is not
+	  the right semantics, and produces a crash when working on an
+	  unitialized buffer.
+
+	* tests/POA/NewPOA/NewPOA.cpp: 
+	* tests/POA/NewPOA/NewPOA.dsp: 
+	  Fixed signed/unsigned warning.
+
+	* tests/POA/NewPOA/NewPOA.dsp: 
+	  Fixed missing options to find ACE.
+
+	Mon Jan 19 16:36:22 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/iiopobj.h: 
+	* tao/iiopobj.cpp: 
+	  Added a missed in action key() method to IIOP_Object.
+
+	* tao/stub.h: 
+	* tao/objkeyC.h: 
+	* tao/object.h: 
+	* tao/object.cpp: 
+	  Removed the non-complaint ObjectKey_ptr type.
+
+	Mon Jan 19 16:19:28 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/deep_free.cpp: 
+	  A reinterpret cast was dropping constness also, thanks to Irfan
+	  for pointing this one out.
+
+	Mon Jan 19 15:36:10 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/sequence_T.i: 
+	* tao/sequence_T.cpp: 
+	  The last merge was too smart, it kept some changes on this
+	  branch that should have gone away.
+
+	Mon Jan 19 13:58:01 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface.cpp: 
+	* TAO_IDL/be/be_interface.cpp: 
+	  Fixed operation table initialization, also called proper
+	  constructor for CORBA::Object in collocated classes.
+
+	* tao/corba.h: 
+	  More include reordering.
+
+	* tao/servant_base.h: 
+	  The operation table was not properly initialized.
+
+	Mon Jan 19 11:28:47 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* Merged changes from main_to_poa_merge_9 up to
+	main_to_poa_merge_10.
+
+	Sun Jan 18 01:04:22 1998    <coryan@MILONGA>
+
+	* TAO_IDL/be/be_attribute.cpp: 
+	* TAO_IDL/be/be_codegen.cpp: 
+	* TAO_IDL/be/be_interface.cpp: 
+	* TAO_IDL/be_include/be_interface.h: 
+	* tao/servant_base.h: 
+	  Added support for collocation in the _narrow method, this
+	  required a complete implementation of _downcast() for each
+	  skeleton.
+
+	Sat Jan 17 20:54:26 1998    <coryan@MILONGA>
+
+	* TAO_IDL/be/be_attribute.cpp: 
+	* TAO_IDL/be/be_interface.cpp: 
+	* TAO_IDL/be/be_sequence.cpp: 
+	* TAO_IDL/be/be_visitor_interface.cpp: 
+	* TAO_IDL/be/be_visitor_sequence.cpp: 
+	  More bug fixes in code generation for sequences, attributes,
+	  etc. Most of them were minor inconsitencies. Also fixed
+	  constructors for collocated classes on NT (working around MSVC++
+	  bug).
+
+	* tao/servant_base.cpp: 
+	* tao/servant_base.h: 
+	  Added default implementation for _downcast(), it just works if
+	  downcasting to "Object".
+
+	* tao/sequence_T.cpp: 
+	* tao/sequence_T.h: 
+	* tao/sequence_T.i: 
+	  Fixed some problems with managed sequences.
+
+	Sat Jan 17 19:27:12 1998    <coryan@MILONGA>
+
+	* tao/servant_base.h: 
+	* tao/servant_base.cpp: 
+	  Added the new _is_a() method on TAO_ServantBase.
+
+	* TAO_IDL/tao_idl.dsp: 
+	* TAO_IDL/be/be_interface.cpp: 
+	* TAO_IDL/be/be_string.cpp: 
+	* TAO_IDL/be/be_visitor_args.cpp: 
+	* TAO_IDL/be/be_visitor_interface.cpp: 
+	* TAO_IDL/be/be_visitor_sequence.cpp: 
+	* TAO_IDL/be_include/be_visitor.h: 
+	* TAO_IDL/be_include/be_visitor_args.h: 
+	* TAO_IDL/be_include/be_visitor_interface.h: 
+	  Added a new _is_a to the generated servants, also implemented
+	  the _is_a method on the collocated classes by invoking that
+	  _is_a().
+	  Added support for attributes in collocated classes, thanks to
+	  Irfan for noticing this.
+
+	Sat Jan 17 15:44:43 1998    <coryan@MILONGA>
+
+	* tao/corba.h: 
+	* tao/iiopobj.cpp: 
+	  Fixed undetected inconsistencies in the last merge.
+
+	* tao/objkeyC.cpp: 
+	* tao/objkeyC.h: 
+	* tao/objkeyC.i: 
+	  I regenrated from the IDL file to use the new sequences.
+
+	Sat Jan 17 11:49:15 1998    <coryan@MILONGA>
+
+	* Merged changes from main_to_poa_merge_8 to main_to_poa_merge_9.
+
+	Sat Jan 17 00:45:59 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/POA: Added new tests: Explicit_Activation_POA_Ids and
+ 	  NewPOA.
+	
+	* tao/servant_base.h (TAO_ServantBase): Added a _downcast method
+ 	  that gets the servant with the correct vtable.  Also added a new
+ 	  class TAO_Local_ServantBase that overwrites _create_stub.
+  	  TAO_Local_ServantBase::_create_stub uses a fake key and does not
+ 	  registration with the default POA.
+
+	* tao/poaS.*: Added _downcast to the generated code. Also added
+ 	  attribute accessor methods.  Also updated constructors to
+ 	  explicitly initialize the virtual base class (CORBA::Object).
+
+	* tao/poaC.h: Added TAO_Local_ServantBase to the PortableServer
+ 	  namespace as PortableServer::LocalServantBase.
+
+	* tao/poaC.cpp (_narrow): Changed the implementation of _narrow to
+ 	  produce a collocated class when appropriate.
+
+	* tao/poa.cpp (TAO_POA::create_*_policy): Made sure these methods
+ 	  return collocated classes and not implementation classes.
+
+	* tao/poa.h (class TAO_POA_Policies): Added set methods to
+ 	  TAO_POA_Policies.
+
+	* tao/orbobj.cpp (resolve_poa): Made sure that the RootPOA is
+ 	  created with the PortableServer::IMPLICIT_ACTIVATION policy.
+
+	* tao/object: Added servant pointer and a collocated flag to
+ 	  object class.
+
+	Fri Jan 16 03:27:30 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao:
+	 
+	    BOA begone: CORBA::POA and all BOA related code has been
+ 	    removed from TAO.
+
+	    POA: Today the PortableServer and the POA were born in TAO.
+
+	* tao/connect (handle_request): Changed handle_request to accept
+ 	  the TAO_GIOP_RequestHeader parameter by reference rather than by
+ 	  value.
+
+	* tao/corba.h: Rearranged header to accommodate the new POA. 
+
+	* tao/corbacom.h (CORBA): Added typedefs for Object_var Object_out
+ 	  in the CORBA class.
+
+	* tao/current: Absorbed all the POACurrent code into the poa.*
+ 	  files.
+
+	* tao/iiopobj.cpp (operator==): Added comparison operator for
+ 	  TAO::ObjectKey.
+
+	* tao/orbobj.cpp (resolve_poa_current and resolve_poa): Made sure
+ 	  that we return the colocated class and not the implementation
+ 	  class.
+
+	* tao/orbobj.h (objref.): POA_init was deprecated.  Please use
+ 	  orb->resolve_initial_references ("RootPOA") instead.
+
+	* tao/objtable.cpp (find): Change the use of auto_ptr(s) to deal
+ 	  correctly with explicit constructors.
+
+	Thu Jan 15 17:27:26 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/orb_core.{h,i}: Added the poa_current() method and internal
+ 	structure so that state is available to the POA and to the upcall.
+
+	* tao/orbobj.{h,cpp}: Added resolve_poa_current() in order to
+ 	return the POACurrent state context.  Added the "POACurrent" to
+ 	one of the things for which resolve_initial_references() works.
+  	Changed resolve_poa() so that things can compile; the impl isn't
+ 	correct but when the POA stuff gets committed, this will be
+ 	changed accordingly.
+
+	Tue Jan 13 12:15:54 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be_include/be_operation.h: 
+	* TAO_IDL/be/be_operation.cpp: 
+	* TAO_IDL/be/be_state_operation.cpp: 
+	  The stubs and skeletons for operations that have a "native"
+	  argument or return value simply "throw" a CORBA::MARSHAL
+	  exception; those methods cannot be called for remote objects.
+	  I also had to return something when an exception is raised and
+	  the return type is a "native", we choose to return 0 for lack of
+	  a better choice.
+
+	Tue Jan 13 10:49:48 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/current.{i,cpp}: Added a first cut at implementations for
+ 	the POA Current impl.
+
+	Mon Jan 12 19:47:42 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/poa.h: 
+	* tao/poa.cpp: 
+	  Added a _get_stub() method that encapsulates code common to all
+	  _this implementations.
+
+	* TAO_IDL/be/be_interface.cpp: 
+	* TAO_IDL/be/be_visitor_interface.cpp: 
+	  The _this() method implementation was changed to use the new
+	  _get_stub finally adding full support for the standard poa, some
+	  changes were required in the _tao_collocated classes and their
+	  constructors.
+
+	* TAO_IDL/be_include/be_helper.h: 
+	* TAO_IDL/be/be_helper.cpp: 
+	  Added "manipulators" to increase and decrement indentation
+	  level. 
+
+	Mon Jan 12 14:55:53 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/current.h (class TAO_POA_Current_Impl): Added this as the
+ 	beginning of the implementation for the POA Current.  More to
+ 	come...
+
+	* tao/default_server.*: Added implementations of create_poa_lock()
+ 	and create_poa_mgr_lock() to obtain their values from -ORBpoalock
+ 	and -ORBpoamgrlock options, respectively, to the Default Server
+ 	Strategy Factory specified in svc.conf.  Values for these are
+ 	either "thread" or "null", which specify an ACE_Thread_Mutex or
+ 	ACE_NULL_Mutex, respectively.
+
+	* tao/server_factory.*: Added create_poa_lock() and
+ 	create_poa_mgr_lock() to obtain locks for use in POA and POA
+ 	Manager instances.
+
+	Mon Jan 12 12:10:58 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/objtable.cpp: 
+	  Fixed some problems with misused auto_ptr and dynamic cast that
+	  was taking away constness at the same time.
+
+	Mon Jan 12 11:55:53 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/orbobj.cpp (resolve_poa): Added skeletal code to create root
+ 	POAs using the resolve_initial_references() interface.  Irfan will
+ 	fill in the correct code for actually creating the POA.
+
+	Sun Jan 11 14:09:48 1998    <coryan@MILONGA>
+
+	* orbsvcs/Dump_Schedule/Dump_Schedule.dsp: 
+	* orbsvcs/Event_Service/CORBA_Utils_T.cpp: 
+	* orbsvcs/Event_Service/Dispatching_Modules.cpp: 
+	* orbsvcs/Event_Service/Event_Channel.cpp: 
+	* orbsvcs/Event_Service/Event_Service.cpp: 
+	* orbsvcs/tests/Event_Latency/Event_Latency.cpp: 
+	  Adapted so they compile with the new POA mapping.
+
+	Sun Jan 11 11:33:36 1998    <coryan@MILONGA>
+
+	* tao/connect.cpp: 
+	  On this branch the find() method for POA's require a
+	  PortableServer::Servant parameter.
+
+	* orbsvcs/Scheduling_Service/Scheduling_Service.cpp: 
+	* orbsvcs/Naming_Service/Naming_Service.cpp: 
+	* orbsvcs/Naming_Service/CosNaming_i.cpp: 
+	  Modified to use the new POA mapping for servers.
+
+	* TAO_IDL/tao_idl.dsp: 
+	  Replaced the old drv_main.cpp with tao_idl.cpp.
+
+	* orbsvcs/orbsvcs/orbsvcs_lib.dsp: 
+	  The final library is not generated inside Debug and its name is
+	  orbsvcs.lib, not orbsvcs_lib.lib
+
+	Sun Jan 11 10:55:04 CST 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* Merged changes from tag main_to_poa_merge_5 and
+	  main_to_poa_merge_6. This late merge is risky, needs complete
+	  validation before public release.
+
+	Sat Jan 10 22:11:47 1998    <coryan@MILONGA>
+
+	* TAO_IDL/be_include/be_interface.h:
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_visitor_interface.cpp:
+	  Work around bug in MSVC++ 5.0 wrt inheritance from nested
+	  classes and the constructor invocation.
+
+	Sat Jan 10 19:21:18 1998    <coryan@MILONGA>
+
+	* TAO_IDL/tao_idl.dsp:
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be_include/be_interface.h:
+	* tao/orb_core.cpp:
+	  Fixed some problems in the latest merges.
+
+	Sat Jan 10 18:06:24 1998    <coryan@MILONGA>
+
+	* Merged changes from tag main_to_poa_merge_7 and
+	  main_to_poa_merge_8.
+	  Resolved many conflicts in TAO_IDL due to similar changes in
+	  both branches.
+
+	Sat Jan 10 16:57:42 1998    <coryan@MILONGA>
+
+	* Merged changes from tag main_to_poa_merge_6 and
+	  main_to_poa_merge_7.
+
+	Fri Jan  9 17:58:43 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_array.cpp:
+	* TAO_IDL/be/be_decl.cpp:
+	* TAO_IDL/be/be_enum.cpp:
+	* TAO_IDL/be/be_enum_val.cpp:
+	* TAO_IDL/be/be_exception.cpp:
+	* TAO_IDL/be/be_expression.cpp:
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_interface_fwd.cpp:
+	* TAO_IDL/be/be_module.cpp:
+	* TAO_IDL/be/be_predefined_type.cpp:
+	* TAO_IDL/be/be_root.cpp:
+	* TAO_IDL/be/be_scope.cpp:
+	* TAO_IDL/be/be_sequence.cpp:
+	* TAO_IDL/be/be_string.cpp:
+	* TAO_IDL/be/be_structure.cpp:
+	* TAO_IDL/be/be_type.cpp:
+	* TAO_IDL/be/be_typedef.cpp:
+	  Minor cosmetic changes to make the main trunk changes identic to
+	  the ones on this branch.
+
+	Thu Jan  8 15:50:59 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_state_operation.cpp:
+	  Added support for native as return type.
+
+	Thu Jan  8 13:20:11 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/ast/Makefile:
+	* TAO_IDL/be/Makefile:
+	  Added ast_native and be_native to the list of files.
+
+	* TAO_IDL/be_include/be_native.h:
+	* TAO_IDL/be/be_native.cpp:
+	* TAO_IDL/be_include/be_visitor.h:
+	* TAO_IDL/be/be_visitor.cpp:
+	  Added support for visiting be_native.
+
+	* TAO_IDL/be_include/be_visitor_args.h:
+	* TAO_IDL/be/be_visitor_args.cpp:
+	  Added support for native and improved the implementation.
+
+	* TAO_IDL/fe/y.tab.cpp:
+	  Removed some includes and pragmas that cause trouble on NT.
+
+	* TAO_IDL/be/be_type.cpp:
+	  Print an error if the default implementation for write_as_return
+	  is called.
+
+	Thu Jan  8 12:53:28 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/corbacom.i (wstring_dup): Added this, which simply calls
+ 	wstring_copy().  Of course, I can't find any mention of EITHER of
+ 	these functions in the 2.0 or 2.1 spec, but what good are wstrings
+ 	if you can't make copies?  Plus, Irfan really wanted it.
+
+	Wed Jan  7 15:09:47 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/fe/y.tab.cpp:
+	  This is the actual file generated from idl.yy, thanks to the
+	  "clone" scheme for building ACE it was lost in the previous
+	  commits.
+
+	Wed Jan  7 14:17:14 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/orbobj.{h,cpp} (key_to_object): Changed signature so that
+ 	it's more in line with what we really need.  This is okay because
+ 	this method is not in the standard, so we can choose whatever we
+ 	damn well please!
+
+	Wed Jan  7 14:08:41 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* Merged changes from version main_to_poa_merge_4 and
+	  main_to_poa_merge_5.
+
+	Tue Jan  6 17:35:44 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface.cpp:
+	  Added several fixes for mutiple inheritance, but still needs
+	  some work.
+
+	Tue Jan  6 15:20:13 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/object.h:
+	* tao/object.cpp:
+	  Removed obsolete methods, they were there to support upcalls on
+	  the server side, but now this is done on
+	  PortableServer::ServantBase.
+
+	Tue Jan  6 14:46:27 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/poa.h:
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_visitor_interface.cpp:
+	  Added a _get_servant () method to the collocated classes, to
+	  obtain access to the underlying skeleton.
+
+	Tue Jan  6 13:31:20 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/objtable.h:
+	* tao/objtable.cpp:
+	  Fixed some problems with the PortableServer::ObjectId and
+	  PortableServer::Servant changes.
+
+	* tao/poa.h:
+	* TAO_IDL/be/be_interface.cpp:
+	  Added a method to get the interface repository name for a
+	  skeleton.
+
+	* tao/encode.cpp:
+	  Fixed problem on object reference enconding.
+
+	Mon Jan 05 23:41:59 1998    <coryan@MILONGA>
+
+	* tao/objkeyC.cpp:
+	  The code for memory reallocation was missing, I added it back.
+
+	* tao/iiopobj.cpp:
+	  Fixed bug in object key generation.
+
+	* tao/poa.cpp:
+	  More debug messages when an object is missing.
+
+	Mon Jan 05 17:46:00 1998    <coryan@MILONGA>
+
+	* tao/connect.cpp:
+	* tao/corba.h:
+	* tao/corbacom.h:
+	* tao/default_server.cpp:
+	* tao/default_server.h:
+	* tao/iiopobj.cpp:
+	* tao/iiopobj.i:
+	* tao/iioporb.cpp:
+	* tao/orbobj.cpp:
+	* tao/params.h:
+	* tao/params.i:
+	* tao/poa.cpp:
+	* tao/poa.h:
+	* tao/server_factory.cpp:
+	* tao/server_factory.h:
+	  The ObjectId changes were "accepted for revision" by the POA
+	  committe, hence I'll commit them, they check them and then I'll
+	  have to make the changes they require ;-)
+	  The current scheme uses TAO::ObjectKey as a representation for
+	  sequence<octet>, this class is generated by the IDL compiler.
+	  The ORB core uses a typedef (TAO_opaque) for all its internal
+	  object keys; the current (and deprecated) POA uses ObjectId
+	  (another typedef on the same thing) as object identifiers.
+
+	Mon Jan  5 13:06:19 1998  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* Merged changes from revision main_to_poa_merge_3 up to revision
+	  main_to_poa_merge_4.
+
+	Mon Jan 05 00:11:45 1998    <coryan@MILONGA>
+
+	* tao/objtable.h:
+	* tao/objtable.cpp:
+	  New Object Table interface, in preparation for the POA needs.
+
+	Sat Jan 03 11:37:21 1998    <coryan@MILONGA>
+
+	* TAO_IDL/be/be_visitor_args.cpp:
+	  Typedefs and predefined types where unproperly handled.
+
+	Fri Jan  2 14:09:49 1998  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp:
+	  Sequences work on Solaris, even Purify gives its "Houston it's a
+	  go", so I'm reinstating them.
+
+	* tests/Cubit/TAO/IDL_Cubit/svr.cpp:
+	  Minor cosmetic changes.
+
+	Fri Jan 02 08:31:32 1998    <coryan@MILONGA>
+
+	* Merged changes from revision main_to_poa_merge_2 up to revision
+	  main_to_poa_merge_3.
+	  Had to disable sequence test from IDL_Cubit.
+
+	Thu Jan 01 15:43:43 1998    <coryan@MILONGA>
+
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_visitor_interface.cpp:
+	  Generated code for collocations setup the "parent_" field
+	  properly.
+
+	* tao/objkeyC.h:
+	* tao/corbacom.h:
+	  Added export macros.
+
+	* tao/objtable.cpp:
+	* tao/objtable.h:
+	* tao/poa.cpp:
+	* tao/poa.h:
+	  Object table is based on servants now.
+
+	* tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp:
+	* tests/Cubit/TAO/IDL_Cubit/server.dsp:
+	* tests/Cubit/TAO/IDL_Cubit/svr.cpp:
+	  Fixed to use the new POA mapping.
+
+	* TAO_IDL/tao_idl.dsp:
+	* tao/TAO.dsp:
+	  Added the new files to the MSVC++ project.
+
+	Tue Dec 30 16:38:42 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* More advances in code generation, it compiles and links now, but
+	  won't run.
+
+	* TAO_IDL/be/be_array.cpp:
+	* TAO_IDL/be/be_enum.cpp:
+	* TAO_IDL/be/be_exception.cpp:
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_interface_fwd.cpp:
+	* TAO_IDL/be/be_predefined_type.cpp:
+	* TAO_IDL/be/be_sequence.cpp:
+	* TAO_IDL/be/be_string.cpp:
+	* TAO_IDL/be/be_structure.cpp:
+	* TAO_IDL/be/be_type.cpp:
+	* TAO_IDL/be/be_typedef.cpp:
+	* TAO_IDL/be/be_union.cpp:
+	* TAO_IDL/be/be_visitor_args.cpp:
+	* TAO_IDL/be_include/be_array.h:
+	* TAO_IDL/be_include/be_enum.h:
+	* TAO_IDL/be_include/be_exception.h:
+	* TAO_IDL/be_include/be_interface.h:
+	* TAO_IDL/be_include/be_interface_fwd.h:
+	* TAO_IDL/be_include/be_predefined_type.h:
+	* TAO_IDL/be_include/be_sequence.h:
+	* TAO_IDL/be_include/be_string.h:
+	* TAO_IDL/be_include/be_structure.h:
+	* TAO_IDL/be_include/be_type.h:
+	* TAO_IDL/be_include/be_typedef.h:
+	* TAO_IDL/be_include/be_union.h:
+	  Added methods to be_type to generate the return types; this
+	  time without any switches, just visitors and virtual
+	  dispatching.
+
+	* tao/poa.cpp:
+	* tao/poa.h:
+	  Added the methods to lookup operations, this are TAO specific
+	  and should have complaint names, but currently I just kept the
+	  old names to avoid a major breakdown.
+
+	* TAO_IDL/ast/Makefile:
+	* TAO_IDL/be/Makefile:
+	* TAO_IDL/driver/Makefile:
+	* TAO_IDL/fe/Makefile:
+	* TAO_IDL/narrow/Makefile:
+	* TAO_IDL/util/Makefile:
+	  Updated dependencies.
+
+	* TAO_IDL/be/be_visitor_interface.cpp:
+	* TAO_IDL/be_include/be_visitor_interface.h:
+	* TAO_IDL/be/be_interface.cpp:
+	  Reverted some changes (code moved from be_interface.cpp into
+	  visitors) to avoid massive conflicts with Andy's changes.
+
+	Tue Dec 30 11:07:06 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/orb_core.h (TAO_Resource_Factory): Corrected my "fat-finger"
+ 	mistake for the return type of get_allocator ().
+
+	Mon Dec 29 16:26:24 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
+
+	* tao/orb_core.{h,cpp}: Added methods for the orb core allocator
+ 	to the resource factory.
+
+	Mon Dec 29 13:18:49 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* TAO_IDL/be/Makefile:
+	* TAO_IDL/be/be_visitor.cpp:
+	* TAO_IDL/be/be_visitor_args.cpp:
+	* TAO_IDL/be/be_visitor_interface.cpp:
+	* TAO_IDL/be_include/be_visitor.h:
+	* TAO_IDL/be_include/be_visitor_args.h:
+	* TAO_IDL/be_include/be_visitor_interface.h:
+	  Started implementation of the collocated class code generation,
+	  using the visitor pattern; hence the new be_visitor class and
+	  some examples of its use.
+
+	* TAO_IDL/be_include/be_type.h:
+	* TAO_IDL/be_include/be_typedef.h:
+	* TAO_IDL/be/be_type.cpp:
+	* TAO_IDL/be/be_typedef.cpp:
+	  Added method to obtain the node type for the most "unaliased"
+	  type though a typedef chain. This is needed in several points
+	  for code generation.
+
+	* TAO_IDL/be/be_interface.cpp:
+	  Implemented the collocated class generation using visitors,
+	  ditto for (part of) the main class.
+
+	* TAO_IDL/util/utl_identifier.cpp:
+	  Fixed memory deallocation problem. The string was copied using
+	  ACE_OS::strdup(), but deleted using operator delete[].
+
+	* TAO_IDL/be/be_argument.cpp:
+	* TAO_IDL/be/be_array.cpp:
+	* TAO_IDL/be/be_attribute.cpp:
+	* TAO_IDL/be/be_constant.cpp:
+	* TAO_IDL/be/be_decl.cpp:
+	* TAO_IDL/be/be_enum.cpp:
+	* TAO_IDL/be/be_enum_val.cpp:
+	* TAO_IDL/be/be_exception.cpp:
+	* TAO_IDL/be/be_expression.cpp:
+	* TAO_IDL/be/be_field.cpp:
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_interface_fwd.cpp:
+	* TAO_IDL/be/be_module.cpp:
+	* TAO_IDL/be/be_operation.cpp:
+	* TAO_IDL/be/be_predefined_type.cpp:
+	* TAO_IDL/be/be_root.cpp:
+	* TAO_IDL/be/be_scope.cpp:
+	* TAO_IDL/be/be_sequence.cpp:
+	* TAO_IDL/be/be_string.cpp:
+	* TAO_IDL/be/be_structure.cpp:
+	* TAO_IDL/be/be_type.cpp:
+	* TAO_IDL/be/be_typedef.cpp:
+	* TAO_IDL/be/be_union.cpp:
+	* TAO_IDL/be/be_union_branch.cpp:
+	* TAO_IDL/be/be_union_label.cpp:
+	* TAO_IDL/be_include/be.h:
+	* TAO_IDL/be_include/be_argument.h:
+	* TAO_IDL/be_include/be_array.h:
+	* TAO_IDL/be_include/be_attribute.h:
+	* TAO_IDL/be_include/be_constant.h:
+	* TAO_IDL/be_include/be_decl.h:
+	* TAO_IDL/be_include/be_enum.h:
+	* TAO_IDL/be_include/be_enum_val.h:
+	* TAO_IDL/be_include/be_exception.h:
+	* TAO_IDL/be_include/be_expression.h:
+	* TAO_IDL/be_include/be_field.h:
+	* TAO_IDL/be_include/be_interface.h:
+	* TAO_IDL/be_include/be_interface_fwd.h:
+	* TAO_IDL/be_include/be_module.h:
+	* TAO_IDL/be_include/be_operation.h:
+	* TAO_IDL/be_include/be_predefined_type.h:
+	* TAO_IDL/be_include/be_root.h:
+	* TAO_IDL/be_include/be_scope.h:
+	* TAO_IDL/be_include/be_sequence.h:
+	* TAO_IDL/be_include/be_string.h:
+	* TAO_IDL/be_include/be_structure.h:
+	* TAO_IDL/be_include/be_type.h:
+	* TAO_IDL/be_include/be_typedef.h:
+	* TAO_IDL/be_include/be_union.h:
+	* TAO_IDL/be_include/be_union_branch.h:
+	* TAO_IDL/be_include/be_union_label.h:
+	  Added the accept() method for the vistor pattern
+	  implementation.
+
+	Mon Dec 29 11:37:47 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
+
+	* tests/Cubit/TAO/MT_Cubit/server/Makefile: Updated dependencies.
+
+	Fri Dec 26 12:05:41 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
+
+	* tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp: Correctly modified the
+ 	make_cubit() method to properly access the underlying object key.
+
+	* tao/objkeyC.cpp: Added this crucial file that I somehow missed
+ 	adding in the last round of changes.
+
+	Wed Dec 24 15:50:38 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
+
+	* tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp: Removed non-standard
+ 	reliance on underlying object key implementation.  It relied on
+ 	the buffer being publicly-accessible, which is wrong.  However,
+ 	I'm not sure that my interim fix is very "right" since it takes
+ 	the address of operator[](0) to get to the underlying entire
+ 	buffer.
+
+	* tests/Cubit/TAO/{IDL_Cubit,MT_Cubit/{server,client}}/Makefile:
+ 	Updated to use rules.tao.GNU.
+
+	* tests/Thruput_test/Makefile: Updated to use rules.tao.GNU.
+
+	* tao/orb.h: Removed unnecessary inclusions of object.h and
+ 	corbacom.h from this file.
+
+	* tao/objkeyC.{h,cpp}: Moved the inclusion of corba.h from the
+ 	header to the implementation because of strange requirements of
+ 	the orb core.  This means that this file CANNOT be used as
+ 	generated by the IDL compiler.
+
+	* tao/{orbobj,stub,object,iiopobj}.cpp: Updated to use the proper
+ 	TAO::ObjectKey_ptr type.
+
+	* tao/Makefile: Updated this after the recent merge that
+ 	accidentally overrote some changes I'd made.
+
+	* taoconfig.mk: Moved the implicit rule into rules.tao.GNU.
+
+	* rules.tao.GNU: Added this file where rules specific to TAO can
+ 	be collected.  Right now it just contains an implicit rule for
+ 	executing the IDL compiler on .idl files.
+
+	Tue Dec 23 12:00:38 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* TAO-INSTALL.html:
+	* VERSION:
+	* Benchmark/benchmark/Makefile:
+	* TAO_IDL/be/be_array.cpp:
+	* TAO_IDL/be/be_attribute.cpp:
+	* TAO_IDL/be/be_codegen.cpp:
+	* TAO_IDL/be/be_decl.cpp:
+	* TAO_IDL/be/be_exception.cpp:
+	* TAO_IDL/be/be_operation.cpp:
+	* TAO_IDL/be/be_scope.cpp:
+	* TAO_IDL/be/be_sequence.cpp:
+	* TAO_IDL/be/be_state.cpp:
+	* TAO_IDL/be/be_state_argument.cpp:
+	* TAO_IDL/be/be_state_exception.cpp:
+	* TAO_IDL/be/be_state_operation.cpp:
+	* TAO_IDL/be/be_state_sequence.cpp:
+	* TAO_IDL/be/be_state_structure.cpp:
+	* TAO_IDL/be/be_state_typedef.cpp:
+	* TAO_IDL/be/be_state_union.cpp:
+	* TAO_IDL/be/be_type.cpp:
+	* TAO_IDL/be/be_union.cpp:
+	* TAO_IDL/be/be_union_branch.cpp:
+	* TAO_IDL/be_include/be_array.h:
+	* TAO_IDL/be_include/be_codegen.h:
+	* TAO_IDL/be_include/be_decl.h:
+	* TAO_IDL/be_include/be_scope.h:
+	* TAO_IDL/be_include/be_sequence.h:
+	* TAO_IDL/be_include/be_state.h:
+	* TAO_IDL/narrow/narrow.cpp:
+	* docs/Options.html:
+	* docs/components.html:
+	* docs/configurations.html:
+	* docs/index.html:
+	* docs/orbsvcs.html:
+	* docs/releasenotes/index.html:
+	* orbsvcs/README:
+	* orbsvcs/Dump_Schedule/Dump_Schedule.cpp:
+	* orbsvcs/Dump_Schedule/Makefile:
+	* orbsvcs/Event_Service/Dispatching_Modules.cpp:
+	* orbsvcs/Event_Service/Dispatching_Modules.i:
+	* orbsvcs/Event_Service/Event_Channel.cpp:
+	* orbsvcs/Event_Service/Event_Channel.i:
+	* orbsvcs/Event_Service/Event_Service.cpp:
+	* orbsvcs/Event_Service/Makefile:
+	* orbsvcs/Event_Service/RT_Task.cpp:
+	* orbsvcs/Event_Service/ReactorTask.cpp:
+	* orbsvcs/Naming_Service/CosNaming_i.cpp:
+	* orbsvcs/Naming_Service/Makefile:
+	* orbsvcs/Scheduling_Service/Config_Scheduler.cpp:
+	* orbsvcs/Scheduling_Service/Config_Scheduler.h:
+	* orbsvcs/Scheduling_Service/Makefile:
+	* orbsvcs/Scheduling_Service/Scheduling_Service.cpp:
+	* orbsvcs/orbsvcs/Makefile:
+	* orbsvcs/orbsvcs/RtecEventChannelAdmin.idl:
+	* orbsvcs/orbsvcs/Runtime_Scheduler.cpp:
+	* orbsvcs/orbsvcs/Runtime_Scheduler.h:
+	* orbsvcs/orbsvcs/Scheduler_Factory.cpp:
+	* orbsvcs/tests/Event_Latency/Event_Latency.cpp:
+	* orbsvcs/tests/Event_Latency/Makefile:
+	* orbsvcs/tests/Logger/Makefile:
+	* orbsvcs/tests/Logger/clnt.cpp:
+	* orbsvcs/tests/Simple_Naming/Makefile:
+	* tao/Makefile:
+	* tao/Timeprobe.cpp:
+	* tao/corba.h:
+	* tao/corbacom.cpp:
+	* tao/deep_free.cpp:
+	* tao/encode.cpp:
+	* tao/except.cpp:
+	* tao/except.h:
+	* tao/giop.cpp:
+	* tao/invoke.cpp:
+	* tao/managed_types.cpp:
+	* tao/managed_types.h:
+	* tao/managed_types.i:
+	* tao/object.i:
+	* tao/orb_core.cpp:
+	* tao/request.cpp:
+	* tao/tao_internals.cpp:
+	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp:
+	* tests/Cubit/TAO/IDL_Cubit/clnt.h:
+	* tests/Cubit/TAO/MT_Cubit/client/Task_Client.cpp:
+	* tests/Cubit/TAO/MT_Cubit/client/Task_Client.h:
+	* tests/Cubit/TAO/MT_Cubit/client/client.cpp:
+	* tests/Cubit/TAO/MT_Cubit/client/cubit.idl:
+	* tests/Cubit/TAO/MT_Cubit/server/cubit.h:
+	* tests/Cubit/TAO/MT_Cubit/server/cubit.idl:
+	* tests/Cubit/TAO/MT_Cubit/server/cubit_i.cpp:
+	* tests/Cubit/TAO/MT_Cubit/server/cubit_i.h:
+	* tests/Cubit/TAO/MT_Cubit/server/method_db.i:
+	* tests/Cubit/TAO/MT_Cubit/server/svr.cpp:
+	  Merged in the changes between revisions main_to_poa_merge_1 and
+	  main_to_poa_merge_2.
+	  The only conflicts were:
+	  + ChangeLog:
+	  removed all the main truck comments and added the one you are
+	  reading just now.
+	  + tests/Cubit/TAO/MT_Cubit/client/Makefile:
+	  + tests/Cubit/TAO/MT_Cubit/client/Makefile:
+	  Left the branch revision, it included the dependencies and had
+	  correct syntax.
+	  + tao/poa.cpp:
+	  CORBA_POA::handle_request was removed on the
+	  branch but modified on the main revision; keep it removed.
+
+	Wed Dec 17 02:11:11 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
+
+	* tao/poa.h:
+	* tao/poa.cpp:
+	* tao/orbobj.h:
+	* tao/orbobj.cpp:
+	* tao/objkeyC.i:
+	* tao/objkeyC.h:
+	* tao/object.h:
+	* tao/iiopobj.h:
+	* tao/iiopobj.cpp:
+	* tao/decode.cpp:
+	* tao/corbacom.h:
+	* tao/corba.h:
+	* tao/any.cpp:
+	All affected by changes to support interfaces required by the new
+ 	POA, specifically CORBA::Object::key() and
+ 	CORBA::ORB::key_to_object().  It does not compile now, and seems
+ 	as if it's simply an ordering problem of header files.
+
+	Mon Dec 15 19:39:20 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* TAO_IDL/be/Makefile:
+	* TAO_IDL/be/be_codegen.cpp:
+	* TAO_IDL/be/be_exception.cpp:
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_state.cpp:
+	* TAO_IDL/be/be_state_attribute.cpp:
+	* TAO_IDL/be/be_state_exception.cpp:
+	* TAO_IDL/be/be_union_branch.cpp:
+	* TAO_IDL/be_include/be_state.h:
+	* docs/releasenotes/orbcore.html:
+	* docs/releasenotes/index.html:
+	* orbsvcs/Naming_Service.cpp:
+	* tao/iiopobj.h:
+	* tao/except.h:
+	* tao/except.cpp: Merged in changes from the main trunk.
+
+	* tests/Thruput_test/Makefile: Updated to use taoconfig.mk.
+
+	Sat Dec 13 22:06:25 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
+
+	* tao/poa.* (get_key): Removed this method, since it's
+ 	unnecessary.
+
+	* tao/objkey.idl: Added this file, which is the idl for an object
+ 	key.
+
+	* tao/iiopobj.*: Added some '@@' comments for Irfan.
+
+	* tao/Makefile: Reworked this monstrositry a bit.
+
+	Fri Dec 12 12:09:42 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp: Changed to use
+ 	CORBA::Object::key() rather than _get_name().
+
+	* tests/Cubit/TAO/{DII_Cubit,IDL_Cubit,MT_Cubit}/Makefile: Updated
+ 	to use taoconfig.mk.
+
+	* tao/orb_core.i: Removed stray printf.
+
+	* taoconfig.mk: Added this file which contains common
+ 	configuration stuff for applications.
+
+	Thu Dec 11 21:28:09 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
+
+	* tao/poa.{h,cpp}: Moved handle_request to
+ 	TAO_Server_Connection_Handler and moved create to
+ 	CORBA::ORB::key_to_object.
+
+	* tao/orbobj.{h,cpp}: Added key_to_object as a method to create an
+ 	object reference from an object key and type id.  This code
+ 	actually used to live in POA::create.
+
+	* tao/object.h: Brief documentation twiddling, and renamed
+ 	get_subclass to get_most_derived, which is hopefully more
+ 	explicative.
+
+	* tao/{object,iiopobj,stub}.{h,cpp}: Renamed _get_name to 'key'
+ 	and have it return a TAO_ObjectKey_ptr rather than a const char*.
+
+	* tao/corbacom.h: Added typedef for TAO_ObjectKey, which
+ 	represents an object key in GIOP.
+
+	* tao/connect.{h,cpp}: Moved handle_request from the POA into
+ 	here, thereby helping confine IIOP-ness to the ORB Core and
+ 	keeping the POA pristine.
+
+	Thu Dec 11 22:18:52 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be/be_interface.cpp: Moved the code generation for the
+	_var and _out classes before the actual class declaration, but
+	after the forward declaration. This was necessary if any elements
+	in the scope of the interface are defined to be of the same type
+	as that interface. In such a situation those elements are defined
+	to be of the _var type. Hence the declaration for _var and _out
+	must precede the class declaration.
+
+	Thu Dec 11 22:00:52 1997  Sergio Flores  <sergio@tango.cs.wustl.edu>
+
+	* orbsvcs/Naming_Service/Naming_Service.cpp (main): Fixed a bug
+ 	related to returning an empty string as the ior in the reply from
+ 	the multicast request.
+
+	Thu Dec 11 14:06:50 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be/{be_exception,be_state_exception}.cpp: Support for
+	exceptions added. Added a new file called
+	"be_state_exception.cpp".
+
+	* TAO_IDL/be_include/be_state.h: Added a new singleton for
+	be_state_exception.
+
+	* TAO_IDL/be/be_state.cpp: Template instantiations for
+	be_state_exception.
+
+	* TAO/docs/releasenotes/index.html: Updated to include exception
+	support.
+
+	* TAO/tao/except.{h,cpp}: Moved the TypeCode member from the
+	private section to the protected section so that derived classes
+	can set it. Also, changed the variable from _type to type_ to
+	stick to the ACE design standards.
+
+	* ============ 
+	* ============ End of POA branch changes.
+	* ============ 
+
 Fri Jan 23 10:29:17 1998  David L. Levine  <@cs.wustl.edu>
 
         * tao/deep_free.cpp (TAO_Marshal_Sequence::deep_free): added

@@ -58,6 +58,11 @@ public:
   virtual int argument_count (void);
   // return the count of members
 
+  virtual int has_native (void);
+  // Any of the arguments or the return value is a <native> type.
+  // This is important because in that case no code should be
+  // generated for the stubs.
+
   // Visiting
   virtual int accept (be_visitor *visitor);
 
@@ -71,11 +76,14 @@ protected:
   int compute_size_type (void);
   // compute the size type if it is unknown
 
-  int compute_argument_count (void);
+  int compute_argument_attr (void);
   // count the number of arguments
 
   int argument_count_;
-  // number of argument
+  // number of arguments
+
+  int has_native_;
+  // Is any argument of type native.
 };
 
 #endif

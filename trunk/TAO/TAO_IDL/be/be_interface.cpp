@@ -19,6 +19,7 @@
 
 #include	"idl.h"
 #include	"idl_extern.h"
+#include "be_visitor_interface.h"
 #include	"be.h"
 
 /*
@@ -28,7 +29,9 @@
 // default constructor
 be_interface::be_interface (void)
   : full_skel_name_ (0),
-    skel_count_ (0)
+    skel_count_ (0),
+    full_coll_name_ (0),
+    local_coll_name_ (0)
 {
   this->size_type (be_decl::VARIABLE); // always the case
 }
@@ -40,9 +43,122 @@ be_interface::be_interface (UTL_ScopedName *n, AST_Interface **ih, long nih,
     AST_Decl (AST_Decl::NT_interface, n, p),
     UTL_Scope (AST_Decl::NT_interface),
     full_skel_name_ (0),
-    skel_count_ (0)
+    skel_count_ (0),
+    full_coll_name_ (0),
+    local_coll_name_ (0)
 {
   this->size_type (be_decl::VARIABLE); // always the case
+}
+
+be_interface::~be_interface (void)
+{
+  if (this->full_skel_name_ != 0)
+    {
+      delete[] this->full_skel_name_;
+      this->full_skel_name_ = 0;
+    }
+  if (this->full_coll_name_ != 0)
+    {
+      delete[] this->full_coll_name_;
+      this->full_coll_name_ = 0;
+    }
+  if (this->local_coll_name_ != 0)
+    {
+      delete[] this->local_coll_name_;
+      this->local_coll_name_ = 0;
+    }
+}
+
+// compute stringified fully qualified collocated class name.
+void
+be_interface::compute_coll_name (void)
+{
+  if (this->full_coll_name_ != 0)
+    return;
+
+  const char collocated[] = "_tao_collocated_";
+  const char poa[] = "POA_";
+  // Reserve enough room for the "POA_" prefix, the "_tao_collocated_"
+  // prefix and the local name and the (optional) "::"
+  int namelen = sizeof (collocated) + sizeof (poa);
+
+  UTL_IdListActiveIterator *i;
+  ACE_NEW (i, UTL_IdListActiveIterator (this->name ()));
+  while (!i->is_done ())
+    {
+      // reserve 2 characters for "::".
+      namelen += ACE_OS::strlen (i->item ()->get_string ()) + 2;
+      i->next ();
+    }
+  delete i;
+
+  ACE_NEW (this->full_coll_name_, char[namelen+1]);
+  this->full_coll_name_[0] = 0; // null terminate the string...
+
+  // Iterate again....
+  ACE_NEW (i, UTL_IdListActiveIterator (this->name ()));
+
+  // Only the first component get the "POA_" preffix.
+  int poa_added = 0;
+  while (!i->is_done ())
+    {
+      const char* item = i->item ()->get_string ();
+
+      // Increase right away, so we can test for the final component
+      // in the loop.
+      i->next ();
+
+      // We add the POA_ preffix only if the first component is not
+      // the global scope...
+      if (ACE_OS::strcmp (item, "") != 0)
+	{
+	  if (!i->is_done ())
+	    {
+	      // We only add the POA_ preffix if there are more than
+	      // two components in the name, in other words, if the
+	      // class is inside some scope.
+	      if (!poa_added)
+		{
+		  ACE_OS::strcat (this->full_coll_name_, poa);
+		  poa_added = 1;
+		}
+	      ACE_OS::strcat (this->full_coll_name_, item);
+	      ACE_OS::strcat (this->full_coll_name_, "::");
+	    }
+	  else
+	    {
+	      ACE_OS::strcat (this->full_coll_name_, collocated);
+	      ACE_OS::strcat (this->full_coll_name_, item);
+	    }
+	}
+    }
+  delete i;
+
+  // Compute the local name for the collocated class.
+  int localen = sizeof (collocated);
+  localen += ACE_OS::strlen (this->local_name ()->get_string ());
+  ACE_NEW (this->local_coll_name_, char[localen]);
+  ACE_OS::strcpy(this->local_coll_name_, collocated);
+  ACE_OS::strcat(this->local_coll_name_,
+		 this->local_name ()->get_string ());
+}
+
+const char*
+be_interface::full_coll_name (void) const
+{
+  if (this->full_coll_name_ == 0)
+    ACE_const_cast(be_interface*, this)->compute_coll_name ();
+
+  return this->full_coll_name_;
+}
+
+const char*
+be_interface::local_coll_name (void) const
+{
+  if (this->local_coll_name_ == 0)
+    ACE_const_cast(be_interface*, this)->compute_coll_name ();
+
+  return this->local_coll_name_;
 }
 
 // compute stringified fully scoped skel name
@@ -126,22 +242,21 @@ be_interface::full_skel_name (void)
 // ----------------------------------------
 
 // generate the client header
-int be_interface::gen_client_header (void)
+int
+be_interface::gen_client_header (void)
 {
-  TAO_OutStream *ch; // output stream
-  long i;            // loop index
-  TAO_NL  nl;        // end line
-
-
   if (!this->cli_hdr_gen_) // not already generated
     {
+      long i;            // loop index
+      TAO_NL  nl;        // end line
+
       // retrieve a singleton instance of the code generator
       TAO_CodeGen *cg = TAO_CODEGEN::instance ();
 
       cg->push (TAO_CodeGen::TAO_INTERFACE_CH); // set the current code
       // generation  state
 
-      ch = cg->client_header ();
+      TAO_OutStream *ch = cg->client_header ();
 
       // == STEP 1:  generate the class name and class names we inherit ==
       ch->indent (); // start with whatever indentation level we are at
@@ -156,7 +271,7 @@ int be_interface::gen_client_header (void)
       *ch << "class " << this->local_name () << ";" << nl;
       // generate the _ptr declaration
       *ch << "typedef " << this->local_name () << " *" << this->local_name ()
-          << "_ptr;" << nl;
+	  << "_ptr;" << nl;
 
       ch->gen_endif ();
 
@@ -165,11 +280,11 @@ int be_interface::gen_client_header (void)
 
       // generate the _var declaration
       if (this->gen_var_defn () == -1)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "be_interface - error generating _var definition\n"));
-          return -1;
-        }
+	{
+	  ACE_ERROR ((LM_ERROR,
+		      "be_interface - error generating _var definition\n"));
+	  return -1;
+	}
       ch->gen_endif ();
 
       // generate the ifdef macro for the _out class
@@ -177,11 +292,11 @@ int be_interface::gen_client_header (void)
 
       // generate the _out declaration - ORBOS/97-05-15 pg 16-20 spec
       if (this->gen_out_defn () == -1)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "be_interface - error generating _var definition\n"));
-          return -1;
-        }
+	{
+	  ACE_ERROR ((LM_ERROR,
+		      "be_interface - error generating _var definition\n"));
+	  return -1;
+	}
       // generate the endif macro
       ch->gen_endif ();
 
@@ -230,49 +345,55 @@ int be_interface::gen_client_header (void)
       ch->incr_indent ();
       // generate the static _duplicate, _narrow, and _nil operations
       *ch << "// the static operations" << nl;
-      *ch << "static " << local_name () << "_ptr " << "_duplicate (" <<
-        local_name () << "_ptr obj);" << nl;
-      *ch << "static " << local_name () << "_ptr " << "_narrow (" <<
-        "CORBA::Object_ptr obj, CORBA::Environment &env);" << nl;
-      *ch << "static " << local_name () << "_ptr " << "_nil (" <<
-        "void);" << nl;
+      *ch << "static " << this->local_name () << "_ptr " << "_duplicate ("
+	  << this->local_name () << "_ptr obj);" << nl;
+      *ch << "static " << this->local_name () << "_ptr " << "_narrow ("
+	  << "CORBA::Object_ptr obj, CORBA::Environment &env);" << nl;
+      *ch << "static " << this->local_name () << "_ptr "
+	  << "_nil (void);" << nl;
 
       // generate a TAO-specific _bind method similar to what Orbix and VisiBroker
       // have
       *ch << "static " << this->local_name () << "_ptr _bind (const char *host, "
-          << "CORBA::UShort port, const char *key, CORBA::Environment &env);\n\n";
+	  << "CORBA::UShort port, const char *key, CORBA::Environment &env);\n\n";
+
+      // the _is_a method
+      ch->indent ();
+      *ch << "virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, "
+	  << "CORBA::Environment &env);\n" << be_nl
+	  << "// = user methods\n";
 
       // generate code for the interface definition by traversing thru the
       // elements of its scope. We depend on the front-end to have made sure
       // that only legal syntactic elements appear in our scope.
-      if (be_scope::gen_client_header () == -1)
-        {
-          ACE_ERROR ((LM_ERROR, "be_interface::gen_client_header\n"));
-          ACE_ERROR ((LM_ERROR, "Scope code generation failure\n"));
-          return -1;
-        }
-
-      // the _is_a method
-      ch->indent ();
-      *ch << "virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, " <<
-        "CORBA::Environment &env);\n";
+      if (this->be_scope::gen_client_header () == -1)
+	{
+	  ACE_ERROR ((LM_ERROR, "be_interface::gen_client_header\n"));
+	  ACE_ERROR ((LM_ERROR, "Scope code generation failure\n"));
+	  return -1;
+	}
 
       // generate the "protected" constructor so that users cannot instantiate
       // us
+      *ch << be_uidt_nl
+	  << "protected:" << be_idt_nl
+	  << this->local_name () << " (" << be_idt << be_idt_nl
+	  << "STUB_Object *objref = 0," << be_nl
+	  << "TAO_ServantBase *servant = 0," << be_nl
+	  << "CORBA::Boolean collocated = CORBA::B_FALSE" << be_uidt_nl
+	  << ");\n" << be_uidt;
       ch->decr_indent ();
-      *ch << "protected:\n";
-      ch->incr_indent ();
-      *ch << local_name () << " (void); // default constructor" << nl;
-      *ch << local_name () << " (STUB_Object *objref);" << nl;
-      *ch << "virtual ~" << local_name () << " (void);\n";
-      ch->decr_indent ();
+
+      // dtor is public...
+      *ch << "public:" << be_idt_nl
+	  << "virtual ~" << this->local_name () << " (void);" << be_uidt_nl;
 
       // private copy constructor and assignment operator. These are not
       // allowed, hence they are private.
       *ch << "private:\n";
       ch->incr_indent ();
-      *ch << local_name () << " (const " << local_name () << "&);" << nl;
-      *ch << "void operator= (const " << local_name () << "&);\n";
+      *ch << this->local_name () << " (const " << this->local_name () << "&);" << nl;
+      *ch << "void operator= (const " << this->local_name () << "&);\n";
       ch->decr_indent ();
       *ch << "};\n\n";
       ch->gen_endif ();
@@ -281,19 +402,19 @@ int be_interface::gen_client_header (void)
       // generate the typecode decl. If we are in the outermost scope, our typecode
       // decl is extern
       if (this->is_nested ())
-        {
-          // we have a scoped name
-          ch->indent ();
-          *ch << "static CORBA::TypeCode_ptr " << this->tc_name
-            ()->last_component () << ";\n\n";
-        }
+	{
+	  // we have a scoped name
+	  ch->indent ();
+	  *ch << "static CORBA::TypeCode_ptr " << this->tc_name
+	    ()->last_component () << ";\n\n";
+	}
       else
-        {
-          // we are in the ROOT scope
-          ch->indent ();
-          *ch << "extern CORBA::TypeCode_ptr " << this->tc_name
-            ()->last_component () << ";\n\n";
-        }
+	{
+	  // we are in the ROOT scope
+	  ch->indent ();
+	  *ch << "extern CORBA::TypeCode_ptr " << this->tc_name
+	    ()->last_component () << ";\n\n";
+	}
 
       cg->pop ();
       this->cli_hdr_gen_ = I_TRUE;
@@ -301,28 +422,89 @@ int be_interface::gen_client_header (void)
   return 0;
 }
 
-int be_interface::gen_client_stubs (void)
+// Generates the client-side inline functions
+int
+be_interface::gen_client_inline (void)
 {
-  TAO_OutStream *cs; // output stream
-  long i;            // loop index
   TAO_NL  nl;        // end line
 
-  // Macro to avoid "warning: unused parameter" type warning.
-  ACE_UNUSED_ARG (i);
+  // retrieve a singleton instance of the code generator
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+
+  TAO_OutStream *ci = cg->client_inline ();
+  ci->indent (); // start from the current indentation level
+
+  *ci << "ACE_INLINE" << nl;
+  *ci << this->name () << "::"
+      << this->local_name () << "(" << be_idt << be_idt_nl
+      << "STUB_Object *objref," << be_nl
+      << "TAO_ServantBase *servant," << be_nl
+      << "CORBA::Boolean collocated" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << " : ACE_CORBA_1 (Object) (objref, servant, collocated)" << be_nl
+      << "{}" << be_nl << be_nl;
+
+  *ci << "ACE_INLINE" << nl;
+  *ci << this->name () << "::~" << this->local_name () <<
+    " (void) // destructor" << nl;
+  *ci << "{}\n\n";
+
+  // _nil method
+  *ci << "ACE_INLINE " << this->name () << "_ptr" << be_nl
+      << this->name () << "::_nil (void)" << be_nl
+      << "{" << be_idt_nl
+      << "return (" << this->name () << "_ptr)0;" << be_uidt_nl
+      << "}\n" << be_nl;
+
+  // generate the ifdefined macro for  the _var type
+  ci->gen_ifdef_macro (this->flatname (), "_var");
+
+  if (this->gen_var_impl () == -1)
+    {
+      ACE_ERROR ((LM_ERROR, "be_interface: _var impl code gen failed\n"));
+      return -1;
+    }
+  ci->gen_endif ();
+
+  // generate the ifdefined macro for  the _out type
+  ci->gen_ifdef_macro (this->flatname (), "_out");
+
+  if (this->gen_out_impl () == -1)
+    {
+      ACE_ERROR ((LM_ERROR, "be_interface: _out impl code gen failed\n"));
+      return -1;
+    }
+  ci->gen_endif ();
+
+  if (this->be_scope::gen_client_inline () == -1)
+    {
+      ACE_ERROR ((LM_ERROR, "be_interface: code gen failed for scope\n"));
+      return -1;
+    }
+
+  return 0;
+}
+
+
+// Generate the client-side stubs
+int
+be_interface::gen_client_stubs (void)
+{
+  TAO_NL  nl;        // end line
 
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
   cg->push (TAO_CodeGen::TAO_INTERFACE_CS); // set the current code generation
                                             // state
 
-  cs = cg->client_stubs ();
+  TAO_OutStream *cs = cg->client_stubs ();
 
   cs->indent (); // start with whatever indentation level we are at
 
   // first generate the code for the static methods
   // The _duplicate method
-  *cs << name () << "_ptr " << name () << "::_duplicate (" <<
-    name () << "_ptr obj)" << nl;
+  *cs << this->name () << "_ptr " << this->name () << "::_duplicate ("
+      << this->name () << "_ptr obj)" << nl;
   *cs << "{\n";
   cs->incr_indent ();
   *cs << "if (!CORBA::is_nil (obj))\n";
@@ -335,17 +517,22 @@ int be_interface::gen_client_stubs (void)
   *cs << "} // end of _duplicate" << nl << nl;
 
   // The _narrow method
-  *cs << name () << "_ptr " << name () <<
-    "::_narrow (CORBA::Object_ptr obj, CORBA::Environment &env)" << nl;
-  *cs << "{\n";
-  cs->incr_indent ();
-  *cs << "if (CORBA::is_nil (obj)) return " << this->name () << "::_nil ();" <<
-    nl;
-  *cs << "if (obj->_is_a (\"" << this->repoID () << "\", env))" << nl;
-  *cs << "{\n";
-  cs->incr_indent ();
+  *cs << this->name () << "_ptr " << this->name ()
+      << "::_narrow (" << be_idt << be_idt_nl
+      << "CORBA::Object_ptr obj," << be_nl
+      << "CORBA::Environment &env" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "if (CORBA::is_nil (obj))" << be_idt_nl
+      << "return " << this->name () << "::_nil ();" << be_uidt_nl
+      << "if (!obj->_is_a (\"" << this->repoID () << "\", env))"
+      << be_idt_nl
+      << "return " << this->name () << "::_nil ();" << be_uidt_nl;
+
+  *cs << "if (!obj->_is_collocated () || !obj->_servant())" << be_nl
+      << "{" << be_idt_nl;
   *cs << "STUB_Object *istub;" << nl;
-  *cs << name () << "_ptr new_obj; // to be returned " << nl;
+  *cs << this->name () << "_ptr new_obj; // to be returned " << nl;
 #if 0 // XXXASG - I was told that emitting this line of code is the root cause
       // of all evil
   *cs << "obj->Release ();" <<
@@ -361,23 +548,24 @@ int be_interface::gen_client_stubs (void)
   *cs << "obj->Release (); " <<
     "// need this since QueryIntf bumped our refcount" << nl;
 #endif
-  *cs << "new_obj = new " << name () << " (istub); " <<
-    "// construct obj ref using the stub object" << nl;
+  *cs << "new_obj = new " << this->name () << " (istub); "
+      << "// construct obj ref using the stub object" << nl;
   *cs << "return new_obj;\n";
   cs->decr_indent ();
-  *cs << "} // end of if" << nl;
-  *cs << "return " << this->name () << "::_nil (); // _narrow failed\n";
-  cs->decr_indent ();
-  *cs << "} // end of _narrow" << nl << nl;
+  *cs << "} // end of if\n" << nl;
 
-  // _nil method
-  *cs << this->name () << "_ptr " << this->name () << "::_nil (void)" <<
-    nl;
-  *cs << "{\n";
-  cs->incr_indent ();
-  *cs << "return (" << name () << "_ptr)NULL;\n";
-  cs->decr_indent ();
-  *cs << "} // end of _nil" << nl << nl;
+  *cs << "STUB_Object *stub = obj->_servant ()->_create_stub (env);" << be_nl
+      << "if (env.exception () != 0)" << be_idt_nl
+      << "return " << this->name () << "::_nil ();" << be_uidt_nl
+      << "void* servant = obj->_servant ()->_downcast (\""
+      << this->repoID () << "\");" << be_nl
+      << "return new "
+      << this->full_coll_name () << "(" << be_idt << be_idt_nl
+      << "ACE_reinterpret_cast(" << this->full_skel_name ()
+      << "_ptr, servant)," << be_nl
+      << "stub" << be_uidt_nl
+      << ");" << be_uidt << be_uidt_nl
+      << "}" << be_nl << be_nl;
 
   // the _bind method
   *cs << this->name () << "_ptr " << this->name () << "::_bind (" <<
@@ -406,7 +594,7 @@ int be_interface::gen_client_stubs (void)
   *cs << "}\n\n";
 
   // generate code for the elements of the interface
-  if (be_scope::gen_client_stubs () == -1)
+  if (this->be_scope::gen_client_stubs () == -1)
     {
       ACE_ERROR ((LM_ERROR, "be_interface::gen_client_stubs\n"));
       ACE_ERROR ((LM_ERROR, "Scope code generation failure\n"));
@@ -416,7 +604,7 @@ int be_interface::gen_client_stubs (void)
   // generate the is_a method
   cs->indent ();
   *cs << "CORBA::Boolean " << this->name () << "::_is_a (" <<
-    "const CORBA::Char *value, CORBA::Environment &env)" << nl;
+    "const CORBA::Char *value, CORBA::Environment &_tao_environment)" << nl;
   *cs << "{\n";
   cs->incr_indent ();
   *cs << "if (\n";
@@ -428,11 +616,11 @@ int be_interface::gen_client_stubs (void)
                          "inheritance graph failed\n"), -1);
     }
   cs->indent ();
-  *cs << "(!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (env))))\n";
+  *cs << "(!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_environment))))\n";
   *cs << "\treturn 1; // success using local knowledge\n";
   cs->decr_indent ();
   *cs << "else" << nl;
-  *cs << "\treturn this->CORBA_Object::_is_a (value, env); // remote call\n";
+  *cs << "\treturn this->CORBA_Object::_is_a (value, _tao_environment); // remote call\n";
   cs->decr_indent ();
   *cs << "}\n\n";
 
@@ -503,30 +691,48 @@ int be_interface::gen_server_header (void)
       << "_ptr;" << nl;
 
   // now generate the class definition
-  *sh << "class " << namebuf << " : public virtual " << this->name ();
+  *sh << "class " << namebuf << " : ";
   if (n_inherits () > 0)  // this interface inherits from other interfaces
     {
       be_interface *intf;
 
-      for (i = 0; i < n_inherits (); i++)
+      *sh << "public virtual ";
+      intf = be_interface::narrow_from_decl (inherits ()[0]);
+      *sh << intf->relative_skel_name (this->full_skel_name ());
+      for (i = 1; i < n_inherits (); i++)
         {
           *sh << ", public virtual ";
           intf = be_interface::narrow_from_decl (inherits ()[i]);
-          *sh << intf->relative_skel_name (this->full_skel_name ());  // dump
-                                                                      // the
-                                                                      // scoped
-                                                                      // name
+          *sh << intf->relative_skel_name (this->full_skel_name ());
         }  // end of for loop
+    }
+  else
+    {
+      // We don't inherit from another user defined object, hence our
+      // base class is the ServantBase class.
+      *sh << " public virtual PortableServer::ServantBase";
     }
   *sh << nl;
   *sh << "{" << nl;
   *sh << "protected:\n";
   sh->incr_indent ();
-  *sh << namebuf << " (const char *obj_name = 0);" << nl;
-  *sh << "virtual ~" << namebuf << " (void);\n";
+  *sh << namebuf << " (void);" << nl;
   sh->decr_indent ();
   *sh << "public:\n";
-  sh->incr_indent (0);
+  sh->incr_indent ();
+  *sh << "virtual ~" << namebuf << " (void);\n";
+
+  sh->indent ();
+  *sh << "virtual CORBA::Boolean _is_a (" << be_idt << be_idt_nl
+      << "const char* logical_type_id," << be_nl
+      << "CORBA::Environment &_tao_environment" << be_uidt
+      << ");\n" << be_uidt;
+
+  sh->indent ();
+  *sh << "virtual void* _downcast (" << be_idt << be_idt_nl
+      << "const char* logical_type_id" << be_uidt_nl
+      << ");\n" << be_uidt;
+
   // generate code for elements in the scope (e.g., operations)
   if (be_scope::gen_server_header () == -1)
     {
@@ -538,7 +744,7 @@ int be_interface::gen_server_header (void)
   // add our _is_a method
   sh->indent ();
   *sh << "static void _is_a_skel (CORBA::ServerRequest &req, " <<
-    "void *obj, void *context, CORBA::Environment &env);\n\n";
+    "void *obj, void *context, CORBA::Environment &_tao_enviroment);\n\n";
 
   // generate skeletons for operations of our base classes. These skeletons
   // just cast the pointer to the appropriate type before invoking the call
@@ -551,10 +757,24 @@ int be_interface::gen_server_header (void)
 
   // add the dispatch method
   sh->indent ();
-  *sh << "virtual void dispatch (CORBA::ServerRequest &req, " <<
-    "void *context, CORBA::Environment &env);" << nl;
+  *sh << "virtual void _dispatch (CORBA::ServerRequest &req, " <<
+    "void *context, CORBA::Environment &env);\n\n";
+
+  // Print out the _this() method.
+  sh->indent ();
+  *sh << this->name () << " *_this (CORBA::Environment &_tao_environment);\n";
+
+  sh->indent ();
+  *sh << "virtual const char* _interface_repository_id"
+      << " (void) const;\n";
+
   sh->decr_indent ();
+
   *sh << "};\n\n";
+
+  be_visitor_collocated_sh visitor;
+  this->accept (&visitor);
+  *sh << "\n";
 
   cg->pop ();
   return 0;
@@ -593,39 +813,19 @@ int be_interface::gen_server_skeletons (void)
     {
       // we are outermost. So the POA_ prefix is prepended to our name
       *ss << this->full_skel_name () << "::POA_" << this->local_name () <<
-        " (const char *obj_name)" << nl;
+        " (void)" << nl;
     }
   else
     {
       // the POA_ prefix is prepended to our outermost module name
       *ss << this->full_skel_name () << "::" << this->local_name () <<
-        " (const char *obj_name)" << nl;
+        " (void)" << nl;
     }
 
-  *ss << "{\n";
-  ss->incr_indent ();
-  // code for the skeleton constructor
-  *ss << "const CORBA::String repoID = \"" << this->repoID () << "\"; // repository ID" << nl;
-  *ss << "IIOP_Object *data; // Actual object reference" << nl;
-  *ss << "TAO_ORB_Core *ocp = TAO_ORB_Core_instance (); " <<
-    "// underlying ORB core instance" << nl;
-  *ss << "CORBA::POA_ptr oa = TAO_ORB_Core_instance ()->root_poa (); " <<
-    "// underlying OA" << nl;
-  *ss << "const ACE_INET_Addr &addr = ocp->orb_params ()->addr ();" << nl;
-  *ss << "this->optable_ = &tao_" << this->flatname () << "_optable;" << nl <<
-    nl;
-  *ss << "// set up an IIOP object" << nl;
-  *ss << "data = new IIOP_Object (CORBA::string_dup (repoID), addr, obj_name);"
-      << nl;
-  *ss << "this->set_parent (data); // store the IIOP obj ref with us" <<
-    nl;
-  //  *ss << "this->sub_ = this; // set the most derived type to be us" << nl;
-  *ss << "// @@ TODO this cast is while we still have sequences " << nl
-      << "// implemented using the old CORBA_SEQUENCE template " << nl;
-  *ss << "if (oa) oa->bind (data->profile.object_key, this); " <<
-    "// register ourselves\n";
-  ss->decr_indent ();
-  *ss << "}\n\n";
+  *ss << "{" << be_idt_nl
+      << "this->optable_ = &tao_" << this->flatname ()
+      << "_optable;" << be_uidt_nl
+      << "}\n\n";
 
   // generate code for elements in the scope (e.g., operations)
   if (be_scope::gen_server_skeletons () == -1)
@@ -637,44 +837,88 @@ int be_interface::gen_server_skeletons (void)
 
   // generate code for the _is_a skeleton
   ss->indent ();
-  *ss << "void " << this->full_skel_name () <<
-    "::_is_a_skel (CORBA::ServerRequest &req, " <<
-    "void * /* obj */, void * /*context*/, CORBA::Environment &env)" << nl;
+  *ss << "void " << this->full_skel_name ()
+      << "::_is_a_skel (" << be_idt << be_idt_nl
+      << "CORBA::ServerRequest &req, " << be_nl
+      << "void * _tao_object_reference," << be_nl
+      << "void * /*context*/," << be_nl
+      << "CORBA::Environment &_tao_environment" << be_uidt_nl
+      << ")" << be_uidt_nl;
+
   *ss << "{\n";
   ss->incr_indent ();
   *ss << "CORBA::NVList_ptr nvlist;" << nl;
   *ss << "CORBA::NamedValue_ptr nv;" << nl;
   *ss << "CORBA::Any temp_value (CORBA::_tc_string);" << nl;
   *ss << "CORBA::Any *any;" << nl;
-  *ss << "CORBA::Boolean *retval;" << nl;
+  *ss << "CORBA::Boolean *retval = new CORBA::Boolean;" << nl;
   *ss << "CORBA::String value;" << nl;
   *ss << nl;
   *ss << "req.orb()->create_list (0, nvlist);" << nl;
-  *ss << "nv = nvlist->add_value (0, temp_value, CORBA::ARG_IN, env);" << nl;
-  *ss << "req.params (nvlist, env); // parse the args" << nl;
-  *ss << "if (env.exception () != 0) return;" << nl;
+  *ss << "nv = nvlist->add_value (0, temp_value, "
+      << "CORBA::ARG_IN, _tao_environment);" << nl;
+  *ss << "req.params (nvlist, _tao_environment); // parse the args" << nl;
+  *ss << "if (_tao_environment.exception () != 0) return;" << nl;
   *ss << "value = *(CORBA::String *)nv->value ()->value ();" << nl;
-  *ss << "if (\n";
-  ss->incr_indent (0);
-  if (this->traverse_inheritance_graph (be_interface::is_a_helper, ss) == -1)
-    {
-    }
-  ss->indent ();
-  *ss << "(!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (env))))\n";
-  *ss << "\tretval = new CORBA::Boolean (CORBA::B_TRUE);\n";
-  ss->decr_indent ();
-  *ss << "else" << nl;
-  *ss << "\tretval = new CORBA::Boolean (CORBA::B_FALSE);" << nl;
-  *ss << "any = new CORBA::Any (CORBA::_tc_boolean, retval, CORBA::B_TRUE);" <<
-    nl;
-  *ss << "req.result (any, env);\n";
+
+  *ss << this->full_skel_name () << "_ptr \t impl = ("
+      << this->full_skel_name () << "_ptr) _tao_object_reference;"
+      << nl;
+
+  *ss << "*retval = impl->_is_a (value, _tao_environment);" << be_nl
+      << "if (_tao_environment.exception () != 0) return;" << be_nl;
+  *ss << "any = new CORBA::Any (CORBA::_tc_boolean, "
+      << "retval, CORBA::B_TRUE);" << nl;
+  *ss << "req.result (any, _tao_environment);\n";
   ss->decr_indent ();
   *ss << "}\n\n";
+
+  ss->indent ();
+  *ss << "CORBA::Boolean " << this->full_skel_name ()
+      << "::_is_a (" << be_idt << be_idt_nl
+      << "const char* value," << be_nl
+      << "CORBA::Environment &_tao_environment" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "if (\n" << be_idt;
+  if (this->traverse_inheritance_graph (be_interface::is_a_helper, ss) == -1)
+    {
+      return -1;
+    }
+
+  ss->indent ();
+  *ss << "(!ACE_OS::strcmp ((char *)value, "
+      << "CORBA::_tc_Object->id (_tao_environment))))"
+      << be_idt_nl << "return CORBA::B_TRUE;" << be_uidt_nl
+      << "else" << be_idt_nl
+      << "return CORBA::B_FALSE;" << be_uidt << be_uidt << be_uidt_nl
+      << "}\n\n";
+
+  ss->indent ();
+  *ss << "void* " << this->full_skel_name ()
+      << "::_downcast (" << be_idt << be_idt_nl
+      << "const char* logical_type_id" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl;
+
+  if (this->traverse_inheritance_graph (be_interface::downcast_helper, ss) == -1)
+    {
+      return -1;
+    }
+  
+  *ss << "if (ACE_OS::strcmp (logical_type_id, "
+      << "\"IDL:omg.org/CORBA/Object:1.0\") == 0)" << be_idt_nl
+      << "return ACE_static_cast(PortableServer::Servant, this);"
+      << be_uidt_nl;
+
+  *ss << "return 0;" << be_uidt_nl
+      << "}\n\n";
+
 
   // now the dispatch method
   ss->indent ();
   *ss << "void " << this->full_skel_name () <<
-    "::dispatch (CORBA::ServerRequest &req, " <<
+    "::_dispatch (CORBA::ServerRequest &req, " <<
     "void *context, CORBA::Environment &env)" << nl;
   *ss << "{\n";
   ss->incr_indent ();
@@ -682,7 +926,7 @@ int be_interface::gen_server_skeletons (void)
   *ss << "CORBA::String opname = req.op_name (); // retrieve operation name" <<
                                                  nl;
   *ss << "// find the skeleton corresponding to this opname" << nl;
-  *ss << "if (this->find (opname, skel) == -1)" << nl;
+  *ss << "if (this->_find (opname, skel) == -1)" << nl;
   *ss << "{\n";
   ss->incr_indent ();
   *ss << "env.exception (new CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));" <<
@@ -693,67 +937,69 @@ int be_interface::gen_server_skeletons (void)
   *ss << "else" << nl;
   *ss << "\tskel (req, this, context, env);\n";
   ss->decr_indent ();
-  *ss << "}\n";
+  *ss << "}\n\n";
+
+  ss->indent ();
+  *ss << "const char* " << this->full_skel_name ()
+      << "::_interface_repository_id (void) const"
+      << nl;
+  *ss << "{\n";
+  ss->incr_indent ();
+  *ss << "return \"" << this->repoID () << "\";\n";
+  ss->decr_indent ();
+  *ss << "}\n\n";
+
   cg->pop ();
-  return 0;
-}
 
-// Generates the client-side inline information
-int
-be_interface::gen_client_inline (void)
-{
-  TAO_OutStream *ci; // output stream
-  TAO_NL  nl;        // end line
+  be_visitor_collocated_ss visitor;
+  this->accept (&visitor);
+  *ss << "\n";
 
-  // retrieve a singleton instance of the code generator
-  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+  *ss << this->name () << "*" << be_nl
+      << this->full_skel_name ()
+      << "::_this (CORBA_Environment &_env)" << be_nl
+      << "{" << be_idt_nl
+      << "STUB_Object *stub = this->_create_stub (_env);" << be_nl
+      << "if (_env.exception () != 0)" << be_idt_nl
+      << "return 0;" << be_uidt_nl
 
-  ci = cg->client_inline ();
-  ci->indent (); // start from the current indentation level
+#if 0
+      << "TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();" << be_nl
+      << "if (orb_core->get_current ()->in_servant_upcall ())" << be_nl
+      << "{" << be_idt << be_nl
+      << "stub = new IIOP_Object (" << be_idt << be_idt << be_nl
+      << "CORBA::string_copy (this->_interface_repository_id ())," << be_nl
+      << "IIOP::Profile (" << be_idt << be_idt << be_nl
+      << "TAO_ORB_Core_instance ()->orb_params ()->addr ()," << be_nl
+      << "orb_core->get_current ()->object_key ()" << be_uidt << be_nl
+      << ")" << be_uidt << be_uidt << be_nl
+      << ");" << be_uidt << be_uidt << be_nl
+      << "}" << be_nl
+      << "else" << be_nl
+      << "{" << be_idt_nl
+      << "POA* poa = this->default_poa (_env);" << be_nl
+      << "if (_env.exception () != 0)" << be_idt << be_nl
+      << "return 0;" << be_uidt << be_nl
+      << "const TAO::ObjectKey& object_key = " << be_idt << be_nl
+      << "poa->servant_to_id (this, _env);" << be_uidt << be_nl
+      << "if (_env.exception () != 0)" << be_idt << be_nl
+      << "return 0;" << be_uidt << be_nl
+      << "stub = new IIOP_Object (" << be_idt << be_idt << be_nl
+      << "CORBA::string_copy (this->_interface_repository_id ())," << be_nl
+      << "IIOP::Profile (" << be_idt << be_idt << be_nl
+      << "TAO_ORB_Core_instance ()->orb_params ()->addr ()," << be_nl
+      << "object_key" << be_uidt << be_nl
+      << ")" << be_uidt << be_uidt << be_nl
+      << ");" << be_uidt << be_uidt << be_nl
+      << "}\n" << be_nl
+#endif /* 0 */
 
-  // generate the constructors and destructor
-  *ci << "ACE_INLINE" << nl;
-  *ci << this->name () << "::" << this->local_name () <<
-    " (void) // default constructor" << nl;
-  *ci << "{}" << nl << nl;
+      << "return new " << this->full_coll_name ()
+      << " (this, stub);" << be_uidt << be_nl;
 
-  *ci << "ACE_INLINE" << nl;
-  *ci << this->name () << "::" << this->local_name () <<
-    " (STUB_Object *objref) // constructor" << nl;
-  *ci << "\t: CORBA_Object (objref)" << nl;
-  *ci << "{}" << nl << nl;
+  *ss << "}\n\n";
 
-  *ci << "ACE_INLINE" << nl;
-  *ci << this->name () << "::~" << this->local_name () <<
-    " (void) // destructor" << nl;
-  *ci << "{}\n\n";
-
-  // generate the ifdefined macro for  the _var type
-  ci->gen_ifdef_macro (this->flatname (), "_var");
-
-  if (this->gen_var_impl () == -1)
-    {
-      ACE_ERROR ((LM_ERROR, "be_interface: _var impl code gen failed\n"));
-      return -1;
-    }
-  ci->gen_endif ();
-
-  // generate the ifdefined macro for  the _out type
-  ci->gen_ifdef_macro (this->flatname (), "_out");
-
-  if (this->gen_out_impl () == -1)
-    {
-      ACE_ERROR ((LM_ERROR, "be_interface: _out impl code gen failed\n"));
-      return -1;
-    }
-  ci->gen_endif ();
-
-  if (be_scope::gen_client_inline () == -1)
-    {
-      ACE_ERROR ((LM_ERROR, "be_interface: code gen failed for scope\n"));
-      return -1;
-    }
-  return 0;
+   return 0;
 }
 
 // Generates the server-side inline
@@ -793,8 +1039,9 @@ be_interface::gen_server_inline (void)
         " (void)" << nl;
     }
 
-  *si << "{" << nl;
+  *si << "{\n";
   *si << "}\n";
+
 
   // generate skeletons for operations of our base classes. These skeletons
   // just cast the pointer to the appropriate type before invoking the call
@@ -1612,13 +1859,27 @@ be_interface::gen_optable_helper (be_interface *derived,
 }
 
 int
-be_interface::is_a_helper (be_interface * /*derived*/, be_interface *bi, TAO_OutStream *os)
+be_interface::is_a_helper (be_interface * /*derived*/,
+			   be_interface *bi,
+			   TAO_OutStream *os)
 {
   // emit the comparison code
   os->indent ();
   *os << "(!ACE_OS::strcmp ((char *)value, \"" << bi->repoID () <<
     "\")) ||\n";
 
+  return 0;
+}
+
+int
+be_interface::downcast_helper (be_interface * /* derived */,
+			       be_interface *base,
+			       TAO_OutStream *os)
+{
+  *os << "if (ACE_OS::strcmp (logical_type_id, \""
+      << base->repoID () << "\") == 0)" << be_idt_nl
+      << "return ACE_static_cast ("
+      << base->full_skel_name () << "_ptr, this);" << be_uidt_nl;
   return 0;
 }
 
@@ -1753,14 +2014,29 @@ be_interface::gen_skel_helper (be_interface *derived,
   return 0;
 }
 
+const char*
+be_interface::relative_coll_name (const char *collname)
+{
+  return be_interface::relative_name (this->full_coll_name (),
+				      collname);
+}
+
 // return the relative skeleton name (needed due to NT compiler insanity)
-char *
+const char *
 be_interface::relative_skel_name (const char *skelname)
 {
-  // some compilers do not like generating a fully scoped name for a type that
-  // was defined in the same enclosing scope in which it was defined. For such,
-  // we emit a macro defined in the ACE library.
-  //
+  return be_interface::relative_name (this->full_skel_name (),
+				      skelname);
+}
+
+const char*
+be_interface::relative_name (const char *localname,
+			     const char *othername)
+{
+  // some compilers do not like generating a fully scoped name for a
+  // type that was defined in the same enclosing scope in which it was
+  // defined.  We have to emit just the partial name, relative to our
+  // "localname"
 
   // The tricky part here is that it is not enough to check if the
   // typename we are using was defined in the current scope. But we
@@ -1792,8 +2068,8 @@ be_interface::relative_skel_name (const char *skelname)
   // macro. Whenever there is no match, the remaining components of the
   // def_scope form the second argument
 
-  ACE_OS::strcpy (def_name, this->full_skel_name ());
-  ACE_OS::strcpy (use_name, skelname);
+  ACE_OS::strcpy (def_name, localname);
+  ACE_OS::strcpy (use_name, othername);
 
   while (def_curr && use_curr)
     {
@@ -1843,6 +2119,13 @@ int
 be_interface::accept (be_visitor *visitor)
 {
   return visitor->visit_interface (this);
+}
+
+int be_interface::write_as_return (TAO_OutStream *stream,
+				   be_type *type)
+{
+  *stream << type->name () << "_ptr";
+  return 0;
 }
 
 // Narrowing

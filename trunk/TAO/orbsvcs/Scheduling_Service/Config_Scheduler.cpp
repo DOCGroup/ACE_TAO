@@ -14,8 +14,7 @@
 #endif /* __ACE_INLINE__ */
 
 ACE_Config_Scheduler::ACE_Config_Scheduler (void)
-  : POA_RtecScheduler::Scheduler ("Scheduler_Generic"),
-    impl(new Scheduler_Generic)
+  : impl(new Scheduler_Generic)
 {
   impl->output_level (10);
 }

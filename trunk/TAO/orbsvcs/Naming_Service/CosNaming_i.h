@@ -43,9 +43,6 @@ class NS_NamingContext : public POA_CosNaming::NamingContext
   NS_NamingContext (void);
   // default constructor.
 
-  NS_NamingContext (const char *key);
-  // constructor
-
   ~NS_NamingContext (void);
   // destructor.
 

@@ -1,6 +1,7 @@
 // $Id$
 
 
+
 #include "ace/Service_Config.h"
 #include "orbsvcs/Scheduler_Factory.h"
 
@@ -376,7 +377,6 @@ ACE_ES_Event_Container::dump (void)
 
 ACE_Push_Supplier_Proxy::ACE_Push_Supplier_Proxy (ACE_ES_Supplier_Module *sm)
   : supplier_module_ (sm),
-    me_ (this),
     push_supplier_ (0)
 {
 }
@@ -454,8 +454,7 @@ ACE_Push_Supplier_Proxy::shutdown (void)
 // ************************************************************
 
 ACE_Push_Consumer_Proxy::ACE_Push_Consumer_Proxy (ACE_ES_Consumer_Module *cm)
-  : me_ (this),
-    push_consumer_ (0),
+  : push_consumer_ (0),
     consumer_module_ (cm)
 {
 }
@@ -526,25 +525,16 @@ ACE_Push_Consumer_Proxy::shutdown (void)
 // ************************************************************
 
 ACE_EventChannel::ACE_EventChannel (u_long type)
-  : POA_RtecEventChannelAdmin::EventChannel ("EventChannel"),
-    rtu_manager_ (0),
+  : rtu_manager_ (0),
     type_ (type),
     state_ (INITIAL_STATE),
-    me_ (this),
     destroyed_ (0)
 {
   consumer_module_ = new ACE_ES_Consumer_Module (this);
   // RtecEventChannelAdmin::ConsumerAdmin_duplicate(consumer_module_);
 
-#if defined(ACE_ES_LACKS_ORB)
-  UPSSingleProcessorOrb_startup(type,
-				dispatching_module,
-				rtu_active,
-				rtu_manager);
-#else
   ACE_NEW(dispatching_module_,
 	  ACE_ES_Priority_Dispatching(this, THREADS_PER_DISPATCH_QUEUE));
-#endif
 
   correlation_module_ = new ACE_ES_Correlation_Module (this);
   subscription_module_ = new ACE_ES_Subscription_Module (this);
@@ -605,15 +595,11 @@ ACE_EventChannel::destroy (CORBA::Environment &_env)
   Shutdown_Channel *sc = new Shutdown_Channel (this);
   if (sc == 0)
     TAO_THROW (CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
-  // @@ TODO: Orbix parameters
-  // (0, CORBA::COMPLETED_NO, "ACE_EventChannel::destroy"));
 
   // Create a wrapper around the dispatch request.
   Flush_Queue_ACT *act = new Flush_Queue_ACT (sc, dispatching_module_);
   if (act == 0)
     TAO_THROW (CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
-  // @@ TODO Orbix parameters
-  // (0, CORBA::COMPLETED_NO, "ACE_EventChannel::destroy"));
 
   // Set a 100ns timer.
   if (this->timer ()->schedule_timer (0, // no rt-info
@@ -868,18 +854,10 @@ ACE_ES_Subscription_Info::insert_or_fail (Subscriber_Map &type_map,
 
 // ************************************************************
 
-typedef ACE_EventChannel::SYNCHRONIZATION_ERROR SYNC_ERROR;
-typedef ACE_EventChannel::QOS_ERROR QOS_ERROR;
-typedef ACE_EventChannel::SUBSCRIPTION_ERROR SUBSCRIPTION_ERROR;
-typedef ACE_EventChannel::CORRELATION_ERROR CORRELATION_ERROR;
-
-// ************************************************************
-
 ACE_ES_Consumer_Module::ACE_ES_Consumer_Module (ACE_EventChannel* channel)
   :  lock_ (),
      all_consumers_ (),
      channel_ (channel),
-     me_ (this),
      down_ (0)
 {
 }
@@ -956,8 +934,8 @@ ACE_ES_Consumer_Module::shutdown (void)
 	 iter.advance ())
       {
 	(*proxy)->shutdown ();
-	CORBA::release (*proxy);
-	// Shouldn't this be _release ()
+	// @@ Cannnot use CORBA::release (*proxy), since it is a servant.
+	delete *proxy;
 
 	// Remove the consumer from our list.
 	{
@@ -982,9 +960,7 @@ ACE_ES_Consumer_Module::disconnecting (ACE_Push_Consumer_Proxy *consumer,
   {
     ACE_ES_GUARD ace_mon (lock_);
     if (ace_mon.locked () == 0)
-      TAO_THROW (SYNC_ERROR);
-    // @@ TODO Orbix parameters
-    // (0, CORBA::COMPLETED_NO, "ACE_ES_Consumer_Module::disconnected"));
+      TAO_THROW (RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR);
 
     if (all_consumers_.remove (consumer) == -1)
       return;
@@ -1008,15 +984,11 @@ ACE_ES_Consumer_Module::disconnecting (ACE_Push_Consumer_Proxy *consumer,
   Shutdown_Consumer *sc = new Shutdown_Consumer (this, consumer);
   if (sc == 0)
     TAO_THROW (CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
-  // @@ TODO Orbix parameters:
-  // (0, CORBA::COMPLETED_NO, "ACE_ES_Consumer_Module::disconnected"));
 
   // Create a wrapper around the dispatch request.
   Flush_Queue_ACT *act = new Flush_Queue_ACT (sc, channel_->dispatching_module_);
   if (act == 0)
     TAO_THROW (CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
-  // @@ TODO Orbix parameters:
-  // (0, CORBA::COMPLETED_NO, "ACE_ES_Consumer_Module::disconnecting"));
 
   ACE_DEBUG ((LM_DEBUG, "(%t) initiating consumer disconnect.\n"));
 
@@ -1071,8 +1043,6 @@ ACE_ES_Consumer_Module::obtain_push_supplier (CORBA::Environment &_env)
       ACE_ERROR ((LM_ERROR, "ACE_EventChannel"
 		  "::obtain_push_supplier failed.\n"));
       TAO_THROW_RETURN (CORBA::NO_MEMORY (CORBA::COMPLETED_NO), 0);
-      // @@ TODO Orbix parameters:
-      // (0, CORBA::COMPLETED_NO, "ACE_ES_Consumer_Module::obtain_push_supplier"));
     }
 
   {
@@ -1080,10 +1050,7 @@ ACE_ES_Consumer_Module::obtain_push_supplier (CORBA::Environment &_env)
     if (ace_mon.locked () == 0)
       {
 	delete new_consumer;
-	TAO_THROW_RETURN (SYNC_ERROR, 0);
-	// @@ TODO Orbix parameters:
-	// (0, CORBA::COMPLETED_NO,
-	//  "ACE_ES_Consumer_Module::obtain_push_supplier"), 0);
+	TAO_THROW_RETURN (RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR, 0);
       }
 
     if (all_consumers_.insert (new_consumer) == -1)
@@ -1117,9 +1084,7 @@ ACE_ES_Correlation_Module::connected (ACE_Push_Consumer_Proxy *consumer,
 {
   // Initialize the consumer correlation filter.
   if (consumer->correlation ().connected (consumer, this) == -1)
-    TAO_THROW (CORRELATION_ERROR);
-  // @@ TODO Orbix parameters:
-  // (0, CORBA::COMPLETED_NO, "ACE_ES_Correlation_Module::connected"));
+    TAO_THROW (RtecEventChannelAdmin::EventChannel::CORRELATION_ERROR);
 }
 
 void
@@ -1830,9 +1795,7 @@ ACE_ES_Subscription_Module::connected (ACE_Push_Supplier_Proxy *supplier,
  {
     ACE_ES_WGUARD ace_mon (lock_);
     if (ace_mon.locked () == 0)
-      TAO_THROW (SYNC_ERROR);
-    // @@ TODO: Orbix parameters
-    // (0, CORBA::COMPLETED_NO, "ACE_ES_Subscription_Module::connected"));
+      TAO_THROW (RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR);
 
     if (all_suppliers_.insert (supplier) == -1)
       ACE_ERROR ((LM_ERROR, "ACE_ES_Subscription_Module insert failed.\n"));
@@ -1968,14 +1931,10 @@ ACE_ES_Subscription_Module::disconnecting (ACE_Push_Supplier_Proxy *supplier,
 {
   ACE_ES_WGUARD ace_mon (lock_);
   if (ace_mon.locked () == 0)
-    TAO_THROW (SYNC_ERROR);
-  // @@ TODO: Orbix parameters
-  // (0, CORBA::COMPLETED_NO, "ACE_ES_Subscription_Module::disconnected"));
+    TAO_THROW (RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR);
 
   if (all_suppliers_.remove (supplier) == -1)
-    TAO_THROW (SUBSCRIPTION_ERROR);
-  // @@ TODO: Orbix parameters.
-  // (0, CORBA::COMPLETED_NO, "ACE_ES_Subscription_Module remove failed"));
+    TAO_THROW (RtecEventChannelAdmin::EventChannel::SUBSCRIPTION_ERROR);
 
   // Remove all consumers from the supplier's source-based subscription lists.
   ACE_ES_Subscription_Info::Subscriber_Set_Iterator source_iterator
@@ -2495,7 +2454,6 @@ ACE_ES_Subscription_Module::shutdown (void)
 ACE_ES_Supplier_Module::ACE_ES_Supplier_Module (ACE_EventChannel *channel) :
   all_suppliers_ (),
   lock_ (),
-  me_ (this),
   up_ (0),
   channel_ (channel)
 {
@@ -2523,14 +2481,10 @@ ACE_ES_Supplier_Module::disconnecting (ACE_Push_Supplier_Proxy *supplier,
 {
   ACE_ES_GUARD ace_mon (lock_);
   if (ace_mon.locked () == 0)
-    TAO_THROW (SYNC_ERROR);
-  // @@ TODO Orbix parameters:
-  // (0, CORBA::COMPLETED_NO, "ACE_ES_Supplier_Module::disconnected"));
+    TAO_THROW (RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR);
 
   if (all_suppliers_.remove (supplier) == -1)
-    TAO_THROW (SUBSCRIPTION_ERROR);
-  // @@ TODO Orbix parameters:
-  // (0, CORBA::COMPLETED_NO, "ACE_ES_Supplier_Module remove failed"));
+    TAO_THROW (RtecEventChannelAdmin::EventChannel::SUBSCRIPTION_ERROR);
 
   up_->disconnecting (supplier, _env);
 
@@ -2584,18 +2538,13 @@ ACE_ES_Supplier_Module::obtain_push_consumer (CORBA::Environment &_env)
 
   if (new_supplier == 0)
     TAO_THROW_RETURN (CORBA::NO_MEMORY (CORBA::COMPLETED_NO), 0);
-  // @@ TODO Orbix parameters:
-  // (0, CORBA::COMPLETED_NO, "ACE_ES_Supplier_Module::obtain_push_consumer"));
 
   {
     ACE_ES_GUARD ace_mon (lock_);
     if (ace_mon.locked () == 0)
       {
 	delete new_supplier;
-	TAO_THROW_RETURN (SYNC_ERROR, 0);
-	// @@ TODO Orbix parameters:
-	// (0, CORBA::COMPLETED_NO,
-	// "ACE_ES_Supplier_Module::obtain_push_consumer"), 0);
+	TAO_THROW_RETURN (RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR, 0);
       }
 
     if (all_suppliers_.insert (new_supplier) == -1)
@@ -2620,9 +2569,6 @@ ACE_ES_Supplier_Module::push (ACE_Push_Supplier_Proxy *proxy,
 
 	  if (temp == 0)
 	    TAO_THROW (CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
-	  // @@ TODO Orbix parameters:
-	  // (0, CORBA::COMPLETED_NO,
-	  //  "ACE_ES_Supplier_Module::obtain_push_consumer"));
 
 	  // This will guarantee that release gets called when we exit
 	  // the scope.
