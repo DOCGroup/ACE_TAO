@@ -28,6 +28,7 @@ USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
+#if !defined (ACE_LACKS_FORK)
 static int release_mutex = 1;
 static int child_process = 0;
 static char *mutex_name = ACE_DEFAULT_MUTEX_A;
@@ -86,11 +87,15 @@ acquire_release (void)
       ACE_ASSERT (mutex.release () == 0);
     }
 }
+#endif /* ! ACE_LACKS_FORK */
 
 int
 main (int argc, char *argv[])
 {
 #if defined (ACE_LACKS_FORK)
+  ACE_UNUSED_ARG (argc);
+  ACE_UNUSED_ARG (argv);
+
   ACE_START_TEST ("Process_Mutex_Test");
   ACE_ERROR ((LM_INFO, "fork is not supported on this platform\n"));
   ACE_END_TEST;
