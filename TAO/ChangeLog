@@ -11,7 +11,7 @@ Mon Aug 30 18:14:49 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
           operators in an expression with types other than integer or
           floating point, (illegal as per CORBA 3.0.3 section 3.10.2), and a
           new error to report if a violation is found. This last
-          fix closes [BUGIS:1682.
+          fix closes [BUGIS:1682].
 
 Mon Aug 30 12:27:38 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
