@@ -645,7 +645,7 @@ TAO_Client_Connection_Handler::handle_close (ACE_HANDLE handle,
 #define TAO_SVC_TUPLE ACE_Svc_Tuple<TAO_Client_Connection_Handler>
 #define TAO_HASH_ADDR ACE_Hash_Addr<ACE_INET_Addr>
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
+template class ACE_Svc_Handler<TAO_SOCK_STREAM, ACE_NULL_SYNCH>;
 template class TAO_HASH_ADDR;
 template class TAO_SVC_TUPLE;
 template class ACE_Map_Manager<int, TAO_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>;
@@ -654,7 +654,7 @@ template class ACE_Map_Iterator<int, TAO_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Map_Reverse_Iterator<int, TAO_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Map_Entry<int, TAO_SVC_TUPLE*>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+#pragma instantiate ACE_Svc_Handler<TAO_SOCK_STREAM, ACE_NULL_SYNCH>
 #pragma instantiate TAO_HASH_ADDR
 #pragma instantiate TAO_SVC_TUPLE
 #pragma instantiate ACE_Map_Manager<int, TAO_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>

@@ -988,15 +988,15 @@ TAO_ORB_Core_instance (void)
 
 template class ACE_Env_Value<int>;
 template class ACE_Env_Value<u_int>;
-template class ACE_Strategy_Acceptor<TAO_Server_Connection_Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_Strategy_Acceptor<TAO_Server_Connection_Handler, TAO_SOCK_ACCEPTOR>;
 template class ACE_Creation_Strategy<TAO_Client_Connection_Handler>;
-template class ACE_Connect_Strategy<TAO_Client_Connection_Handler, ACE_SOCK_CONNECTOR>;
-template class ACE_Strategy_Connector<TAO_Client_Connection_Handler, ACE_SOCK_CONNECTOR>;
+template class ACE_Connect_Strategy<TAO_Client_Connection_Handler, TAO_SOCK_CONNECTOR>;
+template class ACE_Strategy_Connector<TAO_Client_Connection_Handler, TAO_SOCK_CONNECTOR>;
 template class ACE_NOOP_Creation_Strategy<TAO_Client_Connection_Handler>;
 template class ACE_Concurrency_Strategy<TAO_Client_Connection_Handler>;
 template class ACE_NOOP_Concurrency_Strategy<TAO_Client_Connection_Handler>;
 template class ACE_Recycling_Strategy<TAO_Client_Connection_Handler>;
-template class ACE_Connector<TAO_Client_Connection_Handler, ACE_SOCK_CONNECTOR>;
+template class ACE_Connector<TAO_Client_Connection_Handler, TAO_SOCK_CONNECTOR>;
 #if 0
 template class ACE_Unbounded_Stack<TAO_Client_Connection_Handler *>;
 #else
@@ -1018,15 +1018,15 @@ template class ACE_TSS<TAO_Resource_Factory::App_Allocated>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Env_Value<int>
 #pragma instantiate ACE_Env_Value<u_int>
-#pragma instantiate ACE_Strategy_Acceptor<TAO_Server_Connection_Handler, ACE_SOCK_ACCEPTOR>
+#pragma instantiate ACE_Strategy_Acceptor<TAO_Server_Connection_Handler, TAO_SOCK_ACCEPTOR>
 #pragma instantiate ACE_Creation_Strategy<TAO_Client_Connection_Handler>
-#pragma instantiate ACE_Connect_Strategy<TAO_Client_Connection_Handler, ACE_SOCK_CONNECTOR>
-#pragma instantiate ACE_Strategy_Connector<TAO_Client_Connection_Handler, ACE_SOCK_CONNECTOR>
+#pragma instantiate ACE_Connect_Strategy<TAO_Client_Connection_Handler, TAO_SOCK_CONNECTOR>
+#pragma instantiate ACE_Strategy_Connector<TAO_Client_Connection_Handler, TAO_SOCK_CONNECTOR>
 #pragma instantiate ACE_NOOP_Creation_Strategy<TAO_Client_Connection_Handler>
 #pragma instantiate ACE_Concurrency_Strategy<TAO_Client_Connection_Handler>
 #pragma instantiate ACE_NOOP_Concurrency_Strategy<TAO_Client_Connection_Handler>
 #pragma instantiate ACE_Recycling_Strategy<TAO_Client_Connection_Handler>
-#pragma instantiate ACE_Connector<TAO_Client_Connection_Handler, ACE_SOCK_CONNECTOR>
+#pragma instantiate ACE_Connector<TAO_Client_Connection_Handler, TAO_SOCK_CONNECTOR>
 #if 0
 #pragma instantiate ACE_Unbounded_Stack<TAO_Client_Connection_Handler *>
 #else

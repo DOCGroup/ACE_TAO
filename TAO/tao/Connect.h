@@ -27,7 +27,7 @@
 class TAO_OA_Parameters;
 class TAO_GIOP_RequestHeader;
 
-typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+typedef ACE_Svc_Handler<TAO_SOCK_STREAM, ACE_NULL_SYNCH>
         TAO_SVC_HANDLER;
 
 class TAO_Client_Connection_Handler : public TAO_SVC_HANDLER
@@ -163,7 +163,7 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 typedef ACE_Strategy_Acceptor<TAO_Server_Connection_Handler,
-                              ACE_SOCK_ACCEPTOR>
+                              TAO_SOCK_ACCEPTOR>
         TAO_ACCEPTOR;
 
 #endif /* TAO_CONNECT_H */
