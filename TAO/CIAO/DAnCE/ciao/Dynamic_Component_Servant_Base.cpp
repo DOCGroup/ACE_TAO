@@ -1,0 +1,19 @@
+#include "Dynamic_Component_Servant_Base.h"
+#include "CIAO_common.h"
+#include "ace/Log_Msg.h"
+#include "ace/OS_NS_string.h"
+
+ACE_RCSID (ciao,
+           Dynamic_Component_Servant_Base,
+           "$Id$")
+
+namespace CIAO
+{
+  Dynamic_Component_Servant_Base::Dynamic_Component_Servant_Base (void)
+  {
+  }
+
+  Dynamic_Component_Servant_Base::~Dynamic_Component_Servant_Base (void)
+  {
+  }
+}

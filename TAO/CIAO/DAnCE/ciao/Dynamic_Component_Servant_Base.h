@@ -29,14 +29,11 @@ namespace CIAO
   class CIAO_SERVER_Export Dynamic_Component_Servant_Base
   {
   public:
-    // @@ Jai, where are the implementations of the following
-    // operations?
     explicit Dynamic_Component_Servant_Base (void);
 
     virtual ~Dynamic_Component_Servant_Base (void);
 
     virtual PortableServer::Servant create (void) = 0;
-
   };
 
 }
