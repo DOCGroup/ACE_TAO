@@ -50,7 +50,7 @@ class TAO_Wait_Strategy;
 class TAO_Pluggable_Messaging_Interface;
 class TAO_Target_Specification;
 class TAO_Operation_Details;
-class TAO_Base_Connection_Property;
+class TAO_Connection_Descriptor_Interface;
 class TAO_Connection_Handler;
 
 typedef ACE_Message_Queue<ACE_NULL_SYNCH> TAO_Transport_Buffering_Queue;
@@ -364,7 +364,7 @@ public:
   virtual int close (void) = 0;
   // Shutdown Connector bridge and concreate Connector.
 
-  virtual int connect (TAO_Base_Connection_Property *prop,
+  virtual int connect (TAO_Connection_Descriptor_Interface *desc,
                        TAO_Transport *&,
                        ACE_Time_Value *max_wait_time,
                        CORBA::Environment &ACE_TRY_ENV) = 0;

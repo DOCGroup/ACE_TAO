@@ -21,6 +21,8 @@ TAO_Base_Connection_Property::duplicate (void)
 {
   // Get a copy of the underlying endpoint
   TAO_Endpoint *endpt = this->endpoint_->duplicate ();
+  if (endpt == 0)
+    return 0;
 
   // Construct a copy of our class
   TAO_Base_Connection_Property *prop = 0;
@@ -36,14 +38,14 @@ CORBA::Boolean
 TAO_Base_Connection_Property::is_equivalent (
     const TAO_Connection_Descriptor_Interface *rhs)
 {
-  TAO_Connection_Descriptor_Interface  *base =
-    ACE_const_cast (TAO_Connection_Descriptor_Interface *,
+  TAO_Base_Connection_Property *other_desc =
+    ACE_const_cast (TAO_Base_Connection_Property *,
                     rhs);
-
-  if (this->endpoint_->is_equivalent (base->endpoint ()))
-    return 1;
-
-  return 0;
+  
+  if (other_desc == 0)
+    return 0;
+  
+  return this->endpoint_->is_equivalent (other_desc->endpoint_);
 }
 
 

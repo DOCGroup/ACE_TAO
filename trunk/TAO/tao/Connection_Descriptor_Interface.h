@@ -48,7 +48,7 @@
  */
 
 
-class TAO_Connection_Descriptor_Interface
+class TAO_Export TAO_Connection_Descriptor_Interface
 {
 public:
 

@@ -575,6 +575,10 @@ SOURCE=.\Priority_Mapping_Manager.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Private_Connection_Descriptor.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Profile.h
 # End Source File
 # Begin Source File
@@ -1195,6 +1199,10 @@ SOURCE=.\Priority_Mapping_Manager.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Private_Connection_Descriptor.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\Profile.i
 # End Source File
 # Begin Source File
@@ -1804,6 +1812,10 @@ SOURCE=.\Priority_Mapping.cpp
 # Begin Source File
 
 SOURCE=.\Priority_Mapping_Manager.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Private_Connection_Descriptor.cpp
 # End Source File
 # Begin Source File
 
