@@ -39,7 +39,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-/// Policy factory for all RTCORBA related policies.
+/// Policy factory for all FTCORBA related policies.
 class TAO_Export TAO_FT_PolicyFactory :
   public PortableInterceptor::PolicyFactory,
   public TAO_Local_RefCounted_Object
