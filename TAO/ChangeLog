@@ -1,3 +1,11 @@
+Thu Feb 24 23:13:36 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/SystemException.h (SystemException):
+
+	  Made copy constructor public.  HP aC++ wants to have a public
+	  copy constructor when the exception is listed in an exception
+	  specification.
+
 Thu Feb 24 22:49:17 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/PortableServer/Upcall_Wrapper.h:

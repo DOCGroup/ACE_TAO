@@ -80,6 +80,9 @@ namespace CORBA
   {
   public:
 
+    /// Copy constructor.
+    SystemException (const SystemException & src);
+
     /// Destructor.
     ~SystemException (void);
 
@@ -140,9 +143,6 @@ namespace CORBA
 
     /// Default constructor.
     SystemException (void);
-
-    /// Copy constructor.
-    SystemException (const SystemException & src);
 
     /// Assignment operator.
     SystemException & operator= (const SystemException &src);
