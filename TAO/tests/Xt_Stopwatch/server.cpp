@@ -16,9 +16,11 @@ int main (int, char *[])
 
 #else
 
+#include "tao/xt_resource.h"
 #include <Xm/Xm.h>
 #include "Stopwatch_display.h"
-#include "tao/xt_resource.h"
+#include "timer.h"
+
 
 const char *ior_output_file = 0;
 
@@ -71,7 +73,7 @@ main (int argc, char *argv[])
         CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      stopwatch.manage ();
+      
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA");
@@ -89,7 +91,12 @@ main (int argc, char *argv[])
         root_poa->the_POAManager (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      Stopwatch_imp server_impl (orb.in ());
+      stopwatch.manage ();
+
+      // Make a timer class 
+      Timer_imp timer (app, 100, &stopwatch);
+
+      Stopwatch_imp server_impl (orb.in (), &timer);
 
       Stopwatch_var server =
         server_impl._this (ACE_TRY_ENV);
@@ -116,6 +123,8 @@ main (int argc, char *argv[])
 
       poa_manager->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+      
+
 
       XtRealizeWidget (toplevel );
       XtAppMainLoop ( app );
