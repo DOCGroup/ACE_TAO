@@ -8,6 +8,9 @@ Thu Oct 22 11:01:12 1998  David L. Levine  <levine@cs.wustl.edu>
           to use $(IDL_SRC) instead of $(POA_CLT_SRCS), so that client.o
           is not put into libserver.a.  It caused link collisions on VxWorks.
 
+        * orbsvcs/tests/Concurrency/lex.CC_command.cpp: forced CVS check-in
+          to avoid out-of-date warnings during builds, after new checkouts.
+
 Thu Oct 22 11:26:34 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
         * TAO_IDL/include/fe_private.h:
