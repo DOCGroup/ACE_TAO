@@ -1258,8 +1258,9 @@ ACE_Configuration_Heap::create_index (void)
 int
 ACE_Configuration_Heap::create_index_helper (void *buffer)
 {
+  ACE_ASSERT (this->allocator_);
   ACE_NEW_RETURN (this->index_,
- (buffer) SECTION_MAP (this->allocator_),
+                  (buffer) SECTION_MAP (this->allocator_),
                   -1);
   return 0;
 }
@@ -1268,6 +1269,7 @@ int
 ACE_Configuration_Heap::load_key (const ACE_Configuration_Section_Key& key,
                                   ACE_TString& name)
 {
+  ACE_ASSERT (this->allocator_);
   ACE_Configuration_Section_Key_Heap* pKey =
     ACE_dynamic_cast (ACE_Configuration_Section_Key_Heap*,
                       get_internal_key (key));
@@ -1284,7 +1286,7 @@ ACE_Configuration_Heap::add_section (const ACE_Configuration_Section_Key& base,
                                      const ACE_TCHAR* sub_section,
                                      ACE_Configuration_Section_Key& result)
 {
-
+  ACE_ASSERT (this->allocator_);
   ACE_TString section;
   if (load_key (base, section))
     return -1;
@@ -1326,6 +1328,7 @@ int
 ACE_Configuration_Heap::new_section (const ACE_TString& section,
                                      ACE_Configuration_Section_Key& result)
 {
+  ACE_ASSERT (this->allocator_);
   // Create a new section and add it to the global list
 
   // Allocate memory for items to be stored in the table.
@@ -1374,8 +1377,8 @@ ACE_Configuration_Heap::new_section (const ACE_TString& section,
         }
 
       ACE_Configuration_ExtId name (ptr);
-      ACE_Configuration_Section_IntId entry ((VALUE_MAP*)value_hash_map ,
- (SUBSECTION_MAP*)section_hash_map);
+      ACE_Configuration_Section_IntId entry ((VALUE_MAP*) value_hash_map ,
+                                             (SUBSECTION_MAP*) section_hash_map);
 
       // Do a normal bind.  This will fail if there's already an
       // entry with the same name.
@@ -1411,8 +1414,9 @@ int
 ACE_Configuration_Heap::value_open_helper (size_t hash_table_size,
                                           void *buffer)
 {
+  ACE_ASSERT (this->allocator_);
   ACE_NEW_RETURN (buffer,
- (buffer) VALUE_MAP (hash_table_size, this->allocator_),
+                  (buffer) VALUE_MAP (hash_table_size, this->allocator_),
                   -1);
   return 0;
 }
@@ -1421,8 +1425,9 @@ int
 ACE_Configuration_Heap::section_open_helper (size_t hash_table_size,
                                              void *buffer)
 {
+  ACE_ASSERT (this->allocator_);
   ACE_NEW_RETURN (buffer,
- (buffer) SUBSECTION_MAP (hash_table_size, this->allocator_),
+                  (buffer) SUBSECTION_MAP (hash_table_size, this->allocator_),
                   -1);
   return 0;
 }
@@ -1433,6 +1438,7 @@ ACE_Configuration_Heap::open_section (const ACE_Configuration_Section_Key& base,
                                       int create,
                                       ACE_Configuration_Section_Key& result)
 {
+  ACE_ASSERT (this->allocator_);
   if (validate_name (sub_section))
     return -1;
 
@@ -1470,6 +1476,7 @@ ACE_Configuration_Heap::remove_section (const ACE_Configuration_Section_Key& key
                                         const ACE_TCHAR* sub_section,
                                         int recursive)
 {
+  ACE_ASSERT (this->allocator_);
   if (validate_name (sub_section))
     return -1;
 
@@ -1563,6 +1570,7 @@ ACE_Configuration_Heap::enumerate_values (const ACE_Configuration_Section_Key& k
                                           ACE_TString& name,
                                           VALUETYPE& type)
 {
+  ACE_ASSERT (this->allocator_);
   ACE_Configuration_Section_Key_Heap* pKey =
     ACE_dynamic_cast (ACE_Configuration_Section_Key_Heap*,
                       get_internal_key (key));
@@ -1611,6 +1619,7 @@ ACE_Configuration_Heap::enumerate_sections (const ACE_Configuration_Section_Key&
                                             int index,
                                             ACE_TString& name)
 {
+  ACE_ASSERT (this->allocator_);
   // cast to a heap section key
   ACE_Configuration_Section_Key_Heap* pKey =
     ACE_dynamic_cast (ACE_Configuration_Section_Key_Heap*,
@@ -1652,6 +1661,7 @@ ACE_Configuration_Heap::set_string_value (const ACE_Configuration_Section_Key& k
                                           const ACE_TCHAR* name,
                                           const ACE_TString& value)
 {
+  ACE_ASSERT (this->allocator_);
   if (validate_name (name))
     return -1;
 
@@ -1707,6 +1717,7 @@ ACE_Configuration_Heap::set_integer_value (const ACE_Configuration_Section_Key& 
                                            const ACE_TCHAR* name,
                                            u_int value)
 {
+  ACE_ASSERT (this->allocator_);
   if (validate_name (name))
     return -1;
 
@@ -1755,6 +1766,7 @@ ACE_Configuration_Heap::set_binary_value (const ACE_Configuration_Section_Key& k
                                           const void* data,
                                           u_int length)
 {
+  ACE_ASSERT (this->allocator_);
   if (validate_name (name))
     return -1;
 
@@ -1849,6 +1861,7 @@ ACE_Configuration_Heap::get_string_value (const ACE_Configuration_Section_Key& k
                                           const ACE_TCHAR* name,
                                           ACE_TString& value)
 {
+  ACE_ASSERT (this->allocator_);
   if (validate_name (name))
     return -1;
 
@@ -1883,6 +1896,7 @@ ACE_Configuration_Heap::get_integer_value (const ACE_Configuration_Section_Key& 
                                            const ACE_TCHAR* name,
                                            u_int& value)
 {
+  ACE_ASSERT (this->allocator_);
   if (validate_name (name))
     return -1;
 
@@ -1919,6 +1933,7 @@ ACE_Configuration_Heap::get_binary_value (const ACE_Configuration_Section_Key& k
                                           void*& data,
                                           u_int& length)
 {
+  ACE_ASSERT (this->allocator_);
   if (validate_name (name))
     return -1;
 
@@ -1955,6 +1970,7 @@ ACE_Configuration_Heap::find_value (const ACE_Configuration_Section_Key& key,
                                     const ACE_TCHAR* name,
                                     VALUETYPE& type_out)
 {
+  ACE_ASSERT (this->allocator_);
   if (validate_name (name))
     return -1;
 
@@ -1983,6 +1999,7 @@ int
 ACE_Configuration_Heap::remove_value (const ACE_Configuration_Section_Key& key,
                                       const ACE_TCHAR* name)
 {
+  ACE_ASSERT (this->allocator_);
   if (validate_name (name))
     return -1;
 
