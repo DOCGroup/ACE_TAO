@@ -1,3 +1,9 @@
+Fri Mar 03 17:01:54 2000  Steve Huston  <shuston@riverace.com>
+
+        * tests/Malloc_Test.cpp: Changed a couple of straggling
+          ACE_HAS_POSITION_INDEPENDENT_MALLOC to
+          ACE_HAS_POSITION_INDEPENDENT_POINTERS.
+
 Fri Mar 03 11:52:10 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/rules.nested.GNU: added -f $(MAKEFILE)
