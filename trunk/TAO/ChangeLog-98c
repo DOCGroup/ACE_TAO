@@ -1,3 +1,28 @@
+Wed Dec 23 14:44:04 EST 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp:
+	  TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp:
+
+	  Due to a bug in g++2.7.2.3 we were getting lots of link time
+	  undefined symbol errors. This happened for sequences of objects
+	  and interfaces for those platforms that do not support template
+	  specializations or require explicit template
+	  instantiations. Thanks to the efforts of David Levine, we were
+	  able to pinpoint precisely where the problem occured. This was
+	  fixed by moving the generated class declaration of the object
+	  manager after the generated class declaration of the sequence. 
+
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+
+	  In the generated code for _non_existent_skel, the
+	  _tao_obj_reference parameter was unused. We were getting
+	  warnings for this case.
+
+	* tao/Sequence.h:
+
+	  A number of classes had their destructors protected. They are
+	  now moved to the public section.
+	
 Wed Dec 23 12:30:25 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/try_macros.h (TAO_RETHROW_RETURN_VOID): This macro was not
