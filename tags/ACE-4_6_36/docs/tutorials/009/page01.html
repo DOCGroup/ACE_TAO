@@ -1,0 +1,60 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (X11; I; Linux 2.0.32 i486) [Netscape]">
+   <META NAME="Author" CONTENT="James CE Johnson">
+   <TITLE>ACE Tutorial 009</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
+
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 009</FONT></B></CENTER>
+
+<CENTER><B><FONT SIZE=+2>Sending and receiving datagrams again</FONT></B></CENTER>
+
+
+<P>
+<HR WIDTH="100%">
+
+<P>In our previous tutorial, we created a datagram listener and a couple
+of clients that would send it datagrams.&nbsp; That server would respond
+to any datagram sent to the TCP/IP port at which the server was listening.&nbsp;
+What we really want to do, however, is to have the server only respond
+to clients that meet some criteria.
+
+<P>Why is this important?
+
+<P>Imagine you're writting a distributed system that will have many server
+applications.&nbsp; Each of those will probably listen at different (and
+well-known)&nbsp;TCP/IP addresses so that clients can find each server
+without confusion.&nbsp; However...&nbsp; In a large system you might have
+several <I>versions</I> of the same server running at the same time*.&nbsp;
+You probably don't want those servers running at different addresses since
+that breaks the well-known address requirement.
+
+<P>By creating a datagram listener similar to the last tutorial, a client
+can send broadcast datagrams to locate all of the servers listening at
+the well-known address.&nbsp;&nbsp; By adding a thin protocol layer into
+the datagram contents, the servers can be selective about which clients
+they respond to.&nbsp; Thus, if each client sends its version signature
+in the broadcast, then the servers can choose to respond only to clients
+with matching versions.
+<P>
+Kirthika's Abstract:
+<UL>
+Here, the client uses datagrams for discovery of the server in the
+subnet and also sends a signature for authentification. The server
+decides on replying to the client depending on the signature. The only
+changes from the previous tutorial are in the addition of an extra
+signature matching portion on the server side and providing timeout
+values on the client side which allows the send() and recv() calls to
+return on a timeout if the target party fails to respond. 
+<P>
+This feature of discrimnation depending on the client signature could be
+used for security reasons or version confirmation by the server.
+</UL>
+<P><FONT SIZE=-1>*Note:&nbsp; I'm making the assumption that your multiple
+server versions will be running on different hosts since you can only have
+one server listening at the well-known address on a given host.</FONT>
+
+<P><HR WIDTH="100%">
+<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page02.html">Continue This Tutorial</A>]</CENTER>
