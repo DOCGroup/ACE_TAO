@@ -22,7 +22,8 @@ FILES	 = address \
 	timetick \
 	transaction \
 	vb \
-        wpdu
+        wpdu \
+        sagent
 
 TEMPLATE_FILES = 
 
