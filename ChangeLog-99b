@@ -1,11 +1,22 @@
+Wed Apr 28 18:02:36 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.h: Added a new macro called
+	  ACE_non_function_ptr_to_function_ptr_cast to get around some
+	  compiler constrain.  In face, ANSI C++ standard prevents casting
+	  from a non-function pointer (e.g., void *) to a function
+	  pointer.  Currently, only egcs check for this condition.
+
+	* ace/Parse_Node.cpp (symbol): Changed to use the new
+	  ACE_non_function_ptr_to_function_ptr_cast.
+
 Wed Apr 28 16:53:16 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* examples/Reactor/Proactor/Aio_Platform_Test_C.cpp: Added this
 	file, a simple C version of the
 	$ACE_ROOT/tests/Aio_Platforms_Test.cpp. Useful for submitting bug
-	reports etc. 
+	reports etc.
 
-	* ace/Proactor.cpp: 
+	* ace/Proactor.cpp:
 	* ace/POSIX_Asynch_IO.cpp: Fixed old g++ warnings
 
 Wed Apr 28 15:39:14 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
