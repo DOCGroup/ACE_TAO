@@ -1,3 +1,7 @@
+Tue Nov  4 17:11:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tools/Daemon/CIAO_Daemon.cpp: Fixed warnings from g++. 
+
 Tue Nov  4 16:51:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tools/Daemon/controller_i.cpp:

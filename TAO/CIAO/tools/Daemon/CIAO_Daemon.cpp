@@ -20,10 +20,10 @@
 #include "ace/Read_Buffer.h"
 #include "ace/Get_Opt.h"
 
-char *ior_file_name_ = "daemon.ior";
-char *comserv_path_ = "../ComponentServer/ComponentServer";
+const char *ior_file_name_ = "daemon.ior";
+const char *comserv_path_ = "../ComponentServer/ComponentServer";
 CORBA::ULong spawn_wait_ = 5;
-char *installation_datafile_ = "CIAO_Installation_Data.ini";
+const char *installation_datafile_ = "CIAO_Installation_Data.ini";
 char *section_name_ = 0;
 char *default_svcconf_ = 0;
 char *svcconf_config_ = 0;
