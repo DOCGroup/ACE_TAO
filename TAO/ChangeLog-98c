@@ -1,3 +1,11 @@
+Tue Aug 4 14:52:12 1998 Jeff Parsons <jp4@cs.wustl.edu>
+
+      * TAO/tests/Param_Test/bd_struct_seq.{h,cpp}:
+        Same changes as other bounded sequence tests
+        checked in yesterday (non _var members for DII
+        OUT arg and return value). Test now works for DII
+        as well as SII.
+
 Tue Aug  4 12:55:06 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
 	* orbsvcs/tests/Logger/run_test.pl: Revised test script to call
