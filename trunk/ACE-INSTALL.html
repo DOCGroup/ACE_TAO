@@ -1112,6 +1112,8 @@ include $(ACE_ROOT)/include/makeinclude/platform_sunos5_sunc++.GNU
       This file contains the compiler and Makefile directives that are
       platform/compiler-specific. If you'd like to add make options, you
       can add them before including the paltform-specific configuration.<p>
+      NOTE! There really is not a # character before 'include' in the
+      platform_macros.GNU file. # is a comment character.<p>
 
   </p></li><li>Note that because ACE builds shared libraries, you'll need to set
       LD_LIBRARY_PATH to whereever you put the binary version of the
