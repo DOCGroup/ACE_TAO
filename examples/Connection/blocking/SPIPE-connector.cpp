@@ -4,6 +4,7 @@
 
 #define SPIPE_CONNECTOR_C
 
+#include "ace/OS_NS_string.h"
 #include "ace/SPIPE_Addr.h"
 #include "ace/SPIPE_Connector.h"
 #include "ace/Proactor.h"

@@ -24,6 +24,7 @@
 //
 // =====================================================================
 
+#include "ace/OS_NS_unistd.h"
 #include "ace/Proactor.h"
 #include "ace/Task.h"
 #include "ace/WIN32_Proactor.h"

@@ -4,6 +4,7 @@
 #define  SYNCHLIB_BUILD_DLL
 #endif /* SYNCHLIB_BUILD_DLL */
 
+#include "ace/Log_Msg.h"
 #include "Benchmark_Base.h"
 
 ACE_RCSID(Synch_Benchmarks, Benchmark_Base, "$Id$")
