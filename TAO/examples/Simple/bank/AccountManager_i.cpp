@@ -93,7 +93,7 @@ AccountManager_i::open (const char *name,
 
 void
 AccountManager_i::close (Bank::Account_ptr account,
-			 CORBA::Environment &TAO_TRY_ENV)
+			 CORBA::Environment &_env)
 {
   TAO_TRY
     {
