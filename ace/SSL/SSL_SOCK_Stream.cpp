@@ -21,11 +21,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_SSL_SOCK_Stream)
 
 ACE_SSL_SOCK_Stream::ACE_SSL_SOCK_Stream (ACE_SSL_Context *context)
   : ssl_ (0),
-    stream_ (),
-    reactor_ (0),
-    handler_ (0),
-    read_notification_pending_ (0),
-    write_notification_pending_ (0)
+    stream_ ()
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::ACE_SSL_SOCK_Stream");
 
@@ -101,17 +97,26 @@ ACE_SSL_SOCK_Stream::sendv (const iovec iov[],
         {
           // There is a subtle difference in behaviour depending on
           // whether or not any data was sent.  If no data was sent,
-          // then always return -1.  Otherwise only return bytes_sent
-          // if errno == EWOULDBLOCK or the send timed out.  This
-          // gives the caller an opportunity to keep track of which
-          // data was actually sent.
-          if (bytes_sent > 0 && (errno == EWOULDBLOCK || errno == ETIME))
+          // then always return -1.  Otherwise return bytes_sent.
+          // This gives the caller an opportunity to keep track of
+          // which data was actually sent.
+          if (bytes_sent > 0)
             break;
           else
             return -1;
         }
       else
-        bytes_sent += result;
+        {
+          bytes_sent += result;
+
+          // Do not continue on to the next loop iteration if the
+          // amount of data sent was less than the amount data given.
+          // This avoids a subtle problem where "holes" in the data
+          // stream would occur if partial sends of a given buffer in
+          // the iovec array occured.
+          if (ACE_static_cast (size_t, result) < iov[i].iov_len)
+            break;
+        }
 
       (void) countdown.update ();
     }

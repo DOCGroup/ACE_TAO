@@ -293,20 +293,6 @@ protected:
   /// The stream which works under the ssl connection.
   ACE_SOCK_Stream stream_;
 
-  /// Pointer to the Reactor being used to dispatch events coming in
-  /// on this stream's handle.
-  ACE_Reactor *reactor_;
-
-  /// Event handler that handles events coming in this
-  /// ACE_SSL_SOCK_Stream's handle.
-  ACE_Event_Handler *handler_;
-
-  /// If true, a read notification is pending in the Reactor.
-  int read_notification_pending_;
-
-  /// If true, a read notification is pending in the Reactor.
-  int write_notification_pending_;
-
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
