@@ -1,3 +1,11 @@
+Fri Jul 28 12:46:54 2000  David L. Levine <levine@cs.wustl.edu>
+
+        * tests/run_tests.lst: disabled SOCK_Send_Recv_Test,
+          Thread_Pool_Test, Cached_Conn_Test, and Process_Strategy_Test
+          on LynxOS.  The work on LynxOS 3.0.0 x86, but not
+          on our LynxOS 3.1.0 PPC (maybe because it runs out of
+          resources?).
+
 Fri Jul 28 11:12:39 2000  David L. Levine <levine@cs.wustl.edu>
 
         * tests/Thread_Mutex_Test.cpp (spawn): use 3 threads instead
