@@ -49,11 +49,12 @@ Tue Feb 20 16:13:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Tue Feb 20 12:02:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-        * tao/IIOP_Connection_Handler.cpp (handle_close):
-        * tao/Strategies/UIOP_Connection_Handler.cpp:
-        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp: Fixed a
-          leak from open handles on the server side when the clients
-          exit.
+	* tao/IIOP_Connection_Handler.cpp (handle_close): 
+	* tao/Strategies/UIOP_Connection_Handler.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp: Fixed a
+	  leak from open handles on the server side when the clients
+	  exit.  Thanks to Andy Olson <andrew.olson@lmco.com>
+	  and Ossama for helping with this.
 
 Tue Feb 20 10:25:37 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
