@@ -8,6 +8,8 @@
 #if !defined (ACE_LINUX_COMMON_H)
 #define ACE_LINUX_COMMON_H
 
+#define ACE_HAS_BYTESEX_H
+
 #if defined (__alpha__)
 # define ACE_HAS_64BIT_LONGS
 
