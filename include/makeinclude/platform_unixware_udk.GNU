@@ -1,6 +1,6 @@
 # $Id$
 
-# UnixWare V2.2.1.2 with g++ version 2.7.2.2 *not* using Orbix
+# UnixWare V2.2.1.2 with g++ version 2.7.2.2
 
 #ifndef debug
 debug = 1

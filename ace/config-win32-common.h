@@ -103,26 +103,6 @@
 //  Runtime restrictions: winsock2 must be installed.
 //      #define ACE_HAS_WINSOCK2 0
 
-// Define ACE_HAS_ORBIX to 1 in your config.h file if you want to integrate
-// ACE and Orbix in Win32.
-//  Setting applies to  : building ACE, linking with ACE
-//  Runtime restrictions: system must have Orbix DLLs
-#if !defined (ACE_HAS_ORBIX)
-# define ACE_HAS_ORBIX 0
-#endif
-
-#if !defined (ACE_HAS_MT_ORBIX)
-# define ACE_HAS_MT_ORBIX 0
-#endif
-
-// By default, you will get the proper namespace usage for Orbix.  If
-// you don't like this, comment out the #define line or #undef
-// ACE_ORBIX_HAS_NAMESPACES in your config.h file after including this
-// file.
-#if !defined (ACE_ORBIX_HAS_NAMESPACES)
-# define ACE_ORBIX_HAS_NAMESPACES
-#endif /* ACE_ORBIX_HAS_NAMESPACES */
-
 // By default, we use non-static object manager on Win32.  That is,
 // the object manager is allocated in main's stack memory.  If this
 // does not suit your need, i.e., if your programs depend on the use

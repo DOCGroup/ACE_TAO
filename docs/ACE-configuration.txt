@@ -128,7 +128,6 @@ Features and packages:
   --enable-xt-reactor     build support for the XtReactor [default=no]
   --with-x                use the X Window System
   --with-gperf            compile the gperf program       [default=yes]
-  --with-orbix[=DIR]      compile ACE with Orbix          [default=no]
   --with-tli-device[=DEV] device for TCP on TLI           [default=/dev/tcp]
 
 To enable debugging and disable code inlining, for example, just enter

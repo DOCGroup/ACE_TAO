@@ -14,11 +14,6 @@ DIRS  = Gateway \
         gperf \
 	drwho
 
-# The following directories aren't compiled by default since haven't
-# finished integrating it into ACE...
-#
-# Orbix-Examples
-
 #----------------------------------------------------------------------------
 #	Include macros and targets
 #----------------------------------------------------------------------------

@@ -18,10 +18,3 @@ applications that utilize the ACE features.
 	. JAWS -- This is a high-performance HTTP Web server written
 	  with ACE.  It illustrates a number of sophisticated ACE
 	  concurrency and event demultiplexing strategies.
-
-	. Orbix-Examples -- Implements several applications that
-	  integrate ACE and Orbix (which is IONA's implementation of
-	  CORBA).  By default, these aren't compiled since most
-	  platforms don't have Orbix.  These examples are completely
-	  unsupported and may not work...
-

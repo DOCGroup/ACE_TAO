@@ -26,7 +26,6 @@
 #  inline           Enable ACE inlining.  Some platforms enable inlining by
 #                     default, others do not.
 #  optimize         Enable optimization; see OCFLAGS and OCCFLAGS.
-#  orbix            Enable use of Orbix.
 #  pace             Enable PACE as the underpinnings of ACE_OS.
 #  probe            Enable ACE_Timeprobes.
 #  profile          Enable profiling; see PCFLAGS and PCCFLAGS.
@@ -102,7 +101,6 @@
 #  MAKEFLAGS    Flags that are passed into the compilation from the commandline
 #  OCFLAGS      Optimizing C compilation flags
 #  OCCFLAGS     Optimizing C++ compilation flags
-#  ORBIX_ROOT   Root of IONA's Orbix CORBA implementation
 #  PCFLAGS      C compilation flags for profiling
 #  PCCFLAGS     C++ compilation flags for profiling
 #  PLATFORM_XT_CPPFLAGS   Platform CPP options for X11 (some require -I...)
@@ -214,11 +212,6 @@ endif
 ifeq ($(IDL_SERVER_TSRC_EXT),)
 IDL_SERVER_TSRC_EXT = S_T.cpp
 endif
-
-# This is for Orbix support, not related to TAO's IDL compiler.
-# It is probably obsolete by now, if it works at all.
-IDL             = idl
-IDLFLAGS        = -A -B -s $(IDL_SERVER_SRC_EXT) -c $(IDL_CLIENT_SRC_EXT)
 
 ifeq (,$(findstring -I$(ACE_ROOT),$(INCLDIRS)))
   INCLDIRS        += -I$(ACE_ROOT)

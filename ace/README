@@ -403,8 +403,6 @@ ACE_HAS_OPTIMIZED_MESSAGE_QUEUE         Use the semaphore
                                         ACE_Message_Queue rather than
                                         the emulated condition
                                         variable (NT and VxWorks).
-ACE_HAS_ORBIX                           Platform has Orbix CORBA
-                                        implementation
 ACE_HAS_OSF_TIMOD_H                     Platform supports the OSF TLI
                                         timod STREAMS module
 ACE_HAS_PENTIUM                         Platform is an Intel Pentium

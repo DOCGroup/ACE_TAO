@@ -24,23 +24,6 @@ build.local: $(BUILD)
 .SUFFIXES:
 .SUFFIXES: .cpp .cc .C .idl $(SUFFIXES)
 
-ifndef TAO_ROOT
-# and here's how to compile C++ files from the IDL file.
-# only ONE of these rules will be run at make-time,
-
-# The rules are only used if TAO_ROOT is not defined to avoid
-# conflicts with a similar rule in TAO.
-
-%S.cpp: %.idl
-	$(IDL) --version $(IDLFLAGS) $<
-
-%C.cpp: %.idl
-	$(IDL) --version $(IDLFLAGS) $<
-
-%.hh: %.idl
-	$(IDL) --version $(IDLFLAGS) $<
-endif # TAO_ROOT
-
 # C++ related targets
 
 ifeq ($(OS),"Windows_NT")

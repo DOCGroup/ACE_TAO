@@ -1,7 +1,7 @@
 # $Id$
 
-# SunOS 5.x (Solaris 2.x) with SunC++ 4.x
-# *not* using Orbix
+# Digital Unix v.4.X using epc?
+# (Apparently based on SunOS 5.x (Solaris 2.x) with SunC++ 4.x)
 
 debug = 1
 

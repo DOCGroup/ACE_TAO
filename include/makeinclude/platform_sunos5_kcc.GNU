@@ -1,7 +1,6 @@
 # $Id$  -*- Makefile -*-
 
-# SunOS 5.x (Solaris 2.x) with KAI C++ 3.3e, *not* using Orbix.
-#
+# SunOS 5.x (Solaris 2.x) with KAI C++ 3.3e
 
 debug = 1
 distrib = 0
