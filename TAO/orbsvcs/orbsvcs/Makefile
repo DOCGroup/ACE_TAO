@@ -98,6 +98,9 @@ ifndef TAO_ORBSVCS
     TAO_ORBSVCS += RT_Notify
   endif #rt_corba
 
+  ifeq ($(metrics),1)
+    TAO_ORBSVCS += Metrics
+  endif # metrics
 endif # TAO_ORBSVCS
 
 # The order in this list is important as some libraries depend on
@@ -233,6 +236,9 @@ ifneq (,$(findstring  IFRService, $(TAO_ORBSVCS)))
 endif
 ifneq (,$(findstring  RT_Notify, $(TAO_ORBSVCS)))
   MKLIST += Makefile.ETCL Makefile.CosNotification Makefile.RT_Notification
+endif
+ifneq (,$(findstring  Metrics, $(TAO_ORBSVCS)))
+  MKLIST += Makefile.Metrics
 endif
 #----------------------------------------------------------------------------
 #       Local rules
