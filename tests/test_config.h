@@ -49,17 +49,15 @@
 
 #if defined (ACE_HAS_WINCE)
 
-#define ACE_DEFAULT_TEST_FILE_W L"\\temp\\ace_test_file"
-#define ACE_TEMP_FILE_NAME_W L"\\temp\\ace_temp_file"
-#define ACE_LOG_DIRECTORY_W L"\\temp\\log\\"
-#define ACE_LOG_FILE_EXT_NAME_W L".txt"
-#define MAKE_PIPE_NAME_W(X) L"\\\\.\\pipe\\"#X
+#define ACE_DEFAULT_TEST_FILE_A "\\temp\\ace_test_file"
+#define ACE_TEMP_FILE_NAME_A "\\temp\\ace_temp_file"
+#define ACE_LOG_DIRECTORY_A "\\temp\\log\\"
+#define MAKE_PIPE_NAME_A(X) "\\\\.\\pipe\\"#X
 
-#define ACE_DEFAULT_TEST_FILE_A ACE_DEFAULT_TEST_FILE_W
-#define ACE_TEMP_FILE_NAME_A ACE_TEMP_FILE_NAME_W
-#define ACE_LOG_DIRECTORY_A ACE_LOG_DIRECTORY_W
-#define MAKE_PIPE_NAME_A(X) MAKE_PIPE_NAME_W(X)
-#define ACE_LOG_FILE_EXT_NAME_A ACE_LOG_FILE_EXT_NAME_W
+#define ACE_DEFAULT_TEST_FILE_W ACE_TEXT (ACE_DEFAULT_TEST_FILE_A)
+#define ACE_TEMP_FILE_NAME_W ACE_TEXT (ACE_TEMP_FILE_NAME_A)
+#define ACE_LOG_DIRECTORY_W ACE_TEXT (ACE_LOG_DIRECTORY_A)
+#define MAKE_PIPE_NAME_W(X) ACE_TEXT (MAKE_PIPE_NAME_A(X))
 
 #elif defined (ACE_WIN32)
 
@@ -95,8 +93,8 @@
 #endif /* ACE_WIN32 */
 
 #if defined (ACE_HAS_WINCE)
-#define ACE_LOG_FILE_EXT_NAME_W L".txt"
-#define ACE_LOG_FILE_EXT_NAME_A ACE_LOG_FILE_EXT_NAME_W
+#define ACE_LOG_FILE_EXT_NAME_A ".txt"
+#define ACE_LOG_FILE_EXT_NAME_W ACE_TEXT (ACE_LOG_FILE_EXT_NAME_A)
 #else
 #define ACE_LOG_FILE_EXT_NAME_W L".log"
 #define ACE_LOG_FILE_EXT_NAME_A ".log"
@@ -253,21 +251,21 @@ ACE_Test_Output::set_output (const ASYS_TCHAR *filename, int append)
 #else
   ASYS_TCHAR temp[MAXPATHLEN];
   // Ignore the error value since the directory may already exist.
-  LPCTSTR test_dir;
+  ASYS_TCHAR *test_dir;
 
 #if !defined (ACE_HAS_WINCE)
   test_dir = ACE_OS::getenv (ACE_TEXT ("ACE_TEST_DIR"));
 
   if (test_dir == 0)
 #endif /* ACE_HAS_WINCE */
-    test_dir = ACE_TEXT ("");
+    test_dir = ASYS_TEXT ("");
 
   ACE_OS::sprintf (temp,
                    ASYS_TEXT ("%s%s%s%s"),
                    test_dir,
-                   ACE_LOG_DIRECTORY_A,
+                   ASYS_TEXT (ACE_LOG_DIRECTORY_A),
                    ACE::basename (filename, ACE_DIRECTORY_SEPARATOR_CHAR_A),
-                   ACE_LOG_FILE_EXT_NAME_A);
+                   ASYS_TEXT (ACE_LOG_FILE_EXT_NAME_A));
 
 #if defined (VXWORKS)
   // This is the only way I could figure out to avoid a console
