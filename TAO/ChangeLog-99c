@@ -1,3 +1,12 @@
+Fri Apr  9 11:30:37 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/default_server.cpp:
+	* tao/default_client.cpp:
+	* tao/ORB_Core.cpp: Removed ACE_STATIC_SVC_REQUIRE.
+
+	* tao/TAO_Internal.cpp (open_services): Added in TAO's default
+	  static services here.
+
 Fri Apr 09 08:19:42 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * Logging_Service/Makefile,Naming_Service/Makefile,
