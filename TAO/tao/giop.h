@@ -370,6 +370,8 @@ class TAO_GIOP
   // = DESCRIPTION
   //   Only put static methods within this scope.
 {
+  ACE_CLASS_IS_NAMESPACE (TAO_GIOP);
+    
 public:
   // = Close a connection, first sending GIOP::CloseConnection
   static void close_connection (TAO_Client_Connection_Handler *&handle,
@@ -399,11 +401,6 @@ public:
   static void make_error (CDR &msg, ...);
   // Construct a message containing an error so that it can be sent as
   // a response to a request.
-
-private:
-  TAO_GIOP();
-  TAO_GIOP(TAO_GIOP&);
-  ~TAO_GIOP();
 };
 
 #endif /* TAO_GIOP_H */
