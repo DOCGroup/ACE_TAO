@@ -569,8 +569,6 @@ TAO_ORB_Core::init (int &argc, char *argv[])
 
   this->orb_params ()->use_lite_protocol (giop_lite);
 
-  this->orb_params ()->use_dotted_decimal_addresses (dotted_decimal_addresses);
-
   // tell the registry to open all registered interfaces! fredk
   if (this->connector_registry ()->open (trf, this->reactor ()) != 0)
     return -1;
