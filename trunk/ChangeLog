@@ -16,9 +16,9 @@ Tue Jan 11 22:32:47 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	  Release the lock during the "close" upcall.  Fixes a deadlock
 	  that occurred when cancelling a timer during removal of an event
-	  handler from the reactor.  Thanks to gxc <info@socks5cn.com> for
-	  reporting the problem and confirming that this change fixes the
-	  problem.
+	  handler from the reactor.  Thanks to Gao Xianchao <info at
+	  socks5cn dot com> for reporting the problem and confirming that
+	  this change fixes the problem.
 
 Wed Jan 12 00:12:03 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
