@@ -5,10 +5,6 @@
 
 ACE_RCSID (Trader, Constraint_Nodes, "$Id$")
 
-const CORBA::Long MAX_SIGNED_INTEGER = (~ (CORBA::Long)0) >> 1;
-const CORBA::Long MIN_SIGNED_INTEGER = ~ (MAX_SIGNED_INTEGER);
-const CORBA::ULong MAX_UNSIGNED_INTEGER = (~ (CORBA::ULong)0);
-
 int
 TAO_Noop_Constraint::accept (TAO_Constraint_Visitor* visitor)
 {
@@ -291,11 +287,11 @@ TAO_Literal_Constraint (const TAO_Literal_Constraint& lit)
 TAO_Literal_Constraint::
 TAO_Literal_Constraint (CORBA::Any* any)
 {
-  CORBA::Environment env;
+  ACE_DECLARE_NEW_CORBA_ENV;
   CORBA::Any& any_ref = *any;
   CORBA::TypeCode_var type = any_ref.type ();
-  CORBA::TCKind corba_type = type->kind (env);
-  TAO_CHECK_ENV_RETURN_VOID (env);
+  CORBA::TCKind corba_type = type->kind (ACE_TRY_ENV);
+  ACE_CHECK;
 
   this->type_ = TAO_Literal_Constraint::comparable_type (type.in ());
   switch (this->type_)
@@ -415,8 +411,8 @@ TAO_Literal_Constraint::operator CORBA::ULong (void) const
   else if (this->type_ == TAO_DOUBLE)
     return_value =
       (this->op_.double_ > 0) ?
-      ((this->op_.double_ > MAX_UNSIGNED_INTEGER) ?
-       MAX_UNSIGNED_INTEGER :
+      ((this->op_.double_ > ACE_UINT32_MAX) ?
+       ACE_UINT32_MAX :
        (CORBA::ULong) this->op_.double_)
       : 0;
 
@@ -431,16 +427,16 @@ TAO_Literal_Constraint::operator CORBA::Long (void) const
     return_value = this->op_.integer_;
   else if (this->type_ == TAO_UNSIGNED)
     return_value =
-      (this->op_.uinteger_ > (CORBA::ULong) MAX_SIGNED_INTEGER) ?
-      MAX_SIGNED_INTEGER : (CORBA::Long) this->op_.uinteger_;
+      (this->op_.uinteger_ > (CORBA::ULong) ACE_INT32_MAX) ?
+      ACE_INT32_MAX : (CORBA::Long) this->op_.uinteger_;
   else if (this->type_ == TAO_DOUBLE)
     return_value  =
       (this->op_.double_ > 0) ?
-      ((this->op_.double_ > MAX_SIGNED_INTEGER) ?
-       MAX_SIGNED_INTEGER :
+      ((this->op_.double_ > ACE_INT32_MAX) ?
+       ACE_INT32_MAX :
        (CORBA::Long) this->op_.double_) :
-    ((this->op_.double_ < MIN_SIGNED_INTEGER) ?
-     MIN_SIGNED_INTEGER :
+    ((this->op_.double_ < ACE_INT32_MIN) ?
+     ACE_INT32_MIN :
      (CORBA::Long) this->op_.double_);
 
   return return_value;
@@ -474,10 +470,10 @@ TAO_Expression_Type
 TAO_Literal_Constraint::comparable_type (CORBA::TypeCode_ptr type)
 {
   // Convert a CORBA::TCKind into a TAO_Literal_Type
-  CORBA::Environment env;
+  ACE_DECLARE_NEW_CORBA_ENV;  
   TAO_Expression_Type return_value = TAO_UNKNOWN;
-  CORBA::TCKind kind = type->kind (env);
-  TAO_CHECK_ENV_RETURN (env, return_value);
+  CORBA::TCKind kind = type->kind (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (return_value);
 
   switch (kind)
     {
@@ -504,10 +500,10 @@ TAO_Literal_Constraint::comparable_type (CORBA::TypeCode_ptr type)
       break;
     case CORBA::tk_alias:
       {
-	CORBA::TypeCode_ptr typecode = type->content_type (env);
-	TAO_CHECK_ENV_RETURN (env, return_value);
-	CORBA::TCKind kind = typecode->kind (env);
-	TAO_CHECK_ENV_RETURN (env, return_value);
+	CORBA::TypeCode_ptr typecode = type->content_type (ACE_TRY_ENV);
+	ACE_CHECK_RETURN (return_value);
+	CORBA::TCKind kind = typecode->kind (ACE_TRY_ENV);
+	ACE_CHECK_RETURN (return_value);
 
 	if (kind == CORBA::tk_sequence)
 	  return_value = TAO_SEQUENCE;
