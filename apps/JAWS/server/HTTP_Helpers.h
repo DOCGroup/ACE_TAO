@@ -1,9 +1,36 @@
+/* -*- c++ -*- */
+// Hey, Emacs!  This is a C++ file!
+
 // HTTP_Helpers.h
 
 #if !defined (HTTP_HELPERS_H)
 #define HTTP_HELPERS_H
 
 #include "ace/Synch.h"
+
+class HTTP_Helper
+// Static functions to enhance the lives of HTTP programmers everywhere.
+{
+public:
+
+  // Convert and HTTP-date into a time_t
+  static time_t HTTP_mktime (const char *httpdate);
+
+  // Create today's date
+  static const char * HTTP_date (char * const date_string, int date_length);
+
+  static int HTTP_month (const char *month);
+  static const char * HTTP_month (int month);
+
+private:
+
+  static int fixyear (int year);
+
+private:
+  static const char * const months_[12];
+};
+
+// Design around the Singleton pattern
 
 class HTTP_Status_Code
   // = TITLE
@@ -15,7 +42,7 @@ class HTTP_Status_Code
   //     Design around the Singleton pattern
 {
 public:
-  static const char **instance(void);
+  static const char * const * const instance(void);
   // Singleton access point.
 
   enum STATUS_CODE {

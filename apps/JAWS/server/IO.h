@@ -1,8 +1,11 @@
+/* -*- c++ -*- */
+// Hey, Emacs!  This is a C++ file!
+
 #ifndef JAWS_IO_H
 #define JAWS_IO_H
 
 class ACE_Message_Block;
-class HTTP_Handler;
+class JAWS_IO_Handler;
 
 #include "ace/ACE.h"
 #include "ace/Asynch_IO.h"
@@ -23,7 +26,7 @@ class JAWS_IO
 public:
   JAWS_IO (void);
   virtual ~JAWS_IO (void);
-  void handler (HTTP_Handler *handler);
+  void handler (JAWS_IO_Handler *handler);
   void handle (ACE_HANDLE h);
   ACE_HANDLE handle (void);
 
@@ -42,7 +45,48 @@ public:
   
 protected:
   ACE_HANDLE handle_;
-  HTTP_Handler *handler_;
+  JAWS_IO_Handler *handler_;
+};
+
+class JAWS_IO_Handler
+{
+public:
+  virtual void read_complete (ACE_Message_Block &data) = 0;
+  // This method is called by the IO class when new client data shows
+  // up.
+
+  virtual void read_error (void) = 0;
+  // This method is called by the IO class when there was an error in
+  // reading new data from the client.
+
+  virtual void transmit_file_complete (void) = 0;
+  // This method is called by the IO class when the requested file has
+  // been successfully transmitted to the client.
+
+  virtual void transmit_file_error (int result) = 0;
+  // This method is called by the IO class when there was an error in
+  // transmitting the requested file to the client.
+
+  virtual void receive_file_complete (void) = 0;
+  // This method is called by the IO class when the requested file has
+  // been successfully received from the client.
+
+  virtual void receive_file_error (int result) = 0;
+  // This method is called by the IO class when there was an error in
+  // receiving the requested file from the client.
+
+  virtual void write_error (void) = 0;
+  // This method is called by the IO class when there was an error in
+  // writing data to the client.
+
+  virtual void confirmation_message_complete (void) = 0;
+  // This method is called by the IO class when the confirmation
+  // message has been delivered to the client.
+
+  virtual void error_message_complete (void) = 0;
+  // This method is called by the IO class when the error message has
+  // been delivered to the client.
+
 };
 
 class JAWS_Synch_IO : public JAWS_IO
