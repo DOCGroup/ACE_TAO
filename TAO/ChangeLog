@@ -1,7 +1,10 @@
 Fri Sep 13 14:31:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/ImplRepo_Service/ImR_Activator.bor:
-          Added missing libs
+          Added missing libs.
+
+        * tests/POA/Policies/makefile.bor:
+          Fixed this BCB makefile.
 
 Fri Sep 13 09:37:59 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
