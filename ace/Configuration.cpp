@@ -403,9 +403,9 @@ ACE_Configuration_Win32Registry::open_section (const ACE_Configuration_Section_K
         return -3;
     }
 
-  ACE_Configuration_Section_Key *temp;
+  ACE_Section_Key_Win32 *temp;
 
-  ACE_NEW (temp, ACE_Section_Key_Win32 (result_key));
+  ACE_NEW_RETURN (temp, ACE_Section_Key_Win32 (result_key), -4);
   result = ACE_Configuration_Section_Key (temp);
   return 0;
 }
@@ -685,7 +685,7 @@ ACE_Configuration_Win32Registry::get_binary_value (const ACE_Configuration_Secti
   length = buffer_length;
   
   char* new_data;
-  ACE_NEW (new_data, char[length]);
+  ACE_NEW_RETURN (new_data, char[length], -4);
 
   memcpy (new_data, buffer, length);
   data = new_data;
@@ -1220,7 +1220,7 @@ ACE_Configuration_Heap::new_section (const ACE_TString& section,
 
   // set the result
   ACE_Configuration_Section_Key_Heap *temp;
-  ACE_NEW (temp, ACE_Configuration_Section_Key_Heap (section.rep ()));
+  ACE_NEW_RETURN (temp, ACE_Configuration_Section_Key_Heap (section.rep ()), -2);
   result = ACE_Configuration_Section_Key (temp);
   return return_value;
 }
@@ -1277,7 +1277,7 @@ ACE_Configuration_Heap::open_section (const ACE_Configuration_Section_Key& base,
 
   ACE_Configuration_Section_Key_Heap *temp;
 
-  ACE_NEW (temp, ACE_Configuration_Section_Key_Heap (section.rep ()));
+  ACE_NEW_RETURN (temp, ACE_Configuration_Section_Key_Heap (section.rep ()), -3);
   result = ACE_Configuration_Section_Key (temp);
 
   return 0;
@@ -1402,8 +1402,7 @@ ACE_Configuration_Heap::enumerate_values (const ACE_Configuration_Section_Key& k
       if (pKey->value_iter_)
         delete pKey->value_iter_;
 
-      ACE_NEW (pKey->value_iter_, 
-               ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId , ACE_Configuration_Value_IntId, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>::ITERATOR (hash_map->begin ());
+      ACE_NEW_RETURN (pKey->value_iter_, VALUE_HASH::ITERATOR(hash_map->begin()), -3);
     }
  
   // Get the next entry
@@ -1443,7 +1442,7 @@ ACE_Configuration_Heap::enumerate_sections (const ACE_Configuration_Section_Key&
       if (pKey->section_iter_)
         delete pKey->section_iter_;
 
-      ACE_NEW (pKey->section_iter_, SUBSECTION_HASH::ITERATOR (IntId.section_hash_map_->begin ()));
+      ACE_NEW_RETURN (pKey->section_iter_, SUBSECTION_HASH::ITERATOR (IntId.section_hash_map_->begin ()), -3);
     }
  
   // Get the next entry
@@ -1703,7 +1702,7 @@ ACE_Configuration_Heap::get_binary_value (const ACE_Configuration_Section_Key& k
     return -4;
   
   // Make a copy
-  ACE_NEW (data, char[VIntId.length_]);
+  ACE_NEW_RETURN (data, char[VIntId.length_], -5);
   ACE_OS::memcpy (data, VIntId.data_, VIntId.length_);
   length = VIntId.length_;
   return 0;
