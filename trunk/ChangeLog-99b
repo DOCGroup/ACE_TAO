@@ -1,6 +1,12 @@
+Sat May 15 08:30:43 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Containers.h: added #include of ace/Malloc_Base.h.
+          It's needed for the definition of ACE_Allocator when
+          instantiating container classes.
+
 Sat May 15 03:32:02 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/CDR_Stream.h: Added #include of ace/SString.h.
+        * ace/CDR_Stream.h: Added #include of ace/SString.h.
 
 Fri May 14 23:05:32 1999  David L. Levine  <levine@cs.wustl.edu>
 
