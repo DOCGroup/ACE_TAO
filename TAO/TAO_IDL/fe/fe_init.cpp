@@ -181,22 +181,6 @@ fe_populate(AST_Module *m)
                                          create_scoped_name("Object"),
                                          NULL);
   m->fe_add_predefined_type(pdt);
-  pdt = idl_global->gen()
-                ->create_predefined_type(AST_PredefinedType::PT_pseudo,
-                                         create_scoped_name("TypeCode"),
-                                         NULL);
-  m->fe_add_predefined_type(pdt);
-
-# ifdef IDL_HAS_VALUETYPE
-  if (idl_global->obv_support ())
-    {
-      pdt = idl_global->gen()
-                ->create_predefined_type(AST_PredefinedType::PT_pseudo,
-                                         create_scoped_name("ValueBase"),
-                                         NULL);
-      m->fe_add_predefined_type(pdt);
-    }
-# endif /* IDL_HAS_VALUETYPE */
 
   /*
    * Add these to make all keywords protected even in different spellings
