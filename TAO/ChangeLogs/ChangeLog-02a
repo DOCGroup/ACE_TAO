@@ -1,3 +1,9 @@
+Mon Feb 26 09:46:04 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * tests/makefile.bor:
+        * tests/Bidirectional_NestedUpcall/*.bor
+          Added Borland C++ Builder specific makefiles for this test
+
 Mon Feb 26 00:19:28 2001  Darrell Brunsch <brunsch@uci.edu>
 
         Time to do some spring cleaning...
