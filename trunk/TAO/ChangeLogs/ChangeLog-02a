@@ -1,3 +1,16 @@
+Wed May 10 09:10:14 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+	  Fixed an inconsistency in the value of a flag for
+	  optimizing the repo id field of the generated
+	  typecode. I turned off this particular optimization
+	  a while back because of a sponsor request, and 
+	  because it wasn't buying us much anyway, but I
+	  missed a spot. Thanks to Chris Cleeland 
+	  <cleeland@cs.wustl.edu>, whose question about
+	  reducing the size of generated code led me to look
+	  at this file again.
+
 Wed May 10 08:48:23 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_valuetype/marshal_ch.cpp:
