@@ -1,3 +1,12 @@
+Mon Jun  9 11:30:36 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_union/union_cs.cpp:
+
+          Removed check for non-locality in conditional typecode generation.
+          This one was overlooked in the general removal of these checks
+          some time ago. Thanks to Anand <anand@iCMGworld.com> for reporting
+          the bug.
+
 Mon Jun  9 10:09:52 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Strategies/Makefile.bor:
