@@ -99,14 +99,64 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
 
   delete visitor;
 
-  // Step 3: Generate actual code for the method
-  *os << "{" << be_idt_nl
-      << "this->_tao_rh_init_reply ();" << be_nl << be_nl;
+  int is_an_exception_reply = 0;
 
-  marshal_params (node);
+  // Find out if the operation is one of the *_excep() operations, the
+  // conditions are:
+  // 1) The local_name ends in _excep()
+  // 2) There is exactly one argument
+  // 3) The argument takes an implied valuetype generated from the
+  //    original interface
+  // 4) The implied valuetype ends in ExceptionHolder
+  if (ACE_OS::strstr (node->full_name (), "_excep") != 0)
+    {
+      if (node->nmembers () == 1)
+        {
+          UTL_ScopeActiveIterator i (node, UTL_Scope::IK_decls);
+          if (!i.is_done ())
+            {
+              be_argument *argument =
+                be_argument::narrow_from_decl (i.item ());
+              be_valuetype *vt =
+                be_valuetype::narrow_from_decl (argument->field_type ());
+              if (vt != 0
+                  && vt->original_interface () == intf->original_interface ()
+                  && ACE_OS::strstr (vt->full_name (), "ExceptionHolder") != 0)
+                {
+                  is_an_exception_reply = 1;
+                }
+            }
+        }
+    }
 
-  *os << "this->_tao_rh_send_reply ();" << be_uidt_nl
-      << "}" << be_nl;
+  if (is_an_exception_reply)
+    {
+      *os << "{" << be_idt_nl
+          << "ACE_TRY" << be_nl
+          << "{" << be_nl
+          << "ACE_UNUSED_ARG (holder);" << be_nl
+        //          << "  holder->raise_" << node->local_name ()
+        //          << "(ACE_ENV_SINGLE_ARG_PARAMETER);" << be_nl
+        //          << "  ACE_TRY_CHECK;" << be_nl
+          << "}" << be_nl
+          << "ACE_CATCH (CORBA::Exception, ex)" << be_nl
+          << "{" << be_nl
+          << "  this->_tao_rh_send_exception (ex);" << be_nl
+          << "}" << be_nl
+          << "ACE_ENDTRY;" << be_uidt_nl
+          << "}\n" << be_nl;
+    }
+  else
+    {
+      // Step 3: Generate actual code for the method
+      *os << "{" << be_idt_nl
+          << "this->_tao_rh_init_reply ();" << be_nl << be_nl;
+
+      this->marshal_params (node);
+
+      *os << "this->_tao_rh_send_reply ();" << be_uidt_nl
+          << "}" << be_nl;
+    }
 
   return 0;
 

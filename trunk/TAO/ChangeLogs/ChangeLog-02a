@@ -1,3 +1,40 @@
+Thu Jan 31 13:17:24 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO/tao/PortableServer/AMH_Response_Handler.h:
+	* TAO/tao/PortableServer/AMH_Response_Handler.cpp:
+	  Add method to send exceptions back to the client.
+	  Cleanup some of the code and left @@ comments for Mayur.
+
+	* TAO/TAO_IDL/be/be_interface.cpp:
+	  Fixed operation table entry for the _interface()
+	  pseudo-operation, it was broken for non-GPERF tables.
+
+	* TAO/TAO_IDL/be_include/be_visitor_amh_pre_proc.h:
+	* TAO/TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+	  Add the AMH_*ExceptionHolder node after the AMH*_ResponseHandler
+	  node in the AST, that seems to generate the C++ code in the
+	  right order.
+	  Pass the ExceptionHolder argument down to the methods that
+	  insert the ResponseHandler operations, cuts down in lookup time
+	  when creating arguments for the *_excep() operations.
+	  Add code to generate the *_excep() operations in the ResponseHandler.
+
+	* TAO/TAO_IDL/be/be_visitor_operation/amh_rh_sh.cpp:
+	  Remove obsolete comment.
+
+	* TAO/TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp:
+	  Generate different code for _excep() and regular operations.
+	  Needs a little more work to detect _excep() operations reliable,
+	  but it is close enough for goverment work :-)
+
+	* TAO/TAO_IDL/be/be_visitor_operation/operation.cpp:
+	  Simplify implementation of gen_throw_spec(), with a little work
+	  it could be turned into an static function, making it more
+	  reusable.  Similar changed could be made to
+	  gen_environemnt_decl(), gen_environment_var(),
+	  gen_raise_exception(), gen_check_exception() and even
+	  gen_check_interceptor_exception().
+
 Thu Jan 31 13:06:39 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* performance-tests/Latency/AMH/Single_Threaded/Makefile:

@@ -51,11 +51,11 @@ class TAO_ServerRequest;
 class TAO_PortableServer_Export TAO_AMH_Response_Handler
 {
 public:
-  
+
   /// Constructor
   /**
    * Stores necessary information from a TAO_Server_Request onto the heap
-   */ 
+   */
   TAO_AMH_Response_Handler (TAO_ServerRequest &server_request);
 
   /// Destructor
@@ -64,16 +64,31 @@ public:
    * exception back to the client
    */
   virtual ~TAO_AMH_Response_Handler (void);
-  
+
 protected:
 
   /// Sets up the various paramters in anticipation of returning a reply
   /// to the client. return/OUT/INOUT arguments are marshalled into the
-  /// Output stream after this method has been called. 
+  /// Output stream after this method has been called.
   void _tao_rh_init_reply (void);
 
   /// Sends the marshalled reply back to the client.
   void _tao_rh_send_reply (void);
+
+  /// Send back an exception to the client.
+  void _tao_rh_send_exception (CORBA::Exception &ex
+                               ACE_ENV_ARG_DECL);
+
+protected:
+
+  /// The outgoing CDR stream
+  /**
+   * The IDL-generated ResponseHandler implementations used this field
+   * to marshal the response.
+   * Making it a field instead of a public accessor makes the code in
+   * the generated ResponseHandler implementation a lot more readable.
+   */
+  TAO_OutputCDR _tao_out;
 
 private:
 
@@ -82,14 +97,15 @@ private:
   ACE_UNIMPLEMENTED_FUNC (TAO_AMH_Response_Handler& operator= (const TAO_AMH_Response_Handler&))
 
 private:
-
   /// Pointer to the original message-base
   TAO_Pluggable_Messaging *mesg_base_;
 
   /// Copy of the request-id of the original Server-Request
-  CORBA::ULong request_id_; 
+  CORBA::ULong request_id_;
 
   /// For AMH, this seems a little redundant
+  // @@ Mayur: it is *NOT* oneways need to be supported via AMH too,
+  //    only sometimes they do not return anything!
   //  CORBA::Boolean response_expected_;
 
   /// Handle to transport through which the reply will be sent
@@ -103,46 +119,46 @@ private:
   /// The reply service context
   TAO_Service_Context reply_service_context_;
 
-  /// Alwyas set to true (we always have soemthing to return to the client
+  /// Alwyas set to true (we always have soemthing to return to the
+  /// client
+  // @@ Mayur: I think not!  This is used to generate padding in GIOP
+  //    1.2 messages (where the payload must start on an 8-byte
+  //    boundary.  But some replys have no payload (only header), in
+  //    those cases you cannot insert the padding.  We need the
+  //    ResponseHandler to set this field correctly!
   CORBA::Boolean argument_flag_;
 
   //  TAO_GIOP_ReplyStatusType exception_type_;
-  /// Exception type (will be NO_EXCEPTION in the majority of the cases).
+  /// Exception type (will be NO_EXCEPTION in the majority of the
+  /// cases).
+  // @@ Mayur: I do not think we need this one, we can deduce the type
+  //    of reply depending on the _tao_rh_*() method called.
   CORBA::ULong exception_type_;
 
   /**
    * Various states the ResponseHnadler can be in.
    *
-   * These states represent various states the RH can be in and 
-   * the states are used not only in implementing the 'once-only semantics of 
+   * These states represent various states the RH can be in and
+   * the states are used not only in implementing the 'once-only semantics of
    * RHs, but in making sure well the call thread-safe as well.
    */
-  enum REPLY_STATUS
+  enum Reply_Status
     {
-      TAO_UNINITIALISED_REPLY,
-      TAO_INITIALISING_REPLY,
-      TAO_INITIALISED_REPLY,
-      TAO_SENDING_REPLY,
-      TAO_SENT_REPLY
+      TAO_RS_UNINITIALIZED,
+      TAO_RS_INITIALIZED,
+      TAO_RS_SENDING,
+      TAO_RS_SENT
     };
-  REPLY_STATUS once_only_;
+  Reply_Status reply_status_;
   // I would use the "state pattern"..
   // Carlos, Isn't that an overkill?
+  // @@ Mayur: it depends on what form of the "State Pattern" you
+  //    use.  The more generic form, as described in GoF, uses a class
+  //    for each state, super-elegant but indeed a bit heavy handed.
+  //    The lighter-weight form (using a state variable  
 
   /// Mutex to ensure the AMH-RH method call is thread-safe.
-  ACE_SYNCH_MUTEX mutex_;
-
-protected:
-
-  /// The outgoing CDR stream
-  /**
-   * The IDL-generated ResponseHandler implementations used this field
-   * to marshal the response.
-   * Making it a field instead of a public accessor makes the code in
-   * the generated ResponseHandler implementation a lot more readable.
-   */
-  TAO_OutputCDR _tao_out;
-
+  TAO_SYNCH_MUTEX mutex_;
 };
 
 #endif /* TAO_AMH_RESPONSE_HANDLER_H */

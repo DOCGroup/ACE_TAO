@@ -58,7 +58,7 @@ int
 be_visitor_operation::has_param_type (be_operation *node,
                                       AST_Argument::Direction dir)
 {
-  return node->count_arguments_with_direction (dir);
+  return (node->count_arguments_with_direction (dir) != 0);
 }
 
 size_t
@@ -101,28 +101,30 @@ be_visitor_operation::gen_throw_spec (be_operation *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
 
-  if (be_global->use_raw_throw ())
-    *os << be_idt_nl << "throw (";
-  else
-    *os << be_idt_nl << "ACE_THROW_SPEC ((";
+  const char *throw_spec_open = "throw (";
+  const char *throw_spec_close = ")";
 
-  *os << be_idt_nl << "CORBA::SystemException";
+  if (!be_global->use_raw_throw ())
+    {
+      throw_spec_open = "ACE_THROW_SPEC ((";
+      throw_spec_close = "))";
+    }
+
+  *os << be_idt_nl << throw_spec_open
+      << be_idt_nl << "CORBA::SystemException";
   if (node->exceptions ())
     {
 
       // initialize an iterator to iterate thru the exception list
-      UTL_ExceptlistActiveIterator *ei;
-      ACE_NEW_RETURN (ei,
-                      UTL_ExceptlistActiveIterator (node->exceptions ()),
-                      -1);
-      // continue until each element is visited
-      while (!ei->is_done ())
+      for (UTL_ExceptlistActiveIterator ei (node->exceptions ());
+           !ei.is_done ();
+           ei.next ())
         {
-          be_exception *excp = be_exception::narrow_from_decl (ei->item ());
+          be_exception *excp =
+            be_exception::narrow_from_decl (ei.item ());
 
           if (excp == 0)
             {
-              delete ei;
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_operation"
                                  "gen_throw_spec - "
@@ -130,23 +132,11 @@ be_visitor_operation::gen_throw_spec (be_operation *node)
 
             }
 
-          *os << "," << be_nl;
-          // allocator method
-          *os << excp->name ();
-          ei->next ();
-        } // end of while loop
-
-      delete ei;
-    } // end of if
-
-  if (be_global->use_raw_throw ())
-    {
-      *os << be_uidt_nl << ")" << be_uidt;
+          *os << be_nl << ", " << excp->name ();
+        }
     }
-  else
-    {
-      *os << be_uidt_nl << "))" << be_uidt;
-    }
+
+  *os << be_uidt_nl << throw_spec_close << be_uidt;
 
   return 0;
 }
@@ -155,11 +145,11 @@ int
 be_visitor_operation::gen_environment_decl (int argument_emitted,
                                             be_operation *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
-
   // generate the CORBA::Environment parameter for the alternative mapping
   if (be_global->exception_support ())
     return 0;
+
+  TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
 
   // Use ACE_ENV_SINGLE_ARG_DECL or ACE_ENV_ARG_DECL depending on
   // whether the operation node has parameters.
@@ -191,7 +181,7 @@ be_visitor_operation::gen_environment_decl (int argument_emitted,
   return 0;
 }
 
-//Method that returns the appropriate CORBA::Environment variable
+// Method that returns the appropriate CORBA::Environment variable
 const char *
 be_visitor_operation::gen_environment_var ()
 {
@@ -223,7 +213,9 @@ be_visitor_operation::gen_raise_exception (be_type *return_type,
       return 0;
     }
 
-  if (return_type == 0 || this->void_return_type (return_type))
+  int is_void =
+    return_type == 0 || this->void_return_type (return_type);
+  if (is_void)
     {
       *os << "ACE_THROW (";
     }
@@ -233,7 +225,7 @@ be_visitor_operation::gen_raise_exception (be_type *return_type,
     }
   *os << exception_name << " (" << exception_arguments << ")";
 
-  if (return_type == 0 || this->void_return_type (return_type))
+  if (is_void)
     {
       *os << ");\n";
       return 0;

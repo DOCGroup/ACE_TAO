@@ -72,8 +72,6 @@ be_visitor_amh_rh_operation_sh::visit_operation (be_operation *node)
   // Step 1 : Generate return type: always void
   os->indent ();
   *os << "virtual void ";
-  // only for source: *os << intf->full_skel_name () << "::";
-
 
   // Step 2: Generate the method name
   // Check if we are an attribute node in disguise.
