@@ -1,3 +1,11 @@
+Fri Aug 24 08:24:43 2001  Joe Hoffert  <joeh@cs.wustl.edu>
+
+	* pace/vxworks/stdio.inl: 
+	* pace/vxworks/pthread.c: 
+	  Added spaces between function name and argument list
+	  for some functions since fuzz was complaining about
+	  it.
+
 Wed Aug 22 12:30:25 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
 	* pace/win32/pace_lib.dsp: 
