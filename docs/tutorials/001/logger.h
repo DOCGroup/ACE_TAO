@@ -20,6 +20,7 @@ public:
 	{
 	      if (g_reactor-> register_handler (this, ACE_Event_Handler::READ_MASK) == -1)
 		ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) can't register with reactor\n"), -1);
+	      return 0;
 	}
 
   virtual int close (void)

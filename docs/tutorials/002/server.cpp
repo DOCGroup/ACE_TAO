@@ -104,9 +104,15 @@ int main (int argc, char *argv[])
   // Acceptor factory.
   Logging_Acceptor peer_acceptor;
 
-  if (peer_acceptor.open (ACE_INET_Addr (PORT)) == -1)
+  /*  Provide a reactor on the open.  This prevents ACE_Reactor::instance() from
+      creating an unnecessary instance.
+   */
+  if (peer_acceptor.open (ACE_INET_Addr (PORT), g_reactor) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
 
+  /*  This is redundant because opening the acceptor with a reactor pointer will
+      cause the acceptor to be registered with that reactor.
+   */
   else if (g_reactor->register_handler (&peer_acceptor, ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "registering service with ACE_Reactor\n"), -1);
 

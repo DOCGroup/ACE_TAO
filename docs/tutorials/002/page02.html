@@ -44,7 +44,7 @@ thing put together before you worry about things like that.</P>
           // Acceptor factory.
 8.        Logging_Acceptor peer_acceptor;
         
-9.        if (peer_acceptor.open (ACE_INET_Addr (PORT)) == -1)
+9.        if (peer_acceptor.open (ACE_INET_Addr (PORT), g_reactor) == -1)
 10.         ACE_ERROR_RETURN ((LM_ERROR, &quot;%p\n&quot;, &quot;open&quot;), -1);
         
 11.       else if (g_reactor-&gt;register_handler (&amp;peer_acceptor, ACE_Event_Handler::READ_MASK) == -1)
@@ -115,7 +115,13 @@ good way for a constructor to return a failure. Since we need to know if
 the <I>SOCK_Acceptor</I> is initialized correctly, we are better off initializing
 it in a function that <B>can</B> return an error code. You'll also notice
 that we simply create and pass the <I>port</I> object in one step instead
-of creating an intermediate variable to handle it.</LI>
+of creating an intermediate variable to handle it.
+<br>
+9/11/98 (jcej)
+You can pass a reactor pointer to the open() call to prevent ACE_Singleton::instance()
+being called (more on this in a much later tutorial).  This is generally a good idea
+if you've got your own reactor object already.
+</LI>
 
 <LI>We use <I>ACE_ERROR_RETURN</I> to get ourselves out if the <I>open</I>
 call fails. This is a handy and consistent method for reporting nasty things.</LI>
