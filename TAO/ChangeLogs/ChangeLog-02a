@@ -1,8 +1,24 @@
+Wed Jun  7 17:33:55 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Audio_Server.cpp: 
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Server.cpp: 
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Audio_Control_i.cpp: 
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Control_i.cpp: 
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/Command_Handler.cpp: 
+	  
+	  Fixed the Flow Specification parsing problems
+	
+	* orbsvcs/orbsvcs/AV/Transport.cpp: 
+	  
+	  Moved the memory allocation for the connector and acceptor
+	  registries to the TAO_AV_Core constructor.
+
 Wed Jun  7 15:28:21 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * tao/Makefile.bor:
 
           Added some missing files.
+
 
 Wed Jun 07 13:41:17 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
