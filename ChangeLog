@@ -1,3 +1,9 @@
+Tue May 16 10:02:33 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/CDR_File_Test.cpp:
+          The test was removing the file even when the user requested not
+          to do so.
+
 Tue May 16 09:53:19 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/CDR_Stream.i:
