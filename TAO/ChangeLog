@@ -1,3 +1,34 @@
+Wed Jul 16 16:28:47 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+	Fix for the Discarding test failing:
+	
+	* orbsvcs/orbsvcs/Notify/Property_T.h:
+	* orbsvcs/orbsvcs/Notify/Property_T.inl:
+	 
+	  Removed the = operator that did not set the <valid_> flag when
+	  assigning to the TAO_Notify_PropertyBase_T.
+	  This caused a problem when the pacing interval was assigned in
+	  the SequenceProxySupplier because the flag was not copied in
+	  the = operator.
+	
+	* orbsvcs/orbsvcs/Notify/QoSProperties.cpp:
+	* orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushConsumer.cpp:
+
+	  Removed assignment to properties via .value().
+	
+	* orbsvcs/tests/Notify/Discarding/Notify_Sequence_Push_Consumer.cpp:
+	* orbsvcs/tests/Notify/Discarding/Sequence_Consumer.cpp:
+	* orbsvcs/tests/Notify/Discarding/Sequence_Supplier.cpp:
+
+	  Changed the number of events sent to 20 instead of 96 otherwise
+	  the test runs for too long and the consumer times out in the run_test.pl. 
+	  Now the supplier sends 2 event batches of 10 events each.
+	  The consumer max batch size is 5 so it should receive a max of 4
+	  batches. Also reduced the pacing interval to 3s.
+
+	* orbsvcs/tests/Notify/Basic/Sequence.cpp:
+
+	  Added useful debug messages.
 Wed Jul 16 14:13:24 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>		
 
 	* tests/RTScheduling/Scheduler.cpp:	
