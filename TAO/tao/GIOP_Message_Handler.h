@@ -86,7 +86,7 @@ public:
   /// Reset the contents of the <current_buffer_> if no more requests
   /// need to be processed. We reset the contents of the
   /// <message_state_> to parse and process the next request.
-  void reset (int reset_flag);
+  void reset (int reset_flag = 0);
 
   /// Return the underlying message state
   TAO_GIOP_Message_State &message_state (void);
@@ -94,8 +94,10 @@ public:
   /// Return the pointer to the data block within the message block
   ACE_Data_Block *data_block (void) const;
 
-  /// Return the pointer to the datablock by duplicating it.
-  ACE_Data_Block *data_block_dup (void);
+  /// Return the underlying data block of the <current_buffer_>. At
+  /// the sametime making a new data_block for itself. The read and
+  /// write pointer positions would be reset.
+  ACE_Data_Block *steal_data_block (void);
 
   /// Return the rd_ptr of the <current_buffer_>
   char *rd_ptr (void) const;
@@ -131,6 +133,7 @@ private:
   /// Reads the message from the <transport> and sets the <wr_ptr> of
   /// the buffer appropriately.
   int read_messages (TAO_Transport *transport);
+
 
 private:
 

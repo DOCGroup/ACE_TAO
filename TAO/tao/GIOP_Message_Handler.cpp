@@ -20,11 +20,21 @@ TAO_GIOP_Message_Handler::TAO_GIOP_Message_Handler (TAO_ORB_Core * orb_core,
   : mesg_base_ (base),
     message_status_ (TAO_GIOP_WAITING_FOR_HEADER),
     message_size_ (input_cdr_size),
-    current_buffer_ (orb_core->create_input_cdr_data_block (input_cdr_size)),
-    supp_buffer_ (orb_core->create_input_cdr_data_block (input_cdr_size)),
+    current_buffer_ (orb_core->data_block_for_message_block (input_cdr_size)),
+    supp_buffer_ (orb_core->data_block_for_message_block (input_cdr_size)),
     message_state_ (orb_core),
     orb_core_ (orb_core)
 {
+  // NOTE: The message blocks here use a locked allocator which is not
+  // from the TSS even if there is one. We are getting the allocators
+  // from the global memory. We  shouldn't be using the TSS stuff for
+  // the following reason
+  // (a) The connection handlers are per-connection and not
+  //     per-thread.
+  // (b) The order of cleaning is important if we use allocators from
+  //     TSS. The TSS goes away when the threads go away. But the
+  //     connection handlers go away only when the ORB decides to shut
+  //     it down.
   ACE_CDR::mb_align (&this->current_buffer_);
 
   // Calculate the effective message after alignment
@@ -531,4 +541,39 @@ TAO_GIOP_Message_Handler::read_messages (TAO_Transport *transport)
 
   // Success
   return 1;
+}
+
+
+ACE_Data_Block *
+TAO_GIOP_Message_Handler::steal_data_block (void)
+{
+  ACE_Data_Block *db =
+    this->current_buffer_.data_block ()->clone_nocopy ();
+
+  ACE_Data_Block *old_db =
+    this->current_buffer_.replace_data_block (db);
+
+  ACE_CDR::mb_align (&this->current_buffer_);
+
+  return old_db;
+}
+
+
+void
+TAO_GIOP_Message_Handler::reset (int reset_flag)
+{
+  // Reset the contents of the message state
+  this->message_state_.reset (reset_flag);
+
+  // Reset the current buffer
+  this->current_buffer_.reset ();
+
+  ACE_CDR::mb_align (&this->current_buffer_);
+
+  if (this->message_status_ != TAO_GIOP_MULTIPLE_MESSAGES)
+    {
+      this->supp_buffer_.reset ();
+      ACE_CDR::mb_align (&this->supp_buffer_);
+    }
+
 }

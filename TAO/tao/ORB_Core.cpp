@@ -98,6 +98,8 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     object_ref_table_ (),
     orbid_ (ACE_OS::strdup (orbid ? orbid : "")),
     resource_factory_ (0),
+    message_block_dblock_allocator_ (0),
+    message_block_buffer_allocator_ (0),
     resource_factory_from_service_config_ (0),
     // @@ This is not needed since the default resource factory, fredk
     //    is statically added to the service configurator.
@@ -1205,6 +1207,14 @@ TAO_ORB_Core::fini (void)
   // Pass reactor back to the resource factory.
   if (this->resource_factory_ != 0)
     this->resource_factory_->reclaim_reactor (this->reactor_);
+
+  if (this->message_block_dblock_allocator_)
+        this->message_block_dblock_allocator_->remove ();
+    delete this->message_block_dblock_allocator_;
+
+  if (this-> message_block_buffer_allocator_)
+    this->message_block_buffer_allocator_->remove ();
+    delete this->message_block_buffer_allocator_;
 
   (void) TAO_Internal::close_services ();
 
@@ -2579,6 +2589,78 @@ TAO_ORB_Core::create_input_cdr_data_block (size_t size)
     {
       lock_strategy = &this->data_block_lock_;
     }
+
+  return this->create_data_block_i (size,
+                                    buffer_allocator,
+                                    dblock_allocator,
+                                    lock_strategy);
+}
+
+ACE_Data_Block *
+TAO_ORB_Core::data_block_for_message_block (size_t size)
+{
+  ACE_Data_Block *nb = 0;
+
+  ACE_Allocator *dblock_allocator;
+  ACE_Allocator *buffer_allocator;
+
+  /// @@ We are using the input CDR configurations for this. In a
+  /// @@ generic sense we should be using dishing out datablocks to
+  /// @@ the input and output CDR folks. Will get to this when we have
+  /// @@ time -- NB
+  dblock_allocator =
+    this->message_block_dblock_allocator ();
+  buffer_allocator =
+    this->message_block_buffer_allocator ();
+
+  ACE_Lock* lock_strategy = 0;
+  if (this->resource_factory ()->use_locked_data_blocks ())
+    {
+      lock_strategy = &this->data_block_lock_;
+    }
+
+  return this->create_data_block_i (size,
+                                    buffer_allocator,
+                                    dblock_allocator,
+                                    lock_strategy);
+}
+
+ACE_Allocator*
+TAO_ORB_Core::message_block_dblock_allocator (void)
+{
+  if (this->message_block_dblock_allocator_ == 0)
+    {
+      // Double checked locking
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+      if (this->message_block_dblock_allocator_ == 0)
+        this->message_block_dblock_allocator_ =
+          this->resource_factory ()->input_cdr_dblock_allocator ();
+    }
+  return this->message_block_dblock_allocator_;
+}
+
+ACE_Allocator*
+TAO_ORB_Core::message_block_buffer_allocator (void)
+{
+  if (this->message_block_buffer_allocator_ == 0)
+    {
+      // Double checked locking
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+      if (this->message_block_buffer_allocator_ == 0)
+        this->message_block_buffer_allocator_ =
+          this->resource_factory ()->input_cdr_buffer_allocator ();
+    }
+  return this->message_block_buffer_allocator_;
+}
+
+
+ACE_Data_Block *
+TAO_ORB_Core::create_data_block_i (size_t size,
+                                   ACE_Allocator *buffer_allocator,
+                                   ACE_Allocator *dblock_allocator,
+                                   ACE_Lock *lock_strategy)
+{
+  ACE_Data_Block *nb = 0;
 
   ACE_NEW_MALLOC_RETURN (
                          nb,

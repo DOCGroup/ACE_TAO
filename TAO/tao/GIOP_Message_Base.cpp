@@ -23,8 +23,6 @@ TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
                       this,
                       input_cdr_size),
     output_ (0),
-    cdr_buffer_alloc_ (orb_core->resource_factory ()->output_cdr_buffer_allocator ()),
-    cdr_dblock_alloc_ (orb_core->resource_factory ()->output_cdr_dblock_allocator ()),
     generator_parser_ (0)
 {
 #if defined(ACE_HAS_PURIFY)
@@ -36,8 +34,8 @@ TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
            TAO_OutputCDR (this->repbuf_,
                           sizeof this->repbuf_,
                           TAO_ENCAP_BYTE_ORDER,
-                          this->cdr_buffer_alloc_,
-                          this->cdr_dblock_alloc_,
+                          orb_core->message_block_buffer_allocator (),
+                          orb_core->message_block_dblock_allocator (),
                           orb_core->orb_params ()->cdr_memcpy_tradeoff (),
                           orb_core->to_iso8859 (),
                           orb_core->to_unicode ()));
@@ -46,18 +44,7 @@ TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
 
 TAO_GIOP_Message_Base::~TAO_GIOP_Message_Base (void)
 {
-  // Explicitly call the destructor of the output CDR first. They need
-  // the allocators during destruction.
   delete this->output_;
-
-  // Then call the destructor of our allocators
-  if (this->cdr_dblock_alloc_ != 0)
-    this->cdr_dblock_alloc_->remove ();
-  delete this->cdr_dblock_alloc_;
-
-  if (this->cdr_buffer_alloc_ != 0)
-    this->cdr_buffer_alloc_->remove ();
-  delete this->cdr_buffer_alloc_;
 }
 
 
@@ -315,38 +302,20 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   // @@@@Is it necessary  here?
   this->output_->reset ();
 
-  /************************************************************/
-  // @@ This comment was there when we were using multiple reads. Let
-  // it be here  till a point it doesn't make sense _ bala
+  // Get the read and write positions before we steal data.
+  size_t rd_pos = this->message_handler_.rd_pos ();
+  size_t wr_pos = this->message_handler_.wr_pos ();
 
-  // Take out all the information from the <message_state> and reset
-  // it so that nested upcall on the same transport can be handled.
-  //
-  // Notice that the message_state is only modified in one thread at a
-  // time because the reactor does not call handle_input() for the
-  // same Event_Handler in two threads at the same time.
-  /************************************************************/
 
-  // Create a message block by stealing the data block
-  ACE_Message_Block msg_block (this->message_handler_.data_block_dup ());
-
-  // Move the wr_ptr () and rd_ptr in the message block. This is not
-  // generally required as we are not going to write anything. But
-  // this is *important* for checking the length of the CDR streams
-  msg_block.wr_ptr (this->message_handler_.wr_pos ());
-  msg_block.rd_ptr (this->message_handler_.rd_pos ());
-
-  // Steal the input CDR from the message block
-  TAO_InputCDR input_cdr (&msg_block,
+  // Create a input CDR stream.
+  // NOTE: We use the same data block in which we read the message and
+  // we pass it on to the higher layers of the ORB. So we dont to any
+  // copies at all here. The same is alos done in the higher layers.
+  TAO_InputCDR input_cdr (this->message_handler_.steal_data_block (),
+                          rd_pos,
+                          wr_pos,
                           this->message_handler_.message_state ().byte_order,
                           orb_core);
-
-  // input_cdr.skip_bytes (TAO_GIOP_MESSAGE_HEADER_LEN);
-
-  // Send the message state for the service layer like FT to log the
-  // messages
-  // @@@ Needed for DOORS
-  //  orb_core->services_log_msg_rcv (this->message_state_);
 
   // Reset the message handler to receive upcalls if any
   this->message_handler_.reset (0);
@@ -377,23 +346,20 @@ TAO_GIOP_Message_Base::process_reply_message (
     TAO_Pluggable_Reply_Params &params
   )
 {
-  // Create a message block by stealing the data block
-  ACE_Message_Block msg_block (this->message_handler_.data_block_dup ());
+  // Get the read and write positions before we steal data.
+  size_t rd_pos = this->message_handler_.rd_pos ();
+  size_t wr_pos = this->message_handler_.wr_pos ();
 
-  // ACE_CDR::mb_align (&msg_block);
 
-  // Move the wr_ptr () and rd_ptr in the message block. This is not
-  // generally required as we are not going to write anything. But
-  // this is *important* for checking the length of the CDR streams
-  // size_t n = this->message_handler_.message_state ().message_size;
-  msg_block.wr_ptr (this->message_handler_.wr_pos ());
-  msg_block.rd_ptr (this->message_handler_.rd_pos ());
+  // Create a input CDR stream.
+  // NOTE: We use the same data block in which we read the message and
+  // we pass it on to the higher layers of the ORB. So we dont to any
+  // copies at all here. The same is alos done in the higher layers.
+  TAO_InputCDR input_cdr (this->message_handler_.steal_data_block (),
+                          rd_pos,
+                          wr_pos,
+                          this->message_handler_.message_state ().byte_order);
 
-  // Steal the input CDR from the message block
-  int byte_order = this->message_handler_.message_state ().byte_order;
-  TAO_InputCDR input_cdr (&msg_block, byte_order);
-
-  // input_cdr.skip_bytes (TAO_GIOP_MESSAGE_HEADER_LEN);
 
   // Reset the message state. Now, we are ready for the next nested
   // upcall if any.
@@ -623,8 +589,8 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
       int result = 0;
 
       if (response_required)
-	{
-	  CORBA::UNKNOWN exception (CORBA::SystemException::_tao_minor_code
+        {
+          CORBA::UNKNOWN exception (CORBA::SystemException::_tao_minor_code
                                     (TAO_UNHANDLED_SERVER_CXX_EXCEPTION, 0),
                                     CORBA::COMPLETED_MAYBE);
 
