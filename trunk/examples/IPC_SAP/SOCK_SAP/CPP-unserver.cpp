@@ -137,7 +137,7 @@ run_event_loop (const char rendezvous[])
                            "spawn"),
                           1);
 #else
-      server ((void *) new_stream.get_handle ());
+      server (ACE_reinterpret_cast (void *, new_stream.get_handle ()));
 #endif /* ACE_HAS_THREADS */
     }
 
