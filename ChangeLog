@@ -1,3 +1,14 @@
+Mon May 15 12:32:05 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Log_Record.cpp (print):
+
+	  Added a "%s" format specifier to the fprintf() call.  This was
+	  needed to allow strings containing percent signs '%' to be
+	  printed.  This problem was inadvertently introduced during some
+	  UNICODE related updates.  The "%s" format specifier can handle
+	  UNICODE strings.  Thanks to Edan Ayal <edana@bandwiz.com> for
+	  reporting this problem and providing a fix.
+
 Mon May 15 10:25:38 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * bin/create_vt_dsps.pl:
