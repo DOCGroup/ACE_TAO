@@ -4,6 +4,7 @@ Sun Jun 20 17:52:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
         * tao/Object_KeyC.cpp:
         * tao/ORB.cpp:
         * tao/Profile.cpp:
+        * tao/Strategies/SHMIOP_Acceptor.cpp:
           Added include of ace/os_include/os_ctype.h to fix compile errors
           in the Tru64 build.
 
