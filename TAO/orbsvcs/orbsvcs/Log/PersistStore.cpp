@@ -161,8 +161,6 @@ TAO_PersistStore::log (DsLogAdmin::LogRecord &rec)
 int
 TAO_PersistStore::retrieve (DsLogAdmin::RecordId id, DsLogAdmin::LogRecord &rec)
 {
-  CORBA::TypeCode_var tc;
-  char *mb_data = NULL;
   int retval = -1;
   struct PersistentData data;
 
@@ -173,40 +171,47 @@ TAO_PersistStore::retrieve (DsLogAdmin::RecordId id, DsLogAdmin::LogRecord &rec)
                        (void*) &data,
                        sizeof (PersistentData)) > 0)
   {
-    tc = new CORBA::TypeCode (data.kind);
+    // Check to see if this id matches.
+    if (id != data.id)
+    {
+      // Skip record
+      ACE_OS::lseek(this->write_persistent_file_,
+		    sizeof (CORBA::TypeCode) + data.mb_size,
+		    SEEK_CUR);
+      continue;
+    }
+
+    CORBA::TypeCode_var tc = new CORBA::TypeCode (data.kind);
 
     ACE_OS::read (this->write_persistent_file_,
                   (void*) tc.in (),
                   sizeof (CORBA::TypeCode));
 
-    mb_data = new char[data.mb_size];
+    char *mb_data = new char[data.mb_size];
+
     ACE_OS::read (this->write_persistent_file_,
                   (void*) mb_data,
                   data.mb_size);
 
-    // Check to see if this id matches.
-    if (id == data.id)
-    {
-      // Create the message block.
-      ACE_Message_Block mb2 (mb_data, data.mb_size);
+    // Create the message block.
+    ACE_Message_Block mb2 (mb_data, data.mb_size);
 
-      // Set the write pointer
-      mb2.wr_ptr (data.mb_size);
+    // Set the write pointer
+    mb2.wr_ptr (data.mb_size);
 
-      rec.id = id;
-      rec.time = data.time;
+    rec.id = id;
+    rec.time = data.time;
 
-      TAO::Unknown_IDL_Type *unk = 0;
-      ACE_NEW_RETURN (unk,
-                      TAO::Unknown_IDL_Type (tc.in (),
-                                             &mb2,
-                                             data.byte_order),
-                      -1);
-      rec.info.replace (unk);
+    TAO::Unknown_IDL_Type *unk = 0;
+    ACE_NEW_RETURN (unk,
+		    TAO::Unknown_IDL_Type (tc.in (),
+					   &mb2,
+					   data.byte_order),
+		    -1);
+    rec.info.replace (unk);
 
-      retval = 1;
-      break;
-    }
+    retval = 1;
+    break;
   }
 
   return retval;

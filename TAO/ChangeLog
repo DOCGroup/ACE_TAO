@@ -1,3 +1,12 @@
+Thu Nov  4 17:42:07 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Log/PersistStore.cpp:
+
+	  Changed retrieve method to seek past records with non-matching
+	  id's.  This avoids memory leaks and is more efficient than the
+	  code it replaced.  Thanks to Gary Maxy <gary.maxey@hp.com> for
+	  reporting the problem.
+
 Thu Nov  4 13:51:24 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Makefile.am:
