@@ -197,6 +197,17 @@ Sender::pace_data (ACE_ENV_SINGLE_ARG_DECL)
       // The time taken for sending a frame and preparing for the next frame
       ACE_High_Res_Timer elapsed_timer;
 
+      // If we have a receiver, send to it.
+      while (this->protocol_object_ == 0)
+        {
+          // Run the orb for the wait time so the sender can
+          // continue other orb requests.
+          ACE_Time_Value wait_time (5);
+          TAO_AV_CORE::instance ()->orb ()->run (wait_time
+                                                 ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+
       // Continue to send data till the file is read to the end.
       while (1)
         {
@@ -263,19 +274,15 @@ Sender::pace_data (ACE_ENV_SINGLE_ARG_DECL)
           // Start timer before sending the frame.
           elapsed_timer.start ();
 
-          // If we have a receiver, send to it.
-          if (this->protocol_object_)
-            {
-              // Send frame.
-              int result =
-                this->protocol_object_->send_frame (&this->mb_);
+          // Send frame.
+          int result =
+            this->protocol_object_->send_frame (&this->mb_);
 
-              if (result < 0)
-                ACE_ERROR_RETURN ((LM_ERROR,
-                                   "send failed:%p",
-                                   "Sender::pace_data send\n"),
-                                  -1);
-            }
+          if (result < 0)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "send failed:%p",
+                               "Sender::pace_data send\n"),
+                               -1);
 
           ACE_DEBUG ((LM_DEBUG,
                       "Sender::pace_data frame %d was sent succesfully\n",
@@ -358,7 +365,7 @@ main (int argc,
       SENDER::instance ()->pace_data (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      ACE_Time_Value tv (20);
+      ACE_Time_Value tv (10);
       orb->run (tv);
       // Hack for now....
       ACE_OS::sleep (1);

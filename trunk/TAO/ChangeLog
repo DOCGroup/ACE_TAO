@@ -1,3 +1,11 @@
+Wed Oct 20 13:55:13 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.cpp:
+
+          Wait for the distributer to start up before beginning to send the
+          test file contents.  This test still has a shutdown problem, but
+          I'm not sure if it's in the distributer or the AV core.
+
 Wed Oct 20 19:03:01 2004  Olli Savia  <ops@iki.fi>
 
         * examples/POA/DSI/Database_i.cpp:
