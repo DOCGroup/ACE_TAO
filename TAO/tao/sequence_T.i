@@ -216,13 +216,6 @@ TAO_Unbounded_Managed_Sequence<T,Manager>::TAO_Unbounded_Managed_Sequence
 }
 
 template <class T, class Manager> ACE_INLINE Manager
-TAO_Unbounded_Managed_Sequence<T,Manager>::operator[] (CORBA::ULong index)
-{
-  T* tmp = ACE_reinterpret_cast (T*, this->buffer_[index]);
-  return Manager (&tmp, this->release_);
-}
-
-template <class T, class Manager> ACE_INLINE const Manager
 TAO_Unbounded_Managed_Sequence<T,Manager>::operator[] (CORBA::ULong index) const
 {
   T* tmp = ACE_reinterpret_cast (T*, this->buffer_[index]);
@@ -258,13 +251,6 @@ TAO_Bounded_Managed_Sequence<T,Manager,MAX>::TAO_Bounded_Managed_Sequence
 }
 
 template <class T, class Manager, CORBA::ULong MAX> ACE_INLINE Manager
-TAO_Bounded_Managed_Sequence<T,Manager,MAX>::operator[] (CORBA::ULong index)
-{
-  T* tmp = ACE_reinterpret_cast (T*, this->buffer_[index]);
-  return Manager (&tmp, this->release_);
-}
-
-template <class T, class Manager, CORBA::ULong MAX> ACE_INLINE const Manager
 TAO_Bounded_Managed_Sequence<T,Manager,MAX>::operator[] (CORBA::ULong index) const
 {
   T* tmp = ACE_reinterpret_cast (T*, this->buffer_[index]);
