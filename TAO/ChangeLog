@@ -1,14 +1,28 @@
+Mon Jan 20 19:20:32 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Makefile.ETCL:
+        * orbsvcs/orbsvcs/Makefile.FaultTolerance:
+        * orbsvcs/orbsvcs/Makefile.FTORB:
+        * orbsvcs/orbsvcs/Makefile.IFRService:
+        * orbsvcs/orbsvcs/Makefile.PortableGroup:
+        * orbsvcs/orbsvcs/Makefile.RTEvent:
+        * orbsvcs/orbsvcs/Makefile.RTSched:
+        * orbsvcs/orbsvcs/Makefile.Security:
+        * orbsvcs/orbsvcs/Makefile.Svc_Utils:
+          Set the correct x_BUILD_DLL defines. These are needed for the
+          Cygwin/MingW and Kylix compiler.
+
 Mon Jan 20 12:03:03 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/DynamicInterface/Request.cpp:
 
-	  Fixed a bug in poll_response(). Thanks to Jaroslaw Nozderko 
+	  Fixed a bug in poll_response(). Thanks to Jaroslaw Nozderko
 	  <jarek@eko.net.pl> for reporting it.
 
 Mon Jan 20 08:00:44 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/Connection_Handler.cpp: Removed multiple inclusions of an
-	  header. 
+	  header.
 
 Mon Jan 20 10:00:22 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
