@@ -31,6 +31,7 @@ namespace CCF
       KeywordParser EMITS;
       KeywordParser EVENTTYPE;
       KeywordParser HOME;
+      KeywordParser FINDER;
       KeywordParser MANAGES;
       KeywordParser PROVIDES;
       KeywordParser PUBLISHES;
@@ -76,6 +77,10 @@ namespace CCF
       Rule home_factory_parameter;
       Rule home_factory_raises_list;
 
+      Rule home_finder_decl;
+      Rule home_finder_parameter_list;
+      Rule home_finder_parameter;
+      Rule home_finder_raises_list;
 
     public:
       Parser (CompilerElements::Context& context,
@@ -196,6 +201,19 @@ namespace CCF
 
       OneArgAction<IdentifierPtr, SemanticAction::HomeFactory>
       act_home_factory_raises;
+
+      // HomeFinder
+      //
+      OneArgAction<SimpleIdentifierPtr, SemanticAction::HomeFinder>
+      act_home_finder_name;
+
+      TwoArgAction<IdentifierPtr,
+                   SimpleIdentifierPtr,
+                   SemanticAction::HomeFinder>
+      act_home_finder_parameter;
+
+      OneArgAction<IdentifierPtr, SemanticAction::HomeFinder>
+      act_home_finder_raises;
 
     };
   }

@@ -19,6 +19,7 @@
 #include "CCF/IDL3/SemanticAction/Impl/EventType.hpp"
 #include "CCF/IDL3/SemanticAction/Impl/Home.hpp"
 #include "CCF/IDL3/SemanticAction/Impl/HomeFactory.hpp"
+#include "CCF/IDL3/SemanticAction/Impl/HomeFinder.hpp"
 
 namespace CCF
 {
@@ -80,6 +81,11 @@ namespace CCF
             return home_factory_;
           }
 
+          virtual SemanticAction::HomeFinder&
+          home_finder ()
+          {
+            return home_finder_;
+          }
 
           virtual IDL2::SemanticAction::Include&
           include ()
@@ -119,6 +125,7 @@ namespace CCF
           EventType event_type_;
           Home home_;
           HomeFactory home_factory_;
+          HomeFinder home_finder_;
           Include include_;
           Provides provides_;
           Publishes publishes_;

@@ -33,7 +33,7 @@ namespace CCF
       {
         d.traverse (p.belongs ());
       }
-      
+
       template<typename T>
       void ParameterTemplate<T>::
       belongs (T& p)
@@ -50,6 +50,137 @@ namespace CCF
       template<typename T>
       void ParameterTemplate<T>::
       post (T&)
+      {
+      }
+
+
+      // OperationTemplate
+      //
+      //
+      template<typename T>
+      void OperationTemplate<T>::
+      traverse (T& o)
+      {
+        pre (o);
+        returns (o);
+        name (o);
+        receives (o);
+        raises (o);
+        post (o);
+      }
+
+      template<typename T>
+      void OperationTemplate<T>::
+      pre (T&)
+      {
+      }
+
+      template<typename T>
+      void OperationTemplate<T>::
+      returns (T& o, EdgeDispatcherBase& d)
+      {
+        d.traverse (o.returns ());
+      }
+
+      template<typename T>
+      void OperationTemplate<T>::
+      returns (T& o)
+      {
+        returns (o, edge_traverser ());
+      }
+
+      template<typename T>
+      void OperationTemplate<T>::
+      name (T&)
+      {
+      }
+
+      template<typename T>
+      void OperationTemplate<T>::
+      receives (T& o, EdgeDispatcherBase& d)
+      {
+        iterate_and_traverse (o.receives_begin (), o.receives_end (), d);
+      }
+
+      template<typename T>
+      void OperationTemplate<T>::
+      receives (T& o)
+      {
+        receives_pre (o);
+        iterate_and_traverse (o.receives_begin (),
+                              o.receives_end (),
+                              edge_traverser (),
+                              *this,
+                              &OperationTemplate<T>::comma,
+                              o);
+        receives_post (o);
+      }
+
+      template<typename T>
+      void OperationTemplate<T>::
+      receives_pre (T&)
+      {
+      }
+
+      template<typename T>
+      void OperationTemplate<T>::
+      receives_post (T&)
+      {
+      }
+
+      template<typename T>
+      void OperationTemplate<T>::
+      raises (T& o, EdgeDispatcherBase& d)
+      {
+        iterate_and_traverse (o.raises_begin (), o.raises_end (), d);
+      }
+
+      template<typename T>
+      void OperationTemplate<T>::
+      raises (T& o)
+      {
+        typename T::RaisesIterator b (o.raises_begin ()), e (o.raises_end ());
+
+        if (b != e)
+        {
+          raises_pre (o);
+          iterate_and_traverse (
+            b, e, edge_traverser (), *this, &OperationTemplate<T>::comma, o);
+          raises_post (o);
+        }
+        else
+        {
+          raises_none (o);
+        }
+      }
+
+      template<typename T>
+      void OperationTemplate<T>::
+      raises_pre (T&)
+      {
+      }
+
+      template<typename T>
+      void OperationTemplate<T>::
+      raises_post (T&)
+      {
+      }
+
+      template<typename T>
+      void OperationTemplate<T>::
+      raises_none (T&)
+      {
+      }
+
+      template<typename T>
+      void OperationTemplate<T>::
+      post (T&)
+      {
+      }
+
+      template<typename T>
+      void OperationTemplate<T>::
+      comma (T&)
       {
       }
     }

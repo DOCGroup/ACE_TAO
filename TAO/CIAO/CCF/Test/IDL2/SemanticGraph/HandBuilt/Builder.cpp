@@ -107,7 +107,7 @@ build ()
 
   // 13:
   //
-  Operation& f (tu.new_node<Operation> ());
+  TwoWayOperation& f (tu.new_node<TwoWayOperation> ());
   tu.new_edge<Returns> (f, void_);
 
   Parameter& id (tu.new_node<InParameter> ("id"));

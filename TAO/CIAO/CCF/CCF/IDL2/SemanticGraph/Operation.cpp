@@ -188,6 +188,46 @@ namespace CCF
 
       TypeInfo const& Operation::
       static_type_info () { return operation_; }
+
+
+      // OneWayOperation
+      //
+      //
+      namespace
+      {
+        TypeInfo
+        one_way_operation_init_ ()
+        {
+          TypeInfo ti (typeid (OneWayOperation));
+          ti.add_base (Access::PUBLIC, true, Operation::static_type_info ());
+          return ti;
+        }
+
+        TypeInfo one_way_operation_ (one_way_operation_init_ ());
+      }
+
+      TypeInfo const& OneWayOperation::
+      static_type_info () { return one_way_operation_; }
+
+
+      // TwoWayOperation
+      //
+      //
+      namespace
+      {
+        TypeInfo
+        two_way_operation_init_ ()
+        {
+          TypeInfo ti (typeid (TwoWayOperation));
+          ti.add_base (Access::PUBLIC, true, Operation::static_type_info ());
+          return ti;
+        }
+
+        TypeInfo two_way_operation_ (two_way_operation_init_ ());
+      }
+
+      TypeInfo const& TwoWayOperation::
+      static_type_info () { return two_way_operation_; }
     }
   }
 }

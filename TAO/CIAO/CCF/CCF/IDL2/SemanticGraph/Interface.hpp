@@ -6,6 +6,7 @@
 #define CCF_IDL2_SEMANTIC_GRAPH_INTERFACE_HPP
 
 #include "CCF/IDL2/SemanticGraph/Elements.hpp"
+#include "CCF/IDL2/SemanticGraph/Operation.hpp"
 
 namespace CCF
 {
@@ -94,7 +95,7 @@ namespace CCF
         {
           return object ();
         }
-        
+
         static Introspection::TypeInfo const&
         static_type_info ();
 

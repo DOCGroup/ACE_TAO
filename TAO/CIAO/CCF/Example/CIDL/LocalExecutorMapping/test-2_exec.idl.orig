@@ -55,6 +55,7 @@ module M2
     attribute ::M2::S_Seq a_s_seq;
     void foo (in long l, inout boolean b, out long ol, in ::M::I i, out unsigned long long ull, inout ::M2::S_Seq s_seq) raises (::M2::Ex1, ::M2::Ex2);
     ::Components::EnterpriseComponent  new (in long l, in ::M2::OctetSeq s) raises (::M2::Ex2, ::M2::Ex1);
+    ::Components::EnterpriseComponent  find (in long l, in ::M2::OctetSeq s) raises (::M2::Ex1, ::M2::Ex2);
   };
   local interface CCM_H2 : CCM_H2Explicit, CCM_H2Implicit
   {
