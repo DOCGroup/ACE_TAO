@@ -1,4 +1,7 @@
-Fri May 28 01:50:08 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Fri May 28 04:11:48 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/ast/ast_module.cpp (AST_Module): Symbols in module CORBA
+	  should only be added to the table once.
 
 	* tao/orb.idl: Added macros to avoid including this file twice.
 
