@@ -1,3 +1,11 @@
+Fri Jul 28 10:47:27 2000  David L. Levine <levine@cs.wustl.edu>
+
+        * bin/ace-install: added this handy build+install script.
+          Thanks to Eric Mitchell <emitchell@altaira.com> for
+          initially authoring the script, and to Chad Elliott
+          <elliott_c@ociweb.com> for converting it from tcsh to
+          Bourne sh.
+
 Fri Jul 28 10:39:17 2000  David L. Levine <levine@cs.wustl.edu>
 
         * tests/Reader_Writer_Test.cpp (n_iterations): use
