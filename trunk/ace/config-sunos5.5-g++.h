@@ -77,8 +77,8 @@
 // Compiler/platform supports SunOS high resolution timers.
 #define ACE_HAS_HI_RES_TIMER
 
-// Only enable this if you don't mind linking with -lposix4
-// #defined ACE_HAS_CLOCK_GETTIME
+// ACE_HAS_CLOCK_GETTIME requires linking with -lposix4.
+// #define ACE_HAS_CLOCK_GETTIME
 
 // Platform supports IP multicast
 #define ACE_HAS_IP_MULTICAST
