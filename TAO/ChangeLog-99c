@@ -1,3 +1,16 @@
+Sat Dec 18 17:01:11 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * orbsvcs/Time_Service/Server_i.cpp:
+        * orbsvcs/Time_Service/Server_i.h:
+        * orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp:
+        * orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.h:
+        * orbsvcs/tests/Time/run_test.pl:
+
+          Removed the old IR_Helper code from the Time Service.  Also
+          removed the use_ir test from the run_test.pl until I can
+          figure out the interactions between the time service 
+          executables, the naming service, and the IMR. 
+
 Sat Dec 18 13:54:16 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Notify/Notify_Dispatcher.h: made
