@@ -8,7 +8,7 @@ TAO_MProfile::TAO_MProfile (CORBA::ULong sz)
   :  fwded_mprofile_(0),
      pfiles_ (0),
      current_ (0),
-     size_ (sz),
+     size_ (0),
      last_ (0)
 {
   this->set (sz);

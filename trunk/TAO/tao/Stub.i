@@ -28,6 +28,32 @@ STUB_Object::~STUB_Object (void)
   if (fwd_profiles_)
     delete fwd_profiles_;
 
+  if (this->profile_lock_ptr_)
+    delete this->profile_lock_ptr_; 
+
+}
+
+ACE_INLINE
+TAO_Profile *
+STUB_Object::set_profile_in_use_i (TAO_Profile *pfile)
+{
+  TAO_Profile *old = this->profile_in_use_;
+
+  // Since we are actively using this profile we dont want
+  // it to disappear, so increase the reference count by one!!
+  if (pfile && (pfile->_incr_refcnt () == 0))
+  {
+    ACE_ERROR_RETURN ((LM_ERROR,
+                      "(%P|%t) unable to increment profile ref!\n"),
+                      0);
+  }
+
+  this->profile_in_use_ = pfile;
+
+  if (old)
+    old->_decr_refcnt ();
+
+  return this->profile_in_use_;
 }
 
 ACE_INLINE
@@ -45,6 +71,22 @@ STUB_Object::STUB_Object (char *repository_id)
 {
   this->profile_lock_ptr_ = 
     TAO_ORB_Core_instance ()->client_factory ()->create_iiop_profile_lock ();  
+}
+
+ACE_INLINE
+TAO_Profile * 
+STUB_Object::set_profiles (TAO_MProfile *mprofiles)
+{
+
+  ACE_MT (ACE_GUARD_RETURN (ACE_Lock, 
+                            guard, 
+                            *this->profile_lock_ptr_, 
+                            0));
+
+  base_profiles_.set (mprofiles);
+
+  return this->set_profile_in_use_i (this->base_profiles_.get_next ());  
+
 }
 
 ACE_INLINE
@@ -123,31 +165,6 @@ ACE_INLINE
 TAO_Profile *
 STUB_Object::profile_in_use (void)
 {
-  return this->profile_in_use_;
-}
-
-//@@ From Carlos - Virtual functions are dangerous to inline!! FRED
-//   put in .cpp file!
-ACE_INLINE
-TAO_Profile *
-STUB_Object::set_profile_in_use_i (TAO_Profile *pfile)
-{
-  TAO_Profile *old = this->profile_in_use_;
-
-  // Since we are actively using this profile we dont want
-  // it to disappear, so increase the reference count by one!!
-  if (pfile && (pfile->_incr_refcnt () == 0))
-  {
-    ACE_ERROR_RETURN ((LM_ERROR,
-                      "(%P|%t) unable to increment profile ref!\n"),
-                      0);
-  }
-
-  this->profile_in_use_ = pfile;
-
-  if (old)
-    old->_decr_refcnt ();
-
   return this->profile_in_use_;
 }
 
@@ -247,28 +264,30 @@ STUB_Object::use_locate_requests (CORBA::Boolean use_it)
     }   
 } 
 
-  // @@ FRED We need to LOCK this!
-ACE_INLINE
-TAO_Profile * 
-STUB_Object::set_profiles (TAO_MProfile *mprofiles)
-{
-
-  ACE_MT (ACE_GUARD_RETURN (ACE_Lock, 
-                            guard, 
-                            *this->profile_lock_ptr_, 
-                            0));
-
-  base_profiles_.set (mprofiles);
-
-  return this->set_profile_in_use_i (this->base_profiles_.get_next ());  
-
-}
-
 ACE_INLINE
 TAO_MProfile * 
 STUB_Object::get_profiles (void)
 {
   return new TAO_MProfile (&base_profiles_);
+}
+
+ACE_INLINE
+void
+STUB_Object::reset_fwd_profiles (void)
+{
+
+  if (fwd_profiles_)
+  {
+    // @@ Assume on one level deep FRED
+    TAO_MProfile *old = fwd_profiles_;
+    TAO_MProfile *prev = old->fwded_mprofile ();
+    // this should be base_profiles_
+    if (prev->get_current_profile ())
+      prev->get_current_profile ()->fwd_profiles (0);
+      // it better be!  this should be profile_in_use_
+  }
+    
+  set_fwd_profile (0);
 }
 
 ACE_INLINE
@@ -358,25 +377,6 @@ STUB_Object::set_fwd_profiles (TAO_MProfile *mprofiles)
     set_fwd_profile ( this->fwd_profiles_->get_next ());
   }
  
-}
-
-ACE_INLINE
-void
-STUB_Object::reset_fwd_profiles (void)
-{
-
-  if (fwd_profiles_)
-  {
-    // @@ Assume on one level deep FRED
-    TAO_MProfile *old = fwd_profiles_;
-    TAO_MProfile *prev = old->fwded_mprofile ();
-    // this should be base_profiles_
-    if (prev->get_current_profile ())
-      prev->get_current_profile ()->fwd_profiles (0);
-      // it better be!  this should be profile_in_use_
-  }
-    
-  set_fwd_profile (0);
 }
 
 ACE_INLINE
