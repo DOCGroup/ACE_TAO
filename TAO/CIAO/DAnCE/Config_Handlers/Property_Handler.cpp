@@ -2,82 +2,46 @@
 
 #include "Property_Handler.h"
 #include "Any_Handler.h"
-#include "Utils.h"
-#include "tao/Exception.h"
-#include "ace/Auto_Ptr.h"
-#include "ace/SString.h"
+#include "Basic_Deployment_Data.hpp"
+#include "ciao/Deployment_DataC.h"
 
-
-using CIAO::Config_Handler::Utils;
-using CIAO::Config_Handler::Any_Handler;
-
-void
-CIAO::Config_Handler::Property_Handler::process_Property (DOMNodeIterator * iter,
-                                                          Deployment::Property &property)
+namespace CIAO
 {
-  int valid_name = 0, valid_value = 0;
-  for (DOMNode * node = iter->nextNode (); node != 0; node = iter->nextNode ())
+  namespace Config_Handlers
+  {
+
+    Property_Handler::Property_Handler (void)
     {
-      //Check if the Schema IDs for both the elements match
-      XStr name (node->getNodeName ());
-      if (name == XStr (ACE_TEXT ("name")))
-        {
-          valid_name = 1;
-          property.name = Utils::parse_string (iter);
-        }
-      else if (name == XStr (ACE_TEXT ("value")))
-        {
-          valid_value = 1;
-          if (node->hasAttributes ())
-            {
-              xercesc::DOMNamedNodeMap * named_node_map =
-                node->getAttributes ();
-              int length = named_node_map->getLength ();
-              if (length > 1)
-                {
-                  for (int j = 0; j < length; j++)
-                    {
-                      DOMNode * attr_node = named_node_map->item (j);
-                      XStr attr_node_name = attr_node->getNodeName ();
-                      char*  attr_node_value_ch =
-                        XMLString::transcode (attr_node->getNodeValue ());
-                      ACE_TString attr_node_value = attr_node_value_ch;
-                      XMLString::release (&attr_node_value_ch);
-                      if (attr_node_name = XStr (ACE_TEXT ("href")))
-                        {
-                          XMLURL url (attr_node_value.c_str ());
-                          DOMNodeIterator * value_iter =
-                            Utils::parse_href_tag (url,
-                                                   node->getOwnerDocument ());
-                          // Get to the root-node
-                          value_iter->nextNode ();
+    }
 
-                          // Process the value node present there
-                          Any_Handler::process_Any (value_iter,
-                                                    property.value);
-                        }
-                    }
-                }
-              else if (length == 1)
-                Any_Handler::process_Any (iter, property.value);
-            }
-          else
-            // Process the value associated
-            Any_Handler::process_Any (iter, property.value);
-        }
-      else
-        {
-          if (! valid_name || ! valid_value)
-            {
-              ACE_DEBUG ((LM_DEBUG, "Config_Handlers::Property_Handler::\
-                          process_Property element mismatch expected <name> \
-                          or <value>"));
-              ACE_THROW (CORBA::INTERNAL ());
-            }
+    Property_Handler::~Property_Handler (void)
+    {
+    }
 
-          // Processed one element more go back one and exit
-          iter->previousNode ();
-          break;
-        }
-    }/* End Outer for */
+    void
+    Property_Handler::get_property (
+      const Property& desc,
+      Deployment::Property& toconfig)
+    {
+      toconfig.name =
+        CORBA::string_dup (desc.name ().c_str ());
+
+      Any_Handler::extract_into_any (desc.value (),
+                                     toconfig.value);
+
+    }
+
+    Property
+    Property_Handler::get_property (
+      const Deployment::Property& src)
+    {
+      ::XMLSchema::string< char > name ((src.name));
+      Any value (Any_Handler::get_any (src.value));
+
+      Property prop (name,value);
+
+      return prop;
+    }
+
+  }
 }

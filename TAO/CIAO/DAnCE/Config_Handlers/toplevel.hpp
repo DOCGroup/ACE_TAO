@@ -14,8 +14,7 @@ namespace CIAO
 
 #include <memory>
 #include <vector>
-#include "XSCRT/XMLSchema.hpp"
-#include "XSCRT/Parser.hpp"
+#include <XMLSchema/Types.hpp>
 
 #include "pcd.hpp"
 
@@ -29,7 +28,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // package
-      //
+      // 
       public:
       typedef ::std::vector< ::CIAO::Config_Handlers::PackageConfiguration >::iterator package_iterator;
       typedef ::std::vector< ::CIAO::Config_Handlers::PackageConfiguration >::const_iterator package_const_iterator;
@@ -44,6 +43,7 @@ namespace CIAO
 
       public:
       TopLevelPackageDescription ();
+
       TopLevelPackageDescription (::XSCRT::XML::Element< char > const&);
       TopLevelPackageDescription (TopLevelPackageDescription const& s);
 

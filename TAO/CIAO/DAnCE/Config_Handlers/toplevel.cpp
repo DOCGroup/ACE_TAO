@@ -2,7 +2,6 @@
 #include "toplevel.hpp"
 
 
-
 namespace CIAO
 {
   namespace Config_Handlers
@@ -12,7 +11,7 @@ namespace CIAO
 
     TopLevelPackageDescription::
     TopLevelPackageDescription ()
-    :
+    : 
     regulator__ ()
     {
     }
@@ -20,6 +19,7 @@ namespace CIAO
     TopLevelPackageDescription::
     TopLevelPackageDescription (::CIAO::Config_Handlers::TopLevelPackageDescription const& s)
     :
+    XSCRT::Type (), 
     regulator__ ()
     {
       package_.reserve (s.package_.size ());
@@ -107,9 +107,7 @@ namespace CIAO
 
     TopLevelPackageDescription::
     TopLevelPackageDescription (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
 
       ::XSCRT::Parser< char > p (e);
