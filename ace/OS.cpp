@@ -3066,7 +3066,7 @@ ACE_OS::pread (ACE_HANDLE handle,
 #else
   return ::pread (handle, buf, nbytes, offset);
 #endif /* ACE_WIN32 */
-#elif defined (ACE_HAS_THREADS)
+#else
   ACE_MT (ACE_Thread_Mutex *ace_os_monitor_lock =
     ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
       (ACE_Object_Manager::ACE_OS_MONITOR_LOCK);
@@ -3076,12 +3076,6 @@ ACE_OS::pread (ACE_HANDLE handle,
     return -1;
   else
     return ACE_OS::read (handle, buf, nbytes);
-#else
-  ACE_UNUSED_ARG (handle);
-  ACE_UNUSED_ARG (buf);
-  ACE_UNUSED_ARG (nbytes);
-  ACE_UNUSED_ARG (offset);
-  ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAD_P_READ_WRITE */
 }
 
@@ -3114,7 +3108,7 @@ ACE_OS::pwrite (ACE_HANDLE handle,
 #else
   return ::pwrite (handle, buf, nbytes, offset);
 #endif /* ACE_WIN32 */
-#elif defined (ACE_HAS_THREADS)
+#else
   ACE_MT (ACE_Thread_Mutex *ace_os_monitor_lock =
     ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
       (ACE_Object_Manager::ACE_OS_MONITOR_LOCK);
@@ -3124,12 +3118,6 @@ ACE_OS::pwrite (ACE_HANDLE handle,
     return -1;
   else
     return ACE_OS::write (handle, buf, nbytes);
-#else
-  ACE_UNUSED_ARG (handle);
-  ACE_UNUSED_ARG (buf);
-  ACE_UNUSED_ARG (nbytes);
-  ACE_UNUSED_ARG (offset);
-  ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAD_P_READ_WRITE */
 }
 
