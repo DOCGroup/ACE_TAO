@@ -1,3 +1,11 @@
+Mon Nov 15 20:44:04 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.cpp (inherit_log_msg): Added a comment explaining why
+	  we don't inherit the callback when a new thread is created -
+ 	  since all hell would break loose otherwise if it came off the
+ 	  stack!  Thanks to Sangwoo Jin <swjinjin@sei.co.kr> for
+ 	  motivating this clarification.
+
 Mon Nov 15 19:54:36 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* ace-config.in:
