@@ -9,6 +9,12 @@ use PerlACE::ConfigList;
 package PerlACE;
 use Cwd;
 
+# Figure out the svc.conf extension
+$svcconf_ext = $ENV{"ACE_RUNTEST_SVCCONF_EXT"};
+if (!defined $svcconf_ext) {
+    $svcconf_ext = ".conf";
+}
+
 # Turn on autoflush
 $| = 1;
 
