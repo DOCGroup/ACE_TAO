@@ -140,6 +140,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name CosEvent_Static
+    End Project Dependency
 }}}
 
 ###############################################################################
