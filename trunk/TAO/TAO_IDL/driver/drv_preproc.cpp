@@ -78,14 +78,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 ACE_RCSID(driver, drv_preproc, "$Id$")
 
-#undef  MAX_ARGLIST
-#define MAX_ARGLIST 128
-
-static const char *arglist[MAX_ARGLIST];
 static long argcount = 0;
-
-// The ACE_Process_Options default size of 1024 is sometimes not enough.
-const unsigned long TAO_IDL_COMMAND_LINE_BUFFER_SIZE = 4 * 1024;
+static long max_argcount = 128;
+static const char *arglist[128];
 
 // Push the new CPP location if we got a -Yp argument
 void
@@ -98,13 +93,13 @@ DRV_cpp_new_location (const char *new_loc)
 void
 DRV_cpp_putarg (const char *str)
 {
-  if (argcount >= MAX_ARGLIST)
+  if (argcount >= max_argcount)
     {
       ACE_ERROR ((LM_ERROR,
                   "%s%s %d %s\n",
                   ACE_TEXT (idl_global->prog_name ()),
                   ACE_TEXT (": More than"),
-                  MAX_ARGLIST,
+                  max_argcount,
                   ACE_TEXT ("arguments to preprocessor")));
 
       ACE_OS::exit (99);

@@ -452,6 +452,8 @@ DRV_parse_args (long ac, char **av)
     {
       if (av[i][0] == '-')
         {
+          idl_global->append_idl_flag (av[i]);
+
           switch (av[i][1])
             {
             case 0:
@@ -498,24 +500,28 @@ DRV_parse_args (long ac, char **av)
                 {
                   // Client stub's header file ending.
                   // @@ No error handling done here.
+                  idl_global->append_idl_flag (av[i+1]);
                   be_global->client_hdr_ending (av[i+1]);
                   i++;
                 }
               else if (av[i][2] == 's')
                 {
                   // Server skeleton's header file.
+                  idl_global->append_idl_flag (av[i+1]);
                   be_global->server_hdr_ending (av[i+1]);
                   i++;
                 }
               else if (av[i][2] == 'T')
                 {
                   // Server Template header ending.
+                  idl_global->append_idl_flag (av[i+1]);
                   be_global->server_template_hdr_ending (av[i+1]);
                   i++;
                 }
               else if (av[i][2] == 'I')
                 {
                   // Server Template header ending.
+                  idl_global->append_idl_flag (av[i+1]);
                   be_global->implementation_hdr_ending (av[i+1]);
                   i++;
                 }
@@ -541,12 +547,14 @@ DRV_parse_args (long ac, char **av)
 
               if (av[i][2] == 's')
                 {
+                  idl_global->append_idl_flag (av[i+1]);
                   be_global->client_stub_ending (av[i+1]);
                   i++;
                 }
 
               else if (av[i][2] == 'i')
                 {
+                  idl_global->append_idl_flag (av[i+1]);
                   be_global->client_inline_ending (av[i+1]);
                   i++;
                 }
@@ -579,27 +587,32 @@ DRV_parse_args (long ac, char **av)
 
               if (av[i][2] == 's')
                 {
+                  idl_global->append_idl_flag (av[i+1]);
                   be_global->server_skeleton_ending (av[i+1]);
                   i++;
                 }
               else if (av[i][2] == 'T')
                 {
+                  idl_global->append_idl_flag (av[i+1]);
                   be_global->server_template_skeleton_ending (av[i+1]);
                   i++;
                 }
               else if (av[i][2] == 'i')
                 {
+                  idl_global->append_idl_flag (av[i+1]);
                   be_global->server_inline_ending (av[i+1]);
                   i++;
                 }
               else if (av[i][2] == 't')
                 {
+                  idl_global->append_idl_flag (av[i+1]);
                   be_global->server_template_inline_ending (av[i+1]);
                   i++;
                 }
 
               else if (av[i][2] == 'I')
                 {
+                  idl_global->append_idl_flag (av[i+1]);
                   be_global->implementation_skel_ending (av[i+1]);
                   i++;
                 }
@@ -621,6 +634,8 @@ DRV_parse_args (long ac, char **av)
               // <perfect_hash>, <dynamic_hash> or <binary_search>
               // Default is perfect.
             case 'H':
+              idl_global->append_idl_flag (av[i+1]);
+
               if (ACE_OS::strcmp (av[i+1], "dynamic_hash") == 0)
                 {
                   be_global->lookup_strategy (
@@ -682,6 +697,7 @@ DRV_parse_args (long ac, char **av)
               // Path for the perfect hash generator(gperf) program. Default
               // is $ACE_ROOT/bin/gperf.
             case 'g':
+              idl_global->append_idl_flag (av[i+1]);
               idl_global->gperf_path (av[i+1]);
               i++;
               break;
@@ -693,12 +709,14 @@ DRV_parse_args (long ac, char **av)
               // be kept. Default is the current directory from which the
               // <tao_idl> is called.
             case 'o':
+              idl_global->append_idl_flag (av[i+1]);
               be_global->output_dir (av [i+1]);
               i++;
               break;
 
               // Temp directory for the IDL compiler to keep its files.
             case 't':
+              idl_global->append_idl_flag (av[i+1]);
               idl_global->temp_dir (av [i+1]);
               i++;
               break;
@@ -710,10 +728,18 @@ DRV_parse_args (long ac, char **av)
                 {
                   if (i < ac - 1)
                     {
-                      buffer = new char[ACE_OS::strlen (av[i]) 
-                                        + ACE_OS::strlen (av[i + 1]) 
-                                        + 2];
-                      ACE_OS::sprintf (buffer, "%s%s", av[i], av[i+1]);
+                      idl_global->append_idl_flag (av[i+1]);
+
+                      ACE_NEW (buffer,
+                               char[ACE_OS::strlen (av[i]) 
+                                    + ACE_OS::strlen (av[i + 1]) 
+                                    + 2]);
+
+                      ACE_OS::sprintf (buffer, 
+                                       "%s%s", 
+                                       av[i], 
+                                       av[i+1]);
+
                       DRV_cpp_putarg (buffer);
                       i++;
                     }
@@ -960,6 +986,7 @@ DRV_parse_args (long ac, char **av)
                 }
               else if (av[i][2] == 'e')
                 {
+                  idl_global->append_idl_flag (av[i+1]);
                   int option = ACE_OS::atoi (av[i+1]);
 
                   // exception support
@@ -1021,21 +1048,25 @@ DRV_parse_args (long ac, char **av)
                     {
                       if (av[k][j+3] == 's')
                         {
+                          idl_global->append_idl_flag (av[i+1]);
                           be_global->implementation_skel_ending (av[i+1]);
                           i++;
                         }
                       else if (av[k][j+3] == 'h')
                         {
+                          idl_global->append_idl_flag (av[i+1]);
                           be_global->implementation_hdr_ending (av[i+1]);
                           i++;
                         }
                       else if (av[k][j+3] == 'b')
                         {
+                          idl_global->append_idl_flag (av[i+1]);
                           be_global->impl_class_prefix (av[i+1]);
                           i++;
                         }
                       else if (av[k][j+3] == 'e')
                         {
+                          idl_global->append_idl_flag (av[i+1]);
                           be_global->impl_class_suffix (av[i+1]);
                           i++;
                         }

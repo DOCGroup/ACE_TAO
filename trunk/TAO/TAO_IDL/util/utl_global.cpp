@@ -111,8 +111,9 @@ IDL_GlobalData::IDL_GlobalData (void)
       temp_dir_ (0),
       ident_string_ (0),
       obv_support_ (I_FALSE),
-      case_diff_error_ (I_TRUE)
-{
+      case_diff_error_ (I_TRUE),
+      idl_flags_ ("")
+ {
   // Path for the perfect hash generator(gperf) program.
   // Default is $ACE_ROOT/bin/gperf unless ACE_GPERF is defined.
   // Use ACE_GPERF if $ACE_ROOT hasn't been set or won't be set
@@ -850,3 +851,14 @@ IDL_GlobalData::destroy (void)
   // Should do pragmas here.
 }
 
+void
+IDL_GlobalData::append_idl_flag (const char *s)
+{
+  idl_flags_ += " " + ACE_CString (s);     
+}
+
+const char *
+IDL_GlobalData::idl_flags (void) const
+{
+  return idl_flags_.c_str ();
+} 
