@@ -54,6 +54,14 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
   // If we are defined in the outermost scope, then the value is assigned
   // to us here itself, else it will be in the *.cpp file.
 
+  AST_Decl::NodeType nt = AST_Decl::NT_pre_defined;
+  AST_Decl *td = node->constant_value ()->ev ()->tdef;
+
+  if (td != 0)
+    {
+      nt = td->node_type ();
+    }
+
   *os << be_nl << be_nl;
 
   if (! node->is_nested ()
@@ -64,6 +72,10 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
       if (node->et () == AST_Expression::EV_enum)
         {
           *os << node->enum_full_name ();
+        }
+      else if (nt == AST_Decl::NT_typedef)
+        {
+          *os << td->name ();
         }
       else
         {
@@ -81,6 +93,10 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
       if (node->et () == AST_Expression::EV_enum)
         {
           *os << node->enum_full_name ();
+        }
+      else if (nt == AST_Decl::NT_typedef)
+        {
+          *os << td->name ();
         }
       else
         {
