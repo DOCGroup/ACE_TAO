@@ -1,3 +1,16 @@
+Sat Jan 31 11:01:33 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/OS_NS_unistd.h:
+	* ace/OS_NS_unistd.inl:
+
+	  Thanks to Olli Savia, we now have a ACE_OS::swab (). This calls
+	  the platform specific swab () function. There is a emulation
+	  which could be used on platforms that don't support ::swab
+	  (). The emulation can be used by defining ACE_LACKS_SWAB. 
+
+	  I haven't added ACE_LACKS_SWAB in any config file. We will do it
+	  as and when things showup in our daily builds.
+
 Sat Jan 31 08:52:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* bin/MakeProjectCreator/config/smart_proxies.mpb:
