@@ -61,10 +61,10 @@ CACE_Init_TestApp theApp;
 BOOL CACE_Init_TestApp::InitInstance()
 {
 
-#if (defined (ACE_HAS_DLL) && (ACE_HAS_DLL == 0)) && \
-    defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
+  // This is needed because there's no overridden main(int, char *[])
+  // which would normally handle the initialization.  Also see the
+  // corresponding ACE::fini, below.
   ACE::init();
-#endif
 
   CACE_Init_TestDlg dlg;
   m_pMainWnd = &dlg;
@@ -86,10 +86,8 @@ BOOL CACE_Init_TestApp::InitInstance()
 
   // Since the dialog has been closed, return FALSE so that we exit the
   //  application, rather than start the application's message pump.
-#if (defined (ACE_HAS_DLL) && (ACE_HAS_DLL == 0)) && \
-    defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
   ACE::fini();
-#endif
+
   return FALSE;
 }
 
