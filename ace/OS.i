@@ -4299,26 +4299,41 @@ ACE_TSS_Emulation::tss_base ()
 }
 
 ACE_INLINE
-ACE_thread_key_t
+u_int
 ACE_TSS_Emulation::total_keys ()
 {
   return total_keys_;
 }
 
 ACE_INLINE
-ACE_thread_key_t
-ACE_TSS_Emulation::next_key ()
+int
+ACE_TSS_Emulation::next_key (ACE_thread_key_t &key)
 {
-  return total_keys_ < ACE_TSS_THREAD_KEYS_MAX
-           ? total_keys_++
-           : ACE_OS::NULL_key;
+  if (total_keys_ < ACE_TSS_THREAD_KEYS_MAX)
+    {
+#if defined (ACE_HAS_NONSCALAR_THREAD_KEY_T)
+      ACE_OS::memset (&key, 0, sizeof (ACE_thread_key_t));
+      ACE_OS::memcpy (&key, &total_keys_, sizeof (u_int));
+#else
+      key = total_keys_;
+#endif /* ACE_HAS_NONSCALAR_THREAD_KEY_T */
+
+      ++total_keys_;
+      return 0;
+    }
+  else
+    {
+      key = ACE_OS::NULL_key;
+      return -1;
+    }
 }
 
 ACE_INLINE
 ACE_TSS_Emulation::ACE_TSS_DESTRUCTOR
 ACE_TSS_Emulation::tss_destructor (const ACE_thread_key_t key)
 {
-  return tss_destructor_ [key];
+  ACE_KEY_INDEX (key_index, key);
+  return tss_destructor_ [key_index];
 }
 
 ACE_INLINE
@@ -4326,14 +4341,16 @@ void
 ACE_TSS_Emulation::tss_destructor (const ACE_thread_key_t key,
                                    ACE_TSS_DESTRUCTOR destructor)
 {
-  tss_destructor_ [key] = destructor;
+  ACE_KEY_INDEX (key_index, key);
+  tss_destructor_ [key_index] = destructor;
 }
 
 ACE_INLINE
 void *&
 ACE_TSS_Emulation::ts_object (const ACE_thread_key_t key)
 {
-  return tss_base ()[key];
+  ACE_KEY_INDEX (key_index, key);
+  return tss_base ()[key_index];
 }
 
 #endif /* ACE_HAS_TSS_EMULATION */
@@ -4344,7 +4361,8 @@ ACE_OS::thr_getspecific (ACE_thread_key_t key, void **data)
   // ACE_TRACE ("ACE_OS::thr_getspecific");
 #if defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_TSS_EMULATION)
-    if (key >= ACE_TSS_Emulation::total_keys ())
+    ACE_KEY_INDEX (key_index, key);
+    if (key_index >= ACE_TSS_Emulation::total_keys ())
       {
         errno = EINVAL;
         data = 0;

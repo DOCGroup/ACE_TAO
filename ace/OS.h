@@ -1259,10 +1259,17 @@ typedef tid_t ACE_hthread_t;
 
 // Make it easier to write portable thread code.
 typedef pthread_t ACE_thread_t;
-typedef pthread_key_t ACE_thread_key_t;
-typedef pthread_mutex_t ACE_mutex_t;
 typedef pthread_cond_t ACE_cond_t;
+typedef pthread_mutex_t ACE_mutex_t;
 typedef pthread_mutex_t ACE_thread_mutex_t;
+typedef pthread_key_t ACE_thread_key_t;
+#if defined (ACE_HAS_NONSCALAR_THREAD_KEY_T)
+# define ACE_KEY_INDEX(OBJ,KEY) \
+  u_int OBJ; \
+  ACE_OS::memcpy (&OBJ, &KEY, sizeof (u_int));
+#else
+# define ACE_KEY_INDEX(OBJ,KEY) u_int OBJ = KEY;
+#endif /* ACE_HAS_NONSCALAR_THREAD_KEY_T */
 
 #    if !defined (PTHREAD_CANCEL_DISABLE)
 #      define PTHREAD_CANCEL_DISABLE      0
@@ -4294,11 +4301,12 @@ public:
   enum { ACE_TSS_THREAD_KEYS_MAX = ACE_DEFAULT_THREAD_KEYS };
   // Maximum number of TSS keys allowed over the life of the program.
 
-  static ACE_thread_key_t total_keys ();
+  static u_int total_keys ();
   // Returns the total number of keys allocated so far.
 
-  static ACE_thread_key_t next_key ();
-  // Returns the next available key, or (key_t) -1 if none are available.
+  static int next_key (ACE_thread_key_t &key);
+  // Sets the argument to the next available key.  Returns 0 on success,
+  // -1 if no keys are available.
 
   static ACE_TSS_DESTRUCTOR tss_destructor (const ACE_thread_key_t key);
   // Returns the exit hook associated with the key.  Does _not_ check
@@ -4320,7 +4328,7 @@ public:
 
 private:
   // Global TSS structures.
-  static ACE_thread_key_t total_keys_;
+  static u_int total_keys_;
   // Always contains the value of the next key to be allocated.
 
   static ACE_TSS_DESTRUCTOR tss_destructor_ [ACE_TSS_THREAD_KEYS_MAX];
