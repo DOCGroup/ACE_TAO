@@ -48,8 +48,9 @@ namespace CIAO
     class Config_Handler_Export ERE_Handler
     {
     public:
-      static Deployment::ExternalReferenceEndpoint *
-        process_ExternalReferenceEndpoint (DOMNodeIterator * iter);
+      static void  
+        process_ExternalReferenceEndpoint (DOMNodeIterator * iter,
+                                           Deployment::ExternalReferenceEndpoint &ret_struct);
       // process <ExternalReferenceEndpoint> definitions in the descriptor
       // files
 
