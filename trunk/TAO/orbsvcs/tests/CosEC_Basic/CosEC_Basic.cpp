@@ -31,11 +31,8 @@ CosEC_Basic::~CosEC_Basic (void)
 }
 
 int
-CosEC_Basic::init  (int argc, char *argv [])
+CosEC_Basic::init_ORB  (int argc, char *argv [])
 {
-  // @@ Pradeep, this method is too long!  Please split it into
-  // several smaller methods, each of which handles a particular
-  // aspect of the initialization process.
   TAO_TRY
     {
       this->orb_ = CORBA::ORB_init (argc,
@@ -50,7 +47,8 @@ CosEC_Basic::init  (int argc, char *argv [])
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
-                           -1);
+                          -1);
+
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in (),
                                       TAO_TRY_ENV);
@@ -60,12 +58,30 @@ CosEC_Basic::init  (int argc, char *argv [])
         root_poa->the_POAManager (TAO_TRY_ENV);
       TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
 
-      RtecScheduler::Scheduler_var scheduler =
+      poa_manager->activate (TAO_TRY_ENV);
+      TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
+
+      return 0;
+    }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("Exception in CosEC_Basic::init_ORB");
+      return -1;
+    }
+  TAO_ENDTRY;
+}
+
+int
+CosEC_Basic::init_RtEC (void)
+{
+  TAO_TRY
+    {
+      this->scheduler_ =
         this->scheduler_impl_._this (TAO_TRY_ENV);
       TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
 
       CORBA::String_var str =
-        this->orb_->object_to_string (scheduler.in (),
+        this->orb_->object_to_string (this->scheduler_.in (),
                                       TAO_TRY_ENV);
       TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
 
@@ -73,11 +89,8 @@ CosEC_Basic::init  (int argc, char *argv [])
                   "EC_Basic: The (local) scheduler IOR is <%s>\n",
                   str.in ()));
 
-      if (ACE_Scheduler_Factory::server (scheduler.in ()) == -1)
+      if (ACE_Scheduler_Factory::server (this->scheduler_.in ()) == -1)
         return -1;
-
-      poa_manager->activate (TAO_TRY_ENV);
-      TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
 
       this->rtec_ = this->ec_impl_._this (TAO_TRY_ENV);
       TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
@@ -92,16 +105,32 @@ CosEC_Basic::init  (int argc, char *argv [])
 
       this->ec_impl_.activate ();
 
+      return 0;
+    }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("Exception in CosEC_Basic::init_RtEC");
+      return -1;
+    }
+  TAO_ENDTRY;
+}
+
+int
+CosEC_Basic::init_CosEC (void)
+{
+  TAO_TRY
+    {
+      // Setup the QOS params..
       this->supplier_qos_.insert (1,
                                   ACE_ES_EVENT_ANY,
-                                  scheduler->create ("supplier",
-                                                     TAO_TRY_ENV),
+                                  this->scheduler_->create ("supplier",
+                                                            TAO_TRY_ENV),
                                   1);
 
       this->consumer_qos_.start_disjunction_group ();
       this->consumer_qos_.insert_source (1,
-                                         scheduler->create ("consumer",
-                                                            TAO_TRY_ENV));
+                                         this->scheduler_->create ("consumer",
+                                                                   TAO_TRY_ENV));
       TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
 
       const RtecEventChannelAdmin::ConsumerQOS &consumerqos =
@@ -125,10 +154,21 @@ CosEC_Basic::init  (int argc, char *argv [])
     }
   TAO_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("Exception in CosEC_Basic::initEC");
+      TAO_TRY_ENV.print_exception ("Exception in CosEC_Basic::init_CosEC");
       return -1;
     }
   TAO_ENDTRY;
+}
+
+int
+CosEC_Basic::init  (int argc, char *argv [])
+{
+  if (init_ORB (argc, argv) == -1 ||
+      init_RtEC () == -1 ||
+      init_CosEC () == -1)
+    return -1;
+  else
+    return 0;
 }
 
 void
