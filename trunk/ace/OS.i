@@ -1567,6 +1567,8 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
 
   ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
 
+#if defined (ACE_HAS_SIGNAL_OBJECT_AND_WAIT)
+#else
   if (result != -1)
     {
       // If we're the last waiter thread during this particular
@@ -1583,6 +1585,7 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
   // occur because that's the guarantee that we give to our
   // callers.
   ACE_OS::mutex_lock (external_mutex);
+#endif /* ACE_HAS_SIGNAL_OBJECT_AND_WAIT */
 
   // Reset errno in case mutex_lock() also fails...
   errno = error;
