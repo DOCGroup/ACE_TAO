@@ -163,12 +163,6 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::gettimeofday (ACE_Time_Value (*getti
   this->gettimeofday_ = gettimeofday;
 }
 
-template <class TYPE, class FUNCTOR, class ACE_LOCK> ACE_INLINE ACE_LOCK &
-ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::mutex (void)
-{
-  return this->mutex_;
-}
-
 template <class TYPE, class FUNCTOR, class ACE_LOCK> ACE_INLINE FUNCTOR &
 ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::upcall_functor (void)
 {
