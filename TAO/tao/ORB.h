@@ -86,9 +86,6 @@ namespace CORBA
   {
   public:
 
-    // ORB_Core has special privileges
-    friend class ::TAO_ORB_Core;
-
     class TAO_Export InvalidName : public CORBA::UserException
     {
     public:
@@ -499,6 +496,9 @@ namespace CORBA
      */
     const ACE_CString &_tao_ft_client_id (void);
     void _tao_ft_client_id (const char *id);
+
+    /// Factory method that creates an ORB.
+    static CORBA::ORB_ptr _tao_make_ORB (TAO_ORB_Core * orb_core);
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
     // Useful for template programming.
