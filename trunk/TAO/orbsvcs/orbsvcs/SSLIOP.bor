@@ -31,6 +31,7 @@ OBJFILES = \
 	$(OBJDIR)\SSLIOP_Invocation_Interceptor.obj \
 	$(OBJDIR)\SSLIOP_ORBInitializer.obj \
 	$(OBJDIR)\SSLIOP_Profile.obj \
+	$(OBJDIR)\SSLIOP_RSA.obj \
 	$(OBJDIR)\SSLIOP_ReceivedCredentials.obj \
 	$(OBJDIR)\SSLIOP_TargetCredentials.obj \
 	$(OBJDIR)\SSLIOP_Transport.obj \

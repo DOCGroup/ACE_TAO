@@ -55,10 +55,11 @@ module SSLIOP {
     /// Return the certificate chain associated with the current
     /// execution context.  If no SSL session is being used for the
     /// request or upcall, then the NoContext exception is raised.
-    ///
-    /// On the client side, the chain does include the peer (server)
-    /// certficate.  However, the certificate chain on the server side
-    /// does NOT contain the peer (client) certificate.
+    /**
+     * On the client side, the chain does include the peer (server)
+     * certficate.  However, the certificate chain on the server side
+     * does NOT contain the peer (client) certificate.
+     */
     SSL_Cert get_peer_certificate_chain () raises (NoContext);
 
     /// Returns true if the current execution context is not within a
@@ -67,6 +68,33 @@ module SSLIOP {
     /// available.
     boolean no_context ();
   };
+
+  enum FileType {
+    ASN1,
+    PEM
+  };
+
+  enum KeyType {
+    RSA// ,
+//     DSA
+  };
+
+  struct File {
+    FileType type;
+    string filename;
+    string password;   // Only needed for encrypted PEM files.
+  };
+
+  /// The AuthData structure is the SSLIOP-specific authentication
+  /// data that will be passed to the
+  /// SecurityLevel2::PrincipalAuthenticator::authenticate() method.
+  /// Note that this TAO-specific.
+  struct AuthData {
+    File certificate;
+    File key;
+    KeyType key_type;
+  };
+
 # pragma prefix "omg.org"
 
 };
