@@ -1,82 +1,90 @@
+Wed Feb 14 15:36:23 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
+
+        * docs/orbsvcs.html: Added the Notification Service and it's tests
+        into this page.Thanks to Samuel Qi Luo
+        <Samuel.QiLuo@ericsson.com.au> for pointing out the missing documentation.
+
+        * docs/releasenotes/index.html: Updated Notify Status.
+
 Wed Feb 14 14:58:28 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp:
 
-          Removed use of a typedef for _tao_seq_Octet that is guarded 
+          Removed use of a typedef for _tao_seq_Octet that is guarded
           from g++ versions earlier than 2.8. Also replace use of 'new'
           with 'ACE_NEW'.
 
 Wed Feb 14 11:49:17 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/CORBALOC_Parser.cpp (make_stub_from_mprofile):
+        * tao/CORBALOC_Parser.cpp (make_stub_from_mprofile):
 
-	  Fixed "better conversion sequence" warning issued by g++ by
-	  using the ".in()" accessor method.
+          Fixed "better conversion sequence" warning issued by g++ by
+          using the ".in()" accessor method.
 
 Wed Feb 14 11:34:55 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Pluggable.cpp (make_mprofile):
+        * tao/Pluggable.cpp (make_mprofile):
 
-	  Decrease the reference count on the profile before returning
-	  with an exception on error.  Fixes a memory leak.
+          Decrease the reference count on the profile before returning
+          with an exception on error.  Fixes a memory leak.
 
-	* tao/CORBALOC_Parser.h (parse_string_mprofile_helper):
-	* tao/CORBALOC_Parser.cpp (parse_string_mprofile_helper):
+        * tao/CORBALOC_Parser.h (parse_string_mprofile_helper):
+        * tao/CORBALOC_Parser.cpp (parse_string_mprofile_helper):
 
-	  Changed CORBA::String_var parameter that was passed in by copy
-	  to a const char *.  There was no point in passing in a
-	  CORBA::String_var.
+          Changed CORBA::String_var parameter that was passed in by copy
+          to a const char *.  There was no point in passing in a
+          CORBA::String_var.
 
-	  Added missing ACE_CHECK macro.
+          Added missing ACE_CHECK macro.
 
-	  (make_stub_from_mprofile, parse_string_rir_helper ):
+          (make_stub_from_mprofile, parse_string_rir_helper ):
 
-	  Fixed potential memory leak and improved exception safety.
+          Fixed potential memory leak and improved exception safety.
 
-	  (parse_string):
+          (parse_string):
 
-	  Removed unnecessary use of a CORBA::ORB_var, in addition to the
-	  useless duplication of the ORB reference.
+          Removed unnecessary use of a CORBA::ORB_var, in addition to the
+          useless duplication of the ORB reference.
 
-	* tao/orbconf.h:
+        * tao/orbconf.h:
 
-	  Removed "PriorityMappingManager" from the list of initial
-	  services.  There is no need to list it in the static initial
-	  services since it is registered when the RTCORBA support is
-	  loaded into the ORB.
+          Removed "PriorityMappingManager" from the list of initial
+          services.  There is no need to list it in the static initial
+          services since it is registered when the RTCORBA support is
+          loaded into the ORB.
 
-	* tests/InterOp-Naming/run_test.pl:
+        * tests/InterOp-Naming/run_test.pl:
 
-	  Updated test script to excercise additional INS features to make
-	  it possible to catch more problems in TAO's INS support, should
-	  they exist.
+          Updated test script to excercise additional INS features to make
+          it possible to catch more problems in TAO's INS support, should
+          they exist.
 
 Wed Feb 14 13:00:28 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/IIOP_Profile.h: 
-	* tao/IIOP_Endpoint.h:
-	* tao/IIOP_Endpoint.i:
-	* tao/Strategies/UIOP_Profile.h:
-	* tao/Strategies/UIOP_Endpoint.h:
-	* tao/Strategies/UIOP_Endpoint.i:
-	* tao/Strategies/SHMIOP_Profile.h:
-	* tao/Strategies/SHMIOP_Endpoint.h:
-	* tao/Strategies/SHMIOP_Endpoint.i: Removed the references to the
-	  obsolete Client_Connection_Handlers. 
+        * tao/IIOP_Profile.h:
+        * tao/IIOP_Endpoint.h:
+        * tao/IIOP_Endpoint.i:
+        * tao/Strategies/UIOP_Profile.h:
+        * tao/Strategies/UIOP_Endpoint.h:
+        * tao/Strategies/UIOP_Endpoint.i:
+        * tao/Strategies/SHMIOP_Profile.h:
+        * tao/Strategies/SHMIOP_Endpoint.h:
+        * tao/Strategies/SHMIOP_Endpoint.i: Removed the references to the
+          obsolete Client_Connection_Handlers.
 
 Wed Feb 14 09:50:18 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
-	* tao/IIOP_Acceptor.cpp:
-	* tao/IIOP_Acceptor.h:
-	  Updated TAO_IIOP_Acceptor::open and TAO_IIOP_Acceptor::hostname
-	  to use the specified endpoint hostname instead of always
-	  resolving the hostname and then looking it back up for what to
-	  put in the IOR.  This fixed a problem on Windows 2000 when the 
-	  user specified an endpoint having the hostname "localhost".
-	  This would end up causing the actual hostname of the computer
-	  to be put into the IOR, but the server would bind to 127.0.0.1.
-	  As a result, clients wouldn't be able to connect to the server.
-	  This fix partially addresses bugzilla bug 506.
+        * tao/IIOP_Acceptor.cpp:
+        * tao/IIOP_Acceptor.h:
+          Updated TAO_IIOP_Acceptor::open and TAO_IIOP_Acceptor::hostname
+          to use the specified endpoint hostname instead of always
+          resolving the hostname and then looking it back up for what to
+          put in the IOR.  This fixed a problem on Windows 2000 when the
+          user specified an endpoint having the hostname "localhost".
+          This would end up causing the actual hostname of the computer
+          to be put into the IOR, but the server would bind to 127.0.0.1.
+          As a result, clients wouldn't be able to connect to the server.
+          This fix partially addresses bugzilla bug 506.
 
 Wed Feb 14 07:13:12 2001  Carlos O'Ryan  <coryan@uci.edu>
 

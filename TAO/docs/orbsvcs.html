@@ -66,39 +66,41 @@ bgcolor="#ffffff">
       CELLSPACING="2"
       CELLPADDING= "0">
       <TR>
-	<TH>Service</TH>
-	<TH>Implementation Sub-directory</TH></TR>
+        <TH>Service</TH>
+        <TH>Implementation Sub-directory</TH></TR>
       <TR>
-	<TD>A/V Streams Service</TD><TD><CODE>orbsvcs/AV</CODE></TD></TR>
+        <TD>A/V Streams Service</TD><TD><CODE>orbsvcs/AV</CODE></TD></TR>
       <TR>
-	<TD>Concurrency Service</TD><TD><CODE>orbsvcs/Concurrency</CODE></TD></TR>
+        <TD>Concurrency Service</TD><TD><CODE>orbsvcs/Concurrency</CODE></TD></TR>
       <TR>
-	<TD>Event Service</TD><TD><CODE>orbsvcs/CosEvent</CODE></TD></TR>
+        <TD>Event Service</TD><TD><CODE>orbsvcs/CosEvent</CODE></TD></TR>
       <TR>
-	<TD>Real-time Event Service</TD><TD><CODE>orbsvcs/Event</CODE></TD></TR>
+        <TD>Real-time Event Service</TD><TD><CODE>orbsvcs/Event</CODE></TD></TR>
       <TR>
-	<TD>LifeCycle Service</TD><TD><CODE>orbsvcs/LifeCycle</CODE></TD></TR>
+        <TD>LifeCycle Service</TD><TD><CODE>orbsvcs/LifeCycle</CODE></TD></TR>
       <TR>
         <TD>Load Balancing Service</TD>
           <TD><CODE>orbsvcs/LoadBalancing</CODE></TD></TR>
       <TR>
-	<TD>Logging Service</TD><TD><CODE>orbsvcs/Log</CODE></TD></TR>
+        <TD>Logging Service</TD><TD><CODE>orbsvcs/Log</CODE></TD></TR>
       <TR>
-	<TD>Naming Service</TD><TD><CODE>orbsvcs/Naming</CODE></TD></TR>
+        <TD>Naming Service</TD><TD><CODE>orbsvcs/Naming</CODE></TD></TR>
       <TR>
-	<TD>Property Service</TD><TD><CODE>orbsvcs/Property</CODE></TD></TR>
+        <TD>Property Service</TD><TD><CODE>orbsvcs/Property</CODE></TD></TR>
       <TR>
-	<TD>Scheduling Service</TD><TD><CODE>orbsvcs/Sched</CODE></TD></TR>
+        <TD>Scheduling Service</TD><TD><CODE>orbsvcs/Sched</CODE></TD></TR>
       <TR>
-	<TD>Security Service</TD>
+        <TD>Security Service</TD>
           <TD><CODE>orbsvcs/Security</CODE></TD></TR>
       <TR>
         <TD>SSLIOP Pluggable Protocol</TD>
           <TD><CODE>orbsvcs/SSLIOP</CODE></TD></TR>
       <TR>
-	<TD>Trading Service</TD><TD><CODE>orbsvcs/Trader</CODE></TD></TR>
+        <TD>Trading Service</TD><TD><CODE>orbsvcs/Trader</CODE></TD></TR>
       <TR>
-	<TD>Time Service</TD><TD><CODE>orbsvcs/Time</CODE></TD></TR>
+        <TD>Time Service</TD><TD><CODE>orbsvcs/Time</CODE></TD></TR>
+      <TR>
+        <TD>Notification Service</TD><TD><CODE>orbsvcs/Notify</CODE></TD></TR>
   </TABLE>
     </P>
 
@@ -123,6 +125,7 @@ bgcolor="#ffffff">
       <LI>Trading_Service</LI>
       <LI>Time_Service</LI>
       <LI>ImplRepo_Service *(see below)*</LI>
+      <LI>Notify_Service</LI>
     </UL>
 
     <P>In the future we plan to use a single binary and ACE Service
@@ -147,24 +150,24 @@ bgcolor="#ffffff">
       CELLSPACING="2"
       CELLPADDING= "0">
       <TR>
-	<TH>Test directory</TH>
-	<TH>Purpose</TH></TR>
+        <TH>Test directory</TH>
+        <TH>Purpose</TH></TR>
       <TR>
-	<TD><CODE>AVStreams</CODE></TD>
-	<TD>A complete A/V server and client.</TD></TR>
+        <TD><CODE>AVStreams</CODE></TD>
+        <TD>A complete A/V server and client.</TD></TR>
       <TR>
-	<TD><CODE>Concurrency</CODE></TD>
-	<TD>Test the Concurrency Service.</TD></TR>
+        <TD><CODE>Concurrency</CODE></TD>
+        <TD>Test the Concurrency Service.</TD></TR>
 
       <TR>
-	<TD><CODE>CosEC_Basic</CODE></TD>
+        <TD><CODE>CosEC_Basic</CODE></TD>
           <TD>Test the basic functionality of the standard Event
             Service.
           </TD>
         </TR>
 
       <TR>
-	<TD><CODE>CosEC_Multiple</CODE></TD>
+        <TD><CODE>CosEC_Multiple</CODE></TD>
           <TD>Simple example that connects multiple consumers and/or
             suppliers to the standard event service. It can be used to
             show how composing a standard event-service and the
@@ -173,45 +176,45 @@ bgcolor="#ffffff">
         </TR>
 
       <TR>
-	<TD><CODE>EC_Basic</CODE></TD>
+        <TD><CODE>EC_Basic</CODE></TD>
           <TD>Test the basic functionality of the real-time Event
             Service.
           </TD>
         </TR>
 
       <TR>
-	<TD><CODE>EC_Custom_Marshal</CODE></TD>
+        <TD><CODE>EC_Custom_Marshal</CODE></TD>
           <TD>Show how the Real-time event service can send user
             defined data using custom marshaling.
           </TD>
         </TR>
 
       <TR>
-	<TD><CODE>EC_Mcast</CODE></TD>
+        <TD><CODE>EC_Mcast</CODE></TD>
           <TD>Multiple real-time event channels can communicate using
             multicast, this example shows how to do it.
           </TD>
         </TR>
 
       <TR>
-	<TD><CODE>EC_Multiple</CODE></TD>
-	<TD>Connect two Real-time Event Channels using the
-	  <CODE>EC_Gateway</CODE>,
-	  measure latency, utilization and minimum spacing.
+        <TD><CODE>EC_Multiple</CODE></TD>
+        <TD>Connect two Real-time Event Channels using the
+          <CODE>EC_Gateway</CODE>,
+          measure latency, utilization and minimum spacing.
           </TD>
         </TR>
 
       <TR>
-	<TD><CODE>EC_Throughput</CODE></TD>
-	<TD>Measure throughput and latency for collocated and remote
+        <TD><CODE>EC_Throughput</CODE></TD>
+        <TD>Measure throughput and latency for collocated and remote
             real-time event services.
           </TD>
         </TR>
 
       <TR>
-	<TD><CODE>Event_Latency</CODE></TD>
-	<TD>Test the Real-time Event Service and measure end-to-end latency,
-	it also uses the Scheduling and Naming services.</TD></TR>
+        <TD><CODE>Event_Latency</CODE></TD>
+        <TD>Test the Real-time Event Service and measure end-to-end latency,
+        it also uses the Scheduling and Naming services.</TD></TR>
 
       <TR>
         <TD><CODE>ImplRepo</CODE></TD>
@@ -223,19 +226,19 @@ bgcolor="#ffffff">
         <TD>Test that exercises the Load Balancing service.</TD></TR>
 
       <TR>
-	<TD><CODE>Logger</CODE></TD>
-	<TD>An example logging service using the Naming Service to
-	  locate a factory.</TD></TR>
+        <TD><CODE>Logger</CODE></TD>
+        <TD>An example logging service using the Naming Service to
+          locate a factory.</TD></TR>
       <TR>
-	<TD><CODE>Naming</CODE></TD>
-	<TD>This is an obsolete directory.</TD></TR>
+        <TD><CODE>Naming</CODE></TD>
+        <TD>This is an obsolete directory.</TD></TR>
       <TR>
-	<TD><CODE>Property</CODE></TD>
-	<TD>Testing for the Property Service.</TD></TR>
+        <TD><CODE>Property</CODE></TD>
+        <TD>Testing for the Property Service.</TD></TR>
 
       <TR>
-	<TD><CODE>Sched</CODE></TD>
-	<TD>A test of the Scheduling Service.</TD></TR>
+        <TD><CODE>Sched</CODE></TD>
+        <TD>A test of the Scheduling Service.</TD></TR>
 
       <TR>
         <TD><CODE>Security</CODE></TD>
@@ -245,20 +248,30 @@ bgcolor="#ffffff">
             directory.</TD></TR>
 
       <TR>
-	<TD><CODE>Simple_Naming</CODE></TD>
-	<TD>A number of Naming Service tests: from very simple to more fancy.</TD></TR>
+        <TD><CODE>Simple_Naming</CODE></TD>
+        <TD>A number of Naming Service tests: from very simple to more fancy.</TD></TR>
       <TR>
-	<TD><CODE>Simulator</CODE></TD>
-	<TD>Prototype implementation of DOVE (DOVE Agent, DOVE
+        <TD><CODE>Simulator</CODE></TD>
+        <TD>Prototype implementation of DOVE (DOVE Agent, DOVE
             Browser, DOVE MIB, DOVE Application).  The DOVE Agent
             consists of the Event Channel, which is then connected to
             a DOVE Browser implemented in Java.</TD></TR>
       <TR>
-	<TD><CODE>Trading</CODE></TD>
-	<TD>Tests for the Trading Service.</TD></TR>
+        <TD><CODE>Trading</CODE></TD>
+        <TD>Tests for the Trading Service.</TD></TR>
       <TR>
-	<TD><CODE>Time</CODE></TD>
-	<TD> A test for the Time Service.</TD></TR>
+        <TD><CODE>Time</CODE></TD>
+        <TD> A test for the Time Service.</TD></TR>
+       <TR>
+        <TD><CODE>Notify</CODE></TD>
+        <TD>
+            Consists of basic tests foe the Notification Service
+            - Simple event transfer,
+            client Connect-Disconnect to event channel, creating and
+            destroying channel/admin objects,test for Admin
+            properties, test to check offer/subscription changes.
+            The directory also has performance tests for throughput.
+        </TD></TR>
     </TABLE>
     </P>
 
