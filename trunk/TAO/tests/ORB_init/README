@@ -44,9 +44,8 @@ behaviors it tests:
                  // Do something with exc.
               }
 
-Simply run the `ORB_init' program with out any arguments to begin the
+Simply run the `ORB_init' program with out any argument to begin the
 test.  The correct output is:
-
 
         The ORB <my_orb> was successfully returned from a second
         call to CORBA::ORB_init() after it was released in
@@ -57,9 +56,14 @@ test.  The correct output is:
         from a second call to CORBA::ORB_init() after the
         first ORB with the same ORBid was destroyed.
 
-
+        (18804|1024) EXCEPTION, 
         Successfully caught CORBA system exception "UNKNOWN"
         after the last ORB was released.
+
+        The exception follows.  It is safe to ignore it.
+
+        system exception, ID 'IDL:omg.org/CORBA/UNKNOWN:1.0'
+        TAO exception, minor code = 54410000 (unknown location; unspecified errno), completed = NO
 
 
         ORB_init test completed successfully.
