@@ -2453,7 +2453,12 @@ TAO_Unbounded_Object_Sequence<DynamicAny::DynAny,DynamicAny::DynAny_var>
 DynamicAny::DynAnySeq::~DynAnySeq (void) // dtor
 {}
 
-
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+  template class TAO_Object_Manager<DynamicAny::DynAnySeq,DynamicAny::DynAnySeq_var>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate TAO_Object_Manager<DynamicAny::DynAnySeq,DynamicAny::DynAnySeq_var>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* end #if !defined */
 
