@@ -1,3 +1,30 @@
+Mon May 31 15:55:07 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	Converted the INS test to a stand-alone. It was previously 
+	working in conjunction with the bank server.The test can be used 
+	to locate the Naming Service or any arbitrary service through
+	iioploc IORs. Added the following files :
+	
+	* tests/InterOp-Naming/INS.idl: Defines a simple interface with
+	  a single operation.
+
+	The following files define the INS test server capable of being 
+	located through iiopoc IORs.
+	* tests/InterOp-Naming/Server_i.h: 
+	* tests/InterOp-Naming/Server_i.cpp: 
+	* tests/InterOp-Naming/INS_test_server:
+ 	
+	The following files define the servant implementation.
+	* tests/InterOp-Naming/INS_i.cpp: 
+	* tests/InterOp-Naming/INS_i.h:
+
+	The test client :
+	* tests/InterOp-Naming/INS_test_client.cpp:
+	
+	Changed the Makefile and README according to the above changes.
+	* tests/InterOp-Naming/README: 
+	* tests/InterOp-Naming/Makefile:
+	
 Mon May 31 14:50:07 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/default_resource.cpp (init_protocol_factories): This routine
