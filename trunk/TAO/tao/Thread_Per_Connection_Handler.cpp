@@ -36,7 +36,7 @@ TAO_Thread_Per_Connection_Handler::activate (long flags,
                                              void *stack[],
                                              size_t stack_size[],
                                              ACE_thread_t  thread_names[],
-                                             bool inherit_priority)
+                                             bool)
 {
   if (TAO_debug_level)
     {
