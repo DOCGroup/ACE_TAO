@@ -1323,19 +1323,19 @@ ExtractedTypeDeclEmitter::traverse (Any&)
 void
 ExtractedTypeDeclEmitter::traverse (SemanticGraph::Enum& e)
 {
-  os << e.scoped_name () << "" << STRS[EXTRACT] << ";";
+  os << e.scoped_name () << " " << STRS[EXTRACT] << ";";
 }
 
 void
 ExtractedTypeDeclEmitter::traverse (SemanticGraph::Struct& s)
 {
-  os << s.scoped_name () << "" << STRS[EXTRACT] << ";";
+  os << s.scoped_name () << " " << STRS[EXTRACT] << ";";
 }
 
 void
 ExtractedTypeDeclEmitter::traverse (SemanticGraph::Union& u)
 {
-  os << u.scoped_name () << "" << STRS[EXTRACT] << ";";
+  os << u.scoped_name () << " " << STRS[EXTRACT] << ";";
 }
 
 void

@@ -1,3 +1,13 @@
+Tue Feb 22 09:55:51 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/TypeNameEmitter.cpp:
+        
+          Fixed typos in code generation that were omitting a space
+          between the type name and '_ciao_extract_val' for enums,
+          structs and unions when used as component or home attributes.
+          Thanks to Steve Baker <steven_d_baker@raytheon.com> for
+          reporting the bug with enums.
+
 Fri Feb 18 10:11:12 UTC 2005 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/ciao/Servant_Activator.h:
