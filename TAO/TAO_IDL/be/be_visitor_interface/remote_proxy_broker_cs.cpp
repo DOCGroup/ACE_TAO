@@ -31,12 +31,17 @@ be_visitor_interface_remote_proxy_broker_cs::visit_interface (be_interface *node
       << "//           Remote & Base  Proxy Broker Implementation" << be_nl
       << "//" << be_nl << be_nl;
 
+  *os << node->full_base_proxy_broker_name () << "::"
+      << node->base_proxy_broker_name () << " (void)" << be_nl
+      << "{" << be_nl
+      << "}" << be_nl << be_nl;
+
   *os << node->full_base_proxy_broker_name () << "::~"
       << node->base_proxy_broker_name () << " (void)" << be_nl
       << "{" << be_nl
       << "}" << be_nl << be_nl;
 
-  *os << "// Factory function Implementation." << be_nl
+  *os << "// Factory Member function Implementation." << be_nl
       << node->full_remote_proxy_broker_name ()
       << " *" << node->full_remote_proxy_broker_name () << "::the"
       << node->remote_proxy_broker_name ()
@@ -47,6 +52,13 @@ be_visitor_interface_remote_proxy_broker_cs::visit_interface (be_interface *node
       << "return &remote_proxy_broker;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
+  // Ctor
+  *os << node->full_remote_proxy_broker_name () << "::"
+      << node->remote_proxy_broker_name () << " (void)" << be_nl
+      << "{" << be_nl
+      << "}" << be_nl << be_nl;
+
+  // Dtor
   *os << node->full_remote_proxy_broker_name () << "::~"
       << node->remote_proxy_broker_name () << " (void)" << be_nl
       << "{" << be_nl

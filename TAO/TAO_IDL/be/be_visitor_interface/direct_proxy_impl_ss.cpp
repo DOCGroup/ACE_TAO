@@ -19,19 +19,24 @@ be_visitor_interface_direct_proxy_impl_ss::~be_visitor_interface_direct_proxy_im
   // No-Op.
 }
 
-int 
+int
 be_visitor_interface_direct_proxy_impl_ss::visit_interface (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  
+
   this->ctx_->node (node);
   os->indent ();
   *os << be_nl
       << "///////////////////////////////////////////////////////////////////////" << be_nl
-      << "//                 Direct Proxy  Implementation" << be_nl 
+      << "//                 Direct Proxy  Implementation" << be_nl
       << "//" << be_nl << be_nl;
 
-  
+
+  // Ctor Implementation
+  *os << node->full_direct_proxy_impl_name () << "::"
+      << node->direct_proxy_impl_name () << " (void)"
+      << be_nl << "{}" << be_nl << be_nl;
+
   // Dtor Implementation
   *os << node->full_direct_proxy_impl_name () << "::"
       << "~" << node->direct_proxy_impl_name () << " (void)"
@@ -45,12 +50,11 @@ be_visitor_interface_direct_proxy_impl_ss::visit_interface (be_interface *node)
                          "codegen for scope failed\n"),
                         -1);
     }
-  
+
   *os << be_nl
       << "//" << be_nl
-      << "//           End Direct Proxy Implementation" << be_nl 
+      << "//           End Direct Proxy Implementation" << be_nl
       << "///////////////////////////////////////////////////////////////////////"
       << be_nl;
   return 0;
 }
-

@@ -1,3 +1,44 @@
+Fri Nov 24 16:55:29 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface/base_proxy_broker_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/base_proxy_impl_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/direct_proxy_impl_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/direct_proxy_impl_ss.cpp:
+	* TAO_IDL/be/be_visitor_interface/remote_proxy_broker_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/remote_proxy_broker_cs.cpp:
+	* TAO_IDL/be/be_visitor_interface/remote_proxy_impl_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/remote_proxy_impl_cs.cpp:
+	* TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_ss.cpp:
+
+	  Added generation of the default constructor to avoid problem
+	  with older compiler (like gcc272).
+
+	* TAO_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:
+
+	  Made some cosmetic changes in the generated code.
+
+	* tao/Object_Proxy_Broker.cpp:
+	* tao/Object_Proxy_Broker.h:
+	* tao/Object_Proxy_Impl.cpp:
+	* tao/Object_Proxy_Impl.h:
+	* tao/Remote_Object_Proxy_Impl.cpp:
+	* tao/Remote_Object_Proxy_Impl.h:
+	* tao/PortableServer/Direct_Object_Proxy_Impl.cpp:
+	* tao/PortableServer/Direct_Object_Proxy_Impl.h:
+	* tao/PortableServer/ThruPOA_Object_Proxy_Impl.cpp:
+	* tao/PortableServer/ThruPOA_Object_Proxy_Impl.h:
+
+	  Added declaration and implementation of default constructor
+	  to fix the problem with some older compiler (like gcc272).
+
+	* tao/PortableServer/POA.cpp:
+
+	  Substituted  any use of TAO_Collocated_Object with
+	  CORBA::Object, in fact in the new collocation scheme
+	  TAO_Collocated_Object is not used anymore.
+
 Fri Nov 24 12:17:59 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tests/Multiple/Multiple_Impl.cpp:
@@ -13,7 +54,7 @@ Fri Nov 24 14:07:13 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 	* orbsvcs/orbsvcs/Property/CosPropertyService_i.h:
 	  Changed CosProperty_Hash_Key::pname_ to an _var type to fix a
 	  small memory leak. Thanks to Greg Hall greg.j.hall@boeing.com
-	  for providing the fix. 
+	  for providing the fix.
 
 Thu Nov 23 18:21:13 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 

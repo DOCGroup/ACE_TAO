@@ -27,35 +27,42 @@ be_visitor_interface_base_proxy_broker_ch::visit_interface (be_interface *node)
 
   *os << be_nl
       << "///////////////////////////////////////////////////////////////////////" << be_nl
-      << "//                 Base Proxy Broker Declaration " << be_nl 
+      << "//                 Base Proxy Broker Declaration " << be_nl
       << "//" << be_nl << be_nl;
-  
+
   // Generate the class declaration.
   os->indent ();
   *os << "class " << be_global->stub_export_macro () << " "
       << node->base_proxy_broker_name () << be_nl <<  "{" << be_nl
-      << "public:" 
+      << "public:"
       << be_idt_nl; // idt = 1
-    
+
+
+
   // Destructor
-  *os << "virtual ~" << node->base_proxy_broker_name () << " (void);\n" << be_nl;
+  *os << "virtual ~" << node->base_proxy_broker_name () << " (void);" << be_nl;
 
   // Accessor Method
-  *os << "virtual " << node->base_proxy_impl_name () << " &" 
-      << "select_proxy (" 
+  *os << "virtual " << node->base_proxy_impl_name () << " &"
+      << "select_proxy ("
       << be_idt_nl; // idt = 2
 
   *os << node->local_name () << " *object," << be_nl
       << "CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()" << be_uidt_nl
-      << ") = 0;" 
+      << ") = 0;"
       << be_uidt_nl  // idt = 1
       << be_uidt_nl; // idt = 0
+
+  // Constructor
+  *os  << "protected:" << be_idt_nl
+       << node->base_proxy_broker_name () << " (void);" << be_nl
+       << be_uidt_nl;
 
   *os << "};" << be_nl << be_nl;
 
   *os << be_nl
       << "//" << be_nl
-      << "//              End Base Proxy Broker Declaration " << be_nl 
+      << "//              End Base Proxy Broker Declaration " << be_nl
       << "///////////////////////////////////////////////////////////////////////"
       << be_nl << be_nl;
   return 0;

@@ -110,7 +110,7 @@ be_visitor_operation_thru_poa_proxy_impl_ss::visit_operation (be_operation *node
     }
   delete visitor;
 
-  *os << "{" << be_idt << "\n";
+  *os << "{" << be_idt << be_nl;
 
   if (!be_global->exception_support ())
     {
@@ -144,11 +144,11 @@ be_visitor_operation_thru_poa_proxy_impl_ss::visit_operation (be_operation *node
                                  "codegen failed\n"),
                                 -1);
             }
-          *os << ");\n";
+          *os << ");" << be_nl;
         }
     }
 
-  os->indent ();
+  //  os->indent ();
 
   *os <<"TAO_Object_Adapter::Servant_Upcall servant_upcall ("
       << be_idt << be_idt_nl
@@ -163,9 +163,9 @@ be_visitor_operation_thru_poa_proxy_impl_ss::visit_operation (be_operation *node
   if (!be_global->exception_support ())
     *os << "," << be_nl
         << "ACE_TRY_ENV" << be_uidt_nl
-        << ");\n" << be_uidt;
+        << ");" << be_nl << be_uidt;
   else
-    *os << be_uidt_nl << ");\n" << be_uidt;
+    *os << be_uidt_nl << ");" << be_uidt_nl;
 
   // check if there is an exception
   if (!be_global->exception_support ())
@@ -234,7 +234,7 @@ be_visitor_operation_thru_poa_proxy_impl_ss::gen_invoke (
 
   // End the upcall
   *os << be_uidt_nl
-      << ");\n";
+      << ");" << be_nl;
 
   return 0;
 }
@@ -252,16 +252,16 @@ be_visitor_operation_thru_poa_proxy_impl_ss::gen_check_exception (be_type *bt)
       if (bt->size_type () == be_decl::VARIABLE
           || bt->base_node_type () == AST_Decl::NT_array)
         {
-          *os << "ACE_CHECK_RETURN (0);\n";
+          *os << "ACE_CHECK_RETURN (0);" << be_nl;
         }
       else
         {
-          *os << "ACE_CHECK_RETURN  (_tao_retval);\n";
+          *os << "ACE_CHECK_RETURN  (_tao_retval);" << be_nl;
         }
     }
   else
     {
-      *os << "ACE_CHECK;\n";
+      *os << "ACE_CHECK;" << be_nl;
     }
 
   return 0;

@@ -25,7 +25,7 @@ be_visitor_interface_base_proxy_impl_ch::visit_interface (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  os->indent ();
+  //  os->indent ();
 
   *os << be_nl
       << "///////////////////////////////////////////////////////////////////////" << be_nl
@@ -61,9 +61,14 @@ be_visitor_interface_base_proxy_impl_ch::visit_interface (be_interface *node)
   *os << "{" << be_nl << "public:"
       << be_idt_nl; // idt = 1
 
-   // Destructor Declaration.
+
+
+  // Destructor Declaration.
   *os << "virtual ~" << node->base_proxy_impl_name () << " (void);"
       << be_nl  << be_nl;
+
+
+
 
   if (this->visit_scope (node) == -1)
     {
@@ -73,9 +78,15 @@ be_visitor_interface_base_proxy_impl_ch::visit_interface (be_interface *node)
                          "codegen for scope failed\n"), -1);
     }
 
-  *os << be_uidt // idt = 0
-      << "};" << be_nl;
-  *os << be_nl
+  *os << be_uidt; // idt = 0
+
+  // Constructor Declaration.
+  *os << "protected:" << be_idt_nl // idt = 1
+      << node->base_proxy_impl_name () << " (void);"
+      << be_uidt_nl  // idt = 0
+      << be_nl;
+
+  *os  << "};" << be_nl
       << "//" << be_nl
       << "//                Base  Proxy Impl. Declaration" << be_nl
       << "///////////////////////////////////////////////////////////////////////"

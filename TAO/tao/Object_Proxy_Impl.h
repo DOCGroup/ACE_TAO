@@ -35,6 +35,7 @@ public:
 
   virtual ~TAO_Object_Proxy_Impl (void);
 
+
   virtual CORBA::Boolean _is_a (const CORBA::Object_ptr target,
                                 const CORBA::Char *logical_type_id,
                                 CORBA_Environment &ACE_TRY_ENV) = 0;
@@ -45,6 +46,9 @@ public:
                                         CORBA_Environment &ACE_TRY_ENV) = 0;
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
+
+protected:
+  TAO_Object_Proxy_Impl (void);
 
 };
 

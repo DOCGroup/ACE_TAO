@@ -1,7 +1,6 @@
 // @(#) $Id$
 
 #include "POA.h"
-#include "Collocated_Object.h"
 
 //
 // ImplRepo related.
@@ -2137,7 +2136,7 @@ TAO_POA::valid_priority (RTCORBA::Priority priority)
   if (bands_policy != 0)
     // Case 1.
     {
-      RTCORBA::PriorityBands &bands = 
+      RTCORBA::PriorityBands &bands =
         bands_policy->priority_bands_rep ();
 
       for (CORBA::ULong i = 0; i < bands.length (); ++i)
@@ -3623,14 +3622,14 @@ TAO_POA_Policies::validate_priorities (CORBA::Environment &ACE_TRY_ENV)
   //     service it, i.e., whose priority falls into the band's range.
   if (this->priority_bands_ != 0)
     {
-      RTCORBA::PriorityBands &bands = 
+      RTCORBA::PriorityBands &bands =
         this->priority_bands_->priority_bands_rep ();
-      
+
       // Checks 0 and 1.
       if (bands.length () == 0
           || this->server_priority_ == TAO_INVALID_PRIORITY)
         ACE_THROW (PortableServer::POA::InvalidPolicy ());
-        
+
       // Check 2.
       if (this->priority_model_ == SERVER_DECLARED)
         {
@@ -3644,7 +3643,7 @@ TAO_POA_Policies::validate_priorities (CORBA::Environment &ACE_TRY_ENV)
                   break;
                 }
             }
-          
+
           if (!match)
             ACE_THROW (PortableServer::POA::InvalidPolicy ());
         }
@@ -3654,8 +3653,8 @@ TAO_POA_Policies::validate_priorities (CORBA::Environment &ACE_TRY_ENV)
       for (CORBA::ULong i = 0; i < bands.length (); ++i)
         {
           int match = 0;
-          for (TAO_AcceptorSetIterator a = ar->begin (); 
-               a != ar->end (); 
+          for (TAO_AcceptorSetIterator a = ar->begin ();
+               a != ar->end ();
                ++a)
             {
               if ((*a)->priority () <= bands[i].high
@@ -3686,7 +3685,7 @@ TAO_POA_Policies::validate_priorities (CORBA::Environment &ACE_TRY_ENV)
           if ((*a)->priority () == this->server_priority_)
             return;
         }
-      
+
       ACE_THROW (CORBA::BAD_PARAM ());
     }
 }
@@ -4068,11 +4067,11 @@ orbkey:
 
   if (this->orb_core_.optimize_collocation_objects ())
     {
-      ACE_NEW_THROW_EX (tmp,
-                        TAO_Collocated_Object (safe_data.get (),
-                                               collocated,
-                                               servant),
+      ACE_NEW_THROW_EX (tmp, CORBA::Object (safe_data.get (),
+                                            collocated,
+                                            servant),
                         CORBA::INTERNAL ());
+
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
     }
   else
@@ -4137,7 +4136,7 @@ TAO_POA::key_to_stub_i (const TAO_ObjectKey &key,
           TAO_Priority_Acceptor_Filter
             filter (this->policies ().server_protocol ()->protocols_rep (),
                     priority);
-          
+
           data = this->orb_core_.create_stub_object (key,
                                                      type_id,
                                                      client_exposed_policies._retn (),

@@ -36,8 +36,11 @@ be_visitor_interface_remote_proxy_broker_ch::visit_interface (be_interface *node
       << node->base_proxy_broker_name () << be_nl <<  "{" << be_nl
       << "public: " << be_idt_nl;
 
+  // Constructor
+  *os << node->remote_proxy_broker_name () << " (void);" << be_nl << be_nl;
+
   // Destructor
-  *os << "virtual ~" << node->remote_proxy_broker_name () << " (void);\n" << be_nl;
+  *os << "virtual ~" << node->remote_proxy_broker_name () << " (void);" << be_nl << be_nl;
 
   // Accessor Method
   *os << "virtual " << node->base_proxy_impl_name () << " &" << "select_proxy (" << be_idt_nl;

@@ -58,8 +58,11 @@ be_visitor_interface_direct_proxy_impl_sh::visit_interface (be_interface *node)
   *os << be_uidt_nl;
   *os << "{" << be_nl << "public:" << be_idt_nl;
 
+  // Ctor
+  *os << node->direct_proxy_impl_name () << " (void);" << be_nl << be_nl;
+
   // Dtor
-  *os << "~" << node->direct_proxy_impl_name () << " (void);" << be_nl << be_nl;
+  *os << "virtual ~" << node->direct_proxy_impl_name () << " (void);" << be_nl << be_nl;
 
   if (this->visit_scope (node) == -1)
     {
