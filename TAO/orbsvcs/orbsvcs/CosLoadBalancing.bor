@@ -36,6 +36,8 @@ OBJFILES = \
 	$(OBJDIR)\LB_Pull_Handler.obj \
 	$(OBJDIR)\LB_Random.obj \
 	$(OBJDIR)\LB_RoundRobin.obj \
+	$(OBJDIR)\LB_ClientComponent.obj \
+	$(OBJDIR)\LB_ClientORBInitializer.obj \
 	$(OBJDIR)\LB_ClientRequestInterceptor.obj \
 	$(OBJDIR)\LB_ServerRequestInterceptor.obj \
 	$(OBJDIR)\LB_IORInterceptor.obj \
