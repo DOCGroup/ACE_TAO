@@ -1,3 +1,17 @@
+Tue Feb 25 10:00:54 2003  Ossama Othman  <ossama@uci.edu>
+
+	* ace/CDR_Base.h (LongLong):
+	* ace/CDR_Base.inl:
+	* ace/CDR_Base.cpp:
+
+	  Removed newly added 32-bit assignment and comparison operators.
+	  Comparison is non-trivial in this signed case, and assignment
+	  operators are potential source of confusion when implicit
+	  conversions are performed.  This change basically reverts
+	  ACE_CDR::LongLong to its previous implementation, and also
+	  addresses some build problems on platforms with non-native 64
+	  bit signed integers (e.g. VxWorks).
+
 Tue Feb 25 08:09:13 2003  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Atomic_Op_T.h (mutex_):
