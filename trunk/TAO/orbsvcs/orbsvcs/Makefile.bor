@@ -31,6 +31,8 @@ OBJFILES = \
 	$(OBJDIR)\LifeCycleServiceS.obj \
 	$(OBJDIR)\TimeBaseC.obj \
 	$(OBJDIR)\TimeBaseS.obj \
+	$(OBJDIR)\RtecDefaultEventDataC.obj \
+	$(OBJDIR)\RtecDefaultEventDataS.obj \
 	$(OBJDIR)\RtecEventCommC.obj \
 	$(OBJDIR)\RtecEventCommS.obj \
 	$(OBJDIR)\RtecSchedulerC.obj \
@@ -92,7 +94,6 @@ OBJFILES = \
 	$(OBJDIR)\EC_Trivial_Supplier_Filter.obj \
 	$(OBJDIR)\EC_Type_Filter.obj \
 	$(OBJDIR)\EC_UDP_Admin.obj \
-	$(OBJDIR)\Endpoint_Strategy.obj \
 	$(OBJDIR)\Entries.obj \
 	$(OBJDIR)\Event_Channel.obj \
 	$(OBJDIR)\Event_Manip.obj \
@@ -180,6 +181,9 @@ $(IDLDIR)\ImplRepoC.cpp $(IDLDIR)\ImplRepoS.cpp: $(IDLDIR)\ImplRepo.idl
 	$(TAO_IDL) $**
 
 $(IDLDIR)\LifeCycleServiceC.cpp $(IDLDIR)\LifeCycleServiceS.cpp: $(IDLDIR)\LifeCycleService.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\RtecDefaultEventDataC.cpp $(IDLDIR)\RtecDefaultEventDataS.cpp: $(IDLDIR)\RtecDefaultEventData.idl
 	$(TAO_IDL) $**
 
 $(IDLDIR)\RtecEventCommC.cpp $(IDLDIR)\RtecEventCommS.cpp: $(IDLDIR)\RtecEventComm.idl
