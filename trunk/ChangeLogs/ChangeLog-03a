@@ -1,3 +1,7 @@
+Fri Mar 2 20:08  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* include/makeinclude/platform_qnx_rtp_gcc.GNU: 
+
 Fri Mar  2 16:35:58 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/config-win32-borland.h:
