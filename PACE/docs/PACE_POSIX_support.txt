@@ -243,3 +243,53 @@ FILE                    linux   lynxos  sunos   win32
 <times.h>
   times()                                       x
 .............................................................
+<unistd.h>
+  _exit()                                       -N
+  access()                                      -N
+  alarm()                                       x
+  chdir()                                       -N
+  chown()                                       x
+  close()                                       -E
+  dup()                                         -E
+  dup2()                                        x
+  execv()                                       -N
+  execve()                                      -N
+  execvp()                                      -N
+  fdatasync()                                   x
+  fork()                                        x
+  fpathconf()                                   x
+  fsync()                                       x
+  ftruncate()                                   -E
+  getcwd()                                      -N
+  getegid()                                     x
+  get_euid()                                    x
+  getgroups()                                   x
+  getgid()                                      x
+  getlogin()                                    x
+  getlogin_r()                                  x
+  getpgrp()                                     x
+  getpid()                                      -E
+  getppid()                                     x
+  getuid()                                      x
+  isatty()                                      -N
+  link()                                        x
+  lseek()                                       -E
+  pathconf()                                    x
+  pause()                                       x
+  pipe()                                        x
+  read()                                        x
+  rmdir()                                       -N
+  setgid()                                      x
+  setgid()                                      x
+  setpgid()                                     x
+  setsid()                                      x
+  setuid()                                      s
+  sleep()                                       -N
+  sysconf()                                     x
+  tcgetpgrp()                                   x
+  tcsetpgrp()                                   x
+  ttyname()                                     x
+  ttyname_r()                                   x
+  unlink()                                      -N
+  write()                                       -E
+.............................................................  
