@@ -75,7 +75,7 @@ TAO_SHMIOP_Connection_Handler::open (void*)
     return -1;
 #endif /* ! ACE_LACKS_TCP_NODELAY */
 
-  // if (this->transport ()->wait_strategy ()->non_blocking ())
+  if (this->transport ()->wait_strategy ()->non_blocking ())
     {
       if (this->peer ().enable (ACE_NONBLOCK) == -1)
         return -1;

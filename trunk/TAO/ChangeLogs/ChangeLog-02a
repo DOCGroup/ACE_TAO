@@ -1,3 +1,14 @@
+Fri Aug 31 18:53:28 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp: Reverted the
+	  change "Tue Aug 28 16:56:07 2001  Balachandran Natarajan
+	  <bala@cs.wustl.edu>". Put the sockets back in blocking mode for
+	  a RW connection handler. We had severe fall in performance. This
+	  should get that back. We need to come up with a better way to
+	  handle the problem for which the fix was put in.
+
 Fri Aug 31 16:32:14 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/performance-tests/EC_Federated_Latency/Servant_var.h:
