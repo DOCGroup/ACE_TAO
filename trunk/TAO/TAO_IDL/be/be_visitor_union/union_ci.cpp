@@ -142,7 +142,7 @@ int be_visitor_union_ci::visit_union (be_union *node)
                                  "bad or unimplemented discriminant type\n"),
                             -1);
             }
-          *os << be_uidt_nl << "}\n\n";
+          *os << ";" << be_uidt_nl << "}\n\n";
         }
 
       // the discriminant type may have to be defined here if it was an enum
