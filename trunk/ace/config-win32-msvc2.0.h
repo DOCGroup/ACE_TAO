@@ -7,9 +7,6 @@
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
-#if !defined (ACE_CONFIG_H)
-#define ACE_CONFIG_H
-
 #if defined (_MSC_VER)
 	// "C4355: 'this' : used in base member initializer list"
 	#pragma warning(disable:4355) // disable C4514 warning
