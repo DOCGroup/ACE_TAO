@@ -358,13 +358,13 @@ public:
                                                  ACE_Service_Type_Impl *o,
                                                  const ACE_SHLIB_HANDLE handle,
                                                  int active);
+#endif /* ACE_USES_CLASSIC_SVC_CONF == 0 */
 
   static ACE_Service_Type_Impl *create_service_type_impl (const ACE_TCHAR *name,
                                                           int type,
                                                           void *symbol,
                                                           u_int flags,
                                                           ACE_Service_Object_Exterminator gobbler);
-#endif /* ACE_USES_CLASSIC_SVC_CONF == 0 */
 protected:
   /// Process service configuration requests that were provided on the
   /// command-line.  Returns the number of errors that occurred.

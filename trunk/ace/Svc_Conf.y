@@ -239,11 +239,11 @@ svc_location
       if (sym != 0)
         {
           ACE_Service_Type_Impl *stp
-            = ace_create_service_type ($1,
-                                       $2,
-                                       sym,
-                                       flags,
-                                       gobbler);
+            = ACE_Service_Config::create_service_type_impl ($1,
+                                                            $2,
+                                                            sym,
+                                                            flags,
+                                                            gobbler);
           if (stp == 0)
             ace_yyerrno++;
 
@@ -401,46 +401,6 @@ ace_get_module (ACE_Static_Node *str_rec,
     }
 
   return mt;
-}
-
-ACE_Service_Type_Impl *
-ace_create_service_type (const ACE_TCHAR *name,
-                         int type,
-                         void *symbol,
-                         u_int flags,
-                         ACE_Service_Object_Exterminator gobbler)
-{
-  ACE_Service_Type_Impl *stp = 0;
-
-  // Note, the only place we need to put a case statement.  This is
-  // also the place where we'd put the RTTI tests, if the compiler
-  // actually supported them!
-
-  switch (type)
-    {
-    case ACE_SVC_OBJ_T:
-      ACE_NEW_RETURN (stp,
-                      ACE_Service_Object_Type ((ACE_Service_Object *) symbol,
-                                               name, flags,
-                                               gobbler),
-                      0);
-      break;
-    case ACE_MODULE_T:
-      ACE_NEW_RETURN (stp,
-                      ACE_Module_Type (symbol, name, flags),
-                      0);
-      break;
-    case ACE_STREAM_T:
-      ACE_NEW_RETURN (stp,
-                      ACE_Stream_Type (symbol, name, flags),
-                      0);
-      break;
-    default:
-      ACE_ERROR ((LM_ERROR,
-                  ACE_LIB_TEXT ("unknown case\n")));
-      break;
-    }
-  return stp;
 }
 
 #if defined (DEBUGGING)

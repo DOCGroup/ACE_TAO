@@ -1,3 +1,14 @@
+Thu May  9 16:26:48 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ACEXML/examples/SAXPrint/main.cpp: Added missing include file.
+
+	* ace/Service_Config.cpp:
+	* ace/Service_Config.h:
+	* ace/Svc_Conf.y:
+	* ace/Svc_Conf_y.cpp: Consolidated ace_create_service_type into
+	  ACE_Service_Config::create_service_type_impl.
+
+
 Thu May  9 14:35:24 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/XML_Svc_Conf.h: Changed to include ACE_export.h instead of
