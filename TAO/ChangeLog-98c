@@ -1,3 +1,10 @@
+Mon Sep  7 19:45:15 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
+
+	* orbsvcs/Trading_Service/README:
+	* orbsvcs/tests/Trading/README:
+	Added README files directing the user to the
+	docs/releasenotes/trader.html Trading Service documentation. 
+
 Mon Sep  7 19:31:28 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* tests/Simple/time/run_test.pl: Added require Process. Changed 
