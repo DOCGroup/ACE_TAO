@@ -1,3 +1,20 @@
+Wed Jul  8 17:13:00 1998  Jeff Parsons  <jp4@cs.wustl.edu>
+
+	* TAO/tests/Cubit/TAO/DII_Cubit/client.cpp,
+	  TAO/tests/Cubit/TAO/DII_Cubit/client.h,
+	  TAO/tests/Cubit/TAO/DII_Cubit/DII_Cubit.dsw,
+	  TAO/tests/Cubit/TAO/DII_Cubit/DII_Cubit_Test.cpp,
+	  TAO/tests/Cubit/TAO/DII_Cubit/DII_Cubit_Test.dsp,
+	  TAO/tests/Cubit/TAO/DII_Cubit/README,
+	  TAO/tests/Cubit/TAO/DII_Cubit/Makefile:
+	  Combined client.h and client.cpp into one file,
+	  initialized the return variables in all the Cubit 
+	  operations (to get rid of some UMRs in Purify),
+	  removed the one-button test file DII_Cubit_Test.cpp
+	  and the corresponding project file in VC (the perl
+	  script does the same thing and more safely), updated
+	  the DII_Cubit.dsw, Makefile and README files.
+
 Tue Jul  8 14:00:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/orbsvcs.dsp: When changing the RtecEventComm.id
