@@ -22,6 +22,7 @@
 #define ACE_TESTS_PRIORITY_REACTOR_TEST_H
 
 #include "ace/Service_Config.h"
+#include "ace/SOCK_Stream.h"
 #include "ace/Svc_Handler.h"
 
 class Read_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH>
