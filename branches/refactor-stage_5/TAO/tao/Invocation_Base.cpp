@@ -6,13 +6,18 @@
 #include "RequestInfo_Util.h"
 #endif /*TAO_HAS_INTERCEPTORS*/
 
+#if !defined (__ACE_INLINE__)
+# include "Invocation_Base.inl"
+#endif /* __ACE_INLINE__ */
+
 ACE_RCSID (tao,
            Invocation_Base,
            "$Id$")
 
 namespace TAO
 {
-  // Need to move many methods in here to the inlined files..
+
+
   Invocation_Base::Invocation_Base (CORBA::Object_ptr ot,
                                     CORBA::Object_ptr t,
                                     TAO_Operation_Details &details,
@@ -41,47 +46,6 @@ namespace TAO
     return this->target_->_stubobj ()->orb_core ();
   }
 
-  TAO_Stub *
-  Invocation_Base::stub (void) const
-  {
-    return this->target_->_stubobj ();
-  }
-
-  void
-  Invocation_Base::forwarded_reference (CORBA::Object_ptr o)
-  {
-    this->forwarded_to_ = CORBA::Object::_duplicate (o);
-  }
-
-  CORBA::Object_ptr
-  Invocation_Base::forwarded_reference (void)
-  {
-    return CORBA::Object::_duplicate (this->forwarded_to_.in ());
-  }
-
-  CORBA::Object_ptr
-  Invocation_Base::steal_forwarded_reference (void)
-  {
-    return this->forwarded_to_._retn ();
-  }
-
-  void
-  Invocation_Base::reply_received (Invocation_Status s)
-  {
-#if TAO_HAS_INTERCEPTORS == 1
-    this->req_info_.reply_status (s);
-#endif /*TAO_HAS_INTERCEPTORS*/
-    ACE_UNUSED_ARG (s);
-  }
-
-  bool
-  Invocation_Base::is_forwarded (void) const
-  {
-    return (this->forwarded_to_.in () != 0);
-  }
-
-
-
   TAO_Service_Context &
   Invocation_Base::request_service_context (void)
   {
@@ -93,26 +57,7 @@ namespace TAO
   {
     return this->details_.reply_service_context ();
   }
-
-  CORBA::Boolean
-  Invocation_Base::response_expected (void) const
-  {
-    return this->response_expected_;
-  }
-
-  CORBA::Object_ptr
-  Invocation_Base::target (void) const
-  {
-    return this->otarget_;
-  }
-
 #if TAO_HAS_INTERCEPTORS == 1
-  char *
-  Invocation_Base::operation_name (void)
-  {
-    return ACE_const_cast (char *, this->details_.opname ());
-  }
-
   Dynamic::ParameterList *
   Invocation_Base::arguments (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -172,12 +117,6 @@ namespace TAO
   Invocation_Base::sync_scope (void) const
   {
     return this->details_.response_flags ();
-  }
-
-  CORBA::Object_ptr
-  Invocation_Base::effective_target (void) const
-  {
-    return this->target_;
   }
 
   Invocation_Status
