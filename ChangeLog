@@ -1,3 +1,8 @@
+Fri Dec 10 22:57:22 2004  Marek Brudka  <mbrudka@aster.pl>
+
+	* tests/QtReactor_Test.cpp (Message):
+	Removed unnecesary log about lack of Qt support.
+
 Fri Dec 10 22:39:12 2004  Marek Brudka  <mbrudka@aster.pl>
 
 	* bin/MakeProjectCreator/config/global.features (Message):
