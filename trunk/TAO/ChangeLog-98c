@@ -1,5 +1,8 @@
 Fri Dec 19 00:28:24 1997    <nw1@JIG>
 
+	* tests/Cubit/TAO/MT_Cubit/server/svr.cpp (main): Removed some
+	  random codes.
+
 	* tao/tao_internals.cpp (close_services): Disabled closing down
  	  the ACE_Service_Config when reference count drops to 0.
 
