@@ -33,6 +33,23 @@
 #include "tao/PortableServer/ThreadPolicyValueORBControl.h"
 #include "tao/PortableServer/ThreadPolicyValueSingle.h"
 
+#include "tao/PortableServer/LifespanPolicyValueTransient.h"
+#include "tao/PortableServer/LifespanPolicyValuePersistent.h"
+
+#include "tao/PortableServer/IdAssignmentPolicyValueSystem.h"
+#include "tao/PortableServer/IdAssignmentPolicyValueUser.h"
+
+#include "tao/PortableServer/IdUniquenessPolicyValueMultiple.h"
+#include "tao/PortableServer/IdUniquenessPolicyValueUnique.h"
+
+#include "tao/PortableServer/ImplicitActivationPolicyValueExplicit.h"
+#include "tao/PortableServer/ImplicitActivationPolicyValueImplicit.h"
+
+#include "tao/PortableServer/RequestProcessingPolicyValue.h"
+
+#include "tao/PortableServer/ServantRetentionPolicyValueRetain.h"
+#include "tao/PortableServer/ServantRetentionPolicyValueNonRetain.h"
+
 ACE_RCSID (PortableServer,
            PortableServer,
            "$Id$")
@@ -68,6 +85,26 @@ TAO_POA_Initializer::init (void)
       TAO::Portable_Server::ace_svc_desc_ServantRetentionPolicyFactoryImpl
     );
 
+  ACE_Service_Config::process_directive (
+      TAO::Portable_Server::ace_svc_desc_Default_Servant_Request_Processing_Policy
+    );
+
+  ACE_Service_Config::process_directive (
+      TAO::Portable_Server::ace_svc_desc_Servant_Manager_Request_Processing_Policy
+    );
+
+  ACE_Service_Config::process_directive (
+      TAO::Portable_Server::ace_svc_desc_Active_Object_Map_Request_Processing_Policy
+    );
+
+  ACE_Service_Config::process_directive (
+      TAO::Portable_Server::ace_svc_desc_Non_Retain_Servant_Retention_Policy
+    );
+
+  ACE_Service_Config::process_directive (
+      TAO::Portable_Server::ace_svc_desc_Retain_Servant_Retention_Policy
+    );
+
   // Policy Values
 
   ACE_Service_Config::process_directive (
@@ -76,6 +113,38 @@ TAO_POA_Initializer::init (void)
 
   ACE_Service_Config::process_directive (
       TAO::Portable_Server::ace_svc_desc_SINGLE_THREAD_Thread_Policy
+    );
+
+  ACE_Service_Config::process_directive (
+      TAO::Portable_Server::ace_svc_desc_Transient_Lifespan_Policy
+    );
+
+  ACE_Service_Config::process_directive (
+      TAO::Portable_Server::ace_svc_desc_Persistent_Lifespan_Policy
+    );
+
+  ACE_Service_Config::process_directive (
+      TAO::Portable_Server::ace_svc_desc_System_IdAssignment_Policy
+    );
+
+  ACE_Service_Config::process_directive (
+      TAO::Portable_Server::ace_svc_desc_User_IdAssignment_Policy
+    );
+
+  ACE_Service_Config::process_directive (
+      TAO::Portable_Server::ace_svc_desc_Multiple_IdUniqueness_Policy
+    );
+
+  ACE_Service_Config::process_directive (
+      TAO::Portable_Server::ace_svc_desc_Unique_IdUniqueness_Policy
+    );
+
+  ACE_Service_Config::process_directive (
+      TAO::Portable_Server::ace_svc_desc_No_Implicit_Implicit_Activation_Policy
+    );
+
+  ACE_Service_Config::process_directive (
+      TAO::Portable_Server::ace_svc_desc_Implicit_Implicit_Activation_Policy
     );
 
   // Strategies

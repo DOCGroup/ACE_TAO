@@ -15,7 +15,7 @@ namespace TAO
 
     ::PortableServer::LifespanPolicyValue
     Transient_Lifespan_Policy::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-          ACE_THROW_SPEC ((CORBA::SystemException))
+      ACE_THROW_SPEC ((CORBA::SystemException))
     {
       return ::PortableServer::TRANSIENT;
     }

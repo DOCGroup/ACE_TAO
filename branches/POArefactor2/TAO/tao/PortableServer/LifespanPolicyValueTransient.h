@@ -36,8 +36,8 @@ namespace TAO
           ACE_THROW_SPEC ((CORBA::SystemException));
     };
 
-    ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, Transient_LifespanPolicy)
-    ACE_FACTORY_DECLARE (TAO_PortableServer, Transient_LifespanPolicy)
+    ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, Transient_Lifespan_Policy)
+    ACE_FACTORY_DECLARE (TAO_PortableServer, Transient_Lifespan_Policy)
   }
 }
 
