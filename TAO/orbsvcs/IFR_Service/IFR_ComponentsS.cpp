@@ -8980,7 +8980,7 @@ CORBA::Boolean POA_IR::ComponentDef::_is_a (
   
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/IR/ComponentDef:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_InterfaceDef:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/InterfaceDef:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Container:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Contained:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/IDLType:1.0")) ||
@@ -8997,7 +8997,7 @@ void* POA_IR::ComponentDef::_downcast (
 {
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/ComponentDef:1.0") == 0)
     return ACE_static_cast (POA_IR::ComponentDef_ptr, this);
-  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA_InterfaceDef:1.0") == 0)
+  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/InterfaceDef:1.0") == 0)
     return ACE_static_cast (POA_CORBA_InterfaceDef_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Container:1.0") == 0)
     return ACE_static_cast (POA_CORBA_Container_ptr, this);
@@ -10399,7 +10399,7 @@ CORBA::Boolean POA_IR::FactoryDef::_is_a (
   
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/IR/FactoryDef:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_OperationDef:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/OperationDef:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Contained:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/IRObject:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, base_id)))
@@ -10414,7 +10414,7 @@ void* POA_IR::FactoryDef::_downcast (
 {
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/FactoryDef:1.0") == 0)
     return ACE_static_cast (POA_IR::FactoryDef_ptr, this);
-  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA_OperationDef:1.0") == 0)
+  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/OperationDef:1.0") == 0)
     return ACE_static_cast (POA_CORBA_OperationDef_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Contained:1.0") == 0)
     return ACE_static_cast (POA_CORBA_Contained_ptr, this);
@@ -10893,7 +10893,7 @@ CORBA::Boolean POA_IR::FinderDef::_is_a (
   
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/IR/FinderDef:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_OperationDef:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/OperationDef:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Contained:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/IRObject:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, base_id)))
@@ -10908,7 +10908,7 @@ void* POA_IR::FinderDef::_downcast (
 {
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/FinderDef:1.0") == 0)
     return ACE_static_cast (POA_IR::FinderDef_ptr, this);
-  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA_OperationDef:1.0") == 0)
+  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/OperationDef:1.0") == 0)
     return ACE_static_cast (POA_CORBA_OperationDef_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Contained:1.0") == 0)
     return ACE_static_cast (POA_CORBA_Contained_ptr, this);
@@ -13705,7 +13705,7 @@ CORBA::Boolean POA_IR::HomeDef::_is_a (
   
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/IR/HomeDef:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_InterfaceDef:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/InterfaceDef:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Container:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Contained:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/IDLType:1.0")) ||
@@ -13722,7 +13722,7 @@ void* POA_IR::HomeDef::_downcast (
 {
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/HomeDef:1.0") == 0)
     return ACE_static_cast (POA_IR::HomeDef_ptr, this);
-  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA_InterfaceDef:1.0") == 0)
+  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/InterfaceDef:1.0") == 0)
     return ACE_static_cast (POA_CORBA_InterfaceDef_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Container:1.0") == 0)
     return ACE_static_cast (POA_CORBA_Container_ptr, this);

@@ -808,7 +808,7 @@ CORBA::UShort _TAO_CORBA_FixedDef_ThruPOA_Proxy_Impl::digits (
     return ACE_reinterpret_cast (
       POA_CORBA_FixedDef_ptr,
       servant_upcall.servant ()->_downcast (
-          "IDL:omg.org/CORBA_FixedDef:1.0"
+          "IDL:omg.org/CORBA/FixedDef:1.0"
         )
     )->digits (
         ACE_TRY_ENV
@@ -838,7 +838,7 @@ void _TAO_CORBA_FixedDef_ThruPOA_Proxy_Impl::digits (
     ACE_reinterpret_cast (
       POA_CORBA_FixedDef_ptr,
       servant_upcall.servant ()->_downcast (
-          "IDL:omg.org/CORBA_FixedDef:1.0"
+          "IDL:omg.org/CORBA/FixedDef:1.0"
         )
     )->digits (
         digits,
@@ -871,7 +871,7 @@ CORBA::Short _TAO_CORBA_FixedDef_ThruPOA_Proxy_Impl::scale (
     return ACE_reinterpret_cast (
       POA_CORBA_FixedDef_ptr,
       servant_upcall.servant ()->_downcast (
-          "IDL:omg.org/CORBA_FixedDef:1.0"
+          "IDL:omg.org/CORBA/FixedDef:1.0"
         )
     )->scale (
         ACE_TRY_ENV
@@ -901,7 +901,7 @@ void _TAO_CORBA_FixedDef_ThruPOA_Proxy_Impl::scale (
     ACE_reinterpret_cast (
       POA_CORBA_FixedDef_ptr,
       servant_upcall.servant ()->_downcast (
-          "IDL:omg.org/CORBA_FixedDef:1.0"
+          "IDL:omg.org/CORBA/FixedDef:1.0"
         )
     )->scale (
         scale,
@@ -1345,9 +1345,9 @@ CORBA::Boolean POA_CORBA_FixedDef::_is_a (
   ACE_CHECK_RETURN (0);
   
   if (
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_FixedDef:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_IDLType:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_IRObject:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/FixedDef:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/IDLType:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/IRObject:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, base_id)))
       return 1;
     else
@@ -1358,11 +1358,11 @@ void* POA_CORBA_FixedDef::_downcast (
     const char* logical_type_id
   )
 {
-  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA_FixedDef:1.0") == 0)
+  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/FixedDef:1.0") == 0)
     return ACE_static_cast (POA_CORBA_FixedDef_ptr, this);
-  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA_IDLType:1.0") == 0)
+  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/IDLType:1.0") == 0)
     return ACE_static_cast (POA_CORBA_IDLType_ptr, this);
-  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA_IRObject:1.0") == 0)
+  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/IRObject:1.0") == 0)
     return ACE_static_cast (POA_CORBA_IRObject_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
@@ -1376,7 +1376,7 @@ void POA_CORBA_FixedDef::_dispatch (TAO_ServerRequest &req, void *context, CORBA
 
 const char* POA_CORBA_FixedDef::_interface_repository_id (void) const
 {
-  return "IDL:omg.org/CORBA_FixedDef:1.0";
+  return "IDL:omg.org/CORBA/FixedDef:1.0";
 }
 
 CORBA_FixedDef*
@@ -2297,7 +2297,7 @@ CORBA::TypeCode_ptr _TAO_CORBA_ValueMemberDef_ThruPOA_Proxy_Impl::type (
     return ACE_reinterpret_cast (
       POA_CORBA_ValueMemberDef_ptr,
       servant_upcall.servant ()->_downcast (
-          "IDL:omg.org/CORBA_ValueMemberDef:1.0"
+          "IDL:omg.org/CORBA/ValueMemberDef:1.0"
         )
     )->type (
         ACE_TRY_ENV
@@ -2328,7 +2328,7 @@ CORBA_IDLType_ptr _TAO_CORBA_ValueMemberDef_ThruPOA_Proxy_Impl::type_def (
     return ACE_reinterpret_cast (
       POA_CORBA_ValueMemberDef_ptr,
       servant_upcall.servant ()->_downcast (
-          "IDL:omg.org/CORBA_ValueMemberDef:1.0"
+          "IDL:omg.org/CORBA/ValueMemberDef:1.0"
         )
     )->type_def (
         ACE_TRY_ENV
@@ -2358,7 +2358,7 @@ void _TAO_CORBA_ValueMemberDef_ThruPOA_Proxy_Impl::type_def (
     ACE_reinterpret_cast (
       POA_CORBA_ValueMemberDef_ptr,
       servant_upcall.servant ()->_downcast (
-          "IDL:omg.org/CORBA_ValueMemberDef:1.0"
+          "IDL:omg.org/CORBA/ValueMemberDef:1.0"
         )
     )->type_def (
         type_def,
@@ -2391,7 +2391,7 @@ CORBA::Visibility _TAO_CORBA_ValueMemberDef_ThruPOA_Proxy_Impl::access (
     return ACE_reinterpret_cast (
       POA_CORBA_ValueMemberDef_ptr,
       servant_upcall.servant ()->_downcast (
-          "IDL:omg.org/CORBA_ValueMemberDef:1.0"
+          "IDL:omg.org/CORBA/ValueMemberDef:1.0"
         )
     )->access (
         ACE_TRY_ENV
@@ -2421,7 +2421,7 @@ void _TAO_CORBA_ValueMemberDef_ThruPOA_Proxy_Impl::access (
     ACE_reinterpret_cast (
       POA_CORBA_ValueMemberDef_ptr,
       servant_upcall.servant ()->_downcast (
-          "IDL:omg.org/CORBA_ValueMemberDef:1.0"
+          "IDL:omg.org/CORBA/ValueMemberDef:1.0"
         )
     )->access (
         access,
@@ -2946,9 +2946,9 @@ CORBA::Boolean POA_CORBA_ValueMemberDef::_is_a (
   ACE_CHECK_RETURN (0);
   
   if (
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_ValueMemberDef:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_Contained:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_IRObject:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/ValueMemberDef:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Contained:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/IRObject:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, base_id)))
       return 1;
     else
@@ -2959,11 +2959,11 @@ void* POA_CORBA_ValueMemberDef::_downcast (
     const char* logical_type_id
   )
 {
-  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA_ValueMemberDef:1.0") == 0)
+  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/ValueMemberDef:1.0") == 0)
     return ACE_static_cast (POA_CORBA_ValueMemberDef_ptr, this);
-  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA_Contained:1.0") == 0)
+  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Contained:1.0") == 0)
     return ACE_static_cast (POA_CORBA_Contained_ptr, this);
-  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA_IRObject:1.0") == 0)
+  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/IRObject:1.0") == 0)
     return ACE_static_cast (POA_CORBA_IRObject_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
@@ -2977,7 +2977,7 @@ void POA_CORBA_ValueMemberDef::_dispatch (TAO_ServerRequest &req, void *context,
 
 const char* POA_CORBA_ValueMemberDef::_interface_repository_id (void) const
 {
-  return "IDL:omg.org/CORBA_ValueMemberDef:1.0";
+  return "IDL:omg.org/CORBA/ValueMemberDef:1.0";
 }
 
 CORBA_ValueMemberDef*
@@ -5841,7 +5841,7 @@ CORBA_InterfaceDefSeq * _TAO_CORBA_ValueDef_ThruPOA_Proxy_Impl::supported_interf
     return ACE_reinterpret_cast (
       POA_CORBA_ValueDef_ptr,
       servant_upcall.servant ()->_downcast (
-          "IDL:omg.org/CORBA_ValueDef:1.0"
+          "IDL:omg.org/CORBA/ValueDef:1.0"
         )
     )->supported_interfaces (
         ACE_TRY_ENV
@@ -5871,7 +5871,7 @@ void _TAO_CORBA_ValueDef_ThruPOA_Proxy_Impl::supported_interfaces (
     ACE_reinterpret_cast (
       POA_CORBA_ValueDef_ptr,
       servant_upcall.servant ()->_downcast (
-          "IDL:omg.org/CORBA_ValueDef:1.0"
+          "IDL:omg.org/CORBA/ValueDef:1.0"
         )
     )->supported_interfaces (
         supported_interfaces,
@@ -5904,7 +5904,7 @@ CORBA_InitializerSeq * _TAO_CORBA_ValueDef_ThruPOA_Proxy_Impl::initializers (
     return ACE_reinterpret_cast (
       POA_CORBA_ValueDef_ptr,
       servant_upcall.servant ()->_downcast (
-          "IDL:omg.org/CORBA_ValueDef:1.0"
+          "IDL:omg.org/CORBA/ValueDef:1.0"
         )
     )->initializers (
         ACE_TRY_ENV
@@ -5934,7 +5934,7 @@ void _TAO_CORBA_ValueDef_ThruPOA_Proxy_Impl::initializers (
     ACE_reinterpret_cast (
       POA_CORBA_ValueDef_ptr,
       servant_upcall.servant ()->_downcast (
-          "IDL:omg.org/CORBA_ValueDef:1.0"
+          "IDL:omg.org/CORBA/ValueDef:1.0"
         )
     )->initializers (
         initializers,
@@ -5967,7 +5967,7 @@ CORBA_ValueDef_ptr _TAO_CORBA_ValueDef_ThruPOA_Proxy_Impl::base_value (
     return ACE_reinterpret_cast (
       POA_CORBA_ValueDef_ptr,
       servant_upcall.servant ()->_downcast (
-          "IDL:omg.org/CORBA_ValueDef:1.0"
+          "IDL:omg.org/CORBA/ValueDef:1.0"
         )
     )->base_value (
         ACE_TRY_ENV
@@ -5997,7 +5997,7 @@ void _TAO_CORBA_ValueDef_ThruPOA_Proxy_Impl::base_value (
     ACE_reinterpret_cast (
       POA_CORBA_ValueDef_ptr,
       servant_upcall.servant ()->_downcast (
-          "IDL:omg.org/CORBA_ValueDef:1.0"
+          "IDL:omg.org/CORBA/ValueDef:1.0"
         )
     )->base_value (
         base_value,
@@ -6030,7 +6030,7 @@ CORBA_ValueDefSeq * _TAO_CORBA_ValueDef_ThruPOA_Proxy_Impl::abstract_base_values
     return ACE_reinterpret_cast (
       POA_CORBA_ValueDef_ptr,
       servant_upcall.servant ()->_downcast (
-          "IDL:omg.org/CORBA_ValueDef:1.0"
+          "IDL:omg.org/CORBA/ValueDef:1.0"
         )
     )->abstract_base_values (
         ACE_TRY_ENV
@@ -6060,7 +6060,7 @@ void _TAO_CORBA_ValueDef_ThruPOA_Proxy_Impl::abstract_base_values (
     ACE_reinterpret_cast (
       POA_CORBA_ValueDef_ptr,
       servant_upcall.servant ()->_downcast (
-          "IDL:omg.org/CORBA_ValueDef:1.0"
+          "IDL:omg.org/CORBA/ValueDef:1.0"
         )
     )->abstract_base_values (
         abstract_base_values,
@@ -6093,7 +6093,7 @@ CORBA::Boolean _TAO_CORBA_ValueDef_ThruPOA_Proxy_Impl::is_abstract (
     return ACE_reinterpret_cast (
       POA_CORBA_ValueDef_ptr,
       servant_upcall.servant ()->_downcast (
-          "IDL:omg.org/CORBA_ValueDef:1.0"
+          "IDL:omg.org/CORBA/ValueDef:1.0"
         )
     )->is_abstract (
         ACE_TRY_ENV
@@ -6123,7 +6123,7 @@ void _TAO_CORBA_ValueDef_ThruPOA_Proxy_Impl::is_abstract (
     ACE_reinterpret_cast (
       POA_CORBA_ValueDef_ptr,
       servant_upcall.servant ()->_downcast (
-          "IDL:omg.org/CORBA_ValueDef:1.0"
+          "IDL:omg.org/CORBA/ValueDef:1.0"
         )
     )->is_abstract (
         is_abstract,
@@ -6156,7 +6156,7 @@ CORBA::Boolean _TAO_CORBA_ValueDef_ThruPOA_Proxy_Impl::is_custom (
     return ACE_reinterpret_cast (
       POA_CORBA_ValueDef_ptr,
       servant_upcall.servant ()->_downcast (
-          "IDL:omg.org/CORBA_ValueDef:1.0"
+          "IDL:omg.org/CORBA/ValueDef:1.0"
         )
     )->is_custom (
         ACE_TRY_ENV
@@ -6186,7 +6186,7 @@ void _TAO_CORBA_ValueDef_ThruPOA_Proxy_Impl::is_custom (
     ACE_reinterpret_cast (
       POA_CORBA_ValueDef_ptr,
       servant_upcall.servant ()->_downcast (
-          "IDL:omg.org/CORBA_ValueDef:1.0"
+          "IDL:omg.org/CORBA/ValueDef:1.0"
         )
     )->is_custom (
         is_custom,
@@ -6219,7 +6219,7 @@ CORBA::Boolean _TAO_CORBA_ValueDef_ThruPOA_Proxy_Impl::is_truncatable (
     return ACE_reinterpret_cast (
       POA_CORBA_ValueDef_ptr,
       servant_upcall.servant ()->_downcast (
-          "IDL:omg.org/CORBA_ValueDef:1.0"
+          "IDL:omg.org/CORBA/ValueDef:1.0"
         )
     )->is_truncatable (
         ACE_TRY_ENV
@@ -6249,7 +6249,7 @@ void _TAO_CORBA_ValueDef_ThruPOA_Proxy_Impl::is_truncatable (
     ACE_reinterpret_cast (
       POA_CORBA_ValueDef_ptr,
       servant_upcall.servant ()->_downcast (
-          "IDL:omg.org/CORBA_ValueDef:1.0"
+          "IDL:omg.org/CORBA/ValueDef:1.0"
         )
     )->is_truncatable (
         is_truncatable,
@@ -6283,7 +6283,7 @@ CORBA::Boolean _TAO_CORBA_ValueDef_ThruPOA_Proxy_Impl::is_a (
     return ACE_reinterpret_cast (
       POA_CORBA_ValueDef_ptr,
       servant_upcall.servant ()->_downcast (
-          "IDL:omg.org/CORBA_ValueDef:1.0"
+          "IDL:omg.org/CORBA/ValueDef:1.0"
         )
     )->is_a (
         id,
@@ -6315,7 +6315,7 @@ CORBA_ValueDef::FullValueDescription * _TAO_CORBA_ValueDef_ThruPOA_Proxy_Impl::d
     return ACE_reinterpret_cast (
       POA_CORBA_ValueDef_ptr,
       servant_upcall.servant ()->_downcast (
-          "IDL:omg.org/CORBA_ValueDef:1.0"
+          "IDL:omg.org/CORBA/ValueDef:1.0"
         )
     )->describe_value (
         ACE_TRY_ENV
@@ -6351,7 +6351,7 @@ CORBA_ValueMemberDef_ptr _TAO_CORBA_ValueDef_ThruPOA_Proxy_Impl::create_value_me
     return ACE_reinterpret_cast (
       POA_CORBA_ValueDef_ptr,
       servant_upcall.servant ()->_downcast (
-          "IDL:omg.org/CORBA_ValueDef:1.0"
+          "IDL:omg.org/CORBA/ValueDef:1.0"
         )
     )->create_value_member (
         id,
@@ -6392,7 +6392,7 @@ CORBA_AttributeDef_ptr _TAO_CORBA_ValueDef_ThruPOA_Proxy_Impl::create_attribute 
     return ACE_reinterpret_cast (
       POA_CORBA_ValueDef_ptr,
       servant_upcall.servant ()->_downcast (
-          "IDL:omg.org/CORBA_ValueDef:1.0"
+          "IDL:omg.org/CORBA/ValueDef:1.0"
         )
     )->create_attribute (
         id,
@@ -6436,7 +6436,7 @@ CORBA_OperationDef_ptr _TAO_CORBA_ValueDef_ThruPOA_Proxy_Impl::create_operation 
     return ACE_reinterpret_cast (
       POA_CORBA_ValueDef_ptr,
       servant_upcall.servant ()->_downcast (
-          "IDL:omg.org/CORBA_ValueDef:1.0"
+          "IDL:omg.org/CORBA/ValueDef:1.0"
         )
     )->create_operation (
         id,
@@ -8177,11 +8177,11 @@ CORBA::Boolean POA_CORBA_ValueDef::_is_a (
   ACE_CHECK_RETURN (0);
   
   if (
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_ValueDef:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_Container:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_Contained:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_IDLType:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_IRObject:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/ValueDef:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Container:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Contained:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/IDLType:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/IRObject:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, base_id)))
       return 1;
     else
@@ -8192,15 +8192,15 @@ void* POA_CORBA_ValueDef::_downcast (
     const char* logical_type_id
   )
 {
-  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA_ValueDef:1.0") == 0)
+  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/ValueDef:1.0") == 0)
     return ACE_static_cast (POA_CORBA_ValueDef_ptr, this);
-  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA_Container:1.0") == 0)
+  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Container:1.0") == 0)
     return ACE_static_cast (POA_CORBA_Container_ptr, this);
-  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA_Contained:1.0") == 0)
+  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Contained:1.0") == 0)
     return ACE_static_cast (POA_CORBA_Contained_ptr, this);
-  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA_IDLType:1.0") == 0)
+  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/IDLType:1.0") == 0)
     return ACE_static_cast (POA_CORBA_IDLType_ptr, this);
-  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA_IRObject:1.0") == 0)
+  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/IRObject:1.0") == 0)
     return ACE_static_cast (POA_CORBA_IRObject_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
@@ -8214,7 +8214,7 @@ void POA_CORBA_ValueDef::_dispatch (TAO_ServerRequest &req, void *context, CORBA
 
 const char* POA_CORBA_ValueDef::_interface_repository_id (void) const
 {
-  return "IDL:omg.org/CORBA_ValueDef:1.0";
+  return "IDL:omg.org/CORBA/ValueDef:1.0";
 }
 
 CORBA_ValueDef*
@@ -8765,7 +8765,7 @@ CORBA_IDLType_ptr _TAO_CORBA_ValueBoxDef_ThruPOA_Proxy_Impl::original_type_def (
     return ACE_reinterpret_cast (
       POA_CORBA_ValueBoxDef_ptr,
       servant_upcall.servant ()->_downcast (
-          "IDL:omg.org/CORBA_ValueBoxDef:1.0"
+          "IDL:omg.org/CORBA/ValueBoxDef:1.0"
         )
     )->original_type_def (
         ACE_TRY_ENV
@@ -8795,7 +8795,7 @@ void _TAO_CORBA_ValueBoxDef_ThruPOA_Proxy_Impl::original_type_def (
     ACE_reinterpret_cast (
       POA_CORBA_ValueBoxDef_ptr,
       servant_upcall.servant ()->_downcast (
-          "IDL:omg.org/CORBA_ValueBoxDef:1.0"
+          "IDL:omg.org/CORBA/ValueBoxDef:1.0"
         )
     )->original_type_def (
         original_type_def,
@@ -9084,11 +9084,11 @@ CORBA::Boolean POA_CORBA_ValueBoxDef::_is_a (
   ACE_CHECK_RETURN (0);
   
   if (
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_ValueBoxDef:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_TypedefDef:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_Contained:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_IDLType:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_IRObject:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/ValueBoxDef:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/TypedefDef:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Contained:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/IDLType:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/IRObject:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, base_id)))
       return 1;
     else
@@ -9099,15 +9099,15 @@ void* POA_CORBA_ValueBoxDef::_downcast (
     const char* logical_type_id
   )
 {
-  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA_ValueBoxDef:1.0") == 0)
+  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/ValueBoxDef:1.0") == 0)
     return ACE_static_cast (POA_CORBA_ValueBoxDef_ptr, this);
-  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA_TypedefDef:1.0") == 0)
+  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/TypedefDef:1.0") == 0)
     return ACE_static_cast (POA_CORBA_TypedefDef_ptr, this);
-  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA_Contained:1.0") == 0)
+  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Contained:1.0") == 0)
     return ACE_static_cast (POA_CORBA_Contained_ptr, this);
-  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA_IDLType:1.0") == 0)
+  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/IDLType:1.0") == 0)
     return ACE_static_cast (POA_CORBA_IDLType_ptr, this);
-  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA_IRObject:1.0") == 0)
+  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/IRObject:1.0") == 0)
     return ACE_static_cast (POA_CORBA_IRObject_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
@@ -9121,7 +9121,7 @@ void POA_CORBA_ValueBoxDef::_dispatch (TAO_ServerRequest &req, void *context, CO
 
 const char* POA_CORBA_ValueBoxDef::_interface_repository_id (void) const
 {
-  return "IDL:omg.org/CORBA_ValueBoxDef:1.0";
+  return "IDL:omg.org/CORBA/ValueBoxDef:1.0";
 }
 
 CORBA_ValueBoxDef*

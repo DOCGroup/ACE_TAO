@@ -1376,108 +1376,108 @@ IFR_Servant_Factory::create_objref (CORBA::DefinitionKind def_kind,
     PortableServer::string_to_ObjectId (obj_id);
 
   // Can plug in prefix tricks here.
-  ACE_TString repo_id ("IDL:omg.org/IR/");
+  ACE_TString repo_id ("IDL:omg.org/");
 
   switch (def_kind)
   {
     case CORBA::dk_Attribute:
-      repo_id += "AttributeDef:";
+      repo_id += "CORBA/AttributeDef:";
       break;
     case CORBA::dk_Constant:
-      repo_id += "ConstantDef:";
+      repo_id += "CORBA/ConstantDef:";
       break;
     case CORBA::dk_Exception:
-      repo_id += "ExceptionDef:";
+      repo_id += "CORBA/ExceptionDef:";
       break;
     case CORBA::dk_Interface:
-      repo_id += "InterfaceDef:";
+      repo_id += "CORBA/InterfaceDef:";
       break;
     case CORBA::dk_AbstractInterface:
-      repo_id += "AbstractInterfaceDef:";
+      repo_id += "CORBA/AbstractInterfaceDef:";
       break;
     case CORBA::dk_LocalInterface:
-      repo_id += "LocalInterfaceDef:";
+      repo_id += "CORBA/LocalInterfaceDef:";
       break;
     case CORBA::dk_Module:
-      repo_id += "ModuleDef:";
+      repo_id += "CORBA/ModuleDef:";
       break;
     case CORBA::dk_Operation:
-      repo_id += "OperationDef:";
+      repo_id += "CORBA/OperationDef:";
       break;
     case CORBA::dk_Typedef:
-      repo_id += "TypedefDef:";
+      repo_id += "CORBA/TypedefDef:";
       break;
     case CORBA::dk_Alias:
-      repo_id += "AliasDef:";
+      repo_id += "CORBA/AliasDef:";
       break;
     case CORBA::dk_Struct:
-      repo_id += "StructDef:";
+      repo_id += "CORBA/StructDef:";
       break;
     case CORBA::dk_Union:
-      repo_id += "UnionDef:";
+      repo_id += "CORBA/UnionDef:";
       break;
     case CORBA::dk_Enum:
-      repo_id += "EnumDef:";
+      repo_id += "CORBA/EnumDef:";
       break;
     case CORBA::dk_Primitive:
-      repo_id += "PrimitiveDef:";
+      repo_id += "CORBA/PrimitiveDef:";
       break;
     case CORBA::dk_String:
-      repo_id += "StringDef:";
+      repo_id += "CORBA/StringDef:";
       break;
     case CORBA::dk_Sequence:
-      repo_id += "SequenceDef:";
+      repo_id += "CORBA/SequenceDef:";
       break;
     case CORBA::dk_Array:
-      repo_id += "ArrayDef:";
+      repo_id += "CORBA/ArrayDef:";
       break;
     case CORBA::dk_Wstring:
-      repo_id += "WstringDef:";
+      repo_id += "CORBA/WstringDef:";
       break;
     case CORBA::dk_Fixed:
-      repo_id += "FixedDef:";
+      repo_id += "CORBA/FixedDef:";
       break;
     case CORBA::dk_Value:
-      repo_id += "ValueDef:";
+      repo_id += "CORBA/ValueDef:";
       break;
     case CORBA::dk_ValueBox:
-      repo_id += "ValueBoxDef:";
+      repo_id += "CORBA/ValueBoxDef:";
       break;
     case CORBA::dk_ValueMember:
-      repo_id += "ValueMemberDef:";
+      repo_id += "CORBA/ValueMemberDef:";
       break;
     case CORBA::dk_Native:
-      repo_id += "NativeDef:";
+      repo_id += "CORBA/NativeDef:";
       break;
     case CORBA::dk_Component:
-      repo_id += "ComponentDef:";
+      repo_id += "IR/ComponentDef:";
       break;
     case CORBA::dk_Home:
       repo_id += "HomeDef:";
       break;
     case CORBA::dk_Factory:
-      repo_id += "FactoryDef:";
+      repo_id += "IR/FactoryDef:";
       break;
     case CORBA::dk_Finder:
-      repo_id += "FinderDef:";
+      repo_id += "IR/FinderDef:";
       break;
     case CORBA::dk_PrimaryKey:
-      repo_id += "PrimaryKeyDef:";
+      repo_id += "IR/PrimaryKeyDef:";
       break;
     case CORBA::dk_Emits:
-      repo_id += "EmitsDef:";
+      repo_id += "IR/EmitsDef:";
       break;
     case CORBA::dk_Publishes:
-      repo_id += "PublishesDef:";
+      repo_id += "IR/PublishesDef:";
       break;
     case CORBA::dk_Consumes:
-      repo_id += "ConsumesDef:";
+      repo_id += "IR/ConsumesDef:";
       break;
     case CORBA::dk_Provides:
-      repo_id += "ProvidesDef:";
+      repo_id += "IR/ProvidesDef:";
       break;
     case CORBA::dk_Uses:
-      repo_id += "UsesDef:";
+      repo_id += "IR/UsesDef:";
       break;
     default:
       ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), 0);
