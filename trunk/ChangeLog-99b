@@ -13,6 +13,10 @@ Thu Mar 04 07:00:20 1999  David L. Levine  <levine@cs.wustl.edu>
         * ACE-INSTALL.html: corrected name of ace/config-linux-lxpthreads.h.
           Thanks to Barry Hoggard <hoggard@cfx.com> for reporting this.
 
+        * tests/Makefile,Makefile.DLL: instead of always running a
+          recursive make to build libDLL_Test.so, only do that if it
+          needs to be built.  And, added dependencies to Makefile.DLL.
+
 Wed Mar  3 22:30:02 1999  James CE Johnson  <jcej@lads.com>
 
         * ace/IOStream_T.{cpp|h|i}: Those last changes break (at least)
