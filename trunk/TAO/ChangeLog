@@ -1,3 +1,12 @@
+Tue Jan 28 14:27:01 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs\orbsvcs\Notify\Properties.cpp:
+	  In case no conf. file is specified, the EC will default to reactive concurrency.
+ 	  This fixes the problem of the Notify crashing without any
+	  conf. file. Thanks to Dennis Sporcic <dennis@hsa.com.au> and
+	  Frederic Langlet <Frederic.Langlet@alcatel.com> for reporting
+	  this problem.
+		
 Mon Jan 27 23:01:43 2003  Frank Hunleth  <frank@hunleth.com>
 
 	* orbsvcs\orbsvcs\PortableGroup\UIPMC_Transport.cpp:  Fixed code
