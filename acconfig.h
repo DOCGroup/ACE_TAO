@@ -374,9 +374,6 @@
 /* OS/Compiler's header files are not consistent with readv() definition. */
 #undef ACE_HAS_BROKEN_READV
 
-/* Compiler can't handle the static ACE_Addr::sap_any construct. */
-#undef ACE_HAS_BROKEN_SAP_ANY
-
 /* OS/compiler omits the const from the sendmsg() prototype. */
 #undef ACE_HAS_BROKEN_SENDMSG
 
