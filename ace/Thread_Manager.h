@@ -147,7 +147,7 @@ protected:
 
 #endif /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
 
-class ACE_Thread_Descriptor_Base
+class ACE_Thread_Descriptor_Base : public ACE_OS_Thread_Descriptor
 {
   // = TITLE
   //     Basic information for thread descriptors.  These information
@@ -197,12 +197,6 @@ protected:
   ACE_Task_Base *task_;
   // Pointer to an <ACE_Task_Base> or NULL if there's no
   // <ACE_Task_Base>.
-
- long flags_;
-  // Keeps track of whether this thread was created "detached" or not.
-  // If a thread is *not* created detached then if someone calls
-  // <ACE_Thread_Manager::wait>, we need to join with that thread (and
-  // close down the handle).
 
   ACE_Thread_Descriptor_Base *next_;
   ACE_Thread_Descriptor_Base *prev_;
@@ -266,9 +260,6 @@ public:
 
   ~ACE_Thread_Descriptor (void);
   // Do nothing destructor to keep some compilers happy
-
-  long flags (void) const;
-  // Get the thread creation flags.
 
   void acquire_release (void);
   // Do nothing but to acquire the thread descriptor's lock and

@@ -92,7 +92,8 @@ ACE_At_Thread_Exit_Func::apply()
 
 ACE_INLINE
 ACE_Thread_Descriptor_Base::ACE_Thread_Descriptor_Base (void)
-  : thr_id_ (ACE_OS::NULL_thread),
+  : ACE_OS_Thread_Descriptor (),
+    thr_id_ (ACE_OS::NULL_thread),
     thr_handle_ (ACE_OS::NULL_hthread),
     grp_id_ (0),
     thr_state_ (ACE_Thread_Manager::ACE_THR_IDLE),
@@ -159,14 +160,6 @@ ACE_Thread_Descriptor::self (ACE_hthread_t &handle)
   handle = this->thr_handle_;
 }
 
-// Get the thread creation
-ACE_INLINE long
-ACE_Thread_Descriptor::flags (void) const
-{
-  ACE_TRACE ("ACE_Thread_Descriptor::flag");
-  return flags_;
-}
-
 #if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
 ACE_INLINE void
 ACE_Thread_Descriptor::log_msg_cleanup(ACE_Log_Msg* log_msg)
@@ -188,7 +181,7 @@ ACE_Thread_Descriptor::set_next (ACE_Thread_Descriptor *td)
 ACE_INLINE ACE_Thread_Descriptor *
 ACE_Thread_Descriptor::get_next (void)
 {
-  ACE_TRACE ("ACE_Thread_Descriptor::flag");
+  ACE_TRACE ("ACE_Thread_Descriptor::get_next");
   return ACE_static_cast (ACE_Thread_Descriptor *, this->next_);
 }
 
