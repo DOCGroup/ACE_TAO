@@ -8,6 +8,14 @@
 #include <string>
 #include <XSCRT/Elements.hpp>
 
+/**
+ * @@ HACK: VC7
+ *
+ * Disabled the warning about using this in the base member initialization section.
+ * Our use in this file is fine.
+ */
+#pragma warning ( disable: 4355 )
+
 namespace XMLSchema
 {
   typedef XSCRT::FundamentalType<signed char> byte;
@@ -460,7 +468,8 @@ namespace XMLSchema
     }
 
     IDREF (IDREF const& x)
-        : id_ (x.id_), id_provider_ (id_)
+      : XMLSchema::IDREF_Base (),
+        id_ (x.id_), id_provider_ (id_)
     {
     }
 
