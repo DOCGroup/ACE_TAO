@@ -508,7 +508,7 @@ private:
   u_long priority_mask_;
   // Keeps track of all the per-thread <ACE_Log_Priority> values that
   // are currently enabled.  Default is for all logging priorities to
-  // be enabled.
+  // be _disabled_.
 
   // = The following fields are *not* kept in thread-specific storage.
 
