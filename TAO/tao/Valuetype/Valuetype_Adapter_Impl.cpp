@@ -14,7 +14,7 @@ TAO_Valuetype_Adapter_Impl::~TAO_Valuetype_Adapter_Impl (void)
 {
 }
 
-CORBA::Object_ptr 
+CORBA::Object_ptr
 TAO_Valuetype_Adapter_Impl::abstractbase_to_object (
     CORBA::AbstractBase_ptr p
   )
@@ -28,30 +28,33 @@ TAO_Valuetype_Adapter_Impl::type_info_single (void) const
   return TAO_OBV_GIOP_Flags::Type_info_single;
 }
 
-TAO_ValueFactory_Map *
-TAO_Valuetype_Adapter_Impl::valuefactory_map_instance (void)
-{
-  return TAO_VALUEFACTORY_MAP::instance ();
-}
-    
-int 
-TAO_Valuetype_Adapter_Impl::vf_map_rebind (TAO_ValueFactory_Map *map,
-                                           const char *repo_id,
+int
+TAO_Valuetype_Adapter_Impl::vf_map_rebind (const char *repo_id,
                                            CORBA::ValueFactory &factory)
 {
-  return map->rebind (repo_id,
-                      factory);
+  return TAO_VALUEFACTORY_MAP::instance ()->rebind (repo_id,
+                                                    factory);
 }
 
-int 
-TAO_Valuetype_Adapter_Impl::vf_map_find (TAO_ValueFactory_Map *map,
-                                         const char *repo_id,
-                                         CORBA::ValueFactory &factory)
+int
+TAO_Valuetype_Adapter_Impl::vf_map_unbind (const char *repo_id)
+
 {
-  return map->find (repo_id,
-                    factory);
+  CORBA::ValueFactory fac;
+  return TAO_VALUEFACTORY_MAP::instance ()->unbind (repo_id,
+                                                    fac);
 }
-    
+
+CORBA::ValueFactory
+TAO_Valuetype_Adapter_Impl::vf_map_find (const char *repo_id)
+{
+  CORBA::ValueFactory factory = 0;
+  (void) TAO_VALUEFACTORY_MAP::instance ()->find (repo_id,
+                                                  factory);
+
+  return factory;
+}
+
 // *********************************************************************
 
 // Initialization and registration of dynamic service object.
@@ -63,7 +66,7 @@ TAO_Valuetype_Adapter_Impl::Initializer (void)
       "Concrete_Valuetype_Adapter"
     );
 
-  return 
+  return
     ACE_Service_Config::process_directive (
         ace_svc_desc_TAO_Valuetype_Adapter_Impl
       );
@@ -79,4 +82,3 @@ ACE_STATIC_SVC_DEFINE (
   )
 
 ACE_FACTORY_DEFINE (TAO_Valuetype, TAO_Valuetype_Adapter_Impl)
-
