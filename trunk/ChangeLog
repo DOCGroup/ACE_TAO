@@ -1,3 +1,15 @@
+Wed Jan 29 08:30:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Vector_T.cpp:
+          Fixed bug in resize() method, of the original vector, the last
+          item was lost during resize(). Thanks to Denis Parnaland
+          <denis.parnaland@tde.alstom.com> for reporting this.
+
+        * tests/Vector_Test.cpp:
+          Extended this test to test the resize() method of ACE_Vector.
+
+        * THANKS: Added Denis Parnaland.
+
 Tue Jan 28 18:46:41 2003  Steve Huston  <shuston@riverace.com>
 
         * ACEXML/parser/parser/Parser.cpp (parse_element): When converting
