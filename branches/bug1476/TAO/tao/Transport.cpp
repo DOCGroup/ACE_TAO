@@ -2110,6 +2110,12 @@ TAO_Transport::remove_reference (void)
   return this->event_handler_i ()->remove_reference ();
 }
 
+TAO_OutputCDR &
+TAO_Transport::out_stream (void)
+{
+  return this->messaging_object ()->out_stream ();
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class ACE_Reverse_Lock<ACE_Lock>;

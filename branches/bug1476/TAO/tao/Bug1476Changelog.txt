@@ -1,3 +1,17 @@
+Tue Jul 27 12:22:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Transport.{h,cpp}:
+          Added out_stream() which returns the out_stream from the
+          messaging_object, this way the invocation classes don't need to use
+          messaging_object anymore, just get the stream from the transport
+
+        * tao/Synch_Invocation.cpp:
+        * tao/Messaging/Asynch_Invocation.cpp:
+        * tao/LocateRequest_Invocation.cpp:
+          Instead of getting the out_stream from the messaging_object which is
+          retrieved from the transport, get it from the transport. This way we
+          don't have to include tao/Pluggable_Messaging.h
+
 Tue Jul 27 08:37:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport_Connector.{h,cpp}:

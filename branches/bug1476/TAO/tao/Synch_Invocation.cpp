@@ -8,7 +8,6 @@
 #include "Stub.h"
 #include "Bind_Dispatcher_Guard.h"
 #include "operation_details.h"
-#include "Pluggable_Messaging.h"
 #include "Wait_Strategy.h"
 #include "debug.h"
 #include "ORB_Constants.h"
@@ -88,7 +87,7 @@ namespace TAO
 #endif /*TAO_HAS_INTERCEPTORS */
 
     TAO_OutputCDR &cdr =
-      this->resolver_.transport ()->messaging_object ()->out_stream ();
+      this->resolver_.transport ()->out_stream ();
 
     // We have started the interception flow. We need to call the
     // ending interception flow if things go wrong. The purpose of the
@@ -687,7 +686,7 @@ namespace TAO
       this->resolver_.transport ();
 
     TAO_OutputCDR &cdr =
-      transport->messaging_object ()->out_stream ();
+      transport->out_stream ();
 
     ACE_TRY
       {

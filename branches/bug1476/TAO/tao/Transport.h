@@ -453,6 +453,9 @@ public:
   /// Get the connection handler for this transport
   TAO_Connection_Handler * connection_handler (void);
 
+  /// Accessor for the output CDR stream
+  TAO_OutputCDR &out_stream (void);
+
 protected:
 
   virtual TAO_Connection_Handler * connection_handler_i (void) = 0;
