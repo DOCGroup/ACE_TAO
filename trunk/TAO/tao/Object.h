@@ -33,6 +33,9 @@ class TAO_Stub;
 class TAO_Export CORBA_Object
 {
 public:
+  virtual ~CORBA_Object (void);
+  // destructor
+
   static CORBA_Object_ptr _duplicate (CORBA_Object_ptr obj);
   // increment the ref count
 
@@ -98,6 +101,35 @@ public:
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
+#if defined (TAO_HAS_CORBA_MESSAGING)
+  CORBA::Policy_ptr _get_policy (
+      CORBA::PolicyType type,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::default_environment ()
+    );
+  CORBA::Policy_ptr _get_client_policy (
+      CORBA::PolicyType type,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::default_environment ()
+    );
+  CORBA::Object_ptr _set_policy_overrides (
+      const CORBA::PolicyList & policies,
+      CORBA::SetOverrideType set_add,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::default_environment ()
+    );
+  CORBA::PolicyList * _get_policy_overrides (
+      const CORBA::PolicyTypeSeq & types,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::default_environment ()
+    );
+  CORBA::Boolean _validate_connection (
+      CORBA::PolicyList_out inconsistent_policies,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::default_environment ()
+    );
+#endif /* TAO_HAS_CORBA_MESSAGING */
+
   virtual CORBA::ULong _hash (CORBA::ULong maximum,
                               CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // Return a (potentially non-unique) hash value for this object.
@@ -113,6 +145,18 @@ public:
   // private state.  Since that changes easily (when different ORB
   // protocols are in use) there is no default implementation.
 
+  virtual TAO_ObjectKey *_key (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+  // Return the object key as an out parameter.  Caller should release
+  // return value when finished with it.
+
+#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+  typedef CORBA_Object_ptr _ptr_type;
+  typedef CORBA_Object_var _var_type;
+#endif /* __GNUC__ */
+  // Useful for template programming.
+
+  // = TAO extensions
+
   // = Reference count managment.
   CORBA::ULong _incr_refcnt (void);
   // Increment the reference count.
@@ -125,25 +169,12 @@ public:
                 CORBA::Boolean collocated = 0);
   // constructor
 
-  virtual ~CORBA_Object (void);
-  // destructor
-
-  virtual TAO_ObjectKey *_key (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
-  // Return the object key as an out parameter.  Caller should release
-  // return value when finished with it.
-
   virtual TAO_Stub *_stubobj (void) const;
   // get the underlying stub object
 
   virtual void _use_locate_requests (CORBA::Boolean use_it);
   // the the object to use a locate request for the first call to
   // the object
-
-#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
-  typedef CORBA_Object_ptr _ptr_type;
-  typedef CORBA_Object_var _var_type;
-#endif /* __GNUC__ */
-  // Useful for template programming.
 
 protected:
   TAO_ServantBase *servant_;

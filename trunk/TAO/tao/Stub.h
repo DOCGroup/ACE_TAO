@@ -37,6 +37,7 @@
 
 class TAO_GIOP_Invocation;
 class TAO_ORB_Core;
+class TAO_Policy_Manager_Impl;
 
 // Descriptions of parameters.
 
@@ -256,6 +257,35 @@ public:
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
+#if defined (TAO_HAS_CORBA_MESSAGING)
+  CORBA::Policy_ptr get_policy (
+      CORBA::PolicyType type,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::default_environment ()
+    );
+  CORBA::Policy_ptr get_client_policy (
+      CORBA::PolicyType type,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::default_environment ()
+    );
+  TAO_Stub* set_policy_overrides (
+      const CORBA::PolicyList & policies,
+      CORBA::SetOverrideType set_add,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::default_environment ()
+    );
+  CORBA::PolicyList * get_policy_overrides (
+      const CORBA::PolicyTypeSeq & types,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::default_environment ()
+    );
+  CORBA::Boolean validate_connection (
+      CORBA::PolicyList_out inconsistent_policies,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::default_environment ()
+    );
+#endif /* TAO_HAS_CORBA_MESSAGING */
+
   CORBA::String_var type_id;
   // All objref representations carry around a type ID.
 
@@ -433,6 +463,12 @@ private:
 
   TAO_ORB_Core* orb_core_;
   // The ORB
+
+#if defined (TAO_HAS_CORBA_MESSAGING)
+  TAO_Policy_Manager_Impl* policies_;
+  // The policy overrides in this object, if nil then use the default
+  // policies.
+#endif /* TAO_HAS_CORBA_MESSAGING */
 
   // = Disallow copy constructor and assignment operator
   ACE_UNIMPLEMENTED_FUNC (TAO_Stub (const TAO_Stub &))

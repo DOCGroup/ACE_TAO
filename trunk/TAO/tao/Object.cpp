@@ -344,6 +344,61 @@ CORBA_Object::_get_implementation (CORBA::Environment &)
 
 // ****************************************************************
 
+#if defined (TAO_HAS_CORBA_MESSAGING)
+CORBA::Policy_ptr
+CORBA_Object::_get_policy (
+    CORBA::PolicyType type,
+    CORBA::Environment &ACE_TRY_ENV)
+{
+  return this->_stubobj ()->get_policy (type, ACE_TRY_ENV);
+}
+
+CORBA::Policy_ptr
+CORBA_Object::_get_client_policy (
+    CORBA::PolicyType type,
+    CORBA::Environment &ACE_TRY_ENV)
+{
+  return this->_stubobj ()->get_client_policy (type, ACE_TRY_ENV);
+}
+
+CORBA::Object_ptr
+CORBA_Object::_set_policy_overrides (
+    const CORBA::PolicyList & policies,
+    CORBA::SetOverrideType set_add,
+    CORBA::Environment &ACE_TRY_ENV)
+{
+  TAO_Stub* stub =
+    this->_stubobj ()->set_policy_overrides (policies,
+                                             set_add,
+                                             ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
+  return new CORBA_Object (stub,
+                           this->servant_,
+                           this->is_collocated_);
+}
+
+CORBA::PolicyList *
+CORBA_Object::_get_policy_overrides (
+    const CORBA::PolicyTypeSeq & types,
+    CORBA::Environment &ACE_TRY_ENV)
+{
+  return this->_stubobj ()->get_policy_overrides (types, ACE_TRY_ENV);
+}
+
+CORBA::Boolean
+CORBA_Object::_validate_connection (
+    CORBA::PolicyList_out inconsistent_policies,
+    CORBA::Environment &ACE_TRY_ENV)
+{
+  return this->_stubobj ()->validate_connection (inconsistent_policies,
+                                                 ACE_TRY_ENV);
+}
+
+#endif /* TAO_HAS_CORBA_MESSAGING */
+
+// ****************************************************************
+
 CORBA::Boolean
 operator<< (TAO_OutputCDR& cdr, const CORBA_Object* x)
 {

@@ -356,11 +356,11 @@ public:
   // one, otherwise, return 0.  Each type of ORB, e. g., IIOP ORB,
   // must implement this and determine what is a collocated object
   // based on information provided in the TAO_Stub.
-  
+
   virtual int _tao_add_to_IOR_table (ACE_CString &object_id,
                                      CORBA::Object_ptr obj);
   // Add a mapping ObjectID->IOR to the table.
-  
+
   virtual int _tao_find_in_IOR_table (ACE_CString &object_id,
                                       CORBA::Object_ptr &obj);
   // Find the given ObjectID in the table.
@@ -369,13 +369,13 @@ public:
                                      TAO_POA_Manager *poa_manager = 0,
                                      const TAO_POA_Policies *policies = 0);
   // Resolve the POA.
-  
+
   TAO_Stub *create_stub_object (const TAO_ObjectKey &key,
 				const char *type_id,
 				CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // Makes sure that the ORB is open and then creates an IIOP object
   // based on the endpoint.
-  
+
   CORBA_Object_ptr key_to_object (const TAO_ObjectKey &key,
                                   const char *type_id,
                                   CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
@@ -446,6 +446,11 @@ protected:
 
   CORBA_Object_ptr resolve_poa_current (void);
   // Resolve the POA current.
+
+  CORBA_Object_ptr resolve_policy_manager (CORBA::Environment&);
+  // Resolve the Policy Manager for this ORB.
+  CORBA_Object_ptr resolve_policy_current (CORBA::Environment&);
+  // Resolve the Policy Current for this thread.
 
   int run (ACE_Time_Value *tv,
            int break_on_timeouts);

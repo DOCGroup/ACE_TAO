@@ -19,6 +19,7 @@
 #include "tao/Invocation.h"
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
+#include "ace/Auto_Ptr.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Stub.i"
@@ -72,7 +73,8 @@ TAO_Stub::TAO_Stub (char *repository_id,
     refcount_ (1),
     use_locate_request_ (0),
     first_locate_request_ (0),
-    orb_core_ (orb_core)
+    orb_core_ (orb_core),
+    policies_ (0)
 {
   if (this->orb_core_ == 0)
     {
@@ -831,3 +833,134 @@ TAO_Stub::put_params (TAO_GIOP_Invocation &call,
 }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
+
+// ****************************************************************
+
+#if defined (TAO_HAS_CORBA_MESSAGING)
+CORBA::Policy_ptr
+TAO_Stub::get_policy (
+    CORBA::PolicyType type,
+    CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
+                    this->refcount_lock_,
+                    CORBA::Policy::_nil ());
+  
+  if (this->policies_ == 0)
+    return CORBA::Policy::_nil ();
+
+  return this->policies_->get_policy (type, ACE_TRY_ENV);
+}
+
+CORBA::Policy_ptr
+TAO_Stub::get_client_policy (
+    CORBA::PolicyType type,
+    CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
+                    this->refcount_lock_,
+                    CORBA::Policy::_nil ());
+  
+  CORBA::Policy_var result;
+  if (this->policies_ != 0)
+    {
+      result = this->policies_->get_policy (type, ACE_TRY_ENV);
+      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+    }
+
+  if (CORBA::is_nil (result.in ()))
+    {
+      TAO_Policy_Current *policy_current =
+        this->orb_core_->policy_current ();
+      if (policy_current != 0)
+        {
+          result = policy_current->get_policy (type, ACE_TRY_ENV);
+          ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+        }
+    }
+
+  if (CORBA::is_nil (result.in ()))
+    {
+      TAO_Policy_Manager *policy_manager =
+        this->orb_core_->policy_manager ();
+      if (policy_manager != 0)
+        {
+          result = policy_manager->get_policy (type, ACE_TRY_ENV);
+          ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+        }
+    }
+
+  if (CORBA::is_nil (result.in ()))
+    {
+      result = this->orb_core_->get_default_policy (type, ACE_TRY_ENV);
+      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+    }
+
+  return result._retn ();
+}
+
+TAO_Stub*
+TAO_Stub::set_policy_overrides (
+    const CORBA::PolicyList & policies,
+    CORBA::SetOverrideType set_add,
+    CORBA::Environment &ACE_TRY_ENV)
+{
+  auto_ptr<TAO_Policy_Manager_Impl> policy_manager =
+    new TAO_Policy_Manager_Impl;
+
+
+  if (set_add == CORBA::SET_OVERRIDE)
+    {
+      policy_manager->set_policy_overrides (policies,
+                                            set_add,
+                                            ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+    }
+  else if (this->policies_ == 0)
+    {
+      policy_manager->set_policy_overrides (policies,
+                                            CORBA::SET_OVERRIDE,
+                                            ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+    }
+  else
+    {
+      *policy_manager = *this->policies_;
+      policy_manager->set_policy_overrides (policies,
+                                            set_add,
+                                            ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+    }
+
+  TAO_Stub* stub;
+  ACE_NEW_RETURN (stub, TAO_Stub (CORBA::string_dup (this->type_id.in ()),
+                                  this->get_profiles (),
+                                  this->orb_core_),
+                  0);
+  stub->policies_ = policy_manager.release ();
+  return stub;
+}
+
+CORBA::PolicyList *
+TAO_Stub::get_policy_overrides (
+    const CORBA::PolicyTypeSeq & types,
+    CORBA::Environment &ACE_TRY_ENV)
+{
+  if (this->policies_ == 0)
+    return 0;
+
+  return this->policies_->get_policy_overrides (types, ACE_TRY_ENV);
+}
+
+CORBA::Boolean
+TAO_Stub::validate_connection (
+    CORBA::PolicyList_out inconsistent_policies,
+    CORBA::Environment &ACE_TRY_ENV)
+{
+  // @@ What is a good default value to return....
+  inconsistent_policies = 0;
+  return 0;
+}
+
+#endif /* TAO_HAS_CORBA_MESSAGING */
+

@@ -461,6 +461,8 @@ CORBA_ORB::resolve_root_poa (const char *adapter_name,
                              TAO_POA_Manager *poa_manager,
                              const TAO_POA_Policies *policies)
 {
+  // @@ Irfan: this method should take a CORBA::Environment as
+  // argument!
   CORBA::Environment env;
 
   return this->orb_core_->root_poa_reference (env,
@@ -472,6 +474,8 @@ CORBA_ORB::resolve_root_poa (const char *adapter_name,
 CORBA_Object_ptr
 CORBA_ORB::resolve_poa_current (void)
 {
+  // @@ Irfan: this method should take a CORBA::Environment as
+  // argument!
   // Return the pointer to this thread's POACurrent.
 
   CORBA::Environment env;
@@ -488,8 +492,32 @@ CORBA_ORB::resolve_poa_current (void)
 }
 
 CORBA_Object_ptr
+CORBA_ORB::resolve_policy_manager (CORBA::Environment& ACE_TRY_ENV)
+{
+  TAO_Policy_Manager *policy_manager =
+    this->orb_core_->policy_manager ();
+  if (policy_manager == 0)
+    return CORBA_Object::_nil ();
+
+  return policy_manager->_this (ACE_TRY_ENV);
+}
+
+CORBA_Object_ptr
+CORBA_ORB::resolve_policy_current (CORBA::Environment& ACE_TRY_ENV)
+{
+  TAO_Policy_Current *policy_current =
+    this->orb_core_->policy_current ();
+  if (policy_current == 0)
+    return CORBA_Object::_nil ();
+
+  return policy_current->_this (ACE_TRY_ENV);
+}
+
+CORBA_Object_ptr
 CORBA_ORB::resolve_commandline_ref (const char *& init_ref)
 {
+  // @@ Vishal: this method should take a CORBA::Environment as
+  // argument!
 
   // @@ Where are the exceptions caught ??
   CORBA::Environment env;
@@ -524,8 +552,10 @@ CORBA_ORB::resolve_commandline_ref (const char *& init_ref)
 
 CORBA_Object_ptr
 CORBA_ORB::resolve_service (CORBA::String service_name,
-			    ACE_Time_Value *timeout)
+                            ACE_Time_Value *timeout)
 {
+  // @@ Vishal: this method should take a CORBA::Environment as
+  // argument!
   CORBA::Environment env;
   CORBA_Object_ptr return_value = CORBA_Object::_nil ();
 
@@ -588,6 +618,8 @@ CORBA_ORB::resolve_service (CORBA::String service_name,
 CORBA_Object_ptr
 CORBA_ORB::resolve_trading_service (ACE_Time_Value *timeout)
 {
+  // @@ Vishal: this method should take a CORBA::Environment as
+  // argument!
   CORBA::Environment env;
   CORBA_Object_ptr return_value = CORBA_Object::_nil ();
 
@@ -648,7 +680,7 @@ CORBA_ORB::resolve_trading_service (ACE_Time_Value *timeout)
 
 int
 CORBA_ORB::multicast_query (char *buf,
-			    const char *service_name,
+                            const char *service_name,
                             u_short port,
                             ACE_Time_Value *timeout)
 {
@@ -660,40 +692,39 @@ CORBA_ORB::multicast_query (char *buf,
   if (acceptor.open (ACE_Addr::sap_any) == -1
       || acceptor.get_local_addr (my_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "acceptor.open () || "
-		       "acceptor.get_local_addr () failed"),
-		      -1);
+                       "acceptor.open () || "
+                       "acceptor.get_local_addr () failed"),
+                      -1);
 
   // Send a Multicast with service name and a port no.
   ACE_SOCK_Dgram dgram;
 
   // This starts out initialized to all zeros!
   ACE_INET_Addr multicast_addr (port,
-				ACE_DEFAULT_MULTICAST_ADDR);
+                                ACE_DEFAULT_MULTICAST_ADDR);
 
   // Open the datagram.
   if (dgram.open (ACE_Addr::sap_any) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "%p\n",
-                       "unable to open the datagram"),
-		      -1);
+                       "Unable to open the Datagram!\n"),
+                      -1);
 
   // Convert the port that we are listening at to Network Byte Order.
   ACE_UINT16 response_port =
     ACE_HTONS (my_addr.get_port_number ());
 
   // Length of data to be sent. This is sent as a header.
-  CORBA::Short data_len =  
+  CORBA::Short data_len =
     ACE_HTONS (sizeof (ACE_UINT16) + ACE_OS::strlen (service_name));
-  
+
   // Vector to be sent.
   const int iovcnt = 3;
   iovec iovp[iovcnt];
-  
+
   // The length of data to be sent.
   iovp[0].iov_base = (char *) &data_len;
   iovp[0].iov_len  = sizeof (CORBA::Short);
-  
+
   // The port at which we are listening.
   iovp[1].iov_base = (char *) &response_port;
   iovp[1].iov_len  = sizeof (ACE_UINT16);
@@ -749,7 +780,7 @@ CORBA_ORB::multicast_query (char *buf,
                                 timeout);
           // Close socket now.
           stream.close ();
-  
+
           // Check for errors.
           if (result == -1)
             ACE_ERROR ((LM_ERROR,
@@ -759,7 +790,7 @@ CORBA_ORB::multicast_query (char *buf,
             {
               // Null terminate message.
               buf[result] = 0;
-          
+
               if (TAO_debug_level > 0)
                 ACE_DEBUG ((LM_DEBUG,
                             "%s: service resolved to IOR <%s>\n",
@@ -789,6 +820,8 @@ CORBA_ORB::multicast_to_service (const char * service_name,
                                  u_short port,
                                  ACE_Time_Value *timeout)
 {
+  // @@ Vishal: this method should take a CORBA::Environment as
+  // argument!
   char buf[BUFSIZ + 1];
 
   // Use UDP multicast to locate the  service.
@@ -796,15 +829,15 @@ CORBA_ORB::multicast_to_service (const char * service_name,
     CORBA_Object::_nil ();
 
   if (this->multicast_query (buf,
-			     service_name,
-			     port,
-			     timeout) == 0)
+                             service_name,
+                             port,
+                             timeout) == 0)
     {
       CORBA::Environment env;
 
       // Convert IOR to an object reference.
       CORBA_Object_ptr objectified_ior =
-	this->string_to_object ((CORBA::String) buf,
+        this->string_to_object ((CORBA::String) buf,
                                 env);
 
       // Check for errors.
@@ -828,7 +861,7 @@ CORBA_ORB::resolve_initial_references (CORBA::String name,
 CORBA_Object_ptr
 CORBA_ORB::resolve_initial_references (CORBA::String name,
                                        ACE_Time_Value *timeout,
-                                       CORBA_Environment &TAO_IN_ENV)
+                                       CORBA_Environment &ACE_TRY_ENV)
 {
   // Get the table of initial references specified through
   // -ORBInitRef.
@@ -840,47 +873,47 @@ CORBA_ORB::resolve_initial_references (CORBA::String name,
 
   // Is the service name in the IOR Table.
   if (table->find_ior (object_id, ior) == 0)
-    return this->string_to_object (ior.c_str (), TAO_IN_ENV);
+    return this->string_to_object (ior.c_str (), ACE_TRY_ENV);
   else
     {
       // Get the list of initial reference prefixes specified through
       // -ORBDefaultInitRef.
-      char *default_init_ref =
-	this->orb_core_->orb_params ()->default_init_ref ();
+      char * default_init_ref =
+        this->orb_core_->orb_params ()->default_init_ref ();
 
       // Check if a DefaultInitRef was specified.
       if (ACE_OS::strlen (default_init_ref) != 0)
-	{
-	  ACE_CString list_of_profiles;
+        {
+          ACE_CString list_of_profiles;
 
-	  // Used by the strtok_r.
-	  char *lasts = 0;
+          // Used by the strtok_r.
+          char *lasts = 0;
 
-	  // Append the given object ID to all the end-points of
-	  // Default Init Ref.
-	  for (char *str = ACE_OS::strtok_r (default_init_ref,
+          // Append the given object ID to all the end-points of
+          // Default Init Ref.
+          for (char *str = ACE_OS::strtok_r (default_init_ref,
                                              ",",
                                              &lasts);
-	       str != 0 ;
-	       str = ACE_OS::strtok_r (0,
+               str != 0 ;
+               str = ACE_OS::strtok_r (0,
                                        ",",
                                        &lasts))
-	    {
-	      list_of_profiles += ACE_CString (str);
-	      list_of_profiles += ACE_CString ("/");
-	      list_of_profiles += object_id;
-	      list_of_profiles += ACE_CString (",");
-	    }
+            {
+              list_of_profiles += ACE_CString (str);
+              list_of_profiles += ACE_CString ("/");
+              list_of_profiles += object_id;
+              list_of_profiles += ACE_CString (",");
+            }
 
-	  // Clean up.
-	  delete [] default_init_ref;
+          // Clean up.
+          delete [] default_init_ref;
 
-	  // Replace the last extra comma with a null.
-	  list_of_profiles[list_of_profiles.length () - 1] = '\0';
+          // Replace the last extra comma with a null.
+          list_of_profiles[list_of_profiles.length () - 1] = '\0';
 
-	  return this->string_to_object (list_of_profiles.c_str (),
-					 TAO_IN_ENV);
-	}
+          return this->string_to_object (list_of_profiles.c_str (),
+                                         ACE_TRY_ENV);
+        }
 
       delete default_init_ref;
     }
@@ -888,7 +921,7 @@ CORBA_ORB::resolve_initial_references (CORBA::String name,
   if (ACE_OS::strcmp (name,
                       TAO_OBJID_NAMESERVICE) == 0)
     return this->resolve_service ("NameService",
-				  timeout);
+                                  timeout);
   else if (ACE_OS::strcmp (name,
                            TAO_OBJID_TRADINGSERVICE) == 0)
     return this->resolve_trading_service (timeout);
@@ -898,9 +931,15 @@ CORBA_ORB::resolve_initial_references (CORBA::String name,
   else if (ACE_OS::strcmp (name,
                            TAO_OBJID_POACURRENT) == 0)
     return this->resolve_poa_current ();
+  else if (ACE_OS::strcmp (name,
+                           TAO_OBJID_POLICYMANAGER) == 0)
+    return this->resolve_policy_manager (ACE_TRY_ENV);
+  else if (ACE_OS::strcmp (name,
+                           TAO_OBJID_POLICYCURRENT) == 0)
+    return this->resolve_policy_current (ACE_TRY_ENV);
   else
     return this->resolve_service (name,
-				  timeout);
+                                  timeout);
 }
 
 TAO_Stub *
@@ -1355,8 +1394,8 @@ CORBA_ORB::string_to_object (const char *str,
                                       ACE_TRY_ENV);
 
   else if (ACE_OS::strncmp (str,
-			    iioploc_prefix,
-			    sizeof iioploc_prefix - 1) == 0)
+                            iioploc_prefix,
+                            sizeof iioploc_prefix - 1) == 0)
     obj = this->iioploc_string_to_object (str + sizeof iioploc_prefix - 1,
                                           ACE_TRY_ENV);
 
@@ -1440,8 +1479,8 @@ CORBA_ORB::iiop_string_to_object (const char *string,
   // Allocate a Multiple Profile with the given no. of profiles.
   TAO_MProfile *mp;
   ACE_NEW_RETURN (mp,
-		  TAO_MProfile (1),
-		  obj);
+                  TAO_MProfile (1),
+                  obj);
 
   TAO_Profile* pfile;
   ACE_NEW_RETURN (pfile,
@@ -1480,7 +1519,7 @@ CORBA_ORB::iiop_string_to_object (const char *string,
 // object with multiple profiles and then the object reference.
 CORBA::Object_ptr
 CORBA_ORB::iioploc_string_to_object (const char *string,
-				     CORBA::Environment &env)
+                                     CORBA::Environment &env)
 {
   CORBA::Object_ptr obj = CORBA::Object::_nil ();
 
@@ -1501,7 +1540,7 @@ CORBA_ORB::iioploc_string_to_object (const char *string,
        i++)
     {
       if (*(list_of_profiles + i) == ',')
-	profile_count++;
+        profile_count++;
     }
 
   TAO_MProfile mp (profile_count);
@@ -1517,9 +1556,9 @@ CORBA_ORB::iioploc_string_to_object (const char *string,
 
     {
       ACE_NEW_RETURN (pfile,
-		      TAO_IIOP_Profile (str,
-   					env),
-   		      CORBA::Object::_nil ());
+                      TAO_IIOP_Profile (str,
+                                        env),
+                      CORBA::Object::_nil ());
 
       // Give up ownership of the profile.
       mp.give_profile (pfile);
@@ -1601,10 +1640,10 @@ CORBA_ORB::_get_collocated_servant (TAO_Stub *sobj)
           // #if 0's around!
 #if 0
           ACE_ERROR ((LM_ERROR,
-		      "%p: Passing IIOP ORB and non-IIOP object\n",
-		      "_get_collocated_object"));
+                      "%p: Passing IIOP ORB and non-IIOP object\n",
+                      "_get_collocated_object"));
 #endif
-	  // Something must be wrong!
+          // Something must be wrong!
           return 0;
         }
 #if 0
@@ -1689,7 +1728,7 @@ CORBA_ORB::_get_collocated_servant (TAO_Stub *sobj)
 
 #if 0
   ACE_DEBUG ((LM_DEBUG,
-	      "CORBA_ORB: collocation failed for \n"));
+              "CORBA_ORB: collocation failed for \n"));
 #endif
 
   return 0;
@@ -1704,8 +1743,8 @@ CORBA_ORB::_tao_add_to_IOR_table (ACE_CString &object_id,
 {
   if (CORBA::is_nil (obj))
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "Unable to add IOR to table\n"),
-		      -1);
+                       "Unable to add IOR to table\n"),
+                      -1);
 
   CORBA::String_var string =
     this->object_to_string (obj);
@@ -1717,8 +1756,8 @@ CORBA_ORB::_tao_add_to_IOR_table (ACE_CString &object_id,
 
   if (this->lookup_table_.add_ior (object_id, ior) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "Unable to add IOR to table\n"),
-		      -1);
+                       "Unable to add IOR to table\n"),
+                      -1);
 
   return 0;
 }
@@ -1732,8 +1771,8 @@ CORBA_ORB::_tao_find_in_IOR_table (ACE_CString &object_id,
 
   if (this->lookup_table_.find_ior (object_id, ior) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "No match for the given ObjectID\n"),
-		      -1);
+                       "No match for the given ObjectID\n"),
+                      -1);
 
   obj = this->string_to_object (ior.c_str ());
 

@@ -76,8 +76,6 @@ include $(TAO_ROOT)/taoconfig.mk
 LDFLAGS += -L$(TAO_ROOT)/tao
 
 .PRECIOUS: cubitC.cpp cubitS.cpp cubitC.h cubitS.h
-#$(IDL_SRC): cubit.idl
-#	$(TAO_ROOT)/TAO_IDL/tao_idl cubit.idl
 
 server:	$(addprefix $(VDIR),$(CUBIT_SVR_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
