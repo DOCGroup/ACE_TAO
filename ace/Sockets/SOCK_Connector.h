@@ -14,13 +14,13 @@
 #define ACE_SOCK_CONNECTOR_H
 #include "ace/pre.h"
 
-#include "ace/SOCK_Stream.h"
+#include "ace/Sockets/SOCK_Stream.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Time_Value.h"
+#include "ace/Timer/Time_Value.h"
 
 /**
  * @class ACE_SOCK_Connector
@@ -229,7 +229,7 @@ protected:
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/SOCK_Connector.i"
+#include "ace/Sockets/SOCK_Connector.i"
 #endif
 
 #include "ace/post.h"

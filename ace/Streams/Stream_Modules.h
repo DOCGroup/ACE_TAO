@@ -12,7 +12,7 @@
 
 
 // This needs to go outside of the #if !defined() block.  Don't ask...
-#include "ace/Task.h"
+#include "ace/Streams/Task.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -133,7 +133,7 @@ public:
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Stream_Modules.cpp"
+#include "ace/Streams/Stream_Modules.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

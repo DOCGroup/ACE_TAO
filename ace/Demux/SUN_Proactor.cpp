@@ -1,16 +1,20 @@
 /* -*- C++ -*- */
 // $Id$
 
-#include "ace/SUN_Proactor.h"
+#include "ace/Demux/SUN_Proactor.h"
 
 #if defined (ACE_HAS_AIO_CALLS) && defined (sun)
 
-#include "ace/Task_T.h"
-#include "ace/Log_Msg.h"
-#include "ace/Object_Manager.h"
+#include "ace/Threads/Task_T.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
+
+#include "ace/Utils/Object_Manager.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/SUN_Proactor.i"
+#include "ace/Demux/SUN_Proactor.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_SUN_Proactor::ACE_SUN_Proactor (size_t max_aio_operations)

@@ -1,7 +1,7 @@
-#include "ace/Synch_T.h"
-#include "ace/SOCK_Acceptor.h"
-#include "ace/SOCK_Connector.h"
-#include "ace/TkReactor.h"
+#include "ace/Threads/Synch_T.h"
+#include "ace/Sockets/SOCK_Acceptor.h"
+#include "ace/Sockets/SOCK_Connector.h"
+#include "ace/Demux/TkReactor.h"
 
 ACE_RCSID(ace, TkReactor, "$Id$")
 

@@ -3,16 +3,16 @@
 #ifndef ACE_SVC_HANDLER_C
 #define ACE_SVC_HANDLER_C
 
-#include "ace/Svc_Handler.h"
+#include "ace/Svcconf/Svc_Handler.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Object_Manager.h"
-#include "ace/Connection_Recycling_Strategy.h"
+#include "ace/Utils/Object_Manager.h"
+#include "ace/Utils/Connection_Recycling_Strategy.h"
 
-#include "ace/Dynamic.h"
+#include "ace/Utils/Dynamic.h"
 
 ACE_RCSID(ace, Svc_Handler, "$Id$")
 

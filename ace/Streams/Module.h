@@ -21,7 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Task_T.h"
+#include "ace/Streams/Task_T.h"
 
 /**
  * @class ACE_Module_Base
@@ -192,11 +192,11 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Module.i"
+#include "ace/Streams/Module.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Module.cpp"
+#include "ace/Streams/Module.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

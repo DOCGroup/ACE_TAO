@@ -4,16 +4,16 @@
 #ifndef ACE_MODULE_C
 #define ACE_MODULE_C
 
-#include "ace/Module.h"
+#include "ace/Streams/Module.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Stream_Modules.h"
+#include "ace/Streams/Stream_Modules.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Module.i"
+#include "ace/Streams/Module.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Module, "$Id$")

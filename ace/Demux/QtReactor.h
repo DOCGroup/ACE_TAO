@@ -16,14 +16,14 @@
 #include "ace/pre.h"
 
 
-#include "ace/Select_Reactor.h"
+#include "ace/Demux/Select_Reactor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_HAS_QT)
-#include "ace/Map_Manager.h"
+#include "ace/Utils/Templates/Map_Manager.h"
 
 // Qttoolkit specific includes.
 #include <qapplication.h>

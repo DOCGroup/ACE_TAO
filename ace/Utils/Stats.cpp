@@ -580,6 +580,7 @@ ACE_Throughput_Stats::dump_results (const ACE_TCHAR* msg,
 #endif
 }
 
+#ifdef ACE_SUBSET_0
 void
 ACE_Throughput_Stats::dump_throughput (const ACE_TCHAR *msg,
                                        ACE_UINT32 sf,
@@ -596,12 +597,11 @@ ACE_Throughput_Stats::dump_throughput (const ACE_TCHAR *msg,
   seconds /= ACE_HR_SCALE_CONVERSION; 
   double t_avg = samples_count / seconds;
 
-#ifdef ACE_SUBSET_0
   ACE_DEBUG ((LM_DEBUG,
               ACE_LIB_TEXT ("%s throughput: %.2f (events/second)\n"),
               msg, t_avg));
-#endif
 }
+#endif /* ACE_SUBSET_0 */
 
 // ****************************************************************
 

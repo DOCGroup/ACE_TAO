@@ -1,13 +1,13 @@
 // $Id$
 
-#include "ace/Msg_WFMO_Reactor.h"
+#include "ace/Other/Msg_WFMO_Reactor.h"
 
 ACE_RCSID(ace, Msg_WFMO_Reactor, "$Id$")
 
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_MSG_WFMO)
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Msg_WFMO_Reactor.i"
+#include "ace/Other/Msg_WFMO_Reactor.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_Msg_WFMO_Reactor::ACE_Msg_WFMO_Reactor (ACE_Sig_Handler *sh, 

@@ -3,14 +3,14 @@
 #ifndef CACHING_UTILITY_T_C
 #define CACHING_UTILITY_T_C
 
-#include "ace/Caching_Utility_T.h"
+#include "ace/Utils/Templates/Caching_Utility_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #define ACE_LACKS_PRAGMA_ONCE
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // #include "ace/Strategies.h"
-#include "ace/Recyclable.h"
+#include "ace/Utils/Recyclable.h"
 
 ACE_RCSID(ace, Caching_Utility_T, "$Id$")
 

@@ -16,7 +16,7 @@
 #define ACE_MSG_WFMO_REACTOR_H
 #include "ace/pre.h"
 
-#include "ace/WFMO_Reactor.h"
+#include "ace/Demux/WFMO_Reactor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -107,7 +107,7 @@ protected:
 #endif /* ACE_WIN32 && !ACE_LACKS_MSG_WFMO */
 
 #if defined (__ACE_INLINE__)
-#include "ace/Msg_WFMO_Reactor.i"
+#include "ace/Other/Msg_WFMO_Reactor.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

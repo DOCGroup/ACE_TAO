@@ -1,58 +1,56 @@
 # $Id$
 
 #----------------------------------------------------------------------------
-#       Makefile for the libACE_OS
+#       Makefile for the libACE_IPC
 #----------------------------------------------------------------------------
 
 MAKEFILE = Makefile
-LIBNAME   = libACE_Utils
+LIBNAME   = libACE_IPC
 LIB      = $(LIBNAME).a
 SHLIB    = $(LIBNAME).$(SOEXT)
 
-SUBDIRS = Templates
 
-FILES = \
-	ARGV\
-	Active_Map_Manager\
-	Active_Map_Manager_T\
-	Arg_Shifter\
-	Capabilities\
-	Configuration\
-	Configuration_Import_Export\
-	Connection_Recycling_Strategy\
-	Containers\
-	Dirent\
-	Dirent_Selector\
-	Dynamic\
-	Filecache\
-	Flag_Manip\
-	Functor\
-	Functor_T\
-	Future\
-	Future_Set\
-	Get_Opt\
-	Hash_Map_Manager\
-	Hashable\
-	IO_Cntl_Msg\
-	Init_ACE\
-	Lib_Find\
-	Map\
-	Message_Block\
-	Method_Request\
-	Multiplexor\
-	NT_Service\
-	Object_Manager\
-	Pair\
-	Recyclable\
-	Refcountable\
-	Registry\
-	SString\
-	Sample_History\
-	Stats\
-	String_Base_Const\
-	Test_and_Set\
-	Unbounded_Queue\
-	Unbounded_Set
+LIB_FILES = \
+	Addr\
+	DEV\
+	DEV_Addr\
+	DEV_Connector\
+	DEV_IO\
+	FIFO\
+	FIFO_Recv\
+	FIFO_Recv_Msg\
+	FIFO_Send\
+	FIFO_Send_Msg\
+	FILE\
+	FILE_Addr\
+	FILE_Connector\
+	FILE_IO\
+	INET_Addr\
+	IOStream\
+	IOStream_T\
+	IO_SAP\
+	Pipe\
+	SPIPE\
+	SPIPE_Acceptor\
+	SPIPE_Addr\
+	SPIPE_Connector\
+	SPIPE_Stream\
+	SV_Message\
+	SV_Message_Queue\
+	SV_Semaphore_Complex\
+	SV_Semaphore_Simple\
+	SV_Shared_Memory\
+	Signal\
+	TLI\
+	TLI_Acceptor\
+	TLI_Connector\
+	TLI_Stream\
+	TTY_IO\
+	UNIX_Addr\
+	UPIPE_Acceptor\
+	UPIPE_Connector\
+	UPIPE_Stream\
+	XTI_ATM_Mcast
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -63,6 +61,7 @@ include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 ####
 #### ACE_COMPONENTS support.
 ####
+FILES += $(LIB_FILES)
 
 LSRC  = $(addsuffix .cpp,$(FILES))
 
@@ -78,16 +77,8 @@ clean:
 	$(RM) -f $(LIBNAME).a $(LIBNAME).so
 
 #----------------------------------------------------------------------------
-#       Local targets
-#----------------------------------------------------------------------------
-
-
-
-#----------------------------------------------------------------------------
 #       Dependencies
 #----------------------------------------------------------------------------
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
-
-
 

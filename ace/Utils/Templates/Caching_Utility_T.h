@@ -14,13 +14,13 @@
 #define CACHING_UTILITY_H
 #include "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/OS/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #define  ACE_LACKS_PRAGMA_ONCE
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Cleanup_Strategies_T.h"
+#include "ace/Utils/Templates/Cleanup_Strategies_T.h"
 
 // For linkers that cant grok long names.
 #define ACE_Pair_Caching_Utility APUTIL
@@ -332,7 +332,7 @@ private:
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Caching_Utility_T.cpp"
+#include "ace/Utils/Templates/Caching_Utility_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
