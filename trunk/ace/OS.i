@@ -1284,6 +1284,13 @@ ACE_OS::strstr (char *s, const char *t)
   return ::strstr (s, t);
 }
 
+ACE_INLINE size_t
+ACE_OS::strlen (const char *s)
+{
+  // ACE_TRACE ("ACE_OS::strlen");
+  return ::strlen (s);
+}
+
 ACE_INLINE const char *
 ACE_OS::strnstr (const char *s1, const char *s2, size_t len2)
 {
@@ -1419,13 +1426,6 @@ ACE_OS::vsprintf (char *buffer, const char *format, va_list argptr)
   return ACE_SPRINTF_ADAPTER (::vsprintf (buffer, format, argptr));
 }
 #endif /* ACE_HAS_WINCE */
-
-ACE_INLINE size_t
-ACE_OS::strlen (const char *s)
-{
-  // ACE_TRACE ("ACE_OS::strlen");
-  return ::strlen (s);
-}
 
 ACE_INLINE int
 ACE_OS::strcasecmp (const char *s, const char *t)
