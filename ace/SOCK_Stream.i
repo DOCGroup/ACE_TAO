@@ -5,12 +5,17 @@
 
 #include "ace/SOCK_Stream.h"
 
-// Shut down just the reading end of a ACE_SOCK. 
-
 ASYS_INLINE
 ACE_SOCK_Stream::ACE_SOCK_Stream (void)
 {
   // ACE_TRACE ("ACE_SOCK_Stream::ACE_SOCK_Stream");
+}
+
+ASYS_INLINE
+ACE_SOCK_Stream::ACE_SOCK_Stream (ACE_HANDLE h)
+{
+  // ACE_TRACE ("ACE_SOCK_Stream::ACE_SOCK_Stream");
+  this->set_handle (h);
 }
 
 ASYS_INLINE
