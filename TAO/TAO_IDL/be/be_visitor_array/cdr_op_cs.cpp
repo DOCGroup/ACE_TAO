@@ -30,8 +30,7 @@
 // stubs file
 // ***************************************************************************
 
-be_visitor_array_cdr_op_cs::be_visitor_array_cdr_op_cs
-(be_visitor_context *ctx)
+be_visitor_array_cdr_op_cs::be_visitor_array_cdr_op_cs (be_visitor_context *ctx)
   : be_visitor_decl (ctx)
 {
 }
@@ -71,68 +70,5 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
         }              
     }
 
-  return 0;
-}
-
-// Just do nothing for all the base types
-
-int
-be_visitor_array_cdr_op_cs::visit_enum (be_enum *)
-{
-  return 0;
-}
-
-int
-be_visitor_array_cdr_op_cs::visit_interface (be_interface *)
-{
-  return 0;
-}
-
-int
-be_visitor_array_cdr_op_cs::visit_interface_fwd (be_interface_fwd *)
-{
-  return 0;
-}
-
-int
-be_visitor_array_cdr_op_cs::visit_predefined_type (be_predefined_type *)
-{
-  return 0;
-}
-
-int
-be_visitor_array_cdr_op_cs::visit_sequence (be_sequence *)
-{
-  return 0;
-}
-
-int
-be_visitor_array_cdr_op_cs::visit_string (be_string *)
-{
-  return 0;
-}
-
-int
-be_visitor_array_cdr_op_cs::visit_structure (be_structure *)
-{
-  return 0;
-}
-
-int
-be_visitor_array_cdr_op_cs::visit_union (be_union *)
-{
-  return 0;
-}
-
-int
-be_visitor_array_cdr_op_cs::visit_typedef (be_typedef *)
-{
-  return 0;
-}
-
-// helper
-int
-be_visitor_array_cdr_op_cs::visit_node (be_type *)
-{
   return 0;
 }
