@@ -28,6 +28,7 @@
 
 #include "Hasher_i.h"
 
+
 /**
  * @class HasherFactory
  *
