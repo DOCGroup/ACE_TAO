@@ -79,11 +79,25 @@ To run the client, type
 	2. Using the -k option to read the IOR from the 	
 	   command line.
 
-run_test:
---------
-	There is a shell script in this directory named run_test to test all
-	the types for sii invocation. It starts the server first and then runs
-	the client with the different data type parameters.
+run_test.pl:
+-----------
+	There is a perl script in this directory named run_test.pl to test all
+	the types. It starts the server first and then runs the client with 
+	the different data type parameters. The arguments it takes are:
+	
+	-n num              -- runs the client num times (default is 5)
+        -d                  -- runs each in debug mode
+        -onewin             -- keeps all tests in one window on NT
+        -h                  -- prints this information
+        -t type             -- runs only one type of param test
+        -i (dii|sii)        -- Changes the type of invocation (default is sii)
+        
+NOTE**
+----
+	Currently there are still problems with multiple virtual inheritance
+	used in the objref data type. In these tests, type objref works with
+	sii but not dii, and objref_sequence does not work for either sii or dii.
+
 
 
 
