@@ -56,7 +56,13 @@ struct string_traits_base<CORBA::WChar>
 
   inline static char_type * default_initializer()
   {
+#if defined(ACE_HAS_WCHAR) || defined(ACE_HAS_XPG4_MULTIBYTE_CHAR)
     return CORBA::wstring_dup(L"");
+#else
+#warning "platform not configured with native wchar_t support"
+    static CORBA::WChar empty[] = { 0 };
+    return CORBA::wstring_dup(empty);
+#endif /* 0 */
   }
 
   inline static char_type * duplicate(char_type const * s)
