@@ -45,6 +45,7 @@ RESOURCE = $(OBJDIR)\AV.res
 
 CFLAGS = \
 	$(ACE_CFLAGS) \
+        $(ACE_QOS_CFLAGS) \
 	$(TAO_CFLAGS) \
 	$(TAO_PORTABLESERVER_CFLAGS) \
 	$(TAO_PROPERTY_CFLAGS) \
@@ -62,6 +63,7 @@ INCLUDES = AV\*.h AV\*.i AV\*_T.cpp
 
 LIBFILES = \
 	$(ACE_LIB) \
+        $(ACE_QOS_LIB) \
 	$(TAO_LIB) \
 	$(TAO_PORTABLESERVER_LIB) \
 	$(TAO_NAMING_LIB) \
