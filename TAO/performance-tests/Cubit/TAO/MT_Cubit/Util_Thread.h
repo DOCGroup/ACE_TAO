@@ -19,7 +19,7 @@
 
 #include "Task_Client.h"
 
-class Util_Thread : public ACE_Task<ACE_SYNCH>
+class Util_Thread : public ACE_Task<ACE_NULL_SYNCH>
 {
   // = TITLE
   //     The thread that computes utilization.

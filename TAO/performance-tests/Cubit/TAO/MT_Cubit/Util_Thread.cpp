@@ -4,7 +4,7 @@
 
 Util_Thread::Util_Thread (Task_State *ts,
                           ACE_Thread_Manager *thr_mgr)
-  : ACE_MT (ACE_Task<ACE_MT_SYNCH> (thr_mgr)),
+  : ACE_MT (ACE_Task<ACE_NULL_SYNCH> (thr_mgr)),
     done_ (0),
     number_of_computations_ (0),
     ts_ (ts)
@@ -30,7 +30,7 @@ Util_Thread::svc (void)
               "utilization test STARTED\n"));
 
   this->ts_->utilization_task_started_ = 1;
-  
+
   this->ts_->timer_.start ();
 
   this->run_computations ();
@@ -76,7 +76,7 @@ Util_Thread::run_computations (void)
     {
       // bound the number of computations, since we can potentially
       // block the machine if this thread never leaves the loop. 
-      if (this->number_of_computations_ > (ts_->loop_count_ * 50)) // magic number
+      if (this->number_of_computations_ > (ts_->loop_count_ * 1000)) // magic number
 	{
 	  ACE_DEBUG ((LM_DEBUG,
 		      "\t(%t) utilization test breaking loop so machine won't block.\n"));
@@ -84,7 +84,7 @@ Util_Thread::run_computations (void)
 	}
       this->computation ();
       this->number_of_computations_ ++;
-      ACE_OS::thr_yield (); // Shouldn't need this.  And I'm not sure
+      //      ACE_OS::thr_yield (); // Shouldn't need this.  And I'm not sure
                             // if it really helps.
     }
 
