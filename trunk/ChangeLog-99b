@@ -1,3 +1,13 @@
+Wed Feb 17 12:16:30 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/CORBA_macros.h (ACE_DECLARE_NEW_CORBA_ENV): Added this macro
+	  for declaring a new CORBA_Environment called ACE_TRY_ENV.
+	  ACE_TRY_NEW_ENV should now be avoided because it won't work if
+	  multiple try blocks are needed in the top-most functions.
+	  Instead, you can use the new macro to define the environment
+	  variable and use ACE_TRY/ACE_TRY_EX as usually.  This is even
+	  more intuitive than ACE_TRY_NEW_ENV. ;)
+
 Wed Feb 17 10:44:29 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* examples/Reactor/Proactor/test_proactor.dsp:
