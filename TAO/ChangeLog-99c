@@ -1,3 +1,19 @@
+Sun Jun 27 16:48:54 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/Makefile:
+	* tests/Faults/Makefile:
+	* tests/Faults/README:
+	* tests/Faults/client.cpp:
+	* tests/Faults/run_test.pl:
+	* tests/Faults/server.cpp:
+	* tests/Faults/test.idl:
+	* tests/Faults/test_i.cpp:
+	* tests/Faults/test_i.h:
+	* tests/Faults/test_i.i:
+	  Added a new test to check that the ORB can handle a crash on the 
+	  server and/or the client; it doesn't cover all the possible
+	  cases, but at least it is a start.
+
 Sun Jun 27 17:18:29 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* TAO_IDL/be/be_type.cpp (gen_nested_typename):
@@ -427,7 +443,8 @@ Fri Jun 25 13:37:47 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 Fri Jun 25 14:28:59 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * tao/CurrentC.cpp:
-          Simplified exit path to avoid this problems.
+          Simplified exit path to avoid warnings about unreachable code
+	  and/or exit without return.
 
         * tao/append.cpp:
           Added .in() calls for some T_var objects.
@@ -517,7 +534,7 @@ Fri Jun 25 12:38:43 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
           Added default argument values for ACE_TRY_ENV to reflect tao_idl
           generated code. Also removed a vestigal method (verbosity ())
           which was never declared in IDL (since its name would have
-          clashed with the orhte verbosity method). Hopefully DU will be
+          clashed with the other verbosity method). Hopefully DU will be
           pleased now, since this messed up its compile.
 
 Fri Jun 25 11:45:18 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
