@@ -1798,8 +1798,8 @@ private:
   // everything!
   size_t lock_count_;
   size_t recursion_count_;
-  HANDLE owning_thread_;
-  HANDLE lock_semaphore_;
+  ACE_HANDLE owning_thread_;
+  ACE_HANDLE lock_semaphore_;
 #else
   // Store the important state of a recursive mutex.
   int nesting_level_;
