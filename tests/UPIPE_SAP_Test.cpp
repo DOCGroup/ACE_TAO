@@ -92,7 +92,7 @@ connector (void *)
   ACE_ASSERT (ACE_OS::strcmp (conbuf, "this is the acceptor response!") == 0);
 
   c_stream.close ();
-  ACE_DEBUG ((LM_DEBUG, "\n(%t) exiting thread\n"));
+  ACE_DEBUG ((LM_DEBUG, "(%t) exiting thread\n"));
   return 0;
 }
 
