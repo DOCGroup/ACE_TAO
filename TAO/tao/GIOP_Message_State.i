@@ -66,7 +66,7 @@ TAO_GIOP_Version::operator!= (const TAO_GIOP_Version &src)
 //
 // Inlined methods for TAO_GIOP_Message_State
 //
-int
+ACE_INLINE int
 TAO_GIOP_Message_State::message_fragmented (void)
 {
   if (this->more_fragments)

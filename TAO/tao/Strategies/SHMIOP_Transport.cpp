@@ -17,7 +17,7 @@
 #include "tao/debug.h"
 
 #include "tao/GIOP_Message_Lite.h"
-#include "tao/GIOP_Message_Base.h"
+#include "GIOP_Message_NonReactive_Base.h"
 
 #if !defined (__ACE_INLINE__)
 # include "SHMIOP_Transport.i"
