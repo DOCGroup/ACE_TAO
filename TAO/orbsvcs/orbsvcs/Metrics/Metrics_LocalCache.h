@@ -14,6 +14,8 @@
 #include "ace/Metrics_Cache.h"
 #include "ace/Metrics_Cache_T.h"
 #include "ace/Singleton.h"
+#include "ace/Synch_Traits.h"
+#include "ace/Thread_Mutex.h"
 
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Scheduler_Factory.h"
