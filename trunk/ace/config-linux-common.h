@@ -17,9 +17,9 @@
 #endif /* ! __ACE_INLINE__ */
 
 // Needed to make some prototypes visible.
-#if ! defined (_GNU_SOURCE)
-#define _GNU_SOURCE
-#endif /* ! _GNU_SOURCE */
+// #if ! defined (_GNU_SOURCE)
+// #define _GNU_SOURCE
+// #endif /* ! _GNU_SOURCE */
 
 // Needed to differentiate between libc 5 and libc 6 (aka glibc).
 // It's there on all libc 5 systems I checked.
@@ -50,26 +50,26 @@
   // its timeout argument, use ::poll () instead.
 # define ACE_HAS_POLL
 
-# if !defined (__USE_XOPEN_EXTENDED)
+# if !defined (_XOPEN_SOURCE_EXTENDED)
 #   include <unistd.h>
     // unistd.h only declares getpgid () ifdef __USE_XOPEN_EXTENDED.
-    extern "C" __pid_t getpgid __P ((__pid_t __pid));
-# endif /* ! __USE_XOPEN_EXTENDED */
+extern "C" __pid_t getpgid __P ((__pid_t __pid));
+# endif /* ! _XOPEN_SOURCE_EXTENDED */
 
-  // NOTE:  the following defines are necessary with glibc 2.0 (0.961212-5)
-  //        on Alpha.  I assume that they're necessary on Intel as well,
-  //        but that may depend on the version of glibc that is used.
+// NOTE:  the following defines are necessary with glibc 2.0 (0.961212-5)
+//        on Alpha.  I assume that they're necessary on Intel as well,
+//        but that may depend on the version of glibc that is used.
 //# define ACE_HAS_DLFCN_H_BROKEN_EXTERN_C
 # define ACE_HAS_VOIDPTR_SOCKOPT
 # define ACE_LACKS_SYSTIME_H
-  // The strtok_r declaration is protected in string.h.
-  extern "C" char *strtok_r __P ((char *__s, __const char *__delim,
-                                  char **__save_ptr));
-  // NOTE:  end of glibc 2.0 (0.961212-5)-specific configuration.
+// The strtok_r declaration is protected in string.h.
+extern "C" char *strtok_r __P ((char *__s, __const char *__delim,
+                                char **__save_ptr));
+// NOTE:  end of glibc 2.0 (0.961212-5)-specific configuration.
 
 # if __GLIBC__ > 1 && __GLIBC_MINOR__ >= 1
-    // These were suggested by Robert Hanzlik <robi@codalan.cz> to get
-    // ACE to compile on Linux using glibc 2.1 and libg++/gcc 2.8.
+// These were suggested by Robert Hanzlik <robi@codalan.cz> to get
+// ACE to compile on Linux using glibc 2.1 and libg++/gcc 2.8.
 #   undef ACE_HAS_BYTESEX_H
 #   define ACE_HAS_SIGINFO_T
 #   define ACE_LACKS_SIGINFO_H
@@ -171,6 +171,14 @@
 #define ACE_HAS_STRERROR
 
 #define ACE_HAS_STRPTIME
+#if !defined (_XOPEN_SOURCE)
+# include <time.h>
+// strptime() is an XOPEN function.  It is only enabled if _XOPEN_SOURCE
+// or _GNU_SOURCE is defined.  (_GNU_SOURCE causes _XOPEN_SOURCE to be
+// defined on Linux/glibc systems)
+extern "C" char *strptime __P ((__const char *__s, __const char *__fmt,
+                                struct tm *__tp));
+#endif  /* !_XOPEN_SOURCE */
 
 // Compiler supports the ssize_t typedef.
 #define ACE_HAS_SSIZE_T
