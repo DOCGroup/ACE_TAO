@@ -767,8 +767,7 @@ private:
                                               CORBA::Environment &ACE_TRY_ENV);
   // Convert an URL style IOR into an object reference.
 
-  void check_shutdown (CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void check_shutdown (CORBA::Environment &ACE_TRY_ENV);
   // Check if ORB has shutdown.  If it has, throw an exception.
 
 private:
