@@ -151,7 +151,7 @@ server (void *)
 
   // The client will write the entire buffer at once, verify that we
   // can stream it in one byte at a time.
-  for (t = ACE_ALPHABET; *t; t++;)
+  for (t = ACE_ALPHABET; *t; t++)
     {
       if (new_stream.recv (buf, 1) <= 0) 
         {
