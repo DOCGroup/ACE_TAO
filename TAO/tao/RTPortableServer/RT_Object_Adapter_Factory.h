@@ -20,9 +20,10 @@
 
 #include "rtportableserver_export.h"
 
+#include "tao/PortableServer/Object_Adapter.h"
+
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "tao/PortableServer/Object_Adapter.h"
 #include "ace/Service_Config.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

@@ -23,9 +23,9 @@
 
 #include "rtportableserver_export.h"
 
-#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
-
 #include "tao/PortableServer/POA.h"
+
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
 #define TAO_RT_PORTABLESERVER_SAFE_INCLUDE
 #include "RTPortableServerC.h"
