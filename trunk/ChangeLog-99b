@@ -25,6 +25,8 @@ Fri Mar 19 10:29:17 1999  David L. Levine  <levine@cs.wustl.edu>
           segfaults of unknown origin, but they appear to be in the
           LinuxThreads library.
 
+        * bin/ace_components: added.
+
 Fri Mar 19 03:24:34 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * ace/Singleton.cpp (instance): Commented out the call to
