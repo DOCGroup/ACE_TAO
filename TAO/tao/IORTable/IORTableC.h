@@ -374,8 +374,6 @@ namespace IORTable
 // TAO_IDL - Generated from
 // be/be_visitor_traits.cpp:48
 
-#if defined (_MSC_VER)
-
 // Traits specializations.
 namespace TAO
 {
@@ -422,8 +420,6 @@ namespace TAO
 
 #endif /* end #if !defined */
 };
-
-#endif /* _MSC_VER */
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/cdr_op.cpp:48

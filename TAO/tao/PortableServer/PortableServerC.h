@@ -2904,8 +2904,6 @@ namespace PortableServer
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_traits.cpp:48
 
-#if defined (_MSC_VER)
-
 // Traits specializations.
 namespace TAO
 {
@@ -3204,8 +3202,6 @@ namespace TAO
 
 #endif /* end #if !defined */
 };
-
-#endif /* _MSC_VER */
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/any_op_ch.cpp:52

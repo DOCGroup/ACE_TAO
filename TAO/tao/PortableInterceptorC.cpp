@@ -54,7 +54,6 @@ namespace TAO
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:60
 
-#if defined (_MSC_VER)
 
 // Traits specializations for PortableInterceptor::Interceptor.
 
@@ -89,7 +88,6 @@ TAO::Objref_Traits<PortableInterceptor::Interceptor>::tao_marshal (
   return p->marshal (cdr);
 }
 
-#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -642,7 +640,6 @@ namespace PortableInterceptor
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:60
 
-#if defined (_MSC_VER)
 
 // Traits specializations for PortableInterceptor::Current.
 
@@ -677,7 +674,6 @@ TAO::Objref_Traits<PortableInterceptor::Current>::tao_marshal (
   return p->marshal (cdr);
 }
 
-#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -811,8 +807,6 @@ namespace PortableInterceptor
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:60
 
-#if defined (_MSC_VER)
-
 // Traits specializations for PortableInterceptor::RequestInfo.
 
 PortableInterceptor::RequestInfo_ptr
@@ -845,8 +839,6 @@ TAO::Objref_Traits<PortableInterceptor::RequestInfo>::tao_marshal (
 {
   return p->marshal (cdr);
 }
-
-#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -978,8 +970,6 @@ namespace PortableInterceptor
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:60
 
-#if defined (_MSC_VER)
-
 // Traits specializations for PortableInterceptor::ClientRequestInfo.
 
 PortableInterceptor::ClientRequestInfo_ptr
@@ -1012,8 +1002,6 @@ TAO::Objref_Traits<PortableInterceptor::ClientRequestInfo>::tao_marshal (
 {
   return p->marshal (cdr);
 }
-
-#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -1153,8 +1141,6 @@ namespace PortableInterceptor
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:60
 
-#if defined (_MSC_VER)
-
 // Traits specializations for PortableInterceptor::ServerRequestInfo.
 
 PortableInterceptor::ServerRequestInfo_ptr
@@ -1187,8 +1173,6 @@ TAO::Objref_Traits<PortableInterceptor::ServerRequestInfo>::tao_marshal (
 {
   return p->marshal (cdr);
 }
-
-#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -1328,8 +1312,6 @@ namespace PortableInterceptor
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:60
 
-#if defined (_MSC_VER)
-
 // Traits specializations for PortableInterceptor::ClientRequestInterceptor.
 
 PortableInterceptor::ClientRequestInterceptor_ptr
@@ -1362,8 +1344,6 @@ TAO::Objref_Traits<PortableInterceptor::ClientRequestInterceptor>::tao_marshal (
 {
   return p->marshal (cdr);
 }
-
-#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -1508,8 +1488,6 @@ namespace PortableInterceptor
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:60
 
-#if defined (_MSC_VER)
-
 // Traits specializations for PortableInterceptor::ServerRequestInterceptor.
 
 PortableInterceptor::ServerRequestInterceptor_ptr
@@ -1542,8 +1520,6 @@ TAO::Objref_Traits<PortableInterceptor::ServerRequestInterceptor>::tao_marshal (
 {
   return p->marshal (cdr);
 }
-
-#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -1687,8 +1663,6 @@ namespace PortableInterceptor
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:60
 
-#if defined (_MSC_VER)
-
 // Traits specializations for PortableInterceptor::PolicyFactory.
 
 PortableInterceptor::PolicyFactory_ptr
@@ -1721,8 +1695,6 @@ TAO::Objref_Traits<PortableInterceptor::PolicyFactory>::tao_marshal (
 {
   return p->marshal (cdr);
 }
-
-#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -1868,7 +1840,6 @@ namespace PortableInterceptor
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:60
 
-#if defined (_MSC_VER)
 
 // Traits specializations for PortableInterceptor::ORBInitInfo.
 
@@ -1903,7 +1874,6 @@ TAO::Objref_Traits<PortableInterceptor::ORBInitInfo>::tao_marshal (
   return p->marshal (cdr);
 }
 
-#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -2373,7 +2343,6 @@ namespace PortableInterceptor
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:60
 
-#if defined (_MSC_VER)
 
 // Traits specializations for PortableInterceptor::ORBInitializer.
 
@@ -2408,7 +2377,6 @@ TAO::Objref_Traits<PortableInterceptor::ORBInitializer>::tao_marshal (
   return p->marshal (cdr);
 }
 
-#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *

@@ -1,3 +1,35 @@
+Sun Sep 28 11:13:07 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/PortableInterceptorC.cpp:
+	* tao/PortableInterceptorC.h:
+	* tao/DynamicAny/DynamicAnyC.cpp:
+	* tao/DynamicAny/DynamicAnyC.h:
+	* tao/IORInterceptor/IORInterceptorC.cpp:
+	* tao/IORInterceptor/IORInterceptorC.h:
+	* tao/IORManipulation/IORC.cpp: 
+	* tao/IORManipulation/IORC.h:
+	* tao/IORTable/IORTableC.cpp:
+	* tao/IORTable/IORTableC.h:
+	* tao/PortableServer/ImR_LocatorC.cpp:
+	* tao/PortableServer/ImR_LocatorC.h:
+	* tao/PortableServer/ImplRepoC.cpp:
+	* tao/PortableServer/ImplRepoC.h:
+	* tao/PortableServer/PortableServerC.cpp:
+	* tao/PortableServer/PortableServerC.h:
+	* tao/RTCORBA/RTCORBAC.cpp:
+	* tao/RTCORBA/RTCORBAC.h:
+	* tao/RTPortableServer/RTPortableServerC.cpp:
+	* tao/RTPortableServer/RTPortableServerC.h:
+	* tao/RTScheduling/RTSchedulerC.cpp:
+	* tao/RTScheduling/RTSchedulerC.h:
+	  All these files needed the template specializations for
+	  Objref_Traits which were previously available only for
+	  Win32. Win32 was good and it gave compile errors. But 
+	  with g++ we got link errors. 
+
+	* tao/Strategies/UIOP_Acceptor.h: Needed an include of
+	  orbconf.h. Else the cpp file was compiled out of the library. 
+
 Sun Sep 28 11:09:35 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/AMI_Buffering/Client_Task.h:
