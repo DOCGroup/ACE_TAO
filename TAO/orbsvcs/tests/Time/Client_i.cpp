@@ -30,18 +30,18 @@ Client_i::test_for_secure_universal_time (void)
   TAO_TRY
     {
       CosTime::UTO_var UTO_server =
- 	this->clerk_->secure_universal_time (TAO_TRY_ENV);
+ 	   this->clerk_->secure_universal_time (TAO_TRY_ENV);
 
       TAO_CHECK_ENV;
     }
-  TAO_CATCHANY
+  TAO_CATCH (CORBA::SystemException, sysex)
     {
-      TAO_TRY_ENV.print_exception ("Test Successful\n");
+      ACE_UNUSED_ARG (sysex);
+      TAO_TRY_ENV.print_exception ("System Exception");
       ACE_DEBUG ((LM_DEBUG,
- 		  "[CLIENT] Process/Thread Id : (%P/%t) test_for_secure_universal_time()\n"));
-    }
+ 		  "[CLIENT] Process/Thread Id : (%P/%t) test_for_secure_universal_time() successful !!\n"));
+	}
   TAO_ENDTRY;
-
 }
 
 // The following test retrieves the current universal time as a UTO
@@ -57,6 +57,7 @@ Client_i::test_for_universal_time (void)
       CosTime::UTO_var UTO_server =
  	this->clerk_->universal_time (TAO_TRY_ENV);
 
+	  TAO_CHECK_ENV;
       ACE_DEBUG ((LM_DEBUG,
  		  "\nTime = %Q\nInaccuracy = %Q\nTimeDiff = %d\nstruct.time = %Q"
  		  "\nstruct.inacclo = %d\nstruct.inacchi = %d\nstruct.Tdf = %d\n",
@@ -77,7 +78,7 @@ Client_i::test_for_universal_time (void)
                   "[CLIENT] Process/Thread Id : (%P/%t) test_for_universal_time()\n"));
     }
   TAO_ENDTRY;
-};
+}
 
 void
 Client_i::test_for_new_universal_time (void)
@@ -113,7 +114,7 @@ Client_i::test_for_new_universal_time (void)
                   "[CLIENT] Process/Thread Id : (%P/%t) Test new_universal_time () fails.\n"));
     }
   TAO_ENDTRY;
-};
+}
 
 void
 Client_i::test_for_uto_from_utc (void)
@@ -149,7 +150,7 @@ Client_i::test_for_uto_from_utc (void)
                   "[CLIENT] Process/Thread Id : (%P/%t) Test uto_from_utc () fails.\n"));
     }
   TAO_ENDTRY;
-};
+}
 
 void
 Client_i::test_for_new_interval (void)
@@ -318,7 +319,7 @@ Client_i::obtain_initial_references (void)
       clerk_name[0].id = CORBA::string_dup ("ClerkContext");
       strcpy (name, "Clerk:");
       strcat (name, host_name);
-      clerk_name[1].id = name;
+      clerk_name[1].id = CORBA::string_dup (name);
 
       ACE_DEBUG ((LM_DEBUG,
 		  "%s|\n",
@@ -328,6 +329,7 @@ Client_i::obtain_initial_references (void)
         my_name_client_->resolve (clerk_name,
 				  TAO_TRY_ENV);
       TAO_CHECK_ENV;
+
       clerk_ = CosTime::TimeService::_narrow (temp_object.in (),
 					      TAO_TRY_ENV);
       TAO_CHECK_ENV;
