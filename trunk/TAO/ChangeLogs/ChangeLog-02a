@@ -1,3 +1,178 @@
+Fri Sep 21 21:39:22 2001  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Util.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Util.cpp:
+
+	  New SSLIOP utility class containing code common to both the
+	  SSLIOP client side and the server side.
+
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Acceptor.h:
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h:
+
+	  Added new attributed that contains the state to be passed to
+	  each new TAO_SSLIOP_Connection_Handler.
+
+	  Doxygenated this header.
+
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Acceptor.cpp (open_i):
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp (open):
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp (ssliop_open_i):
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (open):
+
+	  Invoke the new TAO_SSLIOP_Util::setup_handler_state() method,
+	  and pass the created state to the creation strategy.
+
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Transport.h:
+
+	  Cache a reference to the SSLIOP::Current object to avoid any
+	  reference resolution overhead in the critical path.
+
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Transport.cpp (handle_input_i):
+
+	  Pass cached SSLIOP::Current reference to the
+	  TAO_Null_SSL_State_Guard.  Saves an
+	  ORB::resolve_initial_references() in th critical path.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.h:
+
+	  Generated and added "TAO_SSLIOP_Current" downcast and reference
+	  count related methods.  For example, it is now possible to
+	  _narrow() a SSLIOP::Current object reference to
+	  TAO_SSLIOP_Current object reference.  This makes it possible to
+	  gain access to the methods in TAO_SSLIOP_Current not defined in
+	  the SSLIOP::Current IDL without relying on dynamic_cast, which
+	  may not work properly when using compilers that do not support
+	  RTTI.
+
+	  (orb_id_):
+
+	  No longer any need for this attribute.  (See below.)
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.cpp (TAO_SSLIOP_Current):
+
+	  This constructor now accepts a pointer to the ORB Core.  This
+	  obviates the need to cache the ORBid.
+
+	  (init):
+
+	  Removed this method.  It is no longer needed since a pointer to
+	  the ORB Core is now cached in the TAO_SSLIOP_Current instance at
+	  ORB bootstrap time.
+
+	  (setup, teardown):
+
+	  These methods now accept parameters that contain the state that
+	  will be used when setting up the TSS portion of the
+	  SSLIOP::Current object.  This makes these mades thread-safe and
+	  reentrant without introducing any locks.  [Bug 943]
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.inl (implementation):
+
+	  Don't call init().  That method has been removed.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ORBInitializer.cpp (pre_init):
+
+	  Retrieve a pointer to the ORB Core from the TAO_ORBInitInfo
+	  object and pass it to the TAO_SSLIOP_Current constructor when
+	  creating the TAO_SSLIOP_Current object.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp
+	  (TAO_SSLIOP_Connection_Handler_State):
+
+	  New class that contains state that must be passed to a
+	  TAO_SSLIOP_Connection_Handler up on creation.
+
+	  (TAO_SSL_State_Guard):
+
+	  No need to export this class.  It is only used internally by the
+	  TAO_SSLIOP library.
+
+	  This class now stores additional state.  Specifically, it
+	  contains a pointer to the "previous" SSLIOP::Current
+	  implementation that was stored in TSS, the current
+	  SSLIOP::Current implementation, and a flag that specifies
+	  whether or not the TSS portion of SSLIOP::Current was setup.
+	  This state is passed to the connection handler each time a
+	  request is handled.  Since this class is instantiated each time
+	  a request is handled, the encapsulated state is
+	  request-specific, meaning that SSL state setup in TSS is
+	  reentrant and thread-safe.  [Bug 943]
+
+	  No longer any need to cache a pointer to the ORB Core.  Adjusted
+	  the constructor signature and removed the attribute
+	  accordingly.
+
+	  (TAO_SSLIOP_Connection_Handler):
+
+	  This connection handler no longer retains an instance of the
+	  TAO_SSLIOP_Current_Impl object.  That object was subject to a
+	  race condition.  [Bug 943]
+
+	  (current):
+
+	  New methods to get and set the cached TAO_SSLIOP_Current
+	  reference.  There is no longer any need to perform a
+	  dynamic_cast on the SSLIOP::Current object reference to gain
+	  access to TAO_SSLIOP_Current-specific methods.
+
+	  (setup_ssl_state):
+
+	  It is no longer necessary to retrieve the SSLIOP::Current object
+	  reference during the first attempt to set up the TSS portion of
+	  the SSLIOP::Current object.  That object reference is now
+	  retrieved and cached at ORB bootstrap time.  (See the
+	  description of the changes to SSLIOP_ORBInitializer.cpp above
+	  for details.)
+
+	  (setup_ssl_state, teardown_ssl_state):
+
+	  These methods now accept parameters that contain the state that
+	  will be used when setting up the TSS portion of the
+	  SSLIOP::Current object.  This makes these mades thread-safe and
+	  reentrant without introducing any locks.  [Bug 943]
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.i:
+
+	  Updated the calls to the setup/teardown_ssl_state() in the
+	  TAO_SSL_State_Guard constructor and destructor to match the new
+	  method signatures.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp (handle_input_i):
+
+	  The signature of the TAO_SSL_State_Guard constructor changed.
+	  Adjusted the instantiation accordingly.
+
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.h:
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.cpp:
+
+	  Changes analogous to those made in the SSLIOP_Connection_Handler
+	  counterparts.  See above for details.
+
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.inl:
+
+	  Inlined the TAO_Null_SSL_State_Guard constructor and destructor
+	  for speed/efficiency reasons.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current_Impl.h:
+
+	  Corrected destructor comment.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current_Impl.inl:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current_Impl.cpp:
+
+	  Inlined the TAO_SSLIOP_Current_Impl constructor for
+	  speed/efficiency reasons, i.e. since it is instantiated in the
+	  critical path.
+
+	* orbsvcs/orbsvcs/Makefile.SSLIOP (FILES):
+	* orbsvcs/orbsvcs/SSLIOP.bor (OBJFILES):
+
+	  Added new SSLIOP_Util sources to the list of files to	compile
+	  and link.
+
 Fri Sep 21 13:01:53 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * docs/tutorials/Quoter/Event_Service/Makefile:

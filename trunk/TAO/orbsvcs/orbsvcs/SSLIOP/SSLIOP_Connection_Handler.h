@@ -1,23 +1,19 @@
 // -*- C++ -*-
-//
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_SSLIOP
-//
-// = FILENAME
-//    SSLIOP_Connect.h
-//
-// = AUTHOR
-//    Carlos O'Ryan <coryan@uci.edu>
-//    Ossama Othman <ossama@uci.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    SSLIOP_Connection_Handler.h
+ *
+ *  $Id$
+ *
+ *  @author  Carlos O'Ryan <coryan@uci.edu>
+ *  @author  Ossama Othman <ossama@uci.edu>
+ */
+//=============================================================================
 
-#ifndef TAO_SSLIOP_CONNECT_H
-#define TAO_SSLIOP_CONNECT_H
+
+#ifndef TAO_SSLIOP_CONNECTION_HANDLER_H
+#define TAO_SSLIOP_CONNECTION_HANDLER_H
 
 #include "ace/pre.h"
 
@@ -36,9 +32,12 @@
 #include "tao/IIOPC.h"
 
 #include "SSLIOP_Transport.h"
-#include "SSLIOP_Current_Impl.h"
-#include "orbsvcs/SSLIOPC.h"
+#include "SSLIOP_Current.h"
 
+
+class TAO_SSLIOP_Connection_Handler_State;
+class TAO_SSLIOP_Connection_Handler;
+typedef TAO_SSLIOP_Connection_Handler TAO_SSLIOP_SVC_HANDLER;
 
 
 /**
@@ -49,10 +48,9 @@
  * The Connection handler which is common for the Acceptor and
  * the Connector
  */
-
-
-class TAO_SSLIOP_Export TAO_SSLIOP_Connection_Handler : public TAO_SSL_SVC_HANDLER,
-                                                        public TAO_Connection_Handler
+class TAO_SSLIOP_Export TAO_SSLIOP_Connection_Handler
+  : public TAO_SSL_SVC_HANDLER,
+    public TAO_Connection_Handler
 {
 
 public:
@@ -108,28 +106,35 @@ public:
 
   /// Make the SSL session state available to the SSLIOP::Current
   /// object.
-  int setup_ssl_state (TAO_ORB_Core *orb_core);
+  int setup_ssl_state (TAO_SSLIOP_Current_Impl *&previous_current_impl,
+                       TAO_SSLIOP_Current_Impl *new_current_impl,
+                       CORBA::Boolean &setup_done);
 
   /// Teardown the SSL session state.
-  void teardown_ssl_state (void);
+  void teardown_ssl_state (TAO_SSLIOP_Current_Impl *previous_current_impl,
+                           CORBA::Boolean &setup_done);
 
 protected:
 
-  /// = Event Handler overloads
+  /**
+   * @name Event Handler overloads
+   *
+   * SSLIOP-specific event handling methods.
+   */
+  //@{
 
   /// Reads a message from the <peer()>, dispatching and servicing it
   /// appropriately.
   /// handle_input() just delegates on handle_input_i().
   virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
 
+  //@}
+
 protected:
 
-  /// Reference to the SSLIOP::Current object.
-  SSLIOP::Current_var current_;
-
-  /// The portion of the SSLIOP::Current object that is placed in
-  /// TSS.
-  TAO_SSLIOP_Current_Impl current_impl_;
+  /// Reference to the SSLIOP::Current object (downcast to gain access
+  /// to the low-level management methods).
+  TAO_SSLIOP_Current_var current_;
 
 private:
 
@@ -138,6 +143,20 @@ private:
 
 };
 
+// ****************************************************************
+
+class TAO_SSLIOP_Connection_Handler_State
+{
+public:
+
+  /// TCP configuration for the connection associated with the
+  /// connection handler.
+  TAO_IIOP_Properties *tcp_properties;
+
+  /// Reference to the (downcast) SSLIOP::Current object.
+  TAO_SSLIOP_Current_var ssliop_current;
+
+};
 
 // ****************************************************************
 
@@ -156,13 +175,12 @@ private:
  * security support, this guard is used to ensure that
  * configuration/deconfiguration is exception safe.
  */
-class TAO_SSLIOP_Export TAO_SSL_State_Guard
+class TAO_SSL_State_Guard
 {
 public:
 
   /// Constructor that sets up the TSS SSL state.
   TAO_SSL_State_Guard (TAO_SSLIOP_Connection_Handler *handler,
-                       TAO_ORB_Core *orb_core,
                        int &result);
 
   /// Destructor that tears down the TSS SSL state.
@@ -173,6 +191,23 @@ private:
   /// Pointer to the connection handler currently handling the
   /// request/upcall.
   TAO_SSLIOP_Connection_Handler *handler_;
+
+  /// The SSLIOP::Current implementation that was previously
+  /// associated with the current thread and invocation.
+  /**
+   * It is stored here until the invocation completes, after which it
+   * placed back into TSS.
+   */
+  TAO_SSLIOP_Current_Impl *previous_current_impl_;
+
+  /// The SSLIOP::Current implementation to be associated with the
+  /// current invocation.
+  TAO_SSLIOP_Current_Impl current_impl_;
+
+  /// Flag that specifies whether or not setup of the SSLIOP::Current
+  /// object completed for the current thread and invocation.
+  CORBA::Boolean setup_done_;
+
 };
 
 
@@ -183,4 +218,4 @@ private:
 
 #include "ace/post.h"
 
-#endif /* TAO_SSLIOP_CONNECT_H */
+#endif /* TAO_SSLIOP_CONNECTION_HANDLER_H */

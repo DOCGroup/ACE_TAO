@@ -22,11 +22,15 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "SSLIOP_Current.h"
+
 #include "tao/IIOP_Transport.h"
+
 
 class TAO_ORB_Core;
 class TAO_IIOP_SSL_Connection_Handler;
 class TAO_Resume_Handle;
+
 
 /**
  * @class TAO_IIOP_SSL_Transport
@@ -55,6 +59,7 @@ public:
   /// Constructor.
   TAO_IIOP_SSL_Transport (TAO_IIOP_SSL_Connection_Handler *handler,
                           TAO_ORB_Core *orb_core,
+                          TAO_SSLIOP_Current_ptr current,
                           CORBA::Boolean flag = 0);
 
   /// Default destructor.
@@ -69,6 +74,10 @@ public:
                               ACE_Time_Value *max_wait_time = 0,
                               int block = 0);
 protected:
+
+  /// Reference to the SSLIOP::Current object (downcast to gain access
+  /// to the low-level management methods).
+  TAO_SSLIOP_Current_var current_;
 
 };
 

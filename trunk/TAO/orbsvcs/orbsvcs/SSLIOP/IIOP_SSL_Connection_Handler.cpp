@@ -3,14 +3,20 @@
 
 #include "IIOP_SSL_Connection_Handler.h"
 #include "IIOP_SSL_Transport.h"
-#include "SSLIOP_Current.h"
+#include "SSLIOP_Connection_Handler.h"
 #include "tao/Timeprobe.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
 #include "tao/debug.h"
 
-ACE_RCSID(TAO_SSLIOP, IIOP_SSL_Connect, "$Id$")
+ACE_RCSID (TAO_SSLIOP,
+           IIOP_SSL_Connection_Handler,
+           "$Id$")
 
+
+#if !defined (__ACE_INLINE__)
+#include "IIOP_SSL_Connection_Handler.inl"
+#endif /* __ACE_INLINE__ */
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
@@ -63,11 +69,22 @@ TAO_IIOP_SSL_Connection_Handler::
 TAO_IIOP_SSL_Connection_Handler (TAO_ORB_Core *orb_core,
                                  CORBA::Boolean flag,
                                  void *arg)
-  : TAO_IIOP_Connection_Handler (orb_core, flag, arg)
+  : TAO_IIOP_Connection_Handler (orb_core,
+                                 flag,
+                                 (ACE_static_cast (
+                                    TAO_SSLIOP_Connection_Handler_State *,
+                                    arg))->tcp_properties)
 {
+  TAO_SSLIOP_Connection_Handler_State *s =
+    ACE_static_cast (TAO_SSLIOP_Connection_Handler_State *,
+                     arg);
+
   TAO_IIOP_SSL_Transport* specific_transport = 0;
   ACE_NEW(specific_transport,
-          TAO_IIOP_SSL_Transport (this, orb_core, 0));
+          TAO_IIOP_SSL_Transport (this,
+                                  orb_core,
+                                  s->ssliop_current.in (),
+                                  0));
 
   // store this pointer (indirectly increment ref count)
   this->transport (specific_transport);
@@ -82,70 +99,3 @@ TAO_IIOP_SSL_Connection_Handler::
 
 // ****************************************************************
 
-TAO_Null_SSL_State_Guard::TAO_Null_SSL_State_Guard (
-  TAO_ORB_Core *orb_core,
-  int &result)
-{
-  // Make sure we have a valid reference to the SSLIOP::Current
-  // object.
-  if (CORBA::is_nil (this->current_.in ()))
-    {
-      ACE_DECLARE_NEW_CORBA_ENV;
-      ACE_TRY
-        {
-          CORBA::Object_var object =
-            orb_core->orb ()->resolve_initial_references (
-              "SSLIOPCurrent",
-              ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          this->current_ = SSLIOP::Current::_narrow (object.in (),
-                                                     ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          if (CORBA::is_nil (this->current_.in ()))
-            ACE_TRY_THROW (CORBA::INV_OBJREF ());
-        }
-      ACE_CATCHANY
-        {
-          if (TAO_debug_level > 0)
-            ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                                 "TAO_Null_SSL_State_Guard: "
-                                 "Could not resolve "
-                                 "\"SSLIOPCurrent\" object.");
-
-          result = -1;
-          return;
-        }
-      ACE_ENDTRY;
-      ACE_CHECK;
-    }
-
-  TAO_SSLIOP_Current *current =
-    ACE_dynamic_cast (TAO_SSLIOP_Current *,
-                      this->current_.in ());
-
-  if (current == 0)   // Sanity check
-    {
-      result = -1;
-      return;
-    }
-
-  // Invalidate the TSS SSL session state to make sure that SSL state
-  // from a previous SSL connection is not confused with this non-SSL
-  // connection.
-  current->setup (0);
-
-  result = 0;
-}
-
-TAO_Null_SSL_State_Guard::~TAO_Null_SSL_State_Guard (void)
-{
-  TAO_SSLIOP_Current *current =
-    ACE_dynamic_cast (TAO_SSLIOP_Current *,
-                      this->current_.in ());
-
-  // Restore the previous TSS SSL state.
-  if (current != 0)
-    current->teardown ();
-}

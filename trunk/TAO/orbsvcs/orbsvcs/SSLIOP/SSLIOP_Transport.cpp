@@ -78,7 +78,6 @@ TAO_SSLIOP_Transport::handle_input_i (TAO_Resume_Handle &rh,
 
   // Set up the SSLIOP::Current object.
   TAO_SSL_State_Guard ssl_state_guard (this->connection_handler_,
-                                       this->orb_core (),
                                        result);
   if (result == -1)
     return -1;

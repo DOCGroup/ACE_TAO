@@ -4,6 +4,8 @@
 
 #include "SSLIOP_Connector.h"
 #include "SSLIOP_Profile.h"
+#include "SSLIOP_Util.h"
+
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
@@ -63,7 +65,8 @@ TAO_SSLIOP_Connector::TAO_SSLIOP_Connector (int no_protection)
   : TAO_IIOP_SSL_Connector (),
     no_protection_ (no_protection),
     connect_strategy_ (),
-    base_connector_ ()
+    base_connector_ (),
+    handler_state_ ()
 {
 }
 
@@ -73,6 +76,11 @@ TAO_SSLIOP_Connector::open (TAO_ORB_Core *orb_core)
   if (this->TAO_IIOP_SSL_Connector::open (orb_core) == -1)
     return -1;
 
+  if (TAO_SSLIOP_Util::setup_handler_state (orb_core,
+                                            &(this->tcp_properties_),
+                                            this->handler_state_) != 0)
+      return -1;
+
   // Our connect creation strategy
   TAO_SSLIOP_CONNECT_CREATION_STRATEGY *connect_creation_strategy = 0;
 
@@ -80,7 +88,7 @@ TAO_SSLIOP_Connector::open (TAO_ORB_Core *orb_core)
                   TAO_SSLIOP_CONNECT_CREATION_STRATEGY
                       (orb_core->thr_mgr (),
                        orb_core,
-                       &(this->tcp_properties_),
+                       &(this->handler_state_),
                        this->lite_flag_),
                   -1);
 

@@ -25,6 +25,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "IIOP_SSL_Connection_Handler.h"
+#include "SSLIOP_Connection_Handler.h"
 #include "tao/IIOP_Acceptor.h"
 
 // TAO IIOP_SSL_Acceptor concrete call defination
@@ -81,6 +82,10 @@ private:
   TAO_IIOP_SSL_CONCURRENCY_STRATEGY *concurrency_strategy_;
   TAO_IIOP_SSL_ACCEPT_STRATEGY *accept_strategy_;
   //@}
+
+  /// State that will be passed to each SSLIOP connection handler upon
+  /// creation.
+  TAO_SSLIOP_Connection_Handler_State handler_state_;
 
 };
 
