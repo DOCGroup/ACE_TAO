@@ -10,6 +10,17 @@ Mon Feb 23 12:26:06 1998  David L. Levine  <levine@cs.wustl.edu>
           ::sched_setscheduler () call, because it returns the old scheduling
           policy, not 0, on success.
 
+        * ace/config-osf1-4.0.h: removed ACE_HAS_EXCEPTIONS because that is
+          enabled by platform_osf1_4.0{,_rcc}.GNU.
+
+        * include/makeinclude/platform_osf1_4.0.GNU: added suppression of
+          warning 835 because /usr/include/cxx/memory, line 505, triggers
+          a warning about an unreferenced parameter.
+
+        * include/makeinclude/platform_osf1_4.0{,_rcc}.GNU: added
+          "exceptions = 1" so that ACE exception handling can be
+          disabled on the make command line.
+
 Mon Feb 23 11:27:10 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE version 4.4.30, released Mon Feb 23 11:27:10 1998.
