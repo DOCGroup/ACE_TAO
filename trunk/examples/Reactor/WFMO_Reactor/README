@@ -86,6 +86,26 @@ int main (void)
 
 ----------------------------------------
 
+. test_timeout --
+
+This example application shows how to write ReactorEx and Proactor
+event loops that handle events for some fixed amount of time.  It uses
+ACE_Service_Config::run_reactorEx_event_loop (run_time) to handle
+events for run_time seconds.  The output should be the following:
+
+1 timeout occurred for Foo.
+2 timeout occurred for Bar.
+3 timeout occurred for Foo.
+4 timeout occurred for Bar.
+5 timeout occurred for Foo.
+6 timeout occurred for Bar.
+7 timeout occurred for Foo.
+8 timeout occurred for Foo.
+9 timeout occurred for Bar.
+10 timeout occurred for Foo.
+11 timeout occurred for Bar.
+12 timeout occurred for Foo.
+
 . test_remove_handler -- 
 
 This application tests the ReactorEx's ability to handle simultaneous
