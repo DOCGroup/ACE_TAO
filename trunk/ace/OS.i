@@ -950,7 +950,7 @@ ACE_INLINE mode_t
 ACE_OS::umask (mode_t cmask)
 {
 #if defined (ACE_HAS_PACE)
-  ACE_OSCALL_RETURN (::pace_umask (cmask), int -1);
+  ACE_OSCALL_RETURN (::pace_umask (cmask), int, -1);
 # elif !defined (ACE_HAS_WINCE)
   ACE_OS_TRACE ("ACE_OS::umask");
   ACE_OSCALL_RETURN (::_umask (cmask), int, -1);
