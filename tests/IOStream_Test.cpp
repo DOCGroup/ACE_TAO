@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    tests
-// 
+//
 // = FILENAME
 //    IOStream_Test.cpp
 //
@@ -14,7 +14,7 @@
 //
 // = AUTHOR
 //    James CE Johnson <jcej@lads.com>
-// 
+//
 // ============================================================================
 
 
@@ -225,7 +225,7 @@ static void *client_thread(void * _thr_mgr)
 /* Test the server's ability to receive data from the client and then begin
    a two-way conversation.
    */
-void server_test(ACE_SOCK_IOStream & client) 
+void server_test(ACE_SOCK_IOStream & client)
 {
 	// Read a qbuf[] from the client.  Notice that all of the
 	// client's whitespace is preserved.
@@ -268,7 +268,7 @@ void server_test(ACE_SOCK_IOStream & client)
 	client << endl;
 
 	// The client will have changed the sign of each data field
-	// and sent 'em all back to us.  At the same time, the 
+	// and sent 'em all back to us.  At the same time, the
 	// client used the precision() function to change the
 	// significant digits for non-integer values.
 	//
