@@ -1,3 +1,10 @@
+Fri Mar 20 09:46:50 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/Memory_Pools.h: 
+	* orbsvcs/orbsvcs/Event/Memory_Pools.cpp: 
+	  Locks are needed for the memory pool singletons; thanks to
+	  Thomas Venturella <tventurell@mdc.com> for detecting this.
+
 Fri Mar 20 09:26:28 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/POA/Generic_Servant/MyFooServant.h: added
