@@ -54,11 +54,11 @@ This document describes how to compile/run the BasicSP (HUDisplay) example with 
   <LI> Change into the $CIAO_ROOT/DAnCE/examples/BasicSP/descriptors directory Start NodeManagers (NodeDameon) by running <code> basicNodeDaemon.pl </code>
   
   <LI> Start the execution manager:
-  <code>$CIAO_ROOT/DAnCE/ExecutionManager/Execution_Manager -o EM.ior -i basicsp.dat </code>
+  <code>$CIAO_ROOT/DAnCE/ExecutionManager/Execution_Manager -o EM.ior -i NodeManagerMap.dat </code>
   </LI>
 
   <LI> Start the executor:
-  <code> $CIAO_ROOT/DAnCE/RepositoryManager/executor -p package.tpd -d HUDisplay.cdp -k file://EM.ior </code>
+  <code> $CIAO_ROOT/DAnCE/Plan_Launcher/plan_launcher -p flattern_deploymentplan.cdp -k file://EM.ior </code>
   
   <LI> After this, components should be deployed successfully. You can run the $CIAO_ROOT/DAnCE/examples/BasicSP/EC/controller to start the application.
        Please make sure that the component IOR file for the EC component is present when you run this client.
