@@ -24,7 +24,7 @@
 #ifndef BOOL_ARRAY_H
 #define BOOL_ARRAY_H
 
-#include "ace/OS.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -61,16 +61,15 @@ public:
   // Reinitializes the array (requires O(1) time).
 
 private:
-  u_long *storage_array_;
+  unsigned long *storage_array_;
   // Initialization of the index space.
 
-  u_long generation_number_;
+  unsigned long generation_number_;
   // Keep track of the current Generation.
 
-  u_long size_;
+  unsigned long size_;
   // Keep track of array size.
 };
 
 #endif /* ACE_HAS_GPERF */
 #endif /* BOOL_ARRAY_H */
-
