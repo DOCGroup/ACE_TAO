@@ -46,6 +46,11 @@
 
 ACE_RCSID(tests, Cached_Accept_Conn_Test, "$Id$")
 
+#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
+USELIB("..\ace\aced.lib");
+//---------------------------------------------------------------------------
+#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   // The explicit instantiations are necessary with g++ 2.91.66
@@ -241,12 +246,9 @@ template class ACE_Guard<ACE_Reverse_Lock<ACE_SYNCH_NULL_MUTEX> >;
 
 #endif /* CACHED_CONNECT_TEST */
 
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
-
-static int debug = 0;
+// For some strange reason this must *not* be static since otherwise
+// certain versions of SunC++ will not link properly.
+int debug = 0;
 
 Client_Svc_Handler::Client_Svc_Handler (ACE_Thread_Manager *t)
   : ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> (t)
@@ -390,7 +392,8 @@ Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::out_of_sockets_handler (void)
     {
       // Close connections which are cached by explicitly purging the
       // connection cache maintained by the connector.
-      ACE_DEBUG ((LM_DEBUG, "Purging connections from Connection Cache...\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "Purging connections from Connection Cache...\n"));
 
       return this->caching_connect_strategy_.purge_connections ();
     }
