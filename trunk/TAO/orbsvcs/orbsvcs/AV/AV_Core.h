@@ -20,7 +20,7 @@
 #define TAO_AV_CORE_H
 #include "ace/pre.h"
 
-#include "tao/PortableServer/ORB_Manager.h"
+#include "tao/PortableServer/PortableServer.h"
 #include "orbsvcs/AVStreamsC.h"
 #include "AV_export.h"
 
@@ -30,78 +30,19 @@ class TAO_AV_Acceptor_Registry;
 class TAO_AV_Acceptor;
 class TAO_AV_Connector;
 class TAO_FlowSpec_Entry;
-
-//forward declaration.
-class TAO_AV_Transport_Factory;
-
-class TAO_AV_Export TAO_AV_Transport_Item
-{
-public:
-  TAO_AV_Transport_Item (const ACE_CString &name);
-  // creator method, the Transport name can only be set when the
-  // object is created.
-
-  const ACE_CString &name (void);
-  // return a reference to the character representation of the Transport
-  // factories name.
-
-  TAO_AV_Transport_Factory *factory (void);
-  // return a pointer to the Transport factory.
-
-  void factory (TAO_AV_Transport_Factory *factory);
-  // set the factory pointer's valus.
-
-private:
-  ACE_CString name_;
-  // Transport factory name.
-
-  TAO_AV_Transport_Factory *factory_;
-  // pointer to factory object.
-};
-
-class TAO_AV_Flow_Protocol_Factory;
-
-class TAO_AV_Export TAO_AV_Flow_Protocol_Item
-{
-public:
-  TAO_AV_Flow_Protocol_Item (const ACE_CString &name);
-  // creator method, the Flow_Protocol name can only be set when the
-  // object is created.
-
-  const ACE_CString &name (void);
-  // return a reference to the character representation of the Flow_Protocol
-  // factories name.
-
-  TAO_AV_Flow_Protocol_Factory *factory (void);
-  // return a pointer to the Flow_Protocol factory.
-
-  void factory (TAO_AV_Flow_Protocol_Factory *factory);
-  // set the factory pointer's valus.
-
-private:
-  ACE_CString name_;
-  // Flow_Protocol factory name.
-
-  TAO_AV_Flow_Protocol_Factory *factory_;
-  // pointer to factory object.
-};
-
-// typedefs for containers containing the list of loaded Flow_Protocol
-// factories.
-typedef ACE_Unbounded_Set<TAO_AV_Flow_Protocol_Item*>
-        TAO_AV_Flow_ProtocolFactorySet;
-
-typedef ACE_Unbounded_Set_Iterator<TAO_AV_Flow_Protocol_Item*>
-        TAO_AV_Flow_ProtocolFactorySetItor;
-
-typedef ACE_Unbounded_Set<TAO_AV_Transport_Item*>
-        TAO_AV_TransportFactorySet;
-
-typedef ACE_Unbounded_Set_Iterator<TAO_AV_Transport_Item*>
-        TAO_AV_TransportFactorySetItor;
+class TAO_AV_Transport_Item;
+class TAO_AV_Flow_Protocol_Item;
 
 typedef ACE_Unbounded_Set <TAO_FlowSpec_Entry*> TAO_AV_FlowSpecSet;
 typedef ACE_Unbounded_Set_Iterator <TAO_FlowSpec_Entry*> TAO_AV_FlowSpecSetItor;
+
+typedef ACE_Unbounded_Set<TAO_AV_Transport_Item*> TAO_AV_TransportFactorySet;
+typedef ACE_Unbounded_Set_Iterator<TAO_AV_Transport_Item*> TAO_AV_TransportFactorySetItor;
+
+// typedefs for containers containing the list of loaded Flow_Protocol factories.
+typedef ACE_Unbounded_Set<TAO_AV_Flow_Protocol_Item*> TAO_AV_Flow_ProtocolFactorySet;
+typedef ACE_Unbounded_Set_Iterator<TAO_AV_Flow_Protocol_Item*> TAO_AV_Flow_ProtocolFactorySetItor;
+
 
 class TAO_AV_Export TAO_AV_Core
 {
@@ -131,8 +72,8 @@ public:
   ~TAO_AV_Core (void);
   // Destructor.
 
-  int init (int &argc,
-            char *argv [],
+  int init (CORBA::ORB_ptr orb,
+            PortableServer::POA_ptr poa,
             CORBA::Environment &env);
   int run (void);
   int stop_run (void);
@@ -161,8 +102,11 @@ public:
   // = Set/get the <ACE_Reactor>.
   void reactor (ACE_Reactor *r);
   ACE_Reactor *reactor (void);
-  TAO_ORB_Manager *orb_manager (void);
-
+  CORBA::ORB_ptr orb (void);
+  void orb (CORBA::ORB_ptr orb_);
+  PortableServer::POA_ptr poa (void);
+  void poa (PortableServer::POA_ptr poa_);
+  
 protected:
   TAO_AV_Connector_Registry *connector_registry_;
   // The connector registry which all active connecters must register
@@ -180,7 +124,7 @@ protected:
 
   ACE_Reactor *reactor_;
   CORBA::ORB_var orb_;
-  TAO_ORB_Manager orb_manager_;
+  PortableServer::POA_var poa_;
   CORBA::Boolean stop_run_;
 };
 
