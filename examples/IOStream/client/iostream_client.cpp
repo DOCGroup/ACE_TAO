@@ -41,3 +41,9 @@ int main (int argc, char *argv[])
 
   return 0;
 }
+
+
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class ACE_IOStream <ACE_SOCK_Stream>;
+template class ACE_Streambuf <ACE_SOCK_Stream>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
