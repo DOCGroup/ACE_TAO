@@ -12,7 +12,7 @@ ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
 ## Makefile.netsvcs.am 
-noinst_LTLIBRARIES = libnetsvcs.la
+lib_LTLIBRARIES = libnetsvcs.la
 
 libnetsvcs_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
