@@ -15,7 +15,7 @@
 #include "ace/Based_Pointer_Repository.h"
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1  */
 
-ACE_RCSID(ace, Memory_Pool, "$Id$")
+ACE_RCSID(ace, Memory_Pool, "Memory_Pool.cpp,v 4.79 2001/09/02 22:33:16 schmidt Exp")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Local_Memory_Pool)
 
@@ -153,6 +153,7 @@ ACE_MMAP_Memory_Pool::protect (void *addr, size_t len, int prot)
 ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (const ACE_TCHAR *backing_store_name,
                                             const OPTIONS *options)
   : base_addr_ (0),
+    use_fixed_addr_(0),
     flags_ (MAP_SHARED),
     write_each_page_ (0),
     minimum_bytes_ (0),
@@ -171,17 +172,18 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (const ACE_TCHAR *backing_store_name,
       else
         // If no options are specified, default to true.
         guess_on_fault_ = 1;
-#endif
+#endif /* (defined (ACE_HAS_SIGINFO_T) && !defined (ACE_LACKS_SI_ADDR)) || defined (ACE_WIN32) */
 
   // Only change the defaults if <options> != 0.
   if (options)
     {
       if (options->flags_ != 0)
         this->flags_ = options->flags_;
-      if (options->use_fixed_addr_)
+      use_fixed_addr_ = options->use_fixed_addr_;
+
+      if (use_fixed_addr_ == ACE_MMAP_Memory_Pool_Options::ALWAYS_FIXED)
         {
-          this->base_addr_ =
-            ACE_const_cast (void *, options->base_addr_);
+          this->base_addr_ = ACE_const_cast (void *, options->base_addr_);
           ACE_SET_BITS (flags_, MAP_FIXED);
         }
       this->write_each_page_ = options->write_each_page_;
@@ -285,6 +287,11 @@ ACE_MMAP_Memory_Pool::map_file (off_t map_size)
 
   // Unmap the existing mapping.
   this->mmap_.unmap ();
+
+#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
+  if(use_fixed_addr_ == ACE_MMAP_Memory_Pool_Options::NEVER_FIXED)
+    this->base_addr_ = 0;
+#endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 
   // Remap the file.
   if (this->mmap_.map (map_size,
@@ -441,7 +448,7 @@ ACE_MMAP_Memory_Pool_Options::ACE_MMAP_Memory_Pool_Options (const void *base_add
                                                             int guess_on_fault,
                                                             LPSECURITY_ATTRIBUTES sa)
   : base_addr_ (base_addr),
-    use_fixed_addr_ (base_addr == 0 ? 0 : use_fixed_addr),
+    use_fixed_addr_ (use_fixed_addr),
     write_each_page_ (write_each_page),
     minimum_bytes_ (minimum_bytes),
     flags_ (flags),
@@ -449,6 +456,10 @@ ACE_MMAP_Memory_Pool_Options::ACE_MMAP_Memory_Pool_Options (const void *base_add
     sa_ (sa)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool_Options::ACE_MMAP_Memory_Pool_Options");
+  // for backwards compatability
+  if (base_addr_ == 0 && use_fixed_addr_ == ALWAYS_FIXED)
+    use_fixed_addr_ = FIRSTCALL_FIXED;
+    
   // HP-UX 11, 64-bit bug workaround.
 #if defined (__hpux) && defined (__LP64__)
   long temp = ACE_DEFAULT_BASE_ADDRL;
