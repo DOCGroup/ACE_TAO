@@ -53,6 +53,7 @@ main (int argc, char *argv[])
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
+#if TAO_HAS_INTERCEPTORS == 1
       PortableInterceptor::ORBInitializer_ptr temp_initializer =
         PortableInterceptor::ORBInitializer::_nil ();
 
@@ -65,6 +66,7 @@ main (int argc, char *argv[])
       PortableInterceptor::register_orb_initializer (orb_initializer.in (),
                                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
@@ -111,6 +113,7 @@ main (int argc, char *argv[])
             old_number = number;
 
           number = server->number (ACE_TRY_ENV);
+
           ACE_TRY_CHECK;
 
           ACE_DEBUG ((LM_INFO,
@@ -127,7 +130,7 @@ main (int argc, char *argv[])
           // after the other.  This means that forwarding did not
           // occur, which is of course a failure in the
           // PortableInterceptor::ForwardRequest support.
-          if (i > 1 && old_number == new_number)
+          if (i > 1 && old_number == number)
             {
               status = -1;
 
@@ -148,6 +151,9 @@ main (int argc, char *argv[])
       return -1;
     }
   ACE_ENDTRY;
+
+  ACE_DEBUG ((LM_INFO,
+              "PortableInterceptor::ForwardRequest test passed.\n"));
 
   return status;
 }
