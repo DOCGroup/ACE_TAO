@@ -43,7 +43,7 @@ class ACE_Allocator;
                               ACE_Hash_Map_Manager_Ex<KEY, ACE_Pair<VALUE, ATTRIBUTES>, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>, \
                               CACHING_STRATEGY, \
                               ATTRIBUTES>
-#endif (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
+#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
 
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class CACHING_STRATEGY, class ATTRIBUTES>
 class ACE_Hash_Cache_Map_Manager : public ACE_CACHE_MAP_MANAGER
