@@ -1,5 +1,6 @@
 Tue Jun 29 13:44:41 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* tests/TAO_Tests.dsw:
 	* tests/IORManipulation/IORManipulation.dsw:
 	* tests/IORManipulation/IORTest.dsp: Added new workspace and
 	  project files.
