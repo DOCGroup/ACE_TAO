@@ -928,8 +928,6 @@ AH_TEMPLATE([ACE_LACKS_NULL_PTHREAD_STATUS],
 AH_TEMPLATE([ACE_HAS_MUTEX_TIMEOUTS],
 [Compiler supports timed mutex acquisitions (e.g. pthread_mutex_timedlock()).])
 
-AH_TEMPLATE([ACE_LACKS_PARAM_H],[Platform lacks <sys/param.h> (e.g., MVS)])
-
 AH_TEMPLATE([ACE_LACKS_NAMED_POSIX_SEM],
 [Platform lacks named POSIX semaphores (e.g., Chorus)])
 
