@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Consumer.h"
+#include "cpuload.h"
 
 #include <sstream> //for ostringstream
 
@@ -86,8 +87,15 @@ Consumer::connect_impl (bool set_rtinfo, //true if should set RT_Info
   RtecScheduler::handle_t rt_info = scheduler->create (cons_entry_pt.str().c_str()
                                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
+
+  //TODO: How get period if !set_rtinfo?
   if (set_rtinfo)
     {
+      //ORBSVCS_Time::TimeT_to_Time_Value(this->_work_time,period);
+      //this->_work_time *= 0.5; //only work for half the period
+      //TODO: How much work should we do?
+      this->_work_time.set(1,0); //based on DT test, work is 1 second long
+
       //ignore period, since it will propagate from Supplier
       RtecScheduler::Period_t p = 0;//period;
 
@@ -139,6 +147,9 @@ Consumer::connect_impl (bool set_rtinfo, //true if should set RT_Info
 
   ACE_DEBUG((LM_DEBUG,"Consumer %d connected\n",this->_consumer_id));
   ACE_DEBUG((LM_DEBUG,"\tEvent type: %d\n",event_type));
+
+  //calibrate
+  this->_work.calibrate();
 }
 
 void
@@ -180,7 +191,7 @@ Consumer::push (const RtecEventComm::EventSet& events
                   "Consumer (%P|%t) no events\n"));
       return;
     }
-
+  /*
   int prio = -1;
   ACE_hthread_t handle;
   ACE_Thread::self(handle);
@@ -188,6 +199,17 @@ Consumer::push (const RtecEventComm::EventSet& events
   //ACE_thread_t tid = ACE_Thread::self();
   ACE_DEBUG ((LM_DEBUG, "Consumer #%d @%d (%P|%t) we received event type %d\n",
               this->_consumer_id,prio,events[0].header.type));
+  */
+
+  //@BT INSTRUMENT with event ID: EVENT_WORK_START Measure time
+  //when work triggered by event starts.
+
+  //do work
+  timeval load = (timeval) this->_work_time;
+  this->_work.run(load);
+
+  //@BT INSTRUMENT with event ID: EVENT_WORK_END Measure time when
+  //work triggered by event finishes.
 }
 
 void
