@@ -1,3 +1,16 @@
+Thu Mar  7 18:40:05 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/Makefile:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/Test.idl:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/Roundtrip.h:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/Roundtrip.cpp:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/client.cpp:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/server.cpp:
+	  Add new test to measure the baseline performance and
+	  predictability of RT-CORBA for the event service configuration.
+	  Without knowing how much to expect from the infrastructure I
+	  cannot decide if the RTEC is doing well or not.
+
 Thu Mar  7 13:03:50 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/Notify_Service/Notify_Service.h:
