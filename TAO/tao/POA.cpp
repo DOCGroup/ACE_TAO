@@ -15,6 +15,8 @@
 // Timeprobes class
 #include "tao/Timeprobe.h"
 
+#if defined (ACE_ENABLE_TIMEPROBES)
+
 static const char *TAO_POA_Timeprobe_Description[] = 
 { 
   "POA::locate_poa_i - start",
@@ -56,6 +58,8 @@ enum
   TAO_SERVANT_DISPATCH_START,
   TAO_SERVANT_DISPATCH_END
 };
+
+#endif /* ACE_ENABLE_TIMEPROBES */
 
 // Setup Timeprobes
 ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_POA_Timeprobe_Description, 

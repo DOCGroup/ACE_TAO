@@ -18,6 +18,8 @@
 
 #include "tao/Timeprobe.h"
 
+#if defined (ACE_ENABLE_TIMEPROBES)
+
 static const char *TAO_ORB_Timeprobe_Description[] = 
 { 
   "CORBA_ORB::run - start",
@@ -29,6 +31,8 @@ enum
   TAO_CORBA_ORB_RUN_START = 0,
   TAO_CORBA_ORB_RUN_END
 };
+
+#endif /* ACE_ENABLE_TIMEPROBES */
 
 // Setup Timeprobes
 ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_ORB_Timeprobe_Description,
