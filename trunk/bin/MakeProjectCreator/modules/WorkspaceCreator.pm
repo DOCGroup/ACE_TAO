@@ -1073,20 +1073,20 @@ sub non_intersection {
 
 sub indirect_depdency {
   my($self)   = shift;
+  my($dir)    = shift;
   my($ccheck) = shift;
   my($cfile)  = shift;
 
-  if (defined $self->{'project_info'}->{$ccheck}) {
-    if ($self->{'project_info'}->{$ccheck}->[1] =~ /$cfile/) {
-      return 1;
-    }
-    else {
-      my($deps) = $self->create_array(
-                           $self->{'project_info'}->{$ccheck}->[1]);
-      foreach my $dep (@$deps) {
-        if ($self->indirect_depdency($dep, $cfile)) {
-          return 1;
-        }
+  if ($self->{'project_info'}->{$ccheck}->[1] =~ /$cfile/) {
+    return 1;
+  }
+  else {
+    my($deps) = $self->create_array(
+                         $self->{'project_info'}->{$ccheck}->[1]);
+    foreach my $dep (@$deps) {
+      if (defined $self->{'project_info'}->{"$dir$dep"} &&
+          $self->indirect_depdency($dir, "$dir$dep", $cfile)) {
+        return 1;
       }
     }
   }
@@ -1145,22 +1145,23 @@ sub add_implicit_project_dependencies {
           ## Remove our starting directory from the projects directory
           ## to get the right part of the directory to prepend.
           $dir =~ s/^$cwd[\/\\]*//;
-          if ($dir ne '') {
-            $file = "$dir/$file";
-          }
 
-          ## Turn the append value into a key for 'project_info'
+          ## Turn the append value into a key for 'project_info' and
+          ## prepend the directory to the file.
           my($ccheck) = $append;
           $ccheck =~ s/"//g;
           if ($dir ne '') {
-            $ccheck = "$dir/$ccheck";
+            $dir .= '/';
+            $ccheck = "$dir$ccheck";
+            $file = "$dir$file";
           }
 
           ## If the append value key contains a reference to the project
           ## that we were going to append the dependency value, then
           ## ignore the generated dependency.  It is redundant and
           ## quite possibly wrong.
-          if (!$self->indirect_depdency($ccheck, $cfile)) {
+          if (!defined $self->{'project_info'}->{$ccheck} ||
+              !$self->indirect_depdency($dir, $ccheck, $cfile)) {
             ## Append the dependency
             $self->{'project_info'}->{$file}->[1] .= " $append";
           }
@@ -1241,11 +1242,10 @@ sub sort_within_group {
 
       my($moved) = 0;
       foreach my $dep (@$darr) {
-        my($base) = basename($dep);
-        if ($baseproj ne $base) {
+        if ($baseproj ne $dep) {
           ## See if the dependency is listed after this project
           for(my $j = $i + 1; $j <= $end; ++$j) {
-            if (basename($$list[$j]) eq $base) {
+            if (basename($$list[$j]) eq $dep) {
               ## If so, move it in front of the current project.
               ## The original code, which had splices, didn't always
               ## work correctly (especially on AIX for some reason).
@@ -1421,9 +1421,8 @@ sub number_target_deps {
         ## found, we put the target number in a hash map (to avoid
         ## duplicates).
         foreach my $dep (@$darr) {
-          my($base) = basename($dep);
           for(my $j = 0; $j < $i; ++$j) {
-            if (basename($list[$j]) eq $base) {
+            if (basename($list[$j]) eq $dep) {
               $targetnumbers{$j} = 1;
             }
           }

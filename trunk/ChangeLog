@@ -1,3 +1,10 @@
+Fri Mar 12 12:51:45 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Fixed a bug where circular dependencies could be added by the
+          implicit dependency generation code due to path mismatches.
+
 Fri Mar 12 13:33:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Reactor/WFMO_Reactor/Prerun_State_Changes.cpp:
