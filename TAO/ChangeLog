@@ -1,3 +1,7 @@
+Thu Oct 31 13:59:50 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/GIOP_Message_Base.cpp: Fixed a typo in the comments.
+
 Thu Oct 31 13:08:23 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp (handle_timeout): Fixed
@@ -15,7 +19,7 @@ Thu Oct 31 11:58:24 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	* orbsvcs/tests/EC_MT_Mcast/MCast.cpp: Fixed compile error in
 	  builds where exceptions have been turned off.
 
-Thu Oct 31 10:51:12 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+Thu Oct 31 10:51:12 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* docs/Smart_Proxies.html: Fixed a few typos.
 
