@@ -153,23 +153,21 @@ public:
 				ACE_Reactor_Mask mask); 
   // Register <event_handler> with <mask>.  The I/O handle is provided
   // through the <io_handle> parameter.
- 
+
 #if defined (ACE_WIN32)
-
-  // Originally this interface was available for all platforms, but
-  // because ACE_HANDLE is an int on non-Win32 platforms, compilers
-  // are not able to tell the difference between
-  // register_handler(ACE_Event_Handler*,ACE_Reactor_Mask) and
-  // register_handler(ACE_Event_Handler*,ACE_HANDLE). Therefore, we
-  // have restricted this method to Win32 only.
-
   virtual int register_handler (ACE_Event_Handler *event_handler, 
 				ACE_HANDLE event_handle = ACE_INVALID_HANDLE);
   // Register an <event_handler> that will be notified when
   // <event_handle> is signaled.  Since no event mask is passed
   // through this interface, it is assumed that the <event_handle>
   // being passed in is an event handle and not an I/O handle.
-
+  //
+  // Originally this interface was available for all platforms, but
+  // because ACE_HANDLE is an int on non-Win32 platforms, compilers
+  // are not able to tell the difference between
+  // register_handler(ACE_Event_Handler*,ACE_Reactor_Mask) and
+  // register_handler(ACE_Event_Handler*,ACE_HANDLE). Therefore, we
+  // have restricted this method to Win32 only.
 #endif /* ACE_WIN32 */
 
   virtual int register_handler (ACE_HANDLE event_handle,
