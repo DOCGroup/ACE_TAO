@@ -657,12 +657,14 @@ main (int argc, char *argv [])
   if (get_options (argc, argv)) ACE_OS::exit (-1);
 
   if (ACE_OS::sched_params (
-        ACE_Sched_Params (ACE_SCHED_FIFO,
-                          ACE_Sched_Params::priority_min (ACE_SCHED_FIFO))) != 0)
+        ACE_Sched_Params (
+          ACE_SCHED_FIFO,
+          ACE_Sched_Params::priority_min (ACE_SCHED_FIFO),
+          ACE_SCOPE_PROCESS)) != 0)
     {
       if (ACE_OS::last_error () == EPERM)
         {
-          ACE_OS::fprintf (stderr, "%s: user is not root, so remain in "
+          ACE_OS::fprintf (stderr, "%s: user is not superuser, so remain in "
                                    "time-sharing class\n", argv[0]);
         }
       else
