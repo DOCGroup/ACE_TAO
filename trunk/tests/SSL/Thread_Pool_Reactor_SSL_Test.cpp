@@ -296,7 +296,7 @@ worker (void *)
 }
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Thread_Pool_Reactor_SSL_Test"));
 
@@ -355,7 +355,7 @@ template class ACE_Svc_Handler<ACE_SSL_SOCK_STREAM, ACE_MT_SYNCH>;
 
 #else
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Thread_Pool_Reactor_SSL_Test"));
 
