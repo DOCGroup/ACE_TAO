@@ -397,7 +397,7 @@ TAO_SSLIOP_Transport::get_listen_point (
 }
 
 ACE_Event_Handler *
-TAO_IIOP_Transport::invalidate_event_handler_i (void)
+TAO_SSLIOP_Transport::invalidate_event_handler_i (void)
 {
   ACE_Event_Handler * eh = this->connection_handler_;
   this->connection_handler_ = 0;
