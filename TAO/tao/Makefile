@@ -93,6 +93,10 @@ IDL_COMPILER_FILES = \
   Union \
   Operation_Table
 
+INTERFACE_REPO_FILES = \
+  InterfaceC 
+  
+
 ORB_CORE_FILES = \
   Any \
   CurrentC \
@@ -210,7 +214,8 @@ ifndef TAO_COMPONENTS
     Interpretive_Marshaling \
     IDL_Compiler \
     ORB_Core \
-    Dynamic_Any
+    Dynamic_Any \
+    Interface_repo
 endif # TAO_COMPONENTS
 
 ####
@@ -243,6 +248,10 @@ endif # ORB_Core
 ifneq (,$(findstring Dynamic_Any,$(TAO_COMPONENTS)))
   FILES += $(DYNAMIC_ANY_FILES)
 endif # Dynamic_Any
+
+ifneq (,$(findstring Interface_repo,$(TAO_COMPONENTS)))
+  FILES += $(INTERFACE_REPO_FILES)
+endif # INTERFACE_REPO
 
 LSRC    = $(addsuffix .cpp,$(FILES))
 BUILD   += TAO_COMPONENTS

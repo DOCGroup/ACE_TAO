@@ -1,3 +1,16 @@
+Tue Aug  3 22:25:13 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Makefile: 
+	* tao/corbafwd.h :
+	* tao/InterfaceC.h :
+	* tao/InterfaceC.cpp :
+	* tao/InterfaceC.i : If the user wants to use the interface
+	  repository he has to compile with the flag
+	  interface_repo=1. Also made these files compilable by the
+	  Makefile. The files would be compiled by default but the actual
+	  code would go in to the library only if the above compile flag
+	  is set.
+
 Tue Aug 03 18:40:47 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* tao/IIOP_Connect.{h,cpp} (TAO_IIOP_Client_Connection_Handler):
