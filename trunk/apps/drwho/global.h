@@ -1,35 +1,48 @@
 /* -*- C++ -*- */
 // $Id$
 
-/* Here are all the declarations that are needed throughout the program. */
+// ============================================================================
+//
+// = LIBRARY
+//    drwho
+//
+// = FILENAME
+//    global.h
+//
+// = DESCRIPTION
+//    Here are all the declarations that are needed throughout the program. */
+//
+// = AUTHOR
+//    Douglas C. Schmidt
+//
+// ============================================================================
 
-#ifndef _GLOBAL_H
+#if !defined (_GLOBAL_H)
 #define _GLOBAL_H
 
-/* These constants are used throughout the program... */
+#include "ace/OS.h"
+
+// These constants are used throughout drwho.
 
 enum 
 {
-  MAXUSERIDNAMELEN 	= 8,
-  MAX_USER_TIMEOUT 	= 300, 
-  MAX_HOST_TIMEOUT 	= 300, 
-#ifdef i386
-  UDP_PACKET_SIZE 	= 0x2000,
-#else
-  UDP_PACKET_SIZE 	= 0x4000,
-#endif
-  PORT_NUMBER 		= 12344
-/*  MAXPATHLEN 		= 1024, 
-    MAXHOSTNAMELEN 	= 64 + 1 */
+  MAXUSERIDNAMELEN = 8,
+  MAX_USER_TIMEOUT = 300, 
+  MAX_HOST_TIMEOUT = 300, 
+  UDP_PACKET_SIZE = 1024 * 8,
+  PORT_NUMBER = 12344
 };
 
-/* Default name of file where friends info is stored. */
+// Default name of file where friends info is stored. 
 #define FRIEND_FILE ".friends.dta"
 
-/* Default name where rwho info is stored. */
+// Default name where rwho info is stored. 
 #define RWHODIR "/usr/spool/rwho"
 
-/* Daemon creator. */
-extern void daemon_start (int ignsigcld);
+// Macros for handling message types. 
+#define GET_PACKET_TYPE(P)      (ntohs (*((short *) P)))
+#define SET_PACKET_TYPE(P,T)    ((*(short *) P) = ntohs (T))
+#define SKIP_PACKET_TYPE(P)     ((P) + sizeof (short))
+#define SUBTRACT_PACKET_TYPE(L) ((L) - sizeof (short)) 
 
 #endif /* _GLOBAL_H */

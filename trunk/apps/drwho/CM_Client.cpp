@@ -1,4 +1,5 @@
 // $Id$
+
 #include "global.h"
 #include "Options.h"
 #include "Multicast_Manager.h"
@@ -16,7 +17,9 @@ CM_Client::open (short port_number)
   if (Comm_Manager::sokfd == ACE_INVALID_HANDLE)
     return -1;
   
-  ACE_OS::memset ((char *) &this->sin, 0, sizeof this->sin);
+  ACE_OS::memset ((char *) &this->sin,
+                  0,
+                  sizeof this->sin);
   this->sin.sin_family = AF_INET;
   this->sin.sin_port = htons (port_number);
 
@@ -38,8 +41,10 @@ CM_Client::receive (int timeout)
 
   while (Multicast_Manager::outstanding_hosts_remain ())
     {
-      if (ACE_OS:;select (Comm_Manager::sokfd + 1,
-                          &this->read_fd_, 0, 0, 
+      if (ACE_OS::select (Comm_Manager::sokfd + 1,
+                          &this->read_fd_,
+                          0,
+                          0, 
                           this->top_) <= 0)
 	break;
       else
@@ -50,7 +55,6 @@ CM_Client::receive (int timeout)
                                         0,
                                         (sockaddr *) &this->sin,
                                         &sin_len);
-      
 	  if (n < 0)
 	    return -1;
 	  else
@@ -108,7 +112,12 @@ CM_Client::send (void)
                       inet_ntoa (this->sin.sin_addr)));
 	}
 
-      if (sendto (Comm_Manager::sokfd, this->send_packet, packet_length, 0, (sockaddr *) &this->sin, sizeof this->sin) < 0)
+      if (sendto (Comm_Manager::sokfd,
+                  this->send_packet,
+                  packet_length,
+                  0,
+                  (sockaddr *) &this->sin,
+                  sizeof this->sin) < 0)
 	return -1;
     }
   return 1;
@@ -122,7 +131,8 @@ CM_Client::CM_Client (void)
 CM_Client::~CM_Client (void)
 {
   if (Options::get_opt (Options::DEBUG))
-    ACE_DEBUG ((LM_DEBUG, "disposing CM_Client\n"));
+    ACE_DEBUG ((LM_DEBUG,
+                "disposing CM_Client\n"));
 
   ACE_OS::closesocket (Comm_Manager::sokfd);
 }

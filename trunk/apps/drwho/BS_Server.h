@@ -23,9 +23,9 @@
 #include "Binary_Search.h"
 
 class BS_Server : public Binary_Search
+{
   // = TITLE
   //    Provides the server's binary search lookup table abstraction. 
-{
 public:
   // = Initialization.
   BS_Server (char *packet);

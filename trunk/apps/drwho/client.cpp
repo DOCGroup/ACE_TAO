@@ -1,5 +1,4 @@
 // $Id$
-// $Id$
 
 // ============================================================================
 //
@@ -17,9 +16,7 @@
 //
 // ============================================================================
 
-#include "ace/OS.h"
 #include "Options.h"
-#include "new.h"
 #include "SML_Client.h"
 #include "SMR_Client.h"
 
@@ -28,18 +25,24 @@
 static SM_Client *
 make_client (void)
 {
+  SM_Client *client = 0;
+
   if (Options::get_opt (Options::REMOTE_USAGE) == 0)
-    return new (PRIVATE_POOL) SML_Client;
+
+    ACE_NEW_RETURN (client,
+                    SML_Client,
+                    0);
   else
-    return new (PRIVATE_POOL) SMR_Client (Options::port_number);
+    ACE_NEW_RETURN (client,
+                    SMR_Client (Options::port_number),
+                    0);
+  return client;
 }
  
 int
 main (int argc, char *argv[])
 {
   Options::set_options (argc, argv);
-
-  mark_memory ();
 
   SM_Client *sm_client = make_client ();
 

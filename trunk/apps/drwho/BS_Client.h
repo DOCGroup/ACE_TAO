@@ -9,9 +9,6 @@
 // = FILENAME
 //    BS_Client.h
 //
-// = DESCRIPTION
-//     Provides the client's binary search lookup table abstraction. 
-//
 // = AUTHOR
 //    Douglas C. Schmidt
 //

@@ -1,28 +1,37 @@
 /* -*- C++ -*- */
 // $Id$
 
-/* Provides the client's lookup table abstraction for `all' users... */
+// ============================================================================
+//
+// = LIBRARY
+//    drwho
+//
+// = FILENAME
+//    PMC_All.h
+//
+// = AUTHOR
+//    Douglas C. Schmidt
+//
+// ============================================================================
 
-#ifndef _FMC_ALL_H
-#define _FMC_ALL_H
+#if !defined (_PMC_ALL_H)
+#define _PMC_ALL_H
 
 #include "PM_Client.h"
 
 class PMC_All : public PM_Client
 {
+  // = TITLE
+  //   Provides the client's lookup table abstraction for `all' users... 
+
 protected:
-  Protocol_Record 	*insert_protocol_info (Protocol_Record &protocol_record);
-  virtual int		encode (char *packet, int &total_bytes);
-  virtual int		decode (char *packet, int &total_bytes);
+  virtual Protocol_Record *insert_protocol_info (Protocol_Record &protocol_record);
+  virtual int encode (char *packet, int &total_bytes);
+  virtual int decode (char *packet, int &total_bytes);
 
 public:
-			PMC_All (void);
-  virtual void 		process (void);
+  PMC_All (void);
+  virtual void process (void);
 };
 
-#ifdef __OPTIMIZE__
-inline
-PMC_All::PMC_All (void)
-{}
-#endif /* __OPTIMIZE__ */
-#endif /* _FMC_ALL_H */
+#endif /* _PMC_ALL_H */

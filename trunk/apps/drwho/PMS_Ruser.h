@@ -1,28 +1,37 @@
 /* -*- C++ -*- */
 // $Id$
 
-/* Provides the server's lookup table abstraction for `ruser' users... */
+// ============================================================================
+//
+// = LIBRARY
+//    drwho
+//
+// = FILENAME
+//    PMS_Ruser.h
+//
+// = AUTHOR
+//    Douglas C. Schmidt
+//
+// ============================================================================
 
-#ifndef _FMS_RUSER_H
-#define _FMS_RUSER_H
+#if !defined (_PMS_RUSER_H)
+#define _PMS_RUSER_H
 
 #include "PM_Server.h"
 
 class PMS_Ruser : public PM_Server
 {
-protected:
-  virtual char			*handle_protocol_entries (char *bp, Drwho_Node *hp);
-  virtual Protocol_Record 	*insert_protocol_info (Protocol_Record &protocol_record);
-  virtual int			encode (char *packet, int &total_bytes);
-  virtual int			decode (char *packet, int &total_bytes);
+  // = TITLE
+  //   Provides the server's lookup table abstraction for `ruser' users... 
 
 public:
   PMS_Ruser (void);
+
+protected:
+  virtual char *handle_protocol_entries (const char *bp, Drwho_Node *hp);
+  virtual Protocol_Record *insert_protocol_info (Protocol_Record &protocol_record);
+  virtual int encode (char *packet, int &total_bytes);
+  virtual int decode (char *packet, int &total_bytes);
 };
 
-#ifdef __OPTIMIZE__
-inline
-PMS_Ruser::PMS_Ruser (void)
-{}
-#endif /* __OPTIMIZE__ */
-#endif /* _FMS_RUSER_H */
+#endif /* _PMS_RUSER_H */

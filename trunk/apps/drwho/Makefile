@@ -18,8 +18,8 @@ SHARED-SRC = Protocol_Manager \
 	     Hash_Table \
 	     Binary_Search \
 	     Search_Struct \
-	     Single_Lookup \
-	     new
+	     Single_Lookup 
+
 SHARED-OBJ = $(addsuffix .o,$(SHARED-SRC))
 
 CLIENT-SRC = PM_Client \

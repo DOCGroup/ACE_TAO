@@ -1,4 +1,5 @@
 // $Id$
+
 #include "Options.h"
 #include "Binary_Search.h"
 
@@ -6,7 +7,7 @@
 // login names for two friends.
 
 int
-Binary_Search::name_compare (void *s1, void *s2)
+Binary_Search::name_compare (const void *s1, const void *s2)
 {
   return ACE_OS::strcmp ((*(Protocol_Record **) s1)->key_name1_,
                          (*(Protocol_Record **) s2)->key_name1_);
@@ -65,7 +66,8 @@ Binary_Search::get_each_entry (void)
 Binary_Search::~Binary_Search (void)
 {
   if (Options::get_opt (Options::DEBUG))
-    ACE_DEBUG ((LM_DEBUG, "disposing Binary_Search\n"));
+    ACE_DEBUG ((LM_DEBUG,
+                "disposing Binary_Search\n"));
 } 
 
 // Used to initialize the values for the iterators...
