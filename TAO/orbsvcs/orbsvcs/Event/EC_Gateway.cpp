@@ -164,6 +164,10 @@ TAO_EC_Gateway_IIOP::update_consumer (RtecEventChannelAdmin::ConsumerQOS& sub,
   this->close (env);
   if (env.exception () != 0) return;
 
+  if (sub.dependencies.length () == 0
+      || pub.publications.length () == 0)
+    return;
+
   for (CORBA::ULong i = 0; i < sub.dependencies.length (); ++i)
     {
       sub.dependencies[i].rt_info = this->rmt_info_;
