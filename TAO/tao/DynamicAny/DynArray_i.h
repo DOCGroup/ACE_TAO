@@ -26,7 +26,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_Export TAO_DynArray_i : public virtual DynamicAny::DynArray, public virtual TAO_Local_RefCounted_Object
+class TAO_DynamicAny_Export TAO_DynArray_i : public virtual DynamicAny::DynArray, public virtual TAO_Local_RefCounted_Object
 {
   // = TITLE
   //    TAO_DynArray_i
