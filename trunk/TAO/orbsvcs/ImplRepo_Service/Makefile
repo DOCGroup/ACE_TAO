@@ -37,16 +37,6 @@ tao_imr_OBJS = \
 BIN2 = ImplRepo_Service \
        tao_imr
 
-#### If the TAO orbsvcs library wasn't built with sufficient components,
-#### don't try to build here.
-#### And Naming should give us the multicast component we need.
-TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq (Naming,$(findstring Naming,$(TAO_ORBSVCS)))
-  ifeq ($(minimum_corba),0)
-    BIN = $(BIN2)
-  endif # minimum_corba
-endif # Time
-
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
@@ -54,6 +44,11 @@ endif # Time
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+
+ifeq ($(minimum_corba),0)
+  BIN = $(BIN2)
+endif # minimum_corba
+
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
