@@ -10,6 +10,8 @@
 #ifndef NODEAPPLICATION_IMPL_H
 #define NODEAPPLICATION_IMPL_H
 
+#include /**/ "ace/pre.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -70,17 +72,19 @@ namespace Deployment
 
       // Cached ComponentServer
       // Note: Need to deal with the namespace refactoring.
-      ComponentServer_ptr component_server_;
+      ComponentServer_var component_server_;
 
       // Cached ComponentInstallation
-      ComponentInstallation_ptr component_installation_;
+      ComponentInstallation_var component_installation_;
 
       // Cached ServerActivator
-      ServerActivator_ptr server_activator_;
+      ServerActivator_var server_activator_;
 
     }; /* class NodeApplication_Impl */
 
 
 }; /* namespace Deployment */
+
+#include /**/ "ace/post.h"
 
 #endif /* NODEAPPLICATION_IMPL_H */

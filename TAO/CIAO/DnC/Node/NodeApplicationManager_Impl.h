@@ -10,7 +10,10 @@
 // things as clear as possible.
 #ifndef NODEAPPLICATIONMANAGER_IMPL_H
 #define NODEAPPLICATIONMANAGER_IMPL_H
-// @@ Tao: Please include pre.h and post.h.
+
+
+#include /**/ "ace/pre.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -21,6 +24,9 @@
 // @@Tao: Since you are doing an implementation of the DnC, should
 // this be in Deployment namespace. Wouldn't it be better put it in
 // CIAO namespace?
+
+// @@Bala, we will think more about the namespace issue. One point is we
+// should follow the spec for portability issue.
 namespace Deployment
 {
   /**
@@ -31,9 +37,9 @@ namespace Deployment
    *        This interface is very simillar to the old DnC CIAO_Daemon.
    *
    **/
-  // @@ Tao: Don't you want to inherit from RefcountedServantBase.?
   class NodeApplicationManager_Impl
-    : public virtual POA_Deployment::NodeApplicationManager
+    : public virtual POA_Deployment::NodeApplicationManager,
+      public virtual PortableServer::RefCountServantBase
     {
     public:
 
@@ -98,13 +104,12 @@ namespace Deployment
 
       // CIAO's Object_Set<> could be used here as well.
       // It takes o(n) time to do find though.
-      // @@ Tao: Are you sure that Hash_Map is O(n)? :-). May be its
-      // good in algo class not for us.
       typedef ACE_Hash_Map_Manager_Ex<const char *,
                                       ::Deployment::NodeApplication_ptr,
                                       ACE_Hash<const char *>,
                                       ACE_Equal_To<const char *>,
                                       TAO_SYNCH_MUTEX> NodeApplication_Table;
+
       typedef NodeApplication_Table::iterator NodeApplication_Iterator;
 
       //Cached Plan
@@ -113,13 +118,12 @@ namespace Deployment
       //Launched Application(NodeApplication) but not terminated yet.
       NodeApplication_Table nodeapplication_table;
 
-      // @@ Tao: Don't you want to use a _var here for proper memory
       // management?
       // Cached NodeManager
-      NodeManager_ptr node_manager_;
+      NodeManager_var node_manager_;
 
       // Cached DomainApplication
-      DomainApplication_ptr domain_application_;
+      DomainApplication_var domain_application_;
 
       // Keep a pointer to the managing ORB serving this servant.
       CORBA::ORB_var orb_;
@@ -138,5 +142,7 @@ namespace Deployment
 
 
 }; /* namespace Deployment */
+
+#include /**/ "ace/post.h"
 
 #endif /* NODEAPPLICATIONMANAGER_IMPL_H */
