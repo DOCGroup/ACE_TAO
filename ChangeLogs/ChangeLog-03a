@@ -1,35 +1,41 @@
+Sat Jan 20 10:49:05 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * docs/ACE-guidelines.html:
+          Update the guidelines to point people to the Doxygen
+          documentation, instead of the now abandoned OSE tools.
+
 Sat Jan 20 10:21:08 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* ace/OS.cpp:
-	  Another pass fixing problems with ACE_BEGINTHREADEX() under
-	  Win32, this time Win32 is working fine.
+        * ace/OS.cpp:
+          Another pass fixing problems with ACE_BEGINTHREADEX() under
+          Win32, this time Win32 is working fine.
 
 Sat Jan 20 10:20:50 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* doc/tutorials: Integrated the new Service Configurator tutorial
-	  into the main tutorials page.
+        * doc/tutorials: Integrated the new Service Configurator tutorial
+          into the main tutorials page.
 
 Fri Jan 19 16:57:43 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Svc_Handler.h: Updated the comments to explain why 
-	  operator new is overloaded.  Thanks to Kirill Kuolechov
- 	  <Kirill.Koulechov@gmx.net> for reporting this.
+        * ace/Svc_Handler.h: Updated the comments to explain why
+          operator new is overloaded.  Thanks to Kirill Kuolechov
+          <Kirill.Koulechov@gmx.net> for reporting this.
 
 Fri Jan 19 15:39:43 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/OS.cpp:
-	  QNX/RTP has the same problem that LynxOS has, after fork() is
-	  invoked trying to destroy the preallocated objects in
-	  ACE_OS_Object_Manager fails.
-	  Factor out this variation in a new macro:
-	  ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK
-	  
+          QNX/RTP has the same problem that LynxOS has, after fork() is
+          invoked trying to destroy the preallocated objects in
+          ACE_OS_Object_Manager fails.
+          Factor out this variation in a new macro:
+          ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK
+
         * ace/config-lynxos.h:
         * ace/config-qnx-rtp.h:
-	  Define the new macro for the two relevant platforms.
+          Define the new macro for the two relevant platforms.
 
         * ace/README:
-	  Document the macro.
+          Document the macro.
 
 Fri Jan 19 15:08:37 2001  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -50,10 +56,10 @@ Fri Jan 19 13:01:13 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
         * ace/SSL/Makefile:
           Put a check for defining ACE_SHLIBS to get it compiled on HPUX.
-  
-	* ace/RMCast/Makefile: 
-	* ace/Makefile : 
-	  Updated dependencies
+
+        * ace/RMCast/Makefile:
+        * ace/Makefile :
+          Updated dependencies
 
         * ace/config-all.h
           Fix a build problem on HP-UX 11.00 with aCC A.03.25.  The macro
