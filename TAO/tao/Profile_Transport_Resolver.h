@@ -15,7 +15,7 @@
 #define TAO_PROFILE_TRANSPORT_RESOLVER_H
 #include "ace/pre.h"
 
-#include "tao/TAO_Export.h"
+#include "tao/Exception.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -20,12 +20,13 @@ ACE_RCSID (TAO,
 # endif /* !__ACE_INLINE__ */
 
 TAO_ClientRequestInfo_i::TAO_ClientRequestInfo_i (TAO::Invocation_Base *inv,
-                                                  CORBA::Object_ptr target)
+                                                  CORBA::Object_ptr target,
+                                                  CORBA::Boolean response_expected)
   : invocation_ (inv),
     target_ (target), // No need to duplicate.
     abstract_target_ (0),
     caught_exception_ (0),
-    response_expected_ (1),
+    response_expected_ (response_expected),
     reply_status_ (-1),
     rs_pi_current_ ()
 {
@@ -34,13 +35,14 @@ TAO_ClientRequestInfo_i::TAO_ClientRequestInfo_i (TAO::Invocation_Base *inv,
 
 TAO_ClientRequestInfo_i::TAO_ClientRequestInfo_i (
     TAO::Invocation_Base *inv,
-    CORBA::AbstractBase_ptr abstract_target
+    CORBA::AbstractBase_ptr abstract_target,
+    CORBA::Boolean response_expected
   )
   : invocation_ (inv),
     target_ (CORBA::Object::_nil ()),
     abstract_target_ (abstract_target), // No need to duplicate.
     caught_exception_ (0),
-    response_expected_ (1),
+    response_expected_ (response_expected),
     reply_status_ (-1),
     rs_pi_current_ ()
 {
@@ -624,11 +626,14 @@ TAO_ClientRequestInfo_i::reply_status (TAO::Invocation_Status invoke_status)
       else
         this->reply_status_ = PortableInterceptor::TRANSPORT_RETRY;
       break;
-    default:
-      // We should only get here if the invocation status is
-      // TAO_INVOKE_EXCEPTION, i.e. a CORBA::SystemException, so set
-      // the appropriate reply status.
+    case TAO::TAO_INVOKE_USER_EXCEPTION:
+      this->reply_status_ = PortableInterceptor::USER_EXCEPTION;
+      break;
+    case TAO::TAO_INVOKE_SYSTEM_EXCEPTION:
       this->reply_status_ = PortableInterceptor::SYSTEM_EXCEPTION;
+      break;
+    default:
+      this->reply_status_ = PortableInterceptor::UNKNOWN;
       break;
     }
 }

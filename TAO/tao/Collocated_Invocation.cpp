@@ -9,11 +9,10 @@ ACE_RCSID (tao,
 namespace TAO
 {
 
-  Collocated_Invocation::Collocated_Invocation (TAO_Stub *stub,
+  Collocated_Invocation::Collocated_Invocation (CORBA::Object *p,
                                                 TAO_Operation_Details &detail)
-    : Invocation_Base (stub,
+    : Invocation_Base (p,
                        detail)
-    , forwarded_ (0)
   {
   }
 
@@ -22,6 +21,7 @@ namespace TAO
                                  CORBA::Object *obj,
                                  Collocation_Strategy strat
                                  ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::Exception))
   {
     // @@ Time to call interceptors...
     cpb->dispatch (obj,

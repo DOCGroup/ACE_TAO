@@ -46,7 +46,8 @@ namespace TAO
                              TAO_Operation_Details &detail);
 
     Invocation_Status remote_twoway (ACE_Time_Value *max_wait_time
-                                     ACE_ENV_ARG_DECL);
+                                     ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::Exception));
 
   protected:
 
@@ -56,6 +57,10 @@ namespace TAO
 
     Invocation_Status handle_user_exception (TAO_InputCDR &cdr
                                              ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::Exception));
+
+    Invocation_Status handle_system_exception (TAO_InputCDR &cdr
+                                               ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     Invocation_Status wait_for_reply (ACE_Time_Value *max_wait_time,
@@ -73,14 +78,31 @@ namespace TAO
 
   };
 
-  class TAO_Export Synch_Oneway_Invocation: private Synch_Twoway_Invocation
+  class TAO_Export Synch_Oneway_Invocation: protected Synch_Twoway_Invocation
   {
   public:
     Synch_Oneway_Invocation (Profile_Transport_Resolver &resolver,
                              TAO_Operation_Details &detail);
 
     Invocation_Status remote_oneway (ACE_Time_Value *max_wait_time
-                                     ACE_ENV_ARG_DECL);
+                                     ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::Exception));
+  };
+
+  class Reply_Guard
+  {
+  public:
+    Reply_Guard (Invocation_Base *s,
+                 Invocation_Status s);
+
+    ~Reply_Guard (void);
+
+    void set_status (Invocation_Status s);
+
+  private:
+    Invocation_Base *invocation_;
+    Invocation_Status status_;
+
   };
 }
 

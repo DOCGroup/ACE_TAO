@@ -29,11 +29,15 @@
 #include "tao/PortableInterceptorC.h"
 #include "tao/StringSeqC.h"
 #include "tao/PICurrent.h"
-#include "tao/Invocation_Base.h"
+#include "tao/Invocation_Utils.h"
 
 class TAO_Service_Context;
 class TAO_GIOP_Invocation;
 
+namespace TAO
+{
+  class Invocation_Base;
+}
 
 /**
  * @class TAO_ClientRequestInfo_i
@@ -47,7 +51,8 @@ public:
 
   /// Constructor from concrete interface.
   TAO_ClientRequestInfo_i (TAO::Invocation_Base *invocation,
-                           CORBA::Object_ptr target);
+                           CORBA::Object_ptr target,
+                           CORBA::Boolean response_expected = 1);
 
   //// @@ NEED TO GO.... For backward compatibility
   TAO_ClientRequestInfo_i (TAO_GIOP_Invocation *,
@@ -55,7 +60,8 @@ public:
 
   /// Constructor from abstract interface.
   TAO_ClientRequestInfo_i (TAO::Invocation_Base *invocation,
-                           CORBA::AbstractBase_ptr abstract_target);
+                           CORBA::AbstractBase_ptr abstract_target,
+                           CORBA::Boolean response_expected = 1);
 
   /// Destructor.
   virtual ~TAO_ClientRequestInfo_i (void);
@@ -214,6 +220,7 @@ public:
 
   /// Set the flag that states whether or not a response is expected.
   /// For example, no response is expected in a one-way operation.
+  // @@@@@ Need to go
   void response_expected (CORBA::Boolean flag);
 
   /// Set the status of the received reply.
@@ -256,7 +263,7 @@ protected:
   CORBA::Exception *caught_exception_;
 
   /// True if a two-way operation, false otherwise.
-  CORBA::Boolean response_expected_;
+  bool response_expected_;
 
   /// Reply status for the current request.
   PortableInterceptor::ReplyStatus reply_status_;

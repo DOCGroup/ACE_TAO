@@ -14,7 +14,6 @@
 #define TAO_OPERATION_DETAILS_H
 
 #include /**/ "ace/pre.h"
-
 #include "corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -121,12 +120,15 @@ public:
    * this call would raise an UNKNOWN exception.
    */
   CORBA::Exception *corba_exception (const char *ex
-                                     ACE_ENV_ARG_DECL);
+                                     ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   bool marshal_args (TAO_OutputCDR &cdr);
   bool demarshal_args (TAO_InputCDR &cdr);
   bool parameter_list (Dynamic::ParameterList &);
   bool exception_list (Dynamic::ExceptionList &);
+  bool result (CORBA::Any *);
+
   TAO::Argument **args (void);
   CORBA::ULong args_num (void) const ;
 

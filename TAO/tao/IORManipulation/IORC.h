@@ -549,7 +549,6 @@ TAO_NAMESPACE  TAO_IOP
       TAO_MngSeq_Var_T<
           IORList,
           TAO_Pseudo_Object_Manager<
-              CORBA::Object,
               CORBA::Object
             >
         >
@@ -560,7 +559,6 @@ TAO_NAMESPACE  TAO_IOP
           IORList,
           IORList_var,
           TAO_Pseudo_Object_Manager<
-              CORBA::Object,
               CORBA::Object
             >
         >
@@ -569,8 +567,7 @@ TAO_NAMESPACE  TAO_IOP
     class TAO_IORManip_Export IORList
       : public
           TAO_Unbounded_Pseudo_Sequence<
-              CORBA::Object,
-              CORBA::Object_var
+              CORBA::Object
             >
     {
     public:

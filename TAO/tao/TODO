@@ -16,7 +16,7 @@
 . Move TAO_Exception_Data elsewhere
 
 . Remove extraneous calls and enums for collocation from
-corbafwd.h. and _new form ORB_Core.h
+  corbafwd.h. and _new form ORB_Core.h
 
 . Test case for forwarded objects in collocated mode being remote
 . Messaging is broken
@@ -32,5 +32,18 @@ corbafwd.h. and _new form ORB_Core.h
 
 . Oneways and location forwards
 
-. 
+. Bug 1476
 
+. Check for Interceptor calls..
+
+. Multiprofile IOR and fallback in case of failure
+
+. Generate the right exception specification in the skeleton for
+  collocated cases. 
+
+. Operation names in skeletons for collocated cases.
+
+. For operation names in ThruPOA collocation that doesnt have
+  arguments, need to send blank arguments to avoid compiler warnings. 
+
+. Cannot declare any variable by name tmp ie. struct tmp {} or exception tmp {};

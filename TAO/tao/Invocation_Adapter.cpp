@@ -22,13 +22,13 @@ ACE_RCSID (tao,
 namespace TAO
 {
   Invocation_Adapter::Invocation_Adapter (CORBA::Object *target,
-                                    Argument **args,
-                                    int arg_number,
-                                    char *operation,
-                                    int op_len,
-                                    Collocation_Proxy_Broker *p,
-                                    Invocation_Type type,
-                                    Invocation_Mode mode)
+                                          Argument **args,
+                                          int arg_number,
+                                          char *operation,
+                                          int op_len,
+                                          Collocation_Proxy_Broker *p,
+                                          Invocation_Type type,
+                                          Invocation_Mode mode)
     : target_ (target)
     , args_ (args)
     , number_args_  (arg_number)
@@ -40,12 +40,13 @@ namespace TAO
   {
   }
 
+  // @@ CHECK to see whther we can throw any other exception other
+  // than CORBA exception since we are not having a throw spec.
 
   void
   Invocation_Adapter::invoke (TAO_Exception_Data *ex_data,
                               unsigned long ex_count
                               ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     // Should stub object be refcounted here?
     TAO_Stub *stub =
@@ -94,6 +95,14 @@ namespace TAO
     while (status == TAO_INVOKE_START ||
            status == TAO_INVOKE_RESTART)
       {
+        if (TAO_debug_level > 2 &&
+            status == TAO_INVOKE_RESTART)
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("TAO (%P|%t) - Invocation_Adapter::invoke_collocated, ")
+                        ACE_TEXT ("handling forwarded locations \n")));
+          }
+
         Collocation_Strategy strat =
           this->cpb_->get_strategy (local_target
                                     ACE_ENV_ARG_PARAMETER);
@@ -111,7 +120,7 @@ namespace TAO
             return;
           }
 
-        Collocated_Invocation coll_inv (stub,
+        Collocated_Invocation coll_inv (local_target,
                                         details);
 
         status = coll_inv.invoke (this->cpb_,
@@ -147,6 +156,14 @@ namespace TAO
     while (status == TAO_INVOKE_START ||
            status == TAO_INVOKE_RESTART)
       {
+        if (TAO_debug_level > 2 &&
+            status == TAO_INVOKE_RESTART)
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("TAO (%P|%t) - Invocation_Adapter::invoke_collocated, ")
+                        ACE_TEXT ("handling forwarded locations \n")));
+          }
+
         Profile_Transport_Resolver resolver (local_target,
                                              stub);
 
@@ -159,13 +176,16 @@ namespace TAO
 
         if (this->type_ == TAO_ONEWAY_INVOCATION)
           {
-            int has_synchronization = 0;
+            bool has_synchronization = false;
             Messaging::SyncScope sync_scope;
             stub->orb_core ()->call_sync_scope_hook (stub,
                                                      has_synchronization,
                                                      sync_scope);
 
-            op.response_flags (sync_scope);
+            if (has_synchronization)
+              op.response_flags (sync_scope);
+            else
+              op.response_flags (Messaging::SYNC_WITH_TRANSPORT);
 
             TAO::Synch_Oneway_Invocation synch (resolver,
                                                 op);
@@ -174,6 +194,9 @@ namespace TAO
               synch.remote_oneway (max_wait_time
                                    ACE_ENV_ARG_PARAMETER);
             ACE_CHECK;
+
+            if (status == TAO_INVOKE_RESTART)
+              local_target = synch.steal_forwarded_reference ();
           }
         else if (this->type_ == TAO_TWOWAY_INVOCATION
                  && this->mode_ == TAO_SYNCHRONOUS_INVOCATION)
@@ -202,6 +225,8 @@ namespace TAO
                  EINVAL),
                CORBA::COMPLETED_NO));
           }
+
+
       }
   }
 

@@ -83,8 +83,7 @@ namespace TAO
 
     void invoke (TAO_Exception_Data *ex,
                  unsigned long ex_count
-                 ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+                 ACE_ENV_ARG_DECL);
 
   protected:
 

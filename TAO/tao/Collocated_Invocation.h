@@ -43,19 +43,18 @@ namespace TAO
   class TAO_Export Collocated_Invocation : protected Invocation_Base
   {
   public:
-    Collocated_Invocation (TAO_Stub *stub,
+    Collocated_Invocation (CORBA::Object *p,
                            TAO_Operation_Details &detail);
 
     Invocation_Status invoke (Collocation_Proxy_Broker *cpb,
                               CORBA::Object *obj,
                               Collocation_Strategy strat
                               ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+      ACE_THROW_SPEC ((CORBA::Exception));
 
   private:
     ACE_UNIMPLEMENTED_FUNC (Collocated_Invocation (void));
-  private:
-    CORBA::Object_var forwarded_;
+
   };
 }
 #include "ace/post.h"
