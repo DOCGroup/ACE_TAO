@@ -150,12 +150,12 @@
 					Name="<%configuration%>|<%platform%>">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Invoking TAO_IDL Compiler on <%dirname(idl_file)%>"
+						Description="Invoking TAO_IDL Compiler on <%idl_file%> in <%dirname(idl_file)%>"
 <%if(dirname_found)%>
 						CommandLine="cd <%dirname(idl_file)%>
-<%tao_idl_exe("$(ACE_ROOT)\\bin\\tao_idl")%> <%idlflags("-Sc")%> <%basename(idl_file)%>"
+<%tao_idl_exe("$(ACE_ROOT)\\bin\\tao_idl")%> <%if(flag_overrides(idl_file))%><%flag_overrides(idl_file)%><%else%><%idlflags("-Sc")%><%endif%> <%basename(idl_file)%>"
 <%else%>
-						CommandLine="<%tao_idl_exe("$(ACE_ROOT)\\bin\\tao_idl")%> <%idlflags("-Sc")%> <%idl_file%>"
+						CommandLine="<%tao_idl_exe("$(ACE_ROOT)\\bin\\tao_idl")%> <%if(flag_overrides(idl_file))%><%flag_overrides(idl_file)%><%else%><%idlflags("-Sc")%><%endif%> <%idl_file%>"
 <%endif%>
 						Outputs="<%noextension(idl_file)%>C.h;<%noextension(idl_file)%>C.i;<%noextension(idl_file)%>C.cpp;<%noextension(idl_file)%>S.h;<%noextension(idl_file)%>S.i;<%noextension(idl_file)%>S.cpp"/>
 				</FileConfiguration>

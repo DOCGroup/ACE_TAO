@@ -9,7 +9,7 @@ NAME = <%if(exename)%><%exename%><%endif%><%if(sharedname)%><%sharedname%><%endi
 <%endif%>
 <%if(idl_files)%>
 
-TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe<%if(idlflags)%> <%idlflags%><%endif%>
+TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe
 <%endif%>
 
 <%if(source_files)%>
@@ -114,6 +114,6 @@ idl_src_files: $(IDLFILES:.idl=C.cpp) $(IDLFILES:.idl=S.cpp)
 
 <%foreach(idl_files)%>
 $(IDLDIR)\<%basenoextension(idl_file)%>S.cpp $(IDLDIR)\<%basenoextension(idl_file)%>C.cpp: $(IDLDIR)\<%basenoextension(idl_file)%>.idl
-	$(TAO_IDL) $**
+	$(TAO_IDL) <%if(flag_overrides(idl_file))%><%flag_overrides(idl_file)%><%else%><%idlflags("-Sc")%><%endif%> $**
 <%endfor%>
 <%endif%>
