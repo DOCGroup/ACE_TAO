@@ -2,14 +2,14 @@
 
 //============================================================================
 //
-//  =FILENAME
+//  = FILENAME
 //     server.cpp
 //
-//  =DESCRIPTION
+//  = DESCRIPTION
 //     Server to test the Servant Activator and Servant Locator for a POA.
 //
-//  =AUTHOR
-//     Irfan Pyarali
+//  = AUTHOR
+//     Irfan Pyarali <irfan@cs.wustl.edu>
 //
 //=============================================================================
 
@@ -198,13 +198,25 @@ main (int argc, char **argv)
           ACE_TRY_CHECK;
         }
 
-      PortableServer::ServantManager_var servant_activator =
-        new MyFooServantActivator (orb.in ());
+      // Allocate the servant activator.
+      MyFooServantActivator *activator;
+      ACE_NEW_RETURN (activator,
+                      MyFooServantActivator (orb.in ()),
+                      0);
 
       // Set MyFooServantActivator object as the servant_manager of
       // firstPOA.
-      first_poa->set_servant_manager (servant_activator.in (),
+      first_poa->set_servant_manager (activator,
                                       ACE_TRY_ENV);
+      // For the code above, we're using the CORBA 3.0 servant manager
+      // semantics supported by TAO.  For CORBA 2.x ORBs you'd need to
+      // use the following code in place of the previous line:
+      //
+      // PortableServer::ServantManager_var servant_activator = 
+      //   activator->_this ();
+      // 
+      // first_poa->set_servant_manager (servant_activator.in (),
+      //                                 ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Create a reference with user created ID in firstPOA which uses
@@ -217,14 +229,25 @@ main (int argc, char **argv)
         first_poa->create_reference_with_id (first_foo_oid.in (), "IDL:Foo:1.0", ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-
-      PortableServer::ServantManager_var servant_locator =
-        new MyFooServantLocator (orb.in ());
+      // Allocate the servant activator.
+      MyFooServantLocator *locator;
+      ACE_NEW_RETURN (locator,
+                      MyFooServantLocator (orb.in ()),
+                      0);
 
       // Set MyFooServantLocator object as the servant Manager of
       // secondPOA.
-      second_poa->set_servant_manager (servant_locator.in (),
+      second_poa->set_servant_manager (locator,
                                        ACE_TRY_ENV);
+      // For the code above, we're using the CORBA 3.0 servant manager
+      // semantics supported by TAO.  For CORBA 2.x ORBs you'd need to
+      // use the following code in place of the previous line:
+      //
+      // PortableServer::ServantManager_var servant_locator =
+      //   locator->_this ();
+      //
+      // second_poa->set_servant_manager (servant_locator.in (),
+      //                                  ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Try to create a reference with user created ID in second_poa

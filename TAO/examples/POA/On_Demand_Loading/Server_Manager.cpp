@@ -245,7 +245,7 @@ Server_i::create_activator (PortableServer::POA_var first_poa)
   ACE_TRY
     {
       // An Servant Activator object is created which will activate
-      // the servant on demand.
+      // the servant on-demand.
       ACE_NEW_RETURN (servant_activator_impl_,
                       ServantActivator_i (orb_.in ()),
                       0);
@@ -254,6 +254,15 @@ Server_i::create_activator (PortableServer::POA_var first_poa)
       // firstPOA.
       first_poa->set_servant_manager (servant_activator_impl_,
                                       ACE_TRY_ENV);
+      // For the code above, we're using the CORBA 3.0 servant manager
+      // semantics supported by TAO.  For CORBA 2.x ORBs you'd need to
+      // use the following code in place of the previous line:
+      //
+      // PortableServer::ServantManager_var servant_activator = 
+      //   servant_activator_impl_->_this ();
+      //
+      // first_poa->set_servant_manager (servant_activator.in (),
+      //                                 ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Create a reference with user created ID in firstPOA which
@@ -289,7 +298,7 @@ Server_i::create_locator (PortableServer::POA_var second_poa)
   ACE_TRY
     {
       // An Servant Locator object is created which will activate
-      // the servant on demand.
+      // the servant on-demand.
       ACE_NEW_RETURN (servant_locator_impl_,
                       ServantLocator_i (orb_.in ()),
                       0);
@@ -298,6 +307,14 @@ Server_i::create_locator (PortableServer::POA_var second_poa)
       // secondPOA.
       second_poa->set_servant_manager (servant_locator_impl_,
                                        ACE_TRY_ENV);
+      // For the code above, we're using the CORBA 3.0 servant manager
+      // semantics supported by TAO.  For CORBA 2.x ORBs you'd need to
+      // use the following code in place of the previous line:
+      // PortableServer::ServantManager_var servant_loactor =
+      //   servant_loator_impl_->_this ();
+      // 
+      // second_poa->set_servant_manager (servant_locator_impl_,
+      //                                  ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Try to create a reference with user created ID in second_poa
