@@ -1,18 +1,24 @@
+Sat Sep 18 17:16:23 2004  Olli Savia  <ops@iki.fi>
+
+        * orbsvcs/ImplRepo_Service/ImR_Activator.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator.cpp:
+          Added explicit static template member instantiations.
+        
 Fri Sep 17 19:33:42 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/CosEvent.mpc:
-	* orbsvcs/orbsvcs/CosNaming.mpc:
-	* orbsvcs/orbsvcs/CosNotification.mpc:
-	* orbsvcs/orbsvcs/CosTrading.mpc:
-	* orbsvcs/orbsvcs/DsEventLogAdmin.mpc:
-	* orbsvcs/orbsvcs/DsLogAdmin.mpc:
-	* orbsvcs/orbsvcs/DsNotifyLogAdmin.mpc:
-	* orbsvcs/orbsvcs/ec_typed_events_skel.mpb:
+        * orbsvcs/orbsvcs/CosEvent.mpc:
+        * orbsvcs/orbsvcs/CosNaming.mpc:
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+        * orbsvcs/orbsvcs/CosTrading.mpc:
+        * orbsvcs/orbsvcs/DsEventLogAdmin.mpc:
+        * orbsvcs/orbsvcs/DsLogAdmin.mpc:
+        * orbsvcs/orbsvcs/DsNotifyLogAdmin.mpc:
+        * orbsvcs/orbsvcs/ec_typed_events_skel.mpb:
 
-	  Changed *_Skel projects to include generated template files in
-	  Header_Files, Inline_Files, and Template_Files.  MPC currently
-	  adds them to the client library, and we'll need them here when
-	  MPC (or the *.mpc files, whichever is wrong) is fixed.
+          Changed *_Skel projects to include generated template files in
+          Header_Files, Inline_Files, and Template_Files.  MPC currently
+          adds them to the client library, and we'll need them here when
+          MPC (or the *.mpc files, whichever is wrong) is fixed.
 
 Fri Sep 17 15:47:14 2004  Dale Wilson  <wilson_d@ociweb.com>
 
@@ -63,7 +69,7 @@ Fri Sep 17 08:44:44 2004  Steve Totten  <totten_s@ociweb.com>
 
 Fri Sep 17 08:21:59 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* tao/Typecode.cpp:
+        * tao/Typecode.cpp:
         * tao/Typecode.h:
         * tao/Typecode.i:
 
