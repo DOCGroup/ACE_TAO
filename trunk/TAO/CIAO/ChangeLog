@@ -1,3 +1,9 @@
+Tue Feb 10 18:15:59 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CCF/Documentation/Build.html:
+
+	  Fixed bugs and updated links.
+
 Tue Feb 10 16:44:33 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* CIDLC/CIDLC.vcproj:

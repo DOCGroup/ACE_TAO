@@ -61,7 +61,6 @@ cvs-id    : $Id$
 
 <li><a href="#linux">Other GNU/Linux or UNIX Distributions</a>
 <ul>
-<li><a href="#linux_make">Make</a></li>
 <li><a href="#linux_cxx">C++</a></li>
 <li><a href="#linux_boost">Boost Libraries</a></li>
 <li><a href="#linux_utility">Utility Library</a></li>
@@ -87,7 +86,6 @@ cvs-id    : $Id$
 Debian package repository:
 
 <ol>
-<li><code>make-3.80-4</code> or better</li>
 <li><code>libboost-dev-1.30.2-2</code> or better</li>
 <li><code>libboost-regex-dev-1.30.2-2</code> or better</li>
 </ol>
@@ -107,7 +105,7 @@ $ dpkg -i libutility*.deb
 
 <p>Now you are ready to build CCF libraries:</p>
 <pre>$ cd $CIAO_ROOT/CCF/CCF
-$ make -f Makefile.alt
+$ make
 </pre>
 
 
@@ -120,9 +118,6 @@ $ make -f Makefile.alt
 
 <ol>
 
-<li><a href="http://www.dre.vanderbilt.edu/cidlc/prerequisites/rpm/make-3.80-1_patched_bbn.i386.rpm">
-<code>make-3.80-1_patched_bbn.i386.rpm</code></a></li>
-
 <li><a href="http://www.dre.vanderbilt.edu/cidlc/prerequisites/rpm/boost-devel-1.30.2-2.i386.rpm">
 <code>boost-devel-1.30.2-2.i386.rpm</code></a></li>
 
@@ -134,7 +129,6 @@ $ make -f Makefile.alt
 </code> then to install you can issue these commands:</p>
 
 <pre>$ cd /usr/src/redhat/RPMS/i386
-$ rpm -Uhv make-3.80-1_patched_bbn.i386.rpm
 $ rpm -Uhv boost-devel-1.30.2-2.i386.rpm
 $ rpm -Uhv Utility-1.2.2-3.i386.rpm
 </pre>
@@ -142,7 +136,7 @@ $ rpm -Uhv Utility-1.2.2-3.i386.rpm
 
 <p>Now you are ready to build CCF libraries:</p>
 <pre>$ cd $CIAO_ROOT/CCF/CCF
-$ make -f Makefile.alt
+$ make
 </pre>
 
 
@@ -150,6 +144,8 @@ $ make -f Makefile.alt
 
 
 <h1><a name="linux">Other GNU/Linux or UNIX Distributions</a></h1>
+
+<!--
 
 <h2><a name="linux_make">Make</a></h2>
 <p>Currently in order to build CCF Libraries you will need
@@ -173,6 +169,8 @@ fixes applied.
 <p>If you are unsure whether you have those bugfixes or not then you can
 just try building CCF and if you see some strange make-related errors then
 you will need to upgrade.</p>
+
+-->
 
 <h2><a name="linux_cxx">C++</a></h2>
 <p>You can use any standard-conformant C++ compiler.
@@ -208,7 +206,7 @@ and <code>libboost_regex.a</code> into it.</p>
 <h2><a name="linux_utility">Utility Library</a></h2>
 
 <p>Another prerequisite for CCF is
-<a href="ftp://ftp.kolpackov.net/pub/Utility/Utility-1.2/Utility-1.2.2.tar.bz2">Utility
+<a href="http://www.dre.vanderbilt.edu/cidlc/prerequisites/Utility-1.2.2.tar.bz2">Utility
 Library</a>. You don't need to build anything in this library. Just unpack
 it to some convenient place.</p>
 
@@ -253,7 +251,7 @@ uninitialized.</p>
 <p>Finally, you can start the build process:</p>
 
 <pre>$ cd CCF/CCF
-$ make -f Makefile.alt</pre>
+$ make</pre>
 
 
 <!-- Windows -->
@@ -291,7 +289,7 @@ downloading unzip this file in <code>D:\lib</code> so that you get
 
 <li>Download the latest pre-built
 <a href="http://sourceforge.net/project/showfiles.php?group_id=7586&package_id=72941">
-<code>boost-jam<code></a>. At the time of writing, the latest version was
+<code>boost-jam</code></a>. At the time of writing, the latest version was
 <code>3.1.7</code> thus the file you download would be
 <code>bjam-3.1.7-ntx86.zip</code>. Unzip this file in <code>D:\lib</code> so
 that you get <code>D:\lib\bin.ntx86\bjam.exe</code>.</li>
@@ -330,7 +328,7 @@ Instructions</a> if you have any questions.<p>
 <h2><a name="windows_utility">Utility Library</a></h2>
 
 <p>Another prerequisite for CCF is
-<a href="ftp://ftp.kolpackov.net/pub/Utility/Utility-1.2.2.tar.bz2">Utility
+<a href="http://www.dre.vanderbilt.edu/cidlc/prerequisites/Utility-1.2.2.tar.bz2">Utility
 Library</a>. You don't need to build anything in this library. Just unpack
 it to some convenient place and add it to your VC7.1 include directory search
 list. For example if you unpacked <code>Utility-1.2.2.tar.bz2</code> in
