@@ -1,3 +1,11 @@
+Wed Mar  9 21:59:24 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/Time_Value.inl (ACE_Time_Value): Moved the definition of 
+	  ACE_Time_Value::set (const struct timeval &) to before it is
+ 	  used by the ACE_Time_Value constructor.  This avoids many
+ 	  warnings with GCC 3.4.1.  Thanks to Peter Heitman
+ 	  <pheitman@cisco.com> for reporting this and suggesting the fix.
+
 Wed Mar  9 11:09:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:

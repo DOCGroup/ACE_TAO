@@ -21,6 +21,16 @@ ACE_Time_Value::operator timeval () const
   return this->tv_;
 }
 
+ACE_INLINE void
+ACE_Time_Value::set (const timeval &tv)
+{
+  // ACE_OS_TRACE ("ACE_Time_Value::set");
+  this->tv_.tv_sec = tv.tv_sec;
+  this->tv_.tv_usec = tv.tv_usec;
+
+  this->normalize ();
+}
+
 ACE_INLINE
 ACE_Time_Value::ACE_Time_Value (const struct timeval &tv)
   // : tv_ ()
@@ -72,16 +82,6 @@ ACE_Time_Value::set (const timespec_t &tv)
   // Convert nanoseconds into microseconds.
   this->tv_.tv_usec = tv.ts_nsec / 1000;
 #endif /* ACE_HAS_BROKEN_TIMESPEC_MEMBERS */
-
-  this->normalize ();
-}
-
-ACE_INLINE void
-ACE_Time_Value::set (const timeval &tv)
-{
-  // ACE_OS_TRACE ("ACE_Time_Value::set");
-  this->tv_.tv_sec = tv.tv_sec;
-  this->tv_.tv_usec = tv.tv_usec;
 
   this->normalize ();
 }
