@@ -232,6 +232,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       while (true); // @@ (OO) What purpose does this server?
       return -1;
     }
+  catch (const DOMException& e)
+    {
+      //ACE_PRINT_EXCEPTION ("Caught DOM Exception: ");
+      ACE_ERROR ((LM_ERROR, "Caught DOM exception\n"));
+      while (true); // @@ (OO) What purpose does this server?
+      return -1;
+    }
   catch (...)
     {
       ACE_ERROR ((LM_ERROR, "Caught unknown exception\n"));
