@@ -1,3 +1,8 @@
+Thu May  3 10:11:08 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Wait_Strategy.h: Removed some comments that were not
+	  applicable anymore.  
+
 Wed May  2 22:39:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp: Fixed a couple of unused variable warnings.  
