@@ -56,7 +56,7 @@ public:
 
   TAO_IIOP_Profile (const ACE_INET_Addr &addr,
                     const TAO_ObjectKey &object_key);
-  // Profile constructor, same as above except the object_key has 
+  // Profile constructor, same as above except the object_key has
   // already been marshaled.
 
   TAO_IIOP_Profile (const ACE_INET_Addr &addr,
@@ -117,8 +117,8 @@ public:
   // this will provide access to lower layer protocols
   // and processing.
 
-  int parse (TAO_InputCDR& cdr, 
-             CORBA::Boolean& continue_decoding, 
+  int parse (TAO_InputCDR& cdr,
+             CORBA::Boolean& continue_decoding,
              CORBA::Environment &env);
   // initialize this object using the given CDR octet string
 
@@ -154,7 +154,7 @@ public:
   CORBA::Boolean is_equivalent (TAO_Profile *other_profile,
                                 CORBA::Environment &env);
   // return true if this profile is equivalent to other_profile.
-  // Two profiles are equivalent iff their key, port, host, object_key 
+  // Two profiles are equivalent iff their key, port, host, object_key
   // and version are the same.
 
   CORBA::ULong hash (CORBA::ULong max,
@@ -162,7 +162,7 @@ public:
   // return a has value for this object.
 
   char *addr_to_string (void);
-  // Return a string representation for the address. 
+  // Return a string representation for the address.
 
   ACE_Addr &object_addr (const ACE_Addr *addr);
   // set the object_addr for the profile.
@@ -208,8 +208,24 @@ public:
   // Increase the reference count by one on this object.
 
   virtual CORBA::ULong _decr_refcnt (void);
-  // Decrement the object's reference count.  When this count 
+  // Decrement the object's reference count.  When this count
   // goes to 0 this object will be deleted.
+
+#if defined (TAO_USES_FLICK)
+  char *&_host_ (void);
+  // Return a reference to the underlying <host_> to allow Flick to
+  // manipulate it directly.
+
+  CORBA::UShort &_port_ (void);
+  // Return a reference to the underlying <port_> to allow Flick to
+  // manipulate it directly.
+
+  TAO_ObjectKey& _object_key_ (void);
+  // Return a non-const reference of object key.
+
+  int reset_object_addr ();
+  // Reset <object_addr_> after setting <host_> and <port_>.
+#endif /* TAO_USES_FLICK */
 
 private:
   int set (const ACE_INET_Addr &addr);
@@ -244,9 +260,9 @@ private:
   // object_key associated with this profile.
 
   ACE_INET_Addr object_addr_;
-  // Cached instance of <ACE_INET_Addr> for use in making 
+  // Cached instance of <ACE_INET_Addr> for use in making
   // invocations, etc.
-  
+
   TAO_Client_Connection_Handler *hint_;
   // pointer to a connection handler which we successfully used already.
 
@@ -259,5 +275,9 @@ private:
   TAO_MProfile *forward_to_;
   // list of profiles which we should try forwarding on.
 };
+
+#if defined (__ACE_INLINE__)
+# include "tao/IIOP_Profile.i"
+#endif /* __ACE_INLINE__ */
 
 #endif  /* TAO_IIOP_PROFILE_H */
