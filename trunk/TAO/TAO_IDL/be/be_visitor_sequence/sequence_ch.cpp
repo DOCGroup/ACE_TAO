@@ -629,22 +629,43 @@ be_visitor_sequence_ch::gen_var_defn (be_sequence *node)
                         -1);
     }
 
-  *os << "operator[] (CORBA::ULong index);" << be_nl;
+  *os << " operator[] (CORBA::ULong index);" << be_nl;
 
-  *os << "const ";
+  AST_Decl::NodeType nt = bt->base_node_type ();
+  AST_PredefinedType::PredefinedType pdt = AST_PredefinedType::PT_void;
 
-  if (bt->accept (visitor) == -1)
+  if (nt == AST_Decl::NT_pre_defined)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_sequence::"
-                         "gen_var_defn - "
-                         "[] ret type gen failed\n"),
-                        -1);
+      AST_PredefinedType *p = AST_PredefinedType::narrow_from_decl (bt);
+      pdt = p->pt ();
+    }
+
+  // @@ (JP) Problems with constant instantiations of TAO_Object_Manager, 
+  // TAO_Pseudo_Object_Manager, TAO_SeqElem_WString_Manager and
+  // TAO_SeqElem_String_Manager make these impossible right now.
+  if (nt != AST_Decl::NT_string
+      && nt != AST_Decl::NT_wstring
+      && nt != AST_Decl::NT_interface
+      && nt != AST_Decl::NT_interface_fwd
+      && pdt != AST_PredefinedType::PT_pseudo)
+    {
+      *os << "const ";
+
+      if (bt->accept (visitor) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_sequence::"
+                             "gen_var_defn - "
+                             "[] ret type gen failed\n"),
+                            -1);
+        }
+
+      *os << " operator[] (CORBA::ULong index) const;" << be_nl;
     }
 
   delete visitor;
 
-  *os << "operator[] (CORBA::ULong index) const;" << be_nl << be_nl;
+  *os << be_nl;
 
   *os << "// in, inout, out, _retn " << be_nl;
 
@@ -759,7 +780,7 @@ be_visitor_sequence_ch::gen_out_defn (be_sequence *node)
 
   delete visitor;
 
-  *os << "operator[] (CORBA::ULong index);" << be_nl;
+  *os << " operator[] (CORBA::ULong index);" << be_nl;
   *os << "\n";
   os->decr_indent ();
   *os << "private:\n";
