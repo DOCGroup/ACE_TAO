@@ -29,7 +29,7 @@ public class NS_Resolve
 {
   
   private static final String ACE_DEFAULT_MULTICAST_ADDR = "224.9.9.2";
-  private static final int TAO_DEFAULT_NAME_SERVER_REQUEST_PORT = 10013;
+  private static final int TAO_DEFAULT_NAME_SERVER_REQUEST_PORT = 28892;
   private static final int MULTICAST_SEND_PORT = 10060;
   private static final int MULTICAST_RECEIVE_PORT = 10061;
   private static final int TAO_SERVICEID_NAMESERVICE = 0;
