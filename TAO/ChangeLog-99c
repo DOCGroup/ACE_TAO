@@ -1,3 +1,10 @@
+Mon Jun 14 15:34:21 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/performance-tests/Cubit/TAO/DII_Cubit/run_test.pl:
+	* TAO/tests/DynAny_Test/run_test.pl:
+	  Added timeout features similar to that in
+	  IDL_Cubit/run_test.pl:
+
 Mon Jun 14 14:37:00 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/AVStreams_i.{h,cpp}: Fixed the throw
