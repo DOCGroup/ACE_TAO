@@ -1962,7 +1962,7 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::CloseHandle (*s), ace_result_), int, -1);
 #  else /* ACE_USES_WINCE_SEMA_SIMULATION */
   int r1 = ACE_OS::mutex_destroy (&s->lock_);
-  int r2 = ACE_OS::cond_destroy (&s->count_nonzero_);
+  int r2 = ACE_OS::event_destroy (&s->count_nonzero_);
   return r1 != 0 || r2 != 0 ? -1 : 0;
 #  endif /* ACE_USES_WINCE_SEMA_SIMULATION */
 #elif defined (VXWORKS)
@@ -2244,7 +2244,7 @@ ACE_OS::sema_trywait (ACE_sema_t *s)
         {
           s->count_--;
           if (s->count_ <= 0)
-            ACE_OS::event_reset (s->count_nonzero_);
+            ACE_OS::event_reset (&s->count_nonzero_);
           return 0;
         }
 
@@ -2348,7 +2348,7 @@ ACE_OS::sema_wait (ACE_sema_t *s)
           {
             s->count_--;
             if (s->count_ <= 0)
-              ACE_OS::event_reset (s->count_nonzero_);
+              ACE_OS::event_reset (&s->count_nonzero_);
             return 0;
           }
 
@@ -2456,7 +2456,7 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
             {
               s->count_--;
               if (s->count_ <= 0)
-                ACE_OS::event_reset (s->count_nonzero_);
+                ACE_OS::event_reset (&s->count_nonzero_);
               return 0;
             }
 
@@ -2776,7 +2776,11 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
       // Wait to be awakened by a ACE_OS::signal() or
       // ACE_OS::broadcast().
 #if defined (ACE_WIN32)
+#  if !defined (ACE_USES_WINCE_SEMA_SIMULATION)
       result = ::WaitForSingleObject (cv->sema_, msec_timeout);
+#  else /* ACE_USES_WINCE_SEMA_SIMULATION */
+      result = ::WaitForSingleObject (cv->sema_.count_nonzero_, msec_timeout);
+#  endif /* ACE_USES_WINCE_SEMA_SIMULATION */
 #else
       // Inline the call to ACE_OS::sema_wait () because it takes an
       // ACE_Time_Value argument.  Avoid the cost of that conversion . . .
@@ -2914,7 +2918,11 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
     return -1;
 
   // Wait to be awakened by a ACE_OS::signal() or ACE_OS::broadcast().
+#if !defined (ACE_USES_WINCE_SEMA_SIMULATION)
   result = ::WaitForSingleObject (cv->sema_, msec_timeout);
+#else 
+  result = ::WaitForSingleObject (cv->sema_.count_nonzero_, msec_timeout);
+#endif /* ACE_USES_WINCE_SEMA_SIMULATION */
 
   // Reacquire lock to avoid race conditions.
   ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
@@ -2974,7 +2982,11 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
 
   // Wait to be awakened by a ACE_OS::cond_signal() or
   // ACE_OS::cond_broadcast().
+#if !defined (ACE_USES_WINCE_SEMA_SIMULATION)
   result = ::WaitForSingleObject (cv->sema_, INFINITE);
+#else
+  result = ::WaitForSingleObject (cv->sema_.count_nonzero_, INFINITE);
+#endif /* ACE_USES_WINCE_SEMA_SIMULATION */
 
   // Reacquire lock to avoid race conditions.
   ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
