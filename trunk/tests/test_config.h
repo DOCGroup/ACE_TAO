@@ -116,6 +116,24 @@ typedef size_t KEY;
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Ending %s test at %D\n\n", program)); \
   ace_file_stream.close ();
 
+#if defined (VXWORKS)
+  // This is the only way I could figure out to avoid an error
+  // about attempting to unlink a non-existant file.
+#define ACE_INIT_LOG(NAME) \
+  char temp[BUFSIZ]; \
+  ACE_OS::sprintf (temp, "%s%s%s", \
+                   ACE_LOG_DIRECTORY_A, \
+                   ACE::basename (NAME, ACE_DIRECTORY_SEPARATOR_CHAR_A), \
+                   ".log"); \
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Deleting old log file %s (if any)\n\n", temp)); \
+  int fd_init_log; \
+  if ((fd_init_log = ACE_OS::open (temp, \
+                                   O_WRONLY | O_CREAT, 0x644)) != ERROR) \
+    { \
+      ACE_OS::close (fd_init_log); \
+      ACE_OS::unlink (temp); \
+    }
+#else /* ! VXWORKS */
 #define ACE_INIT_LOG(NAME) \
   char temp[BUFSIZ]; \
   ACE_OS::sprintf (temp, "%s%s%s", \
@@ -124,6 +142,7 @@ typedef size_t KEY;
                    ".log"); \
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Deleting old log file %s (if any)\n\n", temp)); \
   ACE_OS::unlink (temp);
+#endif /* ! VXWORKS */
 
 const int ACE_NS_MAX_ENTRIES = 1000;
 const int ACE_DEFAULT_USECS = 1000;
