@@ -14,6 +14,11 @@ Wed Jan 16 08:33:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
         * orbsvcs/tests/FaultTolerance/IOGR/Server.bor:
           Use the FTORB library instead of the FT library
 
+        * tests/Portable_Interceptors/ForwardRequest/server.bor:
+        * tests/Portable_Interceptors/ForwardRequest/client.bor:
+          Added -Gv to the TAO_IDL since PortableInterceptor.pidl now
+ 	  has valuetypes.
+
 Tue Jan 15 20:24:24 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_valuetype/any_op_ch.cpp:
