@@ -1,3 +1,12 @@
+Fri Jul 16 10:08:22 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be_visitor_union/union_cs.cpp:
+	* TAO_IDL/be_visitor_union_branch/public_access_cs.cpp:
+	  The 'alloc_flag' argument to the _access() method is
+	  sometimes used and sometimes not. To avoid unused arg
+	  warnings AND 'undefined' compile errors, had to add
+	  ACE_UNUSED_ARG (alloc_flag) on a case-by-case basis.
+
 Fri Jul 16 07:13:08 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils_T.cpp (visit):
