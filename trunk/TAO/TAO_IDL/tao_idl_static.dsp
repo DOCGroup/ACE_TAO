@@ -13,16 +13,18 @@ CFG=TAO_IDL Compiler Static - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "tao_idl_static.mak" CFG="TAO_IDL Compiler Static - Win32 Debug"
+!MESSAGE NMAKE /f "tao_idl_static.mak"\
+ CFG="TAO_IDL Compiler Static - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "TAO_IDL Compiler Static - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "TAO_IDL Compiler Static - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "TAO_IDL Compiler Static - Win32 Release" (based on\
+ "Win32 (x86) Console Application")
+!MESSAGE "TAO_IDL Compiler Static - Win32 Debug" (based on\
+ "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
-# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
@@ -1045,5 +1047,37 @@ SOURCE=.\include\utl_strlist.h
 SOURCE=.\fe\y.tab.h
 # End Source File
 # End Group
+# Begin Source File
+
+SOURCE=.\be\be_valuetype.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_valuetype.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be\be_valuetype_fwd.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_valuetype_fwd.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be\be_visitor_valuetype.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_visitor_valuetype.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be\be_visitor_valuetype_fwd.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_visitor_valuetype_fwd.h
+# End Source File
 # End Target
 # End Project
