@@ -1,3 +1,8 @@
+Wed Feb 28 15:23:46 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* docs/Options.html: Added documentation for the option
+	  "-ORBConnectionCacheLock". 
+
 Wed Feb 28 15:20:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/orbconf.h: Added a check to notify the users that compiling
