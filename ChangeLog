@@ -1,3 +1,9 @@
+Sun Jul 20 14:14:46 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/NT_Service.i (ACE_NT_Service): Set dwWaitHint to 0 in the
+	  constructor.  Thanks to Emiliano Berenbaum <eberenb@yahoo.com>
+ 	  for reporting this.
+
 Fri Jul 18 18:59:46 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ACE-INSTALL.html: Clarified that ACE+TAO no longer build with
