@@ -1,6 +1,13 @@
+Fri Apr 27 11:45:58 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/POA/Single_Threaded_POA/run_test.pl:
+
+          Updated this script to use the newer style perl modules, which
+          support running on Chorus.
+
 Fri Apr 27 11:31:38 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/TAO_Static.dsp: Added missing Endpoint_Selector_Factory.*.
+        * tao/TAO_Static.dsp: Added missing Endpoint_Selector_Factory.*.
 
 Fri Apr 27 11:03:40 2001  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -16,7 +23,7 @@ Fri Apr 27 10:45:35 2001  Chad Elliott  <elliott_c@ociweb.com>
         * tests/Explicit_Event_Loop/run_test.pl:
 
           Updated this test to use the newer style perl modules, which
-          supports running on Chorus.  This required a couple minor
+          support running on Chorus.  This required a couple minor
           modifications to the client and server code.
 
 Fri Apr 27 10:32:57 2001  Jeff Parsons <parsons@cs.wustl.edu>
@@ -27,22 +34,22 @@ Fri Apr 27 10:32:57 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Fri Apr 27 07:29:28 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Big_Request_Muxing/Client_Task.h: Included
-	  "tao/Messaging.h" in this file.
+        * tests/Big_Request_Muxing/Client_Task.h: Included
+          "tao/Messaging.h" in this file.
 
-	* tests/Big_Request_Muxing/Client_Task.cpp: Removed the inclusion
-	  of "tao/Messaging.h" from this file.
+        * tests/Big_Request_Muxing/Client_Task.cpp: Removed the inclusion
+          of "tao/Messaging.h" from this file.
 
 Fri Apr 27 04:07:00 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
 
-	* examples/PluggableUDP/DIOP/DIOP_Transport.cpp:
+        * examples/PluggableUDP/DIOP/DIOP_Transport.cpp:
 
-	  Fixed the send method, as it used not the right handle to send
-	  its data.
+          Fixed the send method, as it used not the right handle to send
+          its data.
 
-	* examples/PluggableUDP/DIOP/DIOP_Acceptor.cpp:
+        * examples/PluggableUDP/DIOP/DIOP_Acceptor.cpp:
 
-	  Fixed code to remove connection handlers.
+          Fixed code to remove connection handlers.
 
 Thu Apr 26 22:21:26 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -70,17 +77,17 @@ Thu Apr 26 22:21:26 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Thu Apr 26 20:18:45 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Generator_Parser_12.cpp:
-	* tao/GIOP_Message_Generator_Parser_10.cpp: Used the new method
-	  ACE_InputCDR::steal_data () to extract data from the
-	  stream. This should help a bit with the performance and would
-	  also address part of bug # 875 in bugzilla. More changes for bug
-	  875 and 871 would be following this one.
+        * tao/GIOP_Message_Generator_Parser_12.cpp:
+        * tao/GIOP_Message_Generator_Parser_10.cpp: Used the new method
+          ACE_InputCDR::steal_data () to extract data from the
+          stream. This should help a bit with the performance and would
+          also address part of bug # 875 in bugzilla. More changes for bug
+          875 and 871 would be following this one.
 
 Thu Apr 26 15:01:55 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Single_Read/Makefile: Fixed a typo. Thanks to Chad for
-	  poiting this out.
+        * tests/Single_Read/Makefile: Fixed a typo. Thanks to Chad for
+          poiting this out.
 
 Thu Apr 26 09:34:56 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -96,24 +103,24 @@ Thu Apr 26 09:34:56 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Thu Apr 26 08:14:20 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Big_Request_Muxing/Client_Task.cpp:
-	* tests/Big_Request_Muxing/client.cpp: Added a missing include
-	  "tao/Messaging.h" so that the file would compile when
-	 interceptors are turned off. This is part of the requirement for
-	  writing TAO applications, which should include all the namespace
-	  files implicitly or explicitly.
+        * tests/Big_Request_Muxing/Client_Task.cpp:
+        * tests/Big_Request_Muxing/client.cpp: Added a missing include
+          "tao/Messaging.h" so that the file would compile when
+          interceptors are turned off. This is part of the requirement for
+          writing TAO applications, which should include all the namespace
+          files implicitly or explicitly.
 
 
 Thu Apr 26 08:06:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Single_Read/Makefile: Made sure that the test builds even
-	  when Messaging is turned off. As a matter of fact the test does
-	  not depend on Messaging at all.
+        * tests/Single_Read/Makefile: Made sure that the test builds even
+          when Messaging is turned off. As a matter of fact the test does
+          not depend on Messaging at all.
 
 Thu Apr 26 07:26:19 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp: Fixed a compile
-	  error.
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp: Fixed a compile
+          error.
 
 Wed Apr 25 16:15:49 2001  Carlos O'Ryan  <coryan@uci.edu>
 
