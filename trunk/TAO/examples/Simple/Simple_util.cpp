@@ -7,7 +7,8 @@
 
 template <class Servant>
 Server<Servant>::Server (void)
-    : ior_output_file_ (0)
+    : ior_output_file_ (0),
+      naming_ (0)
 {
   // no-op.
 }
