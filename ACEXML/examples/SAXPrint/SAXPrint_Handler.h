@@ -3,7 +3,7 @@
 #ifndef ACEXML_SAXPRINT_HANDLER_H
 #define ACEXML_SAXPRINT_HANDLER_H
 
-#include "Common/DefaultHandler.h"
+#include "common/DefaultHandler.h"
 
 class ACEXML_SAXPrint_Handler : public ACEXML_DefaultHandler
 {
