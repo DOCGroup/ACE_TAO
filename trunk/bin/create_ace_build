@@ -20,9 +20,8 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 #    consistency).
 #
 # This program can be re-run on a build tree at any time in order to
-# update it.  It will only add new symlinks, it won't remove any that
-# are no longer valid.  If you want to do that, it's easiest just to
-# remove the build completely and start from scratch.
+# update it.  It will add symlinks for newly added files, and remove
+# any that are no longer valid.
 #
 # If the <build name> starts with "build/", that part will be removed
 # from it.
