@@ -1,3 +1,9 @@
+Thu Mar 16 09:19:13 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Lite.cpp: Added an include file to fix
+	  compilation errors in Linux, MINIMUM_CORBA build. The surprising
+	  part was that the regular build never caught this error.
+
 Thu Mar 16 09:15:02 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/target_identifier.h (class TAO_Target_Specification):
