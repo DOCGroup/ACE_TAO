@@ -1,3 +1,10 @@
+Wed Feb 17 10:44:29 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* examples/Reactor/Proactor/test_proactor.dsp:
+	* examples/Reactor/Proactor/test_proactor.cpp:
+	* examples/Reactor/Proactor/Makefile:
+	rtagged these files with "new_proactor"
+
 Tue Feb 16 17:08:53 1999  Steve Huston  <shuston@riverace.com>
 
         * examples/ASX/Event_Server/Transceiver: Moved Event_Transceiver
@@ -39,8 +46,8 @@ Tue Feb 16 00:39:35 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 	* examples/Reactor/Proactor/test_proactor.cpp:
 	Updated the files.
 	* ace/WIN32_Asynch_IO.h:
-	* ace/WIN32_Asynch_IO.h:
-	* ace/WIN32_Asynch_IO.h:
+	* ace/WIN32_Asynch_IO.cpp:
+	* ace/WIN32_Asynch_IO.i:
 	Added the files
 	* ace/ace_dll.dsp:
 	* ace/ace_lib.dsp:
