@@ -364,8 +364,6 @@ TAO_AV_Child_Process  <T_StreamEndpoint_B, T_VDev, T_MediaCtrl>::init (int argc,
       // create the objects and activate them in the poa
       this->activate_objects (argc,
                               argv,
-                              orb,
-                              poa,
                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -443,24 +441,24 @@ TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activate_objects 
         return -1;
 
       // activate the stream_endpoint
-      CORBA::String_var stream_endpoint_ior = this->orb_->activate_with_poa (this->stream_endpoint_,
-                                                                             ACE_TRY_ENV);
+      CORBA::String_var stream_endpoint_ior = this->activate_with_poa (this->stream_endpoint_,
+                                                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
       if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,
                                            "(%P|%t)TAO_AV_Child_Process::activate_objects,stream_endpoint_ior :%s\n",
                                            stream_endpoint_ior.in ()));
 
       // activate the vdev
-      CORBA::String_var vdev_ior = this->orb_->activate_with_poa (this->vdev_,
-                                                                  ACE_TRY_ENV);
+      CORBA::String_var vdev_ior = this->activate_with_poa (this->vdev_,
+                                                            ACE_TRY_ENV);
       ACE_TRY_CHECK;
       if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,
                                            "(%P|%t)TAO_AV_Child_Process::activate_objects, vdev ior is :%s\n",
                                            vdev_ior.in ()));
 
       // activate the media controller
-      CORBA::String_var media_ctrl_ior = this->orb_->activate_with_poa (this->media_ctrl_,
-                                                                        ACE_TRY_ENV);
+      CORBA::String_var media_ctrl_ior = this->activate_with_poa (this->media_ctrl_,
+                                                                  ACE_TRY_ENV);
 
       ACE_TRY_CHECK;
       if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"(%P|%t)TAO_AV_Child_Process::activate_objects,media_ctrl_ior is: %s\n",media_ctrl_ior.in ()));
@@ -585,7 +583,7 @@ TAO_AV_Child_Process  <T_StreamEndpoint_B, T_VDev, T_MediaCtrl>::run (ACE_Time_V
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      result = this->orb_->run (ACE_TRY_ENV,tv);
+      result = this->orb_->run (tv, ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
