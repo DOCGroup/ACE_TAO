@@ -94,6 +94,11 @@ public:
   int close_handle (void);
   // Close down the <handle_> if necessary.
 
+  int close_filemapping_handle (void);
+  // Close down the internal <file_mapping_> if necessary.  This is
+  // mostly necessary on Win32, that has a different handle for
+  // file-mapping kernal object.
+
   int operator () (void *&addr);
   // This operator passes back the starting address of the mapped
   // file.

@@ -89,11 +89,7 @@ ACE_Mem_Map::unmap (int len)
 {
   ACE_TRACE ("ACE_Mem_Map::unmap");
 
-  if (this->file_mapping_ != this->handle_
-      && this->file_mapping_ != ACE_INVALID_HANDLE)
-    ACE_OS::close (this->file_mapping_);
-
-  this->file_mapping_ = ACE_INVALID_HANDLE;
+  this->close_filemapping_handle ();
 
   if (this->base_addr_ != MAP_FAILED)
     {
@@ -112,11 +108,7 @@ ACE_Mem_Map::unmap (void *addr, int len)
 {
   ACE_TRACE ("ACE_Mem_Map::unmap");
 
-  if (this->file_mapping_ != this->handle_
-      && this->file_mapping_ != ACE_INVALID_HANDLE)
-    ACE_OS::close (this->file_mapping_);
-
-  this->file_mapping_ = ACE_INVALID_HANDLE;
+  this->close_filemapping_handle ();
 
   return ACE_OS::munmap (addr, len < 0 ? this->length_ : len);
 }
@@ -175,3 +167,34 @@ ACE_Mem_Map::advise (int behavior, int len)
     len = this->length_;
   return ACE_OS::madvise ((caddr_t) this->base_addr_, len, behavior);
 }
+
+ACE_INLINE int
+ACE_Mem_Map::close_handle (void)
+{
+  int result = 0;
+
+  if (this->close_handle_)
+    {
+      this->close_handle_ = 0;
+      result = ACE_OS::close (this->handle_);
+      this->handle_ = ACE_INVALID_HANDLE;
+    }
+  
+  return result;
+}
+
+ACE_INLINE int
+ACE_Mem_Map::close_filemapping_handle (void)
+{
+  int result = 0;
+
+  if (this->file_mapping_ != this->handle_
+      && this->file_mapping_ != ACE_INVALID_HANDLE)
+    {
+      result = ACE_OS::close (this->file_mapping_);
+      this->file_mapping_ = ACE_INVALID_HANDLE;
+    }
+
+  return result;
+}
+
