@@ -1,3 +1,14 @@
+Tue Nov 26 20:04:38 2002  Steve Huston  <shuston@riverace.com>
+
+        * tests/Proactor_Test.cpp: Added checks for condition where a read or
+          write fails to initiate because the socket was closed. For Windows,
+          this is a ERROR_NETNAME_DELETED error on the ReadFile/WriteFile call
+          under ACE_WIN32_Asynch_Read/Write_Stream. The test now checks for
+          this and doesn't report an error, but this is a departure from
+          what one would expect from a socket. It might be better if the
+          underlying call was changed to WSARecv/WSASend for Winsock2-enabled
+          systems.
+
 Tue Nov 26 16:08:22 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* bin/auto_run_tests.lst: Added two new tests to our daily builds. 
