@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_LOGGING_STRATEGY_H
 #define ACE_LOGGING_STRATEGY_H
 
@@ -21,9 +20,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if !defined (ACE_DEFAULT_MAX_LOGFILE_SIZE)
-#define ACE_DEFAULT_MAX_LOGFILE_SIZE 16384 /* KB */
-#endif /* ACE_DEFAULT_MAX_LOGFILE_SIZE */
+#if !defined (ACE_DEFAULT_LOGFILE_POLL_INTERVAL)
+#define ACE_DEFAULT_LOGFILE_POLL_INTERVAL 600 /* Seconds */
+#endif /* ACE_DEFAULT_LOGFILE_POLL_INTERVAL */
 
 /**
  * @class ACE_Logging_Strategy
@@ -74,7 +73,8 @@ public:
    * size exceeds <max_size_>, the current logfile is closed, saved to
    * logfile.old, and a new logfile is reopened.
    */
-  virtual int handle_timeout (const ACE_Time_Value& tv, const void* arg);
+  virtual int handle_timeout (const ACE_Time_Value& tv, 
+                              const void* arg);
 
   /** Parse arguments provided in svc.conf file.
    '-f' Pass in the flags (such as OSTREAM, STDERR, LOGGER, VERBOSE,
@@ -86,8 +86,8 @@ public:
    '-n' Set the program name for the %n format specifier.
    '-N' The maximum number of logfiles that we want created.
    '-o' Specifies that we want the no standard logfiles ordering
-        (fastest processing in <handle_timeout>).  Default is not to order
-        logfiles.  
+        (fastest processing in <handle_timeout>).  Default is not to
+        order logfiles.  
    '-p' Pass in the process-wide priorities to either enable (e.g.,
         DEBUG, INFO, WARNING, NOTICE, ERROR, CRITICAL, ALERT,
         EMERGENCY) or to disable (e.g., ~DEBUG, ~INFO, ~WARNING,
@@ -101,6 +101,8 @@ public:
         reconfiguration. 
    */
   int parse_args (int argc, ACE_TCHAR *argv[]);
+
+  void log_msg (ACE_Log_Msg *log_msg);
 
 private:
   /// Tokenize to set all the flags
@@ -124,6 +126,7 @@ private:
 
   /// Logger key for distributed logging.
   ACE_TCHAR *logger_key_;
+
   /// Program name to be used for %n format specifier.
   ACE_TCHAR *program_name_;
 
@@ -153,8 +156,12 @@ private:
   /// Default value is 0.
   u_long interval_;
 
-  /// Maximum logfile size (in KB).  Default value is <ACE_DEFAULT_MAX_LOGFILE_SIZE>.
+  /// Maximum logfile size (in KB).  Default value is 
+  /// <ACE_DEFAULT_MAX_LOGFILE_SIZE>.
   u_long max_size_;
+
+  /// ACE_Log_Msg instance to work with
+  ACE_Log_Msg *log_msg_;
 };
 
 ACE_FACTORY_DECLARE (ACE, ACE_Logging_Strategy)
