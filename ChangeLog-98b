@@ -1,121 +1,121 @@
 Fri Oct  2 00:19:04 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/Thread_Pool_Reactor_Test.cpp: Fixed explicit template
-	  instantiation.
+        * tests/Thread_Pool_Reactor_Test.cpp: Fixed explicit template
+          instantiation.
 
-	* ace/Strategies_T.{h,i,cpp}: Removed classes
-	  ACE_Thread_Pool_Strategy and ACE_Svc_Handler_Pool_Strategy.
+        * ace/Strategies_T.{h,i,cpp}: Removed classes
+          ACE_Thread_Pool_Strategy and ACE_Svc_Handler_Pool_Strategy.
 
-	* tests/run_tests.{sh,bat}: Added Thread_Pool_Reactor_Test into
-	  one-buttoned test scripts.
+        * tests/run_tests.{sh,bat}: Added Thread_Pool_Reactor_Test into
+          one-buttoned test scripts.
 
 Thu Oct 01 12:04:30 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/Thread_Pool_Reactor_Test.cpp: Added a command line argument
-	  parser.
+        * tests/Thread_Pool_Reactor_Test.cpp: Added a command line argument
+          parser.
 
 Thu Oct  1 08:51:00 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/ACE.cpp (max_handles): Added yet another fix for AIX.
-  	  Thanks to Chris Lahey for this.
+        * ace/ACE.cpp (max_handles): Added yet another fix for AIX.
+          Thanks to Chris Lahey for this.
 
 Thu Oct 01 01:05:49 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/tests.dsw:
-	* tests/version_tests/version_tests.dsw:
-	* tests/Thread_Pool_Reactor_Test.{cpp,dsp}: Added a new test that
- 	  torture tests the new ACE_TP_Reactor.
+        * tests/tests.dsw:
+        * tests/version_tests/version_tests.dsw:
+        * tests/Thread_Pool_Reactor_Test.{cpp,dsp}: Added a new test that
+          torture tests the new ACE_TP_Reactor.
 
 Thu Oct 01 00:09:35 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * ace/ACE.cpp: Fixed max_handles().
 
-	* tests/Conn_Test: Removed template specialization for
- 	  INET_Addr.hash().
+        * tests/Conn_Test: Removed template specialization for
+          INET_Addr.hash().
 
-	* ace/Addr.i (hash):
-	* ace/INET_Addr.i (hash):
+        * ace/Addr.i (hash):
+        * ace/INET_Addr.i (hash):
 
-	  Finally gave up with template specialization hell and freak'in
- 	  broken compilers and simply added a hash() method to ACE_Addr
- 	  and ACE_INET_Addr. ACE_Addr::hash() simply return 0 and should
- 	  be overwritten by subclasses that can provide better hashing.
+          Finally gave up with template specialization hell and freak'in
+          broken compilers and simply added a hash() method to ACE_Addr
+          and ACE_INET_Addr. ACE_Addr::hash() simply return 0 and should
+          be overwritten by subclasses that can provide better hashing.
 
 Wed Sep 30 10:16:56 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/ACE.cpp: Modified max_handles() so that it goes the right
- 	  thing on platforms like AIX that don't have any predefined limit
- 	  on the number of handles.  Thanks to Chris Lahey
- 	  <CLahey@cccis.com> for reporting this.
+        * ace/ACE.cpp: Modified max_handles() so that it goes the right
+          thing on platforms like AIX that don't have any predefined limit
+          on the number of handles.  Thanks to Chris Lahey
+          <CLahey@cccis.com> for reporting this.
 
 Wed Sep 30 01:56:54 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Strategies_T:
+        * ace/Strategies_T:
 
-	  - ACE_Refcounted_Hash_Recyclable::operator==(const T &rhs):
- 	    Added new method to prevent implicit type conversions.
+          - ACE_Refcounted_Hash_Recyclable::operator==(const T &rhs):
+            Added new method to prevent implicit type conversions.
 
-	  - Changed ACE_Hash_Addr::hash_i to return u_long instead of
- 	    size_t.  This makes it similar to the return value from
- 	    hash().
+          - Changed ACE_Hash_Addr::hash_i to return u_long instead of
+            size_t.  This makes it similar to the return value from
+            hash().
 
-	  - Added hash caching ability to ACE_Hashable.
+          - Added hash caching ability to ACE_Hashable.
 
-	  - Removed the use of ACE_Hash_Addr inside the
- 	    ACE_Cached_Connect_Strategy.  This allows us to reduce
- 	    implicit type conversions inside connect_svc_handler().
+          - Removed the use of ACE_Hash_Addr inside the
+            ACE_Cached_Connect_Strategy.  This allows us to reduce
+            implicit type conversions inside connect_svc_handler().
 
-	    Users are now required to specialize
- 	    ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>::hash_i (void) instead
- 	    of ACE_Hash_Addr<ACE_INET_Addr>::hash_i(const ACE_INET_Addr&addr)
+            Users are now required to specialize
+            ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>::hash_i (void) instead
+            of ACE_Hash_Addr<ACE_INET_Addr>::hash_i(const ACE_INET_Addr&addr)
 
- 	* tests/Conn_Test.cpp: Changed template specialization of
- 	  ACE_Hash_Addr<ACE_INET_Addr>::hash_i(const ACE_INET_Addr&addr)
- 	  to ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>::hash_i (void).
+        * tests/Conn_Test.cpp: Changed template specialization of
+          ACE_Hash_Addr<ACE_INET_Addr>::hash_i(const ACE_INET_Addr&addr)
+          to ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>::hash_i (void).
 
-	* ace/OS.cpp (open): Fixed a couple of things that were broken
- 	  with respect to when the SetFilePointer was called and when lock
- 	  was released.  Also fixed the UNICODE version of open().  BTW,
-	  these functions had to be moved from OS.i to OS.cpp since the
-	  ACE_Managed_Object is not visible from OS.i.
+        * ace/OS.cpp (open): Fixed a couple of things that were broken
+          with respect to when the SetFilePointer was called and when lock
+          was released.  Also fixed the UNICODE version of open().  BTW,
+          these functions had to be moved from OS.i to OS.cpp since the
+          ACE_Managed_Object is not visible from OS.i.
 
 Wed Sep 30 02:29:48 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* performance-tests/TTCP/ACE-C++/Makefile:
-	* performance-tests/TTCP/ACE-C++/wrapper-new-ttcp.cpp:
-	  Hacked so it would compile, don't know anything further than
-	  that.
+        * performance-tests/TTCP/ACE-C++/Makefile:
+        * performance-tests/TTCP/ACE-C++/wrapper-new-ttcp.cpp:
+          Hacked so it would compile, don't know anything further than
+          that.
 
 Tue Sep 29 21:55:52 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/ace.dsw: Removed Connector.cpp from the compile list since
-	  it is a files with template classes only.
+        * ace/ace.dsw: Removed Connector.cpp from the compile list since
+          it is a files with template classes only.
 
 Tue Sep 29 21:14:02 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.i (open): Grab a lock from the Object_Manager when
-	  O_APPEND is defined to simulate atomic behavior on most UNIX
-	  platforms.  Thanks to Irfan.
+        * ace/OS.i (open): Grab a lock from the Object_Manager when
+          O_APPEND is defined to simulate atomic behavior on most UNIX
+          platforms.  Thanks to Irfan.
 
 Tue Sep 29 19:16:57 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
-	* docs/tutorials/007/thread_pool.h
-	* docs/tutorials/007/thread_pool.cpp
-	Added virtual methods for open() and close() that match the
-	baseclass.  This will keep some compilers from complaining about a
-	partial-overload attempt.  Thanks to Bob McWhirter for catching this.
+        * docs/tutorials/007/thread_pool.h
+        * docs/tutorials/007/thread_pool.cpp
+        Added virtual methods for open() and close() that match the
+        baseclass.  This will keep some compilers from complaining about a
+        partial-overload attempt.  Thanks to Bob McWhirter for catching this.
 
 Tue Sep 29 16:13:10 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Strategies_T:
-	* ace/Connector:
+        * ace/Strategies_T:
+        * ace/Connector:
 
-	  Added accessors for the strategy.
+          Added accessors for the strategy.
 
 Tue Sep 29 14:04:49 EDT 1998  James CE Johnson  <jcej@lads.com>
 
         * docs/tutorials/013/page08.html:  Removed link to message_queue.
-	Thanks to Jeff Hellzen for pointing this out.
+        Thanks to Jeff Hellzen for pointing this out.
 
 Tue Sep 29 11:05:04 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -2238,10 +2238,6 @@ Tue Sep  1 10:43:24 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
           ACE_HAS_BIG_FD_SET.  Therefore, I updated these files.  Thanks
           to Ossama Othman <othman@astrosun.tn.cornell.edu> for reporting
           this.
-
-        * TAO/utils/catior/catior.cpp: Replaced the use of
-          CORBA::B_{TRUE,FALSE} with 1 and 0 to be compatible with the
-          CORBA spec.
 
 Tue Sep 01 10:21:49 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -4574,12 +4570,6 @@ Tue Jul 28 12:36:18 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
           to ACE_Service_Config::close () from the destructor.  This will
           be called by the Object Manager upon destruction.
 
-Tue Jul 28 14:49:52 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-        * TAO/TAO-INSTALL.html (HREF): The paragraph "A note on Make" was
-          duplicated.  Thanks to Jeff McDaniel <jsmcdani@gte.net>
-          for reporting this.
-
 Tue Jul 28 11:34:15 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/OS.{h,i} (strpbrk): Added a const wchar_t version of this
@@ -6083,8 +6073,6 @@ Sat Jun 27 18:13:05 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
         * ace/Timeprobe_T.cpp (ACE_Timeprobe - copy constructor): Stupid
           MSVC is forcing me to define this and make it public; it should
           really be protected; please don't use it.
-
-        * TAO/tests/POA/Explicit_Activation/server.cpp (main):
 
         * ace/Timeprobe.h: Added ACE_SINGLETON_DECLARATION; otherwise all
           compilation units would get a different instantiation of the
