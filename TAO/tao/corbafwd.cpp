@@ -7,7 +7,7 @@
 #endif /* ! __ACE_INLINE__ */
 
 char *
-CORBA::string_dup (const CORBA::Char *str)
+CORBA::string_dup (const char *str)
 {
   if (!str)
     return 0;

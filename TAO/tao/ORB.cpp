@@ -1119,8 +1119,8 @@ CORBA_ORB::check_shutdown (CORBA_Environment &ACE_TRY_ENV)
 // String utility support; this needs to be integrated with the ORB's
 // own memory allocation subsystem.
 
-CORBA::Char*
-CORBA::string_copy (const CORBA::Char *str)
+char *
+CORBA::string_copy (const char *str)
 {
   return CORBA::string_dup (str);
 }
