@@ -24,7 +24,7 @@
 #include "ace/Get_Opt.h"
 #include "tao/corba.h"
 #include "orbsvcs/CosNamingC.h"
-#include "loggerC.h"
+#include "orbsvcs/LoggerC.h"
 
 class Logger_Client 
   // = TITLE
