@@ -1,8 +1,9 @@
 Thu Nov  6 10:38:47 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
-	* tao/params.h (parameters.): Changed LOCAL_INLINE macro to
- 	TAO_LOCAL_INLINE to avoid possible collisions with application
- 	macros.
+	* tao/orbobj.h: Added documentation for a few static methods.
+
+	* tao/params.h: Changed LOCAL_INLINE macro to TAO_LOCAL_INLINE to
+ 	avoid possible collisions with application macros.
 
 Thu Nov  6 02:34:54 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
 

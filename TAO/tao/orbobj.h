@@ -45,14 +45,25 @@ public:
   // Initialize the Portable Object Adapter (POA).
 
   static CORBA::ORB_ptr _duplicate (CORBA::ORB_ptr orb);
+  // Return a duplicate of <{orb}>.  When work with this duplicate is
+  // complete, it should be freed up using <CORBA::release()>.
+  
   static CORBA::ORB_ptr _nil (void);
+  // Returns a pointer to a nil ORB, i.e., an non-existent ORB.  This
+  // can be used for initialization or in comparisons.
 
   virtual CORBA::Object_ptr string_to_object (const CORBA::String str,
 					      CORBA::Environment &env) = 0;
+  // Turn a string-ified object reference back into an object pointer.
+  // Each type of ORB, e.g. an IIOP ORB, must implement this.
+  // Typically these strings are created using <object_to_string()>.
   virtual CORBA::String object_to_string (CORBA::Object_ptr obj,
 					  CORBA::Environment &env) = 0;
-
-  // similar for TypeCodes and Anys ... to/from octet sequences
+  // Turn an object reference into a string.  Each type of ORB,
+  // e.g. an IIOP ORB, must implement this.  This can be used by
+  // servers to publish their whereabouts to clients.  The output of
+  // this is typically eventually given to <string_to_object()> as an
+  // argument.
 
   void create_list (CORBA::Long count,
                     CORBA::NVList_ptr &retval);
