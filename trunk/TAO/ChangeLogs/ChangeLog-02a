@@ -1,3 +1,14 @@
+Mon Mar 19 11:37:43 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/POA/Single_Threaded_POA/Single_Threaded_POA.cpp (main): 
+	* examples/POA/FindPOA/FindPOA.cpp (find_non_existant_POA): 
+
+	  In non-debug compiles, asserts disappear.  Thus it was necessary
+	  to add ACE_UNUSED_ARG to variables that are just being asserted
+	  on.
+
+	* TAOACE.dsw: Added ACE DLL to gpref dependencies.
+	
 Mon Mar 19 12:59:28 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Faults/run_test.pl: Fixed a problem that was signaling a

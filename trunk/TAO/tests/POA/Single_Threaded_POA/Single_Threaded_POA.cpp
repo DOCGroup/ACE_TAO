@@ -182,7 +182,6 @@ main (int argc, char **argv)
       Worker worker1 (object1.in ());
       Worker worker2 (object2.in ());
 
-
       int result =
         worker1.activate (THR_BOUND) != 0 ||
         worker2.activate (THR_BOUND) != 0;
@@ -190,6 +189,9 @@ main (int argc, char **argv)
 
       result = ACE_Thread_Manager::instance ()->wait ();
       ACE_ASSERT (result == 0);
+
+      // In non-debug compiles, asserts will disappear.
+      ACE_UNUSED_ARG (result);
 
       root_poa->destroy (1,
                          1,
