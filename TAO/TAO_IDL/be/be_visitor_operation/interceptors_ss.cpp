@@ -207,9 +207,16 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
     }
 
   *os<< "::"
-      << "arguments (CORBA::Environment &)"<< be_nl
-      << "{" <<be_idt_nl 
-      <<" // Generate the arg list on demand" << be_nl;
+      << "arguments (";
+  // generate the CORBA::Environment parameter for the alternative mapping
+  if (!idl_global->exception_support ())
+    *os<<"CORBA::Environment &";
+  else
+    *os << "void";
+  *os<<")"<< be_idt_nl;
+  *os<<"ACE_THROW_SPEC ((CORBA::SystemException))"<<be_uidt_nl
+     << "{" <<be_idt_nl 
+     <<" // Generate the arg list on demand" << be_nl;
 
   if (node->argument_count () == 0)
     {
@@ -281,8 +288,15 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
     }
 
   *os<< "::"
-      << "exceptions (CORBA::Environment &)"<< be_nl
-      << "{\n // Generate the exception list on demand" << be_nl;
+      << "exceptions (";
+  // generate the CORBA::Environment parameter for the alternative mapping
+  if (!idl_global->exception_support ())
+    *os<<"CORBA::Environment &";
+  else
+    *os << "void";
+  *os<<")"<< be_idt_nl;
+  *os<<"ACE_THROW_SPEC ((CORBA::SystemException))"<<be_uidt_nl
+     << "{\n // Generate the exception list on demand" << be_nl;
   if (!node->exceptions ())
     {
       *os << "return 0;\n}\n\n" << be_nl;
@@ -350,8 +364,15 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
     }
 
   *os<< "::"
-      << "result (CORBA::Environment &)"<< be_nl
-      << "{\n // Generate the result on demand" << be_nl;
+      << "result (";
+  // generate the CORBA::Environment parameter for the alternative mapping
+  if (!idl_global->exception_support ())
+    *os<<"CORBA::Environment &";
+  else
+    *os << "void";
+  *os<<")"<< be_idt_nl;
+  *os<<"ACE_THROW_SPEC ((CORBA::SystemException))"<<be_uidt_nl
+     << "{\n // Generate the result on demand" << be_nl;
   bt = be_type::narrow_from_decl (node->return_type ());
   if (this->void_return_type (bt)) 
     {      
