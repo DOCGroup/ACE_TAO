@@ -1,3 +1,17 @@
+Wed Nov  5 09:56:26 2003  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* tao/ORB_Core.cpp (run): Removed 'int' declaration to prevent
+	  obscuring the 'result' variable.  The reason this is important
+	  is because, by obscuring the 'result' variable, the true return
+	  value of Reactor::handle_events() never got returned, and the
+	  caller (typically ORB_Core::run) couldn't tell why handle_events
+	  exited even though it wants to.
+
+	* tao/ORB_Core.cpp (init): Added new option, -ORBVerboseLogging,
+	  to turn on the VERBOSE or VERBOSE_LITE flag in ACE_Log_Msg.
+	  Range of values are 0, 1, or 2 for no verbose, VERBOSE_LITE, and
+	  VERBOSE, respectively.
+
 Wed Nov  5 09:21:38 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_union.cpp: 

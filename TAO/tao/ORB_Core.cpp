@@ -716,6 +716,33 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
 
         }
       else if ((current_arg = arg_shifter.get_the_parameter
+                (ACE_LIB_TEXT("-ORBVerboseLogging"))))
+        {
+          // Use dotted decimal addresses
+          // @@ this should be renamed.  See above comment. fredk
+          u_long verbose_logging = ACE_OS::atoi (current_arg);
+
+          arg_shifter.consume_arg ();
+
+          typedef void (ACE_Log_Msg::*PTMF)(u_long);
+          PTMF flagop = &ACE_Log_Msg::set_flags;
+          u_long value;
+
+          switch (verbose_logging)
+            {
+            case 0:
+              flagop = &ACE_Log_Msg::clr_flags;
+              value = ACE_Log_Msg::VERBOSE | ACE_Log_Msg::VERBOSE_LITE;
+              break;
+            case 1:
+              value = ACE_Log_Msg::VERBOSE_LITE; break;
+            default:
+              value = ACE_Log_Msg::VERBOSE; break;
+            }
+
+          (ACE_LOG_MSG->*flagop)(value);
+        }
+      else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_LIB_TEXT("-ORBUseIMR"))))
         {
           // Use IR or not.
@@ -1784,7 +1811,7 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
       TAO_LF_Event_Loop_Thread_Helper helper (leader_follower,
                                               lf_strategy,
                                               tv);
-      int result = helper.event_loop_return ();
+      result = helper.event_loop_return ();
       if (result != 0)
         {
           if (errno == ETIME)
