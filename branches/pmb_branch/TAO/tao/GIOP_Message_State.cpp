@@ -37,11 +37,12 @@ public:
     }
 
 private:
-  static const int MAGIC_LENGTH = 8; // " begin\n" + \000
+  static const int MAGIC_LENGTH;
   unsigned int which_level_;
   char* msg_;
 };
 
+const int TAO_Debug_Msg_Emitter_Guard::MAGIC_LENGTH = 8; // " begin\n" + \000
 
 ACE_RCSID(tao, GIOP_Message_State, "$Id$")
 
