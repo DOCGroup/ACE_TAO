@@ -1084,7 +1084,13 @@ _make_##SERVICE_CLASS (ACE_Service_Object_Exterminator *);
  *
  * This macro defines both the factory method and the function used to
  * cleanup the service object.
+ *
+ * If this macro is used to define a factory function that need not be
+ * exported (for example, in a static service situation), CLS can be
+ * specified as ACE_Local_Service.
  */
+# define ACE_Local_Service_Export
+
 # define ACE_FACTORY_DEFINE(CLS,SERVICE_CLASS) \
 void _gobble_##SERVICE_CLASS (void *p) { \
   ACE_Service_Object *_p = ACE_static_cast (ACE_Service_Object *, p); \
