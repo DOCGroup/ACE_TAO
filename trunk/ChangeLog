@@ -1,17 +1,24 @@
+Mon Oct 18 19:21:25 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* bin/MakeProjectCreator/modules/AutomakeWorkspaceHelper.pm:
+
+	  Fixed typo setting ACE_ROOT environment variable in the TAO_IDL
+	  definition.
+
 Mon Oct 18 21:13:02 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/Pagefile_Memory_Pool.cpp: Fixed two bugs with the
 	  ACE_Pagefile_Memory_Pool constructor:
-  
+
           1. In the constructor is called with options=0, then the
 	     internal meber local_cb_ is never initialised.  Thus there is
-	     no way of using it with ACE_Malloc. 
- 
-          2. When used for ACE_Malloc in the following way 
-  
+	     no way of using it with ACE_Malloc.
+
+          2. When used for ACE_Malloc in the following way
+
 	    : ACE_Malloc<ACE_PAGEFILE_MEMORY_POOL,ACE_Process_Mutex>
- 	      Malloc1 ("NAME_TEST" ) 
-  
+ 	      Malloc1 ("NAME_TEST" )
+
             as a mutex is created with the name given, the internal call
 	    to CreateFileMapping (CreateFileMappingEx) fails because a
 	    system object of the same name already exists (the mutex).
