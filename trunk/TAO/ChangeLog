@@ -1,3 +1,10 @@
+Mon Apr 26 06:22:03 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Param_Test/Param_Test.mpc:
+
+          With a recent feature addition, it is no longer necessary to list
+          the A.cpp files, if there are no other idl generated files listed.
+
 Mon Apr 26 08:52:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Resource_Factory.h:
@@ -11,15 +18,15 @@ Mon Apr 26 08:24:54 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Apr 26 00:33:13 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* docs/Security/SSLIOP-USAGE.html:
+        * docs/Security/SSLIOP-USAGE.html:
 
-	  Corrected typo in sample code.
+          Corrected typo in sample code.
 
 Mon Apr 26 00:09:54 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* docs/releasenotes/index.html:
+        * docs/releasenotes/index.html:
 
-	  Updated Security Service release notes.
+          Updated Security Service release notes.
 
 Sun Apr 25 17:03:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -38,66 +45,66 @@ Sun Apr 25 09:48:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Apr 23 22:38:41 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tests/Smart_Proxies/Benchmark/client.cpp:
+        * tests/Smart_Proxies/Benchmark/client.cpp:
 
-	  Include "ace/OS_NS_errno.h" to pull in ACE_OS::last_error()
-	  function prototype.
+          Include "ace/OS_NS_errno.h" to pull in ACE_OS::last_error()
+          function prototype.
 
 Fri Apr 23 22:16:53 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/Event/Mcast/Common/Gateway_EC.cpp:
+        * orbsvcs/tests/Event/Mcast/Common/Gateway_EC.cpp:
 
-	  Include "ace/OS_NS_stdio.h" to pull in f{open,close,printf}()
-	  function prototypes.
+          Include "ace/OS_NS_stdio.h" to pull in f{open,close,printf}()
+          function prototypes.
 
 Fri Apr 23 20:28:35 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/PSS/PSDL_String.cpp:
-	* orbsvcs/PSS/PSDL_String.h:
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
-	* orbsvcs/orbsvcs/AV/AVStreams_i.h:
-	* orbsvcs/orbsvcs/AV/sfp.cpp:
-	* orbsvcs/orbsvcs/AV/sfp.h:
-	* orbsvcs/orbsvcs/ESF/ESF_Proxy_RB_Tree.h:
-	* orbsvcs/orbsvcs/ESF/ESF_Proxy_RB_Tree.i:
-	* orbsvcs/orbsvcs/ETCL/ETCL_Constraint.cpp:
-	* orbsvcs/orbsvcs/ETCL/ETCL_Constraint.h:
-	* orbsvcs/orbsvcs/Event/Event_Channel.h:
-	* orbsvcs/orbsvcs/Event/Event_Channel.i:
-	* orbsvcs/orbsvcs/Naming/Entries.cpp:
-	* orbsvcs/orbsvcs/Naming/Entries.h:
-	* orbsvcs/orbsvcs/Naming/Naming_Service_Container.cpp:
-	* orbsvcs/orbsvcs/Naming/Naming_Service_Container.h:
-	* orbsvcs/orbsvcs/Naming/Persistent_Entries.cpp:
-	* orbsvcs/orbsvcs/Naming/Persistent_Entries.h:
-	* orbsvcs/orbsvcs/Notify/EventType.cpp:
-	* orbsvcs/orbsvcs/Notify/EventType.h:
-	* orbsvcs/orbsvcs/Notify/Property_Boolean.h:
-	* orbsvcs/orbsvcs/Notify/Property_Boolean.inl:
-	* orbsvcs/orbsvcs/Notify/Property_T.h:
-	* orbsvcs/orbsvcs/Notify/Property_T.inl:
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i.h:
-	* orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.cpp:
-	* orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.h:
-	* orbsvcs/orbsvcs/Sched/SchedEntry.h:
-	* orbsvcs/orbsvcs/Sched/SchedEntry.i:
-	* orbsvcs/orbsvcs/Sched/SchedEntry.cpp:
-	* orbsvcs/orbsvcs/Trader/Constraint_Nodes.cpp:
-	* orbsvcs/orbsvcs/Trader/Constraint_Nodes.h:
-	* orbsvcs/orbsvcs/Trader/Interpreter_Utils.cpp:
-	* orbsvcs/orbsvcs/Trader/Interpreter_Utils.h:
-	* orbsvcs/orbsvcs/Trader/Trader.cpp:
-	* orbsvcs/orbsvcs/Trader/Trader.h:
-	* orbsvcs/tests/FtRtEvent/PushConsumer.h:
-	* orbsvcs/tests/FtRtEvent/PushSupplier.h:
-	* examples/Callback_Quoter/Notifier_i.cpp:
-	* examples/Callback_Quoter/Notifier_i.h:
-	* examples/Simple/chat/Broadcaster_i.cpp:
-	* examples/Simple/chat/Broadcaster_i.h:
+        * orbsvcs/PSS/PSDL_String.cpp:
+        * orbsvcs/PSS/PSDL_String.h:
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+        * orbsvcs/orbsvcs/AV/AVStreams_i.h:
+        * orbsvcs/orbsvcs/AV/sfp.cpp:
+        * orbsvcs/orbsvcs/AV/sfp.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_RB_Tree.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_RB_Tree.i:
+        * orbsvcs/orbsvcs/ETCL/ETCL_Constraint.cpp:
+        * orbsvcs/orbsvcs/ETCL/ETCL_Constraint.h:
+        * orbsvcs/orbsvcs/Event/Event_Channel.h:
+        * orbsvcs/orbsvcs/Event/Event_Channel.i:
+        * orbsvcs/orbsvcs/Naming/Entries.cpp:
+        * orbsvcs/orbsvcs/Naming/Entries.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Service_Container.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Service_Container.h:
+        * orbsvcs/orbsvcs/Naming/Persistent_Entries.cpp:
+        * orbsvcs/orbsvcs/Naming/Persistent_Entries.h:
+        * orbsvcs/orbsvcs/Notify/EventType.cpp:
+        * orbsvcs/orbsvcs/Notify/EventType.h:
+        * orbsvcs/orbsvcs/Notify/Property_Boolean.h:
+        * orbsvcs/orbsvcs/Notify/Property_Boolean.inl:
+        * orbsvcs/orbsvcs/Notify/Property_T.h:
+        * orbsvcs/orbsvcs/Notify/Property_T.inl:
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i.h:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.cpp:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.h:
+        * orbsvcs/orbsvcs/Sched/SchedEntry.h:
+        * orbsvcs/orbsvcs/Sched/SchedEntry.i:
+        * orbsvcs/orbsvcs/Sched/SchedEntry.cpp:
+        * orbsvcs/orbsvcs/Trader/Constraint_Nodes.cpp:
+        * orbsvcs/orbsvcs/Trader/Constraint_Nodes.h:
+        * orbsvcs/orbsvcs/Trader/Interpreter_Utils.cpp:
+        * orbsvcs/orbsvcs/Trader/Interpreter_Utils.h:
+        * orbsvcs/orbsvcs/Trader/Trader.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader.h:
+        * orbsvcs/tests/FtRtEvent/PushConsumer.h:
+        * orbsvcs/tests/FtRtEvent/PushSupplier.h:
+        * examples/Callback_Quoter/Notifier_i.cpp:
+        * examples/Callback_Quoter/Notifier_i.h:
+        * examples/Simple/chat/Broadcaster_i.cpp:
+        * examples/Simple/chat/Broadcaster_i.h:
 
-	  Changed return types for equality, relational and logical
-	  operators to "bool", as is the norm for modern C++.
+          Changed return types for equality, relational and logical
+          operators to "bool", as is the norm for modern C++.
 
 Fri Apr 23 15:16:37 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -174,46 +181,46 @@ Fri Apr 23 11:30:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Apr 22 23:15:20 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Cache_Entries.h:
-	* tao/Cache_Entries.inl:
-	* tao/GIOP_Message_Version.h:
-	* tao/GIOP_Message_Version.inl:
-	* tao/Sequence.h:
-	* tao/PortableServer/Object_Adapter.cpp:
-	* tao/PortableServer/Object_Adapter.h:
-	* tao/PortableServer/POA.h:
-	* tao/PortableServer/POA.i:
-	* TAO_IDL/ast/ast_expression.cpp:
-	* TAO_IDL/include/ast_expression.h:
-	* orbsvcs/orbsvcs/PortableGroup/PG_MemberInfo.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/PG_MemberInfo.h:
-	* orbsvcs/orbsvcs/PortableGroup/PG_Operators.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/PG_Operators.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.h:
+        * tao/Cache_Entries.h:
+        * tao/Cache_Entries.inl:
+        * tao/GIOP_Message_Version.h:
+        * tao/GIOP_Message_Version.inl:
+        * tao/Sequence.h:
+        * tao/PortableServer/Object_Adapter.cpp:
+        * tao/PortableServer/Object_Adapter.h:
+        * tao/PortableServer/POA.h:
+        * tao/PortableServer/POA.i:
+        * TAO_IDL/ast/ast_expression.cpp:
+        * TAO_IDL/include/ast_expression.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_MemberInfo.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_MemberInfo.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Operators.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Operators.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.h:
 
-	  Changed all return types for equality, relational and logical
-	  operators to "bool", as is the norm for modern C++.
+          Changed all return types for equality, relational and logical
+          operators to "bool", as is the norm for modern C++.
 
-	* tao/Sequence.cpp:
+        * tao/Sequence.cpp:
 
-	  Slightly optimized the equality operator implementation in the
-	  non-inline case.
+          Slightly optimized the equality operator implementation in the
+          non-inline case.
 
-	  Changed return type of equality operators to "bool" is the norm
-	  for modern C++.
+          Changed return type of equality operators to "bool" is the norm
+          for modern C++.
 
-	* tao/TAO_Singleton.cpp:
-	* tao/Strategies/SCIOP_Endpoint.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Vault.cpp:
+        * tao/TAO_Singleton.cpp:
+        * tao/Strategies/SCIOP_Endpoint.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Vault.cpp:
 
-	  Replaced "Synch_T.h" include with lighter weight ones.  Fixes
-	  "fuzz" errors.
+          Replaced "Synch_T.h" include with lighter weight ones.  Fixes
+          "fuzz" errors.
 
-	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadAverage.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadAverage.cpp:
 
-	  Added minor code review comments for Jai.
+          Added minor code review comments for Jai.
 
 Thu Apr 22 20:02:19 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 

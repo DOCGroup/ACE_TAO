@@ -6,7 +6,6 @@ project(*Server): messaging, taoexe, portableserver, minimum_corba {
 
   Source_Files {
     param_test_i.cpp
-    param_testA.cpp
     server.cpp
   }
 }
