@@ -49,12 +49,6 @@ TAO_Server_Strategy_Factory::create_event_loop_lock (void)
   return 0;
 }
 
-ACE_Lock *
-TAO_Server_Strategy_Factory::create_cached_connector_lock (void)
-{
-  return 0;
-}
-
 const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &
 TAO_Server_Strategy_Factory::active_object_map_creation_parameters (void) const
 {

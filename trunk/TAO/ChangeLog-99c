@@ -1,3 +1,29 @@
+Wed Jul 14 13:19:36 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Client_Strategy_Factory.cpp:
+	* tao/Client_Strategy_Factory.h:
+	* tao/Resource_Factory.cpp:
+	* tao/Server_Strategy_Factory.cpp:
+	* tao/Server_Strategy_Factory.h:
+	* tao/default_client.cpp:
+	* tao/default_client.h:
+	* tao/default_server.cpp:
+	* tao/default_server.h:
+	  Moved the connector_lock() creation from the server strategy
+	  factory to the client strategy factory. Thanks to Phil Mesnier
+	  <mesnier_p@ociweb.com> for reporting this problem. This fixes
+	  [BUGID:17]
+
+	* docs/Options.html:
+	* docs/configurations.html:
+	* performance-tests/Cubit/TAO/IDL_Cubit/svc.conf:
+	* performance-tests/Cubit/TAO/IDL_Cubit/svc.conf.dynamic:
+	* performance-tests/Cubit/TAO/IDL_Cubit/collocation/svc.conf:
+	* performance-tests/Cubit/TAO/MT_Cubit/svc.conf:
+	* tests/Collocation/svc.conf:
+	  Updated the documentation and the svc.conf files that were using 
+	  that option.
+
 Wed Jul 14 12:43:51 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/TAO.cpp (init): replaced "RootPOA" with TAO_OBJID_ROOTPOA.

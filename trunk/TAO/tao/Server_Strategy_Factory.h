@@ -110,9 +110,6 @@ public:
   virtual ACE_Lock *create_event_loop_lock (void);
   // Creates and returns a lock for the event loop.
 
-  virtual ACE_Lock *create_cached_connector_lock (void);
-  // Create the lock to be used by the cached connector.
-
   virtual const Active_Object_Map_Creation_Parameters &active_object_map_creation_parameters (void) const;
   // Return the active object map creation parameters.
 
