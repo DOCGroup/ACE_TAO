@@ -1,3 +1,9 @@
+Tue Jan 18 13:44:34 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Thread_Pool_Test.cpp: Replaced int with size_t to
+	  prevent compiler warnings comparing signed and unsigned
+ 	  quantities.  
+
 Tue Jan 18 09:13:43 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE-INSTALL.html: ACE works just fine on RedHat 5.1 and
