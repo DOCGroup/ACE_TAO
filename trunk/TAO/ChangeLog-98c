@@ -5,6 +5,10 @@ Wed Oct 28 22:22:44 1998  David L. Levine  <levine@cs.wustl.edu>
           return statement will be reached, if an exception isn't thrown.
           This avoids a cxx warning that the last statement is unreachable.
 
+        * TAO_IDL/be/be_visitor_enum/any_op_cs.cpp (visit_enum): removed
+          ACE_NOTREACHED wrapper fron final return statement, because it's
+          reachable.
+
 Wed Oct 28 21:47:32 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_enum/any_op_cs.cpp:
