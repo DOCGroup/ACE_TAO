@@ -1,3 +1,7 @@
+Thu Jun 26 12:38:16 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ACE version 4.2.12, released Thu Jun 26 12:38:16 1997.
+
 Thu Jun 26 01:11:10 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Svc_Conf.y: Added some sanity checks to make sure we don't
