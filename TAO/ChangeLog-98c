@@ -234,7 +234,7 @@ Fri Nov 14 17:08:20 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 Fri Nov 14 17:10:20 1997  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
 
-	* cubit_i.cpp: Chaged &d to %d in ACE_ERROR
+	* cubit_i.cpp: Changed &d to %d in ACE_ERROR
 
 Fri Nov 14 16:42:21 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
