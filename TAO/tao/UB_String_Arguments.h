@@ -46,7 +46,7 @@ namespace TAO
                                     CORBA::WString_out>
   {
   };
-};
+}
 
 #include /**/ "ace/post.h"
 #endif /* TAO_UB_STRING_ARGUMENTS_H */

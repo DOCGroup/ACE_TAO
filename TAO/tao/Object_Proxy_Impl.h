@@ -37,7 +37,7 @@ namespace CORBA
   typedef Object *Object_ptr;
 
   class Environment;
-};
+}
 
 /**
  * @class TAO_Object_Proxy_Impl

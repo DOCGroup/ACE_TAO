@@ -59,7 +59,7 @@ namespace TAO
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVEROBJECT__ARG_TRAITS_CS_)
 #define _IMPLEMENTATIONREPOSITORY_SERVEROBJECT__ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_PortableServer_Export Arg_Traits<ImplementationRepository::ServerObject>
     : public
@@ -73,13 +73,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // .\be\be_visitor_arg_traits.cpp:474
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_STARTUPOPTIONS__ARG_TRAITS_CS_)
 #define _IMPLEMENTATIONREPOSITORY_STARTUPOPTIONS__ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_PortableServer_Export Arg_Traits<ImplementationRepository::StartupOptions>
     : public
@@ -92,13 +92,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // .\be\be_visitor_arg_traits.cpp:474
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATION__ARG_TRAITS_CS_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATION__ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_PortableServer_Export Arg_Traits<ImplementationRepository::ServerInformation>
     : public
@@ -111,13 +111,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // .\be\be_visitor_arg_traits.cpp:265
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST__ARG_TRAITS_CS_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST__ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_PortableServer_Export Arg_Traits<ImplementationRepository::ServerInformationList>
     : public
@@ -133,7 +133,7 @@ namespace TAO
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR__ARG_TRAITS_CS_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR__ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_PortableServer_Export Arg_Traits<ImplementationRepository::ServerInformationIterator>
     : public
@@ -150,7 +150,7 @@ namespace TAO
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_ADMINISTRATION__ARG_TRAITS_CS_)
 #define _IMPLEMENTATIONREPOSITORY_ADMINISTRATION__ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_PortableServer_Export Arg_Traits<ImplementationRepository::Administration>
     : public
@@ -164,13 +164,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // .\be\be_visitor_arg_traits.cpp:265
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_LOCATOR_SERVERNAMELIST__ARG_TRAITS_CS_)
 #define _IMPLEMENTATIONREPOSITORY_LOCATOR_SERVERNAMELIST__ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_PortableServer_Export Arg_Traits<ImplementationRepository::Locator::ServerNameList>
     : public
@@ -183,14 +183,14 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-};
+}
 
 // TAO_IDL - Generated from
 // c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for ImplementationRepository::Locator.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 ImplementationRepository::Locator_ptr
 TAO::Objref_Traits<ImplementationRepository::Locator>::tao_duplicate (
     ImplementationRepository::Locator_ptr p
@@ -199,7 +199,7 @@ TAO::Objref_Traits<ImplementationRepository::Locator>::tao_duplicate (
   return ImplementationRepository::Locator::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<ImplementationRepository::Locator>::tao_release (
     ImplementationRepository::Locator_ptr p
@@ -208,14 +208,14 @@ TAO::Objref_Traits<ImplementationRepository::Locator>::tao_release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 ImplementationRepository::Locator_ptr
 TAO::Objref_Traits<ImplementationRepository::Locator>::tao_nil (void)
 {
   return ImplementationRepository::Locator::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<ImplementationRepository::Locator>::tao_marshal (
     ImplementationRepository::Locator_ptr p,
@@ -226,12 +226,12 @@ TAO::Objref_Traits<ImplementationRepository::Locator>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*ImplementationRepository__TAO_Locator_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_LOCATOR_SERVERNAMELIST_CS_)
@@ -285,29 +285,29 @@ static const CORBA::Long _oc_ImplementationRepository_Locator_ServerNameList[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   56,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x496d706c), 
-  ACE_NTOHL (0x656d656e), 
-  ACE_NTOHL (0x74617469), 
-  ACE_NTOHL (0x6f6e5265), 
-  ACE_NTOHL (0x706f7369), 
-  ACE_NTOHL (0x746f7279), 
-  ACE_NTOHL (0x2f4c6f63), 
-  ACE_NTOHL (0x61746f72), 
-  ACE_NTOHL (0x2f536572), 
-  ACE_NTOHL (0x7665724e), 
-  ACE_NTOHL (0x616d654c), 
-  ACE_NTOHL (0x6973743a), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x496d706c),
+  ACE_NTOHL (0x656d656e),
+  ACE_NTOHL (0x74617469),
+  ACE_NTOHL (0x6f6e5265),
+  ACE_NTOHL (0x706f7369),
+  ACE_NTOHL (0x746f7279),
+  ACE_NTOHL (0x2f4c6f63),
+  ACE_NTOHL (0x61746f72),
+  ACE_NTOHL (0x2f536572),
+  ACE_NTOHL (0x7665724e),
+  ACE_NTOHL (0x616d654c),
+  ACE_NTOHL (0x6973743a),
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:ImplementationRepository/Locator/ServerNameList:1.0
     15,
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x65724e61), 
-  ACE_NTOHL (0x6d654c69), 
+  ACE_NTOHL (0x53657276),
+  ACE_NTOHL (0x65724e61),
+  ACE_NTOHL (0x6d654c69),
   ACE_NTOHL (0x73740000),  // name = ServerNameList
     CORBA::tk_sequence, // typecode kind
   16, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
-    CORBA::tk_string, 
+    CORBA::tk_string,
     0U, // string length
     0U,
 
@@ -342,41 +342,41 @@ void ImplementationRepository::Locator::activate_server_in_activator (
     {
       ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
     }
-  
+
   if (this->the_TAO_Locator_Proxy_Broker_ == 0)
     {
       ImplementationRepository_Locator_setup_collocation (
           this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
         );
     }
-  
+
   TAO::Arg_Traits<void>::ret_val _tao_retval;
   TAO::Arg_Traits<CORBA::Char *>::in_arg_val _tao_server (server);
   TAO::Arg_Traits<CORBA::Char *>::in_arg_val _tao_activator (activator);
-  
+
   TAO::Argument *_tao_signature [] =
     {
       &_tao_retval,
       &_tao_server,
       &_tao_activator
     };
-  
+
   static TAO::Exception_Data
-  _tao_ImplementationRepository_Locator_activate_server_in_activator_exceptiondata [] = 
+  _tao_ImplementationRepository_Locator_activate_server_in_activator_exceptiondata [] =
     {
       {
         "IDL:ImplementationRepository/NotFound:1.0",
         ImplementationRepository::NotFound::_alloc,
         ImplementationRepository::_tc_NotFound
       },
-      
+
       {
         "IDL:ImplementationRepository/CannotActivate:1.0",
         ImplementationRepository::CannotActivate::_alloc,
         ImplementationRepository::_tc_CannotActivate
       }
     };
-  
+
   TAO::Invocation_Adapter _tao_call (
       this,
       _tao_signature,
@@ -385,7 +385,7 @@ void ImplementationRepository::Locator::activate_server_in_activator (
       28,
       this->the_TAO_Locator_Proxy_Broker_
     );
-  
+
   _tao_call.invoke (
       _tao_ImplementationRepository_Locator_activate_server_in_activator_exceptiondata,
       2
@@ -411,27 +411,27 @@ void ImplementationRepository::Locator::remove_server_in_activator (
     {
       ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
     }
-  
+
   if (this->the_TAO_Locator_Proxy_Broker_ == 0)
     {
       ImplementationRepository_Locator_setup_collocation (
           this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
         );
     }
-  
+
   TAO::Arg_Traits<void>::ret_val _tao_retval;
   TAO::Arg_Traits<CORBA::Char *>::in_arg_val _tao_server (server);
   TAO::Arg_Traits<CORBA::Char *>::in_arg_val _tao_activator (activator);
-  
+
   TAO::Argument *_tao_signature [] =
     {
       &_tao_retval,
       &_tao_server,
       &_tao_activator
     };
-  
+
   static TAO::Exception_Data
-  _tao_ImplementationRepository_Locator_remove_server_in_activator_exceptiondata [] = 
+  _tao_ImplementationRepository_Locator_remove_server_in_activator_exceptiondata [] =
     {
       {
         "IDL:ImplementationRepository/NotFound:1.0",
@@ -439,7 +439,7 @@ void ImplementationRepository::Locator::remove_server_in_activator (
         ImplementationRepository::_tc_NotFound
       }
     };
-  
+
   TAO::Invocation_Adapter _tao_call (
       this,
       _tao_signature,
@@ -448,7 +448,7 @@ void ImplementationRepository::Locator::remove_server_in_activator (
       26,
       this->the_TAO_Locator_Proxy_Broker_
     );
-  
+
   _tao_call.invoke (
       _tao_ImplementationRepository_Locator_remove_server_in_activator_exceptiondata,
       1
@@ -474,27 +474,27 @@ void ImplementationRepository::Locator::shutdown_server_in_activator (
     {
       ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
     }
-  
+
   if (this->the_TAO_Locator_Proxy_Broker_ == 0)
     {
       ImplementationRepository_Locator_setup_collocation (
           this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
         );
     }
-  
+
   TAO::Arg_Traits<void>::ret_val _tao_retval;
   TAO::Arg_Traits<CORBA::Char *>::in_arg_val _tao_server (server);
   TAO::Arg_Traits<CORBA::Char *>::in_arg_val _tao_activator (activator);
-  
+
   TAO::Argument *_tao_signature [] =
     {
       &_tao_retval,
       &_tao_server,
       &_tao_activator
     };
-  
+
   static TAO::Exception_Data
-  _tao_ImplementationRepository_Locator_shutdown_server_in_activator_exceptiondata [] = 
+  _tao_ImplementationRepository_Locator_shutdown_server_in_activator_exceptiondata [] =
     {
       {
         "IDL:ImplementationRepository/NotFound:1.0",
@@ -502,7 +502,7 @@ void ImplementationRepository::Locator::shutdown_server_in_activator (
         ImplementationRepository::_tc_NotFound
       }
     };
-  
+
   TAO::Invocation_Adapter _tao_call (
       this,
       _tao_signature,
@@ -511,7 +511,7 @@ void ImplementationRepository::Locator::shutdown_server_in_activator (
       28,
       this->the_TAO_Locator_Proxy_Broker_
     );
-  
+
   _tao_call.invoke (
       _tao_ImplementationRepository_Locator_shutdown_server_in_activator_exceptiondata,
       1
@@ -537,27 +537,27 @@ void ImplementationRepository::Locator::server_is_shutting_down_in_activator (
     {
       ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
     }
-  
+
   if (this->the_TAO_Locator_Proxy_Broker_ == 0)
     {
       ImplementationRepository_Locator_setup_collocation (
           this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
         );
     }
-  
+
   TAO::Arg_Traits<void>::ret_val _tao_retval;
   TAO::Arg_Traits<CORBA::Char *>::in_arg_val _tao_server (server);
   TAO::Arg_Traits<CORBA::Char *>::in_arg_val _tao_activator (activator);
-  
+
   TAO::Argument *_tao_signature [] =
     {
       &_tao_retval,
       &_tao_server,
       &_tao_activator
     };
-  
+
   static TAO::Exception_Data
-  _tao_ImplementationRepository_Locator_server_is_shutting_down_in_activator_exceptiondata [] = 
+  _tao_ImplementationRepository_Locator_server_is_shutting_down_in_activator_exceptiondata [] =
     {
       {
         "IDL:ImplementationRepository/NotFound:1.0",
@@ -565,7 +565,7 @@ void ImplementationRepository::Locator::server_is_shutting_down_in_activator (
         ImplementationRepository::_tc_NotFound
       }
     };
-  
+
   TAO::Invocation_Adapter _tao_call (
       this,
       _tao_signature,
@@ -574,7 +574,7 @@ void ImplementationRepository::Locator::server_is_shutting_down_in_activator (
       36,
       this->the_TAO_Locator_Proxy_Broker_
     );
-  
+
   _tao_call.invoke (
       _tao_ImplementationRepository_Locator_server_is_shutting_down_in_activator_exceptiondata,
       1
@@ -600,19 +600,19 @@ CORBA::Long ImplementationRepository::Locator::register_activator (
     {
       ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
     }
-  
+
   if (this->the_TAO_Locator_Proxy_Broker_ == 0)
     {
       ImplementationRepository_Locator_setup_collocation (
           this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
         );
     }
-  
+
   TAO::Arg_Traits<CORBA::Long>::ret_val _tao_retval;
   TAO::Arg_Traits<CORBA::Char *>::in_arg_val _tao_activator (activator);
   TAO::Arg_Traits<ImplementationRepository::Administration>::in_arg_val _tao_admin (admin);
   TAO::Arg_Traits<ImplementationRepository::Locator::ServerNameList>::in_arg_val _tao_servers (servers);
-  
+
   TAO::Argument *_tao_signature [] =
     {
       &_tao_retval,
@@ -620,7 +620,7 @@ CORBA::Long ImplementationRepository::Locator::register_activator (
       &_tao_admin,
       &_tao_servers
     };
-  
+
   TAO::Invocation_Adapter _tao_call (
       this,
       _tao_signature,
@@ -629,10 +629,10 @@ CORBA::Long ImplementationRepository::Locator::register_activator (
       18,
       this->the_TAO_Locator_Proxy_Broker_
     );
-  
+
   _tao_call.invoke (0, 0 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (_tao_retval.excp ());
-  
+
   return _tao_retval.retn ();
 }
 
@@ -652,25 +652,25 @@ void ImplementationRepository::Locator::unregister_activator (
     {
       ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
     }
-  
+
   if (this->the_TAO_Locator_Proxy_Broker_ == 0)
     {
       ImplementationRepository_Locator_setup_collocation (
           this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
         );
     }
-  
+
   TAO::Arg_Traits<void>::ret_val _tao_retval;
   TAO::Arg_Traits<CORBA::Char *>::in_arg_val _tao_activator (activator);
   TAO::Arg_Traits<CORBA::Long>::in_arg_val _tao_token (token);
-  
+
   TAO::Argument *_tao_signature [] =
     {
       &_tao_retval,
       &_tao_activator,
       &_tao_token
     };
-  
+
   TAO::Invocation_Adapter _tao_call (
       this,
       _tao_signature,
@@ -679,7 +679,7 @@ void ImplementationRepository::Locator::unregister_activator (
       20,
       this->the_TAO_Locator_Proxy_Broker_
     );
-  
+
   _tao_call.invoke (0, 0 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }

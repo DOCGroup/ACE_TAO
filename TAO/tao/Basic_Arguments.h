@@ -102,7 +102,7 @@ namespace TAO
     : public Basic_Arg_Traits_T<CORBA::LongDouble>
   {
   };
-};
+}
 
 #include /**/ "ace/post.h"
 
