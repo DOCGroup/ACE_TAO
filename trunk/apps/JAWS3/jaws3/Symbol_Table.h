@@ -4,7 +4,6 @@
 #ifndef JAWS_SYMBOL_TABLE_H
 #define JAWS_SYMBOL_TABLE_H
 
-#include "ace/OS.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Synch.h"
 

@@ -1,3 +1,33 @@
+Thu Jun 10 18:41:29 2004  Steve Huston  <shuston@riverace.com>
+
+	* apps/JAWS3/jaws3/Asynch_IO.cpp:
+	* apps/JAWS3/jaws3/IO.h:
+	* apps/JAWS3/jaws3/Config_File.cpp:
+	* apps/JAWS3/jaws3/Datagram.h:
+	* apps/JAWS3/jaws3/Export.h:
+	* apps/JAWS3/jaws3/Options.cpp:
+	* apps/JAWS3/jaws3/Protocol_Handler.h:
+	* apps/JAWS3/jaws3/Symbol_Table.h
+	* apps/JAWS3/jaws3/Synch_IO.cpp:
+	* apps/JAWS3/jaws3/THYBRID_Concurrency.cpp:
+	* apps/JAWS3/jaws3/TPOOL_Concurrency.cpp:
+	* apps/JAWS3/jaws3/TPR_Concurrency.cpp:
+	* apps/JAWS3/jaws3/Task_Timer.h:
+	* apps/JAWS3/jaws3/Templates.cpp:
+	* apps/JAWS3/jaws3/Timer.h:
+	* apps/JAWS3/jaws3/Timer_Helpers.h:
+	* examples/APG/Misc_IPC/UDP_Broadcast.cpp:
+	* examples/APG/Misc_IPC/UDP_Multicast.cpp:
+	* examples/APG/Misc_IPC/UDP_Unicast.cpp:
+	* examples/APG/Shared_Memory/Mem_Map.cpp:
+	* examples/APG/Svc_Config/HA_Configurable_Server_Dynamic.cpp:
+	* examples/APG/Svc_Config/HA_Configurable_Server_Static.cpp:
+	* examples/APG/Svc_Config/HA_Status_Dynamic.cpp:
+	* examples/APG/Svc_Config/HA_Status_Static.cpp:
+	* examples/APG/ThreadManagement/Async_Cancel.cpp:
+	  Don't include "ace/OS.h" - it screws up HP aC++ and somehow starts
+	  complaining about mismatched t_bind things in OS_TLI.inl. Weird.
+
 Thu Jun 10 19:41:02 2004  Olli Savia  <ops@iki.fi>
 
         * ACE-INSTALL.html:
