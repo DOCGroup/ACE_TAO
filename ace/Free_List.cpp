@@ -15,6 +15,18 @@ ACE_Free_List<T>::~ACE_Free_List (void)
   // Nothing
 }
 
+template <class T, class LOCK>
+ACE_Locked_Simple_Free_List<T, LOCK>::ACE_Locked_Simple_Free_List ()
+  : head_ (0), 
+    size_ (0)
+{
+}
+
+template <class T, class LOCK>
+ACE_Locked_Simple_Free_List<T, LOCK>::~ACE_Locked_Simple_Free_List ()
+{
+}
+
 // Default constructor that takes in a preallocation number
 // (<prealloc>), a low and high water mark (<lwm> and <hwm>) and an
 // increment value (<inc>)
