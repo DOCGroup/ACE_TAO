@@ -7,7 +7,7 @@ Sat Mar 20 18:39:20 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tests/RTScheduling/VoidData/Makefile:
 
 	  Added dependencies on the IDL_SRC for the for client and server
-	  objects. 
+	  objects. Thanks to Don for help with this.
 
 Sat Mar 20 08:41:19 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
