@@ -352,10 +352,57 @@ run_test (int disable_notify_pipe,
 
 #endif /* ACE_HAS_THREADS */
 
+// run_notify_purge_test tests the reactor's purge_pending_notifications
+// function. It does 2 notifications, and explicitly cancels one, and
+// deletes the other's event handler, which should cause it to be cancelled
+// as well.
+class Purged_Notify : public ACE_Event_Handler
+{
+  virtual int handle_exception (ACE_HANDLE fd = ACE_INVALID_HANDLE)
+  {
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("Got a notify that should have been purged!\n")));
+    return 0;
+  }
+};
+
+static int
+run_notify_purge_test (void)
+{
+  ACE_Reactor *r = ACE_Reactor::instance ();
+  Purged_Notify n1;
+  Purged_Notify *n2 = new Purged_Notify;
+  r->notify (&n1);
+  r->notify (n2);
+  int status = r->purge_pending_notifications (&n1);
+  if (status == -1 && errno == ENOTSUP)
+    return 0;         // Select Reactor w/o ACE_HAS_REACTOR_NOTIFICATION_QUEUE
+  if (status != 1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Purged %d notifies; expected 1\n"),
+                  status));
+    }
+  delete n2;   // Should cause n2's notify to be cancelled
+  ACE_Time_Value t (1);
+  status = r->handle_events (t);  // Should be nothing to do, and time out
+  return status < 0 ? 1 : 0;     // Return 0 for all ok, else error
+}
+
+
 int
 main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Reactor_Notify_Test"));
+
+  int test_result = 0;       // Innocent until proven guilty
+
+  test_result = run_notify_purge_test ();
+  if (test_result == 0)
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("purge_pending_notifications test OK\n")));
+  else
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("purge_pending_notifications test FAIL\n")));
 
 #if defined (ACE_HAS_THREADS)
   ACE_Time_Value timeout (SHORT_TIMEOUT);
@@ -384,7 +431,7 @@ main (int, ACE_TCHAR *[])
               ACE_TEXT ("threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
   ACE_END_TEST;
-  return 0;
+  return test_result;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
