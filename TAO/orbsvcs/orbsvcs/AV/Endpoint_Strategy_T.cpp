@@ -253,11 +253,11 @@ TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::act
     {
 
       // Use the bridge method
-      if (this->make_stream_endpoint (stream_endpoint_a_servant_) == -1)
+      if (this->make_stream_endpoint (this->stream_endpoint_a_servant_) == -1)
         return -1;
 
       // Save the object references, so that create_a can return them
-      this->stream_endpoint_a_ = stream_endpoint_a_servant_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->stream_endpoint_a_ = this->stream_endpoint_a_servant_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -304,10 +304,10 @@ TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::act
 {
   ACE_TRY
     {
-      if (this->make_stream_endpoint ( stream_endpoint_b_servant_ ) == -1)
+      if (this->make_stream_endpoint ( this->stream_endpoint_b_servant_ ) == -1)
         return -1;
 
-      this->stream_endpoint_b_ = stream_endpoint_b_servant_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->stream_endpoint_b_ = this->stream_endpoint_b_servant_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
