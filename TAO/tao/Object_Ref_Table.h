@@ -70,6 +70,9 @@ public:
     const char * id,
     CORBA::Environment &ACE_TRY_ENV);
 
+  /// Explicitly destroy the contents of the object reference table.
+  void destroy (void);
+
 private:
 
   /// The canonical ACE_Map methods.

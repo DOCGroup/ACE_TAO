@@ -2066,6 +2066,11 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion,
       // Invoke Interceptor::destroy() on all registered interceptors.
       this->destroy_interceptors (ACE_TRY_ENV);
       ACE_CHECK;
+
+      // Explicitly destroy the object reference table since it
+      // contains references to objects, which themselves may contain
+      // reference to this ORB.
+      this->object_ref_table_.destroy ();
     }
 }
 
@@ -2078,7 +2083,7 @@ TAO_ORB_Core::destroy (CORBA_Environment &ACE_TRY_ENV)
   // method.  Everything else should go to the shutdown() method.
   // Remember when the ORB Core is finally removed from the ORB table,
   // the reference count goes to zero and fini() is called.  fini()
-  // calls shutdown() and does not call destory() since destroy() will
+  // calls shutdown() and does not call destroy() since destroy() will
   // try to unbind from the ORB table again.  Additional code should
   // not be added to destroy() since there is no guarantee that
   // orb->destroy() will ever be called by the user.  Since TAO

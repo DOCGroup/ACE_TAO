@@ -20,18 +20,9 @@ TAO_Object_Ref_Table::TAO_Object_Ref_Table (void)
 
 TAO_Object_Ref_Table::~TAO_Object_Ref_Table (void)
 {
-  for (Iterator i = this->begin ();
-       i != this->end ();
-       ++i)
-    {
-      // Deallocate the id.
-      CORBA::string_free (ACE_const_cast (char *, (*i).ext_id_));
+  this->destroy ();
 
-      // Release the Object.
-      CORBA::release ((*i).int_id_);
-    }
-
-  this->table_.close ();
+  this->table_.close ();  // Only call close() in this destructor!
 }
 
 void
@@ -84,6 +75,21 @@ TAO_Object_Ref_Table::resolve_initial_references (
   CORBA::Environment &)
 {
   return this->find (id);  // Returns a duplicate.
+}
+
+void
+TAO_Object_Ref_Table::destroy (void)
+{
+  for (Iterator i = this->begin ();
+       i != this->end ();
+       ++i)
+    {
+      // Deallocate the id.
+      CORBA::string_free (ACE_const_cast (char *, (*i).ext_id_));
+
+      // Release the Object.
+      CORBA::release ((*i).int_id_);
+    }
 }
 
 TAO_Object_Ref_Table::Iterator
