@@ -21,7 +21,7 @@
 
 class Peer_i;
 
-class Peer_Handler_i : public POA_AMI_Peer_Handler
+class Peer_Handler_i : public POA_AMI_PeerHandler
 {
 public:
   Peer_Handler_i (Peer_i *peer);
@@ -30,8 +30,14 @@ public:
   virtual void request (CORBA::Long retval, 
                          CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
+
+  virtual void request_excep (AMI_PeerExceptionHolder * excep_holder,
+                              CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   virtual void start (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
+
   virtual void shutdown (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -61,10 +67,11 @@ public:
   // Used by the Reply_Handler to indicate that a reply has been
   // received.
 
-  // = See test.idl for an explanation of these methods.
+   // = See test.idl for an explanation of these methods.
   CORBA::Long request (CORBA::Long id,
                        CORBA::Environment& ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
+  
   void start (const PeerSet& the_peers,
               CORBA::Long iterations,
               CORBA::Environment& ACE_TRY_ENV)
@@ -98,7 +105,7 @@ public:
   Peer_Task (const PeerSet& the_peers,
              CORBA::Long iterations,
              Progress_ptr progress,
-             AMI_Peer_Handler_ptr handler,
+             AMI_PeerHandler_ptr handler,
              CORBA::Long id);
 
   virtual int svc (void);
@@ -114,7 +121,7 @@ private:
   Progress_var progress_;
   // To report progress
 
-  AMI_Peer_Handler_var handler_;
+  AMI_PeerHandler_var handler_;
   // To issue async requests
 
   CORBA::Long id_;
