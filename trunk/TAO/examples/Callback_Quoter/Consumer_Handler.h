@@ -80,7 +80,7 @@ public:
   Callback_Quoter::Consumer_var consumer_var_;
   // Pointer to the consumer object registered with the ORB.
 
-  ACE_Reactor *Consumer_Handler::reactor (void) const;
+  ACE_Reactor *Consumer_Handler::reactor_used (void) const;
   // This method gives the reactor pointer.
 
   int registered_;

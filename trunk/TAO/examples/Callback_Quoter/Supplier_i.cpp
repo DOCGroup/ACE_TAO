@@ -20,7 +20,7 @@ Supplier::~Supplier (void)
 {
   ACE_OS::free (this->ior_);
   ACE_DEBUG ((LM_DEBUG,
-              "Marketfeed daemon exiting!\n"));
+              "Market Status Supplier daemon exiting!\n"));
 }
 
 // Reads the Server factory IOR from a file.
@@ -141,7 +141,7 @@ int
 Supplier::run (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "MarketFeed Daemon is running...\n "));
+              "Market Status Supplier Daemon is running...\n "));
 
   // @@ Ultimately, let's replace this with an ACE_OS::sleep() call or
   // something.
