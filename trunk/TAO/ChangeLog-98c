@@ -1,9 +1,8 @@
 Tue Oct 13 10:51:10 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/ORB.cpp: 
-	  Thread ids in some platforms (ex: HP-UX) are structures, so they
-	  cannot be initialized to 0, thanks to David.Janello@abnamro.com
-	  for reporting this one.
+	* tao/ORB.cpp: Thread ids in some platforms (ex: HP-UX) are
+ 	  structures, so they cannot be initialized to 0.  Thanks to David
+ 	  Janello <David.Janello@abnamro.com> for reporting this.
 
 Tue Oct 13 09:16:20 1998  David L. Levine  <levine@cs.wustl.edu>
 
