@@ -1,0 +1,15 @@
+project(*Server): taoserver, fault_tolerance{
+  exename = ft_replica
+  Source_Files {
+    FT_TestReplica_i.cpp
+    FT_Replica.cpp
+  }
+}
+
+project(*Client): taoclient, fault_tolerance {
+  exename = ft_client
+  Source_Files {
+    FT_Client.cpp
+  }
+}
+

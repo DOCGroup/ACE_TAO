@@ -1,3 +1,34 @@
+Wed Jul 16 09:51:12 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * TAO/tests/FT_App/.cvsignore:
+        * TAO/tests/FT_App/FT_App.mpc:
+        * TAO/tests/FT_App/FT_Client.cpp:
+        * TAO/tests/FT_App/FT_Replica.cpp:
+        * TAO/tests/FT_App/FT_TestReplica.idl:
+        * TAO/tests/FT_App/FT_TestReplica_i.h:
+        * TAO/tests/FT_App/FT_TestReplica_i.cpp:
+        * TAO/tests/FT_App/README:
+        * TAO/tests/FT_App/run_test.pl:
+        * TAO/tests/FT_App/testscript:
+        New directory, new files.
+
+        This is the first pass of FT_App, an application to test
+        Fault Tolerant CORBA.
+
+        FT_Replica is a server that manages a persistent long counter.
+
+        FT_Client is a script-driven client for FT_Replica.  It
+        uses CORBA calls to change the value of the counter and to
+        request that the replica "fault" at various stages of the
+        process.
+
+        FT_Client can also exercise the updatable and checkpointable
+        interfaces in FT_Replica.
+
+        The README file explains this in greater detail.
+
+        These changes were made in the oci_haft branch.
+
 Tue Jul 15 12:33:04 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * TAO/orbsvcs/orbsvcs/FT_CORBA.idl:

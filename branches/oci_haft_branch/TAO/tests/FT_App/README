@@ -1,0 +1,103 @@
+$Id$
+
+This is a simple application intended to test Fault Tolerant Corba.
+
+The server implements the IDL in FT_TestReplica.idl which defines 
+the interface FT_TEST::TestReplica  .
+
+FT_TEST::TestReplica inherits from PullMonitorable and Checkpointable
+to provide access needed by FT Corba's FaultDetector and Orb.
+
+An FT_TEST::TestReplica contains a long counter.  Methods are defined 
+to set, increment, and get the value of the counter.  The counter 
+is also exposed as an attribute named counter.  (i.e. set(x) is 
+exactly equivalent to counter(x), and get() is exactly equivalent 
+to counter())
+
+In addition there is a method named die that lets the client request
+a server "failure" at a variety of interesting times.  See the "die"
+command described below or the FT_TEST::TestReplica::Bane enum in the IDL 
+to find out when death can be scheduled.
+
+The client provides a command interface to operate on the server.
+Tests may be run manually by typing commands, or may be automated by
+redirecting standard input to a file or pipe.
+
+Commands consist of a single character followed by an optional number
+(with no space between).  For example: =10 sets the value of the counter
+to 10.  +5 increments the counter by 5 (thereby setting the value to 15).
+Commands should be separated by spaces or newlines.
+
+Commands are:
+  =N set to N
+  +N increment by N
+  -N decrement by N
+  >N set attribute to N
+  < get and display attribite
+  ! call is_alive and display result
+  s get_state (to be saved for the next S command)
+  S set_state (restore the state from the previous s command)
+  u get_update (to be saved for the next U command)
+  U set_update (restore the update information from the previous u command)
+  dN die on condition N (see below)
+  vN set verbosity (see below)
+  q quit
+  ? help
+
+The conditions recognized on the 'd' command are:
+     0 don't die  (cancels a previous die request)
+     1 immediately
+     2 during next get
+     3 before next set
+     4 after next set
+     5 before next increment
+     6 after next increment
+     7 during next attribute get
+     8 before next attribute set
+     9 after next attribute set
+     10 during get update
+     11 before set update
+     12 after set update
+     13 during get state
+     14 before set state
+     15 after set state
+     16 during is_alive
+     17 is_alive returns false
+
+The verbosity levels:
+     0 silent  -- Do not check the counter value.
+     1 quiet   -- Check the counter value after every command.  
+                  On mismatch generate an error report to cout.
+     2 normal  -- Display the counter value to cout after every command 
+                  (default.)
+     3 noisy   -- Echo commmands to cout.
+     4 loud    -- Echo all CORBA calls to cout immediately before calling 
+                  the method.
+
+To run:
+Start a NameService if necessary.
+Start the FT_Replica.
+Note: due to a bug in a support routine, the FT_Replica must be started
+with a -n option.  I'll fix this when the DOC repository is unfrozen.
+
+Start the FT_Client -- redirecting the input and/or output as necessary.
+
+The client may be run as many times as desired.  Multiple clients may
+be run simultaneously, but they will complain when the counter changes 
+unexpectedly.
+
+The counter is persistent and will survive server failures.  It's 
+stored in a file named persistent.dat.  
+
+Right now only one copy of the server can be run.  This is because
+it registers with the name service using a hard coded name.  
+TODO: add support to client and server for alternate name service names.
+TODO: figure out how to register the server with the ObjectGroup!
+
+After one or both of the above TODO's are done:
+
+Replicas of the server may be run in separate directories to simulate 
+replicated stateful objects (i.e. mirrored databases) , or multiple 
+replicas can be run in the same directory to simulate a server with a 
+"real-world" domain action  (i.e. "fire the retro rockets" 
+or "expose the patient to theraputic radiation.")
