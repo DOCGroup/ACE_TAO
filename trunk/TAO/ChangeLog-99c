@@ -2,7 +2,7 @@ Sat Nov  6 21:14:46 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_rettype.cpp:
 
-	  Removed this file.  It dpesn't appear to be used anywhere.
+	  Removed this file.  It doesn't appear to be used anywhere.
 
 Sat Nov  6 20:37:28 1999  Ossama Othman  <othman@cs.wustl.edu>
 
