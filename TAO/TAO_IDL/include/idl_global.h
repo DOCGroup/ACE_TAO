@@ -627,6 +627,14 @@ public:
 
   virtual idl_bool gen_except_ostream_op (void);
   // Return the flag.
+
+  virtual void gen_smart_proxies (idl_bool value);
+  // To enable or disable AMI call back feature of the Messaging
+  // specification in the generated code.
+
+  virtual idl_bool gen_smart_proxies (void);
+  // Return the flag.
+
 private:
   // Data
   UTL_ScopeStack             *pd_scopes;             // Store scopes stack
@@ -791,6 +799,11 @@ private:
   idl_bool gen_except_ostream_op_;
   // Flag to indicate whether or not ostream operatos are
   // generated for exceptions.
+    
+  idl_bool gen_smart_proxies_;
+  // Flag to indicate whether smart proxies classes will be generated
+  // or not.
+
 };
 
 #endif  //_IDL_IDL_GLOBAL_HH

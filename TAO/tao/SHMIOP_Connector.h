@@ -164,7 +164,8 @@ public:
                                                             TAO_ATTRIBUTES>
           TAO_CACHING_UTILITY;
 
-#if defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
+#if defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES) || \
+(TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY == 1)
   typedef ACE_LRU_Caching_Strategy<TAO_ATTRIBUTES,
                                    TAO_CACHING_UTILITY>
           TAO_CACHING_STRATEGY;
@@ -172,7 +173,8 @@ public:
   typedef ACE_Caching_Strategy<TAO_ATTRIBUTES,
                                TAO_CACHING_UTILITY>
           TAO_CACHING_STRATEGY;
-#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
+#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES
+          TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY == 0*/
 
   typedef ACE_Cached_Connect_Strategy_Ex<TAO_SHMIOP_Client_Connection_Handler,
                                          ACE_MEM_CONNECTOR,

@@ -24,7 +24,8 @@ SRC = $(addsuffix .cpp, $(BIN) $(IDLFILES) $(FILES))
 CLIENT_OBJS = client.o testC.o Smart_Proxy_Impl.o
 SERVER_OBJS = server.o testC.o testS.o
 
-TAO_IDLFLAGS += -Ge 1
+TAO_IDLFLAGS += -Ge 1 -Gsp
+
 #----------------------------------------------------------------------------
 #	Include macros and targets
 #----------------------------------------------------------------------------
