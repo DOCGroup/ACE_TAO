@@ -159,6 +159,31 @@
 
 #define ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK 1
 
+#define ACE_SIZEOF_WCHAR 4
+
+// Not really, but the prototype returns wchar_t instead of wchar_t *
+#define ACE_LACKS_WCSSTR
+
+// No prototypes
+#define ACE_LACKS_ITOW
+#define ACE_LACKS_WCSICMP
+#define ACE_LACKS_WCSNICMP
+#define ACE_LACKS_WCSDUP
+
+// And these have prototypes but no implementation
+#define ACE_LACKS_WCSLEN
+#define ACE_LACKS_WCSNCMP
+#define ACE_LACKS_WCSCPY
+#define ACE_LACKS_WCSNCPY
+#define ACE_LACKS_TOWLOWER
+#define ACE_LACKS_WCSCMP
+#define ACE_LACKS_WCSCAT
+#define ACE_LACKS_WCSNCAT
+#define ACE_LACKS_WCSSPN
+#define ACE_LACKS_WCSCHR
+#define ACE_LACKS_WCSPBRK
+#define ACE_LACKS_WCSRCHR
+
 #if !defined (ACE_NTRACE)
 # define ACE_NTRACE 1
 #endif /* ACE_NTRACE */

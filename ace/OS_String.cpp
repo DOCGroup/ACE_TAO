@@ -821,7 +821,7 @@ ACE_OS_String::wcschr_emulation (const wchar_t *string, wint_t c)
     if (*string == ACE_static_cast (wchar_t, c))
       return ACE_const_cast (wchar_t *, string);
 
-  return ACE_const_cast (wchar_t *, NULL);
+  return NULL;
 }
 #endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSCHR */
 

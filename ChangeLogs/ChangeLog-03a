@@ -1,3 +1,26 @@
+Mon Jan 22 17:01:17 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/OS_String.cpp:
+        * ace/OS_String.inl:
+        * ace/ace_wchar.inl:
+        * ace/config-qnx-rtp.h:
+
+          ACE_HAS_WCHAR fixes.  Support is really bad on QNX RTP
+          so we just end up emulating most everything.  As far as
+          I could tell, there isn't even a way to convert between
+          the two types of strings.
+
+        * ace/OS_Dirent.cpp:
+
+          Rewrote a paragraph to remove the use of "/*" in a larger
+          /*...*/ comment, since gcc complains about it. 
+
+        * tests/Message_Queue_Test.cpp:
+
+          Backed out some changes to it on Jan 21, since it had 
+          problems and I couldn't find any ChangeLog entry for the
+          changes (mistakenly checked in?).
+
 Mon Jan 22 13:51:11 2001  Phil Mesnier  <mesnier_p@ociweb.com>
 
 	* ace/OS_Dirent.cpp (opendir_emulation): Added code to make the
