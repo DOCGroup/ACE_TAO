@@ -1,3 +1,7 @@
+Fri Feb 26 00:05:16 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * TAO version 0.3.6 released.
+
 Thu Feb 25 23:38:46 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/decode.cpp:
