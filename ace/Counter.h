@@ -13,6 +13,7 @@ class Object_ID
  public:
   Object_ID ();
 
+  /* variables */
   uint32_t id;
   uint32_t pid;
   uint64_t tid;
