@@ -32,7 +32,4 @@ RANLIB          = /bin/true
 SOFLAGS = $(CPPFLAGS) -b elf -fpic -G 
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 # SOLINK	= $(SOLINK.cc) -o $@ $(LDFLAGS) $<
-PRELIB  = (echo "main() { }" > gcctemp.c && \
-          $(COMPILE.cc) -o gcctemp.o gcctemp.c && \
-          $(LINK.cc) -o gcctemp gcctemp.o $^ $(LDFLAGS) $(LDLIBS) $(LIBS); \
-          status=$$?; exit $$status)
+PRELIB  = @true
