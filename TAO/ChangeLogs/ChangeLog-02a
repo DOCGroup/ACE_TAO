@@ -48,6 +48,10 @@ Mon Jun 12 20:45:18 2000  Darrell Brunsch <brunsch@uci.edu>
           you want the examples and tests and stuff (see 
           msvc_auto_compile.pl for that).
 
+          Thanks to Thaddeus Olczyk <olczyk@interaccess.com> and
+          Tom Ziomek <tomz@cc.comm.mot.com> for pointing out problems
+          with the current scheme.
+
         * TAO_IDL/tao_idl_static.dsp:
         * examples/Simple/time/client_static.dsp:
         * examples/Simple/time/server_static.dsp:
