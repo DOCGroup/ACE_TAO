@@ -58,7 +58,7 @@ public:
   virtual int visit_union (AST_Union *node);
   // Visit union.
 
-  virtual IR::IDLType_ptr ir_current (void) const;
+  virtual IR_IDLType_ptr ir_current (void) const;
   // Lets the visitor one level above acess this value.
 
 private:
@@ -70,7 +70,7 @@ private:
   // Holder for the member list passed to create_struct() or
   // create_exception().
 
-  ACE_Unbounded_Queue<IR::Contained_ptr> move_queue_;
+  ACE_Unbounded_Queue<IR_Contained_ptr> move_queue_;
   // IR objects that must be moved into the scope (struct or
   // exception) where they were declared in the IDL file.
 };
