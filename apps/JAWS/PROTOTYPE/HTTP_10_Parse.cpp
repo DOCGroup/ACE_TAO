@@ -28,13 +28,20 @@ JAWS_HTTP_10_Parse_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
   JAWS_IO_Handler *handler = data->io_handler ();
   JAWS_IO *io = policy->io ();
 
-  JAWS_HTTP_10_Request *info = new JAWS_HTTP_10_Request;
-  if (info == 0)
+  JAWS_HTTP_10_Request *info;
+
+  if (data->payload ())
+    info = ACE_reinterpret_cast (JAWS_HTTP_10_Request *, data->payload ());
+  else
     {
-      ACE_ERROR ((LM_ERROR, "%p\n", "JAWS_HTTP_10_Parse_Task::handle_put"));
-      return -1;
+      info = new JAWS_HTTP_10_Request;
+      if (info == 0)
+        {
+          ACE_ERROR ((LM_ERROR, "%p\n", "JAWS_HTTP_10_Parse_Task::handle_put"));
+          return -1;
+        }
+      data->payload (ACE_static_cast (void *, info));
     }
-  data->payload (ACE_static_cast (void *, info));
 
   while (this->parse_request (info, data) == 0)
     {
