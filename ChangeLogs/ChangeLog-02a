@@ -1,3 +1,16 @@
+Thu Jul 13 12:58:26 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SSL/ACE_SSL.dsp:
+
+	  Added `SSL_Export.h' to the list of headers.
+
+	* ace/SSL/SSL_Context.cpp:
+
+	  Moved preprocessor conditional that checks if ACE_HAS_SSL is
+	  defined after the inclusion of SSL_Context.h.  This fixes a link
+	  error that occurs when ACE_HAS_SSL is defined in the config
+	  header instead of on the command line.
+
 Thu Jul 13 10:55:44 2000  David L. Levine <levine@cs.wustl.edu>
 
         * ace/Makefile: changed ssl check from ifneq null to
