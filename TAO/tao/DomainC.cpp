@@ -74,6 +74,15 @@ CORBA::tao_DomainManager_life::tao_nil (
   return CORBA::DomainManager::_nil ();
 }
 
+CORBA::Boolean
+CORBA::tao_DomainManager_life::tao_marshal (
+    CORBA::DomainManager_ptr p,
+    TAO_OutputCDR &cdr
+  )
+{
+  return p->marshal (cdr);
+}
+
 CORBA::DomainManager_ptr
 CORBA::tao_DomainManager_cast::tao_narrow (
     CORBA::Object *p
@@ -93,194 +102,32 @@ CORBA::tao_DomainManager_cast::tao_upcast (
   return *tmp;
 }
 
-#if 0
-
-// *************************************************************
-// CORBA::DomainManager_var
-// *************************************************************
-
-CORBA::DomainManager_var::DomainManager_var (void)
-  : ptr_ (DomainManager::_nil ())
-{}
-
-::CORBA::DomainManager_ptr
-CORBA::DomainManager_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-CORBA::DomainManager_var::DomainManager_var (const ::CORBA::DomainManager_var &p)
-  : TAO_Base_var (),
-    ptr_ (DomainManager::_duplicate (p.ptr ()))
-{}
-
-CORBA::DomainManager_var::~DomainManager_var (void)
-{
-  CORBA::release (this->ptr_);
-}
-
-CORBA::DomainManager_var &
-CORBA::DomainManager_var::operator= (DomainManager_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-CORBA::DomainManager_var &
-CORBA::DomainManager_var::operator= (const ::CORBA::DomainManager_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::CORBA::DomainManager::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-CORBA::DomainManager_var::operator const ::CORBA::DomainManager_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-CORBA::DomainManager_var::operator ::CORBA::DomainManager_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-::CORBA::DomainManager_ptr
-CORBA::DomainManager_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-::CORBA::DomainManager_ptr
-CORBA::DomainManager_var::in (void) const
-{
-  return this->ptr_;
-}
-
-::CORBA::DomainManager_ptr &
-CORBA::DomainManager_var::inout (void)
-{
-  return this->ptr_;
-}
-
-::CORBA::DomainManager_ptr &
-CORBA::DomainManager_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::CORBA::DomainManager::_nil ();
-  return this->ptr_;
-}
-
-::CORBA::DomainManager_ptr
-CORBA::DomainManager_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::CORBA::DomainManager_ptr val = this->ptr_;
-  this->ptr_ = ::CORBA::DomainManager::_nil ();
-  return val;
-}
-
-::CORBA::DomainManager_ptr
-CORBA::DomainManager_var::tao_duplicate (DomainManager_ptr p)
-{
-  return ::CORBA::DomainManager::_duplicate (p);
-}
-
-void
-CORBA::DomainManager_var::tao_release (DomainManager_ptr p)
-{
-  CORBA::release (p);
-}
-
-::CORBA::DomainManager_ptr
-CORBA::DomainManager_var::tao_nil (void)
-{
-  return ::CORBA::DomainManager::_nil ();
-}
-
-::CORBA::DomainManager_ptr
-CORBA::DomainManager_var::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return ::CORBA::DomainManager::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-CORBA::DomainManager_var::tao_upcast (void *src)
-{
-  DomainManager **tmp =
-    ACE_static_cast (DomainManager **, src);
-  return *tmp;
-}
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class
+    TAO_Objref_Var_T<
+        CORBA::DomainManager,
+        CORBA::tao_DomainManager_life
+      >;
+  template class
+    TAO_Objref_Out_T<
+        CORBA::DomainManager,
+        CORBA::tao_DomainManager_life
+      >;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        CORBA::DomainManager, \
+        CORBA::tao_DomainManager_life \
+      >
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        CORBA::DomainManager, \
+        CORBA::tao_DomainManager_life \
+      >
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1030
-
-// *************************************************************
-// CORBA::DomainManager_out
-// *************************************************************
-
-CORBA::DomainManager_out::DomainManager_out (DomainManager_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::CORBA::DomainManager::_nil ();
-}
-
-CORBA::DomainManager_out::DomainManager_out (DomainManager_var &p)
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::CORBA::DomainManager::_nil ();
-}
-
-CORBA::DomainManager_out::DomainManager_out (const ::CORBA::DomainManager_out &p)
-  : ptr_ (ACE_const_cast (DomainManager_out &, p).ptr_)
-{}
-
-::CORBA::DomainManager_out &
-CORBA::DomainManager_out::operator= (const ::CORBA::DomainManager_out &p)
-{
-  this->ptr_ = ACE_const_cast (DomainManager_out&, p).ptr_;
-  return *this;
-}
-
-CORBA::DomainManager_out &
-CORBA::DomainManager_out::operator= (const ::CORBA::DomainManager_var &p)
-{
-  this->ptr_ = ::CORBA::DomainManager::_duplicate (p.ptr ());
-  return *this;
-}
-
-CORBA::DomainManager_out &
-CORBA::DomainManager_out::operator= (DomainManager_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-CORBA::DomainManager_out::operator ::CORBA::DomainManager_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-::CORBA::DomainManager_ptr &
-CORBA::DomainManager_out::ptr (void)
-{
-  return this->ptr_;
-}
-
-::CORBA::DomainManager_ptr
-CORBA::DomainManager_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-#endif /* 0 */
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interceptors_cs.cpp:56
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 
@@ -316,7 +163,7 @@ public:
   };
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_cs.cpp:378
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_cs.cpp:376
   
   TAO_ClientRequestInfo_CORBA_DomainManager_get_domain_policy::TAO_ClientRequestInfo_CORBA_DomainManager_get_domain_policy (
       TAO_GIOP_Invocation *_tao_invocation,
@@ -470,87 +317,91 @@ CORBA::_TAO_DomainManager_Remote_Proxy_Impl::_TAO_DomainManager_Remote_Proxy_Imp
           if (_invoke_status == TAO_INVOKE_RESTART)
             {
               _tao_call.restart_flag (1);
-              continue;
             }
-          
+          else
+            {
+              
 #endif /* TAO_HAS_INTERCEPTORS */
-          
-          _tao_call.start (ACE_ENV_SINGLE_ARG_PARAMETER);
-          TAO_INTERCEPTOR_CHECK_RETURN (_tao_retval._retn ());
+              
+              _tao_call.start (ACE_ENV_SINGLE_ARG_PARAMETER);
+              TAO_INTERCEPTOR_CHECK_RETURN (_tao_retval._retn ());
 
-          _tao_call.prepare_header (
-              ACE_static_cast (CORBA::Octet, _tao_response_flag)
-              ACE_ENV_ARG_PARAMETER
-            );
-          TAO_INTERCEPTOR_CHECK_RETURN (_tao_retval._retn ());
+              _tao_call.prepare_header (
+                  ACE_static_cast (CORBA::Octet, _tao_response_flag)
+                  ACE_ENV_ARG_PARAMETER
+                );
+              TAO_INTERCEPTOR_CHECK_RETURN (_tao_retval._retn ());
 
-          TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
-          
-          if (!(
-              (_tao_out << policy_type)
-              ))
-            {
-              TAO_INTERCEPTOR_THROW_RETURN (
-                  CORBA::MARSHAL (
+              TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
+              
+              if (!(
+                  (_tao_out << policy_type)
+                  ))
+                {
+                  TAO_OutputCDR::throw_stub_exception (errno ACE_ENV_ARG_PARAMETER); 
+                  TAO_INTERCEPTOR_CHECK_RETURN (_tao_retval._retn ());
+
+                }
+              
+              _invoke_status =
+                _tao_call.invoke (0, 0 ACE_ENV_ARG_PARAMETER);
+              TAO_INTERCEPTOR_CHECK_RETURN (_tao_retval._retn ());
+
+              if (_invoke_status == TAO_INVOKE_EXCEPTION)
+                {
+                  TAO_INTERCEPTOR_THROW_RETURN (
+                      CORBA::UNKNOWN (
+                          CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES
+                        ),
+                      0
+                    );
+                }
+              else if (_invoke_status == TAO_INVOKE_RESTART)
+                {
+                  _tao_call.restart_flag (1);
+                  TAO_INTERCEPTOR (
+                      _tao_ri.reply_status (_invoke_status);
+                      _tao_vfr.receive_other (
+                          &_tao_ri
+                          ACE_ENV_ARG_PARAMETER
+                        );
+                      ACE_TRY_CHECK;
+                    )
+                }
+              else
+                {
+                  
+                  TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
+                  _tao_call.transport()->assign_translators (&_tao_in,0);
+                  
+                  if (!(
+                      (_tao_in >> _tao_retval.inout ())
+                      ))
+                    {
+                      TAO_InputCDR::throw_stub_exception (errno ACE_ENV_ARG_PARAMETER); 
+                      TAO_INTERCEPTOR_CHECK_RETURN (_tao_retval._retn ());
+
                       
-                    ),
-                  0
-                );
-            }
-          
-          _invoke_status =
-            _tao_call.invoke (0, 0 ACE_ENV_ARG_PARAMETER);
-          TAO_INTERCEPTOR_CHECK_RETURN (_tao_retval._retn ());
-
-          if (_invoke_status == TAO_INVOKE_EXCEPTION)
-            {
-              TAO_INTERCEPTOR_THROW_RETURN (
-                  CORBA::UNKNOWN (
-                      CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES
-                    ),
-                  0
-                );
-            }
-          else if (_invoke_status == TAO_INVOKE_RESTART)
-            {
-              TAO_INTERCEPTOR (
+                    }
+                  
+#if TAO_HAS_INTERCEPTORS == 1
+                  ::CORBA::Policy_ptr _tao_retval_info =
+                    _tao_retval._retn ();
+                  _tao_ri.result (_tao_retval_info);
+                  _tao_retval = _tao_retval_info;
+                  
                   _tao_ri.reply_status (_invoke_status);
-                  _tao_vfr.receive_other (
+                  _tao_vfr.receive_reply (
                       &_tao_ri
                       ACE_ENV_ARG_PARAMETER
                     );
                   ACE_TRY_CHECK;
-                )
-              
-              continue;
-            }
-          
-          TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
-          
-          if (!(
-              (_tao_in >> _tao_retval.inout ())
-              ))
-            {
-              TAO_INTERCEPTOR_THROW_RETURN (
-                  CORBA::MARSHAL (
-                      TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES
-                    ),
-                  0
-                );
-            }
-          
+                
+#endif  /* TAO_HAS_INTERCEPTORS */
+                }
+            
 #if TAO_HAS_INTERCEPTORS == 1
-          ::CORBA::Policy_ptr _tao_retval_info =
-            _tao_retval._retn ();
-          _tao_ri.result (_tao_retval_info);
-          _tao_retval = _tao_retval_info;
-          
-          _tao_ri.reply_status (_invoke_status);
-          _tao_vfr.receive_reply (
-              &_tao_ri
-              ACE_ENV_ARG_PARAMETER
-            );
-          ACE_TRY_CHECK;
+            }
         }
       ACE_CATCHANY
         {
@@ -561,7 +412,7 @@ CORBA::_TAO_DomainManager_Remote_Proxy_Impl::_TAO_DomainManager_Remote_Proxy_Imp
             );
           ACE_TRY_CHECK;
           
-          PortableInterceptor::ReplyStatus _tao_status =
+          const PortableInterceptor::ReplyStatus _tao_status =
             _tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
           
@@ -585,7 +436,7 @@ CORBA::_TAO_DomainManager_Remote_Proxy_Impl::_TAO_DomainManager_Remote_Proxy_Imp
             );
           ACE_TRY_CHECK;
           
-          PortableInterceptor::ReplyStatus _tao_status =
+          const PortableInterceptor::ReplyStatus _tao_status =
             _tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
           
@@ -597,22 +448,20 @@ CORBA::_TAO_DomainManager_Remote_Proxy_Impl::_TAO_DomainManager_Remote_Proxy_Imp
       ACE_ENDTRY;
       ACE_CHECK_RETURN (_tao_retval._retn ());
       
-      PortableInterceptor::ReplyStatus _tao_status =
+      const PortableInterceptor::ReplyStatus _tao_status =
         _tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (_tao_retval._retn ());
       
-      if (_tao_status == PortableInterceptor::LOCATION_FORWARD
-          || _tao_status == PortableInterceptor::TRANSPORT_RETRY)
-        {
-          continue;
-        }
-      
+      if (_tao_status != PortableInterceptor::LOCATION_FORWARD
+          && _tao_status != PortableInterceptor::TRANSPORT_RETRY)
+        
 #endif  /* TAO_HAS_INTERCEPTORS */
-      
-      break;
+        
+        if (_invoke_status != TAO_INVOKE_RESTART)
+          break;
     }
-  
-  return _tao_retval._retn ();
+
+return _tao_retval._retn ();
 }
 
 //
@@ -668,7 +517,7 @@ CORBA::_TAO_DomainManager_Remote_Proxy_Broker::select_proxy (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:235
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:232
 
 CORBA::DomainManager::DomainManager (int collocated)
 {
@@ -825,7 +674,7 @@ CORBA::DomainManager::_is_a (
     }
   else
     {
-      return this->Object::_is_a (
+      return this->ACE_NESTED_CLASS (CORBA, Object)::_is_a (
           value
           ACE_ENV_ARG_PARAMETER
         );
@@ -866,6 +715,12 @@ void *CORBA::DomainManager::_tao_QueryInterface (ptr_arith_t type)
 const char* CORBA::DomainManager::_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/DomainManager:1.0";
+}
+
+CORBA::Boolean
+CORBA::DomainManager::marshal (TAO_OutputCDR &cdr)
+{
+  return (cdr << this);
 }
 
 // TAO_IDL - Generated from
@@ -936,7 +791,7 @@ TAO_NAMESPACE_END
 int CORBA::ConstructionPolicy::_tao_class_id = 0;
 
 CORBA::ConstructionPolicy_ptr
-tao_CORBA_ConstructionPolicy_duplicate (
+CORBA::tao_ConstructionPolicy_life::tao_duplicate (
     CORBA::ConstructionPolicy_ptr p
   )
 {
@@ -944,7 +799,7 @@ tao_CORBA_ConstructionPolicy_duplicate (
 }
 
 void
-tao_CORBA_ConstructionPolicy_release (
+CORBA::tao_ConstructionPolicy_life::tao_release (
     CORBA::ConstructionPolicy_ptr p
   )
 {
@@ -952,15 +807,24 @@ tao_CORBA_ConstructionPolicy_release (
 }
 
 CORBA::ConstructionPolicy_ptr
-tao_CORBA_ConstructionPolicy_nil (
+CORBA::tao_ConstructionPolicy_life::tao_nil (
     void
   )
 {
   return CORBA::ConstructionPolicy::_nil ();
 }
 
+CORBA::Boolean
+CORBA::tao_ConstructionPolicy_life::tao_marshal (
+    CORBA::ConstructionPolicy_ptr p,
+    TAO_OutputCDR &cdr
+  )
+{
+  return p->marshal (cdr);
+}
+
 CORBA::ConstructionPolicy_ptr
-tao_CORBA_ConstructionPolicy_narrow (
+CORBA::tao_ConstructionPolicy_cast::tao_narrow (
     CORBA::Object *p
     ACE_ENV_ARG_DECL
   )
@@ -969,7 +833,7 @@ tao_CORBA_ConstructionPolicy_narrow (
 }
 
 CORBA::Object *
-tao_CORBA_ConstructionPolicy_upcast (
+CORBA::tao_ConstructionPolicy_cast::tao_upcast (
     void *src
   )
 {
@@ -978,202 +842,29 @@ tao_CORBA_ConstructionPolicy_upcast (
   return *tmp;
 }
 
-CORBA::Boolean
-tao_CORBA_ConstructionPolicy_marshal (
-    CORBA::ConstructionPolicy_ptr p,
-    TAO_OutputCDR &strm
-  )
-{
-  return p->marshal (strm);
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:721
-
-// *************************************************************
-// CORBA::ConstructionPolicy_var
-// *************************************************************
-
-CORBA::ConstructionPolicy_var::ConstructionPolicy_var (void)
-  : ptr_ (ConstructionPolicy::_nil ())
-{}
-
-::CORBA::ConstructionPolicy_ptr
-CORBA::ConstructionPolicy_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-CORBA::ConstructionPolicy_var::ConstructionPolicy_var (const ::CORBA::ConstructionPolicy_var &p)
-  : TAO_Base_var (),
-    ptr_ (ConstructionPolicy::_duplicate (p.ptr ()))
-{}
-
-CORBA::ConstructionPolicy_var::~ConstructionPolicy_var (void)
-{
-  CORBA::release (this->ptr_);
-}
-
-CORBA::ConstructionPolicy_var &
-CORBA::ConstructionPolicy_var::operator= (ConstructionPolicy_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-CORBA::ConstructionPolicy_var &
-CORBA::ConstructionPolicy_var::operator= (const ::CORBA::ConstructionPolicy_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::CORBA::ConstructionPolicy::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-CORBA::ConstructionPolicy_var::operator const ::CORBA::ConstructionPolicy_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-CORBA::ConstructionPolicy_var::operator ::CORBA::ConstructionPolicy_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-::CORBA::ConstructionPolicy_ptr
-CORBA::ConstructionPolicy_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-::CORBA::ConstructionPolicy_ptr
-CORBA::ConstructionPolicy_var::in (void) const
-{
-  return this->ptr_;
-}
-
-::CORBA::ConstructionPolicy_ptr &
-CORBA::ConstructionPolicy_var::inout (void)
-{
-  return this->ptr_;
-}
-
-::CORBA::ConstructionPolicy_ptr &
-CORBA::ConstructionPolicy_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::CORBA::ConstructionPolicy::_nil ();
-  return this->ptr_;
-}
-
-::CORBA::ConstructionPolicy_ptr
-CORBA::ConstructionPolicy_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::CORBA::ConstructionPolicy_ptr val = this->ptr_;
-  this->ptr_ = ::CORBA::ConstructionPolicy::_nil ();
-  return val;
-}
-
-::CORBA::ConstructionPolicy_ptr
-CORBA::ConstructionPolicy_var::tao_duplicate (ConstructionPolicy_ptr p)
-{
-  return ::CORBA::ConstructionPolicy::_duplicate (p);
-}
-
-void
-CORBA::ConstructionPolicy_var::tao_release (ConstructionPolicy_ptr p)
-{
-  CORBA::release (p);
-}
-
-::CORBA::ConstructionPolicy_ptr
-CORBA::ConstructionPolicy_var::tao_nil (void)
-{
-  return ::CORBA::ConstructionPolicy::_nil ();
-}
-
-::CORBA::ConstructionPolicy_ptr
-CORBA::ConstructionPolicy_var::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return ::CORBA::ConstructionPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-CORBA::ConstructionPolicy_var::tao_upcast (void *src)
-{
-  ConstructionPolicy **tmp =
-    ACE_static_cast (ConstructionPolicy **, src);
-  return *tmp;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1030
-
-// *************************************************************
-// CORBA::ConstructionPolicy_out
-// *************************************************************
-
-CORBA::ConstructionPolicy_out::ConstructionPolicy_out (ConstructionPolicy_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::CORBA::ConstructionPolicy::_nil ();
-}
-
-CORBA::ConstructionPolicy_out::ConstructionPolicy_out (ConstructionPolicy_var &p)
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::CORBA::ConstructionPolicy::_nil ();
-}
-
-CORBA::ConstructionPolicy_out::ConstructionPolicy_out (const ::CORBA::ConstructionPolicy_out &p)
-  : ptr_ (ACE_const_cast (ConstructionPolicy_out &, p).ptr_)
-{}
-
-::CORBA::ConstructionPolicy_out &
-CORBA::ConstructionPolicy_out::operator= (const ::CORBA::ConstructionPolicy_out &p)
-{
-  this->ptr_ = ACE_const_cast (ConstructionPolicy_out&, p).ptr_;
-  return *this;
-}
-
-CORBA::ConstructionPolicy_out &
-CORBA::ConstructionPolicy_out::operator= (const ::CORBA::ConstructionPolicy_var &p)
-{
-  this->ptr_ = ::CORBA::ConstructionPolicy::_duplicate (p.ptr ());
-  return *this;
-}
-
-CORBA::ConstructionPolicy_out &
-CORBA::ConstructionPolicy_out::operator= (ConstructionPolicy_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-CORBA::ConstructionPolicy_out::operator ::CORBA::ConstructionPolicy_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-::CORBA::ConstructionPolicy_ptr &
-CORBA::ConstructionPolicy_out::ptr (void)
-{
-  return this->ptr_;
-}
-
-::CORBA::ConstructionPolicy_ptr
-CORBA::ConstructionPolicy_out::operator-> (void)
-{
-  return this->ptr_;
-}
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class
+    TAO_Objref_Var_T<
+        CORBA::ConstructionPolicy,
+        CORBA::tao_ConstructionPolicy_life
+      >;
+  template class
+    TAO_Objref_Out_T<
+        CORBA::ConstructionPolicy,
+        CORBA::tao_ConstructionPolicy_life
+      >;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        CORBA::ConstructionPolicy, \
+        CORBA::tao_ConstructionPolicy_life \
+      >
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        CORBA::ConstructionPolicy, \
+        CORBA::tao_ConstructionPolicy_life \
+      >
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interceptors_cs.cpp:56
@@ -1210,7 +901,7 @@ public:
   };
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_cs.cpp:378
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_cs.cpp:376
   
   TAO_ClientRequestInfo_CORBA_ConstructionPolicy_make_domain_manager::TAO_ClientRequestInfo_CORBA_ConstructionPolicy_make_domain_manager (
       TAO_GIOP_Invocation *_tao_invocation,
@@ -1378,67 +1069,73 @@ void CORBA::_TAO_ConstructionPolicy_Remote_Proxy_Impl::make_domain_manager (
           if (_invoke_status == TAO_INVOKE_RESTART)
             {
               _tao_call.restart_flag (1);
-              continue;
             }
-          
+          else
+            {
+              
 #endif /* TAO_HAS_INTERCEPTORS */
-          
-          _tao_call.start (ACE_ENV_SINGLE_ARG_PARAMETER);
-          TAO_INTERCEPTOR_CHECK;
+              
+              _tao_call.start (ACE_ENV_SINGLE_ARG_PARAMETER);
+              TAO_INTERCEPTOR_CHECK;
 
-          _tao_call.prepare_header (
-              ACE_static_cast (CORBA::Octet, _tao_response_flag)
-              ACE_ENV_ARG_PARAMETER
-            );
-          TAO_INTERCEPTOR_CHECK;
-
-          TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
-          
-          if (!(
-              (adapter->interfacedef_cdr_insert (_tao_out, object_type)) &&
-              (_tao_out << CORBA::Any::from_boolean (constr_policy))
-              ))
-            {
-              TAO_INTERCEPTOR_THROW (
-                  CORBA::MARSHAL (
-                      
-                    )
+              _tao_call.prepare_header (
+                  ACE_static_cast (CORBA::Octet, _tao_response_flag)
+                  ACE_ENV_ARG_PARAMETER
                 );
-            }
-          
-          _invoke_status =
-            _tao_call.invoke (0, 0 ACE_ENV_ARG_PARAMETER);
-          TAO_INTERCEPTOR_CHECK;
+              TAO_INTERCEPTOR_CHECK;
 
-          if (_invoke_status == TAO_INVOKE_EXCEPTION)
-            {
-              TAO_INTERCEPTOR_THROW (
-                  CORBA::UNKNOWN (
-                      CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES
+              TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
+              
+              if (!(
+                  (adapter->interfacedef_cdr_insert (_tao_out, object_type)) &&
+                  (_tao_out << CORBA::Any::from_boolean (constr_policy))
+                  ))
+                {
+                  TAO_OutputCDR::throw_stub_exception (errno ACE_ENV_ARG_PARAMETER); 
+                  TAO_INTERCEPTOR_CHECK;
+
+                }
+              
+              _invoke_status =
+                _tao_call.invoke (0, 0 ACE_ENV_ARG_PARAMETER);
+              TAO_INTERCEPTOR_CHECK;
+
+              if (_invoke_status == TAO_INVOKE_EXCEPTION)
+                {
+                  TAO_INTERCEPTOR_THROW (
+                      CORBA::UNKNOWN (
+                          CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES
+                        )
+                    );
+                }
+              else if (_invoke_status == TAO_INVOKE_RESTART)
+                {
+                  _tao_call.restart_flag (1);
+                  TAO_INTERCEPTOR (
+                      _tao_ri.reply_status (_invoke_status);
+                      _tao_vfr.receive_other (
+                          &_tao_ri
+                          ACE_ENV_ARG_PARAMETER
+                        );
+                      ACE_TRY_CHECK;
                     )
-                );
-            }
-          else if (_invoke_status == TAO_INVOKE_RESTART)
-            {
-              TAO_INTERCEPTOR (
+                }
+              else
+                {
+#if TAO_HAS_INTERCEPTORS == 1
+                  
                   _tao_ri.reply_status (_invoke_status);
-                  _tao_vfr.receive_other (
+                  _tao_vfr.receive_reply (
                       &_tao_ri
                       ACE_ENV_ARG_PARAMETER
                     );
                   ACE_TRY_CHECK;
-                )
-              
-              continue;
-            }
+                
+#endif  /* TAO_HAS_INTERCEPTORS */
+                }
+            
 #if TAO_HAS_INTERCEPTORS == 1
-          
-          _tao_ri.reply_status (_invoke_status);
-          _tao_vfr.receive_reply (
-              &_tao_ri
-              ACE_ENV_ARG_PARAMETER
-            );
-          ACE_TRY_CHECK;
+            }
         }
       ACE_CATCHANY
         {
@@ -1449,7 +1146,7 @@ void CORBA::_TAO_ConstructionPolicy_Remote_Proxy_Impl::make_domain_manager (
             );
           ACE_TRY_CHECK;
           
-          PortableInterceptor::ReplyStatus _tao_status =
+          const PortableInterceptor::ReplyStatus _tao_status =
             _tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
           
@@ -1473,7 +1170,7 @@ void CORBA::_TAO_ConstructionPolicy_Remote_Proxy_Impl::make_domain_manager (
             );
           ACE_TRY_CHECK;
           
-          PortableInterceptor::ReplyStatus _tao_status =
+          const PortableInterceptor::ReplyStatus _tao_status =
             _tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
           
@@ -1485,19 +1182,17 @@ void CORBA::_TAO_ConstructionPolicy_Remote_Proxy_Impl::make_domain_manager (
       ACE_ENDTRY;
       ACE_CHECK;
       
-      PortableInterceptor::ReplyStatus _tao_status =
+      const PortableInterceptor::ReplyStatus _tao_status =
         _tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
       
-      if (_tao_status == PortableInterceptor::LOCATION_FORWARD
-          || _tao_status == PortableInterceptor::TRANSPORT_RETRY)
-        {
-          continue;
-        }
-      
+      if (_tao_status != PortableInterceptor::LOCATION_FORWARD
+          && _tao_status != PortableInterceptor::TRANSPORT_RETRY)
+        
 #endif  /* TAO_HAS_INTERCEPTORS */
-      
-      break;
+        
+        if (_invoke_status != TAO_INVOKE_RESTART)
+          break;
     }
 }
 
@@ -1554,7 +1249,7 @@ CORBA::_TAO_ConstructionPolicy_Remote_Proxy_Broker::select_proxy (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:235
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:232
 
 CORBA::ConstructionPolicy::ConstructionPolicy (int collocated)
 {
@@ -1717,7 +1412,7 @@ CORBA::ConstructionPolicy::_is_a (
     }
   else
     {
-      return this->Object::_is_a (
+      return this->ACE_NESTED_CLASS (CORBA, Object)::_is_a (
           value
           ACE_ENV_ARG_PARAMETER
         );
@@ -1772,6 +1467,12 @@ void *CORBA::ConstructionPolicy::_tao_QueryInterface (ptr_arith_t type)
 const char* CORBA::ConstructionPolicy::_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/ConstructionPolicy:1.0";
+}
+
+CORBA::Boolean
+CORBA::ConstructionPolicy::marshal (TAO_OutputCDR &cdr)
+{
+  return (cdr << this);
 }
 
 // TAO_IDL - Generated from
@@ -1841,295 +1542,202 @@ TAO_NAMESPACE_DEFINE (
   )
 TAO_NAMESPACE_END
 
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_obj_sequence_cs.cpp:103
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:50
 
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-#if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_DOMAINMANAGERLIST_CS_)
-#define __TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_DOMAINMANAGERLIST_CS_
+template class
+  TAO_Unbounded_Object_Sequence<
+      CORBA::DomainManager,
+      CORBA::DomainManager_var,
+      CORBA::tao_DomainManager_life,
+      CORBA::tao_DomainManager_cast
+    >;
 
-// The Base_Sequence functions, please see tao/Sequence.h
-void
-CORBA::_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::_allocate_buffer (CORBA::ULong length)
-{
-  CORBA::DomainManager **tmp = 0;
-  tmp = _TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::allocbuf (length);
+
+template class
+  TAO_VarSeq_Var_T<
+      CORBA::DomainManagerList,
+      TAO_Object_Manager<
+          CORBA::DomainManager,
+          CORBA::DomainManager_var,
+          CORBA::tao_DomainManager_life
+        >
+    >;
+
+template class
+  TAO_Seq_Out_T<
+      CORBA::DomainManagerList,
+      CORBA::DomainManagerList_var,
+      TAO_Object_Manager<
+          CORBA::DomainManager,
+          CORBA::DomainManager_var,
+          CORBA::tao_DomainManager_life
+        >
+    >;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+# pragma instantiate \
+    TAO_Unbounded_Object_Sequence< \
+        CORBA::DomainManager, \
+        CORBA::DomainManager_var, \
+        CORBA::tao_DomainManager_life, \
+        CORBA::tao_DomainManager_cast, \
+      >
+
+# pragma instantiate \
+    TAO_VarSeq_Var_T< \
+        CORBA::DomainManagerList, \
+        TAO_Object_Manager< \
+            CORBA::DomainManager, \
+            CORBA::DomainManager_var, \
+            CORBA::tao_DomainManager_life \
+          > \
+      >
+
+# pragma instantiate \
+    TAO_Seq_Out_T< \
+        CORBA::DomainManagerList, \
+        CORBA::DomainManagerList_var, \
+        TAO_Object_Manager< \
+            CORBA::DomainManager, \
+            CORBA::DomainManager_var, \
+            CORBA::tao_DomainManager_life \
+          > \
+      >
+
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
   
-  if (this->buffer_ != 0)
-    {
-      CORBA::DomainManager **old = ACE_reinterpret_cast (CORBA::DomainManager**, this->buffer_);
-      
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-        {
-          if (!this->release_)
-            {
-              tmp[i] = CORBA::DomainManager::_duplicate (old[i]);
-            }
-          else
-            {
-              tmp[i] = old[i];
-            }
-        }
-      
-      if (this->release_)
-        {
-          delete [] old;
-        }
-    }
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
   
-  this->buffer_ = tmp;
-}
-
-void
-CORBA::_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::_deallocate_buffer (void)
-{
-  if (this->buffer_ == 0 || this->release_ == 0)
-    {
-      return;
-    }
-  
-  CORBA::DomainManager **tmp = ACE_reinterpret_cast (CORBA::DomainManager**, this->buffer_);
-  
-  for (CORBA::ULong i = 0; i < this->length_; ++i)
-    {
-      CORBA::release (tmp[i]);
-      tmp[i] = CORBA::DomainManager::_nil ();
-    }
-  
-  _TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::freebuf (tmp);
-  this->buffer_ = 0;
-}
-
-CORBA::_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::~_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList (void)
-{
-  this->_deallocate_buffer ();
-}
-
-void
-CORBA::_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)
-{
-  CORBA::DomainManager **tmp = ACE_reinterpret_cast (CORBA::DomainManager**, this->buffer_);
-  
-  for (CORBA::ULong i = nl; i < ol; ++i)
-    {
-      CORBA::release (tmp[i]);
-      tmp[i] = CORBA::DomainManager::_nil ();
-    }
-}
-
-void 
-CORBA::_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::_downcast (
-    void* target,
-    CORBA::Object *src
-    ACE_ENV_ARG_DECL
-  )
-{
-  CORBA::DomainManager **tmp = ACE_static_cast (CORBA::DomainManager**, target);
-  *tmp = CORBA::DomainManager::_narrow (src ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-}
-
-CORBA::Object*
-CORBA::_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::_upcast (void *src) const
-{
-  CORBA::DomainManager **tmp = ACE_static_cast (CORBA::DomainManager**, src);
-  return *tmp;
-}
-
-#endif /* end #if !defined */
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-
-#if 0
-
-// *************************************************************
-// CORBA::DomainManagerList
-// *************************************************************
-
-CORBA::DomainManagerList::DomainManagerList (void)
-{}
-
-CORBA::DomainManagerList::DomainManagerList (CORBA::ULong max)
-  : 
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-TAO_Unbounded_Object_Sequence<CORBA::DomainManager,CORBA::DomainManager_var>
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
- (max)
-{}
-
-CORBA::DomainManagerList::DomainManagerList (
-    CORBA::ULong max,
-    CORBA::ULong length,
-    CORBA::DomainManager_ptr *buffer,
-    CORBA::Boolean release
-  )
-  : 
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-TAO_Unbounded_Object_Sequence<CORBA::DomainManager,CORBA::DomainManager_var>
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
- (max, length, buffer, release)
-{}
-
-CORBA::DomainManagerList::DomainManagerList (const DomainManagerList &seq)
-  : 
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-TAO_Unbounded_Object_Sequence<CORBA::DomainManager,CORBA::DomainManager_var>
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
- (seq)
-{}
-
-CORBA::DomainManagerList::~DomainManagerList (void) // dtor
-{}
-
-void CORBA::DomainManagerList::_tao_any_destructor (void *_tao_void_pointer)
-{
-  DomainManagerList *tmp = ACE_static_cast (DomainManagerList*, _tao_void_pointer);
-  delete tmp;
-}
-
-#endif /* 0 */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
-
-static const CORBA::Long _oc_CORBA_DomainManagerList[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  40,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f446f), 
-  ACE_NTOHL (0x6d61696e), 
-  ACE_NTOHL (0x4d616e61), 
-  ACE_NTOHL (0x6765724c), 
-  ACE_NTOHL (0x6973743a), 
-  ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/DomainManagerList:1.0
-    18,
-  ACE_NTOHL (0x446f6d61), 
-  ACE_NTOHL (0x696e4d61), 
-  ACE_NTOHL (0x6e616765), 
-  ACE_NTOHL (0x724c6973), 
-  ACE_NTOHL (0x74000000),  // name = DomainManagerList
-    CORBA::tk_sequence, // typecode kind
-  80, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    CORBA::tk_objref, // typecode kind
-    64, // encapsulation length
+  static const CORBA::Long _oc_CORBA_DomainManagerList[] =
+  {
+        TAO_ENCAP_BYTE_ORDER, // byte order
+    40,
+    ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
+    ACE_NTOHL (0x434f5242), 
+    ACE_NTOHL (0x412f446f), 
+    ACE_NTOHL (0x6d61696e), 
+    ACE_NTOHL (0x4d616e61), 
+    ACE_NTOHL (0x6765724c), 
+    ACE_NTOHL (0x6973743a), 
+    ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/DomainManagerList:1.0
+        18,
+    ACE_NTOHL (0x446f6d61), 
+    ACE_NTOHL (0x696e4d61), 
+    ACE_NTOHL (0x6e616765), 
+    ACE_NTOHL (0x724c6973), 
+    ACE_NTOHL (0x74000000),  // name = DomainManagerList
+        CORBA::tk_sequence, // typecode kind
+    80, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
-      36,
-      ACE_NTOHL (0x49444c3a), 
-      ACE_NTOHL (0x6f6d672e), 
-      ACE_NTOHL (0x6f72672f), 
-      ACE_NTOHL (0x434f5242), 
-      ACE_NTOHL (0x412f446f), 
-      ACE_NTOHL (0x6d61696e), 
-      ACE_NTOHL (0x4d616e61), 
-      ACE_NTOHL (0x6765723a), 
-      ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/DomainManager:1.0
-            14,
-      ACE_NTOHL (0x446f6d61), 
-      ACE_NTOHL (0x696e4d61), 
-      ACE_NTOHL (0x6e616765), 
-      ACE_NTOHL (0x72000000),  // name = DomainManager
-      
-    0U,
+      CORBA::tk_objref, // typecode kind
+      64, // encapsulation length
+        TAO_ENCAP_BYTE_ORDER, // byte order
+        36,
+        ACE_NTOHL (0x49444c3a), 
+        ACE_NTOHL (0x6f6d672e), 
+        ACE_NTOHL (0x6f72672f), 
+        ACE_NTOHL (0x434f5242), 
+        ACE_NTOHL (0x412f446f), 
+        ACE_NTOHL (0x6d61696e), 
+        ACE_NTOHL (0x4d616e61), 
+        ACE_NTOHL (0x6765723a), 
+        ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/DomainManager:1.0
+                14,
+        ACE_NTOHL (0x446f6d61), 
+        ACE_NTOHL (0x696e4d61), 
+        ACE_NTOHL (0x6e616765), 
+        ACE_NTOHL (0x72000000),  // name = DomainManager
+        
+      0U,
 
 };
-
-static CORBA::TypeCode _tc_TAO_tc_CORBA_DomainManagerList (
-    CORBA::tk_alias,
-    sizeof (_oc_CORBA_DomainManagerList),
-    (char *) &_oc_CORBA_DomainManagerList,
-    0,
-    sizeof (CORBA::DomainManagerList)
-  );
-
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (
-    ::CORBA::TypeCode_ptr,
-    _tc_DomainManagerList,
-    &_tc_TAO_tc_CORBA_DomainManagerList
-  )
-TAO_NAMESPACE_END
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:52
-
-// Copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    CORBA::DomainManager_ptr _tao_elem
-  )
-{
-  CORBA::DomainManager_ptr _tao_objptr =
-    CORBA::DomainManager::_duplicate (_tao_elem);
-  _tao_any <<= &_tao_objptr;
-}
-
-// Non-copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    CORBA::DomainManager_ptr *_tao_elem
-  )
-{
-  TAO::Any_Impl_T<CORBA::DomainManager>::insert (
-      _tao_any,
-      CORBA::DomainManager::_tao_any_destructor,
-      CORBA::_tc_DomainManager,
-      *_tao_elem
+  
+  static CORBA::TypeCode _tc_TAO_tc_CORBA_DomainManagerList (
+      CORBA::tk_alias,
+      sizeof (_oc_CORBA_DomainManagerList),
+      (char *) &_oc_CORBA_DomainManagerList,
+      0,
+      sizeof (CORBA::DomainManagerList)
     );
-}
-
-CORBA::Boolean
-operator>>= (
-    const CORBA::Any &_tao_any,
-    CORBA::DomainManager_ptr &_tao_elem
-  )
-{
-  return
-    TAO::Any_Impl_T<CORBA::DomainManager>::extract (
+  
+  TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+  TAO_NAMESPACE_BEGIN (CORBA)
+  TAO_NAMESPACE_DEFINE (
+      ::CORBA::TypeCode_ptr,
+      _tc_DomainManagerList,
+      &_tc_TAO_tc_CORBA_DomainManagerList
+    )
+  TAO_NAMESPACE_END
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:52
+  
+  // Copying insertion.
+  void
+  operator<<= (
+      CORBA::Any &_tao_any,
+      CORBA::DomainManager_ptr _tao_elem
+    )
+  {
+    CORBA::DomainManager_ptr _tao_objptr =
+      CORBA::DomainManager::_duplicate (_tao_elem);
+    _tao_any <<= &_tao_objptr;
+  }
+  
+  // Non-copying insertion.
+  void
+  operator<<= (
+      CORBA::Any &_tao_any,
+      CORBA::DomainManager_ptr *_tao_elem
+    )
+  {
+    TAO::Any_Impl_T<CORBA::DomainManager>::insert (
         _tao_any,
         CORBA::DomainManager::_tao_any_destructor,
         CORBA::_tc_DomainManager,
-        _tao_elem
+        *_tao_elem
       );
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<CORBA::DomainManager>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
-    defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<CORBA::DomainManager,CORBA::DomainManager_var>;
-  template class TAO::Any_Impl_T<CORBA::DomainManager>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<CORBA::DomainManager, CORBA::DomainManager_var>
-# pragma instantiate TAO::Any_Impl_T<CORBA::DomainManager>
+  }
+  
+  CORBA::Boolean
+  operator>>= (
+      const CORBA::Any &_tao_any,
+      CORBA::DomainManager_ptr &_tao_elem
+    )
+  {
+    return
+      TAO::Any_Impl_T<CORBA::DomainManager>::extract (
+          _tao_any,
+          CORBA::DomainManager::_tao_any_destructor,
+          CORBA::_tc_DomainManager,
+          _tao_elem
+        );
+  }
+  
+  template<>
+  CORBA::Boolean
+  TAO::Any_Impl_T<CORBA::DomainManager>::to_object (
+      CORBA::Object_ptr &_tao_elem
+    ) const
+  {
+    _tao_elem = CORBA::Object::_duplicate (this->value_);
+    return 1;
+  }
+  
+  #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+      defined (ACE_HAS_GNU_REPO)
+    template class TAO_Object_Manager<CORBA::DomainManager,CORBA::DomainManager_var>;
+    template class TAO::Any_Impl_T<CORBA::DomainManager>;
+  #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+  # pragma instantiate TAO_Object_Manager<CORBA::DomainManager, CORBA::DomainManager_var>
+  # pragma instantiate TAO::Any_Impl_T<CORBA::DomainManager>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
@@ -2254,8 +1862,15 @@ CORBA::Boolean operator>>= (
       );
 }
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+  template class TAO::Any_Dual_Impl_T<CORBA::DomainManagerList>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate TAO::Any_Dual_Impl_T<CORBA::DomainManagerList>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:94
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:63
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -2298,7 +1913,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:94
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:63
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -2341,7 +1956,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:125
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:98
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,

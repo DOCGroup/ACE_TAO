@@ -113,7 +113,7 @@ ACE_INLINE
 T *
 TAO_Seq_Var_Base_T<T,T_elem>::_retn (void)
 {
-  T * Stmp = this->ptr_;
+  T * tmp = this->ptr_;
   this->ptr_ = 0;
   return tmp;
 }

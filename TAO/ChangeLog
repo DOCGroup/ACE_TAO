@@ -1,3 +1,42 @@
+Fri Mar 28 19:12:40 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CONV_FRAMEC.cpp:
+        * CONV_FRAMEC.h:
+        * CONV_FRAMEC.i:
+        * CurrentC.cpp:
+        * CurrentC.h:
+        * CurrentC.i:
+        * DomainC.cpp:
+        * DomainC.h:
+        * DomainC.i:
+        * DynamicC.cpp:
+        * DynamicC.h:
+        * DynamicC.i:
+        * GIOPC.cpp:
+        * GIOPC.h:
+        * GIOPC.i:
+        * IIOPC.cpp:
+        * IIOPC.h:
+        * IIOPC.i:
+
+ 	  Regenerated some hand-crafted files.
+
+        * corbafwd.h:
+
+	  Removed some forward _var and _out declarations.
+	  Since these are now typedefs, they can't be forward
+	  declared.
+
+        * Seq_VarOut_T.inl:
+
+	  Fixed a typo.
+
+        * GIOP.pidl:
+        * IOP.pidl:
+
+	  Modified these to use CORBA::OctetSeq instead of
+	  regenerating each time.
+
 Fri Mar 28 17:09:30 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * AbstractBase.cpp:

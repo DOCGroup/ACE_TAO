@@ -26,11 +26,15 @@
 #define _TAO_IDL_ORIG_DOMAINC_H_
 
 #include "ace/pre.h"
+
 #include "tao/corba.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+
+#include "tao/corbafwd.h"
 
 #include "PolicyC.h"
 
@@ -64,112 +68,36 @@ TAO_NAMESPACE  CORBA
 {
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
-
-#if !defined (_CORBA_DOMAINMANAGER___PTR_CH_)
-#define _CORBA_DOMAINMANAGER___PTR_CH_
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:566
   
   class DomainManager;
   typedef DomainManager *DomainManager_ptr;
-
-#endif /* end #if !defined */
+  struct tao_DomainManager_life;
+  typedef TAO_Objref_Var_T<DomainManager, tao_DomainManager_life> DomainManager_var;
+  typedef TAO_Objref_Out_T<DomainManager, tao_DomainManager_life> DomainManager_out;
   
-    struct tao_DomainManager_life;
-    typedef TAO_Objref_Var_T<DomainManager, tao_DomainManager_life> DomainManager_var;
-    typedef TAO_Objref_Out_T<DomainManager, tao_DomainManager_life> DomainManager_out;
-
-    struct tao_DomainManager_life
-    {
-      static DomainManager_ptr tao_duplicate (DomainManager_ptr);
-      static void tao_release (DomainManager_ptr);
-      static DomainManager_ptr tao_nil (void);
-    };
-
-    struct tao_DomainManager_cast
-    {
-      static DomainManager_ptr tao_narrow (CORBA::Object_ptr
-                                 ACE_ENV_ARG_DECL);
-      static CORBA::Object_ptr tao_upcast (void *);
-    };
-
-#if 0
-  
-#if !defined (_CORBA_DOMAINMANAGER___VAR_CH_)
-#define _CORBA_DOMAINMANAGER___VAR_CH_
-  
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
-  
-  class TAO_Export DomainManager_var : public TAO_Base_var
+  struct tao_DomainManager_life
   {
-  public:
-    DomainManager_var (void); // default constructor
-    DomainManager_var (DomainManager_ptr p) : ptr_ (p) {} 
-    DomainManager_var (const DomainManager_var &); // copy constructor
-    ~DomainManager_var (void); // destructor
-    
-    DomainManager_var &operator= (DomainManager_ptr);
-    DomainManager_var &operator= (const DomainManager_var &);
-    DomainManager_ptr operator-> (void) const;
-    
-    operator const DomainManager_ptr &() const;
-    operator DomainManager_ptr &();
-    // in, inout, out, _retn 
-    DomainManager_ptr in (void) const;
-    DomainManager_ptr &inout (void);
-    DomainManager_ptr &out (void);
-    DomainManager_ptr _retn (void);
-    DomainManager_ptr ptr (void) const;
-    
-    // Hooks used by template sequence and object manager classes
-    // for non-defined forward declared interfaces.
     static DomainManager_ptr tao_duplicate (DomainManager_ptr);
     static void tao_release (DomainManager_ptr);
     static DomainManager_ptr tao_nil (void);
-    static DomainManager_ptr tao_narrow (
-        CORBA::Object *
-        ACE_ENV_ARG_DECL_NOT_USED
+    static CORBA::Boolean tao_marshal (
+        DomainManager_ptr,
+        TAO_OutputCDR &
       );
-    static CORBA::Object * tao_upcast (void *);
-  
-  private:
-    DomainManager_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    DomainManager_var (const TAO_Base_var &rhs);
-    DomainManager_var &operator= (const TAO_Base_var &rhs);
   };
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_DOMAINMANAGER___OUT_CH_)
-#define _CORBA_DOMAINMANAGER___OUT_CH_
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
-  
-  class TAO_Export DomainManager_out
+  struct tao_DomainManager_cast
   {
-  public:
-    DomainManager_out (DomainManager_ptr &);
-    DomainManager_out (DomainManager_var &);
-    DomainManager_out (const DomainManager_out &);
-    DomainManager_out &operator= (const DomainManager_out &);
-    DomainManager_out &operator= (const DomainManager_var &);
-    DomainManager_out &operator= (DomainManager_ptr);
-    operator DomainManager_ptr &();
-    DomainManager_ptr &ptr (void);
-    DomainManager_ptr operator-> (void);
-  
-  private:
-    DomainManager_ptr &ptr_;
+    static DomainManager_ptr tao_narrow (
+        CORBA::Object_ptr
+        ACE_ENV_ARG_DECL
+      );
+    static CORBA::Object_ptr tao_upcast (void *);
   };
-
-#endif /* end #if !defined */
-
-#endif /* 0 */
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_CORBA_DOMAINMANAGER_CH_)
 #define _CORBA_DOMAINMANAGER_CH_
@@ -219,7 +147,7 @@ TAO_NAMESPACE  CORBA
       ));
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:211
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -403,93 +331,39 @@ TAO_NAMESPACE  CORBA
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
   
-  const CORBA::ULong SecConstruction = 11U;
+  const CORBA::PolicyType SecConstruction = 11U;
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
-
-#if !defined (_CORBA_CONSTRUCTIONPOLICY___PTR_CH_)
-#define _CORBA_CONSTRUCTIONPOLICY___PTR_CH_
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:566
   
   class ConstructionPolicy;
   typedef ConstructionPolicy *ConstructionPolicy_ptr;
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_CONSTRUCTIONPOLICY___VAR_CH_)
-#define _CORBA_CONSTRUCTIONPOLICY___VAR_CH_
+  struct tao_ConstructionPolicy_life;
+  typedef TAO_Objref_Var_T<ConstructionPolicy, tao_ConstructionPolicy_life> ConstructionPolicy_var;
+  typedef TAO_Objref_Out_T<ConstructionPolicy, tao_ConstructionPolicy_life> ConstructionPolicy_out;
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
-  
-  class TAO_Export ConstructionPolicy_var : public TAO_Base_var
+  struct tao_ConstructionPolicy_life
   {
-  public:
-    ConstructionPolicy_var (void); // default constructor
-    ConstructionPolicy_var (ConstructionPolicy_ptr p) : ptr_ (p) {} 
-    ConstructionPolicy_var (const ConstructionPolicy_var &); // copy constructor
-    ~ConstructionPolicy_var (void); // destructor
-    
-    ConstructionPolicy_var &operator= (ConstructionPolicy_ptr);
-    ConstructionPolicy_var &operator= (const ConstructionPolicy_var &);
-    ConstructionPolicy_ptr operator-> (void) const;
-    
-    operator const ConstructionPolicy_ptr &() const;
-    operator ConstructionPolicy_ptr &();
-    // in, inout, out, _retn 
-    ConstructionPolicy_ptr in (void) const;
-    ConstructionPolicy_ptr &inout (void);
-    ConstructionPolicy_ptr &out (void);
-    ConstructionPolicy_ptr _retn (void);
-    ConstructionPolicy_ptr ptr (void) const;
-    
-    // Hooks used by template sequence and object manager classes
-    // for non-defined forward declared interfaces.
     static ConstructionPolicy_ptr tao_duplicate (ConstructionPolicy_ptr);
     static void tao_release (ConstructionPolicy_ptr);
     static ConstructionPolicy_ptr tao_nil (void);
-    static ConstructionPolicy_ptr tao_narrow (
-        CORBA::Object *
-        ACE_ENV_ARG_DECL_NOT_USED
+    static CORBA::Boolean tao_marshal (
+        ConstructionPolicy_ptr,
+        TAO_OutputCDR &
       );
-    static CORBA::Object * tao_upcast (void *);
-  
-  private:
-    ConstructionPolicy_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    ConstructionPolicy_var (const TAO_Base_var &rhs);
-    ConstructionPolicy_var &operator= (const TAO_Base_var &rhs);
   };
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_CONSTRUCTIONPOLICY___OUT_CH_)
-#define _CORBA_CONSTRUCTIONPOLICY___OUT_CH_
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
-  
-  class TAO_Export ConstructionPolicy_out
+  struct tao_ConstructionPolicy_cast
   {
-  public:
-    ConstructionPolicy_out (ConstructionPolicy_ptr &);
-    ConstructionPolicy_out (ConstructionPolicy_var &);
-    ConstructionPolicy_out (const ConstructionPolicy_out &);
-    ConstructionPolicy_out &operator= (const ConstructionPolicy_out &);
-    ConstructionPolicy_out &operator= (const ConstructionPolicy_var &);
-    ConstructionPolicy_out &operator= (ConstructionPolicy_ptr);
-    operator ConstructionPolicy_ptr &();
-    ConstructionPolicy_ptr &ptr (void);
-    ConstructionPolicy_ptr operator-> (void);
-  
-  private:
-    ConstructionPolicy_ptr &ptr_;
+    static ConstructionPolicy_ptr tao_narrow (
+        CORBA::Object_ptr
+        ACE_ENV_ARG_DECL
+      );
+    static CORBA::Object_ptr tao_upcast (void *);
   };
-
-#endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_CORBA_CONSTRUCTIONPOLICY_CH_)
 #define _CORBA_CONSTRUCTIONPOLICY_CH_
@@ -540,7 +414,7 @@ TAO_NAMESPACE  CORBA
       ));
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:211
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -724,184 +598,37 @@ TAO_NAMESPACE  CORBA
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ConstructionPolicy;
   
-#if 0
-  
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-
-#if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_DOMAINMANAGERLIST_CH_)
-#define __TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_DOMAINMANAGERLIST_CH_
-  
-  class TAO_Export _TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList
-    : public TAO_Unbounded_Base_Sequence
-  {
-  public:
-    _TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList (void);
-    _TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList (CORBA::ULong maximum);
-    _TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList (
-        CORBA::ULong maximum,
-        CORBA::ULong length,
-        DomainManager* *value,
-        CORBA::Boolean release = 0
-      );
-    _TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList (
-        const _TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList &rhs
-      );
-    _TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList &operator= (
-        const _TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList &rhs
-      );
-    virtual ~_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList (void);
-    
-    // = Accessors.
-    TAO_Object_Manager<CORBA::DomainManager,CORBA::DomainManager_var> operator[] (CORBA::ULong index) const;
-    
-    // = Static operations.
-    static DomainManager **allocbuf (CORBA::ULong nelems);
-    static void freebuf (DomainManager **buffer);
-    
-    // Implement the TAO_Base_Sequence methods (see Sequence.h)
-    virtual void _allocate_buffer (CORBA::ULong length);
-    virtual void _deallocate_buffer (void);
-    DomainManager* *get_buffer (CORBA::Boolean orphan = 0);
-    const DomainManager* *get_buffer (void) const;
-    virtual void _shrink_buffer (
-        CORBA::ULong nl,
-        CORBA::ULong ol
-      );
-    
-    virtual void _downcast (
-        void* target,
-        CORBA::Object *src
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      );
-    virtual CORBA::Object* _upcast (void *src) const;
-  };
-
-#endif /* end #if !defined */
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-
-#if !defined (_CORBA_DOMAINMANAGERLIST_CH_)
-#define _CORBA_DOMAINMANAGERLIST_CH_
-  
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:371
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:75
   
-  class DomainManagerList;
-  class DomainManagerList_var;
+  typedef
+    TAO_Unbounded_Object_Sequence<
+        CORBA::DomainManager,
+        CORBA::DomainManager_var,
+        CORBA::tao_DomainManager_life,
+        CORBA::tao_DomainManager_cast
+      > DomainManagerList;
   
-  // *************************************************************
-  // CORBA::DomainManagerList
-  // *************************************************************
+  typedef
+    TAO_VarSeq_Var_T<
+        DomainManagerList,
+        TAO_Object_Manager<
+            CORBA::DomainManager,
+            CORBA::DomainManager_var,
+            CORBA::tao_DomainManager_life
+          >
+      > DomainManagerList_var;
   
-  class TAO_Export DomainManagerList : public 
-  
-  // TAO_IDL - Generated from 
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:51
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  _TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Object_Sequence<DomainManager,DomainManager_var,tao_DomainManager_life,tao_DomainManager_cast>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-  {
-  public:
-    DomainManagerList (void);
-    DomainManagerList (CORBA::ULong max);
-    DomainManagerList (
-        CORBA::ULong max, 
-        CORBA::ULong length, 
-        DomainManager_ptr *buffer, 
-        CORBA::Boolean release = 0
-      );
-    DomainManagerList (const DomainManagerList &);
-    ~DomainManagerList (void);
-    
-    static void _tao_any_destructor (void*);
-    
-    typedef DomainManagerList_var _var_type;
-  };
-
-#endif /* end #if !defined */
-  
-#endif /* 0 */
-
-  typedef TAO_Unbounded_Object_Sequence<DomainManager,
-                                        DomainManager_var,
-                                        tao_DomainManager_life,
-                                        tao_DomainManager_cast>
-    DomainManagerList;
-  
-#if !defined (_CORBA_DOMAINMANAGERLIST___VAR_CH_)
-#define _CORBA_DOMAINMANAGERLIST___VAR_CH_
-  
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:549
-  
-  // *************************************************************
-  // class CORBA::DomainManagerList_var
-  // *************************************************************
-  
-  class TAO_Export DomainManagerList_var
-  {
-  public:
-    DomainManagerList_var (void);
-    DomainManagerList_var (DomainManagerList *);
-    DomainManagerList_var (const DomainManagerList_var &);
-    ~DomainManagerList_var (void);
-    
-    DomainManagerList_var &operator= (DomainManagerList *);
-    DomainManagerList_var &operator= (const DomainManagerList_var &);
-    DomainManagerList *operator-> (void);
-    const DomainManagerList *operator-> (void) const;
-    
-    operator const DomainManagerList &() const;
-    operator DomainManagerList &();
-    operator DomainManagerList &() const;
-    
-    // Variable-size base types only.
-    operator DomainManagerList *&();
-    
-    TAO_Object_Manager<DomainManager,DomainManager_var,tao_DomainManager_life> operator[] (CORBA::ULong index);
-    
-    // in, inout, out, _retn 
-    const DomainManagerList &in (void) const;
-    DomainManagerList &inout (void);
-    DomainManagerList *&out (void);
-    DomainManagerList *_retn (void);
-    DomainManagerList *ptr (void) const;
-  
-  private:
-    DomainManagerList *ptr_;
-  };
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_DOMAINMANAGERLIST___OUT_CH_)
-#define _CORBA_DOMAINMANAGERLIST___OUT_CH_
-  
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:753
-  
-  class TAO_Export DomainManagerList_out
-  {
-  public:
-    DomainManagerList_out (DomainManagerList *&);
-    DomainManagerList_out (DomainManagerList_var &);
-    DomainManagerList_out (const DomainManagerList_out &);
-    DomainManagerList_out &operator= (const DomainManagerList_out &);
-    DomainManagerList_out &operator= (DomainManagerList *);
-    operator DomainManagerList *&();
-    DomainManagerList *&ptr (void);
-    DomainManagerList *operator-> (void);
-    TAO_Object_Manager<DomainManager,DomainManager_var,tao_DomainManager_life> operator[] (CORBA::ULong index);
-  
-  private:
-    DomainManagerList *&ptr_;
-    // Assignment from T_var not allowed.
-    void operator= (const DomainManagerList_var &);
-  };
-
-#endif /* end #if !defined */
+  typedef
+    TAO_Seq_Out_T<
+        DomainManagerList,
+        DomainManagerList_var,
+        TAO_Object_Manager<
+            CORBA::DomainManager,
+            CORBA::DomainManager_var,
+            CORBA::tao_DomainManager_life
+          >
+      > DomainManagerList_out;
   
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
@@ -971,7 +698,7 @@ TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::Construction
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::ConstructionPolicy_ptr &);
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:57
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:64
 
 #if !defined _TAO_CDR_OP_CORBA_DomainManagerList_H_
 #define _TAO_CDR_OP_CORBA_DomainManagerList_H_
@@ -993,7 +720,7 @@ TAO_Export CORBA::Boolean operator>> (
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1009
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1018
 
 #if defined (__ACE_INLINE__)
 #include "DomainC.i"

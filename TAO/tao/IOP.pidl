@@ -41,7 +41,7 @@ module IOP
 
   struct TaggedProfile {
     ProfileId       tag;
-    sequence<octet> profile_data;
+    CORBA::OctetSeq profile_data;
   };
 
   struct IOR {
@@ -52,7 +52,7 @@ module IOP
   typedef unsigned long ComponentId;
   struct TaggedComponent {
     ComponentId     tag;
-    sequence<octet> component_data;
+    CORBA::OctetSeq component_data;
   };
   typedef sequence<TaggedComponent> MultipleComponentProfile;
   typedef sequence<TaggedComponent> TaggedComponentList;
@@ -77,7 +77,7 @@ module IOP
   typedef unsigned long ServiceId;
   struct ServiceContext {
     ServiceId          context_id;
-    sequence <octet>   context_data;
+    CORBA::OctetSeq    context_data;
   };
   typedef sequence <ServiceContext> ServiceContextList;
 
@@ -137,7 +137,5 @@ module IOP
     Codec create_codec (in Encoding enc) raises (UnknownEncoding);
   };
 };
-
-#pragma prefix ""
 
 #endif  /* TAO_IOP_PIDL */
