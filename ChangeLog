@@ -1,3 +1,12 @@
+Fri Oct 13 11:41:29 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* ace/Makefile.bor (OBJFILES): 
+	* ace/Makefile.am (libACE_Utils_la_SOURCES): 
+	  Updated to include the new files.
+
+	* examples/Shared_Malloc/test_position_independent_malloc.cpp:
+	  Included a header file.
+	  
 Fri Oct 13 11:43:56 2000  David L. Levine <levine@cs.wustl.edu>
 
         * ACE-INSTALL.html: updated supported platforms list.

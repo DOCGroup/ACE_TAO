@@ -182,4 +182,3 @@ template class ACE_Based_Pointer<ACE_PI_Control_Block::ACE_Name_Node>;
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1*/
 
 #endif /* ACE_PI_MALLOC_CPP */
-

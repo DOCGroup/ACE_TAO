@@ -10,6 +10,8 @@ main (int argc, char **argv)
   const char *host = argc > 1 ? argv[1] : "-hlocalhost";
   const char *port = argc > 2 ? argv[2] : "-p20012";
 
+  ACE_STATIC_SVC_REGISTER(ACE_Naming_Context);
+
   ACE_Naming_Context ns;   
   ACE_Name_Options *name_options = ns.name_options ();
   

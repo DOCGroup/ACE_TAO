@@ -12,6 +12,8 @@ int main (int, char *[])
 
   int i;
 
+  ACE_STATIC_SVC_REGISTER(ACE_Naming_Context);
+
   ACE_Naming_Context *ns_ptr;
   ACE_NEW_RETURN (ns_ptr,
                   ACE_Naming_Context,
