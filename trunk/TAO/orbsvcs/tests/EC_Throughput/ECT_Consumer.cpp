@@ -154,6 +154,8 @@ Driver::run (int argc, char* argv[])
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
+      this->dump_results ();
+
       this->disconnect_consumers (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
@@ -212,6 +214,18 @@ Driver::connect_consumers (RtecEventChannelAdmin::EventChannel_ptr channel,
                                     channel,
                                     _env);
       if (_env.exception () != 0) return;
+    }
+}
+
+void
+Driver::dump_results (void)
+{
+  for (int i = 0; i < this->n_consumers_; ++i)
+    {
+      char buf[BUFSIZ];
+      ACE_OS::sprintf (buf, "consumer_%02.2d", i);
+
+      this->consumers_[i]->dump_results (buf);
     }
 }
 
@@ -372,11 +386,28 @@ Test_Consumer::disconnect (CORBA::Environment &_env)
 }
 
 void
+Test_Consumer::dump_results (const char* name)
+{
+  ACE_Time_Value tv;
+  this->timer_.elapsed_time (tv);
+  double f = 1.0 / (tv.sec () + tv.usec () / 1000000.0);
+  double eps = this->recv_count_ * f;
+  
+  ACE_DEBUG ((LM_DEBUG,
+              "ECT_Consumer (%s):\n"
+              "    Total time: %d.%08.8d (secs.usecs)\n"
+              "    Total events: %d\n"
+              "    Events per second: %.3f\n",
+              name,
+              tv.sec (), tv.usec (),
+              this->recv_count_,
+              eps));
+}
+
+void
 Test_Consumer::push (const RtecEventComm::EventSet& events,
                      CORBA::Environment &_env)
 {
-  ACE_hrtime_t arrival = ACE_OS::gethrtime ();
-
   if (events.length () == 0)
     {
       // ACE_DEBUG ((LM_DEBUG, "no events\n"));
@@ -385,12 +416,17 @@ Test_Consumer::push (const RtecEventComm::EventSet& events,
 
   ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
 
+  // We start the timer as soon as we receive the first event...
+  if (this->recv_count_ == 0)
+    this->timer_.start ();
+
   this->recv_count_ += events.length ();
 
-  if (this->recv_count_ % 100 == 0)
+  if (TAO_debug_level > 0
+      && this->recv_count_ % 1000 == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-		  "ECT_Consumer (%P|%t): %d events received\n",
+                  "ECT_Consumer (%P|%t): %d events received\n",
 		  this->recv_count_));
     }
 
@@ -409,7 +445,12 @@ Test_Consumer::push (const RtecEventComm::EventSet& events,
         {
           this->shutdown_count_++;
           if (this->shutdown_count_ >= this->n_suppliers_)
-            this->driver_->shutdown_consumer (this->cookie_, _env);
+            {
+              // We stop the timer as soon as we realize it is time to
+              // do so.
+              this->timer_.stop ();
+              this->driver_->shutdown_consumer (this->cookie_, _env);
+            }
         }
     }
 }

@@ -82,11 +82,14 @@ public:
   // equality using source_ and type_ only.  A 0 source_ is a wildcard
   // (always equal).  A type_ of ACE_ES_EVENT_ANY is also a wildcard.
 
+#if 0
+  // @@ Memory allocators
   void *operator new (size_t nbytes);
   // Allocates memory from a thread-specific memory pool.
 
   void operator delete (void *);
   // Returns memory to a thread-specific memory pool.
+#endif
 
   void dump (void);
 

@@ -1,3 +1,24 @@
+Fri Oct  9 16:27:46 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/EC_Throughput/ECT_Supplier.h: 
+	* orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp: 
+	* orbsvcs/tests/EC_Throughput/ECT_Consumer.h: 
+	* orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp: 
+	  We measure and report the elapsed time for the test (in the case
+	  of the consumer the time since we receive the first event).
+	  We use this to measure throughput (in events per second).
+
+	* orbsvcs/orbsvcs/Event/Memory_Pools.h: 
+	* orbsvcs/orbsvcs/Event/Memory_Pools.cpp: 
+	* orbsvcs/orbsvcs/Event/Event_Channel.h: 
+	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
+	* orbsvcs/orbsvcs/Event/Dispatching_Modules.h: 
+	* orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp: 
+	  We do not overload operator new and operator delete anymore. The
+	  allocators we were using were problematic for this use case and
+	  we believe that a better speed up can be obtained by reducing
+	  the number of allocations.
+
 Fri Oct 09 15:27:17 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp (~App_Allocated): Free up the memory pool

@@ -14,6 +14,7 @@
 #define ECT_CONSUMER_H
 
 #include "ace/Task.h"
+#include "ace/High_Res_Timer.h"
 #include "orbsvcs/Channel_Clients_T.h"
 
 class Driver;
@@ -39,6 +40,9 @@ public:
   void disconnect (CORBA::Environment &_env);
   // Disconnect from the EC.
 
+  void dump_results (const char* name);
+  // Print out the results
+
   virtual void push (const RtecEventComm::EventSet& events,
 		     CORBA::Environment &_env);
   virtual void disconnect_push_consumer (CORBA::Environment &);
@@ -61,6 +65,7 @@ private:
 
   ACE_SYNCH_MUTEX lock_;
   int recv_count_;
+  ACE_High_Res_Timer timer_;
   // How many events we have received.
 
   int shutdown_count_;
@@ -99,6 +104,9 @@ private:
 			  CORBA::Environment &_env);
   void disconnect_consumers (CORBA::Environment &_env);
   // Connect and disconnect the consumers.
+
+  void dump_results (void);
+  // Print out the results
 
 private:
   Test_Consumer* consumers_[Driver::MAX_CONSUMERS];
