@@ -1,3 +1,17 @@
+Thu Feb  5 05:35:35 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
+
+        * rules.tao.GNU:
+          Added a new variable, VTAO_IDLFLAGS, and assign $(TAO_IDLFLAGS)
+          to it.  Then use VTAO_IDLFLAGS when invoking the TAO_IDL
+          compiler.  This is needed to avoid a problem where users
+          "override" TAO_IDLFLAGS in their own makefiles.  Once you
+          override a variable, all subsequent assignments must use
+          "override" too, or they are ignored.  Many Makefile throughout
+          TAO make assignments to TAO_IDLFLAGS, as well as many users, so
+          adding "override" has the potential of breaking lots of code.
+          This change is needed so that -I$(TAO_ROOT) to TAO_IDLFLAGS
+          without breaking user makefiles that override it.
+
 Wed Feb  4 18:29:32 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* rules.tao.GNU:
