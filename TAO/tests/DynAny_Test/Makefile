@@ -65,11 +65,9 @@ realclean:	clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/da_testsC.o .obj/da_testsC.o .obj/da_testsC.o .obj/da_testsC.o: da_testsC.cpp da_testsC.h \
+.obj/da_testsC.o .obj/da_testsC.so .shobj/da_testsC.o .shobj/da_testsC.so: da_testsC.cpp da_testsC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -387,11 +385,9 @@ realclean:	clean
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  da_testsC.i
 
-.obj/da_testsS.o .obj/da_testsS.o .obj/da_testsS.o .obj/da_testsS.o: da_testsS.cpp da_testsS.h da_testsC.h \
+.obj/da_testsS.o .obj/da_testsS.so .shobj/da_testsS.o .shobj/da_testsS.so: da_testsS.cpp da_testsS.h da_testsC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -740,11 +736,9 @@ realclean:	clean
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.i \
  $(TAO_ROOT)/tao/PortableServer/Operation_Table.h
 
-.obj/data.o .obj/data.o .obj/data.o .obj/data.o: data.cpp data.h \
+.obj/data.o .obj/data.so .shobj/data.o .shobj/data.so: data.cpp data.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1066,11 +1060,9 @@ realclean:	clean
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.i
 
-.obj/driver.o .obj/driver.o .obj/driver.o .obj/driver.o: driver.cpp driver.h \
+.obj/driver.o .obj/driver.so .shobj/driver.o .shobj/driver.so: driver.cpp driver.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1396,11 +1388,9 @@ realclean:	clean
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i
 
-.obj/test_dynany.o .obj/test_dynany.o .obj/test_dynany.o .obj/test_dynany.o: test_dynany.cpp test_dynany.h \
+.obj/test_dynany.o .obj/test_dynany.so .shobj/test_dynany.o .shobj/test_dynany.so: test_dynany.cpp test_dynany.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1724,11 +1714,9 @@ realclean:	clean
  $(TAO_ROOT)/tao/DynamicAny/DynamicAnyC.h \
  $(TAO_ROOT)/tao/DynamicAny/DynamicAnyC.i
 
-.obj/test_dynarray.o .obj/test_dynarray.o .obj/test_dynarray.o .obj/test_dynarray.o: test_dynarray.cpp test_dynarray.h \
+.obj/test_dynarray.o .obj/test_dynarray.so .shobj/test_dynarray.o .shobj/test_dynarray.so: test_dynarray.cpp test_dynarray.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -2052,11 +2040,9 @@ realclean:	clean
  $(TAO_ROOT)/tao/DynamicAny/DynamicAnyC.h \
  $(TAO_ROOT)/tao/DynamicAny/DynamicAnyC.i
 
-.obj/test_dynenum.o .obj/test_dynenum.o .obj/test_dynenum.o .obj/test_dynenum.o: test_dynenum.cpp test_dynenum.h \
+.obj/test_dynenum.o .obj/test_dynenum.so .shobj/test_dynenum.o .shobj/test_dynenum.so: test_dynenum.cpp test_dynenum.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -2380,11 +2366,9 @@ realclean:	clean
  $(TAO_ROOT)/tao/DynamicAny/DynamicAnyC.h \
  $(TAO_ROOT)/tao/DynamicAny/DynamicAnyC.i
 
-.obj/test_dynsequence.o .obj/test_dynsequence.o .obj/test_dynsequence.o .obj/test_dynsequence.o: test_dynsequence.cpp test_dynsequence.h \
+.obj/test_dynsequence.o .obj/test_dynsequence.so .shobj/test_dynsequence.o .shobj/test_dynsequence.so: test_dynsequence.cpp test_dynsequence.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -2708,11 +2692,9 @@ realclean:	clean
  $(TAO_ROOT)/tao/DynamicAny/DynamicAnyC.h \
  $(TAO_ROOT)/tao/DynamicAny/DynamicAnyC.i
 
-.obj/test_dynstruct.o .obj/test_dynstruct.o .obj/test_dynstruct.o .obj/test_dynstruct.o: test_dynstruct.cpp test_dynstruct.h \
+.obj/test_dynstruct.o .obj/test_dynstruct.so .shobj/test_dynstruct.o .shobj/test_dynstruct.so: test_dynstruct.cpp test_dynstruct.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -3036,11 +3018,9 @@ realclean:	clean
  $(TAO_ROOT)/tao/DynamicAny/DynamicAnyC.h \
  $(TAO_ROOT)/tao/DynamicAny/DynamicAnyC.i
 
-.obj/test_dynunion.o .obj/test_dynunion.o .obj/test_dynunion.o .obj/test_dynunion.o: test_dynunion.cpp test_dynunion.h \
+.obj/test_dynunion.o .obj/test_dynunion.so .shobj/test_dynunion.o .shobj/test_dynunion.so: test_dynunion.cpp test_dynunion.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -3364,11 +3344,9 @@ realclean:	clean
  $(TAO_ROOT)/tao/DynamicAny/DynamicAnyC.h \
  $(TAO_ROOT)/tao/DynamicAny/DynamicAnyC.i
 
-.obj/test_wrapper.o .obj/test_wrapper.o .obj/test_wrapper.o .obj/test_wrapper.o: test_wrapper.cpp test_wrapper.h \
+.obj/test_wrapper.o .obj/test_wrapper.so .shobj/test_wrapper.o .shobj/test_wrapper.so: test_wrapper.cpp test_wrapper.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \

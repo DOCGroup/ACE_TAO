@@ -91,15 +91,13 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/CEC_ConsumerAdmin.o .obj/CEC_ConsumerAdmin.o .obj/CEC_ConsumerAdmin.o .obj/CEC_ConsumerAdmin.o: CosEvent/CEC_ConsumerAdmin.cpp \
+.obj/CEC_ConsumerAdmin.o .obj/CEC_ConsumerAdmin.so .shobj/CEC_ConsumerAdmin.o .shobj/CEC_ConsumerAdmin.so: CosEvent/CEC_ConsumerAdmin.cpp \
  CosEvent/CEC_ConsumerAdmin.h \
  $(ACE_ROOT)/ace/pre.h \
  CosEventChannelAdminS.h \
  CosEventCommS.h \
  CosEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -456,12 +454,10 @@ realclean: clean
  CosEvent/CEC_Factory.i CosEvent/CEC_Defaults.h \
  CosEvent/CEC_EventChannel.i
 
-.obj/CEC_ConsumerControl.o .obj/CEC_ConsumerControl.o .obj/CEC_ConsumerControl.o .obj/CEC_ConsumerControl.o: CosEvent/CEC_ConsumerControl.cpp \
+.obj/CEC_ConsumerControl.o .obj/CEC_ConsumerControl.so .shobj/CEC_ConsumerControl.o .shobj/CEC_ConsumerControl.so: CosEvent/CEC_ConsumerControl.cpp \
  CosEvent/CEC_ConsumerControl.h \
  $(ACE_ROOT)/ace/pre.h \
  CosEvent/event_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -780,13 +776,11 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  CosEvent/CEC_ConsumerControl.i
 
-.obj/CEC_Dispatching.o .obj/CEC_Dispatching.o .obj/CEC_Dispatching.o .obj/CEC_Dispatching.o: CosEvent/CEC_Dispatching.cpp \
+.obj/CEC_Dispatching.o .obj/CEC_Dispatching.so .shobj/CEC_Dispatching.o .shobj/CEC_Dispatching.so: CosEvent/CEC_Dispatching.cpp \
  CosEvent/CEC_Dispatching.h \
  $(ACE_ROOT)/ace/pre.h \
  CosEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1129,12 +1123,10 @@ realclean: clean
  CosEventChannelAdminS.i \
  CosEvent/CEC_ProxyPushSupplier.i
 
-.obj/CEC_EventChannel.o .obj/CEC_EventChannel.o .obj/CEC_EventChannel.o .obj/CEC_EventChannel.o: CosEvent/CEC_EventChannel.cpp \
+.obj/CEC_EventChannel.o .obj/CEC_EventChannel.so .shobj/CEC_EventChannel.o .shobj/CEC_EventChannel.so: CosEvent/CEC_EventChannel.cpp \
  CosEvent/CEC_EventChannel.h \
- $(ACE_ROOT)/ace/pre.h CosEvent/CEC_Factory.h \
- CosEvent/event_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/pre.h \
+ CosEvent/CEC_Factory.h CosEvent/event_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1503,10 +1495,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
-.obj/CEC_Factory.o .obj/CEC_Factory.o .obj/CEC_Factory.o .obj/CEC_Factory.o: CosEvent/CEC_Factory.cpp CosEvent/CEC_Factory.h \
- $(ACE_ROOT)/ace/pre.h CosEvent/event_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
+.obj/CEC_Factory.o .obj/CEC_Factory.so .shobj/CEC_Factory.o .shobj/CEC_Factory.so: CosEvent/CEC_Factory.cpp CosEvent/CEC_Factory.h \
+ $(ACE_ROOT)/ace/pre.h \
+ CosEvent/event_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1827,15 +1818,13 @@ realclean: clean
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
-.obj/CEC_ProxyPushConsumer.o .obj/CEC_ProxyPushConsumer.o .obj/CEC_ProxyPushConsumer.o .obj/CEC_ProxyPushConsumer.o: CosEvent/CEC_ProxyPushConsumer.cpp \
+.obj/CEC_ProxyPushConsumer.o .obj/CEC_ProxyPushConsumer.so .shobj/CEC_ProxyPushConsumer.o .shobj/CEC_ProxyPushConsumer.so: CosEvent/CEC_ProxyPushConsumer.cpp \
  CosEvent/CEC_ProxyPushConsumer.h \
  $(ACE_ROOT)/ace/pre.h \
  CosEventChannelAdminS.h \
  CosEventCommS.h \
  CosEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -2192,15 +2181,13 @@ realclean: clean
  CosEvent/CEC_ProxyPullSupplier.h CosEvent/CEC_ProxyPullSupplier.i \
  CosEvent/CEC_ConsumerAdmin.i
 
-.obj/CEC_ProxyPullConsumer.o .obj/CEC_ProxyPullConsumer.o .obj/CEC_ProxyPullConsumer.o .obj/CEC_ProxyPullConsumer.o: CosEvent/CEC_ProxyPullConsumer.cpp \
+.obj/CEC_ProxyPullConsumer.o .obj/CEC_ProxyPullConsumer.so .shobj/CEC_ProxyPullConsumer.o .shobj/CEC_ProxyPullConsumer.so: CosEvent/CEC_ProxyPullConsumer.cpp \
  CosEvent/CEC_ProxyPullConsumer.h \
  $(ACE_ROOT)/ace/pre.h \
  CosEventChannelAdminS.h \
  CosEventCommS.h \
  CosEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -2558,15 +2545,13 @@ realclean: clean
  CosEvent/CEC_ConsumerAdmin.i CosEvent/CEC_SupplierControl.h \
  CosEvent/CEC_SupplierControl.i
 
-.obj/CEC_ProxyPushSupplier.o .obj/CEC_ProxyPushSupplier.o .obj/CEC_ProxyPushSupplier.o .obj/CEC_ProxyPushSupplier.o: CosEvent/CEC_ProxyPushSupplier.cpp \
+.obj/CEC_ProxyPushSupplier.o .obj/CEC_ProxyPushSupplier.so .shobj/CEC_ProxyPushSupplier.o .shobj/CEC_ProxyPushSupplier.so: CosEvent/CEC_ProxyPushSupplier.cpp \
  CosEvent/CEC_ProxyPushSupplier.h \
  $(ACE_ROOT)/ace/pre.h \
  CosEventChannelAdminS.h \
  CosEventCommS.h \
  CosEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -2916,15 +2901,13 @@ realclean: clean
  ESF/ESF_Proxy_RefCount_Guard.i \
  ESF/ESF_Proxy_RefCount_Guard.cpp
 
-.obj/CEC_ProxyPullSupplier.o .obj/CEC_ProxyPullSupplier.o .obj/CEC_ProxyPullSupplier.o .obj/CEC_ProxyPullSupplier.o: CosEvent/CEC_ProxyPullSupplier.cpp \
+.obj/CEC_ProxyPullSupplier.o .obj/CEC_ProxyPullSupplier.so .shobj/CEC_ProxyPullSupplier.o .shobj/CEC_ProxyPullSupplier.so: CosEvent/CEC_ProxyPullSupplier.cpp \
  CosEvent/CEC_ProxyPullSupplier.h \
  $(ACE_ROOT)/ace/pre.h \
  CosEventChannelAdminS.h \
  CosEventCommS.h \
  CosEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -3267,15 +3250,13 @@ realclean: clean
  CosEvent/CEC_Factory.i CosEvent/CEC_Defaults.h \
  CosEvent/CEC_EventChannel.i
 
-.obj/CEC_SupplierAdmin.o .obj/CEC_SupplierAdmin.o .obj/CEC_SupplierAdmin.o .obj/CEC_SupplierAdmin.o: CosEvent/CEC_SupplierAdmin.cpp \
+.obj/CEC_SupplierAdmin.o .obj/CEC_SupplierAdmin.so .shobj/CEC_SupplierAdmin.o .shobj/CEC_SupplierAdmin.so: CosEvent/CEC_SupplierAdmin.cpp \
  CosEvent/CEC_SupplierAdmin.h \
  $(ACE_ROOT)/ace/pre.h \
  CosEventChannelAdminS.h \
  CosEventCommS.h \
  CosEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -3631,12 +3612,10 @@ realclean: clean
  CosEvent/CEC_Factory.i CosEvent/CEC_Defaults.h \
  CosEvent/CEC_EventChannel.i
 
-.obj/CEC_SupplierControl.o .obj/CEC_SupplierControl.o .obj/CEC_SupplierControl.o .obj/CEC_SupplierControl.o: CosEvent/CEC_SupplierControl.cpp \
+.obj/CEC_SupplierControl.o .obj/CEC_SupplierControl.so .shobj/CEC_SupplierControl.o .shobj/CEC_SupplierControl.so: CosEvent/CEC_SupplierControl.cpp \
  CosEvent/CEC_SupplierControl.h \
  $(ACE_ROOT)/ace/pre.h \
  CosEvent/event_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -3955,7 +3934,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  CosEvent/CEC_SupplierControl.i
 
-.obj/CEC_Dispatching_Task.o .obj/CEC_Dispatching_Task.o .obj/CEC_Dispatching_Task.o .obj/CEC_Dispatching_Task.o: CosEvent/CEC_Dispatching_Task.cpp \
+.obj/CEC_Dispatching_Task.o .obj/CEC_Dispatching_Task.so .shobj/CEC_Dispatching_Task.o .shobj/CEC_Dispatching_Task.so: CosEvent/CEC_Dispatching_Task.cpp \
  CosEvent/CEC_Dispatching_Task.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Task.h \
@@ -3963,8 +3942,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -4314,14 +4291,12 @@ realclean: clean
  CosEvent/event_export.h CosEvent/CEC_ProxyPushSupplier.i \
  CosEvent/CEC_Dispatching_Task.i
 
-.obj/CEC_MT_Dispatching.o .obj/CEC_MT_Dispatching.o .obj/CEC_MT_Dispatching.o .obj/CEC_MT_Dispatching.o: CosEvent/CEC_MT_Dispatching.cpp \
+.obj/CEC_MT_Dispatching.o .obj/CEC_MT_Dispatching.so .shobj/CEC_MT_Dispatching.o .shobj/CEC_MT_Dispatching.so: CosEvent/CEC_MT_Dispatching.cpp \
  CosEvent/CEC_MT_Dispatching.h \
  $(ACE_ROOT)/ace/pre.h \
  CosEvent/CEC_Dispatching.h \
  CosEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -4676,14 +4651,12 @@ realclean: clean
  CosEvent/CEC_ProxyPushSupplier.i CosEvent/CEC_Dispatching_Task.i \
  CosEvent/CEC_MT_Dispatching.i
 
-.obj/CEC_Reactive_ConsumerControl.o .obj/CEC_Reactive_ConsumerControl.o .obj/CEC_Reactive_ConsumerControl.o .obj/CEC_Reactive_ConsumerControl.o: \
+.obj/CEC_Reactive_ConsumerControl.o .obj/CEC_Reactive_ConsumerControl.so .shobj/CEC_Reactive_ConsumerControl.o .shobj/CEC_Reactive_ConsumerControl.so: \
  CosEvent/CEC_Reactive_ConsumerControl.cpp \
  CosEvent/CEC_Reactive_ConsumerControl.h \
  $(ACE_ROOT)/ace/pre.h \
  CosEvent/CEC_ConsumerControl.h \
  CosEvent/event_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -5044,14 +5017,12 @@ realclean: clean
  CosEvent/CEC_ProxyPullSupplier.h CosEvent/CEC_ProxyPullSupplier.i \
  CosEvent/CEC_ConsumerAdmin.i
 
-.obj/CEC_Reactive_SupplierControl.o .obj/CEC_Reactive_SupplierControl.o .obj/CEC_Reactive_SupplierControl.o .obj/CEC_Reactive_SupplierControl.o: \
+.obj/CEC_Reactive_SupplierControl.o .obj/CEC_Reactive_SupplierControl.so .shobj/CEC_Reactive_SupplierControl.o .shobj/CEC_Reactive_SupplierControl.so: \
  CosEvent/CEC_Reactive_SupplierControl.cpp \
  CosEvent/CEC_Reactive_SupplierControl.h \
  $(ACE_ROOT)/ace/pre.h \
  CosEvent/CEC_SupplierControl.h \
  CosEvent/event_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -5412,12 +5383,10 @@ realclean: clean
  CosEvent/CEC_ProxyPullConsumer.h CosEvent/CEC_ProxyPullConsumer.i \
  CosEvent/CEC_SupplierAdmin.i
 
-.obj/CEC_Pulling_Strategy.o .obj/CEC_Pulling_Strategy.o .obj/CEC_Pulling_Strategy.o .obj/CEC_Pulling_Strategy.o: CosEvent/CEC_Pulling_Strategy.cpp \
+.obj/CEC_Pulling_Strategy.o .obj/CEC_Pulling_Strategy.so .shobj/CEC_Pulling_Strategy.o .shobj/CEC_Pulling_Strategy.so: CosEvent/CEC_Pulling_Strategy.cpp \
  CosEvent/CEC_Pulling_Strategy.h \
  $(ACE_ROOT)/ace/pre.h \
  CosEvent/event_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -5425,14 +5394,12 @@ realclean: clean
  $(ACE_ROOT)/ace/ace_wchar.inl \
  CosEvent/CEC_Pulling_Strategy.i
 
-.obj/CEC_Reactive_Pulling_Strategy.o .obj/CEC_Reactive_Pulling_Strategy.o .obj/CEC_Reactive_Pulling_Strategy.o .obj/CEC_Reactive_Pulling_Strategy.o: \
+.obj/CEC_Reactive_Pulling_Strategy.o .obj/CEC_Reactive_Pulling_Strategy.so .shobj/CEC_Reactive_Pulling_Strategy.o .shobj/CEC_Reactive_Pulling_Strategy.so: \
  CosEvent/CEC_Reactive_Pulling_Strategy.cpp \
  CosEvent/CEC_Reactive_Pulling_Strategy.h \
  $(ACE_ROOT)/ace/pre.h \
  CosEvent/CEC_Pulling_Strategy.h \
  CosEvent/event_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -5797,12 +5764,10 @@ realclean: clean
  CosEvent/CEC_ProxyPullSupplier.h CosEvent/CEC_ProxyPullSupplier.i \
  CosEvent/CEC_ConsumerAdmin.i
 
-.obj/CEC_Default_Factory.o .obj/CEC_Default_Factory.o .obj/CEC_Default_Factory.o .obj/CEC_Default_Factory.o: CosEvent/CEC_Default_Factory.cpp \
+.obj/CEC_Default_Factory.o .obj/CEC_Default_Factory.so .shobj/CEC_Default_Factory.o .shobj/CEC_Default_Factory.so: CosEvent/CEC_Default_Factory.cpp \
  CosEvent/CEC_Default_Factory.h \
- $(ACE_ROOT)/ace/pre.h CosEvent/CEC_Factory.h \
- CosEvent/event_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/pre.h \
+ CosEvent/CEC_Factory.h CosEvent/event_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -6218,14 +6183,12 @@ realclean: clean
  $(ACE_ROOT)/ace/Sched_Params.h \
  $(ACE_ROOT)/ace/Sched_Params.i
 
-.obj/CEC_Event_Loader.o .obj/CEC_Event_Loader.o .obj/CEC_Event_Loader.o .obj/CEC_Event_Loader.o: CosEvent/CEC_Event_Loader.cpp \
+.obj/CEC_Event_Loader.o .obj/CEC_Event_Loader.so .shobj/CEC_Event_Loader.o .shobj/CEC_Event_Loader.so: CosEvent/CEC_Event_Loader.cpp \
  CosEvent/CEC_Event_Loader.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -6582,11 +6545,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i
 
-.obj/CosEventCommS.o .obj/CosEventCommS.o .obj/CosEventCommS.o .obj/CosEventCommS.o: CosEventCommS.cpp CosEventCommS.h \
- $(ACE_ROOT)/ace/pre.h CosEventCommC.h \
+.obj/CosEventCommS.o .obj/CosEventCommS.so .shobj/CosEventCommS.o .shobj/CosEventCommS.so: CosEventCommS.cpp CosEventCommS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ CosEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -6936,12 +6898,11 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.i \
  $(TAO_ROOT)/tao/PortableServer/Operation_Table.h
 
-.obj/CosEventChannelAdminS.o .obj/CosEventChannelAdminS.o .obj/CosEventChannelAdminS.o .obj/CosEventChannelAdminS.o: CosEventChannelAdminS.cpp \
- CosEventChannelAdminS.h $(ACE_ROOT)/ace/pre.h \
+.obj/CosEventChannelAdminS.o .obj/CosEventChannelAdminS.so .shobj/CosEventChannelAdminS.o .shobj/CosEventChannelAdminS.so: CosEventChannelAdminS.cpp \
+ CosEventChannelAdminS.h \
+ $(ACE_ROOT)/ace/pre.h \
  CosEventCommS.h CosEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -7293,11 +7254,9 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.i \
  $(TAO_ROOT)/tao/PortableServer/Operation_Table.h
 
-.obj/CosEventCommC.o .obj/CosEventCommC.o .obj/CosEventCommC.o .obj/CosEventCommC.o: CosEventCommC.cpp CosEventCommC.h \
+.obj/CosEventCommC.o .obj/CosEventCommC.so .shobj/CosEventCommC.o .shobj/CosEventCommC.so: CosEventCommC.cpp CosEventCommC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -7615,11 +7574,10 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  CosEvent/event_export.h CosEventCommC.i
 
-.obj/CosEventChannelAdminC.o .obj/CosEventChannelAdminC.o .obj/CosEventChannelAdminC.o .obj/CosEventChannelAdminC.o: CosEventChannelAdminC.cpp \
- CosEventChannelAdminC.h $(ACE_ROOT)/ace/pre.h \
+.obj/CosEventChannelAdminC.o .obj/CosEventChannelAdminC.so .shobj/CosEventChannelAdminC.o .shobj/CosEventChannelAdminC.so: CosEventChannelAdminC.cpp \
+ CosEventChannelAdminC.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \

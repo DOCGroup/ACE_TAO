@@ -58,11 +58,9 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/test.o .obj/test.o .obj/test.o .obj/test.o: test.cpp Ptest.h \
+.obj/test.o .obj/test.so .shobj/test.o .shobj/test.so: test.cpp Ptest.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -379,11 +377,9 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h
 
-.obj/Ptest.o .obj/Ptest.o .obj/Ptest.o .obj/Ptest.o: Ptest.cpp Ptest.h \
+.obj/Ptest.o .obj/Ptest.so .shobj/Ptest.o .shobj/Ptest.so: Ptest.cpp Ptest.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
