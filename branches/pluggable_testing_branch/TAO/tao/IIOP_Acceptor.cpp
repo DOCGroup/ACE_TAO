@@ -21,6 +21,10 @@
 #include "tao/GIOP.h"
 #include "tao/debug.h"
 
+#if !defined(__ACE_INLINE__)
+#include "tao/IIOP_Acceptor.i"
+#endif /* __ACE_INLINE__ */
+
 ACE_RCSID(tao, IIOP_Acceptor, "$Id$")
 
 // ****************************************************************

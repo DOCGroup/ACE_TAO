@@ -20,11 +20,12 @@
 #ifndef TAO_IIOP_ACCEPTOR_H
 #define TAO_IIOP_ACCEPTOR_H
 
-#include "ace/Acceptor.h"
-#include "ace/SOCK_Acceptor.h"
 #include "tao/Pluggable.h"
 #include "tao/Connect.h"
 #include "tao/Acceptor_Impl.h"
+
+#include "ace/Acceptor.h"
+#include "ace/SOCK_Acceptor.h"
 
 // TAO IIOP_Acceptor concrete call defination
 
@@ -63,6 +64,10 @@ public:
   CORBA::ULong endpoint_count (void);
   // return the number of profiles this will generate
 
+  const ACE_INET_Addr& address (void) const;
+  // @@ Helper method for the implementation repository, should go
+  //    away
+
   typedef TAO_Acceptor_Impl<TAO_Server_Connection_Handler, ACE_SOCK_ACCEPTOR> TAO_IIOP_BASE_ACCEPTOR;
 
 private:
@@ -76,7 +81,6 @@ private:
 
   ACE_INET_Addr address_;
   ACE_CString host_;
-  u_short port_;
   // Cache the information about the endpoint serviced by this
   // acceptor.
   // @@ TODO there may in fact be multiple hostnames for this
@@ -84,5 +88,9 @@ private:
   //    (0.0.0.0) then there will be possibly a different hostname for
   //    each interface.
 };
+
+#if defined(__ACE_INLINE__)
+#include "tao/IIOP_Acceptor.i"
+#endif /* __ACE_INLINE__ */
 
 #endif  /* TAO_IIOP_ACCEPTOR_H */
