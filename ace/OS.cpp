@@ -2363,6 +2363,10 @@ ACE_Thread_Adapter::inherit_log_msg (void)
   // within thread-specific storage.
   ACE_Log_Msg *new_log = ACE_LOG_MSG;
 
+    // Note that we do not inherit the callback because this might
+    // have been allocated off of the stack of the original thread, in
+    // which case all hell would break loose...
+
   if (this->ostream_)
     {
       new_log->msg_ostream (this->ostream_);
@@ -2380,7 +2384,7 @@ ACE_Thread_Adapter::inherit_log_msg (void)
   new_log->seh_except_handler (this->seh_except_handler_);
 # endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
 
-  // @@ Now the TSS Log_Mesg has been created, cache my thread
+  // @@ Now the TSS Log_Msg has been created, cache my thread
   // descriptor in.
 
   if (this->thr_desc_ != 0)
