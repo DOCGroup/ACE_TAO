@@ -1,25 +1,24 @@
-// This may look like C, but it's really -*- C++ -*-
-//
-// $Id$
-
 #include "SSLIOP_Profile.h"
 #include "ssl_endpoints.h"
 #include "tao/CDR.h"
 #include "tao/Environment.h"
 
+
 ACE_RCSID (TAO_SSLIOP,
            SSLIOP_Profile,
            "$Id$")
+
 
 #if !defined (__ACE_INLINE__)
 # include "SSLIOP_Profile.i"
 #endif /* __ACE_INLINE__ */
 
-TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (const ACE_INET_Addr &addr,
-                                        const TAO_ObjectKey &object_key,
-                                        const TAO_GIOP_Message_Version &version,
-                                        TAO_ORB_Core *orb_core,
-                                        const SSLIOP::SSL *ssl_component)
+TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (
+  const ACE_INET_Addr & addr,
+  const TAO::ObjectKey & object_key,
+  const TAO_GIOP_Message_Version & version,
+  TAO_ORB_Core * orb_core,
+  const SSLIOP::SSL * ssl_component)
   : TAO_IIOP_Profile (addr,
                       object_key,
                       version,
@@ -29,13 +28,14 @@ TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (const ACE_INET_Addr &addr,
   this->ssl_endpoint_.iiop_endpoint (&this->endpoint_, 1);
 }
 
-TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (const char* host,
-                                        CORBA::UShort port,
-                                        const TAO_ObjectKey &object_key,
-                                        const ACE_INET_Addr &addr,
-                                        const TAO_GIOP_Message_Version &version,
-                                        TAO_ORB_Core *orb_core,
-                                        const SSLIOP::SSL *ssl_component)
+TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (
+  const char * host,
+  CORBA::UShort port,
+  const TAO::ObjectKey & object_key,
+  const ACE_INET_Addr & addr,
+  const TAO_GIOP_Message_Version & version,
+  TAO_ORB_Core * orb_core,
+  const SSLIOP::SSL * ssl_component)
   : TAO_IIOP_Profile (host,
                       port,
                       object_key,
@@ -47,15 +47,15 @@ TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (const char* host,
   this->ssl_endpoint_.iiop_endpoint (&this->endpoint_, 1);
 }
 
-TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (TAO_ORB_Core *orb_core,
-                                        const SSLIOP::SSL *ssl_component)
+TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (TAO_ORB_Core * orb_core,
+                                        const SSLIOP::SSL * ssl_component)
   : TAO_IIOP_Profile (orb_core),
     ssl_endpoint_ (ssl_component, 0)
 {
   this->ssl_endpoint_.iiop_endpoint (&this->endpoint_, 1);
 }
 
-TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (TAO_ORB_Core *orb_core)
+TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (TAO_ORB_Core * orb_core)
   : TAO_IIOP_Profile (orb_core),
     ssl_endpoint_ (0, 0)
 {
@@ -82,7 +82,7 @@ TAO_SSLIOP_Profile::~TAO_SSLIOP_Profile (void)
 //  0 -> can't understand this version
 //  1 -> success.
 int
-TAO_SSLIOP_Profile::decode (TAO_InputCDR& cdr)
+TAO_SSLIOP_Profile::decode (TAO_InputCDR & cdr)
 {
   int r = this->TAO_IIOP_Profile::decode (cdr);
   if (r != 1)
@@ -170,7 +170,7 @@ TAO_SSLIOP_Profile::decode (TAO_InputCDR& cdr)
 }
 
 CORBA::Boolean
-TAO_SSLIOP_Profile::is_equivalent (const TAO_Profile *other_profile)
+TAO_SSLIOP_Profile::is_equivalent (const TAO_Profile * other_profile)
 {
   const TAO_SSLIOP_Profile *op =
     ACE_dynamic_cast (const TAO_SSLIOP_Profile *, other_profile);
@@ -198,7 +198,7 @@ TAO_SSLIOP_Profile::endpoint (void)
 }
 
 void
-TAO_SSLIOP_Profile::add_endpoint (TAO_SSLIOP_Endpoint *endp)
+TAO_SSLIOP_Profile::add_endpoint (TAO_SSLIOP_Endpoint * endp)
 {
   endp->next_ = this->ssl_endpoint_.next_;
   this->ssl_endpoint_.next_ = endp;
@@ -240,7 +240,8 @@ TAO_SSLIOP_Profile::encode_endpoints (void)
            == 0)
           || (out_cdr << endpoints) == 0)
         return -1;
-      CORBA::ULong length = out_cdr.total_length ();
+
+      const CORBA::ULong length = out_cdr.total_length ();
 
       IOP::TaggedComponent tagged_component;
       tagged_component.tag = TAO_TAG_SSL_ENDPOINTS;
@@ -310,8 +311,7 @@ TAO_SSLIOP_Profile::decode_endpoints (void)
       // Now that we have a complete list of ssl endpoins, we can
       // connect them with their iiop counterparts, which have been
       // extracted/chained during the IIOP profile decoding.
-      TAO_IIOP_Endpoint *iiop_endp =
-        &this->endpoint_;
+      TAO_IIOP_Endpoint *iiop_endp = &this->endpoint_;
 
       for (TAO_SSLIOP_Endpoint * ssl_endp = &this->ssl_endpoint_;
            ssl_endp != 0;
@@ -331,11 +331,12 @@ TAO_SSLIOP_Profile::decode_endpoints (void)
 }
 
 void
-TAO_SSLIOP_Profile::parse_string (const char *ior
+TAO_SSLIOP_Profile::parse_string (const char * ior
                                   ACE_ENV_ARG_DECL)
 {
    TAO_IIOP_Profile::parse_string (ior
                                    ACE_ENV_ARG_PARAMETER);
+   ACE_CHECK;
 
-    this->ssl_endpoint_.iiop_endpoint(&this->endpoint_, 1);
+   this->ssl_endpoint_.iiop_endpoint (&this->endpoint_, 1);
 }

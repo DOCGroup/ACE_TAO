@@ -45,28 +45,28 @@ class TAO_SSLIOP_Export TAO_SSLIOP_Profile : public TAO_IIOP_Profile
 public:
   /// Profile constructor, same as above except the object_key has
   /// already been marshaled.
-  TAO_SSLIOP_Profile (const ACE_INET_Addr &addr,
-                      const TAO_ObjectKey &object_key,
-                      const TAO_GIOP_Message_Version &version,
-                      TAO_ORB_Core *orb_core,
-                      const SSLIOP::SSL *ssl_component);
+  TAO_SSLIOP_Profile (const ACE_INET_Addr & addr,
+                      const TAO::ObjectKey & object_key,
+                      const TAO_GIOP_Message_Version & version,
+                      TAO_ORB_Core * orb_core,
+                      const SSLIOP::SSL * ssl_component);
 
   ///  Profile constructor, this is the most efficient since it
   /// doesn't require any address resolution processing.
   TAO_SSLIOP_Profile (const char *host,
                       CORBA::UShort port,
-                      const TAO_ObjectKey &object_key,
-                      const ACE_INET_Addr &addr,
-                      const TAO_GIOP_Message_Version &version,
-                      TAO_ORB_Core *orb_core,
-                      const SSLIOP::SSL *ssl_component);
+                      const TAO::ObjectKey & object_key,
+                      const ACE_INET_Addr & addr,
+                      const TAO_GIOP_Message_Version & version,
+                      TAO_ORB_Core * orb_core,
+                      const SSLIOP::SSL * ssl_component);
 
   /// Create profile with the given SSLIOP tagged component.
-  TAO_SSLIOP_Profile (TAO_ORB_Core *orb_core,
-                      const SSLIOP::SSL *ssl_component);
+  TAO_SSLIOP_Profile (TAO_ORB_Core * orb_core,
+                      const SSLIOP::SSL * ssl_component);
 
   /// Profile constructor, default.
-  TAO_SSLIOP_Profile (TAO_ORB_Core *orb_core);
+  TAO_SSLIOP_Profile (TAO_ORB_Core * orb_core);
 
   /// Destructor is to be called only through _decr_refcnt().
   ~TAO_SSLIOP_Profile (void);
@@ -86,7 +86,7 @@ public:
   virtual int decode (TAO_InputCDR& cdr);
   virtual int encode_endpoints (void);
 
-  virtual CORBA::Boolean is_equivalent (const TAO_Profile *other_profile);
+  virtual CORBA::Boolean is_equivalent (const TAO_Profile * other_profile);
 
   /// Return pointer to the head of this profile's endpoints list,
   /// i.e., <ssl_endpoint_> accessor.
@@ -100,7 +100,7 @@ public:
    * Initialize this object using the given input string.
    * Url-style string contain only one endpoint.
    */
-  virtual void parse_string (const char *string
+  virtual void parse_string (const char * string
                              ACE_ENV_ARG_DECL);
 
   /**
@@ -109,7 +109,7 @@ public:
    * <endp>.  If <endp>'s <iiop_endpoint_> member is not 0, it is
    * added to our parent's class endpoint list.
    */
-  void add_endpoint (TAO_SSLIOP_Endpoint *endp);
+  void add_endpoint (TAO_SSLIOP_Endpoint * endp);
 
 private:
 
