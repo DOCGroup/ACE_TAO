@@ -173,7 +173,7 @@ sub check_workspace () {
   }
 
   my @out_of_date = ();
-  open (CVS, "$cvs -nq checkout $module |")  ||
+  open (CVS, "$cvs -nq checkout $module 2>&1 |")  ||
     die "$0: unable to open $cvs\n";
   while (<CVS>) {
     next if m%^U %;    #### Allow others to update the repository.
@@ -188,7 +188,8 @@ sub check_workspace () {
   }
 
   if (! "$exec_prefix"  &&  @out_of_date) {
-    warn "ERROR: workspace must be updated or cleaned:\n  " .
+    warn "ERROR: workspace must be updated (with cvs -q up -d) or " .
+         "cleaned:\n  " .
          join ("\n  ", @out_of_date) . "\n";
     return 1;
   }
