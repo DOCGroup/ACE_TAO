@@ -72,6 +72,42 @@ be_visitor_union_branch_public_cs::visit_union_branch (be_union_branch *node)
 int
 be_visitor_union_branch_public_cs::visit_array (be_array *node)
 {
+  // if not a typedef and we are defined in the use scope, we must be
+  // defined
+
+  if (!this->ctx_->alias () // not a typedef
+      && node->is_child (this->ctx_->scope ()))
+    {
+      // anonymous array case
+
+      // instantiate a visitor context with a copy of our context. This info
+      // will be modified based on what type of node we are visiting
+      be_visitor_context ctx (*this->ctx_);
+      ctx.node (node); // set the node to be the node being visited. The scope
+                       // is still the same
+
+      // first generate the inline operations for this anonymous array type
+      ctx.state (TAO_CodeGen::TAO_ARRAY_CS);
+      be_visitor *visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_union_branch_public_cs::"
+                             "visit_array - "
+                             "Bad visitor\n"
+                             ), -1);
+        }
+      if (node->accept (visitor) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_union_branch_public_cs::"
+                             "visit_array - "
+                             "codegen failed\n"
+                             ), -1);
+        }
+      delete visitor;
+    }
+
   return 0;
 }
 
@@ -112,6 +148,42 @@ be_visitor_union_branch_public_cs::visit_enum (be_enum *node)
 int
 be_visitor_union_branch_public_cs::visit_sequence (be_sequence *node)
 {
+  // if not a typedef and we are defined in the use scope, we must be
+  // defined
+
+  if (!this->ctx_->alias () // not a typedef
+      && node->is_child (this->ctx_->scope ()))
+    {
+      // anonymous array case
+
+      // instantiate a visitor context with a copy of our context. This info
+      // will be modified based on what type of node we are visiting
+      be_visitor_context ctx (*this->ctx_);
+      ctx.node (node); // set the node to be the node being visited. The scope
+                       // is still the same
+
+      // first generate the inline operations for this anonymous sequence type
+      ctx.state (TAO_CodeGen::TAO_SEQUENCE_CS);
+      be_visitor *visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_union_branch_public_cs::"
+                             "visit_sequence - "
+                             "Bad visitor\n"
+                             ), -1);
+        }
+      if (node->accept (visitor) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_union_branch_public_cs::"
+                             "visit_sequence - "
+                             "codegen failed\n"
+                             ), -1);
+        }
+      delete visitor;
+    }
+
   return 0;
 }
 

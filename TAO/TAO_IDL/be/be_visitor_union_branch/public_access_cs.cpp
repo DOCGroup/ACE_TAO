@@ -113,11 +113,44 @@ be_visitor_union_branch_public_access_cs::visit_array (be_array *node)
                          "bad context information\n"
                          ), -1);
     }
+
+  // for anonymous arrays, the type name has a _ prepended. We compute the
+  // fullname with or without the underscore and use it later on.
+  char fname [NAMEBUFSIZE];  // to hold the full and
+
+  // save the node's local name and full name in a buffer for quick use later
+  // on 
+  ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
+  if (bt->node_type () != AST_Decl::NT_typedef // not a typedef
+      && bt->is_child (bu)) // bt is defined inside the union
+    {
+      // for anonymous arrays ...
+      // we have to generate a name for us that has an underscope prepended to
+      // our local name. This needs to be inserted after the parents's name
+
+      if (bt->is_nested ())
+        {
+          be_decl *parent = be_scope::narrow_from_scope (bt->defined_in ())->decl ();
+          ACE_OS::sprintf (fname, "%s::_%s", parent->fullname (), 
+                           bt->local_name ()->get_string ());
+        }
+      else
+        {
+          ACE_OS::sprintf (fname, "_%s", bt->fullname ());
+        }
+    }
+  else
+    {
+      // typedefed node
+      ACE_OS::sprintf (fname, "%s", bt->fullname ());
+    }
+
   os = this->ctx_->stream ();
   *os << "if (alloc_flag)" << be_idt_nl;
-  *os << "this->u_." << ub->local_name () << "_ = " << bt->name ()
+  *os << "this->u_." << ub->local_name () << "_ = " << fname
       << "_alloc ();" << be_uidt_nl;
   *os << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl;
+
   return 0;
 }
 
