@@ -187,18 +187,6 @@ protected:
   u_long event_;
 };
 
-#if defined (__ACE_INLINE__)
-#include "ace/Timeprobe.i"
-#endif /* __ACE_INLINE__ */
-
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Timeprobe.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Timeprobe.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 #include "ace/Synch.h"
 #include "ace/Singleton.h"
 
@@ -222,6 +210,18 @@ typedef ACE_TSS_Singleton<ACE_TIMEPROBE_WITH_LOCKING, ACE_SYNCH_NULL_MUTEX> ACE_
 #  else /* ACE_TSS_TIMEPROBES */
 typedef ACE_Singleton<ACE_TIMEPROBE_WITH_LOCKING, ACE_SYNCH_MUTEX> ACE_TIMEPROBE_SINGLETON;
 #  endif /* ACE_TSS_TIMEPROBES */
+
+#if defined (__ACE_INLINE__)
+#include "ace/Timeprobe.i"
+#endif /* __ACE_INLINE__ */
+
+#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
+#include "ace/Timeprobe.cpp"
+#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+
+#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
+#pragma implementation ("Timeprobe.cpp")
+#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* ACE_COMPILE_TIMEPROBES */
 
