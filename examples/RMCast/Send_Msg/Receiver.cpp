@@ -2,10 +2,10 @@
 // author    : Boris Kolpackov <boris@kolpackov.net>
 // cvs-id    : $Id$
 
-#include "Protocol.h"
-
-#include "ace/RMCast/Socket.h"
 #include "ace/OS_NS_string.h"
+#include "protocols/ace/RMCast/Socket.h"
+
+#include "Protocol.h"
 
 #include <vector>
 #include <iostream>
