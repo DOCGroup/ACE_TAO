@@ -49,8 +49,13 @@ have_asynchio (void)
   // Call sysconf to find out runtime values.
   errno = 0;
   ACE_ERROR ((LM_ERROR,
+#if defined (_SC_LISTIO_AIO_MAX)
+              "Runtime value of LISTIO_AIO_MAX is %d, errno = %d\n",
+              sysconf(_SC_LISTIO_AIO_MAX),
+#else
               "Runtime value of AIO_LISTIO_MAX is %d, errno = %d\n",
               sysconf(_SC_AIO_LISTIO_MAX),
+#endif
               errno));
 
   errno = 0;
