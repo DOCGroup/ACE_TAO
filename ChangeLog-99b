@@ -1,3 +1,10 @@
+Mon Dec 13 01:12:00 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/WFMO_Reactor.cpp (update_state): make_changes() calls into
+	  user code which can request other changes.  So keep looping
+	  until all requested changes are completed.  Thanks to Edan Ayal
+	  <EdanA@cti2.com> for reporting this problem!
+
 Sun Dec 12 20:10:23 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/config-hpux-10.x.h: Tweaked ACE_MALLOC_PADDING,
@@ -27,7 +34,7 @@ Sat Dec 11 10:40:38 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 Fri Dec 11 11:13:54 1999  James Hu  <jxh@entera.com>
 
 	* ace/Dirent.i:
-          Constructor with a path passed in was not initializing dirp_.  
+          Constructor with a path passed in was not initializing dirp_.
 
 Fri Dec 10 17:29:54 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
