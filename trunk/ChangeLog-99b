@@ -6,7 +6,8 @@ Wed Feb 17 12:16:30 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  multiple try blocks are needed in the top-most functions.
 	  Instead, you can use the new macro to define the environment
 	  variable and use ACE_TRY/ACE_TRY_EX as usually.  This is even
-	  more intuitive than ACE_TRY_NEW_ENV. ;)
+	  more intuitive than ACE_TRY_NEW_ENV. ;)  Thanks to Andy for
+	  reporting the problem.
 
 Wed Feb 17 10:44:29 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
