@@ -10,6 +10,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/SString.h"
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_ctype.h"
 
 ACE_RCSID (ace,
            Get_Opt,
@@ -483,9 +484,9 @@ ACE_Get_Opt::long_option (const ACE_TCHAR *name,
   // isalnum, otherwise, it will crash the program.
   if (short_option > 0 &&
       short_option < 256 &&
-      isalnum (short_option) != 0)
+      ACE_OS::ace_isalnum (short_option) != 0)
 #else
-  if (isalnum (short_option) != 0)
+  if (ACE_OS::ace_isalnum (short_option) != 0)
 #endif /* _MSC_VER && _MSC_VER >= 1300 */
     {
       // If the short_option already exists, make sure it matches, otherwise
