@@ -15,7 +15,8 @@ $implrepo_ior = "implrepo.ior";
 
 $implrepo_server = "..".$DIR_SEPARATOR."..".$DIR_SEPARATOR."ImplRepo_Service".
                    $DIR_SEPARATOR."ImplRepo_Service".$EXE_EXT;
-$tao_ir = "tao_ir".$EXE_EXT;
+$tao_ir = "..".$DIR_SEPARATOR."..".$DIR_SEPARATOR."ImplRepo_Service".
+                   $DIR_SEPARATOR."tao_ir".$EXE_EXT;
 $airplane_server = $EXEPREFIX."airplane_server".$EXE_EXT;
 $airplane_client = $EXEPREFIX."airplane_client".$EXE_EXT;
 $nestea_server = $EXEPREFIX."nestea_server".$EXE_EXT;
