@@ -1,3 +1,16 @@
+Fri Aug 29 15:18:36 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * apps/JAWS/clients/Blobby/blobby.mpc:
+        * apps/soreduce/soreduce.mpc:
+          Added exename to both of these to force an exe to be created
+          instead of a library.
+
+        * tests/RMCast/acetest.mpb
+          Modified the path for Main.cpp so that it picks up the one in
+          the current directory.  Some build were having problems with
+          this and didn't create the .obj directory which cause
+          compilation to fail.
+
 Fri Aug 29 13:41:40 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:

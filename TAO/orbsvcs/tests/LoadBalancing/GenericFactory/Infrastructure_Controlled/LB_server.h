@@ -41,7 +41,7 @@ public:
   int start_orb_and_poa (void);
 
   /// Create the Object Group using the Load Manager Reference.
-  int create_object_group (const char *loc1, const char *loc2);
+  int create_object_group (const char *loc_1, const char *loc_2);
 
   /// Run the ORB.
   int run (void);

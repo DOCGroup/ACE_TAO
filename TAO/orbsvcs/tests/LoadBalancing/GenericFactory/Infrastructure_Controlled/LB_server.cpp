@@ -148,7 +148,7 @@ LB_server::start_orb_and_poa (void)
 }
 
 int
-LB_server::create_object_group (const char *loc1, const char *loc2)
+LB_server::create_object_group (const char *loc_1, const char *loc_2)
 {
   ACE_TRY_NEW_ENV
     {
@@ -204,8 +204,8 @@ LB_server::create_object_group (const char *loc1, const char *loc2)
       PortableGroup::Location & location2 = factory_infos[1].the_location;
       location2.length (1);
 
-      location1[0].id = CORBA::string_dup (loc1);
-      location2[0].id = CORBA::string_dup (loc2);
+      location1[0].id = CORBA::string_dup (loc_1);
+      location2[0].id = CORBA::string_dup (loc_2);
 
       property_two.nam[0].id =
         CORBA::string_dup ("org.omg.PortableGroup.Factories");
