@@ -110,7 +110,7 @@ protected:
 private:
 
   /// The number of requests that have arrived on the server.
-  ACE_Atomic_Op<ACE_Thread_Mutex, long> request_count_;
+  ACE_Atomic_Op<ACE_SYNCH_MUTEX, long> request_count_;
 
 };
 
