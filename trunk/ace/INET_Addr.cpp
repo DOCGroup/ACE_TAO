@@ -936,8 +936,7 @@ ACE_INET_Addr::get_host_addr (char *dst, int size) const
         }
 
 #  if defined (ACE_WIN32)
-      if (0 == ::getnameinfo (reinterpret_cast<const sockaddr*> (
-                                &this->inet_addr_.in6_),
+      if (0 == ::getnameinfo (reinterpret_cast<const sockaddr*> (&this->inet_addr_.in6_),
                               this->get_size (),
                               dst,
                               size,
