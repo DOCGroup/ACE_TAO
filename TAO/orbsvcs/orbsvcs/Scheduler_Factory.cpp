@@ -186,14 +186,14 @@ static char start_infos[] =
 
 static char end_infos[] =
 "};\n"
-"static int infos_size = sizeof(infos)/sizeof(infos[0])\n\n";
+"static int infos_size = sizeof(infos)/sizeof(infos[0]);\n\n";
 
 static char start_configs[] =
 "\nstatic ACE_Scheduler_Factory::POD_Config_Info configs[] = {\n";
 
 static char end_configs[] =
 "};\n"
-"static int configs_size = sizeof(configs)/sizeof(configs[0])\n\n";
+"static int configs_size = sizeof(configs)/sizeof(configs[0]);\n\n";
 
 int ACE_Scheduler_Factory::dump_schedule
    (const RtecScheduler::RT_Info_Set& infos,
