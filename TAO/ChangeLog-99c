@@ -26,6 +26,9 @@ Tue Apr 20 11:09:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* tests/MT_Client/client.cpp:
 	  Use the ACE macros to print out exceptions.
 
+	* tao/MessagingC.cpp:
+	  Fixed warnings about unitialized variables.
+
 Tue Apr 20 02:47:32 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Param_Test/param_test_i.cpp (test_exception): It was still
