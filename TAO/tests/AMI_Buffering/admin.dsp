@@ -101,6 +101,8 @@ SOURCE=.\TestC.cpp
 
 !IF  "$(CFG)" == "AMI_Buffering Admin - Win32 Release"
 
+# ADD CPP /GR
+
 !ELSEIF  "$(CFG)" == "AMI_Buffering Admin - Win32 Debug"
 
 # ADD CPP /GR

@@ -1,3 +1,8 @@
+Wed Apr 09 17:54:59 2003  Simon McQueen  <sm@prismtechnologies.com>
+
+	* tests/AMI_Buffering/admin.dsp:
+	* tests/OBV/Any/client.dsp: Couple of RTTI settings that got missed.
+
 Wed Apr  9 11:19:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Bug_1482_Regression/Client_Task.h:
