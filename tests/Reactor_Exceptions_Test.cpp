@@ -143,6 +143,7 @@ public:
   }
 };
 
+#if defined (ACE_HAS_THREADS)
 static int
 worker (void)
 {
@@ -157,6 +158,8 @@ worker (void)
 
   return 0;
 }
+#endif /* ACE_HAS_THREADS */
+
 #endif /* ACE_HAS_EXCEPTIONS */
 
 int

@@ -1,3 +1,10 @@
+Fri Jan 31 12:55:26 2003  Frank Hunleth  <frank@hunleth.com>
+
+	* tests/Reactor_Exceptions_Test.cpp (worker):  Added #if defined
+	  (ACE_HAS_THREADS) guard around worker () function to remove a
+	  compiler warning on single threaded configurations that have
+	  exceptions enabled.
+
 Thu Jan 30 21:57:58 2003  Frank Hunleth  <frank@hunleth.com>
 
 	* examples/Threads/thread_specific.cpp (worker): Added __OpenBSD__
