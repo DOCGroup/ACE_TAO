@@ -1,3 +1,63 @@
+Wed Nov 21 10:42:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Svc_Handler.cpp: 
+	* ace/Connector.h:
+	* ace/Strategies_T.h:
+	* ace/Acceptor.h:
+	* ace/Svc_Handler.h: Fixed compilation errors. 
+
+Tue Nov 20 12:48:39 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Strategies.h:
+	* ace/Strategies.cpp:
+	* ace/Strategies.i: Removed from the repo as the files are being
+	  replaced with  multiple files, with one class per file. Please
+	  see below for details.  The conglomeration of all the classes in
+	  the same file made very less sense.
+
+	* ace/Connection_Recycling_Strategy.h:
+	* ace/Connection_Recycling_Strategy.cpp: Added a new file for the
+	  class ACE_Connection_Recycling_Strategy
+
+	* ace/Hashable.h:
+	* ace/Hashable.cpp:
+	* ace/Hashable.inl: New file for the class ACE_Hashable
+
+	* ace/Notification_Strategy.h:
+	* ace/Notification_Strategy.cpp:
+	* ace/Notification_Strategy.inl: New file for the class
+	  ACE_Notification_Strategy.
+
+	* ace/Reactor_Notification_Strategy.h:
+	* ace/Reactor_Notification_Strategy.cpp:
+	* ace/Reactor_Notification_Strategy.inl: New file for the class
+	  ACE_Reactor_Notification_Strategy
+
+	* ace/Recyclable.h:
+	* ace/Recyclable.cpp:
+	* ace/Recyclable.inl: New file for the class ACE_Recyclable
+
+	* ace/Refcountable.h:
+	* ace/Refcountable.cpp:
+	* ace/Refcountable.inl: New file for the class ACE_Refcountable. 
+
+	* ace/OS.h: Moved the enum ACE_Recyclable_State to Recyclable.h
+
+	* ace/Acceptor.h:
+	* ace/Caching_Utility_T.cpp: 
+	* ace/Message_Queue.h:
+	* ace/Message_Queue_T.cpp: 
+	* ace/Strategies_T.h:
+	* ace/Svc_Handler.cpp: Removed inclusion of Strategies.h. 
+		
+	* ace/Procator.cpp: #included Service_Config.h 
+
+	* ace/Makefile: Added new file and generated dependencies
+
+	* ace/SSL/Makefile:
+	* ace/RMCast/Makefile: Generated dependencies.
+
+
 Mon Nov 19 18:08:35 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Handle_Set.cpp: Some cosmetic changes.
