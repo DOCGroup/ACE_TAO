@@ -1,3 +1,11 @@
+Sun Sep  2 19:33:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Select_Reactor_Base.cpp: Fixed a small problem with the
+	  select reactor's notify () handling mechanism. This was more of
+	  a problem with me not checking the while () loop condition
+	  properly. This should fix most of the reactor problems seen in
+	  the daily builds.
+
 Sat Sep  1 14:10:08 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/System_Time.cpp,
