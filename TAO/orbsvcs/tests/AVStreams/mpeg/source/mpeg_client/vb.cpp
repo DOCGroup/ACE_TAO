@@ -162,19 +162,23 @@ void VBdeleteSem(void)
   
 /* SIGUSR1 from CTR is for killing this process, without affecting any other ones. */
 
-static void usr1_handler(int sig)
-{
-  exit_tag = 1;
-}
-
 static void exit_on_kill(void)
 {
+  ACE_DEBUG ((LM_DEBUG,"(%P|%t) VBProcess killed\n"));
   extern void set_exit_routine_tag(int tag);
   set_exit_routine_tag(0);
   ComCloseConn(savedSocket);
   VBdeleteBuf();
   exit(0);
 }
+
+static void usr1_handler(int sig)
+{
+  cerr << "VBProcess got sigusr1\n";
+  exit_on_kill ();
+  exit_tag = 1;
+}
+
 
 static void usr2_handler(int sig)
 {
