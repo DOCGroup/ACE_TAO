@@ -1,3 +1,10 @@
+Wed Jun 18 16:18:19 2003  Gan Deng  <gan.deng@vanderbilt.edu>
+
+	* performance-tests/Sequence_Latency/Thread_Pool/*: New test for
+	  the sequence of different data types. This is based on
+	  performance-tests/Latency/Thread_Pool, but uses different data
+	  types.
+
 Wed Jun 18 14:01:37 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Objref_VarOut_T.cpp:
