@@ -238,14 +238,8 @@ public:
   /// Default Constructor
   TAO_StreamCtrl (void);
 
-  /// Copy  Constructor to fool g++
-  TAO_StreamCtrl (TAO_StreamCtrl const &);
-
   /// virtual destructor.
   virtual ~TAO_StreamCtrl (void);
-
-  /// Fooling g++
-  void operator= (TAO_StreamCtrl const &);
 
   /// Stop the transfer of data of the stream
   /// Empty the_spec means apply operation to all flows
