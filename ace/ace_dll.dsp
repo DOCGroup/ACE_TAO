@@ -946,6 +946,10 @@ SOURCE=.\Time_Request_Reply.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Time_Value.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Timeprobe.cpp
 # End Source File
 # Begin Source File
@@ -3023,6 +3027,10 @@ SOURCE=.\Thread_Control.inl
 # Begin Source File
 
 SOURCE=.\Thread_Manager.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Time_Value.inl
 # End Source File
 # Begin Source File
 
