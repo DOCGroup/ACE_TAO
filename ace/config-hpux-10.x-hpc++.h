@@ -71,6 +71,9 @@
 // Compiler supports template specialization.
 #  define ACE_HAS_TEMPLATE_SPECIALIZATION
 
+// Compiler doesn't handle calling to destructor of a template class explicitly correctly.
+#  define ACE_HAS_HPUX_ACC_BROKEN_TEMPLATE_DESTRUCTOR
+
 #endif /* __cplusplus < 199707L */
 
 // Compiler supports the ssize_t typedef.
