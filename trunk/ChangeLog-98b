@@ -1,3 +1,10 @@
+Fri May 29 21:59:01 1998  James C Hu  <jxh@cs.wustl.edu>
+
+	* RB_Tree.h:
+	* RB_Tree.i:
+	* RB_Tree.cpp: Debugged some minor typo errors, and changes
+	  related to internalizing the RED and BLACK enums.
+
 Fri May 29 21:55:11 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/High_Res_Timer.cpp: don't use ACE_HAS_PENTIUM code on
