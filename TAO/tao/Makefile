@@ -769,8 +769,7 @@ realclean:
  target_specification.i
 
 .obj/Transport.o .obj/Transport.so .shobj/Transport.o .shobj/Transport.so: Transport.cpp Transport.h \
- $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(ACE_ROOT)/ace/pre.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -1305,8 +1304,7 @@ realclean:
  ORB_Core.i debug.h
 
 .obj/Resume_Handle.o .obj/Resume_Handle.so .shobj/Resume_Handle.o .shobj/Resume_Handle.so: Resume_Handle.cpp Resume_Handle.h \
- $(ACE_ROOT)/ace/pre.h \
- TAO_Export.h \
+ $(ACE_ROOT)/ace/pre.h TAO_Export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1401,8 +1399,8 @@ realclean:
  orbconf.h \
  varbase.h \
  TAO_Export.h \
- corbafwd.i \
- ORB.h Exception.h \
+ corbafwd.i ORB.h \
+ Exception.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -1547,8 +1545,7 @@ realclean:
  ORB_Core.i
 
 .obj/Profile.o .obj/Profile.so .shobj/Profile.o .shobj/Profile.so: Profile.cpp Profile.h \
- $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(ACE_ROOT)/ace/pre.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -1808,8 +1805,7 @@ realclean:
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  ORB_Core.i \
- Stub.i \
- debug.h \
+ Stub.i debug.h \
  target_specification.h \
  Object_KeyC.h \
  target_specification.i
@@ -8964,8 +8960,7 @@ realclean:
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
 .obj/LocalObject.o .obj/LocalObject.so .shobj/LocalObject.o .shobj/LocalObject.so: LocalObject.cpp LocalObject.h \
- $(ACE_ROOT)/ace/pre.h \
- Object.h \
+ $(ACE_ROOT)/ace/pre.h Object.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
@@ -9086,8 +9081,7 @@ realclean:
  Sequence_T.i \
  Sequence_T.cpp \
  Environment.h \
- CDR.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
+ CDR.h $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  CDR.i \
  Remote_Object_Proxy_Impl.h CurrentC.h \
@@ -9240,8 +9234,7 @@ realclean:
  Any.i
 
 .obj/ORB.o .obj/ORB.so .shobj/ORB.o .shobj/ORB.so: ORB.cpp ORB.h \
- $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(ACE_ROOT)/ace/pre.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -9373,8 +9366,7 @@ realclean:
  Object.i \
  CurrentC.i \
  PolicyC.i \
- ORB.i \
- ORB_Table.h \
+ ORB.i ORB_Table.h \
  TAO_Singleton.h \
  TAO_Singleton.inl \
  TAO_Singleton.cpp \
@@ -9513,8 +9505,8 @@ realclean:
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  ORB_Core.i \
- Stub.i \
- ORB_Core.h debug.h TAO_Internal.h NVList.h \
+ Stub.i ORB_Core.h \
+ debug.h TAO_Internal.h NVList.h \
  NVList.i \
  Dynamic_Adapter.h MProfile.h ORBInitInfo.h PortableInterceptorC.h \
  LocalObject.h StringSeqC.h StringSeqC.i ORBInitInfo.inl \
@@ -9654,8 +9646,7 @@ realclean:
  corbafwd.i
 
 .obj/PolicyC.o .obj/PolicyC.so .shobj/PolicyC.o .shobj/PolicyC.so: PolicyC.cpp PolicyC.h \
- $(ACE_ROOT)/ace/pre.h \
- TAO_Export.h \
+ $(ACE_ROOT)/ace/pre.h TAO_Export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -9752,8 +9743,7 @@ realclean:
  varbase.h \
  TAO_Export.h \
  corbafwd.i \
- Exception.h \
- $(ACE_ROOT)/ace/SString.h \
+ Exception.h $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/String_Base_Const.h \
  $(ACE_ROOT)/ace/String_Base.i \
@@ -9774,8 +9764,7 @@ realclean:
  Sequence_T.i \
  Sequence_T.cpp \
  Environment.h \
- CDR.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
+ CDR.h $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  CDR.i \
  Remote_Object_Proxy_Impl.h \
@@ -11098,8 +11087,7 @@ realclean:
  Sequence_T.i \
  Sequence_T.cpp \
  Environment.h \
- CDR.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
+ CDR.h $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  CDR.i \
  Remote_Object_Proxy_Impl.h \
@@ -11110,8 +11098,7 @@ realclean:
  Object.i \
  CurrentC.i \
  PolicyC.i \
- DomainC.i \
- Stub.h \
+ DomainC.i Stub.h \
  Pluggable.h \
  Typecode.h \
  Exception.h \
@@ -12044,8 +12031,7 @@ realclean:
  varbase.h \
  TAO_Export.h \
  corbafwd.i \
- Endpoint.i \
- Stub.h \
+ Endpoint.i Stub.h \
  Pluggable.h \
  Sequence.h \
  Managed_Types.h \
@@ -12210,8 +12196,8 @@ realclean:
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  ORB_Core.i \
- Stub.i \
- Sequence.h Object.h Invocation.h CDR.h Any.h Synch_Reply_Dispatcher.h \
+ Stub.i Sequence.h \
+ Object.h Invocation.h CDR.h Any.h Synch_Reply_Dispatcher.h \
  Reply_Dispatcher.h \
  Reply_Dispatcher.i \
  LF_Event.h \
@@ -13468,8 +13454,7 @@ realclean:
  Typecode.i
 
 .obj/Protocols_Hooks.o .obj/Protocols_Hooks.so .shobj/Protocols_Hooks.o .shobj/Protocols_Hooks.so: Protocols_Hooks.cpp Protocols_Hooks.h \
- $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(ACE_ROOT)/ace/pre.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -13718,8 +13703,7 @@ realclean:
  Sequence_T.i \
  Sequence_T.cpp \
  Environment.h \
- CDR.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
+ CDR.h $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  CDR.i \
  Remote_Object_Proxy_Impl.h \
@@ -13843,8 +13827,7 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Stub.h \
+ CDR.i Stub.h \
  Pluggable.h \
  Sequence.h \
  Managed_Types.h \
@@ -13997,8 +13980,8 @@ realclean:
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  ORB_Core.i \
- Stub.i \
- Any.h Synch_Reply_Dispatcher.h \
+ Stub.i Any.h \
+ Synch_Reply_Dispatcher.h \
  Reply_Dispatcher.h \
  Reply_Dispatcher.i \
  LF_Event.h \
@@ -14796,8 +14779,7 @@ realclean:
  operation_details.i
 
 .obj/ClientRequestInfo.o .obj/ClientRequestInfo.so .shobj/ClientRequestInfo.o .shobj/ClientRequestInfo.so: ClientRequestInfo.cpp ClientRequestInfo.h \
- $(ACE_ROOT)/ace/pre.h \
- orbconf.h \
+ $(ACE_ROOT)/ace/pre.h orbconf.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -14894,8 +14876,7 @@ realclean:
  varbase.h \
  TAO_Export.h \
  corbafwd.i \
- DynamicC.h \
- Any.h \
+ DynamicC.h Any.h \
  CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
@@ -14958,8 +14939,7 @@ realclean:
  ClientRequestInfo_i.inl
 
 .obj/ClientRequestInfo_i.o .obj/ClientRequestInfo_i.so .shobj/ClientRequestInfo_i.o .shobj/ClientRequestInfo_i.so: ClientRequestInfo_i.cpp ClientRequestInfo_i.h \
- $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(ACE_ROOT)/ace/pre.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -15056,8 +15036,7 @@ realclean:
  corbafwd.i \
  PortableInterceptorC.h \
  corbafwd.h \
- DynamicC.h \
- Any.h \
+ DynamicC.h Any.h \
  CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
@@ -15231,8 +15210,7 @@ realclean:
  Invocation.i Tagged_Components.h debug.h
 
 .obj/RequestInfo_Util.o .obj/RequestInfo_Util.so .shobj/RequestInfo_Util.o .shobj/RequestInfo_Util.so: RequestInfo_Util.cpp RequestInfo_Util.h \
- $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(ACE_ROOT)/ace/pre.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -15365,8 +15343,7 @@ realclean:
 
 .obj/ClientInterceptorAdapter.o .obj/ClientInterceptorAdapter.so .shobj/ClientInterceptorAdapter.o .shobj/ClientInterceptorAdapter.so: ClientInterceptorAdapter.cpp \
  ClientInterceptorAdapter.h \
- $(ACE_ROOT)/ace/pre.h \
- orbconf.h \
+ $(ACE_ROOT)/ace/pre.h orbconf.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -15464,8 +15441,7 @@ realclean:
  corbafwd.i \
  PortableInterceptorC.h \
  corbafwd.h \
- DynamicC.h \
- Any.h \
+ DynamicC.h Any.h \
  CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
@@ -15735,8 +15711,8 @@ realclean:
  orbconf.h \
  varbase.h \
  TAO_Export.h \
- corbafwd.i \
- IOPC.h TAO_Export.h Any.h \
+ corbafwd.i IOPC.h \
+ TAO_Export.h Any.h \
  CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
@@ -15760,8 +15736,8 @@ realclean:
  Exception.h \
  Exception.i \
  Typecode.i \
- Any.i \
- Object.h Exception.h CDR.h Sequence.h \
+ Any.i Object.h \
+ Exception.h CDR.h Sequence.h \
  Managed_Types.h \
  Managed_Types.i \
  Sequence.i \
@@ -15875,8 +15851,7 @@ realclean:
  varbase.h \
  TAO_Export.h \
  corbafwd.i \
- DynamicC.h \
- Any.h \
+ DynamicC.h Any.h \
  CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
@@ -16317,8 +16292,7 @@ realclean:
 
 .obj/PICurrent_ORBInitializer.o .obj/PICurrent_ORBInitializer.so .shobj/PICurrent_ORBInitializer.o .shobj/PICurrent_ORBInitializer.so: PICurrent_ORBInitializer.cpp \
  PICurrent_ORBInitializer.h \
- $(ACE_ROOT)/ace/pre.h \
- TAO_Export.h \
+ $(ACE_ROOT)/ace/pre.h TAO_Export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -16685,8 +16659,7 @@ realclean:
  StringSeqC.i
 
 .obj/OctetSeqC.o .obj/OctetSeqC.so .shobj/OctetSeqC.o .shobj/OctetSeqC.so: OctetSeqC.cpp OctetSeqC.h \
- $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(ACE_ROOT)/ace/pre.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -16814,8 +16787,8 @@ realclean:
  Exception.h \
  Exception.i \
  Typecode.i \
- Any.i \
- CDR.h Typecode.h ORB_Core.h ORB.h Exception.h Services.h \
+ Any.i CDR.h \
+ Typecode.h ORB_Core.h ORB.h Exception.h Services.h \
  Services.i \
  CORBA_String.h \
  CORBA_String.inl \
@@ -16926,8 +16899,7 @@ realclean:
  ORB_Core.i
 
 .obj/StringSeqC.o .obj/StringSeqC.so .shobj/StringSeqC.o .shobj/StringSeqC.so: StringSeqC.cpp StringSeqC.h \
- $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(ACE_ROOT)/ace/pre.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -17055,12 +17027,11 @@ realclean:
  Exception.h \
  Exception.i \
  Typecode.i \
- Any.i \
- CDR.h Typecode.h
+ Any.i CDR.h \
+ Typecode.h
 
 .obj/ORB_Core.o .obj/ORB_Core.so .shobj/ORB_Core.o .shobj/ORB_Core.so: ORB_Core.cpp ORB_Core.h \
- $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(ACE_ROOT)/ace/pre.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -17154,8 +17125,8 @@ realclean:
  orbconf.h \
  varbase.h \
  TAO_Export.h \
- corbafwd.i \
- ORB.h Exception.h \
+ corbafwd.i ORB.h \
+ Exception.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -17317,8 +17288,7 @@ realclean:
  GIOP_Message_Version.h \
  GIOP_Message_Version.inl \
  Profile.i \
- MProfile.i \
- Stub.h \
+ MProfile.i Stub.h \
  MProfile.h \
  ORB.h \
  ORB_Core.h \
@@ -17399,9 +17369,6 @@ realclean:
  ClientRequestInfo.h \
  PortableInterceptorC.h \
  ClientRequestInfo.inl \
- $(ACE_ROOT)/ace/Env_Value_T.h \
- $(ACE_ROOT)/ace/Env_Value_T.i \
- $(ACE_ROOT)/ace/Env_Value_T.cpp \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
  $(ACE_ROOT)/ace/Dynamic_Service.i \
@@ -17905,8 +17872,8 @@ realclean:
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
- corbafwd.i \
- ORB.h Exception.h \
+ corbafwd.i ORB.h \
+ Exception.h \
  corbafwd.h \
  Exception.i \
  Services.h \
@@ -20933,6 +20900,9 @@ realclean:
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Arg_Shifter.h \
+ $(ACE_ROOT)/ace/Env_Value_T.h \
+ $(ACE_ROOT)/ace/Env_Value_T.i \
+ $(ACE_ROOT)/ace/Env_Value_T.cpp \
  TAO_Internal.h TAO_Export.h default_server.h \
  Server_Strategy_Factory.h \
  corbafwd.h \
@@ -21100,8 +21070,7 @@ realclean:
  debug.h
 
 .obj/TAO_Server_Request.o .obj/TAO_Server_Request.so .shobj/TAO_Server_Request.o .shobj/TAO_Server_Request.so: TAO_Server_Request.cpp TAO_Server_Request.h \
- $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(ACE_ROOT)/ace/pre.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -21344,8 +21313,8 @@ realclean:
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  ORB_Core.i Timeprobe.h \
- $(ACE_ROOT)/ace/Timeprobe.h \
- debug.h Pluggable_Messaging_Utils.h \
+ $(ACE_ROOT)/ace/Timeprobe.h debug.h \
+ Pluggable_Messaging_Utils.h \
  Pluggable_Messaging_Utils.i \
  Pluggable_Messaging.h \
  Pluggable_Messaging_Utils.h \
@@ -23943,8 +23912,7 @@ realclean:
  Transport_Mux_Strategy.h
 
 .obj/IOPC.o .obj/IOPC.so .shobj/IOPC.o .shobj/IOPC.so: IOPC.cpp IOPC.h \
- $(ACE_ROOT)/ace/pre.h \
- TAO_Export.h \
+ $(ACE_ROOT)/ace/pre.h TAO_Export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -23952,8 +23920,7 @@ realclean:
  $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
- $(ACE_ROOT)/ace/OS_Errno.inl \
- Any.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl Any.h \
  CDR.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -24064,8 +24031,8 @@ realclean:
  Exception.h \
  Exception.i \
  Typecode.i \
- Any.i \
- Object.h Exception.h CDR.h Sequence.h \
+ Any.i Object.h \
+ Exception.h CDR.h Sequence.h \
  Managed_Types.h \
  Managed_Types.i \
  Sequence.i \
@@ -24118,8 +24085,7 @@ realclean:
  $(ACE_ROOT)/ace/Managed_Object.cpp \
  TAO_Singleton_Manager.h \
  Adapter.h Adapter.i PolicyFactory_Registry.h PortableInterceptorC.h \
- DynamicC.h \
- Any.h \
+ DynamicC.h Any.h \
  DynamicC.i MessagingC.h orbconf.h ValueBase.h \
  ValueBase.i \
  ValueFactory.h \
@@ -24298,8 +24264,7 @@ realclean:
  CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- PollableC.i \
+ CDR.i PollableC.i \
  Stub.h \
  Pluggable.h \
  Sequence.h \
@@ -27310,8 +27275,8 @@ realclean:
  MProfile.i \
  ORB.h \
  ORB_Core.h \
- Stub.i \
- MProfile.h Connector_Registry.h \
+ Stub.i MProfile.h \
+ Connector_Registry.h \
  params.h \
  Connector_Registry.i
 
@@ -27450,8 +27415,7 @@ realclean:
  CORBANAME_Parser.i Invocation.h CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Stub.h \
+ CDR.i Stub.h \
  Pluggable.h \
  Sequence.h \
  Managed_Types.h \
@@ -27580,8 +27544,8 @@ realclean:
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  ORB_Core.i \
- Stub.i \
- Any.h Synch_Reply_Dispatcher.h \
+ Stub.i Any.h \
+ Synch_Reply_Dispatcher.h \
  Reply_Dispatcher.h \
  Reply_Dispatcher.i \
  LF_Event.h \
@@ -28549,8 +28513,7 @@ realclean:
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
 .obj/ORBInitInfo.o .obj/ORBInitInfo.so .shobj/ORBInitInfo.o .shobj/ORBInitInfo.so: ORBInitInfo.cpp ORBInitInfo.h \
- $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(ACE_ROOT)/ace/pre.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -28647,8 +28610,7 @@ realclean:
  corbafwd.i \
  PortableInterceptorC.h \
  corbafwd.h \
- DynamicC.h \
- Any.h \
+ DynamicC.h Any.h \
  CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
@@ -28788,8 +28750,7 @@ realclean:
 
 .obj/ORBInitializer_Registry.o .obj/ORBInitializer_Registry.so .shobj/ORBInitializer_Registry.o .shobj/ORBInitializer_Registry.so: ORBInitializer_Registry.cpp \
  ORBInitializer_Registry.h \
- $(ACE_ROOT)/ace/pre.h \
- TAO_Export.h \
+ $(ACE_ROOT)/ace/pre.h TAO_Export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -28886,8 +28847,7 @@ realclean:
  varbase.h \
  TAO_Export.h \
  corbafwd.i \
- DynamicC.h \
- Any.h \
+ DynamicC.h Any.h \
  CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
@@ -28956,8 +28916,7 @@ realclean:
 
 .obj/PolicyFactory_Registry.o .obj/PolicyFactory_Registry.so .shobj/PolicyFactory_Registry.o .shobj/PolicyFactory_Registry.so: PolicyFactory_Registry.cpp \
  PolicyFactory_Registry.h \
- $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(ACE_ROOT)/ace/pre.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -29054,8 +29013,7 @@ realclean:
  corbafwd.i \
  PortableInterceptorC.h \
  corbafwd.h \
- DynamicC.h \
- Any.h \
+ DynamicC.h Any.h \
  CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
@@ -29699,8 +29657,7 @@ realclean:
 
 .obj/Cleanup_Func_Registry.o .obj/Cleanup_Func_Registry.so .shobj/Cleanup_Func_Registry.o .shobj/Cleanup_Func_Registry.so: Cleanup_Func_Registry.cpp \
  Cleanup_Func_Registry.h \
- $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(ACE_ROOT)/ace/pre.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -29903,8 +29860,7 @@ realclean:
  Transport_Descriptor_Interface.inl
 
 .obj/Object_Ref_Table.o .obj/Object_Ref_Table.so .shobj/Object_Ref_Table.o .shobj/Object_Ref_Table.so: Object_Ref_Table.cpp Object_Ref_Table.h \
- $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(ACE_ROOT)/ace/pre.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -30170,8 +30126,7 @@ realclean:
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
 .obj/CodecFactory.o .obj/CodecFactory.so .shobj/CodecFactory.o .shobj/CodecFactory.so: CodecFactory.cpp CodecFactory.h \
- $(ACE_ROOT)/ace/pre.h \
- TAO_Export.h \
+ $(ACE_ROOT)/ace/pre.h TAO_Export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -30179,9 +30134,8 @@ realclean:
  $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
- $(ACE_ROOT)/ace/OS_Errno.inl \
- IOPC.h Any.h \
- CDR.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl IOPC.h \
+ Any.h CDR.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -30291,8 +30245,8 @@ realclean:
  Exception.h \
  Exception.i \
  Typecode.i \
- Any.i \
- Object.h Exception.h CDR.h Sequence.h \
+ Any.i Object.h \
+ Exception.h CDR.h Sequence.h \
  Managed_Types.h \
  Managed_Types.i \
  Sequence.i \
@@ -30304,8 +30258,7 @@ realclean:
 
 .obj/CodecFactory_ORBInitializer.o .obj/CodecFactory_ORBInitializer.so .shobj/CodecFactory_ORBInitializer.o .shobj/CodecFactory_ORBInitializer.so: CodecFactory_ORBInitializer.cpp \
  CodecFactory_ORBInitializer.h \
- $(ACE_ROOT)/ace/pre.h \
- TAO_Export.h \
+ $(ACE_ROOT)/ace/pre.h TAO_Export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -30402,8 +30355,7 @@ realclean:
  varbase.h \
  TAO_Export.h \
  corbafwd.i \
- DynamicC.h \
- Any.h \
+ DynamicC.h Any.h \
  CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/SString.h \
@@ -30569,8 +30521,8 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- OctetSeqC.h corbafwd.h Sequence.h \
+ CDR.i OctetSeqC.h \
+ corbafwd.h Sequence.h \
  Managed_Types.h \
  Managed_Types.i \
  Sequence.i \
@@ -30590,8 +30542,8 @@ realclean:
  Exception.h \
  Exception.i \
  Typecode.i \
- Any.i \
- Typecode.h Marshal.h \
+ Any.i Typecode.h \
+ Marshal.h \
  Principal.h \
  OctetSeqC.h \
  Principal.i \
@@ -30720,8 +30672,7 @@ realclean:
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
 .obj/Flushing_Strategy.o .obj/Flushing_Strategy.so .shobj/Flushing_Strategy.o .shobj/Flushing_Strategy.so: Flushing_Strategy.cpp Flushing_Strategy.h \
- $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(ACE_ROOT)/ace/pre.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -31263,8 +31214,7 @@ realclean:
  Queued_Message.inl debug.h
 
 .obj/Queued_Message.o .obj/Queued_Message.so .shobj/Queued_Message.o .shobj/Queued_Message.so: Queued_Message.cpp Queued_Message.h \
- $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(ACE_ROOT)/ace/pre.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -31562,8 +31512,7 @@ realclean:
  LF_Event.h LF_Event.inl Queued_Message.inl
 
 .obj/Transport_Timer.o .obj/Transport_Timer.so .shobj/Transport_Timer.o .shobj/Transport_Timer.so: Transport_Timer.cpp Transport_Timer.h \
- $(ACE_ROOT)/ace/pre.h \
- TAO_Export.h \
+ $(ACE_ROOT)/ace/pre.h TAO_Export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -34459,8 +34408,7 @@ realclean:
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
 .obj/MessagingC.o .obj/MessagingC.so .shobj/MessagingC.o .shobj/MessagingC.so: MessagingC.cpp MessagingC.h \
- $(ACE_ROOT)/ace/pre.h \
- orbconf.h \
+ $(ACE_ROOT)/ace/pre.h orbconf.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -34471,8 +34419,7 @@ realclean:
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
  $(ACE_ROOT)/ace/Basic_Types.i \
- corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Base.h \
+ corbafwd.h $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -34585,8 +34532,8 @@ realclean:
  Exception.h \
  Exception.i \
  Typecode.i \
- Any.i \
- CDR.h Remote_Object_Proxy_Impl.h TimeBaseC.h \
+ Any.i CDR.h \
+ Remote_Object_Proxy_Impl.h TimeBaseC.h \
  Any.h \
  SmartProxies/Smart_Proxies.h \
  SmartProxies/smartproxies_export.h \
@@ -34752,8 +34699,8 @@ realclean:
  ClientInterceptorAdapter.inl
 
 .obj/Messaging.o .obj/Messaging.so .shobj/Messaging.o .shobj/Messaging.so: Messaging.cpp Messaging.h \
- $(ACE_ROOT)/ace/pre.h \
- MessagingC.h orbconf.h \
+ $(ACE_ROOT)/ace/pre.h MessagingC.h \
+ orbconf.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -34764,8 +34711,7 @@ realclean:
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
  $(ACE_ROOT)/ace/Basic_Types.i \
- corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Base.h \
+ corbafwd.h $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -34878,8 +34824,8 @@ realclean:
  Exception.h \
  Exception.i \
  Typecode.i \
- Any.i \
- CDR.h Remote_Object_Proxy_Impl.h TimeBaseC.h \
+ Any.i CDR.h \
+ Remote_Object_Proxy_Impl.h TimeBaseC.h \
  Any.h \
  SmartProxies/Smart_Proxies.h \
  SmartProxies/smartproxies_export.h \
