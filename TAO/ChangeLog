@@ -8,7 +8,7 @@ Tue Jun 22 08:04:14 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Notify/Notify_Extensions.cpp:
 
-	  Changed usage of these macros to vanilla c++ keywords. 
+	  Changed usage of the above macros to vanilla c++ keywords.
 
 Tue Jun 22 12:44:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
