@@ -90,6 +90,10 @@ SOEXT      = dll
 SOFLAGS    += $(MODEL_FLAGS) $(CPPFLAGS)
 SOBUILD    = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 
+PLATFORM_FL_CPPFLAGS=
+PLATFORM_FL_LIBS=-lfltk -lfltk_forms -lfltk_gl -lfltk_images
+PLATFORM_FL_LDFLAGS=
+
 # The sed below is to strip comments on the .def file,
 # to workaround to a bug in ld.
 SHLIBBUILD = \
