@@ -1,5 +1,9 @@
 Sun Jul  1 11:49:13 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
+	* examples/Reactor/Proactor: Integrated a test that exercises the
+	  support for asynchronous UDP operations.  Thanks to Roger Tragin
+ 	  <r.tragin@computer.org> for contributing this.
+
 	* ace/Synch_T.i: Changed the implementations of all the
 	  acquire*() method to call release().  Thanks to Edan Ayal
  	  <edana@bandwiz.com> for reporting this.
