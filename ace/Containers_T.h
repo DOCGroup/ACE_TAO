@@ -1291,15 +1291,15 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
+  /// Holds the contents of the set.
   struct
   {
+    /// Item in the set.
     T item_;
-    // Item in the set.
 
+    /// Keeps track of whether this item is in use or not.
     int is_free_;
-    // Keeps track of whether this item is in use or not.
   } search_structure_[ACE_SIZE];
-  // Holds the contents of the set.
 
   /// Current size of the set.
   size_t cur_size_;
@@ -1478,11 +1478,11 @@ public:
 private:
   struct Search_Structure
   {
+    /// Item in the set.
     T item_;
-    // Item in the set.
 
+    /// Keeps track of whether this item is in use or not.
     int is_free_;
-    // Keeps track of whether this item is in use or not.
   };
 
   /// Holds the contents of the set.
