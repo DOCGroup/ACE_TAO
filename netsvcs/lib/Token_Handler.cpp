@@ -7,7 +7,13 @@
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)
 
-ACE_RCSID(lib, Token_Handler, "$Id$")
+#include "ace/Signal.h"
+
+
+ACE_RCSID (lib,
+           Token_Handler,
+           "$Id$")
+
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Acceptor<ACE_Token_Handler, ACE_SOCK_ACCEPTOR>;
@@ -263,7 +269,7 @@ ACE_Token_Handler::renew (ACE_Token_Proxy *proxy)
 }
 
 /* VIRTUAL */ int
-ACE_Token_Handler::remove (ACE_Token_Proxy *proxy)
+ACE_Token_Handler::remove (ACE_Token_Proxy * /* proxy */)
 {
   ACE_TRACE ("ACE_Token_Handler::remove");
 #if 0
