@@ -15,6 +15,7 @@ ACE_RCSID(ace, Timeprobe_T, "$Id$")
 
 #include "ace/Timeprobe.h"
 #include "ace/High_Res_Timer.h"
+#include "ace/OS_NS_String.h"
 
 template <class ACE_LOCK, class ALLOCATOR>
 ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::ACE_Timeprobe_Ex (u_long size)
