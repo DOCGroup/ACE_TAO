@@ -55,7 +55,7 @@ release</a> of <a href="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a>:
 <li>
 <a href="OBV.html">Object-by-Value</a></li>
 
-<li><a href"CORBA2.3.1">CORBA 2.3.1 Conformance</a></li>
+<li><a href="#CORBA2.3.1">CORBA 2.3.1 Conformance</a></li>
 
 </UL>
 </TD>
@@ -2209,6 +2209,7 @@ please refers to Section 11.1.1 to 11.1.4 of the
 our short <a href="../LocalObject.html">guideline</a> on implementing
 local objects.</p>
 
+<HR><P>
 <h3><a NAME="CORBA2.3.1">CORBA 2.3.1 Conformance</a></h3>
 (updated 9 August 2000)<br>
 Here is a summary of TAO's conformance issues with CORBA 2.3.1:<br>
@@ -2220,8 +2221,6 @@ Here is a summary of TAO's conformance issues with CORBA 2.3.1:<br>
    and search for the change bars, meanwhile this can help:
 <ul>
 
-  <li>The INS features (have to merge the code)
-
   <li>The full OBV (valueboxes, valuetypes in all sorts of things, value
    graphs, Anys and value types, abstract interfaces, etc. etc.)
 
@@ -2229,17 +2228,17 @@ Here is a summary of TAO's conformance issues with CORBA 2.3.1:<br>
    non-backwards compatible, and it is going to be changed).
 
   <li>The IfR database cannot be populated (so it is less than fully
-   operational ;-)
+   operational ;-))
 
   <li>The old typecode factory methods (we support a much better
-   alternative from a 3.0 draft)
+   alternative from a CORBA 3.0 draft)
 
   <li>Fixed data types (who cares)
 
-  <li>GIOP fragments (1.1 and 1.2) are completely untested.
+  <li>GIOP fragments (1.1 and 1.2) are not completely tested.
 
   <li>There are several "optional" features like bi-dir GIOP that we
-   don't support and people tend to expect.
+   don't support yet.
 
   <li>The old ServantManager interfaces (POA stuff)
 
@@ -2248,8 +2247,6 @@ Here is a summary of TAO's conformance issues with CORBA 2.3.1:<br>
 
   <li>I think our interpretation of codesets is compliant (we only
    support one codeset), but would have to check.
-
-  <li>I'm sure I'm leaving other minor things here and there...
 </ul>
 
 
