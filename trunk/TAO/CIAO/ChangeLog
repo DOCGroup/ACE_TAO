@@ -1,3 +1,11 @@
+Thu Mar 24 15:19:21 2005  Will Otte <wotte@dre.vanderbilt.edu>
+
+	* DAnCE/Config_Handlers/XSCRT/Elements.hpp
+	* DAnCE/Config_Handlers/XSCRT/XML.hpp
+
+	Moved a pragma disable from Elements.hpp to XML.hpp to
+	attempt to silence more warnings in VC6.
+
 Thu Mar 24 14:52:03 2005  Will Otte <wotte@dre.vanderilt.edu>
 
 	* DAnCE/Config_Handlers/Any_Handler.cpp

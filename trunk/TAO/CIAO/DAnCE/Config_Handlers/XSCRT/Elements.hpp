@@ -17,7 +17,7 @@
 
 // Stuff for broken VC6. Don't like what you see - use better compiler!
 //
-#pragma warning(disable:4786)
+
 
 inline
 std::wistream&

@@ -12,6 +12,11 @@
 
 //@@ VC6
 #if defined (_MSC_VER) && (_MSC_VER < 1300)
+
+// This disables a warning thrown in debug  builds saying that
+// long names have been truncated. 
+#pragma warning(disable:4786)
+
 namespace std
 {
   typedef ::size_t size_t;
