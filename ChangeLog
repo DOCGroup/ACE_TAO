@@ -1,3 +1,8 @@
+Mon Aug 25 05:44:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Tests.bor:
+          Added Bug_1576_Regression_Test
+
 Sun Aug 24 20:21:02 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ASNMP/asnmp/octet.cpp:
