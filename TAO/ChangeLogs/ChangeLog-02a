@@ -1,3 +1,15 @@
+Tue Sep 26 13:43:18 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface/interface_cs_.cpp:
+
+	  Moved the visit_scope call for the interface so it
+	  comes after the interface's _is_a, _tao_QueryInterface,
+	  and _interface_repository_id methods have been generated,
+	  so that the interface's methods will all be in one place.
+	  This makes it easier for the patch files for the hand-
+	  crafted code to do their work. Thanks to Irfan for pointing
+	  this out.
+
 Tue Sep 26 10:10:55 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * TAO_IDL/Makefile.dependencies:
