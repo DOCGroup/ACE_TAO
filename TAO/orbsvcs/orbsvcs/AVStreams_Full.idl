@@ -1,5 +1,8 @@
 // $Id$ 
 
+// IDL for Control and Management of Audio/Video Streams
+// Revised Submission
+
 // Additional IDL for full profile
 #include "AVStreams.idl"
 
