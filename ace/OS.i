@@ -1320,7 +1320,7 @@ ACE_OS::cuserid (char *user, size_t maxlen)
 #else
   // Hackish because of missing buffer size!
   ACE_UNUSED_ARG (maxlen);
-  ACE_OSCALL_RETURN (::cuserid (user), char *, 0);
+  ACE_OSCALL_RETURN (::ace_cuserid(user), char*, 0);
 #endif /* VXWORKS */
 }
 
@@ -1702,9 +1702,9 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
   errno = EINVAL;
   return -1;
 #else /* ACE_HAS_THREADS && ACE_HAS_WTHREADS */
-  return ACE_OS::mutex_init (m, 
-                             type, ACE_Wide_To_Ascii (name).char_rep (), 
-                             attributes, 
+  return ACE_OS::mutex_init (m,
+                             type, ACE_Wide_To_Ascii (name).char_rep (),
+                             attributes,
                              sa);
 #endif /* ACE_HAS_THREADS && ACE_HAS_WTHREADS */
 }
@@ -4489,9 +4489,9 @@ ACE_OS::event_init (ACE_event_t *event,
 
   return 0;
 #else  /* ACE_WIN32 */
-  return ACE_OS::event_init (event, 
-                             manual_reset, 
-                             initial_state, 
+  return ACE_OS::event_init (event,
+                             manual_reset,
+                             initial_state,
                              type,
                              ACE_Wide_To_Ascii (name).char_rep (),
                              arg,
@@ -9474,7 +9474,7 @@ ACE_OS::timezone (void)
 #     if defined(ACE_TIMEZONE)
   return 0;
 #     else
-  return ::timezone;   // For UNIX platforms.
+  return ::ace_timezone();
 #     endif /* ACE_TIMEZONE */
 #   endif
 # else
@@ -9492,11 +9492,7 @@ ACE_OS::difftime (time_t t1, time_t t0)
   // simulate difftime ; just subtracting ; ACE_PSOS case
   return ((double)t1) - ((double)t0);
 #else
-# if defined (ACE_DIFFTIME)
-  return ACE_DIFFTIME (t1, t0);
-# else
-  return ::difftime (t1, t0);
-# endif /* ACE_DIFFTIME  && ! ACE_PSOS_HAS_TIME */
+  return ::ace_difftime(t1, t0);
 #endif /* ACE_HAS_PACE */
 }
 #endif /* ! ACE_LACKS_DIFFTIME */
