@@ -65,7 +65,7 @@ Thu Apr 24 22:01:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 Thu Apr 24 19:39:36 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao\PortableServer\POA: 
+	* tao/PortableServer/POA: 
 
  	  The following changes are primarily to fix the problems caused
 	  by:	
@@ -95,12 +95,12 @@ Thu Apr 24 19:39:36 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  params required to call create_object_key() and key_to_object()
 	  are stored away in <key_to_object_params_>.
 	
-	* tao\PortableServer\ObjectReferenceTemplate.cpp: 
+	* tao/PortableServer/ObjectReferenceTemplate.cpp: 
 
 	  In make_object(), invoke_key_to_object() no longer requires any
 	  parameters to be passed to it.
 
-	* tao\RTPortableServer\RT_POA.i: 
+	* tao/RTPortableServer/RT_POA.i: 
 
 	  Fixed create_reference_with_priority() and
 	  create_reference_with_id_and_priority() to pass the priority
