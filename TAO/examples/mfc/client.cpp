@@ -34,12 +34,12 @@ main (int argc, char *argv[])
   W32_Test_Interface_var mycall = 
     W32_Test_Interface::_narrow (orb_obj.in ());
 
-  CORBA::String response;
-
   cout << "Sending the Request!" << endl;
-  response = mycall->getresponse (1);
-
+  char *response = mycall->getresponse (1);
   cout << "The answer ..." << response << endl;
+
+  // Free up the string.
+  CORBA::string_free (response);
 
   return 0;
 }
