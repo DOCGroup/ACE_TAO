@@ -28,12 +28,6 @@ DIRS  =	ASX \
 	Threads \
 	Timer_Queue
 
-ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
-  ifneq ($(rmcast),0)
-    DIRS += RMCast
-  endif # rmcast
-endif # ACE_HAS_GNUG_PRE_2_8
-
 # Makefiles TBD:
 #	ttcp
 #       CORBA
@@ -44,6 +38,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
 #----------------------------------------------------------------------------
 
 include	$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+
+ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
+  ifneq ($(rmcast),0)
+    DIRS += RMCast
+  endif # rmcast
+endif # ACE_HAS_GNUG_PRE_2_8
+
 include	$(ACE_ROOT)/include/makeinclude/macros.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.nested.GNU
