@@ -239,8 +239,8 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind,
       ACE_NEW (this->non_aligned_buffer_,
                char [this->length_ + 4 + 4 + ACE_CDR::MAX_ALIGNMENT]);
 
-      char* start = ptr_align_binary (this->non_aligned_buffer_,
-                                      ACE_CDR::MAX_ALIGNMENT);
+      char* start = ACE_ptr_align_binary (this->non_aligned_buffer_,
+                                          ACE_CDR::MAX_ALIGNMENT);
 
       (void) ACE_OS::memcpy (start, &this->kind_, 4);
       (void) ACE_OS::memcpy (start + 4, &this->length_, 4);

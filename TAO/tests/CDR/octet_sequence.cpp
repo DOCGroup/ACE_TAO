@@ -6,15 +6,15 @@
 //    TAO/tests/CDR
 //
 // = FILENAME
-//    basic_types.cpp
+//   octet_sequence.cpp
 //
 // = DESCRIPTION
-//   Test the basic funcionality of a CDR stream by encoding some
-//   basic types and then decoding them again.
+//   Verifies that reference counting is performed correctly for octet
+//   sequence marshaling.
 //
 // = AUTHORS
-//    Dave Meyer (dmeyer@std.saic.com)
-//    Carlos O'Ryan (coryan@cs.wustl.edu)
+//   Dave Meyer (dmeyer@std.saic.com)
+//   Carlos O'Ryan (coryan@cs.wustl.edu)
 //
 // ============================================================================
 

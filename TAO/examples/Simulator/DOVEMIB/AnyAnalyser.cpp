@@ -115,9 +115,9 @@ AnyAnalyser::analyse (CORBA::TypeCode_ptr tc_ptr,
 
               // calculate
               align_offset =
-                      (ptr_arith_t) ptr_align_binary (value_ptr, alignment)
+                      (ptr_arith_t) ACE_ptr_align_binary (value_ptr, alignment)
                       - (ptr_arith_t) value_ptr
-                      + (ptr_arith_t) ptr_align_binary (start_addr, alignment)
+                      + (ptr_arith_t) ACE_ptr_align_binary (start_addr, alignment)
                       - (ptr_arith_t) start_addr;
               ACE_TRY_CHECK;
 
@@ -212,5 +212,3 @@ AnyAnalyser::analyse (CORBA::TypeCode_ptr tc_ptr,
   ACE_ENDTRY;
   return 0;
 }
-
-

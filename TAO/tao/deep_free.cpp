@@ -186,8 +186,8 @@ TAO_Marshal_Struct::deep_free (CORBA::TypeCode_ptr  tc,
     }
 
   // In case this hasn't been done yet.
-  source = ptr_align_binary (source,
-                             tc->alignment (ACE_TRY_ENV));
+  source = ACE_ptr_align_binary (source,
+                                 tc->alignment (ACE_TRY_ENV));
   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
   CORBA::TypeCode::traverse_status retval = CORBA::TypeCode::TRAVERSE_CONTINUE;
@@ -216,9 +216,9 @@ TAO_Marshal_Struct::deep_free (CORBA::TypeCode_ptr  tc,
       ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
       align_offset =
-        (ptr_arith_t) ptr_align_binary (source, alignment)
+        (ptr_arith_t) ACE_ptr_align_binary (source, alignment)
         - (ptr_arith_t) source
-        - ((ptr_arith_t) ptr_align_binary (start_addr, alignment)
+        - ((ptr_arith_t) ACE_ptr_align_binary (start_addr, alignment)
         - (ptr_arith_t) start_addr);
       if (align_offset < 0)
         align_offset += alignment;
