@@ -55,7 +55,7 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
   // to us here itself, else it will be in the *.cpp file.
 
   AST_Decl::NodeType nt = AST_Decl::NT_pre_defined;
-  AST_Decl *td = node->constant_value ()->ev ()->tdef;
+  AST_Decl *td = node->constant_value ()->get_tdef ();
 
   if (td != 0)
     {

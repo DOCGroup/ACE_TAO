@@ -181,7 +181,6 @@ public:
         } u;
 
       ExprType et;
-      AST_Decl *tdef;                   // Propagates aliased constant type.
     };
 
  // Operations.
@@ -279,6 +278,8 @@ public:
 
   long compare (AST_Expression *vc);
 
+  AST_Decl *get_tdef (void) const;
+
 protected:
   // Evaluate different sets of operators.
   AST_ExprValue *eval_bin_op (EvalKind ek);
@@ -316,6 +317,8 @@ private:
   UTL_ScopedName *pd_n;
   // Symbolic name (if any).
 
+  AST_Decl *tdef;
+  // Propagates aliased constant type.
 private:
   // Fill out the lineno, filename and definition scope details.
   void fill_definition_details (void);
