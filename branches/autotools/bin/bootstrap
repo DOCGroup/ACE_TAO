@@ -50,7 +50,7 @@ Workspace Bootstrapping
     Bootstrapping a workspace causes all files necessary for
     maintainers to build ACE or TAO to be generated.
 
-    Enabling dependency tracking via the \`--enable-deps' option causes
+    Enabling dependency tracking via the \`--enable-deps\' option causes
     GNU Automake to generate dependency tracking rules in generated
     Makefile.in files.  Currently those dependency tracking rules only
     work with GNU C++, which is why dependency tracking is disabled by
@@ -113,21 +113,17 @@ if test -d m4; then
   # Update the NEWS file
   # For now just copy the contents of the `VERSION' file to make automake
   # happy.  Eventually, we should start putting real news in to it.
-  echo Creating a NEWS file
+  echo "Creating a NEWS file"
   cp VERSION NEWS
 
   # Generate an `aclocal.m4' file from all existing m4 macro files
   # including those in the `m4' directory.
-  echo Running aclocal
+  echo "Running aclocal"
   aclocal -I m4
 
-  # Generate a `config.h.in' configuration header template from `acconfig.h'.
-  echo Running autoheader
-  autoheader -I m4
-
-  # Generate the `configure' script from the `configure.in'.
-  echo Running autoconf
-  autoconf
+# Make sure libtool support files are available.
+  echo "Running libtool"
+  libtoolize --automake
 
 #   # Generate all `Makefile.in' templates in the directories listed in
 #   # `configure.in' and add any missing files that GNU Automake needs so
@@ -136,11 +132,18 @@ if test -d m4; then
 #   if test $bootstrap_release = no && test $enable_deps = no; then
 #     automake --add-missing --include-deps #--verbose
 #   else
-    automake --add-missing #--verbose
+
+    echo "Running automake"
+    automake --add-missing
 #   fi
 
-#   Make sure libtool support files are available.
-    libtoolize --automake
+  # Generate a `config.h.in' configuration header template from `acconfig.h'.
+  echo "Running autoheader"
+  autoheader -I m4
+
+  # Generate the `configure' script from the `configure.in'.
+  echo "Running autoconf"
+  autoconf
 
 #   # Generate the man pages.
 #   # Only generate man pages if bootstrapping a release.
@@ -181,8 +184,8 @@ if test -d m4; then
 #   fi  # test -f man/man3/Makefile.am
 
   # Provide some more "useful" information.
-  echo Done bootstrapping.
+  echo "Done bootstrapping."
 else
-  echo ACE must be bootstrapped from the top-level ACE source directory.
+  echo "ACE must be bootstrapped from the top-level ACE source directory."
   exit 1;
 fi  # test -d m4
