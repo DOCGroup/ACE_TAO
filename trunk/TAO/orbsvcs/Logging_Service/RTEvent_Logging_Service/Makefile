@@ -10,7 +10,7 @@ LSRC = RTEvent_Logging_Service.cpp
 
 LOG_OBJS=$(LSRC:.cpp=.o)
 
-LDLIBS = -lTAO -lTAO_PortableServer -lTAO_DsLogAdmin -lTAO_RTEventLogAdmin -lTAO_CosNaming -lACE -lTAO_RTEvent -lTAO_RTSched
+LDLIBS = -lTAO_RTEventLogAdmin -lTAO_DsLogAdmin -lTAO_RTEvent -lTAO_RTSched -lTAO_CosNaming -lTAO_PortableServer -lTAO -lACE
 
 BIN2 = RTEvent_Logging_Service
 
