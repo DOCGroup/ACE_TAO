@@ -1,28 +1,36 @@
+Thu Apr 20 09:50:49 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/RB_Tree.h:
+        * ace/RB_Tree.i:
+          Fixed implementation of the end() method.  It should return a
+          singular iterator that is different from all valid iterator, not
+          an iterator pointing to the last element in the collection.
+
 Thu Apr 20 08:53:31 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* ace/CDR_Stream.i:
-	  Fixed problem in the align_write_ptr() method.  It was optimized
-	  for the case where there was enough room in the current buffer,
-	  but the optimization broke with a previous fix from Feb 29.
+        * ace/CDR_Stream.i:
+          Fixed problem in the align_write_ptr() method.  It was optimized
+          for the case where there was enough room in the current buffer,
+          but the optimization broke with a previous fix from Feb 29.
 
 Thu Apr 20 08:40:00 2000  Chris Gill  <cdgill@cs.wustl.edu>
 
-	* examples/Bounded_Packet_Relay/BPR_Drivers_T.h,
-	  examples/Bounded_Packet_Relay/Thread_Bounded_Packet_Relay.cpp:
+        * examples/Bounded_Packet_Relay/BPR_Drivers_T.h,
+          examples/Bounded_Packet_Relay/Thread_Bounded_Packet_Relay.cpp:
           Fixed warnings from g++
 
 Wed Apr 19 21:53:52 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* examples/Bounded_Packet_Relay: Added some missing template
- 	  instantiations and other assorted problems.  Thanks to Aoxiang
- 	  Xu <axu@cim.mcgill.ca> for reporting these.
+        * examples/Bounded_Packet_Relay: Added some missing template
+          instantiations and other assorted problems.  Thanks to Aoxiang
+          Xu <axu@cim.mcgill.ca> for reporting these.
 
 Wed Apr 19 07:04:13 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Containers_T.cpp (copy_nodes): insert_head() should have
-	  been insert_tail().  Thanks to Umar Syyid for clarifying this.
-  	  Also, added some comments to explain what's going on in 
-	  insert_tail() since the code was somewhat non-intuitive ;-).
+        * ace/Containers_T.cpp (copy_nodes): insert_head() should have
+          been insert_tail().  Thanks to Umar Syyid for clarifying this.
+          Also, added some comments to explain what's going on in
+          insert_tail() since the code was somewhat non-intuitive ;-).
 
 Wed Apr 19 15:00:44 2000  Carlos O'Ryan  <coryan@uci.edu>
 
