@@ -97,13 +97,13 @@ private:
 
   /// FALSE represents original argv passed in is char, and TRUE
   /// represents wchar_t.
-  const bool original_type_;
+  const int original_type_;
 
   /// TRUE indicates wchar_t type argv has been passed.
-  bool wchar_passed_;
+  int wchar_passed_;
 
   /// TRUE indicates char type argv has been passed.
-    bool char_passed_;
+  int char_passed_;
 #endif  /* ACE_USES_WCHAR */
 };
 

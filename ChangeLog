@@ -1,3 +1,21 @@
+Sat Oct 19 21:58:00 2002  Krishnakumar B  <kitty@cse.wustl.edu>
+
+        * ace/Argv_Type_Converter.cpp:
+        * ace/Argv_Type_Converter.h:
+        * ace/Argv_Type_Converter.inl:
+        * ace/Codecs.cpp:
+        * ace/Codecs.h:
+        * ace/OS.cpp:
+        * ace/Vector_T.cpp:
+        * ace/Vector_T.h:
+        * ace/WFMO_Reactor.cpp:
+        * tests/Proactor_Scatter_Gather_Test.cpp: Convert bool to use int.
+
+        * ace/SString.cpp: Removed a redundant initialization to 0.
+
+        * tests/Makefile: Add DIRS_PARALLEL=1 to allow building in
+          parallel in $ACE_ROOT/tests.
+
 Sat Oct 19 11:40:22 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.h: Added a ptrdiff_t typedef for ACE_HAS_WINCE. eVC3,

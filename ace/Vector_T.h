@@ -25,7 +25,7 @@
 /*
  * Default size for an ACE_Vector.
  */
-const size_t ACE_VECTOR_DEFAULT_SIZE = 32; 
+const size_t ACE_VECTOR_DEFAULT_SIZE = 32;
 
 /**
  * @class ACE_Vector
@@ -146,7 +146,7 @@ public:
    * performance.
    */
   void pop_back (void);
-  
+
   /**
    * This function dumps the content of the vector.  TO BE MOVED out
    * of this class.  It needs to be implemented as a global template
@@ -198,8 +198,8 @@ protected:
  *          returns false otherwise.  Also, returns false in case if
  *          v1's size is not equal to v2's size.
  */
-template<class T> 
-bool compare (const ACE_Vector<T>& v1,
+template<class T>
+int compare (const ACE_Vector<T>& v1,
 	      const ACE_Vector<T>& v2,
 	      const size_t from_ndx,
 	      const size_t to_ndx);
@@ -220,8 +220,8 @@ bool compare (const ACE_Vector<T>& v1,
  *         index range.
  */
 
-template<class T> 
-bool partial_compare (const ACE_Vector<T>& v1,
+template<class T>
+int partial_compare (const ACE_Vector<T>& v1,
 		      const ACE_Vector<T>& v2,
 		      const size_t from_ndx,
 		      const size_t to_ndx);

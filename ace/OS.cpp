@@ -6835,7 +6835,7 @@ ACE_CE_ARGV::ACE_CE_ARGV(ACE_TCHAR* cmdLine)
 
   int formattedCmdLength = ACE_OS::strlen(formattedCmdLine);
 
-  bool insideQuotation = false;
+  int insideQuotation = 0;
   int* argv_strlen = 0;
   int entry_size = 0;
   ACE_NEW (argv_strlen, int[max_possible_argc]);
@@ -6850,7 +6850,7 @@ ACE_CE_ARGV::ACE_CE_ARGV(ACE_TCHAR* cmdLine)
         }
       else if (formattedCmdLine[i] == '"')
         {
-          insideQuotation = !insideQuotation;
+          insideQuotation = (insideQuotation ? 0 : 1);
         }
       else if ((!insideQuotation) && (iswspace(formattedCmdLine[i]) != 0))
         {
