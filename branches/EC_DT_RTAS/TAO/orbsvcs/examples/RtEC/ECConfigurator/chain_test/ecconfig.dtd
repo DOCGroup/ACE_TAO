@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- ECCONFIGURATION -->
+  <!ELEMENT ECConfiguration ((Event|Timeout)*,(LocalEventChannel|RemoteEventChannel)*,TestDriver) >
+
+<!-- EVENT -->
+  <!ELEMENT Event (Period,Phase,Criticality,Importance,WorstExecution,TypicalExecution) >
+  <!ATTLIST Event name CDATA #REQUIRED >
+  <!ATTLIST Event type CDATA #REQUIRED >
+
+  <!ELEMENT Criticality (EMPTY) >
+  <!ATTLIST Criticality value (VERY_LOW|LOW|MEDIUM|HIGH|VERY_HIGH) #REQUIRED >
+
+  <!ELEMENT Importance (EMPTY) >
+  <!ATTLIST Importance value (VERY_LOW|LOW|MEDIUM|HIGH|VERY_HIGH) #REQUIRED >
+
+  <!ELEMENT WorstExecution (#PCDATA) >
+
+  <!ELEMENT TypicalExecution (#PCDATA) >
+
+<!-- TIMEOUT -->
+  <!ELEMENT Timeout (Period,Phase?) >
+  <!ATTLIST Timeout name CDATA #REQUIRED >
+
+  <!ELEMENT Period (#PCDATA) >
+
+  <!ELEMENT Phase (#PCDATA) >
+
+<!-- LOCALEVENTCHANNEL -->
+  <!ELEMENT LocalEventChannel (SchedulingStrategy,(Consumer,Supplier)*) >
+  <!ATTLIST LocalEventChannel name CDATA #REQUIRED >
+
+  <!ELEMENT SchedulingStrategy (EMPTY) >
+  <!ATTLIST SchedulingStrategy type (EDF|MUF|RMS) #REQUIRED >
+  <!ATTLIST SchedulingStrategy enableRG (yes|no) #REQUIRED >
+
+  <!ELEMENT Consumer (Subscriptions,Dependants?) >
+  <!ATTLIST Consumer name CDATA #REQUIRED >
+
+  <!ELEMENT Subscriptions (EventName*) >
+
+  <!ELEMENT EventName (#PCDATA) >
+
+  <!ELEMENT Dependants (SupplierName*) >
+
+  <!ELEMENT SupplierName (#PCDATA) >
+
+  <!-- If no Triggers is supplied (or it is empty), the Supplier is assumed to be self-triggered -->
+  <!ELEMENT Supplier (Publications,Triggers?) >
+  <!ATTLIST Supplier name CDATA #REQUIRED >
+  <!ATTLIST Supplier id CDATA #REQUIRED >
+
+  <!ELEMENT Publications (EventName*) >
+
+  <!ELEMENT Triggers (TimeoutName*) >
+
+  <!ELEMENT TimeoutName (#PCDATA) >
+
+<!-- REMOTEEVENTCHANNEL -->
+  <!-- Consumer/Supplier on remote are local but subscribe/publish remotely -->
+  <!ELEMENT RemoteEventChannel (IORFile, (Consumer,Supplier)*) >
+  <!ATTLIST RemoteEventChannel name CDATA #REQUIRED >
+
+  <!ELEMENT IORFile (#PCDATA) >
+
+<!-- There should only be one Driver for each process-->
+<!-- TESTDRIVER -->
+  <!ELEMENT TestDriver (StartCondition,StopCondition) >
+
+  <!ELEMENT StartCondition (Time) >
+  <!ATTLIST StartCondition type (GlobalTime|DelayAfterStart|DelayAfterConnect) #REQUIRED >
+  <!ATTLIST StartCondition master (yes|no) "no" >
+
+  <!ELEMENT Time (#PCDATA) >
+
+  <!ELEMENT StopCondition (Value) >
+  <!ATTLIST StopCondition type (Duration|EventNumber) #REQUIRED >
+
+  <!ELEMENT Value (#PCDATA) >

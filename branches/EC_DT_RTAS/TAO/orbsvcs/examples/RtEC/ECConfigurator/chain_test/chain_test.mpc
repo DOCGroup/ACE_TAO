@@ -1,0 +1,35 @@
+project(Consumer_Chain): orbsvcsexe, rtevent, rtsched, rtschedevent, rtkokyuevent, kokyu {
+  exename = Consumer_EC
+  idlflags += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h
+  includes += $(TAO_ROOT)/orbsvcs $(TAO_ROOT)/orbsvcs/orbsvcs ..
+  libs += ConfigurableEC
+  libpaths += ..
+
+  Source_Files {
+    Consumer_EC.cpp
+  }
+}
+
+project(Consumer_Supplier_Chain): orbsvcsexe, rtevent, rtsched, rtschedevent, rtkokyuevent, kokyu {
+  exename = Consumer_Supplier_EC
+  idlflags += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h
+  includes += $(TAO_ROOT)/orbsvcs $(TAO_ROOT)/orbsvcs/orbsvcs ..
+  libs += ConfigurableEC
+  libpaths += ..
+
+  Source_Files {
+    Consumer_Supplier_EC.cpp
+  }
+}
+
+project(Supplier_Chain): orbsvcsexe, rtevent, rtsched, rtschedevent, rtkokyuevent, kokyu {
+  exename = Supplier_EC
+  idlflags += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h
+  includes += $(TAO_ROOT)/orbsvcs $(TAO_ROOT)/orbsvcs/orbsvcs ..
+  libs += ConfigurableEC
+  libpaths += ..
+
+  Source_Files {
+    Supplier_EC.cpp
+  }
+}
