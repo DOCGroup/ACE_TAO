@@ -1,3 +1,13 @@
+Thu Nov 18 19:20:16 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* ace/OS.h (SEM_FAILED):
+
+	  Changed SEM_FAILED from ((sem_t *) 0) to ((sem_t *) -1).
+	  Although it makes more sense to have a zero fail value, it
+	  appears that many OSes are still brain damaged enough to use -1
+	  instead.  This change is consistent with what ACE expected as
+	  the sem_open() fail value prior to my updates.
+
 Thu Nov 18 16:37:55 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* ace/OS.h:
