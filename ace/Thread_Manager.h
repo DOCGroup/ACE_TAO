@@ -437,6 +437,9 @@ protected:
   void remove_thr (ACE_Thread_Descriptor *td, int close_handler);
   // Remove thread from the table.
 
+  void remove_thr_all (void);
+  // Remove all threads from the table.
+
   // = The following four methods implement a simple scheme for
   // operating on a collection of threads atomically.
 
