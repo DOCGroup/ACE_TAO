@@ -274,15 +274,15 @@ TAO_ServerRequest::tao_send_reply_exception (CORBA::Exception &ex)
         }
 
       // Create a new output CDR stream
-#if defined(ACE_HAS_PURIFY)
-      // Only inititialize the buffer if we're compiling with Purify.
+#if defined(ACE_HAS_MEMORY_PROFILER)
+      // Only inititialize the buffer if we're compiling with a profiler.
       // Otherwise, there is no real need to do so, especially since
       // we can avoid the initialization overhead at runtime if we
-      // are not compiling with Purify support.
+      // are not compiling with memory profiler support.
       char repbuf[ACE_CDR::DEFAULT_BUFSIZE] = { 0 };
 #else
       char repbuf[ACE_CDR::DEFAULT_BUFSIZE];
-#endif /* ACE_HAS_PURIFY */
+#endif /* ACE_HAS_MEMORY_PROFILER */
       TAO_OutputCDR output (repbuf,
                             sizeof repbuf,
                             TAO_ENCAP_BYTE_ORDER,
