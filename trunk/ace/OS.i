@@ -1,8 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-#include "ACE.h"
-
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 #undef ACE_INLINE
 #define ACE_INLINE
@@ -2712,6 +2710,7 @@ ACE_OS::rw_wrlock (ACE_rwlock_t *rw)
 #endif /* ACE_HAS_THREADS */		     
 }
 
+#if defined (ACE_HAS_THREADS) && defined (ACE_HAS_STHREADS)
 ACE_INLINE int 
 ACE_OS::rwlock_init (ACE_rwlock_t *rw, 
 		     int type, 
@@ -2721,53 +2720,9 @@ ACE_OS::rwlock_init (ACE_rwlock_t *rw,
   // ACE_TRACE ("ACE_OS::rwlock_init");
   type = type;
   name = name;
-#if defined (ACE_HAS_THREADS)
-#if defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::rwlock_init (rw, type, arg), ace_result_), int, -1);
-#else /* NT, POSIX, and VxWorks don't support this natively. */
-  ACE_UNUSED_ARG (name);
-  int result = -1;
-  
-  // Since we cannot use the user specified name for all three
-  // objects, we will create three complete new names
-  TCHAR name1[100];
-  TCHAR name2[100];
-  TCHAR name3[100];
-
-  ACE::unique_name (&rw->lock_, name1, sizeof name1);
-  ACE::unique_name (&rw->waiting_readers_, name2, sizeof name2);
-  ACE::unique_name (&rw->waiting_writers_, name3, sizeof name3);
-
-  if (ACE_OS::mutex_init (&rw->lock_, type, name1, arg) == 0
-      && ACE_OS::cond_init (&rw->waiting_readers_, type, name2, arg) == 0
-      && ACE_OS::cond_init (&rw->waiting_writers_, type, name3, arg) == 0)
-    {
-      // Success!  
-      rw->ref_count_ = 0;
-      rw->num_waiting_writers_ = 0;
-      rw->num_waiting_readers_ = 0;
-
-      result = 0;
-    }
-
-  if (result == -1)
-    {
-      int error = errno;
-      ACE_OS::mutex_destroy (&rw->lock_);
-      ACE_OS::cond_destroy (&rw->waiting_readers_);
-      ACE_OS::cond_destroy (&rw->waiting_writers_);
-      errno = error;
-    }
-  return result;
-#endif /* ACE_HAS_STHREADS */
-#else
-  ACE_UNUSED_ARG (rw);
-  ACE_UNUSED_ARG (type);
-  ACE_UNUSED_ARG (name);
-  ACE_UNUSED_ARG (arg);
-  ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_THREADS */		     
 }
+#endif /* ACE_HAS THREADS && ACE_HAS_STHREADS */
 
 ACE_INLINE int 
 ACE_OS::rwlock_destroy (ACE_rwlock_t *rw)
