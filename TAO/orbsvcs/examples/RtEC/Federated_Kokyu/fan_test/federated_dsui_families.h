@@ -1,5 +1,5 @@
 // $Id$
-// Automatically generated header file "federated_dsui_families.h"  by dsui-parse.py 
+// Automatically generated header file "federated_dsui_families.h"  by dsui-parse.py
 #ifndef _federated_DSUI_FAMILIES_H
 #define _federated_DSUI_FAMILIES_H
 

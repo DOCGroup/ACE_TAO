@@ -1,5 +1,5 @@
 // $Id$
-// Automatically generated header file "federated_dsui_table.h" by dsui-parse.py 
+// Automatically generated header file "federated_dsui_table.h" by dsui-parse.py
 #ifndef _federated_DSUI_TABLE_H
 #define _federated_DSUI_TABLE_H
 
