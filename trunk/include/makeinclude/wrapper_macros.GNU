@@ -320,7 +320,9 @@ else  # ! exceptions
 endif # ! exceptions
 
 ifeq ($(minimum_corba),1)
-  CPPFLAGS += -DTAO_HAS_MINIMUM_CORBA
+  CPPFLAGS += -DTAO_HAS_MINIMUM_CORBA  
+else
+  override minimum_corba =
 endif # minimum_corba
 
 ifeq ($(profile),0)
