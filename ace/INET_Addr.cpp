@@ -187,8 +187,7 @@ ACE_INET_Addr::set (u_short port_number,
   else 
     {
 #if defined (VXWORKS)
-      int address = ::hostGetByName ((char *) host_name);
-      return this->set (port_number, encode ? ntohl (address) : address, encode);
+      hostent *hp = ACE_OS::gethostbyname (host_name);
 #else
       hostent hentry;
       ACE_HOSTENT_DATA buf;
@@ -196,6 +195,7 @@ ACE_INET_Addr::set (u_short port_number,
 
       hostent *hp = ACE_OS::gethostbyname_r (host_name, &hentry,
 					     buf, &error);
+#endif /* VXWORKS */
   
       if (hp == 0)
 	{
@@ -207,7 +207,6 @@ ACE_INET_Addr::set (u_short port_number,
 	  (void) ACE_OS::memcpy ((void *) &addr, hp->h_addr, hp->h_length); 
 	  return this->set (port_number, encode ? ntohl (addr) : addr, encode);
 	}
-#endif /* VXWORKS */
     }
 }
  

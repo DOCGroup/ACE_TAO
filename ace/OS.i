@@ -2198,15 +2198,17 @@ ACE_OS::gethostbyname (const char *name)
 #if defined (VXWORKS)
   // not thread safe!
   static hostent ret;
+  static int first_addr;
   static char *hostaddr[2];
 
-  if ((hostaddr[0] = (char *) ::hostGetByName ((char *) name)) < 0)
+  if ((first_addr = (char *) ::hostGetByName ((char *) name)) < 0)
     return 0;
+  hostaddr[0] = (char *) &first_addr;
   hostaddr[1] = 0;
 
   ret.h_name = (char *) name;  /* might not be official: just echo input arg */
   ret.h_addrtype = AF_INET;
-  ret.h_length = IP_ADDR_LEN;
+  ret.h_length = 4;  // VxWorks 5.2/3 doesn't define IP_ADDR_LEN;
   ret.h_addr_list = hostaddr;
 
   return &ret;
