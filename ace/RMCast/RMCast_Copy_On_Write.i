@@ -33,4 +33,3 @@ ACE_RMCast_Copy_On_Write_Read_Guard<COLLECTION,ITERATOR>::
 }
 
 // ****************************************************************
-

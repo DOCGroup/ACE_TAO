@@ -1,3 +1,30 @@
+Tue Oct  3 17:07:37 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/RMCast/Makefile:
+        * ace/RMCast/RMCast_Reordering.h:
+        * ace/RMCast/RMCast_Reordering.i:
+        * ace/RMCast/RMCast_Reordering.cpp:
+          Add re-ordering module, this is the receiver-side module that
+          acks messages and delivers them in order to the application.
+
+        * ace/RMCast/RMCast.h:
+          Fixed data type in the Ack_Join message
+
+        * ace/RMCast/RMCast_Copy_On_Write.h:
+        * ace/RMCast/RMCast_Copy_On_Write.i:
+        * ace/RMCast/RMCast_Copy_On_Write.cpp:
+        * ace/RMCast/RMCast_Retransmission.cpp:
+          Cleanup the Copy_On_Write implementation
+
+        * tests/RMCast/Makefile:
+        * tests/RMCast/RMCast_Tests.dsw:
+        * tests/RMCast/RMCast_Reordering_Test.cpp:
+        * tests/RMCast/RMCast_Reordering_Test.dsp:
+          Add test for the reordering module.
+
+        * tests/RMCast/RMCast_Retransmission_Test.cpp:
+          Remove debug messages for the retransmission stuff.
+
 Tue Oct  3 15:03:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/OS.i:
@@ -17,11 +44,11 @@ Tue Oct  3 14:25:09 2000  Darrell Brunsch <brunsch@uci.edu>
         * ace/OS.i:
 
           Expanded TCHAR versions of some string macros to have
-          both _A and _W versions.  Moved many of these 
+          both _A and _W versions.  Moved many of these
           definitions around, since a lot of the same code was
-          being repeated.  The macros changed are:  
+          being repeated.  The macros changed are:
           ACE_DIRECTORY_SEPARATOR_STR, ACE_DIRECTORY_SEPARATOR_CHAR,
-          ACE_PLATFORM, ACE_PLATFORM_EXE_SUFFIX, 
+          ACE_PLATFORM, ACE_PLATFORM_EXE_SUFFIX,
           ACE_DEFAULT_LOCALNAME, ACE_DEFAULT_GLOBALNAME and
           ACE_DEFAULT_MUTEX.  [Bug 674]
 
@@ -32,7 +59,7 @@ Tue Oct  3 14:25:09 2000  Darrell Brunsch <brunsch@uci.edu>
         * ace/Process_Mutex.h:
 
           Changed the ACE_Process_Mutex constructor to take a
-          char as a argument instead of TCHAR.  Also added a 
+          char as a argument instead of TCHAR.  Also added a
           version that takes in wchar_t.
 
         * ace/Synch.cpp:
@@ -45,10 +72,10 @@ Tue Oct  3 14:25:09 2000  Darrell Brunsch <brunsch@uci.edu>
         * ace/ace_wchar.h:
         * ace/ace_wchar.inl: (added)
 
-          Moved the method definitions from inlined in the 
+          Moved the method definitions from inlined in the
           class definition to the .inl file.
 
-          Added typedefs for ACE_OS_C/WString to the 
+          Added typedefs for ACE_OS_C/WString to the
           ACE_Wide_To_Ascii/Asci_To_Wide classes for legacy
           support.  [Bug 675]
 
@@ -78,17 +105,17 @@ Tue Oct  3 12:25:46 2000  Darrell Brunsch <brunsch@uci.edu>
         * ace/Thread_Adapter.cpp:
         * ace/Thread_Adapter.h:
 
-          Separated ACE_Thread_Adapter::invoke into invoke and 
+          Separated ACE_Thread_Adapter::invoke into invoke and
           invoke_i because it uses SEH and James added local vars
           with destructors.  They don't work together in the same
           function.
 
 Tue Oct 03 12:53:28 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* bin/run_all_list.pm:
+        * bin/run_all_list.pm:
 
-	  Disabled Connection Purging test, and enabled Exposed
-	  Policies test.
+          Disabled Connection Purging test, and enabled Exposed
+          Policies test.
 
 Tue Oct  3 10:52:24 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -98,39 +125,39 @@ Tue Oct  3 10:52:24 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Tue Oct  3 10:40:04 PDT 2000 James Hu <jxh@entera.com>
 
-	* ace/Thread_Adapter.cpp:
-	* ace/Thread_Exit.cpp:
-	* ace/Thread_Exit.h:
+        * ace/Thread_Adapter.cpp:
+        * ace/Thread_Exit.cpp:
+        * ace/Thread_Exit.h:
 
-	  Changed this check to creating an ACE_Thread_Exit off the
+          Changed this check to creating an ACE_Thread_Exit off the
           heap via a smart pointeresque way of the TSS instance
           fails to create.
 
 Tue Oct  3 05:55:01 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Hash_Map_Manager_T.cpp: Added && (__SUNPRO_CC == 0x420)
-	  to the #elif defined (__SUNPRO_CC) to make things work properly
- 	  on the Sun FORTE compiler.  Thanks to Russ Noseworthy for
- 	  reporting this.
+        * ace/Hash_Map_Manager_T.cpp: Added && (__SUNPRO_CC == 0x420)
+          to the #elif defined (__SUNPRO_CC) to make things work properly
+          on the Sun FORTE compiler.  Thanks to Russ Noseworthy for
+          reporting this.
 
 Mon Oct  2 18:49:06 PDT 2000 James Hu <jxh@entera.com>
 
-	* ace/Thread_Adapter.cpp:
+        * ace/Thread_Adapter.cpp:
 
-	  If the TSS instance of the ACE_Thread_Exit class fails to
-	  create, the application will crash.  The new code will detect
-	  the failure, wait half a second, and try again.  This
-	  solution, while cheesy, corrects a problem Entera
-	  encountered, and avoids the problems my previous attempt
-	  caused with ACE.
+          If the TSS instance of the ACE_Thread_Exit class fails to
+          create, the application will crash.  The new code will detect
+          the failure, wait half a second, and try again.  This
+          solution, while cheesy, corrects a problem Entera
+          encountered, and avoids the problems my previous attempt
+          caused with ACE.
 
 Mon Oct  2 13:38:44 2000  Ossama Othman  <ossama@uci.edu>
 
-	* examples/QOS/QoS_Signal_Handler.cpp:
-	* examples/QOS/QoS_Util.cpp:
+        * examples/QOS/QoS_Signal_Handler.cpp:
+        * examples/QOS/QoS_Util.cpp:
 
-	  Include "ace/Log_Msg.h" to pull in definitions of the
-	  ACE_{DEBUG,ERROR} macros.
+          Include "ace/Log_Msg.h" to pull in definitions of the
+          ACE_{DEBUG,ERROR} macros.
 
 Mon Oct  2 11:29:47 2000  Carlos O'Ryan  <coryan@uci.edu>
 
