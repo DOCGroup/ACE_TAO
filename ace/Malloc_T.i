@@ -152,55 +152,96 @@ ACE_Allocator_Adapter<MALLOC>::protect (void *addr, size_t len, int flags)
   return this->allocator_.protect (addr, len, flags);
 }
 
-template <ACE_MEM_POOL_1, class ACE_LOCK> ACE_INLINE ACE_MEM_POOL &
-ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::memory_pool (void)
+template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> ACE_INLINE ACE_MEM_POOL &
+ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::memory_pool (void)
 {
-  ACE_TRACE ("ACE_Malloc<MEMORY_POOL, ACE_LOCK>::memory_pool");
+  ACE_TRACE ("ACE_Malloc_T<MEMORY_POOL, ACE_LOCK, ACE_CB>::memory_pool");
   return this->memory_pool_;
 }
 
-template <ACE_MEM_POOL_1, class ACE_LOCK> ACE_INLINE int
-ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::sync (ssize_t len,
-                                            int flags)
+template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> ACE_INLINE int
+ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::sync (ssize_t len,
+                                                    int flags)
 {
-  ACE_TRACE ("ACE_Malloc<MEMORY_POOL, ACE_LOCK>::sync");
+  ACE_TRACE ("ACE_Malloc_T<MEMORY_POOL, ACE_LOCK, ACE_CB>::sync");
   return this->memory_pool_.sync (len, flags);
 }
 
-template <ACE_MEM_POOL_1, class ACE_LOCK> ACE_INLINE int
-ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::sync (void *addr,
-                                            size_t len,
-                                            int flags)
+template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> ACE_INLINE int
+ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::sync (void *addr,
+                                                    size_t len,
+                                                    int flags)
 {
-  ACE_TRACE ("ACE_Malloc<MEMORY_POOL, ACE_LOCK>::sync");
+  ACE_TRACE ("ACE_Malloc_T<MEMORY_POOL, ACE_LOCK, ACE_CB>::sync");
   return this->memory_pool_.sync (addr, len, flags);
 }
 
-template <ACE_MEM_POOL_1, class ACE_LOCK> ACE_INLINE int
-ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::protect (ssize_t len,
-                                               int flags)
+template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> ACE_INLINE int
+ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::protect (ssize_t len,
+                                                       int flags)
 {
-  ACE_TRACE ("ACE_Malloc<MEMORY_POOL, ACE_LOCK>::protect");
+  ACE_TRACE ("ACE_Malloc_T<MEMORY_POOL, ACE_LOCK, ACE_CB>::protect");
   return this->memory_pool_.protect (len, flags);
 }
 
-template <ACE_MEM_POOL_1, class ACE_LOCK> ACE_INLINE int
-ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::protect (void *addr,
-                                               size_t len,
-                                               int flags)
+template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> ACE_INLINE int
+ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::protect (void *addr,
+                                                             size_t len,
+                                                             int flags)
 {
-  ACE_TRACE ("ACE_Malloc<MEMORY_POOL, ACE_LOCK>::protect");
+  ACE_TRACE ("ACE_Malloc_T<MEMORY_POOL, ACE_LOCK, ACE_CB>::protect");
   return this->memory_pool_.protect (addr, len, flags);
 }
 
-template <ACE_MEM_POOL_1, class ACE_LOCK> ACE_INLINE ACE_LOCK &
-ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::mutex (void)
+template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> ACE_INLINE ACE_LOCK &
+ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::mutex (void)
 {
   return this->lock_;
 }
 
-template <ACE_MEM_POOL_1, class ACE_LOCK> ACE_INLINE void
-ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::init_malloc_header_ptr (void* ptr)
+template <ACE_MEM_POOL_1, class ACE_LOCK> ACE_INLINE
+ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc (LPCTSTR pool_name)
+  : ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_Control_Block> (pool_name)
+{
+}
+
+template <ACE_MEM_POOL_1, class ACE_LOCK> ACE_INLINE
+ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc (LPCTSTR pool_name,
+                                                  LPCTSTR lock_name,
+                                                  const ACE_MEM_POOL_OPTIONS *options)
+  : ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_Control_Block> (pool_name, lock_name, options)
+{
+}
+
+#if !defined (ACE_HAS_TEMPLATE_TYPEDEFS)
+template <ACE_MEM_POOL_1, class ACE_LOCK> ACE_INLINE
+ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc (LPCTSTR pool_name,
+                                                  LPCTSTR lock_name,
+                                                  const void *options)
+  : ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_Control_Block> (pool_name, lock_name, options)
+{
+}
+#endif /* !ACE_HAS_TEMPLATE_TYPEDEFS */
+
+template <ACE_MEM_POOL_1, class ACE_LOCK> ACE_INLINE
+ACE_Malloc_LIFO_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc_LIFO_Iterator (ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK> &malloc,
+                                                                              const char *name)
+  : ACE_Malloc_LIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_Control_Block> (malloc, name)
+{
+}
+
+template <ACE_MEM_POOL_1, class ACE_LOCK> ACE_INLINE
+ACE_Malloc_FIFO_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc_FIFO_Iterator (ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK> &malloc,
+                                                                              const char *name)
+  : ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_Control_Block> (malloc, name)
+{
+}
+
+
+
+#if 0
+template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> ACE_INLINE void
+ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::init_malloc_header_ptr (void* ptr)
 {
 #if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
   new (ptr) ACE_MALLOC_HEADER_PTR (this->cb_ptr_, 0);
@@ -208,3 +249,4 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::init_malloc_header_ptr (void* ptr)
   ACE_UNUSED_ARG (ptr);
 #endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
 }
+#endif

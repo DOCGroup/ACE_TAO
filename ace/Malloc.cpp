@@ -24,7 +24,7 @@ ACE_Allocator *ACE_Allocator::allocator_ = 0;
 int ACE_Allocator::delete_allocator_ = 0;
 
 void
-ACE_Malloc_Header::dump (void) const
+ACE_Control_Block::ACE_Malloc_Header::dump (void) const
 {
   ACE_TRACE ("ACE_Malloc_Header::dump");
 
@@ -59,15 +59,15 @@ ACE_Control_Block::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-ACE_Name_Node::ACE_Name_Node (void)
+ACE_Control_Block::ACE_Name_Node::ACE_Name_Node (void)
 {
   ACE_TRACE ("ACE_Name_Node::ACE_Name_Node");
 }
 
-ACE_Name_Node::ACE_Name_Node (const char *name,
-                              char *name_ptr,
-                              char *pointer,
-                              ACE_Name_Node *next)
+ACE_Control_Block::ACE_Name_Node::ACE_Name_Node (const char *name,
+                                                 char *name_ptr,
+                                                 char *pointer,
+                                                 ACE_Name_Node *next)
   : name_ (name_ptr),
     pointer_ (pointer),
     next_ (next),
@@ -80,33 +80,33 @@ ACE_Name_Node::ACE_Name_Node (const char *name,
     next->prev_ = this;
 }
 
-ACE_Name_Node::ACE_Name_Node (const ACE_Name_Node &)
+ACE_Control_Block::ACE_Name_Node::ACE_Name_Node (const ACE_Name_Node &)
 {
   ACE_TRACE ("ACE_Name_Node::ACE_Name_Node");
   ACE_ASSERT (!"not implemented!");
 }
 
 const char *
-ACE_Name_Node::name (void) const
+ACE_Control_Block::ACE_Name_Node::name (void) const
 {
   const char *c = this->name_;
   return c;
 }
 
 void
-ACE_Name_Node::name (const char *)
+ACE_Control_Block::ACE_Name_Node::name (const char *)
 {
   ACE_ASSERT (!"not implemented yet");
 }
 
-ACE_Malloc_Header::ACE_Malloc_Header (void)
+ACE_Control_Block::ACE_Malloc_Header::ACE_Malloc_Header (void)
   : next_block_ (0),
     size_ (0)
 {
 }
 
 void
-ACE_Name_Node::dump (void) const
+ACE_Control_Block::ACE_Name_Node::dump (void) const
 {
   ACE_TRACE ("ACE_Name_Node");
 
@@ -120,6 +120,106 @@ ACE_Name_Node::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
+
+#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
+void
+ACE_PI_Control_Block::ACE_Malloc_Header::dump (void) const
+{
+  ACE_TRACE ("ACE_Malloc_Header::dump");
+
+  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nnext_block = %x"), (ACE_Malloc_Header *) this->next_block_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nsize = %d\n"), this->size_));
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+}
+
+void
+ACE_PI_Control_Block::dump (void) const
+{
+  ACE_TRACE ("ACE_Control_Block::dump");
+
+  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Name Node:\n")));
+  for (ACE_Name_Node *nextn = this->name_head_;
+       nextn != 0;
+       nextn = nextn->next_)
+    nextn->dump ();
+
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("freep_ = %x"), (ACE_Malloc_Header *) this->freep_));
+  this->base_.dump ();
+
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nMalloc Header:\n")));
+  for (ACE_Malloc_Header *nexth = ((ACE_Malloc_Header *)this->freep_)->next_block_;
+       nexth != 0 && nexth != &this->base_;
+       nexth = nexth->next_block_)
+    nexth->dump ();
+
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+}
+
+ACE_PI_Control_Block::ACE_Name_Node::ACE_Name_Node (void)
+{
+  ACE_TRACE ("ACE_Name_Node::ACE_Name_Node");
+}
+
+ACE_PI_Control_Block::ACE_Name_Node::ACE_Name_Node (const char *name,
+                                                    char *name_ptr,
+                                                    char *pointer,
+                                                    ACE_Name_Node *next)
+  : name_ (name_ptr),
+    pointer_ (pointer),
+    next_ (next),
+    prev_ (0)
+{
+  ACE_TRACE ("ACE_Name_Node::ACE_Name_Node");
+  char *n = this->name_;
+  ACE_OS::strcpy (n, name);
+  if (next != 0)
+    next->prev_ = this;
+}
+
+ACE_PI_Control_Block::ACE_Name_Node::ACE_Name_Node (const ACE_Name_Node &)
+{
+  ACE_TRACE ("ACE_Name_Node::ACE_Name_Node");
+  ACE_ASSERT (!"not implemented!");
+}
+
+const char *
+ACE_PI_Control_Block::ACE_Name_Node::name (void) const
+{
+  const char *c = this->name_;
+  return c;
+}
+
+void
+ACE_PI_Control_Block::ACE_Name_Node::name (const char *)
+{
+  ACE_ASSERT (!"not implemented yet");
+}
+
+ACE_PI_Control_Block::ACE_Malloc_Header::ACE_Malloc_Header (void)
+  : next_block_ (0),
+    size_ (0)
+{
+}
+
+void
+ACE_PI_Control_Block::ACE_Name_Node::dump (void) const
+{
+  ACE_TRACE ("ACE_Name_Node");
+
+  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("pointer = %x"), (const char *) this->pointer_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("\nnext_ = %x"), (ACE_Name_Node *) this->next_));
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT("\nname_ = (%x, %s)"),
+              (const char *) this->name_,
+              (const char *) this->name_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+}
+#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
 
 ACE_Allocator *
 ACE_Allocator::instance (void)
@@ -270,17 +370,17 @@ template class ACE_Atomic_Op<ACE_PROCESS_MUTEX, int>;
 
 #if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Based_Pointer_Basic<ACE_Malloc_Header>;
-template class ACE_Based_Pointer_Basic<ACE_Name_Node>;
+template class ACE_Based_Pointer_Basic<ACE_PI_Control_Block::ACE_Malloc_Header>;
+template class ACE_Based_Pointer_Basic<ACE_PI_Control_Block::ACE_Name_Node>;
 template class ACE_Based_Pointer_Basic<char>;
-template class ACE_Based_Pointer<ACE_Malloc_Header>;
-template class ACE_Based_Pointer<ACE_Name_Node>;
+template class ACE_Based_Pointer<ACE_PI_Control_Block::ACE_Malloc_Header>;
+template class ACE_Based_Pointer<ACE_PI_Control_Block::ACE_Name_Node>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Based_Pointer_Basic<ACE_Malloc_Header>
-#pragma instantiate ACE_Based_Pointer_Basic<ACE_Name_Node>
+#pragma instantiate ACE_Based_Pointer_Basic<ACE_PI_Control_Block::ACE_Malloc_Header>
+#pragma instantiate ACE_Based_Pointer_Basic<ACE_PI_Control_Block::ACE_Name_Node>
 #pragma instantiate ACE_Based_Pointer_Basic<char>
-#pragma instantiate ACE_Based_Pointer<ACE_Malloc_Header>
-#pragma instantiate ACE_Based_Pointer<ACE_Name_Node>
+#pragma instantiate ACE_Based_Pointer<ACE_PI_Control_Block::ACE_Malloc_Header>
+#pragma instantiate ACE_Based_Pointer<ACE_PI_Control_Block::ACE_Name_Node>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 #endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
 

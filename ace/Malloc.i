@@ -2,9 +2,46 @@
 // $Id$
 
 ACE_INLINE
-ACE_Name_Node::~ACE_Name_Node (void)
+ACE_Control_Block::ACE_Name_Node::~ACE_Name_Node (void)
 {
 }
+
+ACE_INLINE void
+ACE_Control_Block::ACE_Malloc_Header::init_ptr
+  (ACE_Malloc_Header **ptr, ACE_Malloc_Header *init, void *)
+{
+  *ptr = init;
+}
+
+ACE_INLINE void
+ACE_Control_Block::ACE_Name_Node::init_ptr
+  (ACE_Name_Node **ptr, ACE_Name_Node *init, void *)
+{
+  *ptr = init;
+}
+
+#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
+ACE_INLINE
+ACE_PI_Control_Block::ACE_Name_Node::~ACE_Name_Node (void)
+{
+}
+
+ACE_INLINE void
+ACE_PI_Control_Block::ACE_Malloc_Header::init_ptr
+  (MALLOC_HEADER_PTR *ptr, ACE_Malloc_Header *init, void *base_addr)
+{
+  new ((void *) ptr) MALLOC_HEADER_PTR (base_addr, 0);
+  *ptr = init;
+}
+
+ACE_INLINE void
+ACE_PI_Control_Block::ACE_Name_Node::init_ptr
+  (NAME_NODE_PTR *ptr, ACE_Name_Node *init, void *base_addr)
+{
+  new ((void *) ptr) NAME_NODE_PTR (base_addr, 0);
+  *ptr = init;
+}
+#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
 
 ACE_INLINE void *
 ACE_New_Allocator::malloc (size_t nbytes)

@@ -84,111 +84,115 @@ struct ACE_Export ACE_Malloc_Stats
                                 : (((ACE_MALLOC_PADDING / ACE_MALLOC_ALIGN) + 1) \
                                    * ACE_MALLOC_ALIGN))
 
-#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
-#define ACE_MALLOC_HEADER_PTR ACE_Based_Pointer<ACE_Malloc_Header>
-#define ACE_NAME_NODE_PTR ACE_Based_Pointer<ACE_Name_Node>
-#define ACE_CHAR_PTR ACE_Based_Pointer_Basic<char>
-#else
-#define ACE_MALLOC_HEADER_PTR ACE_Malloc_Header *
-#define ACE_NAME_NODE_PTR ACE_Name_Node *
-#define ACE_CHAR_PTR char *
-#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
-
-class ACE_Export ACE_Malloc_Header
-{
-  // = TITLE
-  //    This is the control block header.  It's used by <ACE_Malloc>
-  //    to keep track of each chunk of data when it's in the free
-  //    list or in use.
-public:
-  ACE_Malloc_Header (void);
-
-  ACE_MALLOC_HEADER_PTR next_block_;
-  // Points to next block if on free list.
-
-  size_t size_;
-  // Size of this header control block.
-
-#define ACE_MALLOC_PADDING_SIZE ((int) (ACE_MALLOC_HEADER_SIZE - \
-                                  (sizeof (ACE_MALLOC_HEADER_PTR) + sizeof (size_t))) / (int) sizeof (long))
-  long padding_[ACE_MALLOC_PADDING_SIZE < 1 ? 1 : ACE_MALLOC_PADDING_SIZE];
-
-  void dump (void) const;
-  // Dump the state of the object.
-
-#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
-private:
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Malloc_Header &))
-#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
-};
-
-class ACE_Export ACE_Name_Node
-{
-  // = TITLE
-  //    This class supports "named memory regions" within <ACE_Malloc>.
-  //
-  // = DESCRIPTION
-  //   Internally, the named memory regions are stored as a
-  //   doubly-linked list within the <Memory_Pool>.  This makes
-  //   it easy to iterate over the items in the list in both FIFO
-  //   and LIFO order.
-public:
-  // = Initialization methods.
-  ACE_Name_Node (const char *name,
-                 char *name_ptr,
-                 char *pointer,
-                 ACE_Name_Node *head);
-  // Constructor.
-
-  ACE_Name_Node (const ACE_Name_Node &);
-  // Copy constructor.
-
-  ACE_Name_Node (void);
-  // Constructor.
-
-  ~ACE_Name_Node (void);
-  // Constructor.
-
-  const char *name (void) const;
-  // Return a pointer to the name of this node.
-
-  void name (const char *);
-  // Assign a name;
-
-  ACE_CHAR_PTR name_;
-  // Name of the Node.
-
-  ACE_CHAR_PTR pointer_;
-  // Pointer to the contents.
-
-  ACE_NAME_NODE_PTR next_;
-  // Pointer to the next node in the doubly-linked list.
-
-  ACE_NAME_NODE_PTR prev_;
-  // Pointer to the previous node in the doubly-linked list.
-
-  void dump (void) const;
-  // Dump the state of the object.
-
-#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
-private:
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Name_Node &))
-#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
-};
-
 class ACE_Export ACE_Control_Block
 {
   // = TITLE
   //    This information is stored in memory allocated by the <Memory_Pool>.
   //
   // = DESCRIPTION
-  //    This class should be local to class ACE_Malloc, but some older
-  //    C++ compilers don't like nested classes in templates...
+  //    This class defines the "old" control block class for use in
+  //    ACE_Malloc_T.  This control block implementation is
+  //    considerable more efficient than the "position independent"
+  //    one below (ACE_PI_Control_Block) but if you are going to use
+  //    it to construct a ACE_Malloc_T and access the memory from
+  //    several different processes, you must "map" the underlying
+  //    memory pool to the same address.
 public:
-  ACE_NAME_NODE_PTR name_head_;
+
+  class ACE_Export ACE_Malloc_Header
+  {
+    // = TITLE
+    //    This is the control block header.  It's used by <ACE_Malloc>
+    //    to keep track of each chunk of data when it's in the free
+    //    list or in use.
+  public:
+    ACE_Malloc_Header (void);
+
+    ACE_Malloc_Header *next_block_;
+    // Points to next block if on free list.
+
+    static void init_ptr (ACE_Malloc_Header **ptr,
+                          ACE_Malloc_Header *init,
+                          void *base_addr);
+    // Initialize a malloc header pointer.
+
+    size_t size_;
+    // Size of this header control block.
+
+#if defined (ACE_MALLOC_PADDING_SIZE) && (ACE_MALLOC_PADDING_SIZE == 0)
+    // No padding required.
+#else
+# if !defined (ACE_MALLOC_PADDING_SIZE)
+#   define ACE_MALLOC_PADDING_SIZE ((int) (ACE_MALLOC_HEADER_SIZE - \
+                                    (sizeof (ACE_Malloc_Header*) + sizeof (size_t)))\
+                                    / (int) sizeof (long))
+# endif /* !ACE_MALLOC_PADDING_SIZE */
+    long padding_[ACE_MALLOC_PADDING_SIZE < 1 ? 1 : ACE_MALLOC_PADDING_SIZE];
+#endif /* ACE_MALLOC_PADDING_SIZE && ACE_MALLOC_PADDING_SIZE == 0 */
+
+    void dump (void) const;
+    // Dump the state of the object.
+  };
+
+  class ACE_Export ACE_Name_Node
+  {
+    // = TITLE
+    //    This class supports "named memory regions" within <ACE_Malloc>.
+    //
+    // = DESCRIPTION
+    //   Internally, the named memory regions are stored as a
+    //   doubly-linked list within the <Memory_Pool>.  This makes
+    //   it easy to iterate over the items in the list in both FIFO
+    //   and LIFO order.
+  public:
+    // = Initialization methods.
+    ACE_Name_Node (const char *name,
+                   char *name_ptr,
+                   char *pointer,
+                   ACE_Name_Node *head);
+    // Constructor.
+
+    ACE_Name_Node (const ACE_Name_Node &);
+    // Copy constructor.
+
+    ACE_Name_Node (void);
+    // Constructor.
+
+    ~ACE_Name_Node (void);
+    // Constructor.
+
+    static void init_ptr (ACE_Name_Node **ptr,
+                          ACE_Name_Node *init,
+                          void *base_addr);
+    // Initialize a name node pointer.
+
+    const char *name (void) const;
+    // Return a pointer to the name of this node.
+
+    void name (const char *);
+    // Assign a name;
+
+    char *name_;
+    // Name of the Node.
+
+    char *pointer_;
+    // Pointer to the contents.
+
+    ACE_Name_Node *next_;
+    // Pointer to the next node in the doubly-linked list.
+
+    ACE_Name_Node *prev_;
+    // Pointer to the previous node in the doubly-linked list.
+
+    void dump (void) const;
+    // Dump the state of the object.
+  };
+
+
+  ACE_Name_Node *name_head_;
   // Head of the linked list of Name Nodes.
 
-  ACE_MALLOC_HEADER_PTR freep_;
+  ACE_Malloc_Header *freep_;
   // Current head of the freelist.
 
   char lock_name_[MAXNAMELEN];
@@ -197,25 +201,192 @@ public:
 #if defined (ACE_HAS_MALLOC_STATS)
   // Keep statistics about ACE_Malloc state and performance.
   ACE_Malloc_Stats malloc_stats_;
-#define ACE_CONTROL_BLOCK_SIZE ((int)(sizeof (ACE_NAME_NODE_PTR) \
-                                      + sizeof (ACE_MALLOC_HEADER_PTR) \
+#define ACE_CONTROL_BLOCK_SIZE ((int)(sizeof (ACE_Name_Node*) \
+                                      + sizeof (ACE_Malloc_Header*) \
                                       + MAXNAMELEN  \
                                       + sizeof (ACE_Malloc_Stats)))
 #else
-#define ACE_CONTROL_BLOCK_SIZE ((int)(sizeof (ACE_NAME_NODE_PTR) \
-                                      + sizeof (ACE_MALLOC_HEADER_PTR) \
+#define ACE_CONTROL_BLOCK_SIZE ((int)(sizeof (ACE_Name_Node*) \
+                                      + sizeof (ACE_Malloc_Header*) \
                                       + MAXNAMELEN))
 #endif /* ACE_HAS_MALLOC_STATS */
 
 // Notice the casting to int for <sizeof> otherwise unsigned int
 // arithmetic is used and some awful things may happen.
-#define ACE_CONTROL_BLOCK_ALIGN_LONGS \
+#if defined (ACE_CONTROL_BLOCK_ALIGN_LONGS) && (ACE_CONTROL_BLOCK_ALIGN_LONGS == 0)
+  // No padding required in control block.
+#else
+# if !defined (ACE_CONTROL_BLOCK_ALIGN_LONGS)
+#   define ACE_CONTROL_BLOCK_ALIGN_LONGS \
             ((ACE_CONTROL_BLOCK_SIZE % ACE_MALLOC_ALIGN != 0 \
               ? ACE_MALLOC_ALIGN - (ACE_CONTROL_BLOCK_SIZE % ACE_MALLOC_ALIGN) \
               : ACE_MALLOC_ALIGN) / int (sizeof (long)))
-
+# endif /* !ACE_CONTROL_BLOCK_ALIGN_LONGS */
   long align_[ACE_CONTROL_BLOCK_ALIGN_LONGS < 1 ? 1 : ACE_CONTROL_BLOCK_ALIGN_LONGS];
   // Force alignment.
+#endif /* ACE_CONTROL_BLOCK_ALIGN_LONGS && ACE_CONTROL_BLOCK_ALIGN_LONGS == 0 */
+
+  ACE_Malloc_Header base_;
+  // Dummy node used to anchor the freelist.  This needs to come last...
+
+  void dump (void) const;
+  // Dump the state of the object.
+};
+
+#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
+
+// prepare for position independent malloc
+class ACE_Export ACE_PI_Control_Block
+{
+  // = TITLE
+  //    This information is stored in memory allocated by the <Memory_Pool>.
+  //
+  // = DESCRIPTION
+  //    This class implements the control block structure that can be
+  //    used in a "position indepent" fashion, i.e., you don't need to
+  //    "map" the underlying memory pool to the same address in
+  //    processes sharing the memory.  The tradoff of this flexibility
+  //    is more expensive malloc/free operations.
+public:
+  class ACE_Malloc_Header;
+  class ACE_Name_Node;
+
+  typedef ACE_Based_Pointer<ACE_Malloc_Header> MALLOC_HEADER_PTR;
+  typedef ACE_Based_Pointer<ACE_Name_Node> NAME_NODE_PTR;
+  typedef ACE_Based_Pointer_Basic<char> CHAR_PTR;
+
+  class ACE_Export ACE_Malloc_Header
+  {
+    // = TITLE
+    //    This is the control block header.  It's used by <ACE_Malloc>
+    //    to keep track of each chunk of data when it's in the free
+    //    list or in use.
+  public:
+    ACE_Malloc_Header (void);
+
+    MALLOC_HEADER_PTR next_block_;
+    // Points to next block if on free list.
+
+    static void init_ptr (MALLOC_HEADER_PTR *ptr,
+                          ACE_Malloc_Header *init,
+                          void *base_addr);
+    // Initialize a malloc header pointer.
+
+    size_t size_;
+    // Size of this header control block.
+
+#if defined (ACE_PI_MALLOC_PADDING_SIZE) && (ACE_PI_MALLOC_PADDING_SIZE == 0)
+    // No padding required for PI_Malloc_Header.
+#else
+# if !defined (ACE_PI_MALLOC_PADDING_SIZE)
+#   define ACE_PI_MALLOC_PADDING_SIZE ((int) (ACE_MALLOC_HEADER_SIZE - \
+                                       (sizeof (MALLOC_HEADER_PTR) + sizeof (size_t)))\
+                                       / (int) sizeof (long))
+# endif /* !ACE_PI_MALLOC_PADDING_SIZE */
+    long padding_[ACE_PI_MALLOC_PADDING_SIZE < 1 ? 1 : ACE_PI_MALLOC_PADDING_SIZE];
+#endif /* ACE_PI_MALLOC_PADDING_SIZE && ACE_PI_MALLOC_PADDING_SIZE == 0 */
+
+    void dump (void) const;
+    // Dump the state of the object.
+
+  private:
+    ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Malloc_Header &))
+  };
+
+  class ACE_Export ACE_Name_Node
+  {
+    // = TITLE
+    //    This class supports "named memory regions" within <ACE_Malloc>.
+    //
+    // = DESCRIPTION
+    //   Internally, the named memory regions are stored as a
+    //   doubly-linked list within the <Memory_Pool>.  This makes
+    //   it easy to iterate over the items in the list in both FIFO
+    //   and LIFO order.
+  public:
+    // = Initialization methods.
+    ACE_Name_Node (const char *name,
+                   char *name_ptr,
+                   char *pointer,
+                   ACE_Name_Node *head);
+    // Constructor.
+
+    ACE_Name_Node (const ACE_Name_Node &);
+    // Copy constructor.
+
+    ACE_Name_Node (void);
+    // Constructor.
+
+    ~ACE_Name_Node (void);
+    // Constructor.
+
+    static void init_ptr (NAME_NODE_PTR *ptr,
+                          ACE_Name_Node *init,
+                          void *base_addr);
+    // Initialize a name node pointer.
+
+    const char *name (void) const;
+    // Return a pointer to the name of this node.
+
+    void name (const char *);
+    // Assign a name;
+
+    CHAR_PTR name_;
+    // Name of the Node.
+
+    CHAR_PTR pointer_;
+    // Pointer to the contents.
+
+    NAME_NODE_PTR next_;
+    // Pointer to the next node in the doubly-linked list.
+
+    NAME_NODE_PTR prev_;
+    // Pointer to the previous node in the doubly-linked list.
+
+    void dump (void) const;
+    // Dump the state of the object.
+
+  private:
+    ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Name_Node &))
+  };
+
+
+  NAME_NODE_PTR name_head_;
+  // Head of the linked list of Name Nodes.
+
+  MALLOC_HEADER_PTR freep_;
+  // Current head of the freelist.
+
+  char lock_name_[MAXNAMELEN];
+  // Name of lock thats ensures mutual exclusion.
+
+#if defined (ACE_HAS_MALLOC_STATS)
+  // Keep statistics about ACE_Malloc state and performance.
+  ACE_Malloc_Stats malloc_stats_;
+#define ACE_PI_CONTROL_BLOCK_SIZE ((int)(sizeof (NAME_NODE_PTR) \
+                                         + sizeof (MALLOC_HEADER_PTR) \
+                                         + MAXNAMELEN  \
+                                         + sizeof (ACE_Malloc_Stats)))
+#else
+#define ACE_PI_CONTROL_BLOCK_SIZE ((int)(sizeof (NAME_NODE_PTR) \
+                                         + sizeof (MALLOC_HEADER_PTR) \
+                                         + MAXNAMELEN))
+#endif /* ACE_HAS_MALLOC_STATS */
+
+#if defined (ACE_PI_CONTROL_BLOCK_ALIGN_LONGS) && (ACE_PI_CONTROL_BLOCK_ALIGN_LONGS == 0)
+  // No padding required for PI_Control_Block.
+#else
+# if !defined (ACE_PI_CONTROL_BLOCK_ALIGN_LONGS)
+// Notice the casting to int for <sizeof> otherwise unsigned int
+// arithmetic is used and some awful things may happen.
+#   define ACE_PI_CONTROL_BLOCK_ALIGN_LONGS \
+            ((ACE_PI_CONTROL_BLOCK_SIZE % ACE_MALLOC_ALIGN != 0 \
+              ? ACE_MALLOC_ALIGN - (ACE_PI_CONTROL_BLOCK_SIZE % ACE_MALLOC_ALIGN) \
+              : ACE_MALLOC_ALIGN) / int (sizeof (long)))
+# endif /* !ACE_PI_CONTROL_BLOCK_ALIGN_LONGS */
+  long align_[ACE_PI_CONTROL_BLOCK_ALIGN_LONGS < 1 ? 1 : ACE_PI_CONTROL_BLOCK_ALIGN_LONGS];
+  // Force alignment.
+#endif /* ACE_PI_CONTROL_BLOCK_ALIGN_LONGS && ACE_PI_CONTROL_BLOCK_ALIGN_LONGS == 0 */
 
   ACE_Malloc_Header base_;
   // Dummy node used to anchor the freelist.  This needs to come last...
@@ -223,11 +394,10 @@ public:
   void dump (void) const;
   // Dump the state of the object.
 
-#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
 private:
   ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Control_Block &))
-#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
 };
+#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
 
 class ACE_Export ACE_New_Allocator : public ACE_Allocator
 {
