@@ -289,6 +289,8 @@ private:
 };
 
 
+/* MATT UPDATE */
+
 /**
  * @class ACE_Unbounded_Stack
  *
@@ -298,7 +300,8 @@ private:
  * If you use the <insert> or <remove> methods you should keep
  * in mind that duplicate entries aren't allowed.  In general,
  * therefore, you should avoid the use of these methods since
- * they aren't really part of the ADT stack.
+ * they aren't really part of the ADT stack.  The stack is implemented
+ * as a doubly linked list. 
  */
 template <class T>
 class ACE_Unbounded_Stack
@@ -312,19 +315,34 @@ public:
   // = Initialization, assignment, and termination methods.
   /// Initialize a new stack so that it is empty.  Use user defined
   /// allocation strategy if specified.
+  /**
+   * Initialize an empty stack using the user specified allocation strategy 
+   * if provided. 
+   */
   ACE_Unbounded_Stack (ACE_Allocator *alloc = 0);
 
   /// The copy constructor (performs initialization).
+  /**
+   * Initialize this stack to be an exact copy of <s>.
+   */
   ACE_Unbounded_Stack (const ACE_Unbounded_Stack<T> &s);
 
   /// Assignment operator (performs assignment).
+  /**
+   * Perform a deep copy of the rhs into the lhs. 
+   */
   void operator= (const ACE_Unbounded_Stack<T> &s);
 
   /// Perform actions needed when stack goes out of scope.
+  /**
+   * Destroy the underlying list for the stack. 
+   */
   ~ACE_Unbounded_Stack (void);
 
   // = Classic Stack operations.
 
+
+  ///Push an element onto the top of stack. 
   /**
    * Place a new item on top of the stack.  Returns -1 if the stack
    * is already full, 0 if the stack is not already full, and -1 if
@@ -332,6 +350,7 @@ public:
    */
   int push (const T &new_item);
 
+  ///Pop the top element of the stack. 
   /**
    * Remove and return the top stack item.  Returns -1 if the stack is
    * already empty, 0 if the stack is not already empty, and -1 if
@@ -339,6 +358,7 @@ public:
    */
   int pop (T &item);
 
+  ///Examine the top of the stack. 
   /**
    * Return top stack item without removing it.  Returns -1 if the
    * stack is already empty, 0 if the stack is not already empty, and
@@ -349,13 +369,20 @@ public:
   // = Check boundary conditions.
 
   /// Returns 1 if the container is empty, otherwise returns 0.
+  /**
+   * Constant time check to see if the stack is empty. 
+   */
   int is_empty (void) const;
 
   /// Returns 1 if the container is full, otherwise returns 0.
+  /**
+   * Always resturns 0 since the stack is unbounded. 
+   */
   int is_full (void) const;
 
   // = Auxiliary methods (not strictly part of the Stack ADT).
 
+  ///Linear Insert of an item. 
   /**
    * Insert <new_item> into the Stack at the head (but doesn't allow
    * duplicates).  Returns -1 if failures occur, 1 if item is already
@@ -365,12 +392,21 @@ public:
 
   /// Remove <item> from the Stack.  Returns 0 if it removes the item,
   /// -1 if it can't find the item, and -1 if a failure occurs.
+  /**
+   * Linear remove operation. 
+   */
   int remove (const T &item);
 
   /// Finds if <item> occurs the set.  Returns 0 if finds, else -1.
+  /**
+   * Linear find operation. 
+   */
   int find (const T &item) const;
 
   /// The number of items in the stack.
+  /**
+   * Constant time access to the current stack size. 
+   */
   size_t size (void) const;
 
   /// Dump the state of an object.
