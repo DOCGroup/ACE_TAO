@@ -1,3 +1,11 @@
+Mon Jan 24 21:38:09 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/CosLoadBalancing.idl (CosLoadBalancing):
+
+	  Changed typeprefix for this module from "omg.org" to "tao.lb".
+	  The IDL in this file is not yet OMG standard, and is generally
+	  specific to TAO.
+
 Mon Jan 24 16:59:22 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tao/Makefile.am:
