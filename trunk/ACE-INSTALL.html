@@ -65,12 +65,12 @@ using many different compilers over the years.  The <A
 HREF="http://www.dre.vanderbilt.edu/">DOC group</A>, <A
 HREF="http://www.riverace.com/">Riverace</A>, <A
 HREF="http://www.theaceorb.com">OCI</A>, <A
-HREF="http://www.theaceorb.nl">Remedy IT</A>, 
+HREF="http://www.theaceorb.nl">Remedy IT</A>,
 and members of the ACE user community have all contributed ports to
 make ACE the successful and far-reaching toolkit it is today.  Any
 UNIX/POSIX/Windows variation is a potential target platform for ACE.
 If you have <A HREF="docs/ACE-porting.html">porting questions</A> or
-have a problem 
+have a problem
 compiling the ACE source distribution, please contact one of the
 commercial support companies, or send a copy of the
 PROBLEM-REPORT-FORM to either the <A HREF="news:comp.soft-sys.ace">ACE
@@ -104,7 +104,7 @@ For information on TAO's platform coverage and support, please also see
     </td>
     <td>DOC sites at <A HREF="http://www.dre.vanderbilt.edu/">ISIS, <A
     HREF="http://doc.ece.uci.edu/">UCI</A> and <A
-    HREF="http://tao.doc.wustl.edu/">Washington University</A> 
+    HREF="http://tao.doc.wustl.edu/">Washington University</A>
     </td>
   </tr>
   <tr>
@@ -125,8 +125,8 @@ For information on TAO's platform coverage and support, please also see
   <tr>
     <th>Remedy IT</th>
     <td>Maintains ACE on many platforms required for their ACE and
-        TAO service offerings. Besides the standard DOC group platforms 
-        we also support Borland C++ Builder 6, CBuilderX 1.0, VxWorks 5.5, 
+        TAO service offerings. Besides the standard DOC group platforms
+        we also support Borland C++ Builder 6, CBuilderX 1.0, VxWorks 5.5,
         OpenVMS 7.3-2, Linux 64bit Alpha, Tru64, and HPUX 11i 32/64 bit.
     </td>
     <td>Remedy IT <A HREF="http://www.theaceorb.nl">web site</A> and
@@ -150,7 +150,7 @@ For information on TAO's platform coverage and support, please also see
     <td>The following platforms have been supported in the past but are
         not supported anymore by the DOC Group. If you want to have
         support for these environments contact one of the commercial
-        support organisations. The platforms are: VxWorks 5.4, MSVC5, 
+        support organisations. The platforms are: VxWorks 5.4, MSVC5,
         Borland C++ Builder 4 and 5.
     </td>
   </tr>
@@ -196,7 +196,7 @@ HREF="bin/MakeProjectCreator/README"> REAME for ACE
 </A>files for details. The options that have been used to generate the
 above build files can be found in <A
 HREF="bin/MakeProjectCreator/config/global.features">
-global.features</A> file.  
+global.features</A> file.
 
 
 <P><HR><P>
@@ -266,7 +266,7 @@ global.features</A> file.
       5.7 host, using a g++ or egcs that was built on an older SunOS
       host. <P>
 
-      The Sun/C++ compilers until and including 5.4 has several 
+      The Sun/C++ compilers until and including 5.4 has several
       problems with templates and we don't test very often with them.
       We regularly use and test with Sun/C++ 5.5.</p>
 
@@ -310,9 +310,9 @@ global.features</A> file.
       file called <CODE>ACE_All_Tmp.h</CODE>
       and add a line to #include each of the .h files listed under
       <CODE>TEMPLATE_FILES=</CODE> in the GNUmakefile. Now update the
-      GNUmakefile so that 
+      GNUmakefile so that
       <CODE>FILES=ACE_All_Src</CODE> and
-      <CODE>TEMPLATE_FILES=ACE_All_Tmp</CODE>.<P> 
+      <CODE>TEMPLATE_FILES=ACE_All_Tmp</CODE>.<P>
 
   <LI><B><a name="Linux">Linux</a></B><P>
 
@@ -743,7 +743,7 @@ global.features</A> file.
         needed to build it:</p>
 
         <p>1. The latest version of the Apple Developer Tools
-        (December 2002)</p> 
+        (December 2002)</p>
         <p>2. The dlcompat library (obtained either through Fink or
         SourceForge)</p>
 
@@ -999,14 +999,14 @@ the UNIX methods.
 <P>
 GNU Autoconf support is available in the ACE only distribution in the
 DOC group website. More, precisely support for Autoconf will be
-missing in distributions that have TAO and CIAO bundled along. 
+missing in distributions that have TAO and CIAO bundled along.
 
-GNU Autoconf support has been partially present in a number of ACE 
+GNU Autoconf support has been partially present in a number of ACE
 versions. However, ACE 5.4 was the first version that supported it in
 earnest. There are still a few problems with this method, so you
 should be careful to test the resulting ACE library before using it in
 your applications. The traditional configuration method is still more
-reliable. Any help you can 
+reliable. Any help you can
 lend to improve the ACE build process using GNU Autoconf would be very much
 appreciated. Please send any fixes to the
 <A HREF="mailto:ace-users@cs.wustl.edu">ACE users</A> mailing list.</P>
@@ -1107,9 +1107,9 @@ per-platform configuration method:</P>
   <LI>Install <A HREF="http://ftp.gnu.org/pub/gnu/make/">GNU make</A>
   3.79.1 or greater on your system (available via <code>http</code>
       anonymous <code>ftp</code> from <code>ftp.gnu.org</code> in the
-      <code>pub/gnu/make/</code> directory). 
+      <code>pub/gnu/make/</code> directory).
       You <EM>must</EM> use GNU make when using ACE's traditional
-	per-platform configuration method or ACE won't compile.<P>
+        per-platform configuration method or ACE won't compile.<P>
 
   <LI>Add an environment variable called ACE_ROOT that contains the
       name of the root of the directory where you keep the ACE wrapper
@@ -1200,7 +1200,7 @@ include $(ACE_ROOT)/include/makeinclude/platform_sunos5_sunc++.GNU
 
   <LI>If you need to regenerate the Svc_Conf_y.cpp file, you'll need to
       get <A HREF="http://ftp.gnu.org/pub/gnu/bison/">GNU Bison</A>.
-	However, you should rarely, if ever, need to do this.<P>
+        However, you should rarely, if ever, need to do this.<P>
 
 </OL>
 
@@ -1222,7 +1222,7 @@ in MSVC may not do this).  <P>
 ACE contains project files for Microsoft Visual C++ 6.0 (*.dsp/.dsw)
 and Visual C++ .NET 2003 (*.vcproj/.sln).  There are also
 Makefile.bor files to compile ACE, and the ACE one-button tests with
-Borland C++ Builder. <P> 
+Borland C++ Builder. <P>
 
 <P><hr align=left width="50%"><P>
 <H4><A NAME="borland">Building and Installing ACE on Windows with Borland
@@ -1343,7 +1343,7 @@ make -f Makefile.bor
 Once you build all the tests, you can run the perl script:<P>
 <BLOCKQUOTE><CODE>run_test.pl</CODE></BLOCKQUOTE><P> in the
 <code>tests</code> directory to try all the tests. You need to make
-sure the ACE bin and lib directory (in this case 
+sure the ACE bin and lib directory (in this case
 <CODE>ACE_ROOT\bin</CODE> and <CODE>ACE_ROOT\lib</CODE>)
 are on the path before you try to run the tests.<p>
 
@@ -1382,7 +1382,7 @@ Microsoft Visual C++</A></H4>
   NT.<BR>  <STRONG>Note:</STRONG> If you use the dynamic libraries,
   make sure you include ACE_ROOT\lib in your PATH whenever you run
   programs that uses ACE.  Otherwise you may experience problems
-  finding ace.dll or aced.dll.<BR> 
+  finding ace.dll or aced.dll.<BR>
       <BR>
   <LI>If you are building for Windows NT 4 or later (Windows 2000, XP, etc.)
       then you can start building without anymore changes. If you are building
@@ -1618,13 +1618,13 @@ For our build we require the packages
        % cd $ACE_ROOT/ace
        % make
        </pre></code></blockquote>
-       
+
        <p>
        This should create <TT>libACE.dll</TT> (the Win32 shared library) and
        <TT>libACE.dll.a</TT> (the Win32 import library for the DLL).
        Note that the name for the ACE DLL follows the MinGW convention, which itself
        resembles UNIX.
-     
+
        <p>
        If you want static libs also, you may run:
 
