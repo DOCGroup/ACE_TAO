@@ -500,7 +500,7 @@ ACE::ldfind (const char filename[],
               
           // Look at each dynamic lib directory in the search path.
           char *nextholder = 0;
-          char *path_entry = ACE_OS::strsplit_r
+          const char *path_entry = ACE_OS::strsplit_r
             (ld_path, ACE_LD_SEARCH_PATH_SEPARATOR_STR, nextholder);
 
           int result = 0;

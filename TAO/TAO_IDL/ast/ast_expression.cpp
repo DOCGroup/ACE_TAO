@@ -1489,7 +1489,8 @@ AST_Expression::dump(ostream &o)
   case EC_none:
     break;
   default:
-    o << GTDEVEL("unsupported dump mode for expression with ec == ") << pd_ec ;
+    o << GTDEVEL("unsupported dump mode for expression with ec == ") 
+      << (int) pd_ec ;
     break;
   }
 }
