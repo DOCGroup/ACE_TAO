@@ -24,7 +24,6 @@ FILES   = \
         Parse_Headers \
         IO
 
-LIBS   += $(ACELIB)
 LDLIBS  = # -lJAWS
 
 PSRC    = $(addsuffix .cpp,$(BIN))
