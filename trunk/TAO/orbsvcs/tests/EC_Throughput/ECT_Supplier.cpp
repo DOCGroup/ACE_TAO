@@ -13,6 +13,7 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Sched_Params.h"
 #include "ace/High_Res_Timer.h"
+#include "ace/ACE.h"
 
 ACE_RCSID(EC_Throughput, ECT_Supplier, "$Id$")
 
