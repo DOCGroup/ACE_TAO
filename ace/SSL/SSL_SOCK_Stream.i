@@ -77,7 +77,7 @@ ACE_SSL_SOCK_Stream::send (const void *buf,
 
   if (status <= 0)
     {
-      switch (::SSL_get_error (this->ssl_, n))
+      switch (::SSL_get_error (this->ssl_, status))
         {
         case SSL_ERROR_WANT_WRITE:
         case SSL_ERROR_WANT_READ:
@@ -117,7 +117,7 @@ ACE_SSL_SOCK_Stream::recv (void *buf,
                            n);
   if (status <= 0) 
     {
-      switch (::SSL_get_error (this->ssl_, n))
+      switch (::SSL_get_error (this->ssl_, status))
         {
         case SSL_ERROR_WANT_WRITE:
         case SSL_ERROR_WANT_READ:
@@ -147,7 +147,7 @@ ACE_SSL_SOCK_Stream::send (const void *buf,
 
   if (status <= 0)
     {
-      switch (::SSL_get_error (this->ssl_, n))
+      switch (::SSL_get_error (this->ssl_, status))
         {
         case SSL_ERROR_WANT_WRITE:
         case SSL_ERROR_WANT_READ:
@@ -177,7 +177,7 @@ ACE_SSL_SOCK_Stream::recv (void *buf,
 
   if (status <= 0)
     {
-      switch (::SSL_get_error (this->ssl_, n))
+      switch (::SSL_get_error (this->ssl_, status))
         {
         case SSL_ERROR_WANT_WRITE:
         case SSL_ERROR_WANT_READ:

@@ -1,3 +1,13 @@
+Thu Jul 13 09:33:45 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SSL/SSL_SOCK_Stream.i (send, recv):
+
+	  Fixed typos where size of buffer being sent/received was passed
+	  to the OpenSSL SSL_get_error() function, instead of the return
+	  status of the SSL_write()/SSL_read() call.  This will fix
+	  some broken error handling.
+	  Reported by Craig Perras <cperras@watchguard.com>
+
 Thu Jul 13 07:55:41 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * docs/ACE-guidelines.html: added general guideline to not
