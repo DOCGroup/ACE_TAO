@@ -676,9 +676,17 @@ AST_Module::has_nested_valuetype ()
 }
 
 int
-AST_Module::be_add_interface (AST_Interface *i)
+AST_Module::be_add_interface (AST_Interface *i, AST_Interface *ix)
 {
-  this->fe_add_interface (i);
+   /*
+   * Add it to scope
+   */
+  add_to_scope(i, ix);
+  /*
+   * Add it to set of locally referenced symbols
+   */
+  add_to_referenced(i, I_FALSE, ix);
+
   return 0;
 }
 

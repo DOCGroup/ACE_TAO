@@ -94,6 +94,7 @@ FILES = tao_idl \
         be/be_module \
         be/be_native \
         be/be_operation \
+		be/be_operation_strategy \
         be/be_predefined_type \
         be/be_root \
         be/be_sequence \

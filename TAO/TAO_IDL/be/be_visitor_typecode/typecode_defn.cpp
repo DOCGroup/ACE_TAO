@@ -146,10 +146,7 @@ be_visitor_typecode_defn::visit_type (be_type *node)
   
   // Note that we just need the parameters here and hence we generate the
   // encapsulation for the parameters.
-  if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_TYPECODE_DEFN)
-    this->ctx_->sub_state (TAO_CodeGen::TAO_AMI_HANDLER_TC_DEFN_ENCAPSULATION);
-  else
-    this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_ENCAPSULATION);
+  this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_ENCAPSULATION);
   
   if (node->accept (this) == -1)
     {
@@ -165,10 +162,7 @@ be_visitor_typecode_defn::visit_type (be_type *node)
   *os << "static CORBA::TypeCode _tc_TAO_tc_";
 
   // Flat name generation.
-  if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_TYPECODE_DEFN)
-    *os << flat_name;
-  else
-    *os << node->flat_name ();
+  *os << node->flat_name ();
   
   *os << " (";
   
@@ -205,24 +199,15 @@ be_visitor_typecode_defn::visit_type (be_type *node)
   *os << ", sizeof (_oc_";
   
   // Flat name generation.
-  if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_TYPECODE_DEFN)
-    *os << flat_name;
-  else
-    *os <<  node->flat_name ();
+  *os <<  node->flat_name ();
   
   *os << "), (char *) &_oc_";
 
   // Flat name generation.
-  if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_TYPECODE_DEFN) 
-    *os << flat_name;
-  else
-    *os <<  node->flat_name ();
+  *os <<  node->flat_name ();
   
   // Name generation.
-  if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_TYPECODE_DEFN)
-    *os << ", 0, sizeof (" << node->compute_name ("AMI_", "Handler") << "));" << be_nl; 
-  else
-    *os << ", 0, sizeof (" << node->name () << "));" << be_nl;
+  *os << ", 0, sizeof (" << node->name () << "));" << be_nl;
   
   // Is our enclosing scope a module? We need this check because for
   // platforms that support namespaces, the typecode must be declared
@@ -242,18 +227,12 @@ be_visitor_typecode_defn::visit_type (be_type *node)
       *os << "TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_";
       
       // Local name generation.
-      if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_TYPECODE_DEFN)
-        *os << "AMI_" << node->local_name () << "Handler";
-      else
-        *os << node->local_name ();
+      *os << node->local_name ();
       
       *os << ", &_tc_TAO_tc_";
 
       // Flat name generation.
-      if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_TYPECODE_DEFN)
-        *os << flat_name;
-      else
-        *os << node->flat_name ();
+      *os << node->flat_name ();
 
       *os << ")" << be_nl;
       
@@ -271,18 +250,12 @@ be_visitor_typecode_defn::visit_type (be_type *node)
       *os << "CORBA::TypeCode_ptr ";
 
       // Tc name generation.
-      if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_TYPECODE_DEFN)
-        *os << node->tc_name ("AMI_", "Handler");
-      else
-        *os << node->tc_name ();
+      *os << node->tc_name ();
       
       *os << " = &_tc_TAO_tc_";
 
       // Flat name generation.
-      if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_TYPECODE_DEFN) 
-        *os << flat_name;
-      else
-        *os <<  node->flat_name ();
+      *os <<  node->flat_name ();
       
       *os << ";\n\n";
     }
@@ -434,14 +407,12 @@ be_visitor_typecode_defn::visit_interface (be_interface *node)
 {
   switch (this->ctx_->sub_state ())
     {
-    case TAO_CodeGen::TAO_AMI_HANDLER_TC_DEFN_TYPECODE:
     case TAO_CodeGen::TAO_TC_DEFN_TYPECODE:
       return this->visit_type (node);
 
     case TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED:
       return this->gen_typecode (node);
 
-    case TAO_CodeGen::TAO_AMI_HANDLER_TC_DEFN_ENCAPSULATION:
     case TAO_CodeGen::TAO_TC_DEFN_ENCAPSULATION:
       return this->gen_encapsulation (node);
 
@@ -2898,10 +2869,7 @@ be_visitor_typecode_defn::gen_repoID (be_decl *node)
       *os << " // repository ID = ";
       
       // repoID generation.
-      if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_TYPECODE_DEFN)
-        *os << repoID;
-      else
-        *os << node->repoID ();
+      *os << node->repoID ();
       
       // size of the repoID filed
       this->tc_offset_ += (2 * sizeof (ACE_CDR::ULong));
@@ -2910,17 +2878,11 @@ be_visitor_typecode_defn::gen_repoID (be_decl *node)
     {
       // Unoptimized case.
       
-      if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_TYPECODE_DEFN)
-        *os << (ACE_OS::strlen (repoID) + 1) << ", ";
-      else
-        *os << (ACE_OS::strlen (node->repoID ()) + 1) << ", ";
+      *os << (ACE_OS::strlen (node->repoID ()) + 1) << ", ";
       
       ACE_CDR::ULong *arr, i, arrlen;
 
-      if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_TYPECODE_DEFN)
-        (void) this->tc_name2long (repoID, arr, arrlen);
-      else
-        (void) this->tc_name2long (node->repoID (), arr, arrlen);
+      (void) this->tc_name2long (node->repoID (), arr, arrlen);
 
       for (i = 0; i < arrlen; i++)
         {
@@ -2928,10 +2890,7 @@ be_visitor_typecode_defn::gen_repoID (be_decl *node)
         }
       
       // Comment.
-      if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_TYPECODE_DEFN)
-        *os << " // repository ID = " << repoID;
-      else
-        *os << " // repository ID = " << node->repoID ();
+      *os << " // repository ID = " << node->repoID ();
 
       // size of the repoID field
       this->tc_offset_ += (arrlen + 1) * sizeof (ACE_CDR::ULong);
@@ -2963,26 +2922,15 @@ be_visitor_typecode_defn::gen_name (be_decl *node)
     {
       ACE_CDR::ULong *arr, i, arrlen;
 
-      if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_TYPECODE_DEFN)
-        {
-          *os << (ACE_OS::strlen (node->compute_local_name ("AMI_", "Handler")->get_string ()) + 1) << ", ";
-          (void) this->tc_name2long (node->compute_local_name ("AMI_", "Handler")->get_string (), arr, arrlen);
-        }
-      else
-        {
-          *os << (ACE_OS::strlen (node->local_name ()->get_string ()) + 1) << ", ";
-          (void) this->tc_name2long (node->local_name ()->get_string (), arr, arrlen);
-        }
+      *os << (ACE_OS::strlen (node->local_name ()->get_string ()) + 1) << ", ";
+      (void) this->tc_name2long (node->local_name ()->get_string (), arr, arrlen);
 
       for (i = 0; i < arrlen; i++)
         {
           os->print ("ACE_NTOHL (0x%x), ", arr[i]);
         }
       
-      if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_TYPECODE_DEFN)
-        *os << " // name = " << node->compute_local_name ("AMI_", "Handler");
-      else
-        *os << " // name = " << node->local_name ();
+      *os << " // name = " << node->local_name ();
 
       // size of the name field.
       this->tc_offset_ += (arrlen + 1) * sizeof (ACE_CDR::ULong);

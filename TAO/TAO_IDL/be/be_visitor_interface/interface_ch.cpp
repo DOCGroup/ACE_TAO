@@ -58,7 +58,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
       if (idl_global->ami_call_back () == I_TRUE)
         {
-          be_interface_type_strategy *old_strategy =
+          be_interface_strategy *old_strategy =
             node->set_strategy (new be_interface_ami_handler_strategy (node));
 
           // generate the ifdefined macro for  the _ptr type
@@ -337,7 +337,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
           // Remove the exception holder strategy, delete it,
           // and set the ami handler strategy
-          be_interface_type_strategy *old_strategy =
+          be_interface_strategy *old_strategy =
             node->set_strategy (new be_interface_ami_handler_strategy (node));
 
           ctx = *this->ctx_;

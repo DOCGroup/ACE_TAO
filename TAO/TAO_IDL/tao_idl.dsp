@@ -921,6 +921,21 @@ SOURCE=.\be\be_operation.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\be\be_operation_strategy.cpp
+
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\be\be_predefined_type.cpp
 
 !IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
@@ -2204,10 +2219,6 @@ SOURCE=.\be_include\be_interface_fwd.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\be_include\be_interface_strategy.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\be_include\be_module.h
 # End Source File
 # Begin Source File
@@ -2217,6 +2228,10 @@ SOURCE=.\be_include\be_native.h
 # Begin Source File
 
 SOURCE=.\be_include\be_operation.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_operation_strategy.h
 # End Source File
 # Begin Source File
 

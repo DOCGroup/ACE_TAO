@@ -61,6 +61,7 @@ be_visitor_operation_argument::post_process (be_decl *bd)
         if (!this->last_node (bd))
           *os << ",\n";
       break;
+#if 0 
     case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_COLLOCATED_ARG_UPCALL_SS:          
     case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARG_UPCALL_CS:          
       if (!this->last_inout_or_out_node (bd))
@@ -78,6 +79,8 @@ be_visitor_operation_argument::post_process (be_decl *bd)
             *os << ",\n";
         }
       break;
+#endif /* 0 */
+
     default:
       break;
     }
@@ -119,6 +122,7 @@ be_visitor_operation_argument::visit_operation (be_operation *node)
           os->indent ();
           *os << "ACE_TRY_ENV";
           break;
+#if 0
         case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_COLLOCATED_ARG_UPCALL_SS:
         case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARG_UPCALL_CS:
           // applicable only to these cases where the actual upcall is made 
@@ -131,6 +135,7 @@ be_visitor_operation_argument::visit_operation (be_operation *node)
           os->indent ();
           *os << "ACE_TRY_ENV";
           break;
+#endif /* 0 */
         default:
           break;
         }
@@ -195,20 +200,11 @@ be_visitor_operation_argument::visit_argument (be_argument *node)
     case TAO_CodeGen::TAO_OPERATION_ARG_DECL_SS:
       ctx.state (TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS);
       break;
-    case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARG_DECL_CS:
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_VARDECL_CS);
-      break;
     case TAO_CodeGen::TAO_OPERATION_ARG_DEMARSHAL_SS:
       ctx.state (TAO_CodeGen::TAO_ARGUMENT_DEMARSHAL_SS);
       break;
-    case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARG_DEMARSHAL_CS:
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_DEMARSHAL_CS);
-      break;
     case TAO_CodeGen::TAO_OPERATION_ARG_MARSHAL_SS:
       ctx.state (TAO_CodeGen::TAO_ARGUMENT_MARSHAL_SS);
-      break;
-    case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARG_MARSHAL_CS:
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_MARSHAL_CS);
       break;
     case TAO_CodeGen::TAO_OPERATION_ARG_PRE_UPCALL_SS:
       ctx.state (TAO_CodeGen::TAO_ARGUMENT_PRE_UPCALL_SS);
@@ -219,18 +215,29 @@ be_visitor_operation_argument::visit_argument (be_argument *node)
     case TAO_CodeGen::TAO_OPERATION_ARG_UPCALL_SS:
       ctx.state (TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS);
       break;
-    case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_COLLOCATED_ARG_UPCALL_SS:
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_COLLOCATED_UPCALL_SS);
-      break;
-    case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARG_UPCALL_CS:
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_UPCALL_CS);
-      break;
     case TAO_CodeGen::TAO_OPERATION_ARG_POST_UPCALL_SS:
       ctx.state (TAO_CodeGen::TAO_ARGUMENT_POST_UPCALL_SS);
       break;
     case TAO_CodeGen::TAO_OPERATION_ARG_POST_MARSHAL_SS:
       ctx.state (TAO_CodeGen::TAO_ARGUMENT_POST_MARSHAL_SS);
       break;
+#if 0
+    case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARG_DECL_CS:
+      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_VARDECL_CS);
+      break;
+    case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARG_DEMARSHAL_CS:
+      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_DEMARSHAL_CS);
+      break;
+    case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARG_MARSHAL_CS:
+      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_MARSHAL_CS);
+      break;
+    case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_COLLOCATED_ARG_UPCALL_SS:
+      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_COLLOCATED_UPCALL_SS);
+      break;
+    case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARG_UPCALL_CS:
+      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_UPCALL_CS);
+      break;
+#endif /* 0 */
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,

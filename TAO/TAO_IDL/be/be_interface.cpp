@@ -65,10 +65,10 @@ be_interface::~be_interface (void)
     delete this->strategy_;
 }
 
-be_interface_type_strategy *
-be_interface::set_strategy (be_interface_type_strategy *new_strategy)
+be_interface_strategy *
+be_interface::set_strategy (be_interface_strategy *new_strategy)
 {
-  be_interface_type_strategy *old = this->strategy_;
+  be_interface_strategy *old = this->strategy_;
 
   if (new_strategy != 0)
     this->strategy_ = new_strategy;
@@ -1111,19 +1111,6 @@ be_interface::gen_optable_entries (be_interface *derived)
                       << derived->full_skel_name () << "::"
                       << d->local_name () << "_skel},\n";
                   derived->skel_count_++;
-
-                  if (this->strategy_->strategy_type () 
-                    == be_interface_type_strategy::AMI_HANDLER)
-                    {
-                      os->indent ();
-
-                      // we are an operation node
-                      *os << "{\"" << d->original_local_name () << "_excep\", &"
-                          << derived->full_skel_name () << "::"
-                          << d->local_name () << "_excep_skel},\n";
-
-                      derived->skel_count_++;
-                    }
                 }
               else if (d->node_type () == AST_Decl::NT_attr)
                 {
@@ -1140,20 +1127,6 @@ be_interface::gen_optable_entries (be_interface *derived)
 
                   derived->skel_count_++;
 
-                  if (this->strategy_->strategy_type () 
-                    == be_interface_type_strategy::AMI_HANDLER)
-                    {
-                      os->indent ();
-
-                      // Generate only the "get" entry if we are
-                      // readonly.
-                      *os << "{\"_get_" << d->original_local_name () << "_excep"
-                          << "\", &" << derived->full_skel_name ()
-                          << "::_get_" << d->local_name () << "_excep_skel},\n";
-
-                      derived->skel_count_++;
-                    }
-
                   attr = AST_Attribute::narrow_from_decl (d);
                   if (!attr)
                     return -1;
@@ -1166,16 +1139,6 @@ be_interface::gen_optable_entries (be_interface *derived)
                           << "\", &" << derived->full_skel_name ()
                           << "::_set_" << d->local_name () << "_skel},\n";
                       derived->skel_count_++;
-
-                      if (this->strategy_->strategy_type () 
-                        == be_interface_type_strategy::AMI_HANDLER)
-                        {
-                          os->indent (); // start from current indentation level
-                          *os << "{\"_set_" << d->original_local_name () << "_excep"
-                              << "\", &" << derived->full_skel_name ()
-                              << "::_set_" << d->local_name () << "_excep_skel},\n";
-                          derived->skel_count_++;
-                        }
                     }
                 }
               si->next ();
@@ -1220,20 +1183,7 @@ be_interface::gen_optable_entries (be_interface *derived)
                       << derived->full_skel_name () << "::"
                       << d->local_name () << "_skel" << "\n";
                   derived->skel_count_++;
-
-                  if (this->strategy_->strategy_type () 
-                    == be_interface_type_strategy::AMI_HANDLER)
-                    {
-                      os->indent ();
-
-                      // We are an operation node. We use the original
-                      // operation name, not the one with _cxx_ in it.
-                      *os << d->original_local_name () << "_excep,\t&"
-                          << derived->full_skel_name () << "::"
-                          << d->local_name () << "_excep_skel" << "\n";
-                      derived->skel_count_++;
-                    }
-                }
+               }
               else if (d->node_type () == AST_Decl::NT_attr)
                 {
                   AST_Attribute *attr;
@@ -1247,18 +1197,6 @@ be_interface::gen_optable_entries (be_interface *derived)
                       << d->local_name () << "_skel\n";
                   derived->skel_count_++;
 
-                  if (this->strategy_->strategy_type () 
-                    == be_interface_type_strategy::AMI_HANDLER)
-                    {
-                      os->indent ();
-
-                      // Generate only the "get" entry if we are readonly
-                      *os << "_get_" << d->original_local_name () << "_excep,\t&"
-                          << derived->full_skel_name () << "::_get_"
-                          << d->local_name () << "_excep_skel\n";
-                      derived->skel_count_++;
-                    }
-
                   attr = AST_Attribute::narrow_from_decl (d);
                   if (!attr)
                     return -1;
@@ -1271,16 +1209,6 @@ be_interface::gen_optable_entries (be_interface *derived)
                           << derived->full_skel_name () << "::_set_"
                           << d->local_name () << "_skel\n";
                       derived->skel_count_++;
-
-                      if (this->strategy_->strategy_type () 
-                        == be_interface_type_strategy::AMI_HANDLER)
-                        {
-                          os->indent (); // start from current indentation level
-                          *os << "_set_" << d->original_local_name () << "_excep,\t&"
-                              << derived->full_skel_name () << "::_set_"
-                              << d->local_name () << "_excep_skel\n";
-                          derived->skel_count_++;
-                        }
                     }
                 }
               si->next ();

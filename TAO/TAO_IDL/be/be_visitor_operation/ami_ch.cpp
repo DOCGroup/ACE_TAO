@@ -83,7 +83,7 @@ be_visitor_operation_ami_ch::visit_operation (be_operation *node)
   //         mapping. For these we grab a visitor that generates the
   //         parameter listing.
   be_visitor_context ctx (*this->ctx_);
-  ctx.state (TAO_CodeGen::TAO_AMI_OPERATION_ARGLIST_CH);
+  ctx.state (TAO_CodeGen::TAO_OPERATION_ARGLIST_CH);
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
   if (!visitor)
     {
@@ -94,7 +94,7 @@ be_visitor_operation_ami_ch::visit_operation (be_operation *node)
                         -1);
     }
 
-  if (node->accept (visitor) == -1)
+  if (node->hidden_operation ()->accept (visitor) == -1)
     {
       delete visitor;
       ACE_ERROR_RETURN ((LM_ERROR,

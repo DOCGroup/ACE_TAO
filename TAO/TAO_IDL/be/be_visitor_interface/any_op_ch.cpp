@@ -60,7 +60,7 @@ be_visitor_interface_any_op_ch::visit_interface (be_interface *node)
     to_do = 2;
   else
     to_do = 1;
-  be_interface_type_strategy *old_strategy = 0;
+  be_interface_strategy *old_strategy = 0;
 
   for (i = 0; i < to_do; i++)
     {

@@ -32,7 +32,7 @@
 class TAO_OutStream;
 
 // Forward declaration of the strategy
-class be_interface_type_strategy;
+class be_interface_strategy;
 
 /*
  * BE_Interface
@@ -69,7 +69,7 @@ public:
   ~be_interface (void);
   // dtor
 
-  be_interface_type_strategy *set_strategy (be_interface_type_strategy *new_strategy);
+  be_interface_strategy *set_strategy (be_interface_strategy *new_strategy);
   // Set the strategy to generate the names
 
   // Methods, which access the strategy
@@ -268,7 +268,7 @@ private:
   // am I directly or indirectly involved in a multiple inheritance. If the
   // value is -1 => not computed yet.
 
-  be_interface_type_strategy *strategy_;
+  be_interface_strategy *strategy_;
   // Member for holding the strategy for generating names
 };
 

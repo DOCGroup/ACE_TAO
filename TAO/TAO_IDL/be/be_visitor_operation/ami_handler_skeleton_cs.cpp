@@ -92,7 +92,7 @@ be_visitor_operation_ami_handler_skeleton_cs::visit_operation (be_operation *nod
     }
 
   // Genereate scope name.
-  *os << parent->compute_name ("AMI_", "Handler");
+  *os << parent->full_name ();
 
   // Generate the operation name.
   *os << "::";
@@ -105,7 +105,7 @@ be_visitor_operation_ami_handler_skeleton_cs::visit_operation (be_operation *nod
       else
         *os << "_get_";
     }
-  *os << node->local_name () << "_skel (" << be_idt_nl;
+  *os << node->local_name () << "_reply_stub (" << be_idt_nl;
 
   // Generate the argument list.
   *os << "TAO_InputCDR &_tao_in, " << be_nl
@@ -147,10 +147,10 @@ be_visitor_operation_ami_handler_skeleton_cs::visit_operation (be_operation *nod
   os->indent();
 
   *os << "// Retrieve Reply Handler object." << be_nl;
-  *os << parent->compute_name ("AMI_", "Handler") << "_var "
+  *os << parent->full_name () << "_var "
       << "_tao_reply_handler_object =" << be_idt_nl;
 
-  *os << parent->compute_name ("AMI_", "Handler");
+  *os << parent->full_name ();
   *os << "::_narrow(_tao_reply_handler, ACE_TRY_ENV);" << be_uidt_nl;
 
   // @@ Michael: We do not activate this right now,
@@ -164,25 +164,9 @@ be_visitor_operation_ami_handler_skeleton_cs::visit_operation (be_operation *nod
       << "{\n";
 #endif
 
-  // declare a return type variable
-  ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_RETVAL_DECL_CS);
-  visitor = tao_cg->make_visitor (&ctx);
-  if (!visitor || (bt->accept (visitor) == -1))
-    {
-      delete visitor;
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) ami_handler_skeleton_cs::"
-                         "visit_operation - "
-                         "codegen for return var decl failed\n"),
-                        -1);
-    }
-  delete visitor;
-  visitor = 0;
-
   // declare variables for arguments
   ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARG_DECL_CS);
+  ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_DECL_SS);
   visitor = tao_cg->make_visitor (&ctx);
   if (!visitor || (node->accept (visitor) == -1))
     {
@@ -462,54 +446,26 @@ be_compiled_visitor_operation_ami_handler_skeleton_cs::
   os->indent ();
 
   *os << "// Demarshall all the arguments." << be_nl;
-  if (!this->void_return_type (bt)
-      || this->has_param_type (node, AST_Argument::dir_INOUT)
-      || this->has_param_type (node, AST_Argument::dir_OUT))
+  if (this->has_param_type (node, AST_Argument::dir_IN))
     {
       *os << "if (!(\n" << be_idt << be_idt << be_idt;
 
-      if (!this->void_return_type (bt))
+      // demarshal each in and inout argument
+      ctx = *this->ctx_;
+      ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_DEMARSHAL_SS);
+      ctx.sub_state (TAO_CodeGen::TAO_CDR_INPUT);
+      visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor || (node->accept (visitor) == -1))
         {
-          // demarshal the return val
-          ctx = *this->ctx_;
-          ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_RETVAL_DEMARSHAL_CS);
-          ctx.sub_state (TAO_CodeGen::TAO_CDR_INPUT);
-          visitor = tao_cg->make_visitor (&ctx);
-          if (!visitor || (node->accept (visitor) == -1))
-            {
-              delete visitor;
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_compiled_visitor_operation_ami_handler_skeleton_cs::"
-                                 "gen_demarshal_params - "
-                                 "codegen for return var failed\n"),
-                                -1);
-            }
           delete visitor;
-
-          if (this->has_param_type (node, AST_Argument::dir_INOUT) ||
-              this->has_param_type (node, AST_Argument::dir_OUT))
-            *os << " &&\n";
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l)  be_compiled_visitor_operation_ami_handler_skeleton_cs::"
+                             "gen_marshal_params - "
+                             "codegen for args failed\n"),
+                            -1);
         }
+      delete visitor;
 
-      if (this->has_param_type (node, AST_Argument::dir_INOUT) ||
-          this->has_param_type (node, AST_Argument::dir_OUT))
-        {
-          // demarshal each in and inout argument
-          ctx = *this->ctx_;
-          ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARG_DEMARSHAL_CS);
-          ctx.sub_state (TAO_CodeGen::TAO_CDR_INPUT);
-          visitor = tao_cg->make_visitor (&ctx);
-          if (!visitor || (node->accept (visitor) == -1))
-            {
-              delete visitor;
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l)  be_compiled_visitor_operation_ami_handler_skeleton_cs::"
-                                 "gen_marshal_params - "
-                                 "codegen for args failed\n"),
-                                -1);
-            }
-          delete visitor;
-        }
       *os << be_uidt << be_uidt_nl
           << " ))" << be_nl
           << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl << be_nl;
@@ -533,19 +489,8 @@ be_compiled_visitor_operation_ami_handler_skeleton_cs::
   *os << node->local_name () << " (" << be_idt_nl;
 
 
-  // if we have a non-void return type then pass it as the first argument
-  if (!this->void_return_type (bt))
-    {
-      *os << "_tao_retval,\n";
-
-    }
-
   ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARG_UPCALL_CS);
-
-  if (this->has_param_type (node, AST_Argument::dir_INOUT)
-      || this->has_param_type (node, AST_Argument::dir_OUT))
-    ctx.sub_state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_HAS_ARGUMENTS);
+  ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_UPCALL_SS);
   // generate the argument list containing the inout and inout arguments
   visitor = tao_cg->make_visitor (&ctx);
   if (!visitor || (node->accept (visitor) == -1))
