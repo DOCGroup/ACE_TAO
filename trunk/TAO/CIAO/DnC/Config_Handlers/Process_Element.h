@@ -55,6 +55,8 @@ using xercesc::DOMNode;
 using xercesc::DOMNodeFilter;
 using xercesc::DOMNamedNodeMap;
 
+BEGIN_DEPLOYMENT_NAMESPACE
+
 // ID map type definition
 typedef ACE_Hash_Map_Manager<ACE_TString, int, ACE_Null_Mutex> REF_MAP;
 typedef ACE_Hash_Map_Iterator<ACE_TString, int, ACE_Null_Mutex> REF_ITER;
@@ -114,6 +116,8 @@ process_element_remote(DOMDocument* doc, DOMNodeIterator* iter, DOMNode* node,
                        XStr& node_name, const char* name,
                        ELEMENT& elem, OBJECT* obj, FUNCTION func,
                        REF_MAP& id_map);
+
+END_DEPLOYMENT_NAMESPACE
 
 #include "Process_Element.i"
 #include "Process_Element.tpp"
