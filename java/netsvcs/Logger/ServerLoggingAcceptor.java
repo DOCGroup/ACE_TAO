@@ -32,8 +32,14 @@ import JACE.Misc.*;
  */
 public class ServerLoggingAcceptor extends Acceptor implements Runnable
 {
-  // Main function so the service can be started without the service
-  // configurator.
+  /** Main function to bootstrap the process
+   *
+   *  Command line arguments:
+   *
+   *  -p <port>         Select a port for listening for requests
+   *  -r <class name>   Specify a LogMessageReceiver (make sure it's a full class name)
+   * 
+   */
   public static void main (String [] args)
     {
       ServerLoggingAcceptor sla = new ServerLoggingAcceptor();
@@ -41,14 +47,15 @@ public class ServerLoggingAcceptor extends Acceptor implements Runnable
       sla.init(args);
     }
 
-  // Called by the service configurator, receives the command line and
-  // launches its own thread.
+  /** 
+   * Receives the command line and launches its own thread
+   */
   public int init (String [] args)
     {
       this.parseArgs(args);
 
-      // *** should contain choices like what the default is
-      // in an options singleton?
+      // If the user didn't specify a LogMessageReceiver, use the default
+      // (which just calls a print method on LogMessage)
       if (this.receiver_ == null)
 	this.receiver_ = new DefaultLMR();
 
@@ -56,34 +63,41 @@ public class ServerLoggingAcceptor extends Acceptor implements Runnable
       return 0;
     }
 
-  // Specify what LogMessageReceiver to use 
+  /**
+   * Specify what LogMessageReceiver to use 
+   */
   public void setLMR(LogMessageReceiver receiver)
     {
       this.receiver_ = receiver;
     }
 
-  // Accessor for the LogMessageReceiver
+  /** 
+   * Accessor for the LogMessageReceiver
+   */
   public LogMessageReceiver getLMR ()
     {
       return this.receiver_;
     }
 
-  // Create a new ServerLoggingHandler 
+  /** 
+   * Create a new ServerLoggingHandler 
+   */
   protected SvcHandler makeSvcHandler ()
     throws InstantiationException, IllegalAccessException
     {
-      // ** could contain this choice in a singleton, too
       return new netsvcs.Logger.ServerLoggingHandler (this.receiver_);
     }
 
-  // Run forever accepting new connections
+  /**
+   * Run forever accepting new connections
+   */
   public void run ()
     {
       try {
 
 	this.open (this.port_);
 	while (true) 
-	  this.accept();  // blocks
+	  this.accept();  
 
       } catch (SocketException e)
 	{
@@ -105,7 +119,9 @@ public class ServerLoggingAcceptor extends Acceptor implements Runnable
       ACE.ERROR("ServerLoggingAcceptor has exited");
     }
 
-  // Process the command line
+  /**
+   * Process the command line
+   */
   protected void parseArgs (String args[])
   {
     String s;
@@ -145,7 +161,6 @@ public class ServerLoggingAcceptor extends Acceptor implements Runnable
       }
   }
 
-  // port should be in options singleton **
   private int port_ = ACE.DEFAULT_SERVER_PORT;
   private LogMessageReceiver receiver_ = null;
 };
