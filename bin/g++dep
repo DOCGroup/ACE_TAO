@@ -8,7 +8,7 @@
 #       @(#)mkdep.sh    1.7     (Berkeley)      10/13/87
 #
 
-PATH=/usr/local/bin:/project/doc/pkg/gnu/bin:/bin:/usr/bin:/usr/ucb:\
+PATH=/usr/local/bin:/bin:/usr/bin:/usr/ucb:\
 /usr/gnu:/usr/gnu/bin:/opt/gnu/bin:/pkg/gnu/bin:$PATH
 export PATH
 
