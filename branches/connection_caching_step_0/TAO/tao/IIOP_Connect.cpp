@@ -343,6 +343,7 @@ TAO_IIOP_Client_Connection_Handler (ACE_Thread_Manager *t,
 
 TAO_IIOP_Client_Connection_Handler::~TAO_IIOP_Client_Connection_Handler (void)
 {
+  cout << "Are we here in dest " <<endl;
   // If the socket has not already been closed.
   if (this->transport_.handle () != ACE_INVALID_HANDLE)
     {
@@ -411,6 +412,7 @@ TAO_IIOP_Client_Connection_Handler::open (void *)
 int
 TAO_IIOP_Client_Connection_Handler::close (u_long)
 {
+  cout << "Do we get here " <<endl;
   this->destroy ();
 
   return 0;

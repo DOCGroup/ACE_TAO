@@ -27,6 +27,21 @@ TAO_Connection_Handler::cache_map_entry (
   this->cache_map_entry_ = entry;
 }
 
+ACE_INLINE void
+TAO_Connection_Handler::incr_ref_count (void)
+{
+  this->ref_count_ ++;
+}
+
+ACE_INLINE void
+TAO_Connection_Handler::decr_ref_count (void)
+{
+  this->ref_count_ --;
+
+  if (this->ref_count_ == 0)
+    delete this;
+}
+
 
 ACE_INLINE TAO_ORB_Core *
 TAO_Connection_Handler::orb_core (void)

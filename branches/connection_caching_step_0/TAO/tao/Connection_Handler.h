@@ -81,9 +81,11 @@ public:
   int make_idle (void);
   // Make ourselves ready for use
 
-  int mark_closed (void);
-  // Mark ourselves as closed ie. connection handler may not be valid
-  // for this connection.
+  void incr_ref_count (void);
+  // Increment the reference count
+
+  void decr_ref_count (void);
+  // Decrement the refernce count
 
 protected:
 
@@ -121,6 +123,7 @@ protected:
   // Implementation of the call  handle_cleanup () in
   // Service_Handler.
 
+
 private:
 
   TAO_ORB_Core *orb_core_;
@@ -128,6 +131,10 @@ private:
 
   TAO_ORB_Core_TSS_Resources *tss_resources_;
   // Cached tss resources of the ORB that activated this object.
+
+  u_long ref_count_;
+  // Reference count to the number of external references -- ie. the
+  // count of the number of places our references are being held.
 
   TAO_Connection_Cache_Manager::HASH_MAP_ENTRY *cache_map_entry_;
   // The cache map entry -- where we are in the Connection Cache

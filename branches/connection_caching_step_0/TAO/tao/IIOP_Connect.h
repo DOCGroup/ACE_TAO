@@ -183,6 +183,7 @@ protected:
   // Perform appropriate closing.
 
 protected:
+
   TAO_IIOP_Server_Transport transport_;
   // @@ New transport object reference.
 
@@ -190,7 +191,7 @@ protected:
   // Messaging acceptor factory
 
   u_long refcount_;
-  // Reference count.  It is used to count nested upcalls on this
+  // Reference count.It is used to count nested upcalls on this
   // svc_handler i.e., the connection can close during nested upcalls,
   // you should not delete the svc_handler until the stack unwinds
   // from the nested upcalls.

@@ -15,6 +15,7 @@ ACE_RCSID(tao, Connection_Handler, "$Id$")
 TAO_Connection_Handler::TAO_Connection_Handler (TAO_ORB_Core *orb_core)
   :orb_core_ (orb_core),
    tss_resources_ (orb_core->get_tss_resources ()),
+   ref_count_ (1),
    cache_map_entry_ (0)
 {
 }
@@ -27,12 +28,6 @@ TAO_Connection_Handler::make_idle (void)
     this->orb_core_->connection_cache ().make_idle (this->cache_map_entry_);
 }
 
-int
-TAO_Connection_Handler::mark_closed (void)
-{
-  return
-    this->orb_core_->connection_cache ().mark_closed (this->cache_map_entry_);
-}
 
 void
 TAO_Connection_Handler::remove_handle (ACE_HANDLE handle)
