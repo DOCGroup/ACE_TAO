@@ -1,5 +1,9 @@
 #!/pkg/gnu/bin/perl -I../../../bin
-#
+# $Id$
+eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
+
 # If your perl installation isn't in /pkg/gnu/bin/perl,
 # please make the change accordingly
 #
@@ -124,7 +128,7 @@ for ($i = 0; $i <= $#ARGV; $i++)
   {
     if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-?")
     {
-      print "run_test [-n num] [-leave] [-d] [-h] [-cm] [-sm] [-ns|sv|ff|cl|gf]\n";
+      print "run_test [-n num] [-leave] [-onewin] [-d] [-h] [-cm] [-sm] [-ns|sv|ff|cl|gf]\n";
       print "\n";
       print "-n num              -- runs the client num times\n";
       print "-leave              -- leaves the servers running and their windows open\n";
@@ -215,6 +219,8 @@ name_server ();
 sleep $sleeptime;
 read_nsior ();
 
+die;
+
 server ();
 sleep $sleeptime;
 
@@ -237,9 +243,9 @@ if ($leave)
 
 if ($^O eq "MSWin32")
 {
-  system ("del ".$nsiorfile);
+  system ("del /q $nsiorfile");
 }
 else
 {
-  system ("rm ".$nsiorfile);
+  system ("rm $nsiorfile");
 }
