@@ -43,9 +43,8 @@ int be_visitor_args_paramlist::visit_argument (be_argument *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
   this->ctx_->node (node); // save the argument node
- 
-  os->indent ();
 
+  os->indent ();
   // We donot put "out" arguments into the arglist.
   if (this->direction () ==  AST_Argument::dir_OUT)
     return 0;
@@ -58,12 +57,25 @@ int be_visitor_args_paramlist::visit_argument (be_argument *node)
                          "visit_argument - "
                          "Bad argument type\n"),
                         -1);
+    } 
+  // Generate valuetype check: this hack is needed as there is no 
+  // available way to check for valuetype type.
+  // Any operators for valuetypes arent there so we dont add it to the
+  // paramlist.
+  if (bt->base_node_type () == AST_Decl::NT_interface)
+    {
+      be_valuetype *vt = be_valuetype::narrow_from_decl (node->field_type ());
+      // If it is a valuetype go back
+      if (vt)
+        return 0;
     }
+      
+  os->indent (); // start with current indentation level
 
-   os->indent (); // start with current indentation level
-
-  *os << be_idt << "length = this->parameter_list_.length ();" << be_nl
-      << "  this->parameter_list_.length (length + 1);" << be_nl;
+  *os << "CORBA::ULong length_" <<node->local_name () // Just to make the length var unique
+      << " = this->parameter_list_.length ();" << be_nl
+      << "  this->parameter_list_.length (length_"
+      <<node->local_name ()<<" + 1);" << be_nl;
 
   // Amazed by the zillion os operators below? Its just to combat
   // side effects functions like type_name() have on the os stream.
@@ -82,12 +94,14 @@ int be_visitor_args_paramlist::visit_argument (be_argument *node)
         *os << "(const ::" << bt->name () << "_slice *) ";
       *os << " this->";
       *os << node->local_name () << "_));"<<be_nl;
-      *os <<  "  this->parameter_list_[length].argument <<= _tao_forany_" ;
+      *os <<  "  this->parameter_list_[length_"
+          << node->local_name ()<<"].argument <<= _tao_forany_" ;
       *os  << node->local_name ()<< ";"<<be_nl;
     }
   else
     {  
-      *os << "  this->parameter_list_[length].argument "; //<<= this->arg_;
+      *os << "  this->parameter_list_[length_"
+          <<  node->local_name ()<< "].argument "; //<<= this->arg_;
       // Insertion into an Any has some special cases which need to be 
       // dealt with.
       
@@ -133,7 +147,8 @@ int be_visitor_args_paramlist::visit_argument (be_argument *node)
                                   -1);
               }
             break;
-          }     
+          }
+          
         default:
           *os << " this->" << node->local_name () << "_;" << be_nl;
           
@@ -145,13 +160,16 @@ int be_visitor_args_paramlist::visit_argument (be_argument *node)
   switch (node->direction ())
     {
       case AST_Argument::dir_IN:
-         *os <<"this->parameter_list_[length].mode = Dynamic::PARAM_IN;"<<be_nl;
+         *os <<"this->parameter_list_[length_"
+             << node->local_name ()<<"].mode = Dynamic::PARAM_IN;"<<be_nl;
          break;
       case AST_Argument::dir_OUT:
-         *os <<"this->parameter_list_[length].mode = Dynamic::PARAM_OUT;"<<be_nl;
+         *os <<"this->parameter_list_[length_"
+             << node->local_name ()<<"].mode = Dynamic::PARAM_OUT;"<<be_nl;
          break;
       case AST_Argument::dir_INOUT:
-         *os <<"this->parameter_list_[length].mode = Dynamic::PARAM_INOUT;"<<be_nl;
+         *os <<"this->parameter_list_[length_"
+             << node->local_name ()<<"].mode = Dynamic::PARAM_INOUT;"<<be_nl;
          break;
     default: 
       {
@@ -237,5 +255,4 @@ be_visitor_args_paramlist::visit_predefined_type (be_predefined_type *node)
     }
   return 0;
 }
-
  
