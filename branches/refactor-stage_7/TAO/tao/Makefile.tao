@@ -201,6 +201,7 @@ ORB_CORE_FILES = \
   PICurrent_ORBInitializer \
   DynamicC \
   Dynamic_ParameterC \
+  ParameterMode \
   OctetSeqC \
   StringSeqC \
   Codeset_Manager \
