@@ -79,7 +79,7 @@ public:
   // notifies the <ACE_Reactor::instance> so that it can wake up
   // and close down gracefully.
 
-  static sig_atomic_t event_loop_done (void);
+  static int event_loop_done (void);
   // Report if the <ACE_Reactor::instance>'s event loop is finished.
 
   ACE_Reactor (ACE_Reactor_Impl *implementation = 0);

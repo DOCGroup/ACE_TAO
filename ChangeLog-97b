@@ -1,5 +1,14 @@
 Fri Oct  3 11:39:45 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* ace/Thread_Manager: Added a new flags_ field to
+ 	  ACE_Thread_Descriptor and changed the insert_thr() and
+ 	  append_thr() methods to update this flag so that we can keep
+ 	  track of whether the thread was created "detached" or not.
+
+	* ace/Reactor.cpp (event_loop_done): Replaced the use of
+ 	  sig_atomic_t with int to workaround bugs with KAI C++.  Thanks
+ 	  to Torbjorn Lindgren <tl@funcom.no> for reporting this.
+
 	* ace/CORBA_Handler: Removed the reactor() accessors since they
  	  are subsumed by the methods in ACE_Event_Handler.  Thanks to
  	  Jean-Marc STRAUSS <strauss@objectif.fr> for reporting this.

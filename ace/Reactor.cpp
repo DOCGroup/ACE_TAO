@@ -159,10 +159,10 @@ ACE_Reactor::end_event_loop (void)
     (0, ACE_Event_Handler::NULL_MASK, (ACE_Time_Value *) &ACE_Time_Value::zero);
 }
 
-sig_atomic_t
+int
 ACE_Reactor::event_loop_done (void)
 {
   ACE_TRACE ("ACE_Reactor::event_loop_done");
-  return ACE_Reactor::end_event_loop_;
+  return ACE_Reactor::end_event_loop_ != 0;
 }
 
