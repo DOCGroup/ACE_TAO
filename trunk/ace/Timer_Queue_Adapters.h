@@ -115,7 +115,7 @@ public:
   virtual void deactivate (void);
   // Inform the dispatching thread that it should terminate.
 
-  ACE_SYNCH_MUTEX &lock (void);
+  ACE_SYNCH_MUTEX &mutex (void);
   // Access the locking mechanism, useful for iteration.
 
   TQ &timer_queue (void);
@@ -144,7 +144,7 @@ private:
   // dispatch the next timer; it is used to wake it up if there is a
   // change on the timer queue.
 
-  ACE_SYNCH_MUTEX lock_;
+  ACE_SYNCH_MUTEX mutex_;
   // The mutual exclusion mechanism which is required to use the
   // <condition_>.
 

@@ -149,9 +149,9 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::ACE_Thread_Timer_Queue_Adapter (ACE_Thread_M
 }
 
 template<class TQ> ACE_SYNCH_MUTEX &
-ACE_Thread_Timer_Queue_Adapter<TQ>::lock (void)
+ACE_Thread_Timer_Queue_Adapter<TQ>::mutex (void)
 {
-  return this->lock_;
+  return this->mutex_;
 }
 
 template<class TQ> long 

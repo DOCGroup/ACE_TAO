@@ -1,3 +1,16 @@
+Mon Nov 03 18:32:42 1997  Carlos O'Ryan  <coryan@MILONGA>
+
+	* ace/Proactor.cpp: 
+	* ace/Timer_Queue_T.h: 
+	* ace/Timer_Queue_T.cpp: 
+	* ace/Timer_Heap_T.cpp: 
+	* ace/Synch_T.h: 
+	* ace/Synch_T.cpp: 
+	* ace/Atomic_Op.i: 
+	  Changed the method name from lock() to mutex(), otherwise the
+	  lame HP/C++ compiler gets completely confused. Also changed the
+	  field from lock_ to mutex_
+
 Mon Nov  3 17:15:17 1997  Steve Huston  <shuston@riverace.com>
 
 	* ace/OS.h: Removed "class ace_dewarn_gplusplus;" from the
