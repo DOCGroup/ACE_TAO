@@ -68,11 +68,15 @@ y.tab.h y.tab.cpp: idl.yy
 	@-$(RM) -f y.tab.cpp.orig
 
 lex.yy.cpp: idl.ll y.tab.h
-	$(LEX) $(LFLAGS) idl.ll > $@
-	@sed -e "s/unistd/stdio/g" -e "s@#include <@#include /**/ <@" -e "s/ECHO/TAO_ECHO/g" < $@ >> /tmp/$@
-	@cp /tmp/$@ $@
+	$(LEX) $(LFLAGS) idl.ll > /tmp/$@
+	@#### Replace #includes of standard headers with #include of ace/OS.h,
+	@#### so that ace/config.h is #included first.
+	@sed -e 's%#include.*<stdio.h>%#include "ace/OS.h"%g' \
+	     -e '/#include.*stdlib.h/D' \
+	     -e '/#include.*unistd.h/D' \
+	     -e 's/ECHO/TAO_ECHO/g' < /tmp/$@ > $@
 	@patch < lex.yy.cpp.diff
-	@-(RM) -f /tmp/$@ lex.yy.cpp.orig
+	@-$(RM) -f /tmp/$@ lex.yy.cpp.orig
 
 #----------------------------------------------------------------------------
 #	Dependencies
