@@ -123,8 +123,10 @@ public:
 
   // = The POA_RtecEventComm::PushComsumer methods.
   virtual void push (const RtecEventComm::EventSet& events,
-                     CORBA::Environment &_env);
-  virtual void disconnect_push_consumer (CORBA::Environment &);
+                     CORBA::Environment &_env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect_push_consumer (CORBA::Environment &)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   ECB_Test* test_;
@@ -176,7 +178,8 @@ public:
   // Send one event, the supplier provides the SourceID
 
   // = The POA_RtecEventComm::PushSupplier methods.
-  virtual void disconnect_push_supplier (CORBA::Environment &);
+  virtual void disconnect_push_supplier (CORBA::Environment &)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   ECB_Test* test_;
