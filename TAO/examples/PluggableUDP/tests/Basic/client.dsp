@@ -5,7 +5,7 @@
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 # TARGTYPE "Win32 (ALPHA) Console Application" 0x0603
 
-CFG=UDP Basic Client - Win32 Debug
+CFG=UDP Basic Client - Win32 Static Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -14,7 +14,7 @@ CFG=UDP Basic Client - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "client.mak" CFG="UDP Basic Client - Win32 Debug"
+!MESSAGE NMAKE /f "client.mak" CFG="UDP Basic Client - Win32 Static Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
@@ -22,6 +22,8 @@ CFG=UDP Basic Client - Win32 Debug
 !MESSAGE "UDP Basic Client - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE "UDP Basic Client - Win32 Alpha Debug" (based on "Win32 (ALPHA) Console Application")
 !MESSAGE "UDP Basic Client - Win32 Alpha Release" (based on "Win32 (ALPHA) Console Application")
+!MESSAGE "UDP Basic Client - Win32 Static Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "UDP Basic Client - Win32 Static Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -150,6 +152,64 @@ SOURCE="$(InputPath)"
 
 # End Custom Build
 
+!ELSEIF  "$(CFG)" == "UDP Basic Client - Win32 Static Release"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 0
+# PROP BASE Output_Dir "client\Static Release"
+# PROP BASE Intermediate_Dir "client\Static Release"
+# PROP BASE Ignore_Export_Lib 0
+# PROP BASE Target_Dir "client"
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 0
+# PROP Output_Dir "client\Static Release"
+# PROP Intermediate_Dir "client\Static Release"
+# PROP Ignore_Export_Lib 0
+# PROP Target_Dir "client"
+CPP=cl.exe
+# ADD BASE CPP /nologo /MD /W3 /GX /O2 /I "..\..\..\..\\" /I "..\..\..\..\..\\" /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /FD /c
+# SUBTRACT BASE CPP /YX
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\..\..\\" /I "..\..\..\..\..\\" /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /D "ACE_AS_STATIC_LIBS" /D "TAO_AS_STATIC_LIBS" /FD /c
+# SUBTRACT CPP /YX
+RSC=rc.exe
+# ADD BASE RSC /l 0x409 /d "NDEBUG"
+# ADD RSC /l 0x409 /d "NDEBUG"
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LINK32=link.exe
+# ADD BASE LINK32 ace.lib TAO.lib TAO_PortableServer.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer"
+# ADD LINK32 ace.lib TAO.lib TAO_PortableServer.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer"
+
+!ELSEIF  "$(CFG)" == "UDP Basic Client - Win32 Static Debug"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir "client\Static Debug"
+# PROP BASE Intermediate_Dir "client\Static Debug"
+# PROP BASE Ignore_Export_Lib 0
+# PROP BASE Target_Dir "client"
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 1
+# PROP Output_Dir "Static_Debug"
+# PROP Intermediate_Dir "Static_Debug"
+# PROP Ignore_Export_Lib 0
+# PROP Target_Dir "client"
+CPP=cl.exe
+# ADD BASE CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\..\\" /I "..\..\..\..\..\\" /D "_DEBUG" /D "WIN32" /D "_CONSOLE" /FD /c
+# SUBTRACT BASE CPP /YX
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\..\\" /I "..\..\..\..\..\\" /D "_DEBUG" /D "WIN32" /D "_CONSOLE" /D "ACE_AS_STATIC_LIBS" /D "TAO_AS_STATIC_LIBS" /FD /c
+# SUBTRACT CPP /YX
+RSC=rc.exe
+# ADD BASE RSC /l 0x409 /d "_DEBUG"
+# ADD RSC /l 0x409 /d "_DEBUG"
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LINK32=link.exe
+# ADD BASE LINK32 aced.lib TAOd.lib TAO_PortableServerd.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer"
+# ADD LINK32 TAOsd.lib acesd.lib TAO_PortableServersd.lib TAO_DIOPsd.lib advapi32.lib user32.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\DIOP"
+
 !ENDIF 
 
 # Begin Target
@@ -158,6 +218,8 @@ SOURCE="$(InputPath)"
 # Name "UDP Basic Client - Win32 Debug"
 # Name "UDP Basic Client - Win32 Alpha Debug"
 # Name "UDP Basic Client - Win32 Alpha Release"
+# Name "UDP Basic Client - Win32 Static Release"
+# Name "UDP Basic Client - Win32 Static Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
@@ -172,6 +234,10 @@ SOURCE=.\client.cpp
 !ELSEIF  "$(CFG)" == "UDP Basic Client - Win32 Alpha Debug"
 
 !ELSEIF  "$(CFG)" == "UDP Basic Client - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "UDP Basic Client - Win32 Static Release"
+
+!ELSEIF  "$(CFG)" == "UDP Basic Client - Win32 Static Debug"
 
 !ENDIF 
 
@@ -188,6 +254,10 @@ SOURCE=.\UDP_Client_i.cpp
 
 !ELSEIF  "$(CFG)" == "UDP Basic Client - Win32 Alpha Release"
 
+!ELSEIF  "$(CFG)" == "UDP Basic Client - Win32 Static Release"
+
+!ELSEIF  "$(CFG)" == "UDP Basic Client - Win32 Static Debug"
+
 !ENDIF 
 
 # End Source File
@@ -202,6 +272,10 @@ SOURCE=.\UDP_i.cpp
 !ELSEIF  "$(CFG)" == "UDP Basic Client - Win32 Alpha Debug"
 
 !ELSEIF  "$(CFG)" == "UDP Basic Client - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "UDP Basic Client - Win32 Static Release"
+
+!ELSEIF  "$(CFG)" == "UDP Basic Client - Win32 Static Debug"
 
 !ENDIF 
 
@@ -218,6 +292,10 @@ SOURCE=.\UDPC.cpp
 
 !ELSEIF  "$(CFG)" == "UDP Basic Client - Win32 Alpha Release"
 
+!ELSEIF  "$(CFG)" == "UDP Basic Client - Win32 Static Release"
+
+!ELSEIF  "$(CFG)" == "UDP Basic Client - Win32 Static Debug"
+
 !ENDIF 
 
 # End Source File
@@ -232,6 +310,10 @@ SOURCE=.\UDPS.cpp
 !ELSEIF  "$(CFG)" == "UDP Basic Client - Win32 Alpha Debug"
 
 !ELSEIF  "$(CFG)" == "UDP Basic Client - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "UDP Basic Client - Win32 Static Release"
+
+!ELSEIF  "$(CFG)" == "UDP Basic Client - Win32 Static Debug"
 
 !ENDIF 
 
@@ -415,6 +497,86 @@ BuildCmds= \
    $(BuildCmds)
 
 "$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "UDP Basic Client - Win32 Static Release"
+
+# PROP BASE Ignore_Default_Tool 1
+# PROP Ignore_Default_Tool 1
+USERDEP__UDP_I="..\..\..\..\..\bin\Release\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
+InputPath=.\UDP.idl
+InputName=UDP
+
+BuildCmds= \
+	..\..\..\..\..\bin\Release\tao_idl -Ge 1 -Sp -Sd $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "UDP Basic Client - Win32 Static Debug"
+
+# PROP BASE Ignore_Default_Tool 1
+# PROP Ignore_Default_Tool 1
+USERDEP__UDP_I="..\..\..\..\..\bin\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
+InputPath=.\UDP.idl
+InputName=UDP
+
+BuildCmds= \
+	..\..\..\..\..\bin\tao_idl -Ge 1 -Sp -Sd $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 # End Custom Build
 
