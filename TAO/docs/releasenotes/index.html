@@ -46,7 +46,7 @@ release</a> of <a href="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a>:
 <a href="#cservices">CORBA Concurrency Service</a></li>
 
 <li>
-<a href="#av">CORBA Audio/Video Control Service</a></li>
+<a href="#av">CORBA Audio/Video Streaming Service</a></li>
 
 <li>
 <a href="#ts">CORBA Time Service</a></li>
@@ -732,22 +732,46 @@ Future Work:
 Implementation of the Concurrency Service with transactions</li>
 </ul><P>
 <hr WIDTH="100%">
-<h3>
-<a NAME="av"></a>CORBA Audio/Video Control Service</h3>
-Point of contact: <a href="mailto:naga@cs.wustl.edu">Nagarajan Surendran</a>
+<h3><a NAME="av"></a>CORBA Audio/Video Streaming Service</h3>
+Point of contact: <a href="mailto:naga@cs.wustl.edu">Nagarajan
+Surendran</a> and <a href="mailto:yamuna@cs.wustl.edu">Yamuna Krishnamurthy</a>
 <p>This is an implementation of the OMG spec addressing the <a href="http://www.cs.wustl.edu/~sumedh/research/corbaav.pdf">Control
-and Management of Audio/Video Streams</a>.
-<p>The audio/video streaming service has been implemented in the light
-profile. An MPEG-1 application which streams mpeg-1 video and mpeg-1 audio
-separately has been developed using the service. This application currently
-works only for Unix platforms.
+and Management of Audio/Video Streams</a>.For more documentation on
+TAO's A/V Service please have a look <A HREF="http://www.cs.wustl.edu/~naga/av.html">here</A>.
+
+<p><h4>Current Status:</h4>
+<p>
+<ul>
+  <li>
+      The audio/video streaming service has been implemented in the full
+      profile. The current implementation support all the flow related
+      components like flowEndpoint,FDev,FlowConnection,..,etc.
+  </li>
+  <li>
+      An MPEG-1 application which streams mpeg-1 video and mpeg-1 audio
+      separately has been developed using the service. The client side
+      of the mpeg player requires X windows support.Its available in
+      the release at $TAO_ROOT/orbsvcs/tests/AVStreams/mpeg/source.
+  </li>
+  <li>
+      An Integrated Video-on-demand application has been developed
+      using the Trading Service and the A/V Service. The demo uses a
+      Java FrontEnd and JNI to talk to the TAO C++ trader client. The
+      demo is available in the release at
+      $TAO_ROOT/orbsvcs/tests/AVStreams/server_discovery.
+  </li>
+</ul>
 <p>Work in progress:
 <ul>
 <li>
-Implementing the SFP protocol</li>
-
+Implementing the SFP protocol.
+</li>
 <li>
-Integrating the mpeg-1 streaming application with the trading service.</li>
+    Adding Multipoint streams support.
+</li>
+<li>
+    Developing a Video-conferencing application using the A/V Service.
+</li>
 </ul>
 
 <hr>
