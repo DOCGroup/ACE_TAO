@@ -783,7 +783,7 @@ Key_List::output_hash_function (void)
     ;
 
   if (option[INLINE])
-    printf ("inline\n\n");
+    printf ("inline\n");
   
   if (option[C])
     printf ("static ");
@@ -1225,7 +1225,7 @@ Key_List::output (void)
   printf ("%s\n", include_src);
   
   // Get prototype for strncmp() and strcmp().
-  printf ("#include <string.h>");
+  printf ("#include <string.h>\n");
   if (option[TYPE] && !option[NOTYPE]) // Output type declaration now, reference it later on....
     printf ("%s;\n", array_type);
   

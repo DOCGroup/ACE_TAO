@@ -1,6 +1,7 @@
-/* C code produced by gperf version 2.5 (GNU C++ version) */
+/* C code produced by gperf version 2.6 (GNU C++ version) */
 /* Command-line: ../src/gperf -D -p -t  */
 /* Command-line: gperf -p -j1 -i 1 -g -o -t -N is_reserved_word -k1,3,$ c-parse.gperf  */ 
+#include <string.h>
 struct resword { char *name; short token; enum rid rid; };
 
 #define TOTAL_KEYWORDS 51
@@ -8,12 +9,13 @@ struct resword { char *name; short token; enum rid rid; };
 #define MAX_WORD_LENGTH 13
 #define MIN_HASH_VALUE 4
 #define MAX_HASH_VALUE 82
-/* maximum key range = 79, duplicates = 2 */
+#define HASH_VALUE_RANGE 79
+#define DUPLICATES 3
 
 static unsigned int
 hash (str, len)
      char *str;
-     int unsigned len;
+     unsigned int len;
 {
   static unsigned char asso_values[] =
     {
@@ -109,7 +111,7 @@ in_word_set (str, len)
     {
       int key = hash (str, len);
 
-      if (key <= MAX_HASH_VALUE && key >= 0)
+      if (key <= MAX_HASH_VALUE && key >= MIN_HASH_VALUE)
         {
           int index = lookup[key];
 

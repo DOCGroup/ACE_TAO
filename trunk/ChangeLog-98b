@@ -1,5 +1,8 @@
 Sat Jun  6 18:34:24 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* apps/gperf/src/Key_List.cpp (output_switch): Fixed another bug
+	  where strcmp() should be generated instead of strncmp().
+
 	* apps/gperf/src: We no longer call the inline option "GNU" but
 	  now call it "INLINE".
 

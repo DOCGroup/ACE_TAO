@@ -1,6 +1,7 @@
-/* C code produced by gperf version 2.5 (GNU C++ version) */
-/* Command-line: ../src/gperf -p -j1 -g -o -t -N is_reserved_word -k1,3,$  */
-/* Command-line: gperf -p -j1 -i 1 -g -o -t -N is_reserved_word -k1,3,$ c-parse.gperf  */ 
+/* C code produced by gperf version 2.6 (GNU C++ version) */
+/* Command-line: ../src/gperf -p -j1 -o -t -N is_reserved_word -k1,3,$  */
+/* Command-line: gperf -p -j1 -i 1 -o -t -N is_reserved_word -k1,3,$ c-parse.gperf  */ 
+#include <string.h>
 struct resword { char *name; short token; enum rid rid; };
 
 #define TOTAL_KEYWORDS 51
@@ -8,12 +9,13 @@ struct resword { char *name; short token; enum rid rid; };
 #define MAX_WORD_LENGTH 13
 #define MIN_HASH_VALUE 8
 #define MAX_HASH_VALUE 82
-/* maximum key range = 75, duplicates = 0 */
+#define HASH_VALUE_RANGE 75
+#define DUPLICATES 0
 
 static unsigned int
 hash (str, len)
      char *str;
-     int unsigned len;
+     unsigned int len;
 {
   static unsigned char asso_values[] =
     {
@@ -41,7 +43,6 @@ hash (str, len)
       case 2:
       case 1:
         hval += asso_values[str[0]];
-        break;
     }
   return hval + asso_values[str[len - 1]];
 }

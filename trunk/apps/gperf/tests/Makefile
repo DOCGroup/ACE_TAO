@@ -35,19 +35,19 @@ check:
 	@echo "testing ANSI C reserved words, all items should be found in the set"
 	./cout -v < $(srcdir)/c.gperf > c.out
 	-diff -b $(srcdir)/c.exp c.out
-	$(GPERF) -a -k1,4,'$$' $(srcdir)/ada.gperf > adainset.c
+	$(GPERF) -a -k1,4,'$$' $(srcdir)/ada.gperf > adainset.cpp
 # double '$$' is only there since make gets confused; programn wants only 1 '$'
-	$(CXX) $(CFLAGS) -o aout adainset.c test.o
+	$(CXX) $(CFLAGS) -o aout adainset.cpp test.o
 	@echo "testing Ada reserved words, all items should be found in the set"
 	./aout -v < $(srcdir)/ada.gperf > ada-res.out
 	-diff -b $(srcdir)/ada-res.exp ada-res.out
-	$(GPERF) -a -p -D -k1,'$$' -s 2 -o $(srcdir)/adadefs.gperf > preinset.c
-	$(CXX) $(CFLAGS) -o preout preinset.c test.o
+	$(GPERF) -a -p -D -k1,'$$' -s 2 -o $(srcdir)/adadefs.gperf > preinset.cpp
+	$(CXX) $(CFLAGS) -o preout preinset.cpp test.o
 	@echo "testing Ada predefined words, all items should be found in the set"
 	./preout -v < $(srcdir)/adadefs.gperf > ada-pred.out
 	-diff -b $(srcdir)/ada-pred.exp ada-pred.out
-	$(GPERF) -a -k1,2,'$$' -o $(srcdir)/modula3.gperf > m3inset.c
-	$(CXX) $(CFLAGS) -o m3out m3inset.c test.o
+	$(GPERF) -a -k1,2,'$$' -o $(srcdir)/modula3.gperf > m3inset.cpp
+	$(CXX) $(CFLAGS) -o m3out m3inset.cpp test.o
 	@echo "testing Modula3 reserved words, all items should be found in the set"
 	./m3out -v < $(srcdir)/modula3.gperf > modula.out
 	-diff -b $(srcdir)/modula.exp modula.out
@@ -57,13 +57,13 @@ check:
 	./pout -v < $(srcdir)/pascal.gperf > pascal.out
 	-diff -b $(srcdir)/pascal.exp pascal.out
 # these next 5 are demos that show off the generated code
-	$(GPERF) -a -p -j1 -o -t -N is_reserved_word -k1,3,'$$' < $(srcdir)/c-parse.gperf > test-1.out
+	$(GPERF) -p -j1 -o -t -N is_reserved_word -k1,3,'$$' < $(srcdir)/c-parse.gperf > test-1.out
 	-diff -b $(srcdir)/test-1.exp test-1.out
-	$(GPERF) -a -n -k1-8 -l <$(srcdir)/modula2.gperf > test-2.out
+	$(GPERF) -n -k1-8 -l <$(srcdir)/modula2.gperf > test-2.out
 	-diff -b $(srcdir)/test-2.exp test-2.out
-	$(GPERF) -a -p -j 1 -o -a -C -g -t -k1,4,$$ < $(srcdir)/gplus.gperf > test-3.out
+	$(GPERF) -p -j 1 -o -a -C -g -t -k1,4,$$ < $(srcdir)/gplus.gperf > test-3.out
 	-diff -b $(srcdir)/test-3.exp test-3.out
-	$(GPERF) -a -D -p -t < $(srcdir)/c-parse.gperf > test-4.out
+	$(GPERF) -D -p -t < $(srcdir)/c-parse.gperf > test-4.out
 	-diff -b $(srcdir)/test-4.exp test-4.out
 	$(GPERF) -a -g -o -j1 -t -p -N is_reserved_word < $(srcdir)/gpc.gperf > test-5.out
 	-diff -b $(srcdir)/test-5.exp test-5.out
