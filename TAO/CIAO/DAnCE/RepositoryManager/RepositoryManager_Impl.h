@@ -13,6 +13,7 @@
 
 #ifndef REPOSITORYMANAGER_IMPL_H
 #define REPOSITORYMANAGER_IMPL_H
+#include /**/ "ace/pre.h"
 
 #include "RepositoryManagerS.h"
 #include "ace/Get_Opt.h"
