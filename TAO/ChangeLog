@@ -1,3 +1,12 @@
+Wed Apr 14 10:08:18 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/IFR_Service/IFR_Service.mpc:
+
+          For the IFRService project, rely on the ifrservice base project to
+          get the settings for minimum_corba.  Also, for the other projects
+          inherit from minimum_corba instead of directly adding
+          minimum_corba to 'avoids'.
+
 Wed Apr 14 13:51:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         All added includes below are needed because of my regenerations
@@ -215,196 +224,196 @@ Tue Apr 13 08:13:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Apr 12 23:57:24 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Acceptor_Registry.cpp:
-	* tao/Connector_Registry.cpp:
-	* tao/Invocation_Adapter.h:
-	* tao/Invocation_Base.cpp:
-	* tao/Invocation_Endpoint_Selectors.cpp:
-	* tao/Remote_Invocation.cpp:
-	* tao/Transport.cpp:
+        * tao/Acceptor_Registry.cpp:
+        * tao/Connector_Registry.cpp:
+        * tao/Invocation_Adapter.h:
+        * tao/Invocation_Base.cpp:
+        * tao/Invocation_Endpoint_Selectors.cpp:
+        * tao/Remote_Invocation.cpp:
+        * tao/Transport.cpp:
 
-	  Improved "const correctness".
+          Improved "const correctness".
 
-	* tao/Adapter.cpp:
-	* tao/Any.cpp:
-	* tao/Any_Impl.cpp:
-	* tao/Any_Unknown_IDL_Type.cpp:
-	* tao/CORBALOC_Parser.cpp:
-	* tao/CORBANAME_Parser.cpp:
-	* tao/Codeset_Manager.cpp:
-	* tao/DLL_Parser.cpp:
-	* tao/Default_Collocation_Resolver.cpp:
-	* tao/Default_Endpoint_Selector_Factory.cpp:
-	* tao/Default_Protocols_Hooks.cpp:
-	* tao/Default_Stub_Factory.cpp:
-	* tao/Default_Thread_Lane_Resources_Manager.cpp:
-	* tao/DomainC.cpp:
-	* tao/Environment.cpp:
-	* tao/Exception.cpp:
-	* tao/FILE_Parser.cpp:
-	* tao/IIOP_Acceptor.cpp:
-	* tao/IIOP_Connector.cpp:
-	* tao/IIOP_Factory.cpp:
-	* tao/IIOP_Lite_Factory.cpp:
-	* tao/IIOP_Profile.cpp:
-	* tao/IIOP_Transport.cpp:
-	* tao/Incoming_Message_Queue.cpp:
-	* tao/MCAST_Parser.cpp:
-	* tao/ORB.cpp:
-	* tao/ORBInitInfo.cpp:
-	* tao/ORBInitializer_Registry.cpp:
-	* tao/ORB_Core.cpp:
-	* tao/ORB_Table.cpp:
-	* tao/Object.cpp:
-	* tao/Object_KeyC.cpp:
-	* tao/Profile.cpp:
-	* tao/Request_Dispatcher.h:
-	* tao/Resource_Factory.cpp:
-	* tao/Sequence.cpp:
-	* tao/Stub.cpp:
-	* tao/Synch_Invocation.cpp:
-	* tao/TAO_Internal.cpp:
-	* tao/Transport_Cache_Manager.cpp:
-	* tao/Transport_Connector.cpp:
-	* tao/Typecode.cpp:
-	* tao/default_client.cpp:
-	* tao/default_resource.cpp:
-	* tao/default_server.cpp:
-	* tao/params.cpp:
-	* tao/Domain/DomainS.cpp:
-	* tao/DynamicAny/DynAny_i.cpp:
-	* tao/DynamicAny/DynCommon.cpp:
-	* tao/DynamicAny/DynEnum_i.cpp:
-	* tao/DynamicAny/DynamicAnyC.cpp:
-	* tao/DynamicInterface/Context.cpp:
-	* tao/DynamicInterface/DII_Invocation.cpp:
-	* tao/DynamicInterface/Dynamic_Implementation.cpp:
-	* tao/DynamicInterface/Request.cpp:
-	* tao/IORInterceptor/IORInterceptorC.cpp:
-	* tao/IORManipulation/IORC.cpp:
-	* tao/IORManipulation/IORManip_Loader.cpp:
-	* tao/IORManipulation/IORManipulation.cpp:
-	* tao/IORTable/IOR_Table_Impl.cpp:
-	* tao/PortableServer/ImR_LocatorS.cpp:
-	* tao/PortableServer/ImplRepoS.cpp:
-	* tao/PortableServer/Object_Adapter.cpp:
-	* tao/PortableServer/POA.cpp:
-	* tao/PortableServer/PolicyS.cpp:
-	* tao/PortableServer/PortableServer.cpp:
-	* tao/PortableServer/PortableServerC.cpp:
-	* tao/PortableServer/Servant_Base.cpp:
-	* tao/PortableServer/ServerRequestInfo.cpp:
-	* tao/RTCORBA/RT_Endpoint_Selector_Factory.cpp:
-	* tao/RTCORBA/RT_Policy_i.cpp:
-	* tao/RTCORBA/RT_Protocols_Hooks.cpp:
-	* tao/RTCORBA/RT_Stub_Factory.cpp:
-	* tao/RTCORBA/Thread_Pool.h:
-	* tao/RTPortableServer/RT_Servant_Dispatcher.cpp:
-	* tao/RTScheduling/Current.cpp:
-	* tao/Strategies/DIOP_Acceptor.cpp:
-	* tao/Strategies/DIOP_Connector.cpp:
-	* tao/Strategies/DIOP_Endpoint.cpp:
-	* tao/Strategies/DIOP_Factory.cpp:
-	* tao/Strategies/DIOP_Profile.cpp:
-	* tao/Strategies/SHMIOP_Endpoint.cpp:
-	* tao/Strategies/SHMIOP_Factory.cpp:
-	* tao/Strategies/SHMIOP_Profile.cpp:
-	* tao/Strategies/UIOP_Acceptor.cpp:
-	* tao/Strategies/UIOP_Connector.cpp:
-	* tao/Strategies/UIOP_Endpoint.cpp:
-	* tao/Strategies/UIOP_Factory.cpp:
-	* tao/Strategies/UIOP_Lite_Factory.cpp:
-	* tao/Strategies/UIOP_Profile.cpp:
-	* tao/Strategies/advanced_resource.cpp:
-	* tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
-	* tao/Valuetype/AbstractBase.h:
-	* tao/Valuetype/AbstractBase.inl:
-	* tao/Valuetype/ValueFactory_Map.h:
+        * tao/Adapter.cpp:
+        * tao/Any.cpp:
+        * tao/Any_Impl.cpp:
+        * tao/Any_Unknown_IDL_Type.cpp:
+        * tao/CORBALOC_Parser.cpp:
+        * tao/CORBANAME_Parser.cpp:
+        * tao/Codeset_Manager.cpp:
+        * tao/DLL_Parser.cpp:
+        * tao/Default_Collocation_Resolver.cpp:
+        * tao/Default_Endpoint_Selector_Factory.cpp:
+        * tao/Default_Protocols_Hooks.cpp:
+        * tao/Default_Stub_Factory.cpp:
+        * tao/Default_Thread_Lane_Resources_Manager.cpp:
+        * tao/DomainC.cpp:
+        * tao/Environment.cpp:
+        * tao/Exception.cpp:
+        * tao/FILE_Parser.cpp:
+        * tao/IIOP_Acceptor.cpp:
+        * tao/IIOP_Connector.cpp:
+        * tao/IIOP_Factory.cpp:
+        * tao/IIOP_Lite_Factory.cpp:
+        * tao/IIOP_Profile.cpp:
+        * tao/IIOP_Transport.cpp:
+        * tao/Incoming_Message_Queue.cpp:
+        * tao/MCAST_Parser.cpp:
+        * tao/ORB.cpp:
+        * tao/ORBInitInfo.cpp:
+        * tao/ORBInitializer_Registry.cpp:
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Table.cpp:
+        * tao/Object.cpp:
+        * tao/Object_KeyC.cpp:
+        * tao/Profile.cpp:
+        * tao/Request_Dispatcher.h:
+        * tao/Resource_Factory.cpp:
+        * tao/Sequence.cpp:
+        * tao/Stub.cpp:
+        * tao/Synch_Invocation.cpp:
+        * tao/TAO_Internal.cpp:
+        * tao/Transport_Cache_Manager.cpp:
+        * tao/Transport_Connector.cpp:
+        * tao/Typecode.cpp:
+        * tao/default_client.cpp:
+        * tao/default_resource.cpp:
+        * tao/default_server.cpp:
+        * tao/params.cpp:
+        * tao/Domain/DomainS.cpp:
+        * tao/DynamicAny/DynAny_i.cpp:
+        * tao/DynamicAny/DynCommon.cpp:
+        * tao/DynamicAny/DynEnum_i.cpp:
+        * tao/DynamicAny/DynamicAnyC.cpp:
+        * tao/DynamicInterface/Context.cpp:
+        * tao/DynamicInterface/DII_Invocation.cpp:
+        * tao/DynamicInterface/Dynamic_Implementation.cpp:
+        * tao/DynamicInterface/Request.cpp:
+        * tao/IORInterceptor/IORInterceptorC.cpp:
+        * tao/IORManipulation/IORC.cpp:
+        * tao/IORManipulation/IORManip_Loader.cpp:
+        * tao/IORManipulation/IORManipulation.cpp:
+        * tao/IORTable/IOR_Table_Impl.cpp:
+        * tao/PortableServer/ImR_LocatorS.cpp:
+        * tao/PortableServer/ImplRepoS.cpp:
+        * tao/PortableServer/Object_Adapter.cpp:
+        * tao/PortableServer/POA.cpp:
+        * tao/PortableServer/PolicyS.cpp:
+        * tao/PortableServer/PortableServer.cpp:
+        * tao/PortableServer/PortableServerC.cpp:
+        * tao/PortableServer/Servant_Base.cpp:
+        * tao/PortableServer/ServerRequestInfo.cpp:
+        * tao/RTCORBA/RT_Endpoint_Selector_Factory.cpp:
+        * tao/RTCORBA/RT_Policy_i.cpp:
+        * tao/RTCORBA/RT_Protocols_Hooks.cpp:
+        * tao/RTCORBA/RT_Stub_Factory.cpp:
+        * tao/RTCORBA/Thread_Pool.h:
+        * tao/RTPortableServer/RT_Servant_Dispatcher.cpp:
+        * tao/RTScheduling/Current.cpp:
+        * tao/Strategies/DIOP_Acceptor.cpp:
+        * tao/Strategies/DIOP_Connector.cpp:
+        * tao/Strategies/DIOP_Endpoint.cpp:
+        * tao/Strategies/DIOP_Factory.cpp:
+        * tao/Strategies/DIOP_Profile.cpp:
+        * tao/Strategies/SHMIOP_Endpoint.cpp:
+        * tao/Strategies/SHMIOP_Factory.cpp:
+        * tao/Strategies/SHMIOP_Profile.cpp:
+        * tao/Strategies/UIOP_Acceptor.cpp:
+        * tao/Strategies/UIOP_Connector.cpp:
+        * tao/Strategies/UIOP_Endpoint.cpp:
+        * tao/Strategies/UIOP_Factory.cpp:
+        * tao/Strategies/UIOP_Lite_Factory.cpp:
+        * tao/Strategies/UIOP_Profile.cpp:
+        * tao/Strategies/advanced_resource.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+        * tao/Valuetype/AbstractBase.h:
+        * tao/Valuetype/AbstractBase.inl:
+        * tao/Valuetype/ValueFactory_Map.h:
 
-	  Added missing #includes necessary for the
-	  ACE_TEMPLATES_REQUIRE_SOURCE + non-inlined case, in addition to
-	  GNU g++ 3.4 (pre-release) preprocessor errors.  Thanks to
-	  Oliver Kellogg <Oliver.Kellogg@sysde.eads.net> and Roland Meub
-	  <roland.meub@gmx.de> for providing patches.
+          Added missing #includes necessary for the
+          ACE_TEMPLATES_REQUIRE_SOURCE + non-inlined case, in addition to
+          GNU g++ 3.4 (pre-release) preprocessor errors.  Thanks to
+          Oliver Kellogg <Oliver.Kellogg@sysde.eads.net> and Roland Meub
+          <roland.meub@gmx.de> for providing patches.
 
-	* tao/Any.i:
-	* tao/IOP_IOR.pidl:
-	* tao/ParameterMode.h:
-	* tao/Resource_Factory.h:
-	* tao/Sequence.i:
-	* tao/Valuetype/ValueBase.inl:
+        * tao/Any.i:
+        * tao/IOP_IOR.pidl:
+        * tao/ParameterMode.h:
+        * tao/Resource_Factory.h:
+        * tao/Sequence.i:
+        * tao/Valuetype/ValueBase.inl:
 
-	  Nuked trailing whitespace.
+          Nuked trailing whitespace.
 
-	* tao/Asynch_Queued_Message.h (size_):
+        * tao/Asynch_Queued_Message.h (size_):
 
-	  Made this class member "const".  Its value never changes.
+          Made this class member "const".  Its value never changes.
 
-	* tao/Asynch_Queued_Message.cpp (TAO_Asynch_Queued_Message):
+        * tao/Asynch_Queued_Message.cpp (TAO_Asynch_Queued_Message):
 
-	  Initialize "size_" member in base member initializer list since
-	  that member is now "const".
+          Initialize "size_" member in base member initializer list since
+          that member is now "const".
 
-	* tao/GIOP_Message_Base.cpp:
-	* tao/Invocation_Adapter.cpp:
+        * tao/GIOP_Message_Base.cpp:
+        * tao/Invocation_Adapter.cpp:
 
-	  Corrected typo in comment.
+          Corrected typo in comment.
 
-	* tao/CORBA_methods.h:
-	* tao/DynamicInterface/ExceptionList.h:
+        * tao/CORBA_methods.h:
+        * tao/DynamicInterface/ExceptionList.h:
 
-	  Moved CORBA::{release,is_nil}(CORBA::ExceptionList *) prototypes
-	  to CORBA_methods.h.  Fixes GNU g++ 3.4 (pre-release)
-	  compile-time errors.  Thanks to Oliver Kellogg
-	  <Oliver.Kellogg@sysde.eads.net> and Roland Meub
-	  <roland.meub@gmx.de> for providing patches.
+          Moved CORBA::{release,is_nil}(CORBA::ExceptionList *) prototypes
+          to CORBA_methods.h.  Fixes GNU g++ 3.4 (pre-release)
+          compile-time errors.  Thanks to Oliver Kellogg
+          <Oliver.Kellogg@sysde.eads.net> and Roland Meub
+          <roland.meub@gmx.de> for providing patches.
 
-	* tao/IORInterceptor_Adapter.h (destroy_interceptors):
+        * tao/IORInterceptor_Adapter.h (destroy_interceptors):
 
           Neglected to commit this file when this change "Fri Mar 26
-	  14:32:35 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>" was
-	  committed.
+          14:32:35 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>" was
+          committed.
 
-	* tao/Policy_Set.cpp (get_policy_overrides):
+        * tao/Policy_Set.cpp (get_policy_overrides):
 
-	  Improved exception safety, "const correctness" and performance.
+          Improved exception safety, "const correctness" and performance.
 
-	* tao/Profile_Transport_Resolver.cpp:
-	* tao/Synch_Invocation.h:
+        * tao/Profile_Transport_Resolver.cpp:
+        * tao/Synch_Invocation.h:
 
-	  Minor code cleanup.
+          Minor code cleanup.
 
-	* tao/Valuetype/Value_CORBA_methods.h:
+        * tao/Valuetype/Value_CORBA_methods.h:
 
-	  New file containing prototypes for methods in the CORBA
-	  namespace.
+          New file containing prototypes for methods in the CORBA
+          namespace.
 
-	* tao/Valuetype/ValueBase.h:
+        * tao/Valuetype/ValueBase.h:
 
-	  Moved CORBA::{add,remove}_ref() prototypes to new
-	  Value_CORBA_methods.h header.
+          Moved CORBA::{add,remove}_ref() prototypes to new
+          Value_CORBA_methods.h header.
 
-	  (TAO_OBV_GIOP_Flags):
+          (TAO_OBV_GIOP_Flags):
 
-	  Changed this class to a namespace, which is really what it was
-	  intended to be.
+          Changed this class to a namespace, which is really what it was
+          intended to be.
 
-	  All constants in this namespace are now set in the header, which
-	  is consistent with our current TAO conventions.
+          All constants in this namespace are now set in the header, which
+          is consistent with our current TAO conventions.
 
-	* tao/Valuetype/ValueBase.cpp:
+        * tao/Valuetype/ValueBase.cpp:
 
-	  Moved static constant definitions to the header, which is
-	  consistent with our current TAO conventions.
+          Moved static constant definitions to the header, which is
+          consistent with our current TAO conventions.
 
-	* tao/Valuetype/Value_VarOut_T.cpp:
+        * tao/Valuetype/Value_VarOut_T.cpp:
 
-	  Include new "Value_CORBA_methods.h" header to pull in
-	  CORBA::{add,remove}_ref(CORBA::ValueBase *) function
-	  prototypes.  Addresses GNU g++ 3.4 (pre-release) compile-time
-	  problems.  Thanks to Oliver Kellogg
-	  <Oliver.Kellogg@sysde.eads.net> and Roland Meub
-	  <roland.meub@gmx.de> for providing patches.
+          Include new "Value_CORBA_methods.h" header to pull in
+          CORBA::{add,remove}_ref(CORBA::ValueBase *) function
+          prototypes.  Addresses GNU g++ 3.4 (pre-release) compile-time
+          problems.  Thanks to Oliver Kellogg
+          <Oliver.Kellogg@sysde.eads.net> and Roland Meub
+          <roland.meub@gmx.de> for providing patches.
 
 Tue Apr 13 06:46:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
