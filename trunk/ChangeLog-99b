@@ -1,3 +1,7 @@
+Wed Aug 04 12:58:53 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/*.dsp:  Fixed Alpha configurations.
+
 Wed Aug  4 12:26:53 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/Malloc.h:
