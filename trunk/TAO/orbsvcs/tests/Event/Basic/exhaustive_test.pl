@@ -46,18 +46,20 @@ foreach $d (@dispatching_configs) {
 
 	print STDERR "\n\n", $config, "\n";
 
-	$T = Process::Create ($EXEPREFIX . "Random".$EXE_EXT,
+	system ("purify.exe ".
+			      "/run .\\Release\\Random.exe ".
 			      " -ORBSvcConf "
 			      .$cwd.$DIR_SEPARATOR.
 			      "$conf_file"
 			      ." -suppliers 16"
 			      ." -consumers 16"
 			      ." -max_recursion 0");
-	if ($T->TimedWait (900) == -1) {
-	  print STDERR "ERROR: Test timedout\n";
-	  $status = 1;
-	  $T->Kill (); $T->TimedWait (1);
-	}
+# $T = Process::Create ("c:\\Program Files\\Rational\\Purify\\purify.exe"
+#	if ($T->TimedWait (900) == -1) {
+#	  print STDERR "ERROR: Test timedout\n";
+#	  $status = 1;
+#	  $T->Kill (); $T->TimedWait (1);
+#	}
       }
     }
   }

@@ -1,11 +1,49 @@
+Wed May 10 16:23:37 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/orbsvcs.dsw:
+        * orbsvcs/orbsvcs/CosEvent.dsp:
+          Still fixing the dependencies in the workspace.
+
+	* orbsvcs/tests/Event/lib/ECTest.dsp:
+	* orbsvcs/tests/Event/Basic/Atomic_Reconnect.dsp:
+	* orbsvcs/tests/Event/Basic/BCast.dsp:
+	* orbsvcs/tests/Event/Basic/Bitmask.dsp:
+	* orbsvcs/tests/Event/Basic/Complex.dsp:
+	* orbsvcs/tests/Event/Basic/Control.dsp:
+	* orbsvcs/tests/Event/Basic/Disconnect.dsp:
+	* orbsvcs/tests/Event/Basic/Gateway.dsp:
+	* orbsvcs/tests/Event/Basic/MT_Disconnect.dsp:
+	* orbsvcs/tests/Event/Basic/Negation.dsp:
+	* orbsvcs/tests/Event/Basic/Observer.dsp:
+	* orbsvcs/tests/Event/Basic/Random.dsp:
+	* orbsvcs/tests/Event/Basic/Reconnect.dsp:
+	* orbsvcs/tests/Event/Basic/Shutdown.dsp:
+	* orbsvcs/tests/Event/Basic/Timeout.dsp:
+	* orbsvcs/tests/Event/Basic/Wildcard.dsp:
+	* orbsvcs/tests/Event/Basic/exhaustive_test.pl:
+	* orbsvcs/tests/Event/Performance/Connect.dsp:
+	* orbsvcs/tests/Event/Performance/Inversion.dsp:
+	* orbsvcs/tests/Event/Performance/Throughput.dsp:
+	  We only need to link the TAO_RTEvent library now.
+
+	* orbsvcs/tests/Event/Basic/Schedule.dsp:
+	  This project still requires the TAO_RTSched library.
+
+	* docs/tutorials/Quoter/Simple/Client/index.html:
+	  Improved the explanation as to what the *S_T.cpp are for.  They
+	  shoult not be compiled, but they are needed to compile the
+	  *S.cpp file.
+	  Thanks to William Horn <whorn1984@my-deja.com> for pointing this
+	  out.
+
 Wed May 10 16:17:31 2000  Ossama Othman  <ossama@uci.edu>
 
-	* docs/releasenotes/index.html:
+        * docs/releasenotes/index.html:
 
-	  Added basic information about TAO's pending CORBA Security
-	  Service implementation.
+          Added basic information about TAO's pending CORBA Security
+          Service implementation.
 
-	  Updated point of contact for Pluggable Protocols, namely me.
+          Updated point of contact for Pluggable Protocols, namely me.
 
 Wed May 10 15:57:12 2000  Carlos O'Ryan  <coryan@uci.edu>
 
