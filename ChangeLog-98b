@@ -1,3 +1,19 @@
+Fri Sep 25 14:51:54 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* ace/Asynch_IO.h:
+	* ace/Asynch_IO.cpp:
+	* ace/Proactor.h: 
+	* ace/Proactor.cpp: 
+   	  Implemented Asynch_Accept to work for AIO_CONTROL_BLOCKS strategy of
+   	  completion notification. 
+   	  Defined an auxillary Accept_Handler called ACE_AIO_Accept_Handler in
+   	  addition to the ACE_Asynch_Accept_Handler. ACE_AIO_Accept_Handler  
+   	  holds the notification pipe and does a read on it to handle the	   
+   	  <ACE_Asynch_Accept::Result> coming from Asynch_Accept_handler. 	   
+   	  THANKS to Doug and Irfan for suggesting this 'notification pipe' based
+   	  implementation for AIO_CONTROL_BLOCKS strategy, so that Proactor will
+   	  work on platforms where POSIX4 RT_Signals are broken (Solaris 2.6 !)
+   	  
 Fri Sep 25 12:40:45 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-sunos5.{5,6}.h: removed #define/#undef of
