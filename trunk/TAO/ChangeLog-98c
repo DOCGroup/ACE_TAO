@@ -1,5 +1,9 @@
 Fri Oct 16 15:48:48 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* tao: Replaced all #if !defined (TAO_FOO_H) with #ifndef
+ 	  TAO_FOO_H since many C++ preprocessors can recognize this idiom
+ 	  and optimize for it.
+
 	* tao/POA.cpp: Changed from operator++ to ++operator to be more
  	  efficient.  Thanks to Irfan for suggesting this change.
 
