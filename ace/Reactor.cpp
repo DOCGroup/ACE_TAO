@@ -1614,6 +1614,6 @@ ACE_Reactor::check_handles (void)
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class ACE_Guard<ACE_Token>;
+ACE_MT (template class ACE_Guard<ACE_REACTOR_MUTEX>);
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
 

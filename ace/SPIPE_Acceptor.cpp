@@ -36,7 +36,7 @@ ACE_SPIPE_Acceptor::dump (void) const
 
 int
 ACE_SPIPE_Acceptor::open (const ACE_SPIPE_Addr &local_sap, 
-			  int reuse_addr,
+			  int /* reuse_addr */,
 			  int perms)
 {
   ACE_TRACE ("ACE_SPIPE_Acceptor::open");

@@ -11,7 +11,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_SPIPE_Connector)
 ACE_SPIPE_Connector::ACE_SPIPE_Connector (ACE_SPIPE_Stream &new_io, 
 					  const ACE_SPIPE_Addr &remote_sap,
 					  ACE_Time_Value *timeout,
-					  const ACE_Addr &local_sap,
+					  const ACE_Addr & local_sap,
 					  int reuse_addr, 
 					  int flags,
 					  int perms)
@@ -39,8 +39,8 @@ int
 ACE_SPIPE_Connector::connect (ACE_SPIPE_Stream &new_io, 
 			      const ACE_SPIPE_Addr &remote_sap,
 			      ACE_Time_Value *timeout,
-			      const ACE_Addr &local_sap,
-			      int reuse_addr,
+			      const ACE_Addr & /* local_sap */,
+			      int /* reuse_addr */,
 			      int flags, 
 			      int perms)
 {

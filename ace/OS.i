@@ -281,6 +281,7 @@ ACE_OS::rand_r (ACE_RANDR_TYPE seed)
 #if defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE)
   ACE_OSCALL_RETURN (::rand_r (seed), int, -1);
 #else
+  seed = seed;
   ACE_OSCALL_RETURN (::rand (), int, -1);
 #endif
 }

@@ -349,6 +349,7 @@ ACE_Log_Msg::log (const char *format_str,
 { 
   ACE_TRACE ("ACE_Log_Msg::log");
   // External decls. 
+
   extern int sys_nerr;
   typedef void (*PTF)(...);
 
@@ -891,5 +892,5 @@ ACE_Log_Msg::getpid (void) const
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class ACE_Guard<ACE_Recursive_Thread_Mutex>;
+ACE_MT (template class ACE_Guard<ACE_Recursive_Thread_Mutex>);
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

@@ -626,7 +626,7 @@ ACE_Sig_Handlers::handler (int signum, ACE_Event_Handler *new_sh)
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class ACE_TSS_Guard<ACE_Recursive_Thread_Mutex>;
+ACE_MT (template class ACE_TSS_Guard<ACE_Recursive_Thread_Mutex>);
 template class ACE_Fixed_Set<ACE_Event_Handler *, ACE_MAX_SIGNAL_HANDLERS>;
 template class ACE_Fixed_Set_Iterator<ACE_Event_Handler *, ACE_MAX_SIGNAL_HANDLERS>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

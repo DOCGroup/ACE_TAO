@@ -204,7 +204,7 @@ ACE_Token_Collection::renew (const char *token_name,
 }
 
 int 
-ACE_Token_Collection::release (ACE_Synch_Options &options)
+ACE_Token_Collection::release (ACE_Synch_Options &)
 
 {
   ACE_TRACE ("ACE_Token_Collection::release");
@@ -265,7 +265,7 @@ ACE_Token_Collection::clone (void) const
 
 // This method doesn't mean anything for a collection.
 ACE_Tokens *
-ACE_Token_Collection::create_token (const char *name)
+ACE_Token_Collection::create_token (const char *)
 {
   ACE_TRACE ("ACE_Token_Collection::create_token");
   return (ACE_Tokens *) 0;

@@ -183,7 +183,7 @@ Consumer::svc (void)
 // Main driver function.
 
 int 
-main (int argc, char *argv[])
+main (int, char *argv[])
 {
   ACE_Service_Config daemon (argv[0]);
 

@@ -919,9 +919,7 @@ template class ACE_Unbounded_Set_Iterator<ACE_Static_Svc_Descriptor *>;
 template class ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex>;
 template class ACE_Allocator_Adapter<ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex> >;
 template class auto_ptr<ACE_Obstack>;
-#if !defined (ACE_HAS_THREADS)
 template class ACE_Guard<ACE_Null_Mutex>;
 template class ACE_Read_Guard<ACE_Null_Mutex>;
 template class ACE_Write_Guard<ACE_Null_Mutex>;
-#endif /* ACE_HAS_THREADS */
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
