@@ -452,7 +452,7 @@ InputPath=.\anonymous.idl
 InputName=anonymous
 
 BuildCmds= \
-	..\..\..\bin\tao_idl $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -537,7 +537,7 @@ InputPath=.\array.idl
 InputName=array
 
 BuildCmds= \
-	..\..\..\bin\tao_idl $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -622,7 +622,7 @@ InputPath=.\constants.idl
 InputName=constants
 
 BuildCmds= \
-	..\..\..\bin\tao_idl $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -707,7 +707,7 @@ InputPath=.\enum_in_struct.idl
 InputName=enum_in_struct
 
 BuildCmds= \
-	..\..\..\bin\tao_idl $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -792,7 +792,7 @@ InputPath=.\generic_object.idl
 InputName=generic_object
 
 BuildCmds= \
-	..\..\..\bin\tao_idl $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -877,7 +877,7 @@ InputPath=.\included.idl
 InputName=included
 
 BuildCmds= \
-	..\..\..\bin\tao_idl $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -962,7 +962,7 @@ InputPath=.\including.idl
 InputName=including
 
 BuildCmds= \
-	..\..\..\bin\tao_idl $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1047,7 +1047,7 @@ InputPath=.\interface.idl
 InputName=interface
 
 BuildCmds= \
-	..\..\..\bin\tao_idl $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1132,7 +1132,7 @@ InputPath=.\keywords.idl
 InputName=keywords
 
 BuildCmds= \
-	..\..\..\bin\tao_idl $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1179,7 +1179,7 @@ InputPath=.\params.idl
 InputName=params
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-	tao_idl $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
 
 # End Custom Build
 
@@ -1200,7 +1200,7 @@ InputPath=.\pragma.idl
 InputName=pragma
 
 BuildCmds= \
-	..\..\..\bin\tao_idl $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1285,7 +1285,7 @@ InputPath=.\reopened_modules.idl
 InputName=reopened_modules
 
 BuildCmds= \
-	..\..\..\bin\tao_idl $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1370,7 +1370,7 @@ InputPath=.\sequence.idl
 InputName=sequence
 
 BuildCmds= \
-	..\..\..\bin\tao_idl $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1455,7 +1455,7 @@ InputPath=.\typedef.idl
 InputName=typedef
 
 BuildCmds= \
-	..\..\..\bin\tao_idl $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1540,7 +1540,7 @@ InputPath=.\union.idl
 InputName=union
 
 BuildCmds= \
-	..\..\..\bin\tao_idl $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

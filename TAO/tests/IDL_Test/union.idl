@@ -155,3 +155,20 @@ module UnionTest3
    	 };
 };
 
+// Make sure inner union is generated in header file with
+// proper scoping (or lack thereof) in its name, depending
+// on the platform.
+enum XType { X_A };
+enum ZType { Z_A };
+union X switch (XType) 
+{
+  case X_A:
+    struct Y 
+      {
+        union Z switch (ZType) 
+        {
+          case Z_A: long a;
+        } u;
+      } a;
+};
+
