@@ -93,7 +93,7 @@ Sat Feb 21 08:08:55 1998  David L. Levine  <levine@cs.wustl.edu>
         * rules.tao.GNU: added -Wno-used to CCFLAGS, with g++ only.
 
         * tao/align.h,corbacom.h,orbconf.h,orbobj.cpp:
-           use ACE Basic_Types instead of local SIZEOF_* macros.
+          use ACE Basic_Types instead of local SIZEOF_* macros.
 
         * tao/debug.cpp: null f{,un}lockfile with ACE_HAS_DCE_DRAFT4_THREADS
           (LynxOS).
