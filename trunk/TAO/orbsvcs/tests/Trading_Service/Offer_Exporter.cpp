@@ -31,20 +31,24 @@ Simple_DP_Evaluation_Handler<T>::evalDP (const CORBA::Any& extra_info,
 					 CORBA::Environment& _env)
   TAO_THROW_SPEC ((CosTradingDynamic::DPEvalFailure))
 {
+  T* copy;
   CORBA::Any* return_value = 0;
 
-  ACE_NEW_RETURN (return_value, CORBA::Any, return_value);
+  ACE_NEW_RETURN (return_value, CORBA::Any, 0);
+  ACE_NEW_RETURN (copy, T (this->dp_), 0);
 
-  (*return_value) <<= this->dp_;
+  (*return_value) <<= copy;
   return return_value;
 }
 
 TAO_Offer_Exporter::
 TAO_Offer_Exporter (PortableServer::POA_ptr poa_object,
 		    CosTrading::Register_ptr register_if,
+		    CORBA::ORB_ptr orb,
 		    CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException))
-    : register_ (register_if)
+    : orb_ (CORBA::ORB::_duplicate (orb)),
+      register_ (register_if)
 {
   this->create_offers ();
   this->admin_ = register_if->admin_if (_env);
@@ -154,7 +158,11 @@ TAO_Offer_Exporter::describe_offers (CORBA::Environment& _env)
 
 	      ACE_DEBUG ((LM_DEBUG, "Offer Id: %s\n", (const char *) offer_id_seq[i]));
 	      ACE_DEBUG ((LM_DEBUG, "Service Type: %s\n", offer_info->type.in ()));	      
+#if defined TAO_HAS_DYNAMIC_PROPERTY_BUG
+	      TT_Info::dump_properties (offer_info->properties, this->orb_.ptr ());
+#else  
 	      TT_Info::dump_properties (offer_info->properties);
+#endif /* TAO_HAS_DYNAMIC_PROPERTY_BUG */ 
 	      ACE_DEBUG ((LM_DEBUG, "------------------------------\n"));
 	    }
 	}
@@ -266,10 +274,8 @@ TAO_Offer_Exporter::create_offers (void)
   TAO_Sequences::StringSeq string_seq (QUEUE_SIZE);
   TAO_Sequences::ULongSeq ulong_seq (QUEUE_SIZE);
 
-#ifdef TAO_USE_DYNAMIC_PROPERTIES  
   CosTradingDynamic::DynamicProp* dp_user_queue;
   CosTradingDynamic::DynamicProp* dp_file_queue;
-#endif /* TAO_USE_DYNAMIC_PROPERTIES */
   
   // Initialize plotters
   string_seq.length (QUEUE_SIZE);
@@ -287,22 +293,39 @@ TAO_Offer_Exporter::create_offers (void)
 	  ulong_seq[j] = counter * 10000;
 	}
 
-#ifdef TAO_USE_DYNAMIC_PROPERTIES  
+#if defined TAO_HAS_DYNAMIC_PROPERTY_BUG
       
       dp_user_queue = this->dp_plotters_[i].construct_dynamic_prop
 	(TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_USER_QUEUE],
 	 TT_Info::PLOTTER_PROPERTY_TYPES[TT_Info::PLOTTER_USER_QUEUE],
-	 extra_info);
-		       
-      this->dp_plotters_[i].register_handler
+	 extra_info,
+	 this->orb_.ptr ());
+
+      dp_file_queue = this->dp_plotters_[i].construct_dynamic_prop
+	(TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_FILE_SIZES_PENDING],
+	 TT_Info::PLOTTER_PROPERTY_TYPES[TT_Info::PLOTTER_FILE_SIZES_PENDING],
+	 extra_info,
+	 this->orb_.ptr ());
+
+#else
+
+      dp_user_queue = this->dp_plotters_[i].construct_dynamic_prop
 	(TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_USER_QUEUE],
-	 new Simple_DP_Evaluation_Handler<TAO_Sequences::StringSeq> (string_seq),
-	 CORBA::B_TRUE);
+	 TT_Info::PLOTTER_PROPERTY_TYPES[TT_Info::PLOTTER_USER_QUEUE],
+	 extra_info);
 
       dp_file_queue = this->dp_plotters_[i].construct_dynamic_prop
 	(TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_FILE_SIZES_PENDING],
 	 TT_Info::PLOTTER_PROPERTY_TYPES[TT_Info::PLOTTER_FILE_SIZES_PENDING],
 	 extra_info);
+      
+#endif /* TAO_HAS_DYNAMIC_PROPERTY_BUG */ 
+      
+      this->dp_plotters_[i].register_handler
+	(TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_USER_QUEUE],
+	 new Simple_DP_Evaluation_Handler<TAO_Sequences::StringSeq> (string_seq),
+	 CORBA::B_TRUE);
+
 
       this->dp_plotters_[i].register_handler
 	(TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_FILE_SIZES_PENDING],
@@ -310,10 +333,7 @@ TAO_Offer_Exporter::create_offers (void)
 	 CORBA::B_TRUE);
       
       this->props_plotters_[i].length (9);
-#else      
-      this->props_plotters_[i].length (7);
-#endif /* TAO_USE_DYNAMIC_PROPERTIES */
-      
+
       this->props_plotters_[i][0].name = CORBA::string_dup (TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::NAME]);
       this->props_plotters_[i][0].value <<= CORBA::string_dup (name);
       this->props_plotters_[i][1].name = CORBA::string_dup (TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::LOCATION]);
@@ -328,13 +348,10 @@ TAO_Offer_Exporter::create_offers (void)
       this->props_plotters_[i][5].value <<= (CORBA::Float) i;
       this->props_plotters_[i][6].name = CORBA::string_dup (TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_MODEL_NUMBER]);
       this->props_plotters_[i][6].value <<= CORBA::string_dup (TT_Info::MODEL_NUMBERS[i]);
-
-#ifdef TAO_USE_DYNAMIC_PROPERTIES
       this->props_plotters_[i][7].name = TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_USER_QUEUE];
       this->props_plotters_[i][7].value <<= *dp_user_queue;
       this->props_plotters_[i][8].name = TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_FILE_SIZES_PENDING];
       this->props_plotters_[i][8].value <<= *dp_file_queue;
-#endif /* TAO_USE_DYNAMIC_PROPERTIES */
     }
 
   // Initialize printers

@@ -12,6 +12,7 @@ const char* TAO_Machine_Properties::PROP_NAMES[] =
   "PAGES",
   "SWAPS",
   "PACKETS",
+  "ERRORS",
   "CONTEXT_SWITCHES",
   "COLLISIONS",
   "INTERRUPTS",

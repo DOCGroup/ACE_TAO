@@ -21,10 +21,19 @@
 
 #include "Constraint_Evaluator.h"
 
+#if defined TAO_HAS_DYNAMIC_PROPERTY_BUG
+TAO_Constraint_Evaluator::
+TAO_Constraint_Evaluator(CosTrading::Offer* offer,
+			 CORBA::ORB_ptr orb,
+			 CORBA::Boolean supports_dp)
+  : prop_eval_ (*offer, supports_dp),
+    orb_ (CORBA::ORB::_duplicate (orb))
+#else
 TAO_Constraint_Evaluator::
 TAO_Constraint_Evaluator(CosTrading::Offer* offer,
 			 CORBA::Boolean supports_dp)
   : prop_eval_ (*offer, supports_dp)
+#endif /* TAO_HAS_DYNAMIC_PROPERTY_BUG */
 {
   this->props_.clear();
   int length = offer->properties.length();
@@ -474,8 +483,15 @@ visit_property(TAO_Property_Constraint* literal)
       // Retrieve the value of the property from the Property_Evaluator
       int prop_index = (*prop_iter).second;
 
+#if defined TAO_HAS_DYNAMIC_PROPERTY_BUG
+      CORBA::Any* value =
+	this->prop_eval_.property_value (prop_index,
+					 this->orb_.ptr (),
+					 env);
+#else      
       CORBA::Any* value =
 	this->prop_eval_.property_value (prop_index, env);
+#endif /* TAO_HAS_DYNAMIC_PROPERTY_BUG */
 
       if (value != 0)
 	{

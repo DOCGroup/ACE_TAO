@@ -25,6 +25,7 @@ public:
 
   TAO_Offer_Exporter (PortableServer::POA_ptr poa,
 		      CosTrading::Register_ptr register_if,
+		      CORBA::ORB_ptr orb,
 		      CORBA::Environment& env)
     TAO_THROW_SPEC ((CORBA::SystemException));
 
@@ -82,6 +83,8 @@ private:
 		     CosTrading::NotImplemented));
 
   void create_offers (void);
+
+  CORBA::ORB_var orb_;
   
   CosTrading::Register_var register_;
   CosTrading::Admin_var admin_;

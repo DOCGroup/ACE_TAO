@@ -22,7 +22,8 @@ class TAO_Offer_Importer
 {
 public:
 
-  TAO_Offer_Importer (CosTrading::Lookup_ptr lookup_if);
+  TAO_Offer_Importer (CosTrading::Lookup_ptr lookup_if,
+		      CORBA::ORB_ptr orb);
 
   void perform_queries (CORBA::Environment& _env)
     TAO_THROW_SPEC ((CORBA::SystemException,
@@ -55,6 +56,8 @@ private:
 			CosTrading::OfferIterator_ptr offer_iterator,
 			CORBA::Environment& _env) const
     TAO_THROW_SPEC ((CORBA::SystemException));
+
+  CORBA::ORB_var orb_;
   
   CosTrading::Lookup_var lookup_;
   

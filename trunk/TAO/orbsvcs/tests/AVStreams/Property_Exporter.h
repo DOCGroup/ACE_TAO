@@ -37,10 +37,18 @@ class TAO_Property_Exporter
 //   3. export ()
 {
  public:
-  
+
+#if defined TAO_HAS_DYNAMIC_PROPERTY_BUG
   TAO_Property_Exporter (CosTrading::Lookup_var lookup_if,
 			 CosPropertyService::PropertySet_ptr prop_set,
+			 CORBA::ORB_ptr orb,
 			 CORBA::ULong initial_size = 10);
+#else
+    TAO_Property_Exporter (CosTrading::Lookup_var lookup_if,
+			 CosPropertyService::PropertySet_ptr prop_set,
+			 CORBA::ULong initial_size = 10);
+
+#endif /* TAO_HAS_DYNAMIC_PROPERTY_BUG */
   
   ~TAO_Property_Exporter (void);
   // Delete all Dynamic Property adapters
@@ -67,7 +75,7 @@ class TAO_Property_Exporter
 		   CosTrading::Register::InvalidObjectRef, 
 		   CosTrading::IllegalServiceType, 
 		   CosTrading::UnknownServiceType, 
-		   CosTrading::Register::InterfaceTypeMismatch, 
+o		   CosTrading::Register::InterfaceTypeMismatch, 
 		   CosTrading::IllegalPropertyName, 
 		   CosTrading::PropertyTypeMismatch, 
 		   CosTrading::ReadonlyDynamicProperty, 
@@ -105,6 +113,10 @@ private:
   void operator= (const TAO_Property_Exporter&);
   // These don't make sense on this class.
 
+#if defined TAO_HAS_DYNAMIC_PROPERTY_BUG
+  CORBA::ORB_var orb_;
+#endif /* TAO_HAS_DYNAMIC_PROPERTY_BUG */
+  
   const int increment_;
   
   CosTrading::Lookup_var lookup_;

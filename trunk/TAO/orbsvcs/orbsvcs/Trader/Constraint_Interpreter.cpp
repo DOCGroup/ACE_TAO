@@ -62,12 +62,26 @@ TAO_Constraint_Interpreter::~TAO_Constraint_Interpreter (void)
 {
 }
 
+#if defined TAO_HAS_DYNAMIC_PROPERTY_BUG
+
+CORBA::Boolean
+TAO_Constraint_Interpreter::
+evaluate (CosTrading::Offer* offer, CORBA::ORB_ptr orb)
+{
+  TAO_Constraint_Evaluator evaluator (offer, orb);
+  return evaluator.evaluate_constraint (this->root_);
+}
+
+#else
+
 CORBA::Boolean
 TAO_Constraint_Interpreter::evaluate (CosTrading::Offer* offer)
 {
   TAO_Constraint_Evaluator evaluator (offer);
   return evaluator.evaluate_constraint (this->root_);
 }
+
+#endif /* TAO_HAS_DYNAMIC_PROPERTY_BUG */
 
 CORBA::Boolean
 TAO_Constraint_Interpreter::evaluate(TAO_Constraint_Evaluator& evaluator)

@@ -20,6 +20,16 @@
 #include "ace/OS.h"
 #include <iostream.h>
 
+#if defined TAO_HAS_DYNAMIC_PROPERTY_BUG
+TAO_Trader_Base::TAO_Trader_Base (CORBA::ORB_ptr orb)
+  : trading_components_ (*this),
+    import_attributes_ (*this),
+    support_attributes_ (*this),
+    link_attributes_ (*this),
+    orb_ (CORBA::ORB::_duplicate (orb))
+{
+}
+#else
 TAO_Trader_Base::TAO_Trader_Base (void)
   : trading_components_ (*this),
     import_attributes_ (*this),
@@ -27,6 +37,7 @@ TAO_Trader_Base::TAO_Trader_Base (void)
     link_attributes_ (*this)
 {
 }
+#endif /* TAO_HAS_DYNAMIC_PROPERTY_BUG */
 
 TAO_Import_Attributes_Impl &
 TAO_Trader_Base::import_attributes (void)
@@ -102,6 +113,14 @@ TAO_Trader_Base::is_valid_identifier_name (const char* ident)
   return return_value;
 }
 
+#if defined TAO_HAS_DYNAMIC_PROPERTY_BUG
+CORBA::ORB_ptr
+TAO_Trader_Base::orb (void)
+{
+  return this->orb_.ptr ();  
+}
+#endif /* TAO_HAS_DYNAMIC_PROPERTY_BUG */
+
 int
 operator< (const SERVICE_TYPE_REPOS::IncarnationNumber &l,
 	   const SERVICE_TYPE_REPOS::IncarnationNumber &r)
@@ -124,6 +143,24 @@ operator> (const SERVICE_TYPE_REPOS::IncarnationNumber &l,
 
 #include "Trader_T.h"
 
+#if defined TAO_HAS_DYNAMIC_PROPERTY_BUG
+
+TAO_Trader_Factory::TAO_TRADER*
+TAO_Trader_Factory::create_linked_trader (CORBA::ORB_ptr orb)
+{
+  typedef TAO_Trader<ACE_Null_Mutex, ACE_Null_Mutex>  NULL_TRADER;
+  
+  NULL_TRADER::Trader_Components linked_trader =
+    (NULL_TRADER::Trader_Components)
+    (NULL_TRADER::LOOKUP |
+     NULL_TRADER::REGISTER |
+     NULL_TRADER::ADMIN |
+     NULL_TRADER::LINK);
+  return new NULL_TRADER (orb, linked_trader);
+}
+
+#else
+
 TAO_Trader_Factory::TAO_TRADER*
 TAO_Trader_Factory::create_linked_trader (void)
 {
@@ -137,6 +174,8 @@ TAO_Trader_Factory::create_linked_trader (void)
      NULL_TRADER::LINK);
   return new NULL_TRADER (linked_trader);
 }
+
+#endif /* TAO_HAS_DYNAMIC_PROPERTY_BUG */
 
 #ifdef ACE_HAS_THREADS
 /*

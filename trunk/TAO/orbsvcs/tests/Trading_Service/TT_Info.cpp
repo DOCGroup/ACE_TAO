@@ -212,8 +212,14 @@ const char* TT_Info::QUERIES[][3] =
 };
 
 
+#if defined TAO_HAS_DYNAMIC_PROPERTY_BUG
+void
+TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
+			  CORBA::ORB_ptr orb)
+#else
 void
 TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq)
+#endif /* TAO_HAS_DYNAMIC_PROPERTY_BUG */
 {
   CORBA::Environment env;
   TAO_Property_Evaluator prop_eval (prop_seq);
@@ -225,7 +231,11 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq)
       ACE_DEBUG ((LM_DEBUG, "%-15s: ", prop_seq[k].name.in ()));
       TAO_TRY
 	{
+#if defined TAO_HAS_DYNAMIC_PROPERTY_BUG
+	  value = prop_eval.property_value(k, orb, env);
+#else
 	  value = prop_eval.property_value(k, env);
+#endif /* TAO_HAS_DYNAMIC_PROPERTY_BUG */
 	  TAO_CHECK_ENV;
 
 	  tc = value->type ();
@@ -240,20 +250,22 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq)
 	continue;
       else if (tc->equal (TAO_Sequences::_tc_StringSeq, env))
 	{
-	  TAO_Sequences::StringSeq str_seq;
-	  //(*value) >>= str_seq;
+	  TAO_Sequences::StringSeq* str_seq_ptr;
+	  (*value) >>= str_seq_ptr;
 
-	  for (int length = str_seq.length (), i = 0; i < length; i++)
+	  TAO_Sequences::StringSeq_var str_seq (str_seq_ptr);
+	  for (int length = str_seq->length (), i = 0; i < length; i++)
 	    ACE_DEBUG ((LM_DEBUG, "%s ", (const char *) str_seq[i]));
 
 	  ACE_DEBUG ((LM_DEBUG, "\n"));
 	}
       else if (tc->equal (TAO_Sequences::_tc_ULongSeq, env))
 	{
-	  TAO_Sequences::ULongSeq ulong_seq;
-	  //	  (*value) >>= ulong_seq;
+	  TAO_Sequences::ULongSeq* ulong_seq_ptr;
+	  (*value) >>= ulong_seq_ptr;
 
-	  for (int length = ulong_seq.length (), i = 0; i < length; i++)
+	  TAO_Sequences::ULongSeq_var ulong_seq (ulong_seq_ptr);
+	  for (int length = ulong_seq->length (), i = 0; i < length; i++)
 	    ACE_DEBUG ((LM_DEBUG, "%d ", ulong_seq[i]));
 
 	  ACE_DEBUG ((LM_DEBUG, "\n"));

@@ -60,8 +60,13 @@ public:
   typedef TAO_Service_Type_Map<MAP_LOCK_TYPE> SERVICE_TYPE_MAP;
   typedef SERVICE_TYPE_MAP::Local_Offer_Iterator LOCAL_OFFER_ITER;
   typedef MAP_LOCK_TYPE LOCK_TYPE;
-  
+
+#if defined TAO_HAS_DYNAMIC_PROPERTY_BUG
+  TAO_Trader (CORBA::ORB_ptr orb, Trader_Components components = LOOKUP);
+#else
   TAO_Trader (Trader_Components components = LOOKUP);
+#endif /* TAO_HAS_DYNAMIC_PROPERTY_BUG */
+  
   // Constructor which based on its arguments will create 
   // a particular type of trader (e.g. Query trader, Simple trader, etc.)
   // The argument is a bitwise OR of desired Trader_Components as listed
