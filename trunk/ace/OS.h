@@ -1719,8 +1719,6 @@ _make_##SERVICE_CLASS (ACE_Service_Object_Exterminator *gobbler) \
  * The ACE services defined in netsvcs use this helper macros for
  * simplicity.
  *
- * @todo The macros should be moved into the netsvcs library, they
- * have no place in ace/OS.h
  */
 //@{
 # define ACE_SVC_FACTORY_DECLARE(X) ACE_FACTORY_DECLARE (ACE_Svc, X)
