@@ -8,6 +8,10 @@
 #       Local macros
 #----------------------------------------------------------------------------
 
+ifndef TAO_ROOT
+  TAO_ROOT = $(ACE_ROOT)/TAO
+endif # ! TAO_ROOT
+	
 IDL_FILES = Test
 IDL_SRC = TestC.cpp TestS.cpp
 BIN = client server
