@@ -3,10 +3,10 @@ Sun Jan 12 18:20:49 1997  David L. Levine  <levine@cs.wustl.edu>
 	* ace/ACE.cpp (round_to_pagesize): fixed typo in reference to
 	  ACE::pagesize_
 
-	* ace/ACE.cpp: initialize ACE::pagesize_ to 0 if ACE_HAS_GETPAGESIZE.
-	  That allows ACE:round_to_pagesize () to set ACE::pagesize_ using
-	  the appropriate system call.  If ACE_HAS_GETPAGESIZE isn't set,
-	  then ACE::pagesize_ is initialized to ACE_PAGE_SIZE, as before.
+	* ace/ACE.cpp: initialize ACE::pagesize_ to 0.
+
+	* ace/config-irix*.h and config-win*.h: removed ACE_PAGE_SIZE
+	  definition because these platforms no longer use it
 
 Sat Jan 11 15:11:28 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
