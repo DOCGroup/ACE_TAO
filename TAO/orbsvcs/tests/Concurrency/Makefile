@@ -91,8 +91,10 @@ CC_command.tab: CC_command.y
 		sed -e "s/char \*getenv/char *ace_foo/g" \
 		    -e "s/= getenv/= ACE_OS::getenv/g" \
 		    -e "s/yynewerror://g" \
+                    -e "s/goto\ yynewerror.*//g" \
 		    -e "s/yy/ace_cc_yy/g" \
 		    -e "s/YY/ACE_CC_YY/g" \
+                    -e "s/^\#pragma.*//g" \
 		    -e "s/y\.tab\.c/CC_command.tab.cpp/g" < y.tab.c > /tmp/$(USER).CC_Y
 		sed -e "s/yy/ace_cc_yy/g" \
 		    -e "s/YY/ACE_CC_YY/g" < y.tab.h > /tmp/$(USER).CC_YH
