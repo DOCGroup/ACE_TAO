@@ -373,9 +373,11 @@ ACE_Message_Block::ACE_Message_Block (const char *data,
                 ACE_LIB_TEXT ("ACE_Message_Block")));
 }
 
-ACE_Message_Block::ACE_Message_Block (ACE_Allocator *message_block_allocator)
+ACE_Message_Block::ACE_Message_Block (ACE_Allocator *message_block_allocator,
+                                      const ACE_Object_Counter::object_id* oid)
   : flags_ (0),
-    data_block_ (0)
+    data_block_ (0),
+    oid_ (oid)
 {
   ACE_TRACE ("ACE_Message_Block::ACE_Message_Block");
 
@@ -518,9 +520,11 @@ ACE_Message_Block::ACE_Message_Block (size_t size,
 
 ACE_Message_Block::ACE_Message_Block (ACE_Data_Block *data_block,
                                       ACE_Message_Block::Message_Flags flags,
-                                      ACE_Allocator *message_block_allocator)
+                                      ACE_Allocator *message_block_allocator,
+                                      const ACE_Object_Counter::object_id* oid)
   : flags_ (flags),
-    data_block_ (0)
+    data_block_ (0),
+    oid_ (oid)
 {
   ACE_TRACE ("ACE_Message_Block::ACE_Message_Block");
 

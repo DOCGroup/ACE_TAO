@@ -74,7 +74,8 @@ public:
   ACE_Message_Queue (size_t high_water_mark = ACE_Message_Queue_Base::DEFAULT_HWM,
                      size_t low_water_mark = ACE_Message_Queue_Base::DEFAULT_LWM,
                      ACE_Notification_Strategy * = 0,
-                     uint8_t enable_dsui = 0);
+                     uint8_t enable_dsui = 0,
+                     uint32_t queue_id = 0);
 
   /**
    * Initialize an <ACE_Message_Queue>.  The <high_water_mark>
@@ -518,8 +519,12 @@ private:
   ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Message_Queue<ACE_SYNCH_USE> &))
   ACE_UNIMPLEMENTED_FUNC (ACE_Message_Queue (const ACE_Message_Queue<ACE_SYNCH_USE> &))
 
+
   /// Keeps track if we are using DSUI in the queue (1 = enabled, 0 = disabled)
   uint8_t enabled_dsui_;
+
+  /// Keeps track of the Queue ID for using with DSUI
+  uint32_t queue_id_;
 };
 
 // This typedef is used to get around a compiler bug in g++/vxworks.

@@ -24,6 +24,7 @@
 #include "ace/Default_Constants.h"
 #include "ace/Global_Macros.h"
 #include "ace/Time_Value.h"
+#include "ace/Counter.h"
 
 #include <stdlib.h>
 
@@ -127,7 +128,8 @@ public:
 
   // = Initialization and termination.
   /// Create an empty message.
-  ACE_Message_Block (ACE_Allocator *message_block_allocator = 0);
+  ACE_Message_Block (ACE_Allocator *message_block_allocator = 0,
+                     const ACE_Object_Counter::object_id* = 0);
 
   /**
    * Create an <ACE_Message_Block> that owns the <ACE_Data_Block>
@@ -138,7 +140,8 @@ public:
    */
   ACE_Message_Block (ACE_Data_Block *,
                      Message_Flags flags = 0,
-                     ACE_Allocator *message_block_allocator = 0);
+                     ACE_Allocator *message_block_allocator = 0,
+                     const ACE_Object_Counter::object_id* = 0);
 
   /**
    * Create a Message Block that assumes ownership of <data> without
@@ -656,6 +659,8 @@ private:
   // = Disallow these operations for now (use <clone> instead).
   ACE_Message_Block &operator= (const ACE_Message_Block &);
   ACE_Message_Block (const ACE_Message_Block &);
+
+  const ACE_Object_Counter::object_id* oid_;
 };
 
 /**

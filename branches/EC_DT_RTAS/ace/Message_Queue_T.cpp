@@ -504,10 +504,12 @@ template <ACE_SYNCH_DECL>
 ACE_Message_Queue<ACE_SYNCH_USE>::ACE_Message_Queue (size_t hwm,
                                                      size_t lwm,
                                                      ACE_Notification_Strategy *ns,
-                                                     uint8_t enabled_dsui)
+                                                     uint8_t enabled_dsui,
+                                                     uint32_t queue_id)
   : not_empty_cond_ (this->lock_),
     not_full_cond_ (this->lock_),
-    enabled_dsui_ (enabled_dsui)
+    enabled_dsui_ (enabled_dsui),
+    queue_id_ (queue_id)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::ACE_Message_Queue");
 
@@ -1280,10 +1282,13 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_tail (ACE_Message_Block *new_item,
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_tail");
   int queue_count = 0;
   {
+#if defined (ACE_HAS_DSUI)
     DSUI_EVENT_LOG (MSG_QUEUE_FAM, BEFORE_ENQUEUE_TAIL_LOCK_ACQUIRE, 0, 0, NULL);
+#endif // ACE_HAS_DSUI
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
+#if defined (ACE_HAS_DSUI)
     DSUI_EVENT_LOG (MSG_QUEUE_FAM, AFTER_ENQUEUE_TAIL_LOCK_ACQUIRE, 0, 0, NULL);
-
+#endif // ACE_HAS_DSUI
     if (this->state_ == ACE_Message_Queue_Base::DEACTIVATED)
       {
         errno = ESHUTDOWN;
