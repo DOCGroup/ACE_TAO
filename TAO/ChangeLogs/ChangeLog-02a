@@ -1,3 +1,9 @@
+Tue Nov 14 06:56:11 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Connection_Cache_Manager.cpp: Fixed a compiler error in
+	  VC++. Looks like VC++ does not like the same variable
+	  declaration in two different for loops. 
+
 Tue Nov 14 01:51:49 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/Invocation.h

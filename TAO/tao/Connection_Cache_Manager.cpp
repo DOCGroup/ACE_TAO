@@ -242,22 +242,22 @@ TAO_Connection_Cache_Manager::close_i (ACE_Handle_Set &handle_set)
     }
 
   // In the second step do the management of the rest
-  for (HASH_MAP_ITER iter = this->cache_map_.begin ();
-       iter != this->cache_map_.end ();
-       ++iter)
+  for (HASH_MAP_ITER iter_i = this->cache_map_.begin ();
+       iter_i != this->cache_map_.end ();
+       ++iter_i)
     {
       // As a first step, check whether the handler has been
       // registered with the reactor. If registered, then get the
       // handle and set that in the <handle_set> so that the ORB_Core
       // would deregister them from the reactor before shutdown.
 
-      if ((*iter).int_id_.handler ()->is_registered ())
+      if ((*iter_i).int_id_.handler ()->is_registered ())
         {
-          handle_set.set_bit ((*iter).int_id_.handler ()->fetch_handle ());
+          handle_set.set_bit ((*iter_i).int_id_.handler ()->fetch_handle ());
         }
 
       // Then decrement the reference count on the handler
-      (*iter).int_id_.handler ()->decr_ref_count ();
+      (*iter_i).int_id_.handler ()->decr_ref_count ();
     }
 
   // Unbind all the entries in the map
