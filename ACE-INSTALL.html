@@ -648,8 +648,8 @@ need to do:<P>
 <H4><A NAME="win32">Building and Installing ACE on Win32</A></H4>
 
 ACE contains project files for Microsoft Visual C++ 4.x (*.mdp) and
-5.0 with Service Pack 2 or 3 (*.dsw), as well as Borland C++ 5.x (ace.ide).
-<P>
+5.0 with Service Pack 3, and 6.0 (*.dsw), as well as Borland C++ 5.x
+(ace.ide).  <P>
 
 There are also project group files (BPG) to compile ACE and the
 one-button tests with Borland C++ Builder 3.0. This port has not
@@ -684,7 +684,7 @@ the STL fixes.
   <LI> Create a directory, e.g., C:\ACE, and copy all of the ACE
       distribution into it.  This directory will be referred to as
       ACE_ROOT in the rest of this discussion.<BR><BR>
-  <LI> Create a file called config.h in the ACE_ROOT\ace directory 
+  <LI> Create a file called config.h in the ACE_ROOT\ace directory
       that contains: <BR>
       <BR>
       <CODE>#include "ace/config-win32.h"</CODE><BR>
@@ -706,7 +706,7 @@ the STL fixes.
       before the #include statement in ACE_ROOT\ace\config.h and it
       will turn off Windows NT 4 specific code.<BR>
       <BR>
-      If you want to use the standard C++ headers (iostream, cstdio, ...
+  <li>If you want to use the standard C++ headers (iostream, cstdio, ...
       as defined by the C++ Standard Draft 2) that comes with MSVC 5,
       then add the line <BR>
       <BR>
@@ -714,20 +714,27 @@ the STL fixes.
       <BR>
       before the #include statement in ACE_ROOT\ace\config.h.<BR>
       <br>
-      If ACE will be used with MFC programs, also add the following to
+  <li>If ACE will be used with MFC programs, also add the following to
       your <code>config.h</code> file.  Notice that ACE will use
       CWinThread to spawn new threads if this is defined.<br>
       <br>
       <code>#define ACE_HAS_MFC 1</code><br>
       <br>
-      If you are building for Windows CE, you need to add the line <BR>
+      By default ACE always uses DLL version of run-time libraries
+      regardless you are building  DLL or static version of ACE.  If
+      you prefer to link MFC as a static library into ACE, you can do
+      this by defining <code>ACE_USES_STATIC_MFC</code> in your
+      <code>config.h</code> file.  If you insist on linking everything
+      statically, you'll have to modify the project file yourself.<br>
+      <br>
+  <li>If you are building for Windows CE, you need to add the line <BR>
       <br>
       <code>#define ACE_HAS_WINCE</code>
       <br>
       before including &lt;ace/config-win32.h&gt;.  Notice that CE uses a
       different set of dsw/dsp files.<br> <br>
 
-      The default project files which build ACE library have various
+  <li>The default project files which build ACE library have various
       configurations to build dynamic/static, with or without Unicode
       support.  Although we recommend using the dynamic library, if,
       for some reasons, you would rather work with static library,
@@ -742,7 +749,9 @@ the STL fixes.
       <BR>
       before the #include statement in ACE_ROOT\ace\config.h to disable
       inline function and reduce the size of static libraries (and your
-      executables.)<BR><BR>
+      executables.)  Notice that you need to use DLL version of
+      run-time libraries even you are using ACE as a static library.
+      That's the default behavior.<BR><BR>
 </Ol>
 
 <B>ACE TESTS</B><P>
