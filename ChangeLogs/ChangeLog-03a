@@ -1,3 +1,9 @@
+Sat Nov  9 12:37:54 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* docs/ACE-guidelines.html: Updated the ACE guidelines to
+	  refer to the correct Doxygen links.  Thanks to 
+	  Johnny Willemsen for reporting this.
+
 Sat Nov  9 21:48:31 2002  Steve Huston  <shuston@riverace.com>
 
         * tests/Proactor_Test.cpp: When disabling Nagle's, use IPPROTO_TCP,
