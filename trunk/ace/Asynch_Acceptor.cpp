@@ -85,7 +85,8 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
 
   // Bind to the specified port.
   if (ACE_OS::bind (this->listen_handle_, 
-		    (sockaddr *) address.get_addr (),
+		    ACE_reinterpret_cast (sockaddr *,
+                                          address.get_addr ()),
 		    address.get_size ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
@@ -300,7 +301,8 @@ ACE_Asynch_Acceptor<HANDLER>::parse_address (const ACE_Asynch_Accept::Result &re
               remote_size));
   
   // Set the address.
-  remote_address.set_addr ((sockaddr_in *) message_block.rd_ptr (),
+  remote_address.set_addr (ACE_reinterpret_cast (sockaddr_in *,
+                                                 message_block.rd_ptr ()),
                            remote_size);  
   
   // Update the <rd_ptr>.
@@ -313,8 +315,9 @@ ACE_Asynch_Acceptor<HANDLER>::parse_address (const ACE_Asynch_Accept::Result &re
   
   // Get the address.
   sockaddr_in local_addr;
-  if (getsockname (result.accept_handle (),
-                   (sockaddr *) &local_addr,
+  if (ACE_OS::getsockname (result.accept_handle (),
+                           ACE_reinterpret_cast (sockaddr *,
+                                                 &local_addr),
                    &local_size) < 0)
     ACE_ERROR ((LM_ERROR,
                 "%p\n",
@@ -350,8 +353,12 @@ ACE_Asynch_Acceptor<HANDLER>::parse_address (const ACE_Asynch_Accept::Result &re
 			  &remote_addr,
 			  &remote_size);
 
-  local_address.set_addr ((sockaddr_in *) local_addr, local_size);
-  remote_address.set_addr ((sockaddr_in *) remote_addr, remote_size);
+  local_address.set_addr (ACE_reinterpret_cast (sockaddr_in *,
+                                                local_addr),
+                          local_size);
+  remote_address.set_addr (ACE_reinterpret_cast (sockaddr_in *,
+                                                 remote_addr),
+                           remote_size);
 #else
   // just in case
   errno = ENOTSUP;
