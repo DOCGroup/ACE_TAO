@@ -1,3 +1,11 @@
+Wed Feb 27 01:12:32 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* ace/Swap.h:
+	* ace/Swap.inl:
+	* ace/Swap.cpp:
+	  Add helper template to swap variables, very useful when
+	  implementing exception neutral/safe classes.
+
 Wed Feb 26 00:38:50 2002 UTC  Don Hinton <dhinton@ieee.org>
 
 	* ace/Select_Reactor_Base.h:
