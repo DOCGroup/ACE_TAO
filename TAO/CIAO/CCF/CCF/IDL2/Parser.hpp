@@ -1,6 +1,6 @@
 // file      : CCF/IDL2/Parser.hpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $id$
+// cvs-id    : $Id$
 
 #ifndef CCF_IDL2_PARSER_HPP
 #define CCF_IDL2_PARSER_HPP

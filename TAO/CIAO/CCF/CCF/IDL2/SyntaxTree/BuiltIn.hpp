@@ -1,6 +1,6 @@
 // file      : CCF/IDL2/SyntaxTree/BuiltIn.hpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $id$
+// cvs-id    : $Id$
 
 #ifndef CCF_IDL2_SYNTAX_TREE_BUILT_IN_HPP
 #define CCF_IDL2_SYNTAX_TREE_BUILT_IN_HPP

@@ -1,6 +1,6 @@
 // file      : CCF/IDL3/SyntaxTree.hpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $id$
+// cvs-id    : $Id$
 
 #ifndef CCF_IDL3_SYNTAX_TREE_HPP
 #define CCF_IDL3_SYNTAX_TREE_HPP

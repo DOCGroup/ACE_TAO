@@ -1,6 +1,6 @@
 // file      : CCF/Example/CIDL/LocalExecutorMapping/test-1.idl
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $id$
+// cvs-id    : $Id$
 
 #include <Components.idl>
 include "test-0.idl";

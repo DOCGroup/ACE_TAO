@@ -1,6 +1,6 @@
 // file      : CCF/CIDL/SemanticAction/Factory.hpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $id$
+// cvs-id    : $Id$
 
 #ifndef CCF_CIDL_SEMANTIC_ACTION_FACTORY_HPP
 #define CCF_CIDL_SEMANTIC_ACTION_FACTORY_HPP

@@ -1,6 +1,6 @@
 // file      : CCF/IDL2/SyntaxTree/ValueType.hpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $id$
+// cvs-id    : $Id$
 
 #ifndef CCF_IDL2_SYNTAX_TREE_VALUE_TYPE_HPP
 #define CCF_IDL2_SYNTAX_TREE_VALUE_TYPE_HPP

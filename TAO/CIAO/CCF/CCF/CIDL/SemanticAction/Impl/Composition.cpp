@@ -1,6 +1,6 @@
 // file      : CCF/CIDL/SemanticAction/Impl/Composition.cpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $id$
+// cvs-id    : $Id$
 
 #include "CCF/CIDL/SemanticAction/Impl/Composition.hpp"
 

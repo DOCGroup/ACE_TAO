@@ -1,6 +1,6 @@
 // file      : CCF/CIDL/LexicalAnalyzer.cpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $id$
+// cvs-id    : $Id$
 
 #include "CCF/CIDL/LexicalAnalyzer.hpp"
 

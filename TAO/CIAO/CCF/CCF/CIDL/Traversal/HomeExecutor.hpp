@@ -1,6 +1,6 @@
 // file      : CCF/CIDL/Traversal/HomeExecutor.hpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $id$
+// cvs-id    : $Id$
 
 #ifndef CCF_CIDL_TRAVERSAL_HOME_EXECUTOR_HPP
 #define CCF_CIDL_TRAVERSAL_HOME_EXECUTOR_HPP
