@@ -11,6 +11,8 @@
 #include "FT_ProxyAdmin_Base.h"
 #include "IOGR_Maker.h"
 #include "Replication_Service.h"
+#include "orbsvcs/FtRtecEventCommC.h"
+
 
 ACE_RCSID (EventChannel,
            FTEC_Event_Channel_Impl,
@@ -312,7 +314,7 @@ TAO_FTEC_Event_Channel_Impl::connect_push_consumer (
 
   FtRtecEventChannelAdmin::ObjectId *oid;
 
-  if (any >>= oid) {
+  if ((*any) >>= oid) {
     FtRtecEventChannelAdmin::ObjectId* result;
     ACE_NEW_THROW_EX(result,
                      FtRtecEventChannelAdmin::ObjectId(*oid),
@@ -352,7 +354,7 @@ TAO_FTEC_Event_Channel_Impl::connect_push_supplier (
 
   FtRtecEventChannelAdmin::ObjectId *oid;
 
-  if (any >>= oid) {
+  if ((*any) >>= oid) {
     FtRtecEventChannelAdmin::ObjectId* result;
     ACE_NEW_THROW_EX(result,
                      FtRtecEventChannelAdmin::ObjectId(*oid),
