@@ -21,14 +21,18 @@
 
 #include "StringSeqC.h"
 
+#if defined (__BORLANDC__)
+#pragma option -w-rvl -w-rch -w-ccc -w-aus
+#endif /* __BORLANDC__ */
+
 #if !defined (__ACE_INLINE__)
 #include "StringSeqC.i"
 #endif /* !defined INLINE */
 
 #include "tao/Any.h"
 
-#if !defined (_STRINGSEQ_CS_)
-#define _STRINGSEQ_CS_
+#if !defined (TAO_STRINGSEQ_CS)
+#define TAO_STRINGSEQ_CS
 
 // *************************************************************
 // CORBA_StringSeq
@@ -91,8 +95,8 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_StringSeq (CORBA::tk_alias, sizeof (_oc_
 CORBA::TypeCode_ptr _tc_CORBA_StringSeq = &_tc_TAO_tc_CORBA_StringSeq;
 
 
-#if !defined (_WSTRINGSEQ_CS_)
-#define _WSTRINGSEQ_CS_
+#if !defined (TAO_WSTRINGSEQ_CS)
+#define TAO_WSTRINGSEQ_CS
 
 // *************************************************************
 // CORBA_WStringSeq
