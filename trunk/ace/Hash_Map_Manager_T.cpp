@@ -118,6 +118,10 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::open 
 {
   ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
 
+  // Calling this->close_i () to ensure we release previous allocated
+  // memory before allocating new one.
+  this->close_i ();
+
   if (alloc == 0)
     alloc = ACE_Allocator::instance ();
 
@@ -128,10 +132,6 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::open 
   // was made: it used to have an enum that was supposed to be defined
   // to be ACE_DEFAULT_MAP_SIZE, but instead was defined to be 0).
   ACE_ASSERT (size != 0);
-
-  // Calling this->close_i () to ensure we release previous allocated
-  // memory before allocating new one.
-  this->close_i ();
 
   return this->create_buckets (size);
 }

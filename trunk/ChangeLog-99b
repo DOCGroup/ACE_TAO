@@ -1,3 +1,12 @@
+1999-01-28  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Hash_Map_Manager_T.cpp (open): this->close_i() must be
+	  called *before* the allocators are changed.
+
+	* ace/Map_Manager.cpp (open): Close the old map (if any) before
+	  creating the new map.  This also make open() reentrant. Thanks
+	  to Zoran Ivanovic <zorani@pathcom.com> for reporting this bug.
+
 Thu Jan 28 19:08:25 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/Active_Map_Manager_T.h: 
