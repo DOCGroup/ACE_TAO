@@ -1,3 +1,18 @@
+Mon Oct 27 17:15:52 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_enum/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+
+          Moved generation of marshal_value() and demarshal_value() Any
+          template class overrides for local types (types whose 
+          declaration is contained in a local interface) to come 
+          before generation of the Any operators, required by platforms
+          with no implicit template instantiation.
+
 Sun Oct 26 16:15:19 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/BiDir_GIOP/BiDirPolicyC.cpp:

@@ -34,6 +34,8 @@ public:
 
   virtual int visit_enum (be_enum *node);
 
+  virtual int visit_exception (be_exception *node);
+
   virtual int visit_interface (be_interface *node);
 
   virtual int visit_valuetype (be_valuetype *node);
@@ -47,8 +49,6 @@ public:
   virtual int visit_structure (be_structure *node);
 
   virtual int visit_union (be_union *node);
-
-  virtual int visit_exception(be_exception*);
 
 protected:
   virtual idl_bool this_mode_generated (be_decl *node) const;
