@@ -239,7 +239,6 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
     waiting_destruction_ (0),
     servant_deactivation_condition_ (thread_lock),
     waiting_servant_deactivation_ (0),
-    single_threaded_lock_ (0),
     caller_key_to_object_ (0),
     servant_for_key_to_object_ (0)
 {
@@ -290,19 +289,6 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
 
   // Check for exception in construction of the active object map.
   ACE_CHECK;
-
-#if (TAO_HAS_MINIMUM_POA == 0)
-
-  // Setup lock if POA is single threaded.
-  if (this->cached_policies_.thread () == PortableServer::SINGLE_THREAD_MODEL)
-    {
-      ACE_NEW_THROW_EX (this->single_threaded_lock_,
-                        TAO_SYNCH_RECURSIVE_MUTEX,
-                        CORBA::NO_MEMORY ());
-
-    }
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   // Register self with manager.
   int result = this->poa_manager_.register_poa (this);
@@ -364,7 +350,6 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
 
 TAO_POA::~TAO_POA (void)
 {
-  delete this->single_threaded_lock_;
 }
 
 void

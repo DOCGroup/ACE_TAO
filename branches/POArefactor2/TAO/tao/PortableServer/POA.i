@@ -620,12 +620,6 @@ TAO_POA::waiting_destruction (void) const
   return this->waiting_destruction_;
 }
 
-ACE_INLINE TAO_SYNCH_RECURSIVE_MUTEX &
-TAO_POA::single_threaded_lock (void) const
-{
-  return *this->single_threaded_lock_;
-}
-
 ACE_INLINE TAO_ORB_Core &
 TAO_POA::orb_core (void) const
 {

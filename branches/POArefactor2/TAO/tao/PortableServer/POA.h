@@ -912,8 +912,6 @@ protected:
 
   CORBA::ULong decrement_outstanding_requests (void);
 
-  TAO_SYNCH_RECURSIVE_MUTEX &single_threaded_lock (void) const;
-
   String name_;
 
   TAO_POA_Manager &poa_manager_;
@@ -1005,8 +1003,6 @@ protected:
   TAO_SYNCH_CONDITION servant_deactivation_condition_;
 
   CORBA::ULong waiting_servant_deactivation_;
-
-  TAO_SYNCH_RECURSIVE_MUTEX *single_threaded_lock_;
 
   CORBA::ULong caller_key_to_object_;
 
