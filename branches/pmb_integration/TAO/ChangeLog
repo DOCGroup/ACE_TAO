@@ -1,3 +1,51 @@
+Mon Nov 15 13:45:20 2004  Mike Martinez  <martinez_m@ociweb.com>
+
+        * tao/GIOP_Message_Base.cpp:
+
+          Changed the creation of the InputCDR objects to use the
+          datablock directly from the queued data.  Also accounted for
+          the new contents that have already eliminated the GIOP header
+          data from the queued data.
+
+        * tao/Incoming_Message_Queue.h (make_minimal_message, dump_msg):
+        * tao/Incoming_Message_Queue.cpp (make_minimal_message, dump_msg):
+
+          Added two new methods: make_minimal_message() which creates a
+          queued data object and transfers ownership of an
+          ACE_Message_Block to the new object; and, dump_msg() to
+          display the contents of a queued data message for diagnostic
+          purposes.
+
+        * tao/Transport.h:
+
+          Changed the uncompleted_message_ member name to
+          current_message_.  Also added a locking strategy member for
+          use in locking the receive allocation strategies.
+
+        * tao/Transport.cpp (process_queue_head):
+        * tao/Transport.cpp (process_parsed_messages):
+	
+	  Added more diagnostic messages.
+	
+        * tao/Transport.cpp (enqueue_incoming_message):
+
+     	  Removed header skip read pointer adjustments.  Also removed
+          message block consolidation since a chained message is now
+          being passed to the protocol methods for processing.
+
+	* tao/Transport.cpp (handle_input):
+
+          Modified to use a different processing algorithm.  This will
+	  allocate a large buffer and read directly into this buffer.  The
+	  buffer is managed by an ACE_Data_Block.  Processing of messages
+	  in the buffer is performed by creating ACE_Message_Block objects
+	  pointing into the buffer and referencing each message header and
+	  message data segment in the buffer.  Message blocks are chained
+	  if messages span single buffers as well.  Header data is parsed
+	  and elided from the message data chain before being enqueued for
+	  further processing.  As much data as possible is read and
+	  processed from the handle before yielding to the reactor.
+
 Thu Sep 23 19:49:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:

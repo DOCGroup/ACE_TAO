@@ -377,52 +377,52 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   // Get the read and write positions before we steal data.
   size_t rd_pos = qd->msg_block_->rd_ptr () - qd->msg_block_->base ();
   size_t wr_pos = qd->msg_block_->wr_ptr () - qd->msg_block_->base ();
-  rd_pos += TAO_GIOP_MESSAGE_HEADER_LEN;
+// We are now eliding the header before calling this method.
+//rd_pos += TAO_GIOP_MESSAGE_HEADER_LEN;
 
   if (TAO_debug_level > 0)
-    this->dump_msg ("recv",
-                    reinterpret_cast<u_char *> (qd->msg_block_->rd_ptr ()),
-                    qd->msg_block_->length ());
+    qd->dump_msg ("recv") ;
 
 
-  // Create a input CDR stream. We do the following
-  //  1 - If the incoming message block has a data block with a flag
-  //      DONT_DELETE  (for the data block) we create an input CDR
-  //      stream the same way.
-  //  2 - If the incoming message block had a datablock from heap just
-  //      use it by duplicating it and make the flag 0.
-  // NOTE: We use the same data block in which we read the message and
-  // we pass it on to the higher layers of the ORB. So we dont to any
-  // copies at all here. The same is also done in the higher layers.
+  // Create a input CDR stream.
 
-  ACE_Message_Block::Message_Flags flg = 0;
-  ACE_Data_Block *db = 0;
+#ifdef MIKE_SEZ_COPYIT
+  //
+  // We force a copy out of the receive buffer here, which allows us to
+  // use the NULL locking strategy within the Transport processing.  Do
+  // we need to change the locking back here?
+  //
+  TAO_InputCDR input_cdr (qd->msg_block_,
+                          qd->byte_order_,
+                          qd->major_version_,
+                          qd->minor_version_,
+                          this->orb_core_);
 
-  // Get the flag in the message block
-  flg = qd->msg_block_->self_flags ();
+#else // MIKE_SEZ_COPYIT
 
-  if (ACE_BIT_ENABLED (flg,
-                       ACE_Message_Block::DONT_DELETE))
-    {
-      // Use the same datablock
-      db = qd->msg_block_->data_block ();
-    }
-  else
-    {
-      // Use a duplicated datablock as the datablock has come off the
-      // heap.
-      db = qd->msg_block_->data_block ()->duplicate ();
-    }
-
-
-  TAO_InputCDR input_cdr (db,
-                          flg,
+  TAO_InputCDR input_cdr (qd->msg_block_->data_block (),
+                          qd->msg_block_->self_flags (),
                           rd_pos,
                           wr_pos,
                           qd->byte_order_,
                           qd->major_version_,
                           qd->minor_version_,
                           this->orb_core_);
+
+  if( qd->msg_block_->cont() != 0) {
+    //
+    // The message block is chained, consolidate the whole thing by
+    // copying, since the data conversion expects a single contiguous
+    // buffer.
+    //
+    // NOTE: This may leak the previous flavor, so we may need to manage
+    //       that if we pursue this change.  Do we need to reset the
+    //       pointers here as well?
+    //
+    input_cdr.reset( qd->msg_block_, qd->byte_order_) ;
+  }
+
+#endif // MIKE_SEZ_COPYIT
 
   transport->assign_translators(&input_cdr,&output);
 
@@ -470,26 +470,49 @@ TAO_GIOP_Message_Base::process_reply_message (
   // Get the read and write positions before we steal data.
   size_t rd_pos = qd->msg_block_->rd_ptr () - qd->msg_block_->base ();
   size_t wr_pos = qd->msg_block_->wr_ptr () - qd->msg_block_->base ();
-  rd_pos += TAO_GIOP_MESSAGE_HEADER_LEN;
+// We are now eliding the header before calling this method.
+//rd_pos += TAO_GIOP_MESSAGE_HEADER_LEN;
 
   if (TAO_debug_level > 0)
-    this->dump_msg ("recv",
-                    reinterpret_cast<u_char *>(qd->msg_block_->rd_ptr ()),
-                    qd->msg_block_->length ());
+    qd->dump_msg ("recv");
 
+#ifdef MIKE_SEZ_COPYIT
+  //
+  // We force a copy out of the receive buffer here, which allows us to
+  // use the NULL locking strategy within the Transport processing.  Do
+  // we need to change the locking back here?
+  //
+  TAO_InputCDR input_cdr (qd->msg_block_,
+                          qd->byte_order_,
+                          qd->major_version_,
+                          qd->minor_version_,
+                          this->orb_core_);
 
-  // Create a empty buffer on stack
-  // NOTE: We use the same data block in which we read the message and
-  // we pass it on to the higher layers of the ORB. So we dont to any
-  // copies at all here.
+#else // MIKE_SEZ_COPYIT
+
   TAO_InputCDR input_cdr (qd->msg_block_->data_block (),
-                          ACE_Message_Block::DONT_DELETE,
+                          qd->msg_block_->self_flags (),
                           rd_pos,
                           wr_pos,
                           qd->byte_order_,
                           qd->major_version_,
                           qd->minor_version_,
                           this->orb_core_);
+
+  if( qd->msg_block_->cont() != 0) {
+    //
+    // The message block is chained, consolidate the whole thing by
+    // copying, since the data conversion expects a single contiguous
+    // buffer.
+    //
+    // NOTE: This may leak the previous flavor, so we may need to manage
+    //       that if we pursue this change.
+    //
+    input_cdr.reset( qd->msg_block_, qd->byte_order_) ;
+  }
+
+#endif // MIKE_SEZ_COPYIT
+
 
   // We know we have some reply message. Check whether it is a
   // GIOP_REPLY or GIOP_LOCATE_REPLY to take action.

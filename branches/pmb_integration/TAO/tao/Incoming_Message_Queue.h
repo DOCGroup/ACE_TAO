@@ -207,6 +207,13 @@ public:
   static auto_ptr<TAO_Queued_Data> COULD_NOT_UNDERSTAND_HEADER;
   static auto_ptr<TAO_Queued_Data> GENERAL_FAILURE;
 
+  /**
+   * @brief Create an empty object owning the @arg mb message block
+   *        argument.
+   */
+  static TAO_Queued_Data* make_minimal_message (ACE_Message_Block *mb,
+                                                ACE_Allocator *alloc = 0);
+
   /*!
    \brief Make and return an instance of TAO_Queued_Data suitable for use as an uncompleted message.
   */
@@ -230,6 +237,9 @@ public:
 
   /// Consolidate this fragments chained message blocks into one.
   void consolidate (void);
+
+  /// Display the contents of this object.
+  void TAO_Queued_Data::dump_msg (const char *label) ;
 
   /*!
     \brief Creation and deletion of a node in the queue.

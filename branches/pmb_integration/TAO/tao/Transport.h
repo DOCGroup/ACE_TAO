@@ -891,8 +891,8 @@ protected:
   /// Queue of the completely-received incoming messages..
   TAO_Incoming_Message_Queue incoming_message_queue_;
 
-  /// Place to hold a partially-received (waiting-to-be-completed) message
-  TAO_Queued_Data * uncompleted_message_;
+  /// Place to hold the message currently being processed.
+  TAO_Queued_Data* current_message_;
 
   /// The queue will start draining no later than <queing_deadline_>
   /// *if* the deadline is
@@ -967,6 +967,8 @@ private:
   /// first request. After that, the translators are fixed for the life of the
   /// connection.
   CORBA::Boolean first_request_;
+
+  ACE_Lock* data_locking_strategy_; // SYNCH or NULL
 };
 
 /**

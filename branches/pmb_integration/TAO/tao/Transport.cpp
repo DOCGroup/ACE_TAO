@@ -31,7 +31,6 @@
 # include "Transport.inl"
 #endif /* __ACE_INLINE__ */
 
-
 ACE_RCSID (tao,
            Transport,
            "$Id$")
@@ -116,7 +115,7 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
   , head_ (0)
   , tail_ (0)
   , incoming_message_queue_ (orb_core)
-  , uncompleted_message_ (0)
+  , current_message_ (0)
   , current_deadline_ (ACE_Time_Value::zero)
   , flush_timer_id_ (-1)
   , transport_timer_ (this)
@@ -130,6 +129,7 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
   , wchar_translator_ (0)
   , tcs_set_ (0)
   , first_request_ (1)
+  , data_locking_strategy_ (0)
 {
   TAO_Client_Strategy_Factory *cf =
     this->orb_core_->client_factory ();
@@ -139,6 +139,12 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
 
   // Create TMS now.
   this->tms_ = cf->create_transport_mux_strategy (this);
+
+#ifdef MIKE_SEZ_COPYIT
+  this->data_locking_strategy_ = new ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX> ;
+#else  // MIKE_SEZ_COPYIT
+  this->data_locking_strategy_ = this->orb_core_->locking_strategy() ;
+#endif // MIKE_SEZ_COPYIT
 }
 
 TAO_Transport::~TAO_Transport (void)
@@ -163,6 +169,10 @@ TAO_Transport::~TAO_Transport (void)
   // *must* have been cleaned up.
   ACE_ASSERT (this->head_ == 0);
   ACE_ASSERT (this->cache_map_entry_ == 0);
+
+#ifdef MIKE_SEZ_COPYIT
+  delete this->data_locking_strategy_ ;
+#endif // MIKE_SEZ_COPYIT
 }
 
 void
@@ -1208,9 +1218,9 @@ private:
 int
 TAO_Transport::handle_input (TAO_Resume_Handle &rh,
                              ACE_Time_Value * max_wait_time,
-                             int /*block*/)
+                             int block)
 {
-  CTHack cthack;
+  ACE_UNUSED_ARG (block);
 
   if (TAO_debug_level > 3)
     {
@@ -1235,6 +1245,498 @@ TAO_Transport::handle_input (TAO_Resume_Handle &rh,
       return retval;
     }
 
+  //
+  // Loop while reads are incomplete and retries remain.
+  //
+  int  rereads = TAO_MAX_TRANSPORT_REREAD_ATTEMPTS ;
+                                  // Attempts to complete a read.
+  bool partial = true ;           // Incomplete read.
+  bool disconnect = false ;       // Problem encountered.
+  bool message_enqueued = false ; // A message has been queued.
+  while( partial == true && rereads-- >= 0 && disconnect == false) {
+    //
+    // Create the input buffer.  The actual buffer and the data
+    // block that manages it are created on the heap and orphaned to
+    // the processing code.  The message block that we use to walk
+    // through the entire set of data read from the handle is on the
+    // stack and reinitialized each pass through the loop here.  As it
+    // goes out of scope at the end of loop processing, it release()es
+    // the contained data block and buffer.  If there were problems
+    // and no other references to the data was created during the loop,
+    // this then frees those resources.  Cool, huh.
+    //
+    ACE_Data_Block* data = 0 ;
+    ACE_NEW_MALLOC_RETURN (
+      data,
+      (ACE_Data_Block*) this->orb_core_
+                            ->input_cdr_dblock_allocator()
+                            ->malloc( sizeof(ACE_Data_Block)),
+      ACE_Data_Block(
+        4*TAO_MAXBUFSIZE,             // S/B tunable
+        ACE_Message_Block::MB_DATA,
+        0,                            // Create new buffer on heap
+        this->orb_core_->input_cdr_buffer_allocator(),
+        this->data_locking_strategy_, // SYNCH or NULL
+        0,                            // flags -- on the heap and fully owned!
+        this->orb_core_->input_cdr_dblock_allocator()
+      ),
+      -1
+    ) ;
+
+    //
+    // Pass in the allocator as a courtesy to any duplicates on the
+    // heap.
+    //
+    ACE_Message_Block whole_block(
+      data, // From above.
+      0,    // flags -- on the heap and fully owned!
+      this->orb_core_->input_cdr_msgblock_allocator ()
+    ) ;
+
+    //
+    // Greedy read - always read as much as possible.
+    //
+    ssize_t data_left_in_buffer
+            = this->recv(
+                whole_block.wr_ptr(),
+                whole_block.space(),
+                max_wait_time
+              ) ;
+    if( data_left_in_buffer > 0) {
+      whole_block.wr_ptr( data_left_in_buffer) ;
+
+      if (TAO_debug_level > 3)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT("TAO (%P|%t) - Transport[%d]::handle_input, ")
+                ACE_TEXT("read %d bytes from handle.\n"),
+                this->id (), data_left_in_buffer));
+        }
+
+      if (TAO_debug_level >= 10)
+        {
+          ACE_HEX_DUMP ((LM_DEBUG,
+                        (const char *) whole_block.rd_ptr(),
+                        data_left_in_buffer,
+                        ACE_TEXT ("handle data")));
+        }
+
+    } else {
+      if( errno != EWOULDBLOCK && errno != EAGAIN) {
+        //
+        // Error during read operation.
+        //
+        disconnect = true  ;
+
+#ifdef NO_RETRY_ON_EMPTY_HANDLE
+      } else {
+        partial = false ;
+#endif // NO_RETRY_ON_EMPTY_HANDLE
+
+      }
+
+      //
+      // Try again or give up.
+      //
+      continue ;
+    }
+
+    //
+    // Process the entire buffer.
+    //
+    while( data_left_in_buffer > 0) {
+      //
+      // Create a message block to reference the current portion of
+      // the header that we are reading.
+      //
+      ACE_Message_Block* current_block ;
+      ACE_NEW_MALLOC_RETURN (
+        current_block,
+        (ACE_Message_Block*) this->orb_core_
+                                 ->input_cdr_msgblock_allocator()
+                                 ->malloc( sizeof(ACE_Message_Block)),
+        ACE_Message_Block(
+          data->duplicate(), // From above.
+          0,    // flags -- on the heap and fully owned!
+          this->orb_core_->input_cdr_msgblock_allocator ()
+        ),
+        -1
+      ) ;
+      current_block->rd_ptr( whole_block.rd_ptr()) ;
+
+      //
+      // Check current state of header processing.
+      //
+      ssize_t wanted_size
+              = this->messaging_object()->header_length() ;
+      if( this->current_message_ != 0) {
+        //
+        // Only need the remainder.  If we have a full header already,
+        // this will allow us to bypass further header processing.
+        // Let the value go under 0 if we are receiving data, since
+        // the header read is guarded by checking for over 0 bytes to
+        // go in the header.
+        //
+        wanted_size
+          -= this->current_message_->msg_block_->total_length() ;
+      }
+
+      //
+      // Only process header information if we need to.
+      //
+      if( 0 < wanted_size) {
+        if( data_left_in_buffer < wanted_size) {
+          //
+          // A partial header was read.  Adjust the current read pointer
+          // in the buffer as well as the header block write pointer.
+          //
+          partial = true ;
+          whole_block.rd_ptr( data_left_in_buffer) ;
+          current_block->wr_ptr( whole_block.rd_ptr()) ;
+          data_left_in_buffer = 0 ;
+
+        } else {
+          //
+          // A complete header was read.  Make sure that the header
+          // chain is correct.
+          //
+          partial = false ;
+          whole_block.rd_ptr( wanted_size) ;
+          current_block->wr_ptr( whole_block.rd_ptr()) ;
+          data_left_in_buffer -= wanted_size ;
+        }
+
+        if (TAO_debug_level > 3)
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT("TAO (%P|%t) - Transport[%d]::handle_input, ")
+                  ACE_TEXT("processed %d header bytes, header is %s.\n"),
+                  this->id (), current_block->length(),
+                  (partial == true) ? ACE_TEXT("incomplete") : ACE_TEXT("complete")
+            ));
+          }
+
+        if (TAO_debug_level >= 10)
+          {
+            ACE_HEX_DUMP ((LM_DEBUG,
+                          (const char *) current_block->rd_ptr(),
+                          current_block->length(),
+                          ACE_TEXT ("handle data")));
+          }
+
+        //
+        // Install the new block appropriately.
+        //
+        if( this->current_message_ == 0) {
+          //
+          // This is the start of a new message, create the structures
+          // to handle the message and load 'em up.  We pass ownership
+          // of the current ACE_Message_Block to the TAO_Queued_Data
+          // object, since we will only refer to it via that object
+          // and it will persist beyond the current scope.
+          //
+          this->current_message_
+            = TAO_Queued_Data::make_minimal_message( current_block) ;
+          if( this->current_message_ == 0) {
+            //
+            // Problem creating data structures, panic.
+            //
+            disconnect = true ;
+            break ; // Leave the inner loop and hit the outer loop
+                    // conditional directly.
+          }
+
+        } else {
+          //
+          // This is another block in a header chain.
+          //
+          ACE_Message_Block* location = this->current_message_->msg_block_ ;
+          while( location->cont() != 0) {
+            location = location->cont() ;
+          }
+          if( current_block->rd_ptr() == location->wr_ptr()) {
+            //
+            // Current data follows the previous in the same buffer,
+            // so we just need to adjust the existing block and release
+            // the new one.
+            //
+            location->wr_ptr( current_block->length()) ;
+            current_block->release() ;
+
+          } else {
+            //
+            // Data is in a different buffer, need to chain this on.
+            //
+            location->cont( current_block) ;
+          }
+        }
+
+        //
+        // Process the new header data.
+        //
+        if( partial == true) {
+          //
+          // We read a partial header, so make sure that the queued
+          // data state reflects this.
+          //
+          this->current_message_->current_state_
+            = TAO_Queued_Data::WAITING_TO_COMPLETE_HEADER ;
+
+        } else {
+          //
+          // We just finished a header, go ahead and parse it to
+          // extract the message length.
+          //
+
+          //
+          // Ensure that we have a contiguous aligned header to parse.
+          //
+          if( this->current_message_->msg_block_->cont() != 0) {
+            //
+            // This is inefficient but the entire set of code for
+            // handling the header (and indeed the entire message)
+            // assumes that we have a single, aligned, contiguous
+            // buffer.  Yuk.
+            //
+            current_block = this->current_message_->msg_block_ ;
+            ACE_NEW_MALLOC_RETURN (
+              this->current_message_->msg_block_,
+              (ACE_Message_Block*) this->orb_core_
+                                       ->input_cdr_msgblock_allocator()
+                                       ->malloc( sizeof(ACE_Message_Block)),
+              ACE_Message_Block(
+                this->orb_core_->input_cdr_msgblock_allocator ()
+              ),
+              -1
+            ) ;
+            ACE_CDR::consolidate(
+              this->current_message_->msg_block_,
+              current_block
+            ) ;
+            current_block->release() ;
+          }
+
+          //
+          // We have a complete, aligned and contiguous, header at
+          // this point, so go ahead and process it.
+          //
+          // This delegates that actual parsing actions to the protocol
+          // objects.
+          //
+          if( 0 == this->messaging_object()->check_for_valid_header(
+                     *this->current_message_->msg_block_
+                   )) {
+            //
+            // Invalid header, panic.
+            //
+            disconnect = true ;
+            break ; // Leave the inner loop and hit the outer loop
+                    // conditional directly.
+          }
+
+          //
+          // This is copied from the original
+          // TAO_Queued_Data::make_{in}complete_message() factory
+          // methods.
+          //
+          this->messaging_object()->set_queued_data_from_message_header(
+            this->current_message_, *this->current_message_->msg_block_
+          ) ;
+          if( this->current_message_->current_state_
+              == TAO_Queued_Data::INVALID) {
+            //
+            // Could not understand header, panic.
+            //
+            disconnect = true ;
+            break ; // Leave the inner loop and hit the outer loop
+                    // conditional directly.
+          }
+
+          //
+          // Update queued data state.  We have not extracted any
+          // payload bytes from the input buffer yet, so we do not
+          // have to adjust any of the internal values.
+          //
+          this->current_message_->current_state_
+            = TAO_Queued_Data::WAITING_TO_COMPLETE_PAYLOAD ;
+        }
+
+        //
+        // At this point, we have already consumed the new
+        // ACE_Message_Block pointing into the data that we created
+        // at the top of the loop, so we return to the top to initialize
+        // another one.
+        //
+        continue ;
+      }
+
+      //
+      // We have a valid message and parsed header!  This means
+      // that we are just receiving a message at this point.
+      // The TAO_Queued_Data::missing_data_bytes_ member is initialized
+      // to the GIOP message payload size.  We adjust it to show the
+      // remaining data to read for the current message since we do
+      // not want to change the semantics of its use, although it
+      // would be just as easy to leave the payload size alone.
+      //
+
+      //
+      // Update the message to end at the end of the current segment
+      // of the message.
+      //
+      wanted_size = this->current_message_->missing_data_bytes_ ;
+      if( data_left_in_buffer < wanted_size) {
+        //
+        // This is a partial read of message data, store it, chain it,
+        // and move on.
+        //
+        partial = true ;
+        whole_block.rd_ptr( data_left_in_buffer) ;
+        current_block->wr_ptr( whole_block.rd_ptr()) ;
+        this->current_message_->missing_data_bytes_ -= data_left_in_buffer ;
+        data_left_in_buffer = 0 ;
+
+      } else {
+        //
+        // We completed a message, pass it on.
+        //
+        partial = false ;
+        whole_block.rd_ptr( wanted_size) ;
+        current_block->wr_ptr( whole_block.rd_ptr()) ;
+        data_left_in_buffer -= wanted_size ;
+        this->current_message_->missing_data_bytes_ = 0 ;
+        this->current_message_->current_state_ = TAO_Queued_Data::COMPLETED ;
+      }
+
+      if (TAO_debug_level > 3)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT("TAO (%P|%t) - Transport[%d]::handle_input, ")
+                ACE_TEXT("grabbed another %d data bytes into current message.  ")
+                ACE_TEXT("%d bytes left in buffer for next message.  ")
+                ACE_TEXT("%d bytes left to read to complete message.\n"),
+                this->id (), current_block->length(), data_left_in_buffer,
+                this->current_message_->missing_data_bytes_
+                    ));
+        }
+
+      if (TAO_debug_level >= 10)
+        {
+          ACE_HEX_DUMP ((LM_DEBUG,
+                        (const char *) current_block->rd_ptr(),
+                        current_block->length(),
+                        ACE_TEXT ("handle data")));
+        }
+
+      //
+      // Install the current block into the message.
+      //
+      ACE_Message_Block* location = this->current_message_->msg_block_ ;
+      while( location->cont() != 0) {
+        location = location->cont() ;
+      }
+      if( current_block->rd_ptr() == location->wr_ptr()
+          && location != this->current_message_->msg_block_
+        ) {
+        //
+        // Current data follows the previous in the same buffer,
+        // so we just need to adjust the existing block and release
+        // the new one.
+        //
+        // Note that we do _not_ coallesce the first message data block
+        // into the message header block.  This allows us to easily
+        // discard the header once we have received the entire message.
+        // The test works since we know that we have consolidated the
+        // header into a single message block in order to parse it.
+        //
+        location->wr_ptr( current_block->length()) ;
+        current_block->release() ;
+
+      } else {
+        //
+        // Data is in a different buffer, need to chain this on.
+        //
+        location->cont( current_block) ;
+      }
+
+      //
+      // Enqueue any completed message.
+      //
+      if( this->current_message_->current_state_
+          == TAO_Queued_Data::COMPLETED
+        ) {
+        //
+        // Remove and release the header from the queued message.
+        // This works since we are assured that the header has been
+        // consolidated in order to have been parsed earlier.
+        //
+        current_block = this->current_message_->msg_block_ ;
+        this->current_message_->msg_block_
+          = this->current_message_->msg_block_->cont() ;
+        current_block->cont( 0) ;
+        current_block->release() ;
+
+        if (TAO_debug_level > 3)
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT("TAO (%P|%t) - Transport[%d]::handle_input, ")
+                  ACE_TEXT("enqueueing message for processing.\n"),
+                  this->id ()));
+            ACE_DEBUG ((LM_DEBUG,"---Data block ref count: %d\n",
+                       this->current_message_
+                           ->msg_block_
+                           ->data_block()
+                           ->reference_count()
+                      )) ;
+          }
+        if (TAO_debug_level >= 10)
+          {
+            this->current_message_->dump_msg( "enqueueing") ;
+          }
+
+        //
+        // Enqueue the current message.
+        //
+        this->enqueue_incoming_message( this->current_message_) ;
+        this->current_message_ = 0 ;
+        message_enqueued = true ;
+      }
+    }
+  }
+
+  //
+  // Post read processing - manage message processing, resume handle
+  //                        and disconnecting.
+  //
+  if( disconnect) {
+    this->enqueue_incoming_message (
+      TAO_Queued_Data::make_close_connection ()
+    ) ;
+    message_enqueued = true ; // ??? or not ???
+
+  } else if( partial) {
+    rh.set_flag( TAO_Resume_Handle::TAO_HANDLE_LEAVE_SUSPENDED) ;
+  }
+
+  int processing_results = 0 ;
+  if( message_enqueued) { // && partial == false) { // because of return val?
+    processing_results = this->process_queue_head( rh) ;
+  }
+
+  if (TAO_debug_level > 3)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+            ACE_TEXT("TAO (%P|%t) - Transport[%d]::handle_input, ")
+            ACE_TEXT("returning with disconnect == %d and partial == %d and processing_results == %d\n"),
+            this->id (), disconnect, partial, processing_results));
+    }
+
+  //
+  // Return an appropriate value.
+  //
+  return disconnect? -1: partial? 1: processing_results ;
+
+#if 0// def COMPILE_OLD_PMB_CODE_AS_WELL
   // If there are no messages then we can go ahead to read from the
   // handle for further reading..
 
@@ -1682,9 +2184,12 @@ complete_message_and_possibly_enqueue:
     }
 
   return retval;
+
+#endif // COMPILE_OLD_PMB_CODE_AS_WELL
 }
 
 
+#if 0 // defined(COMPILE_OLD_PMB_CODE_AS_WELL)
 void
 TAO_Transport::try_to_complete (ACE_Time_Value *max_wait_time)
 {
@@ -1722,6 +2227,7 @@ TAO_Transport::try_to_complete (ACE_Time_Value *max_wait_time)
       missing_data -= n;
     }
 }
+#endif // defined(COMPILE_OLD_PMB_CODE_AS_WELL)
 
 
 int
@@ -1777,8 +2283,6 @@ TAO_Transport::enqueue_incoming_message (TAO_Queued_Data *queueable_message)
             mb = mb->cont ();
 
           // Add the current message block to the end of the chain
-          // after adjusting the read pointer to skip the GIOP header
-          queueable_message->msg_block_->rd_ptr(TAO_GIOP_MESSAGE_HEADER_LEN);
           mb->cont (queueable_message->msg_block_);
 
           // Get rid of the queuable message but save the message block
@@ -1799,8 +2303,6 @@ TAO_Transport::enqueue_incoming_message (TAO_Queued_Data *queueable_message)
       else
         {
           // There is a complete chain of fragments
-          fragment_message->consolidate ();
-
           // Go ahead and enqueue this message
           return this->incoming_message_queue_.enqueue_tail (
                                                     queueable_message);
@@ -1831,27 +2333,23 @@ TAO_Transport::enqueue_incoming_message (TAO_Queued_Data *queueable_message)
                            major, minor),
                           -1);
 
+      if (TAO_debug_level > 3)
+        {
+          ACE_DEBUG ((LM_DEBUG, "FRAGMENTED GIOP v1.2 MESSAGE BEING PROCESSED!!!\n")) ;
+        }
+
       // Find the last message block in the continuation
       mb = fragment_message->msg_block_;
       while (mb->cont () != 0)
         mb = mb->cont ();
 
       // Add the current message block to the end of the chain
-      // after adjusting the read pointer to skip the GIOP header
-      queueable_message->msg_block_->rd_ptr(TAO_GIOP_MESSAGE_HEADER_LEN +
-                                            TAO_GIOP_MESSAGE_FRAGMENT_HEADER);
       mb->cont (queueable_message->msg_block_);
 
       // Remove our reference to the message block.  At this point
       // the message block of the fragment head owns it as part of a
       // chain
       queueable_message->msg_block_ = 0;
-
-      if (!queueable_message->more_fragments_)
-        {
-          // This is the end of the fragments for this request
-          fragment_message->consolidate ();
-        }
 
       // Get rid of the queuable message
       queueable_message->release ();
@@ -1879,6 +2377,20 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
 {
   // Get the <message_type> that we have received
   TAO_Pluggable_Message_Type t =  qd->msg_type_;
+
+  if (TAO_debug_level > 3)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+            ACE_TEXT("TAO (%P|%t) - Transport[%d]::process_parsed_messages, ")
+            ACE_TEXT("going to protocol processing.\n"),
+            this->id ()));
+      ACE_DEBUG ((LM_DEBUG,"---Data block ref count: %d\n",
+                  qd->msg_block_->data_block()->reference_count()));
+    }
+  if (TAO_debug_level >= 10)
+    {
+      qd->dump_msg( "dispatching") ;
+    }
 
   int result = 0;
   if (t == TAO_PLUGGABLE_MESSAGE_CLOSECONNECTION)
@@ -1978,6 +2490,20 @@ TAO_Transport::process_queue_head (TAO_Resume_Handle &rh)
   // Get the message on the head of the queue..
   TAO_Queued_Data *qd =
     this->incoming_message_queue_.dequeue_head ();
+
+  if (TAO_debug_level > 3)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT("TAO (%P|%t) - Transport[%d]::process_queue_head, ")
+            ACE_TEXT("dequeued message to process.\n"),
+            this->id ()));
+      ACE_DEBUG ((LM_DEBUG,"---Data block ref count: %d\n",
+                  qd->msg_block_->data_block()->reference_count())) ;
+    }
+  if (TAO_debug_level >= 10)
+    {
+      qd->dump_msg( "dequeued") ;
+    }
 
   if (TAO_debug_level > 3)
     {
