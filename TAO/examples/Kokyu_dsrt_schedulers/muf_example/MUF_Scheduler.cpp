@@ -35,7 +35,7 @@ void guid_copy( RTScheduling::Current::IdType& lhs, const Kokyu::GuidType& rhs)
 
 ACE_Atomic_Op<ACE_Thread_Mutex, long> server_guid_counter;
 
-MUF_Scheduling::SchedulingParameter 
+MUF_Scheduling::SchedulingParameter
 MUF_Sched_Param_Policy::value (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -88,7 +88,6 @@ MUF_Scheduler::MUF_Scheduler (CORBA::ORB_ptr orb)
 
 MUF_Scheduler::~MUF_Scheduler (void)
 {
-  delete kokyu_dispatcher_;
 }
 
 void
@@ -139,7 +138,7 @@ MUF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType
   qos.deadline_ = time_base_to_tv (sched_param->deadline);
   qos.exec_time_ = time_base_to_tv (sched_param->estimated_initial_execution_time);
   qos.criticality_ = sched_param->criticality;
-  
+
   kokyu_dispatcher_->schedule (count, qos);
 }
 
@@ -482,20 +481,20 @@ MUF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri
 
       CORBA::Any sc_qos_as_any;
       sc_qos_as_any <<= sc_qos;
-      
+
       sc.context_data = ACE_reinterpret_cast(
-					     IOP::ServiceContext::_tao_seq_Octet &,
-					     *codec_->encode (sc_qos_as_any));
-      
+                                             IOP::ServiceContext::_tao_seq_Octet &,
+                                             *codec_->encode (sc_qos_as_any));
+
       // Add this context to the service context list.
       ri->add_reply_service_context (sc, 1 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
-      
+
       ACE_DEBUG ((LM_DEBUG, "reply sc added\n"));
     }
-  
+
   kokyu_dispatcher_->update_schedule (guid, Kokyu::BLOCK);
-  
+
   ACE_DEBUG ((LM_DEBUG, "(%t): guid = %d, send_reply interceptor done\n", guid));
 }
 
