@@ -185,6 +185,10 @@ extern int h_errno;     /* This isn't declared in a header file on HP-UX */
 #  if !defined (ACE_MT_SAFE)
         #define ACE_MT_SAFE 1
 #  endif
+
+// The threads version of select loses const-ness of the timeval arg
+#  define ACE_HAS_NONCONST_SELECT_TIMEVAL
+
 #  define ACE_HAS_PTHREADS
 #  define ACE_HAS_PTHREADS_DRAFT4
 // POSIX real-time semaphore definitions are in the header files, and it
