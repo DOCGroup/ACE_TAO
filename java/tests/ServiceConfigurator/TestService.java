@@ -18,13 +18,35 @@ public class TestService extends ServiceObject
 {
   public int init (String [] args)
   {
-    ACE.DEBUG ("In Test_Service::init() with arguments: " +
-    	       args[0] + args[1]);
+    System.out.println("TestService init with arguments: ");
 
-    //ACE.DEBUG ("In new Test_Service::init() with arguments: " +
-    //       args[0] + args[1]);
+    if (args != null)
+      for (int i = 0; i < args.length; i++)
+        ACE.DEBUG (args[i]);
+
     return 0;
   }
 
+  public int suspend()
+  {
+    System.out.println("TestService suspend ----");
+
+    return 0;
+  }
+
+  public int resume()
+  {
+    System.out.println("TestService resume ----");
+
+    return 0;
+  }
+
+  public int fini()
+  {
+    System.out.println("TestService remove ----");
+
+    return 0;
+  }
+    
 }
 

@@ -14,7 +14,8 @@ doc:
 
 
 files =	 TestService.java \
-	 mainTest.java
+	 reloadTest.java \
+	 suspendTest.java
 
 packages = tests.Service_Configurator
 
