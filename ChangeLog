@@ -1,5 +1,9 @@
 Thu Jan 18 12:49:53 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
+	* ace/SUN_Proactor.cpp: Added support for cancel_aiocb().  Thanks
+	  to Alexander Libman <Alibman@baltimore.com> for contributing
+ 	  this.
+
 	* tests/Makefile.bor (TESTS): Added Config_Test so that this test
 	  runs on Borland.
 
