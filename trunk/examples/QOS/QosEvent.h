@@ -153,14 +153,14 @@ OPTIONS default_options =
   {IPPROTO_TCP, FALSE, FALSE}
 };
 
-ACE_Flow_Spec default_notraffic (QOS_NOT_SPECIFIED,
-                                 QOS_NOT_SPECIFIED,
-                                 QOS_NOT_SPECIFIED,
-                                 QOS_NOT_SPECIFIED,
-                                 QOS_NOT_SPECIFIED,
-                                 SERVICETYPE_NOTRAFFIC,
-                                 QOS_NOT_SPECIFIED,
-                                 QOS_NOT_SPECIFIED,
+ACE_Flow_Spec default_notraffic (ACE_QOS_NOT_SPECIFIED,
+                                 ACE_QOS_NOT_SPECIFIED,
+                                 ACE_QOS_NOT_SPECIFIED,
+                                 ACE_QOS_NOT_SPECIFIED,
+                                 ACE_QOS_NOT_SPECIFIED,
+                                 ACE_SERVICETYPE_NOTRAFFIC,
+                                 ACE_QOS_NOT_SPECIFIED,
+                                 ACE_QOS_NOT_SPECIFIED,
                                  25,
                                  1);
     
@@ -169,7 +169,7 @@ ACE_Flow_Spec default_g711 (9200,
                             18400,
                             0,
                             0,
-                            SERVICETYPE_CONTROLLEDLOAD,
+                            ACE_SERVICETYPE_CONTROLLEDLOAD,
                             368,
                             368,
                             25,
