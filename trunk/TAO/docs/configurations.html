@@ -44,6 +44,7 @@ option).</p>
         <li><a href="#orb">ORB and other resources.</a>
         <li><a href="#poa">POA.</a>
         <li><a href="#coltbl">Collocation Table.</a>
+        <li><a href="#iiopprofile">Forwarding IIOP Profile</a>
       </ul>
   <li><b><a href="#examples">Configuration examples</a></b>
       <ul>
@@ -171,6 +172,22 @@ option).</p>
             ORB's listening endpoint.<p>
 
       </ul><p>
+
+  <li><b><a name="iiopprofile">Forwarding IIOP Profile:</a></b> 
+	  In the case of multiple threads using the same <code>CORBA::Object</code> and
+	  using forwarding, it is necessary to protect the forwarding
+	  <code>IIOP_Profile</code>, which is part of the <code>IIOP_Object</code>, 
+	  which is part of the CORBA::Object against multiple access. Therefore
+	  a mutex lock is used by default to ensure proper access. Using
+	  the switch <code>-ORBiiopprofilelock</code> this policy can 
+	  be deactivated specifying <code>-ORBiiopprofilelock null</code>.
+	  A motivation to do this might be performance reasons in cases,
+	  where no forwarding is used or no multithreading with access 
+	  to shared <code>CORBA::Object</code>'s. Deactivating forces the ORB
+	  to use a null mutex, which does introduce only a very small 
+	  overhead, compared with overhead introduced by a regular mutex lock.
+	  <p>
+
 
 </ul>
 

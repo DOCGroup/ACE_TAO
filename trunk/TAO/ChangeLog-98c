@@ -1,5 +1,8 @@
 Tue Jun 30 10:40:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
+	* docs/configurations.html: Added documentation about the 
+	  -ORBiiopprofilelock switch.
+
 	* tao/Client_Strategy_Factory.{h,cpp}: Added the create_iiop_profile_lock (void)
 
 	* tao/GIOP.cpp: Use ACE_Lock instead of ACE_SYNCH_MUTEX.
