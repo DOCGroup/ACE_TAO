@@ -1,3 +1,10 @@
+Tue Jun 10 12:50:16 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Only read in a base project if it hasn't been read for the current
+          project.
+
 Tue Jun 10 11:35:29 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/create_ace_build:
