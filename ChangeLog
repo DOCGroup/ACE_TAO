@@ -1,6 +1,12 @@
+Tue Nov  5 20:26:33 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* tests/tests.mpc:  Added Multicast_Test entry.
+
+	* tests/README: Upadate instructions for adding new tests.
+
 Tue Nov  5 12:12:05 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* tests/Multicast_Test.cpp: Fixed compile errorsin single threaded
+	* tests/Multicast_Test.cpp: Fixed compile errors in single threaded
 	  builds. 
 
 Tue Nov  5 11:24:03 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
@@ -49,7 +55,7 @@ Tue Nov  5 05:54:16 UTC 2002  Don Hinton  <dhinton@ieee.org>
 	  builds.  Added #ifdef for ACE_HAS_THREADS, since it uses 
 	  ACE_Task as an active object.
 
-	* tests/run_test;lst:  Turned off Multicast_Test and 
+	* tests/run_test.lst:  Turned off Multicast_Test and 
 	  Token_Stategy_Test for single threaded builds.
 
 Mon Nov  4 18:01:25 UTC 2002  Don Hinton  <dhinton@ieee.org>
@@ -704,7 +710,7 @@ Fri Oct 18 13:21:05 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
  	  and longs/ints are different sizes.  Thanks to Cristian
  	  Ungureanu <cristian.ungureanu@amdocs.com> for motivating this.
 
-Fri Oct 18 17:20:02 UTC 2002  Don Hinton  <dhinton@iee.org>
+Fri Oct 18 17:20:02 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* ace/SOCK_Dgram_Mcast.{h,cpp}:
 

@@ -19,14 +19,17 @@ $ACE_ROOT/tests:
 
 1.  Use appropriate ACE_START_TEST and ACE_END_TEST macros in main ()
 
-2.  Add test to Makefile
+2.  Add new project entry to the tests.mpc file.
 
-3.  Add test to MS project files (tests.dsp and
-    version_tests/version_tests.dsp)
+3.  Add test to Makefile. *
 
-4.  Add test to all or most of these:
+4.  Add a new MS project file, e.g., <test>.dsp, then add and entry for 
+    it to the tests.dsp file. *
 
-    run_tests.lst, run_tests.bat, run_tests.psosim, and run_tests.vxworks.
+5.  Add test to run_test.lst.
+
+* Steps 3 and 4 will go away once the mpc architecture is fully integrated,
+  since the Makefile and project files can be created on-the-fly by mpc.
 ________________________________________
 
 
@@ -74,14 +77,6 @@ Notes:
    config files are also present in the test-suite, namely
    UNIXserver.conf and UNIXclerk.conf (and for Win32, Win32server.conf
    and Win32clerk.conf).
-
-Please see run_tests.vxworks for information on the status of tests on
-VxWorks.
-
-Please see run_tests.psosim for information on the status of tests on
-pSOSim.  Run_tests.psosim is an executable shell script that runs all
-tests that are (believed) relevant to the single threaded port to
-pSOSim.
 
 If you have any questions/suggestions, please send email to
 ace-users@cs.wustl.edu.
