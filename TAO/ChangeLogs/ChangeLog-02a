@@ -1,3 +1,14 @@
+Sat May 13 22:30:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* tests/Connection_Purging/run_test.pl: Removed -d debug option by
+	  default.
+	* tests/Connection_Purging/Connection_Purging.cpp: Tweaked the
+	  test to produce a "succees/failure" output and also the
+	  exception which is expected when the handles limit is surpassed 
+          is only displayed in the debug mode.
+	* tests/Connection_Purging/README: Added a couple of lines
+	  explaining about the excepted exception.
+		
 Sat May 13 12:19:10 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Policies/Makefile:
