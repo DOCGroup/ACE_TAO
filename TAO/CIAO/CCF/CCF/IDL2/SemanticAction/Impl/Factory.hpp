@@ -10,8 +10,10 @@
 #include "CCF/IDL2/SemanticAction/Impl/Attribute.hpp"
 #include "CCF/IDL2/SemanticAction/Impl/Include.hpp"
 #include "CCF/IDL2/SemanticAction/Impl/Interface.hpp"
+#include "CCF/IDL2/SemanticAction/Impl/Member.hpp"
 #include "CCF/IDL2/SemanticAction/Impl/Module.hpp"
 #include "CCF/IDL2/SemanticAction/Impl/Operation.hpp"
+#include "CCF/IDL2/SemanticAction/Impl/Struct.hpp"
 #include "CCF/IDL2/SemanticAction/Impl/Typedef.hpp"
 #include "CCF/IDL2/SemanticAction/Impl/TypeId.hpp"
 
@@ -43,8 +45,10 @@ namespace CCF
                 attribute_ (trace_, scope_),
                 include_ (trace_, *this, r, scope_),
                 interface_ (trace_, scope_),
+                member_ (trace_, scope_),
                 module_ (trace_, scope_),
                 operation_ (trace_, scope_),
+                struct__ (trace_, scope_),
                 typedef__ (trace_, scope_),
                 type_id_ (trace_, scope_),
                 type_prefix_ (trace_, scope_)
@@ -69,6 +73,12 @@ namespace CCF
             return interface_;
           }
 
+          virtual SemanticAction::Member&
+          member ()
+          {
+            return member_;
+          }
+
           virtual SemanticAction::Module&
           module ()
           {
@@ -79,6 +89,12 @@ namespace CCF
           operation ()
           {
             return operation_;
+          }
+
+          virtual SemanticAction::Struct&
+          struct_ ()
+          {
+            return struct__;
           }
 
           virtual SemanticAction::Typedef&
@@ -108,8 +124,10 @@ namespace CCF
           Attribute attribute_;
           Include include_;
           Interface interface_;
+          Member member_;
           Module module_;
           Operation operation_;
+          Struct struct__;
           Typedef typedef__;
           TypeId type_id_;
           TypePrefix type_prefix_;

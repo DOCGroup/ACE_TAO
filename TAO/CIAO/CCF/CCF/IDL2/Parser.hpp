@@ -311,6 +311,7 @@ namespace CCF
       KeywordParser OUT;
       KeywordParser SEQUENCE;
       KeywordParser SINCLUDE;
+      KeywordParser STRUCT;
       KeywordParser SUPPORTS;
       KeywordParser TYPEDEF;
       KeywordParser TYPEID;
@@ -363,9 +364,16 @@ namespace CCF
 
       Rule direction_specifier;
 
+      Rule member_decl;
+      Rule member_declarator_list;
+
       Rule operation_decl;
       Rule operation_parameter_list;
       Rule operation_parameter;
+
+      Rule struct_decl;
+      Rule struct_decl_trailer;
+      Rule struct_body;
 
       Rule typedef_;
       Rule typedef_type_spec;
@@ -441,6 +449,19 @@ namespace CCF
       act_interface_end;
 
 
+      // Member
+      //
+      //
+      OneArgAction<IdentifierPtr, SemanticAction::Member>
+      act_member_begin;
+
+      OneArgAction<SimpleIdentifierPtr, SemanticAction::Member>
+      act_member_declarator;
+
+      NoArgAction<SemanticAction::Member>
+      act_member_end;
+
+
       // Module
       //
       //
@@ -497,6 +518,21 @@ namespace CCF
 
       NoArgAction<SemanticAction::Operation>
       act_operation_end;
+
+      // Struct
+      //
+      //
+      OneArgAction<SimpleIdentifierPtr, SemanticAction::Struct>
+      act_struct_begin;
+
+      ScopeAction
+      act_struct_open_scope;
+
+      ScopeAction
+      act_struct_close_scope;
+
+      NoArgAction<SemanticAction::Struct>
+      act_struct_end;
 
 
       // Typedef

@@ -14,8 +14,10 @@ namespace CCF
       class Attribute;
       class Include;
       class Interface;
+      class Member;
       class Module;
       class Operation;
+      class Struct;
       class Typedef;
       class TypeId;
       class TypePrefix;
@@ -38,11 +40,17 @@ namespace CCF
         virtual Interface&
         interface () = 0;
 
+        virtual Member&
+        member () = 0;
+
         virtual Module&
         module () = 0;
 
         virtual Operation&
         operation () = 0;
+
+        virtual Struct&
+        struct_ () = 0;
 
         virtual Typedef&
         typedef_ () = 0;
