@@ -138,7 +138,7 @@ const char*
   [receptacle name]Connections_var retv =
     new [receptacle name]Connections (this->ciao_muses_[receptacle name]_.current_size ());
 
-  CORBA::Long i = 0;
+  CORBA::ULong i = 0;
   CIAO::Active_Objref_Map::iterator end = this->ciso_muses_[receptacle name]_.end ();
   for (CIAO::Active_Objref_Map::iterator iter = this->ciso_muses_[receptacle name]_.begin ();
        iter != end;
@@ -393,6 +393,12 @@ CORBA::Boolean
                                                               ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  if (CORBA::is_nil (object_ref))
+    ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
+
+  CORBA::Object_var the_other = object_ref->_get_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
   CORBA::Object_var me = this->context_->get_CCM_object (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
@@ -411,8 +417,34 @@ CORBA::Boolean
                    Components::AlreadyConnected,
                    Components::ExceededConnectionLimit))
 {
-  // @@ to-do
+  // @@ We can omit this if clause if there's no receptacle in this component.
+  if (name == 0)
+    ACE_THROW_RETURN (Components::InvalidName (), 0);
+
+##foreach [receptacle name] with [uses type] in (list of all 'uses' interfaces) generate:
+  if (ACE_OS_String::strcmp (name, "[receptacle name]") == 0)
+    {
+##  if [receptacle name] is a simplex receptacle ('uses')
+      this->connect_[receptacle name] (connection
+                                       ACE_ENV_ARG_PARAMETER);
+      return 0;
+##  else ([receptacle name] is a multiplex ('uses multiple') receptacle)
+      return this->connect_[receptacle name] (connection
+                                              ACE_ENV_ARG_PARAMETER);
+##  endif [receptacle name]
+    }
+##end foreach [receptacle name] with [uses type]
+
+  ACE_THROW_RETURN (Components::InvalidName (), 0);
 }
+
+/*
+##foreach [receptacle name] with [uses type] in (list of all 'uses' interfaces) generate:
+##  if [receptacle name] is a simplex receptacle ('uses')
+##  else ([receptacle name] is a multiplex ('uses multiple') receptacle)
+##  endif [receptacle name]
+##end foreach [receptacle name] with [uses type]
+*/
 
 CORBA::Object_ptr
 [ciao module name]::[component name]_Servant::disconnect (const char * name,
@@ -424,7 +456,21 @@ CORBA::Object_ptr
                    Components::CookieRequired,
                    Components::NoConnection))
 {
-  // @@ to-do
+  // @@ We can omit this if clause if there's no receptacle in this component.
+  if (name == 0)
+    ACE_THROW_RETURN (Components::InvalidName (), 0);
+
+##foreach [receptacle name] with [uses type] in (list of all 'uses' interfaces) generate:
+  if (ACE_OS_String::strcmp (name, "[receptacle name]") == 0)
+##  if [receptacle name] is a simplex receptacle ('uses')
+      return this->disconnect_[receptacle name] (ACE_ENV_SINGLE_ARG_PARAMETER);
+##  else ([receptacle name] is a multiplex ('uses multiple') receptacle)
+      return this->connect_[receptacle name] (ck
+                                              ACE_ENV_ARG_PARAMETER);
+##  endif [receptacle name]
+##end foreach [receptacle name] with [uses type]
+
+  ACE_THROW_RETURN (Components::InvalidName (), 0);
 }
 
 ::Components::ConnectionDescriptions *
@@ -433,14 +479,55 @@ CORBA::Object_ptr
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::InvalidName))
 {
-  // @@ to-do
+  // @@ We can omit this if clause if there's no receptacle in this component.
+  if (name == 0)
+    ACE_THROW_RETURN (Components::InvalidName (), 0);
+
+##foreach [receptacle name] with [uses type] in (list of all 'uses' interfaces) generate:
+  if (ACE_OS_String::strcmp (name, "[receptacle name]") == 0)
+    {
+##  if [receptacle name] is a simplex receptacle ('uses')
+      [receptacle name]Connections_var retv =
+        new ::Components::ConnectionConnections (1);
+
+      retv[0].ck = 0;
+      retv[0].objref = this->get_connection_[receptacle name] (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+
+      return retv._retn ();
+##  else ([receptacle name] is a multiplex ('uses multiple') receptacle)
+      // @@ Return type does not match here.  We can not return directly.
+      return this->get_connections_[receptacle name] (ACE_ENV_SINGLE_ARG_PARAMETER);
+##  endif [receptacle name]
+    }
+##end foreach [receptacle name] with [uses type]
+
+  ACE_THROW_RETURN (Components::InvalidName (), 0);
 }
 
 ::Components::ReceptacleDescriptions *
 [ciao module name]::[component name]_Servant::get_all_receptacles (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // @@ to-do
+  ::Components::ReceptacleDescriptions_var retv =
+      new ::Components::ReceptacleDescriptions (#99); // #99 is number of receptacles
+                                                      // this component has.
+  CORBA::ULong i = 0;
+
+##foreach [receptacle name] with [uses type] in (list of all 'uses' interfaces) generate:
+  retv[i].Name ((const char *) "[receptacle name]");
+  retv[i].type_id ((const char *) "[uses type repo id]");
+##  if [receptacle name] is a simplex receptacle ('uses')
+  retv[i].is_multiple (0);
+##  else ([receptacle name] is a multiplex ('uses multiple') receptacle)
+  retv[i].is_multiple (1);
+##  endif [receptacle name]
+  retv[i].connections (*this->get_connections ("[receptacle name]"
+                                               ACE_ENV_ARG_PARAMETER));
+  ++i;
+##end foreach [receptacle name] with [uses type]
+
+  return retv._retn ();
 }
 
 ::Components::ReceptacleDescriptions *
@@ -449,7 +536,29 @@ CORBA::Object_ptr
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::InvalidName))
 {
-  // @@ to-do
+  ::Components::ReceptacleDescriptions_var retv =
+      new ::Components::ReceptacleDescriptions (names.length ());
+
+  CORBA::ULong i = 0;
+  for (; i < names.length (); ++i)
+    {
+##foreach [receptacle name] with [uses type] in (list of all 'uses' interfaces) generate:
+      if (ACE_OS_String::strcmp (name, "[receptacle name]") == 0)
+        {
+          retv[i].Name ((const char *) "[receptacle name]");
+          retv[i].type_id ((const char *) "[uses type repo id]");
+##  if [receptacle name] is a simplex receptacle ('uses')
+          retv[i].is_multiple (0);
+##  else ([receptacle name] is a multiplex ('uses multiple') receptacle)
+          retv[i].is_multiple (1);
+##  endif [receptacle name]
+          retv[i].connections (*this->get_connections ("[receptacle name]"
+                                                       ACE_ENV_ARG_PARAMETER));
+        }
+##end foreach [receptacle name] with [uses type]
+      ACE_THROW_RETURN (::Components::InvalidName (), 0);
+    }
+  return retv._retn ();
 }
 
 // Operations for Events interface
@@ -459,7 +568,15 @@ CORBA::Object_ptr
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::InvalidName))
 {
-  // @@ to-do
+  // @@ We can omit this if clause if there's no event sinks in this component.
+  if (sink_name == 0)
+    ACE_THROW_RETURN (Components::InvalidName (), 0);
+
+##foreach [consumer name] with [eventtype] in (list of all consumers) generate:
+  if (ACE_OS_String::strcmp (sink_name, "[consumer name]") == 0)
+    return this->get_consumer_[consumer name] (ACE_ENV_SINGLE_ARG_PARAMATER);
+##end foreach [consumer name] with [eventtype]
+  ACE_THROW_RETURN (Components::InvalidName (), 0);
 }
 
 ::Components::Cookie_ptr
@@ -468,13 +585,25 @@ CORBA::Object_ptr
                                                          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::InvalidName,
-                   Components::AlreadyConnected,
-                   Components::InvalidConnection))
+                   Components::InvalidConnection,
+                   Components::ExceededConnectionLimit))
 {
-  // @@ to-do
+  // @@ We can omit this if clause if there's no publisher in this component.
+  if (publisher_name == 0)
+    ACE_THROW_RETURN (Components::InvalidName (), 0);
+
+##foreach [publish name] with [eventtype] in (list of all publishers) generate:
+  if (ACE_OS_String::strcmp (publisher_name, "[publish name]") == 0)
+    {
+      return this->subscribe_[publish name] (subscriber
+                                             ACE_ENV_ARG_PARAMTER);
+    }
+##end foreach [publish name] with [eventtype]
+
+  ACE_THROW_RETURN (Components::InvalidName (), 0);
 }
 
-void
+::Components::EventConsumerBase_ptr
 [ciao module name]::[component name]_Servant::unsubscribe (const char * publisher_name,
                                                            Components::Cookie_ptr ck
                                                            ACE_ENV_ARG_DECL)
@@ -482,7 +611,19 @@ void
                    Components::InvalidName,
                    Components::InvalidConnection))
 {
-  // @@ to-do
+  // @@ We can omit this if clause if there's no publisher in this component.
+  if (publisher_name == 0)
+    ACE_THROW_RETURN (Components::InvalidName (), 0);
+
+##foreach [publish name] with [eventtype] in (list of all publishers) generate:
+  if (ACE_OS_String::strcmp (publisher_name, "[publish name]") == 0)
+    {
+      return this->unsubscribe_[publish name] (ck
+                                               ACE_ENV_ARG_PARAMTER);
+    }
+##end foreach [publish name] with [eventtype]
+
+  ACE_THROW_RETURN (Components::InvalidName (), 0);
 }
 
 void
@@ -494,7 +635,20 @@ void
                    Components::AlreadyConnected,
                    Components::InvalidConnection))
 {
-  // @@ to-do
+  // @@ We can omit this if clause if there's no emitter in this component.
+  if (emitter_name == 0)
+    ACE_THROW_RETURN (Components::InvalidName (), 0);
+
+##foreach [emit name] with [eventtype] in (list of all emitters) generate:
+  if (ACE_OS_String::strcmp (emitter_name, "[emit name]") == 0)
+    {
+      this->connect_[emit name] (consumer
+                                 ACE_ENV_ARG_PARAMTER);
+      return;
+    }
+##end foreach [emit name] with [eventtype]
+
+  ACE_THROW_RETURN (Components::InvalidName (), 0);
 }
 
 ::Components::EventConsumerBase_ptr
@@ -504,14 +658,38 @@ void
                    Components::InvalidName,
                    Components::NoConnection))
 {
-  // @@ to-do
+  // @@ We can omit this if clause if there's no emitter in this component.
+  if (source_name == 0)
+    ACE_THROW_RETURN (Components::InvalidName (), 0);
+
+##foreach [emit name] with [eventtype] in (list of all emitters) generate:
+  if (ACE_OS_String::strcmp (source_name, "[emit name]") == 0)
+    {
+      return this->disconnect_[emit name] (ACE_ENV_SINGLE_ARG_PARAMTER);
+    }
+##end foreach [emit name] with [eventtype]
+
+  ACE_THROW_RETURN (Components::InvalidName (), 0);
 }
 
 ::Components::ConsumerDescriptions *
 [ciao module name]::[component name]_Servant::get_all_consumers (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // @@ to-do
+  ::Components::ConsumerDescriptions_var retv =
+      new ::Components::ConsumerDescriptions (#99); // #99 is the number of consumers
+                                                    // this component has.
+  CORBA::ULong i = 0;
+##foreach [consumer name] with [eventtype] in (list of all consumers) generate:
+  retv[i].Name ("[consumer name]");
+  retv[i].type_id ("[eventtype]Consumer repo id");
+  [eventtype]Consumer_var c = this->get_consumer_[consumer name] (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  retv[i].consumer (c.in ());
+##end foreach [consumer name] with [eventtype]
+
+  return retv._retn ();
 }
 
 ::Components::ConsumerDescriptions *
@@ -520,14 +698,44 @@ void
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::InvalidName))
 {
-  // @@ to-do
+  ::Components::ConsumerDescriptions_var retv =
+      new ::Components::ConsumerDescriptions (names.length ());
+
+  CORBA::ULong i = 0;
+  for (; i < names.length (); ++i)
+    {
+##foreach [consumer name] with [eventtype] in (list of all consumers) generate:
+      if (ACE_OS_String::strcmp (names[i].in (), "[consumer name]") == 0)
+        {
+          retv[i].Name ("[consumer name]");
+          retv[i].type_id ("[eventtype]Consumer repo id");
+          [eventtype]Consumer_var c =
+            this->get_consumer_[consumer name] (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_CHECK_RETURN (0);
+
+          retv[i].consumer (c.in ());
+        }
+##end foreach [consumer name] with [eventtype]
+      ACE_THROW_RETURN (::Components::InvalidName (), 0);
+    }
+  return retv._retn ();
 }
 
 ::Components::EmitterDescriptions *
 [ciao module name]::[component name]_Servant::get_all_emitters (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // @@ to-do
+  ::Components::EmitterDescriptions_var retv =
+      new ::Components::EmitterDescriptions (#99); // #99 is the number of emitters
+                                                    // this component has.
+  CORBA::ULong i = 0;
+##foreach [emit name] with [eventtype] in (list of all emitters) generate:
+  retv[i].Name ("[emit name]");
+  retv[i].type_id ("[eventtype]Consumer repo id");
+  retv[i].consumer ([eventtype]Consumer::_duplicate (this->context_->ciao_emits_[emit name]_consumer_));
+##end foreach [emitter name] with [eventtype]
+
+  return retv._retn ();
 }
 
 ::Components::EmitterDescriptions *
@@ -536,7 +744,23 @@ void
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::InvalidName))
 {
-  // @@ to-do
+  ::Components::EmitterDescriptions_var retv =
+      new ::Components::EmitterDescriptions (names.length ());
+
+  CORBA::ULong i = 0;
+  for (; i < names.length (); ++i)
+    {
+##foreach [emit name] with [eventtype] in (list of all emitters) generate:
+      if (ACE_OS_String::strcmp (names[i].in (), "[emit name]") == 0)
+        {
+          retv[i].Name ("[emit name]");
+          retv[i].type_id ("[eventtype]Consumer repo id");
+  retv[i].consumer ([eventtype]Consumer::_duplicate (this->context_->ciao_emits_[emit name]_consumer_));
+        }
+##end foreach [consumer name] with [eventtype]
+      ACE_THROW_RETURN (::Components::InvalidName (), 0);
+    }
+  return retv._retn ();
 }
 
 ::Components::PublisherDescriptions *
@@ -544,6 +768,9 @@ void
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // @@ to-do
+
+  // Need to add interfaces in the Context class to gather the information.
+  // Or we can just relay it to the Context object.
 }
 
 ::Components::PublisherDescriptions *
@@ -553,6 +780,9 @@ void
                    Components::InvalidName))
 {
   // @@ to-do
+
+  // Need to add interfaces in the Context class to gather the information.
+  // Or we can just relay it to the Context object.
 }
 
 // Operations for CCMObject interface
@@ -581,11 +811,12 @@ void
 }
 
 void
-[ciao module name]::[component name]_Servant::configuration_complete (ACE_ENV_SINGLE_ARG_DECL)
+[ciao module name]::[component name]_Servant::configuration_complete (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::InvalidConfiguration))
 {
   // @@ to-do
+  // No-op.  Don't know how to pass this info to monolithic executor.
 }
 
 void
@@ -594,13 +825,35 @@ void
                    Components::RemoveFailure))
 {
   // @@ to-do
+  // Need to figure out what to do here.  E.g., tear down the all the connections
+  // this component has?
 }
 
 ::Components::ComponentPortDescription *
 [ciao module name]::[component name]_Servant::get_all_ports (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // @@ to-do
+  ::Components::ComponentPortDescription_var retv =
+    new ::Components::ComponentPortDescription;
+
+  ::Components::FacetDescriptions_var facets_desc
+      = this->get_all_facets (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ::Components::ReceptacleDescriptions_var receptacle_desc
+      = get_all_receptacles (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ::Components::ConsumerDescriptions_var consumer_desc
+      = this->get_all_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ::Components::EmitterDescriptions_var emitter_desc
+      = this->get_all_emitters (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ::Components::PublisherDescriptions_var publisher_desc
+      = this->get_all_publishers (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+  retv->facets (facets_desc.in());
+  retv->receptacles (receptacle_desc.in());
+  retv->consumers (consumer_desc.in());
+  retv->emitters (emitter_desc.in());
+  retv->publishers (publisher_desc.in());
+
+  return retv._retn();
 }
 
 // get_component implementation.
