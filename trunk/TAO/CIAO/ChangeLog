@@ -1,38 +1,3 @@
-Sat Mar  5 17:10:42 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
-
-
-        * DAnCE/ciao/CCM_Core.mpc:
-        * DAnCE/ciao/Container_Base.h:
-        * DAnCE/ciao/Context_Impl_T.cpp:
-        * DAnCE/ciao/Deployment_Core.idl:
-        * DAnCE/ciao/Dynamic_Component_Activator.cpp:
-        * DAnCE/ciao/Dynamic_Component_Activator.h:
-        * DAnCE/ciao/Dynamic_Component_Servant_Base.cpp:
-        * DAnCE/ciao/Dynamic_Component_Servant_Base.h:
-        * DAnCE/ciao/Dynamic_Component_Servant_T.cpp:
-        * DAnCE/ciao/Dynamic_Component_Servant_T.h:
-        * DAnCE/ciao/Home_Servant_Impl_Base.h:
-        * DAnCE/ciao/Home_Servant_Impl_T.cpp:
-        * DAnCE/ciao/Home_Servant_Impl_T.h:
-        * DAnCE/ciao/Port_Activator_T.cpp:
-        * DAnCE/ciao/Servant_Activator.cpp:
-        * DAnCE/ciao/Servant_Activator.h:
-        * DAnCE/ciao/Servant_Impl_Base.cpp:
-        * DAnCE/ciao/Servant_Impl_Base.h:
-        * DAnCE/ciao/Servant_Impl_T.cpp:
-        * DAnCE/ciao/Servant_Impl_T.h:
-        * DAnCE/ciao/Swapping_Container.cpp:
-        * DAnCE/ciao/Swapping_Container.h:
-        * DAnCE/ciao/Swapping_Container.inl:
-        * DAnCE/ciao/Swapping_Servant_Home_Impl_Base.cpp:
-        * DAnCE/ciao/Swapping_Servant_Home_Impl_Base.h:
-        * DAnCE/ciao/Swapping_Servant_Home_Impl_T.cpp:
-        * DAnCE/ciao/Swapping_Servant_Home_Impl_T.h:
-
-          Added changes to allow the CIAO infrastructure
-          to dynamically replace or swap component
-          implementations.
-
 Fri Mar  4 17:13:16 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/Hello/Hello_Base/Hello_Base.idl:
