@@ -1,3 +1,10 @@
+Mon Dec 21 11:56:29 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_array/array_ch.cpp (visit_array): Fixed
+ 	  the functions to use TAO_NAMESPACE_STORAGE_CLASS instead of
+ 	  static.  Thanks to Patrice Bensoussan <pbensoussan@amadeus.net>
+ 	  for reporting this bug.
+
 Mon Dec 21 09:15:11 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/tests/EC_Throughput/ECT_Driver.i: 
