@@ -1,8 +1,12 @@
+Thu Dec 17 16:56:28 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/create_ace_build: try /bin/find if /usr/bin/find doesn't exist.
+
 Thu Dec 17 12:43:11 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace: Removed the use of ACE_DEBUG within handle_signal() methods
- 	  to avoid portability problems.  Thanks to Susan Liebeskind
- 	  <susan.liebeskind@gtri.gatech.edu> for reporting this.
+        * ace: Removed the use of ACE_DEBUG within handle_signal() methods
+          to avoid portability problems.  Thanks to Susan Liebeskind
+          <susan.liebeskind@gtri.gatech.edu> for reporting this.
 
 Tue Dec 15 14:45:49 1998  David L. Levine  <levine@cs.wustl.edu>
 
