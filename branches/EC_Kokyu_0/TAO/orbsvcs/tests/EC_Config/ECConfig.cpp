@@ -3,6 +3,8 @@
 #ifndef ECCONFIG_C
 #define ECCONFIG_C
 
+#include "ECConfig.h"
+
 #include <sstream> //for ostringstream
 
 #include "ace/Array.h"
@@ -13,14 +15,12 @@
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/Event/EC_Kokyu_Factory.h"
 
-#include "ECConfig.h"
-
 namespace TestConfig {
 
 template <class SCHED_STRAT>
 ECConfig<SCHED_STRAT>::ECConfig (void)
   : Test_Config (),
-    configured (false)
+    configured (0) //false
 {
 }
 
@@ -48,7 +48,7 @@ ECConfig<SCHED_STRAT>::reset (void)
     delete this->suppliers[i];
   }
 
-  configured = false;
+  configured = 0; //false
 }
 
 template <class SCHED_STRAT> int
@@ -210,7 +210,7 @@ ECConfig<SCHED_STRAT>::configure (TCFG_SET_WPTR testconfigs)
       ACE_TRY_CHECK;
       ACE_DEBUG ((LM_DEBUG, "EC activated\n"));
 
-      configured = true;
+      configured = 1; //true
     }
   ACE_CATCHANY
     {
