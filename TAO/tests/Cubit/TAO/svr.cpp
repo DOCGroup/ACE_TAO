@@ -75,7 +75,7 @@ main (int argc, char *argv[])
     }
 
   // Initialize the Basic Object Adapter
-  CORBA::POA_ptr oa_ptr = orb_ptr->POA_init (argc, argv, "ROA");
+  CORBA::POA_ptr oa_ptr = orb_ptr->POA_init (argc, argv );
 
   if (oa_ptr == 0)
     ACE_ERROR_RETURN ((LM_ERROR, " (%P|%t) Unable to initialize the POA.\n"), 1);
