@@ -20,7 +20,7 @@ IDL_SRC	= \
 PROG_SRCS = \
 	Load_Balancing_Service.cpp \
 	Identity_Server.cpp \
-       	Identity_Client.cpp \
+	Identity_Client.cpp \
         Load_Balancer_i.cpp \
 	Identity_i.cpp
 
@@ -31,7 +31,7 @@ CLIENT_OBJS = Identity_Client.o \
 	      Load_BalancerC.o
 
 SERVER_OBJS = Identity_Server.o \
-              Identity_i.o \ 
+              Identity_i.o \
 	      IdentityC.o \
 	      IdentityS.o \
 	      Load_BalancerC.o
