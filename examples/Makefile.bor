@@ -7,7 +7,10 @@ DIRS = \
         Log_Msg \
         Map_Manager \
         Mem_Map \
+        Misc \
+        Naming \
         Reactor \
+        Registry \
         RMCast \
         Service_Configurator \
         Threads
