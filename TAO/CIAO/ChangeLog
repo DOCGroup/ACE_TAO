@@ -1,3 +1,8 @@
+Sat May 17 11:18:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/handcrafted/BasicSP/*/config: Config files for
+	  testing. 
+
 Sat May 17 11:05:40 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/handcrafted/BasicSP/BasicSP.idl: Changed to include
