@@ -1,3 +1,9 @@
+Fri Nov 13 08:55:18 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Process_Mutex_Test.cpp: wrapped some variables
+          and functions with #ifndef ACE_LACKS_FORK, to avoid
+          warnings on VxWorks.
+
 Thu Nov 12 09:07:28 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/make_release: use ../diffs if building ace+tao kit, so
