@@ -1,3 +1,10 @@
+Fri Sep 29 14:00:15 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Makefile.am (IDL_FILES, pkginclude_HEADERS):
+
+	  Changed variable "IDL_HEADERS" to "IDL_FILES."  The "_HEADERS"
+	  suffix is reserved by automake.
+
 Fri Sep 29 14:48:38 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.cpp
