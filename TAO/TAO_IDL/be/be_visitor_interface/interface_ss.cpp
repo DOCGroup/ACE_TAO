@@ -89,7 +89,11 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   if (this->generate_proxy_classes (node) == -1)
     {
-      return -1;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_interface_ss::"
+                         "visit_interface - "
+                         "codegen for proxy classes\n"),
+                        -1);
     }
 
   *os << "// TAO_IDL - Generated from " << be_nl
@@ -122,18 +126,19 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << full_skel_name << "::"
       << local_name_prefix << node_local_name << " ("
       << "const " << local_name_prefix << node_local_name << "& rhs)";
-  *os << be_idt_nl
-      << ": ";
 
-  if (node->traverse_inheritance_graph (
-                be_interface::copy_ctor_helper, os
-              ) == -1)
+  *os << be_idt_nl
+      << ":";
+
+  if (this->generate_copy_ctor (node, os) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "be_visitor_interface_ss::visit_interface - "
                          " copy ctor generation failed\n"),
                         -1);
     }
+    
+
 
   *os << "  TAO_ServantBase (rhs)" << be_uidt_nl
       << "{}" << be_nl << be_nl;
@@ -555,6 +560,14 @@ be_visitor_interface_ss::generate_downcast_implementation (be_interface *node,
                                                            TAO_OutStream *os)
 {
   return node->traverse_inheritance_graph (be_interface::downcast_helper,
+                                           os);
+}
+
+int
+be_visitor_interface_ss::generate_copy_ctor (be_interface *node,
+                                             TAO_OutStream *os)
+{
+  return node->traverse_inheritance_graph (be_interface::copy_ctor_helper,
                                            os);
 }
 

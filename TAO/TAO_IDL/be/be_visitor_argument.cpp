@@ -41,4 +41,3 @@
 #include "be_visitor_argument/request_info_arglist.cpp"
 
 ACE_RCSID(be, be_visitor_argument, "$Id$")
-

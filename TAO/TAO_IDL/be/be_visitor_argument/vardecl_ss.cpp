@@ -462,5 +462,3 @@ int be_visitor_args_vardecl_ss::visit_typedef (be_typedef *node)
   this->ctx_->alias (0);
   return 0;
 }
-
-
