@@ -61,8 +61,8 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.i \
- $(ACE_ROOT)/ace/post.h QuoterS_T.h \
- QuoterS_T.i QuoterS_T.cpp QuoterS.i
+ $(ACE_ROOT)/ace/post.h QuoterS_T.h QuoterS_T.i \
+ QuoterS_T.cpp QuoterS.i
 
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp Stock_Factory_i.h Stock_i.h QuoterS.h QuoterC.h \
  QuoterC.i \
@@ -70,8 +70,8 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.i \
- $(ACE_ROOT)/ace/post.h QuoterS_T.h \
- QuoterS_T.i QuoterS_T.cpp QuoterS.i
+ $(ACE_ROOT)/ace/post.h QuoterS_T.h QuoterS_T.i \
+ QuoterS_T.cpp QuoterS.i
 
 .obj/QuoterC.o .obj/QuoterC.so .shobj/QuoterC.o .shobj/QuoterC.so: QuoterC.cpp QuoterC.h QuoterC.i
 
@@ -80,8 +80,8 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.i \
- $(ACE_ROOT)/ace/post.h QuoterS_T.h \
- QuoterS_T.i QuoterS_T.cpp QuoterS.i \
+ $(ACE_ROOT)/ace/post.h QuoterS_T.h QuoterS_T.i \
+ QuoterS_T.cpp QuoterS.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
  $(ACE_ROOT)/ace/Map.h \
@@ -100,25 +100,32 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.i \
  $(TAO_ROOT)/tao/PortableServer/poa_macros.h \
  $(TAO_ROOT)/tao/PortableServer/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
  $(TAO_ROOT)/tao/PortableServer/Active_Object_Map.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.i \
- $(TAO_ROOT)/tao/PortableServer/Operation_Table.h
+ $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
+ $(TAO_ROOT)/tao/TAO_Server_Request.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
+ $(TAO_ROOT)/tao/GIOPC.h \
+ $(TAO_ROOT)/tao/GIOPC.i \
+ $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/TAO_Server_Request.i
 
 .obj/Handler_i.o .obj/Handler_i.so .shobj/Handler_i.o .shobj/Handler_i.so: Handler_i.cpp Handler_i.h QuoterS.h QuoterC.h QuoterC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.i \
- $(ACE_ROOT)/ace/post.h QuoterS_T.h \
- QuoterS_T.i QuoterS_T.cpp QuoterS.i
+ $(ACE_ROOT)/ace/post.h QuoterS_T.h QuoterS_T.i \
+ QuoterS_T.cpp QuoterS.i
 
 .obj/Stock_i.o .obj/Stock_i.so .shobj/Stock_i.o .shobj/Stock_i.so: Stock_i.cpp Stock_i.h QuoterS.h QuoterC.h QuoterC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.i \
- $(ACE_ROOT)/ace/post.h QuoterS_T.h \
- QuoterS_T.i QuoterS_T.cpp QuoterS.i
+ $(ACE_ROOT)/ace/post.h QuoterS_T.h QuoterS_T.i \
+ QuoterS_T.cpp QuoterS.i
 
 .obj/Stock_Factory_i.o .obj/Stock_Factory_i.so .shobj/Stock_Factory_i.o .shobj/Stock_Factory_i.so: Stock_Factory_i.cpp Stock_Factory_i.h Stock_i.h \
  QuoterS.h QuoterC.h QuoterC.i \
@@ -126,7 +133,7 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.i \
- $(ACE_ROOT)/ace/post.h QuoterS_T.h \
- QuoterS_T.i QuoterS_T.cpp QuoterS.i
+ $(ACE_ROOT)/ace/post.h QuoterS_T.h QuoterS_T.i \
+ QuoterS_T.cpp QuoterS.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
