@@ -102,6 +102,7 @@ int
 main (int argc, char** argv)
 {
   CORBA_Environment env;
+  int i = 0;
 
   COOL::EOA::bind(argv[2], env);
   if (env.exception()) {
@@ -133,7 +134,7 @@ main (int argc, char** argv)
   
   COOL_Activity_ptr new_activity [2];
   
-  for (int i = 0; i < 1; i++)
+  for (i = 0; i < 1; i++)
     {
       if (thisCapsule->createActivity ((COOL_ActivityFunc) create_servant,
 				       (void *) argv,
@@ -144,7 +145,7 @@ main (int argc, char** argv)
     }
   
   CORBA_Long status;
-  for (int i = 0; i < 1; i++)
+  for (i = 0; i < 1; i++)
     {
       if (new_activity [i]->join (status) != C_OK)
         {
