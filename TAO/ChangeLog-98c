@@ -1,3 +1,15 @@
+Fri Dec  4 16:04:56 1998  Ossama Othman  <ossama@debian.org>
+
+	* TAO_IDL/util/utl_global.cpp(IDL_GlobalData constructor):
+	Added support for hardcoding a gperf default path other than
+	$ACE_ROOT/bin/gperf.  This works by #defining the ACE_GPERF
+	macro at compile time to be the desired gperf.
+
+  	For example:  -DACE_GPERF=\"/usr/local/bin/gperf-ace\"
+
+	The actual gperf program must be included in the definition of
+	ACE_GPERF, not just the directory in which it is located.
+
 Fri Dec 04 12:45:01 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/IDL_Cubit/README: added sample
