@@ -1,3 +1,8 @@
+Mon Apr  3 11:09:26 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	* ace/QoS_Manager.cpp: Added the #if defined 
+	  (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION).
+
 Mon Apr  3 08:00:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* bin/auto_compile: Added <smart_proxies> flag.
