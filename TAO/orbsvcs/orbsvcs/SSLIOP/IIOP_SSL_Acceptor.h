@@ -61,15 +61,15 @@ public:
 
 protected:
 
+  /// Implement the common part of the open*() methods.  This method is
+  /// virtual to allow a derived class implementation to be invoked
+  /// instead.
   virtual int open_i (const ACE_INET_Addr &addr,
                       ACE_Reactor *reactor);
-  // Implement the common part of the open*() methods.  This method is
-  // virtual to allow a derived class implementation to be invoked
-  // instead.
 
 private:
 
-  /// the concrete acceptor, as a pointer to it's base class.
+  /// The concrete acceptor, as a pointer to it's base class.
   TAO_IIOP_SSL_BASE_ACCEPTOR base_acceptor_;
 
   /**

@@ -24,48 +24,53 @@
 #include "orbsvcs/PortableGroupC.h"
 #include "tao/Object_KeyC.h"
 
+/**
+ * @class TAO_GroupId_Hash
+ *
+ * @brief Hashing class for Group Ids.
+ *
+ * Define the hash() method for Group Ids.
+ */
 class TAO_PortableGroup_Export TAO_GroupId_Hash
 {
-  // = TITLE
-  //     Hashing class for Group Ids.
-  //
-  // = DESCRIPTION
-  //     Define the hash() method for Group Ids.
 public:
 
+  /// Returns hash value.
   u_long operator () (const PortableGroup::TagGroupTaggedComponent *id) const;
-  // Returns hash value.
 };
 
+/**
+ * @class TAO_GroupId_Equal_To
+ *
+ * @brief Hashing class for Group Ids.
+ *
+ * Define the Equal_To () method for Object Ids.
+ */
 class TAO_PortableGroup_Export TAO_GroupId_Equal_To
 {
-  // = TITLE
-  //     Hashing class for Group Ids.
-  //
-  // = DESCRIPTION
-  //     Define the Equal_To () method for Object Ids.
 public:
 
+  /// Returns 1 if equal.
   int operator () (const PortableGroup::TagGroupTaggedComponent *lhs,
                    const PortableGroup::TagGroupTaggedComponent *rhs) const;
-  // Returns 1 if equal.
 };
 
+/**
+ * @class TAO_Portable_Group_Map
+ *
+ * @brief Map of GroupIds to ObjectKeys.
+ */
 class TAO_PortableGroup_Export TAO_Portable_Group_Map
 {
-  // = TITLE
-  //     Map of GroupIds to ObjectKeys.
-  //
-  // = DESCRIPTION
 public:
 
+	/**
+	 * @struct Map_Entry
+	 *
+	 * @brief Value field of the portable group map.
+	 */
   struct Map_Entry
   {
-    // = TITLE
-    //     Value field of the portable group map.
-    //
-    // = DESCRIPTION
-
     /// The key.
     TAO_ObjectKey key;
 
