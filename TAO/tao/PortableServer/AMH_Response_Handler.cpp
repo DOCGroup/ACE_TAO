@@ -227,18 +227,18 @@ TAO_AMH_Response_Handler::_tao_rh_send_exception (CORBA::Exception &ex
   }
 }
 
-long
-TAO_AMH_Response_Handler::decr_refcount (void)
+void
+TAO_AMH_Response_Handler::_remove_ref (void)
 {
   {
-    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
-                      mon,
-                      this->refcount_lock_,
-                      -1);
+    ACE_GUARD (TAO_SYNCH_MUTEX,
+               mon,
+               this->refcount_lock_);
+    
     --this->refcount_;
 
     if (this->refcount_ > 0)
-      return this->refcount_;
+      return;
   }
 
   if (this->allocator_)
@@ -252,7 +252,7 @@ TAO_AMH_Response_Handler::decr_refcount (void)
       delete this;
     }
 
-  return 0;
+  return;
 }
 
 namespace TAO
@@ -262,7 +262,7 @@ namespace TAO
       TAO_AMH_Response_Handler *arh)
     ACE_THROW_SPEC (())
   {
-    (void) arh->decr_refcount ();
+    (void) arh->_remove_ref ();
   }
 }
 

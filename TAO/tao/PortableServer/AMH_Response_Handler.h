@@ -87,7 +87,7 @@ public:
 
   /// @name Mutators for refcount
   //@{
-  long decr_refcount (void);
+  virtual void _remove_ref (void);
   //@}
 
 protected:
