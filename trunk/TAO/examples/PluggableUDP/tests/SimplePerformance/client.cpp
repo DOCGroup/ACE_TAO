@@ -42,6 +42,8 @@ public:
   Client (Simple_Server_ptr server, int niterations);
   // ctor
 
+  virtual ~Client (void) {};
+
   virtual int svc (void);
   // The thread entry point.
 
@@ -82,7 +84,7 @@ int main (int argc, char *argv[])
                             1);
         }
 
-      CORBA::String_var string =  orb->object_to_string(server);
+      CORBA::String_var string =  orb->object_to_string (server.in ());
       ACE_DEBUG ((LM_DEBUG, 
                   "Client: orb->object_to_string:\n%s\n",
                   string.in ()));
