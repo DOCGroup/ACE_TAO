@@ -5,7 +5,8 @@
 #----------------------------------------------------------------------------
 
 BIN	= gperf
-LIB	= libGperf.a
+LIB   	= libGperf.a
+SHLIB	= libGperf.$(SOEXT)
 
 FILES	= new \
 	  Options \
@@ -19,13 +20,12 @@ FILES	= new \
 	  Version
 
 LSRC	= $(addsuffix .cpp,$(FILES)) 
-LOBJ	= $(addsuffix .o,$(FILES))
 
 LDLIBS	= -lGperf
 
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
-BUILD 	= $(VLIB) $(SHLIBA) $(VBIN)
+BUILD 	= $(VLIB) $(VSHLIB) $(SHLIBA) $(VBIN)
 
 #----------------------------------------------------------------------------
 #	Include macros and targets

@@ -466,7 +466,7 @@ Key_List::output_min_max (void)
 void 
 Key_List::output_switch (void)
 {
-  char      *comp_buffer;
+  char *comp_buffer;
   List_Node *curr = head;
   int pointer_and_type_enabled = option[POINTER] && option[TYPE];
   int total_switches = option.get_total_switches ();
@@ -477,11 +477,11 @@ Key_List::output_switch (void)
       // Keep track of the longest string we'll need!
       const char *s = "charmap[*str] == *resword->%s && !strncasecmp (str + 1, resword->%s + 1, len - 1)";
 #if defined (__GNUG__)
-      comp_buffer = (char *) alloca (strlen (s)
-				     + 2 * strlen (option.get_key_name ()) + 1);   
+      comp_buffer = 
+        (char *) alloca (strlen (s) + 2 * strlen (option.get_key_name ()) + 1);   
 #else
-      comp_buffer = new char [strlen (s)
-				     + 2 * strlen (option.get_key_name ()) + 1];
+      comp_buffer =
+        new char [strlen (s) + 2 * strlen (option.get_key_name ()) + 1];
 #endif /* __GNUG__ */
       if (option[COMP])
         sprintf (comp_buffer, "%s == *resword->%s && !%s (str + 1, resword->%s + 1, len - 1)",
@@ -489,8 +489,8 @@ Key_List::output_switch (void)
 		 option[STRCASECMP] ? "strncasecmp" : "strncmp", option.get_key_name ()); 
       else
         sprintf (comp_buffer, "%s == *resword->%s && !%s (str + 1, resword->%s + 1)",
-               option[STRCASECMP] ? "charmap[*str]" : "*str", option.get_key_name (), 
-	       option[STRCASECMP] ? "strcasecmp" : "strcmp", option.get_key_name ());
+                 option[STRCASECMP] ? "charmap[*str]" : "*str", option.get_key_name (), 
+                 option[STRCASECMP] ? "strcasecmp" : "strcmp", option.get_key_name ());
     }
   else
     {
@@ -501,7 +501,7 @@ Key_List::output_switch (void)
       else
         comp_buffer = option[STRCASECMP]
           ? "charmap[*str] == *resword && !strncasecmp (str + 1, resword + 1, len - 1)"
-          : "*str == *resword && !strncmp (str + 1, resword + 1, len - 1)";
+          : "*str == *resword && !strcmp (str + 1, resword + 1)";
     }
   if (!option[OPTIMIZE])
     printf ("  if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)\n    {\n");
@@ -622,7 +622,7 @@ Key_List::output_switch (void)
 	  printf ("            }\n");
 	  curr = temp;
 	}
-      else                          /* Nothing special required here. */
+     else // Nothing special required here.
         {                        
           int i = 0;
           printf ("              char *s;\n\n              switch (key - %d)\n                {\n",
