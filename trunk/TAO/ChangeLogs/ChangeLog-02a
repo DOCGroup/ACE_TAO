@@ -1,3 +1,34 @@
+Wed Apr 17 12:25:31 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Base.cpp (send_reply_exception):
+	* tao/GIOP_Message_Base.h: Instead of creating a new OutputCDR
+	  buffer, reuse the one that has already been created when the
+	  request is cobbled up in a CDR. Changed the signature of the
+	  send_reply_exception () to take an OutputCDR argument instead of
+	  a pointer to the ORB_Core. 
+
+	* tao/Transport_Connector.cpp:
+	* tao/Transport_Connector.h: Added a new method to set and
+	  validate (set_validate_endpoint ()) the endpoints that has been
+	  passed in. This is required since we dont set the standard
+	  addresses, like ACE_INET_Addr for IIOP from host and port
+	  information, in the endpoint encapsulation during IOR decode
+	  time. We lazily evaluate it during invocation.
+	
+	* tao/IIOP_Connector.cpp
+	* tao/IIOP_Connector.h:
+	* tao/Strategies/DIOP_Connector.cpp
+	* tao/Strategies/DIOP_Connector.h
+	* tao/Strategies/SHMIOP_Connector.cpp:
+	* tao/Strategies/SHMIOP_Connector.h:
+	* tao/Strategies/UIOP_Connector.cpp:
+	* tao/Strategies/UIOP_Connector.h:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.h:
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.h: Implementation for
+	  the above method in all the protocols that we have.
+
 Wed Apr 17 09:12:48 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PortableInterceptor.pidl:

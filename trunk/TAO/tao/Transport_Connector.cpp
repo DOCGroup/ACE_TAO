@@ -207,6 +207,9 @@ TAO_Connector::connect (TAO_GIOP_Invocation *invocation,
                         TAO_Transport_Descriptor_Interface *desc
                         ACE_ENV_ARG_DECL_NOT_USED)
 {
+  if (this->set_validate_endpoint (desc->endpoint ()) == -1)
+    return -1;
+
   TAO_Transport *base_transport = 0;
 
   // Check the Cache first for connections

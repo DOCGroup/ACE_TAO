@@ -93,19 +93,15 @@ TAO_DIOP_Connector::close (void)
 }
 
 int
-TAO_DIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
-                                     TAO_Transport_Descriptor_Interface *desc)
+TAO_DIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
 {
-  TAO_Transport *&transport = invocation->transport ();
-
-  TAO_Endpoint *endpoint = desc->endpoint ();
-
   if (endpoint->tag () != TAO_TAG_UDP_PROFILE)
     return -1;
 
   TAO_DIOP_Endpoint *diop_endpoint =
     ACE_dynamic_cast (TAO_DIOP_Endpoint *,
                       endpoint );
+
   if (diop_endpoint == 0)
     return -1;
 
@@ -128,6 +124,26 @@ TAO_DIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
 
       return -1;
     }
+
+  return 0;
+}
+
+int
+TAO_DIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
+                                     TAO_Transport_Descriptor_Interface *desc)
+{
+  TAO_Transport *&transport = invocation->transport ();
+
+  TAO_DIOP_Endpoint *diop_endpoint =
+    ACE_dynamic_cast (TAO_DIOP_Endpoint *,
+                      desc->endpoint ());
+
+  if (diop_endpoint == 0)
+    return -1;
+
+  const ACE_INET_Addr &remote_address =
+    diop_endpoint->object_addr ();
+
 
   TAO_DIOP_Connection_Handler *svc_handler = 0;
 
