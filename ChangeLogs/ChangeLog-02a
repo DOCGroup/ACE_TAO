@@ -1,3 +1,26 @@
+Thu Jul 12 06:01:03 2001  John Michael Zorko <j.zorko@att.net>
+  
+        * netsvcs/lib/Server_Logging_Handler.cpp:
+	  Added an an additional #define in config-macosx.h called
+ 	  ACE_HAS_MACOSX_DYLIB, and checked to see if this was _not_
+ 	  defined before instantiating the offending template in
+ 	  Server_Logging_Handler.cpp.  OS X has this thing about .dylibs
+ 	  (OS X version of .so) where they can't have any duplicate
+ 	  symbols, which is why libnetsvcs wasn't building on OS X
+ 	  earlier.  This fixes that.
+  
+        * include/makeincludes/platform-macosx.GNU: Added -lACE to the
+	  LIBS line, which fixed the majority of the build problems.
+
+        * ace/config-macosx.h: Added the ACE_HAS_MACOSX_DYLIB #define
+	  mentioned above.
+
+Thu Jul 12 06:01:03 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/TLI_Connector.cpp (complete): Changed ACE_OS::t_rcvconnect()
+	  to simply t_rcvconnect().  Thansk to Andreas Geisler for
+ 	  reporting this.
+
 Thu Jul 12 09:43:36 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/FILE_Connector.h (ACE_FILE_Connector, connect):
@@ -17,7 +40,6 @@ Wed Jul 11 22:31:50 2001  Krishnakumar B  <kitty@cs.wustl.edu>
         * ace/TLI_Acceptor.cpp(open_new_endpoint):
 
           Fixed a small typo causing compilation errors under Tru64.
-
 
 Wed Jul 11 13:06:33 2001  Steve Huston  <shuston@riverace.com>
 

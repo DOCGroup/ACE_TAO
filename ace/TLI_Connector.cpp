@@ -199,7 +199,7 @@ ACE_TLI_Connector::complete (ACE_TLI_Stream &new_stream,
    if (WaitForSingleObject (new_stream.get_handle(), tv->msec()) == WAIT_OBJECT_0)
     {
       if (ACE_OS::t_look (new_stream.get_handle()) == T_CONNECT)
-        return ACE_OS::t_rcvconnect (new_stream.get_handle(), 0);
+        return t_rcvconnect (new_stream.get_handle(), 0);
       else
         return -1;
     }

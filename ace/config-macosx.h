@@ -1,6 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
-// config-macosx-pthread.h
+
+// This configuration file is designed to work with the MacOS X operating system.
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
@@ -13,7 +14,7 @@
 # include "ace/config-g++-common.h"
 #endif /* __GNUG__ */
 
-#undef ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
+//#undef ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 
 #if defined (ACE_HAS_PENTIUM)
 # undef ACE_HAS_PENTIUM
@@ -22,6 +23,7 @@
 // Platform specific directives
 
 #define __MACOSX__
+#define ACE_HAS_MACOSX_DYLIB
 
 #if !defined (_THREAD_SAFE)
 #define _THREAD_SAFE
@@ -46,8 +48,7 @@
 //Platform supports sigsuspend()
 #define ACE_HAS_SIGSUSPEND
 
-// Platform/compiler has macros for sig{empty,fill,add,del}set (e.g.,
-// SCO and FreeBSD)  
+//Platform/compiler has macros for sig{empty,fill,add,del}set (e.g., SCO and FreeBSD)
 #define ACE_HAS_SIG_MACROS
 
 //#define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
