@@ -49,21 +49,20 @@ $lib_extension = 'a';
 ####
 #### Process command line args.
 ####
-@argv = @ARGV;
-foreach my $arg (@argv) {
-  if ($arg eq '-h') {
+while ($#ARGV >= $[  &&  $ARGV[0] =~ /^-/) {
+  if ($ARGV[0] eq '-h') {
     $html = 1;
     chop ($sysname = `uname -s`);
     chop ($sysrev = `uname -r`);
     shift;
-  } elsif ($arg eq '-s') {
+  } elsif ($ARGV[0] eq '-s') {
     $lib_extension = 'so';
     $build_args =~ s/ static_libs_only=1//;
     shift;
-  } elsif ($arg eq '-v') {
+  } elsif ($ARGV[0] eq '-v') {
     $verbose = 1;
     shift;
-  } elsif ($arg eq '-?') {
+  } elsif ($ARGV[0] eq '-?') {
     print "$usage";
     exit;
   } else {

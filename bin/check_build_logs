@@ -27,32 +27,32 @@ $mail_recipients = '';
 ####
 #### Process command line args.
 ####
-foreach my $arg (@ARGV) {
-  if ($arg eq '-l') {
-    if ( $ARGV[1] =~ /^[\da-zA-Z]+$/ ) {
+while ($#ARGV >= $[) {
+  if ($ARGV[0] eq '-l') {
+    if ($ARGV[1] =~ /^[\da-zA-Z]+$/) {
       $log_directory = $ARGV[1];
       shift;
     } else {
       print STDERR "$0:  must provide argument for -l option\n";
       die $usage;
     }
-    shift;
-  } elsif ($arg eq '-m') {
-    if ( $ARGV[1] =~ /^[\da-zA-Z]+$/ ) {
+  } elsif ($ARGV[0] eq '-m') {
+    if ($ARGV[1] =~ /^[\da-zA-Z]+$/) {
       $mail_recipients = $ARGV[1];
       shift;
     } else {
       print STDERR "$0:  must provide argument for -m option\n";
       die $usage;
     }
-    shift;
-  } elsif ($arg eq '-?') {
+  } elsif ($ARGV[0] eq '-?') {
     print "$usage";
     exit;
   } else {
+    print "$0: unknown arg: $ARGV[0]\n";
     print "$usage";
-    exit;
+    exit 1;
   }
+  shift;
 }
 
 
