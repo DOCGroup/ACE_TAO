@@ -78,6 +78,12 @@ public:
   /// Dump the state of an request.
   void dump (void) const;
 
+  ACE_Message_Queue<ACE_SYNCH> *queue (void) const;
+  /// Get a pointer to the underlying queue.
+
+  void queue (ACE_Message_Queue<ACE_SYNCH> *q);
+  /// Set the pointer to the underlying queue.
+
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 

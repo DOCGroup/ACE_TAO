@@ -20,3 +20,15 @@ ACE_Activation_Queue::is_empty (void) const
 {
   return queue_->is_empty ();
 }
+
+ACE_INLINE ACE_Message_Queue<ACE_SYNCH> *
+ACE_Activation_Queue::queue (void) const
+{
+  return queue_;
+}
+
+ACE_INLINE void 
+ACE_Activation_Queue::queue (ACE_Message_Queue<ACE_SYNCH> *q)
+{
+  queue_ = q;
+}
