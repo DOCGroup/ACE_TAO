@@ -44,9 +44,16 @@ ACE::out_of_handles (int error)
 #elif defined (linux)
       // On linux, we need to check for ENOENT also.
       error == ENOENT ||
+      // For RedHat5.2, need to check for EINVAL too.
+      error == EINVAL ||
 #elif defined (sun)
       // On sun, we need to check for ENOSR also.
       error == ENOSR ||
+#elif defined (__FreeBSD__)
+       // On FreeBSD we need to check for 
+       // EOPNOTSUPP (LinuxThreads) or
+       // ENOSYS (libc_r threads) also.
+       error == EOPNOTSUPP || ENOSYS ||
 #endif /* ACE_WIN32 */
       error == ENFILE)
     return 1;
