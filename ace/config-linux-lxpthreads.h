@@ -32,8 +32,16 @@
 #define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
+#if defined (i386)
+  // If running an Intel, assume that it's a Pentium so that
+  // ACE_OS::gethrtime () can use the RDTSC instruction.  If
+  // running a 486 or lower, be sure to comment this out.
+  // (If not running an Intel CPU, this #define will not be seen
+  //  because of the i386 protection, so it can be ignored.)
+# define ACE_HAS_PENTIUM
+#endif /* i386 */
+
 #define ACE_HAS_LONG_FDMASK
-#define ACE_HAS_PENTIUM
 #define ACE_HAS_LONGLONG_T
 #define ACE_HAS_STRING_CLASS
 
