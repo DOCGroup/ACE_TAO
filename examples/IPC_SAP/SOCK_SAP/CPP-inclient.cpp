@@ -1,7 +1,10 @@
 // $Id$
 
-// This tests the features of the ACE_SOCK_Connector and
-// ACE_SOCK_Stream classes.
+// This tests the features of the <ACE_SOCK_Connector> and
+// <ACE_SOCK_Stream> classes.  In addition, it can be used to test the
+// oneway and twoway latency and throughput at the socket-level.  This
+// is useful as a baseline to compare against ORB-level performance
+// for the same types of data.
 
 #include "ace/SOCK_Connector.h"
 #include "ace/INET_Addr.h"
@@ -12,8 +15,6 @@
 #include "ace/Synch.h"
 
 ACE_RCSID(SOCK_SAP, CPP_inclient, "$Id$")
-
-// ACE SOCK_SAP client.
 
 class Options
   // = TITLE
@@ -272,12 +273,12 @@ void *
 Options::shared_client_test (u_short port,
                              ACE_SOCK_Stream &cli_stream)
 {
-  // Add one to the port for the oneway test!
   ACE_INET_Addr remote_addr (port, this->host_);
 
   ACE_SOCK_Connector con;
 
-  if (con.connect (cli_stream, remote_addr) == -1)
+  if (con.connect (cli_stream,
+                   remote_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) %p\n",
                        "connection failed"),
@@ -299,7 +300,7 @@ Options::shared_client_test (u_short port,
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) waiting...\n"));
               
-  // Wait for all other threads to get initialized.
+  // Wait for all other threads to finish initialization.
   this->barrier_->wait ();
   return buf;
 }
@@ -310,6 +311,8 @@ Options::oneway_client_test (void *)
 {
   Options *options = OPTIONS::instance ();
   ACE_SOCK_Stream cli_stream;
+
+  // Add 1 to the port to trigger the oneway test!
   void *buf = options->shared_client_test (options->port () + 1,
                                            cli_stream);
   // This variable is allocated off the stack to obviate the need for
@@ -327,7 +330,7 @@ Options::oneway_client_test (void *)
   // "incomplete writes").
 
   for (ssize_t r_bytes;
-       (r_bytes = options->read (buf, sizeof buf, iteration)) > 0;
+       (r_bytes = options->read (buf, len, iteration)) > 0;
        // Transmit at the proper rate.
        ACE_OS::sleep (options->sleep_time ()))
     if (ACE_OS::memcmp (buf,
@@ -357,10 +360,8 @@ Options::twoway_client_test (void *)
 {
   Options *options = OPTIONS::instance ();
 
-  // Timer business.
-  ACE_High_Res_Timer timer;
-
   ACE_SOCK_Stream cli_stream;
+
   void *request = options->shared_client_test (options->port (),
                                                cli_stream);
 
@@ -370,6 +371,10 @@ Options::twoway_client_test (void *)
 
   // Keep track of return value.
   int result = 0;
+
+  // Timer business.
+  ACE_High_Res_Timer timer;
+
   ACE_INT32 len = options->message_len ();
 
   ACE_DEBUG ((LM_DEBUG,
@@ -390,6 +395,10 @@ Options::twoway_client_test (void *)
     // Transmit <request> to the server.
     else
       {
+        // Note that we use the incremental feature of the
+        // <ACE_High_Res_Timer> so that we don't get "charged" for the
+        // <ACE_OS::sleep> used to control the rate at which requests
+        // are sent.
         timer.start_incr ();
 
         if (cli_stream.send (request, r_bytes) == -1)
@@ -410,14 +419,15 @@ Options::twoway_client_test (void *)
             result = -1;
             break;
           }
+
         timer.stop_incr ();
       }
 
   ACE_Time_Value tv;
+
   timer.elapsed_time_incr (tv);
   double real_time = tv.sec () * ACE_ONE_SECOND_IN_USECS + tv.usec ();
-
-  double messages_per_sec = iteration * 1000000.0 / real_time;
+  double messages_per_sec = double (iteration * ACE_ONE_SECOND_IN_USECS) / real_time;
 
   ACE_DEBUG ((LM_DEBUG,
 	      ASYS_TEXT ("(%t) messages = %d\n(%t) usec-per-message = %f\n(%t) messages-per-second = %0.00f\n"),
