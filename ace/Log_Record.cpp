@@ -18,7 +18,7 @@ void
 ACE_Log_Record::priority (u_long p) 
 {
   ACE_TRACE ("ACE_Log_Record::priority");
-  this->type_ = ACE::log2 (p);
+  this->type_ = p;
 }
 
 void
