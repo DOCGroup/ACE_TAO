@@ -60,7 +60,7 @@ timer_callback (HWND hwnd,
 }
 
 int 
-main (void)
+main (int argc, char** argv)
 {
   // Manage memory automagically.
   // Note that ordering here is important.
