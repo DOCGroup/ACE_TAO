@@ -1,3 +1,8 @@
+Sun Jan 10 02:57:26 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/POA/DSI/Database_i.cpp: Fixed template instantiation
+ 	  problems and member re-ordereding problems.
+
 Sat Jan  9 22:50:35 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	* orbsvcs/Time_Service/Server_i.cpp : Added the Implementation
