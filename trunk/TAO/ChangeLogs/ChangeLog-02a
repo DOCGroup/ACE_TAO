@@ -1,3 +1,7 @@
+Fri Mar 30 17:09:04 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/*/Makefile: Updated dependencies.
+
 Fri Mar 30 16:07:29 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/tests/Simple_Naming/client.cpp: Fixed fuzz warnings. 
