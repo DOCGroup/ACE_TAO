@@ -1,3 +1,9 @@
+Mon Jan 28 16:21:59 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp:
+	  Add Messaging.cpp to the project files.
+
 Mon Jan 28 16:11:36 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
