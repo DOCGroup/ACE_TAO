@@ -47,7 +47,7 @@ module Database
     {
       Identifier name;
       any value;
-      Flags flags;
+      Flags options;
     };
 
   typedef sequence<NamedValue> NVPairSequence;
