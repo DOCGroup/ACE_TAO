@@ -26,6 +26,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if defined (_MSC_VER)
+# if (_MSC_VER >= 1200)
+#  pragma warning(push)
+# endif /* _MSC_VER >= 1200 */
+# pragma warning (disable:4250)
+#endif /* _MSC_VER */
+
 class TAO_DynamicAny_Export TAO_DynStruct_i : public virtual DynamicAny::DynStruct, public virtual TAO_Local_RefCounted_Object
 {
   // = TITLE
@@ -653,6 +660,10 @@ private:
   ACE_Array_Base<DynamicAny::DynAny_var> da_members_;
   // Each component is also a DynAny
 };
+
+#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+# pragma warning(pop)
+#endif /* _MSC_VER */
 
 #include "ace/post.h"
 #endif /* TAO_DYNSTRUCT_I_H */

@@ -25,6 +25,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if defined (_MSC_VER)
+# if (_MSC_VER >= 1200)
+#  pragma warning(push)
+# endif /* _MSC_VER >= 1200 */
+# pragma warning (disable:4250)
+#endif /* _MSC_VER */
+
 class TAO_DynamicAny_Export TAO_DynAnyFactory : public virtual DynamicAny::DynAnyFactory, public virtual TAO_Local_RefCounted_Object
 {
   // = DESCRIPTION
@@ -105,6 +112,10 @@ private:
   TAO_DynAnyFactory (const TAO_DynAnyFactory &src);
   TAO_DynAnyFactory &operator= (const TAO_DynAnyFactory &src);
 };
+
+#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+# pragma warning(pop)
+#endif /* _MSC_VER */
 
 #include "ace/post.h"
 #endif /* TAO_DYNANYFACTORY_H */
