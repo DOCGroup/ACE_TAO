@@ -418,9 +418,17 @@ ACE_Filecache_Object::init (void)
 }
 
 ACE_Filecache_Object::ACE_Filecache_Object (void)
-  : tempname_ (0), mmap_ (), handle_ (0), stat_ (), size_ (0),
-    action_ (0), error_ (0), stale_ (0), sa_ (),
-    junklock_ (), lock_ (junklock_)
+  : tempname_ (0),
+    mmap_ (),
+    handle_ (0),
+    stat_ (),
+    size_ (0),
+    action_ (0),
+    error_ (0),
+    stale_ (0),
+    sa_ (),
+    junklock_ (),
+    lock_ (junklock_)
 {
   this->init ();
 }
@@ -429,8 +437,16 @@ ACE_Filecache_Object::ACE_Filecache_Object (const char *filename,
                                             ACE_SYNCH_RW_MUTEX &lock,
                                             LPSECURITY_ATTRIBUTES sa,
                                             int mapit)
-  : tempname_ (0), mmap_ (), handle_ (0), stat_ (), size_ (0),
-    action_ (0), error_ (0), stale_ (0), sa_ (sa), junklock_ (),
+  : tempname_ (0),
+    mmap_ (),
+    handle_ (0),
+    // stat_ (),
+    size_ (0),
+    action_ (0),
+    error_ (0),
+    stale_ (0),
+    sa_ (sa),
+    junklock_ (),
     lock_ (lock_)
 {
   this->init ();
