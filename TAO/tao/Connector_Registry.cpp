@@ -77,8 +77,8 @@ TAO_Connector_Registry::open (TAO_ORB_Core *orb_core)
          if (connector->open (orb_core) != 0)
            {
              ACE_ERROR_RETURN ((LM_ERROR,
-                                ACE_LIB_TEXT ("TAO (%P|%t) unable to open connector for ")
-                                ACE_LIB_TEXT ("<%s>.\n"),
+                                ACE_TEXT ("TAO (%P|%t) unable to open connector for ")
+                                ACE_TEXT ("<%s>.\n"),
                                 ACE_TEXT_CHAR_TO_TCHAR((*factory)->protocol_name ().c_str ())),
                                -1);
            }
@@ -195,10 +195,10 @@ TAO_Connector_Registry::create_profile (TAO_InputCDR &cdr)
           if (TAO_debug_level > 0)
             {
               ACE_DEBUG ((LM_WARNING,
-                          ACE_LIB_TEXT ("TAO (%P|%t) - TAO_Connector_Registry")
-                          ACE_LIB_TEXT ("::create_profile: ")
-                          ACE_LIB_TEXT ("WARNING: extracting object from ")
-                          ACE_LIB_TEXT ("default ORB_Core\n")));
+                          ACE_TEXT ("TAO (%P|%t) - TAO_Connector_Registry")
+                          ACE_TEXT ("::create_profile: ")
+                          ACE_TEXT ("WARNING: extracting object from ")
+                          ACE_TEXT ("default ORB_Core\n")));
             }
         }
 
