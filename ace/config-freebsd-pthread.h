@@ -23,6 +23,7 @@
 #define ACE_LACKS_RWLOCK_T
 #define ACE_HAS_SIG_MACROS
 #define ACE_HAS_CHARPTR_DL
+#define ACE_USES_ASM_SYMBOL_IN_DLSYM	  
 
 // Platform supports POSIX timers via timestruct_t.
 #define ACE_HAS_POSIX_TIME
