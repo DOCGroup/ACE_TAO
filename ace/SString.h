@@ -19,6 +19,12 @@
 
 #include "ace/ACE.h"
 
+#if defined (UNICODE)
+#define ACE_TString ACE_WString
+#else /* UNICODE */
+#define ACE_TString ACE_CString
+#endif /* UNICODE */
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
