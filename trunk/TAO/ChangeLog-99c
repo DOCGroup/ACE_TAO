@@ -4,10 +4,6 @@ Mon Sep 21 09:20:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 	  Removed some AMI visitors for interpretive marshaling because
 	  we do not support interpretive marshaling for AMI anyway. 
 
-	* TAO_IDL/be/be_visitor_operation/ami_handler_skeleton_cs.cpp:
-	  Implemented the code necessary to do exception handling in 
-	  the reply stub.
-
 	* TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
 	  Fixed some code generation problem with the ACE_NESTED_CLASS
 	  macro.
