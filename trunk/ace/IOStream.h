@@ -34,7 +34,12 @@ typedef CString ACE_IOStream_String;
 typedef String ACE_IOStream_String;
 #else
 #include /**/ <string>
+
+#if defined(ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
+typedef std::string ACE_IOStream_String;
+#else
 typedef string ACE_IOStream_String;
+#endif /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
 #endif /* ! ACE_HAS_STDCPP_STL_INCLUDES */
 #endif /* ACE_WIN32 */
 
