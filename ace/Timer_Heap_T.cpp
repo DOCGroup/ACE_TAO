@@ -217,7 +217,7 @@ template <class TYPE, class FUNCTOR, class ACE_LOCK> int
 ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::is_empty (void) const
 {
   ACE_TRACE ("ACE_Timer_Heap::is_empty");
-  return this->cur_size_ == 0;
+  return this->cur_size_ == 0;  
 }
 
 
@@ -369,7 +369,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::reheap_up (ACE_Timer_Node_T<TYPE> *mo
 template <class TYPE, class FUNCTOR, class ACE_LOCK> void
 ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::insert (ACE_Timer_Node_T<TYPE> *new_node)
 {
-  if (this->cur_size_ + 1 >= max_size_)
+  if (this->cur_size_ + 2 >= max_size_)
     this->grow_heap ();
 
   this->reheap_up (new_node,
