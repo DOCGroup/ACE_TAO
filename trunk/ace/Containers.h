@@ -690,8 +690,8 @@ template <class T> class ACE_DLList_Iterator;
 template <class T>
 class ACE_DLList_Node
 {
-friend ACE_DLList<T>;
-friend ACE_DLList_Iterator<T>;
+friend class ACE_DLList<T>;
+friend class ACE_DLList_Iterator<T>;
 
 public:
   ACE_DLList_Node (void)
@@ -722,8 +722,8 @@ template <class T>
 class ACE_DLList
   : private ACE_Double_Linked_List< ACE_DLList_Node<T> >
 {
-friend ACE_DLList_Node<T>;
-friend ACE_DLList_Iterator<T>;
+friend class ACE_DLList_Node<T>;
+friend class ACE_DLList_Iterator<T>;
 
 public:
 
@@ -786,8 +786,8 @@ template <class T>
 class ACE_DLList_Iterator
   : private ACE_Double_Linked_List_Iterator< ACE_DLList_Node<T> >
 {
-friend ACE_DLList<T>;
-friend ACE_DLList_Node<T>;
+friend class ACE_DLList<T>;
+friend class ACE_DLList_Node<T>;
 
 public:
   // = Initialization method.
