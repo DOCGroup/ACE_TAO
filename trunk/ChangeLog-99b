@@ -1,3 +1,10 @@
+Thu Jul 15 09:28:32 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_tru64_cxx.GNU: changed
+          4.0f to 4.0F, because that's what sizer -v returns
+          on DU 4.0F.  Thanks to Doug Anderson <dla@home.com>
+          for reporting this.
+
 Thu Jul 15 09:15:11 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/config-aix-4.x.h: Corrected template settings for IBM C/C++
