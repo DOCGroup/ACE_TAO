@@ -7,9 +7,13 @@
 //
 //****************************************************************************
 
-#include "ace/OS.h"
-#include "ace/Get_Opt.h"
-#include "cubit.h"
+#include <iostream.h>
+#include <stdio.h>
+#include <string.h>
+#include <time.h>
+#include <stdlib.h>
+#include "cubitC.h"
+#include "Profile_Timer.h"
 
 int LOOP_COUNT;
 char SERVER_HOST [1024];
@@ -24,39 +28,14 @@ void run_tests (Cubit_var, int);
 //     This method parses the command line arguments
 int parse_args(int argc, char *argv[])
 {
-  ACE_OS::strcpy (SERVER_HOST, "localhost");
-  ACE_Get_Opt opts (argc, argv, "dh:n:O:x");
-  int			c;
-  
-  while ((c = opts ()) != -1)
-    switch (c) {
-    case 'h':
-      ACE_OS::strcpy (SERVER_HOST, opts.optarg);
-      continue;
-    case 'd':  // debug flag
-      continue;
-      
-    case 'n':			// loop count
-      LOOP_COUNT = (unsigned) ACE_OS::atoi (opts.optarg);
-      continue;
-      
-    case 'O':			// stringified objref
-      continue;
-      
-    case 'x':
-      continue;
-      
-    case '?':
-    default:
-      ACE_OS::fprintf (stderr, "usage:  %s"
-                       " [-d]"
-                       " [-n loopcount]"
-                       " [-h SERVER_HOST]"
-                       " [-x]"
-                       "\n", argv [0]
-                       );
-      return 1;
-    }
+  if (argc != 3) {
+    cerr << "Format: client <machine name> <loop count>" << endl;
+    return -1;
+  }
+
+  strcpy(SERVER_HOST, argv[1]);
+
+  LOOP_COUNT = atoi(argv[2]);
   
   return 0;  // Indicates successful parsing of command line
 }
@@ -78,13 +57,15 @@ main (int argc, char *argv[])
   // Initialise client's binding to an
   // arbitrary cubit server (at some host)
   // 
-  TRY {
-    cb = Cubit::_bind ("", SERVER_HOST, IT_X);
-  }
-  CATCHANY {
-    cerr << "Binding failed: " << IT_X;
-  }
-  ENDTRY;
+  try {
+    cb = Cubit::_bind ("Cubit", SERVER_HOST);
+
+  } catch (const CORBA::Exception & sysEx) {
+    cerr << "Binding failed: " << endl;
+    cerr << sysEx;
+  } catch (...) {
+    cerr << "Unexpected exception" << endl;
+  }       
   
   run_tests (cb, LOOP_COUNT);
   return 0;
@@ -103,10 +84,9 @@ run_tests (Cubit_var cb, int loop_count)
   call_count = 0;
   error_count = 0;
 
-  ACE_Time_Value before, after;
+  Profile_Timer pt;
 
-  before = ACE_OS::gettimeofday();
-  
+  pt.start();
   //
   // Cube an octet.
   //
@@ -118,17 +98,21 @@ run_tests (Cubit_var cb, int loop_count)
 
       CORBA::Octet arg_octet = func (i), ret_octet;
 
-      TRY {
-      ret_octet = cb->cube_octet (arg_octet);
-      } 
-      CATCHANY {
-        cerr << "Call failed: " << IT_X;
-        error_count++;
-      } 
-      ENDTRY;
+      try {
+	ret_octet = cb->cube_octet (arg_octet);
+      
+      } catch (const CORBA::Exception &sysEx) {
+	cerr << "Call failed: " << endl;
+	cerr << sysEx;
+	error_count++;
+      } catch (...) {
+	cerr << "Unexpected exception" << endl;
+	error_count++;
+      }       
+
       arg_octet = arg_octet * arg_octet * arg_octet;
       if (arg_octet != ret_octet) {
-        ACE_OS::printf ("** cube_octet(%d)  (--> %d)\n", arg_octet , ret_octet);
+        printf ("** cube_octet(%d)  (--> %d)\n", arg_octet , ret_octet);
         error_count++;
       }
     
@@ -140,17 +124,21 @@ run_tests (Cubit_var cb, int loop_count)
 
       CORBA::Short arg_short = func (i), ret_short;
 
-      TRY {
-      ret_short = cb->cube_short (arg_short);
-      } 
-      CATCHANY {
-        cerr << "Call failed: " << IT_X;
-        error_count++;
-      } 
-      ENDTRY;
+      try {
+	ret_short = cb->cube_short (arg_short);
+       
+      } catch (const CORBA::Exception &sysEx) {
+	cerr << "Call failed: " << endl;
+	cerr << sysEx;
+	error_count++;
+      } catch (...) {
+	cerr << "Unexpected exception" << endl;
+	error_count++;
+      }       
+
       arg_short = arg_short * arg_short * arg_short;
       if (arg_short != ret_short) {
-        ACE_OS::printf ("** cube_short(%d)  (--> %d)\n", arg_short , ret_short);
+        printf ("** cube_short(%d)  (--> %d)\n", arg_short , ret_short);
         error_count++;
       }
 
@@ -162,16 +150,20 @@ run_tests (Cubit_var cb, int loop_count)
 
       CORBA::Long arg_long = func (i), ret_long;
 
-      TRY {
-      ret_long = cb->cube_long (arg_long);
-      } 
-      CATCHANY {
-        cerr << "Call failed: " << IT_X;
-      } 
-      ENDTRY;
+      try {
+	ret_long = cb->cube_long (arg_long);
+      } catch (const CORBA::Exception &sysEx) {
+	cerr << "Call failed: " << endl;
+	cerr << sysEx;
+	error_count++;
+      } catch (...) {
+	cerr << "Unexpected exception" << endl;
+	error_count++;
+      }       
+
       arg_long = arg_long * arg_long * arg_long;
       if (arg_long != ret_long) {
-        ACE_OS::printf ("** cube_long(%d)  (--> %d)\n", arg_long , ret_long);
+        printf ("** cube_long(%d)  (--> %d)\n", arg_long , ret_long);
         error_count++;
       }
 
@@ -187,14 +179,19 @@ run_tests (Cubit_var cb, int loop_count)
        arg_struct.s = func (i);
        arg_struct.o = func (i);
        
-       TRY {
+       try {
          ret_struct = cb->cube_struct (arg_struct);
-       }
-       CATCHANY {
-         cerr << "Call failed: " << IT_X;
-         error_count++;
-       } 
-       ENDTRY;
+
+       } catch (const CORBA::Exception &sysEx) {
+	 cerr << "Call failed: " << endl;
+	 cerr << sysEx;
+	 error_count++;
+       } catch (...) {
+	 cerr << "Unexpected exception" << endl;
+	 error_count++;
+       }       
+
+
        arg_struct.l = arg_struct.l  * arg_struct.l  * arg_struct.l ;
        arg_struct.s = arg_struct.s  * arg_struct.s  * arg_struct.s ;
        arg_struct.o = arg_struct.o  * arg_struct.o  * arg_struct.o ;
@@ -208,25 +205,26 @@ run_tests (Cubit_var cb, int loop_count)
          }
     }
     
-  
-  after = ACE_OS::gettimeofday();
+  pt.stop();
+
+  Elapsed_Time et;
+  pt.elapsed_time(et);
   
   if (call_count > 0) 
     {
       if (error_count == 0)
         {
-          ACE_Time_Value diff = after - before;
-          unsigned long	us = diff.sec() * 1000 * 1000 + diff.usec();
+          unsigned long	us = et.real_time * 1000 * 1000;
           
           us /= call_count;
           
           if (us > 0)
-            ACE_OS::printf ("cube average call ACE_OS::time\t= %ld.%.03ldms, \t"
+            printf ("cube average call ACE_OS::time\t= %ld.%.03ldms, \t"
                             "%ld calls/second\n",
                             us / 1000, us % 1000,
                             1000000L / us);
         }
       
-      ACE_OS::printf ("%d calls, %d errors\n", call_count, error_count);
+      printf ("%d calls, %d errors\n", call_count, error_count);
     }
 }
