@@ -1,3 +1,7 @@
+Fri Jul 17 17:58:37 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * docs/implrepo.html: Addressed some more comments.
+
 Fri Jul 17 11:47:42 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/IIOP_Object.cpp (do_static_call,put_params): on sparcs
