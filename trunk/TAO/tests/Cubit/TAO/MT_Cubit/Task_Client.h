@@ -30,7 +30,7 @@
 #include "cubitC.h"
 
 #if defined (CHORUS)
-#include "pccTimer.h"
+#include "/project/doc/mvme/pccTimer.h"
 #endif /* CHORUS */
 
 #include <math.h>
