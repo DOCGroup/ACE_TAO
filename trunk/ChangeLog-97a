@@ -1,3 +1,24 @@
+Tue May 13 18:08:32 1997    <irfan@TWOSTEP>
+
+	* tests: For Win32, added Reactor_Exceptions_Test and
+	  Priority_Tasks_Tests. Files changes include run_tests.bat,
+	  tests.mak, and tests.mdp.
+
+	* tests/Future_Test.cpp (main): Fixed memory leaks in main() and
+	  in name_i().
+
+	* tests/Thread_Pool_Test.cpp (open): The loop was messed up
+	  causing memory leaks. I fixed it.
+
+	* ace/UPIPE_Stream.cpp (close): I am not sure why the stream was
+ 	  closed with M_DELETE_NONE. This indicates that close() should
+ 	  not delete any Tasks. This caused a memory leak as the Tasks in
+ 	  the Tail and Head modules were not deleted. I have removed this
+ 	  to fix the memory leak.
+
+	  Also added a destructor such that mb_last_ is released if it is
+	  still around. 
+
 Tue May 13 16:48:18 1997  James C Hu  <jxh@polka.cs.wustl.edu>
 
 	* ace/Process.cpp: Added implmenetations to new interfaces

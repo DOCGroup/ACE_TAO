@@ -19,10 +19,12 @@ Mutex_Test
 Naming_Test
 Pipe_Test
 Priority_Buffer_Test
+Priority_Task_Test
 Process_Mutex_Test
 Process_Strategy_Test
 Reactor_Timer_Test
 Reactor_Notify_Test
+Reactor_Exceptions_Test
 Reader_Writer_Test
 Recursive_Mutex_Test
 Service_Config_Test

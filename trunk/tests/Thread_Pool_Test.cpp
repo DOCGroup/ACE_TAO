@@ -138,10 +138,10 @@ Thread_Pool::open (void *)
 	      "(%t) producer start, dumping the Thread_Pool\n"));
   this->dump ();
 
-  ACE_Message_Block *mb;
-
-  for (size_t count = 0;;)
+  for (size_t count = 0; count < n_iterations; count++)
     {
+      ACE_Message_Block *mb = 0;
+
       // Allocate a new message.
       ACE_NEW_RETURN (mb, 
 		      ACE_Message_Block (BUFSIZ, ACE_Message_Block::MB_DATA, 
@@ -150,11 +150,6 @@ Thread_Pool::open (void *)
 
       ACE_OS::sprintf (mb->rd_ptr (), "%d\n", count);
       int n = ACE_OS::strlen (mb->rd_ptr ());
-
-      if (count == n_iterations)
-	break;
-      else
-	count++;
 
       if (count == 0 || (count % 20 == 0))
 	ACE_OS::sleep (1);
@@ -173,6 +168,8 @@ Thread_Pool::open (void *)
 	      "\n(%t) sending shutdown message to %d threads, dump of task:\n",
 	      this->thr_count ()));
   this->dump ();
+
+  ACE_Message_Block *mb = 0;
 
   ACE_NEW_RETURN (mb, 
 		  ACE_Message_Block (0, ACE_Message_Block::MB_DATA, 
@@ -231,6 +228,7 @@ main (int, char *[])
 
   ACE_ASSERT (thread_pool.msg_queue ()->is_empty ());
   ACE_DEBUG ((LM_DEBUG, "(%t) destroying worker tasks and exiting...\n"));
+  
 #else
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
 #endif /* ACE_HAS_THREADS */

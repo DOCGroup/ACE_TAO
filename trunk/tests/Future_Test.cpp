@@ -174,6 +174,7 @@ Scheduler::Scheduler (const char *newname, Scheduler *new_Scheduler)
 Scheduler::~Scheduler (void)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) Scheduler %s will be destroyed\n", this->name_));
+  delete[] this->name_;
 }
 
 // open
@@ -237,12 +238,7 @@ Scheduler::work_i (u_long param,
 const char *
 Scheduler::name_i (void)
 {
-  char *the_name;
-
-  ACE_NEW_RETURN (the_name, char[ACE_OS::strlen (this->name_) + 1], 0);
-  ACE_OS::strcpy (the_name, this->name_);
-
-  return the_name;
+  return this->name_;
 }
 
 ACE_Future<const char *> 
@@ -299,7 +295,7 @@ main (int, char *[])
   ACE_START_TEST ("Future_Test");
 
 #if defined (ACE_HAS_THREADS)
-  Scheduler *andres, *peter, *helmut, *matias;
+  Scheduler *andres = 0, *peter = 0, *helmut = 0, *matias = 0;
 
   // Create active objects..  
   // @@ Should "open" be subsumed within the constructor of
@@ -397,6 +393,12 @@ main (int, char *[])
   ACE_DEBUG ((LM_DEBUG,"(%t) th' that's all folks!\n"));
 
   ACE_OS::sleep (5);
+
+  delete andres;
+  delete peter;
+  delete helmut;
+  delete matias;
+
 #else
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
 #endif /* ACE_HAS_THREADS */
