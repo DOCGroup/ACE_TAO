@@ -1,3 +1,16 @@
+Thu Aug 12 16:22:08 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/EC_Custom_Marshal/ECM_Consumer.cpp:
+	* orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp:
+	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
+	* orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.cpp:
+	* orbsvcs/tests/EC_Throughput/ECT_Supplier_Driver.cpp:
+	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
+	* orbsvcs/tests/Event/Basic/Schedule.cpp:
+	* orbsvcs/tests/Event/lib/Driver.cpp:
+	* utils/nslist/nslist.cpp:
+	  Removed more gcc-2.95 warnings.
+
 Thu Aug 12 16:06:16 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO version 1.0.1 released.

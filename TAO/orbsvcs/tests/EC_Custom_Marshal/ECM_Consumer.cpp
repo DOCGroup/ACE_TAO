@@ -268,7 +268,7 @@ Driver::connect_consumers (RtecEventChannelAdmin::EventChannel_ptr channel,
   for (int i = 0; i < this->n_consumers_; ++i)
     {
       char buf[BUFSIZ];
-      ACE_OS::sprintf (buf, "consumer_%02.2d", i);
+      ACE_OS::sprintf (buf, "consumer_%02d", i);
 
       ACE_NEW (this->consumers_[i],
                Test_Consumer (this, this->consumers_ + i));
