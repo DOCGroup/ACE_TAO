@@ -58,14 +58,14 @@ TAO_NAMESPACE  Dynamic
   {
         PARAM_IN,
         PARAM_OUT,
-        PARAM_INOUT    
+        PARAM_INOUT
   };
   typedef ParameterMode &ParameterMode_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ParameterMode;
 
   struct Parameter;
   class Parameter_var;
-  
+
   struct TAO_Export Parameter
   {
 
@@ -86,18 +86,18 @@ TAO_NAMESPACE  Dynamic
     Parameter_var (Parameter *);
     Parameter_var (const Parameter_var &); // copy constructor
     ~Parameter_var (void); // destructor
-    
+
     Parameter_var &operator= (Parameter *);
     Parameter_var &operator= (const Parameter_var &);
     Parameter *operator-> (void);
     const Parameter *operator-> (void) const;
-    
+
     operator const Parameter &() const;
     operator Parameter &();
     operator Parameter &() const;
     operator Parameter *&(); // variable-size types only
-    
-    // in, inout, out, _retn 
+
+    // in, inout, out, _retn
     const Parameter &in (void) const;
     Parameter &inout (void);
     Parameter *&out (void);
@@ -119,7 +119,7 @@ TAO_NAMESPACE  Dynamic
     operator Parameter *&();
     Parameter *&ptr (void);
     Parameter *operator-> (void);
-    
+
   private:
     Parameter *&ptr_;
     // assignment from T_var not allowed
@@ -130,7 +130,7 @@ TAO_NAMESPACE  Dynamic
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-    
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_DYNAMIC_PARAMETERLIST_CH_)
 #define __TAO_UNBOUNDED_SEQUENCE_DYNAMIC_PARAMETERLIST_CH_
 
@@ -138,9 +138,9 @@ TAO_NAMESPACE  Dynamic
     {
     public:
       // = Initialization and termination methods.
-      
+
       _TAO_Unbounded_Sequence_Dynamic_ParameterList (void); // Default constructor.
-      _TAO_Unbounded_Sequence_Dynamic_ParameterList (CORBA::ULong maximum); 
+      _TAO_Unbounded_Sequence_Dynamic_ParameterList (CORBA::ULong maximum);
       _TAO_Unbounded_Sequence_Dynamic_ParameterList (CORBA::ULong maximum,
         CORBA::ULong length,
         Parameter *data,
@@ -157,7 +157,7 @@ TAO_NAMESPACE  Dynamic
       virtual void _allocate_buffer (CORBA::ULong length);
       virtual void _deallocate_buffer (void);
       // Implement the TAO_Base_Sequence methods (see Sequence.h)
-      
+
       Parameter *get_buffer (CORBA::Boolean orphan = 0);
       const Parameter *get_buffer (void) const;
       void replace (CORBA::ULong max,
@@ -169,32 +169,32 @@ TAO_NAMESPACE  Dynamic
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-  
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+
 #if !defined (_DYNAMIC_PARAMETERLIST_CH_)
 #define _DYNAMIC_PARAMETERLIST_CH_
 
   class ParameterList;
   class ParameterList_var;
-  
+
   // *************************************************************
   // ParameterList
   // *************************************************************
-  
-  class TAO_Export ParameterList : public 
+
+  class TAO_Export ParameterList : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
     _TAO_Unbounded_Sequence_Dynamic_ParameterList
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
     TAO_Unbounded_Sequence<Parameter>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
   {
   public:
     ParameterList (void); // default ctor
     ParameterList (CORBA::ULong max); // uses max size
     ParameterList (
-      CORBA::ULong max, 
-      CORBA::ULong length, 
-      Parameter *buffer, 
+      CORBA::ULong max,
+      CORBA::ULong length,
+      Parameter *buffer,
       CORBA::Boolean release = 0
     );
     ParameterList (const ParameterList &); // copy ctor
@@ -206,7 +206,7 @@ TAO_NAMESPACE  Dynamic
 #endif /* ! __GNUC__ || g++ >= 2.8 */
 
   };
-  
+
 #endif /* end #if !defined */
 
 
@@ -224,21 +224,21 @@ TAO_NAMESPACE  Dynamic
     ParameterList_var (ParameterList *);
     ParameterList_var (const ParameterList_var &); // copy constructor
     ~ParameterList_var (void); // destructor
-    
+
     ParameterList_var &operator= (ParameterList *);
     ParameterList_var &operator= (const ParameterList_var &);
     ParameterList *operator-> (void);
     const ParameterList *operator-> (void) const;
-    
+
     operator const ParameterList &() const;
     operator ParameterList &();
     operator ParameterList &() const;
     operator ParameterList *&(); // variable-size base types only
-    
+
     Parameter & operator[] (CORBA::ULong index);
     const Parameter & operator[] (CORBA::ULong index) const;
-    
-    // in, inout, out, _retn 
+
+    // in, inout, out, _retn
     const ParameterList &in (void) const;
     ParameterList &inout (void);
     ParameterList *&out (void);
@@ -268,7 +268,7 @@ TAO_NAMESPACE  Dynamic
     ParameterList *&ptr (void);
     ParameterList *operator-> (void);
     Parameter & operator[] (CORBA::ULong index);
-    
+
   private:
     ParameterList *&ptr_;
     // assignment from T_var not allowed
@@ -293,7 +293,7 @@ TAO_NAMESPACE  Dynamic
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-    
+
 #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_DYNAMIC_EXCEPTIONLIST_CH_)
 #define __TAO_UNBOUNDED_OBJECT_SEQUENCE_DYNAMIC_EXCEPTIONLIST_CH_
 
@@ -301,7 +301,7 @@ TAO_NAMESPACE  Dynamic
     {
     public:
       // = Initialization and termination methods.
-      
+
       _TAO_Unbounded_Object_Sequence_Dynamic_ExceptionList (void);
       _TAO_Unbounded_Object_Sequence_Dynamic_ExceptionList (CORBA::ULong maximum);
       _TAO_Unbounded_Object_Sequence_Dynamic_ExceptionList (CORBA::ULong maximum,
@@ -320,38 +320,38 @@ TAO_NAMESPACE  Dynamic
       CORBA::TypeCode* *get_buffer (CORBA::Boolean orphan = 0);
       const CORBA::TypeCode* *get_buffer (void) const;
       virtual void _shrink_buffer (CORBA::ULong nl, CORBA::ULong ol);
-      
+
     };
 
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-  
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+
 #if !defined (_DYNAMIC_EXCEPTIONLIST_CH_)
 #define _DYNAMIC_EXCEPTIONLIST_CH_
 
   class ExceptionList;
   class ExceptionList_var;
-  
+
   // *************************************************************
   // ExceptionList
   // *************************************************************
-  
-  class TAO_Export ExceptionList : public 
+
+  class TAO_Export ExceptionList : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
     _TAO_Unbounded_Object_Sequence_Dynamic_ExceptionList
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
     TAO_Unbounded_Pseudo_Sequence<CORBA::TypeCode,CORBA::TypeCode_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
   {
   public:
     ExceptionList (void); // default ctor
     ExceptionList (CORBA::ULong max); // uses max size
     ExceptionList (
-      CORBA::ULong max, 
-      CORBA::ULong length, 
-      CORBA::TypeCode_ptr *buffer, 
+      CORBA::ULong max,
+      CORBA::ULong length,
+      CORBA::TypeCode_ptr *buffer,
       CORBA::Boolean release = 0
     );
     ExceptionList (const ExceptionList &); // copy ctor
@@ -363,7 +363,7 @@ TAO_NAMESPACE  Dynamic
 #endif /* ! __GNUC__ || g++ >= 2.8 */
 
   };
-  
+
 #endif /* end #if !defined */
 
 
@@ -381,20 +381,20 @@ TAO_NAMESPACE  Dynamic
     ExceptionList_var (ExceptionList *);
     ExceptionList_var (const ExceptionList_var &); // copy constructor
     ~ExceptionList_var (void); // destructor
-    
+
     ExceptionList_var &operator= (ExceptionList *);
     ExceptionList_var &operator= (const ExceptionList_var &);
     ExceptionList *operator-> (void);
     const ExceptionList *operator-> (void) const;
-    
+
     operator const ExceptionList &() const;
     operator ExceptionList &();
     operator ExceptionList &() const;
     operator ExceptionList *&(); // variable-size base types only
-    
+
     TAO_Pseudo_Object_Manager<TypeCode,TypeCode_var> operator[] (CORBA::ULong index);
-    
-    // in, inout, out, _retn 
+
+    // in, inout, out, _retn
     const ExceptionList &in (void) const;
     ExceptionList &inout (void);
     ExceptionList *&out (void);
@@ -424,7 +424,7 @@ TAO_NAMESPACE  Dynamic
     ExceptionList *&ptr (void);
     ExceptionList *operator-> (void);
     TAO_Pseudo_Object_Manager<TypeCode,TypeCode_var> operator[] (CORBA::ULong index);
-    
+
   private:
     ExceptionList *&ptr_;
     // assignment from T_var not allowed
@@ -462,7 +462,7 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const Dynamic::Except
 
 #ifndef __ACE_INLINE__
 
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Dynamic::ParameterMode &); // 
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Dynamic::ParameterMode &); //
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, Dynamic::ParameterMode &);
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Dynamic::Parameter &);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, Dynamic::Parameter &);

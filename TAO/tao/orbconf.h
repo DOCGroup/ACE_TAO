@@ -1,24 +1,21 @@
 // This may look like C, but it's really -*- C++ -*-
-// @ (#) $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//     TAO
-//
-// = FILENAME
-//     orbconf.h
-//
-// = DESCRIPTION
-//     Build configuration file for the Inter-ORB Engine, and application
-//     level code using it via <corba.hh>
-//
-// = AUTHOR
-//     Copyright 1995 by Sun Microsystems, Inc.
-//
-//     TAO-specific changes by Chris Cleeland and Douglas C. Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file     orbconf.h
+ *
+ *  $Id$
+ *
+ *   Build configuration file for the Inter-ORB Engine, and application
+ *   level code using it via <corba.hh>
+ *
+ *
+ *  @author  Copyright 1995 by Sun Microsystems, Inc.
+ *  @author  TAO-specific changes by Chris Cleeland
+ *  @author  and Douglas C. Schmidt
+ */
+//=============================================================================
+
 
 #ifndef TAO_ORB_CONFIG_H
 #define TAO_ORB_CONFIG_H
@@ -686,7 +683,7 @@ enum MCAST_SERVICEID
 
 // CLIENT_PRIORITY_POLICY has been deprecated!  It is disabled by
 // default.  It's functionality is replaced by RTCORBA policies, see
-// TAO's RTCORBA documentation for more details.  
+// TAO's RTCORBA documentation for more details.
 //
 //To explicitly enable CLIENT_PRIORITY_POLICY support uncomment the
 //following #define TAO_HAS_CLIENT_PRIORITY_POLICY 1

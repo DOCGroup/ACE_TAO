@@ -1,18 +1,15 @@
 // This may look like C, but it's really -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//     default_client.h
-//
-// = AUTHOR
-//     Chris Cleeland
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file     default_client.h
+ *
+ *  $Id$
+ *
+ *  @author  Chris Cleeland
+ */
+//=============================================================================
+
 
 #ifndef TAO_DEFAULT_CLIENT_H
 #define TAO_DEFAULT_CLIENT_H
@@ -26,27 +23,30 @@
 
 #include "ace/Service_Config.h"
 
+/**
+ * @class TAO_Default_Client_Strategy_Factory
+ *
+ * @brief This is the "default" client strategy factor for TAO.  It
+ * includes strategies that are configured through command-line
+ * options so that everything operates as if there were no
+ * dynamically-linkable strategies.
+ */
 class TAO_Export TAO_Default_Client_Strategy_Factory : public TAO_Client_Strategy_Factory
 {
-  // = TITLE
-  //   This is the "default" client strategy factor for TAO.  It
-  //   includes strategies that are configured through command-line
-  //   options so that everything operates as if there were no
-  //   dynamically-linkable strategies.
 public:
   // = Initialization and termination methods.
+  /// Constructor.
   TAO_Default_Client_Strategy_Factory (void);
-  // Constructor.
 
+  /// Destructor.
   virtual ~TAO_Default_Client_Strategy_Factory (void);
-  // Destructor.
 
   // = Service Configurator hooks.
+  /// Dynamic linking hook
   virtual int init (int argc, char* argv[]);
-  // Dynamic linking hook
 
+  /// Parse svc.conf arguments
   int parse_args (int argc, char* argv[]);
-  // Parse svc.conf arguments
 
   // = Check Client_Strategy_Factory.h for the documentation of the
   //   following methods.
@@ -62,8 +62,8 @@ private:
     TAO_THREAD_LOCK
   };
 
+  /// the lock type for forwarding IIOP Profile
   Lock_Type profile_lock_type_;
-  // the lock type for forwarding IIOP Profile
 
   enum Transport_Mux_Strategy
   {
@@ -71,8 +71,8 @@ private:
     TAO_EXCLUSIVE_TMS
   };
 
+  /// The client Request Mux Strategy.
   Transport_Mux_Strategy transport_mux_strategy_;
-  // The client Request Mux Strategy.
 
   enum Wait_Strategy
   {
@@ -81,8 +81,8 @@ private:
     TAO_WAIT_ON_READ
   };
 
+  /// The wait-for-reply strategy.
   Wait_Strategy wait_strategy_;
-  // The wait-for-reply strategy.
 };
 
 #if defined (__ACE_INLINE__)

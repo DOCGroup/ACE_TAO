@@ -1,18 +1,15 @@
 // This may look like C, but it's really -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//     TAO
-//
-// = FILENAME
-//     Server_Strategy_Factory.h
-//
-// = AUTHOR
-//     Chris Cleeland
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file     Server_Strategy_Factory.h
+ *
+ *  $Id$
+ *
+ *  @author  Chris Cleeland
+ */
+//=============================================================================
+
 
 #ifndef TAO_SERVER_STRATEGY_FACTORY_H
 #define TAO_SERVER_STRATEGY_FACTORY_H
@@ -38,13 +35,16 @@ enum TAO_Demux_Strategy
   TAO_USER_DEFINED
 };
 
+/**
+ * @class TAO_Server_Strategy_Factory
+ *
+ * @brief Base class for the server's abstract factory that manufactures
+ * various strategies of special utility to it.  This simply
+ * serves as an interface to a subclass that REALLY gets
+ * specified and loaded by the Service Configurator.
+ */
 class TAO_Export TAO_Server_Strategy_Factory : public ACE_Service_Object
 {
-  // = TITLE
-  //    Base class for the server's abstract factory that manufactures
-  //    various strategies of special utility to it.  This simply
-  //    serves as an interface to a subclass that REALLY gets
-  //    specified and loaded by the Service Configurator.
 public:
 
   struct Active_Object_Map_Creation_Parameters
@@ -86,45 +86,49 @@ public:
   };
 
   // = Initialization and termination methods.
+  /// Constructor.
   TAO_Server_Strategy_Factory (void);
-  // Constructor.
 
+  /// Destructor.
   virtual ~TAO_Server_Strategy_Factory(void);
-  // Destructor.
 
+  /**
+   * Call <open> on various strategies.  This is not performed in
+   * <init> so that the other portions of the ORB have a chance to
+   * "settle" in their initialization since the streategies herein
+   * might need some of that information.
+   */
   virtual int open (TAO_ORB_Core* orb_core);
-  // Call <open> on various strategies.  This is not performed in
-  // <init> so that the other portions of the ORB have a chance to
-  // "settle" in their initialization since the streategies herein
-  // might need some of that information.
 
+  /// Enable POA locking?
   virtual int enable_poa_locking (void);
-  // Enable POA locking?
 
+  /// Are server connections active (i.e. run in their own thread)
   virtual int activate_server_connections (void);
-  // Are server connections active (i.e. run in their own thread)
 
+  /**
+   * Obtain the timeout value used by the thread-per-connection server
+   * threads to poll the shutdown flag in the ORB.
+   * Return -1 if the ORB should use the compile-time defaults.
+   * If the return value is zero then the threads block without
+   * timeouts.
+   */
   virtual int thread_per_connection_timeout (ACE_Time_Value &timeout);
-  // Obtain the timeout value used by the thread-per-connection server 
-  // threads to poll the shutdown flag in the ORB.
-  // Return -1 if the ORB should use the compile-time defaults.
-  // If the return value is zero then the threads block without
-  // timeouts.
 
+  /// The thread activation parameters
   virtual int server_connection_thread_flags (void);
   virtual int server_connection_thread_count (void);
-  // The thread activation parameters
 
+  /// Creates and returns a lock for the event loop.
   virtual ACE_Lock *create_event_loop_lock (void);
-  // Creates and returns a lock for the event loop.
 
+  /// Return the active object map creation parameters.
   virtual const Active_Object_Map_Creation_Parameters &active_object_map_creation_parameters (void) const;
-  // Return the active object map creation parameters.
 
 protected:
 
+  /// Active object map creation parameters.
   Active_Object_Map_Creation_Parameters active_object_map_creation_parameters_;
-  // Active object map creation parameters.
 };
 
 #include "ace/post.h"

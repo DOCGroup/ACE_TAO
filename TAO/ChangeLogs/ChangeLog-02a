@@ -1,3 +1,9 @@
+Fri Dec 15 11:36:08 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/*.h:
+          Change the comments that still were in old OSE-style to make
+          Doxygen happy.
+
 Fri Dec 15 08:14:51 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/tests/LoadBalancing/Makefile:

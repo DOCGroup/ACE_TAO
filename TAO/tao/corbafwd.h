@@ -1,28 +1,25 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//   corbafwd.h
-//
-// = DESCRIPTION
-//   Forward declare the basic types used in the ORB
-//   implementation. Regular users of the ORB should only include
-//   tao/corba.h, but the implementation of the ORB itself should
-//   include this file.  That reduces interdependency and speed up
-//   compilations and recompilations.
-//
-// = AUTHOR
-//   Carlos O'Ryan
-//   Chris Cleeland
-//   Douglas C. Schmidt
-//   based on work  Copyright 1994-1995 by Sun Microsystems Inc.
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   corbafwd.h
+ *
+ *  $Id$
+ *
+ * Forward declare the basic types used in the ORB
+ * implementation. Regular users of the ORB should only include
+ * tao/corba.h, but the implementation of the ORB itself should
+ * include this file.  That reduces interdependency and speed up
+ * compilations and recompilations.
+ *
+ *
+ *  @author Carlos O'Ryan
+ *  @author Chris Cleeland
+ *  @author Douglas C. Schmidt
+ *  @author Copyright 1994-1995 by Sun Microsystems Inc.
+ */
+//=============================================================================
+
 
 #ifndef TAO_CORBAFWD_H
 #define TAO_CORBAFWD_H
@@ -46,8 +43,8 @@
 // needs to apply throughout an ORB.
 
 #if defined (_MSC_VER) || defined (__BORLANDC__)
-# ifdef   _DEBUG                  // convert from VC++ convention ...
-#   define  TAO_DEBUG             // ... to normal convention
+# ifdef   _DEBUG                  /* convert from VC++ convention ... */
+#   define  TAO_DEBUG             /* ... to normal convention */
 # endif
 #endif  /* _MSC_VER || __BORLANDC__ */
 
@@ -288,9 +285,12 @@ class CORBA_DIIPollable_var;
 class CORBA_DIIPollable_out;
 typedef CORBA_DIIPollable *CORBA_DIIPollable_ptr;
 
+/**
+ * @class TAO_OutputCDR;
+ @@ TODO This should be TAO_TAO_Stub
+ */
 class TAO_InputCDR;
 class TAO_OutputCDR;
-// @@ TODO This should be TAO_TAO_Stub
 class TAO_Stub;
 
 class CORBA_ORB_ObjectIdList;

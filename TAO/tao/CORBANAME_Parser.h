@@ -1,17 +1,14 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   TAO
-//
-// = FILENAME
-//   CORBANAME_Parser.h
-//
-// = AUTHOR
-//   Priyanka Gontla (pgontla@uci.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   CORBANAME_Parser.h
+ *
+ *  $Id$
+ *
+ *  @author Priyanka Gontla (pgontla@uci.edu)
+ */
+//=============================================================================
+
 
 #ifndef TAO_CORBANAME_PARSER_H
 #define TAO_CORBANAME_PARSER_H
@@ -25,23 +22,24 @@
 
 #include "ace/Service_Config.h"
 
+/**
+ * @class TAO_CORBANAME_Parser
+ *
+ * @brief Implements the <corbaname:> IOR format
+ *
+ * This class implements the <corbaname:> IOR format.
+ * It is dynamically loaded by the ORB and used to get reference
+ * to a naming service at the given address and port and then resolve an
+ * object in that context.
+ */
 class TAO_Export TAO_CORBANAME_Parser : public TAO_IOR_Parser
 {
-  // = TITLE
-  //   Implements the <corbaname:> IOR format
-  //
-  // = DESCRIPTION
-  //   This class implements the <corbaname:> IOR format.
-  //   It is dynamically loaded by the ORB and used to get reference
-  //   to a naming service at the given address and port and then resolve an
-  //   object in that context.
-  //
 public:
+  /// Constructor
   TAO_CORBANAME_Parser (void);
-  // Constructor
 
+  /// The destructor
   virtual ~TAO_CORBANAME_Parser (void);
-  // The destructor
 
   // = The IOR_Parser methods, please read the documentation in
   //   IOR_Parser.h

@@ -1,22 +1,19 @@
 // This may look like C, but it's really -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    IIOP_Connector.h
-//
-// = DESCRIPTION
-//    IIOP specific connector processing
-//
-// = AUTHOR
-//    Fred Kuhns <fredk@cs.wustl.edu>
-//    Modified by Balachandran Natarajan <bala@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    IIOP_Connector.h
+ *
+ *  $Id$
+ *
+ *  IIOP specific connector processing
+ *
+ *
+ *  @author Fred Kuhns <fredk@cs.wustl.edu>
+ *  @author Balachandran Natarajan <bala@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_IIOP_CONNECTOR_H
 #define TAO_IIOP_CONNECTOR_H
@@ -35,23 +32,24 @@
 
 // ****************************************************************
 
+/**
+ * @class TAO_IIOP_Connector
+ *
+ * @brief IIOP-specific Connector bridge for pluggable protocols.
+ *
+ * Concrete instance of the TAO_Connector class.  Responsible
+ * for establishing a connection with a server and is called from the
+ * Connector_Registory.
+ */
 class TAO_Export TAO_IIOP_Connector : public TAO_Connector
 {
-  // = TITLE
-  //   IIOP-specific Connector bridge for pluggable protocols.
-  //
-  // = DESCRIPTION
-  //   Concrete instance of the TAO_Connector class.  Responsible
-  //   for establishing a connection with a server and is called from the
-  //   Connector_Registory.
-  //
 public:
   // = Initialization and termination methods.
+  /// Constructor.
   TAO_IIOP_Connector (CORBA::Boolean flag = 0);
-  // Constructor.
 
+  /// Destructor.
   ~TAO_IIOP_Connector (void);
-  // Destructor.
 
   // = The TAO_Connector methods, please check the documentation on
   // Pluggable.h

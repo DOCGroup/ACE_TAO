@@ -1,20 +1,16 @@
 // -*- C++ -*-
-//
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//     TAO
-//
-// = FILENAME
-//     RT_PolicyFactory.h
-//
-// = AUTHOR
-//     Angelo Corsaro <corsaro@cs.wustl.edu>
-//     Ossama Othman <ossama@uci.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file     RT_PolicyFactory.h
+ *
+ *  $Id$
+ *
+ *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
+ *  @author  Ossama Othman <ossama@uci.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_RT_POLICY_FACTORY_H
 #define TAO_RT_POLICY_FACTORY_H

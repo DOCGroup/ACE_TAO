@@ -1,17 +1,14 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   TAO
-//
-// = FILENAME
-//   Leader_Follower.h
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Leader_Follower.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #ifndef TAO_LEADER_FOLLOWER_H
 #define TAO_LEADER_FOLLOWER_H
@@ -28,177 +25,185 @@
 class TAO_Export TAO_Leader_Follower
 {
 public:
+  /// Constructor
   TAO_Leader_Follower (TAO_ORB_Core *orb_core);
-  // Constructor
 
+  /// Destructor
   ~TAO_Leader_Follower (void);
-  // Destructor
 
+  /// The current thread has become a server thread (i.e. called
+  /// ORB::run), update any flags and counters.
   int set_event_loop_thread (ACE_Time_Value *max_wait_time);
-  // The current thread has become a server thread (i.e. called
-  // ORB::run), update any flags and counters.
 
+  /// The current thread is not a server thread anymore, reset any
+  /// flags and counters.
   void reset_event_loop_thread (void);
-  // The current thread is not a server thread anymore, reset any
-  // flags and counters.
 
+  /// This thread is going to perform an upcall, it will no longer be
+  /// an event loop thread.
   void set_upcall_thread (void);
-  // This thread is going to perform an upcall, it will no longer be
-  // an event loop thread.
 
+  /// Is there any thread running as a leader?
   int leader_available (void) const;
-  // Is there any thread running as a leader?
 
+  /// A server thread is making a request.
   void set_client_thread (void);
-  // A server thread is making a request.
 
+  /// A server thread has finished is making a request.
   void reset_client_thread (void);
-  // A server thread has finished is making a request.
 
+  /// The current thread has become the leader thread in the
+  /// client side leader-follower set.
   void set_client_leader_thread (void) ;
-  // The current thread has become the leader thread in the
-  // client side leader-follower set.
 
+  /// The current thread is no longer the leader thread in the client
+  /// side leader-follower set.
   void reset_client_leader_thread (void) ;
-  // The current thread is no longer the leader thread in the client
-  // side leader-follower set.
 
+  /// sets the thread ID of the leader thread in the leader-follower
+  /// model
   void set_client_leader_thread (ACE_thread_t thread_ID);
-  // sets the thread ID of the leader thread in the leader-follower
-  // model
 
+  /// checks if we are a leader thread
   int is_client_leader_thread (void) const;
-  // checks if we are a leader thread
 
+  /**
+   * A leader thread is relinquishing its role, unless there are more
+   * leader threads running pick up a follower (if there is any) to
+   * play the leader role.
+   */
   int elect_new_leader (void);
-  // A leader thread is relinquishing its role, unless there are more
-  // leader threads running pick up a follower (if there is any) to
-  // play the leader role.
 
+  /**
+   * adds the a follower to the set of followers in the leader-
+   * follower model
+   * returns 0 on success, -1 on failure and 1 if the element is
+   * already there.
+   */
   int add_follower (ACE_SYNCH_CONDITION *follower_ptr);
-  // adds the a follower to the set of followers in the leader-
-  // follower model
-  // returns 0 on success, -1 on failure and 1 if the element is
-  // already there.
 
+  /// checks for the availablity of a follower
+  /// returns 1 on available, 0 else
   int follower_available (void) const;
-  // checks for the availablity of a follower
-  // returns 1 on available, 0 else
 
+  /// removes a follower from the leader-follower set
+  /// returns 0 on success, -1 on failure
   int remove_follower (ACE_SYNCH_CONDITION *follower_ptr);
-  // removes a follower from the leader-follower set
-  // returns 0 on success, -1 on failure
 
+  /// returns randomly a follower from the leader-follower set
+  /// returns follower on success, else 0
   ACE_SYNCH_CONDITION *get_next_follower (void);
-  // returns randomly a follower from the leader-follower set
-  // returns follower on success, else 0
 
+  /// Accessors
   ACE_SYNCH_MUTEX &lock (void);
   ACE_Reverse_Lock<ACE_SYNCH_MUTEX> &reverse_lock (void);
-  // Accessors
 
+  /// Check if there are any client threads running
   int has_clients (void) const;
-  // Check if there are any client threads running
 
+  /// Accesor to the reactor
   ACE_Reactor *reactor (void);
-  // Accesor to the reactor
 
 private:
+  /// Shortcut to obtain the TSS resources of the orb core.
   TAO_ORB_Core_TSS_Resources *get_tss_resources (void) const;
-  // Shortcut to obtain the TSS resources of the orb core.
 
+  /// Wait for the client leader to complete.
   int wait_for_client_leader_to_complete (ACE_Time_Value *max_wait_time);
-  // Wait for the client leader to complete.
 
+  /**
+   * Implement the reset_event_loop_thread() method, once the TSS
+   * resources have been acquired.
+   * Also used in the set_upcall_thread.
+   */
   void reset_event_loop_thread_i (TAO_ORB_Core_TSS_Resources *tss);
-  // Implement the reset_event_loop_thread() method, once the TSS
-  // resources have been acquired.
-  // Also used in the set_upcall_thread.
 
 private:
+  /// The orb core
   TAO_ORB_Core *orb_core_;
-  // The orb core
 
+  /// To synchronize access to the members.
   ACE_SYNCH_MUTEX lock_;
-  // To synchronize access to the members.
 
+  /// do protect the access to the following three members
   ACE_Reverse_Lock<ACE_SYNCH_MUTEX> reverse_lock_;
-  // do protect the access to the following three members
 
   ACE_Unbounded_Set<ACE_SYNCH_CONDITION *> follower_set_;
   // keep a set of followers around (protected)
 
+  /**
+   * Count the number of active leaders.
+   * There could be many leaders in the thread pool (i.e. calling
+   * ORB::run), and the same leader could show up multiple times as it
+   * receives nested upcalls and sends more requests.
+   */
   int leaders_;
-  // Count the number of active leaders.
-  // There could be many leaders in the thread pool (i.e. calling
-  // ORB::run), and the same leader could show up multiple times as it
-  // receives nested upcalls and sends more requests.
 
+  /// Count the number of active clients, this is useful to know when
+  /// to deactivate the reactor
   int clients_;
-  // Count the number of active clients, this is useful to know when
-  // to deactivate the reactor
 
+  /// The reactor
   ACE_Reactor *reactor_;
-  // The reactor
 
+  /// Is a client thread the current leader?
   int client_thread_is_leader_;
-  // Is a client thread the current leader?
 
+  /// Are server threads waiting for the client leader to complete?
   int event_loop_threads_waiting_;
-  // Are server threads waiting for the client leader to complete?
 
+  /// Condition variable for server threads waiting for the client
+  /// leader to complete.
   ACE_SYNCH_CONDITION event_loop_threads_condition_;
-  // Condition variable for server threads waiting for the client
-  // leader to complete.
 };
 
 class TAO_Export TAO_LF_Client_Thread_Helper
 {
 public:
+  /// Constructor
   TAO_LF_Client_Thread_Helper (TAO_Leader_Follower &leader_follower);
-  // Constructor
 
+  /// Destructor
   ~TAO_LF_Client_Thread_Helper (void);
-  // Destructor
 
 private:
+  /// Reference to leader/followers object.
   TAO_Leader_Follower &leader_follower_;
-  // Reference to leader/followers object.
 };
 
 class TAO_Export TAO_LF_Client_Leader_Thread_Helper
 {
 public:
+  /// Constructor
   TAO_LF_Client_Leader_Thread_Helper (TAO_Leader_Follower &leader_follower);
-  // Constructor
 
+  /// Destructor
   ~TAO_LF_Client_Leader_Thread_Helper (void);
-  // Destructor
 
 private:
+  /// Reference to leader/followers object.
   TAO_Leader_Follower &leader_follower_;
-  // Reference to leader/followers object.
 };
 
 class TAO_Export TAO_LF_Event_Loop_Thread_Helper
 {
 public:
+  /// Constructor
   TAO_LF_Event_Loop_Thread_Helper (TAO_Leader_Follower &leader_follower);
-  // Constructor
 
+  /// Destructor
   ~TAO_LF_Event_Loop_Thread_Helper (void);
-  // Destructor
 
+  /// Calls <set_event_loop_thread> on the leader/followers object.
   int set_event_loop_thread (ACE_Time_Value *max_wait_time);
-  // Calls <set_event_loop_thread> on the leader/followers object.
 
 private:
+  /// Reference to leader/followers object.
   TAO_Leader_Follower &leader_follower_;
-  // Reference to leader/followers object.
 
+  /// Remembers whether we have to call the reset method in the
+  /// destructor.
   int call_reset_;
-  // Remembers whether we have to call the reset method in the
-  // destructor.
 };
 
 #if defined (__ACE_INLINE__)

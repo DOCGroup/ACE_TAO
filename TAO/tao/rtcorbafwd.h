@@ -1,24 +1,21 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   TAO
-//
-// = FILENAME
-//   rtcorbafwd.h
-//
-// = DESCRIPTION
-//   Forward declare the basic types used in the RT-CORBA namespace.
-//   As with the CORBA namespace they are too many to just lump them
-//   in the same file, and having a place where they are only forward
-//   declared breaks cyclic dependencies.
-//
-// = AUTHOR
-//   Carlos O'Ryan
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   rtcorbafwd.h
+ *
+ *  $Id$
+ *
+ * Forward declare the basic types used in the RT-CORBA namespace.
+ * As with the CORBA namespace they are too many to just lump them
+ * in the same file, and having a place where they are only forward
+ * declared breaks cyclic dependencies.
+ *
+ *
+ *  @author Carlos O'Ryan
+ */
+//=============================================================================
+
 
 #ifndef TAO_RTCORBAFWD_H
 #define TAO_RTCORBAFWD_H
@@ -46,7 +43,7 @@ TAO_NAMESPACE RTCORBA
   // = DESCRIPTION
   //   The contents of the RTCORBA module are defined in
   //   orbos/99-02-12, the complete listing is in section 4.16
-  //   Notice that the name of the namespace was changed from RT_CORBA 
+  //   Notice that the name of the namespace was changed from RT_CORBA
   //   to RTCORBA by the corrigendum in:
   //   orbos/99-03-29
 

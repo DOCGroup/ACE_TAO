@@ -1,19 +1,15 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   TAO
-//
-// = FILENAME
-//   Resource_Factory.h
-//
-// = AUTHOR
-//   Chris Cleeland
-//   Carlos O'Ryan
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Resource_Factory.h
+ *
+ *  $Id$
+ *
+ *  @author Chris CleelandCarlos O'Ryan
+ */
+//=============================================================================
+
 
 #ifndef TAO_RESOURCE_FACTORY_H
 #define TAO_RESOURCE_FACTORY_H
@@ -41,23 +37,23 @@ class TAO_Priority_Mapping;
 class TAO_Export TAO_Protocol_Item
 {
 public:
+  /// creator method, the protocol name can only be set when the
+  /// object is created.
   TAO_Protocol_Item (const ACE_CString &name);
-  // creator method, the protocol name can only be set when the
-  // object is created.
 
+  /// destructor that deallocates the factory object if the
+  /// Protocol_Item retains ownership.
   ~TAO_Protocol_Item (void);
-  // destructor that deallocates the factory object if the
-  // Protocol_Item retains ownership.
 
+  /// return a reference to the character representation of the protocol
+  /// factories name.
   const ACE_CString &protocol_name (void);
-  // return a reference to the character representation of the protocol
-  // factories name.
 
+  /// return a pointer to the protocol factory.
   TAO_Protocol_Factory *factory (void);
-  // return a pointer to the protocol factory.
 
+  /// set the factory pointer's value.
   void factory (TAO_Protocol_Factory *factory, int owner = 0);
-  // set the factory pointer's value.
 
 private:
   // Prohibited
@@ -65,14 +61,14 @@ private:
   ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Protocol_Item&))
 
 private:
+  /// protocol factory name.
   ACE_CString name_;
-  // protocol factory name.
 
+  /// pointer to factory object.
   TAO_Protocol_Factory *factory_;
-  // pointer to factory object.
 
+  /// whether we own (and therefore have to delete) the factory object.
   int factory_owner_;
-  // whether we own (and therefore have to delete) the factory object.
 };
 
 // typedefs for containers containing the list of loaded protocol
@@ -85,15 +81,16 @@ typedef ACE_Unbounded_Set_Iterator<TAO_Protocol_Item*>
 
 // ****************************************************************
 
+/**
+ * @class TAO_Resource_Factory
+ *
+ * @brief Factory which manufacturers resources for use by the ORB Core.
+ *
+ * This class is a factory/repository for critical ORB Core
+ * resources.
+ */
 class TAO_Export TAO_Resource_Factory : public ACE_Service_Object
 {
-  // = TITLE
-  //   Factory which manufacturers resources for use by the ORB Core.
-  //
-  // = DESCRIPTION
-  //   This class is a factory/repository for critical ORB Core
-  //   resources.
-  //
 public:
 
   enum Caching_Strategy
@@ -117,74 +114,80 @@ public:
 
   // = Resource Retrieval
 
+  /// @@ Backwards compatibility, return 1 if the ORB core should use
+  ///    TSS resources
   virtual int use_tss_resources (void) const;
-  // @@ Backwards compatibility, return 1 if the ORB core should use
-  //    TSS resources
 
+  /// @@ Backwards compatibility, return 1 if the ORB core should use
+  ///    Locked_Data_Blocks
   virtual int use_locked_data_blocks (void) const;
-  // @@ Backwards compatibility, return 1 if the ORB core should use
-  //    Locked_Data_Blocks
 
+  /// Create the reactor holder, an strategy to control the number of
+  /// reactors in the ORB
   virtual TAO_Reactor_Registry *get_reactor_registry (void);
-  // Create the reactor holder, an strategy to control the number of
-  // reactors in the ORB
 
+  /// Return an <ACE_Reactor> to be utilized.
   virtual ACE_Reactor *get_reactor (void);
-  // Return an <ACE_Reactor> to be utilized.
 
+  /// Reclaim reactor resources (e.g. deallocate, etc).
   virtual void reclaim_reactor (ACE_Reactor *reactor);
-  // Reclaim reactor resources (e.g. deallocate, etc).
 
+  /// return a reference to the acceptor registry.
   virtual TAO_Acceptor_Registry *get_acceptor_registry (void);
-  // return a reference to the acceptor registry.
 
+  /// Return an Connector to be utilized.
   virtual TAO_Connector_Registry *get_connector_registry (void);
-  // Return an Connector to be utilized.
 
+  /// Access the input CDR allocators.
   virtual ACE_Allocator* input_cdr_dblock_allocator (void);
   virtual ACE_Allocator* input_cdr_buffer_allocator (void);
-  // Access the input CDR allocators.
 
+  /// Access the output CDR allocators.
   virtual ACE_Allocator* output_cdr_dblock_allocator (void);
   virtual ACE_Allocator* output_cdr_buffer_allocator (void);
-  // Access the output CDR allocators.
 
+  /**
+   * The protocol factory list is implemented in this class since
+   * a) it will be a global resource and
+   * b) it is initialized at start up and then not altered.
+   * Returns a container holding the list of loaded protocols.
+   */
   virtual TAO_ProtocolFactorySet *get_protocol_factories (void);
-  // The protocol factory list is implemented in this class since
-  // a) it will be a global resource and
-  // b) it is initialized at start up and then not altered.
-  // Returns a container holding the list of loaded protocols.
 
+  /**
+   * this method will loop through the protocol list and
+   * using the protocol name field this method will
+   * retrieve a pointer to the associated protocol factory
+   * from the service configurator.  It is assumed
+   * that only one thread will call this method at ORB initialization.
+   * NON-THREAD-SAFE
+   */
   virtual int init_protocol_factories (void);
-  // this method will loop through the protocol list and
-  // using the protocol name field this method will
-  // retrieve a pointer to the associated protocol factory
-  // from the service configurator.  It is assumed
-  // that only one thread will call this method at ORB initialization.
-  // NON-THREAD-SAFE
 
+  /// This accesses the connection caching strategy we use for managing
+  /// purging of unused entries from the connection cache on demnad.
   virtual Caching_Strategy connection_caching_strategy_type (void) const;
-  // This accesses the connection caching strategy we use for managing
-  // purging of unused entries from the connection cache on demnad.
 
+  /// This denotes the amount of entries to remove from the connection
+  /// cache.
   virtual double purge_percentage (void) const;
-  // This denotes the amount of entries to remove from the connection
-  // cache.
 
+  /// Configure the priority mapping for the ORB
   virtual TAO_Priority_Mapping *get_priority_mapping (void);
-  // Configure the priority mapping for the ORB
 
   virtual int get_parser_names (char **&names,
                                 int &number_of_names);
 
+  /// Creates the lock for the lock needed in the Cache Map
   virtual ACE_Lock *create_cached_connection_lock (void);
-  // Creates the lock for the lock needed in the Cache Map
 
 protected:
+  /**
+   * Loads the default protocols. This method is used so that the
+   * advanced_resource.cpp can call the one in default_resource.cpp
+   * without calling unnecessary functions.
+   */
   virtual int load_default_protocols (void);
-  // Loads the default protocols. This method is used so that the
-  // advanced_resource.cpp can call the one in default_resource.cpp
-  // without calling unnecessary functions.
 };
 
 #include "ace/post.h"

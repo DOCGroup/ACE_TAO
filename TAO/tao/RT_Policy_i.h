@@ -1,21 +1,14 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   TAO
-//
-// = DESCRIPTION
-//   Implementation classes for the RT CORBA 1.0 policies.
-//
-// = FILENAME
-//   RT_Policy_i.h
-//
-// = AUTHOR
-//   Marina Spivak (marina@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   RT_Policy_i.h
+ *
+ *  $Id$
+ *
+ *  @author Marina Spivak (marina@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #ifndef TAO_RT_POLICY_I_H
 #define TAO_RT_POLICY_I_H
@@ -42,31 +35,34 @@
 #endif /* _MSC_VER */
 
 
+/**
+ * @class TAO_PriorityModelPolicy
+ *
+ * @brief RTCORBA::PriorityModelPolicy implementation
+ *
+ * This policy controls how the priority at which a server handles
+ * requests from clients is determined.
+ */
 class TAO_Export TAO_PriorityModelPolicy :  public RTCORBA::PriorityModelPolicy, public TAO_Local_RefCounted_Object
 {
-  // = TITLE
-  //   RTCORBA::PriorityModelPolicy implementation
-  //
-  // = DESCRIPTION
-  //   This policy controls how the priority at which a server handles
-  //   requests from clients is determined.
-  //
 public:
+  /// Constructor.
   TAO_PriorityModelPolicy (RTCORBA::PriorityModel priority_model,
                            RTCORBA::Priority server_priority);
-  // Constructor.
 
+  /// Copy constructor.
   TAO_PriorityModelPolicy (const TAO_PriorityModelPolicy &rhs);
-  // Copy constructor.
 
+  /// Destructor.
   virtual ~TAO_PriorityModelPolicy (void);
-  // Destructor.
 
+  /**
+   * Accessor for the <priority_model_> attribute.  This method is
+   * used internally by the orb.  This is a more efficient
+   * (non-virtual, no exception handling) relative of the idl interface
+   * implementation <priority_model> below.
+   */
   RTCORBA::PriorityModel get_priority_model (void);
-  // Accessor for the <priority_model_> attribute.  This method is
-  // used internally by the orb.  This is a more efficient
-  // (non-virtual, no exception handling) relative of the idl interface
-  // implementation <priority_model> below.
 
   virtual RTCORBA::PriorityModel priority_model (CORBA::Environment
                                                  &ACE_TRY_ENV =
@@ -91,45 +87,46 @@ public:
                                          TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /// This method writes a CDR representation of the object state.
   virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
-  // This method writes a CDR representation of the object state.
 
+  /// This method reads the object state from a CDR representation.
   virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
-  // This method reads the object state from a CDR representation.
 
 protected:
 
+  /// This constructor is used by TAO_RT_PolicyFactory when decoding
+  /// policies from tagged components in an IOR.
   friend class TAO_RT_PolicyFactory;
   TAO_PriorityModelPolicy (void);
-  // This constructor is used by TAO_RT_PolicyFactory when decoding
-  // policies from tagged components in an IOR.
 
 private:
 
+  /// Attributes.
   RTCORBA::PriorityModel priority_model_;
   RTCORBA::Priority server_priority_;
-  // Attributes.
 };
 
 //*************************************************************************
 
+/**
+ * @class TAO_ThreadpoolPolicy
+ *
+ * @brief RTCORBA::ThreadpoolPolicy implementation
+ *
+ * This policy controls which threadpool is associated with a POA.
+ */
 class TAO_Export TAO_ThreadpoolPolicy : public RTCORBA::ThreadpoolPolicy, public TAO_Local_RefCounted_Object
 {
-  // = TITLE
-  //   RTCORBA::ThreadpoolPolicy implementation
-  //
-  // = DESCRIPTION
-  //   This policy controls which threadpool is associated with a POA.
-  //
 public:
+  /// Constructor.
   TAO_ThreadpoolPolicy (RTCORBA::ThreadpoolId id);
-  // Constructor.
 
+  /// Copy constructor.
   TAO_ThreadpoolPolicy (const TAO_ThreadpoolPolicy &rhs);
-  // Copy constructor.
 
+  /// Destructor.
   virtual ~TAO_ThreadpoolPolicy (void);
-  // Destructor.
 
   virtual RTCORBA::ThreadpoolId threadpool (CORBA::Environment
                                             &ACE_TRY_ENV =
@@ -151,31 +148,32 @@ public:
 
 private:
 
+  /// Attribute.
   RTCORBA::ThreadpoolId id_;
-  // Attribute.
 };
 
 //*************************************************************************
 
+/**
+ * @class TAO_PrivateConnectionPolicy
+ *
+ * @brief RTCORBA::PrivateConnectionPolicy implementation
+ *
+ * This policy controls whether the transport connection for the
+ * Object is private, i.e., not available for carrying out invocations on
+ * other objects.
+ */
 class TAO_Export TAO_PrivateConnectionPolicy : public RTCORBA::PrivateConnectionPolicy, public TAO_Local_RefCounted_Object
 {
-  // = TITLE
-  //   RTCORBA::PrivateConnectionPolicy implementation
-  //
-  // = DESCRIPTION
-  //   This policy controls whether the transport connection for the
-  //   Object is private, i.e., not available for carrying out invocations on
-  //   other objects.
-  //
 public:
+  /// Constructor.
   TAO_PrivateConnectionPolicy (void);
-  // Constructor.
 
+  /// Copy constructor.
   TAO_PrivateConnectionPolicy (const TAO_PrivateConnectionPolicy &rhs);
-  // Copy constructor.
 
+  /// Destructor.
   virtual ~TAO_PrivateConnectionPolicy (void);
-  // Destructor.
 
   virtual CORBA::PolicyType policy_type (CORBA::Environment
                                          &ACE_TRY_ENV =
@@ -193,33 +191,36 @@ public:
 
 //*************************************************************************
 
+/**
+ * @class TAO_PriorityBandedConnectionPolicy
+ *
+ * @brief RTCORBA::PriorityBandedConnectionPolicy implementation
+ *
+ * RT CORBA provides facility for a client to communicate with a
+ * server via multiple connections, aka bands, with each connection handling
+ * invocations that are made at a different CORBA priority.
+ * This policy allows the specification of the number of such
+ * bands and their priorities.
+ */
 class TAO_Export TAO_PriorityBandedConnectionPolicy : public RTCORBA::PriorityBandedConnectionPolicy, public TAO_Local_RefCounted_Object
 {
-  // = TITLE
-  //   RTCORBA::PriorityBandedConnectionPolicy implementation
-  //
-  // = DESCRIPTION
-  //   RT CORBA provides facility for a client to communicate with a
-  //   server via multiple connections, aka bands, with each connection handling
-  //   invocations that are made at a different CORBA priority.
-  //   This policy allows the specification of the number of such
-  //   bands and their priorities.
-  //
 public:
+  /// Constructor.
   TAO_PriorityBandedConnectionPolicy (const RTCORBA::PriorityBands &bands);
-  // Constructor.
 
+  /// Copy constructor.
   TAO_PriorityBandedConnectionPolicy (const
                                       TAO_PriorityBandedConnectionPolicy &rhs);
-  // Copy constructor.
 
+  /// Destructor.
   virtual ~TAO_PriorityBandedConnectionPolicy (void);
-  // Destructor.
 
+  /**
+   * Accessor to the underlying priority bands of the policy (does not
+   * make a copy like the idl accessor <priority_bands> implementation
+   * below.)
+   */
   RTCORBA::PriorityBands &priority_bands_rep (void);
-  // Accessor to the underlying priority bands of the policy (does not
-  // make a copy like the idl accessor <priority_bands> implementation
-  // below.)
 
   virtual RTCORBA::PriorityBands * priority_bands (CORBA::Environment
                                                    &ACE_TRY_ENV =
@@ -239,50 +240,53 @@ public:
                         TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /// This method writes a CDR representation of the current object.
   virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
-  // This method writes a CDR representation of the current object.
 
+  /// This method reads the object state from a CDR representation.
   virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
-  // This method reads the object state from a CDR representation.
 
 protected:
 
+  /// This constructor is used by TAO_RT_PolicyFactory when decoding
+  /// policies from tagged components in an IOR.
   friend class TAO_RT_PolicyFactory;
   TAO_PriorityBandedConnectionPolicy (void);
-  // This constructor is used by TAO_RT_PolicyFactory when decoding
-  // policies from tagged components in an IOR.
 
 private:
 
+  /// Attribute.
   RTCORBA::PriorityBands priority_bands_;
-  // Attribute.
 };
 
 //*************************************************************************
 
+/**
+ * @class TAO_ServerProtocolPolicy
+ *
+ * @brief RTCORBA::ServerProtocolPolicy implementation
+ *
+ * This policy controls selection and configuration of
+ * communication protocols on the server-side of the RT ORB.
+ */
 class TAO_Export TAO_ServerProtocolPolicy : public RTCORBA::ServerProtocolPolicy, public TAO_Local_RefCounted_Object
 {
-  // = TITLE
-  //   RTCORBA::ServerProtocolPolicy implementation
-  //
-  // = DESCRIPTION
-  //   This policy controls selection and configuration of
-  //   communication protocols on the server-side of the RT ORB.
-  //
 public:
+  /// Constructor.
   TAO_ServerProtocolPolicy (const RTCORBA::ProtocolList &protocols);
-  // Constructor.
 
+  /// Copy constructor.
   TAO_ServerProtocolPolicy (const TAO_ServerProtocolPolicy &rhs);
-  // Copy constructor.
 
+  /// Destructor.
   virtual ~TAO_ServerProtocolPolicy (void);
-  // Destructor.
 
+  /**
+   * Accessor to the underlying protocols list of the policy (does not
+   * make a copy like the idl accessor <protocols> implementation
+   * below.)
+   */
   RTCORBA::ProtocolList & protocols_rep (void);
-  // Accessor to the underlying protocols list of the policy (does not
-  // make a copy like the idl accessor <protocols> implementation
-  // below.)
 
   virtual RTCORBA::ProtocolList * protocols (CORBA::Environment
                                              &ACE_TRY_ENV =
@@ -304,35 +308,38 @@ public:
 
 private:
 
+  /// Attribute.
   RTCORBA::ProtocolList protocols_;
-  // Attribute.
 };
 
 //*************************************************************************
 
+/**
+ * @class TAO_ClientProtocolPolicy
+ *
+ * @brief RTCORBA::ClientProtocolPolicy implementation
+ *
+ * This policy controls selection and configuration of
+ * communication protocols on the client-side of the RT ORB.
+ */
 class TAO_Export TAO_ClientProtocolPolicy : public RTCORBA::ClientProtocolPolicy, public TAO_Local_RefCounted_Object
 {
-  // = TITLE
-  //   RTCORBA::ClientProtocolPolicy implementation
-  //
-  // = DESCRIPTION
-  //   This policy controls selection and configuration of
-  //   communication protocols on the client-side of the RT ORB.
-  //
 public:
+  /// Constructor.
   TAO_ClientProtocolPolicy (const RTCORBA::ProtocolList &protocols);
-  // Constructor.
 
+  /// Copy constructor.
   TAO_ClientProtocolPolicy (const TAO_ClientProtocolPolicy &rhs);
-  // Copy constructor.
 
+  /// Destructor.
   virtual ~TAO_ClientProtocolPolicy (void);
-  // Destructor.
 
+  /**
+   * Accessor to the underlying protocols list of the policy (does not
+   * make a copy like the idl accessor <protocols> implementation
+   * below.)
+   */
   RTCORBA::ProtocolList & protocols_rep (void);
-  // Accessor to the underlying protocols list of the policy (does not
-  // make a copy like the idl accessor <protocols> implementation
-  // below.)
 
   virtual RTCORBA::ProtocolList * protocols (CORBA::Environment
                                              &ACE_TRY_ENV =
@@ -354,23 +361,23 @@ public:
 
   // = CDR Encoder/Decoder.
 
+  /// This method writes a CDR representation of the current object.
   virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
-  // This method writes a CDR representation of the current object.
 
+  /// This method reads the object state from a CDR representation.
   virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
-  // This method reads the object state from a CDR representation.
 
 protected:
 
+  /// This constructor is used by TAO_RT_PolicyFactory when decoding
+  /// policies from tagged components in an IOR.
   friend class TAO_RT_PolicyFactory;
   TAO_ClientProtocolPolicy (void);
-  // This constructor is used by TAO_RT_PolicyFactory when decoding
-  // policies from tagged components in an IOR.
 
 private:
 
+  /// Attribute.
   RTCORBA::ProtocolList protocols_;
-  // Attribute.
 };
 
 //*************************************************************************
@@ -385,6 +392,7 @@ class TAO_Export TAO_TCP_Properties : public RTCORBA::TCPProtocolProperties, pub
   //   Stores TCP Protocol configuration properties.
   //
 public:
+  /// Constructor.
   TAO_TCP_Properties (CORBA::Long send_buffer_size =
                       ACE_DEFAULT_MAX_SOCKET_BUFSIZ,
                       CORBA::Long recv_buffer_size =
@@ -392,10 +400,9 @@ public:
                       CORBA::Boolean keep_alive = 1,
                       CORBA::Boolean dont_route = 0,
                       CORBA::Boolean no_delay = 1);
-  // Constructor.
 
+  /// Destructor.
   virtual ~TAO_TCP_Properties (void);
-  // Destructor.
 
   virtual CORBA::Long send_buffer_size (CORBA::Environment
                                         &ACE_TRY_ENV =
@@ -445,11 +452,11 @@ public:
     ACE_THROW_SPEC (());
 
 
+  /// This method writes a CDR representation of TCPProtocolProperties.
   virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
-  // This method writes a CDR representation of TCPProtocolProperties.
 
+  /// This method reads the object state from a CDR representation.
   virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
-  // This method reads the object state from a CDR representation.
 
 private:
   // = Attributes.
@@ -463,15 +470,16 @@ private:
 
 //*************************************************************************
 
+/**
+ * @class TAO_Unix_Domain_Properties
+ *
+ * @brief RTCORBA::UnixDomainProtocolProperties implementation.
+ *
+ * Stores Unix Domain Sockets (Local IPC) Protocol configuration
+ * properties.
+ */
 class TAO_Export TAO_Unix_Domain_Properties : public RTCORBA::UnixDomainProtocolProperties, public TAO_Local_RefCounted_Object
 {
-  // = TITLE
-  //   RTCORBA::UnixDomainProtocolProperties implementation.
-  //
-  // = DESCRIPTION
-  //   Stores Unix Domain Sockets (Local IPC) Protocol configuration
-  //   properties.
-  //
 public:
   TAO_Unix_Domain_Properties (CORBA::Long send_buffer_size =
                               ACE_DEFAULT_MAX_SOCKET_BUFSIZ,
@@ -480,8 +488,8 @@ public:
 
   // Constructor.
 
+  /// Destructor.
   virtual ~TAO_Unix_Domain_Properties (void);
-  // Destructor.
 
   virtual CORBA::Long send_buffer_size (CORBA::Environment
                                         &ACE_TRY_ENV =
@@ -503,20 +511,24 @@ public:
                                  TAO_default_environment ())
     ACE_THROW_SPEC (());
 
+  /**
+   * This method writes the CDR encapsulation of an instance of
+   * UnixDomainProperties. This Protocol Property in TAO specific,
+   * so there is no order of encapsulation specified in the
+   * RT CORBA Spec. The current implementation encodes the field
+   * according to the order of declaration (i.e. first is encoded
+   * send_buffer_size and then recv_buffer_size).
+   */
   virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
-  // This method writes the CDR encapsulation of an instance of
-  // UnixDomainProperties. This Protocol Property in TAO specific,
-  // so there is no order of encapsulation specified in the
-  // RT CORBA Spec. The current implementation encodes the field
-  // according to the order of declaration (i.e. first is encoded
-  // send_buffer_size and then recv_buffer_size).
 
+  /**
+   * This method reads an instance of UnixDomainProperties from
+   * a CDR encapsulation. This Protocol Property in TAO specific,
+   * so there is no order of encapsulation specified in the
+   * RT CORBA Spec. The current implementation expect the field
+   * according to the order of declaration.
+   */
   virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
-  // This method reads an instance of UnixDomainProperties from
-  // a CDR encapsulation. This Protocol Property in TAO specific,
-  // so there is no order of encapsulation specified in the
-  // RT CORBA Spec. The current implementation expect the field
-  // according to the order of declaration.
 
 private:
 
@@ -527,21 +539,22 @@ private:
 
 //*************************************************************************
 
+/**
+ * @class TAO_SMEM_Properties
+ *
+ * @brief RTCORBA::SharedMemoryProtocolProperties implementation.
+ *
+ * Stores Shared Memory Protocol configuration
+ * properties.
+ */
 class TAO_Export TAO_SMEM_Properties : public RTCORBA::SharedMemoryProtocolProperties, public TAO_Local_RefCounted_Object
 {
-  // = TITLE
-  //   RTCORBA::SharedMemoryProtocolProperties implementation.
-  //
-  // = DESCRIPTION
-  //   Stores Shared Memory Protocol configuration
-  //   properties.
-  //
 public:
+  /// Constructor.
   TAO_SMEM_Properties (void);
-  // Constructor.
 
+  /// Destructor.
   virtual ~TAO_SMEM_Properties (void);
-  // Destructor.
 
   // = IDL interface methods.
 
@@ -575,19 +588,23 @@ public:
                               TAO_default_environment ())
     ACE_THROW_SPEC (());
 
+  /**
+   * This method writes the CDR encapsulation of an instance of
+   * SMEMProperties. This Protocol Property in TAO specific,
+   * so there is no order of encapsulation specified in the
+   * RT CORBA Spec. The current implementation encodes the field
+   * according to the order of declaration.
+   */
   virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
-  // This method writes the CDR encapsulation of an instance of
-  // SMEMProperties. This Protocol Property in TAO specific,
-  // so there is no order of encapsulation specified in the
-  // RT CORBA Spec. The current implementation encodes the field
-  // according to the order of declaration.
 
+  /**
+   * This method reads an instance of SMEMProperties from
+   * a CDR encapsulation. This Protocol Property in TAO specific,
+   * so there is no order of encapsulation specified in the
+   * RT CORBA Spec. The current implementation expect the field
+   * according to the order of declaration.
+   */
   virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
-  // This method reads an instance of SMEMProperties from
-  // a CDR encapsulation. This Protocol Property in TAO specific,
-  // so there is no order of encapsulation specified in the
-  // RT CORBA Spec. The current implementation expect the field
-  // according to the order of declaration.
 
 private:
 
@@ -621,21 +638,25 @@ class TAO_Export TAO_Protocol_Properties_Factory
 {
 public:
 
+  /**
+   * Creates the proper transport ProtocolProperties subclass that matches
+   * the IOP::ProfileId.
+   * NOTE: Each IOP::ProfileId corresponds to two sets of protocol
+   * properties: one describes the transport protocol and the other
+   * describes the ORB messaging protocol.
+   */
   static RTCORBA::ProtocolProperties*
   create_transport_protocol_property (IOP::ProfileId id);
-  // Creates the proper transport ProtocolProperties subclass that matches
-  // the IOP::ProfileId.
-  // NOTE: Each IOP::ProfileId corresponds to two sets of protocol
-  // properties: one describes the transport protocol and the other
-  // describes the ORB messaging protocol.
 
+  /**
+   * Creates the proper orb ProtocolProperties subclass for
+   * IOP::ProfileId.
+   * NOTE: Each IOP::ProfileId corresponds to two sets of protocol
+   * properties: one describes the transport protocol and the other
+   * describes the ORB messaging protocol.
+   */
   static RTCORBA::ProtocolProperties*
   create_orb_protocol_property (IOP::ProfileId id);
-  // Creates the proper orb ProtocolProperties subclass for
-  // IOP::ProfileId.
-  // NOTE: Each IOP::ProfileId corresponds to two sets of protocol
-  // properties: one describes the transport protocol and the other
-  // describes the ORB messaging protocol.
 
 protected:
   TAO_Protocol_Properties_Factory (void);

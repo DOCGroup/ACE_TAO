@@ -1,21 +1,14 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   TAO
-//
-// = DESCRIPTION
-//   Implementation of RTCORBA::Mutex interface.
-//
-// = FILENAME
-//   RT_Mutex.h
-//
-// = AUTHOR
-//   Marina Spivak (marina@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   RT_Mutex.h
+ *
+ *  $Id$
+ *
+ *  @author Marina Spivak (marina@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #ifndef TAO_RT_MUTEX_H
 #define TAO_RT_MUTEX_H
@@ -50,11 +43,11 @@ class TAO_Export TAO_RT_Mutex :
   //   Placeholder for mutex implementation.
   //
 public:
+  /// Constructor.
   TAO_RT_Mutex (void);
-  // Constructor.
 
+  /// Destructor.
   virtual ~TAO_RT_Mutex (void);
-  // Destructor.
 
   virtual void lock (CORBA::Environment &ACE_TRY_ENV =
                      TAO_default_environment ())

@@ -1,15 +1,15 @@
 // This may look like C, but it's really -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//     TAO
-//
-// = AUTHOR
-//     Alexander Babu Arulanthu <alex@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Wait_On_Reactor.h
+ *
+ *  $Id$
+ *
+ *  @author  Alexander Babu Arulanthu <alex@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_WAIT_ON_REACTOR_H
 #define TAO_WAIT_ON_REACTOR_H
@@ -21,22 +21,22 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class TAO_Wait_On_Reactor
+ *
+ * @brief Wait on the Reactor. Happens in s Single Threaded client
+ * environment.
+ *
+ */
 class TAO_Export TAO_Wait_On_Reactor : public TAO_Wait_Strategy
 {
-  // = TITLE
-  //
-  //    Wait on the Reactor. Happens in s Single Threaded client
-  //    environment.
-  //
-  // = DESCRIPTION
-  //
 
 public:
+  /// Constructor.
   TAO_Wait_On_Reactor (TAO_Transport *transport);
-  // Constructor.
 
+  /// Destructor.
   virtual ~TAO_Wait_On_Reactor (void);
-  // Destructor.
 
   // = Documented in TAO_Wait_Strategy.
 

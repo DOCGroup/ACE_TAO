@@ -1,30 +1,27 @@
 // This may look like C, but it's really -*- C++ -*-
-// $Id$
 
-// ========================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    PortableInterceptor.h
-//
-// = DESCRIPTION
-//     This file contains two helper classes to simplify the support of
-//     interceptors in tao_idl generated code.  All the helper classes
-//     implementations are in PortableInterceptor.i file.
-//
-//     A series of TAO_INTERCEPTOR* macros are also defined in the file.
-//     These macros allows us to disable/enable support of interceptors
-//     easily.
-//
-//
-// = AUTHOR
-//     Nanbor Wang <nanbor@cs.wustl.edu>
-//     Kirthika Parameswaran  <kirthika@cs.wustl.edu>
-//     Ossama Othman <ossama@uci.edu>
-//
-// ========================================================================
+//=============================================================================
+/**
+ *  @file    PortableInterceptor.h
+ *
+ *  $Id$
+ *
+ *   This file contains two helper classes to simplify the support of
+ *   interceptors in tao_idl generated code.  All the helper classes
+ *   implementations are in PortableInterceptor.i file.
+ *
+ *   A series of TAO_INTERCEPTOR* macros are also defined in the file.
+ *   These macros allows us to disable/enable support of interceptors
+ *   easily.
+ *
+ *
+ *
+ *  @author  Nanbor Wang <nanbor@cs.wustl.edu>
+ *  @author  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+ *  @author  Ossama Othman <ossama@uci.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_PORTABLE_INTERCEPTOR_H
 #define TAO_PORTABLE_INTERCEPTOR_H
@@ -56,14 +53,16 @@
 #include "tao/PortableInterceptorC.h"
 #include "tao/Interceptor_List.h"
 
+/**
+ * @class TAO_ClientRequestInterceptor_Adapter
+ *
+ * @brief TAO_ClientRequestInterceptor_Adapter
+ *
+ * A convenient helper class to invoke registered client request
+ * interceptor(s) in tao_idl generated code.
+ */
 class TAO_Export TAO_ClientRequestInterceptor_Adapter
 {
-  // = TITLE
-  //   TAO_ClientRequestInterceptor_Adapter
-  //
-  // = DESCRIPTION
-  //   A convenient helper class to invoke registered client request
-  //   interceptor(s) in tao_idl generated code.
 
 public:
 
@@ -72,9 +71,9 @@ public:
 
   ~TAO_ClientRequestInterceptor_Adapter (void);
 
+  //@{
+  /// @name PortableInterceptor Client Side Interception Points
   /**
-   * @name PortableInterceptor Client Side Interception Points
-   *
    * Each of these methods corresponds to a client side interception
    * point.  There are no "intermediate" interception points on the
    * client side, only "starting" and "ending" interception points.
@@ -83,7 +82,7 @@ public:
    * The "send_poll()" and "receive_other()" PortableInterceptor
    * interception points are missing.
    */
-  //@{
+
   /// This method implements one of the "starting" client side
   /// interception points.
   void send_request (PortableInterceptor::ClientRequestInfo_ptr ri,
@@ -124,14 +123,16 @@ private:
 
 };
 
+/**
+ * @class TAO_ServerRequestInterceptor_Adapter
+ *
+ * @brief TAO_ServerRequestInterceptor_Adapter
+ *
+ * A convenient helper class to invoke registered server request
+ * interceptor(s) in tao_idl generated code.
+ */
 class TAO_Export TAO_ServerRequestInterceptor_Adapter
 {
-  // = TITLE
-  //   TAO_ServerRequestInterceptor_Adapter
-  //
-  // = DESCRIPTION
-  //   A convenient helper class to invoke registered server request
-  //   interceptor(s) in tao_idl generated code.
 
 public:
 
@@ -140,6 +141,7 @@ public:
 
   ~TAO_ServerRequestInterceptor_Adapter (void);
 
+  ///@{
   /**
    * @name PortableInterceptor Client Side Interception Points
    *
@@ -150,7 +152,6 @@ public:
    * The "receive_request_service_contexts()" and "send_other()"
    * PortableInterceptor interception points are missing.
    */
-  //@{
   /**
    * This method implements the "starting" server side interception
    * point.

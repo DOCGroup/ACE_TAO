@@ -1,17 +1,14 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   TAO
-//
-// = FILENAME
-//   DLL_Parser.h
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   DLL_Parser.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #ifndef TAO_DLL_PARSER_H
 #define TAO_DLL_PARSER_H
@@ -24,23 +21,24 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class TAO_DLL_Parser
+ *
+ * @brief Defines the interface for the pluggable DLL parser components
+ *
+ * The ORB is able to dynamically load the list of DLL formats it
+ * understands.  That allow us to integrate formats such as
+ * corbaname:, http: or ftp: only when required.
+ * This class provides a uniform interface for all the DLL parsers
+ */
 class TAO_Export TAO_DLL_Parser : public TAO_IOR_Parser
 {
-  // = TITLE
-  //   Defines the interface for the pluggable DLL parser components
-  //
-  // = DESCRIPTION
-  //   The ORB is able to dynamically load the list of DLL formats it
-  //   understands.  That allow us to integrate formats such as
-  //   corbaname:, http: or ftp: only when required.
-  //   This class provides a uniform interface for all the DLL parsers
-  //
 public:
+  /// Constructor
   TAO_DLL_Parser (void);
-  // Constructor
 
+  /// The destructor
   virtual ~TAO_DLL_Parser (void);
-  // The destructor
 
   // = The IOR_Parser methods, please read the documentation in
   //   IOR_Parser.h

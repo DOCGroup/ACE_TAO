@@ -1,23 +1,19 @@
 // -*- C++ -*-
-//
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    TAO_Singleton.h
-//
-// = DESCRIPTION
-//     Header file for the TAO-specific Singleton implementation.
-//     Based entirely on tao/TAO_Singleton.*.
-//
-// = AUTHOR
-//     Ossama Othman <ossama@uci.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    TAO_Singleton.h
+ *
+ *  $Id$
+ *
+ *   Header file for the TAO-specific Singleton implementation.
+ *   Based entirely on tao/TAO_Singleton.*.
+ *
+ *
+ *  @author  Ossama Othman <ossama@uci.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_SINGLETON_H
 #define TAO_SINGLETON_H
@@ -31,84 +27,88 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
+/**
+ * @class TAO_Singleton
+ *
+ * @brief TAO-specific Singleton class
+ *
+ * TAO_Singletons are used by TAO to register TAO-specific
+ * singleton instances with the TAO_Object_Manager.  This
+ * ensures that TAO singletons are isolated from ACE's
+ * Object_Manager, thus allowing TAO to be safely dynamically
+ * unloaded.
+ */
 template <class TYPE, class ACE_LOCK>
 class TAO_Singleton : public ACE_Cleanup
 {
-  // = TITLE
-  //     TAO-specific Singleton class
-  //
-  // = DESCRIPTION
-  //     TAO_Singletons are used by TAO to register TAO-specific
-  //     singleton instances with the TAO_Object_Manager.  This
-  //     ensures that TAO singletons are isolated from ACE's
-  //     Object_Manager, thus allowing TAO to be safely dynamically
-  //     unloaded.
 
 public:
+  /// Global access point to the Singleton.
   static TYPE *instance (void);
-  // Global access point to the Singleton.
 
+  /// Cleanup method, used by <ace_cleanup_destroyer> to destroy the
+  /// singleton.
   virtual void cleanup (void *param = 0);
-  // Cleanup method, used by <ace_cleanup_destroyer> to destroy the
-  // singleton.
 
+  /// Dump the state of the object.
   static void dump (void);
-  // Dump the state of the object.
 
 protected:
+  /// Default constructor.
   TAO_Singleton (void);
-  // Default constructor.
 
+  /// Contained instance.
   TYPE instance_;
-  // Contained instance.
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
+  /// Pointer to the Singleton (ACE_Cleanup) instance.
   static TAO_Singleton<TYPE, ACE_LOCK> *singleton_;
-  // Pointer to the Singleton (ACE_Cleanup) instance.
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 
+  /// Get pointer to the TAO Singleton instance.
   static TAO_Singleton<TYPE, ACE_LOCK> *&instance_i (void);
-  // Get pointer to the TAO Singleton instance.
 };
 
+/**
+ * @class TAO_TSS_Singleton
+ *
+ * @brief TAO-specific Singleton class
+ *
+ * TAO_Singletons are used by TAO to register TAO-specific
+ * singleton instances with the TAO_Object_Manager.  This
+ * ensures that TAO singletons are isolated from ACE's
+ * Object_Manager, thus allowing TAO to be safely dynamically
+ * unloaded.
+ */
 template <class TYPE, class ACE_LOCK>
 class TAO_TSS_Singleton : public ACE_Cleanup
 {
-  // = TITLE
-  //     TAO-specific Singleton class
-  //
-  // = DESCRIPTION
-  //     TAO_Singletons are used by TAO to register TAO-specific
-  //     singleton instances with the TAO_Object_Manager.  This
-  //     ensures that TAO singletons are isolated from ACE's
-  //     Object_Manager, thus allowing TAO to be safely dynamically
-  //     unloaded.
 
 public:
+  /// Global access point to the Singleton.
   static TYPE *instance (void);
-  // Global access point to the Singleton.
 
+  /// Cleanup method, used by <ace_cleanup_destroyer> to destroy the
+  /// singleton.
   virtual void cleanup (void *param = 0);
-  // Cleanup method, used by <ace_cleanup_destroyer> to destroy the
-  // singleton.
 
+  /// Dump the state of the object.
   static void dump (void);
-  // Dump the state of the object.
 
 protected:
+  /// Default constructor.
   TAO_TSS_Singleton (void);
-  // Default constructor.
 
+  /// Contained instance.
   ACE_TSS_TYPE (TYPE) instance_;
-  // Contained instance.
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
+  /// Pointer to the Singleton (ACE_Cleanup) instance.
   static TAO_TSS_Singleton<TYPE, ACE_LOCK> *singleton_;
-  // Pointer to the Singleton (ACE_Cleanup) instance.
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 
+  /// Get pointer to the TAO TSS Singleton instance.
   static TAO_TSS_Singleton<TYPE, ACE_LOCK> *&instance_i (void);
-  // Get pointer to the TAO TSS Singleton instance.
 };
 
 #if defined (__ACE_INLINE__)

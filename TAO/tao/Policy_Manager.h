@@ -1,21 +1,18 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   TAO
-//
-// = FILENAME
-//   Policy_Manager.h
-//
-// = DESCRIPTION
-//   An implementation for the CORBA::PolicyManager interface.
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Policy_Manager.h
+ *
+ *  $Id$
+ *
+ * An implementation for the CORBA::PolicyManager interface.
+ *
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #ifndef TAO_POLICY_MANAGER_H
 #define TAO_POLICY_MANAGER_H
@@ -51,55 +48,57 @@ class TAO_PriorityBandedConnectionPolicy;
 class TAO_ServerProtocolPolicy;
 class TAO_ClientProtocolPolicy;
 
+/**
+ * @class TAO_Policy_Manager_Impl
+ *
+ * @brief The policy manager implementation.
+ *
+ * This class is used to implement both the CORBA::PolicyManager
+ * and the CORBA::PolicyCurrent interfaces.
+ */
 class TAO_Export TAO_Policy_Manager_Impl
 {
-  //
-  // = TITLE
-  //   The policy manager implementation.
-  //
-  // = DESCRIPTION
-  //   This class is used to implement both the CORBA::PolicyManager
-  //   and the CORBA::PolicyCurrent interfaces.
-  //
 
   friend class TAO_Policy_Manager;
 
 public:
 
+  /// Constructor
   TAO_Policy_Manager_Impl (void);
-  // Constructor
 
+  /// Destructor
   ~TAO_Policy_Manager_Impl (void);
-  // Destructor
 
+  /// Copy the state from <source>, it uses the copy() operator to
+  /// obtain independent copies of all the policies.
   void copy_from (TAO_Policy_Manager_Impl* source,
                   CORBA::Environment &ACE_TRY_ENV);
-  // Copy the state from <source>, it uses the copy() operator to
-  // obtain independent copies of all the policies.
 
+  /**
+   * Modify the list of policies to include <policies>.
+   * If <set_add> is CORBA::SET_OVERRIDE then we replace all the old
+   * policies. If it is CORBA::ADD_OVERRIDE we simply add the policies
+   * in <policies>.
+   * No attempt is made to validate the policies for consistency.
+   */
   void set_policy_overrides (const CORBA::PolicyList & policies,
                              CORBA::SetOverrideType set_add,
                              CORBA::Environment &ACE_TRY_ENV =
                              TAO_default_environment ()
     );
-  // Modify the list of policies to include <policies>.
-  // If <set_add> is CORBA::SET_OVERRIDE then we replace all the old
-  // policies. If it is CORBA::ADD_OVERRIDE we simply add the policies
-  // in <policies>.
-  // No attempt is made to validate the policies for consistency.
 
+  /// Get the values (if any) for the policies in <types>, if <types>
+  /// is an empty list the method returns *all* the current policies.
   CORBA::PolicyList * get_policy_overrides (const CORBA::PolicyTypeSeq & types,
                                             CORBA::Environment &ACE_TRY_ENV =
                                             TAO_default_environment ()
     );
-  // Get the values (if any) for the policies in <types>, if <types>
-  // is an empty list the method returns *all* the current policies.
 
+  /// Obtain a single policy.
   CORBA::Policy_ptr get_policy (CORBA::PolicyType policy,
                                 CORBA::Environment &ACE_TRY_ENV =
                                 TAO_default_environment ()
     );
-  // Obtain a single policy.
 
   // = Direct accesors to the policy implementations, for speedy
   //   lookups.
@@ -141,9 +140,9 @@ private:
   ACE_UNIMPLEMENTED_FUNC (TAO_Policy_Manager_Impl operator=(const TAO_Policy_Manager_Impl&))
   ACE_UNIMPLEMENTED_FUNC (TAO_Policy_Manager_Impl(const TAO_Policy_Manager_Impl&))
 
+  /// Remove and destroy all the policy objects owned by this policy
+  /// manager.
   void cleanup_i (CORBA::Environment &ACE_TRY_ENV);
-  // Remove and destroy all the policy objects owned by this policy
-  // manager.
 
 private:
   // The known policies are kept as pointers to the implementation
@@ -177,11 +176,11 @@ private:
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
+  /// Other policies that are not optimized for fast querying
   CORBA::PolicyList other_policies_;
-  // Other policies that are not optimized for fast querying
 
+  /// The number of non-nil policies
   CORBA::ULong count_;
-  // The number of non-nil policies
 };
 
 // ****************************************************************
@@ -191,14 +190,14 @@ class TAO_Export TAO_Policy_Manager :
   public TAO_Local_RefCounted_Object
 {
 public:
+  /// constructor
   TAO_Policy_Manager (void);
-  // constructor
 
+  /// Obtain a single policy.
   CORBA::Policy_ptr get_policy (CORBA::PolicyType policy,
                                 CORBA::Environment &ACE_TRY_ENV =
                                 TAO_default_environment ()
     );
-  // Obtain a single policy.
 
   // = The CORBA::PolicyManager operations
 
@@ -245,11 +244,11 @@ public:
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
 private:
+  /// Protect access
   ACE_SYNCH_MUTEX mutex_;
-  // Protect access
 
+  /// The implementation.
   TAO_Policy_Manager_Impl impl_;
-  // The implementation.
 };
 
 // ****************************************************************
@@ -257,11 +256,11 @@ private:
 class TAO_Export TAO_Policy_Current_Impl
 {
 public:
+  /// Obtain a single policy.
   CORBA::Policy_ptr get_policy (CORBA::PolicyType policy,
                                 CORBA::Environment &ACE_TRY_ENV =
                                 TAO_default_environment ()
     );
-  // Obtain a single policy.
 
   // = The CORBA::PolicyManager operations
 
@@ -300,8 +299,8 @@ public:
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
 private:
+  /// The implementation.
   TAO_Policy_Manager_Impl manager_impl_;
-  // The implementation.
 };
 
 // ****************************************************************
@@ -311,15 +310,15 @@ class TAO_Export TAO_Policy_Current :
   public TAO_Local_RefCounted_Object
 {
 public:
+  /// Constructor
   TAO_Policy_Current (void);
-  // Constructor
 
+  /// Obtain a single policy.
   CORBA::Policy_ptr get_policy (
       CORBA::PolicyType policy,
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
-  // Obtain a single policy.
 
   // = The CORBA::PolicyManager operations
 

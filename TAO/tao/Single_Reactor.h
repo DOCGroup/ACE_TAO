@@ -1,17 +1,14 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   TAO
-//
-// = FILENAME
-//   Single_Reactor.h
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Single_Reactor.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #ifndef TAO_SINGLE_REACTOR_H
 #define TAO_SINGLE_REACTOR_H
@@ -25,24 +22,25 @@
 
 class TAO_Leader_Follower;
 
+/**
+ * @class TAO_Single_Reactor
+ *
+ * @brief The Single_Reactor concurrency strategy.
+ *
+ * This strategy creates a different reactor for each priority
+ * level, threads at the right priority level run the event loop
+ * on that reactor.
+ * Multiple threads can share the same reactor, usually using the
+ * thread-pool strategy.
+ */
 class TAO_Export TAO_Single_Reactor  : public TAO_Reactor_Registry
 {
-  // = TITLE
-  //   The Single_Reactor concurrency strategy.
-  //
-  // = DESCRIPTION
-  //   This strategy creates a different reactor for each priority
-  //   level, threads at the right priority level run the event loop
-  //   on that reactor.
-  //   Multiple threads can share the same reactor, usually using the
-  //   thread-pool strategy.
-  //
 public:
+  /// Default constructor
   TAO_Single_Reactor (void);
-  // Default constructor
 
+  /// The destructor
   virtual ~TAO_Single_Reactor (void);
-  // The destructor
 
   // = The TAO_Reactor_Registry methods, please check the
   // documentation in tao/Reactor_Registry.h
@@ -55,8 +53,8 @@ public:
   virtual int shutdown_all (void);
 
 private:
+  /// The leader follower
   TAO_Leader_Follower *leader_follower_;
-  // The leader follower
 };
 
 #if defined (__ACE_INLINE__)

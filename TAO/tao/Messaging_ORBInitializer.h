@@ -1,19 +1,15 @@
 // -*- C++ -*-
-//
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//     TAO
-//
-// = FILENAME
-//     Messaging_ORBInitializer.h
-//
-// = AUTHOR
-//     Ossama Othman <ossama@uci.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file     Messaging_ORBInitializer.h
+ *
+ *  $Id$
+ *
+ *  @author  Ossama Othman <ossama@uci.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_MESSAGING_ORB_INITIALIZER_H
 #define TAO_MESSAGING_ORB_INITIALIZER_H
@@ -57,10 +53,10 @@ public:
 
 private:
 
+  ////< Register Messaging policy factories.
   void register_policy_factories (
          PortableInterceptor::ORBInitInfo_ptr info
          TAO_ENV_ARG_DECL);
-  ///< Register Messaging policy factories.
 
 };
 

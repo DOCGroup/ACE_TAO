@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    Object_Proxy_Impl.h
-//
-// = DESCRIPTION
-//    This files contains the proxy definition of the interface that
-//    all the Object proxy have to imlements.
-//
-// = AUTHOR
-//     Angelo Corsaro <corsaro@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Object_Proxy_Impl.h
+ *
+ *  $Id$
+ *
+ *  This files contains the proxy definition of the interface that
+ *  all the Object proxy have to imlements.
+ *
+ *
+ *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_OBJECT_PROXY_IMPL_H_
 #define TAO_OBJECT_PROXY_IMPL_H_
@@ -23,14 +20,16 @@
 #include "ace/pre.h"
 #include "tao/corbafwd.h"
 
+/**
+ * @class TAO_Object_Proxy_Impl
+ *
+ * @brief TAO_Object_Proxy_Impl
+ *
+ * This class defines the interface that the proxy for the class
+ * CORBA::Object have to implement.
+ */
 class TAO_Export TAO_Object_Proxy_Impl
 {
-  // = TITLE
-  //     TAO_Object_Proxy_Impl
-  //
-  // = DESCRIPTION
-  //     This class defines the interface that the proxy for the class
-  //     CORBA::Object have to implement.
 public:
 
   virtual ~TAO_Object_Proxy_Impl (void);
