@@ -542,7 +542,7 @@ ACE_Unbounded_Queue<T>::reset (void)
 }
 
 template <class T> int
-ACE_Unbounded_Queue<T>::get (T *&item, size_t index) const
+ACE_Unbounded_Queue<T>::get (T *&item, size_t slot) const
 {
 //   ACE_TRACE ("ACE_Unbounded_Queue<T>::get");
 
@@ -552,7 +552,7 @@ ACE_Unbounded_Queue<T>::get (T *&item, size_t index) const
 
   for (i = 0; i < this->cur_size_; i++)
     {
-      if (i == index)
+      if (i == slot)
         break;
 
       curr = curr->next_;
@@ -569,7 +569,7 @@ ACE_Unbounded_Queue<T>::get (T *&item, size_t index) const
 
 template <class T> int
 ACE_Unbounded_Queue<T>::set (const T &item,
-                             size_t index)
+                             size_t slot)
 {
 //   ACE_TRACE ("ACE_Unbounded_Queue<T>::set");
 
@@ -578,7 +578,7 @@ ACE_Unbounded_Queue<T>::set (const T &item,
   size_t i;
 
   for (i = 0;
-       i < index && i < this->cur_size_;
+       i < slot && i < this->cur_size_;
        i++)
     curr = curr->next_;
 
@@ -594,7 +594,7 @@ ACE_Unbounded_Queue<T>::set (const T &item,
 
       // A common case will be increasing the set size by 1.
       // Therefore, we'll optimize for this case.
-      if (i == index)
+      if (i == slot)
         {
           // Try to expand the size of the set by 1.
           if (this->enqueue_tail (item) == -1)
@@ -607,7 +607,7 @@ ACE_Unbounded_Queue<T>::set (const T &item,
           T dummy;
 
           // We need to expand the list by multiple (dummy) items.
-          for (; i < index; i++)
+          for (; i < slot; i++)
             {
               // This head points to the existing dummy node, which is
               // about to be overwritten when we add the new dummy
@@ -851,12 +851,12 @@ ACE_Double_Linked_List<T>::reset (void)
 }
 
 template <class T> int
-ACE_Double_Linked_List<T>::get (T *&item, size_t index)
+ACE_Double_Linked_List<T>::get (T *&item, size_t slot)
 {
   ACE_Double_Linked_List_Iterator<T> iter (*this);
 
   for (size_t i = 0;
-       i < index && !iter.done ();
+       i < slot && !iter.done ();
        i++)
     iter.advance ();
 
@@ -2368,30 +2368,30 @@ ACE_Array_Base<T>::operator= (const ACE_Array_Base<T> &s)
     }
 }
 
-// Set an item in the array at location index.
+// Set an item in the array at location slot.
 
 template <class T> int
-ACE_Array_Base<T>::set (const T &new_item, size_t index)
+ACE_Array_Base<T>::set (const T &new_item, size_t slot)
 {
-  if (this->in_range (index))
+  if (this->in_range (slot))
     {
-      this->array_[index] = new_item;
+      this->array_[slot] = new_item;
       return 0;
     }
   else
     return -1;
 }
 
-// Get an item in the array at location index.
+// Get an item in the array at location slot.
 
 template <class T> int
-ACE_Array_Base<T>::get (T &item, size_t index) const
+ACE_Array_Base<T>::get (T &item, size_t slot) const
 {
-   if (this->in_range (index))
+   if (this->in_range (slot))
      {
        // Copies the item.  If you don't want to copy, use operator []
        // instead (but then you'll be responsible for range checking).
-       item = this->array_[index];
+       item = this->array_[slot];
        return 0;
      }
    else
@@ -2453,8 +2453,8 @@ ACE_Array<T>::operator== (const ACE_Array<T> &s) const
   else if (this->size () != s.size ())
     return 0;
 
-  for (size_t index = 0; index < s.size (); index++)
-    if ((*this)[index] != s[index])
+  for (size_t slot = 0; slot < s.size (); slot++)
+    if ((*this)[slot] != s[slot])
       return 0;
 
   return 1;

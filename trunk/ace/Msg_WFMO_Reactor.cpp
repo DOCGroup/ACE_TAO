@@ -80,10 +80,10 @@ ACE_Msg_WFMO_Reactor::dispatch_window_messages (void)
 }
 
 DWORD
-ACE_Msg_WFMO_Reactor::poll_remaining_handles (size_t index)
+ACE_Msg_WFMO_Reactor::poll_remaining_handles (size_t slot)
 {
-  return ::MsgWaitForMultipleObjects (this->handler_rep_.max_handlep1 () - index,
-                                      this->handler_rep_.handles () + index,
+  return ::MsgWaitForMultipleObjects (this->handler_rep_.max_handlep1 () - slot,
+                                      this->handler_rep_.handles () + slot,
                                       FALSE,
                                       0,
                                       QS_ALLINPUT);

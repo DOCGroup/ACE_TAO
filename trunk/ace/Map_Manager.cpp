@@ -79,9 +79,9 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::bind_i (const EXT_ID &ext_id,
                                                    const INT_ID &int_id)
 {
   // Try to find the key.
-  size_t index = 0;
+  size_t slot = 0;
   int result = this->find_and_return_index (ext_id,
-                                            index);
+                                            slot);
 
   if (result == 0)
     {
@@ -124,14 +124,14 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::next_free (size_t &free_slot)
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> void
-ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::shared_move (size_t index,
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::shared_move (size_t slot,
                                                         ACE_Map_Entry<EXT_ID, INT_ID> &current_list,
                                                         size_t current_list_id,
                                                         ACE_Map_Entry<EXT_ID, INT_ID> &new_list,
                                                         size_t new_list_id)
 {
   // Grab the entry.
-  ENTRY &entry = this->search_structure_[index];
+  ENTRY &entry = this->search_structure_[slot];
 
   //
   // Remove from current list.
@@ -169,16 +169,16 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::shared_move (size_t index,
   entry.prev (new_list_id);
 
   // Fix entry before us.
-  new_list.next (index);
+  new_list.next (slot);
 
   // Fix entry after us.
   if (new_list_next == new_list_id)
     {
-      new_list.prev (index);
+      new_list.prev (slot);
     }
   else
     {
-      this->search_structure_[new_list_next].prev (index);
+      this->search_structure_[new_list_next].prev (slot);
     }
 }
 
@@ -190,17 +190,17 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::shared_bind (const EXT_ID &ext_id,
   // therefore, simply adds to the map.
 
   // Find an empty slot.
-  size_t index = 0;
-  int result = this->next_free (index);
+  size_t slot = 0;
+  int result = this->next_free (slot);
 
   if (result == 0)
     {
       // Copy key and value.
-      this->search_structure_[index].int_id_ = int_id;
-      this->search_structure_[index].ext_id_ = ext_id;
+      this->search_structure_[slot].int_id_ = int_id;
+      this->search_structure_[slot].ext_id_ = ext_id;
 
       // Move from free list to occupied list
-      this->move_from_free_list_to_occupied_list (index);
+      this->move_from_free_list_to_occupied_list (slot);
 
       // Update the current size.
       ++this->cur_size_;
@@ -216,15 +216,15 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::rebind_i (const EXT_ID &ext_id,
                                                      INT_ID &old_int_id)
 {
   // First try to find the key.
-  size_t index = 0;
+  size_t slot = 0;
   int result = this->find_and_return_index (ext_id,
-                                            index);
+                                            slot);
 
   if (result == 0)
     {
       // We found it, so make copies of the old entries and rebind
       // current entries.
-      ENTRY &ss = this->search_structure_[index];
+      ENTRY &ss = this->search_structure_[slot];
       old_ext_id = ss.ext_id_;
       old_int_id = ss.int_id_;
       ss.ext_id_ = ext_id;
@@ -249,15 +249,15 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::rebind_i (const EXT_ID &ext_id,
                                                      INT_ID &old_int_id)
 {
   // First try to find the key.
-  size_t index = 0;
+  size_t slot = 0;
   int result = this->find_and_return_index (ext_id,
-                                            index);
+                                            slot);
 
   if (result == 0)
     {
       // We found it, so make copies of the old entries and rebind
       // current entries.
-      ENTRY &ss = this->search_structure_[index];
+      ENTRY &ss = this->search_structure_[slot];
       old_int_id = ss.int_id_;
       ss.ext_id_ = ext_id;
       ss.int_id_ = int_id;
@@ -281,14 +281,14 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::rebind_i (const EXT_ID &ext_id,
 {
 
   // First try to find the key.
-  size_t index = 0;
+  size_t slot = 0;
   int result = this->find_and_return_index (ext_id,
-                                            index);
+                                            slot);
 
   if (result == 0)
     {
       // We found it, so rebind current entries.
-      ENTRY &ss = this->search_structure_[index];
+      ENTRY &ss = this->search_structure_[slot];
       ss.ext_id_ = ext_id;
       ss.int_id_ = int_id;
 
@@ -310,15 +310,15 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::trybind_i (const EXT_ID &ext_id,
                                                       INT_ID &int_id)
 {
   // Try to find the key.
-  size_t index = 0;
+  size_t slot = 0;
   int result = this->find_and_return_index (ext_id,
-                                            index);
+                                            slot);
 
   if (result == 0)
     {
       // Key was found.  Make a copy of value, but *don't* update
       // anything in the map!
-      int_id = this->search_structure_[index].int_id_;
+      int_id = this->search_structure_[slot].int_id_;
       return 1;
     }
   else
@@ -331,7 +331,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::trybind_i (const EXT_ID &ext_id,
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int
 ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::find_and_return_index (const EXT_ID &ext_id,
-                                                                  size_t &index)
+                                                                  size_t &slot)
 {
   // Go through the entire occupied list looking for the key.
   for (size_t i = this->occupied_list_.next ();
@@ -341,8 +341,8 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::find_and_return_index (const EXT_ID &
       if (this->equal (this->search_structure_[i].ext_id_,
                        ext_id))
         {
-          // If found, return index.
-          index = i;
+          // If found, return slot.
+          slot = i;
           return 0;
         }
     }
@@ -356,14 +356,14 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::find_i (const EXT_ID &ext_id,
                                                    INT_ID &int_id)
 {
   // Try to find the key.
-  size_t index = 0;
+  size_t slot = 0;
   int result = this->find_and_return_index (ext_id,
-                                            index);
+                                            slot);
 
   if (result == 0)
     {
       // Key was found.  Make a copy of value.
-      int_id = this->search_structure_[index].int_id_;
+      int_id = this->search_structure_[slot].int_id_;
     }
 
   return result;
@@ -371,16 +371,16 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::find_i (const EXT_ID &ext_id,
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int
 ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind_and_return_index (const EXT_ID &ext_id,
-                                                                    size_t &index)
+                                                                    size_t &slot)
 {
   // Try to find the key.
   int result = this->find_and_return_index (ext_id,
-                                            index);
+                                            slot);
 
   if (result == 0)
     {
       // Move from occupied list to free list
-      this->move_from_occupied_list_to_free_list (index);
+      this->move_from_occupied_list_to_free_list (slot);
 
       // Update the current size.
       --this->cur_size_;
@@ -394,14 +394,14 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind_i (const EXT_ID &ext_id,
                                                      INT_ID &int_id)
 {
   // Unbind the entry.
-  size_t index = 0;
+  size_t slot = 0;
   int result = this->unbind_and_return_index (ext_id,
-                                              index);
+                                              slot);
 
   if (result == 0)
     {
       // If found, copy the value.
-      int_id = this->search_structure_[index].int_id_;
+      int_id = this->search_structure_[slot].int_id_;
     }
 
   return result;

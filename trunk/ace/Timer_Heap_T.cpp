@@ -278,44 +278,44 @@ template <class TYPE, class FUNCTOR, class ACE_LOCK> void
 ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::copy (int index, ACE_Timer_Node_T<TYPE> *moved_node)
 {
   // Insert <moved_node> into its new location in the heap.
-  this->heap_[index] = moved_node;
+  this->heap_[slot] = moved_node;
 
   ACE_ASSERT (moved_node->get_timer_id () >= 0
               && moved_node->get_timer_id () < (int) this->max_size_);
   // Update the corresponding slot in the parallel <timer_ids_> array.
-  this->timer_ids_[moved_node->get_timer_id ()] = index;
+  this->timer_ids_[moved_node->get_timer_id ()] = slot;
 }
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK> ACE_Timer_Node_T<TYPE> *
-ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::remove (size_t index)
+ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::remove (size_t slot)
 {
-  ACE_Timer_Node_T<TYPE> *removed_node = this->heap_[index];
+  ACE_Timer_Node_T<TYPE> *removed_node = this->heap_[slot];
 
   // Return this timer id to the freelist.
   this->push_freelist (removed_node->get_timer_id ());
 
   // Decrement the size of the heap by one since we're removing the
-  // "index"th node.
+  // "slot"th node.
   this->cur_size_--;
 
   // Only try to reheapify if we're not deleting the last entry.
 
-  if (index < this->cur_size_)
+  if (slot < this->cur_size_)
     {
       ACE_Timer_Node_T<TYPE> *moved_node = this->heap_[this->cur_size_];
 
       // Move the end node to the location being removed and update
       // the corresponding slot in the parallel <timer_ids> array.
-      this->copy (index, moved_node);
+      this->copy (slot, moved_node);
 
       // If the <moved_node->time_value_> is great than or equal its
       // parent it needs be moved down the heap.
-      size_t parent = ACE_HEAP_PARENT (index);
+      size_t parent = ACE_HEAP_PARENT (slot);
 
       if (moved_node->get_timer_value () >= this->heap_[parent]->get_timer_value ())
-        this->reheap_down (moved_node, index, ACE_HEAP_LCHILD (index));
+        this->reheap_down (moved_node, slot, ACE_HEAP_LCHILD (slot));
       else
-        this->reheap_up (moved_node, index, parent);
+        this->reheap_up (moved_node, slot, parent);
     }
 
   return removed_node;
@@ -323,7 +323,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::remove (size_t index)
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK> void
 ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::reheap_down (ACE_Timer_Node_T<TYPE> *moved_node,
-                                                    size_t index,
+                                                    size_t slot,
                                                     size_t child)
 {
   // Restore the heap property after a deletion.
@@ -339,8 +339,8 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::reheap_down (ACE_Timer_Node_T<TYPE> *
       // the <moved_node>.
       if (this->heap_[child]->get_timer_value () < moved_node->get_timer_value ())
         {
-          this->copy (index, this->heap_[child]);
-          index = child;
+          this->copy (slot, this->heap_[child]);
+          slot = child;
           child = ACE_HEAP_LCHILD (child);
         }
       else
@@ -348,25 +348,25 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::reheap_down (ACE_Timer_Node_T<TYPE> *
         break;
     }
 
-  this->copy (index, moved_node);
+  this->copy (slot, moved_node);
 }
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK> void
 ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::reheap_up (ACE_Timer_Node_T<TYPE> *moved_node,
-                                                  size_t index,
+                                                  size_t slot,
                                                   size_t parent)
 {
   // Restore the heap property after an insertion.
 
-  while (index > 0)
+  while (slot > 0)
     {
       // If the parent node is greater than the <moved_node> we need
       // to copy it down.
       if (moved_node->get_timer_value () < this->heap_[parent]->get_timer_value ())
         {
-          this->copy (index, this->heap_[parent]);
-          index = parent;
-          parent = ACE_HEAP_PARENT (index);
+          this->copy (slot, this->heap_[parent]);
+          slot = parent;
+          parent = ACE_HEAP_PARENT (slot);
         }
       else
         break;
@@ -374,7 +374,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::reheap_up (ACE_Timer_Node_T<TYPE> *mo
 
   // Insert the new node into its proper resting place in the heap and
   // update the corresponding slot in the parallel <timer_ids> array.
-  this->copy (index, moved_node);
+  this->copy (slot, moved_node);
 }
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK> void

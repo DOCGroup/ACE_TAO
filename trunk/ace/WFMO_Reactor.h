@@ -295,8 +295,8 @@ public:
   virtual int make_changes (void);
   // Make changes to the handle set
 
-  int scheduled_for_deletion (size_t index) const;
-  // Check to see if <index> has been scheduled for deletion
+  int scheduled_for_deletion (size_t slot) const;
+  // Check to see if <slot> has been scheduled for deletion
 
   int modify_network_events_i (ACE_HANDLE io_handle,
                                ACE_Reactor_Mask new_masks,
@@ -334,17 +334,17 @@ public:
   // Deletions in to_be_added_info_, or transfers to current_info_ or
   // current_suspended_info_ from to_be_added_info_
 
-  int remove_handler_i (size_t index,
+  int remove_handler_i (size_t slot,
                         ACE_Reactor_Mask mask);
-  // Removes the <ACE_Event_Handler> at <index> from the table.
+  // Removes the <ACE_Event_Handler> at <slot> from the table.
 
-  int remove_suspended_handler_i (size_t index,
+  int remove_suspended_handler_i (size_t slot,
                                   ACE_Reactor_Mask mask);
-  // Removes the <ACE_Event_Handler> at <index> from the table.
+  // Removes the <ACE_Event_Handler> at <slot> from the table.
 
-  int remove_to_be_added_handler_i (size_t index,
+  int remove_to_be_added_handler_i (size_t slot,
                                     ACE_Reactor_Mask to_be_removed_masks);
-  // Removes the <ACE_Event_Handler> at <index> from the table.
+  // Removes the <ACE_Event_Handler> at <slot> from the table.
 
   void dump (void) const;
   // Dump the state of an object.
@@ -934,7 +934,7 @@ protected:
                                         int alertable);
   // Wait for timer and I/O events to occur.
 
-  virtual DWORD poll_remaining_handles (size_t index);
+  virtual DWORD poll_remaining_handles (size_t slot);
   // Check for activity on remaining handles.
 
   virtual int expire_timers (void);
@@ -948,22 +948,22 @@ protected:
   // Protect against structured exceptions caused by user code when
   // dispatching handles
 
-  virtual int dispatch_handles (size_t index);
-  // Dispatches any active handles from handles_[<index>] to
+  virtual int dispatch_handles (size_t slot);
+  // Dispatches any active handles from handles_[<slot>] to
   // handles_[active_handles_] using <WaitForMultipleObjects> to poll
   // through our handle set looking for active handles.
 
-  virtual int dispatch_handler (size_t index,
+  virtual int dispatch_handler (size_t slot,
                                 size_t max_handlep1);
   // Dispatches a single handler.  Returns 0 on success, -1 if the
   // handler was removed.
 
-  virtual int simple_dispatch_handler (int index,
+  virtual int simple_dispatch_handler (int slot,
                                        ACE_HANDLE event_handle);
   // Dispatches a single handler.  Returns 0 on success, -1 if the
   // handler was removed.
 
-  virtual int complex_dispatch_handler (int index,
+  virtual int complex_dispatch_handler (int slot,
                                         ACE_HANDLE event_handle);
   // Dispatches a single handler.  Returns 0 on success, -1 if the
   // handler was removed.

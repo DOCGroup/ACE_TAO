@@ -278,7 +278,7 @@ protected:
   // called with locks held.
 
   int find_and_return_index (const EXT_ID &ext_id,
-                             size_t &index);
+                             size_t &slot);
   // Performs a find using <ext_id> as the key.  Must be called with
   // locks held.
 
@@ -292,7 +292,7 @@ protected:
   // with locks held.
 
   int unbind_and_return_index (const EXT_ID &ext_id,
-                               size_t &index);
+                               size_t &slot);
   // Performs an unbind using <ext_id> as the key.  Must be called
   // with locks held.
 
@@ -320,16 +320,16 @@ protected:
   size_t occupied_list_id (void) const;
   // Id of the occupied list sentinel.
 
-  int next_free (size_t &index);
+  int next_free (size_t &slot);
   // Finds the next free slot.
 
-  void move_from_free_list_to_occupied_list (size_t index);
+  void move_from_free_list_to_occupied_list (size_t slot);
   // Move from free list to occupied list.
 
-  void move_from_occupied_list_to_free_list (size_t index);
+  void move_from_occupied_list_to_free_list (size_t slot);
   // Move from occupied list to free list.
 
-  void shared_move (size_t index,
+  void shared_move (size_t slot,
                     ACE_Map_Entry<EXT_ID, INT_ID> &current_list,
                     size_t current_list_id,
                     ACE_Map_Entry<EXT_ID, INT_ID> &new_list,
