@@ -10,7 +10,8 @@
 #----------------------------------------------------------------------------
 DIRS_PARALLEL = 1
 
-BIN =   ACE_Test \
+BIN =   \
+        ACE_Test \
         Aio_Platform_Test \
         Arg_Shifter_Test \
         ARGV_Test \
@@ -18,7 +19,7 @@ BIN =   ACE_Test \
         Auto_IncDec_Test \
         Barrier_Test \
         Basic_Types_Test \
-	Bound_Ptr_Test \
+        Bound_Ptr_Test \
         Buffer_Stream_Test \
         Cache_Map_Manager_Test \
         Cached_Accept_Conn_Test \
@@ -28,81 +29,86 @@ BIN =   ACE_Test \
         CDR_File_Test \
         CDR_Test \
         Collection_Test \
-	Config_Test \
+        Config_Test \
         Conn_Test \
         Date_Time_Test \
-	Dev_Poll_Reactor_Test \
-	Dirent_Test \
-        DLList_Test \
+        Dev_Poll_Reactor_Test \
+        Dirent_Test \
         DLL_Test\
+        DLList_Test \
+        Dynamic_Priority_Test \
         Enum_Interfaces_Test \
         Env_Value_Test \
         FIFO_Test \
-        Future_Test \
         Future_Set_Test \
-	Get_Opt_Test \
+        Future_Test \
+        Get_Opt_Test \
         Handle_Set_Test \
-        High_Res_Timer_Test \
-        Hash_Map_Manager_Test \
         Hash_Map_Bucket_Iterator_Test \
+        Hash_Map_Manager_Test \
+        High_Res_Timer_Test \
         INET_Addr_Test \
         IOStream_Test \
         Lazy_Map_Manager_Test \
         Log_Msg_Test \
-	Logging_Strategy_Test \
+        Logging_Strategy_Test \
         Malloc_Test \
-        Map_Test \
         Map_Manager_Test \
+        Map_Test \
         Max_Default_Port_Test \
-	MEM_Stream_Test \
         Mem_Map_Test \
+        MEM_Stream_Test \
+        Message_Block_Test \
+        Message_Queue_Notifications_Test \
+        Message_Queue_Test \
+        Message_Queue_Test_Ex \
         MM_Shared_Memory_Test \
         MT_Reactor_Timer_Test \
         MT_Reactor_Upcall_Test \
+        MT_Reference_Counted_Event_Handler_Test \
+        MT_Reference_Counted_Notify_Test \
         MT_SOCK_Test \
-        Message_Block_Test \
-        Message_Queue_Test \
-        Message_Queue_Test_Ex \
-        Message_Queue_Notifications_Test \
         Multicast_Test \
         Multihomed_INET_Addr_Test \
+        NonBlocking_Conn_Test \
         Notify_Performance_Test \
         Object_Manager_Test \
         Obstack_Test \
         OrdMultiSet_Test \
         OS_Test \
-	Proactor_Scatter_Gather_Test \
-	Proactor_Test \
-	Proactor_Timer_Test \
+        Pipe_Test \
+        Priority_Buffer_Test \
+        Priority_Reactor_Test \
+        Priority_Task_Test \
+        Proactor_Scatter_Gather_Test \
+        Proactor_Test \
+        Proactor_Timer_Test \
+        Process_Manager_Test \
         Process_Mutex_Test \
         Process_Strategy_Test \
-        Priority_Buffer_Test \
-        Dynamic_Priority_Test \
-        Priority_Task_Test \
-        Priority_Reactor_Test \
-        Process_Manager_Test \
-        Pipe_Test \
         RB_Tree_Test \
-        Reactors_Test \
+        Reactor_Dispatch_Order_Test \
         Reactor_Exceptions_Test \
         Reactor_Notify_Test \
-        Reactor_Dispatch_Order_Test \
         Reactor_Performance_Test \
+        Reactor_Registration_Test \
         Reactor_Timer_Test \
+        Reactors_Test \
         Reader_Writer_Test \
-        Recursive_Condition_Test \
         Recursive_Condition_Bug_Test \
+        Recursive_Condition_Test \
         Recursive_Mutex_Test \
-	Refcounted_Auto_Ptr_Test \
+        Refcounted_Auto_Ptr_Test \
+        Reference_Counted_Event_Handler_Test \
         Reverse_Lock_Test \
         Semaphore_Test \
         Signal_Test \
         Sigset_Ops_Test \
         Simple_Message_Block_Test \
-        SOCK_Test \
         SOCK_Connector_Test \
-	SOCK_SEQPACK_Association_Test \
         SOCK_Send_Recv_Test \
+        SOCK_SEQPACK_Association_Test \
+        SOCK_Test \
         SPIPE_Test \
         SString_Test \
         SV_Shared_Memory_Test \
@@ -111,17 +117,20 @@ BIN =   ACE_Test \
         Thread_Manager_Test \
         Thread_Mutex_Test \
         Thread_Pool_Test \
-        Timeprobe_Test \
         Time_Service_Test \
         Time_Value_Test \
+        Timeprobe_Test \
+        Timer_Cancellation_Test \
+        Timer_Queue_Reference_Counting_Test \
         Timer_Queue_Test \
-	Token_Strategy_Test \
+        Token_Strategy_Test \
         TP_Reactor_Test \
         TSS_Test \
-	Vector_Test \
-        UPIPE_SAP_Test \
         Unbounded_Set_Test_Ex \
-        Upgradable_RW_Test
+        Upgradable_RW_Test \
+        UPIPE_SAP_Test \
+        Vector_Test \
+        WFMO_Reactor_Test
 
 BIN2 =  Naming_Test \
         Thread_Pool_Reactor_Test \
@@ -231,26 +240,26 @@ endif
 #----------------------------------------------------------------------------
 
 libFramework_Component_DLL.$(SOEXT): Framework_Component_DLL.cpp Framework_Component_DLL.h
-	@$(MAKE) -f Makefile.Framework_Component_DLL
+        @$(MAKE) -f Makefile.Framework_Component_DLL
 
 libDLL_Test.$(SOEXT): DLL_Test_Impl.cpp DLL_Test_Impl.h
-	@$(MAKE) -f Makefile.DLL_Test
+        @$(MAKE) -f Makefile.DLL_Test
 
 libService_Config_DLL.$(SOEXT): Service_Config_DLL.cpp Service_Config_DLL.h
-	@$(MAKE) -f Makefile.Service_Config_DLL
+        @$(MAKE) -f Makefile.Service_Config_DLL
 
 ifdef VXWORKS
 all: run_test.vxworks
 
 run_test.vxworks: run_test.lst
-	run_test.pl -v -Config STATIC -Config CHECK_RESOURCES -o run_test.vxworks
+        run_test.pl -v -Config STATIC -Config CHECK_RESOURCES -o run_test.vxworks
 endif
 
 realclean: clean
-	-$(MAKE) -f Makefile.Framework_Component_DLL realclean
-	-$(MAKE) -f Makefile.DLL_Test realclean
-	-$(MAKE) -f Makefile.Service_Config_DLL realclean
-	-$(RM) log/compilations.log*
+        -$(MAKE) -f Makefile.Framework_Component_DLL realclean
+        -$(MAKE) -f Makefile.DLL_Test realclean
+        -$(MAKE) -f Makefile.Service_Config_DLL realclean
+        -$(RM) log/compilations.log*
 
 #----------------------------------------------------------------------------
 #       Dependencies

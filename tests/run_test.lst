@@ -25,13 +25,13 @@ Basic_Types_Test
 Bound_Ptr_Test
 Buffer_Stream_Test
 Cache_Map_Manager_Test
-Cached_Conn_Test: !LynxOS !VxWorks
 Cached_Accept_Conn_Test: !VxWorks
 Cached_Allocator_Test
+Cached_Conn_Test: !LynxOS !VxWorks
 Capabilities_Test
-CDR_Test
-CDR_File_Test
 CDR_Array_Test
+CDR_File_Test
+CDR_Test
 Codecs_Test
 Collection_Test
 Config_Test
@@ -45,23 +45,24 @@ Enum_Interfaces_Test
 Env_Value_Test: !chorus !WinCE
 FIFO_Test: !Win32
 Framework_Component_Test: !STATIC
-Future_Test
 Future_Set_Test
+Future_Test
 Get_Opt_Test
 Handle_Set_Test
-Hash_Map_Manager_Test
 Hash_Map_Bucket_Iterator_Test
+Hash_Map_Manager_Test
 High_Res_Timer_Test
 INET_Addr_Test
 IOStream_Test
 Lazy_Map_Manager_Test
 Log_Msg_Test
 Logging_Strategy_Test: !STATIC !ST
+Malloc_Test: !VxWorks
 Map_Manager_Test
 Map_Test
 Max_Default_Port_Test: !ST
-MEM_Stream_Test: !VxWorks
 Mem_Map_Test: !chorus !Unicos !VxWorks
+MEM_Stream_Test: !VxWorks
 Message_Block_Test: !chorus
 Message_Queue_Notifications_Test
 Message_Queue_Test: !chorus
@@ -69,12 +70,14 @@ Message_Queue_Test_Ex: !chorus
 MM_Shared_Memory_Test: !chorus !Unicos !VxWorks
 MT_Reactor_Timer_Test: !VxWorks
 MT_Reactor_Upcall_Test: !VxWorks
+MT_Reference_Counted_Event_Handler_Test
+MT_Reference_Counted_Notify_Test
 MT_SOCK_Test: !chorus
-Malloc_Test: !VxWorks
 Multicast_Test: !ST
 Multihomed_INET_Addr_Test
 Naming_Test: OTHER !chorus !LynxOS !Unicos !VxWorks
 New_Fail_Test: ALL !DISABLED
+NonBlocking_Conn_Test
 Notify_Performance_Test
 Object_Manager_Test
 Obstack_Test
@@ -91,44 +94,49 @@ Process_Manager_Test: !chorus !VxWorks
 Process_Mutex_Test: !chorus !VxWorks
 Process_Strategy_Test: !chorus !LynxOS !VxWorks
 RB_Tree_Test
-Reactors_Test
+Reactor_Dispatch_Order_Test
 Reactor_Exceptions_Test
 Reactor_Notify_Test: !ST
-Reactor_Dispatch_Order_Test
 Reactor_Performance_Test: !chorus
+Reactor_Registration_Test
 Reactor_Timer_Test
+Reactors_Test
 Reader_Writer_Test
-Recursive_Condition_Test: !ST
 Recursive_Condition_Bug_Test: !ST
+Recursive_Condition_Test: !ST
 Recursive_Mutex_Test: !ST
 Refcounted_Auto_Ptr_Test: !VxWorks
+Reference_Counted_Event_Handler_Test
 Reverse_Lock_Test
 Semaphore_Test
 Service_Config_Test: !STATIC
 Sigset_Ops_Test
 Simple_Message_Block_Test: !chorus
-Svc_Handler_Test
-SOCK_Test: !chorus
 SOCK_Connector_Test
 SOCK_Send_Recv_Test: !LynxOS
+SOCK_Test: !chorus
 SPIPE_Test: !VxWorks
 SString_Test
 SV_Shared_Memory_Test: !MSVC !Unicos !VxWorks !RH_7.1
+Svc_Handler_Test
 Task_Test
 Thread_Manager_Test: !Unicos
 Thread_Mutex_Test: !chorus
-Thread_Pool_Reactor_Test: OTHER
 Thread_Pool_Reactor_Resume_Test: OTHER !ST
+Thread_Pool_Reactor_Test: OTHER
 Thread_Pool_Test: !LynxOS !VxWorks
-Timer_Queue_Test
-Timeprobe_Test
 Time_Service_Test: ALL !STATIC !DISABLED !missing_netsvcs TOKEN !chorus !Unicos
 Time_Value_Test
+Timeprobe_Test
+Timer_Cancellation_Test
+Timer_Queue_Reference_Counting_Test
+Timer_Queue_Test
 Token_Strategy_Test: !ST
 Tokens_Test: ALL MSVC !DISABLED TOKEN !chorus !Unicos
 TP_Reactor_Test: ALL
 TSS_Test
-Vector_Test
 Unbounded_Set_Test_Ex
-UPIPE_SAP_Test: !VxWorks
 Upgradable_RW_Test: !chorus
+UPIPE_SAP_Test: !VxWorks
+Vector_Test
+WFMO_Reactor_Test

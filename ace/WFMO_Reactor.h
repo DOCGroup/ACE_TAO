@@ -403,6 +403,12 @@ public:
                                     ACE_Reactor_Mask to_be_removed_masks);
 
   /**
+   * Return the Event_Handler associated with <handle>.  Return 0 if
+   * <handle> is not registered.
+   */
+  ACE_Event_Handler *handler (ACE_HANDLE handle);
+
+  /**
    * Check to see if <handle> is associated with a valid Event_Handler
    * bound to <mask>.  Return the <event_handler> associated with this
    * <handler> if <event_handler> != 0.
@@ -410,6 +416,13 @@ public:
   int handler (ACE_HANDLE handle,
                ACE_Reactor_Mask mask,
                ACE_Event_Handler **event_handler = 0);
+
+  /**
+   * Check to see if <handle> is associated with a valid
+   * Event_Handler. Return Event_Handler and associated masks.
+   */
+  ACE_Event_Handler *handler (ACE_HANDLE handle,
+                              long &existing_masks);
 
   /// Dump the state of an object.
   void dump (void) const;
@@ -1055,6 +1068,12 @@ public:
                                            ACE_Reactor_Mask    = ACE_Event_Handler::ALL_EVENTS_MASK);
 
   // = Assorted helper methods.
+
+  /**
+   * Return the Event_Handler associated with <handle>.  Return 0 if
+   * <handle> is not registered.
+   */
+  ACE_Event_Handler *handler (ACE_HANDLE handle);
 
   /**
    * Check to see if <handle> is associated with a valid Event_Handler

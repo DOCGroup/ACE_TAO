@@ -1082,11 +1082,21 @@ ACE_WFMO_Reactor::ready_ops (ACE_HANDLE handle,
   ACE_NOTSUP_RETURN (-1);
 }
 
+ACE_INLINE ACE_Event_Handler *
+ACE_WFMO_Reactor::handler (ACE_HANDLE handle)
+{
+  ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->lock_, 0);
+
+  return this->handler_rep_.handler (handle);
+}
+
 ACE_INLINE int
 ACE_WFMO_Reactor::handler (ACE_HANDLE handle,
                            ACE_Reactor_Mask mask,
                            ACE_Event_Handler **event_handler)
 {
+  ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->lock_, -1);
+
   return this->handler_rep_.handler (handle,
                                      mask,
                                      event_handler);

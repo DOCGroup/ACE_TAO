@@ -2,15 +2,15 @@
 //
 // Visual Age C++ 5 Project file for building all the tests.
 
+subproject Aio_Platform_Test icc "Aio_Platform_Test.icc", ics "Aio_Platform_Test.ics"
+{
+}
+
 subproject Arg_Shifter_Test icc "Arg_Shifter_Test.icc", ics "Arg_Shifter_Test.ics"
 {
 }
 
 subproject ARGV_Test icc "ARGV_Test.icc", ics "ARGV_Test.ics"
-{
-}
-
-subproject Aio_Platform_Test icc "Aio_Platform_Test.icc", ics "Aio_Platform_Test.ics"
 {
 }
 
@@ -38,18 +38,6 @@ subproject Buffer_Stream_Test icc "Buffer_Stream_Test.icc", ics "Buffer_Stream_T
 {
 }
 
-subproject CDR_Array_Test icc "CDR_Array_Test.icc", ics "CDR_Array_Test.ics"
-{
-}
-
-subproject CDR_File_Test icc "CDR_File_Test.icc", ics "CDR_File_Test.ics"
-{
-}
-
-subproject CDR_Test icc "CDR_Test.icc", ics "CDR_Test.ics"
-{
-}
-
 subproject Cache_Map_Manager_Test icc "Cache_Map_Manager_Test.icc", ics "Cache_Map_Manager_Test.ics"
 {
 }
@@ -63,6 +51,18 @@ subproject Cached_Conn_Test icc "Cached_Conn_Test.icc", ics "Cached_Conn_Test.ic
 }
 
 subproject Capabilities_Test icc "Capabilities_Test.icc", ics "Capabilities_Test.ics"
+{
+}
+
+subproject CDR_Array_Test icc "CDR_Array_Test.icc", ics "CDR_Array_Test.ics"
+{
+}
+
+subproject CDR_File_Test icc "CDR_File_Test.icc", ics "CDR_File_Test.ics"
+{
+}
+
+subproject CDR_Test icc "CDR_Test.icc", ics "CDR_Test.ics"
 {
 }
 
@@ -82,19 +82,15 @@ subproject Date_Time_Test icc "Date_Time_Test.icc", ics "Date_Time_Test.ics"
 {
 }
 
+subproject Dirent_Test icc "Dirent_Test.icc", ics "Dirent_Test.ics"
+{
+}
+
 subproject DLL_Test icc "DLL_Test.icc", ics "DLL_Test.ics"
 {
 }
 
-subproject libDLL_Test icc "libDLL_Test.icc", ics "libDLL_Test.ics"
-{
-}
-
 subproject DLList_Test icc "DLList_Test.icc", ics "DLList_Test.ics"
-{
-}
-
-subproject Dirent_Test icc "Dirent_Test.icc", ics "Dirent_Test.ics"
 {
 }
 
@@ -158,31 +154,19 @@ subproject Lazy_Map_Manager_Test icc "Lazy_Map_Manager_Test.icc", ics "Lazy_Map_
 {
 }
 
+subproject libDLL_Test icc "libDLL_Test.icc", ics "libDLL_Test.ics"
+{
+}
+
+subproject libService_Config_DLL icc "libService_Config_DLL.icc", ics "libService_Config_DLL.ics"
+{
+}
+
 subproject Log_Msg_Test icc "Log_Msg_Test.icc", ics "Log_Msg_Test.ics"
 {
 }
 
 subproject Logging_Strategy_Test icc "Logging_Strategy_Test.icc", ics "Logging_Strategy_Test.ics"
-{
-}
-
-subproject MEM_Stream_Test icc "MEM_Stream_Test.icc", ics "MEM_Stream_Test.ics"
-{
-}
-
-subproject MM_Shared_Memory_Test icc "MM_Shared_Memory_Test.icc", ics "MM_Shared_Memory_Test.ics"
-{
-}
-
-subproject MT_Reactor_Timer_Test icc "MT_Reactor_Timer_Test.icc", ics "MT_Reactor_Timer_Test.ics"
-{
-}
-
-subproject MT_Reactor_Upcall_Test icc "MT_Reactor_Upcall_Test.icc", ics "MT_Reactor_Upcall_Test.ics"
-{
-}
-
-subproject MT_SOCK_Test icc "MT_SOCK_Test.icc", ics "MT_SOCK_Test.ics"
 {
 }
 
@@ -206,6 +190,10 @@ subproject Mem_Map_Test icc "Mem_Map_Test.icc", ics "Mem_Map_Test.ics"
 {
 }
 
+subproject MEM_Stream_Test icc "MEM_Stream_Test.icc", ics "MEM_Stream_Test.ics"
+{
+}
+
 subproject Message_Block_Test icc "Message_Block_Test.icc", ics "Message_Block_Test.ics"
 {
 }
@@ -222,6 +210,30 @@ subproject Message_Queue_Test_Ex icc "Message_Queue_Test_Ex.icc", ics "Message_Q
 {
 }
 
+subproject MM_Shared_Memory_Test icc "MM_Shared_Memory_Test.icc", ics "MM_Shared_Memory_Test.ics"
+{
+}
+
+subproject MT_Reactor_Timer_Test icc "MT_Reactor_Timer_Test.icc", ics "MT_Reactor_Timer_Test.ics"
+{
+}
+
+subproject MT_Reactor_Upcall_Test icc "MT_Reactor_Upcall_Test.icc", ics "MT_Reactor_Upcall_Test.ics"
+{
+}
+
+subproject MT_Reference_Counted_Event_Handler_Test icc "MT_Reference_Counted_Event_Handler_Test.icc", ics "MT_Reference_Counted_Event_Handler_Test.ics"
+{
+}
+
+subproject MT_Reference_Counted_Notify_Test icc "MT_Reference_Counted_Nofity_Test.icc", ics "MT_Reference_Counted_Notify_Test.ics"
+{
+}
+
+subproject MT_SOCK_Test icc "MT_SOCK_Test.icc", ics "MT_SOCK_Test.ics"
+{
+}
+
 subproject Multihomed_INET_Addr_Test icc "Multihomed_INET_Addr_Test.icc", ics "Multihomed_INET_Addr_Test.ics"
 {
 }
@@ -234,11 +246,11 @@ subproject New_Fail_Test icc "New_Fail_Test.icc", ics "New_Fail_Test.ics"
 {
 }
 
-subproject Notify_Performance_Test icc "Notify_Performance_Test.icc", ics "Notify_Performance_Test.ics"
+subproject NonBlocking_Conn_Test icc "NonBlocking_Conn_Test.icc", ics "NonBlocking_Conn_Test.ics"
 {
 }
 
-subproject OS_Test icc "OS_Test.icc", ics "OS_Test.ics"
+subproject Notify_Performance_Test icc "Notify_Performance_Test.icc", ics "Notify_Performance_Test.ics"
 {
 }
 
@@ -251,6 +263,10 @@ subproject Obstack_Test icc "Obstack_Test.icc", ics "Obstack_Test.ics"
 }
 
 subproject OrdMultiSet_Test icc "OrdMultiSet_Test.icc", ics "OrdMultiSet_Test.ics"
+{
+}
+
+subproject OS_Test icc "OS_Test.icc", ics "OS_Test.ics"
 {
 }
 
@@ -286,6 +302,10 @@ subproject RB_Tree_Test icc "RB_Tree_Test.icc", ics "RB_Tree_Test.ics"
 {
 }
 
+subproject Reactor_Dispatch_Order_Test icc "Reactor_Dispatch_Order_Test.icc", ics "Reactor_Dispatch_Order_Test.ics"
+{
+}
+
 subproject Reactor_Exceptions_Test icc "Reactor_Exceptions_Test.icc", ics "Reactor_Exceptions_Test.ics"
 {
 }
@@ -294,11 +314,11 @@ subproject Reactor_Notify_Test icc "Reactor_Notify_Test.icc", ics "Reactor_Notif
 {
 }
 
-subproject Reactor_Dispatch_Order_Test icc "Reactor_Dispatch_Order_Test.icc", ics "Reactor_Dispatch_Order_Test.ics"
+subproject Reactor_Performance_Test icc "Reactor_Performance_Test.icc", ics "Reactor_Performance_Test.ics"
 {
 }
 
-subproject Reactor_Performance_Test icc "Reactor_Performance_Test.icc", ics "Reactor_Performance_Test.ics"
+subproject Reactor_Registration_Test icc "Reactor_Registration_Test.icc", ics "Reactor_Registration_Test.ics"
 {
 }
 
@@ -326,7 +346,15 @@ subproject Refcounted_Auto_Ptr_Test icc "Refcounted_Auto_Ptr_Test.icc", ics "Ref
 {
 }
 
+subproject Reference_Counted_Event_Handler_Test icc "Reference_Counted_Event_Handler_Test.icc", ics "Reference_Counted_Event_Handler_Test.ics"
+{
+}
+
 subproject Reverse_Lock_Test icc "Reverse_Lock_Test.icc", ics "Reverse_Lock_Test.ics"
+{
+}
+
+subproject Semaphore_Test icc "Semaphore_Test.icc", ics "Semaphore_Test.ics"
 {
 }
 
@@ -334,7 +362,19 @@ subproject Service_Config_Test icc "Service_Config_Test.icc", ics "Service_Confi
 {
 }
 
-subproject libService_Config_DLL icc "libService_Config_DLL.icc", ics "libService_Config_DLL.ics"
+subproject Service_Config_Test icc "Service_Config_Test.icc", ics "Service_Config_Test.ics"
+{
+}
+
+subproject Signal_Test icc "Signal_Test.icc", ics "Signal_Test.ics"
+{
+}
+
+subproject Sigset_Ops_Test icc "Sigset_Ops_Test.icc", ics "Sigset_Ops_Test.ics"
+{
+}
+
+subproject Simple_Message_Block_Test icc "Simple_Message_Block_Test.icc", ics "Simple_Message_Block_Test.ics"
 {
 }
 
@@ -362,31 +402,7 @@ subproject SV_Shared_Memory_Test icc "SV_Shared_Memory_Test.icc", ics "SV_Shared
 {
 }
 
-subproject Semaphore_Test icc "Semaphore_Test.icc", ics "Semaphore_Test.ics"
-{
-}
-
-subproject Service_Config_Test icc "Service_Config_Test.icc", ics "Service_Config_Test.ics"
-{
-}
-
-subproject Signal_Test icc "Signal_Test.icc", ics "Signal_Test.ics"
-{
-}
-
-subproject Sigset_Ops_Test icc "Sigset_Ops_Test.icc", ics "Sigset_Ops_Test.ics"
-{
-}
-
-subproject Simple_Message_Block_Test icc "Simple_Message_Block_Test.icc", ics "Simple_Message_Block_Test.ics"
-{
-}
-
 subproject Svc_Handler_Test icc "Svc_Handler_Test.icc", ics "Svc_Handler_Test.ics"
-{
-}
-
-subproject TSS_Test icc "TSS_Test.icc", ics "TSS_Test.ics"
 {
 }
 
@@ -402,11 +418,11 @@ subproject Thread_Mutex_Test icc "Thread_Mutex_Test.icc", ics "Thread_Mutex_Test
 {
 }
 
-subproject Thread_Pool_Reactor_Test icc "Thread_Pool_Reactor_Test.icc", ics "Thread_Pool_Reactor_Test.ics"
+subproject Thread_Pool_Reactor_Resume_Test icc "Thread_Pool_Reactor_Resume_Test.icc", ics "Thread_Pool_Reactor_Resume_Test.ics"
 {
 }
 
-subproject Thread_Pool_Reactor_Resume_Test icc "Thread_Pool_Reactor_Resume_Test.icc", ics "Thread_Pool_Reactor_Resume_Test.ics"
+subproject Thread_Pool_Reactor_Test icc "Thread_Pool_Reactor_Test.icc", ics "Thread_Pool_Reactor_Test.ics"
 {
 }
 
@@ -426,6 +442,14 @@ subproject Timeprobe_Test icc "Timeprobe_Test.icc", ics "Timeprobe_Test.ics"
 {
 }
 
+subproject Timer_Cancellation_Test icc "Timer_Cancellation_Test.icc", ics "Timer_Cancellation_Test.ics"
+{
+}
+
+subproject Timer_Queue_Reference_Counting_Test icc "Timer_Queue_Reference_Counting_Test.icc", ics "Timer_Queue_Reference_Counting_Test.ics"
+{
+}
+
 subproject Timer_Queue_Test icc "Timer_Queue_Test.icc", ics "Timer_Queue_Test.ics"
 {
 }
@@ -438,7 +462,7 @@ subproject Tokens_Test icc "Tokens_Test.icc", ics "Tokens_Test.ics"
 {
 }
 
-subproject UPIPE_SAP_Test icc "UPIPE_SAP_Test.icc", ics "UPIPE_SAP_Test.ics"
+subproject TSS_Test icc "TSS_Test.icc", ics "TSS_Test.ics"
 {
 }
 
@@ -450,7 +474,15 @@ subproject Upgradable_RW_Test icc "Upgradable_RW_Test.icc", ics "Upgradable_RW_T
 {
 }
 
+subproject UPIPE_SAP_Test icc "UPIPE_SAP_Test.icc", ics "UPIPE_SAP_Test.ics"
+{
+}
+
 subproject Vector_Test icc "Vector_Test.icc", ics "Vector_Test.ics"
+{
+}
+
+subproject WFMO_Reactor_Test icc "WFMO_Reactor_Test.icc", ics "WFMO_Reactor_Test.ics"
 {
 }
 
@@ -461,27 +493,26 @@ subproject XtReactor_Test icc "XtReactor_Test.icc", ics "XtReactor_Test.ics"
 
 build all
 {
-use ARGV_Test
 use Aio_Platform_Test
+use ARGV_Test
 use Atomic_Op_Test
 use Auto_IncDec_Test
 use Barrier_Test
 use Basic_Types_Test
 use Buffer_Stream_Test
-use CDR_Array_Test
-use CDR_File_Test
-use CDR_Test
 use Cache_Map_Manager_Test
 use Cached_Accept_Conn_Test
 use Cached_Conn_Test
 use Capabilities_Test
+use CDR_Array_Test
+use CDR_File_Test
+use CDR_Test
 use Collection_Test
 use Config_Test
 use Conn_Test
-use DLL_Test
-use libDLL_Test
-use DLList_Test
 use Dirent_Test
+use DLL_Test
+use DLList_Test
 use Dynamic_Priority_Test
 use Enum_Interfaces_Test
 use Env_Value_Test
@@ -495,27 +526,31 @@ use Hash_Map_Manager_Test
 use High_Res_Timer_Test
 use IOStream_Test
 use Lazy_Map_Manager_Test
+use libDLL_Test
 use Log_Msg_Test
 use Logging_Strategy_Test
-use MEM_Stream_Test
-use MM_Shared_Memory_Test
-use MT_Reactor_Timer_Test
-use MT_Reactor_Upcall_Test
-use MT_SOCK_Test
 use Malloc_Test
 use Map_Manager_Test
 use Map_Test
 use Mem_Map_Test
+use MEM_Stream_Test
 use Message_Block_Test
 use Message_Queue_Notifications_Test
 use Message_Queue_Test
 use Message_Queue_Test_Ex
+use MM_Shared_Memory_Test
+use MT_Reactor_Timer_Test
+use MT_Reactor_Upcall_Test
+use MT_Reference_Counted_Event_Handler_Test
+use MT_Reference_Counted_Notify_Test
+use MT_SOCK_Test
 use Naming_Test
 use New_Fail_Test
+use NonBlocking_Conn_Test
 use Notify_Performance_Test
-use OS_Test
 use Object_Manager_Test
 use OrdMultiSet_Test
+use OS_Test
 use Pipe_Test
 use Priority_Buffer_Test
 use Priority_Reactor_Test
@@ -524,29 +559,30 @@ use Process_Manager_Test
 use Process_Mutex_Test
 use Process_Strategy_Test
 use RB_Tree_Test
+use Reactor_Dispatch_Order_Test
 use Reactor_Exceptions_Test
 use Reactor_Notify_Test
-use Reactor_Dispatch_Order_Test
 use Reactor_Performance_Test
+use Reactor_Registration_Test
 use Reactor_Timer_Test
 use Reactors_Test
 use Reader_Writer_Test
 use Recursive_Mutex_Test
 use Refcounted_Auto_Ptr_Test
+use Reference_Counted_Event_Handler_Test
 use Reverse_Lock_Test
+use Semaphore_Test
+use Service_Config_Test
+use Signal_Test
+use Sigset_Ops_Test
+use Simple_Message_Block_Test
 use SOCK_Connector_Test
 use SOCK_Send_Recv_Test
 use SOCK_Test
 use SPIPE_Test
 use SString_Test
 use SV_Shared_Memory_Test
-use Semaphore_Test
-use Service_Config_Test
-use Signal_Test
-use Sigset_Ops_Test
-use Simple_Message_Block_Test
 use Svc_Handler_Test
-use TSS_Test
 use Task_Test
 use Thread_Manager_Test
 use Thread_Mutex_Test
@@ -555,12 +591,16 @@ use Thread_Pool_Test
 use Time_Service_Test
 use Time_Value_Test
 use Timeprobe_Test
+use Timer_Cancellation_Test
+use Timer_Queue_Reference_Counting_Test
 use Timer_Queue_Test
 use TkReactor_Test
 use Tokens_Test
-use UPIPE_SAP_Test
+use TSS_Test
 use Unbounded_Set_Test_Ex
 use Upgradable_RW_Test
+use UPIPE_SAP_Test
 use Vector_Test
+use WFMO_Reactor_Test
 use XtReactor_Test
 }

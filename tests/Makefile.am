@@ -89,58 +89,61 @@ noinst_PROGRAMS = \
   Basic_Types_Test \
   Bound_Ptr_Test \
   Buffer_Stream_Test \
-  CDR_File_Test \
-  CDR_Test \
   Cache_Map_Manager_Test \
   Cached_Accept_Conn_Test \
   Cached_Allocator_Test \
   Cached_Conn_Test \
   Capabilities_Test \
+  CDR_File_Test \
+  CDR_Test \
   Collection_Test \
   Config_Test \
   Conn_Test \
-  DLL_Test\
-  DLList_Test \
   Date_Time_Test \
   Dev_Poll_Reactor_Test \
   Dirent_Test \
+  DLL_Test\
+  DLList_Test \
   Dynamic_Priority_Test \
   Enum_Interfaces_Test \
   Env_Value_Test \
   FIFO_Test \
-  Future_Test \
   Future_Set_Test \
+  Future_Test \
   Get_Opt_Test \
   Handle_Set_Test \
-  Hash_Map_Manager_Test \
   Hash_Map_Bucket_Iterator_Test \
+  Hash_Map_Manager_Test \
   High_Res_Timer_Test \
   INET_Addr_Test \
   IOStream_Test \
   Lazy_Map_Manager_Test \
   Log_Msg_Test \
   Logging_Strategy_Test \
-  MEM_Stream_Test \
-  MM_Shared_Memory_Test \
-  MT_Reactor_Timer_Test \
-  MT_Reactor_Upcall_Test \
-  MT_SOCK_Test \
   Malloc_Test \
   Map_Manager_Test \
   Map_Test \
   Max_Default_Port_Test \
   Mem_Map_Test \
+  MEM_Stream_Test \
   Message_Block_Test \
   Message_Queue_Notifications_Test \
   Message_Queue_Test \
   Message_Queue_Test_Ex \
+  MM_Shared_Memory_Test \
+  MT_Reactor_Timer_Test \
+  MT_Reactor_Upcall_Test \
+  MT_Reference_Counted_Event_Handler_Test \
+  MT_Reference_Counted_Notify_Test \
+  MT_SOCK_Test \
   Multicast_Test \
   Multihomed_INET_Addr_Test \
+  NonBlocking_Conn_Test \
   Notify_Performance_Test \
-  OS_Test \
   Object_Manager_Test \
   Obstack_Test \
   OrdMultiSet_Test \
+  OS_Test \
   Pipe_Test \
   Priority_Buffer_Test \
   Priority_Reactor_Test \
@@ -148,35 +151,35 @@ noinst_PROGRAMS = \
   Proactor_Scatter_Gather_Test \
   Proactor_Test \
   Proactor_Timer_Test \
+  Process_Manager_Test \
   Process_Mutex_Test \
   Process_Strategy_Test \
-  Process_Manager_Test \
   RB_Tree_Test \
   Reactor_Dispatch_Order_Test \
   Reactor_Exceptions_Test \
   Reactor_Notify_Test \
   Reactor_Performance_Test \
+  Reactor_Registration_Test \
   Reactor_Timer_Test \
   Reactors_Test \
   Reader_Writer_Test \
   Recursive_Condition_Test \
   Recursive_Mutex_Test \
   Refcounted_Auto_Ptr_Test \
+  Reference_Counted_Event_Handler_Test \
   Reverse_Lock_Test \
+  Semaphore_Test \
+  Service_Config_Test \
+  Signal_Test \
+  Sigset_Ops_Test \
+  Simple_Message_Block_Test \
   SOCK_Connector_Test \
   SOCK_Send_Recv_Test \
   SOCK_Test \
   SPIPE_Test \
   SString_Test \
   SV_Shared_Memory_Test \
-  Semaphore_Test \
-  Service_Config_Test \
-  Signal_Test \
-  Sigset_Ops_Test \
-  Simple_Message_Block_Test \
   Svc_Handler_Test \
-  TP_Reactor_Test \
-  TSS_Test \
   Task_Test \
   Thread_Manager_Test \
   Thread_Mutex_Test \
@@ -184,12 +187,17 @@ noinst_PROGRAMS = \
   Time_Service_Test \
   Time_Value_Test \
   Timeprobe_Test \
+  Timer_Cancellation_Test \
+  Timer_Queue_Reference_Counting_Test \
   Timer_Queue_Test \
   Token_Strategy_Test \
-  UPIPE_SAP_Test \
+  TP_Reactor_Test \
+  TSS_Test \
   Unbounded_Set_Test_Ex \
   Upgradable_RW_Test \
+  UPIPE_SAP_Test \
   Vector_Test \
+  WFMO_Reactor_Test \
   \
   Naming_Test \
   \

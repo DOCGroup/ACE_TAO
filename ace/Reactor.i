@@ -51,7 +51,7 @@ ACE_Reactor::run_event_loop (ACE_Time_Value &tv)
   if (r == 0)
     return -1;
 
-  return r->run_reactor_event_loop 
+  return r->run_reactor_event_loop
     (tv, ACE_Reactor::check_reconfiguration);
 }
 
@@ -83,7 +83,7 @@ ACE_Reactor::run_alertable_event_loop (ACE_Time_Value &tv)
   if (r == 0)
     return -1;
 
-  return r->run_alertable_reactor_event_loop 
+  return r->run_alertable_reactor_event_loop
     (tv, ACE_Reactor::check_reconfiguration);
 }
 
@@ -544,6 +544,12 @@ ACE_Reactor::purge_pending_notifications (ACE_Event_Handler *eh,
   return this->implementation ()->purge_pending_notifications (eh, mask);
 }
 
+ACE_INLINE ACE_Event_Handler *
+ACE_Reactor::handler (ACE_HANDLE handle)
+{
+  return this->implementation ()->handler (handle);
+}
+
 ACE_INLINE int
 ACE_Reactor::handler (ACE_HANDLE handle,
                       ACE_Reactor_Mask mask,
@@ -670,6 +676,3 @@ ACE_Reactor::uses_event_associations (void)
 {
   return this->implementation ()->uses_event_associations ();
 }
-
-
-
