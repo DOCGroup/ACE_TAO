@@ -52,7 +52,9 @@ void
 TAO_Strategized_Object_Proxy_Broker::create_proxy (TAO_ORB_Core::TAO_Collocation_Strategies strategy,
                                                    CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_Guard<ACE_Mutex> guard (this->mutex_);
+  ACE_GUARD (ACE_SYNCH_MUTEX,
+             guard,
+             this->mutex_);
 
   if (this->proxy_cache_[strategy] == 0)
     {
@@ -83,7 +85,7 @@ TAO_Strategized_Object_Proxy_Broker::create_proxy (TAO_ORB_Core::TAO_Collocation
             ACE_CHECK;
             break;
           }
-          
+
         }
     }
 }

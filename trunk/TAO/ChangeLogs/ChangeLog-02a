@@ -1,3 +1,13 @@
+Wed Sep 27 17:44:12 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tao/PortableServer/Strategized_Object_Proxy_Broker.h:
+	* tao/PortableServer/Strategized_Object_Proxy_Broker.cpp:
+	* tao/MProfile.h:
+        * tao/MProfile.i:
+
+	  Substituted ACE mutexes and ACE guards class with the
+	  proper macros.
+
 Wed Sep 27 15:37:53 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/PortableServer/PortableServerC.cpp
