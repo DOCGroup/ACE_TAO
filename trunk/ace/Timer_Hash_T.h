@@ -68,8 +68,8 @@ private:
   // Timer Queue to do the calling up to
 
   // = Don't allow these operations for now.
-  ACE_Timer_Hash_Upcall (const ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, LOCK> &);
-  void operator= (const ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, LOCK> &);
+  ACE_UNIMPLEMENTED_FUNC (ACE_Timer_Hash_Upcall (const ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, LOCK> &))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, LOCK> &))
 };
 
 template <class TYPE, class FUNCTOR, class LOCK, class BUCKET>
@@ -226,8 +226,8 @@ private:
   // Iterator used to expire timers.
 
   // = Don't allow these operations for now.
-  ACE_Timer_Hash_T (const ACE_Timer_Hash_T<TYPE, FUNCTOR, LOCK, BUCKET> &);
-  void operator= (const ACE_Timer_Hash_T<TYPE, FUNCTOR, LOCK, BUCKET> &);
+  ACE_UNIMPLEMENTED_FUNC (ACE_Timer_Hash_T (const ACE_Timer_Hash_T<TYPE, FUNCTOR, LOCK, BUCKET> &))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Timer_Hash_T<TYPE, FUNCTOR, LOCK, BUCKET> &))
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

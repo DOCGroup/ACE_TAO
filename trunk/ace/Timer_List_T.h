@@ -170,8 +170,8 @@ private:
   // method.
 
   // = Don't allow these operations for now.
-  ACE_Timer_List_T (const ACE_Timer_List_T<TYPE, FUNCTOR, LOCK> &);
-  void operator= (const ACE_Timer_List_T<TYPE, FUNCTOR, LOCK> &);
+  ACE_UNIMPLEMENTED_FUNC (ACE_Timer_List_T (const ACE_Timer_List_T<TYPE, FUNCTOR, LOCK> &))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Timer_List_T<TYPE, FUNCTOR, LOCK> &))
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

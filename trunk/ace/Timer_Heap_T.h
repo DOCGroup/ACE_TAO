@@ -248,8 +248,8 @@ private:
   // Used to delete the allocated memory when required.
 
   // = Don't allow these operations for now.
-  ACE_Timer_Heap_T (const ACE_Timer_Heap_T<TYPE, FUNCTOR, LOCK> &);
-  void operator= (const ACE_Timer_Heap_T<TYPE, FUNCTOR, LOCK> &);
+  ACE_UNIMPLEMENTED_FUNC (ACE_Timer_Heap_T (const ACE_Timer_Heap_T<TYPE, FUNCTOR, LOCK> &))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Timer_Heap_T<TYPE, FUNCTOR, LOCK> &))
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

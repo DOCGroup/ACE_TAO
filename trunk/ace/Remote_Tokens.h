@@ -275,8 +275,8 @@ protected:
   // Token_Proxy.
 
 private:
-  ACE_TSS_Connection (const ACE_TSS_Connection &);
-  void operator= (const ACE_TSS_Connection &);
+  ACE_UNIMPLEMENTED_FUNC (ACE_TSS_Connection (const ACE_TSS_Connection &))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_TSS_Connection &))
   // Private: should not be used
 };
 
