@@ -137,30 +137,28 @@ public:
   TAO_ORB_Core *orb_core (void) const;
   // Get it.
 
-  // = Get and set methods for thr RMS object.
+  // = Get and set methods for thr TMS object.
 
-  // void rms (TAO_Transport_Mux_Strategy *rms);
-  // Set the RMS object.
+  // void tms(TAO_Transport_Mux_Strategy *rms);
+  // Set the TMSobject.
 
-  TAO_Transport_Mux_Strategy * rms (void) const;
-  // Get the RMS used by this Transport object.
+  TAO_Transport_Mux_Strategy *tms (void) const;
+  // Get the TMS used by this Transport object.
 
   TAO_Wait_Strategy *wait_strategy (void) const;
   // Return the Wait strategy used by the Transport.
 
   CORBA::ULong request_id (void);
-  // Get request id for the current invocation from the RMS object.
+  // Get request id for the current invocation from the TMSobject.
 
   int bind_reply_dispatcher (CORBA::ULong request_id,
                               TAO_Reply_Dispatcher *rd);
-  // Bind the reply dispatcher with the RMS object.
+  // Bind the reply dispatcher with the TMS object.
 
   virtual int wait_for_reply (void);
   // Wait for the reply depending on the strategy.
 
   virtual int handle_client_input (int block = 0);
-  // @@ Make this pure virtual !!! (alex)
-
   // Read and handle the reply. Returns 0 when there is Short Read on
   // the connection. Returns 1 when the full reply is read and
   // handled. Returns -1 on errors.
