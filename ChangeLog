@@ -1,3 +1,10 @@
+Tue Mar  8 11:06:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/make_release:
+          In the default.features file used to generate the GNU makefiles
+          removed tk_reactor=1 and xt_reactor=1, these are not used anymore
+          and added tk=1, xt=1, fl=1 and qt=1
+
 Tue Mar  8 07:02:14 2005  Olli Savia  <ops@iki.fi>
 
         * ace/config-lynxos.h:
