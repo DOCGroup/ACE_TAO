@@ -1,3 +1,9 @@
+Wed Apr 18 21:38:35 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* orbsvcs/Naming_Service: Updated the README file so that it explains
+	  how to trouble shoot problems with multicast.  Thanks to Stephen
+ 	  Torri <s.torri@lancaster.ac.uk> for contributing this.
+
 Wed Apr 18 19:17:37 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * performance-tests/Makefile:
