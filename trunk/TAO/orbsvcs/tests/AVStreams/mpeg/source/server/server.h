@@ -145,9 +145,14 @@ public:
 
   void clear_child (int sig);
   // Signal handler function for SIGCHLD
+
+  ~AV_Server_Sig_Handler (void);
+  // Destructor
+
 private:
   ACE_HANDLE handle_;
   // dummy handle for the sig handler.
+  ACE_Sig_Set sig_set;
 };
 
 class AV_Server

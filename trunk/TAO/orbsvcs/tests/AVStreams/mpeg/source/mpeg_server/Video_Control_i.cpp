@@ -122,7 +122,8 @@ CORBA::Boolean
 Video_Control_i::position (const Video_Control::POSITIONpara &para,
                            CORBA::Environment& env)
 {
-  return 0;
+  return this->get_video_control_handler ()->position (para,
+                                                       env);
 }
 
 
