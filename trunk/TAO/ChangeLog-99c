@@ -1,3 +1,18 @@
+Tue Oct 19 19:20:47 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_valuetype/field_cs.cpp:
+	  Fixed generation of 'set' function for an interface
+	  member of a valuetype. rhs was arg->duplicate ()
+	  instead of <scoped name>::_duplicate (arg).
+
+	* TAO_IDL/be/be_visitor_field/field_ch.cpp:
+	  Turned up more cases where ACE_NESTED_CLASS
+	  should not be used.
+
+	Thanks to Erik Johannes <ejohannes@oresis.com> for
+	sending in the example IDL file that turned up 
+	these bugs.
+
 Tue Oct 19 13:19:00 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_field/field_ch.cpp:
