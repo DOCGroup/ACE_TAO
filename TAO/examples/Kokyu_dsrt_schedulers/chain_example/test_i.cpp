@@ -141,10 +141,10 @@ Simple_Server_i::test_method (CORBA::Long exec_duration ACE_ENV_ARG_DECL)
 	      "Request processing in thread %t done, "
 	      "prio = %d, load = %d, elapsed time = %umsec\n", 
 	      prio, exec_duration, elapsed_time.msec () ));
+  DSUI_EVENT_LOG (TEST_ONE_FAM, STOP_SERVICE, 0, sizeof(Object_ID), (char*)&oid);
   DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_START, 0, sizeof(Object_ID), (char*)&oid);  
   this->server_->test_method2(exec_duration);
   DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_DONE, 0, sizeof(Object_ID), (char*)&oid); 
-  DSUI_EVENT_LOG (TEST_ONE_FAM, STOP_SERVICE, 0, sizeof(Object_ID), (char*)&oid);
 }
 
 void
