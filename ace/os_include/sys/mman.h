@@ -2,19 +2,19 @@
 
 //=============================================================================
 /**
- *  @file    mman.h
+ *  @file    os_mman.h
  *
  *  memory management declarations
  *
  *  $Id$
  *
- *  @author Don Hinton <dhinton@ieee.org>
+ *  @author Don Hinton <dhinton@dresystems.com>
  *  @author This code was originally in various places including ace/OS.h.
  */
 //=============================================================================
 
-#ifndef ACE_OS_INCLUDE_SYS_MMAN_H
-#define ACE_OS_INCLUDE_SYS_MMAN_H
+#ifndef ACE_OS_INCLUDE_SYS_OS_MMAN_H
+#define ACE_OS_INCLUDE_SYS_OS_MMAN_H
 
 #include "ace/pre.h"
 
@@ -26,8 +26,28 @@
 
 #include "ace/os_include/sys/types.h"
 
+#if defined (ACE_LACKS_MMAP)
+#  define ACE_LACKS_SYS_MMAN_H
+#endif /* ACE_LACKS_MMAP */
+
 #if !defined (ACE_LACKS_SYS_MMAN_H)
-# include /**/ <sys/mman.h>
+   // Fixes a problem with HP/UX.
+#  if defined (ACE_HAS_BROKEN_MMAP_H)
+     extern "C" {
+#  endif /* ACE_HAS_BROKEN_MMAP_H */
+#  include /**/ <sys/mman.h>
+#  if defined (ACE_HAS_BROKEN_MMAP_H)
+     }
+#  endif /* ACE_HAS_BROKEN_MMAP_H */
+#else /* ACE_LACKS_SYS_MMAH */
+#  define PROT_READ 0
+#  define PROT_WRITE 0
+#  define PROT_EXEC 0
+#  define PROT_NONE 0
+#  define PROT_RDWR 0
+#  define MAP_PRIVATE 0
+#  define MAP_SHARED 0
+#  define MAP_FIXED 0
 #endif /* !ACE_LACKS_SYS_MMAN_H */
 
 #if defined (ACE_WIN32)
@@ -56,4 +76,4 @@ PAGE_NOCACHE  */
 #endif /* PROT_RDWR */
 
 #include "ace/post.h"
-#endif /* ACE_OS_INCLUDE_SYS_MMAN_H */
+#endif /* ACE_OS_INCLUDE_SYS_OS_MMAN_H */

@@ -2,19 +2,19 @@
 
 //=============================================================================
 /**
- *  @file    signal.h
+ *  @file    os_signal.h
  *
  *  signals
  *
  *  $Id$
  *
- *  @author Don Hinton <dhinton@ieee.org>
+ *  @author Don Hinton <dhinton@dresystems.com>
  *  @author This code was originally in various places including ace/OS.h.
  */
 //=============================================================================
 
-#ifndef ACE_OS_INCLUDE_SIGNAL_H
-#define ACE_OS_INCLUDE_SIGNAL_H
+#ifndef ACE_OS_INCLUDE_OS_SIGNAL_H
+#define ACE_OS_INCLUDE_OS_SIGNAL_H
 
 #include "ace/pre.h"
 
@@ -30,20 +30,30 @@
 #  if !defined (ACE_LACKS_SIGINFO_H)
 #    if defined (__QNX__) || defined (__OpenBSD__)
 #      include /**/ <sys/siginfo.h>
-#    elif defined(__rtems__)
-//#      include "ace/os_include/signal.h"
 #    else  /* __QNX__ || __OpenBSD__ */
 #      include /**/ <siginfo.h>
 #    endif /* __QNX__ || __OpenBSD__ */
 #  endif /* ACE_LACKS_SIGINFO_H */
 #endif /* ACE_HAS_SIGINFO_T */
 
+#if defined (ACE_SIGINFO_IS_SIGINFO_T)
+   typedef struct siginfo siginfo_t;
+#endif /* ACE_LACKS_SIGINFO_H */
+
 #include "ace/os_include/ucontext.h"
 #include "ace/os_include/time.h"
 
 #if !defined (ACE_LACKS_SINGNAL_H)
-# include /**/ <signal.h>
+   extern "C" {
+#  include /**/ <signal.h>
+   }
 #endif /* !ACE_LACKS_SIGNAL_H */
+
+#if defined (ACE_LACKS_SIGSET)
+#  if !defined(__MINGW32__)
+     typedef u_int sigset_t;
+#  endif /* !__MINGW32__*/
+#endif /* ACE_LACKS_SIGSET */
 
 #if defined (ACE_HAS_SIG_MACROS)
 #  undef sigemptyset
@@ -148,5 +158,83 @@
 # define ACE_SIGURG -2
 # define ACE_CLOEXEC -3
 
+#if defined (ACE_PSOS) 
+#  if !defined (ACE_PSOSIM)
+     extern "C"
+     {
+       typedef void (* ACE_SignalHandler) (void);
+       typedef void (* ACE_SignalHandlerV) (void);
+     }
+#    if !defined(SIG_DFL)
+#      define SIG_DFL (ACE_SignalHandler) 0
+#    endif  /* philabs */
+#  endif /* !ACE_PSOSIM */
+#  if ! defined (NSIG)
+#    define NSIG 32
+#  endif /* NSIG */
+#endif /* ACE_PSOS && !ACE_PSOSIM */
+
+#if defined (ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES)
+   // Prototypes for both signal() and struct sigaction are consistent..
+#  if defined (ACE_HAS_SIG_C_FUNC)
+     extern "C" {
+#  endif /* ACE_HAS_SIG_C_FUNC */
+#  if !defined (ACE_PSOS)
+     typedef void (*ACE_SignalHandler)(int);
+     typedef void (*ACE_SignalHandlerV)(int);
+#  endif /* !defined (ACE_PSOS) */
+#  if defined (ACE_HAS_SIG_C_FUNC)
+     }
+#  endif /* ACE_HAS_SIG_C_FUNC */
+#elif defined (ACE_HAS_LYNXOS_SIGNALS)
+   typedef void (*ACE_SignalHandler)(...);
+   typedef void (*ACE_SignalHandlerV)(...);
+#elif defined (ACE_HAS_TANDEM_SIGNALS)
+   typedef void (*ACE_SignalHandler)(...);
+   typedef void (*ACE_SignalHandlerV)(...);
+#elif defined (ACE_HAS_IRIX_53_SIGNALS)
+   typedef void (*ACE_SignalHandler)(...);
+   typedef void (*ACE_SignalHandlerV)(...);
+#elif defined (ACE_HAS_SPARCWORKS_401_SIGNALS)
+   typedef void (*ACE_SignalHandler)(int, ...);
+   typedef void (*ACE_SignalHandlerV)(int,...);
+#elif defined (ACE_HAS_SUNOS4_SIGNAL_T)
+   typedef void (*ACE_SignalHandler)(...);
+   typedef void (*ACE_SignalHandlerV)(...);
+#elif defined (ACE_HAS_SVR4_SIGNAL_T)
+   // SVR4 Signals are inconsistent (e.g., see struct sigaction)..
+   typedef void (*ACE_SignalHandler)(int);
+#  if !defined (m88k)     /*  with SVR4_SIGNAL_T */
+     typedef void (*ACE_SignalHandlerV)(void);
+#  else
+     typedef void (*ACE_SignalHandlerV)(int);
+#  endif  /*  m88k */       /*  with SVR4_SIGNAL_T */
+#elif defined (ACE_WIN32)
+   typedef void (__cdecl *ACE_SignalHandler)(int);
+   typedef void (__cdecl *ACE_SignalHandlerV)(int);
+#elif defined (ACE_HAS_UNIXWARE_SVR4_SIGNAL_T)
+   typedef void (*ACE_SignalHandler)(int);
+   typedef void (*ACE_SignalHandlerV)(...);
+#elif defined (INTEGRITY)
+   typedef void (*ACE_SignalHandler)();
+   typedef void (*ACE_SignalHandlerV)(int);
+#else /* This is necessary for some older broken version of cfront */
+#  if defined (SIG_PF)
+#    define ACE_SignalHandler SIG_PF
+#  else
+     typedef void (*ACE_SignalHandler)(int);
+#  endif /* SIG_PF */
+   typedef void (*ACE_SignalHandlerV)(...);
+#endif /* ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES */
+
+#if defined (ACE_LACKS_SIGACTION)
+   struct sigaction
+   {
+     int sa_flags;
+     ACE_SignalHandlerV sa_handler;
+     sigset_t sa_mask;
+   };
+#endif /* ACE_LACKS_SIGACTION */
+
 #include "ace/post.h"
-#endif /* ACE_OS_INCLUDE_SIGNAL_H */
+#endif /* ACE_OS_INCLUDE_OS_SIGNAL_H */

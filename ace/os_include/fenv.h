@@ -2,19 +2,19 @@
 
 //=============================================================================
 /**
- *  @file    fenv.h
+ *  @file    os_fenv.h
  *
  *  floating-point environment
  *
  *  $Id$
  *
- *  @author Don Hinton <dhinton@ieee.org>
+ *  @author Don Hinton <dhinton@dresystems.com>
  *  @author This code was originally in various places including ace/OS.h.
  */
 //=============================================================================
 
-#ifndef ACE_OS_INCLUDE_FENV_H
-#define ACE_OS_INCLUDE_FENV_H
+#ifndef ACE_OS_INCLUDE_OS_FENV_H
+#define ACE_OS_INCLUDE_OS_FENV_H
 
 #include "ace/pre.h"
 
@@ -29,4 +29,4 @@
 #endif /* !ACE_LACKS_FENV_H */
 
 #include "ace/post.h"
-#endif /* ACE_OS_INCLUDE_FENV_H */
+#endif /* ACE_OS_INCLUDE_OS_FENV_H */

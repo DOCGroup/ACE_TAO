@@ -2,19 +2,19 @@
 
 //=============================================================================
 /**
- *  @file    math.h
+ *  @file    os_math.h
  *
  *  mathematical declarations
  *
  *  $Id$
  *
- *  @author Don Hinton <dhinton@ieee.org>
+ *  @author Don Hinton <dhinton@dresystems.com>
  *  @author This code was originally in various places including ace/OS.h.
  */
 //=============================================================================
 
-#ifndef ACE_OS_INCLUDE_MATH_H
-#define ACE_OS_INCLUDE_MATH_H
+#ifndef ACE_OS_INCLUDE_OS_MATH_H
+#define ACE_OS_INCLUDE_OS_MATH_H
 
 #include "ace/pre.h"
 
@@ -29,4 +29,4 @@
 #endif /* !ACE_LACKS_MATH_H */
 
 #include "ace/post.h"
-#endif /* ACE_OS_INCLUDE_MATH_H */
+#endif /* ACE_OS_INCLUDE_OS_MATH_H */

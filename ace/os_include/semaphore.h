@@ -2,19 +2,19 @@
 
 //=============================================================================
 /**
- *  @file    semaphore.h
+ *  @file    os_semaphore.h
  *
  *  semaphores (REALTIME)
  *
  *  $Id$
  *
- *  @author Don Hinton <dhinton@ieee.org>
+ *  @author Don Hinton <dhinton@dresystems.com>
  *  @author This code was originally in various places including ace/OS.h.
  */
 //=============================================================================
 
-#ifndef ACE_OS_INCLUDE_SEMAPHORE_H
-#define ACE_OS_INCLUDE_SEMAPHORE_H
+#ifndef ACE_OS_INCLUDE_OS_SEMAPHORE_H
+#define ACE_OS_INCLUDE_OS_SEMAPHORE_H
 
 #include "ace/pre.h"
 
@@ -56,4 +56,4 @@ typedef struct
 # endif /* ACE_HAS_POSIX_SEM */
 
 #include "ace/post.h"
-#endif /* ACE_OS_INCLUDE_SEMAPHORE_H */
+#endif /* ACE_OS_INCLUDE_OS_SEMAPHORE_H */

@@ -20,10 +20,16 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if (defined (ACE_PSOS) && !defined (ACE_PSOSIM)) || defined (__QNX__)
+   typedef long fd_mask;
+#elif defined (ACE_WIN32) && defined (CHORUS) && !defined (CHORUS_4)
+   typedef cx_fd_mask fd_mask;
+#endif /* ACE_PSOS */
+
 // Default size of the ACE Reactor.
 #if defined (FD_SETSIZE)
    int const ACE_FD_SETSIZE = FD_SETSIZE;
-#else
+#else /* !FD_SETSIZE */
 #  define ACE_FD_SETSIZE FD_SETSIZE
 #endif /* ACE_FD_SETSIZE */
 

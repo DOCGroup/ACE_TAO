@@ -2,19 +2,19 @@
 
 //=============================================================================
 /**
- *  @file    types.h
+ *  @file    os_types.h
  *
  *  data types
  *
  *  $Id$
  *
- *  @author Don Hinton <dhinton@ieee.org>
+ *  @author Don Hinton <dhinton@dresystems.com>
  *  @author This code was originally in various places including ace/OS.h.
  */
 //=============================================================================
 
-#ifndef ACE_OS_INCLUDE_SYS_TYPES_H
-#define ACE_OS_INCLUDE_SYS_TYPES_H
+#ifndef ACE_OS_INCLUDE_SYS_OS_TYPES_H
+#define ACE_OS_INCLUDE_SYS_OS_TYPES_H
 
 #include "ace/pre.h"
 
@@ -27,18 +27,16 @@
 #include "ace/os_include/stddef.h"
 
 #if !defined (ACE_LACKS_SYS_TYPES_H)
-# include /**/ <sys/types.h>
+#  include /**/ <sys/types.h>
 #endif /* !ACE_LACKS_SYS_TYPES_H */
 
 // todo: don't forget to clean this up!  ;-)
-# if !defined (ACE_HAS_CLOCK_GETTIME) && !(defined (_CLOCKID_T_) || defined (_CLOCKID_T))
-typedef int clockid_t;
-#   if !defined (CLOCK_REALTIME)
-#     define CLOCK_REALTIME 0
-#   endif /* CLOCK_REALTIME */
-# endif /* ! ACE_HAS_CLOCK_GETTIME && ! _CLOCKID_T_ */
-
-
+#if !defined (ACE_HAS_CLOCK_GETTIME) && !(defined (_CLOCKID_T_) || defined (_CLOCKID_T))
+   typedef int clockid_t;
+#  if !defined (CLOCK_REALTIME)
+#    define CLOCK_REALTIME 0
+#  endif /* CLOCK_REALTIME */
+#endif /* ! ACE_HAS_CLOCK_GETTIME && ! _CLOCKID_T_ */
 
 #if defined (ACE_HAS_WINCE)
 #  include /**/ <types.h>
@@ -106,4 +104,4 @@ typedef int clockid_t;
 #endif /* ACE_WIN32 && !__MINGW32__ */
 
 #include "ace/post.h"
-#endif /* ACE_OS_INCLUDE_SYS_TYPES_H */
+#endif /* ACE_OS_INCLUDE_SYS_OS_TYPES_H */

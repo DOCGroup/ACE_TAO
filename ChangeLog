@@ -1,3 +1,125 @@
+Wed May 14 17:40:28 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/OS.h:
+          Moved more code, as listed below.
+
+        * ace/Default_Constants.h:
+          Moved ACE_DIRECTORY_SEPERATOR_*, ACE_PLATFORM_*,
+          ACE_LD_SEARCH_PATH_*, ACE_DLL_*, ACE_DEFAULT_SVC_CONF,
+          ACE_DEFAULT_[LOCAL|GLOBAL]NAME_*, ACE_DEFAULT_NAMESPACE_*,
+          ACE_DEFAULT_THREAD_PRIORITY, and ACE_MAX_DEFAULT_PORT
+          defines here.
+
+        * ace/Global_Macros.h:
+          Moved the Service Configurator macros here.
+
+        * ace/Handle_Set.h:
+        * ace/os_include/sys/select.h:
+          Moved the fd_mask typedef from ace/Handle_Set.h to
+          ace/os_include/sys/select.h.
+
+        * ace/config-all.h:
+          Moved ACE_OSTREAM, ACE_DEFAULT_LOG_STREAM, ACE_SYNCH_*,
+          ACE_WSOCK_VERSION, _REENTRANT, ACE_USING, ACE_TYPENAME_*,
+          and ACE_TEMPLATE_SPECIALIZATION defines here.
+
+        * ace/config-psosim-g++:
+          Moved the size_t define here.
+
+        * ace/config-win32-msvc.h:
+          Moved the pragma warning disable's and ACE_HAS_STRICT here.
+
+        * ace/os_include/*h:
+          Changed the @file and include guards to include an OS/os 
+          prefix.  The file names will be changed when we merge to 
+          the main trunk.
+
+        * ace/os_include/dlfcn.h:
+          Moved extern "C" {} wrapper around the include of dlfcn.h when
+          ACE_HAS_DLFCN_H_BROKEN_EXTERN_C defined, ACE_SHLIB_*,
+          ACE_DEFAULT_SHLIB_MODE, and RTLD_* defines here.
+
+        * ace/os_include/errno.h:
+          Moved the ACE_PSOS and ACE_WIN32 E* defines here.
+
+        * ace/os_include/fcntl.h:
+          Moved the ACE_WIN32 O_* and ACE_NONBLOCK defines here.
+
+        * ace/os_include/limits.h:
+          Added POSIX NAME_MAX and HOST_NAME_MAX.  Moved MAXNAMLEN, 
+          MAXNAMELEN, and MAXHOSTNAMELEN here.
+
+        * ace/os_include/netdb.h:
+          Move queue define when ACE_HAS_STL_QUEUE_CONFLICT is defined here.
+          Added extern "C" {} around netdb.h include.  Moved hostent,
+          servent structs and ACE_[HOSTENT|SERVENT|PROTOENT]_DATA*
+          defines here.
+
+        * ace/os_include/pthread.h:
+          Added extern "C" {} wrapper around pthread.h include.
+
+        * ace/os_include/signal.h:
+          Moved siginfo_t typedef here.  Added extern "C" {} wrapper
+          around signal.h include and moved sigset_t typedef here.  Moved
+          ACE_SignalHandler and ACE_SignalHandlerV function typedefs
+          and sigaction struct definition here.
+
+        * ace/os_include/stdint.h:
+          Moved ACE_PSOS typedefs here.  
+
+        * ace/os_include/stdlib.h:
+          Moved alloca.h include here.  
+
+        * ace/os_include/string.h:
+          Changed extern to extern "C" to the strdup() declaration.
+
+        * ace/os_include/unistd.h:
+          Changed extern to extern"C" to the getopt() declaration.
+
+        * ace/os_include/arpa/inet.h:
+          Added extern "C" {} around arpa/inet.h include.
+
+        * ace/os_include/net/if.h:
+          Move map define when ACE_HAS_STL_MAP_CONFLICT is defined here.
+          Added extern "C" {} around net/if.h include.  Moved
+          IFF_LOOPBACK define here.  Moved struct ifafilt declare when
+          ACE_HAS_BROKEN_IF_HEADER is defined.
+
+        * ace/os_include/netinet/in.h:
+          Move queue define when ACE_HAS_STL_QUEUE_CONFLICT is defined here.
+          Added extern "C" {} around netinet/in.h include.  Moved
+          IPPORT_RESERVED, IPPORT_USERRESERVED, INADDR_LOOPBACK,
+          INADDR_NONE, INET_ADDRSTRLEN, and INET6_ADDRSTRLEN defines here.
+
+        * ace/os_include/netinet/tcp.h:
+          Moved TCP_NODELAY define here.
+
+        * ace/os_include/sys/ipc.h:
+          Moved ACE_INVALID_SEM_KEY and the IPC_* defines here.
+
+        * ace/os_include/sys/mman.h:
+          Moved extern "C" {} around sys/mman.h when ACE_HAS_BROKEN_MMAP_H
+          is defined.  Moved the PROT* and MAP_* defines here.
+
+        * ace/os_include/sys/sem.h:
+          Moved union semun definition here.
+
+        * ace/os_include/sys/socket.h:
+          Moved cygwin32/socket.h include here.  Moved __cplusplus
+          undef/def around sys/socket.h include when 
+          ACE_HAS_AIX_BROKEN_SOCKET_HEADER is defined.  Moved AF_*, PF_*,
+          ACE_ADDRESS_FAMILY_INET and ACE_PROTOCOL_FAMILY_INET defines
+          here.
+
+        * ace/os_include/sys/stat.h:
+          Added undef ACE_LACKS_SYS_STAT_H if ACE_PSOS is defined (should
+          go in the ACE_PSOS headers, eventually).  Changed umask(),
+          mkfifo(), and mkdir() declarations from extern to extern "C".
+
+        * ace/os_include/sys/uio.h:
+          Moved iovec definition for ACE_WIN32 here.  Moved
+          ACE_[READ|WRITE]_TYPE typedefs here.
+
 Sun May 11 15:51:51 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         Merged dre_osh_01 up to the main and rebranched to dre_osh_01

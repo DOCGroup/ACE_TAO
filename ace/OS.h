@@ -34,6 +34,13 @@
 #include "ace/OS_TLI.h"
 #include "ace/OS_Errno.h"
 
+#include "ace/os_include/dlfcn.h"
+#include "ace/os_include/sys/mman.h"
+#include "ace/os_include/dirent.h"
+#include "ace/os_include/netdb.h"
+#include "ace/os_include/sys/socket.h"
+#include "ace/os_include/net/if.h"
+
 #include "ace/Time_Value.h"
 
 class ACE_Timeout_Manager;
@@ -61,18 +68,12 @@ class ACE_Timeout_Manager;
 
 # if defined (ACE_PSOS)
 
-#   if defined (ACE_LACKS_ASSERT_MACRO)
-#     define assert(expr)
-#   endif
-
 #   if defined (ACE_PSOSIM)
 
 #     include /**/x "ace/sys_conf.h" /* system configuration file */
 #     include /**/x <psos.h>         /* pSOS+ system calls                */
 #     include /**/x <pna.h>          /* pNA+ TCP/IP Network Manager calls */
 
-    /* In the *simulator* environment, use unsigned int for size_t */
-#     define size_t  unsigned int
 
 
     /*   include <rpc.h>       pRPC+ Remote Procedure Call Library calls   */
@@ -88,51 +89,9 @@ class ACE_Timeout_Manager;
     /* put includes for necessary UNIX file system calls here */
 #     include "ace/os_include/sys/stat.h"
 #     include "ace/os_include/stropts.h" // instead of <sys/ioctl.h>
-//#     include /**/x <sys/sockio.h> // again, for ioctl
 #     include "ace/os_include/netinet/tcp.h"
 
-#     define TCP_
-#     if ! defined (BUFSIZ)
-#       define BUFSIZ 1024
-#     endif  /* ! defined (BUFSIZ) */
-
-
 #   else
-
-#     if defined (ACE_PSOS_CANT_USE_SYS_TYPES)
-      // these are missing from the pSOS types.h file, and the compiler
-      // supplied types.h file collides with the pSOS version.
-#       if !defined (ACE_SHOULD_NOT_DEFINE_SYS_TYPES)
-      typedef unsigned char     u_char;
-      typedef unsigned short    u_short;
-#       endif /* ACE_SHOULD_NOT_DEFINE_SYS_TYPES */
-      typedef unsigned int      u_int;
-#       if !defined (ACE_SHOULD_NOT_DEFINE_SYS_TYPES)
-      typedef unsigned long     u_long;
-#       endif /* ACE_SHOULD_NOT_DEFINE_SYS_TYPES */
-
-      // These are defined in types.h included by (among others) pna.h
-#       if 0
-      typedef unsigned char     uchar_t;
-      typedef unsigned short    ushort_t;
-      typedef unsigned int      uint_t;
-      typedef unsigned long     ulong_t;
-#       endif /* 0 */
-      typedef char *            caddr_t;
-
-#       if defined (ACE_PSOS_DIAB_PPC)
-      // pid_t is defined in sys/types.h
-#         if 0
-      typedef unsigned long pid_t;
-#         endif /* 0 */
-#     define ACE_INVALID_PID ((pid_t) ~0)
-#       else /* !defined (ACE_PSOS_DIAB_PPC) */
-      typedef long pid_t;
-#     define ACE_INVALID_PID ((pid_t) -1)
-#       endif /* defined (ACE_PSOS_DIAB_PPC) */
-
-//      typedef unsigned char wchar_t;
-#     endif /* ACE_PSOS_CANT_USE_SYS_TYPES */
 
 #     include /**/x "ace/sys_conf.h" /* system configuration file */
 #     include /**/x <configs.h>   /* includes all pSOS headers */
@@ -149,124 +108,12 @@ class ACE_Timeout_Manager;
 #       include "ace/os_include/sys/wait.h"    /* Diab Data supplied header file */
 #     endif /* ACE_PSOS_DIAB_MIPS */
 
-// This collides with phile.h
-//    #include /**/x <sys/stat.h>    /* Diab Data supplied header file */
-
-// Some versions have missing preprocessor definitions
-#     if !defined (AF_UNIX)
-#       define AF_UNIX 0x1
-#     endif /* AF_UNIX */
-#     define PF_UNIX AF_UNIX
-#     define PF_INET AF_INET
-#     if !defined (AF_MAX)
-#       define AF_MAX AF_INET
-#     endif /* AF_MAX */
-#     if !defined (IFF_LOOPBACK)
-#       define IFF_LOOPBACK IFF_EXTLOOPBACK
-#     endif /* IFF_LOOPBACK */
-
-  typedef long fd_mask;
-#     define IPPORT_RESERVED       1024
-#     define IPPORT_USERRESERVED   5000
-
-  extern "C"
-  {
-    typedef void (* ACE_SignalHandler) (void);
-    typedef void (* ACE_SignalHandlerV) (void);
-  }
-
-#     if !defined(SIG_DFL)
-#       define SIG_DFL (ACE_SignalHandler) 0
-#     endif  /* philabs */
-
 #   endif /* defined (ACE_PSOSIM) */
 
 // Some versions of pSOS do not define error numbers, but newer
 // versions do. So, include errno.h and then see which ones are not
 // yet defined.
 #   include "ace/os_include/errno.h"
-
-#   if !defined (EPERM)
-#     define EPERM        1        /* Not super-user                        */
-#   endif /* EPERM */
-#   if !defined (ENOENT)
-#     define ENOENT       2        /* No such file or directory             */
-#   endif /* ENOENT */
-#   if !defined (ESRCH)
-#     define ESRCH        3        /* No such process                       */
-#   endif /* ESRCH */
-#   if ! defined (EINTR)
-#     define EINTR        4        /* interrupted system call               */
-#   endif /* EINTR */
-#   if !defined (EBADF)
-#     define EBADF        9        /* Bad file number                       */
-#   endif /* EBADF */
-#   if !defined (EAGAIN)
-#     define EAGAIN       11       /* Resource temporarily unavailable      */
-#   endif /* EAGAIN */
-#   if !defined (EWOULDBLOCK)
-#     define EWOULDBLOCK  EAGAIN   /* Blocking resource request would block */
-#   endif /* EWOULDBLOCK */
-#   if !defined (ENOMEM)
-#     define ENOMEM       12       /* Not enough core                       */
-#   endif /* ENOMEM */
-#   if !defined (EACCES)
-#     define EACCES      13       /* Permission denied                     */
-#   endif /* EACCES */
-#   if !defined (EFAULT)
-#     define EFAULT       14       /* Bad access                            */
-#   endif /* EFAULT */
-#   if !defined (EEXIST)
-#     define EEXIST       17       /* File exists                           */
-#   endif /* EEXIST */
-#   if !defined (ENOSPC)
-#     define ENOSPC       28       /* No space left on device               */
-#   endif /* ENOSPC */
-#   if !defined (EPIPE)
-#     define EPIPE        32       /* Broken pipe                           */
-#   endif /* EPIPE */
-#   if !defined (ETIME)
-#     define ETIME        62       /* timer expired                         */
-#   endif /* ETIME */
-#   if !defined (ENAMETOOLONG)
-#     define ENAMETOOLONG 78       /* path name is too long                 */
-#   endif /* ENAMETOOLONG */
-#   if !defined (ENOSYS)
-#     define ENOSYS       89       /* Unsupported file system operation     */
-#   endif /* ENOSYS */
-#   if !defined (EADDRINUSE)
-#     define EADDRINUSE   125      /* Address already in use                */
-#   endif /* EADDRINUSE */
-#   if !defined (ENETUNREACH)
-#     define ENETUNREACH  128      /* Network is unreachable                */
-#   endif /* ENETUNREACH */
-#   if !defined (EISCONN)
-#     define EISCONN      133      /* Socket is already connected           */
-#   endif /* EISCONN */
-#   if !defined (ESHUTDOWN)
-#     define ESHUTDOWN    143      /* Can't send after socket shutdown      */
-#   endif /* ESHUTDOWN */
-#   if !defined (ECONNREFUSED)
-#     define ECONNREFUSED 146      /* Connection refused                    */
-#   endif /* ECONNREFUSED */
-#   if !defined (EINPROGRESS)
-#     define EINPROGRESS  150      /* operation now in progress             */
-#   endif /* EINPROGRESS */
-#   if !defined (ERRMAX)
-#     define ERRMAX       151      /* Last error number                     */
-#   endif /* ERRMAX */
-
-#   if ! defined (NSIG)
-#     define NSIG 32
-#   endif /* NSIG */
-
-#   if ! defined (TCP_NODELAY)
-#     define TCP_NODELAY  1
-#   endif /* TCP_NODELAY */
-
-// For general purpose portability
-
-#   define ACE_BITS_PER_ULONG (8 * sizeof (u_long))
 
 typedef u_long ACE_idtype_t;
 typedef u_long ACE_id_t;
@@ -288,66 +135,8 @@ typedef struct
   char name_[4];
 } ACE_sema_t;
 
-// Used for dynamic linking.
-#   if !defined (ACE_DEFAULT_SVC_CONF)
-#     if (ACE_USES_CLASSIC_SVC_CONF == 1)
-#       define ACE_DEFAULT_SVC_CONF "./svc.conf"
-#     else
-#       define ACE_DEFAULT_SVC_CONF "./svc.conf.xml"
-#     endif /* ACE_USES_CLASSIC_SVC_CONF ==1 */
-#   endif /* ACE_DEFAULT_SVC_CONF */
-
-#   define ACE_DIRECTORY_SEPARATOR_STR_A "/"
-#   define ACE_DIRECTORY_SEPARATOR_CHAR_A '/'
-#   define ACE_PLATFORM_A "pSOS"
-#   define ACE_PLATFORM_EXE_SUFFIX_A ""
-
-#   define ACE_DLL_SUFFIX ACE_LIB_TEXT (".so")
-#   define ACE_DLL_PREFIX ACE_LIB_TEXT ("lib")
-#   define ACE_LD_SEARCH_PATH ACE_LIB_TEXT ("LD_LIBRARY_PATH")
-#   define ACE_LD_SEARCH_PATH_SEPARATOR_STR ACE_LIB_TEXT (":")
-#   define ACE_LOGGER_KEY ACE_LIB_TEXT ("/tmp/server_daemon")
-
-#   define ACE_MAX_DEFAULT_PORT 65535
-
-#   if ! defined(MAXNAMLEN)
-#     define MAXNAMLEN   255
-#   endif /* MAXNAMLEN */
-
-#   if defined (ACE_LACKS_MMAP)
-#     define PROT_READ 0
-#     define PROT_WRITE 0
-#     define PROT_EXEC 0
-#     define PROT_NONE 0
-#     define PROT_RDWR 0
-#     define MAP_PRIVATE 0
-#     define MAP_SHARED 0
-#     define MAP_FIXED 0
-#   endif /* ACE_LACKS_MMAP */
 
 typedef int ACE_exitcode;
-
-typedef ACE_HANDLE ACE_SHLIB_HANDLE;
-#   define ACE_SHLIB_INVALID_HANDLE ACE_INVALID_HANDLE
-#   define ACE_DEFAULT_SHLIB_MODE 0
-
-#   define ACE_INVALID_SEM_KEY -1
-
-struct  hostent {
-  char    *h_name;        /* official name of host */
-  char    **h_aliases;    /* alias list */
-  int     h_addrtype;     /* host address type */
-  int     h_length;       /* address length */
-  char    **h_addr_list;  /* (first, only) address from name server */
-#   define h_addr h_addr_list[0]   /* the first address */
-};
-
-struct  servent {
-  char     *s_name;    /* official service name */
-  char    **s_aliases; /* alias list */
-  int       s_port;    /* port # */
-  char     *s_proto;   /* protocol to use */
-};
 
 #   define ACE_SEH_TRY if (1)
 #   define ACE_SEH_EXCEPT(X) while (0)
@@ -537,30 +326,6 @@ private:
   /// Keeps track of whether we've already been stopped.
   int stopped_;
 };
-
-# if defined (ACE_HAS_USING_KEYWORD)
-#   define ACE_USING using
-# else
-#   define ACE_USING
-# endif /* ACE_HAS_USING_KEYWORD */
-
-# if defined (ACE_HAS_TYPENAME_KEYWORD)
-#   define ACE_TYPENAME typename
-# else
-#   define ACE_TYPENAME
-# endif /* ACE_HAS_TYPENAME_KEYWORD */
-
-# if defined (ACE_HAS_STD_TEMPLATE_SPECIALIZATION)
-#   define ACE_TEMPLATE_SPECIALIZATION template<>
-# else
-#   define ACE_TEMPLATE_SPECIALIZATION
-# endif /* ACE_HAS_STD_TEMPLATE_SPECIALIZATION */
-
-# if defined (ACE_HAS_STD_TEMPLATE_METHOD_SPECIALIZATION)
-#   define ACE_TEMPLATE_METHOD_SPECIALIZATION template<>
-# else
-#   define ACE_TEMPLATE_METHOD_SPECIALIZATION
-# endif /* ACE_HAS_STD_TEMPLATE_SPECIALIZATION */
 
 // The following is necessary since many C++ compilers don't support
 // typedef'd types inside of classes used as formal template
@@ -757,223 +522,6 @@ private:
 #   define ACE_PAGEFILE_MEMORY_POOL ACE_Pagefile_Memory_Pool, ACE_Pagefile_Memory_Pool_Options
 # endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
 
-// These two are only for backward compatibility. You should avoid
-// using them if not necessary.
-# define ACE_SYNCH_1 ACE_SYNCH_DECL
-# define ACE_SYNCH_2 ACE_SYNCH_USE
-
-// For Win32 compatibility... todo: should go in cpp
-# if !defined (ACE_WSOCK_VERSION)
-#   define ACE_WSOCK_VERSION 0, 0
-# endif /* ACE_WSOCK_VERSION */
-
-/// Service Objects, i.e., objects dynamically loaded via the service
-/// configurator, must provide a destructor function with the
-/// following prototype to perform object cleanup.
-typedef void (*ACE_Service_Object_Exterminator)(void *);
-
-/** @name Service Configurator macros
- *
- * The following macros are used to define helper objects used in
- * ACE's Service Configurator.  This is an implementation of the
- * Service Configurator pattern:
- *
- * http://www.cs.wustl.edu/~schmidt/PDF/SvcConf.pdf
- *
- * The intent of this pattern is to allow developers to dynamically
- * load and configure services into a system.  With a little help from
- * this macros statically linked services can also be dynamically
- * configured.
- *
- * More details about this component are available in the documentation
- * of the ACE_Service_Configurator class and also
- * ACE_Dynamic_Service.
- *
- * Notice that in all the macros the SERVICE_CLASS parameter must be
- * the name of a class derived from ACE_Service_Object.
- */
-//@{
-/// Declare a the data structure required to register a statically
-/// linked service into the service configurator.
-/**
- * The macro should be used in the header file where the service is
- * declared, its only argument is usually the name of the class that
- * implements the service.
- *
- * @param SERVICE_CLASS The name of the class implementing the
- *   service.
- */
-# define ACE_STATIC_SVC_DECLARE(SERVICE_CLASS) \
-extern ACE_Static_Svc_Descriptor ace_svc_desc_##SERVICE_CLASS ;
-
-/// As ACE_STATIC_SVC_DECLARE, but using an export macro for NT
-/// compilers.
-/**
- * NT compilers require the use of explicit directives to export and
- * import symbols from a DLL.  If you need to define a service in a
- * dynamic library you should use this version instead.
- * Normally ACE uses a macro to inject the correct export/import
- * directives on NT.  Naturally it also the macro expands to a blank
- * on platforms that do not require such directives.
- * The first argument (EXPORT_NAME) is the prefix for this export
- * macro, the full name is formed by appending _Export.
- * ACE provides tools to generate header files that define the macro
- * correctly on all platforms, please see
- * $ACE_ROOT/bin/generate_export_file.pl
- *
- * @param EXPORT_NAME The export macro name prefix.
- * @param SERVICE_CLASS The name of the class implementing the service.
- */
-#define ACE_STATIC_SVC_DECLARE_EXPORT(EXPORT_NAME,SERVICE_CLASS) \
-extern EXPORT_NAME##_Export ACE_Static_Svc_Descriptor ace_svc_desc_##SERVICE_CLASS;
-
-/// Define the data structure used to register a statically linked
-/// service into the Service Configurator.
-/**
- * The service configurator requires several arguments to build and
- * control an statically linked service, including its name, the
- * factory function used to construct the service, and some flags.
- * All those parameters are configured in a single structure, an
- * instance of this structure is statically initialized using the
- * following macro.
- *
- * @param SERVICE_CLASS The name of the class that implements the
- *    service, must be derived (directly or indirectly) from
- *    ACE_Service_Object.
- * @param NAME The name for this service, this name is used by the
- *    service configurator to match configuration options provided in
- *    the svc.conf file.
- * @param TYPE The type of object.  Objects can be streams or service
- *    objects.  Please read the ACE_Service_Configurator and ASX
- *    documentation for more details.
- * @param FN The name of the factory function, usually the
- *    ACE_SVC_NAME macro can be used to generate the name.  The
- *    factory function is often defined using ACE_FACTORY_DECLARE and
- *    ACE_FACTORY_DEFINE.
- * @param FLAGS Flags to control the ownership and lifecycle of the
- *    object. Please read the ACE_Service_Configurator documentation
- *    for more details.
- * @param ACTIVE If not zero then a thread will be dedicate to the
- *    service. Please read the ACE_Service_Configurator documentation
- *    for more details.
- */
-#define ACE_STATIC_SVC_DEFINE(SERVICE_CLASS, NAME, TYPE, FN, FLAGS, ACTIVE) \
-ACE_Static_Svc_Descriptor ace_svc_desc_##SERVICE_CLASS = { NAME, TYPE, FN, FLAGS, ACTIVE };
-
-/// Automatically register a service with the service configurator
-/**
- * In some applications the services must be automatically registered
- * with the service configurator, before main() starts.
- * The ACE_STATIC_SVC_REQUIRE macro defines a class whose constructor
- * register the service, it also defines a static instance of that
- * class to ensure that the service is registered before main.
- *
- * On platforms that lack adequate support for static C++ objects the
- * macro ACE_STATIC_SVC_REGISTER can be used to explicitly register
- * the service.
- *
- * @todo One class per-Service_Object seems wasteful.  It should be
- *   possible to define a single class and re-use it for all the
- *   service objects, just by passing the Service_Descriptor as an
- *   argument to the constructor.
- */
-#if defined(ACE_LACKS_STATIC_CONSTRUCTORS)
-# define ACE_STATIC_SVC_REQUIRE(SERVICE_CLASS)\
-class ACE_Static_Svc_##SERVICE_CLASS {\
-public:\
-  ACE_Static_Svc_##SERVICE_CLASS() { \
-    ACE_Service_Config::static_svcs ()->insert (\
-         &ace_svc_desc_##SERVICE_CLASS); \
-  } \
-};
-#define ACE_STATIC_SVC_REGISTER(SERVICE_CLASS)\
-ACE_Static_Svc_##SERVICE_CLASS ace_static_svc_##SERVICE_CLASS
-
-#else /* !ACE_LACKS_STATIC_CONSTRUCTORS */
-
-# define ACE_STATIC_SVC_REQUIRE(SERVICE_CLASS)\
-class ACE_Static_Svc_##SERVICE_CLASS {\
-public:\
-  ACE_Static_Svc_##SERVICE_CLASS() { \
-    ACE_Service_Config::static_svcs ()->insert (\
-         &ace_svc_desc_##SERVICE_CLASS); \
-    } \
-};\
-static ACE_Static_Svc_##SERVICE_CLASS ace_static_svc_##SERVICE_CLASS;
-#define ACE_STATIC_SVC_REGISTER(SERVICE_CLASS) do {} while (0)
-
-#endif /* !ACE_LACKS_STATIC_CONSTRUCTORS */
-
-/// Declare the factory method used to create dynamically loadable
-/// services.
-/**
- * Once the service implementation is dynamically loaded the Service
- * Configurator uses a factory method to create the object.
- * This macro declares such a factory function with the proper
- * interface and export macros.
- * Normally used in the header file that declares the service
- * implementation.
- *
- * @param CLS must match the prefix of the export macro used for this
- *        service.
- * @param SERVICE_CLASS must match the name of the class that
- *        implements the service.
- *
- */
-#define ACE_FACTORY_DECLARE(CLS,SERVICE_CLASS) \
-extern "C" CLS##_Export ACE_Service_Object *\
-_make_##SERVICE_CLASS (ACE_Service_Object_Exterminator *);
-
-/// Define the factory method (and destructor) for a dynamically
-/// loadable service.
-/**
- * Use with arguments matching ACE_FACTORY_DECLARE.
- * Normally used in the .cpp file that defines the service
- * implementation.
- *
- * This macro defines both the factory method and the function used to
- * cleanup the service object.
- *
- * If this macro is used to define a factory function that need not be
- * exported (for example, in a static service situation), CLS can be
- * specified as ACE_Local_Service.
- */
-# define ACE_Local_Service_Export
-
-# define ACE_FACTORY_DEFINE(CLS,SERVICE_CLASS) \
-void _gobble_##SERVICE_CLASS (void *p) { \
-  ACE_Service_Object *_p = ACE_static_cast (ACE_Service_Object *, p); \
-  ACE_ASSERT (_p != 0); \
-  delete _p; } \
-extern "C" CLS##_Export ACE_Service_Object *\
-_make_##SERVICE_CLASS (ACE_Service_Object_Exterminator *gobbler) \
-{ \
-  ACE_TRACE (#SERVICE_CLASS); \
-  if (gobbler != 0) \
-    *gobbler = (ACE_Service_Object_Exterminator) _gobble_##SERVICE_CLASS; \
-  return new SERVICE_CLASS; \
-}
-
-/// The canonical name for a service factory method
-#define ACE_SVC_NAME(SERVICE_CLASS) _make_##SERVICE_CLASS
-
-/// The canonical way to invoke (i.e. construct) a service factory
-/// method.
-#define ACE_SVC_INVOKE(SERVICE_CLASS) _make_##SERVICE_CLASS (0)
-
-//@}
-
-/** @name Helper macros for services defined in the netsvcs library.
- *
- * The ACE services defined in netsvcs use this helper macros for
- * simplicity.
- *
- */
-//@{
-# define ACE_SVC_FACTORY_DECLARE(X) ACE_FACTORY_DECLARE (ACE_Svc, X)
-# define ACE_SVC_FACTORY_DEFINE(X) ACE_FACTORY_DEFINE (ACE_Svc, X)
-//@}
-
 # if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION))
 #   define ACE_TSS_TYPE(T) ACE_TSS< T >
 #   if defined (ACE_HAS_BROKEN_CONVERSIONS)
@@ -990,18 +538,10 @@ _make_##SERVICE_CLASS (ACE_Service_Object_Exterminator *gobbler) \
 #   include /**/x <sys/procfs.h>
 # endif /* ACE_HAS_PROC_FS */
 
-# if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-#   define ACE_MT(X) X
-#   if !defined (_REENTRANT)
-#     define _REENTRANT
-#   endif /* _REENTRANT */
-# else
-#   define ACE_MT(X)
-# endif /* ACE_MT_SAFE  todo: this needs to go in a header higher up...*/
-
-# if !defined (ACE_DEFAULT_THREAD_PRIORITY)
-#   define ACE_DEFAULT_THREAD_PRIORITY (-0x7fffffffL - 1L)
-# endif /* ACE_DEFAULT_THREAD_PRIORITY */
+// Type-safe, and unsigned.
+static const ACE_UINT32 ACE_U_ONE_SECOND_IN_MSECS = 1000U;
+static const ACE_UINT32 ACE_U_ONE_SECOND_IN_USECS = 1000000U;
+static const ACE_UINT32 ACE_U_ONE_SECOND_IN_NSECS = 1000000000U;
 
 # if defined (ACE_HAS_POSIX_SEM)
 #   include "ace/os_include/semaphore.h"
@@ -1175,7 +715,6 @@ struct sockaddr_un {
   char  sun_path[108]; // path name.
 };
 
-#     define MAXNAMLEN   255
 #     define NSIG (_NSIGS + 1)
 
 // task options:  the other options are either obsolete, internal, or for
@@ -1683,22 +1222,6 @@ protected:
 #   include "ace/os_include/sched.h"
 # endif /* ACE_NEEDS_SCHED_H */
 
-#if !defined (ACE_OSTREAM_TYPE)
-# if defined (ACE_LACKS_IOSTREAM_TOTALLY)
-#   define ACE_OSTREAM_TYPE FILE
-# else  /* ! ACE_LACKS_IOSTREAM_TOTALLY */
-#   define ACE_OSTREAM_TYPE ostream
-# endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
-#endif /* ! ACE_OSTREAM_TYPE */
-
-#if !defined (ACE_DEFAULT_LOG_STREAM)
-# if defined (ACE_LACKS_IOSTREAM_TOTALLY)
-#   define ACE_DEFAULT_LOG_STREAM 0
-# else  /* ! ACE_LACKS_IOSTREAM_TOTALLY */
-#   define ACE_DEFAULT_LOG_STREAM (&cerr)
-# endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
-#endif /* ! ACE_DEFAULT_LOG_STREAM */
-
 // If the user wants minimum IOStream inclusion, we will just include
 // the forward declarations
 # if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
@@ -1720,126 +1243,16 @@ protected:
 # endif /* ACE_HAS_BYTESEX_H */
 # include "ace/Basic_Types.h"
 
-// Type-safe, and unsigned.
-static const ACE_UINT32 ACE_U_ONE_SECOND_IN_MSECS = 1000U;
-static const ACE_UINT32 ACE_U_ONE_SECOND_IN_USECS = 1000000U;
-static const ACE_UINT32 ACE_U_ONE_SECOND_IN_NSECS = 1000000000U;
-
 # if defined (ACE_HAS_UTIME)
 #   include "ace/os_include/utime.h"
 # endif /* ACE_HAS_UTIME */
 
-# if defined (ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES)
-// Prototypes for both signal() and struct sigaction are consistent..
-#   if defined (ACE_HAS_SIG_C_FUNC)
-extern "C" {
-#   endif /* ACE_HAS_SIG_C_FUNC */
-#   if !defined (ACE_PSOS)
-typedef void (*ACE_SignalHandler)(int);
-typedef void (*ACE_SignalHandlerV)(int);
-#   endif /* !defined (ACE_PSOS) */
-#   if defined (ACE_HAS_SIG_C_FUNC)
-}
-#   endif /* ACE_HAS_SIG_C_FUNC */
-# elif defined (ACE_HAS_LYNXOS_SIGNALS)
-typedef void (*ACE_SignalHandler)(...);
-typedef void (*ACE_SignalHandlerV)(...);
-# elif defined (ACE_HAS_TANDEM_SIGNALS)
-typedef void (*ACE_SignalHandler)(...);
-typedef void (*ACE_SignalHandlerV)(...);
-# elif defined (ACE_HAS_IRIX_53_SIGNALS)
-typedef void (*ACE_SignalHandler)(...);
-typedef void (*ACE_SignalHandlerV)(...);
-# elif defined (ACE_HAS_SPARCWORKS_401_SIGNALS)
-typedef void (*ACE_SignalHandler)(int, ...);
-typedef void (*ACE_SignalHandlerV)(int,...);
-# elif defined (ACE_HAS_SUNOS4_SIGNAL_T)
-typedef void (*ACE_SignalHandler)(...);
-typedef void (*ACE_SignalHandlerV)(...);
-# elif defined (ACE_HAS_SVR4_SIGNAL_T)
-// SVR4 Signals are inconsistent (e.g., see struct sigaction)..
-typedef void (*ACE_SignalHandler)(int);
-#   if !defined (m88k)     /*  with SVR4_SIGNAL_T */
-typedef void (*ACE_SignalHandlerV)(void);
-#   else
-typedef void (*ACE_SignalHandlerV)(int);
-#   endif  /*  m88k */       /*  with SVR4_SIGNAL_T */
-# elif defined (ACE_WIN32)
-typedef void (__cdecl *ACE_SignalHandler)(int);
-typedef void (__cdecl *ACE_SignalHandlerV)(int);
-# elif defined (ACE_HAS_UNIXWARE_SVR4_SIGNAL_T)
-typedef void (*ACE_SignalHandler)(int);
-typedef void (*ACE_SignalHandlerV)(...);
-# elif defined (INTEGRITY)
-typedef void (*ACE_SignalHandler)();
-typedef void (*ACE_SignalHandlerV)(int);
-# else /* This is necessary for some older broken version of cfront */
-#   if defined (SIG_PF)
-#     define ACE_SignalHandler SIG_PF
-#   else
-typedef void (*ACE_SignalHandler)(int);
-#   endif /* SIG_PF */
-typedef void (*ACE_SignalHandlerV)(...);
-# endif /* ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES */
 
 # if defined (ACE_WIN32)
-// Turn off warnings for /W4
-// To resume any of these warning: #pragma warning(default: 4xxx)
-// which should be placed after these defines
-
-#   if !defined (ALL_WARNINGS) && defined(_MSC_VER) && !defined(ghs) && !defined(__MINGW32__)
-// #pragma warning(disable: 4101)  // unreferenced local variable
-#     pragma warning(disable: 4127)  /* constant expression for TRACE/ASSERT */
-#     pragma warning(disable: 4134)  /* message map member fxn casts */
-#     pragma warning(disable: 4511)  /* private copy constructors are good to have */
-#     pragma warning(disable: 4512)  /* private operator= are good to have */
-#     pragma warning(disable: 4514)  /* unreferenced inlines are common */
-#     pragma warning(disable: 4710)  /* private constructors are disallowed */
-#     pragma warning(disable: 4705)  /* statement has no effect in optimized code */
-// #pragma warning(disable: 4701)  // local variable *may* be used without init
-// #pragma warning(disable: 4702)  // unreachable code caused by optimizations
-#     pragma warning(disable: 4791)  /* loss of debugging info in retail version */
-// #pragma warning(disable: 4204)  // non-constant aggregate initializer
-#     pragma warning(disable: 4275)  /* deriving exported class from non-exported */
-#     pragma warning(disable: 4251)  /* using non-exported as public in exported */
-#     pragma warning(disable: 4786)  /* identifier was truncated to '255' characters in the browser information */
-#     pragma warning(disable: 4097)  /* typedef-name used as synonym for class-name */
-#   endif /* !ALL_WARNINGS && _MSV_VER && !ghs && !__MINGW32__ */
-
-// STRICT type checking in WINDOWS.H enhances type safety for Windows
-// programs by using distinct types to represent all the different
-// HANDLES in Windows. So for example, STRICT prevents you from
-// mistakenly passing an HPEN to a routine expecting an HBITMAP.
-// Note that we only use this if we
-#   if defined (ACE_HAS_STRICT) && (ACE_HAS_STRICT != 0)
-#     if !defined (STRICT)   /* may already be defined */
-#       define STRICT
-#     endif /* !STRICT */
-#   endif /* ACE_HAS_STRICT */
 
 #   if !defined (ACE_HAS_WINCE)
 #     include "ace/os_include/sys/timeb.h"
 #   endif /* ACE_HAS_WINCE */
-
-// Need to work around odd glitches with NT.
-#   if !defined (ACE_MAX_DEFAULT_PORT)
-#     define ACE_MAX_DEFAULT_PORT 65535
-#   endif /* ACE_MAX_DEFAULT_PORT */
-
-// We're on WinNT or Win95
-#   define ACE_PLATFORM_A "Win32"
-#   define ACE_PLATFORM_EXE_SUFFIX_A ".exe"
-
-// Used for dynamic linking
-#   if !defined (ACE_DEFAULT_SVC_CONF)
-#     if (ACE_USES_CLASSIC_SVC_CONF == 1)
-#       define ACE_DEFAULT_SVC_CONF ACE_LIB_TEXT (".\\svc.conf")
-#     else
-#       define ACE_DEFAULT_SVC_CONF ACE_LIB_TEXT (".\\svc.conf.xml")
-#     endif /* ACE_USES_CLASSIC_SVC_CONF ==1 */
-#   endif /* ACE_DEFAULT_SVC_CONF */
-
-#   define ACE_INVALID_SEM_KEY 0
 
 #   if !defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
 #     define ACE_SEH_TRY if (1)
@@ -1868,68 +1281,12 @@ typedef void (*ACE_SignalHandlerV)(...);
 // The "null" device on Win32.
 #   define ACE_DEV_NULL "nul"
 
-// Define the pathname separator characters for Win32 (ugh).
-#   define ACE_DIRECTORY_SEPARATOR_STR_A "\\"
-#   define ACE_DIRECTORY_SEPARATOR_CHAR_A '\\'
-#   define ACE_LD_SEARCH_PATH ACE_LIB_TEXT ("PATH")
-#   define ACE_LD_SEARCH_PATH_SEPARATOR_STR ACE_LIB_TEXT (";")
-#   define ACE_DLL_SUFFIX ACE_LIB_TEXT (".dll")
-#   if defined (__MINGW32__)
-#     define ACE_DLL_PREFIX ACE_LIB_TEXT ("lib")
-#   else /* __MINGW32__ */
-#     define ACE_DLL_PREFIX ACE_LIB_TEXT ("")
-#   endif /* __MINGW32__ */
-
 #include "ace/os_include/sys/mman.h" //// MMAP flags
 
 #   if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
 #     include "ace/os_include/netinet/in.h"  // <ws2tcpip.h>
 #   endif /* ACE_HAS_WINSOCK2 */
 
-// error code mapping
-#   define ETIME                   ERROR_SEM_TIMEOUT
-#   define EWOULDBLOCK             WSAEWOULDBLOCK
-#   define EINPROGRESS             WSAEINPROGRESS
-#   define EALREADY                WSAEALREADY
-#   define ENOTSOCK                WSAENOTSOCK
-#   define EDESTADDRREQ            WSAEDESTADDRREQ
-#   define EMSGSIZE                WSAEMSGSIZE
-#   define EPROTOTYPE              WSAEPROTOTYPE
-#   define ENOPROTOOPT             WSAENOPROTOOPT
-#   define EPROTONOSUPPORT         WSAEPROTONOSUPPORT
-#   define ESOCKTNOSUPPORT         WSAESOCKTNOSUPPORT
-#   define EOPNOTSUPP              WSAEOPNOTSUPP
-#   define EPFNOSUPPORT            WSAEPFNOSUPPORT
-#   define EAFNOSUPPORT            WSAEAFNOSUPPORT
-#   define EADDRINUSE              WSAEADDRINUSE
-#   define EADDRNOTAVAIL           WSAEADDRNOTAVAIL
-#   define ENETDOWN                WSAENETDOWN
-#   define ENETUNREACH             WSAENETUNREACH
-#   define ENETRESET               WSAENETRESET
-#   define ECONNABORTED            WSAECONNABORTED
-#   define ECONNRESET              WSAECONNRESET
-#   define ENOBUFS                 WSAENOBUFS
-#   define EISCONN                 WSAEISCONN
-#   define ENOTCONN                WSAENOTCONN
-#   define ESHUTDOWN               WSAESHUTDOWN
-#   define ETOOMANYREFS            WSAETOOMANYREFS
-#   define ETIMEDOUT               WSAETIMEDOUT
-#   define ECONNREFUSED            WSAECONNREFUSED
-#   define ELOOP                   WSAELOOP
-#   define EHOSTDOWN               WSAEHOSTDOWN
-#   define EHOSTUNREACH            WSAEHOSTUNREACH
-#   define EPROCLIM                WSAEPROCLIM
-#   define EUSERS                  WSAEUSERS
-#   define EDQUOT                  WSAEDQUOT
-#   define ESTALE                  WSAESTALE
-#   define EREMOTE                 WSAEREMOTE
-// Grrr! ENAMETOOLONG and ENOTEMPTY are already defined by the horrible
-// 'standard' library.
-// #define ENAMETOOLONG            WSAENAMETOOLONG
-
-#   if defined (__BORLANDC__) && (__BORLANDC__ <= 0x540)
-#     define ENOTEMPTY               WSAENOTEMPTY
-#   endif /* __BORLANDC__  && __BORLANDC__ <= 0x540*/
 
 
 #   if !defined (ACE_HAS_WINCE)
@@ -1989,83 +1346,21 @@ typedef DWORD ACE_exitcode;
 
 // Reliance on CRT - I don't really like this.
 
-#   define MAXNAMLEN   _MAX_FNAME
-#   define EADDRINUSE WSAEADDRINUSE
-
-/// The ordering of the fields in this struct is important.  It has to
-/// match those in WSABUF.
-struct iovec
-{
-  /// byte count to read/write
-  u_long iov_len;
-  /// data to be read/written
-  char *iov_base;
-
-  // WSABUF is a Winsock2-only type.
-#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-  operator WSABUF &(void) { return *((WSABUF *) this); }
-#endif /* defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) */
-};
 
 typedef int ACE_idtype_t;
 typedef DWORD ACE_id_t;
 #   define ACE_SELF (0)
 typedef int ACE_pri_t;
 
-// Dynamic loading-related types - used for dlopen and family.
-typedef HINSTANCE ACE_SHLIB_HANDLE;
-#   define ACE_SHLIB_INVALID_HANDLE 0
-#   define ACE_DEFAULT_SHLIB_MODE 0
-
 # elif defined (ACE_PSOS)
 
 typedef ACE_UINT64 ACE_hrtime_t;
-
-#   if defined (ACE_SIGINFO_IS_SIGINFO_T)
-  typedef struct siginfo siginfo_t;
-#   endif /* ACE_LACKS_SIGINFO_H */
 
 # else /* !defined (ACE_WIN32) && !defined (ACE_PSOS) */
 
 #   if defined (m88k)
 #     define RUSAGE_SELF 1
 #   endif  /*  m88k */
-
-// Default port is MAX_SHORT.
-#   define ACE_MAX_DEFAULT_PORT 65535
-
-#   define ACE_INVALID_SEM_KEY -1
-
-// Define the pathname separator characters for UNIX.
-#   define ACE_DIRECTORY_SEPARATOR_STR_A "/"
-#   define ACE_DIRECTORY_SEPARATOR_CHAR_A '/'
-
-// We're some kind of UNIX...
-#   define ACE_PLATFORM_A "UNIX"
-#   define ACE_PLATFORM_EXE_SUFFIX_A ""
-
-#   if !defined (ACE_LD_SEARCH_PATH)
-#     define ACE_LD_SEARCH_PATH "LD_LIBRARY_PATH"
-#   endif /* ACE_LD_SEARCH_PATH */
-#   if !defined (ACE_LD_SEARCH_PATH_SEPARATOR_STR)
-#     define ACE_LD_SEARCH_PATH_SEPARATOR_STR ":"
-#   endif /* ACE_LD_SEARCH_PATH_SEPARATOR_STR */
-
-#   if !defined (ACE_DLL_SUFFIX)
-#     define ACE_DLL_SUFFIX ".so"
-#   endif /* ACE_DLL_SUFFIX */
-#   if !defined (ACE_DLL_PREFIX)
-#     define ACE_DLL_PREFIX "lib"
-#   endif /* ACE_DLL_PREFIX */
-
-// Used for dynamic linking.
-#   if !defined (ACE_DEFAULT_SVC_CONF)
-#     if (ACE_USES_CLASSIC_SVC_CONF == 1)
-#       define ACE_DEFAULT_SVC_CONF ACE_LIB_TEXT ("./svc.conf")
-#     else
-#       define ACE_DEFAULT_SVC_CONF ACE_LIB_TEXT ("./svc.conf.xml")
-#     endif /* ACE_USES_CLASSIC_SVC_CONF ==1 */
-#   endif /* ACE_DEFAULT_SVC_CONF */
 
 // Be consistent with Winsock naming
 typedef int ACE_exitcode;
@@ -2165,59 +1460,7 @@ struct ACE_OVERLAPPED
 #     define PIPE_TYPE_MESSAGE 0
 #   endif /* !defined PIPE_TYPE_MESSAGE */
 
-#   if defined (ACE_HAS_BROKEN_IF_HEADER)
-struct ifafilt;
-#   endif /* ACE_HAS_BROKEN_IF_HEADER */
 
-#   if defined (ACE_HAS_AIX_BROKEN_SOCKET_HEADER)
-#     undef __cplusplus
-#     include "ace/os_include/sys/socket.h"
-#     define __cplusplus
-#   else
-#     include "ace/os_include/sys/socket.h"
-#   endif /* ACE_HAS_AIX_BROKEN_SOCKET_HEADER */
-
-extern "C"
-{
-#   if defined (VXWORKS)
-  struct  hostent {
-    char    *h_name;        /* official name of host */
-    char    **h_aliases;    /* aliases:  not used on VxWorks */
-    int     h_addrtype;     /* host address type */
-    int     h_length;       /* address length */
-    char    **h_addr_list;  /* (first, only) address from name server */
-#     define h_addr h_addr_list[0]   /* the first address */
-  };
-#   elif defined (ACE_HAS_CYGWIN32_SOCKET_H)
-#     include /**/x <cygwin32/socket.h>
-#   else
-#     if defined (ACE_HAS_STL_QUEUE_CONFLICT)
-#       define queue _Queue_
-#     endif /* ACE_HAS_STL_QUEUE_CONFLICT */
-#     include "ace/os_include/netdb.h"
-#     if defined (ACE_HAS_STL_QUEUE_CONFLICT)
-#       undef queue
-#     endif /* ACE_HAS_STL_QUEUE_CONFLICT */
-#   endif /* VXWORKS */
-
-
-// This part if to avoid STL name conflict with the map structure
-// in net/if.h.
-#   if defined (ACE_HAS_STL_MAP_CONFLICT)
-#     define map _Resource_Allocation_Map_
-#   endif /* ACE_HAS_STL_MAP_CONFLICT */
-#   include "ace/os_include/net/if.h"
-#   if defined (ACE_HAS_STL_MAP_CONFLICT)
-#     undef map
-#   endif /* ACE_HAS_STL_MAP_CONFLICT */
-
-#   if defined (ACE_HAS_STL_QUEUE_CONFLICT)
-#     define queue _Queue_
-#   endif /* ACE_HAS_STL_QUEUE_CONFLICT */
-#   include "ace/os_include/netinet/in.h"
-#   if defined (ACE_HAS_STL_QUEUE_CONFLICT)
-#     undef queue
-#   endif /* ACE_HAS_STL_QUEUE_CONFLICT */
 
 #   if defined (ACE_VXWORKS) && ACE_VXWORKS <= 0x540
       // Work around a lack of ANSI prototypes for these functions on VxWorks.
@@ -2228,7 +1471,7 @@ extern "C"
 #   else  /* ! (ACE_VXWORKS) && ACE_VXWORKS <= 0x540 */
 #     include "ace/os_include/arpa/inet.h"
 #   endif /* ! (ACE_VXWORKS) && ACE_VXWORKS <= 0x540 */
-}
+
 #   if !defined (ACE_LACKS_TCP_H)
 #     if defined(ACE_HAS_CONFLICTING_XTI_MACROS)
 #       if defined(TCP_NODELAY)
@@ -2264,7 +1507,6 @@ extern_C int      pipe            __((int* fildes));
 extern_C int      gethostname     __((char*, size_t));
 
 #     if  !defined(CHORUS_4)
-typedef cx_fd_mask fd_mask;
 typedef void (*__sighandler_t)(int); // keep Signal compilation happy
 #     endif
 #   elif defined (CYGWIN32)
@@ -2285,7 +1527,6 @@ typedef void (*__sighandler_t)(int); // keep Signal compilation happy
       // sets O_NDELAY
 #     include /**/x <unix.h>
 #     include "ace/os_include/limits.h"  // <sys/param.h> /* for NBBY */
-      typedef long fd_mask;
 #     if !defined (NFDBITS)
 #       define NFDBITS (sizeof(fd_mask) * NBBY)        /* bits per mask */
 #     endif /* ! NFDBITS */
@@ -2414,57 +1655,6 @@ extern "C"
 #     include "ace/os_include/sys/select.h"
 #   endif /* ACE_HAS_SELECT_H */
 
-#   if defined (ACE_HAS_ALLOCA_H)
-//#     include /**/ <alloca.h>
-#   endif /* ACE_HAS_ALLOCA_H */
-
-/* Set the proper handle type for dynamically-loaded libraries. */
-/* Also define a default 'mode' for loading a library - the names and values */
-/* differ between OSes, so if you write code that uses the mode, be careful */
-/* of the platform differences. */
-#   if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
-#    if defined (ACE_HAS_DLFCN_H_BROKEN_EXTERN_C)
-extern "C" {
-#     endif /* ACE_HAS_DLFCN_H_BROKEN_EXTERN_C */
-#     include "ace/os_include/dlfcn.h"
-#     if defined (ACE_HAS_DLFCN_H_BROKEN_EXTERN_C)
-}
-#     endif /* ACE_HAS_DLFCN_H_BROKEN_EXTERN_C */
-  typedef void *ACE_SHLIB_HANDLE;
-#   define ACE_SHLIB_INVALID_HANDLE 0
-#   if defined (__KCC) && defined(RTLD_GROUP) && defined(RTLD_NODELETE)
-#   define ACE_DEFAULT_SHLIB_MODE RTLD_LAZY | RTLD_GROUP | RTLD_NODELETE
-#   else
-#   define ACE_DEFAULT_SHLIB_MODE RTLD_LAZY
-#   endif /* KCC */
-#   elif defined (__hpux)
-#     if defined(__GNUC__) || __cplusplus >= 199707L
-#       include /**/x <dl.h>
-#     else
-#       include /**/x <cxxdl.h>
-#     endif /* (g++ || HP aC++) vs. HP C++ */
-  typedef shl_t ACE_SHLIB_HANDLE;
-#   define ACE_SHLIB_INVALID_HANDLE 0
-#   define ACE_DEFAULT_SHLIB_MODE BIND_DEFERRED
-#   else
-  typedef void *ACE_SHLIB_HANDLE;
-#   define ACE_SHLIB_INVALID_HANDLE 0
-#   define ACE_DEFAULT_SHLIB_MODE RTLD_LAZY
-
-#   endif /* ACE_HAS_SVR4_DYNAMIC_LINKING */
-
-#if !defined (RTLD_LAZY)
-#define RTLD_LAZY 1
-#endif /* !RTLD_LAZY */
-
-#if !defined (RTLD_NOW)
-#define RTLD_NOW 2
-#endif /* !RTLD_NOW */
-
-#if !defined (RTLD_GLOBAL)
-#define RTLD_GLOBAL 3
-#endif /* !RTLD_GLOBAL */
-
 // There must be a better way to do this...
 #   if !defined (RLIMIT_NOFILE)
 #     if defined (linux) || defined (AIX) || defined (SCO)
@@ -2475,27 +1665,6 @@ extern "C" {
 #       endif /* RLIMIT_OFILE */
 #     endif /* defined (linux) || defined (AIX) || defined (SCO) */
 #   endif /* RLIMIT_NOFILE */
-
-#   if defined (ACE_LACKS_MMAP)
-#     define PROT_READ 0
-#     define PROT_WRITE 0
-#     define PROT_EXEC 0
-#     define PROT_NONE 0
-#     define PROT_RDWR 0
-#     define MAP_PRIVATE 0
-#     define MAP_SHARED 0
-#     define MAP_FIXED 0
-#   endif /* ACE_LACKS_MMAP */
-
-// Fixes a problem with HP/UX.
-#   if defined (ACE_HAS_BROKEN_MMAP_H)
-extern "C"
-{
-#     include "ace/os_include/sys/mman.h"
-}
-#   elif !defined (ACE_LACKS_MMAP)
-#     include "ace/os_include/sys/mman.h"
-#   endif /* ACE_HAS_BROKEN_MMAP_H */
 
 #     include "ace/os_include/sys/msg.h"
 
@@ -2530,70 +1699,6 @@ extern "C"
 #   endif /* ! ACE_HAS_HI_RES_TIMER  ||  ACE_LACKS_LONGLONG_T */
 
 # endif /* !defined (ACE_WIN32) && !defined (ACE_PSOS) */
-
-// Define the Wide character and normal versions of some of the string macros
-#   if defined (ACE_HAS_WCHAR)
-#     define ACE_DIRECTORY_SEPARATOR_STR_W ACE_TEXT_WIDE(ACE_DIRECTORY_SEPARATOR_STR_A)
-#     define ACE_DIRECTORY_SEPARATOR_CHAR_W ACE_TEXT_WIDE(ACE_DIRECTORY_SEPARATOR_CHAR_A)
-#     define ACE_PLATFORM_W ACE_TEXT_WIDE(ACE_PLATFORM_A)
-#     define ACE_PLATFORM_EXE_SUFFIX_W ACE_TEXT_WIDE(ACE_PLATFORM_EXE_SUFFIX_A)
-#   endif /* ACE_HAS_WCHAR */
-
-#   define ACE_DIRECTORY_SEPARATOR_STR ACE_LIB_TEXT (ACE_DIRECTORY_SEPARATOR_STR_A)
-#   define ACE_DIRECTORY_SEPARATOR_CHAR ACE_LIB_TEXT (ACE_DIRECTORY_SEPARATOR_CHAR_A)
-#   define ACE_PLATFORM ACE_LIB_TEXT (ACE_PLATFORM_A)
-#   define ACE_PLATFORM_EXE_SUFFIX ACE_LIB_TEXT (ACE_PLATFORM_EXE_SUFFIX_A)
-
-// Theses defines are used by the ACE Name Server.
-#   if !defined (ACE_DEFAULT_LOCALNAME_A)
-#     define ACE_DEFAULT_LOCALNAME_A "localnames"
-#   endif /* ACE_DEFAULT_LOCALNAME_A */
-#   if !defined (ACE_DEFAULT_GLOBALNAME_A)
-#     define ACE_DEFAULT_GLOBALNAME_A "globalnames"
-#   endif /* ACE_DEFAULT_GLOBALNAME_A */
-
-// ACE_DEFAULT_NAMESPACE_DIR is for legacy mode apps.  A better
-// way of doing this is something like ACE_Lib_Find::get_temp_dir, since
-// this directory may not exist
-#   if defined (ACE_LEGACY_MODE)
-#     if defined (ACE_WIN32)
-#       define ACE_DEFAULT_NAMESPACE_DIR_A "C:\\temp"
-#     else /* ACE_WIN32 */
-#       define ACE_DEFAULT_NAMESPACE_DIR_A "/tmp"
-#     endif /* ACE_WIN32 */
-#     if defined (ACE_HAS_WCHAR)
-#       define ACE_DEFAULT_NAMESPACE_DIR_W ACE_TEXT_WIDE(ACE_DEFAULT_NAMESPACE_DIR_A)
-#     endif /* ACE_HAS_WCHAR */
-#     define ACE_DEFAULT_NAMESPACE_DIR ACE_LIB_TEXT(ACE_DEFAULT_NAMESPACE_DIR_A)
-#   endif /* ACE_LEGACY_MODE */
-
-#   if defined (ACE_HAS_WCHAR)
-#     define ACE_DEFAULT_LOCALNAME_W ACE_TEXT_WIDE(ACE_DEFAULT_LOCALNAME_A)
-#     define ACE_DEFAULT_GLOBALNAME_W ACE_TEXT_WIDE(ACE_DEFAULT_GLOBALNAME_A)
-#   endif /* ACE_HAS_WCHAR */
-
-#   define ACE_DEFAULT_LOCALNAME ACE_LIB_TEXT (ACE_DEFAULT_LOCALNAME_A)
-#   define ACE_DEFAULT_GLOBALNAME ACE_LIB_TEXT (ACE_DEFAULT_GLOBALNAME_A)
-
-// defined Win32 specific macros for UNIX platforms
-# if !defined (O_BINARY)
-#   define O_BINARY 0
-# endif /* O_BINARY */
-# if !defined (_O_BINARY)
-#   define _O_BINARY O_BINARY
-# endif /* _O_BINARY */
-# if !defined (O_TEXT)
-#   define O_TEXT 0
-# endif /* O_TEXT */
-# if !defined (_O_TEXT)
-#   define _O_TEXT O_TEXT
-# endif /* _O_TEXT */
-# if !defined (O_RAW)
-#   define O_RAW 0
-# endif /* O_RAW */
-# if !defined (_O_RAW)
-#   define _O_RAW O_RAW
-# endif /* _O_RAW */
 
 # if !defined (ACE_DEFAULT_SYNCH_TYPE)
 #   define ACE_DEFAULT_SYNCH_TYPE USYNC_THREAD
@@ -2631,90 +1736,6 @@ struct ACE_utsname
 typedef struct utsname ACE_utsname;
 # endif /* ACE_LACKS_UTSNAME_T */
 
-// Increase the range of "address families".  Please note that this
-// must appear _after_ the include of sys/socket.h, for the AF_FILE
-// definition on Linux/glibc2.
-#if !defined (AF_ANY)
-# define AF_ANY (-1)
-#endif /* AF_ANY */
-
-# define AF_SPIPE (AF_MAX + 1)
-# if !defined (AF_FILE)
-#   define AF_FILE (AF_MAX + 2)
-# endif /* ! AF_FILE */
-# define AF_DEV (AF_MAX + 3)
-# define AF_UPIPE (AF_SPIPE)
-
-# if defined (ACE_SELECT_USES_INT)
-typedef int ACE_FD_SET_TYPE;
-# else
-typedef fd_set ACE_FD_SET_TYPE;
-# endif /* ACE_SELECT_USES_INT */
-
-# if !defined (MAXNAMELEN)
-#   if defined (FILENAME_MAX)
-#     define MAXNAMELEN FILENAME_MAX
-#   else
-#     define MAXNAMELEN 256
-#   endif /* FILENAME_MAX */
-# endif /* MAXNAMELEN */
-
-# if !defined(MAXHOSTNAMELEN)
-#   define MAXHOSTNAMELEN  256
-# endif /* MAXHOSTNAMELEN */
-
-// Define INET loopback address constant if it hasn't been defined
-// Dotted Decimal 127.0.0.1 == Hexidecimal 0x7f000001
-# if !defined (INADDR_LOOPBACK)
-#   define INADDR_LOOPBACK ((ACE_UINT32) 0x7f000001)
-# endif /* INADDR_LOOPBACK */
-
-// The INADDR_NONE address is generally 255.255.255.255.
-# if !defined (INADDR_NONE)
-#   define INADDR_NONE ((ACE_UINT32) 0xffffffff)
-# endif /* INADDR_NONE */
-
-// Define INET string length constants if they haven't been defined
-//
-// for IPv4 dotted-decimal
-# if !defined (INET_ADDRSTRLEN)
-#   define INET_ADDRSTRLEN 16
-# endif /* INET_ADDRSTRLEN */
-//
-// for IPv6 hex string
-# if !defined (INET6_ADDRSTRLEN)
-#   define INET6_ADDRSTRLEN 46
-# endif /* INET6_ADDRSTRLEN */
-
-#if defined (ACE_HAS_IPV6)
-
-#  if defined (ACE_USES_IPV4_IPV6_MIGRATION)
-#    define ACE_ADDRESS_FAMILY_INET  AF_UNSPEC
-#    define ACE_PROTOCOL_FAMILY_INET PF_UNSPEC
-#  else
-#    define ACE_ADDRESS_FAMILY_INET AF_INET6
-#    define ACE_PROTOCOL_FAMILY_INET PF_INET6
-#  endif /* ACE_USES_IPV4_IPV6_MIGRATION */
-
-#else
-#  define ACE_ADDRESS_FAMILY_INET AF_INET
-#  define ACE_PROTOCOL_FAMILY_INET PF_INET
-#endif
-
-# if defined (ACE_LACKS_SIGSET)
-#    if !defined(__MINGW32__)
-typedef u_int sigset_t;
-#    endif /* !__MINGW32__*/
-# endif /* ACE_LACKS_SIGSET */
-
-# if defined (ACE_LACKS_SIGACTION)
-struct sigaction
-{
-  int sa_flags;
-  ACE_SignalHandlerV sa_handler;
-  sigset_t sa_mask;
-};
-# endif /* ACE_LACKS_SIGACTION */
 
 # if !defined (O_NONBLOCK)
 #   define O_NONBLOCK  1
@@ -2731,22 +1752,6 @@ struct sigaction
 # if !defined (SIG_SETMASK)
 #   define SIG_SETMASK 3
 # endif /* SIG_SETMASK */
-
-# if !defined (IPC_CREAT)
-#   define IPC_CREAT 0
-# endif /* IPC_CREAT */
-
-# if !defined (IPC_NOWAIT)
-#   define IPC_NOWAIT 0
-# endif /* IPC_NOWAIT */
-
-# if !defined (IPC_RMID)
-#   define IPC_RMID 0
-# endif /* IPC_RMID */
-
-# if !defined (IPC_EXCL)
-#   define IPC_EXCL 0
-# endif /* IPC_EXCL */
 
 # if !defined (IP_DROP_MEMBERSHIP)
 #   define IP_DROP_MEMBERSHIP 0
@@ -2784,14 +1789,6 @@ struct sigaction
 # if !defined (SIOCGIFADDR)
 #   define SIOCGIFADDR 0
 # endif /* SIOCGIFADDR */
-
-# if !defined (IPC_PRIVATE)
-#   define IPC_PRIVATE ACE_INVALID_SEM_KEY
-# endif /* IPC_PRIVATE */
-
-# if !defined (IPC_STAT)
-#   define IPC_STAT 0
-# endif /* IPC_STAT */
 
 # if !defined (GETVAL)
 #   define GETVAL 0
@@ -2906,36 +1903,7 @@ struct sigaction
 #   define ACE_DEFAULT_TIMERS _SC_TIMER_MAX
 # endif /* ACE_DEFAULT_TIMERS */
 
-# if defined (ACE_HAS_STRUCT_NETDB_DATA)
-typedef char ACE_HOSTENT_DATA[sizeof(struct hostent_data)];
-typedef char ACE_SERVENT_DATA[sizeof(struct servent_data)];
-typedef char ACE_PROTOENT_DATA[sizeof(struct protoent_data)];
-# else
-#   if !defined ACE_HOSTENT_DATA_SIZE
-#     define ACE_HOSTENT_DATA_SIZE (4*1024)
-#   endif /*ACE_HOSTENT_DATA_SIZE */
-#   if !defined ACE_SERVENT_DATA_SIZE
-#     define ACE_SERVENT_DATA_SIZE (4*1024)
-#   endif /*ACE_SERVENT_DATA_SIZE */
-#   if !defined ACE_PROTOENT_DATA_SIZE
-#     define ACE_PROTOENT_DATA_SIZE (2*1024)
-#   endif /*ACE_PROTOENT_DATA_SIZE */
-typedef char ACE_HOSTENT_DATA[ACE_HOSTENT_DATA_SIZE];
-typedef char ACE_SERVENT_DATA[ACE_SERVENT_DATA_SIZE];
-typedef char ACE_PROTOENT_DATA[ACE_PROTOENT_DATA_SIZE];
-# endif /* ACE_HAS_STRUCT_NETDB_DATA */
 
-# if !defined (ACE_HAS_SEMUN) || (defined (__GLIBC__) && defined (_SEM_SEMUN_UNDEFINED))
-union semun
-{
-  /// value for SETVAL
-  int val;
-  /// buffer for IPC_STAT & IPC_SET
-  struct semid_ds *buf;
-  /// array for GETALL & SETALL
-  u_short *array;
-};
-# endif /* !ACE_HAS_SEMUN || (defined (__GLIBC__) && defined (_SEM_SEMUN_UNDEFINED)) */
 
 
 // Create some useful typedefs.

@@ -2,19 +2,19 @@
 
 //=============================================================================
 /**
- *  @file    glob.h
+ *  @file    os_glob.h
  *
  *  pathname pattern-matching types
  *
  *  $Id$
  *
- *  @author Don Hinton <dhinton@ieee.org>
+ *  @author Don Hinton <dhinton@dresystems.com>
  *  @author This code was originally in various places including ace/OS.h.
  */
 //=============================================================================
 
-#ifndef ACE_OS_INCLUDE_GLOB_H
-#define ACE_OS_INCLUDE_GLOB_H
+#ifndef ACE_OS_INCLUDE_OS_GLOB_H
+#define ACE_OS_INCLUDE_OS_GLOB_H
 
 #include "ace/pre.h"
 
@@ -31,4 +31,4 @@
 #endif /* !ACE_LACKS_GLOB_H */
 
 #include "ace/post.h"
-#endif /* ACE_OS_INCLUDE_GLOB_H */
+#endif /* ACE_OS_INCLUDE_OS_GLOB_H */

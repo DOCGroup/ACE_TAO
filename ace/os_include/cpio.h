@@ -2,19 +2,19 @@
 
 //=============================================================================
 /**
- *  @file    cpio.h
+ *  @file    os_cpio.h
  *
  *  cpio archive values
  *
  *  $Id$
  *
- *  @author Don Hinton <dhinton@ieee.org>
+ *  @author Don Hinton <dhinton@dresystems.com>
  *  @author This code was originally in various places including ace/OS.h.
  */
 //=============================================================================
 
-#ifndef ACE_OS_INCLUDE_CPIO_H
-#define ACE_OS_INCLUDE_CPIO_H
+#ifndef ACE_OS_INCLUDE_OS_CPIO_H
+#define ACE_OS_INCLUDE_OS_CPIO_H
 
 #include "ace/pre.h"
 
@@ -29,4 +29,4 @@
 #endif /* !ACE_LACKS_CPIO_H */
 
 #include "ace/post.h"
-#endif /* ACE_OS_INCLUDE_CPIO_H */
+#endif /* ACE_OS_INCLUDE_OS_CPIO_H */
