@@ -1,3 +1,20 @@
+Fri Sep 15 14:33:45 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/IIOP_Profile.cpp (decode_endpoints):
+	* tao/UIOP_Profile.cpp (decode_endpoints):
+	* tao/SHMIOP_Profile.cpp (decode_endpoints):
+
+	  Check return value of CDR stream to endpoint extraction
+	  operation prior to attempting to access the endpoint.  This
+	  fixes an assertion problem.  This is intended to be an interim
+	  fix.
+
+	* tao/default_resource.cpp (TAO_Default_Resource_Factory):
+
+	  Initialize the parser_names_count_ and parser_names_ members in
+	  the member initializer list.  This fixes an "uninitialized read"
+	  error.
+
 Fri Sep 15 14:25:37 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/ior_corbaloc/ior_corbaloc.dsp :
