@@ -118,7 +118,7 @@ be_visitor_component_cs::visit_component (be_component *node)
       << " **, src);" << be_uidt_nl
       << "return *tmp;" << be_uidt_nl
       << "}" << be_nl << be_nl;
-
+/*
   // Generate the _var class.
   if (node->gen_var_impl () == -1)
     {
@@ -138,7 +138,7 @@ be_visitor_component_cs::visit_component (be_component *node)
                          "codegen for _out failed\n"),
                         -1);
     }
-
+*/
   be_visitor_context ctx (*this->ctx_);
 
   // Interceptor classes.  The interceptors helper classes must be

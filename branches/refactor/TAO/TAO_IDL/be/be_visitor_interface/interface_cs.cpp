@@ -163,7 +163,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "{" << be_idt_nl
       << "return p->marshal (strm);" << be_uidt_nl
       << "}";
-
+/*
   // Generate the _var class.
   if (node->gen_var_impl () == -1)
     {
@@ -183,7 +183,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
                          "codegen for _out failed\n"),
                         -1);
     }
-
+*/
   be_visitor_context ctx = (*this->ctx_);
 
   // Interceptor classes.  The interceptors helper classes must be

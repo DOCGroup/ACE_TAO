@@ -41,29 +41,6 @@ public:
   virtual ~be_type (void);
   // Destructor.
 
-  virtual int gen_var_defn (char *interface_local_name = 0);
-  // Generate the _var class definition.
-  // generate the var definition. If <interface_name> is not 0, generate
-  // the var defn for that name. Otherwise, do it for the interface you
-  // are visiting (this).
-
-  virtual int gen_var_impl (char *interface_local_name = 0,
-                            char *interface_full_name = 0);
-  // Generate the implementation for the _var class.
-  // If any one of the argument is 0, then use the name in <this>,
-  // otherwise use the name given. Just making the class more useful.
-
-  virtual int gen_out_defn (char *interface_name = 0);
-  // Generate the out class definition. If <interface_name> is not 0,
-  // generate the out defn for that name. Otherwise, do it for the
-  // interface you are visiting (this).
-
-  virtual int gen_out_impl (char *interface_local_name = 0,
-                            char *interface_full_name = 0);
-  // Generate the out class implementation.
-  // If any one of the argument is 0, then use the name giin this
-  // node, else use the arguments.
-
   UTL_ScopedName *tc_name (void);
   // Return the typecode name. When both, the prefix and the suffix
   // are non null, it computes and returns a tc name. Else, it also

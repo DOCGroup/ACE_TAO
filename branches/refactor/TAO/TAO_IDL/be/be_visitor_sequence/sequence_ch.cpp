@@ -241,7 +241,7 @@ be_visitor_sequence_ch::instantiate_sequence (be_sequence *node)
     case be_sequence::MNG_ABSTRACT:
       if (node->unbounded ())
         {
-          this->gen_unbounded_obj_sequence (node);
+//          this->gen_unbounded_obj_sequence (node);
         }
       else
         {
@@ -314,9 +314,6 @@ be_visitor_sequence_ch::instantiate_sequence (be_sequence *node)
 
 int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
 {
-  be_type *bt = 0;
-  TAO_OutStream *os = this->ctx_->stream ();
-
   if (node->defined_in () == 0)
     {
       // The node is a nested sequence, and has had no scope defined.
@@ -337,7 +334,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
     {
       return 0;
     }
-
+/*
   // Instantiation.
 
   if (this->instantiate_sequence (node) == -1)
@@ -353,6 +350,9 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
 
   // Generate the ifdefined macro for the sequence type.
   os->gen_ifdef_macro (node->flat_name ());
+*/
+  be_type *bt = 0;
+  TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the base type since we may need to do some code
   // generation for the base type.
@@ -367,9 +367,149 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
                         -1);
     }
 
+  AST_Decl *parent = ScopeAsDecl (bt->defined_in ());
+
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
+  // Generate the appropriate sequence type.
+  switch (node->managed_type ())
+    {
+    case be_sequence::MNG_OBJREF:
+      if (node->unbounded ())
+        {
+          *os << "typedef" << be_idt_nl
+              << "TAO_Unbounded_Object_Sequence<" << be_idt << be_idt_nl
+              << bt->name () << "," << be_nl
+              << bt->name () << "_var," << be_nl;
+          
+          if (parent != 0)
+            {
+              *os << parent->name () << "::";
+            }
+
+          *os << "tao_" << bt->local_name () << "_life," << be_nl;
+          
+          if (parent != 0)
+            {
+              *os << parent->name () << "::";
+            }
+
+          *os << "tao_" << bt->local_name () << "_cast" << be_uidt_nl
+              << "> " << node->local_name () << ";" << be_uidt << be_uidt;
+        }
+      else
+        {
+        }
+
+      // Generate the _var and _out types only if we are not anonymous.
+      if (this->ctx_->tdef () != 0)
+        {
+          *os << be_nl << be_nl
+              << "typedef" << be_idt_nl
+              << "TAO_VarSeq_Var_T<" << be_idt << be_idt_nl
+              << node->local_name () << "," << be_nl
+              << "TAO_Object_Manager<" << be_idt << be_idt_nl
+              << bt->name () << "," << be_nl
+              << bt->name () << "_var," << be_nl;
+          
+          if (parent != 0)
+            {
+              *os << parent->name () << "::";
+            }
+
+          *os << "tao_" << bt->local_name () << "_life" << be_uidt_nl
+              << ">" << be_uidt << be_uidt_nl
+              << "> " << node->local_name () << "_var;" << be_uidt << be_uidt;
+
+          *os << be_nl << be_nl
+              << "typedef" << be_idt_nl
+              << "TAO_Seq_Out_T<" << be_idt << be_idt_nl
+              << node->local_name () << "," << be_nl
+              << node->local_name () << "_var," << be_nl
+              << "TAO_Object_Manager<" << be_idt << be_idt_nl
+              << bt->name () << "," << be_nl
+              << bt->name () << "_var," << be_nl;
+          
+          if (parent != 0)
+            {
+              *os << parent->name () << "::";
+            }
+
+          *os << "tao_" << bt->local_name () << "_life" << be_uidt_nl
+              << ">" << be_uidt << be_uidt_nl
+              << "> " << node->local_name () << "_out;" << be_uidt << be_uidt;
+        }
+
+      break;
+    case be_sequence::MNG_ABSTRACT:
+      if (node->unbounded ())
+        {
+        }
+      else
+        {
+        }
+
+      break;
+    case be_sequence::MNG_PSEUDO:
+      if (node->unbounded ())
+        {
+        }
+      else
+        {
+        }
+
+      break;
+    case be_sequence::MNG_VALUE:
+      if (node->unbounded ())
+        {
+        }
+      else
+        {
+        }
+
+      break;
+    case be_sequence::MNG_STRING:
+      if (node->unbounded ())
+        {
+        }
+      else
+        {
+        }
+
+      break;
+    case be_sequence::MNG_WSTRING:
+      if (node->unbounded ())
+        {
+        }
+      else
+        {
+        }
+
+      break;
+    default: // Not a managed type.
+      if (bt->base_node_type () == AST_Decl::NT_array)
+        {
+          if (node->unbounded ())
+            {
+            }
+          else
+            {
+            }
+        }
+      else
+        {
+          if (node->unbounded ())
+            {
+            }
+          else
+            {
+            }
+        }
+
+      break;
+    }
+/*
   *os << "class " << node->local_name () << ";" << be_nl;
 
   // No _var class for anonymous sequences.
@@ -485,9 +625,9 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
 	        << ")" << be_uidt_nl
 	        << "  : " << node->instance_name ()
 	        << " (length, mb) {}" << "\n"
-	        << "#endif /* TAO_NO_COPY_OCTET_SEQUENCE == 1 */";
+	        << "#endif /* TAO_NO_COPY_OCTET_SEQUENCE == 1 *//*";
     }
-
+/*
   *os << be_uidt_nl << "};";
 
   os->gen_endif (); // Endif macro.
@@ -524,9 +664,8 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
 
       os->gen_endif ();
     }
-
+*/
   node->cli_hdr_gen (1);
-
   return 0;
 }
 
