@@ -48,7 +48,7 @@ namespace CCF
         {
         }
 
-        virtual void
+        virtual bool
         dispatch (SyntaxTree::NodePtr const& n);
 
       public:
