@@ -1,3 +1,10 @@
+Tue Nov 21 18:04:00 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tests/RTCORBA/README
+	* tests/RTCORBA/Banded_Connections/README:
+
+	  Added test description and expected output.	  
+
 Tue Nov 21 15:56:10 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/ORB_Core.cpp:
