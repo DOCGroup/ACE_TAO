@@ -69,16 +69,15 @@
 #define ACE_HAS_TEMPLATE_SPECIALIZATION
 #define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 #define ACE_HAS_USING_KEYWORD
+# ifdef _STANDARD_C_PLUS_PLUS
+#   define ACE_HAS_STD_TEMPLATE_SPECIALIZATION
+#   define ACE_HAS_TYPENAME_KEYWORD
+# endif /* _STANDARD_C_PLUS_PLUS */
 #else
 #define ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA
 #endif /* _COMPILER_VERSION >= 720 */
 #define ACE_TEMPLATES_REQUIRE_SOURCE
 #define ACE_NEEDS_FUNC_DEFINITIONS
-
-// Platform supports exceptions. Under 6.2 this requires an extra flag
-// for the compiler, don't worry is already there in
-// platform_irix6.x.GNU
-#define ACE_HAS_EXCEPTIONS
 
 // Platform supports STREAM pipes (note that this is disabled by
 // default, see the manual page on pipe(2) to find out how to enable
