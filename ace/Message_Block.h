@@ -107,7 +107,7 @@ public:
 		     ACE_Message_Type type = MB_DATA, 
 		     ACE_Message_Block *cont = 0, 
 		     const char *data = 0,
-		     ACE_Allocator *allocator_strategy_ = 0,
+		     ACE_Allocator *allocator_strategy = 0,
 		     ACE_Lock *locking_strategy = 0,
 		     u_long priority = 0);
   // Create an initialized message of type <type> containing <size>
@@ -128,7 +128,7 @@ public:
 	    ACE_Message_Type type = MB_DATA, 
 	    ACE_Message_Block *cont = 0, 
 	    const char *data = 0,
-	    ACE_Allocator *allocator = 0,
+	    ACE_Allocator *allocator_strategy = 0,
 	    ACE_Lock *locking_strategy = 0,
 	    u_long priority = 0);
   // Create an initialized message of type <type> containing <size>
@@ -297,7 +297,7 @@ private:
 		     ACE_Message_Type type,
 		     ACE_Message_Block *cont,
 		     const char *data,
-		     ACE_Allocator *allocator,
+		     ACE_Allocator *allocator_strategy,
 		     ACE_Lock *locking_strategy,
 		     Message_Flags flags,
 		     u_long priority,
@@ -311,7 +311,7 @@ private:
 	      ACE_Message_Type type,
 	      ACE_Message_Block *cont,
 	      const char *data,
-	      ACE_Allocator *allocator,
+	      ACE_Allocator *allocator_strategy,
 	      ACE_Lock *locking_strategy,
 	      Message_Flags flags,
 	      u_long priority, 
