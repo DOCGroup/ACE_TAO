@@ -116,7 +116,7 @@
 // This deals with platforms that support namespaces vs platforms that
 // don't.
 #if defined (ACE_HAS_USING_KEYWORD)
-#define TAO_NAMESPACE namespace
+#define TAO_NAMESPACE struct
 #else
 #define TAO_NAMESPACE struct
 #endif /* ACE_HAS_USING_KEYWORD */
@@ -146,6 +146,24 @@
 // access the underlying message block).
 //
 #define TAO_NO_COPY_OCTET_SEQUENCES
+
+// Even though the strategy above minimizes copies in some cases it is
+// more efficient just to copy the octet sequence, for instance, while
+// enconding a "small" octet sequence in a buffer that has enough
+// space.
+// This parameter controls the default value for "small enough", but
+// can also be set using the command line option -ORBCDRtradeoff
+#define TAO_DEFAULT_CDR_MEMCPY_TRADEOFF 256
+
+// The CDR growing strategy is control by several parameters:
+// + The default or initial CDR buffer size.
+// + From that value the CDR buffer is grown exponentially (size
+//   duplicated each time) until it reaches EXP_GROWTH_MAX.
+// + From then on the buffer is grown linearly in chunks of
+// LINEAR_GROWTH_MAX
+#define TAO_DEFAULT_CDR_BUFSIZE 512
+#define TAO_DEFAULT_CDR_EXP_GROWTH_MAX 4096
+#define TAO_DEFAULT_CDR_LINEAR_GROWTH_CHUNK 4096
 
 // BC++ seems to have a different convention for detecting Win32 than
 // VC++.

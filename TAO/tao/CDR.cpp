@@ -30,11 +30,7 @@
 // though.)
 //
 // THREADING NOTE: "CDR" is a data structure which must be protected
-// by external critical sections.  Like simpler numeric types, "CDR"
-// instances are accessed and modified atomically.  This
-// implementation is reentrant, so that independent "CDR" values may
-// be manipulated concurrently when the underlying programming
-// environment is itself reentrant.
+// by external critical sections.  
 
 #include "tao/corba.h"
 
@@ -156,6 +152,7 @@ TAO_OutputCDR::TAO_OutputCDR (size_t size,
     }
   ACE_NEW (this->start_, ACE_Message_Block (size));
   CDR::mb_align (this->start_);
+  this->current_ = this->start_;
 }
 
 TAO_OutputCDR::TAO_OutputCDR (char *data, size_t size,
@@ -168,6 +165,7 @@ TAO_OutputCDR::TAO_OutputCDR (char *data, size_t size,
   ACE_NEW (this->start_, ACE_Message_Block (data, size));
   // We cannot trust the buffer to be properly aligned
   CDR::mb_align (this->start_);
+  this->current_ = this->start_;
 }
 
 TAO_OutputCDR::TAO_OutputCDR (ACE_Message_Block *data,
@@ -180,50 +178,88 @@ TAO_OutputCDR::TAO_OutputCDR (ACE_Message_Block *data,
   this->start_ = ACE_Message_Block::duplicate (data);
   // We cannot trust the buffer to be properly aligned
   CDR::mb_align (this->start_);
+  this->current_ = this->start_;
 }
 
 TAO_OutputCDR::~TAO_OutputCDR (void)
 {
   ACE_Message_Block::release (this->start_);
   this->start_ = 0;
+  this->current_ = 0;
 }
 
 void
 TAO_OutputCDR::reset (void)
 {
+  this->current_ = this->start_;
   CDR::mb_align (this->start_);
 }
 
-ACE_INLINE char*
-TAO_OutputCDR::wr_ptr (void) const
+size_t
+TAO_OutputCDR::total_length (void) const
 {
-  return this->start_->wr_ptr ();
+  size_t l = 0;
+  // Compute the total size.
+  for (ACE_Message_Block *i = this->begin ();
+       i != this->end ();
+       i = i->cont ())
+    l += i->length ();
+  return l;
 }
 
-ACE_INLINE char*
-TAO_OutputCDR::end (void) const
-{
-  return this->start_->end ();
-}
 
 ACE_INLINE int
 TAO_OutputCDR::adjust (size_t size, size_t align, char*& buf)
 {
-  buf = ptr_align_binary (this->wr_ptr(), align);
+  buf = ptr_align_binary (this->current_->wr_ptr(), align);
   char *end = buf + size;
 
-  if (end <= this->end ())
+  if (end <= this->current_->end ())
     {
-      this->start_->wr_ptr (end);
+      this->current_->wr_ptr (end);
       return 0;
     }
-  else if (CDR::grow (this->start_,
-                      this->start_->size() + (end - this->end () )) == 0)
+  else
     {
-      // grow(0) may change the value of wr_ptr() so we have to
+      if (this->current_->cont () == 0
+	  || this->current_->size () < size + CDR::MAX_ALIGNMENT)
+	{
+	  // Allocate the next block, it must be large enough.
+	  int block_size = CDR::DEFAULT_BUFSIZE;
+	  while (block_size < size + CDR::MAX_ALIGNMENT)
+	    {
+	      if (block_size < CDR::EXP_GROWTH_MAX)
+		block_size *= 2;
+	      else
+		block_size += CDR::LINEAR_GROWTH_CHUNK;
+	    }
+	  this->good_bit_ = 0;
+	  ACE_Message_Block* tmp;
+	  ACE_NEW_RETURN (tmp, ACE_Message_Block (block_size), -1);
+	  this->good_bit_ = 1;
+
+	  // The new block must start with the same alignment as the
+	  // previous block finished.
+	  ptr_arith_t tmpalign =
+	    ptr_arith_t(tmp->wr_ptr ()) % CDR::MAX_ALIGNMENT;
+	  ptr_arith_t curalign =
+	    ptr_arith_t(this->current_->wr_ptr ()) % CDR::MAX_ALIGNMENT;
+	  int offset = curalign - tmpalign;
+	  if (offset < 0)
+	    offset += CDR::MAX_ALIGNMENT;
+	  tmp->rd_ptr (offset);
+	  tmp->wr_ptr (tmp->rd_ptr ());
+
+	  // grow the chain and set the current block.
+	  tmp->cont (this->current_->cont ());
+	  this->current_->cont (tmp);
+	}
+      this->current_ = this->current_->cont ();
+
+      // Now we are ready to set buf..
       // recompute the position....
-      buf = ptr_align_binary (this->wr_ptr(), align);
-      this->start_->wr_ptr (buf + size);
+      buf = ptr_align_binary (this->current_->wr_ptr(), align);
+      this->current_->wr_ptr (buf + size);
       return 0;
     }
   this->good_bit_ = 0;
@@ -239,10 +275,10 @@ TAO_OutputCDR::adjust (size_t size, char*& buf)
 CORBA_Boolean
 TAO_OutputCDR::write_1 (const CORBA::Octet* x)
 {
-  if (this->wr_ptr () < this->end() || CDR::grow(this->start_, 0) == 0)
+  char* buf;
+  if (this->adjust (1, buf) == 0)
     {
-      *ACE_reinterpret_cast(CORBA::Octet*,this->wr_ptr()) = *x;
-      this->start_->wr_ptr (1);
+      *ACE_reinterpret_cast(CORBA::Octet*, buf) = *x;
       return CORBA::B_TRUE;
     }
 
@@ -355,8 +391,8 @@ TAO_OutputCDR::write_array (const void* x,
                             size_t align,
                             CORBA::ULong length)
 {
-  char* buf;
-  if (this->adjust (size * length, align, buf) == 0)
+  char* buf; 
+ if (this->adjust (size * length, align, buf) == 0)
     {
 #if !defined (TAO_ENABLE_SWAP_ON_WRITE)
       ACE_OS::memcpy (buf, x, size*length);
@@ -448,6 +484,43 @@ TAO_OutputCDR::write_wstring (const CORBA::WChar *x)
 	}
     }
   return CORBA::B_FALSE;
+}
+
+CORBA_Boolean
+TAO_OutputCDR::write_octet_array (const CORBA::Octet* x,
+				  CORBA::ULong length)
+{
+#if !defined (TAO_NO_COPY_OCTET_SEQUENCES)
+  return this->write_array (x,
+			    CDR::OCTET_SIZE,
+			    CDR::OCTET_ALIGN,
+			    length);
+#else
+  // @@ If the buffer is small and it fits in the current message
+  // block it may be cheaper just to copy the buffer.
+  int memcpy_tradeoff =
+    TAO_ORB_Core_instance ()->orb_params ()->cdr_memcpy_tradeoff ();
+  if (length < memcpy_tradeoff
+      && this->current_->wr_ptr () + length < this->current_->end ())
+    return this->write_array (x,
+			      CDR::OCTET_SIZE,
+			      CDR::OCTET_ALIGN,
+			      length);
+
+  ACE_Message_Block* mb;
+  this->good_bit_ = 0;
+  ACE_NEW_RETURN (mb,
+		  ACE_Message_Block (ACE_reinterpret_cast(char*,x),
+				     length),
+		  CORBA::B_FALSE);
+  mb->wr_ptr (length);
+  this->good_bit_ = 1;
+
+  mb->cont (this->current_->cont ());
+  this->current_->cont (mb);
+  this->current_ = mb;
+  return CORBA::B_TRUE;
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES */
 }
 
 CORBA_Boolean
@@ -561,11 +634,18 @@ TAO_InputCDR::operator= (const TAO_InputCDR& rhs)
 }
 
 TAO_InputCDR::TAO_InputCDR (const TAO_OutputCDR& rhs)
-  : start_ (ACE_Message_Block::duplicate (rhs.start_)),
-    factory_ (rhs.factory_),
+  : factory_ (rhs.factory_),
     do_byte_swap_ (rhs.do_byte_swap_),
     good_bit_ (1)
 {
+  size_t size = rhs.total_length ();
+  ACE_NEW (this->start_,
+	   ACE_Message_Block (size + CDR::MAX_ALIGNMENT));
+  CDR::mb_align (this->start_);
+  for (ACE_Message_Block *i = rhs.begin ();
+       i != rhs.end ();
+       i = i->cont ())
+    this->start_->copy (i->rd_ptr (), i->length ());
 }
 
 TAO_InputCDR::~TAO_InputCDR (void)

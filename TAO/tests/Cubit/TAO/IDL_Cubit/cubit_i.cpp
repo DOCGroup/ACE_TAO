@@ -144,8 +144,9 @@ Cubit_i::cube_sequence(const Cubit::vector &input,
       output[i] = x * x * x;
     }
 #else
+  CORBA::ULong i = 0;
   CORBA::Long x = input[0];
-  output[0] = x * x * x;
+  output[i] = x * x * x;
 #endif
 }
 
@@ -167,8 +168,9 @@ Cubit_i::cube_raw (const Cubit::Raw &input,
       output[i] = x * x * x;
     }
 #else
+  CORBA::ULong i = 0;
   CORBA::Octet x = input[0];
-  output[0] = x * x * x;
+  output[i] = x * x * x;
 #endif
 }
 

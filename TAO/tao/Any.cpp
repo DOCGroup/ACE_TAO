@@ -98,7 +98,7 @@ CORBA_Any::CORBA_Any (CORBA::TypeCode_ptr tc,
           stream.encode (this->type_, this->value_, 0, env);
 
           // retrieve the start of the message block chain and save it
-          this->cdr_ = stream.start ()->clone ();
+          this->cdr_ = stream.begin ()->clone ();
         }
     }
 }
@@ -121,8 +121,7 @@ CORBA_Any::CORBA_Any (const CORBA_Any &src)
     {
       // the data was already encoded in "src". We simply duplicate it to avoid
       // copies.
-      this->cdr_ = ACE_Message_Block::duplicate ((ACE_Message_Block *)
-                                                 src.cdr_);
+      this->cdr_ = ACE_Message_Block::duplicate (src.cdr_);
     }
   else
     {
@@ -131,7 +130,7 @@ CORBA_Any::CORBA_Any (const CORBA_Any &src)
 
       stream.encode (this->type_, src.value_, 0, env);
       // retrieve the start of the message block chain and duplicate it
-      this->cdr_ = stream.start ()->clone ();
+      this->cdr_ = stream.begin ()->clone ();
     }
 }
 
@@ -174,8 +173,7 @@ CORBA_Any::operator= (const CORBA_Any &src)
   // form and must be encoded. Else we must simply duplicate the message block
   if (src.any_owns_data_)
     {
-      this->cdr_ = ACE_Message_Block::duplicate ((ACE_Message_Block *)
-                                                 src.cdr_);
+      this->cdr_ = ACE_Message_Block::duplicate (src.cdr_);
     }
   else
     {
@@ -183,7 +181,7 @@ CORBA_Any::operator= (const CORBA_Any &src)
 
       stream.encode (this->type_, src.value_, 0, env);
       // retrieve the start of the message block chain and duplicate it
-      this->cdr_ = stream.start ()->clone ();
+      this->cdr_ = stream.begin ()->clone ();
     }
   return *this;
 }
@@ -262,8 +260,7 @@ CORBA_Any::replace (CORBA::TypeCode_ptr tc,
 
       stream.encode (tc, value, 0, env);
       // retrieve the start of the message block chain and duplicate it
-      this->cdr_ = ACE_Message_Block::duplicate ((ACE_Message_Block *)
-                                                 stream.start ());
+      this->cdr_ = ACE_Message_Block::duplicate (stream.begin ());
     }
 }
 
