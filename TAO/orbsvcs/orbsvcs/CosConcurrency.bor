@@ -32,6 +32,9 @@ CPPDIR = .;Concurrency
 
 IDLDIR = .
 
+INCDIR_NAME = orbsvcs\Concurrency
+INCLUDES = Concurrency\*.h
+
 LIBFILES = $(ACE_LIB) $(TAO_LIB)
 
 all: idl_src_files concurrency_lib

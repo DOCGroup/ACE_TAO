@@ -59,6 +59,9 @@ CPPDIR = .;Notify
 
 IDLDIR = .
 
+INCDIR_NAME = orbsvcs\Notify
+INCLUDES = Notify\*.h Notify\*.i Notify\*_T.cpp
+
 LIBFILES = $(ACE_LIB) $(TAO_LIB) $(TAO_SVC_UTILS_LIB) $(TAO_EVENT_LIB) \
 	$(TAO_TRADING_LIB)
 
