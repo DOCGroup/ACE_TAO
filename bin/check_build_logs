@@ -19,12 +19,13 @@ my $find = -e '/pkg/gnu/bin/find'  ?  '/pkg/gnu/bin/find'  :  'find';
 my $mail = "mail -s '$subject'";
 
 my $ostype = $ENV{'OSTYPE'}  ||  `/bin/uname -s`;
-if ( "$ostype" =~ /(solaris)|(SunOS)/i ) {
+if ("$ostype" =~ /(solaris)|(SunOS)/i) {
   #### $mail = "/pkg/mh/bin/mhmail -subject '$subject'";
   $mail = "/usr/bin/mailx -s '$subject'";
 }
 
-$ENV{'LD_LIBRARY_PATH'} = '/opt/SUNWspro_5.0/dt/lib:/usr/openwin/lib:/usr/lib:/project/danzon/pkg/egcs/lib:' unless $ENV{'LD_LIBRARY_PATH'};
+$ENV{'LD_LIBRARY_PATH'} = '/opt/SUNWspro_5.0/dt/lib:/usr/openwin/lib:' .
+  '/usr/lib:/project/danzon/pkg/egcs/lib:' unless $ENV{'LD_LIBRARY_PATH'};
 $ENV{'TMPDIR'} = '/tmp';
 $ENV{'USER'} = $ENV{'LOGNAME'};
 
@@ -87,7 +88,7 @@ while ($#ARGV >= $[) {
 chdir $log_directory  ||
   die "$0: unable to cd to \"$log_directory\"\n";
 
-(my $log_files = ( `$find . -name '*.log' -daystart -ctime 0 -print` )) =~
+(my $log_files = (`$find . -name '*.log' -daystart -ctime 0 -print | sort`)) =~
   tr [\n] [ ];
 $log_files =~ s%\./(make)%$1%g;  #### Remove leading ./ from each filename.
 
@@ -95,6 +96,7 @@ $log_files =~ s%\./(make)%$1%g;  #### Remove leading ./ from each filename.
 ####
 #### Grep the log files for problems.
 ####
+my $line_count = 0;
 my @output = ();
 open (EGREP, "egrep -n \'Error|errors|[^a]Stop|No rule to make|\(undefined symb\)|[Ww]arn|not exist|core dumped|: #[0-9]|cxx:\' $log_files /dev/null |")  ||
   die "$0: unable to open egrep\n";
@@ -102,6 +104,8 @@ while (<EGREP>) {
   push @output, $_ unless /calls, 0 errors$/  ||
                           /Found non-pic R_SPARC/  ||
                           /Purify engine: Error: .* Ignoring it\.$/;
+  ++$line_count;
+  last if $line_count > 2000;
 }
 close EGREP;
 
