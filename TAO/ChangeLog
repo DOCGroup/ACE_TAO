@@ -1,3 +1,17 @@
+Thu Aug 28 07:41:58 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/DynamicInterface/Context.cpp:
+
+	  Include "tao/Environment.h" for CORBA::Environment type.
+
+	* tao/Messaging/Connection_Timeout_Policy_i.cpp:
+
+	  Include "tao/debug.h" for TAO_debug_level global variable.
+
+	* tao/Strategies/uiop_endpoints.h:
+
+	  Include "tao/CDR.h" for TAO_{Input,Output}CDR types.
+
 Thu Aug 28 12:37:21 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/examples/RtEC/IIOPGateway/Gateway.cpp:
