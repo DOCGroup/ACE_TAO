@@ -7,8 +7,18 @@
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
-#define ACE_HAS_EXCEPTIONS
+// ACE_HAS_EXCEPTIONS requires -fhandle-exceptions, but that gives
+// g++ 2.7.2 fits:  it spits out all kinds of warnings that it doesn't
+// without that option (and that are just wrong), and runs out of
+// virtual memory when trying to compile ace/Log_Msg.cpp.
+// So until -fhandle-exceptions gets fixed, we can't use this with g++ . . .
+// #define ACE_HAS_EXCEPTIONS
+
 #define ACE_HAS_UNICODE
+
+#if defined (__ACE_INLINE__)
+#define ACE_HAS_INLINED_OSCALLS
+#endif /* __ACE_INLINE__ */
 
 // G++ doesn't support template typedefs fully (yet).
 // #define ACE_HAS_TEMPLATE_TYPEDEFS
