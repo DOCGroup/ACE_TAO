@@ -1,3 +1,11 @@
+Wed Aug 21 16:55:39 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/LoadBalancer/LoadMonitor.bor (CFLAGS, LIBFILES):
+
+	  Add PortableGroup flags and library to these variables.
+	  Statically linked binaries require the PortableGroup library to
+	  be linked in.
+
 Wed Aug 21 12:05:35 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/LocalObject.h:
