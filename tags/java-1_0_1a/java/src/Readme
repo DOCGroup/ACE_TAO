@@ -1,0 +1,8 @@
+The Makefile has been worked over severely, and it now REQUIRES GNU
+Make.  The makefile is still a little rough, and will definitely
+evolve.
+
+Suggestsions are welcome at cleeland@cs.wustl.edu or pjain@cs.wustl.edu.
+
+Also, TimeValue moved from the ACE.Reactor to ACE.ASX package to break
+up some circular dependency problems.
