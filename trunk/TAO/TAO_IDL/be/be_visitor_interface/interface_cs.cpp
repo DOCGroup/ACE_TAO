@@ -142,28 +142,55 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << " ();" << be_uidt << be_uidt << be_nl << be_nl; // idt = 1
 
       // Now we setup the immediate parents.
-      if (node->n_inherits () > 0)
+      int n_parents = node->n_inherits ();
+
+      if (n_parents > 0)
         {
-          for (int i = 0; i < node->n_inherits (); i++)
+          for (int i = 0; i < n_parents; i++)
             {
               be_interface *inherited =
                 be_interface::narrow_from_decl (node->inherits ()[i]);
+
               if (inherited->is_nested ())
                 {
-                  be_decl* scope =
-                    be_scope::narrow_from_scope (inherited->defined_in ())->decl ();
-                  *os << "ACE_NESTED_CLASS ("
-                      << scope->name () << ","
-                      << inherited->local_name ()
-                      << ")";
+                  if (!ACE_OS::strcmp (inherited->local_name (), 
+                                       node->local_name ()))
+                    {
+                      *os << "this->" << node->flat_name ()
+                          << "_base_class_name";
+                    }
+                  else
+                    {
+                      be_scope *scope = 
+                        be_scope::narrow_from_scope (inherited->defined_in ());
+
+                      be_decl* scope_decl = scope->decl ();
+
+                      *os << "ACE_NESTED_CLASS ("
+                          << scope_decl->name () << ", "
+                          << inherited->local_name ()
+                          << ")";
+                    }
                 }
               else
-                *os << inherited->name ();
-              *os << "::_tao_setup_collocation" << " (collocated);" << be_nl;
+                {
+                  *os << inherited->name ();
+                }
+
+              *os << "::_tao_setup_collocation" << " (collocated);";
+
+              if (i == n_parents - 1)
+                {
+                  *os << be_uidt_nl;
+                }
+              else
+                {
+                  *os << be_nl;
+                }
             }
         }
 
-      *os << be_uidt_nl << "}" << be_nl << be_nl;
+      *os << "}" << be_nl << be_nl;
     }
 
   // Then generate the code for the static methods
