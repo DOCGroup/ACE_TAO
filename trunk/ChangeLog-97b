@@ -1,3 +1,7 @@
+Wed Nov 19 22:11:20 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * ACE version 4.3.53, released Wed Nov 19 22:11:20 1997.
+
 Wed Nov 19 15:55:52 1997  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
 
 	* config-netbsd.h: NetBSD 1.3alpha has a better MSYNC. Commented out
