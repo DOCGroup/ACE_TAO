@@ -32,6 +32,17 @@
 #                     specified by the Makefile, as in performance-tests/Misc.
 #  static_libs_only Only build static libraries.
 #
+#  Usually, users do not need to be concerned with make targets.
+#  Just enter "make" on the command line to build.  A few notable
+#  targets are listed below.
+#
+#  Target             Description
+#  ------             -----------
+#  show_statics       Lists all static objects in object files built for
+#                       current directory.  Only supported for g++.
+#  show_uninit        Lists all uninitialized in object files built for
+#                       current directory.  Only supported for g++.
+#
 #  The following describes the ACE wrapper macros:
 #
 #  Variable     Description
