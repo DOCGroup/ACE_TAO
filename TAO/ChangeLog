@@ -1,3 +1,10 @@
+Tue Aug 31 19:05:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/AVStreams/Multicast/ftp.cpp:
+          When the input file cannot be opened, log an error and return -1
+          instead of going on further without an input file, which results
+          in strange crashes.
+
 Tue Aug 31 19:01:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp:
