@@ -117,6 +117,8 @@
 #define ACE_UINT64_TYPEDEF unsigned long long
 #define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 
+typedef unsigned long long ACE_UINT64;
+
 #if defined(__x86_64__)
 #define ACE_SIZEOF_DOUBLE 8
 #define ACE_SIZEOF_FLOAT 4
