@@ -51,7 +51,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 tao.lib ace.lib TAO_PortableServer.lib  TAO_Valuetype.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\ace" /libpath:"..\..\tao" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao\Messaging" /libpath:"..\..\tao\Valuetype"
+# ADD LINK32 tao.lib ace.lib TAO_PortableServer.lib TAO_Valuetype.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\ace" /libpath:"..\..\tao" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao\Messaging" /libpath:"..\..\tao\Valuetype"
 # SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "Bug_1670_Regression Client - Win32 Debug"
@@ -122,7 +122,7 @@ InputPath=.\Test.idl
 InputName=Test
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -Ge 1 $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Ge 1 -Gv -GH $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
