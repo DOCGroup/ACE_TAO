@@ -123,6 +123,10 @@ SOURCE=.\Reply_Handler.h
 
 SOURCE=.\TestC.h
 # End Source File
+# Begin Source File
+
+SOURCE=.\TestS.h
+# End Source File
 # End Group
 # Begin Group "IDL Files"
 
@@ -218,6 +222,10 @@ BuildCmds= \
 # Begin Source File
 
 SOURCE=.\TestC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\TestS.i
 # End Source File
 # End Group
 # End Target
