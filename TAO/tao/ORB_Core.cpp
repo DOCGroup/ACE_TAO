@@ -58,6 +58,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     protocol_factories_ (0),
     implrepo_service_ (CORBA::Object::_nil ()),
     use_implrepo_ (0),
+    typecode_factory_ (CORBA::Object::_nil ()),
     orb_ (),
     root_poa_ (0),
     root_poa_reference_ (),
@@ -1210,6 +1211,8 @@ TAO_ORB_Core::fini (void)
   (void) this->thr_mgr ()->wait ();
 
   CORBA::release (this->implrepo_service_);
+
+  CORBA::release (this->typecode_factory_);
 
   if (TAO_debug_level >= 3)
     {

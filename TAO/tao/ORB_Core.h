@@ -430,6 +430,10 @@ public:
   void implrepo_service (const CORBA::Object_ptr ir);
   // Set/Get the IOR of the Implementation Repository service.
 
+  CORBA::Object_ptr typecode_factory (void);
+  void typecode_factory (const CORBA::Object_ptr tf);
+  // Get/Set the IOR of the TypeCodeFactory DLL.
+
 protected:
 
   int init (int &argc, char **argv, CORBA::Environment &ACE_TRY_ENV);
@@ -481,6 +485,9 @@ protected:
 
   int use_implrepo_;
   // Flag for whether the implrepo support is enabled or not.
+
+  CORBA::Object_ptr typecode_factory_;
+  // The cached IOR for the TypeCodeFactory DLL.
 
   CORBA::ORB_var orb_;
   // @@ Should we keep a single ORB pointer? This is good because
