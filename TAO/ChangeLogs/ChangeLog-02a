@@ -1,3 +1,11 @@
+Wed Jun 19 12:16:32 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* TAO_IDL/be/be_visitor_valuetype/arglist.cpp (visit_operation): 
+    ACE_ENV macros were generated immediately after the arguments 
+    like: (Float xACE_ENV).  Changed the generation so that there
+    is now at least one space between the last argument and the 
+    macro.     
+
 Wed Jun 19 11:52:55 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* tests/Nested_Upcall_Crash/Makefile:
