@@ -178,7 +178,7 @@ Server<Servant>::init (const char *servant_name,
     }
   ACE_CATCHANY
     {
-      ACE_TRY_ENV.print_exception ("\tException in activation of POA");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"\tException in activation of POA");
       return -1;
     }
   ACE_ENDTRY;
@@ -219,6 +219,9 @@ Server<Servant>::register_name (void)
     {
       CORBA::Object_var object = servant_._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+      
+      this->orb_manager_.activate_poa_manager (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       naming_server_->rebind (bindName,
                               object.in(),
@@ -234,13 +237,13 @@ Server<Servant>::register_name (void)
     }
   ACE_CATCH (CosNaming::NamingContext::AlreadyBound, ex)
     {
-      ACE_TRY_ENV.clear ();
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Unable to bind %s \n",
                          name),
                         -1);
     }
   ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
@@ -424,16 +427,17 @@ Client<INTERFACE_OBJECT, Var>::obtain_initial_references (CORBA::Environment &AC
                            "the TAO_Naming_Client. \n"),
                           -1);
 
+
       CosNaming::Name server_name (1);
       server_name.length (1);
       server_name[0].id =
       CORBA::string_dup (this->name_);
-
       CORBA::Object_var obj =
         naming_client_->resolve (server_name,
                                 ACE_TRY_ENV);
+      cout << "I am here "<<endl;
       ACE_TRY_CHECK;
-
+      cout << "I am here 1"<<endl;
       this->server_ = INTERFACE_OBJECT::_narrow (obj.in (),
                                              ACE_TRY_ENV);
       ACE_TRY_CHECK;
