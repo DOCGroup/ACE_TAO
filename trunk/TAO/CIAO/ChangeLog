@@ -1,7 +1,17 @@
+Mon Oct 11 11:02:41 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CCF/CCF/CodeGenerationKit/IndentationIDL.hpp:
+
+	  Put double new line after `}'.
+
+	* CIDLC/cidlc.cpp:
+
+	  Print build date and time in --version.
+
 Mon Oct 11 10:08:48 2004  Gan Deng  <gan.deng@vanderbilt.edu>
 
  	* DAnCE/examples/BasicSP/Readme.html
- 	
+
  	  Update the README file for running the example.
 
 Sun Oct 10 10:45:48 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
@@ -38,8 +48,8 @@ Sat Oct  9 23:43:52 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* DAnCE/Config_Handlers/Plan_Handler.cpp:
 
-	  Fixed a compilation error in Borland builds. 
-	
+	  Fixed a compilation error in Borland builds.
+
 	* DAnCE/examples/BasicSP/BMClosedED/BMClosedED.mpc:
 	* DAnCE/examples/BasicSP/BMDisplay/BMDisplay.mpc:
 	* DAnCE/examples/BasicSP/EC/EC.mpc:
@@ -56,31 +66,31 @@ Sat Oct  9 23:43:52 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  Added missing libraries. They have been wrong for a very long
 	  time. Thanks to Borland builds for catching these. I am sure
 	  there are a few more and I will allow one more build to catch
-	  them. 
+	  them.
 
 	* examples/OEP/Display/RateGen/RateGen_exec.cpp:
 	* examples/OEP/Display/RateGen/RateGen_exec.h:
 
 	  Fixed warnings due to hidden virtual functions.
 
-	
+
 Sat Oct  9 14:29:41 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* CIDLC/ServantSourceGenerator.cpp:
 
 	  Added a .in () to the _var variable used in push_event ().
-	
+
 	* DAnCE/Config_Handlers/XercesString.cpp:
 	* DAnCE/Config_Handlers/XercesString.h:
 
 	  Removed an unnecessary operator== which was confusing some
-	  compilers. 
-	
+	  compilers.
+
 	* DAnCE/RepositoryManager/RepositoryManager_Impl.cpp:
 	* DAnCE/RepositoryManager/Repository_Manager.cpp:
 
 	  Changed the wrong exceptions that were being thrown.
-	
+
 	* DAnCE/examples/BasicSP/EC/EC_exec.cpp:
 	* DAnCE/examples/BasicSP/EC/EC_exec.h:
 	* examples/OEP/BasicSP/EC/EC_exec.cpp:
@@ -101,11 +111,11 @@ Thu Oct  7 03:17:54 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  Updated to be more compliant with the DnC spec.
 
 Wed Oct  6 16:10:27 2004  Will Otte  <wotte@dre.vanderbilt.edu>
-	
+
 	* docs/schema/ciaopolicy.xsd:
 
 	  Finished filling out the policy schema.
- 
+
 Sun Oct 03 09:38:03 2004  Nanbor Wang  <nanbor@cse.wustl.edu>
 
 	* DAnCE/Config_Handlers/XSCRT/Elements.hpp:

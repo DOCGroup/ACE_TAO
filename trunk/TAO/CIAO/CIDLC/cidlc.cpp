@@ -88,7 +88,8 @@ main (int argc, char* argv[])
 
     if (cl.get_value ("version", false))
     {
-      cerr << "CIAO CIDL Compiler " << CIAO_VERSION << endl;
+      cerr << "CIAO CIDL Compiler " << CIAO_VERSION
+           << " (built on " << __DATE__ << " at " << __TIME__ << ")" << endl;
       return 0;
     }
 
