@@ -4098,7 +4098,7 @@ PortableInterceptor::OctetSeq * PortableInterceptor::ServerRequestInfo::object_i
       14,
       istub->orb_core ()
     );
-
+  /*
 #if (TAO_HAS_INTERCEPTORS == 1)
     TAO_ClientRequestInterceptor_Adapter
       _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));

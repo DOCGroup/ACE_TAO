@@ -8,8 +8,13 @@
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "DynamicC.h"
+
 // Added
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 #include "tao/ORB.h"
+#include "tao/corba.h"
 #if !defined (__ACE_INLINE__)
 #include "DynamicC.i"
 #endif /* !defined INLINE */

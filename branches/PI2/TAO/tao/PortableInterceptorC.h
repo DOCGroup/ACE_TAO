@@ -11,7 +11,6 @@
 #define _TAO_IDL_PORTABLEINTERCEPTORC_H_
 //Added
 #include "tao/corbafwd.h"
-#include "tao/Object.h"
 
 #if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
 #include "ace/streams.h"
@@ -21,8 +20,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "DynamicC.h"
-#include "MessagingC.h"
+#include "tao/DynamicC.h"
+#include "tao/MessagingC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -43,6 +42,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+#if (TAO_HAS_INTERCEPTORS == 1)
 TAO_NAMESPACE  PortableInterceptor
 {
   typedef char * RepositoryId;
@@ -2691,6 +2691,8 @@ extern  PortableInterceptor::ORBInitializer_ptr (*_TAO_collocation_PortableInter
 #if defined (__ACE_INLINE__)
 #include "PortableInterceptorC.i"
 #endif /* defined INLINE */
+
+#endif /* TAO_HAS_INTERCEPTORS == 1 */
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
