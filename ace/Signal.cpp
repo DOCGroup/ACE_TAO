@@ -12,22 +12,24 @@
 
 #if defined (ACE_HAS_SIG_C_FUNC)
 extern "C" void 
-ace_signal_handler_dispatch (int signum, siginfo_t *info, ucontext_t *context)
+ace_sig_handler_dispatch (int signum, siginfo_t *info, ucontext_t *context)
 {
   ACE_TRACE ("ace_signal_handler_dispatch");
   ACE_Sig_Handler::dispatch (signum, info, context);
 }
 
 extern "C" void 
-ace_signal_handlers_dispatch (int signum, siginfo_t *info, ucontext_t *context)
+ace_sig_handlers_dispatch (int signum, siginfo_t *info, ucontext_t *context)
 {
   ACE_TRACE ("ace_signal_handlers_dispatch");
   ACE_Sig_Handlers::dispatch (signum, info, context);
 }
 
-static ACE_SignalHandler ace_dispatcher = ACE_SignalHandler (ace_signal_handler_dispatch);
+static ACE_SignalHandler ace_signal_handler_dispatcher = ACE_SignalHandler (ace_sig_handler_dispatch);
+static ACE_SignalHandler ace_signal_handlers_dispatcher = ACE_SignalHandler (ace_sig_handlers_dispatch);
 #else
-static ACE_SignalHandler ace_dispatcher = ACE_SignalHandler (ACE_Sig_Handler::dispatch);
+static ACE_SignalHandler ace_signal_handler_dispatcher = ACE_SignalHandler (ACE_Sig_Handler::dispatch);
+static ACE_SignalHandler ace_signal_handlers_dispatcher = ACE_SignalHandler (ACE_Sig_Handlers::dispatch);
 #endif /* ACE_HAS_SIG_C_FUNC */
 
 #if defined (ACE_MT_SAFE)
@@ -184,7 +186,7 @@ ACE_Sig_Handler::register_handler (int signum,
       if (new_disp == 0)
         new_disp = &sa;
   
-      new_disp->handler (ace_dispatcher);
+      new_disp->handler (ace_signal_handler_dispatcher);
       new_disp->flags (new_disp->flags () | SA_SIGINFO);
       return new_disp->register_action (signum, old_disp);
     }
@@ -407,7 +409,7 @@ ACE_Sig_Handlers::register_handler (int signum,
       // Check whether we are already in control of the signal
       // handling disposition...
 
-      if (!(sa.handler () == ace_dispatcher
+      if (!(sa.handler () == ace_signal_handlers_dispatcher
 	  || sa.handler () == ACE_SignalHandler (SIG_IGN)
 	  || sa.handler () == ACE_SignalHandler (SIG_DFL)))
 	{
@@ -455,8 +457,8 @@ ACE_Sig_Handlers::register_handler (int signum,
 	  delete ace_sig_adapter;
 	  return -1;
 	}
-      // If ACE_Sig_Handler::dispatch() was set we're done.
-      else if (sa.handler () == ace_dispatcher)
+      // If ACE_Sig_Handlers::dispatch() was set we're done.
+      else if (sa.handler () == ace_signal_handlers_dispatcher)
 	return ace_sig_adapter->sigkey ();
 
       // Otherwise, we need to register our handler function so that
@@ -468,7 +470,7 @@ ACE_Sig_Handlers::register_handler (int signum,
 	  if (new_disp == 0)
 	    new_disp = &sa;
 
-	  new_disp->handler (ace_dispatcher);
+	  new_disp->handler (ace_signal_handlers_dispatcher);
 
 	  // Default is to restart signal handlers.
 	  new_disp->flags (new_disp->flags () | SA_RESTART);

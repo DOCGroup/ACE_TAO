@@ -45,7 +45,7 @@ ACE_SV_Semaphore_Simple::init (key_t k, int i)
 // specific amount (positive or negative; amount can`t be zero). 
      
 int 
-ACE_SV_Semaphore_Simple::op (int val, int n, int flags) const
+ACE_SV_Semaphore_Simple::op (int val, u_short n, int flags) const
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::op");
   sembuf op_op;
@@ -68,7 +68,7 @@ int
 ACE_SV_Semaphore_Simple::open (key_t k, 
 			       int flags, 
 			       int initial_value, 
-			       int n, 
+			       u_short n, 
 			       int perms)
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::open");
@@ -99,7 +99,7 @@ ACE_SV_Semaphore_Simple::open (key_t k,
 ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple (key_t k, 
 						  int flags, 
 						  int initial_value, 
-						  int n, 
+						  u_short n, 
 						  int perms)
   : key_ (k)
 {
@@ -150,7 +150,7 @@ int
 ACE_SV_Semaphore_Simple::open (const char *name, 
 			       int flags, 
 			       int initial_value, 
-			       int n, 
+			       u_short n, 
 			       int perms)
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::open");
@@ -168,7 +168,7 @@ ACE_SV_Semaphore_Simple::open (const char *name,
 ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple (const char *name, 
 						  int flags, 
 						  int initial_value, 
-						  int n, 
+						  u_short n, 
 						  int perms)
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple");

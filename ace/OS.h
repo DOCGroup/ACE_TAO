@@ -106,12 +106,6 @@
 // Here are all ACE-specific global declarations needed throughout
 // ACE.
 
-#if defined (ACE_HAS_USING_KEYWORD)
-#define	ACE_USING using
-#else
-#define ACE_USING
-#endif /* ACE_HAS_USING_KEYWORD */
-
 // Helpful dump macros.
 #define ACE_BEGIN_DUMP "\n====\n(%P|%t|%x)"
 #define ACE_END_DUMP "====\n"
@@ -178,6 +172,12 @@ typedef int key_t;
 #endif /* VXWORKS */
 
 #include "ace/Time_Value.h"
+
+#if defined (ACE_HAS_USING_KEYWORD)
+#define	ACE_USING using
+#else
+#define ACE_USING
+#endif /* ACE_HAS_USING_KEYWORD */
 
 // The following is necessary since many C++ compilers don't support
 // typedef'd types inside of classes used as formal template
