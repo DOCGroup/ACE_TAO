@@ -86,9 +86,16 @@ public:
   // Get list item.
   UTL_ScopedName *head (void);
 
+  // Accessors.
+  idl_bool truncatable (void) const;
+  void truncatable (idl_bool val);
+
 private:
   // List item.
   UTL_ScopedName *pd_car_data;
+
+  // Used only with valuetye inheritance list. Defualts to 0.
+  idl_bool pd_truncatable;
 };
 
 // Active iterator for UTL_NameList.

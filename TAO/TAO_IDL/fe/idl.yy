@@ -584,6 +584,13 @@ interface_header :
 // interface_header : interface_decl inheritance_spec
           idl_global->set_parse_state (IDL_GlobalData::PS_InheritSpecSeen);
 
+          if ($2 != 0 && $2->truncatable ())
+            {
+              idl_global->err ()->syntax_error (
+                                      IDL_GlobalData::PS_InheritColonSeen
+                                    );
+            }
+
           /*
            * Create an AST representation of the information in the header
            * part of an interface - this representation contains a computed
@@ -647,15 +654,16 @@ interface_header :
         ;
 
 inheritance_spec
-        : ':'
+        : ':' opt_truncatable
         {
-// inheritance_spec : ':'
+// inheritance_spec : ':' opt_truncatable
           idl_global->set_parse_state (IDL_GlobalData::PS_InheritColonSeen);
         }
           at_least_one_scoped_name
         {
 //      at_least_one_scoped_name
-          $$ = $3;
+          $4->truncatable ($2);
+          $$ = $4;
         }
         | /* EMPTY */
         {
@@ -813,11 +821,21 @@ value_abs_decl :
 
 value_header :
         value_decl
-        opt_truncatable
         inheritance_spec
         {
-// value_header : value_decl opt_truncatable inheritance_spec 
+// value_header : value_decl inheritance_spec 
           idl_global->set_parse_state (IDL_GlobalData::PS_InheritSpecSeen);
+
+          if ($2 != 0 && $2->truncatable ())
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("warning in %s line %d\n"),
+                          idl_global->filename ()->get_string (),
+                          idl_global->lineno ()));
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("truncatable modifier not supported ")
+                          ACE_TEXT ("and is ignored\n")));
+            }
         }
         supports_spec
         {
@@ -831,9 +849,9 @@ value_header :
                           1);
           ACE_NEW_RETURN ($$,
                           FE_OBVHeader (sn,
-                                        $3,
-                                        $5,
-                                        $2),
+                                        $2,
+                                        $4,
+                                        $2 ? $2->truncatable () : I_FALSE),
                           1);      
         }
         ;
@@ -856,14 +874,7 @@ opt_truncatable :
         IDL_TRUNCATABLE
         {
 // opt_truncatable : IDL_TRUNCATABLE
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("warning in %s line %d\n"),
-                      idl_global->filename ()->get_string (),
-                      idl_global->lineno ()));
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("truncatable modifier not supported ")
-                      ACE_TEXT ("and is ignored\n")));
-          $$ = I_FALSE;
+          $$ = I_TRUE;
         }
         | /* EMPTY */
         {
@@ -5066,11 +5077,21 @@ event_plain_header :
         ;   
         
 event_rest_of_header :     
-        opt_truncatable
         inheritance_spec
         {
-// event_rest_of_header : opt_truncatable inheritance_spec
+// event_rest_of_header : inheritance_spec
           idl_global->set_parse_state (IDL_GlobalData::PS_InheritSpecSeen);
+
+          if ($1 != 0 && $1->truncatable ())
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("warning in %s line %d\n"),
+                          idl_global->filename ()->get_string (),
+                          idl_global->lineno ()));
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("truncatable modifier not supported ")
+                          ACE_TEXT ("and is ignored\n")));
+            }
         }
         supports_spec
         {
@@ -5079,9 +5100,9 @@ event_rest_of_header :
 
           ACE_NEW_RETURN ($$,
                           FE_EventHeader (0,
-                                          $2,
-                                          $4,
-                                          $1),
+                                          $1,
+                                          $3,
+                                          $1 ? $1->truncatable () : I_FALSE),
                           1);
         }
         ;
