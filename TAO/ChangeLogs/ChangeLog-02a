@@ -1,3 +1,9 @@
+Sat Dec  2 00:23:10 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tests/RTCORBA/Explicit_Binding/Makefile:
+
+	  Updated dependencies.
+
 Fri Dec 01 23:00:32 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tests/RTCORBA/Explicit_Binding/Explicit_Binding.dsw
@@ -18,21 +24,21 @@ Fri Dec 01 23:00:32 2000  Marina Spivak  <marina@cs.wustl.edu>
 	* tests/RTCORBA/RTCORBA_tests.dsw:
 
           Added a test for <Object::_validate_connection>.
-	
+
 	* tests/RTCORBA/Private_Connection/run_test.pl:
 
 	  Modified script to delete old ior files before starting.
-	  
+
 	* tao/Invocation.cpp
 	* tao/Invocation.i
 	* tao/Invocation.h
 	* tao/Invocation_Endpoint_Selectors.cpp
 	* tao/Invocation_Endpoint_Selectors.h
 	* tao/Stub.cpp (validate_connection):
-	  
+
 	  Modified <validate_connection> to work with RTCORBA policies and
 	  to populate <inconsistent_policies> parameter.
-	
+
 Fri Dec  1 19:05:22 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* orbsvcs/tests/InterfaceRepo/Persistence_Test/Ptest.cpp:
