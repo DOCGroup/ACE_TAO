@@ -1115,6 +1115,7 @@ be_interface::traverse_inheritance_graph (be_interface::tao_code_emitter gen,
   this->insert_queue.reset ();
   this->del_queue.reset ();
 
+
   // Insert ourselves in the queue.
   if (insert_queue.enqueue_tail (this) == -1)
     {
@@ -1123,7 +1124,6 @@ be_interface::traverse_inheritance_graph (be_interface::tao_code_emitter gen,
                          "error generating entries\n"),
                         -1);
     }
-
   be_code_emitter_wrapper wrapper (gen);
 
   return this->traverse_inheritance_graph (wrapper,
@@ -1138,11 +1138,50 @@ be_interface::traverse_inheritance_graph (
     idl_bool abstract_paths_only
   )
 {
+  AST_Interface *intf;  // element inside the queue
+
+  if (!this->insert_queue.is_empty ())
+    {
+      // Dequeue the element at the head of the queue.
+      if (this->insert_queue.dequeue_head (intf))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_interface::traverse_graph - "
+                             "dequeue_head failed\n"),
+                            -1);
+        }
+
+      // If we are doing a component, we check for a parent.
+      if (intf->node_type () == AST_Decl::NT_component)
+        {
+          AST_Component *base =
+            AST_Component::narrow_from_decl (intf)->base_component ();
+
+          if (base != 0)
+            {
+              (void) this->insert_non_dup (base);
+
+              long n_supports = base->n_supports ();
+              AST_Interface **supports = base->supports ();
+
+              for (long j = 0; j < n_supports; ++j)
+                {
+                  (void) this->insert_non_dup (supports[j],
+                                               abstract_paths_only);
+                }
+            }
+          else
+            {
+              (void) this->insert_non_dup (be_global->ccmobject ());
+            }
+        }
+
+      (void) this->insert_non_dup (intf, abstract_paths_only);
+    }
+
   // Do until queue is empty.
   while (!this->insert_queue.is_empty ())
     {
-      AST_Interface *intf;  // element inside the queue
-
       // Use breadth-first strategy i.e., first generate entries for ourselves,
       // followed by nodes that we immediately inherit from, and so on. In the
       // process make sure that we do not generate code for the same node more
@@ -1179,55 +1218,6 @@ be_interface::traverse_inheritance_graph (
                              "helper code gen failed\n"),
                             -1);
         }
-
-      // If we are doing a component, we check for a parent.
-      if (bi->node_type () == AST_Decl::NT_component)
-        {
-          AST_Component *base =
-            AST_Component::narrow_from_decl (bi)->base_component ();
-
-          if (base != 0)
-            {
-              (void) this->insert_non_dup (base);
-
-              long n_supports = base->n_supports ();
-              AST_Interface **supports = base->supports ();
-
-              for (long j = 0; j < n_supports; ++j)
-                {
-                  (void) this->insert_non_dup (supports[j]);
-                }
-            }
-          else
-            {
-              (void) this->insert_non_dup (be_global->ccmobject ());
-            }
-        }
-
-      // Now check if the dequeued element has any ancestors. If yes, insert
-      // them inside the queue making sure that there are no duplicates.
-      // If we are doing a component, the inheritance list is actually a
-      // supports list.
-      for (long i = 0; i < bi->n_inherits (); ++i)
-        {
-          // Retrieve the next parent from which the dequeued element inherits.
-          AST_Interface *parent = bi->inherits ()[i];
-
-          if (parent == 0)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_interface::traverse_graph -"
-                                 " bad inherited interface\n"),
-                                -1);
-            }
-
-          if (abstract_paths_only && ! parent->is_abstract ())
-            {
-              continue;
-            }
-
-          (void) this->insert_non_dup (parent);
-        } // end of for loop
     } // end of while queue not empty
 
   return 0;

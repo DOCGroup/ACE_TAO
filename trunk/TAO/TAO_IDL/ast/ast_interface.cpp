@@ -1165,7 +1165,7 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
 void
 AST_Interface::redef_clash_populate_r (AST_Interface *t)
 {
-  if (this->insert_non_dup (t) == 0)
+  if (this->insert_non_dup (t, 0) == 0)
     {
       return;
     }
@@ -1206,8 +1206,26 @@ AST_Interface::redef_clash_populate_r (AST_Interface *t)
 }
 
 int
-AST_Interface::insert_non_dup (AST_Interface *t)
+AST_Interface::insert_non_dup (AST_Interface *t,
+                               idl_bool abstract_paths_only)
 {
+  // Now check if the dequeued element has any ancestors. If yes, insert
+  // them inside the queue making sure that there are no duplicates.
+  // If we are doing a component, the inheritance list is actually a
+  // supports list.
+  for (long i = 0; i < t->n_inherits (); ++i)
+    {
+      // Retrieve the next parent from which the dequeued element inherits.
+      AST_Interface *parent = t->inherits ()[i];
+
+      if (abstract_paths_only && ! parent->is_abstract ())
+        {
+          continue;
+        }
+
+      (void) this->insert_non_dup (parent, abstract_paths_only);
+    } // end of for loop
+
   const char *full_name = t->full_name ();
 
   // Initialize an iterator to search the queue for duplicates.
