@@ -341,7 +341,7 @@ CORBA_Any::operator<<= (CORBA::TypeCode_ptr tc)
                  env);
 }
 
-// insertion of CORBA object
+// insertion of CORBA object - copying
 void
 CORBA::Any::operator<<= (const CORBA::Object_ptr obj)
 {
@@ -349,6 +349,7 @@ CORBA::Any::operator<<= (const CORBA::Object_ptr obj)
   (*this) <<= &objptr;
 }
 
+// insertion of CORBA object - non-copying
 void
 CORBA::Any::operator<<= (CORBA::Object_ptr *objptr)
 {
