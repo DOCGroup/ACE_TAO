@@ -1778,6 +1778,8 @@ fi dnl test "$cross_compiling" != yes
 
 dnl Other checks
 
+ACE_VAR_TIMEZONE
+
 
 dnl Check for istream operator>> for char, unsigned char and signed char
 ACE_CACHE_CHECK([for istream operator>> for char types],

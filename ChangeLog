@@ -1,3 +1,26 @@
+Thu Sep  2 16:39:29 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/config-linux-common.h:
+	* ace/config-netbsd.h:
+
+	  Changed to define ACE_HAS_TIMEZONE.
+
+	* ace/OS_NS_time.h:
+
+	  Changed ace_timezone() to use ACE_HAS_TIMEZONE feature test
+	  macro instead of OS-specific macros to determine whether to
+	  use global timezone variable or the gettimeofday() function
+	  to obtain the current timezone.
+
+	* configure.ac:
+
+	  Changed to call ACE_VAR_TIMEZONE.
+
+	* m4/platform.m4:
+
+	  Added new macro, ACE_VAR_TIMEZONE.  Sets new feature test macro
+	  ACE_HAS_TIMEZONE if platform supports global timezone variable.
+
 Thu Sep  2 16:43:29 2004  Steve Huston  <shuston@riverace.com>
 
 	* m4/ace.m4: Added AM_CONDITIONAL for BUILD_EXCEPTIONS, BUILD_THREADS,

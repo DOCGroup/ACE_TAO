@@ -295,6 +295,9 @@
 // Compiler/platform contains the <sys/syscall.h> file.
 #define ACE_HAS_SYS_SYSCALL_H
 
+// Platform/compiler supports global timezone variable.
+#define ACE_HAS_TIMEZONE
+
 // Platform/compiler supports void * as second parameter to gettimeofday().
 #define ACE_HAS_VOIDPTR_GETTIMEOFDAY
 

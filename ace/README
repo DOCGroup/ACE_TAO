@@ -632,6 +632,8 @@ ACE_HAS_THR_C_DEST                      The pthread_keycreate()
 ACE_HAS_THR_C_FUNC                      The pthread_create() routine
                                         *must* take extern C
                                         functions.
+ACE_HAS_TIMEZONE			Platform/compiler supports
+					global "timezone" variable.
 ACE_HAS_TIMEZONE_GETTIMEOFDAY           Platform/compiler supports
                                         timezone * as second parameter
                                         to gettimeofday()
