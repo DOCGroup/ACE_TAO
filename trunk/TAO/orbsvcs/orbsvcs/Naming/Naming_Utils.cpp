@@ -25,11 +25,11 @@
 
 ACE_RCSID(Naming, Naming_Utils, "$Id$")
 
-// Default constructor
+  // Default constructor
 
-TAO_Naming_Server::TAO_Naming_Server (void)
-  : ior_multicast_ (0),
-    naming_context_name_ (CORBA::string_dup ("NameService"))
+  TAO_Naming_Server::TAO_Naming_Server (void)
+    : ior_multicast_ (0),
+      naming_context_name_ (CORBA::string_dup ("NameService"))
 {
 }
 
@@ -62,7 +62,7 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                   "\nNameService not found; calling init\n"));
+		    "\nNameService not found; calling init\n"));
       return (this->init_new_naming (orb, child_poa, argc, argv));
     }
   else
@@ -340,6 +340,13 @@ TAO_Naming_Server::~TAO_Naming_Server (void)
 
 CosNaming::NamingContext_ptr
 TAO_Naming_Client::operator -> (void) const
+{
+  return this->naming_context_.ptr ();
+}
+
+// Returns a pointer to the NamingContext.
+CosNaming::NamingContext_ptr
+TAO_Naming_Client::get_context (void) const
 {
   return this->naming_context_.ptr ();
 }
