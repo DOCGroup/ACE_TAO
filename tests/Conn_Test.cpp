@@ -848,7 +848,7 @@ main (int argc, ACE_TCHAR *argv[])
       if (spawn_processes (&acceptor,
                            &server_addr) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%r) %p\n"),
+                           ACE_TEXT ("(%P|%t) %p\n"),
                            ACE_TEXT ("spawn_processes")),
                           1);
 #elif defined (ACE_HAS_THREADS)
