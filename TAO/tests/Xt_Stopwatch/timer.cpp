@@ -4,11 +4,11 @@
 Timer_imp::Timer_imp (XtAppContext &app, 
                       CORBA::Long interval,
                       Stopwatch_display *stopwatch)
-  : app_ (app),
-    interval_ (interval),
-    id_ (0),
-    counter_ (0),
-    stopwatch_ (stopwatch)
+  :stopwatch_ (stopwatch), 
+   counter_ (0),
+   interval_ (interval), 
+   id_ (0),
+   app_ (app)
 {
 }
 
