@@ -34,6 +34,26 @@ namespace CCF
       static_type_info () { return attribute_; }
 
 
+      // GetRaises
+      //
+      //
+      namespace
+      {
+        TypeInfo
+        get_raises_init_ ()
+        {
+          TypeInfo ti (typeid (GetRaises));
+          ti.add_base (Access::PUBLIC, true, Edge::static_type_info ());
+          return ti;
+        }
+
+        TypeInfo get_raises_ (get_raises_init_ ());
+      }
+
+      TypeInfo const& GetRaises::
+      static_type_info () { return get_raises_; }
+
+
       // ReadAttribute
       //
       //
@@ -52,6 +72,26 @@ namespace CCF
 
       TypeInfo const& ReadAttribute::
       static_type_info () { return read_attribute_; }
+
+
+      // SetRaises
+      //
+      //
+      namespace
+      {
+        TypeInfo
+        set_raises_init_ ()
+        {
+          TypeInfo ti (typeid (SetRaises));
+          ti.add_base (Access::PUBLIC, true, Edge::static_type_info ());
+          return ti;
+        }
+
+        TypeInfo set_raises_ (set_raises_init_ ());
+      }
+
+      TypeInfo const& SetRaises::
+      static_type_info () { return set_raises_; }
 
 
       // WriteAttribute

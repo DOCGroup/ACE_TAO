@@ -28,6 +28,12 @@ namespace CCF
         name (SimpleIdentifierPtr const& id) = 0;
 
         virtual void
+        get_raises (IdentifierPtr const& id) = 0;
+
+        virtual void
+        set_raises (IdentifierPtr const& id) = 0;
+
+        virtual void
         end () = 0;
       };
     }

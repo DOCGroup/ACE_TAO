@@ -34,9 +34,17 @@ namespace CCF
           name (SimpleIdentifierPtr const& id);
 
           virtual void
+          get_raises (IdentifierPtr const& id);
+
+          virtual void
+          set_raises (IdentifierPtr const& id);
+
+          virtual void
           end ();
 
         private:
+          bool readonly_;
+          SemanticGraph::Type* type_;
           SemanticGraph::Attribute* a_;
         };
       }

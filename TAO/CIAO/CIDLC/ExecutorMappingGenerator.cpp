@@ -361,8 +361,14 @@ namespace
                             Emitter
   {
     AttributeEmitter (Context& c, ostream& os)
-        : Emitter (c, os)
+        : Emitter (c, os),
+          type_name_ (c, os)
     {
+      edge_traverser (get_raises_);
+      edge_traverser (set_raises_);
+
+      get_raises_.node_traverser (type_name_);
+      set_raises_.node_traverser (type_name_);
     }
 
     // ReadAttribute
@@ -380,9 +386,27 @@ namespace
     }
 
     virtual void
+    get_raises_pre (SemanticGraph::ReadAttribute&)
+    {
+      os << " raises (";
+    }
+
+    virtual void
+    get_raises_post (SemanticGraph::ReadAttribute&)
+    {
+      os << ")";
+    }
+
+    virtual void
     post (SemanticGraph::ReadAttribute&)
     {
       os << ";";
+    }
+
+    virtual void
+    comma (SemanticGraph::ReadAttribute&)
+    {
+      os << ", ";
     }
 
     // ReadWriteAttribute
@@ -400,10 +424,45 @@ namespace
     }
 
     virtual void
+    get_raises_pre (SemanticGraph::ReadWriteAttribute&)
+    {
+      os << " getraises (";
+    }
+
+    virtual void
+    get_raises_post (SemanticGraph::ReadWriteAttribute&)
+    {
+      os << ")";
+    }
+
+    virtual void
+    set_raises_pre (SemanticGraph::ReadWriteAttribute&)
+    {
+      os << " setraises (";
+    }
+
+    virtual void
+    set_raises_post (SemanticGraph::ReadWriteAttribute&)
+    {
+      os << ")";
+    }
+
+    virtual void
     post (SemanticGraph::ReadWriteAttribute&)
     {
       os << ";";
     }
+
+    virtual void
+    comma (SemanticGraph::ReadWriteAttribute&)
+    {
+      os << ", ";
+    }
+
+  private:
+    Traversal::GetRaises get_raises_;
+    Traversal::SetRaises set_raises_;
+    TypeNameEmitter type_name_;
   };
 
 
@@ -724,7 +783,7 @@ namespace
   struct ContextEmitter : ComponentEmitter
   {
     ContextEmitter (Context& c, ostream& os, CommandLine const& cl)
-      : ComponentEmitter (c, os), 
+      : ComponentEmitter (c, os),
         name_emitter (c, os, "CCM_", "_Context"),
         cl_ (cl)
     {
@@ -755,7 +814,7 @@ namespace
     {
       string swap_option = cl_.get_value ("custom-container", "");
       bool swapping = (swap_option == "upgradeable");
-      
+
       if (swapping)
       {
         os << " : ::CIAO::UpgradeableContext";
@@ -775,7 +834,7 @@ namespace
 
     virtual void
     names_post (Type& t)
-    {      
+    {
       os << "}";
     }
 
@@ -1594,7 +1653,7 @@ namespace
         : Emitter (c, os)
     {
     }
-    
+
     virtual void
     traverse (SemanticGraph::QuoteIncludes& qi)
     {
@@ -1876,7 +1935,7 @@ generate (CommandLine const& cl,
 
     string swap_option = cl.get_value ("custom-container", "");
     bool swapping = (swap_option == "upgradeable");
-    
+
     if (swapping)
     {
       os << "#include <UpgradeableContext.idl>" << endl;

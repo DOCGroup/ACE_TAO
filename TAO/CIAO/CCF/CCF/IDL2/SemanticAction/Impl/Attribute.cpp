@@ -30,7 +30,9 @@ namespace CCF
         {
           if (ctx.trace ()) cerr << "readonly attribute" << endl;
 
-          a_ = &ctx.tu ().new_node<ReadAttribute> ();
+          readonly_ = true;
+
+
         }
 
         void Attribute::
@@ -38,7 +40,7 @@ namespace CCF
         {
           if (ctx.trace ()) cerr << "readwrite attribute" << endl;
 
-          a_ = &ctx.tu ().new_node<ReadWriteAttribute> ();
+          readonly_ = false;
         }
 
         void Attribute::
@@ -49,13 +51,13 @@ namespace CCF
           Name name (id->lexeme ());
           ScopedName from (ctx.scope ().scoped_name ());
 
+          type_ = 0;
+
           try
           {
             try
             {
-              Type& t (resolve<Type> (from, name, Flags::complete));
-
-              ctx.tu ().new_edge<Belongs> (*a_, t);
+              type_ = &resolve<Type> (from, name, Flags::complete);
             }
             catch (Resolve const&)
             {
@@ -86,7 +88,94 @@ namespace CCF
         {
           if (ctx.trace ()) cerr << id << endl;
 
-          ctx.tu ().new_edge<Defines> (ctx.scope (), *a_, id->lexeme ());
+          if (type_ != 0)
+          {
+            if (readonly_)
+              a_ = &ctx.tu ().new_node<ReadAttribute> ();
+            else
+              a_ = &ctx.tu ().new_node<ReadWriteAttribute> ();
+
+            ctx.tu ().new_edge<Belongs> (*a_, *type_);
+            ctx.tu ().new_edge<Defines> (ctx.scope (), *a_, id->lexeme ());
+          }
+        }
+
+        void Attribute::
+        get_raises (IdentifierPtr const& id)
+        {
+          if (ctx.trace ()) cerr << "get-raise " << id << endl;
+
+          Name name (id->lexeme ());
+          ScopedName from (ctx.scope ().scoped_name ());
+
+          try
+          {
+            try
+            {
+              SemanticGraph::Exception& e (
+                resolve<SemanticGraph::Exception> (from, name));
+
+              ctx.tu ().new_edge<GetRaises> (
+                dynamic_cast<ReadAttribute&> (*a_), e);
+            }
+            catch (Resolve const&)
+            {
+              cerr << "error: invalid raises declaration" << endl;
+              throw;
+            }
+          }
+          catch (NotFound const&)
+          {
+            cerr << "no exception with name \'" << name
+                 << "\' visible from scope \'" << from << "\'" << endl;
+          }
+          catch (WrongType const&)
+          {
+            cerr << "declaration with name \'" << name
+                 << "\' visible from scope \'" << from
+                 << "\' is not an exception declaration" << endl;
+            cerr << "using non-exception type in raises declaration is "
+                 << "illegal" << endl;
+          }
+        }
+
+        void Attribute::
+        set_raises (IdentifierPtr const& id)
+        {
+          if (ctx.trace ()) cerr << "set-raise " << id << endl;
+
+          Name name (id->lexeme ());
+          ScopedName from (ctx.scope ().scoped_name ());
+
+          try
+          {
+            try
+            {
+              SemanticGraph::Exception& e (
+                resolve<SemanticGraph::Exception> (from, name));
+
+              ctx.tu ().new_edge<SetRaises> (
+                dynamic_cast<WriteAttribute&> (*a_), e);
+            }
+            catch (Resolve const&)
+            {
+              cerr << "error: invalid raises declaration" << endl;
+              throw;
+            }
+          }
+          catch (NotFound const&)
+          {
+            cerr << "no exception with name \'" << name
+                 << "\' visible from scope \'" << from << "\'" << endl;
+          }
+          catch (WrongType const&)
+          {
+            cerr << "declaration with name \'" << name
+                 << "\' visible from scope \'" << from
+                 << "\' is not an exception declaration" << endl;
+            cerr << "using non-exception type in raises declaration is "
+                 << "illegal" << endl;
+          }
         }
 
         void Attribute::

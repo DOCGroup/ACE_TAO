@@ -34,6 +34,7 @@ namespace CCF
       keyword_table_.insert ("exception"  );
       keyword_table_.insert ("enum"       );
       keyword_table_.insert ("factory"    );
+      keyword_table_.insert ("getraises"  );
       keyword_table_.insert ("in"         );
       keyword_table_.insert ("inout"      );
       keyword_table_.insert ("interface"  );
@@ -48,6 +49,7 @@ namespace CCF
       keyword_table_.insert ("raises"     );
       keyword_table_.insert ("readonly"   );
       keyword_table_.insert ("sequence"   );
+      keyword_table_.insert ("setraises"  );
       keyword_table_.insert ("struct"     );
       keyword_table_.insert ("supports"   );
       keyword_table_.insert ("switch"     );

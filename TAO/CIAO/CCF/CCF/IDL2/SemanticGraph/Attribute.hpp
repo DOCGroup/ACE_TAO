@@ -33,11 +33,29 @@ namespace CCF
       };
 
 
+      //
+      //
+      //
       class ReadAttribute;
 
+      //
+      //
+      //
       class GetRaises : public virtual Edge
       {
       public:
+        ReadAttribute&
+        attribute () const
+        {
+          return *attribute_;
+        }
+
+        Exception&
+        exception () const
+        {
+          return *exception_;
+        }
+
         static Introspection::TypeInfo const&
         static_type_info ();
 
@@ -48,11 +66,51 @@ namespace CCF
         {
           type_info (static_type_info ());
         }
+
+        void
+        set_left_node (ReadAttribute& a)
+        {
+          attribute_ = &a;
+        }
+
+        void
+        set_right_node (Exception& n)
+        {
+          exception_ = &n;
+        }
+
+      private:
+        ReadAttribute* attribute_;
+        Exception* exception_;
       };
 
 
+      //
+      //
+      //
       class ReadAttribute : public virtual Attribute
       {
+        typedef
+        std::vector<GetRaises*>
+        GetRaises_;
+
+      public:
+        typedef
+        GetRaises_::const_iterator
+        GetRaisesIterator;
+
+        GetRaisesIterator
+        get_raises_begin () const
+        {
+          return get_raises_.begin ();
+        }
+
+        GetRaisesIterator
+        get_raises_end () const
+        {
+          return get_raises_.end ();
+        }
+
       public:
         static Introspection::TypeInfo const&
         static_type_info ();
@@ -64,8 +122,22 @@ namespace CCF
         {
           type_info (static_type_info ());
         }
+
+        void
+        add_edge_left (GetRaises& e)
+        {
+          get_raises_.push_back (&e);
+        }
+
+      private:
+        GetRaises_ get_raises_;
       };
 
+
+      //
+      //
+      //
+      class WriteAttribute;
 
       //
       //
@@ -73,6 +145,18 @@ namespace CCF
       class SetRaises : public virtual Edge
       {
       public:
+        WriteAttribute&
+        attribute () const
+        {
+          return *attribute_;
+        }
+
+        Exception&
+        exception () const
+        {
+          return *exception_;
+        }
+
         static Introspection::TypeInfo const&
         static_type_info ();
 
@@ -83,11 +167,47 @@ namespace CCF
         {
           type_info (static_type_info ());
         }
+
+        void
+        set_left_node (WriteAttribute& a)
+        {
+          attribute_ = &a;
+        }
+
+        void
+        set_right_node (Exception& n)
+        {
+          exception_ = &n;
+        }
+
+      private:
+        WriteAttribute* attribute_;
+        Exception* exception_;
       };
 
 
       class WriteAttribute : public virtual Attribute
       {
+        typedef
+        std::vector<SetRaises*>
+        SetRaises_;
+
+      public:
+        typedef
+        SetRaises_::const_iterator
+        SetRaisesIterator;
+
+        SetRaisesIterator
+        set_raises_begin () const
+        {
+          return set_raises_.begin ();
+        }
+
+        SetRaisesIterator
+        set_raises_end () const
+        {
+          return set_raises_.end ();
+        }
       public:
         static Introspection::TypeInfo const&
         static_type_info ();
@@ -99,6 +219,15 @@ namespace CCF
         {
           type_info (static_type_info ());
         }
+
+        void
+        add_edge_left (SetRaises& e)
+        {
+          set_raises_.push_back (&e);
+        }
+
+      private:
+        SetRaises_ set_raises_;
       };
 
 
