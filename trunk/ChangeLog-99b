@@ -6,7 +6,7 @@ Sat Apr 24 07:24:51 1999  David L. Levine  <levine@cs.wustl.edu>
         * ace/config-vxworks5.x.h: added ACE_THR_PRI_OTHER_DEF
           #define, for use by MT_Cubit.
 
-        * ace/Object_Manager.cpp (fini): unconditionally set
+        * ace/Object_Manager.cpp, OS.cpp (fini): unconditionally set
           instance_ to 0 at the end.  This allows init () to
           work properly if called after fini (), such as for
           repeated test on VxWorks.  Thanks to Todd Mullanix
