@@ -206,7 +206,7 @@ InputPath=.\CIAO_Container.pidl
 InputName=CIAO_Container
 
 BuildCmds= \
-	..\..\..\bin\release\tao_idl -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_CONTAINER_Export -Wb,export_include=CIAO_CONTAINER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).pidl \
+	..\..\..\bin\release\tao_idl -Ge 1 -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_CONTAINER_Export -Wb,export_include=CIAO_CONTAINER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).pidl \
 	del $(InputName)S.* \
 	del $(InputName)S_T.* \
 	
@@ -229,7 +229,7 @@ InputPath=.\CIAO_Container.pidl
 InputName=CIAO_Container
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_CONTAINER_Export -Wb,export_include=CIAO_CONTAINER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).pidl \
+	..\..\..\bin\tao_idl -Ge 1 -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_CONTAINER_Export -Wb,export_include=CIAO_CONTAINER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).pidl \
 	del $(InputName)S.* \
 	del $(InputName)S_T.* \
 	
@@ -259,7 +259,7 @@ InputPath=.\CIAO_Container_Ex.pidl
 InputName=CIAO_Container_Ex
 
 BuildCmds= \
-	..\..\..\bin\release\tao_idl -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_CONTAINER_Export -Wb,export_include=CIAO_CONTAINER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).pidl \
+	..\..\..\bin\release\tao_idl -Ge 1 -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_CONTAINER_Export -Wb,export_include=CIAO_CONTAINER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).pidl \
 	del $(InputName)S.* \
 	del $(InputName)S_T.* \
 	
@@ -282,7 +282,7 @@ InputPath=.\CIAO_Container_Ex.pidl
 InputName=CIAO_Container_Ex
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_CONTAINER_Export -Wb,export_include=CIAO_CONTAINER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).pidl \
+	..\..\..\bin\tao_idl -Ge 1 -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_CONTAINER_Export -Wb,export_include=CIAO_CONTAINER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).pidl \
 	del $(InputName)S.* \
 	del $(InputName)S_T.* \
 	
@@ -312,7 +312,7 @@ InputPath=.\CIAO_Transaction.pidl
 InputName=CIAO_Transaction
 
 BuildCmds= \
-	..\..\..\bin\release\tao_idl -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_CONTAINER_Export -Wb,export_include=CIAO_CONTAINER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).pidl \
+	..\..\..\bin\release\tao_idl -Ge 1 -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_CONTAINER_Export -Wb,export_include=CIAO_CONTAINER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).pidl \
 	del $(InputName)S.* \
 	del $(InputName)S_T.* \
 	
@@ -335,7 +335,7 @@ InputPath=.\CIAO_Transaction.pidl
 InputName=CIAO_Transaction
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_CONTAINER_Export -Wb,export_include=CIAO_CONTAINER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).pidl \
+	..\..\..\bin\tao_idl -Ge 1 -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_CONTAINER_Export -Wb,export_include=CIAO_CONTAINER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).pidl \
 	del $(InputName)S.* \
 	del $(InputName)S_T.* \
 	
@@ -365,7 +365,7 @@ InputPath=.\CosPersistentState.pidl
 InputName=CosPersistentState
 
 BuildCmds= \
-	..\..\..\bin\release\tao_idl -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_CONTAINER_Export -Wb,export_include=CIAO_CONTAINER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).pidl \
+	..\..\..\bin\release\tao_idl -Ge 1 -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_CONTAINER_Export -Wb,export_include=CIAO_CONTAINER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).pidl \
 	del $(InputName)S.* \
 	del $(InputName)S_T.* \
 	
@@ -388,7 +388,7 @@ InputPath=.\CosPersistentState.pidl
 InputName=CosPersistentState
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_CONTAINER_Export -Wb,export_include=CIAO_CONTAINER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).pidl \
+	..\..\..\bin\tao_idl -Ge 1 -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_CONTAINER_Export -Wb,export_include=CIAO_CONTAINER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).pidl \
 	del $(InputName)S.* \
 	del $(InputName)S_T.* \
 	

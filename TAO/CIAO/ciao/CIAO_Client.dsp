@@ -154,7 +154,7 @@ InputPath=.\CIAO_Base.pidl
 InputName=CIAO_Base
 
 BuildCmds= \
-	..\..\..\bin\release\tao_idl -I ../.. -I ../../orbsvcs/orbsvcs -Wb,skel_export_macro=CIAO_CONTAINER_Export -Wb,skel_export_include=CIAO_CONTAINER_export.h -Wb,export_macro=CIAO_CLIENT_Export -Wb,export_include=CIAO_CLIENT_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).pidl
+	..\..\..\bin\release\tao_idl -Ge 1 -I ../.. -I ../../orbsvcs/orbsvcs -Wb,skel_export_macro=CIAO_CONTAINER_Export -Wb,skel_export_include=CIAO_CONTAINER_export.h -Wb,export_macro=CIAO_CLIENT_Export -Wb,export_include=CIAO_CLIENT_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).pidl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -183,7 +183,7 @@ InputPath=.\CIAO_Base.pidl
 InputName=CIAO_Base
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_CLIENT_Export -Wb,export_include=CIAO_CLIENT_export.h -Wb,pre_include="ace/pre.h" -Wb,skel_export_macro=CIAO_CONTAINER_Export -Wb,skel_export_include=CIAO_CONTAINER_export.h -Wb,post_include="ace/post.h" $(InputName).pidl
+	..\..\..\bin\tao_idl -Ge 1 -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_CLIENT_Export -Wb,export_include=CIAO_CLIENT_export.h -Wb,pre_include="ace/pre.h" -Wb,skel_export_macro=CIAO_CONTAINER_Export -Wb,skel_export_include=CIAO_CONTAINER_export.h -Wb,post_include="ace/post.h" $(InputName).pidl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -219,7 +219,7 @@ InputPath=.\CIAO_Component.pidl
 InputName=CIAO_Component
 
 BuildCmds= \
-	..\..\..\bin\release\tao_idl -I ../.. -I ../../orbsvcs/orbsvcs -Wb,skel_export_macro=CIAO_CONTAINER_Export -Wb,skel_export_include=CIAO_CONTAINER_export.h -Wb,export_macro=CIAO_CLIENT_Export -Wb,export_include=CIAO_CLIENT_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).pidl
+	..\..\..\bin\release\tao_idl -Ge 1 -I ../.. -I ../../orbsvcs/orbsvcs -Wb,skel_export_macro=CIAO_CONTAINER_Export -Wb,skel_export_include=CIAO_CONTAINER_export.h -Wb,export_macro=CIAO_CLIENT_Export -Wb,export_include=CIAO_CLIENT_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).pidl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -248,7 +248,7 @@ InputPath=.\CIAO_Component.pidl
 InputName=CIAO_Component
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_CLIENT_Export -Wb,export_include=CIAO_CLIENT_export.h -Wb,pre_include="ace/pre.h" -Wb,skel_export_macro=CIAO_CONTAINER_Export -Wb,skel_export_include=CIAO_CONTAINER_export.h -Wb,post_include="ace/post.h" $(InputName).pidl
+	..\..\..\bin\tao_idl -Ge 1 -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_CLIENT_Export -Wb,export_include=CIAO_CLIENT_export.h -Wb,pre_include="ace/pre.h" -Wb,skel_export_macro=CIAO_CONTAINER_Export -Wb,skel_export_include=CIAO_CONTAINER_export.h -Wb,post_include="ace/post.h" $(InputName).pidl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -284,7 +284,7 @@ InputPath=.\CIAO_Event.pidl
 InputName=CIAO_Event
 
 BuildCmds= \
-	..\..\..\bin\release\tao_idl -I ../.. -I ../../orbsvcs/orbsvcs -Wb,skel_export_macro=CIAO_CONTAINER_Export -Wb,skel_export_include=CIAO_CONTAINER_export.h -Wb,export_macro=CIAO_CLIENT_Export -Wb,export_include=CIAO_CLIENT_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).pidl
+	..\..\..\bin\release\tao_idl -Ge 1 -I ../.. -I ../../orbsvcs/orbsvcs -Wb,skel_export_macro=CIAO_CONTAINER_Export -Wb,skel_export_include=CIAO_CONTAINER_export.h -Wb,export_macro=CIAO_CLIENT_Export -Wb,export_include=CIAO_CLIENT_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).pidl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -313,7 +313,7 @@ InputPath=.\CIAO_Event.pidl
 InputName=CIAO_Event
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_CLIENT_Export -Wb,export_include=CIAO_CLIENT_export.h -Wb,pre_include="ace/pre.h" -Wb,skel_export_macro=CIAO_CONTAINER_Export -Wb,skel_export_include=CIAO_CONTAINER_export.h -Wb,post_include="ace/post.h" $(InputName).pidl
+	..\..\..\bin\tao_idl -Ge 1 -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_CLIENT_Export -Wb,export_include=CIAO_CLIENT_export.h -Wb,pre_include="ace/pre.h" -Wb,skel_export_macro=CIAO_CONTAINER_Export -Wb,skel_export_include=CIAO_CONTAINER_export.h -Wb,post_include="ace/post.h" $(InputName).pidl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

@@ -122,7 +122,7 @@ InputPath=.\CIAO_Deployment.pidl
 InputName=CIAO_Deployment
 
 BuildCmds= \
-	..\..\..\bin\release\tao_idl -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_SERVER_Export -Wb,export_include=CIAO_SERVER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).pidl \
+	..\..\..\bin\release\tao_idl -Ge 1 -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_SERVER_Export -Wb,export_include=CIAO_SERVER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).pidl \
 	del $(InputName)S.* \
 	del $(InputName)S_T.* \
 	
@@ -145,7 +145,7 @@ InputPath=.\CIAO_Deployment.pidl
 InputName=CIAO_Deployment
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_SERVER_Export -Wb,export_include=CIAO_SERVER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).pidl \
+	..\..\..\bin\tao_idl -Ge 1 -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_SERVER_Export -Wb,export_include=CIAO_SERVER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).pidl \
 	del $(InputName)S.* \
 	del $(InputName)S_T.* \
 	
