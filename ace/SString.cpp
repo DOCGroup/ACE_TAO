@@ -677,13 +677,13 @@ ACE_WString::operator = (const ACE_WString &s)
 	{
 	  this->allocator_->free (this->rep_);
 	  this->rep_ = (ACE_USHORT16 *) this->allocator_->malloc ((s.len_ + 1) * sizeof (ACE_USHORT16));
-	  // null terminate 
-	  this->rep_[s.len_] = 0;
 	}
 
       this->len_ = s.len_;
       ACE_OS::memcpy ((void *) this->rep_, (const void *) s.rep_,
 		      this->len_ * sizeof (ACE_USHORT16));
+      // null terminate 
+      this->rep_[s.len_] = 0;
     }
 }
 
@@ -734,10 +734,10 @@ ACE_WString::operator += (const ACE_WString &s)
 {
   ACE_TRACE ("ACE_WString::operator +=");
   ACE_USHORT16 *t = (ACE_USHORT16 *) this->allocator_->malloc ((this->len_ + s.len_ + 1) * sizeof (ACE_USHORT16));
-
+  
   ACE_OS::memcpy ((void *) t, (const void *) this->rep_, this->len_ * sizeof (ACE_USHORT16));
-  ACE_OS::memcpy ((void *) (t + this->len_ * sizeof (ACE_USHORT16)), 
-	    (const void *) s.rep_, s.len_ * sizeof (ACE_USHORT16));
+  ACE_OS::memcpy ((void *) (t + this->len_), 
+		  (const void *) s.rep_, s.len_ * sizeof (ACE_USHORT16));
   this->len_ += s.len_;
 
   // null terminate 

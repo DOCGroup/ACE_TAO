@@ -1,3 +1,11 @@
+Tue Jun 10 12:47:49 1997    <irfan@TWOSTEP>
+
+	* ace/SString.cpp (operator = and operator +=): There were two
+ 	  bugs here.  operator= forgot to tack on the NULL terminator
+ 	  after the memcpy() and operator+= appended the second string
+ 	  incorrectly. Thanks to Michael R. MacFaden <mrm@cisco.com> for
+ 	  pointing these out.
+
 Tue Jun 10 12:16:04 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* ace/Makefile: Updated to reflect newly added files
