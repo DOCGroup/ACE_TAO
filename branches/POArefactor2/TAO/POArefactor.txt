@@ -1,3 +1,15 @@
+Wed Nov 24 15:10:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Environment.{h,i,cpp}:
+          Removed default_environment, which was deprecated, with this gone,
+          we can move the include of default_environment.h to the cpp file.
+
+        * tao/default_environment.h:
+          Fixed typo in comment
+
+        * tao/Pseudo_VarOut_T.h:
+          Removed commented out include
+
 Wed Nov 24 13:12:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Typecode_typesC.h:

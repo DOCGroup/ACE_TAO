@@ -2,37 +2,28 @@
 //
 // $Id$
 
-ACE_INLINE 
-CORBA::Environment &
-CORBA::default_environment (void)
-{
-  return TAO_default_environment ();
-}
-
-// ======================================================
-
-ACE_INLINE 
+ACE_INLINE
 CORBA::Boolean
 CORBA::is_nil (CORBA::Environment_ptr env)
 {
   return env == 0;
 }
 
-ACE_INLINE 
+ACE_INLINE
 void
 CORBA::release (CORBA::Environment_ptr env)
 {
   delete env;
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::Exception *
 CORBA::Environment::exception (void) const
 {
   return this->exception_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::Environment *
 CORBA::Environment::_duplicate (CORBA::Environment *x)
 {
@@ -44,7 +35,7 @@ CORBA::Environment::_duplicate (CORBA::Environment *x)
   return new CORBA::Environment (*x);
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::Environment_ptr
 CORBA::Environment::_nil (void)
 {

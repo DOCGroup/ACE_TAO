@@ -30,23 +30,17 @@
 #include "tao/CORBA_methods.h"
 #include "tao/orbconf.h"
 #include "tao/Pseudo_VarOut_T.h"
-#include "tao/default_environment.h"
 
 class TAO_ORB_Core;
 
 namespace CORBA
 {
-
   class Exception;
 
   class Environment;
   typedef Environment *Environment_ptr;
   typedef TAO_Pseudo_Var_T<Environment> Environment_var;
   typedef TAO_Pseudo_Out_T<Environment, Environment_var> Environment_out;
-
-  /// Obtain the thread-specific default environment.  This is
-  /// obsolete and only left here for backwards compatibility.
-  TAO_NAMESPACE_INLINE_FUNCTION Environment & default_environment (void);
 
   /**
    * @class Environment
