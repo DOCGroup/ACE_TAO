@@ -46,7 +46,7 @@ class TAO_Export TAO_RT_Current :
   //   Allows setting/getting the priority of the current thread.
   //
 public:
-  TAO_RT_Current (void);
+  TAO_RT_Current (TAO_ORB_Core *orb_core);
   // Default constructor.
 
   virtual ~TAO_RT_Current (void);
@@ -64,6 +64,8 @@ public:
 
 private:
 
+  TAO_ORB_Core *orb_core_;
+  // ORB Core that owns us.
 };
 
 

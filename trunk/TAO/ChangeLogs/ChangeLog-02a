@@ -1,9 +1,18 @@
+Wed Aug 23 15:34:29 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/RT_Current.h
+	* tao/RT_Current.cpp:
+
+	  After this interface was made local, it no longer had access to
+	  the orb_core through its stub, and wasn't working.  Changed the
+	  implementation to store the pointer to its ORB Core.
+
 Wed Aug 23 15:08:12 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tests/RTCORBA/Client_Propagated/server.cpp:
-	  
+
 	  Fixed compile problem.
-	
+
 	* tests/RTCORBA/Client_Propagated/client.dsp:
 	* tests/RTCORBA/Client_Propagated/server.dsp:
 
