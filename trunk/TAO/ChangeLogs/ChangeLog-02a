@@ -338,8 +338,9 @@ Fri Jun 16 13:16:49 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
         * tao/RT_Policy_i.cpp:
 
-          Changed <_tao_encode> methods implementation for the
+          Changed <_tao_encode> method implementation for the
           client exposed policies.
+	  // @@ Angelo, changed why? to do what?
 
         * TAO/tests/Exposed_Policies/client.cpp:
         * TAO/tests/Exposed_Policies/Client.dsp:
@@ -355,6 +356,16 @@ Fri Jun 16 13:16:49 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
         * TAO/tests/Exposed_Policies/Server.dsp:
 
           Added files for testing the client exposed policies.
+	  // @@ Angelo,
+	  // 1) I do not see an entry/mentioning of removing
+	  tests/ExposedPolicies directory (the one you replaced with the files
+	  above, nor do I see any entries about removing
+	  tests/ExposedPolicies/Client and Server subdirectories (the
+	  change you made a while back).  It is important to document not
+	  only what you add/change, but also what you remove! 2) when you
+	  write the names of files you modified/added/removed in TAO, the
+	  pathname must be relative to the ACE_wrappers/TAO directory.
+	  Please remove the extra 'TAO' for the files above.
 
 Fri Jun 16 08:46:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -596,7 +607,7 @@ Thu Jun 15 14:23:53 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
         * tao/diffs/RTCORBAC.h.diff:
         * tao/diffs/RTCORBAC.cpp.diff:
 
-          Created diffs file for modified pidl generated files.
+          Created diffs files for modified pidl generated files.
 
 Thu Jun 15 13:39:27 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
@@ -620,6 +631,7 @@ Thu Jun 15 13:20:49 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
           Added methods to get client exposed policies, and added
           member variable to cache those client exposed policies.
+	  // @@ Angelo, please list the names of methods/variables added.
 
 Thu Jun 15 12:43:44 2000  yamuna  <yamuna@cs.wustl.edu>
 
@@ -686,7 +698,7 @@ Tue Jun 13 21:32:28 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
         * tao/ORB_Core.cpp:
 
-          Fixed Memory leaks in <create_stub_object>.
+          Fixed Memory leak in <create_stub_object>.
 
         * tao/Profile.cpp:
 
@@ -694,9 +706,10 @@ Tue Jun 13 21:32:28 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
         * tao/Profile.h:
 
-          Added comment to point out the current assumption of
-          having only one policy list shared by all profiles,
-          and whose lifecycle is managed by the TAO_MProfile.
+          Added comment about current assumption of
+          all profiles having the same policies.  Based on this assumption,
+	  only one policy list is shared by all profiles,
+          and its lifecycle is managed by the TAO_MProfile.
 
 Tue Jun 13 12:56:36 2000  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -815,6 +828,7 @@ Mon Jun 12 12:00:14 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
           Moved <create_policy_list> implementation so that no problem
           occurs when inlining is enabled.
+	  // @@ Angelo, moved <create_policy_list> where?
 
 Sun Jun 11 20:55:08 2000  Carlos O'Ryan  <coryan@uci.edu>
 
