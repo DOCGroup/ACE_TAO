@@ -154,8 +154,9 @@
 #  define ACE_LACKS_SIGINFO_H
 #endif /* ACE_AIX_MINOR_VERS >=2 */
 #define ACE_HAS_SIGWAIT
-#define ACE_HAS_SIGTIMEDWAIT
-
+#if (ACE_AIX_MINOR_VERS > 3)
+#  define ACE_HAS_SIGTIMEDWAIT
+#endif /* ACE_AIX_MINOR_VERS > 3 */
 #define ACE_HAS_SIN_LEN
 #define ACE_HAS_STRBUF_T
 
