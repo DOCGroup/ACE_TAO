@@ -34,14 +34,14 @@ TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object
   // Lookup the target POA.  Note that Object Adapter lock is held
   // until <servant_upcall> dies.
   TAO::Portable_Server::Servant_Upcall servant_upcall (orb_core);
-  TAO_POA *poa =
+  TAO_Root_POA *poa =
     servant_upcall.lookup_POA (object->_stubobj ()->object_key ()
                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   // Get the thread pool associated with this POA.
   TAO_Thread_Pool *target_thread_pool =
-    (TAO_Thread_Pool *) poa->thread_pool ();
+    static_cast <TAO_Thread_Pool *> (poa->thread_pool ());
 
   // If the target POA does not have a dedicated thread pool, then all
   // calls to it are collocated.
@@ -54,7 +54,7 @@ TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object
 
   // Get the lane for this thread.
   TAO_Thread_Lane *current_thread_lane =
-    (TAO_Thread_Lane *) tss.lane_;
+    static_cast <TAO_Thread_Lane *> (tss.lane_);
 
   TAO_Thread_Pool *current_thread_pool = 0;
 

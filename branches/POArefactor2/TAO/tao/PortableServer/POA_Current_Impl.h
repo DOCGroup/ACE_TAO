@@ -40,7 +40,7 @@ namespace TAO
 // ****************************************************************
 
 // Forward declaration
-class TAO_POA;
+class TAO_Root_POA;
 class TAO_POA_Manager;
 class TAO_TSS_Resources;
 class TAO_Transport;
@@ -71,7 +71,7 @@ namespace TAO
     {
     public:
 
-      friend class TAO_POA;
+      friend class TAO_Root_POA;
 
       /// Return pointer to the invoking POA.  Raises the
       /// <CORBA::NoContext> exception.
@@ -99,10 +99,10 @@ namespace TAO
                          PortableServer::Current::NoContext));
 
       /// Set the POA implementation.
-      void poa (TAO_POA *);
+      void poa (TAO_Root_POA *);
 
       /// Get the POA implemantation
-      TAO_POA *poa (void) const;
+      TAO_Root_POA *poa (void) const;
 
       /// ORB Core for this current.
       TAO_ORB_Core &orb_core (void) const;
@@ -144,12 +144,12 @@ namespace TAO
       void teardown (void);
 
       /// Setup the current.
-      void setup (TAO_POA *impl,
+      void setup (TAO_Root_POA *impl,
                   const TAO::ObjectKey &key);
 
     protected:
       /// The POA implementation invoking an upcall
-      TAO_POA *poa_;
+      TAO_Root_POA *poa_;
 
       /**
        * The object ID of the current context.  This is the user id and

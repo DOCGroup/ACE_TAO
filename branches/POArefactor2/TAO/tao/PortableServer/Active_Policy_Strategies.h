@@ -23,7 +23,7 @@
 #include "ace/CORBA_macros.h"
 #include "tao/Environment.h"
 
-class TAO_POA;
+class TAO_Root_POA;
 
 namespace TAO
 {
@@ -47,7 +47,7 @@ namespace TAO
       Active_Policy_Strategies();
 
       void update (Cached_Policies &policies,
-                   TAO_POA* poa
+                   TAO_Root_POA* poa
                    ACE_ENV_ARG_DECL);
 
       void cleanup (ACE_ENV_SINGLE_ARG_DECL);

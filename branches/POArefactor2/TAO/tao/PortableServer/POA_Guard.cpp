@@ -1,7 +1,7 @@
 // $Id$
 
 #include "POA_Guard.h"
-#include "POA.h"
+#include "Root_POA.h"
 #include "tao/ORB_Constants.h"
 
 ACE_RCSID(PortableServer,
@@ -12,7 +12,7 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    POA_Guard::POA_Guard (TAO_POA &poa
+    POA_Guard::POA_Guard (TAO_Root_POA &poa
                           ACE_ENV_ARG_DECL,
                           int check_for_destruction)
       : guard_ (poa.lock ())

@@ -30,7 +30,7 @@
 #include "ace/Unbounded_Set.h"
 
 // Forward decl.
-class TAO_POA;
+class TAO_Root_POA;
 class TAO_Object_Adapter;
 
 // This is to remove "inherits via dominance" warnings from MSVC.
@@ -44,7 +44,7 @@ class TAO_PortableServer_Export TAO_POA_Manager :
   public PortableServer::POAManager,
   public TAO_Local_RefCounted_Object
 {
-  friend class TAO_POA;
+  friend class TAO_Root_POA;
   friend class TAO_Object_Adapter;
 
 public:
@@ -122,9 +122,9 @@ protected:
 
   ACE_Lock &lock (void);
 
-  int remove_poa (TAO_POA *poa);
+  int remove_poa (TAO_Root_POA *poa);
 
-  int register_poa (TAO_POA *poa);
+  int register_poa (TAO_Root_POA *poa);
 
   /**
    * Generate an AdapterManagerId for this POAManager.
@@ -139,7 +139,7 @@ protected:
 
   ACE_Lock &lock_;
 
-  typedef ACE_Unbounded_Set<TAO_POA *> POA_COLLECTION;
+  typedef ACE_Unbounded_Set<TAO_Root_POA *> POA_COLLECTION;
 
   POA_COLLECTION poa_collection_;
 

@@ -420,7 +420,7 @@ TAO_Object_Adapter::dispatch_servant (const TAO::ObjectKey &key,
 void
 TAO_Object_Adapter::locate_poa (const TAO::ObjectKey &key,
                                 PortableServer::ObjectId &system_id,
-                                TAO_POA *&poa
+                                TAO_Root_POA *&poa
                                 ACE_ENV_ARG_DECL)
 {
   TAO_Object_Adapter::poa_name poa_system_name;
@@ -434,7 +434,7 @@ TAO_Object_Adapter::locate_poa (const TAO::ObjectKey &key,
   {
     ACE_FUNCTION_TIMEPROBE (TAO_POA_PARSE_KEY_START);
 
-    result = TAO_POA::parse_key (key,
+    result = TAO_Root_POA::parse_key (key,
                                  poa_system_name,
                                  system_id,
                                  is_root,
@@ -464,7 +464,7 @@ TAO_Object_Adapter::locate_poa (const TAO::ObjectKey &key,
 
 int
 TAO_Object_Adapter::activate_poa (const poa_name &folded_name,
-                                  TAO_POA *&poa
+                                  TAO_Root_POA *&poa
                                   ACE_ENV_ARG_DECL)
 {
   int result = -1;
@@ -475,7 +475,7 @@ TAO_Object_Adapter::activate_poa (const poa_name &folded_name,
   iteratable_poa_name::iterator iterator = ipn.begin ();
   iteratable_poa_name::iterator end = ipn.end ();
 
-  TAO_POA *parent = this->root_;
+  TAO_Root_POA *parent = this->root_;
   if (parent == 0 || parent->name () != *iterator)
     ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
                       -1);
@@ -490,7 +490,7 @@ TAO_Object_Adapter::activate_poa (const poa_name &folded_name,
        iterator != end;
        ++iterator)
     {
-      TAO_POA *current = 0;
+      TAO_Root_POA *current = 0;
 
       ACE_TRY
         {
@@ -524,7 +524,7 @@ int
 TAO_Object_Adapter::find_transient_poa (const poa_name &system_name,
                                         CORBA::Boolean root,
                                         const TAO::Portable_Server::Temporary_Creation_Time &poa_creation_time,
-                                        TAO_POA *&poa
+                                        TAO_Root_POA *&poa
                                         ACE_ENV_ARG_DECL_NOT_USED)
 {
   int result = 0;
@@ -548,7 +548,7 @@ TAO_Object_Adapter::find_transient_poa (const poa_name &system_name,
 
 int
 TAO_Object_Adapter::bind_poa (const poa_name &folded_name,
-                              TAO_POA *poa,
+                              TAO_Root_POA *poa,
                               poa_name_out system_name)
 {
   if (poa->persistent ())
@@ -561,7 +561,7 @@ TAO_Object_Adapter::bind_poa (const poa_name &folded_name,
 }
 
 int
-TAO_Object_Adapter::unbind_poa (TAO_POA *poa,
+TAO_Object_Adapter::unbind_poa (TAO_Root_POA *poa,
                                 const poa_name &folded_name,
                                 const poa_name &system_name)
 {
@@ -579,7 +579,7 @@ TAO_Object_Adapter::locate_servant_i (const TAO::ObjectKey &key
   ACE_FUNCTION_TIMEPROBE (TAO_POA_LOCATE_SERVANT_START);
 
   PortableServer::ObjectId id;
-  TAO_POA *poa = 0;
+  TAO_Root_POA *poa = 0;
 
   this->locate_poa (key,
                     id,
@@ -615,7 +615,7 @@ TAO_Object_Adapter::find_servant_i (const TAO::ObjectKey &key,
                                     ACE_ENV_ARG_DECL)
 {
   PortableServer::ObjectId id;
-  TAO_POA *poa = 0;
+  TAO_Root_POA *poa = 0;
 
   this->locate_poa (key,
                     id,
@@ -693,7 +693,7 @@ TAO_Object_Adapter::open (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK;
 
   // Construct a new POA
-  TAO_POA::String root_poa_name (TAO_DEFAULT_ROOTPOA_NAME);
+  TAO_Root_POA::String root_poa_name (TAO_DEFAULT_ROOTPOA_NAME);
   this->root_ =
     this->servant_dispatcher_->create_Root_POA (root_poa_name,
                                                 *poa_manager,
@@ -759,7 +759,7 @@ TAO_Object_Adapter::close (int wait_for_completion
   // etherealizations have finished and root POA has been destroyed
   // (implying that all descendent POAs have also been destroyed).
 
-  TAO_POA *root = 0;
+  TAO_Root_POA *root = 0;
   {
     ACE_GUARD (ACE_Lock, ace_mon, this->lock ());
     if (this->root_ == 0)
@@ -779,7 +779,7 @@ void
 TAO_Object_Adapter::check_close (int wait_for_completion
                                  ACE_ENV_ARG_DECL)
 {
-  TAO_POA::check_for_valid_wait_for_completions (this->orb_core (),
+  TAO_Root_POA::check_for_valid_wait_for_completions (this->orb_core (),
                                                  wait_for_completion
                                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -799,8 +799,8 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (ACE_OS::memcmp (key.get_buffer (),
-                      &TAO_POA::objectkey_prefix[0],
-                      TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE) != 0)
+                      &TAO_Root_POA::objectkey_prefix[0],
+                      TAO_Root_POA::TAO_OBJECTKEY_PREFIX_SIZE) != 0)
     {
       return TAO_Adapter::DS_MISMATCHED_KEY;
     }
@@ -1001,8 +1001,8 @@ TAO_Object_Adapter::get_collocated_servant (const TAO_MProfile &mp
       TAO::ObjectKey_var objkey = profile->_key ();
 
       if (ACE_OS::memcmp (objkey->get_buffer (),
-                          &TAO_POA::objectkey_prefix[0],
-                          TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE) != 0)
+                          &TAO_Root_POA::objectkey_prefix[0],
+                          TAO_Root_POA::TAO_OBJECTKEY_PREFIX_SIZE) != 0)
         continue;
 
       TAO_ServantBase *servant = 0;
@@ -1043,7 +1043,7 @@ TAO_Object_Adapter::Active_Hint_Strategy::~Active_Hint_Strategy (void)
 int
 TAO_Object_Adapter::Active_Hint_Strategy::find_persistent_poa (
   const poa_name &system_name,
-  TAO_POA *&poa
+  TAO_Root_POA *&poa
   ACE_ENV_ARG_DECL)
 {
   poa_name folded_name;
@@ -1077,7 +1077,7 @@ TAO_Object_Adapter::Active_Hint_Strategy::find_persistent_poa (
 int
 TAO_Object_Adapter::Active_Hint_Strategy::bind_persistent_poa (
   const poa_name &folded_name,
-  TAO_POA *poa,
+  TAO_Root_POA *poa,
   poa_name_out system_name)
 {
   poa_name name = folded_name;
@@ -1122,7 +1122,7 @@ TAO_Object_Adapter::No_Hint_Strategy::~No_Hint_Strategy (void)
 int
 TAO_Object_Adapter::No_Hint_Strategy::find_persistent_poa (
   const poa_name &system_name,
-  TAO_POA *&poa
+  TAO_Root_POA *&poa
   ACE_ENV_ARG_DECL)
 {
   int result =
@@ -1143,7 +1143,7 @@ TAO_Object_Adapter::No_Hint_Strategy::find_persistent_poa (
 int
 TAO_Object_Adapter::No_Hint_Strategy::bind_persistent_poa (
   const poa_name &folded_name,
-  TAO_POA *poa,
+  TAO_Root_POA *poa,
   poa_name_out system_name)
 {
   int result =
@@ -1198,12 +1198,12 @@ TAO_Object_Adapter::poa_name_iterator::operator* () const
 {
   CORBA::ULong start_at =
     this->last_separator_ +
-    TAO_POA::name_separator_length ();
+    TAO_Root_POA::name_separator_length ();
 
   CORBA::ULong how_many =
     this->position_
     - this->last_separator_
-    - TAO_POA::name_separator_length ();
+    - TAO_Root_POA::name_separator_length ();
 
   return ACE_CString (reinterpret_cast <const char *>
                                        (&this->folded_buffer_[start_at]),
@@ -1220,7 +1220,7 @@ TAO_Object_Adapter::poa_name_iterator::operator++ (void)
       ++this->position_;
       if (this->position_ < this->size_)
         {
-          if (this->folded_buffer_[this->position_] == TAO_POA::name_separator ())
+          if (this->folded_buffer_[this->position_] == TAO_Root_POA::name_separator ())
             break;
         }
       else
@@ -1306,7 +1306,7 @@ TAO_Object_Adapter::servant_dispatcher (TAO_Servant_Dispatcher *dispatcher)
 
 // Common typedefs.
 typedef TAO_Object_Adapter::poa_name key;
-typedef TAO_POA *value;
+typedef TAO_Root_POA *value;
 
 typedef ACE_Pair<key, value> expanded_value;
 typedef ACE_Reference_Pair<const key, value> tao_value_type;
@@ -1388,7 +1388,7 @@ template class ACE_Unbounded_Set_Iterator<TAO_POA_Manager *>;
 
 // Common typedefs.
 typedef TAO_Object_Adapter::poa_name key;
-typedef TAO_POA *value;
+typedef TAO_Root_POA *value;
 
 typedef ACE_Pair<key, value> expanded_value;
 typedef ACE_Reference_Pair<const key, value> tao_value_type;

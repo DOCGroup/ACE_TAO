@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_POA;
+class TAO_Root_POA;
 
 namespace TAO
 {
@@ -36,7 +36,7 @@ namespace TAO
 
       virtual ~ServantRetentionStrategyNonRetain (void);
 
-      virtual void strategy_init (TAO_POA *poa ACE_ENV_ARG_DECL);
+      virtual void strategy_init (TAO_Root_POA *poa ACE_ENV_ARG_DECL);
 
       virtual void strategy_cleanup(ACE_ENV_SINGLE_ARG_DECL);
 
@@ -153,7 +153,7 @@ namespace TAO
         const PortableServer::ObjectId &user_id);
 
     protected:
-      TAO_POA *poa_;
+      TAO_Root_POA *poa_;
     };
   }
 }

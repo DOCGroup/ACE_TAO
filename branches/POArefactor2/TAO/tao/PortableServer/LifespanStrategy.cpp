@@ -30,7 +30,7 @@ namespace TAO
 
     void
     LifespanStrategy::strategy_init (
-      TAO_POA *poa
+      TAO_Root_POA *poa
       ACE_ENV_ARG_DECL_NOT_USED)
     {
       poa_ = poa;

@@ -81,7 +81,7 @@ namespace TAO
             this->server_object_->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
 
-          TAO_POA *tao_poa = dynamic_cast<TAO_POA*>(poa.in());
+          TAO_Root_POA *tao_poa = dynamic_cast<TAO_Root_POA*>(poa.in());
 
           if (!tao_poa)
             {
@@ -116,7 +116,7 @@ namespace TAO
       if (CORBA::is_nil(imr_locator.in ()))
           return;
 
-      TAO_POA *root_poa = this->poa_->object_adapter ().root_poa ();
+      TAO_Root_POA *root_poa = this->poa_->object_adapter ().root_poa ();
       ACE_NEW_THROW_EX (this->server_object_,
                         ServerObject_i (this->poa_->orb_core ().orb (),
                                         root_poa),

@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_POA;
+class TAO_Root_POA;
 
 namespace TAO
 {
@@ -38,7 +38,7 @@ namespace TAO
     class TAO_PortableServer_Export POA_Guard
     {
     public:
-      POA_Guard (TAO_POA &poa
+      POA_Guard (TAO_Root_POA &poa
                  ACE_ENV_ARG_DECL,
                  int check_for_destruction = 1);
 

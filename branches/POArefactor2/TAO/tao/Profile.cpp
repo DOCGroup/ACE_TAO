@@ -503,7 +503,7 @@ TAO_Profile::policies (ACE_ENV_SINGLE_ARG_DECL)
                       buf = policy_value_seq[i].pvalue.get_buffer ();
 
                       TAO_InputCDR in_cdr (
-                        ACE_reinterpret_cast (const char*, buf),
+                        reinterpret_cast <const char*>  (buf),
                         policy_value_seq[i].pvalue.length ());
 
 
@@ -844,7 +844,7 @@ CORBA::Boolean
 TAO_Unknown_Profile::do_is_equivalent (const TAO_Profile* other_profile)
 {
   const TAO_Unknown_Profile * op =
-    ACE_dynamic_cast (const TAO_Unknown_Profile *, other_profile);
+    dynamic_cast <const TAO_Unknown_Profile *> (other_profile);
 
   return (CORBA::Boolean) (op == 0 ? 0 : this->body_ == op->body_);
 }

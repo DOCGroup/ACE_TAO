@@ -22,7 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // Forward declaration
-class TAO_POA;
+class TAO_Root_POA;
 class TAO_Object_Adapter;
 
 namespace TAO
@@ -48,17 +48,17 @@ namespace TAO
     public:
 
       /// Constructor.
-      Non_Servant_Upcall (TAO_POA &poa);
+      Non_Servant_Upcall (TAO_Root_POA &poa);
 
       /// Destructor.
       ~Non_Servant_Upcall (void);
 
-      TAO_POA &poa (void) const;
+      TAO_Root_POA &poa (void) const;
 
     protected:
 
       TAO_Object_Adapter &object_adapter_;
-      TAO_POA &poa_;
+      TAO_Root_POA &poa_;
       Non_Servant_Upcall *previous_;
     };
   }

@@ -2,7 +2,7 @@
 
 #include "tao/PortableServer/Non_Servant_Upcall.h"
 #include "tao/PortableServer/Object_Adapter.h"
-#include "tao/PortableServer/POA.h"
+#include "tao/PortableServer/Root_POA.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/PortableServer/Non_Servant_Upcall.inl"
@@ -16,7 +16,7 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    Non_Servant_Upcall::Non_Servant_Upcall (TAO_POA &poa)
+    Non_Servant_Upcall::Non_Servant_Upcall (TAO_Root_POA &poa)
       : object_adapter_ (poa.object_adapter ()),
         poa_ (poa),
         previous_ (0)

@@ -32,7 +32,7 @@ namespace TAO
     public:
       virtual ~ImplicitActivationStrategy (void);
 
-      virtual void strategy_init(TAO_POA *poa ACE_ENV_ARG_DECL);
+      virtual void strategy_init(TAO_Root_POA *poa ACE_ENV_ARG_DECL);
 
       virtual void strategy_cleanup(ACE_ENV_SINGLE_ARG_DECL);
 

@@ -30,7 +30,7 @@
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
-class TAO_POA;
+class TAO_Root_POA;
 class TAO_Active_Object_Map;
 struct TAO_Active_Object_Map_Entry;
 namespace TAO

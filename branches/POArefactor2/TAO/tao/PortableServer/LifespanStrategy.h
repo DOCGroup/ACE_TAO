@@ -37,7 +37,7 @@ namespace TAO
 
       virtual ~LifespanStrategy (void);
 
-      virtual void strategy_init(TAO_POA *poa ACE_ENV_ARG_DECL);
+      virtual void strategy_init(TAO_Root_POA *poa ACE_ENV_ARG_DECL);
 
       virtual void strategy_cleanup(ACE_ENV_SINGLE_ARG_DECL);
 
@@ -73,7 +73,7 @@ namespace TAO
       virtual void check_state (ACE_ENV_SINGLE_ARG_DECL) = 0;
 
     protected:
-      TAO_POA *poa_;
+      TAO_Root_POA *poa_;
     };
 
   } /* namespace Portable_Server */

@@ -66,9 +66,9 @@ TAO_POA_Manager::deactivate_i (CORBA::Boolean etherealize_objects,
                    PortableServer::POAManager::AdapterInactive))
 {
   // Is the <wait_for_completion> semantics for this thread correct?
-  TAO_POA::check_for_valid_wait_for_completions (this->object_adapter_.orb_core (),
-                                                 wait_for_completion
-                                                 ACE_ENV_ARG_PARAMETER);
+  TAO_Root_POA::check_for_valid_wait_for_completions (this->object_adapter_.orb_core (),
+                                                      wait_for_completion
+                                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // This operation changes the state of the POA manager to
@@ -116,7 +116,7 @@ TAO_POA_Manager::deactivate_i (CORBA::Boolean etherealize_objects,
        iterator != this->poa_collection_.end ();
        ++iterator)
     {
-      TAO_POA *poa = *iterator;
+      TAO_Root_POA *poa = *iterator;
       poa->deactivate_all_objects_i (etherealize_objects,
                                      wait_for_completion
                                      ACE_ENV_ARG_PARAMETER);
@@ -162,9 +162,9 @@ TAO_POA_Manager::hold_requests_i (CORBA::Boolean wait_for_completion
                    PortableServer::POAManager::AdapterInactive))
 {
   // Is the <wait_for_completion> semantics for this thread correct?
-  TAO_POA::check_for_valid_wait_for_completions (this->object_adapter_.orb_core (),
-                                                 wait_for_completion
-                                                 ACE_ENV_ARG_PARAMETER);
+  TAO_Root_POA::check_for_valid_wait_for_completions (this->object_adapter_.orb_core (),
+                                                      wait_for_completion
+                                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // This operation changes the state of the POA manager to
@@ -203,7 +203,7 @@ TAO_POA_Manager::hold_requests_i (CORBA::Boolean wait_for_completion
            iterator != this->poa_collection_.end ();
            ++iterator)
         {
-          TAO_POA *poa = *iterator;
+          TAO_Root_POA *poa = *iterator;
           poa->wait_for_completions (wait_for_completion
                                      ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
@@ -265,7 +265,7 @@ TAO_POA_Manager::discard_requests_i (CORBA::Boolean wait_for_completion
            iterator != this->poa_collection_.end ();
            ++iterator)
         {
-          TAO_POA *poa = *iterator;
+          TAO_Root_POA *poa = *iterator;
           poa->wait_for_completions (wait_for_completion
                                      ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
@@ -279,7 +279,7 @@ TAO_POA_Manager::discard_requests_i (CORBA::Boolean wait_for_completion
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 int
-TAO_POA_Manager::remove_poa (TAO_POA *poa)
+TAO_POA_Manager::remove_poa (TAO_Root_POA *poa)
 {
   int result = this->poa_collection_.remove (poa);
 
@@ -295,7 +295,7 @@ TAO_POA_Manager::remove_poa (TAO_POA *poa)
 }
 
 int
-TAO_POA_Manager::register_poa (TAO_POA *poa)
+TAO_POA_Manager::register_poa (TAO_Root_POA *poa)
 {
   return this->poa_collection_.insert (poa);
 }
@@ -373,12 +373,12 @@ TAO_POA_Manager::check_state (ACE_ENV_SINGLE_ARG_DECL)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Unbounded_Set<TAO_POA *>;
-template class ACE_Unbounded_Set_Iterator<TAO_POA *>;
+template class ACE_Unbounded_Set<TAO_Root_POA *>;
+template class ACE_Unbounded_Set_Iterator<TAO_Root_POA *>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Unbounded_Set<TAO_POA *>
-#pragma instantiate ACE_Unbounded_Set_Iterator<TAO_POA *>
+#pragma instantiate ACE_Unbounded_Set<TAO_Root_POA *>
+#pragma instantiate ACE_Unbounded_Set_Iterator<TAO_Root_POA *>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -41,7 +41,7 @@ ACE_Array_Base<PortableInterceptor::ObjectReferenceTemplate*>
     TAO_ObjectReferenceTemplate_Array;
 
 class TAO_IORInterceptor_List;
-class TAO_POA;
+class TAO_Root_POA;
 
 /**
  * @class TAO_IORInterceptor_Adapter
@@ -79,7 +79,7 @@ public:
    * IORInterceptor::components_established() once the former is
    * completed.
    */
-  virtual void establish_components (TAO_POA *poa ACE_ENV_ARG_DECL)
+  virtual void establish_components (TAO_Root_POA *poa ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
   /// Call the IORInterceptor::components_established() method on all

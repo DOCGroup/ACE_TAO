@@ -34,7 +34,7 @@ namespace TAO
 
       virtual ~IdUniquenessStrategyUnique (void);
 
-      virtual void strategy_init(TAO_POA *poa ACE_ENV_ARG_DECL);
+      virtual void strategy_init(TAO_Root_POA *poa ACE_ENV_ARG_DECL);
 
       virtual void strategy_cleanup(ACE_ENV_SINGLE_ARG_DECL);
 
@@ -45,7 +45,7 @@ namespace TAO
       virtual bool allow_multiple_activations (void) const;
 
     private:
-      TAO_POA* poa_;
+      TAO_Root_POA* poa_;
     };
 
     ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, IdUniquenessStrategyUnique)

@@ -30,7 +30,7 @@
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
-class TAO_POA;
+class TAO_Root_POA;
 
 namespace TAO
 {

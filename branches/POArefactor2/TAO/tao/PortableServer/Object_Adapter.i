@@ -73,7 +73,7 @@ TAO_Object_Adapter::find_servant (const TAO::ObjectKey &key,
 
 ACE_INLINE int
 TAO_Object_Adapter::find_persistent_poa (const poa_name &system_name,
-                                         TAO_POA *&poa
+                                         TAO_Root_POA *&poa
                                          ACE_ENV_ARG_DECL)
 {
   return this->hint_strategy_->find_persistent_poa (system_name,
@@ -86,7 +86,7 @@ TAO_Object_Adapter::find_poa (const poa_name &system_name,
                               CORBA::Boolean activate_it,
                               CORBA::Boolean root,
                               const TAO::Portable_Server::Temporary_Creation_Time &poa_creation_time,
-                              TAO_POA *&poa
+                              TAO_Root_POA *&poa
                               ACE_ENV_ARG_DECL)
 {
   if (activate_it)
@@ -106,7 +106,7 @@ TAO_Object_Adapter::find_poa (const poa_name &system_name,
 }
 
 ACE_INLINE int
-TAO_Object_Adapter::bind_transient_poa (TAO_POA *poa,
+TAO_Object_Adapter::bind_transient_poa (TAO_Root_POA *poa,
                                         poa_name_out system_name)
 {
   poa_name name;
@@ -125,7 +125,7 @@ TAO_Object_Adapter::bind_transient_poa (TAO_POA *poa,
 
 ACE_INLINE int
 TAO_Object_Adapter::bind_persistent_poa (const poa_name &folded_name,
-                                         TAO_POA *poa,
+                                         TAO_Root_POA *poa,
                                          poa_name_out system_name)
 {
   return this->hint_strategy_->bind_persistent_poa (folded_name,
@@ -147,7 +147,7 @@ TAO_Object_Adapter::unbind_persistent_poa (const poa_name &folded_name,
                                                       system_name);
 }
 
-ACE_INLINE TAO_POA *
+ACE_INLINE TAO_Root_POA *
 TAO_Object_Adapter::root_poa (void) const
 {
   return this->root_;

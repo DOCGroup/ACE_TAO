@@ -40,7 +40,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_POA;
+class TAO_Root_POA;
 class TAO_POA_Manager;
 class TAO_TSS_Resources;
 class TAO_Transport;
@@ -69,7 +69,7 @@ class TAO_PortableServer_Export TAO_Object_Adapter
 {
 public:
 
-  friend class TAO_POA;
+  friend class TAO_Root_POA;
 
   typedef PortableServer::ObjectId poa_name;
   typedef PortableServer::ObjectId_var poa_name_var;
@@ -98,19 +98,19 @@ public:
                 CORBA::Boolean activate_it,
                 CORBA::Boolean root,
                 const TAO::Portable_Server::Temporary_Creation_Time &poa_creation_time,
-                TAO_POA *&poa
+                TAO_Root_POA *&poa
                 ACE_ENV_ARG_DECL);
 
   int bind_poa (const poa_name &folded_name,
-                TAO_POA *poa,
+                TAO_Root_POA *poa,
                 poa_name_out system_name);
 
-  int unbind_poa (TAO_POA *poa,
+  int unbind_poa (TAO_Root_POA *poa,
                   const poa_name &folded_name,
                   const poa_name &system_name);
 
   int activate_poa (const poa_name &folded_name,
-                    TAO_POA *&poa
+                    TAO_Root_POA *&poa
                     ACE_ENV_ARG_DECL);
 
   ACE_Lock &lock (void);
@@ -120,7 +120,7 @@ public:
   ACE_Reverse_Lock<ACE_Lock> &reverse_lock (void);
 
   /// Access the root poa.
-  TAO_POA *root_poa (void) const;
+  TAO_Root_POA *root_poa (void) const;
 
   /// Access to ORB Core.
   TAO_ORB_Core &orb_core (void) const;
@@ -187,24 +187,24 @@ protected:
 
   void locate_poa (const TAO::ObjectKey &key,
                    PortableServer::ObjectId &id,
-                   TAO_POA *&poa
+                   TAO_Root_POA *&poa
                    ACE_ENV_ARG_DECL);
 
   int find_transient_poa (const poa_name &system_name,
                           CORBA::Boolean root,
                           const TAO::Portable_Server::Temporary_Creation_Time &poa_creation_time,
-                          TAO_POA *&poa
+                          TAO_Root_POA *&poa
                           ACE_ENV_ARG_DECL);
 
   int find_persistent_poa (const poa_name &system_name,
-                           TAO_POA *&poa
+                           TAO_Root_POA *&poa
                            ACE_ENV_ARG_DECL);
 
-  int bind_transient_poa (TAO_POA *poa,
+  int bind_transient_poa (TAO_Root_POA *poa,
                           poa_name_out system_name);
 
   int bind_persistent_poa (const poa_name &folded_name,
-                           TAO_POA *poa,
+                           TAO_Root_POA *poa,
                            poa_name_out system_name);
 
   int unbind_transient_poa (const poa_name &system_name);
@@ -234,11 +234,11 @@ public:
     virtual ~Hint_Strategy (void);
 
     virtual int find_persistent_poa (const poa_name &system_name,
-                                     TAO_POA *&poa
+                                     TAO_Root_POA *&poa
                                      ACE_ENV_ARG_DECL) = 0;
 
     virtual int bind_persistent_poa (const poa_name &folded_name,
-                                     TAO_POA *poa,
+                                     TAO_Root_POA *poa,
                                      poa_name_out system_name) = 0;
 
     virtual int unbind_persistent_poa (const poa_name &folded_name,
@@ -269,11 +269,11 @@ public:
     virtual ~Active_Hint_Strategy (void);
 
     virtual int find_persistent_poa (const poa_name &system_name,
-                                     TAO_POA *&poa
+                                     TAO_Root_POA *&poa
                                      ACE_ENV_ARG_DECL);
 
     virtual int bind_persistent_poa (const poa_name &folded_name,
-                                     TAO_POA *poa,
+                                     TAO_Root_POA *poa,
                                      poa_name_out system_name);
 
     virtual int unbind_persistent_poa (const poa_name &folded_name,
@@ -283,7 +283,7 @@ public:
 
     typedef ACE_Active_Map_Manager_Adapter<
     poa_name,
-      TAO_POA *,
+      TAO_Root_POA *,
       TAO_Preserve_Original_Key_Adapter> persistent_poa_system_map;
 
     persistent_poa_system_map persistent_poa_system_map_;
@@ -307,11 +307,11 @@ public:
     virtual ~No_Hint_Strategy (void);
 
     virtual int find_persistent_poa (const poa_name &system_name,
-                                     TAO_POA *&poa
+                                     TAO_Root_POA *&poa
                                      ACE_ENV_ARG_DECL);
 
     virtual int bind_persistent_poa (const poa_name &folded_name,
-                                     TAO_POA *poa,
+                                     TAO_Root_POA *poa,
                                      poa_name_out system_name);
 
     virtual int unbind_persistent_poa (const poa_name &folded_name,
@@ -328,13 +328,13 @@ protected:
   /// Base class of the id map.
   typedef ACE_Map<
   poa_name,
-    TAO_POA *> transient_poa_map;
+    TAO_Root_POA *> transient_poa_map;
 
 #if (TAO_HAS_MINIMUM_POA_MAPS == 0)
   /// Id hash map.
   typedef ACE_Hash_Map_Manager_Ex_Adapter<
   poa_name,
-    TAO_POA *,
+    TAO_Root_POA *,
     TAO_ObjectId_Hash,
     ACE_Equal_To<poa_name>,
     TAO_Incremental_Key_Generator> transient_poa_hash_map;
@@ -344,25 +344,25 @@ protected:
   /// Id linear map.
   typedef ACE_Map_Manager_Adapter<
   poa_name,
-    TAO_POA *,
+    TAO_Root_POA *,
     TAO_Incremental_Key_Generator> transient_poa_linear_map;
 #endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
   /// Id active map.
   typedef ACE_Active_Map_Manager_Adapter<
   poa_name,
-    TAO_POA *,
+    TAO_Root_POA *,
     TAO_Ignore_Original_Key_Adapter> transient_poa_active_map;
 
   /// Base class of the name map.
   typedef ACE_Map<
   poa_name,
-    TAO_POA *> persistent_poa_name_map;
+    TAO_Root_POA *> persistent_poa_name_map;
 
   /// Id hash map.
   typedef ACE_Hash_Map_Manager_Ex_Adapter<
   poa_name,
-    TAO_POA *,
+    TAO_Root_POA *,
     TAO_ObjectId_Hash,
     ACE_Equal_To<PortableServer::ObjectId>,
     ACE_Noop_Key_Generator<poa_name> > persistent_poa_name_hash_map;
@@ -371,7 +371,7 @@ protected:
   /// Id linear map.
   typedef ACE_Map_Manager_Adapter<
   poa_name,
-    TAO_POA *,
+    TAO_Root_POA *,
     ACE_Noop_Key_Generator<poa_name> > persistent_poa_name_linear_map;
 #endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
@@ -487,7 +487,7 @@ private:
   ACE_thread_t non_servant_upcall_thread_;
 
   /// The Root POA
-  TAO_POA *root_;
+  TAO_Root_POA *root_;
 
   /// The default validator and the beginning of the chain of
   /// policy validators.

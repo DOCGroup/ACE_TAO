@@ -84,7 +84,7 @@ TAO_IORInterceptor_Adapter_Impl::interceptor_list (void)
 
 void
 TAO_IORInterceptor_Adapter_Impl::establish_components (
-  TAO_POA* poa
+  TAO_Root_POA* poa
   ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {

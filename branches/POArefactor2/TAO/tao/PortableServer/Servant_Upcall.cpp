@@ -234,7 +234,7 @@ namespace TAO
     {
     }
 
-    TAO_POA *
+    TAO_Root_POA *
     Servant_Upcall::lookup_POA (const TAO::ObjectKey &key
                                                     ACE_ENV_ARG_DECL)
     {

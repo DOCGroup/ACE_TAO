@@ -23,7 +23,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_POA;
+class TAO_Root_POA;
 
 namespace TAO
 {
@@ -33,7 +33,7 @@ namespace TAO
       : public virtual ACE_Service_Object
     {
     public:
-      virtual void strategy_init(TAO_POA *poa ACE_ENV_ARG_DECL) = 0;
+      virtual void strategy_init(TAO_Root_POA *poa ACE_ENV_ARG_DECL) = 0;
 
       virtual void strategy_cleanup(ACE_ENV_SINGLE_ARG_DECL) = 0;
 

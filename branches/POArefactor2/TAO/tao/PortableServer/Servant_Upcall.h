@@ -30,7 +30,7 @@
 #endif /* _MSC_VER */
 
 // Forward declaration
-class TAO_POA;
+class TAO_Root_POA;
 class TAO_ServerRequest;
 class TAO_Object_Adapter;
 struct TAO_Active_Object_Map_Entry;
@@ -110,11 +110,11 @@ namespace TAO
       void post_invoke (void);
 
       /// Locate POA.
-      TAO_POA *lookup_POA (const TAO::ObjectKey &key
+      TAO_Root_POA *lookup_POA (const TAO::ObjectKey &key
                            ACE_ENV_ARG_DECL);
 
       /// POA accessor.
-      TAO_POA &poa (void) const;
+      TAO_Root_POA &poa (void) const;
 
       /// Object Adapter accessor.
       TAO_Object_Adapter &object_adapter (void) const;
@@ -195,7 +195,7 @@ namespace TAO
 
       TAO_Object_Adapter *object_adapter_;
 
-      TAO_POA *poa_;
+      TAO_Root_POA *poa_;
 
       PortableServer::Servant servant_;
 

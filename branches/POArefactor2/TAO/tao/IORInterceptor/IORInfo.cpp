@@ -1,5 +1,5 @@
 #include "IORInfo.h"
-#include "tao/PortableServer/POA.h"
+#include "tao/PortableServer/Root_POA.h"
 
 #include "tao/PolicyC.h"
 #include "tao/IOPC.h"
@@ -15,7 +15,7 @@ ACE_RCSID (IORInterceptor,
 #endif /* __ACE_INLINE__ */
 
 
-TAO_IORInfo::TAO_IORInfo (TAO_POA *poa)
+TAO_IORInfo::TAO_IORInfo (TAO_Root_POA *poa)
   : poa_ (poa),
     components_established_ (0)
 {

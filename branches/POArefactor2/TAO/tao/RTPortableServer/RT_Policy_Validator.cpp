@@ -86,8 +86,8 @@ TAO_POA_RT_Policy_Validator::validate_server_protocol (TAO_Policy_Set &policies
   ACE_CHECK;
 
   TAO_ServerProtocolPolicy *server_protocol =
-    ACE_dynamic_cast (TAO_ServerProtocolPolicy *,
-                      server_protocol_policy.in ());
+    dynamic_cast <TAO_ServerProtocolPolicy *>
+                      (server_protocol_policy.in ());
 
   RTCORBA::ProtocolList &protocols =
     server_protocol->protocols_rep ();
@@ -471,8 +471,7 @@ TAO_POA_RT_Policy_Validator::extract_thread_pool (TAO_ORB_Core &orb_core,
   ACE_CHECK_RETURN (0);
 
   TAO_RT_ORB *tao_rt_orb =
-    ACE_dynamic_cast (TAO_RT_ORB *,
-                      rt_orb.in ());
+    dynamic_cast <TAO_RT_ORB *> (rt_orb.in ());
 
   TAO_Thread_Pool_Manager &tp_manager =
     tao_rt_orb->tp_manager ();

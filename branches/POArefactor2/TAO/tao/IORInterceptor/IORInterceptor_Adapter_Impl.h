@@ -27,7 +27,7 @@
 #include "ace/Service_Config.h"
 #include "IORInterceptor_List.h"
 
-class TAO_POA;
+class TAO_Root_POA;
 
 /**
  * @class TAO_IORInterceptor_Adapter_Impl
@@ -54,7 +54,7 @@ public:
   virtual TAO_IORInterceptor_List *interceptor_list (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void establish_components (TAO_POA *poa ACE_ENV_ARG_DECL)
+  virtual void establish_components (TAO_Root_POA *poa ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Call the IORInterceptor::components_established() method on all
