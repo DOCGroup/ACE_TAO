@@ -291,7 +291,7 @@ TAO::TypeCode::Union<StringType,
 template <typename StringType, class CaseArrayType, class RefCountPolicy>
 char const *
 TAO::TypeCode::Union<StringType, CaseArrayType, RefCountPolicy>::id_i (
-  ACE_ENV_SINGLE_ARG_DECL) const
+  ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -301,7 +301,7 @@ TAO::TypeCode::Union<StringType, CaseArrayType, RefCountPolicy>::id_i (
 template <typename StringType, class CaseArrayType, class RefCountPolicy>
 char const *
 TAO::TypeCode::Union<StringType, CaseArrayType, RefCountPolicy>::name_i (
-  ACE_ENV_SINGLE_ARG_DECL) const
+  ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -378,7 +378,7 @@ CORBA::Long
 TAO::TypeCode::Union<StringType,
                      CaseArrayType,
                      RefCountPolicy>::default_index_i (
-  ACE_ENV_SINGLE_ARG_DECL) const
+  ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
 {
   return this->default_index_;
 }

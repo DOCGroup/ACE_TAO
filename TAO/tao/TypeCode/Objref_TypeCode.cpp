@@ -12,7 +12,7 @@
 
 template <typename StringType, CORBA::TCKind Kind, class RefCountPolicy>
 bool
-TAO::TypeCode::Objref<StringType, RefCountPolicy>::tao_marshal (
+TAO::TypeCode::Objref<StringType, CORBA::TCKind, RefCountPolicy>::tao_marshal (
   TAO_OutputCDR &) const
 {
   // A tk_objref TypeCode has a "complex" parameter list type (see
@@ -29,21 +29,21 @@ TAO::TypeCode::Objref<StringType, RefCountPolicy>::tao_marshal (
 
 template <typename StringType, CORBA::TCKind Kind, class RefCountPolicy>
 void
-TAO::TypeCode::Objref<StringType, RefCountPolicy>::tao_duplicate (void)
+TAO::TypeCode::Objref<StringType, Kind, RefCountPolicy>::tao_duplicate (void)
 {
   this->RefCountPolicy::add_ref (void);
 }
 
 template <typename StringType, CORBA::TCKind Kind, class RefCountPolicy>
 void
-TAO::TypeCode::Objref<StringType, RefCountPolicy>::tao_release (void)
+TAO::TypeCode::Objref<StringType, Kind, RefCountPolicy>::tao_release (void)
 {
   this->RefCountPolicy::remove_ref (void);
 }
 
 template <typename StringType, CORBA::TCKind Kind, class RefCountPolicy>
 CORBA::Boolean
-TAO::TypeCode::Objref<StringType, RefCountPolicy>::equal_i (
+TAO::TypeCode::Objref<StringType, Kind, RefCountPolicy>::equal_i (
   CORBA::TypeCode_ptr /* tc */
   ACE_ENV_ARG_DECL_NOT_USED) const
 {
@@ -55,7 +55,7 @@ TAO::TypeCode::Objref<StringType, RefCountPolicy>::equal_i (
 
 template <typename StringType, CORBA::TCKind Kind, class RefCountPolicy>
 CORBA::Boolean
-TAO::TypeCode::Objref<StringType, RefCountPolicy>::equivalent_i (
+TAO::TypeCode::Objref<StringType, Kind, RefCountPolicy>::equivalent_i (
   CORBA::TypeCode_ptr tc
   ACE_ENV_ARG_DECL) const
 {
@@ -85,7 +85,7 @@ TAO::TypeCode::Objref<StringType, RefCountPolicy>::equivalent_i (
 
 template <typename StringType, CORBA::TCKind Kind, class RefCountPolicy>
 CORBA::TCKind
-TAO::TypeCode::Objref<StringType, RefCountPolicy>::kind_i (
+TAO::TypeCode::Objref<StringType, Kind, RefCountPolicy>::kind_i (
   ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
 {
   return Objref_Traits<Kind>::kind;
@@ -93,7 +93,7 @@ TAO::TypeCode::Objref<StringType, RefCountPolicy>::kind_i (
 
 template <typename StringType, CORBA::TCKind Kind, class RefCountPolicy>
 CORBA::TypeCode_ptr
-TAO::TypeCode::Objref<StringType, RefCountPolicy>::get_compact_typecode_i (
+TAO::TypeCode::Objref<StringType, Kind, RefCountPolicy>::get_compact_typecode_i (
   ACE_ENV_SINGLE_ARG_DECL) const
 {
   TAO_TypeCodeFactory_Adapter * adapter =
@@ -112,5 +112,27 @@ TAO::TypeCode::Objref<StringType, RefCountPolicy>::get_compact_typecode_i (
                                                   this->attributes_.id (),
                                                   ACE_ENV_ARG_PARAMETER);
 }
+
+
+template <typename StringType, CORBA::TCKind Kind, class RefCountPolicy>
+char const *
+TAO::TypeCode::Objref<StringType, Kind, RefCountPolicy>::id_i (
+  ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
+{
+  // Ownership is retained by the TypeCode, as required by the C++
+  // mapping.
+  return this->attributes_.id ();
+}
+
+template <typename StringType, CORBA::TCKind Kind, class RefCountPolicy>
+char const *
+TAO::TypeCode::Objref<StringType, Kind, RefCountPolicy>::name_i (
+  ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
+{
+  // Ownership is retained by the TypeCode, as required by the C++
+  // mapping.
+  return this->attributes_.name ();
+}
+
 
 #endif  /*  TAO_OBJREF_TYPECODE_CPP */
