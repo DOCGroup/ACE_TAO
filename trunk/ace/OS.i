@@ -1102,8 +1102,16 @@ ACE_OS::cond_init (ACE_cond_t *cv, int type, LPCTSTR name, void *arg)
 		     int, -1);
 #elif defined (ACE_HAS_WTHREADS) || defined (VXWORKS)
   cv->waiters_ = 0;
+  cv->was_broadcast_ = 0;
 
-  return ACE_OS::sema_init (&cv->sema_, 0, type, name, arg);
+  int result = 0;
+  if (ACE_OS::sema_init (&cv->sema_, 0, type, name, arg) == -1)
+    result = -1;
+  else if (ACE_OS::mutex_init (&cs->waiters_lock_) = -1)
+    result = -1;
+  else if (ACE_OS::event_init (&cv->waiters_done_) == -1)
+    result = -1;
+  return result;
 #endif /* ACE_HAS_STHREADS */
 #else
   cv = cv;
@@ -1131,7 +1139,7 @@ ACE_OS::cond_signal (ACE_cond_t *cv)
   if (cv->waiters_ > 0)
     return ACE_OS::sema_post (&cv->sema_);
   else
-    return 0; 
+    return 0; // No-op
 #endif /* ACE_HAS_STHREADS */
 #else
   cv = cv;
@@ -1155,29 +1163,28 @@ ACE_OS::cond_broadcast (ACE_cond_t *cv)
 #elif defined (ACE_HAS_WTHREADS) || defined (VXWORKS)
   // The <external_mutex> must be locked before this call is made.
 
-  int result = 0;
-  int error = 0;
+  if (this->waiters_ == 0)
+    return 0; // No-op
+  else // We are broadcasting, even if there is just one waiter...
+    {
+      int result = 0;
+      // Record the fact that we are broadcasting.  This helps the
+      // cond_wait() method know how to optimize itself.
+      this->was_broadcast_ = 1;
 
-  // Keep track of the number of waiters.
-  // cv->signaled_waiters_ = cv->waiters_;
-  // ACE_OS::sema_init (cv->signaled_counter_, cv->signaled_waiters_);
+      // Wake up all the waiters.
 
-  // Wake up all the waiters.
-
-  for (int i = cv->waiters_; i > 0; i--)
-    if (ACE_OS::sema_post (&cv->sema_) != 0)
-      {
-	error = errno;
+      if (ACE_OS::sema_post (&sv->sema_, this->waiters) == -1)
 	result = -1;
-	break;
-      }
 
-  // Wait for all the awakened threads to acquire their part of the
-  // counting semaphore. 
-  // ::WaitForSingleObject (cv->waiters_done_, INFINITE);
-  // ACE_OS::sema_destroy (cv->signaled_counter_);
-  errno = error;
-  return result;
+      // Wait for all the awakened threads to acquire their part of the
+      // counting semaphore. 
+      else if (ACE_OS::event_wait (&cv->waiters_done_) == -1)
+	result = -1;
+
+      this->was_broadcast_ = 0;
+      return result;
+    }
 #endif /* ACE_HAS_STHREADS */
 #else
   cv = cv;
@@ -1198,38 +1205,58 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::cond_wait (cv, external_mutex), ace_result_), 
 		     int, -1);
 #elif defined (ACE_HAS_WTHREADS) || defined (VXWORKS)
-  // It's ok to increment this because the <external_mutex> is locked.
+  // It's ok to increment this because the <external_mutex> must be
+  // locked by the caller.
   cv->waiters_++;
-
-  if (ACE_OS::mutex_unlock (external_mutex) != 0)
-    return -1;
 
   int result = 0;
   int error = 0;
 
-  // Wait to be awakened by a ACE_OS::signal() or ACE_OS::broadcast().
-  if (ACE_OS::sema_wait (&cv->sema_) != 0)
+#if defined (ACE_HAS_SIGNAL_OBJECT_AND_WAIT)
+  // This call will automatically release the mutex and wait on the semaphore.
+  result = ::SignalObjectAndWait (*external_mutex, cv->sema_, INFINITE, FALSE);
+#else
+  // We keep the lock held just long enough to increment the count of
+  // waiters by one.  Note that we can't keep it held across the call
+  // to ACE_OS::sema_wait() since that will deadlock other calls to
+  // ACE_OS::cond_signal().
+  if (ACE_OS::mutex_unlock (external_mutex) != 0)
+    return -1;
+
+  // Wait to be awakened by a ACE_OS::cond_signal() or
+  // ACE_OS::cond_broadcast().
+  result = ::WaitForSingleObject (cv->sema_, INFINITE);
+#endif /* ACE_HAS_SIGNAL_OBJECT_AND_WAIT */
+  if (result != WAIT_OBJECT_0)
+    // This is a hack, we need to find an appropriate mapping...
+    error = result == WAIT_TIMEOUT ? ETIME : ::GetLastError ();
+  else 
     {
-      result = -1;
-      error = errno;
+      // If we are broadcasting, then we need to be smarter about
+      // locking since there can now be multiple threadsd in the
+      // crtical section.  If we are signaling, however, we don't have
+      // to worry since there will just be 1 thread here.
+      if (cv->was_broadcast_)
+	{
+	  if (ACE_OS::mutex_lock (cv->waiters_lock_) != -1)
+	    {
+	      // By making the waiter responsible for decrementing its count we
+	      // don't have to worry about having an internal mutex.  Thanks to
+	      // Karlheinz for recognizing this optimization.
+	      cv->waiters_--;
+	      // Release the signaler/broadcaster if we're the last waiter.	
+	      if (cv->waiters_ == 0)
+		::SetEvent (cv->waiters_done_);
+	      ACE_OS::mutex_unlock (cv->internal_mutex_);
+	    }
+	}
+      else
+	cv->waiters_--;
     }
-
-  // ACE_OS::sema_wait (cv->signaled_counter_);
-  // ACE_OS::mutex_lock (cv->internal_mutex_);
-  // cv->signaled_waiters_--;
-  // Release the signaler.
-  // if (cv->signaled_waiters_ == 0)
-  //   ::SetEvent (cv->waiters_done_);
-  // ACE_OS::mutex_unlock (cv->internal_mutex_);
-
-  // We must always regain the mutex, even when errors occur so that
-  // we can atomically decrement the count of the waiters.
+  // We must always regain the external mutex, even when errors
+  // occur because that's the guarantee that we give to our
+  // callers.
   ACE_OS::mutex_lock (external_mutex);
-
-  // By making the waiter responsible for decrementing its count we
-  // don't have to worry about having an internal mutex.  Thanks to
-  // Karlheinz for recognizing this optimization.
-  cv->waiters_--;
 
   // Reset errno in case mutex_lock() also fails...
   errno = error;
@@ -1248,55 +1275,81 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   // ACE_TRACE ("ACE_OS::cond_timedwait");
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_WTHREADS)
-  // Note that it is ok to increment this because the <external_mutex>
-  // is locked!
+
+  // Handle the easy case first.
+  if (timeout == 0)
+    return ACE_OS::cond_wait (cv, external_mutex);
+
+  // It's ok to increment this because the <external_mutex> must be
+  // locked by the caller.
   cv->waiters_++;
+
+  int result = 0;
+  int error = 0;
+  int msec_timeout;
+
+  if (timeout->sec () == 0 && timeout->usec () == 0)
+    msec_timeout = 0; // Do a "poll."
+  else
+    {
+      // Note that we must convert between absolute time (which is
+      // passed as a parameter) and relative time (which is what
+      // WaitForSingleObjects() expects).
+      ACE_Time_Value relative_time (*timeout - ACE_OS::gettimeofday ());
+      msec_timeout = relative_time.msec ();
+    }
   
+#if defined (ACE_HAS_SIGNAL_OBJECT_AND_WAIT)
+  // This call will automatically release the mutex and wait on the semaphore.
+  result = ::SignalObjectAndWait (*external_mutex, cv->sema_, msec_timeout, FALSE);
+#else
   // We keep the lock held just long enough to increment the count of
   // waiters by one.  Note that we can't keep it held across the call
   // to WaitForSingleObject since that will deadlock other calls to
   // ACE_OS::cond_signal().
   if (ACE_OS::mutex_unlock (external_mutex) != 0)
     return -1;
-  
-  DWORD result;
-  
-  if (timeout == 0)
-    // Wait forever.
-    result = ::WaitForSingleObject (cv->sema_, INFINITE);
-  else if (timeout->sec () == 0 && timeout->usec () == 0)
-    // Do a "poll".
-    result = ::WaitForSingleObject (cv->sema_, 0);
-  else
+
+  // Wait to be awakened by a ACE_OS::signal() or ACE_OS::broadcast().
+  result = ::WaitForSingleObject (cv->sema_, msec_timeout);
+#endif /* ACE_HAS_SIGNAL_OBJECT_AND_WAIT */
+  if (result != WAIT_OBJECT_0)
+    // This is a hack, we need to find an appropriate mapping...
+    error = result == WAIT_TIMEOUT ? ETIME : ::GetLastError ();
+  else 
     {
-      // Wait for upto <relative_time> number of milliseconds.  Note
-      // that we must convert between absolute time (which is passed
-      // as a parameter) and relative time (which is what
-      // WaitForSingleObjects() expects).
-      ACE_Time_Value relative_time (*timeout - ACE_OS::gettimeofday ());
-      result = ::WaitForSingleObject (cv->sema_, relative_time.msec ());
+      // If we are broadcasting, then we need to be smarter about
+      // locking since there can now be multiple threadsd in the
+      // crtical section.  If we are signaling, however, we don't have
+      // to worry since there will just be 1 thread here.
+      if (cv->was_broadcast_)
+	{
+	  if (ACE_OS::mutex_lock (cv->waiters_lock_) != -1)
+	    {
+	      // By making the waiter responsible for decrementing its count we
+	      // don't have to worry about having an internal mutex.  Thanks to
+	      // Karlheinz for recognizing this optimization.
+	      cv->waiters_--;
+	      // Release the signaler/broadcaster if we're the last waiter.	
+	      if (cv->waiters_ == 0)
+		::SetEvent (cv->waiters_done_);
+	      ACE_OS::mutex_unlock (cv->internal_mutex_);
+	    }
+	}
+      else
+	cv->waiters_--;
     }
-  
-  // Reacquire the lock before we decrement the count of waiters.
+  // We must always regain the external mutex, even when errors
+  // occur because that's the guarantee that we give to our
+  // callers.
   ACE_OS::mutex_lock (external_mutex);
-  
-  cv->waiters_--;
-
-  if (result == WAIT_OBJECT_0)
-    return 0;
-  else
-    {
-      errno = result == WAIT_TIMEOUT ? ETIME : ::GetLastError ();
-      // This is a hack, we need to find an appropriate mapping...
-      return -1;
-    }
-
+  errno = error;
+  return result;
 #elif defined (VXWORKS)
   // POSIX semaphores don't have a timed wait.  Should implement conds with
   // VxWorks semaphores instead, they do have a timed wait.  But all of the
   // other cond operations would have to be modified.
   ACE_NOTSUP_RETURN (-1);
-
 #else /* PTHREADS or STHREADS or DCETHREADS */
   int result;
   timestruc_t ts = *timeout; // Calls ACE_Time_Value::operator timestruc_t().
@@ -2899,6 +2952,24 @@ ACE_OS::sema_post (ACE_sema_t *s)
 #else
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_POSIX_SEM */
+}
+
+ACE_INLINE int 
+ACE_OS::sema_post (ACE_sema_t *s, size_t release_count)
+{
+#if defined (ACE_WIN32)
+  // Win32 supports this natively.
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::ReleaseSemaphore (*, release_count, 0),
+				       ace_result_),
+		     int, -1);
+#else
+  // On POSIX platforms we need to emulate this ourselves.
+  for (size_t i = 0; i < release_count; i++)
+    if (ACE_OS::sema_post (s) == -1)
+      return -1;
+
+  return 0;
+#endif /* ACE_WIN32 */  
 }
 
 ACE_INLINE int

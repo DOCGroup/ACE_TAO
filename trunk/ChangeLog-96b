@@ -1,3 +1,23 @@
+Wed Dec 18 06:37:22 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.i (cond_wait): Added the new algorithm for condition
+ 	  variable emulation on Win32. (and VxWorks).  This should fix the
+ 	  nasty problems we had with earlier version (which weren't
+ 	  "fair").  Thanks to James Mansion, Karlheinz, Detlef, and Irfan
+ 	  for helping with this.
+
+	* ace/Registry.h: Removed the "ACE_TURN_NOMINMAX_OFF" stuff
+	  in order to simplify the code.  Thanks to Irfan for this.
+
+	* ace/OS.i (sema_post): Added a new overloaded version of
+ 	  ACE_OS::sema_post(), which takes a "release count."  This is the
+ 	  number of times to release the semaphore.  Note that Win32
+ 	  supports this natively, whereas on POSIX we need to loop...
+
+	* ace/Proactor.cpp (handle_events): Changed the Proactor logic so
+ 	  that it will correctly propagate any errors that occur to the
+ 	  handle_{input,output}_complete callback.
+
 Tue Dec 17 20:56:56 1996  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.{h,i}: on VxWorks: implemented ACE_OS::gethostbyname (),
