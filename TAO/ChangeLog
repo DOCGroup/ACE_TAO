@@ -1,3 +1,10 @@
+Tue Oct  8 09:44:43 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Makefile (LDLIBS):
+
+	  No need to link the TAO_Messaging library.  Addresses a
+	  link-time error in builds that disable CORBA Messaging support.
+
 Tue Oct  8 09:36:38 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Makefile (MKLIST):
