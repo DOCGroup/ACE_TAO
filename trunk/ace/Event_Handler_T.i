@@ -66,7 +66,7 @@ ACE_Event_Handler_T<T>::handle_close (ACE_HANDLE fd, ACE_Reactor_Mask close_mask
 }
 
 template<class T> ACE_INLINE int
-ACE_Event_Handler_T<T>::handle_signal (ACE_HANDLE signum, siginfo_t *s, ucontext_t *u)
+ACE_Event_Handler_T<T>::handle_signal (int signum, siginfo_t *s, ucontext_t *u)
 {
   ACE_TRACE ("ACE_Event_Handler_T<T>::handle_signal");
   return this->sig_handler_ == 0 ? 0 : (this->op_handler_->*sig_handler_) (signum, s, u);

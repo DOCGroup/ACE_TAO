@@ -1612,7 +1612,7 @@ ACE_WFMO_Reactor::ok_to_wait (ACE_Time_Value *max_wait_time,
   int timeout = max_wait_time == 0 ? INFINITE : max_wait_time->msec ();
 
   // Atomically wait for both the <lock_> and <ok_to_wait_> event
-  int result = 0;
+  DWORD result = 0;
   while (1)
     {
 #if defined (ACE_HAS_PHARLAP)
@@ -1721,7 +1721,7 @@ ACE_WFMO_Reactor::dispatch (int wait_status)
   // Expire timers
   handlers_dispatched += this->expire_timers ();
 
-  switch (wait_status)
+  switch ((DWORD)wait_status)
     {
     case WAIT_FAILED: // Failure.
       ACE_OS::set_errno_to_last_error ();
@@ -1763,8 +1763,8 @@ ACE_WFMO_Reactor::dispatch_handles (size_t wait_status)
        number_of_handlers_dispatched++)
     {
       bool ok = (
-#if ! (defined(__BORLANDC__) && (__BORLANDC__ >= 0x0530))
-                 // wait_status is unsigned in Borland;
+#if ! (defined(__BORLANDC__) && (__BORLANDC__ >= 0x0530)) && !defined (ghs)
+                 // wait_status is unsigned in Borland and Green Hills;
                  // This >= is always true, with a warning.
                  wait_status >= WAIT_OBJECT_0 &&
 #endif

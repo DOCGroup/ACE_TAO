@@ -809,8 +809,15 @@ ACE_Process_Manager::wait (pid_t pid,
         pid = 0;
       else
         {
+          // Green Hills produces a warning that result >= WAIT_OBJECT_0 is
+          // a pointless comparison because WAIT_OBJECT_0 is zero and DWORD is
+          // unsigned long, so this test is skipped for Green Hills.
+# if defined (ghs)
+          ACE_ASSERT (result < WAIT_OBJECT_0 + current_count_);
+# else
           ACE_ASSERT (result >= WAIT_OBJECT_0
                       && result < WAIT_OBJECT_0 + current_count_);
+# endif
 
           idx = this->find_proc (handles[result - WAIT_OBJECT_0]);
 

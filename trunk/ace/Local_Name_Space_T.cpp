@@ -89,7 +89,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::remap (EXCEPTION_POINTERS *ep)
   // ACE_MMap_Memory_Pool.
   if (this->allocator_->alloc ().memory_pool ().remap (addr) == -1)
     // Kick it upstairs...
-    return (DWORD) EXCEPTION_CONTINUE_SEARCH;
+    return EXCEPTION_CONTINUE_SEARCH;
 
 #if __X86__
   // This is 80x86-specific.
@@ -100,7 +100,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::remap (EXCEPTION_POINTERS *ep)
   ep->ContextRecord->IntT5 = ep->ContextRecord->IntA0 + 3;
 #endif /* __X86__ */
     // Resume execution at the original point of "failure."
-  return (DWORD) EXCEPTION_CONTINUE_EXECUTION;
+  return EXCEPTION_CONTINUE_EXECUTION;
 }
 #endif /* ACE_WIN32 */
 

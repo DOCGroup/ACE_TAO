@@ -951,8 +951,11 @@ ACE_OS::gettimeofday (void)
 {
   // ACE_OS_TRACE ("ACE_OS::gettimeofday");
 
+#if !defined (ACE_HAS_WINCE)&& !defined (ACE_WIN32)
   timeval tv;
   int result = 0;
+#endif // !defined (ACE_HAS_WINCE)&& !defined (ACE_WIN32)
+
 #if (0)
   struct timespec ts;
 
@@ -1001,11 +1004,13 @@ ACE_OS::gettimeofday (void)
 # else
   ACE_OSCALL (::gettimeofday (&tv), int, -1, result);
 # endif /* ACE_HAS_SVR4_GETTIMEOFDAY */
-#endif /* ACE_HAS_PACE */
+#endif /* 0 */
+#if !defined (ACE_HAS_WINCE)&& !defined (ACE_WIN32)
   if (result == -1)
     return -1;
   else
     return ACE_Time_Value (tv);
+#endif // !defined (ACE_HAS_WINCE)&& !defined (ACE_WIN32)
 }
 
 ACE_INLINE int
@@ -3597,8 +3602,8 @@ ACE_OS::sema_post (ACE_sema_t *s, size_t release_count)
   // Win32 supports this natively.
 #  if defined (ACE_HAS_PACE)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::ReleaseSemaphore (*(s->sema_),
-										  release_count, 0), ace_result_),
-										  int, -1);
+                                          release_count, 0), ace_result_),
+                                          int, -1);
 #  else
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::ReleaseSemaphore (*s, release_count, 0),
                                           ace_result_), int, -1);
@@ -10305,7 +10310,7 @@ ACE_OS::dup2 (ACE_HANDLE oldhandle, ACE_HANDLE newhandle)
 #endif /* ACE_HAS_PACE */
 }
 
-#if defined (ghs) && defined (ACE_HAS_PENTIUM)
+#if defined (ghs) && defined (ACE_HAS_PENTIUM) && !defined (ACE_WIN32)
   extern "C" ACE_hrtime_t ACE_gethrtime ();
 #endif /* ghs && ACE_HAS_PENTIUM */
 
@@ -10324,7 +10329,7 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
   ::time_base_to_time(&tb, TIMEBASE_SZ);
 
   return ACE_hrtime_t(tb.tb_high) * ACE_ONE_SECOND_IN_NSECS + tb.tb_low;
-#elif defined (ghs) && defined (ACE_HAS_PENTIUM)
+#elif defined (ghs) && defined (ACE_HAS_PENTIUM) && !defined (ACE_WIN32)
   ACE_UNUSED_ARG (op);
   // Use .obj/gethrtime.o, which was compiled with g++.
   return ACE_gethrtime ();
@@ -10376,7 +10381,12 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
 
   ::QueryPerformanceCounter (&freq);
 
+#  if defined (ghs)
+  ACE_UINT64 uint64_freq(freq.u.LowPart, ACE_static_cast (unsigned int, freq.u.HighPart));
+  return uint64_freq;
+#  else
   return freq.QuadPart;
+#  endif //ghs
 
 #elif defined (CHORUS)
   if (op == ACE_OS::ACE_HRTIMER_GETTIME)
@@ -10700,7 +10710,7 @@ ACE_OS::llseek (ACE_HANDLE handle, ACE_LOFF_T offset, int whence)
 #elif defined (ACE_HAS_LSEEK64)
   ACE_OSCALL_RETURN (::lseek64 (handle, offset, whence), ACE_LOFF_T, -1);
 #elif defined (ACE_HAS_LLSEEK)
-  # if defined (ACE_WIN32) 
+  # if defined (ACE_WIN32)
     ACE_OSCALL_RETURN (::_lseeki64 (int (handle), offset, whence), ACE_LOFF_T, -1);
   # else
     ACE_OSCALL_RETURN (::llseek (handle, offset, whence), ACE_LOFF_T, -1);
