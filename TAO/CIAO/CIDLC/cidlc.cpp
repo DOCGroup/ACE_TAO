@@ -18,6 +18,7 @@
 #include "ServantGenerator.hpp"
 #include "RepositoryIdGenerator.hpp"
 #include "DescriptorGenerator.hpp"
+#include "SizeTypeCalculator.hpp"
 
 #include <iostream>
 
@@ -49,6 +50,7 @@ int main (int argc, char* argv[])
     ServantGenerator svnt_gen (cl);
     RepositoryIdGenerator repid_gen;
     DescriptorGenerator desc_gen;
+    SizeTypeCalculator sizetype_calc;
 
     if (cl.get_value ("help", false) || cl.get_value ("help-html", false))
     {
@@ -252,6 +254,12 @@ int main (int argc, char* argv[])
     // Generate executor mapping.
     {
       lem_gen.generate (cl, unit);
+    }
+    
+    // Calculate the size type of everything in the AST.
+    // This must be executed before the servant code generator.
+    {
+      sizetype_calc.calculate (unit);
     }
 
     // Generate servant code.

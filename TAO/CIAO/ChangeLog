@@ -1,3 +1,35 @@
+Wed Oct 29 15:56:33 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CCF/CCF/IDL2/Traversal/Interface.hpp:
+        * CCF/CCF/IDL2/Traversal/Struct.hpp:
+        
+          Cosmetic changes.
+          
+        * CIDLC/CIDLC.vcproj:
+        
+          Added SizeTypeCalculator.{h,cpp} to project.
+          
+        * CIDLC/Literals.hpp:
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * CIDLC/ServantSourceGenerator.cpp:
+        
+          Fixed bugs in code generation - missing 'Consumer' appended
+          to eventtype name, and event typename used for concatenation
+          of operation name instead of event identifier name.
+          
+        * CIDLC/SizeTypeCalculator.cpp:
+        
+          Added support for wstrings, sequences and interfaces.
+          
+        * CIDLC/TypeNameEmitter.cpp:
+        * CIDLC/TypeNameEmitter.hpp:
+        
+          Added support for typedefs, structs, sequences and interfaces.
+          
+        * CIDLC/cidlc.cpp:
+        
+          Added instantiation and launch of SizeTypeCalculator.
+
 Wed Oct 29 15:19:07 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CCF/CCF/IDL2/SyntaxTree/BuiltIn.hpp:

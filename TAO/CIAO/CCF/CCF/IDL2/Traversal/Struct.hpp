@@ -33,7 +33,7 @@ namespace CCF
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::StructDecl> ());
-	  return true;
+          return true;
         }
 
         virtual void
@@ -62,7 +62,7 @@ namespace CCF
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::StructForwardDecl> ());
-	  return true;
+	        return true;
         }
 
         virtual void

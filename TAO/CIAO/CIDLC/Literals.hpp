@@ -68,7 +68,9 @@ namespace StringLiterals
     // Labels for things stored in a SyntaxTree node's Context.
     "CIDLC::RepositoryIdGenerator::TypeId",               // TYPE_ID
     "CIDLC::RepositoryIdGenerator::TypePrefix",           // TYPE_PREFIX
-    "CIDLC::RepositoryIdGenerator::RepoId"                // REPO_ID
+    "CIDLC::RepositoryIdGenerator::RepoId",               // REPO_ID
+    
+    "variable-size"                                       // VAR_SIZE
   };
 
   // Index into the strings above.
@@ -101,7 +103,8 @@ namespace StringLiterals
     INH_RCSB,
     TYPE_ID,
     TYPE_PREFIX,
-    REPO_ID
+    REPO_ID,
+    VAR_SIZE
   };
 }
 

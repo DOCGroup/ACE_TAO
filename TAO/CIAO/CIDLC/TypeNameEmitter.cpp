@@ -3,10 +3,12 @@
 // cvs-id    : $Id$
 
 #include "TypeNameEmitter.hpp"
+#include "Literals.hpp"
 
 #include <ostream>
 
 using namespace std;
+using namespace StringLiterals;
 
 TypeNameEmitter::TypeNameEmitter (ostream& os_)
   : os (os_)
@@ -105,7 +107,8 @@ ReturnTypeNameEmitter::traverse (StringDeclPtr const&)
 }
 
 void
-ReturnTypeNameEmitter::traverse (TypedefDeclPtr const &, StringDeclPtr const&)
+ReturnTypeNameEmitter::traverse (TypedefDeclPtr const&, 
+                                 StringDeclPtr const&)
 {
   os << "char *";
 }
@@ -117,7 +120,8 @@ ReturnTypeNameEmitter::traverse (WstringDeclPtr const&)
 }
 
 void
-ReturnTypeNameEmitter::traverse (TypedefDeclPtr const &, WstringDeclPtr const&)
+ReturnTypeNameEmitter::traverse (TypedefDeclPtr const&, 
+                                 WstringDeclPtr const&)
 {
   os << "::CORBA::WChar *";
 }
@@ -141,9 +145,18 @@ ReturnTypeNameEmitter::traverse (AnyDeclPtr const&)
 }
 
 void
-ReturnTypeNameEmitter::traverse (StructDeclPtr const&)
+ReturnTypeNameEmitter::traverse (StructDeclPtr const& s)
 {
-  //os << "::CORBA::Any *";
+  // This should always be in the context, since the SizeTypeCalculator
+  // is executed before the servant code generators.
+  bool var_size = s->context ().get<bool> (STRS[VAR_SIZE]);
+  
+  os << s->name ();
+  
+  if (var_size)
+  {
+    os << " *";
+  }
 }
 
 void
@@ -153,7 +166,7 @@ ReturnTypeNameEmitter::traverse (SequenceDeclPtr const& s)
 }
 
 void
-ReturnTypeNameEmitter::traverse (LocalInterfaceDeclPtr const& i)
+ReturnTypeNameEmitter::traverse (InterfaceDeclPtr const& i)
 {
   os << i->name () << "_ptr";
 }
@@ -244,13 +257,21 @@ INArgTypeNameEmitter::traverse (StringDeclPtr const&)
 }
 
 void
-INArgTypeNameEmitter::traverse (TypedefDeclPtr const &, StringDeclPtr const&)
+INArgTypeNameEmitter::traverse (TypedefDeclPtr const&, 
+                                StringDeclPtr const&)
 {
   os << "const char *";
 }
 
 void
 INArgTypeNameEmitter::traverse (WstringDeclPtr const&)
+{
+  os << "const ::CORBA::WChar *";
+}
+
+void
+INArgTypeNameEmitter::traverse (TypedefDeclPtr const&, 
+                                WstringDeclPtr const&)
 {
   os << "const ::CORBA::WChar *";
 }
@@ -274,15 +295,21 @@ INArgTypeNameEmitter::traverse (AnyDeclPtr const&)
 }
 
 void
-INArgTypeNameEmitter::traverse (StructDeclPtr const&)
+INArgTypeNameEmitter::traverse (StructDeclPtr const& s)
 {
-  //os << "::CORBA::Any *";
+  os << "const " << s->name () << " &";;
 }
 
 void
 INArgTypeNameEmitter::traverse (SequenceDeclPtr const& s)
 {
   os << "const " << s->name () << " &";;
+}
+
+void
+INArgTypeNameEmitter::traverse (InterfaceDeclPtr const& i)
+{
+  os << i->name () << "_ptr";
 }
 
 // ===============================================================
@@ -371,7 +398,21 @@ INOUTArgTypeNameEmitter::traverse (StringDeclPtr const&)
 }
 
 void
+INOUTArgTypeNameEmitter::traverse (TypedefDeclPtr const&, 
+                                   StringDeclPtr const&)
+{
+  os << "char *&";
+}
+
+void
 INOUTArgTypeNameEmitter::traverse (WstringDeclPtr const&)
+{
+  os << "::CORBA::WChar *&";
+}
+
+void
+INOUTArgTypeNameEmitter::traverse (TypedefDeclPtr const&, 
+                                   WstringDeclPtr const&)
 {
   os << "::CORBA::WChar *&";
 }
@@ -395,15 +436,21 @@ INOUTArgTypeNameEmitter::traverse (AnyDeclPtr const&)
 }
 
 void
-INOUTArgTypeNameEmitter::traverse (StructDeclPtr const&)
+INOUTArgTypeNameEmitter::traverse (StructDeclPtr const& s)
 {
-  //os << "::CORBA::Any *";
+  os << s->name () << " &";
 }
 
 void
 INOUTArgTypeNameEmitter::traverse (SequenceDeclPtr const& s)
 {
   os << s->name () << " &";
+}
+
+void
+INOUTArgTypeNameEmitter::traverse (InterfaceDeclPtr const& i)
+{
+  os << i->name () << "_ptr &";
 }
 
 // =================================================================
@@ -492,7 +539,21 @@ OUTArgTypeNameEmitter::traverse (StringDeclPtr const&)
 }
 
 void
+OUTArgTypeNameEmitter::traverse (TypedefDeclPtr const&, 
+                                 StringDeclPtr const&)
+{
+  os << "::CORBA::String_out";
+}
+
+void
 OUTArgTypeNameEmitter::traverse (WstringDeclPtr const&)
+{
+  os << "::CORBA::WString_out";
+}
+
+void
+OUTArgTypeNameEmitter::traverse (TypedefDeclPtr const&, 
+                                 WstringDeclPtr const&)
 {
   os << "::CORBA::WString_out";
 }
@@ -516,9 +577,9 @@ OUTArgTypeNameEmitter::traverse (AnyDeclPtr const&)
 }
 
 void
-OUTArgTypeNameEmitter::traverse (StructDeclPtr const&)
+OUTArgTypeNameEmitter::traverse (StructDeclPtr const& s)
 {
-  //os << "::CORBA::Any *";
+  os << s->name () << "_out";
 }
 
 void
@@ -526,3 +587,10 @@ OUTArgTypeNameEmitter::traverse (SequenceDeclPtr const& s)
 {
   os << s->name () << "_out";
 }
+
+void
+OUTArgTypeNameEmitter::traverse (InterfaceDeclPtr const& i)
+{
+  os << i->name () << "_out";
+}
+

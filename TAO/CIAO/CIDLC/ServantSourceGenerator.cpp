@@ -803,7 +803,8 @@ namespace
          << STRS[EXCP_SNGL] << endl
          << "{" << endl
          << "this->ciao_emits_" << d->name ().simple ()
-         << "_consumer_->push_" << d->name ().simple () << " (" << endl
+         << "_consumer_->push_" << d->type ()->name ().simple () 
+         << " (" << endl
          << "ev" << endl
          << STRS[ENV_ARG] << ");" << endl
          << "}" << endl
