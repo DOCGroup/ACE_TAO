@@ -539,9 +539,9 @@ ACE_Shared_Memory_Pool::handle_signal (int , siginfo_t *siginfo, ucontext_t *)
 {
   ACE_TRACE ("ACE_Shared_Memory_Pool::handle_signal");
   // ACE_DEBUG ((LM_DEBUG, "signal %S occurred\n", signum)); 
-  off_t offset;
 
 #if defined (ACE_HAS_SIGINFO_T) && !defined (ACE_LACKS_SI_ADDR)
+  off_t offset;
   // Make sure that the pointer causing the problem is within the
   // range of the backing store.
 
@@ -578,6 +578,8 @@ ACE_Shared_Memory_Pool::handle_signal (int , siginfo_t *siginfo, ucontext_t *)
                          "shmat", shmem, address), 0);
 	
   // NOTE: this won't work if we dont have SIGINFO_T or SI_ADDR
+#else
+  ACE_UNUSED_ARG (siginfo);
 #endif /* ACE_HAS_SIGINFO_T && !defined (ACE_LACKS_SI_ADDR) */
 
   return 0;
