@@ -71,8 +71,13 @@ static ACE_THR_FUNC_RETURN controller (void *arg) {
   }
 #else
   for (;;) {
+#if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) && (ACE_USES_STD_NAMESPACE_ FOR_STDCPP_LIB == 0)
+    string user_input;
+    getline (cin, user_input, '\n');
+#else
     std::string user_input;
     std::getline (cin, user_input, '\n');
+#endif
     if (user_input == "quit") {
       reactor->notify (quit_handler);
       break;
