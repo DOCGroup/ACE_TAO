@@ -49,7 +49,7 @@ public:
   virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
   // Handle data from the client.
 
-  virtual int svc (void *);
+  virtual int svc (void);
   // Thread method
 
   virtual int close (u_long);
