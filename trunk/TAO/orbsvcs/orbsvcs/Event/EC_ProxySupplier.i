@@ -26,8 +26,7 @@ ACE_INLINE RtecEventComm::PushConsumer_ptr
 TAO_EC_ProxyPushSupplier::consumer (void) const
 {
   ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
-
-  return this->consumer_.in ();
+  return RtecEventComm::PushConsumer::_duplicate (this->consumer_.in ());
 }
 
 ACE_INLINE void
