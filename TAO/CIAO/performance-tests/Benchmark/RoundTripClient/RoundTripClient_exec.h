@@ -59,7 +59,7 @@ namespace MyImpl
 
     virtual ::Benchmark::CCM_Controller_ptr
 			get_controller (ACE_ENV_SINGLE_ARG_DECL)
-  		ACE_THROW_SPEC ((CORBA::SystemException));
+		ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual void start (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));

@@ -33,6 +33,17 @@ module Benchmark
 
   };
 
+  /**
+   * @interface Controller
+   *
+   * This interface is used to start the tests.
+   */
+  interface Controller 
+  {
+    /// Start the test
+    void start ();
+  };
+
 };
 
 #endif /*CIAO_BENCHMARK_IDL*/
