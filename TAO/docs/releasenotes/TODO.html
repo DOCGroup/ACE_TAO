@@ -48,10 +48,10 @@
 	</P>
       </LI>
 
-      <LI><P><B>EC:</B>
-	  If a Supplier disconnects while it has consumers
-	  registered for it's Supplier_ID, the consumers are not
-	  connected again even if the supplier reconnects.
+      <LI><P><B>EC:</B>If a Supplier disconnects while it has
+	  consumers registered for it's Supplier_ID,
+	  the consumers are not connected again even if the supplier
+	  reconnects.
 	  <BR>[STATUS] Carlos in working on this.
 	</P>
       </LI>
@@ -660,6 +660,12 @@ class Foo {
 	  it will add the current thread to the follower list every
 	  time it returns from waiting in the condition variable,
 	  assuming that it was signaled and removed every time.
+	</P>
+      </LI>
+
+      <LI><P>By default TAO disables Nagle's algorithm, this should be
+	  an optional feature, otherwise TAO will perform poorly over
+	  WANs.
 	</P>
       </LI>
 
