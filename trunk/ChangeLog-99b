@@ -1,3 +1,12 @@
+Tue Jul  6 18:15:31 1999  Steve Huston  <shuston@riverace.com>
+
+        * tests/Atomic_Op_Test.dsp:
+        * tests/Barrier_Test.dsp:
+        * tests/Cache_Map_Manager_Test.dsp:
+        * tests/Future_Set_Test.dsp:
+          Changed PharLap ETS configurations to put intermediate files in
+          ETS_LIB\Debug (like all the others), not in ETS_DLL\Debug.
+
 Tue Jul  6 17:54:52 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* ace/Caching_Strategies_T.{h,i,cpp}: Added Abstract Base class
