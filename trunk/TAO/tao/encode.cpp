@@ -232,7 +232,6 @@ TAO_Marshal_Principal::encode (CORBA::TypeCode_ptr,
                                void *context,
                                CORBA::Environment &env)
 {
-  CORBA::Boolean continue_encoding = 1;
   TAO_OutputCDR *stream = (TAO_OutputCDR *) context;
 
   CORBA::Principal_ptr p = *(CORBA::Principal_ptr *) data;

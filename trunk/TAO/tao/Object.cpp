@@ -61,13 +61,13 @@ CORBA_Object::_get_interface (CORBA::Environment &ACE_TRY_ENV)
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_interface",
       TAO_ORB_Core_instance ()
     );
-  
+
 
   // If we get forwarded we have to return to this point:
 _tao_start_again:
@@ -111,8 +111,8 @@ _tao_start_again:
   if (_invoke_status == TAO_GIOP_NO_EXCEPTION)
   {
     istub->set_valid_profile ();
-    TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
 #if 0
+    TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
     // @@ The extraction operation (>>) for InterfaceDef will be
     // defined, and thus this code will work. Right now we raise a
     // MARSHAL exception....
@@ -138,7 +138,8 @@ _tao_start_again:
     ACE_THROW_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_MAYBE), _tao_retval);
 
   }
-  return _tao_retval;
+  // @@ This statement is not reached due to the #if 0 above...
+  ACE_NOTREACHED (return _tao_retval);
 }
 
 // IS_A ... ask the object if it's an instance of the type whose
@@ -296,13 +297,13 @@ CORBA_Object::_non_existent (CORBA::Environment &ACE_TRY_ENV)
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_non_existent",
       TAO_ORB_Core_instance ()
     );
-  
+
 
   // If we get forwarded we have to return to this point:
 _tao_start_again:
@@ -636,7 +637,7 @@ TAO_Object_Field::~TAO_Object_Field (void)
 
 template class TAO_Object_Field_T<CORBA_Object>;
 template class auto_ptr<TAO_MProfile>;
-template class ACE_Auto_Ptr<TAO_MProfile>;
+template class ACE_Auto_Basic_Ptr<TAO_MProfile>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
