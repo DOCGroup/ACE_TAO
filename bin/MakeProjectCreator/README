@@ -42,6 +42,7 @@ idlflags	Specifies the idl flags to be used when processing idl files
 idlpreprocessor	Simple assignment used in the gnu template only
 pch_header	Specifies the precompiled header file name
 pch_source	Specifies the precompiled source file name
+ssl             Specifies that the project will use ssl
 tao		Specifies that the project will use TAO
 
 libpaths	Specifies 1 or more locations to find libraries

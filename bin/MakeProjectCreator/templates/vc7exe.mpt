@@ -5,6 +5,7 @@ pch_defines        = ACE_USING_PCH
 configuration_type = 1
 subsystem          = 1
 pdb                = 1
+ssl_libs           = libeay32 ssleay32
 
 Release {
   defines          = NDEBUG

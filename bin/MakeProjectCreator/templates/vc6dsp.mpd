@@ -61,7 +61,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo <%if(sharedname)%>/o"<%libout%>\<%sharedname%>.bsc"<%endif%>
 <%if(type_is_binary)%>
 LINK32=link.exe
-# ADD LINK32 <%systemlibs("advapi32.lib user32.lib")%> /INCREMENTAL:<%incremental("NO")%> <%foreach(libs defaultlibs)%><%lib%><%lib_modifier%>.lib <%endfor%><%foreach(libpaths)%>/libpath:"<%libpath%>" <%endfor%>/nologo /version:<%version("1.0")%> /subsystem:<%subsystem("windows")%><%if(type_is_dynamic)%> /dll<%endif%> <%debug_switch("/debug")%> <%if(pdb)%><%if(sharedname)%>/pdb:<%sharedname%><%lib_modifier%>.pdb <%endif%><%endif%>/machine:<%machine("I386")%> /out:"<%if(sharedname)%><%dllout%>\<%sharedname%><%lib_modifier%>.dll<%endif%><%if(exename)%><%if(install)%><%install%>\<%endif%><%exename%>.exe<%endif%>"
+# ADD LINK32 <%systemlibs("advapi32.lib user32.lib")%> <%if(ssl)%><%foreach(ssl_libs)%><%ssl_lib%>.lib <%endfor%><%endif%>/INCREMENTAL:<%incremental("NO")%> <%foreach(libs defaultlibs)%><%lib%><%lib_modifier%>.lib <%endfor%><%foreach(libpaths)%>/libpath:"<%libpath%>" <%endfor%>/nologo /version:<%version("1.0")%> /subsystem:<%subsystem("windows")%><%if(type_is_dynamic)%> /dll<%endif%> <%debug_switch("/debug")%> <%if(pdb)%><%if(sharedname)%>/pdb:<%sharedname%><%lib_modifier%>.pdb <%endif%><%endif%>/machine:<%machine("I386")%> /out:"<%if(sharedname)%><%dllout%>\<%sharedname%><%lib_modifier%>.dll<%endif%><%if(exename)%><%if(install)%><%install%>\<%endif%><%exename%>.exe<%endif%>"
 <%if(link_flags_removed)%>
 # SUBTRACT LINK32 <%link_flags_removed%>
 <%endif%>

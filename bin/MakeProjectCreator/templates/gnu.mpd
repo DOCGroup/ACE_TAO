@@ -83,12 +83,17 @@ endif
 <%if(libpaths)%>
 LDFLAGS      +=<%foreach(libpaths)%> -L<%libpath%><%endfor%>
 <%endif%>
+<%if(idl_files)%>
 <%if(idlflags)%>
 TAO_IDLFLAGS += <%idlflags%>
+<%endif%>
 <%endif%>
 <%if(libs)%>
 
 <%if(exename)%>LDLIBS<%endif%><%if(sharedname)%>ACE_SHLIBS<%endif%> =<%foreach(libs)%> -l<%lib%><%endfor%>
+<%endif%>
+<%if(ssl)%>
+<%if(exename)%>LDLIBS<%endif%><%if(sharedname)%>ACE_SHLIBS<%endif%> +=<%foreach(ssl_libs)%> -l<%ssl_lib%><%endfor%>
 <%endif%>
 
 #----------------------------------------------------------------------------

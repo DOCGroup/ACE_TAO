@@ -3,6 +3,7 @@ type_is_binary  = 1
 type_is_dynamic = 1
 common_defines  = WIN32 _WINDOWS
 pch_defines     = ACE_USING_PCH
+ssl_libs        = libeay32 ssleay32
 
 Release {
   use_debug_libraries   = 0
