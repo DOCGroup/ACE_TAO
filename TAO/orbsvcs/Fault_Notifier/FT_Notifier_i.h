@@ -8,7 +8,9 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/FT_NotifierS.h"
+#include "ace/pre.h"
+
+#include <orbsvcs/FT_NotifierS.h>
 #include <orbsvcs/Notify/Notify_EventChannelFactory_i.h>
 #include <ace/Vector_t.h>
 
@@ -25,12 +27,12 @@ public:
   /**
    * Default constructor.
    */
-  FT_FaultNotifier_i (void);
+  FT_FaultNotifier_i ();
 
   /**
    * Virtual destructor.
    */
-  virtual ~FT_FaultNotifier_i (void);
+  virtual ~FT_FaultNotifier_i ();
 
 
   /**
@@ -52,7 +54,7 @@ public:
    * Revoke the publication of this objects IOR.
    * @return zero for success; nonzero is process return code for failure.
    */
-  int self_unregister (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  int self_unregister (ACE_ENV_SINGLE_ARG_DECL);
 
   /**
    * Identify this fault notifier.
@@ -60,6 +62,12 @@ public:
    */
   const char * identity () const;
 
+  /**
+   * idle time activity.
+   * @param result [out] status code to return from process
+   * @returns 0 to continue; nonzero to quit
+   */
+  int idle(int &result ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   //////////////////
   // CORBA interface
@@ -67,39 +75,45 @@ public:
 
   virtual void push_structured_fault (
       const CosNotification::StructuredEvent & event
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void push_sequence_fault (
     const CosNotification::EventBatch & events
+    ACE_ENV_ARG_DECL_WITH_DEFAULTS
   )
   ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual ::CosNotifyFilter::Filter_ptr create_subscription_filter (
     const char * constraint_grammar
+    ACE_ENV_ARG_DECL_WITH_DEFAULTS
   )
   ACE_THROW_SPEC ((CORBA::SystemException, CosNotifyFilter::InvalidGrammar));
 
   virtual FT::FaultNotifier::ConsumerId connect_structured_fault_consumer (
     CosNotifyComm::StructuredPushConsumer_ptr push_consumer,
     CosNotifyFilter::Filter_ptr filter
+    ACE_ENV_ARG_DECL_WITH_DEFAULTS
   )
   ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual FT::FaultNotifier::ConsumerId connect_sequence_fault_consumer (
     CosNotifyComm::SequencePushConsumer_ptr push_consumer,
     CosNotifyFilter::Filter_ptr filter
+    ACE_ENV_ARG_DECL_WITH_DEFAULTS
   )
   ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void disconnect_consumer (
     FT::FaultNotifier::ConsumerId connection
+    ACE_ENV_ARG_DECL_WITH_DEFAULTS
   )
   ACE_THROW_SPEC ((CORBA::SystemException, CosEventComm::Disconnected));
 
   //////////////////////////////////////////
   // CORBA interface PullMonitorable methods
-  virtual CORBA::Boolean is_alive ()
+  virtual CORBA::Boolean is_alive (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException));
 
   /////////////////////////
@@ -109,11 +123,6 @@ private:
    * Write this notifier's IOR to a file
    */
   int write_IOR ();
-
-  /**
-   * Clean house for notifier shut down.
-   */
-  void shutdown_i ();
 
   ///////////////
   // Data Members
@@ -174,6 +183,9 @@ private:
 
   ProxyInfoVec proxyInfos_;
 
+  size_t consumerConnects_;
+  size_t consumerDisconnects_;
+
 /////////////////////
   ::CosNotifyChannelAdmin::ChannelID channelId_;
   ::CosNotifyChannelAdmin::EventChannel_var notify_channel_;
@@ -189,7 +201,13 @@ private:
     */
   int verbose_;
 
+  /*
+   * boolean quit when all consumers disconnect
+   */
+  int quitOnIdle_;
+
 };
 
+#include "ace/post.h"
 
 #endif /* FT_NOTIFIER_I_H_  */

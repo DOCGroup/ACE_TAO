@@ -351,6 +351,7 @@ void StubFaultNotifier::shutdown_i ()
 
 void StubFaultNotifier::push_structured_fault (
     const CosNotification::StructuredEvent & event
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -380,6 +381,7 @@ void StubFaultNotifier::push_structured_fault (
 
 void StubFaultNotifier::push_sequence_fault (
     const CosNotification::EventBatch & events
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -390,6 +392,7 @@ void StubFaultNotifier::push_sequence_fault (
 
 ::CosNotifyFilter::Filter_ptr StubFaultNotifier::create_subscription_filter (
     const char * constraint_grammar
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -403,6 +406,7 @@ void StubFaultNotifier::push_sequence_fault (
 FT::FaultNotifier::ConsumerId StubFaultNotifier::connect_structured_fault_consumer (
     CosNotifyComm::StructuredPushConsumer_ptr push_consumer,
     CosNotifyFilter::Filter_ptr filter
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -415,6 +419,7 @@ FT::FaultNotifier::ConsumerId StubFaultNotifier::connect_structured_fault_consum
 FT::FaultNotifier::ConsumerId StubFaultNotifier::connect_sequence_fault_consumer (
     CosNotifyComm::SequencePushConsumer_ptr push_consumer,
     CosNotifyFilter::Filter_ptr filter
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -425,6 +430,7 @@ FT::FaultNotifier::ConsumerId StubFaultNotifier::connect_sequence_fault_consumer
 
 void StubFaultNotifier::disconnect_consumer (
     FT::FaultNotifier::ConsumerId connection
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -434,7 +440,7 @@ void StubFaultNotifier::disconnect_consumer (
   ACE_THROW (CORBA::NO_IMPLEMENT());
 }
 
-CORBA::Boolean StubFaultNotifier::is_alive ()
+CORBA::Boolean StubFaultNotifier::is_alive (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return 1;
