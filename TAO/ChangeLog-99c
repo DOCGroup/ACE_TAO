@@ -4,6 +4,11 @@ Tue May 25 08:23:03 1999  David L. Levine  <levine@cs.wustl.edu>
           return statement with ACE_NOTREACHED, to please
           DU cxx 6.2-021.
 
+        * orbsvcs/tests/Simple_Naming/client.cpp (init):
+          commented out retun in catchany clause, to avoid
+          warning about redundant return at end of function
+          from DU cxx.
+
 Tue May 25 01:42:03 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tao/Exception.h (TAO_Exceptions): Added an static ACE_Allocator
