@@ -1,3 +1,9 @@
+Tue Oct 14 17:48:28 1997  Steve Huston  <shuston@riverace.com>
+
+	* ace/config-hpux-10.x-hpc++.h: Set ACE_LACKS_SIGNED_CHAR for
+	  both C++ and aC++, not just C++.  Thanks to Stephen Coy and
+	  David Levine for finding this.
+
 Tue Oct 14 03:26:17 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/OS.cpp (uname): Added a workaround for the fact that
