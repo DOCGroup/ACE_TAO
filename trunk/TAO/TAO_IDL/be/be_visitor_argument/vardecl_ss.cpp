@@ -291,59 +291,67 @@ int be_visitor_args_vardecl_ss::visit_predefined_type (be_predefined_type *node)
 
   if (pt == AST_PredefinedType::PT_any)
     {
+      *os << bt->name ();
+
       switch (this->direction ())
         {
         case AST_Argument::dir_IN:
         case AST_Argument::dir_INOUT:
-          *os << bt->name () << " " << arg->local_name () << ";";
-
+          *os << " ";
           break;
         case AST_Argument::dir_OUT:
-          *os << bt->name () << "_var "
-              << arg->local_name () << ";";
-
+          *os << "_var ";
           break;
         }
+
+      *os << arg->local_name () << ";";
     }
   else if (pt == AST_PredefinedType::PT_pseudo
            || pt == AST_PredefinedType::PT_object)
     {
-      switch (this->direction ())
-        {
-        case AST_Argument::dir_IN:
-        case AST_Argument::dir_INOUT:
-          *os << bt->name () << "_var " << arg->local_name ()
-              << ";";
-          break;
-        case AST_Argument::dir_OUT:
-          *os << bt->name () << "_var "
-              << arg->local_name () << ";";
-
-          break;
-        }
+      *os << bt->name () << "_var " << arg->local_name () << ";";
     }
   else
     {
+      *os << bt->name () << " " << arg->local_name ();
+
       switch (this->direction ())
         {
         case AST_Argument::dir_IN:
+          break;
+
+        // @@@ (JP) This is a hack for VC7, which gets an internal
+        // compiler error if these not initialized.
+        // (02-12-09)
         case AST_Argument::dir_INOUT:
         case AST_Argument::dir_OUT:
-          *os << bt->name () << " " << arg->local_name ();
-
-          // @@@ (JP) This is a hack for VC7, which gets an internal
-          // compiler error if a boolean OUT is not initialized.
-          // (02-08-13)
-          if (this->direction () == AST_Argument::dir_OUT
-              && pt == AST_PredefinedType::PT_boolean)
-            {
-              *os << " = 0";
+          switch (pt)
+            { 
+              case AST_PredefinedType::PT_boolean:
+              case AST_PredefinedType::PT_short:
+              case AST_PredefinedType::PT_long:
+              case AST_PredefinedType::PT_ushort:
+              case AST_PredefinedType::PT_ulong:
+              case AST_PredefinedType::PT_ulonglong:
+              case AST_PredefinedType::PT_float:
+              case AST_PredefinedType::PT_double:
+              case AST_PredefinedType::PT_octet:
+                *os << " = 0";
+                break;
+              case AST_PredefinedType::PT_longlong:
+                *os << " = ACE_CDR_LONGLONG_INITIALIZER";
+                break;
+              case AST_PredefinedType::PT_longdouble:
+                *os << " = ACE_CDR_LONG_DOUBLE_INITIALIZER";
+                break;
+              default:
+                break;
             }
-
-          *os << ";";
 
           break;
         }
+
+      *os << ";";
     }
 
   return 0;
