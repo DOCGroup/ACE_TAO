@@ -43,4 +43,6 @@ int main (int argc, char *argv [])
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
+
+  return 0;
 }

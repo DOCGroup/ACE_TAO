@@ -243,9 +243,9 @@ Client::init (int argc,char **argv)
     {
       PortableServer::POAManager_var mgr
         = TAO_AV_CORE::instance ()->poa ()->the_POAManager ();
-      
+
       mgr->activate ();
-      
+
       this->parse_args (this->argc_, this->argv_);
 
       ACE_NEW_RETURN (this->fdev_,
@@ -356,7 +356,7 @@ Client::run (void)
       if (TAO_AV_CORE::instance ()->orb ()->run (tv) == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
-      
+
       ACE_DEBUG ((LM_DEBUG, "Exited the TAO_AV_Core::run\n"));
     }
   ACE_CATCHANY
@@ -373,17 +373,17 @@ int
 main (int argc,
       char *argv[])
 {
-  CORBA::ORB_var orb = CORBA::ORB_init (argc, 
+  CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                         argv);
-  
+
   CORBA::Object_var obj
     = orb->resolve_initial_references ("RootPOA");
-  
+
   PortableServer::POA_var poa
     = PortableServer::POA::_narrow (obj.in ());
-  
+
   ACE_DECLARE_NEW_CORBA_ENV;
-  
+
   ACE_TRY
     {
       TAO_AV_CORE::instance ()->init (orb.in (),
@@ -398,7 +398,7 @@ main (int argc,
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
-  
+
   int result = 0;
   result = CLIENT::instance ()->init (argc,argv);
   if (result < 0)
@@ -406,7 +406,8 @@ main (int argc,
   result = CLIENT::instance ()->run ();
   if (result < 0)
     ACE_ERROR_RETURN ((LM_ERROR,"client::run failed\n"),1);
-  
+
+  return result;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

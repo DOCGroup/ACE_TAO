@@ -1,3 +1,22 @@
+Fri Dec 29 07:38:27 2000  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* tests/Policies/Manipulation.cpp:
+	* orbsvcs/tests/Time/Client_i.cpp:
+	* 
+	  Fixed compile errors under VxWorks due to lack of support
+	  for 64 bit integers.
+
+	* orbsvcs/tests/AVStreams/Pluggable/server.cpp:
+	* orbsvcs/tests/AVStreams/Pluggable/ftp.cpp:
+	* orbsvcs/tests/AVStreams/Full_Profile/server.cpp:
+	* orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp:
+	* orbsvcs/tests/AVStreams/Multicast/server.cpp:
+	* orbsvcs/tests/AVStreams/Multicast/ftp.cpp:
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.cpp:
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp:
+	* orbsvcs/tests/Interoperable_Naming/client.cpp:
+	  Fixed compile warnings due to missing return statements.
+	
 Thu Dec 28 10:05:42 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl: 
