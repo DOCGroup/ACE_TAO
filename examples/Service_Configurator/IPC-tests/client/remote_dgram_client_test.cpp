@@ -67,11 +67,11 @@ main (int argc, char *argv[])
       
       /* Next, send the file's contents. */
 
-  int cc = sd.send (cp, mmap.size (), sa);
+  ssize_t cc = sd.send (cp, mmap.size (), sa);
 
   if (cc == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send"), -1);
-  else if (cc != mmap.size())
+  else if (cc != (ssize_t) mmap.size ())
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", 
 		       "Not all the contents of mmap file are sent."), -1);
   return 0;
