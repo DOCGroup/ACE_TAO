@@ -931,6 +931,18 @@ users to take advantage of the TAO octet sequence extensions to
 preserve the buffer after the upcall. </td>
       </tr>
       <tr>
+        <td><code>-ORBAMHResponseHandlerAllocator</code> <em>which</em></td>
+        <td><a name="-ORBAMHResponseHandlerAllocator"></a>Specify whether the ORB
+uses locked (<em>which</em> = <code>thread</code>) or lock-free (<em>which</em>
+= <code>null</code>) allocators for the AMH response handlers.</td>
+      </tr>
+      <tr>
+        <td><code>-ORBAMIResponseHandlerAllocator</code> <em>which</em></td>
+        <td><a name="-ORBAMIResponseHandlerAllocator"></a>Specify whether the ORB
+uses locked (<em>which</em> = <code>thread</code>) or lock-free (<em>which</em>
+= <code>null</code>) allocators for the AMI response handlers.</td>
+      </tr>
+      <tr>
         <td><code>-ORBReactorRegistry</code> <em>registry_type</em></td>
         <td><a name="-ORBReactorRegistry"></a>This option is no longer
 supported. The Advanced Resource Factory will emit an error if you

@@ -138,6 +138,18 @@ TAO_Resource_Factory::output_cdr_msgblock_allocator (void)
   return 0;
 }
 
+ACE_Allocator *
+TAO_Resource_Factory::amh_response_handler_allocator (void)
+{
+  return 0;
+}
+
+ACE_Allocator *
+TAO_Resource_Factory::ami_response_handler_allocator (void)
+{
+  return 0;
+}
+
 TAO_ProtocolFactorySet *
 TAO_Resource_Factory::get_protocol_factories (void)
 {

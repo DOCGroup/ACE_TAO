@@ -122,6 +122,16 @@ public:
    * locks.
    */
   ACE_Allocator *output_cdr_msgblock_allocator (void);
+
+  /* Allocator is intended for allocating the AMH response handlers
+   * This allocator is global.
+   */
+  ACE_Allocator *amh_response_handler_allocator (void);
+
+  /* Allocator is intended for allocating the AMI response handlers
+   * This allocator is global.
+   */
+  ACE_Allocator *ami_response_handler_allocator (void);
   //@}
 
 private:
@@ -174,11 +184,17 @@ private:
   ACE_Allocator *output_cdr_buffer_allocator_;
   ACE_Allocator *output_cdr_msgblock_allocator_;
   //@}
-};
 
-#if defined (__ACE_INLINE__)
-# include "tao/Thread_Lane_Resources.i"
-#endif /* __ACE_INLINE__ */
+  /// @name The allocators for AMH.
+  //@{
+  ACE_Allocator *amh_response_handler_allocator_;
+  //@}
+
+  /// @name The allocators for AMI.
+  //@{
+  ACE_Allocator *ami_response_handler_allocator_;
+  //@}
+};
 
 #include /**/ "ace/post.h"
 
