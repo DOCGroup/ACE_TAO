@@ -1,3 +1,10 @@
+Thu Sep 18 08:22:00 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_sequence.cpp:
+
+          Fixed bug in checking for the presence of an octet sequence
+          declaration in the node constructor.
+
 Thu Sep 18 07:39:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_helper.cpp: Added a new line after the generation
