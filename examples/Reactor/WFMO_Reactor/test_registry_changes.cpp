@@ -123,11 +123,11 @@ main (int, char *[])
   ACE_Reactor reactor;
   Event_Handler handler (reactor);
 
-  ACE_ASSERT (ACE_OS::thr_create ((ACE_THR_FUNC) worker, &handler, 0, 0) == 0);
+  int result = ACE_OS::thr_create ((ACE_THR_FUNC) worker, &handler, 0, 0);
+  ACE_ASSERT (result == 0);
 
-  int result = 0;
-  while (result != -1)
-    result = reactor.handle_events ();
+  for (result = 0; result != -1; result = reactor.handle_events ())
+    continue;
 
   return 0;
 }

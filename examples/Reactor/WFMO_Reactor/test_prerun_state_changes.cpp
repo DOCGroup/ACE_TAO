@@ -46,16 +46,19 @@ main (int argc, char *argv[])
 
   Event_Handler *event_handler = new Event_Handler;
 
-  ACE_ASSERT (ACE_Reactor::instance ()->register_handler (handle,
-                                                          event_handler,
-                                                          ACE_Event_Handler::READ_MASK) == 0);
+  int result = ACE_Reactor::instance ()->register_handler (handle,
+                                                           event_handler,
+                                                           ACE_Event_Handler::READ_MASK);
+  ACE_ASSERT (result == 0);
 
-  ACE_ASSERT (ACE_Reactor::instance ()->register_handler (handle,
-                                                          event_handler,
-                                                          ACE_Event_Handler::WRITE_MASK | ACE_Event_Handler::QOS_MASK) == 0);
+  result = ACE_Reactor::instance ()->register_handler (handle,
+                                                       event_handler,
+                                                       ACE_Event_Handler::WRITE_MASK | ACE_Event_Handler::QOS_MASK);
+  ACE_ASSERT (result == 0);
 
-  ACE_ASSERT (ACE_Reactor::instance ()->remove_handler (handle,
-                                                        ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL) == 0);
+  result = ACE_Reactor::instance ()->remove_handler (handle,
+                                                     ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL);
+  ACE_ASSERT (result == 0);
 
   return 0;
 }

@@ -90,9 +90,8 @@ Event_Handler::handle_timeout (const ACE_Time_Value &tv,
       ACE_NEW_RETURN (this->mutex_,
                       ACE_Process_Mutex,
                       -1);
-      ACE_ASSERT (ACE_Thread_Manager::instance ()->spawn
-                  (&worker,
-                   this) != -1);
+      int result = ACE_Thread_Manager::instance ()->spawn (&worker, this);
+      ACE_ASSERT (result != -1);
     }
 
   return 0;

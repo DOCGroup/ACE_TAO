@@ -68,15 +68,17 @@ main (int argc, char** argv)
   auto_ptr<ACE_Reactor_Impl> delete_impl (impl);
 
   event_handler.iterations_ = 5;
-  ACE_ASSERT (ACE_Reactor::instance ()->register_handler (&event_handler, 
-                                                          event_handler.handle_.handle ()) == 0);
+  int result = ACE_Reactor::instance ()->register_handler (&event_handler, 
+                                                           event_handler.handle_.handle ());
+  ACE_ASSERT (result == 0);
   
   ACE_Time_Value timeout (1);
-  ACE_ASSERT (::SetTimer (NULL,                         // handle of window for timer messages 
-                          NULL,                         // timer identifier 
-                          timeout.msec (),              // time-out value 
-                          (TIMERPROC) &timer_callback   // address of timer procedure 
-                          ) != 0);
+  result = ::SetTimer (NULL,                         // handle of window for timer messages 
+                       NULL,                         // timer identifier 
+                       timeout.msec (),              // time-out value 
+                       (TIMERPROC) &timer_callback   // address of timer procedure 
+                       );
+  ACE_ASSERT (result != 0);
   
   ACE_Reactor::run_event_loop ();
 

@@ -135,14 +135,18 @@ worker (void)
 int 
 main (int, char *[])
 {
-  ACE_ASSERT (reactor.register_handler (&simple_handler, 
-					simple_handler.event1_.handle ()) == 0);
-  ACE_ASSERT (reactor.register_handler (&simple_handler, 
-					simple_handler.event2_.handle ()) == 0);
+  int result = reactor.register_handler (&simple_handler, 
+                                       simple_handler.event1_.handle ());
+  ACE_ASSERT (result == 0);
 
-  ACE_ASSERT (ACE_OS::thr_create ((ACE_THR_FUNC) worker, 0, 0, 0) == 0);
+  result = reactor.register_handler (&simple_handler, 
+                                     simple_handler.event2_.handle ());
+  ACE_ASSERT (result == 0);
+
+  result = ACE_OS::thr_create ((ACE_THR_FUNC) worker, 0, 0, 0);
+  ACE_ASSERT (result == 0);
   
-  int result = 0;
+  result = 0;
   while (!stop_test && result != -1)
     {
       result = reactor.handle_events ();
