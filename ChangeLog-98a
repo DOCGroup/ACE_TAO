@@ -1,3 +1,8 @@
+Wed Jan 14 20:41:35 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/Signal.i (is_member): 
+	  Fixed typo in new cast, the type is sigset_t not sigset.
+
 Wed Jan 14 20:27:44 1998    <coryan@MILONGA>
 
 	* ace/OS.h: 
