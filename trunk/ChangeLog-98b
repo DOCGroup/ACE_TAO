@@ -1,36 +1,41 @@
+Tue Dec 29 09:47:48 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-sunos*.h,README:
+          restored ACE_TIMER_SKEW, with explanatory comment.
+
 Mon Dec 28 23:12:59 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/DLL.h,
-	  ace/Mem_Map.h,
-	  ace/Read_Buffer.h:
-	  Added ACE_UNIMPLEMENTED_FUNC() macros to these headers.
+        * ace/DLL.h,
+          ace/Mem_Map.h,
+          ace/Read_Buffer.h:
+          Added ACE_UNIMPLEMENTED_FUNC() macros to these headers.
 
 Wed Dec 28 22:55:55 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* ace/DLL.h: Prevent copying and assignment by putting these
-	  methods in the private part of the class.
+        * ace/DLL.h: Prevent copying and assignment by putting these
+          methods in the private part of the class.
 
 Mon Dec 28 17:57:25 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
-	* docs/tutorials/020/*: 
-	Sooner than expected...  A brief and basic intro to using
-	ACE_Shared_Memory_MM.
-	
-	* docs/tutorials/online-tutorials.html: 
-	Linked in 019 and 020
+        * docs/tutorials/020/*:
+        Sooner than expected...  A brief and basic intro to using
+        ACE_Shared_Memory_MM.
+
+        * docs/tutorials/online-tutorials.html:
+        Linked in 019 and 020
 
 Mon Dec 28 16:32:42 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
-	* docs/tutorials/019/*: 
-	At long last, a basic Tutorial on ACE_Shared_Memory_SV.  With
-	luck, 020 will be added soon to cover ACE_Shared_Memory_MM
+        * docs/tutorials/019/*:
+        At long last, a basic Tutorial on ACE_Shared_Memory_SV.  With
+        luck, 020 will be added soon to cover ACE_Shared_Memory_MM
 
 Mon Dec 28 11:21:40 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Strategies.h: Put the "virtual" keyword in from of the
- 	  ~ACE_Reactor_Notification_Strategy to make it clear
- 	  that this destructor is virtual.  Thanks to Greg Gallant
-	  <greg.gallant@jhuapl.edu> for pointing this out.
+        * ace/Strategies.h: Put the "virtual" keyword in from of the
+          ~ACE_Reactor_Notification_Strategy to make it clear
+          that this destructor is virtual.  Thanks to Greg Gallant
+          <greg.gallant@jhuapl.edu> for pointing this out.
 
 Mon Dec 28 11:12:08 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -6443,8 +6448,8 @@ Tue Aug 25 18:48:50 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
           to 1.  -y is a new option that sets
           ACE_Service_Config::no_static_svcs_ to 0.
 
-	  The motivation for this change was to minimize the ACE
- 	  footprint, i.e., only load them if the program requires it.	  
+          The motivation for this change was to minimize the ACE
+          footprint, i.e., only load them if the program requires it.
 
 Tue Aug 25 18:28:11 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
