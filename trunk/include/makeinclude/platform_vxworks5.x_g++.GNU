@@ -39,30 +39,34 @@ endif # PPC604
 #### END CPU-specific settings
 
 
-TARGET_DIR	= $(WIND_BASE)/target
-HOST_DIR	= $(WIND_BASE)/host/sun4-solaris2
-BIN_DIR		= $(HOST_DIR)/bin
+TARGET_DIR      = $(WIND_BASE)/target
+HOST_DIR        = $(WIND_BASE)/host/sun4-solaris2
+BIN_DIR         = $(HOST_DIR)/bin
 
-CC		= cc$(TOOLENV)
-CXX		= g++$(TOOLENV)
-CFLAGS		+= -DVXWORKS -D_REENTRANT -I. -I$(ACE_ROOT) -I$(WIND_BASE)/target/h -ansi -fno-builtin -fno-defer-pop -fvolatile -nostdinc -nostdlib -O -pipe -Wall
+CC              = cc$(TOOLENV)
+CXX             = g++$(TOOLENV)
+CFLAGS          += -DVXWORKS -D_REENTRANT -I. -I$(ACE_ROOT) -I$(WIND_BASE)/target/h -ansi -fno-builtin -fno-defer-pop -fvolatile -nostdinc -nostdlib -O -pipe -Wall
 #### Note: -f-no-implicit-templates doesn't seem to work well with
 ####       g++ cygnus-2.7.2-960126 for pc486 target.  Some
 ####       member functions don't get instantiated.  Wind River knows
 ####       about this problem (SPR 8483).
-CCFLAGS		+= $(DCFLAGS) $(CFLAGS) #### -fno-implicit-templates
-DCFLAGS		+= -g
-INCLDIRS	+=
-LD		= ld$(TOOLENV)
-LDFLAGS		+= -X -r .obj/__ctordtor.o
-PIC		=
-AR		= ar$(TOOLENV)
-ARFLAGS		= rv
-RANLIB		= /bin/true
-PRELINK		= nm$(TOOLENV) .obj/$@.o $(ACE_ROOT)/ace/libACE.a | munch | egrep -v '\.cpp' > __ctordtor.c; $(COMPILE.c) -traditional -o .obj/__ctordtor.o __ctordtor.c; /bin/rm __ctordtor.c;
+CCFLAGS         += $(DCFLAGS) $(CFLAGS) #### -fno-implicit-templates
+DCFLAGS         += -g
+INCLDIRS        +=
+LD              = ld$(TOOLENV)
+LDFLAGS         += -X -r .obj/__ctordtor.o
+PIC             =
+AR              = ar$(TOOLENV)
+ARFLAGS         = rv
+RANLIB          = /bin/true
+PRELINK         = nm$(TOOLENV) .obj/$@.o $(ACE_ROOT)/ace/libACE.a | munch | egrep -v '\.cpp' > __ctordtor.c; $(COMPILE.c) -traditional -o .obj/__ctordtor.o __ctordtor.c; /bin/rm __ctordtor.c;
 
 #### don't build shared objects:
 BUILD           = $(VOBJS) $(VLIB) $(VBIN)
+OBJDIRS         = .obj
+SHOBJ           = $(addsuffix .o,$(FILES))
+SOEXT           = o
+VSHDIR		= .obj/
 
 #### ld can't handle INCLDIRS, so override LINK definitions.
 LINK.c           = override
