@@ -27,7 +27,7 @@ ORB_Initializer::post_init (PortableInterceptor::ORBInitInfo_ptr info
 
   // Register replica controller as server request interceptor.
   //
-  TAO_ORBInitInfo* tao_info (dynamic_cast<TAO_ORBInitInfo*> (info));
+  TAO_ORBInitInfo* tao_info = dynamic_cast<TAO_ORBInitInfo*> (info);
 
   CORBA::ORB_var orb (tao_info->orb_core ()->orb ());
 

@@ -376,7 +376,7 @@ ReplicaController::send_reply (
     msg->length (size);
 
     {
-      CORBA::Octet* buf (msg->get_buffer ());
+      CORBA::Octet* buf = msg->get_buffer ();
 
       for (ACE_Message_Block const* mb = cdr.begin ();
            mb != 0;
