@@ -1,3 +1,9 @@
+Tue Apr 30 14:51:58 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Makefile:
+	* tests/Makefile.bor: Added the Connection_Timeout test to the
+	  list of directories. 
+
 Tue Apr 30 14:46:26 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Connection_Timeout/client.cpp:

@@ -19,6 +19,7 @@ DIRS = \
 	Collocation \
 	Connect_Strategy_Test \
 	Connection_Purging \
+	Connection_Timeout \
 	Crash_On_Write \
 	Cache_Growth_Test \
 	Crashed_Callback \
