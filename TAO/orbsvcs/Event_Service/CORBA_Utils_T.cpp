@@ -120,7 +120,7 @@ ACE_CORBA_Sequence<TYPE>::length (CORBA::ULong len)
       // Allocate the space that we need.
       TYPE* tmp = this->new_array (len);
       // Copy over the old sequence.
-      for (int i = 0; i < maximum_; ++i)
+      for (CORBA::ULong i = 0; i < maximum_; ++i)
 	{
 	  tmp[i] = buffer_[i];
 	}

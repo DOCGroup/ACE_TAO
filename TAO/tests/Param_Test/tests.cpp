@@ -1,5 +1,6 @@
 // $Id$
 
+
 // ============================================================================
 //
 // = LIBRARY
@@ -616,7 +617,7 @@ Test_String_Sequence::print_values (void)
                   "Element #%d\n"
                   "in : %s\n",
                   i,
-                  (this->in_[i].in ()? (char *)this->in_[i].in ():"<nul>")));
+                  this->in_[i]? (const char *)this->in_[i]:"<nul>"));
     }
   if (!this->in_.ptr ())
     ACE_DEBUG ((LM_DEBUG, "\nin sequence is NUL\n"));
@@ -627,7 +628,7 @@ Test_String_Sequence::print_values (void)
                   "Element #%d\n"
                   "in : %s\n",
                   i,
-                  (this->inout_[i].in ()? (char *)this->inout_[i].in ():"<nul>")));
+                  (this->inout_[i]? (const char *)this->inout_[i]:"<nul>")));
     }
   if (!this->inout_.ptr ())
     ACE_DEBUG ((LM_DEBUG, "\ninout sequence is NUL\n"));
@@ -638,7 +639,7 @@ Test_String_Sequence::print_values (void)
                   "Element #%d\n"
                   "in : %s\n",
                   i,
-                  (this->out_[i].in ()? (char *)this->out_[i].in ():"<nul>")));
+                  (this->out_[i]? (const char *)this->out_[i]:"<nul>")));
     }
   if (!this->out_.ptr ())
     ACE_DEBUG ((LM_DEBUG, "\nout sequence is NUL\n"));
@@ -649,7 +650,7 @@ Test_String_Sequence::print_values (void)
                   "Element #%d\n"
                   "in : %s\n",
                   i,
-                  (this->ret_[i].in ()? (char *)this->ret_[i].in ():"<nul>")));
+                  (this->ret_[i]? (const char *)this->ret_[i]:"<nul>")));
     }
   if (!this->ret_.ptr ())
     ACE_DEBUG ((LM_DEBUG, "\nin sequence is NUL\n"));
@@ -825,7 +826,7 @@ Test_Var_Struct::print_values (void)
                   "Element #%d\n"
                   "in.seq : %s\n",
                   i,
-                  (this->in_.seq[i].in ()? (char *)this->in_.seq[i].in ():"<nul>")));
+                  (this->in_.seq[i]? (const char *)this->in_.seq[i]:"<nul>")));
     }
   ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));
   for (i=0; this->inout_.ptr () && (i < this->inout_->seq.length ()); i++)
@@ -834,7 +835,7 @@ Test_Var_Struct::print_values (void)
                   "Element #%d\n"
                   "inout : %s\n",
                   i,
-                  (this->inout_->seq[i].in ()? (char *)this->inout_->seq[i].in ():"<nul>")));
+                  (this->inout_->seq[i]? (const char *)this->inout_->seq[i]:"<nul>")));
     }
   if (!this->inout_.ptr ())
     ACE_DEBUG ((LM_DEBUG, "\ninout struct does not exist\n"));
@@ -845,7 +846,7 @@ Test_Var_Struct::print_values (void)
                   "Element #%d\n"
                   "in : %s\n",
                   i,
-                  (this->out_->seq[i].in ()? (char *)this->out_->seq[i].in ():"<nul>")));
+                  (this->out_->seq[i]? (const char *)this->out_->seq[i]:"<nul>")));
     }
   if (!this->out_.ptr ())
     ACE_DEBUG ((LM_DEBUG, "\nout struct is NUL\n"));
@@ -856,7 +857,7 @@ Test_Var_Struct::print_values (void)
                   "Element #%d\n"
                   "in : %s\n",
                   i,
-                  (this->ret_->seq[i].in ()? (char *)this->ret_->seq[i].in ():"<nul>")));
+                  (this->ret_->seq[i]? (const char *)this->ret_->seq[i]:"<nul>")));
     }
   if (!this->ret_.ptr ())
     ACE_DEBUG ((LM_DEBUG, "\nret struct is NUL\n"));
@@ -1005,13 +1006,13 @@ Test_Nested_Struct::print_values (void)
                   "out (len = %d): %s\n"
                   "ret (len = %d): %s\n",
                   this->in_.vs.seq.length (),
-                  (this->in_.vs.seq.length ()? (char *)this->in_.vs.seq[i]:"<nul>"),
+                  (this->in_.vs.seq.length ()? (const char *)this->in_.vs.seq[i]:"<nul>"),
                   this->inout_->vs.seq.length (),
-                  (this->inout_->vs.seq.length ()? (char *)this->inout_->vs.seq[i]:"<nul>"),
+                  (this->inout_->vs.seq.length ()? (const char *)this->inout_->vs.seq[i]:"<nul>"),
                   this->out_->vs.seq.length (),
-                  (this->out_->vs.seq.length ()? (char *)this->out_->vs.seq[i]:"<nul>"),
+                  (this->out_->vs.seq.length ()? (const char *)this->out_->vs.seq[i]:"<nul>"),
                   this->ret_->vs.seq.length (),
-                  (this->ret_->vs.seq.length ()? (char *)this->ret_->vs.seq[i]:"<nul>")));
+                  (this->ret_->vs.seq.length ()? (const char *)this->ret_->vs.seq[i]:"<nul>")));
     }
 }
 
@@ -1053,14 +1054,19 @@ Test_Struct_Sequence::init_parameters (Param_Test_ptr objref,
   CORBA::ULong len = (CORBA::ULong) (gen->gen_long () % 10) + 1;
 
   // set the length of the sequence
-  this->in_.vs.seq.length (len);
+  this->in_.length (len);
   // now set each individual element
-  for (CORBA::ULong i=0; i < this->in_.vs.seq.length (); i++)
+  for (CORBA::ULong i=0; i < this->in_.length (); i++)
     {
       // generate some arbitrary string to be filled into the ith location in
       // the sequence
-      char *str = gen->gen_string ();
-      this->in_.vs.seq[i] = str;
+      this->in_[i].dummy1 = gen->gen_string ();
+      this->in_[i].dummy2 = gen->gen_string ();
+
+      CORBA::ULong len2 = (CORBA::ULong) (gen->gen_long () % 3) + 1;
+      this->in_[i].seq.length (len2);
+      for (CORBA::ULong j = 0; j < this->in_[i].seq.length (); j++)
+	this->in_[i].seq[j] = gen->gen_string ();
     }
   return 0;
 }
@@ -1079,7 +1085,7 @@ Test_Struct_Sequence::run_sii_test (Param_Test_ptr objref,
                                     CORBA::Environment &env)
 {
   Param_Test::StructSeq_out out (this->out_.out ());
-  this->ret_ = objref->test_Struct_Sequence (this->in_,
+  this->ret_ = objref->test_struct_sequence (this->in_,
                                            this->inout_.inout (),
                                            out,
                                            env);
@@ -1091,9 +1097,9 @@ Test_Struct_Sequence::add_args (CORBA::NVList_ptr &param_list,
                                 CORBA::NVList_ptr &retval,
                                 CORBA::Environment &env)
 {
-  CORBA::Any in_arg (Param_Test::_tc_Struct_Sequence, (void *) &this->in_, 0);
-  CORBA::Any inout_arg (Param_Test::_tc_Struct_Sequence, &this->inout_.inout (), 0);
-  CORBA::Any out_arg (Param_Test::_tc_Struct_Sequence, this->out_.out (), 0);
+  CORBA::Any in_arg (Param_Test::_tc_StructSeq, (void *) &this->in_, 0);
+  CORBA::Any inout_arg (Param_Test::_tc_StructSeq, &this->inout_.inout (), 0);
+  CORBA::Any out_arg (Param_Test::_tc_StructSeq, this->out_.out (), 0);
 
   // add parameters
   (void)param_list->add_value ("s1", in_arg, CORBA::ARG_IN, env);
@@ -1101,7 +1107,7 @@ Test_Struct_Sequence::add_args (CORBA::NVList_ptr &param_list,
   (void)param_list->add_value ("s3", out_arg, CORBA::ARG_OUT, env);
 
   // add return value
-  (void)retval->item (0, env)->value ()->replace (Param_Test::_tc_Struct_Sequence,
+  (void)retval->item (0, env)->value ()->replace (Param_Test::_tc_StructSeq,
                                                   &this->ret_,
                                                   0, // does not own
                                                   env);
@@ -1129,26 +1135,54 @@ Test_Struct_Sequence::check_validity (CORBA::Request_ptr req)
   return this->check_validity ();
 }
 
+static void print_var_struct (const Param_Test::Var_Struct& vs)
+{
+  ACE_DEBUG ((LM_DEBUG,
+	      "  dummy1 = <%s>\n"
+	      "  dummy2 = <%s>\n"
+	      "  seq length: %d\n",
+	      vs.dummy1.in ()?(const char*)vs.dummy1.in ():"",
+	      vs.dummy2.in ()?(const char*)vs.dummy2.in ():"",
+	      vs.seq.length ()));
+  for (CORBA::ULong i = 0; i < vs.seq.length (); ++i)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+		  "    seq[%d] = <%s>\n",
+		  i, (const char*)vs.seq[i]));
+    }
+}
+
 void
 Test_Struct_Sequence::print_values (void)
 {
-  for (CORBA::ULong i=0; i < this->in_.vs.seq.length (); i++)
+  CORBA::ULong i;
+  for (i = 0; i < this->in_.length (); i++)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "\n*=*=*=*=*=*=*=*=*=*=\n"
-                  "Element # %d\n"
-                  "in (len = %d): %s\n"
-                  "inout (len = %d): %s\n"
-                  "out (len = %d): %s\n"
-                  "ret (len = %d): %s\n",
-                  this->in_.vs.seq.length (),
-                  (this->in_.vs.seq.length ()? (char *)this->in_.vs.seq[i]:"<nul>"),
-                  this->inout_->vs.seq.length (),
-                  (this->inout_->vs.seq.length ()? (char *)this->inout_->vs.seq[i]:"<nul>"),
-                  this->out_->vs.seq.length (),
-                  (this->out_->vs.seq.length ()? (char *)this->out_->vs.seq[i]:"<nul>"),
-                  this->ret_->vs.seq.length (),
-                  (this->ret_->vs.seq.length ()? (char *)this->ret_->vs.seq[i]:"<nul>")));
+                  "IN Element # %d\n"));
+      print_var_struct (this->in_[i]);
+    }
+  for (i = 0; i < this->inout_->length (); i++)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "\n*=*=*=*=*=*=*=*=*=*=\n"
+                  "INOUT Element # %d\n"));
+      print_var_struct (this->inout_[i]);
+    }
+  for (i = 0; i < this->out_->length (); i++)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "\n*=*=*=*=*=*=*=*=*=*=\n"
+                  "OUT Element # %d\n"));
+      print_var_struct (this->out_[i]);
+    }
+  for (i = 0; i < this->ret_->length (); i++)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "\n*=*=*=*=*=*=*=*=*=*=\n"
+                  "RET Element # %d\n"));
+      print_var_struct (this->ret_[i]);
     }
 }
 

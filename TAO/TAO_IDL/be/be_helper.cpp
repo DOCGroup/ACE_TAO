@@ -32,6 +32,22 @@ TAO_NL::TAO_NL (void)
 {
 }
 
+TAO_INDENT::TAO_INDENT (int do_now)
+  :  do_now_ (do_now)
+{
+}
+
+TAO_UNINDENT::TAO_UNINDENT (int do_now)
+  :  do_now_ (do_now)
+{
+}
+
+const TAO_NL be_nl;
+const TAO_INDENT be_idt;
+const TAO_INDENT be_idt_nl (1);
+const TAO_UNINDENT be_uidt;
+const TAO_UNINDENT be_uidt_nl (1);
+
 // methods of the TAO_OutStream class
 
 TAO_OutStream::TAO_OutStream (void)
@@ -135,6 +151,14 @@ TAO_OutStream::indent (void)
   return 0;
 }
 
+int
+TAO_OutStream::nl (void)
+{
+  ACE_OS::fprintf (this->fp_, "\n");
+  this->indent ();
+  return 0;
+}
+
 // macro generation
 int
 TAO_OutStream::gen_ifdef_macro (const char *flatname, const char *suffix)
@@ -213,13 +237,28 @@ TAO_OutStream::operator<< (const long num)
 }
 
 TAO_OutStream &
-TAO_OutStream::operator<< (const TAO_NL nl)
+TAO_OutStream::operator<< (const TAO_NL&)
 {
-  // Macro to avoid "warning: unused parameter" type warning.
-  ACE_UNUSED_ARG (nl);
-
   ACE_OS::fprintf (this->fp_ , "\n");
   this->indent ();
+  return *this;
+}
+
+TAO_OutStream &
+TAO_OutStream::operator<< (const TAO_INDENT& i)
+{
+  this->incr_indent (0);
+  if (i.do_now_)
+    this->nl ();
+  return *this;
+}
+
+TAO_OutStream &
+TAO_OutStream::operator<< (const TAO_UNINDENT& i)
+{
+  this->decr_indent (0);
+  if (i.do_now_)
+    this->nl ();
   return *this;
 }
 
