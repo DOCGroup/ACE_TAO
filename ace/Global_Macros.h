@@ -238,7 +238,8 @@ friend class ace_dewarn_gplusplus
             } \
         } \
      while (0)
-#if defined(__IBMCPP__) && (__IBMCPP__ >= 400)
+
+#if defined (ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS)
 #   define ACE_DES_FREE_TEMPLATE(POINTER,DEALLOCATOR,T_CLASS,T_PARAMETER) \
      do { \
           if (POINTER) \
@@ -258,7 +259,7 @@ friend class ace_dewarn_gplusplus
             } \
         } \
      while (0)
-#endif /* defined(__IBMCPP__) && (__IBMCPP__ >= 400) */
+#endif /* defined(ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS) */
 #   define ACE_DES_ARRAY_FREE_TEMPLATE(POINTER,SIZE,DEALLOCATOR,T_CLASS,T_PARAMETER) \
      do { \
           if (POINTER) \
@@ -273,7 +274,7 @@ friend class ace_dewarn_gplusplus
             } \
         } \
      while (0)
-#if defined(__IBMCPP__) && (__IBMCPP__ >= 400)
+#if defined(ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS)
 #   define ACE_DES_FREE_TEMPLATE2(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2) \
      do { \
           if (POINTER) \
@@ -293,7 +294,7 @@ friend class ace_dewarn_gplusplus
             } \
         } \
      while (0)
-#endif /* defined(__IBMCPP__) && (__IBMCPP__ >= 400) */
+#endif /* defined(ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS) */
 #   define ACE_DES_FREE_TEMPLATE3(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2,T_PARAM3) \
      do { \
           if (POINTER) \

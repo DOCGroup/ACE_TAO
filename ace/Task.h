@@ -186,7 +186,7 @@ public:
                         void *stack[] = 0,
                         size_t stack_size[] = 0,
                         ACE_thread_t thread_ids[] = 0,
-                        bool inherit_priority = false);
+                        bool inherit_priority = true);
 
   /**
    * Block until there are no more threads running in this task.
