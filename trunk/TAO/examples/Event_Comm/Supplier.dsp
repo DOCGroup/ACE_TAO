@@ -17,12 +17,13 @@ CFG=Event_Comm Supplier - Win32 Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Event_Comm Supplier - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "Event_Comm Supplier - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "Event_Comm Supplier - Win32 Release" (based on\
+ "Win32 (x86) Console Application")
+!MESSAGE "Event_Comm Supplier - Win32 Debug" (based on\
+ "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
-# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
@@ -151,7 +152,7 @@ InputPath=.\Event_Comm.idl
 InputName=Event_Comm
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -Ge 1 $(InputName).idl
+	..\..\..\bin\Relese\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -184,12 +185,13 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "Event_Comm Supplier - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
+USERDEP__EVENT="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\Event_Comm.idl
 InputName=Event_Comm
 
 BuildCmds= \
-	tao_idl -Ge 1 $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

@@ -155,6 +155,7 @@ SOURCE=.\TTest.idl
 
 !IF  "$(CFG)" == "TradingLib - Win32 Release"
 
+USERDEP__TTEST="..\..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL compiler
 InputPath=.\TTest.idl
 InputName=TTest
@@ -193,6 +194,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "TradingLib - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
+USERDEP__TTEST="..\..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL compiler
 InputPath=.\TTest.idl
 InputName=TTest
