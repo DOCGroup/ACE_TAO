@@ -1,3 +1,8 @@
+Wed Oct  6 15:10:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Test_Output.cpp:
+          Added missing includes for VxWorks
+
 Wed Oct  6 15:00:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Dynamic_Priority_Test.cpp:
