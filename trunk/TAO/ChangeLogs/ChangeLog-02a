@@ -1,3 +1,13 @@
+Thu Oct 19 17:33:35 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/ORB_Core.cpp:
+          Fixed default svc conf directives for the POA and the IORTable.
+          Thanks to James Megquier <jmegq@bbn.com> for sending the
+          patches.
+
+        * tao/GIOP_Message_Acceptors.cpp:
+          Remove obsolete comments.
+
 Thu Oct 19 15:42:13 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/TAO.dsp:
