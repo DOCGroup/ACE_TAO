@@ -10,6 +10,20 @@
 
 ACE_RCSID(TAO, Client_Priority_Policy, "$Id$")
 
+TAO_Client_Priority_Policy::TAO_Client_Priority_Policy (
+    PortableServer::POA_ptr poa,
+    const TAO::PrioritySpecification &priority_spec)
+  :  poa_ (PortableServer::POA::_duplicate (poa)),
+     priority_spec_ (priority_spec)
+{
+}
+
+TAO_Client_Priority_Policy::TAO_Client_Priority_Policy (const TAO_Client_Priority_Policy &rhs)
+  : poa_ (rhs.poa_),
+    priority_spec_ (rhs.priority_spec_)
+{
+}
+
 TAO::PrioritySpecification
 TAO_Client_Priority_Policy::priority_specification (CORBA::Environment &)
 {

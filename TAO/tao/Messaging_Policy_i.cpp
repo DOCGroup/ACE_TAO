@@ -18,6 +18,12 @@ TAO_RelativeRoundtripTimeoutPolicy_i::TAO_RelativeRoundtripTimeoutPolicy_i (
 {
 }
 
+TAO_RelativeRoundtripTimeoutPolicy_i::TAO_RelativeRoundtripTimeoutPolicy_i (const TAO_RelativeRoundtripTimeoutPolicy_i &rhs)
+  : poa_ (rhs.poa_),
+    relative_expiry_ (rhs.relative_expiry_)
+{
+}
+
 TimeBase::TimeT
 TAO_RelativeRoundtripTimeoutPolicy_i::relative_expiry (
       CORBA::Environment &
@@ -125,6 +131,12 @@ TAO_Sync_Scope_Policy::TAO_Sync_Scope_Policy (Messaging::SyncScope synchronizati
                                               PortableServer::POA_ptr poa)
   : synchronization_ (synchronization),
     poa_ (PortableServer::POA::_duplicate (poa))
+{
+}
+
+TAO_Sync_Scope_Policy::TAO_Sync_Scope_Policy (const TAO_Sync_Scope_Policy &rhs)
+  : synchronization_ (rhs.synchronization_),
+    poa_ (rhs.poa_)
 {
 }
 
