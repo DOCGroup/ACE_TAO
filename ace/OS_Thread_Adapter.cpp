@@ -2,7 +2,7 @@
 
 #include "ace/OS_Thread_Adapter.h"
 #include "ace/Thread_Hook.h"
-#include "ace/OS.h"
+#include "ace/OS.h"  // for thr_self(), etc...
 
 ACE_RCSID (ace,
            OS_Thread_Adapter,

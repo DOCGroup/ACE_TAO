@@ -31,17 +31,17 @@ ACE_Log_Msg_NT_Event_Log::open (const ACE_TCHAR *logger_key)
                                    msg_file,
                                    MAXPATHLEN))
     return -1;
-  int msg_file_length = ACE_OS::strlen (msg_file);
+  int msg_file_length = ACE_OS_String::strlen (msg_file);
 
   // Information is stored in the registry at a location based on the
   // program name.
   ACE_TCHAR reg_key [MAXPATHLEN];
-  ACE_OS::strcpy (reg_key,
-                  ACE_LIB_TEXT ("SYSTEM\\CurrentControlSet\\Services\\EventLog\\Application\\"));
-  int reg_key_length = ACE_OS::strlen(reg_key);
-  ACE_OS::strncat (reg_key,
-                   logger_key ? logger_key : ACE_Log_Msg::program_name (),
-                   MAXPATHLEN - reg_key_length);
+  ACE_OS_String::strcpy (reg_key,
+                         ACE_LIB_TEXT ("SYSTEM\\CurrentControlSet\\Services\\EventLog\\Application\\"));
+  int reg_key_length = ACE_OS_String::strlen(reg_key);
+  ACE_OS_String::strncat (reg_key,
+                          logger_key ? logger_key : ACE_Log_Msg::program_name (),
+                          MAXPATHLEN - reg_key_length);
 
   // Add the event source to the registry. Note that if this fails it
   // is not fatal. The application will still be able to write entries

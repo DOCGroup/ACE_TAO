@@ -103,9 +103,9 @@ ACE_High_Res_Timer::get_cpuinfo (void)
             {
               // If this is an Alpha chip, then the BogoMips rating is
               // usable...
-              if (ACE_OS::strncmp (arg,
-                                   "Alpha",
-                                   5) == 0)
+              if (ACE_OS_String::strncmp (arg,
+                                          "Alpha",
+                                          5) == 0)
                 {
                   supported = 1;
                   // ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT (" recognized Alpha chip...")));
@@ -117,10 +117,10 @@ ACE_High_Res_Timer::get_cpuinfo (void)
             {
               // But if we don't have the right kind of Intel chip,
               // just quit.
-              if (ACE_OS::strcmp (arg, "II") == 0
-                  || ACE_OS::strcmp (arg, "III") == 0
-                  || ACE_OS::strcmp (arg, "IV") == 0
-                  || ACE_OS::strcmp (arg, "Pro") == 0)
+              if (ACE_OS_String::strcmp (arg, "II") == 0
+                  || ACE_OS_String::strcmp (arg, "III") == 0
+                  || ACE_OS_String::strcmp (arg, "IV") == 0
+                  || ACE_OS_String::strcmp (arg, "Pro") == 0)
                 {
                   supported = 1;
                   // ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT (" recognized Pentium Pro/II chip...")));
@@ -451,10 +451,10 @@ ACE_High_Res_Timer::print_ave (const ACE_TCHAR *str,
 
   ACE_OS::write (handle,
                  str,
-                 ACE_OS::strlen (str));
+                 ACE_OS_String::strlen (str));
   ACE_OS::write (handle,
                  buf,
-                 ACE_OS::strlen (buf));
+                 ACE_OS_String::strlen (buf));
 }
 
 void
@@ -494,10 +494,10 @@ ACE_High_Res_Timer::print_total (const ACE_TCHAR *str,
 
   ACE_OS::write (handle,
                  str,
-                 ACE_OS::strlen (str));
+                 ACE_OS_String::strlen (str));
   ACE_OS::write (handle,
                  buf,
-                 ACE_OS::strlen (buf));
+                 ACE_OS_String::strlen (buf));
 }
 #endif /* !ACE_HAS_WINCE */
 

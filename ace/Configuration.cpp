@@ -220,7 +220,7 @@ ACE_Configuration::validate_name (const ACE_TCHAR* name)
        // Make sure it doesn't contain any invalid characters
        *pos != '\0';
        pos++)
-    if (ACE_OS::strchr (ACE_LIB_TEXT ("\\]["), *pos))
+    if (ACE_OS_String::strchr (ACE_LIB_TEXT ("\\]["), *pos))
       return -1;
 
   // Make sure its not too long.
@@ -983,10 +983,10 @@ ACE_Configuration_Win32Registry::resolve_key (HKEY hKey,
   // recurse through the path
   ACE_TCHAR *temp_path = 0;
   ACE_NEW_RETURN (temp_path,
-                  ACE_TCHAR[ACE_OS::strlen (path) + 1],
+                  ACE_TCHAR[ACE_OS_String::strlen (path) + 1],
                   0);
   ACE_Auto_Basic_Array_Ptr<ACE_TCHAR> pData (temp_path);
-  ACE_OS::strcpy (pData.get (), path);
+  ACE_OS_String::strcpy (pData.get (), path);
   ACE_Tokenizer parser (pData.get ());
   parser.delimiter_replace ('\\', '\0');
   parser.delimiter_replace ('/', '\0');
@@ -1132,13 +1132,13 @@ ACE_Configuration_ExtId& ACE_Configuration_ExtId::operator= (const ACE_Configura
 int
 ACE_Configuration_ExtId::operator == (const ACE_Configuration_ExtId& rhs) const
 {
-  return (ACE_OS::strcmp (name_, rhs.name_) == 0);
+  return (ACE_OS_String::strcmp (name_, rhs.name_) == 0);
 }
 
 int
 ACE_Configuration_ExtId::operator != (const ACE_Configuration_ExtId& rhs) const
 {
-  return (ACE_OS::strcmp (name_, rhs.name_) != 0);
+  return (ACE_OS_String::strcmp (name_, rhs.name_) != 0);
 }
 
 u_long
@@ -1208,14 +1208,14 @@ ACE_Configuration_Section_Key_Heap::ACE_Configuration_Section_Key_Heap (const AC
     value_iter_ (0),
     section_iter_ (0)
 {
-  path_ = ACE_OS::strdup (path);
+  path_ = ACE_OS_String::strdup (path);
 }
 
 ACE_Configuration_Section_Key_Heap::~ACE_Configuration_Section_Key_Heap ()
 {
   delete value_iter_;
   delete section_iter_;
-  ACE_OS::free (path_);
+  ACE_OS_Memory::free (path_);
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -1261,7 +1261,7 @@ ACE_Configuration_Heap::open (const ACE_TCHAR* file_name,
   default_map_size_ = default_map_size;
 
   // Make sure that the file name is of the legal length.
-  if (ACE_OS::strlen (file_name) >= MAXNAMELEN + MAXPATHLEN)
+  if (ACE_OS_String::strlen (file_name) >= MAXNAMELEN + MAXPATHLEN)
     {
       errno = ENAMETOOLONG;
       return -1;
@@ -1386,8 +1386,8 @@ ACE_Configuration_Heap::add_section (const ACE_Configuration_Section_Key& base,
   section += sub_section;
 
   // Add it to the base section
-  ACE_TCHAR* pers_name = (ACE_TCHAR *) allocator_->malloc ((ACE_OS::strlen (sub_section) + 1) * sizeof (ACE_TCHAR));
-  ACE_OS::strcpy (pers_name, sub_section);
+  ACE_TCHAR* pers_name = (ACE_TCHAR *) allocator_->malloc ((ACE_OS_String::strlen (sub_section) + 1) * sizeof (ACE_TCHAR));
+  ACE_OS_String::strcpy (pers_name, sub_section);
   ACE_Configuration_ExtId SSExtId (pers_name);
   if (IntId.section_hash_map_->bind (SSExtId, ignored, allocator_))
     {
@@ -1415,7 +1415,7 @@ ACE_Configuration_Heap::new_section (const ACE_TString& section,
   else
     {
       // Populate memory with data.
-      ACE_OS::strcpy (ptr, section.fast_rep ());
+      ACE_OS_String::strcpy (ptr, section.fast_rep ());
 
       void *value_hash_map = 0;
       size_t map_size = sizeof (VALUE_MAP);
@@ -1754,7 +1754,7 @@ ACE_Configuration_Heap::set_string_value (const ACE_Configuration_Section_Key& k
       // Allocate the new value in this heap
       ACE_TCHAR* pers_value =
         (ACE_TCHAR *) allocator_->malloc ((value.length () + 1) * sizeof (ACE_TCHAR));
-      ACE_OS::strcpy (pers_value, value.fast_rep ());
+      ACE_OS_String::strcpy (pers_value, value.fast_rep ());
       ACE_Configuration_Value_IntId new_value_int (pers_value);
       entry->int_id_ = new_value_int;
     }
@@ -1762,11 +1762,11 @@ ACE_Configuration_Heap::set_string_value (const ACE_Configuration_Section_Key& k
     {
       // it doesn't exist, bind it
       ACE_TCHAR* pers_name =
-        (ACE_TCHAR *) allocator_->malloc ((ACE_OS::strlen (name) + 1) * sizeof (ACE_TCHAR));
-      ACE_OS::strcpy (pers_name, name);
+        (ACE_TCHAR *) allocator_->malloc ((ACE_OS_String::strlen (name) + 1) * sizeof (ACE_TCHAR));
+      ACE_OS_String::strcpy (pers_name, name);
       ACE_TCHAR* pers_value =
         (ACE_TCHAR *) allocator_->malloc ((value.length () + 1) * sizeof (ACE_TCHAR));
-      ACE_OS::strcpy (pers_value, value.fast_rep ());
+      ACE_OS_String::strcpy (pers_value, value.fast_rep ());
       ACE_Configuration_ExtId item_name (pers_name);
       ACE_Configuration_Value_IntId item_value (pers_value);
       if (section_int.value_hash_map_->bind (item_name, item_value, allocator_))
@@ -1814,8 +1814,8 @@ ACE_Configuration_Heap::set_integer_value (const ACE_Configuration_Section_Key& 
     {
       // it doesn't exist, bind it
       ACE_TCHAR* pers_name =
-        (ACE_TCHAR *) allocator_->malloc ((ACE_OS::strlen (name) + 1) * sizeof (ACE_TCHAR));
-      ACE_OS::strcpy (pers_name, name);
+        (ACE_TCHAR *) allocator_->malloc ((ACE_OS_String::strlen (name) + 1) * sizeof (ACE_TCHAR));
+      ACE_OS_String::strcpy (pers_name, name);
       ACE_Configuration_ExtId item_name (pers_name);
       ACE_Configuration_Value_IntId item_value (value);
       if (section_int.value_hash_map_->bind (item_name, item_value, allocator_))
@@ -1860,7 +1860,7 @@ ACE_Configuration_Heap::set_binary_value (const ACE_Configuration_Section_Key& k
       entry->int_id_.free (allocator_);
       // Allocate the new value in this heap
       ACE_TCHAR* pers_value = (ACE_TCHAR *) allocator_->malloc (length);
-      ACE_OS::memcpy (pers_value, data, length);
+      ACE_OS_String::memcpy (pers_value, data, length);
       ACE_Configuration_Value_IntId new_value_int (pers_value, length);
       entry->int_id_ = new_value_int;
     }
@@ -1868,10 +1868,10 @@ ACE_Configuration_Heap::set_binary_value (const ACE_Configuration_Section_Key& k
     {
       // it doesn't exist, bind it
       ACE_TCHAR* pers_name =
-        (ACE_TCHAR *) allocator_->malloc ((ACE_OS::strlen (name) + 1) * sizeof (ACE_TCHAR));
-      ACE_OS::strcpy (pers_name, name);
+        (ACE_TCHAR *) allocator_->malloc ((ACE_OS_String::strlen (name) + 1) * sizeof (ACE_TCHAR));
+      ACE_OS_String::strcpy (pers_name, name);
       ACE_TCHAR* pers_value = (ACE_TCHAR *) allocator_->malloc (length);
-      ACE_OS::memcpy (pers_value, data, length);
+      ACE_OS_String::memcpy (pers_value, data, length);
       ACE_Configuration_ExtId item_name (pers_name);
       ACE_Configuration_Value_IntId item_value (pers_value, length);
       if (section_int.value_hash_map_->bind (item_name, item_value, allocator_))
@@ -1897,11 +1897,11 @@ ACE_Configuration_Heap::set_binary_value (const ACE_Configuration_Section_Key& k
     {
       // it doesn't exist, bind it
       ACE_TCHAR* pers_name =
-        (ACE_TCHAR *) allocator_->malloc ((ACE_OS::strlen (name) + 1) * sizeof (ACE_TCHAR));
-      ACE_OS::strcpy (pers_name, name);
+        (ACE_TCHAR *) allocator_->malloc ((ACE_OS_String::strlen (name) + 1) * sizeof (ACE_TCHAR));
+      ACE_OS_String::strcpy (pers_name, name);
       ACE_TCHAR* pers_value =
       (ACE_TCHAR *) allocator_->malloc (length);
-      ACE_OS::memcpy (pers_value, data, length);
+      ACE_OS_String::memcpy (pers_value, data, length);
       ACE_Configuration_ExtId VExtId (pers_name);
       ACE_Configuration_Value_IntId VIntId (pers_value, length);
       if (IntId.value_hash_map_->bind (VExtId, VIntId, allocator_))
@@ -1918,7 +1918,7 @@ ACE_Configuration_Heap::set_binary_value (const ACE_Configuration_Section_Key& k
       VIntIdFind.free (allocator_);
       // Assign a new value
       ACE_TCHAR* pers_value = (ACE_TCHAR *) allocator_->malloc (length);
-      ACE_OS::memcpy (pers_value, data, length);
+      ACE_OS_String::memcpy (pers_value, data, length);
       VIntIdFind = ACE_Configuration_Value_IntId (pers_value, length);
     }
 */
@@ -2029,7 +2029,7 @@ ACE_Configuration_Heap::get_binary_value (const ACE_Configuration_Section_Key& k
 
   // Make a copy
   ACE_NEW_RETURN (data, char[VIntId.length_], -5);
-  ACE_OS::memcpy (data, VIntId.data_, VIntId.length_);
+  ACE_OS_String::memcpy (data, VIntId.data_, VIntId.length_);
   length = VIntId.length_;
   return 0;
 }

@@ -240,9 +240,9 @@ ACE_Mem_Map::open (const ACE_TCHAR *file_name,
 {
   ACE_TRACE ("ACE_Mem_Map::open");
 
-  ACE_OS::strsncpy (this->filename_,
-                    file_name,
-                    MAXPATHLEN);
+  ACE_OS_String::strsncpy (this->filename_,
+                           file_name,
+                           MAXPATHLEN);
 
 #if defined (CHORUS)
   this->handle_ = ACE_OS::shm_open (file_name, flags, mode, sa);
@@ -296,7 +296,7 @@ ACE_Mem_Map::ACE_Mem_Map (void)
     close_handle_ (0)
 {
   ACE_TRACE ("ACE_Mem_Map::ACE_Mem_Map");
-  ACE_OS::memset (this->filename_, 0, sizeof this->filename_);
+  ACE_OS_String::memset (this->filename_, 0, sizeof this->filename_);
 }
 
 // Map a file specified by FILE_NAME.
@@ -349,9 +349,9 @@ ACE_Mem_Map::ACE_Mem_Map (ACE_HANDLE handle,
 {
   ACE_TRACE ("ACE_Mem_Map::ACE_Mem_Map");
 
-  ACE_OS::memset (this->filename_,
-                  0,
-                  sizeof this->filename_);
+  ACE_OS_String::memset (this->filename_,
+                         0,
+                         sizeof this->filename_);
   if (this->map (handle,
                  len,
                  prot,

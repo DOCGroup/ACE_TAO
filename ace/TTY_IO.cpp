@@ -6,7 +6,7 @@ ACE_RCSID(ace, TTY_IO, "$Id$")
 
 ACE_TTY_IO::Serial_Params::Serial_Params (void)
 {
-  ACE_OS::memset (this, 0, sizeof *this);
+  ACE_OS_String::memset (this, 0, sizeof *this);
 }
 
 // Interface for reading/writing serial device parameters
@@ -211,7 +211,7 @@ ACE_TTY_IO::control (Control_Mode cmd,
       if (arg->parityenb)
         {
           c_cflag |= PARENB;
-          if (ACE_OS::strcasecmp (arg->paritymode, "odd") == 0)
+          if (ACE_OS_String::strcasecmp (arg->paritymode, "odd") == 0)
             c_cflag |= PARODD;
         }
 
@@ -355,13 +355,13 @@ ACE_TTY_IO::control (Control_Mode cmd,
       if (arg->parityenb)
         {
           dcb.fParity = TRUE;
-          if (ACE_OS::strcasecmp (arg->paritymode, "odd") == 0)
+          if (ACE_OS_String::strcasecmp (arg->paritymode, "odd") == 0)
             dcb.Parity = ODDPARITY;
-          else if (ACE_OS::strcasecmp (arg->paritymode, "even") == 0)
+          else if (ACE_OS_String::strcasecmp (arg->paritymode, "even") == 0)
             dcb.Parity = EVENPARITY;
-          else if (ACE_OS::strcasecmp (arg->paritymode, "mark") == 0)
+          else if (ACE_OS_String::strcasecmp (arg->paritymode, "mark") == 0)
             dcb.Parity = MARKPARITY;
-          else if (ACE_OS::strcasecmp (arg->paritymode, "space") == 0)
+          else if (ACE_OS_String::strcasecmp (arg->paritymode, "space") == 0)
             dcb.Parity = SPACEPARITY;
           else
             dcb.Parity = NOPARITY;

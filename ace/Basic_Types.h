@@ -53,36 +53,31 @@
 #   pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
+# include "ace/ACE_export.h"
+# include "ace/ace_limits.h"
+
 // Pull in definitions
-# include /**/ <limits.h>   // Integer limits
+//# include /**/ <limits.h>   // Integer limits
 # include /**/ <float.h>    // Floating point limits
 # include /**/ <stdlib.h>   // Other types
 
 # if defined(ACE_LACKS_LONGLONG_T)
-#   include /**/ <stdarg.h> // LynxOS requires this before stdio.h
-#   include /**/ <stdio.h>  // For long long emulation
+#   include "ace/ace_stdio.h"
 # endif  /* ACE_LACKS_LONGLONG_T */
 
+
+
+#if 0
 # if !defined (ACE_LACKS_SYS_TYPES_H)
-#   include /**/ <sys/types.h>
+#   include "ace/ace_sys_types.h"
 # endif  /* ACE_LACKS_SYS_TYPES_H */
 
 # if !defined (ACE_LACKS_PARAM_H)
 #  include /**/ <sys/param.h>
 # endif /* ACE_LACKS_PARAM_H */
+#endif /* 0 */
 
-# include "ace/ACE_export.h"
 
-// Pick up MAXPATHLEN without need of OS.h.
-#if !defined (MAXPATHLEN)
-#  if defined (ACE_WIN32)
-#    define MAXPATHLEN  _MAX_PATH
-#  elif defined (_POSIX_PATH_MAX)
-#     define MAXPATHLEN _POSIX_PATH_MAX
-#  else
-#     define MAXPATHLEN 1024
-#  endif /* ACE_WIN32 */
-#endif /* MAXPATHLEN */
 
 // A char always has 1 byte, by definition.
 # define ACE_SIZEOF_CHAR 1
@@ -190,6 +185,12 @@
 #   endif /* ! ACE_WIN32 && ! ACE_LACKS_LONGLONG_T */
 # endif /* !defined (ACE_SIZEOF_LONG_LONG) */
 
+// Moved from OS.h dah
+# if defined (ACE_PSOS_TM)
+typedef long long longlong_t;
+typedef long      id_t;
+# endif /* ACE_PSOS_TM */
+
 // The sizes of the commonly implemented types are now known.  Set up
 // typedefs for whatever we can.  Some of these are needed for certain cases
 // of ACE_UINT64, so do them before the 64-bit stuff.
@@ -287,13 +288,13 @@ typedef ACE_UINT16 ACE_USHORT16;
 
 // If the platform lacks a long long, define one.
 # if defined (ACE_LACKS_LONGLONG_T)
-# if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
+#   if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
 // Forward declaration for streams
-#   include "ace/iosfwd.h"
-# else /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
+#     include "ace/iosfwd.h"
+#   else /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
 // Else they will get all the stream header files
-#   include "ace/streams.h"
-# endif /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
+#     include "ace/streams.h"
+#   endif /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
 
 /**
  * @class ACE_U_LongLong
@@ -582,6 +583,11 @@ typedef ACE_UINT16 ACE_USHORT16;
 #define ACE_FLT_MAX 3.402823466e+38F
 #define ACE_DBL_MAX 1.7976931348623158e+308
 
+
+
+
+// This doesn't belong here, so turn it off until I figure out where it goes.
+#if 0 
 // Byte-order (endian-ness) determination.
 # if defined (BYTE_ORDER)
 #   if (BYTE_ORDER == LITTLE_ENDIAN)
@@ -617,48 +623,40 @@ typedef ACE_UINT16 ACE_USHORT16;
 #   endif
 # endif /* ! BYTE_ORDER && ! __BYTE_ORDER */
 
+// Add some typedefs and macros to enhance Win32 conformance...
+#   if !defined (LPSECURITY_ATTRIBUTES)
+#     define LPSECURITY_ATTRIBUTES int
+#   endif /* !defined LPSECURITY_ATTRIBUTES */
+#   if !defined (GENERIC_READ)
+#     define GENERIC_READ 0
+#   endif /* !defined GENERIC_READ */
+#   if !defined (FILE_SHARE_READ)
+#     define FILE_SHARE_READ 0
+#   endif /* !defined FILE_SHARE_READ */
+#   if !defined (OPEN_EXISTING)
+#     define OPEN_EXISTING 0
+#   endif /* !defined OPEN_EXISTING */
+#   if !defined (FILE_ATTRIBUTE_NORMAL)
+#     define FILE_ATTRIBUTE_NORMAL 0
+#   endif /* !defined FILE_ATTRIBUTE_NORMAL */
+#   if !defined (MAXIMUM_WAIT_OBJECTS)
+#     define MAXIMUM_WAIT_OBJECTS 0
+#   endif /* !defined MAXIMUM_WAIT_OBJECTS */
+#   if !defined (FILE_FLAG_OVERLAPPED)
+#     define FILE_FLAG_OVERLAPPED 0
+#   endif /* !defined FILE_FLAG_OVERLAPPED */
+#   if !defined (FILE_FLAG_SEQUENTIAL_SCAN)
+#     define FILE_FLAG_SEQUENTIAL_SCAN 0
+#   endif   /* FILE_FLAG_SEQUENTIAL_SCAN */
 
-// These were moved from OS.h.
-#if defined (ACE_HAS_THREADS)
-#  if defined (ACE_HAS_PTHREADS)
-#    if defined (ACE_HAS_TSS_EMULATION)
-       typedef u_long ACE_thread_key_t;
-#    else  /* ! ACE_HAS_TSS_EMULATION */
-#      include /**/ <pthread.h>
-       typedef pthread_key_t ACE_thread_key_t;
-#    endif /* ! ACE_HAS_TSS_EMULATION */
-#  elif defined (ACE_HAS_STHREADS)
-     // Solaris threads, without PTHREADS.
-     // Typedefs to help compatibility with Windows NT and Pthreads.
-     typedef thread_t ACE_thread_t;
-     typedef thread_key_t ACE_thread_key_t;
-//     typedef mutex_t ACE_mutex_t;
-#  elif defined (ACE_PSOS)
-#    if defined (ACE_PSOS_HAS_TSS)
-       typedef u_long ACE_thread_key_t;
-#    else
-       typedef u_int ACE_thread_key_t;
-#    endif /* ACE_PSOS_HAS_TSS */
-#  elif defined (VXWORKS)
-     typedef u_int ACE_thread_key_t;
-#  elif defined (ACE_WIN32)
-#    if !defined(__MINGW32__)
-       typedef long pid_t;
-#    endif /* __MINGW32__ */
-#    if defined (ACE_HAS_TSS_EMULATION)
-//     typedef DWORD ACE_OS_thread_key_t;
-       typedef u_int ACE_thread_key_t;
-#    else  /* ! ACE_HAS_TSS_EMULATION */
-       typedef DWORD ACE_thread_key_t;
-#    endif /* ! ACE_HAS_TSS_EMULATION */
-#  endif
-#else
-   typedef u_int ACE_thread_key_t;
-#endif
+
 
 #if !defined (ACE_HAS_SSIZE_T)
   typedef int ssize_t;
 #endif /* ACE_HAS_SSIZE_T */
+
+#endif /* 0 */
+
 
 # if defined (__ACE_INLINE__)
 #   include "ace/Basic_Types.i"

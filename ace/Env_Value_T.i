@@ -1,5 +1,7 @@
 // $Id$
 
+#include "ace/OS.h" // for getenv()
+
 template <class T> ACE_INLINE
 ACE_Env_Value<T>::operator T (void)
 {

@@ -27,7 +27,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SString.h"
+#include "ace/Basic_Types.h"
+#include "ace/ace_sys_param.h"
 
 /**
  * @class ACE_Name_Request

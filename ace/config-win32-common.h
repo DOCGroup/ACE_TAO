@@ -504,5 +504,82 @@ typedef unsigned long long ACE_UINT64;
 #define SO_REUSEPORT 0x0400  // We just have to pick a value that won't conflict
 #endif
 
+
+
+#if defined (ACE_HAS_WTHREADS)
+
+typedef CRITICAL_SECTION ACE_thread_mutex_t;
+
+typedef struct
+{
+  int type_; // Either USYNC_THREAD or USYNC_PROCESS
+  union
+  {
+    HANDLE proc_mutex_;
+    CRITICAL_SECTION thr_mutex_;
+  };
+} ACE_mutex_t;
+
+// Wrapper for NT Events.
+typedef HANDLE ACE_event_t;
+
+#     if defined (ACE_WIN32)
+// This can probably get _wider_ as more types are defined in PACE.
+// ie: see above ACE_mutex_t
+
+//@@ ACE_USES_WINCE_SEMA_SIMULATION is used to debug
+//   semaphore simulation on WinNT.  It should be
+//   changed to ACE_USES_HAS_WINCE at some later point.
+#       if !defined (ACE_USES_WINCE_SEMA_SIMULATION)
+typedef HANDLE ACE_sema_t;
+#       else
+/**
+ * @class ACE_sema_t
+ *
+ * @brief Semaphore simulation for Windows CE.
+ */
+class ACE_OS_Export ACE_sema_t
+{
+public:
+  /// Serializes access to <count_>.
+  ACE_thread_mutex_t lock_;
+
+  /// This event is signaled whenever the count becomes non-zero.
+  ACE_event_t count_nonzero_;
+
+  /// Current count of the semaphore.
+  u_int count_;
+};
+
+#       endif /* ACE_USES_WINCE_SEMA_SIMULATION */
+#     endif /* defined (ACE_WIN32) */
+
+// These need to be different values, neither of which can be 0...
+#     define USYNC_THREAD 1
+#     define USYNC_PROCESS 2
+
+#     define THR_CANCEL_DISABLE      0
+#     define THR_CANCEL_ENABLE       0
+#     define THR_CANCEL_DEFERRED     0
+#     define THR_CANCEL_ASYNCHRONOUS 0
+#     define THR_DETACHED            0x02000000 /* ignore in most places */
+#     define THR_BOUND               0          /* ignore in most places */
+#     define THR_NEW_LWP             0          /* ignore in most places */
+#     define THR_DAEMON              0          /* ignore in most places */
+#     define THR_JOINABLE            0          /* ignore in most places */
+#     define THR_SUSPENDED   CREATE_SUSPENDED
+#     define THR_USE_AFX             0x01000000
+#     define THR_SCHED_FIFO          0
+#     define THR_SCHED_RR            0
+#     define THR_SCHED_DEFAULT       0
+#     define THR_SCOPE_PROCESS       0
+#     define THR_SCOPE_SYSTEM        0
+#   endif /* ACE_HAS_PTHREADS / STHREADS / PSOS / VXWORKS / WTHREADS */
+
+
+
+
+
+
 #include "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_COMMON_H */

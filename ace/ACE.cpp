@@ -167,9 +167,7 @@ ACE::select (int width,
 int
 ACE::terminate_process (pid_t pid)
 {
-#if defined (ACE_HAS_PACE)
-  return pace_kill (pid, 9);
-#elif defined (ACE_HAS_PHARLAP)
+#if defined (ACE_HAS_PHARLAP)
   ACE_UNUSED_ARG (pid);
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_WIN32)
@@ -205,22 +203,13 @@ ACE::terminate_process (pid_t pid)
       return -1;
 #else
   return ACE_OS::kill (pid, 9);
-#endif /* ACE_HAS_PACE */
+#endif /* ACE_HAS_PHARLAP */
 }
 
 int
 ACE::process_active (pid_t pid)
 {
-#if defined (ACE_HAS_PACE)
-  int retval = pace_kill (pid, 0);
-
-  if (retval == 0)
-    return 1;
-  else if (errno == ESRCH)
-    return 0;
-  else
-    return -1;
-#elif !defined(ACE_WIN32)
+#if !defined(ACE_WIN32)
   int retval = ACE_OS::kill (pid, 0);
 
   if (retval == 0)
@@ -248,20 +237,20 @@ ACE::process_active (pid_t pid)
       ::CloseHandle (process_handle);
       return result;
     }
-#endif /* ACE_HAS_PACE */
+#endif /* !ACE_WIN32 */
 }
 
 const ACE_TCHAR *
 ACE::execname (const ACE_TCHAR *old_name)
 {
 #if defined (ACE_WIN32)
-  if (ACE_OS::strstr (old_name, ACE_LIB_TEXT (".exe")) == 0)
+  if (ACE_OS_String::strstr (old_name, ACE_LIB_TEXT (".exe")) == 0)
     {
       ACE_TCHAR *new_name;
 
       size_t size =
-        ACE_OS::strlen (old_name)
-        + ACE_OS::strlen (ACE_LIB_TEXT (".exe"))
+        ACE_OS_String::strlen (old_name)
+        + ACE_OS_String::strlen (ACE_LIB_TEXT (".exe"))
         + 1;
 
       ACE_NEW_RETURN (new_name,
@@ -269,10 +258,10 @@ ACE::execname (const ACE_TCHAR *old_name)
                       0);
       ACE_TCHAR *end = new_name;
 
-      end = ACE_OS::strecpy (new_name, old_name);
+      end = ACE_OS_String::strecpy (new_name, old_name);
 
       // Concatenate the .exe suffix onto the end of the executable.
-      ACE_OS::strcpy (end, ACE_LIB_TEXT (".exe"));
+      ACE_OS_String::strcpy (end, ACE_LIB_TEXT (".exe"));
 
       return new_name;
     }
@@ -520,7 +509,7 @@ const ACE_TCHAR *
 ACE::basename (const ACE_TCHAR *pathname, ACE_TCHAR delim)
 {
   ACE_TRACE ("ACE::basename");
-  const ACE_TCHAR *temp = ACE_OS::strrchr (pathname, delim);
+  const ACE_TCHAR *temp = ACE_OS_String::strrchr (pathname, delim);
 
   if (temp == 0)
     return pathname;
@@ -534,7 +523,7 @@ ACE::dirname (const ACE_TCHAR *pathname, ACE_TCHAR delim)
   ACE_TRACE ("ACE::dirname");
   static ACE_TCHAR return_dirname[MAXPATHLEN + 1];
 
-  const ACE_TCHAR *temp = ACE_OS::strrchr (pathname, delim);
+  const ACE_TCHAR *temp = ACE_OS_String::strrchr (pathname, delim);
 
   if (temp == 0)
     {
@@ -551,9 +540,9 @@ ACE::dirname (const ACE_TCHAR *pathname, ACE_TCHAR delim)
       if (len > (sizeof return_dirname / sizeof (ACE_TCHAR)))
         len = sizeof return_dirname / sizeof (ACE_TCHAR);
 
-      ACE_OS::strsncpy (return_dirname,
-                        pathname,
-                        len);
+      ACE_OS_String::strsncpy (return_dirname,
+                               pathname,
+                               len);
       return return_dirname;
     }
 }
@@ -2599,17 +2588,17 @@ ACE::timestamp (ACE_TCHAR date_and_time[],
                    timebuf,
                    sizeof timebuf);
   // date_and_timelen > sizeof timebuf!
-  ACE_OS::strsncpy (date_and_time,
-                    timebuf,
-                    date_and_timelen);
+  ACE_OS_String::strsncpy (date_and_time,
+                           timebuf,
+                           date_and_timelen);
   char yeartmp[5];
-  ACE_OS::strsncpy (yeartmp,
-                    &date_and_time[20],
-                    5);
+  ACE_OS_String::strsncpy (yeartmp,
+                           &date_and_time[20],
+                           5);
   char timetmp[9];
-  ACE_OS::strsncpy (timetmp,
-                    &date_and_time[11],
-                    9);
+  ACE_OS_String::strsncpy (timetmp,
+                           &date_and_time[11],
+                           9);
   ACE_OS::sprintf (&date_and_time[11],
                    "%s %s.%06ld",
                    yeartmp,
@@ -3017,7 +3006,7 @@ ACE::set_handle_limit (int new_limit)
 #if !defined (ACE_LACKS_RLIMIT) && defined (RLIMIT_NOFILE)
   struct rlimit rl;
 
-  ACE_OS::memset ((void *) &rl, 0, sizeof rl);
+  ACE_OS_String::memset ((void *) &rl, 0, sizeof rl);
   int r = ACE_OS::getrlimit (RLIMIT_NOFILE, &rl);
   if (r == 0)
     max_limit = rl.rlim_max;
@@ -3272,9 +3261,9 @@ ACE::strndup (const char *str, size_t n)
 
   char *s;
   ACE_ALLOCATOR_RETURN (s,
-                        (char *) ACE_OS::malloc (len + 1),
+                        (char *) ACE_OS_Memory::malloc (len + 1),
                         0);
-  return ACE_OS::strsncpy (s, str, len + 1);
+  return ACE_OS_String::strsncpy (s, str, len + 1);
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -3295,10 +3284,10 @@ ACE::strndup (const wchar_t *str, size_t n)
   wchar_t *s;
   ACE_ALLOCATOR_RETURN (s,
                         ACE_static_cast (wchar_t *,
-                                         ACE_OS::malloc ((len + 1)
-                                                         * sizeof (wchar_t))),
+                                         ACE_OS_Memory::malloc ((len + 1)
+                                                                * sizeof (wchar_t))),
                         0);
-  return ACE_OS::strsncpy (s, str, len + 1);
+  return ACE_OS_String::strsncpy (s, str, len + 1);
 }
 #endif /* ACE_HAS_WCHAR */
 
@@ -3320,7 +3309,7 @@ ACE::strnnew (const char *str, size_t n)
   ACE_NEW_RETURN (s,
                   char[len + 1],
                   0);
-  return ACE_OS::strsncpy (s, str, len + 1);
+  return ACE_OS_String::strsncpy (s, str, len + 1);
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -3342,7 +3331,7 @@ ACE::strnnew (const wchar_t *str, size_t n)
   ACE_NEW_RETURN (s,
                   wchar_t[len + 1],
                   0);
-  return ACE_OS::strsncpy (s, str, len + 1);
+  return ACE_OS_String::strsncpy (s, str, len + 1);
 }
 #endif /* ACE_HAS_WCHAR */
 
@@ -3373,12 +3362,12 @@ ACE::strnew (const char *s)
     return 0;
   char *t = 0;
   ACE_NEW_RETURN (t, 
-                  char [::strlen (s) + 1],
+                  char [ACE_OS_String::strlen (s) + 1],
                   0);
   if (t == 0)
     return 0;
   else
-    return ACE_OS::strcpy (t, s);
+    return ACE_OS_String::strcpy (t, s);
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -3394,7 +3383,7 @@ ACE::strnew (const wchar_t *s)
   if (t == 0)
     return 0;
   else
-    return ACE_OS::strcpy (t, s);
+    return ACE_OS_String::strcpy (t, s);
 }
 #endif /* ACE_HAS_WCHAR */
 

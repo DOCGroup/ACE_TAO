@@ -224,10 +224,10 @@ ACE_SOCK_Acceptor::shared_open (const ACE_Addr &local_sap,
   if (protocol_family == PF_INET6)
     {
       sockaddr_in6 local_inet6_addr;
-      ACE_OS::memset (ACE_reinterpret_cast (void *,
-                                            &local_inet6_addr),
-                      0,
-                      sizeof local_inet6_addr);
+      ACE_OS_String::memset (ACE_reinterpret_cast (void *,
+                                                   &local_inet6_addr),
+                             0,
+                             sizeof local_inet6_addr);
 
       if (local_sap == ACE_Addr::sap_any)
         {
@@ -253,10 +253,10 @@ ACE_SOCK_Acceptor::shared_open (const ACE_Addr &local_sap,
   if (protocol_family == PF_INET)
     {
       sockaddr_in local_inet_addr;
-      ACE_OS::memset (ACE_reinterpret_cast (void *,
-                                            &local_inet_addr),
-                      0,
-                      sizeof local_inet_addr);
+      ACE_OS_String::memset (ACE_reinterpret_cast (void *,
+                                                   &local_inet_addr),
+                             0,
+                             sizeof local_inet_addr);
 
       if (local_sap == ACE_Addr::sap_any)
         {

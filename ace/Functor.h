@@ -226,7 +226,7 @@ ACE_TEMPLATE_SPECIALIZATION
 class ACE_Export ACE_Equal_To<const ACE_TCHAR *>
 {
 public:
-  /// Simply calls ACE_OS::strcmp
+  /// Simply calls ACE_OS_String::strcmp
   int operator () (const ACE_TCHAR *lhs,
                    const ACE_TCHAR *rhs) const;
 };
@@ -241,7 +241,7 @@ ACE_TEMPLATE_SPECIALIZATION
 class ACE_Export ACE_Equal_To<ACE_TCHAR *>
 {
 public:
-  /// Simply calls ACE_OS::strcmp
+  /// Simply calls ACE_OS_String::strcmp
   int operator () (const ACE_TCHAR *lhs,
                    const ACE_TCHAR *rhs) const;
 };
@@ -332,7 +332,7 @@ ACE_TEMPLATE_SPECIALIZATION
 class ACE_Export ACE_Less_Than<const ACE_TCHAR *>
 {
 public:
-  /// Simply calls ACE_OS::strcmp
+  /// Simply calls ACE_OS_String::strcmp
   int operator () (const ACE_TCHAR *lhs,
                    const ACE_TCHAR *rhs) const;
 };
@@ -347,7 +347,7 @@ ACE_TEMPLATE_SPECIALIZATION
 class ACE_Export ACE_Less_Than<ACE_TCHAR *>
 {
 public:
-  /// Simply calls ACE_OS::strcmp
+  /// Simply calls ACE_OS_String::strcmp
   int operator () (const ACE_TCHAR *lhs,
                    const ACE_TCHAR *rhs) const;
 };
@@ -364,7 +364,7 @@ ACE_TEMPLATE_SPECIALIZATION
 class ACE_Export ACE_Less_Than<const ACE_ANTI_TCHAR *>
 {
 public:
-  /// Simply calls ACE_OS::strcmp
+  /// Simply calls ACE_OS_String::strcmp
   int operator () (const ACE_ANTI_TCHAR *lhs,
                    const ACE_ANTI_TCHAR *rhs) const;
 };
@@ -379,7 +379,7 @@ ACE_TEMPLATE_SPECIALIZATION
 class ACE_Export ACE_Less_Than<ACE_ANTI_TCHAR *>
 {
 public:
-  /// Simply calls ACE_OS::strcmp
+  /// Simply calls ACE_OS_String::strcmp
   int operator () (const ACE_ANTI_TCHAR *lhs,
                    const ACE_ANTI_TCHAR *rhs) const;
 };
@@ -419,7 +419,7 @@ ACE_TEMPLATE_SPECIALIZATION
 class ACE_Export ACE_Equal_To<const ACE_ANTI_TCHAR *>
 {
 public:
-  /// Simply calls ACE_OS::strcmp
+  /// Simply calls ACE_OS_String::strcmp
   int operator () (const ACE_ANTI_TCHAR *lhs,
                    const ACE_ANTI_TCHAR *rhs) const;
 };
@@ -434,7 +434,7 @@ ACE_TEMPLATE_SPECIALIZATION
 class ACE_Export ACE_Equal_To<ACE_ANTI_TCHAR *>
 {
 public:
-  /// Simply calls ACE_OS::strcmp
+  /// Simply calls ACE_OS_String::strcmp
   int operator () (const ACE_ANTI_TCHAR *lhs,
                    const ACE_ANTI_TCHAR *rhs) const;
 };

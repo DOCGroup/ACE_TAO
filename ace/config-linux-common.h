@@ -224,7 +224,8 @@
 // Platform defines struct timespec but not timespec_t
 #define ACE_LACKS_TIMESPEC_T
 
-#define ACE_LACKS_STRRECVFD
+// need to figure out when it is and isn't defined. 
+//#define ACE_LACKS_STRRECVFD
 
 //#define ACE_LACKS_MSYNC
 
@@ -254,6 +255,8 @@
 
 // Compiler/platform defines the sig_atomic_t typedef.
 #define ACE_HAS_SIG_ATOMIC_T
+
+#define ACE_HAS_STRBUF_T
 
 // Compiler/platform defines a union semun for SysV shared memory.
 #define ACE_HAS_SEMUN

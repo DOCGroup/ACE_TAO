@@ -164,9 +164,9 @@ ACE_Thread::disablecancel (struct cancel_state *old_state)
                                            &old_cstate);
   if (result == 0 && old_state != 0)
     {
-      ACE_OS::memset (old_state,
-                      0,
-                      sizeof (old_state));
+      ACE_OS_String::memset (old_state,
+                             0,
+                             sizeof (old_state));
       old_state->cancelstate = old_cstate;
     }
 

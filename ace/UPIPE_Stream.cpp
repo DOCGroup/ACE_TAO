@@ -125,9 +125,9 @@ ACE_UPIPE_Stream::recv (char *buffer,
 	  {
 	    // The remaining data is not enough.
 
-	    ACE_OS::memcpy ((void *) &buffer[bytes_read], 
-			    this->mb_last_->rd_ptr (), 
-			    this->remaining_);
+	    ACE_OS_String::memcpy ((void *) &buffer[bytes_read], 
+                                   this->mb_last_->rd_ptr (), 
+                                   this->remaining_);
 	    bytes_read += this->remaining_;
 	    this->remaining_ = 0;
 	    this->mb_last_ = this->mb_last_->release ();
@@ -138,9 +138,9 @@ ACE_UPIPE_Stream::recv (char *buffer,
 	    // The remaining data is at least enough.  If there's
 	    // more, we'll get it the next time through.
 
-	    ACE_OS::memcpy (&buffer[bytes_read], 
-			    this->mb_last_->rd_ptr (), 
-			    n);
+	    ACE_OS_String::memcpy (&buffer[bytes_read], 
+                                   this->mb_last_->rd_ptr (), 
+                                   n);
 	    bytes_read += n;
 
 	    // Advance rd_ptr.

@@ -101,8 +101,8 @@ ACE_NS_String::operator == (const ACE_NS_String &s) const
 {
   ACE_TRACE ("ACE_NS_String::operator ==");
   return this->len_ == s.len_
-    && ACE_OS::memcmp ((void *) this->rep_,
-                       (void *) s.rep_, this->len_) == 0;
+    && ACE_OS_String::memcmp ((void *) this->rep_,
+                              (void *) s.rep_, this->len_) == 0;
 }
 
 int
@@ -120,7 +120,7 @@ ACE_NS_String::ACE_NS_String (ACE_USHORT16 *dst,
     delete_rep_ (0)
 {
   ACE_TRACE ("ACE_NS_String::ACE_NS_String");
-  ACE_OS::memcpy (this->rep_, src, bytes);
+  ACE_OS_String::memcpy (this->rep_, src, bytes);
 }
 
 size_t

@@ -2,6 +2,9 @@
 
 #include "ace/Lib_Find.h"
 #include "ace/Log_Msg.h"
+#include "ace/Trace.h"
+#include "ace/OS_String.h"
+#include "ace/OS.h" // for access(), sprintf(), fopen(), etc...
 
 ACE_RCSID(ace, Lib_Find, "$Id$")
 
@@ -34,14 +37,14 @@ ACE_Lib_Find::ldfind (const ACE_TCHAR filename[],
 #endif /* ACE_WIN32 && ACE_LD_DECORATOR_STR && !ACE_DISABLE_DEBUG_DLL_CHECK */
 
   // Create a copy of filename to work with.
-  if (ACE_OS::strlen (filename) + 1
+  if (ACE_OS_String::strlen (filename) + 1
       > (sizeof tempcopy / sizeof (ACE_TCHAR)))
     {
       errno = ENOMEM;
       return -1;
     }
   else
-    ACE_OS::strcpy (tempcopy, filename);
+    ACE_OS_String::strcpy (tempcopy, filename);
 
   // Insert canonical directory separators.
   ACE_TCHAR *separator_ptr;
@@ -53,26 +56,26 @@ ACE_Lib_Find::ldfind (const ACE_TCHAR filename[],
 #endif /* ACE_DIRECTORY_SEPARATOR_CHAR */
 
   // Separate filename from pathname.
-  separator_ptr = ACE_OS::strrchr (tempcopy, '/');
+  separator_ptr = ACE_OS_String::strrchr (tempcopy, '/');
 
   // This is a relative path.
   if (separator_ptr == 0)
     {
       searchpathname[0] = '\0';
-      ACE_OS::strcpy (searchfilename, tempcopy);
+      ACE_OS_String::strcpy (searchfilename, tempcopy);
     }
   else // This is an absolute path.
     {
-      ACE_OS::strcpy (searchfilename, separator_ptr + 1);
+      ACE_OS_String::strcpy (searchfilename, separator_ptr + 1);
       separator_ptr[1] = '\0';
-      ACE_OS::strcpy (searchpathname, tempcopy);
+      ACE_OS_String::strcpy (searchpathname, tempcopy);
     }
 
   int got_suffix = 0;
 
   // Check to see if this has an appropriate DLL suffix for the OS
   // platform.
-  ACE_TCHAR *s = ACE_OS::strrchr (searchfilename, '.');
+  ACE_TCHAR *s = ACE_OS_String::strrchr (searchfilename, '.');
 
   const ACE_TCHAR *dll_suffix = ACE_DLL_SUFFIX;
 
@@ -84,11 +87,11 @@ ACE_Lib_Find::ldfind (const ACE_TCHAR filename[],
       // Check whether this matches the appropriate platform-specific
       // suffix.
 #if defined (ACE_WIN32)
-      // Use <ACE_OS::strcasecmp> on any platform with
+      // Use <ACE_OS_String::strcasecmp> on any platform with
       // case-insensitive filenames.
-      if (ACE_OS::strcasecmp (s, dll_suffix) != 0)
+      if (ACE_OS_String::strcasecmp (s, dll_suffix) != 0)
 #else
-      if (ACE_OS::strcmp (s, dll_suffix) != 0)
+      if (ACE_OS_String::strcmp (s, dll_suffix) != 0)
 #endif /* ACE_WIN32 */
         {
           ACE_ERROR ((LM_WARNING,
@@ -99,17 +102,17 @@ ACE_Lib_Find::ldfind (const ACE_TCHAR filename[],
     }
 
   // Make sure we've got enough space in searchfilename.
-  if (ACE_OS::strlen (searchfilename)
-      + ACE_OS::strlen (ACE_DLL_PREFIX)
-      + got_suffix ? 0 : ACE_OS::strlen (dll_suffix) >= (sizeof searchfilename /
-                                                         sizeof (ACE_TCHAR)))
+  if (ACE_OS_String::strlen (searchfilename)
+      + ACE_OS_String::strlen (ACE_DLL_PREFIX)
+      + got_suffix ? 0 : ACE_OS_String::strlen (dll_suffix) >= (sizeof searchfilename /
+                                                                sizeof (ACE_TCHAR)))
     {
       errno = ENOMEM;
       return -1;
     }
 
 #if defined (ACE_WIN32) && defined (ACE_LD_DECORATOR_STR) && !defined (ACE_DISABLE_DEBUG_DLL_CHECK)
-  size_t len_searchfilename = ACE_OS::strlen (searchfilename);
+  size_t len_searchfilename = ACE_OS_String::strlen (searchfilename);
   if (! got_suffix)
     ACE_OS_String::strcpy (searchfilename + len_searchfilename,
                            decorator);
@@ -121,10 +124,10 @@ ACE_Lib_Find::ldfind (const ACE_TCHAR filename[],
 
 #endif /* ACE_WIN32 && ACE_LD_DECORATOR_STR && !ACE_DISABLE_DEBUG_DLL_CHECK */
       // Use absolute pathname if there is one.
-      if (ACE_OS::strlen (searchpathname) > 0)
+      if (ACE_OS_String::strlen (searchpathname) > 0)
         {
-          if (ACE_OS::strlen (searchfilename)
-              + ACE_OS::strlen (searchpathname) >= maxpathnamelen)
+          if (ACE_OS_String::strlen (searchfilename)
+              + ACE_OS_String::strlen (searchpathname) >= maxpathnamelen)
             {
               errno = ENOMEM;
               return -1;
@@ -214,26 +217,26 @@ ACE_Lib_Find::ldfind (const ACE_TCHAR filename[],
             if (ld_path != 0)
               {
                 ld_path_temp = (ACE_TCHAR *)
-                  ACE_OS::malloc ((ACE_OS::strlen (ld_path) + 2)
-                                  * sizeof (ACE_TCHAR));
+                  ACE_OS_Memory::malloc ((ACE_OS_String::strlen (ld_path) + 2)
+                                         * sizeof (ACE_TCHAR));
                 if (ld_path_temp != 0)
                   {
-                    ACE_OS::strcpy (ld_path_temp,
-                                    ACE_LD_SEARCH_PATH_SEPARATOR_STR);
+                    ACE_OS_String::strcpy (ld_path_temp,
+                                           ACE_LD_SEARCH_PATH_SEPARATOR_STR);
 
-                    ACE_OS::strcat (ld_path_temp, ld_path);
+                    ACE_OS_String::strcat (ld_path_temp, ld_path);
                     ld_path = ld_path_temp;
                   }
                 else
                   {
-                    ACE_OS::free ((void *) ld_path_temp);
+                    ACE_OS_Memory::free ((void *) ld_path_temp);
                     ld_path = ld_path_temp = 0;
                   }
               }
 #endif /* ACE_HAS_WINCE */
 
           if (ld_path != 0
-              && (ld_path = ACE_OS::strdup (ld_path)) != 0)
+              && (ld_path = ACE_OS_String::strdup (ld_path)) != 0)
             {
               // strtok has the strange behavior of not separating the
               // string ":/foo:/bar" into THREE tokens.  One would expect
@@ -266,9 +269,9 @@ ACE_Lib_Find::ldfind (const ACE_TCHAR filename[],
                       result = -1;
                       break;
                     }
-                  else if (ACE_OS::strlen (path_entry)
+                  else if (ACE_OS_String::strlen (path_entry)
                            + 1
-                           + ACE_OS::strlen (searchfilename)
+                           + ACE_OS_String::strlen (searchfilename)
                            >= maxpathnamelen)
                     {
                       errno = ENOMEM;
@@ -338,9 +341,9 @@ ACE_Lib_Find::ldfind (const ACE_TCHAR filename[],
 
 #if defined (ACE_HAS_WINCE)
               if (ld_path_temp != 0)
-                ACE_OS::free (ld_path_temp);
+                ACE_OS_Memory::free (ld_path_temp);
 #endif /* ACE_HAS_WINCE */
-              ACE_OS::free ((void *) ld_path);
+              ACE_OS_Memory::free ((void *) ld_path);
 #if defined (ACE_HAS_WINCE) && defined (ACE_LD_DECORATOR_STR) && \
             !defined (ACE_DISABLE_DEBUG_DLL_CHECK)
                if (result == 0 || tag == 0)
@@ -380,7 +383,7 @@ ACE_Lib_Find::ldname (const ACE_TCHAR *entry_point)
 #if defined (__BORLANDC__)
   size_t size =
     1 // leading '_'
-    + ACE_OS::strlen (entry_point)
+    + ACE_OS_String::strlen (entry_point)
     + 1;
 
   ACE_TCHAR *new_name;
@@ -388,13 +391,13 @@ ACE_Lib_Find::ldname (const ACE_TCHAR *entry_point)
                   ACE_TCHAR[size],
                   0);
 
-  ACE_OS::strcpy (new_name, ACE_LIB_TEXT ("_"));
-  ACE_OS::strcat (new_name, entry_point);
+  ACE_OS_String::strcpy (new_name, ACE_LIB_TEXT ("_"));
+  ACE_OS_String::strcat (new_name, entry_point);
 
   return new_name;
 #else /* __BORLANDC__ */
   size_t size =
-    ACE_OS::strlen (entry_point)
+    ACE_OS_String::strlen (entry_point)
     + 1;
 
   ACE_TCHAR *new_name;
@@ -402,7 +405,7 @@ ACE_Lib_Find::ldname (const ACE_TCHAR *entry_point)
                   ACE_TCHAR[size],
                   0);
 
-  ACE_OS::strcpy (new_name, entry_point);
+  ACE_OS_String::strcpy (new_name, entry_point);
 
   return new_name;
 #endif /* __BORLANDC__ */
@@ -429,7 +432,7 @@ ACE_Lib_Find::get_temp_dir (ACE_TCHAR *buffer, size_t buffer_len)
   if (tmpdir == NULL)
     tmpdir = ACE_LIB_TEXT ("/tmp");
 
-  size_t len = ACE_OS::strlen (tmpdir);
+  size_t len = ACE_OS_String::strlen (tmpdir);
 
   // Check to see if the buffer is large enough for the string,
   // another /, and its null character (hence the + 2)
@@ -439,7 +442,7 @@ ACE_Lib_Find::get_temp_dir (ACE_TCHAR *buffer, size_t buffer_len)
     }
   else
     {
-      ACE_OS::strcpy (buffer, tmpdir);
+      ACE_OS_String::strcpy (buffer, tmpdir);
 
       // Add a trailing slash because we cannot assume there is already one
       // at the end.  And having an extra one should not cause problems.
@@ -509,7 +512,7 @@ ACE_Lib_Find::strsplit_r (char *str,
 
   if (next_start != 0)
     {
-      char *tok_loc = ACE_OS::strstr (next_start, token);
+      char *tok_loc = ACE_OS_String::strstr (next_start, token);
 
       if (tok_loc != 0)
         {
@@ -518,7 +521,7 @@ ACE_Lib_Find::strsplit_r (char *str,
 
           // Insure it's terminated.
           *tok_loc = '\0';
-          next_start = tok_loc + ACE_OS::strlen (token);
+          next_start = tok_loc + ACE_OS_String::strlen (token);
         }
       else
         {
@@ -543,7 +546,7 @@ ACE_Lib_Find::strsplit_r (wchar_t *str,
 
   if (next_start != 0)
     {
-      wchar_t *tok_loc = ACE_OS::strstr (next_start, token);
+      wchar_t *tok_loc = ACE_OS_String::strstr (next_start, token);
 
       if (tok_loc != 0)
         {
@@ -552,7 +555,7 @@ ACE_Lib_Find::strsplit_r (wchar_t *str,
 
           // Insure it's terminated.
           *tok_loc = '\0';
-          next_start = tok_loc + ACE_OS::strlen (token);
+          next_start = tok_loc + ACE_OS_String::strlen (token);
         }
       else
         {

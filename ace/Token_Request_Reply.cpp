@@ -33,7 +33,7 @@ ACE_Token_Request::ACE_Token_Request (int token_type,
   this->requeue_position (0);      // to avoid Purify UMR
   this->notify (0);                // to avoid Purify UMR
   transfer_.arg_ = 0;              // to avoid Purify UMR
-  ACE_OS::memset (transfer_.data_, 0, sizeof transfer_.data_); // to avoid Purify UMR
+  ACE_OS_String::memset (transfer_.data_, 0, sizeof transfer_.data_); // to avoid Purify UMR
   this->token_name (token_name, client_id);
   this->options (options);
 }
@@ -61,7 +61,7 @@ ACE_Token_Request::decode (void)
 		(void *) transfer_.arg_);
 
   // Decode the variable-sized portion.
-  int token_len = ACE_OS::strlen (this->token_name_);
+  int token_len = ACE_OS_String::strlen (this->token_name_);
 
   // Check to make sure this->tokenName_ isn't too long!
   if (token_len >= ACE_MAXTOKENNAMELEN)
@@ -78,8 +78,8 @@ ACE_Token_Request::decode (void)
   // ':'
   // client_id_ plus '\0'
   size_t data_size = ACE_TOKEN_REQUEST_HEADER_SIZE
-                     + ACE_OS::strlen (this->token_name_) + 1
-		     + ACE_OS::strlen (this->client_id_) + 1
+                     + ACE_OS_String::strlen (this->token_name_) + 1
+		     + ACE_OS_String::strlen (this->client_id_) + 1
 		     + 1;
 
   // Make sure the message was correctly received and framed.

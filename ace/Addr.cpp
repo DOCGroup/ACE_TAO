@@ -3,7 +3,9 @@
 
 #include "ace/Addr.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS.h"
+#include "ace/Trace.h"
+#include "ace/Global_Macros.h"
+#include "ace/ace_sys_socket.h"
 
 ACE_RCSID(ace, Addr, "$Id$")
 

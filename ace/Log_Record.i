@@ -3,6 +3,11 @@
 
 // Log_Record.i
 
+#include "ace/Trace.h"
+#include "ace/Global_Macros.h"
+#include "ace/Time_Value.h"
+#include "ace/OS_String.h"
+
 ASYS_INLINE
 ACE_Log_Record::~ACE_Log_Record (void)
 {
@@ -12,27 +17,27 @@ ASYS_INLINE void
 ACE_Log_Record::encode (void)
 {
   ACE_TRACE ("ACE_Log_Record::encode");
-  this->length_ = htonl (this->length_);
-  this->type_ = htonl (this->type_);
+  this->length_ = ACE_HTONL (this->length_);
+  this->type_ = ACE_HTONL (this->type_);
   // Make sure we don't enclose the sec() and usec() fields until
   // they've been normalized.
-  this->secs_ = htonl (this->secs_);
-  this->usecs_ = htonl (this->usecs_);
-  this->pid_ = htonl (this->pid_);
+  this->secs_ = ACE_HTONL (this->secs_);
+  this->usecs_ = ACE_HTONL (this->usecs_);
+  this->pid_ = ACE_HTONL (this->pid_);
 }
 
 ASYS_INLINE void
 ACE_Log_Record::decode (void)
 {
   ACE_TRACE ("ACE_Log_Record::decode");
-  ACE_Time_Value tv (ntohl (this->secs_),
-                     ntohl (this->usecs_));
+  ACE_Time_Value tv (ACE_NTOHL (this->secs_),
+                     ACE_NTOHL (this->usecs_));
 
   this->secs_ = tv.sec ();
   this->usecs_ = tv.usec ();
-  this->type_ = ntohl (this->type_);
-  this->pid_ = ntohl (this->pid_);
-  this->length_ = ntohl (this->length_);
+  this->type_ = ACE_NTOHL (this->type_);
+  this->pid_ = ACE_NTOHL (this->pid_);
+  this->length_ = ACE_NTOHL (this->length_);
 }
 
 ASYS_INLINE long
@@ -103,5 +108,5 @@ ASYS_INLINE size_t
 ACE_Log_Record::msg_data_len (void) const
 {
   ACE_TRACE ("ACE_Log_Record::msg_data_len");
-  return ACE_OS::strlen (this->msg_data_) + 1;
+  return ACE_OS_String::strlen (this->msg_data_) + 1;
 }

@@ -14,17 +14,22 @@
 #define ACE_EVENT_HANDLER_H
 #include "ace/pre.h"
 
-#include "ace/ACE.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/ACE_export.h"
+#include "ace/ace_sys_types.h"
+#include "ace/OS.h" // for siginfo_t, etc...
 
 // Forward declaration.
 class ACE_Message_Block;
 class ACE_Reactor;
 class ACE_Thread_Manager;
 class ACE_Process;
+class ACE_Time_Value;
 
 typedef u_long ACE_Reactor_Mask;
 

@@ -21,7 +21,22 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Global_Macros.h"
+
+# if (ACE_NTRACE == 1)
+#   define ACE_TRACE(X)
+# else
+#   define ACE_TRACE(X) ACE_Trace ____ (ACE_LIB_TEXT (X), __LINE__, ACE_LIB_TEXT (__FILE__))
+# endif /* ACE_NTRACE */
+
+// By default we perform no tracing on the OS layer, otherwise the
+// coupling between the OS layer and Log_Msg is too tight.  But the
+// application can override the default if they wish to in config.h, e;g.:
+// #define ACE_OS_TRACE ACE_TRACE
+# if !defined(ACE_OS_TRACE)
+#   define ACE_OS_TRACE(X)
+# endif /* ACE_OS_TRACE */
+
+
 
 /**
  * @class ACE_Trace

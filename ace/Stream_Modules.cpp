@@ -136,11 +136,11 @@ ACE_Stream_Head<ACE_SYNCH_USE>::info (ACE_TCHAR **strp, size_t length) const
   ACE_TRACE ("ACE_Stream_Head<ACE_SYNCH_USE>::info");
   const ACE_TCHAR *name = this->name ();
 
-  if (*strp == 0 && (*strp = ACE_OS::strdup (name)) == 0)
+  if (*strp == 0 && (*strp = ACE_OS_String::strdup (name)) == 0)
     return -1;
   else
-    ACE_OS::strsncpy (*strp, name, length);
-  return ACE_OS::strlen (name);
+    ACE_OS_String::strsncpy (*strp, name, length);
+  return ACE_OS_String::strlen (name);
 }
 
 template <ACE_SYNCH_DECL> int
@@ -275,11 +275,11 @@ ACE_Stream_Tail<ACE_SYNCH_USE>::info (ACE_TCHAR **strp, size_t length) const
   ACE_TRACE ("ACE_Stream_Tail<ACE_SYNCH_USE>::info");
   const ACE_TCHAR *name = this->name ();
 
-  if (*strp == 0 && (*strp = ACE_OS::strdup (name)) == 0)
+  if (*strp == 0 && (*strp = ACE_OS_String::strdup (name)) == 0)
     return -1;
   else
-    ACE_OS::strsncpy (*strp, name, length);
-  return ACE_OS::strlen (name);
+    ACE_OS_String::strsncpy (*strp, name, length);
+  return ACE_OS_String::strlen (name);
 }
 
 template <ACE_SYNCH_DECL> int
@@ -332,7 +332,7 @@ ACE_Thru_Task<ACE_SYNCH_USE>::svc (void)
 
 template <ACE_SYNCH_DECL> int
 ACE_Thru_Task<ACE_SYNCH_USE>::put (ACE_Message_Block *msg,
-                                 ACE_Time_Value *tv)
+                                   ACE_Time_Value *tv)
 {
   ACE_TRACE ("ACE_Thru_Task<ACE_SYNCH_USE>::put");
   return this->put_next (msg, tv);
@@ -352,11 +352,11 @@ ACE_Thru_Task<ACE_SYNCH_USE>::info (ACE_TCHAR **strp,
   ACE_TRACE ("ACE_Thru_Task<ACE_SYNCH_USE>::info");
   const ACE_TCHAR *name = this->name ();
 
-  if (*strp == 0 && (*strp = ACE_OS::strdup (name)) == 0)
+  if (*strp == 0 && (*strp = ACE_OS_String::strdup (name)) == 0)
     return -1;
   else
-    ACE_OS::strsncpy (*strp, name, length);
-  return ACE_OS::strlen (name);
+    ACE_OS_String::strsncpy (*strp, name, length);
+  return ACE_OS_String::strlen (name);
 }
 
 template <ACE_SYNCH_DECL> int

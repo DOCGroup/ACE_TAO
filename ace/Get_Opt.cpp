@@ -234,13 +234,13 @@ ACE_Get_Opt::long_option_i (void)
       p = this->long_opts_[option_index];
       ACE_ASSERT (p);
 
-      if (!ACE_OS::strncmp (p->name_, this->nextchar_, len))
+      if (!ACE_OS_String::strncmp (p->name_, this->nextchar_, len))
         {
           // Got at least a partial match.
           pfound = p;
           indfound = option_index;
           hits += 1;
-          if (len == ACE_OS::strlen(p->name_))
+          if (len == ACE_OS_String::strlen (p->name_))
             {
               // And in fact, it an exact match, so let's use it.
               exact = 1;
@@ -335,7 +335,8 @@ ACE_Get_Opt::short_option_i (void)
   /* Look at and handle the next option-character.  */
   ACE_TCHAR opt = *this->nextchar_++;
   ACE_TCHAR *oli = 0;
-  oli = ACE_const_cast (ACE_TCHAR*, ACE_OS::strchr (this->optstring_.c_str (), opt));
+  oli = ACE_const_cast (ACE_TCHAR*, ACE_OS_String::strchr (this->optstring_.c_str (), 
+                                                           opt));
 
   /* Increment `optind' when we start to process its last character.  */
   if (*this->nextchar_ == '\0')
@@ -415,8 +416,8 @@ ACE_Get_Opt::operator () (void)
       return -1;
     }
 
-  // We check this because we can string short options together if the preceding one doesn't take
-  // an argument.
+  // We check this because we can string short options together if the preceding
+  //  one doesn't take an argument.
   if (this->nextchar_ == 0 || *this->nextchar_ == '\0')
     {
       int retval = this->nextchar_i ();
@@ -457,7 +458,8 @@ ACE_Get_Opt::long_option (const ACE_TCHAR *name,
       // add it.
       ACE_TCHAR *s = 0;
       if ((s = ACE_const_cast (ACE_TCHAR*,
-                               ACE_OS::strchr (this->optstring_.c_str (), short_option))) != 0)
+                               ACE_OS_String::strchr (this->optstring_.c_str (), 
+                                                      short_option))) != 0)
         {
           // Short option exists, so verify the argument options
           if (s[1] == ':')
@@ -587,7 +589,7 @@ ACE_Get_Opt::permute (void)
   this->nonopt_end_ = this->optind;
 
   if (this->optind != this->argc_
-      && ACE_OS::strcmp (this->argv_[this->optind],
+      && ACE_OS_String::strcmp (this->argv_[this->optind],
                          ACE_LIB_TEXT ("--")) == 0)
     {
       // We found the marker for the end of the options.

@@ -3,6 +3,9 @@
 
 // Handle_Set.i
 
+#include "ace/Trace.h"
+#include /**/ <stddef.h>
+
 // Initialize the bitmask to all 0s and reset the associated fields.
 
 #if defined (ACE_HAS_WINCE)

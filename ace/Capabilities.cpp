@@ -206,7 +206,7 @@ ACE_Capabilities::is_entry (const ACE_TCHAR *name, const ACE_TCHAR *line)
         nextname += *line++;
 
       // We have found the required entry?
-      if (ACE_OS::strcmp (nextname.c_str (), name) == 0)
+      if (ACE_OS_String::strcmp (nextname.c_str (), name) == 0)
         return 1;
 
       // Skip puntuaction char if neccesary.

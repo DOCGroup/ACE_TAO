@@ -16,8 +16,8 @@ ACE_System_Time::ACE_System_Time (const ACE_TCHAR *poolname)
     {
 #if defined (ACE_DEFAULT_BACKING_STORE)
       // Create a temporary file.
-      ACE_OS::strcpy (this->poolname_,
-                      ACE_DEFAULT_BACKING_STORE);
+      ACE_OS_String::strcpy (this->poolname_,
+                             ACE_DEFAULT_BACKING_STORE);
 #else /* ACE_DEFAULT_BACKING_STORE */
       if (ACE_Lib_Find::get_temp_dir (this->poolname_, 
                                       MAXPATHLEN - 17) == -1)
@@ -30,14 +30,14 @@ ACE_System_Time::ACE_System_Time (const ACE_TCHAR *poolname)
         }
 
       // Add the filename to the end
-      ACE_OS::strcat (this->poolname_, ACE_LIB_TEXT ("ace-malloc-XXXXXX"));
+      ACE_OS_String::strcat (this->poolname_, ACE_LIB_TEXT ("ace-malloc-XXXXXX"));
   
 #endif /* ACE_DEFAULT_BACKING_STORE */
     }
   else
-    ACE_OS::strsncpy (this->poolname_,
-                      poolname,
-                      (sizeof this->poolname_ / sizeof (ACE_TCHAR)));
+    ACE_OS_String::strsncpy (this->poolname_,
+                             poolname,
+                             (sizeof this->poolname_ / sizeof (ACE_TCHAR)));
   
   ACE_NEW (this->shmem_,
            ALLOCATOR (this->poolname_));

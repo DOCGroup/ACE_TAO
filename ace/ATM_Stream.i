@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 // $Id$
 
 // ATM_Stream.i
@@ -35,7 +37,7 @@ ACE_ATM_Stream::open (ACE_ATM_Params params)
 
   struct sockaddr_atm sock_addr;
 
-  ACE_OS::memset(&sock_addr, 0, sizeof(struct sockaddr_atm));
+  ACE_OS_String::memset(&sock_addr, 0, sizeof(struct sockaddr_atm));
   sock_addr.satm_family = AF_ATM;
   sock_addr.satm_number.AddressType=ADDR_ANY;
   sock_addr.satm_number.NumofDigits = ATM_ADDR_SIZE;

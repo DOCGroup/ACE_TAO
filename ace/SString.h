@@ -277,7 +277,7 @@ public:
    * <B>Example:</B>
    * \verbatim
      char buf[30];
-     ACE_OS::strcpy(buf, "William/Joseph/Hagins");
+     ACE_OS_String::strcpy(buf, "William/Joseph/Hagins");
 
      ACE_Tokenizer tok (buf);
      tok.delimiter ('/');
@@ -301,7 +301,7 @@ public:
    * <B>Example:</B>
    * \verbatim
      char buf[30];
-     ACE_OS::strcpy(buf, "William/Joseph/Hagins");
+     ACE_OS_String::strcpy(buf, "William/Joseph/Hagins");
 
      ACE_Tokenizer tok (buf);
      tok.delimiter_replace ('/', 0);
@@ -329,7 +329,7 @@ public:
    * <B>Example with strip = 0:</B>
    * \verbatim
      char buf[30];
-     ACE_OS::strcpy(buf, "William(Joseph)Hagins");
+     ACE_OS_String::strcpy(buf, "William(Joseph)Hagins");
 
      ACE_Tokenizer tok (buf);
      tok.preserve_designators ('(', ')', 0);
@@ -346,7 +346,7 @@ public:
    * <B>Example with strip = 1:</B>
    * \verbatim
      char buf[30];
-     ACE_OS::strcpy(buf, "William(Joseph)Hagins");
+     ACE_OS_String::strcpy(buf, "William(Joseph)Hagins");
 
      ACE_Tokenizer tok (buf);
      tok.preserve_designators ('(', ')', 1);
@@ -453,7 +453,7 @@ protected:
  * @brief Simple class to automatically de-allocate strings
  *
  * Keeps a pointer to a string and deallocates it (using
- * <ACE_OS::free>) on its destructor.
+ * <ACE_OS_Memory::free>) on its destructor.
  * If you need to delete using "delete[]" the
  * ACE_Auto_Array_Ptr<char*> is your choice.
  * The class plays the same role as auto_ptr<>

@@ -54,9 +54,9 @@ ACE_ATM_Addr::ACE_ATM_Addr (u_char selector)
               sizeof this->atm_addr_)
 {
   // ACE_TRACE ("ACE_ATM_Addr::ACE_ATM_Addr");
- (void) ACE_OS::memset ((void *) &this->atm_addr_,
-                         0,
-                         sizeof this->atm_addr_);
+ (void) ACE_OS_String::memset ((void *) &this->atm_addr_,
+                               0,
+                               sizeof this->atm_addr_);
   this->init (selector);
 }
 
@@ -139,11 +139,11 @@ ACE_ATM_Addr::init (u_char selector)
   atm_addr_.sap.t_atm_sap_appl.SVE_tag = (int8_t) T_ATM_PRESENT;
   atm_addr_.sap.t_atm_sap_appl.ID_type = (u_int8_t) T_ATM_USER_APP_ID;
 
-  ACE_OS::memcpy (atm_addr_.sap.t_atm_sap_appl.ID.user_defined_ID,
-                  BHLI_MAGIC,
-                  sizeof atm_addr_.sap.t_atm_sap_appl.ID);
+  ACE_OS_String::memcpy (atm_addr_.sap.t_atm_sap_appl.ID.user_defined_ID,
+                         BHLI_MAGIC,
+                         sizeof atm_addr_.sap.t_atm_sap_appl.ID);
 #elif defined (ACE_HAS_FORE_ATM_WS2)
-  ACE_OS::memset ((void *)&atm_addr_, 0, sizeof atm_addr_);
+  ACE_OS_String::memset ((void *)&atm_addr_, 0, sizeof atm_addr_);
   atm_addr_.satm_number.Addr[ ATM_ADDR_SIZE - 1 ] = (char)selector;
   atm_addr_.satm_family = AF_ATM;
   atm_addr_.satm_number.AddressType = ATM_NSAP;
@@ -155,7 +155,7 @@ ACE_ATM_Addr::init (u_char selector)
   // Need to know the correspondence.
   //atm_addr_.sap.t_atm_sap_appl.SVE_tag = (int8_t) T_ATM_PRESENT;
   //atm_addr_.sap.t_atm_sap_appl.ID_type = (u_int8_t) T_ATM_USER_APP_ID;
-  //ACE_OS::memcpy (atm_addr_.sap.t_atm_sap_appl.ID.user_defined_ID,
+  //ACE_OS_String::memcpy (atm_addr_.sap.t_atm_sap_appl.ID.user_defined_ID,
   //                BHLI_MAGIC,
   //                sizeof atm_addr_.sap.t_atm_sap_appl.ID);
 #elif defined (ACE_HAS_LINUX_ATM)
@@ -186,8 +186,8 @@ ACE_ATM_Addr::set (const ACE_ATM_Addr &sap,
   ACE_ASSERT (sap.get_type () == PF_ATMSVC);
 #endif /* ACE_HAS_FORE_ATM_XTI || ACE_HAS_FORE_ATM_WS2 */
 
- (void) ACE_OS::memcpy ((void *) &this->atm_addr_,
- (void *) &sap.atm_addr_,
+  ACE_OS_String::memcpy ((void *) &this->atm_addr_,
+                         (void *) &sap.atm_addr_,
                          sizeof this->atm_addr_);
   return 0;
 }
@@ -209,9 +209,9 @@ ACE_ATM_Addr::set (const ATM_Addr *sap,
 #endif /* ACE_HAS_FORE_ATM_XTI || ACE_HAS_FORE_ATM_WS2 */
                             sizeof (*sap));
 
- (void) ACE_OS::memcpy ((void *) &this->atm_addr_,
- (void *) sap,
-                         sizeof this->atm_addr_);
+  ACE_OS_String::memcpy ((void *) &this->atm_addr_,
+                               (void *) sap,
+                               sizeof this->atm_addr_);
   return 0;
 }
 
@@ -261,15 +261,15 @@ ACE_ATM_Addr::string_to_addr (const ACE_TCHAR sap[])
     }
   else if ((entry = gethostbyname_atmnsap ((ACE_TCHAR *)sap)) != 0)
     {
-      ACE_OS::memcpy (atm_addr_.sap.t_atm_sap_addr.address, 
-                      entry->h_addr_list[0],
-                      ATMNSAP_ADDR_LEN - 1);
+      ACE_OS_String::memcpy (atm_addr_.sap.t_atm_sap_addr.address, 
+                             entry->h_addr_list[0],
+                             ATMNSAP_ADDR_LEN - 1);
     }
   else if ((nsap = atmnsap_addr (sap)) != 0)
     {
-      ACE_OS::memcpy (atm_addr_.sap.t_atm_sap_addr.address,
-                      nsap->atmnsap,
-                      ATMNSAP_ADDR_LEN);
+      ACE_OS_String::memcpy (atm_addr_.sap.t_atm_sap_addr.address,
+                             nsap->atmnsap,
+                             ATMNSAP_ADDR_LEN);
     }
   else {
       errno = EINVAL;
@@ -329,7 +329,7 @@ ACE_ATM_Addr::string_to_addr (const ACE_TCHAR sap[])
       return -1;
    }
 #elif defined (ACE_HAS_LINUX_ATM)
-   if (sap == 0 || !ACE_OS::strcmp (sap,"")) {
+   if (sap == 0 || !ACE_OS_String::strcmp (sap,"")) {
      errno = EINVAL;
      return -1;
    }
@@ -365,19 +365,19 @@ ACE_ATM_Addr::addr_to_string (ACE_TCHAR addr[],
 #if defined (ACE_HAS_FORE_ATM_XTI)
   ACE_TCHAR buffer[MAXNAMELEN + 1];
   struct atmnsap_addr nsap;
-  ACE_OS::memcpy (nsap.atmnsap,
-                  atm_addr_.sap.t_atm_sap_addr.address,
-                  ATMNSAP_ADDR_LEN);
+  ACE_OS_String::memcpy (nsap.atmnsap,
+                         atm_addr_.sap.t_atm_sap_addr.address,
+                         ATMNSAP_ADDR_LEN);
   ACE_OS::sprintf (buffer,
                    ACE_LIB_TEXT ("%s"),
                    atmnsap_ntoa (nsap));
 
-  size_t total_len = ACE_OS::strlen (buffer) + sizeof ('\0');
+  size_t total_len = ACE_OS_String::strlen (buffer) + sizeof ('\0');
 
   if (addrlen < total_len)
     return -1;
   else
-    ACE_OS::strcpy (addr, buffer);
+    ACE_OS_String::strcpy (addr, buffer);
 
   return 0;
 #elif defined (ACE_HAS_FORE_ATM_WS2)
@@ -390,29 +390,29 @@ ACE_ATM_Addr::addr_to_string (ACE_TCHAR addr[],
   for (i = 0; i < ATM_ADDR_SIZE; i++) {
     buffer[ i * 3 ] = '\0';
 	  ACE_OS::sprintf (buffer, ACE_LIB_TEXT ("%s%02x."), 
-                     buffer, 
-                     atm_addr_.satm_number.Addr[ i ]);
+                           buffer, 
+                           atm_addr_.satm_number.Addr[ i ]);
   }
 
   buffer[ ATM_ADDR_SIZE * 3 - 1 ] = '\0';
-  ACE_OS::strcpy (addr, buffer);
+  ACE_OS_String::strcpy (addr, buffer);
 
   return 0;
 #elif defined (ACE_HAS_LINUX_ATM)
   ACE_TCHAR buffer[MAX_ATM_ADDR_LEN + 1];
   int total_len;
   if ((total_len = atm2text (buffer,
-                            sizeof buffer,
- (struct sockaddr *)& (atm_addr_.sockaddratmsvc), 
-                            A2T_PRETTY)) < 0) {
+                             sizeof buffer,
+                             (struct sockaddr *)& (atm_addr_.sockaddratmsvc), 
+                             A2T_PRETTY)) < 0) {
     ACE_DEBUG ((LM_DEBUG,"ACE_ATM_Addr (addr_to_string): atm2text failed\n"));
     return -1;
   }
   if (addrlen < (size_t)total_len)
     return -1;
   else
-    ACE_OS::strcpy (addr,
-                   buffer);
+    ACE_OS_String::strcpy (addr,
+                           buffer);
 
   return 0;
 #else
@@ -449,8 +449,8 @@ ACE_ATM_Addr::set_addr (void *addr, int len)
   this->ACE_Addr::base_set (AF_UNSPEC,
 #endif /* ACE_HAS_FORE_ATM_XTI || ACE_HAS_FORE_WS2 */
                             len);
-  ACE_OS::memcpy ((void *) &this->atm_addr_,
- (void *) addr, len);
+  ACE_OS_String::memcpy ((void *) &this->atm_addr_,
+                         (void *) addr, len);
 }
 
 // Compare two addresses for inequality.
@@ -479,9 +479,9 @@ ACE_ATM_Addr::operator == (const ACE_ATM_Addr &sap) const
                     & (sap.atm_addr_.atmsap),
                     0));
 #else
-  return ACE_OS::memcmp (&atm_addr_,
-                         &sap.atm_addr_,
-                         sizeof (ATM_Addr)) == 0;
+  return ACE_OS_String::memcmp (&atm_addr_,
+                                &sap.atm_addr_,
+                                sizeof (ATM_Addr)) == 0;
 #endif /*  ACE_HAS_LINUX_ATM */
 }
 

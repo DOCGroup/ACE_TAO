@@ -35,7 +35,8 @@ void ACE_CE_Screen_Output::log(ACE_Log_Record &log_record)
 
     if (result == 0)
     {
-        verbose_msg[ ACE_OS::strlen(verbose_msg) - 1 ] = 0;  // CE does not like '\n' by itself.
+        verbose_msg[ ACE_OS_String::strlen(verbose_msg) - 1 ] = 0;  
+        // CE does not like '\n' by itself.
         *this << verbose_msg << endl;
     }
 }
@@ -66,7 +67,7 @@ ACE_CE_Screen_Output& ACE_CE_Screen_Output::operator << (ACE_TCHAR* output)
 
 ACE_CE_Screen_Output& ACE_CE_Screen_Output::operator << (const ACE_TCHAR* output)
 {
-    ACE_TCHAR* buffer = ACE_OS::strdup(output);
+    ACE_TCHAR* buffer = ACE_OS_String::strdup(output);
     if (buffer != 0)
     {
         *this << buffer;

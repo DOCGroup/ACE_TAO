@@ -119,20 +119,20 @@ ACE_INLINE void
 ACE_Token_Request::token_name (const ACE_TCHAR *token_name, 
                                const ACE_TCHAR *client_id)
 {
-  size_t token_name_length = ACE_OS::strlen (token_name) + 1; // Add 1 for '\0'.
-  size_t client_id_length = ACE_OS::strlen (client_id) + 1; // Add 1 for '\0'.
+  size_t token_name_length = ACE_OS_String::strlen (token_name) + 1; // Add 1 for '\0'.
+  size_t client_id_length = ACE_OS_String::strlen (client_id) + 1; // Add 1 for '\0'.
 
   // Set up pointers and copy token_name and client_id into request.
   token_name_ = this->transfer_.data_;
   client_id_  = &this->token_name_[token_name_length + 1]; // Add 1 for ':';
   client_id_[-1] = ACE_LIB_TEXT (':'); // Insert the ':' before this->clientId_.
 
-  (void) ACE_OS::memcpy (this->token_name_, 
-                         token_name, 
-                         token_name_length * sizeof (ACE_TCHAR));
-  (void) ACE_OS::memcpy (this->client_id_, 
-                         client_id, 
-                         client_id_length * sizeof (ACE_TCHAR));
+  (void) ACE_OS_String::memcpy (this->token_name_, 
+                                token_name, 
+                                token_name_length * sizeof (ACE_TCHAR));
+  (void) ACE_OS_String::memcpy (this->client_id_, 
+                                client_id, 
+                                client_id_length * sizeof (ACE_TCHAR));
 
   // Fixed length header size
   size_t len = ACE_TOKEN_REQUEST_HEADER_SIZE;

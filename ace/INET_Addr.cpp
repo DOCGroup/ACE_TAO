@@ -27,12 +27,12 @@ ACE_INET_Addr::addr_to_string (ACE_TCHAR s[],
   // XXX Can we (should we) include the scope id for IPv6 addresses?
 
   size_t total_len = (ipaddr_format == 0 ?
-                      ACE_OS::strlen (this->get_host_name ()) :
-                      ACE_OS::strlen (this->get_host_addr ()))
-    + ACE_OS::strlen ("65536") // Assume the max port number.
+                      ACE_OS_String::strlen (this->get_host_name ()) :
+                      ACE_OS_String::strlen (this->get_host_addr ()))
+    + ACE_OS_String::strlen ("65536") // Assume the max port number.
     + sizeof (':')
 #if defined ACE_HAS_IPV6
-    + ACE_OS::strlen ("[]")
+    + ACE_OS_String::strlen ("[]")
 #endif
     + sizeof ('\0'); // For trailing '\0'.
 
@@ -87,18 +87,18 @@ ACE_INET_Addr::operator == (const ACE_INET_Addr &sap) const
       this->get_size () != sap.get_size ()    )
     return 0;
 
-  return (ACE_OS::memcmp (&this->inet_addr_,
-                          &sap.inet_addr_,
-                          this->get_size ()) == 0);
+  return (ACE_OS_String::memcmp (&this->inet_addr_,
+                                 &sap.inet_addr_,
+                                 this->get_size ()) == 0);
 }
 
 ACE_INET_Addr::ACE_INET_Addr (void)
   : ACE_Addr (this->determine_type(), sizeof (inet_addr_))
 {
   // ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
-  (void) ACE_OS::memset ((void *) &this->inet_addr_,
-                         0,
-                         sizeof this->inet_addr_);
+  (void) ACE_OS_String::memset ((void *) &this->inet_addr_,
+                                0,
+                                sizeof this->inet_addr_);
 }
 
 int
@@ -108,10 +108,10 @@ ACE_INET_Addr::set (const ACE_INET_Addr &sa)
 
   if (sa.get_type () == AF_ANY)
     // Ugh, this is really a base class, so don't copy it.
-    ACE_OS::memset (&this->inet_addr_, 0, sizeof (this->inet_addr_));
+    ACE_OS_String::memset (&this->inet_addr_, 0, sizeof (this->inet_addr_));
   else
     // It's ok to make the copy.
-    ACE_OS::memcpy (&this->inet_addr_, &sa.inet_addr_, sa.get_size ());
+    ACE_OS_String::memcpy (&this->inet_addr_, &sa.inet_addr_, sa.get_size ());
 
   return 0;
 }
@@ -127,14 +127,14 @@ ACE_INET_Addr::string_to_addr (const char s[])
 
   // Need to make a duplicate since we'll be overwriting the string.
   ACE_ALLOCATOR_RETURN (ip_addr,
-                        ACE_OS::strdup (s),
+                        ACE_OS_String::strdup (s),
                         -1);
   // We use strrchr because of IPv6 addresses.
-  char *port_p = ACE_OS::strrchr (ip_addr, ':');
+  char *port_p = ACE_OS_String::strrchr (ip_addr, ':');
 
   if (port_p == 0) // Assume it's a port number.
     {
-      if (ACE_OS::strspn (ip_addr, "1234567890") == ACE_OS::strlen (ip_addr))
+      if (ACE_OS_String::strspn (ip_addr, "1234567890") == ACE_OS_String::strlen (ip_addr))
         { // port number
           u_short port = (u_short) ACE_OS::atoi (ip_addr);
           result = this->set (port, ACE_UINT32 (INADDR_ANY));
@@ -146,7 +146,7 @@ ACE_INET_Addr::string_to_addr (const char s[])
     {
       *port_p = '\0'; ++port_p; // skip over ':'
 
-      if (ACE_OS::strspn (port_p, "1234567890") == ACE_OS::strlen (port_p))
+      if (ACE_OS_String::strspn (port_p, "1234567890") == ACE_OS_String::strlen (port_p))
         {
           u_short port = (u_short) ACE_OS::atoi (port_p);
           result = this->set (port, ip_addr);
@@ -155,7 +155,7 @@ ACE_INET_Addr::string_to_addr (const char s[])
         result = this->set (port_p, ip_addr);
     }
 
-  ACE_OS::free (ACE_MALLOC_T (ip_addr));
+  ACE_OS_Memory::free (ACE_MALLOC_T (ip_addr));
   return result;
 }
 
@@ -170,7 +170,7 @@ ACE_INET_Addr::ACE_INET_Addr (const char address[])
   : ACE_Addr (this->determine_type(), sizeof (inet_addr_))
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
-  ACE_OS::memset (&this->inet_addr_, 0, sizeof (this->inet_addr_));
+  ACE_OS_String::memset (&this->inet_addr_, 0, sizeof (this->inet_addr_));
   this->set (address);
 }
 
@@ -179,7 +179,7 @@ ACE_INET_Addr::ACE_INET_Addr (const wchar_t address[])
   : ACE_Addr (this->determine_type(), sizeof (inet_addr_))
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
-  ACE_OS::memset (&this->inet_addr_, 0, sizeof (this->inet_addr_));
+  ACE_OS_String::memset (&this->inet_addr_, 0, sizeof (this->inet_addr_));
   this->set (address);
 }
 
@@ -270,7 +270,7 @@ ACE_INET_Addr::set (u_short port_number,
   if (ACE_OS::inet_aton (host_name,
                          &addrv4) == 1)
     return this->set (port_number,
-                      encode ? ntohl (addrv4.s_addr) : addrv4.s_addr,
+                      encode ? ACE_NTOHL (addrv4.s_addr) : addrv4.s_addr,
                       encode);
   else
     {
@@ -295,7 +295,7 @@ ACE_INET_Addr::set (u_short port_number,
                                         hp->h_addr,
                                         hp->h_length);
           return this->set (port_number,
-                            encode ? ntohl (addrv4.s_addr) : addrv4.s_addr,
+                            encode ? ACE_NTOHL (addrv4.s_addr) : addrv4.s_addr,
                             encode);
         }
     }
@@ -331,7 +331,8 @@ ACE_INET_Addr::set (const char port_name[],
 
   int address_family = PF_UNSPEC;
 #  if defined (ACE_HAS_IPV6)
-  if (ACE_OS_String::strcmp (protocol, ACE_LIB_TEXT ("tcp6")) == 0)
+  // Don't use ACE_LIB_TEXT since protocol is a char[]
+  if (ACE_OS_String::strcmp (protocol, "tcp6") == 0)
     address_family = AF_INET6;
 #  endif /* ACE_HAS_IPV6 */
 
@@ -379,12 +380,13 @@ ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
   : ACE_Addr (this->determine_type(), sizeof (inet_addr_))
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
-  ACE_OS::memset (&this->inet_addr_, 0, sizeof (this->inet_addr_));
+  ACE_OS_String::memset (&this->inet_addr_, 0, sizeof (this->inet_addr_));
   if (this->set (port_number,
                  host_name,
                  1,
                  address_family) == -1)
 #if defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS)
+    //dah is this right?  ie, no ACE_LIB_TEXT
     ACE_ERROR ((LM_ERROR,
                 (char *)"ACE_INET_Addr::ACE_INET_Addr: %p\n",
                 (((char *) host_name == 0) ?
@@ -405,7 +407,7 @@ ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
   : ACE_Addr (this->determine_type(), sizeof (inet_addr_))
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
-  ACE_OS::memset (&this->inet_addr_, 0, sizeof (this->inet_addr_));
+  ACE_OS_String::memset (&this->inet_addr_, 0, sizeof (this->inet_addr_));
   if (this->set (port_number,
                  host_name,
                  1,
@@ -435,14 +437,14 @@ ACE_INET_Addr::set (const sockaddr_in *addr, int len)
 
   if (addr->sin_family == AF_INET)
     {
-      ACE_OS::memcpy (&this->inet_addr_.in4_, addr, len);
+      ACE_OS_String::memcpy (&this->inet_addr_.in4_, addr, len);
       this->base_set (AF_INET, len);
       return 0;
     }
 #if defined (ACE_HAS_IPV6)
   else if (addr->sin_family == AF_INET6)
     {
-      ACE_OS::memcpy (&this->inet_addr_.in6_, addr, len);
+      ACE_OS_String::memcpy (&this->inet_addr_.in6_, addr, len);
       this->base_set (AF_INET6, len);
       return 0;
     }
@@ -496,7 +498,7 @@ ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
   : ACE_Addr (this->determine_type(), sizeof (inet_addr_))
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
-  ACE_OS::memset (&this->inet_addr_, 0, sizeof (this->inet_addr_));
+  ACE_OS_String::memset (&this->inet_addr_, 0, sizeof (this->inet_addr_));
   if (this->set (port_number, inet_address) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("%p\n"),
@@ -512,7 +514,7 @@ ACE_INET_Addr::ACE_INET_Addr (const char port_name[],
   : ACE_Addr (this->determine_type(), sizeof (inet_addr_))
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
-  ACE_OS::memset (&this->inet_addr_, 0, sizeof (this->inet_addr_));
+  ACE_OS_String::memset (&this->inet_addr_, 0, sizeof (this->inet_addr_));
   if (this->set (port_name,
                  host_name,
                  protocol) == -1)
@@ -527,7 +529,7 @@ ACE_INET_Addr::ACE_INET_Addr (const wchar_t port_name[],
   : ACE_Addr (this->determine_type(), sizeof (inet_addr_))
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
-  ACE_OS::memset (&this->inet_addr_, 0, sizeof (this->inet_addr_));
+  ACE_OS_String::memset (&this->inet_addr_, 0, sizeof (this->inet_addr_));
   if (this->set (port_name,
                  host_name,
                  protocol) == -1)
@@ -545,7 +547,7 @@ ACE_INET_Addr::ACE_INET_Addr (const char port_name[],
   : ACE_Addr (this->determine_type(), sizeof (inet_addr_))
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
-  ACE_OS::memset (&this->inet_addr_, 0, sizeof (this->inet_addr_));
+  ACE_OS_String::memset (&this->inet_addr_, 0, sizeof (this->inet_addr_));
   if (this->set (port_name,
                  inet_address,
                  protocol) == -1)
@@ -560,7 +562,7 @@ ACE_INET_Addr::ACE_INET_Addr (const wchar_t port_name[],
   : ACE_Addr (this->determine_type(), sizeof (inet_addr_))
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
-  ACE_OS::memset (&this->inet_addr_, 0, sizeof (this->inet_addr_));
+  ACE_OS_String::memset (&this->inet_addr_, 0, sizeof (this->inet_addr_));
   if (this->set (port_name,
                  inet_address,
                  protocol) == -1)
@@ -640,7 +642,7 @@ ACE_INET_Addr::get_host_name (void) const
 
   static char name[MAXHOSTNAMELEN + 1];
   if (this->get_host_name (name, MAXHOSTNAMELEN + 1) == -1)
-    ACE_OS::strcpy (name, "<unknown>");
+    ACE_OS_String::strcpy (name, "<unknown>");
   return name;
 }
 
@@ -719,12 +721,12 @@ ACE_INET_Addr::get_host_name_i (char hostname[], size_t len) const
       if (hp == 0 || hp->h_name == 0)
         return -1;
 
-      if (ACE_OS::strlen (hp->h_name) >= len)
+      if (ACE_OS_String::strlen (hp->h_name) >= len)
         {
           // We know the length, so use memcpy
           if (len > 0)
             {
-              ACE_OS::memcpy (hostname, hp->h_name, len - 1);
+              ACE_OS_String::memcpy (hostname, hp->h_name, len - 1);
               hostname[len-1]= '\0';
             }
           errno = ENOSPC;
@@ -733,7 +735,7 @@ ACE_INET_Addr::get_host_name_i (char hostname[], size_t len) const
           // other places.
         }
 
-      ACE_OS::strcpy (hostname, hp->h_name);
+      ACE_OS_String::strcpy (hostname, hp->h_name);
       return 0;
 #endif /* VXWORKS */
     }
@@ -878,7 +880,7 @@ ACE_INET_Addr::get_host_addr (char *dst, int size) const
   return &buf_[0];
 #else /* VXWORKS */
   char *ch = ACE_OS::inet_ntoa (this->inet_addr_.in4_.sin_addr);
-  ACE_OS::strncpy (dst, ch, size);
+  ACE_OS_String::strncpy (dst, ch, size);
   return ch;
 #endif
 }

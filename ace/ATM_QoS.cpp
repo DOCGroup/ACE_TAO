@@ -41,7 +41,7 @@ ACE_ATM_QoS::ACE_ATM_QoS (int pktSize)
 {
   ACE_TRACE ("ACE_ATM_QoS::ACE_ATM_QoS");
 #if defined (ACE_HAS_LINUX_ATM)
-    ACE_OS::memset(&qos_, 0, sizeof(qos_));
+    ACE_OS_String::memset(&qos_, 0, sizeof(qos_));
     qos_.aal = ATM_PROTOCOL_DEFAULT;
     qos_.rxtp.traffic_class = ATM_ANYCLASS;
     qos_.rxtp.max_sdu = pktSize;
@@ -113,7 +113,7 @@ ACE_ATM_QoS::ACE_ATM_QoS(int rate,
 
   size += sizeof(Q2931_IE_TYPE) + sizeof(ULONG) + sizeof(ATM_QOS_CLASS_IE);
 
-  qos_.ProviderSpecific.buf = (char *) ACE_OS::malloc(size);
+  qos_.ProviderSpecific.buf = (char *) ACE_OS_Memory::malloc(size);
   if (qos_.ProviderSpecific.buf == 0) {
     ACE_ERROR((LM_ERROR,
                ACE_LIB_TEXT ("ACE_ATM_QoS::ACE_ATM_QoS: Unable to allocate %d bytes for qos_.ProviderSpecific.buf\n"),
@@ -121,37 +121,37 @@ ACE_ATM_QoS::ACE_ATM_QoS(int rate,
     return;
   }
   qos_.ProviderSpecific.len = size;
-  ACE_OS::memset(qos_.ProviderSpecific.buf, 0, size);
+  ACE_OS_String::memset(qos_.ProviderSpecific.buf, 0, size);
 
   ie_ptr = (Q2931_IE *) qos_.ProviderSpecific.buf;
   ie_ptr->IEType = IE_AALParameters;
   ie_ptr->IELength = sizeof( Q2931_IE_TYPE ) 
     + sizeof( ULONG ) 
     + sizeof( AAL_PARAMETERS_IE );
-  ACE_OS::memcpy(ie_ptr->IE, &ie_aalparams, sizeof(AAL_PARAMETERS_IE));
+  ACE_OS_String::memcpy(ie_ptr->IE, &ie_aalparams, sizeof(AAL_PARAMETERS_IE));
 
   ie_ptr = (Q2931_IE *) ((char *)ie_ptr + ie_ptr->IELength);
   ie_ptr->IEType = IE_TrafficDescriptor;
   ie_ptr->IELength = sizeof( Q2931_IE_TYPE ) 
     + sizeof( ULONG ) 
     + sizeof( ATM_TRAFFIC_DESCRIPTOR_IE );
-  ACE_OS::memcpy(ie_ptr->IE, &ie_td, sizeof(ATM_TRAFFIC_DESCRIPTOR_IE));
+  ACE_OS_String::memcpy(ie_ptr->IE, &ie_td, sizeof(ATM_TRAFFIC_DESCRIPTOR_IE));
 
   ie_ptr = (Q2931_IE *) ((char *)ie_ptr + ie_ptr->IELength);
   ie_ptr->IEType = IE_BroadbandBearerCapability;
   ie_ptr->IELength = sizeof( Q2931_IE_TYPE ) 
     + sizeof( ULONG ) 
     + sizeof( ATM_BROADBAND_BEARER_CAPABILITY_IE );
-  ACE_OS::memcpy(ie_ptr->IE, 
-                 &ie_bbc, 
-                 sizeof(ATM_BROADBAND_BEARER_CAPABILITY_IE));
+  ACE_OS_String::memcpy(ie_ptr->IE, 
+                        &ie_bbc, 
+                        sizeof(ATM_BROADBAND_BEARER_CAPABILITY_IE));
 
   ie_ptr = (Q2931_IE *) ((char *)ie_ptr + ie_ptr->IELength);
   ie_ptr->IEType = IE_QOSClass;
   ie_ptr->IELength = sizeof( Q2931_IE_TYPE ) 
     + sizeof( ULONG ) 
     + sizeof( ATM_QOS_CLASS_IE );
-  ACE_OS::memcpy(ie_ptr->IE, &ie_qos, sizeof(ATM_QOS_CLASS_IE));
+  ACE_OS_String::memcpy(ie_ptr->IE, &ie_qos, sizeof(ATM_QOS_CLASS_IE));
 
   //	qos_.SendingFlowspec.TokenRate = 0xffffffff;
   //	qos_.SendingFlowspec.TokenBucketSize = 0xffffffff;
@@ -202,9 +202,9 @@ ACE_ATM_QoS::ACE_ATM_QoS(int rate,
   ACE_UNUSED_ARG (rate);
   ACE_UNUSED_ARG (pktSize);
 #elif defined (ACE_HAS_LINUX_ATM)
-  ACE_OS::memset(&qos_,
-                 0,
-                 sizeof(qos_));
+  ACE_OS_String::memset(&qos_,
+                        0,
+                        sizeof(qos_));
   qos_.aal = ATM_PROTOCOL_DEFAULT;
   qos_.rxtp.max_sdu = pktSize;
 
@@ -293,7 +293,7 @@ ACE_ATM_QoS::set_cbr_rate (int rate,
 
   size += sizeof(Q2931_IE_TYPE) + sizeof(ULONG) + sizeof(ATM_QOS_CLASS_IE);
 
-  qos_.ProviderSpecific.buf = (char *) ACE_OS::malloc(size);
+  qos_.ProviderSpecific.buf = (char *) ACE_OS_Memory::malloc(size);
   if (qos_.ProviderSpecific.buf == 0) {
     ACE_ERROR((LM_ERROR,
                ACE_LIB_TEXT ("ACE_ATM_QoS::ACE_ATM_QoS: Unable to allocate %d bytes for qos_.ProviderSpecific.buf\n"),
@@ -301,28 +301,28 @@ ACE_ATM_QoS::set_cbr_rate (int rate,
     return;
   }
   qos_.ProviderSpecific.len = size;
-  ACE_OS::memset(qos_.ProviderSpecific.buf, 0, size);
+  ACE_OS_String::memset(qos_.ProviderSpecific.buf, 0, size);
 
   ie_ptr = (Q2931_IE *) qos_.ProviderSpecific.buf;
   ie_ptr->IEType = IE_AALParameters;
   ie_ptr->IELength = sizeof( Q2931_IE_TYPE ) +
                      sizeof( ULONG ) +
                      sizeof( AAL_PARAMETERS_IE );
-  ACE_OS::memcpy(ie_ptr->IE, &ie_aalparams, sizeof(AAL_PARAMETERS_IE));
+  ACE_OS_String::memcpy(ie_ptr->IE, &ie_aalparams, sizeof(AAL_PARAMETERS_IE));
 
   ie_ptr = (Q2931_IE *) ((char *)ie_ptr + ie_ptr->IELength);
   ie_ptr->IEType = IE_TrafficDescriptor;
   ie_ptr->IELength = sizeof( Q2931_IE_TYPE ) +
                      sizeof( ULONG ) +
                      sizeof( ATM_TRAFFIC_DESCRIPTOR_IE );
-  ACE_OS::memcpy(ie_ptr->IE, &ie_td, sizeof(ATM_TRAFFIC_DESCRIPTOR_IE));
+  ACE_OS_String::memcpy(ie_ptr->IE, &ie_td, sizeof(ATM_TRAFFIC_DESCRIPTOR_IE));
 
   ie_ptr = (Q2931_IE *) ((char *)ie_ptr + ie_ptr->IELength);
   ie_ptr->IEType = IE_BroadbandBearerCapability;
   ie_ptr->IELength = sizeof( Q2931_IE_TYPE ) +
                      sizeof( ULONG ) +
                      sizeof( ATM_BROADBAND_BEARER_CAPABILITY_IE );
-  ACE_OS::memcpy( ie_ptr->IE, 
+  ACE_OS_String::memcpy( ie_ptr->IE, 
                   &ie_bbc, 
                   sizeof( ATM_BROADBAND_BEARER_CAPABILITY_IE ));
 
@@ -330,11 +330,11 @@ ACE_ATM_QoS::set_cbr_rate (int rate,
   ie_ptr->IEType = IE_QOSClass;
   ie_ptr->IELength = sizeof(Q2931_IE_TYPE) + sizeof(ULONG) +
                      sizeof(ATM_QOS_CLASS_IE);
-  ACE_OS::memcpy(ie_ptr->IE, &ie_qos, sizeof(ATM_QOS_CLASS_IE));
+  ACE_OS_String::memcpy(ie_ptr->IE, &ie_qos, sizeof(ATM_QOS_CLASS_IE));
   */
 
   const int BYTES_PER_ATM_CELL = 53;
-  ACE_OS::memset(&qos_, 0, sizeof(ATM_QoS));
+  ACE_OS_String::memset(&qos_, 0, sizeof(ATM_QoS));
   // Setting the token rate sets the minimum rate. 3 Mbits/sec seems too high.
   //  Certainly for Vaudeville audio, we only need about 1000 c/s which is
   //  424000 bits/sec which is 53000 bytes/sec.
@@ -462,13 +462,13 @@ ACE_ATM_QoS::construct_options (ACE_HANDLE fd,
   int qos_cells;
   struct t_info info;
 
-  if (ACE_OS::t_getinfo (fd, &info) == -1)
+  if (ACE_OS_TLI::t_getinfo (fd, &info) == -1)
     {
-      ACE_OS::t_error ("t_getinfo");
+      ACE_OS_TLI::t_error ("t_getinfo");
       return 0;
     }
 
-  buf = (char *) ACE_OS::malloc (info.options);
+  buf = (char *) ACE_OS_Memory::malloc (info.options);
 
   if (buf == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -501,21 +501,21 @@ ACE_ATM_QoS::construct_options (ACE_HANDLE fd,
       boundaddr.addr.maxlen = sizeof(local_addr);
       boundaddr.addr.buf = (char *) &local_addr;
 
-      //if (ACE_OS::t_getprotaddr(fd, &boundaddr, NULL) < 0) {
-      if (ACE_OS::t_getname(fd,
-                            &boundaddr.addr,
-                            LOCALNAME) < 0)
+      //if (ACE_OS_TLI::t_getprotaddr(fd, &boundaddr, NULL) < 0) {
+      if (ACE_OS_TLI::t_getname(fd,
+                                &boundaddr.addr,
+                                LOCALNAME) < 0)
         {
-          ACE_OS::t_error("t_getname (local_address)");
+          ACE_OS_TLI::t_error("t_getname (local_address)");
           ACE_ERROR ((LM_ERROR,
                       ACE_LIB_TEXT ("Can't get local address!\n")));
-          ACE_OS::free (buf);
+          ACE_OS_Memory::free (buf);
           return 0;
         }
 
-      ACE_OS::memcpy(source_addr->address,
-                     local_addr.sap.t_atm_sap_addr.address,
-                     ATMNSAP_ADDR_LEN);
+      ACE_OS_String::memcpy(source_addr->address,
+                            local_addr.sap.t_atm_sap_addr.address,
+                            ATMNSAP_ADDR_LEN);
 
       popt = T_OPT_NEXTHDR (buf, info.options , popt);
     }

@@ -138,7 +138,7 @@ ACE_Condition<MUTEX>::ACE_Condition (MUTEX &m,
               ACE_OS::close (fd);
               return;
             }
-          this->condname_ = ACE_OS::strdup (name);
+          this->condname_ = ACE_OS_String::strdup (name);
           if (this->condname_ == 0)
             {
               ACE_OS::close (fd);

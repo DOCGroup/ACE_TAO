@@ -17,6 +17,13 @@
 #   include  <sys/systeminfo.h>
 # endif /* ACE_HAS_SYS_INFO */
 
+// Moved from OS.h dah
+# if !defined (_SC_AIO_MAX)
+#   define _SC_AIO_MAX 1
+# endif /* _SC_AIO_MAX */
+
+
+
 // *********************************************************************
 class ACE_Export ACE_POSIX_Wakeup_Completion : public ACE_POSIX_Asynch_Result
 {

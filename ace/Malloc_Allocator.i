@@ -18,7 +18,7 @@ ACE_New_Allocator::calloc (size_t nbytes,
 
   ACE_NEW_RETURN (ptr, char[nbytes], 0);
 
-  ACE_OS::memset (ptr, initial_value, nbytes);
+  ACE_OS_String::memset (ptr, initial_value, nbytes);
   return (void *) ptr;
 }
 
@@ -136,7 +136,7 @@ ACE_Static_Allocator_Base::calloc (size_t nbytes,
 {
   void *ptr = this->malloc (nbytes);
 
-  ACE_OS::memset (ptr, initial_value, nbytes);
+  ACE_OS_String::memset (ptr, initial_value, nbytes);
   return (void *) ptr;
 }
 

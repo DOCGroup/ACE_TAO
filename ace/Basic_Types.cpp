@@ -1,6 +1,7 @@
 // $Id$
 
-#include "ace/OS.h"
+#include "ace/Basic_Types.h"
+
 #if !defined (__ACE_INLINE__)
 # include "ace/Basic_Types.i"
 #endif /* ! __ACE_INLINE__ */
@@ -30,7 +31,7 @@ ACE_U_LongLong::as_string (ACE_TCHAR *output,
 {
   if (*this == 0)
     {
-      ACE_OS::strcpy(output, "0");
+      ACE_OS_String::strcpy(output, "0");
     }
   else
     {

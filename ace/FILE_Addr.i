@@ -7,7 +7,7 @@
 
 // Transform the current address into string format.
 
-#include "ace/SString.h"
+#include "ace/OS_String.h"
 
 // Return the address.
 
@@ -22,7 +22,7 @@ ACE_FILE_Addr::get_addr (void) const
 ACE_INLINE int
 ACE_FILE_Addr::operator == (const ACE_FILE_Addr &sap) const
 {
-  return ACE_OS::strcmp (this->filename_, sap.filename_) == 0;
+  return ACE_OS_String::strcmp (this->filename_, sap.filename_) == 0;
 }
 
 // Compare two addresses for inequality.

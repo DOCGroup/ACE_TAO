@@ -196,11 +196,11 @@ ACE_Module_Type::info (ACE_TCHAR **str, size_t len) const
                    this->name (),
                    ACE_LIB_TEXT ("# ACE_Module\n"));
 
-  if (*str == 0 && (*str = ACE_OS::strdup (buf)) == 0)
+  if (*str == 0 && (*str = ACE_OS_String::strdup (buf)) == 0)
     return -1;
   else
-    ACE_OS::strsncpy (*str, buf, len);
-  return ACE_OS::strlen (buf);
+    ACE_OS_String::strsncpy (*str, buf, len);
+  return ACE_OS_String::strlen (buf);
 }
 
 void
@@ -278,11 +278,11 @@ ACE_Stream_Type::info (ACE_TCHAR **str, size_t len) const
                    this->name (),
                    ACE_LIB_TEXT ("# STREAM\n"));
 
-  if (*str == 0 && (*str = ACE_OS::strdup (buf)) == 0)
+  if (*str == 0 && (*str = ACE_OS_String::strdup (buf)) == 0)
     return -1;
   else
-    ACE_OS::strsncpy (*str, buf, len);
-  return ACE_OS::strlen (buf);
+    ACE_OS_String::strsncpy (*str, buf, len);
+  return ACE_OS_String::strlen (buf);
 }
 
 int
@@ -373,7 +373,7 @@ ACE_Stream_Type::find (const ACE_TCHAR *mod_name) const
   for (ACE_Module_Type *m = this->head_;
        m != 0;
        m = m->link ())
-    if (ACE_OS::strcmp (m->name (), mod_name) == 0)
+    if (ACE_OS_String::strcmp (m->name (), mod_name) == 0)
       return m;
 
   return 0;

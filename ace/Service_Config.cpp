@@ -563,7 +563,7 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
 
   const ACE_TCHAR *key = logger_key;
 
-  if (key == 0 || ACE_OS::strcmp (key, ACE_DEFAULT_LOGGER_KEY) == 0)
+  if (key == 0 || ACE_OS_String::strcmp (key, ACE_DEFAULT_LOGGER_KEY) == 0)
     // Only use the static <logger_key_> if the caller doesn't
     // override it in the parameter list or if the key supplied is
     // equal to the default static logger key.

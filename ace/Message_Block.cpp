@@ -80,9 +80,9 @@ ACE_Message_Block::copy (const char *buf, size_t n)
     return -1;
   else
     {
-      (void) ACE_OS::memcpy (this->wr_ptr (),
-                             buf,
-                             n);
+      (void) ACE_OS_String::memcpy (this->wr_ptr (),
+                                    buf,
+                                    n);
       this->wr_ptr (n);
       return 0;
     }
@@ -96,15 +96,15 @@ ACE_Message_Block::copy (const char *buf)
   // Note that for this to work correct, end() *must* be >= wr_ptr().
   size_t len = ACE_static_cast(size_t,
                                (this->end () - this->wr_ptr ()));
-  size_t buflen = ACE_OS::strlen (buf) + 1;
+  size_t buflen = ACE_OS_String::strlen (buf) + 1;
 
   if (len < buflen)
     return -1;
   else
     {
-      (void) ACE_OS::memcpy (this->wr_ptr (),
-                             buf,
-                             buflen);
+      (void) ACE_OS_String::memcpy (this->wr_ptr (),
+                                    buf,
+                                    buflen);
       this->wr_ptr (buflen);
       return 0;
     }
@@ -116,9 +116,9 @@ ACE_Message_Block::crunch (void)
   if (this->rd_ptr () > this->base ())
     {
       size_t len = this->length ();
-      (void) ACE_OS::memmove (this->base (),
-                              this->rd_ptr (),
-                              len);
+      (void) ACE_OS_String::memmove (this->base (),
+                                     this->rd_ptr (),
+                                     len);
       this->rd_ptr (this->base ());
       this->wr_ptr (this->base () + len);
     }
@@ -189,9 +189,9 @@ ACE_Data_Block::size (size_t length)
                             (char *) this->allocator_strategy_->malloc (length),
                             -1);
 
-      ACE_OS::memcpy (buf,
-                      this->base_,
-                      this->cur_size_);
+      ACE_OS_String::memcpy (buf,
+                             this->base_,
+                             this->cur_size_);
       if (ACE_BIT_DISABLED (this->flags_,
                             ACE_Message_Block::DONT_DELETE))
         this->allocator_strategy_->free ((void *) this->base_);
@@ -582,9 +582,9 @@ ACE_Message_Block::ACE_Message_Block (const ACE_Message_Block &mb,
       size_t wr_offset = mb.wr_ptr_ - (start - mb.base ());
 
       // Copy wr_offset amount of data in to <this->data_block>
-      (void) ACE_OS::memcpy (this->wr_ptr (),
-                             start,
-                             wr_offset);
+      (void) ACE_OS_String::memcpy (this->wr_ptr (),
+                                    start,
+                                    wr_offset);
 
       // Dont move the write pointer, just leave it to the application
       // to do what it wants
@@ -1019,9 +1019,9 @@ ACE_Data_Block::clone (ACE_Message_Block::Message_Flags mask) const
   // Copy all of the payload memory into the new object.
   if (nb != 0)
     {
-      ACE_OS::memcpy (nb->base_,
-                      this->base_,
-                      this->max_size_);
+      ACE_OS_String::memcpy (nb->base_,
+                             this->base_,
+                             this->max_size_);
     }
 
   return nb;

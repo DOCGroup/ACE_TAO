@@ -142,13 +142,13 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
         {
           ACE_UINT64 haddr;  // a place to put the address
           char * haddrp = (char *) &haddr;  // convert to char pointer
-          ACE_OS::memcpy(haddrp,(char *) hp->h_addr,hp->h_length);
+          ACE_OS_String::memcpy(haddrp,(char *) hp->h_addr,hp->h_length);
           host_addr.sin_addr.s_addr = haddr;
         }
 #else /* ! _UNICOS */
-        ACE_OS::memcpy ((char *) &host_addr.sin_addr.s_addr,
-                        (char *) hp->h_addr,
-                        hp->h_length);
+        ACE_OS_String::memcpy ((char *) &host_addr.sin_addr.s_addr,
+                               (char *) hp->h_addr,
+                               hp->h_length);
 #endif /* ! _UNICOS */
     }
 
@@ -168,9 +168,9 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
         {
           struct sockaddr_in if_addr;
 
-          ACE_OS::memcpy (&if_addr,
-                          &ifr->ifr_addr,
-                          sizeof if_addr);
+          ACE_OS_String::memcpy (&if_addr,
+                                 &ifr->ifr_addr,
+                                 sizeof if_addr);
 
           if (host_addr.sin_addr.s_addr != if_addr.sin_addr.s_addr)
             continue;

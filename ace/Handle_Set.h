@@ -14,11 +14,18 @@
 #define ACE_HANDLE_SET_H
 #include "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/config-all.h"
+#include "ace/Global_Macros.h"
+#include "ace/ace_sys_types.h"
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+# if !defined (ACE_DEFAULT_SELECT_REACTOR_SIZE)
+#   define ACE_DEFAULT_SELECT_REACTOR_SIZE ACE_FD_SETSIZE
+# endif /* ACE_DEFAULT_SELECT_REACTOR_SIZE */
 
 /**
  * @class ACE_Handle_Set

@@ -141,12 +141,12 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
       ACE_OS::sprintf (name,
                        ACE_LIB_TEXT ("MEM_Acceptor_%d_"),
                        local_addr.get_port_number ());
-      ACE_OS::strcat (buf, name);
+      ACE_OS_String::strcat (buf, name);
     }
   ACE_TCHAR unique [MAXPATHLEN];
   ACE_OS::unique_name (&new_stream, unique, MAXPATHLEN);
 
-  ACE_OS::strcat (buf, unique);
+  ACE_OS_String::strcat (buf, unique);
 
   // Make sure we have a fresh start.
   ACE_OS::unlink (buf);
@@ -185,7 +185,7 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
     return -1;
 
   // @@ Need to handle timeout here.
-  ACE_UINT16 buf_len = (ACE_OS::strlen (buf) + 1) * sizeof (ACE_TCHAR);
+  ACE_UINT16 buf_len = (ACE_OS_String::strlen (buf) + 1) * sizeof (ACE_TCHAR);
 
   // No need to worry about byte-order because both parties should always
   // be on the same machine.

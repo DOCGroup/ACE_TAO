@@ -73,11 +73,11 @@ ACE_Service_Manager::info (ACE_TCHAR **strp, size_t length) const
                    sa.get_port_number (),
                    ACE_LIB_TEXT ("tcp"),
                    ACE_LIB_TEXT ("# lists all services in the daemon\n"));
-  if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
+  if (*strp == 0 && (*strp = ACE_OS_String::strdup (buf)) == 0)
     return -1;
   else
-    ACE_OS::strsncpy (*strp, buf, length);
-  return ACE_OS::strlen (buf);
+    ACE_OS_String::strsncpy (*strp, buf, length);
+  return ACE_OS_String::strlen (buf);
 }
 
 int
@@ -168,14 +168,14 @@ ACE_Service_Manager::list_services (void)
        sri.next (sr) != 0;
        sri.advance ())
     {
-      int len = ACE_OS::strlen (sr->name ()) + 11;
+      int len = ACE_OS_String::strlen (sr->name ()) + 11;
       ACE_TCHAR buf[BUFSIZ];
       ACE_TCHAR *p = buf + len;
 
-      ACE_OS::strcpy (buf, sr->name ());
-      ACE_OS::strcat (buf, (sr->active ()) ?
-                      ACE_LIB_TEXT (" (active) ") :
-                      ACE_LIB_TEXT (" (paused) "));
+      ACE_OS_String::strcpy (buf, sr->name ());
+      ACE_OS_String::strcat (buf, (sr->active ()) ?
+                             ACE_LIB_TEXT (" (active) ") :
+                             ACE_LIB_TEXT (" (paused) "));
 
       p[-1] = ' ';
       p[0]  = '\0';
@@ -243,10 +243,10 @@ ACE_Service_Manager::process_request (ACE_TCHAR *request)
 
   *p = '\0';
 
-  if (ACE_OS::strcmp (request, ACE_LIB_TEXT ("help")) == 0)
+  if (ACE_OS_String::strcmp (request, ACE_LIB_TEXT ("help")) == 0)
     // Return a list of the configured services.
     this->list_services ();
-  else if (ACE_OS::strcmp (request, ACE_LIB_TEXT ("reconfigure") )== 0)
+  else if (ACE_OS_String::strcmp (request, ACE_LIB_TEXT ("reconfigure") )== 0)
     // Trigger a reconfiguration by re-reading the local <svc.conf> file.
     this->reconfigure_services ();
   else
@@ -331,8 +331,8 @@ ACE_Service_Manager::handle_input (ACE_HANDLE)
           offset += result;
           *offset = 0;
 
-          if (ACE_OS::strchr (request, '\r') != 0
-              || ACE_OS::strchr (request, '\n') != 0)
+          if (ACE_OS_String::strchr (request, '\r') != 0
+              || ACE_OS_String::strchr (request, '\n') != 0)
             remaining = 0;
         }
     }

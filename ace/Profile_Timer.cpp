@@ -24,12 +24,12 @@ ACE_Profile_Timer::dump (void) const
 ACE_Profile_Timer::ACE_Profile_Timer (void)
 {
   ACE_TRACE ("ACE_Profile_Timer::ACE_Profile_Timer");
-  ACE_OS::memset (&this->end_usage_, 0, sizeof this->end_usage_);
-  ACE_OS::memset (&this->begin_usage_, 0, sizeof this->begin_usage_);
-  ACE_OS::memset (&this->last_usage_, 0, sizeof this->last_usage_);
+  ACE_OS_String::memset (&this->end_usage_, 0, sizeof this->end_usage_);
+  ACE_OS_String::memset (&this->begin_usage_, 0, sizeof this->begin_usage_);
+  ACE_OS_String::memset (&this->last_usage_, 0, sizeof this->last_usage_);
 
 #  if defined (ACE_HAS_PRUSAGE_T)
-  ACE_OS::memset (&this->last_usage_, 0, sizeof this->last_usage_);
+  ACE_OS_String::memset (&this->last_usage_, 0, sizeof this->last_usage_);
   char buf[20];
   ACE_OS::sprintf (buf, "/proc/%d", ACE_static_cast (int, ACE_OS::getpid ()));
 
@@ -39,9 +39,9 @@ ACE_Profile_Timer::ACE_Profile_Timer (void)
                 ACE_LIB_TEXT ("%p\n"),
                 buf));
 #  elif defined (ACE_HAS_GETRUSAGE)
-  ACE_OS::memset (&this->begin_time_, 0, sizeof this->begin_time_);
-  ACE_OS::memset (&this->end_time_, 0, sizeof this->end_time_);
-  ACE_OS::memset (&this->last_time_, 0, sizeof this->last_time_);
+  ACE_OS_String::memset (&this->begin_time_, 0, sizeof this->begin_time_);
+  ACE_OS_String::memset (&this->end_time_, 0, sizeof this->end_time_);
+  ACE_OS_String::memset (&this->last_time_, 0, sizeof this->last_time_);
 #  endif /* ACE_HAS_PRUSAGE_T */
 }
 
@@ -271,13 +271,13 @@ ACE_Profile_Timer::ACE_Profile_Timer (void)
   ACE_TRACE ("ACE_Profile_Timer::ACE_Profile_Timer");
 #  if defined (ACE_HAS_GETRUSAGE)
 
-  ACE_OS::memset (&this->end_usage_, 0, sizeof this->end_usage_);
-  ACE_OS::memset (&this->begin_usage_, 0, sizeof this->begin_usage_);
-  ACE_OS::memset (&this->last_usage_, 0, sizeof this->last_usage_);
+  ACE_OS_String::memset (&this->end_usage_, 0, sizeof this->end_usage_);
+  ACE_OS_String::memset (&this->begin_usage_, 0, sizeof this->begin_usage_);
+  ACE_OS_String::memset (&this->last_usage_, 0, sizeof this->last_usage_);
 
-  ACE_OS::memset (&this->begin_time_, 0, sizeof this->begin_time_);
-  ACE_OS::memset (&this->end_time_, 0, sizeof this->end_time_);
-  ACE_OS::memset (&this->last_time_, 0, sizeof this->last_time_);
+  ACE_OS_String::memset (&this->begin_time_, 0, sizeof this->begin_time_);
+  ACE_OS_String::memset (&this->end_time_, 0, sizeof this->end_time_);
+  ACE_OS_String::memset (&this->last_time_, 0, sizeof this->last_time_);
 #  endif /* ACE_HAS_GETRUSAGE */
 }
 

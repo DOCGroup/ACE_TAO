@@ -1,6 +1,7 @@
 // $Id$
 
-#include "ace/OS.h"
+#include "ace/OS_Memory.h"
+#include "ace/OS_Dirent.h"
 #include "ace/Dirent_Selector.h"
 
 #if !defined (__ACE_INLINE__)
@@ -29,7 +30,7 @@ ACE_Dirent_Selector::open (const ACE_TCHAR *dir,
                            int (*cmp) (const dirent **d1,
                                        const dirent **d2))
 {
-  n_ = ACE_OS::scandir (dir, &this->namelist_, sel, cmp);
+  n_ = ACE_OS_Dirent::scandir (dir, &this->namelist_, sel, cmp);
   return n_;
 }
 
@@ -37,8 +38,8 @@ int
 ACE_Dirent_Selector::close (void)
 {
   for (--n_; n_>=0; --n_)
-    ACE_OS::free (this->namelist_[n_]);
+    ACE_OS_Memory::free (this->namelist_[n_]);
 
-  ACE_OS::free (this->namelist_);
+  ACE_OS_Memory::free (this->namelist_);
   return 0;
 }

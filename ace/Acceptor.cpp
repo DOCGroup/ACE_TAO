@@ -173,11 +173,11 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::info (ACE_TCHAR **strp,
                    addr_str,
                    ACE_LIB_TEXT ("# acceptor factory\n"));
 
-  if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
+  if (*strp == 0 && (*strp = ACE_OS_String::strdup (buf)) == 0)
     return -1;
   else
-    ACE_OS::strsncpy (*strp, buf, length);
-  return ACE_OS::strlen (buf);
+    ACE_OS_String::strsncpy (*strp, buf, length);
+  return ACE_OS_String::strlen (buf);
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
@@ -504,11 +504,11 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open
 
   if (this->service_name_ == 0 && service_name != 0)
     ACE_ALLOCATOR_RETURN (this->service_name_,
-                          ACE_OS::strdup (service_name),
+                          ACE_OS_String::strdup (service_name),
                           -1);
   if (this->service_description_ == 0 && service_description != 0)
     ACE_ALLOCATOR_RETURN (this->service_description_,
-                          ACE_OS::strdup (service_description),
+                          ACE_OS_String::strdup (service_description),
                           -1);
   this->reactor (reactor);
 
@@ -605,10 +605,10 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Strategy_Acceptor
 
   if (service_name != 0)
     ACE_ALLOCATOR (this->service_name_,
-                   ACE_OS::strdup (service_name));
+                   ACE_OS_String::strdup (service_name));
   if (service_description != 0)
     ACE_ALLOCATOR (this->service_description_,
-                   ACE_OS::strdup (service_description));
+                   ACE_OS_String::strdup (service_description));
   this->use_select_ = use_select;
 }
 
@@ -747,8 +747,8 @@ template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
 ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::~ACE_Strategy_Acceptor (void)
 {
   ACE_TRACE ("ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::~ACE_Strategy_Acceptor");
-  ACE_OS::free ((void *) this->service_name_);
-  ACE_OS::free ((void *) this->service_description_);
+  ACE_OS_Memory::free ((void *) this->service_name_);
+  ACE_OS_Memory::free ((void *) this->service_description_);
   this->handle_close ();
 }
 
@@ -788,11 +788,11 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::info (ACE_TCHAR **strp,
                    ? ACE_LIB_TEXT ("<unknown>")
                    : this->service_description_);
 
-  if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
+  if (*strp == 0 && (*strp = ACE_OS_String::strdup (buf)) == 0)
     return -1;
   else
-    ACE_OS::strsncpy (*strp, buf, length);
-  return ACE_OS::strlen (buf);
+    ACE_OS_String::strsncpy (*strp, buf, length);
+  return ACE_OS_String::strlen (buf);
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
@@ -1140,11 +1140,11 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::info (ACE_TCHAR **strp,
                    addr_str,
                    ACE_LIB_TEXT ("#oneshot acceptor factory\n"));
 
-  if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
+  if (*strp == 0 && (*strp = ACE_OS_String::strdup (buf)) == 0)
     return -1;
   else
-    ACE_OS::strsncpy (*strp, buf, length);
-  return ACE_OS::strlen (buf);
+    ACE_OS_String::strsncpy (*strp, buf, length);
+  return ACE_OS_String::strlen (buf);
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int

@@ -480,12 +480,12 @@ ACE_OutputCDR::write_array (const void *x,
   if (this->adjust (size * length, align, buf) == 0)
     {
 #if !defined (ACE_ENABLE_SWAP_ON_WRITE)
-      ACE_OS::memcpy (buf, x, size*length);
+      ACE_OS_String::memcpy (buf, x, size*length);
       return 1;
 #else
       if (!this->do_byte_swap_ || size == 1)
         {
-          ACE_OS::memcpy (buf, x, size*length);
+          ACE_OS_String::memcpy (buf, x, size*length);
           return 1;
         }
       else
@@ -856,7 +856,7 @@ ACE_InputCDR::read_string (char *&x)
       ACE_NEW_RETURN (x,
                       ACE_CDR::Char[1],
                       0);
-      ACE_OS::strcpy (ACE_const_cast (char *&, x), "");
+      ACE_OS_String::strcpy (ACE_const_cast (char *&, x), "");
       return 1;
     }
 
@@ -959,11 +959,11 @@ ACE_InputCDR::read_array (void* x,
   if (this->adjust (size * length, align, buf) == 0)
     {
 #if defined (ACE_DISABLE_SWAP_ON_READ)
-      ACE_OS::memcpy (x, buf, size*length);
+      ACE_OS_String::memcpy (x, buf, size*length);
 #else
       if (!this->do_byte_swap_ || size == 1)
         {
-          ACE_OS::memcpy (x, buf, size*length);
+          ACE_OS_String::memcpy (x, buf, size*length);
         }
       else
         {
@@ -1355,9 +1355,9 @@ ACE_InputCDR::clone_from (ACE_InputCDR &cdr)
   size_t wr_bytes = wr_ptr - nwr_ptr;
 
   // Now do the copy
-  (void) ACE_OS::memcpy (this->start_.wr_ptr (),
-                         cdr.start_.rd_ptr (),
-                         wr_bytes);
+  (void) ACE_OS_String::memcpy (this->start_.wr_ptr (),
+                                cdr.start_.rd_ptr (),
+                                wr_bytes);
 
   // Set the read pointer position to the same point as that was in
   // <incoming> cdr.

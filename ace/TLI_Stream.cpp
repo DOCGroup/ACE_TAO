@@ -37,7 +37,7 @@ ACE_TLI_Stream::get_remote_addr (ACE_Addr &sa) const
   name.maxlen = sa.get_size ();
   name.buf = (char *) sa.get_addr ();
 
-  // if (ACE_OS::t_getname (this->get_handle (), &name, REMOTENAME) == -1)   
+  // if (ACE_OS_TLI::t_getname (this->get_handle (), &name, REMOTENAME) == -1)   
   if (ACE_OS::ioctl (this->get_handle (),
                      TI_GETPEERNAME,
                      &name) == -1)
@@ -104,7 +104,7 @@ ACE_TLI_Stream::close (void)
     return ACE_OS::close (fd);
   else
 #endif /* ACE_WIN32 */
-    return ACE_OS::t_close (fd);
+    return ACE_OS_TLI::t_close (fd);
 }
 
 #endif /* ACE_HAS_TLI */

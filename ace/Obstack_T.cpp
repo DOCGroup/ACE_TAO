@@ -70,9 +70,9 @@ ACE_Obstack_T<CHAR>::request (size_t len)
           if (this->size_ < len + datasize)
             return -1;
 
-          ACE_OS::memcpy (this->curr_->block_,
-                          temp->block_,
-                          datasize);
+          ACE_OS_String::memcpy (this->curr_->block_,
+                                 temp->block_,
+                                 datasize);
           this->curr_->cur_ = this->curr_->block_ + datasize;
         }
     }
@@ -155,7 +155,7 @@ ACE_Obstack_T<CHAR>::copy (const CHAR *s,
     return 0;
 
   size_t tsize = len * sizeof (CHAR);
-  ACE_OS::memcpy (this->curr_->cur_, s, tsize);
+  ACE_OS_String::memcpy (this->curr_->cur_, s, tsize);
   this->curr_->cur_ += tsize ;
   return this->freeze ();
 }

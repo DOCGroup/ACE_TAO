@@ -11,6 +11,7 @@
 //=============================================================================
 
 #include "ace/OS_QoS.h"
+#include "ace/OS_Errno.h"
 
 ACE_Flow_Spec::ACE_Flow_Spec (u_long token_rate,
                               u_long token_bucket_size,

@@ -333,7 +333,7 @@ ACE_SOCK_Dgram::send (const iovec iov[],
 
   for (i = 0; i < n; i++)
     {
-      ACE_OS::memcpy (ptr, iov[i].iov_base, iov[i].iov_len);
+      ACE_OS_String::memcpy (ptr, iov[i].iov_base, iov[i].iov_len);
       ptr += iov[i].iov_len;
     }
 
@@ -389,7 +389,7 @@ ACE_SOCK_Dgram::recv (iovec iov[],
            i < n && copyn > 0;
            i++)
         {
-          ACE_OS::memcpy (iov[i].iov_base, ptr,
+          ACE_OS_String::memcpy (iov[i].iov_base, ptr,
                           // iov_len is int on some platforms, size_t on others
                           copyn > (int) iov[i].iov_len
                             ? (size_t) iov[i].iov_len
@@ -483,7 +483,7 @@ ACE_SOCK_Dgram::set_nic (const char *option_value)
                           option_value) == -1)
     return;
   multicast_address.imr_interface.s_addr =
-    htonl (interface_addr.get_ip_address ());
+    ACE_HTONL (interface_addr.get_ip_address ());
 #else
   ifreq if_address;
 
@@ -491,7 +491,7 @@ ACE_SOCK_Dgram::set_nic (const char *option_value)
   // Look up the interface by number, not name.
   if_address.ifr_ifno = ACE_OS::atoi (option_value);
 #else
-  ACE_OS::strcpy (if_address.ifr_name, option_value);
+  ACE_OS_String::strcpy (if_address.ifr_name, option_value);
 #endif /* defined (ACE_PSOS) */
 
   if (ACE_OS::ioctl (this->get_handle (),

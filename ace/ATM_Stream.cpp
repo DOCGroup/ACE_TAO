@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/ATM_Stream.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID (ace, ATM_Stream, "$Id$")
 
@@ -25,23 +26,23 @@ ACE_ATM_Stream::get_peer_name (void) const
 #if defined (ACE_HAS_FORE_ATM_XTI) 
   //   // Use t_getprotaddr for XTI/ATM
   //   struct t_bind *localaddr 
-  //     = (struct t_bind *) ACE_OS::t_alloc (get_handle (),
+  //     = (struct t_bind *) ACE_OS_TLI::t_alloc (get_handle (),
   //                                          T_BIND,
   //                                          T_ADDR);
   //   struct t_bind *peeraddr 
-  //      = (struct t_bind *) ACE_OS::t_alloc (get_handle (),
+  //      = (struct t_bind *) ACE_OS_TLI::t_alloc (get_handle (),
   //                                           T_BIND,
   //                                           T_ADDR);
   //   ::t_getprotaddr (get_handle (),
   //                   localaddr,
   //                   peeraddr);
 
-  //   char* connected_name = (char*) ACE_OS::malloc (peeraddr->addr.len + 1);
-  //   ACE_OS::strcpy (connected_name,
+  //   char* connected_name = (char*) ACE_OS_Memory::malloc (peeraddr->addr.len + 1);
+  //   ACE_OS_String::strcpy (connected_name,
   //                  peeraddr->addr.buf);
-  //   ACE_OS::t_free ((char *) localaddr,
+  //   ACE_OS_TLI::t_free ((char *) localaddr,
   //                   T_BIND);
-  //   ACE_OS::t_free ((char *) peeraddr,
+  //   ACE_OS_TLI::t_free ((char *) peeraddr,
   //                   T_BIND);
   //   return (connected_name);
 
@@ -52,7 +53,7 @@ ACE_ATM_Stream::get_peer_name (void) const
   struct netbuf name;
   name.maxlen = sa.get_size ();
   name.buf = (char *) sa.get_addr ();
-  ACE_OS::t_getname (this->get_handle (), &name, REMOTENAME);
+  ACE_OS_TLI::t_getname (this->get_handle (), &name, REMOTENAME);
   //  ACE_OS::ioctl (this->get_handle (),
   //               TI_GETPEERNAME,
   //               &name);
@@ -61,7 +62,7 @@ ACE_ATM_Stream::get_peer_name (void) const
 #elif defined (ACE_HAS_FORE_ATM_WS2) 
   // Use getpeername for WinSock2.
   struct sockaddr_atm name;
-  ACE_OS::memset (&name, 0, sizeof (name));
+  ACE_OS_String::memset (&name, 0, sizeof (name));
   int nameSize = sizeof (name);
 
   if (ACE_OS::getpeername (this->get_handle (),
@@ -78,11 +79,11 @@ ACE_ATM_Stream::get_peer_name (void) const
   buffer[ (ATM_ADDR_SIZE - 1) * 3 ] = '\0';
   sprintf (buffer, "%s%02x.", buffer, 0);
   buffer[ ATM_ADDR_SIZE * 3 - 1 ] = '\0';
-  for (index = 0; index < ACE_OS::strlen (buffer); ++index) 
+  for (index = 0; index < ACE_OS_String::strlen (buffer); ++index) 
     buffer[index] = tolower (buffer[index]);
 
   ifstream atm_hosts ("C:/WINNT/atmhosts");
-  assert (atm_hosts.is_open ());
+  ACE_ASSERT (atm_hosts.is_open ());
 
   // Find the host address in the ATM hosts file and return the
   //  host name
@@ -92,7 +93,7 @@ ACE_ATM_Stream::get_peer_name (void) const
   while (!atm_hosts.eof ()) {
     atm_hosts.getline (line, 256);
     // Convert the line to lower case to ease comparison
-    for (index = 0; index < ACE_OS::strlen (line); ++index) 
+    for (index = 0; index < ACE_OS_String::strlen (line); ++index) 
       line[index] = tolower (line[index]);
     if (strstr (line, buffer) != 0) 
       {
@@ -154,14 +155,14 @@ ACE_ATM_Stream::get_vpi_vci (ACE_UINT16 &vpi,
   struct t_info info;
   struct t_optmgmt opt_req, opt_ret;
 
-  if (ACE_OS::t_getinfo (stream_.get_handle (),
+  if (ACE_OS_TLI::t_getinfo (stream_.get_handle (),
                         &info) < 0) 
     {
-      ACE_OS::t_error ("t_getinfo");
+      ACE_OS_TLI::t_error ("t_getinfo");
       return -1;
     }
 
-  char *buf_req = (char *) ACE_OS::malloc (info.options);
+  char *buf_req = (char *) ACE_OS_Memory::malloc (info.options);
   if (buf_req == (char *) NULL) 
     {
       ACE_OS::fprintf (stderr,
@@ -170,7 +171,7 @@ ACE_ATM_Stream::get_vpi_vci (ACE_UINT16 &vpi,
       return -1;
     }
 
-  char *buf_ret = (char *) ACE_OS::malloc (info.options);
+  char *buf_ret = (char *) ACE_OS_Memory::malloc (info.options);
   if (buf_ret == (char *) NULL) 
     {
       ACE_OS::fprintf (stderr,
@@ -179,8 +180,8 @@ ACE_ATM_Stream::get_vpi_vci (ACE_UINT16 &vpi,
       return -1;
     }
 
-  ACE_OS::memset (&opt_req, 0, sizeof (opt_req));
-  ACE_OS::memset (&opt_ret, 0, sizeof (opt_ret));
+  ACE_OS_String::memset (&opt_req, 0, sizeof (opt_req));
+  ACE_OS_String::memset (&opt_ret, 0, sizeof (opt_ret));
 
   struct t_opthdr *popt = (struct t_opthdr *) buf_req;
   struct t_opthdr *popt_ret = (struct t_opthdr *) buf_ret;
@@ -203,19 +204,19 @@ ACE_ATM_Stream::get_vpi_vci (ACE_UINT16 &vpi,
   opt_ret.opt.maxlen  = info.options;
   opt_ret.opt.buf = (char *) popt_ret;
 
-  if (ACE_OS::t_optmgmt (stream_.get_handle (),
+  if (ACE_OS_TLI::t_optmgmt (stream_.get_handle (),
                         &opt_req,
                         &opt_ret) < 0) {
-    ACE_OS::t_error ("t_optmgmt");
+    ACE_OS_TLI::t_error ("t_optmgmt");
     return -1;
   }
 
-  ACE_OS::memcpy (connect_opts,
+  ACE_OS_String::memcpy (connect_opts,
  (char *) popt_ret + sizeof (struct t_opthdr),
                  opt_size);
 
-  ACE_OS::free (buf_ret);
-  ACE_OS::free (buf_req);
+  ACE_OS_Memory::free (buf_ret);
+  ACE_OS_Memory::free (buf_req);
 
   vpi = conn_prop.vpi;
   vci = conn_prop.vci;

@@ -26,46 +26,46 @@ ACE_Logging_Strategy::priorities (ACE_TCHAR *priority_string,
 
   // Parse string and alternate priority mask.
 
-  for (ACE_TCHAR *priority = ACE_OS::strtok (priority_string,
-                                             ACE_LIB_TEXT ("|"));
+  for (ACE_TCHAR *priority = ACE_OS_String::strtok (priority_string,
+                                                    ACE_LIB_TEXT ("|"));
        priority != 0;
-       priority = ACE_OS::strtok (0, ACE_LIB_TEXT ("|")))
+       priority = ACE_OS_String::strtok (0, ACE_LIB_TEXT ("|")))
     {
-      if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("TRACE")) == 0)
+      if (ACE_OS_String::strcmp (priority, ACE_LIB_TEXT ("TRACE")) == 0)
         ACE_SET_BITS (priority_mask, LM_TRACE);
-      else if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("~TRACE")) == 0)
+      else if (ACE_OS_String::strcmp (priority, ACE_LIB_TEXT ("~TRACE")) == 0)
         ACE_CLR_BITS (priority_mask, LM_TRACE);
-      else if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("DEBUG")) == 0)
+      else if (ACE_OS_String::strcmp (priority, ACE_LIB_TEXT ("DEBUG")) == 0)
         ACE_SET_BITS (priority_mask, LM_DEBUG);
-      else if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("~DEBUG")) == 0)
+      else if (ACE_OS_String::strcmp (priority, ACE_LIB_TEXT ("~DEBUG")) == 0)
         ACE_CLR_BITS (priority_mask, LM_DEBUG);
-      else if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("INFO")) == 0)
+      else if (ACE_OS_String::strcmp (priority, ACE_LIB_TEXT ("INFO")) == 0)
         ACE_SET_BITS (priority_mask, LM_INFO);
-      else if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("~INFO")) == 0)
+      else if (ACE_OS_String::strcmp (priority, ACE_LIB_TEXT ("~INFO")) == 0)
         ACE_CLR_BITS (priority_mask, LM_INFO);
-      else if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("NOTICE")) == 0)
+      else if (ACE_OS_String::strcmp (priority, ACE_LIB_TEXT ("NOTICE")) == 0)
         ACE_SET_BITS (priority_mask, LM_NOTICE);
-      else if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("~NOTICE")) == 0)
+      else if (ACE_OS_String::strcmp (priority, ACE_LIB_TEXT ("~NOTICE")) == 0)
         ACE_CLR_BITS (priority_mask, LM_NOTICE);
-      else if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("WARNING")) == 0)
+      else if (ACE_OS_String::strcmp (priority, ACE_LIB_TEXT ("WARNING")) == 0)
         ACE_SET_BITS (priority_mask, LM_WARNING);
-      else if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("~WARNING")) == 0)
+      else if (ACE_OS_String::strcmp (priority, ACE_LIB_TEXT ("~WARNING")) == 0)
         ACE_CLR_BITS (priority_mask, LM_WARNING);
-      else if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("ERROR")) == 0)
+      else if (ACE_OS_String::strcmp (priority, ACE_LIB_TEXT ("ERROR")) == 0)
         ACE_SET_BITS (priority_mask, LM_ERROR);
-      else if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("~ERROR")) == 0)
+      else if (ACE_OS_String::strcmp (priority, ACE_LIB_TEXT ("~ERROR")) == 0)
         ACE_CLR_BITS (priority_mask, LM_ERROR);
-      else if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("CRITICAL")) == 0)
+      else if (ACE_OS_String::strcmp (priority, ACE_LIB_TEXT ("CRITICAL")) == 0)
         ACE_SET_BITS (priority_mask, LM_CRITICAL);
-      else if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("~CRITICAL")) == 0)
+      else if (ACE_OS_String::strcmp (priority, ACE_LIB_TEXT ("~CRITICAL")) == 0)
         ACE_CLR_BITS (priority_mask, LM_CRITICAL);
-      else if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("ALERT")) == 0)
+      else if (ACE_OS_String::strcmp (priority, ACE_LIB_TEXT ("ALERT")) == 0)
         ACE_SET_BITS (priority_mask, LM_ALERT);
-      else if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("~ALERT")) == 0)
+      else if (ACE_OS_String::strcmp (priority, ACE_LIB_TEXT ("~ALERT")) == 0)
         ACE_CLR_BITS (priority_mask, LM_ALERT);
-      else if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("EMERGENCY")) == 0)
+      else if (ACE_OS_String::strcmp (priority, ACE_LIB_TEXT ("EMERGENCY")) == 0)
         ACE_SET_BITS (priority_mask, LM_EMERGENCY);
-      else if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("~EMERGENCY")) == 0)
+      else if (ACE_OS_String::strcmp (priority, ACE_LIB_TEXT ("~EMERGENCY")) == 0)
         ACE_CLR_BITS (priority_mask, LM_EMERGENCY);
     }
 
@@ -83,24 +83,24 @@ ACE_Logging_Strategy::priorities (ACE_TCHAR *priority_string,
 void
 ACE_Logging_Strategy::tokenize (ACE_TCHAR *flag_string)
 {
-  for (ACE_TCHAR *flag = ACE_OS::strtok (flag_string,
-                                         ACE_LIB_TEXT ("|"));
+  for (ACE_TCHAR *flag = ACE_OS_String::strtok (flag_string,
+                                                ACE_LIB_TEXT ("|"));
        flag != 0;
-       flag = ACE_OS::strtok (0, ACE_LIB_TEXT ("|")))
+       flag = ACE_OS_String::strtok (0, ACE_LIB_TEXT ("|")))
     {
-      if (ACE_OS::strcmp (flag, ACE_LIB_TEXT ("STDERR")) == 0)
+      if (ACE_OS_String::strcmp (flag, ACE_LIB_TEXT ("STDERR")) == 0)
         ACE_SET_BITS (this->flags_, ACE_Log_Msg::STDERR);
-      else if (ACE_OS::strcmp (flag, ACE_LIB_TEXT ("LOGGER")) == 0)
+      else if (ACE_OS_String::strcmp (flag, ACE_LIB_TEXT ("LOGGER")) == 0)
         ACE_SET_BITS (this->flags_, ACE_Log_Msg::LOGGER);
-      else if (ACE_OS::strcmp (flag, ACE_LIB_TEXT ("OSTREAM")) == 0)
+      else if (ACE_OS_String::strcmp (flag, ACE_LIB_TEXT ("OSTREAM")) == 0)
         ACE_SET_BITS (this->flags_, ACE_Log_Msg::OSTREAM);
-      else if (ACE_OS::strcmp (flag, ACE_LIB_TEXT ("VERBOSE")) == 0)
+      else if (ACE_OS_String::strcmp (flag, ACE_LIB_TEXT ("VERBOSE")) == 0)
         ACE_SET_BITS (this->flags_, ACE_Log_Msg::VERBOSE);
-      else if (ACE_OS::strcmp (flag, ACE_LIB_TEXT ("VERBOSE_LITE")) == 0)
+      else if (ACE_OS_String::strcmp (flag, ACE_LIB_TEXT ("VERBOSE_LITE")) == 0)
         ACE_SET_BITS (this->flags_, ACE_Log_Msg::VERBOSE_LITE);
-      else if (ACE_OS::strcmp (flag, ACE_LIB_TEXT ("SILENT")) == 0)
+      else if (ACE_OS_String::strcmp (flag, ACE_LIB_TEXT ("SILENT")) == 0)
         ACE_SET_BITS (this->flags_, ACE_Log_Msg::SILENT);
-      else if (ACE_OS::strcmp (flag, ACE_LIB_TEXT ("SYSLOG")) == 0)
+      else if (ACE_OS_String::strcmp (flag, ACE_LIB_TEXT ("SYSLOG")) == 0)
         ACE_SET_BITS (this->flags_, ACE_Log_Msg::SYSLOG);
     }
 }
@@ -144,7 +144,7 @@ ACE_Logging_Strategy::parse_args (int argc, ACE_TCHAR *argv[])
           break;
         case 'i':
           // Interval (in secs) at which logfile size is sampled.
-          this->interval_ = ACE_OS::strtoul (get_opt.opt_arg (), 0, 10);
+          this->interval_ = ACE_OS_String::strtoul (get_opt.opt_arg (), 0, 10);
           break;
         case 'k':
           // Ensure that the LOGGER flag is set
@@ -154,7 +154,7 @@ ACE_Logging_Strategy::parse_args (int argc, ACE_TCHAR *argv[])
           break;
         case 'm':
           // Maximum logfile size (in KB).  Must be a non-zero value.
-          this->max_size_ = ACE_OS::strtoul (get_opt.opt_arg (), 0, 10);
+          this->max_size_ = ACE_OS_String::strtoul (get_opt.opt_arg (), 0, 10);
           this->max_size_ <<= 10;       // convert to KB
           break;
         case 'n':
@@ -219,7 +219,7 @@ ACE_Logging_Strategy::ACE_Logging_Strategy (void)
     }
 
   // Add the filename to the end
-  ACE_OS::strcat (this->filename_,
+  ACE_OS_String::strcat (this->filename_,
                   ACE_LIB_TEXT ("logfile"));
 #endif /* ACE_DEFAULT_LOGFILE */
   this->logger_key_ = 0;
@@ -397,7 +397,7 @@ ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &,
       while((res = (res / 10))>0)
         digits++;
 
-      if (ACE_OS::strlen (this->filename_) + digits <= MAXPATHLEN)
+      if (ACE_OS_String::strlen (this->filename_) + digits <= MAXPATHLEN)
         {
           ACE_TCHAR backup[MAXPATHLEN+1];
 

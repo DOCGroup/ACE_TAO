@@ -15,7 +15,8 @@
 #define ACE_ARGUMENT_VECTOR_H
 #include "ace/pre.h"
 
-#include "ace/ACE.h"
+//#include "ace/ACE.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

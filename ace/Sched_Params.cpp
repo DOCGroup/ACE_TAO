@@ -45,8 +45,8 @@ ACE_Sched_Params::priority_min (const Policy policy,
           pcinfo_t pcinfo;
           // The following is just to avoid Purify warnings about unitialized
           // memory reads.
-          ACE_OS::memset (&pcinfo, 0, sizeof pcinfo);
-          ACE_OS::strcpy (pcinfo.pc_clname, "TS");
+          ACE_OS_String::memset (&pcinfo, 0, sizeof pcinfo);
+          ACE_OS_String::strcpy (pcinfo.pc_clname, "TS");
 
           if (ACE_OS::priority_control (P_ALL /* ignored */,
                                         P_MYID /* ignored */,
@@ -150,9 +150,9 @@ ACE_Sched_Params::priority_max (const Policy policy,
       pcinfo_t pcinfo;
       // The following is just to avoid Purify warnings about unitialized
       // memory reads.
-      ACE_OS::memset (&pcinfo, 0, sizeof pcinfo);
-      ACE_OS::strcpy (pcinfo.pc_clname,
-                      policy == ACE_SCHED_OTHER  ?  "TS"  :  "RT");
+      ACE_OS_String::memset (&pcinfo, 0, sizeof pcinfo);
+      ACE_OS_String::strcpy (pcinfo.pc_clname,
+                             policy == ACE_SCHED_OTHER  ?  "TS"  :  "RT");
 
       if (ACE_OS::priority_control (P_ALL /* ignored */,
                                     P_MYID /* ignored */,

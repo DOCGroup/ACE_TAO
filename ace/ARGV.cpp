@@ -5,6 +5,7 @@
 
 #include "ace/ARGV.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS.h"  // argv_to_str(), getenv(), etc...
 
 #if !defined (__ACE_INLINE__)
 #include "ace/ARGV.i"
@@ -74,8 +75,8 @@ ACE_ARGV::ACE_ARGV (const ACE_TCHAR buf[],
 
   // Make an internal copy of the string.
   ACE_NEW (this->buf_,
-           ACE_TCHAR[ACE_OS::strlen (buf) + 1]);
-  ACE_OS::strcpy (this->buf_, buf);
+           ACE_TCHAR[ACE_OS_String::strlen (buf) + 1]);
+  ACE_OS_String::strcpy (this->buf_, buf);
 
   // Create this->argv_.
   if (this->string_to_argv () == -1)
@@ -112,10 +113,10 @@ ACE_ARGV::ACE_ARGV (ACE_TCHAR *argv[],
       if (this->substitute_env_args_
 	  && (argv[i][0] == '$'
 	  && (temp = ACE_OS::getenv (&argv[i][1])) != 0))
-	buf_len += ACE_OS::strlen (temp);
+	buf_len += ACE_OS_String::strlen (temp);
       else
 #endif /* !ACE_LACKS_ENV */
-	buf_len += ACE_OS::strlen (argv[i]);
+	buf_len += ACE_OS_String::strlen (argv[i]);
 
       // Add one for the extra space between each string.
       buf_len++;
@@ -139,10 +140,10 @@ ACE_ARGV::ACE_ARGV (ACE_TCHAR *argv[],
       if (this->substitute_env_args_
 	  && (argv[j][0] == '$'
 	  && (temp = ACE_OS::getenv (&argv[j][1])) != 0))
-	end = ACE_OS::strecpy (end, temp);
+	end = ACE_OS_String::strecpy (end, temp);
       else
 #endif /* ACE_LACKS_ENV */
-	end = ACE_OS::strecpy (end, argv[j]);
+	end = ACE_OS_String::strecpy (end, argv[j]);
 
       // Replace the null char that strecpy copies with white space as
       // a separator.
@@ -184,17 +185,17 @@ ACE_ARGV::ACE_ARGV (ACE_TCHAR *first_argv[],
   // Add the number of arguments in both the argvs.
   this->argc_ = first_argc + second_argc;
 
-  int buf_len = ACE_OS::strlen (first_buf) + ACE_OS::strlen (second_buf) + 1;
+  int buf_len = ACE_OS_String::strlen (first_buf) + ACE_OS_String::strlen (second_buf) + 1;
 
   // Allocate memory to the lenght of the combined argv string.
   ACE_NEW (this->buf_,
            ACE_TCHAR[buf_len + 1]);
 
   // copy the first argv string to the buffer
-  ACE_OS::strcpy (this->buf_,first_buf);
+  ACE_OS_String::strcpy (this->buf_,first_buf);
 
   // concatenate the second argv string to the buffer
-  ACE_OS::strcat (this->buf_,second_buf);
+  ACE_OS_String::strcat (this->buf_,second_buf);
 
   //   Delete the first and second buffers
 
@@ -235,7 +236,7 @@ ACE_ARGV::add (const ACE_TCHAR *next_arg)
                        ACE_LIB_TEXT ("Can't add more to ARGV queue")),
                       -1);
 
-  this->length_ += ACE_OS::strlen (next_arg);
+  this->length_ += ACE_OS_String::strlen (next_arg);
 
   this->argc_++;
 
@@ -244,7 +245,7 @@ ACE_ARGV::add (const ACE_TCHAR *next_arg)
   if (this->argv_ != 0)
     {
       for (int i = 0; this->argv_[i] != 0; i++)
-	ACE_OS::free ((void *) this->argv_[i]);
+	ACE_OS_Memory::free ((void *) this->argv_[i]);
 
       delete [] this->argv_;
       this->argv_ = 0;
@@ -274,7 +275,7 @@ ACE_ARGV::~ACE_ARGV (void)
 
   if (this->argv_ != 0)
     for (int i = 0; this->argv_[i] != 0; i++)
-      ACE_OS::free ((void *) this->argv_[i]);
+      ACE_OS_Memory::free ((void *) this->argv_[i]);
 
   delete [] this->argv_;
   delete [] this->buf_;
@@ -313,12 +314,12 @@ ACE_ARGV::create_buf_from_queue (void)
 
       more = iter.advance ();
 
-      len = ACE_OS::strlen (*arg);
+      len = ACE_OS_String::strlen (*arg);
 
       // Copy the argument into buf_
-      ACE_OS::memcpy ((void *) ptr,
-                      (const void *) (*arg),
-                      len * sizeof (ACE_TCHAR));
+      ACE_OS_String::memcpy ((void *) ptr,
+                             (const void *) (*arg),
+                             len * sizeof (ACE_TCHAR));
       // Move the pointer down.
       ptr += len;
 

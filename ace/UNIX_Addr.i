@@ -18,8 +18,8 @@ ACE_UNIX_Addr::get_addr (void) const
 ACE_INLINE int
 ACE_UNIX_Addr::string_to_addr (const char addr[])
 {
-  ACE_OS::strsncpy (this->unix_addr_.sun_path, addr,
-                    sizeof this->unix_addr_.sun_path);
+  ACE_OS_String::strsncpy (this->unix_addr_.sun_path, addr,
+                           sizeof this->unix_addr_.sun_path);
   return 0;
 }
 
@@ -28,7 +28,7 @@ ACE_UNIX_Addr::string_to_addr (const char addr[])
 ACE_INLINE int
 ACE_UNIX_Addr::addr_to_string (char s[], size_t len) const
 {
-  ACE_OS::strsncpy (s, this->unix_addr_.sun_path, len);
+  ACE_OS_String::strsncpy (s, this->unix_addr_.sun_path, len);
   return 0;
 }
 
@@ -37,9 +37,9 @@ ACE_UNIX_Addr::addr_to_string (char s[], size_t len) const
 ACE_INLINE int
 ACE_UNIX_Addr::operator == (const ACE_UNIX_Addr &sap) const
 {
-  return ACE_OS::strncmp (this->unix_addr_.sun_path,
-			  sap.unix_addr_.sun_path,
-			  sizeof this->unix_addr_.sun_path) == 0;
+  return ACE_OS_String::strncmp (this->unix_addr_.sun_path,
+                                 sap.unix_addr_.sun_path,
+                                 sizeof this->unix_addr_.sun_path) == 0;
 }
 
 // Compare two addresses for inequality.

@@ -14,7 +14,12 @@
 #define ACE_FILE_LOCK_H
 #include "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/config-all.h"
+#include "ace/ACE_export.h"
+#include "ace/ace_sys_types.h"
+
+
+#include "ace/OS.h" // for ACE_OS::ace_flock_t
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

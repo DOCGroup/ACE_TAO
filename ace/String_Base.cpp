@@ -40,7 +40,7 @@ ACE_String_Base<CHAR>::set (const CHAR *s,
       this->buf_len_ = new_buf_len;
       this->release_ = 1;
       this->len_ = len;
-      ACE_OS::memcpy (this->rep_, s, len * sizeof (CHAR));
+      ACE_OS_String::memcpy (this->rep_, s, len * sizeof (CHAR));
       // NUL terminate.
       this->rep_[len] = '\0';
     }
@@ -72,7 +72,7 @@ ACE_String_Base<CHAR>::set (const CHAR *s,
         }
       else
         {
-          ACE_OS::memcpy (this->rep_, s, len * sizeof (CHAR));
+          ACE_OS_String::memcpy (this->rep_, s, len * sizeof (CHAR));
           // NUL terminate.
           this->rep_[len] = 0;
           this->len_ = len;
@@ -121,9 +121,9 @@ ACE_String_Base<CHAR>::operator+= (const ACE_String_Base<CHAR> &s)
       // case 1. No memory allocation needed.
       if (this->buf_len_ >= new_buf_len)
         // Copy in data from new string.
-        ACE_OS::memcpy (this->rep_ + this->len_,
-                        s.rep_,
-                        s.len_ * sizeof (CHAR));
+        ACE_OS_String::memcpy (this->rep_ + this->len_,
+                               s.rep_,
+                               s.len_ * sizeof (CHAR));
 
       // case 2. Memory reallocation is needed
       else
@@ -136,13 +136,13 @@ ACE_String_Base<CHAR>::operator+= (const ACE_String_Base<CHAR> &s)
                                 *this);
 
           // Copy memory from old string into new string.
-          ACE_OS::memcpy (t,
-                          this->rep_,
-                          this->len_ * sizeof (CHAR));
+          ACE_OS_String::memcpy (t,
+                                 this->rep_,
+                                 this->len_ * sizeof (CHAR));
 
-          ACE_OS::memcpy (t + this->len_,
-                          s.rep_,
-                          s.len_ * sizeof (CHAR));
+          ACE_OS_String::memcpy (t + this->len_,
+                                 s.rep_,
+                                 s.len_ * sizeof (CHAR));
 
           if (this->release_)
             this->allocator_->free (this->rep_);
@@ -175,7 +175,7 @@ ACE_String_Base<CHAR>::resize (size_t len, CHAR c)
     }
 
   this->len_ = 0;
-  ACE_OS::memset (this->rep_,
-                  c,
-                  this->buf_len_ * sizeof (CHAR));
+  ACE_OS_String::memset (this->rep_,
+                         c,
+                         this->buf_len_ * sizeof (CHAR));
 }

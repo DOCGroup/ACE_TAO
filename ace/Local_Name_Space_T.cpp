@@ -134,7 +134,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::shared_bind_i (const ACE_NS_WStr
   ACE_TRACE ("ACE_Local_Name_Space::shared_bind_i");
   size_t name_len = (name.length () + 1) * sizeof (ACE_USHORT16);
   size_t value_len = (value.length () + 1) * sizeof (ACE_USHORT16);
-  size_t type_len = ACE_OS::strlen (type) + 1;
+  size_t type_len = ACE_OS_String::strlen (type) + 1;
   size_t total_len = name_len + value_len + type_len;
   char *ptr = (char *) this->allocator_->malloc (total_len);
 
@@ -153,7 +153,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::shared_bind_i (const ACE_NS_WStr
       ACE_NS_String new_name (name_rep, name_urep.get (), name_len);
       ACE_NS_String new_value (value_rep, value_urep.get (), value_len);
 
-      ACE_OS::strcpy (new_type, type);
+      ACE_OS_String::strcpy (new_type, type);
       ACE_NS_Internal new_internal (new_value, new_type);
       int result = -1;
 
@@ -310,7 +310,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::resolve_i (const ACE_NS_WString 
   // ACE_USHORT16
   const char *temp = ns_internal.type ();
 
-  size_t len = ACE_OS::strlen (ns_internal.type ());
+  size_t len = ACE_OS_String::strlen (ns_internal.type ());
   // Makes a copy here. Caller needs to call delete to free up
   // memory.
   char *new_type;
@@ -318,7 +318,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::resolve_i (const ACE_NS_WString 
                   char [len + 1],
                   -1);
 
-  ACE_OS::strsncpy (new_type, temp, len + 1);
+  ACE_OS_String::strsncpy (new_type, temp, len + 1);
   type = new_type;
   return 0;
 }
@@ -348,7 +348,8 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Local_Name_Space (ACE_Naming
 {
   ACE_TRACE ("ACE_Local_Name_Space::ACE_Local_Name_Space");
   if (this->open (scope_in) == -1)
-    ACE_ERROR ((LM_ERROR,  ACE_LIB_TEXT ("%p\n"),  ACE_LIB_TEXT ("ACE_Local_Name_Space::ACE_Local_Name_Space")));
+    ACE_ERROR ((LM_ERROR,  ACE_LIB_TEXT ("%p\n"),
+                ACE_LIB_TEXT ("ACE_Local_Name_Space::ACE_Local_Name_Space")));
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK>
@@ -388,9 +389,9 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
   const ACE_TCHAR *database = this->name_options_->database ();
 
   // Use process name as the file name.
-  size_t len = ACE_OS::strlen (dir);
-  len += ACE_OS::strlen (ACE_DIRECTORY_SEPARATOR_STR);
-  len += ACE_OS::strlen (database) + 1;
+  size_t len = ACE_OS_String::strlen (dir);
+  len += ACE_OS_String::strlen (ACE_DIRECTORY_SEPARATOR_STR);
+  len += ACE_OS_String::strlen (database) + 1;
 
   if (len >= MAXNAMELEN + MAXPATHLEN)
     {
@@ -398,9 +399,9 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
       return -1;
     }
 
-  ACE_OS::strcpy (this->context_file_, dir);
-  ACE_OS::strcat (this->context_file_, ACE_DIRECTORY_SEPARATOR_STR);
-  ACE_OS::strcat (this->context_file_, database);
+  ACE_OS_String::strcpy (this->context_file_, dir);
+  ACE_OS_String::strcat (this->context_file_, ACE_DIRECTORY_SEPARATOR_STR);
+  ACE_OS_String::strcat (this->context_file_, database);
 
 #if !defined (CHORUS)
   ACE_MEM_POOL_OPTIONS options (this->name_options_->base_address ());
@@ -418,33 +419,33 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
 
   size_t length = 0;
   length = sizeof lock_name_for_local_name_space / sizeof (ACE_TCHAR);
-  ACE_OS::strsncpy (lock_name_for_local_name_space,
-                    dir,
-                    length);
+  ACE_OS_String::strsncpy (lock_name_for_local_name_space,
+                           dir,
+                           length);
 
-  ACE_OS::strncat (lock_name_for_local_name_space,
-                   ACE_DIRECTORY_SEPARATOR_STR,
-                   length -  ACE_OS::strlen (lock_name_for_local_name_space));
-  ACE_OS::strncat (lock_name_for_local_name_space,
-                   ACE_LIB_TEXT ("name_space_"),
-                   length -  ACE_OS::strlen (lock_name_for_local_name_space));
-  ACE_OS::strncat (lock_name_for_local_name_space,
-                   postfix,
-                   length -  ACE_OS::strlen (lock_name_for_local_name_space));
+  ACE_OS_String::strncat (lock_name_for_local_name_space,
+                          ACE_DIRECTORY_SEPARATOR_STR,
+                          length - ACE_OS_String::strlen (lock_name_for_local_name_space));
+  ACE_OS_String::strncat (lock_name_for_local_name_space,
+                          ACE_LIB_TEXT ("name_space_"),
+                          length - ACE_OS_String::strlen (lock_name_for_local_name_space));
+  ACE_OS_String::strncat (lock_name_for_local_name_space,
+                          postfix,
+                          length - ACE_OS_String::strlen (lock_name_for_local_name_space));
 
   length = sizeof lock_name_for_backing_store / sizeof (ACE_TCHAR);
-  ACE_OS::strsncpy (lock_name_for_backing_store,
-                    dir,
-                    length);
-  ACE_OS::strncat (lock_name_for_backing_store,
-                   ACE_DIRECTORY_SEPARATOR_STR,
-                   length -  ACE_OS::strlen (lock_name_for_backing_store));
-  ACE_OS::strncat (lock_name_for_backing_store,
-                   ACE_LIB_TEXT ("backing_store_"),
-                   length -  ACE_OS::strlen (lock_name_for_backing_store));
-  ACE_OS::strncat (lock_name_for_backing_store,
-                   postfix,
-                   length - ACE_OS::strlen (ACE_LIB_TEXT ("backing_store_")));
+  ACE_OS_String::strsncpy (lock_name_for_backing_store,
+                           dir,
+                           length);
+  ACE_OS_String::strncat (lock_name_for_backing_store,
+                          ACE_DIRECTORY_SEPARATOR_STR,
+                          length - ACE_OS_String::strlen (lock_name_for_backing_store));
+  ACE_OS_String::strncat (lock_name_for_backing_store,
+                          ACE_LIB_TEXT ("backing_store_"),
+                          length - ACE_OS_String::strlen (lock_name_for_backing_store));
+  ACE_OS_String::strncat (lock_name_for_backing_store,
+                          postfix,
+                          length - ACE_OS_String::strlen (ACE_LIB_TEXT ("backing_store_")));
 
   // Create the allocator with the appropriate options.
   ACE_NEW_RETURN (this->allocator_,
@@ -600,9 +601,9 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_types_i (ACE_PWSTRING_SET &
   char *pattern_rep = pattern.char_rep ();
 
   // Check for wildcard case first.
-  if (ACE_OS::strcmp ("", pattern_rep) == 0)
+  if (ACE_OS_String::strcmp ("", pattern_rep) == 0)
     ACE_ALLOCATOR_RETURN (compiled_regexp,
-                          ACE_OS::strdup (""),
+                          ACE_OS_String::strdup (""),
                           -1);
   else
     // Compile the regular expression (the 0's cause ACE_OS::compile
@@ -625,13 +626,13 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_types_i (ACE_PWSTRING_SET &
       const char *type = map_entry->int_id_.type ();
 
       // Everything matches the wildcard.
-      if (ACE_OS::strcmp ("", pattern_rep) == 0
+      if (ACE_OS_String::strcmp ("", pattern_rep) == 0
 #if defined (ACE_HAS_REGEX)
           || ACE_OS::step (type, compiled_regexp) != 0)
 #else
         // If we don't have regular expressions just use strstr() for
         // substring matching.
-        || ACE_OS::strstr (type, compiled_regexp) != 0)
+        || ACE_OS_String::strstr (type, compiled_regexp) != 0)
 #endif /* ACE_HAS_REGEX */
 
         {
@@ -648,7 +649,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_types_i (ACE_PWSTRING_SET &
     }
 #if defined (ACE_HAS_REGEX)
   if (compiled_regexp)
-    ACE_OS::free ((void *) compiled_regexp);
+    ACE_OS_Memory::free ((void *) compiled_regexp);
 #endif /* ACE_HAS_REGEX */
   delete [] pattern_rep;  // delete pattern_rep;
   return result;
@@ -724,8 +725,8 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_type_entries_i (ACE_BINDING
   char *pattern_rep = pattern.char_rep ();
 
   // Check for wildcard case first.
-  if (ACE_OS::strcmp ("", pattern_rep) == 0)
-    compiled_regexp = ACE_OS::strdup ("");
+  if (ACE_OS_String::strcmp ("", pattern_rep) == 0)
+    compiled_regexp = ACE_OS_String::strdup ("");
   else
     // Compile the regular expression (the 0's cause ACE_OS::compile to allocate space).
 #if defined (ACE_HAS_REGEX)
@@ -741,11 +742,11 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_type_entries_i (ACE_BINDING
       // Get the type.
       const char *type = map_entry->int_id_.type ();
 
-      if (ACE_OS::strcmp ("", pattern_rep) == 0 // Everything matches the wildcard.
+      if (ACE_OS_String::strcmp ("", pattern_rep) == 0 // Everything matches the wildcard.
 #if defined (ACE_HAS_REGEX)
           || ACE_OS::step (type, compiled_regexp) != 0)
 #else /* If we don't have regular expressions just use strstr() for substring matching. */
-        || ACE_OS::strstr (type, compiled_regexp) != 0)
+        || ACE_OS_String::strstr (type, compiled_regexp) != 0)
 #endif /* ACE_HAS_REGEX */
         {
           ACE_Name_Binding entry (map_entry->ext_id_,
@@ -758,7 +759,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_type_entries_i (ACE_BINDING
     }
 #if defined (ACE_HAS_REGEX)
   if (compiled_regexp)
-    ACE_OS::free ((void *) compiled_regexp);
+    ACE_OS_Memory::free ((void *) compiled_regexp);
 #endif /* ACE_HAS_REGEX */
   delete [] pattern_rep;  // delete pattern_rep;
   return 0;

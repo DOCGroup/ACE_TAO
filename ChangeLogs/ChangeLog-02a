@@ -1,3 +1,286 @@
+Fri Apr 19 13:42:28 UTC 2002  Don Hinton  <dhinton@ieee.org>
+	
+	* ace/ARGV.cpp:
+	* ace/ATM_Stream.cpp:
+	* ace/Addr.cpp:
+	* ace/Array_Base.h:
+	* ace/Array_Base.inl:
+	* ace/Asynch_IO.h:
+	* ace/Asynch_IO_Impl.cpp:
+	* ace/Base_Thread_Adapter.cpp:
+	* ace/Basic_Types.cpp:
+	* ace/Basic_Types.h:
+	* ace/DEV_Addr.cpp:
+	* ace/DEV_Addr.h:
+	* ace/DEV_Addr.i:
+	* ace/DEV_IO.i:
+	* ace/Dirent_Selector.cpp:
+	* ace/Dirent_Selector.h:
+	* ace/Env_Value_T.h:
+	* ace/Env_Value_T.i:
+	* ace/Event_Handler.h:
+	* ace/FILE_Addr.cpp:
+	* ace/FILE_Addr.h:
+	* ace/FILE_Addr.i:
+	* ace/File_Lock.h:
+	* ace/Flag_Manip.cpp:
+	* ace/Flag_Manip.h:
+	* ace/Flag_Manip.i:
+	* ace/Free_List.h:
+	* ace/Handle_Gobbler.h:
+	* ace/Handle_Ops.cpp:
+	* ace/Handle_Ops.h:
+	* ace/Handle_Set.cpp:
+	* ace/Handle_Set.h:
+	* ace/Handle_Set.i:
+	* ace/IOStream.h:
+	* ace/Lib_Find.cpp:
+	* ace/Lib_Find.h:
+	* ace/Log_Msg.cpp:
+	* ace/Log_Msg.h:
+	* ace/Log_Record.h:
+	* ace/Log_Record.i:
+	* ace/Malloc_Base.h:
+	* ace/Name_Request_Reply.cpp:
+	* ace/Name_Request_Reply.h:
+	* ace/OS.h:
+	* ace/OS_Dirent.cpp:
+	* ace/OS_QoS.cpp:
+	* ace/OS_QoS.h:
+	* ace/OS_Thread_Adapter.cpp:
+	* ace/Object_Manager.h:
+	* ace/POSIX_Asynch_IO.h:
+	* ace/Proactor.h:
+	* ace/Proactor_Impl.h:
+	* ace/Process.h:
+	* ace/RW_Process_Mutex.h:
+	* ace/Refcounted_Auto_Ptr.h:
+	* ace/TLI.i:
+	* ace/Thread_Exit.h:
+	* ace/Time_Request_Reply.cpp:
+	* ace/Time_Request_Reply.h:
+	* ace/Trace.h:
+	* ace/Unbounded_Queue.cpp:
+	
+	  Adjusted includes by either adding or removing include of OS.h, OS_*.h,
+	  ACE.h, Trace.h, ACE_export.h, Log_Msg.h, Global_Macros.h, or one 
+	  of the new ace_*h headers, etc....  Added appropriate forward declarations,
+	  e.g., ACE_Time_Value, where needed.
+
+	* ace/config-win32-common.h:
+	* ace/config-linux.h:
+	* ace/config-all.h:
+	* ace/Time_Value.h:
+	* ace/Thread.h:
+	* ace/Service_Object.h:
+	* ace/POSIX_Proactor.cpp:
+	* ace/OS_Errno.h:
+	* ace/ace_errno.h:
+	* ace/LSOCK.h:
+	* ace/Handle_Set.h:
+	* ace/Basic_Types.h:
+	* ace/OS.h:
+	* ace/ace*.h:
+
+	  Started moving typedefs/defines out of OS.h and into the 
+	  "appropriate" files.  This is a work in progress.
+
+	* ace/OS.h:
+	* ace/ace_dirent.h:
+	* ace/ace_errno.h:
+	* ace/ace_limits.h:
+	* ace/ace_psos.h:
+	* ace/ace_semaphore.h:
+	* ace/ace_stdio.h:
+	* ace/ace_stropts.h:
+	* ace/ace_sys_mman.h:
+	* ace/ace_sys_msg.h:
+	* ace/ace_sys_param.h:
+	* ace/ace_sys_resource.h:
+	* ace/ace_sys_sem.h:
+	* ace/ace_sys_signal.h:
+	* ace/ace_sys_socket.h:
+	* ace/ace_sys_stat.h:
+	* ace/ace_sys_types.h:
+	* ace/ace_sys_uio.h:
+	* ace/ace_threads.h:
+	* ace/ace_time.h:
+
+	  Added new suite of files to abstract OS differences.  They try to mirror
+	  the standard Unix includes and handle the platform differences.  Thus, just 
+	  include ace_sys_types.h instead of sys/types.h.  Moved typedefs and defines
+	  from OS.h to the appropriate ace_*.h files and included all of them in OS.h
+	  for backward compatibility.
+
+	* ace/ACE.cpp: (missing some ACE_OS_String's)
+	* ace/ACE.h:
+	* ace/ARGV.cpp:
+	* ace/ATM_Acceptor.cpp:
+	* ace/ATM_Addr.cpp:
+	* ace/ATM_QoS.cpp:
+	* ace/ATM_Stream.cpp:
+	* ace/ATM_Stream.i:
+	* ace/Acceptor.cpp:
+	* ace/Basic_Types.cpp:
+	* ace/CDR_Base.cpp:
+	* ace/CDR_Stream.cpp:
+	* ace/CDR_Stream.i:
+	* ace/CE_Screen_Output.cpp:
+	* ace/Capabilities.cpp:
+	* ace/Codeset_IBM1047.cpp:
+	* ace/Configuration.cpp:
+	* ace/Connector.cpp:
+	* ace/DEV_Addr.cpp:
+	* ace/DEV_Addr.i:
+	* ace/Dirent_Selector.cpp:
+	* ace/Env_Value_T.h:
+	* ace/FIFO.cpp:
+	* ace/FILE_Addr.cpp:
+	* ace/FILE_Addr.i:
+	* ace/Filecache.cpp:
+	* ace/Functor.h (comment):
+	* ace/Functor.i:
+	* ace/Get_Opt.cpp:
+	* ace/Handle_Set.cpp:
+	* ace/High_Res_Timer.cpp:
+	* ace/INET_Addr.cpp:
+	* ace/Lib_Find.cpp:
+	* ace/Local_Name_Space.cpp:
+	* ace/Local_Name_Space_T.cpp:
+	* ace/Local_Tokens.cpp:
+	* ace/Local_Tokens.i:
+	* ace/Log_Msg.cpp:
+	* ace/Log_Msg_NT_Event_Log.cpp:
+	* ace/Log_Msg_UNIX_Syslog.cpp:
+	* ace/Log_Record.cpp:
+	* ace/Log_Record.i:
+	* ace/Logging_Strategy.cpp:
+	* ace/MEM_Acceptor.cpp:
+	* ace/MEM_Addr.cpp:
+	* ace/MEM_IO.cpp:
+	* ace/MEM_IO.i:
+	* ace/Malloc.cpp:
+	* ace/Malloc_Allocator.i:
+	* ace/Malloc_T.cpp:
+	* ace/Malloc_T.i:
+	* ace/Mem_Map.cpp:
+	* ace/Memory_Pool.cpp:
+	* ace/Message_Block.cpp:
+	* ace/Module.i:
+	* ace/Name_Space.cpp:
+	* ace/Naming_Context.cpp:
+	* ace/Object_Manager.cpp:
+	* ace/Obstack_T.cpp:
+	* ace/PI_Malloc.cpp:
+	* ace/Parse_Node.cpp:
+	* ace/Process.cpp:
+	* ace/Process.i:
+	* ace/Profile_Timer.cpp:
+	* ace/Registry.cpp:
+	* ace/Remote_Name_Space.cpp:
+	* ace/SOCK_Acceptor.cpp:
+	* ace/SOCK_Dgram.cpp:
+	* ace/SOCK_Dgram_Bcast.cpp:
+	* ace/SOCK_Dgram_Mcast.cpp:
+	* ace/SPIPE_Addr.cpp:
+	* ace/SPIPE_Addr.i:
+	* ace/SString.cpp:
+	* ace/SString.h (comment):
+	* ace/SString.i:
+	* ace/Sched_Params.cpp:
+	* ace/Service_Config.cpp:
+	* ace/Service_Config.i:
+	* ace/Service_Manager.cpp:
+	* ace/Service_Repository.cpp:
+	* ace/Service_Types.cpp:
+	* ace/Sock_Connect.cpp:
+	* ace/Strategies_T.cpp:
+	* ace/Stream.cpp:
+	* ace/Stream_Modules.cpp:
+	* ace/String_Base.cpp:
+	* ace/String_Base.i:
+	* ace/Synch.cpp:
+	* ace/Synch.i:
+	* ace/Synch_T.cpp:
+	* ace/Synch_T.i:
+	* ace/System_Time.cpp:
+	* ace/TLI.cpp:
+	* ace/TLI.i:
+	* ace/TLI_Acceptor.cpp:
+	* ace/TLI_Connector.cpp:
+	* ace/TLI_Stream.cpp:
+	* ace/TTY_IO.cpp:
+	* ace/Thread.i:
+	* ace/Timer_Heap_T.cpp:
+	* ace/Token_Collection.cpp:
+	* ace/Token_Request_Reply.cpp:
+	* ace/Token_Request_Reply.i:
+	* ace/UNIX_Addr.cpp:
+	* ace/UNIX_Addr.i:
+	* ace/UPIPE_Stream.cpp:
+	* ace/gethrtime.cpp:
+	
+	  Changed ACE_OS:: to ACE_OS_String::, ACE_OS_Memory::, ACE_OS_TLI::, or
+	  ACE_OS_Dirent::, as appropriate, to reflect the current ACE_OS subsetting
+	  and reduce the dependancy on OS.h.
+
+	* ace/INET_Addr.cpp:
+
+	  Removed ACE_LIB_TEXT wrapper around "tcp6" in a strcmp()
+	  since protocol is always a char, not an ACE_TCHAR. 
+
+	  Also, ACE_HAS_BROKEN_CONDITIONAL_STRING_CAST with (char*), should
+	  this be (ACE_TCHAR*) or something else?  or be removed?
+
+	* ace/Log_Msg.h:
+
+	  Removed friend void ACE_OS::cleanup_tss (const u_int) that
+	  didn't seem to be needed.
+
+	* ace/ATM_Stream.cpp:
+	* ace/TP_Reactor.cpp (comment):
+	* ace/Task_T.i:
+
+	  Changed assert to ACE_Assert.
+
+	* ace/OS.h:
+	* ace/OS.i:
+	* ace/OS_String.h:
+	* ace/OS_String.inl:
+	* ace/Log_Msg.h:
+	* ace/CDR_Base.h:
+
+	  Moved WChar typedef and methods  wslen(), wscpy(), wscmp(), and 
+	  wsncmp() from ACE_OS to ACE_OS_String.  Made appropriate changes
+	  where they were used.  Changed CDR_Base::WChar to use ACE_UINT16 
+	  directly instead of having to include OS_String.h.  Maybe this
+	  really belongs in Basic_Types.h or ace_sys_types.h.
+
+	* ace/ACE.cpp:
+	* ace/OS.cpp:
+	* ace/OS.i:
+	* ace/OS.h:
+	* ace/OS_Dirent.inl:
+	* ace/OS_Memory.h:
+	* ace/OS_String.inl:
+	* ace/Thread_Manager.cpp:
+	* ace/WFMO_Reactor.cpp:
+	* ace/config-all.h:
+	* ace/config-win32-borland.h:
+	* ace/config-win32-msvc-5.h:
+	* ace/config-win32-msvc-6.h:
+
+	  Removed PACE.
+
+	* ace/INET_Addr.cpp:
+	* ace/Log_Record.i:
+	* ace/Name_Request_Reply.cpp:
+	* ace/SOCK_Dgram.cpp:
+	* ace/SOCK_Dgram_Mcast.cpp:
+	* ace/Time_Request_Reply.cpp:
+
+	  Changed ntohl, etc..., to ACE_NTOHL, etc...
+	
 Sat Apr 13 19:28:40 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* ace/Basic_Types.h:  Added include of pthread.h to pick

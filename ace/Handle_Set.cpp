@@ -3,6 +3,7 @@
 
 #include "ace/Handle_Set.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_String.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Handle_Set.i"
@@ -86,9 +87,9 @@ ACE_Handle_Set::ACE_Handle_Set (const ACE_FD_SET_TYPE &fd_mask)
 {
   ACE_TRACE ("ACE_Handle_Set::ACE_Handle_Set");
   this->reset ();
-  ACE_OS::memcpy ((void *) &this->mask_,
-                  (void *) &fd_mask,
-                  sizeof this->mask_);
+  ACE_OS_String::memcpy ((void *) &this->mask_,
+                         (void *) &fd_mask,
+                         sizeof this->mask_);
 #if !defined (ACE_WIN32)
   this->sync (ACE_Handle_Set::MAXSIZE);
 #if defined (ACE_HAS_BIG_FD_SET)

@@ -119,7 +119,7 @@ ACE_Stream<ACE_SYNCH_USE>::insert (const ACE_TCHAR *prev_name,
   for (ACE_Module<ACE_SYNCH_USE> *prev_mod = this->stream_head_;
        prev_mod != 0;
        prev_mod = prev_mod->next ())
-    if (ACE_OS::strcmp (prev_mod->name (), prev_name) == 0)
+    if (ACE_OS_String::strcmp (prev_mod->name (), prev_name) == 0)
       {
         ACE_Module<ACE_SYNCH_USE> *next_mod = prev_mod->next ();
 
@@ -153,7 +153,7 @@ ACE_Stream<ACE_SYNCH_USE>::replace (const ACE_TCHAR *replace_name,
   for (ACE_Module<ACE_SYNCH_USE> *rep_mod = this->stream_head_;
        rep_mod != 0;
        rep_mod = rep_mod->next ())
-    if (ACE_OS::strcmp (rep_mod->name (), replace_name) == 0)
+    if (ACE_OS_String::strcmp (rep_mod->name (), replace_name) == 0)
       {
         ACE_Module<ACE_SYNCH_USE> *next_mod = rep_mod->next ();
 
@@ -238,7 +238,7 @@ ACE_Stream<ACE_SYNCH_USE>::remove (const ACE_TCHAR *name,
   for (ACE_Module<ACE_SYNCH_USE> *mod = this->stream_head_;
        mod != 0;
        mod = mod->next ())
-    if (ACE_OS::strcmp (mod->name (), name) == 0)
+    if (ACE_OS_String::strcmp (mod->name (), name) == 0)
       {
         if (prev == 0) // Deleting ACE_Stream Head
           this->stream_head_->link (mod->next ());
@@ -268,7 +268,7 @@ ACE_Stream<ACE_SYNCH_USE>::find (const ACE_TCHAR *name)
   for (ACE_Module<ACE_SYNCH_USE> *mod = this->stream_head_;
        mod != 0;
        mod = mod->next ())
-    if (ACE_OS::strcmp (mod->name (), name) == 0)
+    if (ACE_OS_String::strcmp (mod->name (), name) == 0)
         return mod;
 
   return 0;

@@ -10,9 +10,9 @@
 ACE_INLINE int
 ACE_SPIPE_Addr::addr_to_string (ACE_TCHAR *s, size_t len) const
 {
-  ACE_OS::strsncpy (s,
-                    this->SPIPE_addr_.rendezvous_,
-                    len);
+  ACE_OS_String::strsncpy (s,
+                           this->SPIPE_addr_.rendezvous_,
+                           len);
   return 0;
 }
 
@@ -29,8 +29,8 @@ ACE_SPIPE_Addr::get_addr (void) const
 ACE_INLINE int
 ACE_SPIPE_Addr::operator == (const ACE_SPIPE_Addr &sap) const
 {
-  return ACE_OS::strcmp (this->SPIPE_addr_.rendezvous_,
-                         sap.SPIPE_addr_.rendezvous_    ) == 0;
+  return ACE_OS_String::strcmp (this->SPIPE_addr_.rendezvous_,
+                                sap.SPIPE_addr_.rendezvous_    ) == 0;
 }
 
 // Compare two addresses for inequality.

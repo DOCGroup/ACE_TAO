@@ -28,9 +28,8 @@
 
 #if defined (ACE_HAS_AIO_CALLS)
 
-#include "ace/OS.h"
+#include "ace/ACE_export.h"
 #include "ace/Asynch_IO_Impl.h"
-#include "ace/Reactor.h"
 #include "ace/Select_Reactor.h"
 #include "ace/Unbounded_Queue.h"
 #include "ace/Task.h"

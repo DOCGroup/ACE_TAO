@@ -22,6 +22,65 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+// Moved from OS.h dah
+// Default address for shared memory mapped files and SYSV shared memory
+// (defaults to 64 M).
+# if !defined (ACE_DEFAULT_BASE_ADDR)
+#   define ACE_DEFAULT_BASE_ADDR ((char *) (64 * 1024 * 1024))
+# endif /* ACE_DEFAULT_BASE_ADDR */
+
+// Moved from OS.h dah
+// This fudge factor can be overriden for timers that need it, such as on
+// Solaris, by defining the ACE_TIMER_SKEW symbol in the appropriate config
+// header.
+# if !defined (ACE_TIMER_SKEW)
+#   define ACE_TIMER_SKEW 0
+# endif /* ACE_TIMER_SKEW */
+
+// Moved from OS.h dah
+// Do not change these values wantonly since GPERF depends on them..
+# define ACE_ASCII_SIZE 128
+# define ACE_EBCDIC_SIZE 256
+
+# if 'a' < 'A'
+#   define ACE_HAS_EBCDIC
+#   define ACE_STANDARD_CHARACTER_SET_SIZE 256
+# else
+#   define ACE_HAS_ASCII
+#   define ACE_STANDARD_CHARACTER_SET_SIZE 128
+# endif /* 'a' < 'A' */
+
+// Moved from OS.h dah
+# if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+#   define ACE_MT(X) X
+#   if !defined (_REENTRANT)
+#     define _REENTRANT
+#   endif /* _REENTRANT */
+# else
+#   define ACE_MT(X)
+# endif /* ACE_MT_SAFE */
+
+
+# if !defined (ACE_DEFAULT_THREAD_PRIORITY)
+#   define ACE_DEFAULT_THREAD_PRIORITY (-0x7fffffffL - 1L)
+# endif /* ACE_DEFAULT_THREAD_PRIORITY */
+
+
+# if defined (ACE_HAS_NO_THROW_SPEC)
+#   define ACE_THROW_SPEC(X)
+# else
+#   if defined (ACE_HAS_EXCEPTIONS)
+#     define ACE_THROW_SPEC(X) throw X
+#     if defined (ACE_WIN32) && defined(_MSC_VER) && !defined (ghs)
+// @@ MSVC "supports" the keyword but doesn't implement it (Huh?).
+//    Therefore, we simply supress the warning for now.
+#       pragma warning( disable : 4290 )
+#     endif /* ACE_WIN32 */
+#   else  /* ! ACE_HAS_EXCEPTIONS */
+#     define ACE_THROW_SPEC(X)
+#   endif /* ! ACE_HAS_EXCEPTIONS */
+# endif /*ACE_HAS_NO_THROW_SPEC*/
+
 // ============================================================================
 // RCSID Macros
 // ============================================================================
@@ -600,6 +659,7 @@ typedef void *(*ACE_THR_FUNC)(void *);
     // vxWorks.h.
     // Also, be sure that these #includes come _after_ the key_t typedef, and
     // before the #include of time.h.
+// since this comes before key_t, which *was* defined in OS.h, this seems strange.
 #     include /**/ <stdarg.h>
 #   endif /* ghs */
 
@@ -620,13 +680,6 @@ typedef void *(*ACE_THR_C_FUNC)(void *);
 }
 
 // ============================================================================
-// PACE macros
-// ============================================================================
-#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
-# define ACE_HAS_POSIX_SEM
-#endif /* ACE_HAS_PACE */
-
-// ============================================================================
 // Miscellaneous macros
 // ============================================================================
 
@@ -635,12 +688,16 @@ typedef void *(*ACE_THR_C_FUNC)(void *);
 #if defined ACE_HAS_VERBOSE_NOTSUP
   // Print a console message with the file and line number of the
   // unsupported function.
+
+#if 0
 # if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
 #   include /**/ <cstdio>
 # else
 #   include /**/ <stdarg.h> // LynxOS requires this before stdio.h
 #   include /**/ <stdio.h>
 # endif
+#endif /* 0 */
+
 # define ACE_NOTSUP_RETURN(FAILVALUE) do { errno = ENOTSUP; fprintf (stderr, ACE_LIB_TEXT ("ACE_NOTSUP: %s, line %d\n"), __FILE__, __LINE__); return FAILVALUE; } while (0)
 # define ACE_NOTSUP do { errno = ENOTSUP; fprintf (stderr, ACE_LIB_TEXT ("ACE_NOTSUP: %s, line %d\n"), __FILE__, __LINE__); return; } while (0)
 #else /* ! ACE_HAS_VERBOSE_NOTSUP */

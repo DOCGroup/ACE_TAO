@@ -106,8 +106,8 @@ void
 ACE_Log_Record::msg_data (const ACE_TCHAR *data)
 {
   // ACE_TRACE ("ACE_Log_Record::msg_data");
-  ACE_OS::strsncpy (this->msg_data_, data,
-                    (sizeof this->msg_data_ / sizeof (ACE_TCHAR)));
+  ACE_OS_String::strsncpy (this->msg_data_, data,
+                           (sizeof this->msg_data_ / sizeof (ACE_TCHAR)));
   this->round_up ();
 }
 
@@ -141,7 +141,7 @@ ACE_Log_Record::round_up (void)
   // ACE_TRACE ("ACE_Log_Record::round_up");
   // Determine the length of the payload.
   int len = (sizeof (*this) - sizeof (this->msg_data_))
-    + (sizeof (ACE_TCHAR) * ((ACE_OS::strlen (this->msg_data_) + 1)));
+    + (sizeof (ACE_TCHAR) * ((ACE_OS_String::strlen (this->msg_data_) + 1)));
 
   // Round up to the alignment.
   this->length_ = ((len + ACE_Log_Record::ALIGN_WORDB - 1)
@@ -238,7 +238,7 @@ ACE_Log_Record::print (const ACE_TCHAR *host_name,
     {
       if (fp != NULL)
         {
-          int verbose_msg_len = ACE_OS::strlen (verbose_msg);
+          int verbose_msg_len = ACE_OS_String::strlen (verbose_msg);
           int fwrite_result = ACE_OS::fprintf (fp, ACE_LIB_TEXT ("%s"), verbose_msg);
 
           // We should have written everything
