@@ -1,3 +1,13 @@
+Wed Sep  1 10:12:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-hpux-11.00.h:
+          Added several new defines, these are gathered by comparing an
+          autoconf generated config.h and the original file. It seems HPUX
+          has much more stuff than we currently use. Everything is tested
+          on HPUX 11i v2, maybe it breaks older versions, I don't think so
+          but if it will, our daily builds will trigger this and we have
+          to make the defines than dependent on the HPUX version.
+
 Wed Sep  1 07:02:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Synch_Options.cpp:
