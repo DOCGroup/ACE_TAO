@@ -1,3 +1,8 @@
+Fri Jul  6 22:04:51 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/LongUpcalls/run_ami_test.pl: Made the perl script
+	  runnable.  It was giving weird errors in the builds.
+
 Fri Jul 06 21:53:26 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
         * tao/Makefile.bor:
@@ -114,7 +119,7 @@ Fri Jul  6 13:19:25 2001  Jeff Parsons <parsons@cs.wustl.edu>
 	  Thanks to Craig Rodrigues and Christopher Kohlhoff for helping to
 	  track this stuff down.
 
-        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ch.cpp:
+         * TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ch.cpp:
           Changed generation of 'TAO_EXPORT_NESTED_MACRO' to 'TAO_EXPORT_MACRO'.
 
 Fri Jul  6 12:38:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
