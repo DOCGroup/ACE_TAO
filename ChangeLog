@@ -1,3 +1,9 @@
+Wed Jun 16 09:54:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_compile_stats.sh:
+          Let the default yrange be 5 seconds, 10 seconds is too much for ACE,
+          the graphs are hard to read.
+
 Wed Jun 16 08:00:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/*.{h,cpp,i,inl}:
