@@ -1,3 +1,12 @@
+Mon Jun 28 17:50:19 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/tests/Param_Test/client.cpp:
+	  Added some ACE_CHECK_* macros.
+
+	* TAO/tests/Param_Test/big_union.cpp:
+	  Added initialization code for out_ and ret_
+	  members. Makes the DII test happier.
+
 Mon Jun 28 17:38:55 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* examples/Simple/chat/Broadcaster_i.h:
