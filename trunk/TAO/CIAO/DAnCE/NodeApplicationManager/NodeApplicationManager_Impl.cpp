@@ -239,7 +239,8 @@ create_connections (ACE_ENV_SINGLE_ARG_DECL)
     const CORBA::ULong facet_len = facets->length ();
     const CORBA::ULong consumer_len = consumers->length ();
 
-    retv->length (facet_len + consumer_len);
+    CORBA::ULong curr_len = retv->length ();
+    retv->length (curr_len + facet_len + consumer_len);
 
     CORBA::ULong i = 0;
     for (i = 0; i < facet_len; ++i)
@@ -308,7 +309,7 @@ startLaunch (const Deployment::Properties & configProperty,
   Deployment::ComponentInfos_var comp_info;
 
   // For debugging.
-  if (CIAO::debug_level () > 1)
+  if (true) //(CIAO::debug_level () > 1)
   {
     const CORBA::ULong info_len = infos.length ();
     for (CORBA::ULong i = 0; i < info_len; ++i)
