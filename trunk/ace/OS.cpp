@@ -3679,8 +3679,8 @@ ACE_OS::mktime (struct tm *t)
 }
 #endif /* !ACE_HAS_WINCE */
 
-#if !defined (ACE_HAS_THREADS) || !defined (ACE_HAS_STHREADS) || defined (ACE_LACKS_RWLOCK_T)
-// The ACE_HAS_THREADS and ACE_HAS_STHREADS case is in OS.i
+#if !defined (ACE_HAS_THREADS) || defined (ACE_LACKS_RWLOCK_T)
+// The ACE_HAS_THREADS and ACE_HAS_STHREADS case is in OS.i.
 int
 ACE_OS::rwlock_init (ACE_rwlock_t *rw,
                      int type,
@@ -3691,22 +3691,25 @@ ACE_OS::rwlock_init (ACE_rwlock_t *rw,
   type = type;
   name = name;
 #if defined (ACE_HAS_THREADS)
-#if !defined (ACE_HAS_STHREADS) || defined (ACE_LACKS_RWLOCK_T)
+#if defined (ACE_LACKS_RWLOCK_T)
   /* NT, POSIX, and VxWorks don't support this natively. */
   ACE_UNUSED_ARG (name);
   int result = -1;
 
   // Since we cannot use the user specified name for all three
-  // objects, we will create three complete new names
+  // objects, we will create three completely new names.
   TCHAR name1[ACE_UNIQUE_NAME_LEN];
   TCHAR name2[ACE_UNIQUE_NAME_LEN];
   TCHAR name3[ACE_UNIQUE_NAME_LEN];
 
-  ACE::unique_name ((const void *) &rw->lock_, name1,
+  ACE::unique_name ((const void *) &rw->lock_,
+                    name1,
                     ACE_UNIQUE_NAME_LEN);
-  ACE::unique_name ((const void *) &rw->waiting_readers_, name2,
+  ACE::unique_name ((const void *) &rw->waiting_readers_,
+                    name2,
                     ACE_UNIQUE_NAME_LEN);
-  ACE::unique_name ((const void *) &rw->waiting_writers_, name3,
+  ACE::unique_name ((const void *) &rw->waiting_writers_,
+                    name3,
                     ACE_UNIQUE_NAME_LEN);
 
   if (ACE_OS::mutex_init (&rw->lock_, type, name1, arg) == 0
@@ -3730,7 +3733,7 @@ ACE_OS::rwlock_init (ACE_rwlock_t *rw,
       errno = error;
     }
   return result;
-#endif /* ! ACE_HAS_STHREADS */
+#endif /* ACE_LACKS_RWLOCK_T */
 #else
   ACE_UNUSED_ARG (rw);
   ACE_UNUSED_ARG (type);
@@ -3739,7 +3742,7 @@ ACE_OS::rwlock_init (ACE_rwlock_t *rw,
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */
 }
-#endif /* ! ACE_HAS_THREADS || ! ACE_HAS_STHREADS || defined (ACE_LACKS_RWLOCK_T) */
+#endif /* ! ACE_HAS_THREADS || ACE_LACKS_RWLOCK_T */
 
 #if defined (ACE_PSOS)
 
@@ -3760,45 +3763,46 @@ const int ACE_PSOS_Time_t::month_origin = 1;
 // maximum number of clock ticks supported
 const u_long ACE_PSOS_Time_t::max_ticks = ~0UL;
 
-
-ACE_PSOS_Time_t::ACE_PSOS_Time_t ()
-  : date_ (0), time_ (0), ticks_ (0)
+ACE_PSOS_Time_t::ACE_PSOS_Time_t (void)
+  : date_ (0),
+    time_ (0),
+    ticks_ (0)
 {
 }
-  // default ctor: date, time, and ticks all zeroed
+
+// default ctor: date, time, and ticks all zeroed
 
 ACE_PSOS_Time_t::ACE_PSOS_Time_t (const timespec_t& t)
 {
   struct tm* tm_struct = ACE_OS::gmtime (&(t.tv_sec));
 
-  // encode date values from tm struct into pSOS date bit array
+  // Encode date values from tm struct into pSOS date bit array.
 
-  date_  = (ACE_PSOS_Time_t::year_mask &
-            ACE_static_cast (u_long,
-                             tm_struct->tm_year + ACE_PSOS_Time_t::year_origin)) <<
-           ACE_PSOS_Time_t::year_shift;
+  date_ = (ACE_PSOS_Time_t::year_mask &
+           ACE_static_cast (u_long,
+                            tm_struct->tm_year + ACE_PSOS_Time_t::year_origin)) <<
+    ACE_PSOS_Time_t::year_shift;
 
   date_ |= (ACE_PSOS_Time_t::month_mask &
             ACE_static_cast (u_long,
                              tm_struct->tm_mon + ACE_PSOS_Time_t::month_origin)) <<
-           ACE_PSOS_Time_t::month_shift;
+    ACE_PSOS_Time_t::month_shift;
 
   date_ |= ACE_PSOS_Time_t::day_mask &
-           ACE_static_cast (u_long, tm_struct->tm_mday);
+    ACE_static_cast (u_long, tm_struct->tm_mday);
 
+  // Encode time values from tm struct into pSOS time bit array.
 
-  // encode time values from tm struct into pSOS time bit array
-
-  time_  = (ACE_PSOS_Time_t::hour_mask  &
+  time_ = (ACE_PSOS_Time_t::hour_mask  &
             ACE_static_cast (u_long, tm_struct->tm_hour)) <<
-           ACE_PSOS_Time_t::hour_shift;
+    ACE_PSOS_Time_t::hour_shift;
 
   time_ |= (ACE_PSOS_Time_t::minute_mask &
             ACE_static_cast (u_long, tm_struct->tm_min)) <<
-           ACE_PSOS_Time_t::minute_shift;
+    ACE_PSOS_Time_t::minute_shift;
 
   time_ |= ACE_PSOS_Time_t::second_mask &
-           ACE_static_cast (u_int, tm_struct->tm_sec);
+    ACE_static_cast (u_int, tm_struct->tm_sec);
 
   // encode nanoseconds as system clock ticks
   ticks_ = ACE_static_cast (u_long,
@@ -3807,10 +3811,10 @@ ACE_PSOS_Time_t::ACE_PSOS_Time_t (const timespec_t& t)
                              ACE_static_cast (double, 1000000000)));
 
 }
-  // ctor from a timespec_t
 
+// ctor from a timespec_t
 
-ACE_PSOS_Time_t::operator timespec_t ()
+ACE_PSOS_Time_t::operator timespec_t (void)
 {
   struct tm tm_struct;
 
@@ -3855,18 +3859,17 @@ ACE_PSOS_Time_t::operator timespec_t ()
                                ((ACE_static_cast (double, ticks_) *
                                  ACE_static_cast (double, 1000000000)) /
                                 ACE_static_cast (double, KC_TICKS2SEC)));
-
   return t;
 }
-  // type cast operator (to a timespec_t)
+
+// type cast operator (to a timespec_t)
 
 ACE_INLINE u_long
 ACE_PSOS_Time_t::get_system_time (ACE_PSOS_Time_t& t)
 {
   u_long ret_val = 0;
 
-#if defined (ACE_PSOSIM) /* system time is broken in simulator */
-
+#if defined (ACE_PSOSIM) // system time is broken in simulator.
   timeval tv;
   int result = 0;
   ACE_OSCALL (::gettimeofday (&tv, 0), int, -1, result);
@@ -3881,16 +3884,13 @@ ACE_PSOS_Time_t::get_system_time (ACE_PSOS_Time_t& t)
   t.date_ = pt.date_;
   t.time_ = pt.time_;
   t.ticks_ = pt.ticks_;
-
 #else
-
   ret_val = tm_get (&(t.date_), &(t.time_), &(t.ticks_));
-
 #endif  /* ACE_PSOSIM */
-
   return ret_val;
 }
-  // static member function to get current system time
+
+// Static member function to get current system time.
 
 ACE_INLINE u_long
 ACE_PSOS_Time_t::set_system_time (const ACE_PSOS_Time_t& t)
@@ -3898,16 +3898,18 @@ ACE_PSOS_Time_t::set_system_time (const ACE_PSOS_Time_t& t)
   u_long ret_val = tm_set (t.date_, t.time_, t.ticks_);
   return ret_val;
 }
-  // static member function to set current system time
+
+// Static member function to set current system time.
 
 #if defined (ACE_PSOSIM)
 
 ACE_INLINE u_long
-ACE_PSOS_Time_t::init_simulator_time ()
+ACE_PSOS_Time_t::init_simulator_time (void)
 {
-  // This is a hack using a direct UNIX system call, because the appropriate
-  // ACE_OS method ultimately uses the pSOS tm_get function, which would fail
-  // because the simulator's system time is uninitialized (chicken and egg).
+  // This is a hack using a direct UNIX system call, because the
+  // appropriate ACE_OS method ultimately uses the pSOS tm_get
+  // function, which would fail because the simulator's system time is
+  // uninitialized (chicken and egg).
   timeval t;
   int result = 0;
   ACE_OSCALL (::gettimeofday (&t, 0), int, -1, result);
@@ -3925,10 +3927,10 @@ ACE_PSOS_Time_t::init_simulator_time ()
 
   }
 }
-  // static member function to initialize system time, using UNIX calls
+
+// Static member function to initialize system time, using UNIX calls.
 
 #endif /* ACE_PSOSIM */
-
 #endif /* ACE_PSOS */
 
 #if defined (__DGUX) && defined (ACE_HAS_THREADS) && defined (_POSIX4A_DRAFT10_SOURCE)
@@ -3936,8 +3938,8 @@ extern "C" int __d6_sigwait (sigset_t *set);
 
 extern "C" int __d10_sigwait( const sigset_t *set, int *sig )
 {
-sigset_t  unconst_set = *set;
-int       caught_sig;
+  sigset_t  unconst_set = *set;
+  int caught_sig;
 
   if ((caught_sig = __d6_sigwait(&unconst_set)) == -1)
     return -1;
@@ -4021,7 +4023,7 @@ ace_sysconf_dump (void)
               ACE_OS::sysconf (_SC_TIMERS),
               ACE_OS::sysconf (_SC_VERSION)));
 }
-#endif
+#endif /* CHORUS */
 
 #if defined (ACE_HAS_WINCE)
 ACE_CE_Bridge *ACE_CE_Bridge::default_text_bridge_ = 0;

@@ -1863,15 +1863,16 @@ protected:
 #       if defined (USYNC_PROCESS)
 #         undef USYNC_PROCESS
 #       endif /* USYNC_PROCESS */
+// If we are on Solaris we can just reuse the existing implementations
+// of these synchronization types.
+#     if !defined (ACE_LACKS_RWLOCK_T)
+#include /**/ <synch.h>
+typedef rwlock_t ACE_rwlock_t;
+#     endif /* !ACE_LACKS_RWLOCK_T */
 #       include /**/ <thread.h>
 #     endif /* defined (ACE_LACKS_PTHREAD_YIELD) && defined (ACE_HAS_THR_YIELD) */
 
 #   else
-// If we are on Solaris we can just reuse the existing implementations
-// of these synchronization types.
-#     if !defined (ACE_LACKS_RWLOCK_T)
-typedef rwlock_t ACE_rwlock_t;
-#     endif /* !ACE_LACKS_RWLOCK_T */
 #     if !defined (ACE_HAS_POSIX_SEM)
 typedef sema_t ACE_sema_t;
 #     endif /* !ACE_HAS_POSIX_SEM */
@@ -3279,16 +3280,20 @@ extern "C"
 #  include /**/ <sys/priocntl.h>
 # endif /* ACE_HAS_PRIOCNTL */
 
+#if defined (ACE_HAS_IDTYPE_T)
+  typedef idtype_t ACE_idtype_t;
+#else
+  typedef int ACE_idtype_t;
+#endif /* ACE_HAS_IDTYPE_T */
+
 # if defined (ACE_HAS_STHREADS) || defined (DIGITAL_UNIX)
 #   if defined (ACE_LACKS_PRI_T)
     typedef int pri_t;
 #   endif /* ACE_LACKS_PRI_T */
-  typedef idtype_t ACE_idtype_t;
   typedef id_t ACE_id_t;
 #   define ACE_SELF P_MYID
   typedef pri_t ACE_pri_t;
 # else  /* ! ACE_HAS_STHREADS && ! DIGITAL_UNIX */
-  typedef int ACE_idtype_t;
   typedef long ACE_id_t;
 #   define ACE_SELF (-1)
   typedef short ACE_pri_t;

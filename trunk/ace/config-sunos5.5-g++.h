@@ -206,5 +206,6 @@
 
 #define ACE_HAS_STL_MAP_CONFLICT
 #define ACE_HAS_STL_QUEUE_CONFLICT
+#define ACE_HAS_IDTYPE_T
 
 #endif /* ACE_CONFIG_H */
