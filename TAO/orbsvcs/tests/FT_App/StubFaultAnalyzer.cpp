@@ -112,8 +112,8 @@ int StubFaultAnalyzer::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   //////////////////////////////////////////
   // resolve reference to detector factory
   CORBA::Object_var detector_obj = this->orb_->string_to_object(this->detector_ior_);
-  this->factory_ = ::FT::FaultDetectorFactory::_narrow(detector_obj);
-  if (CORBA::is_nil(this->factory_))
+  this->factory_ = ::FT::FaultDetectorFactory::_narrow(detector_obj.in ());
+  if (CORBA::is_nil(this->factory_.in ()))
   {
     std::cerr << "Can't resolve Detector Factory IOR " << this->detector_ior_ << std::endl;
     result = -1;
@@ -122,8 +122,8 @@ int StubFaultAnalyzer::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   //////////////////////////////////////////
   // resolve references to notifier
   CORBA::Object_var not_obj = this->orb_->string_to_object(this->notifier_ior_);
-  this->notifier_ = ::FT::FaultNotifier::_narrow(not_obj);
-  if (CORBA::is_nil(this->notifier_))
+  this->notifier_ = ::FT::FaultNotifier::_narrow(not_obj.in ());
+  if (CORBA::is_nil(this->notifier_.in ()))
   {
     std::cerr << "Can't resolve Notifier IOR " << this->notifier_ior_ << std::endl;
     result = -1;
@@ -154,8 +154,8 @@ int StubFaultAnalyzer::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
     {
       const char * iorName = this->replicaIORs[nRep];
       CORBA::Object_var rep_obj = this->orb_->string_to_object(iorName);
-      FT::PullMonitorable_var replica = FT::PullMonitorable::_narrow(rep_obj);
-      if (CORBA::is_nil(replica))
+      FT::PullMonitorable_var replica = FT::PullMonitorable::_narrow(rep_obj.in ());
+      if (CORBA::is_nil(replica.in ()))
       {
         std::cerr << "Can't resolve Replica IOR " << iorName << std::endl;
         result = -1;
@@ -169,10 +169,10 @@ int StubFaultAnalyzer::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
         TAO_PG::Properties_Encoder encoder;
 
         PortableGroup::Value value;
-        value <<= this->notifier_;
+        value <<= this->notifier_.in ();
         encoder.add(::FT::FT_NOTIFIER, value);
 
-        value <<= replica;
+        value <<= replica.in ();
         encoder.add(::FT::FT_MONITORABLE, value);
 
         FT::FTDomainId domain_id = 0;

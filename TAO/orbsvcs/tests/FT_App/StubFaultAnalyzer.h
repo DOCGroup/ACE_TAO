@@ -3,6 +3,9 @@
 // $Id$
 #ifndef STUBFAULTANALYZER_H
 #define STUBFAULTANALYZER_H
+#include /**/ <ace/pre.h>
+#include <ace/ACE.h>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -124,5 +127,6 @@ private:
 
 };
 
+#include /**/ <ace/post.h>
 
 #endif /* STUBFAULTANALYZER_H  */

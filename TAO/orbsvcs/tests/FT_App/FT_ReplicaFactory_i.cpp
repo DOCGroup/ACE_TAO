@@ -49,19 +49,29 @@ static const char * criterion_initial_value = "INITIAL_VALUE";
 // FT_ReplicaFactory_i  Construction/destruction
 
 FT_ReplicaFactory_i::FT_ReplicaFactory_i ()
-  : ior_output_file_(0)
+  : internals_ ()
+  , orb_ (CORBA::ORB::_nil ())
+  , poa_ (PortableServer::POA::_nil ())
+  , object_id_ ()
+  , ior_ ()
+  , ior_output_file_ (0)
+  , identity_ ()
+  , have_replication_manager_(0)
+  , replication_manager_(0)
   , factory_registry_ior_(0)
   , factory_registry_ (0)
   , registered_(0)
-  , ns_name_(0)
-  , location_("unknown")
-  , quit_on_idle_(0)
-  , unregister_by_location_(0)
   , test_output_file_(0)
+  , ns_name_(0)
+  , naming_context_ (CosNaming::NamingContext::_nil ())
+  , this_name_ ()
+  , roles_ ()
+  , location_ ("unknown")
+  , quit_on_idle_ (0)
+  , unregister_by_location_ (0)
+  , replicas_ ()
   , empty_slots_(0)
   , quit_requested_(0)
-  , have_replication_manager_(0)
-  , replication_manager_(0)
 {
   ACE_DEBUG((LM_DEBUG, "TestReplica type_id: %s\n", FT_TEST::_tc_TestReplica->id() ));
 //  ACE_DEBUG((LM_DEBUG, "Hobbit type_id: %s\n", FT_TEST::_tc_Hobbit->id() ));
@@ -294,7 +304,7 @@ int FT_ReplicaFactory_i::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
                                   ACE_ENV_ARG_PARAMETER);
 
   ACE_CHECK_RETURN (-1);
-  if (CORBA::is_nil(this->poa_))
+  if (CORBA::is_nil(this->poa_.in ()))
   {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT (" (%P|%t) Unable to narrow the POA.\n")),
@@ -329,8 +339,8 @@ int FT_ReplicaFactory_i::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
       CORBA::Object_var reg_obj = this->orb_->string_to_object(factory_registry_ior_
                                     ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
-      this->factory_registry_ = ::PortableGroup::FactoryRegistry::_narrow(reg_obj);
-      if (CORBA::is_nil(this->factory_registry_))
+      this->factory_registry_ = ::PortableGroup::FactoryRegistry::_narrow(reg_obj.in ());
+      if (CORBA::is_nil(this->factory_registry_.in ()))
       {
         ACE_ERROR (( LM_ERROR,
            "Can't resolve Factory Registry IOR %s\n",
@@ -350,14 +360,14 @@ int FT_ReplicaFactory_i::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
       ACE_TRY_CHECK;
       this->replication_manager_ = ::FT::ReplicationManager::_narrow(rm_obj.in() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      if (!CORBA::is_nil (replication_manager_))
+      if (!CORBA::is_nil (replication_manager_.in ()))
       {
         this->have_replication_manager_ = 1;
         // empty criteria
         ::PortableGroup::Criteria criteria;
         this->factory_registry_ = this->replication_manager_->get_factory_registry(criteria  ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
-        if (CORBA::is_nil (this->factory_registry_))
+        if (CORBA::is_nil (this->factory_registry_.in ()))
         {
           ACE_ERROR ((LM_ERROR,"ReplicaFactory: ReplicationManager failed to return FactoryRegistry.  Factory will not be registered.\n" ));
         }
@@ -366,7 +376,7 @@ int FT_ReplicaFactory_i::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
       {
         this->factory_registry_ =  ::PortableGroup::FactoryRegistry::_narrow(rm_obj.in()  ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
-        if (!CORBA::is_nil(this->factory_registry_))
+        if (!CORBA::is_nil(this->factory_registry_.in ()))
         {
           ACE_DEBUG ((LM_DEBUG,"Found a FactoryRegistry DBA ReplicationManager\n" ));
         }
@@ -388,7 +398,7 @@ int FT_ReplicaFactory_i::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 
   }
 
-  if ( ! CORBA::is_nil (this->factory_registry_))
+  if ( ! CORBA::is_nil (this->factory_registry_.in ()))
   {
     size_t roleCount = roles_.size();
     for (size_t nRole = 0; nRole < roleCount; ++nRole)
@@ -396,7 +406,7 @@ int FT_ReplicaFactory_i::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
       const char * roleName = this->roles_[nRole].c_str();
 
       PortableGroup::FactoryInfo info;
-      info.the_factory = ::PortableGroup::GenericFactory::_narrow(this_obj);
+      info.the_factory = ::PortableGroup::GenericFactory::_narrow(this_obj.in ());
       info.the_location.length(1);
       info.the_location[0].id = CORBA::string_dup(this->location_);
       info.the_criteria.length(1);
@@ -495,7 +505,7 @@ int FT_ReplicaFactory_i::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
     ACE_CHECK_RETURN (-1);
     ::CORBA::Object_var replica_obj = poa->servant_to_reference(replica ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (-1);
-    ::CORBA::String_var replicaIOR = this->orb_->object_to_string(replica_obj ACE_ENV_ARG_PARAMETER);
+    ::CORBA::String_var replicaIOR = this->orb_->object_to_string(replica_obj.in () ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (-1);
     write_ior (this->test_output_file_, replicaIOR);
   }
@@ -615,6 +625,7 @@ CORBA::Object_ptr FT_ReplicaFactory_i::create_object (
   ))
 {
   METHOD_ENTRY(FT_ReplicaFactory_i::create_object);
+  ACE_UNUSED_ARG (type_id);
   InternalGuard guard (this->internals_);
 
   ::TAO_PG::Properties_Decoder decoder (the_criteria);

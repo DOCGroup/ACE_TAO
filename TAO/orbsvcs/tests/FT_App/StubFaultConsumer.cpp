@@ -20,7 +20,7 @@ StubFaultConsumer::~StubFaultConsumer ()
 
 ::PortableServer::POA_ptr StubFaultConsumer::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
 {
-  return ::PortableServer::POA::_duplicate(this->poa_ ACE_ENV_ARG_PARAMETER);
+  return ::PortableServer::POA::_duplicate(this->poa_.in () ACE_ENV_ARG_PARAMETER);
 }
 
 PortableServer::ObjectId StubFaultConsumer::objectId()const
@@ -37,7 +37,10 @@ size_t StubFaultConsumer::notifications () const
 int StubFaultConsumer::parse_args (int argc, char * argv[])
 {
   int optionError = 0;
-#ifdef NO_ARGS_FOR_NOW
+#ifndef NO_ARGS_FOR_NOW
+  ACE_UNUSED_ARG (argc);
+  ACE_UNUSED_ARG (argv);
+#else // NO_ARGS_FOR_NOW
   ACE_Get_Opt get_opts (argc, argv, "");
   int c;
   while ((c = get_opts ()) != -1)
@@ -146,7 +149,7 @@ int StubFaultConsumer::parse_args (int argc, char * argv[])
       argv [0]
       ));
   }
-#endif
+#endif  NO_ARGS_FOR_NOW
   return optionError;
 }
 
@@ -180,7 +183,7 @@ int StubFaultConsumer::init (CORBA::ORB_ptr orb,
                                   ACE_ENV_ARG_PARAMETER);
 
   ACE_CHECK_RETURN (-1);
-  if (CORBA::is_nil(this->poa_))
+  if (CORBA::is_nil(this->poa_.in ()))
   {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT (" (%P|%t) Unable to narrow the POA.\n")),
@@ -209,8 +212,8 @@ int StubFaultConsumer::init (CORBA::ORB_ptr orb,
   CosNotifyFilter::Filter_var filter = CosNotifyFilter::Filter::_nil();
 
   this->consumer_id_ = notifier->connect_structured_fault_consumer(
-    CosNotifyComm::StructuredPushConsumer::_narrow(this_obj),
-    filter);
+    CosNotifyComm::StructuredPushConsumer::_narrow(this_obj.in ()),
+    filter.in ());
 
   return result;
 }
@@ -290,15 +293,17 @@ void StubFaultConsumer::offer_change (
     const CosNotification::EventTypeSeq & removed
     ACE_ENV_ARG_DECL
   )
-  throw (CORBA::SystemException, CosNotifyComm::InvalidEventType)
+  ACE_THROW_SPEC ((CORBA::SystemException, CosNotifyComm::InvalidEventType))
 {
+  ACE_UNUSED_ARG (added);
+  ACE_UNUSED_ARG (removed);
   ACE_ERROR ((LM_ERROR,
     "StubFaultConsumer: offer_change call ignored.\n"
   ));
 }
 
 void StubFaultConsumer::disconnect_structured_push_consumer(ACE_ENV_SINGLE_ARG_DECL)
-  throw (CORBA::SystemException)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_ERROR ((LM_ERROR,
     "StubFaultConsumer:disconnect_structured_push_consumer interpreted as quit request.\n"

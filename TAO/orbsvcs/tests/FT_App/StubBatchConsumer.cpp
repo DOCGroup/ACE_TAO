@@ -20,6 +20,8 @@ StubBatchConsumer::~StubBatchConsumer ()
 
 int StubBatchConsumer::parse_args (int argc, char * argv[])
 {
+  ACE_UNUSED_ARG (argc);
+  ACE_UNUSED_ARG (argv);
   int optionError = 0;
   // No options for now
   return optionError;
@@ -28,7 +30,7 @@ int StubBatchConsumer::parse_args (int argc, char * argv[])
 
 ::PortableServer::POA_ptr StubBatchConsumer::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
 {
-  return ::PortableServer::POA::_duplicate(this->poa_ ACE_ENV_ARG_PARAMETER);
+  return ::PortableServer::POA::_duplicate(this->poa_.in () ACE_ENV_ARG_PARAMETER);
 }
 
 PortableServer::ObjectId StubBatchConsumer::objectId()const
@@ -65,7 +67,7 @@ int StubBatchConsumer::init (CORBA::ORB_ptr orb, ::FT::FaultNotifier_var & notif
 
   ACE_CHECK_RETURN (-1);
 
-  if (CORBA::is_nil(this->poa_))
+  if (CORBA::is_nil(this->poa_.in ()))
   {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT (" (%P|%t) Unable to narrow the POA.\n")),
@@ -94,8 +96,8 @@ int StubBatchConsumer::init (CORBA::ORB_ptr orb, ::FT::FaultNotifier_var & notif
   CosNotifyFilter::Filter_var filter = CosNotifyFilter::Filter::_nil();
 
   this->consumer_id_ = notifier->connect_sequence_fault_consumer(
-    CosNotifyComm::SequencePushConsumer::_narrow(this_obj),
-    filter);
+    CosNotifyComm::SequencePushConsumer::_narrow(this_obj.in ()),
+    filter.in ());
 
   return result;
 }
@@ -137,6 +139,7 @@ void StubBatchConsumer::push_structured_events (
     , CosEventComm::Disconnected
   ))
 {
+  ACE_UNUSED_ARG (notifications);
   //@@ sequence of structured event handling not written yet
 }
 
@@ -145,8 +148,10 @@ void StubBatchConsumer::offer_change (
     const CosNotification::EventTypeSeq & removed
     ACE_ENV_ARG_DECL
   )
-  throw (CORBA::SystemException, CosNotifyComm::InvalidEventType)
+  ACE_THROW_SPEC ((CORBA::SystemException, CosNotifyComm::InvalidEventType))
 {
+  ACE_UNUSED_ARG (added);
+  ACE_UNUSED_ARG (removed);
   ACE_ERROR ((LM_ERROR,
     "StubBatchConsumer: offer_change call ignored.\n"
   ));
