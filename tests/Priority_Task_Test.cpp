@@ -102,10 +102,8 @@ Priority_Task::svc (void)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "getprio failed"), -1);
 
   if (prio == this->priority_)
-    {
-      ACE_DEBUG ((LM_DEBUG, "(%t) actual prio of %d equals desired priority\n",
+    ACE_DEBUG ((LM_DEBUG, "(%t) actual prio of %d equals desired priority\n",
                   prio));
-    }
   else
     {
       ACE_DEBUG ((LM_ERROR, "(%t) actual prio = %d, desired priority_ = %d!\n",
@@ -123,19 +121,21 @@ main (int, char *[])
 {
   ACE_START_TEST ("Priority_Task_Test");
 
+  int status = 0;
+
 #if defined (ACE_HAS_THREADS)
 
   Priority_Task tasks[ACE_MAX_ITERATIONS];
 
-  int status = 0;
   int i;
 
   // Spawn off ACE_MAX_ITERATIONS of tasks, passing each one their
   // iteration number as their priority.
 
-  // NOTE:  on Solaris, for example, this requests the min FIFO
+  // NOTE: on Solaris, for example, this requests the min FIFO
   // priority.  But, this test doesn't use the Realtime scheduling
-  // class.  The FIFO priorities are used because they're all nonnegative.
+  // class.  The FIFO priorities are used because they're all
+  // nonnegative.
 
   ACE_Sched_Priority_Iterator priority (ACE_SCHED_FIFO,
                                         ACE_SCOPE_THREAD);
@@ -147,9 +147,7 @@ main (int, char *[])
 
       // If there are more priorities get the next one...
       if (priority.more ())
-        {
-          priority.next ();
-        }
+        priority.next ();
     }
 
   ACE_DEBUG ((LM_DEBUG, "(%t) %d tasks spawned, wait for them to exit . . .\n",
