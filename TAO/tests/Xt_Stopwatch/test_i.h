@@ -17,6 +17,8 @@
 #define SERVER_TEST_I_H
 
 #include "testS.h"
+#include "timer.h"
+
 
 #if defined(ACE_HAS_XT)
 
@@ -29,7 +31,7 @@ class Stopwatch_imp : public POA_Stopwatch
   //   Implements the Stopwatch interface in test.idl
   //
 public:
-  Stopwatch_imp (CORBA::ORB_ptr);
+  Stopwatch_imp (CORBA::ORB_ptr, Timer_imp *);
   // ctor
 
   // = The Simple_Server methods.
@@ -40,6 +42,9 @@ public:
 private:
   CORBA::ORB_var orb_;
   // The ORB
+
+  Timer_imp *timer_;
+  // Hold the timer object...
 };
 
 #if defined(__ACE_INLINE__)
