@@ -665,7 +665,7 @@ Peer_Handler::handle_close (ACE_HANDLE,
 }
 
 int
-Peer_Acceptor::open (u_short port)
+Peer_Acceptor::start (u_short port)
 {
   // This object only gets allocated once and is just recycled
   // forever.
@@ -858,14 +858,14 @@ Peer_Factory::init (int argc, char *argv[])
                       -1);
 
   if (Options::instance ()->enabled (Options::SUPPLIER_ACCEPTOR)
-      && this->supplier_acceptor_.open
+      && this->supplier_acceptor_.start
       (Options::instance ()->supplier_acceptor_port ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "Acceptor::open"),
                       -1);
   else if (Options::instance ()->enabled (Options::CONSUMER_ACCEPTOR)
-           && this->consumer_acceptor_.open
+           && this->consumer_acceptor_.start
            (Options::instance ()->consumer_acceptor_port ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
