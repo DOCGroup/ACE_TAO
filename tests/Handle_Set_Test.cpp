@@ -116,6 +116,7 @@ test_boundaries (void)
   ACE_ASSERT (count == handle_set.num_set ());
 }
 
+#if !defined (CHORUS)
 static void
 test_performance (size_t max_handles,
 		  size_t max_iterations)
@@ -159,6 +160,7 @@ test_performance (size_t max_handles,
 	      count,
 	      (et.real_time / double (count)) * 1000000));
 }
+#endif /* ! CHORUS */
 
 int
 main (int argc, char *argv[])
@@ -171,7 +173,14 @@ main (int argc, char *argv[])
 
   test_duplicates (count);
   test_boundaries ();
+#if !defined (CHORUS)
+  // Chorus loses its lunch on the floating point arithmetic.  It
+  // can't even printf using a %f, %e, or %g format specifier.  It
+  // just prints "f", "e", or "g", respectively.  Maybe something has
+  // to be done to configure it for floating point?  Until we figure
+  // it out, don't bother with the performance test.
   test_performance (max_handles, max_iterations);
+#endif /* ! CHORUS */
 
   ACE_END_TEST;
   return 0;
