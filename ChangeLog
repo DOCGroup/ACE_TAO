@@ -1,3 +1,15 @@
+Fri Aug  1 17:23:32 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/Cache_Map_Manager_T.cpp:
+	* ace/Functor.i:
+	* ace/Hash_Map_Manager_T.cpp:
+	* ace/Map_Manager.cpp:
+	* ace/POSIX_Asynch_IO.h:
+	* ace/RB_Tree.i:
+	* ace/String_Base.cpp: Changed all the includes of OS.h and
+	  Malloc.h to OS_String.h and Malloc_Base.h, since that is
+	  sufficient. Thanks to Carlos O'Ryan for providing the patches. 
+
 Fri Aug  1 14:55:00 2003  Dan Troesser  <troesser_d@ociweb.com>
 
         * bin/create_ace_build.pl:
