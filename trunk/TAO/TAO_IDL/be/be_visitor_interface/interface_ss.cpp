@@ -170,7 +170,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_uidt_nl;
   *os << "{" << be_idt_nl;
-  *os << "TAO_InputCDR &_tao_in = _tao_server_request.incoming ();" 
+  *os << "TAO_InputCDR &_tao_in = _tao_server_request.incoming ();"
   << be_nl << be_nl;
 
   *os << full_skel_name << " *_tao_impl =" << be_idt_nl
@@ -320,7 +320,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << ")" << be_uidt_nl;
   *os << "{" << be_idt_nl;
   *os << full_skel_name << " *_tao_impl =" << be_idt_nl
-      << "(" << full_skel_name << " *) _tao_object_reference;" 
+      << "(" << full_skel_name << " *) _tao_object_reference;"
       << be_uidt_nl << be_nl;
 
   *os << "CORBA::Object_var _tao_retval =" << be_idt_nl
@@ -416,7 +416,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "                    \"IDL:omg.org/CORBA/Object:1.0\") == 0)"
       << be_idt_nl
       << "{" << be_idt_nl
-      << "return ACE_static_cast (PortableServer::Servant, this);"
+      << "return static_cast<PortableServer::Servant> (this);"
       << be_uidt_nl
       << "}" << be_uidt_nl << be_nl;
 
@@ -574,7 +574,7 @@ be_visitor_interface_ss::generate_send_reply (TAO_OutStream *)
 {
   // no-op for regular interfaces
 }
- 
+
 void
 be_visitor_interface_ss::dispatch_method (be_interface *node)
 {
@@ -687,8 +687,8 @@ be_visitor_interface_ss::generate_proxy_classes (be_interface *node)
           << node->flat_client_enclosing_scope ()
           << node->base_proxy_broker_name ()
           << "_Factory_Initializer (" << be_idt << be_idt_nl
-          << "ACE_reinterpret_cast (" << be_idt << be_idt_nl
-          << "size_t," << be_nl
+          << "reinterpret_cast<" << be_idt << be_idt_nl
+          << "size_t> (" << be_nl
           << node->flat_client_enclosing_scope ()
           << node->base_proxy_broker_name ()
           << "_Factory_Initializer" << be_uidt_nl

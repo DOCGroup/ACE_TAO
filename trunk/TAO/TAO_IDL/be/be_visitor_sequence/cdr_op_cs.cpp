@@ -76,7 +76,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
   // If our element type is an anonymous sequence, generate code for it here.
   if (bt->node_type () == AST_Decl::NT_sequence)
     {
-      int status = 
+      int status =
           this->gen_anonymous_base_type (
               bt,
               TAO_CodeGen::TAO_ROOT_CDR_OP_CS
@@ -111,7 +111,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
       << "{" << be_idt_nl;
 
   // First encode the sequence length.
-  *os << "CORBA::ULong _tao_seq_len = _tao_sequence.length ();"
+  *os << "const CORBA::ULong _tao_seq_len = _tao_sequence.length ();"
       << be_nl << be_nl;
   *os << "if (strm << _tao_seq_len)" << be_idt_nl
       << "{" << be_idt_nl;
@@ -145,20 +145,20 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
 
   *os << "CORBA::Boolean operator>> (" << be_idt << be_idt_nl
       << "TAO_InputCDR &";
-      
+
   if (! bt->is_local ())
     {
       *os << "strm";
     }
-    
+
   *os << "," << be_nl
       << node->name () << " &";
-      
+
   if (! bt->is_local ())
     {
       *os << "_tao_sequence";
     }
-    
+
   *os << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl;
@@ -357,7 +357,7 @@ be_visitor_sequence_cdr_op_cs::visit_predefined_type (
                 << "input_cdr_allocator_type_locked () == 1)" << be_nl
                 << "{" << be_idt_nl
                 << "TAO_Unbounded_Sequence<CORBA::Octet> *oseq = " << be_nl
-                << "  ACE_static_cast(TAO_Unbounded_Sequence<CORBA::Octet>*, "
+                << "  static_cast<TAO_Unbounded_Sequence<CORBA::Octet> *> ("
                 << "&_tao_sequence);" << be_nl
                 << "oseq->replace (_tao_seq_len, strm.start ());"
                 << be_nl
@@ -375,7 +375,7 @@ be_visitor_sequence_cdr_op_cs::visit_predefined_type (
           {
             *os << "{" << be_idt_nl
                 << "TAO_Unbounded_Sequence<CORBA::Octet> *oseq = " << be_nl
-                << "  ACE_static_cast (TAO_Unbounded_Sequence<CORBA::Octet>*, "
+                << "  static_cast<TAO_Unbounded_Sequence<CORBA::Octet> *> ("
                 << "(" << sequence->name () << " *)&_tao_sequence);" << be_nl
                 << "if (oseq->mb ())" << be_idt_nl
                 << "return strm.write_octet_array_mb (oseq->mb ());"
@@ -730,22 +730,22 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
                   break;
                 case AST_PredefinedType::PT_char:
                   *os << "_tao_marshal_flag =" << be_idt_nl
-                      << "(strm >> CORBA::Any::to_char (_tao_sequence[i]));" 
+                      << "(strm >> CORBA::Any::to_char (_tao_sequence[i]));"
                       << be_uidt;
                   break;
                 case AST_PredefinedType::PT_wchar:
                   *os << "_tao_marshal_flag =" << be_idt_nl
-                      << "(strm >> CORBA::Any::to_wchar (_tao_sequence[i]));" 
+                      << "(strm >> CORBA::Any::to_wchar (_tao_sequence[i]));"
                       << be_uidt;
                   break;
                 case AST_PredefinedType::PT_boolean:
-                  *os << "_tao_marshal_flag =" << be_idt_nl 
-                      << "(strm >> CORBA::Any::to_boolean (_tao_sequence[i]));" 
+                  *os << "_tao_marshal_flag =" << be_idt_nl
+                      << "(strm >> CORBA::Any::to_boolean (_tao_sequence[i]));"
                       << be_uidt;
                   break;
                 case AST_PredefinedType::PT_octet:
-                  *os << "_tao_marshal_flag =" << be_idt_nl 
-                      << "(strm >> CORBA::Any::to_octet (_tao_sequence[i]));" 
+                  *os << "_tao_marshal_flag =" << be_idt_nl
+                      << "(strm >> CORBA::Any::to_octet (_tao_sequence[i]));"
                       << be_uidt;
                   break;
                 default:
@@ -799,8 +799,8 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
           os->indent ();
 
           *os << be_idt << be_idt_nl;
-          *os << "ACE_const_cast (const " << this->ctx_->node ()->name ()
-              << ", _tao_sequence)[i]\n";
+          *os << "const_cast<const " << this->ctx_->node ()->name ()
+              << "> (_tao_sequence)[i]\n";
           *os << "#else";
 
           os->indent ();
@@ -877,22 +877,22 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
                   break;
                 case AST_PredefinedType::PT_char:
                   *os << "_tao_marshal_flag =" << be_idt_nl
-                      << "(strm << CORBA::Any::from_char (_tao_sequence[i]));" 
+                      << "(strm << CORBA::Any::from_char (_tao_sequence[i]));"
                       << be_uidt;
                   break;
                 case AST_PredefinedType::PT_wchar:
                   *os << "_tao_marshal_flag =" << be_idt_nl
-                      << "(strm << CORBA::Any::from_wchar (_tao_sequence[i]));" 
+                      << "(strm << CORBA::Any::from_wchar (_tao_sequence[i]));"
                       << be_uidt;
                   break;
                 case AST_PredefinedType::PT_boolean:
-                  *os << "_tao_marshal_flag =" << be_idt_nl 
-                      << "(strm << CORBA::Any::from_boolean (_tao_sequence[i]));" 
+                  *os << "_tao_marshal_flag =" << be_idt_nl
+                      << "(strm << CORBA::Any::from_boolean (_tao_sequence[i]));"
                       << be_uidt;
                   break;
                 case AST_PredefinedType::PT_octet:
-                  *os << "_tao_marshal_flag =" << be_idt_nl 
-                      << "(strm << CORBA::Any::from_octet (_tao_sequence[i]));" 
+                  *os << "_tao_marshal_flag =" << be_idt_nl
+                      << "(strm << CORBA::Any::from_octet (_tao_sequence[i]));"
                       << be_uidt;
                   break;
                 default:
@@ -922,6 +922,6 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
 
   *os << be_uidt_nl << be_nl;
   *os << "return _tao_marshal_flag;" << be_uidt_nl;
- 
+
   return 0;
 }

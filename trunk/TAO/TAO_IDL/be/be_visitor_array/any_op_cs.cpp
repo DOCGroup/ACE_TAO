@@ -55,7 +55,7 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // Since we don't generate CDR stream operators for types that
-  // explicitly contain a local interface (at some level), we 
+  // explicitly contain a local interface (at some level), we
   // must override these Any template class methods to avoid
   // calling the non-existent operators. The zero return value
   // will eventually cause CORBA::MARSHAL to be raised if this
@@ -98,12 +98,12 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
       << "_tao_any," << be_nl
       << node->name () << "_forany::_tao_any_destructor," << be_nl
       << node->tc_name () << "," << be_nl
-      << "ACE_const_cast (" << be_idt << be_idt_nl
-      << node->name () << "_slice *," << be_nl
+      << "const_cast<" << be_idt << be_idt_nl
+      << node->name () << "_slice *> (" << be_nl
       << "_tao_elem.nocopy ()" << be_idt_nl
       << "? _tao_elem.in ()" << be_nl
-      << ": ACE_const_cast (" << be_idt << be_idt << be_idt_nl
-      << "const " << node->name () << "_slice *," << be_nl
+      << ": const_cast<" << be_idt << be_idt << be_idt_nl
+      << "const " << node->name () << "_slice *> (" << be_nl
       << node->name () << "_dup (_tao_elem.in ())" << be_uidt_nl
       << ")" << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << ")" << be_uidt << be_uidt_nl
@@ -123,8 +123,8 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
       << "_tao_any," << be_nl
       << node->name () << "_forany::_tao_any_destructor," << be_nl
       << node->tc_name () << "," << be_nl
-      << "ACE_const_cast (" << be_idt << be_idt_nl
-      << "const " << node->name () << "_slice *&," << be_nl
+      << "const_cast<" << be_idt << be_idt_nl
+      << "const " << node->name () << "_slice *&> (" << be_nl
       << "_tao_elem.out ()" << be_uidt_nl
       << ")" << be_uidt << be_uidt_nl
       << ");" << be_uidt << be_uidt << be_uidt << be_uidt_nl

@@ -459,7 +459,7 @@ be_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node,
 
   *os << be_nl
       << "_tao_call.prepare_header (" << be_idt << be_idt_nl
-      << "ACE_static_cast (CORBA::Octet, _tao_response_flag)" << be_nl
+      << "static_cast<CORBA::Octet> (_tao_response_flag)" << be_nl
       << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl << ");"
       << be_uidt_nl;
 

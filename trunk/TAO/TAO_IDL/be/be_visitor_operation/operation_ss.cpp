@@ -138,8 +138,8 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
 
   // Get the right object implementation.
   *os << intf->full_skel_name () << " *_tao_impl =" << be_idt_nl
-      << "ACE_static_cast (" << be_idt << be_idt_nl
-      << intf->full_skel_name () << " *," << be_nl
+      << "static_cast<" << be_idt << be_idt_nl
+      << intf->full_skel_name () << " *> (" << be_nl
       << "_tao_servant" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl;
 
@@ -199,8 +199,8 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
 
   // Cast the Servant_Upcall pointer.
   *os << "TAO_Object_Adapter::Servant_Upcall *_tao_upcall =" << be_idt_nl
-      << "ACE_static_cast (" << be_idt << be_idt_nl
-      << "TAO_Object_Adapter::Servant_Upcall *," << be_nl
+      << "static_cast<" << be_idt << be_idt_nl
+      << "TAO_Object_Adapter::Servant_Upcall *> (" << be_nl
       << "_tao_servant_upcall" << be_uidt_nl
       << ");" << be_uidt_nl << be_uidt_nl;
 

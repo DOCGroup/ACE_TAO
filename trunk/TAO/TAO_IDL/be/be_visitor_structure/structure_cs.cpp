@@ -74,8 +74,8 @@ be_visitor_structure_cs::visit_structure (be_structure *node)
           << ")" << be_uidt_nl
           << "{" << be_idt_nl
           << node->local_name () << " *_tao_tmp_pointer =" << be_idt_nl
-          << "ACE_static_cast (" << node->local_name ()
-          << " *, _tao_void_pointer);" << be_uidt_nl
+          << "static_cast<" << node->local_name ()
+          << " *> (_tao_void_pointer);" << be_uidt_nl
           << "delete _tao_tmp_pointer;" << be_uidt_nl
           << "}";
     }

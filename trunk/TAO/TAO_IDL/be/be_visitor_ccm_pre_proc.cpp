@@ -1565,12 +1565,12 @@ be_visitor_ccm_pre_proc::create_explicit (be_home *node)
                             node->local_name (),
                             "Explicit",
                             ScopeAsDecl (node->defined_in ()));
-                            
+
   // We're at global scope here so we need to fool the scope stack
   // for a minute so the correct repo id can be calculated at
   // interface construction time.
   idl_global->scopes ().push (node->defined_in ());
-  
+
   AST_Interface *i = 0;
   ACE_NEW_RETURN (i,
                   be_interface (explicit_name,
@@ -1581,10 +1581,10 @@ be_visitor_ccm_pre_proc::create_explicit (be_home *node)
                                 I_FALSE,
                                 I_FALSE),
                   0);
-     
-  // Back to reality.                
+
+  // Back to reality.
   idl_global->scopes ().pop ();
-  
+
   i->set_name (explicit_name);
   i->set_defined_in (node->defined_in ());
   i->set_imported (node->imported ());
@@ -1644,12 +1644,12 @@ be_visitor_ccm_pre_proc::create_implicit (be_home *node)
                              I_FALSE,
                              I_TRUE);
   parent_id.destroy ();
-  
+
   // We're at global scope here so we need to fool the scope stack
   // for a minute so the correct repo id can be calculated at
   // interface construction time.
   idl_global->scopes ().push (node->defined_in ());
-  
+
   AST_Interface *i = 0;
   ACE_NEW_RETURN (i,
                   be_interface (implicit_name,
@@ -1660,10 +1660,10 @@ be_visitor_ccm_pre_proc::create_implicit (be_home *node)
                                 I_FALSE,
                                 I_FALSE),
                   0);
-     
-  // Back to reality.                
+
+  // Back to reality.
   idl_global->scopes ().pop ();
-  
+
   i->set_name (implicit_name);
   i->set_defined_in (node->defined_in ());
   i->set_imported (node->imported ());
@@ -1698,7 +1698,7 @@ be_visitor_ccm_pre_proc::create_equivalent (be_home *node,
   // for a minute so the correct repo id can be calculated at
   // interface construction time.
   idl_global->scopes ().push (node->defined_in ());
-  
+
   AST_Interface *retval = 0;
   ACE_NEW_RETURN (retval,
                   be_interface (equiv_name,
@@ -1709,16 +1709,16 @@ be_visitor_ccm_pre_proc::create_equivalent (be_home *node,
                                 I_FALSE,
                                 I_FALSE),
                   0);
-     
-  // Back to reality.                
+
+  // Back to reality.
   idl_global->scopes ().pop ();
-  
+
   retval->set_name (equiv_name);
   retval->set_defined_in (s);
   retval->set_imported (node->imported ());
   be_interface::narrow_from_decl (retval)->gen_fwd_helper_name ();
-  UTL_ScopedName *unmangled_name = ACE_static_cast (UTL_ScopedName *,
-                                                    node->name ()->copy ());
+  UTL_ScopedName *unmangled_name =
+    static_cast<UTL_ScopedName *> (node->name ()->copy ());
   UTL_ScopedName *mangled_name =
     this->create_scoped_name (0,
                               node->local_name (),
@@ -1752,8 +1752,7 @@ be_visitor_ccm_pre_proc::create_scoped_name (const char *prefix,
                                   0),
                   0);
   UTL_ScopedName *full_name =
-    ACE_static_cast (UTL_ScopedName *,
-                     parent->name ()->copy ());
+    static_cast<UTL_ScopedName *> (parent->name ()->copy ());
   full_name->nconc (last_segment);
   return full_name;
 }
@@ -1792,8 +1791,7 @@ be_visitor_ccm_pre_proc::compute_inheritance (be_home *node)
         );
       new_local += "Explicit";
       UTL_ScopedName *parent_name =
-        ACE_static_cast (UTL_ScopedName *,
-                         node->base_home ()->name ()->copy ());
+        static_cast<UTL_ScopedName *> (node->base_home ()->name ()->copy ());
       parent_name->last_component ()->replace_string (new_local.c_str ());
       ACE_NEW_RETURN (retval,
                       UTL_NameList (parent_name,
@@ -1808,8 +1806,7 @@ be_visitor_ccm_pre_proc::compute_inheritance (be_home *node)
   for (long i = 0; i < n_supports; ++i)
     {
       supported_name =
-        ACE_static_cast (UTL_ScopedName *,
-                         node->inherits ()[i]->name ()->copy ());
+        static_cast<UTL_ScopedName *> (node->inherits ()[i]->name ()->copy ());
       ACE_NEW_RETURN (conc_value,
                       UTL_NameList (supported_name,
                                     0),

@@ -166,8 +166,8 @@ be_visitor_component_cs::visit_component (be_component *node)
           << node->name ()
           << "::_tao_any_destructor (void *_tao_void_pointer)" << be_nl
           << "{" << be_idt_nl
-          << node->local_name () << " *_tao_tmp_pointer = ACE_static_cast ("
-          << node->local_name () << " *, _tao_void_pointer);" << be_nl
+          << node->local_name () << " *_tao_tmp_pointer = static_cast<"
+          << node->local_name () << " *> (_tao_void_pointer);" << be_nl
           << "CORBA::release (_tao_tmp_pointer);" << be_uidt_nl
           << "}" << be_nl << be_nl;
     }
