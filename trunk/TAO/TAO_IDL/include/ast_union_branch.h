@@ -73,6 +73,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 class UTL_LabelList;
 class AST_Type;
 class AST_UnionLabel;
+class AST_Union;
 
 // Representation of union branch declaration.
 // A branch of a union is a field with a label.
@@ -95,10 +96,14 @@ public:
   AST_UnionLabel *label (unsigned long index = 0);
 
   unsigned long label_list_length (void);
+  
+  // Called if our labels are enum values - adds them the
+  // enclosing scope's name_referenced list.
+  void add_labels (AST_Union *u);
 
   // Narrowing.
-  DEF_NARROW_METHODS1(AST_UnionBranch, AST_Field);
-  DEF_NARROW_FROM_DECL(AST_UnionBranch);
+  DEF_NARROW_METHODS1 (AST_UnionBranch, AST_Field);
+  DEF_NARROW_FROM_DECL (AST_UnionBranch);
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);

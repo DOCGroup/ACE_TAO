@@ -1,3 +1,22 @@
+Fri Oct 29 10:09:56 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_union.cpp:
+        * TAO_IDL/ast/ast_union_branch.cpp:
+        * TAO_IDL/include/ast_union.h:
+        * TAO_IDL/include/ast_union_branch.h:
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/util/utl_scope.cpp:
+        
+          When a union has an enum discriminator, each label name is
+          added to an existing list of identifiers for the union
+          scope, so that when a union member is added to the AST,
+          we can detect a name clash between its name and a label
+          name. Thanks to Bjorn Roald <bjorn.roald@kongsberg.com>
+          for making a post to comp.object.corba, pointing out that
+          the TAO IDL compiler accepts this kind of illegal IDL, and
+          to Michi Henning <michi@triodia.com> for confirming that
+          Bjorn's example IDL was indeed illegal.
+
 Fri Oct 29 09:23:50 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/IFR_Service/ifr_adding_visitor_structure.cpp:

@@ -71,6 +71,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_union_branch.h"
 #include "ast_union_label.h"
+#include "ast_union.h"
 #include "ast_visitor.h"
 #include "utl_labellist.h"
 
@@ -158,6 +159,28 @@ AST_UnionBranch::label_list_length (void)
   else
     {
       return 0;
+    }
+}
+
+void
+AST_UnionBranch::add_labels (AST_Union *u)
+{
+  AST_UnionLabel *ul = 0;
+  AST_Expression *ex = 0;
+
+  for (UTL_LabellistActiveIterator i (this->pd_ll);
+       !i.is_done ();
+       i.next ())
+    {
+      ul = i.item ();
+      
+      if (ul->label_kind () == AST_UnionLabel::UL_default)
+        {
+          return;
+        }
+        
+      ex = ul->label_val ();
+      u->add_to_name_referenced (ex->n ()->first_component ());
     }
 }
 

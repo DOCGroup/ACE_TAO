@@ -968,6 +968,14 @@ AST_Union::fe_add_union_branch (AST_UnionBranch *t)
   // Add it to scope.
   this->add_to_scope (t);
 
+  // If we have an enum discriminator, add the label names to
+  // the name_referenced list before we add the union branch,
+  // so a branch name clash with a label name will be caught.
+  if (this->pd_udisc_type == AST_Expression::EV_enum)
+    {
+      t->add_labels (this);
+    }
+
   // Add it to set of locally referenced symbols.
   this->add_to_referenced (t,
                            I_FALSE,
@@ -982,7 +990,7 @@ AST_Union::fe_add_union_branch (AST_UnionBranch *t)
                                I_FALSE,
                                mru->first_component ());
     }
-
+    
   this->fields_.enqueue_tail (t);
 
   return t;
