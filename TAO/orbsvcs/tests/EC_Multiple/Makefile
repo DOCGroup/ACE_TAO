@@ -240,7 +240,7 @@ EC_Multiple: $(addprefix $(VDIR),$(EC_MULTIPLE_OBJS) $(EC_MULTIPLE_CONFIG_OBJS))
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/singletons.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
@@ -248,21 +248,21 @@ EC_Multiple: $(addprefix $(VDIR),$(EC_MULTIPLE_OBJS) $(EC_MULTIPLE_CONFIG_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs/Event_Service_Constants.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Service_Constants.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs/Time_Utilities.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs/Event_Utilities.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Utilities.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Service_Constants.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs/Scheduler_Factory.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.i \
  EC_Multiple.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Channel_Clients_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs/Channel_Clients_T.i
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Channel_Clients_T.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
