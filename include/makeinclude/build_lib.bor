@@ -37,9 +37,17 @@ INSTALL_TYPES = lib includes
 .path.cpp = $(CPPDIR)
 !endif
 
+!ifdef CDIR
+.path.c = $(CDIR)
+!endif
+
 .path.obj = $(OBJDIR)
 
 .cpp.obj:
+	@$(MAKE_OBJDIR)
+	$(CC) $(COMMON_CFLAGS) $(LIB_CFLAGS) $(CFLAGS) -c -n$(@D) $<
+
+.c.obj:
 	@$(MAKE_OBJDIR)
 	$(CC) $(COMMON_CFLAGS) $(LIB_CFLAGS) $(CFLAGS) -c -n$(@D) $<
 

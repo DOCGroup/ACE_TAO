@@ -43,6 +43,10 @@ INSTALL_TYPES = dll lib includes
 .path.cpp = $(CPPDIR)
 !endif
 
+!ifdef CDIR
+.path.c = $(CDIR)
+!endif
+
 !ifdef RESDIR
 .path.rc = $(RESDIR)
 !else
@@ -52,6 +56,10 @@ INSTALL_TYPES = dll lib includes
 .path.obj = $(OBJDIR)
 
 .cpp.obj:
+	@$(MAKE_OBJDIR)
+	$(CC) $(COMMON_CFLAGS) $(DLL_CFLAGS) $(CFLAGS) -c -n$(@D) $<
+
+.c.obj:
 	@$(MAKE_OBJDIR)
 	$(CC) $(COMMON_CFLAGS) $(DLL_CFLAGS) $(CFLAGS) -c -n$(@D) $<
 

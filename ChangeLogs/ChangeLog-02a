@@ -1,10 +1,25 @@
+Fri Oct 13 06:26:18 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/RMCast/Send_File:
+    	  Added makefiles for Send_File multicast example.
+
+	* include/makeinclude/build_dll.bor:
+	* include/makeinclude/build_exe.bor:
+	* include/makeinclude/build_lib.bor:
+	  Added support for compilation of C source files.
+
+	* include/makeinclude/ace_flags.bor:
+          Added IORManip and FaultTolerance libraries for TAO.
+
+	  Thanks to Christopher Kohlhoff for providing these fixes.
+
 Thu Oct 12 23:33:21 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/Synch.h:
         * ace/Synch_T.h:
         * ace/Test_and_Set.cpp:
 	  Fixed order of includes to compile under gcc.
-	
+
 Thu Oct 12 22:58:13 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/ACE_Lib_Find.h:
