@@ -1,3 +1,15 @@
+Sat Nov 15 12:27:59 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* TAO_IDL/be/be_field.cpp: 
+	  Only generate the inline members of the field type if the type
+	  is not imported. 
+
+	* TAO_IDL/driver/drv_fork.cpp: 
+	* TAO_IDL/driver/drv_preproc.cpp: 
+	  Removed old code to support plain fork (without ACE).
+	  Also removed temporary files *unless* we are on Win32, were
+	  removing the file and keeping it open fails.
+
 Sat Nov 15 12:19:55 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
 
 	* TAO_IDL/be/be_codegen.cpp: Changed two loop counters from type
