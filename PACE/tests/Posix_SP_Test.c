@@ -131,8 +131,10 @@ check_sysconf ()
                        "_SC_PRIORITY_SCHEDULING",
                        "_SC_REALTIME_SIGNALS"};
 
+  PACE_UNUSED_ARG (confstrs);
+
   /* Success indicated by compilation for this function. */
-  printf("pace_sysconf %s\n", success);
+  /* printf("pace_sysconf %s\n", success); */
   for (index = 0; index < confnamessize; index++) 
     {
       /* Call pace_sysconf() */
@@ -144,13 +146,13 @@ check_sysconf ()
          conformant platforms may not support all the names. However,
          using the names above should not cause compilation errors.
          */
-      printf("pace_sysconf: name == %s\n", confstrs[index]);
+      /* printf("pace_sysconf: name == %s\n", confstrs[index]); */
       if (retval == -1)
         {
-          printf("retval == %ld\n", retval);
+          /* printf("retval == %ld\n", retval); */
           if (errno == 0)
             {
-              printf("Unsupported name [errno did not change]\n");
+              /* printf("Unsupported name [errno did not change]\n"); */
             }
           else
             {
@@ -159,11 +161,11 @@ check_sysconf ()
         }
       else
         {
-          printf("pace_sysconf: value == %ld\n", retval);
+          /* printf("pace_sysconf: value == %ld\n", retval); */
         }
     }
 
-  printf("\n");
+  /* printf("\n"); */
 }
 
 void
@@ -177,14 +179,14 @@ check_time ()
   errno = 0;
   retval = pace_time(&local_time);
 
-  printf("pace_time %s\n", success);
+  /* printf("pace_time %s\n", success); */
   if (retval == -1)
     {
       printf("errno == %d\n", errno);
     }
   else
     {
-      printf("pace_time (with time_t* arg) == %ld\n", local_time);
+      /* printf("pace_time (with time_t* arg) == %ld\n", local_time); */
     }
 
   /* Call pace_time() with NULL arg */
@@ -197,7 +199,7 @@ check_time ()
     }
   else
     {
-      printf("pace_time (with NULL arg) == %ld\n\n", retval);
+      /* printf("pace_time (with NULL arg) == %ld\n\n", retval); */
     }
 }
 
@@ -210,7 +212,7 @@ check_uname ()
   /* Call pace_uname() */
   errno = 0;
   retval = pace_uname(&name);
-  printf("pace_uname %s\n", success);
+  /* printf("pace_uname %s\n", success); */
 
   if (retval < 0)
     {
@@ -218,11 +220,11 @@ check_uname ()
     }
   else
     {
-      printf("pace_uname: uname.sysname == %s\n", name.sysname);
-      printf("pace_uname: uname.nodename == %s\n", name.nodename);
-      printf("pace_uname: uname.release == %s\n", name.release);
-      printf("pace_uname: uname.version == %s\n", name.version);
-      printf("pace_uname: uname.machine == %s\n", name.machine);
+      /* printf("pace_uname: uname.sysname == %s\n", name.sysname); */
+      /* printf("pace_uname: uname.nodename == %s\n", name.nodename); */
+      /* printf("pace_uname: uname.release == %s\n", name.release); */
+      /* printf("pace_uname: uname.version == %s\n", name.version); */
+      /* printf("pace_uname: uname.machine == %s\n", name.machine); */
     }
 }
 

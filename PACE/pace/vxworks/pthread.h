@@ -153,7 +153,7 @@ extern "C" {
   int pthread_sigmask (int how,
                        const sigset_t * set,
                        sigset_t * oset);
-
+  pace_pthread_t pthread_self ();
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
 #if defined (PACE_HAS_CPLUSPLUS)
