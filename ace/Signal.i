@@ -108,7 +108,11 @@ ACE_INLINE void
 ACE_Sig_Action::handler (ACE_SignalHandler handler)
 {
   ACE_TRACE ("ACE_Sig_Action::handler");
-  this->sa_.sa_handler = ACE_SignalHandlerV (handler);
+#if !defined(ACE_HAS_TANDEM_SIGNALS)                                  
+  this->sa_.sa_handler = ACE_SignalHandlerV (sig_handler);
+#else                                                                 
+  this->sa_.sa_handler = (void (*)()) ACE_SignalHandlerV (sig_handler);
+#endif /* !ACE_HAS_TANDEM_SIGNALS */
 }
 
 ACE_INLINE void

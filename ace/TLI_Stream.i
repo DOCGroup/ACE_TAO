@@ -49,7 +49,7 @@ ACE_TLI_Stream::send_n (const void *buf, size_t n, int flags) const
 {
   ACE_TRACE ("ACE_TLI_Stream::send_n");
   size_t b_sent;
-  ssize_t b_written;
+  ssize_t b_written = 0;
   
   for (b_sent = 0; b_sent < n; b_sent += b_written)
     if ((b_written = ACE_OS::t_snd (this->get_handle (), 
