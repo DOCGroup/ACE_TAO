@@ -1,3 +1,39 @@
+Tue Nov  9 15:12:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_codegen.cpp:
+	  Changed
+	 
+	  #if defined(_MSC_VER)
+	  #pragma warning(disable:4250)
+	  #endif /* _MSC_VER */
+  
+	  // ...
+  
+          #if defined(_MSC_VER)  
+	  #pragma warning(default:4250)
+	  #endif /* _MSC_VER */
+
+	  to
+
+	  #if defined(_MSC_VER)
+	  #pragma warning(push)
+	  #pragma warning(disable:4250)
+	  #endif /* _MSC_VER */
+  
+	  // ...
+  
+          #if defined(_MSC_VER)  
+	  #pragma warning(pop)
+	  #endif /* _MSC_VER */
+  
+          in all generated header files. This will restore the original
+	  value even if it was modified from the default. Also removed
+	  the first half of the pair from generated *_S.cpp file - it
+	  is unneeded.
+	  Thanks to David Hauck <davidh@realtimeint.com> and
+	  Jovan Kilibarda <jovank@realtimeint.com> for
+	  suggesting this.
+	  
 Tue Nov  9 14:34:17 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
        * TAO_IDL/be_include/be.h
