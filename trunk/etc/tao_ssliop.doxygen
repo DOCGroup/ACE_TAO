@@ -70,7 +70,7 @@ IGNORE_PREFIX         =
 #---------------------------------------------------------------------------
 
 GENERATE_HTML         = YES
-HTML_OUTPUT           = html/orbsvcs/orbsvcs/SSLIOP
+HTML_OUTPUT           = html/tao/ssliop
 HTML_HEADER           = 
 HTML_FOOTER           =
 HTML_STYLESHEET       = 
