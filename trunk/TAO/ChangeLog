@@ -1,3 +1,8 @@
+Tue Mar 08 21:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/*S.{h,cpp,inl}:
+          Regenerated with the latest TAO_IDL compiler
+
 Tue Mar 08 12:26:03 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/PortableServer/get_arg.h:
