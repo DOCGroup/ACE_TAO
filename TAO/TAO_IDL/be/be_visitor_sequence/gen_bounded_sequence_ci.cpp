@@ -64,7 +64,7 @@ be_visitor_sequence_ci::gen_bounded_sequence (be_sequence *node)
   if (node->is_nested ())
     {
       ACE_OS::sprintf (full_class_name, "%s::%s",
-                       be_scope::narrow_from_scope (node->defined_in ())->decl ()->fullname (),
+                       be_scope::narrow_from_scope (node->defined_in ())->decl ()->full_name (),
                        class_name);
     }
   else

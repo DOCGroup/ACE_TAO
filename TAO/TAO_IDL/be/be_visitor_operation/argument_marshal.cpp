@@ -212,7 +212,7 @@ be_visitor_compiled_args_decl::visit_array (be_array *node)
     }
 
   // for anonymous arrays, the type name has a _ prepended. We compute
-  // the fullname with or without the underscore and use it later on.
+  // the full_name with or without the underscore and use it later on.
   char fname [NAMEBUFSIZE];  // to hold the full and
 
   ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
@@ -228,18 +228,18 @@ be_visitor_compiled_args_decl::visit_array (be_array *node)
         {
           be_decl *parent =
             be_scope::narrow_from_scope (node->defined_in ())->decl ();
-          ACE_OS::sprintf (fname, "%s::_%s", parent->fullname (),
+          ACE_OS::sprintf (fname, "%s::_%s", parent->full_name (),
                            node->local_name ()->get_string ());
         }
       else
         {
-          ACE_OS::sprintf (fname, "_%s", node->fullname ());
+          ACE_OS::sprintf (fname, "_%s", node->full_name ());
         }
     }
   else
     {
       // typedefed node
-      ACE_OS::sprintf (fname, "%s", node->fullname ());
+      ACE_OS::sprintf (fname, "%s", node->full_name ());
     }
 
   if (f->direction () != AST_Argument::dir_IN)

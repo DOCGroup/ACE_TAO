@@ -81,9 +81,9 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
       // being declared more than once.
       if (!tdef)
         {
-          *os << "\n#if !defined _TAO_CDR_OP_" 
-              << node->flatname () << "_CPP_" << be_nl
-              << "#define _TAO_CDR_OP_" << node->flatname () << "_CPP_\n\n";
+          *os << "\n#if !defined _TAO_CDR_OP_"
+              << node->flat_name () << "_CPP_" << be_nl
+              << "#define _TAO_CDR_OP_" << node->flat_name () << "_CPP_\n\n";
         }
 
       //  set the sub state as generating code for the output operator
@@ -177,8 +177,8 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
 
       if (!tdef)
         {
-          *os << "#endif /* _TAO_CDR_OP_" 
-              << node->flatname () << "_CPP_ */\n\n";
+          *os << "#endif /* _TAO_CDR_OP_"
+              << node->flat_name () << "_CPP_ */\n\n";
         }
 
       node->cli_stub_cdr_op_gen (1);

@@ -161,7 +161,7 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
   this->ws_ = orb_core->client_factory ()->create_wait_strategy (this);
 
   // Create TMS now.
-  this->tms_ = orb_core->client_factory ()->create_transport_mux_strategy (orb_core);
+  this->tms_ = orb_core->client_factory ()->create_transport_mux_strategy (this);
 }
 
 TAO_Transport::~TAO_Transport (void)
@@ -215,9 +215,11 @@ TAO_Transport::bind_reply_dispatcher (CORBA::ULong request_id,
 }
 
 int
-TAO_Transport::wait_for_reply (ACE_Time_Value *max_wait_time)
+TAO_Transport::wait_for_reply (ACE_Time_Value *max_wait_time,
+                               int &reply_received)
 {
-  return this->ws_->wait (max_wait_time);
+  return this->ws_->wait (max_wait_time,
+                          reply_received);
 }
 
 // Read and handle the reply. Returns 0 when there is Short Read on
@@ -241,19 +243,25 @@ TAO_Transport::register_handler (void)
 int
 TAO_Transport::idle_after_send (void)
 {
-  return this->tms ()->idle_after_send (this);
+  return this->tms ()->idle_after_send ();
 }  
 
-int
-TAO_Transport::idle_after_reply (void)
-{
-  return this->tms ()->idle_after_reply (this);
-}
+// int
+// TAO_Transport::idle_after_reply (void)
+// {
+//   return this->tms ()->idle_after_reply ();
+// }
 
-int
-TAO_Transport::reply_received (const CORBA::ULong request_id)
+// int
+// TAO_Transport::reply_received (const CORBA::ULong request_id)
+// {
+//   return this->tms ()->reply_received (request_id);
+// }
+
+ACE_SYNCH_CONDITION *
+TAO_Transport::leader_follower_condition_variable (void)
 {
-  return this->tms ()->reply_received (request_id);
+  return this->wait_strategy ()->leader_follower_condition_variable ();
 }
 
 void

@@ -17,6 +17,10 @@ LDLIBS = -lTAO
 IDLFILES = testC testS
 BIN = client st_client server st_server
 
+ifdef AMI
+BIN += ami-latency-client ami-throughput-client
+endif # AMI
+
 SRC = $(addsuffix .cpp, $(BIN) $(IDLFILES) test_i)
 
 CLIENT_OBJS = client.o testC.o
@@ -24,7 +28,19 @@ ST_CLIENT_OBJS = st_client.o testC.o
 SERVER_OBJS = server.o test_i.o $(addsuffix .o, $(IDLFILES))
 ST_SERVER_OBJS = st_server.o test_i.o $(addsuffix .o, $(IDLFILES))
 
-TAO_IDLFLAGS += -Ge 1
+ifdef AMI
+AMI_LATENCY_CLIENT_OBJS = ami-latency-client.o testC.o
+AMI_THROUGHPUT_CLIENT_OBJS = ami-throughput-client.o testC.o
+endif # AMI
+
+BUILD = $(BIN)
+VLDLIBS = $(LDLIBS:%=%$(VAR))
+VBIN = $(BIN:%=%$(VAR))
+TAO_IDLFLAGS += -Ge 1 
+
+ifdef AMI
+TAO_IDLFLAGS += -GC
+endif # AMI
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -55,6 +71,14 @@ server: $(addprefix $(VDIR),$(SERVER_OBJS))
 
 st_server: $(addprefix $(VDIR),$(ST_SERVER_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
+
+ifdef AMI
+ami-latency-client: $(addprefix $(VDIR),$(AMI_LATENCY_CLIENT_OBJS))
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
+
+ami-throughput-client: $(addprefix $(VDIR),$(AMI_THROUGHPUT_CLIENT_OBJS))
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
+endif # AMI
 
 realclean: clean
 	-$(RM) $(foreach ext, $(IDL_EXT), test$(ext))
@@ -187,8 +211,7 @@ realclean: clean
  $(ACE_ROOT)/ace/High_Res_Timer.h \
  $(ACE_ROOT)/ace/High_Res_Timer.i \
  $(ACE_ROOT)/ace/Sched_Params.h \
- $(ACE_ROOT)/ace/Sched_Params.i \
- testC.h \
+ $(ACE_ROOT)/ace/Sched_Params.i testC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -401,8 +424,7 @@ realclean: clean
  $(ACE_ROOT)/ace/High_Res_Timer.h \
  $(ACE_ROOT)/ace/High_Res_Timer.i \
  $(ACE_ROOT)/ace/Sched_Params.h \
- $(ACE_ROOT)/ace/Sched_Params.i \
- testC.h \
+ $(ACE_ROOT)/ace/Sched_Params.i testC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \

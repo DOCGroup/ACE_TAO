@@ -61,7 +61,7 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
   if (node->opt_accessor ())
     {
       os->indent ();
-      *os << "typedef " << node->fullname () << " ";
+      *os << "typedef " << node->full_name () << " ";
       if (!node->is_nested ())
         *os << "OBV_";
       *os << node->local_name () << ";" << be_nl;
@@ -70,7 +70,7 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
     {
       // == STEP 1:  generate the class name and the class name we inherit ==
 
-      os->gen_ifdef_macro (node->flatname (), "_OBV");
+      os->gen_ifdef_macro (node->flat_name (), "_OBV");
       os->indent ();
 
       *os << "// OBV_ class" << be_nl;
@@ -78,7 +78,7 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
       if (!node->is_nested())   // we are in root ?
         *os << "OBV_";
       *os << node->local_name () << " : public virtual "
-                                 << node->fullname () << be_nl;
+                                 << node->full_name () << be_nl;
 
       // == STEP 2: generate the body ==
 
@@ -97,9 +97,9 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
         {
           *os << be_uidt_nl << "protected:" << be_idt_nl;
           *os << "virtual CORBA::Boolean _tao_marshal__"
-              <<    node->flatname () << " (TAO_OutputCDR &);" << be_nl;
+              <<    node->flat_name () << " (TAO_OutputCDR &);" << be_nl;
           *os << "virtual CORBA::Boolean _tao_unmarshal__"
-              <<    node->flatname () << " (TAO_InputCDR &);" << be_nl;
+              <<    node->flat_name () << " (TAO_InputCDR &);" << be_nl;
           *os << "CORBA::Boolean "
               << "_tao_marshal_state (TAO_OutputCDR &);" << be_nl
               << "CORBA::Boolean "

@@ -126,7 +126,7 @@ int be_visitor_exception_ctor::visit_array (be_array *node)
 
   if (this->ctx_->state () != TAO_CodeGen::TAO_EXCEPTION_CTOR_CH
       && !tdef)
-    *os << this->ctx_->scope ()->fullname () << "::";
+    *os << this->ctx_->scope ()->full_name () << "::";
 
   if (!tdef)
     *os << "_";

@@ -406,7 +406,7 @@ be_interpretive_visitor_operation_ss::gen_pre_skel_info (be_operation *node,
       else
         *os << "_get_";
     }
-  *os << node->flatname () <<
+  *os << node->flat_name () <<
     "_paramdata [] = " << be_nl;
   *os << "{\n";
   os->incr_indent ();
@@ -427,7 +427,7 @@ be_interpretive_visitor_operation_ss::gen_pre_skel_info (be_operation *node,
     }
   *os << "\n";
   os->decr_indent ();
-  *os << "}; // " << node->flatname () << "_paramdata\n\n";
+  *os << "}; // " << node->flat_name () << "_paramdata\n\n";
 
   // now generate the calldata table
   os->indent ();
@@ -441,7 +441,7 @@ be_interpretive_visitor_operation_ss::gen_pre_skel_info (be_operation *node,
       else
         *os << "_get_";
     }
-  *os << node->flatname ()
+  *os << node->flat_name ()
       << "_calldata = " << be_nl
       << "{"
       << "\"";
@@ -479,7 +479,7 @@ be_interpretive_visitor_operation_ss::gen_pre_skel_info (be_operation *node,
       else
         *os << "_get_";
     }
-  *os << node->flatname () << "_paramdata};\n\n";
+  *os << node->flat_name () << "_paramdata};\n\n";
 
   return 0;
 }
@@ -506,7 +506,7 @@ be_interpretive_visitor_operation_ss::gen_demarshal_params (be_operation *node,
       else
         *os << "_get_";
     }
-  *os << node->flatname () << "_calldata,\n";
+  *os << node->flat_name () << "_calldata,\n";
 
   // pass the appropriate return value to the demarshal operation
   ctx = *this->ctx_;
@@ -572,7 +572,7 @@ be_interpretive_visitor_operation_ss::gen_marshal_params (be_operation *node,
       else
         *os << "_get_";
     }
-  *os << node->flatname () << "_calldata,\n";
+  *os << node->flat_name () << "_calldata,\n";
 
   // pass the appropriate return value to the marshal operation
   ctx = *this->ctx_;

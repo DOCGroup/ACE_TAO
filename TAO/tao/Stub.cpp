@@ -124,6 +124,7 @@ TAO_Stub::add_forward_profiles (const TAO_MProfile &mprofiles)
   // make sure we start at the beginning of mprofiles
   this->forward_profiles_->rewind ();
 }
+
 // Quick'n'dirty hash of objref data, for partitioning objrefs into
 // sets.
 //
@@ -674,7 +675,7 @@ TAO_Stub::do_dynamic_call (const char *opname,
 
                   begin = call.inp_stream ().rd_ptr ();
                   // skip the parameter to get the ending position
-                  retval = temp.skip (any->type_, 
+                  retval = temp.skip (any->type_,
                                       ACE_TRY_ENV);
                   ACE_CHECK;
 
@@ -685,7 +686,7 @@ TAO_Stub::do_dynamic_call (const char *opname,
                       TAO_OutputCDR out (any->cdr_);
 
                       retval = out.append (any->type_,
-                                           &call.inp_stream (), 
+                                           &call.inp_stream (),
                                            ACE_TRY_ENV);
                       ACE_CHECK;
 
@@ -725,7 +726,7 @@ TAO_Stub::do_dynamic_call (const char *opname,
                     }
 
                   call.get_value (any->type_,
-                                  (void *) any->value_, 
+                                  (void *) any->value_,
                                   ACE_TRY_ENV);
                   ACE_CHECK;
                 }
@@ -957,7 +958,6 @@ TAO_Stub::validate_connection (
   inconsistent_policies = 0;
   return 0;
 }
-
 
 #endif /* TAO_HAS_CORBA_MESSAGING */
 

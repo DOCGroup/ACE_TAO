@@ -5,7 +5,8 @@
 #include "tao/debug.h"
 #include "tao/Pluggable.h"
 
-TAO_Transport_Mux_Strategy::TAO_Transport_Mux_Strategy (void)
+TAO_Transport_Mux_Strategy::TAO_Transport_Mux_Strategy (TAO_Transport *transport)
+  : transport_ (transport)
 {
 }
 
@@ -13,13 +14,24 @@ TAO_Transport_Mux_Strategy::~TAO_Transport_Mux_Strategy (void)
 {
 }
 
+
+int
+TAO_Transport_Mux_Strategy::bind_dispatcher (CORBA::ULong,
+                                             TAO_Reply_Dispatcher *rd)
+{
+  // Help the Reply dispatcher to obtain leader follower condition
+  // variable.
+  return rd->leader_follower_condition_variable (this->transport_);
+}
+
 // *********************************************************************
 
-TAO_Exclusive_TMS::TAO_Exclusive_TMS (TAO_ORB_Core *orb_core)
-  : request_id_generator_ (0),
+TAO_Exclusive_TMS::TAO_Exclusive_TMS (TAO_Transport *transport)
+  : TAO_Transport_Mux_Strategy (transport),
+    request_id_generator_ (0),
     request_id_ (0),
     rd_ (0),
-    message_state_ (orb_core)
+    message_state_ (transport->orb_core ())
 {
 }
 
@@ -48,7 +60,7 @@ TAO_Exclusive_TMS::bind_dispatcher (CORBA::ULong request_id,
   //    should be the correct place to <reset> the message state. Do I
   //    make sense? (Alex).
   // @@ Alex: the state must be reset, but the contents are always
-  //    clean because: 
+  //    clean because:
   //    1) it starts clean
   //    2) it is reset after each reply arrives...
 
@@ -56,7 +68,8 @@ TAO_Exclusive_TMS::bind_dispatcher (CORBA::ULong request_id,
   if (this->message_state_.message_size != 0)
     this->message_state_.reset (0);
 
-  return 0;
+  return TAO_Transport_Mux_Strategy::bind_dispatcher (request_id,
+                                                      rd);
 }
 
 int
@@ -84,10 +97,33 @@ TAO_Exclusive_TMS::dispatch_reply (CORBA::ULong request_id,
   this->request_id_ = 0xdeadbeef; // @@ What is a good value???
   this->rd_ = 0;
 
-  return rd->dispatch_reply (reply_status,
-                             version,
-                             reply_ctx,
-                             message_state);
+  // Dispatch the reply.
+  int result = rd->dispatch_reply (reply_status,
+                                   version,
+                                   reply_ctx,
+                                   message_state);
+
+  // Idle the transport now.
+  // if (this->transport_ != 0)
+  //  this->transport_->idle ();
+  // @@ Carlos : We can do this, in the Muxed Leader Follower
+  //    implementation. In the older implementation, since the state
+  //    variables are in the Transport, and since we are in the
+  //    handle_input right now, we cannot idle the Transport. This
+  //    means that I cannot use  asynchronous requests with Exclusive
+  //    Transport&Old Leader Follower implementation , because I dont
+  //    know when to idle the Transport.
+  //    So I am moving this <idle> call to the destructors of
+  //    synchronous invocations and for asynchronous invocations
+  //    idle'ing is not at all called after the reply is
+  //    received.
+  //    We can enable <idle> out here, once we get rid of the old
+  //    Leader Follower implementation. Then we can get rid of the
+  //    destructors in the Invocation classes and they dont have to
+  //    call <idle>.
+  //    Do I make sense? (Alex).
+
+  return result;
 }
 
 TAO_GIOP_Message_State *
@@ -106,53 +142,54 @@ TAO_Exclusive_TMS::destroy_message_state (TAO_GIOP_Message_State *)
 }
 
 int
-TAO_Exclusive_TMS::idle_after_send (TAO_Transport *)
+TAO_Exclusive_TMS::idle_after_send (void)
 {
   // No op.
   return 0;
 }
 
-int
-TAO_Exclusive_TMS::idle_after_reply (TAO_Transport *transport)
-{
-  if (transport != 0)
-    return transport->idle ();
+// int
+// TAO_Exclusive_TMS::idle_after_reply (void)
+// {
+//   if (this->transport_ != 0)
+//     return this->transport_->idle ();
+//
+//   return 0;
+// }
 
-  return 0;
-}
-
-int
-TAO_Exclusive_TMS::reply_received (const CORBA::ULong request_id)
-{
-  if (this->rd_ == 0)
-    {
-      // Reply should have been dispatched already.
-      return 1;
-    }
-  else if (this->request_id_ == request_id)
-    {
-      // Reply dispatcher is still here.
-      return 0;
-    }
-  else
-    {
-      // Error. Request id is not matching.
-
-      if (TAO_debug_level > 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "(%P | %t):TAO_Exclusive_TMS::reply_received:"
-                      "Invalid request_id \n"));
-        }
-      return -1;
-    }
-}
+// int
+// TAO_Exclusive_TMS::reply_received (const CORBA::ULong request_id)
+// {
+//   if (this->rd_ == 0)
+//     {
+//       // Reply should have been dispatched already.
+//       return 1;
+//     }
+//   else if (this->request_id_ == request_id)
+//     {
+//       // Reply dispatcher is still here.
+//       return 0;
+//     }
+//   else
+//     {
+//       // Error. Request id is not matching.
+//
+//       if (TAO_debug_level > 0)
+//         {
+//           ACE_DEBUG ((LM_DEBUG,
+//                       "(%P | %t):TAO_Exclusive_TMS::reply_received:"
+//                       "Invalid request_id \n"));
+//         }
+//       return -1;
+//     }
+// }
 
 // *********************************************************************
 
-TAO_Muxed_TMS::TAO_Muxed_TMS (TAO_ORB_Core *orb_core)
-  : request_id_generator_ (0),
-    orb_core_ (orb_core),
+TAO_Muxed_TMS::TAO_Muxed_TMS (TAO_Transport *transport)
+  : TAO_Transport_Mux_Strategy (transport),
+    request_id_generator_ (0),
+    orb_core_ (transport->orb_core ()),
     message_state_ (0)
 {
 }
@@ -189,6 +226,10 @@ TAO_Muxed_TMS::bind_dispatcher (CORBA::ULong request_id,
 
       return -1;
     }
+
+  return TAO_Transport_Mux_Strategy::bind_dispatcher (request_id,
+                                                      rd);
+
   return 0;
 }
 
@@ -221,7 +262,7 @@ TAO_Muxed_TMS::dispatch_reply (CORBA::ULong request_id,
       return -1;
     }
 
-  // @@ Carlos : We could save the <messagee_state> somehow and then
+  // @@ Carlos : We could save the <message_state> somehow and then
   //    signal some other thread to go ahead read the incoming message
   //    if any. Is this what you were telling me before? (Alex).
 
@@ -230,6 +271,9 @@ TAO_Muxed_TMS::dispatch_reply (CORBA::ULong request_id,
                              version,
                              reply_ctx,
                              message_state);
+
+  // No need for idling Transport, it would have got idle'd soon after
+  // sending the request.
 }
 
 TAO_GIOP_Message_State *
@@ -239,7 +283,8 @@ TAO_Muxed_TMS::get_message_state (void)
     {
       // Create the next message state.
       ACE_NEW_RETURN (this->message_state_,
-                      TAO_GIOP_Message_State (this->orb_core_),
+                      TAO_GIOP_Message_State
+                      (this->transport_->orb_core ()),
                       0);
     }
 
@@ -254,34 +299,34 @@ TAO_Muxed_TMS::destroy_message_state (TAO_GIOP_Message_State *)
 }
 
 int
-TAO_Muxed_TMS::idle_after_send (TAO_Transport *transport)
+TAO_Muxed_TMS::idle_after_send (void)
 {
-  if (transport != 0)
-    return transport->idle ();
+  if (this->transport_ != 0)
+    return this->transport_->idle ();
 
   return 0;
 }
 
-int
-TAO_Muxed_TMS::idle_after_reply (TAO_Transport *)
-{
-  return 0;
-}
+// int
+// TAO_Muxed_TMS::idle_after_reply (void)
+// {
+//   return 0;
+// }
 
-int
-TAO_Muxed_TMS::reply_received (const CORBA::ULong request_id)
-{
-  if (this->dispatcher_table_.find (request_id) == -1)
-    {
-      // Reply should have been dispatched already.
-      return 1;
-    }
-  else
-    {
-      // Reply dispatcher is still here.
-      return 0;
-    }
-}
+// int
+// TAO_Muxed_TMS::reply_received (const CORBA::ULong request_id)
+// {
+//   if (this->dispatcher_table_.find (request_id) == -1)
+//     {
+//       // Reply should have been dispatched already.
+//       return 1;
+//     }
+//   else
+//     {
+//       // Reply dispatcher is still here.
+//       return 0;
+//     }
+// }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Hash_Map_Manager_Ex <CORBA::ULong,

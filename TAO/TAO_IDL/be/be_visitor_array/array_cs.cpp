@@ -72,7 +72,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
   if (this->ctx_->tdef ())
     {
       // typedefed node
-      ACE_OS::sprintf (fname, "%s", node->fullname ());
+      ACE_OS::sprintf (fname, "%s", node->full_name ());
       ACE_OS::sprintf (lname, "%s",
                        node->local_name ()->get_string ());
     }
@@ -84,14 +84,14 @@ int be_visitor_array_cs::visit_array (be_array *node)
       if (node->is_nested ())
         {
           be_decl *parent = be_scope::narrow_from_scope (node->defined_in ())->decl ();
-          ACE_OS::sprintf (fname, "%s::_%s", parent->fullname (),
+          ACE_OS::sprintf (fname, "%s::_%s", parent->full_name (),
                            node->local_name ()->get_string ());
           ACE_OS::sprintf (lname, "_%s",
                            node->local_name ()->get_string ());
         }
       else
         {
-          ACE_OS::sprintf (fname, "_%s", node->fullname ());
+          ACE_OS::sprintf (fname, "_%s", node->full_name ());
           ACE_OS::sprintf (lname, "_%s",
                            node->local_name ()->get_string ());
         }

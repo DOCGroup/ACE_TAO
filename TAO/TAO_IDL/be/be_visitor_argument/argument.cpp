@@ -64,7 +64,7 @@ be_visitor_args::type_name (be_type *node, const char *suffix)
                        (this->ctx_->scope (), suffix));
       break;
     default: // fullname for all other cases
-      ACE_OS::sprintf (namebuf, "%s", bt->fullname ());
+      ACE_OS::sprintf (namebuf, "%s", bt->full_name ());
       if (suffix)
         ACE_OS::strcat (namebuf, suffix);
     }

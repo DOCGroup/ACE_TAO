@@ -151,13 +151,13 @@ be_predefined_type::be_predefined_type (AST_PredefinedType::PredefinedType t,
   compute_repoID ();
 
   // computes the fully scoped name
-  compute_fullname ();
+  compute_full_name ();
 
   // computes the fully scoped typecode name
   compute_tc_name ();
 
   // compute the flattened fully scoped name
-  compute_flatname ();
+  compute_flat_name ();
 
  
 }

@@ -79,7 +79,7 @@ be_visitor_rettype_ami_handler_result_arg::visit_type (be_type *node)
   os->indent (); // start from current indentation level
 
   // generate the typecode information here
-  *os << "static const CORBA::Long _oc_" << node->flatname () << "[] ="
+  *os << "static const CORBA::Long _oc_" << node->flat_name () << "[] ="
       << be_nl;
   *os << "{" << be_idt << "\n";
 
@@ -102,7 +102,7 @@ be_visitor_rettype_ami_handler_result_arg::visit_type (be_type *node)
     }
   *os << be_uidt << "};" << be_nl;
 
-  *os << "static CORBA::TypeCode _tc_TAO_tc_" << node->flatname ()
+  *os << "static CORBA::TypeCode _tc_TAO_tc_" << node->flat_name ()
       << " (";
   switch (node->node_type ())
     {
@@ -134,8 +134,8 @@ be_visitor_rettype_ami_handler_result_arg::visit_type (be_type *node)
       return -1; // error
     }
 
-  *os << ", sizeof (_oc_" <<  node->flatname ()
-      << "), (char *) &_oc_" << node->flatname ()
+  *os << ", sizeof (_oc_" <<  node->flat_name ()
+      << "), (char *) &_oc_" << node->flat_name ()
       << ", 0, sizeof (" << node->name () << "));" << be_nl;
 
   // is our enclosing scope a module? We need this check because for
@@ -155,7 +155,7 @@ be_visitor_rettype_ami_handler_result_arg::visit_type (be_type *node)
         }
       *os << "TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_"
           << node->local_name () << ", &_tc_TAO_tc_"
-          << node->flatname () << ")" << be_nl;
+          << node->flat_name () << ")" << be_nl;
       if (this->gen_nested_namespace_end (module) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -168,7 +168,7 @@ be_visitor_rettype_ami_handler_result_arg::visit_type (be_type *node)
     {
       // outermost scope.
       *os << "CORBA::TypeCode_ptr " << node->tc_name () << " = &_tc_TAO_tc_"
-          <<  node->flatname () << ";\n\n";
+          <<  node->flat_name () << ";\n\n";
     }
   return 0;
 }
@@ -3007,8 +3007,8 @@ queue_lookup (ACE_Unbounded_Queue <be_visitor_typecode_defn::QNode *> &queue,
       iter.next (addr);
       item = *addr;
 
-      if (!ACE_OS::strcmp (item->node->fullname (),
-                           node->fullname ()))
+      if (!ACE_OS::strcmp (item->node->full_name (),
+                           node->full_name ()))
         {
           // found
           return item;

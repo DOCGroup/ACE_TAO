@@ -67,9 +67,9 @@ be_visitor_ ami_handler_cs::visit_interface (be_interface *node)
   be_decl *parent = be_scope::narrow_from_scope (node->defined_in ())->decl ();
   
   if (parent != 0 &&
-      parent->fullname () != 0 &&
-      ACE_OS::strlen (parent->fullname ()))
-    scope_len = ACE_OS::strlen (parent->fullname ()) + ACE_OS::strlen ("::");
+      parent->full_name () != 0 &&
+      ACE_OS::strlen (parent->full_name ()))
+    scope_len = ACE_OS::strlen (parent->full_name ()) + ACE_OS::strlen ("::");
   
   ACE_NEW_RETURN (full_name,
                   char [scope_len +
@@ -80,11 +80,11 @@ be_visitor_ ami_handler_cs::visit_interface (be_interface *node)
                   -1);
   
   if (parent != 0 &&
-      parent->fullname () != 0 &&
-      ACE_OS::strlen (parent->fullname ()))
+      parent->full_name () != 0 &&
+      ACE_OS::strlen (parent->full_name ()))
     ACE_OS::sprintf (full_name,
                      "%s::AMI_%s_Handler",
-                     parent->fullname (),
+                     parent->full_name (),
                      node->local_name ()->get_string ());
   else
     ACE_OS::sprintf (full_name,

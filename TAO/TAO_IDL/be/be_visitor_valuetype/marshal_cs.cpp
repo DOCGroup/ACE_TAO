@@ -62,7 +62,7 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
       else // only can access base class via virtual function
         {
           *os << "if (!this->_tao_marshal__"
-              <<       inh->flatname ()
+              <<       inh->flat_name ()
               << " (strm)) return 0;" << be_nl;
         }
     }
@@ -104,7 +104,7 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
       else // only can access base class via virtual function
         {
           *os << "if (!this->_tao_unmarshal__"
-              <<       inh->flatname ()
+              <<       inh->flat_name ()
               << " (strm)) return 0;" << be_nl;
         }
     }

@@ -172,7 +172,8 @@ public:
                              TAO_Reply_Dispatcher *rd);
   // Bind the reply dispatcher with the TMS object.
 
-  virtual int wait_for_reply (ACE_Time_Value *max_wait_time);
+  virtual int wait_for_reply (ACE_Time_Value *max_wait_time,
+                              int &reply_received);
   // Wait for the reply depending on the strategy.
 
   virtual int handle_client_input (int block = 0,
@@ -195,13 +196,18 @@ public:
   // Request has been just sent, but the reply is not received. Idle
   // the transport now.
 
-  virtual int idle_after_reply (void);
+  // virtual int idle_after_reply (void);
   // Request is sent and the reply is received. Idle the transport
   // now.
 
-  virtual int reply_received (const CORBA::ULong request_id);
+  // virtual int reply_received (const CORBA::ULong request_id);
   // Check with the TMS whether the reply has been receieved for the
   // request with <request_id>.
+
+  virtual ACE_SYNCH_CONDITION *leader_follower_condition_variable (void);
+  // Return the TSS leader follower condition variable used in the
+  // Wait Strategy. Muxed Leader Follower implementation returns a
+  // valid condition variable, others return 0.
 
 protected:
   CORBA::ULong tag_;
