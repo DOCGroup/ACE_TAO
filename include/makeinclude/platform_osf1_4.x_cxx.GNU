@@ -118,6 +118,11 @@ CCFLAGS         += $(CFLAGS) $(WARNING_FLAGS) $(TEMPLATES_FLAG)
 DCFLAGS         += -g -O0
 DLD             = $(CXX)
 LD              = $(CXX)
+#### The -hidden [...] -non_hidden business avoids multiply defined
+#### symbols between the shared library and libcxxstd.a.  It's the
+#### workaround recommended in PTR 43-4-204.  It must appear before any
+#### linker commands.
+LDFLAGS         = -hidden $(wildcard /usr/lib/libcxxstd.a) -non_hidden
 LIBS            += $(CFLAGS) -ltli -lrt
 MATHLIB         = -lm
 OCFLAGS         += -O4
@@ -134,12 +139,7 @@ TMPINCDIR       = cxx_repository
 RANLIB          = @true
 SOFLAGS         += -shared $(ACELIB)
 
-#### The -hidden [...] -non_hidden business avoids multiply defined
-#### symbols between the shared library and libcxxstd.a.  It's the
-#### workaround recommended in PTR 43-4-204.  It must appear at (or
-#### very near) the end of the link line.
-LIBS            := $(LIBS) \
-                -hidden $(wildcard /usr/lib/cmplrs/cxx/libcxxstd.a) -non_hidden
+LIBS            :=  $(LIBS)
 SOBUILD         = $(RM) $@; $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $< && \
                   ln $(VSHDIR)$*.o $@
 ifeq (0,$(rtti))

@@ -1,8 +1,16 @@
+Tue Apr  9 19:48:15 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * include/makeinclude/platform_osf1_4.x_cxx.GNU (LDFLAGS):
+
+          Moved the -hidden and -non_hidden from LIBS to LDFLAGS. The
+          linker doesn't like it seeing at the end. This fixes the
+          problems with Tru64.
+
 Tue Apr  9 12:43:04 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/auto_run_tests.lst: Added POA_BiDir to the list of tests to
 	  be run and prevented MT_BiDir from running in minimum_corba
-	  builds. 
+	  builds.
 
 Tue Apr  9 11:46:52 2002  Steve Huston  <shuston@riverace.com>
 
