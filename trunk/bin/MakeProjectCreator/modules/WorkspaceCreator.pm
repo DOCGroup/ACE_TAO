@@ -13,6 +13,7 @@ package WorkspaceCreator;
 use strict;
 use FileHandle;
 use File::Path;
+use File::Compare;
 use File::Basename;
 
 use Creator;
@@ -484,20 +485,47 @@ sub write_workspace {
       if ($dir ne '.') {
         mkpath($dir, 0, 0777);
       }
-      if (open($fh, ">$name")) {
+
+      ## First write the output to a temporary file
+      my($tmp) = "MWC$>.$$";
+      my($different) = 1;
+      if (open($fh, ">$tmp")) {
         $self->pre_workspace($fh);
         $self->write_comps($fh, $generator);
         $self->post_workspace($fh);
         close($fh);
 
-        if ($addfile) {
-          $self->add_file_written($name);
+        if (-r $name &&
+            -s $tmp == -s $name && compare($tmp, $name) == 0) {
+          $different = 0;
         }
       }
       else {
-        $error = 'ERROR: Unable to open ' . $self->getcwd() .
-                 "/$name for output";
+        $error = "ERROR: Unable to open $tmp for output.";
         $status = 0;
+      }
+
+      if ($status) {
+        if ($different) {
+          unlink($name);
+          if (rename($tmp, $name)) {
+            if ($addfile) {
+              $self->add_file_written($name);
+            }
+          }
+          else {
+            $error = 'ERROR: Unable to open ' . $self->getcwd() .
+                     "/$name for output";
+            $status = 0;
+          }
+        }
+        else {
+          ## We will pretend that we wrote the file
+          unlink($tmp);
+          if ($addfile) {
+            $self->add_file_written($name);
+          }
+        }
       }
     }
     else {

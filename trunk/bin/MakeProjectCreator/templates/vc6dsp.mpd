@@ -218,6 +218,7 @@ BuildCmds= \
 
 # PROP Default_Filter "<%foreach(custom_type->inputexts)%><%custom_type->inputext%><%fornotlast(";")%><%endfor%>"
 <%foreach(custom_type->input_files)%>
+<%if(custom_type->input_file->output_files)%>
 # Begin Source File
 
 SOURCE=.\<%custom_type->input_file%>
@@ -253,6 +254,7 @@ BuildCmds= \
 !ENDIF
 
 # End Source File
+<%endif%>
 <%endfor%>
 # End Group
 <%endfor%>
