@@ -3212,59 +3212,61 @@ struct sigaction
 };
 #endif /* ACE_LACKS_SIGACTION */
 
-// This one exists only to please Service_Config.h and
-// Service_Manager.cpp
 #if !defined (SIGHUP)
-#define SIGHUP 1
+#define SIGHUP 0
 #endif /* SIGHUP */
 
 #if !defined (SIGINT)
-#define SIGINT 2
+#define SIGINT 0
 #endif /* SIGINT */
 
 #if !defined (SIGSEGV)
-#define SIGSEGV 11
+#define SIGSEGV 0
 #endif /* SIGSEGV */
 
-#if !defined (SIG_DFL)
-#define SIG_DFL ((__sighandler_t)0)
-#endif /* SIG_DFL */
-
-#if !defined (SIG_IGN)
-#define SIG_IGN ((__sighandler_t)1)     /* ignore signal */
-#endif /* SIG_IGN */
-
-#if !defined (SIG_ERR)
-#define SIG_ERR ((__sighandler_t)-1)    /* error return from signal */
-#endif /* SIG_ERR */
-
 #if !defined (SIGIO)
-#define SIGIO 29
+#define SIGIO 0
 #endif /* SIGSEGV */
 
 #if !defined (SIGUSR1)
-#define SIGUSR1 16
+#define SIGUSR1 0
 #endif /* SIGUSR1 */
 
 #if !defined (SIGUSR2)
-#define SIGUSR2 17
+#define SIGUSR2 0
 #endif /* SIGUSR2 */
 
 #if !defined (SIGCHLD)
-#define SIGCHLD 18
+#define SIGCHLD 0
 #endif /* SIGCHLD */
 
 #if !defined (SIGCHLD)
-#define SIGCHLD 18
+#define SIGCHLD 0
 #endif /* SIGCHLD */
 
 #if !defined (SIGQUIT)
-#define SIGQUIT 3
+#define SIGQUIT 0
 #endif /* SIGQUIT */
 
 #if !defined (SIGPIPE)
-#define SIGPIPE 13
-#endif /* SIGPIPE      */
+#define SIGPIPE 0
+#endif /* SIGPIPE */
+
+#if !defined (SIGALRM)
+#define SIGALRM 0
+#endif /* SIGALRM */
+
+#if !defined (SIG_DFL)
+#define SIG_DFL ((__sighandler_t) 0)
+#endif /* SIG_DFL */
+
+#if !defined (SIG_IGN)
+#define SIG_IGN ((__sighandler_t) 1)     /* ignore signal */
+#endif /* SIG_IGN */
+
+#if !defined (SIG_ERR)
+#define SIG_ERR ((__sighandler_t) -1)    /* error return from signal */
+#endif /* SIG_ERR */
 
 #if !defined (O_NONBLOCK)
 #define O_NONBLOCK  1
@@ -3277,10 +3279,6 @@ struct sigaction
 #if !defined (SIG_UNBLOCK)
 #define SIG_UNBLOCK 2
 #endif /* SIG_UNBLOCK */
-
-#if !defined (SIGALRM)
-#define SIGALRM 14
-#endif /* SIGALRM */
 
 #if !defined (SIG_SETMASK)
 #define SIG_SETMASK 3

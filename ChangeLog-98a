@@ -1,3 +1,43 @@
+Thu Jan  1 12:04:29 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* apps/Gateway/Peer/Options.cpp (parse_args): Changed the option
+ 	  to set the passive acceptor port from -p to -a.  This is now
+ 	  consistent with the option for active connector port number,
+ 	  which is -c.
+
+	* apps/Gateway/Gateway/Gateway.cpp (fini): Added a call to
+ 	  ACE::remove_stdin_handler(), which removes the handler for
+ 	  ACE_STDIN so the gatewayd will shutdown cleanly.
+
+	* ace/ACE: Added a new method, remove_stdin_handler(), which is
+ 	  the inverse of the register_stdin_handler() method.  However,
+ 	  I'm not sure how to make this work on NT!
+
+	* examples/Reactor/Misc/notification.cpp: Removed some CHORUS-specific
+	  code, which should be a no-op with our new signal() and sigaction()
+	  scheme.
+
+	* ace/OS.i: Enhanced the signal() and sigaction() wrappers so that
+ 	  they simply ignore signums of 0.  This means that we don't need
+ 	  to special case all this stuff throughout ACE anymore.
+
+	* ace/OS.h: Changed all the #defines for various SIG* so that they
+ 	  are all 0.  This way, we can ensure that the signal() functions
+ 	  in ACE_OS can correctly ignore these signals.  This should clean
+ 	  up a ton of platform-dependent code throughout ACE.
+
+	* apps/Gateway/Gateway/Gateway.cpp (init): Revised the code a bit
+ 	  to factor out platform-dependent signal handling stuff in the
+ 	  right place.
+
+	* apps/Gateway/Gateway/gatewayd.cpp: Cleaned up the gatewayd main
+ 	  program so that it reuses more ACE components and so that it is
+ 	  more portable.
+
+Thu Jan 01 07:56:17 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * ACE version 4.4.12, released Thu Jan 01 07:56:17 1998.
+
 Thu Jan 01 08:50:55 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * apps/Gateway/Peer/Peer.cpp: added template instantiations.
@@ -10,13 +50,17 @@ Thu Jan 01 08:50:55 1998  David L. Levine  <levine@cs.wustl.edu>
           trouble with its inline template member functions, especially
           if __ACE_INLINE__ is disabled.
 
-Thu Jan 01 07:56:17 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+Thu Jan  1 00:00:00 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-        * ACE version 4.4.12, released Thu Jan 01 07:56:17 1998.
+	* Happy New Year!  Here's a thought for the new year, courtesy of
+ 	  Sumedh:
 
-Thu Jan  1 00:51:38 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+          Nothing in the world is permanent,
+	  and we're foolish when we ask anything to last;
+          but surely we're still more foolish
+          not to take delight in it while we have it.
 
-	* Happy New Year!
+	          - W.Somerset Maugham (Razor's Edge)
 
 Wed Dec 31 19:10:59 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
@@ -29,7 +73,8 @@ Wed Dec 31 19:10:59 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
  	  portable.
 
 	* netsvcs/servers/main.cpp (main): Revised the code a bit to
-	  factor out the signal handling stuff in the right place.
+ 	  factor out platform-dependent signal handling stuff in the right
+ 	  place.
 
 	* apps/Gateway/Peer: Factored out some common initialization code
  	  to create an Options Singleton.  Yowza!

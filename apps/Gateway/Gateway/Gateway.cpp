@@ -176,25 +176,25 @@ Gateway::init (int argc, char *argv[])
   sig_set.sig_add (SIGINT);
   sig_set.sig_add (SIGQUIT);
 
-  // Register ourselves to receive SIGINT and SIGQUIT so we can shut
-  // down gracefully via signals.
+  // Register ourselves to receive signals so we can shut down
+  // gracefully.
 
-#if defined (ACE_WIN32)
-  if (ACE_Reactor::instance ()->register_handler
-      (SIGINT, this) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "register_handler"), -1);
-#else
-  if (ACE_Reactor::instance ()->register_handler
-      (sig_set, this) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "register_handler"), -1);
-#endif
+  if (ACE_Reactor::instance ()->register_handler (sig_set,
+                                                  this) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%t) %p\n",
+                       "register_handler"),
+                      -1);
 
   // Register this handler to receive events on stdin.  We use this to
   // shutdown the Gateway gracefully.
   if (ACE::register_stdin_handler (this,
 				   ACE_Reactor::instance (),
 				   ACE_Thread_Manager::instance ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "register_stdin_handler"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%t) %p\n",
+                       "register_stdin_handler"),
+                      -1);
 
   // If this->performance_window_ > 0 start a timer.
 
@@ -203,9 +203,12 @@ Gateway::init (int argc, char *argv[])
       if (ACE_Reactor::instance ()->schedule_timer
 	  (&this->event_channel_, 0,
 	   this->event_channel_.options ().performance_window_) == -1)
-	ACE_ERROR ((LM_ERROR, "(%t) %p\n", "schedule_timer"));
+	ACE_ERROR ((LM_ERROR,
+                    "(%t) %p\n",
+                    "schedule_timer"));
       else
-	ACE_DEBUG ((LM_DEBUG, "starting timer for %d seconds...\n",
+	ACE_DEBUG ((LM_DEBUG,
+                    "starting timer for %d seconds...\n",
 		   this->event_channel_.options ().performance_window_));
     }
 
@@ -228,6 +231,11 @@ Gateway::init (int argc, char *argv[])
 int
 Gateway::fini (void)
 {
+  // Remove the handler that receive events on stdin.  Otherwise, we
+  // will crash on shutdown.
+  ACE::remove_stdin_handler (ACE_Reactor::instance (),
+                             ACE_Thread_Manager::instance ());
+
   // Close down the event channel.
   return this->event_channel_.close ();
 }

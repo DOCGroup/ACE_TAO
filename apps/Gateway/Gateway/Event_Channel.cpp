@@ -323,7 +323,7 @@ ACE_Event_Channel::close (u_long)
       ACE_DEBUG ((LM_DEBUG, "(%t) suspending all threads\n"));
     }
 
-  // Tell everyone that the spaceship is here
+  // Tell everyone that the spaceship is here.
   {
     PROXY_MAP_ITERATOR cmi (this->proxy_map_);
 
@@ -350,7 +350,7 @@ ACE_Event_Channel::close (u_long)
   // Close down the acceptor
   acceptor_.close ();
 
-  // Tell everyone that it is now time to commit suicide
+  // Tell everyone that it is now time to commit suicide.
   {
     PROXY_MAP_ITERATOR cmi (this->proxy_map_);
 

@@ -23,8 +23,8 @@ int
 Peer_Handler::open (void *a)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "Gateway handler's handle = %d\n",
-             this->peer ().get_handle ()));
+              "handle = %d\n", 
+              this->peer ().get_handle ()));
 
   // Call down to the base class to activate and register this handler
   // with an <ACE_Reactor>.
@@ -565,31 +565,30 @@ Peer_Handler::handle_close (ACE_HANDLE,
   return 0;
 }
 
-Peer_Acceptor::Peer_Acceptor (void)
-  : peer_handler_ (0)
-{
-}
-
 int
 Peer_Acceptor::open (void)
 {
+  this->peer_handler_ = 0;
+
   if (Options::instance ()->enabled (Options::ACCEPTOR))
     {
       // This object only gets allocated once and is just recycled
       // forever.
-      ACE_NEW_RETURN (peer_handler_, Peer_Handler, 0);
+      ACE_NEW_RETURN (peer_handler_, Peer_Handler, -1);
+
+      this->addr_.set (Options::instance ()->acceptor_port ());
 
       // Call down to the <Acceptor::open> method.
       if (this->inherited::open (this->addr_) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n",
                            "open"),
-                          0);
+                          -1);
       else if (this->acceptor ().get_local_addr (this->addr_) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n",
                            "get_local_addr"),
-                          0);
+                          -1);
       else
         ACE_DEBUG ((LM_DEBUG,
                     "listening at port %d\n",
@@ -605,7 +604,8 @@ int
 Peer_Acceptor::close (void)
 {
   // Will trigger a delete.
-  this->peer_handler_->destroy ();
+  if (this->peer_handler_ != 0)
+    this->peer_handler_->destroy (); 
 
   // Close down the base class.
   return this->inherited::close ();
@@ -622,8 +622,35 @@ Peer_Acceptor::make_svc_handler (Peer_Handler *&sh)
   return 0;
 }
 
-Peer_Connector::Peer_Connector (void)
+int
+Peer_Connector::open (void)
 {
+  if (Options::instance ()->enabled (Options::CONNECTOR))
+    {
+      // This object only gets allocated once and is just recycled
+      // forever.
+      ACE_NEW_RETURN (peer_handler_,
+                      Peer_Handler,
+                      -1);
+
+      this->addr_.set (Options::instance ()->connector_port (),
+                       Options::instance ()->connector_host ());
+
+      if (this->connect (this->peer_handler_,
+                         this->addr_) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "%p\n",
+                           "connect"),
+                          -1);
+      else
+        ACE_DEBUG ((LM_DEBUG,
+                    "connected to %s:%d\n",
+                    this->addr_.get_host_name (),
+                    this->addr_.get_port_number ()));
+    }
+  else
+    ACE_DEBUG ((LM_DEBUG,
+                "not running in Connector mode\n"));
 }
 
 int
@@ -690,10 +717,8 @@ Peer_Factory::init (int argc, char *argv[])
   ACE_Sig_Set sig_set;
 
   sig_set.sig_add (SIGINT);
-#if !defined (ACE_WIN32)
   sig_set.sig_add (SIGQUIT);
   sig_set.sig_add (SIGPIPE);
-#endif /* ACE_WIN32 */
 
   // Register ourselves to receive signals so we can shut down
   // gracefully.
@@ -702,7 +727,17 @@ Peer_Factory::init (int argc, char *argv[])
                                                   this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "register_handler"), -1);
 
-  return this->acceptor_.open ();
+  if (this->acceptor_.open () == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "Acceptor::open"),
+                      -1);
+  else if (this->connector_.open () == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "Connector::open"),
+                      -1);
+  return 0;
 }
 
 // The following is a "Factory" used by the <ACE_Service_Config> and
