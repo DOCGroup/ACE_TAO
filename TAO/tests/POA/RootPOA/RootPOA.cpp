@@ -13,9 +13,9 @@ main (int argc, char **argv)
       return -1;
     }
 
-  CORBA::Object_ptr obj = orb->resolve_initial_references ("RootPOA");
+  CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
 
-  PortableServer::POA_ptr rootPOA = PortableServer::POA::_narrow (obj, env);
+  PortableServer::POA_var rootPOA = PortableServer::POA::_narrow (obj, env);
   if (env.exception () != 0)
     {
       env.print_exception ("PortableServer::POA::_narrow");
@@ -29,6 +29,10 @@ main (int argc, char **argv)
       return -1;
     }
   
-  cout << poa_name << endl;
+  char *name = poa_name;
+  cout << name << endl;
+
+  CORBA::release (orb);
+
   return 0;
 }

@@ -104,3 +104,12 @@ TAO_ServantBase::_create_stub (CORBA_Environment &_env)
 
   return stub;
 }
+
+STUB_Object *
+TAO_Local_ServantBase::_create_stub (CORBA_Environment &_env)
+{
+  // Note the use of a fake key and no registration with POAs
+  return new IIOP_Object (CORBA::string_copy (this->_interface_repository_id ()),
+                          IIOP::Profile (TAO_ORB_Core_instance ()->orb_params ()->addr (),
+                                         "0"));
+}

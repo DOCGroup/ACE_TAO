@@ -180,19 +180,26 @@ public:
 
   TAO_POA_Policies (void);
 
-  PortableServer::ThreadPolicyValue thread (void);
+  PortableServer::ThreadPolicyValue thread (void) const;
+  void thread (PortableServer::ThreadPolicyValue value);
 
-  PortableServer::LifespanPolicyValue lifespan (void);
+  PortableServer::LifespanPolicyValue lifespan (void) const;
+  void lifespan (PortableServer::LifespanPolicyValue value);
 
-  PortableServer::IdUniquenessPolicyValue id_uniqueness (void);
+  PortableServer::IdUniquenessPolicyValue id_uniqueness (void) const;
+  void id_uniqueness (PortableServer::IdUniquenessPolicyValue value);
 
-  PortableServer::IdAssignmentPolicyValue id_assignment (void);
+  PortableServer::IdAssignmentPolicyValue id_assignment (void) const;
+  void id_assignment (PortableServer::IdAssignmentPolicyValue value);
 
-  PortableServer::ImplicitActivationPolicyValue implicit_activation (void);
+  PortableServer::ImplicitActivationPolicyValue implicit_activation (void) const;
+  void implicit_activation (PortableServer::ImplicitActivationPolicyValue value);
 
-  PortableServer::ServantRetentionPolicyValue servant_retention (void);
+  PortableServer::ServantRetentionPolicyValue servant_retention (void) const;
+  void servant_retention (PortableServer::ServantRetentionPolicyValue value);
 
-  PortableServer::RequestProcessingPolicyValue request_processing (void);
+  PortableServer::RequestProcessingPolicyValue request_processing (void) const;
+  void request_processing (PortableServer::RequestProcessingPolicyValue value);
 
   void parse_policies (const PortableServer::PolicyList& policies,
                        CORBA::Environment &env);
