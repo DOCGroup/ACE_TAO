@@ -1,14 +1,16 @@
 #----------------------------------------------------------------------------
 #	$Id$
 #
-#	Makefile for the TAO tests
+#	Makefile for the TAO Cubit tests
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
 #	Local macros
 #----------------------------------------------------------------------------
 
+# Currently, IDL_Cubit *must* come before the IDL_Cubit tests.
 DIRS  = IDL_Cubit \
+        DII_Cubit \
 	MT_Cubit
 
 # These are disabled by default...
