@@ -1,3 +1,9 @@
+Fri May  9 12:12:51 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Fixed a bug where file names would have extra slashes in them.
+
 Fri May  9 11:58:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* THANKS: Added Ira Burton to the hall of fame.
