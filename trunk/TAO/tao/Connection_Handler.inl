@@ -37,3 +37,9 @@ TAO_Connection_Handler::is_connecting (void)
 {
   return this->state_ == TAO_LF_Event::LFS_CONNECTION_WAIT;
 }
+
+ACE_INLINE int
+TAO_Connection_Handler::set_dscp_codepoint (CORBA::Boolean)
+{
+  return 0;
+}

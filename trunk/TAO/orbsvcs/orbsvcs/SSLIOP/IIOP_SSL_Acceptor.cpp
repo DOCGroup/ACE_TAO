@@ -1,7 +1,5 @@
 #include "IIOP_SSL_Acceptor.h"
 
-#include "SSLIOP_Util.h"
-
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 
@@ -41,8 +39,7 @@ TAO::IIOP_SSL_Acceptor::IIOP_SSL_Acceptor (CORBA::Boolean flag)
     base_acceptor_ (),
     creation_strategy_ (0),
     concurrency_strategy_ (0),
-    accept_strategy_ (0),
-    handler_state_ ()
+    accept_strategy_ (0)
 {
 }
 
@@ -67,14 +64,8 @@ int
 TAO::IIOP_SSL_Acceptor::open_i (const ACE_INET_Addr& addr,
                                 ACE_Reactor *reactor)
 {
-  if (SSLIOP::Util::setup_handler_state (this->orb_core_,
-                                         &(this->tcp_properties_),
-                                         this->handler_state_) != 0)
-      return -1;
-
   ACE_NEW_RETURN (this->creation_strategy_,
                   TAO_IIOP_SSL_CREATION_STRATEGY (this->orb_core_,
-                                                  &(this->handler_state_),
                                                   this->lite_flag_),
                   -1);
 

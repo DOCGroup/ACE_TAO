@@ -101,8 +101,9 @@ public:
 
   /// Set the Diff-Serv codepoint on outgoing packets.  Only has
   /// effect for remote protocols (e.g., IIOP); no effect for local
-  /// protocols (UIOP).
-  virtual int set_dscp_codepoint (CORBA::Boolean set_network_priority) = 0;
+  /// protocols (UIOP).  Default implementation is for local
+  /// protocols.  Remote protocols must overwrite implementation.
+  virtual int set_dscp_codepoint (CORBA::Boolean set_network_priority);
 
 protected:
 

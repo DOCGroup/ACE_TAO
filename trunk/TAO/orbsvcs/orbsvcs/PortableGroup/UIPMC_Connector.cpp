@@ -158,8 +158,7 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
     {
       TAO_UIPMC_Connection_Handler *svc_handler_i = 0;
       ACE_NEW_RETURN (svc_handler_i,
-                      TAO_UIPMC_Connection_Handler (this->orb_core (),
-                                                   0 /* TAO_UIPMC_Properties */),
+                      TAO_UIPMC_Connection_Handler (this->orb_core ()),
                       0);
 
       svc_handler_i->local_addr (ACE_sap_any_cast (ACE_INET_Addr &));
@@ -251,13 +250,6 @@ char
 TAO_UIPMC_Connector::object_key_delimiter (void) const
 {
   return TAO_UIPMC_Profile::object_key_delimiter_;
-}
-
-int
-TAO_UIPMC_Connector::init_uipmc_properties (void)
-{
-  // @@ Michael: We have no TCP, so we have no TCP properties.
-  return 0;
 }
 
 int

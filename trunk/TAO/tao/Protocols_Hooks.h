@@ -42,10 +42,10 @@ class TAO_Connection_Handler;
 class TAO_Transport;
 class TAO_Stub;
 
-class TAO_IIOP_Protocol_Properties
+class TAO_Export TAO_IIOP_Protocol_Properties
 {
-public:  
-  
+public:
+
   TAO_IIOP_Protocol_Properties (void);
 
   CORBA::Long send_buffer_size_;
@@ -55,21 +55,21 @@ public:
   CORBA::Boolean no_delay_;
   CORBA::Boolean enable_network_priority_;
 };
-  
-class TAO_UIOP_Protocol_Properties
+
+class TAO_Export TAO_UIOP_Protocol_Properties
 {
-public:  
-  
+public:
+
   TAO_UIOP_Protocol_Properties (void);
 
   CORBA::Long send_buffer_size_;
   CORBA::Long recv_buffer_size_;
 };
-  
-class TAO_SHMIOP_Protocol_Properties
+
+class TAO_Export TAO_SHMIOP_Protocol_Properties
 {
-public:  
-  
+public:
+
   TAO_SHMIOP_Protocol_Properties (void);
 
   CORBA::Long send_buffer_size_;
@@ -81,20 +81,20 @@ public:
   ACE_CString mmap_filename_;
   ACE_CString mmap_lockname_;
 };
-  
-class TAO_DIOP_Protocol_Properties
+
+class TAO_Export TAO_DIOP_Protocol_Properties
 {
-public:  
-  
+public:
+
   TAO_DIOP_Protocol_Properties (void);
 
   CORBA::Boolean enable_network_priority_;
 };
-  
-class TAO_SCIOP_Protocol_Properties
+
+class TAO_Export TAO_SCIOP_Protocol_Properties
 {
-public:  
-  
+public:
+
   TAO_SCIOP_Protocol_Properties (void);
 
   CORBA::Long send_buffer_size_;
@@ -104,7 +104,7 @@ public:
   CORBA::Boolean no_delay_;
   CORBA::Boolean enable_network_priority_;
 };
-  
+
 class TAO_Export TAO_Protocols_Hooks : public ACE_Service_Object
 {
 public:
@@ -118,41 +118,41 @@ public:
   virtual CORBA::Boolean set_client_network_priority (IOP::ProfileId protocol_tag,
                                                       TAO_Stub *stub
                                                       ACE_ENV_ARG_DECL) = 0;
-  
+
   virtual CORBA::Boolean set_server_network_priority (IOP::ProfileId protocol_tag,
                                                       CORBA::Policy *policy
                                                       ACE_ENV_ARG_DECL) = 0;
-  
+
   virtual void server_protocol_properties_at_orb_level (TAO_IIOP_Protocol_Properties &protocol_properties
                                                         ACE_ENV_ARG_DECL) = 0;
-  
+
   virtual void client_protocol_properties_at_orb_level (TAO_IIOP_Protocol_Properties &protocol_properties
                                                         ACE_ENV_ARG_DECL) = 0;
-  
+
   virtual void server_protocol_properties_at_orb_level (TAO_UIOP_Protocol_Properties &protocol_properties
                                                         ACE_ENV_ARG_DECL) = 0;
-  
+
   virtual void client_protocol_properties_at_orb_level (TAO_UIOP_Protocol_Properties &protocol_properties
                                                         ACE_ENV_ARG_DECL) = 0;
-  
+
   virtual void server_protocol_properties_at_orb_level (TAO_SHMIOP_Protocol_Properties &protocol_properties
                                                         ACE_ENV_ARG_DECL) = 0;
-  
+
   virtual void client_protocol_properties_at_orb_level (TAO_SHMIOP_Protocol_Properties &protocol_properties
                                                         ACE_ENV_ARG_DECL) = 0;
-  
+
   virtual void server_protocol_properties_at_orb_level (TAO_DIOP_Protocol_Properties &protocol_properties
                                                         ACE_ENV_ARG_DECL) = 0;
-  
+
   virtual void client_protocol_properties_at_orb_level (TAO_DIOP_Protocol_Properties &protocol_properties
                                                         ACE_ENV_ARG_DECL) = 0;
-  
+
   virtual void server_protocol_properties_at_orb_level (TAO_SCIOP_Protocol_Properties &protocol_properties
                                                         ACE_ENV_ARG_DECL) = 0;
-  
+
   virtual void client_protocol_properties_at_orb_level (TAO_SCIOP_Protocol_Properties &protocol_properties
                                                         ACE_ENV_ARG_DECL) = 0;
-  
+
   virtual CORBA::Long get_dscp_codepoint (void) = 0;
 
   virtual void rt_service_context (TAO_Stub *stub,
