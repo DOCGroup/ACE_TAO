@@ -1,8 +1,19 @@
+Tue Jan 20 05:34:16 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO/tao/sequence.cpp: In the assignment operator for Unbounded
+	string sequences, we had forgotten to update the max and length
+	fields to that of the assigned sequence in the event of it being
+	larger than ourselves. We had also forgottent o set our release
+	flag to true as well as free the old buffer (if already our
+	release flag was true). I have not checked if there are similar
+	bugs in other "=" operators or not. But these will be evident as
+	more tests are added to the Param_Test example.
+
 Mon Jan 19 23:35:45 1998    <coryan@MILONGA>
 
-	* tao/sequence_T.h: 
-	* tao/sequence_T.i: 
-	* tao/sequence_T.cpp: 
+	* tao/sequence_T.h:
+	* tao/sequence_T.i:
+	* tao/sequence_T.cpp:
 	  Finished suit of parametric classes for sequences, including
 	  bounded sequences of objects and strings.
 	  Fixed some more bugs in the Manager classes for sequences of
@@ -44,20 +55,20 @@ Mon Jan 19 15:41:53 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Mon Jan 19 11:24:43 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/sequence_T.i: 
+	* tao/sequence_T.i:
 	  g++ does not like nested types in templates.
 
-	* docs/releasenotes/index.html: 
+	* docs/releasenotes/index.html:
 	  Updated docs on services.
 
 Sun Jan 18 21:33:21 1998    <coryan@MILONGA>
 
-	* tao/sequence.h: 
-	* tao/sequence.i: 
-	* tao/sequence.cpp: 
-	* tao/sequence_T.h: 
-	* tao/sequence_T.i: 
-	* tao/sequence_T.cpp: 
+	* tao/sequence.h:
+	* tao/sequence.i:
+	* tao/sequence.cpp:
+	* tao/sequence_T.h:
+	* tao/sequence_T.i:
+	* tao/sequence_T.cpp:
 	  Added new class for sequences of strings, the approach based on
 	  templates was not worth it.
 	  Also fixed a number of bugs in the unbounded object sequences.
@@ -65,19 +76,19 @@ Sun Jan 18 21:33:21 1998    <coryan@MILONGA>
 	  + Bounded sequences of objects
 	  + Bounded sequences of strings.
 
-	* TAO_IDL/be_include/be_helper.h: 
-	* TAO_IDL/be/be_helper.cpp: 
+	* TAO_IDL/be_include/be_helper.h:
+	* TAO_IDL/be/be_helper.cpp:
 	  Addded small manipulators to indent and unindent an output
 	  stream.
-	
-	* TAO_IDL/be/be_visitor_sequence.cpp: 
+
+	* TAO_IDL/be/be_visitor_sequence.cpp:
 	  Synch up with new classes for string and objects.
 
-	* tests/Param_Test/tests.cpp: 
+	* tests/Param_Test/tests.cpp:
 	  Fixed some problems with the test for sequences of variable
 	  sized structures.
 
-	* orbsvcs/Event_Service/CORBA_Utils_T.cpp: 
+	* orbsvcs/Event_Service/CORBA_Utils_T.cpp:
 	  Fixed unsigned/signed comparison.
 
 Sun Jan 18 18:30:16 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
@@ -91,7 +102,7 @@ Sun Jan 18 18:30:16 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 Sat Jan 17 23:41:33 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* Added more MSVC makefiles in some test directories.
-	
+
 	* tests/Param_Test/{client,server}.dsp: Correct idl generated
  	  files' dependency.
 
