@@ -94,7 +94,7 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream) const
 
   if (!SSL_in_accept_init (new_stream.ssl ()))
     ::SSL_set_accept_state (new_stream.ssl ());
-	
+
   int status = ::SSL_accept (new_stream.ssl ());
 
   if (status <= 0)
@@ -110,7 +110,7 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream) const
           errno = EWOULDBLOCK;
           break;
         default:
-#ifndef ACE_NDEBUG 
+#ifndef ACE_NDEBUG
           ERR_print_errors_fp (stderr);
 #endif  /* ACE_NDEBUG */
           break;
@@ -132,7 +132,8 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream) const
                   ::X509_verify_cert_error_string (verify_error)));
 #endif  /* ACE_NDEBUG */
 
-      return new_stream.close ();
+      (void) new_stream.close ();
+      return -1;
     }
 
   return 0;

@@ -1,3 +1,11 @@
+Tue Dec  5 09:38:22 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SSL/SSL_SOCK_Acceptor.cpp (ssl_accept):
+
+	  Return "-1" instead of the result of the
+	  ACE_SSL_SOCK_Stream::close() method.  The latter may actually,
+	  and most likely will return without error.
+
 Tue Dec 05 05:39:39 2000  Christopher Kohlhoff  <chris@kohlhoff.com>
 
         * tests/Makefile.bor:
@@ -71,7 +79,7 @@ Mon Dec 04 16:32:11 2000  Ossama Othman  <ossama@uci.edu>
 	  cases.  They are apparently not necessary when performing a SSL
 	  write.
 
-	* ace/SSL/SSL_SOCK_Acceptor.cpp:
+	* ace/SSL/SSL_SOCK_Acceptor.cpp (ssl_accept):
 
 	  Check that the X.509 verification didn't fail.  If the
 	  verification failed then do not continue.
