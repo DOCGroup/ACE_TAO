@@ -1,3 +1,16 @@
+Mon Oct  4 12:32:05 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* tao/Transport_Cache_Manager.cpp:
+	 
+	  Use the ORBConnectionCacheMax value within the transport cache
+	  manager. Added an extra check to disallow setting the value to
+	  0. Thanks to Vladislav Zverev <vladislav at gtss dot spb dot ru>
+	  for reporting the problem.
+	
+	* tao/default_resource.cpp:
+
+	  Cosmetic fix. 
+
 Mon Oct  4 11:59:43 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Wait_Never.cpp:
