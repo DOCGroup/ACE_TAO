@@ -1,3 +1,10 @@
+Wed Nov 12 09:26:48 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * examples/AMI/FL_Callback/Makefile:
+          Fixed problems with BIN and BIN_UNCHECKED usage, moved BUILD
+          variable assignment down to below BIN assignment, so it will be
+          available.
+
 Wed Nov 12 08:22:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/RTCORBA/Persistent_IOR/server.cpp:

@@ -1,3 +1,9 @@
+Wed Nov 12 09:26:48 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * include/makeinclude/rules.local.GNU:
+          Use CLEAN_LIB and CLEAN_SHLIB for the deinstall.local target as
+          well.
+
 Wed Nov 12 08:44:54 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * performance-tests/SCTP/Makefile:
