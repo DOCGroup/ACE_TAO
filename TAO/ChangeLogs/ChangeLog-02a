@@ -1,9 +1,3 @@
-Wed Mar  6 00:12:18 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
-
-	* ChangeLog:
-	  Fixed the ChangeLog entry to have forward slashes for
-	  all files in the entry dated Mar 6 19:16. 
-
 Tue Mar  5 23:47:17 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Object.h:
