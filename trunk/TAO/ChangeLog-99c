@@ -1,9 +1,9 @@
-Thu Feb 11 13:32:05 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Thu Feb 11 14:07:54 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* docs/configurations.html: Changed the multi-thread,
-	  thread-per-connection example to Thruput.  Thanks to
-	  Terry Rosenbaum <Terry.Rosenbaum@Radiology.MSU.edu> for
-	  reporting this.
+	thread-per-connection example to Concurrency_Service.  Thanks to
+	Terry Rosenbaum <Terry.Rosenbaum@Radiology.MSU.edu> for reporting
+	this.
 
 Thu Feb 11 11:28:44 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
