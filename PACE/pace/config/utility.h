@@ -50,7 +50,7 @@ return ( (errno = ENOTSUP), FAILVALUE)
 
 #include <windows.h>
 
-// Perform a mapping of Win32 error numbers into POSIX errnos.
+/* Perform a mapping of Win32 error numbers into POSIX errnos. */
 # define PACE_FAIL_RETURN(RESULT) do { \
   switch (GetLastError ()) { \
   case ERROR_NOT_ENOUGH_MEMORY: errno = ENOMEM; break; \
@@ -60,16 +60,18 @@ return ( (errno = ENOTSUP), FAILVALUE)
   } \
   return RESULT; } while (0)
 
-// The "null" device on Win32.
+/* The "null" device on Win32. */
 # define PACE_DEV_NULL "nul"
 
-// Define the pathname separator characters for Win32 (ugh).
+/* Define the pathname separator characters for Win32 (ugh). */
 # define PACE_DIRECTORY_SEPARATOR_STR "\\"
 # define PACE_DIRECTORY_SEPARATOR_CHAR '\\'
 # define PACE_LD_SEARCH_PATH "PATH"
 # define PACE_LD_SEARCH_PATH_SEPARATOR_STR ";"
 # define PACE_DLL_SUFFIX ".dll"
 # define PACE_DLL_PREFIX ""
+
+# define PACE_SYSCALL_FAILED 0xFFFFFFFF
 
 /* Turns "FALSE" into -1 */
 # define PACE_ADAPT_RETVAL(OP,RESULT) \
