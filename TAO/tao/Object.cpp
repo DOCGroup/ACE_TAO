@@ -381,6 +381,18 @@ CORBA_Object::_get_interface (CORBA::Environment &ACE_TRY_ENV)
   return the_proxy._get_interface (this, ACE_TRY_ENV);
 }
 
+CORBA_Object_ptr
+CORBA_Object::_get_component (CORBA::Environment &ACE_TRY_ENV)
+{
+  // Get the right Proxy.
+  TAO_Object_Proxy_Impl &the_proxy =
+    this->proxy_broker_->select_proxy (this, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
+  // Perform the Call.
+  return the_proxy._get_component (this, ACE_TRY_ENV);
+}
+
 CORBA::ImplementationDef_ptr
 CORBA_Object::_get_implementation (CORBA::Environment &)
 {

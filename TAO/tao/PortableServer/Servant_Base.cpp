@@ -115,6 +115,12 @@ TAO_ServantBase::_get_interface (CORBA::Environment &ACE_TRY_ENV)
                                  ACE_TRY_ENV);
 }
 
+CORBA_Object_ptr
+TAO_ServantBase::_get_component (CORBA::Environment &ACE_TRY_ENV)
+{
+  return CORBA_Object::_nil ();
+}
+
 int
 TAO_ServantBase::_find (const char *opname,
                         TAO_Skeleton& skelfunc,

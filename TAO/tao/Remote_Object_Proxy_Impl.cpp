@@ -93,7 +93,7 @@ TAO_Remote_Object_Proxy_Impl::_is_a (const CORBA::Object_ptr target,
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
-CORBA::Boolean 
+CORBA::Boolean
 TAO_Remote_Object_Proxy_Impl::_non_existent (const CORBA::Object_ptr target,
                                              CORBA_Environment &ACE_TRY_ENV)
 {
@@ -183,4 +183,70 @@ TAO_Remote_Object_Proxy_Impl::_get_interface (const CORBA::Object_ptr target,
                                         ACE_TRY_ENV);
 }
 
+CORBA::Object_ptr
+TAO_Remote_Object_Proxy_Impl::_get_component (const CORBA::Object_ptr target,
+                                              CORBA_Environment &ACE_TRY_ENV)
+{
+  CORBA::Object_ptr _tao_retval = CORBA::Object::_nil ();
+  CORBA::Object_var _tao_safe_retval (_tao_retval);
+
+  ACE_TRY
+    {
+      // Must catch exceptions, if the server raises a
+      // CORBA::OBJECT_NOT_EXIST then we must return 1, instead of
+      // propagating the exception.
+      TAO_Stub *istub = target->_stubobj ();
+      if (istub == 0)
+        ACE_THROW_RETURN (CORBA::INTERNAL (
+                            CORBA_SystemException::_tao_minor_code (
+                              TAO_DEFAULT_MINOR_CODE,
+                              EINVAL),
+                            CORBA::COMPLETED_NO),
+                          _tao_retval);
+
+      TAO_GIOP_Twoway_Invocation _tao_call (istub,
+                                            "_get_component",
+                                            14,
+                                            1,
+                                            istub->orb_core ());
+
+      // ACE_TRY_ENV.clear ();
+      for (;;)
+        {
+          _tao_call.start (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
+          CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
+
+          _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
+                                    ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
+          int _invoke_status =
+            _tao_call.invoke (0, 0, ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
+          if (_invoke_status == TAO_INVOKE_RESTART)
+            continue;
+          ACE_ASSERT (_invoke_status != TAO_INVOKE_EXCEPTION);
+          if (_invoke_status != TAO_INVOKE_OK)
+            {
+              ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
+                                                CORBA::COMPLETED_YES),
+                                _tao_retval);
+            }
+          break;
+        }
+      TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
+      if (! (_tao_in >> _tao_safe_retval.inout ()))
+        ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
+                          _tao_retval);
+    }
+  ACE_CATCHANY
+    {
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  return _tao_safe_retval._retn ();
+}
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */

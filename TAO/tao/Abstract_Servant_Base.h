@@ -49,6 +49,11 @@ public:
       CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
     ) = 0;
 
+  /// Acquire the component reference.
+  virtual CORBA_Object_ptr _get_component (
+      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+    ) = 0;
+
   //@{
   /// @name Reference counting hooks: no-ops by default.
   virtual void _add_ref (CORBA_Environment &ACE_TRY_ENV =

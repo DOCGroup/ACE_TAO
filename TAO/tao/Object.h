@@ -105,6 +105,13 @@ public:
         TAO_default_environment ()
     );
 
+  /// Get a reference to the component this interface is part of a
+  /// component.
+  virtual CORBA_Object_ptr _get_component (
+      CORBA_Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    );
+
   // DII operations to create a request.
   //
   // The mapping for create_request is split into two forms,

@@ -80,4 +80,28 @@ TAO_Direct_Object_Proxy_Impl::_get_interface (const CORBA::Object_ptr target,
   return 0;
 }
 
+CORBA_Object_ptr
+TAO_Direct_Object_Proxy_Impl::_get_component (const CORBA::Object_ptr target,
+                                              CORBA_Environment &ACE_TRY_ENV)
+{
+  ACE_TRY
+    {
+      if (target->_servant () != 0)
+        return target->_servant ()->_get_component (ACE_TRY_ENV);
+
+      // @@ Maybe we want to change this exception...
+      ACE_THROW_RETURN (CORBA::INV_OBJREF (), 0);
+    }
+  ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
+    {
+    }
+  ACE_CATCHANY
+    {
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+
+  return 0;
+}
+
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */

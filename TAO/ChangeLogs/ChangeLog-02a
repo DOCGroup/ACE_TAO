@@ -1,3 +1,25 @@
+Thu Aug 23 15:54:44 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/TAO.dsp: Flipped on "generate browse information" flag.  We
+	  need to remove this setting when we merge the branch into the
+	  main trunk.
+
+	* tao/Abstract_Servant_Base.h:
+	* tao/Object.cpp:
+	* tao/Object.h:
+	* tao/Object_Proxy_Impl.h:
+	* tao/Remote_Object_Proxy_Impl.cpp:
+	* tao/Remote_Object_Proxy_Impl.h:
+	* tao/PortableServer/Direct_Object_Proxy_Impl.cpp:
+	* tao/PortableServer/Direct_Object_Proxy_Impl.h:
+	* tao/PortableServer/Servant_Base.cpp:
+	* tao/PortableServer/Servant_Base.h:
+	* tao/PortableServer/ThruPOA_Object_Proxy_Impl.cpp:
+	* tao/PortableServer/ThruPOA_Object_Proxy_Impl.h: Added
+	  _get_component() as one of the default operations an CORBA
+	  Object supports.  The default implementation is to return a nil
+	  object reference.
+
 Fri Aug 17 14:04:20 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO_IDL/be/be_sequence.cpp:
