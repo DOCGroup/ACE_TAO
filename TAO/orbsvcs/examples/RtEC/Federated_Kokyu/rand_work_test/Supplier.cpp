@@ -6,8 +6,8 @@
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/RtecEventCommC.h"
-#include <ace/Counter.h>
-#include <ace/OS_NS_sys_time.h>
+#include "ace/Counter.h"
+#include "ace/OS_NS_sys_time.h"
 
 #if defined (ACE_HAS_DSUI)
 #include <dsui.h>
@@ -41,7 +41,7 @@ Supplier::rt_info(void) const
 }
 
 void
-Supplier::timeout_occured (ACE_ENV_SINGLE_ARG_DECL)
+Supplier::timeout_occured (Object_ID oid ACE_ENV_ARG_DECL)
 {
   RtecEventComm::EventSet event (1);
   event.length (1);
@@ -49,7 +49,6 @@ Supplier::timeout_occured (ACE_ENV_SINGLE_ARG_DECL)
   event[0].header.source = id_;
   event[0].header.ttl    = 1;
 
-  Object_ID oid = ACE_OBJECT_COUNTER->increment();
   event[0].header.eid.id = oid.id;
   event[0].header.eid.tid = oid.tid;
   event[0].header.eid.pid = oid.pid;
@@ -100,16 +99,17 @@ Supplier_Timeout_Handler::handle_timeout (const ACE_Time_Value &,
   ACE_DEBUG((LM_DEBUG,"Supplier_Timeout_Handler (for Supplier id %d) (%P|%t) BEGIN_SCHED_SEGMENT (timeout occurred) at %u\n",
              this->supplier_impl_->get_id(),ACE_OS::gettimeofday().msec()));
 
-  Object_ID oid;
+  Object_ID oid = ACE_OBJECT_COUNTER->increment();
+  //Object_ID oid;
   //oid.id = events[0].header.eid.id;
-  oid.tid = ACE_Thread::self();
-  oid.pid = ACE_OS::getpid();
+  //oid.tid = ACE_Thread::self();
+  //oid.pid = ACE_OS::getpid();
   //oid.queue_id = events[0].header.eid.queue_id;
   //oid.type = events[0].header.type;
 
   DSTRM_EVENT (WORKER_GROUP_FAM, BEGIN_SCHED_SEGMENT, 0, sizeof(Object_ID), (char*)&oid);
 
-  supplier_impl_->timeout_occured (ACE_ENV_SINGLE_ARG_PARAMETER);
+  supplier_impl_->timeout_occured (oid ACE_ENV_ARG_PARAMETER);
 
   //@BT: Finished handling the timeout.
   //DSTRM_EVENT (WORKER_GROUP_FAM, END_SCHED_SEGMENT, 1, 0, NULL);

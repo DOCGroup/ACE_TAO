@@ -65,8 +65,6 @@ public:
     subt.exec = ACE_Time_Value(0,32);
     subt.period = ACE_Time_Value(0,849);
     subt.phase = ACE_Time_Value(0,335);
-    //subt.period = ACE_Time_Value(1,849);
-    //subt.phase = ACE_Time_Value(5,335);
 
     supp_id = 100*subt.task_index + subt.subtask_index;
     next_supp_id = 100*subt.task_index + subt.subtask_index+1;
