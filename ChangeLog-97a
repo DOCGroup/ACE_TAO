@@ -6,6 +6,9 @@ Tue Mar 25 10:17:08 1997  David L. Levine  <levine@cs.wustl.edu>
 	  for providing this fix, without which random task names would
 	  be assigned.
 
+	* netsvcs/lib/TS_Clerk_Handler.cpp: added another template
+	  specialization.
+
 	* examples/Reactor/Multicast/client.cpp: Log_Wrapper::LOG_DEBUG
 	  instead of LM_DEBUG.
 
