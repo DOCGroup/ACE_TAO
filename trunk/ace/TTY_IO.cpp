@@ -37,7 +37,8 @@ ACE_TTY_IO::control (Control_Mode cmd,
   // Get default device parameters.
 
 #if defined (TCGETS)
-    if (this->ACE_IO_SAP::control (TCGETS, (void *) &devpar) == -1)
+    if (this->ACE_IO_SAP::control (ACE_static_cast (int, TCGETS),
+                                   (void *) &devpar) == -1)
 #elif defined (TCGETA)
     if (this->ACE_IO_SAP::control (TCGETA, (void *) &devpar) == -1)
 #else
@@ -165,7 +166,7 @@ ACE_TTY_IO::control (Control_Mode cmd,
       devpar.c_cc[5] = ivtime_cc5;
 
 #if defined(TCSETS)
-      return this->ACE_IO_SAP::control (TCSETS,
+      return this->ACE_IO_SAP::control (ACE_static_cast (int, TCSETS),
                                         (void *) &devpar);
 #elif defined(TCSETA)
       return this->ACE_IO_SAP::control (TCSETA,
@@ -221,11 +222,11 @@ ACE_TTY_IO::control (Control_Mode cmd,
       switch (arg->stopbits)
         {
         case 1:
-	  dcb.StopBits = ONESTOPBIT;
-	  break ;
+          dcb.StopBits = ONESTOPBIT;
+          break ;
         case 2:
-	  dcb.StopBits = TWOSTOPBITS;
-	  break ;
+          dcb.StopBits = TWOSTOPBITS;
+          break ;
         default:
           return -1;
         }
