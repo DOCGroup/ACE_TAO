@@ -323,6 +323,10 @@ SOURCE=.\Invocation.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Invocation_Endpoint_Selectors.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\IOPC.h
 # End Source File
 # Begin Source File
@@ -947,6 +951,10 @@ SOURCE=.\Invocation.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Invocation_Endpoint_Selectors.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\IOPC.i
 # End Source File
 # Begin Source File
@@ -1496,6 +1504,10 @@ SOURCE=.\InterfaceC.cpp
 # Begin Source File
 
 SOURCE=.\Invocation.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Invocation_Endpoint_Selectors.cpp
 # End Source File
 # Begin Source File
 

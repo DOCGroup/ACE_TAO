@@ -38,6 +38,7 @@
 #include "tao/Services_Activate.h"
 #include "tao/Invocation.h"
 
+#include "tao/Invocation_Endpoint_Selectors.h"
 
 #if defined(ACE_MVS)
 #include "ace/Codeset_IBM1047.h"
@@ -119,7 +120,13 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     thread_per_connection_use_timeout_ (1),
     open_lock_ (),
     open_called_ (0),
+    endpoint_selector_factory_ (0),
+    default_endpoint_selector_ (0),
 #if (TAO_HAS_RT_CORBA == 1)
+    priority_endpoint_selector_ (0),
+    protocol_endpoint_selector_ (0),
+    priority_protocol_selector_ (0),
+    client_priority_policy_selector_ (0),
     rt_orb_ (0),
     rt_current_ (0),
     priority_mapping_manager_ (0),
@@ -159,6 +166,24 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
 
   ACE_NEW (this->policy_current_,
            TAO_Policy_Current);
+
+  ACE_NEW (this->endpoint_selector_factory_,
+           TAO_Endpoint_Selector_Factory);
+  
+  ACE_NEW (this->default_endpoint_selector_,
+           TAO_Default_Endpoint_Selector);
+
+  ACE_NEW (this->priority_endpoint_selector_,
+           TAO_Priority_Endpoint_Selector);
+
+  ACE_NEW (this->protocol_endpoint_selector_,
+           TAO_Protocol_Endpoint_Selector);
+  
+  ACE_NEW (this->priority_protocol_selector_,
+           TAO_Priority_Protocol_Selector);
+
+  ACE_NEW (this->client_priority_policy_selector_,
+           TAO_Client_Priority_Policy_Selector);
 
 #if (TAO_HAS_RT_CORBA == 1)
 
@@ -202,6 +227,13 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
   delete this->policy_current_;
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+
+  delete this->endpoint_selector_factory_;
+  delete this->default_endpoint_selector_;
+  delete this->priority_endpoint_selector_;
+  delete this->protocol_endpoint_selector_;
+  delete this->priority_protocol_selector_;
+  delete this->client_priority_policy_selector_;
 
 #if (TAO_HAS_RT_CORBA == 1)
 
@@ -2015,6 +2047,10 @@ TAO_ORB_Core::set_default_policies (void)
   this->default_policies_->server_protocol (server_protocol_policy);
 
   // Set ClientProtocolPolicy.
+  // NOTE: ClientProtocolPolicy default is used ONLY for protocol
+  // configuration (not protocol preference) IF there is no ORB-level
+  // override.  It is not used when computing effective policy value
+  // for preferencing protocols.
   TAO_ClientProtocolPolicy *client_protocol_policy = 0;
   ACE_NEW_RETURN (client_protocol_policy,
                   TAO_ClientProtocolPolicy (protocols),

@@ -225,6 +225,12 @@ TAO_Unknown_Profile::endpoint (void)
   return 0;
 }
 
+size_t
+TAO_Unknown_Profile::endpoint_count (void)
+{
+  return 0;
+}
+
 int
 TAO_Unknown_Profile::parse_string (const char *,
                                    CORBA::Environment &)

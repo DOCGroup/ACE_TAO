@@ -60,6 +60,14 @@ class TAO_MProfile;
 class TAO_Profile;
 class TAO_GIOP_Invocation;
 
+class TAO_Endpoint_Selector_Factory;
+class TAO_Invocation_Endpoint_Selector;
+class TAO_Default_Endpoint_Selector;
+class TAO_Priority_Endpoint_Selector;
+class TAO_Protocol_Endpoint_Selector;
+class TAO_Priority_Protocol_Selector;
+class TAO_Client_Priority_Policy_Selector;
+
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
 class TAO_Eager_Buffering_Sync_Strategy;
@@ -345,6 +353,27 @@ public:
   // usually created on the stack, but, the spec allows their creation
   // on the heap and/or as class members; we need to investigate the
   // tradeoffs and take a decision.
+
+  TAO_Endpoint_Selector_Factory *endpoint_selector_factory (void);
+  //
+
+  TAO_Invocation_Endpoint_Selector *default_endpoint_selector (void);
+  //
+  
+#if (TAO_HAS_RT_CORBA == 1)
+
+  TAO_Invocation_Endpoint_Selector *protocol_endpoint_selector (void);
+  //
+
+  TAO_Invocation_Endpoint_Selector *priority_endpoint_selector (void);
+  //
+
+  TAO_Invocation_Endpoint_Selector *priority_protocol_selector (void);
+  //
+
+  TAO_Invocation_Endpoint_Selector *client_priority_policy_selector (void);
+  //
+#endif /* TAO_HAS_RT_CORBA == 1 */
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
@@ -821,7 +850,27 @@ protected:
   int open_called_;
   // Flag which denotes that the open method was called.
 
+
+  TAO_Endpoint_Selector_Factory *endpoint_selector_factory_;
+  //
+
+  TAO_Default_Endpoint_Selector* default_endpoint_selector_;
+  //
+
 #if (TAO_HAS_RT_CORBA == 1)
+
+  TAO_Priority_Endpoint_Selector *priority_endpoint_selector_;
+  //
+
+  TAO_Protocol_Endpoint_Selector *protocol_endpoint_selector_;
+  //
+
+  TAO_Priority_Protocol_Selector *priority_protocol_selector_;
+  //
+
+  TAO_Client_Priority_Policy_Selector
+  *client_priority_policy_selector_;
+  //
 
   TAO_RT_ORB *rt_orb_;
   // Implementation of RTCORBA::RTORB interface.

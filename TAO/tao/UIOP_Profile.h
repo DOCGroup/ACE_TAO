@@ -123,7 +123,10 @@ public:
   // allocated for the returned key.
 
   virtual TAO_Endpoint *endpoint (void);
-  // Return pointer to the head of this profile's endpoints list.
+  // Return pointer to the head of this profile's endpoints list. 
+
+  virtual size_t endpoint_count (void);
+  // Return how many endpoints this profile contains.
 
   void add_endpoint (TAO_UIOP_Endpoint *endp);
   // Add <endp> to this profile's list of endpoints (it is inserted

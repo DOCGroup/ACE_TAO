@@ -102,6 +102,12 @@ TAO_SHMIOP_Profile::endpoint (void)
   return &this->endpoint_;
 }
 
+size_t
+TAO_SHMIOP_Profile::endpoint_count (void)
+{
+  return this->count_;
+}
+
 // return codes:
 // -1 -> error
 //  0 -> can't understand this version

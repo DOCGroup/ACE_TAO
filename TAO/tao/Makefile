@@ -185,6 +185,7 @@ ORB_CORE_FILES = \
   debug \
   Object_KeyC \
   Invocation \
+  Invocation_Endpoint_Selectors \
   Asynch_Invocation \
   DII_Invocation \
   operation_details \
