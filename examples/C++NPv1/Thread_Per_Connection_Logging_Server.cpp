@@ -15,7 +15,10 @@
 
 #include <errno.h>
 
-extern "C" static void sigterm_handler (int /* signum */) { /* No-op. */ }
+namespace {
+  extern "C" void sigterm_handler (int /* signum */) { /* No-op. */ }
+}
+
 
 ACE_THR_FUNC_RETURN Thread_Per_Connection_Logging_Server::run_svc (void *arg)
 {
