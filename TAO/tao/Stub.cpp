@@ -189,27 +189,6 @@ TAO_Stub::hash (CORBA::ULong max,
   ACE_ERROR_RETURN((LM_ERROR, "(%P|%t) hash called on a null profile!\n"), 0);
 }
 
-int operator==(const TAO_opaque& rhs,
-               const TAO_opaque& lhs)
-{
-  if (rhs.length () != lhs.length ())
-    return 0;
-
-  for (CORBA::ULong i = 0;
-       i < rhs.length ();
-       ++i)
-    if (rhs[i] != lhs[i])
-      return 0;
-
-  return 1;
-}
-
-int operator!=(const TAO_opaque& rhs,
-               const TAO_opaque& lhs)
-{
-  return !(rhs == lhs);
-}
-
 // Expensive comparison of objref data, to see if two objrefs
 // certainly point at the same object. (It's quite OK for this to
 // return FALSE, and yet have the two objrefs really point to the same
