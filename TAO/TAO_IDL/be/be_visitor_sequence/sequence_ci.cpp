@@ -226,8 +226,8 @@ be_visitor_sequence_ci::gen_var_impl (be_sequence *node)
   // constr from a _ptr
   os->indent ();
   *os << "ACE_INLINE" << be_nl;
-  *os << fname << "::" << lname << " (" << ACE_GLOBAL_COLONS 
-      << node->name () << " *p)" << be_nl;
+  *os << fname << "::" << lname << " (" << node->local_name () 
+      << " *p)" << be_nl;
   *os << "  : ptr_ (p)" << be_nl;
   *os << "{}\n\n";
 
@@ -274,8 +274,8 @@ be_visitor_sequence_ci::gen_var_impl (be_sequence *node)
   // assignment operator from a pointer
   os->indent ();
   *os << "ACE_INLINE " << fname << " &" << be_nl;
-  *os << fname << "::operator= (" << ACE_GLOBAL_COLONS 
-      << node->name () << " *p)" << be_nl;
+  *os << fname << "::operator= (" << node->local_name () 
+      << " *p)" << be_nl;
   *os << "{\n";
   os->incr_indent ();
   *os << "delete this->ptr_;" << be_nl;
@@ -518,8 +518,8 @@ be_visitor_sequence_ci::gen_out_impl (be_sequence *node)
   // constr from a pointer
   os->indent ();
   *os << "ACE_INLINE" << be_nl;
-  *os << fname << "::" << lname << " (" << ACE_GLOBAL_COLONS 
-      << node->name () << " *&p)" << be_nl;
+  *os << fname << "::" << lname << " (" << node->local_name () 
+      << " *&p)" << be_nl;
   *os << "  : ptr_ (p)" << be_nl;
   *os << "{\n";
   os->incr_indent ();
@@ -530,8 +530,8 @@ be_visitor_sequence_ci::gen_out_impl (be_sequence *node)
   // constructor from _var &
   os->indent ();
   *os << "ACE_INLINE" << be_nl;
-  *os << fname << "::" << lname << " (" << ACE_GLOBAL_COLONS 
-      << node->name () << "_var &p) // constructor from _var" << be_nl;
+  *os << fname << "::" << lname << " (" << node->local_name () 
+      << "_var &p) // constructor from _var" << be_nl;
   *os << "  : ptr_ (p.out ())" << be_nl;
   *os << "{\n";
   os->incr_indent ();
@@ -545,8 +545,8 @@ be_visitor_sequence_ci::gen_out_impl (be_sequence *node)
   *os << "ACE_INLINE" << be_nl;
   *os << fname << "::" << lname << " (const ::" << fname 
       << " &p) // copy constructor" << be_nl;
-  *os << "  : ptr_ (ACE_const_cast (" << ACE_GLOBAL_COLONS 
-      << fname << "&, p).ptr_)" << be_nl;
+  *os << "  : ptr_ (ACE_const_cast (" << lname 
+      << "&, p).ptr_)" << be_nl;
   *os << "{}\n\n";
 
   // assignment operator from _out &
@@ -556,8 +556,8 @@ be_visitor_sequence_ci::gen_out_impl (be_sequence *node)
     " &p)" << be_nl;
   *os << "{\n";
   os->incr_indent ();
-  *os << "this->ptr_ = ACE_const_cast (" << ACE_GLOBAL_COLONS 
-      << fname << "&, p).ptr_;" << be_nl;
+  *os << "this->ptr_ = ACE_const_cast (" << lname 
+      << "&, p).ptr_;" << be_nl;
   *os << "return *this;\n";
   os->decr_indent ();
   *os << "}\n\n";
@@ -567,8 +567,8 @@ be_visitor_sequence_ci::gen_out_impl (be_sequence *node)
   // assignment operator from pointer
   os->indent ();
   *os << "ACE_INLINE ::" << fname << " &" << be_nl;
-  *os << fname << "::operator= (" << ACE_GLOBAL_COLONS 
-      << node->name () << " *p)" << be_nl;
+  *os << fname << "::operator= (" << node->local_name () 
+      << " *p)" << be_nl;
   *os << "{\n";
   os->incr_indent ();
   *os << "this->ptr_ = p;" << be_nl;

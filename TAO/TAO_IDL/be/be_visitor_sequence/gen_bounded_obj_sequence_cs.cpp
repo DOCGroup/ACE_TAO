@@ -95,7 +95,7 @@ be_visitor_sequence_cs::gen_bounded_obj_sequence (be_sequence *node)
       << "{" << be_idt_nl
       << "// For this class memory is never reallocated so the implementation" << be_nl
       << "// is *really* simple." << be_nl
-      << "this->buffer_ = " << full_class_name << "::allocbuf (length);" << be_uidt_nl
+      << "this->buffer_ = " << class_name << "::allocbuf (length);" << be_uidt_nl
       << "}" << be_nl
       << be_nl;
 
@@ -109,7 +109,7 @@ be_visitor_sequence_cs::gen_bounded_obj_sequence (be_sequence *node)
   *os <<" **tmp = ACE_reinterpret_cast (";
   pt->accept (visitor);
   *os << " **, this->buffer_);" << be_nl
-      << full_class_name << "::freebuf (tmp);" << be_nl
+      << class_name << "::freebuf (tmp);" << be_nl
       << "this->buffer_ = 0;" << be_uidt_nl
       << "}" << be_nl
       << be_nl;

@@ -206,7 +206,7 @@ be_structure::gen_var_impl (char *,
   ACE_OS::sprintf (fname, "%s_var", this->full_name ());
 
   ACE_OS::memset (lname, '\0', NAMEBUFSIZE);
-  ACE_OS::sprintf (lname, "%s_var", local_name ()->get_string ());
+  ACE_OS::sprintf (lname, "%s_var", this->local_name ()->get_string ());
 
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
@@ -230,8 +230,8 @@ be_structure::gen_var_impl (char *,
   // constr from a pointer
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname << " (" << ACE_GLOBAL_COLONS 
-      << this->name () << " *p)" << nl;
+  *ci << fname << "::" << lname << " (" << this->local_name () 
+      << " *p)" << nl;
   *ci << "  : ptr_ (p)" << nl;
   *ci << "{}\n\n";
 
@@ -278,8 +278,8 @@ be_structure::gen_var_impl (char *,
   // assignment operator from a pointer
   ci->indent ();
   *ci << "ACE_INLINE " << fname << " &" << nl;
-  *ci << fname << "::operator= (" << ACE_GLOBAL_COLONS 
-      << this->name () << " *p)" << nl;
+  *ci << fname << "::operator= (" << this->local_name () 
+      << " *p)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "delete this->ptr_;" << nl;
@@ -595,7 +595,7 @@ be_structure::gen_out_impl (char *,
   // constructor from _var &
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname << " (" << "::" << this->name () 
+  *ci << fname << "::" << lname << " (" << this->local_name () 
       << "_var &p) // constructor from _var" << nl;
   *ci << "  : ptr_ (p.out ())" << nl;
   *ci << "{\n";
@@ -610,7 +610,7 @@ be_structure::gen_out_impl (char *,
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname << " (const ::" << fname 
       << " &p) // copy constructor" << nl;
-  *ci << "  : ptr_ (ACE_const_cast (::" << fname << "&,p).ptr_)" << nl;
+  *ci << "  : ptr_ (ACE_const_cast (" << lname << "&, p).ptr_)" << nl;
   *ci << "{}\n\n";
 
   // assignment operator from _out &
@@ -620,7 +620,7 @@ be_structure::gen_out_impl (char *,
     " &p)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
-  *ci << "this->ptr_ = ACE_const_cast (::" << fname << "&, p).ptr_;" << nl;
+  *ci << "this->ptr_ = ACE_const_cast (" << lname << "&, p).ptr_;" << nl;
   *ci << "return *this;\n";
   ci->decr_indent ();
   *ci << "}\n\n";
@@ -630,8 +630,7 @@ be_structure::gen_out_impl (char *,
   // assignment operator from pointer
   ci->indent ();
   *ci << "ACE_INLINE " << fname << " &" << nl;
-  *ci << fname << "::operator= (" << "::" << this->name () 
-      << " *p)" << nl;
+  *ci << fname << "::operator= (" << this->local_name () << " *p)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "this->ptr_ = p;" << nl;

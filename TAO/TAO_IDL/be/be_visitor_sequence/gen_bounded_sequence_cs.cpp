@@ -108,7 +108,7 @@ be_visitor_sequence_cs::gen_bounded_sequence (be_sequence *node)
       << "// allocate a buffer of the requested length. The buffer is allocated for the" << be_nl
       << "// right type" << be_nl
       << "{" << be_idt_nl
-      << "this->buffer_ = " << full_class_name << "::allocbuf ("
+      << "this->buffer_ = " << class_name << "::allocbuf ("
       << node->max_size () << ");" << be_uidt_nl
       << "}" << be_nl
       << be_nl;
@@ -124,7 +124,7 @@ be_visitor_sequence_cs::gen_bounded_sequence (be_sequence *node)
   *os <<" *tmp = ACE_reinterpret_cast (";
   pt->accept (visitor);
   *os << " *, this->buffer_);" << be_nl
-      << full_class_name << "::freebuf (tmp);" << be_nl
+      << class_name << "::freebuf (tmp);" << be_nl
       << "this->buffer_ = 0;" << be_uidt_nl
       << "}" << be_nl
       << be_nl;
