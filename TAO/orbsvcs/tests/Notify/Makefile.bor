@@ -10,6 +10,8 @@ DIRS = \
         Discarding \
         MT_Dispatching \
         Ordering \
-        performance-tests
+        performance-tests \
+        Sequence_Multi_ETCL_Filter \
+        Sequence_Multi_Filter
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
