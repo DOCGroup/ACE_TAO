@@ -472,7 +472,8 @@ be_compiled_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node
   *os << "ACE_CHECK;" << be_nl;
 
   // Prepare the request header
-  *os << "CORBA::Short flag = ";
+  os->indent ();
+  *os << "CORBA::Short _tao_response_flag = ";
 
   switch (node->flags ())
     {
@@ -480,12 +481,13 @@ be_compiled_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node
       *os << "_tao_call.sync_scope ();";
       break;
     default:
-      *os << "TAO::SYNC_WITH_TARGET;";
+      *os << "TAO_TWOWAY_RESPONSE_FLAG;" << be_nl;
     }
 
   *os << be_nl
-      << "_tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);" << be_nl
-      << "ACE_CHECK;\n" << be_nl;
+      << "_tao_call.prepare_header (" << be_idt << be_idt_nl
+      << "ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV"
+      << be_uidt_nl << ");" << be_uidt << "\n";
 
   // Now make sure that we have some in and inout
   // parameters. Otherwise, there is nothing to be marshaled in.
