@@ -1,3 +1,7 @@
+Tue Jun 29 22:48:43 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/OS.i (strncasecmp): Changed <n> to <len>.
+
 Tue Jun 29 22:33:55 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/OS.i:
