@@ -60,7 +60,7 @@ be_visitor_interface_si::visit_interface (be_interface *node)
 
   os->indent (); // start with whatever indentation level we are at
   *os << "ACE_INLINE CORBA::Boolean" << be_nl;
-  *os << node->name () << "::in_mult_inheritance (void)" << be_nl
+  *os << node->full_skel_name () << "::in_mult_inheritance (void)" << be_nl
       << "{" << be_idt_nl;
   switch (node->in_mult_inheritance ())
     {
