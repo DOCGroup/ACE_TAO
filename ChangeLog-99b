@@ -17,19 +17,32 @@ Thu Aug 19 10:04:12 1999  David L. Levine  <levine@cs.wustl.edu>
 
 Thu Aug 19 09:34:41 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-        * ace/Service_Config: Updated the failure result comment for
-          open() and cleaned up the return value and errno propagation for
-          open_i() when process_commandline_directives() fails.  Thanks to
-          Jerry D. De Master <jdemaste@ipdinc.com> for reporting the bug
-          and suggesting a fix.
+        * ace/WFMO_Reactor.h,
+        * ace/WFMO_Reactor.cpp,
+        * ace/Select_Reactor_T.h,
+        * ace/Select_Reactor_T.cpp,
+        * ace/Reactor_Impl.h,
+        * ace/Reactor.h,
+        * ace/Reactor.cpp:
+	  Added a pair of restart() methods that can be used to set/get
+ 	  the restart_ flag, which controls whether the handle_events()
+ 	  event loop is restarted automatically when select() is
+ 	  interrpted.  Thanks to Erik Koerber <erik.koerber@siemens.at>
+ 	  for suggesting this.
 
-        * ace/Service_Config.h: Moved the process_directives() method
-          used to parse the svc.conf files out of the protected part of
-          the class to the public part so that application programmers can
-          call this directly to reconfigure services from the svc.conf
-          files.  Thanks to John Mink <John.Mink@nl.origin-it.com> for
-          suggesting this.
+	* ace/Service_Config: Updated the failure result comment for
+	  open() and cleaned up the return value and errno propagation for
+ 	  open_i() when process_commandline_directives() fails.  Thanks to
+ 	  Jerry D. De Master <jdemaste@ipdinc.com> for reporting the bug
+ 	  and suggesting a fix.
 
+	* ace/Service_Config.h: Moved the process_directives() method
+	  used to parse the svc.conf files out of the protected part of
+ 	  the class to the public part so that application programmers can
+ 	  call this directly to reconfigure services from the svc.conf
+ 	  files.  Thanks to John Mink <John.Mink@nl.origin-it.com> for
+	  suggesting this.
+	
 Wed Aug 18 22:45:24 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
         * ace/WFMO_Reactor.h,
