@@ -394,7 +394,16 @@ be_predefined_type::gen_typecode (void)
       *cs << "CORBA::tk_wchar,\n\n";
       break;
     case AST_PredefinedType::PT_pseudo:
-      *cs << "CORBA::tk_objref,\n\n";
+      {
+        *cs << this->tc_name () << ", \n";
+        if (!ACE_OS::strcmp (this->local_name ()->get_string (), "Object"))
+          {
+            *cs << this->tc_encap_len () << ", // encapsulation length\n";
+            // now emit the encapsulation
+            this->gen_encapsulation ();
+          }
+      }
+      break;
     }
   return 0;
 }
@@ -402,22 +411,66 @@ be_predefined_type::gen_typecode (void)
 long
 be_predefined_type::tc_size (void)
 {
-  return 4; // for the enum value
+  if (ACE_OS::strcmp (this->local_name ()->get_string (), "Object")) // not same
+    return 4; // for the enum value
+  else
+    return 4 + 4 + this->tc_encap_len ();
 }
 
 long
 be_predefined_type::tc_encap_len (void)
 {
-  // XXXASG - TODO what if it was of type Object? or one of the pseudo-objects
-  return 0; // no encapsulation
+  if ((this->encap_len_ == -1) // not computed yet
+      && (!ACE_OS::strcmp (this->local_name ()->get_string (), "Object")))
+    // is a CORBA::Object
+    {
+      this->encap_len_ = 4;  // holds the byte order flag
+
+      this->encap_len_ += this->repoID_encap_len (); // for repoID
+
+      // do the same thing for the local name
+      this->encap_len_ += this->name_encap_len ();
+    }
+
+  return this->encap_len_;
 }
 
-int
-be_predefined_type::gen_encapsulation (void)
-{
-  // XXXASG - TODO what if it was of type Object? or one of the pseudo-objects
-  return 0; // nothing to be done
-}
+  int
+    be_predefined_type::gen_encapsulation (void)
+    {
+      if (!ACE_OS::strcmp (this->local_name ()->get_string (), "Object"))
+        {
+          TAO_OutStream *cs; // output stream
+          TAO_NL  nl;        // end line
+          TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+          long i, arrlen;
+          long *arr;  // an array holding string names converted to array of longs
+
+          cs = cg->client_stubs ();
+          cs->indent (); // start from whatever indentation level we were at
+
+          // XXXASG - byte order must be based on what m/c we are generating code -
+          // TODO
+          *cs << "TAO_ENCAP_BYTE_ORDER, // byte order" << nl;
+          // generate repoID
+          *cs << (ACE_OS::strlen (this->repoID ())+1) << ", ";
+          (void)this->tc_name2long (this->repoID (), arr, arrlen);
+          for (i=0; i < arrlen; i++)
+            {
+              cs->print ("0x%x, ", arr[i]);
+            }
+          *cs << " // repository ID = " << this->repoID () << nl;
+          // generate name
+          *cs << (ACE_OS::strlen (this->local_name ()->get_string ())+1) << ", ";
+          (void)this->tc_name2long(this->local_name ()->get_string (), arr, arrlen);
+          for (i=0; i < arrlen; i++)
+            {
+              cs->print ("0x%x, ", arr[i]);
+            }
+          *cs << " // name = " << this->local_name () << ",\n";
+        }
+      return 0;
+    }
 
 // compute the size type of the node in question
 int
