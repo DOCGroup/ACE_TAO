@@ -176,9 +176,9 @@ RtecEventComm::_tao__seq_EventSet::length (CORBA::ULong length)
     this->buffer_ = tmp;
     this->release_ = 1;
 
-    this->length_ = length;
 this->maximum_ = length;
   }
+    this->length_ = length;
 }
 
 static const CORBA::Long _oc_RtecEventComm__tao__seq_EventSet[] =

@@ -437,7 +437,7 @@ be_sequence::gen_client_stubs (void)
 	    return -1;
 	  *cs << " *tmp = " << this->name ()
 	      << "::allocbuf (length);" << nl;
-	  *cs << "if (tmp == 0)" << nl;
+	  *cs << "if (tmp == 0)\n";
 	  cs->incr_indent ();
 	  *cs << "return;\n";
 	  cs->decr_indent ();
@@ -453,11 +453,11 @@ be_sequence::gen_client_stubs (void)
 	  *cs << this->name () << "::freebuf (this->buffer_);\n";
 	  cs->decr_indent ();
 	  *cs << "this->buffer_ = tmp;" << nl;
-	  *cs << "this->release_ = 1;\n" << nl;
-	  *cs << "this->length_ = length;\n";
+	  *cs << "this->release_ = 1;" << nl;
 	  *cs << "this->maximum_ = length;\n";
 	  cs->decr_indent ();
 	  *cs << "}\n";
+	  *cs << "this->length_ = length;\n";
 	}
       cs->decr_indent ();
       *cs << "}\n\n";

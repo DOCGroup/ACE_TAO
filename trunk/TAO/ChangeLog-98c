@@ -1,3 +1,22 @@
+Mon Nov 17 18:40:49 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* orb_core.i: 
+	  Some data was not initialized when used from a thread different
+	  than the one doing ORB_init (even though we choose a global ORB
+	  in the svc.conf file). Chris found a fix for this. The affected
+	  methods are reactor(), thr_mgr(), connector() and acceptor().
+
+	* TAO_IDL/be/be_sequence.cpp: 
+	  length was not working if the value was <= than the maximum.
+
+	* orbsvcs/lib/CosNamingC.cpp: 
+	* orbsvcs/lib/RtecEventChannelAdminC.cpp: 
+	* orbsvcs/lib/RtecEventCommC.cpp: 
+	* orbsvcs/lib/RtecSchedulerC.cpp: 
+	* orbsvcs/lib/RtecSchedulerS.cpp: 
+	  Fixed the length() problem by hand, even though the new IDL
+	  compiler should do it right.
+
 Mon Nov 17 11:52:54 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* TAO_IDL/be/be_codegen.cpp (server_header),
