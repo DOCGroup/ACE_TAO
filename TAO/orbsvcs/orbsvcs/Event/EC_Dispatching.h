@@ -57,7 +57,7 @@ public:
 
   /**
    * The consumer represented by @a proxy should receive @a event.
-   * It can use the information in @a qos_info   to determine the event
+   * It can use the information in @a qos_info to determine the event
    * priority (among other things).
    */
   virtual void push (TAO_EC_ProxyPushSupplier *proxy,

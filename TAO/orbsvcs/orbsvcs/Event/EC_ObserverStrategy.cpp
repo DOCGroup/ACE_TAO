@@ -323,6 +323,153 @@ TAO_EC_Basic_ObserverStrategy::fill_qos (
     }
 }
 
+
+// ****************************************************************
+
+TAO_EC_Reactive_ObserverStrategy::~TAO_EC_Reactive_ObserverStrategy (void)
+{
+}
+
+void
+TAO_EC_Reactive_ObserverStrategy::supplier_qos_update (
+                                        TAO_EC_ProxyPushConsumer *consumer
+                                        ACE_ENV_ARG_DECL)
+{
+  if (consumer->publications ().is_gateway)
+    return;
+
+  RtecEventChannelAdmin::SupplierQOS s_qos;
+  this->fill_qos (s_qos ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  Observer_Map copy;
+  this->create_observer_map (copy ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  Observer_Map_Iterator end = copy.end ();
+  for (Observer_Map_Iterator i  = copy.begin ();
+       i != end;
+       ++i)
+    {
+      Observer_Entry& entry = (*i).int_id_;
+      ACE_TRY
+        {
+          entry.observer->update_supplier (s_qos ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+      ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
+        {
+          // Exception occured while updating observer, so remove it from the
+          // observer list
+          this->observer_not_exists (entry ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+      ACE_CATCH (CORBA::TRANSIENT, transient)
+        {
+          // Exception occured while updating observer, so remove it from the
+          // observer list
+          this->observer_not_exists (entry ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+      ACE_CATCHANY
+        {
+          // Ignore all exceptions
+        }
+      ACE_ENDTRY;
+    }
+}
+
+void
+TAO_EC_Reactive_ObserverStrategy::consumer_qos_update (
+                                        TAO_EC_ProxyPushSupplier *supplier
+                                        ACE_ENV_ARG_DECL)
+{
+  if (supplier->subscriptions ().is_gateway)
+    return;
+
+  RtecEventChannelAdmin::ConsumerQOS c_qos;
+  this->fill_qos (c_qos ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  Observer_Map copy;
+  this->create_observer_map (copy ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  Observer_Map_Iterator end = copy.end ();
+  for (Observer_Map_Iterator i  = copy.begin ();
+       i != end;
+       ++i)
+    {
+      Observer_Entry& entry = (*i).int_id_;
+      ACE_TRY
+        {
+          entry.observer->update_consumer (c_qos ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+      ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
+        {
+          // Exception occured while updating observer, so remove it from the
+          // observer list
+          this->observer_not_exists (entry ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+      ACE_CATCH (CORBA::TRANSIENT, transient)
+        {
+          // Exception occured while updating observer, so remove it from the
+          // observer list
+          this->observer_not_exists (entry ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+      ACE_CATCHANY
+        {
+          // Ignore all exceptions
+        }
+      ACE_ENDTRY;
+    }
+}
+
+int
+TAO_EC_Reactive_ObserverStrategy::create_observer_map (Observer_Map &map
+                                                       ACE_ENV_ARG_DECL)
+{
+  ACE_GUARD_THROW_EX (ACE_Lock, ace_mon, *this->lock_,
+                 RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR());
+  ACE_CHECK_RETURN (0);
+
+  Observer_Map_Iterator end = this->observers_.end ();
+  for (Observer_Map_Iterator i  = this->observers_.begin ();
+       i != end;
+       ++i)
+    {
+      Observer_Entry& entry = (*i).int_id_;
+      Observer_Entry copy (entry.handle,
+                            RtecEventChannelAdmin::Observer::_duplicate (entry.observer.in ()));
+      if (map.bind (copy.handle, copy) == -1)
+      {
+        map.unbind_all();
+        return 0;
+      }
+    }
+
+  return map.current_size();
+}
+
+void
+TAO_EC_Reactive_ObserverStrategy::observer_not_exists (Observer_Entry& observer
+                                                       ACE_ENV_ARG_DECL)
+{
+  ACE_TRY
+    {
+      this->remove_observer(observer.handle ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // Ignore exceptions
+    }
+  ACE_ENDTRY;
+}
+
 // ****************************************************************
 
 void

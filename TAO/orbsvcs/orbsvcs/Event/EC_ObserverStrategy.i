@@ -49,6 +49,16 @@ TAO_EC_Basic_ObserverStrategy::
 // ****************************************************************
 
 ACE_INLINE
+TAO_EC_Reactive_ObserverStrategy::
+      TAO_EC_Reactive_ObserverStrategy (TAO_EC_Event_Channel_Base* ec,
+                                     ACE_Lock* lock)
+  :  TAO_EC_Basic_ObserverStrategy (ec, lock)
+{
+}
+
+// ****************************************************************
+
+ACE_INLINE
 TAO_EC_Accumulate_Supplier_Headers::
     TAO_EC_Accumulate_Supplier_Headers (TAO_EC_Basic_ObserverStrategy::Headers &h)
   : headers_ (h)

@@ -169,6 +169,8 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
                 this->observer_ = 0;
               else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("basic")) == 0)
                 this->observer_ = 1;
+              else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("reactive")) == 0)
+                this->observer_ = 2;
               else
                   this->unsupported_option_value ("-ECObserver", opt);
               arg_shifter.consume_arg ();
@@ -619,6 +621,13 @@ TAO_EC_Default_Factory::create_observer_strategy (TAO_EC_Event_Channel_Base *ec)
       ACE_Lock* lock = 0;
       ACE_NEW_RETURN (lock, ACE_Lock_Adapter<TAO_SYNCH_MUTEX>, 0);
       return new TAO_EC_Basic_ObserverStrategy (ec, lock);
+    }
+  else if (this->observer_ == 2)
+    {
+      // @@ The lock should also be under control of the user...
+      ACE_Lock* lock = 0;
+      ACE_NEW_RETURN (lock, ACE_Lock_Adapter<TAO_SYNCH_MUTEX>, 0);
+      return new TAO_EC_Reactive_ObserverStrategy (ec, lock);
     }
   return 0;
 }

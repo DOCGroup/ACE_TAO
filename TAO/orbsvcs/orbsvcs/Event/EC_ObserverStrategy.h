@@ -5,6 +5,8 @@
  *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ *  @author Johnny Willemsen (jwillemsen@remedy.nl)
+ *  @author Kees van Marle (kvmarle@remedy.nl)
  *
  * Based on previous work by Tim Harrison (harrison@cs.wustl.edu) and
  * other members of the DOC group. More details can be found in:
@@ -218,12 +220,12 @@ protected:
   /// Helpers.
   //@{
   /// Recompute EC consumer subscriptions and send them out to all observers.
-  void consumer_qos_update (TAO_EC_ProxyPushSupplier *supplier
-                            ACE_ENV_ARG_DECL);
+  virtual void consumer_qos_update (TAO_EC_ProxyPushSupplier *supplier
+                                    ACE_ENV_ARG_DECL);
 
   /// Recompute EC supplier publications and send them out to all observers.
-  void supplier_qos_update (TAO_EC_ProxyPushConsumer *consumer
-                            ACE_ENV_ARG_DECL);
+  virtual void supplier_qos_update (TAO_EC_ProxyPushConsumer *consumer
+                                    ACE_ENV_ARG_DECL);
 
   /// Compute consumer QOS.
   void fill_qos (RtecEventChannelAdmin::ConsumerQOS &qos
@@ -251,6 +253,60 @@ protected:
 
   /// Keep the set of Observers
   Observer_Map observers_;
+};
+
+// ****************************************************************
+
+/**
+ * @class TAO_EC_Reactive_ObserverStrategy
+ *
+ * @brief A reactive observer strategy.
+ *
+ * This class simply keeps the information about the current list
+ * of observers, whenever the list of consumers and/or suppliers
+ * changes in queries the EC, computes the global subscription
+ * and/or publication list and sends the update message to all the
+ * observers. When an observer isn't reachable it is removed from
+ * the observer list.
+ *
+ * <H2>Memory Management</H2>
+ * It assumes ownership of the <lock>, but not of the
+ * Event_Channel.
+ */
+class TAO_RTEvent_Export TAO_EC_Reactive_ObserverStrategy :
+  public TAO_EC_Basic_ObserverStrategy
+{
+public:
+  /// Constructor
+  TAO_EC_Reactive_ObserverStrategy (TAO_EC_Event_Channel_Base* ec,
+                                    ACE_Lock* lock);
+
+  /// Destructor
+  virtual ~TAO_EC_Reactive_ObserverStrategy (void);
+
+protected:
+  /// Helpers.
+  //@{
+  /// Recompute EC consumer subscriptions and send them out to all observers.
+  virtual void consumer_qos_update (TAO_EC_ProxyPushSupplier *supplier
+                                    ACE_ENV_ARG_DECL);
+
+  /// Recompute EC supplier publications and send them out to all observers.
+  virtual void supplier_qos_update (TAO_EC_ProxyPushConsumer *consumer
+                                    ACE_ENV_ARG_DECL);
+
+  /**
+   * Copies all current observers into a map and passes it
+   * back to the caller through @a map.
+   * @return Returns the size of the map.
+   */
+  int create_observer_map (Observer_Map &map
+                           ACE_ENV_ARG_DECL);
+
+  /// The observer doesn't exist anymore
+  void observer_not_exists (Observer_Entry& observer
+                            ACE_ENV_ARG_DECL);
+  //@}
 };
 
 // ****************************************************************

@@ -5,6 +5,7 @@
  *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ *  @author Johnny Willemsen  (jwillemsen@remedy.nl)
  *
  * Based on previous work by Tim Harrison (harrison@cs.wustl.edu) and
  * other members of the DOC group. More details can be found in:
@@ -28,15 +29,13 @@
  *
  * @brief Event Channel Gateway using IIOP.
  *
- * This class mediates among two event channels, it connects as a
- * consumer of events with a remote event channel, and as a supplier
- * of events with the local EC.
- * As a consumer it gives a QoS designed to only accept the events
- * in which *local* consumers are interested.
- * Eventually the local EC should create this object and compute its
- * QoS in an automated manner; but this requires some way to filter
- * out the peers registered as consumers, otherwise we will get
- * loops in the QoS graph.
+ * This class mediates among two event channels, it connects as a consumer of
+ * events with a remote event channel, and as a supplier of events with the
+ * local EC. As a consumer it gives a QoS designed to only accept the events
+ * in which *local* consumers are interested. Eventually the local EC should
+ * create this object and compute its QoS in an automated manner; but this
+ * requires some way to filter out the peers registered as consumers,
+ * otherwise we will get loops in the QoS graph.
  * It uses exactly the same set of events in the publications list
  * when connected as a supplier.
  *
@@ -57,15 +56,15 @@ class TAO_RTEvent_Export TAO_EC_Gateway_IIOP : public TAO_EC_Gateway
 {
 public:
   TAO_EC_Gateway_IIOP (void);
-  ~TAO_EC_Gateway_IIOP (void);
+  virtual ~TAO_EC_Gateway_IIOP (void);
 
   /**
    * To do its job this class requires to know the local and remote ECs it will
    * connect to.
    * @return 0 in case of success, -1 in case of failure
    */
-  int init (RtecEventChannelAdmin::EventChannel_ptr rmt_ec,
-            RtecEventChannelAdmin::EventChannel_ptr lcl_ec
+  int init (RtecEventChannelAdmin::EventChannel_ptr supplier_ec,
+            RtecEventChannelAdmin::EventChannel_ptr consumer_ec
             ACE_ENV_ARG_DECL);
 
   /// The channel is disconnecting.
@@ -74,7 +73,7 @@ public:
   /// The channel is disconnecting.
   void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
-  /// This is the Consumer side behavior, it pushes the events to the
+  /// This is the consumer side behavior, it pushes the events to the
   /// local event channel.
   void push (const RtecEventComm::EventSet &events
              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
@@ -99,8 +98,8 @@ private:
 
 protected:
   /// Do the real work in init()
-  int init_i (RtecEventChannelAdmin::EventChannel_ptr rmt_ec,
-              RtecEventChannelAdmin::EventChannel_ptr lcl_ec
+  int init_i (RtecEventChannelAdmin::EventChannel_ptr supplier_ec,
+              RtecEventChannelAdmin::EventChannel_ptr consumer_ec
               ACE_ENV_ARG_DECL);
 
 protected:
@@ -119,14 +118,17 @@ protected:
   int update_posted_;
   RtecEventChannelAdmin::ConsumerQOS c_qos_;
 
-  /// The remote and the local EC, so we can reconnect when the list changes.
-  RtecEventChannelAdmin::EventChannel_var rmt_ec_;
-  RtecEventChannelAdmin::EventChannel_var lcl_ec_;
+  /// The event channel acting as supplier for this gateway so we can reconnect
+  /// when the list changes.
+  RtecEventChannelAdmin::EventChannel_var supplier_ec_;
 
-  /// Our remote RT_Infos.
-  RtecBase::handle_t rmt_info_;
-  /// Our local RT_Infos.
-  RtecBase::handle_t lcl_info_;
+  /// The event channel acting as consumer of this gateway
+  RtecEventChannelAdmin::EventChannel_var consumer_ec_;
+ 
+  /// Our RT_Infos for the event channel that is the supplier.
+  RtecBase::handle_t supplier_info_;
+  /// Our RT_Infos for the event channel that is the consumer.
+  RtecBase::handle_t consumer_info_;
 
   /// Our consumer personality....
   ACE_PushConsumer_Adapter<TAO_EC_Gateway_IIOP> consumer_;
@@ -145,11 +147,13 @@ protected:
   typedef ACE_Map_Iterator<RtecEventComm::EventSourceID,RtecEventChannelAdmin::ProxyPushConsumer_ptr,ACE_Null_Mutex> Consumer_Map_Iterator;
 
   /// We talk to the EC (as a supplier) using either an per-supplier
-  /// proxy or a generic proxy for the type only subscriptions.
+  /// proxy or a generic proxy for the type only subscriptions. We push the
+  /// events to these proxies
   Consumer_Map consumer_proxy_map_;
   RtecEventChannelAdmin::ProxyPushConsumer_var default_consumer_proxy_;
 
-  /// We talk to the EC (as a consumer) using this proxy.
+  /// We talk to the EC (as a consumer) using this proxy. We receive the events
+  /// from these proxy
   RtecEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;
 };
 
