@@ -7,14 +7,14 @@ ACE_RCSID (GenericFactory,
            LB_server,
            "$Id$")
 
-LB_Basic_Test::LB_Basic_Test (int argc, char **argv)
+LB_server::LB_server (int argc, char **argv)
   : argc_ (argc)
   , argv_ (argv)
 {
 }
 
 int
-LB_Basic_Test::destroy (void)
+LB_server::destroy (void)
 {
   ACE_TRY_NEW_ENV
     {
@@ -31,36 +31,34 @@ LB_Basic_Test::destroy (void)
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught while destroying Basic_Test\n");
+                           "Exception caught while destroying LB_server\n");
+      return -1;
     }
   ACE_ENDTRY;
-
-  // @@ Jai, you're returning the same return value regardless of
-  //    whether or not an error occurred.  By convention, return zero
-  //    on success or non-zero on failure (typically -1).
   return 1;
+
 }
 
 CORBA::ORB_ptr
-LB_Basic_Test::orb (void)
+LB_server::orb (void)
 {
   return this->orb_.in ();
 }
 
 CORBA::Object_ptr
-LB_Basic_Test::object_group (void)
+LB_server::object_group (void)
 {
   return this->object_group_.in ();
 }
 
 CosLoadBalancing::LoadManager_ptr
-LB_Basic_Test::load_manager (void)
+LB_server::load_manager (void)
 {
   return this->lm_.in ();
 }
 
 int
-LB_Basic_Test::write_ior_to_file (const char *ior)
+LB_server::write_ior_to_file (const char *ior)
 {
   FILE *output_file =
     ACE_OS::fopen ("obj.ior", "w");
@@ -78,7 +76,7 @@ LB_Basic_Test::write_ior_to_file (const char *ior)
 }
 
 int
-LB_Basic_Test::start_orb_and_poa (void)
+LB_server::start_orb_and_poa (void)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
@@ -137,7 +135,7 @@ LB_Basic_Test::start_orb_and_poa (void)
 }
 
 int
-LB_Basic_Test::create_object_group (void)
+LB_server::create_object_group (void)
 {
   ACE_TRY_NEW_ENV
     {
@@ -182,7 +180,7 @@ LB_Basic_Test::create_object_group (void)
 }
 
 int
-LB_Basic_Test::register_servant (Basic *servant, const char *loc)
+LB_server::register_servant (Basic *servant, const char *loc)
 {
   ACE_TRY_NEW_ENV
     {
