@@ -93,7 +93,7 @@ Proactor_Test: !chorus !VxWorks !LynxOS
 Proactor_Timer_Test: !chorus !VxWorks !LynxOS
 Process_Manager_Test: !chorus !VxWorks
 Process_Mutex_Test: !chorus !VxWorks
-Process_Strategy_Test: !chorus !LynxOS !VxWorks
+Process_Strategy_Test: !chorus !LynxOS !VxWorks !Cygwin
 RB_Tree_Test
 Reactor_Dispatch_Order_Test
 Reactor_Exceptions_Test
