@@ -175,7 +175,7 @@ deep_copy (CORBA::TypeCode_ptr tc,
         CORBA::Principal_ptr src, dst;
 
         src = *(CORBA::Principal_ptr *) source;
-	// @@ Andy, please make sure to check for memory failure.
+        // @@ Andy, please make sure to check for memory failure.
         dst = *(CORBA::Principal_ptr *) dest = new CORBA::Principal;
 
         // Principals are just opaque IDs ... copy them
@@ -184,13 +184,13 @@ deep_copy (CORBA::TypeCode_ptr tc,
         dst->id.length = dst->id.maximum = src->id.length;
 
         if (dst->id.length > 0)
-	  {
-	    // @@ Andy, please make sure to check for memory failure.
-	    dst->id.buffer = new CORBA::Octet [(unsigned) dst->id.length];
-	    ACE_OS::memcpy (dst->id.buffer, src->id.buffer,
-			    (size_t) dst->id.length);
-	  }
-	else
+          {
+            // @@ Andy, please make sure to check for memory failure.
+            dst->id.buffer = new CORBA::Octet [(unsigned) dst->id.length];
+            ACE_OS::memcpy (dst->id.buffer, src->id.buffer,
+                            (size_t) dst->id.length);
+          }
+        else
           dst->id.buffer = 0;
       }
     break;
@@ -219,18 +219,18 @@ deep_copy (CORBA::TypeCode_ptr tc,
         tcp = tc->typecode_param (0, env);
 
         if (env.exception () != 0)
-	  {
-	    retval = CORBA::TypeCode::TRAVERSE_STOP;
-	    break;
-	  }
+          {
+            retval = CORBA::TypeCode::TRAVERSE_STOP;
+            break;
+          }
 
         size = tcp->size (env);
 
         if (env.exception () != 0)
-	  {
-	    retval = CORBA::TypeCode::TRAVERSE_STOP;
-	    break;
-	  }
+          {
+            retval = CORBA::TypeCode::TRAVERSE_STOP;
+            break;
+          }
         tcp->Release ();
 
         // Now allocate a new (uninitialized) buffer of the right size
@@ -247,10 +247,10 @@ deep_copy (CORBA::TypeCode_ptr tc,
     case CORBA::tk_array:
     case CORBA::tk_alias:
       return tc->traverse (source,
-			   dest,
+                           dest,
                            (CORBA::TypeCode::VisitRoutine) deep_copy,
-			   0,
-			   env);
+                           0,
+                           env);
 
     case CORBA::tk_except:
       // Exceptions in memory have a "hidden" typecode up front, used
@@ -262,10 +262,10 @@ deep_copy (CORBA::TypeCode_ptr tc,
       (void) (*(CORBA::TypeCode_ptr *) dest)->AddRef ();
 
       return tc->traverse (source,
-			   dest,
-			   (CORBA::TypeCode::VisitRoutine) deep_copy,
-			   0,
-			   env);
+                           dest,
+                           (CORBA::TypeCode::VisitRoutine) deep_copy,
+                           0,
+                           env);
 
     case CORBA::tk_enum:
       *(int *) dest = *(int *) source;
@@ -273,12 +273,12 @@ deep_copy (CORBA::TypeCode_ptr tc,
 
     case CORBA::tk_string:
       *(CORBA::String *) dest =
-	CORBA::string_copy (*(CORBA::String *) source);
+        CORBA::string_copy (*(CORBA::String *) source);
       break;
 
     case CORBA::tk_wstring:
       *(CORBA::WString *) dest =
-	CORBA::wstring_copy (*(CORBA::WString *) source);
+        CORBA::wstring_copy (*(CORBA::WString *) source);
       break;
 
     default:
@@ -358,10 +358,10 @@ CORBA_Any::operator= (const CORBA_Any &src)
 
 static CORBA::TypeCode::traverse_status
 deep_free (CORBA::TypeCode_ptr tc,
-	   const void *value,
-	   const void *,      // value2 unused
-	   void *,      // context unused
-	   CORBA::Environment &env)
+           const void *value,
+           const void *,      // value2 unused
+           void *,      // context unused
+           CORBA::Environment &env)
 {
   // Don't do anything if the value is a null pointer.
 
@@ -393,10 +393,10 @@ deep_free (CORBA::TypeCode_ptr tc,
     case CORBA::tk_array:
     case CORBA::tk_alias:
       return tc->traverse (value,
-			   0,
-			   (CORBA::TypeCode::VisitRoutine) deep_free,
-			   0,
-			   env);
+                           0,
+                           (CORBA::TypeCode::VisitRoutine) deep_free,
+                           0,
+                           env);
 
       // XXX: Exceptions are currently leaked because of bugs lurking
       // in this area.  Keep in mind that there are two things to
@@ -423,10 +423,10 @@ deep_free (CORBA::TypeCode_ptr tc,
 
     case CORBA::tk_sequence:
       retval = tc->traverse (value,
-			     0,
-			     (CORBA::TypeCode::VisitRoutine) deep_free,
-			     0,
-			     env);
+                             0,
+                             (CORBA::TypeCode::VisitRoutine) deep_free,
+                             0,
+                             env);
       // @@ This better be allocated via new[].
       // @@ (ANDY) I'm not sure what to do here...should I delete the value?  It seems
       // that the DTOR for the sequence will insure that this buffer goes away.
@@ -435,7 +435,7 @@ deep_free (CORBA::TypeCode_ptr tc,
 
     case CORBA::tk_TypeCode:
       if ((*(CORBA::TypeCode_ptr *) value) != 0)
-	 (*(CORBA::TypeCode_ptr *) value)->Release ();
+         (*(CORBA::TypeCode_ptr *) value)->Release ();
       break;
 
     case CORBA::tk_Principal:
@@ -510,15 +510,15 @@ CORBA_Any::~CORBA_Any (void)
 
 void
 CORBA_Any::replace (CORBA::TypeCode_ptr tc,
-		    const void *v,
-		    CORBA::Boolean orb_owns_data,
-		    CORBA::Environment &env)
+                    const void *v,
+                    CORBA::Boolean orb_owns_data,
+                    CORBA::Environment &env)
 {
   if (this->orb_owns_data_)
     {
       //      (void) deep_free (type_, value_, 0, 0, env);
       if (value_)
-	DEEP_FREE (this->type_, this->value_, 0, env);
+        DEEP_FREE (this->type_, this->value_, 0, env);
       delete this->value_;
     }
 
@@ -539,9 +539,9 @@ CORBA_Any::operator<<= (from_string s)
 {
   // if the inserted string is bounded, we create a typecode.
   static CORBA::Long _oc_string [] =
-  {	// CDR typecode octets
+  {     // CDR typecode octets
     TAO_ENCAP_BYTE_ORDER,   // native endian + padding; "tricky"
-    0			    // ... unbounded string to start with
+    0                       // ... unbounded string to start with
   };
 
   CORBA::TypeCode_ptr tc = 0;
@@ -549,10 +549,10 @@ CORBA_Any::operator<<= (from_string s)
     {
       // bounded string
       _oc_string [1] = s.bound_;
-      CORBA::TypeCode_ptr tc = new CORBA::TypeCode (CORBA::tk_string,
-                                                    sizeof _oc_string,
-                                                    (u_char *) &_oc_string,
-                                                    CORBA::B_TRUE);
+      ACE_NEW (tc, CORBA::TypeCode (CORBA::tk_string,
+                                    sizeof _oc_string,
+                                    (u_char *) &_oc_string,
+                                    CORBA::B_TRUE));
     }
   else
     tc = CORBA::_tc_string; // unbounded
@@ -791,7 +791,7 @@ CORBA_Any::Release (void)
 
 TAO_HRESULT
 CORBA_Any::QueryInterface (REFIID riid,
-			   void **ppv)
+                           void **ppv)
 {
   *ppv = 0;
 
@@ -918,7 +918,7 @@ CORBA_Any_var::operator= (CORBA::Any *p)
   if (this->ptr_ != p)
     {
       if (this->ptr_ != 0)
-	delete (this->ptr_);
+        delete (this->ptr_);
 
       this->ptr_ = p;
     }
