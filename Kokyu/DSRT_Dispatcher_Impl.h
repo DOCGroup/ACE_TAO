@@ -20,11 +20,15 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Service_Config.h"
 
+#include "ace/Sched_Params.h"
+
 #include "kokyu_export.h"
 #include "Kokyu.h"
 
 namespace Kokyu
 {
+  class DSRT_Scheduler_Impl;
+
   class DSRT_Dispatcher_Impl : public ACE_Service_Object
   {
   public:
@@ -47,6 +51,10 @@ namespace Kokyu
                            const QoSDescriptor&);
 
   private:
+    DSRT_Scheduler_Impl* create_scheduler (DSRT_Sched_t sched_type,
+                                           ACE_Sched_Params::Policy sched_policy,
+                                           int sched_scope);
+
     int init_i (const DSRT_ConfigInfo&);
     int schedule_i (guid_t guid,
                     const QoSDescriptor&);
@@ -60,6 +68,7 @@ namespace Kokyu
     //    DSRT_Dispatcher_Task_Auto_Ptr task_;
     DSRT_ConfigInfo curr_config_info_;
     DSRT_Sched_t sched_type_;
+    DSRT_Scheduler_Impl* scheduler_impl_;
   };
 
 } //end of namespace
