@@ -140,7 +140,7 @@ FILES = tao_idl \
 	be/be_visitor_union_branch \
 	be/be_interpretive
 
-LSRC   	= $(addsuffix .cpp,$(FILES)) \
+SRC   	= $(addsuffix .cpp,$(FILES))
 #VOBJS = $(LSRC:%.cpp=$(VDIR)%.$(OBJEXT))
 #$(BIN): $(VOBJS)
 
