@@ -16,6 +16,7 @@
 # should also add -Wl,+vnocompatwarnings.
 
 debug = 1
+distrib = 0
 threads = 1
 
 # First, extract the OS version number.
@@ -49,6 +50,7 @@ endif
 DCFLAGS		+= -g
 DLD		= $(CXX) $(CCFLAGS)
 LD		= $(CXX)
+OCFLAGS		= -O
 PIC		= +Z
 
 AR		= $(COMPILE.cc) +inst_close $^; /bin/ar
@@ -56,6 +58,9 @@ ARFLAGS		= ruv
 RANLIB		= echo
 LDFLAGS		= -Wl,+s
 SOFLAGS		= -b
+ifeq ($(distrib),1)
+SOFLAGS		+= -Wl,-x -Wl,+h/usr/lib/$(@F)
+endif
 SOEXT		= sl
 #
 # Grab the appropriate libraries based on the version of HP-UX we're building
