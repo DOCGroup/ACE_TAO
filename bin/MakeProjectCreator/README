@@ -93,14 +93,16 @@ dllout		(Windows Only) Specifies where the dll will be placed
 libout		(Windows Only) Specifies where the lib will be placed
 install		Specifies where the executable (or library non-Windows) will go
 idlflags	Specifies the idl flags to be used when processing idl files
+idlgendir       Specifies the output directory for idl generated files.
+                If a listed idl file has a directory as part of the name,
+                the generated files will go in that directory unless
+                idlgendir specifies otherwise.
 idlpreprocessor	Simple assignment used in the gnu template only
 pch_header	Specifies the precompiled header file name
 pch_source	Specifies the precompiled source file name
 ssl             Specifies that the project will use ssl
 tao		Specifies that the project will use TAO
 version         Specifies the version number for the library or executable
-flag_overrides  Used to determine flags that have been overriden on a per
-                file basis.
 
 libpaths	Specifies 1 or more locations to find libraries
 includes	Specifies 1 or more locations to find include files
@@ -127,6 +129,8 @@ guid		This is used by the VC7 project and workspace creator.
 configurations	When used within a foreach context, this info (each
 		configuration) is gathered for use with the VC7 workspace
 		creator.
+flag_overrides  Used to determine flags that have been overriden on a per
+                file basis.
 
 
 Defaulting Behavior

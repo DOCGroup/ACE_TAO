@@ -138,6 +138,14 @@ sub create_array {
 }
 
 
+sub slash_to_backslash {
+  my($self) = shift;
+  my($file) = shift;
+  $file =~ s/\//\\/g;
+  return $file;
+}
+
+
 # ************************************************************
 # Virtual Methods To Be Overridden
 # ************************************************************
