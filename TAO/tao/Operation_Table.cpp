@@ -9,41 +9,41 @@ ACE_RCSID(tao, Operation_Table, "$Id$")
 #if defined (ACE_ENABLE_TIMEPROBES)
 
 static const char *TAO_Operation_Table_Timeprobe_Description[] =
-{
-  "TAO_Dynamic_Hash_OpTable::find - start",
-  "TAO_Dynamic_Hash_OpTable::find - end",
+  {
+    "TAO_Dynamic_Hash_OpTable::find - start",
+    "TAO_Dynamic_Hash_OpTable::find - end",
   
-  "TAO_Linear_Search_OpTable::find - start",
-  "TAO_Linear_Search_OpTable::find - end",
+    "TAO_Linear_Search_OpTable::find - start",
+    "TAO_Linear_Search_OpTable::find - end",
   
-  "TAO_Active_Demux_OpTable::find - start",
-  "TAO_Active_Demux_OpTable::find - end",
+    "TAO_Active_Demux_OpTable::find - start",
+    "TAO_Active_Demux_OpTable::find - end",
   
-  "TAO_Perfect_Hash_OpTable::find - start",
-  "TAO_Perfect_Hash_OpTable::find - end",
+    "TAO_Perfect_Hash_OpTable::find - start",
+    "TAO_Perfect_Hash_OpTable::find - end",
   
-  "TAO_Binary_Search_OpTable::find - start",
-  "TAO_Binary_Search_OpTable::find - end"
-};
+    "TAO_Binary_Search_OpTable::find - start",
+    "TAO_Binary_Search_OpTable::find - end"
+  };
 
 enum
-{
-  // Timeprobe description table start key
-  TAO_DYNAMIC_HASH_OPTABLE_FIND_START = 600,
-  TAO_DYNAMIC_HASH_OPTABLE_FIND_END,
+  {
+    // Timeprobe description table start key
+    TAO_DYNAMIC_HASH_OPTABLE_FIND_START = 600,
+    TAO_DYNAMIC_HASH_OPTABLE_FIND_END,
   
-  TAO_LINEAR_SEARCH_OPTABLE_FIND_START,
-  TAO_LINEAR_SEARCH_OPTABLE_FIND_END,
+    TAO_LINEAR_SEARCH_OPTABLE_FIND_START,
+    TAO_LINEAR_SEARCH_OPTABLE_FIND_END,
   
-  TAO_ACTIVE_DEMUX_OPTABLE_FIND_START,
-  TAO_ACTIVE_DEMUX_OPTABLE_FIND_END,
+    TAO_ACTIVE_DEMUX_OPTABLE_FIND_START,
+    TAO_ACTIVE_DEMUX_OPTABLE_FIND_END,
   
-  TAO_PERFECT_HASH_OPTABLE_FIND_START,
-  TAO_PERFECT_HASH_OPTABLE_FIND_END,
+    TAO_PERFECT_HASH_OPTABLE_FIND_START,
+    TAO_PERFECT_HASH_OPTABLE_FIND_END,
   
-  TAO_BINARY_SEARCH_OPTABLE_FIND_START,
-  TAO_BINARY_SEARCH_OPTABLE_FIND_END
-};
+    TAO_BINARY_SEARCH_OPTABLE_FIND_START,
+    TAO_BINARY_SEARCH_OPTABLE_FIND_END
+  };
 
 // Setup Timeprobes
 ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Operation_Table_Timeprobe_Description,
