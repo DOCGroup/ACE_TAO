@@ -1,3 +1,9 @@
+Fri Jan 17 09:00:17 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ACE-INSTALL.html (make): Removed all claims that we support 
+	  SunC++ 4.2.  Thanks to Kirat Singh <kirat.singh@gs.com> for
+	  reporting this.
+
 Sat Jan 18 09:07:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Makefile.DLL_Test:
@@ -18,10 +24,9 @@ Thu Jan 16 19:06:19 2003  Stephen Torri <storri@cse.wustl.edu>
         * ace/config-freebsd.h:
         * ace/README:
 
-          Added a new macro called ACE_HAS_PTHREAD_SETSTACK for
-          systems that use the newer glibc (2.3+). Eliminates
-          linker warning about not using the pthread function
-          called pthread_setstack.
+          Added a new macro called ACE_HAS_PTHREAD_SETSTACK for systems
+ 	  that use the newer glibc (2.3+). Eliminates linker warning about
+ 	  not using the pthread function called pthread_setstack.
 
 Thu Jan 16 16:25:45 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
