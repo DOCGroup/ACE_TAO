@@ -71,7 +71,7 @@ TAO_SunSoft_OutStream::print (AST_Expression *expr)
           this->TAO_OutStream::print ("%ld", ev->u.lval);
           break;
         case AST_Expression::EV_ulong:
-          this->TAO_OutStream::print ("%ld", ev->u.ulval);
+          this->TAO_OutStream::print ("%u", ev->u.ulval);
           break;
         case AST_Expression::EV_longlong:
 #if ! defined (ACE_LACKS_LONGLONG_T)
@@ -80,7 +80,7 @@ TAO_SunSoft_OutStream::print (AST_Expression *expr)
           break;
         case AST_Expression::EV_ulonglong:
 #if ! defined (ACE_LACKS_LONGLONG_T)
-          this->TAO_OutStream::print ("%ld", ev->u.ullval);
+          this->TAO_OutStream::print ("%u", ev->u.ullval);
 #endif /* ! defined (ACE_LACKS_LONGLONG_T) */
           break;
         case AST_Expression::EV_float:
@@ -92,7 +92,11 @@ TAO_SunSoft_OutStream::print (AST_Expression *expr)
         case AST_Expression::EV_longdouble:
           break;
         case AST_Expression::EV_char:
-          if (isprint (ev->u.cval))
+          // isprint() sees '\' as a printable character
+          // so we have to test for it first.
+          if (ev->u.cval == '\\')
+            this->TAO_OutStream::print ("'\\\\'");
+          else if (isprint (ev->u.cval))
 	          this->TAO_OutStream::print ("'%c'", ev->u.cval);
 	        else if (iscntrl (ev->u.cval))
             switch (ev->u.cval) 
@@ -117,9 +121,6 @@ TAO_SunSoft_OutStream::print (AST_Expression *expr)
                   break;
                 case '\a':
                   this->TAO_OutStream::print ("'\\a'");
-                  break;
-                case '\\':
-                  this->TAO_OutStream::print ("'\\'");
                   break;
                 case '\?':
                   this->TAO_OutStream::print ("'?'");
