@@ -37,6 +37,7 @@
 #include "ace/Proactor.h"
 #include "ace/Asynch_Acceptor.h"
 #include "ace/Asynch_Connector.h"
+#include "ace/Mem_Map.h"
 
 #include "ace/SOCK_Connector.h"
 
