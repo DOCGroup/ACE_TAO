@@ -36,11 +36,6 @@ public:
   int get_local_addr (ACE_SPIPE_Addr &) const;
   // Return the local address of this endpoint.
 
-  int disable (int signum) const ;
-  // Disable signal <signum>
-  // This is here to prevent Win32 from
-  // disabling SPIPE using socket calls
-
   void dump (void) const;
   // Dump the state of an object.
 
