@@ -479,6 +479,26 @@ be_visitor_interface_cs::gen_xxx_narrow (const char *pre,
           << "return " << node->local_name () << "::_duplicate (proxy);" << be_uidt_nl
           << "}" << be_nl << be_nl;
     }
+  else if (be_global->gen_smart_proxies () &&
+           !node->is_abstract ())
+    {
+      *os << node->full_name () << " *proxy = 0;" << be_nl << be_nl
+          << "proxy = TAO::Narrow_Utils<"
+          << node->local_name () << ">::" << pre << " (";
+
+      *os << be_idt << be_idt_nl
+          << "_tao_objref," << be_nl
+          << "\"" << node->repoID () << "\"," << be_nl
+          << node->flat_client_enclosing_scope ()
+          << node->base_proxy_broker_name ()
+          << "_Factory_function_pointer" << be_nl
+          << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
+          << ");" << be_uidt << be_nl
+          << "return TAO_" << node->local_name ()
+          << "_PROXY_FACTORY_ADAPTER::instance ()->create_proxy (proxy);"
+          << be_uidt << be_uidt_nl
+          << "}" << be_nl << be_nl;
+    }
   else
     {
       *os << "return" << be_idt_nl;
