@@ -1,3 +1,8 @@
+Mon Aug  9 18:12:12 UTC 2004  Johnny Willemsen  <jwillemen@remedy.nl>
+
+        * ace/OS_NS_stdlib.cpp (realpath):
+          Applied ACE code formatting to make it readable
+
 Mon Aug  9 15:20:00 UTC 2004  Simon Massey  <simon.massey@prismtechnologies.com>
 
         * ace/Sock_Connect.cpp
