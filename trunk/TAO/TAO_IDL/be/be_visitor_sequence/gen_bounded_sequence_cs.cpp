@@ -92,7 +92,7 @@ be_visitor_sequence_cs::gen_bounded_sequence (be_sequence *node)
       << "// allocate a buffer of the requested length. The buffer is allocated for the" << be_nl
       << "// right type" << be_nl
       << "{" << be_idt_nl
-      << "this->buffer_ = " << full_class_name << "::allocbuf (" 
+      << "this->buffer_ = " << full_class_name << "::allocbuf ("
       << node->max_size () << ");" << be_uidt_nl
       << "}" << be_nl
       << be_nl;
@@ -104,15 +104,15 @@ be_visitor_sequence_cs::gen_bounded_sequence (be_sequence *node)
       << "{" << be_idt_nl
       << "if (this->buffer_ == 0 || this->release_ == 0)" << be_idt_nl
       << "return;" << be_uidt_nl;
-  pt->accept(visitor); 
+  pt->accept(visitor);
   *os <<" *tmp = ACE_reinterpret_cast (";
-  pt->accept (visitor); 
+  pt->accept (visitor);
   *os << " *, this->buffer_);" << be_nl
       << full_class_name << "::freebuf (tmp);" << be_nl
       << "this->buffer_ = 0;" << be_uidt_nl
       << "}" << be_nl
       << be_nl;
-  
+
   // destructor
   *os << full_class_name << "::~" << class_name << " (void) // Dtor." << be_nl
       << "{" << be_idt_nl
@@ -121,10 +121,10 @@ be_visitor_sequence_cs::gen_bounded_sequence (be_sequence *node)
       << be_nl;
 
   os->gen_endif (); // endif macro
-  
+
   // generate #endif for AHETI
   os->gen_endif_AHETI();
-  
+
   delete visitor;
   return 0;
 }

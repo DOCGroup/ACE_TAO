@@ -112,22 +112,22 @@ be_visitor_sequence_ch::gen_unbounded_sequence (be_sequence *node)
 
   // Accessors
   *os << "// = Accessors." << be_nl;
-  pt->accept (visitor); 
+  pt->accept (visitor);
   *os <<" &operator[] (CORBA::ULong i);" << be_nl;
 
   // operator[]
-  *os << "const "; 
-  pt->accept (visitor); 
+  *os << "const ";
+  pt->accept (visitor);
   *os << " &operator[] (CORBA::ULong i) const;" << be_nl;
 
   // Static operations
   *os << "// = Static operations." << be_nl
-      << "static "; 
-  pt->accept (visitor); 
+      << "static ";
+  pt->accept (visitor);
   *os << " *allocbuf (CORBA::ULong size);" << be_nl;
 
-  *os << "static void freebuf ("; 
-  pt->accept (visitor); 
+  *os << "static void freebuf (";
+  pt->accept (visitor);
   *os << " *buffer);" << be_nl;
 
   // allocate_buffer
@@ -139,18 +139,18 @@ be_visitor_sequence_ch::gen_unbounded_sequence (be_sequence *node)
   // Implement the TAO_Base_Sequence methods (see Sequence.h)
   *os << "// Implement the TAO_Base_Sequence methods (see Sequence.h)" << be_nl
       << be_nl;
-  pt->accept(visitor); 
+  pt->accept(visitor);
   *os << " *get_buffer (CORBA::Boolean orphan = 0);" << be_nl;
 
   // get_buffer
-  *os << "const "; 
-  pt->accept (visitor); 
+  *os << "const ";
+  pt->accept (visitor);
   *os << " *get_buffer (void) const;" << be_nl;
-  
+
   // replace
   *os << "void replace (CORBA::ULong max," << be_idt_nl
       << "CORBA::ULong length," << be_nl;
-  pt->accept(visitor); 
+  pt->accept(visitor);
   *os <<" *data," << be_nl
       << "CORBA::Boolean release);" << be_uidt << be_uidt_nl;
 

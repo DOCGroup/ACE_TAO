@@ -66,7 +66,7 @@ be_visitor_sequence_cs::gen_bounded_str_sequence (be_sequence *node)
   be_visitor_context ctx (*this->ctx_);
   ctx.state (TAO_CodeGen::TAO_SEQUENCE_BASE_CS);
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
-  
+
   // !! branching in either compile time template instantiation
   // or manual template instatiation
   os->gen_ifdef_AHETI();
@@ -78,7 +78,7 @@ be_visitor_sequence_cs::gen_bounded_str_sequence (be_sequence *node)
 #if 0 /* Why is this here? ASG */
   // generate the class name
   be_type  *pt; // base types
-      
+
   if (bt->node_type () == AST_Decl::NT_typedef)
   {
     // get the primitive base type of this typedef node
@@ -88,7 +88,7 @@ be_visitor_sequence_cs::gen_bounded_str_sequence (be_sequence *node)
   else
     pt = bt;
 
-  // the accept is here the first time used and if an 
+  // the accept is here the first time used and if an
   // error occurs, it will occur here. Later no check
   // for errors will be done.
   if (pt->accept (visitor) == -1)
@@ -107,7 +107,7 @@ be_visitor_sequence_cs::gen_bounded_str_sequence (be_sequence *node)
       << "{" << be_idt_nl
       << "// For this class memory is never reallocated so the implementation" << be_nl
       << "// is *really* simple." << be_nl
-      << "this->buffer_ = " << full_class_name << "::allocbuf (" 
+      << "this->buffer_ = " << full_class_name << "::allocbuf ("
       << node->max_size () << ");" << be_uidt_nl
       << "}" << be_nl
       << be_nl;
@@ -153,4 +153,3 @@ be_visitor_sequence_cs::gen_bounded_str_sequence (be_sequence *node)
   delete visitor;
   return 0;
 }
-
