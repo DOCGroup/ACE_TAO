@@ -1,143 +1,149 @@
+Wed Aug 26 22:04:37 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * TAO_IDL/driver/drv_preproc.cpp (DRV_check_for_include): declare
+          for loop indices "fi" and "i" before the loops, because they are
+          used after.
+
 Wed Aug 26 19:13:49 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Sequence.i: 
-	* tao/Sequence.cpp: 
-	  Moved the sequence<octet>::get_buffer method to the .i file to
-	  work around a Sun/C++ bug (apparently it only shows up on
-	  Solaris 2.6 for x86).
+        * tao/Sequence.i:
+        * tao/Sequence.cpp:
+          Moved the sequence<octet>::get_buffer method to the .i file to
+          work around a Sun/C++ bug (apparently it only shows up on
+          Solaris 2.6 for x86).
 
-	* tao/CDR.cpp: 
-	  Fixed syntax error when compiling without
-	  TAO_NO_COPY_OCTET_SEQUENCES.
+        * tao/CDR.cpp:
+          Fixed syntax error when compiling without
+          TAO_NO_COPY_OCTET_SEQUENCES.
 
 Wed Aug 26 20:37:33 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
-	* tests/Cubit/TAO/MT_Cubit/Cubit_Task.cpp:
-	* tests/Cubit/TAO/MT_Cubit/Globals.cpp:
-	* tests/Cubit/TAO/MT_Cubit/Globals.h:
-	* tests/Cubit/TAO/MT_Cubit/Makefile:
-	* tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
-	* tests/Cubit/TAO/MT_Cubit/Task_Client.h:
-	* tests/Cubit/TAO/MT_Cubit/Util_Thread.cpp:
-	* tests/Cubit/TAO/MT_Cubit/client.cpp:
-	* tests/Cubit/TAO/MT_Cubit/cubit_i.cpp:
-	* tests/Cubit/TAO/MT_Cubit/cubit_i.h:
-	* tests/Cubit/TAO/MT_Cubit/server.cpp:
-	* tests/Cubit/TAO/MT_Cubit/server.h: Added code to test ORB/OS CPU
- 	overhead.  Separated code into different source files.  The server
- 	does not depend on the Task_State class anymore.
+        * tests/Cubit/TAO/MT_Cubit/Cubit_Task.cpp:
+        * tests/Cubit/TAO/MT_Cubit/Globals.cpp:
+        * tests/Cubit/TAO/MT_Cubit/Globals.h:
+        * tests/Cubit/TAO/MT_Cubit/Makefile:
+        * tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
+        * tests/Cubit/TAO/MT_Cubit/Task_Client.h:
+        * tests/Cubit/TAO/MT_Cubit/Util_Thread.cpp:
+        * tests/Cubit/TAO/MT_Cubit/client.cpp:
+        * tests/Cubit/TAO/MT_Cubit/cubit_i.cpp:
+        * tests/Cubit/TAO/MT_Cubit/cubit_i.h:
+        * tests/Cubit/TAO/MT_Cubit/server.cpp:
+        * tests/Cubit/TAO/MT_Cubit/server.h: Added code to test ORB/OS CPU
+        overhead.  Separated code into different source files.  The server
+        does not depend on the Task_State class anymore.
 
 Wed Aug 26 20:13:27 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* utils/IOR-parser/*: Added this another utility (which was
- 	  donated by Priya Narasimhan <priya@lambda.ece.ucsb.edu>) that
- 	  takes in a stringified IOR and decodes it, printing out the
- 	  information contained in it.
+        * utils/IOR-parser/*: Added this another utility (which was
+          donated by Priya Narasimhan <priya@lambda.ece.ucsb.edu>) that
+          takes in a stringified IOR and decodes it, printing out the
+          information contained in it.
 
-	* tao/ORB.h (CORBA): Added default arguments to the final two
- 	  parameters of ORB_init() to simplify common use-cases.
+        * tao/ORB.h (CORBA): Added default arguments to the final two
+          parameters of ORB_init() to simplify common use-cases.
 
 Wed Aug 26 19:13:33 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* utils/catior/*: Added this utility (which was donated by Jeff
- 	  Hopper <jhopper@nosc.mil>) that takes in a stringified IOR and
- 	  decodes it, printing out the information contained in it.
+        * utils/catior/*: Added this utility (which was donated by Jeff
+          Hopper <jhopper@nosc.mil>) that takes in a stringified IOR and
+          decodes it, printing out the information contained in it.
 
 Wed Aug 26 17:00:38 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* TAO_IDL/driver/drv_preproc.cpp (DRV_check_for_include): Removed
-	  an unused local variable <nm>.
+        * TAO_IDL/driver/drv_preproc.cpp (DRV_check_for_include): Removed
+          an unused local variable <nm>.
 
 Wed Aug 26 19:13:33 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* utils/catior/*: Added this little utility (which was donated
-	  by Jeff Hopper <jhopper@nosc.mil>) which will take in a
-	  stringified IOR and decode it, printing out the information
-	  contained in it.
+        * utils/catior/*: Added this little utility (which was donated
+          by Jeff Hopper <jhopper@nosc.mil>) which will take in a
+          stringified IOR and decode it, printing out the information
+          contained in it.
 
 Wed Aug 26 18:15:37 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/mpeg/: Added a README file and 
-	  renamed the README and INSTALL files to README.OGI and
- 	  INSTALL.OGI.
+        * orbsvcs/tests/AVStreams/mpeg/: Added a README file and
+          renamed the README and INSTALL files to README.OGI and
+          INSTALL.OGI.
 
 Wed Aug 26 18:07:31 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
-	* tao/orb.h:
-	  Removed static declarations of _tc_struct, _tc_enum,
-	  _tc_sequence, _tc_array, _tc_union. These need to be 
-	  generated by the IDL compiler.
+        * tao/orb.h:
+          Removed static declarations of _tc_struct, _tc_enum,
+          _tc_sequence, _tc_array, _tc_union. These need to be
+          generated by the IDL compiler.
 
-	* any.{h,i,cpp}:
-	  At Carlos' recommendation, added a constructor that takes
-	  a typecode pointer and a CDR stream, and a CDR accessor
-	  method.
+        * any.{h,i,cpp}:
+          At Carlos' recommendation, added a constructor that takes
+          a typecode pointer and a CDR stream, and a CDR accessor
+          method.
 
 Wed Aug 26 17:00:38 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Environment.cpp (CORBA_Environment): Disable updating the
-	  default environment for now.  (Per Carlos' instruction.)
+        * tao/Environment.cpp (CORBA_Environment): Disable updating the
+          default environment for now.  (Per Carlos' instruction.)
 
-	* tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp (run): Don't run the
-	  cube_rti_data test for now.
+        * tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp (run): Don't run the
+          cube_rti_data test for now.
 
-	* tao/orbconf.h:  Defined TAO_NULL_LOCK_REACTOR as
-	  ACE_Select_Reactor_T<
-	  ACE_Select_Reactor_Token_T<ACE_Noop_Token>>. 
-	
-	* tao/ORB_Core.{h,cpp}: Added a new option '-ORBlockfreereactor'
- 	  for TAO_Resource_Factory.  Specify it to 'yes' if you don't want
- 	  any locking with the reactor.  Use with care, e.g., if you are
- 	  running a completely single-threaded ORB or a Reactor-per-thread
- 	  model.
+        * tao/orbconf.h:  Defined TAO_NULL_LOCK_REACTOR as
+          ACE_Select_Reactor_T<
+          ACE_Select_Reactor_Token_T<ACE_Noop_Token>>.
+
+        * tao/ORB_Core.{h,cpp}: Added a new option '-ORBlockfreereactor'
+          for TAO_Resource_Factory.  Specify it to 'yes' if you don't want
+          any locking with the reactor.  Use with care, e.g., if you are
+          running a completely single-threaded ORB or a Reactor-per-thread
+          model.
 
 Wed Aug 26 17:05:27 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* docs/releasenotes/index.html: Updated the IDL compiler portion,
-	adding a note about the recent options and the fixing of the
-	relative path name problems.  
+        * docs/releasenotes/index.html: Updated the IDL compiler portion,
+        adding a note about the recent options and the fixing of the
+        relative path name problems.
 
 Wed Aug 26 16:32:18 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* TAO_IDL/be/be_codegen.cpp: 
-	* TAO_IDL/util/utl_global.cpp: 
-	* TAO_IDL/include/idl_global.h: 
-	* TAO_IDL/driver/drv_preproc.cpp: 
-		Fixed the relative #include path generation. tao_idl now
-	puts header names derived from the #include'd idl files as they
-	appear originally in the main idl file. 
-		Thanks to Carlos and Andy for their suggestions and
-	guidance. 
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/driver/drv_preproc.cpp:
+                Fixed the relative #include path generation. tao_idl now
+        puts header names derived from the #include'd idl files as they
+        appear originally in the main idl file.
+                Thanks to Carlos and Andy for their suggestions and
+        guidance.
 
 Wed Aug 26 13:12:57 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
-	* tests/Cubit/TAO/DII_Cubit/client.cpp
-	* orbsvcs/tests/Concurrency/CC_naming_service.cpp
-	  Added ".in ()" to orb argument for my_name_client.init.
+        * tests/Cubit/TAO/DII_Cubit/client.cpp
+        * orbsvcs/tests/Concurrency/CC_naming_service.cpp
+          Added ".in ()" to orb argument for my_name_client.init.
 
 Wed Aug 26 12:11:23 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp : Fixed the _out warnings 
-	  given by the SunCC compiler. Thanks to David for the fix.
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp : Fixed the _out warnings
+          given by the SunCC compiler. Thanks to David for the fix.
 
 Mon Aug 24 15:07:29 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/Cubit/TAO_IDL_Cubit/{client,server}.dsp: Added RTI_IO.cpp
-	  into the project.
+        * tests/Cubit/TAO_IDL_Cubit/{client,server}.dsp: Added RTI_IO.cpp
+          into the project.
 
-	* tests/Cubit/TAO/IDL_Cubit/RTI_IO.h: Make sure we use "ace/OS.h"
-	  instead of <iostream.h> directly.
+        * tests/Cubit/TAO/IDL_Cubit/RTI_IO.h: Make sure we use "ace/OS.h"
+          instead of <iostream.h> directly.
 
 Tue Aug 25 14:32:41 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp (cube_rti_data): 
-	* tests/Cubit/TAO/IDL_Cubit/Cubit_i.cpp (cube_rti_data): 
+        * tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp (cube_rti_data):
+        * tests/Cubit/TAO/IDL_Cubit/Cubit_i.cpp (cube_rti_data):
 
-	  Fixed the use of _out variables.
+          Fixed the use of _out variables.
 
         * tests/Cubit/TAO/IDL_Cubit/RTI_IO.cpp (print_RtiPacket): Changed
           code to use ACE_DEBUG instead of iostreams.
-	  
+
 Tue Aug 25 11:11:54 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/Simulator/{Event_Supplier,DOVEMIB}/Makefile:
