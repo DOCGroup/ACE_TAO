@@ -178,43 +178,14 @@ client (void *)
 
   ACE_SOCK_Connector con;
                                                         
-  // Attempt a non-blocking connect to the server, reusing the local
-  // addr if necessary.  Initiate blocking connection with server.
+  // Initiate blocking connection with server.
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) starting connect\n"));
 
   if (con.connect (cli_stream, remote_addr) == -1)
-    {
-      // Initiate timed, non-blocking connection with server.
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) starting non-blocking connect\n"));
-
-      if (con.connect (cli_stream,
-                       remote_addr,
-                       (ACE_Time_Value *) &ACE_Time_Value::zero) == -1)
-	{
-	  if (errno != EWOULDBLOCK)
-	    ACE_ERROR_RETURN ((LM_ERROR,
-                               "(%P|%t) %p\n",
-                               "connection failed"),
-                              0);
-
-	  ACE_DEBUG ((LM_DEBUG, "(%P|%t) starting timed connect\n"));
-
-	  // Check if non-blocking connection is in progress, and wait
-	  // up to timeout seconds for it to complete.
-	  
-	  if (con.complete (cli_stream,
-                            &remote_addr,
-                            options->timeout ()) == -1)
-	    ACE_ERROR_RETURN ((LM_ERROR,
-                               "(%P|%t) %p\n",
-                               "complete failed"),
-                              0);
-	  else
-	    ACE_DEBUG ((LM_DEBUG,
-                        "(%P|%t) connected to %s\n",
-                        remote_addr.get_host_name ()));
-	}
-    }
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%P|%t) %p\n",
+                       "connection failed"),
+                      0);
   else
     ACE_DEBUG ((LM_DEBUG,
                 "(%P|%t) connected to %s\n",
@@ -250,20 +221,11 @@ client (void *)
                              "send_n"), 
                             0);
       }
-
-  // Explicitly close the writer-side of the connection.
-  if (cli_stream.close_writer () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) %p\n",
-                       "close_writer"), 
-                      0);
-
-  // Wait for handshake with server. 
-  if (cli_stream.recv_n (buf, 1) != 1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) %p\n",
-                       "recv_n"),
-                      0);    
+    else if (cli_stream.recv (buf, sizeof buf) <= 0)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%P|%t) %p\n",
+                         "recv"),
+                        0);
 
   // Close the connection completely. 
   if (cli_stream.close () == -1) 
