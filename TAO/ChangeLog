@@ -1,7 +1,7 @@
 Fri Oct 04 19:23:08 2002  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao\PortableServer\Object_Adapter.cpp (init): 
-	* tao\PortableServer\PortableServer.cpp: Moved the registration of
+	* tao/PortableServer/Object_Adapter.cpp (init): 
+	* tao/PortableServer/PortableServer.cpp: Moved the registration of
 	  PortableServer_ORBInitializer with the
 	  PortableInterceptor::ORBInitializer to the
 	  Object_Adapter_Factory::init().  This way we don't do the
