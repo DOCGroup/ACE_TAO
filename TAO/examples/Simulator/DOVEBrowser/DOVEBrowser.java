@@ -18,9 +18,9 @@ public class DOVEBrowser  { //extends java.applet.Applet {
 
   DemoCore demoCore_;
   
-  public DOVEBrowser () {
+  public DOVEBrowser (String nameServiceIOR) {
     super ();
-    demoCore_ = new DemoCore ();   
+    demoCore_ = new DemoCore (nameServiceIOR);   
   }
   
   public void init () {
@@ -36,8 +36,13 @@ public class DOVEBrowser  { //extends java.applet.Applet {
   
   public static void main (String[] args)
     {
-      DOVEBrowser doveBrowser_ = new DOVEBrowser ();
-      doveBrowser_.init ();
+      String nameServiceIOR = null;
+      if (args[0] == "-ORBnameserviceior") {
+	nameServiceIOR = args[1];
+      }
+      
+      DOVEBrowser doveBrowser = new DOVEBrowser (nameServiceIOR);
+      doveBrowser.init ();
     }  
 }
   
