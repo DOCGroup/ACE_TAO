@@ -1,3 +1,15 @@
+Sat Jun 17 18:15:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* tests/Makefile.DLL:
+	* tests/Makefile.DLL_Test: 
+	  Renamed Makefile.DLL since on NT it appeared as if there was a
+	  dll version of the Makefile. Also did a make depend. Thanks to
+	  James Megquier  <jmegq@bbn.com> for reporting this and to
+	  Darrell brunsch <brunsch@cs.wustl.edu> for suggesting that the
+  	  name be changed.
+	* tests/Makefile: Updated the Makefile to now have
+	  Makefile.DLL_Test.
+		
 Sat Jun 17 08:03:53 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* docs/tutorials/Chap_5/ex02.html: Fixed a typo where
