@@ -351,7 +351,6 @@ DRV_pre_proc(char *myfile)
     system(catbuf);
   }
 
-#if 0
   if (ACE_OS::unlink(tmp_ifile) == -1) {
     cerr << idl_global->prog_name()
          << GTDEVEL(": Could not remove cpp input file ")
@@ -359,7 +358,7 @@ DRV_pre_proc(char *myfile)
          << "\n";
     exit(99);
   }
-#endif
+
 #if !defined (ACE_WIN32)
   // TODO: This unlink fails every time under NT, it seems that you
   // cannot remove an open file under that OS?
