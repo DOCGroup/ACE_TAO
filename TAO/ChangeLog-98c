@@ -1,20 +1,9 @@
-Sat Oct 25 22:28:42 1997  Carlos O'Ryan  <coryan@MILONGA>
-
-	* TAO_IDL/fe/idl.ll: Since yytext may be an "unsigned char*" under
- 	  HP-UX they define an "alias" __yytext. This hack fails miserably
- 	  when using flex, since then the yytext thing can change on the
- 	  fly. I use an inline function instead.  Added support for #line
- 	  preprocessor directives.
-
-	* TAO_IDL/driver/drv_preproc.cpp: Documented some of my changes
- 	  for NT, namely the fact that unlinking the output file while
- 	  still open causes the parsing to fail on NT.
-
-	* TAO_IDL/tao_idl.dsp: Added new folders for source files, header
- 	  files, template files, etc. I modelled this based on the ACE
- 	  project files.
-
 Sat Oct 25 18:14:14 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* TAO_IDL/be/be_interface.cpp (be_interface): Fixed yet another
+ 	round of uninitialized data members.  It is clear that the
+ 	original authors of this code wouldn't pass my ugrad programming
+ 	course...
 
 	* TAO_IDL/fe/idl.ll (idl_parse_line_and_file): Had to make a minor
  	change to skip over the #line directive from Microsoft.  In
@@ -49,6 +38,22 @@ Sat Oct 25 18:14:14 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
  	(e.g., FLOAT) with IDL_<name> (e.g., IDL_FLOAT) so that the code
  	won't bomb on lame systems like NT that typedef basic types to all
  	capitals (e.g., typedef float FLOAT).
+
+Sat Oct 25 22:28:42 1997  Carlos O'Ryan  <coryan@MILONGA>
+
+	* TAO_IDL/fe/idl.ll: Since yytext may be an "unsigned char*" under
+ 	  HP-UX they define an "alias" __yytext. This hack fails miserably
+ 	  when using flex, since then the yytext thing can change on the
+ 	  fly. I use an inline function instead.  Added support for #line
+ 	  preprocessor directives.
+
+	* TAO_IDL/driver/drv_preproc.cpp: Documented some of my changes
+ 	  for NT, namely the fact that unlinking the output file while
+ 	  still open causes the parsing to fail on NT.
+
+	* TAO_IDL/tao_idl.dsp: Added new folders for source files, header
+ 	  files, template files, etc. I modelled this based on the ACE
+ 	  project files.
 
 Sat Oct 25 22:05:43 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
 
