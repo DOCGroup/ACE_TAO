@@ -715,8 +715,9 @@ public:
 
   // = The locking strategy prevents race conditions.
   /// Get the locking strategy.
-  /// Set a new locking strategy and return the hold one.
   ACE_Lock *locking_strategy (void);
+
+  /// Set a new locking strategy and return the hold one.
   ACE_Lock *locking_strategy (ACE_Lock *);
 
   /// Dump the state of an object.

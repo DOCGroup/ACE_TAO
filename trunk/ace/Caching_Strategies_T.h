@@ -48,8 +48,10 @@ public:
   /// Accessor method for the timer attributes.
   virtual ATTRIBUTES attributes (void) = 0;
 
-  // = Accessor methods for the percentage of entries to purge.
+  /// Get the percentage of entries to purge.
   virtual double purge_percent (void) = 0;
+
+  /// Set the percentage of entries to purge.
   virtual void purge_percent (double percentage) = 0;
 
   // = Strategy related Operations
@@ -118,8 +120,10 @@ public:
   /// Accessor method for the timer attributes.
   ATTRIBUTES attributes (void);
 
-  // = Accessor methods for the percentage of entries to purge.
+  /// Get the percentage of entries to purge.
   double purge_percent (void);
+
+  /// Set the percentage of entries to purge.
   void purge_percent (double percentage);
 
   // = Strategy related Operations
@@ -213,9 +217,10 @@ public:
   /// Accessor method for the timer attributes.
   ATTRIBUTES attributes (void);
 
-  // = Accessor methods for the percentage of entries to purge.
+  /// Get the percentage of entries to purge.
   double purge_percent (void);
 
+  /// Set the percentage of entries to purge.
   void purge_percent (double percentage);
 
   // =  Strategy related Operations
@@ -313,9 +318,10 @@ public:
   /// Access the attributes.
   ATTRIBUTES attributes (void);
 
-  // = Accessor methods for the percentage of entries to purge.
+  /// Get the percentage of entries to purge.
   double purge_percent (void);
 
+  /// Set the percentage of entries to purge.
   void purge_percent (double percentage);
 
   // =  Strategy related Operations
@@ -404,9 +410,10 @@ public:
   /// Accessor method.
   ATTRIBUTES attributes (void);
 
-  // = Accessor methods for the percentage of entries to purge.
+  /// Get the percentage of entries to purge.
   double purge_percent (void);
 
+  /// Set the percentage of entries to purge.
   void purge_percent (double percentage);
 
   // =  Strategy related Operations
@@ -480,9 +487,10 @@ public:
   /// Accessor method.
   ATTRIBUTES attributes (void);
 
- // = Accessor methods for the percentage of entries to purge.
+  /// Get the percentage of entries to purge.
   double purge_percent (void);
 
+  /// Set the percentage of entries to purge.
   void purge_percent (double percentage);
 
   // =  Strategy related Operations

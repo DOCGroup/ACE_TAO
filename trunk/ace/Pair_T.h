@@ -45,14 +45,18 @@ public:
   /// Default constructor.
   ACE_Pair (void);
 
-  /// Get/Set first.
+  /// Get first.
   T1 &first (void);
   const T1 &first (void) const;
+
+  /// Set first.
   void first (const T1 &t1);
 
-  /// Access second.
+  /// Get second.
   T2 &second (void);
   const T2 &second (void) const;
+
+  /// Set second.
   void second (const T2 &t2);
 
 protected:

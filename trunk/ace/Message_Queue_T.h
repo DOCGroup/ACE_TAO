@@ -1129,8 +1129,10 @@ public:
    */
   virtual int notify (void);
 
-  /// Get/set the notification strategy for the <Message_Queue>
+  /// Get the notification strategy for the <Message_Queue>
   virtual ACE_Notification_Strategy *notification_strategy (void);
+
+  /// Set the notification strategy for the <Message_Queue>
   virtual void notification_strategy (ACE_Notification_Strategy *s);
 
   /// Returns a reference to the lock used by the <ACE_Message_Queue_Ex>.

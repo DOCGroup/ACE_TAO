@@ -702,13 +702,22 @@ public:
   // = Cancel methods, which provides a cooperative thread-termination mechanism (will not block).
   /**
    * Cancel's all the threads.
-   * Cancel a single thread.
-   * Cancel a group of threads.
-   * True if <t_id> is cancelled, else false.
    */
   int cancel_all (int async_cancel = 0);
+
+  /**
+   * Cancel a single thread.
+   */
   int cancel (ACE_thread_t, int async_cancel = 0);
+
+  /**
+   * Cancel a group of threads.
+   */
   int cancel_grp (int grp_id, int async_cancel = 0);
+
+  /**
+   * True if <t_id> is cancelled, else false.
+   */
   int testcancel (ACE_thread_t t_id);
 
   /// Set group ids for a particular thread id.
@@ -730,13 +739,22 @@ public:
    * Block until there are no more threads running in <task>.  Returns
    * 0 on success and -1 on failure.  Note that <wait_task> will not
    * wait on detached threads.
-   * Suspend all threads in an ACE_Task.
-   * Resume all threads in an ACE_Task.
-   * Send a signal <signum> to all threads in an <ACE_Task>.
    */
   int wait_task (ACE_Task_Base *task);
+
+  /**
+   * Suspend all threads in an ACE_Task.
+   */
   int suspend_task (ACE_Task_Base *task);
+
+  /**
+   * Resume all threads in an ACE_Task.
+   */
   int resume_task (ACE_Task_Base *task);
+
+  /**
+   * Send a signal <signum> to all threads in an <ACE_Task>.
+   */
   int kill_task (ACE_Task_Base *task,
                  int signum);
 

@@ -48,8 +48,9 @@ public:
 
   // = ATM-specific open and shutdown operations.
   /// open the stream.
-  /// Close down and release resources.
   int open (ACE_ATM_Params params = ACE_ATM_Params());
+
+  /// Close down and release resources.
   int close (void);
 
   /// Get the underlying handle.

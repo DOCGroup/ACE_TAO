@@ -44,22 +44,22 @@ public:
 
   typedef ACE_Based_Pointer<ACE_MEM_SAP_Node> ACE_MEM_SAP_NODE_PTR;
 
-  // Initialize the node with its capacity.
+  /// Initialize the node with its capacity.
   ACE_MEM_SAP_Node (size_t cap);
 
-  // Get the size of the data we hold.
+  /// Get the size of the data we hold.
   size_t size (void) const;
 
-  // Get the capacity of this block of data.
+  /// Get the capacity of this block of data.
   size_t capacity (void) const;
 
-  // Get the pointer to the block of data we hold.
+  /// Get the pointer to the block of data we hold.
   void *data (void);
 
-  // The maximum size of this memory block.
+  /// The maximum size of this memory block.
   size_t capacity_;
 
-  // The actualy size used.
+  /// The actualy size used.
   size_t size_;
 
   ACE_MEM_SAP_NODE_PTR next_;

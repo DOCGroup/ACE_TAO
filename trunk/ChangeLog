@@ -1,3 +1,26 @@
+Tue Apr 18 11:34:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Asynch_IO.h:
+        * ace/ATM_Params.h:
+        * ace/ATM_Stream.h:
+        * ace/Caching_Strategies_T.h:
+        * ace/Event_Handler.h:
+        * ace/MEM_Acceptor.h:
+        * ace/MEM_Connector.h:
+        * ace/MEM_SAP.h:
+        * ace/Memory_Pool.h:
+        * ace/Message_Block.h:
+        * ace/Message_Queue_T.h:
+        * ace/Pair_T.h:
+        * ace/Parse_Node.h:
+        * ace/Select_Reactor_Base.h:
+        * ace/Thread_Adapter.h:
+        * ace/Thread_Adapter.h:
+        * ace/Thread_Manager.h:
+        * ace/WIN32_Asynch_IO.h:
+        * ace/WIN32_Proactor.h:
+          Doxygen-ized some of the comments
+
 Tue Apr 18 07:39:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Synch-Benchmarks/Base_Test/Baseline_Test.h:

@@ -332,11 +332,11 @@ private:
 #include "ace/Parse_Node.i"
 #endif /* __ACE_INLINE__ */
 
-// Keeps track of the number of errors encountered so far.
+/// Keeps track of the number of errors encountered so far.
 extern int ace_yyerrno;
 
-// Global variable used to communicate between the parser and the main
-// program.
+/// Global variable used to communicate between the parser and the main
+/// program.
 extern ACE_Service_Config *ace_this_svc;
 
 #include "ace/post.h"
