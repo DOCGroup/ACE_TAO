@@ -1,0 +1,55 @@
+Tue Jun 30 00:58:57 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * TAO version 0.1.36 released.
+
+Mon Jun 29 14:43:17 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * TAO_IDL/be/be_array.cpp (gen_forany_defn): changed
+          declaration of friend CORBA::Any to friend class CORBA_Any,
+          to keep DEC cxx from complaining.  Also, commented out
+          the declaration, because it doesn't appear to be necessary.
+
+        * tests/OctetSeq/OctetSeq.cpp (main): cast sizeof to int
+          to avoid egcs warning about signed/unsigned comparison.
+
+Mon Jun 29 11:05:03 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+        * tao/encode.cpp:
+          Removed unused variable.
+
+Mon Jun 29 11:00:26 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+
+        After the call to do_static_call, we were not checking if some
+        exception was raised. This was causing major problems if there was
+        any post do_static_call processing such as narrowing to be
+        done. Thanks to Seth Widoff for reporting the problem.
+
+Sun Jun 28 21:33:48 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/GIOP.cpp: replaced ACE_SYNCH_RW_MUTEX with
+          ACE_SYNCH_MUTEX so that it will compile with g++
+          (and be correct :-).
+
+        * tests/OctetSeq/OctetSeq.cpp (main): changed loop index
+          i from u_int to int to avoid signed/unsigned comparison.
+
+Sun Jun 28 16:10:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
+
+        * tests/NestedUpcalls/Triangle_Test/Makefile: Added
+          this Makefile for use on Unix machines.
+
+Sun Jun 28 15:30:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
+
+        * tao/GIOP.cpp: In method location_forwarding, removed
+          the explicit release of the IIOP_Object. It is implicitly
+          released by the release of the CORBA::OBject pointer.
+
+        * tests/Quoter/Generic_Factory_Impl.{h,cpp}: Splitted
+          the create_object method into two parts.
+
+Sat Jun 27 18:13:05 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * TAO/tests/POA/Explicit_Activation/server.cpp (main): Changed
+          #include "ace/Timeprobes.h" to #include "tao/Timeprobes.h".
