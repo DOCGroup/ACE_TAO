@@ -166,6 +166,8 @@ endif
   $(ACE_ROOT)/ace/OS_NS_signal.h \
   $(ACE_ROOT)/ace/OS_NS_signal.inl \
   $(ACE_ROOT)/ace/OS_NS_Thread.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
   $(ACE_ROOT)/ace/OS_NS_stdio.inl \
   $(ACE_ROOT)/ace/OS_NS_pwd.h \
@@ -191,6 +193,9 @@ endif
   $(ACE_ROOT)/ace/Addr.h \
   $(ACE_ROOT)/ace/Addr.i \
   $(ACE_ROOT)/ace/INET_Addr.i \
+  $(ACE_ROOT)/ace/OS_NS_arpa_inet.h \
+  $(ACE_ROOT)/ace/os_include/arpa/os_inet.h \
+  $(ACE_ROOT)/ace/OS_NS_arpa_inet.inl \
   $(ACE_ROOT)/ACEXML/common/URL_Addr.inl \
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
@@ -205,8 +210,6 @@ endif
   $(ACE_ROOT)/ace/SOCK_Stream.i \
   $(ACE_ROOT)/ace/Mem_Map.h \
   $(ACE_ROOT)/ace/Mem_Map.i \
-  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
-  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
   $(ACE_ROOT)/ace/SOCK_Connector.h \
   $(ACE_ROOT)/ace/SOCK_Connector.i \
   $(ACE_ROOT)/ace/Connector.h \
@@ -529,6 +532,8 @@ endif
   $(ACE_ROOT)/ace/OS_NS_signal.h \
   $(ACE_ROOT)/ace/OS_NS_signal.inl \
   $(ACE_ROOT)/ace/OS_NS_Thread.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
   $(ACE_ROOT)/ace/OS_NS_stdio.inl \
   $(ACE_ROOT)/ace/OS_NS_pwd.h \
@@ -672,6 +677,8 @@ endif
   $(ACE_ROOT)/ace/OS_NS_signal.h \
   $(ACE_ROOT)/ace/OS_NS_signal.inl \
   $(ACE_ROOT)/ace/OS_NS_Thread.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
   $(ACE_ROOT)/ace/OS_NS_stdio.inl \
   $(ACE_ROOT)/ace/OS_NS_pwd.h \

@@ -154,10 +154,10 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/os_include/os_inttypes.h \
   $(ACE_ROOT)/ace/os_include/os_stdint.h \
   $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_time.h \
   $(ACE_ROOT)/ace/OS_NS_sys_time.inl \
-  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_NS_unistd.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
@@ -229,6 +229,9 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/OS_NS_signal.h \
   $(ACE_ROOT)/ace/OS_NS_signal.inl \
   $(ACE_ROOT)/ace/OS_NS_Thread.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
+  $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/OS_NS_sys_socket.h \
   $(ACE_ROOT)/ace/os_include/net/os_if.h \
   $(ACE_ROOT)/ace/OS_NS_stropts.h \
@@ -255,7 +258,6 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Node.cpp \
   $(ACE_ROOT)/ace/Array_Base.h \
   $(ACE_ROOT)/ace/Malloc_Base.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/Array_Base.inl \
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(ACE_ROOT)/ace/Unbounded_Set.h \

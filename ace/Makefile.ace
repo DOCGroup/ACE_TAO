@@ -700,15 +700,15 @@ endif # GHS
   ARGV.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Unbounded_Queue.h \
   Node.h \
+  config-all.h \
+  OS_main.h \
   Node.cpp \
   os_include/os_stddef.h \
   Unbounded_Queue.inl \
@@ -735,10 +735,10 @@ endif # GHS
   ARGV.i \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -780,16 +780,16 @@ endif # GHS
   Argv_Type_Converter.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   OS_Memory.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   os_include/os_stddef.h \
   OS_NS_stdlib.h \
@@ -861,19 +861,19 @@ endif # GHS
   Time_Value.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  os_include/sys/os_time.h \
+  config-all.h \
   OS_main.h \
+  os_include/sys/os_types.h \
+  os_include/os_stddef.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
-  os_include/sys/os_types.h \
-  os_include/os_stddef.h \
   os_include/os_errno.h \
   Basic_Types.h \
   os_include/os_limits.h \
@@ -1009,20 +1009,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   OS_NS_sys_socket.h \
   os_include/sys/os_socket.h \
   os_include/sys/os_uio.h \
@@ -1038,7 +1041,6 @@ endif # GHS
 .obj/OS_main.o .obj/OS_main.so .shobj/OS_main.o .shobj/OS_main.so: OS_main.cpp \
   OS_main.h \
   ACE_export.h \
-  config-all.h \
   pre.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
@@ -1213,7 +1215,58 @@ endif # GHS
   OS_NS_macros.h \
   OS_NS_errno.h \
   os_include/os_errno.h \
-  OS_NS_errno.inl
+  OS_NS_errno.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  os_include/sys/os_types.h \
+  os_include/os_stddef.h \
+  Global_Macros.h \
+  OS_Errno.h \
+  OS_Errno.inl \
+  OS_NS_fcntl.inl \
+  OS_NS_unistd.h \
+  os_include/os_unistd.h \
+  os_include/os_inttypes.h \
+  os_include/os_stdint.h \
+  Time_Value.h \
+  os_include/sys/os_time.h \
+  Time_Value.inl \
+  OS_NS_sys_time.h \
+  OS_NS_sys_time.inl \
+  os_include/os_stdio.h \
+  os_include/os_stdarg.h \
+  OS_NS_unistd.inl \
+  OS_NS_sys_utsname.h \
+  os_include/sys/os_utsname.h \
+  OS_NS_sys_utsname.inl \
+  OS_NS_string.h \
+  Basic_Types.h \
+  os_include/os_limits.h \
+  os_include/os_float.h \
+  os_include/os_stdlib.h \
+  os_include/sys/os_wait.h \
+  os_include/os_signal.h \
+  os_include/os_time.h \
+  os_include/os_ucontext.h \
+  os_include/sys/os_resource.h \
+  Basic_Types.i \
+  OS_NS_string.inl \
+  OS_NS_wchar.h \
+  os_include/os_wchar.h \
+  os_include/os_string.h \
+  os_include/os_ctype.h \
+  OS_NS_wchar.inl \
+  Default_Constants.h \
+  OS_Memory.h \
+  OS_NS_stdlib.h \
+  OS_NS_stdlib.inl \
+  Object_Manager_Base.h \
+  Cleanup.h \
+  Cleanup.inl \
+  Object_Manager_Base.inl \
+  os_include/os_search.h \
+  OS_Memory.inl
 
 .obj/OS_NS_errno.o .obj/OS_NS_errno.so .shobj/OS_NS_errno.o .shobj/OS_NS_errno.so: OS_NS_errno.cpp \
   OS_NS_errno.h \
@@ -1260,10 +1313,10 @@ endif # GHS
   os_include/os_inttypes.h \
   os_include/os_stdint.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -1311,7 +1364,10 @@ endif # GHS
   os_include/os_semaphore.h \
   OS_NS_signal.h \
   OS_NS_signal.inl \
-  OS_NS_Thread.inl
+  OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  os_include/sys/os_mman.h
 
 .obj/OS_NS_math.o .obj/OS_NS_math.so .shobj/OS_NS_math.o .shobj/OS_NS_math.so: OS_NS_math.cpp \
   OS_NS_math.h \
@@ -1426,12 +1482,12 @@ endif # GHS
   os_include/os_poll.h \
   OS_NS_poll.inl \
   Time_Value.h \
-  Time_Value.inl \
-  OS_NS_sys_time.h \
-  OS_NS_sys_time.inl \
   os_include/sys/os_time.h \
   os_include/sys/os_types.h \
   os_include/os_stddef.h \
+  Time_Value.inl \
+  OS_NS_sys_time.h \
+  OS_NS_sys_time.inl \
   os_include/os_errno.h \
   OS_NS_errno.h \
   OS_NS_errno.inl
@@ -1519,10 +1575,10 @@ endif # GHS
   os_include/os_inttypes.h \
   os_include/os_stdint.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   os_include/os_errno.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
@@ -1650,7 +1706,18 @@ endif # GHS
   os_include/os_wchar.h \
   os_include/os_string.h \
   os_include/os_ctype.h \
-  OS_NS_wchar.inl
+  OS_NS_wchar.inl \
+  OS_NS_stdlib.h \
+  OS_NS_stdlib.inl \
+  Object_Manager_Base.h \
+  Cleanup.h \
+  Cleanup.inl \
+  Object_Manager_Base.inl \
+  Global_Macros.h \
+  OS_Errno.h \
+  os_include/os_errno.h \
+  OS_Errno.inl \
+  os_include/os_search.h
 
 .obj/OS_NS_strings.o .obj/OS_NS_strings.so .shobj/OS_NS_strings.o .shobj/OS_NS_strings.so: OS_NS_strings.cpp \
   OS_NS_strings.h \
@@ -1690,10 +1757,10 @@ endif # GHS
   os_include/os_errno.h \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -1767,10 +1834,10 @@ endif # GHS
   os_include/os_inttypes.h \
   os_include/os_stdint.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   os_include/os_stdio.h \
   os_include/os_stdarg.h \
   OS_NS_unistd.inl \
@@ -1927,10 +1994,10 @@ endif # GHS
   os_include/os_errno.h \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -2002,10 +2069,10 @@ endif # GHS
   os_include/os_inttypes.h \
   os_include/os_stdint.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   os_include/os_errno.h \
   os_include/os_stdio.h \
   os_include/os_stdarg.h \
@@ -2061,11 +2128,11 @@ endif # GHS
   OS_main.h \
   ACE_export.h \
   Time_Value.h \
-  Time_Value.inl \
-  OS_NS_sys_time.inl \
   os_include/sys/os_time.h \
   os_include/sys/os_types.h \
   os_include/os_stddef.h \
+  Time_Value.inl \
+  OS_NS_sys_time.inl \
   os_include/os_errno.h
 
 .obj/OS_NS_sys_uio.o .obj/OS_NS_sys_uio.so .shobj/OS_NS_sys_uio.o .shobj/OS_NS_sys_uio.so: OS_NS_sys_uio.cpp \
@@ -2304,25 +2371,30 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Sched_Params.h \
   Sched_Params.i \
   OS_Thread_Adapter.h \
   OS_Thread_Adapter.inl \
-  Min_Max.h
+  Min_Max.h \
+  OS_NS_ctype.h \
+  OS_NS_ctype.inl
 
 .obj/OS_NS_time.o .obj/OS_NS_time.so .shobj/OS_NS_time.o .shobj/OS_NS_time.so: OS_NS_time.cpp \
   OS_NS_time.h \
@@ -2404,11 +2476,14 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
-  OS_NS_pwd.inl
+  OS_NS_pwd.inl \
+  os_include/sys/os_mman.h
 
 .obj/OS_NS_unistd.o .obj/OS_NS_unistd.so .shobj/OS_NS_unistd.o .shobj/OS_NS_unistd.so: OS_NS_unistd.cpp \
   OS_NS_unistd.h \
@@ -2427,10 +2502,10 @@ endif # GHS
   os_include/os_inttypes.h \
   os_include/os_stdint.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   os_include/os_errno.h \
   os_include/os_stdio.h \
   os_include/os_stdarg.h \
@@ -2490,11 +2565,14 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
-  OS_NS_pwd.inl
+  OS_NS_pwd.inl \
+  os_include/sys/os_mman.h
 
 .obj/OS_NS_wchar.o .obj/OS_NS_wchar.so .shobj/OS_NS_wchar.o .shobj/OS_NS_wchar.so: OS_NS_wchar.cpp \
   OS_NS_wchar.h \
@@ -2534,14 +2612,14 @@ endif # GHS
   OS_QoS.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   os_include/sys/os_uio.h \
+  config-all.h \
+  OS_main.h \
   os_include/sys/os_types.h \
   os_include/os_stddef.h \
   os_include/os_limits.h \
@@ -2556,10 +2634,10 @@ endif # GHS
   os_include/os_errno.h \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -2615,20 +2693,22 @@ endif # GHS
   OS_Errno.h \
   os_include/os_errno.h \
   OS_Errno.inl \
-  OS_TLI.inl
+  OS_TLI.inl \
+  OS_NS_errno.h \
+  OS_NS_errno.inl
 
 .obj/OS_Errno.o .obj/OS_Errno.so .shobj/OS_Errno.o .shobj/OS_Errno.so: OS_Errno.cpp \
   OS_Errno.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl
 
 .obj/Base_Thread_Adapter.o .obj/Base_Thread_Adapter.so .shobj/Base_Thread_Adapter.o .shobj/Base_Thread_Adapter.so: Base_Thread_Adapter.cpp \
@@ -2722,20 +2802,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
-  OS_NS_pwd.inl
+  OS_NS_pwd.inl \
+  os_include/sys/os_mman.h
 
 .obj/OS_Log_Msg_Attributes.o .obj/OS_Log_Msg_Attributes.so .shobj/OS_Log_Msg_Attributes.o .shobj/OS_Log_Msg_Attributes.so: OS_Log_Msg_Attributes.cpp \
   OS_Log_Msg_Attributes.h \
@@ -2779,20 +2862,20 @@ endif # GHS
   Sched_Params.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
+  config-all.h \
+  OS_main.h \
+  os_include/sys/os_types.h \
+  os_include/os_stddef.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
-  os_include/sys/os_types.h \
-  os_include/os_stddef.h \
   os_include/os_errno.h \
   OS_NS_Thread.h \
   Global_Macros.h \
@@ -2845,34 +2928,37 @@ endif # GHS
   OS_NS_errno.h \
   OS_NS_errno.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Sched_Params.i
 
 .obj/Handle_Set.o .obj/Handle_Set.so .shobj/Handle_Set.o .shobj/Handle_Set.so: Handle_Set.cpp \
   Handle_Set.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   os_include/sys/os_select.h \
+  config-all.h \
+  OS_main.h \
   os_include/sys/os_time.h \
   os_include/sys/os_types.h \
   os_include/os_stddef.h \
@@ -2915,13 +3001,11 @@ endif # GHS
   Copy_Disabled.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
-  ace_wchar.inl \
-  OS_main.h
+  ace_wchar.inl
 
 .obj/ACE.o .obj/ACE.so .shobj/ACE.o .shobj/ACE.so: ACE.cpp \
   ACE.h \
@@ -3016,11 +3100,14 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   OS_NS_sys_socket.h \
   os_include/net/os_if.h \
   OS_NS_stropts.h \
@@ -3045,7 +3132,6 @@ endif # GHS
   String_Base_Const.h \
   String_Base.i \
   Malloc_Base.h \
-  os_include/sys/os_mman.h \
   Min_Max.h \
   String_Base.cpp \
   SString.i \
@@ -3076,14 +3162,14 @@ endif # GHS
   Active_Map_Manager.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Basic_Types.h \
+  config-all.h \
+  OS_main.h \
   os_include/os_limits.h \
   os_include/os_unistd.h \
   os_include/sys/os_types.h \
@@ -3151,20 +3237,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Guard_T.inl \
   RW_Thread_Mutex.h \
   RW_Mutex.h \
@@ -3173,7 +3262,6 @@ endif # GHS
   Guard_T.cpp \
   Map_Manager.cpp \
   Malloc_Base.h \
-  os_include/sys/os_mman.h \
   Null_Mutex.h \
   Active_Map_Manager_T.i \
   Active_Map_Manager_T.cpp
@@ -3182,14 +3270,14 @@ endif # GHS
   Arg_Shifter.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   OS_NS_string.h \
+  config-all.h \
+  OS_main.h \
   Basic_Types.h \
   os_include/os_limits.h \
   os_include/os_unistd.h \
@@ -3247,27 +3335,43 @@ endif # GHS
   Global_Macros.h \
   OS_Errno.h \
   OS_Errno.inl \
-  Hash_Map_Manager_T.h \
-  Default_Constants.h \
-  Functor.h \
+  OS_Memory.h \
+  os_include/os_stddef.h \
+  OS_NS_stdlib.h \
+  os_include/os_stdlib.h \
+  os_include/sys/os_wait.h \
+  os_include/os_signal.h \
+  os_include/sys/os_types.h \
+  os_include/os_time.h \
+  os_include/os_ucontext.h \
+  os_include/sys/os_resource.h \
+  os_include/sys/os_time.h \
+  OS_NS_stdlib.inl \
+  Object_Manager_Base.h \
+  Cleanup.h \
+  Cleanup.inl \
+  Object_Manager_Base.inl \
+  OS_NS_string.h \
   Basic_Types.h \
   os_include/os_limits.h \
   os_include/os_unistd.h \
-  os_include/sys/os_types.h \
-  os_include/os_stddef.h \
   os_include/os_inttypes.h \
   os_include/os_stdint.h \
   os_include/os_stdio.h \
   os_include/os_stdarg.h \
   os_include/os_float.h \
-  os_include/os_stdlib.h \
-  os_include/sys/os_wait.h \
-  os_include/os_signal.h \
-  os_include/os_time.h \
-  os_include/os_ucontext.h \
-  os_include/sys/os_resource.h \
-  os_include/sys/os_time.h \
   Basic_Types.i \
+  OS_NS_string.inl \
+  OS_NS_wchar.h \
+  os_include/os_wchar.h \
+  os_include/os_string.h \
+  os_include/os_ctype.h \
+  OS_NS_wchar.inl \
+  os_include/os_search.h \
+  OS_Memory.inl \
+  Hash_Map_Manager_T.h \
+  Default_Constants.h \
+  Functor.h \
   Functor.i \
   ACE.h \
   Flag_Manip.h \
@@ -3299,23 +3403,7 @@ endif # GHS
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_string.h \
-  OS_NS_string.inl \
-  OS_NS_wchar.h \
-  os_include/os_wchar.h \
-  os_include/os_string.h \
-  os_include/os_ctype.h \
-  OS_NS_wchar.inl \
   OS_NS_macros.h \
-  OS_Memory.h \
-  OS_NS_stdlib.h \
-  OS_NS_stdlib.inl \
-  Object_Manager_Base.h \
-  Cleanup.h \
-  Cleanup.inl \
-  Object_Manager_Base.inl \
-  os_include/os_search.h \
-  OS_Memory.inl \
   OS_NS_Thread.h \
   os_include/os_pthread.h \
   Base_Thread_Adapter.h \
@@ -3329,11 +3417,14 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   OS_NS_sys_socket.h \
   os_include/net/os_if.h \
   OS_NS_stropts.h \
@@ -3360,7 +3451,6 @@ endif # GHS
   Guard_T.cpp \
   Hash_Map_Manager_T.cpp \
   Malloc_Base.h \
-  os_include/sys/os_mman.h \
   Containers.h \
   Containers.i \
   Containers_T.h \
@@ -3394,15 +3484,15 @@ endif # GHS
   Containers.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Containers.i \
   Containers_T.h \
+  config-all.h \
+  OS_main.h \
   Node.h \
   Node.cpp \
   Array_Base.h \
@@ -3566,6 +3656,8 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
@@ -3632,8 +3724,6 @@ endif # GHS
   Signal.i \
   Mem_Map.h \
   Mem_Map.i \
-  OS_NS_sys_mman.h \
-  OS_NS_sys_mman.inl \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
@@ -3750,6 +3840,8 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
@@ -3816,8 +3908,6 @@ endif # GHS
   Signal.i \
   Mem_Map.h \
   Mem_Map.i \
-  OS_NS_sys_mman.h \
-  OS_NS_sys_mman.inl \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
@@ -3835,25 +3925,25 @@ endif # GHS
   Date_Time.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Date_Time.i \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   Time_Value.h \
-  Time_Value.inl \
-  OS_NS_sys_time.h \
-  OS_NS_sys_time.inl \
   os_include/sys/os_time.h \
   os_include/sys/os_types.h \
   os_include/os_stddef.h \
+  Time_Value.inl \
+  OS_NS_sys_time.h \
+  OS_NS_sys_time.inl \
   OS_NS_time.h \
   Basic_Types.h \
   os_include/os_limits.h \
@@ -3905,14 +3995,14 @@ endif # GHS
   Dirent.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   OS_NS_dirent.h \
+  config-all.h \
+  OS_main.h \
   os_include/os_dirent.h \
   os_include/sys/os_types.h \
   os_include/os_stddef.h \
@@ -3965,14 +4055,14 @@ endif # GHS
   Dirent_Selector.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   os_include/os_dirent.h \
+  config-all.h \
+  OS_main.h \
   os_include/sys/os_types.h \
   os_include/os_stddef.h \
   os_include/os_limits.h \
@@ -4019,15 +4109,15 @@ endif # GHS
   Dynamic.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Dynamic.i \
   Singleton.h \
+  config-all.h \
+  OS_main.h \
   TSS_T.h \
   Lock.h \
   Lock.inl \
@@ -4091,20 +4181,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Thread_Mutex.inl \
   TSS_T.inl \
   TSS_T.cpp \
@@ -4166,16 +4259,16 @@ endif # GHS
 .obj/Flag_Manip.o .obj/Flag_Manip.so .shobj/Flag_Manip.o .shobj/Flag_Manip.so: Flag_Manip.cpp Flag_Manip.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   Flag_Manip.i \
   OS_NS_fcntl.h \
@@ -4191,14 +4284,14 @@ endif # GHS
   Framework_Component.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   os_include/os_signal.h \
+  config-all.h \
+  OS_main.h \
   os_include/sys/os_types.h \
   os_include/os_stddef.h \
   os_include/os_time.h \
@@ -4258,20 +4351,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Thread_Mutex.inl \
   Framework_Component.inl \
   ACE.h \
@@ -4423,11 +4519,14 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   OS_NS_sys_socket.h \
   os_include/net/os_if.h \
   OS_NS_stropts.h \
@@ -4556,6 +4655,8 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
@@ -4678,11 +4779,14 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   OS_NS_sys_socket.h \
   os_include/net/os_if.h \
   OS_NS_stropts.h \
@@ -4708,34 +4812,29 @@ endif # GHS
   RW_Thread_Mutex.inl \
   Guard_T.cpp \
   Hash_Map_Manager_T.cpp \
-  Malloc_Base.h \
-  os_include/sys/os_mman.h
+  Malloc_Base.h
 
 .obj/Connection_Recycling_Strategy.o .obj/Connection_Recycling_Strategy.so .shobj/Connection_Recycling_Strategy.o .shobj/Connection_Recycling_Strategy.so: Connection_Recycling_Strategy.cpp \
   Connection_Recycling_Strategy.h \
   pre.h \
   Recyclable.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Recyclable.inl
 
 .obj/Hashable.o .obj/Hashable.so .shobj/Hashable.o .shobj/Hashable.so: Hashable.cpp \
   Hashable.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Hashable.inl
 
 .obj/Notification_Strategy.o .obj/Notification_Strategy.so .shobj/Notification_Strategy.o .shobj/Notification_Strategy.so: Notification_Strategy.cpp \
@@ -4743,14 +4842,14 @@ endif # GHS
   pre.h \
   Event_Handler.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   os_include/os_signal.h \
+  config-all.h \
+  OS_main.h \
   os_include/sys/os_types.h \
   os_include/os_stddef.h \
   os_include/os_time.h \
@@ -4811,20 +4910,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Thread_Mutex.inl \
   Atomic_Op_T.h \
   Atomic_Op_T.i \
@@ -4849,42 +4951,38 @@ endif # GHS
   Recyclable.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Recyclable.inl
 
 .obj/Refcountable.o .obj/Refcountable.so .shobj/Refcountable.o .shobj/Refcountable.so: Refcountable.cpp \
   Refcountable.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Refcountable.inl
 
 .obj/Handle_Ops.o .obj/Handle_Ops.so .shobj/Handle_Ops.o .shobj/Handle_Ops.so: Handle_Ops.cpp \
   Handle_Ops.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   Handle_Ops.i \
   OS_NS_errno.h \
@@ -4896,25 +4994,25 @@ endif # GHS
   os_include/os_stddef.h \
   OS_NS_fcntl.inl \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
-  OS_NS_sys_time.inl \
-  os_include/sys/os_time.h
+  OS_NS_sys_time.inl
 
 .obj/Init_ACE.o .obj/Init_ACE.so .shobj/Init_ACE.o .shobj/Init_ACE.so: Init_ACE.cpp \
   Init_ACE.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Init_ACE.i \
   Object_Manager.h \
   Object_Manager_Base.h \
+  config-all.h \
+  OS_main.h \
   Cleanup.h \
   Cleanup.inl \
   os_include/sys/os_types.h \
@@ -4974,20 +5072,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Recursive_Thread_Mutex.inl \
   Static_Object_Lock.h \
   Object_Manager.i \
@@ -5077,25 +5178,25 @@ endif # GHS
   Message_Block.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Default_Constants.h \
+  config-all.h \
+  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
   OS_Errno.inl \
   Time_Value.h \
-  Time_Value.inl \
-  OS_NS_sys_time.h \
-  OS_NS_sys_time.inl \
   os_include/sys/os_time.h \
   os_include/sys/os_types.h \
   os_include/os_stddef.h \
+  Time_Value.inl \
+  OS_NS_sys_time.h \
+  OS_NS_sys_time.inl \
   Message_Block.i \
   Message_Block_T.h \
   Message_Block_T.i \
@@ -5154,15 +5255,17 @@ endif # GHS
   OS_NS_errno.h \
   OS_NS_errno.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
@@ -5182,30 +5285,30 @@ endif # GHS
   Method_Request.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl
 
 .obj/Object_Manager.o .obj/Object_Manager.so .shobj/Object_Manager.o .shobj/Object_Manager.so: Object_Manager.cpp \
   Object_Manager.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Object_Manager_Base.h \
+  config-all.h \
+  OS_main.h \
   Cleanup.h \
   Cleanup.inl \
   os_include/sys/os_types.h \
@@ -5265,20 +5368,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Recursive_Thread_Mutex.inl \
   Static_Object_Lock.h \
   Object_Manager.i \
@@ -5301,7 +5407,6 @@ endif # GHS
   Guard_T.cpp \
   Map_Manager.cpp \
   Malloc_Base.h \
-  os_include/sys/os_mman.h \
   Local_Tokens.h \
   Local_Tokens.i \
   Token_Manager.i \
@@ -5385,6 +5490,9 @@ endif # GHS
   SOCK_IO.i \
   INET_Addr.h \
   INET_Addr.i \
+  OS_NS_arpa_inet.h \
+  os_include/arpa/os_inet.h \
+  OS_NS_arpa_inet.inl \
   SOCK_Stream.i \
   SOCK_Acceptor.h \
   SOCK_Acceptor.i \
@@ -5434,8 +5542,6 @@ endif # GHS
   Memory_Pool.h \
   Mem_Map.h \
   Mem_Map.i \
-  OS_NS_sys_mman.h \
-  OS_NS_sys_mman.inl \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
@@ -5461,14 +5567,14 @@ endif # GHS
   String_Base_Const.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Basic_Types.h \
+  config-all.h \
+  OS_main.h \
   os_include/os_limits.h \
   os_include/os_unistd.h \
   os_include/sys/os_types.h \
@@ -5491,14 +5597,14 @@ endif # GHS
   Malloc.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Log_Msg.h \
+  config-all.h \
+  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
@@ -5570,15 +5676,17 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
@@ -5632,8 +5740,6 @@ endif # GHS
   Signal.i \
   Mem_Map.h \
   Mem_Map.i \
-  OS_NS_sys_mman.h \
-  OS_NS_sys_mman.inl \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
@@ -5661,15 +5767,15 @@ endif # GHS
   Stats.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Unbounded_Queue.h \
   Node.h \
+  config-all.h \
+  OS_main.h \
   Node.cpp \
   os_include/os_stddef.h \
   Unbounded_Queue.inl \
@@ -5860,16 +5966,16 @@ endif # GHS
   pre.h \
   Mem_Map.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   os_include/sys/os_mman.h \
   os_include/sys/os_types.h \
@@ -5886,10 +5992,10 @@ endif # GHS
   Mem_Map.i \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -6018,18 +6124,18 @@ endif # GHS
   Dump.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Dump_T.h \
   Dump_T.cpp \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   Guard_T.h \
   Lock.h \
@@ -6089,20 +6195,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Guard_T.inl \
   RW_Thread_Mutex.h \
   RW_Mutex.h \
@@ -6215,11 +6324,14 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   OS_NS_sys_socket.h \
   os_include/net/os_if.h \
   OS_NS_stropts.h \
@@ -6247,7 +6359,6 @@ endif # GHS
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   Malloc_Base.h \
-  os_include/sys/os_mman.h \
   Log_Msg.h \
   Log_Priority.h \
   Containers.h \
@@ -6310,50 +6421,46 @@ endif # GHS
   SOCK_IO.i \
   INET_Addr.h \
   INET_Addr.i \
+  OS_NS_arpa_inet.h \
+  os_include/arpa/os_inet.h \
+  OS_NS_arpa_inet.inl \
   SOCK_Stream.i \
   SOCK_Connector.i \
   Log_Msg_NT_Event_Log.h \
   Log_Msg_UNIX_Syslog.h \
   Log_Record.h \
-  Log_Record.i \
-  os_include/arpa/os_inet.h
+  Log_Record.i
 
 .obj/Log_Msg_Callback.o .obj/Log_Msg_Callback.so .shobj/Log_Msg_Callback.o .shobj/Log_Msg_Callback.so: Log_Msg_Callback.cpp \
   Log_Msg_Callback.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
-  ace_wchar.inl \
-  OS_main.h
+  ace_wchar.inl
 
 .obj/Log_Msg_Backend.o .obj/Log_Msg_Backend.so .shobj/Log_Msg_Backend.o .shobj/Log_Msg_Backend.so: Log_Msg_Backend.cpp \
   Log_Msg_Backend.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
-  ace_wchar.inl \
-  OS_main.h
+  ace_wchar.inl
 
 .obj/Log_Msg_IPC.o .obj/Log_Msg_IPC.so .shobj/Log_Msg_IPC.o .shobj/Log_Msg_IPC.so: Log_Msg_IPC.cpp \
   Log_Msg_IPC.h \
   pre.h \
   Log_Msg_Backend.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   SOCK_Connector.h \
   SOCK_Stream.h \
   SOCK_IO.h \
@@ -6365,6 +6472,8 @@ endif # GHS
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   Flag_Manip.i \
   OS_NS_fcntl.h \
@@ -6386,10 +6495,10 @@ endif # GHS
   OS_NS_stropts.inl \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -6460,15 +6569,20 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  os_include/sys/os_mman.h \
   SOCK_IO.i \
   INET_Addr.h \
   INET_Addr.i \
+  OS_NS_arpa_inet.h \
+  os_include/arpa/os_inet.h \
+  OS_NS_arpa_inet.inl \
   SOCK_Stream.i \
   SOCK_Connector.i \
   Log_Record.h \
   Log_Priority.h \
-  Log_Record.i \
-  os_include/arpa/os_inet.h
+  Log_Record.i
 
 .obj/Log_Msg_NT_Event_Log.o .obj/Log_Msg_NT_Event_Log.so .shobj/Log_Msg_NT_Event_Log.o .shobj/Log_Msg_NT_Event_Log.so: Log_Msg_NT_Event_Log.cpp \
   config-all.h \
@@ -6574,11 +6688,14 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   OS_NS_sys_socket.h \
   os_include/net/os_if.h \
   OS_NS_stropts.h \
@@ -6603,13 +6720,13 @@ endif # GHS
   pre.h \
   post.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Default_Constants.h \
+  config-all.h \
+  OS_main.h \
   Basic_Types.h \
   os_include/os_limits.h \
   os_include/os_unistd.h \
@@ -6695,11 +6812,14 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   OS_NS_sys_socket.h \
   os_include/net/os_if.h \
   OS_NS_stropts.h \
@@ -6719,14 +6839,14 @@ endif # GHS
   pre.h \
   Shared_Object.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   os_include/sys/os_types.h \
+  config-all.h \
+  OS_main.h \
   os_include/os_stddef.h \
   Shared_Object.i \
   Svc_Conf_Tokens.h \
@@ -6790,20 +6910,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Thread_Mutex.inl \
   Atomic_Op_T.h \
   Atomic_Op_T.i \
@@ -6858,7 +6981,6 @@ endif # GHS
   Node.cpp \
   Array_Base.h \
   Malloc_Base.h \
-  os_include/sys/os_mman.h \
   Array_Base.inl \
   Array_Base.cpp \
   Unbounded_Set.h \
@@ -6881,14 +7003,14 @@ endif # GHS
   Trace.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Log_Msg.h \
+  config-all.h \
+  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
@@ -6918,27 +7040,27 @@ endif # GHS
   Activation_Queue.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Message_Queue.h \
   Message_Block.h \
   Default_Constants.h \
+  config-all.h \
+  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
   OS_Errno.inl \
   Time_Value.h \
-  Time_Value.inl \
-  OS_NS_sys_time.h \
-  OS_NS_sys_time.inl \
   os_include/sys/os_time.h \
   os_include/sys/os_types.h \
   os_include/os_stddef.h \
+  Time_Value.inl \
+  OS_NS_sys_time.h \
+  OS_NS_sys_time.inl \
   Message_Block.i \
   Message_Block_T.h \
   Message_Block_T.i \
@@ -6998,15 +7120,17 @@ endif # GHS
   OS_NS_errno.h \
   OS_NS_errno.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
@@ -7110,20 +7234,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Thread_Mutex.inl \
   Atomic_Op_T.h \
   Atomic_Op_T.i \
@@ -7145,15 +7272,15 @@ endif # GHS
   Process.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Handle_Set.h \
   os_include/sys/os_select.h \
+  config-all.h \
+  OS_main.h \
   os_include/sys/os_time.h \
   os_include/sys/os_types.h \
   os_include/os_stddef.h \
@@ -7250,6 +7377,8 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
@@ -7305,14 +7434,14 @@ endif # GHS
   pre.h \
   Event_Handler.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   os_include/os_signal.h \
+  config-all.h \
+  OS_main.h \
   os_include/sys/os_types.h \
   os_include/os_stddef.h \
   os_include/os_time.h \
@@ -7373,20 +7502,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Thread_Mutex.inl \
   Atomic_Op_T.h \
   Atomic_Op_T.i \
@@ -7416,7 +7548,6 @@ endif # GHS
   String_Base_Const.h \
   String_Base.i \
   Malloc_Base.h \
-  os_include/sys/os_mman.h \
   Min_Max.h \
   String_Base.cpp \
   ACE.h \
@@ -7471,28 +7602,26 @@ endif # GHS
   TSS_Adapter.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   TSS_Adapter.inl
 
 .obj/Auto_Event.o .obj/Auto_Event.so .shobj/Auto_Event.o .shobj/Auto_Event.so: Auto_Event.cpp \
   Auto_Event.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Event.h \
   OS_NS_Thread.h \
+  config-all.h \
+  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
@@ -7551,20 +7680,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Event.inl \
   Auto_Event.inl
 
@@ -7572,15 +7704,15 @@ endif # GHS
   Manual_Event.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Event.h \
   OS_NS_Thread.h \
+  config-all.h \
+  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
@@ -7639,20 +7771,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Event.inl \
   Manual_Event.inl
 
@@ -7660,14 +7795,14 @@ endif # GHS
   Barrier.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   OS_NS_errno.h \
+  config-all.h \
+  OS_main.h \
   os_include/os_errno.h \
   OS_NS_errno.inl \
   Condition_Thread_Mutex.h \
@@ -7728,20 +7863,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Thread_Mutex.inl \
   Condition_Thread_Mutex.inl \
   Barrier.inl \
@@ -7759,14 +7897,14 @@ endif # GHS
   Condition_Thread_Mutex.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Thread_Mutex.h \
+  config-all.h \
+  OS_main.h \
   OS_NS_Thread.h \
   Global_Macros.h \
   OS_Errno.h \
@@ -7826,20 +7964,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Thread_Mutex.inl \
   Condition_Thread_Mutex.inl \
   Log_Msg.h \
@@ -7849,15 +7990,15 @@ endif # GHS
   Condition_Recursive_Thread_Mutex.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Recursive_Thread_Mutex.h \
   OS_NS_Thread.h \
+  config-all.h \
+  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
@@ -7916,20 +8057,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Recursive_Thread_Mutex.inl \
   Condition_Recursive_Thread_Mutex.inl
 
@@ -7937,14 +8081,14 @@ endif # GHS
   Event.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   OS_NS_Thread.h \
+  config-all.h \
+  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
@@ -8003,20 +8147,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Event.inl \
   Log_Msg.h \
   Log_Priority.h
@@ -8025,27 +8172,25 @@ endif # GHS
   Lock.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Lock.inl
 
 .obj/Mutex.o .obj/Mutex.so .shobj/Mutex.o .shobj/Mutex.so: Mutex.cpp \
   Mutex.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Log_Msg.h \
+  config-all.h \
+  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
@@ -8106,37 +8251,37 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
-  Mutex.inl \
-  OS_NS_sys_mman.h \
-  OS_NS_sys_mman.inl \
-  os_include/sys/os_mman.h
+  os_include/sys/os_mman.h \
+  Mutex.inl
 
 .obj/RW_Mutex.o .obj/RW_Mutex.so .shobj/RW_Mutex.o .shobj/RW_Mutex.so: RW_Mutex.cpp \
   RW_Mutex.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   OS_NS_Thread.h \
+  config-all.h \
+  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
@@ -8195,20 +8340,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   RW_Mutex.inl \
   Log_Msg.h \
   Log_Priority.h
@@ -8217,15 +8365,15 @@ endif # GHS
   RW_Thread_Mutex.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   RW_Mutex.h \
   OS_NS_Thread.h \
+  config-all.h \
+  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
@@ -8284,20 +8432,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   RW_Mutex.inl \
   RW_Thread_Mutex.inl \
   Guard_T.h \
@@ -8310,14 +8461,14 @@ endif # GHS
   Recursive_Thread_Mutex.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   OS_NS_Thread.h \
+  config-all.h \
+  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
@@ -8376,20 +8527,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Recursive_Thread_Mutex.inl \
   Log_Msg.h \
   Log_Priority.h
@@ -8398,14 +8552,14 @@ endif # GHS
   Semaphore.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   OS_NS_Thread.h \
+  config-all.h \
+  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
@@ -8464,20 +8618,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Semaphore.inl \
   Log_Msg.h \
   Log_Priority.h \
@@ -8576,20 +8733,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Thread_Mutex.inl \
   Log_Msg.h \
   Log_Priority.h \
@@ -8601,21 +8761,79 @@ endif # GHS
   RW_Mutex.h \
   RW_Mutex.inl \
   RW_Thread_Mutex.inl \
-  Guard_T.cpp
+  Guard_T.cpp \
+  Malloc_T.h \
+  Malloc.h \
+  Malloc.i \
+  Memory_Pool.h \
+  ACE.h \
+  Flag_Manip.h \
+  Flag_Manip.i \
+  Handle_Ops.h \
+  Handle_Ops.i \
+  Lib_Find.h \
+  Lib_Find.i \
+  Init_ACE.h \
+  Init_ACE.i \
+  Sock_Connect.h \
+  os_include/netinet/os_in.h \
+  os_include/sys/os_socket.h \
+  os_include/sys/os_uio.h \
+  Sock_Connect.i \
+  ACE.i \
+  OS_NS_sys_socket.h \
+  os_include/net/os_if.h \
+  OS_NS_stropts.h \
+  os_include/os_stropts.h \
+  OS_NS_stropts.inl \
+  OS_QoS.h \
+  OS_NS_sys_socket.inl \
+  OS_NS_sys_uio.h \
+  OS_NS_sys_uio.inl \
+  Event_Handler.h \
+  Atomic_Op.h \
+  Atomic_Op_T.h \
+  Atomic_Op_T.i \
+  Atomic_Op_T.cpp \
+  Atomic_Op.i \
+  Synch_Traits.h \
+  Event_Handler.i \
+  Signal.h \
+  Signal.i \
+  Mem_Map.h \
+  Mem_Map.i \
+  SV_Semaphore_Complex.h \
+  SV_Semaphore_Simple.h \
+  SV_Semaphore_Simple.i \
+  SV_Semaphore_Complex.i \
+  Unbounded_Set.h \
+  Node.h \
+  Node.cpp \
+  Unbounded_Set.inl \
+  Unbounded_Set.cpp \
+  Malloc_Base.h \
+  Memory_Pool.i \
+  Malloc_Allocator.h \
+  Malloc_Allocator.i \
+  Free_List.h \
+  Free_List.i \
+  Free_List.cpp \
+  Malloc_T.i \
+  Malloc_T.cpp
 
 .obj/Thread_Semaphore.o .obj/Thread_Semaphore.so .shobj/Thread_Semaphore.o .shobj/Thread_Semaphore.so: Thread_Semaphore.cpp \
   Thread_Semaphore.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Semaphore.h \
   OS_NS_Thread.h \
+  config-all.h \
+  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
@@ -8674,41 +8892,68 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Semaphore.inl \
-  Thread_Semaphore.inl
+  Thread_Semaphore.inl \
+  ACE.h \
+  Flag_Manip.h \
+  Flag_Manip.i \
+  Handle_Ops.h \
+  Handle_Ops.i \
+  Lib_Find.h \
+  Lib_Find.i \
+  Init_ACE.h \
+  Init_ACE.i \
+  Sock_Connect.h \
+  os_include/netinet/os_in.h \
+  os_include/sys/os_socket.h \
+  os_include/sys/os_uio.h \
+  Sock_Connect.i \
+  ACE.i \
+  OS_NS_sys_socket.h \
+  os_include/net/os_if.h \
+  OS_NS_stropts.h \
+  os_include/os_stropts.h \
+  OS_NS_stropts.inl \
+  OS_QoS.h \
+  OS_NS_sys_socket.inl \
+  OS_NS_sys_uio.h \
+  OS_NS_sys_uio.inl
 
 .obj/Synch_Options.o .obj/Synch_Options.so .shobj/Synch_Options.o .shobj/Synch_Options.so: Synch_Options.cpp \
   Synch_Options.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
+  config-all.h \
+  OS_main.h \
+  os_include/sys/os_types.h \
+  os_include/os_stddef.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
-  os_include/sys/os_types.h \
-  os_include/os_stddef.h \
   os_include/os_errno.h \
   Synch_Options.i \
   Global_Macros.h \
@@ -8719,18 +8964,19 @@ endif # GHS
   Process_Semaphore.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
-  os_include/sys/os_ipc.h \
+  os_include/sys/os_stat.h \
+  config-all.h \
+  OS_main.h \
   os_include/sys/os_types.h \
   os_include/os_stddef.h \
+  os_include/sys/os_ipc.h \
   os_include/sys/os_sem.h \
   Default_Constants.h \
   SV_Semaphore_Simple.i \
@@ -8788,24 +9034,50 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   SV_Semaphore_Complex.i \
   Process_Semaphore.inl \
   Log_Msg.h \
-  Log_Priority.h
+  Log_Priority.h \
+  ACE.h \
+  Flag_Manip.h \
+  Flag_Manip.i \
+  Handle_Ops.h \
+  Handle_Ops.i \
+  Lib_Find.h \
+  Lib_Find.i \
+  Init_ACE.h \
+  Init_ACE.i \
+  Sock_Connect.h \
+  os_include/netinet/os_in.h \
+  os_include/sys/os_socket.h \
+  os_include/sys/os_uio.h \
+  Sock_Connect.i \
+  ACE.i \
+  OS_NS_sys_socket.h \
+  os_include/net/os_if.h \
+  OS_NS_stropts.h \
+  os_include/os_stropts.h \
+  OS_NS_stropts.inl \
+  OS_QoS.h \
+  OS_NS_sys_socket.inl \
+  OS_NS_sys_uio.h \
+  OS_NS_sys_uio.inl
 
 .obj/Process_Mutex.o .obj/Process_Mutex.so .shobj/Process_Mutex.o .shobj/Process_Mutex.so: Process_Mutex.cpp \
   Process_Mutex.h \
@@ -8820,9 +9092,10 @@ endif # GHS
   ACE_export.h \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
-  os_include/sys/os_ipc.h \
+  os_include/sys/os_stat.h \
   os_include/sys/os_types.h \
   os_include/os_stddef.h \
+  os_include/sys/os_ipc.h \
   os_include/sys/os_sem.h \
   Default_Constants.h \
   SV_Semaphore_Simple.i \
@@ -8880,20 +9153,22 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   SV_Semaphore_Complex.i \
   Process_Mutex.inl \
   Log_Msg.h \
@@ -8930,21 +9205,53 @@ endif # GHS
   RW_Mutex.h \
   RW_Mutex.inl \
   RW_Thread_Mutex.inl \
-  Guard_T.cpp
+  Guard_T.cpp \
+  Malloc_T.h \
+  Malloc.h \
+  Malloc.i \
+  Memory_Pool.h \
+  Event_Handler.h \
+  Atomic_Op.h \
+  Thread_Mutex.h \
+  Thread_Mutex.inl \
+  Atomic_Op_T.h \
+  Atomic_Op_T.i \
+  Atomic_Op_T.cpp \
+  Atomic_Op.i \
+  Synch_Traits.h \
+  Event_Handler.i \
+  Signal.h \
+  Signal.i \
+  Mem_Map.h \
+  Mem_Map.i \
+  Unbounded_Set.h \
+  Node.h \
+  Node.cpp \
+  Unbounded_Set.inl \
+  Unbounded_Set.cpp \
+  Malloc_Base.h \
+  Memory_Pool.i \
+  Malloc_Allocator.h \
+  Malloc_Allocator.i \
+  Free_List.h \
+  Free_List.i \
+  Free_List.cpp \
+  Malloc_T.i \
+  Malloc_T.cpp
 
 .obj/RW_Process_Mutex.o .obj/RW_Process_Mutex.so .shobj/RW_Process_Mutex.o .shobj/RW_Process_Mutex.so: RW_Process_Mutex.cpp \
   RW_Process_Mutex.h \
   pre.h \
   File_Lock.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   OS_NS_stdio.h \
+  config-all.h \
+  OS_main.h \
   os_include/os_stdio.h \
   os_include/os_stdarg.h \
   os_include/os_stddef.h \
@@ -8957,10 +9264,10 @@ endif # GHS
   os_include/os_inttypes.h \
   os_include/os_stdint.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   os_include/os_errno.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
@@ -9036,6 +9343,9 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  os_include/sys/os_mman.h \
   OS_NS_sys_socket.h \
   os_include/net/os_if.h \
   OS_NS_stropts.h \
@@ -9044,20 +9354,65 @@ endif # GHS
   OS_QoS.h \
   OS_NS_sys_socket.inl \
   OS_NS_sys_uio.h \
-  OS_NS_sys_uio.inl
+  OS_NS_sys_uio.inl \
+  Malloc_T.h \
+  Malloc.h \
+  Malloc.i \
+  Memory_Pool.h \
+  Event_Handler.h \
+  Atomic_Op.h \
+  Thread_Mutex.h \
+  Thread_Mutex.inl \
+  Atomic_Op_T.h \
+  Atomic_Op_T.i \
+  Guard_T.h \
+  Lock.h \
+  Lock.inl \
+  Guard_T.inl \
+  RW_Thread_Mutex.h \
+  RW_Mutex.h \
+  RW_Mutex.inl \
+  RW_Thread_Mutex.inl \
+  Guard_T.cpp \
+  Atomic_Op_T.cpp \
+  Atomic_Op.i \
+  Synch_Traits.h \
+  Event_Handler.i \
+  Signal.h \
+  Signal.i \
+  Mem_Map.h \
+  Mem_Map.i \
+  SV_Semaphore_Complex.h \
+  SV_Semaphore_Simple.h \
+  SV_Semaphore_Simple.i \
+  SV_Semaphore_Complex.i \
+  Unbounded_Set.h \
+  Node.h \
+  Node.cpp \
+  Unbounded_Set.inl \
+  Unbounded_Set.cpp \
+  Malloc_Base.h \
+  Memory_Pool.i \
+  Malloc_Allocator.h \
+  Malloc_Allocator.i \
+  Free_List.h \
+  Free_List.i \
+  Free_List.cpp \
+  Malloc_T.i \
+  Malloc_T.cpp
 
 .obj/File_Lock.o .obj/File_Lock.so .shobj/File_Lock.o .shobj/File_Lock.so: File_Lock.cpp \
   File_Lock.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   OS_NS_stdio.h \
+  config-all.h \
+  OS_main.h \
   os_include/os_stdio.h \
   os_include/os_stdarg.h \
   os_include/os_stddef.h \
@@ -9070,10 +9425,10 @@ endif # GHS
   os_include/os_inttypes.h \
   os_include/os_stdint.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   os_include/os_errno.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
@@ -9128,14 +9483,14 @@ endif # GHS
   Thread.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   OS_NS_Thread.h \
+  config-all.h \
+  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
@@ -9194,20 +9549,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Thread_Adapter.h \
   Thread_Adapter.inl \
   Thread.i
@@ -9217,15 +9575,15 @@ endif # GHS
   pre.h \
   Lock.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Lock.inl \
   Thread_Mutex.h \
+  config-all.h \
+  OS_main.h \
   OS_NS_Thread.h \
   Global_Macros.h \
   OS_Errno.h \
@@ -9285,20 +9643,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Thread_Mutex.inl \
   TSS_T.inl \
   TSS_T.cpp \
@@ -9327,7 +9688,6 @@ endif # GHS
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   Malloc_Base.h \
-  os_include/sys/os_mman.h \
   Containers.h \
   Containers.i \
   Containers_T.h \
@@ -9394,15 +9754,15 @@ endif # GHS
   Thread_Adapter.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Base_Thread_Adapter.h \
   OS_Log_Msg_Attributes.h \
+  config-all.h \
+  OS_main.h \
   os_include/os_stdio.h \
   os_include/os_stdarg.h \
   os_include/os_stddef.h \
@@ -9463,20 +9823,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Thread.i \
   Thread_Exit.h \
   Thread_Control.h \
@@ -9491,7 +9854,6 @@ endif # GHS
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   Malloc_Base.h \
-  os_include/sys/os_mman.h \
   Log_Msg.h \
   Log_Priority.h \
   Containers.h \
@@ -9639,20 +10001,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Recursive_Thread_Mutex.inl \
   Static_Object_Lock.h \
   Object_Manager.i \
@@ -9673,7 +10038,6 @@ endif # GHS
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   Malloc_Base.h \
-  os_include/sys/os_mman.h \
   Log_Msg.h \
   Log_Priority.h \
   Containers.h \
@@ -9810,20 +10174,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Thread_Adapter.h \
   Thread_Adapter.inl \
   Thread.i \
@@ -9838,7 +10205,6 @@ endif # GHS
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   Malloc_Base.h \
-  os_include/sys/os_mman.h \
   Log_Msg.h \
   Log_Priority.h \
   Containers.h \
@@ -9914,14 +10280,14 @@ endif # GHS
   Thread.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   OS_NS_Thread.h \
+  config-all.h \
+  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
@@ -9980,20 +10346,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Thread_Adapter.h \
   Thread_Adapter.inl \
   Thread.i \
@@ -10020,14 +10389,14 @@ endif # GHS
   Event_Handler.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   os_include/os_signal.h \
+  config-all.h \
+  OS_main.h \
   os_include/sys/os_types.h \
   os_include/os_stddef.h \
   os_include/os_time.h \
@@ -10088,20 +10457,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Thread_Mutex.inl \
   Atomic_Op_T.h \
   Atomic_Op_T.i \
@@ -10126,7 +10498,6 @@ endif # GHS
   Message_Block_T.i \
   Message_Block_T.cpp \
   Malloc_Base.h \
-  os_include/sys/os_mman.h \
   Reactor.h \
   Timer_Queuefwd.h \
   Reactor_Timer_Interface.h \
@@ -10264,10 +10635,10 @@ endif # GHS
   Lock.inl \
   Reactor_Timer_Interface.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   os_include/os_errno.h \
   Event_Handler.h \
   Atomic_Op.h \
@@ -10314,20 +10685,23 @@ endif # GHS
   OS_NS_errno.h \
   OS_NS_errno.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Thread_Mutex.inl \
   Atomic_Op_T.h \
   Atomic_Op_T.i \
@@ -10360,7 +10734,6 @@ endif # GHS
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   Malloc_Base.h \
-  os_include/sys/os_mman.h \
   Map_Manager.h \
   Map_Manager.i \
   Map_Manager.cpp \
@@ -10571,20 +10944,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Semaphore.inl \
   Thread_Semaphore.inl \
   Null_Semaphore.h \
@@ -10631,7 +11007,6 @@ endif # GHS
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   Malloc_Base.h \
-  os_include/sys/os_mman.h \
   Map_Manager.h \
   Map_Manager.i \
   Map_Manager.cpp \
@@ -10869,15 +11244,17 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
@@ -10971,8 +11348,6 @@ endif # GHS
   Memory_Pool.h \
   Mem_Map.h \
   Mem_Map.i \
-  OS_NS_sys_mman.h \
-  OS_NS_sys_mman.inl \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
@@ -11060,20 +11435,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Thread_Adapter.h \
   Thread_Adapter.inl \
   Thread.i \
@@ -11090,7 +11468,6 @@ endif # GHS
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   Malloc_Base.h \
-  os_include/sys/os_mman.h \
   Log_Msg.h \
   Log_Priority.h \
   Containers.h \
@@ -11290,12 +11667,12 @@ endif # GHS
   Lock.inl \
   Reactor_Timer_Interface.h \
   Time_Value.h \
-  Time_Value.inl \
-  OS_NS_sys_time.h \
-  OS_NS_sys_time.inl \
   os_include/sys/os_time.h \
   os_include/sys/os_types.h \
   os_include/os_stddef.h \
+  Time_Value.inl \
+  OS_NS_sys_time.h \
+  OS_NS_sys_time.inl \
   os_include/os_errno.h \
   Event_Handler.h \
   os_include/os_signal.h \
@@ -11351,20 +11728,23 @@ endif # GHS
   OS_NS_errno.h \
   OS_NS_errno.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Thread_Mutex.inl \
   Atomic_Op_T.h \
   Atomic_Op_T.i \
@@ -11389,7 +11769,6 @@ endif # GHS
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   Malloc_Base.h \
-  os_include/sys/os_mman.h \
   Unbounded_Set.h \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
@@ -11558,20 +11937,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Thread_Mutex.inl \
   Atomic_Op_T.h \
   Atomic_Op_T.i \
@@ -11651,7 +12033,6 @@ endif # GHS
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Malloc_Base.h \
-  os_include/sys/os_mman.h \
   Timer_Heap_T.cpp \
   OS_NS_sys_select.h \
   OS_NS_sys_select.inl \
@@ -11738,20 +12119,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Thread_Mutex.inl \
   Atomic_Op_T.h \
   Atomic_Op_T.i \
@@ -11823,6 +12207,9 @@ endif # GHS
   SOCK_IO.i \
   INET_Addr.h \
   INET_Addr.i \
+  OS_NS_arpa_inet.h \
+  os_include/arpa/os_inet.h \
+  OS_NS_arpa_inet.inl \
   SOCK_Stream.i \
   SOCK_Acceptor.i \
   SOCK_Connector.h \
@@ -11841,7 +12228,6 @@ endif # GHS
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Malloc_Base.h \
-  os_include/sys/os_mman.h \
   Timer_Heap_T.cpp \
   Signal.h \
   Signal.i
@@ -11936,20 +12322,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Thread_Mutex.inl \
   Atomic_Op_T.h \
   Atomic_Op_T.i \
@@ -12048,20 +12437,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Thread_Mutex.inl \
   Atomic_Op_T.h \
   Atomic_Op_T.i \
@@ -12141,7 +12533,6 @@ endif # GHS
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Malloc_Base.h \
-  os_include/sys/os_mman.h \
   Timer_Heap_T.cpp \
   OS_NS_sys_select.h \
   OS_NS_sys_select.inl \
@@ -12269,20 +12660,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Thread_Mutex.inl \
   Atomic_Op_T.h \
   Atomic_Op_T.i \
@@ -12362,7 +12756,6 @@ endif # GHS
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Malloc_Base.h \
-  os_include/sys/os_mman.h \
   Timer_Heap_T.cpp \
   OS_NS_sys_select.h \
   OS_NS_sys_select.inl \
@@ -12376,14 +12769,14 @@ endif # GHS
   Asynch_IO.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   os_include/os_signal.h \
+  config-all.h \
+  OS_main.h \
   os_include/sys/os_types.h \
   os_include/os_stddef.h \
   os_include/os_time.h \
@@ -12449,20 +12842,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Thread_Adapter.h \
   Thread_Adapter.inl \
   Thread.i \
@@ -12479,7 +12875,6 @@ endif # GHS
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   Malloc_Base.h \
-  os_include/sys/os_mman.h \
   Log_Msg.h \
   Log_Priority.h \
   Containers.h \
@@ -12580,7 +12975,10 @@ endif # GHS
   INET_Addr.h \
   Addr.h \
   Addr.i \
-  INET_Addr.i
+  INET_Addr.i \
+  OS_NS_arpa_inet.h \
+  os_include/arpa/os_inet.h \
+  OS_NS_arpa_inet.inl
 
 .obj/Asynch_IO_Impl.o .obj/Asynch_IO_Impl.so .shobj/Asynch_IO_Impl.o .shobj/Asynch_IO_Impl.so: Asynch_IO_Impl.cpp \
   Asynch_IO_Impl.h \
@@ -12627,12 +13025,12 @@ endif # GHS
   Lock.inl \
   Reactor_Timer_Interface.h \
   Time_Value.h \
-  Time_Value.inl \
-  OS_NS_sys_time.h \
-  OS_NS_sys_time.inl \
   os_include/sys/os_time.h \
   os_include/sys/os_types.h \
   os_include/os_stddef.h \
+  Time_Value.inl \
+  OS_NS_sys_time.h \
+  OS_NS_sys_time.inl \
   os_include/os_errno.h \
   Event_Handler.h \
   os_include/os_signal.h \
@@ -12688,20 +13086,23 @@ endif # GHS
   OS_NS_errno.h \
   OS_NS_errno.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Thread_Mutex.inl \
   Atomic_Op_T.h \
   Atomic_Op_T.i \
@@ -12782,7 +13183,6 @@ endif # GHS
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Malloc_Base.h \
-  os_include/sys/os_mman.h \
   Timer_Heap_T.cpp \
   OS_NS_sys_select.h \
   OS_NS_sys_select.inl \
@@ -12952,15 +13352,17 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
@@ -13077,6 +13479,9 @@ endif # GHS
   Addr.h \
   Addr.i \
   INET_Addr.i \
+  OS_NS_arpa_inet.h \
+  os_include/arpa/os_inet.h \
+  OS_NS_arpa_inet.inl \
   Asynch_Pseudo_Task.h \
   Reactor.h \
   Reactor.i \
@@ -13156,15 +13561,15 @@ endif # GHS
   Addr.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Addr.i \
   Log_Msg.h \
+  config-all.h \
+  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
@@ -13190,14 +13595,14 @@ endif # GHS
   pre.h \
   Sock_Connect.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Basic_Types.h \
+  config-all.h \
+  OS_main.h \
   os_include/os_limits.h \
   os_include/os_unistd.h \
   os_include/sys/os_types.h \
@@ -13233,12 +13638,11 @@ endif # GHS
   OS_Errno.h \
   os_include/os_errno.h \
   OS_Errno.inl \
-  Log_Msg.h \
-  Default_Constants.h \
-  Log_Priority.h \
-  OS_Log_Msg_Attributes.h \
-  iosfwd.h \
-  OS_Log_Msg_Attributes.inl \
+  OS_NS_arpa_inet.h \
+  os_include/arpa/os_inet.h \
+  OS_NS_arpa_inet.inl \
+  OS_NS_errno.h \
+  OS_NS_errno.inl \
   OS_NS_stdio.h \
   os_include/os_fcntl.h \
   os_include/sys/os_stat.h \
@@ -13252,11 +13656,10 @@ endif # GHS
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_errno.h \
-  OS_NS_errno.inl \
   OS_NS_macros.h \
   OS_NS_fcntl.h \
   OS_NS_fcntl.inl \
+  Default_Constants.h \
   OS_Memory.h \
   OS_NS_stdlib.h \
   OS_NS_stdlib.inl \
@@ -13269,9 +13672,11 @@ endif # GHS
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
-  OS_NS_arpa_inet.h \
-  os_include/arpa/os_inet.h \
-  OS_NS_arpa_inet.inl \
+  Log_Msg.h \
+  Log_Priority.h \
+  OS_Log_Msg_Attributes.h \
+  iosfwd.h \
+  OS_Log_Msg_Attributes.inl \
   OS_NS_netdb.h \
   os_include/os_netdb.h \
   OS_NS_netdb.inl \
@@ -13291,14 +13696,14 @@ endif # GHS
   INET_Addr.h \
   Sock_Connect.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Basic_Types.h \
+  config-all.h \
+  OS_main.h \
   os_include/os_limits.h \
   os_include/os_unistd.h \
   os_include/sys/os_types.h \
@@ -13334,6 +13739,40 @@ endif # GHS
   OS_Errno.h \
   os_include/os_errno.h \
   OS_Errno.inl \
+  OS_NS_arpa_inet.h \
+  os_include/arpa/os_inet.h \
+  OS_NS_arpa_inet.inl \
+  OS_NS_errno.h \
+  OS_NS_errno.inl \
+  OS_NS_stdio.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_stdio.inl \
+  OS_NS_unistd.h \
+  Time_Value.h \
+  Time_Value.inl \
+  OS_NS_sys_time.h \
+  OS_NS_sys_time.inl \
+  OS_NS_unistd.inl \
+  OS_NS_sys_utsname.h \
+  os_include/sys/os_utsname.h \
+  OS_NS_sys_utsname.inl \
+  OS_NS_macros.h \
+  OS_NS_fcntl.h \
+  OS_NS_fcntl.inl \
+  Default_Constants.h \
+  OS_Memory.h \
+  OS_NS_stdlib.h \
+  OS_NS_stdlib.inl \
+  Object_Manager_Base.h \
+  Cleanup.h \
+  Cleanup.inl \
+  Object_Manager_Base.inl \
+  os_include/os_search.h \
+  OS_Memory.inl \
+  OS_NS_pwd.h \
+  os_include/os_pwd.h \
+  OS_NS_pwd.inl \
   Containers_T.h \
   Containers.h \
   Containers.i \
@@ -13348,7 +13787,6 @@ endif # GHS
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Log_Msg.h \
-  Default_Constants.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
   iosfwd.h \
@@ -13358,15 +13796,6 @@ endif # GHS
   Unbounded_Queue.cpp \
   Containers_T.i \
   Containers_T.cpp \
-  OS_Memory.h \
-  OS_NS_stdlib.h \
-  OS_NS_stdlib.inl \
-  Object_Manager_Base.h \
-  Cleanup.h \
-  Cleanup.inl \
-  Object_Manager_Base.inl \
-  os_include/os_search.h \
-  OS_Memory.inl \
   Multihomed_INET_Addr.i
 
 .obj/IPC_SAP.o .obj/IPC_SAP.so .shobj/IPC_SAP.o .shobj/IPC_SAP.so: IPC_SAP.cpp \
@@ -13374,16 +13803,16 @@ endif # GHS
   pre.h \
   Flag_Manip.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   Flag_Manip.i \
   OS_NS_fcntl.h \
@@ -13405,10 +13834,10 @@ endif # GHS
   OS_NS_stropts.inl \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -13489,10 +13918,10 @@ endif # GHS
   OS_NS_stropts.inl \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -13589,10 +14018,10 @@ endif # GHS
   OS_NS_stropts.inl \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -13663,9 +14092,15 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  os_include/sys/os_mman.h \
   SOCK_IO.i \
   INET_Addr.h \
   INET_Addr.i \
+  OS_NS_arpa_inet.h \
+  os_include/arpa/os_inet.h \
+  OS_NS_arpa_inet.inl \
   SOCK_Stream.i \
   SOCK_Acceptor.i \
   UNIX_Addr.h \
@@ -13719,10 +14154,10 @@ endif # GHS
   OS_NS_stropts.inl \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -13796,9 +14231,15 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  os_include/sys/os_mman.h \
   SOCK_IO.i \
   INET_Addr.h \
   INET_Addr.i \
+  OS_NS_arpa_inet.h \
+  os_include/arpa/os_inet.h \
+  OS_NS_arpa_inet.inl \
   SOCK_CODgram.i \
   LSOCK_CODgram.i \
   Log_Msg.h \
@@ -13847,10 +14288,10 @@ endif # GHS
   OS_NS_stropts.inl \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -13921,9 +14362,15 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  os_include/sys/os_mman.h \
   SOCK_IO.i \
   INET_Addr.h \
   INET_Addr.i \
+  OS_NS_arpa_inet.h \
+  os_include/arpa/os_inet.h \
+  OS_NS_arpa_inet.inl \
   SOCK_Stream.i \
   SOCK_Connector.i \
   LSOCK_Stream.h \
@@ -13978,10 +14425,10 @@ endif # GHS
   OS_NS_stropts.inl \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -14033,6 +14480,9 @@ endif # GHS
   os_include/netinet/os_in.h \
   Sock_Connect.i \
   INET_Addr.i \
+  OS_NS_arpa_inet.h \
+  os_include/arpa/os_inet.h \
+  OS_NS_arpa_inet.inl \
   SOCK_Dgram.i \
   LSOCK.h \
   LSOCK.i \
@@ -14085,10 +14535,10 @@ endif # GHS
   OS_NS_stropts.inl \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -14159,9 +14609,15 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  os_include/sys/os_mman.h \
   SOCK_IO.i \
   INET_Addr.h \
   INET_Addr.i \
+  OS_NS_arpa_inet.h \
+  os_include/arpa/os_inet.h \
+  OS_NS_arpa_inet.inl \
   SOCK_Stream.i \
   UNIX_Addr.h \
   Log_Msg.h \
@@ -14176,13 +14632,11 @@ endif # GHS
   SOCK.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Addr.h \
   Addr.i \
   IPC_SAP.h \
@@ -14190,6 +14644,8 @@ endif # GHS
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   Flag_Manip.i \
   OS_NS_fcntl.h \
@@ -14211,10 +14667,10 @@ endif # GHS
   OS_NS_stropts.inl \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -14274,13 +14730,11 @@ endif # GHS
   SOCK_IO.h \
   SOCK.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Addr.h \
   Addr.i \
   IPC_SAP.h \
@@ -14288,6 +14742,8 @@ endif # GHS
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   Flag_Manip.i \
   OS_NS_fcntl.h \
@@ -14309,10 +14765,10 @@ endif # GHS
   OS_NS_stropts.inl \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -14383,9 +14839,15 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  os_include/sys/os_mman.h \
   SOCK_IO.i \
   INET_Addr.h \
   INET_Addr.i \
+  OS_NS_arpa_inet.h \
+  os_include/arpa/os_inet.h \
+  OS_NS_arpa_inet.inl \
   SOCK_Stream.i \
   SOCK_Acceptor.i \
   Log_Msg.h \
@@ -14397,13 +14859,11 @@ endif # GHS
   SOCK_IO.h \
   SOCK.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Addr.h \
   Addr.i \
   IPC_SAP.h \
@@ -14411,6 +14871,8 @@ endif # GHS
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   Flag_Manip.i \
   OS_NS_fcntl.h \
@@ -14432,10 +14894,10 @@ endif # GHS
   OS_NS_stropts.inl \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -14506,9 +14968,15 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  os_include/sys/os_mman.h \
   SOCK_IO.i \
   INET_Addr.h \
   INET_Addr.i \
+  OS_NS_arpa_inet.h \
+  os_include/arpa/os_inet.h \
+  OS_NS_arpa_inet.inl \
   SOCK_CODgram.i \
   Log_Msg.h \
   Log_Priority.h
@@ -14517,14 +14985,14 @@ endif # GHS
   Sock_Connect.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Basic_Types.h \
+  config-all.h \
+  OS_main.h \
   os_include/os_limits.h \
   os_include/os_unistd.h \
   os_include/sys/os_types.h \
@@ -14561,8 +15029,41 @@ endif # GHS
   OS_Errno.h \
   os_include/os_errno.h \
   OS_Errno.inl \
-  Log_Msg.h \
+  OS_NS_arpa_inet.h \
+  os_include/arpa/os_inet.h \
+  OS_NS_arpa_inet.inl \
+  OS_NS_errno.h \
+  OS_NS_errno.inl \
+  OS_NS_stdio.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_stdio.inl \
+  OS_NS_unistd.h \
+  Time_Value.h \
+  Time_Value.inl \
+  OS_NS_sys_time.h \
+  OS_NS_sys_time.inl \
+  OS_NS_unistd.inl \
+  OS_NS_sys_utsname.h \
+  os_include/sys/os_utsname.h \
+  OS_NS_sys_utsname.inl \
+  OS_NS_macros.h \
+  OS_NS_fcntl.h \
+  OS_NS_fcntl.inl \
   Default_Constants.h \
+  OS_Memory.h \
+  OS_NS_stdlib.h \
+  OS_NS_stdlib.inl \
+  Object_Manager_Base.h \
+  Cleanup.h \
+  Cleanup.inl \
+  Object_Manager_Base.inl \
+  os_include/os_search.h \
+  OS_Memory.inl \
+  OS_NS_pwd.h \
+  os_include/os_pwd.h \
+  OS_NS_pwd.inl \
+  Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
   iosfwd.h \
@@ -14582,25 +15083,10 @@ endif # GHS
   Malloc_Base.h \
   os_include/sys/os_mman.h \
   Min_Max.h \
-  OS_Memory.h \
-  OS_NS_stdlib.h \
-  OS_NS_stdlib.inl \
-  Object_Manager_Base.h \
-  Cleanup.h \
-  Cleanup.inl \
-  Object_Manager_Base.inl \
-  os_include/os_search.h \
-  OS_Memory.inl \
   String_Base.cpp \
   ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
-  OS_NS_errno.h \
-  OS_NS_errno.inl \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -14608,16 +15094,6 @@ endif # GHS
   Init_ACE.h \
   Init_ACE.i \
   ACE.i \
-  OS_NS_unistd.h \
-  Time_Value.h \
-  Time_Value.inl \
-  OS_NS_sys_time.h \
-  OS_NS_sys_time.inl \
-  OS_NS_unistd.inl \
-  OS_NS_sys_utsname.h \
-  os_include/sys/os_utsname.h \
-  OS_NS_sys_utsname.inl \
-  OS_NS_macros.h \
   OS_NS_Thread.h \
   os_include/os_pthread.h \
   Base_Thread_Adapter.h \
@@ -14628,11 +15104,8 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
-  OS_NS_stdio.h \
-  OS_NS_stdio.inl \
-  OS_NS_pwd.h \
-  os_include/os_pwd.h \
-  OS_NS_pwd.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   OS_NS_sys_socket.h \
   os_include/net/os_if.h \
   OS_NS_stropts.h \
@@ -14654,13 +15127,11 @@ endif # GHS
   SOCK_IO.h \
   SOCK.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Addr.h \
   Addr.i \
   IPC_SAP.h \
@@ -14668,6 +15139,8 @@ endif # GHS
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   Flag_Manip.i \
   OS_NS_fcntl.h \
@@ -14689,10 +15162,10 @@ endif # GHS
   OS_NS_stropts.inl \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -14763,9 +15236,15 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  os_include/sys/os_mman.h \
   SOCK_IO.i \
   INET_Addr.h \
   INET_Addr.i \
+  OS_NS_arpa_inet.h \
+  os_include/arpa/os_inet.h \
+  OS_NS_arpa_inet.inl \
   SOCK_Stream.i \
   SOCK_Connector.i \
   Log_Msg.h \
@@ -14776,13 +15255,11 @@ endif # GHS
   pre.h \
   SOCK.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Addr.h \
   Addr.i \
   IPC_SAP.h \
@@ -14790,6 +15267,8 @@ endif # GHS
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   Flag_Manip.i \
   OS_NS_fcntl.h \
@@ -14811,10 +15290,10 @@ endif # GHS
   OS_NS_stropts.inl \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -14866,6 +15345,9 @@ endif # GHS
   os_include/netinet/os_in.h \
   Sock_Connect.i \
   INET_Addr.i \
+  OS_NS_arpa_inet.h \
+  os_include/arpa/os_inet.h \
+  OS_NS_arpa_inet.inl \
   SOCK_Dgram.i \
   Handle_Set.h \
   os_include/sys/os_select.h \
@@ -14894,6 +15376,9 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  os_include/sys/os_mman.h \
   OS_NS_sys_select.h \
   OS_NS_sys_select.inl
 
@@ -14903,14 +15388,14 @@ endif # GHS
   INET_Addr.h \
   Sock_Connect.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Basic_Types.h \
+  config-all.h \
+  OS_main.h \
   os_include/os_limits.h \
   os_include/os_unistd.h \
   os_include/sys/os_types.h \
@@ -14946,21 +15431,15 @@ endif # GHS
   OS_Errno.h \
   os_include/os_errno.h \
   OS_Errno.inl \
-  SOCK_Dgram.h \
-  SOCK.h \
-  IPC_SAP.h \
-  Flag_Manip.h \
-  Flag_Manip.i \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
+  OS_NS_arpa_inet.h \
+  os_include/arpa/os_inet.h \
+  OS_NS_arpa_inet.inl \
   OS_NS_errno.h \
   OS_NS_errno.inl \
-  IPC_SAP.i \
-  OS_NS_stropts.h \
-  os_include/os_stropts.h \
-  OS_NS_stropts.inl \
+  OS_NS_stdio.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_stdio.inl \
   OS_NS_unistd.h \
   Time_Value.h \
   Time_Value.inl \
@@ -14971,6 +15450,8 @@ endif # GHS
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
   OS_NS_macros.h \
+  OS_NS_fcntl.h \
+  OS_NS_fcntl.inl \
   Default_Constants.h \
   OS_Memory.h \
   OS_NS_stdlib.h \
@@ -14981,6 +15462,18 @@ endif # GHS
   Object_Manager_Base.inl \
   os_include/os_search.h \
   OS_Memory.inl \
+  OS_NS_pwd.h \
+  os_include/os_pwd.h \
+  OS_NS_pwd.inl \
+  SOCK_Dgram.h \
+  SOCK.h \
+  IPC_SAP.h \
+  Flag_Manip.h \
+  Flag_Manip.i \
+  IPC_SAP.i \
+  OS_NS_stropts.h \
+  os_include/os_stropts.h \
+  OS_NS_stropts.inl \
   OS_QoS.h \
   SOCK.i \
   OS_NS_sys_socket.h \
@@ -14988,11 +15481,6 @@ endif # GHS
   OS_NS_sys_socket.inl \
   OS_NS_sys_uio.h \
   OS_NS_sys_uio.inl \
-  OS_NS_stdio.h \
-  OS_NS_stdio.inl \
-  OS_NS_pwd.h \
-  os_include/os_pwd.h \
-  OS_NS_pwd.inl \
   SOCK_Dgram.i \
   SOCK_Dgram_Bcast.i \
   Log_Msg.h \
@@ -15018,6 +15506,9 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  os_include/sys/os_mman.h \
   OS_NS_netdb.h \
   os_include/os_netdb.h \
   OS_NS_netdb.inl
@@ -15028,13 +15519,11 @@ endif # GHS
   SOCK_Dgram.h \
   SOCK.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Addr.h \
   Addr.i \
   IPC_SAP.h \
@@ -15042,6 +15531,8 @@ endif # GHS
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   Flag_Manip.i \
   OS_NS_fcntl.h \
@@ -15063,10 +15554,10 @@ endif # GHS
   OS_NS_stropts.inl \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -15118,9 +15609,11 @@ endif # GHS
   os_include/netinet/os_in.h \
   Sock_Connect.i \
   INET_Addr.i \
+  OS_NS_arpa_inet.h \
+  os_include/arpa/os_inet.h \
+  OS_NS_arpa_inet.inl \
   SOCK_Dgram.i \
   SOCK_Dgram_Mcast.i \
-  os_include/arpa/os_inet.h \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
@@ -15132,13 +15625,11 @@ endif # GHS
   pre.h \
   SOCK.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Addr.h \
   Addr.i \
   IPC_SAP.h \
@@ -15146,6 +15637,8 @@ endif # GHS
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   Flag_Manip.i \
   OS_NS_fcntl.h \
@@ -15167,10 +15660,10 @@ endif # GHS
   OS_NS_stropts.inl \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -15241,6 +15734,9 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  os_include/sys/os_mman.h \
   SOCK_IO.i \
   Handle_Set.h \
   os_include/sys/os_select.h \
@@ -15255,13 +15751,11 @@ endif # GHS
   SOCK_SEQPACK_Acceptor.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   SOCK_SEQPACK_Association.h \
   SOCK_IO.h \
   SOCK.h \
@@ -15272,6 +15766,8 @@ endif # GHS
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   Flag_Manip.i \
   OS_NS_fcntl.h \
@@ -15293,10 +15789,10 @@ endif # GHS
   OS_NS_stropts.inl \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -15367,10 +15863,16 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  os_include/sys/os_mman.h \
   SOCK_IO.i \
   Multihomed_INET_Addr.h \
   INET_Addr.h \
   INET_Addr.i \
+  OS_NS_arpa_inet.h \
+  os_include/arpa/os_inet.h \
+  OS_NS_arpa_inet.inl \
   Containers_T.h \
   Containers.h \
   Containers.i \
@@ -15378,7 +15880,6 @@ endif # GHS
   Node.cpp \
   Array_Base.h \
   Malloc_Base.h \
-  os_include/sys/os_mman.h \
   Array_Base.inl \
   Array_Base.cpp \
   Unbounded_Set.h \
@@ -15405,10 +15906,8 @@ endif # GHS
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ACE_export.h \
-  config-all.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   SOCK_IO.h \
   SOCK.h \
   Addr.h \
@@ -15418,6 +15917,8 @@ endif # GHS
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   Flag_Manip.i \
   OS_NS_fcntl.h \
@@ -15439,10 +15940,10 @@ endif # GHS
   OS_NS_stropts.inl \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -15513,10 +16014,16 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  os_include/sys/os_mman.h \
   SOCK_IO.i \
   Multihomed_INET_Addr.h \
   INET_Addr.h \
   INET_Addr.i \
+  OS_NS_arpa_inet.h \
+  os_include/arpa/os_inet.h \
+  OS_NS_arpa_inet.inl \
   Containers_T.h \
   Containers.h \
   Containers.i \
@@ -15524,7 +16031,6 @@ endif # GHS
   Node.cpp \
   Array_Base.h \
   Malloc_Base.h \
-  os_include/sys/os_mman.h \
   Array_Base.inl \
   Array_Base.cpp \
   Unbounded_Set.h \
@@ -15550,10 +16056,8 @@ endif # GHS
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ACE_export.h \
-  config-all.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   SOCK_SEQPACK_Association.h \
   SOCK_IO.h \
   SOCK.h \
@@ -15564,6 +16068,8 @@ endif # GHS
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   Flag_Manip.i \
   OS_NS_fcntl.h \
@@ -15585,10 +16091,10 @@ endif # GHS
   OS_NS_stropts.inl \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -15659,10 +16165,16 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  os_include/sys/os_mman.h \
   SOCK_IO.i \
   Multihomed_INET_Addr.h \
   INET_Addr.h \
   INET_Addr.i \
+  OS_NS_arpa_inet.h \
+  os_include/arpa/os_inet.h \
+  OS_NS_arpa_inet.inl \
   Containers_T.h \
   Containers.h \
   Containers.i \
@@ -15670,7 +16182,6 @@ endif # GHS
   Node.cpp \
   Array_Base.h \
   Malloc_Base.h \
-  os_include/sys/os_mman.h \
   Array_Base.inl \
   Array_Base.cpp \
   Unbounded_Set.h \
@@ -15693,13 +16204,11 @@ endif # GHS
   SOCK_IO.h \
   SOCK.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Addr.h \
   Addr.i \
   IPC_SAP.h \
@@ -15707,6 +16216,8 @@ endif # GHS
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   Flag_Manip.i \
   OS_NS_fcntl.h \
@@ -15728,10 +16239,10 @@ endif # GHS
   OS_NS_stropts.inl \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -15802,9 +16313,15 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  os_include/sys/os_mman.h \
   SOCK_IO.i \
   INET_Addr.h \
   INET_Addr.i \
+  OS_NS_arpa_inet.h \
+  os_include/arpa/os_inet.h \
+  OS_NS_arpa_inet.inl \
   SOCK_Stream.i
 
 .obj/ATM_Addr.o .obj/ATM_Addr.so .shobj/ATM_Addr.o .shobj/ATM_Addr.so: ATM_Addr.cpp \
@@ -15897,16 +16414,16 @@ endif # GHS
   IO_SAP.h \
   Flag_Manip.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   Flag_Manip.i \
   OS_NS_fcntl.h \
@@ -15928,10 +16445,10 @@ endif # GHS
   OS_NS_stropts.inl \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -15979,15 +16496,15 @@ endif # GHS
   pre.h \
   Addr.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Addr.i \
   os_include/os_dirent.h \
+  config-all.h \
+  OS_main.h \
   os_include/sys/os_types.h \
   os_include/os_stddef.h \
   os_include/os_limits.h \
@@ -16035,16 +16552,16 @@ endif # GHS
   IO_SAP.h \
   Flag_Manip.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   Flag_Manip.i \
   OS_NS_fcntl.h \
@@ -16066,10 +16583,10 @@ endif # GHS
   OS_NS_stropts.inl \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -16138,11 +16655,14 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   OS_NS_sys_socket.h \
   os_include/net/os_if.h \
   OS_NS_sys_socket.inl \
@@ -16157,16 +16677,16 @@ endif # GHS
   IO_SAP.h \
   Flag_Manip.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   Flag_Manip.i \
   OS_NS_fcntl.h \
@@ -16188,10 +16708,10 @@ endif # GHS
   OS_NS_stropts.inl \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -16260,11 +16780,14 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   OS_NS_sys_socket.h \
   os_include/net/os_if.h \
   OS_NS_sys_socket.inl \
@@ -16275,18 +16798,18 @@ endif # GHS
   FIFO.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   IPC_SAP.h \
   Flag_Manip.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   Flag_Manip.i \
   OS_NS_fcntl.h \
@@ -16308,10 +16831,10 @@ endif # GHS
   OS_NS_stropts.inl \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -16360,18 +16883,18 @@ endif # GHS
   pre.h \
   FIFO.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   IPC_SAP.h \
   Flag_Manip.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   Flag_Manip.i \
   OS_NS_fcntl.h \
@@ -16393,10 +16916,10 @@ endif # GHS
   OS_NS_stropts.inl \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -16458,11 +16981,14 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   OS_NS_sys_socket.h \
   os_include/net/os_if.h \
   OS_NS_sys_socket.inl \
@@ -16477,18 +17003,18 @@ endif # GHS
   FIFO_Recv.h \
   FIFO.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   IPC_SAP.h \
   Flag_Manip.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   Flag_Manip.i \
   OS_NS_fcntl.h \
@@ -16510,10 +17036,10 @@ endif # GHS
   OS_NS_stropts.inl \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -16575,11 +17101,14 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   OS_NS_sys_socket.h \
   os_include/net/os_if.h \
   OS_NS_sys_socket.inl \
@@ -16595,18 +17124,18 @@ endif # GHS
   pre.h \
   FIFO.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   IPC_SAP.h \
   Flag_Manip.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   Flag_Manip.i \
   OS_NS_fcntl.h \
@@ -16628,10 +17157,10 @@ endif # GHS
   OS_NS_stropts.inl \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -16693,11 +17222,14 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   OS_NS_sys_socket.h \
   os_include/net/os_if.h \
   OS_NS_sys_socket.inl \
@@ -16712,18 +17244,18 @@ endif # GHS
   FIFO_Send.h \
   FIFO.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   IPC_SAP.h \
   Flag_Manip.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   Flag_Manip.i \
   OS_NS_fcntl.h \
@@ -16745,10 +17277,10 @@ endif # GHS
   OS_NS_stropts.inl \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -16810,11 +17342,14 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   OS_NS_sys_socket.h \
   os_include/net/os_if.h \
   OS_NS_sys_socket.inl \
@@ -16829,18 +17364,18 @@ endif # GHS
   pre.h \
   Addr.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Addr.i \
   Flag_Manip.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   Flag_Manip.i \
   OS_NS_fcntl.h \
@@ -16931,6 +17466,8 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
@@ -16958,16 +17495,16 @@ endif # GHS
   IO_SAP.h \
   Flag_Manip.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   Flag_Manip.i \
   OS_NS_fcntl.h \
@@ -16989,10 +17526,10 @@ endif # GHS
   OS_NS_stropts.inl \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -17066,6 +17603,8 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
@@ -17092,16 +17631,16 @@ endif # GHS
   IO_SAP.h \
   Flag_Manip.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   Flag_Manip.i \
   OS_NS_fcntl.h \
@@ -17123,10 +17662,10 @@ endif # GHS
   OS_NS_stropts.inl \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -17200,6 +17739,8 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
@@ -17227,16 +17768,16 @@ endif # GHS
   IO_SAP.h \
   Flag_Manip.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   Flag_Manip.i \
   OS_NS_fcntl.h \
@@ -17258,10 +17799,10 @@ endif # GHS
   OS_NS_stropts.inl \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -17335,6 +17876,8 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
@@ -17361,16 +17904,16 @@ endif # GHS
   pre.h \
   Flag_Manip.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   Flag_Manip.i \
   OS_NS_fcntl.h \
@@ -17392,10 +17935,10 @@ endif # GHS
   OS_NS_stropts.inl \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -17440,27 +17983,27 @@ endif # GHS
   IOStream.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
-  streams.h
+  streams.h \
+  config-all.h \
+  OS_main.h
 
 .obj/Pipe.o .obj/Pipe.so .shobj/Pipe.o .shobj/Pipe.so: Pipe.cpp \
   Pipe.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Default_Constants.h \
+  config-all.h \
+  OS_main.h \
   Pipe.i \
   Global_Macros.h \
   OS_Errno.h \
@@ -17494,10 +18037,10 @@ endif # GHS
   OS_NS_stropts.inl \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -17567,28 +18110,35 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  os_include/sys/os_mman.h \
   SOCK_IO.i \
   INET_Addr.h \
   INET_Addr.i \
+  OS_NS_arpa_inet.h \
+  os_include/arpa/os_inet.h \
+  OS_NS_arpa_inet.inl \
   SOCK_Stream.i \
   SOCK_Acceptor.i \
   SOCK_Connector.h \
   SOCK_Connector.i \
   Log_Msg.h \
-  Log_Priority.h
+  Log_Priority.h \
+  os_include/netinet/os_tcp.h
 
 .obj/Signal.o .obj/Signal.so .shobj/Signal.o .shobj/Signal.so: Signal.cpp \
   Recursive_Thread_Mutex.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   OS_NS_Thread.h \
+  config-all.h \
+  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
@@ -17647,20 +18197,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Recursive_Thread_Mutex.inl \
   Signal.h \
   Event_Handler.h \
@@ -17698,7 +18251,6 @@ endif # GHS
   Node.cpp \
   Array_Base.h \
   Malloc_Base.h \
-  os_include/sys/os_mman.h \
   Array_Base.inl \
   Array_Base.cpp \
   Unbounded_Set.h \
@@ -17714,16 +18266,16 @@ endif # GHS
   SPIPE_Addr.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Addr.h \
   Addr.i \
   os_include/sys/os_types.h \
+  config-all.h \
+  OS_main.h \
   os_include/os_stddef.h \
   os_include/os_dirent.h \
   os_include/os_limits.h \
@@ -17817,6 +18369,8 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
@@ -17842,16 +18396,16 @@ endif # GHS
   IPC_SAP.h \
   Flag_Manip.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   Flag_Manip.i \
   OS_NS_fcntl.h \
@@ -17873,10 +18427,10 @@ endif # GHS
   OS_NS_stropts.inl \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -17950,6 +18504,8 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
@@ -17974,16 +18530,16 @@ endif # GHS
   IPC_SAP.h \
   Flag_Manip.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   Flag_Manip.i \
   OS_NS_fcntl.h \
@@ -18005,10 +18561,10 @@ endif # GHS
   OS_NS_stropts.inl \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -18082,6 +18638,8 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
@@ -18111,16 +18669,16 @@ endif # GHS
   IPC_SAP.h \
   Flag_Manip.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   Flag_Manip.i \
   OS_NS_fcntl.h \
@@ -18142,10 +18700,10 @@ endif # GHS
   OS_NS_stropts.inl \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -18219,6 +18777,8 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
@@ -18246,16 +18806,16 @@ endif # GHS
   IPC_SAP.h \
   Flag_Manip.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   Flag_Manip.i \
   OS_NS_fcntl.h \
@@ -18277,10 +18837,10 @@ endif # GHS
   OS_NS_stropts.inl \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -18354,6 +18914,8 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
@@ -18375,17 +18937,17 @@ endif # GHS
   SV_Message.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   SV_Message.i \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl
 
 .obj/SV_Message_Queue.o .obj/SV_Message_Queue.so .shobj/SV_Message_Queue.o .shobj/SV_Message_Queue.so: SV_Message_Queue.cpp \
@@ -18405,9 +18967,10 @@ endif # GHS
   OS_Errno.h \
   os_include/os_errno.h \
   OS_Errno.inl \
-  os_include/sys/os_ipc.h \
+  os_include/sys/os_stat.h \
   os_include/sys/os_types.h \
   os_include/os_stddef.h \
+  os_include/sys/os_ipc.h \
   Default_Constants.h \
   SV_Message_Queue.i \
   OS_NS_sys_msg.h \
@@ -18432,16 +18995,17 @@ endif # GHS
   pre.h \
   SV_Semaphore_Simple.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  os_include/sys/os_stat.h \
+  config-all.h \
   OS_main.h \
-  os_include/sys/os_ipc.h \
   os_include/sys/os_types.h \
   os_include/os_stddef.h \
+  os_include/sys/os_ipc.h \
   os_include/sys/os_sem.h \
   Default_Constants.h \
   SV_Semaphore_Simple.i \
@@ -18499,20 +19063,22 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   SV_Semaphore_Complex.i \
   Log_Msg.h \
   Log_Priority.h
@@ -18521,16 +19087,17 @@ endif # GHS
   SV_Semaphore_Simple.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  os_include/sys/os_stat.h \
+  config-all.h \
   OS_main.h \
-  os_include/sys/os_ipc.h \
   os_include/sys/os_types.h \
   os_include/os_stddef.h \
+  os_include/sys/os_ipc.h \
   os_include/sys/os_sem.h \
   Default_Constants.h \
   SV_Semaphore_Simple.i \
@@ -18588,20 +19155,22 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Log_Msg.h \
   Log_Priority.h \
   ACE.h \
@@ -18633,16 +19202,17 @@ endif # GHS
   SV_Shared_Memory.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  os_include/sys/os_stat.h \
+  config-all.h \
   OS_main.h \
-  os_include/sys/os_ipc.h \
   os_include/sys/os_types.h \
   os_include/os_stddef.h \
+  os_include/sys/os_ipc.h \
   Default_Constants.h \
   SV_Shared_Memory.i \
   OS_NS_sys_shm.h \
@@ -18672,16 +19242,16 @@ endif # GHS
   IPC_SAP.h \
   Flag_Manip.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   Flag_Manip.i \
   OS_NS_fcntl.h \
@@ -18703,10 +19273,10 @@ endif # GHS
   OS_NS_stropts.inl \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -18760,7 +19330,10 @@ endif # GHS
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
-  OS_NS_pwd.inl
+  OS_NS_pwd.inl \
+  Auto_Ptr.h \
+  Auto_Ptr.i \
+  Auto_Ptr.cpp
 
 .obj/TLI_Acceptor.o .obj/TLI_Acceptor.so .shobj/TLI_Acceptor.o .shobj/TLI_Acceptor.so: TLI_Acceptor.cpp \
   TLI_Acceptor.h \
@@ -18769,16 +19342,16 @@ endif # GHS
   IPC_SAP.h \
   Flag_Manip.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   Flag_Manip.i \
   OS_NS_fcntl.h \
@@ -18800,10 +19373,10 @@ endif # GHS
   OS_NS_stropts.inl \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -18849,6 +19422,14 @@ endif # GHS
   os_include/sys/os_socket.h \
   Sock_Connect.i \
   INET_Addr.i \
+  OS_NS_arpa_inet.h \
+  os_include/arpa/os_inet.h \
+  OS_NS_arpa_inet.inl \
+  OS_NS_stdio.h \
+  OS_NS_stdio.inl \
+  OS_NS_pwd.h \
+  os_include/os_pwd.h \
+  OS_NS_pwd.inl \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
@@ -18872,11 +19453,9 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
-  OS_NS_stdio.h \
-  OS_NS_stdio.inl \
-  OS_NS_pwd.h \
-  os_include/os_pwd.h \
-  OS_NS_pwd.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  os_include/sys/os_mman.h \
   OS_NS_sys_socket.h \
   os_include/net/os_if.h \
   OS_NS_sys_socket.inl \
@@ -18891,16 +19470,16 @@ endif # GHS
   IPC_SAP.h \
   Flag_Manip.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   Flag_Manip.i \
   OS_NS_fcntl.h \
@@ -18922,10 +19501,10 @@ endif # GHS
   OS_NS_stropts.inl \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -18970,6 +19549,14 @@ endif # GHS
   os_include/sys/os_socket.h \
   Sock_Connect.i \
   INET_Addr.i \
+  OS_NS_arpa_inet.h \
+  os_include/arpa/os_inet.h \
+  OS_NS_arpa_inet.inl \
+  OS_NS_stdio.h \
+  OS_NS_stdio.inl \
+  OS_NS_pwd.h \
+  os_include/os_pwd.h \
+  OS_NS_pwd.inl \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
@@ -18983,16 +19570,16 @@ endif # GHS
   IPC_SAP.h \
   Flag_Manip.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   Flag_Manip.i \
   OS_NS_fcntl.h \
@@ -19014,10 +19601,10 @@ endif # GHS
   OS_NS_stropts.inl \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -19062,6 +19649,14 @@ endif # GHS
   os_include/sys/os_socket.h \
   Sock_Connect.i \
   INET_Addr.i \
+  OS_NS_arpa_inet.h \
+  os_include/arpa/os_inet.h \
+  OS_NS_arpa_inet.inl \
+  OS_NS_stdio.h \
+  OS_NS_stdio.inl \
+  OS_NS_pwd.h \
+  os_include/os_pwd.h \
+  OS_NS_pwd.inl \
   ACE.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -19083,11 +19678,9 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
-  OS_NS_stdio.h \
-  OS_NS_stdio.inl \
-  OS_NS_pwd.h \
-  os_include/os_pwd.h \
-  OS_NS_pwd.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  os_include/sys/os_mman.h \
   OS_NS_sys_socket.h \
   os_include/net/os_if.h \
   OS_NS_sys_socket.inl \
@@ -19102,16 +19695,16 @@ endif # GHS
   IO_SAP.h \
   Flag_Manip.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   Flag_Manip.i \
   OS_NS_fcntl.h \
@@ -19133,10 +19726,10 @@ endif # GHS
   OS_NS_stropts.inl \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -19205,11 +19798,14 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   OS_NS_sys_socket.h \
   os_include/net/os_if.h \
   OS_NS_sys_socket.inl \
@@ -19316,11 +19912,14 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   OS_NS_sys_socket.h \
   os_include/net/os_if.h \
   OS_NS_stropts.h \
@@ -19355,11 +19954,11 @@ endif # GHS
   os_include/os_errno.h \
   OS_Errno.inl \
   Time_Value.h \
+  os_include/sys/os_time.h \
+  os_include/sys/os_types.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
-  os_include/sys/os_types.h \
   Message_Block.i \
   Message_Block_T.h \
   Message_Block_T.i \
@@ -19421,15 +20020,17 @@ endif # GHS
   OS_NS_errno.h \
   OS_NS_errno.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
@@ -19599,11 +20200,11 @@ endif # GHS
   os_include/os_errno.h \
   OS_Errno.inl \
   Time_Value.h \
+  os_include/sys/os_time.h \
+  os_include/sys/os_types.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
-  os_include/sys/os_types.h \
   Message_Block.i \
   Message_Block_T.h \
   Message_Block_T.i \
@@ -19665,15 +20266,17 @@ endif # GHS
   OS_NS_errno.h \
   OS_NS_errno.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
@@ -19841,11 +20444,11 @@ endif # GHS
   os_include/os_errno.h \
   OS_Errno.inl \
   Time_Value.h \
+  os_include/sys/os_time.h \
+  os_include/sys/os_types.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
-  os_include/sys/os_types.h \
   Message_Block.i \
   Message_Block_T.h \
   Message_Block_T.i \
@@ -19907,15 +20510,17 @@ endif # GHS
   OS_NS_errno.h \
   OS_NS_errno.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
@@ -20067,13 +20672,11 @@ endif # GHS
   SOCK_IO.h \
   SOCK.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Addr.h \
   Addr.i \
   IPC_SAP.h \
@@ -20081,6 +20684,8 @@ endif # GHS
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   Flag_Manip.i \
   OS_NS_fcntl.h \
@@ -20102,10 +20707,10 @@ endif # GHS
   OS_NS_stropts.inl \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -20176,9 +20781,15 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  os_include/sys/os_mman.h \
   SOCK_IO.i \
   INET_Addr.h \
   INET_Addr.i \
+  OS_NS_arpa_inet.h \
+  os_include/arpa/os_inet.h \
+  OS_NS_arpa_inet.inl \
   SOCK_Stream.i \
   SOCK_Acceptor.i \
   MEM_Stream.h \
@@ -20192,7 +20803,6 @@ endif # GHS
   Malloc_T.h \
   Malloc_Allocator.h \
   Malloc_Base.h \
-  os_include/sys/os_mman.h \
   Malloc_Allocator.i \
   Free_List.h \
   Free_List.i \
@@ -20223,8 +20833,6 @@ endif # GHS
   Signal.i \
   Mem_Map.h \
   Mem_Map.i \
-  OS_NS_sys_mman.h \
-  OS_NS_sys_mman.inl \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
@@ -20283,16 +20891,16 @@ endif # GHS
   MEM_Addr.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   INET_Addr.h \
   Sock_Connect.h \
   Basic_Types.h \
+  config-all.h \
+  OS_main.h \
   os_include/os_limits.h \
   os_include/os_unistd.h \
   os_include/sys/os_types.h \
@@ -20328,20 +20936,15 @@ endif # GHS
   OS_Errno.h \
   os_include/os_errno.h \
   OS_Errno.inl \
-  MEM_Addr.i \
-  Log_Msg.h \
-  Default_Constants.h \
-  Log_Priority.h \
-  OS_Log_Msg_Attributes.h \
-  iosfwd.h \
-  OS_Log_Msg_Attributes.inl \
-  OS_NS_stdlib.h \
-  OS_NS_stdlib.inl \
-  Object_Manager_Base.h \
-  Cleanup.h \
-  Cleanup.inl \
-  Object_Manager_Base.inl \
-  os_include/os_search.h \
+  OS_NS_arpa_inet.h \
+  os_include/arpa/os_inet.h \
+  OS_NS_arpa_inet.inl \
+  OS_NS_errno.h \
+  OS_NS_errno.inl \
+  OS_NS_stdio.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_stdio.inl \
   OS_NS_unistd.h \
   Time_Value.h \
   Time_Value.inl \
@@ -20351,15 +20954,28 @@ endif # GHS
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_errno.h \
-  OS_NS_errno.inl \
   OS_NS_macros.h \
   OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
   OS_NS_fcntl.inl \
+  Default_Constants.h \
   OS_Memory.h \
+  OS_NS_stdlib.h \
+  OS_NS_stdlib.inl \
+  Object_Manager_Base.h \
+  Cleanup.h \
+  Cleanup.inl \
+  Object_Manager_Base.inl \
+  os_include/os_search.h \
   OS_Memory.inl \
+  OS_NS_pwd.h \
+  os_include/os_pwd.h \
+  OS_NS_pwd.inl \
+  MEM_Addr.i \
+  Log_Msg.h \
+  Log_Priority.h \
+  OS_Log_Msg_Attributes.h \
+  iosfwd.h \
+  OS_Log_Msg_Attributes.inl \
   os_include/os_netdb.h
 
 .obj/MEM_Connector.o .obj/MEM_Connector.so .shobj/MEM_Connector.o .shobj/MEM_Connector.so: MEM_Connector.cpp \
@@ -20370,13 +20986,11 @@ endif # GHS
   SOCK_IO.h \
   SOCK.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Addr.h \
   Addr.i \
   IPC_SAP.h \
@@ -20384,6 +20998,8 @@ endif # GHS
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   Flag_Manip.i \
   OS_NS_fcntl.h \
@@ -20405,10 +21021,10 @@ endif # GHS
   OS_NS_stropts.inl \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -20479,9 +21095,15 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  os_include/sys/os_mman.h \
   SOCK_IO.i \
   INET_Addr.h \
   INET_Addr.i \
+  OS_NS_arpa_inet.h \
+  os_include/arpa/os_inet.h \
+  OS_NS_arpa_inet.inl \
   SOCK_Stream.i \
   SOCK_Connector.i \
   MEM_Stream.h \
@@ -20495,7 +21117,6 @@ endif # GHS
   Malloc_T.h \
   Malloc_Allocator.h \
   Malloc_Base.h \
-  os_include/sys/os_mman.h \
   Malloc_Allocator.i \
   Free_List.h \
   Free_List.i \
@@ -20526,8 +21147,6 @@ endif # GHS
   Signal.i \
   Mem_Map.h \
   Mem_Map.i \
-  OS_NS_sys_mman.h \
-  OS_NS_sys_mman.inl \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
@@ -20587,13 +21206,11 @@ endif # GHS
   pre.h \
   SOCK.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Addr.h \
   Addr.i \
   IPC_SAP.h \
@@ -20601,6 +21218,8 @@ endif # GHS
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   Flag_Manip.i \
   OS_NS_fcntl.h \
@@ -20622,10 +21241,10 @@ endif # GHS
   OS_NS_stropts.inl \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -20701,6 +21320,8 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   Guard_T.inl \
   RW_Thread_Mutex.h \
   RW_Mutex.h \
@@ -20736,8 +21357,6 @@ endif # GHS
   Signal.i \
   Mem_Map.h \
   Mem_Map.i \
-  OS_NS_sys_mman.h \
-  OS_NS_sys_mman.inl \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
@@ -20797,15 +21416,15 @@ endif # GHS
   pre.h \
   PI_Malloc.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Malloc.h \
   Log_Msg.h \
+  config-all.h \
+  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
@@ -20877,15 +21496,17 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
@@ -20939,8 +21560,6 @@ endif # GHS
   Signal.i \
   Mem_Map.h \
   Mem_Map.i \
-  OS_NS_sys_mman.h \
-  OS_NS_sys_mman.inl \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
@@ -20989,13 +21608,11 @@ endif # GHS
   MEM_IO.h \
   SOCK.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Addr.h \
   Addr.i \
   IPC_SAP.h \
@@ -21003,6 +21620,8 @@ endif # GHS
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   Flag_Manip.i \
   OS_NS_fcntl.h \
@@ -21024,10 +21643,10 @@ endif # GHS
   OS_NS_stropts.inl \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -21103,6 +21722,8 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   Guard_T.inl \
   RW_Thread_Mutex.h \
   RW_Mutex.h \
@@ -21138,8 +21759,6 @@ endif # GHS
   Signal.i \
   Mem_Map.h \
   Mem_Map.i \
-  OS_NS_sys_mman.h \
-  OS_NS_sys_mman.inl \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
@@ -21191,6 +21810,9 @@ endif # GHS
   MEM_IO.i \
   INET_Addr.h \
   INET_Addr.i \
+  OS_NS_arpa_inet.h \
+  os_include/arpa/os_inet.h \
+  OS_NS_arpa_inet.inl \
   MEM_Stream.i
 
 .obj/Basic_Stats.o .obj/Basic_Stats.so .shobj/Basic_Stats.o .shobj/Basic_Stats.so: Basic_Stats.cpp \
@@ -21238,14 +21860,14 @@ endif # GHS
   High_Res_Timer.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Basic_Types.h \
+  config-all.h \
+  OS_main.h \
   os_include/os_limits.h \
   os_include/os_unistd.h \
   os_include/sys/os_types.h \
@@ -21337,6 +21959,8 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   Guard_T.inl \
   RW_Thread_Mutex.h \
   RW_Mutex.h \
@@ -21526,11 +22150,14 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   OS_NS_sys_socket.h \
   os_include/net/os_if.h \
   OS_NS_stropts.h \
@@ -21564,10 +22191,7 @@ endif # GHS
   Signal.h \
   Signal.i \
   Mem_Map.h \
-  os_include/sys/os_mman.h \
   Mem_Map.i \
-  OS_NS_sys_mman.h \
-  OS_NS_sys_mman.inl \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
@@ -21598,19 +22222,19 @@ endif # GHS
   pre.h \
   Time_Value.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
+  os_include/sys/os_time.h \
+  config-all.h \
   OS_main.h \
+  os_include/sys/os_types.h \
+  os_include/os_stddef.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
-  os_include/sys/os_types.h \
-  os_include/os_stddef.h \
   os_include/os_errno.h \
   SString.h \
   SStringfwd.h \
@@ -21696,6 +22320,8 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
@@ -21805,20 +22431,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Guard_T.inl \
   RW_Thread_Mutex.h \
   RW_Mutex.h \
@@ -21854,7 +22483,6 @@ endif # GHS
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Malloc_Base.h \
-  os_include/sys/os_mman.h \
   Timer_Heap_T.cpp \
   Timer_List_T.h \
   Timer_List_T.cpp \
@@ -21938,20 +22566,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Guard_T.inl \
   RW_Thread_Mutex.h \
   RW_Mutex.h \
@@ -21981,7 +22612,6 @@ endif # GHS
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Malloc_Base.h \
-  os_include/sys/os_mman.h \
   Timer_Heap_T.cpp \
   Recursive_Thread_Mutex.h \
   Recursive_Thread_Mutex.inl
@@ -22063,20 +22693,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Guard_T.inl \
   RW_Thread_Mutex.h \
   RW_Mutex.h \
@@ -22108,15 +22741,15 @@ endif # GHS
   Containers.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Containers.i \
   Containers_T.h \
+  config-all.h \
+  OS_main.h \
   Node.h \
   Node.cpp \
   Array_Base.h \
@@ -22202,15 +22835,17 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
@@ -22316,20 +22951,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Guard_T.inl \
   RW_Thread_Mutex.h \
   RW_Mutex.h \
@@ -22361,16 +22999,16 @@ endif # GHS
   DLL.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   os_include/os_dlfcn.h \
   Log_Msg.h \
@@ -22454,11 +23092,14 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   OS_NS_sys_socket.h \
   os_include/net/os_if.h \
   OS_NS_stropts.h \
@@ -22482,14 +23123,14 @@ endif # GHS
   DLL_Manager.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Auto_Ptr.h \
+  config-all.h \
+  OS_main.h \
   Auto_Ptr.i \
   Global_Macros.h \
   OS_Errno.h \
@@ -22554,20 +23195,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Thread_Mutex.inl \
   Log_Msg.h \
   Log_Priority.h \
@@ -22622,7 +23266,6 @@ endif # GHS
   String_Base_Const.h \
   String_Base.i \
   Malloc_Base.h \
-  os_include/sys/os_mman.h \
   Min_Max.h \
   String_Base.cpp \
   SString.i \
@@ -22633,14 +23276,14 @@ endif # GHS
   Dynamic_Service_Base.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Service_Config.h \
+  config-all.h \
+  OS_main.h \
   Default_Constants.h \
   Unbounded_Queue.h \
   Node.h \
@@ -22743,6 +23386,8 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
@@ -22916,6 +23561,8 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
@@ -23151,6 +23798,8 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
@@ -23215,8 +23864,6 @@ endif # GHS
   Signal.i \
   Mem_Map.h \
   Mem_Map.i \
-  OS_NS_sys_mman.h \
-  OS_NS_sys_mman.inl \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
@@ -23253,6 +23900,9 @@ endif # GHS
   SOCK_IO.i \
   INET_Addr.h \
   INET_Addr.i \
+  OS_NS_arpa_inet.h \
+  os_include/arpa/os_inet.h \
+  OS_NS_arpa_inet.inl \
   SOCK_Stream.i \
   SOCK_Acceptor.h \
   SOCK_Acceptor.i \
@@ -23305,13 +23955,11 @@ endif # GHS
   SOCK_IO.h \
   SOCK.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Addr.h \
   Addr.i \
   IPC_SAP.h \
@@ -23319,6 +23967,8 @@ endif # GHS
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   Flag_Manip.i \
   OS_NS_fcntl.h \
@@ -23340,10 +23990,10 @@ endif # GHS
   OS_NS_stropts.inl \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -23414,9 +24064,15 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  os_include/sys/os_mman.h \
   SOCK_IO.i \
   INET_Addr.h \
   INET_Addr.i \
+  OS_NS_arpa_inet.h \
+  os_include/arpa/os_inet.h \
+  OS_NS_arpa_inet.inl \
   SOCK_Stream.i \
   SOCK_Acceptor.h \
   SOCK_Acceptor.i \
@@ -23458,7 +24114,6 @@ endif # GHS
   Node.cpp \
   Array_Base.h \
   Malloc_Base.h \
-  os_include/sys/os_mman.h \
   Array_Base.inl \
   Array_Base.cpp \
   Unbounded_Set.h \
@@ -23499,14 +24154,14 @@ endif # GHS
   pre.h \
   Shared_Object.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   os_include/sys/os_types.h \
+  config-all.h \
+  OS_main.h \
   os_include/os_stddef.h \
   Shared_Object.i \
   Svc_Conf_Tokens.h \
@@ -23570,20 +24225,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Thread_Mutex.inl \
   Atomic_Op_T.h \
   Atomic_Op_T.i \
@@ -23636,14 +24294,14 @@ endif # GHS
   Service_Repository.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Default_Constants.h \
+  config-all.h \
+  OS_main.h \
   Thread_Mutex.h \
   OS_NS_Thread.h \
   Global_Macros.h \
@@ -23703,20 +24361,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Thread_Mutex.inl \
   Service_Repository.i \
   Guard_T.h \
@@ -23786,14 +24447,14 @@ endif # GHS
   Service_Object.h \
   Shared_Object.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   os_include/sys/os_types.h \
+  config-all.h \
+  OS_main.h \
   os_include/os_stddef.h \
   Shared_Object.i \
   Svc_Conf_Tokens.h \
@@ -23857,20 +24518,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Thread_Mutex.inl \
   Atomic_Op_T.h \
   Atomic_Op_T.i \
@@ -23935,7 +24599,6 @@ endif # GHS
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   Malloc_Base.h \
-  os_include/sys/os_mman.h \
   Containers.h \
   Containers.i \
   Containers_T.h \
@@ -24008,14 +24671,14 @@ endif # GHS
   Obchunk.h \
   Malloc.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Log_Msg.h \
+  config-all.h \
+  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
@@ -24087,15 +24750,17 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
@@ -24149,8 +24814,6 @@ endif # GHS
   Signal.i \
   Mem_Map.h \
   Mem_Map.i \
-  OS_NS_sys_mman.h \
-  OS_NS_sys_mman.inl \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
@@ -24268,14 +24931,14 @@ endif # GHS
   Shared_Object.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   os_include/sys/os_types.h \
+  config-all.h \
+  OS_main.h \
   os_include/os_stddef.h \
   Shared_Object.i \
   Global_Macros.h \
@@ -24287,26 +24950,24 @@ endif # GHS
   XML_Svc_Conf.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
-  ace_wchar.inl \
-  OS_main.h
+  ace_wchar.inl
 
 .obj/Svc_Conf_l.o .obj/Svc_Conf_l.so .shobj/Svc_Conf_l.o .shobj/Svc_Conf_l.so: Svc_Conf_l.cpp \
   Object_Manager.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Object_Manager_Base.h \
+  config-all.h \
+  OS_main.h \
   Cleanup.h \
   Cleanup.inl \
   os_include/sys/os_types.h \
@@ -24366,20 +25027,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Recursive_Thread_Mutex.inl \
   Static_Object_Lock.h \
   Object_Manager.i \
@@ -24408,7 +25072,6 @@ endif # GHS
   Malloc_T.h \
   Malloc_Allocator.h \
   Malloc_Base.h \
-  os_include/sys/os_mman.h \
   Malloc_Allocator.i \
   Free_List.h \
   Free_List.i \
@@ -24454,8 +25117,6 @@ endif # GHS
   Signal.i \
   Mem_Map.h \
   Mem_Map.i \
-  OS_NS_sys_mman.h \
-  OS_NS_sys_mman.inl \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
@@ -24506,14 +25167,14 @@ endif # GHS
   Obchunk.h \
   Malloc.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Log_Msg.h \
+  config-all.h \
+  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
@@ -24585,15 +25246,17 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
@@ -24647,8 +25310,6 @@ endif # GHS
   Signal.i \
   Mem_Map.h \
   Mem_Map.i \
-  OS_NS_sys_mman.h \
-  OS_NS_sys_mman.inl \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
@@ -24854,15 +25515,17 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
@@ -24916,8 +25579,6 @@ endif # GHS
   Signal.i \
   Mem_Map.h \
   Mem_Map.i \
-  OS_NS_sys_mman.h \
-  OS_NS_sys_mman.inl \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
@@ -25133,6 +25794,8 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
@@ -25267,6 +25930,8 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
@@ -25392,6 +26057,8 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
@@ -25419,25 +26086,25 @@ endif # GHS
   pre.h \
   Message_Block.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Default_Constants.h \
+  config-all.h \
+  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
   OS_Errno.inl \
   Time_Value.h \
-  Time_Value.inl \
-  OS_NS_sys_time.h \
-  OS_NS_sys_time.inl \
   os_include/sys/os_time.h \
   os_include/sys/os_types.h \
   os_include/os_stddef.h \
+  Time_Value.inl \
+  OS_NS_sys_time.h \
+  OS_NS_sys_time.inl \
   Message_Block.i \
   Message_Block_T.h \
   Message_Block_T.i \
@@ -25497,15 +26164,17 @@ endif # GHS
   OS_NS_errno.h \
   OS_NS_errno.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
@@ -25540,14 +26209,14 @@ endif # GHS
   Notification_Strategy.h \
   Event_Handler.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   os_include/os_signal.h \
+  config-all.h \
+  OS_main.h \
   os_include/sys/os_types.h \
   os_include/os_stddef.h \
   os_include/os_time.h \
@@ -25608,20 +26277,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Thread_Mutex.inl \
   Atomic_Op_T.h \
   Atomic_Op_T.i \
@@ -25654,14 +26326,14 @@ endif # GHS
   Service_Object.h \
   Shared_Object.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   os_include/sys/os_types.h \
+  config-all.h \
+  OS_main.h \
   os_include/os_stddef.h \
   Shared_Object.i \
   Svc_Conf_Tokens.h \
@@ -25725,20 +26397,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Thread_Mutex.inl \
   Atomic_Op_T.h \
   Atomic_Op_T.i \
@@ -25776,7 +26451,6 @@ endif # GHS
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   Malloc_Base.h \
-  os_include/sys/os_mman.h \
   Containers.h \
   Containers.i \
   Containers_T.h \
@@ -25938,20 +26612,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Guard_T.inl \
   RW_Thread_Mutex.h \
   RW_Mutex.h \
@@ -25960,7 +26637,6 @@ endif # GHS
   Guard_T.cpp \
   Map_Manager.cpp \
   Malloc_Base.h \
-  os_include/sys/os_mman.h \
   Based_Pointer_Repository.h \
   Synch_Traits.h \
   Singleton.h \
@@ -26018,14 +26694,14 @@ endif # GHS
   Malloc.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Log_Msg.h \
+  config-all.h \
+  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
@@ -26097,15 +26773,17 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
@@ -26159,8 +26837,6 @@ endif # GHS
   Signal.i \
   Mem_Map.h \
   Mem_Map.i \
-  OS_NS_sys_mman.h \
-  OS_NS_sys_mman.inl \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
@@ -26184,15 +26860,15 @@ endif # GHS
   PI_Malloc.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Malloc.h \
   Log_Msg.h \
+  config-all.h \
+  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
@@ -26264,15 +26940,17 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
@@ -26326,8 +27004,6 @@ endif # GHS
   Signal.i \
   Mem_Map.h \
   Mem_Map.i \
-  OS_NS_sys_mman.h \
-  OS_NS_sys_mman.inl \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
@@ -26373,15 +27049,15 @@ endif # GHS
   Malloc_Allocator.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Malloc_Base.h \
   os_include/sys/os_types.h \
+  config-all.h \
+  OS_main.h \
   os_include/os_stddef.h \
   os_include/sys/os_mman.h \
   Malloc_Allocator.i \
@@ -26446,15 +27122,17 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
@@ -26480,14 +27158,14 @@ endif # GHS
   Malloc.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Log_Msg.h \
+  config-all.h \
+  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
@@ -26559,15 +27237,17 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
@@ -26621,8 +27301,6 @@ endif # GHS
   Signal.i \
   Mem_Map.h \
   Mem_Map.i \
-  OS_NS_sys_mman.h \
-  OS_NS_sys_mman.inl \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
@@ -26639,16 +27317,16 @@ endif # GHS
   Mem_Map.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   os_include/sys/os_mman.h \
   os_include/sys/os_types.h \
@@ -26665,10 +27343,10 @@ endif # GHS
   Mem_Map.i \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -26812,11 +27490,14 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   OS_NS_sys_socket.h \
   os_include/net/os_if.h \
   OS_NS_stropts.h \
@@ -26850,10 +27531,7 @@ endif # GHS
   Signal.h \
   Signal.i \
   Mem_Map.h \
-  os_include/sys/os_mman.h \
   Mem_Map.i \
-  OS_NS_sys_mman.h \
-  OS_NS_sys_mman.inl \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
@@ -26906,14 +27584,14 @@ endif # GHS
   pre.h \
   Malloc.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Log_Msg.h \
+  config-all.h \
+  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
@@ -26985,15 +27663,17 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
@@ -27047,8 +27727,6 @@ endif # GHS
   Signal.i \
   Mem_Map.h \
   Mem_Map.i \
-  OS_NS_sys_mman.h \
-  OS_NS_sys_mman.inl \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
@@ -27068,14 +27746,14 @@ endif # GHS
   Obchunk.h \
   Malloc.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Log_Msg.h \
+  config-all.h \
+  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
@@ -27147,15 +27825,17 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
@@ -27209,8 +27889,6 @@ endif # GHS
   Signal.i \
   Mem_Map.h \
   Mem_Map.i \
-  OS_NS_sys_mman.h \
-  OS_NS_sys_mman.inl \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
@@ -27229,16 +27907,16 @@ endif # GHS
   Read_Buffer.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   os_include/os_stdio.h \
   os_include/os_stdarg.h \
@@ -27340,6 +28018,8 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
@@ -27390,13 +28070,11 @@ endif # GHS
   Shared_Memory.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   os_include/os_stddef.h
 
 .obj/Shared_Memory_MM.o .obj/Shared_Memory_MM.so .shobj/Shared_Memory_MM.o .shobj/Shared_Memory_MM.so: Shared_Memory_MM.cpp \
@@ -27404,18 +28082,18 @@ endif # GHS
   pre.h \
   Shared_Memory.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   os_include/os_stddef.h \
   Mem_Map.h \
   Global_Macros.h \
   OS_Errno.h \
   os_include/os_errno.h \
+  config-all.h \
+  OS_main.h \
   OS_Errno.inl \
   os_include/sys/os_mman.h \
   os_include/sys/os_types.h \
@@ -27431,10 +28109,10 @@ endif # GHS
   Mem_Map.i \
   OS_NS_unistd.h \
   Time_Value.h \
+  os_include/sys/os_time.h \
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
-  os_include/sys/os_time.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
@@ -27483,17 +28161,18 @@ endif # GHS
   pre.h \
   Shared_Memory.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   os_include/os_stddef.h \
   SV_Shared_Memory.h \
-  os_include/sys/os_ipc.h \
+  os_include/sys/os_stat.h \
+  config-all.h \
+  OS_main.h \
   os_include/sys/os_types.h \
+  os_include/sys/os_ipc.h \
   Default_Constants.h \
   SV_Shared_Memory.i \
   OS_NS_sys_shm.h \
@@ -27584,14 +28263,14 @@ endif # GHS
   INET_Addr.h \
   Sock_Connect.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Basic_Types.h \
+  config-all.h \
+  OS_main.h \
   os_include/os_limits.h \
   os_include/os_unistd.h \
   os_include/sys/os_types.h \
@@ -27627,23 +28306,15 @@ endif # GHS
   OS_Errno.h \
   os_include/os_errno.h \
   OS_Errno.inl \
-  SOCK_Connector.h \
-  SOCK_Stream.h \
-  SOCK_IO.h \
-  SOCK.h \
-  IPC_SAP.h \
-  Flag_Manip.h \
-  Flag_Manip.i \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
+  OS_NS_arpa_inet.h \
+  os_include/arpa/os_inet.h \
+  OS_NS_arpa_inet.inl \
   OS_NS_errno.h \
   OS_NS_errno.inl \
-  IPC_SAP.i \
-  OS_NS_stropts.h \
-  os_include/os_stropts.h \
-  OS_NS_stropts.inl \
+  OS_NS_stdio.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_stdio.inl \
   OS_NS_unistd.h \
   Time_Value.h \
   Time_Value.inl \
@@ -27654,6 +28325,8 @@ endif # GHS
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
   OS_NS_macros.h \
+  OS_NS_fcntl.h \
+  OS_NS_fcntl.inl \
   Default_Constants.h \
   OS_Memory.h \
   OS_NS_stdlib.h \
@@ -27664,6 +28337,20 @@ endif # GHS
   Object_Manager_Base.inl \
   os_include/os_search.h \
   OS_Memory.inl \
+  OS_NS_pwd.h \
+  os_include/os_pwd.h \
+  OS_NS_pwd.inl \
+  SOCK_Connector.h \
+  SOCK_Stream.h \
+  SOCK_IO.h \
+  SOCK.h \
+  IPC_SAP.h \
+  Flag_Manip.h \
+  Flag_Manip.i \
+  IPC_SAP.i \
+  OS_NS_stropts.h \
+  os_include/os_stropts.h \
+  OS_NS_stropts.inl \
   OS_QoS.h \
   SOCK.i \
   OS_NS_sys_socket.h \
@@ -27671,11 +28358,6 @@ endif # GHS
   OS_NS_sys_socket.inl \
   OS_NS_sys_uio.h \
   OS_NS_sys_uio.inl \
-  OS_NS_stdio.h \
-  OS_NS_stdio.inl \
-  OS_NS_pwd.h \
-  os_include/os_pwd.h \
-  OS_NS_pwd.inl \
   ACE.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -27697,6 +28379,9 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  os_include/sys/os_mman.h \
   SOCK_IO.i \
   SOCK_Stream.i \
   SOCK_Connector.i \
@@ -27821,20 +28506,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Guard_T.inl \
   RW_Thread_Mutex.h \
   RW_Mutex.h \
@@ -27843,7 +28531,6 @@ endif # GHS
   Guard_T.cpp \
   Map_Manager.cpp \
   Malloc_Base.h \
-  os_include/sys/os_mman.h \
   Local_Tokens.h \
   Local_Tokens.i \
   SString.h \
@@ -27960,20 +28647,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Guard_T.inl \
   RW_Thread_Mutex.h \
   RW_Mutex.h \
@@ -27982,7 +28672,6 @@ endif # GHS
   Guard_T.cpp \
   Map_Manager.cpp \
   Malloc_Base.h \
-  os_include/sys/os_mman.h \
   Local_Tokens.h \
   Local_Tokens.i \
   Object_Manager.h \
@@ -28071,20 +28760,23 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   Guard_T.inl \
   RW_Thread_Mutex.h \
   RW_Mutex.h \
@@ -28093,7 +28785,6 @@ endif # GHS
   Guard_T.cpp \
   Map_Manager.cpp \
   Malloc_Base.h \
-  os_include/sys/os_mman.h \
   Local_Tokens.h \
   Local_Tokens.i \
   Token_Manager.i \
@@ -28120,12 +28811,12 @@ endif # GHS
   ACE_export.h \
   Local_Tokens.i \
   Time_Value.h \
-  Time_Value.inl \
-  OS_NS_sys_time.h \
-  OS_NS_sys_time.inl \
   os_include/sys/os_time.h \
   os_include/sys/os_types.h \
   os_include/os_stddef.h \
+  Time_Value.inl \
+  OS_NS_sys_time.h \
+  OS_NS_sys_time.inl \
   os_include/os_errno.h \
   Token_Request_Reply.i
 
@@ -28222,11 +28913,14 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
   os_include/os_pwd.h \
   OS_NS_pwd.inl \
+  os_include/sys/os_mman.h \
   OS_NS_sys_socket.h \
   os_include/net/os_if.h \
   OS_NS_stropts.h \
@@ -28243,7 +28937,6 @@ endif # GHS
   String_Base_Const.h \
   String_Base.i \
   Malloc_Base.h \
-  os_include/sys/os_mman.h \
   Min_Max.h \
   String_Base.cpp \
   Auto_Ptr.h \
@@ -28279,8 +28972,6 @@ endif # GHS
   Signal.i \
   Mem_Map.h \
   Mem_Map.i \
-  OS_NS_sys_mman.h \
-  OS_NS_sys_mman.inl \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
@@ -28333,14 +29024,14 @@ endif # GHS
   INET_Addr.h \
   Sock_Connect.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   Basic_Types.h \
+  config-all.h \
+  OS_main.h \
   os_include/os_limits.h \
   os_include/os_unistd.h \
   os_include/sys/os_types.h \
@@ -28376,23 +29067,15 @@ endif # GHS
   OS_Errno.h \
   os_include/os_errno.h \
   OS_Errno.inl \
-  SOCK_Connector.h \
-  SOCK_Stream.h \
-  SOCK_IO.h \
-  SOCK.h \
-  IPC_SAP.h \
-  Flag_Manip.h \
-  Flag_Manip.i \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
+  OS_NS_arpa_inet.h \
+  os_include/arpa/os_inet.h \
+  OS_NS_arpa_inet.inl \
   OS_NS_errno.h \
   OS_NS_errno.inl \
-  IPC_SAP.i \
-  OS_NS_stropts.h \
-  os_include/os_stropts.h \
-  OS_NS_stropts.inl \
+  OS_NS_stdio.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_stdio.inl \
   OS_NS_unistd.h \
   Time_Value.h \
   Time_Value.inl \
@@ -28403,6 +29086,8 @@ endif # GHS
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
   OS_NS_macros.h \
+  OS_NS_fcntl.h \
+  OS_NS_fcntl.inl \
   Default_Constants.h \
   OS_Memory.h \
   OS_NS_stdlib.h \
@@ -28413,6 +29098,20 @@ endif # GHS
   Object_Manager_Base.inl \
   os_include/os_search.h \
   OS_Memory.inl \
+  OS_NS_pwd.h \
+  os_include/os_pwd.h \
+  OS_NS_pwd.inl \
+  SOCK_Connector.h \
+  SOCK_Stream.h \
+  SOCK_IO.h \
+  SOCK.h \
+  IPC_SAP.h \
+  Flag_Manip.h \
+  Flag_Manip.i \
+  IPC_SAP.i \
+  OS_NS_stropts.h \
+  os_include/os_stropts.h \
+  OS_NS_stropts.inl \
   OS_QoS.h \
   SOCK.i \
   OS_NS_sys_socket.h \
@@ -28420,11 +29119,6 @@ endif # GHS
   OS_NS_sys_socket.inl \
   OS_NS_sys_uio.h \
   OS_NS_sys_uio.inl \
-  OS_NS_stdio.h \
-  OS_NS_stdio.inl \
-  OS_NS_pwd.h \
-  os_include/os_pwd.h \
-  OS_NS_pwd.inl \
   ACE.h \
   Handle_Ops.h \
   Handle_Ops.i \
@@ -28446,6 +29140,9 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  os_include/sys/os_mman.h \
   SOCK_IO.i \
   SOCK_Stream.i \
   SOCK_Connector.i \
@@ -28456,7 +29153,6 @@ endif # GHS
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   Malloc_Base.h \
-  os_include/sys/os_mman.h \
   Log_Msg.h \
   Log_Priority.h \
   Unbounded_Set.h \
@@ -28563,16 +29259,16 @@ endif # GHS
   Name_Space.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   SString.h \
   SStringfwd.h \
   Basic_Types.h \
+  config-all.h \
+  OS_main.h \
   os_include/os_limits.h \
   os_include/os_unistd.h \
   os_include/sys/os_types.h \
@@ -28662,6 +29358,8 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
@@ -28679,7 +29377,14 @@ endif # GHS
   Auto_Ptr.h \
   Auto_Ptr.i \
   Auto_Ptr.cpp \
-  SString.i
+  SString.i \
+  Unbounded_Set.h \
+  Node.h \
+  Node.cpp \
+  Unbounded_Set.inl \
+  Unbounded_Set.cpp \
+  Log_Msg.h \
+  Log_Priority.h
 
 .obj/Naming_Context.o .obj/Naming_Context.so .shobj/Naming_Context.o .shobj/Naming_Context.so: Naming_Context.cpp \
   Get_Opt.h \
@@ -28781,15 +29486,17 @@ endif # GHS
   Time_Value.inl \
   OS_NS_sys_time.h \
   OS_NS_sys_time.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
+  OS_NS_fcntl.h \
+  os_include/os_fcntl.h \
+  os_include/sys/os_stat.h \
+  OS_NS_fcntl.inl \
   OS_NS_unistd.h \
   OS_NS_unistd.inl \
   OS_NS_sys_utsname.h \
   os_include/sys/os_utsname.h \
   OS_NS_sys_utsname.inl \
-  OS_NS_fcntl.h \
-  os_include/os_fcntl.h \
-  os_include/sys/os_stat.h \
-  OS_NS_fcntl.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
@@ -28856,6 +29563,9 @@ endif # GHS
   Addr.h \
   Addr.i \
   INET_Addr.i \
+  OS_NS_arpa_inet.h \
+  os_include/arpa/os_inet.h \
+  OS_NS_arpa_inet.inl \
   SOCK_Connector.h \
   SOCK_Stream.h \
   SOCK_IO.h \
@@ -28887,8 +29597,6 @@ endif # GHS
   Signal.i \
   Mem_Map.h \
   Mem_Map.i \
-  OS_NS_sys_mman.h \
-  OS_NS_sys_mman.inl \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Semaphore_Simple.i \
@@ -28936,16 +29644,16 @@ endif # GHS
   Remote_Name_Space.h \
   pre.h \
   ACE_export.h \
-  config-all.h \
   config.h \
   $(ACE_PLATFORM_CONFIG) \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  OS_main.h \
   SString.h \
   SStringfwd.h \
   Basic_Types.h \
+  config-all.h \
+  OS_main.h \
   os_include/os_limits.h \
   os_include/os_unistd.h \
   os_include/sys/os_types.h \
@@ -29035,6 +29743,8 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \
@@ -29058,6 +29768,9 @@ endif # GHS
   Addr.h \
   Addr.i \
   INET_Addr.i \
+  OS_NS_arpa_inet.h \
+  os_include/arpa/os_inet.h \
+  OS_NS_arpa_inet.inl \
   SOCK_Connector.h \
   SOCK_Stream.h \
   SOCK_IO.h \
@@ -29225,6 +29938,8 @@ endif # GHS
   OS_NS_signal.h \
   OS_NS_signal.inl \
   OS_NS_Thread.inl \
+  OS_NS_sys_mman.h \
+  OS_NS_sys_mman.inl \
   OS_NS_stdio.h \
   OS_NS_stdio.inl \
   OS_NS_pwd.h \

@@ -46,7 +46,6 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 .obj/file-reverse.o .obj/file-reverse.so .shobj/file-reverse.o .shobj/file-reverse.so: file-reverse.cpp \
   $(ACE_ROOT)/ace/OS_main.h \
   $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -57,6 +56,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
   $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/os_include/sys/os_types.h \
@@ -73,10 +73,10 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Mem_Map.i \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_time.h \
   $(ACE_ROOT)/ace/OS_NS_sys_time.inl \
-  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/OS_NS_unistd.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
@@ -127,7 +127,6 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 .obj/file-reverse.o .obj/file-reverse.so .shobj/file-reverse.o .shobj/file-reverse.so: file-reverse.cpp \
   $(ACE_ROOT)/ace/OS_main.h \
   $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -138,6 +137,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
   $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/os_include/sys/os_types.h \
@@ -154,10 +154,10 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Mem_Map.i \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_time.h \
   $(ACE_ROOT)/ace/OS_NS_sys_time.inl \
-  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/OS_NS_unistd.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \

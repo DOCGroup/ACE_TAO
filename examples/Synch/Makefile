@@ -45,7 +45,6 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 .obj/proc_sema.o .obj/proc_sema.so .shobj/proc_sema.o .shobj/proc_sema.so: proc_sema.cpp \
   $(ACE_ROOT)/ace/OS_main.h \
   $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -55,9 +54,11 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Process_Semaphore.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_ipc.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/os_include/sys/os_types.h \
   $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_ipc.h \
   $(ACE_ROOT)/ace/os_include/sys/os_sem.h \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
@@ -115,20 +116,22 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_time.h \
   $(ACE_ROOT)/ace/OS_NS_sys_time.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/OS_NS_unistd.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.inl \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
   $(ACE_ROOT)/ace/OS_NS_stdio.inl \
   $(ACE_ROOT)/ace/OS_NS_pwd.h \
   $(ACE_ROOT)/ace/os_include/os_pwd.h \
   $(ACE_ROOT)/ace/OS_NS_pwd.inl \
+  $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
   $(ACE_ROOT)/ace/Process_Semaphore.inl \
   $(ACE_ROOT)/ace/Get_Opt.h \
@@ -140,7 +143,6 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Node.cpp \
   $(ACE_ROOT)/ace/Array_Base.h \
   $(ACE_ROOT)/ace/Malloc_Base.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/Array_Base.inl \
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(ACE_ROOT)/ace/Unbounded_Set.h \
@@ -161,7 +163,6 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 .obj/proc_sema.o .obj/proc_sema.so .shobj/proc_sema.o .shobj/proc_sema.so: proc_sema.cpp \
   $(ACE_ROOT)/ace/OS_main.h \
   $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -171,9 +172,11 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Process_Semaphore.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_ipc.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/os_include/sys/os_types.h \
   $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_ipc.h \
   $(ACE_ROOT)/ace/os_include/sys/os_sem.h \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
@@ -231,20 +234,22 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_time.h \
   $(ACE_ROOT)/ace/OS_NS_sys_time.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/OS_NS_unistd.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.inl \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
   $(ACE_ROOT)/ace/OS_NS_stdio.inl \
   $(ACE_ROOT)/ace/OS_NS_pwd.h \
   $(ACE_ROOT)/ace/os_include/os_pwd.h \
   $(ACE_ROOT)/ace/OS_NS_pwd.inl \
+  $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
   $(ACE_ROOT)/ace/Process_Semaphore.inl \
   $(ACE_ROOT)/ace/Get_Opt.h \
@@ -256,7 +261,6 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Node.cpp \
   $(ACE_ROOT)/ace/Array_Base.h \
   $(ACE_ROOT)/ace/Malloc_Base.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/Array_Base.inl \
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(ACE_ROOT)/ace/Unbounded_Set.h \

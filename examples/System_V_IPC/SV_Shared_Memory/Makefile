@@ -47,16 +47,17 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/SV_Shared_Memory.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
+  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_ipc.h \
   $(ACE_ROOT)/ace/os_include/sys/os_types.h \
   $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_ipc.h \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/SV_Shared_Memory.i \
   $(ACE_ROOT)/ace/OS_NS_sys_shm.h \
@@ -82,14 +83,13 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
   SV_Shared_Memory_Test.h \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
   $(ACE_ROOT)/ace/os_include/os_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
   $(ACE_ROOT)/ace/OS_NS_stdio.inl \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_time.h \
   $(ACE_ROOT)/ace/OS_NS_sys_time.inl \
-  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/OS_NS_unistd.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
@@ -130,16 +130,17 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/SV_Shared_Memory.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
+  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_ipc.h \
   $(ACE_ROOT)/ace/os_include/sys/os_types.h \
   $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_ipc.h \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/SV_Shared_Memory.i \
   $(ACE_ROOT)/ace/OS_NS_sys_shm.h \
@@ -165,14 +166,13 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
   SV_Shared_Memory_Test.h \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
   $(ACE_ROOT)/ace/os_include/os_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
   $(ACE_ROOT)/ace/OS_NS_stdio.inl \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_time.h \
   $(ACE_ROOT)/ace/OS_NS_sys_time.inl \
-  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/OS_NS_unistd.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \

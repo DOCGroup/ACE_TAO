@@ -168,6 +168,8 @@ endif
   $(ACE_ROOT)/ace/OS_NS_signal.h \
   $(ACE_ROOT)/ace/OS_NS_signal.inl \
   $(ACE_ROOT)/ace/OS_NS_Thread.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
   $(ACE_ROOT)/ace/OS_NS_stdio.inl \
   $(ACE_ROOT)/ace/OS_NS_pwd.h \
@@ -271,8 +273,6 @@ endif
   $(ACE_ROOT)/ace/Signal.i \
   $(ACE_ROOT)/ace/Mem_Map.h \
   $(ACE_ROOT)/ace/Mem_Map.i \
-  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
-  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \

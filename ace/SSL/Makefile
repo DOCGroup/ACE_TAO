@@ -63,10 +63,16 @@ endif
 
 
 .obj/SSL_Context.o .obj/SSL_Context.so .shobj/SSL_Context.o .shobj/SSL_Context.so: SSL_Context.cpp SSL_Context.h \
-  $(ACE_ROOT)/ace/pre.h SSL_Export.h \
+  $(ACE_ROOT)/ace/pre.h \
+  SSL_Export.h \
+  $(ACE_ROOT)/ace/config-all.h \
+  $(ACE_ROOT)/ace/config.h \
+  $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
+  $(ACE_ROOT)/ace/OS_main.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -86,12 +92,13 @@ endif
   $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/String_Base.i \
   $(ACE_ROOT)/ace/Malloc_Base.h \
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
@@ -104,15 +111,13 @@ endif
   $(ACE_ROOT)/ace/os_include/os_ctype.h \
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/OS_Memory.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_NS_stdlib.h \
   $(ACE_ROOT)/ace/OS_NS_stdlib.inl \
   $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Cleanup.h \
   $(ACE_ROOT)/ace/Cleanup.inl \
   $(ACE_ROOT)/ace/Object_Manager_Base.inl \
+  $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/String_Base.cpp \
   $(ACE_ROOT)/ace/ACE.h \
@@ -160,12 +165,15 @@ endif
   $(ACE_ROOT)/ace/OS_NS_signal.h \
   $(ACE_ROOT)/ace/OS_NS_signal.inl \
   $(ACE_ROOT)/ace/OS_NS_Thread.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
   $(ACE_ROOT)/ace/OS_NS_stdio.inl \
   $(ACE_ROOT)/ace/OS_NS_pwd.h \
   $(ACE_ROOT)/ace/os_include/os_pwd.h \
   $(ACE_ROOT)/ace/OS_NS_pwd.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_socket.h \
+  $(ACE_ROOT)/ace/os_include/net/os_if.h \
   $(ACE_ROOT)/ace/OS_NS_stropts.h \
   $(ACE_ROOT)/ace/os_include/os_stropts.h \
   $(ACE_ROOT)/ace/OS_NS_stropts.inl \
@@ -200,8 +208,6 @@ endif
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/Mutex.inl \
-  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
-  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
   $(ACE_ROOT)/ace/Null_Barrier.h \
   $(ACE_ROOT)/ace/Null_Condition.h \
   $(ACE_ROOT)/ace/Null_Mutex.h \
@@ -239,8 +245,10 @@ endif
   $(ACE_ROOT)/ace/Condition_T.cpp \
   $(ACE_ROOT)/ace/Synch_Traits.h \
   $(ACE_ROOT)/ace/Synch_T.i \
-  $(ACE_ROOT)/ace/Synch_T.cpp SSL_Context.inl \
-  sslconf.h $(ACE_ROOT)/ace/Object_Manager.h \
+  $(ACE_ROOT)/ace/Synch_T.cpp \
+  SSL_Context.inl sslconf.h \
+  $(ACE_ROOT)/ace/Object_Manager.h \
+  $(ACE_ROOT)/ace/Static_Object_Lock.h \
   $(ACE_ROOT)/ace/Object_Manager.i \
   $(ACE_ROOT)/ace/Managed_Object.h \
   $(ACE_ROOT)/ace/Managed_Object.i \
@@ -255,18 +263,25 @@ endif
   $(ACE_ROOT)/ace/Framework_Component_T.cpp
 
 .obj/SSL_SOCK.o .obj/SSL_SOCK.so .shobj/SSL_SOCK.o .shobj/SSL_SOCK.so: SSL_SOCK.cpp SSL_SOCK.h \
-  $(ACE_ROOT)/ace/pre.h SSL_Export.h \
+  $(ACE_ROOT)/ace/pre.h \
+  SSL_Export.h \
+  $(ACE_ROOT)/ace/config-all.h \
+  $(ACE_ROOT)/ace/config.h \
+  $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/SOCK.h \
+  $(ACE_ROOT)/ace/OS_main.h \
   $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/SOCK.h \
   $(ACE_ROOT)/ace/Addr.h \
   $(ACE_ROOT)/ace/Addr.i \
   $(ACE_ROOT)/ace/IPC_SAP.h \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/Flag_Manip.i \
   $(ACE_ROOT)/ace/OS_NS_fcntl.h \
   $(ACE_ROOT)/ace/os_include/os_fcntl.h \
@@ -275,7 +290,6 @@ endif
   $(ACE_ROOT)/ace/os_include/os_stddef.h \
   $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_NS_errno.inl \
   $(ACE_ROOT)/ace/IPC_SAP.i \
   $(ACE_ROOT)/ace/OS_NS_stropts.h \
@@ -288,10 +302,10 @@ endif
   $(ACE_ROOT)/ace/OS_NS_stropts.inl \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_time.h \
   $(ACE_ROOT)/ace/OS_NS_sys_time.inl \
-  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/OS_NS_unistd.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
@@ -316,20 +330,20 @@ endif
   $(ACE_ROOT)/ace/OS_NS_macros.h \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_NS_stdlib.h \
   $(ACE_ROOT)/ace/OS_NS_stdlib.inl \
   $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Cleanup.h \
   $(ACE_ROOT)/ace/Cleanup.inl \
   $(ACE_ROOT)/ace/Object_Manager_Base.inl \
+  $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_QoS.h \
   $(ACE_ROOT)/ace/os_include/sys/os_uio.h \
   $(ACE_ROOT)/ace/SOCK.i \
   $(ACE_ROOT)/ace/OS_NS_sys_socket.h \
   $(ACE_ROOT)/ace/os_include/sys/os_socket.h \
+  $(ACE_ROOT)/ace/os_include/net/os_if.h \
   $(ACE_ROOT)/ace/OS_NS_sys_socket.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_uio.h \
   $(ACE_ROOT)/ace/OS_NS_sys_uio.inl \
@@ -337,21 +351,30 @@ endif
   $(ACE_ROOT)/ace/OS_NS_stdio.inl \
   $(ACE_ROOT)/ace/OS_NS_pwd.h \
   $(ACE_ROOT)/ace/os_include/os_pwd.h \
-  $(ACE_ROOT)/ace/OS_NS_pwd.inl SSL_SOCK.i
+  $(ACE_ROOT)/ace/OS_NS_pwd.inl \
+  SSL_SOCK.i
 
 .obj/SSL_SOCK_Acceptor.o .obj/SSL_SOCK_Acceptor.so .shobj/SSL_SOCK_Acceptor.o .shobj/SSL_SOCK_Acceptor.so: SSL_SOCK_Acceptor.cpp SSL_SOCK_Acceptor.h \
-  $(ACE_ROOT)/ace/pre.h SSL_Export.h \
+  $(ACE_ROOT)/ace/pre.h \
+  SSL_Export.h \
+  $(ACE_ROOT)/ace/config-all.h \
+  $(ACE_ROOT)/ace/config.h \
+  $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
-  $(ACE_ROOT)/ace/ace_wchar.inl SSL_SOCK_Stream.h \
-  SSL_SOCK.h $(ACE_ROOT)/ace/SOCK.h \
+  $(ACE_ROOT)/ace/ace_wchar.inl \
+  $(ACE_ROOT)/ace/OS_main.h \
   $(ACE_ROOT)/ace/ACE_export.h \
+  SSL_SOCK_Stream.h SSL_SOCK.h \
+  $(ACE_ROOT)/ace/SOCK.h \
   $(ACE_ROOT)/ace/Addr.h \
   $(ACE_ROOT)/ace/Addr.i \
   $(ACE_ROOT)/ace/IPC_SAP.h \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/Flag_Manip.i \
   $(ACE_ROOT)/ace/OS_NS_fcntl.h \
   $(ACE_ROOT)/ace/os_include/os_fcntl.h \
@@ -360,7 +383,6 @@ endif
   $(ACE_ROOT)/ace/os_include/os_stddef.h \
   $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_NS_errno.inl \
   $(ACE_ROOT)/ace/IPC_SAP.i \
   $(ACE_ROOT)/ace/OS_NS_stropts.h \
@@ -373,10 +395,10 @@ endif
   $(ACE_ROOT)/ace/OS_NS_stropts.inl \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_time.h \
   $(ACE_ROOT)/ace/OS_NS_sys_time.inl \
-  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/OS_NS_unistd.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
@@ -401,20 +423,20 @@ endif
   $(ACE_ROOT)/ace/OS_NS_macros.h \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_NS_stdlib.h \
   $(ACE_ROOT)/ace/OS_NS_stdlib.inl \
   $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Cleanup.h \
   $(ACE_ROOT)/ace/Cleanup.inl \
   $(ACE_ROOT)/ace/Object_Manager_Base.inl \
+  $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_QoS.h \
   $(ACE_ROOT)/ace/os_include/sys/os_uio.h \
   $(ACE_ROOT)/ace/SOCK.i \
   $(ACE_ROOT)/ace/OS_NS_sys_socket.h \
   $(ACE_ROOT)/ace/os_include/sys/os_socket.h \
+  $(ACE_ROOT)/ace/os_include/net/os_if.h \
   $(ACE_ROOT)/ace/OS_NS_sys_socket.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_uio.h \
   $(ACE_ROOT)/ace/OS_NS_sys_uio.inl \
@@ -422,8 +444,9 @@ endif
   $(ACE_ROOT)/ace/OS_NS_stdio.inl \
   $(ACE_ROOT)/ace/OS_NS_pwd.h \
   $(ACE_ROOT)/ace/os_include/os_pwd.h \
-  $(ACE_ROOT)/ace/OS_NS_pwd.inl SSL_SOCK.i \
-  SSL_Context.h $(ACE_ROOT)/ace/SString.h \
+  $(ACE_ROOT)/ace/OS_NS_pwd.inl \
+  SSL_SOCK.i SSL_Context.h \
+  $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
@@ -456,6 +479,8 @@ endif
   $(ACE_ROOT)/ace/OS_NS_signal.h \
   $(ACE_ROOT)/ace/OS_NS_signal.inl \
   $(ACE_ROOT)/ace/OS_NS_Thread.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
@@ -483,8 +508,6 @@ endif
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/Mutex.inl \
-  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
-  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
   $(ACE_ROOT)/ace/Null_Barrier.h \
   $(ACE_ROOT)/ace/Null_Condition.h \
   $(ACE_ROOT)/ace/Null_Mutex.h \
@@ -522,13 +545,18 @@ endif
   $(ACE_ROOT)/ace/Condition_T.cpp \
   $(ACE_ROOT)/ace/Synch_Traits.h \
   $(ACE_ROOT)/ace/Synch_T.i \
-  $(ACE_ROOT)/ace/Synch_T.cpp SSL_Context.inl \
+  $(ACE_ROOT)/ace/Synch_T.cpp \
+  SSL_Context.inl \
   $(ACE_ROOT)/ace/SOCK_Stream.h \
   $(ACE_ROOT)/ace/SOCK_IO.h \
   $(ACE_ROOT)/ace/SOCK_IO.i \
   $(ACE_ROOT)/ace/INET_Addr.h \
   $(ACE_ROOT)/ace/INET_Addr.i \
-  $(ACE_ROOT)/ace/SOCK_Stream.i SSL_SOCK_Stream.i \
+  $(ACE_ROOT)/ace/OS_NS_arpa_inet.h \
+  $(ACE_ROOT)/ace/os_include/arpa/os_inet.h \
+  $(ACE_ROOT)/ace/OS_NS_arpa_inet.inl \
+  $(ACE_ROOT)/ace/SOCK_Stream.i \
+  SSL_SOCK_Stream.i \
   $(ACE_ROOT)/ace/SOCK_Acceptor.h \
   $(ACE_ROOT)/ace/SOCK_Acceptor.i \
   SSL_SOCK_Acceptor.i \
@@ -538,18 +566,26 @@ endif
   $(ACE_ROOT)/ace/os_include/os_strings.h
 
 .obj/SSL_SOCK_Connector.o .obj/SSL_SOCK_Connector.so .shobj/SSL_SOCK_Connector.o .shobj/SSL_SOCK_Connector.so: SSL_SOCK_Connector.cpp SSL_SOCK_Connector.h \
-  $(ACE_ROOT)/ace/pre.h SSL_Export.h \
+  $(ACE_ROOT)/ace/pre.h \
+  SSL_Export.h \
+  $(ACE_ROOT)/ace/config-all.h \
+  $(ACE_ROOT)/ace/config.h \
+  $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
-  $(ACE_ROOT)/ace/ace_wchar.inl SSL_SOCK_Stream.h \
-  SSL_SOCK.h $(ACE_ROOT)/ace/SOCK.h \
+  $(ACE_ROOT)/ace/ace_wchar.inl \
+  $(ACE_ROOT)/ace/OS_main.h \
   $(ACE_ROOT)/ace/ACE_export.h \
+  SSL_SOCK_Stream.h SSL_SOCK.h \
+  $(ACE_ROOT)/ace/SOCK.h \
   $(ACE_ROOT)/ace/Addr.h \
   $(ACE_ROOT)/ace/Addr.i \
   $(ACE_ROOT)/ace/IPC_SAP.h \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/Flag_Manip.i \
   $(ACE_ROOT)/ace/OS_NS_fcntl.h \
   $(ACE_ROOT)/ace/os_include/os_fcntl.h \
@@ -558,7 +594,6 @@ endif
   $(ACE_ROOT)/ace/os_include/os_stddef.h \
   $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_NS_errno.inl \
   $(ACE_ROOT)/ace/IPC_SAP.i \
   $(ACE_ROOT)/ace/OS_NS_stropts.h \
@@ -571,10 +606,10 @@ endif
   $(ACE_ROOT)/ace/OS_NS_stropts.inl \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_time.h \
   $(ACE_ROOT)/ace/OS_NS_sys_time.inl \
-  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/OS_NS_unistd.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
@@ -599,20 +634,20 @@ endif
   $(ACE_ROOT)/ace/OS_NS_macros.h \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_NS_stdlib.h \
   $(ACE_ROOT)/ace/OS_NS_stdlib.inl \
   $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Cleanup.h \
   $(ACE_ROOT)/ace/Cleanup.inl \
   $(ACE_ROOT)/ace/Object_Manager_Base.inl \
+  $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_QoS.h \
   $(ACE_ROOT)/ace/os_include/sys/os_uio.h \
   $(ACE_ROOT)/ace/SOCK.i \
   $(ACE_ROOT)/ace/OS_NS_sys_socket.h \
   $(ACE_ROOT)/ace/os_include/sys/os_socket.h \
+  $(ACE_ROOT)/ace/os_include/net/os_if.h \
   $(ACE_ROOT)/ace/OS_NS_sys_socket.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_uio.h \
   $(ACE_ROOT)/ace/OS_NS_sys_uio.inl \
@@ -620,8 +655,9 @@ endif
   $(ACE_ROOT)/ace/OS_NS_stdio.inl \
   $(ACE_ROOT)/ace/OS_NS_pwd.h \
   $(ACE_ROOT)/ace/os_include/os_pwd.h \
-  $(ACE_ROOT)/ace/OS_NS_pwd.inl SSL_SOCK.i \
-  SSL_Context.h $(ACE_ROOT)/ace/SString.h \
+  $(ACE_ROOT)/ace/OS_NS_pwd.inl \
+  SSL_SOCK.i SSL_Context.h \
+  $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
@@ -654,6 +690,8 @@ endif
   $(ACE_ROOT)/ace/OS_NS_signal.h \
   $(ACE_ROOT)/ace/OS_NS_signal.inl \
   $(ACE_ROOT)/ace/OS_NS_Thread.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
@@ -681,8 +719,6 @@ endif
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/Mutex.inl \
-  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
-  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
   $(ACE_ROOT)/ace/Null_Barrier.h \
   $(ACE_ROOT)/ace/Null_Condition.h \
   $(ACE_ROOT)/ace/Null_Mutex.h \
@@ -720,13 +756,18 @@ endif
   $(ACE_ROOT)/ace/Condition_T.cpp \
   $(ACE_ROOT)/ace/Synch_Traits.h \
   $(ACE_ROOT)/ace/Synch_T.i \
-  $(ACE_ROOT)/ace/Synch_T.cpp SSL_Context.inl \
+  $(ACE_ROOT)/ace/Synch_T.cpp \
+  SSL_Context.inl \
   $(ACE_ROOT)/ace/SOCK_Stream.h \
   $(ACE_ROOT)/ace/SOCK_IO.h \
   $(ACE_ROOT)/ace/SOCK_IO.i \
   $(ACE_ROOT)/ace/INET_Addr.h \
   $(ACE_ROOT)/ace/INET_Addr.i \
-  $(ACE_ROOT)/ace/SOCK_Stream.i SSL_SOCK_Stream.i \
+  $(ACE_ROOT)/ace/OS_NS_arpa_inet.h \
+  $(ACE_ROOT)/ace/os_include/arpa/os_inet.h \
+  $(ACE_ROOT)/ace/OS_NS_arpa_inet.inl \
+  $(ACE_ROOT)/ace/SOCK_Stream.i \
+  SSL_SOCK_Stream.i \
   $(ACE_ROOT)/ace/SOCK_Connector.h \
   $(ACE_ROOT)/ace/SOCK_Connector.i \
   SSL_SOCK_Connector.i \
@@ -739,10 +780,14 @@ endif
   $(ACE_ROOT)/ace/Handle_Set.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/config.h \
+  $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/os_include/sys/os_select.h \
+  $(ACE_ROOT)/ace/config-all.h \
+  $(ACE_ROOT)/ace/OS_main.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
   $(ACE_ROOT)/ace/os_include/sys/os_types.h \
   $(ACE_ROOT)/ace/os_include/os_stddef.h \
@@ -758,7 +803,9 @@ endif
   $(ACE_ROOT)/ace/Handle_Set.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
@@ -778,7 +825,6 @@ endif
   $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
   $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_NS_errno.inl \
   $(ACE_ROOT)/ace/IPC_SAP.i \
   $(ACE_ROOT)/ace/OS_NS_stropts.h \
@@ -807,20 +853,20 @@ endif
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/OS_NS_macros.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_NS_stdlib.h \
   $(ACE_ROOT)/ace/OS_NS_stdlib.inl \
   $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Cleanup.h \
   $(ACE_ROOT)/ace/Cleanup.inl \
   $(ACE_ROOT)/ace/Object_Manager_Base.inl \
+  $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_QoS.h \
   $(ACE_ROOT)/ace/os_include/sys/os_uio.h \
   $(ACE_ROOT)/ace/SOCK.i \
   $(ACE_ROOT)/ace/OS_NS_sys_socket.h \
   $(ACE_ROOT)/ace/os_include/sys/os_socket.h \
+  $(ACE_ROOT)/ace/os_include/net/os_if.h \
   $(ACE_ROOT)/ace/OS_NS_sys_socket.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_uio.h \
   $(ACE_ROOT)/ace/OS_NS_sys_uio.inl \
@@ -828,8 +874,9 @@ endif
   $(ACE_ROOT)/ace/OS_NS_stdio.inl \
   $(ACE_ROOT)/ace/OS_NS_pwd.h \
   $(ACE_ROOT)/ace/os_include/os_pwd.h \
-  $(ACE_ROOT)/ace/OS_NS_pwd.inl SSL_SOCK.i \
-  SSL_Context.h $(ACE_ROOT)/ace/SString.h \
+  $(ACE_ROOT)/ace/OS_NS_pwd.inl \
+  SSL_SOCK.i SSL_Context.h \
+  $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
@@ -859,6 +906,8 @@ endif
   $(ACE_ROOT)/ace/OS_NS_signal.h \
   $(ACE_ROOT)/ace/OS_NS_signal.inl \
   $(ACE_ROOT)/ace/OS_NS_Thread.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
@@ -884,8 +933,6 @@ endif
   $(ACE_ROOT)/ace/Manual_Event.inl \
   $(ACE_ROOT)/ace/Mutex.h \
   $(ACE_ROOT)/ace/Mutex.inl \
-  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
-  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
   $(ACE_ROOT)/ace/Null_Barrier.h \
   $(ACE_ROOT)/ace/Null_Condition.h \
   $(ACE_ROOT)/ace/Null_Mutex.h \
@@ -923,21 +970,32 @@ endif
   $(ACE_ROOT)/ace/Condition_T.cpp \
   $(ACE_ROOT)/ace/Synch_Traits.h \
   $(ACE_ROOT)/ace/Synch_T.i \
-  $(ACE_ROOT)/ace/Synch_T.cpp SSL_Context.inl \
+  $(ACE_ROOT)/ace/Synch_T.cpp \
+  SSL_Context.inl \
   $(ACE_ROOT)/ace/SOCK_Stream.h \
   $(ACE_ROOT)/ace/SOCK_IO.h \
   $(ACE_ROOT)/ace/SOCK_IO.i \
   $(ACE_ROOT)/ace/INET_Addr.h \
   $(ACE_ROOT)/ace/INET_Addr.i \
-  $(ACE_ROOT)/ace/SOCK_Stream.i SSL_SOCK_Stream.i \
+  $(ACE_ROOT)/ace/OS_NS_arpa_inet.h \
+  $(ACE_ROOT)/ace/os_include/arpa/os_inet.h \
+  $(ACE_ROOT)/ace/OS_NS_arpa_inet.inl \
+  $(ACE_ROOT)/ace/SOCK_Stream.i \
+  SSL_SOCK_Stream.i \
   $(ACE_ROOT)/ace/OS_NS_sys_select.h \
   $(ACE_ROOT)/ace/OS_NS_sys_select.inl
 
 .obj/SSL_Asynch_Stream.o .obj/SSL_Asynch_Stream.so .shobj/SSL_Asynch_Stream.o .shobj/SSL_Asynch_Stream.so: SSL_Asynch_Stream.cpp SSL_Asynch_Stream.h \
-  $(ACE_ROOT)/ace/pre.h SSL_Context.h \
+  $(ACE_ROOT)/ace/pre.h \
+  SSL_Context.h SSL_Export.h \
+  $(ACE_ROOT)/ace/config-all.h \
+  $(ACE_ROOT)/ace/config.h \
+  $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
+  $(ACE_ROOT)/ace/OS_main.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -957,12 +1015,13 @@ endif
   $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/String_Base.i \
   $(ACE_ROOT)/ace/Malloc_Base.h \
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
@@ -975,15 +1034,13 @@ endif
   $(ACE_ROOT)/ace/os_include/os_ctype.h \
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/OS_Memory.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_NS_stdlib.h \
   $(ACE_ROOT)/ace/OS_NS_stdlib.inl \
   $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Cleanup.h \
   $(ACE_ROOT)/ace/Cleanup.inl \
   $(ACE_ROOT)/ace/Object_Manager_Base.inl \
+  $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/String_Base.cpp \
   $(ACE_ROOT)/ace/ACE.h \
@@ -1031,12 +1088,15 @@ endif
   $(ACE_ROOT)/ace/OS_NS_signal.h \
   $(ACE_ROOT)/ace/OS_NS_signal.inl \
   $(ACE_ROOT)/ace/OS_NS_Thread.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
   $(ACE_ROOT)/ace/OS_NS_stdio.inl \
   $(ACE_ROOT)/ace/OS_NS_pwd.h \
   $(ACE_ROOT)/ace/os_include/os_pwd.h \
   $(ACE_ROOT)/ace/OS_NS_pwd.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_socket.h \
+  $(ACE_ROOT)/ace/os_include/net/os_if.h \
   $(ACE_ROOT)/ace/OS_NS_stropts.h \
   $(ACE_ROOT)/ace/os_include/os_stropts.h \
   $(ACE_ROOT)/ace/OS_NS_stropts.inl \
@@ -1071,8 +1131,6 @@ endif
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/Mutex.inl \
-  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
-  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
   $(ACE_ROOT)/ace/Null_Barrier.h \
   $(ACE_ROOT)/ace/Null_Condition.h \
   $(ACE_ROOT)/ace/Null_Mutex.h \
@@ -1110,7 +1168,8 @@ endif
   $(ACE_ROOT)/ace/Condition_T.cpp \
   $(ACE_ROOT)/ace/Synch_Traits.h \
   $(ACE_ROOT)/ace/Synch_T.i \
-  $(ACE_ROOT)/ace/Synch_T.cpp SSL_Context.inl \
+  $(ACE_ROOT)/ace/Synch_T.cpp \
+  SSL_Context.inl \
   $(ACE_ROOT)/ace/Asynch_IO_Impl.h \
   $(ACE_ROOT)/ace/Asynch_IO.h \
   $(ACE_ROOT)/ace/Asynch_IO_Impl.i \
@@ -1202,6 +1261,7 @@ endif
   $(ACE_ROOT)/ace/Singleton.i \
   $(ACE_ROOT)/ace/Singleton.cpp \
   $(ACE_ROOT)/ace/Object_Manager.h \
+  $(ACE_ROOT)/ace/Static_Object_Lock.h \
   $(ACE_ROOT)/ace/Object_Manager.i \
   $(ACE_ROOT)/ace/Managed_Object.h \
   $(ACE_ROOT)/ace/Managed_Object.i \
@@ -1243,10 +1303,16 @@ endif
   $(ACE_ROOT)/ace/Proactor.i
 
 .obj/SSL_Asynch_BIO.o .obj/SSL_Asynch_BIO.so .shobj/SSL_Asynch_BIO.o .shobj/SSL_Asynch_BIO.so: SSL_Asynch_BIO.cpp SSL_Asynch_BIO.h \
-  $(ACE_ROOT)/ace/pre.h SSL_Export.h \
+  $(ACE_ROOT)/ace/pre.h \
+  SSL_Export.h \
+  $(ACE_ROOT)/ace/config-all.h \
+  $(ACE_ROOT)/ace/config.h \
+  $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
+  $(ACE_ROOT)/ace/OS_main.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   SSL_Asynch_Stream.h SSL_Context.h \
   $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
@@ -1267,12 +1333,13 @@ endif
   $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/String_Base.i \
   $(ACE_ROOT)/ace/Malloc_Base.h \
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
@@ -1285,15 +1352,13 @@ endif
   $(ACE_ROOT)/ace/os_include/os_ctype.h \
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/OS_Memory.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_NS_stdlib.h \
   $(ACE_ROOT)/ace/OS_NS_stdlib.inl \
   $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Cleanup.h \
   $(ACE_ROOT)/ace/Cleanup.inl \
   $(ACE_ROOT)/ace/Object_Manager_Base.inl \
+  $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/String_Base.cpp \
   $(ACE_ROOT)/ace/ACE.h \
@@ -1341,12 +1406,15 @@ endif
   $(ACE_ROOT)/ace/OS_NS_signal.h \
   $(ACE_ROOT)/ace/OS_NS_signal.inl \
   $(ACE_ROOT)/ace/OS_NS_Thread.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
   $(ACE_ROOT)/ace/OS_NS_stdio.inl \
   $(ACE_ROOT)/ace/OS_NS_pwd.h \
   $(ACE_ROOT)/ace/os_include/os_pwd.h \
   $(ACE_ROOT)/ace/OS_NS_pwd.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_socket.h \
+  $(ACE_ROOT)/ace/os_include/net/os_if.h \
   $(ACE_ROOT)/ace/OS_NS_stropts.h \
   $(ACE_ROOT)/ace/os_include/os_stropts.h \
   $(ACE_ROOT)/ace/OS_NS_stropts.inl \
@@ -1381,8 +1449,6 @@ endif
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/Mutex.inl \
-  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
-  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
   $(ACE_ROOT)/ace/Null_Barrier.h \
   $(ACE_ROOT)/ace/Null_Condition.h \
   $(ACE_ROOT)/ace/Null_Mutex.h \
@@ -1420,7 +1486,8 @@ endif
   $(ACE_ROOT)/ace/Condition_T.cpp \
   $(ACE_ROOT)/ace/Synch_Traits.h \
   $(ACE_ROOT)/ace/Synch_T.i \
-  $(ACE_ROOT)/ace/Synch_T.cpp SSL_Context.inl \
+  $(ACE_ROOT)/ace/Synch_T.cpp \
+  SSL_Context.inl \
   $(ACE_ROOT)/ace/Asynch_IO_Impl.h \
   $(ACE_ROOT)/ace/Asynch_IO.h \
   $(ACE_ROOT)/ace/Asynch_IO_Impl.i \
