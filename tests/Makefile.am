@@ -237,6 +237,8 @@ noinst_PROGRAMS = \
   $(TOKENS_TEST) \
   $(XTREACTOR_TEST)
 
+ACE_Test_SOURCES = ACE_Test.cpp
+
 Aio_Platform_Test_SOURCES = Aio_Platform_Test.cpp
 
 Arg_Shifter_Test_SOURCES = Arg_Shifter_Test.cpp
