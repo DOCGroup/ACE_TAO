@@ -233,7 +233,7 @@ Scheduling_Service: $(addprefix $(VDIR),$(SCHEDULE_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Service_Constants.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs/Time_Utilities.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/Config_Scheduler.i
 
