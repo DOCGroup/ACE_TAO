@@ -8,7 +8,8 @@ endif
 
 SRC = Notify_Server.cpp Notify_Service.cpp
 
-LDLIBS = -lTAO_ETCL -lTAO_CosNotification -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_DynamicAny -lTAO_IORTable -lTAO_PortableServer -lTAO
+LDLIBS = -lTAO_ETCL -lTAO_CosNotification -lTAO_CosNaming -lTAO_Svc_Utils \
+         -lTAO_DynamicAny -lTAO_IORTable -lTAO_PortableServer -lTAO
 
 BIN2 = Notify_Service
 
@@ -33,7 +34,8 @@ include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 #include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
-LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
+LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs/ETCL -L$(TAO_ROOT)/orbsvcs/orbsvcs \
+           -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) $(TSS_ORB_FLAG)
 
 NOTIFY_OBJS = Notify_Service.o Notify_Server.o
