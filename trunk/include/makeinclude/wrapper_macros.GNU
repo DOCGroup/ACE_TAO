@@ -277,6 +277,7 @@ ifdef shared_libs
     #### Build shared libs only.
     ifeq ($(SHLIB),)
       #### Makefile only specifies static libs, so only build static libs.
+      BUILD         = $(VLIB) $(VBIN)
     else # ! SHLIB
       #### Don't build static libs.
       BUILD         = $(VSHLIB) $(SHLIBA) $(VBIN)
