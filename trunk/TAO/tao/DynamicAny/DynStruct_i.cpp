@@ -234,7 +234,7 @@ TAO_DynStruct_i::current_member_name (ACE_ENV_SINGLE_ARG_DECL)
   CORBA::TypeCode_var unaliased_tc =
     TAO_DynAnyFactory::strip_alias (this->type_.in ()
                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (0);
   const char *name =
     unaliased_tc->member_name (this->current_position_
                                ACE_ENV_ARG_PARAMETER);
@@ -275,7 +275,7 @@ TAO_DynStruct_i::current_member_kind (ACE_ENV_SINGLE_ARG_DECL)
   CORBA::TypeCode_var unaliased_tc =
     TAO_DynAnyFactory::strip_alias (this->type_.in ()
                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (0);
   CORBA::TypeCode_var tc =
   unaliased_tc->member_type (this->current_position_
                                   ACE_ENV_ARG_PARAMETER);
@@ -416,7 +416,7 @@ TAO_DynStruct_i::get_members_as_dyn_any (ACE_ENV_SINGLE_ARG_DECL)
   CORBA::TypeCode_var unaliased_tc =
     TAO_DynAnyFactory::strip_alias (this->type_.in ()
                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (0);
 
   // Assign name and value to each pearl on the string.
   for (CORBA::ULong i = 0; i < this->component_count_; ++i)
