@@ -1,3 +1,11 @@
+Sat Sep  2 08:14:58 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Portable_Interceptors/Benchmark/Makefile:
+        * tests/Portable_Interceptors/Dynamic/Makefile:
+        * tests/Portable_Interceptors/Service_Context_Manipulation/Makefile:
+          The ifeq(interceptors,1) protection was commented out in one
+	  case, the other files needed to refresh their dependencies.
+
 Fri Sep  1 23:51:56 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * examples/Simple/time-date/svc.conf:
