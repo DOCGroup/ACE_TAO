@@ -362,7 +362,7 @@ The correct way to write that guard is:
 
     <li>Never include a header file when a forward reference will do,
       remember that templates can be forward referenced too.
-      Consult your favorite C++ book to find out when you must include 
+      Consult your favorite C++ book to find out when you must include
       the full class definition.<p>
   </ul>
 
@@ -556,7 +556,7 @@ Foo::bar ()
         for convenience, if its performance is not critical, it is usually
         easiest just to make the virtual destructor non-inline.)<p>
 
-    
+
     <li><a name="ACE_Time_Value example">Avoid default arguments</a>
         unless there's a good reason.  For an example of how they got
         us into a jam is:
@@ -704,6 +704,9 @@ Foo::bar ()
          differences across platforms.<p>
      <li>After attempting to open an existing file, always check for success.
          Take appropriate action if the open failed.<p>
+     <li>Notice that <strong><code>ACE_DEBUG</code></strong> and
+         <strong><code>ACE_ERROR</code></strong> don't support
+         <code>%ld</code> of any other multicharacter format.<p>
   </ul>
 
   <li><strong>UNICODE conformity</strong><p>
@@ -1203,7 +1206,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
       platform or another should be avoided (see above),
       but it is bound to happen when so many platforms are in use.
       Be available after making a change,
-      if you won't be available for at least 48 hours after the change 
+      if you won't be available for at least 48 hours after the change
       is made then don't make it!<p>
 </ul>
 
