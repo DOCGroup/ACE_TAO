@@ -1081,9 +1081,9 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
     trf->get_reactor_registry ();
   this->reactor_registry_->open (this);
 
-#if (TAO_HAS_RT_CORBA == 0)
+#if (TAO_HAS_RT_CORBA == 1)
   this->priority_mapping_manager_->mapping (trf->get_priority_mapping ());
-#endif /* TAO_HAS_RT_CORBA == 0 */
+#endif /* TAO_HAS_RT_CORBA == 1 */
 
   // @@ ????
   // Make sure the reactor is initialized...
