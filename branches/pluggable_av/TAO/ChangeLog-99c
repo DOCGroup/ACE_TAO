@@ -1,3 +1,18 @@
+Wed Jul 14 20:29:06 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: 
+	* orbsvcs/orbsvcs/AV/MCast.cpp:
+	* orbsvcs/orbsvcs/AV/Transport.cpp:Changed the inheritance
+	  structure.. Made the UDP_Flow_Handler classes have the
+	  SOCK_Dgram as a memebr rather than inheriting from it..
+	  Fixed warnings with g++ in other files listed below
+	* orbsvcs/orbsvcs/AV/Nill.cpp:
+	* orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp:
+	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp:
+	* orbsvcs/orbsvcs/AV/Policy.cpp:
+	* orbsvcs/orbsvcs/AV/sfp.cpp
+	* orbsvcs/orbsvcs/AV/RTP.cpp
+
 Wed Jul 14 00:27:00 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.{h,cpp}: 
