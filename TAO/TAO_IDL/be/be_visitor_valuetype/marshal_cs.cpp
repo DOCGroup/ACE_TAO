@@ -29,8 +29,9 @@
 ACE_RCSID(be_visitor_valuetype, marshal_cs, "$Id$")
 
 
-be_visitor_valuetype_marshal_cs::be_visitor_valuetype_marshal_cs
-(be_visitor_context *ctx)
+be_visitor_valuetype_marshal_cs::be_visitor_valuetype_marshal_cs (
+    be_visitor_context *ctx
+  )
   : be_visitor_scope (ctx)
 {
 }
@@ -43,23 +44,38 @@ int
 be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-
-  this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_OUTPUT);
+  this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
 
   *os << "CORBA::Boolean" << be_nl;
+
   this->class_name (node, os);
-  *os << "::_tao_marshal_state (TAO_OutputCDR &strm)" << be_nl
-      << "{" << be_idt_nl;
+
+  *os << "::_tao_marshal_state (TAO_OutputCDR &";
+
   be_valuetype *inh = node->statefull_inherit ();
+
+  // If the valuetype has no fields, and no stateful inherit,
+  // the stream arg is unused.
+  if (inh != 0 || node->data_members_count () > 0)
+    {
+      *os << "strm";
+    }
+    
+  *os << ")" << be_nl
+      << "{" << be_idt_nl;
+
   if (inh)
     {
       if (inh->opt_accessor ())
         {
           *os << "if (!this->";
+
           this->class_name (inh, os);
+
           *os << "::_tao_marshal_state (strm)) return 0;" << be_nl;
         }
-      else // only can access base class via virtual function
+      // Can access base class only via virtual function.
+      else
         {
           *os << "if (!this->_tao_marshal__"
               <<       inh->flat_name ()
@@ -67,16 +83,15 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
         }
     }
 
-  { // array _forany
-    be_visitor_context* new_ctx =
-      new be_visitor_context (*this->ctx_);
-    be_visitor_valuetype_field_cdr_decl field_decl (new_ctx);
-    field_decl.visit_scope (node);
-  }
+  be_visitor_context new_ctx = *this->ctx_;
+  be_visitor_valuetype_field_cdr_decl field_out_cdr (&new_ctx);
+  field_out_cdr.visit_scope (node);
 
   *os << "if (" << be_idt_nl;
-  // all we have to do is to visit the scope and generate code
-  this->gen_fields (node, *this->ctx_);
+
+  // All we have to do is to visit the scope and generate code.
+  this->gen_fields (node, 
+                    *this->ctx_);
 
   *os << be_uidt_nl << ")"
       << be_idt_nl
@@ -85,20 +100,33 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
       << "return 0;" << be_uidt_nl << be_uidt_nl
       << "}\n\n";
 
-  // set the substate as generating code for the input operator
-  this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_INPUT);
+  // Set the substate as generating code for the input operator.
+  this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_INPUT);
 
   *os << "CORBA::Boolean" << be_nl;
+
   this->class_name (node, os);
-  *os << "::_tao_unmarshal_state (TAO_InputCDR &strm)" << be_nl
+
+  *os << "::_tao_unmarshal_state (TAO_InputCDR &";
+  
+  // If the valuetype has no fields, and no stateful inherit,
+  // the stream arg is unused.
+  if (inh != 0 || node->data_members_count () > 0)
+    {
+      *os << "strm";
+    }
+    
+  *os << ")" << be_nl
       << "{" << be_idt_nl;
-  inh = node->statefull_inherit ();
+
   if (inh)
     {
       if (inh->opt_accessor ())
         {
           *os << "if (!this->";
+
           this->class_name (inh, os);
+
           *os << "::_tao_unmarshal_state (strm)) return 0;" << be_nl;
         }
       else // only can access base class via virtual function
@@ -109,16 +137,14 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
         }
     }
 
-  { // array _forany
-    be_visitor_context* new_ctx =
-      new be_visitor_context (*this->ctx_);
-    be_visitor_valuetype_field_cdr_decl field_decl (new_ctx);
-    field_decl.visit_scope (node);
-  }
+  be_visitor_valuetype_field_cdr_decl field_in_cdr (&new_ctx);
+  field_in_cdr.visit_scope (node);
 
   *os << "if (" << be_idt_nl;
-  // all we have to do is to visit the scope and generate code
-  this->gen_fields (node, *this->ctx_);
+
+  // All we have to do is to visit the scope and generate code.
+  this->gen_fields (node, 
+                    *this->ctx_);
 
   *os << be_uidt_nl << ")"
       << be_idt_nl
@@ -130,23 +156,27 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
   return 0;
 }
 
-// retrieve the fully scoped skeleton name
+// Retrieve the fully scoped skeleton name.
 void
 be_visitor_valuetype_marshal_cs::class_name (be_valuetype *node,
                                              TAO_OutStream *os)
 {
   if (node->opt_accessor ())
     {
-      be_decl *scope = be_scope::narrow_from_scope (node->defined_in ())->decl ();
+      be_decl *scope = 
+        be_scope::narrow_from_scope (node->defined_in ())->decl ();
+
       *os << "ACE_NESTED_CLASS ("
           << scope->name () << ","
           << node->local_name () << ")";
     }
   else
-    *os << node->full_obv_skel_name ();
+    {
+      *os << node->full_obv_skel_name ();
+    }
 }
 
-// ops for field marshal
+// Operations for field marshaling.
 int
 be_visitor_valuetype_marshal_cs::gen_fields (be_valuetype *node,
                                              be_visitor_context &ctx)
