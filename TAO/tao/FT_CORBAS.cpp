@@ -197,71 +197,12 @@ void FT_POA_RequestDurationPolicy::_get_request_duration_value_skel (
   FT_POA_RequestDurationPolicy *_tao_impl = (FT_POA_RequestDurationPolicy *)_tao_object_reference;
 
   TimeBase::TimeT _tao_retval = 0;
-#if (TAO_HAS_INTERCEPTORS == 1)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
-  ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_request_duration_value",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
       _tao_retval = _tao_impl->request_duration_value (
         ACE_TRY_ENV
       );
 
-      TAO_INTERCEPTOR_CHECK;
-
-#if (TAO_HAS_INTERCEPTORS == 1)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_request_duration_value",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_request_duration_value",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
+      ACE_CHECK;
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -646,71 +587,13 @@ void FT_POA_HeartbeatPolicy::_get_heartbeat_policy_value_skel (
   FT_POA_HeartbeatPolicy *_tao_impl = (FT_POA_HeartbeatPolicy *)_tao_object_reference;
 
   FT::HeartbeatPolicyValue _tao_retval;
-#if (TAO_HAS_INTERCEPTORS == 1)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
-  ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_heartbeat_policy_value",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
       _tao_retval = _tao_impl->heartbeat_policy_value (
         ACE_TRY_ENV
       );
 
-      TAO_INTERCEPTOR_CHECK;
+      ACE_CHECK;
 
-#if (TAO_HAS_INTERCEPTORS == 1)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_heartbeat_policy_value",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_heartbeat_policy_value",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
@@ -1095,71 +978,13 @@ void FT_POA_HeartbeatEnabledPolicy::_get_heartbeat_enabled_policy_value_skel (
   FT_POA_HeartbeatEnabledPolicy *_tao_impl = (FT_POA_HeartbeatEnabledPolicy *)_tao_object_reference;
 
   CORBA::Boolean _tao_retval = 0;
-#if (TAO_HAS_INTERCEPTORS == 1)
-  TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
-  ACE_CHECK;
-  PortableInterceptor::Cookies _tao_cookies;
-  CORBA::NVList_var _tao_interceptor_args;
-  CORBA::Object_var _tao_objref;
-  if (_tao_vfr.valid ())
-    {
-      _tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-      ACE_CHECK;
-
-      _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_TRY
-    {
-      _tao_vfr.preinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_heartbeat_enabled_policy_value",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
       _tao_retval = _tao_impl->heartbeat_enabled_policy_value (
         ACE_TRY_ENV
       );
 
-      TAO_INTERCEPTOR_CHECK;
+      ACE_CHECK;
 
-#if (TAO_HAS_INTERCEPTORS == 1)
-      _tao_vfr.postinvoke (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_heartbeat_enabled_policy_value",
-          _tao_server_request.service_info (),
-          _tao_interceptor_args.inout (),
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      TAO_INTERCEPTOR_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_server_request.request_id (),
-          1,
-          _tao_objref.in (),
-          "_get_heartbeat_enabled_policy_value",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;

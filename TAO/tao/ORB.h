@@ -34,7 +34,7 @@
 #include "tao/IORManipulation.h"
 
 // Interceptor definitions.
-#include "tao/Interceptor.h"
+#include "tao/PortableInterceptor.h"
 
 // IRIX needs this for the throw specs
 #include "tao/PolicyC.h"

@@ -13,7 +13,7 @@
 
 #include "tao/Stub.h"
 #include "tao/Invocation.h"
-#include "tao/InterceptorC.h"
+//#include "tao/PortableInterceptorC.h"
 #include "tao/NVList.h"
 
 #if !defined (__ACE_INLINE__)
@@ -308,96 +308,37 @@ TimeBase::TimeT FT_RequestDurationPolicy::request_duration_value (
       istub->orb_core ()
     );
 
-#if (TAO_HAS_INTERCEPTORS == 1)
-    TAO_ClientRequestInterceptor_Adapter
-      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
-    ACE_CHECK_RETURN  (_tao_retval);
-    PortableInterceptor::Cookies _tao_cookies;
-    CORBA::NVList_var _tao_interceptor_args;
-    if (_tao_vfr.valid ())
-      {
-        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-        ACE_CHECK_RETURN  (_tao_retval);
-      }
-
-    ACE_TRY
-      {
-#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
+        ACE_CHECK_RETURN  (_tao_retval);
 
-        TAO_INTERCEPTOR (
-            _tao_vfr.preinvoke (
-                _tao_call.request_id (),
-                1,
-                this,
-                "_get_request_duration_value",
-                _tao_call.service_info (),
-                _tao_interceptor_args.inout (),
-                _tao_cookies,
-                ACE_TRY_ENV
-              )
-          );
-        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
+        ACE_CHECK_RETURN  (_tao_retval);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
+                ACE_CHECK_RETURN  (_tao_retval);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_retval)
           ))
-          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
-        TAO_INTERCEPTOR (
-            _tao_vfr.postinvoke (
-                _tao_call.request_id (),
-                1,
-                this,
-                "_get_request_duration_value",
-                _tao_call.service_info (),
-                _tao_interceptor_args.inout (),
-                _tao_cookies,
-                ACE_TRY_ENV
-              )
-          );
-        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         break;
 
       }
-#if (TAO_HAS_INTERCEPTORS == 1)
-
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_call.request_id (),
-          1,
-          this,
-          "_get_request_duration_value",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN  (_tao_retval);
-#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_retval;
 }
 
@@ -629,96 +570,36 @@ FT_HeartbeatPolicyValue FT_HeartbeatPolicy::heartbeat_policy_value (
       istub->orb_core ()
     );
 
-#if (TAO_HAS_INTERCEPTORS == 1)
-    TAO_ClientRequestInterceptor_Adapter
-      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
-    ACE_CHECK_RETURN  (_tao_retval);
-    PortableInterceptor::Cookies _tao_cookies;
-    CORBA::NVList_var _tao_interceptor_args;
-    if (_tao_vfr.valid ())
-      {
-        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-        ACE_CHECK_RETURN  (_tao_retval);
-      }
-
-    ACE_TRY
-      {
-#endif /* TAO_HAS_INTERCEPTORS */
-
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
+        ACE_CHECK_RETURN  (_tao_retval);
 
-        TAO_INTERCEPTOR (
-            _tao_vfr.preinvoke (
-                _tao_call.request_id (),
-                1,
-                this,
-                "_get_heartbeat_policy_value",
-                _tao_call.service_info (),
-                _tao_interceptor_args.inout (),
-                _tao_cookies,
-                ACE_TRY_ENV
-              )
-          );
-        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
+        ACE_CHECK_RETURN  (_tao_retval);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
+                ACE_CHECK_RETURN  (_tao_retval);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_retval)
           ))
-          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
-        TAO_INTERCEPTOR (
-            _tao_vfr.postinvoke (
-                _tao_call.request_id (),
-                1,
-                this,
-                "_get_heartbeat_policy_value",
-                _tao_call.service_info (),
-                _tao_interceptor_args.inout (),
-                _tao_cookies,
-                ACE_TRY_ENV
-              )
-          );
-        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         break;
 
       }
-#if (TAO_HAS_INTERCEPTORS == 1)
-
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_call.request_id (),
-          1,
-          this,
-          "_get_heartbeat_policy_value",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN  (_tao_retval);
-#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_retval;
 }
 
@@ -882,96 +763,36 @@ CORBA::Boolean FT_HeartbeatEnabledPolicy::heartbeat_enabled_policy_value (
       istub->orb_core ()
     );
 
-#if (TAO_HAS_INTERCEPTORS == 1)
-    TAO_ClientRequestInterceptor_Adapter
-      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
-    ACE_CHECK_RETURN  (_tao_retval);
-    PortableInterceptor::Cookies _tao_cookies;
-    CORBA::NVList_var _tao_interceptor_args;
-    if (_tao_vfr.valid ())
-      {
-        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
-        ACE_CHECK_RETURN  (_tao_retval);
-      }
-
-    ACE_TRY
-      {
-#endif /* TAO_HAS_INTERCEPTORS */
-
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
+        ACE_CHECK_RETURN  (_tao_retval);
 
-        TAO_INTERCEPTOR (
-            _tao_vfr.preinvoke (
-                _tao_call.request_id (),
-                1,
-                this,
-                "_get_heartbeat_enabled_policy_value",
-                _tao_call.service_info (),
-                _tao_interceptor_args.inout (),
-                _tao_cookies,
-                ACE_TRY_ENV
-              )
-          );
-        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
+        ACE_CHECK_RETURN  (_tao_retval);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
+                ACE_CHECK_RETURN  (_tao_retval);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> CORBA::Any::to_boolean (_tao_retval))
           ))
-          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
-        TAO_INTERCEPTOR (
-            _tao_vfr.postinvoke (
-                _tao_call.request_id (),
-                1,
-                this,
-                "_get_heartbeat_enabled_policy_value",
-                _tao_call.service_info (),
-                _tao_interceptor_args.inout (),
-                _tao_cookies,
-                ACE_TRY_ENV
-              )
-          );
-        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         break;
 
       }
-#if (TAO_HAS_INTERCEPTORS == 1)
-
-    }
-  ACE_CATCHANY
-    {
-      _tao_vfr.exception_occurred (
-          _tao_call.request_id (),
-          1,
-          this,
-          "_get_heartbeat_enabled_policy_value",
-          _tao_cookies,
-          ACE_TRY_ENV
-        );
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN  (_tao_retval);
-#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_retval;
 }
 
