@@ -24,6 +24,7 @@
 #include "ace/streams.h"
 
 #include "ace/OS_NS_string.h"
+#include "ace/Log_Msg.h"
 
 wchar_t *
 make_wstring (const char *str)
@@ -34,12 +35,14 @@ make_wstring (const char *str)
 
   int len = strlen (str) + 1;
   wchar_t *wstr = new wchar_t[len];
-  cout << "make_wstring: str = " << str << endl;
+  ACE_DEBUG ((LM_DEBUG,
+              "make_wstring: str = %s\n",str));
   for (int i = 0; i < len; i++)
     {
       char *t = ACE_const_cast (char *, str);
       wstr[i] = ACE_static_cast (wchar_t, *(t + i));
-      cout << "wstr[" << i << "] = " << (short)wstr[i] << endl;
+      ACE_DEBUG ((LM_DEBUG,
+	              "wstr[%d] = %d\n", i, (short)wstr[i]));
     }
   return wstr;
 }
@@ -64,18 +67,7 @@ int main (int argc, char *argv[])
       // Get IOR from command line (or file)
       if (argc != 2)
         {
-          ifstream fstr;
-          fstr.open ("server.ior");
-
-          if (fstr.bad ())
-            {
-              cout << "Cannot open server.ior and no IOR argument!" << endl;
-              exit (1);
-            }
-          else
-            {
-              fstr >> buf;
-            }
+		  ACE_OS::strcpy (buf, "file://server.ior");
         }
       else
         {
@@ -111,16 +103,16 @@ int main (int argc, char *argv[])
       const char *any_reply;
       outarg >>= any_reply;
 
-      cout << "Client sent " << bare_string
-           << ", got " << reply.in () << endl;
+      ACE_DEBUG ((LM_DEBUG,
+                 "Client sent %s, got %s\n", bare_string, reply.in () ));
 
       if (ACE_OS::strcmp (bare_string, reply.in ()) != 0)
         {
           ++error_count;
         }
 
-      cout << "Client sent " << any_string
-           << ", got " << any_reply << endl;
+      ACE_DEBUG ((LM_DEBUG,
+                 "Client sent %s, got %s\n", any_string, any_reply ));
 
       if (ACE_OS::strcmp (any_string, any_reply) != 0)
         {
@@ -129,7 +121,8 @@ int main (int argc, char *argv[])
 #if defined (ACE_HAS_WCHAR)
       wchar_t *wide_string = ACE_OS::strdup(ACE_TEXT_ALWAYS_WCHAR ("Wide String"));
       wchar_t *wide_reply = server->op2 (wide_string);
-      cout << "sent " << wide_string << " got " << wide_reply << endl;
+      ACE_DEBUG ((LM_DEBUG,
+                  "sent %W, got %W\n", wide_string, wide_reply));
 #endif /* ACE_HAS_WCHAR */
     }
   ACE_CATCHANY

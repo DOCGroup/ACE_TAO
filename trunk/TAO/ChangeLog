@@ -1,3 +1,41 @@
+Tue Nov 16 13:04:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
+
+	* tao/BoundsA.cpp:
+	* tao/PolicyA.cpp:
+	* tao/PortableInterceptorA.cpp:
+	* tao/WrongTransactionA.cpp:
+	* tao/Messaging/MessagingC.cpp:
+	* tao/PortableServer/PortableServerA.cpp:
+	* tao/IORManipulation/IORA.cpp:
+	  Fixed missing includes for f.i. VxWorks builds because of IDL compiler
+	  bug in case of special build configs.
+	  IDL compiler has also been fixed so files will be correctly regenerated
+	  next time (when POA refactoring is complete).
+
+	* tao/Any.cpp:
+	* tao/Codeset_Manager.cpp:
+	* tao/Codeset_Translator_Factory.cpp:
+	* tao/GIOPC.cpp:
+	* tao/ORBInitializer_Registry.cpp:
+	* tao/Transport.cpp:
+	* tao/UTF16_BOM_Factory.cpp:
+	* tao/Utils/RIR_Narrow.cpp:
+	* tests/Bug_1361_Regression/shutdown.cpp:
+	* tests/CDR/basic_types.cpp:
+	* tests/CDR/growth.cpp:
+	* tests/CodeSets/libs/IBM1047_ISO8859/Char_IBM1047_ISO8859_Factory.cpp:
+	* tests/CodeSets/libs/IBM1047_ISO8859/Wchar_IBM1047_ISO8859_Factory.cpp:
+	* tests/CodeSets/simple/client.cpp:
+	* tests/CodeSets/simple/server.cpp:
+	* tests/Collocation/Diamond_i.h:
+	* tests/IORManipulation/IORTest.cpp:
+	* tests/POA/Policies/Policies.cpp:
+	* tests/Smart_Proxies/Collocation/Smart_Proxy_Impl.cpp:
+	  Fixed missing includes and iostream incompatibilities for VxWorks builds.
+
+	* tests/Servant_To_Reference_Test/Servant_to_Reference.mpc:
+	  Fixed double link of Test_i.o because .h was added to Source_Files.
+
 Mon Nov 15 15:06:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/AMH_Exceptions/AMH_Exceptions.mpc:

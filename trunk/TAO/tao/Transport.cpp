@@ -19,6 +19,7 @@
 #include "Codeset_Manager.h"
 #include "Codeset_Translator_Factory.h"
 #include "debug.h"
+#include "CDR.h"
 
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_stdio.h"
