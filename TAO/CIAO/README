@@ -9,6 +9,7 @@ to compile them first.  Here is a non-exhaustive list:
 
         ACEXML,
 
+        Valuetype
         Security
         PortableServer
         IFR_Client
