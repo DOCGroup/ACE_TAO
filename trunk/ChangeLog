@@ -1,9 +1,15 @@
+Thu Feb  3 08:38:22 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * bin/run_all_list.pm:
+          Disable the $TAO_ROOT/orbsvcs/tests/Event/* tests under single
+          threaded builds because the tests do indeed use threads.
+
 Wed Feb  2 23:35:19 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS.cpp (thr_create): Added a cast to (long) for
-	  PRIORITY_MAX so that the types will be consistent for the
- 	  ace_min() function.  Thanks to James Briggs
- 	  <James.Briggs@dsto.defence.gov.au> for reporting this.
+        * ace/OS.cpp (thr_create): Added a cast to (long) for
+          PRIORITY_MAX so that the types will be consistent for the
+          ace_min() function.  Thanks to James Briggs
+          <James.Briggs@dsto.defence.gov.au> for reporting this.
 
 Wed Feb 02 21:56:32 2000  David L. Levine  <levine@cs.wustl.edu>
 
