@@ -913,6 +913,7 @@ Natarajan Kalpathy <Natarajan_Kalpathy@mw.3com.com>
 David O'Farrell <eeidofl@eei.ericsson.se>
 Bob Bouterse <BBouterse@escient.com>
 Malcolm Spence <spence_m@ociweb.com>
+Dong-Yueh Liu <dyliu@ms1.hinet.net>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that
