@@ -1,3 +1,11 @@
+Tue Jun 17 11:38:36 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* src/Gen_Perf.cpp (run): 
+	* src/Key_List.cpp (already_determined): 
+	* src/List_Node.cpp (List_Node): Added casts to prevent GCC 3.3
+	  from complaining about stupid stuff...  Thanks to Bala for
+ 	  reporting this.
+
 Sun Jul 28 17:04:54 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* src/gperf.cpp (main): Only generate the timestamps if the

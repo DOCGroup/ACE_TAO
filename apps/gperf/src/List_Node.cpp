@@ -84,7 +84,11 @@ List_Node::List_Node (char *k, int len)
 
   if (option[ALLCHARS])         // Use all the character position in the KEY.
     for (; *k; k++, ptr++)
-      ++Vectors::occurrences[*ptr = *k];
+      {
+        *ptr = *k;
+        int i = (int) *ptr;
+        ++Vectors::occurrences[i];
+      }
   else                          
     {
       // Only use those character positions specified by the user.
@@ -102,7 +106,7 @@ List_Node::List_Node (char *k, int len)
             *ptr = key[i - 1];
           else // Out of range of KEY length, so we'll just skip it.
             continue;
-          ++Vectors::occurrences[*ptr++];
+          ++Vectors::occurrences[(int) *ptr++];
         }
 
       // Didn't get any hits and user doesn't want to consider the
