@@ -543,6 +543,10 @@ SOURCE=.\AV\UDP.h
 # PROP Default_Filter "cpp"
 # Begin Source File
 
+SOURCE=.\AV\AV_Core.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\AV\AVStreams_i.cpp
 # End Source File
 # Begin Source File
@@ -568,6 +572,10 @@ SOURCE=.\AV\MCast.cpp
 # Begin Source File
 
 SOURCE=".\AV\media-timer.cpp"
+# End Source File
+# Begin Source File
+
+SOURCE=.\AV\Nil.cpp
 # End Source File
 # Begin Source File
 
