@@ -279,6 +279,12 @@ public:
 
   CORBA::ULong request_id (void);
 
+  CORBA::Object_ptr forward_location (void);
+  // get the forward_location
+
+  CORBA::ULong exception_type (void);
+  // get the exception type
+
 private:
 #if !defined (TAO_COPY_OPNAME)
   char* operation_;

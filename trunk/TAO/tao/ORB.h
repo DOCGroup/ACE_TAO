@@ -185,6 +185,23 @@ typedef u_int CORBA_Flags;
   typedef u_char CORBA_Boolean;
 #endif /* ! (ghs && CHORUS) */
 
+  typedef struct TAO_Leader_Follower_Info_Struct
+    {
+      ACE_SYNCH_MUTEX leader_follower_lock_; 
+      // do protect the access to the following three members
+  
+      ACE_Unbounded_Set<ACE_SYNCH_CONDITION *> follower_set_;
+      // keep a set of followers around (protected)
+
+      int leaders_; 
+      // 0 if no leader is around, 1 if there is a leader
+      // > 1 if we do nested upcalls (protected)
+
+      ACE_thread_t leader_thread_ID_;
+      // thread ID of the leader thread (protected)
+    } TAO_Leader_Follower_Info;
+
+
 // forward declare sequences.
 template <class T> class TAO_Unbounded_Sequence;
 template <class T> class TAO_Unbounded_Object_Sequence;
@@ -910,6 +927,9 @@ public:
   // indicates if we have reached a point where all ORB owned resources will be
   // deallocated
 
+  TAO_Leader_Follower_Info &leader_follower_info (void);
+  // get access to the leader_follower_info
+
 protected:
   // We must be created via the <ORB_init> call.
   CORBA_ORB (void);
@@ -965,6 +985,9 @@ private:
 
   ACE_SYNCH_CONDITION* cond_become_leader_;
   // wait to become the leader if the leader-follower model is active
+
+  TAO_Leader_Follower_Info  leader_follower_info_;
+  // Information about the leader follower model
 
   // = NON-PROVIDED METHODS
   CORBA_ORB (const CORBA_ORB &);

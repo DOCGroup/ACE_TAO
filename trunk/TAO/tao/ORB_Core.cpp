@@ -55,13 +55,6 @@ TAO_ORB_Core::TAO_ORB_Core (void)
 {
 }
 
-ACE_SYNCH_MUTEX  TAO_ORB_Core::leader_follower_lock_;
-
-ACE_Unbounded_Set<ACE_SYNCH_CONDITION*> TAO_ORB_Core::follower_set_;
-
-int TAO_ORB_Core::leaders_ = 0;
-
-ACE_thread_t TAO_ORB_Core::leader_thread_ID_ = 0;
 
 TAO_ORB_Core::~TAO_ORB_Core (void)
 {
@@ -952,7 +945,7 @@ TAO_ORB_Core::leader_available (void)
   // returns the value of the flag indicating if a leader
   // is available in the leader-follower model
 {
-  return this->leaders_;
+  return this->orb ()->leader_follower_info ().leaders_;
 }
 
 int
@@ -960,8 +953,9 @@ TAO_ORB_Core::I_am_the_leader_thread (void)
   // returns 1 if we are the leader thread,
   // else 0
 {
-  if (this->leaders_)
-    return (this->leader_thread_ID_ == ACE_Thread::self ());
+  TAO_Leader_Follower_Info &lf_info = this->orb ()->leader_follower_info ();
+  if (lf_info.leaders_)
+    return (lf_info.leader_thread_ID_ == ACE_Thread::self ());
   else
     return 0;
 }
@@ -971,10 +965,11 @@ TAO_ORB_Core::set_leader_thread (void)
   // sets the thread ID of the leader thread in the leader-follower
   // model
 {
-  ACE_ASSERT ((this->leaders_ >= 1 && this->leader_thread_ID_ == ACE_Thread::self ())
-              || this->leaders_ == 0);
-  this->leaders_++;
-  this->leader_thread_ID_ = ACE_Thread::self ();
+  TAO_Leader_Follower_Info &lf_info = this->orb ()->leader_follower_info ();
+  ACE_ASSERT ((lf_info.leaders_ >= 1 && lf_info.leader_thread_ID_ == ACE_Thread::self ())
+              || lf_info.leaders_ == 0);
+  lf_info.leaders_++;
+  lf_info.leader_thread_ID_ = ACE_Thread::self ();
 }
 
 int
@@ -983,14 +978,16 @@ TAO_ORB_Core::unset_leader_wake_up_follower (void)
 {
   ACE_Guard <ACE_SYNCH_MUTEX> g (TAO_ORB_Core_instance ()->leader_follower_lock ());
 
+  TAO_Leader_Follower_Info &lf_info = this->orb ()->leader_follower_info ();
+
   this->unset_leader_thread ();
 
   if (TAO_ORB_Core_instance ()->follower_available ()
-      && !this->leader_available ())
+      && !TAO_ORB_Core_instance ()->leader_available ())
     // do it only if a follower is available and no leader is available
     {
-      ACE_SYNCH_CONDITION* condition_ptr = this->get_next_follower ();
-      if (this->remove_follower (condition_ptr) == -1)
+      ACE_SYNCH_CONDITION* condition_ptr = TAO_ORB_Core_instance ()->get_next_follower ();
+      if (TAO_ORB_Core_instance ()->remove_follower (condition_ptr) == -1)
         return -1;
       condition_ptr->signal ();
     }
@@ -1002,9 +999,10 @@ void
 TAO_ORB_Core::unset_leader_thread (void)
   // sets the flag in the leader-follower model to false
 {
-  ACE_ASSERT ((this->leaders_ > 1 && this->leader_thread_ID_ == ACE_Thread::self ())
-              || this->leaders_ == 1);
-  this->leaders_--;
+  TAO_Leader_Follower_Info &lf_info = this->orb ()->leader_follower_info ();
+  ACE_ASSERT ((lf_info.leaders_ > 1 && lf_info.leader_thread_ID_ == ACE_Thread::self ())
+              || lf_info.leaders_ == 1);
+  lf_info.leaders_--;
 }
 
 
@@ -1012,7 +1010,7 @@ ACE_SYNCH_MUTEX &
 TAO_ORB_Core::leader_follower_lock (void)
   // returns the leader-follower lock
 {
-  return this->leader_follower_lock_;
+  return this->orb ()->leader_follower_info ().leader_follower_lock_;
 }
 
 int
@@ -1021,7 +1019,7 @@ TAO_ORB_Core::add_follower (ACE_SYNCH_CONDITION *follower_ptr)
   // follower model
   // returns 0 on success, -1 on failure
 {
-  if (this->follower_set_.insert (follower_ptr) != 0)
+  if (this->orb ()->leader_follower_info ().follower_set_.insert (follower_ptr) != 0)
     return -1;
   return 0;
 }
@@ -1031,7 +1029,7 @@ TAO_ORB_Core::follower_available (void)
 // checks for the availablity of a follower
   // returns 1 on available, 0 else
 {
-  return !this->follower_set_.is_empty ();
+  return !this->orb ()->leader_follower_info ().follower_set_.is_empty ();
 }
 
 int
@@ -1039,7 +1037,7 @@ TAO_ORB_Core::remove_follower (ACE_SYNCH_CONDITION *follower_ptr)
   // removes a follower from the leader-follower set
   // returns 0 on success, -1 on failure
 {
-  return this->follower_set_.remove (follower_ptr);
+  return this->orb ()->leader_follower_info ().follower_set_.remove (follower_ptr);
 }
 
 ACE_SYNCH_CONDITION*
@@ -1047,7 +1045,8 @@ TAO_ORB_Core::get_next_follower (void)
   // returns randomly a follower from the leader-follower set
   // returns follower on success, else 0
 {
-  ACE_Unbounded_Set_Iterator<ACE_SYNCH_CONDITION *> iterator (this->follower_set_);
+  ACE_Unbounded_Set_Iterator<ACE_SYNCH_CONDITION *> iterator (
+    this->orb ()->leader_follower_info ().follower_set_);
   if (iterator.first () == 0)
     // means set is empty
     return 0;

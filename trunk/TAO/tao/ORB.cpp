@@ -82,8 +82,10 @@ CORBA_ORB::CORBA_ORB (void)
     event_service_ (CORBA_Object::_nil ()),
     trading_service_ (CORBA_Object::_nil ())
 {
+  leader_follower_info_.leaders_ = 0;
+  leader_follower_info_.leader_thread_ID_ = 0;
   this->cond_become_leader_ = 
-      new ACE_SYNCH_CONDITION (TAO_ORB_Core_instance ()->leader_follower_lock ());
+      new ACE_SYNCH_CONDITION (leader_follower_info_.leader_follower_lock_);
 }
 
 CORBA_ORB::~CORBA_ORB (void)
@@ -235,10 +237,10 @@ CORBA_ORB::run (ACE_Time_Value *tv)
     
     while (TAO_ORB_Core_instance ()->leader_available ())
       {
-	if (TAO_ORB_Core_instance ()->add_follower (this->cond_become_leader_) == -1)
-	  ACE_ERROR ((LM_ERROR,
-		      "(%P|%t) ORB::run: Failed to add a follower thread\n"));
-	this->cond_become_leader_->wait ();     
+	      if (TAO_ORB_Core_instance ()->add_follower (this->cond_become_leader_) == -1)
+	        ACE_ERROR ((LM_ERROR,
+		                  "(%P|%t) ORB::run: Failed to add a follower thread\n"));
+	      this->cond_become_leader_->wait ();     
       }
     TAO_ORB_Core_instance ()->set_leader_thread ();
   }
@@ -321,9 +323,9 @@ CORBA_ORB::run (ACE_Time_Value *tv)
   if (result != -1)
     {
       if (TAO_ORB_Core_instance ()->unset_leader_wake_up_follower () == -1)
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   "(%P|%t) ORB::run: Failed to add a follower thread\n"),
-			  -1);
+	      ACE_ERROR_RETURN ((LM_ERROR,
+			                     "(%P|%t) ORB::run: Failed to add a follower thread\n"),
+			                    -1);
       return 0;
       // nothing went wrong
     }
@@ -653,6 +655,14 @@ CORBA_ORB::key_to_object (const TAO_ObjectKey &key,
   return new_obj;
 }
 
+TAO_Leader_Follower_Info &
+CORBA_ORB::leader_follower_info (void)
+// get access to the leader_follower_info
+{
+  return leader_follower_info_;
+}
+
+
 // String utility support; this can need to be integrated with the
 // ORB's own memory allocation subsystem.
 
@@ -821,6 +831,7 @@ CORBA::ORB_init (int &argc,
 
   return TAO_ORB_Core_instance()->orb ();
 }
+
 
 // *************************************************************
 // Inline operators for TAO_opaque encoding and decoding

@@ -159,7 +159,7 @@ IIOP_ServerRequest::IIOP_ServerRequest (CORBA::ULong &request_id,
     orb_ (the_orb),
     poa_ (the_poa),
     service_info_ (0),
-    request_id_ (0),
+    request_id_ (request_id),
     object_key_ (object_key),
     requesting_principal_ (0)
 {
@@ -324,24 +324,24 @@ IIOP_ServerRequest::set_exception (const CORBA::Any &value,
 
     // If narrowing of exception succeeded
     if (forward_request != 0)
-    {
-            this->forward_location_ = forward_request->forward_reference;
-          }
-
+      {
+        this->forward_location_ = forward_request->forward_reference;
+        this->exception_type_ = TAO_GIOP_USER_EXCEPTION;
+      }
     // Normal exception
     else
-          {
-            this->exception_ = new CORBA::Any;
-            this->exception_->replace (value.type (), value.value (), 1, env);
+     {
+       this->exception_ = new CORBA::Any;
+       this->exception_->replace (value.type (), value.value (), 1, env);
 
-            // @@ This cast is not safe, but we haven't implemented the >>=
-            // and <<= operators for base exceptions (yet).
-            CORBA_Exception* x = (CORBA_Exception*)value.value ();
-            if (CORBA_UserException::_narrow (x) != 0)
-        this->exception_type_ = TAO_GIOP_USER_EXCEPTION;
-      else
+       // @@ This cast is not safe, but we haven't implemented the >>=
+       // and <<= operators for base exceptions (yet).
+       CORBA_Exception* x = (CORBA_Exception*)value.value ();
+       if (CORBA_UserException::_narrow (x) != 0)
+         this->exception_type_ = TAO_GIOP_USER_EXCEPTION;
+       else
         this->exception_type_ = TAO_GIOP_SYSTEM_EXCEPTION;
-          }
+    }
   }
 }
 
@@ -574,4 +574,19 @@ IIOP_ServerRequest::dsi_marshal (CORBA::Environment &env)
             }
         }
     }
+}
+
+
+CORBA::Object_ptr 
+IIOP_ServerRequest::forward_location (void)
+// get the forward_location
+{
+  return CORBA::Object::_duplicate (this->forward_location_.in ());
+}
+
+CORBA::ULong 
+IIOP_ServerRequest::exception_type (void)
+// get the exception type
+{
+  return this->exception_type_;
 }
