@@ -109,14 +109,5 @@ protected:
   Benchmark_Method_Base (void);
 };
 
-class SYNCHLIB_Export Benchmark_Performance_Test_Base : public Benchmark_Base
-{
-  // = TITLE
-  //     This class identifies itself as Benmarking Performance Test class.
-protected:
-  Benchmark_Performance_Test_Base (void);
-};
-
-
 # endif /* ACE_HAS_THREADS */
 #endif /* ACE_BENCHMARK_BASE_H */
