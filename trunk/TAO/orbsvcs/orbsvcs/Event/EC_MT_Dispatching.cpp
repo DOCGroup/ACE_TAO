@@ -16,6 +16,7 @@ TAO_EC_MT_Dispatching::TAO_EC_MT_Dispatching (int nthreads,
      thread_creation_flags_ (thread_creation_flags_),
      thread_priority_ (thread_priority),
      force_activate_ (force_activate),
+     task_ (&this->thread_manager_),
      active_ (0)
 {
 }
@@ -27,6 +28,8 @@ TAO_EC_MT_Dispatching::activate (void)
 
   if (this->active_ != 0)
     return;
+  
+  this->active_ = 1;
 
   if (this->task_.activate (this->thread_creation_flags_,
                             this->nthreads_,
@@ -53,7 +56,10 @@ TAO_EC_MT_Dispatching::shutdown (void)
   if (this->active_ == 0)
     return;
 
-  this->task_.putq (new TAO_EC_Shutdown_Command);
+  for (int i = 0; i < this->nthreads_; ++i)
+    {
+      this->task_.putq (new TAO_EC_Shutdown_Command);
+    }
   this->thread_manager_.wait ();
 }
 
