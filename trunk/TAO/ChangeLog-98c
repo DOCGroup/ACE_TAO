@@ -1,3 +1,11 @@
+Mon Jul  6 17:00;00 1998  Jeff Parsons   <jp4@cs.wustl.edu>
+
+	* TAO/tests/Cubit/TAO/DII_Cubit/client.{h.cpp}:
+	  Added a DII request on the naming service to get the
+	  Cubit factory IOR, plus code to implement all the 
+	  command line options. Built with SunCC, it works on Unix,
+	  but not yet on NT.
+
 Mon Jul  6 15:46:35 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/decode.cpp: 
