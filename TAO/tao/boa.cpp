@@ -191,13 +191,14 @@ CORBA_BOA::handle_request (TAO_GIOP_RequestHeader hdr,
 
   this->dispatch (hdr.object_key, svr_req, 0 /* this is IIOP residue */, env);
 
+  // FIXME! I don't think this should happen yet!
   svr_req.release ();
 
   // If no reply is necessary (i.e., oneway), then return!
   if (! hdr.response_expected)
     return;
   
-    // Otherwise check for correct parameter handling, and reply as
+  // Otherwise check for correct parameter handling, and reply as
   // appropriate.
   //
   // NOTE: if "env" is set, it takes precedence over exceptions
@@ -211,6 +212,10 @@ CORBA_BOA::handle_request (TAO_GIOP_RequestHeader hdr,
   // the language mapped one should be used for system exceptions.
 
   TAO_GIOP::start_message (TAO_GIOP_Reply, response);
+  TAO_GIOP_ServiceContextList resp_ctx;
+  resp_ctx.length = 0;
+  response.encode (&TC_ServiceContextList, &resp_ctx, 0, env);
+  response.put_ulong (hdr.request_id);
   
   CORBA::TypeCode_ptr tc;
   const void *value;

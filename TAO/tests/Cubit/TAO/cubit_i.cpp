@@ -85,7 +85,7 @@ void Cubit_i::Cubit_please_exit (CORBA::Environment &env)
   TAO_OA_Parameters* params = TAO_OA_Parameters::instance ();
    
   dmsg ("I've been asked to shut down...");
-  params->oa ()->please_shutdown (env);
+  params->root_poa ()->please_shutdown (env);
   // end_reactor_event_loop() no longer?
   dexc (env, "please_exit, please_shutdown");
 }
