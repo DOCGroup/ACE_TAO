@@ -39,21 +39,20 @@ public:
                       int reuse_addr = 0,
                       int flags = O_RDWR,
                       int perms = 0);
-  // Actively connect and produce a <new_stream> if things go well.
-  // The <remote_sap> is the address that we are trying to connect
-  // with.  The <timeout> is the amount of time to wait to connect.
-  // If it's 0 then we block indefinitely.  If *timeout == {0, 0} then
-  // the connection is done using non-blocking mode.  In this case, if
-  // the connection can't be made immediately the value of -1 is
-  // returned with <errno == EWOULDBLOCK>.  If *timeout > {0, 0} then
-  // this is the amount of time to wait before timing out.  If the
-  // time expires before the connection is made <errno == ETIME>.  The
-  // <local_sap> is the value of local address to bind to.  If it's
-  // the default value of <ACE_Addr::sap_any> then the user is letting
-  // the OS do the binding.  If <reuse_addr> == 1 then the
-  // <local_addr> is reused, even if it hasn't been cleanedup yet.
-  // The <flags> and <perms> arguments are passed down to the open()
-  // method.
+  // Actively ``connect'' and produce a <new_io> <ACE_FILE_IO> object
+  // if things go well.  The <remote_sap> is the file that we are
+  // trying to create/open.  If it's the default value of
+  // <ACE_Addr::sap_any> then the user is letting the OS create the
+  // filename (via <ACE_OS::mktemp>).  The <timeout> is the amount of
+  // time to wait to create/open the file.  If it's 0 then we block
+  // indefinitely.  If *timeout == {0, 0} then the file is created
+  // using non-blocking mode.  In this case, if the create/open can't
+  // be done immediately the value of -1 is returned with <errno ==
+  // EWOULDBLOCK>.  If *timeout > {0, 0} then this is the amount of
+  // time to wait before timing out.  If the time expires before the
+  // connection is made <errno == ETIME>.  The <local_sap> and
+  // <reuse_addr> parameters are ignored.  The <flags> and <perms>
+  // arguments are passed down to the <ACE_OS::open> method.
 
   int connect (ACE_FILE_IO &new_io,
                const ACE_FILE_Addr &remote_sap,
@@ -62,21 +61,20 @@ public:
                int reuse_addr = 0,
                int flags = O_RDWR,
                int perms = 0);
-  // Actively connect and produce a <new_stream> if things go well.
-  // The <remote_sap> is the address that we are trying to connect
-  // with.  The <timeout> is the amount of time to wait to connect.
-  // If it's 0 then we block indefinitely.  If *timeout == {0, 0} then
-  // the connection is done using non-blocking mode.  In this case, if
-  // the connection can't be made immediately the value of -1 is
-  // returned with <errno == EWOULDBLOCK>.  If *timeout > {0, 0} then
-  // this is the amount of time to wait before timing out.  If the
-  // time expires before the connection is made <errno == ETIME>.  The
-  // <local_sap> is the value of local address to bind to.  If it's
-  // the default value of <ACE_Addr::sap_any> then the user is letting
-  // the OS do the binding.  If <reuse_addr> == 1 then the
-  // <local_addr> is reused, even if it hasn't been cleanedup yet.
-  // The <flags> and <perms> arguments are passed down to the open()
-  // method.
+  // Actively ``connect'' and produce a <new_io> <ACE_FILE_IO> object
+  // if things go well.  The <remote_sap> is the file that we are
+  // trying to create/open.  If it's the default value of
+  // <ACE_Addr::sap_any> then the user is letting the OS create the
+  // filename (via <ACE_OS::mktemp>).  The <timeout> is the amount of
+  // time to wait to create/open the file.  If it's 0 then we block
+  // indefinitely.  If *timeout == {0, 0} then the file is created
+  // using non-blocking mode.  In this case, if the create/open can't
+  // be done immediately the value of -1 is returned with <errno ==
+  // EWOULDBLOCK>.  If *timeout > {0, 0} then this is the amount of
+  // time to wait before timing out.  If the time expires before the
+  // connection is made <errno == ETIME>.  The <local_sap> and
+  // <reuse_addr> parameters are ignored.  The <flags> and <perms>
+  // arguments are passed down to the <ACE_OS::open> method.
 
   int reset_new_handle (ACE_HANDLE handle);
   // Resets any event associations on this handle

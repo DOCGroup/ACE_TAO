@@ -1,5 +1,11 @@
 Sun Jan  3 14:39:49 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
+	* ace/FILE_Connector.h: Updated the comments.
+
+	* ace/FILE.h: Added a new get_info() method that takes a reference
+ 	  to an ACE_FILE_Info rather than a pointer.  This is a cleaner
+ 	  API, IMHO.
+
 	* ace/FILE_Connector.cpp (connect): When the <remote_sap> argument
  	  is ACE_Addr::sap_any, then connect will select a temporary
  	  filename using the new ACE_DEFAULT_TEMP_FILE macro and
