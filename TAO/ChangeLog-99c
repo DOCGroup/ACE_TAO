@@ -1,3 +1,11 @@
+Wed Dec 22 10:17:08 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/IIOP_Connect.cpp (open): set TCP_NODELAY if
+          ! ACE_LACKS_TCP_NODELAY, instead of if TCP_NODELAY
+          is defined.  This allows users to disable in ace/config.h,
+          if desired.  Thanks to David Hauck <davidh@realtimeint.com>
+          for suggesting this. [Bug 395]
+
 Wed Dec 22 08:42:27 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * docs/tutorials/Quoter/index.html: fixed RT Event_Service
