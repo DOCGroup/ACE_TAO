@@ -2053,7 +2053,7 @@ ACE_Thread_Adapter::invoke (void)
   // order to get preemption when running in the RT class.  This is
   // the ACE way to do that . . .
   ACE_hthread_t thr_handle;
-  ACE_Thread::self (thr_handle);
+  ACE_OS::thr_self (thr_handle);
   int prio;
 
   // thr_getprio () on the current thread should never fail.
