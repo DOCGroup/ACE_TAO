@@ -80,7 +80,7 @@ sub run_test
     print STDERR ("server $server1args\n");
 
     if (ACE::waitforfile_timed ("server1", 5) == -1) {
-      print STDERR "ERROR: cannot file <server1> or <server2>\n";
+      print STDERR "ERROR: cannot find file <server1> or <server2>\n";
       $SRV1->Kill (); $SRV1->TimedWait (1);
       exit 1;
     }
@@ -90,7 +90,7 @@ sub run_test
     print STDERR ("server $server2args\n");
 
     if (ACE::waitforfile_timed ("server2", 5) == -1) {
-      print STDERR "ERROR: cannot file <server1> or <server2>\n";
+      print STDERR "ERROR: cannot find file <server1> or <server2>\n";
       $SRV1->Kill (); $SRV1->TimedWait (1);
       $SRV2->Kill (); $SRV2->TimedWait (1);
       exit 1;
@@ -101,7 +101,7 @@ sub run_test
 			       "$server3args");
 
       if (ACE::waitforfile_timed ("server3", 5) == -1) {
-	print STDERR "ERROR: cannot file <server3>\n";
+	print STDERR "ERROR: cannot find file <server3>\n";
 	$SRV1->Kill (); $SRV1->TimedWait (1);
 	$SRV2->Kill (); $SRV2->TimedWait (1);
 	$SRV3->Kill (); $SRV3->TimedWait (1);
