@@ -281,7 +281,7 @@ TAO_Property_Evaluator::property_value (int index,
 }
 
 CORBA::TypeCode*
-TAO_Property_Evaluator::property_type(int index)
+TAO_Property_Evaluator::property_type (int index)
 {
   CORBA::TypeCode* prop_type = CORBA::TypeCode::_nil();
   
