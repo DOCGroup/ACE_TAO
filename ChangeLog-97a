@@ -44,6 +44,11 @@ Sat Jun 28 08:27:27 1997  David L. Levine  <levine@cs.wustl.edu>
 	* tests/SV_Shared_Memory_Test.cpp: moved template specializations
 	  so that they're not done on platforms that don't support SV IPC.
 
+	* examples/IOStream/client/iostream_client.cpp,
+	  examples/IOStream/server/iostream_server.cpp:
+	  use ACE_HAS_STRING_CLASS rather than __GNUC__ to determine whether
+	  the platform has a String class.
+
 Fri Jun 27 13:10:46 1997  Douglas C. Schmidt  <schmidt@merengue.cs.wustl.edu>
 
 	* ace: Changed the name of config-vxworks5.2-g++.h to
