@@ -23,9 +23,11 @@ HTTP_Response::HTTP_Response (HTTP_Request &request, JAWS_IO &io)
 
 HTTP_Response::~HTTP_Response (void)
 {
-  //  if (this->HTTP_HEADER != EMPTY_HEADER)
-  //    delete [] this->HTTP_HEADER;
+#if defined (ACE_JAWS_BASELINE)
+  if (this->HTTP_HEADER != EMPTY_HEADER)
+    delete [] this->HTTP_HEADER;
   // The [] is important.  Without it, there was a huge memory leak!
+#endif /* ACE_JAWS_BASELINE */
 }
 
 void
@@ -320,9 +322,27 @@ HTTP_Response::build_headers (void)
     }
   else
     {
-      // HTTP_HEADER = new char[BUFSIZ * 4];
-      // We assume that at this point everything is OK
+#if defined (ACE_JAWS_BASELINE)
+      HTTP_HEADER = new char[BUFSIZ * 4];
 
+      // We assume that at this point everything is OK
+      HTTP_HEADER_LENGTH =
+        ACE_OS::sprintf (HTTP_HEADER, "%s", "HTTP/1.0 200 OK\r\n");
+
+      char date_ptr [40];
+      // 40 bytes is the maximum length needed to store the date
+
+      if (HTTP_Helper::HTTP_date (date_ptr) != 0)
+	HTTP_HEADER_LENGTH +=
+	  ACE_OS::sprintf (HTTP_HEADER+HTTP_HEADER_LENGTH,
+                           "Date: %s\r\n", date_ptr);
+
+      if (! this->request_.cgi ())
+	HTTP_HEADER_LENGTH +=
+	  ACE_OS::sprintf (HTTP_HEADER+HTTP_HEADER_LENGTH, 
+                           "Content-type: %s\r\n\r\n",
+                           "text/html");
+#else
       if (! this->request_.cgi ())
         HTTP_HEADER = "HTTP/1.0 200 OK\r\n"
           "Content-type: text/html\r\n\r\n";
@@ -331,20 +351,7 @@ HTTP_Response::build_headers (void)
 
       HTTP_HEADER_LENGTH = ACE_OS::strlen (HTTP_HEADER);
 
-#if 0
-      const char *date_ptr = HTTP_Helper::HTTP_date ();
-
-      if (date_ptr != 0)
-	HTTP_HEADER_LENGTH +=
-	  ACE_OS::sprintf(HTTP_HEADER+HTTP_HEADER_LENGTH,
-                            "Date: %s\r\n", date_ptr);
-
-      if (! this->request_.cgi ())
-	HTTP_HEADER_LENGTH +=
-	  ACE_OS::sprintf(HTTP_HEADER+HTTP_HEADER_LENGTH, 
-			  "Content-type: %s\r\n\r\n",
-			  "text/html");
-#endif
+#endif /* ACE_JAWS_BASELINE */
     }
 
   HTTP_TRAILER = "";

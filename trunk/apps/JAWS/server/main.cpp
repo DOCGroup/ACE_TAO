@@ -12,8 +12,9 @@ static void
 handler (int) 
 { 
   // reap any threads which have been orphaned.
-  while (ACE_OS::thr_join (0, 0, 0) ==0)
-    ;
+  // can't do this until we figure out how to shut down a thread pool
+//  while (ACE_OS::thr_join (0, 0, 0) ==0)
+//    ;
 
   // call exit() so that static destructors get called 
   ACE_OS::exit (0); 

@@ -1,3 +1,31 @@
+Fri Jul 25 02:05:20 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
+
+	* server/HTTP_Server.cpp: Changes to allow the thread creation
+	  flags to be specified from the command line.  Removed some code
+	  that was used to track down memory leaks.
+
+	* server/HTTP_Helpers.{h,cpp}: Added another method 
+	  HTTP_date (char *), so that a buffer to which the date will be
+	  written to can be passed into the HTTP_date routine.
+
+	* server/HTTP_Response.cpp: Changed some code so that the baseline
+	  implementation can be created at compile time.
+
+	* server/IO.cpp: Changed some code so that the baseline
+	  implementation can be created at compile time.
+
+	* server/main.cpp: Changed the signal handler to wait for threads
+	  to die.  However, this code will remain dormant for now, until
+	  we design a nice way to shut down a thread pool.
+
+	* server/svc.conf: Changes to add some other entries people can
+	  try.
+
+	* server/Makefile: Changes to allow JAWS to be built with static
+	  linking only, to ease the process of using Purify and Quantify.
+	  Dynamic linking will be re-configured in the future when we have
+	  all the memory leaks worked out.
+
 Mon Jul 22 16:55:00 1997  Chris Cleeland <cleeland@cs.wustl.edu>
 
 	* Changed references to WRAPPER_ROOT to ACE_ROOT in every
