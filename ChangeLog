@@ -1,3 +1,8 @@
+Fri Nov 15 07:08:46 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* bin/auto_run_tests.lst: Fixed a few minor problems that showed
+	  up in the daily builds.
+
 Thu Nov 14 22:08:49 2002  Steve Huston  <shuston@riverace.com>
 
         * tests/Proactor_Test.cpp: Make this test behave better:
@@ -40,7 +45,7 @@ Thu Nov 14 22:47:45 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 	* ace/config-linux-common.h: Define ACE_HAS_POSIX_REALTIME_SIGNALS,
 	  ACE_HAS_AIO_CALLS.
 
-Thu Nov 14 16:19:57 2002  Balachandran Natarajan  <bala@bala@isis-server.isis.vanderbilt.edu>
+Thu Nov 14 16:19:57 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* bin/auto_run_tests.lst: Added two tests, Bug_1269_Regression and
 	  Bug_1270_Regression into the daily regression suite. They will
