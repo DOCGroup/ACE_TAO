@@ -132,9 +132,8 @@ ACEXML_Svcconf_Handler::processingInstruction (const ACEXML_Char *,
 }
 
 void
-ACEXML_Svcconf_Handler::setDocumentLocator (ACEXML_Locator* locator)
+ACEXML_Svcconf_Handler::setDocumentLocator (ACEXML_Locator* )
 {
-  this->locator_ = locator;
 }
 
 void
