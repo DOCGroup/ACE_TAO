@@ -4,13 +4,13 @@
 ** Copyright 2002 Addison Wesley. All Rights Reserved.
 */
 
+#include "ace/OS.h"
 #include "ace/CDR_Stream.h"
 #include "ace/FILE_Addr.h"
 #include "ace/FILE_Connector.h"
 #include "ace/FILE_IO.h"
 #include "ace/Message_Block.h"
 #include "ace/Module.h"
-#include "ace/OS_String.h"
 #include "ace/SString.h"
 #include "ace/Stream.h"
 #include "ace/Synch.h"
@@ -22,15 +22,16 @@ class Logrec_Module : public ACE_Module<ACE_MT_SYNCH>
 {
 public:
   Logrec_Module (ACE_TCHAR *name)
-    : ACE_Module (name, 
-                  &task_, // Initialize writer-side task.
-                  0,      // Ignore reader-side task.
-                  0, ACE_Module::M_DELETE_READER) {}
+    : ACE_Module<ACE_MT_SYNCH> (name, 
+                                &task_, // Initialize writer-side task.
+                                0,      // Ignore reader-side task.
+                                0,
+                                ACE_Module<ACE_MT_SYNCH>::M_DELETE_READER) {}
 private:
   TASK task_;
 };
 #define LOGREC_MODULE(NAME) \
-  typedef Logrec_Module<NAME> NAME##_Module (#NAME)
+  typedef Logrec_Module<NAME> NAME##_Module
 
 class Logrec_Reader : public ACE_Task<ACE_MT_SYNCH>
 {
@@ -53,8 +54,8 @@ public:
   }
 
   virtual int svc () {
-    // Steve, can we please use a macro, const, or enum here?
-    ACE_Message_Block mblk (8*1024);
+    const size_t FileReadSize = 8 * 1024;
+    ACE_Message_Block mblk (FileReadSize);
  
     for (;; mblk.crunch ()) {
       // Read as much as will fit in the message block.
@@ -62,7 +63,6 @@ public:
                                           mblk.space ());
       if (bytes_read <= 0)
         break;
-
       mblk.wr_ptr (ACE_static_cast (size_t, bytes_read));
 
       // We have a bunch of data from the log file. The data is
@@ -134,13 +134,13 @@ public:
         temp = temp->cont ();
 
         // Demarshal the pid
-        ACE_CDR::Long *lp = ACE_reinterpret_cast (ACE_CDR::Long*, temp->wr_ptr ());
+        lp = ACE_reinterpret_cast (ACE_CDR::Long*, temp->wr_ptr ());
         cdr >> *lp;
         temp->wr_ptr (sizeof (ACE_CDR::Long));
         temp = temp->cont ();
 
         // Demarshal the time (2 Longs)
-        ACE_CDR::Long *lp = ACE_reinterpret_cast (ACE_CDR::Long*, temp->wr_ptr ());
+        lp = ACE_reinterpret_cast (ACE_CDR::Long*, temp->wr_ptr ());
         cdr >> *lp; ++lp; cdr >> *lp;
         temp->wr_ptr (2 * sizeof (ACE_CDR::Long));
         temp = temp->cont ();
@@ -156,14 +156,19 @@ public:
         if (put_next (head) == -1) break;
 
         // Move the file-content block's read pointer up past whatever
-        // was just processed. This works because ACE_InputCDR has
-        // been moving rec's rd_ptr to reflect demarshaled content, so
-        // it's length now reflects what is left.
-        mblk.rd_ptr (mblk.length () - rec->length ());
+        // was just processed. Although the rec's rd_ptr has not been
+        // moved, cdr's has.  Therefore, use its length() to determine
+        // how much is left.
+        mblk.rd_ptr (mblk.length () - cdr.length ());
       }
-   }
+    }
 
-  return 0;
+    // Now that the file is done, send a block down the stream to tell
+    // the other modules to stop.
+    ACE_Message_Block *stop;
+    ACE_NEW_RETURN (stop, ACE_Message_Block (0, ACE_Message_Block::MB_STOP), 0);
+    put_next (stop);
+    return 0;
   }
 };
 
@@ -171,11 +176,12 @@ class Logrec_Reader_Module : public ACE_Module<ACE_MT_SYNCH>
 {
 public:
   Logrec_Reader_Module (const ACE_TString &filename)
-    : task_ (filename),
-      ACE_Module (ACE_TEXT ("Logrec Reader"),
-                  &task_, // Initialize writer-side.
-                  0,      // Ignore reader-side.
-                  0, ACE_Module::M_DELETE_READER) {}
+    : ACE_Module<ACE_MT_SYNCH> (ACE_TEXT ("Logrec Reader"),
+                                &task_, // Initialize writer-side.
+                                0,      // Ignore reader-side.
+                                0,
+                                ACE_Module<ACE_MT_SYNCH>::M_DELETE_READER),
+      task_ (filename) {}
 private:
   Logrec_Reader task_;
 };
@@ -186,12 +192,18 @@ public:
   // Initialization hook method.
   virtual int open (void *) { return activate (); }
 
-  virtual int put (ACE_Message_Block *mblk, ACE_Time_Value &to) 
+  virtual int put (ACE_Message_Block *mblk, ACE_Time_Value *to) 
   { return putq (mblk, to); }
 
   virtual int svc () {
-    for (ACE_Message_Block *mb; getq (mb) != -1; mb->release ())
+    for (ACE_Message_Block *mb; getq (mb) != -1; mb->release ()) {
+      if (mb->msg_type () == ACE_Message_Block::MB_STOP) {
+        put_next (mb);
+        break;
+      }
       ACE::write_n (ACE_STDOUT, mb);
+    }
+    return 0;
   }
 };
 
@@ -199,80 +211,66 @@ LOGREC_MODULE (Logrec_Writer);
 
 class Logrec_Formatter : public ACE_Task<ACE_MT_SYNCH>
 {
+public:
+  typedef void (*FORMATTER[5])(ACE_Message_Block *);
 private:
-  typedef void (*FORMATTER[5])(ACE_Message_Block *,
-                               ACE_CDR::Boolean);
   static FORMATTER format_; // Array of format static methods.
 
 public:
-  virtual int put (ACE_Message_Block *mblk, ACE_Time_Value &) {
-    // Steve, if we convert stuff into host byte order in the
-    // Logrec_Reader class can we simplify the code here?!
-    if (mblk->type () != Logrec_Reader::MB_CLIENT) return -1;
-    ACE_InputCDR cdr (mblk); ACE_CDR::Boolean byte_order;
-    cdr >> ACE_InputCDR::to_boolean (byte_order);
-
-    for (ACE_Message_Block *temp = mblk;
-         temp != 0;
-         temp = temp->cont ()) {
-      int mb_type = temp->msg_type () - ACE_Message_Block::MB_USER;
-      (*format_[mb_type])(temp, byte_order);
-    }
+  virtual int put (ACE_Message_Block *mblk, ACE_Time_Value *) {
+    if (mblk->msg_type () == Logrec_Reader::MB_CLIENT)
+      for (ACE_Message_Block *temp = mblk;
+           temp != 0;
+           temp = temp->cont ()) {
+        int mb_type = temp->msg_type () - ACE_Message_Block::MB_USER;
+        (*format_[mb_type])(temp);
+      }
     return put_next (mblk);
   }
 
-  // Steve, is it valid to define static methods inline?!
-  static void format_client (ACE_Message_Block *mblk,
-                             ACE_CDR::Boolean byte_order) {
-    ACE_InputCDR cdr (mblk); cdr.reset_byte_order (byte_order);
-    ACE_CDR::ULong length; cdr >> length;
-    mblk->size (11); // Max size in ASCII of 32-bit word.
-    mblk->reset ();
-    mblk->wr_ptr (size_t (sprintf (mblk->wr_ptr (), "%ld", length)));
+  static void format_client (ACE_Message_Block *) {
+    return;
   }
 
-  static void format_type (ACE_Message_Block *mblk,
-                           ACE_CDR::Boolean byte_order) {
-    ACE_InputCDR cdr (mblk); cdr.reset_byte_order (byte_order);
-    ACE_CDR::ULong type; cdr >> type;
+  static void format_type (ACE_Message_Block *mblk) {
+    ACE_CDR::Long type = * (ACE_CDR::Long *)mblk->rd_ptr ();
     mblk->size (11); // Max size in ASCII of 32-bit word.
     mblk->reset ();
-    mblk->wr_ptr (sprintf (mblk->wr_ptr (), "%ld", type));
+    mblk->wr_ptr ((size_t) sprintf (mblk->wr_ptr (), "%d", type));
   }
 
-  static void format_pid (ACE_Message_Block *mblk,
-                          ACE_CDR::Boolean byte_order) {
-    ACE_InputCDR cdr (mblk); cdr.reset_byte_order (byte_order);
-    ACE_CDR::ULong pid; cdr >> pid;
+  static void format_pid (ACE_Message_Block *mblk) {
+    ACE_CDR::Long pid = * (ACE_CDR::Long *)mblk->rd_ptr ();
     mblk->size (11); // Max size in ASCII of 32-bit word.
     mblk->reset ();
-    mblk->wr_ptr (sprintf (mblk->wr_ptr (), "%ld", pid));
+    mblk->wr_ptr ((size_t) sprintf (mblk->wr_ptr (), "%d", pid));
   }
 
-  static void format_time (ACE_Message_Block *mblk,
-                           ACE_CDR::Boolean byte_order) {
-    ACE_InputCDR cdr (mblk); cdr.reset_byte_order (byte_order);
-    ACE_CDR::ULong secs; cdr >> secs;
-    ACE_CDR::ULong usecs; cdr >> usecs;
+  static void format_time (ACE_Message_Block *mblk) {
+    ACE_CDR::Long secs = * (ACE_CDR::Long *)mblk->rd_ptr ();
+    mblk->rd_ptr (sizeof (ACE_CDR::Long));
+    ACE_CDR::Long usecs = * (ACE_CDR::Long *)mblk->rd_ptr ();
     char timestamp[26]; // Max size of ctime_r() string.
-    ACE_OS::ctime_r (secs, timestamp, sizeof timestamp);
+    time_t time_secs (secs);
+    ACE_OS::ctime_r (&time_secs, timestamp, sizeof timestamp);
     mblk->size (26); // Max size of ctime_r() string.
     mblk->reset ();
     timestamp[19] = '\0'; // NUL-terminate after the time.
     timestamp[24] = '\0'; // NUL-terminate after the date.
     size_t fmt_len (sprintf (mblk->wr_ptr (),
-                             "%s.%03ld %s",
+                             "%s.%03d %s",
                              timestamp + 4,
                              usecs / 1000,
                              timestamp + 20));
     mblk->wr_ptr (fmt_len);
   }
 
-  static void format_data (ACE_Message_Block *mblk) {
-    mblk->rd_ptr (4); 
+  static void format_data (ACE_Message_Block *) {
+    return;
   }
+};
 
-Logrec_Formatter::FORMATTER Logrec_Formatter::format_[] = {
+Logrec_Formatter::FORMATTER Logrec_Formatter::format_ = {
   format_client, format_type, format_pid, format_time, format_data
 };
 
@@ -285,25 +283,30 @@ private:
 
 public:
   virtual int put (ACE_Message_Block *mblk,
-                   ACE_Time_Value &) {
-    ACE_Message_Block *separator;
-    ACE_NEW_RETURN (separator,
-                    ACE_Message_Block (ACE_OS::strlen ("|") + 1,
-                                       ACE_Message_Block::MB_DATA,
-                                       0, 0, 0, &lock_strategy_),
-                    -1);
-    separator->copy ("|");
-   
-    for (ACE_Message_Block *temp = mblk; temp != 0; ) {
-      ACE_Message_Block *dup = separator->duplicate ();
-      dup->cont (temp->cont ());
-      temp->cont (dup);
-      temp = dup->cont ();
-    }
+                   ACE_Time_Value *) {
+    if (mblk->msg_type () != ACE_Message_Block::MB_STOP) {
+      ACE_Message_Block *separator;
+      ACE_NEW_RETURN (separator,
+                      ACE_Message_Block (ACE_OS::strlen ("|") + 1,
+                                         ACE_Message_Block::MB_DATA,
+                                         0, 0, 0, &lock_strategy_),
+                      -1);
+      separator->copy ("|");
 
-    int result = put_next (mblk);
-    separator->release ();
-    return result;
+      ACE_Message_Block *dup;
+      for (ACE_Message_Block *temp = mblk; temp != 0; ) {
+        dup = separator->duplicate ();
+        dup->cont (temp->cont ());
+        temp->cont (dup);
+        temp = dup->cont ();
+      }
+      ACE_Message_Block *nl;
+      ACE_NEW_RETURN (nl, ACE_Message_Block (2), 0);
+      nl->copy ("\n");
+      dup->cont (nl);
+      separator->release ();
+    }
+    return put_next (mblk);
   }
 };
 
@@ -318,10 +321,10 @@ int main (int argc, char *argv[])
   ACE_TString logfile (ACE_TEXT_CHAR_TO_TCHAR (argv[1]));
   ACE_Stream<ACE_MT_SYNCH> stream;
 
-  if (stream.push (new Logrec_Writer_Module) != -1
-      && stream.push (new Logrec_Separator_Module) != -1
-      && stream.push (new Logrec_Formatter_Module) != -1
-      && stream.push (new Logrec_Reader_Module (logfile) != -1)
+  if (stream.push (new Logrec_Writer_Module (ACE_TEXT ("Writer"))) != -1
+      && stream.push (new Logrec_Separator_Module (ACE_TEXT ("Separator"))) != -1
+      && stream.push (new Logrec_Formatter_Module (ACE_TEXT ("Formatter"))) != -1
+      && stream.push (new Logrec_Reader_Module (logfile)) != -1)
     return ACE_Thread_Manager::instance ()->wait () == 0 ? 0 : 1;
   return 1;
 }
