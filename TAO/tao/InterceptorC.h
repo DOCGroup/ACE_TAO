@@ -63,7 +63,7 @@ TAO_NAMESPACE  PortableInterceptor
   {
   public:
     Cookie_var (void); // default constructor
-    Cookie_var (Cookie_ptr);
+    Cookie_var (Cookie_ptr p) : ptr_ (p) {}
     Cookie_var (const Cookie_var &); // copy constructor
     ~Cookie_var (void); // destructor
 

@@ -37,6 +37,14 @@
  TAO_NAMESPACE  PortableInterceptor
  {
  
+@@ -61,6 +63,6 @@
+   {
+   public:
+     Cookie_var (void); // default constructor
+-    Cookie_var (Cookie_ptr);
++    Cookie_var (Cookie_ptr p) : ptr_ (p) {}
+     Cookie_var (const Cookie_var &); // copy constructor
+     ~Cookie_var (void); // destructor
 @@ -745,6 +747,8 @@
  #if defined (__ACE_INLINE__)
  #include "InterceptorC.i"

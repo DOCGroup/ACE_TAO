@@ -28,11 +28,6 @@ PortableInterceptor::Cookie_var::Cookie_var (void) // default constructor
   : ptr_ (Cookie::_nil ())
 {}
 
-ACE_INLINE
-PortableInterceptor::Cookie_var::Cookie_var (Cookie_ptr p)
-  : ptr_ (p)
-{}
-
 ACE_INLINE ::PortableInterceptor::Cookie_ptr
 PortableInterceptor::Cookie_var::ptr (void) const
 {
