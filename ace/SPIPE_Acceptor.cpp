@@ -8,7 +8,7 @@ ACE_RCSID(ace, SPIPE_Acceptor, "$Id$")
 
 ACE_SPIPE_Acceptor::ACE_SPIPE_Acceptor (void)
 #if (defined (ACE_WIN32) && defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
-  : pipe_handle_ (ACE_INVALID_HANDLE)
+  : sa_ (0), pipe_handle_ (ACE_INVALID_HANDLE)
 #endif /* ACE_WIN32 */
 {
   ACE_TRACE ("ACE_SPIPE_Acceptor::ACE_SPIPE_Acceptor");
@@ -42,14 +42,20 @@ ACE_SPIPE_Acceptor::dump (void) const
 
 int
 ACE_SPIPE_Acceptor::open (const ACE_SPIPE_Addr &local_sap, 
-			  int reuse_addr,
-			  int perms)
+                          int reuse_addr,
+                          int perms,
+                          LPSECURITY_ATTRIBUTES sa)
 {
   ACE_TRACE ("ACE_SPIPE_Acceptor::open");
   ACE_UNUSED_ARG (reuse_addr);
 
   this->local_addr_ = local_sap;
   this->set_handle (ACE_INVALID_HANDLE);
+#if (defined (ACE_WIN32) && defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
+  this->sa_ = sa;
+#else
+  ACE_UNUSED_ARG (sa);
+#endif /* ACE_WIN32 */
 
   return this->create_new_instance (perms);
 }
@@ -108,20 +114,22 @@ ACE_SPIPE_Acceptor::create_new_instance (int perms)
         1024 * 10,
         1024 * 10,
         ACE_DEFAULT_TIMEOUT,
-        NULL);
+        this->sa_);
 
 
   if (this->pipe_handle_ == ACE_INVALID_HANDLE)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       // Start the Connect (analogous to listen () for a socket).
       // Completion is noted by the event being signalled.  If a
       // client connects before this call, the error status will be
       // ERROR_PIPE_CONNECTED, in which case that fact is remembered
-      // via already_connected_ and noted when the user calls accept
-      // ().  Else the error status should be ERROR_IO_PENDING and the
-      // OS will signal the event when it's done.
+      // via already_connected_ and noted when the user calls accept().
+      // Else the error status should be ERROR_IO_PENDING and the OS
+      // will signal the event when it's done.
       this->already_connected_ = 0;
       this->set_handle (this->event_.handle ());
       this->overlapped_.hEvent = this->event_.handle ();
@@ -166,12 +174,13 @@ ACE_SPIPE_Acceptor::close (void)
 }
 
 ACE_SPIPE_Acceptor::ACE_SPIPE_Acceptor (const ACE_SPIPE_Addr &local_sap, 
-					int reuse_addr,
-					int perms)
+                                        int reuse_addr,
+                                        int perms,
+                                        LPSECURITY_ATTRIBUTES sa)
 {
   ACE_TRACE ("ACE_SPIPE_Acceptor::ACE_SPIPE_Acceptor");
 
-  if (this->open (local_sap, reuse_addr, perms) == -1)
+  if (this->open (local_sap, reuse_addr, perms, sa) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("%p\n"),
                 ACE_LIB_TEXT ("ACE_SPIPE_Acceptor")));
@@ -181,9 +190,9 @@ ACE_SPIPE_Acceptor::ACE_SPIPE_Acceptor (const ACE_SPIPE_Addr &local_sap,
 
 int
 ACE_SPIPE_Acceptor::accept (ACE_SPIPE_Stream &new_io, 
-			    ACE_SPIPE_Addr *remote_addr,
-			    ACE_Time_Value *timeout, 
-			    int restart,
+                            ACE_SPIPE_Addr *remote_addr,
+                            ACE_Time_Value *timeout, 
+                            int restart,
                             int reset_new_handle)
 {
   ACE_TRACE ("ACE_SPIPE_Acceptor::accept");
@@ -231,14 +240,14 @@ ACE_SPIPE_Acceptor::accept (ACE_SPIPE_Stream &new_io,
   if (this->already_connected_ == 0)
     {
       if (timeout != 0)
-	{
-	  ACE_Time_Value abstime (ACE_OS::gettimeofday () + *timeout);
-	  if (this->event_.wait (&abstime) == -1)
-	    return -1;
-	}
+        {
+          ACE_Time_Value abstime (ACE_OS::gettimeofday () + *timeout);
+          if (this->event_.wait (&abstime) == -1)
+            return -1;
+        }
       else
-	if (this->event_.wait () == -1)
-	  return -1;
+        if (this->event_.wait () == -1)
+          return -1;
 
       // Should be here with the ConnectNamedPipe operation complete.
       // Steal the already_connected_ flag to record the results.

@@ -3,6 +3,20 @@ Wed Apr  3 18:01:33 2002  Steve Huston  <shuston@riverace.com>
         * ace/SOCK_Dgram.cpp (shared_open): Add PF_INET6 to the test for
           need to bind an unused port if ACE_HAS_IPV6 is defined.
 
+Wed Apr  3 11:04:37 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Handle_Ops.{h, cpp} (handle_timed_open):
+        * ace/SPIPE_Connector.{h cpp} (ctor, connect): Added optional
+          LPSECURITY_ATTRIBTUES arg, defaults to 0. Allows Windows users
+          to set security for the new file/pipe open.
+
+        * ace/SPIPE_Acceptor.{h cpp} (ctor, open): Added optional
+          LPSECURITY_ATTRIBUTES arg, defaults to 0, same as above.
+          Also added a LPSECURITY_ATTRIBUTES member for NT4 and up.
+          The LPSECURITY_ATTRIBUTES passed in is remembered across
+          named pipe instances, and is used to create each new instance.
+          Doxygen-ized the comments.
+
 Wed Apr  3 10:15:00 2002  Si Mong Park  <spark@ociweb.com>
 
         * tests/Atomic_Op_Test_WinCE.vcp:
