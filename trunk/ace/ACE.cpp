@@ -10,13 +10,7 @@
 #include "ace/Reactor.h"
 
 // Size of a VM page.
-#if defined (ACE_HAS_GETPAGESIZE)
-// This static instance member will get loaded with the system pagesize
-// on the first call to ACE::round_to_pagesize ().
 size_t ACE::pagesize_ = 0;
-#else
-size_t ACE::pagesize_ = ACE_PAGE_SIZE;
-#endif /* ACE_HAS_GETPAGESIZE */
 
 int
 ACE::register_stdin_handler (ACE_Event_Handler *eh,
@@ -640,6 +634,9 @@ ACE::round_to_pagesize (off_t len)
       ACE::pagesize_ = (size_t) sys_info.dwPageSize;
 #elif defined (ACE_HAS_GETPAGESIZE)
       ACE::pagesize_ = (size_t) ::getpagesize ();
+#else
+      // Use the default set in config.h
+      ACE::pagesize_ = ACE_PAGE_SIZE;
 #endif /* ACE_WIN32 */
     }
 

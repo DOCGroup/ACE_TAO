@@ -143,9 +143,6 @@
 // Platform supports IP multicast
 #define ACE_HAS_IP_MULTICAST
 
-// Defines the page size of the system.
-#define ACE_PAGE_SIZE 4096
-
 // Turns off the tracing feature.
 #if !defined (ACE_NTRACE)
 #define ACE_NTRACE 1

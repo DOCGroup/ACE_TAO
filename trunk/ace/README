@@ -32,7 +32,7 @@ ACE_HAS_COMPLEX_LOCK			Platform supports non-standard readers/writer locks...
 ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES 	Prototypes for both signal() and struct sigaction are consistent.
 ACE_HAS_CPLUSPLUS_HEADERS		Compiler/platform has correctly prototyped header files
 ACE_HAS_DLL				Build ACE using the frigging PC DLL nonsense...
-ACE_HAS_GETPAGESIZE			Platform supports getpagesize() call.
+ACE_HAS_GETPAGESIZE			Platform supports getpagesize() call (otherwise, ACE_PAGE_SIZE must be defined, except on Win32)
 ACE_HAS_GETRUSAGE                       Platform supports the getrusage() system call.
 ACE_HAS_GNU_CSTRING_H			Denotes that GNU has cstring.h as standard which redefines memchr() 
 ACE_HAS_GREENHILLS_SOCKETS		Platform is using GreenHills compiler with its weird socket headers.
@@ -177,7 +177,7 @@ ACE_NEEDS_SYSTIME_H			<time.h> doesn't automatically #include /**/ <sys/time.h>
 ACE_NEEDS_WRITEV			Platform doesn't define writev, so use our own
 ACE_NLOGGING				Turns off the LM_DEBUG and LM_ERROR logging macros...
 ACE_NTRACE				Turns off the tracing feature.
-ACE_PAGE_SIZE				Defines the page size of the system
+ACE_PAGE_SIZE				Defines the page size of the system (not used on Win32 or with ACE_HAS_GETPAGESIZE).
 ACE_REDEFINES_XTI_FUNCTIONS		Platform redefines the t_... names (UnixWare)
 ACE_SELECT_USES_INT			Platform uses int for select() rather than fd_set
 ACE_TEMPLATES_REQUIRE_PRAGMA		Compiler's template mechanism must use a pragma This is used for AIX's C++ compiler.
