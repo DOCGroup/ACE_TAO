@@ -329,13 +329,7 @@ test_mutex_threads (RTCORBA::RTORB_ptr rt_orb)
 
   Mutex_Test_Data test_data;
 
-  const u_int n_threads =
-#if defined (__Lynx__)
-    3;  /* It just doesn't work with 4 threads. (Advice from Thread_Mutex_Test.cpp) */
-#else  /* ! __Lynx__ */
-  MAX_THREADS;
-#endif /* ! __Lynx__ */
-
+  const u_int n_threads = MAX_THREADS;
   int shared_var = 0;
   int error_flag = 0;
 
