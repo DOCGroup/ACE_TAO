@@ -1,3 +1,10 @@
+Thu May 25 15:19:14 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/OS_String.cpp:
+
+          Added an include for stddef.h, since we use size_t here.  Also
+          moved the OS_Export.h include after the #pragma once stuff.
+
 Thu May 25 12:26:36 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * examples/IPC_SAP/ATM_SAP/Makefile:
