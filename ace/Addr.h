@@ -83,7 +83,7 @@ public:
 
   /// Returns a hash value.  This should be overwritten by a subclass
   /// that can produce a better hash value.
-  virtual u_long hash (void) const;
+  virtual unsigned long hash (void) const;
 
   /// Dump the state of an object.
   void dump (void) const;
