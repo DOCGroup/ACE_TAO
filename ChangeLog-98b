@@ -2,7 +2,18 @@ Wed May 27 07:04:42 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Service_Config.cpp: default debug_ to 1 instead
           of 0.  And the -d option now disables debug messages,
-          instead of enabling them.
+          instead of enabling them.  Thanks to Irfan for reporting
+          that LM_DEBUG messages were lost without this fix.
+
+        * ace/High_Res_Timer (calibrate): added calibrate () method
+          to calculate the global scale factor on Pentiums.  It's
+          called by the constructor for the first instantiation
+          in a process.  (On WIN32, get_registry_scale_factor () is
+          called instead of calibrate ().)
+
+        * ace/Stats.cpp (sample): continue aggregating data even
+          if there is overflow.  This allows, e.g., a mean to be
+          calculated even if the standard deviation calculation overflow.
 
 Tue May 26 22:25:18 1998  Stephen Coy  <stevec@wsa.com.au>
 
