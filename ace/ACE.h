@@ -302,10 +302,17 @@ public:
 
   // = Timed Scatter-read and gather-write functions.
 
+  static ssize_t sendv_n (ACE_HANDLE handle,
+                          const iovec *iov,
+                          int iovcnt);
+  // Send all <iovcnt> <iovec> structs to <handle> (uses the
+  // <ACE_OS::sendv> call).  If it succeeds the number of bytes
+  // written is returned, else -1 is returned.
+
   static ssize_t writev (ACE_HANDLE handle,
                          const iovec *iov,
                          int iovcnt,
-                         const ACE_Time_Value *timeout);
+                         const ACE_Time_Value *timeout = 0);
   // Send <iovcnt> <iovec> structs to <handle> (uses the
   // <ACE_OS::writev> call).  If <timeout> == 0, the caller will block
   // until action is possible, else will wait until the relative time
@@ -313,10 +320,17 @@ public:
   // returned with <errno == ETIME>.  If it succeeds the number of
   // bytes written is returned.
 
+  static ssize_t writev_n (ACE_HANDLE handle,
+                           const iovec *iov,
+                           int iovcnt);
+  // Send all <iovcnt> <iovec> structs to <handle> (uses the
+  // <ACE_OS::writev> call).  If it succeeds the number of bytes
+  // written is returned, else -1 is returned.
+
   static ssize_t readv (ACE_HANDLE handle,
                         iovec *iov,
                         int iovcnt,
-                        const ACE_Time_Value *timeout);
+                        const ACE_Time_Value *timeout = 0);
   // Read <iovcnt> <iovec> structs from <handle> (uses the
   // <ACE_OS::readv> call).  If <timeout> == 0, the caller will block
   // until action is possible, else will wait until the relative time

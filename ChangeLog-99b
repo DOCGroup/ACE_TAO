@@ -1,5 +1,18 @@
 Mon Jan 11 12:54:26 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/SOCK_IO: Added const qualifiers to all the send*() and
+ 	  recv*() methods that take ACE_Time_Value values.  Thanks to Jody
+ 	  Hagins <jody@atdesk.com> for reporting this.
+
+	* ace/SOCK_IO: Added a new send_n() method that uses the new
+ 	  ACE::sendv_n() method!
+
+	* ace/ACE: Added a new sendv_n() and writev_n() method that sends
+ 	  all the bytes in the iovec!
+
+	* ace/ACE.h (ACE): Added default values of 0 for ACE::writev() and
+	  ACE::readv().
+
 	* examples/NT_Service: Tidied up the formatting to conform to the
  	  ACE programming guidelines.
 
