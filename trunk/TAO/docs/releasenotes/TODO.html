@@ -269,6 +269,12 @@
         </P>
       </LI>
 
+      <LI><P><B>IDL Compiler:</B>Support for the <CODE>version</CODE>
+	  pragma, this also requires some changes in the
+	  <CODE>_is_a()</CODE> implementation.
+	</P>
+      </LI>
+
       <LI><P>Support native C++ exceptions.
 	This entails the following subtasks:<P>
 	<OL>
@@ -497,13 +503,6 @@ class POA_Foo {
 	<BR>[STATUS] Jeff added several of them, I need to check what
 	is missing.
       <P></LI>
-
-      <LI><P><B>IDL Compiler:</B>The IDL compiler could generate files
-          with empty 
-	  implementation classes, just to make the life of implementors
-	  a bit easier.
-        </P>
-      </LI>
 
       <LI>Prepare the 1.0 release:<P>
 	<OL>
@@ -993,14 +992,23 @@ encapsulation format.
       
     </OL>
 
-
 <HR><P>
       <H3>Completed Tasks</H3>
 
     <OL>
+      <LI><P><B>IDL Compiler:</B>The IDL compiler could generate files
+          with empty 
+	  implementation classes, just to make the life of implementors
+	  a bit easier.
+	  <BR>[DONE]
+	  <BR>[ASSIGNED TO:] Yamuna
+        </P>
+      </LI>
+
       <LI><P><B>EC:</B> Build a COS Event Channel on top of the RTEC
 	Event Service.
-        <BR>[ASSIGNED TO:] Pradeep
+	  <BR>[DONE]
+	  <BR>[ASSIGNED TO:] Pradeep
         </P>
       </LI>
 
