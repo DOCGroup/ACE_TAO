@@ -1,3 +1,10 @@
+Mon Apr 16 13:13:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+        * docs/releasenotes/index.html:
+        * examples/PluggableUDP/DIOP/README:
+
+          Updated documentation about the UDP based pluggable protocol.
+
 Mon Apr 16 09:49:58 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/tests/InterfaceRepo/Application_Test/Makefile:

@@ -28,7 +28,6 @@ Notes on the DIOP implementation:
   TAO connector. It installs a connection handler on the first
   invocation on a remote CORBA object.
 
-
 DIOP Installation:
 
 - Compile TAO/examples/PluggableUDP/DIOP to create the DIOP library.
@@ -43,27 +42,37 @@ DIOP Installation:
   dynamic DIOP_Factory Service_Object * TAO_DIOP:_make_TAO_DIOP_Protocol_Factory() ""
   static Resource_Factory "-ORBProtocolFactory DIOP_Factory"
 
+Limitations:
+
+- No preconnections are supported.
+
+- No thread-per connection is supported.
+
+- Requests from multiple clients are received on the same socket.
+
+- Only oneway invocations operations are supported.
+
+  Using exclusive connections (see ORB configuration) twoways
+  might work, but are not explicitely supported. Please note
+  that you need to use timeouts in combination with twoways
+  in order to avoid deadlocking your application.
+
 
 Issues:
-
-- Optimization of DIOP_Transport::{send,recv}
 
 - Default port is the same on client and server, therefore
   the client ports need to be explicitly set by -ORBEndpoint option.
   Maybe there is a way to find free ports?
 
-- Remove commented out code from DIOP_* files.
+- GIOP invocations containing more than ACE_MAX_DGRAM_SIZE bytes of header
+  and invocation data will not be sent to the remote side, they will
+  be dropped without error notification.
+  The reason for this is that we want to ensure all invocation information
+  is received at once by the server. Supporting multiple UDP packets would
+  require keeping state in the server and is therefore avoided.
 
-Limitations:
-
-- No preconnections are supported.
-
-- Only single threaded servers are supported as we cache parts of a UDP
-  packet. If we would allow multiple threads this buffer could be corrupted.
-
-- No thread-per connection is supported.
-
-- Requests from multiple clients are received on the same socket.
+  A hook might be provided in the future in order to notify applications
+  about dropped invocations.
 
 
 Disclaimer:
@@ -76,23 +85,25 @@ Disclaimer:
 
   - Almost 100% reliable UDP communication as we use IP over ATM
 
-       (Even if it would be less reliable you can manage it by using one-way
-	   request operations and one-way response operations in combination with
-	   application level timeouts.)
+    (Even if it would be less reliable you can manage it by using one-way
+    request operations and one-way response operations in combination with
+    application level timeouts.)
   
   - TCP got ruled out as it behaves to sluggish on sudden disconnections, we
     needed to be able to plug & play CPU cards without impacting any ORB
-	communicating to that CPU.
+    communicating to that CPU.
 
-	   (This is the main reason why we do not keep any state in the client side
-	    of the Pluggable Protocol)
+    (This is the main reason why we do not keep any state in the client side
+    of the Pluggable Protocol)
 
   - As we use a special hardware configuration we defined that every GIOP message
     (and therefore every IDL signature) message is shorter than 4kB, which is the
-	maximum length of a UDP packet anyway.
+    maximum length of a UDP packet anyway.
 	  
-	   (Support for fragmentation, as GIOP 1.2 supports it might help, this is
-	    a future option)
+    (Support for fragmentation, as GIOP 1.2 supports it might help, this is
+    a future option)
+
+  - No data sent via DIOP would be larger than ACE_MAX_DGRAM_SIZE.
 
 
 Appendix:
