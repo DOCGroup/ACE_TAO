@@ -1,3 +1,10 @@
+Wed Sep 12 14:33:29 2001  Steve Huston  <shuston@riverace.com>
+
+        * tests/High_Res_Timer_Test.cpp: Incorporated some additional tests
+          for usec/nsec sanity checks on the calculated ACE_High_Res_Timer
+          values. Thank you very much to Alain Decamps
+          <Alain.Decamps@PIDPA.be> for this test.
+
 Tue Sep 11 12:40:01 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* Terror unleashed. The World Trade Center and the Pentagon
