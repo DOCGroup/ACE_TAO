@@ -20,6 +20,8 @@
 
 #include "BMDisplay_svnt.h"
 #include "Cookies.h"
+#include "ciao/Servant_Activator.h"
+#include "ciao/Port_Activator_T.h"
 
 namespace BMDisplay_Impl
 {
@@ -389,25 +391,6 @@ namespace BMDisplay_Impl
       ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (::BasicSP::DataAvailableConsumer::_nil ());
 
-      BMDisplay_Servant::DataAvailableConsumer_data_ready_Servant *svt = 0;
-      ACE_NEW_RETURN (
-      svt,
-      BMDisplay_Servant::DataAvailableConsumer_data_ready_Servant (
-      this->executor_.in (),
-      this->context_),
-      ::BasicSP::DataAvailableConsumer::_nil ());
-
-      PortableServer::ServantBase_var safe_servant (svt);
-
-      PortableServer::ObjectId_var oid =
-      PortableServer::string_to_ObjectId ("BasicSP_BMDisplay_data_ready");
-
-      this->container_->_ciao_the_POA ()->activate_object_with_id (
-      oid.in (),
-      svt
-      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (::BasicSP::DataAvailableConsumer::_nil ());
-
       ::BasicSP::DataAvailableConsumer_var eco =
       ::BasicSP::DataAvailableConsumer::_narrow (
       obj.in ()
@@ -431,10 +414,43 @@ namespace BMDisplay_Impl
         return ret;
       }
 
+      CIAO::Port_Activator_T<
+      BMDisplay_Servant::DataAvailableConsumer_data_ready_Servant,
+      ::BasicSP::CCM_BMDisplay,
+      ::BasicSP::CCM_BMDisplay_Context,
+      BMDisplay_Servant > *tmp = 0;
+
+      typedef  CIAO::Port_Activator_T<
+      BMDisplay_Servant::DataAvailableConsumer_data_ready_Servant,
+      ::BasicSP::CCM_BMDisplay,
+      ::BasicSP::CCM_BMDisplay_Context, 
+      BMDisplay_Servant > 
+       MACRO_MADNESS_TYPEDEF;
+
+
+      ACE_NEW_THROW_EX ( 
+        tmp,
+        MACRO_MADNESS_TYPEDEF (
+      "BasicSP_BMDisplay_data_ready",
+      "data_ready",
+      CIAO::Port_Activator::Sink,
+      this->executor_.in (),
+      this->context_,
+      this),
+      CORBA::NO_MEMORY ());
+
+
+      CIAO::Servant_Activator *sa = 
+      this->container_->ports_servant_activator ();
+
+      if (!sa->register_port_activator (tmp))
+      return 0;
+
       ::CORBA::Object_var obj =
       this->container_->generate_reference (
       "BasicSP_BMDisplay_data_ready",
-      "IDL:BasicSP/DataAvailableConsumer:1.0"
+      "IDL:BasicSP/DataAvailableConsumer:1.0",
+      CIAO::Container::Facet_Consumer
       ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (::BasicSP::DataAvailableConsumer::_nil ());
 
@@ -773,6 +789,22 @@ namespace BMDisplay_Impl
     ::Components::RemoveFailure))
     {
       // CIAO to-do
+    }
+
+    CORBA::Object_ptr
+    BMDisplay_Servant::get_facet_executor (const char *name
+    ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((
+    ::CORBA::SystemException))
+    {
+      if (name == 0)
+      {
+        ACE_THROW_RETURN (
+        ::CORBA::BAD_PARAM (),
+        ::CORBA::Object::_nil ());
+      }
+
+       return CORBA::Object::_nil ();
     }
 
     // Supported operations.

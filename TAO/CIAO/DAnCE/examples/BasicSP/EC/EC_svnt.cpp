@@ -20,6 +20,8 @@
 
 #include "EC_svnt.h"
 #include "Cookies.h"
+#include "ciao/Servant_Activator.h"
+#include "ciao/Port_Activator_T.h"
 
 namespace EC_Impl
 {
@@ -674,6 +676,22 @@ namespace EC_Impl
     ::Components::RemoveFailure))
     {
       // CIAO to-do
+    }
+
+    CORBA::Object_ptr
+    EC_Servant::get_facet_executor (const char *name
+    ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((
+    ::CORBA::SystemException))
+    {
+      if (name == 0)
+      {
+        ACE_THROW_RETURN (
+        ::CORBA::BAD_PARAM (),
+        ::CORBA::Object::_nil ());
+      }
+
+       return CORBA::Object::_nil ();
     }
 
     // Supported operations.

@@ -20,6 +20,8 @@
 
 #include "BMClosedED_svnt.h"
 #include "Cookies.h"
+#include "ciao/Servant_Activator.h"
+#include "ciao/Port_Activator_T.h"
 
 namespace BMClosedED_Impl
 {
@@ -431,39 +433,8 @@ namespace BMClosedED_Impl
         return ::BasicSP::ReadData::_duplicate (this->provide_dataout_.in ());
       }
 
-      ::BasicSP::CCM_ReadData_var fexe =
-      this->executor_->get_dataout (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (::BasicSP::ReadData::_nil ());
-
-      if (::CORBA::is_nil (fexe.in ()))
-      {
-        ACE_THROW_RETURN (
-        ::CORBA::INTERNAL (),
-        ::BasicSP::ReadData::_nil ());
-      }
-
       ::CORBA::Object_var obj =
       this->provide_dataout_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (::BasicSP::ReadData::_nil ());
-
-      CIAO_GLUE_BasicSP::ReadData_Servant *svt = 0;
-
-      ACE_NEW_RETURN (
-      svt,
-      CIAO_GLUE_BasicSP::ReadData_Servant (
-      fexe.in (),
-      this->context_),
-      ::BasicSP::ReadData::_nil ());
-
-      PortableServer::ServantBase_var safe_servant (svt);
-
-      PortableServer::ObjectId_var oid =
-      PortableServer::string_to_ObjectId ("BasicSP_BMClosedED_dataout");
-
-      this->container_->_ciao_the_POA ()->activate_object_with_id (
-      oid.in (),
-      svt
-      ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (::BasicSP::ReadData::_nil ());
 
       ::BasicSP::ReadData_var fo =
@@ -489,10 +460,42 @@ namespace BMClosedED_Impl
         return ret;
       }
 
+      CIAO::Port_Activator_T< CIAO_GLUE_BasicSP::ReadData_Servant,
+      ::BasicSP::CCM_ReadData,
+       ::Components::CCMContext,
+      BMClosedED_Servant > *tmp = 0;
+
+      typedef  CIAO::Port_Activator_T<
+      CIAO_GLUE_BasicSP::ReadData_Servant,
+      ::BasicSP::CCM_ReadData,
+       ::Components::CCMContext,
+      BMClosedED_Servant >
+       MACRO_MADNESS_TYPEDEF;
+
+
+      ACE_NEW_THROW_EX ( 
+        tmp,
+        MACRO_MADNESS_TYPEDEF (
+      "BasicSP_BMClosedED_dataout",
+      "dataout",
+      CIAO::Port_Activator::Facet,
+      0,
+      this->context_,
+      this),
+      CORBA::NO_MEMORY ());
+
+
+      CIAO::Servant_Activator *sa = 
+      this->container_->ports_servant_activator ();
+
+      if (!sa->register_port_activator (tmp))
+      return 0;
+
       ::CORBA::Object_var obj =
       this->container_->generate_reference (
       "BasicSP_BMClosedED_dataout",
-      "IDL:BasicSP/ReadData:1.0"
+      "IDL:BasicSP/ReadData:1.0",
+      CIAO::Container::Facet_Consumer
       ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (::BasicSP::ReadData::_nil ());
 
@@ -656,25 +659,6 @@ namespace BMClosedED_Impl
       ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (::BasicSP::DataAvailableConsumer::_nil ());
 
-      BMClosedED_Servant::DataAvailableConsumer_in_avail_Servant *svt = 0;
-      ACE_NEW_RETURN (
-      svt,
-      BMClosedED_Servant::DataAvailableConsumer_in_avail_Servant (
-      this->executor_.in (),
-      this->context_),
-      ::BasicSP::DataAvailableConsumer::_nil ());
-
-      PortableServer::ServantBase_var safe_servant (svt);
-
-      PortableServer::ObjectId_var oid =
-      PortableServer::string_to_ObjectId ("BasicSP_BMClosedED_in_avail");
-
-      this->container_->_ciao_the_POA ()->activate_object_with_id (
-      oid.in (),
-      svt
-      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (::BasicSP::DataAvailableConsumer::_nil ());
-
       ::BasicSP::DataAvailableConsumer_var eco =
       ::BasicSP::DataAvailableConsumer::_narrow (
       obj.in ()
@@ -698,10 +682,43 @@ namespace BMClosedED_Impl
         return ret;
       }
 
+      CIAO::Port_Activator_T<
+      BMClosedED_Servant::DataAvailableConsumer_in_avail_Servant,
+      ::BasicSP::CCM_BMClosedED,
+      ::BasicSP::CCM_BMClosedED_Context,
+      BMClosedED_Servant > *tmp = 0;
+
+      typedef  CIAO::Port_Activator_T<
+      BMClosedED_Servant::DataAvailableConsumer_in_avail_Servant,
+      ::BasicSP::CCM_BMClosedED,
+      ::BasicSP::CCM_BMClosedED_Context, 
+      BMClosedED_Servant > 
+       MACRO_MADNESS_TYPEDEF;
+
+
+      ACE_NEW_THROW_EX ( 
+        tmp,
+        MACRO_MADNESS_TYPEDEF (
+      "BasicSP_BMClosedED_in_avail",
+      "in_avail",
+      CIAO::Port_Activator::Sink,
+      this->executor_.in (),
+      this->context_,
+      this),
+      CORBA::NO_MEMORY ());
+
+
+      CIAO::Servant_Activator *sa = 
+      this->container_->ports_servant_activator ();
+
+      if (!sa->register_port_activator (tmp))
+      return 0;
+
       ::CORBA::Object_var obj =
       this->container_->generate_reference (
       "BasicSP_BMClosedED_in_avail",
-      "IDL:BasicSP/DataAvailableConsumer:1.0"
+      "IDL:BasicSP/DataAvailableConsumer:1.0",
+      CIAO::Container::Facet_Consumer
       ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (::BasicSP::DataAvailableConsumer::_nil ());
 
@@ -1065,6 +1082,27 @@ namespace BMClosedED_Impl
     ::Components::RemoveFailure))
     {
       // CIAO to-do
+    }
+
+    CORBA::Object_ptr
+    BMClosedED_Servant::get_facet_executor (const char *name
+    ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((
+    ::CORBA::SystemException))
+    {
+      if (name == 0)
+      {
+        ACE_THROW_RETURN (
+        ::CORBA::BAD_PARAM (),
+        ::CORBA::Object::_nil ());
+      }
+
+      if (ACE_OS::strcmp (name, "dataout") == 0)
+      {
+        return this->executor_->get_dataout (ACE_ENV_SINGLE_ARG_PARAMETER);
+      }
+
+       return CORBA::Object::_nil ();
     }
 
     // Supported operations.
