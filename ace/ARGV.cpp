@@ -232,7 +232,7 @@ ACE_ARGV::ACE_ARGV (int substitute_env_args)
   ACE_TRACE ("ACE_ARGV::ACE_ARGV Iterative");
 
   // Nothing to do yet -- the user puts in arguments via add ()
-};
+}
 
 int
 ACE_ARGV::add (const char *next_arg)
