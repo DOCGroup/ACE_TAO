@@ -9,7 +9,9 @@
 #include "SSL_SOCK.i"
 #endif
 
-ACE_RCSID(ACE_SSL, SSL_SOCK, "$Id$")
+ACE_RCSID (ACE_SSL,
+           SSL_SOCK,
+           "$Id$")
 
 
 ACE_SSL_SOCK::ACE_SSL_SOCK (void)
@@ -42,7 +44,6 @@ ACE_SSL_SOCK::enable (int value) const
     default:
       return -1;
     }
-  return 0;
 }
 
 int
@@ -64,5 +65,4 @@ ACE_SSL_SOCK::disable (int value) const
     default:
       return -1;
     }
-  return 0;
 }
