@@ -64,7 +64,7 @@ int main (int argc, char *argv[])
       CosNaming::Name channel_name (1);
       channel_name.length (1);
       channel_name[0].id = CORBA::string_dup ("EventService");
-      naming_context->bind (channel_name, ec, TAO_TRY_ENV);
+      naming_context->bind (channel_name, ec.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       poa_manager->activate (TAO_TRY_ENV);
