@@ -6,6 +6,7 @@ TAO_EC_Event_Channel_Attributes (PortableServer::POA_ptr s_poa,
                                  PortableServer::POA_ptr c_poa)
   :  consumer_reconnect (TAO_EC_DEFAULT_CONSUMER_RECONNECT),
      supplier_reconnect (TAO_EC_DEFAULT_SUPPLIER_RECONNECT),
+     disconnect_callbacks (TAO_EC_DEFAULT_DISCONNECT_CALLBACKS),
      busy_hwm (TAO_EC_DEFAULT_BUSY_HWM),
      max_write_delay (TAO_EC_DEFAULT_MAX_WRITE_DELAY),
      scheduler (RtecScheduler::Scheduler::_nil ()),
@@ -162,6 +163,12 @@ ACE_INLINE int
 TAO_EC_Event_Channel::supplier_reconnect (void) const
 {
   return this->supplier_reconnect_;
+}
+
+ACE_INLINE int
+TAO_EC_Event_Channel::disconnect_callbacks (void) const
+{
+  return this->disconnect_callbacks_;
 }
 
 ACE_INLINE RtecScheduler::Scheduler_ptr

@@ -128,7 +128,17 @@ TAO_EC_ProxyPushConsumer::shutdown (CORBA::Environment &ACE_TRY_ENV)
   this->deactivate (ACE_TRY_ENV);
   ACE_CHECK;
 
-  supplier->disconnect_push_supplier (ACE_TRY_ENV);
+  ACE_TRY
+    {
+      supplier->disconnect_push_supplier (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // Ignore exceptions, we must isolate other clients from
+      // failures on this one.
+    }
+  ACE_ENDTRY;
 }
 
 void
@@ -278,6 +288,8 @@ TAO_EC_ProxyPushConsumer::disconnect_push_consumer (
       CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  RtecEventComm::PushSupplier_var supplier;
+
   {
     ACE_GUARD_THROW_EX (
         ACE_Lock, ace_mon, *this->lock_,
@@ -288,6 +300,8 @@ TAO_EC_ProxyPushConsumer::disconnect_push_consumer (
     if (this->is_connected_i () == 0)
       ACE_THROW (CORBA::BAD_INV_ORDER ()); // @@ add user exception?
 
+    supplier = this->supplier_._retn ();
+
     this->cleanup_i ();
   }
 
@@ -296,6 +310,22 @@ TAO_EC_ProxyPushConsumer::disconnect_push_consumer (
 
   // Notify the event channel...
   this->event_channel_->disconnected (this, ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (this->event_channel_->disconnect_callbacks ())
+    {
+      ACE_TRY
+        {
+          supplier->disconnect_push_supplier (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+      ACE_CATCHANY
+        {
+          // Ignore exceptions, we must isolate other clients from
+          // failures on this one.
+        }
+      ACE_ENDTRY;
+    }
 
   this->_decr_refcnt ();
 }
