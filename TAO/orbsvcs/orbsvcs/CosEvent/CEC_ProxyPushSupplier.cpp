@@ -3,6 +3,7 @@
 #include "CEC_ProxyPushSupplier.h"
 #include "CEC_Dispatching.h"
 #include "CEC_EventChannel.h"
+#include "CEC_ConsumerControl.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "CEC_ProxyPushSupplier.i"
@@ -271,10 +272,27 @@ TAO_CEC_ProxyPushSupplier::push_to_consumer (const CORBA::Any& event,
       consumer->push (event, ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
+  ACE_CATCH (CORBA::OBJECT_NOT_EXIST, not_used)
+    {
+      TAO_CEC_ConsumerControl *control =
+        this->event_channel_->consumer_control ();
+
+      control->consumer_not_exist (this, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCH (CORBA::SystemException, sysex)
+    {
+      TAO_CEC_ConsumerControl *control =
+        this->event_channel_->consumer_control ();
+
+      control->system_exception (this,
+                                 sysex,
+                                 ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
   ACE_CATCHANY
     {
-      // @@ This is where the policies for misbehaving consumers
-      //    should kick in.... for the moment just ignore them.
+      // Shouldn't happen, but does not hurt
     }
   ACE_ENDTRY;
 }
@@ -303,10 +321,27 @@ TAO_CEC_ProxyPushSupplier::reactive_push_to_consumer (
         consumer->push (event, ACE_TRY_ENV);
         ACE_TRY_CHECK;
       }
+    ACE_CATCH (CORBA::OBJECT_NOT_EXIST, not_used)
+      {
+        TAO_CEC_ConsumerControl *control =
+          this->event_channel_->consumer_control ();
+
+        control->consumer_not_exist (this, ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+      }
+    ACE_CATCH (CORBA::SystemException, sysex)
+      {
+        TAO_CEC_ConsumerControl *control =
+          this->event_channel_->consumer_control ();
+
+        control->system_exception (this,
+                                   sysex,
+                                   ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+      }
     ACE_CATCHANY
       {
-        // @@ This is where the policies for misbehaving consumers
-        //    should kick in.... for the moment just ignore them.
+        // Shouldn't happen, but does not hurt
       }
     ACE_ENDTRY;
   }

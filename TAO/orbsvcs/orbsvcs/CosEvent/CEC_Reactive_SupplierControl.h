@@ -90,7 +90,9 @@ public:
   virtual int shutdown (void);
   virtual void supplier_not_exist (TAO_CEC_ProxyPushConsumer *proxy,
                                    CORBA::Environment &);
-  virtual void system_exception (TAO_CEC_ProxyPushConsumer *proxy,
+  virtual void supplier_not_exist (TAO_CEC_ProxyPullConsumer *proxy,
+                                   CORBA::Environment &);
+  virtual void system_exception (TAO_CEC_ProxyPullConsumer *proxy,
                                  CORBA::SystemException &,
                                  CORBA::Environment &);
 
@@ -124,12 +126,26 @@ private:
 
 // ****************************************************************
 
-class TAO_CEC_Ping_Supplier : public TAO_EC_Worker<TAO_CEC_ProxyPushConsumer>
+class TAO_CEC_Ping_Push_Supplier : public TAO_EC_Worker<TAO_CEC_ProxyPushConsumer>
 {
 public:
-  TAO_CEC_Ping_Supplier (TAO_CEC_SupplierControl *control);
+  TAO_CEC_Ping_Push_Supplier (TAO_CEC_SupplierControl *control);
 
   virtual void work (TAO_CEC_ProxyPushConsumer *consumer,
+                     CORBA::Environment &ACE_TRY_ENV);
+
+private:
+  TAO_CEC_SupplierControl *control_;
+};
+
+// ****************************************************************
+
+class TAO_CEC_Ping_Pull_Supplier : public TAO_EC_Worker<TAO_CEC_ProxyPullConsumer>
+{
+public:
+  TAO_CEC_Ping_Pull_Supplier (TAO_CEC_SupplierControl *control);
+
+  virtual void work (TAO_CEC_ProxyPullConsumer *consumer,
                      CORBA::Environment &ACE_TRY_ENV);
 
 private:

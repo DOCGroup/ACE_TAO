@@ -162,19 +162,6 @@ TAO_CEC_Pull_Event::work (TAO_CEC_ProxyPullConsumer *consumer,
                                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
-  ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
-    {
-      // @@ this->supplier_control_->supplier_not_exist (consumer, ACE_TRY_ENV);
-      // @@ ACE_TRY_CHECK;
-    }
-  ACE_CATCH (CORBA::TRANSIENT, transient)
-    {
-      // This is TAO's minor code for a failed connection, we may
-      // want to be more lenient in the future..
-      // if (transient.minor () == 0x54410085)
-      // @@ this->control_->supplier_not_exist (consumer, ACE_TRY_ENV);
-      // @@ ACE_TRY_CHECK;
-    }
   ACE_CATCHANY
     {
       // Ignore all exceptions

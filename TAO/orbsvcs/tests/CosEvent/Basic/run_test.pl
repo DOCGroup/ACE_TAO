@@ -47,7 +47,7 @@ if ($T->TimedWait (60) == -1) {
   $T->Kill (); $T->TimedWait (1);
 }
 
-#print STDERR "\n\nPull-Push Events\n";
+print STDERR "\n\nPull-Push Events\n";
 $T = Process::Create ($prefix . "Pull_Push_Event".$EXE_EXT,
                       " -ORBSvcConf svc.pull.conf");
 if ($T->TimedWait (60) == -1) {

@@ -57,6 +57,18 @@ TAO_EC_Event_Channel::scheduling_strategy (void) const
   return this->scheduling_strategy_;
 }
 
+ACE_INLINE TAO_EC_ConsumerControl*
+TAO_EC_Event_Channel::consumer_control (void) const
+{
+  return this->consumer_control_;
+}
+
+ACE_INLINE TAO_EC_SupplierControl*
+TAO_EC_Event_Channel::supplier_control (void) const
+{
+  return this->supplier_control_;
+}
+
 ACE_INLINE TAO_EC_ProxyPushSupplier*
 TAO_EC_Event_Channel::create_proxy_push_supplier (void)
 {
