@@ -93,11 +93,6 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
   
       (void) this->leader_follower_condition_variable_->signal ();
     }
-  else
-    {
-      ACE_DEBUG ((LM_DEBUG, 
-                  "(%P | %t):TAO_Synch_Reply_Dispatcher::dispatch_reply:cond variable 0\n"));
-    }
   
   return 1;
 }
