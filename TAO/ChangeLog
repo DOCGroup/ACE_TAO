@@ -1,3 +1,15 @@
+Thu Aug 26 22:54:35 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/GIOP.pidl:
+        
+          Added missing #ifndef guard around the file. With recent 
+          changes that have tightened up redefinition checking in
+          reopened modules, we were getting a redefinition error
+          from GIOP.pidl being included in FT_CORBA_ORB.idl by
+          two different paths and having no protection from the
+          #ifndef guard. Thanks to J.T. Conklin <jtc@acorntoolworks.com>
+          for reporting the problem.
+
 Thu Aug 26 20:19:19 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tao/Makefile.am:
