@@ -459,22 +459,22 @@ CORBA::Request::handle_response (TAO_InputCDR &incoming,
 }
 
 // Constructor.
-CORBA_ORB_RequestSeq::CORBA_ORB_RequestSeq (CORBA::ULong max)
+CORBA::ORB_RequestSeq::ORB_RequestSeq (CORBA::ULong max)
   : TAO_Unbounded_Pseudo_Sequence <CORBA::Request,CORBA::Request_var> (max)
 {
   // No-op.
 }
 
-CORBA_ORB_RequestSeq::CORBA_ORB_RequestSeq (const CORBA_ORB_RequestSeq &rhs)
+CORBA::ORB_RequestSeq::ORB_RequestSeq (const CORBA::ORB_RequestSeq &rhs)
   : TAO_Unbounded_Pseudo_Sequence <CORBA::Request,CORBA::Request_var> (rhs)
 {
   // No-op.
 }
 
-CORBA_ORB_RequestSeq::CORBA_ORB_RequestSeq (CORBA::ULong max,
-                                            CORBA::ULong length,
-                                            CORBA::Request **data,
-                                            CORBA::Boolean release)
+CORBA::ORB_RequestSeq::ORB_RequestSeq (CORBA::ULong max,
+                                       CORBA::ULong length,
+                                       CORBA::Request **data,
+                                       CORBA::Boolean release)
   : TAO_Unbounded_Pseudo_Sequence <CORBA::Request,CORBA::Request_var> (max,
                                                                        length,
                                                                        data,
@@ -484,7 +484,7 @@ CORBA_ORB_RequestSeq::CORBA_ORB_RequestSeq (CORBA::ULong max,
 }
 
 
-CORBA_ORB_RequestSeq::CORBA_ORB_RequestSeq (void)
+CORBA::ORB_RequestSeq::ORB_RequestSeq (void)
 {
   // No-op.
 }
