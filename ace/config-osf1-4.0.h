@@ -10,6 +10,9 @@
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
+// this platform uses Digital's CXX compiler
+#define DEC_CXX
+
 #define ACE_HAS_STRING_CLASS
 #define ACE_LACKS_LINEBUFFERED_STREAMBUF
 #define ACE_LACKS_SIGNED_CHAR
