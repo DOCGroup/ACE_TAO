@@ -11,6 +11,9 @@
 
 include $(STL_ROOT)/config/local.cfg
 
+STD=$(STL_ROOT)/ospace/std
+STL=$(STL_ROOT)/stl
+
 CC_INCLUDES += -I$(STD)
 CC_INCLUDES += -pta
 
