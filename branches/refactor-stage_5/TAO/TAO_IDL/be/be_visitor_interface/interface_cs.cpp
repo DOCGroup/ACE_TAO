@@ -371,12 +371,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   *os << "CORBA::Boolean" << be_nl
       << node->full_name () << "::_is_a (" << be_idt << be_idt_nl
       << "const char *value" << be_nl
-      << "ACE_ENV_ARG_DECL";
-
-  if (node->is_abstract ())
-    {
-      *os << "_NOT_USED";
-    }
+      << "ACE_ENV_ARG_DECL_NOT_USED";
 
   *os << be_uidt_nl << ")" << be_uidt_nl
       << "{" << be_idt_nl
