@@ -135,12 +135,12 @@ ACE_ARGV::string_to_array()
 
 ACE_ARGV::ACE_ARGV (char buf[], 
 		    int substitute_env_args)
-  : argc_ (0),
-    substitute_env_args_ (substitute_env_args),
-    argv_ (0), 
+  : substitute_env_args_ (substitute_env_args),
+    state_ (TO_PTR_ARRAY),
+    argc_ (0),
+    argv_ (0),
     buf_ (0),
-    length_ (0),
-    state_ (TO_PTR_ARRAY)
+    length_ (0)
 {
   ACE_TRACE ("ACE_ARGV::ACE_ARGV char[] to char *[]");
 
@@ -157,12 +157,12 @@ ACE_ARGV::ACE_ARGV (char buf[],
 
 ACE_ARGV::ACE_ARGV (char *argv[],
 		    int substitute_env_args)
-  : argc_ (0),
-    substitute_env_args_ (substitute_env_args),
-    argv_ (0), 
+  : substitute_env_args_ (substitute_env_args),
+    state_ (TO_STRING),
+    argc_ (0),
+    argv_ (0),
     buf_ (0),
-    length_ (0),
-    state_ (TO_STRING)
+    length_ (0)
 {
   ACE_TRACE ("ACE_ARGV::ACE_ARGV char*[] to char[]");
 
@@ -195,8 +195,9 @@ ACE_ARGV::ACE_ARGV (char *argv[],
   ACE_NEW (this->buf_, char[buf_len + 1]);
 
   char *end = this->buf_;
+  int j;
 
-  for (int j = 0; argv[j] != 0; j++)
+  for (j = 0; argv[j] != 0; j++)
     {
       char *temp;
 
@@ -220,12 +221,12 @@ ACE_ARGV::ACE_ARGV (char *argv[],
 }
 
 ACE_ARGV::ACE_ARGV(int substitute_env_args)
-  : argc_ (0),
-    substitute_env_args_ (substitute_env_args),
-    argv_ (0), 
+  : substitute_env_args_ (substitute_env_args),
+    state_ (ITERATIVE),
+    argc_ (0),
+    argv_ (0),
     buf_ (0),
-    length_ (0),
-    state_ (ITERATIVE)
+    length_ (0)
 {
   ACE_TRACE ("ACE_ARGV::ACE_ARGV Iterative");
 
@@ -330,3 +331,10 @@ ACE_ARGV::create_buf_from_queue(void)
   return 0;
 }
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Unbounded_Queue<char *>;
+template class ACE_Unbounded_Queue_Iterator<char *>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Unbounded_Queue<char *>
+#pragma instantiate ACE_Unbounded_Queue_Iterator<char *>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
