@@ -1,3 +1,11 @@
+Fri Apr 23 22:35:23 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Process_Manager.cpp (wait):
+	* ace/WFMO_Reactor.cpp (dispatch_handles):
+
+	  Fixed "pointless comparison of unsigned integer with zero"
+	  MSVC++ 7.1 warning.
+
 Fri Apr 23 22:26:19 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* examples/Web_Crawler/Iterators.cpp (next):
