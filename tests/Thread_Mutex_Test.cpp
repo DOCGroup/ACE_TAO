@@ -9,9 +9,9 @@
 //    Thread_Mutex_Test.cpp
 //
 // = DESCRIPTION
-//      This is a simple test to illustrate the functionality of
-//      ACE_Thread_Mutex. The test acquires and releases mutexes. No
-//      command line arguments are needed to run the test.
+//     This test illustrates the functionality of the
+//     ACE_Thread_Mutex. The test acquires and releases mutexes. No
+//     command line arguments are needed to run the test.
 //
 // = AUTHOR
 //    Prashant Jain <pjain@cs.wustl.edu> and Doug Schmidt <schmidt@cs.wustl.edu>
@@ -36,11 +36,8 @@ ACE_RCSID(tests, Thread_Mutex_Test, "$Id$")
 #endif
 
 #if !defined (ACE_HAS_MUTEX_TIMEOUTS)
-
 static int reported_notsup = 0;
-
-#endif
-
+#endif /* ACE_HAS_MUTEX_TIMEOUTS */
 
 static void *
 test (void *args)
@@ -124,6 +121,114 @@ test (void *args)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) = released on iteration %d\n"),
                   i));
+
+      // Basic ACE_Guard usage - automatically acquire the mutex on
+      // guard construction and automatically release it on
+      // destruction.
+      {
+        // Construct an ACE_Guard to implicitly acquire the mutex.
+        ACE_Guard<ACE_TEST_MUTEX> guard (*mutex);
+        ACE_ASSERT (guard.locked () != 0);
+
+        // Perform some operation which might exit the current scope
+        // prematurely, e.g. by returning or throwing an exception.
+        // ...
+
+        // ACE_Guard object is destroyed when exiting scope and guard
+        // destructor automatically releases mutex.
+      }
+
+      // Use an ACE_Guard to automatically acquire a mutex, but release
+      // the mutex early.
+      {
+        // Construct an ACE_Guard to implicitly acquire the mutex.
+        ACE_Guard<ACE_TEST_MUTEX> guard (*mutex);
+        ACE_ASSERT (guard.locked () != 0);
+
+        // Perform some operation which might exit the current scope
+        // prematurely, e.g. by returning or throwing an exception.
+        // ...
+
+        // Release the mutex since we no longer need it.
+        guard.release ();
+        ACE_ASSERT (guard.locked () == 0);
+
+        // Do something else which does not require the mutex to be locked.
+        // ...
+
+        // ACE_Guard object's destructor will not release the mutex.
+      }
+
+      // Use an ACE_Guard to automatically acquire a mutex, but
+      // relinquish ownership of the lock so that the mutex is not
+      // automatically released on guard destruction. This is useful
+      // when an operation might not release the mutex in some
+      // conditions, in which case responsibility for releasing it is
+      // passed to someone else.
+      {
+        // Construct an ACE_Guard to implicitly acquire the mutex.
+        ACE_Guard<ACE_TEST_MUTEX> guard (*mutex);
+        ACE_ASSERT (guard.locked () != 0);
+
+        // Perform some operation which might exit the current scope
+        // prematurely, e.g. by returning or throwing an exception.
+        // ...
+
+        // Relinquish ownership of the mutex lock. Someone else must
+        // now release it.
+        guard.disown ();
+        ACE_ASSERT (guard.locked () == 0);
+
+        // ACE_Guard object's destructor will not release the mutex.
+      }
+      // We are now responsible for releasing the mutex.
+      result = mutex->release ();
+      ACE_ASSERT (result == 0);
+
+      // Construct an ACE_Guard without automatically acquiring the lock.
+      {
+        // Construct an ACE_Guard object without automatically
+        // acquiring the mutex or taking ownership of an existing
+        // lock. The third parameter tells the guard that the mutex
+        // has not been locked.
+        ACE_Guard<ACE_TEST_MUTEX> guard (*mutex, 0, 0);
+        ACE_ASSERT (guard.locked () == 0);
+
+        // Conditionally acquire the mutex.
+        if (i % 2 == 0)
+          {
+            guard.acquire ();
+            ACE_ASSERT (guard.locked () != 0);
+          }
+
+        // Perform some operation that might exit the current scope
+        // prematurely, e.g. by returning or throwing an exception.
+        // ...
+
+        // ACE_Guard object is destroyed when exiting scope and guard
+        // destructor automatically releases if it was acquired above.
+      }
+
+      // Use an ACE_Guard to take ownership of a previously acquired
+      // mutex.
+      timeout = ACE_OS::gettimeofday ();
+      timeout += delta;  // Must pass absolute time to acquire().
+      if (mutex->acquire (timeout) == 0)
+        {
+          // Construct an ACE_Guard object without automatically
+          // acquiring the mutex, but instead take ownership of the
+          // existing lock.  The third parameter tells the guard that
+          // the mutex has already been locked.
+          ACE_Guard<ACE_TEST_MUTEX> guard (*mutex, 0, 1);
+          ACE_ASSERT (guard.locked () != 0);
+
+          // Perform some operation which might exit the current scope
+          // prematurely, e.g. by returning or throwing an exception.
+          // ...
+
+          // ACE_Guard object is destroyed when exiting scope and guard
+          // destructor automatically releases mutex.
+        }
     }
 
   return 0;
