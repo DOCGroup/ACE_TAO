@@ -1,3 +1,8 @@
+Wed Oct 30 19:38:20 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* orbsvcs/orbsvcs/AV/UDP.cpp (TAO_AV_UDP_Object::handle_input): 
+	  Improve debugging message.
+
 Wed Oct 30 12:49:32 2002  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tao\PortableServer\PortableServer_ORBInitializer.cpp
