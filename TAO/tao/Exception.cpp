@@ -618,13 +618,51 @@ void
 TAO_Exceptions::make_unknown_user_typecode (CORBA::TypeCode_ptr &tcp,
                                             CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Dynamic_Adapter *dynamic_adapter =
-    ACE_Dynamic_Service<TAO_Dynamic_Adapter>::instance (
-        TAO_ORB_Core::dynamic_adapter_name ()
-      );
+  // Create the TypeCode for the CORBA_UnknownUserException.
 
-  dynamic_adapter->create_unknown_user_typecode (tcp,
-                                                 ACE_TRY_ENV);
+#if defined(ACE_MVS)
+  // @@ We need to use a translator to make sure that all TypeCodes
+  // are stored in ISO8859 form, the problem is that this hack does
+  // not scale as more native sets have to be supported
+
+  ACE_IBM1047_ISO8859 translator;
+  TAO_OutputCDR stream (0,
+                        ACE_CDR_BYTE_ORDER,
+                        TAO_Exceptions::global_allocator_,
+                        TAO_Exceptions::global_allocator_,
+                        ACE_DEFAULT_CDR_MEMCPY_TRADEOFF,
+                        &translator);
+#else
+  TAO_OutputCDR stream (0,
+                        ACE_CDR_BYTE_ORDER,
+                        TAO_Exceptions::global_allocator_,
+                        TAO_Exceptions::global_allocator_,
+                        ACE_DEFAULT_CDR_MEMCPY_TRADEOFF);
+#endif /* ACE_MVS */
+
+  const char *interface_id =
+    "IDL:omg.org/CORBA/UnknownUserException:1.0";
+  const char *name = "UnknownUserException";
+  const char *field_name = "exception";
+
+  CORBA::Boolean result = stream.write_octet (TAO_ENCAP_BYTE_ORDER) == 0
+    || stream.write_string (interface_id) == 0
+    || stream.write_string (name) == 0
+    || stream.write_ulong (1L) == 0
+    || stream.write_string (field_name) == 0;
+  if (result)
+    ACE_THROW (CORBA_INITIALIZE ());
+
+  if (!(stream << CORBA::_tc_any))
+    ACE_THROW (CORBA_INITIALIZE ());
+
+  ACE_NEW_THROW_EX (tcp,
+                    CORBA::TypeCode (CORBA::tk_except,
+                                     stream.length (),
+                                     stream.buffer (),
+                                     1,
+                                     sizeof (CORBA_UserException)),
+                    CORBA_INITIALIZE ());
 }
 
 void

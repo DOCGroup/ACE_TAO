@@ -76,11 +76,6 @@ public:
   // CORBA::ORB::create_exception_list.
   virtual void create_exception_list (CORBA::ExceptionList_ptr &,
                                       CORBA_Environment &);
-
-  // TAO_Exceptions::make_unknown_user_typecode.
-  // Typecode for CORBA::UnknownUserException.
-  virtual void create_unknown_user_typecode (CORBA::TypeCode_ptr &,
-                                             CORBA::Environment &);
 };
 
 #include "ace/post.h"
