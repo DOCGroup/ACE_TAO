@@ -62,6 +62,12 @@ Sat Feb 24 08:21:48 2001  David L. Levine <levine@cs.wustl.edu>
           for confirming that -fno-implicit-templates should work with
           the Tornado II g++.  [Bug 658]
 
+Thu Feb 22 15:59:04 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.i: The ACE_TRACE call for ACE_OS::gmtime identified the
+ 	  function as "localtime".  This is now fixed.  Thanks to Mason
+ 	  Deaver <mason.deaver@tripointglobal.com> for reporting this.
+
 Fri Feb 23 19:44:36 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ACE version 5.1.13 released.
