@@ -584,6 +584,8 @@ class TAO_Export RequestInfo : public virtual CORBA_Object
         CORBA::SystemException
       )) = 0;
 
+#if (TAO_HAS_CORBA_MESSAGING == 1)
+
     virtual Messaging::SyncScope sync_scope (
                 CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
@@ -591,6 +593,8 @@ class TAO_Export RequestInfo : public virtual CORBA_Object
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
+
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
     virtual PortableInterceptor::ReplyStatus reply_status (
                 CORBA::Environment &ACE_TRY_ENV = 
