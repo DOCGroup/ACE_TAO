@@ -16,7 +16,7 @@ TAO_Internal::fake_service_entries_i (void)
 #define FAKE_SVC_ENTRY(svcname, svctype, argc, argv) \
   do \
     { \
-      ACE_Service_Object *obj = _make_##svctype (); \
+      ACE_Service_Object *obj = _make_##svctype (0); \
       obj->init (argc, argv); \
       ACE_Service_Repository::instance ()->insert \
         (new ACE_Service_Type (svcname,\
