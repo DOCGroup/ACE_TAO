@@ -32,7 +32,7 @@ public:
   JAWS_IO_Acceptor (void);
   virtual ~JAWS_IO_Acceptor (void);
 
-  virtual int open (const ACE_INET_Addr &address, int backlog = 5);
+  virtual int open (const ACE_INET_Addr &address, int backlog = 20);
   // Initiate a passive mode socket.
 
   virtual int open (const ACE_HANDLE &socket);
@@ -64,7 +64,7 @@ class JAWS_Export JAWS_IO_Synch_Acceptor : public JAWS_IO_Acceptor
 {
 public:
 
-  virtual int open (const ACE_INET_Addr &local_sap, int backlog = 5);
+  virtual int open (const ACE_INET_Addr &local_sap, int backlog = 20);
   // Initiate a passive mode socket.
 
   virtual int open (const ACE_HANDLE &socket);
@@ -95,7 +95,7 @@ public:
   JAWS_IO_Asynch_Acceptor (void);
   virtual ~JAWS_IO_Asynch_Acceptor (void);
 
-  virtual int open (const ACE_INET_Addr &address, int backlog = 5);
+  virtual int open (const ACE_INET_Addr &address, int backlog = 20);
   // Initiate an asynchronous passive connection
 
   virtual int open (const ACE_HANDLE &socket);

@@ -69,14 +69,17 @@ JAWS_HTTP_10_Write_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
       switch (handler->status ())
         {
         case JAWS_IO_Handler::WRITE_OK:
-          delete info;
-
           if (info->status () == (int) JAWS_HTTP_10_Request::STATUS_QUIT)
-            return -1;
+            {
+              delete info;
+              return -1;
+            }
 
+          delete info;
           return 0;
 
         case JAWS_IO_Handler::WRITE_ERROR:
+          delete info;
           return -1;
 
         default:
@@ -115,6 +118,7 @@ JAWS_HTTP_10_Write_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
             return 1;
           }
         }
+
     }
 
   delete info;

@@ -143,7 +143,8 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *ts_db)
       if (task == 0)
         {
           JAWS_TRACE ("JAWS_Concurrency_Base::svc_hook, recycling");
-          handler->done ();
+          if (handler)
+            handler->done ();
           handler = 0;
           JAWS_IO_Handler **ioh = waiter->find (waiter_index);
           *ioh = 0;
@@ -163,7 +164,9 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *ts_db)
 
           // We need a way to destroy all the handlers created by the
           // Asynch_Acceptor.  Figure this out later.
-          handler = waiter->wait_for_completion (waiter_index);
+          do
+            handler = waiter->wait_for_completion (waiter_index);
+          while (handler && handler->count () > 0);
           result = (handler == 0) ? -1 : 0;
         }
 
@@ -172,7 +175,8 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *ts_db)
           // something wrong.
           JAWS_TRACE ("JAWS_Concurrency_Base::svc_hook, negative result");
           ACE_ERROR ((LM_ERROR, "%p\n", "JAWS_Concurrency_Base::svc_hook"));
-          handler->done ();
+          if (handler)
+            handler->done ();
           handler = 0;
           JAWS_IO_Handler **ioh = waiter->find (waiter_index);
           *ioh = 0;
