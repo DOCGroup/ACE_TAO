@@ -62,7 +62,7 @@ Test_Task::Test_Task (void)
   this->handled_ = 0;
   Test_Task::current_count_++;
   ACE_DEBUG ((LM_DEBUG,
-	      "Test_Task constructed, current_count_ = %d\n",
+	      ACE_TEXT ("Test_Task constructed, current_count_ = %d\n"),
 	      Test_Task::current_count_));
 }
 
@@ -71,7 +71,7 @@ Test_Task::~Test_Task (void)
   ACE_GUARD (ACE_Thread_Mutex, ace_mon, lock_);
 
   ACE_DEBUG ((LM_DEBUG,
-              "Test_Task destroyed, current_count_ = %d\n",
+              ACE_TEXT ("Test_Task destroyed, current_count_ = %d\n"),
 	      Test_Task::current_count_));
 }
 
@@ -89,7 +89,7 @@ Test_Task::close (u_long)
 
   Test_Task::current_count_--;
   ACE_DEBUG ((LM_DEBUG,
-              "Test_Task::close () current_count_ = %d.\n",
+              ACE_TEXT ("Test_Task::close () current_count_ = %d.\n"),
 	      Test_Task::current_count_));
   return 0;
 }
@@ -113,14 +113,13 @@ Test_Task::svc (void)
 	  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, lock_, -1);
 
 	  ACE_ERROR_RETURN ((LM_ERROR,
-                             "Test_Task: error %p!\n",
-                             "notifying reactor"),
+                             ACE_TEXT ("Test_Task: error %p!\n"),
+                             ACE_TEXT ("notifying reactor")),
                              0);
 	}
     }
 
-  ACE_DEBUG ((LM_DEBUG,
-              " (%t) returning from svc ()\n"));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%t) returning from svc ()\n")));
   return 0;
 }
 
@@ -134,7 +133,7 @@ Test_Task::handle_input (ACE_HANDLE)
       ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, lock_, -1);
       Test_Task::done_cnt_++;
       ACE_DEBUG ((LM_DEBUG,
-		  " (%t) Test_Task: handle_input! done_cnt_ = %d.\n",
+		  ACE_TEXT (" (%t) Test_Task: handle_input done_cnt_ = %d.\n"),
 		  Test_Task::done_cnt_));
     }
 
@@ -152,8 +151,7 @@ dispatch (void *arg)
       ACE_LOG_MSG->msg_ostream (out_stream);
     }
 
-  ACE_DEBUG ((LM_DEBUG,
-              " (%t) Dispatcher Thread started!\n"));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%t) Dispatcher Thread started!\n")));
   ACE_Reactor *r = reinterpret_cast <ACE_Reactor *> (arg);
   int result;
 
@@ -165,7 +163,7 @@ dispatch (void *arg)
 
       if (result <= 0)
 	ACE_DEBUG ((LM_DEBUG,
-                    "Dispatch: handle_events (): %d",
+                    ACE_TEXT ("Dispatch: handle_events (): %d"),
                     result));
     }
 
@@ -190,8 +188,8 @@ ACE_TMAIN (int argc, ACE_TCHAR **)
                                 ios::trunc|ios::out),
                       -1);
 #else
-	  if ( (out_stream = ACE_OS::fopen("test_task_three.out", "w")) == NULL )
-		return -1;
+      if ((out_stream = ACE_OS::fopen ("test_task_three.out", "w")) == NULL)
+        return -1;
 #endif
       ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
       ACE_LOG_MSG->msg_ostream (out_stream);
@@ -229,13 +227,13 @@ ACE_TMAIN (int argc, ACE_TCHAR **)
 	  if (errno == ETIME)
 	    {
 	      ACE_DEBUG ((LM_DEBUG,
-                          "no activity within 2 seconds, shutting down\n"));
+                          ACE_TEXT ("no activity within 2 seconds, shutting down\n")));
 	      break;
 	    }
 	  else
 	    ACE_ERROR ((LM_ERROR,
-                        "%p error handling events\n",
-                        "main"));
+                        ACE_TEXT ("%p error handling events\n"),
+                        ACE_TEXT ("main")));
 	}
     }
 
@@ -243,11 +241,13 @@ ACE_TMAIN (int argc, ACE_TCHAR **)
     {
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
       *out_stream << flush;
-      ((ofstream*)out_stream)->close ();
+      delete out_stream;
 #else
-	  ACE_OS::fflush(out_stream);
-	  ACE_OS::fclose(out_stream);
+      ACE_OS::fflush(out_stream);
+      ACE_OS::fclose(out_stream);
 #endif
+      ACE_LOG_MSG->clr_flags (ACE_Log_Msg::OSTREAM);
+      ACE_LOG_MSG->msg_ostream (0);
     }
 
   // Bail out here so that we don't call the destructors for the tasks..
@@ -262,7 +262,7 @@ int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR ((LM_ERROR,
-              "threads not supported on this platform\n"));
+              ACE_TEXT ("threads not supported on this platform\n")));
   return 0;
 }
 #endif /* ACE_HAS_THREADS */

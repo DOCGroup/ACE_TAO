@@ -1,3 +1,12 @@
+Fri Nov 26 17:46:29 2004  Steve Huston  <shuston@riverace.com>
+
+	* examples/System_V_IPC/SV_Message_Queues/TMQ_Client.cpp: Corrected
+	  wide-char issues.
+
+	* examples/Threads/task_three.cpp: ACE_OSTREAM_TYPE is not always a
+	  class that offers close(). So just delete the object when it's
+	  not needed any longer. Also, remove the reference from ACE_Log_Msg.
+
 Fri Nov 25 19:12:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
         * examples/Threads/task_three.cpp:
