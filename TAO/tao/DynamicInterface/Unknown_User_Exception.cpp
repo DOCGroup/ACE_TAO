@@ -113,3 +113,29 @@ CORBA::UnknownUserException::_type (void) const
 {
   return CORBA::_tc_UnknownUserException;
 }
+
+namespace TAO
+{
+  namespace TypeCode
+  {
+    Struct_Field<char const *> const fields_CORBA_UnknownUserException[] =
+      {
+        { "exception", &CORBA::_tc_any }
+      };
+
+    Struct<char const *,
+           Struct_Field<char const *> const *,
+           CORBA::tk_except,
+           TAO::Null_RefCount_Policy> tc_UnknownUserException (
+             "IDL:omg.org/CORBA/UnknownUserException:1.0",
+             "UnknownUserException",
+             TAO::TypeCode::fields_CORBA_UnknownUserException,
+             1 /* # of fields */);
+  }
+}
+
+namespace CORBA
+{
+  CORBA::TypeCode_ptr const _tc_UnknownUserException =
+    &TAO::TypeCode::tc_UnknownUserException;
+}

@@ -99,6 +99,11 @@ namespace CORBA
     /// Holder for the actual exception.
     CORBA::Any *exception_;
   };
+
+  // The CORBA::UnknownUserException TypeCode.
+  extern TAO_DynamicInterface_Export TypeCode_ptr const
+    _tc_UnknownUserException;
+
 } // End CORBA namespace.
 
 

@@ -221,28 +221,6 @@ namespace CORBA
 class TAO_Export TAO_Exceptions
 {
 public:
-  /**
-   * Make the TypeCode for a standard exception.  When used correctly,
-   * initializing system exceptions is only an exercise in CPU time;
-   * it allocates no new memory.
-   */
-  static void make_standard_typecode (CORBA::TypeCode_ptr &tcp,
-                                      const char *name,
-                                      char *buf,
-                                      size_t buflen
-                                      ACE_ENV_ARG_DECL);
-
-  /// Make the TypeCode for the CORBA::UnknownUserException standard
-  /// exception.
-  static void make_unknown_user_typecode (CORBA::TypeCode_ptr &tcp
-                                          ACE_ENV_ARG_DECL);
-
-  /// Runtime initialization of all standard exception typecodes.
-  /// Called from @c CORBA::ORB_init.
-  static void init (ACE_ENV_SINGLE_ARG_DECL);
-
-  /// Runtime finalization of all standard exception typecodes.
-  static void fini (void);
 
   /// Create a CORBA::SystemException given the interface repository ID.
   static CORBA::SystemException *create_system_exception (
@@ -250,18 +228,6 @@ public:
       ACE_ENV_ARG_DECL
     );
 
-  /**
-   * This global allocator is used to initialize system exception
-   * typecodes.  Since at the time, the ORB is mostly still not
-   * available.  Using a separate allocator prevents CDR routines from
-   * accessing the optimized allocators from the ORB.
-   */
-  static ACE_Allocator *global_allocator_;
-
-private:
-  /// Flag that denotes that the TAO's CORBA exceptions have been
-  /// initialized.
-  static bool initialized_;
 };
 
 #if defined (TAO_DONT_CATCH_DOT_DOT_DOT)

@@ -7,6 +7,11 @@
 #include "TypeCode.h"
 #include "ORB_Constants.h"
 #include "TypeCode_Constants.h"
+#include "TypeCode_Enumerator.h"
+#include "Enum_TypeCode.h"
+#include "TypeCode_Struct_Field.h"
+#include "Struct_TypeCode.h"
+#include "Null_RefCount_Policy.h"
 #include "CORBA_String.h"
 #include "CDR.h"
 #include "debug.h"
@@ -31,24 +36,6 @@
 ACE_RCSID (tao,
            SystemException,
            "$Id$")
-
-
-ACE_Allocator *TAO_Exceptions::global_allocator_;
-
-// Flag that denotes that the TAO TypeCode constants have been
-// initialized.
-bool TAO_Exceptions::initialized_ = false;
-
-namespace CORBA
-{
-  CORBA::TypeCode_ptr _tc_UnknownUserException = 0;
-}
-
-namespace TAO
-{
-  // TAO specific typecode.
-  extern CORBA::TypeCode_ptr TC_completion_status;
-}
 
 
 /**
@@ -798,145 +785,6 @@ CORBA::SystemException::_tao_get_omg_exception_description (
   return "*unknown description*";
 }
 
-// Note that "buffer" holds the (unscoped) name originally, and is
-// then overwritten.
-
-void
-TAO_Exceptions::make_unknown_user_typecode (CORBA::TypeCode_ptr &tcp
-                                            ACE_ENV_ARG_DECL)
-{
-  // Create the TypeCode for the CORBA::UnknownUserException.
-  TAO_OutputCDR stream (0,
-                        ACE_CDR_BYTE_ORDER,
-                        TAO_Exceptions::global_allocator_,
-                        TAO_Exceptions::global_allocator_,
-                        TAO_Exceptions::global_allocator_,
-                        ACE_DEFAULT_CDR_MEMCPY_TRADEOFF);
-
-  static const char * interface_id =
-    "IDL:omg.org/CORBA/UnknownUserException:1.0";
-  static const char * name = "UnknownUserException";
-  static const char * field_name = "exception";
-
-  const CORBA::Boolean result =
-    (stream.write_octet (TAO_ENCAP_BYTE_ORDER) == 0
-     || stream.write_string (interface_id) == 0
-     || stream.write_string (name) == 0
-     || stream.write_ulong (1L) == 0
-     || stream.write_string (field_name) == 0);
-
-  if (result)
-    ACE_THROW (CORBA::INITIALIZE ());
-
-  if (!(stream << CORBA::_tc_any))
-    ACE_THROW (CORBA::INITIALIZE ());
-
-  ACE_NEW_THROW_EX (tcp,
-                    CORBA::TypeCode (CORBA::tk_except,
-                                     stream.length (),
-                                     stream.buffer (),
-                                     1,
-                                     sizeof (CORBA::UserException)),
-                    CORBA::INITIALIZE ());
-}
-
-void
-TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
-                                        const char *name,
-                                        char *buffer,
-                                        size_t buflen
-                                        ACE_ENV_ARG_DECL)
-{
-  // This function must only be called ONCE, and with a global lock
-  // held!  The <CORBA::ORB_init> method is responsible for ensuring
-  // this.
-  static const char *minor = "minor";
-  static const char *completed = "completed";
-
-  // Create a CDR stream ... juggle the alignment here a bit, we know
-  // it's good enough for the typecode.
-
-#if defined(ACE_MVS)
-  // @@ We need to use a translator to make sure that all TypeCodes
-  // are stored in ISO8859 form, the problem is that this hack does
-  // not scale as more native sets have to be supported
-
-  ACE_IBM1047_ISO8859 translator;
-  TAO_OutputCDR stream (buffer,
-                        buflen,
-                        ACE_CDR_BYTE_ORDER,
-                        TAO_Exceptions::global_allocator_,
-                        TAO_Exceptions::global_allocator_,
-                        TAO_Exceptions::global_allocator_,
-                        ACE_DEFAULT_CDR_MEMCPY_TRADEOFF,
-                        &translator);
-#else
-  TAO_OutputCDR stream (buffer,
-                        buflen,
-                        ACE_CDR_BYTE_ORDER,
-                        TAO_Exceptions::global_allocator_,
-                        TAO_Exceptions::global_allocator_,
-                        TAO_Exceptions::global_allocator_,
-                        ACE_DEFAULT_CDR_MEMCPY_TRADEOFF);
-#endif /* ACE_MVS */
-
-  // into CDR stream, stuff (in order):
-  //    - byte order flag [4 bytes]
-  //    - exception ID [27 + N bytes]
-  //    - exception name [4 + N bytes ]
-  //    - number of members (2) [4 bytes ]
-  //    - foreach member, { name string, typecode } [~40 bytes]
-
-  static const char prefix[] = "IDL:omg.org/CORBA/";
-  static const char suffix[] = ":1.0";
-  char * full_id =
-    CORBA::string_alloc (sizeof prefix
-                         + static_cast<CORBA::ULong> (ACE_OS::strlen (name))
-                         + sizeof suffix);
-
-  CORBA::String_var safe_full_id = full_id;
-
-  ACE_OS::strcpy (full_id, prefix);
-  ACE_OS::strcat (full_id, name);
-  ACE_OS::strcat (full_id, suffix);
-
-  CORBA::Boolean result = stream.write_octet (TAO_ENCAP_BYTE_ORDER) == 0
-    || stream.write_string (full_id) == 0
-    || stream.write_string (name) == 0
-    || stream.write_ulong (2L) != 1
-    || stream.write_string (minor) == 0;
-
-  result = result || !(stream << CORBA::_tc_ulong);
-
-  (void) safe_full_id.out ();  // No longer need the string
-
-  result = result || stream.write_string (completed) == 0;
-  result = result || !(stream << TAO::TC_completion_status);
-
-  if (result)
-    ACE_THROW (CORBA::INITIALIZE ());
-
-  // @@ It is possible to throw an exception at this point?
-  //    What if the exception typecode has not been initialized yet?
-
-  // OK, we stuffed the buffer we were given (or grew a bigger one;
-  // hope to avoid that during initialization).  Now build and return
-  // a TypeCode, saving it away in the list of ones that the ORB will
-  // always accept as part of any operation response!
-
-  ACE_NEW_THROW_EX (tcp,
-                    CORBA::TypeCode (CORBA::tk_except,
-                                     stream.length (),
-                                     stream.buffer (),
-                                     1,
-                                     sizeof (CORBA::SystemException)),
-                    CORBA::INITIALIZE ());
-  ACE_CHECK;
-
-  ACE_ASSERT (tcp->length_ <= buflen);
-  return;
-}
-
 #if defined (ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO)
 #undef THREAD_CANCELLED
 #endif /* ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO */
@@ -988,31 +836,67 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
     TAO_SYSTEM_EXCEPTION (ACTIVITY_REQUIRED) \
     TAO_SYSTEM_EXCEPTION (THREAD_CANCELLED)
 
-// Declare static storage for these ... the buffer is "naturally"
-// aligned and overwritten.
-//
-// @@ this actually doesn't guarantee "natural" alignment, but
-// it works that way in most systems.
+namespace TAO
+{
+  namespace TypeCode
+  {
+    Enumerator<char const *> const enumerators_CORBA_CompletionStatus[]=
+      {
+        { "COMPLETED_YES"   },
+        { "COMPLETED_NO"    },
+        { "COMPLETED_MAYBE" }
+      };
 
-#define TAO_TC_BUF_LEN 256
+    Enum<char const *,
+         Enumerator<char const *> const *, 
+         TAO::Null_RefCount_Policy>
+      tc_CompletionStatus ("IDL:omg.org/CORBA/CompletionStatus:1.0",
+                           "CompletionStatus",
+                           enumerators_CORBA_CompletionStatus,
+                           3 /* # of enumerators */);
+  }
+}
 
-static CORBA::Long tc_buf_CORBA[TAO_TC_BUF_LEN / sizeof (CORBA::Long)];
+namespace CORBA
+{
+  // An internal TypeCode.
+  TypeCode_ptr const _tc_CompletionStatus =
+    &TAO::TypeCode::tc_CompletionStatus;
+}
+
+namespace TAO
+{
+  namespace TypeCode
+  {
+    Struct_Field<char const *> const fields_CORBA_SystemException[] =
+      {
+        { "minor",     &CORBA::_tc_ulong },
+        { "completed", &CORBA::_tc_CompletionStatus }
+      };
+
+    typedef Struct<char const *,
+                   Struct_Field<char const *> const *,
+                   CORBA::tk_except,
+                   TAO::Null_RefCount_Policy> tc_SystemException;
+  }
+}
 
 #define TAO_SYSTEM_EXCEPTION(name) \
-  CORBA::TypeCode_ptr CORBA::_tc_ ## name = 0;
+namespace TAO \
+{ \
+  namespace TypeCode \
+  { \
+    tc_SystemException tc_CORBA_ ## name ( \
+      "IDL:omg.org/CORBA/" #name ":1.0", \
+      #name, \
+      TAO::TypeCode::fields_CORBA_SystemException, \
+      2 /* # of fields */); \
+  } \
+} \
+CORBA::TypeCode_ptr const CORBA::_tc_ ## name = \
+    &TAO::TypeCode::tc_CORBA_ ## name;
   STANDARD_EXCEPTION_LIST
 #undef  TAO_SYSTEM_EXCEPTION
-
-  static CORBA::TypeCode_ptr *type_code_array [] = {
-#define TAO_SYSTEM_EXCEPTION(name) \
-      &CORBA::_tc_ ## name,
-      STANDARD_EXCEPTION_LIST
-#undef  TAO_SYSTEM_EXCEPTION
-      &CORBA::_tc_null};
-
-// Since we add an extra element subtract 1
-static const CORBA::ULong array_sz =
-    (sizeof (type_code_array) / sizeof (CORBA::TypeCode_ptr)) - 1;
 
 static const char *repo_id_array[] = {
 #define TAO_SYSTEM_EXCEPTION(name) \
@@ -1022,6 +906,9 @@ static const char *repo_id_array[] = {
       0
   };
 
+// Since we add an extra element subtract 1
+static const CORBA::ULong array_sz =
+  (sizeof (repo_id_array) / sizeof (char const *)) - 1;
 
 TAO::excp_factory excp_array [] = {
 #define TAO_SYSTEM_EXCEPTION(name) \
@@ -1029,49 +916,7 @@ TAO::excp_factory excp_array [] = {
       STANDARD_EXCEPTION_LIST
 #undef  TAO_SYSTEM_EXCEPTION
       0
-    };
-
-void
-TAO_Exceptions::init (ACE_ENV_SINGLE_ARG_DECL)
-{
-  // This routine should only be called once.
-
-  // Not thread safe.  Caller must provide synchronization.
-
-  if (TAO_Exceptions::initialized_)
-    {
-      return;
-    }
-
-  // Initialize the start up allocator.
-  ACE_NEW (TAO_Exceptions::global_allocator_,
-           ACE_New_Allocator);
-
-  static const char *name_array[] = {
-#define TAO_SYSTEM_EXCEPTION(name) \
-                        # name,
-      STANDARD_EXCEPTION_LIST
-#undef  TAO_SYSTEM_EXCEPTION
-      0
-  };
-
-  for (CORBA::ULong i = 0; i < array_sz; ++i)
-    {
-      TAO_Exceptions::make_standard_typecode (*type_code_array[i],
-                                              name_array[i],
-                                              (char*) tc_buf_CORBA,
-                                              sizeof tc_buf_CORBA
-                                              ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-    }
-
-  TAO_Exceptions::make_unknown_user_typecode (CORBA::_tc_UnknownUserException
-                                              ACE_ENV_ARG_PARAMETER);
-
-  TAO_Exceptions::initialized_ = true;
-}
-
-#undef TAO_TC_BUF_LEN
+};
 
 CORBA::SystemException *
 TAO_Exceptions::create_system_exception (const char *id
@@ -1084,22 +929,6 @@ TAO_Exceptions::create_system_exception (const char *id
     }
 
   return 0;
-}
-
-void
-TAO_Exceptions::fini (void)
-{
-  for (CORBA::ULong i = 0; i < array_sz; ++i)
-    {
-      CORBA::release (*type_code_array[i]);
-      *type_code_array[i] = 0;
-    }
-
-  CORBA::release (CORBA::_tc_UnknownUserException);
-  CORBA::_tc_UnknownUserException = 0;
-
-  delete TAO_Exceptions::global_allocator_;
-  TAO_Exceptions::global_allocator_ = 0;
 }
 
 #define TAO_SYSTEM_EXCEPTION(name) \
