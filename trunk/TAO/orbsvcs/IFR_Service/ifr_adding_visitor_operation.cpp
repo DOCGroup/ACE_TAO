@@ -91,7 +91,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
           ACE_TRY_CHECK;
 
           exceptions[i++] = CORBA_ExceptionDef::_narrow (prev_def.in (),
-                                                      ACE_TRY_ENV);
+                                                         ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
           ex_iter.next ();
@@ -146,7 +146,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
           ACE_TRY_CHECK;
 
           this->ir_current_ = CORBA_IDLType::_narrow (prev_def.in (),
-                                                   ACE_TRY_ENV);
+                                                      ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
       else
@@ -180,7 +180,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
         {
           CORBA_InterfaceDef_var iface = 
             CORBA_InterfaceDef::_narrow (current_scope,
-                                      ACE_TRY_ENV);
+                                         ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
           CORBA_OperationDef_var new_def =
@@ -247,7 +247,7 @@ ifr_adding_visitor_operation::visit_argument (AST_Argument *node)
           ACE_TRY_CHECK;
 
           this->ir_current_ = CORBA_IDLType::_narrow (prev_def.in (),
-                                                   ACE_TRY_ENV);
+                                                      ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
       else

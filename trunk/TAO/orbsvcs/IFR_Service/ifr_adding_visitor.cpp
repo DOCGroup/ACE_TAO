@@ -434,7 +434,7 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
                     {
                       this->ir_current_ =
                         CORBA_IDLType::_narrow (prev_def.in (),
-                                             ACE_TRY_ENV);
+                                                ACE_TRY_ENV);
                       ACE_TRY_CHECK
 
                       return 0;
@@ -521,7 +521,7 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
             {
               this->ir_current_ = 
                 CORBA_InterfaceDef::_narrow (prev_def.in (),
-                                          ACE_TRY_ENV);
+                                             ACE_TRY_ENV);
               ACE_TRY_CHECK;
 
               if (CORBA::is_nil (this->ir_current_.in ()))
@@ -619,7 +619,7 @@ ifr_adding_visitor::visit_interface_fwd (AST_InterfaceFwd *node)
           // the current IR object holder.
           this->ir_current_ = 
             CORBA_InterfaceDef::_narrow (prev_def.in (),
-                                      ACE_TRY_ENV);
+                                         ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
           // Nothing prevents this interface's repo id from already being
@@ -706,7 +706,7 @@ ifr_adding_visitor::visit_structure (AST_Structure *node)
         {
           this->ir_current_ =
             CORBA_IDLType::_narrow (prev_def.in (),
-                                 ACE_TRY_ENV);
+                                    ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
           // Nothing prevents this struct's repo id from already being
@@ -818,7 +818,7 @@ ifr_adding_visitor::visit_enum (AST_Enum *node)
           // the current IR object holder.
           this->ir_current_ = 
             CORBA_EnumDef::_narrow (prev_def.in (),
-                                 ACE_TRY_ENV);
+                                    ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
           // Nothing prevents this enum's repo id from already being
@@ -929,7 +929,7 @@ ifr_adding_visitor::visit_attribute (AST_Attribute *node)
 
               this->ir_current_ = 
                 CORBA_IDLType::_narrow (prev_type_def.in (),
-                                     ACE_TRY_ENV);
+                                        ACE_TRY_ENV);
               ACE_TRY_CHECK;
             }
           else
@@ -956,7 +956,9 @@ ifr_adding_visitor::visit_attribute (AST_Attribute *node)
           if (be_global->ifr_scopes ().top (current_scope) == 0)
             {
               CORBA_InterfaceDef_var iface = 
-                CORBA_InterfaceDef::_narrow (current_scope);
+                CORBA_InterfaceDef::_narrow (current_scope,
+                                             ACE_TRY_ENV);
+              ACE_TRY_CHECK;
 
               new_def =
                 iface->create_attribute (node->repoID (),
@@ -982,7 +984,7 @@ ifr_adding_visitor::visit_attribute (AST_Attribute *node)
         {
           new_def = 
             CORBA_AttributeDef::_narrow (prev_def.in (),
-                                      ACE_TRY_ENV);
+                                         ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
           // Nothing prevents this attribute's repo id from already being
@@ -1046,7 +1048,7 @@ ifr_adding_visitor::visit_union (AST_Union *node)
         {
           this->ir_current_ =
             CORBA_UnionDef::_narrow (prev_def.in (),
-                                  ACE_TRY_ENV);
+                                     ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
           // Nothing prevents this union's repo id from already being
@@ -1135,7 +1137,7 @@ ifr_adding_visitor::visit_constant (AST_Constant *node)
         {      
           CORBA_ConstantDef_var const_def =
             CORBA_ConstantDef::_narrow (prev_def.in (),
-                                     ACE_TRY_ENV);
+                                        ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
           if (CORBA::is_nil (const_def.in ()))
@@ -1362,7 +1364,7 @@ ifr_adding_visitor::visit_typedef (AST_Typedef *node)
           // the current IR object holder.
           this->ir_current_ = 
             CORBA_TypedefDef::_narrow (prev_def.in (),
-                                    ACE_TRY_ENV);
+                                       ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
           // Nothing prevents this typedef's repo id from already being
@@ -1405,7 +1407,7 @@ ifr_adding_visitor::visit_root (AST_Root *node)
     {
       CORBA_Container_var new_scope = 
         CORBA_Container::_narrow (be_global->repository (),
-                               ACE_TRY_ENV);
+                                  ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (be_global->ifr_scopes ().push (new_scope.in ()) != 0)
@@ -1496,7 +1498,7 @@ ifr_adding_visitor::visit_native (AST_Native *node)
         {
           this->ir_current_ =
             CORBA_NativeDef::_narrow (prev_def.in (),
-                                   ACE_TRY_ENV);
+                                      ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
           // Nothing prevents this native type's repo id from already being
@@ -1748,7 +1750,7 @@ ifr_adding_visitor::element_type (AST_Type *base_type,
         }
 
       this->ir_current_ = CORBA_IDLType::_narrow (contained.in (),
-                                               ACE_TRY_ENV);
+                                                  ACE_TRY_ENV);
       ACE_CHECK;
     }
 }

@@ -459,9 +459,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name TypeCodeFactory_DLL
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name Svc Utils
     End Project Dependency
     Begin Project Dependency

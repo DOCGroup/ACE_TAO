@@ -871,15 +871,13 @@ Admin_Client::struct_test (CORBA::Environment &ACE_TRY_ENV)
   members[0].type_def = this->repo_->get_primitive (CORBA::pk_string,
                                                     ACE_TRY_ENV);
   ACE_CHECK;
-  members[0].type = members[0].type_def->type (ACE_TRY_ENV);
-  ACE_CHECK;
+  members[0].type = CORBA::TypeCode::_duplicate (CORBA::_tc_void);
 
   members[1].name = CORBA::string_dup ("bd_string");
   members[1].type_def = this->repo_->create_string (5,
                                                     ACE_TRY_ENV);
   ACE_CHECK;
-  members[1].type = members[1].type_def->type (ACE_TRY_ENV);
-  ACE_CHECK;
+  members[1].type = CORBA::TypeCode::_duplicate (CORBA::_tc_void);
 
   CORBA::EnumMemberSeq e_members (2);
   e_members.length (2);
@@ -895,8 +893,7 @@ Admin_Client::struct_test (CORBA::Environment &ACE_TRY_ENV)
                                                        ACE_TRY_ENV);
   ACE_CHECK;
   members[2].type_def = CORBA::EnumDef::_duplicate (e_var.in ());
-  members[2].type = members[2].type_def->type (ACE_TRY_ENV);
-  ACE_CHECK;
+  members[2].type = CORBA::TypeCode::_duplicate (CORBA::_tc_void);
 
   CORBA::StructDef_var svar = this->repo_->create_struct ("IDL:my_struct:1.0",
                                                           "my_struct",
@@ -968,16 +965,14 @@ Admin_Client::struct_test (CORBA::Environment &ACE_TRY_ENV)
   members[0].type_def = this->repo_->get_primitive (CORBA::pk_long,
                                                     ACE_TRY_ENV);
   ACE_CHECK;
-  members[0].type = members[0].type_def->type (ACE_TRY_ENV);
-  ACE_CHECK;
+  members[0].type = CORBA::TypeCode::_duplicate (CORBA::_tc_void);
 
   members[1].name = CORBA::string_dup ("array_mem");
   members[1].type_def = this->repo_->create_array (5,
                                                    members[0].type_def.in (),
                                                    ACE_TRY_ENV);
   ACE_CHECK;
-  members[1].type = members[1].type_def->type (ACE_TRY_ENV);
-  ACE_CHECK;
+  members[1].type = CORBA::TypeCode::_duplicate (CORBA::_tc_void);
 
   svar->members (members,
                  ACE_TRY_ENV);
@@ -1288,8 +1283,7 @@ Admin_Client::union_test (CORBA::Environment &ACE_TRY_ENV)
   s_members[0].type_def = this->repo_->create_string (6,
                                                       ACE_TRY_ENV);
   ACE_CHECK;
-  s_members[0].type = s_members[0].type_def->type (ACE_TRY_ENV);
-  ACE_CHECK;
+  s_members[0].type = CORBA::TypeCode::_duplicate (CORBA::_tc_void);
 
   CORBA::StructDef_var s_var =
     this->repo_->create_struct ("IDL:struct_in_union:1.0",
@@ -1306,8 +1300,7 @@ Admin_Client::union_test (CORBA::Environment &ACE_TRY_ENV)
   u_members[0].type_def = this->repo_->get_primitive (CORBA::pk_long,
                                                       ACE_TRY_ENV);
   ACE_CHECK;
-  u_members[0].type = u_members[0].type_def->type (ACE_TRY_ENV);
-  ACE_CHECK;
+  u_members[0].type = CORBA::TypeCode::_duplicate (CORBA::_tc_void);
   CORBA::TypeCode_var d_type = d_var->type (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR maker2;
@@ -1322,8 +1315,7 @@ Admin_Client::union_test (CORBA::Environment &ACE_TRY_ENV)
   u_members[1].type_def = this->repo_->get_primitive (CORBA::pk_long,
                                                       ACE_TRY_ENV);
   ACE_CHECK;
-  u_members[1].type = u_members[1].type_def->type (ACE_TRY_ENV);
-  ACE_CHECK;
+  u_members[1].type = CORBA::TypeCode::_duplicate (CORBA::_tc_void);
   TAO_OutputCDR maker0;
   maker0.write_ulong (2);  // TWO
   CORBA::Any any0 (d_type.in (),
@@ -1334,8 +1326,8 @@ Admin_Client::union_test (CORBA::Environment &ACE_TRY_ENV)
 
   u_members[2].name = CORBA::string_dup ("structval");
   u_members[2].type_def = CORBA::StructDef::_duplicate (s_var.in ());
-  u_members[2].type = u_members[2].type_def->type (ACE_TRY_ENV);
-  ACE_CHECK;
+  u_members[2].type = CORBA::TypeCode::_duplicate (CORBA::_tc_void);
+
   TAO_OutputCDR maker1;
   maker1.write_ulong (0); // ZERO
   CORBA::Any any1 (d_type.in (),
@@ -1348,8 +1340,7 @@ Admin_Client::union_test (CORBA::Environment &ACE_TRY_ENV)
   u_members[3].type_def = this->repo_->create_string (17,
                                                       ACE_TRY_ENV);
   ACE_CHECK;
-  u_members[3].type = u_members[3].type_def->type (ACE_TRY_ENV);
-  ACE_CHECK;
+  u_members[3].type = CORBA::TypeCode::_duplicate (CORBA::_tc_void);
   u_members[3].label <<= CORBA::Any::from_octet (0);   // default case (ONE)
 
   CORBA::UnionDef_var u_var = this->repo_->create_union ("IDL:my_union:1.0",
