@@ -1,3 +1,9 @@
+Fri Sep 19 14:27:57 2003  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * performance-tests/Benchmark/RoundTripServer/RoundTripServer.mpc:
+          Fixed to adhere to latest mpc changes. This also ensured proper
+          make files to be generated.
+
 Fri Sep 19 13:31:50 2003  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * performance-tests/Benchmark/descriptors/Test-IOR.cad:
