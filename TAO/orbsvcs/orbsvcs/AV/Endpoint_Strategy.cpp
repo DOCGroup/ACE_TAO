@@ -20,6 +20,9 @@
 // TAO_AV_Endpoint_Strategy
 // ----------------------------------------------------------------------
 
+TAO_AV_Endpoint_Strategy::TAO_AV_Endpoint_Strategy (void)
+{
+}
 
 int
 TAO_AV_Endpoint_Strategy::create_A (AVStreams::StreamEndPoint_A_ptr &stream_endpoint,
@@ -432,20 +435,20 @@ TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activate_objects 
                                                                                 char **argv,
                                                                                 CORBA::Environment &env)
 {
-  this->orb_manager_.init (argc,
-                           argv,
-                           env);
+  this->orb_manager_.init_child_poa (argc,
+                                     argv,
+                                     env);
   TAO_CHECK_ENV_RETURN (env, -1);
 
-  this->orb_manager_.activate ("Stream_Endpoint",
-                               this->stream_endpoint_,
-                               env);
+  this->orb_manager_.activate_under_child_poa ("Stream_Endpoint",
+                                               this->stream_endpoint_,
+                                               env);
   TAO_CHECK_ENV_RETURN (env, -1);
 
 
-  this->orb_manager_.activate ("VDev",
-                               this->vdev_,
-                               env);
+  this->orb_manager_.activate_under_child_poa ("VDev",
+                                               this->vdev_,
+                                               env);
   TAO_CHECK_ENV_RETURN (env, -1);
 
   return 0;
@@ -499,9 +502,21 @@ TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::register_vdev (CO
 
 template <class T_StreamEndpoint_B, class T_VDev , class T_MediaCtrl>
 int
-TAO_AV_Child_Process  <T_StreamEndpoint_B, T_VDev, T_MediaCtrl>::run (ACE_Time_Value &tv)
+TAO_AV_Child_Process  <T_StreamEndpoint_B, T_VDev, T_MediaCtrl>::run (ACE_Time_Value *tv)
 {
-  return this->orb_manager_.run (tv);
+  int result;
+  TAO_TRY
+    {
+      result = this->orb_manager_.run (TAO_TRY_ENV,tv);
+      TAO_CHECK_ENV;
+    }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("orb_manager_.run ()");
+      return -1;
+    }
+  TAO_ENDTRY;
+  return result;
 }
 
 template <class T_StreamEndpoint_B, class T_VDev , class T_MediaCtrl>
@@ -562,9 +577,9 @@ TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::register_stream_e
     this->stream_endpoint_name_;
   
   // Register the stream endpoint object with the naming server.
-  this->naming_context_->bind (Stream_Endpoint_B_Name,
-                        this->stream_endpoint_b_._this (env),
-                        env);
+  this->naming_context_->bind (Stream_Endpoint_Name,
+                               this->stream_endpoint__._this (env),
+                               env);
 
   if (env.exception () != 0)
     {
