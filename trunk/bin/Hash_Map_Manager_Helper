@@ -16,7 +16,8 @@
 #
 # (a) It uses commas to delimit the types in ACE_Hash_Map_Manager<X,
 # Y, Z>.  If X, Y, or Z are complicated types containing commas (e.g.,
-# T<a, b>), this script will not work.
+# T<a, b>), this script will not work. Also, all template parameters
+# are assumed to be on the same line.
 #
 # In the case where this script will not work, here are the cookbook,
 # do-it-yourself instructions: 
