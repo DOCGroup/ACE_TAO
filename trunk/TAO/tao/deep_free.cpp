@@ -216,9 +216,16 @@ TAO_Marshal_Struct::deep_free (CORBA::TypeCode_ptr  tc,
                         case CORBA::tk_Principal:
                           retval = TAO_Marshal_Principal::deep_free (param, source, dest, env);
                           break;
+
                         case CORBA::tk_objref:
-                          retval = TAO_Marshal_ObjRef::deep_free (param, source, dest, env);
+			  {
+			    TAO_Object_Field* field = 
+			      ACE_static_cast (TAO_Object_Field*,source);
+			    field->_release ();
+			    retval = CORBA::TypeCode::TRAVERSE_CONTINUE;
+			  }
                           break;
+
                         case CORBA::tk_struct:
                           retval = TAO_Marshal_Struct::deep_free (param, source, dest, env);
                           break;

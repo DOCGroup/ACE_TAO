@@ -207,8 +207,10 @@ be_visitor_field_ch::visit_interface (be_interface *node)
     bt = node;
 
   // if not a typedef and we are defined in the use scope, we must be defined
-  os->indent (); // start from current indentation level
-  *os << bt->nested_type_name (this->ctx_->scope (), "_var");
+  os->indent ();
+  *os << "TAO_Object_Field_T<"
+      <<  bt->nested_type_name (this->ctx_->scope (), "")
+      << ">";
   return 0;
 }
 
@@ -227,8 +229,10 @@ be_visitor_field_ch::visit_interface_fwd (be_interface_fwd *node)
     bt = node;
 
   // if not a typedef and we are defined in the use scope, we must be defined
-  os->indent (); // start from current indentation level
-  *os << bt->nested_type_name (this->ctx_->scope (), "_var");
+  os->indent ();
+  *os << "TAO_Object_Field_T<"
+      <<  bt->nested_type_name (this->ctx_->scope (), "")
+      << ">";
   return 0;
 }
 

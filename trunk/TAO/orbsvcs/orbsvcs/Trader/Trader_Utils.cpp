@@ -266,7 +266,6 @@ TAO_Property_Evaluator::property_value (int index,
   else if (this->supports_dp_)
     {
       // Property is defined at this point.
-      CosTradingDynamic::DynamicPropEval_var dp_eval;
       CosTradingDynamic::DynamicProp* dp_struct;
       const CORBA::String_var name = this->props_[index].name;
       const CORBA::Any& value = this->props_[index].value;
@@ -274,16 +273,8 @@ TAO_Property_Evaluator::property_value (int index,
       // Extract the DP_Struct.
       value >>= dp_struct;
 
-#if defined TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG
-      CORBA::ORB_ptr orb = TAO_ORB_Core_instance ()->orb ();
-      CORBA::Object_var obj = orb->string_to_object (dp_struct->eval_if, _env);
-      TAO_CHECK_ENV_RETURN (_env, 0);
-      dp_eval = CosTradingDynamic::DynamicPropEval::_narrow (obj.in (), _env);
-      TAO_CHECK_ENV_RETURN (_env, 0);
-#else
-      dp_eval =
+      CosTradingDynamic::DynamicPropEval_var dp_eval =
         CosTradingDynamic::DynamicPropEval::_duplicate (dp_struct->eval_if);
-#endif /* TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG */
 
       if (CORBA::is_nil (dp_eval.in ()))
         {
@@ -467,12 +458,7 @@ construct_dynamic_prop (const char* name,
       CosTradingDynamic::DynamicPropEval_var dp_eval =
         this->_this (TAO_TRY_ENV);
 
-#if defined TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG
-      CORBA::ORB_ptr orb = TAO_ORB_Core_instance ()-> orb ();
-      dp_struct->eval_if = orb->object_to_string (dp_eval.in (), TAO_TRY_ENV);
-#else
       dp_struct->eval_if = dp_eval;
-#endif /* TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG */
 
       TAO_CHECK_ENV;
 

@@ -192,7 +192,7 @@ be_sequence::managed_type (void)
               (prim_type);
             if (bpd->pt () == AST_PredefinedType::PT_pseudo)
               {
-                this->mt_ = be_sequence::MNG_OBJREF;
+                this->mt_ = be_sequence::MNG_PSEUDO;
               }
             else
               {
@@ -349,7 +349,8 @@ be_sequence::instance_name ()
   // generate the appropriate sequence type
   switch (this->managed_type ())
     {
-    case be_sequence::MNG_OBJREF: // sequence of objrefs
+    case be_sequence::MNG_PSEUDO:
+    case be_sequence::MNG_OBJREF:
       if (this->unbounded ())
         ACE_OS::sprintf (namebuf, 
                          "_TAO_Unbounded_Object_Sequence_%s",

@@ -313,6 +313,61 @@ TAO_Bounded_Object_Sequence<T, MAX>::operator[] (CORBA::ULong index) const
 }
 
 // *************************************************************
+// class TAO_Unbounded_Pseudo_Sequence
+// *************************************************************
+
+//default constructor
+template <class T> ACE_INLINE
+TAO_Unbounded_Pseudo_Sequence<T>::TAO_Unbounded_Pseudo_Sequence (void)
+{
+}
+
+template <class T> ACE_INLINE
+TAO_Unbounded_Pseudo_Sequence<T>::
+TAO_Unbounded_Pseudo_Sequence (CORBA::ULong maximum,
+                               CORBA::ULong length,
+                               T* *value,
+                               CORBA::Boolean release)
+  : TAO_Unbounded_Base_Sequence (maximum, length, value, release)
+{
+}
+
+template <class T> ACE_INLINE TAO_Object_Manager<T>
+TAO_Unbounded_Pseudo_Sequence<T>::operator[] (CORBA::ULong index) const
+{
+  ACE_ASSERT (index < this->maximum_);
+  T ** const tmp = ACE_reinterpret_cast (T ** ACE_CAST_CONST, this->buffer_);
+  return TAO_Object_Manager<T> (tmp + index, this->release_);
+}
+
+// *************************************************************
+// class TAO_Bounded_Pseudo_Sequence
+// *************************************************************
+
+template<class T, CORBA::ULong MAX> ACE_INLINE
+TAO_Bounded_Pseudo_Sequence<T,MAX>::~TAO_Bounded_Pseudo_Sequence (void)
+{
+  this->_deallocate_buffer ();
+}
+
+template <class T, CORBA::ULong MAX> ACE_INLINE
+TAO_Bounded_Pseudo_Sequence<T,MAX>::
+TAO_Bounded_Pseudo_Sequence (CORBA::ULong length,
+                             T **value,
+                             CORBA::Boolean release)
+  : TAO_Bounded_Base_Sequence (MAX, length, value, release)
+{
+}
+
+template <class T, CORBA::ULong MAX> ACE_INLINE TAO_Object_Manager<T>
+TAO_Bounded_Pseudo_Sequence<T, MAX>::operator[] (CORBA::ULong index) const
+{
+  ACE_ASSERT (index < this->maximum_);
+  T **const tmp = ACE_reinterpret_cast (T ** ACE_CAST_CONST, this->buffer_);
+  return TAO_Object_Manager<T> (tmp + index, this->release_);
+}
+
+// *************************************************************
 // class TAO_Bounded_String_Sequence
 // *************************************************************
 

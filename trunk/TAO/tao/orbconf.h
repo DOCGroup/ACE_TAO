@@ -225,10 +225,6 @@
 #undef major
 #endif /* major*/
 
-// TAO has problems encoding/decoding object references inside
-// structs. 
-#define TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG
-
 // For Win16, near/far pointers reflect same/other segment addressing.
 // Of course, ACE doesn't support Win16, so why bother?
 

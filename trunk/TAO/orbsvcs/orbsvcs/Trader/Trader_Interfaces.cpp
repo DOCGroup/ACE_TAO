@@ -631,17 +631,8 @@ federated_query (const CosTrading::LinkNameSeq& links,
                                           TAO_TRY_ENV);
           TAO_CHECK_ENV;
 
-          CosTrading::Lookup_var remote_lookup;
-#ifdef TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG
-          CORBA::ORB_ptr orb = TAO_ORB_Core_instance ()-> orb ();
-          CORBA::Object_var obj =
-            orb->string_to_object (link_info->target, TAO_TRY_ENV);
-          TAO_CHECK_ENV;
-          remote_lookup = CosTrading::Lookup::_narrow (obj.in (), TAO_TRY_ENV);
-          TAO_CHECK_ENV;
-#else
-          remote_lookup = CosTrading::Lookup::_duplicate (link_info->target);
-#endif /* TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG */
+          CosTrading::Lookup_var remote_lookup =
+	    CosTrading::Lookup::_duplicate (link_info->target);
 
           // Perform the federated query.
           remote_lookup->query (type,
@@ -763,16 +754,8 @@ forward_query (const char* next_hop,
         link_interface->describe_link (next_hop, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      CosTrading::Lookup_var remote_lookup;
-#ifdef TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG
-      CORBA::ORB_ptr orb = TAO_ORB_Core_instance ()-> orb ();
-      CORBA::Object_var obj = orb->string_to_object (link_info->target, TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-      remote_lookup = CosTrading::Lookup::_narrow (obj.in (), TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-#else
-      remote_lookup = CosTrading::Lookup::_duplicate (link_info->target);
-#endif /* TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG */
+      CosTrading::Lookup_var remote_lookup =
+	CosTrading::Lookup::_duplicate (link_info->target);
 
       CORBA::Object_var us = this->_this (TAO_TRY_ENV);
       TAO_CHECK_ENV;
@@ -1182,16 +1165,9 @@ resolve (const CosTrading::TraderName &name,
       link_info = link_if->describe_link (name[0], TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-#ifdef TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG
-      CORBA::ORB_ptr orb = TAO_ORB_Core_instance ()-> orb ();
-      CORBA::Object_var obj = orb->string_to_object (link_info->target_reg, TAO_TRY_ENV);
+      remote_reg =
+	CosTrading::Register::_narrow (link_info->target_reg, TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      remote_reg = CosTrading::Register::_narrow (obj.in (), TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-#else
-      remote_reg = CosTrading::Register::_narrow (link_info->target_reg);
-#endif /* TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG */
-
     }
   TAO_CATCHANY
     {
@@ -1672,13 +1648,7 @@ add_link (const char *name,
   // Create a link info structure for this link of the federation.
   CosTrading::Link::LinkInfo link_info;
 
-#ifdef TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG
-  CORBA::ORB_ptr orb = TAO_ORB_Core_instance ()-> orb ();
-  link_info.target = orb->object_to_string (target, _env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
-#else
   link_info.target = CosTrading::Lookup::_duplicate (target);
-#endif /* TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG */
 
   link_info.def_pass_on_follow_rule = def_pass_on_follow_rule;
   link_info.limiting_follow_rule = limiting_follow_rule;
@@ -1737,32 +1707,14 @@ TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::describe_link (const char *name,
   new_link_info->def_pass_on_follow_rule = old_link_info.def_pass_on_follow_rule;
   new_link_info->limiting_follow_rule = old_link_info.limiting_follow_rule;
 
-#ifdef TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG
-  CORBA::ORB_ptr orb = TAO_ORB_Core_instance ()-> orb ();
-  CORBA::Object_var obj =
-    orb->string_to_object (old_link_info.target, _env);
-  TAO_CHECK_ENV_RETURN (_env, new_link_info);
-  CosTrading::Lookup_var remote_lookup =
-    CosTrading::Lookup::_narrow (obj.in (), _env);
-  TAO_CHECK_ENV_RETURN (_env, new_link_info);
-#endif /* TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG */
-
   new_link_info->target = old_link_info.target;
 
   // Delayed retrieval of register interface.
   // This avoids the nested upcall that would occur were we to invoke
   // this method in the add_link method.
 
-#ifdef TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG
-  CosTrading::Register_var remote_register = remote_lookup->register_if (_env);
-  TAO_CHECK_ENV_RETURN (_env, new_link_info);
-  new_link_info->target_reg =
-    orb->object_to_string (remote_register.in (), _env);
-  TAO_CHECK_ENV_RETURN (_env, new_link_info);
-#else
   new_link_info->target_reg = old_link_info.target->register_if (_env);
   TAO_CHECK_ENV_RETURN (_env, new_link_info);
-#endif /* TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG */
 
   // return the link information for this link name.
   return new_link_info;
