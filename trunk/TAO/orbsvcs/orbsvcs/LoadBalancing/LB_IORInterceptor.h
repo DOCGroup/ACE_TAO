@@ -81,7 +81,9 @@ public:
   virtual void establish_components (
       PortableInterceptor::IORInfo_ptr info
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((
+        CORBA::SystemException
+    )); 
 
   virtual void components_established (
       PortableInterceptor::IORInfo_ptr info
