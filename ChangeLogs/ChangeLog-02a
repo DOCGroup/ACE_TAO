@@ -1,3 +1,12 @@
+Mon Sep 25 16:58:22 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ltcf-c.sh:
+	* ltcf-cxx.sh:
+	* ltconfig:
+	* ltmain.sh:
+
+	  Updates from upstream libtool multi-language CVS branch.
+
 Mon Sep 25 14:24:49 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* Static_performance.dsw:
