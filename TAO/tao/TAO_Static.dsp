@@ -247,6 +247,14 @@ SOURCE=.\Forwarding_Servant.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\FT_CORBAC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\FT_CORBAS.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\GIOP_Message_Accept_State.cpp
 # End Source File
 # Begin Source File
@@ -915,6 +923,22 @@ SOURCE=.\Forwarding_Servant.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\FT_CORBAC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\FT_CORBAS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ftcorbafwd.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ftpoafwd.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\giop.h
 # End Source File
 # Begin Source File
@@ -1484,6 +1508,14 @@ SOURCE=.\Environment.i
 # Begin Source File
 
 SOURCE=.\Exception.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\FT_CORBAC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\FT_CORBAS.i
 # End Source File
 # Begin Source File
 
