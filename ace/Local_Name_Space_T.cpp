@@ -148,8 +148,8 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::shared_bind_i (const ACE_WString
       ACE_USHORT16 *name_rep = (ACE_USHORT16 *) (ptr + value_len);
       char *new_type = (char *) (ptr + value_len + name_len);
 
-      ACE_Auto_Array_Ptr<ACE_USHORT16> name_urep (name.ushort_rep ());
-      ACE_Auto_Array_Ptr<ACE_USHORT16> value_urep (value.ushort_rep ());
+      ACE_Auto_Basic_Array_Ptr<ACE_USHORT16> name_urep (name.ushort_rep ());
+      ACE_Auto_Basic_Array_Ptr<ACE_USHORT16> value_urep (value.ushort_rep ());
       ACE_NS_String new_name (name_rep, name_urep.get (), name_len);
       ACE_NS_String new_value (value_rep, value_urep.get (), value_len);
 
