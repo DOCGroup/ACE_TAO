@@ -77,6 +77,9 @@
 // Used then the function requires a return value.
 # define ACE_CHECK_RETURN(RETV)
 
+// ACE_THROW_INT should not be used by the user.
+# define ACE_THROW_INT(EXCEPTION) throw EXCEPTION
+
 // Throwing an exception is easy. These two macros should _NOT_ be
 // used within try blocks.
 # define ACE_THROW(EXCEPTION) throw EXCEPTION
@@ -161,6 +164,9 @@
 # define ACE_CHECK_RETURN(RETV) \
     if (ACE_TRY_ENV . exception () != 0) \
       return RETV
+
+// ACE_THROW_INT should not be used by the user.
+# define ACE_THROW_INT(EXCEPTION) ACE_TRY_ENV.exception (EXCEPTION)
 
 // Throwing exceptions will inevitably cause an return from the current
 // function.  These two macros should _NOT_ be used within try blocks.
