@@ -252,8 +252,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
  $(TAO_ROOT)/tao/Request.i \
- $(TAO_ROOT)/tao/Stub.h \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
  $(TAO_ROOT)/tao/varout.h \
@@ -284,15 +282,16 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Pluggable.h \
+ $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/Pluggable.h \
  $(TAO_ROOT)/tao/IIOP_Profile.h \
  $(TAO_ROOT)/tao/IIOP_Transport.h \
  $(TAO_ROOT)/tao/IIOP_Connector.h \
  $(TAO_ROOT)/tao/IIOP_Acceptor.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
@@ -308,8 +307,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ORB_Strategies_T.i \
  $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
  $(TAO_ROOT)/tao/default_server.i \
- $(TAO_ROOT)/tao/IIOP_Object.h \
- $(TAO_ROOT)/tao/IIOP_Object.i \
+ $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
  $(TAO_ROOT)/tao/IIOP_ORB.i \
  $(TAO_ROOT)/tao/IIOP_Interpreter.h \
@@ -506,8 +505,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
  $(TAO_ROOT)/tao/Request.i \
- $(TAO_ROOT)/tao/Stub.h \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
  $(TAO_ROOT)/tao/varout.h \
@@ -538,15 +535,16 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Pluggable.h \
+ $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/Pluggable.h \
  $(TAO_ROOT)/tao/IIOP_Profile.h \
  $(TAO_ROOT)/tao/IIOP_Transport.h \
  $(TAO_ROOT)/tao/IIOP_Connector.h \
  $(TAO_ROOT)/tao/IIOP_Acceptor.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
@@ -562,8 +560,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ORB_Strategies_T.i \
  $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
  $(TAO_ROOT)/tao/default_server.i \
- $(TAO_ROOT)/tao/IIOP_Object.h \
- $(TAO_ROOT)/tao/IIOP_Object.i \
+ $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
  $(TAO_ROOT)/tao/IIOP_ORB.i \
  $(TAO_ROOT)/tao/IIOP_Interpreter.h \
@@ -761,8 +759,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
  $(TAO_ROOT)/tao/Request.i \
- $(TAO_ROOT)/tao/Stub.h \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
  $(TAO_ROOT)/tao/varout.h \
@@ -793,15 +789,16 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Pluggable.h \
+ $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/Pluggable.h \
  $(TAO_ROOT)/tao/IIOP_Profile.h \
  $(TAO_ROOT)/tao/IIOP_Transport.h \
  $(TAO_ROOT)/tao/IIOP_Connector.h \
  $(TAO_ROOT)/tao/IIOP_Acceptor.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
@@ -817,8 +814,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ORB_Strategies_T.i \
  $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
  $(TAO_ROOT)/tao/default_server.i \
- $(TAO_ROOT)/tao/IIOP_Object.h \
- $(TAO_ROOT)/tao/IIOP_Object.i \
+ $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
  $(TAO_ROOT)/tao/IIOP_ORB.i \
  $(TAO_ROOT)/tao/IIOP_Interpreter.h \
@@ -1019,8 +1016,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
  $(TAO_ROOT)/tao/Request.i \
- $(TAO_ROOT)/tao/Stub.h \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
  $(TAO_ROOT)/tao/varout.h \
@@ -1051,15 +1046,16 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Pluggable.h \
+ $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/Pluggable.h \
  $(TAO_ROOT)/tao/IIOP_Profile.h \
  $(TAO_ROOT)/tao/IIOP_Transport.h \
  $(TAO_ROOT)/tao/IIOP_Connector.h \
  $(TAO_ROOT)/tao/IIOP_Acceptor.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
@@ -1075,8 +1071,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ORB_Strategies_T.i \
  $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
  $(TAO_ROOT)/tao/default_server.i \
- $(TAO_ROOT)/tao/IIOP_Object.h \
- $(TAO_ROOT)/tao/IIOP_Object.i \
+ $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
  $(TAO_ROOT)/tao/IIOP_ORB.i \
  $(TAO_ROOT)/tao/IIOP_Interpreter.h \
@@ -1272,8 +1268,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Request.h \
  $(TAO_ROOT)/tao/Request.i \
- $(TAO_ROOT)/tao/Stub.h \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
  $(TAO_ROOT)/tao/varout.h \
@@ -1304,15 +1298,16 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Pluggable.h \
+ $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/Pluggable.h \
  $(TAO_ROOT)/tao/IIOP_Profile.h \
  $(TAO_ROOT)/tao/IIOP_Transport.h \
  $(TAO_ROOT)/tao/IIOP_Connector.h \
  $(TAO_ROOT)/tao/IIOP_Acceptor.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
@@ -1328,8 +1323,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ORB_Strategies_T.i \
  $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
  $(TAO_ROOT)/tao/default_server.i \
- $(TAO_ROOT)/tao/IIOP_Object.h \
- $(TAO_ROOT)/tao/IIOP_Object.i \
+ $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
  $(TAO_ROOT)/tao/IIOP_ORB.i \
  $(TAO_ROOT)/tao/IIOP_Interpreter.h \
