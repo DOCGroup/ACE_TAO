@@ -1,3 +1,8 @@
+Fri Apr 11 15:12:54 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/IFR_Client/IFR_BaseS.h: Added this dummy header file so that
+	  it is easier to include "IFR_Base.idl" in other idl files.
+
 Fri Apr 11 09:33:41 2003  Dave Smith  <dts@prismtechnologies.com>
 
 	* orbsvcs/test/Notify/lib/Application_Commnad.h
