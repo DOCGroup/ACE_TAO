@@ -31,7 +31,7 @@ typedef long            id_t;
 #   error UNICODE must be defined when using ACE_HAS_MOSTLY_UNICODE_APIS, check your compiler document on how to enable UNICODE.
 # endif /* ACE_HAS_MOSTLY_UNICODE_APIS && !UNICODE */
 
-# if defined (ACE_LACKS_INLINE_FUNCTIONS)
+# if defined (ACE_LACKS_INLINE_FUNCTIONS) && !define (ACE_NO_INLINE)
 #   define ACE_NO_INLINE
 # endif
 
