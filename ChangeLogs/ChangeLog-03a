@@ -1,3 +1,55 @@
+Mon Feb 10 19:42:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ATM_Acceptor.h:
+          Converted old style documentation to doxygen style
+
+        * ace/Arg_Shifter.h:
+          Added private declaration of copy constructor and assignment
+          operator. Instances of these class can not be copied using the
+          default ones. Also fixes a MSVC6 level 4 warning.
+
+        * ace/Configuration.cpp:
+          Removed not needed MingW ifdef, the normal code also compiles with
+          MingW
+
+        * ace/config-win32.h:
+          Removed cygwin from this file. For cygwin the config-cygwin32.h
+          must be included directly in config.h
+
+        * ace/Notification_Strategy.h:
+        * ace/Notification_Strategy.inl:
+          Made mask() method const
+
+        * include/makeinclude/ace_flags.bor:
+          If TAO_ROOT isn't defined, define it as $(ACE_ROOT)/TAO
+
+        * bin/MakeProjectCreator/templates/bor.mpd:
+        * include/makeinclude/build_dll.bor:
+        * include/makeinclude/build_exe.bor:
+          Thanks for Christopher Kohlhoff <chris@kohlhoff.com> for providing
+          a fix for the singleton template with Borland. The problem is that
+          with a singleton template the code is implicitly generated into
+          every object file that references it. The linker then strips out
+          all but a single copy of the code. When linking an exe that refers
+          to a singleton template in a dll, the linker would choose one
+          of the template code instances in the exe's .obj files, and completely
+          ignore the instance that was exported by the dll.
+
+          The key to the solution is that it appears that the borland linker
+          chooses the first instance of the template symbols that it sees. The
+          linker will let you list the .lib files in the place normally used
+          for object files. By listing the library files before any of the
+          object files, it resolves the template code against the dll exports.
+
+        * examples/Service_Configurator/Misc/Makefile:
+        * examples/Service_Configurator/Misc/Makefile.Timer:
+        * examples/Service_Configurator/Misc/Makefile.main:
+          Splitted the original GNU makefile in multiple files, one for the
+          shared library and one for the exe and one to trigger the other
+          two. This fixes the compile errors with this example with Cygwin
+          and MingW. Thanks for Vince Mounts <vince@mounts.cc> for making
+          these makefiles.
+
 Mon Feb 10 09:22:04 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/SPIPE_Stream.i: Added a special case for win32 platforms to

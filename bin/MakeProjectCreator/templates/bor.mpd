@@ -28,8 +28,10 @@ EXTERNAL_LIBS =
 
 LFLAGS = \
 <%foreach(libpaths)%>
+	-j<%libpath%>\$(CONFIG_SUBDIR) -j<%libpath%> \
 	-L<%libpath%>\$(CONFIG_SUBDIR) -L<%libpath%> \
 <%endfor%>
+  -j$(CORE_BINDIR) \
   -L$(CORE_BINDIR)
 
 LIBFILES = \
