@@ -1,3 +1,10 @@
+Tue Dec  9 18:02:43 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/orb_core.cpp: The moral of this changelog entry is to be
+ 	VERY careful when cutting and pasting code...the
+ 	resource_factory() accessor should not be setting the
+ 	client_factory_ member at all!
+
 Tue Dec  9 11:55:50 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
 	* tao/compat/objbase.h: Added NOERROR as #define if we're not on
