@@ -27,6 +27,7 @@
 #include "ace/Process.h"
 #include "ace/Log_Msg.h"
 #include "ace/Time_Value.h"
+#include "ace/SString.h"
 
 ACE_RCSID(Process, process, "$Id$")
 
