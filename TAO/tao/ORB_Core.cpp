@@ -8,9 +8,8 @@
 #include "tao/TAO_Internal.h"
 #include "tao/Arg_Shifter.h"
 
-#define TAO_SINGLETON_TYPE ACE_Singleton
-
-typedef ACE_TSS_Singleton<TAO_ORB_Core, ACE_SYNCH_MUTEX> TAO_ORB_CORE;
+typedef ACE_TSS_Singleton<TAO_ORB_Core, ACE_SYNCH_MUTEX> 
+        TAO_ORB_CORE;
 
 TAO_ORB_Core::TAO_ORB_Core (void)
   : orb_ (0),
@@ -914,9 +913,6 @@ template class ACE_Singleton<TAO_Resource_Factory::App_Allocated, ACE_SYNCH_MUTE
 template class ACE_TSS_Singleton<TAO_Resource_Factory::App_Allocated, ACE_SYNCH_MUTEX>;
 template class ACE_TSS<TAO_Resource_Factory::App_Allocated>;
 
-#if 0
-template class TAO_SINGLETON_TYPE<TAO_Resource_Factory, ACE_SYNCH_MUTEX>;
-#endif
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Env_Value<int>
 #pragma instantiate ACE_Env_Value<u_int>
@@ -946,10 +942,6 @@ template class TAO_SINGLETON_TYPE<TAO_Resource_Factory, ACE_SYNCH_MUTEX>;
 #pragma instantiate ACE_Singleton<TAO_Resource_Factory::App_Allocated, ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_TSS_Singleton<TAO_Resource_Factory::App_Allocated, ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_TSS<TAO_Resource_Factory::App_Allocated>
-
-#if 0
-#pragma instantiate TAO_SINGLETON_TYPE<TAO_Resource_Factory, ACE_SYNCH_MUTEX>
-#endif
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 ACE_FACTORY_DEFINE (TAO, TAO_Resource_Factory)
