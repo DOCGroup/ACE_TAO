@@ -1,3 +1,9 @@
+Mon Dec 14 10:49:29 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/RB_Tree_Test.dsp: Redid the project file.  A VC 6 only
+	  compiler option somehow got into the file.  Thanks to Ulf
+	  Jaehrig <jaehrig@desys.com> for reporting this.
+
 Mon Dec 14 10:24:59 1998 Fred Kuhns <fredk@arl.wustl.edu>
 
         * ace/OS.h: Added #define for IOV_MAX 16
