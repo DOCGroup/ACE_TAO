@@ -56,6 +56,7 @@ CONTROLLED_FILES = ChangeLog \
 		   TAO-INSTALL.html \
 		   TAO-inheritance.pdf.gz \
 		   TAO-inheritance.ps.gz \
+                   BUG-REPORT-FORM \
 		   COPYING \
 		   COPYING.sun \
 		   release.chk \
