@@ -8,15 +8,15 @@ usage="usage: $0 [-n <iterations>] [-t] <number of low priority threads>"
 user=`whoami`
 ior_file=/tmp/MT_Cubit-ior.${user}
 iterations=1000
-tmp=
+client_exec_prefix=time
 
 if [ "$HOSTTYPE" = "lynxos" ]; then
   server_exec_prefix='prio 30'
   tmp='/tmp/'
 else
   server_exec_prefix=
+  tmp=
 fi
-client_exec_prefix=time
 
 
 ########
@@ -57,5 +57,5 @@ sleep 4
 ########
 ######## Start client.
 ########
-./client -s -f $ior_file -t $threads -n $iterations > \
+$client_exec_prefix ./client -s -f $ior_file -t $threads -n $iterations > \
   ${tmp}client-${threads}.log 2>&1
