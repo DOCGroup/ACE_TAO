@@ -1,3 +1,8 @@
+Mon Feb 28 14:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/IDL_Test/main.cpp:
+          Specify access control to get rid of Tru64 warning
+
 Mon Feb 28 07:58:58 2005  Ciju John  <john_c@ociweb.com>
 
         * tao/IIOP_Acceptor.cpp:
