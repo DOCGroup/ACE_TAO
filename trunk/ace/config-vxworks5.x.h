@@ -21,7 +21,9 @@
 
 # define ACE_HAS_VERBOSE_NOTSUP
 # define ACE_LACKS_IOSTREAM_FX
-# define ACE_MAIN ace_main
+# if !defined (ACE_MAIN)
+#   define ACE_MAIN ace_main
+# endif /* ! ACE_MAIN */
 
   // Even though the documentation suggests that g++/VxWorks 5.3.1
   // (Tornado 1.0.1) supports long long, Wind River tech support says
