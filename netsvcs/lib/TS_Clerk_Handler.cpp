@@ -39,8 +39,8 @@ class ACE_Svc_Export ACE_TS_Clerk_Handler : public ACE_Svc_Handler<ACE_SOCK_STRE
   //    passes the delta time by reference back to the Clerk Processor.
 {
 public:
-  ACE_TS_Clerk_Handler (ACE_TS_Clerk_Processor *processor, 
-			ACE_INET_Addr &addr);
+  ACE_TS_Clerk_Handler (ACE_TS_Clerk_Processor *processor = 0,
+			ACE_INET_Addr &addr = (ACE_INET_Addr &) ACE_Addr::sap_any);
   // Default constructor.
 
   // = Set/get the current state

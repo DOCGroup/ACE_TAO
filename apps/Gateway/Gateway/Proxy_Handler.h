@@ -35,7 +35,11 @@ class Proxy_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH>
   //     Channel from Suppliers and forward them to Consumers.
 {
 public:
+  Proxy_Handler (void);
+  // Default constructor (needed to make <ACE_Connector> happy).
+
   Proxy_Handler (const Proxy_Config_Info &);
+  // Real constructor.
 
   virtual int open (void * = 0);
   // Initialize and activate a single-threaded Proxy_Handler (called by
