@@ -7258,13 +7258,13 @@ typedef ACE_TRANSMIT_FILE_BUFFERS* ACE_LPTRANSMIT_FILE_BUFFERS;
 #define ACE_SIGRTMAX 0
 #endif /* ACE_HAS_AIO_CALLS */
 
-#if !defined (ACE_ONLY_LATEST_AND_GREATEST)
+#if defined (ACE_LEGACY_MODE)
 # include "ace/Log_Msg.h"
 # include "ace/Thread_Hook.h"
 # include "ace/Thread_Adapter.h"
 # include "ace/Thread_Exit.h"
 # include "ace/Thread_Control.h"
-#endif  /* ACE_ONLY_LATEST_AND_GREATEST */
+#endif  /* ACE_LEGACY_MODE */
 
 #include "ace/post.h"
 #endif  /* ACE_OS_H */
