@@ -238,15 +238,15 @@ ifndef LIBEXT
 endif
 
 ifndef CC_OUTPUT_FLAG
-  CC_OUTPUT_FLAG = -o 
+  CC_OUTPUT_FLAG = -o
 endif # CC_OUTPUT_FLAG
 
 ifndef SO_OUTPUT_FLAG
-  SO_OUTPUT_FLAG = -o 
+  SO_OUTPUT_FLAG = -o
 endif # SO_OUTPUT_FLAG
 
 ifndef LINK_OUTPUT_FLAG
-  LINK_OUTPUT_FLAG = -o 
+  LINK_OUTPUT_FLAG = -o
 endif # LINK_OUTPUT_FLAG
 
 #----------------------------------------------------------------------------
@@ -425,7 +425,7 @@ ifdef shared_libs
       #### Don't build static libs.
       BUILD         = $(VSHLIB) $(SHLIBA) $(VBIN)
       LIB           =
-      OBJEXT        = so
+#      OBJEXT        = so
       ifndef VXWORKS
         VDIR        = .shobj/
         ifeq ($(BIN),)
