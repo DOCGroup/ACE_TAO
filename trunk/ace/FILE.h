@@ -56,23 +56,23 @@ public:
 /**
  * @class ACE_FILE
  *
- * @brief Defines the core methods of the <ACE_FILE> abstraction.
+ * @brief Defines the core methods of the ACE_FILE abstraction.
  */
 class ACE_Export ACE_FILE : public ACE_IO_SAP
 {
 public:
-  /// Close the <ACE_FILE> handle without removing the <ACE_FILE> from
+  /// Close the ACE_FILE handle without removing the ACE_FILE from
   /// the file system.
   int close (void);
 
-  /// Close and remove the <ACE_FILE> from the file system.
+  /// Close and remove the ACE_FILE from the file system.
   int remove (void);
 
-  /// Remove the <ACE_FILE> from the file system without closing the
-  /// <ACE_FILE> handle.
+  /// Remove the ACE_FILE from the file system without closing the
+  /// ACE_FILE handle.
   int unlink (void);
 
-  /// Get information on this <ACE_FILE>.
+  /// Get information on this ACE_FILE.
   int get_info (ACE_FILE_Info *finfo);
 
   /// Get information on this <ACE_FILE>.
@@ -100,21 +100,24 @@ public:
   /// Return an offset for the file handle.
   off_t tell (void);
 
-  /// Same as <tell>, but <position> is deprecated.
+  /**
+   * @deprecated
+   * Same as tell(), but position() is deprecated.
+   */
   off_t position (void);
 
   /**
-   * Disable signal <signum>
+   * Disable signal @a signum
    * This is here to prevent Win32 from
    * disabling SPIPE using socket calls
    */
   int disable (int signum) const ;
 
-  /// Return the local endpoint address in the referenced <ACE_Addr>.
+  /// Return the local endpoint address in the referenced ACE_Addr.
   /// Returns 0 if successful, else -1.
   int get_local_addr (ACE_Addr &) const;
 
-  /// Return the same thing as <get_local_addr>.
+  /// Return the same thing as get_local_addr().
   int get_remote_addr (ACE_Addr &) const;
 
   /// Dump the state of an object.
@@ -125,7 +128,7 @@ public:
 
 protected:
   /// Ensure that this class is only created by the
-  /// <ACE_FILE_Connector>.
+  /// ACE_FILE_Connector.
   ACE_FILE (void);
 
   /// File we are "connected" with...
