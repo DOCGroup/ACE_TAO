@@ -115,14 +115,15 @@ TAO_Exclusive_TMS::destroy_message_state (TAO_GIOP_Message_State *)
 
 // *********************************************************************
 
-TAO_Muxed_TMS::TAO_Muxed_TMS (void)
-  : request_id_generator_ (0)
+TAO_Muxed_TMS::TAO_Muxed_TMS (TAO_ORB_Core *orb_core)
+  : request_id_generator_ (0),
+    orb_core_ (orb_core),
+    message_state_ (0)
 {
 }
 
 TAO_Muxed_TMS::~TAO_Muxed_TMS (void)
 {
-  // @@ delete ???
 }
 
 // Generate and return an unique request id for the current
@@ -130,6 +131,7 @@ TAO_Muxed_TMS::~TAO_Muxed_TMS (void)
 CORBA::ULong
 TAO_Muxed_TMS::request_id (void)
 {
+  // @@ I am sure we need lock for this in the MT case. (Alex). 
   return this->request_id_generator_++;
 }
 
@@ -160,7 +162,11 @@ TAO_Muxed_TMS::dispatch_reply (CORBA::ULong request_id,
                                TAO_GIOP_ServiceContextList &reply_ctx,
                                TAO_GIOP_Message_State *message_state)
 {
-
+  // This message state should be the same as the one we have here,
+  // which we gave to the Transport to read the message. Just a sanity
+  // check here. 
+  ACE_ASSERT (message_state == this->message_state_);
+  
   int result = 0;
   TAO_Reply_Dispatcher *rd = 0;
 
@@ -194,15 +200,22 @@ TAO_Muxed_TMS::dispatch_reply (CORBA::ULong request_id,
 TAO_GIOP_Message_State *
 TAO_Muxed_TMS::get_message_state (void)
 {
-  return 0;
+  if (this->message_state_ == 0)
+    {
+      // Create the next message state.
+      ACE_NEW_RETURN (this->message_state_,
+                      TAO_GIOP_Message_State (this->orb_core_),
+                      0);
+    }
+  
+  return this->message_state_;
 }
 
 void
 TAO_Muxed_TMS::destroy_message_state (TAO_GIOP_Message_State *)
 {
-  // @@ Implement.
-  //    delete message_state;
-  //    message_state = 0;
+  delete this->message_state_;
+  this->message_state_ = 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
