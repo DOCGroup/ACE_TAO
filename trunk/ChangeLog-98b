@@ -32,7 +32,7 @@ Fri Sep 25 12:40:45 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/OS.i: removed carriage returns.  Thanks to Darrell
           for noticing it.
 
-        * tests/Handle_Set.cpp: removed ACE_Node<ACE_HANDLE>
+        * tests/Handle_Set_Test.cpp: removed ACE_Node<ACE_HANDLE>
           template instantiation because it conflicted with the
           ACE_Node<ACE_INT32> instantiation in ace/Stats.cpp.
 
