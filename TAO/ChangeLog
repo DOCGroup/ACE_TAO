@@ -1,3 +1,10 @@
+Fri Feb  4 18:00:03 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Messaging/Asynch_Reply_Dispatcher.cpp:
+
+	  Followed the same protocol as applied in "Thu Feb  3 19:27:58
+	  2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>". 
+
 Fri Feb  4 15:09:22 2005  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:

@@ -40,8 +40,8 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (
   if (params.input_cdr_ == 0)
     return -1;
 
-  bool cont_dispatch =
-    this->try_dispatch_reply ();
+  if (!this->try_dispatch_reply ())
+    return 0;
 
   if (this->timeout_handler_)
     {
@@ -52,14 +52,6 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (
       this->timeout_handler_ = 0;
       // AMI Timeout Handling End
     }
-
-  // A simple protocol that we follow. If the timeout had been handled
-  // by another thread, the last refcount for us will be held by the
-  // timeout handler. Hence the above call to remove_reference () will
-  // delete us. We then have to rely on the status of our stack
-  // variable to exit safely.
-  if (!cont_dispatch)
-    return 0;
 
   this->reply_status_ = params.reply_status_;
 
@@ -154,8 +146,8 @@ TAO_Asynch_Reply_Dispatcher::connection_closed (void)
 {
   ACE_TRY_NEW_ENV
     {
-      bool cont_dispatch =
-        this->try_dispatch_reply ();
+      if (!this->try_dispatch_reply ())
+        return 0;
 
       if (this->timeout_handler_)
         {
@@ -165,16 +157,6 @@ TAO_Asynch_Reply_Dispatcher::connection_closed (void)
           this->timeout_handler_->remove_reference ();
           this->timeout_handler_ = 0;
         }
-
-      // AMI Timeout Handling End
-
-      // A simple protocol that we follow. If the timeout had been handled
-      // by another thread, the last refcount for us will be held by the
-      // timeout handler. Hence the above call to remove_reference () will
-      // delete us. We then have to rely on the status of our stack
-      // variable to exit safely.
-      if (!cont_dispatch)
-        return;
 
       // Generate a fake exception....
       CORBA::COMM_FAILURE comm_failure (0, CORBA::COMPLETED_MAYBE);
