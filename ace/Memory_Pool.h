@@ -148,7 +148,13 @@ public:
  *
  * @brief Make a memory pool that is based on System V shared memory
  * (shmget(2) etc.).  This implementation allows memory to be
- * shared between processes.
+ * shared between processes.  If your platform doesn't support
+ * System V shared memory (e.g., Win32 and many RTOS platforms
+ * do not) then you should use ACE_MMAP_Memory_Pool instead of this
+ * class.  In fact, you should probably use ACE_MMAP_Memory_Pool on
+ * platforms that *do* support System V shared memory since it
+ * provides more powerful features, such as persistent backing store
+ * and greatly scalability.
  */
 class ACE_Export ACE_Shared_Memory_Pool : public ACE_Event_Handler
 {

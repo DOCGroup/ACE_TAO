@@ -11,10 +11,9 @@
  *   course.
  *
  *
- *  @author Doug Schmidt
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef ACE_PROCESS_MUTEX_H
 #define ACE_PROCESS_MUTEX_H
