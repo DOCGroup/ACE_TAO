@@ -1,3 +1,11 @@
+Sat Jan 17 16:10:04 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* examples/Service_Configurator/Misc/main.cpp (main): Replaced the
+ 	  buggy use of ACE_Service_Config daemon; with
+ 	  ACE_Service_Config::open().  We'll have to fix this properly
+ 	  some day, but for now this is the best solution.  Thanks to
+ 	  Pawel Roman <proman@npac.syr.edu> for reporting this.
+
 Sat Jan 17 00:42:13 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/SString.cpp (substring): Fixed bug.  count should be
