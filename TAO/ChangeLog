@@ -1,3 +1,22 @@
+Tue Oct 28 21:51:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Dynamic_Adapter.cpp:
+        * tao/Dynamic_Adapter.h:
+        * tao/DynamicInterface/Context.h:
+        * tao/DynamicInterface/Request.h:
+        * tao/DynamicInterface/Request.inl:
+        * tao/DynamicInterface/Server_Request.h:
+        * tao/DynamicInterface/Server_Request.inl:
+
+          Moved CORBA::release() and CORBA::is_nil() for Request and
+          ServerRequest from Dynamic_Adapter.* to their associated
+          files in the DynamicInterface library.
+
+        * TAOACE.dsw:
+
+          Added dependency on the TAO_Messaging library to 
+          TAO_DynamicInterface library build.
+
 Tue Oct 28 20:56:41 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_sequence.cpp:
