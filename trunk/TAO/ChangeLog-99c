@@ -10,7 +10,7 @@ Mon May 31 17:45:56 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  original code (with the small fix) commented out, so it
 	  can be quickly restored if anyone sees something I 
 	  missed or if there are resulting problems. This fixes a
-	  problem reported by Dale/Christine Wood" <dale_wood@Mitel.COM>.
+	  problem reported by Dale/Christine Wood <dale_wood@Mitel.COM>.
 
 Mon May 31 17:35:51 1999  Ossama Othman  <othman@cs.wustl.edu>
 
