@@ -10,7 +10,7 @@
 //
 // ============================================================================
 
-#include "test_config.h"
+#include "../test_config.h"
 #include "ace/RMCast/RMCast_Proxy.h"
 #include "ace/RMCast/RMCast_Membership.h"
 

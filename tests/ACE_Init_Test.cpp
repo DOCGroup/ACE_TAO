@@ -14,10 +14,27 @@
 //
 // ACE_Init_Test.cpp : Defines the class behaviors for the application.
 
+#include "test_config.h"
+
+#if !defined(ACE_WIN32)
+
+// If this is not a WIN32 platform do not even try to compile the
+// test, many of the #includes make little sense.
+int
+main (int, char*[])
+{
+  ACE_START_TEST (ACE_TEXT ("ACE_Init_Test"));
+  ACE_ERROR ((LM_INFO,
+              ACE_TEXT ("This is not a Win32 platform, test skipped\n")));
+  ACE_END_TEST;
+  return 0;
+}
+
+#else
+
 #include "ACE_Init_Test_StdAfx.h"
 #include "ACE_Init_Test.h"
 #include "ACE_Init_TestDlg.h"
-#include "test_config.h"
 #include "ace/Thread_Manager.h"
 
 
@@ -69,7 +86,7 @@ BOOL CACE_Init_TestApp::InitInstance()
   CACE_Init_TestDlg dlg;
   m_pMainWnd = &dlg;
   ACE_Thread_Manager::instance()->spawn (wait_and_kill_dialog,
-					 m_pMainWnd);
+                                         m_pMainWnd);
   int nResponse = dlg.DoModal();
   if (nResponse == IDOK)
     {
@@ -108,3 +125,5 @@ wait_and_kill_dialog (void *pBox)
     return 0;
 
 }
+
+#endif /* ACE_WIN32 */

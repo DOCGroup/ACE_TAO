@@ -10,7 +10,7 @@
 //
 // ============================================================================
 
-#include "test_config.h"
+#include "../test_config.h"
 #include "ace/Message_Block.h"
 #include "ace/Task.h"
 #include "ace/RMCast/RMCast_Fragment.h"

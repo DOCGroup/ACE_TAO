@@ -1,3 +1,20 @@
+Sun Dec  2 12:44:58 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tests/ACE_Init_Test.cpp:
+	* tests/ACE_Init_TestDlg.cpp:
+	  Protect this test against compilation on non-Win32 platforms,
+	  that makes it easier to compile using samwise.
+
+	* tests/RMCast/RMCast_Fragment_Test.cpp:
+	* tests/RMCast/RMCast_Membership_Test.cpp:
+	* tests/RMCast/RMCast_Reassembly_Test.cpp:
+	* tests/RMCast/RMCast_Reordering_Test.cpp:
+	* tests/RMCast/RMCast_Retransmission_Test.cpp:
+	* tests/RMCast/RMCast_UDP_Best_Effort_Test.cpp:
+	  Change #include "test_config.h" to #include "../test_config.h",
+	  it is easier to generate makefiles and projects files with
+	  samwise if we do that.
+
 Sun Dec 02 12:15:25 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* ace/OS.cpp: 
@@ -10,7 +27,7 @@ Sun Dec  2 12:17:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* ace/Reactor.i: Fixed a warning in TRU 64. Thanks to
 	  <krumpo@pobox.sk>  which reminded me of the fix in one of my
 	  workspaces. This shows up only in V6.3-013 (cxx) of the
-	  compiler.  
+	  compiler.
 
 Sat Dec  1 19:39:22 2001  Steve Huston  <shuston@riverace.com>
 
@@ -41,7 +58,7 @@ Sat Dec  1 18:03:51 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 	  Added support so that ACE will build and run on Mac OS X 10.1.
   	  Thanks to John Michael Zorko <j.zorko@att.net> for contributing
  	  this.
-	
+
 Fri Nov 30 19:08:19 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/ARGV.cpp (dump): Fixed a bug with dump() so that it
@@ -76,7 +93,7 @@ Wed Nov 28 17:44:26 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 	  ACE_OS::stat().  Thanks to Christopher Kohlhoff
  	  <chris@kohlhoff.com> and Chris Able <cable@scires.com> for
  	  reporting/fixing this.
-  
+
 Sat Dec 01 09:26:27 2001  Balachandran  <bala@cs.wustl.edu>
 
         * ACE version 5.2.1 released.
