@@ -1,3 +1,11 @@
+Tue Jul 13 11:03:38 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/OctetSeq/run_test.pl:
+	* examples/POA/On_Demand_Activation/run_test.pl:
+	* examples/POA/On_Demand_Loading/run_test.pl:
+	* examples/POA/Reference_Counted_Servant/run_test.pl:
+	  Fine tune the timeouts for slower (or loaded systems)
+
 1999-07-13  Yamuna Krishnamurthy  <krishnam@ss135.rsch.comm.mot.com>
 
 	* TAO_IDL/be/be_visitor_operation/operation_is.cpp (visit_operation): 
@@ -7,11 +15,10 @@
 	
 	* TAO_IDL/be/be_visitor_interface/interface_is.cpp (visit_interface):
 	* TAO_IDL/be/be_visitor_interface/interface_ih.cpp (be_visitor_interface_ih): 
-	Modified the code generated to avoid dominance problem with multiple inheritance
+	Modified the code generated to avoid dominance problem with
+	multiple inheritance
 
-	
-
-Tue Jul 13 09:53:57 1999 Fred Kuhns <fredk@cs.wustl.edu>
+Tue Jul 13 09:53:57 1999  Fred Kuhns  <fredk@cs.wustl.edu>
        
         * Moved the implementation of TAO_Stub::add_forward_profiles
           outside of the TAO_HAS_CORBA_MESSAGING ifdef's.  Thanks to
