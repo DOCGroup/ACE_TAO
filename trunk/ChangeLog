@@ -1,3 +1,18 @@
+Thu Jul 31 14:22:17 2003  Justin Michel  <michel_j@ociweb.com>
+
+        * bin/create_ace_build.pl:
+        * bin/MakeProjectCreator/config/acedefaults.mpb:
+        * bin/MakeProjectCreator/config/loadbalancing.mpb:
+        * bin/MakeProjectCreator/config/property.mpb:
+        * bin/MakeProjectCreator/config/rtoldevent.mpb:
+
+          Added .disable to the list of files that won't be linked
+        by create_ace_build.pl.
+          Added legacy libpaths so that generated Makefiles will be
+        reverse compatible with existing ones, as a temporary 
+        workaround until everything is MPC generated.
+          Fixed some typos in base mpb files.
+
 Thu Jul 31 13:12:17 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:

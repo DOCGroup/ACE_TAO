@@ -1,5 +1,5 @@
 project : messaging, naming, portablegroup {
   libs     += TAO_CosLoadBalancing
-  after    += LoadBalancing
+  after    += CosLoadBalancing
   comps    += CosLoadBalancing
 }
