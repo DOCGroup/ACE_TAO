@@ -322,7 +322,7 @@ STUB_Object::do_static_call (CORBA::Environment &ACE_TRY_ENV,
       call.start (ACE_TRY_ENV);
       ACE_CHECK;
 
-      int status = call.invoke (ACE_TRY_ENV);
+      call.invoke (ACE_TRY_ENV);
       ACE_CHECK;
 
       this->first_locate_request_ = 0;
@@ -377,7 +377,7 @@ STUB_Object::do_static_call (CORBA::Environment &ACE_TRY_ENV,
           // The only case left is status == TAO_INVOKE_OK, exit the
           // loop.  We cannot retry because at this point we either
           // got a reply or something with an status of
-          // COMPLETED_MAYBE, thus we cannot reissue the request if we 
+          // COMPLETED_MAYBE, thus we cannot reissue the request if we
           // are to satisfy the "at most once" semantics.
           break;
         }
@@ -548,7 +548,7 @@ STUB_Object::do_dynamic_call (const char *opname,
       call.start (ACE_TRY_ENV);
       ACE_CHECK;
 
-      int status = call.invoke (ACE_TRY_ENV);
+      call.invoke (ACE_TRY_ENV);
       ACE_CHECK;
 
       this->first_locate_request_ = 0;
@@ -585,7 +585,7 @@ STUB_Object::do_dynamic_call (const char *opname,
           // The only case left is status == TAO_INVOKE_OK, exit the
           // loop.  We cannot retry because at this point we either
           // got a reply or something with an status of
-          // COMPLETED_MAYBE, thus we cannot reissue the request if we 
+          // COMPLETED_MAYBE, thus we cannot reissue the request if we
           // are to satisfy the "at most once" semantics.
           break;
         }
@@ -602,7 +602,7 @@ STUB_Object::do_dynamic_call (const char *opname,
           // @@ (ASG) I need to look into this OUT_LIST_MEMORY stuff
           // (4/21/98).
           // @@ (Carlos) All this code seems bogus, we know that
-          //    allocating memory of behalf of the user is and endless 
+          //    allocating memory of behalf of the user is and endless
           //    source of trouble (due to vtbls and the such).
 
           // If caller didn't set OUT_LIST_MEMORY flag, allocate
@@ -687,7 +687,7 @@ STUB_Object::do_dynamic_call (const char *opname,
                   CORBA::TypeCode_var tcp = value->value ()->type ();
                   size_t size = tcp->size (ACE_TRY_ENV);
                   ACE_CHECK;
-                  
+
                   if (size != 0)
                     {
                       CORBA::Octet *ptr = new CORBA::Octet [size];
