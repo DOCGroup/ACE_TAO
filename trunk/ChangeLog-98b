@@ -2,6 +2,8 @@ Tue Oct 20 07:09:31 1998  Steve Huston  <shuston@riverace.com>
 
 	* ace/config-aix-4.2.x.h: Added ACE_HAS_GPERF.
 
+	* tests/tests.(mak mdp): Fixed to build clean.
+
 Mon Oct 19 21:40:56 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * *.h: changed include protection from #if !defined to ifndef.
