@@ -29,31 +29,22 @@ namespace Kokyu
 {
   class DSRT_Scheduler_Impl;
 
-  class DSRT_Dispatcher_Impl : public ACE_Service_Object
+  class DSRT_Dispatcher_Impl
   {
   public:
 
-    static int init_svcs (void);
-
     virtual ~DSRT_Dispatcher_Impl ();
-    //    int activate ();
-
-    // = The Service_Object entry points
-    virtual int init (int argc, ACE_TCHAR* argv[]);
-    virtual int fini (void);
 
     int init (const DSRT_ConfigInfo&);
     int schedule (guid_t guid,
-                    const QoSDescriptor&);
+                  const QoSDescriptor&);
     int update_schedule (guid_t guid,
-                           const QoSDescriptor&);
+                         const QoSDescriptor&);
     int cancel_schedule (guid_t guid,
-                           const QoSDescriptor&);
+                         const QoSDescriptor&);
 
   private:
-    DSRT_Scheduler_Impl* create_scheduler (DSRT_Sched_t sched_type,
-                                           ACE_Sched_Params::Policy sched_policy,
-                                           int sched_scope);
+    DSRT_Scheduler_Impl* create_scheduler (DSRT_Sched_t sched_type);
 
     int init_i (const DSRT_ConfigInfo&);
     int schedule_i (guid_t guid,
@@ -64,19 +55,12 @@ namespace Kokyu
                            const QoSDescriptor&);
 
   private:
-    //    typedef auto_ptr<DSRT_Dispatcher_Task> DSRT_Dispatcher_Task_Auto_Ptr;
-    //    DSRT_Dispatcher_Task_Auto_Ptr task_;
     DSRT_ConfigInfo curr_config_info_;
     DSRT_Sched_t sched_type_;
     DSRT_Scheduler_Impl* scheduler_impl_;
   };
 
 } //end of namespace
-
-extern ACE_Static_Svc_Descriptor ace_svc_desc_DSRT_Dispatcher_Impl;
-
-//ACE_STATIC_SVC_DECLARE (DSRT_Dispatcher_Impl)
-ACE_FACTORY_DECLARE (Kokyu, DSRT_Dispatcher_Impl)
 
 #if defined (__ACE_INLINE__)
 #include "DSRT_Dispatcher_Impl.i"

@@ -81,13 +81,14 @@ create_DSRT_dispatcher (const DSRT_ConfigInfo& config_info)
 
   DSRT_Dispatcher_Impl* tmp;
 
-  DSRT_Dispatcher_Impl::init_svcs ();
+  //DSRT_Dispatcher_Impl::init_svcs ();
 
   ACE_Service_Config::open ("Kokyu", ACE_DEFAULT_LOGGER_KEY, 0);
 
-  tmp =
-    ACE_Dynamic_Service<DSRT_Dispatcher_Impl>::instance ("DSRT_Dispatcher_Impl");
+  //tmp =
+  //  ACE_Dynamic_Service<DSRT_Dispatcher_Impl>::instance ("DSRT_Dispatcher_Impl");
 
+  ACE_NEW_RETURN (tmp, DSRT_Dispatcher_Impl, (DSRT_Dispatcher*) 0);
   ACE_ASSERT (tmp != 0);
   DSRT_Dispatcher* disp;
   ACE_NEW_RETURN (disp, DSRT_Dispatcher, (DSRT_Dispatcher*)0);

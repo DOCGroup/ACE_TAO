@@ -2,5 +2,7 @@
 <!-- Converted from svc.conf by svcconf-convert.pl -->
 <ACE_Svc_Conf>
  <!--  -->
- <static id="DSRT_Dispatcher_Impl" params="-schedtype MIF"/>
+ <dynamic id="DSRT_Scheduler_Impl" type="Service_Object">
+   <initializer path="Kokyu" init="_make_MIF_Scheduler_Impl" params="-sched_scope thread -sched_policy fifo"/>
+ </dynamic>
 </ACE_Svc_Conf>
