@@ -74,51 +74,51 @@ Grid_Client_i::run (int argc,
   if (this->parse_args (argc, argv) == -1)
     return -1;
 
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
       // Make the Grid.
-
+      
       Grid_ptr grid = client->make_grid (width_,
                                          height_,
-                                         TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) Made the grid succesfully"));
+                  "(%P|%t) Made the grid succesfully\n"));
 
       // Set a value on the grid
       grid->set (setx_,
                  sety_,
                  value_,
-                 TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                 ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Setting a value for the grid\n"));
 
       CORBA::Long ret_val = grid->get (setx_,
                                        sety_,
-                                       TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                       ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       ACE_ASSERT (ret_val == value_);
   
       if (client.shutdown () == 1)
-        client->shutdown (TAO_TRY_ENV);
+        client->shutdown (ACE_TRY_ENV);
       ACE_UNUSED_ARG (ret_val);
     }
-  TAO_CATCH (CORBA::UserException, range_ex)
+  ACE_CATCH (CORBA::UserException, range_ex)
     {
       ACE_UNUSED_ARG (range_ex);
-      TAO_TRY_ENV.print_exception ("\tFrom get and set grid");
+      ACE_TRY_ENV.print_exception ("\tFrom get and set grid");
       return -1;
     }
-  TAO_CATCH (CORBA::SystemException, memex)
+  ACE_CATCH (CORBA::SystemException, memex)
     {
       ACE_UNUSED_ARG (memex);
-      TAO_TRY_ENV.print_exception (" Cannot make grid as Memory exhausted");
+      ACE_TRY_ENV.print_exception (" Cannot make grid as Memory exhausted");
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 
   return 0;
 }
