@@ -132,17 +132,7 @@ TAO_IIOP_Transport::register_handler_i (void)
                   "TAO (%P|%t) - IIOP_Transport::register_handler %d\n",
                   this->id ()));
     }
-  if (this->connection_handler_->is_registered ())
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - IIOP_Transport::register_handler %d"
-                  ", already registered\n",
-                  this->id ()));
-      return 0;
-    }
 
-  // @@ It seems like this method should go away, the right reactor is
-  //    picked at object creation time.
   ACE_Reactor *r = this->orb_core_->reactor ();
 
   if (r == this->connection_handler_->reactor ())
@@ -151,9 +141,7 @@ TAO_IIOP_Transport::register_handler_i (void)
   // Set the flag in the Connection Handler and in the Wait Strategy
   // @@Maybe we should set these flags after registering with the
   // reactor. What if the  registration fails???
-  this->connection_handler_->is_registered (1);
   this->ws_->is_registered (1);
-
 
   // Register the handler with the reactor
   return  r->register_handler (this->connection_handler_,

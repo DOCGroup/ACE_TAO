@@ -95,14 +95,9 @@ TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
     return sh->activate (f->server_connection_thread_flags (),
                          f->server_connection_thread_count ());
 
-  // reactive concurrency model
-
-  // Also set the flag in the connection handler to indicate whether
-  // the handler has been registered with the reactor
-  sh->is_registered (1);
-
-  return this->orb_core_->reactor ()->register_handler
-    (sh, ACE_Event_Handler::READ_MASK);
+  // reactive concurrency model. We may want to register ourselves
+  // with the reactor. Call the register handler on the transport.
+  return sh->transport ()->register_handler ();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
