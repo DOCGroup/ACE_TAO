@@ -1,27 +1,45 @@
+Tue Dec 16 07:13:53 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/TMCast/TMCast.mpc:
+        * ace/ace.mwc:
+        * bin/MakeProjectCreator/config/tmcast.mpb:
+
+          Added a project and base project for TMCast.
+
+        * examples/IPC_SAP/SSL_SAP/SSL-server-simple.cpp:
+        * examples/TMCast/Member/member.cpp:
+
+          Added #include's to get things to build on Linux.
+
+        * examples/TMCast/Member/Member.mpc:
+
+          Added an mpc to override the default project to add the tmcast
+          base project.
+
 Mon Dec 15 20:34:31 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/MM_Shared_Memory_Test.cpp:
-	* tests/Reactor_Notify_Test.cpp:
-	* tests/Semaphore_Test.cpp:
-	* tests/TP_Reactor_Test.cpp:
+        * tests/MM_Shared_Memory_Test.cpp:
+        * tests/Reactor_Notify_Test.cpp:
+        * tests/Semaphore_Test.cpp:
+        * tests/TP_Reactor_Test.cpp:
 
-	  More fixes like "Mon Dec 15 11:09:45 2003  Douglas C. Schmidt
-	  <schmidt@ace.cs.wustl.edu>". Thanks to Don for motivating this.
+          More fixes like "Mon Dec 15 11:09:45 2003  Douglas C. Schmidt
+          <schmidt@ace.cs.wustl.edu>". Thanks to Don for motivating this.
 
 Mon Dec 15 18:51:15 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* bin/MakeProjectCreator/templates/gnu.mpd:
-	  Added setting of CLEANUP_INSTALL, this has the result that an exe
-	  that is installed into a different directory is also removed when
-	  doing a clean. Thanks to Don and Chad for validing this.
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+          Added setting of CLEANUP_INSTALL, this has the result that an exe
+          that is installed into a different directory is also removed when
+          doing a clean. Thanks to Don and Chad for validing this.
 
 Mon Dec 15 11:09:45 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* tests/Proactor_Test.cpp (ACE_MT_SYNCH>): 
-	* ace/POSIX_CB_Proactor.cpp (ACE_POSIX_CB_Proactor): Added a 
-	  cast to (unsigned int) so things will work properly for the
- 	  ACE_Thread_Semaphore.  Thanks to Bala and Don Hinton for
- 	  reporting these problems.
+        * tests/Proactor_Test.cpp (ACE_MT_SYNCH>):
+        * ace/POSIX_CB_Proactor.cpp (ACE_POSIX_CB_Proactor): Added a
+          cast to (unsigned int) so things will work properly for the
+          ACE_Thread_Semaphore.  Thanks to Bala and Don Hinton for
+          reporting these problems.
 
 Mon Dec 15 10:11:31 2003  Chad Elliott  <elliott_c@ociweb.com>
 
