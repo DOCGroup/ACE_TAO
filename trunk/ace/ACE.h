@@ -531,7 +531,7 @@ public:
   // Map troublesome win32 errno values to values that standard C
   // strerr function understands.  Thank you Microsoft.
 
-  static const char *sock_error (int error);
+  static const ASYS_TCHAR *sock_error (int error);
   // Returns a string containing the error message corresponding to a
   // WinSock error.  This works around an omission in the Win32 API...
 

@@ -2014,102 +2014,102 @@ ACE::is_prime (const u_long n,
     return 0;
 }
 
-const char *
+const ASYS_TCHAR *
 ACE::sock_error (int error)
 {
 #if defined (ACE_WIN32)
   switch (error)
     {
     case WSAVERNOTSUPPORTED:
-      return "version of WinSock not supported";
+      return ASYS_TEXT ("version of WinSock not supported");
       /* NOTREACHED */
     case WSASYSNOTREADY:
-      return "WinSock not present or not responding";
+      return ASYS_TEXT ("WinSock not present or not responding");
       /* NOTREACHED */
     case WSAEINVAL:
-      return "app version not supported by DLL";
+      return ASYS_TEXT ("app version not supported by DLL");
       /* NOTREACHED */
     case WSAHOST_NOT_FOUND:
-      return "Authoritive: Host not found";
+      return ASYS_TEXT ("Authoritive: Host not found");
       /* NOTREACHED */
     case WSATRY_AGAIN:
-      return "Non-authoritive: host not found or server failure";
+      return ASYS_TEXT ("Non-authoritive: host not found or server failure");
       /* NOTREACHED */
     case WSANO_RECOVERY:
-      return "Non-recoverable: refused or not implemented";
+      return ASYS_TEXT ("Non-recoverable: refused or not implemented");
       /* NOTREACHED */
     case WSANO_DATA:
-      return "Valid name, no data record for type";
+      return ASYS_TEXT ("Valid name, no data record for type");
       /* NOTREACHED */
       /*
         case WSANO_ADDRESS:
         return "Valid name, no MX record";
           */
     case WSANOTINITIALISED:
-      return "WSA Startup not initialized";
+      return ASYS_TEXT ("WSA Startup not initialized");
       /* NOTREACHED */
     case WSAENETDOWN:
-      return "Network subsystem failed";
+      return ASYS_TEXT ("Network subsystem failed");
       /* NOTREACHED */
     case WSAEINPROGRESS:
-      return "Blocking operation in progress";
+      return ASYS_TEXT ("Blocking operation in progress");
       /* NOTREACHED */
     case WSAEINTR:
-      return "Blocking call cancelled";
+      return ASYS_TEXT ("Blocking call cancelled");
       /* NOTREACHED */
     case WSAEAFNOSUPPORT:
-      return "address family not supported";
+      return ASYS_TEXT ("address family not supported");
       /* NOTREACHED */
     case WSAEMFILE:
-      return "no file handles available";
+      return ASYS_TEXT ("no file handles available");
       /* NOTREACHED */
     case WSAENOBUFS:
-      return "no buffer space available";
+      return ASYS_TEXT ("no buffer space available");
       /* NOTREACHED */
     case WSAEPROTONOSUPPORT:
-      return "specified protocol not supported";
+      return ASYS_TEXT ("specified protocol not supported");
       /* NOTREACHED */
     case WSAEPROTOTYPE:
-      return "protocol wrong type for this socket";
+      return ASYS_TEXT ("protocol wrong type for this socket");
       /* NOTREACHED */
     case WSAESOCKTNOSUPPORT:
-      return "socket type not supported for address family";
+      return ASYS_TEXT ("socket type not supported for address family");
       /* NOTREACHED */
     case WSAENOTSOCK:
-      return "handle is not a socket";
+      return ASYS_TEXT ("handle is not a socket");
       /* NOTREACHED */
     case WSAEWOULDBLOCK:
-      return "socket marked as non-blocking and SO_LINGER set not 0";
+      return ASYS_TEXT ("socket marked as non-blocking and SO_LINGER set not 0");
       /* NOTREACHED */
     case WSAEADDRINUSE:
-      return "address already in use";
+      return ASYS_TEXT ("address already in use");
       /* NOTREACHED */
     case WSAECONNABORTED:
-      return "connection aborted";
+      return ASYS_TEXT ("connection aborted");
       /* NOTREACHED */
     case WSAECONNRESET:
-      return "connection reset";
+      return ASYS_TEXT ("connection reset");
       /* NOTREACHED */
     case WSAENOTCONN:
-      return "not connected";
+      return ASYS_TEXT ("not connected");
       /* NOTREACHED */
     case WSAETIMEDOUT:
-      return "connection timed out";
+      return ASYS_TEXT ("connection timed out");
       /* NOTREACHED */
     case WSAECONNREFUSED:
-      return "connection refused";
+      return ASYS_TEXT ("connection refused");
       /* NOTREACHED */
     case WSAEHOSTDOWN:
-      return "host down";
+      return ASYS_TEXT ("host down");
       /* NOTREACHED */
     case WSAEHOSTUNREACH:
-      return "host unreachable";
+      return ASYS_TEXT ("host unreachable");
       /* NOTREACHED */
     case WSAEADDRNOTAVAIL:
-      return "address not available";
+      return ASYS_TEXT ("address not available");
       /* NOTREACHED */
     default:
-      return "unknown error";
+      return ASYS_TEXT ("unknown error");
       /* NOTREACHED */
     }
 #else
