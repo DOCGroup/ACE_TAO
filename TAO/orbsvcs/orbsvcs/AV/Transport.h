@@ -19,8 +19,14 @@
 #define TAO_AV_TRANSPORT_H
 
 #include "ace/Acceptor.h"
+#include "ace/SOCK_Acceptor.h"
+#include "ace/Connector.h"
+#include "ace/SOCK_Connector.h"
 #include "ace/Addr.h"
-#include "AVStreams_i.h"
+#include "ace/SOCK_Dgram.h"
+#include "orbsvcs/orbsvcs_export.h"
+#include "AV_Core.h"
+#include "FlowSpec_Entry.h"
 
 //  Transports
 
@@ -211,7 +217,7 @@ public:
   virtual int open_default (TAO_Base_StreamEndPoint *endpoint,
                             TAO_AV_Core *av_core,
                             TAO_FlowSpec_Entry *entry) = 0;
-  virtual const char *flowname ();
+  const char *flowname ();
   virtual int close (void) = 0;
 protected:
   ACE_CString flowname_;
@@ -319,7 +325,7 @@ class TAO_AV_Connector
 public:
   TAO_AV_Connector (void);
   virtual ~TAO_AV_Connector (void);
-  virtual const char *flowname (void);
+  const char *flowname (void);
 
   virtual int open (TAO_Base_StreamEndPoint *endpoint,
                     TAO_AV_Core *av_core) = 0;
@@ -393,6 +399,7 @@ protected:
 
 // Protocol Factories
 class TAO_ORBSVCS_Export TAO_AV_Protocol_Factory
+// @@ Derive from Svc config.
 {
 public:
   TAO_AV_Protocol_Factory (void);
@@ -426,18 +433,29 @@ public:
   virtual TAO_AV_Connector *make_connector (void);
 };
 
+// Forward declarations.
+class TAO_AV_Protocol_Object;
+class TAO_AV_Callback;
+
 class TAO_AV_Flow_Handler
 {
 public:
   TAO_AV_Flow_Handler (TAO_AV_Callback *callback);
-  virtual int start (void);
-  virtual int stop  (void);
-  virtual TAO_AV_Transport *transport (void);
+  virtual int start (TAO_FlowSpec_Entry::Role role);
+  virtual int stop  (TAO_FlowSpec_Entry::Role role);
+  TAO_AV_Transport *transport (void);
+  TAO_AV_Protocol_Object* protocol_object (void);
+  void protocol_object (TAO_AV_Protocol_Object *protocol_object);
+  int handle_timeout (const ACE_Time_Value &tv, const void *arg = 0);
   virtual int set_remote_address (ACE_Addr *address);
-  //  virtual ACE_Event_Handler* event_handler (void) = 0;
+  virtual ACE_Event_Handler* event_handler (void) = 0;
 protected:
   TAO_AV_Transport *transport_;
   TAO_AV_Callback *callback_;
+  TAO_AV_Protocol_Object *protocol_object_;
+  long timer_id_;
+  ACE_Reactor *reactor_;
+  void *timeout_arg_;
 };
 
 class TAO_AV_TCP_Flow_Handler
@@ -449,7 +467,8 @@ public:
   virtual TAO_AV_Transport *transport (void);
   virtual int open (void * = 0);
   virtual int handle_input (ACE_HANDLE fd);
-  //  virtual ACE_Event_Handler* event_handler (void){ return this; }
+  virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg = 0);
+  virtual ACE_Event_Handler* event_handler (void){ return this; }
 protected:
   TAO_AV_Core *av_core_;
 };
@@ -463,15 +482,18 @@ public:
   //Ctor
   ~TAO_AV_UDP_Flow_Handler (void);
   // Dtor
+  int open (ACE_Addr &address);
   virtual TAO_AV_Transport *transport (void);
   virtual int set_remote_address (ACE_Addr *address);
   virtual ACE_HANDLE get_handle (void) const;
   virtual int handle_input (ACE_HANDLE fd);
-  virtual ACE_SOCK_Dgram *get_socket (void) const;
+  virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg = 0);
+  const ACE_SOCK_Dgram *get_socket (void) const;
+  virtual ACE_Event_Handler* event_handler (void){ return this; }
 protected:
   TAO_AV_Core *av_core_;
   ACE_INET_Addr peer_addr_;
-  ACE_SOCK_Dgram *sock_dgram_;
+  ACE_SOCK_Dgram sock_dgram_;
 };
 
 typedef ACE_Unbounded_Set<TAO_AV_Connector*> TAO_AV_ConnectorSet;
@@ -518,5 +540,9 @@ protected:
                     TAO_FlowSpec_Entry *entry);
   TAO_AV_AcceptorSet acceptors_;
 };
+
+#if defined (__ACE_INLINE__)
+#include "Transport.i"
+#endif /* __ACE_INLINE__ */
 
 #endif /* TAO_AV_TRANSPORT_H */

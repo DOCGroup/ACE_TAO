@@ -2,6 +2,7 @@
 
 #include "MCast.h"
 #include "Nil.h"
+#include "AVStreams_i.h"
 
 //------------------------------------------------------------
 // TAO_AV_UDP_MCast_Acceptor
@@ -32,9 +33,13 @@ TAO_AV_UDP_MCast_Acceptor::make_svc_handler (TAO_AV_UDP_MCast_Flow_Handler *&mca
                       TAO_AV_UDP_MCast_Object (callback,
                                                mcast_handler->transport ()),
                       -1);
+      mcast_handler->protocol_object (object);
+      callback->protocol_object (object);
       this->endpoint_->set_protocol_object (this->flowname_.c_str (),
                                             object);
+      this->endpoint_->set_handler (this->flowname_.c_str (),mcast_handler);
       this->entry_->protocol_object (object);
+      this->entry_->handler (mcast_handler);
     }
   return 0;
 }
@@ -48,12 +53,12 @@ TAO_AV_UDP_MCast_Acceptor::open_i (ACE_Reactor *reactor,
   this->make_svc_handler (handler);
   int result = handler->get_mcast_socket ()->subscribe (*mcast_addr);
   if (result < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_UDP_connector::open failed\n"),-1);
+    ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_UDP_MCast_connector::open failed\n"),-1);
   // Now disable Multicast loopback.
   // @@Should we make this a policy?
   if (handler->get_mcast_socket ()->set_option (IP_MULTICAST_LOOP,
                                             0) < 0)
-    ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_MCast_Acceptor::multicast loop disable failed\n"));
+    if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_MCast_Acceptor::multicast loop disable failed\n"));
   // @@ This should also be policies.
   int bufsize = 80 * 1024;
   if (handler->get_mcast_socket ()->ACE_SOCK::set_option (SOL_SOCKET,
@@ -72,12 +77,12 @@ TAO_AV_UDP_MCast_Acceptor::open_i (ACE_Reactor *reactor,
   result = this->activate_svc_handler (handler);
   if (result < 0)
     return result;
-  ACE_INET_Addr *local_addr = 0;
-  ACE_NEW_RETURN (local_addr,
-                  ACE_INET_Addr,
-                  -1);
-  handler->get_mcast_socket ()->get_local_addr (*local_addr);
-  mcast_addr = local_addr;
+//   ACE_INET_Addr *local_addr = 0;
+//   ACE_NEW_RETURN (local_addr,
+//                   ACE_INET_Addr,
+//                   -1);
+//   handler->get_mcast_socket ()->get_local_addr (*local_addr);
+//   mcast_addr = local_addr;
   return 0;
 }
 
@@ -105,7 +110,7 @@ TAO_AV_UDP_MCast_Acceptor::open_default (TAO_Base_StreamEndPoint */*endpoint*/,
                                          TAO_AV_Core */*av_core*/,
                                          TAO_FlowSpec_Entry */*entry*/)
 {
-  ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_MCast_Acceptor::open_default\n"));
+  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_MCast_Acceptor::open_default\n"));
   return 0;
 }
 
@@ -118,6 +123,7 @@ TAO_AV_UDP_MCast_Acceptor::activate_svc_handler (TAO_AV_UDP_MCast_Flow_Handler *
                                                  ACE_Event_Handler::READ_MASK);
   if (result < 0)
     ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_Dgram_Acceptor::activate_svc_handler failed\n"),result);
+  event_handler->reactor (this->av_core_->reactor ());
   return 0;
 }
 
@@ -155,9 +161,13 @@ TAO_AV_UDP_MCast_Connector::make_svc_handler (TAO_AV_UDP_MCast_Flow_Handler *&mc
                       TAO_AV_UDP_MCast_Object (callback,
                                                mcast_handler->transport ()),
                       -1);
+      mcast_handler->protocol_object (object);
+      callback->protocol_object (object);
       this->endpoint_->set_protocol_object (this->flowname_.c_str (),
                                             object);
+      this->endpoint_->set_handler (this->flowname_.c_str (),mcast_handler);
       this->entry_->protocol_object (object);
+      this->entry_->handler (mcast_handler);
     }
   return 0;
 }
@@ -166,7 +176,7 @@ int
 TAO_AV_UDP_MCast_Connector::open (TAO_Base_StreamEndPoint *endpoint,
                                   TAO_AV_Core *av_core)
 {
-  ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_Connector::open "));
+  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_MCast_Connector::open "));
   this->endpoint_ = endpoint;
   this->av_core_ = av_core;
   return 0;
@@ -180,12 +190,12 @@ TAO_AV_UDP_MCast_Connector::connect_i (ACE_Reactor *reactor,
   this->make_svc_handler (handler);
   int result = handler->get_mcast_socket ()->subscribe (*mcast_addr);
   if (result < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_UDP_connector::open failed\n"),-1);
+    ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_UDP_MCast_connector::open failed\n"),-1);
   // Now disable Multicast loopback.
   // @@Should we make this a policy?
   if (handler->get_mcast_socket ()->set_option (IP_MULTICAST_LOOP,
                                             0) < 0)
-    ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_MCast_Acceptor::multicast loop disable failed\n"));
+    if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_MCast_Acceptor::multicast loop disable failed\n"));
   int bufsize = 80 * 1024;
   if (handler->get_mcast_socket ()->ACE_SOCK::set_option (SOL_SOCKET,
                                                           SO_RCVBUF,
@@ -203,12 +213,12 @@ TAO_AV_UDP_MCast_Connector::connect_i (ACE_Reactor *reactor,
   result = this->activate_svc_handler (handler);
   if (result < 0)
     return result;
-  ACE_INET_Addr *local_addr = 0;
-  ACE_NEW_RETURN (local_addr,
-                  ACE_INET_Addr,
-                  -1);
-  handler->get_mcast_socket ()->get_local_addr (*local_addr);
-  mcast_addr = local_addr;
+//   ACE_INET_Addr *local_addr = 0;
+//   ACE_NEW_RETURN (local_addr,
+//                   ACE_INET_Addr,
+//                   -1);
+//   handler->get_mcast_socket ()->get_local_addr (*local_addr);
+//  mcast_addr = local_addr;
 }
 
 int
@@ -235,6 +245,7 @@ TAO_AV_UDP_MCast_Connector::activate_svc_handler (TAO_AV_UDP_MCast_Flow_Handler 
                                                  ACE_Event_Handler::READ_MASK);
   if (result < 0)
     ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_Dgram_Acceptor::activate_svc_handler failed\n"),result);
+  event_handler->reactor (this->av_core_->reactor ());
   return 0;
 }
 
@@ -284,10 +295,17 @@ TAO_AV_UDP_MCast_Flow_Handler::handle_input (ACE_HANDLE /*fd*/)
   return 0;
 }
 
+int
+TAO_AV_UDP_MCast_Flow_Handler::handle_timeout (const ACE_Time_Value &tv, 
+                                               const void *arg)
+{
+  return TAO_AV_Flow_Handler::handle_timeout (tv,arg);
+}
+
 ACE_HANDLE
 TAO_AV_UDP_MCast_Flow_Handler::get_handle (void) const
 {
-  ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_MCast_Flow_Handler::get_handle "));
+  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_MCast_Flow_Handler::get_handle "));
   return this->get_mcast_socket ()->get_handle () ;
 }
 
@@ -397,10 +415,10 @@ TAO_AV_UDP_MCast_Transport::send (const char *buf,
                                   size_t len,
                                   ACE_Time_Value *)
 {
-  ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_MCast_Transport::send "));
-  char addr [BUFSIZ];
-  this->peer_addr_.addr_to_string (addr,BUFSIZ);
-  ACE_DEBUG ((LM_DEBUG,"to %s\n",addr));
+//   if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_MCast_Transport::send "));
+//   char addr [BUFSIZ];
+//   this->peer_addr_.addr_to_string (addr,BUFSIZ);
+//   if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"to %s\n",addr));
 
   return this->handler_->get_mcast_socket ()->send (buf, len);
 }
@@ -487,7 +505,7 @@ TAO_AV_UDP_MCast_Protocol_Factory::match_protocol (TAO_AV_Core::Protocol protoco
 TAO_AV_Acceptor*
 TAO_AV_UDP_MCast_Protocol_Factory::make_acceptor (void)
 {
-  ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_MCast_Protocol_Factory::make_acceptor "));
+  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_MCast_Protocol_Factory::make_acceptor "));
   TAO_AV_Acceptor *acceptor = 0;
   ACE_NEW_RETURN (acceptor,
                   TAO_AV_UDP_MCast_Acceptor,
@@ -498,7 +516,7 @@ TAO_AV_UDP_MCast_Protocol_Factory::make_acceptor (void)
 TAO_AV_Connector*
 TAO_AV_UDP_MCast_Protocol_Factory::make_connector (void)
 {
-  ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_MCast_Protocol_Factory::make_connector "));
+  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_MCast_Protocol_Factory::make_connector "));
   TAO_AV_Connector *connector = 0;
   ACE_NEW_RETURN (connector,
                   TAO_AV_UDP_MCast_Connector,

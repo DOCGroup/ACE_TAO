@@ -42,7 +42,7 @@ MediaTimer* MediaTimer::instance_;
 MediaTimer::MediaTimer()
 {
         instance_ = this;
-        offset_ = random();
+        offset_ = ACE_OS::rand ();
 }
 
 MediaTimer::~MediaTimer()

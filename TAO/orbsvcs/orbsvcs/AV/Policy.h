@@ -20,12 +20,12 @@
 #define TAO_AV_POLICY_H
 
 #include "tao/TAO.h"
-#include "Transport.h"
+#include "tao/debug.h"
+#include "orbsvcs/orbsvcs_export.h"
 
 struct TAO_AV_frame_info
 {
   CORBA::Boolean boundary_marker;
-  CORBA::Octet format;
   CORBA::ULong timestamp;
   CORBA::ULong ssrc;
   CORBA::ULong sequence_num;
@@ -108,17 +108,47 @@ public:
                                 void *value);
 };
 
+class TAO_AV_Protocol_Object;
+class TAO_AV_Transport;
+
 class TAO_AV_Callback
 {
+  //@@coryan:Document this class.
+
 public:
+  TAO_AV_Callback (void);
   virtual int handle_start (void);
+  // Called during Streamctrl->start.
+
   virtual int handle_stop (void);
-  virtual int receive_frame (ACE_Message_Block *frame);
+  // Called during Streamctrl->stop.
+
+  virtual int handle_timeout (void *arg);
+  // Called during timeout for Flow Producers.
+
+  virtual int receive_frame (ACE_Message_Block *frame,
+                             TAO_AV_frame_info *frame_info = 0);
+  // Called when a frame arrives for a FlowConsumer.
+
   virtual int handle_end_stream (void);
+  // Called during Streamctrl->destroy i.e tear_down  of the stream
+  // @@coryan:Call it handle_destroy or handle_close.
+
+  virtual void get_timeout (ACE_Time_Value *&tv,
+                            void *&arg);
+  // Called to get the timeout. If tv is 0 then the framework stop
+  // calling this.
+
+//   virtual int get_frame (ACE_Message_Block *&frame,
+//                          TAO_AV_frame_info *&frame_info);
+  // @@: Should these be in the open method??
   TAO_AV_Transport *transport (void);
   void transport (TAO_AV_Transport *transport);
+  TAO_AV_Protocol_Object *protocol_object (void);
+  void protocol_object (TAO_AV_Protocol_Object *object);
 protected:
   TAO_AV_Transport *transport_;
+  TAO_AV_Protocol_Object *protocol_object_;
 };
 
 class TAO_AV_Protocol_Object
@@ -143,6 +173,10 @@ public:
                           TAO_AV_frame_info *frame_info = 0) = 0;
   // send a data frame.
 
+  virtual int send_frame (const iovec *iov,
+                          int iovcnt,
+                          TAO_AV_frame_info *frame_info = 0) = 0;
+  // @@Naga: We might need to make this pure virtual
   void transport (TAO_AV_Transport *transport);
   TAO_AV_Transport *transport (void);
   // set/get the transport.

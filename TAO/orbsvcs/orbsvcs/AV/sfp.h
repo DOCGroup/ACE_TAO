@@ -22,15 +22,16 @@
 #include "ace/SOCK_Dgram.h"
 #include "ace/INET_Addr.h"
 
-#include "Transport.h"
 #include "Policy.h"
+#include "MCast.h"
+#include "AVStreams_i.h"
 
 #define TAO_SFP_MAGIC_NUMBER_LEN 4
 #define TAO_SFP_MESSAGE_TYPE_OFFSET 5
 #define TAO_SFP_WRITEV_MAX 128
 
-//#define TAO_SFP_MAX_PACKET_SIZE ACE_MAX_DGRAM_SIZE
-#define TAO_SFP_MAX_PACKET_SIZE 132
+#define TAO_SFP_MAX_PACKET_SIZE ACE_MAX_DGRAM_SIZE
+//#define TAO_SFP_MAX_PACKET_SIZE 132
 
 class TAO_SFP_Fragment_Node
 {
@@ -53,10 +54,13 @@ public:
     {}
   int last_received_;
   size_t num_fragments_;
+  TAO_AV_frame_info frame_info;
   ACE_Ordered_MultiSet<TAO_SFP_Fragment_Node> fragment_set_;
 };
 
 typedef ACE_Ordered_MultiSet_Iterator<TAO_SFP_Fragment_Node> FRAGMENT_SET_ITERATOR;
+typedef ACE_Hash_Map_Manager<CORBA::ULong,TAO_SFP_Fragment_Table_Entry*,ACE_Null_Mutex> TAO_SFP_Fragment_Table;
+typedef ACE_Hash_Map_Manager<CORBA::ULong,TAO_SFP_Fragment_Table*,ACE_Null_Mutex> TAO_SFP_Fragment_Table_Map;
 
 class TAO_ORBSVCS_Export TAO_SFP_Frame_State
 {
@@ -74,7 +78,7 @@ public:
   CORBA::Boolean more_fragments_;
   ACE_Message_Block *frame_block_;
   // boolean flags indicating that there are more fragments.
-  ACE_Hash_Map_Manager<CORBA::ULong,TAO_SFP_Fragment_Table_Entry*,ACE_Null_Mutex> fragment_table_;
+  TAO_SFP_Fragment_Table_Map fragment_table_map_;
 };
 
 class TAO_AV_Transport;
@@ -158,11 +162,13 @@ public:
 
   static int read_frame (TAO_AV_Transport *transport,
                          flowProtocol::frameHeader &frame_header,
-                         TAO_SFP_Frame_State &state);
+                         TAO_SFP_Frame_State &state,
+                         TAO_AV_frame_info *&frame_info);
 
   static int read_fragment (TAO_AV_Transport *transport,
-                     flowProtocol::fragment &fragment,
-                     TAO_SFP_Frame_State &state);
+                            flowProtocol::fragment &fragment,
+                            TAO_SFP_Frame_State &state,
+                            TAO_AV_frame_info *&frame_info);
 
   static int peek_frame_header (TAO_AV_Transport *transport,
                                 flowProtocol::frameHeader &header,
@@ -173,7 +179,8 @@ public:
                                    TAO_InputCDR &cdr);
 
   static int handle_input (TAO_AV_Transport *transport,
-                           TAO_SFP_Frame_State &state);
+                           TAO_SFP_Frame_State &state,
+                           TAO_AV_frame_info *&frame_info);
 
   static ACE_Message_Block* check_all_fragments (TAO_SFP_Fragment_Table_Entry *fragment_entry);
 
@@ -195,6 +202,11 @@ public:
 
   virtual int send_frame (ACE_Message_Block *frame,
                           TAO_AV_frame_info *frame_info = 0);
+
+  virtual int send_frame (const iovec *iov,
+                          int iovcnt,
+                          TAO_AV_frame_info *frame_info = 0);
+
   virtual int end_stream (void);
 protected:
   ACE_Message_Block *get_fragment (ACE_Message_Block *&frame,
@@ -214,8 +226,6 @@ public:
   virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
   virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
                             ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
-  virtual int start (void);
-  virtual int stop  (void);
 protected:
   TAO_SFP_Frame_State state_;
 };
@@ -224,12 +234,13 @@ class TAO_SFP_UDP_Sender_Handler
   :public TAO_AV_UDP_Flow_Handler
 {
 public:
-  TAO_SFP_UDP_Sender_Handler (TAO_SFP_Object *sfp_object);
+  TAO_SFP_UDP_Sender_Handler (TAO_AV_Callback *callback,
+                              TAO_SFP_Object *sfp_object);
   virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
   virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
                             ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
-  virtual int start (void);
-  virtual int stop  (void);
+  virtual int start (TAO_FlowSpec_Entry::Role role);
+  virtual int stop  (TAO_FlowSpec_Entry::Role role);
 protected:
   TAO_SFP_Object *sfp_object_;
 };
@@ -268,6 +279,72 @@ public:
   TAO_SFP_UDP_Connector (void);
   ~TAO_SFP_UDP_Connector (void);
   int make_svc_handler (TAO_AV_UDP_Flow_Handler *&handler);
+};
+
+//----------------------------------------------------------------------
+// SFP_UDP_MCast classes
+//----------------------------------------------------------------------
+class TAO_SFP_UDP_MCast_Receiver_Handler
+  :public TAO_AV_UDP_MCast_Flow_Handler
+{
+public:
+  TAO_SFP_UDP_MCast_Receiver_Handler (TAO_AV_Callback *callback);
+  virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
+  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
+                            ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
+protected:
+  TAO_SFP_Frame_State state_;
+};
+
+class TAO_SFP_UDP_MCast_Sender_Handler
+  :public TAO_AV_UDP_MCast_Flow_Handler
+{
+public:
+  TAO_SFP_UDP_MCast_Sender_Handler (TAO_AV_Callback *callback,
+                                    TAO_SFP_Object *sfp_object);
+  virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
+  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
+                            ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
+  virtual int start (TAO_FlowSpec_Entry::Role role);
+  virtual int stop  (TAO_FlowSpec_Entry::Role role);
+protected:
+  TAO_SFP_Object *sfp_object_;
+};
+
+
+class TAO_ORBSVCS_Export TAO_SFP_UDP_MCast_Protocol_Factory
+  :public TAO_AV_Protocol_Factory
+{
+public:
+  TAO_SFP_UDP_MCast_Protocol_Factory (void);
+  ~TAO_SFP_UDP_MCast_Protocol_Factory (void);
+
+  virtual int match_protocol (TAO_AV_Core::Protocol protocol);
+  // verify protocol is a match.
+
+  virtual TAO_AV_Acceptor *make_acceptor (void);
+  // create an acceptor.
+
+  virtual TAO_AV_Connector *make_connector (void);
+  // create a connector.
+};
+
+class TAO_SFP_UDP_MCast_Acceptor
+  :public TAO_AV_UDP_MCast_Acceptor
+{
+public:
+  TAO_SFP_UDP_MCast_Acceptor (void);
+  ~TAO_SFP_UDP_MCast_Acceptor (void);
+  int make_svc_handler (TAO_AV_UDP_MCast_Flow_Handler *&handler);
+};
+
+class TAO_SFP_UDP_MCast_Connector
+  :public TAO_AV_UDP_MCast_Connector
+{
+public:
+  TAO_SFP_UDP_MCast_Connector (void);
+  ~TAO_SFP_UDP_MCast_Connector (void);
+  int make_svc_handler (TAO_AV_UDP_MCast_Flow_Handler *&handler);
 };
 
 #endif /* !defined (TAO_SFP_H) */

@@ -90,6 +90,14 @@ TAO_AV_Protocol_Object::stop (void)
   return this->callback_->handle_stop ();
 }
 
+// int
+// TAO_AV_Protocol_Object::send_frame (const iovec *iov,
+//                                     int iovcnt,
+//                                     TAO_AV_frame_info *frame_info)
+// {
+//   ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_Protocol_Object::send_frame\n"),-1);
+// }
+
 int
 TAO_AV_Protocol_Object::set_policies (const PolicyList &policy_list)
 {
@@ -104,29 +112,62 @@ TAO_AV_Protocol_Object::get_policies (void)
 }
 
 // TAO_AV_Callback
+
+TAO_AV_Callback::TAO_AV_Callback (void)
+  :transport_ (0),
+   protocol_object_ (0)
+{
+}
+
 int
 TAO_AV_Callback::handle_start (void)
 {
+  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_Callback::handle_start\n"));
   return -1;
 }
 
 int
 TAO_AV_Callback::handle_stop (void)
 {
+  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_Callback::handle_stop\n"));
   return -1;
 }
 
 int
-TAO_AV_Callback::receive_frame (ACE_Message_Block */*frame*/)
+TAO_AV_Callback::receive_frame (ACE_Message_Block */*frame*/,
+                                TAO_AV_frame_info *)
 {
+  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_Callback::receive_frame\n"));
   return -1;
 }
 
 int
 TAO_AV_Callback::handle_end_stream (void)
 {
+  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_Callback::handle_end_stream\n"));
   return -1;
 }
+
+void
+TAO_AV_Callback::get_timeout (ACE_Time_Value *&tv,
+                              void *&arg)
+{
+  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_Callback::get_timeout\n"));
+}
+
+int
+TAO_AV_Callback::handle_timeout (void *arg)
+{
+  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_Callback::handle_timeout\n"));
+  return 0;
+}
+
+// int
+// TAO_AV_Callback::get_frame (ACE_Message_Block *&frame,
+//                             TAO_AV_frame_info *&frame_info)
+// {
+//   return -1;
+// }
 
 TAO_AV_Transport*
 TAO_AV_Callback::transport (void)
@@ -138,6 +179,18 @@ void
 TAO_AV_Callback::transport (TAO_AV_Transport *transport)
 {
   this->transport_ = transport;
+}
+
+TAO_AV_Protocol_Object*
+TAO_AV_Callback::protocol_object (void)
+{
+  return this->protocol_object_;
+}
+
+void
+TAO_AV_Callback::protocol_object (TAO_AV_Protocol_Object *object)
+{
+  this->protocol_object_ = object;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

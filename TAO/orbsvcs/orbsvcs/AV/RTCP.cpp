@@ -33,14 +33,14 @@
  */
 
 // $Id$
-#include "Transport.h"
 #include "RTP.h"
 #include "RTCP.h"
 #include "media-timer.h"
 #include "ntp-time.h"
 
 // static hash map of rtcp handlers for all the flows.
-TAO_AV_RTCP::RTCP_Map TAO_AV_RTCP::rtcp_map_;
+TAO_AV_RTCP::RTCP_MCast_Map TAO_AV_RTCP::rtcp_mcast_map_;
+TAO_AV_RTCP::RTCP_UDP_Map TAO_AV_RTCP::rtcp_udp_map_;
 
 // TAO_AV_RTP_State
 TAO_AV_RTP_State::TAO_AV_RTP_State (void)
@@ -166,7 +166,7 @@ TAO_AV_RTCP::parse_rr_records (ACE_UINT32,
                               const u_char*,
                               ACE_UINT32)
 {
-  ACE_DEBUG ( (LM_DEBUG,"TAO_AV_RTCP::parse_rr_records\n"));
+  if (TAO_debug_level > 0) ACE_DEBUG ( (LM_DEBUG,"TAO_AV_RTCP::parse_rr_records\n"));
 }
 
 void
@@ -444,7 +444,7 @@ TAO_AV_RTCP::send_report (int bye,
   if (rint < RTCP_MIN_RPT_TIME * 1000.)
     rint = RTCP_MIN_RPT_TIME * 1000.;
   state->rint_ = rint;
-  handler->schedule (int (fmod (double (random ()), rint) + rint * .5 + .5));
+  handler->schedule (int (fmod (double (ACE_OS::rand ()), rint) + rint * .5 + .5));
 
   source_manager->CheckActiveSources (rint);
 }
@@ -574,6 +574,18 @@ TAO_AV_RTCP::handle_input (TAO_AV_Transport *transport,
   return 0;
 }
 
+ACE_UINT32
+TAO_AV_RTCP::alloc_srcid (ACE_UINT32 addr)
+{
+  timeval tv;
+  ::gettimeofday(&tv, 0);
+  ACE_UINT32 srcid = ACE_UINT32 (tv.tv_sec + tv.tv_usec);
+  srcid += (ACE_UINT32)getuid();
+  srcid += (ACE_UINT32)getpid();
+  srcid += addr;
+  return (srcid);
+}
+
 // TAO_AV_RTCP_Flow_Handler
 TAO_AV_RTCP_Flow_Handler::TAO_AV_RTCP_Flow_Handler (ACE_Reactor *reactor,
                                                     TAO_Base_StreamEndPoint *endpoint,
@@ -597,7 +609,7 @@ void
 TAO_AV_RTCP_Flow_Handler::init (void)
 {
   // Schedule a timer.
-  ACE_DEBUG ((LM_DEBUG,"TAO_AV_RTCP_Flow_Handler::schedule\n"));
+  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_RTCP_Flow_Handler::schedule\n"));
   /*
    * schedule a timer for our first report using half the
    * min rtcp interval.  This gives us some time before
@@ -611,7 +623,7 @@ TAO_AV_RTCP_Flow_Handler::init (void)
   if (rint < RTCP_MIN_RPT_TIME / 2. * 1000.)
     rint = RTCP_MIN_RPT_TIME / 2. * 1000.;
   this->state_.rint_ = rint;
-  int msec = int(fmod(double(random()), rint) + rint * .5 + .5);
+  int msec = int(fmod(double(ACE_OS::rand ()), rint) + rint * .5 + .5);
   this->schedule (msec);
 }
 
@@ -664,7 +676,7 @@ TAO_AV_RTCP_UDP_Flow_Handler::event_handler (void)
 int
 TAO_AV_RTCP_UDP_Flow_Handler::handle_input (ACE_HANDLE /*fd*/)
 {
-  ACE_DEBUG ((LM_DEBUG,"TAO_AV_RTCP_UDP_Flow_Handler::handle_input"));
+  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_RTCP_UDP_Flow_Handler::handle_input"));
   TAO_AV_RTCP::rtcphdr rtcp_header;
   int result = TAO_AV_RTCP::handle_input (this->transport_,
                                           rtcp_header,
@@ -679,7 +691,7 @@ int
 TAO_AV_RTCP_UDP_Flow_Handler::handle_timeout (const ACE_Time_Value &/*tv*/,
                                               const void */*arg*/)
 {
-  ACE_DEBUG ((LM_DEBUG,"TAO_AV_RTCP_UDP_Flow_Handler::handle_timeout"));
+  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_RTCP_UDP_Flow_Handler::handle_timeout"));
   TAO_AV_RTCP::send_report (0,
                             this->transport_,
                             this->source_manager_,

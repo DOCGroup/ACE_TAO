@@ -40,6 +40,7 @@
 int
 TAO_AV_RTP::handle_input (TAO_AV_Transport *transport,
                           ACE_Message_Block *&data,
+                          TAO_AV_frame_info *&frame_info,
                           ACE_Addr &addr,
                           TAO_AV_SourceManager *source_manager,
                           TAO_AV_RTP_State *state)
@@ -66,7 +67,7 @@ TAO_AV_RTP::handle_input (TAO_AV_Transport *transport,
   ACE_Addr *addr_ptr = 0;
   addr_ptr = transport->get_peer_addr ();
   if (addr_ptr == 0)
-    ACE_DEBUG ( (LM_ERROR,"TAO_AV_RTP::handle_input:get_peer_addr failed\n"));
+    if (TAO_debug_level > 0) ACE_DEBUG ( (LM_ERROR,"TAO_AV_RTP::handle_input:get_peer_addr failed\n"));
   addr = *addr_ptr;
   rtphdr* rh = (rtphdr*)data->rd_ptr ();
   int version = * (u_char*)rh >> 6;
@@ -87,7 +88,7 @@ TAO_AV_RTP::handle_input (TAO_AV_Transport *transport,
       }
       break;
     default:
-      ACE_DEBUG ( (LM_DEBUG,"TAO_AV_RTP::Unknown address type\n"));
+      if (TAO_debug_level > 0) ACE_DEBUG ( (LM_DEBUG,"TAO_AV_RTP::Unknown address type\n"));
       break;
     }
   data->rd_ptr (sizeof (rtphdr));
@@ -101,7 +102,6 @@ TAO_AV_RTP::handle_input (TAO_AV_Transport *transport,
       data->release ();
       return -1;
     }
-  TAO_AV_frame_info *frame_info;
   ACE_NEW_RETURN (frame_info,
                   TAO_AV_frame_info,
                   -1);
@@ -110,14 +110,14 @@ TAO_AV_RTP::handle_input (TAO_AV_Transport *transport,
   frame_info->ssrc = header.rh_ssrc;
   frame_info->sequence_num = header.rh_seqno;
   frame_info->format = header.rh_flags & 0x7f;
-  ACE_Message_Block *frame_info_mb;
-  ACE_NEW_RETURN (frame_info_mb,
-                  ACE_Message_Block ((char *)frame_info,
-                                     sizeof (TAO_AV_frame_info)),
-                  -1);
-  frame_info_mb->wr_ptr (sizeof(TAO_AV_frame_info));
-  frame_info_mb->cont (data);
-  data = frame_info_mb;
+//   ACE_Message_Block *frame_info_mb;
+//   ACE_NEW_RETURN (frame_info_mb,
+//                   ACE_Message_Block ((char *)frame_info,
+//                                      sizeof (TAO_AV_frame_info)),
+//                   -1);
+//   frame_info_mb->wr_ptr (sizeof(TAO_AV_frame_info));
+//   frame_info_mb->cont (data);
+//   data = frame_info_mb;
   return 0;
 }
 
@@ -233,6 +233,7 @@ TAO_AV_RTP::demux (rtphdr* rh,
 //     h->recv (rh, bp + hlen, cc);
 }
 
+ACE_INLINE
 int
 TAO_AV_RTP::write_header (rtphdr &header,
                           int format,
@@ -252,6 +253,7 @@ TAO_AV_RTP::write_header (rtphdr &header,
   return 0;
 }
 
+ACE_INLINE
 int
 TAO_AV_RTP::send_frame (TAO_AV_Transport *transport,
                         rtphdr &header,
@@ -264,6 +266,25 @@ TAO_AV_RTP::send_frame (TAO_AV_Transport *transport,
   int result = transport->send (&mb);
   if (result < 0)
     ACE_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP::send_frame failed\n"),result);
+  return 0;
+}
+
+//ACE_INLINE
+int
+TAO_AV_RTP::send_frame (TAO_AV_Transport *transport,
+                        rtphdr &header,
+                        const iovec *iov,
+                        int iovcnt)
+{
+  iovec send_iov[IOV_MAX];
+  send_iov [0].iov_base = (char *)&header;
+  send_iov [0].iov_len  = sizeof(header);
+  for (int i=1;i<=iovcnt; i++)
+    send_iov [i] = iov [i-1];
+  int result = transport->send (send_iov,
+                                iovcnt+1);
+  if (result < 0)
+    ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_RTP::send_frame failed\n"),result);
   return 0;
 }
 
@@ -330,8 +351,10 @@ TAO_AV_RTP_UDP_Acceptor::make_svc_handler (TAO_AV_UDP_Flow_Handler *&handler)
                       TAO_AV_RTP_Object (callback,
                                          handler->transport ()),
                       -1);
+      callback->protocol_object (object);
       this->endpoint_->set_protocol_object (this->flowname_.c_str (),
                                             object);
+      this->endpoint_->set_handler (this->flowname_.c_str (),handler);
       this->entry_->protocol_object (object);
     }
   else
@@ -358,34 +381,42 @@ TAO_AV_RTP_UDP_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
   if (result < 0)
     return result;
   TAO_String_Hash_Key handler_key (entry->flowname ());
-  TAO_AV_RTCP::RTCP_Map::ENTRY *handler_entry = 0;
-  if (TAO_AV_RTCP::rtcp_map_.find (handler_key,
-                                   handler_entry) == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,"RTCP Object already created for this flow\n"),0);
-  // Now do the creation of RTCP handler.
-  // The address of RTCP will always be one port higher than RTP.
-  ACE_INET_Addr *entry_addr = ACE_static_cast (ACE_INET_Addr *,
-                                               entry->address ());
-  if (entry_addr == 0)
-    return -1;
-  ACE_INET_Addr local_addr (entry_addr->get_port_number ()+1,
-                            entry_addr->get_ip_address ());
+  TAO_AV_RTCP::RTCP_UDP_Map::ENTRY *handler_entry = 0;
   TAO_AV_RTP_UDP_Flow_Handler *rtp_handler = ACE_dynamic_cast (TAO_AV_RTP_UDP_Flow_Handler *,
                                                                this->handler_);
-  TAO_AV_UDP_Flow_Handler *handler = 0;
-  result = this->acceptor_.open (this,
-                                 av_core->reactor (),
-                                 local_addr,
-                                 handler);
-  TAO_AV_RTCP_UDP_Flow_Handler *rtcp_handler = ACE_dynamic_cast (TAO_AV_RTCP_UDP_Flow_Handler*,
-                                                                 handler);
+  TAO_AV_RTCP_UDP_Flow_Handler *rtcp_handler = 0;
+  if (TAO_AV_RTCP::rtcp_udp_map_.find (handler_key,
+                                       handler_entry) == 0)
+    {
+      if (TAO_debug_level > 0) ACE_DEBUG ((LM_ERROR,"RTCP Object already created for this flow\n"));
+      rtcp_handler = ACE_dynamic_cast (TAO_AV_RTCP_UDP_Flow_Handler*,
+                                       handler_entry->int_id_);
+    }
+  else
+    {
+      // Now do the creation of RTCP handler.
+      // The address of RTCP will always be one port higher than RTP.
+      ACE_INET_Addr *entry_addr = ACE_static_cast (ACE_INET_Addr *,
+                                                   entry->address ());
+      if (entry_addr == 0)
+        return -1;
+      ACE_INET_Addr local_addr (entry_addr->get_port_number ()+1,
+                                entry_addr->get_ip_address ());
+      TAO_AV_UDP_Flow_Handler *handler = 0;
+      result = this->acceptor_.open (this,
+                                     av_core->reactor (),
+                                     local_addr,
+                                     handler);
+      rtcp_handler = ACE_dynamic_cast (TAO_AV_RTCP_UDP_Flow_Handler*,
+                                       handler);
+      result = TAO_AV_RTCP::rtcp_udp_map_.bind (handler_key,rtcp_handler);
+      if (result < 0)
+        if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"rtcp_map::bind failed\n"));
+    }
   rtp_handler->rtcp_handler (rtcp_handler);
   endpoint->set_rtcp_info (entry->flowname (),
                            rtcp_handler->source_manager (),
                            rtcp_handler->state ());
-  result = TAO_AV_RTCP::rtcp_map_.bind (handler_key,rtcp_handler);
-  if (result < 0)
-    ACE_DEBUG ((LM_DEBUG,"rtcp_map::bind failed\n"));
   return 0;
 }
 
@@ -403,19 +434,36 @@ TAO_AV_RTP_UDP_Acceptor::open_default (TAO_Base_StreamEndPoint *endpoint,
   // Now do the creation of RTCP handler.
   // Since its a default open we do a default open for rtcp also.
   ACE_INET_Addr local_addr;
-  TAO_AV_RTP_UDP_Flow_Handler *rtp_handler = ACE_static_cast (TAO_AV_RTP_UDP_Flow_Handler *,
-                                                              this->handler_);
-  TAO_AV_UDP_Flow_Handler *handler = 0;
-  result = this->acceptor_.open (this,
-                                 av_core->reactor (),
-                                 local_addr,
-                                 handler);
-  TAO_AV_RTCP_UDP_Flow_Handler *rtcp_handler = ACE_dynamic_cast (TAO_AV_RTCP_UDP_Flow_Handler*,
-                                                                 handler);
+  TAO_String_Hash_Key handler_key (entry->flowname ());
+  TAO_AV_RTCP::RTCP_UDP_Map::ENTRY *handler_entry = 0;
+  TAO_AV_RTP_UDP_Flow_Handler *rtp_handler = ACE_dynamic_cast (TAO_AV_RTP_UDP_Flow_Handler *,
+                                                               this->handler_);
+  TAO_AV_RTCP_UDP_Flow_Handler *rtcp_handler = 0;
+  if (TAO_AV_RTCP::rtcp_udp_map_.find (handler_key,
+                                   handler_entry) == 0)
+    {
+      if (TAO_debug_level > 0) ACE_DEBUG ((LM_ERROR,"RTCP Object already created for this flow\n"));
+      rtcp_handler = ACE_dynamic_cast (TAO_AV_RTCP_UDP_Flow_Handler*,
+                                       handler_entry->int_id_);
+    }
+  else
+    {
+      TAO_AV_UDP_Flow_Handler *handler = 0;
+      result = this->acceptor_.open (this,
+                                     av_core->reactor (),
+                                     local_addr,
+                                     handler);
+      TAO_AV_RTCP_UDP_Flow_Handler *rtcp_handler = ACE_dynamic_cast (TAO_AV_RTCP_UDP_Flow_Handler*,
+                                                                     handler);
+      result = TAO_AV_RTCP::rtcp_udp_map_.bind (handler_key,rtcp_handler);
+      if (result < 0)
+        if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"rtcp_map::bind failed\n"));
+    }
   rtp_handler->rtcp_handler (rtcp_handler);
   endpoint->set_rtcp_info (entry->flowname (),
                            rtcp_handler->source_manager (),
                            rtcp_handler->state ());
+  return 0;
 }
 
 //------------------------------------------------------------
@@ -423,6 +471,7 @@ TAO_AV_RTP_UDP_Acceptor::open_default (TAO_Base_StreamEndPoint *endpoint,
 //------------------------------------------------------------
 
 TAO_AV_RTP_UDP_Connector::TAO_AV_RTP_UDP_Connector (void)
+  :make_rtp_handler_ (1)
 {
 }
 
@@ -448,8 +497,10 @@ TAO_AV_RTP_UDP_Connector::make_svc_handler (TAO_AV_UDP_Flow_Handler *&handler)
                       TAO_AV_RTP_Object (callback,
                                          handler->transport ()),
                       -1);
+      callback->protocol_object (object);
       this->endpoint_->set_protocol_object (this->flowname_.c_str (),
                                             object);
+      this->endpoint_->set_handler (this->flowname_.c_str (),handler);
       this->entry_->protocol_object (object);
     }
   else
@@ -471,32 +522,45 @@ TAO_AV_RTP_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
   int result = TAO_AV_UDP_Connector::connect (entry,
                                               transport);
   TAO_String_Hash_Key handler_key (entry->flowname ());
-  TAO_AV_RTCP::RTCP_Map::ENTRY *handler_entry = 0;
-  if (TAO_AV_RTCP::rtcp_map_.find (handler_key,
-                                   handler_entry) == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,"RTCP Object already created for this flow\n"),0);
-  // Now do the creation of RTCP handler.
-  // The address of RTCP will always be one port higher than RTP.
-  ACE_INET_Addr *entry_addr = ACE_static_cast (ACE_INET_Addr *,
-                                               entry->address ());
-  if (entry_addr == 0)
-    return -1;
-  ACE_INET_Addr remote_addr (entry_addr->get_port_number ()+1,
-                            entry_addr->get_ip_address ());
-
-  ACE_INET_Addr local_addr;
+  TAO_AV_RTCP::RTCP_UDP_Map::ENTRY *handler_entry = 0;
   TAO_AV_RTP_UDP_Flow_Handler *rtp_handler = ACE_dynamic_cast (TAO_AV_RTP_UDP_Flow_Handler *,
                                                                this->handler_);
-  TAO_AV_UDP_Flow_Handler *handler;
-  result = this->connector_.connect (handler,
-                                     remote_addr,
-                                     local_addr);
-  TAO_AV_RTCP_UDP_Flow_Handler *rtcp_handler = ACE_dynamic_cast (TAO_AV_RTCP_UDP_Flow_Handler*,
-                                                                 handler);
+  TAO_AV_RTCP_UDP_Flow_Handler *rtcp_handler = 0;
+  if (TAO_AV_RTCP::rtcp_udp_map_.find (handler_key,
+                                       handler_entry) == 0)
+    {
+      if (TAO_debug_level > 0) ACE_DEBUG ((LM_ERROR,"RTCP Object already created for this flow\n"));
+      rtcp_handler = ACE_dynamic_cast (TAO_AV_RTCP_UDP_Flow_Handler*,
+                                       handler_entry->int_id_);
+    }
+  else
+    {
+
+      // Now do the creation of RTCP handler.
+      // The address of RTCP will always be one port higher than RTP.
+      ACE_INET_Addr *entry_addr = ACE_static_cast (ACE_INET_Addr *,
+                                                   entry->address ());
+      if (entry_addr == 0)
+        return -1;
+      ACE_INET_Addr remote_addr (entry_addr->get_port_number ()+1,
+                                 entry_addr->get_ip_address ());
+
+      ACE_INET_Addr local_addr;
+      TAO_AV_UDP_Flow_Handler *handler;
+      result = this->connector_.connect (handler,
+                                         remote_addr,
+                                         local_addr);
+      rtcp_handler = ACE_dynamic_cast (TAO_AV_RTCP_UDP_Flow_Handler*,
+                                       handler);
+      result = TAO_AV_RTCP::rtcp_udp_map_.bind (handler_key,rtcp_handler);
+      if (result < 0)
+        if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"rtcp_map::bind failed\n"));
+
+    }
   rtp_handler->rtcp_handler (rtcp_handler);
-  result = TAO_AV_RTCP::rtcp_map_.bind (handler_key,rtcp_handler);
-  if (result < 0)
-    ACE_DEBUG ((LM_DEBUG,"rtcp_map::bind failed\n"));
+  this->endpoint_->set_rtcp_info (entry->flowname (),
+                                  rtcp_handler->source_manager (),
+                                  rtcp_handler->state ());
   return 0;
 }
 
@@ -520,15 +584,18 @@ TAO_AV_RTP_UDP_Flow_Handler::handle_input (ACE_HANDLE /*fd*/)
 {
   ACE_Message_Block *data = 0;
   ACE_INET_Addr addr;
+  TAO_AV_frame_info *frame_info = 0;
   // Handles the incoming RTP packet input.
   int result = TAO_AV_RTP::handle_input (this->transport_,
                                          data,
+                                         frame_info,
                                          addr,
                                          this->source_manager_,
                                          this->state_);
   if (result < 0)
     return 0;
-  result = this->callback_->receive_frame (data);
+  result = this->callback_->receive_frame (data,
+                                           frame_info);
   return 0;
 }
 
@@ -538,18 +605,70 @@ TAO_AV_RTP_Object::send_frame (ACE_Message_Block *frame,
 {
   TAO_AV_RTP::rtphdr header;
   int format = 0;
-  int result = TAO_AV_RTP::write_header (header,
+  int result = -1;
+  if (frame_info != 0)
+    {
+      result = TAO_AV_RTP::write_header (header,
                                          frame_info->format,
                                          this->sequence_num_,
                                          frame_info->timestamp,
                                          frame_info->ssrc,
                                          frame_info->boundary_marker);
-  frame_info->sequence_num = this->sequence_num_;
+      frame_info->sequence_num = this->sequence_num_;
+    }
+  else
+    {
+      result = TAO_AV_RTP::write_header (header,
+                                         0,
+                                         this->sequence_num_,
+                                         0,
+                                         0,
+                                         0);
+    }
   if (result < 0)
     return result;
   result = TAO_AV_RTP::send_frame (this->transport_,
                                    header,
                                    frame);
+  if (result < 0)
+    return result;
+
+  return 0;
+}
+
+int
+TAO_AV_RTP_Object::send_frame (const iovec *iov,
+                               int iovcnt,
+                               TAO_AV_frame_info *frame_info)
+{
+  TAO_AV_RTP::rtphdr header;
+  int format = 0;
+  int result = -1;
+  if (frame_info != 0)
+    {
+      result = TAO_AV_RTP::write_header (header,
+                                         frame_info->format,
+                                         this->sequence_num_,
+                                         frame_info->timestamp,
+                                         frame_info->ssrc,
+                                         frame_info->boundary_marker);
+      frame_info->sequence_num = this->sequence_num_;
+    }
+  else
+    {
+      result = TAO_AV_RTP::write_header (header,
+                                         0,
+                                         this->sequence_num_,
+                                         0,
+                                         0,
+                                         0);
+    }
+  if (result < 0)
+    return result;
+  result = TAO_AV_RTP::send_frame (this->transport_,
+                                   header,
+                                   iov,
+                                   iovcnt);
   if (result < 0)
     return result;
 
@@ -563,7 +682,7 @@ TAO_AV_RTP_Object::TAO_AV_RTP_Object (TAO_AV_Callback *callback,
 {
   // @@Naga:We have to initialize the sequence number to a non-zero
   // random number.
-  this->sequence_num_ = random ();
+  this->sequence_num_ = ACE_OS::rand ();
 }
 
 int
@@ -671,8 +790,10 @@ TAO_AV_RTP_UDP_MCast_Acceptor::make_svc_handler (TAO_AV_UDP_MCast_Flow_Handler *
                       TAO_AV_RTP_Object (callback,
                                          handler->transport ()),
                       -1);
+      callback->protocol_object (object);
       this->endpoint_->set_protocol_object (this->flowname_.c_str (),
                                             object);
+      this->endpoint_->set_handler (this->flowname_.c_str (),handler);
       this->entry_->protocol_object (object);
     }
   else
@@ -700,37 +821,44 @@ TAO_AV_RTP_UDP_MCast_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
   if (result < 0)
     return result;
   TAO_String_Hash_Key handler_key (entry->flowname ());
-  TAO_AV_RTCP::RTCP_Map::ENTRY *handler_entry = 0;
-  if (TAO_AV_RTCP::rtcp_map_.find (handler_key,
-                                   handler_entry) == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,"RTCP Object already created for this flow\n"),0);
-
-  // Now do the creation of RTCP handler.
-  // The address of RTCP will always be one port higher than RTP.
-  ACE_INET_Addr *entry_addr = ACE_static_cast (ACE_INET_Addr *,
-                                               entry->address ());
-  if (entry_addr == 0)
-    return -1;
-  ACE_INET_Addr *local_addr = 0;
-  ACE_NEW_RETURN (local_addr,
-                  ACE_INET_Addr (entry_addr->get_port_number ()+1,
-                                 entry_addr->get_ip_address ()),
-                  -1);
+  TAO_AV_RTCP::RTCP_MCast_Map::ENTRY *handler_entry = 0;
   TAO_AV_RTP_UDP_MCast_Flow_Handler *rtp_handler = ACE_static_cast (TAO_AV_RTP_UDP_MCast_Flow_Handler *,
                                                                     this->handler_);
-  TAO_AV_UDP_MCast_Flow_Handler *handler = 0;
-  result = this->open_i (av_core->reactor (),
-                         local_addr,
-                         handler);
-  TAO_AV_RTCP_UDP_MCast_Flow_Handler *rtcp_handler = ACE_dynamic_cast (TAO_AV_RTCP_UDP_MCast_Flow_Handler*,
-                                                                       handler);
+  TAO_AV_RTCP_UDP_MCast_Flow_Handler *rtcp_handler = 0;
+  if (TAO_AV_RTCP::rtcp_mcast_map_.find (handler_key,
+                                         handler_entry) == 0)
+    {
+      if (TAO_debug_level > 0) ACE_DEBUG ((LM_ERROR,"RTCP Object already created for this flow\n"));
+      rtcp_handler = ACE_dynamic_cast (TAO_AV_RTCP_UDP_MCast_Flow_Handler*,
+                                       handler_entry->int_id_);
+    }
+  else
+    {
+      // Now do the creation of RTCP handler.
+      // The address of RTCP will always be one port higher than RTP.
+      ACE_INET_Addr *entry_addr = ACE_static_cast (ACE_INET_Addr *,
+                                                   entry->address ());
+      if (entry_addr == 0)
+        return -1;
+      ACE_INET_Addr *local_addr = 0;
+      ACE_NEW_RETURN (local_addr,
+                      ACE_INET_Addr (entry_addr->get_port_number ()+1,
+                                     entry_addr->get_ip_address ()),
+                      -1);
+      TAO_AV_UDP_MCast_Flow_Handler *handler = 0;
+      result = this->open_i (av_core->reactor (),
+                             local_addr,
+                             handler);
+      rtcp_handler = ACE_dynamic_cast (TAO_AV_RTCP_UDP_MCast_Flow_Handler*,
+                                       handler);
+      result = TAO_AV_RTCP::rtcp_mcast_map_.bind (handler_key,rtcp_handler);
+      if (result < 0)
+        if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"rtcp_map::bind failed\n"));
+    }
   rtp_handler->rtcp_handler (rtcp_handler);
   endpoint->set_rtcp_info (entry->flowname (),
                            rtcp_handler->source_manager (),
                            rtcp_handler->state ());
-  result = TAO_AV_RTCP::rtcp_map_.bind (handler_key,rtcp_handler);
-  if (result < 0)
-    ACE_DEBUG ((LM_DEBUG,"rtcp_map::bind failed\n"));
 }
 
 int
@@ -744,17 +872,33 @@ TAO_AV_RTP_UDP_MCast_Acceptor::open_default (TAO_Base_StreamEndPoint *endpoint,
                                                 entry);
   if (result < 0)
     return result;
-  // Now do the creation of RTCP handler.
-  // Since its a default open we do a default open for rtcp also.
-  ACE_INET_Addr *local_addr = 0;
+  TAO_String_Hash_Key handler_key (entry->flowname ());
+  TAO_AV_RTCP::RTCP_MCast_Map::ENTRY *handler_entry = 0;
   TAO_AV_RTP_UDP_MCast_Flow_Handler *rtp_handler = ACE_static_cast (TAO_AV_RTP_UDP_MCast_Flow_Handler *,
                                                                     this->handler_);
-  TAO_AV_UDP_MCast_Flow_Handler *handler = 0;
-  result = this->open_i (av_core->reactor (),
-                         local_addr,
-                         handler);
-  TAO_AV_RTCP_UDP_MCast_Flow_Handler *rtcp_handler = ACE_dynamic_cast (TAO_AV_RTCP_UDP_MCast_Flow_Handler*,
-                                                                       handler);
+  TAO_AV_RTCP_UDP_MCast_Flow_Handler *rtcp_handler = 0;
+  if (TAO_AV_RTCP::rtcp_mcast_map_.find (handler_key,
+                                         handler_entry) == 0)
+    {
+      if (TAO_debug_level > 0) ACE_DEBUG ((LM_ERROR,"RTCP Object already created for this flow\n"));
+      rtcp_handler = ACE_dynamic_cast (TAO_AV_RTCP_UDP_MCast_Flow_Handler*,
+                                       handler_entry->int_id_);
+    }
+  else
+    {
+      // Now do the creation of RTCP handler.
+      // Since its a default open we do a default open for rtcp also.
+      ACE_INET_Addr *local_addr = 0;
+      TAO_AV_UDP_MCast_Flow_Handler *handler = 0;
+      result = this->open_i (av_core->reactor (),
+                             local_addr,
+                             handler);
+      rtcp_handler = ACE_dynamic_cast (TAO_AV_RTCP_UDP_MCast_Flow_Handler*,
+                                       handler);
+      result = TAO_AV_RTCP::rtcp_mcast_map_.bind (handler_key,rtcp_handler);
+      if (result < 0)
+        if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"rtcp_map::bind failed\n"));
+    }
   rtp_handler->rtcp_handler (rtcp_handler);
   endpoint->set_rtcp_info (entry->flowname (),
                            rtcp_handler->source_manager (),
@@ -766,6 +910,7 @@ TAO_AV_RTP_UDP_MCast_Acceptor::open_default (TAO_Base_StreamEndPoint *endpoint,
 //------------------------------------------------------------
 
 TAO_AV_RTP_UDP_MCast_Connector::TAO_AV_RTP_UDP_MCast_Connector (void)
+  :make_rtp_handler_ (1)
 {
 }
 
@@ -792,8 +937,10 @@ TAO_AV_RTP_UDP_MCast_Connector::make_svc_handler (TAO_AV_UDP_MCast_Flow_Handler 
                       TAO_AV_RTP_Object (callback,
                                          handler->transport ()),
                       -1);
+      callback->protocol_object (object);
       this->endpoint_->set_protocol_object (this->flowname_.c_str (),
                                             object);
+      this->endpoint_->set_handler (this->flowname_.c_str (),handler);
       this->entry_->protocol_object (object);
     }
   else
@@ -815,44 +962,56 @@ TAO_AV_RTP_UDP_MCast_Connector::connect (TAO_FlowSpec_Entry *entry,
   int result = TAO_AV_UDP_MCast_Connector::connect (entry,
                                                     transport);
   TAO_String_Hash_Key handler_key (entry->flowname ());
-  TAO_AV_RTCP::RTCP_Map::ENTRY *handler_entry = 0;
-  if (TAO_AV_RTCP::rtcp_map_.find (handler_key,
-                                   handler_entry) == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,"RTCP Object already created for this flow\n"),0);
-  // Now do the creation of RTCP handler.
-  // The address of RTCP will always be one port higher than RTP.
-  ACE_INET_Addr *entry_addr = ACE_static_cast (ACE_INET_Addr *,
-                                               entry->address ());
-  if (entry_addr == 0)
-    return -1;
-  ACE_INET_Addr remote_addr (entry_addr->get_port_number ()+1,
-                            entry_addr->get_ip_address ());
-
-  ACE_INET_Addr *address = &remote_addr;
+  TAO_AV_RTCP::RTCP_MCast_Map::ENTRY *handler_entry = 0;
   TAO_AV_RTP_UDP_MCast_Flow_Handler *rtp_handler = ACE_dynamic_cast (TAO_AV_RTP_UDP_MCast_Flow_Handler *,
                                                                      this->handler_);
-  TAO_AV_UDP_MCast_Flow_Handler *handler = 0;
-  result = this->connect_i (this->av_core_->reactor (),
-                            address,
-                            handler);
-  if (result < 0)
-    return result;
-  TAO_AV_RTCP_UDP_MCast_Flow_Handler *rtcp_handler = ACE_dynamic_cast (TAO_AV_RTCP_UDP_MCast_Flow_Handler*,
-                                                                       handler);
+  TAO_AV_RTCP_UDP_MCast_Flow_Handler *rtcp_handler = 0;
+  if (TAO_AV_RTCP::rtcp_mcast_map_.find (handler_key,
+                                   handler_entry) == 0)
+    {
+      if (TAO_debug_level > 0) ACE_DEBUG ((LM_ERROR,"RTCP Object already created for this flow\n"));
+      rtcp_handler = ACE_dynamic_cast (TAO_AV_RTCP_UDP_MCast_Flow_Handler*,
+                                       handler_entry->int_id_);
+    }
+  else
+    {
+
+      // Now do the creation of RTCP handler.
+      // The address of RTCP will always be one port higher than RTP.
+      ACE_INET_Addr *entry_addr = ACE_static_cast (ACE_INET_Addr *,
+                                                   entry->address ());
+      if (entry_addr == 0)
+        return -1;
+      ACE_INET_Addr remote_addr (entry_addr->get_port_number ()+1,
+                                 entry_addr->get_ip_address ());
+
+      ACE_INET_Addr *address = &remote_addr;
+      TAO_AV_UDP_MCast_Flow_Handler *handler = 0;
+      result = this->connect_i (this->av_core_->reactor (),
+                                address,
+                                handler);
+      if (result < 0)
+        return result;
+      rtcp_handler = ACE_dynamic_cast (TAO_AV_RTCP_UDP_MCast_Flow_Handler*,
+                                       handler);
+      result = TAO_AV_RTCP::rtcp_mcast_map_.bind (handler_key,rtcp_handler);
+      if (result < 0)
+        if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"rtcp_map::bind failed\n"));
+    }
   rtp_handler->rtcp_handler (rtcp_handler);
   this->endpoint_->set_rtcp_info (entry->flowname (),
                                   rtcp_handler->source_manager (),
                                   rtcp_handler->state ());
-  result = TAO_AV_RTCP::rtcp_map_.bind (handler_key,rtcp_handler);
-  if (result < 0)
-    ACE_DEBUG ((LM_DEBUG,"rtcp_map::bind failed\n"));
   return 0;
 }
 
 // TAO_AV_RTP_UDP_MCast_Flow_Handler
 TAO_AV_RTP_UDP_MCast_Flow_Handler::TAO_AV_RTP_UDP_MCast_Flow_Handler (TAO_AV_Callback *callback)
   :TAO_AV_Flow_Handler (callback),
-   TAO_AV_UDP_MCast_Flow_Handler (callback)
+   TAO_AV_UDP_MCast_Flow_Handler (callback),
+   source_manager_ (0),
+   rtcp_handler_ (0),
+   state_ (0)
 {
 }
 
@@ -869,9 +1028,11 @@ TAO_AV_RTP_UDP_MCast_Flow_Handler::handle_input (ACE_HANDLE /*fd*/)
 {
   ACE_Message_Block *data = 0;
   ACE_INET_Addr addr;
+  TAO_AV_frame_info *frame_info = 0;
   // Handles the incoming RTP packet input.
   int result = TAO_AV_RTP::handle_input (this->transport_,
                                          data,
+                                         frame_info,
                                          addr,
                                          this->source_manager_,
                                          this->state_);
@@ -880,6 +1041,7 @@ TAO_AV_RTP_UDP_MCast_Flow_Handler::handle_input (ACE_HANDLE /*fd*/)
   // @@ What should we do with the header.
   // Answer:Use it for RTCP statistics. But then the
   // application needs the format of the data to decode it.
-  result = this->callback_->receive_frame (data);
+  result = this->callback_->receive_frame (data,
+                                           frame_info);
   return 0;
 }

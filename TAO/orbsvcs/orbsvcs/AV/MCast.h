@@ -20,8 +20,9 @@
 #ifndef TAO_AV_MCAST_H
 #define TAO_AV_MCAST_H
 
-#include "Transport.h"
+#include "FlowSpec_Entry.h"
 #include "ace/INET_Addr.h"
+#include "ace/SOCK_Dgram_Mcast.h"
 
 class TAO_AV_UDP_MCast_Flow_Handler;
 
@@ -147,11 +148,12 @@ public:
   // Dtor
   virtual ACE_HANDLE get_handle (void) const;
   virtual int handle_input (ACE_HANDLE fd);
+  virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg = 0);
   ACE_SOCK_Dgram_Mcast *get_mcast_socket (void) const;
+  virtual ACE_Event_Handler* event_handler (void){ return this; }
 protected:
   ACE_INET_Addr peer_addr_;
   ACE_SOCK_Dgram_Mcast *dgram_mcast_;
-
 };
 
 class TAO_AV_UDP_MCast_Protocol_Factory
