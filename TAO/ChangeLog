@@ -1,3 +1,16 @@
+Mon Dec  8 19:33:03 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Synch_Invocation.cpp:
+
+	  Fixed a minor problem with reinvocation. We were not handling
+	  errors properly, more precisely the retsrat errors if they show
+	  up during wait_for_reply (). Thanks to Milan Cvetkovic for
+	  motivating this change.
+	
+	* tao/Messaging/Asynch_Invocation.cpp:
+
+	  Cosmetic change.
+
 Mon Dec  8 18:50:58 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_decl.cpp:

@@ -138,8 +138,6 @@ namespace TAO
         if (s != TAO_INVOKE_SUCCESS)
           return s;
 
-
-
         // NOTE: Not sure how things are handles with exclusive muxed
         // strategy.
         if (this->resolver_.transport ()->idle_after_send ())
