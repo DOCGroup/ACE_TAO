@@ -1,3 +1,4 @@
+# $Id$
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
@@ -8,10 +9,10 @@
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  ../../../../orbsvcs/orbsvcs/CosNotifyFilterS.h \
-  ../../../../orbsvcs/orbsvcs/CosNotifyCommS.h \
-  ../../../../orbsvcs/orbsvcs/CosNotificationS.h \
-  ../../../../orbsvcs/orbsvcs/CosNotificationC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -190,8 +191,8 @@
   $(TAO_ROOT)/tao/IOPC.h \
   $(TAO_ROOT)/tao/IOPC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  ../../../../orbsvcs/orbsvcs/Notify/notify_export.h \
-  ../../../../orbsvcs/orbsvcs/CosNotificationC.i \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -208,17 +209,17 @@
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
-  ../../../../orbsvcs/orbsvcs/CosNotificationS.i \
-  ../../../../orbsvcs/orbsvcs/CosEventCommS.h \
-  ../../../../orbsvcs/orbsvcs/CosEventCommC.h \
-  ../../../../orbsvcs/orbsvcs/CosEventCommC.i \
-  ../../../../orbsvcs/orbsvcs/CosEventCommS.i \
-  ../../../../orbsvcs/orbsvcs/CosNotifyCommC.h \
-  ../../../../orbsvcs/orbsvcs/CosNotifyCommC.i \
-  ../../../../orbsvcs/orbsvcs/CosNotifyCommS.i \
-  ../../../../orbsvcs/orbsvcs/CosNotifyFilterC.h \
-  ../../../../orbsvcs/orbsvcs/CosNotifyFilterC.i \
-  ../../../../orbsvcs/orbsvcs/CosNotifyFilterS.i \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.i \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.i \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.i \
   $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/Policy_Manager.h \
@@ -381,10 +382,10 @@
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  ../../../../orbsvcs/orbsvcs/CosNotifyFilterS.h \
-  ../../../../orbsvcs/orbsvcs/CosNotifyCommS.h \
-  ../../../../orbsvcs/orbsvcs/CosNotificationS.h \
-  ../../../../orbsvcs/orbsvcs/CosNotificationC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -563,8 +564,8 @@
   $(TAO_ROOT)/tao/IOPC.h \
   $(TAO_ROOT)/tao/IOPC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  ../../../../orbsvcs/orbsvcs/Notify/notify_export.h \
-  ../../../../orbsvcs/orbsvcs/CosNotificationC.i \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -581,18 +582,18 @@
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
-  ../../../../orbsvcs/orbsvcs/CosNotificationS.i \
-  ../../../../orbsvcs/orbsvcs/CosEventCommS.h \
-  ../../../../orbsvcs/orbsvcs/CosEventCommC.h \
-  ../../../../orbsvcs/orbsvcs/CosEventCommC.i \
-  ../../../../orbsvcs/orbsvcs/CosEventCommS.i \
-  ../../../../orbsvcs/orbsvcs/CosNotifyCommC.h \
-  ../../../../orbsvcs/orbsvcs/CosNotifyCommC.i \
-  ../../../../orbsvcs/orbsvcs/CosNotifyCommS.i \
-  ../../../../orbsvcs/orbsvcs/CosNotifyFilterC.h \
-  ../../../../orbsvcs/orbsvcs/CosNotifyFilterC.i \
-  ../../../../orbsvcs/orbsvcs/CosNotifyFilterS.i \
-  ../../../../orbsvcs/orbsvcs/Notify/FilterFactory.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.i \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.i \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.i \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/FilterFactory.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.i \

@@ -1,8 +1,8 @@
 project(TAO_NotifyTests): orbsvcslib, notify {
-  depends += CosNotification CosEvent
+  depends += CosNotification
   sharedname += TAO_NotifyTests
 
-  libs += TAO_CosNotification TAO_CosEvent
+  libs += TAO_CosNotification
 
   libpaths += $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL
   libpaths += $(TAO_ROOT)/tao/IORTable
@@ -48,52 +48,5 @@ project(TAO_NotifyTests): orbsvcslib, notify {
   SupplierAdmin_Command.cpp
   Task_Stats.cpp  
   }
-}
-
-project(TAO_RT_NotifyTests_Filter): orbsvcslib, notify {
-  sharedname = TAO_RT_NotifyTests_Filter
-  libs       += TAO_CosNotification TAO_RTCORBA
-
-  dllflags    = TAO_RT_Test_Filter_BUILD_DLL
-
-  libpaths += $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL
-  libpaths += $(TAO_ROOT)/tao/DynamicAny
-  libpaths += $(TAO_ROOT)/tao/PortableServer
-  libpaths += $(TAO_ROOT)/tao/IORTable
-  libpaths += $(TAO_ROOT)/tao/RTCORBA
-
-  IDL_Files {  
-  }
-
-  Source_Files{
-    RT_Test_Filter.cpp
-    RT_Test_FilterFactory.cpp
-  }
-}
-
-project(TAO_RT_NotifyTests): orbsvcslib, notify {
-
-  depends    = NotifyTests RTCORBA RTPortableServer                
-  sharedname = TAO_RT_NotifyTests
-  libs       += TAO_NotifyTests TAO_RTCORBA TAO_RTPortableServer                
-
-  libpaths += $(TAO_ROOT)/tao/RTCORBA
-  libpaths += $(TAO_ROOT)/tao/RTPortableServer
-  libpaths += $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL
-  libpaths += $(TAO_ROOT)/tao/IORTable
-  libpaths += $(TAO_ROOT)/tao/DynamicAny
-  libpaths += $(TAO_ROOT)/tao/PortableServer
-
-  dllflags    = TAO_RT_NOTIFY_TEST_BUILD_DLL
-
-  IDL_Files {  
-  }
-
-  Source_Files{
-   RT_Application_Command.cpp
-   RT_POA_Command.cpp
-   RT_Priority_Mapping.cpp
-   RT_Factories_Define.cpp
-  }  
 }
 
