@@ -50,7 +50,7 @@ static int
 init_buffer (size_t index)
 {
   ACE_INT32 len;
- 
+
  if (ACE::recv_n (poll_array[index].fd,
                   (void *) &len,
                   sizeof (ACE_INT32)) != sizeof (ACE_INT32))
@@ -85,7 +85,7 @@ handle_data (size_t &n_handles)
       if (ACE_BIT_ENABLED (poll_array[index].revents, POLLIN))
         {
           // First time in, we need to initialize the buffer.
-          if (buffer_array[index].buf_ == 0 
+          if (buffer_array[index].buf_ == 0
               && init_buffer (index) == -1)
             {
               ACE_ERROR ((LM_ERROR,
@@ -97,7 +97,7 @@ handle_data (size_t &n_handles)
           // Read data from client (terminate on error).
 
           ssize_t n = ACE::recv (poll_array[index].fd,
-                                 buffer_array[index].buf_, 
+                                 buffer_array[index].buf_,
                                  buffer_array[index].len_);
           // <recv> will not block in this case!
 
@@ -179,6 +179,8 @@ main (int, char *[])
 
   for (size_t n_handles = 1;;)
     {
+      ACE_ENDLESS_LOOP
+
       // Wait for client I/O events (handle interrupts).
       while (ACE_OS::poll (poll_array, n_handles) == -1
              && errno == EINTR)

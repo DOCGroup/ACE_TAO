@@ -712,6 +712,10 @@ private:
 #   define ACE_NOTREACHED(a) a
 # endif /* ! defined . . . */
 
+# if !defined (ACE_ENDLESS_LOOP)
+#  define ACE_ENDLESS_LOOP
+# endif /* ! ACE_ENDLESS_LOOP */
+
 # if defined (ACE_NEEDS_FUNC_DEFINITIONS)
     // It just evaporated ;-)  Not pleasant.
 #   define ACE_UNIMPLEMENTED_FUNC(f)
