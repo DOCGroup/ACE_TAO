@@ -29,6 +29,8 @@
 typedef ACE_IOStream<ACE_SOCK_Stream> ACE_SOCK_IOStream;
 
 short PORT = ACE_DEFAULT_SERVER_PORT;
+u_long error_at_server = 0;
+u_long error_at_client = 0;
 
 /* The biggest drawback to an iostream is that it generally
    eats up whitespace when performing a get (>>) operation.
@@ -175,7 +177,7 @@ static void *client_thread(void * _thr_mgr)
 	// Allow the server to get the string and echo it to the user.
 	// (The iostream doesn't need this, but humans do :)
 	//
-	ACE_OS::sleep(1);
+	ACE_OS::sleep(2);
 
 	// Send another string but this time the server will read it
 	// as a char[].  Notice how the server's output doesn't include
@@ -186,7 +188,7 @@ static void *client_thread(void * _thr_mgr)
 	server << str << endl;
 
 	// Again, give the server time to display the happenings to the user.
-	ACE_OS::sleep(1);
+	ACE_OS::sleep(2);
 
 	// Read from the server an int, float, long, float double.
 	// The iostream will pull them out by using the whitespace
@@ -198,7 +200,18 @@ static void *client_thread(void * _thr_mgr)
 	double d;
 	server >> i >> f1 >> l >> f2 >> d;
 
-	ACE_DEBUG ((LM_DEBUG, "Client Received: int %d float %f long %d float %f double %f \n", i, f1, (int) l, f2, d));
+	ACE_DEBUG ((LM_DEBUG, "Client Received: int %d float %f long %d float %f double %f\n", i, f1, (int) l, f2, d));
+
+        // check for proper received values
+	if (i != 1  ||  (f1 < 0.123420 || f1 > 0.123422)  ||
+            l != 666555444  ||  (f2 < 23.44 || f2 > 23.46)  ||
+            (d < -47.1e+9 || d > -45.9e+9))
+          {
+            ACE_DEBUG ((LM_ERROR, "incorrect value received, should be:\n"
+              "int 1 float 0.123421 long 666555444 float 23.450001 "
+              "double -46500000000.00000\n"));
+	    ++error_at_client;
+          }
 
 	// Reset the precision to limit ourselves
 	// to two significant digits.
@@ -229,7 +242,7 @@ void server_test(ACE_SOCK_IOStream & client)
 	qchar qbuf[1024];
 	ACE_OS::memset(qbuf,0,sizeof(qbuf));
 	client >> qbuf;
-	ACE_DEBUG ((LM_DEBUG, "Server Received:  (%s)\n", qbuf));
+	ACE_DEBUG ((LM_DEBUG, "Server Received: (\"%s\")\n", qbuf));
 
 	// Give the client time to announce the next test to the user
 	ACE_OS::sleep(2);
@@ -274,12 +287,23 @@ void server_test(ACE_SOCK_IOStream & client)
 	double d;
 	client >> i >> f1 >> l >> f2 >> d;
 
-	ACE_DEBUG ((LM_DEBUG, "Server Received: int %d float %g long %d float %g double %g \n", i, f1, (int) l, f2, d));
+	ACE_DEBUG ((LM_DEBUG, "Server Received: int %d float %g long %d float %g double %g\n", i, f1, (int) l, f2, d));
+
+        // check for proper received values
+	if (i != -1  ||  (f1 < -0.13 || f1 > -0.11)  ||
+            l != -666555444  ||  (f2 < -24.0 || f2 > -22.0)  ||
+            (d < 45e+9 || d > 47e+9))
+          {
+            ACE_DEBUG ((LM_ERROR, "incorrect value received, should be:\n"
+              "int -1 float -0.12 long -666555444 float -23 double 4.6e+10\n"));
+	    ++error_at_server;
+          }
 
 	return;
 }
 
-main( int argc, char *argv[] )
+int
+main (int argc, char *argv[])
 {
 	ACE_START_TEST ("IOStream_Test");
 
@@ -308,5 +332,5 @@ main( int argc, char *argv[] )
 	acceptor.close();
 
 	ACE_END_TEST;
-	return 0;
+	return error_at_client || error_at_server;
 }
