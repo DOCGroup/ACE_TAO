@@ -1,3 +1,9 @@
+Fri Feb 18 12:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/RTCORBA/Banded_Connections/RTCORBA_Banded_Connections.mpc:
+          Renamed to RTCORBA_Banded_Conn.mpc to fix fuzz error about long
+          file name
+
 Fri Feb 18 11:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO/tao/*C.{h,cpp,inl}:
