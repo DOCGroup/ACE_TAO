@@ -340,7 +340,7 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
         {
           if (TAO_orbdebug)
             ACE_ERROR ((LM_WARNING,
-                        "TAO (%P|%t) No %s found in Service Repository.  "
+                        "TAO (%P|%t) No %s found in Service Repository. "
                         "Using default instance IIOP Protocol Factory.\n",
                         "IIOP Protocol Factory"));
 
@@ -349,7 +349,9 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
                           -1);
         }
 
-      ACE_NEW_RETURN (item, TAO_Protocol_Item ("IIOP_Factory"), -1);
+      ACE_NEW_RETURN (item,
+                      TAO_Protocol_Item ("IIOP_Factory"),
+                      -1);
       item->factory (protocol_factory);
 
       if (this->protocol_factories_.insert (item) == -1)
