@@ -68,17 +68,6 @@ public:
   // Returns pointer to the ORB with which this OA is associated.
   // SHOULD PROBABLY MOVE TO BOA!
 
-  // @@ Please make sure that all macros start with TAO_ ...
-#if defined (ROA_NEEDS_REQ_KEY)
-  CORBA::OctetSeq *get_target_key (CORBA::Environment &env);
-  CORBA::Principal_ptr get_client_principal (CORBA::Environment &env);
-#endif /* ROA_NEEDSS_REQ_KEY */
-
-  virtual int handle_message (TAO_Dispatch_Context &context,
-                              CORBA::Environment &env);
-  // Reads incoming GIOP messages, dispatches them, and sends back any
-  // required replies.  Returns 1 for success, 0==EOF, -1==error.
-
   // = BOA Support
   // @@ Please add comments.
   CORBA::Object_ptr create (CORBA::OctetSeq &obj_id,
@@ -100,10 +89,6 @@ public:
        CORBA::Environment &env);
   virtual ~ROA (void);
 
-#if 0
-  virtual ACE_INET_Addr get_addr (void) const;
-#endif /* 0 */
-  
 private:
   CORBA::Boolean do_exit_;	
   // Flag set by <clean_shutdown ()>.
@@ -129,11 +114,6 @@ private:
 
   ACE_SYNCH_MUTEX com_lock_;	
   // Locks critical sections in COM-related code (was tcpoa_lock).
-
-#if defined (ROA_NEEDS_REQ_KEY)
-  ACE_thread_key_t req_key_;	
-  // Key into TSS for a thread's request header
-#endif /* ROA_NEEDS_REQ_KEY */
 
   // = Copy and assignment:  just say no
   ROA (const ROA &src);
