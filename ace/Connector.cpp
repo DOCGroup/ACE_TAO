@@ -90,7 +90,7 @@ ACE_Connector<SH, PR_CO_2>::activate_svc_handler (SVC_HANDLER *svc_handler)
 template <class SH, PR_CO_1> ACE_PEER_CONNECTOR &
 ACE_Connector<SH, PR_CO_2>::connector (void) const
 {
-  return this->connector_;
+  return ACE_const_cast (ACE_PEER_CONNECTOR &, this->connector_);
 }
 
 template <class SH, PR_CO_1> int
@@ -581,7 +581,7 @@ ACE_Connector<SH, PR_CO_2>::create_AST (SH *sh,
   // schedule a timeout with the ACE_Reactor.
   else
     {
-      ACE_Time_Value *tv = 
+      ACE_Time_Value *tv =
         ACE_const_cast (ACE_Time_Value *,
                         synch_options.time_value ());
       if (tv != 0)
@@ -604,7 +604,7 @@ ACE_Connector<SH, PR_CO_2>::create_AST (SH *sh,
   // Undo previous actions using the ol' "goto label and fallthru"
   // trick...
 fail3:
-  this->reactor ()->remove_handler 
+  this->reactor ()->remove_handler
     (this, mask | ACE_Event_Handler::DONT_CALL);
   /* FALLTHRU */
 fail2:

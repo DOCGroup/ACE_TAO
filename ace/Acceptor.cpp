@@ -39,7 +39,7 @@ template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> ACE_PEER_ACCEPTOR &
 ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::acceptor (void) const
 {
   ACE_TRACE ("ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::acceptor");
-  return (ACE_PEER_ACCEPTOR &) this->peer_acceptor_;
+  return ACE_const_cast (ACE_PEER_ACCEPTOR &, this->peer_acceptor_);
 }
 
 // Returns ACE_HANDLE of the underlying Acceptor_Strategy.
@@ -770,11 +770,11 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::info (ACE_TCHAR **strp,
   // @@ Should add the protocol in...
   ACE_OS::sprintf (buf,
                    ACE_LIB_TEXT ("%s\t %s #%s\n"),
-                   this->service_name_ == 0 
+                   this->service_name_ == 0
                    ? ACE_LIB_TEXT ("<unknown>")
                    : this->service_name_,
                    service_addr_str,
-                   this->service_description_ == 0 
+                   this->service_description_ == 0
                    ? ACE_LIB_TEXT ("<unknown>")
                    : this->service_description_);
 
@@ -874,22 +874,22 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_close (ACE_HANDLE
                                                                       ACE_Reactor_Mask)
 {
   ACE_TRACE ("ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_close");
- 
+
   // Guard against multiple closes.
   if (this->delete_concurrency_strategy_)
     {
       delete this->concurrency_strategy_;
       this->delete_concurrency_strategy_ = 0;
       this->concurrency_strategy_ = 0;
-      
+
       // Note that if we aren't actually registered with the
       // ACE_Reactor then it's ok for this call to fail...
-      
+
       if (this->reactor ())
         this->reactor ()->remove_handler
           (this,
            ACE_Event_Handler::ACCEPT_MASK | ACE_Event_Handler::DONT_CALL);
-      
+
       if (this->peer_acceptor_.close () == -1)
         ACE_ERROR ((LM_ERROR,
                     ACE_LIB_TEXT ("close\n")));

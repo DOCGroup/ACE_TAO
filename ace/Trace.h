@@ -56,6 +56,9 @@ public:
   /// Change the nesting indentation level.
   static void set_nesting_indent (int indent);
 
+  /// Get the nesting indentation level.
+  static int get_nesting_indent (void);
+
   /// Dump the state of an object.
   void dump (void) const;
 
