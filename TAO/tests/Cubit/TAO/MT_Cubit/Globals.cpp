@@ -142,7 +142,7 @@ MT_Priority::get_low_priority (u_int num_low_priority,
     {
       this->num_priorities_ = 0;
 
-      for (ACE_Sched_Priority_Iterator priority_iterator 
+      for (ACE_Sched_Priority_Iterator priority_iterator
              (ACE_SCHED_FIFO, ACE_SCOPE_THREAD);
            priority_iterator.more ();
            priority_iterator.next ())
@@ -192,3 +192,9 @@ MT_Priority::grain (void)
   return this->grain_;
 }
 
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Condition<ACE_SYNCH_MUTEX>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate ACE_Condition<ACE_SYNCH_MUTEX>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
