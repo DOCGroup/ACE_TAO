@@ -2,6 +2,8 @@
 
 #include "interceptors.h"
 #include "tao/OctetSeqC.h"
+#include "ace/Log_Msg.h"
+#include "tao/ORB_Constants.h"
 
 ACE_RCSID (Service_Context_Manipulation,
            interceptors,
@@ -65,10 +67,12 @@ Echo_Client_Request_Interceptor::send_request (
       ACE_CHECK;
     }
 
-  CORBA::String_var operation = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::String_var operation =
+    ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::Object_var target = ri->target (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::Object_var target =
+    ri->target (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::String_var ior =
@@ -188,10 +192,12 @@ Echo_Client_Request_Interceptor::receive_reply (
       ACE_CHECK;
     }
 
-  CORBA::String_var operation = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::String_var operation =
+    ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::Object_var target = ri->target (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::Object_var target =
+    ri->target (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::String_var ior =
@@ -204,6 +210,11 @@ Echo_Client_Request_Interceptor::receive_reply (
               this->myname_,
               operation.in (),
               ior.in ()));
+
+  // No svccontextx for _is_a call.
+  if (ACE_OS::strcmp (operation.in (),
+                      "_is_a") == 0)
+    return;
 
   // Check that the reply service context was received as
   // expected.
