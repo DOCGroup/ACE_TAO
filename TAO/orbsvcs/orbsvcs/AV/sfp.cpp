@@ -51,9 +51,9 @@ SFP_Encoder::encode_start_message ()
       
       // encode the start frame
       if (encoder_->encode (SFP::_tc_start_message,
-                           &start,
-                           0,
-                           TAO_TRY_ENV) 
+                            &start,
+                            0,
+                            TAO_TRY_ENV) 
           == CORBA_TypeCode::TRAVERSE_CONTINUE)
         {
           ACE_DEBUG ((LM_DEBUG, 
