@@ -56,6 +56,9 @@ private:
   int parse_add_args (void);
   // Parses arguments specific to the ADD command.
 
+  int parse_list_args (void);
+  // Parses arguments specific to the LIST command.
+
   int argc_;
   // # of arguments on the command line.
 

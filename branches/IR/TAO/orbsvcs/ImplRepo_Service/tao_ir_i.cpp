@@ -1,10 +1,10 @@
 // $Id$
 
-#include "TAO_IR_i.h"
+#include "tao_ir_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 
-ACE_RCSID(ImplRepo_Service, TAO_IR_i, "$Id")
+ACE_RCSID(ImplRepo_Service, tao_ir_i, "$Id")
 
 // Constructor
 
@@ -70,14 +70,19 @@ TAO_IR_i::parse_args (void)
     return -1;
   }
   
+  // Figure out which command we are doing
+
   if (ACE_OS::strcasecmp (this->argv_[1], ASYS_TEXT ("add")) == 0)
   {
+    // Check for enough arguments (we need 3 for program name, "add",
+    // and the server name to add)
     if (this->argc_ < 3)
     {
       this->print_usage (ADD);
       return -1;
     }
 
+    // Parse the rest of the arguments
     return this->parse_add_args ();
   }
   else if (ACE_OS::strcasecmp (this->argv_[1], ASYS_TEXT ("remove")) == 0)
@@ -98,12 +103,8 @@ TAO_IR_i::parse_args (void)
   }
   else if (ACE_OS::strcasecmp (this->argv_[1], ASYS_TEXT ("list")) == 0)
   {
-    if (this->argc_ > 2)
-    {
-      ACE_ERROR ((LM_ERROR, "Unrecognized options\n"));
-      this->print_usage (LIST);
-      return -1;
-    }
+    this->parse_list_args ();
+
   }
 
   // Indicates successful parsing of command line.
@@ -112,6 +113,7 @@ TAO_IR_i::parse_args (void)
 
 
 // Look at the arguments assuming that it is an add command.
+
 int
 TAO_IR_i::parse_add_args ()
 {
@@ -140,6 +142,32 @@ TAO_IR_i::parse_add_args ()
   // Success
   return 0;
 }
+
+// Look at the arguments assuming that it is an list command.
+
+int
+TAO_IR_i::parse_list_args ()
+{
+  // Skip both the program name and the "list" command
+  // We specify 0 as the 4th argument so it will look at the first
+  // argv.
+  ACE_Get_Opt get_opts (this->argc_ - 2, this->argv_ + 2, "h", 0);
+
+  int c;
+
+  while ((c = get_opts ()) != -1)
+    switch (c)
+      {
+      case 'h':  // display help
+      default:
+        this->print_usage (LIST);
+        return -1;
+      }
+
+  // Success
+  return 0;
+}
+
 
 // Print out information about an operation.
 

@@ -57,7 +57,7 @@ private:
   // The object to use as the default servant.
 };
 
-class ImplRepo_i : public POA_Implementation_Repository
+class ImplRepo_i : public POA_ImplementationRepository::Administration
 {
   // = TITLE
   //    Implementation Repository
@@ -72,52 +72,53 @@ public:
 
   // = Interface methods
 
-  virtual CORBA::Object_ptr activate_object (CORBA::Object_ptr obj,
-                                             CORBA_Environment &ACE_TRY_ENV 
-                                               = CORBA_Environment::default_environment ());
-  // Starts up the server containing the object <obj> if not already running.  
-
-  virtual Implementation_Repository::INET_Addr *activate_server (const char *server,
-                                                                 CORBA::Environment &env);
+  virtual void activate_server (const char * server,
+                                CORBA::Environment &ACE_TRY_ENV = CORBA::Environment::default_environment ());
   // Starts up the server <server> if not already running.
 
   virtual void register_server (const char *server,
-                                const Implementation_Repository::Process_Options &options,
-                                CORBA_Environment &ACE_TRY_ENV 
-                                  = CORBA_Environment::default_environment ());
+                                const ImplementationRepository::StartupOptions &options,
+                                CORBA_Environment &ACE_TRY_ENV = CORBA_Environment::default_environment ());
   // Adds the server to the repository and registers the startup information about 
   // the server <server>.
 
   virtual void reregister_server (const char *server,
-                                  const Implementation_Repository::Process_Options &options,
-                                  CORBA_Environment &ACE_TRY_ENV 
-                                    = CORBA_Environment::default_environment ());
+                                  const ImplementationRepository::StartupOptions &options,
+                                  CORBA_Environment &ACE_TRY_ENV = CORBA_Environment::default_environment ());
   // Updates the startup information about the server <server>.
 
   virtual void remove_server (const char *server,
-                              CORBA_Environment &ACE_TRY_ENV 
-                                = CORBA_Environment::default_environment ());
+                              CORBA_Environment &ACE_TRY_ENV = CORBA_Environment::default_environment ());
   // Removes the server <server> from the repository.
 
-  virtual Implementation_Repository::INET_Addr  
-    *server_is_running (const char *server,
-                        const Implementation_Repository::INET_Addr &addr,
-                        CORBA::Object_ptr ping,
-                        CORBA_Environment &ACE_TRY_ENV 
-                          = CORBA_Environment::default_environment ());
+  virtual void shutdown_server (const char * server,
+                                CORBA::Environment &ACE_TRY_ENV = CORBA::Environment::default_environment ());
+  // Attempts to gracefully shut down the server, if that fails, will try
+  // to do it ungracefully.
+  
+  virtual ImplementationRepository::Address * 
+    server_is_running (const char * server,
+                       const ImplementationRepository::Address &addr,
+                       ImplementationRepository::ServerObject_ptr server_object,
+                       CORBA::Environment &ACE_TRY_ENV = CORBA::Environment::default_environment ());
   // Called by the server to update transient information such as current location of
   // the <server> and its ping object.
 
   virtual void server_is_shutting_down (const char * server,
-                                        CORBA_Environment &ACE_TRY_ENV 
-                                          = CORBA_Environment::default_environment ());
-  // What the server should call before it shutsdown.
+                                        CORBA_Environment &ACE_TRY_ENV = CORBA_Environment::default_environment ());
+  // What the server should call before it shuts down.
+
+  virtual void list (CORBA::ULong how_many,
+                     ImplementationRepository::ServerInformationList_out server_list,
+                     ImplementationRepository::ServerInformationIterator_out server_iterator,
+                     CORBA::Environment &ACE_TRY_ENV = CORBA::Environment::default_environment ());
+  // Used to access the list of servers registered.  May also return an
+  // iterator which can be used to access more than <how_many> of them.
 
   // = Other methods
 
   int init (int argc, char **argv, 
-            CORBA_Environment &ACE_TRY_ENV 
-              = CORBA_Environment::default_environment ());
+            CORBA_Environment &ACE_TRY_ENV = CORBA_Environment::default_environment ());
   // Initialize the Server state - parsing arguments and waiting.
 
   int run (CORBA_Environment &ACE_TRY_ENV = CORBA_Environment::default_environment ());
@@ -171,7 +172,7 @@ public:
 
   CORBA::RepositoryId _primary_interface (const PortableServer::ObjectId &oid,
                                           PortableServer::POA_ptr poa,
-                                          CORBA::Environment &env);
+                                          CORBA::Environment &env = CORBA_Environment::default_environment ());
   // DynamicImplementation stuff
 
 private:
