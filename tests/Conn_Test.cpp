@@ -225,7 +225,7 @@ static void
 cached_connect (STRAT_CONNECTOR &con,
                 const ACE_INET_Addr &server_addr)
 {
-  for (size_t i = 0; i < n_client_iterations; i++)
+  for (int i = 0; i < n_client_iterations; i++)
     {
       Svc_Handler *svc_handler = 0;
 
@@ -243,7 +243,7 @@ cached_connect (STRAT_CONNECTOR &con,
       svc_handler->send_data ();
 
       // Svc_Handler is now idle, so mark it as such and let the cache
-      // recycle it in another thread. 
+      // recycle it in another thread.
       svc_handler->idle (1);
 
       // Rest for a second to give another thread a chance to reuse the
