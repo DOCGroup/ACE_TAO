@@ -81,6 +81,7 @@ run Tokens_Test
 
 run Map_Manager_Test            # uses Map Manager and Hash Map Manager + Forward and Reverse Map Iterators.
 run Message_Queue_Test          # uses Message_Queue + Forward and Reverse Message Queue Iterators.
+run Simple_Message_Block_Test   # uses Message_Block
 run Message_Block_Test          # uses Message_Block and Message_Queue
 run Pipe_Test                   # uses Pipe 
 run Process_Mutex_Test          # uses Process_Mutex
