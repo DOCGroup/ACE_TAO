@@ -1,3 +1,9 @@
+Mon Jul 28 10:13:30 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp:
+
+          Fixed indentation in generated code.
+
 Mon Jul 28 09:33:23 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/RTScheduling/Current.cpp:
