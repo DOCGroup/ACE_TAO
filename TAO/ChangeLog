@@ -1,3 +1,315 @@
+Wed Dec 11 22:26:56 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Any_T.cpp:
+        * tao/Any_T.h:
+        * tao/Any_T.inl:
+
+	  New files added to TAO for the template classes of the
+	  revamped Any implementation. The original Any class contains
+	  few spec-required methods but is mostly a container for
+	  these template classes. Thanks to Carlos O'Ryan 
+	  <coryan@atdesk.com> for guidance with the design.
+
+        * orbsvcs/orbsvcs/IFRService/Servant_Factory.cpp:
+        * orbsvcs/orbsvcs/IFRService/Servant_Factory.h:
+        * orbsvcs/orbsvcs/IFRService/Servant_Locator.cpp:
+        * orbsvcs/orbsvcs/IFRService/Servant_Locator.h:
+        * tao/IFR_TypeCodes.cpp:
+
+	  Files removed from TAO and the Interface Repository.
+
+        * TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_enum/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_field/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+        * TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_cdr_ci.cpp:
+
+	  Changes to the IDL compiler to support the changes to
+	  the TAO Any implementation. Also changes to support the
+	  runtime detection of an attempt to marshal an IDL type
+	  which contains (at any nested level) a local interface.
+	  Now the cases where a local interface is passed as a
+	  non-local base class, and where a union may have a
+	  local interface as its active member (or may not) are
+	  discovered at runtime. Zero is returned from the
+	  attempt to marshal at some level, and the stub operation
+	  will therefore throw CORBA::MARSHAL, as required.
+
+        * orbsvcs/IFR_Service/be_global.cpp:
+        * orbsvcs/IFR_Service/be_global.h:
+        * orbsvcs/IFR_Service/be_produce.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor.h:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_exception.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_exception.h:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_operation.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_operation.h:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_structure.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_structure.h:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_union.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_union.h:
+        * orbsvcs/IFR_Service/ifr_removing_visitor.cpp:
+
+	  Changes to tao_ifr to reflect the removal of all
+	  CORBA_* global classes for Interface Repository objects.
+	  All references to these classes must now use the scoped
+	  name.
+
+        * orbsvcs/IFR_Service/IFR_Service.cpp:
+        * orbsvcs/orbsvcs/IFRService/AbstractInterfaceDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/AbstractInterfaceDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/AliasDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/AliasDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ArrayDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ArrayDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/AttributeDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/AttributeDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ComponentDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ComponentDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ComponentRepository_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ComponentRepository_i.h:
+        * orbsvcs/orbsvcs/IFRService/ConstantDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ConstantDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ConsumesDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ConsumesDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/Contained_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/Contained_i.h:
+        * orbsvcs/orbsvcs/IFRService/Container_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/Container_i.h:
+        * orbsvcs/orbsvcs/IFRService/EmitsDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/EmitsDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/EnumDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/EnumDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/EventDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/EventDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ExceptionDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ExceptionDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/FactoryDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/FactoryDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/FinderDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/FinderDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/FixedDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/FixedDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/HomeDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/HomeDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/IDLType_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/IDLType_i.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_BaseS.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_BaseS.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_BaseS.i:
+        * orbsvcs/orbsvcs/IFRService/IFR_BaseS_T.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_BaseS_T.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_BaseS_T.i:
+        * orbsvcs/orbsvcs/IFRService/IFR_BasicS.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_BasicS.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_BasicS.i:
+        * orbsvcs/orbsvcs/IFRService/IFR_BasicS_T.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_BasicS_T.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_BasicS_T.i:
+        * orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.i:
+        * orbsvcs/orbsvcs/IFRService/IFR_ComponentsS_T.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_ComponentsS_T.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_ComponentsS_T.i:
+        * orbsvcs/orbsvcs/IFRService/IFR_ExtendedS.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_ExtendedS.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_ExtendedS.i:
+        * orbsvcs/orbsvcs/IFRService/IFR_ExtendedS_T.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_ExtendedS_T.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_ExtendedS_T.i:
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Loader.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.h:
+        * orbsvcs/orbsvcs/IFRService/IRObject_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/IRObject_i.h:
+        * orbsvcs/orbsvcs/IFRService/InterfaceDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/InterfaceDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/LocalInterfaceDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/LocalInterfaceDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ModuleDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ModuleDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/NativeDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/NativeDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/OperationDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/OperationDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/PrimaryKeyDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/PrimaryKeyDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/PrimitiveDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/PrimitiveDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ProvidesDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ProvidesDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/PublishesDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/PublishesDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/Repository_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/Repository_i.h:
+        * orbsvcs/orbsvcs/IFRService/SequenceDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/SequenceDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/StringDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/StringDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/StructDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/StructDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/TypedefDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/TypedefDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/UnionDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/UnionDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/UsesDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/UsesDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ValueBoxDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ValueBoxDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ValueDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ValueDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ValueMemberDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ValueMemberDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/WstringDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/WstringDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/concrete_classes.h:
+        * orbsvcs/orbsvcs/IFRService/tmplinst.cpp:
+
+	  The mechanism of method dispatch has been changed in the
+	  Interface Repository to use default servants instead of
+	  Servant Locator. A servant for each IR Object type, and a
+	  POA for each, are created at startup. The object key of
+	  POACurrent is parsed to reconstruct the database key, which
+	  is then plugged into the servant just before the C++ call.
+	  Also, the skeleton files were regenerated. Now only one 
+	  line in each *S.h file needs to be patched.
+
+        * tao/AbstractBase.cpp:
+        * tao/AbstractBase.h:
+        * tao/Abstract_Servant_Base.cpp:
+        * tao/Abstract_Servant_Base.h:
+        * tao/Any.cpp:
+        * tao/Any.h:
+        * tao/Any.i:
+        * tao/Exception.h:
+        * tao/IFR_Client_Adapter.h:
+        * tao/LocalObject.cpp:
+        * tao/LocalObject.h:
+        * tao/Marshal.h:
+        * tao/NVList.cpp:
+        * tao/ORB.cpp:
+        * tao/ORB.h:
+        * tao/Object.cpp:
+        * tao/Object.h:
+        * tao/Object.i:
+        * tao/Object_Proxy_Impl.cpp:
+        * tao/Object_Proxy_Impl.h:
+        * tao/Remote_Object_Proxy_Impl.cpp:
+        * tao/Remote_Object_Proxy_Impl.h:
+        * tao/Sequence_T.cpp:
+        * tao/TypeCodeFactory_Adapter.h:
+        * tao/Typecode.cpp:
+        * tao/Typecode.h:
+        * tao/ValueBase.cpp:
+        * tao/ValueBase.h:
+        * tao/corba.h:
+        * tao/corbafwd.h:
+
+	  Changes to TAO files required by the changes in the Any
+	  implementation and in the IR Object class names. Also,
+	  a virtual marshal() method was added to CORBA::Object to
+	  help detect an attempt to marshal a local interface. Finally,
+	  a TAO-specific method was added to class TypeCode, which 
+	  returns the content type without making a duplicate.
+	  Similar versions of other TypeCode methods that return
+	` typecodes will be made in the future, for internal ORB use.
+
+        * tao/IFR_Client/IFR_BaseC.cpp:
+        * tao/IFR_Client/IFR_BaseC.h:
+        * tao/IFR_Client/IFR_BaseC.i:
+        * tao/IFR_Client/IFR_BasicC.cpp:
+        * tao/IFR_Client/IFR_BasicC.h:
+        * tao/IFR_Client/IFR_BasicC.i:
+        * tao/IFR_Client/IFR_Client_Adapter_Impl.cpp:
+        * tao/IFR_Client/IFR_Client_Adapter_Impl.h:
+        * tao/IFR_Client/IFR_ComponentsC.cpp:
+        * tao/IFR_Client/IFR_ComponentsC.h:
+        * tao/IFR_Client/IFR_ComponentsC.i:
+        * tao/IFR_Client/IFR_ExtendedC.cpp:
+        * tao/IFR_Client/IFR_ExtendedC.h:
+        * tao/IFR_Client/IFR_ExtendedC.i:
+
+	  The stub files were regenerated. They now need no patching.
+
+        * tao/PortableServer/Direct_Object_Proxy_Impl.cpp:
+        * tao/PortableServer/Direct_Object_Proxy_Impl.h:
+        * tao/PortableServer/ImR_LocatorS.cpp:
+        * tao/PortableServer/ImplRepoS.cpp:
+        * tao/PortableServer/POA.cpp:
+        * tao/PortableServer/POA.h:
+        * tao/PortableServer/PolicyS.cpp:
+        * tao/PortableServer/Servant_Base.cpp:
+        * tao/PortableServer/Servant_Base.h:
+        * tao/PortableServer/ThruPOA_Object_Proxy_Impl.cpp:
+        * tao/PortableServer/ThruPOA_Object_Proxy_Impl.h:
+
+	  POA files modified to support the other changes. A public
+	  static method was added to class TAO_POA, to allow access
+	  to a protected static method, which the IFR uses to parse
+	  object keys without requiring new/delete pairs.
+
+        * tao/TypeCodeFactory/TypeCodeFactoryC.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactoryC.inl:
+        * tao/TypeCodeFactory/TypeCodeFactoryC.h:
+        * tao/TypeCodeFactory/TypeCodeFactory_Adapter_Impl.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactory_Adapter_Impl.h:
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactory_i.h:
+
+	  Changes to reflect the removal of global flat names for
+	  the IR Object classes. Also, the stub files were
+	  regenerated, and now need no patching.
+
+        * tao/orb.idl:
+        * tao/IFR_Client/IFR_Basic.pidl:
+        * tao/IFR_Client/IFR_Components.pidl:
+        * tao/IFR_Client/IFR_Base.pidl:
+        * tao/IFR_Client/IFR_Extended.pidl:
+	* tao/TypeCodeFactory/TypeCodeFactory.pidl:
+
+	  Changes to (p)idl files. Small pieces of IFR_Base.pidl
+	  and TypeCodeFactory.pidl that are used by the ORB
+	  were moved to orb.idl, which is now included in these
+	  two files. Code generation is now executed without first
+	  patching the pidl files to remove the CORBA module. The
+	  result of these two changes is the elimination of almost
+	  all the patching to generated files which used to be
+	  necessary.
+
+        * TAOACE.dsw:
+	* ta0/Makefile:
+	* tao/Makefile.bor:
+	* tao/Makefile.am:
+        * tao/TAO.dsp:
+        * tao/IFR_Client/TAO_IFR_Client.dsp:
+        * orbsvcs/orbsvcs/Svc_Utils.dsp:
+        * orbsvcs/orbsvcs/IFRService.dsp:
+
+	  Changes to makefiles, projects and workspaces.
+
+	Changes to NVList, TAO_Marshal_* and the dynamic any classes to
+	support the changes to Anys and TypeCodes have yet to be made.
+	Also, dynamic_cast is now required in Any extraction, whcih may
+	cause a problem on some platforms that don't support RTTI.
+
 Mon Dec  9 16:33:07 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.i:  Added missing 
