@@ -10,11 +10,14 @@ Fri Jan 17 11:45:28 1997  David L. Levine  <levine@cs.wustl.edu>
 	  they usually won't get inlined anyways.
 
 	* ace/OS.cpp (thr_create): added #else clause to be sure that
-	  always sparam.sched_priority always get set to the priority argument
+	  always sparam.sched_priority always get set to the priority argument.
 
 	* netsvcs/clients/Naming/Client/Client_Test.cpp: commented out
 	  unused parameters and wrapped combined assignments/conditional
-	  values to avoid compiler (g++) warnings
+	  values to avoid compiler (g++) warnings.
+
+	* tests/Priority_Task_Test.cpp: added check for successful thread
+	  spawn, and ACE_NEW_THREAD to svc () so that messages get logged.
 
 Fri Jan 17 01:16:32 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
