@@ -1,5 +1,5 @@
---- orig/IORC.h	2005-02-14 14:33:17.541928300 +0100
-+++ IORC.h	2005-02-14 14:35:33.857941100 +0100
+--- orig/IORC.h	2005-03-31 12:04:13.717832000 +0200
++++ IORC.h	2005-03-31 12:04:13.878062400 +0200
 @@ -40,6 +40,10 @@
  # pragma once
  #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -11,25 +11,25 @@
  #include "ior_manip_export.h"
  #include "tao/ORB.h"
  #include "tao/SystemException.h"
---- orig/IORC.cpp	2005-02-14 14:33:17.541928300 +0100
-+++ IORC.cpp	2005-02-14 14:33:48.095862700 +0100
+--- orig/IORC.cpp	2005-03-31 12:04:13.717832000 +0200
++++ IORC.cpp	2005-03-31 12:04:13.878062400 +0200
 @@ -29,7 +29,7 @@
- // be\be_codegen.cpp:302
+ // be\be_codegen.cpp:291
  
  
 -#include "IORC.h"
 +#include "IORManip_Loader.h"
  #include "tao/CDR.h"
- #include "tao/Typecode.h"
- #include "ace/OS_NS_string.h"
---- orig/IORA.cpp	2005-02-14 14:33:17.541928300 +0100
-+++ IORA.cpp	2005-02-14 14:38:14.699219500 +0100
+ #include "tao/Null_RefCount_Policy.h"
+ #include "tao/TypeCode_Constants.h"
+--- orig/IORA.cpp	2005-03-31 12:04:13.717832000 +0200
++++ IORA.cpp	2005-03-31 12:05:19.502425600 +0200
 @@ -25,7 +25,7 @@
  // Information about TAO is available at:
  //     http://www.cs.wustl.edu/~schmidt/TAO.html
  
 -#include "IORC.h"
 +#include "IORManip_Loader.h"
- #include "tao/Typecode.h"
- #include "tao/CDR.h"
- #include "tao/Any.h"
+ #include "tao/Null_RefCount_Policy.h"
+ #include "tao/TypeCode_Constants.h"
+ #include "tao/Alias_TypeCode.h"

@@ -26,10 +26,10 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:302
+// be\be_codegen.cpp:291
 
 
-#include "IORC.h"
+#include "IORManip_Loader.h"
 #include "tao/CDR.h"
 #include "tao/Null_RefCount_Policy.h"
 #include "tao/TypeCode_Constants.h"
@@ -48,7 +48,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be/be_visitor_arg_traits.cpp:69
+// be\be_visitor_arg_traits.cpp:69
 
 // Arg traits specializations.
 namespace TAO
@@ -57,7 +57,7 @@ namespace TAO
 
 
 // TAO_IDL - Generated from 
-// be/be_visitor_exception/exception_cs.cpp:63
+// be\be_visitor_exception/exception_cs.cpp:63
 
 TAO_IOP::EmptyProfileList::EmptyProfileList (void)
   : CORBA::UserException (
@@ -162,7 +162,7 @@ CORBA::TypeCode_ptr TAO_IOP::EmptyProfileList::_tao_type (void) const
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_exception/exception_cs.cpp:63
+// be\be_visitor_exception/exception_cs.cpp:63
 
 TAO_IOP::NotFound::NotFound (void)
   : CORBA::UserException (
@@ -267,7 +267,7 @@ CORBA::TypeCode_ptr TAO_IOP::NotFound::_tao_type (void) const
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_exception/exception_cs.cpp:63
+// be\be_visitor_exception/exception_cs.cpp:63
 
 TAO_IOP::Duplicate::Duplicate (void)
   : CORBA::UserException (
@@ -372,7 +372,7 @@ CORBA::TypeCode_ptr TAO_IOP::Duplicate::_tao_type (void) const
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_exception/exception_cs.cpp:63
+// be\be_visitor_exception/exception_cs.cpp:63
 
 TAO_IOP::Invalid_IOR::Invalid_IOR (void)
   : CORBA::UserException (
@@ -477,7 +477,7 @@ CORBA::TypeCode_ptr TAO_IOP::Invalid_IOR::_tao_type (void) const
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_exception/exception_cs.cpp:63
+// be\be_visitor_exception/exception_cs.cpp:63
 
 TAO_IOP::MultiProfileList::MultiProfileList (void)
   : CORBA::UserException (
@@ -582,7 +582,7 @@ CORBA::TypeCode_ptr TAO_IOP::MultiProfileList::_tao_type (void) const
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:60
+// be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for TAO_IOP::TAO_IOR_Property.
 
@@ -723,7 +723,7 @@ TAO_IOP::TAO_IOR_Property::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:60
+// be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for TAO_IOP::TAO_IOR_Manipulation.
 
@@ -759,7 +759,7 @@ TAO::Objref_Traits<TAO_IOP::TAO_IOR_Manipulation>::marshal (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_sequence/sequence_cs.cpp:65
+// be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_TAO_IOP_TAO_IOR_MANIPULATION_IORLIST_CS_)
 #define _TAO_IOP_TAO_IOR_MANIPULATION_IORLIST_CS_
@@ -917,7 +917,7 @@ TAO_IOP::TAO_IOR_Manipulation::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_exception/cdr_op_cs.cpp:60
+// be\be_visitor_exception/cdr_op_cs.cpp:60
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -937,7 +937,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_exception/cdr_op_cs.cpp:60
+// be\be_visitor_exception/cdr_op_cs.cpp:60
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -957,7 +957,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_exception/cdr_op_cs.cpp:60
+// be\be_visitor_exception/cdr_op_cs.cpp:60
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -977,7 +977,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_exception/cdr_op_cs.cpp:60
+// be\be_visitor_exception/cdr_op_cs.cpp:60
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -997,7 +997,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_exception/cdr_op_cs.cpp:60
+// be\be_visitor_exception/cdr_op_cs.cpp:60
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -1017,7 +1017,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_root/root.cpp:1528
+// be\be_visitor_root/root.cpp:1528
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

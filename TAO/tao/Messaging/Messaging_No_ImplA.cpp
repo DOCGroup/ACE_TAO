@@ -129,7 +129,7 @@ namespace Messaging
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> _tao_fields_Messaging_PriorityRange[] =
+static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_Messaging_PriorityRange[] =
   {
     { "min", &Messaging::_tc_Priority },
     { "max", &Messaging::_tc_Priority }
@@ -282,7 +282,7 @@ namespace Messaging
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> _tao_fields_Messaging_RoutingTypeRange[] =
+static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_Messaging_RoutingTypeRange[] =
   {
     { "min", &Messaging::_tc_RoutingType },
     { "max", &Messaging::_tc_RoutingType }

@@ -25,7 +25,7 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "ObjectReferenceTemplateC.h"
+#include "ObjectReferenceTemplate.h"
 #include "tao/Null_RefCount_Policy.h"
 #include "tao/TypeCode_Constants.h"
 #include "tao/Alias_TypeCode.h"
@@ -38,7 +38,7 @@
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/value_typecode.cpp:32
+// be\be_visitor_typecode/value_typecode.cpp:32
 
 static TAO::TypeCode::Value_Field<char const *> const * const _tao_fields_PortableInterceptor_ObjectReferenceFactory = 0;
 
@@ -63,7 +63,7 @@ namespace PortableInterceptor
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/value_typecode.cpp:32
+// be\be_visitor_typecode/value_typecode.cpp:32
 
 static TAO::TypeCode::Value_Field<char const *> const * const _tao_fields_PortableInterceptor_ObjectReferenceTemplate = 0;
 
@@ -88,12 +88,12 @@ namespace PortableInterceptor
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/alias_typecode.cpp:31
+// be\be_visitor_typecode/alias_typecode.cpp:31
 
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:785
+// be\be_visitor_typecode/typecode_defn.cpp:808
 
 namespace TAO
 {
@@ -127,7 +127,7 @@ namespace PortableInterceptor
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_valuetype/any_op_cs.cpp:57
+// be\be_visitor_valuetype/any_op_cs.cpp:57
 
 template<>
 CORBA::Boolean
@@ -183,7 +183,7 @@ operator>>= (
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_valuetype/any_op_cs.cpp:57
+// be\be_visitor_valuetype/any_op_cs.cpp:57
 
 template<>
 CORBA::Boolean
@@ -239,7 +239,7 @@ operator>>= (
 
 
 // TAO_IDL - Generated from 
-// be/be_visitor_sequence/any_op_cs.cpp:54
+// be\be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
