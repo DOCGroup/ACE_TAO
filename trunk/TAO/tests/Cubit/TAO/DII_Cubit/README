@@ -17,3 +17,9 @@ Default number of loops for the timing tests is 250, but it can be set
 from the command line following [-n <# of loops>]. Other arguments are 
 supported, as shown in parse_args in client.cpp.
 
+On the Unix side, the Makefile will also build IDL_Cubit/server if
+necessary (thanks to David Levine). If the server exits when run on a
+Unix machine, it probbly means that someone else is also running it 
+and the defaults port numbers have collided. Just add the arg
+[-ORBport 0] when running the server and it will get a new port #.
+
