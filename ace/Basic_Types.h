@@ -617,7 +617,8 @@ typedef unsigned char ACE_Byte;
 # else /* ! BYTE_ORDER && ! __BYTE_ORDER */
   // We weren't explicitly told, so we have to figure it out . . .
 #   if defined (i386) || defined (__i386__) || defined (_M_IX86) || \
-     defined (vax) || defined (__alpha) || defined (__LITTLE_ENDIAN__) || defined (ARM)
+     defined (vax) || defined (__alpha) || defined (__LITTLE_ENDIAN__) ||\
+     defined (ARM) || defined (_M_IA64)
     // We know these are little endian.
 #     define ACE_LITTLE_ENDIAN 0x0123
 #     define ACE_BYTE_ORDER ACE_LITTLE_ENDIAN
