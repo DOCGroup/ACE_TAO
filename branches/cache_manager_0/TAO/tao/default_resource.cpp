@@ -40,6 +40,7 @@ TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
     connection_caching_type_ (TAO_CONNECTION_CACHING_STRATEGY),
     cache_maximum_ (TAO_CONNECTION_CACHE_MAXIMUM),
     purge_percentage_ (TAO_PURGE_PERCENT),
+    max_muxed_connections_ (0),
     reactor_mask_signals_ (1),
     dynamically_allocated_reactor_ (0),
     options_processed_ (0),
@@ -350,6 +351,17 @@ TAO_Default_Resource_Factory::init (int argc, char *argv[])
             else
               this->report_option_value_error ("-ORBFlushingStrategy", name);
           }
+      }
+    else if (ACE_OS::strcasecmp (argv[curarg],
+                                 "-ORBMuxedConnectionMax") == 0)
+      {
+        curarg++;
+        if (curarg < argc)
+            this->max_muxed_connections_ =
+              ACE_OS::atoi (argv[curarg]);
+        else
+          this->report_option_value_error ("-ORBMuxedConnectionMax",
+                                           argv[curarg]);
       }
     else if (ACE_OS::strncmp (argv[curarg], "-ORB", 4) == 0)
       {
@@ -738,6 +750,13 @@ TAO_Default_Resource_Factory::purge_percentage (void) const
   return this->purge_percentage_;
 }
 
+int
+TAO_Default_Resource_Factory::max_muxed_connections (void) const
+{
+  return this->max_muxed_connections_;
+}
+
+
 ACE_Lock *
 TAO_Default_Resource_Factory::create_cached_connection_lock (void)
 {
@@ -754,6 +773,16 @@ TAO_Default_Resource_Factory::create_cached_connection_lock (void)
 
   return the_lock;
 }
+
+int
+TAO_Default_Resource_Factory::locked_transport_cache (void)
+{
+  if (this->cached_connection_lock_type_ == TAO_NULL_LOCK)
+    return 0;
+
+  return 1;
+}
+
 
 TAO_Flushing_Strategy *
 TAO_Default_Resource_Factory::create_flushing_strategy (void)
