@@ -34,16 +34,16 @@ Latency_Stats::Latency_Stats (void)
 inline void
 Latency_Stats::sample (ACE_hrtime_t sample)
 {
-  this->sum_ += sample;
+  this->sum_  += sample;
   this->sum2_ += sample * sample;
   if (this->n_ == 0)
     {
       this->min_ = sample;
       this->max_ = sample;
     }
-  else if (this->min_ > sample)
+  if (this->min_ > sample)
     this->min_ = sample;
-  else if (this->max_ < sample)
+  if (this->max_ < sample)
     this->max_ = sample;
   this->n_++;
 }
@@ -79,7 +79,11 @@ Latency_Stats::accumulate (const Latency_Stats& rhs)
 
   if (this->n_ == 0)
     {
-      *this = rhs;
+      this->n_    = rhs.n_;
+      this->min_  = rhs.min_;
+      this->max_  = rhs.max_;
+      this->sum_  = rhs.sum_;
+      this->sum2_ = rhs.sum2_;
       return;
     }
 
@@ -88,9 +92,9 @@ Latency_Stats::accumulate (const Latency_Stats& rhs)
   if (this->max_ < rhs.max_)
     this->max_ = rhs.max_;
 
-  this->sum_ += rhs.sum_;
+  this->sum_  += rhs.sum_;
   this->sum2_ += rhs.sum2_;
-  this->n_ += rhs.n_;
+  this->n_    += rhs.n_;
 }
 
 inline void

@@ -130,15 +130,15 @@ Leader_Follower_Task::svc (void)
         this->condition_.signal ();
       }
 
-      // Record time to wake up follower.
-      this->stats_.sample (ACE_OS::gethrtime () - start_of_burst);
-
       if (exit_loop)
         {
           break;
         }
       else
         {
+          // Record time to wake up follower.
+          this->stats_.sample (ACE_OS::gethrtime () - start_of_burst);
+
           //
           // Process message here.
           //
