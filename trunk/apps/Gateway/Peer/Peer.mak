@@ -101,8 +101,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 ace.lib Peer.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=ace.lib Peer.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
+# ADD LINK32 Peer.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=Peer.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
  comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib\
  odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/peerd.pdb" /debug /machine:I386 /out:"$(OUTDIR)/peerd.exe" 
@@ -190,8 +190,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /debug /machine:I386
-# ADD LINK32 ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /debug /machine:I386
-LINK32_FLAGS=ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
+# ADD LINK32 aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /debug /machine:I386
+LINK32_FLAGS=aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
  comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib\
  odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /incremental:yes\
  /pdb:"$(OUTDIR)/Peer.pdb" /debug /machine:I386 /out:"$(OUTDIR)/Peer.dll"\
@@ -228,6 +228,7 @@ LINK32_OBJS= \
 
 SOURCE=.\peerd.cpp
 DEP_CPP_PEERD=\
+	"..\..\..\ace\config-win32.h"\
 	".\Peer.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
@@ -235,17 +236,28 @@ DEP_CPP_PEERD=\
 	{$(INCLUDE)}"\ace\Addr.i"\
 	{$(INCLUDE)}"\ace\Asynch_IO.h"\
 	{$(INCLUDE)}"\ace\Asynch_IO.i"\
+	{$(INCLUDE)}"\ace\Atomic_Op.i"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
 	{$(INCLUDE)}"\ace\Containers.h"\
 	{$(INCLUDE)}"\ace\Containers.i"\
+	{$(INCLUDE)}"\ace\Dynamic.h"\
+	{$(INCLUDE)}"\ace\Dynamic.i"\
 	{$(INCLUDE)}"\ace\Event_Handler.h"\
 	{$(INCLUDE)}"\ace\Event_Handler.i"\
+	{$(INCLUDE)}"\ace\Free_List.cpp"\
+	{$(INCLUDE)}"\ace\Free_List.h"\
+	{$(INCLUDE)}"\ace\Free_List.i"\
 	{$(INCLUDE)}"\ace\Handle_Set.h"\
 	{$(INCLUDE)}"\ace\Handle_Set.i"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
+	{$(INCLUDE)}"\ace\High_Res_Timer.h"\
+	{$(INCLUDE)}"\ace\High_Res_Timer.i"\
 	{$(INCLUDE)}"\ace\INET_Addr.h"\
 	{$(INCLUDE)}"\ace\INET_Addr.i"\
 	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
@@ -274,6 +286,11 @@ DEP_CPP_PEERD=\
 	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
 	{$(INCLUDE)}"\ace\Message_Queue.h"\
 	{$(INCLUDE)}"\ace\Message_Queue.i"\
+	{$(INCLUDE)}"\ace\Module.cpp"\
+	{$(INCLUDE)}"\ace\Module.h"\
+	{$(INCLUDE)}"\ace\Module.i"\
+	{$(INCLUDE)}"\ace\Object_Manager.h"\
+	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
 	{$(INCLUDE)}"\ace\Pipe.h"\
@@ -304,17 +321,28 @@ DEP_CPP_PEERD=\
 	{$(INCLUDE)}"\ace\Strategies.h"\
 	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
 	{$(INCLUDE)}"\ace\Strategies_T.h"\
+	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
+	{$(INCLUDE)}"\ace\Stream_Modules.h"\
+	{$(INCLUDE)}"\ace\Stream_Modules.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
 	{$(INCLUDE)}"\ace\Svc_Conf_Tokens.h"\
+	{$(INCLUDE)}"\ace\Svc_Handler.cpp"\
+	{$(INCLUDE)}"\ace\Svc_Handler.h"\
+	{$(INCLUDE)}"\ace\Svc_Handler.i"\
 	{$(INCLUDE)}"\ace\Synch.h"\
 	{$(INCLUDE)}"\ace\Synch.i"\
 	{$(INCLUDE)}"\ace\Synch_Options.h"\
 	{$(INCLUDE)}"\ace\Synch_T.cpp"\
 	{$(INCLUDE)}"\ace\Synch_T.h"\
 	{$(INCLUDE)}"\ace\Synch_T.i"\
+	{$(INCLUDE)}"\ace\Task.h"\
+	{$(INCLUDE)}"\ace\Task.i"\
+	{$(INCLUDE)}"\ace\Task_T.cpp"\
+	{$(INCLUDE)}"\ace\Task_T.h"\
+	{$(INCLUDE)}"\ace\Task_T.i"\
 	{$(INCLUDE)}"\ace\Thread.h"\
 	{$(INCLUDE)}"\ace\Thread.i"\
 	{$(INCLUDE)}"\ace\Thread_Manager.h"\
@@ -353,6 +381,7 @@ DEP_CPP_PEERD=\
 
 SOURCE=.\Peer.cpp
 DEP_CPP_PEER_=\
+	"..\..\..\ace\config-win32.h"\
 	"..\Gateway\Event.h"\
 	".\Peer.h"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
@@ -364,6 +393,10 @@ DEP_CPP_PEER_=\
 	{$(INCLUDE)}"\ace\Addr.i"\
 	{$(INCLUDE)}"\ace\Asynch_IO.h"\
 	{$(INCLUDE)}"\ace\Asynch_IO.i"\
+	{$(INCLUDE)}"\ace\Atomic_Op.i"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
@@ -373,12 +406,17 @@ DEP_CPP_PEER_=\
 	{$(INCLUDE)}"\ace\Dynamic.i"\
 	{$(INCLUDE)}"\ace\Event_Handler.h"\
 	{$(INCLUDE)}"\ace\Event_Handler.i"\
+	{$(INCLUDE)}"\ace\Free_List.cpp"\
+	{$(INCLUDE)}"\ace\Free_List.h"\
+	{$(INCLUDE)}"\ace\Free_List.i"\
 	{$(INCLUDE)}"\ace\Get_Opt.h"\
 	{$(INCLUDE)}"\ace\Get_Opt.i"\
 	{$(INCLUDE)}"\ace\Handle_Set.h"\
 	{$(INCLUDE)}"\ace\Handle_Set.i"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
+	{$(INCLUDE)}"\ace\High_Res_Timer.h"\
+	{$(INCLUDE)}"\ace\High_Res_Timer.i"\
 	{$(INCLUDE)}"\ace\INET_Addr.h"\
 	{$(INCLUDE)}"\ace\INET_Addr.i"\
 	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
@@ -410,6 +448,8 @@ DEP_CPP_PEER_=\
 	{$(INCLUDE)}"\ace\Module.cpp"\
 	{$(INCLUDE)}"\ace\Module.h"\
 	{$(INCLUDE)}"\ace\Module.i"\
+	{$(INCLUDE)}"\ace\Object_Manager.h"\
+	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
 	{$(INCLUDE)}"\ace\Pipe.h"\

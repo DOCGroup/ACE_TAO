@@ -31,8 +31,9 @@ NULL=nul
 !ENDIF 
 ################################################################################
 # Begin Project
-CPP=cl.exe
+# PROP Target_Last_Scanned "server_loggerd - Win32 Debug"
 RSC=rc.exe
+CPP=cl.exe
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
 # PROP BASE Output_Dir "Debug"
@@ -76,8 +77,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
+# ADD LINK32 aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
  comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib\
  odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/server_loggerd.pdb" /debug /machine:I386\
@@ -124,20 +125,37 @@ CPP_SBRS=.\.
 
 SOURCE=.\server_loggerd.cpp
 DEP_CPP_SERVE=\
+	"..\..\..\ace\config-win32.h"\
 	".\Logging_Acceptor.h"\
 	".\Reactor_Singleton.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Addr.h"\
 	{$(INCLUDE)}"\ace\Addr.i"\
+	{$(INCLUDE)}"\ace\Asynch_IO.h"\
+	{$(INCLUDE)}"\ace\Asynch_IO.i"\
+	{$(INCLUDE)}"\ace\Atomic_Op.i"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config.h"\
+	{$(INCLUDE)}"\ace\Containers.cpp"\
+	{$(INCLUDE)}"\ace\Containers.h"\
+	{$(INCLUDE)}"\ace\Containers.i"\
 	{$(INCLUDE)}"\ace\Event_Handler.h"\
 	{$(INCLUDE)}"\ace\Event_Handler.i"\
+	{$(INCLUDE)}"\ace\Free_List.cpp"\
+	{$(INCLUDE)}"\ace\Free_List.h"\
+	{$(INCLUDE)}"\ace\Free_List.i"\
 	{$(INCLUDE)}"\ace\Get_Opt.h"\
 	{$(INCLUDE)}"\ace\Get_Opt.i"\
 	{$(INCLUDE)}"\ace\Handle_Set.h"\
 	{$(INCLUDE)}"\ace\Handle_Set.i"\
+	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
+	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
+	{$(INCLUDE)}"\ace\High_Res_Timer.h"\
+	{$(INCLUDE)}"\ace\High_Res_Timer.i"\
 	{$(INCLUDE)}"\ace\INET_Addr.h"\
 	{$(INCLUDE)}"\ace\INET_Addr.i"\
 	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
@@ -166,6 +184,8 @@ DEP_CPP_SERVE=\
 	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
 	{$(INCLUDE)}"\ace\Message_Queue.h"\
 	{$(INCLUDE)}"\ace\Message_Queue.i"\
+	{$(INCLUDE)}"\ace\Object_Manager.h"\
+	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
 	{$(INCLUDE)}"\ace\Pipe.h"\
@@ -180,9 +200,6 @@ DEP_CPP_SERVE=\
 	{$(INCLUDE)}"\ace\Service_Config.i"\
 	{$(INCLUDE)}"\ace\Service_Object.h"\
 	{$(INCLUDE)}"\ace\Service_Object.i"\
-	{$(INCLUDE)}"\ace\Set.cpp"\
-	{$(INCLUDE)}"\ace\Set.h"\
-	{$(INCLUDE)}"\ace\Set.i"\
 	{$(INCLUDE)}"\ace\Shared_Object.h"\
 	{$(INCLUDE)}"\ace\Shared_Object.i"\
 	{$(INCLUDE)}"\ace\Signal.h"\
@@ -200,9 +217,6 @@ DEP_CPP_SERVE=\
 	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\Stack.cpp"\
-	{$(INCLUDE)}"\ace\Stack.h"\
-	{$(INCLUDE)}"\ace\Stack.i"\
 	{$(INCLUDE)}"\ace\stdcpp.h"\
 	{$(INCLUDE)}"\ace\Strategies.h"\
 	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
@@ -223,8 +237,19 @@ DEP_CPP_SERVE=\
 	{$(INCLUDE)}"\ace\Thread_Manager.h"\
 	{$(INCLUDE)}"\ace\Thread_Manager.i"\
 	{$(INCLUDE)}"\ace\Time_Value.h"\
+	{$(INCLUDE)}"\ace\Timer_Heap.h"\
+	{$(INCLUDE)}"\ace\Timer_Heap_T.cpp"\
+	{$(INCLUDE)}"\ace\Timer_Heap_T.h"\
+	{$(INCLUDE)}"\ace\Timer_List.h"\
+	{$(INCLUDE)}"\ace\Timer_List_T.cpp"\
+	{$(INCLUDE)}"\ace\Timer_List_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue.i"\
+	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
+	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
+	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
+	{$(INCLUDE)}"\ace\Timer_Wheel.h"\
+	{$(INCLUDE)}"\ace\Timer_Wheel_T.cpp"\
+	{$(INCLUDE)}"\ace\Timer_Wheel_T.h"\
 	{$(INCLUDE)}"\ace\Token.h"\
 	{$(INCLUDE)}"\ace\Token.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
@@ -240,18 +265,35 @@ DEP_CPP_SERVE=\
 
 SOURCE=.\Logging_Handler.cpp
 DEP_CPP_LOGGI=\
+	"..\..\..\ace\config-win32.h"\
 	".\Logging_Handler.h"\
 	".\Reactor_Singleton.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Addr.h"\
 	{$(INCLUDE)}"\ace\Addr.i"\
+	{$(INCLUDE)}"\ace\Asynch_IO.h"\
+	{$(INCLUDE)}"\ace\Asynch_IO.i"\
+	{$(INCLUDE)}"\ace\Atomic_Op.i"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config.h"\
+	{$(INCLUDE)}"\ace\Containers.cpp"\
+	{$(INCLUDE)}"\ace\Containers.h"\
+	{$(INCLUDE)}"\ace\Containers.i"\
 	{$(INCLUDE)}"\ace\Event_Handler.h"\
 	{$(INCLUDE)}"\ace\Event_Handler.i"\
+	{$(INCLUDE)}"\ace\Free_List.cpp"\
+	{$(INCLUDE)}"\ace\Free_List.h"\
+	{$(INCLUDE)}"\ace\Free_List.i"\
 	{$(INCLUDE)}"\ace\Handle_Set.h"\
 	{$(INCLUDE)}"\ace\Handle_Set.i"\
+	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
+	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
+	{$(INCLUDE)}"\ace\High_Res_Timer.h"\
+	{$(INCLUDE)}"\ace\High_Res_Timer.i"\
 	{$(INCLUDE)}"\ace\INET_Addr.h"\
 	{$(INCLUDE)}"\ace\INET_Addr.i"\
 	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
@@ -280,6 +322,8 @@ DEP_CPP_LOGGI=\
 	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
 	{$(INCLUDE)}"\ace\Message_Queue.h"\
 	{$(INCLUDE)}"\ace\Message_Queue.i"\
+	{$(INCLUDE)}"\ace\Object_Manager.h"\
+	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
 	{$(INCLUDE)}"\ace\Pipe.h"\
@@ -294,9 +338,6 @@ DEP_CPP_LOGGI=\
 	{$(INCLUDE)}"\ace\Service_Config.i"\
 	{$(INCLUDE)}"\ace\Service_Object.h"\
 	{$(INCLUDE)}"\ace\Service_Object.i"\
-	{$(INCLUDE)}"\ace\Set.cpp"\
-	{$(INCLUDE)}"\ace\Set.h"\
-	{$(INCLUDE)}"\ace\Set.i"\
 	{$(INCLUDE)}"\ace\Shared_Object.h"\
 	{$(INCLUDE)}"\ace\Shared_Object.i"\
 	{$(INCLUDE)}"\ace\Signal.h"\
@@ -312,9 +353,6 @@ DEP_CPP_LOGGI=\
 	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\Stack.cpp"\
-	{$(INCLUDE)}"\ace\Stack.h"\
-	{$(INCLUDE)}"\ace\Stack.i"\
 	{$(INCLUDE)}"\ace\stdcpp.h"\
 	{$(INCLUDE)}"\ace\Strategies.h"\
 	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
@@ -335,8 +373,19 @@ DEP_CPP_LOGGI=\
 	{$(INCLUDE)}"\ace\Thread_Manager.h"\
 	{$(INCLUDE)}"\ace\Thread_Manager.i"\
 	{$(INCLUDE)}"\ace\Time_Value.h"\
+	{$(INCLUDE)}"\ace\Timer_Heap.h"\
+	{$(INCLUDE)}"\ace\Timer_Heap_T.cpp"\
+	{$(INCLUDE)}"\ace\Timer_Heap_T.h"\
+	{$(INCLUDE)}"\ace\Timer_List.h"\
+	{$(INCLUDE)}"\ace\Timer_List_T.cpp"\
+	{$(INCLUDE)}"\ace\Timer_List_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue.i"\
+	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
+	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
+	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
+	{$(INCLUDE)}"\ace\Timer_Wheel.h"\
+	{$(INCLUDE)}"\ace\Timer_Wheel_T.cpp"\
+	{$(INCLUDE)}"\ace\Timer_Wheel_T.h"\
 	{$(INCLUDE)}"\ace\Token.h"\
 	{$(INCLUDE)}"\ace\Token.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
@@ -352,6 +401,7 @@ DEP_CPP_LOGGI=\
 
 SOURCE=.\Logging_Acceptor.cpp
 DEP_CPP_LOGGIN=\
+	"..\..\..\ace\config-win32.h"\
 	".\Logging_Acceptor.h"\
 	".\Logging_Handler.h"\
 	".\Reactor_Singleton.h"\
@@ -359,12 +409,28 @@ DEP_CPP_LOGGIN=\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Addr.h"\
 	{$(INCLUDE)}"\ace\Addr.i"\
+	{$(INCLUDE)}"\ace\Asynch_IO.h"\
+	{$(INCLUDE)}"\ace\Asynch_IO.i"\
+	{$(INCLUDE)}"\ace\Atomic_Op.i"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config.h"\
+	{$(INCLUDE)}"\ace\Containers.cpp"\
+	{$(INCLUDE)}"\ace\Containers.h"\
+	{$(INCLUDE)}"\ace\Containers.i"\
 	{$(INCLUDE)}"\ace\Event_Handler.h"\
 	{$(INCLUDE)}"\ace\Event_Handler.i"\
+	{$(INCLUDE)}"\ace\Free_List.cpp"\
+	{$(INCLUDE)}"\ace\Free_List.h"\
+	{$(INCLUDE)}"\ace\Free_List.i"\
 	{$(INCLUDE)}"\ace\Handle_Set.h"\
 	{$(INCLUDE)}"\ace\Handle_Set.i"\
+	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
+	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
+	{$(INCLUDE)}"\ace\High_Res_Timer.h"\
+	{$(INCLUDE)}"\ace\High_Res_Timer.i"\
 	{$(INCLUDE)}"\ace\INET_Addr.h"\
 	{$(INCLUDE)}"\ace\INET_Addr.i"\
 	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
@@ -393,6 +459,8 @@ DEP_CPP_LOGGIN=\
 	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
 	{$(INCLUDE)}"\ace\Message_Queue.h"\
 	{$(INCLUDE)}"\ace\Message_Queue.i"\
+	{$(INCLUDE)}"\ace\Object_Manager.h"\
+	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
 	{$(INCLUDE)}"\ace\Pipe.h"\
@@ -407,9 +475,6 @@ DEP_CPP_LOGGIN=\
 	{$(INCLUDE)}"\ace\Service_Config.i"\
 	{$(INCLUDE)}"\ace\Service_Object.h"\
 	{$(INCLUDE)}"\ace\Service_Object.i"\
-	{$(INCLUDE)}"\ace\Set.cpp"\
-	{$(INCLUDE)}"\ace\Set.h"\
-	{$(INCLUDE)}"\ace\Set.i"\
 	{$(INCLUDE)}"\ace\Shared_Object.h"\
 	{$(INCLUDE)}"\ace\Shared_Object.i"\
 	{$(INCLUDE)}"\ace\Signal.h"\
@@ -427,9 +492,6 @@ DEP_CPP_LOGGIN=\
 	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\Stack.cpp"\
-	{$(INCLUDE)}"\ace\Stack.h"\
-	{$(INCLUDE)}"\ace\Stack.i"\
 	{$(INCLUDE)}"\ace\stdcpp.h"\
 	{$(INCLUDE)}"\ace\Strategies.h"\
 	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
@@ -450,8 +512,19 @@ DEP_CPP_LOGGIN=\
 	{$(INCLUDE)}"\ace\Thread_Manager.h"\
 	{$(INCLUDE)}"\ace\Thread_Manager.i"\
 	{$(INCLUDE)}"\ace\Time_Value.h"\
+	{$(INCLUDE)}"\ace\Timer_Heap.h"\
+	{$(INCLUDE)}"\ace\Timer_Heap_T.cpp"\
+	{$(INCLUDE)}"\ace\Timer_Heap_T.h"\
+	{$(INCLUDE)}"\ace\Timer_List.h"\
+	{$(INCLUDE)}"\ace\Timer_List_T.cpp"\
+	{$(INCLUDE)}"\ace\Timer_List_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue.i"\
+	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
+	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
+	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
+	{$(INCLUDE)}"\ace\Timer_Wheel.h"\
+	{$(INCLUDE)}"\ace\Timer_Wheel_T.cpp"\
+	{$(INCLUDE)}"\ace\Timer_Wheel_T.h"\
 	{$(INCLUDE)}"\ace\Token.h"\
 	{$(INCLUDE)}"\ace\Token.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
