@@ -38,7 +38,7 @@ public:
   ~ACE_Profile_Timer (void) {}
   int  start (void) { errno = ENOTSUP; return -1; }
   int  stop (void) { errno = ENOTSUP; return -1; }
-  int  elapsed_time (ACE_Elapsed_Time &et) { errno = ENOTSUP; return -1; }
+  int  elapsed_time (ACE_Elapsed_Time & /* et */) { errno = ENOTSUP; return -1; }
 };
 #else
 class ACE_Export ACE_Profile_Timer
