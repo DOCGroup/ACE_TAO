@@ -59,7 +59,7 @@ Test_i::test_method (CORBA::Short priority,
   // Print out the info.
   if (servant_thread_priority != priority)
     ACE_DEBUG ((LM_DEBUG,
-                "ERROR: servant thread priority is not equal"
+                "ERROR: servant thread priority is not equal "
                 "to method argument.\n"));
 
   ACE_DEBUG ((LM_DEBUG,
@@ -221,7 +221,7 @@ main (int argc, char *argv[])
 
       if (final_thread_priority != initial_thread_priority)
         ACE_DEBUG ((LM_DEBUG,
-                    "ERROR: Priority of the servant thread"
+                    "ERROR: Priority of the servant thread "
                     "has been permanently changed!\n"
                     "Initial priority: %d  Final priority: %d\n",
                     initial_thread_priority, final_thread_priority));
