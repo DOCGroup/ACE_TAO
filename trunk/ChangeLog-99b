@@ -1,3 +1,8 @@
+Mon Jul 12 14:46:05 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/ace_dll.dsp: Merged additional MFC configuration.  Thanks to
+	  John Morey <jmorey@tbi.com> for submitting the patch.
+
 Mon Jul 12 15:27:37 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-osf1.h,config-osf1-4.0.h,
@@ -75,7 +80,7 @@ Mon Jul 12 10:05:31 1999  Steve Huston  <shuston@riverace.com>
 
 Mon Jul 12 09:26:29 1999  David L. Levine  <levine@cs.wustl.edu>
 
-        * tests/Makefile: don't build libDLL_Test.so if not building
+        * testsr/Makefile: don't build libDLL_Test.so if not building
           shared libraries.  This simplifies the build on static-libs
           only platforms, and can be used by run_tests.sh, below.
           [Bug 62]
