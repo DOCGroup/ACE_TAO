@@ -1,6 +1,6 @@
 #
-# Makefile for building the IFR Service executable
-# 
+# Makefile for building	the IFR	Service	executable
+#
 
 NAME = IFR_Service
 
@@ -15,14 +15,14 @@ OBJFILES = \
 	$(OBJDIR)\Contained_i.obj \
 	$(OBJDIR)\Container_i.obj \
 	$(OBJDIR)\EmitsDef_i.obj \
-	$(OBJDIR)\EnumDef_i.obj \
+	$(OBJDIR)\EnumDef_i.obj	\
 	$(OBJDIR)\EventDef_i.obj \
 	$(OBJDIR)\ExceptionDef_i.obj \
 	$(OBJDIR)\FactoryDef_i.obj \
 	$(OBJDIR)\FinderDef_i.obj \
 	$(OBJDIR)\FixedDef_i.obj \
-	$(OBJDIR)\HomeDef_i.obj \
-	$(OBJDIR)\IDLType_i.obj \
+	$(OBJDIR)\HomeDef_i.obj	\
+	$(OBJDIR)\IDLType_i.obj	\
 	$(OBJDIR)\IFR_Server.obj \
 	$(OBJDIR)\IFR_Service.obj \
 	$(OBJDIR)\InterfaceDef_i.obj \
@@ -45,7 +45,7 @@ OBJFILES = \
 	$(OBJDIR)\tmplinst.obj \
 	$(OBJDIR)\TypedefDef_i.obj \
 	$(OBJDIR)\UnionDef_i.obj \
-	$(OBJDIR)\UsesDef_i.obj \
+	$(OBJDIR)\UsesDef_i.obj	\
 	$(OBJDIR)\ValueBoxDef_i.obj \
 	$(OBJDIR)\ValueDef_i.obj \
 	$(OBJDIR)\ValueMemberDef_i.obj \
@@ -61,10 +61,10 @@ CFLAGS = \
 	$(ACE_CFLAGS) \
 	$(TAO_CFLAGS) \
 	$(TAO_PORTABLESERVER_CFLAGS) \
-	$(TAO_SVC_UTILS_CFLAGS) \
+	$(TAO_SVC_UTILS_CFLAGS)	\
 	$(TAO_IORTABLE_CFLAGS) \
 	-DTCF_HAS_DLL=$(TCF_DLLFLAG)
-        
+
 LIBFILES = \
 	$(ACE_LIB) \
 	$(TAO_LIB) \
