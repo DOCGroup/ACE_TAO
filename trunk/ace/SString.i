@@ -1,8 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-// SString.i
-
 ACE_INLINE size_t
 ACE_CString::length (void) const
 {
@@ -10,7 +8,7 @@ ACE_CString::length (void) const
   return this->len_;
 }
 
-ACE_INLINE ACE_CString 
+ACE_INLINE ACE_CString
 ACE_CString::substr (size_t offset,
                      ssize_t length) const
 {
@@ -19,7 +17,7 @@ ACE_CString::substr (size_t offset,
 
 // Return the <index'th> character in the string.
 
-ACE_INLINE char 
+ACE_INLINE char
 ACE_CString::operator[] (size_t index) const
 {
   ACE_TRACE ("ACE_CString::operator[]");
@@ -41,7 +39,7 @@ ACE_INLINE char *
 ACE_CString::rep (void) const
 {
   ACE_TRACE ("ACE_CString::rep");
-  
+
   char *new_string;
   ACE_NEW_RETURN (new_string, char[this->len_ + 1], 0);
   ACE_OS::strcpy (new_string, this->rep_);
@@ -63,7 +61,7 @@ ACE_CString::c_str (void) const
 
 // Comparison operator.
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_CString::operator== (const ACE_CString &s) const
 {
   ACE_TRACE ("ACE_CString::operator==");
@@ -74,14 +72,14 @@ ACE_CString::operator== (const ACE_CString &s) const
 
 // Comparison operator.
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_CString::operator!= (const ACE_CString &s) const
 {
   ACE_TRACE ("ACE_CString::operator!=");
   return !(*this == s);
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_CString::compare (const ACE_CString &s) const
 {
   ACE_TRACE ("ACE_CString::compare");
@@ -96,13 +94,13 @@ ACE_CString::strstr (const ACE_CString &s) const
   return this->find (s.rep_);
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_CString::find (const ACE_CString &str, int pos) const
 {
   return this->find (str.rep_, pos);
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_CString::find (const char *s, int pos) const
 {
   char *substr = this->rep_ + pos;
@@ -113,7 +111,7 @@ ACE_CString::find (const char *s, int pos) const
     return pointer - substr;
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_CString::find (char c, int pos) const
 {
   char *substr = this->rep_ + pos;
@@ -123,8 +121,8 @@ ACE_CString::find (char c, int pos) const
   else
     return pointer - substr;
 }
-  
-ACE_INLINE int 
+
+ACE_INLINE int
 ACE_CString::rfind (char c, int pos) const
 {
   if (pos == ACE_CString::npos)
@@ -135,17 +133,17 @@ ACE_CString::rfind (char c, int pos) const
       if (this->rep_[i] == c)
         return i;
     }
-  
+
   return ACE_CString::npos;
 }
-  
+
 ACE_INLINE u_long
 ACE_CString::hash (void) const
 {
   return ACE::hash_pjw (this->rep_);
 }
 
-ACE_INLINE ACE_SString 
+ACE_INLINE ACE_SString
 ACE_SString::substr (size_t offset,
                      ssize_t length) const
 {
@@ -154,7 +152,7 @@ ACE_SString::substr (size_t offset,
 
 // Return the <index'th> character in the string.
 
-ACE_INLINE char 
+ACE_INLINE char
 ACE_SString::operator[] (size_t index) const
 {
   ACE_TRACE ("ACE_SString::operator[]");
@@ -199,7 +197,7 @@ ACE_SString::c_str (void) const
 
 // Comparison operator.
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_SString::operator== (const ACE_SString &s) const
 {
   ACE_TRACE ("ACE_SString::operator==");
@@ -209,14 +207,14 @@ ACE_SString::operator== (const ACE_SString &s) const
 
 // Comparison operator.
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_SString::operator!= (const ACE_SString &s) const
 {
   ACE_TRACE ("ACE_SString::operator!=");
   return !(*this == s);
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_SString::compare (const ACE_SString &s) const
 {
   ACE_TRACE ("ACE_CString::compare");
@@ -231,13 +229,13 @@ ACE_SString::strstr (const ACE_SString &s) const
   return this->find (s.rep_);
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_SString::find (const ACE_SString &str, int pos) const
 {
   return this->find (str.rep_, pos);
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_SString::find (const char *s, int pos) const
 {
   char *substr = this->rep_ + pos;
@@ -248,7 +246,7 @@ ACE_SString::find (const char *s, int pos) const
     return pointer - substr;
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_SString::find (char c, int pos) const
 {
   char *substr = this->rep_ + pos;
@@ -258,8 +256,8 @@ ACE_SString::find (char c, int pos) const
   else
     return pointer - substr;
 }
-  
-ACE_INLINE int 
+
+ACE_INLINE int
 ACE_SString::rfind (char c, int pos) const
 {
   if (pos == ACE_SString::npos)
@@ -270,10 +268,10 @@ ACE_SString::rfind (char c, int pos) const
       if (this->rep_[i] == c)
         return i;
     }
-  
+
   return ACE_SString::npos;
 }
-  
+
 ACE_INLINE u_long
 ACE_SString::hash (void) const
 {
@@ -287,7 +285,7 @@ ACE_SString::length (void) const
   return this->len_;
 }
 
-ACE_INLINE ACE_WString 
+ACE_INLINE ACE_WString
 ACE_WString::substr (size_t offset,
                      ssize_t length) const
 {
@@ -308,7 +306,7 @@ ACE_WString::rep (void) const
       ACE_NEW_RETURN (t, ACE_USHORT16[this->len_ + 1], 0);
       ACE_OS::memcpy (t, this->rep_, this->len_ * sizeof (ACE_USHORT16));
 
-      // null terminate 
+      // null terminate
       t[this->len_] = 0;
 
       return t;
@@ -331,33 +329,33 @@ ACE_WString::c_str (void) const
 
 // Comparison operator.
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_WString::operator== (const ACE_WString &s) const
 {
   ACE_TRACE ("ACE_WString::operator==");
   return this->len_ == s.len_
-    && ACE_OS::memcmp ((const void *) this->rep_, 
-		       (const void *) s.rep_,
-		       this->len_ * sizeof (ACE_USHORT16)) == 0;
+    && ACE_OS::memcmp ((const void *) this->rep_,
+                       (const void *) s.rep_,
+                       this->len_ * sizeof (ACE_USHORT16)) == 0;
 }
 
 // Comparison operator.
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_WString::operator!= (const ACE_WString &s) const
 {
   ACE_TRACE ("ACE_WString::operator!=");
   return !(*this == s);
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_WString::compare (const ACE_WString &s) const
 {
   ACE_TRACE ("ACE_WString::compare");
 
-  return ACE_OS::memcmp ((const void *) this->rep_, 
-			 (const void *) s.rep_,
-			 this->len_ * sizeof (ACE_USHORT16));
+  return ACE_OS::memcmp ((const void *) this->rep_,
+                         (const void *) s.rep_,
+                         this->len_ * sizeof (ACE_USHORT16));
 }
 
 // Return the <index'th> character in the string.
@@ -386,13 +384,13 @@ ACE_WString::strstr (const ACE_WString &s) const
   return this->find (s.rep_);
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_WString::find (const ACE_WString &str, int pos) const
 {
   return this->find (str.rep_, pos);
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_WString::find (const ACE_USHORT16 *s, int pos) const
 {
   ACE_USHORT16 *substr = this->rep_ + pos;
@@ -403,22 +401,22 @@ ACE_WString::find (const ACE_USHORT16 *s, int pos) const
     return pointer - substr;
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_WString::find (ACE_USHORT16 c, int pos) const
 {
   if (pos == ACE_WString::npos)
     pos = this->len_;
 
-  for (int i = pos; i < this->len_; i++)
+  for (size_t i = pos; i < this->len_; i++)
     {
       if (this->rep_[i] == c)
-        return i;
+        return ACE_static_cast (int, i);
     }
-  
+
   return ACE_WString::npos;
 }
-  
-ACE_INLINE int 
+
+ACE_INLINE int
 ACE_WString::rfind (ACE_USHORT16 c, int pos) const
 {
   if (pos == ACE_WString::npos)
@@ -429,10 +427,10 @@ ACE_WString::rfind (ACE_USHORT16 c, int pos) const
       if (this->rep_[i] == c)
         return i;
     }
-  
+
   return ACE_WString::npos;
 }
-  
+
 ACE_INLINE size_t
 ACE_WString::length (void) const
 {
