@@ -56,7 +56,8 @@ public:
 
   /// Install the timeout handler
   virtual long schedule_timer (CORBA::ULong ,
-                               const ACE_Time_Value &)= 0;
+                               const ACE_Time_Value &
+                               ACE_ENV_ARG_DECL)= 0;
 
   /// Mutators for refcount
   long incr_refcount (void);
@@ -139,8 +140,7 @@ namespace TAO
   class ARDB_Refcount_Functor
   {
   public:
-    void operator() (TAO_Asynch_Reply_Dispatcher_Base *ardb
-                     ACE_ENV_ARG_DECL)
+    void operator() (TAO_Asynch_Reply_Dispatcher_Base *ardb)
       ACE_THROW_SPEC (());
   };
 
