@@ -1,3 +1,18 @@
+Mon Jan  8 17:27:29 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * tao/Policy_Manager.cpp:
+
+          I believe I removed a warning for MSVC 5 by adding a
+          .in () to the 
+
+              CORBA::Policy_var policy = policies[i];   
+
+          statement in TAO_Policy_Manager_Impl::set_policy_overrides.
+
+        * orbsvcs/orbsvcs/AV/sfp.cpp:
+
+          Fixed some unused argument warnings.
+
 Mon Jan  8 13:36:18 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/RTCP.cpp: 
