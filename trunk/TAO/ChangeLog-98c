@@ -1,5 +1,9 @@
 Fri May 01 17:56:07 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* tao/orbsvcs/orbsvcs/Naming/Naming_Utils.cpp: Moved #include of
+ 	  Arg_Shifter.h after #include of tao/corba.h so that ACE_Export
+ 	  is properly defined.
+
 	* tao/TAO.dsp: Removed Arg_Shifter.cpp from the project.
 
 Fri May  1 17:26:31 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
