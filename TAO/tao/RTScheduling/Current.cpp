@@ -47,6 +47,7 @@ TAO_RTScheduler_Current::begin_scheduling_segment(const char * name,
 				  sched_param,
 				  implicit_sched_param
 				  ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 
@@ -67,7 +68,7 @@ TAO_RTScheduler_Current::update_scheduling_segment (const char * name,
 				   sched_param,
 				   implicit_sched_param
 				   ACE_ENV_ARG_PARAMETER);
-  
+  ACE_CHECK;
 }
 
 void 
@@ -91,6 +92,7 @@ TAO_RTScheduler_Current::end_scheduling_segment (const char * name
   
   impl->end_scheduling_segment (name
 				ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 RTScheduling::DistributableThread_ptr 
@@ -104,7 +106,7 @@ TAO_RTScheduler_Current::lookup(const RTScheduling::Current::IdType & id
   
   RTScheduling::DistributableThread_var DT = RTScheduling::DistributableThread::_narrow (DT_obj
 											 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (0);
   
   if (!CORBA::is_nil (DT.in ()))
     return RTScheduling::DistributableThread::_duplicate (DT.in());
@@ -131,7 +133,7 @@ TAO_RTScheduler_Current::spawn (RTScheduling::ThreadAction_ptr start,
   TAO_RTScheduler_Current_i *impl = this->implementation ();
   
   if (impl == 0)
-    ACE_THROW (CORBA::NO_IMPLEMENT ());
+    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
   
   return impl->spawn (start,
 		      data,
@@ -150,9 +152,9 @@ TAO_RTScheduler_Current::id (ACE_ENV_SINGLE_ARG_DECL)
   TAO_RTScheduler_Current_i *impl = this->implementation ();
   
   if (impl == 0)
-    ACE_THROW (CORBA::NO_IMPLEMENT ());
+    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
   
-  return impl->id (ACE_ENV_ARG_PARAMETER);
+  return impl->id (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CORBA::Policy_ptr 
@@ -162,9 +164,9 @@ TAO_RTScheduler_Current::scheduling_parameter (ACE_ENV_SINGLE_ARG_DECL)
   TAO_RTScheduler_Current_i *impl = this->implementation ();
   
   if (impl == 0)
-    ACE_THROW (CORBA::NO_IMPLEMENT ());
+    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
   
-  return impl->scheduling_parameter (ACE_ENV_ARG_PARAMETER);
+  return impl->scheduling_parameter (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CORBA::Policy_ptr 
@@ -174,9 +176,9 @@ TAO_RTScheduler_Current::implicit_scheduling_parameter (ACE_ENV_SINGLE_ARG_DECL)
   TAO_RTScheduler_Current_i *impl = this->implementation ();
   
   if (impl == 0)
-    ACE_THROW (CORBA::NO_IMPLEMENT ());
+    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
   
-  return impl->implicit_scheduling_parameter (ACE_ENV_ARG_PARAMETER);
+  return impl->implicit_scheduling_parameter (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 RTScheduling::Current::NameList * 
@@ -186,13 +188,13 @@ TAO_RTScheduler_Current::current_scheduling_segment_names (ACE_ENV_SINGLE_ARG_DE
   TAO_RTScheduler_Current_i *impl = this->implementation ();
   
   if (impl == 0)
-    ACE_THROW (CORBA::NO_IMPLEMENT ());
+    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
   
-  return impl->current_scheduling_segment_names (ACE_ENV_ARG_PARAMETER);
+  return impl->current_scheduling_segment_names (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 RTCORBA::Priority 
-TAO_RTScheduler_Current::the_priority (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+TAO_RTScheduler_Current::the_priority (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
 	return this->rt_current_->the_priority ();
@@ -200,7 +202,7 @@ TAO_RTScheduler_Current::the_priority (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
 void 
 TAO_RTScheduler_Current::the_priority (RTCORBA::Priority the_priority
-                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                             ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
 	this->rt_current_->the_priority(the_priority);
@@ -222,6 +224,8 @@ TAO_RTScheduler_Current::implementation (TAO_RTScheduler_Current_i* new_current)
 TAO_RTScheduler_Current_i*
 TAO_RTScheduler_Current::implementation (void)
 {
+  ACE_DECLARE_NEW_CORBA_ENV;
+
   TAO_TSS_Resources *tss =
     TAO_TSS_RESOURCES::instance ();
 
@@ -237,8 +241,7 @@ TAO_RTScheduler_Current::implementation (void)
 					  CORBA::SystemException::_tao_minor_code (
 					  TAO_DEFAULT_MINOR_CODE,
 					  ENOMEM),
-					  CORBA::COMPLETED_NO));
-      ACE_CHECK;
+					  CORBA::COMPLETED_NO ));
 
       tss->rtscheduler_current_impl_ = impl;
     }
@@ -303,6 +306,9 @@ TAO_RTScheduler_Current_i::TAO_RTScheduler_Current_i (TAO_ORB_Core* orb,
     previous_current_ (prev_current),
     dt_hash_ (dt_hash)
 {
+  
+  ACE_DECLARE_NEW_CORBA_ENV;
+
   ACE_DEBUG ((LM_DEBUG,
 	      "TAO_RTScheduler_Current_i::TAO_RTScheduler_Current_i\n"));
   
@@ -319,7 +325,7 @@ void
 TAO_RTScheduler_Current_i::begin_scheduling_segment(const char * name,
 						    CORBA::Policy_ptr sched_param,
 						    CORBA::Policy_ptr implicit_sched_param
-						    ACE_ENV_SINGLE_ARG_DECL)
+						    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
 		   RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE))
 {
@@ -360,7 +366,7 @@ TAO_RTScheduler_Current_i::begin_scheduling_segment(const char * name,
 
       if (result != 0)
 	{
-	  this->cancel_thread (ACE_ENV_ARG_PARAMETER);
+	  this->cancel_thread (ACE_ENV_SINGLE_ARG_PARAMETER);
 	  ACE_CHECK;
 	}
       else if (result == 1)
@@ -378,7 +384,7 @@ TAO_RTScheduler_Current_i::begin_scheduling_segment(const char * name,
     {
       if (this->dt_->state () == RTScheduling::DistributableThread::CANCELLED)
 	{
-	  this->cancel_thread (ACE_ENV_ARG_PARAMETER);
+	  this->cancel_thread (ACE_ENV_SINGLE_ARG_PARAMETER);
 	  ACE_CHECK;
 	}
       
@@ -421,14 +427,14 @@ void
 TAO_RTScheduler_Current_i::update_scheduling_segment (const char * name,
 						      CORBA::Policy_ptr sched_param,
 						      CORBA::Policy_ptr implicit_sched_param
-						      ACE_ENV_SINGLE_ARG_DECL)
+						      ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
 		   RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE))
 {
   // Check if DT has been cancelled
   if (this->dt_->state () == RTScheduling::DistributableThread::CANCELLED)
     {
-      this->cancel_thread (ACE_ENV_ARG_PARAMETER);
+      this->cancel_thread (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
   
@@ -457,7 +463,7 @@ TAO_RTScheduler_Current_i::end_scheduling_segment (const char * name
       // Check if DT has been cancelled
       if (this->dt_->state () == RTScheduling::DistributableThread::CANCELLED)
 	{
-	  this->cancel_thread (ACE_ENV_ARG_PARAMETER);
+	  this->cancel_thread (ACE_ENV_SINGLE_ARG_PARAMETER);
 	  ACE_CHECK;
 	}
 
@@ -514,7 +520,7 @@ TAO_RTScheduler_Current_i::spawn (RTScheduling::ThreadAction_ptr start,
     {
       // Check if DT has been cancelled.
       if (this->dt_->state () == RTScheduling::DistributableThread::CANCELLED)
-	this->cancel_thread ();
+	this->cancel_thread (ACE_ENV_SINGLE_ARG_PARAMETER);
       
       // Generate GUID.
       this->guid_.length (sizeof(long));
@@ -629,7 +635,7 @@ DTTask::DTTask (//ACE_Thread_Manager* manager,
 int 
 DTTask::svc (void)
 {
-  ACE_TRY
+  ACE_TRY_NEW_ENV
     {
       TAO_TSS_Resources *tss =
 	TAO_TSS_RESOURCES::instance ();
@@ -1080,18 +1086,18 @@ const char* TAO_RTScheduler_Current::_interface_repository_id (void) const
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Hash_Map_Manager_Ex<IdType, CORBA::Object_ptr, TAO_DTId_Hash, ACE_Hash<IdType>, ACE_Equal_To<IdType>, ACE_Thread_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<IdType, CORBA::Object_ptr, TAO_DTId_Hash, ACE_Hash<IdType>, ACE_Equal_To<IdType>, ACE_Thread_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<IdType, CORBA::Object_ptr, TAO_DTId_Hash, ACE_Equal_To<IdType>, ACE_Thread_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<IdType, CORBA::Object_ptr, TAO_DTId_Hash, ACE_Equal_To<IdType>, ACE_Thread_Mutex>;
 template class ACE_Hash_Map_Entry<IdType, CORBA::Object_ptr>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<IdType, CORBA::Object_ptr, TAO_DTId_Hash, ACE_Hash<IdType>, ACE_Equal_To<IdType>, ACE_Thread_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<IdType, CORBA::Object_ptr, TAO_DTId_Hash, ACE_Hash<IdType>, ACE_Equal_To<IdType>, ACE_Thread_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<IdType, CORBA::Object_ptr, TAO_DTId_Hash, ACE_Equal_To<IdType>, ACE_Thread_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<IdType, CORBA::Object_ptr, TAO_DTId_Hash, ACE_Equal_To<IdType>, ACE_Thread_Mutex>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Hash_Map_Manager_Ex<IdType, CORBA::Object_ptr, TAO_DTId_Hash, ACE_Hash<IdType>, ACE_Equal_To<IdType>, ACE_Thread_Mutex>;
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<IdType, CORBA::Object_ptr, TAO_DTId_Hash, ACE_Hash<IdType>, ACE_Equal_To<IdType>, ACE_Thread_Mutex>;
+#pragma instantiate ACE_Hash_Map_Manager_Ex<IdType, CORBA::Object_ptr, TAO_DTId_Hash, ACE_Equal_To<IdType>, ACE_Thread_Mutex>;
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<IdType, CORBA::Object_ptr, TAO_DTId_Hash, ACE_Equal_To<IdType>, ACE_Thread_Mutex>;
 #pragma instantiate ACE_Hash_Map_Entry<IdType, CORBA::Object_ptr>;
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<IdType, CORBA::Object_ptr, TAO_DTId_Hash, ACE_Hash<IdType>, ACE_Equal_To<IdType>, ACE_Thread_Mutex>;
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<IdType, CORBA::Object_ptr, TAO_DTId_Hash, ACE_Hash<IdType>, ACE_Equal_To<IdType>, ACE_Thread_Mutex>;
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<IdType, CORBA::Object_ptr, TAO_DTId_Hash, ACE_Equal_To<IdType>, ACE_Thread_Mutex>;
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<IdType, CORBA::Object_ptr, TAO_DTId_Hash, ACE_Equal_To<IdType>, ACE_Thread_Mutex>;
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
