@@ -18,7 +18,7 @@
 
 #include "FooS.h"
 
-class MyFooServant : public POA_Foo
+class GENERIC_SERVANT_Export MyFooServant : public POA_Foo
 {
 public:
   // constructor - takes a POA and a value parameter

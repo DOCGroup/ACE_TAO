@@ -95,26 +95,28 @@ SOURCE=.\Foo.idl
 
 # Begin Custom Build
 InputPath=.\Foo.idl
+InputName=Foo
 
 BuildCmds= \
-	..\..\..\tao_idl\tao_idl Foo.idl
+	..\..\..\tao_idl\tao_idl -Wb,export_macro=GENERIC_SERVANT_Export\
+ -Wb,export_include=generic_servant_export.h $(InputName).idl
 
-"FooS.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"FooS.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"FooS.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"FooC.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"FooC.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"FooC.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 # End Custom Build
 
@@ -122,26 +124,28 @@ BuildCmds= \
 
 # Begin Custom Build
 InputPath=.\Foo.idl
+InputName=Foo
 
 BuildCmds= \
-	..\..\..\tao_idl\tao_idl Foo.idl
+	..\..\..\tao_idl\tao_idl -Wb,export_macro=GENERIC_SERVANT_Export\
+ -Wb,export_include=generic_servant_export.h $(InputName).idl
 
-"FooS.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"FooS.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"FooS.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"FooC.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"FooC.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"FooC.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 # End Custom Build
 

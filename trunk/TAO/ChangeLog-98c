@@ -1,3 +1,23 @@
+Fri Mar 20 00:36:16 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/poa.cpp (dispatch_servant_i): The POA Current was not being
+ 	  setup correctly.  It was used before it was created. Fix was to
+ 	  change the order of things in dispatch_servant_i() and restored
+ 	  pre_invoke() to its original state.
+
+	* tests/POA/Generic_Servant/client.cpp (main): Make sure the
+ 	  client does not crash if the user does not provide an IOR.
+
+	* tests/POA/Generic_Servant/MyFooServant.h (MyFooServant): Added
+ 	  export macro so that the class gets properly included in the
+ 	  DLL.
+
+	* TAO_IDL/GenExportH.BAT: Changed %1% to %1.
+
+	* tests/POA/Generic_Servant/generic_servant_export.h: The server
+ 	  lib will now be created as a DLL instead of as a static library.
+  	  New file was added to get the exports right.
+
 Thu Mar 19 18:42:20 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_attribute.cpp (visit_attribute): Undefined
