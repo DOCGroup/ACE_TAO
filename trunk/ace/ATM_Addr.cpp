@@ -58,7 +58,6 @@ ACE_ATM_Addr::ACE_ATM_Addr (const ATMSAPAddress *sap)
 ACE_ATM_Addr::ACE_ATM_Addr (const ASYS_TCHAR sap[])
 {
   ACE_TRACE ("ACE_ATM_Addr::ACE_ATM_Addr");
-
   this->set (sap);
 }
 
@@ -99,6 +98,8 @@ ACE_ATM_Addr::set (const ACE_ATM_Addr &sap)
 {
   ACE_TRACE ("ACE_ATM_Addr::set");
 
+  this->init ();
+
   this->ACE_Addr::base_set (sap.get_type (),
                             sap.get_size ());
 
@@ -117,6 +118,8 @@ ACE_ATM_Addr::set (const ATMSAPAddress *sap)
 {
   ACE_TRACE ("ACE_ATM_Addr::set");
 
+  this->init ();
+
 #if defined (ACE_HAS_FORE_ATM_XTI)
   this->ACE_Addr::base_set (AF_ATM,
 #else
@@ -134,6 +137,8 @@ int
 ACE_ATM_Addr::set (const ASYS_TCHAR address[])
 {
   ACE_TRACE ("ACE_ATM_Addr::set");
+
+  this->init ();
 
 #if defined (ACE_HAS_FORE_ATM_XTI)
   atm_addr_.sap.t_atm_sap_addr.SVE_tag_addr =
@@ -303,7 +308,6 @@ ACE_ATM_Addr::get_local_address (ACE_HANDLE fd,
                                  u_char addr[])
 {
 #if defined (ACE_HAS_FORE_ATM_XTI)
-                         sizeof (struct ATMSAPAddress)) == 0;
   ATMSAPAddress local_addr;
   struct t_bind boundaddr;
 
@@ -346,7 +350,8 @@ ACE_ATM_Addr::construct_options(ACE_HANDLE fd,
   buf = (char *) ACE_OS::malloc (info.options);
 
   if (buf == 0)
-    ACE_ERROR_RETURN (("Unable to allocate %ld bytes for options\n",
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ASYS_TEXT ("Unable to allocate %ld bytes for options\n"),
                        info.options),
                       0);
 
@@ -371,7 +376,8 @@ ACE_ATM_Addr::construct_options(ACE_HANDLE fd,
 
       if (get_local_address (fd, source_addr->address))
         {
-          ACE_ERROR ("Can't get local address!\n");
+          ACE_ERROR ((LM_ERROR,
+                      ASYS_TEXT ("Can't get local address!\n")));
           ACE_OS::free (buf);
           return 0;
         }
