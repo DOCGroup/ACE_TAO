@@ -1367,7 +1367,7 @@ ACE_EXTRA_DIST = os_include
 dist-hook:
 	(cd $(srcdir); tar cf - $(ACE_EXTRA_DIST)) | (cd $(distdir); \
           tar xfBp -)
-	list=`find $(distdir) -type d -name CVS -print`; for p in $$list; do \
+	list=`find $(distdir) -type d -a \( -name CVS -o -name .svn \) -a -print`; for p in $$list; do \
           rm -rf $$p; \
         done
 
@@ -1382,7 +1382,7 @@ clean-local:
 ## os_include subdirectory just for installation purposes seemed like
 ## overkill.
 install-data-local:
-	list=`(cd $(srcdir); find os_include -type d | $(EGREP) -v CVS)`; for p in $$list; do \
+	list=`(cd $(srcdir); find os_include -type d -a \! \( -name CVS -o -name .svn \) )`; for p in $$list; do \
 	  $(mkdir_p) $(DESTDIR)$(pkgincludedir)/$$p; \
 	  files=`(cd $(srcdir)/$$p; $(ECHO) *.h)`; \
           test "$$files" != "*.h"  && \
