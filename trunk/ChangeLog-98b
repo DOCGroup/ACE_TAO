@@ -1,3 +1,8 @@
+Mon Aug 10 20:12:21 1998  Steve Huston  <shuston@riverace.com>
+
+	* ace/Log_Msg.cpp: On HP-UX 10.x, display thread's readable number
+	  rather than an int represenation of a pointer.
+
 Mon Aug 10 10:35:26 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* Added the ACE-subsets.html file to the ACE directory so that
