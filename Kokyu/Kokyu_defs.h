@@ -66,7 +66,7 @@ namespace Kokyu
       VERY_HIGH_IMPORTANCE
     };
 
-  struct Reordering_Queue_Attributes
+  struct Kokyu_Export Reordering_Queue_Attributes
   {
     Reordering_Queue_Attributes ();
     unsigned long static_bit_field_mask_;
@@ -75,7 +75,7 @@ namespace Kokyu
     unsigned long dynamic_priority_offset_;
   };
 
-  struct ConfigInfo
+  struct Kokyu_Export ConfigInfo
   {
     Priority_t preemption_priority_;
 
