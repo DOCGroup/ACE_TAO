@@ -49,6 +49,11 @@ Thu Aug 27 11:35:11 1998  David L. Levine  <levine@cs.wustl.edu>
           updated comments to reflect that rtti=0 is now supported on
           OSF1-4.0.  (It's not only supported on Sun CC/SunOS 5.)
 
+        * tests/SOCK_Connector_Test.cpp (host_is_up): broke out
+          the code to test whether a host exists, is reachable, and
+          is up into host_is_up ().  Consider the host up if the
+          blocking connection attempt succeeds, or down if it doesn't.
+
 Wed Aug 26 23:43:42 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.5.32 released.
