@@ -193,10 +193,10 @@ LIST   = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/ace_LYNX_PPC/
 WEB    = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?ace_LYNX_PPC
 STATUS = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/ace_LYNX_PPC/status.txt
 
-[Lynx_I386]
-LIST   = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/danzon_LYNX_I386/
-WEB    = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?danzon_LYNX_I386
-STATUS = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/danzon_LYNX_I386/status.txt
+#[Lynx_I386]
+#LIST   = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/danzon_LYNX_I386/
+#WEB    = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?danzon_LYNX_I386
+#STATUS = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/danzon_LYNX_I386/status.txt
 
 [RedHat_7.1_Full]
 LIST   = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/beguine.doc.wustl.edu_Full/
