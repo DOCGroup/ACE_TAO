@@ -34,7 +34,7 @@ class Thread_Task : public Periodic_Task
   Thread_Task (void);
 
   /// Activate thread(s).
-  virtual int activate (ACE_Barrier* barrier);
+  virtual int activate_task (ACE_Barrier* barrier);
 
  protected:
 

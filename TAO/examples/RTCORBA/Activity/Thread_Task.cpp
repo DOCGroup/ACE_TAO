@@ -12,7 +12,7 @@ Thread_Task::Thread_Task (void)
 }
 
 int
-Thread_Task::activate (ACE_Barrier* barrier)
+Thread_Task::activate_task (ACE_Barrier* barrier)
 {
   barrier_ = barrier;
 
@@ -134,4 +134,3 @@ Thread_Task::svc (void)
 
   return 0;
 }
-

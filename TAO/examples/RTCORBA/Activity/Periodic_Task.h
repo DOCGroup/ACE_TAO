@@ -35,10 +35,10 @@ class Periodic_Task : public ACE_Task <ACE_SYNCH>
   ~Periodic_Task ();
 
   /// Init the state of this object.
-  int init (ACE_Arg_Shifter& arg_shifter);
+  int init_task (ACE_Arg_Shifter& arg_shifter);
 
   /// Activate this task, synch on the given barrier.
-  virtual int activate (ACE_Barrier* barrier) = 0;
+  virtual int activate_task (ACE_Barrier* barrier) = 0;
 
   /// Dump the stats collected.
   void dump_stats (ACE_TCHAR* msg);
