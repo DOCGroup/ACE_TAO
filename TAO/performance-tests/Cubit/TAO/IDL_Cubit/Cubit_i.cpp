@@ -60,7 +60,7 @@ static const char *Cubit_i_Timeprobe_Description[] =
 
 enum
 {
-  // Timeprobe description table start key 
+  // Timeprobe description table start key
   CUBIT_I_CUBE_ONEWAY_START = 10100,
   CUBIT_I_CUBE_ONEWAY_END,
 
@@ -101,7 +101,8 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (Cubit_i_Timeprobe_Description,
 // Constructor
 
 Cubit_Factory_i::Cubit_Factory_i (CORBA::ORB_ptr orb)
-  : my_cubit_ (orb)
+  : my_cubit_ (orb),
+    cubit_registered_ (0)
 {
 }
 
@@ -109,11 +110,34 @@ Cubit_Factory_i::Cubit_Factory_i (CORBA::ORB_ptr orb)
 
 Cubit_Factory_i::~Cubit_Factory_i (void)
 {
+  if (this->cubit_registered_)
+    {
+      ACE_TRY_NEW_ENV
+        {
+          PortableServer::POA_var poa = this->my_cubit_._default_POA (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
+          PortableServer::ObjectId_var id = poa->servant_to_id (&this->my_cubit_,
+                                                                ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
+          poa->deactivate_object (id.in (),
+                                  ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+      ACE_CATCHANY
+        {
+          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught and ignored");
+        }
+      ACE_ENDTRY;
+    }
 }
 
 Cubit_ptr
 Cubit_Factory_i::make_cubit (CORBA::Environment &env)
 {
+  this->cubit_registered_ = 1;
+
   return my_cubit_._this (env);
 }
 
@@ -294,7 +318,7 @@ Cubit_i::cube_octet_sequence (const Cubit::octet_seq &input,
 #endif
 }
 
-void 
+void
 Cubit_i::cube_many_sequence (const Cubit::many_seq & input,
                              Cubit::many_seq_out output,
                              CORBA::Environment &)
