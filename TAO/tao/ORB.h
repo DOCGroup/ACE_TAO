@@ -24,7 +24,7 @@
 #include "tao/Exception.h"
 #include "tao/IOR_LookupTable.h"
 #include "tao/Services.h"
-#include "IORManipulation.h"
+#include "tao/IORManipulation.h"
 
 // IRIX needs this for the throw specs
 #include "tao/PolicyC.h"
