@@ -39,7 +39,8 @@ DIRS  = CDR \
 	Interceptors \
 	Endpoint_Per_Priority \
 	Explicit_Event_Loop \
-	DynAny_Test
+	DynAny_Test \
+	Policies
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

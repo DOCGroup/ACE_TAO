@@ -148,6 +148,9 @@ TAO_Eager_Buffering_Sync_Strategy::buffering_constraints_reached (TAO_Transport 
   if (buffering_constraint_policy == 0)
     return 1;
 
+  // Automatically release the policy
+  CORBA::Object_var auto_release = buffering_constraint_policy;
+
   TAO::BufferingConstraint buffering_constraint;
   buffering_constraint_policy->get_buffering_constraint (buffering_constraint);
 

@@ -465,6 +465,9 @@ TAO_IIOP_Client_Connection_Handler::handle_timeout (const ACE_Time_Value &,
   TAO_RelativeRoundtripTimeoutPolicy *timeout_policy =
     this->orb_core_->stubless_relative_roundtrip_timeout ();
 
+  // Automatically release the policy
+  CORBA::Object_var auto_release = timeout_policy;
+
   ACE_Time_Value max_wait_time_value;
 
   // If max_wait_time is not zero then this is not the first attempt
@@ -475,6 +478,7 @@ TAO_IIOP_Client_Connection_Handler::handle_timeout (const ACE_Time_Value &,
       timeout_policy->set_time_value (max_wait_time_value);
       max_wait_time = &max_wait_time_value;
     }
+
 
 #endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 

@@ -9,6 +9,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
 #include "tao/CDR.h"
+#include "tao/Messaging_Policy_i.h"
 #include "tao/GIOP_Message_Acceptors.h"
 #include "tao/GIOP_Message_Lite.h"
 
@@ -327,7 +328,7 @@ TAO_SHMIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
   // Reset the message state.
   this->transport_.message_state_.reset (0);
 
-  result = 
+  result =
     this->acceptor_factory_->process_client_message (this->transport (),
                                                      this->orb_core_,
                                                      input_cdr,
@@ -448,6 +449,30 @@ TAO_SHMIOP_Client_Connection_Handler::handle_timeout (const ACE_Time_Value &,
   //
   // This method is called when buffering timer expires.
   //
+
+  ACE_Time_Value *max_wait_time = 0;
+
+#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
+
+  TAO_RelativeRoundtripTimeoutPolicy *timeout_policy =
+    this->orb_core_->stubless_relative_roundtrip_timeout ();
+
+  // Automatically release the policy
+  CORBA::Object_var auto_release = timeout_policy;
+
+  ACE_Time_Value max_wait_time_value;
+
+  // If max_wait_time is not zero then this is not the first attempt
+  // to send the request, the timeout value includes *all* those
+  // attempts.
+  if (timeout_policy != 0)
+    {
+      timeout_policy->set_time_value (max_wait_time_value);
+      max_wait_time = &max_wait_time_value;
+    }
+
+
+#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 
   // Cannot deal with errors, and therefore they are ignored.
   this->transport ()->send_buffered_messages ();

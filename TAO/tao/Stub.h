@@ -275,14 +275,14 @@ public:
   // Just forward profiles.
   void use_locate_requests (CORBA::Boolean use_it);
   // set the flags to use locate_requests.
-  
+
   void set_valid_profile (void);
   // NON-THREAD-SAFE.  Will set profile_success_ to 0.
 
   CORBA::Boolean valid_profile (void);
   // returns TRUE if a connection was successful with at least
   // one profile.
-  
+
   TAO_Profile *base_profiles (const TAO_MProfile& mprofiles);
   // Initialize the base_profiles_ and set profile_in_use_ to
   // reference the first profile.
@@ -314,7 +314,7 @@ public:
 
   void addressing_mode (CORBA::Short addr_mode);
   // Set the addressing mode
-  
+
   CORBA::Short addressing_mode (void);
   // Return the Addressing mode
 
