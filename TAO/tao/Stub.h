@@ -18,7 +18,7 @@
 //    remote invocation framework.  This is for use by
 //    compiler-generated code, not by portable applications!
 //
-//    These constitute the stub API to this "ORB Core".  Such
+//    These constitute the stub API to this "ORB Core."  Such
 //    interfaces are not specified by OMG, and may differ between
 //    different ORBs.  This one has the particular advantage that
 //    stubs can be quite small.
