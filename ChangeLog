@@ -1,3 +1,7 @@
+Mon Dec  2 17:58:06 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* ace/ACE.cpp: Fixed a compile error with g++.
+
 Sat Nov 30 09:18:51 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/ACE.{h,cpp}: Added a new crc32() method that works on

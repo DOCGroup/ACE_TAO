@@ -492,8 +492,8 @@ ACE::crc32 (iovec *iov, int len)
 
   for (int i = 0; i < len; ++i) 
     {
-      for (const char *p = iov[i].iov_base;
-           p != iov[i].iov_base + iov[i].iov_len;
+      for (const char *p = (char *) iov[i].iov_base;
+           p != (char *) iov[i].iov_base + iov[i].iov_len;
            ++p)
         COMPUTE (crc, *p);
 
