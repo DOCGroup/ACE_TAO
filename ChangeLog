@@ -1,3 +1,10 @@
+Thu Feb 26 10:54:42 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* Makefile:
+
+	  Removed the CIAO_Core target, since it was brain dead in the
+	  first place. 
+
 Thu Feb 26 11:15:39 2004  Steve Huston  <shuston@riverace.com>
 
 	* examples/C++NPv2/AIO_Client_Logging_Daemon.cpp: In declaration of
