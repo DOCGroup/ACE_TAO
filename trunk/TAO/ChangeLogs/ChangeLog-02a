@@ -1,3 +1,10 @@
+Sat Jun  3 20:56:46 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/orbsvcs/AV/MCast.cpp:
+        * orbsvcs/orbsvcs/AV/RTP.cpp:
+
+          Removed ACE_INLINE macros in these .cpp files.
+
 Sat Jun 03 17:08:34 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Bitmask_Filter.cpp:

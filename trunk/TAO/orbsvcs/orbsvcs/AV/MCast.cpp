@@ -173,14 +173,14 @@ TAO_AV_UDP_MCast_Transport::send (const iovec *iov,
 
 }
 
-ACE_INLINE int
+int
 TAO_AV_UDP_MCast_Transport::mtu (void)
 {
   return ACE_MAX_DGRAM_SIZE;
 }
 
 
-ACE_INLINE ssize_t
+ssize_t
 TAO_AV_UDP_MCast_Transport::recv (char *buf,
                                   size_t len,
                                   ACE_Time_Value *)
@@ -188,7 +188,7 @@ TAO_AV_UDP_MCast_Transport::recv (char *buf,
   return this->handler_->get_mcast_socket ()->recv (buf, len,this->peer_addr_);
 }
 
-ACE_INLINE ssize_t
+ssize_t
 TAO_AV_UDP_MCast_Transport::recv (char *buf,
                                   size_t len,
                                   int flags,
