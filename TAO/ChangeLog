@@ -1,13 +1,18 @@
+Fri Dec 10 18:42:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Object_KeyC.cpp:
+          Regenerated after the changes of Jeff below
+
 Fri Dec 10 12:29:34 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
-        
+
           - Changed C-style cast to const_cast in generated code for
             optimized handling of octet sequences.
-            
+
           - Changed generated local variable name from 'oseq' to
             '_tao_octet_seq' to minimize the chance of name clashes.
-          
+
           - Removed alternate code generation that had a guard for
             VC 5 only, since we no longer support that version.
 
