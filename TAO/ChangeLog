@@ -1,3 +1,16 @@
+Mon Dec 29 10:52:04 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Bug_1568_Regression/Bug_1568_Regression.mpc:
+	* tests/Bug_1568_Regression/Makefile:
+	* tests/Bug_1568_Regression/Test.idl:
+	* tests/Bug_1568_Regression/client.cpp:
+	* tests/Bug_1568_Regression/run_test.pl:
+	* tests/Bug_1568_Regression/server.cpp:
+
+	  New regression test to the daily builds. The bug was fixed long
+	  back but the regression attached to the builds were not checked
+	  in. Thanks to Carlos O'Ryan for the test.
+
 Mon Dec 29 09:45:07 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Makefile:
