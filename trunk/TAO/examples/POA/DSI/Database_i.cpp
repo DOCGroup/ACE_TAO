@@ -76,11 +76,11 @@ DatabaseImpl::Entry::_is_a (CORBA::ServerRequest_ptr request,
 
   ACE_TRY
     {
-      CORBA::NamedValue_ptr named_value_1 = list->add_value ("value", 
-                                                             any_1, 
-                                                             CORBA::ARG_IN, 
-                                                             ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      // CORBA::NamedValue_ptr named_value_1 = list->add_value ("value", 
+      //                                                     any_1, 
+      //                                                     CORBA::ARG_IN, 
+      //                                                     ACE_TRY_ENV);
+      //ACE_TRY_CHECK;
 
       request->arguments (list,
                           ACE_TRY_ENV);
@@ -214,9 +214,10 @@ DatabaseImpl::Agent::find_entry (const char *key,
     }
   
   void *temp;
+  Database::Entry_var entry;
   if (DATABASE::instance ()->find (key, temp) == 0)
     {
-      Employee *employee = (Employee *) temp;
+      //      Employee *employee = (Employee *) temp;
 
       // creates a reference to the CORBA object used to encapsulate
       // access to the new entry in the database.  There is an interface
@@ -228,13 +229,10 @@ DatabaseImpl::Agent::find_entry (const char *key,
                                                                     ACE_TRY_ENV);
       ACE_CHECK_RETURN (Database::Entry::_nil ());
       
-      Database::Entry_var entry = Database::Entry::_narrow (obj.in (), 
-                                                            ACE_TRY_ENV);
+      entry = Database::Entry::_narrow (obj.in (), 
+                                        ACE_TRY_ENV);
       ACE_CHECK_RETURN (Database::Entry::_nil ());
-
-      return entry._retn ();
     }
-
   else
     {
       
@@ -244,6 +242,7 @@ DatabaseImpl::Agent::find_entry (const char *key,
                         Database::Unknown_Key);
       ACE_CHECK_RETURN (Database::Entry::_nil ());
     }
+  return entry._retn ();
 }
 
 void 
