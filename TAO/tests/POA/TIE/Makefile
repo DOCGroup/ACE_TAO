@@ -32,6 +32,16 @@ VBIN = $(BIN:%=%$(VAR))
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+
+#
+# Since g++ cannot handle nested classes properly, this test will not
+# build on g++.
+#
+ifeq ($(findstring g++,$(CXX)),g++)
+  default:
+	@echo will not build with g++
+endif # g++
+
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
@@ -39,7 +49,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 #include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
-
 
 .PRECIOUS: FooC.h FooC.i FooC.cpp FooS.h FooS.i FooS.cpp
 
