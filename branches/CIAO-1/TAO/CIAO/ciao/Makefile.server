@@ -14,13 +14,20 @@ endif # ! TAO_ROOT
 ifndef CIAO_ROOT
   CIAO_ROOT = $(ACE_ROOT)/TAO/CIAO
 endif # ! CIAO_ROOT
+
 MAKEFILE = Makefile.server
+
+#----------------------------------------------------------------------------
+#       Include macros and targets
+#----------------------------------------------------------------------------
+
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(TAO_ROOT)/rules.tao.GNU
 
 # On non-Windows environment, we should at least define
 # the export_include IDL flag.
 override TAO_IDL_FLAGS += -Ge 1 -Sc -I$(TAO_ROOT) \
-	-I$(TAO_ROOT)/orbsvcs/orbsvcs \
-	-Wb,export_include=CIAO_SERVER_export.h \
+	-Wb,export_include=CIAO_Server_Export.h \
 	-Wb,pre_include="ace/pre.h" \
 	-Wb,post_include="ace/post.h"
 
@@ -32,7 +39,7 @@ ACE_SHLIBS = -lTAO -lACE
 IDL_FILES = CCM_Deployment
 IDL_SRC = CCM_DeploymentC
 
-SHLIB_SRC = $(IDL_SRC)
+SHLIB_SRC = $(IDL_SRC) Container_Base
 
 LSRC = $(addsuffix .cpp,$(SHLIB_SRC))
 LOBJ = $(addsuffix .o,$(SHLIB_SRC))
@@ -42,15 +49,18 @@ PSRC = $(addsuffix .cpp,$(BIN))
 #       Include macros and targets
 #----------------------------------------------------------------------------
 
-include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
-include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
-#include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
+
+#----------------------------------------------------------------------------
+#       Local targets (and local hacks)
+#----------------------------------------------------------------------------
+INCLDIRS += -I$(TAO_ROOT)/CIAO
 
 .PRECIOUS: CCM_DeploymentC.h CCM_DeploymentC.i CCM_DeploymentC.cpp
 
