@@ -1,3 +1,19 @@
+Wed Jul 17 15:18:31 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Configuration.h: Doxygen improvements.
+
+        * ace/Configuration.cpp: All error cases where a return
+          (-2, -3, -4, -5) occurred now return -1 with errno set.
+
+        * ace/OS.{i cpp}: Follow-up to Wed Jul 17 11:34:28 2002  Steve Huston
+          Only make ACE_WIN64 use intptr_t - must have a new SDK to get
+          intptr_t, and not all have it.... so use it only for ACE_WIN64
+          since the compiler comes in the newer SDK... Win32 does
+          fine with long, which is what an intrptr_t is on Win32.
+
+          Also fixed the PACE-busted conditional compiles around siginfo_t
+          to match the declaration in OS.h. Win32 needs this stuff.
+
 Wed Jul 17 14:25:39 2002  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/platform_aix_ibm.GNU: Added -qfuncsect to the
