@@ -314,20 +314,23 @@ be_visitor_union_branch_public_ci::visit_interface (be_interface *node)
       ub->gen_label_value (os);
       *os << ";" << be_nl;
 
-      *os << "this->u_." << ub->local_name ()
-          << "_ = new TAO_Object_Field_T<"
-          << bt->nested_type_name (bu, "") << ",";
-      // Must use another statement, nested_type_name has side effects...
+      *os << "typedef TAO_Object_Field_T<"
+          << bt->nested_type_name (bu, "") << ", ";
+      // Can't concatentate two calls to nested_type_name
       *os << bt->nested_type_name (bu, "_var")
-          << "> (" << bt->name ()
-          << "::_duplicate (val));" << be_uidt_nl;
+          << "> OBJECT_FIELD;" << be_nl;
+      *os << "ACE_NEW (" << be_idt << be_idt_nl
+          << "this->u_." << ub->local_name () << "_," << be_nl
+          << "OBJECT_FIELD (" << bt->name ()
+          << "::_duplicate (val))" << be_uidt_nl
+          << ");" << be_uidt << be_uidt_nl;
     }
   else
     {
       // default label
       // XXXASG - TODO
     }
-  *os << "}" << be_nl;
+  *os << "}" << be_nl << be_nl;
 
   // get method
   *os << "// retrieve the member" << be_nl
@@ -386,13 +389,16 @@ be_visitor_union_branch_public_ci::visit_interface_fwd (be_interface_fwd *node)
       ub->gen_label_value (os);
       *os << ";" << be_nl;
 
-      *os << "this->u_." << ub->local_name ()
-          << "_ = new TAO_Object_Field_T<"
-          << bt->nested_type_name (bu, "") << ",";
-      // Must use another statement, nested_type_name has side effects...
-      *os << bt->nested_type_name (bu, "_var") 
-          << "> (" << bt->name ()
-          << "::_duplicate (val));" << be_uidt_nl;
+      *os << "typedef TAO_Object_Field_T<"
+          << bt->nested_type_name (bu, "") << ", ";
+      // Can't concatentate two calls to nested_type_name
+      *os << bt->nested_type_name (bu, "_var")
+          << "> OBJECT_FIELD;" << be_nl;
+      *os << "ACE_NEW (" << be_idt << be_idt_nl
+          << "this->u_." << ub->local_name () << "_," << be_nl
+          << "OBJECT_FIELD (" << bt->name ()
+          << "::_duplicate (val))" << be_uidt_nl
+          << ");" << be_uidt << be_uidt_nl;
     }
   else
     {
@@ -475,10 +481,12 @@ be_visitor_union_branch_public_ci::visit_predefined_type (be_predefined_type *no
       case AST_PredefinedType::PT_pseudo:
         if (!ACE_OS::strcmp (node->local_name ()->get_string (), "Object"))
           {
-            *os << "this->u_." << ub->local_name () << "_ = new "
-                << "TAO_Object_Field_T<CORBA::Object,"
-                << "CORBA::Object_var> (CORBA::Object::_duplicate (val));"
-                << be_uidt_nl;
+            *os << "typedef TAO_Object_Field_T<CORBA::Object, "
+                << "CORBA::Object_var> OBJECT_FIELD;" << be_nl
+                << "ACE_NEW (" << be_idt << be_idt_nl
+                << "this->u_." << ub->local_name () << "_," << be_nl
+                << "OBJECT_FIELD (CORBA::Object::_duplicate (val))" << be_uidt_nl
+                << ");" << be_uidt << be_uidt_nl;
           }
         else
           {
@@ -488,8 +496,11 @@ be_visitor_union_branch_public_ci::visit_predefined_type (be_predefined_type *no
         break;
 
       case AST_PredefinedType::PT_any:
-        *os << "this->u_." << ub->local_name () << "_ = new "
-            << bt->name () << " (val);" << be_uidt_nl;
+        *os << "ACE_NEW (" << be_idt << be_idt_nl
+            << "this->u_." << ub->local_name ()
+            << "_," << be_nl
+            << bt->name () << " (val)" << be_uidt_nl
+            << ");" << be_uidt << be_uidt_nl;
         break;
 
       case AST_PredefinedType::PT_void:
@@ -644,8 +655,10 @@ be_visitor_union_branch_public_ci::visit_sequence (be_sequence *node)
 
   *os << ";" << be_nl;
 
-  *os << "this->u_." << ub->local_name () << "_ = new "
-      << bt->name () << " (val);" << be_uidt_nl;
+  *os << "ACE_NEW (" << be_idt << be_idt_nl
+      << "this->u_." << ub->local_name () << "_," << be_nl
+      << bt->name () << " (val)" << be_uidt_nl
+      << ");" << be_uidt << be_uidt_nl;
 
   *os << "}\n\n";
 
@@ -940,8 +953,10 @@ be_visitor_union_branch_public_ci::visit_structure (be_structure *node)
   if (bt->size_type () == be_type::VARIABLE
       || node->has_constructor ())
     {
-      *os << "this->u_." << ub->local_name () << "_ = new "
-          << bt->name () << " (val);" << be_uidt_nl;
+      *os << "ACE_NEW (" << be_idt << be_idt_nl
+          << "this->u_." << ub->local_name () << "_," << be_nl
+          << bt->name () << " (val)" << be_uidt_nl
+          << ");" << be_uidt << be_uidt_nl;
     }
   else
     {
@@ -1082,9 +1097,11 @@ be_visitor_union_branch_public_ci::visit_union (be_union *node)
 
   *os << ";" << be_nl;
 
-  *os << "this->u_."
-      << ub->local_name () << "_ = new " << bt->name ()
-      << " (val);" << be_uidt_nl;
+  *os << "ACE_NEW (" << be_idt << be_idt_nl
+      << "this->u_." << ub->local_name () << "_," << be_nl
+      << bt->name () << " (val)" << be_uidt_nl
+      << ");" << be_uidt << be_uidt_nl;
+
   *os << "}\n\n";
 
   // readonly get method

@@ -501,6 +501,9 @@ public:
 
     TAO_AMI_HANDLER_TC_DEFN_TYPECODE, // For AMI Handler interface.
 
+    // means we are not generating the assignment operator
+    TAO_UNION_COPY_CONSTRUCTOR,
+
     // used to denote either error or don't care
     TAO_SUB_STATE_UNKNOWN
   };

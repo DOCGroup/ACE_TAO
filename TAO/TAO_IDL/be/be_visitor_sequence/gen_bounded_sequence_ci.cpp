@@ -109,10 +109,13 @@ be_visitor_sequence_ci::gen_bounded_sequence (be_sequence *node)
   *os << " *" << be_nl
       << full_class_name << "::allocbuf (CORBA::ULong) "
       << "// Allocate storage for the sequence." << be_nl
-      << "{" << be_idt_nl
-      << "return new ";
+      << "{" << be_idt_nl;
   pt->accept (visitor);
-  *os << "[" << node->max_size () << "];" << be_uidt_nl
+  *os << " *retval = 0;" << be_nl
+      << "ACE_NEW_RETURN (retval, ";
+  pt->accept (visitor);
+  *os << "[" << node->max_size () << "], 0);" << be_nl
+      << "return retval;" << be_uidt_nl
       << "}" << be_nl
       << be_nl;
 

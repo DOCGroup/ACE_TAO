@@ -154,7 +154,9 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       *os << "CORBA::Exception *" << node->name ()
           << "::_alloc (void)" << be_nl;
       *os << "{" << be_idt_nl;
-      *os << "return new " << node->name () << ";" << be_uidt_nl;
+      *os << "CORBA::Exception *retval = 0;" << be_nl
+          << "ACE_NEW_RETURN (retval, " << node->name () << ", 0);" << be_nl
+          << "return retval;" << be_uidt_nl;
       *os << "}\n\n";
 
       // constructor taking all members. It exists only if there are any

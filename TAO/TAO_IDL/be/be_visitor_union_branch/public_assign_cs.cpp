@@ -224,13 +224,28 @@ be_visitor_union_branch_public_assign_cs::visit_interface (be_interface *node)
   os = this->ctx_->stream ();
 
   os->indent (); // start from current indentation
-  // set the discriminant to the appropriate label
-  *os << "this->u_." << ub->local_name ()
-      << "_ = new TAO_Object_Field_T<"
-      << bt->name () << ","
-      << bt->name () << "_var"
-      << "> (" << bt->name () << "::_duplicate (u.u_."
-      << ub->local_name () << "_->ptr ()));" << be_uidt_nl;
+
+  // So the template will work with the macro.
+  *os << "typedef TAO_Object_Field_T<" << bt->name ()
+      << ", " << bt->name () << "_var> OBJECT_FIELD;" << be_nl;
+
+  if (this->ctx_->sub_state () == TAO_CodeGen::TAO_UNION_COPY_CONSTRUCTOR)
+    // We are generating the copy constructor.
+    *os << "ACE_NEW (" << be_idt << be_idt_nl
+        << "this->u_." << ub->local_name () << "_," << be_nl
+        << "OBJECT_FIELD (" << bt->name () 
+        << "::_duplicate (u.u_." << ub->local_name ()
+        << "_->ptr ()))" << be_uidt_nl
+        << ");" << be_uidt << be_uidt_nl;
+  else
+    // We are generating the assignment operator.
+    *os << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
+        << "this->u_." << ub->local_name () << "_," << be_nl
+        << "OBJECT_FIELD (" << bt->name () 
+        << "::_duplicate (u.u_." << ub->local_name ()
+        << "_->ptr ()))," << be_nl
+        << "*this" << be_uidt_nl
+        << ");" << be_uidt << be_uidt_nl;
 
   return 0;
 }
@@ -262,13 +277,28 @@ be_visitor_union_branch_public_assign_cs::visit_interface_fwd (be_interface_fwd 
   os = this->ctx_->stream ();
 
   os->indent (); // start from current indentation
-  // set the discriminant to the appropriate label
-  *os << "this->u_." << ub->local_name ()
-      << "_ = new TAO_Object_Field_T<"
-      << bt->name () << ","
-      << bt->name () << "_var"
-      << "> (" << bt->name () << "::_duplicate (u.u_."
-      << ub->local_name () << "_->ptr ()));" << be_uidt_nl;
+
+  // So the template will work with the macro.
+  *os << "typedef TAO_Object_Field_T<" << bt->name ()
+      << ", " << bt->name () << "_var> OBJECT_FIELD;" << be_nl;
+
+  if (this->ctx_->sub_state () == TAO_CodeGen::TAO_UNION_COPY_CONSTRUCTOR)
+    // We are generating the copy constructor.
+    *os << "ACE_NEW (" << be_idt << be_idt_nl
+        << "this->u_." << ub->local_name () << "_," << be_nl
+        << "OBJECT_FIELD (" << bt->name () 
+        << "::_duplicate (u.u_." << ub->local_name ()
+        << "_->ptr ()))" << be_uidt_nl
+        << ");" << be_uidt << be_uidt_nl;
+  else
+    // We are generating the assignment operator.
+    *os << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
+        << "this->u_." << ub->local_name () << "_," << be_nl
+        << "OBJECT_FIELD (" << bt->name () 
+        << "::_duplicate (u.u_." << ub->local_name ()
+        << "_->ptr ()))," << be_nl
+        << "*this" << be_uidt_nl
+        << ");" << be_uidt << be_uidt_nl;
 
   return 0;
 }
@@ -304,12 +334,29 @@ be_visitor_union_branch_public_assign_cs::visit_predefined_type (be_predefined_t
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_pseudo:
-      *os << "this->u_." << ub->local_name () << "_ = ";
       if (!ACE_OS::strcmp (node->local_name ()->get_string (), "Object"))
         {
-          *os << "new TAO_Object_Field_T<CORBA::Object,CORBA::Object_var> "
-              << "(CORBA::Object::_duplicate (u.u_."
-              << ub->local_name () << "_->ptr ()));" << be_uidt_nl;
+          // So the template will work with the macro.
+          *os << "typedef TAO_Object_Field_T<CORBA::Object, " 
+              << "CORBA::Object_var> OBJECT_FIELD;" << be_nl;
+
+          if (this->ctx_->sub_state () == TAO_CodeGen::TAO_UNION_COPY_CONSTRUCTOR)
+            // We are generating the copy constructor.
+            *os << "ACE_NEW (" << be_idt << be_idt_nl
+                << "this->u_." << ub->local_name () << "_," << be_nl
+                << "OBJECT_FIELD (CORBA::Object" 
+                << "::_duplicate (u.u_." << ub->local_name ()
+                << "_->ptr ()))" << be_uidt_nl
+                << ");" << be_uidt << be_uidt_nl;
+          else
+            // We are generating the assignment operator.
+            *os << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
+                << "this->u_." << ub->local_name () << "_," << be_nl
+                << "OBJECT_FIELD (CORBA::Object" 
+                << "::_duplicate (u.u_." << ub->local_name ()
+                << "_->ptr ()))," << be_nl
+                << "*this" << be_uidt_nl
+                << ");" << be_uidt << be_uidt_nl;
         }
       else
         {
@@ -318,9 +365,19 @@ be_visitor_union_branch_public_assign_cs::visit_predefined_type (be_predefined_t
         }
       break;
     case AST_PredefinedType::PT_any:
-      *os << "this->u_." << ub->local_name () << "_ = new "
-          << bt->name () << " (*u.u_."
-          << ub->local_name () << "_);" << be_uidt_nl;
+      if (this->ctx_->sub_state () == TAO_CodeGen::TAO_UNION_COPY_CONSTRUCTOR)
+        *os << "ACE_NEW (" << be_idt << be_idt_nl
+            << "this->u_." << ub->local_name () << "_," << be_nl
+            << bt->name () << " (*u.u_." 
+            << ub->local_name () << "_)" << be_uidt_nl
+            << ");" << be_uidt << be_uidt_nl;
+      else
+        *os << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
+            << "this->u_." << ub->local_name () << "_," << be_nl
+            << bt->name () << " (*u.u_."
+            << ub->local_name () << "_)," << be_nl
+            << "*this" << be_uidt_nl
+            << ");" << be_uidt << be_uidt_nl;
       break;
     case AST_PredefinedType::PT_void:
       break;
@@ -361,10 +418,20 @@ be_visitor_union_branch_public_assign_cs::visit_sequence (be_sequence *node)
   os = this->ctx_->stream ();
 
   os->indent (); // start from current indentation
-  // set the discriminant to the appropriate label
-  *os << "this->u_." << ub->local_name () << "_ = new "
-      << bt->name () << " (*u.u_."
-      << ub->local_name () << "_);" << be_uidt_nl;
+
+  if (this->ctx_->sub_state () == TAO_CodeGen::TAO_UNION_COPY_CONSTRUCTOR)
+    *os << "ACE_NEW (" << be_idt << be_idt_nl
+        << "this->u_." << ub->local_name () << "_," << be_nl
+        << bt->name () << " (*u.u_." 
+        << ub->local_name () << "_)" << be_uidt_nl
+        << ");" << be_uidt << be_uidt_nl;
+  else
+    *os << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
+        << "this->u_." << ub->local_name () << "_," << be_nl
+        << bt->name () << " (*u.u_."
+        << ub->local_name () << "_)," << be_nl
+        << "*this" << be_uidt_nl
+        << ");" << be_uidt << be_uidt_nl;
 
   return 0;
 }
@@ -438,9 +505,19 @@ be_visitor_union_branch_public_assign_cs::visit_structure (be_structure *node)
   if (bt->size_type () == be_type::VARIABLE
       || node->has_constructor ())
     {
-      *os << "this->u_." << ub->local_name () << "_ = new "
-          << bt->name () << " (*u.u_."
-          << ub->local_name () << "_);" << be_uidt_nl;
+      if (this->ctx_->sub_state () == TAO_CodeGen::TAO_UNION_COPY_CONSTRUCTOR)
+        *os << "ACE_NEW (" << be_idt << be_idt_nl
+            << "this->u_." << ub->local_name () << "_," << be_nl
+            << bt->name () << " (*u.u_." 
+            << ub->local_name () << "_)" << be_uidt_nl
+            << ");" << be_uidt << be_uidt_nl;
+      else
+        *os << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
+            << "this->u_." << ub->local_name () << "_," << be_nl
+            << bt->name () << " (*u.u_."
+            << ub->local_name () << "_)," << be_nl
+            << "*this" << be_uidt_nl
+            << ");" << be_uidt << be_uidt_nl;
     }
   else
     {
@@ -499,10 +576,20 @@ be_visitor_union_branch_public_assign_cs::visit_union (be_union *node)
   os = this->ctx_->stream ();
 
   os->indent (); // start from current indentation
-  // set the discriminant to the appropriate label
-  *os << "this->u_." << ub->local_name () << "_ = new "
-      << bt->name () << " (*u.u_."
-      << ub->local_name () << "_);" << be_uidt_nl;
+
+  if (this->ctx_->sub_state () == TAO_CodeGen::TAO_UNION_COPY_CONSTRUCTOR)
+    *os << "ACE_NEW (" << be_idt << be_idt_nl
+        << "this->u_." << ub->local_name () << "_," << be_nl
+        << bt->name () << " (*u.u_." 
+        << ub->local_name () << "_)" << be_uidt_nl
+        << ");" << be_uidt << be_uidt_nl;
+  else
+    *os << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
+        << "this->u_." << ub->local_name () << "_," << be_nl
+        << bt->name () << " (*u.u_."
+        << ub->local_name () << "_)," << be_nl
+        << "*this" << be_uidt_nl
+        << ");" << be_uidt << be_uidt_nl;
 
   return 0;
 }
