@@ -3,20 +3,67 @@
 #
 
 #
-# This script helps in fixing the template instantiations changes
-# required by the new design of ACE_Hash_Map_Manager.  Note that this
-# script is not a 100% fool proof: (a) It uses commas to delimit the
-# types in ACE_Hash_Map_Manager<X, Y, Z>.  If X, Y, or Z are
-# complicated types containing commas (e.g., T<a, b>), this script
-# will not work. (b) The second problem is for g++ users (version
-# lower than 2.8). g++ is broken such that if you explicitly
-# instantiate templates, it will ignore template specialization.
-# Therefore if you are using the template instantiation provided in
-# ACE for ACE_Hash and ACE_Equal_To, don't instantiate those
-# templates.
-#
 # This script is used by Hash_Map_Manager_Helper.csh.
 #
+
+#
+# This script helps in fixing the template instantiations changes
+# required by the new design of ACE_Hash_Map_Manager.  
+#
+# Note that this script is not a 100% fool proof: 
+#
+# (a) It uses commas to delimit the types in ACE_Hash_Map_Manager<X,
+# Y, Z>.  If X, Y, or Z are complicated types containing commas (e.g.,
+# T<a, b>), this script will not work.
+#
+# In the case where this script will not work, here are the cookbook,
+# do-it-yourself instructions: 
+#
+# ACE_Hash_Map_Entry<X, Y>
+#
+# changes to:
+#
+# ACE_Hash_Map_Entry<X, Y>
+# ACE_Hash<X>
+# ACE_Equal_To<X>
+#
+#
+# ACE_Hash_Map_Iterator_Base<X, Y, Z>
+#
+# changes to:
+#
+# ACE_Hash_Map_Iterator_Base_Ex<X, Y, ACE_Hash<X>, ACE_Equal_To<X>, Z>
+#
+#
+# ACE_Hash_Map_Manager<X, Y, Z>
+#
+# changes to:
+#
+# ACE_Hash_Map_Manager<X, Y, Z>
+# ACE_Hash_Map_Manager_Ex<X, Y, ACE_Hash<X>, ACE_Equal_To<X>, Z>
+#
+#
+# ACE_Hash_Map_Iterator<X, Y, Z>
+#
+# changes to:
+#
+# ACE_Hash_Map_Iterator<X, Y, Z>
+# ACE_Hash_Map_Iterator_Ex<X, Y, ACE_Hash<X>, ACE_Equal_To<X>, Z>
+#
+#
+# ACE_Hash_Map_Reverse_Iterator<X, Y, Z>
+#
+# changes to:
+#
+# ACE_Hash_Map_Reverse_Iterator<X, Y, Z>
+# ACE_Hash_Map_Reverse_Iterator_Ex<X, Y, ACE_Hash<X>, ACE_Equal_To<X>, Z>
+
+
+# (b) The second problem is for g++ users (version lower than
+# 2.8). g++ is broken such that if you explicitly instantiate
+# templates, it will ignore template specialization.  Therefore if you
+# are using the template instantiation provided in ACE for ACE_Hash
+# and ACE_Equal_To, don't instantiate those templates.
 
 $template_instantiation = "template class";
 $end_of_template_instantiation = ";";
