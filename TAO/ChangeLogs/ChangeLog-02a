@@ -1,20 +1,25 @@
+Tue Apr 09 07:36:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/POA/POA_BiDir/Makefile.bor:
+          Corrected makefile
+
 Sun Apr 07 16:18:41 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/MT_BiDir/server.dsp:
 	* tests/MT_BiDir/client.dsp: Fixed the release build
-	  configuration. This shoudl fix errors in the release builds of
-	  Win32. 
+          configuration. This should fix errors in the release builds of
+	  Win32.
 
 	* examples/POA/POA_BiDir/POA_BiDir.dsp: Fixed the release build
-	  configuration. 
+	  configuration.
 
 Sun Apr  7 07:32:40 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* TAO-inheritance.pdf:
 	* TAO-inheritance.ps.gz: Removed these files from the
 	  distribution. They are outdated. The doxygen documentation
-	  should be more useful since it has the latest documentation. 
-	  
+	  should be more useful since it has the latest documentation.
+
 Sun Apr 07 10:31:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/MT_BiDir/server.bor:
