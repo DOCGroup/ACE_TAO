@@ -6,11 +6,13 @@ Fri Nov 20 15:49:04 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
  	  handle_close() called for all three masks (READ, WRITE, and
  	  EXCEPT).
 
-	* ace/WFMO_Reactor.cpp (remove_handler_i): There was a bug in
- 	  WFMO_Reactor where handle_close() was not called when it is not
- 	  a complete removal. Added a call to handle_close() for all the
- 	  masks that were removed.  Note that partial removals do not
- 	  change the state of the internal tables of the reactor.
+	* ace/WFMO_Reactor.cpp (remove_handler_i,
+ 	  remove_suspended_handler_i, and remove_to_be_added_handler_i):
+ 	  There was a bug in WFMO_Reactor where handle_close() was not
+ 	  called when it is not a complete removal. Added a call to
+ 	  handle_close() for all the masks that were removed.  Note that
+ 	  partial removals do not change the state of the internal tables
+ 	  of the reactor.
 
 	* ace/OS.i (recvfrom): There is a bug in the Win32 implementation
  	  of this function.  It reports an error (with errno=WSAEMSGSIZE),

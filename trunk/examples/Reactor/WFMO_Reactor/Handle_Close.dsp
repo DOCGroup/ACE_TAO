@@ -1,23 +1,24 @@
-# Microsoft Developer Studio Project File - Name="Timeouts" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="Handle_Close" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 5.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=Timeouts - Win32 Debug
+CFG=Handle_Close - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
-!MESSAGE NMAKE /f "Timeouts.mak".
+!MESSAGE NMAKE /f "Handle_Close.mak".
 !MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "Timeouts.mak" CFG="Timeouts - Win32 Debug"
+!MESSAGE NMAKE /f "Handle_Close.mak" CFG="Handle_Close - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Timeouts - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "Handle_Close - Win32 Debug" (based on\
+ "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -27,8 +28,8 @@ CPP=cl.exe
 RSC=rc.exe
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "Timeout0"
-# PROP BASE Intermediate_Dir "Timeout0"
+# PROP BASE Output_Dir "Handle_C"
+# PROP BASE Intermediate_Dir "Handle_C"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
@@ -37,8 +38,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
-# SUBTRACT CPP /YX
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -49,10 +49,10 @@ LINK32=link.exe
 # ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\ace"
 # Begin Target
 
-# Name "Timeouts - Win32 Debug"
+# Name "Handle_Close - Win32 Debug"
 # Begin Source File
 
-SOURCE=.\test_timeouts.cpp
+SOURCE=.\test_handle_close.cpp
 # End Source File
 # End Target
 # End Project
