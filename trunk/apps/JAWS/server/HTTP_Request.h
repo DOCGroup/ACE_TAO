@@ -15,6 +15,9 @@ public:
   HTTP_Request (void);
   // Default construction.
 
+  ~HTTP_Request (void);
+  // Destructor.
+
   int parse_request (ACE_Message_Block &mb);
   // parse an incoming request
 
