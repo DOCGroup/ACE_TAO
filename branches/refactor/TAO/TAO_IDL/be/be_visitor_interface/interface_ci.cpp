@@ -74,14 +74,13 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
       *os << be_nl << be_nl
           << "ACE_INLINE" << be_nl
           << node->name () << "::" << node->local_name () 
-          << " (void)" << be_idt_nl
-          << ": CORBA::AbstractBase ()" << be_uidt_nl
+          << " (void)" << be_nl
           << "{}" << be_nl << be_nl;
 
       *os << "ACE_INLINE" << be_nl
           << node->name () << "::" << node->local_name () 
           << " (const " << node->local_name () << " &rhs)" << be_idt_nl
-          << ": CORBA::AbstractBase (rhs)" << be_uidt_nl
+          << ": ACE_NESTED_CLASS (CORBA, AbstractBase) (rhs)" << be_uidt_nl
           << "{}" << be_nl << be_nl;
 
       *os << "ACE_INLINE" << be_nl
@@ -91,7 +90,8 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
           << "CORBA::Boolean _tao_collocated," << be_nl
           << "TAO_Abstract_ServantBase *servant" << be_uidt_nl
           << ")" << be_nl
-          << ": CORBA::AbstractBase (objref, _tao_collocated, servant)"
+          << ": ACE_NESTED_CLASS (CORBA, AbstractBase) "
+          << "(objref, _tao_collocated, servant)"
           << be_uidt_nl
           << "{}";
     }
