@@ -1,3 +1,9 @@
+Wed Mar 20 11:23:38 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* ace/Service_Manager.cpp (handle_input): 
+	  Moved the declaration of 'error' outside the do-while loop to
+	  fix the 'error (undeclared)' error.
+
 Wed Mar 20 09:51:47 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/Acceptor.cpp (handle_input): Updated the comments to point out that

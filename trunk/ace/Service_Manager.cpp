@@ -308,10 +308,12 @@ ACE_Service_Manager::handle_input (ACE_HANDLE)
   // the system is heavily loaded.  Read bytes into the buffer until a
   // '\n' or '\r' is found in the buffer, otherwise the buffer
   // contains an incomplete string.
+
+  int error;
   do
     {
       result = client_stream_.recv (offset, remaining);
-      int error = errno;
+      error = errno;
       if (result == 0 && error != EWOULDBLOCK) 
         remaining = 0;
 
