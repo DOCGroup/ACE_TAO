@@ -92,6 +92,17 @@ typedef size_t KEY;
 #define MAKE_PIPE_NAME MAKE_PIPE_NAME_A
 #endif /* UNICODE */
 
+const size_t ACE_NS_MAX_ENTRIES = 1000;
+const size_t ACE_DEFAULT_USECS = 1000;
+const size_t ACE_MAX_TIMERS = 4;
+const size_t ACE_MAX_THREADS = 4;
+const size_t ACE_MAX_DELAY = 10;
+const size_t ACE_MAX_INTERVAL = 0;
+const size_t ACE_MAX_ITERATIONS = 10;
+const size_t ACE_MAX_PROCESSES = 10;
+const size_t ACE_MAX_CLIENTS = 30;
+
+#if !defined (ACE_HAS_WINCE)
 #define ACE_START_TEST(NAME) \
   const char *program = NAME; \
   ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM | ACE_Log_Msg::VERBOSE_LITE); \
@@ -148,16 +159,6 @@ typedef size_t KEY;
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Deleting old log file %s (if any)\n\n", temp)); \
   ACE_OS::unlink (temp);
 #endif /* ! VXWORKS */
-
-const size_t ACE_NS_MAX_ENTRIES = 1000;
-const size_t ACE_DEFAULT_USECS = 1000;
-const size_t ACE_MAX_TIMERS = 4;
-const size_t ACE_MAX_THREADS = 4;
-const size_t ACE_MAX_DELAY = 10;
-const size_t ACE_MAX_INTERVAL = 0;
-const size_t ACE_MAX_ITERATIONS = 10;
-const size_t ACE_MAX_PROCESSES = 10;
-const size_t ACE_MAX_CLIENTS = 30;
 
 char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 
@@ -252,6 +253,16 @@ ACE_Test_Output::close (void)
   this->output_file_.flush ();
   this->output_file_.close ();
 }
+#else
+
+#define ACE_START_TEST(NAME) \
+  const ASYS_TCHAR *program = NAME; \
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) starting %s test at %D\n"), program))
+
+#define ACE_END_TEST \
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) Ending %s test at %D\n"), program)); \
+
+#endif /* ACE_HAS_WINCE */
 
 void
 randomize (int array[], size_t size)
