@@ -27,11 +27,45 @@ TAO_GIOP_Message_Handler::reset (int /*reset_flag*/)
   this->message_state_.reset (0);
 
   // Reset the current buffer
-  this->current_buffer_.reset ();
+  if (this->message_status_ != TAO_GIOP_MULTIPLE_MESSAGES)
+    this->current_buffer_.reset ();
+
+  this->supp_buffer_.reset ();
+
 }
 
 ACE_INLINE char *
 TAO_GIOP_Message_Handler::rd_ptr (void) const
 {
   return this->current_buffer_.rd_ptr ();
+}
+
+ACE_INLINE size_t
+TAO_GIOP_Message_Handler::rd_pos (void) const
+{
+  if (this->supp_buffer_.length () > 0)
+    {
+      return
+        this->supp_buffer_.rd_ptr () - this->supp_buffer_.base ();
+    }
+  else
+    {
+      return
+        this->current_buffer_.rd_ptr () - this->current_buffer_.base ();
+    }
+}
+
+ACE_INLINE size_t
+TAO_GIOP_Message_Handler::wr_pos (void) const
+{
+  if (this->supp_buffer_.length () > 0)
+    {
+      return
+        this->supp_buffer_.wr_ptr () - this->supp_buffer_.base ();
+    }
+  else
+    {
+      return
+        this->current_buffer_.wr_ptr () - this->current_buffer_.base ();
+    }
 }

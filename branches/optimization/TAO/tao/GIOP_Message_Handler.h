@@ -30,7 +30,24 @@ enum TAO_GIOP_Message_Status
   TAO_GIOP_WAITING_FOR_HEADER = 0,
 
   /// The buffer is waiting for the payload to appear on the socket
-  TAO_GIOP_WAITING_FOR_PAYLOAD
+  TAO_GIOP_WAITING_FOR_PAYLOAD,
+
+  /// The buffer has got multiple messages
+  TAO_GIOP_MULTIPLE_MESSAGES
+};
+
+enum TAO_Message_Block_Content_Status
+{
+  /// The buffer has nomore info for processing ie. all information
+  /// have been processed
+  TAO_MESSAGE_BLOCK_COMPLETE = 3,
+
+  /// The buffer has something meaningful and needs processing
+  TAO_MESSAGE_BLOCK_NEEDS_PROCESSING,
+
+  /// The buffer has nothing meaningful. Need to read more data from
+  /// the socket to make the reamaining data meaningful
+  TAO_MESSAGE_BLOCK_INCOMPLETE
 };
 
 /**
@@ -61,6 +78,9 @@ public:
   /// processing.
   int is_message_ready (void);
 
+  /// Do we have more messages for processing?
+  int more_messages (void);
+
   /// Reset the contents of the <current_buffer_> if no more requests
   /// need to be processed. We reset the contents of the
   /// <message_state_> to parse and process the next request.
@@ -78,6 +98,12 @@ public:
   /// Return the rd_ptr of the <current_buffer_>
   char *rd_ptr (void) const;
 
+  /// Return the position of the read pointer in the <current_buffer_>
+  size_t rd_pos (void) const;
+
+  /// Return the position of the write pointer in the <current_buffer_>
+  size_t wr_pos (void) const;
+
 private:
 
   /// Parses the header information from the <current_buffer_>.
@@ -92,6 +118,13 @@ private:
   /// size of the current buffer is less than the payload size, the
   /// size of the buffer is increased.
   CORBA::ULong get_payload_size (void);
+
+  /// Extract a CORBA::ULong from the <current_buffer_>
+  CORBA::ULong read_ulong (const char *buf);
+
+  /// Align the left over info in the <current_buffer_> to the start
+  /// of the message block.
+  void align_left_info (void);
 
 private:
 
@@ -110,6 +143,12 @@ private:
   /// read() should put the data.
   ACE_Message_Block current_buffer_;
 
+  /// The supplementary buffer that holds just one message if the
+  /// <current_buffer_> has more than one message. One message from
+  /// the <current_buffer_> is taken and filled in this buffer, which
+  /// is then sent to the higher layers of the ORB.
+  ACE_Message_Block supp_buffer_;
+
   /// The message state. It represents the status of the messages that
   /// have been read from the current_buffer_
   TAO_GIOP_Message_State message_state_;
@@ -122,6 +161,7 @@ const size_t TAO_GIOP_MESSAGE_FLAGS_OFFSET = 6;
 const size_t TAO_GIOP_MESSAGE_TYPE_OFFSET  = 7;
 const size_t TAO_GIOP_VERSION_MINOR_OFFSET = 5;
 const size_t TAO_GIOP_VERSION_MAJOR_OFFSET = 4;
+const size_t TAO_GIOP_MESSAGE_FRAGMENT_HEADER = 4;
 
 #if defined (__ACE_INLINE__)
 # include "tao/GIOP_Message_Handler.inl"

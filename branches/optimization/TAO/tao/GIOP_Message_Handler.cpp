@@ -11,8 +11,6 @@
 
 
 
-
-
 ACE_RCSID(tao, GIOP_Message_Handler, "$Id$")
 
 
@@ -25,6 +23,7 @@ TAO_GIOP_Message_Handler::TAO_GIOP_Message_Handler (TAO_ORB_Core * orb_core)
     // data portion from this buffer in the skeleton. Why?? Needs
     // investigation.
     //current_buffer_ (orb_core->create_input_cdr_data_block (ACE_CDR::DEFAULT_BUFSIZE)),
+    supp_buffer_ (ACE_CDR::DEFAULT_BUFSIZE),
     message_state_ (orb_core)
 {
 }
@@ -60,7 +59,7 @@ TAO_GIOP_Message_Handler::read_parse_message (TAO_Transport *transport)
       return -1;
     }
 
-  // Now we have a succesful read. First adjust the read pointer
+  // Now we have a succesful read. First adjust the write pointer
   this->current_buffer_.wr_ptr (n);
 
   // Check what message are we waiting for and take suitable action
@@ -69,26 +68,9 @@ TAO_GIOP_Message_Handler::read_parse_message (TAO_Transport *transport)
       if (this->current_buffer_.length () >=
           TAO_GIOP_MESSAGE_HEADER_LEN)
         {
-          if (this->parse_header () == -1)
-            return -1;
+          return this->parse_header ();
         }
     }
-
-  /*if (this->message_status_ == TAO_GIOP_WAITING_FOR_PAYLOAD)
-    {
-      // If the length of the buffer is greater than the size of the
-      // message that we received then process that message. If not
-      // just return allowing the reactor to call us back.
-      if (this->current_buffer_.length () < (this->message_status_.message_size +
-                                             TAO_GIOP_MESSAGE_HEADER_LEN))
-        return 0;
-      else
-        {
-          // We have payloads that we need to process
-          if (this->parse_payload () == -1)
-            return -1;
-        }
-        }*/
 
   return 0;
 }
@@ -147,11 +129,9 @@ TAO_GIOP_Message_Handler::parse_header (void)
   this->message_state_.message_type =
     buf[TAO_GIOP_MESSAGE_TYPE_OFFSET];
 
-
-
-
   // Get the payload size. If the payload size is greater than the
-  // length then set the length of the message block to that size
+  // length then set the length of the message block to that
+  // size. Move the rd_ptr to the end of the GIOP header
   this->message_state_.message_size = this->get_payload_size ();
 
   if (TAO_debug_level > 2)
@@ -165,10 +145,25 @@ TAO_GIOP_Message_Handler::parse_header (void)
                   this->message_state_.message_size));
     }
 
-  // The GIOP header has been parsed. Set the status to wait for payload
+  if (this->message_state_.more_fragments &&
+      this->message_state_.giop_version.minor == 2 &&
+      this->current_buffer_.length () > TAO_GIOP_MESSAGE_FRAGMENT_HEADER)
+    {
+      // Fragmented message in GIOP 1.2 should have a fragment header
+      // following the GIOP header.  Grab the rd_ptr to get that
+      // info.
+      buf = this->current_buffer_.rd_ptr ();
+      this->message_state_.request_id = this->read_ulong (buf);
+
+      // Move the read pointer to the end of the fragment header
+      this->current_buffer_.rd_ptr (TAO_GIOP_MESSAGE_FRAGMENT_HEADER);
+    }
+
+  // The GIOP header has been parsed. Set the status to wait for
+  // payload
   this->message_status_ = TAO_GIOP_WAITING_FOR_PAYLOAD;
 
-  return 0;
+  return 1;
 }
 
 
@@ -230,10 +225,27 @@ TAO_GIOP_Message_Handler::get_payload_size (void)
   // the payload
   this->current_buffer_.rd_ptr (TAO_GIOP_MESSAGE_SIZE_OFFSET);
 
-  // No. of bytes occupied by the message size in the header.
+  CORBA::ULong x = this->read_ulong (this->current_buffer_.rd_ptr ());
+
+  if ((x + TAO_GIOP_MESSAGE_HEADER_LEN) > this->message_size_)
+    {
+      // Increase the size of the <current_buffer_>
+      this->current_buffer_.size (x + TAO_GIOP_MESSAGE_HEADER_LEN);
+      this->message_size_ = x + TAO_GIOP_MESSAGE_HEADER_LEN;
+    }
+
+  // Set the read pointer to the end of the GIOP header
+  this->current_buffer_.rd_ptr (TAO_GIOP_MESSAGE_HEADER_LEN -
+                                TAO_GIOP_MESSAGE_SIZE_OFFSET);
+  return x;
+}
+
+CORBA::ULong
+TAO_GIOP_Message_Handler::read_ulong (const char *ptr)
+{
   size_t msg_size = 4;
 
-  char *buf = ACE_ptr_align_binary (this->current_buffer_.rd_ptr (),
+  char *buf = ACE_ptr_align_binary (ptr,
                                     msg_size);
 
   CORBA::ULong x;
@@ -250,15 +262,6 @@ TAO_GIOP_Message_Handler::get_payload_size (void)
   x = *ACE_reinterpret_cast(ACE_CDR::ULong*, buf);
 #endif /* ACE_DISABLE_SWAP_ON_READ */
 
-  if ((x + TAO_GIOP_MESSAGE_HEADER_LEN) > this->message_size_)
-    {
-      // Increase the size of the <current_buffer_>
-      this->current_buffer_.size (x + TAO_GIOP_MESSAGE_HEADER_LEN);
-    }
-
-  // Set the read pointer to the end of the GIOP header
-  this->current_buffer_.rd_ptr (TAO_GIOP_MESSAGE_HEADER_LEN -
-                                TAO_GIOP_MESSAGE_SIZE_OFFSET);
   return x;
 }
 
@@ -267,33 +270,83 @@ TAO_GIOP_Message_Handler::is_message_ready (void)
 {
   if (this->message_status_ == TAO_GIOP_WAITING_FOR_PAYLOAD)
     {
-      // If the length of the buffer is greater than the size of the
-      // message that we received then process that message. If not
-      // just return allowing the reactor to call us back.
-      if (this->current_buffer_.length () <
-          (this->message_state_.message_size))
+      size_t len = this->current_buffer_.length ();
+      int retval = 0;
+      if (len == this->message_state_.message_size)
 
         {
-          return 0;
+          // If the buffer length is equal to the size of the payload we
+          // have exactly one message. Check whether we have received
+          // only the first part of the fragment.
+          this->message_status_ = TAO_GIOP_WAITING_FOR_HEADER;
+          return this->message_state_.is_complete (this->current_buffer_);
+        }
+      else if (len > this->message_state_.message_size)
+        {
+          // If the length is greater we have received some X messages
+          // and a part of X + 1  messages (probably) with X varying
+          // from  1 to N.
+          this->message_status_ = TAO_GIOP_MULTIPLE_MESSAGES;
+
+          // Now copy the first message in to the <supp_buffer_>
+          this->supp_buffer_.size (this->message_state_.message_size);
+          this->supp_buffer_.copy (this->current_buffer_.rd_ptr (),
+                                   this->message_state_.message_size);
+
+          // We have one of the messages copied. Let us move the
+          // rd_ptr in <current_buffer_> after that message
+          this->current_buffer_.rd_ptr (this->message_state_.message_size);
+
+          return this->message_state_.is_complete (this->supp_buffer_);
         }
     }
 
-  this->message_status_ = TAO_GIOP_WAITING_FOR_HEADER;
 
-  // We have atleast one message for processing
-  return 1;
+
+  // Just return allowing the reactor to call us back to get the rest
+  // of the info
+  return 0;
 }
-/*int
-TAO_GIOP_Message_Handler::parse_payload (void)
+
+
+int
+TAO_GIOP_Message_Handler::more_messages (void)
 {
-  if (this->current_buffer_.length () ==
-      (this->message_state_.message_size + TAO_GIOP_MESSAGE_HEADER_LEN))
+  if (this->message_status_ == TAO_GIOP_MULTIPLE_MESSAGES)
     {
-      // We have exactly one message in the buffer
-
-        // Reset our input CDR stream
-      this->message_state_.cdr.reset_byte_order
-        (this->message_state_.byte_order);
+      if (this->current_buffer_.length () >
+          TAO_GIOP_MESSAGE_HEADER_LEN)
+        return this->parse_header ();
+      else
+        {
+          // We have some message but it is not of suffcieint length
+          // for us to process. We copy that left over piece to the
+          // start of the <current_buffer_> and align the rd_ptr &
+          // wr_ptr.
+          this->align_left_info ();
+          this->message_status_ = TAO_GIOP_WAITING_FOR_HEADER;
+          return TAO_MESSAGE_BLOCK_INCOMPLETE;
+        }
     }
+
+  // No more meaningful messages
+  return TAO_MESSAGE_BLOCK_COMPLETE;
 }
-*/
+
+void
+TAO_GIOP_Message_Handler::align_left_info (void)
+{
+  // Copy left over stuff in to <supp_buffer_>
+  this->supp_buffer_.copy (this->current_buffer_.rd_ptr (),
+                           this->current_buffer_.length ());
+
+  // Reset the current buffer
+  this->current_buffer_.reset ();
+
+  // Copy the info from the <supp_buffer_>
+  this->current_buffer_.copy (this->supp_buffer_.rd_ptr (),
+                              this->supp_buffer_.length ());
+
+  // Reset the <supp_buffer_>
+  this->supp_buffer_.reset ();
+}

@@ -198,21 +198,28 @@ TAO_GIOP_Message_Base::read_message (TAO_Transport *transport,
   this->set_state (state.giop_version.major,
                    state.giop_version.minor);
 
-  if (TAO_debug_level >= 4)
+
+
+  int retval =  this->message_handler_.is_message_ready ();
+
+  if (retval == 1)
     {
-      size_t len = TAO_GIOP_MESSAGE_HEADER_LEN ;
+      if (TAO_debug_level >= 4)
+        {
+          size_t len = TAO_GIOP_MESSAGE_HEADER_LEN ;
 
-      char *buf = this->message_handler_.rd_ptr ();
-      buf -= len;
-      size_t msg_len =
-        state.message_size + len;
+          char *buf = this->message_handler_.rd_ptr ();
+          buf -= len;
+          size_t msg_len =
+            state.message_size + len;
 
-      this->dump_msg ("recv",
-                      ACE_reinterpret_cast (u_char *,
+          this->dump_msg ("recv",
+                          ACE_reinterpret_cast (u_char *,
                                             buf),
-                      msg_len);
+                          msg_len);
+        }
     }
-  return this->message_handler_.is_message_ready ();
+  return retval;
 }
 
 
@@ -332,8 +339,8 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   // generally required as we are not going to write anything. But
   // this is *important* for checking the length of the CDR streams
   size_t n = this->message_handler_.message_state ().message_size;
-  msg_block.wr_ptr (n + TAO_GIOP_MESSAGE_HEADER_LEN);
-  msg_block.rd_ptr (TAO_GIOP_MESSAGE_HEADER_LEN);
+  msg_block.wr_ptr (this->message_handler_.wr_pos ());
+  msg_block.rd_ptr (this->message_handler_.rd_pos ());
 
   // Steal the input CDR from the message block
   TAO_InputCDR input_cdr (&msg_block,
@@ -1066,7 +1073,6 @@ TAO_GIOP_Message_Base::send_reply_exception (
   return transport->send_message (output);
 }
 
-
 void
 TAO_GIOP_Message_Base::dump_msg (const char *label,
                                  const u_char *ptr,
@@ -1140,6 +1146,7 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
 }
 
 
+
 int
 TAO_GIOP_Message_Base::generate_locate_reply_header (
     TAO_OutputCDR & /*cdr*/,
@@ -1155,4 +1162,64 @@ TAO_GIOP_Message_Base::is_ready_for_bidirectional (void)
   // We dont really know.. So ask the enerator and parser objects that
   // we know.
   return this->generator_parser_->is_ready_for_bidirectional ();
+}
+
+int
+TAO_GIOP_Message_Base::more_messages (void)
+{
+  // Does the handler have more messages for processing?
+  int retval  = this->message_handler_.more_messages ();
+
+  if (retval == TAO_MESSAGE_BLOCK_COMPLETE ||
+      retval == TAO_MESSAGE_BLOCK_INCOMPLETE)
+    return 1;
+
+  // Get the message state
+  TAO_GIOP_Message_State &state =
+    this->message_handler_.message_state ();
+
+  // Set the state internally for parsing and generating messages
+  this->set_state (state.giop_version.major,
+                   state.giop_version.minor);
+
+  if (TAO_debug_level >= 4)
+    {
+      size_t len = TAO_GIOP_MESSAGE_HEADER_LEN ;
+
+      char *buf = this->message_handler_.rd_ptr ();
+      buf -= len;
+      size_t msg_len =
+        state.message_size + len;
+
+      this->dump_msg ("recv",
+                      ACE_reinterpret_cast (u_char *,
+                                            buf),
+                      msg_len);
+    }
+
+  retval =  this->message_handler_.is_message_ready ();
+
+  if (retval == 1)
+    {
+      if (TAO_debug_level >= 4)
+        {
+          size_t len = TAO_GIOP_MESSAGE_HEADER_LEN ;
+
+          char *buf = this->message_handler_.rd_ptr ();
+          buf -= len;
+          size_t msg_len =
+            state.message_size + len;
+
+          this->dump_msg ("recv",
+                          ACE_reinterpret_cast (u_char *,
+                                                buf),
+                          msg_len);
+        }
+
+      // We have a message ready. This can be processed by the higher
+      // layers
+      return TAO_MESSAGE_BLOCK_NEEDS_PROCESSING;
+    }
+
+  return retval;
 }

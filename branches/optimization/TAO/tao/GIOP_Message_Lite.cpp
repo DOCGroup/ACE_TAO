@@ -280,7 +280,7 @@ TAO_GIOP_Message_Lite::read_message (TAO_Transport *transport,
       return -1;
     }
 
-   this->message_state_.current_offset += n;
+   current_offset += n;
 
   if (this->message_state_.current_offset ==
       this->message_state_.message_size)
@@ -299,7 +299,7 @@ TAO_GIOP_Message_Lite::read_message (TAO_Transport *transport,
         }
     }
 
-  return this->message_state_.is_complete ();
+  return 1;//this->message_state_.is_complete ();
 }
 
 
