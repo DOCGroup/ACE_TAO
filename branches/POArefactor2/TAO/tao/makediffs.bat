@@ -9,6 +9,9 @@ unix2dos diffs\Policy.diff
 diff -wub orig/Typecode_typesC.h Typecode_typesC.h > diffs/Typecode_types.diff
 unix2dos diffs\Typecode_types.diff
 
+diff -wub orig/Policy_ForwardC.h Policy_ForwardC.h > diffs/Policy_Forward.diff
+unix2dos diffs\Policy_Forward.diff
+
 diff -wub orig/UShortSeqC.h UShortSeqC.h > diffs/UShortSeq.diff
 unix2dos diffs\UShortSeq.diff
 
