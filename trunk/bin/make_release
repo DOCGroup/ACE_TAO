@@ -365,7 +365,6 @@ sub check_workspace () {
 
   if ($kit =~ /^ace/) {
     chdir 'ACE_wrappers'  ||  die "$0: unable to chdir ACE_wrappers\n";
-    &ex("bin/bootstrap");  ## Temporary ACE+autoconf hack.
   } elsif ($kit =~ /tao/) {
     chdir 'ACE_wrappers/TAO'  ||  die "$0: unable to chdir ACE_wrappers/TAO\n";
   }
@@ -494,7 +493,7 @@ sub update_version_files () {
     if ("$exec_prefix") {
       print "ACE version ${major_version}.${minor_version}.${beta_version}\n";
     } else {
-    
+
       open (ACE_VERSION_H, "> ace/Version.h")  ||
         die "$0: unable to open ace/Version.h\n";
 
@@ -607,6 +606,9 @@ sub diff () {
 ########
 sub create_kit () {
 
+  #### Create kits with group write permission.
+  umask 2;
+
   my $dest = $install  ?  "$export_dir"  :  'created';
   my $dispose = $install  ?  "$mv"  :  'echo';
 
@@ -643,7 +645,7 @@ sub create_kit () {
         "$dispose ACE.tar.gz ACE-lib.tar.gz $dest; ";
       $archives = " ACE.tar.gz ACE-lib.tar.gz ACE.zip ACE-lib.zip ";
     } else {
-      $build_command = 
+      $build_command =
         "$find $release_files $release_filter | $cpio -o -H tar | " .
           "$gzip -9 > ACE.tar.gz && " .
         "$find $release_lib_files $release_filter | $cpio -o -H tar | " .
@@ -653,7 +655,7 @@ sub create_kit () {
       $archives = " ACE.tar.gz ACE-lib.tar.gz ";
     }
   }
-  
+
   if ($kit eq 'ace+tao') {
     $release_files .= ' ACE_wrappers/TAO';
 
@@ -670,7 +672,7 @@ sub create_kit () {
         "$dispose ACE+TAO.tar.gz ACE+TAO.zip $dest";
       $archives .= " ACE+TAO.tar.gz ACE+TAO.zip ";
     } else {
-      $build_command .= 
+      $build_command .=
         "$find $release_files $release_filter | $cpio -o -H tar | " .
           "$gzip -9 > ACE+TAO.tar.gz && " .
         "$chmod a+r ACE+TAO.tar.gz && " .
