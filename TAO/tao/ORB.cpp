@@ -1233,9 +1233,7 @@ CORBA::ORB_init (int &argc,
 
   TAO_ORB_Core_Auto_Ptr safe_oc (oc);
 
-  ///  #if TAO_HAS_INTERCEPTORS == 1
-
-  PortableInterceptor::ORBInitInfo_ptr orb_init_info_temp;
+  TAO_ORBInitInfo *orb_init_info_temp;
   ACE_NEW_THROW_EX (orb_init_info_temp,
                     TAO_ORBInitInfo (safe_oc.get (),
                                      argc,
@@ -1247,11 +1245,8 @@ CORBA::ORB_init (int &argc,
                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CORBA::ORB::_nil ());
 
-  // @@ TODO: We need to make sure this reference is no longer valid
-  //          after the ORB is fully initialized.  According to the
-  //          portable interceptor spec, we should throw a
-  //          CORBA::OBJECT_NOT_EXIST() exception during subsequent
-  //          attempts to access this instance.
+  /// This ORBInitInfo instance is only valid for the duration of this
+  /// ORB's initialization.
   PortableInterceptor::ORBInitInfo_var orb_init_info =
     orb_init_info_temp;
 
@@ -1261,7 +1256,6 @@ CORBA::ORB_init (int &argc,
   TAO_ORBInitializer_Registry::instance ()->pre_init (orb_init_info.in (),
                                                      ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::ORB::_nil ());
-  ///#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
   // Initialize the ORB Core instance.
   int result = safe_oc->init (argc, argv, ACE_TRY_ENV);
@@ -1276,13 +1270,16 @@ CORBA::ORB_init (int &argc,
                           CORBA::COMPLETED_NO),
                         CORBA::ORB::_nil ());
 
-  ///#if TAO_HAS_INTERCEPTORS == 1
-  /// Call the ORBInitializer::post_init() on each registered ORB
-  /// initializer.
+  // Call the ORBInitializer::post_init() on each registered ORB
+  // initializer.
   TAO_ORBInitializer_Registry::instance ()->post_init (orb_init_info.in (),
                                                        ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::ORB::_nil ());
-  ///#endif  /* TAO_HAS_INTERCEPTORS == 1 */
+
+  // Invalidate the ORBInitInfo instance to prevent future
+  // modifications to the ORB.  This behavior complies with the
+  // PortableInterceptor specification.
+  orb_init_info_temp->orb_core_ = 0;
 
   if (TAO_debug_level >= 3)
     ACE_DEBUG ((LM_DEBUG,

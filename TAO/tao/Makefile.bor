@@ -25,6 +25,7 @@ OBJFILES = \
 	$(OBJDIR)\BoundsC.obj \
 	$(OBJDIR)\Buffering_Constraint_Policy.obj \
 	$(OBJDIR)\CDR.obj \
+	$(OBJDIR)\Cleanup_Func_Registry.obj \
 	$(OBJDIR)\Client_Priority_Policy.obj \
 	$(OBJDIR)\Client_Strategy_Factory.obj \
 	$(OBJDIR)\ClientRequestInfo.obj \
@@ -76,6 +77,7 @@ OBJFILES = \
 	$(OBJDIR)\IOPC.obj \
 	$(OBJDIR)\IOPS.obj \
 	$(OBJDIR)\IOR_Parser.obj \
+	$(OBJDIR)\IORInfo.obj \
 	$(OBJDIR)\Leader_Follower.obj \
 	$(OBJDIR)\LocalObject.obj \
 	$(OBJDIR)\Managed_Types.obj \

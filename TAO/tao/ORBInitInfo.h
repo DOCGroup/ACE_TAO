@@ -1,34 +1,29 @@
 // -*- C++ -*-
-//
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//     TAO
-//
-// = FILENAME
-//     ORBInitInfo.h
-//
-// = AUTHOR
-//     Ossama Othman <ossama@uci.edu>
-//
-// ============================================================================
+// ===================================================================
+/**
+ *  @file   ORBInitInfo.h
+ *
+ *  $Id$
+ *
+ *  @author Ossama Othman <ossama@uci.edu>
+ */
+// ===================================================================
 
 #ifndef TAO_ORB_INIT_INFO_H
 #define TAO_ORB_INIT_INFO_H
 
 #include "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableInterceptorC.h"
-#include "tao/LocalObject.h"
-#include "tao/StringSeqC.h"
+#include "PortableInterceptorC.h"
+#include "LocalObject.h"
+#include "StringSeqC.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
@@ -41,8 +36,15 @@
 
 class TAO_ORB_Core;
 
-/// This class encapsulates the data passed to ORBInitializers during
-/// ORB initialization.
+/**
+ * @class TAO_ORBInitInfo
+ *
+ * @brief An implementation of the PortableInterceptor::ORBInitInfo
+ *        interface.
+ *
+ * This class encapsulates the data passed to ORBInitializers during
+ * ORB initialization.
+ */
 class TAO_Export TAO_ORBInitInfo :
   public virtual PortableInterceptor::ORBInitInfo,
   public virtual TAO_Local_RefCounted_Object
@@ -54,17 +56,31 @@ class TAO_Export TAO_ORBInitInfo :
 
 public:
 
+  /// Destructor
   ~TAO_ORBInitInfo (void);
-  ///< Destructor
 
+  /** @name PortableInterceptor::ORBInitInfo Methods
+   *
+   * These methods are exported by the
+   * PortableInterceptor::ORBInitInfo interface.
+   */
+
+  //@{
+  /// Return the argument vector for the ORB currently being
+  /// initialized as a string sequence.
   virtual CORBA::StringSeq * arguments (
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /// Return the ORBid for the ORB currently being initialized.
   virtual char * orb_id (
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /// Register a mapping between a string and a corresponding object
+  /// reference with the ORB being initialized.  This is particularly
+  /// useful for registering references to local
+  /// (locality constrained) objects.
   virtual void register_initial_reference (
       const char * id,
       CORBA::Object_ptr obj,
@@ -72,47 +88,88 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ORBInitInfo::InvalidName));
 
+  /// Obtain a reference to an object that may not yet be available
+  /// via the usual CORBA::ORB::resolve_initial_references() mechanism
+  /// since the ORB may not be fully initialized yet.
   virtual CORBA::Object_ptr resolve_initial_references (
       const char * id,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ORBInitInfo::InvalidName));
 
+  /// Register a client request interceptor with the ORB currently
+  /// being initialized.
   virtual void add_client_request_interceptor (
       PortableInterceptor::ClientRequestInterceptor_ptr interceptor,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ORBInitInfo::DuplicateName));
 
+  /// Register a server request interceptor with the ORB currently
+  /// being initialized.
   virtual void add_server_request_interceptor (
       PortableInterceptor::ServerRequestInterceptor_ptr interceptor,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ORBInitInfo::DuplicateName));
 
+  /// Register an IOR interceptor with the ORB currently being
+  /// initialized.
   virtual void add_ior_interceptor (
       PortableInterceptor::IORInterceptor_ptr interceptor,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ORBInitInfo::DuplicateName));
 
+  /// Reserve a slot in table found within the
+  /// PortableInterceptor::Current object.
   virtual PortableInterceptor::SlotId allocate_slot_id (
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /// Register a policy factory of the given policy type with the ORB
+  /// currently being initialized.
   virtual void register_policy_factory (
       CORBA::PolicyType type,
       PortableInterceptor::PolicyFactory_ptr policy_factory,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
+  //@}
+
+  /** @name TAO Extensions
+   *  These methods are not part of the PortableInterceptor
+   *  specification, and are TAO-specific extensions.
+   */
+
+  //@{
+  /**
+   * Allocate a slot in the ORB's TSS resources.  TAO uses a single
+   * TSS key for these resources, so it is useful to place TSS objects
+   * in TAO's TSS resources on platforms where the number of TSS keys
+   * is low.  The returned SlotId can be used to index into the array
+   * stored in ORB's TSS resources structure.
+   *
+   * An accompanying cleanup function (e.g. a TSS destructor) can also
+   * be registered.
+   */
+  size_t allocate_tss_slot_id (
+      ACE_CLEANUP_FUNC cleanup,
+      CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  //@}
 
 protected:
 
+  /// Only allow this class to be instantiated on the heap since it is
+  /// reference counted.
   TAO_ORBInitInfo (TAO_ORB_Core *orb_core,
                    int argc,
                    char *argv[]);
-  ///< Only allow this class to be instantiated on the heap since it
-  ///< is reference counted.
+
+  /// Check if this ORBInitInfo instance is valid.  Once post_init()
+  /// has been called on each of the ORBInitializers, this ORBInitInfo
+  /// is no longer valid.  Throw an exception in that case.
+  void check_validity (CORBA::Environment &ACE_TRY_ENV);
 
 private:
 
@@ -124,18 +181,16 @@ private:
 
 private:
 
+  /// Reference to the ORB Core.
   TAO_ORB_Core *orb_core_;
-  ///< Reference to the ORB Core.
 
-  CORBA::StringSeq arguments_;
-  ///< A copy of the argument vector (argv) passed to ORB_init() call,
-  ///< but in the form of a string sequence. 
+  /// The number of arguments in the argument vector passed to
+  /// CORBA::ORB_init().
+  int argc_;
 
-  // IOP_N::CodecFactory_var codec_factory_;
-  ///< Reference to CodecFactory in the ORB.  Normally
-  ///< ORB::resolve_initial_references("CodecFactory") is used to get
-  ///< a reference to the CodecFactory, but the ORB has not been
-  ///< initialized by the time the ORBInitializers are called.
+  /// The argument vector passed to CORBA::ORB_init().
+  char **argv_;
+
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

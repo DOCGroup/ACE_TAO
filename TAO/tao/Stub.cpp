@@ -10,60 +10,56 @@
 // based implementation, and can neither be used by other kinds of
 // objref nor have a default implementation.
 
-#include "tao/Endpoint.h"
-#include "tao/Stub.h"
-#include "tao/Sequence.h"
-#include "tao/Object.h"
-#include "tao/Invocation.h"
-#include "tao/Asynch_Invocation.h"
-#include "tao/ORB_Core.h"
-#include "tao/Client_Strategy_Factory.h"
-#include "tao/Sync_Strategies.h"
-#include "tao/Buffering_Constraint_Policy.h"
-#include "tao/Messaging_Policy_i.h"
-#include "tao/Client_Priority_Policy.h"
-#include "tao/debug.h"
+#include "Endpoint.h"
+#include "Stub.h"
+#include "Sequence.h"
+#include "Object.h"
+#include "Invocation.h"
+#include "Asynch_Invocation.h"
+#include "ORB_Core.h"
+#include "Client_Strategy_Factory.h"
+#include "Sync_Strategies.h"
+#include "Buffering_Constraint_Policy.h"
+#include "Messaging_Policy_i.h"
+#include "Client_Priority_Policy.h"
+#include "debug.h"
 
 #if (TAO_HAS_RT_CORBA == 1)
-# include "tao/RT_Policy_i.h"
+# include "RT_Policy_i.h"
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
 #include "ace/Auto_Ptr.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Stub.i"
+# include "Stub.i"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(tao, TAO_Stub, "$Id$")
 
-  TAO_Stub::TAO_Stub (char *repository_id,
-                      const TAO_MProfile &profiles,
-                      TAO_ORB_Core *orb_core)
-    : type_id (repository_id),
-
+TAO_Stub::TAO_Stub (const char *repository_id,
+                    const TAO_MProfile &profiles,
+                    TAO_ORB_Core *orb_core)
+  : type_id (repository_id),
 #if (TAO_HAS_RT_CORBA == 1)
-
-      priority_model_policy_ (0),
-      priority_banded_connection_policy_ (0),
-      client_protocol_policy_ (0),
-      are_policies_parsed_ (0),
-
+    priority_model_policy_ (0),
+    priority_banded_connection_policy_ (0),
+    client_protocol_policy_ (0),
+    are_policies_parsed_ (0),
 #endif /* TAO_HAS_RT_CORBA == 1 */
-      base_profiles_ ((CORBA::ULong) 0),
-      forward_profiles_ (0),
-      profile_in_use_ (0),
-      profile_lock_ptr_ (0),
-      profile_success_ (0),
-      refcount_lock_ (),
-      refcount_ (1),
-      orb_core_ (orb_core),
-      orb_ (),
-      servant_orb_ (),
-      #if (TAO_HAS_CORBA_MESSAGING == 1)
-      policies_ (0),
-      #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
-      addressing_mode_ (0)
-
+    base_profiles_ ((CORBA::ULong) 0),
+    forward_profiles_ (0),
+    profile_in_use_ (0),
+    profile_lock_ptr_ (0),
+    profile_success_ (0),
+    refcount_lock_ (),
+    refcount_ (1),
+    orb_core_ (orb_core),
+    orb_ (),
+    servant_orb_ (),
+#if (TAO_HAS_CORBA_MESSAGING == 1)
+    policies_ (0),
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+    addressing_mode_ (0)
 {
   if (this->orb_core_ == 0)
     {
@@ -611,7 +607,7 @@ TAO_Stub::set_policy_overrides (const CORBA::PolicyList & policies,
     }
 
   TAO_Stub* stub;
-  ACE_NEW_RETURN (stub, TAO_Stub (CORBA::string_dup (this->type_id.in ()),
+  ACE_NEW_RETURN (stub, TAO_Stub (this->type_id.in (),
                                   this->base_profiles_,
                                   this->orb_core_),
                   0);

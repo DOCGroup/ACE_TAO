@@ -1,3 +1,213 @@
+Wed Nov 15 01:48:29 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Any.cpp (operator=):
+
+	  Removed redundant zero pointer checks.  The delete() operator
+	  already performs zero pointer checks.
+
+	* tao/Messaging_ORBInitializer.cpp (register_policy_factories):
+	* tao/RT_ORBInitializer.cpp (register_policy_factories):
+
+	  The PolicyFactory registry duplicates policy factories upon
+	  registration.  Removed call to PolicyFactory::_retn() since it
+	  causes a leak (off-by-one reference count error).
+
+	* tao/Stub.h (TAO_Stub):
+	* tao/Stub.cpp (TAO_Stub):
+
+	  Changed repository ID argument to be a "const char *" so that a
+	  copy is made.  This makes it easier to keep code that creates
+	  a TAO_Stub exception safe since that code retains ownership of
+	  its copy of the repository ID.
+
+	  (set_policy_overrides):
+
+	  The TAO_Stub constructor now takes a "const char *" repository
+	  ID argument.  Do not bother passing a copy to the constructor
+	  when instantiating a new TAO_Stub since the constructor will
+	  make a copy itself.
+
+	* tao/CORBALOC_Parser.cpp (make_stub_from_mprofile):
+
+	  Cast zero argument to "const char *" since the TAO_Stub
+	  constructor now acceptos a "const char *."
+
+	* tao/Object.cpp (operator>>):
+
+	  Pass type hint using the ".in()" accessor instead of "._retn()."
+	  The TAO_Stub constructor now copies the string.  This fixes a
+	  potential memory leak.
+
+	* tao/ORB_Core.h:
+
+	  Doxygenated most of this header.
+
+	  (TAO_ORB_Core_TSS_Resources):
+
+	  Added array that can be used to store TSS objects.  We're
+	  basically doing TSS emulation again here.  This code maybe
+	  refactored to take advantage of ACE's TSS emulation class.
+
+	  (TAO_ORB_Core):
+
+	  Added new TAO_Cleanup_Func_Registry attribute.
+
+	* tao/ORB_Core.i (add_interceptor, ior_interceptors):
+
+	  New methods for registering and accessing IOR interceptors.
+
+	  (get_tss_resource, set_tss_resource):
+
+	  New methods to access and set the ORB Core TSS resource at a
+	  given slot ID.
+
+	  (add_tss_cleanup_func):
+
+	  Register a TSS cleanup function.  The slot ID for the
+	  corresponding ORB core TSS resource is returned by this method,
+	  too.
+
+	* tao/ORB_Core.cpp (establish_components):
+
+	  New method that iterates over the registered IOR interceptors so
+	  that they may be given the opportunity to add tagged components
+	  to the profiles for a servant being created.
+
+	  (create_stub_object):
+
+	  Do not copy the repository ID string.  The TAO_Stub constructor
+	  now copies it.  This fixes a potential memory leak.
+
+	  Invoke the newly added establish_components() method to to
+	  process any registered IOR interceptors.
+
+	  (~TAO_ORB_Core_TSS_Resources):
+
+	  Invoke the TAO_Cleanup_Func_Registry::cleanup() on the TSS
+	  object array.
+
+	* tao/IORInfo.h:
+	* tao/IORInfo.cpp:
+
+	  Implementation of the PortableInterceptor::IORInfo interface.
+
+	* tao/Profile.h:
+	* tao/Profile.cpp (add_tagged_component):
+
+	  New method that adds an IOP::TaggedComponent to the profile's
+	  tagged component list.  This method is used by TAO's IOR
+	  interceptor implementation.
+
+	  (verify_orb_configuration):
+
+	  New internal method that verifies that the ORB configuration
+	  will not prevent tagged components from being used.  
+
+	  (verify_profile_version):
+
+	  New internal method that verifies that the profile is GIOP 1.0
+	  or better.  Tagged components can only be used in GIOP 1.1
+	  profiles or better.
+
+	* tao/corbafwd.h:
+
+	  Typedef CORBA::OctetSeq{_var,_out} against the generated
+	  CORBA_OctetSeq classes, instead of the raw
+	  TAO_Unbounded_Sequence<Octet> template.  This is necessary in
+	  case users need access to the Any insertion/extraction
+	  operators.
+
+	* tao/Principal.h:
+
+	  Include "OctetSeqC.h" to pull in CORBA::OctetSeq class
+	  definition.
+
+	* tao/Interceptor_List.h:
+	* tao/Interceptor_List.inl:
+	* tao/Interceptor_List.cpp:
+
+	  Added IOR interceptor list support.
+
+	* tao/ORBInitInfo.h (TAO_ORBInitInfo):
+
+          Removed the "arguments_" attribute.  Caching the string sequence
+          doesn't buy us anything since a copy must be made whenever
+          returning it.  See below.
+
+	* tao/ORBInitInfo.cpp (TAO_ORBInitInfo):
+
+          Defer creation of the string sequence containing the argument
+          vector passed to CORBA::ORB_init() until the
+          ORBInitInfo::arguments() method is called.  Since a copy of the
+          sequence has to be returned to the caller anyway, creating the
+          string sequence so early doesn't buy us anything.  This also
+          reduces memory usage for those who never need to call the
+          ORBInitInfo::arguments() method.
+
+	  (arguments):
+
+          In accordance with the C++ mapping for sequences, return a
+          copy of the argument string sequence.
+
+	  (resolve_initial_references):
+
+          The ORB is practically fully initialized by the time
+          ORBInitInfo::post_init() is reached so just use the ORB's
+          resolve_initial_references() mechanism.
+
+	  (add_ior_interceptor):
+
+	  Added IOR interceptor registration support.
+
+	  (allocate_tss_slot_id):
+
+	  Allocate a slot in the ORB's TSS resources.  TAO uses a single
+	  TSS key for these resources, so it is useful to place TSS
+	  objects in TAO's TSS resources on platforms where the number of
+	  TSS keys is low.  The returned SlotId can be used to index into
+	  the array stored in ORB's TSS resources structure.  An
+	  accompanying cleanup function (e.g. a TSS destructor) can also
+	  be registered.  This is a TAO extension.
+
+	* tao/ORB.cpp (ORB_init):
+
+	  Invalidate the ORBInitInfo instance to prevent future
+	  modifications to the ORB.  This behavior complies with the
+	  PortableInterceptor specification.
+
+	* tao/Cleanup_Func_Registry.h:
+	* tao/Cleanup_Func_Registry.cpp:
+
+	  New class that contains the TSS destructors corresponding to the
+	  TSS objects stored in the newly added array in TAO's TSS
+	  resources.
+
+	* tao/PortableInterceptors.h:
+
+	  Moved inclusion of `PortableInteceptor.i' within the
+	  "TAO_HAS_INTERCEPTORS" block.
+
+	* tao/ORBInitializer_Registry.h:
+	* tao/PolicyFactory_Registry.h:
+
+	  Doxygenated these headers.
+
+	* tao/ORBInitializer_Registry.cpp:
+	* tao/PolicyFactory_Registry.cpp:
+
+	  Comment updates.
+
+	* tao/MProfile.cpp:
+
+	  Coding style updates.
+
+	* tao/Makefile:
+	* tao/Makefile.bor:
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp:
+
+	  Added Cleanup_Func_Registry.* and IORInfo.* to these files.
+
 Wed Nov 15 00:04:30 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/PortableServer/POA.cpp (key_to_stub_i):
@@ -72,7 +282,7 @@ Tue Nov 14 18:21:29 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
         * orbsvcs/orbsvcs/FaultTolerance/FT_PolicyFactory.h:
         * orbsvcs/orbsvcs/FaultTolerance/FT_PolicyFactory.cpp: Changed the
           way FT policies were created. The procedure adopted now is in
-          conformance with the PotableInteceptor spec. The model closely
+          conformance with the PotrableInterceptor spec. The model closely
           follows the creation of policies for RT CORBA and Messaging in
           TAO.
 

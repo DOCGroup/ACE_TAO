@@ -1,22 +1,40 @@
 // $Id$
 
-#include "tao/Profile.h"
-#include "tao/Object_KeyC.h"
+#include "Profile.h"
+#include "Object_KeyC.h"
 
-#include "tao/MessagingC.h"
-#include "tao/Stub.h"
-#include "tao/debug.h"
+#include "MessagingC.h"
+#include "Stub.h"
+#include "debug.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/Profile.i"
+#include "Profile.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(tao, Profile, "$Id$")
 
-  // ****************************************************************
+// ****************************************************************
 
-  TAO_Profile::~TAO_Profile (void)
+TAO_Profile::~TAO_Profile (void)
 {
+}
+
+void
+TAO_Profile::add_tagged_component (const IOP::TaggedComponent &component,
+                                   CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Sanity checks.
+  this->verify_orb_configuration (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  this->verify_profile_version (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // ----------------------------------------------------------------
+
+  // Add the given tagged component to this profile.
+  this->tagged_components ().set_component (component);
 }
 
 void
@@ -235,6 +253,63 @@ TAO_Stub*
 TAO_Profile::the_stub (void)
 {
   return stub_;
+}
+
+void
+TAO_Profile::verify_orb_configuration (CORBA::Environment &ACE_TRY_ENV)
+{
+  // If the ORB isn't configured to support tagged components, then
+  // throw an exception.
+  if (this->orb_core_->orb_params ()->std_profile_components () == 0)
+    {
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%P|%t) Cannot add ")
+		    ACE_TEXT ("IOP::TaggedComponent to profile.\n")
+		    ACE_TEXT ("(%P|%t) Standard profile components")
+		    ACE_TEXT ("have been disabled.\n")
+                    ACE_TEXT ("(%P|%t) Try")
+                    ACE_TEXT ("\"-ORBStdProfileComponents 1\"\n")));
+
+      // Throw an exception since some services may depend on standard
+      // profile components.  Ignoring the problem would undermine
+      // services that depend on standard profile components, so
+      // let the IORInterceptor that no further progress will be
+      // made.
+      ACE_THROW (CORBA::BAD_PARAM (
+                   CORBA_SystemException::_tao_minor_code (
+                      TAO_DEFAULT_MINOR_CODE,
+		      EINVAL),
+		   CORBA::COMPLETED_NO));
+    }
+}
+
+void
+TAO_Profile::verify_profile_version (CORBA::Environment &ACE_TRY_ENV)
+{
+  // GIOP 1.0 does not support tagged components.  Throw an exception
+  // if the profile is a GIOP 1.0 profile.
+
+  if (this->version_.major == 1 && this->version_.minor == 0)
+    {
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%P|%t) Cannot add ")
+		    ACE_TEXT ("IOP::TaggedComponent to GIOP 1.0")
+		    ACE_TEXT ("IOR profile.\n")
+                    ACE_TEXT ("(%P|%t) Try using a GIOP 1.1 or ")
+                    ACE_TEXT ("greater endpoint.\n")));
+
+      // Throw an exception since some services may depend on tagged
+      // components.  Ignoring the problem would undermine services
+      // that depend on standard profile components, so let the
+      // IORInterceptor know that no further progress will be made.
+      ACE_THROW (CORBA::BAD_PARAM (
+                   CORBA_SystemException::_tao_minor_code (
+                     TAO_DEFAULT_MINOR_CODE,
+		     EINVAL),
+		   CORBA::COMPLETED_NO));
+    }
 }
 
 // ****************************************************************

@@ -499,6 +499,25 @@ SOURCE=.\CDR.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Cleanup_Func_Registry.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Client_Priority_Policy.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -1507,6 +1526,25 @@ SOURCE=.\IOPS.cpp
 # Begin Source File
 
 SOURCE=.\IOR_Parser.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\IORInfo.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
@@ -3276,6 +3314,14 @@ SOURCE=.\cdr.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Cleanup_Func_Registry.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Cleanup_Func_Registry.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\Client_Priority_Policy.h
 # End Source File
 # Begin Source File
@@ -3521,6 +3567,10 @@ SOURCE=.\ior_corbaname_export.h
 # Begin Source File
 
 SOURCE=.\IOR_Parser.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\IORInfo.h
 # End Source File
 # Begin Source File
 

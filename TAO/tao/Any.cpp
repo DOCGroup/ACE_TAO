@@ -1724,10 +1724,7 @@ CORBA_Any_var::operator= (CORBA::Any *p)
 {
   if (this->ptr_ != p)
     {
-      if (this->ptr_ != 0)
-        {
-          delete (this->ptr_);
-        }
+      delete this->ptr_;
 
       this->ptr_ = p;
     }
@@ -1744,10 +1741,7 @@ CORBA_Any_var::operator= (const CORBA::Any_var& r)
                   CORBA::Any (*r.ptr_),
                   *this);
 
-  if (this->ptr_ != 0)
-    {
-      delete this->ptr_;
-    }
+  delete this->ptr_;
 
   this->ptr_ = tmp;
 

@@ -21,7 +21,7 @@
 //
 // = AUTHOR
 //     Nanbor Wang <nanbor@cs.wustl.edu>
-//     Kirthika PArameswaran  <kirthika@cs.wustl.edu>
+//     Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 //     Ossama Othman <ossama@uci.edu>
 //
 // ========================================================================
@@ -127,11 +127,11 @@ private:
 
 };
 
-#endif /* TAO_HAS_INTERCEPTORS */
-
 #if defined (__ACE_INLINE__)
 #include "tao/PortableInterceptor.i"
 #endif /* defined INLINE */
+
+#endif /* TAO_HAS_INTERCEPTORS */
 
 #include "ace/post.h"
 

@@ -230,7 +230,8 @@ TAO_CORBALOC_Parser::make_stub_from_mprofile (CORBA::Environment &ACE_TRY_ENV)
   // Now make the TAO_Stub.
   TAO_Stub *data = 0;
   ACE_NEW_THROW_EX (data,
-                    TAO_Stub ((char *) 0, this->mprofile_,
+                    TAO_Stub ((const char *) 0,
+                              this->mprofile_,
                               this->orb_->orb_core ()),
                         CORBA::NO_MEMORY (
                           CORBA_SystemException::_tao_minor_code (
