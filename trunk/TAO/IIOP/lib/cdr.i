@@ -29,103 +29,89 @@ CDR::~CDR (void)
     delete real_buffer;
 }
 
-ACE_INLINE
-void*
+ACE_INLINE void *
 CDR::operator new (size_t, void *_FAR p)
 {
   return p;
 }
 
-ACE_INLINE
-void*
+ACE_INLINE void *
 CDR::operator new (size_t s)
 {
   return ::operator new (s);
 }
 
-ACE_INLINE
-void
+ACE_INLINE void
 CDR::operator delete (void *p)
 {
   ::operator delete (p);
 }
 
-ACE_INLINE
-CORBA_Boolean
+ACE_INLINE CORBA_Boolean
 CDR::put_char (CORBA_Char c)
 {
   return put_byte ((char) c);
 }
 
-ACE_INLINE
-CORBA_Boolean
+ACE_INLINE CORBA_Boolean
 CDR::put_wchar (CORBA_WChar wc)
 {
-  // "wchar_t" isn't always 2 bytes, such systems might need
-  // further conversion (e.g. hosts with multibyte characters
-  // native, rather than UNICODE)
+  // "wchar_t" isn't always 2 bytes, such systems might need further
+  // conversion (e.g. hosts with multibyte characters native, rather
+  // than UNICODE)
 
   return put_short ((short) wc);
 }
     
-ACE_INLINE
-CORBA_Boolean
+ACE_INLINE CORBA_Boolean
 CDR::put_boolean (CORBA_Boolean b)
 {
   return put_byte ((char) (b != CORBA_B_FALSE));
 }
 
-ACE_INLINE
-CORBA_Boolean
+ACE_INLINE CORBA_Boolean
 CDR::put_octet (CORBA_Octet o)
 {
   return put_byte ((char) o);
 }
 
-ACE_INLINE
-CORBA_Boolean
+ACE_INLINE CORBA_Boolean
 CDR::put_ushort (CORBA_UShort s)
 {
   return put_short ((CORBA_Short) s);
 }
 
-ACE_INLINE
-CORBA_Boolean
+ACE_INLINE CORBA_Boolean
 CDR::put_ulong (CORBA_ULong l)
 {
   return put_long ((CORBA_Long) l);
 }
 
-ACE_INLINE
-CORBA_Boolean
+ACE_INLINE CORBA_Boolean
 CDR::put_ulonglong (const CORBA_ULongLong &ll)
 {
   return put_longlong ((CORBA_LongLong &) ll);
 }
 				    
-ACE_INLINE
-CORBA_Boolean
+ACE_INLINE CORBA_Boolean
 CDR::put_float (float f)
 {
   return put_long (*(CORBA_Long *) &f);
 }
 
-ACE_INLINE
-CORBA_Boolean
+ACE_INLINE CORBA_Boolean
 CDR::put_double (const double &d)
 {
   return put_longlong (*(CORBA_LongLong *) &d);
 }
 
-ACE_INLINE
-CORBA_Boolean
+ACE_INLINE CORBA_Boolean
 CDR::get_char (CORBA_Char &o)
 {
   return this->get_byte ((char &) o);
 }
 
-ACE_INLINE
-CORBA_Boolean
+ACE_INLINE CORBA_Boolean
 CDR::get_wchar (CORBA_WChar &wc)
 {
   short s;
@@ -137,8 +123,7 @@ CDR::get_wchar (CORBA_WChar &wc)
   return retval;
 }
 
-ACE_INLINE
-CORBA_Boolean
+ACE_INLINE CORBA_Boolean
 CDR::get_boolean (CORBA_Boolean &b)
 {
   CORBA_Char c;
@@ -151,50 +136,43 @@ CDR::get_boolean (CORBA_Boolean &b)
   return retval;
 }
 
-ACE_INLINE
-CORBA_Boolean
+ACE_INLINE CORBA_Boolean
 CDR::get_octet (CORBA_Octet &o)
 {
   return this->get_byte ((char &) o);
 }
 
-ACE_INLINE
-CORBA_Boolean
+ACE_INLINE CORBA_Boolean
 CDR::get_ushort (CORBA_UShort &s)
 {
   return this->get_short ((short&) s);
 }
 
-ACE_INLINE
-CORBA_Boolean
+ACE_INLINE CORBA_Boolean
 CDR::get_ulong (CORBA_ULong &l)
 {
   return this->get_long ((CORBA_Long &) l);
 }
 
-ACE_INLINE
-CORBA_Boolean
+ACE_INLINE CORBA_Boolean
 CDR::get_ulonglong (const CORBA_ULongLong &ull)
 {
   return this->get_longlong ((CORBA_LongLong &) ull);
 }
 
-ACE_INLINE
-CORBA_Boolean
+ACE_INLINE CORBA_Boolean
 CDR::get_float (float &f)
 {
   return this->get_long ((CORBA_Long &) f);
 }
 
-ACE_INLINE
-CORBA_Boolean
+ACE_INLINE CORBA_Boolean
 CDR::get_double (double &d)
 {
   return this->get_longlong ((CORBA_LongLong &) d);
 }
 
-ACE_INLINE
-CORBA_Boolean
+ACE_INLINE CORBA_Boolean
 CDR::skip_bytes (u_int nbytes)
 {
   if (remaining < nbytes)
@@ -204,8 +182,7 @@ CDR::skip_bytes (u_int nbytes)
   return CORBA_B_TRUE;
 }
 
-ACE_INLINE
-void
+ACE_INLINE void
 CDR::setup_encapsulation (u_char *buf, u_int len)
 {
   // Also used when interpreting typecodes, but more generally when
@@ -218,8 +195,7 @@ CDR::setup_encapsulation (u_char *buf, u_int len)
   do_free = 0;
 }
 
-ACE_INLINE
-size_t
+ACE_INLINE size_t
 CDR::bytes_remaining (void)
 {
   return remaining;

@@ -15,8 +15,8 @@ TAO_Client_Connection_Handler::open(void *)
 }
 
 // Determine the appropriate default thread flags, based on system.
-// When I put the concurrency strategy into the factory, then this will
-// go away b/c the concurrency strategy will do this appropriate
+// When I put the concurrency strategy into the factory, then this
+// will go away b/c the concurrency strategy will do this appropriate
 // for each platform!
 #  if defined(linux)
 #    define ROA_DEFAULT_THREADFLAGS  (THR_DETACHED)
@@ -29,20 +29,21 @@ TAO_Client_Connection_Handler::open(void *)
 #  endif
 
 TAO_Server_Factory::CONCURRENCY_STRATEGY*
-TAO_Server_Factory::concurrency_strategy()
+TAO_Server_Factory::concurrency_strategy ()
 {
-  TAO_OA_Parameters* p = TAO_OA_PARAMS::instance();
+  TAO_OA_Parameters* p = TAO_OA_PARAMS::instance ();
 
 
-  if (p->using_threads())
+  if (p->using_threads ())
     {
       // Set the strategy parameters
-      threaded_strategy_.open(ACE_Service_Config::thr_mgr(), ROA_DEFAULT_THREADFLAGS);
+      threaded_strategy_.open (ACE_Service_Config::thr_mgr (),
+			       ROA_DEFAULT_THREADFLAGS);
       concurrency_strategy_ = &threaded_strategy_;
     }
   else
     {
-      reactive_strategy_.open(ACE_Service_Config::reactor());
+      reactive_strategy_.open (ACE_Service_Config::reactor ());
       concurrency_strategy_ = &reactive_strategy_;
     }
 
@@ -50,47 +51,47 @@ TAO_Server_Factory::concurrency_strategy()
 }
 
 TAO_Object_Table*
-TAO_Server_Factory::object_lookup_strategy()
+TAO_Server_Factory::object_lookup_strategy (void)
 {
-  TAO_OA_Parameters* p = TAO_OA_PARAMS::instance();
+  TAO_OA_Parameters* p = TAO_OA_PARAMS::instance ();
 
   // Since these are dynamically created, when do they get destroyed?
-  switch(p->demux_strategy())
+  switch (p->demux_strategy ())
     {
     case TAO_OA_Parameters::TAO_LINEAR:
-      this->objtable_ = new TAO_Linear_ObjTable (p->tablesize());
+      this->objtable_ = new TAO_Linear_ObjTable (p->tablesize ());
       break;
     case TAO_OA_Parameters::TAO_USER_DEFINED:
       // it is assumed that the user would have used the hooks to supply a
       // user-defined instance of the object table
-      ACE_ASSERT(this->objtable_ != 0);
+      ACE_ASSERT (this->objtable_ != 0);
       break;
     case TAO_OA_Parameters::TAO_ACTIVE_DEMUX:
       break;
     case TAO_OA_Parameters::TAO_DYNAMIC_HASH:
     default:
-      this->objtable_ = new TAO_Dynamic_Hash_ObjTable (p->tablesize());
+      this->objtable_ = new TAO_Dynamic_Hash_ObjTable (p->tablesize ());
     }
   return this->objtable_;
 }
 
-TAO_Client_Factory::TAO_Client_Factory()
+TAO_Client_Factory::TAO_Client_Factory (void)
 {
-  // When should I do this open()?  It seems like this is way too early,
-  // but doing it in the accessor for connector() seems like it would be
-  // too late as well.
-  connector_.open(ACE_Service_Config::reactor(),
-		  &null_creation_strategy_,
-		  &caching_connect_strategy_,
-#if defined(TAO_HAS_CLIENT_CONCURRENCY)
-		  concurrency_strategy_()
+  // When should I do this open ()?  It seems like this is way too
+  // early, but doing it in the accessor for connector () seems like
+  // it would be too late as well.
+  connector_.open (ACE_Service_Config::reactor (),
+		   &null_creation_strategy_,
+		   &caching_connect_strategy_,
+#if defined (TAO_HAS_CLIENT_CONCURRENCY)
+		   concurrency_strategy_ ()
 #else
-                  0
-#endif                  
-                  );
+		   0
+#endif /* TAO_HAS_CLIENT_CONCURRENCY */
+		   );
 }
 
-#if defined(ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 template class ACE_Thread_Strategy<ROA_Handler>;
 template class ACE_Concurrency_Strategy<ROA_Handler>;
 template class ACE_Reactive_Strategy<ROA_Handler>;
@@ -101,4 +102,4 @@ template class ACE_Accept_Strategy<ROA_Handler, ACE_SOCK_ACCEPTOR>;
 template class ACE_Cached_Connect_Strategy<CLIENT_HANDLER, ACE_SOCK_STREAM, ACE_SYNCH_RW_MUTEX>;
 template class ACE_NOOP_Creation_Strategy<CLIENT_HANDLER>;
 template class ACE_Strategy_Connector<CLIENT_HANDLER, ACE_SOCK_STREAM>;
-#endif
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

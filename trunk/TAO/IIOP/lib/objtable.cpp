@@ -1,49 +1,52 @@
 #include "objtable.h"
 
-TAO_Dynamic_Hash_ObjTable::TAO_Dynamic_Hash_ObjTable(CORBA_ULong size)
+TAO_Dynamic_Hash_ObjTable::TAO_Dynamic_Hash_ObjTable (CORBA_ULong size)
 {
   if (size > 0)
-    this->hash_.open(size);
+    this->hash_.open (size);
   // else we already have a default hash map
 }
 
-TAO_Dynamic_Hash_ObjTable::~TAO_Dynamic_Hash_ObjTable()
+TAO_Dynamic_Hash_ObjTable::~TAO_Dynamic_Hash_ObjTable (void)
 {
-  this->hash_.close();
+  this->hash_.close ();
 }
 
 int
-TAO_Dynamic_Hash_ObjTable::bind(const CORBA_OctetSeq &key,
-                                CORBA_Object_ptr obj)
+TAO_Dynamic_Hash_ObjTable::bind (const CORBA_OctetSeq &key,
+				 CORBA_Object_ptr obj)
 {
   ACE_CString objkey ((char *)key.buffer);
-  return this->hash_.bind(objkey, obj);
+  return this->hash_.bind (objkey, obj);
 }
 
 int
-TAO_Dynamic_Hash_ObjTable::find(const CORBA_OctetSeq &key, CORBA_Object_ptr &obj)
+TAO_Dynamic_Hash_ObjTable::find (const CORBA_OctetSeq &key,
+				 CORBA_Object_ptr &obj)
 {
   ACE_CString objkey ((char *)key.buffer);
-  return this->hash_.find(objkey, obj);
+  return this->hash_.find (objkey, obj);
 }
 
-// Linear search strategy
-TAO_Linear_ObjTable::TAO_Linear_ObjTable(CORBA_ULong size)
-  : next_(0),
-    tablesize_(size),
-    tbl_(new TAO_Linear_ObjTable_Entry[size])
+// Linear search strategy.
+TAO_Linear_ObjTable::TAO_Linear_ObjTable (CORBA_ULong size)
+  : next_ (0),
+    tablesize_ (size),
+    tbl_ (new TAO_Linear_ObjTable_Entry[size])
 {
 }
 
-TAO_Linear_ObjTable::~TAO_Linear_ObjTable()
+TAO_Linear_ObjTable::~TAO_Linear_ObjTable (void)
 {
   delete [] this->tbl_;
 }
 
-// ****** we should really make sure that the same key doesn't exist ******
+// ****** we should really make sure that the same key doesn't exist
+// ******
+
 int
-TAO_Linear_ObjTable::bind(const CORBA_OctetSeq &key,
-                          const CORBA_Object_ptr obj)
+TAO_Linear_ObjTable::bind (const CORBA_OctetSeq &key,
+			   const CORBA_Object_ptr obj)
 {
   CORBA_ULong i = this->next_;
 
@@ -52,7 +55,7 @@ TAO_Linear_ObjTable::bind(const CORBA_OctetSeq &key,
       this->tbl_[i].obj = obj;
       this->tbl_[i].key.buffer = new CORBA_Octet [key.length];
       this->tbl_[i].key.length = this->tbl_[i].key.maximum = key.length;
-      ACE_OS::memcpy(this->tbl_[i].key.buffer, key.buffer, key.length);
+      ACE_OS::memcpy (this->tbl_[i].key.buffer, key.buffer, key.length);
 
       this->next_++;
       return 0;
@@ -61,57 +64,56 @@ TAO_Linear_ObjTable::bind(const CORBA_OctetSeq &key,
 }
 
 int
-TAO_Linear_ObjTable::find(const CORBA_OctetSeq &key,
-                          CORBA_Object_ptr &obj)
+TAO_Linear_ObjTable::find (const CORBA_OctetSeq &key,
+			   CORBA_Object_ptr &obj)
 {
-  CORBA_ULong i;
 
-  ACE_ASSERT(this->next_ <= this->tablesize_);
-  i=0;
-  while ( i < this->next_) 
+
+  ACE_ASSERT (this->next_ <= this->tablesize_);
+
+  for (CORBA_ULong i = 0;
+       i < this->next_;
+       i++;
     {
-      if (!ACE_OS::memcmp(key.buffer, this->tbl_[i].key.buffer, key.length))
+      if (!ACE_OS::memcmp (key.buffer, this->tbl_[i].key.buffer, key.length))
 	{
 	  obj = this->tbl_[i].obj;
           return 1;
 	}
-      i++;
-    }
   return -1;  // not found
 }
 
-TAO_Linear_ObjTable_Entry::TAO_Linear_ObjTable_Entry()
+TAO_Linear_ObjTable_Entry::TAO_Linear_ObjTable_Entry ()
 {
   this->key.buffer = 0;
   this->key.length = this->key.maximum = 0;
   this->obj = 0;
 }
 
-TAO_Linear_ObjTable_Entry::~TAO_Linear_ObjTable_Entry()
+TAO_Linear_ObjTable_Entry::~TAO_Linear_ObjTable_Entry ()
 {
-  if (this->key.buffer)
-    delete [] this->key.buffer;
+  delete [] this->key.buffer;
   this->key.length = this->key.maximum = 0;
   this->obj = 0;  // cannot delete this as we do not own it
 }
 
 // Active Demux search strategy
-TAO_Active_Demux_ObjTable::TAO_Active_Demux_ObjTable(CORBA_ULong size)
-  : next_(0),
-    tablesize_(size),
-    tbl_(new TAO_Active_Demux_ObjTable_Entry[size])
+TAO_Active_Demux_ObjTable::TAO_Active_Demux_ObjTable (CORBA_ULong size)
+  : next_ (0),
+    tablesize_ (size),
+    tbl_ (new TAO_Active_Demux_ObjTable_Entry[size])
 {
 }
 
-TAO_Active_Demux_ObjTable::~TAO_Active_Demux_ObjTable()
+TAO_Active_Demux_ObjTable::~TAO_Active_Demux_ObjTable ()
 {
   delete [] this->tbl_;
 }
 
 // ****** we should really make sure that the same key doesn't exist ******
 int
-TAO_Active_Demux_ObjTable::bind(const CORBA_OctetSeq &key,
-                                CORBA_Object_ptr obj)
+TAO_Active_Demux_ObjTable::bind (const CORBA_OctetSeq &key,
+				 CORBA_Object_ptr obj)
 {
   CORBA_ULong i = this->next_;
 
@@ -125,27 +127,27 @@ TAO_Active_Demux_ObjTable::bind(const CORBA_OctetSeq &key,
 }
 
 int
-TAO_Active_Demux_ObjTable::find(const CORBA_OctetSeq &key,
-                                CORBA_Object_ptr& obj)
+TAO_Active_Demux_ObjTable::find (const CORBA_OctetSeq &key,
+				 CORBA_Object_ptr& obj)
 {
-  CORBA_ULong i = ACE_OS::atoi((char *)key.buffer);
+  CORBA_ULong i = ACE_OS::atoi ((char *)key.buffer);
 
-  ACE_ASSERT(i <= this->tablesize_);
+  ACE_ASSERT (i <= this->tablesize_);
   obj = this->tbl_[i].obj;
   return 1;
 }
 
-TAO_Active_Demux_ObjTable_Entry::TAO_Active_Demux_ObjTable_Entry()
+TAO_Active_Demux_ObjTable_Entry::TAO_Active_Demux_ObjTable_Entry (void)
 {
   this->obj = 0;
 }
 
-TAO_Active_Demux_ObjTable_Entry::~TAO_Active_Demux_ObjTable_Entry()
+TAO_Active_Demux_ObjTable_Entry::~TAO_Active_Demux_ObjTable_Entry (void)
 {
   this->obj = 0;  // cannot delete this as we do not own it
 }
 
-#if defined(ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 template class ACE_Hash_Map_Manager<ACE_CString, CORBA_Object_ptr, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Hash_Map_Entry<ACE_CString, CORBA_Object_ptr>;
 template class ACE_Guard<ACE_SYNCH_RW_MUTEX>;

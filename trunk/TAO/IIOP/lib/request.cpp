@@ -13,23 +13,20 @@
 #include	"cdr.h"
 #include	"thread.h"
 
-
 // {77420085-F276-11ce-9598-0000C07CA898}
 DEFINE_GUID (IID_CORBA_Request,
 0x77420085, 0xf276, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
 
-ULONG
-__stdcall
-CORBA_Request::AddRef ()
+ULONG __stdcall
+CORBA_Request::AddRef (void)
 {
   ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, 0);
  
   return _refcount++;
 }
  
-ULONG
-__stdcall
-CORBA_Request::Release ()
+ULONG __stdcall
+CORBA_Request::Release (void)
 {
   ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, 0);
  
@@ -44,12 +41,9 @@ CORBA_Request::Release ()
   return 0;
 }
  
-HRESULT
-__stdcall
-CORBA_Request::QueryInterface (
-    REFIID      riid,
-    void        **ppv
-)
+HRESULT __stdcall
+CORBA_Request::QueryInterface (REFIID riid,
+			       void **ppv)
 {
   *ppv = 0;
  
@@ -63,9 +57,8 @@ CORBA_Request::QueryInterface (
   return NOERROR;
 }
 
-//
 // Reference counting for DII Request object
-//
+
 void
 CORBA_release (CORBA_Request_ptr req)
 {
@@ -76,35 +69,30 @@ CORBA_release (CORBA_Request_ptr req)
 CORBA_Boolean
 CORBA_is_nil (CORBA_Request_ptr req)
 {
-  return (CORBA_Boolean)(req == 0);
+  return (CORBA_Boolean) req == 0;
 }
 
-//
+
 // DII Request class implementation
-//
-CORBA_Request::CORBA_Request (
-    CORBA_Object_ptr	    obj,
-    const CORBA_Char        *op,
-    CORBA_NVList_ptr        args,
-    CORBA_NamedValue_ptr    result,
-    CORBA_Flags             flags
-) :
-    _args   	    	    (args),
-    _result 	    	    (result),
-    _flags  	    	    (flags),
-    _refcount	    	    (1)
+
+CORBA_Request::CORBA_Request (CORBA_Object_ptr obj,
+			      const CORBA_Char *op,
+			      CORBA_NVList_ptr args,
+			      CORBA_NamedValue_ptr result,
+			      CORBA_Flags flags) 
+  : _args (args),
+    _result (result),
+    _flags (flags),
+    _refcount (1)
 {
   _target = CORBA_Object::_duplicate (obj);
   _opname = CORBA_string_copy (op);
 }
 
-
-CORBA_Request::CORBA_Request (
-    CORBA_Object_ptr		obj,
-    const CORBA_Char		*op
-) :
-    _flags			(0),
-    _refcount			(1)
+CORBA_Request::CORBA_Request (CORBA_Object_ptr obj,
+			      const CORBA_Char *op) 
+  : _flags (0),
+    _refcount (1)
 {
   _target = CORBA_Object::_duplicate (obj);
   _opname = CORBA_string_copy (op);
@@ -113,7 +101,7 @@ CORBA_Request::CORBA_Request (
   _result = new CORBA_NamedValue;
 }
 
-CORBA_Request::~CORBA_Request ()
+CORBA_Request::~CORBA_Request (void)
 {
   assert (_refcount == 0);
 
@@ -123,39 +111,53 @@ CORBA_Request::~CORBA_Request ()
   CORBA_release (_result);
 }
 
-//
 // The public DII interfaces:  normal and oneway calls.
 //
 // NOTE that using DII, programmers can get the special behaviour of
 // discarding the response for normal calls.  This doesn't change the
-// semantics of any OMG-IDL interface, it just streamlines control flow
-// in some exotic situations.
-//
+// semantics of any OMG-IDL interface, it just streamlines control
+// flow in some exotic situations.
+
 void
-CORBA_Request::invoke ()
+CORBA_Request::invoke (void)
 {
-  STUB_Object     *stub;
+  STUB_Object *stub;
 
-  if (_target->QueryInterface (IID_STUB_Object, (void **) &stub) != NOERROR) {
-    _env.exception (new CORBA_DATA_CONVERSION (COMPLETED_NO));
-    return;
-  }
+  if (_target->QueryInterface (IID_STUB_Object,
+			       (void **) &stub) != NOERROR) 
+    {
+      _env.exception (new CORBA_DATA_CONVERSION (COMPLETED_NO));
+      return;
+    }
 
-  stub->do_dynamic_call ((char *)_opname, CORBA_B_TRUE,
-			 _args, _result, _flags, _exceptions, _env);
+  stub->do_dynamic_call ((char *)_opname,
+			 CORBA_B_TRUE,
+			 _args,
+			 _result,
+			 _flags,
+			 _exceptions,
+			 _env);
   stub->Release ();
 }
 
 void
-CORBA_Request::send_oneway ()
+CORBA_Request::send_oneway (void)
 {
-  STUB_Object     *stub;
+  STUB_Object *stub;
 
-  if (_target->QueryInterface (IID_STUB_Object, (void **) &stub) != NOERROR) {
-    _env.exception (new CORBA_DATA_CONVERSION (COMPLETED_NO));
-    return;
-  }
-  stub->do_dynamic_call ((char *)_opname, CORBA_B_TRUE,
-			 _args, _result, _flags, _exceptions, _env);
+  if (_target->QueryInterface (IID_STUB_Object,
+			       (void **) &stub) != NOERROR) 
+    {
+      _env.exception (new CORBA_DATA_CONVERSION (COMPLETED_NO));
+      return;
+    }
+
+  stub->do_dynamic_call ((char *)_opname,
+			 CORBA_B_TRUE,
+			 _args,
+			 _result,
+			 _flags,
+			 _exceptions,
+			 _env);
   stub->Release ();
 }

@@ -5,26 +5,26 @@
 // IIOP:	Simple asymmetric TCP connection manager
 //
 // This has been multithreaded with a very simple strategy, optimizing
-// for "lightly threaded" clients rather than maximal sharing of system
-// resources (connections, time) in concurrent environments.  Two locks
-// are used, one each for client and server sides.
+// for "lightly threaded" clients rather than maximal sharing of
+// system resources (connections, time) in concurrent environments.
+// Two locks are used, one each for client and server sides.
 //
-// The expectation is:  threads have a refcount on an endpoint only while
-// a call's active.  Between calls, they release the endpoint record.  If
-// need be, the file descriptor in the record may be set to a negative
-// number, and the descriptor closed (e.g. on unrecoverable error).
+// The expectation is: threads have a refcount on an endpoint only
+// while a call's active.  Between calls, they release the endpoint
+// record.  If need be, the file descriptor in the record may be set
+// to a negative number, and the descriptor closed (e.g. on
+// unrecoverable error).
 //
 // The tricky issues have been strongly avoided.  Particularly, on any
 // given connection no multiplexing is done; that simplifies this code
-// substantially, as well as the protocol code that'd otherwise need to
-// dispatch IIOP replies to arbitrary client threads.  This costs most if
-// several "long" (time-wise) calls are made concurrently.
+// substantially, as well as the protocol code that'd otherwise need
+// to dispatch IIOP replies to arbitrary client threads.  This costs
+// most if several "long" (time-wise) calls are made concurrently.
 //
-// Similarly, condition variables aren't used to allow concurrent access
-// to connection tables during "long" operations:  name service lookups,
-// connection establishment, or both.  Initial connection establishment,
-// including use of hostname aliases, pays this cost.
-//
+// Similarly, condition variables aren't used to allow concurrent
+// access to connection tables during "long" operations: name service
+// lookups, connection establishment, or both.  Initial connection
+// establishment, including use of hostname aliases, pays this cost.
 
 #include	<assert.h>
 #if !defined (VXWORKS)
@@ -58,25 +58,23 @@
 #include "thread.h"
 #include "debug.h"
 
-
-//
 // We tell the kernel to queue no more than LISTEN_LIMIT connection
 // requests ... traditionally, BSD implementations max out at 5, but
 // more recent implementations have no OS limit.
-//
-#define	LISTEN_LIMIT		5		// traditional maximum
 
-//
-// Lists holding the connections managed in this module:  one for outgoing
-// connections (client list), the other for incoming ones (server list).
-//
-// NOTE:  with multiple OAs, it'll be desirable to let each OA have its own
-// server endpoint list so OAs can manage requests (and their threading)
-// separately.
-//
-static client_endpoint	*client_list;
-static server_endpoint	*server_list;
+#define	LISTEN_LIMIT 5		// traditional maximum
 
+// Lists holding the connections managed in this module: one for
+// outgoing connections (client list), the other for incoming ones
+// (server list).
+//
+// NOTE: with multiple OAs, it'll be desirable to let each OA have its
+// own server endpoint list so OAs can manage requests (and their
+// threading) separately.
+
+// @@ Can we remove this stuff now?
+static client_endpoint *client_list;
+static server_endpoint *server_list;
 
 #ifdef	_POSIX_THREADS
 //
@@ -88,42 +86,36 @@ static server_endpoint	*server_list;
 static pthread_mutex_t		client_lock = PTHREAD_MUTEX_INITIALIZER;
 static pthread_mutex_t		server_lock = PTHREAD_MUTEX_INITIALIZER;
 
-//
 // We need to cleanly indicate to select()ing server threads that a
 // a connection has been returned to their purview.  The simplest way
 // is for them to wake up normally ... e.g. by data arriving.  We use
 // writes on a private pipe:  that's what signal_fd is for.
-//
-static ACE_HANDLE			signal_fd;
 
-//
+static ACE_HANDLE signal_fd;
+
 // Conceptually, each TCP OA listens to a single "in" signal FD.  But
 // we only support one of them for now.
-//
-static ACE_HANDLE			signal_in_fd;
 
-#endif	// _POSIX_THREADS
+static ACE_HANDLE signal_in_fd;
 
+#endif /* _POSIX_THREADS */
 
-//
 // Release ... must be reentrant in threaded systems.
-//
+
 void
-client_endpoint::release ()
+client_endpoint::release (void)
 {
 #ifdef	_POSIX_THREADS
-    Critical		region (&client_lock);
+  Critical region (&client_lock);
 #endif	// _POSIX_THREADS
 
-    assert (refcount == 1);
-    refcount--;
+  assert (refcount == 1);
+  refcount--;
 }
 
+// Gets or makes a connection to the indicated host@port, or reports
+// an exception explaining why it couldn't.
 
-//
-// Gets or makes a connection to the indicated host@port, or reports an
-// exception explaining why it couldn't.
-//
 client_endpoint *
 client_endpoint::lookup (
     char		*host,
