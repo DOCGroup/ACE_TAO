@@ -742,8 +742,6 @@ CORBA_ORB::multicast_query (char *buf,
         }
       else
         {
-          stream.disable (ACE_NONBLOCK);
-
           // Receive the IOR.
           result = stream.recv (buf,
                                 BUFSIZ,
