@@ -87,6 +87,11 @@ public:
     TAO_SEQUENCE_BODY_SI,
     TAO_SEQUENCE_BODY_SS,
 
+    // for special sequnce elements
+    TAO_SEQELEM_RETTYPE_CH,
+    TAO_SEQELEM_RETTYPE_CI,
+    TAO_SEQELEM_RETTYPE_CS,
+
     // emitting code for the discriminant
     TAO_UNION_DISCTYPEDEFN_CH,
     TAO_UNION_DISCTYPEDEFN_CI,
