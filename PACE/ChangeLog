@@ -1,3 +1,14 @@
+Mon Jul 17 16:37:16 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/win32/sched.h:
+	* pace/win32/sched.inl:
+
+	  Eliminated support for these functions.
+	
+	* docs/PACE_POSIX_support.txt:
+
+	  Updated.
+
 Mon Jul 17 16:27:43 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/win32/pwd.h:
