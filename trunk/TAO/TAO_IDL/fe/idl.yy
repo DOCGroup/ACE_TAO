@@ -724,7 +724,11 @@ const_type
 	      } else {
 	         $$ = AST_Expression::EV_any;
 	      }
-	    } else
+	    } else if (d->node_type () == AST_Decl::NT_string) {
+                $$ = AST_Expression::EV_string;
+            /* @ASG@ we will need a similar one for wstring after it
+                is implemented */
+            } else            
 	      $$ = AST_Expression::EV_any;
 	  } else
 	    $$ = AST_Expression::EV_any;

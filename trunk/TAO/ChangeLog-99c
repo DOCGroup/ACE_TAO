@@ -1,3 +1,14 @@
+Wed Mar 10 10:43:08 EST 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+	* TAO_IDL/fe/idl.yy:
+	  
+	  The front-end was incorrectly handling "const" definitions of
+	  type strings. Thanks to Yaolong Lan (lyaolong@cs.sunysb.edu) for
+	  reporting the problem.
+
+	* TAO_IDL/fe/{y.tab.cpp, y.tab.h, lex.yy.cpp}: Regenerated since
+	  idl.yy was modified.
+
 Tue Mar  9 20:01:40 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* examples/Simulator/DOVEMIB/Makefile:
