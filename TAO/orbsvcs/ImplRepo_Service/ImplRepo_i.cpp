@@ -734,7 +734,8 @@ ImplRepo_i::init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV)
                                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      this->poa_manager_ = this->root_poa_->the_POAManager (ACE_TRY_ENV);
+      PortableServer::POAManager_var poa_manager = 
+        this->root_poa_->the_POAManager (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       CORBA::PolicyList policies (2);
@@ -754,9 +755,10 @@ ImplRepo_i::init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV)
 
       this->imr_poa_ =
         this->root_poa_->create_POA ("ImplRepoService",
-                                     PortableServer::POAManager::_duplicate (this->poa_manager_.in ()),
+                                     poa_manager.in (),
                                      policies,
                                      ACE_TRY_ENV);
+      
       // Warning!  If create_POA fails, then the policies won't be
       // destroyed and there will be hell to pay in memory leaks!
       ACE_TRY_CHECK;
@@ -775,8 +777,8 @@ ImplRepo_i::init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV)
         return retval;
 
       ACE_NEW_RETURN (this->forwarder_impl_,
-                      IMR_Forwarder (CORBA::ORB::_duplicate (this->orb_.in ()),
-                                     PortableServer::POA::_duplicate (this->root_poa_.in ()),
+                      IMR_Forwarder (this->orb_.in (),
+                                     this->root_poa_.in (),
                                      this),
                       -1);
 
@@ -822,8 +824,7 @@ ImplRepo_i::init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV)
         }
 
       ACE_NEW_RETURN (this->activator_,
-                      IMR_Adapter_Activator (this->forwarder_impl_,
-                                             PortableServer::POAManager::_duplicate (this->poa_manager_.in ())),
+                      IMR_Adapter_Activator (this->forwarder_impl_),
                       -1);
 
       PortableServer::AdapterActivator_var activator =
@@ -845,9 +846,8 @@ ImplRepo_i::init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV)
       this->process_mgr_.open (ACE_Process_Manager::DEFAULT_SIZE, reactor);
 
 #if defined (ACE_HAS_IP_MULTICAST)
-      //
+
       // Install ior multicast handler.
-      //
 
       // See if the -ORBMulticastDiscoveryEndpoint option was specified.
       ACE_CString mde (TAO_ORB_Core_instance ()->orb_params ()->mcast_discovery_endpoint ());
@@ -904,11 +904,41 @@ ImplRepo_i::init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV)
       if (OPTIONS::instance ()->debug () > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "Implementation Repository: The multicast server setup is done.\n"));
+
 #endif /* ACE_HAS_IP_MULTICAST */
 
       // Initialize the persistent storage
-      if (this->repository_.init (OPTIONS::instance()->config()))
+      if (this->repository_.init ())
         ACE_ERROR_RETURN ((LM_ERROR, "Repository failed to initialize\n"), -1);
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Server_i::init");
+      ACE_RETHROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
+  return 0;
+}
+
+int
+ImplRepo_i::fini (CORBA::Environment &ACE_TRY_ENV)
+{
+  // Unregister ourself with the orb by replacing with a regular
+  // callback
+  TAO_IOR_LookupTable_Callback *regular;
+
+  ACE_NEW_RETURN (regular, TAO_IOR_LookupTable_Callback, -1);
+
+  this->orb_->_tao_register_IOR_table_callback (regular, 1);
+
+  ACE_TRY_NEW_ENV
+    {
+      this->imr_poa_->destroy (1, 1, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      this->root_poa_->destroy (1, 1, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -923,7 +953,8 @@ ImplRepo_i::init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV)
 int
 ImplRepo_i::run (CORBA::Environment &ACE_TRY_ENV)
 {
-  this->poa_manager_->activate (ACE_TRY_ENV);
+  PortableServer::POAManager_var poa_manager = this->imr_poa_->the_POAManager (ACE_TRY_ENV);
+  poa_manager->activate (ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
   // Get a new iterator
@@ -987,33 +1018,19 @@ ImplRepo_i::run (CORBA::Environment &ACE_TRY_ENV)
 
 ImplRepo_i::~ImplRepo_i (void)
 {
-  if (this->forwarder_impl_ != 0)
-    delete this->forwarder_impl_;
+  // Get reactor instance from TAO.
+  ACE_Reactor *reactor = this->orb_->orb_core ()->reactor ();
 
-  if (this->activator_ != 0)
-    delete this->activator_;
+  // Register event handler for the ior multicast.
+  if (reactor->remove_handler (this->ior_multicast_,
+                               ACE_Event_Handler::READ_MASK) == -1)
+    if (OPTIONS::instance ()->debug () > 0)
+      ACE_DEBUG ((LM_DEBUG,
+                  "Implementation Repository: cannot remove handler\n"));
 
-  if (this->ior_multicast_ != 0)
-    delete this->ior_multicast_;
-
-  // Unregister ourself with the orb by replacing with a regular
-  // callback
-  TAO_IOR_LookupTable_Callback *regular;
-
-  ACE_NEW (regular, TAO_IOR_LookupTable_Callback);
-
-  this->orb_->_tao_register_IOR_table_callback (regular, 1);
-
-  ACE_TRY_NEW_ENV
-    {
-      this->root_poa_->destroy (1, 1, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      // Ignore
-    }
-  ACE_ENDTRY;
+  delete this->forwarder_impl_;
+  delete this->activator_;
+  delete this->ior_multicast_;
 }
 
 
@@ -1228,10 +1245,8 @@ ImplRepo_i::shutdown_server (const char *server,
 }
 
 
-IMR_Adapter_Activator::IMR_Adapter_Activator (IMR_Forwarder *servant,
-                                              PortableServer::POAManager_ptr poa_manager)
-  : servant_ (servant),
-    poa_manager_ (PortableServer::POAManager::_duplicate (poa_manager))
+IMR_Adapter_Activator::IMR_Adapter_Activator (IMR_Forwarder *servant)
+  : servant_ (servant)
 {
   // Nothing
 }
@@ -1272,11 +1287,16 @@ IMR_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
         parent->create_id_uniqueness_policy (PortableServer::MULTIPLE_ID, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      PortableServer::POAManager_var poa_manager = 
+        parent->the_POAManager (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       exception_message = "While create_POA";
       PortableServer::POA_var child = parent->create_POA (name,
-                                                          this->poa_manager_.in (),
+                                                          poa_manager.in (),
                                                           policies,
                                                           ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       exception_message = "While unknown_adapter::policy->destroy";
       for (CORBA::ULong i = 0; i < policies.length (); ++i)

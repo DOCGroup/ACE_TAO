@@ -21,6 +21,10 @@ main (int argc, char *argv[])
         {
           server.run (ACE_TRY_ENV);
           ACE_TRY_CHECK;
+
+          if (server.fini (ACE_TRY_ENV) == -1)
+            return 1;
+          ACE_TRY_CHECK;
         }
     }
   ACE_CATCH (CORBA::SystemException, sysex)
@@ -39,6 +43,5 @@ main (int argc, char *argv[])
       return -1;
     }
   ACE_ENDTRY;
-
   return 0;
 }
