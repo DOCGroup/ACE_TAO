@@ -45,8 +45,8 @@ TAO_NS_Consumer_T<Consumer_Traits>::obtain_proxy (ACE_TYPENAME TAO_NS_Consumer_T
   ACE_ENV_ARG_PARAMETER);
 }
 
-template <class Consumer_Traits> TAO_NS_Consumer_T<Consumer_Traits>::Proxy_Traits_PTR
-TAO_NS_Consumer_T<Consumer_Traits>::obtain_proxy (TAO_NS_Consumer_T<Consumer_Traits>::Admin_Ext_Traits_PTR admin_ptr
+template <class Consumer_Traits> ACE_TYPENAME TAO_NS_Consumer_T<Consumer_Traits>::Proxy_Traits_PTR
+TAO_NS_Consumer_T<Consumer_Traits>::obtain_proxy (ACE_TYPENAME TAO_NS_Consumer_T<Consumer_Traits>::Admin_Ext_Traits_PTR admin_ptr
                                              , CosNotification::QoSProperties& qos
                                              ACE_ENV_ARG_DECL)
 {

@@ -3,14 +3,14 @@
 #include "ace/High_Res_Timer.h"
 
 ACE_INLINE double
-Task_Stats::diff_sec (ACE_hrtime_t& before, ACE_hrtime_t& after)
+Task_Stats::diff_sec (ACE_UINT64 before, ACE_UINT64 after)
 {
   double seconds =
 #if defined ACE_LACKS_LONGLONG_T
     (after - before) / gsf_;
 #else  /* ! ACE_LACKS_LONGLONG_T */
-    ACE_static_cast (double,
-                     ACE_UINT64_DBLCAST_ADAPTER((after - before) / gsf_));
+  ACE_static_cast (double,
+                   ACE_UINT64_DBLCAST_ADAPTER((after - before) / gsf_));
 #endif /* ! ACE_LACKS_LONGLONG_T */
   seconds /= ACE_HR_SCALE_CONVERSION;
 
@@ -18,7 +18,7 @@ Task_Stats::diff_sec (ACE_hrtime_t& before, ACE_hrtime_t& after)
 }
 
 ACE_INLINE ACE_UINT32
-Task_Stats::diff_usec (ACE_hrtime_t& before, ACE_hrtime_t& after)
+Task_Stats::diff_usec (ACE_UINT64 before, ACE_UINT64 after)
 {
   // convert to microseconds
   #if !defined ACE_LACKS_LONGLONG_T
@@ -37,7 +37,7 @@ Task_Stats::diff_usec (ACE_hrtime_t& before, ACE_hrtime_t& after)
 }
 
 ACE_INLINE int
-Task_Stats::sample (ACE_UINT64& inv_start_time, ACE_UINT64& inv_end_time)
+Task_Stats::sample (ACE_UINT64 inv_start_time, ACE_UINT64 inv_end_time)
 {
   if (this->samples_count_ >= this->max_samples_)
   {
