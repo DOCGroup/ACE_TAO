@@ -1,3 +1,9 @@
+Sun Mar 20 08:53:48 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+	* tao/RTCORBA/RT_Stub.cpp:
+
+	  Fixed compilation warnings by adding .in() to the _var type.
+
 Sat Mar 19 13:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/PolicyS.cpp:
