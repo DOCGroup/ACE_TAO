@@ -1,10 +1,25 @@
+Fri Jun  1 14:58:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
+ 
+        * orbsvcs/orbsvcs/AV/QoS_UDP.cpp
+ 
+          Fix some bugs in converting QoS_Param arguments to correct
+          values for RAPI.
+ 
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_Qos/sender.cpp
+ 
+          Change Token Bucket Size (TBS) from 9200 to 708 to work around
+          bug in Cisco 2500 series router.  If TBS is too big, the
+          Cisco will drop the packet without issuing an RSVP error
+          message.  Looks like a bug in the router software.
+
 Fri Jun  1 13:58:28 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* docs/tutorials/Quoter/RT_Event_Service/Makefile: Updated
 	  dependecies. 
 
 	* Changelog : Reformatted this file, specifically the previous
-	  entry.     
+	  entry.
+
 Fri Jun  1 12:37:52 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
 	* tests/RTCORBA/Banded_Connections/run_test.pl:
