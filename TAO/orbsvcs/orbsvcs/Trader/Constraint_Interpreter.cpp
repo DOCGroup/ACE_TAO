@@ -67,12 +67,18 @@ TAO_Constraint_Interpreter (const CosTradingRepos::ServiceTypeRepository::TypeSt
                    CORBA::NO_MEMORY))
   : TAO_Interpreter ()
 {
+  // @@ Throwing Exception from constructor is very nasty situation to
+  // deal with.
+
   TAO_Constraint_Validator type_checker (ts);
 
   if (TAO_Interpreter::is_empty_string (constraints))
-    ACE_NEW_THROW_EX (this->root_,
-                      TAO_Literal_Constraint ((CORBA::Boolean) 1),
-                      CORBA::NO_MEMORY ());
+    {
+      ACE_NEW_THROW_EX (this->root_,
+                        TAO_Literal_Constraint ((CORBA::Boolean) 1),
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK;
+    }
   else
     {
       if (this->build_tree (constraints) != 0)
@@ -91,9 +97,12 @@ TAO_Constraint_Interpreter (TAO_Constraint_Validator& validator,
                    CORBA::NO_MEMORY))
 {
   if (TAO_Interpreter::is_empty_string (constraints))
-    ACE_NEW_THROW_EX (this->root_,
-                      TAO_Literal_Constraint ((CORBA::Boolean) 1),
-                      CORBA::NO_MEMORY ());
+    {
+      ACE_NEW_THROW_EX (this->root_,
+                        TAO_Literal_Constraint ((CORBA::Boolean) 1),
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK;
+    }
   else
     {
       if (this->build_tree (constraints) != 0)
@@ -132,9 +141,12 @@ TAO_Preference_Interpreter (const CosTradingRepos::ServiceTypeRepository::TypeSt
   TAO_Constraint_Validator type_checker (ts);
 
   if (TAO_Interpreter::is_empty_string (preference))
-    ACE_NEW_THROW_EX (this->root_,
-                      TAO_Noop_Constraint (TAO_FIRST),
-                      CORBA::NO_MEMORY ());
+    {
+      ACE_NEW_THROW_EX (this->root_,
+                        TAO_Noop_Constraint (TAO_FIRST),
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK;
+    }
   else
     {
       if (this->build_tree (preference) != 0)
@@ -154,9 +166,12 @@ TAO_Preference_Interpreter (TAO_Constraint_Validator& validator,
     : TAO_Interpreter ()
 {
   if (TAO_Interpreter::is_empty_string (preference))
-    ACE_NEW_THROW_EX (this->root_,
-                      TAO_Noop_Constraint (TAO_FIRST),
-                      CORBA::NO_MEMORY ());
+    {
+      ACE_NEW_THROW_EX (this->root_,
+                        TAO_Noop_Constraint (TAO_FIRST),
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK;
+    }
   else
     {
       if (this->build_tree (preference) != 0)

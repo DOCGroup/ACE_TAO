@@ -170,12 +170,14 @@ void
 TAO_Support_Attributes_i::
 type_repos (CosTrading::TypeRepository_ptr new_value)
 {
-  CORBA::Environment TAO_IN_ENV;
+  // @@ Seth, There is no way to propagate the exception out.
   ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->locker_.lock ());
 
+  ACE_DECLARE_NEW_CORBA_ENV;
   this->type_repos_ = new_value;
+  // @@ What can we do even if we catch this?
   this->service_type_repos_ =
-    CosTradingRepos::ServiceTypeRepository::_narrow (new_value, TAO_IN_ENV);
+    CosTradingRepos::ServiceTypeRepository::_narrow (new_value, ACE_TRY_ENV);
 }
 
 CosTradingRepos::ServiceTypeRepository_ptr
@@ -802,7 +804,7 @@ TAO_Trader_Factory::parse_args (int& argc, char** argv)
                 }
             }
         }
-      else if (ACE_OS::strcmp (current_arg, "-TSdef_follow_policy") == 0 
+      else if (ACE_OS::strcmp (current_arg, "-TSdef_follow_policy") == 0
                || ACE_OS::strcmp (current_arg, "-TSmax_follow_policy") == 0)
         {
           arg_shifter.consume_arg ();
@@ -841,23 +843,33 @@ sequence_type (CORBA::TypeCode* type_code,
                CORBA::Environment& ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  // @@ Seth, why do you use a comma to separate the two statements?
   CORBA::TCKind return_value = CORBA::tk_void,
-    type_kind = type_code->kind (ACE_TRY_ENV);
+  type_kind = type_code->kind (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (return_value);
 
-  if (type_kind == CORBA::tk_alias 
+  if (type_kind == CORBA::tk_alias
       || type_kind == CORBA::tk_sequence)
     {
       CORBA::TypeCode_ptr base = type_code;
 
       while (base->kind (ACE_TRY_ENV) == CORBA::tk_alias)
-        base = base->content_type (ACE_TRY_ENV);
-
-      if (base->kind (ACE_TRY_ENV) == CORBA::tk_sequence)
         {
           base = base->content_type (ACE_TRY_ENV);
-          TAO_CHECK_ENV_RETURN (env, return_value);
+          ACE_CHECK_RETURN (return_value);
+        }
 
-          return_value = base->kind (ACE_TRY_ENV);
+      CORBA::TCKind base_kind = base->kind (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (return_value);
+
+      if (base_kind == CORBA::tk_sequence)
+        {
+          base = base->content_type (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (return_value);
+
+          base_kind = base->kind (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (return_value);
+          return_value = base_kind;
         }
     }
 

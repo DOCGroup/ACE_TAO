@@ -158,7 +158,7 @@ TAO_Service_Type_Repository::remove_type (const char * name,
     ACE_THROW (CosTrading::IllegalServiceType (name));
 
   ACE_WRITE_GUARD_THROW_EX (ACE_Lock, ace_mon, *this->lock_, CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK;
 
   // Check if the type exists.
   Service_Type_Map::ENTRY* type_entry = 0; ;
@@ -545,9 +545,27 @@ validate_inheritance (Prop_Map& prop_map,
               const CosTradingRepos::ServiceTypeRepository::PropStruct&
                 property_in_map = *existing_prop->int_id_;
 
+
               CORBA::TypeCode_ptr prop_type = property_in_map.value_type.in ();
-              if (! super_props[j].value_type->equal (prop_type, ACE_TRY_ENV) ||
-                  super_props[j].mode > property_in_map.mode)
+              int compare = 0;
+              ACE_TRY
+                {
+                  compare = super_props[j].value_type->equal (prop_type, ACE_TRY_ENV);
+                  ACE_TRY_CHECK;
+
+                }
+              ACE_CATCHANY
+                {
+                ACE_TRY_THROW (CosTradingRepos::ServiceTypeRepository::ValueTypeRedefinition
+                               (super_props[j].name,
+                                super_props[j],
+                                property_in_map.name,
+                                property_in_map));
+                }
+              ACE_ENDTRY;
+              ACE_CHECK;
+
+              if (! compare || super_props[j].mode > property_in_map.mode)
                 ACE_THROW (CosTradingRepos::ServiceTypeRepository::ValueTypeRedefinition
                            (super_props[j].name,
                             super_props[j],

@@ -171,7 +171,8 @@ private:
                             CosTradingRepos::ServiceTypeRepository_ptr rep,
                             TAO_Constraint_Interpreter& constr_inter,
                             TAO_Preference_Interpreter& pref_inter,
-                            TAO_Offer_Filter& offer_filter);
+                            TAO_Offer_Filter& offer_filter,
+                            CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Traverse the type hierarchy to pull the matching offers from all
   // subtypes of the root type.
 

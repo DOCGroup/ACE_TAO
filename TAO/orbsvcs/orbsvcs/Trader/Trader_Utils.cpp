@@ -219,7 +219,6 @@ TAO_Property_Evaluator::~TAO_Property_Evaluator (void)
 int
 TAO_Property_Evaluator::is_dynamic_property (int index)
 {
-  CORBA::Environment env;
   int return_value = 0,
     num_properties = this->props_.length();
 
@@ -230,6 +229,7 @@ TAO_Property_Evaluator::is_dynamic_property (int index)
       const CORBA::Any& value = this->props_[index].value;
       CORBA::TypeCode_var type = value.type ();
 
+      // @@ Seth, this will not work on platforms using environment variable.
       ACE_DECLARE_NEW_CORBA_ENV;
 
       if (type->equal (CosTradingDynamic::_tc_DynamicProp,
@@ -290,11 +290,11 @@ TAO_Property_Evaluator::property_value (int index,
             }
           ACE_CATCH (CORBA::SystemException, excp)
             {
-              ACE_THROW_RETURN
-                (CosTradingDynamic::DPEvalFailure (name, type, info),
-                 prop_val);
+              ACE_TRY_THROW
+                (CosTradingDynamic::DPEvalFailure (name, type, info));
             }
           ACE_ENDTRY;
+          ACE_CHECK_RETURN (prop_val);
         }
     }
 
@@ -388,9 +388,12 @@ TAO_Property_Evaluator_By_Name::property_value (const char* property_name,
   // If the property name is in the map, delegate evaluation to our
   // superclass. Otherwise, throw an exception.
   if (this->table_.find (prop_name, index) == 0)
-    prop_value =
-      this->TAO_Property_Evaluator::property_value (index,
-                                                    ACE_TRY_ENV);
+    {
+      prop_value =
+        this->TAO_Property_Evaluator::property_value (index,
+                                                      ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+    }
 
   return prop_value;
 }
@@ -443,6 +446,7 @@ construct_dynamic_prop (const char* name,
 
   if (this->prop_.in () == CosTradingDynamic::DynamicPropEval::_nil ())
     {
+      // Seth, we need a way to either propagate exceptions out.
       ACE_DECLARE_NEW_CORBA_ENV;
 
       this->prop_ = this->_this (ACE_TRY_ENV);
@@ -454,7 +458,6 @@ construct_dynamic_prop (const char* name,
 
   dp_struct->eval_if =
     CosTradingDynamic::DynamicPropEval::_duplicate (this->prop_.in ());
-  ACE_CHECK_RETURN (0);
 
   dp_struct->returned_type =
     CORBA::TypeCode::_duplicate (returned_type);
@@ -468,6 +471,7 @@ TAO_Dynamic_Property::destroy (void)
 {
   if (this->prop_.in () != CosTradingDynamic::DynamicPropEval::_nil ())
     {
+      // @@ Seth, we need a way to propagate exceptions out.
       ACE_DECLARE_NEW_CORBA_ENV;
       PortableServer::POA_var poa = this->_default_POA (ACE_TRY_ENV);
       ACE_CHECK;
@@ -607,6 +611,7 @@ TAO_Policies::ulong_prop (POLICY_TYPE pol,
       const CosTrading::PolicyValue& value = policy->value;
       CORBA::TypeCode_var type = value.type ();
 
+      // @@ Seth, rethrowing a different exception?  need ACE_CHECK_RETURN here.
       if (!type->equal (CORBA::_tc_ulong, ACE_TRY_ENV))
         ACE_THROW_RETURN (CosTrading::Lookup::PolicyTypeMismatch (*policy),
                           return_value);
@@ -675,6 +680,7 @@ TAO_Policies::boolean_prop (POLICY_TYPE pol,
       const CosTrading::PolicyValue& value = policy->value;
       CORBA::TypeCode_var type = value.type ();
 
+      // Seth, should we need to check the exception before throwing another one?
       if (!type->equal (CORBA::_tc_boolean, ACE_TRY_ENV))
         ACE_THROW_RETURN (CosTrading::Lookup::PolicyTypeMismatch (*policy),
                           return_value);
@@ -734,6 +740,8 @@ TAO_Policies::starting_trader (CORBA::Environment& ACE_TRY_ENV) const
       CosTrading::PolicyValue& value = policy->value;
       CORBA::TypeCode_var type = value.type ();
 
+      // @@ Seth, complex statements are not portable, exception-wise
+      // We also need to check here.
       if (! (type->equal (CosTrading::_tc_TraderName, ACE_TRY_ENV) ||
              type->equal (CosTrading::_tc_LinkNameSeq, ACE_TRY_ENV)))
         ACE_THROW_RETURN (CosTrading::Lookup::PolicyTypeMismatch (*policy),
@@ -845,6 +853,8 @@ copy_in_follow_option (CosTrading::PolicySeq& policy_seq,
   CosTrading::FollowOption trader_max_follow_policy =
     this->trader_.import_attributes ().max_follow_policy ();
 
+  // @@ Seth, I am quite lost here, are you tring to catch an exception here,
+  // or, you are trying to pass exceptions out?  Why do you use a different env here?
   if (this->policies_[LINK_FOLLOW_RULE] != 0)
     {
       CORBA::Environment env;
@@ -916,6 +926,7 @@ copy_to_pass (CosTrading::PolicySeq& policy_seq,
       // We always require a hop count.
       if (i == HOP_COUNT)
         {
+          // @@ Seth, Same thing here, are you trying to catch the exception??? (and forget about it?)
           CORBA::Environment env;
           new_policy.name = POLICY_NAMES[HOP_COUNT];
           new_policy.value <<= this->hop_count (env) - 1;
@@ -1135,6 +1146,7 @@ merge_properties (const CosTrading::PropertySeq& modifies,
           CORBA::TypeCode_ptr type_def = 0;
           if (this->prop_types_.find (prop_name, type_def) == 0)
             {
+              // @@ Seth, are we trying to ignore the exception here?
               CORBA::Environment ACE_TRY_ENV;
               CORBA::TypeCode_var prop_type = prop_eval.property_type (i);
 
@@ -1211,12 +1223,15 @@ TAO_Offer_Modifier::affect_change (const CosTrading::PropertySeq& modifies)
 
 TAO_Offer_Filter::TAO_Offer_Filter (TAO_Policies& policies,
                                     CORBA::Environment& ACE_TRY_ENV)
+  // @@ Seth, this is definitely no exception safe.  But I don't know of a better way.
   : search_card_ (policies.search_card (ACE_TRY_ENV)),
     match_card_ (policies.match_card (ACE_TRY_ENV)),
     return_card_ (policies.return_card (ACE_TRY_ENV)),
     dp_ (policies.use_dynamic_properties (ACE_TRY_ENV)),
     mod_ (policies.use_modifiable_properties (ACE_TRY_ENV))
 {
+  ACE_CHECK;
+  // @@ Seth, need another ACE_CHECK here.
   if (policies.exact_type_match (ACE_TRY_ENV) == 1)
     {
       TAO_String_Hash_Key exact_match
