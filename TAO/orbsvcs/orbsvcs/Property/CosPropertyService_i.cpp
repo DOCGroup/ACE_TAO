@@ -1896,7 +1896,6 @@ TAO_PropertiesIterator::next_n (CORBA::ULong how_many,
           entry_ptr->int_id_.pvalue_.in ();
       }
     else
-      // @@ Should be an exception.
       break;
   return CORBA::B_TRUE;
 }
