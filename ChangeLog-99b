@@ -18,6 +18,9 @@ Fri Jan 15 21:28:04 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
           the log() method) or have a separate callback object per
           Log_Msg object.
 
+	  Thanks to Chris Lahey <clahey@ix.netcom.com> for suggesting this
+ 	  and send patches.
+
 	* examples/Log_Msg/test_callback.cpp: Added new example for
  	  Log_Msg. This program tests the Log_Msg abstraction wrt writing
  	  to user defined callback objects.
