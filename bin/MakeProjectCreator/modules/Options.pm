@@ -29,7 +29,7 @@ sub completion_command {
   my($str)   = "complete $name " .
                "'c/-/(global include type template relative " .
                "ti static noreldefs notoplevel feature_file " .
-               "value_template value_project)/' " .
+               "value_template value_project make_coexistence)/' " .
                "'c/dll:/f/' 'c/dll_exe:/f/' 'c/lib_exe:/f/' 'c/lib:/f/' " .
                "'n/-ti/(dll lib dll_exe lib_exe)/:' 'n/-type/(";
 
@@ -67,6 +67,7 @@ sub options {
   my($toplevel)   = ($defaults ? 1 : undef);
   my($static)     = ($defaults ? 0 : undef);
   my($recurse)    = ($defaults ? 0 : undef);
+  my($makeco)     = ($defaults ? 0 : undef);
 
   ## Process the command line arguments
   for(my $i = 0; $i <= $#args; $i++) {
@@ -132,6 +133,9 @@ sub options {
       else {
         push(@include, $include);
       }
+    }
+    elsif ($arg eq '-make_coexistence') {
+      $makeco = 1;
     }
     elsif ($arg eq '-noreldefs') {
       $reldefs = 0;
@@ -274,6 +278,7 @@ sub options {
                   'recurse'      => $recurse,
                   'addtemp'      => \%addtemp,
                   'addproj'      => \%addproj,
+                  'coexistence'  => $makeco,
                  );
 
   return \%options;

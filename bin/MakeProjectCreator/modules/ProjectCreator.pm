@@ -143,6 +143,7 @@ sub new {
   my($baseprojs) = shift;
   my($gfeature)  = shift;
   my($feature)   = shift;
+  my($makeco)    = shift;
   my($self)      = Creator::new($class, $global, $inc,
                                 $template, $ti, $dynamic, $static,
                                 $relative, $addtemp, $addproj,

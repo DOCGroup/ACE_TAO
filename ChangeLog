@@ -1,16 +1,39 @@
+Thu Jul 17 06:21:30 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/BorlandProjectCreator.pm:
+
+          Changed the name of borland projects to just be the project name
+          .bor.
+
+        * bin/MakeProjectCreator/USAGE:
+        * bin/MakeProjectCreator/modules/BorlandWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/Driver.pm:
+        * bin/MakeProjectCreator/modules/NMakeWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/Options.pm:
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Changed the default workspace names for nmake and borland to
+          Makefile.  Additionally, I added an option (-make_coexistence)
+          to allow the gnuace, nmake and borland types to coexist.  This
+          option causes the default workspace names for nmake and borland to
+          work as they previously had.  The nmake workspace would be
+          workspace name .nmake and the borland workspace would be named
+          Makefile . project name .bor.
+
 Wed Jul 16 15:29:37 2003  Justin Michel  <michel_j@ociweb.com>
 
-	* bin\create_ace_build.pl:
- 
+        * bin\create_ace_build.pl:
+
           Fixed to link include\makeinclude\*.bor files.
-          A few more link exclusions were added. 
+          A few more link exclusions were added.
 
 Wed Jul 16 15:27:37 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* ace\Dev_Poll_Reactor.h (find_handler): 
+        * ace\Dev_Poll_Reactor.h (find_handler):
 
-	  Pure virtual specifier for find_handler() was a cut and paste
-	  error.
+          Pure virtual specifier for find_handler() was a cut and paste
+          error.
 
 Wed Jul 16 08:38:49 2003  Chad Elliott  <elliott_c@ociweb.com>
 
