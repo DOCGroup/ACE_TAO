@@ -10,8 +10,8 @@ Fri Jun 12 16:53:49 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 	portable.
 
 	* TAO_IDL/{be_enum, be_exception, be_interface, be_structure,
-	be_typedef, be_union}.cpp: Added the call to ACE_NTOHL macro for
-	the arrays of long that are generated for TypeCodes.
+	be_typedef, be_union, be_predefined_type}.cpp: Added the call to
+	ACE_NTOHL macro for the arrays of long that are generated for TypeCodes.
 
 	* tests/Param_Test/params.idl: Added interface definition for
 	tests for arrays. This is still not working at this time.

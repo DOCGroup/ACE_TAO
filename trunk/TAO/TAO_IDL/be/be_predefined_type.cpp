@@ -379,42 +379,43 @@ be_predefined_type::tc_encap_len (void)
   return this->encap_len_;
 }
 
-  int
-    be_predefined_type::gen_encapsulation (void)
+int
+be_predefined_type::gen_encapsulation (void)
+{
+  if ((this->pt () == AST_PredefinedType::PT_any)
+      || (this->pt () == AST_PredefinedType::PT_psuedo))
     {
-      if (!ACE_OS::strcmp (this->local_name ()->get_string (), "Object"))
+      TAO_OutStream *cs; // output stream
+      TAO_NL  nl;        // end line
+      TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+      long i, arrlen;
+      long *arr;  // an array holding string names converted to array of longs
+
+      cs = cg->client_stubs ();
+      cs->indent (); // start from whatever indentation level we were at
+
+      // XXXASG - byte order must be based on what m/c we are generating code -
+      // TODO
+      *cs << "TAO_ENCAP_BYTE_ORDER, // byte order" << nl;
+      // generate repoID
+      *cs << (ACE_OS::strlen (this->repoID ())+1) << ", ";
+      (void)this->tc_name2long (this->repoID (), arr, arrlen);
+      for (i=0; i < arrlen; i++)
         {
-          TAO_OutStream *cs; // output stream
-          TAO_NL  nl;        // end line
-          TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-          long i, arrlen;
-          long *arr;  // an array holding string names converted to array of longs
-
-          cs = cg->client_stubs ();
-          cs->indent (); // start from whatever indentation level we were at
-
-          // XXXASG - byte order must be based on what m/c we are generating code -
-          // TODO
-          *cs << "TAO_ENCAP_BYTE_ORDER, // byte order" << nl;
-          // generate repoID
-          *cs << (ACE_OS::strlen (this->repoID ())+1) << ", ";
-          (void)this->tc_name2long (this->repoID (), arr, arrlen);
-          for (i=0; i < arrlen; i++)
-            {
-              cs->print ("0x%x, ", arr[i]);
-            }
-          *cs << " // repository ID = " << this->repoID () << nl;
-          // generate name
-          *cs << (ACE_OS::strlen (this->local_name ()->get_string ())+1) << ", ";
-          (void)this->tc_name2long(this->local_name ()->get_string (), arr, arrlen);
-          for (i=0; i < arrlen; i++)
-            {
-              cs->print ("0x%x, ", arr[i]);
-            }
-          *cs << " // name = " << this->local_name () << ",\n";
+          cs->print ("ACE_NTOHL (0x%x), ", arr[i]);
         }
-      return 0;
+      *cs << " // repository ID = " << this->repoID () << nl;
+      // generate name
+      *cs << (ACE_OS::strlen (this->local_name ()->get_string ())+1) << ", ";
+      (void)this->tc_name2long(this->local_name ()->get_string (), arr, arrlen);
+      for (i=0; i < arrlen; i++)
+        {
+          cs->print ("ACE_NTOHL (0x%x), ", arr[i]);
+        }
+      *cs << " // name = " << this->local_name () << ",\n";
     }
+  return 0;
+}
 
 // compute the size type of the node in question
 int
