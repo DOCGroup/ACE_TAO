@@ -1,5 +1,8 @@
 Sun Jan 03 21:48:37 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
+	* ace/Asynch_Acceptor.cpp: Since this is a template file, I
+ 	  removed it from the ace library build on NT.
+
 	* ace/Asynch_Acceptor.cpp (open): Changed C-style cast to use the
  	  new ACE_sap_any_cast macro from Dr. Schmidt.
 
