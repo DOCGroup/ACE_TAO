@@ -589,6 +589,8 @@ protected:
                      char c, 
                      int pos = TAO_POA::String::npos) const;
 
+// Should really be protected, but some compilers complain
+public:
   enum LOCATION_RESULT 
   {
     FOUND,
@@ -597,6 +599,7 @@ protected:
     NOT_FOUND
   };
 
+protected:
   virtual LOCATION_RESULT locate_servant_i (const TAO_ObjectKey &key,
                                             PortableServer::Servant &servant,
                                             CORBA::Environment &env);

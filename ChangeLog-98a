@@ -1,3 +1,13 @@
+Tue Mar 17 23:22:20 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Reactor.cpp (ACE_Reactor): If
+ 	  ACE_USE_MSG_WFMO_REACTOR_FOR_REACTOR_IMPL is defined, use
+ 	  ACE_Msg_WFMO_Reactor for ACE_Reactor::instance().
+
+	* examples/Reactor/ReactorEx/test_window_messages.cpp: Tests
+ 	  Msg_WFMO_Reactor's ability to handle regular events and window
+ 	  messages.
+
 Tue Mar 17 21:41:57 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/Threads/task_five.cpp (svc): use ACE_OS::sleep
