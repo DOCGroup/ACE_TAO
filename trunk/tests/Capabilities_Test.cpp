@@ -17,6 +17,8 @@
 //
 // ============================================================================
 
+#include "ace/Capabilities.h"
+
 ACE_RCSID(tests, Capabilities_Test, "$Id$")
 
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
@@ -24,12 +26,10 @@ USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
-#include "ace/Capabilities.h"
-
 static int 
 load_config (void)
 {
-  char *config = "captest.cfg";
+  const char *config = "captest.cfg";
 
   ACE_Capabilities caps;
   if (caps.getent (config,
