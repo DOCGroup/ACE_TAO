@@ -80,6 +80,15 @@ ami-throughput-client: $(addprefix $(VDIR),$(AMI_THROUGHPUT_CLIENT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 endif # AMI
 
+Test.java: test.idl
+	idl2java test.idl
+
+java_client.class: Test.java
+	vbjc java_client.java
+
+java_server.class:
+	vbjc java_server.java
+
 realclean: clean
 	-$(RM) $(foreach ext, $(IDL_EXT), test$(ext))
 
