@@ -849,7 +849,6 @@ HEADER_FILES = \
   Obstack_T.h \
   OS_Dirent.h \
   OS_Errno.h \
-  OS_Export.h \
   OS.h \
   OS_Log_Msg_Attributes.h \
   OS_main.h \
@@ -1190,7 +1189,6 @@ INLINE_FILES = \
   Singleton.i \
   SOCK_Acceptor.i \
   SOCK_CODgram.i \
-  Sock_Connect.i \
   SOCK_Connector.i \
   SOCK_Dgram_Bcast.i \
   SOCK_Dgram.i \
