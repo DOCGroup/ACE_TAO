@@ -7,7 +7,7 @@
 //    TAO
 //
 // = FILENAME
-//    poa.h
+//    POA.h
 //
 // = DESCRIPTION
 //     POA
@@ -584,24 +584,11 @@ protected:
 
   virtual int is_poa_generated_key (const TAO_ObjectKey &key);
 
-  virtual int parse_key_permanent_id (const TAO_ObjectKey &key,
-                                      String &poa_name,
-                                      PortableServer::ObjectId_out id,
-                                      CORBA::Boolean &persistent,
-                                      TAO_Temporary_Creation_Time &poa_creation_time);
-
-  virtual int parse_key_temporary_id (const TAO_ObjectKey &key,
-                                      String &poa_name,
-                                      PortableServer::ObjectId_out id,
-                                      CORBA::Boolean &persistent,
-                                      TAO_Temporary_Creation_Time &poa_creation_time);
-
   virtual int parse_key (const TAO_ObjectKey &key,
                          String &poa_name,
-                         PortableServer::ObjectId_out id,
+                         PortableServer::ObjectId &id,
                          CORBA::Boolean &persistent,
-                         TAO_Temporary_Creation_Time &poa_creation_time,
-                         int temporary_id);
+                         TAO_Temporary_Creation_Time &poa_creation_time);
 
   virtual int rfind (const TAO_ObjectKey &key,
                      char c, 
@@ -624,12 +611,12 @@ protected:
 
   virtual PortableServer::Servant locate_poa_and_servant_i (const TAO_ObjectKey &key,
                                                             const char *operation,
-                                                            PortableServer::ObjectId_out id,
+                                                            PortableServer::ObjectId &id,
                                                             TAO_POA *&poa_impl,
                                                             CORBA::Environment &env);
 
   virtual TAO_POA *locate_poa_i (const TAO_ObjectKey &key,
-                                 PortableServer::ObjectId_out id,
+                                 PortableServer::ObjectId &id,
                                  CORBA::Environment &env);
 
   virtual void dispatch_servant_i (const TAO_ObjectKey &key,
@@ -937,5 +924,9 @@ private:
   TAO_POA_Current (const TAO_POA_Current &);
   void operator= (const TAO_POA_Current &);
 };
+
+#if defined (__ACE_INLINE__)
+# include "tao/POA.i"
+#endif /* __ACE_INLINE__ */
 
 #endif /* POA_H */
