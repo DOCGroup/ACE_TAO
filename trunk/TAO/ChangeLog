@@ -1,3 +1,17 @@
+Tue Oct 28 14:06:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/AVStreams/Latency/pong.cpp: 
+
+	  #included ORB.h and removed corba.h
+
+	* tao/Invocation_Adapter.h: Cosmetic fixes. 
+
+	* TAO_IDL/be/be_visitor_valuetype/any_op_cs.cpp:
+
+	  Implementation of the insertion operators for the valuetypes
+	  generated the ACE_INLINE macro. Removed generation of the
+	  ACE_INLINE macro. 
+
 Tue Oct 28 13:48:50 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Invocation_Adapter.h: 
