@@ -1,3 +1,9 @@
+Tue Sep 21 07:19:29 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tao/Makefile.am:
+
+	  Updated.
+
 Mon Sep 20 07:00:15 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* tests/Sequence_Unit_Tests/Bounded_Simple_Types.cpp:
