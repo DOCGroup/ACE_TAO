@@ -10,8 +10,8 @@ use PerlACE::Run_Test;
 
 # amount of delay between running the servers
 
-$sleeptime = 2;
-$distributor_time = 5;
+$sleeptime = 5;
+$distributor_time = 8;
 $sender_time = 8;
 $status = 0;
 
@@ -21,7 +21,7 @@ $makefile = PerlACE::LocalFile ("input");
 
 unlink $nsior;
 
-$NS  = new PerlACE::Process ("../../../Naming_Service/Naming_Service", "-ORBDottedDecimalAddresses 1 -ORBEndpoint iiop://128.89.73.40:0 -o $nsior");
+$NS  = new PerlACE::Process ("../../../Naming_Service/Naming_Service", "-ORBDottedDecimalAddresses 1 -o $nsior");
 $SV1  = new PerlACE::Process ("sender", "-ORBDottedDecimalAddresses 1 ORBSvcConf components_svc.conf -ORBInitRef NameService=file://$nsior -s sender -r 30");
 $SV2  = new PerlACE::Process ("sender", " -ORBDottedDecimalAddresses 1 -ORBSvcConf components_svc.conf -ORBInitRef NameService=file://$nsior -s sender -r 30");
 $SV3  = new PerlACE::Process ("sender", " -ORBDottedDecimalAddresses 1 -ORBSvcConf components_svc.conf -ORBInitRef NameService=file://$nsior -s sender -r 30");
@@ -96,19 +96,11 @@ print STDERR "\nStarting Distributer 4\n\n";
 
 $DI4->Spawn ();
 
-$sender2 = $SV2->TerminateWaitKill (5);
+$SV2->WaitKill (300);
 
-if ($sender2 != 0) {
-    print STDERR "ERROR: sender2 returned $sender2\n";
-    $status = 1;
-}
+$SV3->WaitKill (300);
 
-$sender3 = $SV3->TerminateWaitKill (5);
-
-if ($sender3 != 0) {
-    print STDERR "ERROR: sender3 returned $sender3\n";
-    $status = 1;
-}
+$SV1->WaitKill ( 300 );
 
 $distributer3 = $DI3->TerminateWaitKill (5);
 
@@ -142,13 +134,6 @@ $receiver2 = $RE2->TerminateWaitKill (5);
 
 if ($receiver2 != 0) {
     print STDERR "ERROR: receiver2 returned $receiver2\n";
-    $status = 1;
-}
-
-$sender = $SV1->TerminateWaitKill (5);
-
-if ($sender != 0) {
-    print STDERR "ERROR: sender returned $sender\n";
     $status = 1;
 }
 

@@ -1,3 +1,15 @@
+Fri May 10 01:21:24 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/Connection_Manager.cpp:
+	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/distributer.cpp:
+	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/receiver.cpp:
+	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/run_test.pl:
+	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/sender.cpp:
+	* orbsvcs/tests/AVStreams/Component_Switching/Connection_Manager.cpp:
+	* orbsvcs/tests/AVStreams/Component_Switching/run_test.pl:
+	  Minor memory management fixes.  Reduce complexity of
+	  test scripts.
+
 Thu May  9 14:26:52 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp:

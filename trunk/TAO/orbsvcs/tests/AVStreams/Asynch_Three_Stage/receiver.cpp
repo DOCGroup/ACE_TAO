@@ -256,8 +256,6 @@ main (int argc,
       // Hack for now....
       ACE_OS::sleep (1);
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

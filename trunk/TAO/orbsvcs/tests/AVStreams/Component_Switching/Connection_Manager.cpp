@@ -464,14 +464,6 @@ Connection_Manager::destroy (const ACE_CString &flowname
   this->protocol_objects_.unbind (flowname);
   this->receivers_.unbind (flowname);
 
-  AVStreams::StreamCtrl_var streamctrl;
-  this->streamctrls_.find (flowname,
-                             streamctrl);
-
-  AVStreams::flowSpec stop_spec;
-  streamctrl->destroy (stop_spec
-                       ACE_ENV_ARG_PARAMETER);
-
   this->streamctrls_.unbind(flowname);
   ACE_CHECK;
 }
