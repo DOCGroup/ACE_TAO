@@ -1,8 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
 
-//
-============================================================================
+//============================================================================
 //
 // = LIBRARY
 //    ace
@@ -18,8 +17,7 @@
 //    Instead, it should #include "ace/IOStream.h".  That's because
 //    we only put some conditional compilations in that file.
 //
-//
-============================================================================
+//============================================================================
 
 #ifndef ACE_IOSTREAM_T_H
 #define ACE_IOSTREAM_T_H
@@ -84,7 +82,7 @@ template <class STREAM>
 class ACE_IOStream : public STREAM,
                      protected ACE_Streambuf_T<STREAM>,
   // This is where all of the action takes place.  The
-ACE_Streambuf_T<STREAM>
+  // ACE_Streambuf_T<STREAM>
   // is the interface to the underlying STREAM.
                      public iostream
 {
@@ -179,10 +177,8 @@ public:
 #endif /* !ACE_WIN32 */
       return (0);
     }
-  virtual int ipfx0(void)         {  return ipfx (0); }  // Optimized
-ipfx(0)
-  virtual int ipfx1(void)                                // Optimized
-ipfx(1)
+  virtual int ipfx0(void)         {  return ipfx (0); }  // Optimized ipfx(0)
+  virtual int ipfx1(void)                                // Optimized ipfx(1)
     {
       if (good())
         {
