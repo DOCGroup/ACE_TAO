@@ -1,3 +1,9 @@
+Sun Aug 22 14:51:56 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	* ace/OS.i (join_leaf): Constructed a winsock2 QOS structure 
+	  within ACE_OS::join_leaf () from the corresponding ACE QOS
+	  classes. Passed this QOS structure to WSAJoinLeaf ().
+
 Sun Aug 22 12:18:42 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Process.i (wait): Fixed a typo.
