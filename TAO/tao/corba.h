@@ -83,6 +83,9 @@
 #include "tao/DomainC.h"
 #include "tao/WrongTransactionC.h"
 
+// Interface repository
+#include "tao/InterfaceC.h"
+
 #if !defined (ACE_NESTED_CLASS)
 #if defined (ACE_WIN32)
 #define ACE_NESTED_CLASS(SCOPE,CLASS) CLASS
