@@ -24,8 +24,11 @@
 
 #include "CCSS.h"
 #include "icp.h"      // mine
+#include "assert.h"
 #include <map>
 #include <list>
+
+using namespace std;
 
 // The following headers are #included automatically by ACE+TAO.
 // Therefore, they don't need to be included explicitly.

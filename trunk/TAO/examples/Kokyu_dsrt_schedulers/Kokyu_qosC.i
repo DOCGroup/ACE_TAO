@@ -27,17 +27,17 @@
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_sequence/cdr_op_ci.cpp:81
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_sequence/cdr_op_ci.cpp:81
 
 #if !defined _TAO_CDR_OP_Kokyu_GuidType_I_
 #define _TAO_CDR_OP_Kokyu_GuidType_I_
 
-CORBA::Boolean  operator<< (
+CORBA::Boolean Kokyu_DSRT_Schedulers_Export operator<< (
     TAO_OutputCDR &,
     const Kokyu::GuidType &
   );
 
-CORBA::Boolean  operator>> (
+CORBA::Boolean Kokyu_DSRT_Schedulers_Export operator>> (
     TAO_InputCDR &,
     Kokyu::GuidType &
   );
@@ -45,7 +45,7 @@ CORBA::Boolean  operator>> (
 #endif /* _TAO_CDR_OP_Kokyu_GuidType_I_ */
 
 // TAO_IDL - Generated from
-// be/be_visitor_structure/cdr_op_ci.cpp:70
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_structure/cdr_op_ci.cpp:70
 
 ACE_INLINE
 CORBA::Boolean operator<< (

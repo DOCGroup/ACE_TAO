@@ -25,8 +25,10 @@
 
 #include "CCSS.h"
 #include <map>
-//#include <assert.h>
+#include <iostream>
+#include <assert.h>
 
+using namespace std;
 
 class Controller_impl;
 

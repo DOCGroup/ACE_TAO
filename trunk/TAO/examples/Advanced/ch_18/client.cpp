@@ -18,10 +18,13 @@
 // ============================================================================
 
 #include    "CCSC.h"        // ORB-specific
+#include    "assert.h"
 #include    <orbsvcs/CosNamingC.h>
-// #include    <iostream.h>
+#include    <iostream>
 // #include    <fstream.h>
 // ----------------------------------------------------------------
+
+using namespace std;
 
 template<class T>
 typename T::_ptr_type
@@ -31,7 +34,7 @@ resolve_init(CORBA::ORB_ptr orb, const char * id)
     try {
         obj = orb->resolve_initial_references(id);
     }
-    catch (const CORBA::ORB::InvalidName & e) {
+    catch (const CORBA::ORB::InvalidName &) {
         throw;
     }
     catch (const CORBA::Exception & e) {
@@ -70,7 +73,7 @@ resolve_name(
     try {
         obj = nc->resolve(name);
     }
-    catch (const CosNaming::NamingContext::NotFound & e) {
+    catch (const CosNaming::NamingContext::NotFound &) {
         throw;
     }
     catch (const CORBA::Exception & e) {
@@ -271,14 +274,14 @@ main(int argc, char * argv[])
         cout << endl;
         
         // Change the location of first device in the list
-        CCS::AssetType anum = list[0]->asset_num();
+        CCS::AssetType anum = list[0u]->asset_num();
         cout << "Changing location of device "
              << anum << "." << endl;
-        list[0]->location("Earth");
+        list[0u]->location("Earth");
         // Check that the location was updated
         cout << "New details for device "
              << anum << " are:" << endl;
-        cout << list[0] << endl;
+        cout << list[0u] << endl;
 
         // Find first thermostat in list.
         CCS::Thermostat_var tmstat;

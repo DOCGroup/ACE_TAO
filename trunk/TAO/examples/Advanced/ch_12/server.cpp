@@ -22,7 +22,9 @@
 #include "server.h"
 #include <algorithm>
 #include "icp.h"
-#include <strstream.h>
+#include <strstream>
+#include <fstream>
+#include <iostream>
 
 // The following headers are #included automatically by ACE+TAO.
 // Therefore, they don't need to be included explicitly.

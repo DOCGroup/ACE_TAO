@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:302
+// .\be\be_codegen.cpp:338
 
 
 #include "Kokyu_qosC.h"
@@ -43,7 +43,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be/be_visitor_arg_traits.cpp:60
+// .\be\be_visitor_arg_traits.cpp:62
 
 // Arg traits specializations.
 namespace TAO
@@ -51,7 +51,7 @@ namespace TAO
 };
 
 // TAO_IDL - Generated from 
-// be/be_visitor_sequence/sequence_cs.cpp:65
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_KOKYU_GUIDTYPE_CS_)
 #define _KOKYU_GUIDTYPE_CS_
@@ -104,7 +104,7 @@ void Kokyu::GuidType::_tao_any_destructor (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_Kokyu_GuidType[] =
 {
@@ -146,7 +146,7 @@ namespace Kokyu
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_Kokyu_Svc_Ctxt_DSRT_QoS[] =
 {
@@ -301,7 +301,7 @@ namespace Kokyu
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_structure/structure_cs.cpp:66
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_structure/structure_cs.cpp:66
 
 void 
 Kokyu::Svc_Ctxt_DSRT_QoS::_tao_any_destructor (
@@ -314,7 +314,7 @@ Kokyu::Svc_Ctxt_DSRT_QoS::_tao_any_destructor (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_sequence/any_op_cs.cpp:54
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -372,7 +372,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_structure/any_op_cs.cpp:54
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -430,7 +430,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_sequence/cdr_op_cs.cpp:95
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_sequence/cdr_op_cs.cpp:95
 
 #if !defined _TAO_CDR_OP_Kokyu_GuidType_CPP_
 #define _TAO_CDR_OP_Kokyu_GuidType_CPP_
@@ -522,103 +522,4 @@ CORBA::Boolean operator>> (
 }
 
 #endif /* _TAO_CDR_OP_Kokyu_GuidType_CPP_ */
-
-// TAO_IDL - Generated from
-// be/be_visitor_root/root.cpp:1702
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-  template class
-    TAO_FixedSeq_Var_T<
-        Kokyu::GuidType,
-        CORBA::Octet
-      >;
-
-  template class
-    TAO_Seq_Var_Base_T<
-        Kokyu::GuidType,
-        CORBA::Octet
-      >;
-
-  template class
-    TAO_Seq_Out_T<
-        Kokyu::GuidType,
-        Kokyu::GuidType_var,
-        CORBA::Octet
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        Kokyu::GuidType
-      >;
-
-  template class
-    TAO_Var_Var_T<
-        Kokyu::Svc_Ctxt_DSRT_QoS
-      >;
-
-  template class
-    TAO_Var_Base_T<
-        Kokyu::Svc_Ctxt_DSRT_QoS
-      >;
-
-  template class
-    TAO_Out_T<
-        Kokyu::Svc_Ctxt_DSRT_QoS,
-        Kokyu::Svc_Ctxt_DSRT_QoS_var
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        Kokyu::Svc_Ctxt_DSRT_QoS
-      >;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-    TAO_FixedSeq_Var_T< \
-        Kokyu::GuidType, \
-        CORBA::Octet \
-      >
-
-# pragma instantiate \
-    TAO_Seq_Var_Base_T< \
-        Kokyu::GuidType, \
-        CORBA::Octet \
-      >
-
-# pragma instantiate \
-    TAO_Seq_Out_T< \
-        Kokyu::GuidType, \
-        Kokyu::GuidType_var, \
-        CORBA::Octet \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        Kokyu::GuidType \
-      >
-
-# pragma instantiate \
-    TAO_Var_Var_T< \
-        Kokyu::Svc_Ctxt_DSRT_QoS \
-      >
-
-# pragma instantiate \
-    TAO_Var_Base_T< \
-        Kokyu::Svc_Ctxt_DSRT_QoS \
-      >
-
-# pragma instantiate \
-    TAO_Out_T< \
-        Kokyu::Svc_Ctxt_DSRT_QoS, \
-        Kokyu::Svc_Ctxt_DSRT_QoS_var \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        Kokyu::Svc_Ctxt_DSRT_QoS \
-      >
-
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 
