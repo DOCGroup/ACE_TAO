@@ -1,3 +1,10 @@
+Thu Jan 11 13:54:56 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * performance-tests/Cubit/TAO/DII_Cubit/DII_Cubit.dsw:
+        * performance-tests/Cubit/TAO/DII_Cubit/client.dsp:
+
+          Added static release and debug version to project.
+
 Thu Jan 11 14:04:09 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
