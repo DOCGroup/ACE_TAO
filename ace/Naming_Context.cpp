@@ -21,7 +21,7 @@ typedef ACE_Local_Name_Space <ACE_LITE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex> L
 
 ACE_FACTORY_DEFINE (ACE, ACE_Naming_Context)
 ACE_STATIC_SVC_DEFINE (ACE_Naming_Context,
-                       ACE_TEXT ("ACE_Naming_Context"),
+                       ACE_LIB_TEXT ("ACE_Naming_Context"),
                        ACE_SVC_OBJ_T,
                        &ACE_SVC_NAME (ACE_Naming_Context),
                        ACE_Service_Type::DELETE_THIS |

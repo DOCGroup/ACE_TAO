@@ -128,10 +128,10 @@ ACE_Static_Allocator_Base::dump (void) const
   ACE_TRACE ("ACE_Static_Base_Allocator::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\noffset_ = %d"), this->offset_));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nsize_ = %d\n"), this->size_));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\noffset_ = %d"), this->offset_));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nsize_ = %d\n"), this->size_));
   ACE_HEX_DUMP ((LM_DEBUG, this->buffer_, this->size_));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -155,10 +155,10 @@ ACE_Malloc_Stats::dump (void) const
   int ninuse  = this->ninuse_.value ();
   int nchunks = this->nchunks_.value ();
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("nblocks = %d"), nblocks));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("\nninuse = %d"), ninuse));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("\nnchunks = %d"), nchunks));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT("nblocks = %d"), nblocks));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT("\nninuse = %d"), ninuse));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT("\nnchunks = %d"), nchunks));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 

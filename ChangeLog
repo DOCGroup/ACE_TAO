@@ -1,3 +1,18 @@
+Thu Oct 19 13:52:49 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/Malloc_Allocator.cpp:
+        * ace/Naming_Context.cpp:
+        * ace/PI_Malloc.cpp:
+
+          Needed to change some ACE_TEXT's to ACE_LIB_TEXT.
+
+        * ace/OS.h:
+        * ace/OS_Log_Msg_Attributes.h:
+
+          Moved the definition of ACE_OSTREAM_TYPE from OS.h to 
+          OS_Log_Msg_Attributes.h, since some include paths in
+          ACE_LEGACY_MODE needed it there.
+
 Thu Oct 19 13:17:41 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * tests/run_test.pl:
