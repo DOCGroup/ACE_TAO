@@ -153,6 +153,19 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
                 break;
               }
           }
+        case TAO_AV_Core::TAO_AV_ENDPOINT_A:
+          {
+            switch (entry->direction ())
+              {
+              case TAO_FlowSpec_Entry::TAO_AV_DIR_IN:
+                entry->role (TAO_FlowSpec_Entry::TAO_AV_PRODUCER);
+                break;
+              case TAO_FlowSpec_Entry::TAO_AV_DIR_OUT:
+                entry->role (TAO_FlowSpec_Entry::TAO_AV_CONSUMER);
+                break;
+              }
+            break;
+          }
         default:
           break;
         }
@@ -372,6 +385,37 @@ TAO_AV_Core::init_reverse_flows (TAO_Base_StreamEndPoint *endpoint,
     {
       TAO_FlowSpec_Entry *entry = (*start);
       ACE_Addr *address = entry->address ();
+      switch (direction)
+        {
+        case TAO_AV_Core::TAO_AV_ENDPOINT_B:
+          {
+            switch (entry->direction ())
+              {
+              case TAO_FlowSpec_Entry::TAO_AV_DIR_IN:
+                entry->role (TAO_FlowSpec_Entry::TAO_AV_CONSUMER);
+                break;
+              case TAO_FlowSpec_Entry::TAO_AV_DIR_OUT:
+                entry->role (TAO_FlowSpec_Entry::TAO_AV_PRODUCER);
+                break;
+              }
+            break;
+          }
+        case TAO_AV_Core::TAO_AV_ENDPOINT_A:
+          {
+            switch (entry->direction ())
+              {
+              case TAO_FlowSpec_Entry::TAO_AV_DIR_IN:
+                entry->role (TAO_FlowSpec_Entry::TAO_AV_PRODUCER);
+                break;
+              case TAO_FlowSpec_Entry::TAO_AV_DIR_OUT:
+                entry->role (TAO_FlowSpec_Entry::TAO_AV_CONSUMER);
+                break;
+              }
+            break;
+          }
+        default: break;
+        }
+      
       if (address != 0)
         {
           if (this->get_acceptor (entry->flowname ())!= 0)
