@@ -96,21 +96,20 @@ be_visitor_union_branch_private_ch::visit_array (be_array *node)
 
   os = this->ctx_->stream ();
 
-  os->indent ();
-  // are we fixed size or variable. This will decide our type
-#if 0
-  if (node->size_type () == be_type::VARIABLE)
+  if (bt->node_type () != AST_Decl::NT_typedef // not a typedef
+      && bt->is_child (bu)) // bt is defined inside the union
     {
-      *os << bt->nested_type_name (bu, "_slice") << " *" << ub->local_name ()
+      // case of anonymous array in union
+      os->indent ();
+      *os << "_" << bt->local_name () << "_slice *" << ub->local_name ()
           << "_;\n";
     }
   else
     {
-      *os << bt->nested_type_name (bu) << " " << ub->local_name () << "_;\n";
+      os->indent ();
+      *os << bt->nested_type_name (bu, "_slice") << " *" << ub->local_name ()
+          << "_;\n";
     }
-#endif
-  *os << bt->nested_type_name (bu, "_slice") << " *" << ub->local_name ()
-      << "_;\n";
 
   return 0;
 }

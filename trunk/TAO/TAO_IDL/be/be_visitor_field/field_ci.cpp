@@ -120,7 +120,39 @@ be_visitor_field_ci::visit_array (be_array *node)
 int
 be_visitor_field_ci::visit_sequence (be_sequence *node)
 {
-  // anonymous sequence
+  if (node->node_type () != AST_Decl::NT_typedef // not a typedef
+      && node->is_child (this->ctx_->scope ())) // node is defined inside the
+    // structure
+    {
+      // anonymous sequence
+
+      // instantiate a visitor context with a copy of our context. This info
+      // will be modified based on what type of node we are visiting
+      be_visitor_context ctx (*this->ctx_);
+      ctx.node (node); // set the node to be the node being visited. The scope is
+      // still the same
+
+      // generate the inline code for structs
+      ctx.state (TAO_CodeGen::TAO_SEQUENCE_CI);
+      be_visitor *visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_field_ci::"
+                             "visit_sequence - "
+                             "Bad visitor\n"
+                             ), -1);
+        }
+      if (node->accept (visitor) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_field_ci::"
+                             "visit_sequence - "
+                             "codegen failed\n"
+                             ), -1);
+        }
+      delete visitor;
+    }
   return 0;
 }
 

@@ -1,3 +1,50 @@
+Fri Dec 25 18:27:21 EST 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+	* TAO_IDL/be/be_array.cpp
+	  TAO_IDL/be_include/be_array.h:
+
+	  Moved code generation of the var, out, and forany classes to the
+	  visitor for arrays since there were some dependencies on the
+	  information stored in the visitor context. In particular, this
+	  was required to handle anonymous arrays in structs and unions.
+
+	* TAO_IDL/be/be_type.cpp (nested_type_name)
+	  TAO_IDL/be_include/be_type.h (nested_type_name):
+
+	  Added a third parameter for prefix. We need this for anonymous
+	  array type names who have an underscore prepended to the field
+	  name. 
+
+	* TAO_IDL/be/be_visitor_array/array_ch.cpp
+	  TAO_IDL/be/be_visitor_array/array_ci.cpp
+	  TAO_IDL/be/be_visitor_array/array_cs.cpp
+	  TAO_IDL/be/be_visitor_array/cdr_ch.cpp
+	  TAO_IDL/be/be_visitor_array/cdr_cs.cpp
+	  TAO_IDL/be_include/be_visitor_array/array_ch.h
+	  TAO_IDL/be_include/be_visitor_array/array_ci.h:
+
+	  Moved code generation of the var, out, and forany classes to the
+	  visitors. In addition, fixed a number of problems with anonymous
+	  arrays in structs and unions. Fixed CDR operators for anonymous
+	  arrays.
+
+	* TAO_IDL/be/be_visitor_field/field_ch.cpp
+	  TAO_IDL/be/be_visitor_field/field_ci.cpp
+	  TAO_IDL/be/be_visitor_field/field_cs.cpp
+	  TAO_IDL/be/be_visitor_field/cdr_cs.cpp
+
+	  Fixed problems with anonymous arrays and sequences.
+
+	* TAO_IDL/be/be_visitor_union_branch/private_ch.cpp
+	  TAO_IDL/be/be_visitor_union_branch/public_access.cpp
+	  TAO_IDL/be/be_visitor_union_branch/public_assign.cpp
+	  TAO_IDL/be/be_visitor_union_branch/public_ch.cpp
+	  TAO_IDL/be/be_visitor_union_branch/public_ci.cpp
+	  TAO_IDL/be/be_visitor_union_branch/public_cs.cpp
+	  TAO_IDL/be/be_visitor_union_branch/public_reset.cpp:
+
+	  Fixed problems with anonymous arrays and sequences.
+	
 Thu Dec 24 09:45:36 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.2.44 released.

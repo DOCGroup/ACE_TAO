@@ -113,7 +113,7 @@ be_type::tc_name (void)
 
 // return the type name using the ACE_NESTED_CLASS macro
 const char *
-be_type::nested_type_name (be_decl *use_scope, const char *suffix)
+be_type::nested_type_name (be_decl *use_scope, const char *suffix, const char *prefix)
 {
   // some compilers do not like generating a fully scoped name for a type that
   // was defined in the same enclosing scope in which it was defined. For such,
@@ -222,6 +222,8 @@ be_type::nested_type_name (be_decl *use_scope, const char *suffix)
             }
 
           // append our local name
+          if (prefix)
+            ACE_OS::strcat (this->nested_type_name_, prefix);
           ACE_OS::strcat (this->nested_type_name_, this->local_name ()->get_string ());
           if (suffix)
             ACE_OS::strcat (this->nested_type_name_, suffix);
@@ -231,7 +233,9 @@ be_type::nested_type_name (be_decl *use_scope, const char *suffix)
     }
 
   // otherwise just emit our fullname
-  ACE_OS::sprintf (this->nested_type_name_, this->fullname ());
+  if (prefix)
+    ACE_OS::strcat (this->nested_type_name_, prefix);
+  ACE_OS::strcat (this->nested_type_name_, this->fullname ());
   if (suffix)
     ACE_OS::strcat (this->nested_type_name_, suffix);
 

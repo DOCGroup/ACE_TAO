@@ -108,7 +108,7 @@ be_visitor_union_branch_public_ci::visit_array (be_array *node)
       ctx.node (node); // set the node to be the node being visited. The scope
                        // is still the same
 
-      // first generate the enum declaration
+      // first generate the inline operations for this anonymous array type
       ctx.state (TAO_CodeGen::TAO_ARRAY_CI);
       be_visitor *visitor = tao_cg->make_visitor (&ctx);
       if (!visitor)
@@ -130,11 +130,42 @@ be_visitor_union_branch_public_ci::visit_array (be_array *node)
       delete visitor;
     }
 
+  // for anonymous arrays, the type name has a _ prepended. We compute the
+  // fullname with or without the underscore and use it later on.
+  char fname [NAMEBUFSIZE];  // to hold the full and
+
+  // save the node's local name and full name in a buffer for quick use later
+  // on 
+  ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
+  if (bt->node_type () != AST_Decl::NT_typedef // not a typedef
+      && bt->is_child (bu)) // bt is defined inside the union
+    {
+      // for anonymous arrays ...
+      // we have to generate a name for us that has an underscope prepended to
+      // our local name. This needs to be inserted after the parents's name
+
+      if (bt->is_nested ())
+        {
+          be_decl *parent = be_scope::narrow_from_scope (bt->defined_in ())->decl ();
+          ACE_OS::sprintf (fname, "%s::_%s", parent->fullname (), 
+                           bt->local_name ()->get_string ());
+        }
+      else
+        {
+          ACE_OS::sprintf (fname, "_%s", bt->fullname ());
+        }
+    }
+  else
+    {
+      // typedefed node
+      ACE_OS::sprintf (fname, "%s", bt->fullname ());
+    }
+
   // set method
   os->indent (); // start from current indentation
   *os << "// accessor to set the member" << be_nl
       << "ACE_INLINE void" << be_nl
-      << bu->name () << "::" << ub->local_name () << " (" << bt->name ()
+      << bu->name () << "::" << ub->local_name () << " (" << fname
       << " val)// set" << be_nl
       << "{" << be_idt_nl;
   // set the discriminant to the appropriate label
@@ -160,10 +191,10 @@ be_visitor_union_branch_public_ci::visit_array (be_array *node)
       *os << "// set the value" << be_nl;
       *os << "// store current val in a _var so as to free it on an assignment"
           << be_nl;
-      *os << bt->name () << "_var " << ub->local_name () << "_var (this->u_."
+      *os << fname << "_var " << ub->local_name () << "_var (this->u_."
           << ub->local_name () << "_);" << be_nl;
       *os << "// release old and make a deep copy" << be_nl;
-      *os << ub->local_name () << "_var = " << bt->name ()
+      *os << ub->local_name () << "_var = " << fname
           << "_dup (val);" << be_nl;
       *os << "// the _var gives up ownership" << be_nl;
       *os << "this->u_." << ub->local_name () << "_ = "
@@ -178,7 +209,7 @@ be_visitor_union_branch_public_ci::visit_array (be_array *node)
 
   // get method
   *os << "// retrieve the member" << be_nl
-      << "ACE_INLINE " << bt->name () << "_slice *" << be_nl
+      << "ACE_INLINE " << fname << "_slice *" << be_nl
       << bu->name () << "::" << ub->local_name () << " (void) const" << be_nl
       << "{" << be_idt_nl;
   *os << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl;
@@ -601,6 +632,37 @@ be_visitor_union_branch_public_ci::visit_sequence (be_sequence *node)
                          ), -1);
     }
   os = this->ctx_->stream ();
+
+  if (bt->node_type () != AST_Decl::NT_typedef // not a typedef
+      && bt->is_child (bu)) // bt is defined inside the union
+    {
+      // instantiate a visitor context with a copy of our context. This info
+      // will be modified based on what type of node we are visiting
+      be_visitor_context ctx (*this->ctx_);
+      ctx.node (node); // set the node to be the node being visited. The scope
+                       // is still the same
+
+      // first generate the inline operations for this anonymous sequence type
+      ctx.state (TAO_CodeGen::TAO_SEQUENCE_CI);
+      be_visitor *visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_union_branch_public_ci::"
+                             "visit_sequence - "
+                             "Bad visitor\n"
+                             ), -1);
+        }
+      if (node->accept (visitor) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_union_branch_public_ci::"
+                             "visit_sequence - "
+                             "codegen failed\n"
+                             ), -1);
+        }
+      delete visitor;
+    }
 
   // (1) set from a const
   *os << "// accessor to set the member" << be_nl
@@ -1041,7 +1103,6 @@ be_visitor_union_branch_public_ci::visit_union (be_union *node)
       << bu->name () << "::" << ub->local_name ()
       << " (const " << bt->name () << " &val)" << be_nl
       << "{" << be_idt_nl;
-  os->incr_indent ();  // set the discriminant to the appropriate label
   if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
     {
       // valid label

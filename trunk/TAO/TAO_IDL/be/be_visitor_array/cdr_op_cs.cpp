@@ -11,7 +11,7 @@
 //    cdr_op_cs.cpp
 //
 // = DESCRIPTION
-//    Visitor for code generation of Arrays for the Cdr operators in the client
+//    Visitor for code generation of Arrays for the CDR operators in the client
 //    stubs.
 //
 // = AUTHOR
@@ -72,15 +72,45 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
                             -1);
         }
 
+      // for anonymous arrays, the type name has a _ prepended. We compute the
+      // fullname with or without the underscore and use it later on.
+      char fname [NAMEBUFSIZE];  // to hold the full and
+      
+      // save the node's local name and full name in a buffer for quick use later
+      // on 
+      ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
+      if (this->ctx_->tdef ())
+        {
+          // typedefed node
+          ACE_OS::sprintf (fname, "%s", node->fullname ());
+        }
+      else
+        {
+          // for anonymous arrays ...
+          // we have to generate a name for us that has an underscope prepended to
+          // our local name. This needs to be inserted after the parents's name
+          
+          if (node->is_nested ())
+            {
+              be_decl *parent = be_scope::narrow_from_scope (node->defined_in ())->decl ();
+              ACE_OS::sprintf (fname, "%s::_%s", parent->fullname (), 
+                               node->local_name ()->get_string ());
+            }
+          else
+            {
+              ACE_OS::sprintf (fname, "_%s", node->fullname ());
+            }
+        }
+
       // generate the CDR << and >> operator defns
 
       // save the array node for further use
       this->ctx_->node (node);
 
       //  set the sub state as generating code for the output operator
-      this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_OUTPUT);
+      this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
       *os << "ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, "
-          << "const " << node->name () << "_forany &_tao_array)" << be_nl
+          << "const " << fname << "_forany &_tao_array)" << be_nl
           << "{" << be_idt_nl;
 
       if (bt->accept (this) == -1)
@@ -95,9 +125,9 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
 
       //  set the sub state as generating code for the input operator
       os->indent ();
-      this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_INPUT);
+      this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_INPUT);
       *os << "ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, "
-          << node->name () << "_forany &_tao_array)" << be_nl
+          << fname << "_forany &_tao_array)" << be_nl
           << "{" << be_idt_nl;
       if (bt->accept (this) == -1)
         {

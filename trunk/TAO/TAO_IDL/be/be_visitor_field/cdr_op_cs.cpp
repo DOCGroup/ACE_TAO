@@ -86,43 +86,50 @@ be_visitor_field_cdr_op_cs::visit_array (be_array *node)
                          ), -1);
     }
 
+  // for anonymous arrays, the type name has a _ prepended. We compute the
+  // fullname with or without the underscore and use it later on.
+  char fname [NAMEBUFSIZE];  // to hold the full and
+      
+      // save the node's local name and full name in a buffer for quick use later
+      // on 
+  ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
+  if (!this->ctx_->alias () // not a typedef
+      && node->is_child (this->ctx_->scope ()))
+    {
+      // for anonymous arrays ...
+      // we have to generate a name for us that has an underscope prepended to
+      // our local name. This needs to be inserted after the parents's name
+          
+      if (node->is_nested ())
+        {
+          be_decl *parent = be_scope::narrow_from_scope (node->defined_in ())->decl ();
+          ACE_OS::sprintf (fname, "%s::_%s", parent->fullname (), 
+                           node->local_name ()->get_string ());
+        }
+      else
+        {
+          ACE_OS::sprintf (fname, "_%s", node->fullname ());
+        }
+    }
+  else
+    {
+      // typedefed node
+      ACE_OS::sprintf (fname, "%s", node->fullname ());
+    }
+
   // check what is the code generation substate. Are we generating code for
   // the in/out operators for our parent or for us?
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
-      // check if we are an anonymous array
-      if (!this->ctx_->alias () // not a typedef
-          && node->is_child (this->ctx_->scope ()))
-        {
-          *os << "(strm >> " << f->name () << "_forany "
-              << "(ACE_static_cast (" << f->name () << "_slice *, "
-              << "_tao_aggregate." << f->local_name () << ")))";
-        }
-      else
-        {
-          // it is a typedef
-          *os << "(strm >> " << node->name () << "_forany "
-              << "(ACE_static_cast (" << node->name () << "_slice *, "
-              << "_tao_aggregate." << f->local_name () << ")))";
-        }
+      *os << "(strm >> " << fname  << "_forany "
+          << "(ACE_static_cast (" << fname << "_slice *, "
+          << "_tao_aggregate." << f->local_name () << ")))";
       return 0;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      // check if we are an anonymous array
-      if (!this->ctx_->alias () // not a typedef
-          && node->is_child (this->ctx_->scope ()))
-        {
-          *os << "(strm << " << f->name () << "_forany "
-              << "(ACE_static_cast (" << f->name () << "_slice *, "
-              << "_tao_aggregate." << f->local_name () << ")))";
-        }
-      else
-        {
-          // it is a typedef
-          *os << "(strm << " << node->name () << "_forany "
-              << "(ACE_static_cast (" << node->name () << "_slice *, "
-              << "_tao_aggregate." << f->local_name () << ")))";
-        }
+      *os << "(strm << " << fname << "_forany "
+          << "(ACE_static_cast (" << fname << "_slice *, "
+          << "_tao_aggregate." << f->local_name () << ")))";
       return 0;
     case TAO_CodeGen::TAO_CDR_SCOPE:
       // proceed further

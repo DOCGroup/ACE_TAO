@@ -128,17 +128,27 @@ be_visitor_union_branch_public_ch::visit_array (be_array *node)
                              ), -1);
         }
       delete visitor;
+      // now use this array as a "type" for the subsequent declarator
+      os->indent (); // start from current indentation
+      // the set method
+      *os << "void " << ub->local_name () << " ("
+          << "_" << bt->local_name () << ");// set" << be_nl;
+      // the get method
+      *os << "_" << bt->local_name () << "_slice * " << ub->local_name ()
+          << " (void) const; // get method\n\n";
     }
-
-  // now use this array as a "type" for the subsequent declarator
-  os->indent (); // start from current indentation
-  // the set method
-  *os << "void " << ub->local_name () << " ("
-      << bt->nested_type_name (bu) << ");// set"
-      << be_nl;
-  // the get method
-  *os << bt->nested_type_name (bu, "_slice *") << " " << ub->local_name ()
-      << " (void) const; // get method\n\n";
+  else
+    {
+      // now use this array as a "type" for the subsequent declarator
+      os->indent (); // start from current indentation
+      // the set method
+      *os << "void " << ub->local_name () << " ("
+          << bt->nested_type_name (bu) << ");// set"
+          << be_nl;
+      // the get method
+      *os << bt->nested_type_name (bu, "_slice *") << " " << ub->local_name ()
+          << " (void) const; // get method\n\n";
+    }
 
   return 0;
 }

@@ -78,8 +78,14 @@ A complete list of all modifications to TAO is available in the <A HREF="http://
 <A NAME="idl"></A>IDL Compiler</H3>
 Point of contact: <A HREF="mailto:gokhale@research.bell-labs.com">Aniruddha Gokhale</A>
 
-<P>Current status: (As of Dec 11, 1998.)
+<P>Current status: (As of Dec 25, 1998.)
 <UL>
+     <LI>
+     Fixed a large number of problems with anonymous arrays and
+     sequences inside structs and unions. The name of anonymous
+     sequence needs to be fixed as per latest C++ mapping spec.
+     </LI>
+
      <LI>
      Compile problems with sequence of forward declared interfaces is
      fixed. In addition, problems with sequence of CORBA::Objects is
