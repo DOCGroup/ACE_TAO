@@ -49,7 +49,7 @@ public:
     BUFFER_LEN = 1 + (STANDARD_BUFSIZE / sizeof (CORBA_Long))
   };
 
-  XDR_stream (int _fd) THROWS_NOTHING 
+  XDR_stream (ACE_HANDLE _fd) THROWS_NOTHING 
   : fd (_fd)
   {
     index = 0;
