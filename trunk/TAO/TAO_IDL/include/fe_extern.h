@@ -87,14 +87,14 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // which is then used in the second stage to create the global scope
 // and to populate it with nodes for the predefined types
 
-extern "C" void                 FE_init_stage1();       // Initialize stage 1
-extern "C" void                 FE_init_stage2();       // Initialize stage 2
+void                 FE_init_stage1();       // Initialize stage 1
+void                 FE_init_stage2();       // Initialize stage 2
 
 // Interface to Yacc parser
 
 class File;
-extern "C" int                  FE_yyparse();           // Invode yyparse
-extern "C" void                 FE_set_yyin(File *);    // Set yyin
+int                  FE_yyparse();           // Invode yyparse
+void                 FE_set_yyin(File *);    // Set yyin
 
 // Interface to constructors for objects need by the driver
 
@@ -102,8 +102,8 @@ class UTL_Error;
 class UTL_Indenter;
 class UTL_String;
 
-extern "C" UTL_Error *          FE_new_UTL_Error();
-extern "C" UTL_Indenter *       FE_new_UTL_Indenter();
-extern "C" UTL_String *         FE_new_UTL_String(char *);
+UTL_Error *          FE_new_UTL_Error();
+UTL_Indenter *       FE_new_UTL_Indenter();
+UTL_String *         FE_new_UTL_String(char *);
 
 #endif           // _FE_EXTERN_FE_EXTERN_HH

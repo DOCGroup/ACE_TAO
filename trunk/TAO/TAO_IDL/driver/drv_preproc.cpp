@@ -149,6 +149,9 @@ DRV_cpp_init()
 #if defined (ACE_WIN32)
   DRV_cpp_putarg ("-nologo");
 #endif /* ACE_WIN32 */
+#if defined (ACE_MVS)
+  DRV_cpp_putarg ("-+");
+#endif /* ACE_MVS */
   DRV_cpp_putarg ("-E");
   DRV_cpp_putarg("-DIDL");
   DRV_cpp_putarg ("-I.");

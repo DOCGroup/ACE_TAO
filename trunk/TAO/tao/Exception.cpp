@@ -266,43 +266,68 @@ CORBA_SystemException::print_exception_tao_ (FILE *) const
               "(%P|%t) system exception, ID '%s'\n",
               _id ()));
 
-  const char *location;
-  switch (minor () & 0x00000FF0) {
-    case TAO_INVOCATION_CONNECT_MINOR_CODE :
-      location = "invocation connect failed";
-      break;
-    case TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE :
-      location = "location forward failed";
-      break;
-    case TAO_INVOCATION_SEND_REQUEST_MINOR_CODE :
-      location = "send request failed";
-      break;
-    default :
-      location = "unknown location";
-  }
+  int is_tao_exception = 
+    ((this->minor () & 0xFFFFF0000) == TAO_DEFAULT_MINOR_CODE);
 
-  const char *errno_indication;
-  switch (minor () & 0x0000000F) {
-    case TAO_ETIMEDOUT_MINOR_CODE :
-      errno_indication = "ETIMEOUT";
-      break;
-    case TAO_ENFILE_MINOR_CODE :
-      errno_indication = "ENFILE";
-      break;
-    case TAO_EMFILE_MINOR_CODE :
-      errno_indication = "EMFILE";
-      break;
-    default :
-      errno_indication = "unknown errno";
-  }
+  if (is_tao_exception)
+    {
+      const char *location;
+      switch (minor () & 0x00000FF0) {
+      case TAO_INVOCATION_CONNECT_MINOR_CODE :
+        location = "invocation connect failed";
+        break;
+      case TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE :
+        location = "location forward failed";
+        break;
+      case TAO_INVOCATION_SEND_REQUEST_MINOR_CODE :
+        location = "send request failed";
+        break;
+      case TAO_POA_DISCARDING :
+        location = "poa in discarding state";
+        break;
+      case TAO_POA_HOLDING :
+        location = "poa in holding state";
+        break;
+      default :
+        location = "unknown location";
+      }
 
-  ACE_DEBUG ((LM_ERROR,
-              "(%P|%t) minor code = %x (%s; %s), completed = %s\n",
-              minor (), location, errno_indication,
-              (completed () == CORBA::COMPLETED_YES) ? "YES" :
-              (completed () == CORBA::COMPLETED_NO) ? "NO" :
-              (completed () == CORBA::COMPLETED_MAYBE) ? "MAYBE" :
-              "garbage"));
+      const char *errno_indication;
+      switch (minor () & 0x0000000F) {
+      case TAO_ETIMEDOUT_MINOR_CODE :
+        errno_indication = "ETIMEOUT";
+        break;
+      case TAO_ENFILE_MINOR_CODE :
+        errno_indication = "ENFILE";
+        break;
+      case TAO_EMFILE_MINOR_CODE :
+        errno_indication = "EMFILE";
+        break;
+      default :
+        errno_indication = "unknown errno";
+      }
+  
+      ACE_DEBUG ((LM_ERROR,
+                  "(%P|%t) TAO exception, "
+                  "minor code = %x (%s; %s), "
+                  "completed = %s\n",
+                  minor (), location, errno_indication,
+                  (completed () == CORBA::COMPLETED_YES) ? "YES" :
+                  (completed () == CORBA::COMPLETED_NO) ? "NO" :
+                  (completed () == CORBA::COMPLETED_MAYBE) ? "MAYBE" :
+                  "garbage"));
+    }
+  else
+    {
+      ACE_DEBUG ((LM_ERROR,
+                  "(%P|%t) non-TAO exception, "
+                  "minor code = %x, completed = %s\n",
+                  minor (),
+                  (completed () == CORBA::COMPLETED_YES) ? "YES" :
+                  (completed () == CORBA::COMPLETED_NO) ? "NO" :
+                  (completed () == CORBA::COMPLETED_MAYBE) ? "MAYBE" :
+                  "garbage"));
+    }
 }
 
 
