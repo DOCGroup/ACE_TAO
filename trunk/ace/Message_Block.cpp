@@ -245,6 +245,12 @@ ACE_Data_Block::ACE_Data_Block (void)
 {
   ACE_TRACE ("ACE_Data_Block::ACE_Data_Block");
   ACE_FUNCTION_TIMEPROBE (ACE_DATA_BLOCK_CTOR1_ENTER);
+
+  ACE_ALLOCATOR (this->allocator_strategy_,
+                 ACE_Allocator::instance ());
+
+  ACE_ALLOCATOR (this->data_block_allocator_,
+                 ACE_Allocator::instance ());
 }
 
 ACE_Data_Block::ACE_Data_Block (size_t size,
