@@ -170,19 +170,23 @@ reader (void *)
         }
       else // result == -1
         {
-# if defined (ACE_LACKS_RWLOCK_T)
+          // These #ifs should generally match the logic in OS_NS_Thread.inl.
+
+# if defined (ACE_HAS_PTHREADS_UNIX98_EXT) || !defined (ACE_LACKS_RWLOCK_T)
+          // In this case we have native RW locks support, but native RW
+          // locks may not support upgrading!
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%t) %p\n"),
+                      ACE_TEXT ("can't upgrade write lock"),
+                      1));
+# else
           // In this case we do not have native RW locks, but therefore the
           // emulation, which supports upgradable write locks.
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%t) failure in upgrading to write lock!\n"),
+                      ACE_TEXT ("(%t) %p\n"),
+                      ACE_TEXT ("failure in upgrading to write lock"),
                       1));
-# else
-          // In this case we have native RW locks support, but native RW
-          // locks do not support upgrading!
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%t) no support for upgradable write locks!\n"),
-                      1));
-# endif /* ACE_LACKS_RWLOCK_T */
+# endif /* ACE_HAS_PTHREADS_UNIX98_EXT || !ACE_LACKS_RWLOCK_T */
         }
       //ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%t) done with reading guarded data\n")));
 
