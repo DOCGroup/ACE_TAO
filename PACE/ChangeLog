@@ -1,4 +1,37 @@
+Thu Jun 29 15:04:42 2000  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * pace/posix/aio.h:
+        * pace/posix/assert.h:
+        * pace/posix/ctype.h:
+        * pace/posix/dirent.h:
+        * pace/posix/fcntl.h:
+        * pace/posix/grp.h:
+        * pace/posix/locale.h:
+        * pace/posix/math.h:
+        * pace/posix/mman.h:
+        * pace/posix/mqueue.h:
+        * pace/posix/pthread.h:
+        * pace/posix/pwd.h:
+        * pace/posix/sched.h:
+        * pace/posix/semaphore.h:
+        * pace/posix/setjmp.h:
+        * pace/posix/signal.h:
+        * pace/posix/stdio.h: 
+        * pace/posix/stdlib.h:
+        * pace/posix/string.h:
+        * pace/posix/time.h:
+        * pace/posix/unistd.h:
+        * pace/posix/utime.h:
+        * pace/posix/wait.h:
+          Adding doc++ html man comments.
+
+        * pace/posix/stdio.{h,inl} (pace_printf):
+          Removed pace_snprintf and pace_vsprint functions since they
+          are not POSIX.
+
 Thu Jun 29 14:47:19 2000  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * pace/posix/stdio.inl (pace_printf): 
 
         * pace/man/pace.jpg:
           JPEG file of the PACE icon used in the html man pages.
