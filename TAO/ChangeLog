@@ -1,3 +1,9 @@
+Mon Jun 21 13:54:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/CRC.{h,cpp}:
+          Zapped these files from the repo, they are removed from the projects
+          more than a year ago, but aren't deleted from the repo at that moment
+
 Mon Jun 21 06:51:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/AV/SCTP_SEQ.{h,cpp}:
