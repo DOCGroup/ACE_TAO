@@ -1,4 +1,9 @@
-Sat Aug 26 21:50:34 2000  Marina Spivak  <marina@cs.wustl.edu>
+Sat Aug 26 22:20:50 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp (server_is_running):
+
+	  Pass <imr_poa_> as an argument to the <make_mprofile> method
+	  call. 
 
 	* tao/Acceptor_Registry.cpp
 	* tao/ORB_Core.cpp:
