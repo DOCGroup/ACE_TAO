@@ -1,3 +1,10 @@
+Sat Jul 31 02:45:52 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/make_release:
+
+	  Cosmetic changes to make the generated project and GNUmakefiles
+	  look uniform.
+
 Fri Jul 30 17:28:44 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* NEWS:  Added ACE 5.4.2 noteworthy items.

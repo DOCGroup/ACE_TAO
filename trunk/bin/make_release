@@ -774,12 +774,16 @@ sub generate_makefiles () {
     # Need todo a common chmod on the file lists!
     my $here = Cwd::getcwd();
     
-    my $exclude_option = '-exclude TAOACE.mwc,CIAOTAO.mwc';
-    my $mpc_option = 
-        '-recurse -hierarchy -relative ACE_ROOT=$here/ACE_wrappers'; 
+    my $exclude_option = '-exclude TAO/TAOACE.mwc,TAO/CIAO/CIAOTAO.mwc';
+    my $tmp_mpc_option = 
+        '-recurse -hierarchy -relative ACE_ROOT='; 
+
+    my $mpc_option = $tmp_mpc_option.$here.'/ACE_wrappers';
     
-    my $static_option = 
-        '-static -name_modifier *_Static -apply_project -exclude TAO/CIAO,TAOACE.mwc $mpc_option';
+    my $tmp_static_option = 
+        '-static -name_modifier *_Static -apply_project -exclude TAO/CIAO,TAO/TAOACE.mwc ';
+
+    my $static_option = $tmp_static_option.$mpc_option;
 
     open (FEATURES, "> ACE_wrappers/bin/MakeProjectCreator/config/default.features")  ||
         die "$0: unable to open default.features\n";
@@ -792,7 +796,7 @@ sub generate_makefiles () {
         "sctp=1\n";
 
     &ex ("cd ACE_wrappers; \
-          bin/mwc.pl $mpc_option; \
+          bin/mwc.pl $exclude_option $mpc_option; \
           find ./ -name 'GNUmake*' | /usr/bin/xargs chmod 0644");
 
     open (FEATURES_1, "> ACE_wrappers/bin/MakeProjectCreator/config/default.features")  ||
