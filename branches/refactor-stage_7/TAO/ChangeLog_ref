@@ -1,3 +1,24 @@
+Mon Oct 13 21:19:47 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Portable_Interceptors/Collocated/Makefile:
+	* tests/Portable_Interceptors/Collocated/Dynamic/Client_Task.cpp:
+	* tests/Portable_Interceptors/Collocated/Dynamic/Collocated_Test.cpp:
+	* tests/Portable_Interceptors/Collocated/Dynamic/Echo_Collocated_ORBInitializer.h
+	* tests/Portable_Interceptors/Collocated/Dynamic/Makefile:
+	* tests/Portable_Interceptors/Collocated/Dynamic/Server_Task.cpp:
+	* tests/Portable_Interceptors/Collocated/Dynamic/interceptors.cpp:
+	* tests/Portable_Interceptors/Collocated/Dynamic/interceptors.h:
+	* tests/Portable_Interceptors/Collocated/Dynamic/test.idl:
+	* tests/Portable_Interceptors/Collocated/Dynamic/test_i.cpp:
+	* tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/Client_Task.cpp:
+	* tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/Collocated_ORBInitializer.h: 
+	* tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/Collocated_Test.cpp:
+	* tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/Makefile:
+	* tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/interceptors.cpp:
+	* tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/test_i.cpp:
+
+	  Cleaned up the tests for use in the daily builds.
+
 Mon Oct 13 20:32:22 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/tests/tests.dsw:
