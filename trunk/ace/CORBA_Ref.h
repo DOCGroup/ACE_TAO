@@ -22,6 +22,8 @@
 #if !defined (ACE_CORBA_REF_H)
 #define ACE_CORBA_REF_H
 
+#include "ace/ACE.h"
+
 template <class CORBA_REF>
 class ACE_CORBA_Ref
 {

@@ -23,6 +23,11 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Get_Opt.h"
 
+#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
+USELIB("..\ace\aced.lib");
+//---------------------------------------------------------------------------
+#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
+
 #if defined (ACE_HAS_THREADS)
 
 // Semaphore used in the tests.  Start it "locked" (i.e., its initial

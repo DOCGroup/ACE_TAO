@@ -25,6 +25,11 @@
 #include "ace/SString.h"
 #include "ace/Synch.h"
 
+#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
+USELIB("..\ace\aced.lib");
+//---------------------------------------------------------------------------
+#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
+
 #if defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
 
 #define HASH_STRING_ENTRY ACE_Hash_Map_Entry<ASYS_TCHAR *, ASYS_TCHAR *>
@@ -189,14 +194,14 @@ static const size_t MAX_HASH = 6;
 // information about the <ACE_Hash_Map_Manager>.  We need to figure
 // out how to simplify this.
 static const size_t String_Table_size = sizeof (HASH_STRING_ENTRY) * (STRING_TABLE_SIZE + MAX_HASH);
-static ACE_Static_Allocator<String_Table_size> allocator;
+static ACE_Static_Allocator<String_Table_size> alloc;
 
 static int
 run_test (void)
 {
-  allocator.dump ();
+  alloc.dump ();
 
-  HASH_STRING_MAP hash (MAX_HASH, &allocator);
+  HASH_STRING_MAP hash (MAX_HASH, &alloc);
 
   size_t i;
 
@@ -266,7 +271,7 @@ run_test (void)
                   (ASYS_TCHAR *) entry->int_id_));
   }
 
-  allocator.dump ();
+  alloc.dump ();
   return 0;
 }
 

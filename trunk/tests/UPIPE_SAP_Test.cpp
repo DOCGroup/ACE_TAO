@@ -22,6 +22,11 @@
 #include "ace/UPIPE_Connector.h"
 #include "test_config.h"
 
+#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
+USELIB("..\ace\aced.lib");
+//---------------------------------------------------------------------------
+#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
+
 #if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_STREAM_PIPES) || defined (ACE_WIN32))
 
 // Global pattern
@@ -187,3 +192,13 @@ main (int, char *[])
   ACE_END_TEST;
   return 0;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Stream<ACE_Thread_Mutex,ACE_Condition_Thread_Mutex>;
+template class ACE_Double_Linked_List<ACE_Thread_Descriptor>;
+template class ACE_Unbounded_Queue<ACE_Thread_Descriptor*>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Stream<ACE_Thread_Mutex,ACE_Condition_Thread_Mutex>
+#pragma instantiate ACE_Double_Linked_List<ACE_Thread_Descriptor>
+#pragma instantiate ACE_Unbounded_Queue<ACE_Thread_Descriptor*>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

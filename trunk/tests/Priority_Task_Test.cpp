@@ -22,6 +22,11 @@
 #include "ace/Sched_Params.h"
 #include "test_config.h"
 
+#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
+USELIB("..\ace\aced.lib");
+//---------------------------------------------------------------------------
+#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
+
 static ASYS_TCHAR *usage = ASYS_TEXT ("usage: %s [-d]\n");
 
 #if defined (ACE_HAS_THREADS)

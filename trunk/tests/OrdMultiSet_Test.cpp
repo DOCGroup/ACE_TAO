@@ -25,6 +25,11 @@
 
 #include "ace/Containers.h"
 
+#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
+USELIB("..\ace\aced.lib");
+//---------------------------------------------------------------------------
+#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
+
 int
 main (int, ASYS_TCHAR *[])
 {

@@ -21,6 +21,11 @@
 #include "ace/Object_Manager.h"
 #include "ace/Service_Config.h"
 
+#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
+USELIB("..\ace\aced.lib");
+//---------------------------------------------------------------------------
+#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
+
 static const u_int VARIETIES = 3;
 
 static u_int error = 0;

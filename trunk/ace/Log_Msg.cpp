@@ -601,7 +601,9 @@ ACE_Log_Msg::log (const ASYS_TCHAR *format_str,
   ACE_TRACE ("ACE_Log_Msg::log");
   // External decls.
 
-  extern int sys_nerr;
+#if ! (defined(__BORLANDC__) && __BORLANDC__ >= 0x0530)
+   extern int sys_nerr;
+#endif /* ! (defined(__BORLANDC__) && __BORLANDC__ >= 0x0530) */
   typedef void (*PTF)(...);
 
   // Only print the message if <priority_mask_> hasn't been reset to

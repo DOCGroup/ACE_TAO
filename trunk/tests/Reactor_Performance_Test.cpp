@@ -32,6 +32,11 @@
 #include "ace/Select_Reactor.h"
 #include "ace/Auto_Ptr.h"
 
+#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
+USELIB("..\ace\aced.lib");
+//---------------------------------------------------------------------------
+#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
+
 #if defined (ACE_HAS_THREADS)
 
 // Number of client (user) threads

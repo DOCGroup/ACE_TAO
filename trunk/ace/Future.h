@@ -26,7 +26,8 @@
 // Forward decl.
 template <class T> class ACE_Future;
 
-template <class T> class ACE_Future_Rep
+template <class T>
+class ACE_Future_Rep
 {
   // = TITLE
   //     ACE_Future_Rep<T>
@@ -103,7 +104,8 @@ private:
   ACE_Thread_Mutex value_ready_mutex_;
 };
 
-template <class T> class ACE_Future 
+template <class T>
+class ACE_Future 
 {
   // = TITLE
   //     This class implements a ``single write, multiple read''

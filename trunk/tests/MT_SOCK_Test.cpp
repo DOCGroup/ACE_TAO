@@ -30,6 +30,11 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Handle_Set.h"
 
+#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
+USELIB("..\ace\aced.lib");
+//---------------------------------------------------------------------------
+#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
+
 static void *
 client (void *arg)
 {

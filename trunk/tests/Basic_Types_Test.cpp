@@ -20,6 +20,11 @@
 #include "ace/Log_Msg.h"
 #include "ace/Basic_Types.h"
 
+#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
+USELIB("..\ace\aced.lib");
+//---------------------------------------------------------------------------
+#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
+
 static
 u_int
 check (const ASYS_TCHAR *message, u_int i, u_int j)

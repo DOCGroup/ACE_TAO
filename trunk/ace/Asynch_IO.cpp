@@ -132,11 +132,11 @@ ACE_Asynch_Operation::cancel (void)
   // All I/O operations that are canceled will complete with the error
   // ERROR_OPERATION_ABORTED. All completion notifications for the I/O
   // operations will occur normally.
-#if defined (_WIN32_WINNT) && (_WIN32_WINNT >= 0x0400) && defined (_MSC_VER) && (_MSC_VER > 1020)
+#if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) && (defined (_MSC_VER) && (_MSC_VER > 1020))
   return (int) ::CancelIo (this->handle_);
 #else
   ACE_NOTSUP_RETURN (-1);
-#endif /* (_WIN32_WINNT) && (_WIN32_WINNT >= 0x0400) */
+#endif /* (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) && (defined (_MSC_VER) && (_MSC_VER > 1020)) */
 }
 
 // ************************************************************
@@ -492,8 +492,8 @@ ACE_Asynch_Accept::accept (ACE_Message_Block &message_block,
 			   ACE_HANDLE accept_handle,
 			   const void *act)
 {
-#if (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)) || (_WIN32_WINNT >= 0x0400)
-  // Sanity check: make sure that enough space has been allocated by the caller. 
+#if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
+  // Sanity check: make sure that enough space has been allocated by the caller.
   size_t address_size = sizeof (sockaddr_in) + sizeof (sockaddr);
   size_t space_in_use = message_block.wr_ptr () - message_block.base ();
   size_t total_size = message_block.size ();
@@ -566,7 +566,7 @@ ACE_Asynch_Accept::accept (ACE_Message_Block &message_block,
     }
 #else
   ACE_NOTSUP_RETURN (-1);
-#endif /* defined (ACE_HAS_WINSOCK2) || (_WIN32_WINNT >= 0x0400) */
+#endif /* (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)) */
 }
   
 // ************************************************************
@@ -645,7 +645,7 @@ ACE_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
 					 u_long flags,
 					 const void *act)
 {
-#if (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)) || (_WIN32_WINNT >= 0x0400)
+#if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
   Result *result = 0;
   ACE_NEW_RETURN (result, 
 		  Result (*this->handler_,
@@ -697,7 +697,7 @@ ACE_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
     }  
 #else
   ACE_NOTSUP_RETURN (-1);
-#endif /* defined (ACE_HAS_WINSOCK2) || (_WIN32_WINNT >= 0x0400) */
+#endif /* (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)) */
 }
   
 // ************************************************************

@@ -23,6 +23,11 @@
 #include "ace/SOCK_Stream.h"
 #include "test_config.h"
 
+#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
+USELIB("..\ace\aced.lib");
+//---------------------------------------------------------------------------
+#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
+
 // The original problem this program tested for was incorrectly saying
 // a non-blocking connect completed successfully when it didn't.  The
 // test doesn't always work when done to localhost

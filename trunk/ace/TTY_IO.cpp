@@ -181,9 +181,12 @@ ACE_TTY_IO::control (Control_Mode cmd,
 
       switch (arg->stopbits)
         {
-        case 1: dcb.StopBits = ONESTOPBIT ; break ;
-        case 2: dcb.StopBits = TWOSTOPBITS; break ;
-          break;
+        case 1:
+	  dcb.StopBits = ONESTOPBIT;
+	  break ;
+        case 2:
+	  dcb.StopBits = TWOSTOPBITS;
+	  break ;
         default:
           return -1;
         }

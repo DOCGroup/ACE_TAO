@@ -19,6 +19,11 @@
 #include "ace/Process.h"
 #include "ace/Env_Value_T.h"
 
+#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
+USELIB("..\ace\aced.lib");
+//---------------------------------------------------------------------------
+#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
+
 int
 #if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
 // ACE_HAS_NONSTATIC_OBJECT_MANAGER only allows main to have two

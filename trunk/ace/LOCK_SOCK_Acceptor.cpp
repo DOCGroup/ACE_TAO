@@ -4,6 +4,7 @@
 #define ACE_LOCK_SOCK_ACCEPTOR_CPP
 
 #include /**/ "ace/Synch.h"
+#include /**/ "ace/LOCK_SOCK_Acceptor.h"
 
 template <class ACE_LOCK> int
 ACE_LOCK_SOCK_Acceptor<ACE_LOCK>::accept (ACE_SOCK_Stream &stream,

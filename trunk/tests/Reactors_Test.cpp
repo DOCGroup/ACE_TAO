@@ -21,9 +21,14 @@
 #include "ace/Synch.h"
 #include "ace/Task.h"
 
+#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
+USELIB("..\ace\aced.lib");
+//---------------------------------------------------------------------------
+#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
+
 #if defined (ACE_HAS_THREADS)
 
-ACE_Thread_Manager *tm;
+ACE_Thread_Manager *thr_mgr;
 
 static const int MAX_TASKS = 20;
 
@@ -204,7 +209,7 @@ main (int, ASYS_TCHAR *[])
 #if defined (ACE_HAS_THREADS)
   ACE_ASSERT (ACE_LOG_MSG->op_status () != -1);
 
-  tm = ACE_Thread_Manager::instance ();
+  thr_mgr = ACE_Thread_Manager::instance ();
 
   ACE_Reactor reactor;
   ACE_ASSERT (ACE_LOG_MSG->op_status () != -1);

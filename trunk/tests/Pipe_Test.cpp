@@ -21,6 +21,11 @@
 #include "ace/Process.h"
 #include "ace/Get_Opt.h"
 
+#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
+USELIB("..\ace\aced.lib");
+//---------------------------------------------------------------------------
+#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
+
 static int close_pipe = 1;
 static int child_process = 0;
 static int iterations = ACE_MAX_ITERATIONS;

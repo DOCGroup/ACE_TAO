@@ -16,6 +16,11 @@
 #include "test_config.h"
 #include "ace/OS.h"
 
+#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
+USELIB("..\ace\aced.lib");
+//---------------------------------------------------------------------------
+#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
+
 // Define old style feature selector.
 //#define _POSIX_SOURCE
 

@@ -7890,7 +7890,13 @@ ACE_OS::fdopen (ACE_HANDLE handle, const char *mode)
 #endif /* __BORLANDC__ */
 
       if (!file)
-        ::_close (crt_handle);
+	{
+#if (defined(__BORLANDC__) && __BORLANDC__ >= 0x0530)
+	  ::_rtl_close (crt_handle);
+#else
+	  ::_close (crt_handle);
+#endif /* (defined(__BORLANDC__) && __BORLANDC__ >= 0x0530) */
+	}
     }
 
   return file;
@@ -7905,7 +7911,7 @@ ACE_OS::ftruncate (ACE_HANDLE handle, off_t offset)
 {
   // ACE_TRACE ("ACE_OS::ftruncate");
 #if defined (ACE_WIN32)
-  if (::SetFilePointer (handle, offset, NULL, FILE_BEGIN) != -1)
+  if (::SetFilePointer (handle, offset, NULL, FILE_BEGIN) != (unsigned) -1)
     ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::SetEndOfFile (handle), ace_result_), int, -1);
   else
     ACE_FAIL_RETURN (-1);
@@ -9080,17 +9086,20 @@ ACE_OS::fdopen (ACE_HANDLE handle, const wchar_t *mode)
 
   if (crt_handle != -1)
     {
-#if defined(__BORLANDC__) // VSB
-      //      file = ::_fdopen (crt_handle, (wchar_t *) mode);
-      // @@ Comment out the following line if you don't think you
-      // want to deal with this.
-#error "Please correct me!"
+#if defined(__BORLANDC__)
+      file = ::_wfdopen (crt_handle, (wchar_t*) mode);
 #else
       file = ::_wfdopen (crt_handle, mode);
-#endif /* __BORLANDC__ */
+#endif /* defined(__BORLANDC__) */
 
       if (!file)
-        ::_close (crt_handle);
+	{
+#if (defined(__BORLANDC__) && __BORLANDC__ >= 0x0530)
+	  ::_rtl_close (crt_handle);
+#else
+	  ::_close (crt_handle);
+#endif /* (defined(__BORLANDC__) && __BORLANDC__ >= 0x0530) */
+	}
     }
 
   return file;

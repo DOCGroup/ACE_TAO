@@ -24,6 +24,11 @@
 #include "ace/Message_Block.h"
 #include "ace/Synch.h"
 
+#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
+USELIB("..\ace\aced.lib");
+//---------------------------------------------------------------------------
+#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
+
 int
 main (int, ASYS_TCHAR *[])
 {

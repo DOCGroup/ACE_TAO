@@ -23,6 +23,11 @@
 #include "ace/Timer_Queue.h"
 #include "ace/Reactor.h"
 
+#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
+USELIB("..\ace\aced.lib");
+//---------------------------------------------------------------------------
+#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
+
 static int done = 0;
 static int count = 0;
 static int odd = 0;

@@ -24,6 +24,11 @@
 #include "test_config.h"
 #include "ace/Process.h"
 
+#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
+USELIB("..\ace\aced.lib");
+//---------------------------------------------------------------------------
+#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
+
 #define APPLICATION \
 __TEXT ("..") ACE_DIRECTORY_SEPARATOR_STR \
 __TEXT ("netsvcs") ACE_DIRECTORY_SEPARATOR_STR \
