@@ -15,7 +15,7 @@ static void *client_thread(void *data) {
   // Check for presence of protocol, hostname and filename.
 
   if(!(u->get_protocol() && u->get_hostname() && u->get_filename())) {
-    cerr << "Invalid URL" << endl;
+    ACE_DEBUG((LM_DEBUG, "Invalid URL"));
     return NULL;
   }
 
@@ -78,7 +78,7 @@ int driver(char *id, int total_num, float requests_sec, char *url1, float p1, ch
   for(int i = 0; i < total_num; i++) { // i is used as a id for threads
     ACE_Profile_Timer timer;
     if(sleep_time < delta) {
-      cerr << "Requested rate is too high, sorry! " << endl;
+      ACE_DEBUG((LM_ERROR,"Requested rate is too high, sorry! "));
       return 2;
     }
 	ACE_Time_Value tv(0, sleep_time - delta);
@@ -119,13 +119,13 @@ main(int argc, char **argv)
   ACE_High_Res_Timer::get_env_global_scale_factor ();
 
   if(argc < 3) {
-    cerr << "Usage: " << argv[0] << " infile outfile " << endl;
-    cerr << "The input file contains lines, with the following fields: " << endl;
-    cerr << "experiment_id total_number_of_requests request_rate url1 p1 url2 p2 url3 p3 TCP_NODELAY SOCKET_RECV_BUFSIZ " << endl;
-    
+    //     cerr << "Usage: " << argv[0] << " infile outfile " << endl;
+    //     cerr << "The input file contains lines, with the following fields: " << endl;
+    //     cerr << "experiment_id total_number_of_requests request_rate url1 p1 url2 p2 url3 p3 TCP_NODELAY SOCKET_RECV_BUFSIZ " << endl;
     return 1;
   }
-  
+
+
   FILE *fp = fopen(argv[1],"r");
   if(fp == NULL) {
     perror("fopen");
@@ -148,9 +148,9 @@ main(int argc, char **argv)
 
   
   while(!feof(fp)) {
-	fscanf(fp,"%s %d %f %s %f %s %f %s %f %d %d\n", id, &total_num, &rate, url1, &p1, url2, &p2, url3, &p3, &tcp, &sock);
-	fprintf(stderr,"----\n");
-	fprintf(stderr,"\tNow performing experiment:%s\n\tSending %d requests at %f requests/second\n", id, total_num, rate);
+    fscanf(fp,"%s %d %f %s %f %s %f %s %f %d %d\n", id, &total_num, &rate, url1, &p1, url2, &p2, url3, &p3, &tcp, &sock);
+    //fprintf(stderr,"----\n");
+    //fprintf(stderr,"\tNow performing experiment:%s\n\tSending %d requests at %f requests/second\n", id, total_num, rate);
     driver(id, total_num, rate, url1, p1, url2, p2, url3, p3, tcp, sock);
   }
   fclose(fp);
