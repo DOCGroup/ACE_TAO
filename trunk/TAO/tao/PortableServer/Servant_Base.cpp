@@ -218,12 +218,6 @@ void TAO_ServantBase::synchronous_upcall_dispatch (TAO_ServerRequest & req,
     && req.response_expected ()
     && !req.deferred_reply ();
 
-  ACE_DEBUG ((LM_DEBUG,
-              "@@@@@@@@@@@@@@  %d | %d | %d\n",
-              req.sync_with_server (),
-              req.response_expected (),
-              req.deferred_reply ()));
-
   ACE_TRY
     {
       // Invoke the skeleton, it will demarshal the arguments, invoke
