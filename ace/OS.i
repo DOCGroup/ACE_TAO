@@ -9152,7 +9152,7 @@ ACE_OS::sigaction (int signum,
   ACE_UNUSED_ARG (nsa);
   ACE_UNUSED_ARG (osa);
   ACE_NOTSUP_RETURN (-1);
-#elif defined (ACE_LACKS_POSIX_PROTOTYPES) || defined(ACE_LACKS_SOME_POSIX_PROTOTYPES)
+#elif defined (ACE_LACKS_POSIX_PROTOTYPES) || defined (ACE_LACKS_SOME_POSIX_PROTOTYPES)
   ACE_OSCALL_RETURN (::sigaction (signum, (struct sigaction*) nsa, osa), int, -1);
 #else
   ACE_OSCALL_RETURN (::sigaction (signum, nsa, osa), int, -1);
