@@ -1,4 +1,10 @@
-Wed May 14 15:45:30 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+Wed May 14 21:52:22 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/UPIPE_Stream.cpp (control): We need to "cast away const" so
+ 	  that this method can call the Stream's control() method
+	  (which is non-const).  Thanks to David Levine for locating this.
+
+	* ace/Singleton.cpp: Finished re-implementing ACE_Singleton.
 
 	* examples/ASX/Message_Queue/buffer_stream.cpp: Updated this
  	  example to illustrate (1) how filters work in an ACE_Stream and

@@ -77,13 +77,13 @@ ACE_Singleton<TYPE, LOCK>::instance (TYPE *new_instance)
 {
   ACE_TRACE ("ACE_Singleton::set_instance");
 
-  TYPE *&singleton = ACE_Singleton<TYPE, LOCK>::instance_i ();
   ACE_GUARD_RETURN (LOCK, ace_mon, (ACE_Singleton<TYPE, LOCK>::singleton_lock_i ()), 0);
 
+  TYPE *&singleton = ACE_Singleton<TYPE, LOCK>::instance_i ();
   TYPE *old_instance = singleton;
   singleton = new_instance;
 
-  return singleton;
+  return old_instance;
 }
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
@@ -158,6 +158,20 @@ ACE_SingletonEx<TYPE, LOCK, MEMORY>::instance (void)
     return singleton;
   else
     return singleton->ts_object ();
+}
+
+template <class TYPE, class LOCK, ACE_SingletonEx_Strategy MEMORY> TYPE *
+ACE_Singleton<TYPE, LOCK, MEMORY>::instance (TYPE *new_instance)
+{
+  ACE_TRACE ("ACE_Singleton<TYPE, LOCK, MEMORY>::set_instance");
+
+  ACE_GUARD_RETURN (LOCK, ace_mon, (ACE_SingletonEx<TYPE, LOCK, MEMORY>::singleton_lock_i ()), 0);
+
+  TYPE *&singleton = ACE_Singleton<TYPE, LOCK, MEMORY>::instance_i ();
+  TYPE *old_instance = singleton;
+  singleton = new_instance;
+
+  return old_instance;
 }
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
