@@ -1,3 +1,8 @@
+Fri Oct  9 15:37:26 PDT 1998  James Hu  <jxh@entera.com>
+
+	* ace/Mem_Map.cpp: Protect against assigning 0 to length_.  This
+	  was causing JAWS to fail.
+
 Fri Oct  9 16:59:26 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* examples/IPC_SAP/SOCK_SAP/run_test: 
