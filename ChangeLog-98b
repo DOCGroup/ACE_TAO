@@ -1,5 +1,8 @@
 Tue Nov 24 09:34:58 1998  David L. Levine  <levine@cs.wustl.edu>
 
+        * include/makeinclude/platform_chorus.GNU: added support for
+          exceptions=0/1 make option.
+
         * include/makeinclude/platform_chorus_ghs.GNU: removed
           trailing / from MVME_DIR definition.
 
