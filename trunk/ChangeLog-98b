@@ -1,3 +1,9 @@
+Tue Jun 16 16:08:23 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Timeprobe_T.h (class ACE_Timeprobe): Fixed copy constructor
+ 	  signature. Thanks to Chuck R. Gehr
+ 	  (GehrCR@LOUISVILLE.STORTEK.COM) for pointing this out.
+
 Tue Jun 16 16:18:08 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/FILE_Addr.cpp (operator=): Check to make sure we
