@@ -1,3 +1,30 @@
+Sun Jun 13 14:22:54 1999  Douglas C. Schmidt  <schmidt@maxixe.cs.wustl.edu>
+	
+	* ace/SOCK_Connector: Added the new ACE_Connect_QoS_Params
+	  parameter.  Also created two new private methods,
+	  shared_connect_start() and shared_connect_finish(), that factor
+	  out common code.
+
+	* ace/SOCK_Connector.cpp: Cleaned up the logic that checks for
+	  various types of errors and updated the code to use the new
+	  ACE_Errno_Guard features.
+
+	* ace/OS.h: Added an equality and in-equality operator for
+	  ACE_Errno_Guard and moved all the methods into OS.i rather than
+	  OS.h.  Also added an ACE_Export to the ACE_Errno_Guard class so
+	  that it can be used outside of the ACE library.
+	
+	* ace/OS.h: For Win32, added support for the WinSock2 QoS
+	  functions WSAAccept(), WSAConnect(), WSAJoinLeaf(), and
+	  WSAIoctl().
+	
+	* ace/OS.h: For Win32, added thin wrappers ACE_Flow_Spec and
+	  ACE_QoS that encapsulate the WinSock2 FLOWSPEC and QOS structs,
+	  respectively.
+
+	* ace/OS.h: For Win32, added an implicit conversion operator from
+	  iovec to WSABUF since they are structurally equivalent.
+
 Sun Jun 13 14:22:54 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* bin/README.html: Updated the information about the ACE

@@ -28,8 +28,7 @@
 class ACE_Export ACE_SOCK_Acceptor : public ACE_SOCK
 {
   // = TITLE
-  //     Defines the format and interface for an <ACE_Stream>
-  //     acceptor.
+  //     Defines a factory that creates new <ACE_Stream>s passively. 
 public:
   // = Initialization methods.
   ACE_SOCK_Acceptor (void);
@@ -52,15 +51,26 @@ public:
             int protocol = 0);
   // Initiate a passive mode socket.
 
-  // = Passive connection acceptance method.
+  // = Passive connection <accept> methods.
   int accept (ACE_SOCK_Stream &new_stream,
               ACE_Addr *remote_addr = 0,
               ACE_Time_Value *timeout = 0,
               int restart = 1,
               int reset_new_handle = 0) const;
-  // Accept a new data transfer connection.  A <timeout> of 0 means
-  // block forever, a <timeout> of {0, 0} means poll.  <restart> == 1
-  // means "restart if interrupted."
+  // Accept a new <ACE_SOCK_Stream> connection.  A <timeout> of 0
+  // means block forever, a <timeout> of {0, 0} means poll.  <restart>
+  // == 1 means "restart if interrupted," i.e., if errno == EINTR.
+
+  int accept (ACE_SOCK_Stream &new_stream,
+	      ACE_Accept_QoS_Params qos_params,
+              ACE_Addr *remote_addr = 0,
+              ACE_Time_Value *timeout = 0,
+              int restart = 1,
+              int reset_new_handle = 0) const;
+  // Accept a new <ACE_SOCK_Stream> connection using the RVSP QoS
+  // information in <qos_params>.  A <timeout> of 0 means block
+  // forever, a <timeout> of {0, 0} means poll.  <restart> == 1 means
+  // "restart if interrupted," i.e., if errno == EINTR.
 
   // = Meta-type info
   typedef ACE_INET_Addr PEER_ADDR;
@@ -73,6 +83,18 @@ public:
   // Declare the dynamic allocation hooks.
 
 protected:
+  int shared_accept_start (ACE_Time_Value *timeout,
+			   int restart,
+			   int &in_blocking_mode) const;
+  // Perform operations that must occur before <ACE_OS::accept> is
+  // called.
+
+  int shared_accept_finish (ACE_SOCK_Stream new_stream,
+			    int in_blocking_mode,
+			    int reset_new_handle) const;
+  // Perform operations that must occur after <ACE_OS::accept> is
+  // called.
+
   ACE_HANDLE shared_accept (ACE_Addr *remote_addr,
                             ACE_Time_Value *,
                             int restart,
