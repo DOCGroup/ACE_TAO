@@ -1,35 +1,32 @@
 // $Id$
 
-
 #include "Invocation.h"
-#include "Principal.h"
 #include "Stub.h"
+#include "Profile.h"
 
 #include "Timeprobe.h"
-#include "Dynamic_Adapter.h"
 #include "Object_KeyC.h"
 #include "debug.h"
 #include "Transport.h"
-#include "Pluggable.h"
 #include "Connector_Registry.h"
 #include "Wait_Strategy.h"
 #include "Transport_Mux_Strategy.h"
 #include "Bind_Dispatcher_Guard.h"
 #include "Endpoint.h"
-#include "Base_Transport_Property.h"
 
 #include "GIOP_Utils.h"
 #include "ORB_Core.h"
 #include "Pluggable_Messaging_Utils.h"
 #include "Endpoint_Selector_Factory.h"
-
-#include "ace/Dynamic_Service.h"
+#include "Invocation_Endpoint_Selectors.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Invocation.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(tao, Invocation, "$Id$")
+ACE_RCSID (tao,
+           Invocation,
+           "$Id$")
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
@@ -186,7 +183,7 @@ TAO_GIOP_Invocation::start (ACE_ENV_SINGLE_ARG_DECL)
       this->endpoint_selector_ =
         this->orb_core_->endpoint_selector_factory ()->get_selector (
           this
-           ACE_ENV_ARG_PARAMETER);
+          ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 
@@ -206,7 +203,7 @@ TAO_GIOP_Invocation::start (ACE_ENV_SINGLE_ARG_DECL)
   this->countdown_ = &countdown;
 
   this->endpoint_selector_->select_endpoint (this
-                                              ACE_ENV_ARG_PARAMETER);
+                                             ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Set the unique request ID associated with this request.
@@ -249,7 +246,7 @@ TAO_GIOP_Invocation::perform_call (TAO_Transport_Descriptor_Interface &desc
   // Obtain a connection.
   int result = conn_reg->connect (this,
                                   &desc
-                                   ACE_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (1);
 
   if (result == 0)
@@ -306,7 +303,7 @@ TAO_GIOP_Invocation::prepare_header (CORBA::Octet response_flags
   this->orb_core_->service_context_list (this->stub_,
                                          this->request_service_context (),
                                          this->restart_flag_
-                                          ACE_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Set the target specification mode
@@ -332,7 +329,7 @@ TAO_GIOP_Invocation::prepare_header (CORBA::Octet response_flags
       IOP::IOR *ior_info = 0;
       int retval = this->stub_->create_ior_info (ior_info,
                                                  index
-                                                  ACE_ENV_ARG_PARAMETER);
+                                                 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       if (retval == -1)
@@ -480,7 +477,8 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream
   // in order to obtain the profiles.
   TAO_Stub *stubobj = this->forward_reference_->_stubobj ();
 
-  this->location_forward_i (stubobj ACE_ENV_ARG_PARAMETER);
+  this->location_forward_i (stubobj
+                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);
 
   return TAO_INVOKE_RESTART;
@@ -500,7 +498,8 @@ TAO_GIOP_Invocation::location_forward (CORBA::Object_ptr forward
   // in order to obtain the profiles.
   TAO_Stub *stubobj = forward->_stubobj ();
 
-  this->location_forward_i (stubobj ACE_ENV_ARG_PARAMETER);
+  this->location_forward_i (stubobj
+                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);
 
   return TAO_INVOKE_RESTART;
@@ -522,7 +521,7 @@ TAO_GIOP_Invocation::location_forward_i (TAO_Stub *stubobj
       this->endpoint_selector_ =
         this->orb_core_->endpoint_selector_factory ()->get_selector (
           this
-           ACE_ENV_ARG_PARAMETER);
+          ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 
@@ -530,7 +529,7 @@ TAO_GIOP_Invocation::location_forward_i (TAO_Stub *stubobj
   // profiles.
   this->endpoint_selector_->forward (this,
                                      stubobj->base_profiles ()
-                                      ACE_ENV_ARG_PARAMETER);
+                                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->received_location_forward_ = 1;
@@ -828,7 +827,8 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_GIOP_INVOCATION_INVOKE_START);
 
-  int retval = this->invoke_i (0 ACE_ENV_ARG_PARAMETER);
+  int retval = this->invoke_i (0
+                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (retval);
 
   // A TAO_INVOKE_EXCEPTION status, but no exception raised means that
@@ -870,7 +870,7 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
             }
 
           exception->_tao_decode (this->inp_stream ()
-                                   ACE_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);
 
           if (TAO_debug_level > 5)
@@ -946,14 +946,17 @@ TAO_GIOP_Oneway_Invocation::invoke (ACE_ENV_SINGLE_ARG_DECL)
       || this->sync_scope_ == TAO::SYNC_EAGER_BUFFERING
       || this->sync_scope_ == TAO::SYNC_DELAYED_BUFFERING)
     {
-      return TAO_GIOP_Invocation::invoke (0 ACE_ENV_ARG_PARAMETER);
+      return TAO_GIOP_Invocation::invoke (0
+                                          ACE_ENV_ARG_PARAMETER);
     }
   if (this->sync_scope_ == TAO::SYNC_WITH_TRANSPORT)
     {
-      return TAO_GIOP_Invocation::invoke (1 ACE_ENV_ARG_PARAMETER);
+      return TAO_GIOP_Invocation::invoke (1
+                                          ACE_ENV_ARG_PARAMETER);
     }
 
-  int retval = this->invoke_i (0 ACE_ENV_ARG_PARAMETER);
+  int retval = this->invoke_i (0
+                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);
 
   // A TAO_INVOKE_EXCEPTION status, but no exception raised means that
@@ -1009,7 +1012,8 @@ TAO_GIOP_Locate_Request_Invocation::invoke (ACE_ENV_SINGLE_ARG_DECL)
                         TAO_INVOKE_EXCEPTION);
     }
 
-  CORBA::ULong locate_status = this->invoke_i (1 ACE_ENV_ARG_PARAMETER);
+  CORBA::ULong locate_status = this->invoke_i (1
+                                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);
 
   switch (locate_status)
@@ -1023,7 +1027,7 @@ TAO_GIOP_Locate_Request_Invocation::invoke (ACE_ENV_SINGLE_ARG_DECL)
       // NOTREACHED.
     case TAO_GIOP_OBJECT_FORWARD:
       return this->location_forward (this->inp_stream ()
-                                      ACE_ENV_ARG_PARAMETER);
+                                     ACE_ENV_ARG_PARAMETER);
     case TAO_GIOP_LOC_SYSTEM_EXCEPTION:
       {
         // Pull the exception from the stream.

@@ -1,4 +1,5 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
+//
 // $Id$
 
 #include "tao/Acceptor_Registry.h"
@@ -12,13 +13,14 @@
 #include "tao/Endpoint.h"
 
 #include "ace/Auto_Ptr.h"
-#include "ace/SString.h"
 
 #if !defined(__ACE_INLINE__)
 #include "tao/Acceptor_Registry.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(tao, Acceptor_Registry, "$Id$")
+ACE_RCSID (tao,
+           Acceptor_Registry,
+           "$Id$")
 
 TAO_Acceptor_Registry::TAO_Acceptor_Registry (void)
   : acceptors_ (0),
@@ -588,10 +590,3 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
 
   return 0;
 }
-
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

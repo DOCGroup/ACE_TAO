@@ -1,5 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -7,30 +6,18 @@
  *
  *  $Id$
  *
- *
- *  Data structures used by static and dynamic stubs, and to a
- *  lesser degree by skeletons
- *
- *  Header file for Win32 C/C++/COM interface to one kind of CORBA
- *  remote invocation framework.  This is for use by
- *  compiler-generated code, not by portable applications!
- *
- *  These constitute the stub API to this "ORB Core."  Such
- *  interfaces are not specified by OMG, and may differ between
- *  different ORBs.  This one has the particular advantage that
- *  stubs can be quite small.
- *
- *
- *  @author  Copyright 1994-1995 by Sun Microsystems, Inc.
+ *  @author  Portions Copyright 1994-1995 by Sun Microsystems Inc.
+ *  @author  Portions Copyright 1997-2002 by Washington University
  */
 //=============================================================================
 
 
 #ifndef TAO_STUB_H
 #define TAO_STUB_H
+
 #include "ace/pre.h"
 
-#include "tao/Pluggable.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -135,13 +122,13 @@ public:
   //   Object scope, then at the Current scope, then at the ORB scope,
   //   and, finally, ORB default values are checked.
 
-  CORBA::Policy *relative_roundtrip_timeout (void);
+  CORBA::Policy_ptr relative_roundtrip_timeout (void);
 
-  CORBA::Policy *sync_scope (void);
+  CORBA::Policy_ptr sync_scope (void);
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
-  CORBA::Policy *buffering_constraint (void);
+  CORBA::Policy_ptr buffering_constraint (void);
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
@@ -435,6 +422,7 @@ protected:
 class TAO_Export TAO_Stub_Auto_Ptr
 {
 public:
+
   // = Initialization and termination methods.
   /* explicit */ TAO_Stub_Auto_Ptr (TAO_Stub *p = 0);
   TAO_Stub_Auto_Ptr (TAO_Stub_Auto_Ptr &ap);
@@ -449,7 +437,9 @@ public:
   TAO_Stub *operator-> () const;
 
 protected:
+
   TAO_Stub *p_;
+
 };
 
 #if defined (__ACE_INLINE__)
@@ -457,4 +447,5 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
+
 #endif /* TAO_STUB_H */

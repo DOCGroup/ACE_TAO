@@ -1,10 +1,8 @@
 // $Id$
 
-// @ (#)iiopobj.cpp     1.9 95/11/04
-// Copyright 1995 by Sun Microsystems Inc.
+// Portions Copyright 1995 by Sun Microsystems Inc.
+// Portions Copyright 1997-2002 by Washington University
 // All Rights Reserved
-//
-// XXXX Bridge:         CORBA::Object operations
 //
 // Some CORBA::Object and other operations are specific to this STUB
 // based implementation, and can neither be used by other kinds of
@@ -12,6 +10,7 @@
 
 #include "Endpoint.h"
 #include "Stub.h"
+#include "Profile.h"
 #include "Sequence.h"
 #include "Object.h"
 #include "Invocation.h"
@@ -28,7 +27,9 @@
 # include "Stub.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(tao, TAO_Stub, "$Id$")
+ACE_RCSID (tao,
+           TAO_Stub,
+           "$Id$")
 
 TAO_Stub::TAO_Stub (const char *repository_id,
                     const TAO_MProfile &profiles,
@@ -332,6 +333,51 @@ TAO_Stub::_decr_refcnt (void)
   delete this;
   return 0;
 }
+
+TAO_Profile *
+TAO_Stub::set_profile_in_use_i (TAO_Profile *pfile)
+{
+  TAO_Profile *old = this->profile_in_use_;
+
+  // Since we are actively using this profile we dont want
+  // it to disappear, so increase the reference count by one!!
+  if (pfile && (pfile->_incr_refcnt () == 0))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) unable to increment profile ref!\n")),
+                        0);
+    }
+
+  this->profile_in_use_ = pfile;
+
+  if (old)
+    old->_decr_refcnt ();
+
+  return this->profile_in_use_;
+}
+
+void
+TAO_Stub::forward_back_one (void)
+{
+  TAO_MProfile *from = forward_profiles_->forward_from ();
+
+  delete this->forward_profiles_;
+
+  // the current profile in this profile list is no
+  // longer being forwarded, so set the reference to zero.
+  if (from == &this->base_profiles_)
+    {
+      this->base_profiles_.get_current_profile ()->forward_to (0);
+      this->forward_profiles_ = 0;
+    }
+  else
+    {
+      from->get_current_profile ()->forward_to (0);
+      this->forward_profiles_ = from;
+    }
+
+}
+
 
 // Note that if the repository ID (typeID) is NULL, it will make
 // narrowing rather expensive, though it does ensure that type-safe

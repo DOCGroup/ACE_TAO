@@ -16,28 +16,30 @@
 
 #ifndef TAO_ACCEPTOR_REGISTRY_H
 #define TAO_ACCEPTOR_REGISTRY_H
+
 #include "ace/pre.h"
 
-#include "tao/Pluggable.h"
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SString.h"
-#include "tao/corbafwd.h"
 #include "tao/Resource_Factory.h"
+
+#include "ace/SString.h"
 
 // Forward declarations.
 class ACE_Addr;
 class ACE_Reactor;
+
 class TAO_ORB_Core;
+class TAO_Acceptor;
 class TAO_Acceptor_Filter;
 
 class TAO_Stub;
 class TAO_Profile;
 class TAO_MProfile;
-
 
 typedef TAO_Acceptor** TAO_AcceptorSetIterator;
 
@@ -139,4 +141,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
+
 #endif /* TAO_ACCEPTOR_REGISTRY_H */

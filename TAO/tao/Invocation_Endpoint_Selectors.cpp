@@ -71,8 +71,7 @@ TAO_Default_Endpoint_Selector::next (TAO_GIOP_Invocation *
 }
 
 void
-TAO_Default_Endpoint_Selector::forward (TAO_GIOP_Invocation
-                                        *invocation,
+TAO_Default_Endpoint_Selector::forward (TAO_GIOP_Invocation *invocation,
                                         const TAO_MProfile &mprofile
                                         ACE_ENV_ARG_DECL)
 {
@@ -86,10 +85,10 @@ TAO_Default_Endpoint_Selector::forward (TAO_GIOP_Invocation
   // get created on a per-call basis. For now we'll play it safe.
   if (invocation->stub ()->next_profile () == 0)
     ACE_THROW (CORBA::TRANSIENT (
-                                 CORBA_SystemException::_tao_minor_code (
-                                       TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
-                                       errno),
-                                 CORBA::COMPLETED_NO));
+      CORBA_SystemException::_tao_minor_code (
+        TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
+        errno),
+      CORBA::COMPLETED_NO));
 }
 
 void

@@ -8,6 +8,7 @@
 
 #include "tao/Object.h"
 #include "tao/Stub.h"
+#include "tao/Profile.h"
 #include "tao/ORB_Core.h"
 #include "tao/Invocation.h"
 #include "tao/Connector_Registry.h"

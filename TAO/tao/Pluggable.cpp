@@ -1,16 +1,12 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
+//
 // $Id$
 
 #include "tao/Pluggable.h"
 #include "tao/MProfile.h"
+#include "tao/Profile.h"
 #include "tao/Environment.h"
-#include "tao/ORB_Core.h"
-#include "tao/Client_Strategy_Factory.h"
-#include "tao/Wait_Strategy.h"
-#include "tao/Transport_Mux_Strategy.h"
 #include "tao/debug.h"
-
-#include "tao/target_specification.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Pluggable.i"
@@ -27,7 +23,6 @@ ACE_RCSID (tao,
 TAO_Connector::TAO_Connector (CORBA::ULong tag)
   : tag_(tag),
     orb_core_ (0)
-
 {
 }
 
@@ -73,7 +68,8 @@ TAO_Connector::make_mprofile (const char *string,
   if (TAO_debug_level > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - TAO_Connector::make_mprofile <%s>\n"),
+                  ACE_TEXT ("TAO (%P|%t) - TAO_Connector::make_mprofile ")
+                  ACE_TEXT ("<%s>\n"),
                   string));
     }
 
@@ -170,14 +166,16 @@ TAO_Connector::make_mprofile (const char *string,
           // or
           //    `endpoint/object_key'
 
-          TAO_Profile *profile = this->make_profile (ACE_ENV_SINGLE_ARG_PARAMETER);
+          TAO_Profile *profile =
+            this->make_profile (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
           // Failure:  Problem during profile creation
 
           // Initialize a Profile using the individual endpoint
           // string.
           // @@ Not exception safe!  We need a TAO_Profile_var!
-          profile->parse_string (endpoint.c_str () ACE_ENV_ARG_PARAMETER);
+          profile->parse_string (endpoint.c_str ()
+                                 ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
 
           // Give up ownership of the profile.

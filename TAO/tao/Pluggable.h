@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- *   Interface for the TAO pluggable protocol framework.
+ *  Interface for the TAO pluggable protocol framework.
  *
  *  @author  Fred Kuhns <fredk@cs.wustl.edu>
  */
@@ -15,6 +15,7 @@
 
 #ifndef TAO_PLUGGABLE_H
 #define TAO_PLUGGABLE_H
+
 #include "ace/pre.h"
 
 #include "tao/corbafwd.h"
@@ -23,8 +24,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Sequence.h"
-#include "tao/Typecode.h"
 #include "tao/IOPC.h"
 
 // Forward declarations.
@@ -62,6 +61,7 @@ class TAO_Transport;
 class TAO_Export TAO_Acceptor
 {
 public:
+
   TAO_Acceptor (CORBA::ULong tag);
 
   /// Destructor
@@ -126,6 +126,7 @@ public:
                           TAO_ObjectKey &key) = 0;
 
 private:
+
   /// IOP protocol tag.
   CORBA::ULong tag_;
 
@@ -210,6 +211,7 @@ private:
 
   /// Pointer to our ORB core
   TAO_ORB_Core *orb_core_;
+
 };
 
 #if defined (__ACE_INLINE__)
@@ -217,4 +219,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
+
 #endif  /* TAO_PLUGGABLE_H */

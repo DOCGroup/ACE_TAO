@@ -1,3 +1,53 @@
+Thu Mar  7 20:43:56 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Acceptor_Registry.h:
+	* tao/Connector_Registry.h:
+	* tao/Invocation.h:
+	* tao/Invocation_Endpoint_Selectors.h:
+	* tao/MProfile.h:
+	* tao/MProfile.i:
+	* tao/Pluggable.h:
+	* tao/Stub.h:
+	* tao/Stub.i:
+
+	  Reduced inter-header dependencies by removing extraneous header
+	  includes, forward declaring where appropriate, moving some
+	  (large) inline methods of `.i' files to the corresponding `.cpp'
+	  file.  The latter was needed to make it possible to remove some
+	  includes from the corresponding header file.  These changes
+	  should further reduce TAO preprocessing/compile times.
+
+	* tao/Acceptor_Registry.cpp:
+	* tao/Asynch_Invocation.cpp:
+	* tao/ClientInterceptorAdapter.cpp:
+	* tao/ClientRequestInfo_i.cpp:
+	* tao/Connector_Registry.cpp:
+	* tao/Default_Endpoint_Selector_Factory.cpp:
+	* tao/Invocation.cpp:
+	* tao/Invocation_Endpoint_Selectors.cpp:
+	* tao/MProfile.cpp:
+	* tao/ORB.cpp:
+	* tao/ORB_Core.cpp:
+	* tao/Object.cpp:
+	* tao/Pluggable.cpp:
+	* tao/Stub.cpp:
+	* tao/PortableServer/POA.cpp:
+
+	  The inter-header dependency reductions above required inclusion
+	  of the appropriate header(s) in these source files.  In some
+	  cases, some inline methods were moved to the corresponding
+	  source file.
+
+	* tao/TAO_Singleton.h:
+
+	  Made TAO_TSS_Singleton assignment operator and copy constructor
+	  private to mirror a change that was made to the
+	  ACE_TSS_Singleton class.
+
+	* tao/Any.h:
+
+	  Corrected author information.
+
 Thu Mar  7 17:34:26 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/client.cpp:
