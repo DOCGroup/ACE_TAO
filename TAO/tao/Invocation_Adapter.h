@@ -54,12 +54,17 @@ namespace TAO
    * The main objective of this class is to adapt the type and
    * invocation specific information declared in the IDL by the
    * application and convert them as CORBA invocations to the target
-   * object.
+   * object. Implementation of this class knows how to make
+   * invocations on a collocated or a remote object.
+   *
+   * This adapter class serves as the base class for various types of
+   * invocations like AMI, DII, DSI etc. Adapter classes for AMI, DII,
+   * DSI inherit from this class and their local behavioural
+   * information before kicking off an invocation.
    *
    * @@ More info..
    * Wafer thin inclusions
    * All stuff created on stack
-   * No exception decision in this class.
    * Only handles starts and restarts
    *
    */
@@ -87,10 +92,11 @@ namespace TAO
      * while creating a message format.
      *
      * @param cpb The collocation proxy broker for the target if one
-     * exists.
+     * exists. This is useful especially to route the call to the
+     * collocated target.
      *
      * @param type The operation type which could be a oneway or two
-     * way operation. this information is availbe in the IDL file.
+     * way operation. this information is available in the IDL file.
      *
      * @param mode Invocation mode. This information is also available
      * in the IDL file and in the generated code.
@@ -142,36 +148,41 @@ namespace TAO
                                     TAO_Operation_Details &op
                                     ACE_ENV_ARG_DECL);
 
-    /// Makes a remote calls
+    /// Makes a remote calls to the target.
     /**
-     * This method does the following in the process of making a
-     * remote call
-     *
-     * - Checks whether the operation is a oneway or twoway and
-     *   creates the right invocation objects and delegates the
-     *   responsibilities to it. For more details on the
-     *   responsibilities of these objects pleas check the
-     *   documentation in Synch_Invocation.h
-     *
-     * - Extracts the roundtrip timeout policies set in the ORB
-     *
-     * - Uses the target information to pick a profile and a transport
-     *   object on which the invocation needs to be sent
-     *
-     * - Handles forward location replies that could be received from
-     *   the target
-     *
+     * The stub pointer passed to this call has all the details about
+     * the remote object to which the invocation needs to be routed
+     * to. The implementation of this method takes care of reinvoking
+     * the target if it receives forwarding information or if the
+     * first invocation fails for some reason, like a loss of
+     * connection during send () etc.
      */
     virtual void invoke_remote (TAO_Stub *,
                                 TAO_Operation_Details &op
                                 ACE_ENV_ARG_DECL);
 
-    /// Actual implementation of the invoke_remote () call.
     /**
-     * This is actually a helper function.
+     * @name Helper methods for making different types of invocations.
      *
-     * @param effective_target, is the target on which the present
-     * invocation is on.
+     * These methods useful for various types of invocations like
+     * SII, AMI, DII and DSI. All the subclasses implement these
+     * methods to get the right behaviour at their level.
+     */
+    //@{
+
+    /// Helper method that prepares the necessary stuff for a remote
+    /// invocation.
+
+    /* This method does the following necessary activities needed for
+     * a remote  invocation.
+     *
+     * - Extracts the roundtrip timeout policies set in the ORB or
+     *   Object or at the thread level
+     * - Uses the target information to pick a profile and a transport
+     *   object on which the invocation needs to be sent
+     *
+     * - Checks whether the operation is a oneway or twoway and
+     *   delegates the call.
      */
     virtual Invocation_Status invoke_remote_i (
         TAO_Stub *,
@@ -179,6 +190,7 @@ namespace TAO
         CORBA::Object_ptr &effective_target,
         ACE_Time_Value *&max_wait_time
         ACE_ENV_ARG_DECL);
+
 
     virtual Invocation_Status invoke_twoway (
         TAO_Operation_Details &op,
@@ -194,6 +206,7 @@ namespace TAO
         ACE_Time_Value *&max_wait_time
         ACE_ENV_ARG_DECL);
 
+    //@}
     /// Helper function that extracts the roundtrip timeout policies
     /// set in the ORB.
     bool get_timeout (TAO_Stub *stub,

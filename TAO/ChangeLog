@@ -1,3 +1,18 @@
+Tue Oct 28 13:48:50 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Invocation_Adapter.h: 
+
+	  Added some documentation. More stuff needs to be added.
+	
+	* tao/Profile_Transport_Resolver.cpp: 
+
+	  Cosmetic fix.
+
+	* tao/Messaging/MessagingC.cpp:
+	* tao/ObjRefTemplate/ObjectReferenceTemplateC.cpp:
+
+          Fixed a couple of fuzz errors that slipped.
+
 Tue Oct 28 13:33:58 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/IORInterceptor/TAO_IORInterceptor.dsp;
