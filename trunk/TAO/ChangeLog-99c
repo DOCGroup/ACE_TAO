@@ -25,7 +25,7 @@ Mon Aug  9 20:13:04 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Mon Aug 09 19:11:12 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-        * tests\InterOp-Naming\{server,client}.dsp: Changed the executable
+        * tests/InterOp-Naming/{server,client}.dsp: Changed the executable
           names from server/client to INS_test_server/INS_test_client
           respectively.  Thanks to Mitsuhiko Hara
           <Mitsuhiko.Hara@gemsa.med.ge.com> for reporting this.
@@ -6357,7 +6357,7 @@ Sat Jun 26 12:45:26 1999  Jody Hagins <jody@atdesk.com>
 
         * TAO/tao/orbconf.h: Added TAO_EXPORT_NESTED_CLASSES macro to
           allow nested classes to be exported (see also change in
-          ace\config-win32-borland.h). Borland C++Builder (unlike MSVC++)
+          ace/config-win32-borland.h). Borland C++Builder (unlike MSVC++)
           does not automatically export nested classes when the outer
           class is exported.
 
