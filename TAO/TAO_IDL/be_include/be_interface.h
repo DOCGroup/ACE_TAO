@@ -144,6 +144,12 @@ public:
   // helper method passed to the template method to invoke ctors of all the
   // base classes.
 
+  static int copy_ctor_helper (be_interface *,
+			       be_interface *,
+			       TAO_OutStream *os);
+  // helper method passed to the template method to invoke ctors of all the
+  // base classes.
+
   void compute_fullskelname (void);
   // compute the fully scoped skel class name
 
