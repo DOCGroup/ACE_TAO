@@ -1,19 +1,19 @@
 Wed Aug 16 13:16:18 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/orbsvcs/Makefile.CosTrading (CPP_SRCS): 
-	* orbsvcs/orbsvcs/Makefile.CosEvent (CPP_SRCS): 
-	* orbsvcs/orbsvcs/Makefile.CosNaming (CPP_SRCS): 
+	* orbsvcs/orbsvcs/Makefile.CosTrading (CPP_SRCS):
+	* orbsvcs/orbsvcs/Makefile.CosEvent (CPP_SRCS):
+	* orbsvcs/orbsvcs/Makefile.CosNaming (CPP_SRCS):
 	  Added entries so that the new files *_Loader.* for the
 	  respective services are also compiled.
-	
+
 Tue Aug 15 19:05:50 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tao/RT_Policy_i.cpp: 
+	* tao/RT_Policy_i.cpp:
 	* tao/RT_Policy_i.h:
 	  Fixed minor bug in the decoding of the policy
 	  <TAO_ClientProtocolPolicy>.
-	  
-	  Added methods for GIOP Properties encoding (i.e. 
+
+	  Added methods for GIOP Properties encoding (i.e.
 	  _tao_encode and _tao_decode).
 
 	* tao/Stub.cpp
