@@ -71,8 +71,7 @@ ACE_Framework_Repository::close (void)
                               this->component_vector_[i]);
 
             this->component_vector_[i] = 0;
-            if (s)
-              s->close_singleton ();
+            delete s;
           }
 
       delete [] this->component_vector_;
