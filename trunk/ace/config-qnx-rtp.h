@@ -145,6 +145,7 @@
 #define ACE_LACKS_UCONTEXT_H
 #define ACE_LACKS_UNIX_DOMAIN_SOCKETS
 #define ACE_LACKS_U_LONGLONG_T
+
 #define ACE_LACKS_RLIMIT         // QNX rlimit syscalls don't work properly with ACE.
 
 #define ACE_MT_SAFE 1
@@ -159,9 +160,9 @@
 
 //#define ACE_HAS_NONSTATIC_OBJECT_MANAGER 1
 
-//#if !defined (ACE_NTRACE)
-//# define ACE_NTRACE 1
-//#endif /* ACE_NTRACE */
+#if !defined (ACE_NTRACE)
+# define ACE_NTRACE 1
+#endif /* ACE_NTRACE */
 
 #include "ace/post.h"
 #endif /* ACE_CONFIG_H */

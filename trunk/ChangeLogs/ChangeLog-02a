@@ -1,3 +1,21 @@
+Thu Jan 18 18:48:33 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* ace/Log_Msg.cpp:
+	  Declare sys_nerr as const int under QNX/RTP (and NTO).
+
+	* ace/Pipe.cpp:
+	  Use pipe() under QNX because it lacks both socketpair() and it
+	  cannot open a socket to itself.
+
+	* ace/config-qnx-rtp.h:
+	  Remove ACE_NTRACE hacks.
+	  
+	* include/makeinclude/platform_qnx_rtp_gcc.GNU:
+	  Do not enable the repo by default it breaks QNX.
+	  Instead of removing the definition of DCFLAGS by default we
+	  set debug=0 all the time, that seems like a cleaner way to
+	  disable debugging.
+
 Thu Jan 18 09:34:35 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * include/makeinclude/platform_linux.GNU:

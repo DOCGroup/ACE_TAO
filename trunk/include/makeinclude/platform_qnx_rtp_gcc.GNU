@@ -1,23 +1,17 @@
 # $Id$
 
-# QNX 4.25 hosted GNU g++ for Neutrino 2.0
+# QNX/RTP hosted, using gcc-2.95.2
 
-CROSS-COMPILE = 1
 ACE_HAS_GNUG_PRE_2_8 := 0
-#static_libs_only = 1
 
-#
-# Under the current version of QNX RTP ACE crashes
-# if compiled with debug oprion enabled.
-#
+# ACE crashes when compiled with debugging symbols
+ifeq (,$(debug))
+  debug := 0
+endif # ! debug
 
 ifeq (,$(optimize))
   optimize = 1
 endif # ! optimize
-
-ifeq (,$(repo))
-  repo = 1
-endif # ! repo
 
 CC      = gcc
 CXX     = g++
@@ -26,9 +20,10 @@ CCFLAGS += $(CFLAGS) -fno-implicit-templates
 
 #
 # Under the current version of QNX RTP ACE crashes
-# if compiled with debug oprion enabled.
+# if compiled with debug option enabled. We leave the option here,
+# but disable debug by default.
 #
-#DCFLAGS += -g
+DCFLAGS += -g
 DLD     = $(CXX)
 LD      = $(CXX)
 LDFLAGS +=
