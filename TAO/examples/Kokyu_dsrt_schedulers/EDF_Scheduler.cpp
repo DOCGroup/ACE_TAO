@@ -226,6 +226,10 @@ EDF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
+/*DTTIME: 
+  first time point which records the entering scheduler time on the client side.
+  Fifth Time.
+*/
   Kokyu::Svc_Ctxt_DSRT_QoS sc_qos;
 
   CORBA::String_var operation = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -245,13 +249,12 @@ EDF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
   CORBA::Policy_ptr sched_policy =
     this->current_->scheduling_parameter(ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
-
-  /*
+/*
   int guid;
   ACE_OS::memcpy (&guid,
                   this->current_->id ()->get_buffer (),
                   this->current_->id ()->length ());
-  */
+*/
 
   CORBA::Long importance;
   TimeBase::TimeT deadline;
@@ -281,7 +284,7 @@ EDF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
                   "(%t|%T): send_request guid = %d\n",
                   int_guid));
 #endif
-
+    }
       //Fill the guid in the SC Qos struct
       sc_qos.guid.length (this->current_->id ()->length ());
       guid_copy (sc_qos.guid, *(this->current_->id ()));
@@ -303,7 +306,6 @@ EDF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
       // Add this context to the service context list.
       ri->add_request_service_context (sc, 0 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
-    }
 
 
 #ifdef KOKYU_DSRT_LOGGING
@@ -313,13 +315,24 @@ EDF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
               ));
 #endif
 
+/*DTTIME:
+  record the entering dispatcher time on the client side.
+  Sixth Time.
+*/
   kokyu_dispatcher_->update_schedule (*(this->current_->id ()),
                                         Kokyu::BLOCK);
-
+/*DTTIME:
+  record the leaving dispatcher time on the client side.
+  Seventh Time.
+*/
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
               ACE_LIB_TEXT ("(%t|%T): send_request interceptor done\n")));
 #endif
+/*DTTIME:
+  record the leaving scheduler time on the client side.
+  Eighth Time.
+*/  
 }
 
 void
@@ -332,6 +345,10 @@ EDF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
+/*DTTIME:
+  recording the entering scheduler time on the server side.
+  Nighth Time.
+*/
   Kokyu::Svc_Ctxt_DSRT_QoS* sc_qos_ptr;
 
 #ifdef KOKYU_DSRT_LOGGING
@@ -415,12 +432,22 @@ EDF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
   qos.importance_ = importance;
   qos.deadline_ = deadline;
 
+/*DTTIME:
+  record the entering dispatcher time on the server side.
+  Tenth Time.
+*/
   this->kokyu_dispatcher_->schedule (guid, qos);
-
+/*DTTIME:
+  record the leaving dispatcher time on the server side.
+  Eleventh Time.
+*/
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG, "(%t|%T): receive_request interceptor done\n"));
 #endif
-
+/*DTTIME:
+  record the leaving scheduler time on the server side.
+  Twelfth Time.
+*/
 }
 
 void
@@ -541,6 +568,7 @@ EDF_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri
                               ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+
   RTScheduling::Current::IdType guid;
 
   CORBA::String_var operation = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -559,6 +587,7 @@ EDF_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri
 
   // Check that the reply service context was received as
   // expected.
+
   IOP::ServiceContext_var sc =
     ri->get_reply_service_context (Client_Interceptor::SchedulingInfo 
                                    ACE_ENV_ARG_PARAMETER);
@@ -604,6 +633,7 @@ EDF_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri
   qos.deadline_ =   qos.importance_ = importance;
   qos.deadline_ = deadline;
   this->kokyu_dispatcher_->schedule (guid, qos);
+
 }
 
 void
@@ -622,8 +652,9 @@ EDF_Scheduler::receive_other (PortableInterceptor::ClientRequestInfo_ptr ri
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  receive_reply (ri ACE_ENV_ARG_PARAMETER);
+/*  receive_reply (ri ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
+*/
 }
 
 void
