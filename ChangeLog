@@ -1,3 +1,11 @@
+Thu Aug 12 21:17:05 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* bin/MakeProjectCreator/config/taolib.mpb:
+	  Inherit from pidl.mpb:
+
+	* bin/MakeProjectCreator/config/pidl.mpb:
+	  New file, custom file type definition for *.pidl files.
+
 Thu Aug 12 16:12:18 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/fuzz.pl:
