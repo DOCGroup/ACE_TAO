@@ -1,3 +1,22 @@
+Wed Oct 20 09:21:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/corbafwd.h:
+	* tao/NVList.h:
+	* tao/NVList.cpp:
+	* tao/GIOP_Server_Request.cpp:
+	  Using a ServiceContext we can insert padding to ensure that the
+	  payload of the message is preserved in DSI gateways. This let us 
+	  further reduce the number of data copies and memory
+	  allocations.
+
+	* tests/DSI_Gateway/test_dsi.h:
+	* tests/DSI_Gateway/test_dsi.cpp:
+	  Use the new features to implement DSI forwarding of requests
+	  without *any* marshaling/demarshaling.
+
+	* tests/DSI_Gateway/gateway.cpp:
+	  Removed debugging code.
+
 Wed Oct 20 08:45:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_cs.cpp:
