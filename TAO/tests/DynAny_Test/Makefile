@@ -68,6 +68,8 @@ realclean:	clean
 .obj/da_testsC.o .obj/da_testsC.so .shobj/da_testsC.o .shobj/da_testsC.so: da_testsC.cpp da_testsC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -336,14 +338,15 @@ realclean:	clean
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
  $(TAO_ROOT)/tao/Cache_Entries.h \
- $(TAO_ROOT)/tao/Base_Connection_Property.h \
+ $(TAO_ROOT)/tao/Connection_Descriptor_Interface.h \
  $(TAO_ROOT)/tao/Endpoint.h \
  $(TAO_ROOT)/tao/Endpoint.i \
- $(TAO_ROOT)/tao/Base_Connection_Property.inl \
+ $(TAO_ROOT)/tao/Connection_Descriptor_Interface.inl \
  $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.inl \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/ORB_Core.i \
@@ -384,13 +387,13 @@ realclean:	clean
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
- $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  da_testsC.i
 
 .obj/da_testsS.o .obj/da_testsS.so .shobj/da_testsS.o .shobj/da_testsS.so: da_testsS.cpp da_testsS.h da_testsC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -659,14 +662,15 @@ realclean:	clean
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
  $(TAO_ROOT)/tao/Cache_Entries.h \
- $(TAO_ROOT)/tao/Base_Connection_Property.h \
+ $(TAO_ROOT)/tao/Connection_Descriptor_Interface.h \
  $(TAO_ROOT)/tao/Endpoint.h \
  $(TAO_ROOT)/tao/Endpoint.i \
- $(TAO_ROOT)/tao/Base_Connection_Property.inl \
+ $(TAO_ROOT)/tao/Connection_Descriptor_Interface.inl \
  $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.inl \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/ORB_Core.i \
@@ -707,10 +711,9 @@ realclean:	clean
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
- $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  da_testsC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
+ $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
@@ -719,6 +722,7 @@ realclean:	clean
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
+ $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  da_testsS_T.h da_testsS_T.i da_testsS_T.cpp da_testsS.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
@@ -745,6 +749,8 @@ realclean:	clean
 .obj/data.o .obj/data.so .shobj/data.o .shobj/data.so: data.cpp data.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1013,14 +1019,15 @@ realclean:	clean
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
  $(TAO_ROOT)/tao/Cache_Entries.h \
- $(TAO_ROOT)/tao/Base_Connection_Property.h \
+ $(TAO_ROOT)/tao/Connection_Descriptor_Interface.h \
  $(TAO_ROOT)/tao/Endpoint.h \
  $(TAO_ROOT)/tao/Endpoint.i \
- $(TAO_ROOT)/tao/Base_Connection_Property.inl \
+ $(TAO_ROOT)/tao/Connection_Descriptor_Interface.inl \
  $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.inl \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/ORB_Core.i \
@@ -1061,9 +1068,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
- $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
+ $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
@@ -1072,6 +1078,8 @@ realclean:	clean
 .obj/driver.o .obj/driver.so .shobj/driver.o .shobj/driver.so: driver.cpp driver.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1340,14 +1348,15 @@ realclean:	clean
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
  $(TAO_ROOT)/tao/Cache_Entries.h \
- $(TAO_ROOT)/tao/Base_Connection_Property.h \
+ $(TAO_ROOT)/tao/Connection_Descriptor_Interface.h \
  $(TAO_ROOT)/tao/Endpoint.h \
  $(TAO_ROOT)/tao/Endpoint.i \
- $(TAO_ROOT)/tao/Base_Connection_Property.inl \
+ $(TAO_ROOT)/tao/Connection_Descriptor_Interface.inl \
  $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.inl \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/ORB_Core.i \
@@ -1388,11 +1397,10 @@ realclean:	clean
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
- $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  test_dynany.h test_dynarray.h test_dynenum.h test_dynsequence.h \
  test_dynstruct.h test_dynunion.h test_wrapper.h test_wrapper.cpp \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
+ $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
@@ -1403,6 +1411,8 @@ realclean:	clean
 .obj/test_dynany.o .obj/test_dynany.so .shobj/test_dynany.o .shobj/test_dynany.so: test_dynany.cpp test_dynany.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1671,14 +1681,15 @@ realclean:	clean
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
  $(TAO_ROOT)/tao/Cache_Entries.h \
- $(TAO_ROOT)/tao/Base_Connection_Property.h \
+ $(TAO_ROOT)/tao/Connection_Descriptor_Interface.h \
  $(TAO_ROOT)/tao/Endpoint.h \
  $(TAO_ROOT)/tao/Endpoint.i \
- $(TAO_ROOT)/tao/Base_Connection_Property.inl \
+ $(TAO_ROOT)/tao/Connection_Descriptor_Interface.inl \
  $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.inl \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/ORB_Core.i \
@@ -1719,8 +1730,6 @@ realclean:	clean
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
- $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  data.h \
  $(TAO_ROOT)/tao/DynamicAny/DynamicAny.h \
  $(TAO_ROOT)/tao/DynamicAny/dynamicany_export.h \
@@ -1732,6 +1741,8 @@ realclean:	clean
 .obj/test_dynarray.o .obj/test_dynarray.so .shobj/test_dynarray.o .shobj/test_dynarray.so: test_dynarray.cpp test_dynarray.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -2000,14 +2011,15 @@ realclean:	clean
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
  $(TAO_ROOT)/tao/Cache_Entries.h \
- $(TAO_ROOT)/tao/Base_Connection_Property.h \
+ $(TAO_ROOT)/tao/Connection_Descriptor_Interface.h \
  $(TAO_ROOT)/tao/Endpoint.h \
  $(TAO_ROOT)/tao/Endpoint.i \
- $(TAO_ROOT)/tao/Base_Connection_Property.inl \
+ $(TAO_ROOT)/tao/Connection_Descriptor_Interface.inl \
  $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.inl \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/ORB_Core.i \
@@ -2048,8 +2060,6 @@ realclean:	clean
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
- $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  da_testsC.h da_testsC.i data.h \
  $(TAO_ROOT)/tao/DynamicAny/DynamicAny.h \
  $(TAO_ROOT)/tao/DynamicAny/dynamicany_export.h \
@@ -2061,6 +2071,8 @@ realclean:	clean
 .obj/test_dynenum.o .obj/test_dynenum.so .shobj/test_dynenum.o .shobj/test_dynenum.so: test_dynenum.cpp test_dynenum.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -2329,14 +2341,15 @@ realclean:	clean
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
  $(TAO_ROOT)/tao/Cache_Entries.h \
- $(TAO_ROOT)/tao/Base_Connection_Property.h \
+ $(TAO_ROOT)/tao/Connection_Descriptor_Interface.h \
  $(TAO_ROOT)/tao/Endpoint.h \
  $(TAO_ROOT)/tao/Endpoint.i \
- $(TAO_ROOT)/tao/Base_Connection_Property.inl \
+ $(TAO_ROOT)/tao/Connection_Descriptor_Interface.inl \
  $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.inl \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/ORB_Core.i \
@@ -2377,8 +2390,6 @@ realclean:	clean
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
- $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  da_testsC.h da_testsC.i data.h \
  $(TAO_ROOT)/tao/DynamicAny/DynamicAny.h \
  $(TAO_ROOT)/tao/DynamicAny/dynamicany_export.h \
@@ -2390,6 +2401,8 @@ realclean:	clean
 .obj/test_dynsequence.o .obj/test_dynsequence.so .shobj/test_dynsequence.o .shobj/test_dynsequence.so: test_dynsequence.cpp test_dynsequence.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -2658,14 +2671,15 @@ realclean:	clean
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
  $(TAO_ROOT)/tao/Cache_Entries.h \
- $(TAO_ROOT)/tao/Base_Connection_Property.h \
+ $(TAO_ROOT)/tao/Connection_Descriptor_Interface.h \
  $(TAO_ROOT)/tao/Endpoint.h \
  $(TAO_ROOT)/tao/Endpoint.i \
- $(TAO_ROOT)/tao/Base_Connection_Property.inl \
+ $(TAO_ROOT)/tao/Connection_Descriptor_Interface.inl \
  $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.inl \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/ORB_Core.i \
@@ -2706,8 +2720,6 @@ realclean:	clean
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
- $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  da_testsC.h da_testsC.i data.h \
  $(TAO_ROOT)/tao/DynamicAny/DynamicAny.h \
  $(TAO_ROOT)/tao/DynamicAny/dynamicany_export.h \
@@ -2719,6 +2731,8 @@ realclean:	clean
 .obj/test_dynstruct.o .obj/test_dynstruct.so .shobj/test_dynstruct.o .shobj/test_dynstruct.so: test_dynstruct.cpp test_dynstruct.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -2987,14 +3001,15 @@ realclean:	clean
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
  $(TAO_ROOT)/tao/Cache_Entries.h \
- $(TAO_ROOT)/tao/Base_Connection_Property.h \
+ $(TAO_ROOT)/tao/Connection_Descriptor_Interface.h \
  $(TAO_ROOT)/tao/Endpoint.h \
  $(TAO_ROOT)/tao/Endpoint.i \
- $(TAO_ROOT)/tao/Base_Connection_Property.inl \
+ $(TAO_ROOT)/tao/Connection_Descriptor_Interface.inl \
  $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.inl \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/ORB_Core.i \
@@ -3035,8 +3050,6 @@ realclean:	clean
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
- $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  da_testsC.h da_testsC.i data.h \
  $(TAO_ROOT)/tao/DynamicAny/DynamicAny.h \
  $(TAO_ROOT)/tao/DynamicAny/dynamicany_export.h \
@@ -3048,6 +3061,8 @@ realclean:	clean
 .obj/test_dynunion.o .obj/test_dynunion.so .shobj/test_dynunion.o .shobj/test_dynunion.so: test_dynunion.cpp test_dynunion.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -3316,14 +3331,15 @@ realclean:	clean
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
  $(TAO_ROOT)/tao/Cache_Entries.h \
- $(TAO_ROOT)/tao/Base_Connection_Property.h \
+ $(TAO_ROOT)/tao/Connection_Descriptor_Interface.h \
  $(TAO_ROOT)/tao/Endpoint.h \
  $(TAO_ROOT)/tao/Endpoint.i \
- $(TAO_ROOT)/tao/Base_Connection_Property.inl \
+ $(TAO_ROOT)/tao/Connection_Descriptor_Interface.inl \
  $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.inl \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/ORB_Core.i \
@@ -3364,8 +3380,6 @@ realclean:	clean
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
- $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  da_testsC.h da_testsC.i data.h \
  $(TAO_ROOT)/tao/DynamicAny/DynamicAny.h \
  $(TAO_ROOT)/tao/DynamicAny/dynamicany_export.h \
@@ -3377,6 +3391,8 @@ realclean:	clean
 .obj/test_wrapper.o .obj/test_wrapper.so .shobj/test_wrapper.o .shobj/test_wrapper.so: test_wrapper.cpp test_wrapper.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \

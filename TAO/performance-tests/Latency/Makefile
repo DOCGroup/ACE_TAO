@@ -115,6 +115,8 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -401,10 +403,10 @@ realclean: clean
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
  $(TAO_ROOT)/tao/Cache_Entries.h \
- $(TAO_ROOT)/tao/Base_Connection_Property.h \
+ $(TAO_ROOT)/tao/Connection_Descriptor_Interface.h \
  $(TAO_ROOT)/tao/Endpoint.h \
  $(TAO_ROOT)/tao/Endpoint.i \
- $(TAO_ROOT)/tao/Base_Connection_Property.inl \
+ $(TAO_ROOT)/tao/Connection_Descriptor_Interface.inl \
  $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.inl \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
@@ -458,6 +460,8 @@ realclean: clean
 .obj/st_client.o .obj/st_client.so .shobj/st_client.o .shobj/st_client.so: st_client.cpp testC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -726,10 +730,10 @@ realclean: clean
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
  $(TAO_ROOT)/tao/Cache_Entries.h \
- $(TAO_ROOT)/tao/Base_Connection_Property.h \
+ $(TAO_ROOT)/tao/Connection_Descriptor_Interface.h \
  $(TAO_ROOT)/tao/Endpoint.h \
  $(TAO_ROOT)/tao/Endpoint.i \
- $(TAO_ROOT)/tao/Base_Connection_Property.inl \
+ $(TAO_ROOT)/tao/Connection_Descriptor_Interface.inl \
  $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.inl \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
@@ -797,6 +801,8 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1073,10 +1079,10 @@ realclean: clean
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
  $(TAO_ROOT)/tao/Cache_Entries.h \
- $(TAO_ROOT)/tao/Base_Connection_Property.h \
+ $(TAO_ROOT)/tao/Connection_Descriptor_Interface.h \
  $(TAO_ROOT)/tao/Endpoint.h \
  $(TAO_ROOT)/tao/Endpoint.i \
- $(TAO_ROOT)/tao/Base_Connection_Property.inl \
+ $(TAO_ROOT)/tao/Connection_Descriptor_Interface.inl \
  $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.inl \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
@@ -1144,6 +1150,8 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1450,10 +1458,10 @@ realclean: clean
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
  $(TAO_ROOT)/tao/Cache_Entries.h \
- $(TAO_ROOT)/tao/Base_Connection_Property.h \
+ $(TAO_ROOT)/tao/Connection_Descriptor_Interface.h \
  $(TAO_ROOT)/tao/Endpoint.h \
  $(TAO_ROOT)/tao/Endpoint.i \
- $(TAO_ROOT)/tao/Base_Connection_Property.inl \
+ $(TAO_ROOT)/tao/Connection_Descriptor_Interface.inl \
  $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.inl \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
@@ -1506,6 +1514,8 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1812,10 +1822,10 @@ realclean: clean
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
  $(TAO_ROOT)/tao/Cache_Entries.h \
- $(TAO_ROOT)/tao/Base_Connection_Property.h \
+ $(TAO_ROOT)/tao/Connection_Descriptor_Interface.h \
  $(TAO_ROOT)/tao/Endpoint.h \
  $(TAO_ROOT)/tao/Endpoint.i \
- $(TAO_ROOT)/tao/Base_Connection_Property.inl \
+ $(TAO_ROOT)/tao/Connection_Descriptor_Interface.inl \
  $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.inl \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
@@ -1851,13 +1861,20 @@ realclean: clean
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/Sched_Params.h \
- $(ACE_ROOT)/ace/Sched_Params.i
+ $(ACE_ROOT)/ace/Sched_Params.i \
+ $(TAO_ROOT)/tao/Strategies/advanced_resource.h \
+ $(TAO_ROOT)/tao/Strategies/strategies_export.h \
+ $(TAO_ROOT)/tao/default_resource.h \
+ $(TAO_ROOT)/tao/default_resource.i \
+ $(TAO_ROOT)/tao/Strategies/advanced_resource.i
 
 .obj/test_i.o .obj/test_i.so .shobj/test_i.o .shobj/test_i.so: test_i.cpp test_i.h testS.h \
  $(TAO_ROOT)/tao/PortableServer/MessagingS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -2164,10 +2181,10 @@ realclean: clean
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
  $(TAO_ROOT)/tao/Cache_Entries.h \
- $(TAO_ROOT)/tao/Base_Connection_Property.h \
+ $(TAO_ROOT)/tao/Connection_Descriptor_Interface.h \
  $(TAO_ROOT)/tao/Endpoint.h \
  $(TAO_ROOT)/tao/Endpoint.i \
- $(TAO_ROOT)/tao/Base_Connection_Property.inl \
+ $(TAO_ROOT)/tao/Connection_Descriptor_Interface.inl \
  $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.inl \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
@@ -2204,6 +2221,8 @@ realclean: clean
 .obj/testC.o .obj/testC.so .shobj/testC.o .shobj/testC.so: testC.cpp testC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -2472,10 +2491,10 @@ realclean: clean
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
  $(TAO_ROOT)/tao/Cache_Entries.h \
- $(TAO_ROOT)/tao/Base_Connection_Property.h \
+ $(TAO_ROOT)/tao/Connection_Descriptor_Interface.h \
  $(TAO_ROOT)/tao/Endpoint.h \
  $(TAO_ROOT)/tao/Endpoint.i \
- $(TAO_ROOT)/tao/Base_Connection_Property.inl \
+ $(TAO_ROOT)/tao/Connection_Descriptor_Interface.inl \
  $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.inl \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
@@ -2531,6 +2550,8 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -2837,10 +2858,10 @@ realclean: clean
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
  $(TAO_ROOT)/tao/Cache_Entries.h \
- $(TAO_ROOT)/tao/Base_Connection_Property.h \
+ $(TAO_ROOT)/tao/Connection_Descriptor_Interface.h \
  $(TAO_ROOT)/tao/Endpoint.h \
  $(TAO_ROOT)/tao/Endpoint.i \
- $(TAO_ROOT)/tao/Base_Connection_Property.inl \
+ $(TAO_ROOT)/tao/Connection_Descriptor_Interface.inl \
  $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.inl \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
@@ -2900,6 +2921,8 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -3226,10 +3249,10 @@ realclean: clean
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
  $(TAO_ROOT)/tao/Cache_Entries.h \
- $(TAO_ROOT)/tao/Base_Connection_Property.h \
+ $(TAO_ROOT)/tao/Connection_Descriptor_Interface.h \
  $(TAO_ROOT)/tao/Endpoint.h \
  $(TAO_ROOT)/tao/Endpoint.i \
- $(TAO_ROOT)/tao/Base_Connection_Property.inl \
+ $(TAO_ROOT)/tao/Connection_Descriptor_Interface.inl \
  $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.inl \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
@@ -3268,6 +3291,8 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -3594,10 +3619,10 @@ realclean: clean
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
  $(TAO_ROOT)/tao/Cache_Entries.h \
- $(TAO_ROOT)/tao/Base_Connection_Property.h \
+ $(TAO_ROOT)/tao/Connection_Descriptor_Interface.h \
  $(TAO_ROOT)/tao/Endpoint.h \
  $(TAO_ROOT)/tao/Endpoint.i \
- $(TAO_ROOT)/tao/Base_Connection_Property.inl \
+ $(TAO_ROOT)/tao/Connection_Descriptor_Interface.inl \
  $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.inl \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \

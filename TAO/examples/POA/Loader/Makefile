@@ -48,6 +48,8 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 .obj/Server_Manager.o .obj/Server_Manager.so .shobj/Server_Manager.o .shobj/Server_Manager.so: Server_Manager.cpp Server_Manager.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -56,8 +58,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
- Servant_Activator.h \
- $(ACE_ROOT)/ace/OS.h \
+ Servant_Activator.h $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
@@ -317,14 +318,15 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
  $(TAO_ROOT)/tao/Cache_Entries.h \
- $(TAO_ROOT)/tao/Base_Connection_Property.h \
+ $(TAO_ROOT)/tao/Connection_Descriptor_Interface.h \
  $(TAO_ROOT)/tao/Endpoint.h \
  $(TAO_ROOT)/tao/Endpoint.i \
- $(TAO_ROOT)/tao/Base_Connection_Property.inl \
+ $(TAO_ROOT)/tao/Connection_Descriptor_Interface.inl \
  $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.inl \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/ORB_Core.i \
@@ -365,21 +367,21 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
- $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
+ $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.i \
- $(ACE_ROOT)/ace/DLL.h \
- Servant_Locator.h \
+ $(ACE_ROOT)/ace/DLL.h Servant_Locator.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i
 
 .obj/Servant_Activator.o .obj/Servant_Activator.so .shobj/Servant_Activator.o .shobj/Servant_Activator.so: Servant_Activator.cpp Servant_Activator.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -648,14 +650,15 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
  $(TAO_ROOT)/tao/Cache_Entries.h \
- $(TAO_ROOT)/tao/Base_Connection_Property.h \
+ $(TAO_ROOT)/tao/Connection_Descriptor_Interface.h \
  $(TAO_ROOT)/tao/Endpoint.h \
  $(TAO_ROOT)/tao/Endpoint.i \
- $(TAO_ROOT)/tao/Base_Connection_Property.inl \
+ $(TAO_ROOT)/tao/Connection_Descriptor_Interface.inl \
  $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.inl \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/ORB_Core.i \
@@ -696,9 +699,8 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
- $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
+ $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
@@ -708,6 +710,8 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 .obj/Servant_Locator.o .obj/Servant_Locator.so .shobj/Servant_Locator.o .shobj/Servant_Locator.so: Servant_Locator.cpp Servant_Locator.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -976,14 +980,15 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
  $(TAO_ROOT)/tao/Cache_Entries.h \
- $(TAO_ROOT)/tao/Base_Connection_Property.h \
+ $(TAO_ROOT)/tao/Connection_Descriptor_Interface.h \
  $(TAO_ROOT)/tao/Endpoint.h \
  $(TAO_ROOT)/tao/Endpoint.i \
- $(TAO_ROOT)/tao/Base_Connection_Property.inl \
+ $(TAO_ROOT)/tao/Connection_Descriptor_Interface.inl \
  $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.inl \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/ORB_Core.i \
@@ -1024,9 +1029,8 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
- $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
+ $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
@@ -1036,6 +1040,8 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp Server_Manager.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1044,8 +1050,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
- Servant_Activator.h \
- $(ACE_ROOT)/ace/OS.h \
+ Servant_Activator.h $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
@@ -1305,14 +1310,15 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
  $(TAO_ROOT)/tao/Cache_Entries.h \
- $(TAO_ROOT)/tao/Base_Connection_Property.h \
+ $(TAO_ROOT)/tao/Connection_Descriptor_Interface.h \
  $(TAO_ROOT)/tao/Endpoint.h \
  $(TAO_ROOT)/tao/Endpoint.i \
- $(TAO_ROOT)/tao/Base_Connection_Property.inl \
+ $(TAO_ROOT)/tao/Connection_Descriptor_Interface.inl \
  $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.inl \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/ORB_Core.i \
@@ -1353,14 +1359,12 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
- $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
+ $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.i \
- $(ACE_ROOT)/ace/DLL.h \
- Servant_Locator.h
+ $(ACE_ROOT)/ace/DLL.h Servant_Locator.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
