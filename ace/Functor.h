@@ -85,6 +85,7 @@ template <class TYPE> class ACE_Hash;
 template <class TYPE> class ACE_Equal_To;
 template <class TYPE> class ACE_Less_Than;
 
+ACE_TEMPLATE_SPECIALIZATION
 class ACE_Export ACE_Hash<char>
 {
   // = TITLE
@@ -94,6 +95,7 @@ public:
   // Simply returns t
 };
 
+ACE_TEMPLATE_SPECIALIZATION
 class ACE_Export ACE_Hash<signed char>
 {
   // = TITLE
@@ -103,6 +105,7 @@ public:
   // Simply returns t
 };
 
+ACE_TEMPLATE_SPECIALIZATION
 class ACE_Export ACE_Hash<unsigned char>
 {
   // = TITLE
@@ -112,6 +115,7 @@ public:
   // Simply returns t
 };
 
+ACE_TEMPLATE_SPECIALIZATION
 class ACE_Export ACE_Hash<short>
 {
   // = TITLE
@@ -121,6 +125,7 @@ public:
   // Simply returns t
 };
 
+ACE_TEMPLATE_SPECIALIZATION
 class ACE_Export ACE_Hash<unsigned short>
 {
   // = TITLE
@@ -130,6 +135,7 @@ public:
   // Simply returns t
 };
 
+ACE_TEMPLATE_SPECIALIZATION
 class ACE_Export ACE_Hash<int>
 {
   // = TITLE
@@ -139,6 +145,7 @@ public:
   // Simply returns t
 };
 
+ACE_TEMPLATE_SPECIALIZATION
 class ACE_Export ACE_Hash<unsigned int>
 {
   // = TITLE
@@ -148,6 +155,7 @@ public:
   // Simply returns t
 };
 
+ACE_TEMPLATE_SPECIALIZATION
 class ACE_Export ACE_Hash<long>
 {
   // = TITLE
@@ -157,6 +165,7 @@ public:
   // Simply returns t
 };
 
+ACE_TEMPLATE_SPECIALIZATION
 class ACE_Export ACE_Hash<unsigned long>
 {
   // = TITLE
@@ -166,6 +175,7 @@ public:
   // Simply returns t
 };
 
+ACE_TEMPLATE_SPECIALIZATION
 class ACE_Export ACE_Hash<ACE_UINT64>
 {
   // = TITLE
@@ -175,6 +185,7 @@ public:
   // Simply returns t
 };
 
+ACE_TEMPLATE_SPECIALIZATION
 class ACE_Export ACE_Hash<const char *>
 {
   // = TITLE
@@ -184,6 +195,7 @@ public:
   // Calls ACE::hash_pjw
 };
 
+ACE_TEMPLATE_SPECIALIZATION
 class ACE_Export ACE_Hash<char *>
 {
   // = TITLE
@@ -194,6 +206,7 @@ public:
 };
 
 #if !defined (ACE_HAS_WCHAR_TYPEDEFS_CHAR)
+ACE_TEMPLATE_SPECIALIZATION
 class ACE_Export ACE_Hash<const wchar_t *>
 {
   // = TITLE
@@ -203,6 +216,7 @@ public:
   // Calls ACE::hash_pjw
 };
 
+ACE_TEMPLATE_SPECIALIZATION
 class ACE_Export ACE_Hash<wchar_t *>
 {
   // = TITLE
@@ -214,6 +228,7 @@ public:
 #endif /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
 
 #if !defined (ACE_HAS_WCHAR_TYPEDEFS_USHORT)
+ACE_TEMPLATE_SPECIALIZATION
 class ACE_Export ACE_Hash<const ACE_USHORT16 *>
 {
   // = TITLE
@@ -223,6 +238,7 @@ public:
   // Calls ACE::hash_pjw
 };
 
+ACE_TEMPLATE_SPECIALIZATION
 class ACE_Export ACE_Hash<ACE_USHORT16 *>
 {
   // = TITLE
@@ -233,6 +249,7 @@ public:
 };
 #endif /* ! ACE_HAS_WCHAR_TYPEDEFS_USHORT */
 
+ACE_TEMPLATE_SPECIALIZATION
 class ACE_Export ACE_Equal_To<const char *>
 {
   // = TITLE
@@ -243,6 +260,7 @@ public:
   // Simply calls ACE_OS::strcmp
 };
 
+ACE_TEMPLATE_SPECIALIZATION
 class ACE_Export ACE_Equal_To<char *>
 {
   // = TITLE
@@ -255,6 +273,7 @@ public:
 };
 
 #if !defined (ACE_HAS_WCHAR_TYPEDEFS_CHAR)
+ACE_TEMPLATE_SPECIALIZATION
 class ACE_Export ACE_Equal_To<const wchar_t *>
 {
   // = TITLE
@@ -266,6 +285,7 @@ public:
   // Simply calls ACE_OS::strcmp
 };
 
+ACE_TEMPLATE_SPECIALIZATION
 class ACE_Export ACE_Equal_To<wchar_t *>
 {
   // = TITLE
@@ -278,6 +298,7 @@ public:
 #endif /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
 
 #if !defined (ACE_HAS_WCHAR_TYPEDEFS_USHORT)
+ACE_TEMPLATE_SPECIALIZATION
 class ACE_Export ACE_Equal_To<const ACE_USHORT16 *>
 {
   // = TITLE
@@ -289,6 +310,7 @@ public:
   // Simply calls ACE_OS::strcmp
 };
 
+ACE_TEMPLATE_SPECIALIZATION
 class ACE_Export ACE_Equal_To<ACE_USHORT16 *>
 {
   // = TITLE
@@ -300,7 +322,7 @@ public:
 };
 #endif /* ! ACE_HAS_WCHAR_TYPEDEFS_USHORT */
 
-
+ACE_TEMPLATE_SPECIALIZATION
 class ACE_Export ACE_Less_Than<const char *>
 {
   // = TITLE
@@ -312,6 +334,7 @@ public:
   // Simply calls ACE_OS::strcmp
 };
 
+ACE_TEMPLATE_SPECIALIZATION
 class ACE_Export ACE_Less_Than<char *>
 {
   // = TITLE
@@ -324,6 +347,7 @@ public:
 };
 
 #if !defined (ACE_HAS_WCHAR_TYPEDEFS_CHAR)
+ACE_TEMPLATE_SPECIALIZATION
 class ACE_Export ACE_Less_Than<const wchar_t *>
 {
   // = TITLE
@@ -335,6 +359,7 @@ public:
   // Simply calls ACE_OS::strcmp
 };
 
+ACE_TEMPLATE_SPECIALIZATION
 class ACE_Export ACE_Less_Than<wchar_t *>
 {
   // = TITLE
@@ -348,6 +373,7 @@ public:
 #endif /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
 
 #if !defined (ACE_HAS_WCHAR_TYPEDEFS_USHORT)
+ACE_TEMPLATE_SPECIALIZATION
 class ACE_Export ACE_Less_Than<const ACE_USHORT16 *>
 {
   // = TITLE
@@ -359,6 +385,7 @@ public:
   // Simply calls ACE_OS::strcmp
 };
 
+ACE_TEMPLATE_SPECIALIZATION
 class ACE_Export ACE_Less_Than<ACE_USHORT16 *>
 {
   // = TITLE
