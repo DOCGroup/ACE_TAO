@@ -204,7 +204,6 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
     {
       // This is a no-op unless our element is a managed type.
       this->gen_managed_type_tmplinst (node, bt);
-      bt->seen_in_sequence (I_TRUE);
     }
 
   if (this->ctx_->tdef () != 0)
@@ -232,13 +231,12 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
                   return -1;
                 }
             }
-
-          bt->seen_in_sequence (I_TRUE);
         }
     }
 
   os->gen_endif ();
 
+  bt->seen_in_sequence (I_TRUE);
   node->cli_stub_gen (I_TRUE);
   return 0;
 }
@@ -821,7 +819,7 @@ be_visitor_sequence_cs::gen_varout_tmplinst (be_sequence *node,
 
 int
 be_visitor_sequence_cs::gen_base_class_tmplinst (be_sequence *node,
-                                                 be_type *elem)
+                                                 be_type * /*elem */)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
