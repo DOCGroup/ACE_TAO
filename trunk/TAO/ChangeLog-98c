@@ -1,5 +1,8 @@
 Tue Sep 08 14:05:56 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
+	* tao/ORB_Core.cpp (init): Turn on Service_Config debugging only
+ 	  when debugging != 0.
+
 	* tests/POA/Explicit_Activation/server.cpp (write_iors_to_file):
  	  Added checks to catch potential failures in fprintf.
 

@@ -395,7 +395,7 @@ TAO_ORB_Core::init (int& argc, char** argv)
        arg_shifter.ignore_arg ();
    }
 
-   if (debugging == 0)
+   if (debugging != 0)
      svc_config_argv[svc_config_argc++] = CORBA::string_dup ("-d");
 
 
