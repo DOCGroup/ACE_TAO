@@ -1,3 +1,17 @@
+Wed Jul 14 16:37:33 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* Makefile:
+
+	  Added Makefile.am and NEWS to the list of controlled files.  The
+	  file `NEWS' will get generated when a release is made.
+	
+	* TODO:
+	* acconfig.h:
+	* configure.in:
+	* configure:
+
+	  Minor ACE Configuration Project related updates and fixes.
+
 Wed Jul 14 13:38:12 1999  Steve Huston  <shuston@riverace.com>
 
         * tests/Cached_Accept_Conn_Test.cpp: Moved defs of Client_Svc_Handler
