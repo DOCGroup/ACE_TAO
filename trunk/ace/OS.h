@@ -242,6 +242,13 @@
 #define ACE_BEGIN_DUMP "\n====\n(%P|%t|%x)"
 #define ACE_END_DUMP "====\n"
 
+// A free list which create more elements when there aren't enough
+// elements.
+#define ACE_FREE_LIST_WITH_POOL 1
+
+// A simple free list which doen't allocate/deallocate elements.
+#define ACE_PURE_FREE_LIST 2
+
 // This is used to indicate that a platform doesn't support a
 // particular feature.
 #define ACE_NOTSUP_RETURN(FAILVALUE) do { errno = ENOTSUP ; return FAILVALUE; } while (0)
