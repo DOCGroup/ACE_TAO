@@ -1,3 +1,8 @@
+Wed Jul  7 16:33:29 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* tests/Cached_Conn_Test.cpp (main): Added default testing of LRU,
+	  LFU, FIFO caching strategies.
+
 Wed Jul 07 16:06:45 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Recursive_Mutex_Test.cpp: explicitly set the
