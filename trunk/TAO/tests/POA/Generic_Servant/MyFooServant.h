@@ -34,6 +34,9 @@ public:
   // Simple doit method
   virtual CORBA::Long doit (CORBA::Environment &env);
 
+  // Even simpler doit method
+  virtual void simply_doit (CORBA::Environment &env);
+
 protected:
   // Default poa associated with this servant
   PortableServer::POA_var poa_;

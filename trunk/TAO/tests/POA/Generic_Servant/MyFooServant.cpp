@@ -42,3 +42,9 @@ MyFooServant::doit (CORBA::Environment &/*env*/)
 {
   return this->value_;
 }
+
+// do nothing
+void
+MyFooServant::simply_doit (CORBA::Environment &/*env*/)
+{
+}
