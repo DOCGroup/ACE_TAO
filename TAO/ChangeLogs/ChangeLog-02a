@@ -1,3 +1,13 @@
+Tue May 28 14:15:11 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Loader.cpp:
+
+          Change export macro argument in ACE_FACTORY_DEFINE to
+          match the one in ACE_FACTORY_DECLARE in the corresponding
+          header file. Thanks to Don Hinton <dhinton@ieee.org> for
+          tracking down the problem.
+
 Tue May 28 11:12:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/AV/QoS_UDP.h:
