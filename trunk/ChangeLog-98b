@@ -1,3 +1,10 @@
+Wed Sep 30 02:29:48 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* performance-tests/TTCP/ACE-C++/Makefile: 
+	* performance-tests/TTCP/ACE-C++/wrapper-new-ttcp.cpp: 
+	  Hacked so it would compile, don't know anything further than
+	  that.
+
 Tue Sep 29 21:55:52 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/ace.dsw: Removed Connector.cpp from the compile list since

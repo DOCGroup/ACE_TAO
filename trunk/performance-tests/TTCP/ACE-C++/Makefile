@@ -35,7 +35,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #       Local targets
 #----------------------------------------------------------------------------
 
-CCFLAGS = -O2 -DLM_RESULTS
+#CCFLAGS = -O2 -DLM_RESULTS
 #CCFLAGS = -g -DLM_RESULTS
 #DCCFLAGS = -g
 

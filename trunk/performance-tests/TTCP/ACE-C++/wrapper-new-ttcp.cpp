@@ -46,8 +46,9 @@
 /* #define BSD43 */
 /* #define BSD42 */
 /* #define BSD41a */
-#define SYSV /* required on SGI IRIX releases before 3.3 */
+// #define SYSV /* required on SGI IRIX releases before 3.3 */
 
+#include "ace/OS.h"
 #include <ace/SOCK_Connector.h>
 ACE_SOCK_Connector connector_factory;
 
@@ -90,8 +91,6 @@ struct rusage
 #else
 #include <sys/resource.h>
 #endif
-
-ACE_RCSID(ACE_C++, wrapper_new_ttcp, "$Id$")
 
 struct sockaddr_in sinme;
 struct sockaddr_un sunme;
@@ -182,7 +181,6 @@ void err (char *s);
 void mes (char *s);
 void pattern (register char *cp, register int cnt);
 char *outfmt (double b);
-static void getrusage (int ignored, register struct rusage *ru);
 static void gettimeofday (struct timeval *tp, struct timezone *zp);
 void prep_timer (void);
 double read_timer (char *str, int len);
