@@ -123,8 +123,6 @@ public class ServiceRepository
    */
   public int remove (String name)
   {
-    ACE.DEBUG("Removing service: " + name);
-
     ServiceRecord rec = this.find(name, false);
 
     if (rec == null)
