@@ -1,4 +1,4 @@
-// file      : TMCast/LinkListener.hpp
+// file      : ACE_TMCast/LinkListener.hpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 // cvs-id    : $Id$
 
@@ -12,7 +12,7 @@
 #include "Messaging.hpp"
 #include "Protocol.hpp"
 
-namespace TMCast
+namespace ACE_TMCast
 {
   //
   //

@@ -1,4 +1,4 @@
-// file      : TMCast/GroupFwd.hpp
+// file      : ACE_TMCast/GroupFwd.hpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 // cvs-id    : $Id$
 
@@ -7,9 +7,9 @@
 
 #include "Export.hpp"
 
-namespace TMCast
+namespace ACE_TMCast
 {
-  class TMCast_Export Group;
+  class ACE_TMCast_Export Group;
 }
 
 #endif // TMCAST_GROUP_FWD_HPP

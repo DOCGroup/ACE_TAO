@@ -1,4 +1,4 @@
-// file      : TMCast/MTQueue.hpp
+// file      : ACE_TMCast/MTQueue.hpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 // cvs-id    : $Id$
 
@@ -10,7 +10,7 @@
 #include "ace/Unbounded_Queue.h"
 #include "ace/os_include/sys/os_types.h"
 
-namespace TMCast
+namespace ACE_TMCast
 {
   template <typename T,
             typename M,
