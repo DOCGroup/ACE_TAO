@@ -3,7 +3,7 @@
 
 project (CIAO_Client) : taolib_with_idl, valuetype, ifr_client {
   sharedname  = CIAO_Client
-  idlflags  += -Wb,stub_export_include=CIAO_Client_Export.h -Wb,stub_export_macro=CIAO_CLIENT_Export -Wb,skel_export_include=CIAO_Container_Export.h -Wb,skel_export_macro=CIAO_CONTAINER_Export
+  idlflags  += -Sc -Wb,stub_export_include=CIAO_Client_Export.h -Wb,stub_export_macro=CIAO_CLIENT_Export -Wb,skel_export_include=CIAO_Container_Export.h -Wb,skel_export_macro=CIAO_CONTAINER_Export
   dynamicflags    = CIAO_CLIENT_BUILD_DLL
 
   IDL_Files {
@@ -25,13 +25,16 @@ project (CIAO_Client) : taolib_with_idl, valuetype, ifr_client {
     CIAO_Client_Export.h
     CIAO_common.h
   }
+  
+  Template_Files {
+  }
 }
 
 project (CIAO_Container) : orbsvcslib, portableserver, security, iorinterceptor, objreftemplate, valuetype, ifr_client {
   after += CIAO_Client
   sharedname  = CIAO_Container
   libs       += CIAO_Client
-  idlflags  += -Wb,export_include=CIAO_Container_Export.h -Wb,export_macro=CIAO_CONTAINER_Export
+  idlflags  += -Sc -Wb,export_include=CIAO_Container_Export.h -Wb,export_macro=CIAO_CONTAINER_Export
   dynamicflags = CIAO_CONTAINER_BUILD_DLL
 
   IDL_Files {
@@ -51,13 +54,16 @@ project (CIAO_Container) : orbsvcslib, portableserver, security, iorinterceptor,
     CCM_ComponentS.cpp
     Cookies.cpp
   }
+  
+  Template_Files {
+  }
 }
 
 project (CIAO_Server) : orbsvcslib, portableserver, iorinterceptor, objreftemplate, valuetype, ifr_client, security {
   after += CIAO_Container
   sharedname  = CIAO_Server
   libs       +=  CIAO_Client CIAO_Container
-  idlflags  += -Wb,export_include=CIAO_Server_Export.h -Wb,export_macro=CIAO_SERVER_Export
+  idlflags  += -Sc -Wb,export_include=CIAO_Server_Export.h -Wb,export_macro=CIAO_SERVER_Export
 
   dynamicflags    = CIAO_SERVER_BUILD_DLL
 
@@ -79,6 +85,7 @@ project (CIAO_Server) : orbsvcslib, portableserver, iorinterceptor, objreftempla
     Container_Base.cpp
     Container_Impl.cpp
 //    HomeRegistrar_i.cpp
+    Servant_Impl_Base.cpp
     Server_init.cpp
     ServerActivator_Impl.cpp
   }
@@ -86,5 +93,10 @@ project (CIAO_Server) : orbsvcslib, portableserver, iorinterceptor, objreftempla
   Header_Files {
     CIAO_Server_Export.h
     CIAO_common.h
+  }
+  
+  Template_Files {
+    Object_Set_T.cpp
+    Servant_Impl_T.cpp
   }
 }
