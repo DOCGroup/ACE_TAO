@@ -1,3 +1,8 @@
+Mon Dec 20 16:32:54 2004  Nanbor Wang  <nanbor@cse.wustl.edu>
+
+	* DAnCE/Config_Handlers/Config_Handlers.mpc: Added include path to
+	  self for XSC_Config_Handlers project..
+
 Wed Dec 15 13:48:44 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
