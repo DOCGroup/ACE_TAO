@@ -139,7 +139,7 @@ private:
 #endif /* _MSC_VER */
 
 #if defined (__ACE_INLINE__)
-# include "FT_IOGR_Property.i"
+# include "FT_IOGR_Property.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
