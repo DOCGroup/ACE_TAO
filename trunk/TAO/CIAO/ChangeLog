@@ -1,3 +1,9 @@
+Thu Aug 07 16:46:42 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc:
+	  Changed to use base project qt-min_moc as we don't need to use
+	  ACE_QtReactor.
+
 Wed Aug 06 17:00:05 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* docs/XML/ciao_rt_cad_ext.dtd: Added DTD for RT extension to cad
