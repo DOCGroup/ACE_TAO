@@ -65,17 +65,7 @@ TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_ORB_Core *orb_core)
 
 TAO_IIOP_Transport::~TAO_IIOP_Transport (void)
 {
-  // If the socket has not already been closed.
-  if (this->handle () != ACE_INVALID_HANDLE)
-    {
-      // Cannot deal with errors, and therefore they are ignored.
-      this->send_buffered_messages ();
-    }
-  else
-    {
-      // Dequeue messages and delete message blocks.
-      this->dequeue_all ();
-    }
+
 }
 
 

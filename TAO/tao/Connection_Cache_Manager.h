@@ -113,6 +113,12 @@ public:
   int make_idle (HASH_MAP_ENTRY *&entry);
   // Make the entry idle and ready for use.
 
+  int mark_closed (HASH_MAP_ENTRY *&entry);
+  // Mark the entry as closed
+
+  int close (void);
+  // Close the underlying hash map manager
+
   size_t current_size (void) const;
   // Return the current size of the cache.
 
@@ -123,35 +129,45 @@ private:
 
   int bind_i (TAO_Cache_ExtId &ext_id,
               TAO_Cache_IntId &int_id);
-  // Non-Locking version of bind () call. Calls bind on the
-  // Hash_Map_Manager that it holds. If the bind succeeds, it adds the
-  // Hash_Map_Entry in to the Connection_Handler for its reference. If
-  // the bind fails because of an exiting entry, this method calls the
-  // get_last_index_bind ().
+  // Non-Locking version and actual implementation of bind ()
+  // call. Calls bind on the Hash_Map_Manager that it holds. If the
+  // bind succeeds, it adds the Hash_Map_Entry in to the
+  // Connection_Handler for its reference. If the bind fails because
+  // of an exiting entry, this method calls the get_last_index_bind
+  // ().
 
   int find_i (const TAO_Cache_ExtId &key,
               TAO_Cache_IntId &value);
-  // Non-locking version of find () call. This calls the find () on
-  // the underlying Hash_Map_Manager. If the find succeeds, it calls
-  // the get_idle_handler ().
+  // Non-locking version and actual implementation of find ()
+  // call. This calls the find () on the underlying
+  // Hash_Map_Manager. If the find succeeds, it calls the
+  // get_idle_handler ().
 
   int rebind_i (const TAO_Cache_ExtId &key,
               const TAO_Cache_IntId &value);
-  // Non-locking version of rebind () call
+  // Non-locking version and actual implementation of rebind () call
 
   int trybind_i (const TAO_Cache_ExtId &key,
                TAO_Cache_IntId &value);
-  // Non-locking version of trybind () call
+  // Non-locking version and actual implementation of trybind () call
 
   int unbind_i (const TAO_Cache_ExtId &key);
-  // Non-locking version of unbind () call
+  // Non-locking version and actual implementation of unbind () call
 
   int unbind_i (const TAO_Cache_ExtId &key,
                 TAO_Cache_IntId &value);
-  // Non-locking version of unbind () call
+  // Non-locking version and actual implementation of unbind () call
 
   int make_idle_i (HASH_MAP_ENTRY *&entry);
-  // Non-locking version of make_idle ().
+  // Non-locking version and actual implementation of make_idle ().
+
+  int mark_closed_i (HASH_MAP_ENTRY *&entry);
+  // Non-locking version and actual implementation of mark_closed ()
+
+  int close_i (void);
+  // Non-locking version and actual implementation of close ()
+
+private:
 
   int get_last_index_bind (TAO_Cache_ExtId &key,
                            TAO_Cache_IntId &val,
@@ -171,6 +187,7 @@ private:
   // type. If so, we check whether they are are idle for use. If we
   // find one we mark it busy, and set the Hash_Map_Entry in the
   // Connection_Handler object.
+
 
 
 private:

@@ -1,6 +1,6 @@
 #include "tao/Connection_Cache_Manager.h"
 #include "tao/Connection_Handler.h"
-
+#include "tao/debug.h"
 
 
 #if !defined (__ACE_INLINE__)
@@ -21,10 +21,8 @@ TAO_Connection_Cache_Manager::
 
 TAO_Connection_Cache_Manager::~TAO_Connection_Cache_Manager (void)
 {
+  // Delete the lock that we have
   delete this->cache_lock_;
-
-  // Close the HASH MAP and release resources
-  this->cache_map_.close ();
 }
 
 int
@@ -53,7 +51,15 @@ TAO_Connection_Cache_Manager::bind_i (TAO_Cache_ExtId &ext_id,
       retval = this->get_last_index_bind (ext_id,
                                           int_id,
                                           entry);
-      int_id.handler ()->cache_map_entry (entry);
+      if (retval == 0)
+        int_id.handler ()->cache_map_entry (entry);
+    }
+
+  if (TAO_debug_level > 0 && retval != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) TAO_Connection_Cache_Manager::bind_i")
+                  ACE_TEXT ("unable to bind \n")));
     }
 
   return retval;
@@ -74,9 +80,20 @@ TAO_Connection_Cache_Manager::find_i (const TAO_Cache_ExtId &key,
       retval = this->get_idle_handler (key,
                                        entry);
 
+      // We have a succesful entry
       if (entry)
-        value = entry->int_id_;
+        {
+          value = entry->int_id_;
+        }
+
+      if (TAO_debug_level > 0 && retval != 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) TAO_Connection_Cache_Manager::find_i")
+                      ACE_TEXT ("unable to locate a free connection \n")));
+        }
     }
+
 
   return retval;
 }
@@ -121,13 +138,54 @@ TAO_Connection_Cache_Manager::make_idle_i (HASH_MAP_ENTRY *&entry)
                                       new_entry);
   if (retval == 0)
     {
-      new_entry->int_id_.handler ()->
+      new_entry->int_id_.
         recycle_state (ACE_RECYCLABLE_IDLE_AND_PURGABLE);
 
       entry = new_entry;
     }
+  else if (TAO_debug_level > 0 && retval != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) TAO_Connection_Cache_Manager::make_idle_i")
+                  ACE_TEXT ("unable to locate the entry to make it idle \n")));
+    }
 
   return retval;
+}
+
+int
+TAO_Connection_Cache_Manager::mark_closed_i (HASH_MAP_ENTRY *&entry)
+{
+  // First get the entry again (if at all things had changed in the
+  // cache map in the mean time)
+  HASH_MAP_ENTRY *new_entry = 0;
+
+  cout << "Just gettin the size " << this->total_size () <<endl;
+  int retval = this->cache_map_.find (entry->ext_id_,
+                                      new_entry);
+  if (retval == 0)
+    {
+      new_entry->int_id_.
+        recycle_state (ACE_RECYCLABLE_CLOSED);
+
+      entry = new_entry;
+    }
+    else if (TAO_debug_level > 0 && retval != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) TAO_Connection_Cache_Manager::make_idle_i")
+                  ACE_TEXT ("unable to locate the entry to mark it as closed \n")));
+    }
+
+  return retval;
+}
+
+int
+TAO_Connection_Cache_Manager::close_i (void)
+{
+  cout << "We are closing now " <<endl;
+  // Call the close the on the Hash Map that we hold
+  return this->cache_map_.close ();
 }
 
 int
@@ -138,8 +196,11 @@ TAO_Connection_Cache_Manager::
 {
   CORBA::ULong ctr = entry->ext_id_.index ();
 
+  cout << "Counter is " << ctr << endl;
+
   // Start looking at the succesive elements
-  while (entry->next_->ext_id_.index () != 0)
+  while (entry->next_ != 0 &&
+         entry->next_->ext_id_.index () != 0)
     {
       ctr++;
 
@@ -159,22 +220,21 @@ TAO_Connection_Cache_Manager::
 
 int
 TAO_Connection_Cache_Manager::
-get_idle_handler (const TAO_Cache_ExtId & /*ext_id*/,
-                  HASH_MAP_ENTRY *&entry)
+    get_idle_handler (const TAO_Cache_ExtId & /*ext_id*/,
+                      HASH_MAP_ENTRY *&entry)
 {
   // We are sure that we have an entry
   do
     {
       // Found the entry, so check whether it is busy
-      if (entry->int_id_.handler ()->recycle_state () == ACE_RECYCLABLE_IDLE_AND_PURGABLE ||
-          entry->int_id_.handler ()->recycle_state () == ACE_RECYCLABLE_IDLE_AND_PURGABLE)
+      if (entry->int_id_.recycle_state () == ACE_RECYCLABLE_IDLE_AND_PURGABLE ||
+          entry->int_id_.recycle_state () == ACE_RECYCLABLE_IDLE_AND_PURGABLE)
         {
           // Save that in the handler
           entry->int_id_.handler ()->cache_map_entry (entry);
 
           // Mark the connection as busy
-          entry->int_id_.handler ()->recycle_state (ACE_RECYCLABLE_BUSY);
-
+          entry->int_id_.recycle_state (ACE_RECYCLABLE_BUSY);
           return 0;
         }
       else

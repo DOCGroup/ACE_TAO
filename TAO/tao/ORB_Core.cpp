@@ -1218,6 +1218,9 @@ TAO_ORB_Core::fini (void)
       delete this->acceptor_registry_;
     }
 
+  // Close the connection cache
+  //this->connection_cache_.close ();
+
   // Shutdown all open connections that are registered with the ORB
   // Core.  Note that the ACE_Event_Handler::DONT_CALL mask is NOT
   // used here since the reactor should invoke each handle's

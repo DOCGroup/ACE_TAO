@@ -97,6 +97,18 @@ TAO_IIOP_Server_Connection_Handler::TAO_IIOP_Server_Connection_Handler (TAO_ORB_
 TAO_IIOP_Server_Connection_Handler::~TAO_IIOP_Server_Connection_Handler (void)
 {
   delete this->acceptor_factory_;
+
+  // If the socket has not already been closed.
+  if (this->transport_.handle () != ACE_INVALID_HANDLE)
+    {
+      // Cannot deal with errors, and therefore they are ignored.
+      this->transport_.send_buffered_messages ();
+    }
+  else
+    {
+      // Dequeue messages and delete message blocks.
+      this->transport_.dequeue_all ();
+    }
 }
 
 int
@@ -227,6 +239,8 @@ TAO_IIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
                                                       this->transport_.message_state_,
                                                       max_wait_time);
 
+  cout << "The result is amba " << result << endl;
+
   if (result == -1 && TAO_debug_level > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -311,7 +325,17 @@ TAO_IIOP_Client_Connection_Handler (ACE_Thread_Manager *t,
 
 TAO_IIOP_Client_Connection_Handler::~TAO_IIOP_Client_Connection_Handler (void)
 {
-
+  // If the socket has not already been closed.
+  if (this->transport_.handle () != ACE_INVALID_HANDLE)
+    {
+      // Cannot deal with errors, and therefore they are ignored.
+      this->transport_.send_buffered_messages ();
+    }
+  else
+    {
+      // Dequeue messages and delete message blocks.
+      this->transport_.dequeue_all ();
+    }
 }
 
 
@@ -416,8 +440,8 @@ TAO_IIOP_Client_Connection_Handler::handle_close (ACE_HANDLE handle,
                  ACE_TEXT ("TAO (%P|%t) IIOP_Client_Connection_Handler::")
                  ACE_TEXT ("handle_close (%d, %d)\n"), handle, rm));
 
-  if (this->recycler ())
-    this->recycler ()->mark_as_closed (this->recycling_act ());
+  // Mark the handle as closed in the Cache
+  this->mark_closed ();
 
   // Deregister this handler with the ACE_Reactor.
   return this->handle_cleanup ();
@@ -439,9 +463,10 @@ TAO_IIOP_Client_Connection_Handler::handle_close_i (ACE_HANDLE handle,
                  ACE_TEXT ("TAO (%P|%t) IIOP_Client_Connection_Handler::")
                  ACE_TEXT ("handle_close_i (%d, %d)\n"), handle, rm));
 
-  if (this->recycler ())
-    this->recycler ()->mark_as_closed_i (this->recycling_act ());
+  // Mark the handle as closed in the Cache
+  this->mark_closed ();
 
+  // Deregister this handler with the ACE_Reactor.
   return this->handle_cleanup ();
 }
 

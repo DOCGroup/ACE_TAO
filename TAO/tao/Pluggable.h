@@ -100,7 +100,7 @@ public:
                         const ACE_Time_Value *s = 0) = 0;
   virtual ssize_t send (const ACE_Message_Block *mblk,
                         const ACE_Time_Value *s = 0,
-			size_t *bytes_transferred = 0) = 0;
+                        size_t *bytes_transferred = 0) = 0;
   // Write the complete Message_Block chain to the connection.
   // @@ The ACE_Time_Value *s is just a place holder for now.  It is
   // not clear this this is the best place to specify this.  The actual
@@ -214,11 +214,10 @@ public:
   // connector  side. On the acceptor side the connection handler
   // would take care of the messaging objects.
 
+  void dequeue_all (void);
 protected:
 
   void dequeue_head (void);
-
-  void dequeue_all (void);
 
   void reset_queued_message (ACE_Message_Block *message_block,
                              size_t bytes_delivered);
@@ -400,7 +399,7 @@ protected:
   // Return the TAO_ORB_Core pointer
 
   int find_handler (TAO_Base_Connection_Property *prop,
-                    TAO_Connection_Handler *handler);
+                    TAO_Connection_Handler *&handler);
   // Check the Connection Cache to check whether the connection exists
   // in the Cache.
 

@@ -20,15 +20,18 @@ TAO_Connection_Handler::TAO_Connection_Handler (TAO_ORB_Core *orb_core)
 }
 
 
-TAO_Connection_Handler::~TAO_Connection_Handler (void)
-{
-}
-
 int
 TAO_Connection_Handler::make_idle (void)
 {
   return
     this->orb_core_->connection_cache ().make_idle (this->cache_map_entry_);
+}
+
+int
+TAO_Connection_Handler::mark_closed (void)
+{
+  return
+    this->orb_core_->connection_cache ().mark_closed (this->cache_map_entry_);
 }
 
 void

@@ -72,22 +72,18 @@ public:
   virtual ~TAO_Connection_Handler (void);
   // Destructor
 
-  int cache (void);
-  // Add to cache.
-
-  void recycle_state (ACE_Recyclable_State new_state);
-
-  ACE_Recyclable_State recycle_state (void);
-  // Get/Set <recycle_state>.
-
   void cache_map_entry (
       TAO_Connection_Cache_Manager::HASH_MAP_ENTRY *entry);
 
   TAO_Connection_Cache_Manager::HASH_MAP_ENTRY *cache_map_entry (void);
-  // Ste/Get the Cache Map entry
+  // Set/Get the Cache Map entry
 
   int make_idle (void);
   // Make ourselves ready for use
+
+  int mark_closed (void);
+  // Mark ourselves as closed ie. connection handler may not be valid
+  // for this connection.
 
 protected:
 
@@ -135,9 +131,6 @@ private:
 
   TAO_Connection_Cache_Manager::HASH_MAP_ENTRY *cache_map_entry_;
   // The cache map entry -- where we are in the Connection Cache
-
-  ACE_Recyclable_State recycle_state_;
-  // The state of the handle
 };
 
 #if defined (__ACE_INLINE__)

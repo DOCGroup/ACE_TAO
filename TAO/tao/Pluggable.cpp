@@ -435,7 +435,7 @@ TAO_Connector::make_mprofile (const char *string,
 
 int
 TAO_Connector::find_handler (TAO_Base_Connection_Property *prop,
-                             TAO_Connection_Handler *handler)
+                             TAO_Connection_Handler *&handler)
 {
   // Compose the ExternId
   TAO_Cache_ExtId ext_id (prop);
@@ -446,7 +446,9 @@ TAO_Connector::find_handler (TAO_Base_Connection_Property *prop,
                                                  int_id);
 
   if (retval == 0)
-    handler = int_id.handler ();
+    {
+      handler = int_id.handler ();
+    }
 
   return retval;
 }
