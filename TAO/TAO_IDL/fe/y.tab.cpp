@@ -909,7 +909,7 @@ TAO_YYSTYPE tao_yylval;
 #define tao_yystacksize TAO_YYSTACKSIZE
 short tao_yyss[TAO_YYSTACKSIZE];
 TAO_YYSTYPE tao_yyvs[TAO_YYSTACKSIZE];
-#line 2514 "fe/idl.tao_yy"
+#line 2517 "fe/idl.tao_yy"
 /* programs */
 
 /*
@@ -2723,6 +2723,9 @@ case 226:
 	  AST_UnionBranch	*b = NULL;
 	  AST_Field		*f = tao_yyvsp[-2].ffval;
 
+          ACE_UNUSED_ARG (l);
+          ACE_UNUSED_ARG (d);
+
 	  idl_global->set_parse_state(IDL_GlobalData::PS_UnionElemCompleted);
 	  /*
 	   * Create several nodes representing branches of a union.
@@ -2738,26 +2741,26 @@ case 226:
 	}
 break;
 case 227:
-#line 1695 "fe/idl.tao_yy"
+#line 1698 "fe/idl.tao_yy"
 {
 	  idl_global->err()->syntax_error(idl_global->parse_state());
 	}
 break;
 case 228:
-#line 1700 "fe/idl.tao_yy"
+#line 1703 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
 	  tao_yyerrok;
 	}
 break;
 case 229:
-#line 1708 "fe/idl.tao_yy"
+#line 1711 "fe/idl.tao_yy"
 {
 	  tao_yyval.llval = new UTL_LabelList(tao_yyvsp[-1].ulval, tao_yyvsp[0].llval);
 	}
 break;
 case 230:
-#line 1715 "fe/idl.tao_yy"
+#line 1718 "fe/idl.tao_yy"
 {
 	  if (tao_yyvsp[-1].llval == NULL)
 	    tao_yyval.llval = new UTL_LabelList(tao_yyvsp[0].ulval, NULL);
@@ -2768,19 +2771,19 @@ case 230:
 	}
 break;
 case 231:
-#line 1724 "fe/idl.tao_yy"
+#line 1727 "fe/idl.tao_yy"
 {
 	  tao_yyval.llval = NULL;
 	}
 break;
 case 232:
-#line 1731 "fe/idl.tao_yy"
+#line 1734 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_DefaultSeen);
         }
 break;
 case 233:
-#line 1735 "fe/idl.tao_yy"
+#line 1738 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_LabelColonSeen);
 
@@ -2790,19 +2793,19 @@ case 233:
 	}
 break;
 case 234:
-#line 1743 "fe/idl.tao_yy"
+#line 1746 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_CaseSeen);
         }
 break;
 case 235:
-#line 1747 "fe/idl.tao_yy"
+#line 1750 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_LabelExprSeen);
         }
 break;
 case 236:
-#line 1751 "fe/idl.tao_yy"
+#line 1754 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_LabelColonSeen);
 
@@ -2811,13 +2814,13 @@ case 236:
 	}
 break;
 case 237:
-#line 1761 "fe/idl.tao_yy"
+#line 1764 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_UnionElemTypeSeen);
         }
 break;
 case 238:
-#line 1765 "fe/idl.tao_yy"
+#line 1768 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_UnionElemDeclSeen);
 	  /*
@@ -2842,13 +2845,13 @@ case 238:
 	}
 break;
 case 239:
-#line 1791 "fe/idl.tao_yy"
+#line 1794 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_EnumSeen);
         }
 break;
 case 240:
-#line 1795 "fe/idl.tao_yy"
+#line 1798 "fe/idl.tao_yy"
 {
 	  UTL_Scope		*s = idl_global->scopes()->top_non_null();
 	  UTL_ScopedName	*n = new UTL_ScopedName(tao_yyvsp[0].idval, NULL);
@@ -2877,19 +2880,19 @@ case 240:
 	}
 break;
 case 241:
-#line 1822 "fe/idl.tao_yy"
+#line 1825 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_EnumSqSeen);
         }
 break;
 case 242:
-#line 1826 "fe/idl.tao_yy"
+#line 1829 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_EnumBodySeen);
         }
 break;
 case 243:
-#line 1830 "fe/idl.tao_yy"
+#line 1833 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_EnumQsSeen);
 	  /*
@@ -2904,13 +2907,13 @@ case 243:
 	}
 break;
 case 245:
-#line 1849 "fe/idl.tao_yy"
+#line 1852 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_EnumCommaSeen);
         }
 break;
 case 248:
-#line 1858 "fe/idl.tao_yy"
+#line 1861 "fe/idl.tao_yy"
 {
 	  UTL_Scope		*s = idl_global->scopes()->top_non_null();
 	  UTL_ScopedName	*n =
@@ -2932,19 +2935,19 @@ case 248:
 	}
 break;
 case 249:
-#line 1882 "fe/idl.tao_yy"
+#line 1885 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_SequenceCommaSeen);
         }
 break;
 case 250:
-#line 1886 "fe/idl.tao_yy"
+#line 1889 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_SequenceExprSeen);
         }
 break;
 case 251:
-#line 1890 "fe/idl.tao_yy"
+#line 1893 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_SequenceQsSeen);
 	  /*
@@ -2976,7 +2979,7 @@ case 251:
 	}
 break;
 case 252:
-#line 1921 "fe/idl.tao_yy"
+#line 1924 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_SequenceQsSeen);
 	  /*
@@ -3008,7 +3011,7 @@ case 252:
 	}
 break;
 case 253:
-#line 1954 "fe/idl.tao_yy"
+#line 1957 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_SequenceSeen);
 	  /*
@@ -3018,32 +3021,32 @@ case 253:
 	}
 break;
 case 254:
-#line 1962 "fe/idl.tao_yy"
+#line 1965 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_SequenceSqSeen);
         }
 break;
 case 255:
-#line 1966 "fe/idl.tao_yy"
+#line 1969 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_SequenceTypeSeen);
 	  tao_yyval.dcval = tao_yyvsp[0].dcval;
         }
 break;
 case 256:
-#line 1975 "fe/idl.tao_yy"
+#line 1978 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_StringSqSeen);
         }
 break;
 case 257:
-#line 1979 "fe/idl.tao_yy"
+#line 1982 "fe/idl.tao_yy"
 {
 	   idl_global->set_parse_state(IDL_GlobalData::PS_StringExprSeen);
         }
 break;
 case 258:
-#line 1983 "fe/idl.tao_yy"
+#line 1986 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_StringQsSeen);
 	  /*
@@ -3063,7 +3066,7 @@ case 258:
 	}
 break;
 case 259:
-#line 2001 "fe/idl.tao_yy"
+#line 2004 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_StringCompleted);
 	  /*
@@ -3080,25 +3083,25 @@ case 259:
 	}
 break;
 case 260:
-#line 2019 "fe/idl.tao_yy"
+#line 2022 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_StringSeen);
         }
 break;
 case 261:
-#line 2027 "fe/idl.tao_yy"
+#line 2030 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_StringSqSeen);
         }
 break;
 case 262:
-#line 2031 "fe/idl.tao_yy"
+#line 2034 "fe/idl.tao_yy"
 {
 	   idl_global->set_parse_state(IDL_GlobalData::PS_StringExprSeen);
         }
 break;
 case 263:
-#line 2035 "fe/idl.tao_yy"
+#line 2038 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_StringQsSeen);
 	  /*
@@ -3118,7 +3121,7 @@ case 263:
 	}
 break;
 case 264:
-#line 2053 "fe/idl.tao_yy"
+#line 2056 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_StringCompleted);
 	  /*
@@ -3135,19 +3138,19 @@ case 264:
 	}
 break;
 case 265:
-#line 2071 "fe/idl.tao_yy"
+#line 2074 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_StringSeen);
         }
 break;
 case 266:
-#line 2078 "fe/idl.tao_yy"
+#line 2081 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ArrayIDSeen);
         }
 break;
 case 267:
-#line 2082 "fe/idl.tao_yy"
+#line 2085 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ArrayCompleted);
 	  /*
@@ -3160,13 +3163,13 @@ case 267:
 	}
 break;
 case 268:
-#line 2096 "fe/idl.tao_yy"
+#line 2099 "fe/idl.tao_yy"
 {
 	  tao_yyval.elval = new UTL_ExprList(tao_yyvsp[-1].exval, tao_yyvsp[0].elval);
 	}
 break;
 case 269:
-#line 2103 "fe/idl.tao_yy"
+#line 2106 "fe/idl.tao_yy"
 {
 	  if (tao_yyvsp[-1].elval == NULL)
 	    tao_yyval.elval = new UTL_ExprList(tao_yyvsp[0].exval, NULL);
@@ -3177,25 +3180,25 @@ case 269:
 	}
 break;
 case 270:
-#line 2112 "fe/idl.tao_yy"
+#line 2115 "fe/idl.tao_yy"
 {
 	  tao_yyval.elval = NULL;
 	}
 break;
 case 271:
-#line 2119 "fe/idl.tao_yy"
+#line 2122 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_DimSqSeen);
         }
 break;
 case 272:
-#line 2123 "fe/idl.tao_yy"
+#line 2126 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_DimExprSeen);
         }
 break;
 case 273:
-#line 2127 "fe/idl.tao_yy"
+#line 2130 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_DimQsSeen);
 	  /*
@@ -3210,19 +3213,19 @@ case 273:
 	}
 break;
 case 274:
-#line 2144 "fe/idl.tao_yy"
+#line 2147 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_AttrSeen);
         }
 break;
 case 275:
-#line 2148 "fe/idl.tao_yy"
+#line 2151 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_AttrTypeSeen);
         }
 break;
 case 276:
-#line 2152 "fe/idl.tao_yy"
+#line 2155 "fe/idl.tao_yy"
 {
 	  UTL_Scope		*s = idl_global->scopes()->top_non_null();
 	  UTL_DecllistActiveIterator *l = NULL;
@@ -3255,26 +3258,26 @@ case 276:
 	}
 break;
 case 277:
-#line 2186 "fe/idl.tao_yy"
+#line 2189 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_AttrROSeen);
 	  tao_yyval.bval = I_TRUE;
 	}
 break;
 case 278:
-#line 2191 "fe/idl.tao_yy"
+#line 2194 "fe/idl.tao_yy"
 {
 	  tao_yyval.bval = I_FALSE;
 	}
 break;
 case 279:
-#line 2198 "fe/idl.tao_yy"
+#line 2201 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ExceptSeen);
 	}
 break;
 case 280:
-#line 2202 "fe/idl.tao_yy"
+#line 2205 "fe/idl.tao_yy"
 {
 	  UTL_Scope		*s = idl_global->scopes()->top_non_null();
 	  UTL_ScopedName	*n = new UTL_ScopedName(tao_yyvsp[0].idval, NULL);
@@ -3300,19 +3303,19 @@ case 280:
 	}
 break;
 case 281:
-#line 2226 "fe/idl.tao_yy"
+#line 2229 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ExceptSqSeen);
         }
 break;
 case 282:
-#line 2230 "fe/idl.tao_yy"
+#line 2233 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ExceptBodySeen);
         }
 break;
 case 283:
-#line 2234 "fe/idl.tao_yy"
+#line 2237 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ExceptQsSeen);
 	  /*
@@ -3322,13 +3325,13 @@ case 283:
 	}
 break;
 case 284:
-#line 2246 "fe/idl.tao_yy"
+#line 2249 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpTypeSeen);
         }
 break;
 case 285:
-#line 2250 "fe/idl.tao_yy"
+#line 2253 "fe/idl.tao_yy"
 {
 	  UTL_Scope		*s = idl_global->scopes()->top_non_null();
 	  UTL_ScopedName	*n =
@@ -3359,19 +3362,19 @@ case 285:
 	}
 break;
 case 286:
-#line 2279 "fe/idl.tao_yy"
+#line 2282 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpParsCompleted);
         }
 break;
 case 287:
-#line 2283 "fe/idl.tao_yy"
+#line 2286 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpRaiseCompleted);
         }
 break;
 case 288:
-#line 2287 "fe/idl.tao_yy"
+#line 2290 "fe/idl.tao_yy"
 {
 	  UTL_Scope		*s = idl_global->scopes()->top_non_null();
 	  AST_Operation		*o = NULL;
@@ -3395,27 +3398,27 @@ case 288:
 	}
 break;
 case 289:
-#line 2312 "fe/idl.tao_yy"
+#line 2315 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpAttrSeen);
 	  tao_yyval.ofval = AST_Operation::OP_oneway;
 	}
 break;
 case 290:
-#line 2317 "fe/idl.tao_yy"
+#line 2320 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpAttrSeen);
 	  tao_yyval.ofval = AST_Operation::OP_idempotent;
 	}
 break;
 case 291:
-#line 2322 "fe/idl.tao_yy"
+#line 2325 "fe/idl.tao_yy"
 {
 	  tao_yyval.ofval = AST_Operation::OP_noflags;
 	}
 break;
 case 293:
-#line 2330 "fe/idl.tao_yy"
+#line 2333 "fe/idl.tao_yy"
 {
 	  tao_yyval.dcval =
 	    idl_global->scopes()->bottom()
@@ -3423,7 +3426,7 @@ case 293:
 	}
 break;
 case 294:
-#line 2339 "fe/idl.tao_yy"
+#line 2342 "fe/idl.tao_yy"
 {
            cerr << "error in " << idl_global->filename()->get_string()
 		<< " line " << idl_global->lineno() << ":\n" ;
@@ -3431,49 +3434,49 @@ case 294:
         }
 break;
 case 295:
-#line 2349 "fe/idl.tao_yy"
+#line 2352 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpSqSeen);
         }
 break;
 case 296:
-#line 2353 "fe/idl.tao_yy"
+#line 2356 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpQsSeen);
         }
 break;
 case 297:
-#line 2357 "fe/idl.tao_yy"
+#line 2360 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpSqSeen);
         }
 break;
 case 298:
-#line 2362 "fe/idl.tao_yy"
+#line 2365 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpQsSeen);
         }
 break;
 case 300:
-#line 2372 "fe/idl.tao_yy"
+#line 2375 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpParCommaSeen);
         }
 break;
 case 303:
-#line 2381 "fe/idl.tao_yy"
+#line 2384 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpParDirSeen);
         }
 break;
 case 304:
-#line 2385 "fe/idl.tao_yy"
+#line 2388 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpParTypeSeen);
         }
 break;
 case 305:
-#line 2389 "fe/idl.tao_yy"
+#line 2392 "fe/idl.tao_yy"
 {
 	  UTL_Scope		*s = idl_global->scopes()->top_non_null();
 	  AST_Argument		*a = NULL;
@@ -3494,13 +3497,13 @@ case 305:
 	}
 break;
 case 306:
-#line 2411 "fe/idl.tao_yy"
+#line 2414 "fe/idl.tao_yy"
 {
 	  tao_yyval.dcval = idl_global->scopes()->bottom()->lookup_primitive_type(tao_yyvsp[0].etval);
 	}
 break;
 case 308:
-#line 2416 "fe/idl.tao_yy"
+#line 2419 "fe/idl.tao_yy"
 {
 	  UTL_Scope	*s = idl_global->scopes()->top_non_null();
 	  AST_Decl	*d = NULL;
@@ -3513,87 +3516,87 @@ case 308:
 	}
 break;
 case 309:
-#line 2430 "fe/idl.tao_yy"
+#line 2433 "fe/idl.tao_yy"
 {
 	  tao_yyval.dival = AST_Argument::dir_IN;
 	}
 break;
 case 310:
-#line 2434 "fe/idl.tao_yy"
+#line 2437 "fe/idl.tao_yy"
 {
 	  tao_yyval.dival = AST_Argument::dir_OUT;
 	}
 break;
 case 311:
-#line 2438 "fe/idl.tao_yy"
+#line 2441 "fe/idl.tao_yy"
 {
 	  tao_yyval.dival = AST_Argument::dir_INOUT;
 	}
 break;
 case 312:
-#line 2445 "fe/idl.tao_yy"
+#line 2448 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpRaiseSeen);
         }
 break;
 case 313:
-#line 2449 "fe/idl.tao_yy"
+#line 2452 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpRaiseSqSeen);
         }
 break;
 case 314:
-#line 2454 "fe/idl.tao_yy"
+#line 2457 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpRaiseQsSeen);
 	  tao_yyval.nlval = tao_yyvsp[-1].nlval;
 	}
 break;
 case 315:
-#line 2459 "fe/idl.tao_yy"
+#line 2462 "fe/idl.tao_yy"
 {
 	  tao_yyval.nlval = NULL;
 	}
 break;
 case 316:
-#line 2466 "fe/idl.tao_yy"
+#line 2469 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpContextSeen);
         }
 break;
 case 317:
-#line 2470 "fe/idl.tao_yy"
+#line 2473 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpContextSqSeen);
         }
 break;
 case 318:
-#line 2475 "fe/idl.tao_yy"
+#line 2478 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpContextQsSeen);
 	  tao_yyval.slval = tao_yyvsp[-1].slval;
 	}
 break;
 case 319:
-#line 2480 "fe/idl.tao_yy"
+#line 2483 "fe/idl.tao_yy"
 {
 	  tao_yyval.slval = NULL;
 	}
 break;
 case 320:
-#line 2487 "fe/idl.tao_yy"
+#line 2490 "fe/idl.tao_yy"
 {
 	  tao_yyval.slval = new UTL_StrList(tao_yyvsp[-1].sval, tao_yyvsp[0].slval);
 	}
 break;
 case 321:
-#line 2495 "fe/idl.tao_yy"
+#line 2498 "fe/idl.tao_yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpContextCommaSeen);
         }
 break;
 case 322:
-#line 2499 "fe/idl.tao_yy"
+#line 2502 "fe/idl.tao_yy"
 {
 	  if (tao_yyvsp[-3].slval == NULL)
 	    tao_yyval.slval = new UTL_StrList(tao_yyvsp[0].sval, NULL);
@@ -3604,12 +3607,12 @@ case 322:
 	}
 break;
 case 323:
-#line 2508 "fe/idl.tao_yy"
+#line 2511 "fe/idl.tao_yy"
 {
 	  tao_yyval.slval = NULL;
 	}
 break;
-#line 3612 "y.tab.cpp"
+#line 3615 "y.tab.cpp"
     }
     tao_yyssp -= tao_yym;
     tao_yystate = *tao_yyssp;
