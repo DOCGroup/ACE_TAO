@@ -26,7 +26,7 @@
 #define TAO_EC_SCHEDULING_STRATEGY_H
 #include "ace/pre.h"
 
-#include "orbsvcs/RtecSchedulerC.h"
+#include "orbsvcs/RtecBaseC.h"
 #include "orbsvcs/RtecEventCommC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
