@@ -241,7 +241,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (be_op
       << "else" << be_idt_nl
       << "exception_holder_var->is_system_exception (0);"
       << be_uidt_nl << be_nl
-      << "exception_holder_var->byte_order (ACE_CDR_BYTE_ORDER);" << be_nl
+      << "exception_holder_var->byte_order (_tao_in.byte_order ());" << be_nl
       << be_nl
       << "_tao_reply_handler_object->"
       << node->local_name () << "_excep (" << be_idt << be_idt_nl
