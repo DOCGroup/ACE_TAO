@@ -250,7 +250,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Time_Value)
 ACE_Time_Value
 ACE_Time_Value::operator ++ (int)
 {
-  ACE_OS_TRACE ("ACE_Time_Value::operator++(int)");
+  ACE_OS_TRACE ("ACE_Time_Value::operator ++ (int)");
   usec (usec () + 1);
   normalize ();
   return *this;
@@ -259,7 +259,7 @@ ACE_Time_Value::operator ++ (int)
 ACE_Time_Value &
 ACE_Time_Value::operator ++ (void)
 {
-  ACE_OS_TRACE ("ACE_Time_Value::operator++(void)");
+  ACE_OS_TRACE ("ACE_Time_Value::operator ++ (void)");
   usec (usec () + 1);
   normalize ();
   return *this;
@@ -268,10 +268,10 @@ ACE_Time_Value::operator ++ (void)
 // Decrement microseconds (the only reason this is here is / to allow
 // the use of ACE_Atomic_Op with ACE_Time_Value).
 
-ACE_Time_Value 
+ACE_Time_Value
 ACE_Time_Value::operator -- (int)
 {
-  ACE_OS_TRACE ("ACE_Time_Value::operator--(int)");
+  ACE_OS_TRACE ("ACE_Time_Value::operator -- (int)");
   usec (usec () - 1);
   normalize ();
   return *this;
@@ -280,7 +280,7 @@ ACE_Time_Value::operator -- (int)
 ACE_Time_Value &
 ACE_Time_Value::operator -- (void)
 {
-  ACE_OS_TRACE ("ACE_Time_Value::operator--(void)");
+  ACE_OS_TRACE ("ACE_Time_Value::operator -- (void)");
   usec (usec () - 1);
   normalize ();
   return *this;
