@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 
 // ============================================================================
-// $Id$ 
+// $Id$
 //
 // = LIBRARY
 //    orbsvcs
@@ -105,9 +105,9 @@ public:
  
   virtual void withdraw (const char *id, CORBA::Environment& _env)
     TAO_THROW_SPEC ((CORBA::SystemException, 
-		    CosTrading::IllegalOfferId, 
-		    CosTrading::UnknownOfferId, 
-		    CosTrading::Register::ProxyOfferId));
+		     CosTrading::IllegalOfferId, 
+		     CosTrading::UnknownOfferId, 
+		     CosTrading::Register::ProxyOfferId));
 
   // BEGIN SPEC
   // The withdraw operation removes the service offer from the trader
@@ -126,10 +126,10 @@ public:
     describe (const char * id,
 	      CORBA::Environment& _env)
     TAO_THROW_SPEC ((CORBA::SystemException, 
-		    CosTrading::IllegalOfferId, 
-		    CosTrading::UnknownOfferId, 
-		    CosTrading::Register::ProxyOfferId));
-
+		     CosTrading::IllegalOfferId, 
+		     CosTrading::UnknownOfferId, 
+		     CosTrading::Register::ProxyOfferId));
+  
   // BEGIN SPEC
   // The describe operation returns the information about an offered
   // service that is held by the trader. It comprises the "reference"
@@ -149,17 +149,17 @@ public:
 		       const CosTrading::PropertySeq& modify_list,
 		       CORBA::Environment& _env)
     TAO_THROW_SPEC ((CORBA::SystemException, 
-		    CosTrading::NotImplemented, 
-		    CosTrading::IllegalOfferId, 
-		    CosTrading::UnknownOfferId, 
-		    CosTrading::Register::ProxyOfferId, 
-		    CosTrading::IllegalPropertyName, 
-		    CosTrading::Register::UnknownPropertyName, 
-		    CosTrading::PropertyTypeMismatch, 
-		    CosTrading::ReadonlyDynamicProperty, 
-		    CosTrading::Register::MandatoryProperty, 
-		    CosTrading::Register::ReadonlyProperty, 
-		    CosTrading::DuplicatePropertyName));
+		     CosTrading::NotImplemented, 
+		     CosTrading::IllegalOfferId, 
+		     CosTrading::UnknownOfferId, 
+		     CosTrading::Register::ProxyOfferId, 
+		     CosTrading::IllegalPropertyName, 
+		     CosTrading::Register::UnknownPropertyName, 
+		     CosTrading::PropertyTypeMismatch, 
+		     CosTrading::ReadonlyDynamicProperty, 
+		     CosTrading::Register::MandatoryProperty, 
+		     CosTrading::Register::ReadonlyProperty, 
+		     CosTrading::DuplicatePropertyName));
 
   // BEGIN SPEC
   // The modify operation is used to change the description of a
@@ -218,11 +218,11 @@ public:
 					  const char *constr,
 					  CORBA::Environment& _env)
     TAO_THROW_SPEC ((CORBA::SystemException, 
-		    CosTrading::IllegalServiceType, 
-		    CosTrading::UnknownServiceType, 
-		    CosTrading::IllegalConstraint, 
-		    CosTrading::Register::NoMatchingOffers));
-
+		     CosTrading::IllegalServiceType, 
+		     CosTrading::UnknownServiceType, 
+		     CosTrading::IllegalConstraint, 
+		     CosTrading::Register::NoMatchingOffers));
+  
   // BEGIN SPEC
   // The withdraw_using_constraint operation withdraws a set of offers
   // from within a single trader. This set is identified in the same
@@ -250,10 +250,10 @@ public:
     resolve (const CosTrading::TraderName &name,
 	     CORBA::Environment& _env)
     TAO_THROW_SPEC ((CORBA::SystemException, 
-		    CosTrading::Register::IllegalTraderName, 
-		    CosTrading::Register::UnknownTraderName, 
-		    CosTrading::Register::RegisterNotSupported));
-
+		     CosTrading::Register::IllegalTraderName, 
+		     CosTrading::Register::UnknownTraderName, 
+		     CosTrading::Register::RegisterNotSupported));
+  
   // BEGIN SPEC
   // This operation is used to resolve a context relative name for
   // another trader. In particular, it is used when exporting to a
@@ -286,10 +286,10 @@ public:
 			    CosTrading::PropertySeq& properties,
 			    CORBA::Environment& _env)
     TAO_THROW_SPEC ((CosTrading::IllegalPropertyName, 
-		    CosTrading::PropertyTypeMismatch, 
-		    CosTrading::ReadonlyDynamicProperty, 
-		    CosTrading::MissingMandatoryProperty, 
-		    CosTrading::DuplicatePropertyName));
+		     CosTrading::PropertyTypeMismatch, 
+		     CosTrading::ReadonlyDynamicProperty, 
+		     CosTrading::MissingMandatoryProperty, 
+		     CosTrading::DuplicatePropertyName));
   
   // Type is a known service type.
   
@@ -298,6 +298,7 @@ public:
 				CORBA::ULong &position);
   
  private:
+
   TRADER &trader_;
 };
 

@@ -117,7 +117,7 @@ TAO_Policy_Manager::fetch_next_policy (TAO_Policies::POLICY_TYPE pol_type)
 
   if (this->poltable_[pol_type] == -1)
     {
-      int length = this->policies_.length ();
+      CORBA::ULong length = this->policies_.length ();
       this->num_policies_++;
       
       if (length < this->num_policies_)
