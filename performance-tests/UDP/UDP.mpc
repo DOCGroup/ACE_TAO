@@ -2,4 +2,7 @@
 // $Id$
 
 project : aceexe {
+  verbatim(gnuace, local) {
+    LDLIBS += $(MATHLIB)
+  }
 }
