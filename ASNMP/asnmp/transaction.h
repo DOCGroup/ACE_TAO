@@ -34,6 +34,7 @@ class ACE_Export transaction : public ACE_Event_Handler
 {
  public:
   transaction(const Pdu& pdu, const UdpTarget& target, ACE_SOCK_Dgram& io);
+  transaction(ACE_SOCK_Dgram& io):session_(io) { }
   // constructor
 
   ~transaction();
@@ -42,29 +43,30 @@ class ACE_Export transaction : public ACE_Event_Handler
    int run();    
    // begin polling for values
 
-   int result(Pdu& pdu); 
+   int result(Pdu& pdu, char *comm_str = 0, ACE_INET_Addr *from_addr = 0) const;
    // return pdu with result from agent after run() is completed rc = 0
+   // optionally get community str
 
    virtual int handle_input (ACE_HANDLE fd);
-   // called by reactor when data read on session_
+   // called by reactor when data is ready to be read in from OS memory
 
    int send();
    // transmit buffer command to network...
+
+   const ACE_INET_Addr& get_from_addr() const;
+   // pre: handle_input called
+   // retrieve the sender's from address from the last pkt 
 
  private:
   transaction(const transaction&);
   // disallow copy construction
 
-  wpdu wp_;
-  UdpTarget params_;		
-  ACE_INET_Addr addr_;
-  ACE_SOCK_Dgram session_;    
-  // io object 
-
-  iovec receive_iovec_;	// receive buffer
-  // incomming msg details
-  ACE_Addr receive_addr_;	
-  // address msg received from
+  wpdu wp_;			// wire pdu
+  UdpTarget params_;		// params
+  ACE_INET_Addr addr_;		// to address
+  ACE_SOCK_Dgram session_;      // io object 
+  iovec receive_iovec_;		// receive buffer
+  ACE_INET_Addr receive_addr_;	// from address
 };
 
 #endif // TRANSACTION_

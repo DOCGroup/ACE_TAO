@@ -94,8 +94,15 @@ int transaction::handle_input (ACE_HANDLE fd)
   return rc;
 }
 
+
+const ACE_INET_Addr& transaction::get_from_addr() const
+{
+  return receive_addr_;
+}
+
+
 // return pdu to caller
-int transaction::result(Pdu& pdu)
+int transaction::result(Pdu& pdu, char *comm_str, ACE_INET_Addr *from) const 
 {
   // TODO: check to see the sender matches the receiver address..
 
@@ -107,11 +114,16 @@ int transaction::result(Pdu& pdu)
    return -1;
 
  wpdu tmp(receive_iovec_);
+ 
  snmp_version ver;
- if (tmp.get_pdu(pdu, ver) == 0)
-   return 0;
- else
-  return -1;
+
+ // return comm str and from address of incomming pdu if requested
+ int rc = tmp.get_pdu(pdu, ver);
+ if (comm_str)
+   ACE_OS::strcpy(comm_str, (char *)tmp.get_community());
+ if (from)
+  *from = receive_addr_; 
+ return rc;
 }
 
 int transaction::send()
