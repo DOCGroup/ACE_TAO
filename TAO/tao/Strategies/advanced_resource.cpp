@@ -67,7 +67,9 @@ TAO_Resource_Factory_Changer::TAO_Resource_Factory_Changer (void)
 TAO_Advanced_Resource_Factory::TAO_Advanced_Resource_Factory (void)
   : reactor_type_ (TAO_REACTOR_TP),
     threadqueue_type_ (TAO_THREAD_QUEUE_NOT_SET),
-    cdr_allocator_type_ (TAO_ALLOCATOR_THREAD_LOCK)
+    cdr_allocator_type_ (TAO_ALLOCATOR_THREAD_LOCK),
+    amh_response_handler_allocator_lock_type_ (TAO_ALLOCATOR_THREAD_LOCK),
+    ami_response_handler_allocator_lock_type_ (TAO_ALLOCATOR_THREAD_LOCK)
 {
   // Constructor
 }
@@ -205,6 +207,46 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR** argv)
           else
             {
               this->report_option_value_error (ACE_LIB_TEXT("-ORBInputCDRAllocator"), current_arg);
+            }
+
+          arg_shifter.consume_arg ();
+        }
+      else if ((current_arg = arg_shifter.get_the_parameter
+                (ACE_LIB_TEXT("-ORBAMHResponseHandlerAllocator"))))
+        {
+          if (ACE_OS::strcasecmp (current_arg,
+                                  ACE_LIB_TEXT("null")) == 0)
+            {
+              this->amh_response_handler_allocator_lock_type_ = TAO_ALLOCATOR_NULL_LOCK;
+            }
+          else if (ACE_OS::strcasecmp (current_arg,
+                                       ACE_LIB_TEXT("thread")) == 0)
+            {
+              this->amh_response_handler_allocator_lock_type_ = TAO_ALLOCATOR_THREAD_LOCK;
+            }
+          else
+            {
+              this->report_option_value_error (ACE_LIB_TEXT("-ORBAMHResponseHandlerAllocator"), current_arg);
+            }
+
+          arg_shifter.consume_arg ();
+        }
+      else if ((current_arg = arg_shifter.get_the_parameter
+                (ACE_LIB_TEXT("-ORBAMIResponseHandlerAllocator"))))
+        {
+          if (ACE_OS::strcasecmp (current_arg,
+                                  ACE_LIB_TEXT("null")) == 0)
+            {
+              this->ami_response_handler_allocator_lock_type_ = TAO_ALLOCATOR_NULL_LOCK;
+            }
+          else if (ACE_OS::strcasecmp (current_arg,
+                                       ACE_LIB_TEXT("thread")) == 0)
+            {
+              this->ami_response_handler_allocator_lock_type_ = TAO_ALLOCATOR_THREAD_LOCK;
+            }
+          else
+            {
+              this->report_option_value_error (ACE_LIB_TEXT("-ORBAMIResponseHandlerAllocator"), current_arg);
             }
 
           arg_shifter.consume_arg ();
@@ -711,6 +753,44 @@ TAO_Advanced_Resource_Factory::input_cdr_msgblock_allocator (void)
     default:
       return
         this->TAO_Default_Resource_Factory::input_cdr_msgblock_allocator();
+    }
+
+  return allocator;
+}
+
+ACE_Allocator *
+TAO_Advanced_Resource_Factory::amh_response_handler_allocator (void)
+{
+  ACE_Allocator *allocator = 0;
+  switch (this->amh_response_handler_allocator_lock_type_)
+    {
+    case TAO_ALLOCATOR_NULL_LOCK:
+      ACE_NEW_RETURN (allocator,
+                      NULL_LOCK_ALLOCATOR,
+                      0);
+      break;
+    default:
+      return
+        this->TAO_Default_Resource_Factory::amh_response_handler_allocator();
+    }
+
+  return allocator;
+}
+
+ACE_Allocator *
+TAO_Advanced_Resource_Factory::ami_response_handler_allocator (void)
+{
+  ACE_Allocator *allocator = 0;
+  switch (this->ami_response_handler_allocator_lock_type_)
+    {
+    case TAO_ALLOCATOR_NULL_LOCK:
+      ACE_NEW_RETURN (allocator,
+                      NULL_LOCK_ALLOCATOR,
+                      0);
+      break;
+    default:
+      return
+        this->TAO_Default_Resource_Factory::ami_response_handler_allocator();
     }
 
   return allocator;

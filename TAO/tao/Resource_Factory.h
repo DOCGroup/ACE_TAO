@@ -141,7 +141,7 @@ public:
   /// Return a reference to the acceptor registry.
   virtual TAO_Acceptor_Registry *get_acceptor_registry (void);
 
-  /// Return an Connector to be utilized.
+  /// Return a connector to be utilized.
   virtual TAO_Connector_Registry *get_connector_registry (void);
 
   /// @name Access the input CDR allocators.
@@ -160,6 +160,12 @@ public:
   virtual ACE_Allocator* output_cdr_buffer_allocator (void);
   virtual ACE_Allocator* output_cdr_msgblock_allocator (void);
   //@}
+
+  /// Access the AMH response handler allocator
+  virtual ACE_Allocator* amh_response_handler_allocator (void);
+
+  /// Access the AMI response handler allocator
+  virtual ACE_Allocator* ami_response_handler_allocator (void);
 
   /**
    * The protocol factory list is implemented in this class since

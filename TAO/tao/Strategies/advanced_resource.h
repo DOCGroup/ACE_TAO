@@ -46,8 +46,8 @@ public:
   /// Dynamic linking hook
   virtual int init (int argc, ACE_TCHAR* argv[]);
 
-  // = Member Accessors
-  enum
+  /// Type of lock used for the allocators
+  enum Allocator_Lock_Type
   {
     TAO_ALLOCATOR_NULL_LOCK,
     TAO_ALLOCATOR_THREAD_LOCK
@@ -83,13 +83,14 @@ public:
 
   /**
    * @name Resource Retrieval
-   *
    */
   //@{
   virtual int init_protocol_factories (void);
   virtual ACE_Allocator* input_cdr_dblock_allocator (void);
   virtual ACE_Allocator* input_cdr_buffer_allocator (void);
   virtual ACE_Allocator* input_cdr_msgblock_allocator (void);
+  virtual ACE_Allocator* amh_response_handler_allocator (void);
+  virtual ACE_Allocator* ami_response_handler_allocator (void);
   virtual int input_cdr_allocator_type_locked (void);
   virtual TAO_ProtocolFactorySet *get_protocol_factories (void);
   //@}
@@ -121,7 +122,13 @@ protected:
   int threadqueue_type_;
 
   /// The type of CDR allocators.
-  int cdr_allocator_type_;
+  Allocator_Lock_Type cdr_allocator_type_;
+
+  /// Type of lock used by AMH response handler allocator.
+  Allocator_Lock_Type amh_response_handler_allocator_lock_type_;
+
+  /// Type of lock used by AMI response handler allocator.
+  Allocator_Lock_Type ami_response_handler_allocator_lock_type_;
 
   virtual int load_default_protocols (void);
 
