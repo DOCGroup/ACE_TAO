@@ -55,8 +55,10 @@ namespace CIAO
 
     virtual ::Components::ConsumerDescriptions *
     get_registered_consumers (const char *publisher_name
-                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       ::Components::InvalidName,
+                       ::Components::InvalidConnection)) = 0;
                        
   protected:
     SVNT *servant_;
