@@ -67,7 +67,6 @@ public:
   // sensitive. Only the common stuff for all the replies to be
   // sent would be handled.
 
-//BRT
     int send_reply_exception (TAO_Transport *transport,
                             TAO_ORB_Core* orb_core,
                             CORBA::ULong request_id,

@@ -48,7 +48,7 @@ public:
   TAO_GIOP_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
                           TAO_InputCDR &input,
                           TAO_OutputCDR &output,
-						  TAO_Transport *transport, //BRT CHANGE
+                          TAO_Transport *transport,
                           TAO_ORB_Core *orb_core,
                           const TAO_GIOP_Version &version);
 
@@ -141,8 +141,8 @@ public:
 
   virtual void _tao_lazy_evaluation (int lazy_evaluation);
   // Set the lazy evaluation flag
-										//BRT
-  virtual void send_no_exception_reply (/*TAO_Transport *transport*/);
+									
+  virtual void send_no_exception_reply ();
   // Used with reliable oneway requests.
 
   virtual CORBA::Principal_ptr principal (void) const;
@@ -179,9 +179,9 @@ public:
   TAO_Tagged_Profile &profile (void);
   // Return the reference to the tagged profile
 
-  virtual void tao_send_reply (void); // BRT CHANGE
+  virtual void tao_send_reply (void);
 
-  virtual void tao_send_reply_exception (CORBA::Exception&); //BRT CHANGE
+  virtual void tao_send_reply_exception (CORBA::Exception&);
 
 
 private:
@@ -199,7 +199,6 @@ private:
   // Outgoing stream.
 
   TAO_Transport *transport_;
-  //BRT CHANGE
 
   CORBA::Boolean response_expected_;
   // 0: oneway (SYNC_NONE or SYNC_WITH_TRANSPORT)

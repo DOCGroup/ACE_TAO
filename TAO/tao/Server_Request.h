@@ -173,15 +173,13 @@ public:
   virtual void _tao_lazy_evaluation (int lazy_evaluation) = 0;
   // Set the lazy evaluation flag
 
-  //BRT
   virtual void send_no_exception_reply (/*TAO_Transport *transport*/) = 0;
   // Used with reliable oneway requests.
 
   virtual void tao_send_reply (void) = 0;
-  // BRT CHANGE
 
   virtual void tao_send_reply_exception (CORBA::Exception&) = 0;
-  //BRT CHANGE
+
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
   typedef CORBA::ServerRequest_ptr _ptr_type;

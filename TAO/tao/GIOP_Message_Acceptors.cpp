@@ -89,7 +89,7 @@ TAO_GIOP_Message_Acceptors::
   TAO_GIOP_ServerRequest request (this,
                                   input,
                                   *this->output_,
-								  transport, //BRT
+                                  transport,
                                   orb_core,
                                   version);
 
@@ -97,8 +97,7 @@ TAO_GIOP_Message_Acceptors::
 
   CORBA::ULong request_id = 0;
   CORBA::Boolean response_required = 0;
-  CORBA::Boolean sync_with_server = 0;
-  CORBA::Boolean location_forward = 0;
+
   int parse_error = 0;
 
   ACE_TRY
@@ -113,7 +112,6 @@ TAO_GIOP_Message_Acceptors::
       request_id = request.request_id ();
 
       response_required = request.response_expected ();
-      sync_with_server = request.sync_with_server ();
 
 #if (TAO_NO_IOR_TABLE == 0)
       const CORBA::Octet *object_key =
@@ -171,7 +169,6 @@ TAO_GIOP_Message_Acceptors::
       orb_core->object_adapter ()->dispatch_servant (
                                                      request.object_key (),
                                                      request,
-                                                     transport,
                                                      0,
                                                      ACE_TRY_ENV
                                                      );
@@ -198,9 +195,6 @@ TAO_GIOP_Message_Acceptors::
 
       *this->output_ << object_ptr;
 
-      // Flag for code below catch blocks.
-      location_forward = 1;
-//BRT 
       int result = this->send_message (transport,
                                    *this->output_);
 
@@ -310,28 +304,6 @@ TAO_GIOP_Message_Acceptors::
   ACE_ENDTRY;
 
   int result = 0;
-
-  // Do we have a twoway request, a oneway SYNC_WITH_TARGET,
-  // or a oneway SYNC_WITH_SERVER with a location forward reply?
-//BRT
-//  if ((response_required && !sync_with_server)
-//      || (sync_with_server && location_forward))
-//    {
-//      result = this->send_message (transport,
-//                                   *this->output_);
-//
-//      if (result == -1)
-//        {
-//          if (TAO_debug_level > 0)
-//            {
-//              // No exception but some kind of error, yet a response
-//              // is required.
-//              ACE_ERROR ((LM_ERROR,
-//                          ACE_TEXT ("TAO: (%P|%t|%N|%l) %p: cannot send reply\n"),
-//                          ACE_TEXT ("TAO_GIOP::process_server_message")));
-//            }
-//        }
-//    }
 
   return result;
 }
@@ -447,7 +419,6 @@ TAO_GIOP_Message_Acceptors::
       orb_core->object_adapter ()->dispatch_servant
         (server_request.object_key (),
          server_request,
-         transport,
          0,
          ACE_TRY_ENV);
       ACE_TRY_CHECK;
