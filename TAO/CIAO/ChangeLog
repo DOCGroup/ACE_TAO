@@ -1,3 +1,8 @@
+Thu May 27 16:38:19 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* DnC/Deployment.xsd: Added UUID element to deploymentPlan.
+	
+
 Thu May 27 13:03:02 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * DnC/DomainApplicationManager/DomainApplicationManager_Impl.h:

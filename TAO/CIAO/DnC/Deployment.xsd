@@ -262,7 +262,7 @@
   <xsd:element name="SharedResource" type="Deployment:SharedResource"/>
   <xsd:complexType name="Domain">
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
-      <xsd:element name="UUID" type="xsd:string"/>
+      <xsd:element name="UUID" type="xsd:string"/>  
       <xsd:element name="label" type="xsd:string"/>
       <xsd:element name="sharedResource" type="Deployment:SharedResource"/>
       <xsd:element name="node" type="Deployment:Node"/>
@@ -359,8 +359,11 @@
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
   </xsd:complexType>
   <xsd:element name="ArtifactDeploymentDescription" type="Deployment:ArtifactDeploymentDescription"/>
+
+
   <xsd:complexType name="DeploymentPlan">
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
+    <xsd:element name="UUID" type="xsd:string"/>
       <xsd:element name="label" type="xsd:string"/>
       <xsd:element name="realizes" type="Deployment:ComponentInterfaceDescription"/>
       <xsd:element name="implementation" type="Deployment:MonolithicDeploymentDescription"/>
@@ -375,6 +378,8 @@
     <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
   </xsd:complexType>
   <xsd:element name="DeploymentPlan" type="Deployment:DeploymentPlan"/>
+
+
   <xsd:complexType name="ResourceDeploymentDescription">
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
       <xsd:element name="requirementName" type="xsd:string"/>
