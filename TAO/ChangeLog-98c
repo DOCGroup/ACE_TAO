@@ -1,3 +1,7 @@
+Sun Oct 26 22:18:01 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* TAO version 0.0.17, released Sun Oct 26 22:18:01 1997.
+
 Sun Oct 26 17:53:25 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* {tao,tests}/Makefile: Commented out the TAO_HAS_TSS_ORBCORE in
