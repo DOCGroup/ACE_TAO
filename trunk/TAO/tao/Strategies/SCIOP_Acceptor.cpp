@@ -4,14 +4,10 @@
 #if TAO_HAS_SCIOP == 1
 
 #include "tao/MProfile.h"
-/* //#include "tao/ORB_Core.h" */
-/* //#include "tao/Server_Strategy_Factory.h" */
 #include "tao/debug.h"
 #include "tao/Protocols_Hooks.h"
 #include "tao/Codeset_Manager.h"
 #include "tao/Transport.h"
-
-/* //#include "ace/Auto_Ptr.h" */
 
 #if !defined(__ACE_INLINE__)
 #include "SCIOP_Acceptor.i"
