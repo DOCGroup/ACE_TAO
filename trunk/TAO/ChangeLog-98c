@@ -1,3 +1,13 @@
+Wed Aug  5 11:21:29 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/Cubit/TAO/MT_Cubit/server.cpp: 
+	  Fixed couple of minor bugs: assignment of a <const char*> to a
+	  <char*> and a misplaced close paren.
+
+	* tests/Cubit/TAO/DII_Cubit/client.cpp: 
+	  Removed EGCS warning about implicit use of & with function
+	  pointers. 
+
 Tue Aug  4 22:23:47 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit/server.cpp: Cleaned up some of the code
