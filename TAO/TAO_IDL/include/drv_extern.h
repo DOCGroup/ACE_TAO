@@ -74,6 +74,7 @@ const unsigned long TAO_IDL_COMMAND_LINE_BUFFER_SIZE = 4 * 1024;
 extern void DRV_parse_args (long, char **);
 extern void DRV_usage (void);
 extern void DRV_pre_proc (const char *myfile);
+extern void DRV_store_env_include_paths (void);
 extern void DRV_cpp_init (void);
 extern void DRV_cpp_putarg (const char *str);
 extern void DRV_cpp_new_location (const char *new_loc);
