@@ -5,8 +5,6 @@
 #define ACE_CONTAINERS_C
 
 #define ACE_BUILD_DLL
-
-#include "ace/Malloc.h"
 #include "ace/Containers.h"
 
 #if !defined (__ACE_INLINE__)
@@ -129,18 +127,13 @@ ACE_Unbounded_Stack<T>::dump (void) const
 }
 
 template<class T>
-ACE_Unbounded_Stack<T>::ACE_Unbounded_Stack (ACE_Allocator *alloc)
+ACE_Unbounded_Stack<T>::ACE_Unbounded_Stack (void)
   : head_ (0),
-    cur_size_ (0),
-    allocator_ (alloc)
+    cur_size_ (0)
 {
-  //  ACE_TRACE ("ACE_Unbounded_Stack<T>::ACE_Unbounded_Stack");
-  if (this->allocator_ == 0)
-    this->allocator_ = ACE_Allocator::instance ();
-  
-  ACE_NEW_MALLOC (this->head_, this->allocator_->malloc (sizeof (ACE_NODE<T>)),
-		  ACE_NODE<T>);
+  ACE_NEW (this->head_, ACE_Node<T>);
   this->head_->next_ = this->head_;
+  //  ACE_TRACE ("ACE_Unbounded_Stack<T>::ACE_Unbounded_Stack");
 }
 
 template<class T> void
@@ -152,7 +145,7 @@ ACE_Unbounded_Stack<T>::delete_all_nodes (void)
     {
       ACE_Node<T> *temp = this->head_->next_;
       this->head_->next_ = temp->next_;
-      this->allocator_->free (temp);
+      delete temp;
     }
 
   ACE_ASSERT (this->head_ == this->head_->next_
@@ -172,23 +165,17 @@ ACE_Unbounded_Stack<T>::copy_all_nodes (const ACE_Unbounded_Stack<T> &s)
        s_temp != s.head_;
        s_temp = s_temp->next_)
     {
-      ACE_NEW_MALLOC (temp->next_,
-		      this->allocator_->malloc (sizeof (ACE_Node<T>)),
-		      ACE_Node<T> (s_temp->item_, temp->next_));
+      ACE_NEW (temp->next_, 
+	       ACE_Node<T> (s_temp->item_, temp->next_));
       temp = temp->next_;
     }
 }
 
 template<class T>
 ACE_Unbounded_Stack<T>::ACE_Unbounded_Stack (const ACE_Unbounded_Stack<T> &s)
-  : head_ (0),
-    allocator_ (s.allocator_)
+  : head_ (0)
 {
-  if (this->allocator_ == 0)
-    this->allocator_ = ACE_Allocator::instance ();
-
-  ACE_NEW_MALLOC (this->head_, this->allocator_->malloc( sizeof (ACE_Node<T>)),
-		  ACE_Node<T>);
+  ACE_NEW (this->head_, ACE_Node<T>);
   this->head_->next_ = this->head_;
 
   //  ACE_TRACE ("ACE_Unbounded_Stack<T>::ACE_Unbounded_Stack");
@@ -212,7 +199,7 @@ ACE_Unbounded_Stack<T>::~ACE_Unbounded_Stack (void)
   //  ACE_TRACE ("ACE_Unbounded_Stack<T>::~ACE_Unbounded_Stack");
 
   this->delete_all_nodes ();
-  this->allocator_->free (this->head_);
+  delete this->head_;
 }
 
 template<class T> int
@@ -222,8 +209,7 @@ ACE_Unbounded_Stack<T>::push (const T &new_item)
 
   ACE_Node<T> *temp = 0;
 
-  ACE_NEW_MALLOC_RETURN (temp, this->allocator_->malloc (sizeof (ACE_Node<T>)),
-			 ACE_Node<T> (new_item, this->head_->next_), -1);
+  ACE_NEW_RETURN (temp, ACE_Node<T> (new_item, this->head_->next_), -1);
 
   this->head_->next_ = temp;
   return 0;
@@ -242,7 +228,7 @@ ACE_Unbounded_Stack<T>::pop (T &item)
       item = temp->item_;
       this->head_->next_ = temp->next_;
 
-      this->allocator_->free (temp);
+      delete temp;
       return 0;
     }
 }
@@ -297,24 +283,19 @@ ACE_Unbounded_Stack<T>::remove (const T &item)
       // Skip over the node that we're deleting.
       curr->next_ = temp->next_;
       this->cur_size_--;
-      this->allocator_->free (temp);
+      delete temp;
       return 0;
     }
 }
 
 template <class T>
-ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue (ACE_Allocator *alloc)
+ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue (void)
   : head_ (0),
-    cur_size_ (0),
-    allocator_ (alloc)
+    cur_size_ (0)
 {
   ACE_TRACE ("ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue (void)");
 
-  if (this->allocator_ == 0)
-    this->allocator_ = ACE_Allocator::instance ();
-  
-  ACE_NEW_MALLOC (this->head_, this->allocator_->malloc (sizeof (ACE_Node<T>)),
-		  ACE_Node<T>);
+  ACE_NEW (this->head_, ACE_Node<T>);
 
   // Make the list circular by pointing it back to itself.
   this->head_->next_ = this->head_;
@@ -323,16 +304,11 @@ ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue (ACE_Allocator *alloc)
 template <class T>
 ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue (const ACE_Unbounded_Queue<T> &us)
   : head_ (0),
-    cur_size_ (0),
-    allocator_ (us.allocator_)
+    cur_size_ (0)
 {
   ACE_TRACE ("ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue");
 
-  if (this->allocator_ == 0)
-    this->allocator_ = ACE_Allocator::instance ();
-  
-  ACE_NEW_MALLOC (this->head_, this->allocator_->malloc (sizeof (ACE_Node<T>)),
-		  ACE_Node<T>);
+  ACE_NEW (this->head_, ACE_Node<T>);
   this->head_->next_ = this->head_;
   this->copy_nodes (us);
 }
@@ -394,7 +370,7 @@ ACE_Unbounded_Queue<T>::delete_nodes (void)
     {
       ACE_Node<T> *temp = curr;
       curr = curr->next_;
-      this->allocator_->free (temp);
+      delete temp;
       this->cur_size_--;
     }
 
@@ -408,7 +384,7 @@ ACE_Unbounded_Queue<T>::~ACE_Unbounded_Queue (void)
   ACE_TRACE ("ACE_Unbounded_Queue<T>::~ACE_Unbounded_Queue (void)");
 
   this->delete_nodes ();
-  this->allocator_->free (this->head_);
+  delete this->head_;
   this->head_ = 0;
 }
 
@@ -420,8 +396,7 @@ ACE_Unbounded_Queue<T>::enqueue_head (const T &new_item)
   ACE_Node<T> *temp;
 
   // Create a new node that points to the original head.
-  ACE_NEW_MALLOC_RETURN (temp, this->allocator_->malloc (sizeof (ACE_Node<T>)),
-			 ACE_Node<T> (new_item, this->head_->next_), -1);
+  ACE_NEW_RETURN (temp, ACE_Node<T> (new_item, this->head_->next_), -1);
 
   // Link this pointer into the front of the list.
   this->head_->next_ = temp;
@@ -441,8 +416,7 @@ ACE_Unbounded_Queue<T>::enqueue_tail (const T &new_item)
   this->head_->item_ = new_item;
 
   // Create a new dummy node.
-  ACE_NEW_MALLOC_RETURN (temp, this->allocator_->malloc (sizeof (ACE_Node<T>)),
-			 ACE_Node<T> (this->head_->next_), -1);
+  ACE_NEW_RETURN (temp, ACE_Node<T> (this->head_->next_), -1);
 
   // Link this dummy pointer into the list.
   this->head_->next_ = temp;
@@ -467,7 +441,7 @@ ACE_Unbounded_Queue<T>::dequeue_head (T &item)
 
   item = temp->item_;
   this->head_->next_ = temp->next_;
-  this->allocator_->free (temp);
+  delete temp;
   --this->cur_size_;
   return 0;
 }
@@ -1059,8 +1033,7 @@ ACE_Unbounded_Set<T>::insert_tail (const T &item)
   this->head_->item_ = item;
 
   // Create a new dummy node.
-  ACE_NEW_MALLOC_RETURN (temp, this->allocator_->malloc (sizeof (ACE_Node<T>)),
-			 ACE_Node<T> (this->head_->next_), -1);
+  ACE_NEW_RETURN (temp, ACE_Node<T> (this->head_->next_), -1);
 
   // Link this pointer into the list.
   this->head_->next_ = temp;
@@ -1113,7 +1086,7 @@ ACE_Unbounded_Set<T>::delete_nodes (void)
     {
       ACE_Node<T> *temp = curr;
       curr = curr->next_;
-      this->allocator_->free (temp);
+      delete temp;
       this->cur_size_--;
     }
 
@@ -1129,23 +1102,18 @@ ACE_Unbounded_Set<T>::~ACE_Unbounded_Set (void)
   this->delete_nodes ();
 
   // Delete the dummy node.
-  this->allocator_->free (this->head_);
+  delete this->head_;
   this->head_ = 0;
 }
 
 template <class T>
-ACE_Unbounded_Set<T>::ACE_Unbounded_Set (ACE_Allocator *alloc)
+ACE_Unbounded_Set<T>::ACE_Unbounded_Set (void)
   : head_ (0),
-    cur_size_ (0),
-    allocator_ (alloc)
+    cur_size_ (0)
 {
 // ACE_TRACE ("ACE_Unbounded_Set<T>::ACE_Unbounded_Set");
 
-  if (this->allocator_ == 0)
-    this->allocator_ = ACE_Allocator::instance ();
-  
-  ACE_MALLOC_NEW (this->head_, this->allocator_->malloc (sizeof (ACE_Node<T>)),
-		  ACE_Node<T>);
+  ACE_NEW (this->head_, ACE_Node<T>);
 
   // Make the list circular by pointing it back to itself.
   this->head_->next_ = this->head_;
@@ -1154,16 +1122,11 @@ ACE_Unbounded_Set<T>::ACE_Unbounded_Set (ACE_Allocator *alloc)
 template <class T>
 ACE_Unbounded_Set<T>::ACE_Unbounded_Set (const ACE_Unbounded_Set<T> &us)
   : head_ (0),
-    cur_size_ (0),
-    allocator_ (us.allocator_)
+    cur_size_ (0)
 {
   ACE_TRACE ("ACE_Unbounded_Set<T>::ACE_Unbounded_Set");
 
-  if (this->allocator_ == 0)
-    this->allocator_ = ACE_Allocator::instance ();
-  
-  ACE_MALLOC_NEW (this->head_, this->allocator_->malloc (sizeof (ACE_Node<T>)),
-		  ACE_Node<T>);
+  ACE_NEW (this->head_, ACE_Node<T>);
   this->head_->next_ = this->head_;
   this->copy_nodes (us);
 }
@@ -1229,7 +1192,7 @@ ACE_Unbounded_Set<T>::remove (const T &item)
       // Skip over the node that we're deleting.
       curr->next_ = temp->next_;
       this->cur_size_--;
-      this->allocator_->free (temp);
+      delete temp;
       return 0;
     }
 }
