@@ -40,6 +40,9 @@ TAO_Stub::TAO_Stub (const char *repository_id,
                     const TAO_MProfile &profiles,
                     TAO_ORB_Core *orb_core)
   : type_id (repository_id),
+    orb_core_ (orb_core),
+    orb_ (),
+    servant_orb_ (),
 #if (TAO_HAS_RT_CORBA == 1)
     priority_model_policy_ (0),
     priority_banded_connection_policy_ (0),
@@ -53,9 +56,6 @@ TAO_Stub::TAO_Stub (const char *repository_id,
     profile_success_ (0),
     refcount_lock_ (),
     refcount_ (1),
-    orb_core_ (orb_core),
-    orb_ (),
-    servant_orb_ (),
 #if (TAO_HAS_CORBA_MESSAGING == 1)
     policies_ (0),
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
@@ -63,7 +63,7 @@ TAO_Stub::TAO_Stub (const char *repository_id,
     ior_info_ (0),
     forwarded_ior_info_ (0)
 {
-  if (this->orb_core_ == 0)
+  if (this->orb_core_.get() == 0)
     {
       if (TAO_debug_level > 0)
         {
@@ -71,7 +71,7 @@ TAO_Stub::TAO_Stub (const char *repository_id,
                       ACE_TEXT ("TAO: (%P|%t) TAO_Stub created with default ")
                       ACE_TEXT ("ORB core\n")));
         }
-      this->orb_core_ = TAO_ORB_Core_instance ();
+      this->orb_core_.reset (TAO_ORB_Core_instance ());
     }
 
   // Duplicate the ORB_Core, otherwise the allocators and other
@@ -128,8 +128,6 @@ TAO_Stub::~TAO_Stub (void)
   delete this->policies_;
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
-
-  this->orb_core_->_decr_refcnt ();
 
   if (this->ior_info_)
     delete this->ior_info_;
@@ -715,7 +713,7 @@ TAO_Stub::set_policy_overrides (const CORBA::PolicyList & policies,
   TAO_Stub* stub;
   ACE_NEW_RETURN (stub, TAO_Stub (this->type_id.in (),
                                   this->base_profiles_,
-                                  this->orb_core_),
+                                  this->orb_core_.get ()),
                   0);
   stub->policies_ = policy_manager.release ();
 
@@ -743,7 +741,7 @@ TAO_Stub::validate_connection (CORBA::PolicyList_out inconsistent_policies,
   // Use Locate Request to establish connection/make sure the object
   // is there ...
   TAO_GIOP_Locate_Request_Invocation locate_request (this,
-                                                     this->orb_core_);
+                                                     this->orb_core_.get ());
 
   locate_request.init_inconsistent_policies (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);

@@ -380,9 +380,41 @@ private:
                             CORBA::Environment &ACE_TRY_ENV)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-#if (TAO_HAS_RT_CORBA == 1)
 
 private:
+  /// Automatically manage the ORB_Core reference count
+  /**
+   * The ORB_Core cannot go away until the object references it
+   * creates are destroyed.  There are multiple reasons for this, but
+   * in particular, the allocators used for some of the TAO_Profile
+   * objects contained on each TAO_Stub are owned by the TAO_ORB_Core.
+   *
+   * This <B>must</B> be the first field of the class, otherwise the
+   * TAO_ORB_Core is destroyed too early!
+   *
+   */
+  TAO_ORB_Core_Auto_Ptr orb_core_;
+
+  /// ORB required for reference counting.  This will help us keep the
+  /// ORB around until the CORBA::Object we represent dies.
+  /**
+   * @todo Why do we need both a reference to the ORB_Core and its
+   *       ORB? It think the memory management rules for the ORB_Core
+   *       changed, in the good old days it was the CORBA::ORB class
+   *       who owned the ORB_Core, now it is the other way around....
+   */
+  CORBA::ORB_var orb_;
+
+  /**
+   * If this stub refers to a collocated object then we need to hold on to
+   * the servant's ORB (which may be different from the client ORB) so that,
+   *   1. we know that the ORB will stay alive long enough, and,
+   *   2. we can search for the servant/POA's status starting from
+   *      the ORB's RootPOA.
+   */
+  CORBA::ORB_var servant_orb_;
+
+#if (TAO_HAS_RT_CORBA == 1)
 
   /// Helper method used to parse the policies.
   void parse_policies (CORBA::Environment &ACE_TRY_ENV);
@@ -393,12 +425,13 @@ private:
 
   void exposed_client_protocol (CORBA::Policy_ptr policy);
 
-private:
-
-  // The following attribute are used to cache
-  // the different kind of policies and avoid to
-  // parse the MProfile's policy list each time we
-  // are asked about a given policy.
+  /** @name Cache RT-CORBA policies
+   *
+   * The following attribute are used to cache the different kind of
+   * policies and avoid to parse the MProfile's policy list each time
+   * we are asked about a given policy.
+   */
+  //@{
 
   CORBA::Policy *priority_model_policy_;
 
@@ -408,8 +441,9 @@ private:
 
   CORBA::Boolean are_policies_parsed_;
 
+  //@}
+
 #endif /* TAO_HAS_RT_CORBA == 1 */
-private:
 
   /// Ordered list of profiles for this object.
   TAO_MProfile base_profiles_;
@@ -432,22 +466,6 @@ private:
 
   /// Number of outstanding references to this object.
   CORBA::ULong refcount_;
-
-  /// The ORB.
-  TAO_ORB_Core* orb_core_;
-
-  /// ORB required for reference counting.  This will help us keep the
-  /// ORB around until the CORBA::Object we represent dies.
-  CORBA::ORB_var orb_;
-
-  /**
-   * If this stub refers to a collocated object then we need to hold on to
-   * the servant's ORB (which may be different from the client ORB) so that,
-   *   1. we know that the ORB will stay alive long enough, and,
-   *   2. we can search for the servant/POA's status starting from
-   *      the ORB's RootPOA.
-   */
-  CORBA::ORB_var servant_orb_;
 
   /// The policy overrides in this object, if nil then use the default
   /// policies.
