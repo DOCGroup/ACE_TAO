@@ -58,9 +58,11 @@ endif
 
 .obj/SSL-client.o .obj/SSL-client.so .shobj/SSL-client.o .shobj/SSL-client.so: SSL-client.cpp \
  $(ACE_ROOT)/ace/INET_Addr.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -131,7 +133,8 @@ endif
  ../../SSLIOP/SSL.h ../../SSLIOP/SSL_Context.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- ../../SSLIOP/SSL_Context.i ../../SSLIOP/SSL.i \
+ ../../SSLIOP/SSL_Export.h ../../SSLIOP/SSL_Context.i \
+ ../../SSLIOP/SSL.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
@@ -149,9 +152,11 @@ endif
 
 .obj/SSL-client-simple.o .obj/SSL-client-simple.so .shobj/SSL-client-simple.o .shobj/SSL-client-simple.so: SSL-client-simple.cpp \
  $(ACE_ROOT)/ace/INET_Addr.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -197,7 +202,8 @@ endif
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- ../../SSLIOP/SSL_Context.i ../../SSLIOP/SSL.i \
+ ../../SSLIOP/SSL_Export.h ../../SSLIOP/SSL_Context.i \
+ ../../SSLIOP/SSL.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
@@ -238,10 +244,12 @@ endif
 
 .obj/SSL-server.o .obj/SSL-server.so .shobj/SSL-server.o .shobj/SSL-server.so: SSL-server.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -310,7 +318,8 @@ endif
  ../../SSLIOP/SSL.h ../../SSLIOP/SSL_Context.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- ../../SSLIOP/SSL_Context.i ../../SSLIOP/SSL.i \
+ ../../SSLIOP/SSL_Export.h ../../SSLIOP/SSL_Context.i \
+ ../../SSLIOP/SSL.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
@@ -331,10 +340,12 @@ endif
 
 .obj/SSL-server-fancy.o .obj/SSL-server-fancy.so .shobj/SSL-server-fancy.o .shobj/SSL-server-fancy.so: SSL-server-fancy.cpp \
  $(ACE_ROOT)/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -469,7 +480,8 @@ endif
  $(ACE_ROOT)/ace/Get_Opt.i \
  ../../SSLIOP/SSL_SOCK_Acceptor.h ../../SSLIOP/SSL_SOCK_Stream.h \
  ../../SSLIOP/SSL.h ../../SSLIOP/SSL_Context.h \
- ../../SSLIOP/SSL_Context.i ../../SSLIOP/SSL.i \
+ ../../SSLIOP/SSL_Export.h ../../SSLIOP/SSL_Context.i \
+ ../../SSLIOP/SSL.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
@@ -490,10 +502,12 @@ endif
 
 .obj/SSL-server-simple.o .obj/SSL-server-simple.so .shobj/SSL-server-simple.o .shobj/SSL-server-simple.so: SSL-server-simple.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -562,7 +576,8 @@ endif
  ../../SSLIOP/SSL.h ../../SSLIOP/SSL_Context.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- ../../SSLIOP/SSL_Context.i ../../SSLIOP/SSL.i \
+ ../../SSLIOP/SSL_Export.h ../../SSLIOP/SSL_Context.i \
+ ../../SSLIOP/SSL.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
@@ -583,9 +598,11 @@ endif
 
 .obj/SSL-server-poll.o .obj/SSL-server-poll.so .shobj/SSL-server-poll.o .shobj/SSL-server-poll.so: SSL-server-poll.cpp \
  $(ACE_ROOT)/ace/INET_Addr.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -627,7 +644,8 @@ endif
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- ../../SSLIOP/SSL_Context.i ../../SSLIOP/SSL.i \
+ ../../SSLIOP/SSL_Export.h ../../SSLIOP/SSL_Context.i \
+ ../../SSLIOP/SSL.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
