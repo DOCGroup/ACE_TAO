@@ -33,8 +33,7 @@ JAWS_HTTP_10_Write_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
 
   JAWS_IO *io = policy->io ();
 
-  JAWS_HTTP_10_Request *info = ACE_static_cast (JAWS_HTTP_10_Request *,
-                                                data->payload ());
+  JAWS_HTTP_10_Request *info = static_cast<JAWS_HTTP_10_Request *> (data->payload ());
 
   if (info->status () == (int) JAWS_HTTP_10_Request::STATUS_QUIT)
     {

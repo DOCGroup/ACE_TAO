@@ -252,8 +252,7 @@ Key_List::read_keys (void)
           const char *delimiter = option.delimiter ();
           ACE_NEW_RETURN (this->head,
                           List_Node (buffer,
-                                     ACE_static_cast (int,
-                                       ACE_OS::strcspn (buffer,
+                                     static_cast<int> (ACE_OS::strcspn (buffer,
                                                         delimiter))),
                           -1);
           for (temp = this->head;
@@ -263,8 +262,7 @@ Key_List::read_keys (void)
             {
               ACE_NEW_RETURN (temp->next,
                               List_Node (buffer,
-                                         ACE_static_cast (int,
-                                           ACE_OS::strcspn (buffer,
+                                         static_cast<int> (ACE_OS::strcspn (buffer,
                                                             delimiter))),
                               -1);
               this->total_keys++;
@@ -1867,7 +1865,7 @@ Key_List::dump (void)
 
   u_int keysig_width = option.max_keysig_size () > ACE_OS::strlen ("keysig")
     ? option.max_keysig_size ()
-    : ACE_static_cast (u_int, ACE_OS::strlen ("keysig"));
+    : static_cast<u_int> (ACE_OS::strlen ("keysig"));
 
   size_t key_length = this->max_key_length ();
   size_t keyword_width = key_length > ACE_OS::strlen ("keysig")
