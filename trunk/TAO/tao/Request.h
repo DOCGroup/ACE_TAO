@@ -58,9 +58,18 @@ public:
   CORBA::ExceptionList_ptr exceptions (void);
   // Return the exceptions resulting from this request.
 
+  // The next 3 are not yet inplemented - they just
+  // throw CORBA_NO_IMPLEMENT.
+
+  CORBA::Context_ptr ctx (void) const;
+  // Accessor for the Context member.
+
+  void ctx (CORBA::Context_ptr);
+  // Mutator for the Context member.
+
   CORBA::ContextList_ptr contexts (void);
-  // Return a list of the request's contexts. Since TAO does
-  // not implement Contexts, this will always be 0.
+  // Return a list of the request's result's contexts. Since
+  // TAO does not implement Contexts, this will always be 0.
 
   CORBA::Environment_ptr env (void);
   // Return the <Environment> for this request.
@@ -161,8 +170,11 @@ private:
   CORBA::ExceptionList exceptions_;
   // list of exceptions raised by the operation
 
-  CORBA::ContextList contexts_;
-  // List of the request's contexts
+  CORBA::ContextList_ptr contexts_;
+  // List of the request's result's contexts.
+
+  CORBA::Context_ptr ctx_;
+  // Context associated with this request.
 
   CORBA::ULong refcount_;
   // reference counting
