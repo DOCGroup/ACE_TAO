@@ -14,7 +14,7 @@ $iorfile = PerlACE::LocalFile ("test.ior");
 unlink $iorfile;
 
 $SV = new PerlACE::Process ("server", "-ORBEndpoint diop://:12345 -o $iorfile");
-$CL = new PerlACE::Process ("client", "-k file://$iorfile");
+$CL = new PerlACE::Process ("client", "-k file://$iorfile -ORBEndpoint diop://:12346");
 
 $SV->Spawn ();
 
