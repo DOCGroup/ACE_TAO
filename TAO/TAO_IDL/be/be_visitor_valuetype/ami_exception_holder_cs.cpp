@@ -72,7 +72,7 @@ be_visitor_valuetype_ami_exception_holder_cs::visit_valuetype (be_valuetype *nod
   *os << "TAO_OBV_CREATE_RETURN_TYPE (" << node->local_name () << ")" << be_nl
       << node->full_name () << "_factory::create_for_unmarshal ()" << be_nl
       << "{" << be_idt_nl
-      << "return 0" << be_nl
+      << "return 0;" << be_nl
       << "//return new " << node->compute_local_name ("_tao_", "") << ";" << be_uidt_nl
       << "}" << be_nl
       << "\n";
