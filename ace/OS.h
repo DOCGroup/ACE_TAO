@@ -5110,6 +5110,13 @@ private:
   ACE_Thread_Control thread_control_;
   // Automatically add/remove the thread from the
   // <ACE_Thread_Manager>.
+
+  static u_int is_constructed_;
+  // Used to detect whether we should create a new instance (or not)
+  // within the instance method -- we don't trust the instance_ ptr
+  // because the destructor may have run (if ACE::fini() was called).
+  // See bug #526.
+  // We don't follow the singleton pattern due to dependency issues.
 };
 
 # if defined (ACE_HAS_PHARLAP_RT)

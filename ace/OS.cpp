@@ -41,6 +41,8 @@ OSVERSIONINFO ACE_OS::win32_versioninfo_;
 // Cached win32 version information.
 # endif /* ACE_WIN32 */
 
+u_int ACE_Thread_Exit::is_constructed_ = 0;
+
 class ACE_OS_Thread_Mutex_Guard
 {
   // = TITLE
