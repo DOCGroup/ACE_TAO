@@ -11,7 +11,7 @@ class EventHandler_i : public POA_EventHandler
   // = TITLE
   //     Servant implementation for the <EventHandler> IDL interface.
 public:
-  EventHandler_i (void);
+  EventHandler_i (int quiet);
   // Constructor.
 
   virtual ~EventHandler_i (void);
@@ -27,6 +27,10 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // decrement <num> by calling decrement thru <eh> until zero is
   // reached, then return.
+
+private:
+  int quiet_;
+  // be quiet
 };
 
 #endif /* EVENTHANDLER_I_H */

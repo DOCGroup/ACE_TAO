@@ -93,6 +93,9 @@ public:
 
   int is_server_thread_;
   // Is this thread a leader for this ORB?
+
+  int is_leader_thread_;
+  // Is this thread a leader for this ORB?
 };
 
 // ****************************************************************
@@ -132,9 +135,8 @@ public:
   // sets the thread ID of the leader thread in the leader-follower
   // model
 
-  ACE_SYNCH_MUTEX &lock (void);
-  ACE_Reverse_Lock<ACE_SYNCH_MUTEX> &reverse_lock (void);
-  // Accessors
+  int is_leader_thread (void) const;
+  // checks if we are a leader thread
 
   int elect_new_leader (void);
   // A leader thread is relinquishing its role, unless there are more
@@ -158,6 +160,10 @@ public:
   // returns randomly a follower from the leader-follower set
   // returns follower on success, else 0
 
+  ACE_SYNCH_MUTEX &lock (void);
+  ACE_Reverse_Lock<ACE_SYNCH_MUTEX> &reverse_lock (void);
+  // Accessors
+
 private:
   TAO_ORB_Core_TSS_Resources *get_tss_resources (void) const;
   // Shortcut to obtain the TSS resources of the orb core.
@@ -178,7 +184,7 @@ private:
   int leaders_;
   // Count the number of active leaders.
   // There could be many leaders in the thread pool (i.e. calling
-  // ORB::run), and the same leader could show up multiple times as it 
+  // ORB::run), and the same leader could show up multiple times as it
   // receives nested upcalls and sends more requests.
 };
 

@@ -68,6 +68,9 @@ private:
   int nthreads_;
   // # of threads
 
+  int quiet_;
+  // be quiet
+
   CORBA::ORB_var orb_;
   // Remember our orb.
 

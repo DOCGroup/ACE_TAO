@@ -22,13 +22,13 @@ if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
   exit 1;
 }
 
-$CL1 = Process::Create ($EXEPREFIX."$client_process$EXE_EXT ",
+$CL1 = Process::Create ($EXEPREFIX."client$EXE_EXT ",
 			" -k file://$iorfile"
 			. " -i 100");
-$CL2 = Process::Create ($EXEPREFIX."$client_process$EXE_EXT ",
+$CL2 = Process::Create ($EXEPREFIX."client$EXE_EXT ",
 			" -k file://$iorfile"
 			. " -i 100");
-$CL3 = Process::Create ($EXEPREFIX."$client_process$EXE_EXT ",
+$CL3 = Process::Create ($EXEPREFIX."client$EXE_EXT ",
 			" -k file://$iorfile"
 			. " -i 100");
 
@@ -50,6 +50,15 @@ if ($client3 == -1) {
   $CL3->Kill (); $CL3->TimedWait (1);
 }
 
+$CL = Process::Create ($EXEPREFIX."client$EXE_EXT ",
+		       " -k file://$iorfile"
+		       . " -i 100 -x");
+$client = $CL->TimedWait (60);
+if ($client == -1) {
+  print STDERR "ERROR: client timedout\n";
+  $CL->Kill (); $CL->TimedWait (1);
+}
+
 $server = $SV->TimedWait (5);
 if ($server == -1) {
   print STDERR "ERROR: server timedout\n";
@@ -61,7 +70,8 @@ unlink $iorfile;
 if ($server != 0
     || $client1 != 0
     || $client2 != 0
-    || $client3 != 0) {
+    || $client3 != 0
+    || $client != 0) {
   exit 1;
 }
 

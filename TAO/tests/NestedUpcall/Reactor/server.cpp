@@ -5,19 +5,24 @@
 ACE_RCSID(Reactor, server, "$Id$")
 
 NestedUpCalls_Server::NestedUpCalls_Server (void)
-  : ior_output_file_ (0)
+  : ior_output_file_ (0),
+    quiet_ (0)
 {
 }
 
 int
 NestedUpCalls_Server::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "dn:o:");
+  ACE_Get_Opt get_opts (argc_, argv_, "qdn:o:");
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
+      case 'q':
+        this->quiet_ = 1;
+        break;
+
       case 'd':  // debug flag.
         TAO_debug_level++;
         break;
@@ -83,6 +88,8 @@ NestedUpCalls_Server::init (int argc,
                        str.in ());
       ACE_OS::fclose (this->ior_output_file_);
     }
+  
+  this->reactor_impl_.be_quiet (this->quiet_);
 
   return 0;
 }

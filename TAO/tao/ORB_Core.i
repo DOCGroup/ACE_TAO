@@ -223,25 +223,36 @@ TAO_Leader_Follower::reset_client_thread (void)
 ACE_INLINE void
 TAO_Leader_Follower::set_leader_thread (void)
 {
-  ++this->leaders_;
+  TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
+  if (tss->is_leader_thread_ == 0)
+    {
+      ++this->leaders_;
+    }
+  ++tss->is_leader_thread_;
 }
 
 ACE_INLINE void
 TAO_Leader_Follower::reset_leader_thread (void)
 {
-  --this->leaders_;
+  TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
+  --tss->is_leader_thread_;
+  if (tss->is_leader_thread_ == 0)
+    {
+      --this->leaders_;
+    }
 }
 
-ACE_INLINE ACE_SYNCH_MUTEX &
-TAO_Leader_Follower::lock (void)
+ACE_INLINE int
+TAO_Leader_Follower::is_leader_thread (void) const
 {
-  return this->lock_;
+  TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
+  return tss->is_leader_thread_ != 0;
 }
 
-ACE_INLINE ACE_Reverse_Lock<ACE_SYNCH_MUTEX> &
-TAO_Leader_Follower::reverse_lock (void)
+ACE_INLINE int
+TAO_Leader_Follower::follower_available (void) const
 {
-  return this->reverse_lock_;
+  return !this->follower_set_.is_empty ();
 }
 
 ACE_INLINE int
@@ -265,15 +276,21 @@ TAO_Leader_Follower::add_follower (ACE_SYNCH_CONDITION *follower_ptr)
 }
 
 ACE_INLINE int
-TAO_Leader_Follower::follower_available (void) const
-{
-  return !this->follower_set_.is_empty ();
-}
-
-ACE_INLINE int
 TAO_Leader_Follower::remove_follower (ACE_SYNCH_CONDITION *follower_ptr)
 {
   return this->follower_set_.remove (follower_ptr);
+}
+
+ACE_INLINE ACE_SYNCH_MUTEX &
+TAO_Leader_Follower::lock (void)
+{
+  return this->lock_;
+}
+
+ACE_INLINE ACE_Reverse_Lock<ACE_SYNCH_MUTEX> &
+TAO_Leader_Follower::reverse_lock (void)
+{
+  return this->reverse_lock_;
 }
 
 // ****************************************************************
