@@ -337,7 +337,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
                          TAO_InputCDR *src,
                          CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA::TypeCode_ptr discrim_tc =
+  CORBA::TypeCode_var discrim_tc =
     tc->discriminator_type (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
@@ -533,10 +533,10 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
       if (default_member != null_member)
         {
           // Good, use the default to append...
-          CORBA::TypeCode_ptr member_tc =
+          CORBA::TypeCode_var member_tc =
             tc->member_type (default_member, ACE_TRY_ENV);
           ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-          return TAO_Marshal_Object::perform_skip (member_tc,
+          return TAO_Marshal_Object::perform_skip (member_tc.in (),
                                                    src,
                                                    ACE_TRY_ENV);
         }
@@ -544,10 +544,10 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
     }
 
   // If we found the member successfully then just use that one...
-  CORBA::TypeCode_ptr member_tc =
+  CORBA::TypeCode_var member_tc =
     tc->member_type (current_member, ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-  return TAO_Marshal_Object::perform_skip (member_tc,
+  return TAO_Marshal_Object::perform_skip (member_tc.in (),
                                            src,
                                            ACE_TRY_ENV);
 }
