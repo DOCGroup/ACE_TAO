@@ -32,7 +32,7 @@ $c75_ior = PerlACE::LocalFile ("c75.ior");
 $cookie = PerlACE::LocalFile ("ck_demo_deployment");
 
 ## The following control how to iterate thru various work amount
-$start_work = 20;
+$start_work = 80;
 $end_work = 401;
 $work_step = 10;
 $run_time = 60;                 # run for $run_time sec.
@@ -141,21 +141,21 @@ for ($work = $start_work; $work < $end_work; $work += $work_step)
 
     printf "Test work: $work\n";
 
+    if ($reverse_call_order == 0) {
+        $all_iors = "-k file://$c25_ior -k file://$c50_ior -k file://$c75_ior";
+    }
+    else {
+        $all_iors = "-k file://$c50_ior -k file://$c75_ior -k file://$c25_ior";
+    }
+
 #Start the client to send the trigger message
     $CL = new PerlACE::Process ("../Controllers/client",
-                                "-k file://$c25_ior -k file://$c50_ior -k file://$c75_ior -w $work");
+                                "$all_iors -w $work");
     $CL->SpawnWaitKill(60);
 
 ## Now wait for the test to complete.  Need to figure out a way to
 ## detect this.
     sleep ($run_time);
-
-    if ($reverse_call_order == 0) {
-        $all_iors = "-k file://$c25_ior -k file://$c50_ior -k file://$c75_ior";
-    }
-    else {
-        $all_iors = "-k file://$c75_ior -k file://$c50_ior -k file://$c25_ior";
-    }
 
 #Start the client to send the trigger message
     $CL = new PerlACE::Process ("../Controllers/client",
