@@ -344,9 +344,9 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
                         // have a parent, then the application must free it.
 
                         // allocate a new TypeCode
-#if 1
+
                         // This may produce a memory leak, because
-                        // callers are sloppy about removing this
+                        // callers are sloppy about removing these
                         // objects.
                         CORBA::Long _oc_bounded_string [] =
                         {TAO_ENCAP_BYTE_ORDER, 0};
@@ -357,29 +357,6 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
                                                     ACE_reinterpret_cast(char*,_oc_bounded_string),
                                                     0, sizeof
                                                     (CORBA::String_var), 0);
-#elif 0
-                        // This one fails because we are passing the
-                        // parent but the buffer (_oc_bounded_string) is
-                        // not pointing to the parent CDR stream
-                        // (hence no sharing) and the length is wrong
-                        // (should be 8 not bounds).
-                        CORBA::Long _oc_bounded_string [] =
-                        {TAO_ENCAP_BYTE_ORDER, 0};
-                        // Bounded string. Save the bounds
-                        _oc_bounded_string [1] = (CORBA::Long) bound;
-                        *tcp = new CORBA::TypeCode ((CORBA::TCKind) kind,
-                                                    bound, (char *) &_oc_bounded_string,
-                                                    0, sizeof
-                                                    (CORBA::String_var), parent);
-#else
-                        // This depends on the fact that <stream> is
-                        // actually pointing to the parent CDR stream,
-                        // it is untested.
-                        *tcp = new CORBA::TypeCode ((CORBA::TCKind) kind,
-                                                    8,
-                                                    stream->rd_ptr () - 8,
-                                                    0, 0, parent);
-#endif
                       }
                   }
               }
@@ -623,11 +600,25 @@ TAO_Marshal_Struct::decode (CORBA::TypeCode_ptr  tc,
       alignment = param->alignment (ACE_TRY_ENV);
       ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
+      // MSVC built code works with either of these, but Borland
+      // Builder needs the first one, whereas Sun compilers
+      // need the second one.
+#if defined (WIN32)
+      align_offset =
+        (ptr_arith_t) ptr_align_binary (data, alignment)
+        - (ptr_arith_t) data
+        - (ptr_arith_t) ptr_align_binary (start_addr, alignment)
+        - (ptr_arith_t) start_addr;
+      if (align_offset < 0)
+        align_offset += alignment;
+#else
       align_offset =
         (ptr_arith_t) ptr_align_binary (data, alignment)
         - (ptr_arith_t) data
         + (ptr_arith_t) ptr_align_binary (start_addr, alignment)
         - (ptr_arith_t) start_addr;
+#endif
+
       // if both the start_addr and data are not aligned as per
       // the alignment, we do not add the offset
       data = (const void *) ((ptr_arith_t) data +
