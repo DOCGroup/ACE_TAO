@@ -1,3 +1,12 @@
+Mon Jul 12 20:08:17 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Dev_Poll_Reactor.h:
+
+	  The sys_epoll interface was introduced in Linux kernel 2.5.45.
+	  Don't support backported versions since they appear to be
+	  buggy.  The obsolete ioctl()-based interface is no longer
+	  supported.  Issue a preprocessor error in those cases.
+
 Mon Jul 12 19:51:21 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* examples/APG/Reactor/Client.cpp (ACE_TMAIN):
