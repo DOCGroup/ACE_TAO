@@ -29,7 +29,9 @@ ACE_ALLOC_HOOK_DEFINE (ACE_Service_Config)
 void
 ACE_Service_Config::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Service_Config::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 // All the factory functions that allocate default statically linked

@@ -152,6 +152,7 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::~ACE_Timer_List_T (void)
 template <class TYPE, class FUNCTOR, class ACE_LOCK> void
 ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Timer_List_T::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
@@ -166,6 +167,7 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nsize_ = %d"), count));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 
@@ -189,7 +191,7 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::schedule_i (const TYPE &type,
                                                        const ACE_Time_Value &future_time,
                                                        const ACE_Time_Value &interval)
 {
-  ACE_TRACE ("ACE_Timer_List_T::schedule");
+  ACE_TRACE ("ACE_Timer_List_T::schedule_i");
 
   ACE_Timer_Node_T<TYPE>* n = this->alloc_node();
 

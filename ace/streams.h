@@ -21,7 +21,7 @@
 
 #ifndef ACE_STREAMS_H
 #define ACE_STREAMS_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -136,5 +136,5 @@
 #pragma warning(pop)
 #endif /* _MSC_VER >= 1200 */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_STREAMS_H */

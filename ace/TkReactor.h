@@ -12,7 +12,7 @@
 
 #ifndef ACE_TKREACTOR_H
 #define ACE_TKREACTOR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -129,5 +129,5 @@ private:
 };
 
 #endif /* ACE_HAS_TK */
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_TK_REACTOR_H */

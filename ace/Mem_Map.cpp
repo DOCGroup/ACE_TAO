@@ -54,6 +54,7 @@ to_mapping_name (ACE_TCHAR *mapobjname,
 void
 ACE_Mem_Map::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Mem_Map::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -64,6 +65,7 @@ ACE_Mem_Map::dump (void) const
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nfile_mapping_ = %d"), this->file_mapping_));
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nclose_handle_ = %d"), this->close_handle_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 int

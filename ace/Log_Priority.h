@@ -12,7 +12,7 @@
 
 #ifndef ACE_LOG_PRIORITY_H
 #define ACE_LOG_PRIORITY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 /**
  * @brief This data type indicates the relative priorities of the
@@ -72,5 +72,5 @@ enum ACE_Log_Priority
   LM_ENSURE_32_BITS = 0x7FFFFFFF
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_LOG_PRIORITY_H */

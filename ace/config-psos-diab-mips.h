@@ -6,7 +6,7 @@
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 // #if ! defined (__ACE_INLINE__)
 // # define __ACE_INLINE__
@@ -153,7 +153,6 @@
 #define ACE_LACKS_GETSERVBYNAME
 
 // IO Streams stuff
-/* #define ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
 #define ACE_LACKS_IOSTREAM_TOTALLY
 #define ACE_LACKS_ACE_IOSTREAM
 #define ACE_LACKS_IOSTREAM_FX
@@ -252,5 +251,5 @@
 
 #define ACE_PSOS_DIAB_MIPS
 #define ACE_MALLOC_ALIGN 8
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */

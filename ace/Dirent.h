@@ -15,7 +15,7 @@
 
 #ifndef ACE_DIRENT_H
 #define ACE_DIRENT_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
 
@@ -114,5 +114,5 @@ private:
 #include "ace/Dirent.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_DIRENT_H */

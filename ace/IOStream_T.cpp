@@ -13,7 +13,7 @@ ACE_RCSID(ace, IOStream_T, "$Id$")
 
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
 
-#if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION) && defined (__GNUG__)
+#if defined (__GNUG__)
 # if !defined (ACE_IOSTREAM_T_H)
     // _Only_ define this when compiling this .cpp file standalone, not
     // when instantiating templates.  Its purpose is to provide something
@@ -25,7 +25,7 @@ ACE_RCSID(ace, IOStream_T, "$Id$")
     // declared in the iostream.h header file.
     int ACE_IOStream_global_of_builtin_type_to_avoid_munch_problems = 0;
 # endif /* ! ACE_IOSTREAM_T_H */
-#endif /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION && __GNUG__ */
+#endif /*__GNUG__ */
 
 #if !defined (__ACE_INLINE__)
 #include "ace/IOStream_T.i"

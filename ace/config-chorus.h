@@ -9,7 +9,7 @@
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 // Define CHORUS to the correct version number
 #ifdef CHORUS_4
@@ -155,5 +155,5 @@
 // Needed to wait for "processes" to exit.
 #include <am/await.h>
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */

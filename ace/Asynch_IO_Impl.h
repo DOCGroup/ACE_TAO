@@ -22,7 +22,7 @@
 
 #ifndef ACE_ASYNCH_IO_IMPL_H
 #define ACE_ASYNCH_IO_IMPL_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -816,5 +816,5 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_AIO_CALLS  || !ACE_HAS_WINCE && ACE_WIN32 */
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_ASYNCH_IO_IMPL_H */

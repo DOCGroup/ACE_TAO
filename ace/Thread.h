@@ -13,7 +13,7 @@
 #ifndef ACE_THREAD_H
 #define ACE_THREAD_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
 
@@ -253,6 +253,6 @@ private:
 #include "ace/Thread.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_THREAD_H */

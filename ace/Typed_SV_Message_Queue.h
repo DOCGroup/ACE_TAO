@@ -12,7 +12,7 @@
 
 #ifndef ACE_TYPED_MESSAGE_QUEUE_H
 #define ACE_TYPED_MESSAGE_QUEUE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/SV_Message_Queue.h"
 
@@ -84,5 +84,5 @@ private:
 #pragma implementation ("Typed_SV_Message_Queue.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_TYPED_MESSAGE_QUEUE_H */

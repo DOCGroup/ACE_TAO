@@ -589,6 +589,7 @@ ACE_Get_Opt::last_option (const ACE_TString &last_option)
 void
 ACE_Get_Opt::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Get_Opt::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -621,6 +622,7 @@ ACE_Get_Opt::dump (void) const
                   this->long_opts_[i]->val_));
     }
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 void

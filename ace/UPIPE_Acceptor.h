@@ -14,7 +14,7 @@
 
 #ifndef ACE_UPIPE_ACCEPTOR_H
 #define ACE_UPIPE_ACCEPTOR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/UPIPE_Stream.h"
 
@@ -22,7 +22,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Synch.h"
 #include "ace/SPIPE_Acceptor.h"
 #include "ace/Thread_Manager.h"
 
@@ -90,5 +89,5 @@ private:
 #endif
 
 #endif /* ACE_HAS_THREADS */
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_UPIPE_ACCEPTOR_H */

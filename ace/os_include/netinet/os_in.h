@@ -16,7 +16,7 @@
 #ifndef ACE_OS_INCLUDE_NETINET_OS_IN_H
 #define ACE_OS_INCLUDE_NETINET_OS_IN_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -84,5 +84,5 @@ extern "C"
 }
 #endif /* __cplusplus */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_OS_INCLUDE_NETINET_OS_IN_H */

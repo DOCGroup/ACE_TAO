@@ -14,7 +14,9 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Shared_Memory_MM)
 void
 ACE_Shared_Memory_MM::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Shared_Memory_MM::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 // Creates a shared memory segment of SIZE bytes.

@@ -13,7 +13,7 @@
 
 #ifndef ACE_DATE_TIME_H
 #define ACE_DATE_TIME_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
 
@@ -117,5 +117,5 @@ private:
 #include "ace/Date_Time.i"
 #endif
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_DATE_TIME_H */

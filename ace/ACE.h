@@ -12,7 +12,7 @@
 
 #ifndef ACE_ACE_H
 #define ACE_ACE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -783,5 +783,5 @@ private:
 # define log2 acelog2
 #endif /* acelog2 */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif  /* ACE_ACE_H */

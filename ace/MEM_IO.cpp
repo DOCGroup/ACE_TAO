@@ -311,7 +311,9 @@ ACE_MT_MEM_IO::send_buf (ACE_MEM_SAP_Node *buf,
 void
 ACE_MEM_IO::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_MEM_IO::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 int

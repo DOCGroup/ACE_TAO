@@ -13,7 +13,7 @@
 #ifndef ACE_STRATEGIES_T_H
 #define ACE_STRATEGIES_T_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Hash_Map_Manager_T.h"
 
@@ -27,7 +27,7 @@
 #include "ace/Refcountable.h"
 #include "ace/Hashable.h"
 #include "ace/Recyclable.h"
-
+#include "ace/Reverse_Lock_T.h"
 
 // Needed for broken linkers that can't grok long symbols.
 #define ACE_Refcounted_Hash_Recyclable ARHR
@@ -1067,7 +1067,7 @@ protected:
 #pragma implementation ("Strategies_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 
 #endif /* ACE_STRATEGIES_T_H */

@@ -3,7 +3,7 @@
 
 #ifndef ACE_RMCAST_UDP_RELIABLE_RECEIVER_H
 #define ACE_RMCAST_UDP_RELIABLE_RECEIVER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "RMCast_Singleton_Factory.h"
 #include "RMCast_Reliable_Factory.h"
@@ -45,5 +45,5 @@ private:
 #include "RMCast_UDP_Reliable_Receiver.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_RMCAST_UDP_RELIABLE_RECEIVER_H */

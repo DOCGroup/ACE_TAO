@@ -16,7 +16,9 @@ ACE_ALLOC_HOOK_DEFINE(ACE_UPIPE_Connector)
 void
 ACE_UPIPE_Connector::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_UPIPE_Connector::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_UPIPE_Connector::ACE_UPIPE_Connector (void)

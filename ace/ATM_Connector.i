@@ -3,6 +3,14 @@
 
 // ATM_Connector.i
 
+ACE_INLINE void
+ACE_ATM_Connector::dump (void) const
+{
+#if defined (ACE_HAS_DUMP)
+  ACE_TRACE ("ACE_ATM_Connector::dump");
+#endif /* ACE_HAS_DUMP */
+}
+
 ACE_INLINE
 ACE_ATM_Connector::ACE_ATM_Connector (ACE_ATM_Stream &new_stream, 
                                       const ACE_ATM_Addr &remote_sap, 

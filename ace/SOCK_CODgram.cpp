@@ -15,7 +15,9 @@ ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_CODgram)
 void
 ACE_SOCK_CODgram::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_SOCK_CODgram::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 // Here's the general-purpose constructor.

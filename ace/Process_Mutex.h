@@ -16,7 +16,7 @@
 #ifndef ACE_PROCESS_MUTEX_H
 #define ACE_PROCESS_MUTEX_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -29,11 +29,12 @@
 #ifdef _ACE_USE_SV_SEM
 #  undef _ACE_USE_SV_SEM
 #endif /* _ACE_USE_SV_SEM */
+
 #if defined (ACE_HAS_SYSV_IPC) && !defined (ACE_USES_MUTEX_FOR_PROCESS_MUTEX)
 #  include "ace/SV_Semaphore_Complex.h"
 #  define _ACE_USE_SV_SEM
 #else
-#  include "ace/Synch.h"
+#  include "ace/Mutex.h"
 #endif /* ACE_HAS_SYSV_IPC && !ACE_USES_MUTEX_FOR_PROCESS_MUTEX */
 
 /**
@@ -196,6 +197,6 @@ private:
 #include "ace/Process_Mutex.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_PROCESS_MUTEX_H */

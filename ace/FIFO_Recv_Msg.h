@@ -13,7 +13,7 @@
 
 #ifndef ACE_FIFO_RECV_MSG_H
 #define ACE_FIFO_RECV_MSG_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/FIFO_Recv.h"
 
@@ -130,5 +130,5 @@ public:
 #include "ace/FIFO_Recv_Msg.i"
 #endif
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_FIFO_RECV_MSG_H */

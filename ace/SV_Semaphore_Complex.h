@@ -12,7 +12,7 @@
 
 #ifndef ACE_SV_SEMAPHORE_COMPLEX_H
 #define ACE_SV_SEMAPHORE_COMPLEX_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/SV_Semaphore_Simple.h"
 
@@ -151,5 +151,5 @@ private:
 #include "ace/SV_Semaphore_Complex.i"
 #endif
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_SV_SEMAPHORE_COMPLEX_H */

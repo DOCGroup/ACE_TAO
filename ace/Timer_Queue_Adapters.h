@@ -13,7 +13,7 @@
 
 #ifndef ACE_TIMER_QUEUE_ADAPTERS_H
 #define ACE_TIMER_QUEUE_ADAPTERS_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Task.h"
 
@@ -22,6 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Signal.h"
+#include "ace/Condition_Recursive_Thread_Mutex.h"
 
 /**
  * @class ACE_Async_Timer_Queue_Adapter
@@ -240,5 +241,5 @@ private:
 # pragma implementation ("Timer_Queue_Adapters.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_TIMER_QUEUE_ADAPTERS_H */

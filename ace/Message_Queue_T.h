@@ -12,10 +12,11 @@
 
 #ifndef ACE_MESSAGE_QUEUE_T_H
 #define ACE_MESSAGE_QUEUE_T_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Message_Queue.h"
-#include "ace/Synch.h"
+#include "ace/Synch_Traits.h"
+#include "ace/Guard_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -1232,5 +1233,5 @@ private:
 #pragma implementation ("Message_Queue_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_MESSAGE_QUEUE_T_H */

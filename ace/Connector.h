@@ -13,7 +13,7 @@
 #ifndef ACE_CONNECTOR_H
 #define ACE_CONNECTOR_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Service_Object.h"
 
@@ -550,6 +550,6 @@ protected:
 #pragma implementation ("Connector.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_CONNECTOR_H */

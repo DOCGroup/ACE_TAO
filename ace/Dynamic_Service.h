@@ -14,7 +14,7 @@
 #ifndef ACE_DYNAMIC_SERVICE_H
 #define ACE_DYNAMIC_SERVICE_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -59,6 +59,6 @@ public:
 # pragma implementation ("Dynamic_Service.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_DYNAMIC_SERVICE_H */

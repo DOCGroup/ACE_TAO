@@ -12,7 +12,7 @@
 
 #ifndef ACE_TASK_H
 #define ACE_TASK_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Service_Object.h"
 
@@ -278,5 +278,5 @@ private:
 // Include the ACE_Task templates classes at this point.
 #include "ace/Task_T.h"
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_TASK_H */

@@ -13,7 +13,7 @@
 
 #ifndef ACE_ACTIVE_MAP_MANAGER_T_H
 #define ACE_ACTIVE_MAP_MANAGER_T_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Map_Manager.h"
 #include "ace/Active_Map_Manager.h"
@@ -21,6 +21,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Null_Mutex.h"
 
 /**
  * @class ACE_Active_Map_Manager
@@ -201,5 +203,5 @@ private:
 #pragma implementation ("Active_Map_Manager_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_ACTIVE_MAP_MANAGER_T_H */

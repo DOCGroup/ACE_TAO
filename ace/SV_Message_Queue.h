@@ -13,7 +13,7 @@
 #ifndef ACE_SV_MESSAGE_QUEUE_H
 #define ACE_SV_MESSAGE_QUEUE_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -93,6 +93,6 @@ protected:
 #include "ace/SV_Message_Queue.i"
 #endif
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_SV_MESSAGE_QUEUE_H */

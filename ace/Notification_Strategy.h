@@ -10,7 +10,7 @@
 //=============================================================================
 #ifndef ACE_NOTIFICATION_STRATEGY_H
 #define ACE_NOTIFICATION_STRATEGY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Event_Handler.h"
 
@@ -69,5 +69,5 @@ protected:
 #include "ace/Notification_Strategy.inl"
 #endif /* __ACE_INLINE __ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*ACE_NOTIFICATION_STRATEGY_H */

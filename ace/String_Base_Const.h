@@ -13,7 +13,7 @@
 #ifndef ACE_STRING_BASE_CONST_H
 #define ACE_STRING_BASE_CONST_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
 #include "ace/Basic_Types.h"
@@ -35,5 +35,5 @@ public:
   static ssize_t npos;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_STRING_BASE_CONST_H */

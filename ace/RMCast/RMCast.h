@@ -16,7 +16,7 @@
 
 #ifndef ACE_RMCAST_H
 #define ACE_RMCAST_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/OS.h"
 #include "RMCast_Export.h"
@@ -257,5 +257,5 @@ public:
 #include "RMCast.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_RMCAST_H */

@@ -11,7 +11,7 @@
 #ifndef ACE_ARRAY_BASE_H
 #define ACE_ARRAY_BASE_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -202,6 +202,6 @@ private:
 #pragma implementation ("Array_Base.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_ARRAY_BASE_H */

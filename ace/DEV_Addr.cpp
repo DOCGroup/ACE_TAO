@@ -15,11 +15,13 @@ ACE_ALLOC_HOOK_DEFINE(ACE_DEV_Addr)
 void
 ACE_DEV_Addr::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_DEV_Addr::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("devname_ = %s"), this->devname_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 // Do nothing constructor. 

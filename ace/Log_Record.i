@@ -2,6 +2,10 @@
 // $Id$
 
 // Log_Record.i
+#include "ace/Global_Macros.h"
+#include "ace/os_include/arpa/os_inet.h"
+#include "ace/Time_Value.h"
+#include "ace/OS.h"
 
 ASYS_INLINE
 ACE_Log_Record::~ACE_Log_Record (void)

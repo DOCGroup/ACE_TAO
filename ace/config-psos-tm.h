@@ -6,7 +6,7 @@
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 // #if ! defined (__ACE_INLINE__)
 // # define __ACE_INLINE__
@@ -37,8 +37,6 @@
 #include <pna.h>             //JINLU
 #define NSIG _NSIG           //_NSIG = 32 defined in signal.h JINLU
 #define TCP_NODELAY  1       // this will be defined later by pSOS/TM
-
-/* #define ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
 
 #define ACE_LACKS_HRTIME_T
 
@@ -206,5 +204,5 @@
 #endif /* ACE_PSOS_TBD */
 #define ACE_LACKS_MKFIFO
 #define ACE_MALLOC_ALIGN 8
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */

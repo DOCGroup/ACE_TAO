@@ -9,7 +9,6 @@
 #include "ace/SOCK_SEQPACK_Acceptor.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
-#include "ace/Synch.h"
 #include "ace/Auto_Ptr.h"
 
 ACE_RCSID(ace, SOCK_SEQPACK_Acceptor, "SOCK_SEQPACK_Acceptor.cpp,v 4.30 2002/03/08 23:18:09 spark Exp")
@@ -151,7 +150,9 @@ ACE_SOCK_SEQPACK_Acceptor::accept (ACE_SOCK_SEQPACK_Association &new_association
 void
 ACE_SOCK_SEQPACK_Acceptor::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_SOCK_SEQPACK_Acceptor::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 int
@@ -321,12 +322,58 @@ ACE_SOCK_SEQPACK_Acceptor::shared_open (const ACE_Multihomed_INET_Addr &local_sa
               local_sap.get_addresses(local_inet_addrs,
                                       num_addresses);
 
+#if defined (ACE_HAS_LKSCTP)
+      
+              sockaddr_storage *local_sockaddr = 0;
+
+	      // bind the primary first
+              if (ACE_OS::bind (this->get_handle (),
+                                ACE_reinterpret_cast(sockaddr *,
+                                &(local_inet_addrs[0])),
+                                sizeof(sockaddr)) == -1)
+              {
+                error = 1;
+              }
+              
+              // do we need to bind multiple addresses?
+              if (num_addresses > 1)
+              {
+                ACE_NEW_NORETURN(local_sockaddr,
+                               sockaddr_storage[num_addresses - 1]);
+
+                // all of the secondary addresses need the local port set
+                for (size_t i = 1; i < num_addresses; i++)
+                {
+                  local_inet_addrs[i].sin_port = local_inet_addrs[0].sin_port;
+                }
+		
+		// copy the sockaddr_in's to sockaddr_storage
+                for (size_t i = 0; i < num_addresses - 1; i++)
+                {
+                  ACE_OS::memcpy(&(local_sockaddr[i]),
+                                 &(local_inet_addrs[i + 1]),
+                                 sizeof(sockaddr_in));
+                }
+                
+                // now call bindx
+                if (!error && sctp_bindx(this->get_handle (), 
+                                         local_sockaddr, 
+                                         num_addresses - 1, 
+                                         SCTP_BINDX_ADD_ADDR)) 
+                {
+                  error = 1;
+                }
+
+                delete [] local_sockaddr;
+              }
+#else
               // Call bind
               if (ACE_OS::bind (this->get_handle (),
                                 ACE_reinterpret_cast (sockaddr *,
                                                       local_inet_addrs),
                                 (sizeof local_inet_addr)*num_addresses) == -1)
                   error = 1;
+#endif /* ACE_HAS_LKSCTP */
             }
 
           delete [] local_inet_addrs;
@@ -363,8 +410,11 @@ ACE_SOCK_SEQPACK_Acceptor::open (const ACE_Addr &local_sap,
   if (protocol_family == PF_UNSPEC)
     protocol_family = local_sap.get_type ();
 
-
+#if defined (ACE_HAS_LKSCTP)
+  if (ACE_SOCK::open (SOCK_STREAM,
+#else
   if (ACE_SOCK::open (SOCK_SEQPACKET,
+#endif
                       protocol_family,
                       protocol,
                       protocolinfo,
@@ -423,7 +473,11 @@ ACE_SOCK_SEQPACK_Acceptor::open (const ACE_Addr &local_sap,
 #endif /* ACE_HAS_IPV6 */
     }
 
+#if defined (ACE_HAS_LKSCTP)
+  if (ACE_SOCK::open (SOCK_STREAM,
+#else
   if (ACE_SOCK::open (SOCK_SEQPACKET,
+#endif
                       protocol_family,
                       protocol,
                       reuse_addr) == -1)
@@ -456,7 +510,11 @@ ACE_SOCK_SEQPACK_Acceptor::open (const ACE_Multihomed_INET_Addr &local_sap,
 #endif /* ACE_HAS_IPV6 */
     }
 
+#if defined (ACE_HAS_LKSCTP)
+  if (ACE_SOCK::open (SOCK_STREAM,
+#else
   if (ACE_SOCK::open (SOCK_SEQPACKET,
+#endif
                       protocol_family,
                       protocol,
                       reuse_addr) == -1)

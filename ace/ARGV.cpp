@@ -4,11 +4,13 @@
 // Transforms a string BUF into an ARGV-style vector of strings.
 
 #include "ace/ARGV.h"
-#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/ARGV.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/Log_Msg.h"
+#include "ace/OS.h"
 
 ACE_RCSID(ace, ARGV, "$Id$")
 
@@ -17,6 +19,7 @@ ACE_ALLOC_HOOK_DEFINE (ACE_ARGV)
 void
 ACE_ARGV::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_ARGV::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -33,6 +36,7 @@ ACE_ARGV::dump (void) const
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nbuf = %s\n"), this->buf_));
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 // Creates this->argv_ out of this->buf_.  New memory is allocated for

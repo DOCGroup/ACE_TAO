@@ -16,11 +16,13 @@ ACE_ALLOC_HOOK_DEFINE(ACE_MEM_Connector)
 void
 ACE_MEM_Connector::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_MEM_Connector::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_MEM_Connector::ACE_MEM_Connector (void)

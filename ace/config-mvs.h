@@ -5,7 +5,7 @@
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 // The following #defines are hacks to get around things
 // that seem to be missing or different in MVS land
@@ -118,5 +118,5 @@
 
 #define ACE_TEMPLATES_REQUIRE_SOURCE
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */

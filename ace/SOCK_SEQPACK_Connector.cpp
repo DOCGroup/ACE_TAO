@@ -17,7 +17,9 @@ ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_SEQPACK_Connector)
 void
 ACE_SOCK_SEQPACK_Connector::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_SOCK_SEQPACK_Connector::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 int
@@ -31,9 +33,12 @@ ACE_SOCK_SEQPACK_Connector::shared_open (ACE_SOCK_SEQPACK_Association &new_assoc
 
 
   // Only open a new socket if we don't already have a valid handle.
-  if (new_association.get_handle () == ACE_INVALID_HANDLE
-
-      && new_association.open (SOCK_SEQPACKET,
+  if (new_association.get_handle () == ACE_INVALID_HANDLE &&
+#if defined (ACE_HAS_LKSCTP)
+         new_association.open (SOCK_STREAM,
+#else	  
+         new_association.open (SOCK_SEQPACKET,
+#endif /* ACE_HAS_LKSCTP */				      
                                protocol_family,
                                protocol,
                                reuse_addr) == -1)
@@ -54,8 +59,12 @@ ACE_SOCK_SEQPACK_Connector::shared_open (ACE_SOCK_SEQPACK_Association &new_assoc
   ACE_TRACE ("ACE_SOCK_SEQPACK_Connector::shared_open");
 
   // Only open a new socket if we don't already have a valid handle.
-  if (new_association.get_handle () == ACE_INVALID_HANDLE
-      && new_association.open (SOCK_SEQPACKET,
+  if (new_association.get_handle () == ACE_INVALID_HANDLE &&
+#if defined (ACE_HAS_LKSCTP)
+      new_association.open (SOCK_STREAM,
+#else
+      new_association.open (SOCK_SEQPACKET,
+#endif /* ACE_HAS_LKSCTP */
                                protocol_family,
                                protocol,
                                protocolinfo,
@@ -126,6 +135,68 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &
       // the Multihomed_INET_Addr
       local_sap.get_addresses(local_inet_addrs, num_addresses);
 
+#if defined (ACE_HAS_LKSCTP)
+      sockaddr_storage *local_sockaddr = 0;
+      sockaddr_in portst;
+      int sn = sizeof(sockaddr);
+
+      // bind to the primary addr first
+      if (ACE_OS::bind(new_association.get_handle (),
+                       ACE_reinterpret_cast(sockaddr *,
+                       &(local_inet_addrs[0])),
+                       sizeof(sockaddr)))
+      {
+        ACE_Errno_Guard error (errno);
+        new_association.close ();
+        return -1;
+      }
+
+      // do we need to bind multiple addrs
+      if (num_addresses > 1) 
+      {      
+        // allocate enough memory to hold the number of secondary addrs
+        ACE_NEW_NORETURN(local_sockaddr,
+                         sockaddr_storage[num_addresses - 1]);
+
+        // get sockaddr_in for the local handle
+        if (ACE_OS::getsockname(new_association.get_handle (), 
+                                ACE_reinterpret_cast(sockaddr *,
+                                                     &portst),
+		                                     &sn))
+        {
+          ACE_Errno_Guard error (errno);
+	  new_association.close ();
+          return -1;
+        }
+        
+	// set the local port # assigned by the os to every secondary addr
+        for (size_t i = 1; i < num_addresses; i++)
+        {
+          local_inet_addrs[i].sin_port = portst.sin_port;
+        }
+
+        // copy all of the secondary addrs into a sockaddr_storage structure
+        for (size_t i = 0; i < num_addresses - 1; i++)
+        {
+          ACE_OS::memcpy(&(local_sockaddr[i]),
+                         &(local_inet_addrs[i + 1]),
+                         sizeof(sockaddr_in));
+        }
+      
+        if (sctp_bindx(new_association.get_handle(), 
+                       local_sockaddr,
+                       num_addresses - 1,
+                       SCTP_BINDX_ADD_ADDR))
+        {
+          ACE_Errno_Guard error (errno);
+          new_association.close ();
+          return -1;
+        }
+      
+      	delete [] local_sockaddr;
+      }
+#else
+
       // Call bind
       if (ACE_OS::bind (new_association.get_handle (),
                         ACE_reinterpret_cast (sockaddr *,
@@ -137,6 +208,7 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &
           new_association.close ();
           return -1;
         }
+#endif /* ACE_HAS_LKSCTP */
 
       delete [] local_inet_addrs;
     }

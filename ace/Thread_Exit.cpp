@@ -1,7 +1,6 @@
 // $Id$
 
 #include "ace/Thread_Exit.h"
-#include "ace/Synch.h"
 #include "ace/Managed_Object.h"
 #include "ace/Thread_Manager.h"
 

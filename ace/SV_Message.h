@@ -14,7 +14,7 @@
 #ifndef ACE_SV_MESSAGE_H
 #define ACE_SV_MESSAGE_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
 
@@ -59,6 +59,6 @@ protected:
 #include "ace/SV_Message.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_SV_MESSAGE_H */

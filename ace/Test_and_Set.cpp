@@ -4,7 +4,7 @@
 #define ACE_TEST_AND_SET_C
 
 #include "ace/Test_and_Set.h"
-#include "ace/Synch_T.h"
+#include "ace/Guard_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -19,7 +19,7 @@
 
 #ifndef ACE_NAME_PROXY_H
 #define ACE_NAME_PROXY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/INET_Addr.h"
 
@@ -87,5 +87,5 @@ private:
   ACE_Reactor *reactor_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_NAME_PROXY_H */

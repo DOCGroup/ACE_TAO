@@ -6,7 +6,7 @@
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #if defined (__GNUG__)
 # include "ace/config-g++-common.h"
@@ -112,5 +112,5 @@
 #define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
 #define ACE_HAS_DIRENT
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */

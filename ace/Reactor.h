@@ -13,7 +13,7 @@
 
 #ifndef ACE_REACTOR_H
 #define ACE_REACTOR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 class ACE_Reactor_Impl;
 
@@ -858,5 +858,5 @@ protected:
 #include "ace/Reactor.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_REACTOR_H */

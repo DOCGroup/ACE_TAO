@@ -12,7 +12,7 @@
 
 #ifndef ACE_RMCAST_REASSEMBLY_H
 #define ACE_RMCAST_REASSEMBLY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "RMCast_Module.h"
 #include "ace/Hash_Map_Manager.h"
@@ -69,5 +69,5 @@ private:
 #include "RMCast_Reassembly.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_RMCAST_REASSEMBLY_H */

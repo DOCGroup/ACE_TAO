@@ -14,7 +14,7 @@
 
 #ifndef ACE_SPIPE_ACCEPTOR_H
 #define ACE_SPIPE_ACCEPTOR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/SPIPE_Stream.h"
 
@@ -22,8 +22,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_WIN32)
-#include "ace/Synch.h"
+#if (defined (ACE_WIN32) && defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
+#include "ace/Manual_Event.h"
 #endif /* ACE_WIN32 */
 
 /**
@@ -160,5 +160,5 @@ private:
 
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_SPIPE_ACCEPTOR_H */

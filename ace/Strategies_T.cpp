@@ -8,10 +8,10 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Service_Repository.h"
-#include "ace/Synch.h"
 #include "ace/Service_Types.h"
 #include "ace/Thread_Manager.h"
 #include "ace/WFMO_Reactor.h"
+#include "ace/ACE.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/Strategies_T.i"
@@ -1145,80 +1145,104 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::find (
 template <class SVC_HANDLER> void
 ACE_DLL_Strategy<SVC_HANDLER>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_DLL_Strategy<SVC_HANDLER>::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class SVC_HANDLER> void
 ACE_Concurrency_Strategy<SVC_HANDLER>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Concurrency_Strategy<SVC_HANDLER>::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class SVC_HANDLER> void
 ACE_Reactive_Strategy<SVC_HANDLER>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Reactive_Strategy<SVC_HANDLER>::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class SVC_HANDLER> void
 ACE_Thread_Strategy<SVC_HANDLER>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Thread_Strategy<SVC_HANDLER>::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> void
 ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1> void
 ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class SVC_HANDLER> void
 ACE_Process_Strategy<SVC_HANDLER>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Process_Strategy<SVC_HANDLER>::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class SVC_HANDLER> void
 ACE_Scheduling_Strategy<SVC_HANDLER>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Scheduling_Strategy<SVC_HANDLER>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class SVC_HANDLER> void
 ACE_Schedule_All_Reactive_Strategy<SVC_HANDLER>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Schedule_All_Reactive_Strategy<SVC_HANDLER>::dump");
 
   ACE_Scheduling_Strategy<SVC_HANDLER>::dump ();
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class SVC_HANDLER> void
 ACE_Schedule_All_Threaded_Strategy<SVC_HANDLER>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Schedule_All_Threaded_Strategy<SVC_HANDLER>::dump");
 
   ACE_Scheduling_Strategy<SVC_HANDLER>::dump ();
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class SVC_HANDLER> ACE_INLINE void
 ACE_Singleton_Strategy<SVC_HANDLER>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Singleton_Strategy<SVC_HANDLER>::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class SVC_HANDLER> void
 ACE_Creation_Strategy<SVC_HANDLER>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Creation_Strategy<SVC_HANDLER>::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Creation_Strategy)

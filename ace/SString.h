@@ -12,7 +12,7 @@
 
 #ifndef ACE_SSTRING_H
 #define ACE_SSTRING_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/SStringfwd.h"
 
@@ -478,5 +478,5 @@ private:
 #include "ace/SString.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_SSTRING_H */

@@ -10,8 +10,6 @@
 #include "ace/Malloc.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Synch_T.h"
-
 ACE_RCSID(ace, Malloc, "$Id$")
 
 // Process-wide ACE_Allocator.
@@ -25,17 +23,20 @@ int ACE_Allocator::delete_allocator_ = 0;
 void
 ACE_Control_Block::ACE_Malloc_Header::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Control_Block::ACE_Malloc_Header::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nnext_block = %@"), (ACE_Malloc_Header *) this->next_block_));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nsize = %d\n"), this->size_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 void
 ACE_Control_Block::print_alignment_info (void)
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Control_Block::print_alignment_info");
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("Start ---> ACE_Control_Block::print_alignment_info:\n")));
   ACE_DEBUG ((LM_DEBUG,
@@ -65,11 +66,13 @@ ACE_Control_Block::print_alignment_info (void)
               sizeof (ACE_Control_Block)
               ));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("End <--- ACE_Control_Block::print_alignment_info:\n")));
+#endif /* ACE_HAS_DUMP */
 }
 
 void
 ACE_Control_Block::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Control_Block::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -90,6 +93,7 @@ ACE_Control_Block::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_Control_Block::ACE_Name_Node::ACE_Name_Node (void)
@@ -145,6 +149,7 @@ ACE_Control_Block::ACE_Malloc_Header::ACE_Malloc_Header (void)
 void
 ACE_Control_Block::ACE_Name_Node::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Control_Block::ACE_Name_Node::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -156,6 +161,7 @@ ACE_Control_Block::ACE_Name_Node::dump (void) const
               (const char *) this->name_));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 
@@ -171,6 +177,7 @@ ACE_Malloc_Stats::ACE_Malloc_Stats (void)
 void
 ACE_Malloc_Stats::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Malloc_Stats::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -183,6 +190,7 @@ ACE_Malloc_Stats::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT("\nnchunks = %d"), nchunks));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

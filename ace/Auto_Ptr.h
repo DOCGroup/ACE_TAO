@@ -15,15 +15,13 @@
 
 #ifndef ACE_AUTO_PTR_H
 #define ACE_AUTO_PTR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "ace/Trace.h"
 
 #if defined (_MSC_VER)
 // Suppress warning e.g. "return type for
@@ -184,5 +182,5 @@ public:
 #  pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_AUTO_PTR_H */

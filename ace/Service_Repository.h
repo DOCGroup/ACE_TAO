@@ -13,7 +13,7 @@
 #ifndef ACE_SERVICE_REPOSITORY_H
 #define ACE_SERVICE_REPOSITORY_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
 
@@ -22,7 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Default_Constants.h"
-#include "ace/Synch.h"
+#include "ace/Thread_Mutex.h"
 
 
 class ACE_Service_Type;
@@ -206,6 +206,6 @@ private:
 #include "ace/Service_Repository.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* _SERVICE_REPOSITORY_H */

@@ -13,7 +13,7 @@
 
 #ifndef ACE_RMCAST_REORDERING_H
 #define ACE_RMCAST_REORDERING_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "RMCast_Module.h"
 #include "ace/RB_Tree.h"
@@ -92,5 +92,5 @@ protected:
 #include "RMCast_Reordering.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_RMCAST_REORDERING_H */

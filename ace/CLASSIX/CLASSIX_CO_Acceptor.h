@@ -15,7 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_CLASSIX_CO_ACCEPTOR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #define ACE_CLASSIX_CO_ACCEPTOR_H
 
 #include "ace/CLASSIX/CLASSIX_Stream.h"
@@ -142,5 +142,5 @@ private:
 #include "ace/CLASSIX/CLASSIX_CO_Acceptor.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CLASSIX_CO_ACCEPTOR_H */

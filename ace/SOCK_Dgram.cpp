@@ -1,6 +1,5 @@
 #include "ace/SOCK_Dgram.h"
 #include "ace/Handle_Set.h"
-#include "ace/Synch.h"
 #include "ace/Log_Msg.h"
 #include "ace/INET_Addr.h"
 #include "ace/ACE.h"
@@ -18,7 +17,9 @@ ACE_ALLOC_HOOK_DEFINE (ACE_SOCK_Dgram)
 void
 ACE_SOCK_Dgram::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_SOCK_Dgram::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 // Allows a client to read from a socket without having to provide a

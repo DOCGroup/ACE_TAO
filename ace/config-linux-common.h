@@ -10,7 +10,7 @@
 
 #ifndef ACE_LINUX_COMMON_H
 #define ACE_LINUX_COMMON_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #define ACE_HAS_BYTESEX_H
 
@@ -330,7 +330,7 @@
 
 #define ACE_SIZEOF_WCHAR 4
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 // Enables use of POSIX termios struct
 #define ACE_USES_NEW_TERMIOS

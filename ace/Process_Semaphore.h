@@ -17,16 +17,18 @@
 
 #ifndef ACE_PROCESS_SEMAPHORE_H
 #define ACE_PROCESS_SEMAPHORE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
-#include "ace/Synch.h"
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !(defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS))
-#include "ace/SV_Semaphore_Complex.h"
+# include "ace/SV_Semaphore_Complex.h"
+#else
+# include "ace/Semaphore.h"
 #endif /* !(ACE_WIN32 || ACE_HAS_POSIX_SEM || ACE_PSOS) */
 
 /**
@@ -138,5 +140,5 @@ protected:
 #include "ace/Process_Semaphore.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_PROCESS_SEMAPHORE_H */

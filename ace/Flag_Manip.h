@@ -15,7 +15,7 @@
 #ifndef ACE_FLAG_MANIP_H
 #define ACE_FLAG_MANIP_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
 
@@ -48,5 +48,5 @@ class ACE_Export ACE_Flag_Manip
 #include "ace/Flag_Manip.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif  /* ACE_FLAG_MANIP_H */

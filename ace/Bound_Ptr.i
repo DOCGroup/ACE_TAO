@@ -3,7 +3,10 @@
 
 // Bound_Ptr.i
 
-#include "Synch_T.h"
+#include "ace/Guard_T.h"
+#if !defined (ACE_NEW_THROWS_EXCEPTIONS)
+#  include "ace/Log_Msg.h"
+#endif /* ACE_NEW_THROWS_EXCEPTIONS */
 
 template <class ACE_LOCK> inline ACE_Bound_Ptr_Counter<ACE_LOCK> *
 ACE_Bound_Ptr_Counter<ACE_LOCK>::internal_create (int init_obj_ref_count)

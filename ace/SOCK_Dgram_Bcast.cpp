@@ -23,7 +23,9 @@ ACE_Bcast_Node::ACE_Bcast_Node (ACE_INET_Addr &addr,
 void
 ACE_SOCK_Dgram_Bcast::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_SOCK_Dgram_Bcast::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 // Close up and release resources.

@@ -3,8 +3,6 @@
 
 // SV_Semaphore_Simple.i
 
-#include "ace/Trace.h"
-
 ASYS_INLINE int
 ACE_SV_Semaphore_Simple::control (int cmd, 
 				  semun arg, 

@@ -38,8 +38,10 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::init_functions (void)
 void
 ACE_Atomic_Op<ACE_Thread_Mutex, long>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 #if defined (_MSC_VER)

@@ -13,7 +13,7 @@
 #ifndef ACE_SVC_CONF_LEXER_GUARD_H
 #define ACE_SVC_CONF_LEXER_GUARD_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -74,6 +74,6 @@ private:
 };
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* ACE_SVC_CONF_LEXER_GUARD_H */

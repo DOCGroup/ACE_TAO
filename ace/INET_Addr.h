@@ -12,7 +12,7 @@
 
 #ifndef ACE_INET_ADDR_H
 #define ACE_INET_ADDR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Sock_Connect.h"
 
@@ -328,5 +328,5 @@ private:
 #include "ace/INET_Addr.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_INET_ADDR_H */

@@ -14,7 +14,7 @@
 #ifndef ACE_BASED_POINTER_REPOSITORY_H
 #define ACE_BASED_POINTER_REPOSITORY_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
 
@@ -23,6 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/os_include/os_stddef.h"
+#include "ace/Synch_Traits.h"
 
 // Forward decl., using the "Cheshire Cat" technique.
 class ACE_Based_Pointer_Repository_Rep;
@@ -74,6 +75,6 @@ private:
 typedef ACE_Singleton<ACE_Based_Pointer_Repository, ACE_SYNCH_RW_MUTEX>
         ACE_BASED_POINTER_REPOSITORY;
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_BASED_POINTER_REPOSITORY_H */

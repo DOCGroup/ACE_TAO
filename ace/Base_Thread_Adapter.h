@@ -10,7 +10,7 @@
 
 #ifndef ACE_BASE_THREAD_ADAPTER_H
 #define ACE_BASE_THREAD_ADAPTER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/OS_Log_Msg_Attributes.h"
 
@@ -163,5 +163,5 @@ protected:
 #   include "ace/Base_Thread_Adapter.inl"
 # endif /* ACE_HAS_INLINED_OSCALLS */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_BASE_THREAD_ADAPTER_H */

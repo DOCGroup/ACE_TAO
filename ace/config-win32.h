@@ -17,7 +17,7 @@
 
 #ifndef ACE_CONFIG_WIN32_H
 #define ACE_CONFIG_WIN32_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 // NOTE: Please do not add anything besides #include's here.  Put other stuff
 //       (definitions, etc.) in the included headers
@@ -52,5 +52,5 @@
 #    error Compiler is not supported
 #endif
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_H */

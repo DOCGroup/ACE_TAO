@@ -13,7 +13,7 @@
 
 #ifndef ACE_HANDLE_GOBBLER_H
 #define ACE_HANDLE_GOBBLER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/OS.h"
 
@@ -62,5 +62,5 @@ private:
 
 #include "ace/Handle_Gobbler.i"
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_HANDLE_GOBBLER_H */

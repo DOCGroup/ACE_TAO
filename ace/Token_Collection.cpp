@@ -276,6 +276,7 @@ ACE_Token_Collection::create_token (const ACE_TCHAR *)
 void
 ACE_Token_Collection::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Token_Collection::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("ACE_Token_Collection::dump:\n")
@@ -285,6 +286,7 @@ ACE_Token_Collection::dump (void) const
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("base:\n")));
   ACE_Token_Proxy::dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

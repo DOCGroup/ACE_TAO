@@ -23,7 +23,9 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Event_Handler_T)
 template <class T> void
 ACE_Event_Handler_T<T>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Event_Handler_T<T>::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 template<class T>

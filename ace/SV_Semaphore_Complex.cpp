@@ -16,7 +16,9 @@ ACE_ALLOC_HOOK_DEFINE(ACE_SV_Semaphore_Complex)
 void
 ACE_SV_Semaphore_Complex::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_SV_Semaphore_Complex::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 // initial value of process

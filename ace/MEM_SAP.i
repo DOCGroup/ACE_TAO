@@ -3,6 +3,7 @@
 
 // MEM_SAP.i
 
+#include "ace/RW_Thread_Mutex.h"
 
 ASYS_INLINE
 ACE_MEM_SAP_Node::ACE_MEM_SAP_Node (size_t cap)

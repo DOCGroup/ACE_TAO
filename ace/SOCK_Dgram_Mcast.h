@@ -17,7 +17,7 @@
 
 #ifndef ACE_SOCK_DGRAM_MCAST_H
 #define ACE_SOCK_DGRAM_MCAST_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/SOCK_Dgram.h"
 
@@ -29,7 +29,8 @@
 
 #if defined (ACE_SOCK_DGRAM_MCAST_DUMPABLE)
 # include "ace/Containers_T.h"
-# include "ace/Synch_T.h"
+# include "ace/Synch_Traits.h"
+# include "ace/Thread_Mutex.h"
 # if !defined (ACE_SDM_LOCK)
 #  define ACE_SDM_LOCK ACE_SYNCH_MUTEX
 # endif /* ACE_SDM_LOCK */
@@ -418,5 +419,5 @@ private:
 #include "ace/SOCK_Dgram_Mcast.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_SOCK_DGRAM_MCAST_H */

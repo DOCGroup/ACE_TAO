@@ -2,7 +2,7 @@
 
 #ifndef ACE_CONFIG_FSU_PTHREAD_H
 #define ACE_CONFIG_FSU_PTHREAD_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #define ACE_LACKS_CONST_TIMESPEC_PTR
 
@@ -55,5 +55,5 @@ struct sched_param
   int prio;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_FSU_PTHREAD_H */

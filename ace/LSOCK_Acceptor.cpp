@@ -27,11 +27,13 @@ ACE_LSOCK_Acceptor::get_local_addr (ACE_Addr &a) const
 void
 ACE_LSOCK_Acceptor::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_LSOCK_Acceptor::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   this->local_addr_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 // Do nothing routine for constructor.

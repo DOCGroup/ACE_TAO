@@ -14,7 +14,7 @@
 #ifndef ACE_SHARED_MEMORY_H
 #define ACE_SHARED_MEMORY_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
 
@@ -49,6 +49,6 @@ public:
   virtual ACE_HANDLE get_id (void) const = 0;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_SHARED_MEMORY_H */

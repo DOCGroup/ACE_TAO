@@ -28,6 +28,8 @@ ACE_RCSID(ace, Proactor, "$Id$")
 #include "ace/Proactor.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/Auto_Event.h"
+
 /// Process-wide ACE_Proactor.
 ACE_Proactor *ACE_Proactor::proactor_ = 0;
 

@@ -3,7 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "ACE dynamic library"=.\ace_dll.dsp - Package Owner=<4>
+Project: "ACE"=ACE.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -15,7 +15,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "ACE static library"=.\ace_lib.dsp - Package Owner=<4>
+Project: "RMCast"=RMCast\RMCast.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -23,6 +23,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name ACE
+    End Project Dependency
 }}}
 
 ###############################################################################

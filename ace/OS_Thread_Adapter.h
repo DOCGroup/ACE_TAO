@@ -11,7 +11,7 @@
 
 #ifndef ACE_OS_THREAD_ADAPTER_H
 #define ACE_OS_THREAD_ADAPTER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Base_Thread_Adapter.h"
 
@@ -74,5 +74,5 @@ private:
 #   include "ace/OS_Thread_Adapter.inl"
 # endif /* ACE_HAS_INLINED_OSCALLS */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_THREAD_ADAPTER_H */

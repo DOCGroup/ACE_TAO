@@ -16,7 +16,7 @@
 
 #ifndef ACE_WIN32_PROACTOR_H
 #define ACE_WIN32_PROACTOR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -33,6 +33,7 @@
 
 #include "ace/Proactor_Impl.h"
 #include "ace/Asynch_Pseudo_Task.h"
+#include "ace/Auto_Event.h"
 
 // Forward declarations.
 class ACE_WIN32_Asynch_Result;
@@ -268,7 +269,7 @@ protected:
   DWORD number_of_threads_;
 
   /// This event is used in conjunction with Reactor when we try to
-  /// integrate the event loops of Reactor and the Proactor.
+ /// integrate the event loops of Reactor and the Proactor.
   ACE_Auto_Event event_;
 
   /// Flag that indicates whether we are used in conjunction with
@@ -319,5 +320,5 @@ protected:
 };
 
 #endif /* ACE_WIN32 */
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_PROACTOR_H */

@@ -14,6 +14,7 @@ ACE_RCSID(ace, Read_Buffer, "$Id$")
 void
 ACE_Read_Buffer::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Read_Buffer::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("size_ = %d"), this->size_));
@@ -21,6 +22,7 @@ ACE_Read_Buffer::dump (void) const
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nstream_ = %x"), this->stream_));
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nallocator_ = %x"), this->allocator_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_Read_Buffer::ACE_Read_Buffer (FILE *fp,

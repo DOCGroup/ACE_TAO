@@ -16,7 +16,7 @@
 #ifndef ACE_SOCK_SEQPACK_CONNECTOR_H
 #define ACE_SOCK_SEQPACK_CONNECTOR_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "ace/config.h"
 #include "ace/ACE_export.h"
 
@@ -99,7 +99,7 @@ public:
                       int reuse_addr = 0,
                       int flags = 0,
                       int perms = 0,
-                      int protocol = 0);
+                      int protocol = 132);
 
   /**
    * Actively connect to a peer, producing a connected @c ACE_SOCK_SEQPACK_Association
@@ -148,7 +148,7 @@ public:
                       int reuse_addr = 0,
                       int flags = 0,
                       int perms = 0,
-                      int protocol = 0);
+                      int protocol = 132);
 
   /**
    * Actively connect to a peer, producing a connected @c ACE_SOCK_SEQPACK_Association
@@ -198,7 +198,7 @@ public:
                int reuse_addr = 0,
                int flags = 0,
                int perms = 0,
-               int protocol = 0);
+               int protocol = 132);
 
   /**
    * Actively connect to a peer, producing a connected @c ACE_SOCK_SEQPACK_Association
@@ -248,7 +248,7 @@ public:
                int reuse_addr = 0,
                int flags = 0,
                int perms = 0,
-               int protocol = 0);
+               int protocol = 132);
 
   /// Default dtor.
   ~ACE_SOCK_SEQPACK_Connector (void);
@@ -320,6 +320,6 @@ protected:
 #include "ace/SOCK_SEQPACK_Connector.i"
 #endif
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_SOCK_SEQPACK_CONNECTOR_H */

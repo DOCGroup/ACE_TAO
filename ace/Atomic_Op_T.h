@@ -12,16 +12,13 @@
 
 #ifndef ACE_ATOMIC_OP_T_H
 #define ACE_ATOMIC_OP_T_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "ace/Synch.h"
-
 
 /**
  * @class ACE_Atomic_Op_Ex
@@ -250,5 +247,5 @@ private:
 #pragma implementation ("Atomic_Op_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*ACE_ATOMIC_OP_T_H*/

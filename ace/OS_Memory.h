@@ -14,7 +14,7 @@
 
 #ifndef ACE_OS_MEMORY_H
 #define ACE_OS_MEMORY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/OS_Export.h"
 
@@ -257,5 +257,5 @@ public:
 #   include "ace/OS_Memory.inl"
 # endif /* ACE_HAS_INLINED_OSCALLS */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_OS_MEMORY_H */

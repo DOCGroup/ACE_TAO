@@ -5,7 +5,7 @@
 
 #ifndef ACE_CONFIG_IRIX65X_H
 #define ACE_CONFIG_IRIX65X_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 // Include IRIX 6.[234] configuration
 #include "ace/config-irix6.x-sgic++.h"
@@ -14,5 +14,5 @@
 #undef ACE_LACKS_CONDATTR_PSHARED
 #undef ACE_LACKS_MUTEXATTR_PSHARED
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_IRIX65X_H */

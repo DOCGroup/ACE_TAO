@@ -1,7 +1,11 @@
 /* -*- C++ -*- */
 // $Id$
 
+#include "ace/Guard_T.h"
+
 // Token.i
+
+#if defined (ACE_HAS_THREADS)
 
 ACE_INLINE int
 ACE_Token::queueing_strategy (void)
@@ -132,4 +136,29 @@ ACE_Token::ACE_Token_Queue_Entry::signal (void)
 #else
     this->cv_.signal ();
 #endif /* ACE_TOKEN_USES_SEMAPHORE */
+}
+
+#endif /* ACE_HAS_THREADS */
+/******************************************************************************/
+
+ACE_INLINE int
+ACE_Noop_Token::queueing_strategy (void)
+{
+  return -1;
+}
+
+ACE_INLINE void
+ACE_Noop_Token::queueing_strategy (int /* queueing_strategy */)
+{
+}
+
+ACE_INLINE int
+ACE_Noop_Token::renew (int, ACE_Time_Value *)
+{
+  return 0;
+}
+
+ACE_INLINE void
+ACE_Noop_Token::dump (void) const
+{
 }

@@ -29,6 +29,8 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Trace)
 void
 ACE_Trace::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
+#endif /* ACE_HAS_DUMP */
 }
 
 // Determine whether or not tracing is enabled

@@ -3,7 +3,7 @@
 #ifndef ACE_TIMER_QUEUE_T_C
 #define ACE_TIMER_QUEUE_T_C
 
-#include "ace/Synch.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -13,6 +13,7 @@
 #include "ace/Timer_Queue_T.h"
 #include "ace/Log_Msg.h"
 #include "ace/Reactor_Timer_Interface.h"
+#include "ace/Null_Mutex.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Timer_Queue_T.i"
@@ -30,6 +31,7 @@ ACE_RCSID(ace, Timer_Queue_T, "$Id$")
 template <class TYPE> void
 ACE_Timer_Node_T<TYPE>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Timer_Node_T::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nact_ = %x"), this->act_));
@@ -39,6 +41,7 @@ ACE_Timer_Node_T<TYPE>::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nnext_ = %x"), this->next_));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ntimer_id_ = %d\n"), this->timer_id_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class TYPE>
@@ -146,11 +149,13 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::calculate_timeout (ACE_Time_Value *m
 template <class TYPE, class FUNCTOR, class ACE_LOCK> void
 ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Timer_Queue_T::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   this->timeout_.dump ();
   this->timer_skew_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK>

@@ -7,7 +7,7 @@
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 // Both IBM and g++ compilers set _THREAD_SAFE if compiler is asked to compile
 // threaded code (xlC_r, as opposed to xlC; and g++ -pthread)
@@ -315,5 +315,5 @@
 # define ACE_HAS_3_PARAM_WCSTOK
 #endif /* _XOPEN_SOURCE == 500 && !_UNIX95 */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */

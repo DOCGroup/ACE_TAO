@@ -44,6 +44,9 @@ ACE_RCSID (ace,
 #include "ace/Reactor.h"
 #include "ace/Timer_Heap.h"
 #include "ace/ACE.h"
+#include "ace/Reverse_Lock_T.h"
+#include "ace/Recursive_Thread_Mutex.h"
+#include "ace/Null_Mutex.h"
 
 
 ACE_Dev_Poll_Reactor_Notify::ACE_Dev_Poll_Reactor_Notify (void)
@@ -581,6 +584,7 @@ ACE_Dev_Poll_Reactor_Notify::purge_pending_notifications (
 void
 ACE_Dev_Poll_Reactor_Notify::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Dev_Poll_Reactor_Notify::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -589,6 +593,7 @@ ACE_Dev_Poll_Reactor_Notify::dump (void) const
               this->dp_reactor_));
   this->notification_pipe_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 // -----------------------------------------------------------------
@@ -1093,7 +1098,7 @@ ACE_Dev_Poll_Reactor::work_pending_i (ACE_Time_Value * max_wait_time)
     return 0;
 
   if (this->start_pfds_ != this->end_pfds_)
-    return 1;  // We still have work_pending() do not poll for
+    return 1;  // We still have work_pending(). Do not poll for
                // additional events.
 
   ACE_Time_Value timer_buf (0);
@@ -1103,12 +1108,12 @@ ACE_Dev_Poll_Reactor::work_pending_i (ACE_Time_Value * max_wait_time)
                                                         &timer_buf);
 
   // Check if we have timers to fire.
-  int timers_pending =
+  const int timers_pending =
     ((this_timeout != 0 && max_wait_time == 0)
      || (this_timeout != 0 && max_wait_time != 0
          && *this_timeout != *max_wait_time) ? 1 : 0);
 
-  long timeout =
+  const long timeout =
     (this_timeout == 0 ? -1 /* Infinity */ : this_timeout->msec ());
 
 #if defined (ACE_HAS_EVENT_POLL)
@@ -1119,7 +1124,7 @@ ACE_Dev_Poll_Reactor::work_pending_i (ACE_Time_Value * max_wait_time)
   evp.ep_resoff = 0;
 
   // Poll for events
-  int nfds = ACE_OS::ioctl (this->poll_fd_, EP_POLL, &evp);
+  const int nfds = ACE_OS::ioctl (this->poll_fd_, EP_POLL, &evp);
 
   // Retrieve the results from the memory map.
   this->start_pfds_ =
@@ -1135,7 +1140,7 @@ ACE_Dev_Poll_Reactor::work_pending_i (ACE_Time_Value * max_wait_time)
   dvp.dp_timeout = timeout;  // Milliseconds
 
   // Poll for events
-  int nfds = ACE_OS::ioctl (this->poll_fd_, DP_POLL, &dvp);
+  const int nfds = ACE_OS::ioctl (this->poll_fd_, DP_POLL, &dvp);
 
   // Retrieve the results from the pollfd array.
   this->start_pfds_ = dvp.dp_fds;
@@ -1327,7 +1332,7 @@ ACE_Dev_Poll_Reactor::dispatch_notification_handlers (
   // enabled.  We'll handle all these threads and notifications, and
   // then break out to continue the event loop.
 
-  int n =
+  const int n =
     this->notify_handler_->dispatch_notifications (number_of_active_handles,
                                                    dispatch_set.rd_mask_);
 
@@ -1793,7 +1798,7 @@ ACE_Dev_Poll_Reactor::suspend_handlers (void)
 
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1));
 
-  size_t len = this->handler_rep_.size ();
+  const size_t len = this->handler_rep_.size ();
 
   for (size_t i = 0; i < len; ++i)
     if (this->handler_rep_.suspended (i) == 0
@@ -1885,7 +1890,7 @@ ACE_Dev_Poll_Reactor::resume_handlers (void)
 
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1));
 
-  size_t len = this->handler_rep_.size ();
+  const size_t len = this->handler_rep_.size ();
 
   for (size_t i = 0; i < len; ++i)
     if (this->handler_rep_.suspended (i)
@@ -2084,6 +2089,14 @@ ACE_Dev_Poll_Reactor::purge_pending_notifications (ACE_Event_Handler * eh,
   return this->notify_handler_->purge_pending_notifications (eh, mask);
 }
 
+ACE_Event_Handler *
+ACE_Dev_Poll_Reactor::find_handler (ACE_HANDLE handle)
+{
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0));
+
+  return this->handler_rep_.find (handle);
+}
+
 int
 ACE_Dev_Poll_Reactor::handler (ACE_HANDLE handle,
                                ACE_Reactor_Mask mask,
@@ -2259,7 +2272,7 @@ ACE_Dev_Poll_Reactor::mask_ops_i (ACE_HANDLE handle,
   // Block out all signals until method returns.
   ACE_Sig_Guard sb;
 
-  ACE_Reactor_Mask old_mask = this->handler_rep_.mask (handle);
+  const ACE_Reactor_Mask old_mask = this->handler_rep_.mask (handle);
   ACE_Reactor_Mask new_mask = old_mask;
 
   // Perform GET, CLR, SET, and ADD operations on the interest/wait
@@ -2305,7 +2318,7 @@ ACE_Dev_Poll_Reactor::mask_ops_i (ACE_HANDLE handle,
       // Only attempt to alter events for the handle from the
       // "interest set" if it hasn't been suspended.
 
-      short events = this->reactor_mask_to_poll_event (new_mask);
+      const short events = this->reactor_mask_to_poll_event (new_mask);
 
 #if defined (sun)
       // Apparently events cannot be updated on-the-fly on Solaris so
@@ -2365,6 +2378,7 @@ ACE_Dev_Poll_Reactor::ready_ops (ACE_HANDLE /* handle */,
 void
 ACE_Dev_Poll_Reactor::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Dev_Poll_Reactor::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -2378,6 +2392,7 @@ ACE_Dev_Poll_Reactor::dump (void) const
               ACE_LIB_TEXT ("deactivated_ = %d"),
               this->deactivated_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 short

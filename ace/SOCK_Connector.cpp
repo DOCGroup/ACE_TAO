@@ -20,7 +20,9 @@ ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_Connector)
 void
 ACE_SOCK_Connector::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_SOCK_Connector::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 int

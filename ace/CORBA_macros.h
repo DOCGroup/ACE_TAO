@@ -22,7 +22,7 @@
 #ifndef ACE_CORBA_MACROS_H
 #define ACE_CORBA_MACROS_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -542,6 +542,6 @@
 #   define ACE_PRINT_EXCEPTION(EX,INFO) ACE_PRINT_TAO_EXCEPTION(EX,INFO)
 # endif /* ACE_PRINT_EXCEPTION */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_CORBA_MACROS_H */

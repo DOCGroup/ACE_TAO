@@ -15,7 +15,7 @@
 
 #ifndef ACE_SYSTEM_TIME_H
 #define ACE_SYSTEM_TIME_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/OS.h"
 
@@ -25,6 +25,7 @@
 
 #include "ace/Memory_Pool.h"
 #include "ace/Malloc_T.h"
+#include "ace/Null_Mutex.h"
 
 /**
  * @class ACE_System_Time
@@ -83,5 +84,5 @@ private:
   long *delta_time_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_SYSTEM_TIME_H */

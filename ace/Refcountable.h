@@ -11,7 +11,7 @@
 //=============================================================================
 #ifndef ACE_REFCOUNTABLE_H
 #define ACE_REFCOUNTABLE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
 
@@ -53,5 +53,5 @@ protected:
 #include "ace/Refcountable.inl"
 #endif /* __ACE_INLINE __ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*ACE_REFCOUNTABLE_H*/
