@@ -3,11 +3,15 @@ Mon Dec  1 14:01:02 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
         * ace/Log_Msg.cpp, ace/Log_Msg.h, ace/Log_Record.cpp, 
           ace/Log_Record.h ace/OS.h, ace/stdcpp.h, tests/test_config.h:
 
-		  Changed use of ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION in stdcpp.h
+	  Changed use of ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION in stdcpp.h
           to include iostream when the above is #defined.  Made
           changes to other files to accommodate this change.
 
 Mon Dec 01 12:15:00 1997    <irfan@TWOSTEP>
+
+	* ace/config-win32-common.h (ACE_LACKS_ACE_IOSTREAM): James CE
+ 	  Johnson claims that ACE_LACKS_ACE_IOSTREAM is no longer not
+ 	  necessary
 
         * ace/OS.h: Changed the definition of ACE_UNIMPLEMENTED_FUNC so
           that it just evaporates on platform that have
