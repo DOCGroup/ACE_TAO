@@ -25,6 +25,7 @@
 
 // Event_Handler.h contains the definition of ACE_Reactor_Mask
 #include "ace/Event_Handler.h"
+#include "ace/Time_Value.h"
 
 // Forward decls
 class ACE_Handle_Set;

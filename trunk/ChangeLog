@@ -1,3 +1,11 @@
+Wed Nov  5 00:56:43 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * Process_Manager.cpp:
+          Added #include of OS_NS_sys_time.h:
+
+        * ace/Reactor_Impl.h:
+          Added #include of Time_Value.h.
+
 Wed Nov  5 00:28:47 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/OS_Dirent.h:
