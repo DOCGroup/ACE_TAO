@@ -2,6 +2,8 @@
 
 #include "ThreadStrategyFactoryImpl.h"
 #include "ThreadStrategy.h"
+#include "ThreadStrategySingle.h"
+#include "ThreadStrategyORBControl.h"
 #include "ace/Dynamic_Service.h"
 
 ACE_RCSID (PortableServer,
@@ -28,7 +30,7 @@ namespace TAO
       {
         case ::PortableServer::SINGLE_THREAD_MODEL :
         {
-          strategy =
+/*          strategy =
             ACE_Dynamic_Service<ThreadStrategy>::instance ("ThreadStrategySingle");
 
           if (strategy == 0)
@@ -39,12 +41,13 @@ namespace TAO
 
               strategy =
                 ACE_Dynamic_Service<ThreadStrategy>::instance ("ThreadStrategySingle");
-            }
+            }*/
+          ACE_NEW_RETURN (strategy, ThreadStrategySingle, 0);
           break;
         }
         case ::PortableServer::ORB_CTRL_MODEL :
         {
-          strategy =
+/*          strategy =
             ACE_Dynamic_Service<ThreadStrategy>::instance ("ThreadStrategyORBControl");
 
           if (strategy == 0)
@@ -55,7 +58,8 @@ namespace TAO
 
               strategy =
                 ACE_Dynamic_Service<ThreadStrategy>::instance ("ThreadStrategyORBControl");
-            }
+            }*/
+          ACE_NEW_RETURN (strategy, ThreadStrategyORBControl, 0);
           break;
         }
       }
