@@ -213,7 +213,7 @@ ACE_Future_Rep<T>::get (T &value,
 
       while (this->value_ == 0)
         // Perform a timed wait.
-        if ( (ACE_const_cast (ACE_Condition_Thread_Mutex &, this->value_ready_)).wait (tv) == -1)
+        if ((ACE_const_cast (ACE_Condition_Thread_Mutex &, this->value_ready_)).wait (tv) == -1)
           return -1;
 
       // Destructor releases the lock.
