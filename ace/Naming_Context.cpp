@@ -39,9 +39,9 @@ ACE_Naming_Context::info (ACE_TCHAR **strp,
   ACE_TRACE ("ACE_Naming_Context::info");
   ACE_TCHAR buf[BUFSIZ];
 
-  ACE_OS::sprintf (buf, "%s\t#%s\n",
-                   "ACE_Naming_Context",
-                   "Proxy for making calls to a Name Server");
+  ACE_OS::sprintf (buf, ACE_LIB_TEXT("%s\t#%s\n"),
+                   ACE_LIB_TEXT("ACE_Naming_Context"),
+                   ACE_LIB_TEXT("Proxy for making calls to a Name Server"));
 
   if (*strp == 0 && (*strp = ACE_OS_String::strdup (buf)) == 0)
     return -1;
