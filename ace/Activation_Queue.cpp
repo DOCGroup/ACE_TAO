@@ -97,7 +97,13 @@ ACE_Activation_Queue::enqueue (ACE_Method_Request *mr,
                          -1);
 
   // Enqueue in priority order.
-  return this->queue_->enqueue_prio (mb, tv);
+  int result = this->queue_->enqueue_prio (mb, tv);
+
+  // Free ACE_Message_Block if enqueue_prio failed.
+  if (result == -1)
+      ACE_DES_FREE (mb, this->allocator_->free, ACE_Message_Block);
+
+  return result;
 }
 
 

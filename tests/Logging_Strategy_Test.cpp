@@ -98,6 +98,7 @@ run_reactor (void *)
   ACE_Reactor::instance ()->owner 
     (ACE_Thread_Manager::instance ()->thr_self ());
   ACE_Reactor::instance ()->run_reactor_event_loop ();
+  return 0;
 }
 
 // Initiate the cycle of messages.

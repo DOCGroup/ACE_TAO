@@ -1,5 +1,12 @@
 Sun Dec  9 08:54:38 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
+	* ace/Activation_Queue.cpp (enqueue): Fixed a leak where the
+	  dynamically allocated ACE_Message_Block wasn't being released if
+ 	  enqueue_prio() failed.  Thanks to Dan Gilboa
+ 	  <dgilboa@qualcomm.com> for reporting this.
+
+	* tests/Logging_Strategy_Test.cpp (run_reactor): Fixed a warning.
+
 	* tests/MEM_Stream_Test.cpp: Added a call to ACE_Thread_Manager::wait()
 	  to ensure the test shuts down in the right order.  Thanks to
  	  Michael Searles <msearles@base16.com> for reporting this.
