@@ -103,9 +103,6 @@
 #include "tao/optable.h"
 #include "tao/debug.h"
 
-// TAO's specialized BOA
-#include "tao/roa.h"
-
 //#include "tao/xdr.h"
 
 // The following *.i files are always included here
@@ -141,7 +138,6 @@
 #include "tao/default_client.i"
 #include "tao/default_server.i"
 #include "tao/connect.i"
-#include "tao/roa.i"
 #include "tao/iioporb.i"
 #include "tao/iiopobj.i"
 #include "tao/Orb_Core.i"

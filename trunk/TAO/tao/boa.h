@@ -43,9 +43,25 @@ class CORBA_BOA : public IUnknown
   // = TITLE
   //    The <{TAO}> Basic Object Adapter.
 public:
-  virtual CORBA::Object_ptr create (CORBA::OctetSeq& obj_id,
-                                    CORBA::String type_id,
-                                    CORBA::Environment& env) = 0;
+  CORBA_BOA (CORBA::ORB_ptr orb_arg,
+             CORBA::Environment &env);
+  virtual ~CORBA_BOA (void);
+
+  static CORBA::BOA_ptr init (CORBA::ORB_ptr which_orb, 
+                              ACE_INET_Addr &addr,
+                              CORBA::Environment &env);
+  // NON-STANDARD CALL.  According to CORBA V2.0, this functionality
+  // should really be <ROA_ptr ORB::ROA_init (argc,argv,ident)>.
+  //
+  // The current signature is residue from when this code was part of
+  // the SunSoft IIOP reference implementation.
+  //
+  // @@ Hum, does this still make sense now that it's in BOA?
+
+  /* virtual */
+  CORBA::Object_ptr create (CORBA::OctetSeq& obj_id,
+                            CORBA::String type_id,
+                            CORBA::Environment& env);
   // Create a reference to an object, using identifying information
   // that is fully exposed to applications. (An ORB may use additional
   // data internally, of course.)
@@ -86,9 +102,10 @@ public:
   // @@ Please add a comment.  BTW, weren't we planning to rename this
   // typedef?
 
-  virtual void register_dir (dsi_handler skeleton,
-			     void *context,
-			     CORBA::Environment &env) = 0;
+  /* virtual */
+  void register_dir (dsi_handler handler,
+                     void *context,
+                     CORBA::Environment &env);
   // All invocations are handled using DSI ... slightly enhanced from
   // the original CORBA 2.0 specs, to improve performance by getting
   // rid of all mallocation for calls with fixed-size parameter lists.
@@ -121,7 +138,8 @@ public:
   //   such as maintaining persistent tables keyed by references to
   //   objects that may no longer exist.
     
-  virtual void please_shutdown (CORBA::Environment &env) = 0;
+  // @@ virtual
+  void please_shutdown (CORBA::Environment &env);
   // Please Shutdown -- reject all further incoming requests, and
   // allow all currently active calls (e.g. "this one") to complete.
   // This ensures that OS resources associated with this OA can be
@@ -158,13 +176,23 @@ public:
   // guaranteed to include more than one system.  The names themselves
   // are administered using system-specific mechanisms and policies.
 
-  virtual void clean_shutdown (CORBA::Environment &env) = 0;
+  CORBA::OctetSeq *get_key (CORBA::Object_ptr obj,
+			   CORBA::Environment &env);
+  // NON-STANDARD CALL.  When dispatching a request to an object, you
+  // need to be able to get the object key you used to create the
+  // reference.  It's the main way servers distinguish two object
+  // references from each other.
+    
+  /* virtual */
+  void clean_shutdown (CORBA::Environment &env);
   // NON-STANDARD CALL.  OA user asks for a clean shutdown of the OA
   // after currently active calls complete.  OA "requester" (calls
   // <get_request>) asks if we're shutting down, and if so closes down
   // transport cleanly.
+  // @@ This used to be virtual...does it really need to be any more?
 
-  virtual CORBA::Boolean shutting_down (void) = 0;
+  /* virtual */
+  CORBA::Boolean shutting_down (void);
   // NON-STANDARD CALL.  Returns <TRUE> if we're in the process of
   // shutting down.
 
@@ -172,7 +200,8 @@ public:
 		 CORBA::ServerRequest &req, 
 		 void *context, 
 		 CORBA::Environment &env);
-  // @@ Please add a comment.
+  // Find the object for the request and pass it up the chain.  Errors
+  // are returned in <env>.
 
   virtual int bind (const CORBA::OctetSeq &key, 
 		    CORBA::Object_ptr obj);
@@ -185,17 +214,48 @@ public:
   // Looks up an object in the object table using <{key}>.  Returns
   // non-negative integer on success, or -1 on failure.
 
-  virtual CORBA::ORB_ptr orb (void) const = 0;
-  // Return the ORB with which this OA is associated.
+  virtual CORBA::ORB_ptr orb (void) const;
+  // Returns pointer to the ORB with which this OA is associated.
 
-#if 0
-  virtual ACE_INET_Addr get_addr (void) const = 0;
-  // @@ Please add a comment.
-#endif /* 0 */
+  // = COM IUnknown Support
+  ULONG __stdcall AddRef (void);
+  ULONG __stdcall Release (void);
+  HRESULT __stdcall QueryInterface (REFIID riid, void** ppv);
 
 protected:
+  // @@ Do we really need protected anymore?
   TAO_Object_Table *objtable_;
   // Table of objects registered with this Object Adapter.
+
+private:
+  CORBA::Boolean do_exit_;	
+  // Flag set by <clean_shutdown ()>.
+
+  CORBA::ORB_ptr orb_;		
+  // Pointer to our ORB.
+
+  u_int call_count_;		
+  // Used by COM stuff
+
+  u_int refcount_;		
+  // Used by COM stuff
+
+  CORBA::BOA::dsi_handler skeleton_;	
+  // Skeleton function
+
+  void *context_;		
+  // Who knows!?!
+
+  ACE_SYNCH_MUTEX lock_;	
+  // Locks critical sections within ROA code methods (was
+  // tcpoa_mutex).
+
+  ACE_SYNCH_MUTEX com_lock_;	
+  // Locks critical sections in COM-related code (was tcpoa_lock).
+
+  // = Copy and assignment: just say no
+  CORBA_BOA (const CORBA_BOA &src);
+  CORBA_BOA &operator= (const CORBA_BOA &src);
 };
 
 struct TAO_Dispatch_Context
