@@ -2,6 +2,7 @@
 
 
 #include "IIOP_SSL_Connection_Handler.h"
+#include "IIOP_SSL_Transport.h"
 #include "SSLIOP_Current.h"
 #include "tao/Timeprobe.h"
 #include "tao/ORB_Core.h"
@@ -64,6 +65,13 @@ TAO_IIOP_SSL_Connection_Handler (TAO_ORB_Core *orb_core,
                                  void *arg)
   : TAO_IIOP_Connection_Handler (orb_core, flag, arg)
 {
+  TAO_IIOP_SSL_Transport* specific_transport = 0;
+  ACE_NEW(specific_transport,
+          TAO_IIOP_SSL_Transport (this, orb_core, 0));
+
+  // store this pointer (indirectly increment ref count)
+  this->transport (specific_transport);
+  TAO_Transport::release (specific_transport);
 }
 
 TAO_IIOP_SSL_Connection_Handler::
@@ -71,25 +79,6 @@ TAO_IIOP_SSL_Connection_Handler::
 {
 }
 
-int
-TAO_IIOP_SSL_Connection_Handler::handle_input_i (
-  ACE_HANDLE handle,
-  ACE_Time_Value *max_wait_time)
-{
-  int result;
-
-  // Invalidate the TSS SSL session state to make sure that SSL state
-  // from a previous SSL connection is not confused with this non-SSL
-  // connection.
-  TAO_Null_SSL_State_Guard guard (this->orb_core (), result);
-
-  if (result != 0)
-    return -1;
-
-  return
-    this->TAO_IIOP_Connection_Handler::handle_input_i (handle,
-                                                       max_wait_time);
-}
 
 // ****************************************************************
 
