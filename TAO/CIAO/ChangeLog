@@ -4,6 +4,8 @@
 	specification for the new_EC method (explicit home operations
 	don't throw CCMException.)
 
+	* examples/OEP/Display/RateGen/RateGen_exec.{cpp,h}: Ditto.
+
         * CIDLC/*: Adapted the CIDL compiler to work with the new CCF
         library.  Basically the same code is generated with small bugs
         fixed.
