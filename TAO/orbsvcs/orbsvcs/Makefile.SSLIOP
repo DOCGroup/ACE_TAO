@@ -98,8 +98,9 @@ realclean: clean
 
 .obj/IIOP_SSL_Acceptor.o .obj/IIOP_SSL_Acceptor.so .shobj/IIOP_SSL_Acceptor.o .shobj/IIOP_SSL_Acceptor.so: SSLIOP/IIOP_SSL_Acceptor.cpp \
  SSLIOP/IIOP_SSL_Acceptor.h \
- $(ACE_ROOT)/ace/pre.h \
- SSLIOP/SSLIOP_Export.h \
+ $(ACE_ROOT)/ace/pre.h SSLIOP/SSLIOP_Export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -284,8 +285,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
  Security/security_export.h \
@@ -440,6 +439,7 @@ realclean: clean
  $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
+ $(TAO_ROOT)/tao/BiDir_Adapter.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(TAO_ROOT)/tao/ORB_Table.h \
  $(TAO_ROOT)/tao/ORB_Table.inl \
@@ -456,8 +456,9 @@ realclean: clean
 
 .obj/IIOP_SSL_Connection_Handler.o .obj/IIOP_SSL_Connection_Handler.so .shobj/IIOP_SSL_Connection_Handler.o .shobj/IIOP_SSL_Connection_Handler.so: SSLIOP/IIOP_SSL_Connection_Handler.cpp \
  SSLIOP/IIOP_SSL_Connection_Handler.h \
- $(ACE_ROOT)/ace/pre.h \
- SSLIOP/SSLIOP_Export.h \
+ $(ACE_ROOT)/ace/pre.h SSLIOP/SSLIOP_Export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -641,8 +642,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
  Security/security_export.h \
@@ -799,6 +798,7 @@ realclean: clean
  $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
+ $(TAO_ROOT)/tao/BiDir_Adapter.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
  SSLIOP/SSLIOP_Current_Impl.inl SSLIOP/SSLIOP_Current.inl \
  $(TAO_ROOT)/tao/Timeprobe.h \
@@ -807,8 +807,9 @@ realclean: clean
 
 .obj/IIOP_SSL_Connector.o .obj/IIOP_SSL_Connector.so .shobj/IIOP_SSL_Connector.o .shobj/IIOP_SSL_Connector.so: SSLIOP/IIOP_SSL_Connector.cpp \
  SSLIOP/IIOP_SSL_Connector.h \
- $(ACE_ROOT)/ace/pre.h \
- SSLIOP/SSLIOP_Export.h \
+ $(ACE_ROOT)/ace/pre.h SSLIOP/SSLIOP_Export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -993,8 +994,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
  Security/security_export.h \
@@ -1156,6 +1155,7 @@ realclean: clean
  $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
+ $(TAO_ROOT)/tao/BiDir_Adapter.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(TAO_ROOT)/tao/Base_Transport_Property.h \
  $(TAO_ROOT)/tao/Base_Transport_Property.inl \
@@ -1163,8 +1163,9 @@ realclean: clean
  $(TAO_ROOT)/tao/IIOP_Endpoint.i
 
 .obj/SSLIOP_Current.o .obj/SSLIOP_Current.so .shobj/SSLIOP_Current.o .shobj/SSLIOP_Current.so: SSLIOP/SSLIOP_Current.cpp SSLIOP/SSLIOP_Current.h \
- $(ACE_ROOT)/ace/pre.h \
- SSLIOP/SSLIOP_Export.h \
+ $(ACE_ROOT)/ace/pre.h SSLIOP/SSLIOP_Export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1349,8 +1350,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
  Security/security_export.h \
@@ -1435,6 +1434,7 @@ realclean: clean
  $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
+ $(TAO_ROOT)/tao/BiDir_Adapter.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
@@ -1453,6 +1453,8 @@ realclean: clean
 .obj/SSLIOP_Current_Impl.o .obj/SSLIOP_Current_Impl.so .shobj/SSLIOP_Current_Impl.o .shobj/SSLIOP_Current_Impl.so: SSLIOP/SSLIOP_Current_Impl.cpp \
  SSLIOP/SSLIOP_Current_Impl.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1636,8 +1638,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
  Security/security_export.h \
@@ -1722,6 +1722,7 @@ realclean: clean
  $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
+ $(TAO_ROOT)/tao/BiDir_Adapter.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
@@ -1739,8 +1740,9 @@ realclean: clean
 .obj/SSLIOP_Invocation_Interceptor.o .obj/SSLIOP_Invocation_Interceptor.so .shobj/SSLIOP_Invocation_Interceptor.o .shobj/SSLIOP_Invocation_Interceptor.so: \
  SSLIOP/SSLIOP_Invocation_Interceptor.cpp \
  SSLIOP/SSLIOP_Invocation_Interceptor.h \
- $(ACE_ROOT)/ace/pre.h \
- SSLIOP/SSLIOP_Export.h \
+ $(ACE_ROOT)/ace/pre.h SSLIOP/SSLIOP_Export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1924,8 +1926,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
  Security/security_export.h \
@@ -1935,8 +1935,9 @@ realclean: clean
 
 .obj/SSLIOP_ORBInitializer.o .obj/SSLIOP_ORBInitializer.so .shobj/SSLIOP_ORBInitializer.o .shobj/SSLIOP_ORBInitializer.so: SSLIOP/SSLIOP_ORBInitializer.cpp \
  SSLIOP/SSLIOP_ORBInitializer.h \
- $(ACE_ROOT)/ace/pre.h \
- SSLIOP/SSLIOP_Export.h \
+ $(ACE_ROOT)/ace/pre.h SSLIOP/SSLIOP_Export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -2122,8 +2123,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
  Security/security_export.h \
@@ -2208,6 +2207,7 @@ realclean: clean
  $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
+ $(TAO_ROOT)/tao/BiDir_Adapter.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
@@ -2228,8 +2228,9 @@ realclean: clean
  $(TAO_ROOT)/tao/CodecFactory.h
 
 .obj/SSLIOP_Factory.o .obj/SSLIOP_Factory.so .shobj/SSLIOP_Factory.o .shobj/SSLIOP_Factory.so: SSLIOP/SSLIOP_Factory.cpp SSLIOP/SSLIOP_Factory.h \
- $(ACE_ROOT)/ace/pre.h \
- SSLIOP/SSLIOP_Export.h \
+ $(ACE_ROOT)/ace/pre.h SSLIOP/SSLIOP_Export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -2435,8 +2436,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
  Security/security_export.h \
@@ -2571,6 +2570,7 @@ realclean: clean
  $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
+ $(TAO_ROOT)/tao/BiDir_Adapter.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(TAO_ROOT)/tao/ORB_Table.h \
  $(TAO_ROOT)/tao/ORB_Table.inl \
@@ -2623,6 +2623,8 @@ realclean: clean
 
 .obj/SSLIOP_Profile.o .obj/SSLIOP_Profile.so .shobj/SSLIOP_Profile.o .shobj/SSLIOP_Profile.so: SSLIOP/SSLIOP_Profile.cpp SSLIOP/SSLIOP_Profile.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -2809,8 +2811,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
  Security/security_export.h \
@@ -2836,8 +2836,9 @@ realclean: clean
  SSLIOP/SSLIOP_Profile.i SSLIOP/ssl_endpoints.h SSLIOP/ssl_endpoints.i
 
 .obj/SSLIOP_Endpoint.o .obj/SSLIOP_Endpoint.so .shobj/SSLIOP_Endpoint.o .shobj/SSLIOP_Endpoint.so: SSLIOP/SSLIOP_Endpoint.cpp SSLIOP/SSLIOP_Endpoint.h \
- $(ACE_ROOT)/ace/pre.h \
- SSLIOP/SSLIOP_Export.h \
+ $(ACE_ROOT)/ace/pre.h SSLIOP/SSLIOP_Export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -3023,8 +3024,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
  Security/security_export.h \
@@ -3196,15 +3195,17 @@ realclean: clean
  $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
+ $(TAO_ROOT)/tao/BiDir_Adapter.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
  SSLIOP/SSLIOP_Current_Impl.inl SSLIOP/SSLIOP_Connection_Handler.i \
  $(TAO_ROOT)/tao/IIOP_Endpoint.h \
  $(TAO_ROOT)/tao/IIOP_Endpoint.i
 
 .obj/SSLIOP_Transport.o .obj/SSLIOP_Transport.so .shobj/SSLIOP_Transport.o .shobj/SSLIOP_Transport.so: SSLIOP/SSLIOP_Transport.cpp \
- SSLIOP/SSLIOP_Transport.h \
- $(ACE_ROOT)/ace/pre.h \
+ SSLIOP/SSLIOP_Transport.h $(ACE_ROOT)/ace/pre.h \
  SSLIOP/SSLIOP_Export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -3517,8 +3518,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
  Security/security_export.h \
@@ -3563,6 +3562,7 @@ realclean: clean
  $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
+ $(TAO_ROOT)/tao/BiDir_Adapter.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
  SSLIOP/SSLIOP_Current_Impl.inl SSLIOP/SSLIOP_Connection_Handler.i \
  SSLIOP/SSLIOP_Profile.h SSLIOP/SSLIOP_Endpoint.h \
@@ -3632,8 +3632,9 @@ realclean: clean
  $(TAO_ROOT)/tao/Acceptor_Registry.i
 
 .obj/SSLIOP_Connector.o .obj/SSLIOP_Connector.so .shobj/SSLIOP_Connector.o .shobj/SSLIOP_Connector.so: SSLIOP/SSLIOP_Connector.cpp \
- SSLIOP/SSLIOP_Connector.h \
- $(ACE_ROOT)/ace/pre.h \
+ SSLIOP/SSLIOP_Connector.h $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -3851,8 +3852,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
  Security/security_export.h \
@@ -4004,6 +4003,7 @@ realclean: clean
  $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
+ $(TAO_ROOT)/tao/BiDir_Adapter.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
  SSLIOP/SSLIOP_Current_Impl.inl SSLIOP/SSLIOP_Connection_Handler.i \
  SSLIOP/SSLIOP_Profile.h SSLIOP/SSLIOP_Endpoint.h \
@@ -4027,6 +4027,8 @@ realclean: clean
 
 .obj/SSLIOP_Acceptor.o .obj/SSLIOP_Acceptor.so .shobj/SSLIOP_Acceptor.o .shobj/SSLIOP_Acceptor.so: SSLIOP/SSLIOP_Acceptor.cpp SSLIOP/SSLIOP_Acceptor.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -4212,8 +4214,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
  Security/security_export.h \
@@ -4368,6 +4368,7 @@ realclean: clean
  $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
+ $(TAO_ROOT)/tao/BiDir_Adapter.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(TAO_ROOT)/tao/ORB_Table.h \
  $(TAO_ROOT)/tao/ORB_Table.inl \
@@ -4423,6 +4424,8 @@ realclean: clean
 .obj/SSLIOP_Connection_Handler.o .obj/SSLIOP_Connection_Handler.so .shobj/SSLIOP_Connection_Handler.o .shobj/SSLIOP_Connection_Handler.so: SSLIOP/SSLIOP_Connection_Handler.cpp \
  SSLIOP/SSLIOP_Connection_Handler.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -4734,8 +4737,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
  Security/security_export.h \
@@ -4780,6 +4781,7 @@ realclean: clean
  $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
+ $(TAO_ROOT)/tao/BiDir_Adapter.h \
  $(TAO_ROOT)/tao/ORB_Core.i \
  SSLIOP/SSLIOP_Current_Impl.inl SSLIOP/SSLIOP_Connection_Handler.i \
  SSLIOP/SSLIOP_Current.h SSLIOP/SSLIOP_Current.inl \
@@ -4799,6 +4801,8 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -4980,8 +4984,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
  Security/security_export.h \
@@ -4992,6 +4994,8 @@ realclean: clean
 .obj/SSLIOPC.o .obj/SSLIOPC.so .shobj/SSLIOPC.o .shobj/SSLIOPC.so: SSLIOPC.cpp SSLIOPC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -5173,8 +5177,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i \
  SSLIOP/SSLIOP_Export.h SecurityC.h Security/security_export.h \
  SecurityC.i SSLIOPC.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -5262,6 +5264,7 @@ realclean: clean
  $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
+ $(TAO_ROOT)/tao/BiDir_Adapter.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
