@@ -9888,6 +9888,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableServer::ServantActivator>::to_object (
     CORBA::Object_ptr &_tao_elem
