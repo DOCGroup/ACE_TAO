@@ -38,6 +38,7 @@ OBJFILES = \
 	$(OBJDIR)\DynStruct_i.obj \
 	$(OBJDIR)\DynUnion_i.obj \
 	$(OBJDIR)\Environment.obj \
+	$(OBJDIR)\Encodable.obj \
 	$(OBJDIR)\Exception.obj \
 	$(OBJDIR)\Forwarding_Servant.obj \
 	$(OBJDIR)\GIOP_Message_Accept_State.obj \
@@ -114,7 +115,11 @@ OBJFILES = \
 	$(OBJDIR)\Request.obj \
 	$(OBJDIR)\Resource_Factory.obj \
 	$(OBJDIR)\RT_Current.obj \
-	$(OBJDIR)\rtcorbafwd.obj \
+	$(OBJDIR)\RT_Mutex.obj \
+	$(OBJDIR)\RT_ORB.obj \
+	$(OBJDIR)\RT_Policy_i.obj \
+	$(OBJDIR)\RTCORBAC.obj \
+	$(OBJDIR)\RTCORBAS.obj \
 	$(OBJDIR)\Sequence.obj \
 	$(OBJDIR)\Servant_Base.obj \
 	$(OBJDIR)\Server_Request.obj \
