@@ -6,6 +6,8 @@ Fri Feb 21 13:07:33 2003  Ossama Othman  <ossama@uci.edu>
 
 	  Generate code that uses the ACE_NESTED_CLASS macro to work
 	  around MSVC++ 6 lack of fully functional C++ namespace sport.
+	  This should also address problems exhibited in the Borland C++ 6
+	  build due to a missing class scope.
 
 Fri Feb 21 12:54:07 2003  Ossama Othman  <ossama@uci.edu>
 
