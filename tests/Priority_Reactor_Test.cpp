@@ -195,7 +195,6 @@ main (int argc, char *argv[])
 {
   ACE_START_TEST ("Priority_Reactor_Test");
 
-  int disable_priorities = 0;
   ACE_Get_Opt getopt (argc, argv, "dc:l:", 1);
   for (int c; (c = getopt ()) != -1; )
     switch (c)
