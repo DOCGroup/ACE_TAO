@@ -3,6 +3,13 @@ Thu May 07 11:19:25 1998  David L. Levine  <levine@cs.wustl.edu>
         * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp: added
           ACE_Condition<ACE_Thread_Mutex> instantiation.
 
+        * tao/Object_Key.idl,POA.idl,Policy.idl: moved *.idl files
+          to *.IDL, so that the Makefile rules won't automatically
+          regenerate them.  Insert $Id$ strings.
+
+        * tao/Makefile: removed rule to suppress regeneration from
+          .idl files, because it's no longer needed.
+
 Thu May  7 00:44:55 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * Reverted a bunch of s/_env/env/g changes...  Thanks to Sumedh
