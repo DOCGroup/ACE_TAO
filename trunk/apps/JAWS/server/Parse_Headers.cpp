@@ -143,7 +143,7 @@ Headers_Map::Map_Item::~Map_Item ()
   ACE_OS::free ((void *)this->value_);
 }
 
-Headers_Map::Map_Item::operator const char * const & (void) const
+Headers_Map::Map_Item::operator const char * (void) const
 {
   return (this->value_ == NULL) ? this->no_value_ : this->value_;
 }
