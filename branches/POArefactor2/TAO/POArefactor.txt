@@ -1,3 +1,9 @@
+Thu Dec  2 10:38:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/ServantRetentionStrategyRetain.cpp (find_servant):
+          Fixed bug I introduced yesterday. poa_current must be always updated
+          with the user id
+
 Thu Dec  2 09:14:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Prevent that users can include PortableServerC.h, they must include
