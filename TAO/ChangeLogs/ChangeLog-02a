@@ -1,3 +1,12 @@
+Mon Jun 19 18:10:17 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/tests/Interoperable_Naming/Makefile:
+	  Generate dependencies.
+
+        * orbsvcs/tests/Interoperable_Naming/client.cpp:
+        * orbsvcs/tests/Interoperable_Naming/ncontextext_client_i.cpp:
+	  Updated to use the new ACE_RE_THROW macros.
+
 Mon Jun 19 16:59:35 2000  Ossama Othman  <ossama@uci.edu>
 
 	* examples/Content_Server/AMI_Observer/Callback.cpp:
