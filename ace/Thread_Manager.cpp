@@ -93,7 +93,6 @@ ACE_Thread_Descriptor::dump (void) const
 
 ACE_Thread_Descriptor::ACE_Thread_Descriptor (void)
   : thr_id_ (ACE_OS::NULL_thread),
-    thr_handle_ (ACE_OS::NULL_hthread),
     grp_id_ (0),
     thr_state_ (ACE_THR_IDLE),
     task_ (0)
@@ -1372,7 +1371,8 @@ ACE_Thread_Manager::exit (void *status, int do_thr_exit)
           {
             // Mark thread as terminated.
             td->thr_state_ = ACE_THR_TERMINATED;
-            this->terminated_thr_queue_.enqueue_tail (td);
+            this->terminated_thr_queue_.enqueue_tail (*td);
+            // Must copy the information here because td will be "freed" below.
           }
 #if defined (ACE_WIN32)
         else
@@ -1453,16 +1453,16 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
 #if !defined (VXWORKS)
   // @@ VxWorks doesn't support thr_join (yet.)  We are working
   //on our implementation.   Chorus'es thr_join seems broken.
-  ACE_Thread_Descriptor *item;
+  ACE_Thread_Descriptor_Base item;
 
 #if defined (CHORUS)
   if (ACE_Object_Manager::shutting_down () != 1)
     {
 #endif /* CHORUS */
       while (this->terminated_thr_queue_.dequeue_head (item) == 0)
-        if (ACE_BIT_DISABLED (item->flags_, (THR_DETACHED | THR_DAEMON))
-            || ACE_BIT_ENABLED (item->flags_, THR_JOINABLE))
-          ACE_Thread::join (item->thr_handle_);
+        if (ACE_BIT_DISABLED (item.flags_, (THR_DETACHED | THR_DAEMON))
+            || ACE_BIT_ENABLED (item.flags_, THR_JOINABLE))
+            ACE_Thread::join (item.thr_handle_);
       // Detached handles shouldn't reached here.
 #if defined (CHORUS)
     }
@@ -1852,6 +1852,9 @@ ACE_Thread_Control::exit (void *exit_status, int do_thr_exit)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class ACE_Node<ACE_Thread_Descriptor_Base>;
+  template class ACE_Unbounded_Queue<ACE_Thread_Descriptor_Base>;
+  template class ACE_Unbounded_Queue_Iterator<ACE_Thread_Descriptor_Base>;
   template class ACE_Unbounded_Queue<ACE_Thread_Descriptor*>;
   template class ACE_Unbounded_Queue_Iterator<ACE_Thread_Descriptor*>;
   template class ACE_Node<ACE_Thread_Descriptor*>;
@@ -1867,6 +1870,9 @@ ACE_Thread_Control::exit (void *exit_status, int do_thr_exit)
     template class ACE_TSS<ACE_Thread_Exit>;
 # endif /* ACE_HAS_THREADS && (ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION) */
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+  #pragma instantiate ACE_Node<ACE_Thread_Descriptor_Base>
+  #pragma instantiate ACE_Unbounded_Queue<ACE_Thread_Descriptor_Base>
+  #pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_Thread_Descriptor_Base>
   #pragma instantiate ACE_Unbounded_Queue<ACE_Thread_Descriptor*>
   #pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_Thread_Descriptor*>
   #pragma instantiate ACE_Node<ACE_Thread_Descriptor*>

@@ -68,7 +68,32 @@
 class ACE_Task_Base;
 class ACE_Thread_Manager;
 
-class ACE_Export ACE_Thread_Descriptor
+class ACE_Thread_Descriptor_Base
+{
+  // = TITLE
+  //     Basic information for thread descriptors.  These information
+  //     gets extracted out because we need it after a thread is
+  //     terminated.
+
+  friend class ACE_Thread_Manager;
+  friend class ACE_Double_Linked_List<ACE_Thread_Descriptor>;
+  friend class ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>;
+public:
+  ACE_Thread_Descriptor_Base (void);
+  ~ACE_Thread_Descriptor_Base (void);
+
+protected:
+  ACE_hthread_t thr_handle_;
+  // Unique handle to thread (used by Win32 and AIX).
+
+  long flags_;
+  // Keeps track of whether this thread was created "detached" or not.
+  // If a thread is *not* created detached then if someone calls
+  // <ACE_Thread_Manager::wait>, we need to join with that thread (and
+  // close down the handle).
+};
+
+class ACE_Export ACE_Thread_Descriptor : public ACE_Thread_Descriptor_Base
 {
   // = TITLE
   //   Information for controlling threads that run under the control
@@ -146,9 +171,6 @@ private:
   ACE_thread_t thr_id_;
   // Unique thread ID.
 
-  ACE_hthread_t thr_handle_;
-  // Unique handle to thread (used by Win32 and AIX).
-
   int grp_id_;
   // Group ID.
 
@@ -159,12 +181,6 @@ private:
   // Stores the cleanup info for a thread.
   // @@ Note, this should be generalized to be a stack of
   // <ACE_Cleanup_Info>s.
-
-  long flags_;
-  // Keeps track of whether this thread was created "detached" or not.
-  // If a thread is *not* created detached then if someone calls
-  // <ACE_Thread_Manager::wait>, we need to join with that thread (and
-  // close down the handle).
 
   ACE_Task_Base *task_;
   // Pointer to an <ACE_Task_Base> or NULL if there's no
@@ -578,7 +594,7 @@ protected:
   // affecting other thread's descriptor entries.
 
 #if !defined (VXWORKS)
-  ACE_Unbounded_Queue<ACE_Thread_Descriptor*> terminated_thr_queue_;
+  ACE_Unbounded_Queue<ACE_Thread_Descriptor_Base> terminated_thr_queue_;
   // Collect terminated but not yet joined thread entries.
 #endif /* VXWORKS */
 
