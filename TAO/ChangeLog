@@ -1,3 +1,11 @@
+
+Tue Jul 30 11:31:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/*.bor:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/*.bor:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/*.bor:
+          Fixed BCB makefiles for static build.
+
 Tue Jul 30 08:56:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/PSS/PSDL_Typecode_Defn.h:
