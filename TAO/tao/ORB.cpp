@@ -1546,14 +1546,15 @@ CORBA::Object_ptr
 CORBA_ORB::file_string_to_object (const char* filename,
                                   CORBA::Environment& ACE_TRY_ENV)
 {
-  ACE_HANDLE handle = ACE_OS::open (filename, O_RDONLY);
-  if (handle == ACE_INVALID_HANDLE)
+  FILE* file = ACE_OS::fopen (filename, "r");
+
+  if (file == 0)
     return CORBA::Object::_nil ();
 
-  ACE_Read_Buffer reader (handle, 1);
+  ACE_Read_Buffer reader (file, 1);
 
   char* string = reader.read ();
-  ACE_OS::close (handle);
+
   if (string == 0)
     return CORBA::Object::_nil ();
 
