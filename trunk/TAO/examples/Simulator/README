@@ -150,8 +150,14 @@ Starting:
 
 
 	DOVE Browser:
-		vbj DOVEBrowser
-                (also supported: vbj DOVEBrowser -ORBnameserviceior <IOR> ) 
+		// vbj DOVEBrowser
+                // (also supported: vbj DOVEBrowser -ORBnameserviceior <IOR> ) 
+                gatekeeper
+		cd /visigenic/vbroker/lib
+		jar xf vbjorb.jar
+ 		jar xf vbjtools.jar
+		appletviewer DOVEBrowser.html
+                
 
 
 	DOVE MIB:
