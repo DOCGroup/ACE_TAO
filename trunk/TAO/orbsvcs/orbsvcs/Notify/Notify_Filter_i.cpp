@@ -98,7 +98,7 @@ TAO_Notify_Filter_i::add_constraints_i (
                    undo_info) != -1)
                 delete undo_info;
             }
-          ACE_RETHROW;
+          ACE_RE_THROW;
         }
       ACE_ENDTRY;
       ACE_CHECK;
@@ -204,7 +204,7 @@ TAO_Notify_Filter_i::modify_constraints (
       for (index = 0; index < modify_list.length (); ++index)
         constraint_expr_list_.bind (modify_list [index].constraint_id,
                                     constr_saved[index]);
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;

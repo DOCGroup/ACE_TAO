@@ -158,7 +158,7 @@ TAO_PropertySetFactory::create_constrained_propertyset (const CosPropertyService
       delete new_set;
 
       // Throw the exception.
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -202,7 +202,7 @@ TAO_PropertySetFactory::create_initial_propertyset (const CosPropertyService::Pr
       delete new_set;
 
       // Throw the exception.
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_CATCH (CORBA::SystemException, ex)
     {
@@ -210,7 +210,7 @@ TAO_PropertySetFactory::create_initial_propertyset (const CosPropertyService::Pr
       delete new_set;
 
       // Throw the exception.
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -303,7 +303,7 @@ TAO_PropertySetDefFactory::create_constrained_propertysetdef (const CosPropertyS
       delete new_set;
 
       // Throw the exception.
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -347,7 +347,7 @@ TAO_PropertySetDefFactory::create_initial_propertysetdef (const CosPropertyServi
       delete new_set;
 
       // Throw the exception.
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_CATCH (CORBA::SystemException, ex)
     {
@@ -355,7 +355,7 @@ TAO_PropertySetDefFactory::create_initial_propertysetdef (const CosPropertyServi
       delete new_set;
 
       // Throw the exception.
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -403,7 +403,7 @@ TAO_PropertySet::TAO_PropertySet (const CosPropertyService::PropertyTypes allowe
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_PropertySet-Constructor");
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -438,7 +438,7 @@ TAO_PropertySet::TAO_PropertySet (const CosPropertyService::Properties initial_p
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_PropertySet-Constructor");
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -668,7 +668,7 @@ TAO_PropertySet::define_properties (const CosPropertyService::Properties &nprope
          }
        ACE_CATCH (CORBA::SystemException, sysex)
          {
-           ACE_RETHROW;
+           ACE_RE_THROW;
          }
        ACE_ENDTRY;
        ACE_CHECK;
@@ -1066,7 +1066,7 @@ TAO_PropertySet::delete_properties (const CosPropertyService::PropertyNames &pro
       ACE_CATCH (CORBA::SystemException, sysex)
         {
           // We cant afford to get this. Throw this.
-          ACE_RETHROW;
+          ACE_RE_THROW;
         }
       ACE_ENDTRY;
       ACE_CHECK;
@@ -1174,7 +1174,7 @@ TAO_PropertySetDef::TAO_PropertySetDef (const CosPropertyService::PropertyTypes 
     }
   ACE_CATCHANY
     {
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -1393,7 +1393,7 @@ TAO_PropertySetDef::define_properties_with_modes (const CosPropertyService::Prop
         }
       ACE_CATCH (CORBA::SystemException, sysex)
         {
-          ACE_RETHROW;
+          ACE_RE_THROW;
         }
       ACE_ENDTRY;
       ACE_CHECK;
@@ -1652,7 +1652,7 @@ TAO_PropertySetDef::set_property_modes (const CosPropertyService::PropertyModes 
         }
       ACE_CATCH (CORBA::SystemException, systex)
         {
-          ACE_RETHROW;
+          ACE_RE_THROW;
         }
       ACE_ENDTRY;
       ACE_CHECK;

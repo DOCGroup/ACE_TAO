@@ -318,7 +318,7 @@ TAO_Property_Exporter::_cxx_export (const CORBA::Object_ptr object_ref,
   ACE_CATCHANY
     {
       // Sigh, all our efforts were for naight.
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   */
   ACE_ENDTRY;

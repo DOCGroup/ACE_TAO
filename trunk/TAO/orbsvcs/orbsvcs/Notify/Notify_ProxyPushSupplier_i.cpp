@@ -96,7 +96,7 @@ TAO_Notify_ProxyPushSupplier_i::connect_any_push_consumer (CosEventComm::PushCon
    {
      this->cosec_push_consumer_ = CosNotifyComm::PushConsumer::_nil ();
      this->notify_push_consumer_ = CosNotifyComm::PushConsumer::_nil ();
-     ACE_RETHROW;
+     ACE_RE_THROW;
    }
  ACE_ENDTRY;
 }

@@ -52,7 +52,7 @@ TAO_Notify_StructuredProxyPushSupplier_i::connect_structured_push_consumer (CosN
     {
      this->push_consumer_ =
        CosNotifyComm::StructuredPushConsumer::_nil ();
-     ACE_RETHROW;
+     ACE_RE_THROW;
     }
  ACE_ENDTRY;
 }

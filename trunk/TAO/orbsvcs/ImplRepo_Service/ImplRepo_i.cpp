@@ -216,7 +216,7 @@ ImplRepo_i::activate_server_i (const char *server,
         ACE_THROW_RETURN (CORBA::TRANSIENT (
             CORBA_SystemException::_tao_minor_code (
               TAO_IMPLREPO_SERVER_MANUAL_ACTIVATION, 0),
-            CORBA::COMPLETED_NO), 
+            CORBA::COMPLETED_NO),
           "");
 
       this->start_server_i (server);
@@ -291,7 +291,7 @@ ImplRepo_i::start_server_i (const char *server,
           ACE_ERROR ((LM_ERROR,
                       "Error: No startup information for server <%s>\n",
                       server));
-          ACE_THROW (ImplementationRepository::Administration::CannotActivate 
+          ACE_THROW (ImplementationRepository::Administration::CannotActivate
             (CORBA::string_dup ("No startup information")));
           ACE_CHECK;
         }
@@ -316,7 +316,7 @@ ImplRepo_i::start_server_i (const char *server,
                      "Error: Cannot activate server <%s> using <%s>\n",
                       server,
                       startup.c_str ()));
-          ACE_THROW (ImplementationRepository::Administration::CannotActivate 
+          ACE_THROW (ImplementationRepository::Administration::CannotActivate
             (CORBA::string_dup ("Process Creation Failed")));
           ACE_CHECK;
         }
@@ -350,8 +350,8 @@ ImplRepo_i::start_server_i (const char *server,
 
           // Kill the server
           this->process_mgr_.terminate (spawned_pid);
-       
-          ACE_THROW(ImplementationRepository::Administration::CannotActivate 
+
+          ACE_THROW(ImplementationRepository::Administration::CannotActivate
             (CORBA::string_dup ("Timeout")));
           ACE_CHECK;
         }
@@ -372,7 +372,7 @@ ImplRepo_i::start_server_i (const char *server,
 
   // Now check to see if it is responding yet:
 
-  ACE_Time_Value end = ACE_OS::gettimeofday () 
+  ACE_Time_Value end = ACE_OS::gettimeofday ()
                        + OPTIONS::instance ()->startup_timeout ();
 
   ACE_TString server_object_ior, location;
@@ -398,7 +398,7 @@ ImplRepo_i::start_server_i (const char *server,
       ACE_TRY_CHECK_EX (ping1);
 
       server_ping_object =
-        ImplementationRepository::ServerObject::_narrow (object.in (), 
+        ImplementationRepository::ServerObject::_narrow (object.in (),
                                                          ACE_TRY_ENV);
       ACE_TRY_CHECK_EX (ping1);
 
@@ -420,12 +420,12 @@ ImplRepo_i::start_server_i (const char *server,
       // Kill the server
       this->process_mgr_.terminate (spawned_pid);
 
-      ACE_THROW (ImplementationRepository::Administration::CannotActivate 
+      ACE_THROW (ImplementationRepository::Administration::CannotActivate
         (CORBA::string_dup ("Server Ping Object failed")));
     }
   ACE_ENDTRY;
   ACE_CHECK;
-  
+
   while (ACE_OS::gettimeofday () > end)
     {
       ACE_TRY_EX (ping2);
@@ -445,8 +445,8 @@ ImplRepo_i::start_server_i (const char *server,
 
               // Kill the server
               this->process_mgr_.terminate (spawned_pid);
-   
-              ACE_THROW (ImplementationRepository::Administration::CannotActivate 
+
+              ACE_THROW (ImplementationRepository::Administration::CannotActivate
                           (CORBA::string_dup ("Timeout")));
             }
 
@@ -462,8 +462,8 @@ ImplRepo_i::start_server_i (const char *server,
 
           // Kill the server
           this->process_mgr_.terminate (spawned_pid);
-   
-          ACE_THROW (ImplementationRepository::Administration::CannotActivate 
+
+          ACE_THROW (ImplementationRepository::Administration::CannotActivate
                        (CORBA::string_dup ("Ping timed out")));
         }
       ACE_ENDTRY;
@@ -471,7 +471,7 @@ ImplRepo_i::start_server_i (const char *server,
     }
 }
 
-                     
+
 
 // Adds an entry to the Repository about this <server>
 
@@ -734,7 +734,7 @@ ImplRepo_i::init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV)
                                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      PortableServer::POAManager_var poa_manager = 
+      PortableServer::POAManager_var poa_manager =
         this->root_poa_->the_POAManager (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -758,7 +758,7 @@ ImplRepo_i::init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV)
                                      poa_manager.in (),
                                      policies,
                                      ACE_TRY_ENV);
-      
+
       // Warning!  If create_POA fails, then the policies won't be
       // destroyed and there will be hell to pay in memory leaks!
       ACE_TRY_CHECK;
@@ -914,7 +914,7 @@ ImplRepo_i::init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV)
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Server_i::init");
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
@@ -943,7 +943,7 @@ ImplRepo_i::fini (CORBA::Environment &ACE_TRY_ENV)
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Server_i::init");
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
@@ -978,10 +978,10 @@ ImplRepo_i::run (CORBA::Environment &ACE_TRY_ENV)
       Server_Info::ActivationMode activation = Server_Info::NORMAL;
       ImplementationRepository::EnvironmentList environment_vars ;
 
-      server_entry->int_id_->get_startup_info (logical, 
-                                               command_line, 
+      server_entry->int_id_->get_startup_info (logical,
+                                               command_line,
                                                environment_vars,
-                                               working_directory, 
+                                               working_directory,
                                                activation);
 
       ACE_TRY
@@ -1129,10 +1129,10 @@ ImplRepo_i::list (CORBA::ULong how_many,
       Server_Info::ActivationMode activation = Server_Info::NORMAL;
 
       server_entry->int_id_->get_running_info (location, server_ior);
-      server_entry->int_id_->get_startup_info (logical, 
-                                               command_line, 
+      server_entry->int_id_->get_startup_info (logical,
+                                               command_line,
                                                environment_vars,
-                                               working_directory, 
+                                               working_directory,
                                                activation);
 
       server_list[i].logical_server = CORBA::string_dup (logical.c_str ());
@@ -1170,7 +1170,7 @@ ImplRepo_i::list (CORBA::ULong how_many,
         }
       ACE_CATCHANY
         {
-          ACE_RETHROW;
+          ACE_RE_THROW;
         }
       ACE_ENDTRY;
       ACE_CHECK;
@@ -1238,7 +1238,7 @@ ImplRepo_i::shutdown_server (const char *server,
         }
       ACE_CATCHANY
         {
-          ACE_RETHROW;
+          ACE_RE_THROW;
         }
       ACE_ENDTRY;
     }
@@ -1287,7 +1287,7 @@ IMR_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
         parent->create_id_uniqueness_policy (PortableServer::MULTIPLE_ID, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      PortableServer::POAManager_var poa_manager = 
+      PortableServer::POAManager_var poa_manager =
         parent->the_POAManager (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -1450,10 +1450,10 @@ IMR_Iterator::next_n (CORBA::ULong how_many,
       Server_Info::ActivationMode activation = Server_Info::NORMAL;
 
       server_entry->int_id_->get_running_info (location, server_ior);
-      server_entry->int_id_->get_startup_info (logical, 
-                                               command_line, 
+      server_entry->int_id_->get_startup_info (logical,
+                                               command_line,
                                                environment_vars,
-                                               working_directory, 
+                                               working_directory,
                                                activation);
 
       server_list[i].logical_server = CORBA::string_dup (logical.c_str ());

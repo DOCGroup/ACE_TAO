@@ -735,7 +735,7 @@ Exceptions_Test::invalid_name_test (TAO_Naming_Client &root_context,
   ACE_CATCHANY
     {
       ACE_DEBUG ((LM_DEBUG, "Invalid name test failed\n"));
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -770,7 +770,7 @@ Exceptions_Test::already_bound_test (TAO_Naming_Client &root_context,
   ACE_CATCHANY
     {
       ACE_DEBUG ((LM_DEBUG, "Already bound (case 1) test failed\n"));
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
 
   ACE_ENDTRY;
@@ -807,7 +807,7 @@ Exceptions_Test::already_bound_test2 (TAO_Naming_Client &root_context,
   ACE_CATCHANY
     {
       ACE_DEBUG ((LM_DEBUG, "Already bound (case 2) test failed\n"));
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -846,7 +846,7 @@ Exceptions_Test::not_found_test (TAO_Naming_Client &root_context,
   ACE_CATCHANY
     {
       ACE_DEBUG ((LM_DEBUG, "Not found test failed\n"));
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -887,7 +887,7 @@ Exceptions_Test::not_found_test2 (TAO_Naming_Client &root_context,
   ACE_CATCHANY
     {
       ACE_DEBUG ((LM_DEBUG, "Unbind test failed\n"));
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
 
   ACE_ENDTRY;
@@ -928,7 +928,7 @@ Exceptions_Test::not_found_test3 (TAO_Naming_Client &root_context,
   ACE_CATCHANY
     {
       ACE_DEBUG ((LM_DEBUG, "Not found (case 3) test failed\n"));
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;

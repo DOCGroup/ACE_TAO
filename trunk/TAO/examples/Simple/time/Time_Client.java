@@ -132,7 +132,7 @@ public class Time_Client
             }
 
         // Call the Time server object and print results.
-        int time = timeRef.time ();
+        int time = timeRef.current_time ();
 
         java.util.Date date =
           new java.util.Date (((long) time) * 1000);
