@@ -42,8 +42,10 @@ OBJFILES = \
 	$(OBJDIR)\PG_ObjectGroupManager.obj \
 	$(OBJDIR)\PG_ObjectGroup_Map.obj \
 	$(OBJDIR)\PG_Operators.obj \
-	$(OBJDIR)\PG_PropertyManager.obj \
-	$(OBJDIR)\PG_Property_Utils.obj
+        $(OBJDIR)\PG_PropertyManager.obj \
+        $(OBJDIR)\PG_Property_Utils.obj \
+        $(OBJDIR)\PG_Default_Property_Validator.obj \
+        $(OBJDIR)\PG_Null_Property_Validator.obj
 
 RESOURCE = $(OBJDIR)\PortableGroup.res
 

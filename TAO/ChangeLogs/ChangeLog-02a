@@ -1,3 +1,8 @@
+Mon Jul 01 09:11:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/PortableGroup.bor:
+          Added missing files.
+
 Sat Jun 29 06:34:29 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Typecode.cpp (member_visibility): Fixed compilation errors
@@ -89,7 +94,7 @@ Fri Jun 28 16:32:12 2002  Jeff Parsons <parsons@cs.wustl.edu>
         * tao/TypeCode.cpp:
 	* tao/TypeCode.h:
 
-	  Added missing methods member_visibility() and type_modifier(), 
+	  Added missing methods member_visibility() and type_modifier(),
 	  both for TypeCodes containing a valuetype. Thanks to Andy
 	  Alvarez <andy_alvarez@baxter.com> for pointing this out.
 
@@ -112,12 +117,12 @@ Fri Jun 28 09:50:58 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/ORB_Core.h: Added an allocator that could be used to
 	  allocate buffers used for storing messages within the
 	  transport. It is a bad idea to use the same allocators used for
-	  the CDR streams. 
+	  the CDR streams.
 
 	* tao/Transport.cpp:
 	* tao/GIOP_Message_Base.cpp: Used the new allocators for the
 	  incoming message buffers.
-	
+
 Fri Jun 28 10:08:56 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* tests/LongUpcalls/Manager.cpp:
