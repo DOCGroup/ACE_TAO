@@ -73,7 +73,8 @@ private:
   CORBA::Environment env_;
   // Environment variable
 
-  CORBA::Object_ptr CosNaming_;
+  //  CORBA::Object_ptr CosNaming_;
+  CosNaming::NamingContext_ptr CosNaming_;
   // CosNaming obj ref
 
   char *cosnaming_factory_key_;

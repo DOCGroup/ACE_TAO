@@ -28,15 +28,10 @@ CosNaming_Client::CosNaming_Client (void)
     exit_later_ (0),
     factory_ (CORBA::Object::_nil ()),
     objref_ (CORBA::Object::_nil ()),
-    CosNaming_ (CORBA::Object::_nil ()),
-    cosnaming_factory_key_ ("some_key")
+    CosNaming_ (CosNaming::NamingContext::_nil ()),
+    cosnaming_factory_key_ ("naming_context")
 {
 }
-
-// @@ Can't we put this function into the except.h file so we don't
-// need to include its prototype here?
-extern void
-print_exception (const CORBA::Exception *, const char *, FILE *f=stdout);
 
 // Parses the command line arguments and returns an error status.
 
@@ -87,7 +82,7 @@ CosNaming_Client::run (void)
 
   if (this->exit_later_)
     {
-      //ss  this->please_exit (this->env_);
+      //  this->please_exit (this->env_);
       dexc (this->env_, "server, please ACE_OS::exit");
     }
 
@@ -106,7 +101,7 @@ CosNaming_Client::init (int argc, char **argv)
   this->argc_ = argc;
   this->argv_ = argv;
 
-  CosNaming_i cos_naming_i;
+  //  CosNaming::NamingContext_ptr cos_naming_i = new CosNaming::NamingContext;
 
   // retrieve the ORB
   CORBA::ORB_init (this->argc_,
@@ -116,7 +111,7 @@ CosNaming_Client::init (int argc, char **argv)
 
   if (this->env_.exception () != 0)
     {
-      print_exception (this->env_.exception (), "ORB initialization");
+      this->env_.print_exception ("ORB initialization");
       return 1;
     }
 
@@ -125,14 +120,14 @@ CosNaming_Client::init (int argc, char **argv)
     return 1;
 
   // Retrieve a factory objref.
-  this->objref_ = cos_naming_i._bind (this->hostname_,
-				      this->portnum_,
-				      this->cosnaming_factory_key_,
-				      this->env_);
+  this->objref_ = CosNaming::NamingContext::_bind (this->hostname_,
+						   this->portnum_,
+						   this->cosnaming_factory_key_,
+						   this->env_);
 
   if (this->env_.exception () != 0)
     {
-      print_exception (this->env_.exception (), "CosNaming_Factory::_bind");
+      this->env_.print_exception ("CosNaming_Factory::_bind");
       return 1;
     }
 
@@ -149,26 +144,22 @@ CosNaming_Client::init (int argc, char **argv)
   // <CosNaming_Factory> pointer.  However, we do it so that we can
   // explicitly test the _narrow function.
 
-//  this->factory_ = CosNaming::_narrow (this->objref_);
-// I Need to implement this!!
+  this->CosNaming_ = CosNaming::NamingContext::_narrow (this->objref_);
 
-  if (this->factory_ == 0)
+  if (this->CosNaming_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       " (%P|%t) Unable to narrow object reference to a CosNaming_Factory_ptr.\n"),
+		       " (%P|%t) Unable to narrow object reference to a CosNaming_ptr.\n"),
 		      1);
-
-  // Now retrieve the CosNaming obj ref corresponding to the key.
-// @@  this->CosNaming_ = this->factory_->make_cubit (this->CosNaming_key_, this->env_);
 
   if (this->env_.exception () != 0)
     {
-      print_exception (this->env_.exception (), "string2object");
+      this->env_.print_exception ("CosNaming::NamingContext::_narrow");
       return 1;
     }
 
   if (CORBA::is_nil (this->CosNaming_))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "null cubit objref returned by factory\n"),
+                       "null CosNaming objref returned by factory\n"),
                       1);
 
   return 0;
