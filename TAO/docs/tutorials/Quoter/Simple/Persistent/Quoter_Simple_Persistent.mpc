@@ -1,21 +1,19 @@
 // -*- MPC -*-
 // $Id$
 
-project(*client) : taoexe, portableserver {
+project(*client) : taoexe, portableserver, exceptions {
   libs += Quoter_Idl_Lib
   after += Quoter_Idl_Lib
   includes += ../../idl
-  requires += exceptions
   source_files {
     client.cpp
   }
 }
 
-project(*server) : taoexe, portableserver {
+project(*server) : taoserver, exceptions {
   libs += Quoter_Idl_Lib
   after += Quoter_Idl_Lib
   includes += ../../idl
-  requires += exceptions
   source_files {
     server.cpp
     Stock_Factory_i.cpp

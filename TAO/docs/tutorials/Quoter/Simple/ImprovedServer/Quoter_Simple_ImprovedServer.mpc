@@ -1,7 +1,6 @@
 // $Id$
-project : taoexe, portableserver, minimum_corba {
+project : taoserver, minimum_corba, exceptions {
   libs += Quoter_Idl_Lib
   after += Quoter_Idl_Lib
   includes += ../../idl
-  requires += exceptions
 }

@@ -12,8 +12,7 @@ project(*Server): orbsvcsexe, fault_tolerance, tmcast {
   }
 }
 
-project(*Client): taoexe, fault_tolerance {
-  requires += exceptions
+project(*Client): taoexe, fault_tolerance, exceptions {
   includes += $(TAO_ROOT)/orbsvcs
 
   Source_Files {
