@@ -1,3 +1,12 @@
+Mon May  1 21:12:07 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * MessagingC.i:
+        * MessagingC.cpp:
+        * diffs/MessagingC.i.diff:
+        * diffs/MessagingC.cpp.diff:
+          The IDL compiler generated code in the wrong file.  The IDL
+          compiler bug is documented in [BUGID:554]
+
 Mon May  1 19:20:04 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_interface.cpp:
@@ -7,9 +16,9 @@ Mon May  1 19:20:04 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Mon May  1 14:32:11 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp:
-	  fixed type mismatch warning.  Thanks to Darrell for reporting
-	  it.
+        * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp:
+          fixed type mismatch warning.  Thanks to Darrell for reporting
+          it.
 
 Mon May  1 10:25:11 2000  Darrell Brunsch <brunsch@uci.edu>
 
