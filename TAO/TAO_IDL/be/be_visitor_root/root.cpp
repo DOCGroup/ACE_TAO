@@ -117,8 +117,8 @@ int be_visitor_root::visit_root (be_root *node)
                              ),  -1);
         }
       
-      // generate the <<= and >>= operators for all the user-defined data types in
-      // the outermost scope
+      // generate the << and >> operators for all the user-defined
+      // data types in the outermost scope
       if (node->accept (visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -500,10 +500,13 @@ be_visitor_root::visit_interface_fwd (be_interface_fwd *node)
     case TAO_CodeGen::TAO_ROOT_CI:
       ctx.state (TAO_CodeGen::TAO_INTERFACE_FWD_CI);
       break;
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CS:
+      ctx.state (TAO_CodeGen::TAO_INTERFACE_FWD_CDR_OP_CI);
+      break;
     case TAO_CodeGen::TAO_ROOT_ANY_OP_CH:
     case TAO_CodeGen::TAO_ROOT_ANY_OP_CS:
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CH:
-    case TAO_CodeGen::TAO_ROOT_CDR_OP_CS:
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CI:
     case TAO_CodeGen::TAO_ROOT_CS:
     case TAO_CodeGen::TAO_ROOT_SH:
     case TAO_CodeGen::TAO_ROOT_SI:
