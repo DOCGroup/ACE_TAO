@@ -55,8 +55,6 @@ protected:
   virtual void compute_tc_name (void);
   // Overridden method.
 
-  virtual UTL_ScopedName * compute_tc_name (const char *prefix,
-                                            const char *suffix);
   // Compute and return the value.
 
   virtual void compute_repoID (void);

@@ -111,97 +111,14 @@ be_type::compute_tc_name (void)
     }
 }
 
-UTL_ScopedName *
-be_type::compute_tc_name (const char *prefix, 
-                          const char *suffix)
-{
-  // Both prefix and suffix has to be valid. Else return. 
-  if (prefix == 0 || suffix == 0)
-    {
-      return 0;
-    }
-    
-  static char namebuf [NAMEBUFSIZE];
-  ACE_OS::memset (namebuf, 
-                  '\0', 
-                  NAMEBUFSIZE);
-
-  UTL_ScopedName *n = this->name ();
-  UTL_ScopedName *result = 0;
-
-  while (n->tail () != 0)
-    {
-      if (result == 0)
-        {
-          // Does not exist.
-          ACE_NEW_RETURN (result,
-                          UTL_ScopedName (n->head ()->copy (), 
-                                          0),
-                          0);
-        }
-      else
-        {
-          UTL_ScopedName *conc_name = 0;
-          ACE_NEW_RETURN (conc_name,
-                          UTL_ScopedName (n->head ()->copy (),
-                                          0),
-                          0);
-
-          result->nconc (conc_name);
-        }
-
-      n = (UTL_ScopedName *)n->tail ();
-    }
-
-  ACE_OS::sprintf (namebuf,
-                   "_tc_%s%s%s",
-                   prefix,
-                   n->last_component ()->get_string (),
-                   suffix);
-  
-  Identifier *id = 0;
-  ACE_NEW_RETURN (id,
-                  Identifier (namebuf),
-                  0);
-
-  if (result == 0)
-    {
-      // Does not exist.
-      ACE_NEW_RETURN (result,
-                      UTL_ScopedName (id, 
-                                      0),
-                      0);
-    }
-  else
-    {
-      UTL_ScopedName *conc_name = 0;
-      ACE_NEW_RETURN (conc_name,
-                      UTL_ScopedName (id,
-                                      0),
-                      0);
-
-      result->nconc (conc_name);
-    }
-
-  return result;
-}
-
 // Retrieve typecode name.
 UTL_ScopedName *
-be_type::tc_name (const char *prefix, 
-                  const char *suffix)
+be_type::tc_name (void)
 {
-  if (prefix != 0 && suffix != 0)
-    {
-      // Just compute and return the name.
-      return compute_tc_name (prefix, 
-                              suffix);
-    }
-
   // Compute and init the member.
   if (this->tc_name_ == 0)
     {
-      compute_tc_name ();
+      this->compute_tc_name ();
     }
 
   return this->tc_name_;
@@ -224,10 +141,10 @@ be_type::nested_type_name (be_decl *use_scope,
                            const char *prefix)
 {
   return nested_name (this->local_name()->get_string(),
-                     this->full_name(),
-                     use_scope,
-                     suffix,
-                     prefix);
+                      this->full_name(),
+                      use_scope,
+                      suffix,
+                      prefix);
 }
 
 // This works for the "special" names generated for smart proxy

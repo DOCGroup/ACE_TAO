@@ -95,7 +95,7 @@ Identifier::Identifier (const char *s)
                        0,
                        0);
 
-      if (str.find ("_cxx_") == 0)
+      if (str.find ("_cxx_") == 0 || str.find ("_tc_") == 0)
         {
           shift = 0;
         }
