@@ -1,11 +1,17 @@
-//**************************************************************************
+// $Id$
+
+// ============================================================================
 //
-// NAME :   tpr_server.cpp 
-// DESCRIPTION:  
+// = LIBRARY
+//    TAO/tests
 //
-// Server mainline
+// = FILENAME
+//    server.cpp
 //
-//****************************************************************************
+// = AUTHOR
+//    Andy Gokhale, Sumedh Mungee, and Sergio Flores-Gaitan
+//
+// ============================================================================
 
 #include <api/binding.H>
 #include <api/api.H>
@@ -24,14 +30,6 @@ CORBA_BOA_ptr boa;
 int
 create_servant (void *arg)
 {
-  //  char name [1024];
-  //  int i = * (int *)arg;
-  //
-  //  if (i == 0)
-  //    strcpy (name, "HP_Cubit");
-  //  else
-  //    strcpy (name, "LP_Cubit");
-
   char ** argv = (char **) arg;
 
   CORBA_Environment env;
@@ -132,22 +130,21 @@ main (int argc, char** argv)
       ACE_DEBUG ((LM_ERROR, "OA_init failed..\n"));
       return -1;
     }
-
+  
   COOL_Activity_ptr new_activity [2];
-
+  
   for (int i = 0; i < 1; i++)
     {
       if (thisCapsule->createActivity ((COOL_ActivityFunc) create_servant,
-				       //(void *) &i, 
 				       (void *) argv,
                                        new_activity [i]) != C_OK)
         {
-        ACE_ERROR ((LM_ERROR, "%p\n", "activate failed\n"));
+	  ACE_ERROR ((LM_ERROR, "%p\n", "activate failed\n"));
         }
     }
-
+  
   CORBA_Long status;
-  for (i = 0; i < 1; i++)
+  for (int i = 0; i < 1; i++)
     {
       if (new_activity [i]->join (status) != C_OK)
         {

@@ -1,7 +1,9 @@
+// $Id$
 
 #ifndef cubit_ih
 #define cubit_ih
 
+#include <corba/cool.H>
 #include "cubit.H"
 
 class Cubit_Impl {
