@@ -72,7 +72,8 @@ protected:
                      CORBA::SystemException
                      ));
 private:
-  void push (TAO_NS_Event_var & ns) {TAO_NS_ProxyConsumer::push (ns); }
+  // Overloaded TAO_NS_ProxyConsumer::push to get around Borland compiler warnings.
+  virtual void push (TAO_NS_Event_var &event);
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

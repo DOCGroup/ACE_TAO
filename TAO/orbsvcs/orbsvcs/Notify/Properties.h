@@ -63,17 +63,38 @@ public:
   long sched_policy (void);
   void sched_policy (long sched_policy);
 
-  CORBA::Boolean updates (void);
-  void updates (CORBA::Boolean updates);
-
-  ACE_Time_Value& update_period (void);
-  void update_period (ACE_Time_Value& time_value);
+  CORBA::Boolean asynch_updates (void);
+  void asynch_updates (CORBA::Boolean asynch_updates);
 
   // The QoS Property that must be applied to each newly created Event Channel
   const CosNotification::QoSProperties& default_event_channel_qos_properties (void);
 
   // Set the default EC QoS Property.
   void default_event_channel_qos_properties (const CosNotification::QoSProperties &ec_qos);
+
+  // The QoS Property that must be applied to each newly created Supplier Admin
+  const CosNotification::QoSProperties& default_supplier_admin_qos_properties (void);
+
+  // Set the default SA QoS Property.
+  void default_supplier_admin_qos_properties (const CosNotification::QoSProperties &sa_qos);
+
+  // The QoS Property that must be applied to each newly created Consumer Admin
+  const CosNotification::QoSProperties& default_consumer_admin_qos_properties (void);
+
+  // Set the default CA QoS Property.
+  void default_consumer_admin_qos_properties (const CosNotification::QoSProperties &ca_qos);
+
+  // The QoS Property that must be applied to each newly created Proxy Supplier
+  const CosNotification::QoSProperties& default_proxy_supplier_qos_properties (void);
+
+  // Set the default PS QoS Property.
+  void default_proxy_supplier_qos_properties (const CosNotification::QoSProperties &ps_qos);
+
+  // The QoS Property that must be applied to each newly created Proxy Consumer
+  const CosNotification::QoSProperties& default_proxy_consumer_qos_properties (void);
+
+  // Set the default PC QoS Property.
+  void default_proxy_consumer_qos_properties (const CosNotification::QoSProperties &pc_qos);
 
 protected:
   /// Object Factory
@@ -94,17 +115,27 @@ protected:
   /// Scope policy
   long thr_scope_policy_;
 
-  /// True if updates are sent.
-  CORBA::Boolean updates_;
+  /// True if send asynch updates.
+  CORBA::Boolean asynch_updates_;
 
   /// The Update period for updates.
   ACE_Time_Value update_period_;
 
   /// The default EC QoS Properties.
   CosNotification::QoSProperties ec_qos_;
-};
 
-#define TAO_NS_DEFAULT_UPDATES_PERIOD 10000 // 10mS
+  /// The default SA QoS Properties.
+  CosNotification::QoSProperties sa_qos_;
+
+  /// The default CA QoS Properties.
+  CosNotification::QoSProperties ca_qos_;
+
+  /// The default PS QoS Properties.
+  CosNotification::QoSProperties ps_qos_;
+
+  /// The default PC QoS Properties.
+  CosNotification::QoSProperties pc_qos_;
+};
 
 typedef ACE_Singleton<TAO_NS_Properties, TAO_SYNCH_MUTEX> TAO_NS_PROPERTIES;
 

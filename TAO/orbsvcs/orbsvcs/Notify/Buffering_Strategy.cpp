@@ -74,9 +74,9 @@ TAO_NS_Buffering_Strategy::execute (TAO_NS_Method_Request& method_request, ACE_T
   // and queue_length_ is more than max_events_per_consumer_.
   CORBA::Long current = this->queue_length_.value ();
   if ((this->use_max_queue_ && this->max_queue_length_ != 0 &&
-       current > this->max_queue_length_.value ()) ||
+       current >= this->max_queue_length_.value ()) ||
       (!this->use_max_queue_ && this->max_events_per_consumer_ != 0 &&
-       current > this->max_events_per_consumer_.value ()))
+       current >= this->max_events_per_consumer_.value ()))
     {
       if (this->blocking_timeout_.is_valid ())
         {
