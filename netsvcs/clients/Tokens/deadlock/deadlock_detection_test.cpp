@@ -204,7 +204,6 @@ parse_args (int argc, char *argv[])
 			    "[-h <remote host>]\n"
 			    "[-p <remote port>]\n"
 			    "[-i ignore deadlock]\n%a", 1), -1);
-	  break;
 	}
     }
 
