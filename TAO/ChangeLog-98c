@@ -1,3 +1,10 @@
+Fri Jul 31 14:06:22 1998  Jeff Parsons <jp4@cs.wustl.edu>
+         
+      * tao_idl/be/be_visitor_argument/post_upcal_ss.cpp:
+      added an action to visit_predefined_type for the 
+      PT_pseudo case (OUT arg) that fixes the typecode 
+      sii param test.
+
 Fri Jul 31 07:58:36 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_union_branch/{public_ci,
