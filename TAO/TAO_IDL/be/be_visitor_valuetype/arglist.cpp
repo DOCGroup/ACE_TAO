@@ -107,17 +107,17 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
       if (amh_valuetype)
         {
           if (node->argument_count () > 0)
-            env_decl = "ACE_ENV_ARG_DECL_NOT_USED";
+            env_decl = " ACE_ENV_ARG_DECL_NOT_USED";
           else
-            env_decl = "ACE_ENV_SINGLE_ARG_DECL_NOT_USED";
+            env_decl = " ACE_ENV_SINGLE_ARG_DECL_NOT_USED";
         }
       /********************************************************************/
       else
         {
           if (node->argument_count () > 0)
-            env_decl = "ACE_ENV_ARG_DECL";
+            env_decl = " ACE_ENV_ARG_DECL";
           else
-            env_decl = "ACE_ENV_SINGLE_ARG_DECL";
+            env_decl = " ACE_ENV_SINGLE_ARG_DECL";
         }
       *os << env_decl;
 
