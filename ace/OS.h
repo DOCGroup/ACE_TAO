@@ -4528,6 +4528,10 @@ public:
   static int atoi (const wchar_t *s);
 # endif /* ACE_HAS_WCHAR */
 
+#if defined (atop)
+#undef atop
+#endif /* atop */
+
   static void *atop (const char *s);
 
 # if defined (ACE_HAS_WCHAR)
