@@ -22,8 +22,8 @@ sub run_test
 {
   my $type = shift(@_);
 
-  if ($type == "none") {
-    $nagle = "-ORBNodelay 0"
+  if ($type == "none" || $type == "transport") {
+    $nagle = "-ORBNodelay 0";
   }
   else {
     $nagle = "";
@@ -59,7 +59,7 @@ sub run_buffered
 
 # Parse the arguments
 
-@types = ("none", "transport", "server", "target", "twoway");
+@types = ("none", "transport", "server", "target", "twoway -x");
 
 @bufsizes = (10, 40, 100, 400, 1000, 2000);
 
@@ -67,7 +67,7 @@ for ($i = 0; $i <= $#ARGV; $i++)
 {
   SWITCH:
   {
-    if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-?")
+    if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-?") 
     {
       print "Run_Test Perl script for TAO Reliable Oneways Test\n\n";
       print "run_test [-t test type] [-i iterations] [-m buffer size]\n";
