@@ -1,5 +1,10 @@
 Sun Aug 29 07:53:33 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* tests/Process_Manager_Test.cpp: Changed the names of the signal
+	  handlers to one_child_synchronous_signal_handler() and
+ 	  multiple_children_synchronous_signal_handler() to reflect how
+ 	  they are used.
+
 	* ace/OS.[hi]: Added a new wrapper for sigtimedwait() so that
 	  we can encapsulate this.  To make programming more consistent,
  	  the encapsulation uses an ACE_Time_Value, rather than a struct

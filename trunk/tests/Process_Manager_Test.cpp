@@ -513,10 +513,12 @@ main (int argc, ASYS_TCHAR *argv[])
       run_test (one_child_synchronous_signal_handler, 
                 one_child_worker_parent);
 
+#if 0
       // Run the parent logic for the <ACE_TEST_MULTIPLE_CHILDREN>
       // test.
       run_test (multiple_children_synchronous_signal_handler,
                 multiple_children_worker_parent);
+#endif
 
       ACE_END_TEST;
       return 0;
