@@ -1494,28 +1494,28 @@ ACE_ReactorEx::close_singleton (void)
 }
 
 int 
-ACE_Proactor::run_event_loop (void)
+ACE_ReactorEx::run_event_loop (void)
 {
   // not implemented
   return -1;
 }
 
 int 
-ACE_Proactor::run_event_loop (ACE_Time_Value &tv)
+ACE_ReactorEx::run_event_loop (ACE_Time_Value &tv)
 {
   // not implemented
   return -1;
 }
 
 int 
-ACE_Proactor::end_event_loop (void)
+ACE_ReactorEx::end_event_loop (void)
 {
   // not implemented
   return -1;
 }
 
 sig_atomic_t 
-ACE_Proactor::event_loop_done (void)
+ACE_ReactorEx::event_loop_done (void)
 {
   return sig_atomic_t(1);
 }
