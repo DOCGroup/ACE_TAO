@@ -1,3 +1,9 @@
+Tue Nov  9 15:35:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/GIOP_Utils.h:
+          Added forward declaration of ACE_Time_Value, this type is used but
+          not forward declared.
+
 Tue Nov  9 08:27:30 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/AMI_Buffering/client.cpp:
