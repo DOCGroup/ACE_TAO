@@ -25,7 +25,7 @@ Mon Apr 19 16:26:43 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  This wasn't working on NT where the first thing
 	  in the union class memory layout is the vptr. Also
 	  changed the use of value() to _tao_get_cdr() on
-	  the elements of the member label list. That 
+	  the elements of the member label list. That
 	  wouldn't work on any platform because those Anys
 	  are all created with void *value = 0;
 
@@ -38,7 +38,7 @@ Mon Apr 19 16:26:43 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  Also finished implementing the tk_wchar cases, which
 	  Andy had marked TODO.
 
-Mon Apr 19 14:35:42 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+Mon Apr 19 15:23:56 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* orbsvcs/tests/Trading/colocated_test.cpp (main):
 	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp (run):
