@@ -229,9 +229,9 @@ ACE used to build fine using the SGI C++ and GNU GCC compilers for
 	  O32 ABI.
 	  Please check the config files for the details.<P>
 
-<LI> <B> HP-UX 9.x and 10.x </B> <P>
+<LI> <B> HP-UX 9.x, 10.x, and 11.00 </B> <P>
 
-HP sells 2 C++ compilers for HP-UX 10.x.  If you are using 9.x,
+HP sells 2 C++ compilers for HP-UX 10.x and 11.00.  If you are using 9.x,
 	  there's only the first one.
 <UL>
 <LI>HP C++ - this is CC, HP's cfront-based compiler.  As of ACE 4.4, it
@@ -240,8 +240,12 @@ HP sells 2 C++ compilers for HP-UX 10.x.  If you are using 9.x,
 	  if not later.
 
 <LI>HP aC++ - this is aCC, HP's new, ANSI-to-be compiler.  It handles ACE
-	  pretty well.  You should use either version A.01.06 (or later), or
-	  A.01.03.  Patches .04 and .05 do not work.
+	  pretty well.  You should use version A.01.12 on HP-UX 10.x and
+	  version A.03.05 on HP-UX 11.00.  Also see further notes on
+	  this platform at Riverace's
+	  <A HREF="http://www.riverace.com/ACE/hints_hpux.html">HP-UX Hints</A>
+	  page.
+	  
 </UL>
 <P>
 
@@ -580,9 +584,8 @@ YACC</A>.  However, you should rarely, if ever, need to do this.<P>
 <H4><A NAME="win32">Building and Installing ACE on Win32</A></H4>
 
 ACE contains project files for Microsoft Visual C++ 4.x (*.mdp) and
-5.0 with Service Pack 2 (*.dsw), as well as Borland C++ 5.x (ace.ide).
-Notice that Visual C++5.0 Service Pack 3 is broken and we don't
-recommend using it. However, some people have used it successfully.<P>
+5.0 with Service Pack 2 or 3 (*.dsw), as well as Borland C++ 5.x (ace.ide).
+<P>
 
 There are also project group files (BPG) to compile ACE and the
 one-button tests with Borland C++ Builder 3.0. This port has not
@@ -1141,7 +1144,7 @@ $ACE_ROOT, and then invoke the top-level Makefile with the
 % make
 </pre><P>
 
-This will establish a complete tree of links.  Note that you must to
+This will establish a complete tree of links.  Note that you must
 build a config.h and platform_macros.GNU in cloned directory.  In
 addition, make sure you set your LD_LIBRARY_PATH to
 $ACE_ROOT/ace:$LD_LIBRARY_PATH on SVR4 UNIX platforms.<P>
