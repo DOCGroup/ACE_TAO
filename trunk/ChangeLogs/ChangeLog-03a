@@ -1,3 +1,11 @@
+Mon Oct  2 13:38:44 2000  Ossama Othman  <ossama@uci.edu>
+
+	* examples/QOS/QoS_Signal_Handler.cpp:
+	* examples/QOS/QoS_Util.cpp:
+
+	  Include "ace/Log_Msg.h" to pull in definitions of the
+	  ACE_{DEBUG,ERROR} macros.
+
 Mon Oct  2 11:29:47 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/RMCast/RMCast_Retransmission.h:
@@ -51,7 +59,6 @@ Mon Oct  2 11:29:47 2000  Carlos O'Ryan  <coryan@uci.edu>
         * tests/RMCast/RMCast_Retransmission_Test.dsp:
         * tests/RMCast/RMCast_Retransmission_Test.cpp:
           New test for the Retransmission module
-
 
 Sun Oct 01 15:50:42 2000  Darrell Brunsch <brunsch@uci.edu>
 

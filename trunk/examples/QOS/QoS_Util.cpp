@@ -3,6 +3,7 @@
 
 #define SENDER_PORT 10001
 
+#include "ace/Log_Msg.h"
 #include "ace/Get_Opt.h"
 #include "QoS_Util.h"
 
@@ -19,7 +20,7 @@ QoS_Util::QoS_Util (int argc,
 {
   ACE_NEW (this->mult_session_addr_,
            ACE_INET_Addr (ACE_DEFAULT_MULTICAST_PORT));
-  
+
   ACE_NEW (this->dest_addr_,
            ACE_INET_Addr (ACE_DEFAULT_SERVER_PORT));
 }
@@ -66,7 +67,7 @@ QoS_Util::parse_args (void)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"
                            " [-m host:port] QoS multicast session address"
-                           " Overides the receiver address specified in the -n option" 
+                           " Overides the receiver address specified in the -n option"
                            " [-n host:port] Use for a unicast sender. "
                            " Follow by receiver addr"
                            " [-p tcp|udp] specify protocol to be used"
@@ -118,4 +119,3 @@ QoS_Util::multicast_flag (void) const
 {
   return this->multicast_flag_;
 }
-
