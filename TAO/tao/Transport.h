@@ -708,7 +708,7 @@ public:
                                   size_t &bytes_transferred,
                                   ACE_Time_Value *max_wait_time);
   /// Cache management
-  void mark_invalid (void);
+  void purge_entry (void);
 
   /// Cache management
   int make_idle (void);

@@ -1,3 +1,21 @@
+Thu Sep 13 12:46:45 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Transport.h:
+	* tao/Transport.cpp: Changed the name of the method mark_invalid
+	  () to purge_entry (). The mark_invalid () does not remove the
+	  handler from cache. Just leaving the cache entry after the
+	  connection is closed lead to increase in run time memory
+	  requirements.  Se bug #1025 for details.
+	
+	* tao/IIOP_Connection_Handler.cpp:
+	* tao/Strategies/DIOP_Connection_Handler.cpp:
+	* tao/Strategies/UIOP_Connection_Handler.cpp:
+	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp (handle_close): 
+
+	  Purge the entry while  closing down the connection instead of
+	  instead of marking it invalid.
+	
 Thu Sep 13 11:33:35 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/BiDirectional/test_i.cpp (call_client): 
