@@ -28,7 +28,13 @@ ifneq ($(CROSS-COMPILE),)
   clean realclean:
 	@echo Nothing to clean in IFR_Service on CROSS-COMPILE platforms.
 else  # ! CROSS-COMPILE
+ifeq ($(findstring xlC,$(CXX)),xlC)
+  all debug profile optimize install deinstall:  
+	@echo The IFR Service requires the using keyword which isn\'t supported by this compiler.
 
+  clean realclean:
+	@echo Nothing to clean in IFR_Service.
+else
 MKLIST = Makefile.IFR_Service Makefile.tao_ifr
 
 all debug profile optimize install deinstall clean realclean clobber depend idl_stubs:
@@ -40,7 +46,7 @@ else  # ! Windows
         $(MAKE) -f $$m MAKEFILE=$$m $(@:.nested=); \
         done
 endif # ! Windows
-
+endif # ! aix_build
 endif # ! CROSS-COMPILE
 
 #----------------------------------------------------------------------------
