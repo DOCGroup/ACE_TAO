@@ -140,6 +140,7 @@ ACE_TP_Reactor::handle_events (ACE_Time_Value *max_wait_time)
       // a later point of time, we decide to handle signals we have to
       // release the lock before we make any upcalls.. What is here
       // now is not the right thing...
+      // @@ We need to do better..
       return this->handle_signals (event_count,
                                    guard);
     }
@@ -158,7 +159,6 @@ ACE_TP_Reactor::handle_events (ACE_Time_Value *max_wait_time)
          return retval;
 
        // Else just fall through for further handling
-
      }
 
 
@@ -265,6 +265,7 @@ ACE_TP_Reactor::owner (ACE_thread_t *t_id)
 int
 ACE_TP_Reactor::get_event_for_dispatching (ACE_Time_Value *max_wait_time)
 {
+  ACE_TRACE ("ACE_TP_Reactor::get_event_for_dispatching");
   // If the reactor handler state has changed, clear any remembered
   // ready bits and re-scan from the master wait_set.
   if (this->state_changed_)
@@ -346,10 +347,8 @@ ACE_TP_Reactor::handle_timer_events (int &event_count,
   // time.
   ACE_Timer_Node_Dispatch_Info info;
 
-  int result = this->timer_queue_->dispatch_info (cur_time,
-                                                  info);
-
-  if (result)
+  if (this->timer_queue_->dispatch_info (cur_time,
+                                         info))
     {
       // Decrement the number of events that needs handling yet.
       event_count--;
