@@ -1,3 +1,9 @@
+Sun Apr  2 16:00:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* tao/Smart_Proxies.h: Defined the destructor of
+	  TAO_Smart_Proxy_Base to be virtual to ward off g++ compiler
+	  warnings.
+	
 Sun Apr  2 15:13:41 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Message_Base.cpp (dump_msg): Added support to dump GIOP
