@@ -9,6 +9,7 @@
 #ifndef TAO_PERF_RTEC_RTCORBA_SETUP_H
 #define TAO_PERF_RTEC_RTCORBA_SETUP_H
 
+#include "rtec_perf_export.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
 #include "ace/Auto_Ptr.h"
@@ -25,7 +26,7 @@ class RT_Class;
  * @brief Simplify the initialization of performance tests.
  *
  */
-class RTCORBA_Setup
+class TAO_RTEC_Perf_Export RTCORBA_Setup
 {
 public:
   /// Constructor

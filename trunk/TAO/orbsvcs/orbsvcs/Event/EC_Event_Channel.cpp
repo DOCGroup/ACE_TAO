@@ -30,6 +30,7 @@ TAO_EC_Event_Channel (const TAO_EC_Event_Channel_Attributes& attr,
     disconnect_callbacks_ (attr.disconnect_callbacks),
     busy_hwm_ (attr.busy_hwm),
     max_write_delay_ (attr.max_write_delay)
+  , destroyed_ (0)
 {
   if (this->factory_ == 0)
     {
@@ -112,6 +113,12 @@ TAO_EC_Event_Channel::activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 void
 TAO_EC_Event_Channel::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 {
+  {
+    ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
+    if (this->destroyed_)
+      return;
+    this->destroyed_ = 1;
+  }
   this->dispatching_->shutdown ();
   this->timeout_generator_->shutdown ();
   this->supplier_control_->shutdown ();

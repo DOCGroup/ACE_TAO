@@ -12,7 +12,7 @@
 #include "tao/PortableServer/PortableServer.h"
 // #include "tao/RTPortableServer/RTPortableServer.h"
 #include "tao/Strategies/advanced_resource.h"
-#include "tao/Messaging.h"
+#include "tao/Messaging/Messaging.h"
 #include "ace/Get_Opt.h"
 #include "ace/Auto_Ptr.h"
 
@@ -68,9 +68,10 @@ int main (int argc, char *argv[])
       auto_ptr<RTCORBA_Setup> rtcorba_setup;
       if (use_rt_corba)
         {
-          rtcorba_setup = new RTCORBA_Setup (orb,
-                                             test_scheduling
-                                             ACE_ENV_ARG_PARAMETER);
+          rtcorba_setup =
+            auto_ptr<RTCORBA_Setup> (new RTCORBA_Setup (orb,
+                                                        test_scheduling
+                                                        ACE_ENV_ARG_PARAMETER));
           ACE_TRY_CHECK;
         }
 
@@ -145,8 +146,11 @@ int main (int argc, char *argv[])
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      do {
+        ACE_Time_Value tv (1, 0);
+        orb->run (tv ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+      } while (ec_impl->destroyed () == 0);
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
     }

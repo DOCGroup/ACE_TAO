@@ -30,7 +30,7 @@ Client_Group::init (CORBA::Long experiment_id,
                                   workload_in_usecs,
                                   gsf);
   this->loopback_supplier_ = new Loopback_Supplier (experiment_id,
-                                                    base_event_type);
+                                                    base_event_type + 1);
   this->loopback_consumer_ = new Loopback_Consumer (experiment_id,
                                                     base_event_type,
                                                     loopback_supplier_.in ());
@@ -70,4 +70,3 @@ Client_Group::disconnect (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   Auto_Disconnect<Loopback_Supplier> loopback_supplier_disconnect (this->loopback_supplier_);
   Auto_Disconnect<Loopback_Consumer> loopback_consumer_disconnect (this->loopback_consumer_);
 }
-

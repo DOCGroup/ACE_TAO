@@ -222,6 +222,21 @@ Package=<4>
 
 ###############################################################################
 
+Project: "RTCORBAEvent"=.\RTCORBAEvent.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name RTEvent
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "RTEvent"=.\RTEvent.dsp - Package Owner=<4>
 
 Package=<5>

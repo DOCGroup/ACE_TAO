@@ -33,7 +33,7 @@ Send_Task::init (int iterations,
   this->period_in_usecs_ = period_in_usecs;
   this->event_type_ = event_type;
   this->event_source_ = event_source;
-  this->supplier_ = Servant_var<Supplier> (supplier);
+  this->supplier_ = Servant_var<Supplier>::duplicate (supplier);
   this->barrier_ = barrier;
 }
 

@@ -23,7 +23,7 @@
  * @brief Implement a simple consumer to keep track of the latency
  *
  */
-class Loopback_Consumer
+class TAO_RTEC_Perf_Export Loopback_Consumer
   : public virtual POA_RtecEventComm::PushConsumer
   , public virtual PortableServer::RefCountServantBase
 

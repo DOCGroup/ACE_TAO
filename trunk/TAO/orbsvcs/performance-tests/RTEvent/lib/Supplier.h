@@ -9,6 +9,7 @@
 #ifndef TAO_PERF_RTEC_SUPPLIER_H
 #define TAO_PERF_RTEC_SUPPLIER_H
 
+#include "rtec_perf_export.h"
 #include "orbsvcs/RtecEventCommS.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 
@@ -22,7 +23,7 @@
  * @brief Implement a simple supplier to keep track of the latency
  *
  */
-class Supplier
+class TAO_RTEC_Perf_Export Supplier
   : public virtual POA_RtecEventComm::PushSupplier
   , public virtual PortableServer::RefCountServantBase
 {
