@@ -75,7 +75,7 @@ Demux_Test_CodeGenerator::gen_servant_hdr_code (void)
       ACE_OS::fprintf (fp, "   void %s (CORBA::Environment &env = \n"
                        "            CORBA::Environment::"
                        "default_environment ());\n\n", 
-                       str->rep ());
+                       str->c_str ());
 
       (void) iter.advance ();
     }

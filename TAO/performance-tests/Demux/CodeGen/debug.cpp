@@ -62,7 +62,7 @@ Demux_Test_CodeGenerator::print_array (ACE_Unbounded_Queue<ACE_CString> &arr)
 
       ACE_DEBUG ((LM_DEBUG,
                   "\t%s\n",
-                  str->rep ()));
+                  str->c_str ()));
       (void) iter.advance ();
     }
   return 0; 	// not present
