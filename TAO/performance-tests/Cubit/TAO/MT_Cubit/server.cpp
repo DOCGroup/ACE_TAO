@@ -383,7 +383,8 @@ main (int argc, char *argv[])
 
   // run the server.
   result = server.run ();
-  cout << __FILE__ << __LINE__ << endl;
+  ACE_DEBUG ((LM_DEBUG,
+			  "%s:%d\n", __FILE__, __LINE__));
   if (result != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error while running the servants\n"),
