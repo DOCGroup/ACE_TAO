@@ -1,3 +1,13 @@
+Thu Dec 27 09:38:24 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/Reactor/Proactor/test_timeout.cpp: 
+	* examples/Reactor/Proactor/test_multiple_loops.cpp:
+	* examples/Reactor/Proactor/post_completions.cpp:
+	* performance-tests/Synch-Benchmarks/Perf_Test/Performance_Test_Options.h: 
+
+	  Added #includes to prevent compilation errors on Win32. Thanks
+	  to Venkita for pointing this out. 
+	
 Thu Dec 27 06:41:24 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* tests/Proactor_Timer_Test.cpp: Added #ifndefs to guard against

@@ -36,6 +36,7 @@
 #include "ace/Task.h"
 #include "ace/WIN32_Proactor.h"
 #include "ace/POSIX_Proactor.h"
+#include "ace/Atomic_Op.h"
 
 
 // Keep track of how many completions are still expected.

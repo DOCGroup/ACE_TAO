@@ -15,6 +15,7 @@
 #include "ace/Profile_Timer.h"
 #include "ace/Log_Msg.h"
 #include "ace/Thread_Manager.h"
+#include "ace/Atomic_Op.h"
 
 #if defined (ACE_HAS_THREADS)
 
