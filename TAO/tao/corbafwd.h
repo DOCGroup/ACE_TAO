@@ -14,9 +14,9 @@
  * recompilations.
  *
  *  @author Carlos O'Ryan
+ *  @author Ossama Othman
  *  @author Chris Cleeland
  *  @author Douglas C. Schmidt
- *  @author Ossama Othman
  */
 //=============================================================================
 
@@ -44,8 +44,6 @@
 
 #include "tao/orbconf.h"
 #include "tao/TAO_Export.h"
-
-#include "ace/OS_Memory.h"
 
 
 #if defined (_MSC_VER) || defined (__BORLANDC__)
@@ -157,8 +155,8 @@ namespace CORBA
    * CORBA string memory management functions.
    */
   //@{
-  TAO_NAMESPACE_INLINE_FUNCTION char * string_alloc (ULong len);
-  extern TAO_Export  char * string_dup (const char *);
+  extern TAO_Export char * string_alloc (ULong len);
+  extern TAO_Export char * string_dup (const char *);
   TAO_NAMESPACE_INLINE_FUNCTION void string_free (char *);
   //@}
 
@@ -171,8 +169,8 @@ namespace CORBA
    * CORBA wide string memory management functions.
    */
   //@{
-  TAO_NAMESPACE_INLINE_FUNCTION WChar * wstring_alloc (ULong len);
-  extern TAO_Export  WChar * wstring_dup (const WChar * const);
+  extern TAO_Export WChar * wstring_alloc (ULong len);
+  extern TAO_Export WChar * wstring_dup (const WChar * const);
   TAO_NAMESPACE_INLINE_FUNCTION void wstring_free (WChar * const);
   //@}
 

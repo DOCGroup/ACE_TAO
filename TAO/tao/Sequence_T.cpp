@@ -9,9 +9,13 @@
 #include "tao/Sequence_T.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/OS_Memory.h"
+
+
 ACE_RCSID (tao, 
            Sequence_T, 
            "$Id$")
+
 
 template <typename T>
 TAO_Unbounded_Sequence<T>::TAO_Unbounded_Sequence (
