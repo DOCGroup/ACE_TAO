@@ -136,7 +136,9 @@ string_emulation_test (void)
 
     const char memchr1[] = "abcdefghijklmnopqrstuvwxyz";
 
-    ACE_ASSERT (ACE_OS_String::memchr (NULL, 'a', 0) == NULL);
+    ACE_ASSERT (ACE_OS_String::memchr (ACE_static_cast (const void *, NULL), 
+                                       'a', 
+                                       0) == NULL);
     ACE_ASSERT (ACE_OS_String::memchr (memchr1, 'a', sizeof (memchr1)) != NULL);
     ACE_ASSERT (ACE_OS_String::memchr (memchr1, '1', sizeof (memchr1)) == NULL);
   

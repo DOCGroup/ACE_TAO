@@ -1,3 +1,12 @@
+Sun Oct 22 17:22:32 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * tests/OS_Test.cpp:
+
+          Borland complained about memchr (NULL, ...), since
+          it couldn't figure out whether to use the void * or 
+          const void* verison of ACE_OS_String::memchr.
+          Added an explicit cast to help out.
+
 Sun Oct 22 17:09:26 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * tests/MT_SOCK_Test.cpp:
@@ -11,7 +20,7 @@ Sun Oct 22 17:09:26 2000  Darrell Brunsch <brunsch@uci.edu>
            the acceptor-mode socket."
 
           I changed the connection_failed ACE_ERROR_RETURN to an
-          ACE_DEBUG and return, so it will not show up as an error
+          ACE_DEBUG and return. Now it will not show up as an error
           via run_test.pl.
 
 Sun Oct 22 16:32:24 2000  Darrell Brunsch <brunsch@uci.edu>
