@@ -4,16 +4,15 @@
 // ============================================================================
 //
 // = LIBRARY
-//    TAO/tests/Simple/time
+//    TAO/examples/Simple/time
 //
 // = FILENAME
 //    Time_Client_i.h
 //
 // = DESCRIPTION
-//    This class implements the  interface calls for RMI.
+//    This class implements the client calls to the Time example.
 //
 // = AUTHOR
-//    
 //   Balachandran Natarajan <bala@cs.wustl.edu>
 //    
 // ============================================================================
@@ -31,7 +30,7 @@ class Time_Client_i
   //
   // = DESCRIPTION
   //   This class implements the interface between the interface
-  //   objects and the client .
+  //   objects and the client.
 public:
   // = Initialization and termination methods.
   Time_Client_i (void);

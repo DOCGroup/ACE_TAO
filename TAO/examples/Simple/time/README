@@ -1,8 +1,9 @@
 $Id$
 
-This is a simple CORBA example that has an object (Time) with only two
-methods, one that returns the current time of day and another that shuts 
-down the server.
+This is a simple CORBA example that has an object (Time) with two
+methods: one that returns the current time of day and another that
+shuts down the server.  There are clients programs written in both C++
+and Java to access the simple Time service.
 
 server:
 -------
