@@ -135,9 +135,7 @@ typedef ACE_Strategy_Acceptor<TAO_OA_Connection_Handler, ACE_SOCK_ACCEPTOR>
 
 #if defined (ACE_WIN32)
 extern template size_t
-ACE_Hash_Addr<ACE_INET_Addr, TAO_Client_Connection_Handler>::hash_i (const ACE_INET_Addr &addr) const;
-extern template int
-ACE_Hash_Addr<ACE_INET_Addr, TAO_Client_Connection_Handler>::compare_i (const ACE_INET_Addr &a1, 
-                                                                        const ACE_INET_Addr &a2) const;
+ACE_Hash_Addr<ACE_INET_Addr>::hash_i (const ACE_INET_Addr &addr) const;
 #endif /* ACE_WIN32 */
+
 #endif /* TAO_CONNECT_H */
