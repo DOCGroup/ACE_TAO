@@ -1057,7 +1057,7 @@ public:
   ACE_TSS_Info (void);
   // Default constructor
 
-  int key_in_use (void) const { return thread_count_ != -1; }
+  int key_in_use (void) const { return thread_count_ > 0; }
   // Returns 1 if the key is in use, 0 if not.
 
   void key_in_use (int flag) { thread_count_ = flag == 0  ?  -1  :  1; }
