@@ -276,7 +276,7 @@ pace_getuid ()
 #if (PACE_HAS_POSIX_DS_UOF)
 PACE_INLINE
 int
-pace_isatty (PACE_HANDLE fildes)
+pace_isatty (int fildes)
 {
   return isatty (fildes);
 }
@@ -294,7 +294,7 @@ pace_link (const char * existing, const char * new_link)
 #if (PACE_HAS_POSIX_FM_UOF)
 PACE_INLINE
 pace_off_t
-pace_lseek (PACE_HANDLE fildes, pace_off_t offset, int whence)
+pace_lseek (int fildes, pace_off_t offset, int whence)
 {
   return lseek (fildes, offset, whence);
 }
