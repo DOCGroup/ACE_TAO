@@ -1,3 +1,8 @@
+Fri Feb 12 18:41:22 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/SString.cpp: Added "ace/" to #include "Auto_Ptr.h" to conform
+          to conding guidelines.
+
 Fri Feb 12 17:16:17 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/run_tests.vxworks: commented out Message_Queue_Test and
