@@ -344,6 +344,28 @@ public:
   virtual ~TAO_StreamCtrl (void);
   // virtual destructor.
 
+  virtual void stop (const AVStreams::flowSpec &the_spec,
+                     CORBA::Environment &env = CORBA::Environment::default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     AVStreams::noSuchFlow));
+  // Stop the transfer of data of the stream
+  // Empty the_spec means apply operation to all flows
+
+  virtual void start (const AVStreams::flowSpec &the_spec,
+                      CORBA::Environment &env = CORBA::Environment::default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     AVStreams::noSuchFlow));
+  // Start the transfer of data in the stream.
+  // Empty the_spec means apply operation to all flows
+
+  virtual void destroy (const AVStreams::flowSpec &the_spec,
+                        CORBA::Environment &env = CORBA::Environment::default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     AVStreams::noSuchFlow));
+  // Tears down the stream. This will close the connection, and delete
+  // the streamendpoint and vdev associated with this stream
+  // Empty the_spec means apply operation to all flows
+
   virtual CORBA::Boolean bind_devs (AVStreams::MMDevice_ptr a_party,
                                     AVStreams::MMDevice_ptr b_party,
                                     AVStreams::streamQoS &the_qos,
@@ -727,7 +749,7 @@ protected:
 
   u_short mcast_port_;
   ACE_UINT32 mcast_addr_;
-  ACE_Hash_Map_Manager <TAO_String_Hash_Key, TAO_AV_UDP_MCast_Flow_Handler *,ACE_Null_Mutex> dgram_mcast_handler_map_;
+  ACE_Hash_Map_Manager <TAO_String_Hash_Key, TAO_FlowSpec_Entry*,ACE_Null_Mutex> mcast_entry_map_;
   TAO_AV_FlowSpecSet forward_flow_spec_set;
   TAO_AV_FlowSpecSet reverse_flow_spec_set;
   AVStreams::StreamEndPoint_var peer_sep_;
@@ -745,18 +767,6 @@ class TAO_ORBSVCS_Export TAO_StreamEndPoint_A :
 public:
   TAO_StreamEndPoint_A (void);
   // Constructor
-
-  virtual void stop (const AVStreams::flowSpec &the_spec,
-                     CORBA::Environment &env = CORBA::Environment::default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::noSuchFlow));
-   // Stop the stream. Empty the_spec means, for all the flows
-
-  virtual void start (const AVStreams::flowSpec &the_spec,
-                      CORBA::Environment &env = CORBA::Environment::default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     AVStreams::noSuchFlow));
-  // Start the stream, Empty the_spec means, for all the flows
 
   virtual CORBA::Boolean multiconnect (AVStreams::streamQoS &the_qos,
                                        AVStreams::flowSpec &the_spec,
