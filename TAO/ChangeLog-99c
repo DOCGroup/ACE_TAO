@@ -1,3 +1,8 @@
+Wed Apr 28 10:07:54 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/POA/Reference_Counted_Servant/Makefile: added PSRC
+          and re-ran make depend.  The old dependencies had a syntax error.
+
 Wed Apr 28 09:47:05 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO/tests/CDR/octet_sequence.cpp: replaced use of cout
