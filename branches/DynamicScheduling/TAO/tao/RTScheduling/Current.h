@@ -39,9 +39,9 @@ public:
 };
 
 
-typedef ACE_Hash_Map_Manager_Ex<IdType, CORBA::Object_ptr, TAO_DTId_Hash, ACE_Equal_To<IdType>, ACE_Thread_Mutex> DT_Hash_Map;
-typedef ACE_Hash_Map_Iterator_Ex<IdType, CORBA::Object_ptr, TAO_DTId_Hash, ACE_Equal_To<IdType>, ACE_Thread_Mutex> DT_Hash_Map_Iterator;
-typedef ACE_Hash_Map_Entry <IdType,CORBA::Object_ptr> DT_Hash_Map_Entry;
+typedef ACE_Hash_Map_Manager_Ex<IdType, RTScheduling::DistributableThread_var, TAO_DTId_Hash, ACE_Equal_To<IdType>, ACE_Thread_Mutex> DT_Hash_Map;
+typedef ACE_Hash_Map_Iterator_Ex<IdType, RTScheduling::DistributableThread_var, TAO_DTId_Hash, ACE_Equal_To<IdType>, ACE_Thread_Mutex> DT_Hash_Map_Iterator;
+typedef ACE_Hash_Map_Entry <IdType,RTScheduling::DistributableThread_var> DT_Hash_Map_Entry;
 
 class TAO_RTScheduler_Current;
 class TAO_RTScheduler_Current_var;
@@ -219,7 +219,8 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current_i
  public:
 
   TAO_RTScheduler_Current_i (TAO_ORB_Core* orb,
-			     DT_Hash_Map* dt_hash);
+			     DT_Hash_Map* dt_hash
+			     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   TAO_RTScheduler_Current_i (TAO_ORB_Core* orb,
 			     DT_Hash_Map* dt_hash,
@@ -229,7 +230,7 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current_i
 			     CORBA::Policy_ptr implicit_sched_param,
 			     RTScheduling::DistributableThread_ptr dt,
 			     TAO_RTScheduler_Current_i* prev_current
-			     );
+			     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   virtual ~TAO_RTScheduler_Current_i (void)
     {
@@ -243,7 +244,7 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current_i
 	   CORBA::Policy_ptr implicit_sched_param,
 	   CORBA::ULong stack_size,
 	   RTCORBA::Priority base_priority
-	   ACE_ENV_ARG_DECL)
+	   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
   
   virtual void begin_scheduling_segment
@@ -316,7 +317,7 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current_i
   RTScheduling::Scheduler_var scheduler_;
   TAO_ORB_Core* orb_;
   RTScheduling::Current::IdType guid_;
-  const char* name_;
+  CORBA::String_var name_;
   CORBA::Policy_ptr sched_param_;
   CORBA::Policy_ptr implicit_sched_param_;
   RTScheduling::DistributableThread_var dt_;
@@ -324,22 +325,20 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current_i
   DT_Hash_Map* dt_hash_;
 };
 
-// This class provides an entry point for the
-// new DT.
+// This class provides an entry point for the// new DT.
 class DTTask : public ACE_Task <ACE_SYNCH>
 {
 public:
   DTTask (//ACE_Thread_Manager manager,
 	  TAO_ORB_Core* orb,
 	  DT_Hash_Map* dt_hash,
+	  TAO_RTScheduler_Current_i*,	  
 	  RTScheduling::ThreadAction_ptr start,
 	  CORBA::VoidData data,
-	  RTScheduling::Current::IdType guid,
 	  const char* name,
 	  CORBA::Policy_ptr sched_param,
-	  CORBA::Policy_ptr implicit_sched_param,
-	  RTScheduling::DistributableThread_ptr dt);
-  
+	  CORBA::Policy_ptr implicit_sched_param);
+	  
   int activate_task (RTCORBA::Priority base_priority,
 		     CORBA::ULong stack_size);
 
@@ -349,12 +348,12 @@ public:
   //ACE_Thread_Manager* manager_;
   TAO_ORB_Core* orb_;
   DT_Hash_Map* dt_hash_;
+  TAO_RTScheduler_Current_i* current_;
   RTScheduling::ThreadAction_var start_;
   CORBA::VoidData data_;
   RTScheduling::Current::IdType guid_;
-  const char* name_;
+  CORBA::String_var name_;
   CORBA::Policy_var sched_param_;
   CORBA::Policy_var implicit_sched_param_;
-  RTScheduling::DistributableThread_var dt_;
 };
 #endif /*TAO_RTSCHEDULER_CURRENT_H*/
