@@ -20,9 +20,22 @@ EVENT_CON_OBJS = NavWeapC.o NavWeapS.o Event_Con.o
 LOGGING_SUP_OBJS = NavWeapC.o NavWeapS.o Logging_Sup.o DOVE_Supplier.o
 DUALEC_SUP_OBJS = NavWeapC.o NavWeapS.o DualEC_Sup.o DOVE_Supplier.o
 
-BIN = Event_Sup Logging_Sup DualEC_Sup Event_Con
-
 LDLIBS = -lorbsvcs -lTAO
+
+BIN2 = Event_Sup Logging_Sup DualEC_Sup Event_Con
+
+#### If the TAO orbsvcs library wasn't built with sufficient components,
+#### don't try to build here.
+TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (Event,$(findstring Event,$(TAO_ORBSVCS)))
+  ifeq (Sched,$(findstring Sched,$(TAO_ORBSVCS)))
+    ifeq (Time,$(findstring Time,$(TAO_ORBSVCS)))
+      ifeq (Naming,$(findstring Naming,$(TAO_ORBSVCS)))
+        BIN = $(BIN2)
+      endif # Naming
+    endif # Time
+  endif # Sched
+endif # Event
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -63,8 +76,7 @@ DualEC_Sup: $(addprefix $(VDIR),$(DUALEC_SUP_OBJS))
 Event_Con: $(addprefix $(VDIR),$(EVENT_CON_OBJS))
 
 realclean: clean
-	-/bin/rm -rf NavWeap.idl NavWeap[CS].* NavWeap[CS]_T.*
-
+	-$(RM) NavWeap.idl NavWeap[CS].* NavWeap[CS]_T.*
 
 #----------------------------------------------------------------------------
 #       Dependencies
