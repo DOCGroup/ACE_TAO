@@ -1290,6 +1290,66 @@ AH_TEMPLATE([ACE_LACKS_UTSNAME_T],
 
 AH_TEMPLATE([ACE_LACKS_WCHAR_T],[Platform lacks wchar_t typedef])
 
+AH_TEMPLATE([ACE_LACKS_WCSCAT],
+[Platform lacks wcscat()])
+
+AH_TEMPLATE([ACE_LACKS_WCSCHR],
+[Platform lacks wcschr()])
+
+AH_TEMPLATE([ACE_LACKS_WCSCMP],
+[Platform lacks wcscmp()])
+
+AH_TEMPLATE([ACE_LACKS_WCSCPY],
+[Platform lacks wcscpy()])
+
+AH_TEMPLATE([ACE_LACKS_WCSCSPN],
+[Platform lacks wcscspn()])
+
+AH_TEMPLATE([ACE_LACKS_WCSDUP],
+[Platform lacks wcsdup()])
+
+AH_TEMPLATE([ACE_LACKS_WCSICMP],
+[Platform lacks wcsicmp()])
+
+AH_TEMPLATE([ACE_LACKS_WCSLEN],
+[Platform lacks wcslen()])
+
+AH_TEMPLATE([ACE_LACKS_WCSNCAT],
+[Platform lacks wcsncat()])
+
+AH_TEMPLATE([ACE_LACKS_WCSNCMP],
+[Platform lacks wcsncmp()])
+
+AH_TEMPLATE([ACE_LACKS_WCSNCPY],
+[Platform lacks wcsncpy()])
+
+AH_TEMPLATE([ACE_LACKS_WCSNICMP],
+[Platform lacks wcsnicmp()])
+
+AH_TEMPLATE([ACE_LACKS_WCSPBRK],
+[Platform lacks wcspbrk()])
+
+AH_TEMPLATE([ACE_LACKS_WCSRCHR],
+[Platform lacks wcsrchr()])
+
+AH_TEMPLATE([ACE_LACKS_WCSSPN],
+[Platform lacks wcsspn()])
+
+AH_TEMPLATE([ACE_LACKS_WCSSTR],
+[Platform lacks wcsstr()])
+
+AH_TEMPLATE([ACE_LACKS_WCSTOD],
+[Platform lacks wcstod()])
+
+AH_TEMPLATE([ACE_LACKS_WCSTOK],
+[Platform lacks wcstok()])
+
+AH_TEMPLATE([ACE_LACKS_WCSTOL],
+[Platform lacks wcstol()])
+
+AH_TEMPLATE([ACE_LACKS_WCSTOUL],
+[Platform lacks wcstoul()])
+
 AH_TEMPLATE([ACE_LACKS_WILDCARD_BIND],
 [The bind() call will not select the port if it's 0.])
 
