@@ -33,6 +33,13 @@ Fri Oct 31 14:35:37 1997  David L. Levine  <levine@cs.wustl.edu>
         * ace/Service_Config.*,Object_Manager.cpp: moved static
           ACE_Service_Config::signal_handler_ to Object_Manager.
 
+        * include/makeinclude/rules.local.GNU (show_statics,show_uninit):
+          added $(TOOLENV) to allow specification of full path to nm.
+          Thanks to Wei Chiang <chiang@tele.nokia.fi> for this suggestion.
+
+        * include/makeinclude/platform_chorus.GNU: added trailing "/"
+          to TOOLENV definition, so that it can be empty when not used.
+
 Fri Oct 31 00:53:52 1997    <irfan@TWOSTEP>
 
 	* The following five changes were suggested by Stephen Coy
