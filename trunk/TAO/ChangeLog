@@ -1,3 +1,9 @@
+Fri Aug 22 03:56:22 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * tao/Base_Transport_Property.cpp:
+          Added #include OS_Memory.h to pickup the ACE_NEW_RETURN
+          definition.
+
 Thu Aug 21 17:01:13 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	* tao_other_tests.lst: 
