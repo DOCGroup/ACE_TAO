@@ -20,6 +20,7 @@ $status = 0;
 print STDERR "\n\nReconnect suppliers and consumers,",
   " using disconnect/connect calls\n";
 $T = Process::Create ($EXEPREFIX . "Reconnect".$EXE_EXT,
+                      "-ORBsvcconf $cwd$DIR_SEPARATOR" . "svc.conf" .
                       " -suppliers 100 -consumers 100 -d 100");
 if ($T->TimedWait (60) == -1) {
   print STDERR "ERROR: Test timedout\n";
@@ -29,6 +30,7 @@ if ($T->TimedWait (60) == -1) {
 
 print STDERR "\n\nReconnect suppliers and consumers, using connect calls\n";
 $T = Process::Create ($EXEPREFIX . "Reconnect".$EXE_EXT,
+                      "-ORBsvcconf $cwd$DIR_SEPARATOR" . "svc.conf" .
                       " -suppliers 100 -consumers 100 -d 100 -s -c");
 if ($T->TimedWait (60) == -1) {
   print STDERR "ERROR: Test timedout\n";
@@ -39,6 +41,7 @@ if ($T->TimedWait (60) == -1) {
 
 print STDERR "\n\nShutdown EC with clients still attached\n";
 $T = Process::Create ($EXEPREFIX . "Shutdown".$EXE_EXT,
+                      "-ORBsvcconf $cwd$DIR_SEPARATOR" . "svc.conf" .
                       " -suppliers 5 -consumers 5");
 if ($T->TimedWait (60) == -1) {
   print STDERR "ERROR: Test timedout\n";
@@ -69,7 +72,8 @@ if ($T->TimedWait (60) == -1) {
 }
 
 print STDERR "\n\nTimeout tests\n";
-$T = Process::Create ($EXEPREFIX . "Timeout".$EXE_EXT);
+$T = Process::Create ($EXEPREFIX . "Timeout".$EXE_EXT,
+                      "-ORBsvcconf $cwd$DIR_SEPARATOR" . "svc.conf");
 if ($T->TimedWait (60) == -1) {
   print STDERR "ERROR: Test timedout\n";
   $status = 1;
@@ -77,7 +81,8 @@ if ($T->TimedWait (60) == -1) {
 }
 
 print STDERR "\n\nWildcard tests\n";
-$T = Process::Create ($EXEPREFIX . "Wildcard".$EXE_EXT);
+$T = Process::Create ($EXEPREFIX . "Wildcard".$EXE_EXT,
+                      "-ORBsvcconf $cwd$DIR_SEPARATOR" . "svc.conf");
 if ($T->TimedWait (60) == -1) {
   print STDERR "ERROR: Test timedout\n";
   $status = 1;
@@ -85,7 +90,8 @@ if ($T->TimedWait (60) == -1) {
 }
 
 print STDERR "\n\nNegation tests\n";
-$T = Process::Create ($EXEPREFIX . "Negation".$EXE_EXT);
+$T = Process::Create ($EXEPREFIX . "Negation".$EXE_EXT,
+                      "-ORBsvcconf $cwd$DIR_SEPARATOR" . "svc.conf");
 if ($T->TimedWait (60) == -1) {
   print STDERR "ERROR: Test timedout\n";
   $status = 1;
@@ -102,7 +108,8 @@ if ($T->TimedWait (60) == -1) {
 }
 
 print STDERR "\n\nDisconnect callbacks test\n";
-$T = Process::Create ($EXEPREFIX . "Disconnect".$EXE_EXT);
+$T = Process::Create ($EXEPREFIX . "Disconnect".$EXE_EXT,
+                      "-ORBsvcconf $cwd$DIR_SEPARATOR" . "svc.conf");
 if ($T->TimedWait (60) == -1) {
   print STDERR "ERROR: Test timedout\n";
   $status = 1;

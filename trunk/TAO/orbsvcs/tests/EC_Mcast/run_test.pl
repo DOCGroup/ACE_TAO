@@ -15,10 +15,12 @@ ACE::checkForTarget($cwd);
 # Run two copies of the same test...
 $T1 = Process::Create ($EXEPREFIX."EC_Mcast".$EXE_EXT,
 		       " -c $cwd$DIR_SEPARATOR" .
-		       "sample.cfg -n 100 -t 50000 -f Set02");
+                       "sample.cfg -ORBSvcConf $cwd$DIR_SEPARATOR" .
+                       "svc.conf -n 100 -t 50000 -f Set02");
 $T2 = Process::Create ($EXEPREFIX."EC_Mcast".$EXE_EXT,
 		       " -c $cwd$DIR_SEPARATOR" .
-		       "sample.cfg -n 100 -t 50000 -f Set02");
+                       "sample.cfg -ORBSvcConf $cwd$DIR_SEPARATOR" .
+                       "svc.conf -n 100 -t 50000 -f Set02");
 
 if ($T1->TimedWait (60) == -1) {
   print STDERR "ERROR: test1 timedout\n";
