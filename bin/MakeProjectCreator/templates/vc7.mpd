@@ -44,15 +44,6 @@
 <%endif%>
 				AssemblerListingLocation=".\<%intermediate_dir%>\<%noextension(project_file)%>"
 				ObjectFile=".\<%intermediate_dir%>\<%noextension(project_file)%>\"
-<%if(pdb)%>
-<%if(sharedname)%>
-				ProgramDataBaseFileName="<%dllout%>"
-<%else%>
-<%if(exename)%>
-				ProgramDataBaseFileName="<%if(install)%><%install%><%else%><%output_dir%><%endif%>"
-<%endif%>
-<%endif%>
-<%endif%>
 				WarningLevel="<%warning_level("3")%>"
 				SuppressStartupBanner="TRUE"
 				DebugInformationFormat="<%debug_format("3")%>"
