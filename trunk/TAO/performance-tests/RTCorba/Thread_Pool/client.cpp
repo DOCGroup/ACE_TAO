@@ -61,7 +61,10 @@ struct Synchronizers
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "c:h:i:k:m:p:q:r:s:t:u:v:w:x:y:z:");
+  ACE_Get_Opt get_opts (argc, argv,
+                        "c:g:hi:j:k:m:p:q:r:t:u:v:w:x:y:z:" //client options
+                        "b:l:n:o:s:" // server options
+                        );
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -72,13 +75,18 @@ parse_args (int argc, char *argv[])
           ACE_OS::atoi (get_opts.optarg);
         break;
 
-      case 'h':
+      case 'g':
         do_dump_history =
           ACE_OS::atoi (get_opts.optarg);
         break;
 
       case 'i':
         individual_continuous_worker_stats =
+          ACE_OS::atoi (get_opts.optarg);
+        break;
+
+      case 'j':
+        continuous_workers_are_rt =
           ACE_OS::atoi (get_opts.optarg);
         break;
 
@@ -105,11 +113,6 @@ parse_args (int argc, char *argv[])
       case 'r':
         rates_file =
           get_opts.optarg;
-        break;
-
-      case 's':
-        continuous_workers_are_rt =
-          ACE_OS::atoi (get_opts.optarg);
         break;
 
       case 't':
@@ -147,19 +150,29 @@ parse_args (int argc, char *argv[])
           ACE_OS::atoi (get_opts.optarg);
         break;
 
+      case 'b':
+      case 'l':
+      case 'n':
+      case 'o':
+      case 's':
+        // server options: ignored.
+        break;
+
+      case 'h':
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s\n"
                            "\t-c <number of continuous workers> (defaults to %d)\n"
-                           "\t-h <show history> (defaults to %d)\n"
+                           "\t-g <show history> (defaults to %d)\n"
+                           "\t-h <help: shows options menu>\n"
                            "\t-i <print stats of individual continuous workers> (defaults to %d)\n"
+                           "\t-j <continuous workers have real time scope and scheduling policies> (defaults to %d)\n"
                            "\t-k <ior> (defaults to %s)\n"
                            "\t-m <print missed invocations for paced workers> (defaults to %d)\n"
                            "\t-p <invocation priorities file> (defaults to %s)\n"
                            "\t-q <prime number> (defaults to %d)\n"
                            "\t-r <rates file> (defaults to %s)\n"
-                           "\t-s <continuous workers have real time scope and scheduling policies> (defaults to %d)\n"
                            "\t-t <time for test> (defaults to %d)\n"
                            "\t-u <continuous worker priority> (defaults to %d)\n"
                            "\t-v <priority setting: AT_THREAD_CREATION = 0, AFTER_THREAD_CREATION = 1> (defaults to %s)\n"
@@ -172,12 +185,12 @@ parse_args (int argc, char *argv[])
                            continuous_workers,
                            do_dump_history,
                            individual_continuous_worker_stats,
+                           continuous_workers_are_rt,
                            ior,
                            print_missed_invocations,
                            invocation_priorities_file,
                            prime_number,
                            rates_file,
-                           continuous_workers_are_rt,
                            time_for_test,
                            continuous_worker_priority,
                            priority_setting == 0 ? "AT_THREAD_CREATION" : "AFTER_THREAD_CREATION",

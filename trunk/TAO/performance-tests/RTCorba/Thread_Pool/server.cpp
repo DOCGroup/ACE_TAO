@@ -85,7 +85,10 @@ static const char *lanes_file = "empty-file";
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "b:l:o:s:n:");
+  ACE_Get_Opt get_opts (argc, argv,
+                        "b:hl:n:o:s:" // server options
+                        "c:g:hi:j:k:m:p:q:r:t:u:v:w:x:y:z:" // client options
+                        );
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -99,6 +102,10 @@ parse_args (int argc, char *argv[])
         lanes_file = get_opts.optarg;
         break;
 
+      case 'n':
+        number_of_lanes = ACE_OS::atoi (get_opts.optarg);
+        break;
+
       case 'o':
         ior_output_file = get_opts.optarg;
         break;
@@ -107,21 +114,43 @@ parse_args (int argc, char *argv[])
         static_threads = ACE_OS::atoi (get_opts.optarg);
         break;
 
-      case 'n':
-        number_of_lanes = ACE_OS::atoi (get_opts.optarg);
+      case 'c':
+      case 'g':
+      case 'i':
+      case 'j':
+      case 'k':
+      case 'm':
+      case 'p':
+      case 'q':
+      case 'r':
+      case 't':
+      case 'u':
+      case 'v':
+      case 'w':
+      case 'x':
+      case 'y':
+      case 'z':
+        // client options: ignored.
         break;
 
+      case 'h':
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-b <bands file> "
-                           "-l <lanes file> "
-                           "-o <ior file> "
-                           "-s <static threads> "
-                           "-n <number of lanes> "
+                           "usage:  %s\n"
+                           "\t-b <bands file> (defaults to %s)\n"
+                           "\t-h <help: shows options menu>\n"
+                           "\t-l <lanes file> (defaults to %s)\n"
+                           "\t-n <number of lanes> (defaults to %d)\n"
+                           "\t-o <ior file> (defaults to %s)\n"
+                           "\t-s <static threads> (defaults to %d)\n"
                            "\n",
-                           argv [0]),
+                           argv [0],
+                           bands_file,
+                           lanes_file,
+                           number_of_lanes,
+                           ior_output_file,
+                           static_threads),
                           -1);
       }
 
