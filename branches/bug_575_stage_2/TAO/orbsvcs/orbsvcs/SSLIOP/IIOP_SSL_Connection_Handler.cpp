@@ -71,10 +71,8 @@ TAO_IIOP_SSL_Connection_Handler::
 {
 }
 
-int
-TAO_IIOP_SSL_Connection_Handler::handle_input_i (
-  ACE_HANDLE handle,
-  ACE_Time_Value *max_wait_time)
+/*int
+TAO_IIOP_SSL_Connection_Handler::handle_input (ACE_HANDLE handle)
 {
   int result;
 
@@ -87,9 +85,9 @@ TAO_IIOP_SSL_Connection_Handler::handle_input_i (
     return -1;
 
   return
-    this->TAO_IIOP_Connection_Handler::handle_input_i (handle,
-                                                       max_wait_time);
-}
+    this->TAO_IIOP_Connection_Handler::handle_input (handle);
+
+}*/
 
 // ****************************************************************
 

@@ -1,5 +1,6 @@
 // $Id$
 
+
 #include "tao/Adapter.h"
 #include "tao/Object.h"
 #include "tao/Object_KeyC.h"

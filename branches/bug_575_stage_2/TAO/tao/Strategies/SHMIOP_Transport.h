@@ -78,11 +78,10 @@ protected:
                           size_t len,
                           const ACE_Time_Value *s = 0);
 
-  /// Read and process the message from the connection. The processing
-  /// of the message is done by delegating the work to the underlying
-  /// messaging object
-  virtual int read_process_message (ACE_Time_Value *max_time_value = 0,
-                                    int block =0);
+  virtual int consolidate_message (ACE_Message_Block &incoming,
+                                   ssize_t missing_data,
+                                   TAO_Resume_Handle &rh,
+                                   ACE_Time_Value *max_wait_time);
 
   virtual int register_handler_i (void);
 
@@ -107,10 +106,6 @@ public:
   /// Initialising the messaging object
   virtual int messaging_init (CORBA::Octet major,
                               CORBA::Octet minor);
-
-private:
-  /// Process the message that we have read
-  int process_message (void);
 
 private:
   /// The connection service handler used for accessing lower layer

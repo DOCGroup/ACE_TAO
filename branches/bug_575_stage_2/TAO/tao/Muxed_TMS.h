@@ -59,10 +59,6 @@ public:
 
   virtual int dispatch_reply (TAO_Pluggable_Reply_Params &params);
 
-  // @@ Commented for the time being, let the commented line stay for
-  //    sometime - Bala
-  // virtual TAO_GIOP_Message_State *get_message_state (void);
-  // virtual void destroy_message_state (TAO_GIOP_Message_State *);
   virtual int idle_after_send (void);
   virtual int idle_after_reply (void);
   virtual void connection_closed (void);

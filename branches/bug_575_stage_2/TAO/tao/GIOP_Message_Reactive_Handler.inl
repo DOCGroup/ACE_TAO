@@ -3,6 +3,8 @@
 
 
 
+
+#if 0
 ACE_INLINE TAO_GIOP_Message_State &
 TAO_GIOP_Message_Reactive_Handler::message_state (void)
 {
@@ -28,3 +30,5 @@ TAO_GIOP_Message_Reactive_Handler::wr_pos (void) const
   return
     this->current_buffer_.wr_ptr () - this->current_buffer_.base ();
 }
+
+#endif

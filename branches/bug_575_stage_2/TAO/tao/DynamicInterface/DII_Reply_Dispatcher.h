@@ -53,13 +53,18 @@ public:
 
 private:
 
-  TAO_InputCDR reply_cdr_;
-  // CDR stream for reading the input.
-  // @@ Carlos : message_state should go away. All we need is the reply
-  //    cdr. Is that right? (Alex).
+  /// The buffer that is used to initialise the data block
+  char buf_[ACE_CDR::DEFAULT_BUFSIZE];
 
+  /// datablock that is created on teh stack to initialise the CDR
+  /// stream underneath.
+  ACE_Data_Block db_;
+
+  /// CDR stream for reading the input.
+  TAO_InputCDR reply_cdr_;
+
+  /// Where the reply needs to go.
   const CORBA::Request_ptr req_;
-  // Where the reply needs to go.
 };
 
 #include "ace/post.h"

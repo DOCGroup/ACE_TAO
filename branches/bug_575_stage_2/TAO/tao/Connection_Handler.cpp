@@ -6,6 +6,7 @@
 #include "tao/debug.h"
 #include "tao/Object.h"
 #include "tao/Messaging_Policy_i.h"
+#include "Resume_Handle.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/Connection_Handler.inl"
@@ -90,10 +91,15 @@ TAO_Connection_Handler::svc_i (void)
       max_wait_time = &current_timeout;
     }
 
+  TAO_Resume_Handle rh (this->orb_core_,
+                        ACE_INVALID_HANDLE);
+
   while (!this->orb_core_->has_shutdown ()
          && result >= 0)
     {
-      result = this->handle_input_i (ACE_INVALID_HANDLE, max_wait_time);
+      result =
+        this->transport ()->handle_input_i (rh,
+                                            max_wait_time);
 
       if (result == -1 && errno == ETIME)
         {
