@@ -28,7 +28,7 @@
 class AC_CLD_Connector;
 
 class AC_Output_Handler
-  : public ACE_Svc_Handler<ACE_SOCK_Stream, ACE_MT_SYNCH> {
+  : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH> {
 public:
   enum { QUEUE_MAX = sizeof (ACE_Log_Record) * ACE_IOV_MAX };
 
@@ -51,7 +51,7 @@ protected:
 };
 
 class AC_Input_Handler
-  : public ACE_Svc_Handler<ACE_SOCK_Stream, ACE_NULL_SYNCH> {
+  : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> {
 public:
   AC_Input_Handler (AC_Output_Handler *handler = 0)
     : output_handler_ (handler) {}
@@ -72,14 +72,14 @@ protected:
 };
 
 class AC_CLD_Acceptor
-  : public ACE_Acceptor<AC_Input_Handler, ACE_SOCK_Acceptor> {
+  : public ACE_Acceptor<AC_Input_Handler, ACE_SOCK_ACCEPTOR> {
 public:
   // Constructor.
   AC_CLD_Acceptor (AC_Output_Handler *handler = 0)
     : output_handler_ (handler), input_handler_ (handler) {}
 
 protected:
-  typedef ACE_Acceptor<AC_Input_Handler, ACE_SOCK_Acceptor>
+  typedef ACE_Acceptor<AC_Input_Handler, ACE_SOCK_ACCEPTOR>
           PARENT;
 
   // <ACE_Acceptor> factory method.
@@ -97,9 +97,9 @@ protected:
 };
 
 class AC_CLD_Connector
-  : public ACE_Connector<AC_Output_Handler, ACE_SOCK_Connector> {
+  : public ACE_Connector<AC_Output_Handler, ACE_SOCK_CONNECTOR> {
 public:
-  typedef ACE_Connector<AC_Output_Handler, ACE_SOCK_Connector>
+  typedef ACE_Connector<AC_Output_Handler, ACE_SOCK_CONNECTOR>
           PARENT;
 
   // Constructor.
@@ -365,7 +365,8 @@ int AC_CLD_Connector::connect_svc_handler
       (svc_handler, remote_addr, timeout,
        local_addr, reuse_addr, flags, perms) == -1) return -1;
   SSL_clear (ssl_);
-  SSL_set_fd (ssl_, svc_handler->get_handle ());
+  SSL_set_fd (ssl_,
+              ACE_reinterpret_cast (int, svc_handler->get_handle ()));
 
   SSL_set_verify (ssl_, SSL_VERIFY_PEER, 0);
 

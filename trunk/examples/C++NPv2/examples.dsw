@@ -3,6 +3,18 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
+Project: "AC_CLD"=".\AC_CLD.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Configurable_Logging_Server"=".\Configurable_Logging_Server.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -45,7 +57,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "SLDex"=".\SLDex\SLDex.dsp" - Package Owner=<4>
+Project: "SLDex"=".\SLDex.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
