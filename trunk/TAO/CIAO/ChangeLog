@@ -1,3 +1,12 @@
+Mon Jan  5 20:31:18 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/RepositoryIdGenerator.cpp:
+        * CIDLC/RepositoryIdGenerator.hpp:
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * CIDLC/ServantSourceGenerator.cpp:
+        
+          Fixed typos in servant code generation.
+
 Mon Jan  5 19:34:44 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CCF/Documentation/Build.html:
