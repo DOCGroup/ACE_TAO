@@ -1,3 +1,9 @@
+Wed Mar  9 14:20:18 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Makefile.am:
+
+	  Regenerate, fix paths to HTPB and Kokyu libraries.
+
 Wed Mar 09 21:06:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/AMI_Buffering/AMI_Buffering.h:
