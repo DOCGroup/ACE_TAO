@@ -1,3 +1,10 @@
+Tue Jul 24 10:56:04 2001  Ossama Othman  <ossama@uci.edu>
+
+	* bin/generate_doxygen.pl (TAO_DOCS):
+
+	  Added "tao_security" and "tao_ssliop" Doxygen configurations to
+	  the list of documentation to generate.
+
 Tue Jul 24 07:45:03 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Containers_T: Fixed some problems with the lack of 
