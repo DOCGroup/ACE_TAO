@@ -334,7 +334,7 @@ dnl line, then "no_x" is set to "yes."
   [
    ace_user_with_ssl=yes
   ])
-# AM_CONDITIONAL([BUILD_SSL], [test X$ace_user_with_ssl = Xyes])
+AM_CONDITIONAL([BUILD_SSL], [test X$ace_user_with_ssl = Xyes])
 
 #AC_ARG_WITH([tao],
 # AS_HELP_STRING(--with-tao,build TAO (the ACE ORB) [[[yes]]]),
