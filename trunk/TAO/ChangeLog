@@ -1,10 +1,24 @@
+Wed May  5 15:10:41 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/ORB.cpp (init_orb_globals):
+
+	  Added run-time check for sizeof CORBA::Boolean.  TAO's (ACE's)
+	  CDR stream implementation expects the CDR boolean to have a size
+	  of one.  This is mostly a sanity check for us to prevent release
+	  of an ACE/TAO distribution with an incorrectly sized CDR boolean
+	  type on platforms that we support, or are at least have active
+	  builds on our scoreboard.  The check was added since some C++
+	  compilers do not implement a true C++ bool type, but rather
+	  implement it in terms of an integer type.  Thanks to Bala for
+	  pointing out that this is the case for some compilers.
+
 Wed May  5 17:07:33 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/fe_interface_header.cpp:
         * TAO_IDL/include/fe_interface_header.h:
         * TAO_IDL/include/utl_err.h:
         * TAO_IDL/util/utl_err.cpp:
-        
+
           Plugged several holes in error checking for components
           and homes, and created new error messages to be more
           informative in some of these cases. Also cleaned up and
