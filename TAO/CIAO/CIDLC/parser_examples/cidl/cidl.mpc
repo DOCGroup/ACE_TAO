@@ -1,0 +1,11 @@
+project(cidl) : aceexe {
+  exename = cidl
+  includes += .. $(SPIRIT_DIR) $(SPIRIT_DIR)/miniboost
+  Source_Files {
+    cidl.cpp
+    cidl_grammar.cpp
+  }
+  Header_Files {
+    cidl_grammar.h
+  }
+}

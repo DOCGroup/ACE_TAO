@@ -1,0 +1,144 @@
+// $Id$
+
+/**
+ * @@ Compile this file with:
+ *
+ *     tao_idl -Gv -I W:/ACE_wrappers/TAO -I W:/ACE_wrappers/TAO/orbsvcs/orbsvcs Component_Base.idl
+ *     tao_idl -Gv -I ../.. -I ../../orbsvcs/orbsvcs \
+ *          -Wb,export_macro=CIAO_Export \
+ *          -Wb,export_include=CIAO_export.h \
+ *          -Wb,pre_include="ace/pre.h" \
+ *          -Wb,post_include="ace/post.h" \
+ *          CCM_Base.idl
+ */
+
+//#define CIAO_HAS_IMPORT_KEYWORD
+
+#if defined (CIAO_HAS_IMPORT_KEYWORD)
+import ::CORBA;
+#else
+#include <orb.idl>
+#endif /* CIAO_HAS_IMPORT_KEYWORD */
+
+#if !defined (CCM_BASE_IDL)
+#define CCM_BASE_IDL
+
+module Components
+{
+  /**
+   * @@ Commented out temporarily for lack of typePrefix support.
+   */
+  typeprefix Components "omg.org";
+
+  typedef string FeatureName;
+  typedef sequence<FeatureName> NameList;
+
+  valuetype Cookie
+  {
+    private CORBA::OctetSeq cookieValue;
+  };
+
+  valuetype PortDescription
+  {
+    public FeatureName Name;
+    public CORBA::RepositoryId type_id;
+  };
+
+  valuetype FacetDescription : PortDescription
+  {
+    public Object facet_ref;
+  };
+
+  typedef sequence<FacetDescription> FacetDescriptions;
+
+  typedef unsigned long FailureReason;
+
+  exception InvalidName {};
+  exception InvalidConnection {};
+  exception ExceededConnectionLimit {};
+  exception AlreadyConnected {};
+  exception NoConnection {};
+  exception CookieRequired {};
+  exception CreateFailure {
+    FailureReason reason;
+  };
+  exception FinderFailure
+  {
+    FailureReason reason;
+  };
+  exception RemoveFailure
+  {
+    FailureReason reason;
+  };
+  exception DuplicateKeyValue {};
+  exception InvalidKey {};
+  exception UnknownKeyValue {};
+  exception NoKeyAvailable {};
+  exception BadEventType
+  {
+    CORBA::RepositoryId expected_event_type;
+  };
+  exception HomeNotFound {};
+  exception WrongComponentType {};
+
+  typedef FailureReason InvalidConfigurationReason;
+  const InvalidConfigurationReason UnknownConfigValueName = 0;
+  const InvalidConfigurationReason InvalidConfigValueType = 1;
+  const InvalidConfigurationReason ConfigValueRequired = 2;
+  const InvalidConfigurationReason ConfigValueNotExpected = 3;
+  exception InvalidConfiguration
+  {
+    InvalidConfigurationReason reason;
+    FeatureName name;
+  };
+  exception IllegalState {};
+
+  interface Navigation
+  {
+    Object provide_facet (in FeatureName name)
+      raises (InvalidName);
+    FacetDescriptions get_all_facets();
+    FacetDescriptions get_named_facets (in NameList names)
+      raises (InvalidName);
+    boolean same_component (in Object object_ref);
+  };
+
+  valuetype ConnectionDescription
+  {
+    public Cookie ck;
+    public Object objref;
+  };
+  typedef sequence<ConnectionDescription> ConnectionDescriptions;
+
+  valuetype ReceptacleDescription : PortDescription
+  {
+    public boolean is_multiple;
+    public ConnectionDescriptions connections;
+  };
+  typedef sequence<ReceptacleDescription> ReceptacleDescriptions;
+
+  interface Receptacles
+  {
+    Cookie connect (in FeatureName name, in Object connection )
+      raises (InvalidName,
+              InvalidConnection,
+              AlreadyConnected,
+              ExceededConnectionLimit);
+
+    // @@ Changed to return the previously connected object reference -- basef on RTF 1.1.
+    Object disconnect (in FeatureName name, in Cookie ck)
+      raises (InvalidName,
+              InvalidConnection,
+              CookieRequired,
+              NoConnection);
+
+    ConnectionDescriptions get_connections (in FeatureName name)
+      raises (InvalidName);
+
+    ReceptacleDescriptions get_all_receptacles ();
+
+    ReceptacleDescriptions get_named_receptacles (in NameList names)
+      raises (InvalidName);
+  };
+};
+#endif /* CCM_BASE_IDL */

@@ -1,0 +1,220 @@
+<!-- DTD for softpkg. Used to describe CORBA Component
+     implementations. The root element is <softpkg>.
+     Elements are listed alphabetically.
+  -->
+<!-- Revision $Id$ -->
+<!-- Simple xml link attributes based on W3C WD-xlink-19980303.
+     May change when XLL is finalized. -->
+
+<!ENTITY % simple-link-attributes "
+    xml:link     CDATA     #FIXED 'SIMPLE'
+    href         CDATA     #REQUIRED
+">
+
+<!ELEMENT author
+    ( name
+    | company
+    | webpage
+    )* >
+
+<!ELEMENT code
+    ( ( codebase
+      | fileinarchive
+      | link
+      )
+      , entrypoint?
+      , usage?
+    ) >
+<!ATTLIST code
+    type CDATA #IMPLIED >
+
+<!-- If file not available locally, then download via codebase link -->
+<!ELEMENT codebase EMPTY >
+<!ATTLIST codebase
+    filename CDATA #IMPLIED
+    %simple-link-attributes; >
+
+<!ELEMENT compiler EMPTY >
+<!ATTLIST compiler
+    name    CDATA   #REQUIRED
+    version CDATA   #IMPLIED >
+
+<!ELEMENT company ( #PCDATA ) >
+
+<!ELEMENT dependency
+    ( softpkgref
+    | codebase
+    | fileinarchive
+    | localfile
+    | name
+    | valuetypefactory
+    ) >
+<!ATTLIST dependency
+    type   CDATA               #IMPLIED
+    action (assert | install)  "assert">
+
+<!ELEMENT description ( #PCDATA ) >
+
+<!ELEMENT descriptor
+    ( link
+    | fileinarchive
+    ) >
+<!ATTLIST descriptor
+    type    CDATA    #IMPLIED>
+
+<!ELEMENT entrypoint ( #PCDATA) >
+
+<!-- The "extension" element is used for vendor-specific extensions -->
+<!ELEMENT extension (#PCDATA) >
+<!ATTLIST extension
+    class     CDATA   #REQUIRED
+    origin    CDATA   #REQUIRED
+    id        ID      #IMPLIED
+    extra     CDATA   #IMPLIED
+    html-form CDATA   #IMPLIED >
+
+<!-- The "fileinarchive" element is used to specify a file in the archive.
+     If the file is in another archive then link is used to point to
+     the archive in which the file may be found.
+  -->
+<!ELEMENT fileinarchive
+    ( link? ) >
+<!ATTLIST fileinarchive
+    name   CDATA   #REQUIRED >
+
+<!ELEMENT idl
+    ( link
+    | fileinarchive
+    | repository
+    ) >
+<!ATTLIST idl
+    id        CDATA    #REQUIRED
+    homeid    CDATA    #REQUIRED >
+
+<!ELEMENT implementation
+    ( description
+    | code
+    | compiler
+    | dependency
+    | descriptor
+    | extension
+    | programminglanguage
+    | humanlanguage
+    | os
+    | propertyfile
+    | processor
+    | runtime
+    )* >
+<!ATTLIST implementation
+    id         ID      #IMPLIED
+    variation  CDATA   #IMPLIED >
+
+<!ELEMENT implref EMPTY >
+<!ATTLIST implref
+    idref      CDATA   #REQUIRED >
+
+<!ELEMENT ins EMPTY >
+<!ATTLIST inc
+    name       CDATA   #REQUIRED >
+
+<!ELEMENT humanlanguage EMPTY >
+<!ATTLIST humanlanguage
+    name       CDATA   #REQUIRED >
+
+<!ELEMENT license ( #PCDATA ) >
+<!ATTLIST license
+    %simple-link-attributes; >
+
+<!ELEMENT link ( #PCDATA ) >
+<!ATTLIST link
+    %simple-link-attributes; >
+
+<!-- A file that should be available in the local environment -->
+<!ELEMENT localfile EMPTY >
+<!ATTLIST localfile
+    name   CDATA   #REQUIRED >
+
+<!ELEMENT name ( #PCDATA ) >
+
+<!ELEMENT objref EMPTY >
+<!ATTLIST objref
+    string    CDATA   #REQUIRED >
+
+<!ELEMENT os EMPTY >
+<!ATTLIST os
+    name      CDATA   #REQUIRED
+    version   CDATA   #IMPLIED>
+
+<!ELEMENT pkgtype ( #PCDATA ) >
+<!ATTLIST pkgtype
+    version   CDATA   #IMPLIED >
+
+<!ELEMENT processor EMPTY >
+<!ATTLIST processor
+    name      CDATA   #REQUIRED >
+
+<!ELEMENT programminglanguage EMPTY>
+<!ATTLIST programminglanguage
+    name      CDATA   #REQUIRED
+    version   CDATA   #IMPLIED >
+
+<!ELEMENT propertyfile
+    ( fileinarchive
+    | link) >
+<!ATTLIST propertyfile
+    type      CDATA   #IMPLIED >
+
+<!ELEMENT repository
+    ( ins
+    | objref
+    | link
+    ) >
+<!ATTLIST repository
+    type      CDATA   #IMPLIED >
+
+<!ELEMENT runtime EMPTY >
+<!ATTLIST runtime
+    name      CDATA   #REQUIRED
+    version   CDATA   #IMPLIED>
+
+<!ELEMENT softpkg
+    ( title
+    | pkgtype
+    | author
+    | description?
+    | license
+    | idl
+    | propertyfile
+    | dependency
+    | descriptor
+    | implementation
+    | extension
+    )* >
+<!ATTLIST softpkg
+    name      ID       #REQUIRED
+    version   CDATA    #IMPLIED >
+
+<!ELEMENT softpkgref
+    ( ( fileinarchive
+      | link
+      )
+      , implref?
+    ) >
+
+<!ELEMENT title ( #PCDATA ) >
+
+<!ELEMENT usage ( #PCDATA ) >
+
+<!ELEMENT valuetypefactory
+    ( codebase
+    | fileinarchive
+    | link
+    ) >
+<!ATTLIST valuetypefactory
+    repid              CDATA   #REQUIRED
+    valueentrypoint    CDATA   #IMPLIED
+    factoryentrypoint  CDATA   #IMPLIED >
+
+<!ELEMENT webpage ( #PCDATA ) >
+<!ATTLIST webpage
+    %simple-link-attributes; >

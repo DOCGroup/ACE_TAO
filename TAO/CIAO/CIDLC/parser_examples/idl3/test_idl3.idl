@@ -1,0 +1,73 @@
+// $Id$  -*- IDL -*-
+
+import "groovy.idl";
+import skaboodliator::bingabay;
+
+module mod
+{
+  interface dummy {};
+  
+  interface foo
+  {
+    exception dingdong {};
+    exception ramalama {};
+    readonly attribute long foo_attr, foo_attr2;
+    readonly attribute mod::foo self_attr raises (dingdong);
+    attribute string get_str getraises (ramalama, dingdong);
+    attribute string set_str setraises (ramalama, dingdong);
+    attribute long bb getraises (dingdong, ramalama)
+                      setraises (ramalama);
+    typeid dingdong "THE:witch/is:dead";
+  };
+  
+  valuetype val
+  {
+    factory f () raises (dingdong, ramalama);
+    private string pstr;
+  };
+  
+  abstract eventtype efwd;
+  abstract eventtype efwd supports foo
+  {
+    attribute string pstr;
+  };
+  
+  custom eventtype cust
+  {
+    public string pstr;
+    factory f () raises (dingdong, ramalama);
+  };
+  
+  eventtype empty_ev : cust, efwd supports foo, dummy
+  {
+  };
+  
+  component bar;
+  component emptybar supports foo
+  {
+  };
+  
+  component fullbar : emptybar
+  {
+    attribute val cc getraises (dingdong, ramalama)
+                     setraises (ramalama, dingdong);
+    provides pfoo foo;
+    uses ufoo foo;
+    uses multiple umfoo foo;
+    emits emitter efwd;
+    publishes pcust cust;
+    consumes cempty empty_ev;
+  };
+  
+  home fullhome manages fullbar
+  {
+    void op ();
+    factory finit (in string strarg, in wstring wstrarg)
+      raises (dingdong);
+    finder flookup () raises (ramalama, dingdong);
+  };
+  
+  typeid foo "ABRA:cadabra/hocus/pocus:1.234";
+};
+
+typeprefix mod "dre.vanderbilt.edu";

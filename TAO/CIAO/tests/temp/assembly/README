@@ -1,0 +1,4 @@
+The purpose of this test is to ensure the proper functionality of
+Map_Key_Cookie, CIAO's internal Cookie implementation, using
+::Components::Deployment::AssemblyFactory and
+::Components::Deployment::Assembly interfaces.
