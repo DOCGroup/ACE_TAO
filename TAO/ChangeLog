@@ -1,3 +1,8 @@
+Wed Jun 23 08:14:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+          Added missing includes for Tru64 no online build
+
 Wed Jun 23 06:52:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/GIOP_Message_Base.cpp:
