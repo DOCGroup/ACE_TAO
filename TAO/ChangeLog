@@ -1,3 +1,24 @@
+Mon Sep 27 15:15:11 MST 2004  Trevor Fields  <fields_t@ociweb.com>
+        * orbsvcs/ImplRepo_Service/INS_Locator.cpp:
+        * orbsvcs/orbsvcs/IOR_Multicast.h:
+          Changed tao/corba.h include to tao/ORB.h
+
+        * tao/PortableServer/ImplRepo.pidl:
+        * tao/PortableServer/ImplRepoC.h:
+        * tao/PortableServer/ImplRepoC.cpp:
+        * tao/PortableServer/ImplRepoC.i:
+        * tao/PortableServer/ImplRepoS.h:
+        * tao/PortableServer/ImplRepoS.cpp:
+        * tao/PortableServer/ImplRepoS.i:
+        * tao/PortableServer.mpc:
+          Readded ImplRepo.pidl for the PortableServer.
+          This is temporary fix and will be changed so the
+          PortableServer will dynamically load the necessary
+          IMR functions from a dll. 
+
+        * tao/PortableServer/ImplRepo.idl:
+          Removed for above change.
+
 Mon Sep 27 06:45:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/ImplRepo_Service/Activator_NT_Service.cpp:

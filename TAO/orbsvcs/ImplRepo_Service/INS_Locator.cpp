@@ -12,6 +12,7 @@
 
 #include "INS_Locator.h"
 #include "ImR_Locator_i.h"
+#include "tao/ORB_Constants.h"
 
 INS_Locator::INS_Locator (ImR_Locator_i& loc)
 : imr_locator_ (loc)

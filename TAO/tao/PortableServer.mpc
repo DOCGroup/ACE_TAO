@@ -1,9 +1,7 @@
 //$Id$
-project : taolib_with_idl, core {
+project : taolib, core {
   sharedname   = TAO_PortableServer
   dynamicflags = TAO_PORTABLESERVER_BUILD_DLL
-
-  idlflags += -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include=portableserver_export.h -o PortableServer
 
   Source_Files {
     PortableServer
@@ -22,10 +20,6 @@ project : taolib_with_idl, core {
   }
 
   Resource_Files {
-    PortableServer
-  }
-
-  IDL_Files {
     PortableServer
   }
 
