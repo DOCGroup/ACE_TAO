@@ -91,8 +91,8 @@ main (int argc, char *argv[])
         CORBA::_tc_BAD_CONTEXT,
         CORBA::_tc_OBJ_ADAPTER,
         CORBA::_tc_DATA_CONVERSION,
-        CORBA::_tc_Bounds,
-        CORBA::_tc_BadKind
+        CORBA::TypeCode::_tc_Bounds,
+        CORBA::TypeCode::_tc_BadKind
       };
 
       static int n = sizeof (tcs) / sizeof (tcs[0]);
