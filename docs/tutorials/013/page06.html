@@ -61,29 +61,29 @@ class Task : public ACE_Task &lt; ACE_MT_SYNCH >
 {
 public:
 
-  typedef ACE_Task &lt; ACE_MT_SYNCH > inherited;
+    typedef ACE_Task &lt; ACE_MT_SYNCH > inherited;
 
-  <font color=red>// Construct ourselves and an optional number of subtasks</font>
-  <font color=red>// chained beyond us.</font>
+        <font color=red>// Construct ourselves and an optional number of subtasks</font>
+        <font color=red>// chained beyond us.</font>
     Task (int sub_tasks = 0);
-   ~Task (void);
+    ~Task (void);
 
-  <font color=red>// Open the Task with the proper thread-pool size</font>
-  int open (int threads = 1);
+        <font color=red>// Open the Task with the proper thread-pool size</font>
+    int open (int threads = 1);
 
-  <font color=red>// Take Unit_Of_Work objects from the thread pool and invoke</font>
-  <font color=red>// their process() and/or fini() as appropriate.</font>
-  int svc (void);
+        <font color=red>// Take Unit_Of_Work objects from the thread pool and invoke</font>
+        <font color=red>// their process() and/or fini() as appropriate.</font>
+    int svc (void);
 
-  <font color=red>// Shut down the thread pool and it's associated subtasks</font>
-  int close (u_long flags = 0);
+        <font color=red>// Shut down the thread pool and it's associated subtasks</font>
+    int close (u_long flags = 0);
 
-  <font color=red>// Wait for the pool and subtasks to close</font>
-  int wait (void);
+        <font color=red>// Wait for the pool and subtasks to close</font>
+    int wait (void);
 
 protected:
     ACE_Barrier * barrier_;
-  Task *next_;
+    Task *next_;
     MLD;
 };
 
@@ -100,18 +100,18 @@ protected:
 
 <font color=red>/*
    Construct the Task with zero or more subtasks.  If subtasks are requested,
-   we assign our next_ pointer to the first of those and let  it worry about
+   we assign our next_ pointer to the first of those and let it worry about
    any remaining subtasks. 
  */</font>
 <font color=#008888>Task::Task</font> (int sub_tasks)
-: barrier_ (0)
- ,next_ (0)
+        : barrier_ (0)
+         ,next_ (0)
 {
-  ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) Task ctor 0x%x\n</font>", (void *) this));
-  if (sub_tasks)
-  {
-    next_ = new Task (--sub_tasks);
-  }
+    ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) Task ctor 0x%x\n</font>", (void *) this));
+    if (sub_tasks)
+    {
+        next_ = new Task (--sub_tasks);
+    }
 }
 
 <font color=red>/*
@@ -119,10 +119,10 @@ protected:
  */</font>
 <font color=#008888>Task::~Task</font> (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) Task dtor 0x%x\n</font>", (void *) this));
+    ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) Task dtor 0x%x\n</font>", (void *) this));
 
-  delete barrier_;
-  delete next_;
+    delete barrier_;
+    delete next_;
 }
 
 <font color=red>/*
@@ -132,16 +132,16 @@ protected:
  */</font>
 int <font color=#008888>Task::open</font> (int threads)
 {
-  if (next_)
-  {
-    if (next_->open (threads) == -1)
+    if (next_)
     {
-      return -1;
+        if (next_->open (threads) == -1)
+        {
+            return -1;
+        }
     }
-  }
 
-  barrier_ = new ACE_Barrier (threads);
-  return this->activate (THR_NEW_LWP, threads);
+    barrier_ = new ACE_Barrier (threads);
+    return this->activate (THR_NEW_LWP, threads);
 }
 
 <font color=red>/*
@@ -150,13 +150,13 @@ int <font color=#008888>Task::open</font> (int threads)
  */</font>
 int <font color=#008888>Task::close</font> (u_long flags)
 {
-  ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) Task close 0x%x\n</font>", (void *) this));
-  if (next_)
-  {
-    next_->close (flags);
-  }
+    ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) Task close 0x%x\n</font>", (void *) this));
+    if (next_)
+    {
+        next_->close (flags);
+    }
 
-  return (0);
+    return (0);
 }
 
 <font color=red>/*
@@ -166,12 +166,12 @@ int <font color=#008888>Task::close</font> (u_long flags)
  */</font>
 int <font color=#008888>Task::wait</font> (void)
 {
-  <font color=#008888>inherited::wait</font> ();
-  if (next_)
-  {
-    next_->wait ();
-  }
-  return (0);
+    <font color=#008888>inherited::wait</font> ();
+    if (next_)
+    {
+        next_->wait ();
+    }
+    return (0);
 }
 
 <font color=red>/*
@@ -180,109 +180,109 @@ int <font color=#008888>Task::wait</font> (void)
 int <font color=#008888>Task::svc</font> (void)
 {
         <font color=red>// Wait for all threads to get this far before continuing.</font>
-  this->barrier_->wait ();
+    this->barrier_->wait ();
 
-  ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) Task 0x%x starts in thread %u\n</font>", (void *) this, <font color=#008888>ACE_Thread::self</font> ()));
+    ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) Task 0x%x starts in thread %u\n</font>", (void *) this, <font color=#008888>ACE_Thread::self</font> ()));
 
-      <font color=red>// getq() wants an ACE_Message_Block so we'll start out with one</font>
-      <font color=red>// of those.  We could do some casting (or even auto-casting) to</font>
-      <font color=red>// avoid the extra variable but I prefer to be clear about our actions.</font>
-  ACE_Message_Block *message;
+        <font color=red>// getq() wants an ACE_Message_Block so we'll start out with one</font>
+        <font color=red>// of those.  We could do some casting (or even auto-casting) to</font>
+        <font color=red>// avoid the extra variable but I prefer to be clear about our actions.</font>
+    ACE_Message_Block *message;
   
-      <font color=red>// What we really put into the queue was our Message_Block.</font>
-      <font color=red>// After we get the message from the queue, we'll cast it to this </font>
-      <font color=red>// so that we know how to work on it.</font>
-  Message_Block *message_block;
+        <font color=red>// What we really put into the queue was our Message_Block.</font>
+        <font color=red>// After we get the message from the queue, we'll cast it to this </font>
+        <font color=red>// so that we know how to work on it.</font>
+    Message_Block *message_block;
   
-      <font color=red>// And, of course, our Message_Block contains our Data_Block</font>
-      <font color=red>// instead of the typical ACE_Data_Block</font>
-  Data_Block *data_block;
+        <font color=red>// And, of course, our Message_Block contains our Data_Block</font>
+        <font color=red>// instead of the typical ACE_Data_Block</font>
+    Data_Block *data_block;
   
       <font color=red>// Even though we put Work objects into the queue, we take them</font>
       <font color=red>// out using the baseclass pointer.  This allows us to create new </font>
       <font color=red>// derivatives without having to change this svc() method.</font>
-  Unit_Of_Work *work;
+    Unit_Of_Work *work;
 
-  while (1)
-  {
-          <font color=red>// Get the ACE_Message_Block</font>
-    if (this->getq (message) == -1)
+    while (1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green>getq</font>"), -1);
+            <font color=red>// Get the ACE_Message_Block</font>
+        if (this->getq (message) == -1)
+        {
+            ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green>getq</font>"), -1);
+        }
+
+            <font color=red>// "<font color=green>Convert</font>" it to our Message_Block</font>
+        message_block = (Message_Block *) message;
+
+            <font color=red>// Get the ACE_Data_Block and "<font color=green>convert</font>" to Data_Block in one step.</font>
+        data_block = (Data_Block *) (message_block->data_block ());
+
+            <font color=red>// Get the unit of work from the data block</font>
+        work = data_block->data ();
+
+            <font color=red>// Show the object's instance value and "<font color=green>type name</font>"</font>
+        work->who_am_i ();
+        work->what_am_i ();
+
+            <font color=red>// If there is a hangup we need to tell our pool-peers as</font>
+            <font color=red>// well as any subtasks.</font>
+        if (message_block->msg_type () == <font color=#008888>ACE_Message_Block::MB_HANGUP</font>)
+        {
+                <font color=red>// duplicate()ing the message block will increment the</font>
+                <font color=red>// reference counts on the data blocks.  This allows us</font>
+                <font color=red>// to safely release() the message block.  The rule of</font>
+                <font color=red>// thumb is that if you pass a message block to a new</font>
+                <font color=red>// owner, duplicate() it.  Then you can release() when</font>
+                <font color=red>// you're done and not worry about memory leaks.</font>
+            if (this->putq (message_block->duplicate ()) == -1)
+            {
+                ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green>putq</font>"), -1);
+            }
+
+                <font color=red>// If we have a subtask, duplicate() the message block</font>
+                <font color=red>// again and pass it to that task's queue</font>
+            if (next_ && next_->putq (message_block->duplicate ()) == -1)
+            {
+                ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green>putq</font>"), -1);
+            }
+
+                <font color=red>// We're now done with our copy of the block, so we can</font>
+                <font color=red>// release it.  Our peers/subtasks have their own message </font>
+                <font color=red>// block to access the shared data blocks.</font>
+            message_block->release ();
+
+            break;
+        }
+
+            <font color=red>// If this isn't a hangup/shutdown message then we tell the</font>
+            <font color=red>// unit of work to process() for a while.</font>
+        work->process ();
+
+        if (next_)
+        {
+                <font color=red>// If we have subtasks, we pass the block on to them.  Notice</font>
+                <font color=red>// that I don't bother to duplicate() the block since I won't </font>
+                <font color=red>// release it in this case.  I could have invoked</font>
+                <font color=red>// duplicate() in the puq() and then release()</font>
+                <font color=red>// afterwards.  Either is acceptable.</font>
+            if (next_->putq (message_block) == -1)
+                ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green>putq</font>"), -1);
+        }
+        else
+        {
+                <font color=red>// If we don't have subtasks then invoke fini() to tell</font>
+                <font color=red>// the unit of work that we won't be invoking process()</font>
+                <font color=red>// any more.  Then release() the block.  This release()</font>
+                <font color=red>// would not change if we duplicate()ed in the above conditional</font>
+            work->fini ();
+            message_block->release ();
+        }
+
+            <font color=red>// Pretend that the work takes some time...</font>
+        <font color=#008888>ACE_OS::sleep</font> (ACE_Time_Value (0, 250));
     }
 
-        <font color=red>// "<font color=green>Convert</font>" it to our Message_Block</font>
-    message_block = (Message_Block *) message;
-
-        <font color=red>// Get the ACE_Data_Block and "<font color=green>convert</font>" to Data_Block in one step.</font>
-    data_block = (Data_Block *) (message_block->data_block ());
-
-        <font color=red>// Get the unit of work from the data block</font>
-    work = data_block->data ();
-
-        <font color=red>// Show the object's instance value and "<font color=green>type name</font>"</font>
-    work->who_am_i ();
-    work->what_am_i ();
-
-        <font color=red>// If there is a hangup we need to tell our pool-peers as</font>
-        <font color=red>// well as any subtasks.</font>
-    if (message_block->msg_type () == <font color=#008888>ACE_Message_Block::MB_HANGUP</font>)
-    {
-            <font color=red>// duplicate()ing the message block will increment the</font>
-            <font color=red>// reference counts on the data blocks.  This allows us</font>
-            <font color=red>// to safely release() the message block.  The rule of</font>
-            <font color=red>// thumb is that if you pass a message block to a new</font>
-            <font color=red>// owner, duplicate() it.  Then you can release() when</font>
-            <font color=red>// you're done and not worry about memory leaks.</font>
-      if (this->putq (message_block->duplicate ()) == -1)
-      {
-        ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green>putq</font>"), -1);
-      }
-
-          <font color=red>// If we have a subtask, duplicate() the message block</font>
-          <font color=red>// again and pass it to that task's queue</font>
-      if (next_ && next_->putq (message_block->duplicate ()) == -1)
-      {
-        ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green>putq</font>"), -1);
-      }
-
-          <font color=red>// We're now done with our copy of the block, so we can</font>
-          <font color=red>// release it.  Our peers/subtasks have their own message </font>
-          <font color=red>// block to access the shared data blocks.</font>
-      message_block->release ();
-
-      break;
-    }
-
-      <font color=red>// If this isn't a hangup/shutdown message then we tell the</font>
-      <font color=red>// unit of work to process() for a while.</font>
-    work->process ();
-
-    if (next_)
-    {
-            <font color=red>// If we have subtasks, we pass the block on to them.  Notice</font>
-            <font color=red>// that I don't bother to duplicate() the block since I won't </font>
-            <font color=red>// release it in this case.  I could have invoked</font>
-            <font color=red>// duplicate() in the puq() and then release()</font>
-            <font color=red>// afterwards.  Either is acceptable.</font>
-      if (next_->putq (message_block) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green>putq</font>"), -1);
-    }
-    else
-    {
-            <font color=red>// If we don't have subtasks then invoke fini() to tell</font>
-            <font color=red>// the unit of work that we won't be invoking process()</font>
-            <font color=red>// any more.  Then release() the block.  This release()</font>
-            <font color=red>// would not change if we duplicate()ed in the above conditional</font>
-      work->fini ();
-      message_block->release ();
-    }
-
-        <font color=red>// Pretend that the work takes some time...</font>
-    <font color=#008888>ACE_OS::sleep</font> (ACE_Time_Value (0, 250));
-  }
-
-  return (0);
+    return (0);
 }
 </PRE>
 <HR WIDTH="100%">

@@ -7,14 +7,14 @@
    Initialize the state to zero 
  */
 Unit_Of_Work::Unit_Of_Work (void)
-: state_ (0)
+        : state_ (0)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) 0x%x Unit_Of_Work ctor\n", (void *) this));
+    ACE_DEBUG ((LM_DEBUG, "(%P|%t) 0x%x Unit_Of_Work ctor\n", (void *) this));
 }
 
 Unit_Of_Work::~Unit_Of_Work (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) 0x%x Unit_Of_Work dtor\n", (void *) this));
+    ACE_DEBUG ((LM_DEBUG, "(%P|%t) 0x%x Unit_Of_Work dtor\n", (void *) this));
 }
 
 /*
@@ -22,7 +22,7 @@ Unit_Of_Work::~Unit_Of_Work (void)
  */
 void Unit_Of_Work::who_am_i (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) 0x%x Unit_Of_Work instance\n", (void *) this));
+    ACE_DEBUG ((LM_DEBUG, "(%P|%t) 0x%x Unit_Of_Work instance\n", (void *) this));
 }
 
 /*
@@ -30,7 +30,7 @@ void Unit_Of_Work::who_am_i (void)
  */
 void Unit_Of_Work::what_am_i (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) 0x%x I am a Unit_Of_Work object\n", (void *) this));
+    ACE_DEBUG ((LM_DEBUG, "(%P|%t) 0x%x I am a Unit_Of_Work object\n", (void *) this));
 }
 
 /*
@@ -38,7 +38,7 @@ void Unit_Of_Work::what_am_i (void)
  */
 int Unit_Of_Work::process (void)
 {
-  return -1;
+    return -1;
 }
 
 /*
@@ -46,16 +46,16 @@ int Unit_Of_Work::process (void)
  */
 int Unit_Of_Work::fini (void)
 {
-  return -1;
+    return -1;
 }
 
 /*
    Default constructor has no "message number" 
  */
 Work::Work (void)
-:message_ (-1)
+        :message_ (-1)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) 0x%x Work ctor\n", (void *) this));
+    ACE_DEBUG ((LM_DEBUG, "(%P|%t) 0x%x Work ctor\n", (void *) this));
 }
 
 /*
@@ -63,14 +63,14 @@ Work::Work (void)
    you ask. 
  */
 Work::Work (int message)
-: message_ (message)
+        : message_ (message)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) 0x%x Work ctor for message %d\n", (void *) this, message_));
+    ACE_DEBUG ((LM_DEBUG, "(%P|%t) 0x%x Work ctor for message %d\n", (void *) this, message_));
 }
 
 Work::~Work (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) 0x%x Work dtor\n", (void *) this));
+    ACE_DEBUG ((LM_DEBUG, "(%P|%t) 0x%x Work dtor\n", (void *) this));
 }
 
 /*
@@ -78,7 +78,7 @@ Work::~Work (void)
  */
 void Work::what_am_i (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) 0x%x I am a Work object for message %d\n", (void *) this, message_));
+    ACE_DEBUG ((LM_DEBUG, "(%P|%t) 0x%x I am a Work object for message %d\n", (void *) this, message_));
 }
 
 /*
@@ -87,23 +87,23 @@ void Work::what_am_i (void)
  */
 int Work::process (void)
 {
-  switch (++state_)
-  {
-  case 1:
-    ACE_DEBUG ((LM_DEBUG, "(%P|%t) 0x%x Stage One\n", (void *) this));
-    break;
-  case 2:
-    ACE_DEBUG ((LM_DEBUG, "(%P|%t) 0x%x Stage Two\n", (void *) this));
-    break;
-  case 3:
-    ACE_DEBUG ((LM_DEBUG, "(%P|%t) 0x%x Stage Three\n", (void *) this));
-    break;
-  default:
-    ACE_DEBUG ((LM_DEBUG, "(%P|%t) 0x%x No work to do in state %d\n",
-                (void *) this, state_.value ()));
-    break;
-  }
-  return (0);
+    switch (++state_)
+    {
+        case 1:
+            ACE_DEBUG ((LM_DEBUG, "(%P|%t) 0x%x Stage One\n", (void *) this));
+            break;
+        case 2:
+            ACE_DEBUG ((LM_DEBUG, "(%P|%t) 0x%x Stage Two\n", (void *) this));
+            break;
+        case 3:
+            ACE_DEBUG ((LM_DEBUG, "(%P|%t) 0x%x Stage Three\n", (void *) this));
+            break;
+        default:
+            ACE_DEBUG ((LM_DEBUG, "(%P|%t) 0x%x No work to do in state %d\n",
+                        (void *) this, state_.value ()));
+            break;
+    }
+    return (0);
 }
 
 /*
@@ -113,12 +113,12 @@ int Work::process (void)
  */
 int Work::fini (void)
 {
-  while (state_.value () < 3)
-  {
-    if (this->process () == -1)
+    while (state_.value () < 3)
     {
-      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "process"), -1);
+        if (this->process () == -1)
+        {
+            ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "process"), -1);
+        }
     }
-  }
-  return (0);
+    return (0);
 }

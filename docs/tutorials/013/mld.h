@@ -22,13 +22,13 @@
 class mld
 {
 public:
-  mld (void);
-   ~mld (void);
+    mld (void);
+    ~mld (void);
 
-  static int value (void);
+    static int value (void);
 
 protected:
-  static ACE_Atomic_Op < ACE_Mutex, int >counter_;
+    static ACE_Atomic_Op < ACE_Mutex, int >counter_;
 };
 
 // ================================================

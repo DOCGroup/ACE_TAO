@@ -24,29 +24,29 @@ class Task : public ACE_Task < ACE_MT_SYNCH >
 {
 public:
 
-  typedef ACE_Task < ACE_MT_SYNCH > inherited;
+    typedef ACE_Task < ACE_MT_SYNCH > inherited;
 
-  // Construct ourselves and an optional number of subtasks
-  // chained beyond us.
+        // Construct ourselves and an optional number of subtasks
+        // chained beyond us.
     Task (int sub_tasks = 0);
-   ~Task (void);
+    ~Task (void);
 
-  // Open the Task with the proper thread-pool size
-  int open (int threads = 1);
+        // Open the Task with the proper thread-pool size
+    int open (int threads = 1);
 
-  // Take Unit_Of_Work objects from the thread pool and invoke
-  // their process() and/or fini() as appropriate.
-  int svc (void);
+        // Take Unit_Of_Work objects from the thread pool and invoke
+        // their process() and/or fini() as appropriate.
+    int svc (void);
 
-  // Shut down the thread pool and it's associated subtasks
-  int close (u_long flags = 0);
+        // Shut down the thread pool and it's associated subtasks
+    int close (u_long flags = 0);
 
-  // Wait for the pool and subtasks to close
-  int wait (void);
+        // Wait for the pool and subtasks to close
+    int wait (void);
 
 protected:
     ACE_Barrier * barrier_;
-  Task *next_;
+    Task *next_;
     MLD;
 };
 
