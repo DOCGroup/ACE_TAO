@@ -70,6 +70,8 @@ $MAKEFLAGS = $ARGV[4];
 # When an error is found we try to die gracefully and send some email
 # to ADMIN.
 
+$disable_file = $LOGDIR . '/.disable';
+
 sub mydie {
     local @msg = @_;
     open(MAIL, "|mail $ADMIN")
@@ -85,6 +87,8 @@ sub mydie {
     close(MAIL)
 	|| die "cannot close email pipe on error: $msg\n";
     print HIST 'FAILED', "\n";
+    unlink $disable_file
+        || die "cannot unlink disable file";
     exit 0;
 }
 
@@ -99,10 +103,16 @@ $date = localtime;
 
 print HIST $CMD, ': running at ', $date, ' ';
 
-if (-f $LOGDIR . '/.disable') {
+if (-f $disable_file) {
     print HIST "DISABLED\n";
     exit 0;
 }
+
+open (DISABLE, '>' . $disable_file)
+    || mydie "cannot open disable file";
+print DISABLE "auto_compile <$date> is running\n";
+close (DISABLE)
+    || mydie "cannot close disable file";
 
 $LOGFILE = $LOGDIR . '/' . POSIX::strftime("%b%d_%Y.log", localtime);
 open(LOG, '>' . $LOGFILE)
@@ -240,3 +250,6 @@ close(LOG)
 print HIST "OK\n";
 close(HIST)
     || mydie "cannot close history file";
+
+unline $disable_file
+    || mydie "cannot unlink disable file";
