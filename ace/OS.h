@@ -154,11 +154,11 @@ typedef long      id_t;
 
 // The following 3 defines are used in the IP multicast and broadcast tests.
 # if !defined (ACE_DEFAULT_BROADCAST_PORT)
-#   define ACE_DEFAULT_BROADCAST_PORT 10000
+#   define ACE_DEFAULT_BROADCAST_PORT 20000
 # endif /* ACE_DEFAULT_BROADCAST_PORT */
 
 # if !defined (ACE_DEFAULT_MULTICAST_PORT)
-#   define ACE_DEFAULT_MULTICAST_PORT 10001
+#   define ACE_DEFAULT_MULTICAST_PORT 20001
 # endif /* ACE_DEFAULT_MULTICAST_PORT */
 
 # if !defined (ACE_DEFAULT_MULTICAST_ADDR)
@@ -174,7 +174,7 @@ typedef long      id_t;
 
 // Used in many IPC_SAP tests
 # if !defined (ACE_DEFAULT_SERVER_PORT)
-#   define ACE_DEFAULT_SERVER_PORT 10002
+#   define ACE_DEFAULT_SERVER_PORT 20002
 # endif /* ACE_DEFAULT_SERVER_PORT */
 
 # if !defined (ACE_DEFAULT_HTTP_PORT)
@@ -186,72 +186,72 @@ typedef long      id_t;
 # endif /* ACE_DEFAULT_MAX_SOCKET_BUFSIZ */
 
 # if !defined (ACE_DEFAULT_SERVER_PORT_STR)
-#   define ACE_DEFAULT_SERVER_PORT_STR "10002"
+#   define ACE_DEFAULT_SERVER_PORT_STR "20002"
 # endif /* ACE_DEFAULT_SERVER_PORT_STR */
 
 // Used for the Service_Directory test
 # if !defined (ACE_DEFAULT_SERVICE_PORT)
-#   define ACE_DEFAULT_SERVICE_PORT 10003
+#   define ACE_DEFAULT_SERVICE_PORT 20003
 # endif /* ACE_DEFAULT_SERVICE_PORT */
 
 // Used for the ACE_Thread_Spawn test
 # if !defined (ACE_DEFAULT_THR_PORT    )
-#   define ACE_DEFAULT_THR_PORT 10004
+#   define ACE_DEFAULT_THR_PORT 20004
 # endif /* ACE_DEFAULT_THR_PORT */
 
 // Used for <SOCK_Connect::connect> tests
 # if !defined (ACE_DEFAULT_LOCAL_PORT)
-#   define ACE_DEFAULT_LOCAL_PORT 10005
+#   define ACE_DEFAULT_LOCAL_PORT 20005
 # endif /* ACE_DEFAULT_LOCAL_PORT */
 
 // Used for Connector tests
 # if !defined (ACE_DEFAULT_LOCAL_PORT_STR)
-#   define ACE_DEFAULT_LOCAL_PORT_STR "10005"
+#   define ACE_DEFAULT_LOCAL_PORT_STR "20005"
 # endif /* ACE_DEFAULT_LOCAL_PORT_STR */
 
 // Used for the name server.
 # if !defined (ACE_DEFAULT_NAME_SERVER_PORT)
-#   define ACE_DEFAULT_NAME_SERVER_PORT 10006
+#   define ACE_DEFAULT_NAME_SERVER_PORT 20006
 # endif /* ACE_DEFAULT_NAME_SERVER_PORT */
 
 # if !defined (ACE_DEFAULT_NAME_SERVER_PORT_STR)
-#   define ACE_DEFAULT_NAME_SERVER_PORT_STR "10006"
+#   define ACE_DEFAULT_NAME_SERVER_PORT_STR "20006"
 # endif /* ACE_DEFAULT_NAME_SERVER_PORT_STR */
 
 // Used for the token server.
 # if !defined (ACE_DEFAULT_TOKEN_SERVER_PORT)
-#   define ACE_DEFAULT_TOKEN_SERVER_PORT 10007
+#   define ACE_DEFAULT_TOKEN_SERVER_PORT 20007
 # endif /* ACE_DEFAULT_TOKEN_SERVER_PORT */
 
 # if !defined (ACE_DEFAULT_TOKEN_SERVER_PORT_STR)
-#   define ACE_DEFAULT_TOKEN_SERVER_PORT_STR "10007"
+#   define ACE_DEFAULT_TOKEN_SERVER_PORT_STR "20007"
 # endif /* ACE_DEFAULT_TOKEN_SERVER_PORT_STR */
 
 // Used for the logging server.
 # if !defined (ACE_DEFAULT_LOGGING_SERVER_PORT)
-#   define ACE_DEFAULT_LOGGING_SERVER_PORT 10008
+#   define ACE_DEFAULT_LOGGING_SERVER_PORT 20008
 # endif /* ACE_DEFAULT_LOGGING_SERVER_PORT */
 
 # if !defined (ACE_DEFAULT_LOGGING_SERVER_PORT_STR)
-#   define ACE_DEFAULT_LOGGING_SERVER_PORT_STR "10008"
+#   define ACE_DEFAULT_LOGGING_SERVER_PORT_STR "20008"
 # endif /* ACE_DEFAULT_LOGGING_SERVER_PORT_STR */
 
 // Used for the logging server.
 # if !defined (ACE_DEFAULT_THR_LOGGING_SERVER_PORT)
-#   define ACE_DEFAULT_THR_LOGGING_SERVER_PORT 10008
+#   define ACE_DEFAULT_THR_LOGGING_SERVER_PORT 20008
 # endif /* ACE_DEFAULT_THR_LOGGING_SERVER_PORT */
 
 # if !defined (ACE_DEFAULT_THR_LOGGING_SERVER_PORT_STR)
-#   define ACE_DEFAULT_THR_LOGGING_SERVER_PORT_STR "10008"
+#   define ACE_DEFAULT_THR_LOGGING_SERVER_PORT_STR "20008"
 # endif /* ACE_DEFAULT_THR_LOGGING_SERVER_PORT_STR */
 
 // Used for the time server.
 # if !defined (ACE_DEFAULT_TIME_SERVER_PORT)
-#   define ACE_DEFAULT_TIME_SERVER_PORT 10009
+#   define ACE_DEFAULT_TIME_SERVER_PORT 20009
 # endif /* ACE_DEFAULT_TIME_SERVER_PORT */
 
 # if !defined (ACE_DEFAULT_TIME_SERVER_PORT_STR)
-#   define ACE_DEFAULT_TIME_SERVER_PORT_STR "10009"
+#   define ACE_DEFAULT_TIME_SERVER_PORT_STR "20009"
 # endif /* ACE_DEFAULT_TIME_SERVER_PORT_STR */
 
 # if !defined (ACE_DEFAULT_TIME_SERVER_STR)
@@ -263,7 +263,7 @@ typedef long      id_t;
 #   if defined (ACE_HAS_STREAM_PIPES)
 #     define ACE_DEFAULT_RENDEZVOUS "/tmp/fifo.ace"
 #   else
-#     define ACE_DEFAULT_RENDEZVOUS "localhost:10010"
+#     define ACE_DEFAULT_RENDEZVOUS "localhost:20010"
 #   endif /* ACE_HAS_STREAM_PIPES */
 # endif /* ACE_DEFAULT_RENDEZVOUS */
 
@@ -272,7 +272,7 @@ typedef long      id_t;
 #     if defined (ACE_HAS_STREAM_PIPES)
 #       define ACE_DEFAULT_LOGGER_KEY ACE_LIB_TEXT ("/tmp/server_daemon")
 #     else
-#       define ACE_DEFAULT_LOGGER_KEY ACE_LIB_TEXT ("localhost:10012")
+#       define ACE_DEFAULT_LOGGER_KEY ACE_LIB_TEXT ("localhost:20012")
 #     endif /* ACE_HAS_STREAM_PIPES */
 # endif /* ACE_DEFAULT_LOGGER_KEY */
 
