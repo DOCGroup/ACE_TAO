@@ -1056,6 +1056,9 @@ ACE_OS::snprintf (char *buf, size_t maxlen, const char *format, ...)
 #  if defined (ACE_WIN32)
   ACE_OSCALL (ACE_SPRINTF_ADAPTER (::_vsnprintf (buf, maxlen, format, ap)),
               int, -1, result);
+  // Win32 doesn't 0-terminate the string if it overruns maxlen.
+  if (result == -1)
+    buf[maxlen-1] = '\0';
 #  else
   ACE_OSCALL (ACE_SPRINTF_ADAPTER (::vsnprintf (buf, maxlen, format, ap)),
               int, -1, result);
@@ -1093,6 +1096,9 @@ ACE_OS::snprintf (wchar_t *buf, size_t maxlen, const wchar_t *format, ...)
   // as a substitute, which does have the same signature as the UNIX98 one.
   ACE_OSCALL (ACE_SPRINTF_ADAPTER (::_vsnwprintf (buf, maxlen, format, ap)),
               int, -1, result);
+  // Win32 doesn't 0-terminate the string if it overruns maxlen.
+  if (result == -1)
+    buf[maxlen-1] = '\0';
 #  else
   ACE_OSCALL (ACE_SPRINTF_ADAPTER (::vswprintf (buf, maxlen, format, ap)),
               int, -1, result);
