@@ -165,7 +165,7 @@ main (int argc, char *argv[])
 }
 #else
 int 
-main (int argc, char *argv[])
+main (int, char *argv[])
 {
   ACE_ERROR ((LM_ERROR, "error: %s must be run on a platform that support IP multicast\n",
 	    argv[0]));
