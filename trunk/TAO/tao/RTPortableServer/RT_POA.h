@@ -1,21 +1,15 @@
-// -*- C++ -*-
-// $Id$
-
-// ============================================================================
-//
-// = LIBRARY
-//    PortableServer
-//
-// = FILENAME
-//    RT_POA.h
-//
-// = DESCRIPTION
-//     RT_POA
-//
-// = AUTHOR
-//     Irfan Pyarali
-//
-// ============================================================================
+/* -*- C++ -*- */
+//=============================================================================
+/**
+ *  @file    RT_POA.h
+ *
+ *  $Id$
+ *
+ *  RT_POA
+ *
+ *  @author  Irfan Pyarali
+ */
+// ===================================================================
 
 #ifndef TAO_RT_POA_H
 #define TAO_RT_POA_H
@@ -300,8 +294,8 @@ protected:
 
   void validate_policies (ACE_ENV_SINGLE_ARG_DECL);
 
-  // Parse the policy list for RT policies and update our
-  // cached policy instance.
+  /// Parse the policy list for RT policies and update our
+  /// cached policy instance.
   void parse_rt_policies (TAO_POA_Policy_Set &policies
                           ACE_ENV_ARG_DECL);
 

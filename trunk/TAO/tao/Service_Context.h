@@ -45,7 +45,7 @@
  * marshalling and unmarshalling information pertaining to service
  * context list
  *
- * Note: Somewhere down the line we may want to use this class for
+ * @note Somewhere down the line we may want to use this class for
  * fast access to the info that we need from the Service Context
  * List.
  */

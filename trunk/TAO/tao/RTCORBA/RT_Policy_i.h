@@ -457,16 +457,17 @@ private:
 
 //*************************************************************************
 
+/**
+ * @class TAO_TCP_Properties
+ *
+ * @brief RTCORBA::TCPProtocolProperties implementation
+ *
+ * Stores TCP Protocol configuration properties.
+ */
 class TAO_RTCORBA_Export TAO_TCP_Properties
   : public RTCORBA::TCPProtocolProperties,
     public TAO_Local_RefCounted_Object
 {
-  // = TITLE
-  //   RTCORBA::TCPProtocolProperties implementation
-  //
-  // = DESCRIPTION
-  //   Stores TCP Protocol configuration properties.
-  //
 public:
   /// Constructor.
   TAO_TCP_Properties (CORBA::Long send_buffer_size =
