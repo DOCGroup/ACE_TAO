@@ -776,37 +776,37 @@ be_visitor_typecode_defn::visit_string (be_string *node)
 //                     -1);
 // }
 
-int
-be_visitor_typecode_defn::visit_union (be_union *node)
-{
-  switch (this->ctx_->sub_state ())
-    {
-    case TAO_CodeGen::TAO_TC_DEFN_TYPECODE:
-      return this->visit_type (node);
-    case TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED:
-      return this->gen_typecode (node);
-    case TAO_CodeGen::TAO_TC_DEFN_ENCAPSULATION:
-      return this->gen_encapsulation (node);
-    case TAO_CodeGen::TAO_TC_DEFN_TC_SIZE:
-      this->computed_tc_size_ = this->compute_tc_size (node);
-      return ((this->computed_tc_size_ > 0) ? 0 : -1);
-    case TAO_CodeGen::TAO_TC_DEFN_ENCAP_LEN:
-      this->computed_encap_len_ = this->compute_encap_length (node);
-      return ((this->computed_encap_len_ > 0) ? 0 : -1);
-    case TAO_CodeGen::TAO_TC_DEFN_SCOPE:
-    case TAO_CodeGen::TAO_TC_DEFN_SCOPE_LEN:
-//       return this->visit_members (node);
-    default:
-      // error
-      break;
-    }
+// int
+// be_visitor_typecode_defn::visit_union (be_union *node)
+// {
+//   switch (this->ctx_->sub_state ())
+//     {
+//     case TAO_CodeGen::TAO_TC_DEFN_TYPECODE:
+//       return this->visit_type (node);
+//     case TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED:
+//       return this->gen_typecode (node);
+//     case TAO_CodeGen::TAO_TC_DEFN_ENCAPSULATION:
+//       return this->gen_encapsulation (node);
+//     case TAO_CodeGen::TAO_TC_DEFN_TC_SIZE:
+//       this->computed_tc_size_ = this->compute_tc_size (node);
+//       return ((this->computed_tc_size_ > 0) ? 0 : -1);
+//     case TAO_CodeGen::TAO_TC_DEFN_ENCAP_LEN:
+//       this->computed_encap_len_ = this->compute_encap_length (node);
+//       return ((this->computed_encap_len_ > 0) ? 0 : -1);
+//     case TAO_CodeGen::TAO_TC_DEFN_SCOPE:
+//     case TAO_CodeGen::TAO_TC_DEFN_SCOPE_LEN:
+// //       return this->visit_members (node);
+//     default:
+//       // error
+//       break;
+//     }
 
-  ACE_ERROR_RETURN ((LM_ERROR,
-                     ACE_TEXT ("(%N:%l) be_visitor_typecode_defn::")
-                     ACE_TEXT ("visit - bad sub state ")
-                     ACE_TEXT ("in visitor context\n")),
-                    -1);
-}
+//   ACE_ERROR_RETURN ((LM_ERROR,
+//                      ACE_TEXT ("(%N:%l) be_visitor_typecode_defn::")
+//                      ACE_TEXT ("visit - bad sub state ")
+//                      ACE_TEXT ("in visitor context\n")),
+//                     -1);
+// }
 
 // int
 // be_visitor_typecode_defn::visit_valuetype (be_valuetype *node)
