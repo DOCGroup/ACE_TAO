@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- *  @author Doug Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================
 
