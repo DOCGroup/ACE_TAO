@@ -268,7 +268,7 @@ ACE_Log_Msg::instance (void)
 	  key_created_ = 1;
 	}
       ACE_OS::thread_mutex_unlock (&lock);
-    }  
+    }
 
   ACE_Log_Msg *tss_log_msg = 0;
 
@@ -300,7 +300,8 @@ ACE_Log_Msg::instance (void)
 		  if (ACE_OS::thr_setspecific (key_, 
 					       (void *) tss_log_msg) != 0)
 		    return 0; // Major problems, this should *never* happen!
-          }
+ 	  }
+    }
 
   return tss_log_msg;
 #endif /* VXWORKS || ACE_HAS_THREAD_SPECIFIC_STORAGE */
