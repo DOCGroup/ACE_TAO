@@ -23,6 +23,7 @@
 #include <xercesc/util/XercesDefs.hpp>
 #include <xercesc/dom/DOM.hpp>
 #include "XercesString.h"
+#include "RUK_Handler.h"
 
 using Config_Handler::XStr;
 using xercesc::XMLUni;
@@ -47,14 +48,6 @@ namespace CIAO
 {
   namespace Config_Handler
   {
-    class ResourceUsageKind_Handler {
-    public:
-
-      /// Process elements of type ResourceUsageKind definitions in
-      /// the description files.
-      static void
-	process_ResourceUsageKind (DOMNodeIterator *iter, ::Deployment::ResourceUsageKind &kind);
-    };
 
     class IR_Handler
     {

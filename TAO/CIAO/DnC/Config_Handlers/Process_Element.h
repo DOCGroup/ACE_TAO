@@ -84,6 +84,17 @@ process_reference(DOMNode* node,
                   int& index,
                   IDREF_MAP& idref_map);
 
+/*
+ *  Process function for non-sequential elements
+ */
+
+template<typename DATA, typename OBJECT, typename ELEMENT, typename FUNCTION>
+inline bool
+process_element(DOMDocument* doc, DOMNodeIterator* iter, DOMNode* node,
+                XStr& node_name, const char* name,
+                ELEMENT& elem, OBJECT* obj, FUNCTION func,
+                REF_MAP& id_map);
+
 #include "Process_Element.i"
 #include "Process_Element.tpp"
 
