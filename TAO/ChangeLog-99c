@@ -1,3 +1,26 @@
+Thu Jun 10 23:17:38 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be_include/be_enum.h:
+	* TAO_IDL/be/be_enum.cpp:
+	  Added a method to convert a numerical value to an
+	  enum's string name for it. When generating code for
+	  the _default() method for a union, if the 
+	  discriminator is an enum, some compilers (MSVC among
+	  them) will complain about assigning a numeric
+	  constant to the discriminator in _default(). This
+	  method and the changes below enable the assignment
+	  of the enum label identifier instead.
+
+	* TAO_IDL/be/be_visitor_union/union_ci.cpp:
+	* TAO_IDL/be/be_visitor_union/discriminant_ci.cpp:
+	  Moved generation of code for the _default() 
+	  method from the union visitor to the discriminant
+	  visitor, so it would be a little easier to get at
+	  the enum labels. Thanks to
+	  Kristopher Johnson <kjohnson@gardnersys.com> for
+	  pointing out the problem and supplying an IDL
+	  file for a test case.
+
 Thu Jun 10 23:10:23 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/UIOP_Profile.cpp:
