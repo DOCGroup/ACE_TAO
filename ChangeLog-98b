@@ -1,3 +1,10 @@
+Tue Aug 11 15:51:47 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/XtReactor.h (ACE_XtReactor): Changed the constructor so that
+ 	  the XtAppContext can be passed later.  This scheme allows for a
+ 	  default constructor.  Thanks to J-M Strauss
+ 	  <strauss@limeil.cea.fr> for suggesting this.
+
 Tue Aug 11 12:35:10 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.i (fopen): On WinCE, reset the handle to 0 if CreateFile
