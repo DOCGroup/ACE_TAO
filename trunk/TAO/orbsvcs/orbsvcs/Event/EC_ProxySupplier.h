@@ -102,6 +102,11 @@ public:
   virtual PortableServer::POA_ptr _default_POA (CORBA::Environment& env);
   // Override the ServantBase method.
 
+  void push_to_consumer (const RtecEventComm::EventSet &event,
+                         CORBA::Environment &env);
+  // Pushes to the consumer, verifies that it is connected and that it 
+  // is not suspended.
+
   // = The RtecEventChannelAdmin::ProxyPushSupplier methods...
   virtual void connect_push_consumer (
 		RtecEventComm::PushConsumer_ptr push_consumer,
@@ -158,6 +163,9 @@ private:
 
   CORBA::Boolean suspended_;
   // Is this consumer suspended?
+
+  int state_;
+  // The state, see the enum above for a description.
 
   RtecEventChannelAdmin::ConsumerQOS qos_;
   // The subscription and QoS information...

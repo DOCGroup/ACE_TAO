@@ -223,9 +223,23 @@ components:
     The SupplierFiltering object pushes the event [since the event is
     a set it has to push one event at a time] to the a set of
     ProxyPushSuppliers [recall that this are the consumer ambassadors] 
-    
+    They pass the event through their own set of filters, if the
+    filter accepts the event it callbacks on the ProxyPushSupplier.
+    At that point the ProxyPushSupplier requests that the
+    DispatchingModule pushes the event.
+    The dispatching module finally pushes the event to the consumer.
 
   - Adding a consumer:
+    The client calls for_consumers() and obtain_push_supplier() to
+    obtain a reference to the [global] ConsumerAdmin object and to its 
+    own ProxyPushSupplier object.
+    The ProxyPushSupplier object is initially empty, once the user
+    calls connect_push_consumer() on it the set of filters is created
+    using the Filter_Builder strategy and the user supplied QoS
+    parameters.
+    At this point the ProxyPushSupplier becomes "connected" and it
+    uses the Event_Channel implementation to broadcast its
+    subscriptions to all the Suppliers in the set.
 
   - Adding a supplier:
 

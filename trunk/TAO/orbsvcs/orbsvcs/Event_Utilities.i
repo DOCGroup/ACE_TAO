@@ -22,7 +22,7 @@ ACE_ConsumerQOS_Factory::insert_type (RtecEventComm::EventType type,
 				      RtecScheduler::handle_t rt_info)
 {
   RtecEventChannelAdmin::Dependency dependency;
-  dependency.event.header.source = 0;
+  dependency.event.header.source = ACE_ES_EVENT_SOURCE_ANY;
   dependency.event.header.type = type;
   //dependency.event.header.creation_time = 0;
   //dependency.event.header.ec_recv_time = 0;
@@ -51,7 +51,7 @@ ACE_ConsumerQOS_Factory::insert_time (RtecEventComm::EventType type,
 				      RtecScheduler::handle_t rt_info)
 {
   RtecEventChannelAdmin::Dependency dependency;
-  dependency.event.header.source = 0;
+  dependency.event.header.source = ACE_ES_EVENT_SOURCE_ANY;
   dependency.event.header.type = type;
   dependency.event.header.creation_time = interval;
   //dependency.event.header.ec_recv_time = 0;
@@ -73,7 +73,7 @@ ACE_ConsumerQOS_Factory::insert_act (RtecEventComm::EventData act)
   return this->insert (dependency);
 }
 
-ACE_INLINE const RtecEventChannelAdmin::ConsumerQOS& 
+ACE_INLINE const RtecEventChannelAdmin::ConsumerQOS&
 ACE_ConsumerQOS_Factory::get_ConsumerQOS (void)
 {
   return qos_;
@@ -87,7 +87,7 @@ ACE_ConsumerQOS_Factory::operator const RtecEventChannelAdmin::ConsumerQOS& (voi
 
 // ************************************************************
 
-ACE_INLINE const RtecEventChannelAdmin::SupplierQOS& 
+ACE_INLINE const RtecEventChannelAdmin::SupplierQOS&
 ACE_SupplierQOS_Factory::get_SupplierQOS (void)
 {
   return qos_;

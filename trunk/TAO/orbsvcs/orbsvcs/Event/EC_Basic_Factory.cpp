@@ -167,7 +167,7 @@ TAO_EC_Basic_Factory::destroy_consumer_lock (ACE_Lock* x)
 ACE_Lock*
 TAO_EC_Basic_Factory::create_supplier_lock (void)
 {
-  return new ACE_Lock_Adapter<ACE_SYNCH_MUTEX> ();
+  return new ACE_Lock_Adapter<ACE_SYNCH_RECURSIVE_MUTEX> ();
 }
 
 void
