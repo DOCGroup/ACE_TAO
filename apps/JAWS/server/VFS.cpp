@@ -5,6 +5,9 @@
 // Maintain a table of files which are opened.
 // Return a handle to the file, and provide I/O mechanisms for it.
 
+#if !defined (VFS_CPP)
+#define VFS_CPP
+
 #include "JAWS/server/VFS.h"
 #include "JAWS/server/HTTP_Helpers.h"
 
@@ -128,7 +131,7 @@ JAWS_VFS_Node::map_read (void)
       if (this->open (READ_FLAGS) == -1)
 	return -1;
 
-      if (file_mapping_.map (handle_, -1, PROT_READ) == 0)
+      if (file_mapping_.map (handle_, -1, PROT_READ, MAP_PRIVATE) == 0)
 	{
 	  map_state_ = MAPPED_READ;
 	  return 0;
@@ -360,5 +363,6 @@ JAWS_VFS_Node::map_read (void)
 
   map_state_ = MAPPED_READ;
 }
-#endif
+#endif /* 0 */
 
+#endif /* VFS_CPP */
