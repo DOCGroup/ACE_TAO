@@ -47,7 +47,7 @@ public:
   virtual int close (u_long flags = 0);
   // Termination template method.
 
-  int send_request (CDR &stream, int is_twoway);
+  int send_request (TAO_OutputCDR &stream, int is_twoway);
   // Send the request in <stream>.  If it is a twoway invocation, then
   // this re-enters the reactor event loop so that incoming requests
   // can continue to be serviced.  This insures that a nested upcall,
@@ -105,13 +105,16 @@ public:
     LocateRequest // A CORBA LocateRequest was received
   };
 
-  virtual RequestStatus recv_request (CDR &msg, CORBA::Environment &env);
+  virtual RequestStatus recv_request (TAO_InputCDR &msg,
+				      CORBA::Environment &env);
   // Extract a message from the stream associated with <peer()> and
   // place it into <msg>.  Return either <Request> or <LocateRequest>
   // if success, <Error> with <errno> and <env> set if problems.
 
-  virtual int handle_message (CDR &msg, int &response_required,
-                              CDR &response, CORBA::Environment &env);
+  virtual int handle_message (TAO_InputCDR &msg,
+			      int &response_required,
+                              TAO_OutputCDR &response,
+			      CORBA::Environment &env);
   // Handle processing of the request residing in <msg>, setting
   // <response_required> to zero if the request is for a oneway or
   // non-zero if for a two-way and <response> to any necessary
@@ -119,8 +122,10 @@ public:
   // and additional information carried in <env>.
 
 protected:
-  virtual int handle_locate (CDR &msg, int &response_required,
-                             CDR &response, CORBA::Environment &env);
+  virtual int handle_locate (TAO_InputCDR &msg,
+			     int &response_required,
+                             TAO_OutputCDR &response,
+			     CORBA::Environment &env);
   // Handle processing of the location request residing in <msg>,
   // setting <response_required> to one if no errors are encountered.
   // The LocateRequestReply is placed into <response>.  In case of
@@ -128,15 +133,15 @@ protected:
   // <env>.
 
   virtual void handle_request (const TAO_GIOP_RequestHeader &hdr,
-                               CDR &request_body,
-                               CDR &response,
+                               TAO_InputCDR &request_body,
+                               TAO_OutputCDR &response,
                                TAO_Dispatch_Context *some_info,
                                CORBA::Environment &env);
   // Once a request is found in a message, this finds the appropriate
   // POA and dispatches it, then takes care to properly format any
   // response.
 
-  virtual void send_response (CDR &response);
+  virtual void send_response (TAO_OutputCDR &response);
   // Send <response> to the client on the other end.
 
   // = Event Handler overloads

@@ -1,4 +1,4 @@
-// $ID: interp.cpp,v 1.21 1998/03/17 19:55:03 levine Exp $
+// $Id$
 
 // @(#)interp.cpp       1.4 95/11/04
 // Copyright 1994-1995 by Sun Microsystems Inc.
@@ -215,17 +215,17 @@ TAO_IIOP_Interpreter::init_table (void)
 #undef  setup
 
 CORBA::Boolean
-TAO_IIOP_Interpreter::skip_encapsulation (CDR *stream)
+TAO_IIOP_Interpreter::skip_encapsulation (TAO_InputCDR *stream)
 {
   return stream->skip_string ();
 }
 
 CORBA::Boolean
-TAO_IIOP_Interpreter::skip_long (CDR *stream)
+TAO_IIOP_Interpreter::skip_long (TAO_InputCDR *stream)
 {
   CORBA::ULong  scratch;
 
-  return stream->get_ulong (scratch);
+  return stream->read_ulong (scratch);
 }
 
 // For a given typecode, figure out its size and alignment needs.
@@ -248,66 +248,14 @@ TAO_IIOP_Interpreter::skip_long (CDR *stream)
 // traversal.
 
 size_t
-TAO_IIOP_Interpreter::calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
-                                            CDR *original_stream,
-                                            size_t &alignment,
-                                            CORBA::Environment &env)
+TAO_IIOP_Interpreter::calc_nested_size_and_alignment_i (CORBA::TypeCode_ptr tc,
+				       TAO_InputCDR* stream,	
+				       CORBA::TCKind kind,
+				       size_t &alignment,
+				       CORBA::Environment &env)
 {
-  // Get the "kind" ... if this is an indirection, this is a guess
-  // which will soon be updated.
   CORBA::ULong temp;
-  CORBA::TCKind kind;
-
-  if (original_stream->get_ulong (temp) == CORBA::B_FALSE)
-    {
-      env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
-      return 0;
-    }
-
-  env.clear ();
-  kind = (CORBA::TCKind) temp;
-
-  // Check for indirection, setting up the right CDR stream to use
-  // when getting the rest of the parameters.  (We rely on the fact
-  // that indirections may not point to indirections.)
-  CDR indirected_stream;
-  CDR *stream;
-
-  if (kind == ~0)
-    {
-      // Get indirection, sanity check it, set up new stream pointing
-      // there.
-      //
-      // XXX access to "real" size limit for this typecode and use it
-      // to check for errors before indirect and to limit the new
-      // stream's length.  ULONG_MAX is too much!
-
-      CORBA::Long offset;
-      if (!original_stream->get_long (offset)
-          || offset >= -8
-          || ((-offset) & 0x03) != 0)
-        {
-          env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
-          return 0;
-        }
-      // offset -= 4;              // correct for get_long update
-
-      // TODO Provide a method to get an encapsulation from a CDR
-      // stream.
-      indirected_stream.setup_indirection (*original_stream, offset);
-      stream = &indirected_stream;
-
-      // Fetch indirected-to TCKind, deducing byte order.
-
-      if (!indirected_stream.get_ulong (temp))
-        {
-          env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
-          return 0;
-        }
-      kind = (CORBA::TCKind) temp;
-    }
-  else
-    stream = original_stream;
+  // Just a temporary to retrieve CORBA::TCKind variables as ULong's 
 
   // Check for illegal TCKind enum values ... out of range, or which
   // represent data values that can't be nested.  (Some can't even
@@ -331,7 +279,7 @@ TAO_IIOP_Interpreter::calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
       assert (TAO_IIOP_Interpreter::table_[kind].size_ == 0);
 
       // Pull encapsulation length out of the stream.
-      if (stream->get_ulong (temp) == CORBA::B_FALSE)
+      if (stream->read_ulong (temp) == CORBA::B_FALSE)
         {
           env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
           return 0;
@@ -341,7 +289,7 @@ TAO_IIOP_Interpreter::calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
       if (tc)
         {
           tc->kind_ = kind;
-          tc->buffer_ = stream->buffer ();
+          tc->buffer_ = stream->rd_ptr ();
           tc->length_ = temp;
         }
 
@@ -350,25 +298,42 @@ TAO_IIOP_Interpreter::calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
       // any to ensure correctness.  Then use the calculator routine
       // to calculate size and alignment.
 
-      CDR sub_encapsulation;
-      size_t size;
-
       assert (temp <= UINT_MAX);
-      sub_encapsulation.setup_encapsulation (stream->buffer(), temp);
-      size = TAO_IIOP_Interpreter::table_[kind].calc_ (&sub_encapsulation, alignment, env);
+      CORBA::ULong byte_order;
+      if (stream->read_ulong (byte_order) != CORBA::B_TRUE)
+	{
+          env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
+          return 0;
+	}
+
+      TAO_InputCDR nested (*stream, temp - 4);
+
+      if (nested.good_bit () == 0)
+        {
+          env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
+          return 0;
+        }
+
+      size_t size = TAO_IIOP_Interpreter::table_[kind].calc_ (&nested,
+							      alignment,
+							      env);
+      if (env.exception () != 0)
+	{
+	  return 0;
+	}
 
       // Check for garbage at end of parameter lists, or other cases
       // where parameters and the size allocated to them don't jive.
 
-      stream->rd_ptr (temp);
-      if (stream->buffer () != sub_encapsulation.buffer ())
+      stream->skip_bytes (temp - 4);
+      if (stream->rd_ptr () != nested.rd_ptr ())
         {
           env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
           return 0;
         }
       return size;
     }
-  assert (TAO_IIOP_Interpreter::table_[kind].size_ != 0);              // fixed size data type
+  assert (TAO_IIOP_Interpreter::table_[kind].size_ != 0);
 
   // Reinitialize the TypeCode if requested; this consumes any
   // TypeCode parameters in the stream.  They only exist for TCKind
@@ -389,7 +354,7 @@ TAO_IIOP_Interpreter::calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
 
         case CORBA::tk_string:
         case CORBA::tk_wstring:
-          if (stream->get_ulong (len) == CORBA::B_FALSE)
+          if (stream->read_ulong (len) == CORBA::B_FALSE)
             {
               env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
               return 0;
@@ -400,7 +365,7 @@ TAO_IIOP_Interpreter::calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
         case CORBA::tk_enum:
         case CORBA::tk_objref:
         case CORBA::tk_sequence:
-          if (stream->get_ulong (len) == CORBA::B_FALSE)
+          if (stream->read_ulong (len) == CORBA::B_FALSE)
             {
               env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
               return 0;
@@ -408,8 +373,8 @@ TAO_IIOP_Interpreter::calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
           tc->length_ = len;
 
           assert (len < UINT_MAX);
-          tc->buffer_ = stream->buffer ();
-          stream->rd_ptr (len);
+          tc->buffer_ = stream->rd_ptr ();
+          stream->skip_bytes (len);
           break;
         }
 
@@ -428,6 +393,70 @@ TAO_IIOP_Interpreter::calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
   return TAO_IIOP_Interpreter::table_[kind].size_;
 }
 
+size_t
+TAO_IIOP_Interpreter::calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
+                                            TAO_InputCDR *stream,
+                                            size_t &alignment,
+                                            CORBA::Environment &env)
+{
+  // Get the "kind" ... if this is an indirection, this is a guess
+  // which will soon be updated.
+  CORBA::ULong temp;
+  if (stream->read_ulong (temp) == CORBA::B_FALSE)
+    {
+      env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
+      return 0;
+    }
+
+  env.clear ();
+
+  CORBA::TCKind kind = (CORBA::TCKind) temp;
+
+  if (kind != ~0)
+    {
+      return TAO_IIOP_Interpreter::calc_nested_size_and_alignment_i
+	(tc,
+	 stream,
+	 kind,
+	 alignment,
+	 env);
+    }
+
+  // Get indirection, sanity check it, set up new stream pointing
+  // there.
+  //
+  // XXX access to "real" size limit for this typecode and use it
+  // to check for errors before indirect and to limit the new
+  // stream's length.  ULONG_MAX is too much!
+
+  CORBA::Long offset;
+  if (!stream->read_long (offset)
+      || offset >= -8
+      || ((-offset) & 0x03) != 0)
+    {
+      env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
+      return 0;
+    }
+  
+  // Notice how we change the sign of the offset to estimate the
+  // maximum size.
+  TAO_InputCDR indirected_stream (*stream, -offset, offset);
+
+  // Fetch indirected-to TCKind.
+  if (!indirected_stream.read_ulong (temp))
+    {
+      env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
+      return 0;
+    }
+  kind = (CORBA::TCKind) temp;
+
+  return TAO_IIOP_Interpreter::calc_nested_size_and_alignment_i (tc,
+						&indirected_stream,
+						kind,
+						alignment,
+						env);
+}
+
 // Given typecode bytes for a structure (or exception), figure out its
 // alignment and size; return size, alignment is an 'out' parameter.
 // Only "CORBA::tk_struct" (or "CORBA::tk_except") has been taken out of the stream
@@ -444,7 +473,7 @@ TAO_IIOP_Interpreter::calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
 // "RTTI" data.
 
 size_t
-TAO_IIOP_Interpreter::calc_struct_and_except_attributes (CDR *stream,
+TAO_IIOP_Interpreter::calc_struct_and_except_attributes (TAO_InputCDR *stream,
                                                size_t &alignment,
                                                CORBA::Boolean is_exception,
                                                CORBA::Environment &env)
@@ -478,7 +507,7 @@ TAO_IIOP_Interpreter::calc_struct_and_except_attributes (CDR *stream,
 
   if (!stream->skip_string ()
       || !stream->skip_string ()
-      || !stream->get_ulong (members))
+      || !stream->read_ulong (members))
     {
       env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
       return 0;
@@ -530,7 +559,7 @@ TAO_IIOP_Interpreter::calc_struct_and_except_attributes (CDR *stream,
 // Calculate size and alignment for a structure.
 
 size_t
-TAO_IIOP_Interpreter::calc_struct_attributes (CDR *stream,
+TAO_IIOP_Interpreter::calc_struct_attributes (TAO_InputCDR *stream,
                                     size_t &alignment,
                                     CORBA::Environment &env)
 {
@@ -543,7 +572,7 @@ TAO_IIOP_Interpreter::calc_struct_attributes (CDR *stream,
 // Calculate size and alignment for an exception.
 
 size_t
-TAO_IIOP_Interpreter::calc_exception_attributes (CDR *stream,
+TAO_IIOP_Interpreter::calc_exception_attributes (TAO_InputCDR *stream,
                                        size_t &alignment,
                                        CORBA::Environment &env)
 {
@@ -561,7 +590,7 @@ TAO_IIOP_Interpreter::calc_exception_attributes (CDR *stream,
 // the strictest alignment required by _any_ arm of the union.
 
 size_t
-TAO_IIOP_Interpreter::calc_key_union_attributes (CDR *stream,
+TAO_IIOP_Interpreter::calc_key_union_attributes (TAO_InputCDR *stream,
                                                  size_t &overall_alignment,
                                                  size_t &discrim_size_with_pad,
                                                  CORBA::Environment &env)
@@ -599,8 +628,8 @@ TAO_IIOP_Interpreter::calc_key_union_attributes (CDR *stream,
 
   // skip "default used" indicator, and save "member count"
 
-  if (!stream->get_ulong (temp)                 // default used
-      || !stream->get_ulong (members))
+  if (!stream->read_ulong (temp)                 // default used
+      || !stream->read_ulong (members))
     {   // member count
       env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
       return 0;
@@ -628,7 +657,7 @@ TAO_IIOP_Interpreter::calc_key_union_attributes (CDR *stream,
         {
           CORBA::Short s;
 
-          if (!stream->get_short (s))
+          if (!stream->read_short (s))
             {
               env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
               return 0;
@@ -642,7 +671,7 @@ TAO_IIOP_Interpreter::calc_key_union_attributes (CDR *stream,
         {
           CORBA::Long l;
 
-          if (!stream->get_long (l))
+          if (!stream->read_long (l))
             {
               env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
               return 0;
@@ -655,7 +684,7 @@ TAO_IIOP_Interpreter::calc_key_union_attributes (CDR *stream,
         {
           CORBA::Char c;
 
-          if (!stream->get_byte (c))
+          if (!stream->read_char (c))
             {
               env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
               return 0;
@@ -721,7 +750,7 @@ TAO_IIOP_Interpreter::calc_key_union_attributes (CDR *stream,
 // any of the members).
 
 size_t
-TAO_IIOP_Interpreter::calc_union_attributes (CDR *stream,
+TAO_IIOP_Interpreter::calc_union_attributes (TAO_InputCDR *stream,
                                    size_t &alignment,
                                    CORBA::Environment &env)
 {
@@ -733,7 +762,7 @@ TAO_IIOP_Interpreter::calc_union_attributes (CDR *stream,
 // Calculate size and alignment for a typedeffed type.
 
 size_t
-TAO_IIOP_Interpreter::calc_alias_attributes (CDR *stream,
+TAO_IIOP_Interpreter::calc_alias_attributes (TAO_InputCDR *stream,
                                    size_t &alignment,
                                    CORBA::Environment &env)
 {
@@ -756,7 +785,7 @@ TAO_IIOP_Interpreter::calc_alias_attributes (CDR *stream,
 // nested single dimensional arrays.)
 
 size_t
-TAO_IIOP_Interpreter::calc_array_attributes (CDR *stream,
+TAO_IIOP_Interpreter::calc_array_attributes (TAO_InputCDR *stream,
                                    size_t &alignment,
                                    CORBA::Environment &env)
 {
@@ -771,7 +800,7 @@ TAO_IIOP_Interpreter::calc_array_attributes (CDR *stream,
 
   // Get and check count of members.
 
-  if (stream->get_ulong (member_count) == CORBA::B_FALSE
+  if (stream->read_ulong (member_count) == CORBA::B_FALSE
       || member_count > UINT_MAX)
     {
       env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
@@ -786,7 +815,7 @@ TAO_IIOP_Interpreter::calc_array_attributes (CDR *stream,
 
 CORBA::Boolean
 TAO_IIOP_Interpreter::match_value (CORBA::TCKind kind,
-                         CDR *tc_stream,
+                         TAO_InputCDR *tc_stream,
                          const void *value,
                          CORBA::Environment &env)
 {
@@ -799,7 +828,7 @@ TAO_IIOP_Interpreter::match_value (CORBA::TCKind kind,
       {
         CORBA::UShort discrim;
 
-        if (tc_stream->get_ushort (discrim) != CORBA::B_FALSE)
+        if (tc_stream->read_ushort (discrim) != CORBA::B_FALSE)
           retval = (discrim == *(CORBA::UShort *)value);
         else
           env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
@@ -811,7 +840,7 @@ TAO_IIOP_Interpreter::match_value (CORBA::TCKind kind,
       {
         CORBA::ULong discrim;
 
-        if (tc_stream->get_ulong (discrim) != CORBA::B_FALSE)
+        if (tc_stream->read_ulong (discrim) != CORBA::B_FALSE)
           retval = (discrim == *(CORBA::ULong *)value);
         else
           env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
@@ -822,7 +851,7 @@ TAO_IIOP_Interpreter::match_value (CORBA::TCKind kind,
       {
         CORBA::ULong discrim;
 
-        if (tc_stream->get_ulong (discrim) != CORBA::B_FALSE)
+        if (tc_stream->read_ulong (discrim) != CORBA::B_FALSE)
           retval = (discrim == *(unsigned *)value);
         else
           env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
@@ -833,7 +862,7 @@ TAO_IIOP_Interpreter::match_value (CORBA::TCKind kind,
       {
         CORBA::Boolean discrim;
 
-        if (tc_stream->get_boolean (discrim) != CORBA::B_FALSE)
+        if (tc_stream->read_boolean (discrim) != CORBA::B_FALSE)
           retval = (discrim == *(CORBA::Boolean *)value);
         else
           env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
@@ -844,7 +873,7 @@ TAO_IIOP_Interpreter::match_value (CORBA::TCKind kind,
       {
         CORBA::Char discrim;
 
-        if (tc_stream->get_char (discrim) != CORBA::B_FALSE)
+        if (tc_stream->read_char (discrim) != CORBA::B_FALSE)
           retval = (discrim == *(CORBA::Char *)value);
         else
           env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
@@ -855,7 +884,7 @@ TAO_IIOP_Interpreter::match_value (CORBA::TCKind kind,
       {
         CORBA::WChar discrim;
 
-        if (tc_stream->get_wchar (discrim) != CORBA::B_FALSE)
+        if (tc_stream->read_wchar (discrim) != CORBA::B_FALSE)
           retval = (discrim == *(CORBA::WChar *)value);
         else
           env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));

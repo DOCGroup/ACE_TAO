@@ -1,5 +1,7 @@
 // ============================================================================
 //
+// $Id$
+//
 // = LIBRARY
 //    TAO
 //
@@ -585,9 +587,6 @@ TAO_Marshal_Sequence::deep_copy (CORBA::TypeCode_ptr  tc,
   CORBA::OctetSeq *src;
   CORBA::OctetSeq *dst;
 
-  // Used only to access the marshal_object factory.
-  CDR stream;
-
   // Rely on binary format of sequences -- all are the same except for
   // the type pointed to by "buffer."
 
@@ -1016,8 +1015,6 @@ TAO_Marshal_Alias::deep_copy (CORBA::TypeCode_ptr  tc,
 {
   // Typecode of the aliased type.
   CORBA::TypeCode_ptr tc2;
-  // To access the marshal object.
-  CDR stream;
   // Status of deep_copy operation.
   CORBA::TypeCode::traverse_status retval =
     CORBA::TypeCode::TRAVERSE_CONTINUE;
@@ -1142,8 +1139,6 @@ TAO_Marshal_Except::deep_copy (CORBA::TypeCode_ptr  tc,
   CORBA::TypeCode::traverse_status retval = CORBA::TypeCode::TRAVERSE_CONTINUE;
   CORBA::TypeCode_ptr param;
   CORBA::Long size;
-
-  CDR stream;
 
   if (tc)
     {

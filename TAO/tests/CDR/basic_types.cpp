@@ -18,66 +18,93 @@
 // ============================================================================
 
 #include "tao/corba.h"
+#include "tao/debug.h"
 
 static const int n = 4096;
+static int nloops = 100;
 
 struct CDR_Test_Types
 {
-  CDR_Test_Types (void):
-    o (1), s (2), l (4) {}
+  CDR_Test_Types (void);
 
   CORBA::Octet o;
   CORBA::Short s;
   CORBA::Long l;
+  CORBA::String str;
+  CORBA::Double d;
+  
+  enum {
+    ARRAY_SIZE = 10
+  };
+
+  CORBA::Short a[ARRAY_SIZE];
 };
 
+CDR_Test_Types::CDR_Test_Types (void)
+:
+  o (1), s (2), l (4), str ("abc"), d (8)
+{
+  for (int i = 0; i < CDR_Test_Types::ARRAY_SIZE; ++i)
+    {
+      a[i] = i;
+    }
+}
+
 static int
-test_put (CDR &cdr, CDR_Test_Types &test_types)
+test_put (TAO_OutputCDR &cdr, CDR_Test_Types &test_types)
 {
   for (int i = 0; i < n; ++i)
     {
-      if (cdr.put_octet (test_types.o) == 0)
+      if (cdr.write_octet (test_types.o) == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "put_octet[%d] failed\n",
+                           "write_octet[%d] failed\n",
                            i),
                           1);
-      if (cdr.put_short (test_types.s) == 0)
+      if (cdr.write_short (test_types.s) == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "put_short[%d] failed\n",
+                           "write_short[%d] failed\n",
                            i),
                           1);
-      if (cdr.put_octet (test_types.o) == 0)
+      if (cdr.write_octet (test_types.o) == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "put_octet-2[%d] failed\n",
+                           "write_octet-2[%d] failed\n",
                            i),
                           1);
-      if (cdr.put_long (test_types.l) == 0)
+      if (cdr.write_long (test_types.l) == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "put_long[%d] failed\n",
+                           "write_long[%d] failed\n",
                            i),
                           1);
-      if (cdr.put_long (test_types.l) == 0)
+      if (cdr.write_long (test_types.l) == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "put_long-2[%d] failed\n",
+                           "write_long-2[%d] failed\n",
                            i),
                           1);
+#if 0
+      if (cdr.write_string (test_types.str) == 0)
+	ACE_ERROR_RETURN ((LM_ERROR,
+			   "write_string[%d] failed\n",
+			   i),
+			  1);
+#endif
     }
 
   return 0;
 }
 
 static int
-test_get (CDR &cdr, const CDR_Test_Types &test_types)
+test_get (TAO_InputCDR &cdr, const CDR_Test_Types &test_types)
 {
   CORBA::Octet xo;
   CORBA::Short xs;
   CORBA::Long xl;
+  CORBA::String xstr;
 
   for (int i = 0; i < n; ++i)
     {
-      if (cdr.get_octet (xo) == 0)
+      if (cdr.read_octet (xo) == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "get_octet[%d] failed\n",
+                           "read_octet[%d] failed\n",
                            i),
                           1);
       if (xo != test_types.o)
@@ -85,18 +112,18 @@ test_get (CDR &cdr, const CDR_Test_Types &test_types)
                            "octet[%d] differs\n",
                            i),
                           1);
-      if (cdr.get_short (xs) == 0)
+      if (cdr.read_short (xs) == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "get_short[%d] failed\n",
+                           "read_short[%d] failed\n",
                            i), 1);
       if (xs != test_types.s)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "short[%d] differs\n",
                            i),
                           1);
-      if (cdr.get_octet (xo) == 0)
+      if (cdr.read_octet (xo) == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "get_octet-2[%d] failed\n",
+                           "read_octet-2[%d] failed\n",
                            i),
                           1);
       if (xo != test_types.o)
@@ -104,9 +131,9 @@ test_get (CDR &cdr, const CDR_Test_Types &test_types)
                            "octet-2[%d] differs\n",
                            i),
                           1);
-      if (cdr.get_long (xl) == 0)
+      if (cdr.read_long (xl) == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "get_long[%d] failed\n",
+                           "read_long[%d] failed\n",
                            i),
                           1);
       if (xl != test_types.l)
@@ -114,9 +141,9 @@ test_get (CDR &cdr, const CDR_Test_Types &test_types)
                            "long[%d] differs\n",
                            i),
                           1);
-      if (cdr.get_long (xl) == 0)
+      if (cdr.read_long (xl) == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "get_long-2[%d] failed\n",
+                           "read_long-2[%d] failed\n",
                            i),
                           1);
       if (xl != test_types.l)
@@ -124,6 +151,19 @@ test_get (CDR &cdr, const CDR_Test_Types &test_types)
                            "long-2[%d] differs\n",
                            i),
                           1);
+#if 0
+      if (cdr.read_string (xstr) == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "read_string2[%d] failed\n",
+                           i),
+                          1);
+      if (ACE_OS::strcmp (xstr, test_types.str) != 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "string[%d] differs\n",
+                           i),
+                          1);
+      CORBA::string_free (xstr);
+#endif
     }
 
   return 0;
@@ -132,12 +172,26 @@ test_get (CDR &cdr, const CDR_Test_Types &test_types)
 int
 main (int, char *[])
 {
-  CDR cdr;
-  CDR_Test_Types test_types;
+  for (int i = 0; i < nloops; ++i)
+    {
+      TAO_OutputCDR output;
+      CDR_Test_Types test_types;
  
-  if (test_put (cdr, test_types) == 0 
-      && test_get (cdr, test_types) == 0)
-    return 0;
-  else
-    return 1;
+      if (test_put (output, test_types) != 0)
+	{
+	  return 1;
+	}
+      TAO_InputCDR input (output);
+#if 0
+      ACE_DEBUG ((LM_DEBUG, "Output CDR: \n"));
+      ACE_HEX_DUMP ((LM_DEBUG, input.rd_ptr(), 64));
+      ACE_DEBUG ((LM_DEBUG, "Input CDR: \n"));
+      ACE_HEX_DUMP ((LM_DEBUG, input.rd_ptr(), 64));
+#endif
+      if (test_get (input, test_types) != 0)
+	{
+	  return 1;
+	}
+    }
+  return 0;
 }

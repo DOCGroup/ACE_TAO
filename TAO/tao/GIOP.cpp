@@ -84,7 +84,7 @@ TAO_GIOP::dump_msg (const char *label,
 
 CORBA::Boolean
 TAO_GIOP::send_request (TAO_SVC_HANDLER *handler,
-                        CDR &stream)
+                        TAO_OutputCDR &stream)
 {
   ACE_TIMEPROBE ("  -> GIOP::send_request - start");
 
@@ -302,7 +302,7 @@ TAO_GIOP::read_buffer (ACE_SOCK_Stream &peer,
 
 TAO_GIOP::Message_Type
 TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
-                        CDR &msg,
+                        TAO_InputCDR &msg,
                         CORBA::Environment &env)
 {
   ACE_TIMEPROBE ("  -> GIOP::recv_request - start");
@@ -320,19 +320,16 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
   // as the "duty factor" goes down because of either long calls or
   // bursty contention during numerous short calls to the same server.
 
-  msg.reset ();
-
-  if (msg.grow (TAO_GIOP_HEADER_LEN) == 0)
+  CDR::mb_align (msg.start_);
+  if (CDR::grow (msg.start_, TAO_GIOP_HEADER_LEN) == -1)
     {
       env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_MAYBE));
       return TAO_GIOP::MessageError;
     }
 
-  assert (msg.size () > TAO_GIOP_HEADER_LEN);
-
-  char *bufptr = (char*) msg.buffer ();
+  char *header = msg.start_->rd_ptr ();
   ssize_t len = TAO_GIOP::read_buffer (connection,
-                                       bufptr,
+                                       header,
                                        TAO_GIOP_HEADER_LEN);
   // Read the header into the buffer.
 
@@ -369,20 +366,16 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
       return TAO_GIOP::MessageError;
     }
 
-  // Set the end of the message....
-  msg.wr_ptr (TAO_GIOP_HEADER_LEN);
-
-
   // NOTE: if message headers, or whome messages, get encrypted in
   // application software (rather than by the network infrastructure)
   // they should be decrypted here ...
 
   // First make sure it's a GIOP message of any version.
 
-  if (!(bufptr [0] == 'G'
-        && bufptr [1] == 'I'
-        && bufptr [2] == 'O'
-        && bufptr [3] == 'P'))
+  if (!(header [0] == 'G'
+        && header [1] == 'I'
+        && header [2] == 'O'
+        && header [3] == 'P'))
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));      // header
       ACE_DEBUG ((LM_DEBUG, "bad header, magic word\n"));
@@ -393,8 +386,8 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
   // Then make sure the major version is ours, and the minor version
   // is one that we understand.
 
-  if (!(bufptr [4] == TAO_GIOP_MessageHeader::MY_MAJOR
-        && bufptr [5] <= TAO_GIOP_MessageHeader::MY_MINOR))
+  if (!(header [4] == TAO_GIOP_MessageHeader::MY_MAJOR
+        && header [5] <= TAO_GIOP_MessageHeader::MY_MINOR))
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));      // header
       ACE_DEBUG ((LM_DEBUG, "bad header, version\n"));
@@ -405,15 +398,15 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
   // Get the message type out and adjust the buffer's records to record
   // that we've read everything except the length.
 
-  retval = (TAO_GIOP::Message_Type) bufptr[7];
+  retval = (TAO_GIOP::Message_Type) header[7];
 
-  msg.do_byteswap = (bufptr [6] != TAO_ENCAP_BYTE_ORDER);
+  msg.do_byte_swap_ = (header [6] != TAO_ENCAP_BYTE_ORDER);
 
   // Make sure byteswapping is done if needed, and then read the
   // message size (appropriately byteswapped).
 
-  msg.rd_ptr (8);
-  msg.get_ulong (message_size);
+  msg.start_->rd_ptr (8);
+  msg.read_ulong (message_size);
 
   // Make sure we have the full length in memory, growing the buffer
   // if needed.
@@ -423,22 +416,25 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
 
   assert (message_size <= UINT_MAX);
 
-  if (msg.grow (TAO_GIOP_HEADER_LEN + message_size) == 0)
+  if (CDR::grow (msg.start_, TAO_GIOP_HEADER_LEN + message_size) == -1)
     {
       env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_MAYBE));
       return TAO_GIOP::MessageError;
     }
 
-  // The offset from the current position were data writing should
-  // start, since we already read the msg length (4 bytes) starting at
-  // position 8 we need to substract 12 bytes.
-  const int offset = TAO_GIOP_HEADER_LEN - 12;
-  bufptr = (char *)msg.buffer() + offset;
+  // Growing the buffer may have reset the rd_ptr(), but we want to
+  // leave it just after the GIOP header (that was parsed already);
+  CDR::mb_align (msg.start_);
+  msg.start_->wr_ptr (TAO_GIOP_HEADER_LEN);
+  msg.start_->wr_ptr (message_size);
+  msg.start_->rd_ptr (TAO_GIOP_HEADER_LEN);
+
+  char* payload = msg.start_->rd_ptr ();
 
   // Read the rest of this message into the buffer.
 
   len = TAO_GIOP::read_buffer (connection,
-                               bufptr,
+                               payload,
                                (size_t) message_size);
 
   if (len != (ssize_t) message_size)
@@ -471,12 +467,9 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
       return TAO_GIOP::MessageError;
     }
 
-  // Set the end of the message....
-  msg.wr_ptr (message_size);
-
   TAO_GIOP::dump_msg ("recv",
-                      ACE_reinterpret_cast (u_char *, msg.buffer ()),
-                      (size_t) (message_size + TAO_GIOP_HEADER_LEN));
+                      ACE_reinterpret_cast (u_char *, header),
+                      message_size + TAO_GIOP_HEADER_LEN);
   ACE_TIMEPROBE ("  -> GIOP::recv_request - done");
   return retval;
 }
@@ -504,9 +497,13 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (IIOP_Object *data,
     opname_ (operation),
     do_rsvp_ (is_roundtrip),
     my_request_id_ (0),
-    stream_ (buffer, sizeof buffer),
+    out_stream_ (buffer, sizeof buffer),
+    inp_stream_ (buffer, sizeof buffer),
     handler_ (0)
 {
+  // @@ TODO The comments here are scary, can someone please give me a
+  // warm fuzzy feeling about this (coryan).
+
   // The assumption that thread ids are ints is false and horribly
   // implementation-dependent, so this code just sucks.  But, at least
   // it will compile on multiple platforms through the magic of ACE
@@ -725,7 +722,8 @@ TAO_GIOP_Invocation::start (CORBA::Environment &env)
 
   // Build the outgoing message, starting with generic GIOP header.
 
-  CORBA::Boolean bt = TAO_GIOP::start_message (TAO_GIOP::Request, this->stream_);
+  CORBA::Boolean bt = TAO_GIOP::start_message (TAO_GIOP::Request,
+					       this->out_stream_);
 
   if (bt != CORBA::B_TRUE)
     {
@@ -750,29 +748,29 @@ TAO_GIOP_Invocation::start (CORBA::Environment &env)
   static CORBA::Principal_ptr anybody = 0;
   static TAO_GIOP_ServiceContextList svc_ctx;   // all zeroes
 
-  if (this->stream_.encode (&TC_ServiceContextList, 0, &svc_ctx, env)
+  if (this->out_stream_.encode (&TC_ServiceContextList, 0, &svc_ctx, env)
       != CORBA::TypeCode::TRAVERSE_CONTINUE)
     return;
 
-  if (!this->stream_.put_ulong (this->my_request_id_)
-      || !this->stream_.put_boolean (this->do_rsvp_))
+  if (!this->out_stream_.write_ulong (this->my_request_id_)
+      || !this->out_stream_.write_boolean (this->do_rsvp_))
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
       return;
     }
 
-  if (this->stream_.encode (&TC_opaque,
-                            key,
-                            0,
-                            env) != CORBA::TypeCode::TRAVERSE_CONTINUE
-      || this->stream_.encode (CORBA::_tc_string,
-                               &opname_,
-                               0,
-                               env) != CORBA::TypeCode::TRAVERSE_CONTINUE
-      || this->stream_.encode (CORBA::_tc_Principal,
-                               &anybody,
-                               0,
-                               env) != CORBA::TypeCode::TRAVERSE_CONTINUE)
+  if (this->out_stream_.encode (&TC_opaque,
+				key,
+				0,
+				env) != CORBA::TypeCode::TRAVERSE_CONTINUE
+      || this->out_stream_.encode (CORBA::_tc_string,
+				   &opname_,
+				   0,
+				   env) != CORBA::TypeCode::TRAVERSE_CONTINUE
+      || this->out_stream_.encode (CORBA::_tc_Principal,
+				   &anybody,
+				   0,
+				   env) != CORBA::TypeCode::TRAVERSE_CONTINUE)
     return; // right after fault
   else
     return; // no fault reported
@@ -811,7 +809,7 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
 {
   // Send Request, return on error or if we're done
 
-  if (this->handler_->send_request (this->stream_,
+  if (this->handler_->send_request (this->out_stream_,
                                     this->do_rsvp_) == -1)
     {
       // send_request () closed the connection; we just set the
@@ -875,7 +873,8 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
 
   TAO_SVC_HANDLER *handler = this->handler_;
   TAO_GIOP::Message_Type m = TAO_GIOP::recv_request (handler,
-                                               this->stream_, env);
+						     this->inp_stream_,
+						     env);
   switch (m)
     {
     case TAO_GIOP::Reply:
@@ -956,16 +955,16 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
   CORBA::ULong request_id;
   CORBA::ULong reply_status;            // TAO_GIOP_ReplyStatusType
 
-  if (this->stream_.decode (&TC_ServiceContextList, &reply_ctx, 0, env)
+  if (this->inp_stream_.decode (&TC_ServiceContextList, &reply_ctx, 0, env)
       != CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
       TAO_GIOP::send_error (this->handler_);
       return TAO_GIOP_SYSTEM_EXCEPTION;
     }
 
-  if (!this->stream_.get_ulong (request_id)
+  if (!this->inp_stream_.read_ulong (request_id)
       || request_id != this->my_request_id_
-      || !this->stream_.get_ulong (reply_status)
+      || !this->inp_stream_.read_ulong (reply_status)
       || reply_status > TAO_GIOP_LOCATION_FORWARD)
     {
       TAO_GIOP::send_error (this->handler_);
@@ -1002,7 +1001,7 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
 
         // Pull the exception ID out of the marshaling buffer.
         {
-          if (this->stream_.get_string (buf) == CORBA::B_FALSE)
+	  if (this->inp_stream_.read_string (buf) == CORBA::B_FALSE)
             {
               TAO_GIOP::send_error (this->handler_);
               env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_YES));
@@ -1060,7 +1059,7 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
 
                 exception = new (new char [size]) CORBA::Exception (*tcp);
 
-                if (this->stream_.decode (*tcp, exception, 0, env)
+                if (this->inp_stream_.decode (*tcp, exception, 0, env)
                     != CORBA::TypeCode::TRAVERSE_CONTINUE)
                   {
                     delete exception;
@@ -1102,9 +1101,9 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
         // one of the facets of this object will be an IIOP invocation
         // profile.
 
-        if (this->stream_.decode (CORBA::_tc_Object,
-                                  &obj, 0,
-                                  env) != CORBA::TypeCode::TRAVERSE_CONTINUE
+        if (this->inp_stream_.decode (CORBA::_tc_Object,
+				      &obj, 0,
+				      env) != CORBA::TypeCode::TRAVERSE_CONTINUE
             || obj->QueryInterface (IID_IIOP_Object,
                                     (void **) &obj2) != TAO_NOERROR)
           {
@@ -1153,7 +1152,7 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
 }
 
 void
-TAO_GIOP::make_error (CDR &msg, ...)
+TAO_GIOP::make_error (TAO_OutputCDR &msg, ...)
 {
   ACE_UNUSED_ARG (msg);  // just for now
 
@@ -1163,10 +1162,10 @@ TAO_GIOP::make_error (CDR &msg, ...)
 }
 
 CORBA::Boolean
-TAO_GIOP_LocateRequestHeader::init (CDR &msg,
+TAO_GIOP_LocateRequestHeader::init (TAO_InputCDR &msg,
                                     CORBA::Environment &env)
 {
-  return (msg.get_ulong (this->request_id)
+  return (msg.read_ulong (this->request_id)
           && msg.decode (&TC_opaque,
                          &this->object_key,
                          0,
@@ -1176,7 +1175,7 @@ TAO_GIOP_LocateRequestHeader::init (CDR &msg,
 // Initialize the request header from <msg>, setting <env> for errors.
 
 CORBA::Boolean
-TAO_GIOP_RequestHeader::init (CDR &msg,
+TAO_GIOP_RequestHeader::init (TAO_InputCDR &msg,
                               CORBA::Environment &env)
 {
   CORBA::Boolean hdr_status;
@@ -1197,8 +1196,8 @@ TAO_GIOP_RequestHeader::init (CDR &msg,
 
   // Get the rest of the request header ...
 
-  hdr_status = hdr_status && msg.get_ulong (this->request_id);
-  hdr_status = hdr_status && msg.get_boolean (this->response_expected);
+  hdr_status = hdr_status && msg.read_ulong (this->request_id);
+  hdr_status = hdr_status && msg.read_boolean (this->response_expected);
   hdr_status = hdr_status && msg.decode (&TC_opaque,
                                          &this->object_key,
                                          0,
@@ -1215,26 +1214,30 @@ TAO_GIOP_RequestHeader::init (CDR &msg,
 }
 
 CORBA::Boolean
-TAO_GIOP::start_message (TAO_GIOP::Message_Type type, CDR &msg)
+TAO_GIOP::start_message (TAO_GIOP::Message_Type type,
+			 TAO_OutputCDR &msg)
 {
   msg.reset ();
 
   // if (msg.size () < TAO_GIOP_HEADER_LEN)
   // return CORBA::B_FALSE;
 
-  char* next = msg.buffer ();
+  msg.write_octet ('G');
+  msg.write_octet ('I');
+  msg.write_octet ('O');
+  msg.write_octet ('P');
 
-  next [0] = 'G';
-  next [1] = 'I';
-  next [2] = 'O';
-  next [3] = 'P';
+  msg.write_octet (TAO_GIOP_MessageHeader::MY_MAJOR);
+  msg.write_octet (TAO_GIOP_MessageHeader::MY_MINOR);
 
-  next [4] = TAO_GIOP_MessageHeader::MY_MAJOR;
-  next [5] = TAO_GIOP_MessageHeader::MY_MINOR;
-  next [6] = TAO_ENCAP_BYTE_ORDER;
-  next [7] = (u_char) type;
+  msg.write_octet (TAO_ENCAP_BYTE_ORDER);
+  msg.write_octet (type);
 
-  msg.wr_ptr (TAO_GIOP_HEADER_LEN);
+  // Write a dummy <size> later it is set to the right value...
+  // @@ TODO Maybe we should store the OutputCDR status in 
+  CORBA::ULong size = 0;
+  msg.write_ulong (size);
+
   return CORBA::B_TRUE;
 }
 

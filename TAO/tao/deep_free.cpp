@@ -1,5 +1,7 @@
 // ============================================================================
 //
+// $Id$
+//
 // = LIBRARY
 //    TAO
 //
@@ -163,7 +165,6 @@ TAO_Marshal_Struct::deep_free (CORBA::TypeCode_ptr  tc,
   CORBA::TypeCode::traverse_status retval = CORBA::TypeCode::TRAVERSE_CONTINUE;
   CORBA::TypeCode_ptr param;
   CORBA::Long size;
-  CDR stream;
 
   if (tc)
     {
@@ -463,7 +464,6 @@ TAO_Marshal_Array::deep_free (CORBA::TypeCode_ptr  tc,
   CORBA::TypeCode_ptr	tc2;  // typecode of the element
   size_t  size; // size of element
   CORBA::ULong  bounds;
-  CDR stream;  // used only to access the marshal_object factory
 
   // Rely on binary format of sequences -- all are the same
   // except for the type pointed to by "buffer"
@@ -628,7 +628,6 @@ TAO_Marshal_Alias::deep_free (CORBA::TypeCode_ptr  tc,
                               CORBA::Environment &env)
 {
   CORBA::TypeCode_ptr	tc2;  // typecode of the aliased type
-  CDR stream;  // to access the marshal object
   CORBA::TypeCode::traverse_status   retval =
     CORBA::TypeCode::TRAVERSE_CONTINUE; // status of encode operation
 
@@ -735,7 +734,6 @@ TAO_Marshal_Except::deep_free (CORBA::TypeCode_ptr  tc,
   CORBA::TypeCode::traverse_status retval = CORBA::TypeCode::TRAVERSE_CONTINUE;
   CORBA::TypeCode_ptr param;
   CORBA::Long size, alignment;
-  CDR stream;
 #endif /* 0 */
 
   if (tc)
