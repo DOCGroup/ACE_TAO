@@ -78,7 +78,7 @@ void
 ACE_TLI_Request_Queue::free (ACE_TLI_Request *node)
 {
   ACE_TRACE ("ACE_TLI_Request_Queue::free");
-  node->next_      = this->free_list_;
+  node->next_ = this->free_list_;
   this->free_list_ = node;
 }
 
@@ -111,7 +111,7 @@ int
 ACE_TLI_Request_Queue::dequeue (ACE_TLI_Request *&ptr)
 {
   ACE_TRACE ("ACE_TLI_Request_Queue::dequeue");
-  ptr              = this->tail_->next_;
+  ptr = this->tail_->next_;
   this->tail_->next_ = ptr->next_;
   this->current_count_--;
   return 0;
@@ -120,26 +120,35 @@ ACE_TLI_Request_Queue::dequeue (ACE_TLI_Request *&ptr)
 // This is hideous...
 
 static ACE_HANDLE
-open_new_endpoint (ACE_HANDLE listen_handle, const char dev[],
-                   struct t_call *callp, int rwf)
+open_new_endpoint (ACE_HANDLE listen_handle,
+                   const char dev[],
+                   struct t_call *callp,
+                   int rwf)
 {
   ACE_TRACE ("open_new_endpoint");
-  ACE_HANDLE fd;
-
 #if defined (ACE_PSOS)
-  if ((fd = ACE_OS::t_open ((char *) dev, S_IRUSR | S_IWUSR, 0)) == ACE_INVALID_HANDLE
+  ACE_HANDLE fd = ACE_OS::t_open ((char *) dev,
+                                  S_IRUSR | S_IWUSR,
+                                  0);
 #else
-  if ((fd = ACE_OS::t_open ((char *) dev, O_RDWR, 0)) == ACE_INVALID_HANDLE
-#endif
+  ACE_HANDLE fd = ACE_OS::t_open ((char *) dev,
+                                  O_RDWR,
+                                  0);
+#endif /* ACE_PSOS */
+
+  if (fd == ACE_INVALID_HANDLE
       || ACE_OS::t_bind (fd, 0, 0) == ACE_INVALID_HANDLE)
     fd = ACE_INVALID_HANDLE;
-#if defined (I_PUSH)
-  else if (rwf != 0 && ACE_OS::ioctl (fd, I_PUSH, "tirdwr") == ACE_INVALID_HANDLE)
+#if defined (I_PUSH) && !defined (ACE_HAS_FORE_ATM_XTI)
+  else if (rwf != 0 && ACE_OS::ioctl (fd,
+                                      I_PUSH,
+                                      "tirdwr") == ACE_INVALID_HANDLE)
     fd = ACE_INVALID_HANDLE;
 #endif /* I_PUSH */
 
   if (fd == ACE_INVALID_HANDLE)
-    ACE_OS::t_snddis (listen_handle, callp);
+    ACE_OS::t_snddis (listen_handle,
+                      callp);
   return fd;
 }
 
@@ -156,9 +165,11 @@ ACE_TLI_Request_Queue::close (void)
       ACE_TLI_Request &item = this->base_[i];
 
       item.handle_ = ACE_INVALID_HANDLE;
-      if (ACE_OS::t_free ((char *) item.callp_, T_CALL) != 0)
+      if (ACE_OS::t_free ((char *) item.callp_,
+                          T_CALL) != 0)
         res = ACE_INVALID_HANDLE;
     }
+
   delete [] this->base_;
   this->base_ = 0;
   return res;
@@ -171,7 +182,9 @@ ACE_TLI_Request_Queue::open (ACE_HANDLE f, int sz)
   this->handle_   = f;
   this->size_ = sz + 1; // Add one more for the dummy node.
 
-  ACE_NEW_RETURN (this->base_, ACE_TLI_Request[this->size_], ACE_INVALID_HANDLE);
+  ACE_NEW_RETURN (this->base_,
+                  ACE_TLI_Request[this->size_],
+                  ACE_INVALID_HANDLE);
 
   // Initialize the ACE_Queue and the free list.
 
@@ -181,8 +194,9 @@ ACE_TLI_Request_Queue::open (ACE_HANDLE f, int sz)
       this->free (item);
 
       item->handle_ = ACE_INVALID_HANDLE;
-      item->callp_ = (t_call *) ACE_OS::t_alloc (this->handle_, T_CALL, T_ALL);
-
+      item->callp_ = (t_call *) ACE_OS::t_alloc (this->handle_,
+                                                 T_CALL,
+                                                 T_ALL);
       if (item->callp_ == 0)
         return ACE_INVALID_HANDLE;
     }
@@ -212,21 +226,26 @@ ACE_TLI_Request_Queue::enqueue (const char device[],
   ACE_TRACE ("ACE_TLI_Request_Queue::enqueue");
   ACE_TLI_Request *temp = this->alloc ();
   ACE_TLI_Request &req  = *this->tail_;
-  int         res;
+  int res;
 
   do
     res = ACE_OS::t_listen (this->handle_, req.callp_);
-  while (res == ACE_INVALID_HANDLE && restart && t_errno == TSYSERR && errno == EINTR);
+  while (res == ACE_INVALID_HANDLE 
+         && restart 
+         && t_errno == TSYSERR 
+         && errno == EINTR);
 
   if (res != ACE_INVALID_HANDLE)
     {
-      req.handle_ = open_new_endpoint (this->handle_, device, req.callp_, rwflag);
-
+      req.handle_ = open_new_endpoint (this->handle_,
+                                       device,
+                                       req.callp_,
+                                       rwflag);
       if (req.handle_ != ACE_INVALID_HANDLE)
         {
-          temp->next_       = this->tail_->next_;
+          temp->next_ = this->tail_->next_;
           this->tail_->next_ = temp;
-          this->tail_       = temp;
+          this->tail_ = temp;
           this->current_count_++;
           return 0;
         }
@@ -286,25 +305,46 @@ ACE_TLI_Acceptor::open (const ACE_Addr &remote_sap,
   ACE_ALLOCATOR_RETURN (this->device_,
                         ACE_OS::strdup (dev),
                         ACE_INVALID_HANDLE);
-  if (this->ACE_TLI::open (dev, oflag, info) == ACE_INVALID_HANDLE)
+  if (this->ACE_TLI::open (dev,
+                           oflag,
+                           info) == ACE_INVALID_HANDLE)
     res = ACE_INVALID_HANDLE;
+#if !defined (ACE_HAS_FORE_ATM_XTI)
+  // Reusing the address causes problems with FORE's API. The issue
+  // may be that t_optmgmt isn't fully supported by FORE. t_errno is
+  // TBADOPT after the t_optmgmt call so maybe options are configured
+  // differently for XTI than for TLI (at least for FORE's
+  // implementation - XTI is supposed to be a superset of TLI).
   else if (reuse_addr
-           && this->set_option (SOL_SOCKET, SO_REUSEADDR,
-                                &one, sizeof one) == ACE_INVALID_HANDLE)
+           && this->set_option (SOL_SOCKET,
+                                SO_REUSEADDR,
+                                &one,
+                                sizeof one) == ACE_INVALID_HANDLE)
     res = ACE_INVALID_HANDLE;
+#endif /* ACE_HAS_FORE_ATM_XTI */
   else if ((this->disp_ =
-            (struct t_discon *) ACE_OS::t_alloc (this->get_handle (), T_DIS, T_ALL)) == 0)
+            (struct t_discon *) ACE_OS::t_alloc (this->get_handle (),
+                                                 T_DIS,
+                                                 T_ALL)) == 0)
     res = ACE_INVALID_HANDLE;
   else
     {
       struct t_bind req;
 
-      this->backlog_  = qlen;
+#if defined (ACE_HAS_FORE_ATM_XTI)
+      // Not sure why but FORE's t_bind call won't work if t_bind.qlen
+      // != 1 Adjust the backlog accordingly.
+      this->backlog_ = 1;
+      req.qlen = 1;
+#else
+      this->backlog_ = qlen;
       req.qlen = qlen;
+#endif /* ACE_HAS_FORE_ATM_XTI */
       req.addr.maxlen = remote_sap.get_size ();
 
       if (remote_sap == ACE_Addr::sap_any)
-        // Note that if addr.len == 0 then ACE_TLI selects the port number.
+        // Note that if addr.len == 0 then ACE_TLI selects the port
+        // number.
         req.addr.len = 0;
       else
         {
@@ -312,20 +352,22 @@ ACE_TLI_Acceptor::open (const ACE_Addr &remote_sap,
           req.addr.buf = (char *) remote_sap.get_addr ();
         }
 
-      res = ACE_OS::t_bind (this->get_handle (), &req, 0);
+      res = ACE_OS::t_bind (this->get_handle (),
+                            &req,
+                            0);
       if (res != ACE_INVALID_HANDLE)
         {
-          ACE_NEW_RETURN (this->queue_, ACE_TLI_Request_Queue, -1);
-
-          res = this->queue_->open (this->get_handle (), this->backlog_);
+          ACE_NEW_RETURN (this->queue_,
+                          ACE_TLI_Request_Queue,
+                          -1);
+          res = this->queue_->open (this->get_handle (),
+                                    this->backlog_);
         }
     }
-
   if (res == ACE_INVALID_HANDLE)
     this->close ();
   return this->get_handle ();
 }
-
 
 ACE_TLI_Acceptor::ACE_TLI_Acceptor (const ACE_Addr &remote_sap,
                                     int reuse_addr,
@@ -335,9 +377,15 @@ ACE_TLI_Acceptor::ACE_TLI_Acceptor (const ACE_Addr &remote_sap,
                                     const char dev[])
 {
   ACE_TRACE ("ACE_TLI_Acceptor::ACE_TLI_Acceptor");
-  if (this->open (remote_sap, reuse_addr, oflag,
-                  info, back, dev) == ACE_INVALID_HANDLE)
-    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_TLI_Acceptor::ACE_TLI_Acceptor")));
+  if (this->open (remote_sap,
+                  reuse_addr,
+                  oflag,
+                  info,
+                  back,
+                  dev) == ACE_INVALID_HANDLE)
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("%p\n"),
+                ASYS_TEXT ("ACE_TLI_Acceptor::ACE_TLI_Acceptor")));
 }
 
 int
@@ -377,7 +425,9 @@ ACE_TLI_Acceptor::handle_async_event (int restart, int rwf)
       this->queue_->remove (this->disp_->sequence);
       break;
     case T_LISTEN:
-      this->queue_->enqueue (this->device_, restart, rwf);
+      this->queue_->enqueue (this->device_,
+                             restart,
+                             rwf);
       break;
     default:
       return -1;
@@ -403,32 +453,41 @@ ACE_TLI_Acceptor::accept (ACE_TLI_Stream &new_tli_sap,
 
   if (timeout != 0
       && ACE::handle_timed_accept (this->get_handle (),
-                                   timeout, restart) == -1)
+                                   timeout,
+                                   restart) == -1)
     return -1;
   else if (this->queue_->is_empty ())
     {
       req = this->queue_->alloc ();
 
       do
-        res = ACE_OS::t_listen (this->get_handle (), req->callp_);
+        res = ACE_OS::t_listen (this->get_handle (),
+                                req->callp_);
       while (res == ACE_INVALID_HANDLE
              && restart
              && errno == EINTR);
 
       if (res != ACE_INVALID_HANDLE)
         res = req->handle_ = open_new_endpoint (this->get_handle (),
-                                                this->device_, req->callp_, rwf);
+                                                this->device_,
+                                                req->callp_,
+                                                rwf);
     }
   else
     res = this->queue_->dequeue (req);
 
   if (udata != 0)
-    ACE_OS::memcpy ((void *) &req->callp_->udata, (void *) udata, sizeof *udata);
+    ACE_OS::memcpy ((void *) &req->callp_->udata,
+                    (void *) udata,
+                    sizeof *udata);
   if (opt != 0)
-    ACE_OS::memcpy ((void *) &req->callp_->opt, (void *) opt, sizeof *opt);
+    ACE_OS::memcpy ((void *) &req->callp_->opt,
+                    (void *) opt,
+                    sizeof *opt);
 
   while (res != ACE_INVALID_HANDLE)
-    if ((res = ACE_OS::t_accept (this->get_handle (), req->handle_,
+    if ((res = ACE_OS::t_accept (this->get_handle (),
+                                 req->handle_,
                                  req->callp_)) != ACE_INVALID_HANDLE)
       break; // Got one!
     else if (t_errno == TLOOK)
@@ -450,7 +509,8 @@ ACE_TLI_Acceptor::accept (ACE_TLI_Stream &new_tli_sap,
       new_tli_sap.set_handle (req->handle_);
 
       if (remote_addr != 0)
-        remote_addr->set_addr ((void *) req->callp_->addr.buf, req->callp_->addr.len);
+        remote_addr->set_addr ((void *) req->callp_->addr.buf,
+                               req->callp_->addr.len);
     }
 
   req->handle_ = ACE_INVALID_HANDLE;
