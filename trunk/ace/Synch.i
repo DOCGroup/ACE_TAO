@@ -604,7 +604,9 @@ ACE_Recursive_Thread_Mutex::get_nesting_level (void)
 ACE_INLINE int
 ACE_Process_Mutex::remove (void)
 {
-  return this->lock_->remove ();
+  int retv = this->lock_->remove ();
+  this->lock_ = 0;
+  return retv;
 }
 
 // Acquire lock ownership (wait on priority queue if necessary).
