@@ -1,3 +1,8 @@
+Fri Jul  5 13:50:28 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* tests/AMH_Exceptions/server.cpp (start_orb_and_poa): 
+	  Fixed Exception macros for no-exception builds.
+
 Fri Jul  5 12:07:07 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp:
