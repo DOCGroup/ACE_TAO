@@ -239,13 +239,15 @@ public:
   // = Set/get the handler associated with a particular signal.
 
   virtual ACE_Event_Handler *handler (int signum);
-  // Return the list of <ACE_Sig_Handlers> associated with <signum>.
+  // Return the <ACE_Sig_Handler> associated with <signum>.
 
-  virtual ACE_Event_Handler *handler (int signum, ACE_Event_Handler *);
+  virtual ACE_Event_Handler *handler (int signum,
+                                      ACE_Event_Handler *);
   // Set a new <ACE_Event_Handler> that is associated with <signum>.
   // Return the existing handler.
 
-  static void dispatch (int, siginfo_t *, ucontext_t *);
+  static void dispatch (int, siginfo_t *,
+                        ucontext_t *);
   // Callback routine registered with sigaction(2) that dispatches the
   // <handle_signal> method of the appropriate pre-registered
   // ACE_Event_Handler.
@@ -258,6 +260,25 @@ public:
 
 protected:
   // = These methods and data members are shared by derived classes.
+
+  virtual ACE_Event_Handler *handler_i (int signum,
+                                        ACE_Event_Handler *);
+  // Set a new <ACE_Event_Handler> that is associated with <signum>.
+  // Return the existing handler.  Does not acquire any locks so that
+  // it can be called from a signal handler, such as <dispatch>.
+
+  virtual int register_handler_i (int signum,
+                                  ACE_Event_Handler *new_sh,
+                                  ACE_Sig_Action *new_disp = 0,
+                                  ACE_Event_Handler **old_sh = 0,
+                                  ACE_Sig_Action *old_disp = 0);
+  // This implementation method is called by <register_handler> and
+  // <dispatch>.  It doesn't do any locking so that it can be called
+  // within a signal handler, such as <dispatch>.  It adds a new
+  // <ACE_Event_Handler> and a new sigaction associated with <signum>.
+  // Passes back the existing <ACE_Event_Handler> and its sigaction if
+  // pointers are non-zero.  Returns -1 on failure and >= 0 on
+  // success.
 
   static int in_range (int signum);
   // Check whether the SIGNUM is within the legal range of signals.
@@ -352,13 +373,14 @@ public:
   // = Set/get the handler associated with a particular signal.
 
   virtual ACE_Event_Handler *handler (int signum);
-  // Return the head of the list of ACE_Sig_Handlers associated
-  // with SIGNUM.
+  // Return the head of the list of <ACE_Sig_Handler>s associated with
+  // SIGNUM.
 
-  virtual ACE_Event_Handler *handler (int signum, ACE_Event_Handler *);
-  // Set a new ACE_Event_Handler that is associated with SIGNUM at the
-  // head of the list of signals.  Return the existing handler that
-  // was at the head.
+  virtual ACE_Event_Handler *handler (int signum,
+                                      ACE_Event_Handler *);
+  // Set a new <ACE_Event_Handler> that is associated with SIGNUM at
+  // the head of the list of signals.  Return the existing handler
+  // that was at the head.
 
   static void dispatch (int signum, siginfo_t *, ucontext_t *);
   // Callback routine registered with sigaction(2) that dispatches the

@@ -1,5 +1,12 @@
 Mon Aug  9 07:45:19 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Signal.h: Modified the behavior of the
+ 	  ACE_Sig_Handler::dispatch() method so that on Win32 it'll
+ 	  automagically re-register the signal handler after the
+ 	  handler_signal() method returns with a non -1 value.  Thanks to
+ 	  Andreas Geisler <andreas.geisler@erls.siemens.de> for suggesting
+ 	  this.
+
 	* tests/Malloc_Test.cpp: Win32 didn't seem to like a 32k
 	  offset for the virtual address.  Let's try 64k instead.  Thanks
  	  to Nanbor for reporting this.

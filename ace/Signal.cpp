@@ -210,13 +210,10 @@ ACE_Sig_Handler::handler (int signum)
 }
 
 ACE_Event_Handler *
-ACE_Sig_Handler::handler (int signum, ACE_Event_Handler *new_sh)
+ACE_Sig_Handler::handler_i (int signum,
+                            ACE_Event_Handler *new_sh)
 {
-  ACE_TRACE ("ACE_Sig_Handler::handler");
-  ACE_MT (ACE_Recursive_Thread_Mutex *lock =
-    ACE_Managed_Object<ACE_Recursive_Thread_Mutex>::get_preallocated_object
-      (ACE_Object_Manager::ACE_SIG_HANDLER_LOCK);
-    ACE_Guard<ACE_Recursive_Thread_Mutex> m (*lock));
+  ACE_TRACE ("ACE_Sig_Handler::handler_i");
 
   if (ACE_Sig_Handler::in_range (signum))
     {
@@ -229,7 +226,61 @@ ACE_Sig_Handler::handler (int signum, ACE_Event_Handler *new_sh)
     return 0;
 }
 
+ACE_Event_Handler *
+ACE_Sig_Handler::handler (int signum,
+                          ACE_Event_Handler *new_sh)
+{
+  ACE_TRACE ("ACE_Sig_Handler::handler");
+  ACE_MT (ACE_Recursive_Thread_Mutex *lock =
+    ACE_Managed_Object<ACE_Recursive_Thread_Mutex>::get_preallocated_object
+      (ACE_Object_Manager::ACE_SIG_HANDLER_LOCK);
+    ACE_Guard<ACE_Recursive_Thread_Mutex> m (*lock));
+
+  return this->handler_i (signum, new_sh);
+}
+
 // Register an ACE_Event_Handler along with the corresponding SIGNUM.
+// This method does NOT acquire any locks, so it can be called from a
+// signal handler.
+
+int
+ACE_Sig_Handler::register_handler_i (int signum,
+                                     ACE_Event_Handler *new_sh,
+                                     ACE_Sig_Action *new_disp,
+                                     ACE_Event_Handler **old_sh,
+                                     ACE_Sig_Action *old_disp)
+{
+  ACE_TRACE ("ACE_Sig_Handler::register_handler_i");
+
+  if (ACE_Sig_Handler::in_range (signum))
+    {
+      ACE_Sig_Action sa; // Define a "null" action.
+      ACE_Event_Handler *sh = this->handler_i (signum,
+                                               new_sh);
+
+      // Return a pointer to the old <ACE_Sig_Handler> if the user
+      // asks for this.
+      if (old_sh != 0)
+        *old_sh = sh;
+
+      // Make sure that <new_disp> points to a valid location if the
+      // user doesn't care...
+      if (new_disp == 0)
+        new_disp = &sa;
+
+      new_disp->handler (ace_signal_handler_dispatcher);
+#if !defined (ACE_HAS_LYNXOS_SIGNALS)
+      new_disp->flags (new_disp->flags () | SA_SIGINFO);
+#endif /* ACE_HAS_LYNXOS_SIGNALS */
+      return new_disp->register_action (signum, old_disp);
+    }
+  else
+    return -1;
+}
+
+// Register an ACE_Event_Handler along with the corresponding SIGNUM.
+// This method acquires a lock, so it can't be called from a signal
+// handler, e.g., <dispatch>.
 
 int
 ACE_Sig_Handler::register_handler (int signum,
@@ -244,29 +295,11 @@ ACE_Sig_Handler::register_handler (int signum,
       (ACE_Object_Manager::ACE_SIG_HANDLER_LOCK);
     ACE_Guard<ACE_Recursive_Thread_Mutex> m (*lock));
 
-  if (ACE_Sig_Handler::in_range (signum))
-    {
-      ACE_Sig_Action sa; // Define a "null" action.
-      ACE_Event_Handler *sh = this->handler (signum, new_sh);
-
-      // Stack the old ACE_Sig_Handler if the user gives us a pointer
-      // to a object.
-      if (old_sh != 0)
-        *old_sh = sh;
-
-      // Make sure that new_disp points to a valid location if the
-      // user doesn't care...
-      if (new_disp == 0)
-        new_disp = &sa;
-
-      new_disp->handler (ace_signal_handler_dispatcher);
-#if !defined (ACE_HAS_LYNXOS_SIGNALS)
-      new_disp->flags (new_disp->flags () | SA_SIGINFO);
-#endif /* ACE_HAS_LYNXOS_SIGNALS */
-      return new_disp->register_action (signum, old_disp);
-    }
-  else
-    return -1;
+  return this->register_handler_i (signum,
+                                   new_sh,
+                                   new_disp,
+                                   old_sh,
+                                   old_disp);
 }
 
 // Remove an ACE_Event_Handler.
@@ -312,13 +345,6 @@ ACE_Sig_Handler::dispatch (int signum,
                            ucontext_t *ucontext)
 {
   ACE_TRACE ("ACE_Sig_Handler::dispatch");
-  // The following is #ifdef'd out because it's entirely non-portable
-  // to acquire a mutex in a signal handler...
-#if 0
-  ACE_MT (ACE_Recursive_Thread_Mutex *lock =
-          ACE_Managed_Object<ACE_Recursive_Thread_Mutex>::get_preallocated_object (ACE_Object_Manager::ACE_SIG_HANDLER_LOCK);
-          ACE_TSS_Guard<ACE_Recursive_Thread_Mutex> m (*lock));
-#endif /* 0 */
 
   // Save/restore errno.
   ACE_Errno_Guard error (errno);
@@ -332,24 +358,37 @@ ACE_Sig_Handler::dispatch (int signum,
 
   ACE_Event_Handler *eh = ACE_Sig_Handler::signal_handlers_[signum];
 
-  if (eh != 0 && eh->handle_signal (signum, siginfo, ucontext) == -1)
+  if (eh != 0)
     {
-      // Define the default disposition.
+      if (eh->handle_signal (signum, siginfo, ucontext) == -1)
+        {
+          // Define the default disposition.
 #if defined (ACE_PSOS)
-      ACE_Sig_Action sa ((ACE_SignalHandler) 0, (sigset_t *) 0);
+          ACE_Sig_Action sa ((ACE_SignalHandler) 0, (sigset_t *) 0);
 #else
-      ACE_Sig_Action sa (SIG_DFL, (sigset_t *) 0);
+          ACE_Sig_Action sa (SIG_DFL, (sigset_t *) 0);
 #endif /* defined (ACE_PSOS) */
 
-      ACE_Sig_Handler::signal_handlers_[signum] = 0;
+          ACE_Sig_Handler::signal_handlers_[signum] = 0;
 
-      // Remove the current disposition by registering the default
-      // disposition.
-      sa.register_action (signum);
+          // Remove the current disposition by registering the default
+          // disposition.
+          sa.register_action (signum);
 
-      // Allow the event handler to close down if necessary.
-      eh->handle_close (ACE_INVALID_HANDLE,
-                        ACE_Event_Handler::SIGNAL_MASK);
+          // Allow the event handler to close down if necessary.
+          eh->handle_close (ACE_INVALID_HANDLE,
+                            ACE_Event_Handler::SIGNAL_MASK);
+        }
+#if defined (ACE_WIN32)
+      else
+        // Win32 is weird in the sense that it resets the signal
+        // disposition to SIG_DFL after a signal handler is
+        // dispatched.  Therefore, to workaround this "feature" we
+        // must re-register the <ACE_Event_Handler> with <signum>
+        // explicitly.
+        this->register_handler_i (signum,
+                                  eh);
+#endif /* ACE_WIN32*/
     }
 }
 
