@@ -1,3 +1,8 @@
+Fri Mar  7 06:08:16 2003  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/Param_Test/svc.conf: Added native wchar codeset id to
+          allow transmission of wchar data.
+
 Thu Mar  6 11:35:10 2003  Ossama Othman  <ossama@uci.edu>
 
 	* tao/IFR_Client/IFR_ExtendedC.h:
@@ -25,30 +30,25 @@ Thu Mar 06 12:26:36 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 Thu Mar  6 11:03:02 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
-        * TAO_IDL/be/be_visitor_operation/operation.cpp:
-
-        Fix the generation of environment checking code following the call
-        to TAO_[In|Out]putCDR::throw_stub_exception() so it doesn't break on
-        non-native exception builds.
+        * TAO_IDL/be/be_visitor_operation/operation.cpp: Fix the generation
+	  of environment checking code following the call to
+          TAO_[In|Out]putCDR::throw_stub_exception() so it doesn't break
+          on non-native exception builds.
 
 Wed Mar  5 16:09:19 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Codeset_Manager.h:
         * tao/Codeset_Translaotr_Factory.h:
         * tao/Codeset_Translator_Factory_T.h:
-        * tests/CodeSets/simple/server.cpp:
-
-        Fix fuzz errors
+        * tests/CodeSets/simple/server.cpp: Fix fuzz errors
 
 Wed Mar  5 12:53:22 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/TAO.dsp:
         * tao/TAO_Static.dsp:
         * tao/tao-dll.icc:
-        * tao/tao-lib.icc:
-
-        Added Codeset_manager and Codeset_Translator_Factory source to
-        makefiles.
+        * tao/tao-lib.icc: Added Codeset_manager and
+          Codeset_Translator_Factory source to  makefiles.
 
 Wed Mar  5 11:00:51 2003  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -70,15 +70,12 @@ Wed Mar  5 10:21:54 2003  Chad Elliott  <elliott_c@ociweb.com>
 
 Wed Mar  5 09:41:55 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
-        * tao/Makefile.bor (OBJFILES):
-
-        Fixed typo in file list.
+        * tao/Makefile.bor (OBJFILES): Fixed typo in file list.
 
 Wed Mar  5 09:07:02 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
-        * tao/Transport.cpp (assign_translators):
-
-        Removed the ACE_INLINE from the function
+        * tao/Transport.cpp (assign_translators): Removed the ACE_INLINE
+          from the function
 
 Wed Mar  5 08:54:53 CST 2003 Pradeep Gore <pradeep@oomworks.com>
 
@@ -87,23 +84,20 @@ Wed Mar  5 08:54:53 CST 2003 Pradeep Gore <pradeep@oomworks.com>
 
 Wed Mar  5 06:14:34 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
-        * tao/Makefile.bor (OBJFILES):
-
-        Added Codeset related files to makefile.
+        * tao/Makefile.bor (OBJFILES): Added Codeset related files to makefile.
 
 Wed Mar  5 00:01:09 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * TAO_IDL/util/utl_global.cpp (validate_included_idl_files):
-        Swapped the order of parameters to passed to realpath, which is the
-        non-windows function used for canonizing a path.
+          Swapped the order of parameters to passed to realpath, which is
+          the non-windows function used for canonizing a path.
 
 Tue Mar  4 13:44:06 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * TAO/TAO_IDL/be/be_visitor_operation/operation.cpp:
-        * TAO/TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
-
-        Wrap the marshal / unmarshal code to check for errors and call the
-        appropriate static function to raise the related exception.
+        * TAO/TAO_IDL/be/be_visitor_operation/operation_ss.cpp: Wrap the
+          marshal / unmarshal code to check for errors and call the
+          appropriate static function to raise the related exception.
 
         * TAO/tao/Any.cpp:
         * TAO/tao/Any.h:
@@ -142,31 +136,27 @@ Tue Mar  4 13:44:06 2003  Phil Mesnier  <mesnier_p@ociweb.com>
         * tao/Strategies/UIOP_Acceptor.cpp:
         * tao/Strategies/UIOP_Profile.cpp:
         * tao/Strategies/UIOP_Transport.cpp:
-        * utils/catior/catior.cpp:
+        * utils/catior/catior.cpp: These files modified to support the
+          codeset negotiation feature. This feature replaces the
+          ACE_Char_Codeset_Translators owned by the ORB with A codset
+          manager framework and dynamically loadable translators.
 
-        These files modified to support the codeset negotiation feature. This
-        feature replaces the ACE_Char_Codeset_Translators owned by the ORB with
-        A codset manager framework and dynamically loadable translators.
-
-        The functionality conforms with CORBA 3.0 section 13.10.
+          The functionality conforms with CORBA 3.0 section 13.10.
 
         * TAO/tao/Codeset_Manager.cpp:
         * TAO/tao/Codeset_Manager.h:
         * TAO/tao/Codeset_Translator_Factory.cpp:
         * TAO/tao/Codeset_Translator_Factory.h:
         * TAO/tao/Codeset_Translator_Factory_T.cpp:
-        * TAO/tao/Codeset_Translator_Factory_T.h:
+        * TAO/tao/Codeset_Translator_Factory_T.h: New files added to to
+          support the codeset framework
 
-        New files added to to support the codeset framework
-
-        * TAO/tests/CodeSets:
-
-        A new test, including a sample translator library.
+        * TAO/tests/CodeSets: A new test, including a sample translator
+          library.
 
 Tue Mar  4 08:57:20 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/util/utl_global.cpp:
-
           Misunderstood the error message that led to the checkin
           below, actually had to retain the 'const' qualifier.
 
