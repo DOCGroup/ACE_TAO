@@ -25,11 +25,11 @@ const CORBA::Long _oc_TAO__tao_seq_Octet[] =
 
   0,
 };
-CORBA::TypeCode _tc__tc_TAO__tao_seq_Octet (CORBA::tk_sequence, sizeof
+CORBA::TypeCode _tc_TAO_tc_TAO__tao_seq_Octet (CORBA::tk_sequence, sizeof
                                             (_oc_TAO__tao_seq_Octet), (char *)
                                             &_oc_TAO__tao_seq_Octet, 0,
                                             sizeof (TAO_tao_seq_Octet));
-CORBA::TypeCode_ptr TAO_tc__tao_seq_Octet = &_tc__tc_TAO__tao_seq_Octet;
+CORBA::TypeCode_ptr TAO_tc__tao_seq_Octet = &_tc_TAO_tc_TAO__tao_seq_Octet;
 
 
 #endif // end #if !defined
@@ -46,9 +46,9 @@ const CORBA::Long _oc_TAO_ObjectKey[] =
 
   0,
 };
-CORBA::TypeCode _tc__tc_TAO_ObjectKey (CORBA::tk_alias, sizeof
+CORBA::TypeCode _tc_TAO_tc_TAO_ObjectKey (CORBA::tk_alias, sizeof
                                        (_oc_TAO_ObjectKey), (char *)
                                        &_oc_TAO_ObjectKey, 0,
                                        sizeof (TAO_ObjectKey));
-CORBA::TypeCode_ptr TAO_tc_ObjectKey = &_tc__tc_TAO_ObjectKey;
+CORBA::TypeCode_ptr TAO_tc_ObjectKey = &_tc_TAO_tc_TAO_ObjectKey;
 

@@ -32,7 +32,7 @@
 
 #if defined (TAO_HAS_EXCEPTIONS)
 
-#define TAO_TRY_ENV __env
+#define TAO_TRY_ENV _tao_try_environment
 
 // The first "do" scope is for the env.
 // The second "do" scope is for the TAO_CHECK_ENV continues.
