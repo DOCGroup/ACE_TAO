@@ -3949,6 +3949,21 @@ SOURCE=.\Context.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\corbafwd.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\CurrentC.cpp
 
 !IF  "$(CFG)" == "TAO - Win32 Release"
@@ -31093,6 +31108,10 @@ SOURCE=.\connect.i
 # Begin Source File
 
 SOURCE=.\Context.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\corbafwd.i
 # End Source File
 # Begin Source File
 

@@ -118,6 +118,10 @@ SOURCE=.\Context.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\corbafwd.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\CurrentC.cpp
 # End Source File
 # Begin Source File
@@ -747,6 +751,10 @@ SOURCE=.\cdr.i
 # Begin Source File
 
 SOURCE=.\connect.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\corbafwd.i
 # End Source File
 # Begin Source File
 
