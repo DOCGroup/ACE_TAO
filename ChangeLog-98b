@@ -1,8 +1,13 @@
+Tue Sep 29 11:05:04 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/README: removed ACE_HAS_ONLY_TWO_PARAMS_FOR_ASCTIME_R_AND_CTIME_R
+          because it is no longer used.
+
 Mon Sep 28 20:35:49 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
-	* ace/Containers_T.h: 
-	* ace/Containers_T.cpp: Added begin () and end () to
- 	ACE_Unbounded_Queue.
+        * ace/Containers_T.h:
+        * ace/Containers_T.cpp: Added begin () and end () to
+          ACE_Unbounded_Queue.
 
 Mon Sep 28 16:06:05 1998  David L. Levine  <levine@cs.wustl.edu>
 
