@@ -6,7 +6,7 @@
 #include "Method_Request_Dispatch_No_Filtering.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(RT_Notify, TAO_NS_Method_Request_Dispatch_No_Filtering, "$Id$")
+ACE_RCSID(Notify, TAO_NS_Method_Request_Dispatch_No_Filtering, "$Id$")
 
 #include "tao/debug.h"
 #include "ProxySupplier.h"

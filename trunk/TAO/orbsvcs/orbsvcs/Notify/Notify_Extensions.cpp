@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 #include "Notify_Extensions.h"

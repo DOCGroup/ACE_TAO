@@ -6,7 +6,7 @@
 #include "EventType.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(RT_Notify, TAO_NS_EventType, "$Id$")
+ACE_RCSID(Notify, TAO_NS_EventType, "$Id$")
 
 TAO_NS_EventType
 TAO_NS_EventType::special (void)

@@ -25,7 +25,7 @@
  *
  * @brief Maintained for backward compatibility.
  */
-class TAO_Notify_Export TAO_Notify_Default_POA_Factory 
+class TAO_Notify_Export TAO_Notify_Default_POA_Factory
 {
 public:
   /// Helper function to register the default factory into the service

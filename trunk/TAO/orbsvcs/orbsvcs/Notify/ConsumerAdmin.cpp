@@ -91,9 +91,31 @@ TAO_NS_ConsumerAdmin::obtain_notification_push_supplier (CosNotifyChannelAdmin::
                    , CosNotifyChannelAdmin::AdminLimitExceeded
                    ))
 {
+  CosNotification::QoSProperties initial_qos;
+
   return TAO_NS_PROPERTIES::instance()->builder()->build_proxy (this
                                                                 , ctype
                                                                 , proxy_id
+                                                                                                                                                                , initial_qos
+                                                                ACE_ENV_ARG_PARAMETER);
+}
+
+CosNotifyChannelAdmin::ProxySupplier_ptr
+TAO_NS_ConsumerAdmin::obtain_notification_push_supplier_with_qos (CosNotifyChannelAdmin::ClientType ctype,
+                                                                  CosNotifyChannelAdmin::ProxyID_out proxy_id,
+                                                                  const CosNotification::QoSProperties & initial_qos
+                                                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS
+                                                                  )
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException
+                     , CosNotifyChannelAdmin::AdminLimitExceeded
+                     , CosNotification::UnsupportedQoS
+                     ))
+{
+  return TAO_NS_PROPERTIES::instance()->builder()->build_proxy (this
+                                                                , ctype
+                                                                , proxy_id
+                                                                , initial_qos
                                                                 ACE_ENV_ARG_PARAMETER);
 }
 

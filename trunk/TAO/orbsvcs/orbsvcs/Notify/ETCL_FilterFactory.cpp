@@ -6,7 +6,7 @@
 #include "ETCL_FilterFactory.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_ETCL_FilterFactory, "$id$")
+ACE_RCSID(Notify, TAO_NS_ETCL_FilterFactory, "$Id$")
 
 #include "ETCL_Filter.h"
 

@@ -6,7 +6,7 @@
 #include "QoSProperties.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_NS_QoSProperties, "$id$")
+ACE_RCSID(Notify, TAO_NS_QoSProperties, "$Id$")
 
 #include "Property.h"
 

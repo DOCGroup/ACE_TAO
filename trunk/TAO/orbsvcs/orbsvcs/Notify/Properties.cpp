@@ -8,7 +8,7 @@
 #include "Properties.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(RT_Notify, TAO_NS_Properties, "$Id$")
+ACE_RCSID (Notify, TAO_NS_Properties, "$Id$")
 
 TAO_NS_Properties::TAO_NS_Properties (void)
   : factory_ (0)

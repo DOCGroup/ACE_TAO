@@ -7,7 +7,7 @@
 #include "Method_Request_Shutdown.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(RT_Notify, TAO_NS_Method_Request_Shutdown, "$Id$")
+ACE_RCSID(Notify, TAO_NS_Method_Request_Shutdown, "$Id$")
 
 TAO_NS_Method_Request_Shutdown::TAO_NS_Method_Request_Shutdown (TAO_NS_ThreadPool_Task* task)
   : task_ (task)

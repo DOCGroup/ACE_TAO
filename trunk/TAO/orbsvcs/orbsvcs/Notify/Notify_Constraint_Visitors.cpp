@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /* $Id$ */
 
 #include "Notify_Constraint_Visitors.h"

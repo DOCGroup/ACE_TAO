@@ -9,7 +9,7 @@
 #include "Find_Worker_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_NS_Find_Worker_T, "$id$")
+ACE_RCSID(Notify, TAO_NS_Find_Worker_T, "$Id$")
 
 template<class TYPE, class INTERFACE, class INTERFACE_PTR, class EXCEPTION>
 TAO_NS_Find_Worker_T<TYPE,INTERFACE,INTERFACE_PTR,EXCEPTION>::TAO_NS_Find_Worker_T (void)

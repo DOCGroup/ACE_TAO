@@ -19,7 +19,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/CosNotifyChannelAdminS.h"
+#include "orbsvcs/NotifyExtS.h"
 #include "Admin.h"
 
 #if defined(_MSC_VER)
@@ -35,7 +35,7 @@
  * @brief Implementation of CosNotifyChannelAdmin::SupplierAdmin
  *
  */
-class TAO_Notify_Export TAO_NS_SupplierAdmin : public virtual POA_CosNotifyChannelAdmin::SupplierAdmin
+class TAO_Notify_Export TAO_NS_SupplierAdmin : public virtual POA_NotifyExt::SupplierAdmin
                                              , public virtual TAO_NS_Admin
 {
 public:
@@ -56,6 +56,20 @@ public:
   virtual void release (void);
 
 protected:
+
+  /// = NotifyExt::SupplierAdmin methods
+  CosNotifyChannelAdmin::ProxyConsumer_ptr
+  obtain_notification_push_consumer_with_qos (CosNotifyChannelAdmin::ClientType ctype,
+                                              CosNotifyChannelAdmin::ProxyID_out proxy_id,
+                                              const CosNotification::QoSProperties & initial_qos
+                                              ACE_ENV_ARG_DECL_WITH_DEFAULTS
+                                              )
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException
+                     , CosNotifyChannelAdmin::AdminLimitExceeded
+                     , CosNotification::UnsupportedQoS
+                     ));
+
   /// = CosNotifyChannelAdmin::SupplierAdmin methods
   virtual CosNotifyChannelAdmin::AdminID MyID (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((
