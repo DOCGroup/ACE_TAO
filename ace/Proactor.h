@@ -10,8 +10,9 @@
 //    Proactor.h
 //
 // = AUTHOR
-//    Irfan Pyarali (irfan@cs.wustl.edu)
-//    Tim Harrison (harrison@cs.wustl.edu)
+//    Irfan Pyarali (irfan@cs.wustl.edu),
+//    Tim Harrison (harrison@cs.wustl.edu), and
+//    Alexander Babu Arulanthu <alex@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -28,7 +29,6 @@
 #include "ace/Timer_Heap.h"
 #include "ace/Timer_Wheel.h"
 #include "ace/Free_List.h"
-
 
 #if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || \
     (defined (ACE_HAS_AIO_CALLS))
@@ -50,12 +50,12 @@ class ACE_Export ACE_Proactor_Handle_Timeout_Upcall
   //      Queue to call <handle_timeout> on ACE_Handlers.
 public:
   friend class ACE_Proactor;
-  // Proactor has special privileges
-  // Access needed to: proactor ()
+  // Proactor has special privileges, access needed to: proactor ()
 
   typedef ACE_Timer_Queue_T<ACE_Handler *,
                             ACE_Proactor_Handle_Timeout_Upcall,
-                            ACE_SYNCH_RECURSIVE_MUTEX> TIMER_QUEUE;
+                            ACE_SYNCH_RECURSIVE_MUTEX> 
+          TIMER_QUEUE;
 
   ACE_Proactor_Handle_Timeout_Upcall (void);
   // Constructor
@@ -64,17 +64,17 @@ public:
 	       ACE_Handler *handler,
 	       const void *arg,
 	       const ACE_Time_Value &cur_time);
-  // This method is called when the timer expires
+  // This method is called when the timer expires.
 
   int cancellation (TIMER_QUEUE &timer_queue,
 		    ACE_Handler *handler);
-  // This method is called when the timer is canceled
+  // This method is called when the timer is canceled.
 
   int deletion (TIMER_QUEUE &timer_queue,
                 ACE_Handler *handler,
                 const void *arg);
-  // This method is called when the timer queue is destroyed and
-  // the timer is still contained in it
+  // This method is called when the timer queue is destroyed and the
+  // timer is still contained in it.
 
 protected:
   int proactor (ACE_Proactor &proactor);
@@ -97,37 +97,46 @@ public:
   // Access needed to: thr_mgr_
 
   friend class ACE_Proactor_Handle_Timeout_Upcall;
-  // Access needed to: Asynch_Timer, and completion_port_
+  // Access needed to: Asynch_Timer, and completion_port_.
 
   // = Here are the typedefs that the <ACE_Proactor> uses.
 
+  // @@ Alex, are there any reasons why these typedefs aren't
+  // "capitalized?  In general, that's the programming style we
+  // typically use.  Can you please take a look and see what depends
+  // on these typedefs to see if we can capitalize them?
   typedef ACE_Timer_Queue_T<ACE_Handler *,
                             ACE_Proactor_Handle_Timeout_Upcall,
-                            ACE_SYNCH_RECURSIVE_MUTEX> Timer_Queue;
+                            ACE_SYNCH_RECURSIVE_MUTEX> 
+          Timer_Queue;
   typedef ACE_Timer_Queue_Iterator_T<ACE_Handler *,
                                      ACE_Proactor_Handle_Timeout_Upcall,
-                                     ACE_SYNCH_RECURSIVE_MUTEX> Timer_Queue_Iterator;
-
+                                     ACE_SYNCH_RECURSIVE_MUTEX> 
+          Timer_Queue_Iterator;
   typedef ACE_Timer_List_T<ACE_Handler *,
                            ACE_Proactor_Handle_Timeout_Upcall,
-                           ACE_SYNCH_RECURSIVE_MUTEX> Timer_List;
+                           ACE_SYNCH_RECURSIVE_MUTEX> 
+          Timer_List;
   typedef ACE_Timer_List_Iterator_T<ACE_Handler *,
                                     ACE_Proactor_Handle_Timeout_Upcall,
-                                    ACE_SYNCH_RECURSIVE_MUTEX> Timer_List_Iterator;
-
+                                    ACE_SYNCH_RECURSIVE_MUTEX> 
+          Timer_List_Iterator;
   typedef ACE_Timer_Heap_T<ACE_Handler *,
                            ACE_Proactor_Handle_Timeout_Upcall,
-                           ACE_SYNCH_RECURSIVE_MUTEX> Timer_Heap;
+                           ACE_SYNCH_RECURSIVE_MUTEX> 
+          Timer_Heap;
   typedef ACE_Timer_Heap_Iterator_T<ACE_Handler *,
                                     ACE_Proactor_Handle_Timeout_Upcall,
-                                    ACE_SYNCH_RECURSIVE_MUTEX> Timer_Heap_Iterator;
-
+                                    ACE_SYNCH_RECURSIVE_MUTEX> 
+          Timer_Heap_Iterator;
   typedef ACE_Timer_Wheel_T<ACE_Handler *,
                             ACE_Proactor_Handle_Timeout_Upcall,
-                            ACE_SYNCH_RECURSIVE_MUTEX> Timer_Wheel;
+                            ACE_SYNCH_RECURSIVE_MUTEX> 
+          Timer_Wheel;
   typedef ACE_Timer_Wheel_Iterator_T<ACE_Handler *,
                                      ACE_Proactor_Handle_Timeout_Upcall,
-                                     ACE_SYNCH_RECURSIVE_MUTEX> Timer_Wheel_Iterator;
+                                     ACE_SYNCH_RECURSIVE_MUTEX> 
+          Timer_Wheel_Iterator;
 
   ACE_Proactor (size_t number_of_threads = 0,
 		Timer_Queue *tq = 0,
@@ -139,35 +148,35 @@ public:
 
   static ACE_Proactor *instance (size_t threads = 0);
   // Get pointer to a process-wide <ACE_Proactor>.  <threads> should
-  // be part of another method.  It's only here because I'm just a
-  // grad student and not in charge.  No, I'm not bitter about this.
+  // be part of another method.  
 
   static ACE_Proactor *instance (ACE_Proactor *);
   // Set pointer to a process-wide <ACE_Proactor> and return existing
   // pointer.
 
   static void close_singleton (void);
-  // Delete the dynamically allocated Singleton
+  // Delete the dynamically allocated Singleton.
 
   // = Proactor event loop management methods.
+
   static int run_event_loop (void);
-  // Run the event loop until the <ACE_Proactor::handle_events>
-  // method returns -1 or the <end_event_loop> method
-  // is invoked.
+  // Run the event loop until the <ACE_Proactor::handle_events> method
+  // returns -1 or the <end_event_loop> method is invoked.
 
   static int run_event_loop (ACE_Time_Value &tv);
-  // Run the event loop until the <ACE_Proactor::handle_events>
-  // method returns -1, the <end_event_loop> method
-  // is invoked, or the <ACE_Time_Value> expires.
+  // Run the event loop until the <ACE_Proactor::handle_events> method
+  // returns -1, the <end_event_loop> method is invoked, or the
+  // <ACE_Time_Value> expires.
 
   static int end_event_loop (void);
-  // Instruct the <ACE_Proactor::instance> to terminate its event loop.
+  // Instruct the <ACE_Proactor::instance> to terminate its event
+  // loop.
 
   static int event_loop_done (void);
   // Report if the <ACE_Proactor::instance> event loop is finished.
 
   virtual int close (void);
-  // Close the IO completion port
+  // Close the IO completion port.
 
   virtual int register_handle (ACE_HANDLE handle,
 			       const void *completion_key);
@@ -220,9 +229,8 @@ public:
 
   virtual int handle_events (ACE_Time_Value &wait_time);
   // Dispatch a single set of events.  If <wait_time> elapses before
-  // any events occur, return.
-  // Return 0 on success, non-zero (-1) on timeouts/errors and errno
-  // is set accordingly.
+  // any events occur, return.  Return 0 on success, non-zero (-1) on
+  // timeouts/errors and errno is set accordingly.
 
   virtual int handle_events (void);
   // Block indefinitely until at least one event is dispatched.
@@ -254,15 +262,17 @@ public:
   virtual ACE_HANDLE get_handle (void) const;
   // Get the event handle.
 
-
-  int insert_to_aiocb_list (aiocb *aiocb_ptr, ACE_Asynch_Result *result);
-  // @@
-  // This call is for Unix aio_ calls.
-  // This method is used by ACE_Asynch_Operation to store some
-  // information with the Proactor.
-  // Inserting this aiocb_ptr to the array so that aio_return and
-  // aio_error can make use of that. Inserting result so that we can
-  // call the application back through complete.
+  int insert_to_aiocb_list (aiocb *aiocb_ptr,
+                            ACE_Asynch_Result *result);
+  // @@ Alex, is it possible to "hide" this better, i.e., so it's not
+  // in the public interface?  Perhaps we could use a "friend"
+  // instead, or better yet, abstract away from this via some other
+  // technique that wouldn't be so "POSIX"-specific.
+  // This call is for POSIX <aio_> calls.  This method is used by
+  // <ACE_Asynch_Operation> to store some information with the
+  // Proactor.  Inserting this <aiocb_ptr> to the array so that
+  // <aio_return> and <aio_error> can make use of that. Inserting
+  // result so that we can call the application back through complete.
   // @@ Can array be full? That means, the aio issue is successful,
   // but there are already AIO_LIST_AIO_MAX of calls pending. I will
   // have to go for something other than arrays then.
@@ -274,7 +284,7 @@ protected:
 
   virtual int handle_close (ACE_HANDLE handle,
 			    ACE_Reactor_Mask close_mask);
-  // Called when object is removed from the ACE_Reactor
+  // Called when object is removed from the ACE_Reactor.
 
   void application_specific_code (ACE_Asynch_Result *asynch_result,
 				  u_long bytes_transferred,
@@ -282,7 +292,7 @@ protected:
 				  const void *completion_key,
 				  u_long error);
   // Protect against structured exceptions caused by user code when
-  // dispatching handles
+  // dispatching handles.
 
   virtual int handle_events (unsigned long milli_seconds);
   // Dispatch a single set of events.  If <milli_seconds> elapses
@@ -316,13 +326,11 @@ protected:
       // Time value requested by caller
   };
 
-
-
 #if defined (ACE_HAS_AIO_CALLS)
-  // Let us have an array ot keep track of the all the aio's issued
+  // Let us have an array to keep track of the all the aio's issued
   // currently. My intuition is to limit the array size to Maximum
-  // Aios that can be issued thru' a lio_list call.
-  // @@ AIO_LISTIO_MAX is something else in LynxOS!!!
+  // Aios that can be issued thru' a lio_list call.  @@ AIO_LISTIO_MAX
+  // is something else in LynxOS!!!
 #if defined (AIO_LISTIO_MAX)
   aiocb *aiocb_list_ [AIO_LISTIO_MAX];
   ACE_Asynch_Result *result_list_ [AIO_LISTIO_MAX];
@@ -338,25 +346,26 @@ protected:
   size_t aiocb_list_cur_size_;
   // To maintain the current size of the array (list).
 
-#else /* ACE_HAS_AIO_CALLS */
+#elif defined (ACE_WIN32)
   ACE_HANDLE completion_port_;
   // Handle for the completion port.
 #endif /* ACE_HAS_AIO_CALLS */
 
   size_t number_of_threads_;
-  // This number is passed to the CreatIOCompletionPort() system call
+  // This number is passed to the <CreatIOCompletionPort> system
+  // call. 
 
   Timer_Queue *timer_queue_;
-  // Timer Queue
+  // Timer Queue.
 
   int delete_timer_queue_;
-  // Flag on whether to delete the timer queue
+  // Flag on whether to delete the timer queue.
 
   ACE_Proactor_Timer_Handler *timer_handler_;
-  // Handles timeouts events
+  // Handles timeouts events.
 
   ACE_Thread_Manager thr_mgr_;
-  // This will manage the thread in the Timer_Handler
+  // This will manage the thread in the Timer_Handler.
 
   ACE_Auto_Event event_;
   // This event is used in conjunction with Reactor when we try to
@@ -364,7 +373,7 @@ protected:
 
   int used_with_reactor_event_loop_;
   // Flag that indicates whether we are used in conjunction with
-  // Reactor
+  // Reactor.
 
 private:
   static ACE_Proactor *proactor_;
@@ -381,8 +390,7 @@ private:
 #include "ace/Proactor.i"
 #endif /* __ACE_INLINE__ */
 
-#else /* NOT WIN32 */
-
+#else /* NOT WIN32 or POSIX with AIO features. */
 class ACE_Export ACE_Proactor
 {
 public:
