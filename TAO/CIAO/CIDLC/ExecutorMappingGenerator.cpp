@@ -445,7 +445,10 @@ namespace
       }
       else
       {
-        os << "::Components::CCMContext";
+        //@@ (diego) Not clear to me which to use...  I use this one to
+        // make examples work...
+        //os << "::Components::CCMContext";
+        os << "::Components::SessionContext";
       }
 
       os << "{";
