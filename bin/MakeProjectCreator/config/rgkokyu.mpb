@@ -5,4 +5,5 @@ project : acelib, dsui {
   after    += RGKokyu
   libs     += RGKokyu
   includes += $(ACE_ROOT)/Kokyu
+  macros += KOKYU_HAS_RELEASE_GUARD
 }
