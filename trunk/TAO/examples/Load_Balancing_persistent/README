@@ -2,8 +2,14 @@ AIM:
 ---
 This is an extension of the Load_Balancing_Service example in
 $TAO_ROOT/examples/Load_Balancing. The aim of this example is to
-preserve the state of the service.  THe functionality is not much
-diferent from that of the normal Load_Balancing_Service. 
+show a methodology to preserve the state of the service.  Here, the
+service stores the object reference of multiple copies of servers
+registered, so that load can be balanced among the registered
+servers. If the load balancing service fails, the references of the
+servers registered, is read from the persistent storage and can be used
+to satisfy the clients request. The core functionality is not much
+different from that of the normal Load_Balancing_Service in 
+$TAO_ROOT/examples/Load_Balancing.   
 
 Usage:
 -----
@@ -19,9 +25,8 @@ and the client is started as follows
 
 $./client -i file://filename [-r]
 
-Now, the user can kill the service & restart the service. After
-reinvocation of the service, if the client is started again, it
-resolves the client works fine. 
+Now, the user can kill the service & restart the service. If the
+client is restarted, everything should work fine as before.
 
 PS:
 The code contains some MACROS like DOORS_MEASURE_STATS. They have been
