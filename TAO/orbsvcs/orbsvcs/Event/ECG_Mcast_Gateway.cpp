@@ -282,13 +282,23 @@ TAO_ECG_Mcast_Gateway::validate_configuration (void)
 TAO_ECG_Refcounted_Endpoint
 TAO_ECG_Mcast_Gateway::init_endpoint (void)
 {
-  TAO_ECG_Refcounted_Endpoint endpoint;
+  TAO_ECG_UDP_Out_Endpoint* endpoint = 0;
+  TAO_ECG_Refcounted_Endpoint refendpoint;
 
-  ACE_NEW_RETURN (endpoint,
-                  TAO_ECG_UDP_Out_Endpoint,
-                  endpoint);
+  // Try to allocate a new endpoint from the heap
+  ACE_NEW_NORETURN (endpoint,
+                    TAO_ECG_UDP_Out_Endpoint);
 
-  ACE_SOCK_Dgram& dgram = endpoint->dgram ();
+  if (endpoint != 0)
+  {
+    refendpoint = endpoint;
+  }
+  else
+  {
+    return TAO_ECG_Refcounted_Endpoint ();
+  }
+
+  ACE_SOCK_Dgram& dgram = refendpoint->dgram ();
 
   if (dgram.open (ACE_Addr::sap_any) == -1)
     {
@@ -337,7 +347,7 @@ TAO_ECG_Mcast_Gateway::init_endpoint (void)
       return TAO_ECG_Refcounted_Endpoint ();
     }
 
-  return endpoint;
+  return refendpoint;
 }
 
 PortableServer::ServantBase *
