@@ -52,6 +52,7 @@
 #define TAO_AV_RTCP_H
 #include "ace/pre.h"
 
+// FUZZ: disable check_for_math_include
 #include "ace/OS.h"
 #include "source.h"
 #include "AVStreams_i.h"

@@ -42,6 +42,7 @@
 # include "pccTimer.h"
 #endif /* CHORUS_MVME */
 
+// FUZZ: disable check_for_math_include
 #if defined(ACE_HAS_EXCEPTIONS) && !defined (__KCC)
   // Some plaforms define an exception structure in math.h...
 # if defined (__GNUG__)

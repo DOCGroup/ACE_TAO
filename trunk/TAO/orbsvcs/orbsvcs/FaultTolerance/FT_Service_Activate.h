@@ -66,4 +66,5 @@ private:
 
 ACE_FACTORY_DECLARE (TAO_FT, TAO_FT_Service_Activate)
 
+#include "ace/post.h"
 #endif /*TAO_FT_ACTIVATE_H*/
