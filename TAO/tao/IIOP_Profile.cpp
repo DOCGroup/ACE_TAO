@@ -21,7 +21,13 @@ ACE_RCSID(tao, IIOP_Profile, "$Id$")
 
 static const char prefix_[] = "iiop";
 
-const char TAO_IIOP_Profile::object_key_delimiter = '/';
+const char TAO_IIOP_Profile::object_key_delimiter_ = '/';
+
+char 
+TAO_IIOP_Profile::object_key_delimiter (void) const
+{
+  return TAO_IIOP_Profile::object_key_delimiter_;
+}
 
 TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr &addr,
                                     const TAO_ObjectKey &object_key,
@@ -255,7 +261,7 @@ TAO_IIOP_Profile::parse_string (const char *string,
         -1);
     }
 
-  char *okd = ACE_OS::strchr (start, this->object_key_delimiter);
+  char *okd = ACE_OS::strchr (start, this->object_key_delimiter_);
 
   if (okd == 0)
     {
@@ -420,7 +426,7 @@ TAO_IIOP_Profile::to_string (CORBA::Environment &)
                    digits [this->version_.minor],
                    this->host_.in (),
                    this->port_,
-                   this->object_key_delimiter,
+                   this->object_key_delimiter_,
                    key.in ());
   return buf;
 }

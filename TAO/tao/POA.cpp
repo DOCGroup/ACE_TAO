@@ -509,7 +509,7 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
               root_poa->servant_to_id (this->server_object_, ACE_TRY_ENV);
             ACE_CHECK;
 
-            root_poa->deactivate_object (id, ACE_TRY_ENV);
+            root_poa->deactivate_object (id.in (), ACE_TRY_ENV);
             ACE_CHECK;
 
             this->server_object_->_remove_ref ();
@@ -3650,7 +3650,7 @@ TAO_POA::key_to_object (const TAO_ObjectKey &key,
 
       char *pos = ACE_OS::strstr (imr_str.inout (), "://");
 
-      pos = ACE_OS::strchr (pos + 3, imr->_stubobj ()->profile_in_use ()->get_object_key_delimiter ());
+      pos = ACE_OS::strchr (pos + 3, imr->_stubobj ()->profile_in_use ()->object_key_delimiter ());
 
       if (pos)
         *(pos + 1) = 0;  // Crop the string
@@ -3726,7 +3726,7 @@ TAO_POA::imr_notify_startup (CORBA_Environment &ACE_TRY_ENV)
   char *pos = ACE_OS::strstr (svr_str.inout (), "://");
 
   pos = ACE_OS::strchr (pos + 3, 
-                        svr->_stubobj ()->profile_in_use ()->get_object_key_delimiter ());
+                        svr->_stubobj ()->profile_in_use ()->object_key_delimiter ());
 
   if (pos)
     *(pos + 1) = 0;  // Crop the string

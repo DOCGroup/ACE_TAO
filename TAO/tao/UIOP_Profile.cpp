@@ -21,7 +21,13 @@ ACE_RCSID(tao, UIOP_Profile, "$Id$")
 
 static const char prefix_[] = "uiop";
 
-const char TAO_UIOP_Profile::object_key_delimiter = '|';
+const char TAO_UIOP_Profile::object_key_delimiter_ = '|';
+
+char 
+TAO_UIOP_Profile::object_key_delimiter (void) const
+{
+  return TAO_UIOP_Profile::object_key_delimiter_;
+}
 
 TAO_UIOP_Profile::TAO_UIOP_Profile (const ACE_UNIX_Addr &addr,
                                     const TAO_ObjectKey &object_key,
@@ -130,7 +136,7 @@ TAO_UIOP_Profile::parse_string (const char *string,
   CORBA::String_var copy (string);
 
   char *start = copy.inout ();
-  char *cp = ACE_OS::strchr (start, this->object_key_delimiter);
+  char *cp = ACE_OS::strchr (start, this->object_key_delimiter_);
 
   if (cp == 0)
     {
@@ -268,7 +274,7 @@ TAO_UIOP_Profile::to_string (CORBA::Environment &)
                    digits [this->version_.major],
                    digits [this->version_.minor],
                    this->rendezvous_point (),
-                   this->object_key_delimiter,
+                   this->object_key_delimiter_,
                    key.in ());
   return buf;
 }

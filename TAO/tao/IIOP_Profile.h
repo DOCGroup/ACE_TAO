@@ -46,8 +46,8 @@ class TAO_Export TAO_IIOP_Profile : public TAO_Profile
   //   This class defines the IIOP profile as specified in the CORBA
   //   specification.
 public:
-  static const char object_key_delimiter;
-  virtual const char get_object_key_delimiter (void);
+  static const char object_key_delimiter_;
+  virtual char object_key_delimiter (void) const;
   // The object key delimiter that IIOP uses or expects.
 
   static const char *prefix (void);
