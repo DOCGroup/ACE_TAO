@@ -1048,6 +1048,14 @@ ACE_OS::gets (char *str, int n)
 }
 
 int
+fprintf (FILE *fp, char *format, const char *msg)
+{
+  ACE_DEBUG ((LM_DEBUG, format, msg));
+  return 0;
+}
+#endif /* ! ACE_HAS_WINCE */
+
+int
 ACE_OS::execl (const char * /* path */, const char * /* arg0 */, ...)
 {
   ACE_TRACE ("ACE_OS::execl");
@@ -4632,6 +4640,11 @@ void
 ACE_Cleanup::cleanup (void *)
 {
   delete this;
+}
+
+
+ACE_Cleanup::~ACE_Cleanup (void)
+{
 }
 
 // This is necessary to work around nasty problems with MVS C++.

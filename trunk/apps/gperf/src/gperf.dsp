@@ -5,30 +5,95 @@
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 # TARGTYPE "Win32 (ALPHA) Console Application" 0x0603
 
-CFG=gperf - Win32 Debug
+CFG=gperf - Win32 Static Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "gperf.mak".
-!MESSAGE
+!MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE
-!MESSAGE NMAKE /f "gperf.mak" CFG="gperf - Win32 Debug"
-!MESSAGE
+!MESSAGE 
+!MESSAGE NMAKE /f "gperf.mak" CFG="gperf - Win32 Static Debug"
+!MESSAGE 
 !MESSAGE Possible choices for configuration are:
-!MESSAGE
+!MESSAGE 
 !MESSAGE "gperf - Win32 Alpha Release" (based on "Win32 (ALPHA) Console Application")
 !MESSAGE "gperf - Win32 Alpha Debug" (based on "Win32 (ALPHA) Console Application")
 !MESSAGE "gperf - Win32 Release" (based on "Win32 (x86) Console Application")
 !MESSAGE "gperf - Win32 Debug" (based on "Win32 (x86) Console Application")
-!MESSAGE
+!MESSAGE "gperf - Win32 Static Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "gperf - Win32 Static Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 
-!IF  "$(CFG)" == "gperf - Win32 Release"
+!IF  "$(CFG)" == "gperf - Win32 Alpha Release"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 0
+# PROP BASE Output_Dir "gperf__1"
+# PROP BASE Intermediate_Dir "gperf__1"
+# PROP BASE Ignore_Export_Lib 0
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 0
+# PROP Output_Dir ""
+# PROP Intermediate_Dir "Release"
+# PROP Ignore_Export_Lib 0
+# PROP Target_Dir ""
+CPP=cl.exe
+# ADD BASE CPP /nologo /Gt0 /W3 /GX /O2 /I "..\..\..\\ /D " WIN32" /D "NDEBUG" /D "_CONSOLE" /FD /c
+# SUBTRACT BASE CPP /YX
+# ADD CPP /nologo /MD /Gt0 /W3 /GX /O2 /I "..\..\..\\ /D " WIN32" /D "NDEBUG" /D "_CONSOLE" /FD /c
+# SUBTRACT CPP /YX
+RSC=rc.exe
+# ADD BASE RSC /l 0x409 /d "NDEBUG"
+# ADD RSC /l 0x409 /d "NDEBUG"
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LINK32=link.exe
+# ADD BASE LINK32 gperf.lib ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /machine:ALPHA /out:"..\..\..\bin\Release\gperf.exe" /libpath:"..\..\..\ace" /libpath:".\lib"
+# SUBTRACT BASE LINK32 /nodefaultlib
+# ADD LINK32 gperf.lib ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /machine:ALPHA /out:"..\..\..\bin\Release\gperf.exe" /libpath:"..\..\..\ace" /libpath:".\lib"
+# SUBTRACT LINK32 /nodefaultlib
+
+!ELSEIF  "$(CFG)" == "gperf - Win32 Alpha Debug"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir "gperf__0"
+# PROP BASE Intermediate_Dir "gperf__0"
+# PROP BASE Ignore_Export_Lib 0
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 1
+# PROP Output_Dir ""
+# PROP Intermediate_Dir "Debug"
+# PROP Ignore_Export_Lib 0
+# PROP Target_Dir ""
+CPP=cl.exe
+# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\..\..\\ /D " WIN32" /D "_DEBUG" /D "_CONSOLE" /FD /c
+# SUBTRACT BASE CPP /YX
+# ADD CPP /nologo /MDd /Gt0 /W3 /GX /Zi /Od /I "..\..\..\\ /D " WIN32" /D "_DEBUG" /D "_CONSOLE" /FD /c
+# SUBTRACT CPP /YX
+RSC=rc.exe
+# ADD BASE RSC /l 0x409 /d "_DEBUG"
+# ADD RSC /l 0x409 /d "_DEBUG"
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LINK32=link.exe
+# ADD BASE LINK32 gperfd.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:ALPHA /out:"..\..\..\bin\gperf.exe" /pdbtype:sept /libpath:"..\..\..\ace" /libpath:".\lib\\"
+# SUBTRACT BASE LINK32 /incremental:no /nodefaultlib
+# ADD LINK32 gperfd.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:ALPHA /out:"..\..\..\bin\gperf.exe" /pdbtype:sept /libpath:"..\..\..\ace" /libpath:".\lib\\"
+# SUBTRACT LINK32 /incremental:no /nodefaultlib
+
+!ELSEIF  "$(CFG)" == "gperf - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -71,7 +136,7 @@ LINK32=link.exe
 # PROP Target_Dir ""
 CPP=cl.exe
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\\" /D "_CONSOLE" /D "_MBCS" /D "WIN32" /D "_DEBUG" /FD /c
 # SUBTRACT CPP /YX
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -84,55 +149,24 @@ LINK32=link.exe
 # ADD LINK32 gperfd.lib aced.lib /nologo /subsystem:console /debug /machine:I386 /out:"..\..\..\bin\gperf.exe" /pdbtype:sept /libpath:"..\..\..\ace" /libpath:".\lib\\"
 # SUBTRACT LINK32 /nodefaultlib
 
-!ELSEIF  "$(CFG)" == "gperf - Win32 Alpha Debug"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "gperf__0"
-# PROP BASE Intermediate_Dir "gperf__0"
-# PROP BASE Ignore_Export_Lib 0
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir ""
-# PROP Intermediate_Dir "Debug"
-# PROP Ignore_Export_Lib 0
-# PROP Target_Dir ""
-CPP=cl.exe
-# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\..\..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /FD /c
-# SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MDd /Gt0 /W3 /GX /Zi /Od /I "..\..\..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /FD /c
-# SUBTRACT CPP /YX
-RSC=rc.exe
-# ADD BASE RSC /l 0x409 /d "_DEBUG"
-# ADD RSC /l 0x409 /d "_DEBUG"
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 gperfd.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:ALPHA /out:"..\..\..\bin\gperf.exe" /pdbtype:sept /libpath:"..\..\..\ace" /libpath:".\lib\\"
-# SUBTRACT BASE LINK32 /incremental:no /nodefaultlib
-# ADD LINK32 gperfd.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:ALPHA /out:"..\..\..\bin\gperf.exe" /pdbtype:sept /libpath:"..\..\..\ace" /libpath:".\lib\\"
-# SUBTRACT LINK32 /incremental:no /nodefaultlib
-
-!ELSEIF  "$(CFG)" == "gperf - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "gperf - Win32 Static Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "gperf__1"
-# PROP BASE Intermediate_Dir "gperf__1"
+# PROP BASE Output_Dir "gperf___Win32_Static_Release"
+# PROP BASE Intermediate_Dir "gperf___Win32_Static_Release"
 # PROP BASE Ignore_Export_Lib 0
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir ""
-# PROP Intermediate_Dir "Release"
+# PROP Output_Dir "LIB\Release"
+# PROP Intermediate_Dir "LIB\Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 CPP=cl.exe
-# ADD BASE CPP /nologo /Gt0 /W3 /GX /O2 /I "..\..\..\\" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /FD /c
+# ADD BASE CPP /nologo /MD /W3 /GX /O2 /I "..\..\..\\" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MD /Gt0 /W3 /GX /O2 /I "..\..\..\\" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\..\\" /D "_CONSOLE" /D "_MBCS" /D "WIN32" /D "NDEBUG" /D ACE_HAS_DLL=0 /FD /c
 # SUBTRACT CPP /YX
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
@@ -141,19 +175,52 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 gperf.lib ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /machine:ALPHA /out:"..\..\..\bin\Release\gperf.exe" /libpath:"..\..\..\ace" /libpath:".\lib"
+# ADD BASE LINK32 gperf.lib ace.lib /nologo /subsystem:console /machine:I386 /out:"..\..\..\bin\Release\gperf.exe" /libpath:"..\..\..\ace" /libpath:".\lib"
 # SUBTRACT BASE LINK32 /nodefaultlib
-# ADD LINK32 gperf.lib ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /machine:ALPHA /out:"..\..\..\bin\Release\gperf.exe" /libpath:"..\..\..\ace" /libpath:".\lib"
+# ADD LINK32 gperfs.lib aces.lib advapi32.lib user32.lib /nologo /subsystem:console /machine:I386 /out:"..\..\..\bin\Release\gperf.exe" /libpath:"..\..\..\ace" /libpath:".\lib"
 # SUBTRACT LINK32 /nodefaultlib
 
-!ENDIF
+!ELSEIF  "$(CFG)" == "gperf - Win32 Static Debug"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir "gperf___Win32_Static_Debug"
+# PROP BASE Intermediate_Dir "gperf___Win32_Static_Debug"
+# PROP BASE Ignore_Export_Lib 0
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 1
+# PROP Output_Dir "LIB\Debug"
+# PROP Intermediate_Dir "LIB\Debug"
+# PROP Ignore_Export_Lib 0
+# PROP Target_Dir ""
+CPP=cl.exe
+# ADD BASE CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
+# SUBTRACT BASE CPP /YX
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\\" /D "_CONSOLE" /D "_MBCS" /D "WIN32" /D "_DEBUG" /D ACE_HAS_DLL=0 /FD /c
+# SUBTRACT CPP /YX
+RSC=rc.exe
+# ADD BASE RSC /l 0x409 /d "_DEBUG"
+# ADD RSC /l 0x409 /d "_DEBUG"
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LINK32=link.exe
+# ADD BASE LINK32 gperfd.lib aced.lib /nologo /subsystem:console /debug /machine:I386 /out:"..\..\..\bin\gperf.exe" /pdbtype:sept /libpath:"..\..\..\ace" /libpath:".\lib\\"
+# SUBTRACT BASE LINK32 /nodefaultlib
+# ADD LINK32 gperfsd.lib acesd.lib advapi32.lib user32.lib /nologo /subsystem:console /debug /machine:I386 /out:"..\..\..\bin\gperf.exe" /pdbtype:sept /libpath:"..\..\..\ace" /libpath:".\lib\\"
+# SUBTRACT LINK32 /nodefaultlib
+
+!ENDIF 
 
 # Begin Target
 
+# Name "gperf - Win32 Alpha Release"
+# Name "gperf - Win32 Alpha Debug"
 # Name "gperf - Win32 Release"
 # Name "gperf - Win32 Debug"
-# Name "gperf - Win32 Alpha Debug"
-# Name "gperf - Win32 Alpha Release"
+# Name "gperf - Win32 Static Release"
+# Name "gperf - Win32 Static Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter ".cpp"
@@ -161,13 +228,7 @@ LINK32=link.exe
 
 SOURCE=.\gperf.cpp
 
-!IF  "$(CFG)" == "gperf - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "gperf - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "gperf - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "gperf - Win32 Alpha Release"
+!IF  "$(CFG)" == "gperf - Win32 Alpha Release"
 
 DEP_CPP_GPERF=\
 	"..\..\..\ace\ACE.h"\
@@ -182,7 +243,6 @@ DEP_CPP_GPERF=\
 	"..\..\..\ace\config-win32.h"\
 	"..\..\..\ace\config-WinCE.h"\
 	"..\..\..\ace\config.h"\
-	"..\..\..\ace\inc_user_config.h"\
 	"..\..\..\ace\iosfwd.h"\
 	"..\..\..\ace\Log_Msg.h"\
 	"..\..\..\ace\Log_Priority.h"\
@@ -207,9 +267,22 @@ DEP_CPP_GPERF=\
 	".\List_Node.h"\
 	".\Options.h"\
 	".\Vectors.h"\
+	
+NODEP_CPP_GPERF=\
+	"..\..\..\ace\inc_user_config.h"\
+	
 
+!ELSEIF  "$(CFG)" == "gperf - Win32 Alpha Debug"
 
-!ENDIF
+!ELSEIF  "$(CFG)" == "gperf - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "gperf - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "gperf - Win32 Static Release"
+
+!ELSEIF  "$(CFG)" == "gperf - Win32 Static Debug"
+
+!ENDIF 
 
 # End Source File
 # End Group
