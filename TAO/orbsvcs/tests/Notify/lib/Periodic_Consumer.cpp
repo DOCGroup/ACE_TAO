@@ -124,12 +124,12 @@ TAO_NS_Periodic_Consumer::push_structured_event (const CosNotification::Structur
                       CORBA::INTERNAL ());
   ACE_CHECK;
 
+  const CosNotification::PropertySeq& prop_seq = notification.header.variable_header;
+  
   if (this->count_ == -1)
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG, "(%P, %t)Consumer %s received inital (-1)th event \n", this->name_.c_str ()));
-
-      const CosNotification::PropertySeq& prop_seq = notification.header.variable_header;
 
       for (CORBA::ULong i = 0; i < prop_seq.length (); ++i)
         {
@@ -169,8 +169,6 @@ TAO_NS_Periodic_Consumer::push_structured_event (const CosNotification::Structur
   if (this->check_priority_)
     {
       // Check if the event carries a Priority.
-      const CosNotification::PropertySeq& prop_seq = notification.header.variable_header;
-
       int event_has_priority_set = 0;
       CORBA::Short event_priority = 0;
 
@@ -219,6 +217,14 @@ TAO_NS_Periodic_Consumer::push_structured_event (const CosNotification::Structur
             ACE_DEBUG ((LM_DEBUG,
                         "Error: Periodic Consumer expected priority = %d, received priority = %d\n",
                         event_priority, corba_priority));
+        }
+    }
+
+  for (CORBA::ULong i = 0; i < prop_seq.length (); ++i)
+    {
+      if (ACE_OS::strcmp (prop_seq[i].name.in (), "Stop") == 0)
+        {
+          this->count_ = this->max_count_; // force the count to reach max as we've run out of time.
         }
     }
 
