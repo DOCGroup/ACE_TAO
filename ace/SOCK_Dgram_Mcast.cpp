@@ -431,10 +431,13 @@ ACE_SOCK_Dgram_Mcast::subscribe (const ACE_INET_Addr &mcast_addr,
       {
 
         // Subscribe to the QoS session.
+#if 0
         if (qos_manager->join_qos_session (qos_session) == -1)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to join QoS Session\n"),
                             -1);
+#endif
+
       } 
       else
       {
@@ -648,3 +651,13 @@ ACE_SOCK_Dgram_Mcast::make_multicast_address (const ACE_INET_Addr &mcast_addr,
                                          this->mcast_request_if_,
                                          net_if );
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Node<ACE_QoS_Session *>;
+template class ACE_Unbounded_Set<ACE_QoS_Session *>;
+template class ACE_Unbounded_Set_Iterator<ACE_QoS_Session *>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Node<ACE_QoS_Session *>
+#pragma instantiate ACE_Unbounded_Set<ACE_QoS_Session *>
+#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_QoS_Session *>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
