@@ -14,6 +14,10 @@ DATE=`date +%Y/%m/%d-%H:%M`
 
 COMMON_TESTS="AMI DII DSI Deferred Single_Threaded Thread_Per_Connection Thread_Pool"
 
+SEQUENCE_TESTS="Single_Threaded"
+
+SEQ_TEST_TYPE="octet long short char double longlong"
+
 cd $DEST/source
 
 /bin/sync
@@ -43,6 +47,25 @@ if grep -q 'Total throughput: ' Default.log; then
   ) >> Default.txt 
 fi
 
+/bin/sync
+sleep 2
+(
+   cd $ACE_ROOT/TAO/performance-tests/Sequence_Latency/Single_Threaded;
+
+   for i in $SEQ_TEST_TYPE; do
+     (
+       ./default_configuration.pl -t $i > $DEST/source/Sequence_Default_${i}.log 2>&1
+       if grep -q 'Total throughput: ' $DEST/source/Sequence_Default_${i}.log; then
+         (
+           echo -n $DATE " "; 
+           awk '/^Total throughput:/ {print $3}' $DEST/source/Sequence_Default_${i}.log
+         ) >> $DEST/source/Sequence_Default_${i}.txt 
+       fi
+     )
+   done
+
+)
+
 for i in $COMMON_TESTS; do
   /bin/sync
   sleep 10
@@ -53,9 +76,30 @@ for i in $COMMON_TESTS; do
   if grep -q 'Total throughput: ' ${i}.log; then
     (
        echo -n $DATE " "; 
-       awk '/^Total throughput:/ {print $3}' ${i}.log
+       awk '/^Total throughput:/ {print $3}' $DEST/source/${i}.log
     ) >> ${i}.txt 
   fi
+done
+
+for i in $SEQUENCE_TESTS; do
+  /bin/sync
+  sleep 10
+  (
+     cd $ACE_ROOT/TAO/performance-tests/Sequence_Latency/${i};
+     for j in $SEQ_TEST_TYPE; do
+         (
+             ./run_test.pl > $DEST/source/Sequence_${i}_${j}.log 2>&1
+             
+             if grep -q 'Total throughput: ' $DEST/source/Sequence_${i}_${j}.log; then
+                 (
+                     echo -n $DATE " "; 
+                     awk '/^Total throughput:/ {print $3}' $DEST/source/Sequence_${i}_${j}.log
+                 ) >> $DEST/source/Sequence_${i}_${j}.txt 
+             fi
+         )
+     done
+  )
+
 done
 
 for i in $COMMON_TESTS TCP Default; do
@@ -63,6 +107,22 @@ for i in $COMMON_TESTS TCP Default; do
   /bin/cp ${i}.png $DEST/images/${i}.png
   /usr/bin/tac ${i}.txt > $DEST/data/${i}.txt
   /usr/bin/tail -5 ${i}.txt > $DEST/data/LAST_${i}.txt
+done
+
+for i in $SEQ_TEST_TYPE ; do
+  $ACE_ROOT/bin/generate_performance_chart.sh Sequence_Default_${i}.txt Sequence_Default_${i}.png "Default Configuration for $i sequences"
+  /bin/cp Sequence_Default_${i}.png $DEST/images/Sequence_Default_${i}.png
+  /usr/bin/tac $DEST/source/Sequence_Default_${i}.txt > $DEST/data/Sequence_Default_${i}.txt
+  /usr/bin/tail -5 $DEST/source/Sequence_Default_${i}.txt > $DEST/data/LAST_Sequence_Default_${i}.txt
+done
+
+for i in $SEQUENCE_TESTS; do
+for j in $SEQ_TEST_TYPE; do
+  $ACE_ROOT/bin/generate_performance_chart.sh Sequence_${i}_${j}.txt Sequence_${i}_${j}.png "Sequence_$i_$j"
+  /bin/cp Sequence_${i}_${j}.png $DEST/images/Sequence_${i}_${j}.png
+  /usr/bin/tac Sequence_${i}_${j}.txt > $DEST/data/Sequence_${i}_${j}.txt
+  /usr/bin/tail -5 Sequence_${i}_${j}.txt > $DEST/data/LAST_Sequence_${i}_${j}.txt
+done
 done
 
 gnuplot <<_EOF_ >/dev/null 2>&1
