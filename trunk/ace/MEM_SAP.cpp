@@ -71,7 +71,7 @@ template class ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex, ACE_Control
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Write_Guard<ACE_Process_Mutex>
 #pragma instantiate ACE_Read_Guard<ACE_Process_Mutex>
-#if defined (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
+#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 #pragma instantiate ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex, ACE_PI_Control_Block>
 #else
 #pragma instantiate ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex>
