@@ -232,7 +232,6 @@ Tue Jun  1 10:01:25 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	  Included BasicSP.idl to fix problems during static linking.
 
->>>>>>> 1.583
 Tue Jun  1 00:42:56 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/Config_Handlers/DnC_Dump.cpp:
