@@ -1,3 +1,12 @@
+Wed May 12 08:09:49 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/BorlandProjectCreator.pm:
+
+          Sort the directories when forming the cppdir value.  We need to
+          ensure that '.' comes first.  Borland make attempts to generate
+          source files in each CPPDIR directory until it is successful
+          which explains multiple invocations of tao_idl.
+
 Wed May 12 07:32:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-openvms.h:
@@ -39,28 +48,28 @@ Wed May 12 06:37:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue May 11 17:39:22 2004  Steve Huston  <shuston@riverace.com>
 
-	* examples/Log_Msg/Log_Msg_MFC/Log_Msg_MFC.rc: Converted back to
-	  neutral text format.
+        * examples/Log_Msg/Log_Msg_MFC/Log_Msg_MFC.rc: Converted back to
+          neutral text format.
 
 Tue May 11 14:21:39 2004  Steve Huston  <shuston@riverace.com>
 
-	* examples/APG/Streams/streams.mpc: Added 'threads' to the requires
-	  spec.
+        * examples/APG/Streams/streams.mpc: Added 'threads' to the requires
+          spec.
 
 Tue May 11 12:33:49 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/config-freebsd.h: If FreeBSD 5, change the Proactor default
-	  implementation to not be ACE_POSIX_AIOCB_Proactor. Apparantly,
-	  FreeBSD 5 removed the SIGEV_THREAD notification method.
+        * ace/config-freebsd.h: If FreeBSD 5, change the Proactor default
+          implementation to not be ACE_POSIX_AIOCB_Proactor. Apparantly,
+          FreeBSD 5 removed the SIGEV_THREAD notification method.
 
-	* ace/POSIX_CB_Proactor.{h cpp}: Added __FreeBSD_version > 500000 as
-	  a condition that prevents this class from being compiled.
+        * ace/POSIX_CB_Proactor.{h cpp}: Added __FreeBSD_version > 500000 as
+          a condition that prevents this class from being compiled.
 
-	  Thanks to Bill Cassanova for reporting this issue and to
-	  Matthew Corey for digging through the FreeBSD headers to find
-	  out what's going on.
+          Thanks to Bill Cassanova for reporting this issue and to
+          Matthew Corey for digging through the FreeBSD headers to find
+          out what's going on.
 
-	* THANKS: Added Bill Cassanova and Matthew Corey to the Hall of Fame.
+        * THANKS: Added Bill Cassanova and Matthew Corey to the Hall of Fame.
 
 Tue May 11 08:58:33 2004  Chad Elliott  <elliott_c@ociweb.com>
 
