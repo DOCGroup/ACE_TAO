@@ -25,27 +25,24 @@
 #if defined (ACE_HAS_STHREADS)
 // Force test of ACE_U_LongLong class on Solaris only, just so we
 // know that its well-tested.
-# if defined (ACE_HAS_HI_RES_TIMER) || defined (ACE_HAS_LONGLONG_T)
 
-#   if defined (ACE_HAS_HI_RES_TIMER)
-#     undef ACE_HAS_HI_RES_TIMER
-#   endif /* ACE_HAS_HI_RES_TIMER */
+# if defined (ACE_HAS_HI_RES_TIMER)
+#   undef ACE_HAS_HI_RES_TIMER
+# endif /* ACE_HAS_HI_RES_TIMER */
 
-#   if defined (ACE_HAS_LONGLONG_T)
-#     undef ACE_HAS_LONGLONG_T
-#   endif /* ACE_HAS_LONGLONG_T */
+# if defined (ACE_HAS_LONGLONG_T)
+#   undef ACE_HAS_LONGLONG_T
+# endif /* ACE_HAS_LONGLONG_T */
 
-    // Force inlining, in case ACE_U_LongLong member function
-    // definitions are not in libACE.
-#   define __ACE_INLINE__
-
-# endif /* ACE_HAS_HI_RES_TIMER || ACE_HAS_LONGLONG_T */
+  // Force inlining, in case ACE_U_LongLong member function
+  // definitions are not in libACE.
+# define __ACE_INLINE__
 #endif /* ACE_HAS_STHREADS */
 
 #include "test_config.h"
 #include "ace/ACE.h"
 
-#if defined (ACE_HAS_STHREADS)
+#if (!defined (ACE_HAS_HI_RES_TIMER) && !defined (ACE_HAS_LONGLONG_T)) || defined (ACE_HAS_STHREADS)
 u_long
 test_ace_u_longlong ()
 {
@@ -91,7 +88,7 @@ test_ace_u_longlong ()
 
   return errors;
 }
-#endif /* ACE_HAS_STHREADS */
+#endif /* (! ACE_HAS_HI_RES_TIMER && ! ACE_HAS_LONGLONG_T) || ACE_HAS_STHREADS */
 
 
 int
@@ -121,9 +118,9 @@ main (int, char *[])
   ACE_ASSERT (tv6 == tv1);
   ACE_ASSERT (tv5 == tv7);
 
-#if defined (ACE_HAS_STHREADS)
+#if (!defined (ACE_HAS_HI_RES_TIMER) && !defined (ACE_HAS_LONGLONG_T)) || defined (ACE_HAS_STHREADS)
   if (test_ace_u_longlong () != 0) ++ret;
-#endif /* ACE_HAS_STHREADS */
+#endif /* (! ACE_HAS_HI_RES_TIMER && ! ACE_HAS_LONGLONG_T) || ACE_HAS_STHREADS */
 
   ACE_END_TEST;
   return ret;
