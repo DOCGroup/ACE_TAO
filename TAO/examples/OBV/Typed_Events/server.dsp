@@ -7,19 +7,19 @@
 CFG=OBV Typed Events Server - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "server.mak".
-!MESSAGE 
+!MESSAGE
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "server.mak" CFG="OBV Typed Events Server - Win32 Debug"
-!MESSAGE 
+!MESSAGE
 !MESSAGE Possible choices for configuration are:
-!MESSAGE 
+!MESSAGE
 !MESSAGE "OBV Typed Events Server - Win32 Release" (based on "Win32 (x86) Console Application")
 !MESSAGE "OBV Typed Events Server - Win32 Debug" (based on "Win32 (x86) Console Application")
-!MESSAGE 
+!MESSAGE
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -76,7 +76,7 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
 # ADD LINK32 TAOd.lib aced.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace"
 
-!ENDIF 
+!ENDIF
 
 # Begin Target
 
@@ -147,13 +147,13 @@ SOURCE=.\Event_Types.idl
 
 !IF  "$(CFG)" == "OBV Typed Events Server - Win32 Release"
 
-USERDEP__EVENT="..\..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__EVENT="..\..\..\..\bin\Release\tao_idl.exe"
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\Event_Types.idl
 InputName=Event_Types
 
 BuildCmds= \
-	..\..\..\..\bin\Release\tao_idl -Ge 1 -Gc -Gv $(InputName).idl
+	..\..\..\..\bin\Release\tao_idl -Ge 1 -Gv $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -186,13 +186,13 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "OBV Typed Events Server - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__EVENT="..\..\..\..\bin\tao_idl.exe"	
+USERDEP__EVENT="..\..\..\..\bin\tao_idl.exe"
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\Event_Types.idl
 InputName=Event_Types
 
 BuildCmds= \
-	..\..\..\..\bin\tao_idl -Ge 1 -Gc -Gv $(InputName).idl
+	..\..\..\..\bin\tao_idl -Ge 1 -Gv $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -222,7 +222,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # End Group
