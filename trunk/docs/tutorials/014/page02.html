@@ -17,25 +17,26 @@ You find pretty soon that anytime you work with ACE_Task&lt;&gt; you
 	  have to create a derivative.  The Task.h header simply provides
 	  that derivative with the overrides we'll need in our application.
 <P>
-<HR WIDTH="100%"><PRE>
+<HR WIDTH="100%">
+<PRE>
 
-// $Id$
+<font color=red>// $Id$</font>
 
-// Task.h
-//
-// Tutorial regarding a way to use ACE_Stream.
-//
-// written by bob mcwhirter (bob@netwrench.com)
-//
-//
+<font color=red>// Task.h</font>
+<font color=red>//</font>
+<font color=red>// Tutorial regarding a way to use ACE_Stream.</font>
+<font color=red>//</font>
+<font color=red>// written by bob mcwhirter (bob@netwrench.com)</font>
+<font color=red>//</font>
+<font color=red>//</font>
 
-#ifndef TASK_H
-#define TASK_H
+<font color=blue>#ifndef</font> <font color=purple>TASK_H</font>
+<font color=blue>#define</font> <font color=purple>TASK_H</font>
 
-#include &lt;ace/Task.h>
-#include &lt;ace/Synch.h>
+<font color=blue>#include</font> &lt;ace/Task.h>
+<font color=blue>#include</font> &lt;ace/Synch.h>
 
-// Always typedef when possible.
+<font color=red>// Always typedef when possible.</font>
 
 typedef ACE_Task&lt;ACE_MT_SYNCH> Task_Base;
 
@@ -45,33 +46,33 @@ class Task : public Task_Base
 public:
 
   typedef Task_Base inherited;
-  // This is just good form.
+  <font color=red>// This is just good form.</font>
 
   Task(const char *nameOfTask,
        int numberOfThreads);
-  // Initialize our Task with a name,
-  // and number of threads to spawn.
+  <font color=red>// Initialize our Task with a name,</font>
+  <font color=red>// and number of threads to spawn.</font>
 
   virtual ~Task(void);
 
   virtual int open(void *arg);
-  // This is provided to prevent compiler complaints
-  // about hidden virtual functions.
+  <font color=red>// This is provided to prevent compiler complaints</font>
+  <font color=red>// about hidden virtual functions.</font>
 
   virtual int close(u_long flags);
-  // This closes down the Task and all service threads.
+  <font color=red>// This closes down the Task and all service threads.</font>
 
   virtual int put(ACE_Message_Block *message,
-		  ACE_Time_Value *timeout);
-  // This is the interface that ACE_Stream uses to 
-  // communicate with our Task.
+                  ACE_Time_Value *timeout);
+  <font color=red>// This is the interface that ACE_Stream uses to</font>
+  <font color=red>// communicate with our Task.</font>
 
   virtual int svc(void);
-  // This is the actual service loop each of the service
-  // threads iterates through.
+  <font color=red>// This is the actual service loop each of the service</font>
+  <font color=red>// threads iterates through.</font>
 
   const char *nameOfTask(void) const;
-  // Returns the name of this Task.
+  <font color=red>// Returns the name of this Task.</font>
 
 private:
 
@@ -79,13 +80,13 @@ private:
   char d_nameOfTask[64];
 
   ACE_Barrier d_barrier;
-  // Simple Barrier to make sure all of our service
-  // threads have entered their loop before accepting
-  // any messages.
+  <font color=red>// Simple Barrier to make sure all of our service</font>
+  <font color=red>// threads have entered their loop before accepting</font>
+  <font color=red>// any messages.</font>
 };
 
 
-#endif // TASK_H
+<font color=blue>#endif</font> <font color=red>// TASK_H</font>
 </PRE>
 <P><HR WIDTH="100%">
 <CENTER>[<A HREF="..">Tutorial Index</A>] [<A HREF="page03.html">Continue This Tutorial</A>]</CENTER>

@@ -3,7 +3,7 @@
 # To extract the files from this archive, save it to some FILE, remove
 # everything before the `!/bin/sh' line above, then type `sh FILE'.
 #
-# Made on 1998-10-18 17:21 EDT by <jcej@chiroptera.tragus.org>.
+# Made on 1998-10-20 19:37 EDT by <jcej@chiroptera.tragus.org>.
 # Source directory was `/var/home/jcej/projects/ACE_wrappers/docs/tutorials/014'.
 #
 # Existing files will *not* be overwritten unless `-c' is specified.
@@ -12,11 +12,11 @@
 # length mode       name
 # ------ ---------- ------------------------------------------
 #    414 -rw-r--r-- hdr
-#     95 -rw-r--r-- links
+#     44 -rw-r--r-- bodies
 #   1023 -rw-r--r-- page01.pre
-#    230 -rw-r--r-- page02.pre
-#    650 -rw-r--r-- page03.pre
-#    438 -rw-r--r-- page04.pre
+#    231 -rw-r--r-- page02.pre
+#    651 -rw-r--r-- page03.pre
+#    439 -rw-r--r-- page04.pre
 #   1079 -rw-r--r-- page05.pre
 #
 save_IFS="${IFS}"
@@ -64,7 +64,7 @@ else
 fi
 rm -f 1231235999 $$.touch
 #
-if mkdir _sh22803; then
+if mkdir _sh14739; then
   $echo 'x -' 'creating lock directory'
 else
   $echo 'failed to create lock directory'
@@ -106,30 +106,31 @@ SHAR_EOF
     $echo 'hdr:' 'original size' '414,' 'current size' "$shar_count!"
   fi
 fi
-# ============= links ==============
-if test -f 'links' && test "$first_param" != -c; then
-  $echo 'x -' SKIPPING 'links' '(file already exists)'
+# ============= bodies ==============
+if test -f 'bodies' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'bodies' '(file already exists)'
 else
-  $echo 'x -' extracting 'links' '(text)'
-  sed 's/^X//' << 'SHAR_EOF' > 'links' &&
-Task.h     page02.bdy	P
-Task.cpp   page03.bdy	P
-EndTask.h  page04.bdy	P
-stream.cpp page05.bdy	P
+  $echo 'x -' extracting 'bodies' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'bodies' &&
+PAGE=2
+Task.h
+Task.cpp
+EndTask.h
+stream.cpp
 SHAR_EOF
-  $shar_touch -am 1012190598 'links' &&
-  chmod 0644 'links' ||
-  $echo 'restore of' 'links' 'failed'
+  $shar_touch -am 1020193698 'bodies' &&
+  chmod 0644 'bodies' ||
+  $echo 'restore of' 'bodies' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
-    || $echo 'links:' 'MD5 check failed'
-74c924d40fc2d632b42449163664b057  links
+    || $echo 'bodies:' 'MD5 check failed'
+43305b4b15975a1e4cbd99b6d3592c12  bodies
 SHAR_EOF
   else
-    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'links'`"
-    test 95 -eq "$shar_count" ||
-    $echo 'links:' 'original size' '95,' 'current size' "$shar_count!"
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'bodies'`"
+    test 44 -eq "$shar_count" ||
+    $echo 'bodies:' 'original size' '44,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page01.pre ==============
@@ -196,12 +197,12 @@ SHAR_EOF
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page02.pre:' 'MD5 check failed'
-204e84ce7b1b5f89ba4a35d1c822cf64  page02.pre
+4568ed757f3dbc1cebb7dc10d4768894  page02.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page02.pre'`"
-    test 230 -eq "$shar_count" ||
-    $echo 'page02.pre:' 'original size' '230,' 'current size' "$shar_count!"
+    test 231 -eq "$shar_count" ||
+    $echo 'page02.pre:' 'original size' '231,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page03.pre ==============
@@ -233,12 +234,12 @@ SHAR_EOF
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page03.pre:' 'MD5 check failed'
-f0dfbb40626afc1d68e300f162e4316b  page03.pre
+5c35812c1251ef1e8214fa9d9a18d496  page03.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page03.pre'`"
-    test 650 -eq "$shar_count" ||
-    $echo 'page03.pre:' 'original size' '650,' 'current size' "$shar_count!"
+    test 651 -eq "$shar_count" ||
+    $echo 'page03.pre:' 'original size' '651,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page04.pre ==============
@@ -266,12 +267,12 @@ SHAR_EOF
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page04.pre:' 'MD5 check failed'
-044a9b59997dbc6923167bf9bb24c599  page04.pre
+c6eaa0dbd1216734dcf83f5283d433f3  page04.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page04.pre'`"
-    test 438 -eq "$shar_count" ||
-    $echo 'page04.pre:' 'original size' '438,' 'current size' "$shar_count!"
+    test 439 -eq "$shar_count" ||
+    $echo 'page04.pre:' 'original size' '439,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page05.pre ==============
@@ -318,5 +319,5 @@ SHAR_EOF
     $echo 'page05.pre:' 'original size' '1079,' 'current size' "$shar_count!"
   fi
 fi
-rm -fr _sh22803
+rm -fr _sh14739
 exit 0

@@ -1,3 +1,16 @@
+Tue Oct 20 19:37:42 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
+
+	* docs/tutorials/014/*.html:
+	* docs/tutorials/014/Makefile:
+	* docs/tutorials/014/combine.shar:
+	Colorized using the new and improved 'combine' script.  Also
+	modified the Makefile so that the HTML sources won't get destroyed 
+	if the shar operation failed.
+
+	* docs/tutorials/015/Makefile:
+	Added the same Makefile modification to prevent loss of HTML sources
+	
+
 Tue Oct 20 16:28:12 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE-INSTALL.html: added recommended DU CXX version info.
