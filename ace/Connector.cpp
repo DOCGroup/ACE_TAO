@@ -577,7 +577,7 @@ ACE_Connector<SH, PR_CO_2>::info (char **strp, size_t length) const
 
   if (this->connector ().get_local_addr (addr) == -1)
     return -1;
-  else if (addr.addr_to_string (addr_str, sizeof addr) == -1)
+  else if (addr.addr_to_string (addr_str, sizeof addr_str) == -1)
     return -1;
 
   ACE_OS::sprintf (buf,
