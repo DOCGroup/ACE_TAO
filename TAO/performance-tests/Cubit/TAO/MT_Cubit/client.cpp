@@ -322,7 +322,7 @@ Client_i::activate_high_client (void)
   ACE_DEBUG ((LM_DEBUG,
               "Creating 1 client with high priority of %d\n",
               this->high_priority_));
-  if (this->high_priority_client_->activate (THR_BOUND | ACE_SCHED_FIFO,
+  if (this->high_priority_client_->activate (THR_BOUND | THR_SCHED_FIFO,
                                              1,
                                              0,
                                              this->high_priority_,
@@ -330,7 +330,7 @@ Client_i::activate_high_client (void)
                                              0,
                                              0,
                                              0,
-                                             0,           //  size_t stack_size[] = 0,
+                                             0,
                                              (ACE_thread_t *) &this->task_id_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p; priority is %d\n",
@@ -391,7 +391,7 @@ Client_i::activate_low_client (void)
       // The first thread starts at the lowest priority of all the low
       // priority clients.
       if (this->low_priority_client_[i - 1]->activate
-          (THR_BOUND | ACE_SCHED_FIFO,
+          (THR_BOUND | THR_SCHED_FIFO,
            1,
            0,
            this->low_priority_, // These are constructor defaults.
@@ -449,7 +449,7 @@ Client_i::activate_util_thread (void)
       // Activate the Utilization thread.  It will wait until all
       // threads have finished binding.
       this->util_thread_->activate
-        (THR_BOUND | ACE_SCHED_FIFO,
+        (THR_BOUND | THR_SCHED_FIFO,
          1,
          0,
          this->low_priority_);
@@ -605,7 +605,7 @@ Client_i::start_servant (void)
 
   // Make the high priority task an active object.
    if (high_priority_task->activate
-       (THR_BOUND | ACE_SCHED_FIFO,
+       (THR_BOUND | THR_SCHED_FIFO,
         1,
         0,
         this->high_priority_) == -1)
@@ -739,7 +739,7 @@ Client_i::do_thread_per_rate_test (void)
               "Creating 20 Hz client with priority %d\n",
               priority));
 
-  if (CB_20Hz_client.activate (THR_BOUND | ACE_SCHED_FIFO,
+  if (CB_20Hz_client.activate (THR_BOUND | THR_SCHED_FIFO,
                                1,
                                1,
                                priority) == -1)
@@ -768,7 +768,7 @@ Client_i::do_thread_per_rate_test (void)
               "Creating 10 Hz client with priority %d\n",
               priority));
 
-  if (CB_10Hz_client.activate (THR_BOUND | ACE_SCHED_FIFO,
+  if (CB_10Hz_client.activate (THR_BOUND | THR_SCHED_FIFO,
                                1,
                                1,
                                priority) == -1)
@@ -782,7 +782,7 @@ Client_i::do_thread_per_rate_test (void)
               "Creating 5 Hz client with priority %d\n",
               priority));
 
-  if (CB_5Hz_client.activate (THR_BOUND | ACE_SCHED_FIFO,
+  if (CB_5Hz_client.activate (THR_BOUND | THR_SCHED_FIFO,
                               1,
                               1,
                               priority) == -1)
@@ -796,7 +796,7 @@ Client_i::do_thread_per_rate_test (void)
               "Creating 1 Hz client with priority %d\n",
               priority));
 
-  if (CB_1Hz_client.activate (THR_BOUND | ACE_SCHED_FIFO,
+  if (CB_1Hz_client.activate (THR_BOUND | THR_SCHED_FIFO,
                               1,
                               1,
                               priority) == -1)

@@ -199,12 +199,12 @@ Server::activate_high_servant (void)
 
   // Make the high priority task an active object.
   if (this->high_priority_task_->activate
-      (THR_BOUND | ACE_SCHED_FIFO,
+      (THR_BOUND | THR_SCHED_FIFO,
        1,
        0,
        this->high_priority_) == -1)
     ACE_ERROR ((LM_ERROR,
-                "(%P|%t) %p\n"
+                "(%P|%t) %p\n",
                 "\thigh_priority_task->activate failed"));
 
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex,
@@ -270,7 +270,7 @@ Server::activate_low_servants (void)
 
       // Make the low priority task an active object.
       if (this->low_priority_tasks_ [i - 1]->activate
-          (THR_BOUND | ACE_SCHED_FIFO,
+          (THR_BOUND | THR_SCHED_FIFO,
            1,
            0,
            this->low_priority_) == -1)
