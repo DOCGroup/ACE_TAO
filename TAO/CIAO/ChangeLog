@@ -1,3 +1,9 @@
+Wed Mar 23 11:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/Config_Handlers/Basic_Deployment_Data.cpp:
+        * DAnCE/Config_Handlers/DP_Handler.cpp:
+          Fixed compile errors with Borland
+
 Tue Mar 22 21:21:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/ExecutionManager/Execution_Manager_Impl.h:
