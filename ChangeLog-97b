@@ -1,3 +1,9 @@
+Thu Nov 20 11:29:51 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Timer_{Heap,List}_T.{h,cpp}: added
+          ACE_Timer_{Heap,List}::get_first () accessors.  Thanks to
+          Stephen Henry <shenry@mdc.com> for this suggestion.
+
 Thu Nov 20 11:27:44 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.3.54, released Thu Nov 20 11:27:44 1997.
