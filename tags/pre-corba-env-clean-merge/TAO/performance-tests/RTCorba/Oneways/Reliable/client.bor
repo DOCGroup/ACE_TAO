@@ -1,0 +1,26 @@
+#
+# Makefile for building the reliable oneway client
+#
+
+NAME = client
+
+OBJFILES = \
+	$(OBJDIR)\testC.obj \
+	$(OBJDIR)\client.obj
+
+IDLFILES = \
+        $(IDLDIR)\test.idl
+
+CPPDIR = .
+
+IDLDIR = .
+
+!include <$(ACE_ROOT)\include\makeinclude\build_example.bor>
+
+#
+# IDL Build rules
+#
+
+$(IDLDIR)\testS.cpp $(IDLDIR)\testC.cpp: $(IDLDIR)\test.idl
+	$(TAO_IDL) $**
+

@@ -1,0 +1,37 @@
+#
+# Rules for installing files
+#
+
+# This ugliness is to remove extra spaces from between the items in the list.
+INSTALL_TYPES_1 = $(INSTALL_TYPES) $(BLANK_SPACE)
+INSTALL_TYPES_2 = $(INSTALL_TYPES_1: =%)
+INSTALL_TYPES_3 = $(INSTALL_TYPES_2:%%=%)
+INSTALL_TYPES_4 = $(INSTALL_TYPES_3:%%=%)
+INSTALL_TYPES_5 = $(INSTALL_TYPES_4:%=_install )
+
+!ifdef INSTALL_THIS_TARGET
+install: $(INSTALL_TYPES_5)
+!else
+install:
+!endif
+	@echo Do Nothing 1> NUL
+
+exe_install: $(TARGET) $(CORE_TARGET)
+	@$(MAKE_INSTALL_EXEDIR)
+	-copy "$(TARGET)" $(INSTALL_EXEDIR) 1> NUL
+
+!ifdef DEBUG
+dll_install: $(TARGET) $(TARGET:.dll=.tds)
+!else
+dll_install: $(TARGET)
+!endif
+	@$(MAKE_INSTALL_DLLDIR)
+	-&copy "$**" $(INSTALL_DLLDIR) 1> NUL
+
+lib_install: $(TARGET:.dll=.lib)
+	@$(MAKE_INSTALL_LIBDIR)
+	-&copy "$**" $(INSTALL_LIBDIR) 1> NUL
+
+includes_install: $(INCLUDES)
+	@$(MAKE_INSTALL_INCDIR)
+	-&copy "$**" $(INSTALL_INCDIR) 1> NUL
