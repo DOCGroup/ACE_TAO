@@ -10,6 +10,18 @@
 
 ACE_RCSID(AMI_Iterator, client, "$Id")
 
+// Obtain reference to Iterator_Factory
+Web_Server::Iterator_Factory_ptr
+get_iterator (CORBA::ORB_ptr orb,
+              CORBA::Environment &ACE_TRY_ENV);
+
+// Perform file requests
+void invoke_requests (int argc,
+                      char *argv[],
+                      int *request_count,
+                      Web_Server::Iterator_Factory_ptr f,
+                      CORBA::Environment &ACE_TRY_ENV);
+
 int
 main (int argc, char *argv[])
 {
@@ -18,7 +30,8 @@ main (int argc, char *argv[])
     {
       if (argc < 2)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Usage: client filename [filename ...]\n"),
+                           ACE_TEXT ("Usage: client filename ")
+                           ACE_TEXT ("[filename ...]\n")),
                           -1);
       // Initialize the ORB.
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
@@ -42,65 +55,33 @@ main (int argc, char *argv[])
       mgr->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      // Get a reference to the Name Service.
-      obj = orb->resolve_initial_references ("NameService",
-                                             ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      // Narrow to a Naming Context
-      CosNaming::NamingContext_var nc;
-      nc = CosNaming::NamingContext::_narrow (obj.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      if (CORBA::is_nil (obj.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Nil reference to Name Service\n"),
-                          -1);
-      // Create a name.
-      CosNaming::Name name;
-      name.length (1);
-      name[0].id = CORBA::string_dup ("Iterator_Factory");
-      name[0].kind = CORBA::string_dup ("");
-
-      obj = nc->resolve (name, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       // Now narrow to an Iterator_Factory reference.
       Web_Server::Iterator_Factory_var factory =
-        Web_Server::Iterator_Factory::_narrow (obj.in ());
+        ::get_iterator (orb.in (),
+                        ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       if (CORBA::is_nil (factory.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Object pointed to by:\n  %s\n"
-                           "is not an Iterator_Factory object.\n",
+                           ACE_TEXT ("Object pointed to by:\n  %s\n")
+                           ACE_TEXT ("is not an Iterator_Factory object.\n"),
                            argv[1]),
                           -1);
-      // Variable used to keep track of when file retrieval has
-      // completed.
-      int request_count = 0;
-
-      // Activate and run the reply handlers.
-      for (int i = 0;
-           i < argc - 1;  // Don't include the program name.
-           ++i)
-        {
-          Iterator_Handler * handler = 0;
-          ACE_NEW_RETURN (handler,
-                          Iterator_Handler,
-                          -1);
-
-          // Transfer ownership to the POA.
-          PortableServer::ServantBase_var tmp (handler);
-
-          handler->run (&request_count,
-                        argv[i + 1],
-                        factory.in (),
-                        ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-        }
 
       // 1 millisecond delay to reduce "busy waiting" in ORB event
       // loop.  (simulating "work")
       ACE_Time_Value tv (0, 1000);
+
+      // Variable used to keep track of when file retrieval has
+      // completed.
+      int request_count = 0;
+
+      ::invoke_requests (argc,
+                         argv,
+                         &request_count,
+                         factory.in (),
+                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // Run the ORB event loop.
       while (request_count > 0)
@@ -123,14 +104,15 @@ main (int argc, char *argv[])
   ACE_CATCH (Web_Server::Error_Result, exc)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Caught Web Server exception with status %d\n",
+                         ACE_TEXT ("Caught Web Server exception with ")
+                         ACE_TEXT ("status %d\n"),
                          exc.status),
                         -1);
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught unexpected exception:");
+                           ACE_TEXT ("Caught unexpected exception:"));
 
       return -1;
     }
@@ -140,4 +122,75 @@ main (int argc, char *argv[])
   ACE_Process_Manager::instance ()->wait ();
 
   return 0;
+}
+
+Web_Server::Iterator_Factory_ptr
+get_iterator (CORBA::ORB_ptr o,
+              CORBA::Environment &ACE_TRY_ENV)
+{
+  CORBA::ORB_var orb = CORBA::ORB::_duplicate (o);
+
+  // Get a reference to the Name Service.
+  CORBA::Object_var obj =
+    orb->resolve_initial_references ("NameService",
+                                     ACE_TRY_ENV);
+  ACE_CHECK_RETURN (Web_Server::Iterator_Factory::_nil ());
+
+  // Narrow to a Naming Context
+  CosNaming::NamingContext_var nc;
+  nc = CosNaming::NamingContext::_narrow (obj.in (), ACE_TRY_ENV);
+  ACE_CHECK_RETURN (Web_Server::Iterator_Factory::_nil ());
+
+  if (CORBA::is_nil (obj.in ()))
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Nil reference to Name Service\n")));
+      return Web_Server::Iterator_Factory::_nil ();
+    }
+
+  // Create a name.
+  CosNaming::Name name;
+  name.length (1);
+  name[0].id = CORBA::string_dup ("Iterator_Factory");
+  name[0].kind = CORBA::string_dup ("");
+
+  obj = nc->resolve (name, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (Web_Server::Iterator_Factory::_nil ());
+
+  Web_Server::Iterator_Factory_ptr factory =
+    Web_Server::Iterator_Factory::_narrow (obj.in ());
+
+  return factory;
+}
+
+void invoke_requests (int argc,
+                      char *argv[],
+                      int *request_count,
+                      Web_Server::Iterator_Factory_ptr f,
+                      CORBA::Environment &ACE_TRY_ENV)
+{
+  Web_Server::Iterator_Factory_var factory =
+    Web_Server::Iterator_Factory::_duplicate (f);
+
+  // Activate and run the reply handlers.
+  for (int i = 0;
+       i < argc - 1;  // Don't include the program name.
+       ++i)
+    {
+      Iterator_Handler *handler = 0;
+      ACE_NEW_THROW_EX (handler,
+                        Iterator_Handler,
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK;
+      
+      // Transfer ownership to the POA.
+      PortableServer::ServantBase_var tmp (handler);
+
+      // This ends up being an AMI call, so it won't block.
+      handler->run (request_count,
+                    argv[i + 1],
+                    factory.in (),
+                    ACE_TRY_ENV);
+      ACE_CHECK;
+    }
 }

@@ -43,37 +43,12 @@ Callback_i::Callback_i (int * request_count)
 Callback_i::~Callback_i (void)
 {
   (void) this->file_io_.close ();
-
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
-    {
-      // Get the POA used when activating the Reply Handler object.
-      PortableServer::POA_var poa = this->_default_POA (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      // Get the object ID associated with this servant.
-      PortableServer::ObjectId_var oid =
-        poa->servant_to_id (this,
-                            ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      // Now deactivate the iterator object.
-      poa->deactivate_object (oid.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("Caught unexpected exception ")
-                           ACE_TEXT ("in ~Callback_i():"));
-    }
-  ACE_ENDTRY;
 }
 
 void
 Callback_i::next_chunk (const Web_Server::Chunk_Type & chunk_data,
                         CORBA::Boolean last_chunk,
-                        CORBA::Environment &)
+                        CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (!last_chunk)
@@ -118,32 +93,54 @@ Callback_i::next_chunk (const Web_Server::Chunk_Type & chunk_data,
       // If the entire metadata has been received, then spawn an
       // external viewer to display the received file.
       if (this->metadata_received ())
-        (void) this->spawn_viewer ();
+        {
+          (void) this->file_io_.close ();
+          this->deactivate (ACE_TRY_ENV);
+          ACE_CHECK;
+
+          (void) this->spawn_viewer ();
+        }
     }
 }
 
 void
 Callback_i::metadata (const Web_Server::Metadata_Type & metadata)
 {
-  {
-    ACE_MT (ACE_GUARD (ACE_SYNCH_MUTEX,
-                       guard,
-                       this->lock_));
-    this->metadata_ = metadata;
-  }
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      {
+        ACE_MT (ACE_GUARD (ACE_SYNCH_MUTEX,
+                           guard,
+                           this->lock_));
+        this->metadata_ = metadata;
+      }
 
-  ACE_DEBUG ((LM_INFO,
-              ACE_TEXT ("Retrieved file has the following ")
-              ACE_TEXT ("characteristics:\n")
-              ACE_TEXT ("  Modification Date: %s\n")
-              ACE_TEXT ("  Content Type: %s\n"),
-              this->metadata_.modification_date.in (),
-              this->metadata_.content_type.in ()));
+      ACE_DEBUG ((LM_INFO,
+                  ACE_TEXT ("Retrieved file has the following ")
+                  ACE_TEXT ("characteristics:\n")
+                  ACE_TEXT ("  Modification Date: %s\n")
+                  ACE_TEXT ("  Content Type: %s\n"),
+                  this->metadata_.modification_date.in (),
+                  this->metadata_.content_type.in ()));
 
-  // If the entire content of the data has been received, then spawn
-  // an external viewer to display it.
-  if (this->content_received ())
-    (void) this->spawn_viewer ();
+      // If the entire content of the data has been received, then spawn
+      // an external viewer to display it.
+      if (this->content_received ())
+        {
+          this->deactivate (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
+          (void) this->spawn_viewer ();
+        }
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           ACE_TEXT ("Caught unexpected exception ")
+                           ACE_TEXT ("in Callback_i::metdata(...):"));
+    }
+  ACE_ENDTRY;
 }
 
 int
@@ -278,4 +275,22 @@ Callback_i::spawn_viewer (void)
     }
 
   return 0;
+}
+
+void
+Callback_i::deactivate (CORBA::Environment &ACE_TRY_ENV)
+{
+  // Get the POA used when activating the Reply Handler object.
+  PortableServer::POA_var poa = this->_default_POA (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // Get the object ID associated with this servant.
+  PortableServer::ObjectId_var oid =
+    poa->servant_to_id (this,
+                        ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // Now deactivate the iterator object.
+  poa->deactivate_object (oid.in (), ACE_TRY_ENV);
+  ACE_CHECK;
 }

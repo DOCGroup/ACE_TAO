@@ -69,12 +69,12 @@ main (int argc, char *argv[])
                                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
       ACE_DEBUG ((LM_DEBUG,
-                  "Bound <%s> to <%s> in Name Service.\n",
+                  ACE_TEXT ("Bound <%s> to <%s> in Name Service.\n"),
                   name[0].id.in (),
                   IOR.in ()));
 
       ACE_DEBUG ((LM_INFO,
-                  "Accepting requests.\n"));
+                  ACE_TEXT ("Accepting requests.\n")));
 
       // Accept requests.
       orb->run (ACE_TRY_ENV);
@@ -83,7 +83,7 @@ main (int argc, char *argv[])
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught unexpected exception:");
+                           ACE_TEXT ("Caught unexpected exception:"));
 
       return -1;
     }
