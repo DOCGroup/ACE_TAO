@@ -28,15 +28,15 @@ public:
 
   virtual RtecScheduler::handle_t create (const char * entry_point,
 					  CORBA::Environment &_env)
-    ACE_THROW_SPEC ((CORBA::SystemException, RtecScheduler::DUPLICATE_NAME));
+    TAO_THROW_SPEC ((CORBA::SystemException, RtecScheduler::DUPLICATE_NAME));
 
   virtual RtecScheduler::handle_t lookup (const char * entry_point,
 					  CORBA::Environment &_env)
-    ACE_THROW_SPEC((CORBA::SystemException));
+    TAO_THROW_SPEC((CORBA::SystemException));
 
   virtual RtecScheduler::RT_Info* get (RtecScheduler::handle_t handle,
 				       CORBA::Environment &_env)
-    ACE_THROW_SPEC ((CORBA::SystemException, RtecScheduler::UNKNOWN_TASK));
+    TAO_THROW_SPEC ((CORBA::SystemException, RtecScheduler::UNKNOWN_TASK));
 
   virtual void set (RtecScheduler::handle_t handle,
 		    RtecScheduler::Time time,
@@ -47,14 +47,14 @@ public:
 		    RtecScheduler::Quantum quantum,
 		    CORBA::Long threads,
 		    CORBA::Environment &_env)
-    ACE_THROW_SPEC ((CORBA::SystemException, RtecScheduler::UNKNOWN_TASK));
+    TAO_THROW_SPEC ((CORBA::SystemException, RtecScheduler::UNKNOWN_TASK));
 
   virtual void priority (RtecScheduler::handle_t handle,
 			 RtecScheduler::OS_Priority& priority,
 			 RtecScheduler::Sub_Priority& subpriority,
 			 RtecScheduler::Preemption_Priority& p_priority,
 			 CORBA::Environment &_env)
-    ACE_THROW_SPEC ((CORBA::SystemException,
+    TAO_THROW_SPEC ((CORBA::SystemException,
 		     RtecScheduler::UNKNOWN_TASK,
 		     RtecScheduler::NOT_SCHEDULED));
            
@@ -63,7 +63,7 @@ public:
 				     RtecScheduler::Sub_Priority& subpriority,
 				     RtecScheduler::Preemption_Priority& p_priority,
 				     CORBA::Environment &_env)
-    ACE_THROW_SPEC ((CORBA::SystemException,
+    TAO_THROW_SPEC ((CORBA::SystemException,
 		     RtecScheduler::UNKNOWN_TASK,
 		     RtecScheduler::NOT_SCHEDULED));
 
@@ -71,14 +71,14 @@ public:
 			       RtecScheduler::handle_t dependency,
 			       CORBA::Long number_of_calls,
 			       CORBA::Environment &_env)
-    ACE_THROW_SPEC ((CORBA::SystemException,
+    TAO_THROW_SPEC ((CORBA::SystemException,
 		     RtecScheduler::UNKNOWN_TASK));
 
   virtual void compute_scheduling (CORBA::Long minimum_priority,
 				   CORBA::Long maximum_priority,
 				   RtecScheduler::RT_Info_Set_out infos,
 				   CORBA::Environment &_env)
-    ACE_THROW_SPEC((CORBA::SystemException,
+    TAO_THROW_SPEC((CORBA::SystemException,
 		    RtecScheduler::UTILIZATION_BOUND_EXCEEDED,
 		    RtecScheduler::INSUFFICIENT_THREAD_PRIORITY_LEVELS,
 		    RtecScheduler::TASK_COUNT_MISMATCH));

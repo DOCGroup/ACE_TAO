@@ -10,15 +10,17 @@
 TAO has been ported and tested Windows NT, Solaris, VxWorks, and
 Linux.  I expect that major portions of the release will port easily
 to other platforms that ACE has been ported to.  If you can help port
-TAO to other platforms I'd appreciate it. <P>
+TAO to other platforms we'd appreciate it. <P>
 
 TAO can be obtained <A HREF="TAO-obtain.html">electronically</A> via
 the WWW and ftp.  Besides getting the <A
-HREF="http://siesta.cs.wustl.edu/~schmidt/TAO-obtain.html">TAO alpha
+HREF="http://siesta.cs.wustl.edu/~schmidt/TAO-obtain.html">TAO
 release</A> you will need <A
 HREF="http://siesta.cs.wustl.edu/~schmidt/ACE-obtain.html">ACE</A>.
-You will likely need the most recent beta version of ACE because TAO
-tends to track changes to ACE rather closely. <P>
+You will likely need the most recent <A
+HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ACE.tar.gz">beta</a>
+version of ACE because TAO tends to track changes to ACE rather
+closely. <P>
 
 A quick build note for users who have used ACE with other ORBs:
 linking TAO with a version of ACE that must also be linked against
@@ -61,20 +63,28 @@ undefined and most likely unpredictable and erroneous results. <P>
 <HR><P>
 <H3>On Windows NT</H3>
 
+Before compiling <CODE>TAO_IDL</CODE> on NT, you may need to set the
+environment variable <CODE>CPP_PATH</CODE> to where CL.exe is
+installed on your machine.  By default, we set this variable to to
+"C:/Program Files/DevStudio/VC/bin".  Your location may vary, however.
+Notice that if you forget to set this variable, you must rebuild
+<CODE>TAO_IDL</CODE> after setting it. <P>
+
 <H4>Visual C++ 5.0</H4>
 
-<P>It works best if TAO is placed in ACE_wrappers so TAO ends up in 
-ACE_wrappers\TAO because the Visual C++ 5.0 Project files are set up to work 
-in this configuration. If you move it, then make sure you change the project
-file to look for the include and library files in the correct place.</P>
+<P>It works best if TAO is placed in ACE_wrappers so TAO ends up in
+<CODE>ACE_wrappers\TAO</CODE> because the Visual C++ 5.0 Project files
+are set up to work in this configuration. If you move it, then make
+sure you change the project file to look for the include and library
+files in the correct place.</P>
 
 <OL>
-  <LI> Make sure ACE is built (For Visual C++ 5.0, use ace.dsw or ace-vc50.dsw, 
+  <LI> Make sure ACE is built (For Visual C++ 5.0, use ace.dsw or ace-vc50.dsw,
        whichever is in your copy of ACE). <BR><BR>
 
-  <LI> Load the workspace tao\TAO.dsw and build the TAO library. <BR><BR>
+  <LI> Load the workspace <CODE>tao\TAO.dsw</CODE> and build the TAO library. <BR><BR>
 
-  <LI> To build the Cubit test, load the workspace tests\Cubit\TAO\test.dsw 
+  <LI> To build the Cubit test, load the workspace <CODE>tests\Cubit\TAO\test.dsw</CODE>
        and build both client and server. <BR><BR>
 </OL>
 
@@ -83,12 +93,14 @@ file to look for the include and library files in the correct place.</P>
 <OL>
   <LI> In Tools|Options, go to the Directories page and make sure that include
        files paths includes ACE_wrappers\ and the root directory of TAO (which
-       can be ACE_wrappers\TAO if installed there).  The library files paths 
-       should include ACE_wrappers\ace. <P>
+       can be <CODE>ACE_wrappers\TAO</CODE> if installed there).  The
+library files paths
+       should include <CODE>ACE_wrappers\ace</CODE>. <P>
 
-  <LI> Load the project file tao\TAO.mdp and build the TAO library. <P>
+  <LI> Load the project file <CODE>tao\TAO.mdp</CODE> and build the
+TAO library. <P>
 
-  <LI> To build the Cubit test, load the project file tests\Cubit\TAO\test.mdp
+  <LI> To build the Cubit test, load the project file <CODE>tests\Cubit\TAO\test.mdp</CODE>
        and build both client and server. <P>
 </OL>
 
@@ -96,5 +108,5 @@ file to look for the include and library files in the correct place.</P>
 Back to the <A HREF="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</A> home page.
 
 <!--#include virtual="/~schmidt/cgi-sig.html" -->
-</BODY> 
+</BODY>
 </HTML>

@@ -1165,7 +1165,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                     *os << bt->name ();
                   else
                     *os << "char *";
-                  *os << arg->local_name () << ";" << nl;
+                  *os << " " << arg->local_name () << ";" << nl;
                   if (bt->node_type () == AST_Decl::NT_typedef)
                     *os << bt->name () << "_out";
                   else

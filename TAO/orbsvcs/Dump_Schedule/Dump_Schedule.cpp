@@ -15,12 +15,12 @@
 
 int main (int argc, char *argv[])
 {
-  ACE_TRY
+  TAO_TRY
     {
       // Initialize ORB.
       CORBA::ORB_ptr orb = 
-	CORBA::ORB_init (argc, argv, "dump_schedule", ACE_TRY_ENV);
-      ACE_CHECK_ENV;
+	CORBA::ORB_init (argc, argv, "dump_schedule", TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       CORBA::POA_ptr poa =
 	orb->POA_init(argc, argv, "POA");
@@ -33,10 +33,10 @@ int main (int argc, char *argv[])
 
       CORBA::Object_ptr objref =
 	orb->resolve_initial_references ("NameService");
-      ACE_CHECK_ENV;
+      TAO_CHECK_ENV;
       CosNaming::NamingContext_var naming_context = 
-        CosNaming::NamingContext::_narrow (objref, ACE_TRY_ENV);
-      ACE_CHECK_ENV;
+        CosNaming::NamingContext::_narrow (objref, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       ACE_Scheduler_Factory::use_config (naming_context.ptr ());
 
@@ -46,18 +46,18 @@ int main (int argc, char *argv[])
 					 ACE_SCOPE_THREAD),
 	 ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
 					 ACE_SCOPE_THREAD),
-	 infos, ACE_TRY_ENV);
-      ACE_CHECK_ENV;
+	 infos, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       ACE_Scheduler_Factory::dump_schedule (*infos,
 					    "Scheduler_Runtime.cpp");
       delete infos;
     }
-  ACE_CATCH (CORBA::SystemException, sys_ex)
+  TAO_CATCH (CORBA::SystemException, sys_ex)
     {
-      ACE_TRY_ENV.print_exception ("SYS_EX");
+      TAO_TRY_ENV.print_exception ("SYS_EX");
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   return 0;
 }

@@ -135,7 +135,36 @@ be_operation::gen_client_stubs (void)
   cs->incr_indent ();
 
   // entry for the return type
-  *cs << "{" << bt->tc_name () << ", PARAM_RETURN, 0}";
+  *cs << "{" << bt->tc_name () << ", PARAM_RETURN, ";
+  // Are we returning a pointer to value? i.e., is the type variable? If it is,
+  // we must tell the stub what is the size of the top level structure
+  if (bt->size_type () == be_decl::VARIABLE)
+    {
+      switch (bt->node_type ())
+        {
+        case AST_Decl::NT_interface:
+        case AST_Decl::NT_interface_fwd:
+        case AST_Decl::NT_string:
+          // no need of size here
+          *cs << "0}";
+          break;
+        case AST_Decl::NT_pre_defined:
+          {
+            be_predefined_type *bpd = be_predefined_type::narrow_from_decl
+              (bt);
+            if (bpd->pt () == AST_PredefinedType::PT_pseudo)
+              // no need of size here
+              *cs << "0}";
+            else
+              *cs << "sizeof (" << bt->name () << ")}";
+          }
+          break;
+        default:
+          *cs << "sizeof (" << bt->name () << ")}";
+        }
+    }
+  else
+    *cs << "0}";
   paramtblsize++;
   // if we have any arguments, get each one of them
   if (this->nmembers () > 0)
@@ -167,7 +196,39 @@ be_operation::gen_client_stubs (void)
                   *cs << ", PARAM_INOUT, 0}";
                   break;
                 case AST_Argument::dir_OUT:
-                  *cs << ", PARAM_OUT, 0}";
+                  {
+                    *cs << ", PARAM_OUT, 0}";
+#if 0
+                    // Are we returning a pointer to value? i.e., is the type variable? If it is,
+                    // we must tell the stub what is the size of the top level structure
+                    if (bt->size_type () == be_decl::VARIABLE)
+                      {
+                        switch (bt->node_type ())
+                          {
+                          case AST_Decl::NT_interface:
+                          case AST_Decl::NT_interface_fwd:
+                            // no need of size here
+                            *cs << "0}";
+                            break;
+                          case AST_Decl::NT_pre_defined:
+                            {
+                              be_predefined_type *bpd =
+                                be_predefined_type::narrow_from_decl (bt);
+                              if (bpd->pt () == AST_PredefinedType::PT_pseudo)
+                                // no need of size here
+                                *cs << "0}";
+                              else
+                                *cs << "sizeof (" << bt->name () << ")}";
+                            }
+                            break;
+                          default:
+                            *cs << "sizeof (" << bt->name () << ")}";
+                          }
+                      }
+                    else
+                      *cs << "0}";
+#endif
+                  }
                   break;
                 } // end switch
               paramtblsize++;

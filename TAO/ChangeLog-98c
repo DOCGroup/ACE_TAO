@@ -1,3 +1,110 @@
+Tue Dec 23 12:00:38 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* TAO-INSTALL.html: 
+	* VERSION: 
+	* Benchmark/benchmark/Makefile: 
+	* TAO_IDL/be/be_array.cpp: 
+	* TAO_IDL/be/be_attribute.cpp: 
+	* TAO_IDL/be/be_codegen.cpp: 
+	* TAO_IDL/be/be_decl.cpp: 
+	* TAO_IDL/be/be_exception.cpp: 
+	* TAO_IDL/be/be_operation.cpp: 
+	* TAO_IDL/be/be_scope.cpp: 
+	* TAO_IDL/be/be_sequence.cpp: 
+	* TAO_IDL/be/be_state.cpp: 
+	* TAO_IDL/be/be_state_argument.cpp: 
+	* TAO_IDL/be/be_state_exception.cpp: 
+	* TAO_IDL/be/be_state_operation.cpp: 
+	* TAO_IDL/be/be_state_sequence.cpp: 
+	* TAO_IDL/be/be_state_structure.cpp: 
+	* TAO_IDL/be/be_state_typedef.cpp: 
+	* TAO_IDL/be/be_state_union.cpp: 
+	* TAO_IDL/be/be_type.cpp: 
+	* TAO_IDL/be/be_union.cpp: 
+	* TAO_IDL/be/be_union_branch.cpp: 
+	* TAO_IDL/be_include/be_array.h: 
+	* TAO_IDL/be_include/be_codegen.h: 
+	* TAO_IDL/be_include/be_decl.h: 
+	* TAO_IDL/be_include/be_scope.h: 
+	* TAO_IDL/be_include/be_sequence.h: 
+	* TAO_IDL/be_include/be_state.h: 
+	* TAO_IDL/narrow/narrow.cpp: 
+	* docs/Options.html: 
+	* docs/components.html: 
+	* docs/configurations.html: 
+	* docs/index.html: 
+	* docs/orbsvcs.html: 
+	* docs/releasenotes/index.html: 
+	* orbsvcs/README: 
+	* orbsvcs/Dump_Schedule/Dump_Schedule.cpp: 
+	* orbsvcs/Dump_Schedule/Makefile: 
+	* orbsvcs/Event_Service/Dispatching_Modules.cpp: 
+	* orbsvcs/Event_Service/Dispatching_Modules.i: 
+	* orbsvcs/Event_Service/Event_Channel.cpp: 
+	* orbsvcs/Event_Service/Event_Channel.i: 
+	* orbsvcs/Event_Service/Event_Service.cpp: 
+	* orbsvcs/Event_Service/Makefile: 
+	* orbsvcs/Event_Service/RT_Task.cpp: 
+	* orbsvcs/Event_Service/ReactorTask.cpp: 
+	* orbsvcs/Naming_Service/CosNaming_i.cpp: 
+	* orbsvcs/Naming_Service/Makefile: 
+	* orbsvcs/Scheduling_Service/Config_Scheduler.cpp: 
+	* orbsvcs/Scheduling_Service/Config_Scheduler.h: 
+	* orbsvcs/Scheduling_Service/Makefile: 
+	* orbsvcs/Scheduling_Service/Scheduling_Service.cpp: 
+	* orbsvcs/orbsvcs/Makefile: 
+	* orbsvcs/orbsvcs/RtecEventChannelAdmin.idl: 
+	* orbsvcs/orbsvcs/Runtime_Scheduler.cpp: 
+	* orbsvcs/orbsvcs/Runtime_Scheduler.h: 
+	* orbsvcs/orbsvcs/Scheduler_Factory.cpp: 
+	* orbsvcs/tests/Event_Latency/Event_Latency.cpp: 
+	* orbsvcs/tests/Event_Latency/Makefile: 
+	* orbsvcs/tests/Logger/Makefile: 
+	* orbsvcs/tests/Logger/clnt.cpp: 
+	* orbsvcs/tests/Simple_Naming/Makefile: 
+	* tao/Makefile: 
+	* tao/Timeprobe.cpp: 
+	* tao/corba.h: 
+	* tao/corbacom.cpp: 
+	* tao/deep_free.cpp: 
+	* tao/encode.cpp: 
+	* tao/except.cpp: 
+	* tao/except.h: 
+	* tao/giop.cpp: 
+	* tao/invoke.cpp: 
+	* tao/managed_types.cpp: 
+	* tao/managed_types.h: 
+	* tao/managed_types.i: 
+	* tao/object.i: 
+	* tao/orb_core.cpp: 
+	* tao/request.cpp: 
+	* tao/tao_internals.cpp: 
+	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp: 
+	* tests/Cubit/TAO/IDL_Cubit/clnt.h: 
+	* tests/Cubit/TAO/MT_Cubit/client/Task_Client.cpp: 
+	* tests/Cubit/TAO/MT_Cubit/client/Task_Client.h: 
+	* tests/Cubit/TAO/MT_Cubit/client/client.cpp: 
+	* tests/Cubit/TAO/MT_Cubit/client/cubit.idl: 
+	* tests/Cubit/TAO/MT_Cubit/server/cubit.h: 
+	* tests/Cubit/TAO/MT_Cubit/server/cubit.idl: 
+	* tests/Cubit/TAO/MT_Cubit/server/cubit_i.cpp: 
+	* tests/Cubit/TAO/MT_Cubit/server/cubit_i.h: 
+	* tests/Cubit/TAO/MT_Cubit/server/method_db.i: 
+	* tests/Cubit/TAO/MT_Cubit/server/svr.cpp: 
+	  Merged in the changes between revisions main_to_poa_merge_1 and
+	  main_to_poa_merge_2.
+	  The only conflicts were:
+	  + ChangeLog: 
+	  removed all the main truck comments and added the one you are
+	  reading just now.
+	  + tests/Cubit/TAO/MT_Cubit/client/Makefile: 
+	  + tests/Cubit/TAO/MT_Cubit/client/Makefile: 
+	  Left the branch revision, it included the dependencies and had
+	  correct syntax.
+	  + tao/poa.cpp:
+	  CORBA_POA::handle_request was removed on the
+	  branch but modified on the main revision; keep it removed.
+
 Wed Dec 17 02:11:11 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
 	* tao/poa.h: 

@@ -7,12 +7,14 @@
 
 // Default Constructor
 be_scope::be_scope (void)
+  : comma_ (0)
 {
 }
 
 // Constructor
 be_scope::be_scope (AST_Decl::NodeType type)
-  : UTL_Scope (type)
+  : UTL_Scope (type),
+    comma_ (0)
 {
 }
 
@@ -21,12 +23,20 @@ be_scope::~be_scope (void)
 }
 
 // Code generation methods
+void
+be_scope::comma (unsigned short comma)
+{
+  this->comma_ = comma;
+}
+
 int
 be_scope::gen_client_header (void)
 {
   UTL_ScopeActiveIterator *si;
   AST_Decl *d;
   be_decl *bd;
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+  TAO_OutStream *os = cg->client_header (); // output stream
 
   if (this->nmembers () > 0)
     {
@@ -73,6 +83,10 @@ be_scope::gen_client_header (void)
                 }
             } // no imported
           si->next ();
+          if (!si->is_done () && this->comma_)
+            {
+              *os << ", "; // generate a comma
+            }
         } // end of while
       delete si; // free the iterator object
     }
@@ -85,6 +99,8 @@ be_scope::gen_client_stubs (void)
   UTL_ScopeActiveIterator *si;
   AST_Decl *d;
   be_decl *bd;
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+  TAO_OutStream *os = cg->client_stubs (); // output stream
 
   if (this->nmembers () > 0)
     {
@@ -125,6 +141,10 @@ be_scope::gen_client_stubs (void)
                 }
             } // not imported
           si->next ();
+          if (!si->is_done () && this->comma_)
+            {
+              *os << ", "; // generate a comma
+            }
         } // end of while
       delete si; // free the iterator object
     }
@@ -137,6 +157,8 @@ be_scope::gen_client_inline (void)
   UTL_ScopeActiveIterator *si;
   AST_Decl *d;
   be_decl *bd;
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+  TAO_OutStream *os = cg->client_inline (); // output stream
 
   if (this->nmembers () > 0)
     {
@@ -175,6 +197,10 @@ be_scope::gen_client_inline (void)
                 }
             } // not imported
           si->next ();
+          if (!si->is_done () && this->comma_)
+            {
+              *os << ", "; // generate a comma
+            }
         } // end of while
       delete si; // free the iterator object
     }
@@ -187,6 +213,8 @@ be_scope::gen_server_header (void)
   UTL_ScopeActiveIterator *si;
   AST_Decl *d;
   be_decl *bd;
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+  TAO_OutStream *os = cg->server_header (); // output stream
 
   if (this->nmembers () > 0)
     {
@@ -227,6 +255,10 @@ be_scope::gen_server_header (void)
                 }
             } // not imported
           si->next ();
+          if (!si->is_done () && this->comma_)
+            {
+              *os << ", "; // generate a comma
+            }
         } // end of while
       delete si; // free the iterator object
     }
@@ -239,6 +271,8 @@ be_scope::gen_server_skeletons (void)
   UTL_ScopeActiveIterator *si;
   AST_Decl *d;
   be_decl *bd;
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+  TAO_OutStream *os = cg->server_skeletons (); // output stream
 
   if (this->nmembers () > 0)
     {
@@ -278,6 +312,10 @@ be_scope::gen_server_skeletons (void)
                 }
             } // not imported
           si->next ();
+          if (!si->is_done () && this->comma_)
+            {
+              *os << ", "; // generate a comma
+            }
         } // end of while
       delete si; // free the iterator object
     }
@@ -290,6 +328,8 @@ be_scope::gen_server_inline (void)
   UTL_ScopeActiveIterator *si;
   AST_Decl *d;
   be_decl *bd;
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+  TAO_OutStream *os = cg->server_inline (); // output stream
 
   if (this->nmembers () > 0)
     {
@@ -329,6 +369,10 @@ be_scope::gen_server_inline (void)
                 }
             }
           si->next ();
+          if (!si->is_done () && this->comma_)
+            {
+              *os << ", "; // generate a comma
+            }
         } // end of while
       delete si; // free the iterator object
     }
@@ -406,6 +450,33 @@ be_scope::tc_encap_len (void)
       delete si; // free the iterator object
     }
   return encap_len;
+}
+
+// return the scope created by this node (if one exists, else NULL)
+be_decl *
+be_scope::decl (void)
+{
+  switch (this->scope_node_type())
+    {
+    case AST_Decl::NT_interface:
+      return be_interface::narrow_from_scope (this);
+    case AST_Decl::NT_module:
+      return be_module::narrow_from_scope (this);
+    case AST_Decl::NT_root:
+      return be_root::narrow_from_scope (this);
+    case AST_Decl::NT_except:
+      return be_exception::narrow_from_scope (this);
+    case AST_Decl::NT_union:
+      return be_union::narrow_from_scope (this);
+    case AST_Decl::NT_struct:
+      return be_structure::narrow_from_scope (this);
+    case AST_Decl::NT_enum:
+      return be_enum::narrow_from_scope (this);
+    case AST_Decl::NT_op:
+      return be_operation::narrow_from_scope (this);
+    default:
+      return (be_decl *)0;
+    }
 }
 
 // narrowing methods

@@ -192,8 +192,25 @@ Logger_Client::init (int argc, char **argv)
       return 1;
     }
 
-  
+  CosNaming::Name n(1);
+  n.length (1);
+  n[0].id = CORBA::string_dup ("my_naming_context_1");  
 
+
+  CosNaming::NamingContext_ptr nc1 = 
+    this->naming_service_->bind_new_context (n, this->env_);
+
+  if (this->env_.exception () != 0)
+    {
+      this->env_.print_exception ("bind_new_context");
+      return 1;
+    }
+
+  if (CORBA::is_nil (nc1))
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "null NamingContext_ptr returned by bind_new_context\n"),
+                      1);
+ 
   // Now retrieve the Logger obj ref corresponding to key1 and key2
   this->logger_1_ = this->factory_->make_logger ("key1", this->env_);
   this->logger_2_ = this->factory_->make_logger ("key2", this->env_);
@@ -214,6 +231,33 @@ Logger_Client::init (int argc, char **argv)
                        "null logger objref returned by factory\n"),
                       1);
 
+  n[0].id = CORBA::string_dup ("logger_1_");  
+  nc1->bind (n, this->logger_1_, this->env_);
+
+  if (this->env_.exception () != 0)
+    {
+      this->env_.print_exception ("nc1->bind");
+      return 1;
+    }
+
+  nc1->unbind (n, this->env_);
+
+  if (this->env_.exception () != 0)
+    {
+      this->env_.print_exception ("nc1->unbind");
+      return 1;
+    }
+
+  // destroy the naming context created above.
+  nc1->destroy (this->env_);
+
+  if (this->env_.exception () != 0)
+    {
+      this->env_.print_exception ("unbind");
+      return 1;
+    }
+
+  CORBA::release (nc1);
   return 0;
 }
 

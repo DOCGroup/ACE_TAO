@@ -28,7 +28,7 @@ ACE_Config_Scheduler::~ACE_Config_Scheduler (void)
 RtecScheduler::handle_t
 ACE_Config_Scheduler::create (const char * entry_point,
 			      CORBA::Environment &_env)
-     ACE_THROW_SPEC ((CORBA::SystemException,
+     TAO_THROW_SPEC ((CORBA::SystemException,
 		      RtecScheduler::DUPLICATE_NAME))
 {
   typedef RtecScheduler::RT_Info* RT_Info_ptr;
@@ -72,7 +72,7 @@ ACE_Config_Scheduler::create (const char * entry_point,
 RtecScheduler::handle_t
 ACE_Config_Scheduler::lookup (const char * entry_point,
 			      CORBA::Environment &_env)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+    TAO_THROW_SPEC ((CORBA::SystemException))
 {
   RtecScheduler::RT_Info* rt_info = 0;
   switch (impl->get_rt_info (entry_point, rt_info))
@@ -94,7 +94,7 @@ ACE_Config_Scheduler::lookup (const char * entry_point,
 RtecScheduler::RT_Info*
 ACE_Config_Scheduler::get (RtecScheduler::handle_t handle,
 			   CORBA::Environment &_env)
-     ACE_THROW_SPEC((CORBA::SystemException,
+     TAO_THROW_SPEC((CORBA::SystemException,
 		     RtecScheduler::UNKNOWN_TASK))
 {
   RtecScheduler::RT_Info* rt_info = 0;
@@ -128,7 +128,7 @@ void ACE_Config_Scheduler::set (RtecScheduler::handle_t handle,
 				RtecScheduler::Quantum quantum,
 				CORBA::Long threads,
 				CORBA::Environment &_env)
-     ACE_THROW_SPEC ((CORBA::SystemException,
+     TAO_THROW_SPEC ((CORBA::SystemException,
 		      RtecScheduler::UNKNOWN_TASK))
 {
   RtecScheduler::RT_Info* rt_info = 0;
@@ -158,7 +158,7 @@ void ACE_Config_Scheduler::priority (RtecScheduler::handle_t handle,
 				     RtecScheduler::Sub_Priority& subpriority,
 				     RtecScheduler::Preemption_Priority& p_priority,
 				     CORBA::Environment &_env)
-     ACE_THROW_SPEC ((CORBA::SystemException,
+     TAO_THROW_SPEC ((CORBA::SystemException,
 		      RtecScheduler::UNKNOWN_TASK,
 		      RtecScheduler::NOT_SCHEDULED))
 {
@@ -175,7 +175,7 @@ void ACE_Config_Scheduler::entry_point_priority (const char * entry_point,
 						 RtecScheduler::Sub_Priority& subpriority,
 						 RtecScheduler::Preemption_Priority& p_priority,
 						 CORBA::Environment &_env)
-     ACE_THROW_SPEC((CORBA::SystemException,
+     TAO_THROW_SPEC((CORBA::SystemException,
 		     RtecScheduler::UNKNOWN_TASK,
 		     RtecScheduler::NOT_SCHEDULED))
 {
@@ -188,7 +188,7 @@ void ACE_Config_Scheduler::add_dependency (RtecScheduler::handle_t handle,
 					   RtecScheduler::handle_t dependency,
 					   CORBA::Long number_of_calls,
 					   CORBA::Environment &_env)
-     ACE_THROW_SPEC ((CORBA::SystemException,
+     TAO_THROW_SPEC ((CORBA::SystemException,
 		      RtecScheduler::UNKNOWN_TASK))
 {
   RtecScheduler::RT_Info* rt_info = 0;
@@ -216,7 +216,7 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
 					       CORBA::Long maximum_priority,
 					       RtecScheduler::RT_Info_Set_out infos,
 					       CORBA::Environment &_env)
-     ACE_THROW_SPEC ((CORBA::SystemException,
+     TAO_THROW_SPEC ((CORBA::SystemException,
 		      RtecScheduler::UTILIZATION_BOUND_EXCEEDED,
 		      RtecScheduler::INSUFFICIENT_THREAD_PRIORITY_LEVELS,
 		      RtecScheduler::TASK_COUNT_MISMATCH))
@@ -256,6 +256,6 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
   ACE_DEBUG ((LM_DEBUG, "schedule prepared\n"));
 
   ACE_DEBUG ((LM_DEBUG, "dumping to stdout\n"));
-  ACE_Scheduler_Factory::dump_schedule (*infos.ptr()), 0);
+  ACE_Scheduler_Factory::dump_schedule (*(infos.ptr()), 0);
   ACE_DEBUG ((LM_DEBUG, "dump done\n"));
 }
