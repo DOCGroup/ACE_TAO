@@ -1,3 +1,17 @@
+Sat Mar  1 13:47:14 CST 2003 Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/orbsvcs/Notify/Builder.cpp:
+	  Commented out unused parameter.
+
+	* orbsvcs/orbsvcs/Notify/Container_T.inl:
+	* orbsvcs/orbsvcs/Notify/Seq_Worker_T.cpp:
+	  Added missing ACE_TYPENAME keyword.
+
+	* orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.cpp:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.h:
+	  Replaced Service name to "TAO_Notify_Service"
+
 Sat Mar  1 10:27:55 2003  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/IFR_Service/ifr_adding_visitor_exception.h

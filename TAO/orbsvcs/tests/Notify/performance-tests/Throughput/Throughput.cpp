@@ -426,7 +426,7 @@ Notify_Throughput::create_EC (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (this->colocated_ec_ == 1)
     {
-      TAO_NS_Service* notify_service = ACE_Dynamic_Service<TAO_NS_Service>::instance (TAO_NS_COS_NOTIFICATION_SERVICE_NAME);
+      TAO_Notify_Service* notify_service = ACE_Dynamic_Service<TAO_Notify_Service>::instance (TAO_NS_NOTIFICATION_SERVICE_NAME);
 
       if (notify_service == 0)
         {
