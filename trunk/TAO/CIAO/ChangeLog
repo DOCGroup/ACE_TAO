@@ -1,3 +1,18 @@
+Sun Sep 21 17:07:45 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/handcrafted/BasicSP_EC/BasicSP.mpc:
+	* examples/handcrafted/BasicSP_EC/BMClosedED/BMClosedED.mpc:
+	* examples/handcrafted/BasicSP_EC/BMDevice/BMDevice.mpc:
+	* examples/handcrafted/BasicSP_EC/BMDisplay/BMDisplay.mpc:
+	* examples/handcrafted/BasicSP_EC/EC/EC.mpc
+	* examples/handcrafted/BasicSP_EC2/BasicSP.mpc:
+	* examples/handcrafted/BasicSP_EC2/BMClosedED/BMClosedED.mpc:
+	* examples/handcrafted/BasicSP_EC2/BMDevice/BMDevice.mpc:
+	* examples/handcrafted/BasicSP_EC2/BMDisplay/BMDisplay.mpc:
+	  Changed the project file names so that they don't clash with the
+	  project names in examples/handcrafted/BasicSP. This shold get
+	  rid of warning in VC7 builds hosted by remedy.
+
 Fri Sep 19 14:27:57 2003  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * performance-tests/Benchmark/RoundTripServer/RoundTripServer.mpc:

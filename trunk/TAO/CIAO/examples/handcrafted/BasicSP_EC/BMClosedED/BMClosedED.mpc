@@ -2,8 +2,8 @@
 // This file is generated with "generate_component_mpc.pl -l .. -p HUDisplay -i BMClosedED"
 // This file has been manually modified to add a second component implementation.
 
-project(BMClosedED_stub): ciao_client {
-  after += BasicSP_stub
+project(BasicSP_EC_BMClosedED_stub): ciao_client {
+  after += BasicSP_EC_stub
   sharedname = BMClosedED_stub
   libpaths += ..,..\..\..\..\..\..\lib,..\..\..\..\..\tao\IFR_Client,..\..\..\..\..\tao\Valuetype,..\..\..\..\..\tao,..\..\..\..\..\..\ace,..\..\..\..\..\orbsvcs\orbsvcs,..\..\..\..\..\tao\PortableServer,..\..\..\..\..\tao\IORInterceptor,..\..\..\..\..\tao\ObjRefTemplate,..\..\..\..\..\..\ACEXML\parser\parser,..\..\..\..\..\..\ACEXML\common,..\..\..\..\..\tao\IORTable
   idlflags += -Wb,stub_export_macro=BMCLOSEDED_STUB_Export -Wb,stub_export_include=BMClosedED_stub_export.h -Wb,skel_export_macro=BMCLOSEDED_SVNT_Export -Wb,skel_export_include=BMClosedED_svnt_export.h
@@ -19,8 +19,8 @@ project(BMClosedED_stub): ciao_client {
   }
 }
 
-project(BMClosedED_svnt) : ciao_servant {
-  after += BasicSP_svnt BMClosedED_stub
+project(BasicSP_EC_BMClosedED_svnt) : ciao_servant {
+  after += BasicSP_EC_svnt BasicSP_EC_BMClosedED_stub
   sharedname  = BMClosedED_svnt
   libs    += BMClosedED_stub BasicSP_stub BasicSP_svnt TAO_RTEvent
   libpaths += ..,..\..\..\..\..\..\lib,..\..\..\..\..\tao\IFR_Client,..\..\..\..\..\tao\Valuetype,..\..\..\..\..\tao,..\..\..\..\..\..\ace,..\..\..\..\..\orbsvcs\orbsvcs,..\..\..\..\..\tao\PortableServer,..\..\..\..\..\tao\IORInterceptor,..\..\..\..\..\tao\ObjRefTemplate,..\..\..\..\..\..\ACEXML\parser\parser,..\..\..\..\..\..\ACEXML\common,..\..\..\..\..\tao\IORTable
@@ -43,8 +43,8 @@ project(BMClosedED_svnt) : ciao_servant {
 }
 
 
-project(BMClosedED_exec) : ciao_component {
-  after   += BMClosedED_svnt
+project(BasicSP_EC_BMClosedED_exec) : ciao_component {
+  after   += BasicSP_EC_BMClosedED_svnt
   sharedname = BMClosedED_exec
   libs      += BMClosedED_stub BMClosedED_svnt BasicSP_stub BasicSP_svnt TAO_RTEvent
   libpaths += ..,..\..\..\..\..\..\lib,..\..\..\..\..\tao\IFR_Client,..\..\..\..\..\tao\Valuetype,..\..\..\..\..\tao,..\..\..\..\..\..\ace,..\..\..\..\..\orbsvcs\orbsvcs,..\..\..\..\..\tao\PortableServer,..\..\..\..\..\tao\IORInterceptor,..\..\..\..\..\tao\ObjRefTemplate,..\..\..\..\..\..\ACEXML\parser\parser,..\..\..\..\..\..\ACEXML\common,..\..\..\..\..\tao\IORTable
