@@ -135,7 +135,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::enqueue (ACE_MESSAGE_TYPE
 {
   ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::enqueue_prio");
  
-  return this->enqueue_prio (mb, timeout);
+  return this->enqueue_prio (new_item, timeout);
 }
 
 template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> int
