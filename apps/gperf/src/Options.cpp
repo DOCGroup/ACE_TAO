@@ -78,7 +78,7 @@ void
 Options::usage (void)
 {
   ACE_ERROR ((LM_ERROR,
-              "Usage: %n [-acCdDef[num]gGhH<hashname>i<init>IjJ"
+              "Usage: %n [-aBcCdDef[num]gGhH<hashname>i<init>IjJ"
               "k<keys>K<keyname>lL<language>mMnN<function name>o"
               "Oprs<size>S<switches>tTvVZ<class name>].\n"
               "(type %n -h for help)\n"));
@@ -223,7 +223,7 @@ Options::parse_args (int argc, char *argv[])
   if (ACE_LOG_MSG->open (argv[0]) == -1)
     return -1;
 
-  ACE_Get_Opt getopt (argc, argv, "adcCDe:Ef:gGhH:i:IJj:k:K:lL:mMnN:oOprs:S:tTvVZ:");
+  ACE_Get_Opt getopt (argc, argv, "aBcCdDe:Ef:gGhH:i:IJj:k:K:lL:mMnN:oOprs:S:tTvVZ:");
   int option_char;
 
   argc_ = argc;
@@ -239,7 +239,13 @@ Options::parse_args (int argc, char *argv[])
             ACE_SET_BITS (option_word_, ANSI);
             break;
           }
-        // Generate strncmp rather than strcmp.
+          // Generate code for Binary Search.
+        case 'B':
+	  {
+	    ACE_SET_BITS (option_word_, BINARYSEARCH);
+	    break;
+	  }
+          // Generate strncmp rather than strcmp.
         case 'c':               
           {
             ACE_SET_BITS (option_word_, COMP);
@@ -306,6 +312,8 @@ Options::parse_args (int argc, char *argv[])
           {
             ACE_OS::fprintf (stderr,
                              "-a\tGenerate ANSI standard C output code, i.e., function prototypes.\n"
+                             "-B\tGenerate code for Binary Search.\n"
+
                              "-c\tGenerate comparison code using strncmp rather than strcmp.\n"
                              "-C\tMake the contents of generated lookup tables constant, i.e., readonly.\n"
                              "-d\tEnables the debugging option (produces verbose output to the standard error).\n"
