@@ -174,6 +174,8 @@ public:
 
 };
 
+
+
 // ****************************************************************
 
 /**
@@ -966,6 +968,8 @@ public:
   /// Return a pointer to the -ORBInitRef map.
   InitRefMap * init_ref_map (void);
 
+
+
 protected:
 
   /// Destructor is protected since the ORB Core is a reference
@@ -1458,6 +1462,10 @@ public:
    * those are precious commodities (e.g., NT).
    */
   void *poa_current_impl_;
+
+  void *rtscheduler_current_impl_;
+
+  void *rtscheduler_previous_current_impl_;
 
   /// The default environment for the thread.
   CORBA::Environment *default_environment_;
