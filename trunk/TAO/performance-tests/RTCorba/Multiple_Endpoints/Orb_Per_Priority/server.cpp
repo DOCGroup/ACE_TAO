@@ -2,6 +2,8 @@
 
 #include "test_i.h"
 #include "tao/RTCORBA/RTCORBA.h"
+#include "tao/RTCORBA/Priority_Mapping.h"
+#include "tao/RTCORBA/Priority_Mapping_Manager.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 #include "ace/Sched_Params.h"
