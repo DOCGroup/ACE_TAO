@@ -6,8 +6,9 @@ Mon Feb 14 22:56:17 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	  polymorphic invocations of the client and server side
 	  *_Argument_T<>::arg() method.  These classes are the key to
 	  using the same skeleton code for both collocated and
-	  uncollocated invocations.  Both of these class templates
-	  subclass the TAO::Argument class.
+	  uncollocated invocations without having to resort to complicated
+	  argument conversion code.  Both of these class templates
+	  subclass the TAO::Argument class. 
 
 	* tao/BD_String_Argument_T.h:
 	* tao/Basic_Argument_T.h:
@@ -33,8 +34,6 @@ Mon Feb 14 22:56:17 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	  instead of TAO::Argument to enable polymorphic invocation of the
 	  arg() method used in the stubs and skeletons.  See
 	  "tao/Argument_T.h" details above.
-
-Thu Nov 11 20:41:05 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
 	* TAO_IDL/be/be_visitor_argument/request_info_ch.cpp:
