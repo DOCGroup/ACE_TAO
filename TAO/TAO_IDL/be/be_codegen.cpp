@@ -656,6 +656,7 @@ TAO_CodeGen::end_server_template_skeletons (void)
 void
 TAO_CodeGen::gperf_input_stream (TAO_OutStream *os)
 {
+  delete this->gperf_input_stream_;
   this->gperf_input_stream_ = os;
 }
 
@@ -668,7 +669,8 @@ TAO_CodeGen::gperf_input_stream (void)
 void
 TAO_CodeGen::gperf_input_filename (char *filename)
 {
-  this->gperf_input_filename_ = filename;
+  delete[] this->gperf_input_filename_;
+  this->gperf_input_filename_ = ACE::strnew (filename);
 }
 
 char *

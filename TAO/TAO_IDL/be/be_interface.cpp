@@ -923,7 +923,7 @@ be_interface::gen_operation_table (void)
 
         // Add the gperf input header.
         gen_gperf_input_header (ss);
-
+        
         // Traverse the graph.
         if (this->traverse_inheritance_graph (be_interface::gen_optable_helper, ss) == -1)
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -944,12 +944,10 @@ be_interface::gen_operation_table (void)
             << "::_non_existent_skel\n";
         this->skel_count_++;
 
-        // Input to the gperf is ready. Run gperf and get things done.
+        // Input to the gperf is ready. Run gperf and get things
+        // done. This method also unlinks the temp file that we used
+        // for the gperf.
         gen_perfect_hash_optable ();
-
-        // Cleanup the temp file. Delete the stream, remove the file
-        // and delete the filename ptr.
-        cleanup_gperf_temp_file ();
       }
       break;
 
@@ -1342,21 +1340,25 @@ be_interface::gen_perfect_hash_methods (void)
 
   // Set the stdin and stdout appropriately for the gperf program.
 
-  // Stdin is our temp file. Close the temp file and open using
-  // ACE_OS::open so that we will get ACE_HANDLE.
+  // Stdin is our temp file. Close the temp file and open. We will use
+  // <open_temp_file> to  open the file now, so that the file will get
+  // deleted once when we close the file.
 
+  // Close the file. 
   if (ACE_OS::fclose (cg->gperf_input_stream ()->file ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p:File close failed on temp gperf's input file\n"),
                       -1);
 
-  ACE_HANDLE input =  ACE_OS::open (cg->gperf_input_filename (),
-                                    O_RDONLY);
+  // Open the temp file. 
+  ACE_HANDLE input =  ACE::open_temp_file (cg->gperf_input_filename (),
+                                           O_RDONLY);
+  
   if (input == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p:File open failed on gperf's temp input file\n"),
                       -1);
-
+  
   // Stdout is server skeleton. Do *not* close the file, just open
   // again with ACE_OS::open with WRITE + APPEND option.. After this,
   // remember to update the file offset to the correct location.
@@ -1424,6 +1426,7 @@ be_interface::gen_perfect_hash_instance ()
       << be_nl;
 }
 
+#if 0
 // Delete the stream and filename for this temp file and also remove
 // the temperary gperf's input file.
 void
@@ -1451,6 +1454,7 @@ be_interface::cleanup_gperf_temp_file (void)
   char *fname = cg->gperf_input_filename ();
   delete[] fname;
 }
+#endif /* 0 */
 
 int
 be_interface::is_a_helper (be_interface * /*derived*/,
