@@ -590,8 +590,7 @@ TAO_Compiled_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     case TAO_CodeGen::TAO_ARGUMENT_INVOKE_CS:
       return new be_visitor_args_compiled_marshal_cs (new_ctx);
     case TAO_CodeGen::TAO_ARGUMENT_POST_INVOKE_CS:
-      // this is a NO-OP
-      return new be_visitor_decl (new_ctx);
+      return new be_visitor_args_post_docall_compiled_cs (new_ctx);
     case TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS:
       return new be_compiled_visitor_args_vardecl_ss (new_ctx);
     case TAO_CodeGen::TAO_ARGUMENT_PRE_UPCALL_SS:
