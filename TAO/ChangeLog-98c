@@ -1,3 +1,18 @@
+Tue Mar 31 15:15:53 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Sequence.h: 
+	* tao/Sequence.i: 
+	* tao/Sequence_T.h: 
+	* tao/Sequence_T.i: 
+	  g++ does not like typedefs inside templates, and we were abusing
+	  them in the sequences.
+
+	* tests/CDR/tc.cpp: 
+	  Fixed formatting problems.
+
+	* tests/Param_Test/tmplinst.cpp: 
+	  Added missing template instantiations.
+
 Tue Mar 31 14:38:29 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* tao/Sequence_T.i (replace): Make sure to cast this->buffer_
