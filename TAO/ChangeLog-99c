@@ -64,6 +64,13 @@ Fri Jul 16 14:05:33 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 Fri Jul 16 13:59:10 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* tao/{Makefile.bor,tao.rc},
+	  orbsvcs/orbsvcs/{Makefile.bor,orbsvcs.rc}:
+	  Updated these files to add version information to the DLLs so
+ 	  when you right click them in windows explorer you can see what
+ 	  version the file is (e.g., "4.6.45").  Thanks to Christopher
+ 	  Kohlhoff <chris@kohlhoff.com> for contributing this.
+  
 	* examples/Borland: Updated the examples to contain several minor
 	  fixes for Borland C++ Builder.  Thanks to Christopher Kohlhoff
  	  <chris@kohlhoff.com> for reporting this.
