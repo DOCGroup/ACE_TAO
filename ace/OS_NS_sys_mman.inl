@@ -214,6 +214,9 @@ ACE_OS::mmap (void *addr,
   flags |= ACE_OS_EXTRA_MMAP_FLAGS;
 #  endif /* ACE_OS_EXTRA_MMAP_FLAGS */
   ACE_UNUSED_ARG (file_mapping);
+#  if defined (ACE_OPENVMS)
+  ::fsync(file_handle);
+#  endif
   ACE_OSCALL_RETURN ((void *) ::mmap ((ACE_MMAP_TYPE) addr,
                                       len,
                                       prot,
@@ -306,6 +309,8 @@ ACE_OS::shm_open (const ACE_TCHAR *filename,
 # if defined (ACE_HAS_SHM_OPEN)
   ACE_UNUSED_ARG (sa);
   ACE_OSCALL_RETURN (::shm_open (filename, mode, perms), ACE_HANDLE, -1);
+# elif defined (ACE_OPENVMS)
+  ACE_OSCALL_RETURN (::open (filename, mode, perms, ACE_TEXT("shr=get,put,upd")), ACE_HANDLE, -1);
 # else  /* ! ACE_HAS_SHM_OPEN */
   // Just use ::open.
   return ACE_OS::open (filename, mode, perms, sa);
