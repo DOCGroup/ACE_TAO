@@ -134,8 +134,8 @@ sub parse_file {
 
   if (!$status) {
     $self->error($errorString,
-                 $self->getcwd() .
-                 "/$input: line " . $self->get_line_number() . ':');
+                 (basename($input) eq $input ? $self->getcwd() . '/' : '') .
+                 "$input: line " . $self->get_line_number() . ':');
   }
   elsif ($status && $self->{$self->{'type_check'}}) {
     ## If we are at the end of the file and the type we are looking at
@@ -346,9 +346,7 @@ sub parse_scope {
     if ($line eq '') {
     }
     elsif ($line =~ /^}/) {
-      $status = 1;
-      $errorString = '';
-      $self->handle_scoped_end($type, $flags);
+      ($status, $errorString) = $self->handle_scoped_end($type, $flags);
       last;
     }
     else {
@@ -533,6 +531,21 @@ sub modify_assignment_value {
 }
 
 
+sub get_assignment_hash {
+  my($self)   = shift;
+  my($tag)    = ($self->{'reading_global'} ? 'global_assign' : 'assign');
+  my($assign) = $self->{$tag};
+
+  ## If we haven't yet defined the hash table in this project
+  if (!defined $assign) {
+    $assign = {};
+    $self->{$tag} = $assign;
+  }
+
+  return $assign;
+}
+
+
 sub process_assignment {
   my($self)   = shift;
   my($name)   = shift;
@@ -542,14 +555,7 @@ sub process_assignment {
 
   ## If no hash table was passed in
   if (!defined $assign) {
-    my($tag) = ($self->{'reading_global'} ? 'global_assign' : 'assign');
-    $assign  = $self->{$tag};
-
-    ## If we haven't yet defined the hash table in this project
-    if (!defined $assign) {
-      $assign = {};
-      $self->{$tag} = $assign;
-    }
+    $assign = $self->get_assignment_hash();
   }
 
   if (defined $value) {
@@ -851,6 +857,7 @@ sub handle_scoped_end {
   #my($self)  = shift;
   #my($type)  = shift;
   #my($flags) = shift;
+  return 1, undef;
 }
 
 
