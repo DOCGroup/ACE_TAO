@@ -1,3 +1,56 @@
+Thu Mar 10 15:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.h:
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/ConsumerAdmin_i.h:
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/CosEvent_Utilities.h:
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/EventChannel_i.h:
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/ProxyPushConsumer_i.h:
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/ProxyPushSupplier_i.h:
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/SupplierAdmin_i.h:
+        * orbsvcs/examples/LoadBalancing/ORBInitializer.h:
+        * orbsvcs/examples/LoadBalancing/ServerRequestInterceptor.h:
+        * orbsvcs/examples/Notify/Filter/Filter.h:
+        * orbsvcs/examples/Notify/Lanes/Supplier.h:
+        * orbsvcs/examples/Notify/Subscribe/Subscribe.h:
+        * orbsvcs/examples/Notify/ThreadPool/Supplier.h:
+        * orbsvcs/examples/ORT/Server_IORInterceptor.h:
+        * orbsvcs/examples/ORT/Server_IORInterceptor_ORBInitializer.h:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/CPU/ORBInitializer.h:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/CPU/Roundtrip.h:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/ORBInitializer.h:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/Roundtrip.h:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/ServerRequestInterceptor.h:
+        * orbsvcs/tests/CosEvent/Basic/Random.h:
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Consumer.cpp
+        * orbsvcs/tests/Event/Basic/Random.h:
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Server_ORBInitializer.h:
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Server_Request_Interceptor.h:
+        * orbsvcs/tests/HTIOP/Hello/Hello.h:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/Basic.h:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/Factory.h:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/Simple.h:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/Basic.h:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/Simple.h:
+        * orbsvcs/tests/Miop/McastHello/McastHello.h:
+        * orbsvcs/tests/Notify/Basic/ConnectDisconnect.h:
+        * orbsvcs/tests/Notify/Basic/Events.h:
+        * orbsvcs/tests/Notify/Basic/Filter.h:
+        * orbsvcs/tests/Notify/Basic/MultiTypes.h:
+        * orbsvcs/tests/Notify/Basic/Sequence.h:
+        * orbsvcs/tests/Notify/Basic/Simple.h:
+        * orbsvcs/tests/Notify/Basic/Updates.h:
+        * orbsvcs/tests/Notify/Reconnecting/Consumer.h:
+        * orbsvcs/tests/Notify/Test_Filter/RT_Test_Filter.h:
+        * orbsvcs/tests/Notify/Test_Filter/RT_Test_FilterFactory.h:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.h:
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.h:
+        * orbsvcs/tests/Security/MT_IIOP_SSL/Client_Worker.h:
+        * orbsvcs/tests/Security/MT_IIOP_SSL/Server_Worker.h:
+        * orbsvcs/tests/Security/MT_SSLIOP/Client_Worker.h:
+        * orbsvcs/tests/Security/MT_SSLIOP/Server_Worker.h:
+        * orbsvcs/tests/Trading/Simple_Dynamic.h:
+          Removed checks for _MSC_VER >= 1200, just check for _MSC_VER
+
 Thu Mar 10 15:03:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Latency/AMH_Single_Threaded/Roundtrip.h:
