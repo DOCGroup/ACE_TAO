@@ -26,7 +26,7 @@ public:
   typedef ACE_Stream<ACE_MT_SYNCH> inherited;
 
   CommandStream (ACE_SOCK_Stream *peer)
-    : peer_(peer), inherited()  { }
+    : inherited (), peer_(peer) { }
 
   virtual int open (void *arg,
                     ACE_Module<ACE_MT_SYNCH> *head = 0,
