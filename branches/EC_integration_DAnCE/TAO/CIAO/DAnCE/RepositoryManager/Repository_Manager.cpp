@@ -68,7 +68,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   // Initialize the ORB so that CORBA::Any will work
   //
-  CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "");
+  CORBA::ORB_var orb =
+    CORBA::ORB_init (argc,
+                     argv,
+                     "");
 
   try
     {
@@ -116,7 +119,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           ACE_DEBUG ((LM_DEBUG, "Null DOM Document obtained, \
                       May be the URL is wrong!!\n"));
-          throw Null_Dom_Document ();
+          throw CIAO::Null_Dom_Document ();
         }
 
       // free up DOMBuilder. DOMBuilder also deletes the DOMDocument memory.
@@ -142,12 +145,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       pc = rep_impl->findPackageByName ("PC");
       //Deployment::DnC_Dump::dump (*pc);
 
-      REF_MAP ref_map;
-      REF_MAP primary_ref_map;
+      CIAO::REF_MAP ref_map;
+      CIAO::REF_MAP primary_ref_map;
 
       // traverse the PackageConfiguration IDL data structure and
       // update the deployment plan IDL data structure.
-      traverse_package (pc, plan, ref_map, primary_ref_map);
+      CIAO::traverse_package (pc, plan, ref_map, primary_ref_map);
 
       //Deployment::DnC_Dump::dump (plan);
 
@@ -256,7 +259,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   catch (CORBA::Exception& ex)
     {
       ACE_PRINT_EXCEPTION (ex, "Caught CORBA Exception: ");
-      while (true); 
+      while (true);
       return -1;
     }
   catch (const DOMException& e)
@@ -275,13 +278,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
       //ACE_PRINT_EXCEPTION ("Caught DOM Exception: ");
       ACE_ERROR ((LM_ERROR, "Caught DOM exception\n"));
-      while (true); 
+      while (true);
       return -1;
     }
   catch (...)
     {
       ACE_ERROR ((LM_ERROR, "Caught unknown exception\n"));
-      while (true); 
+      while (true);
       return -1;
     }
 
