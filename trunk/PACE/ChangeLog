@@ -1,4 +1,13 @@
+Tue Jun 27 16:35:20 2000  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * pace/posix/aio.h:
+          Removed copyrighted Solaris man text that accidentally get
+          committed to the repository and replaced it with text to
+          denote what really needs to go there.
+
 Tue Jun 27 14:32:40 2000  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * pace/posix/aio.h: 
 
         * tests/Makefile (ACELIB):
           Defining PACE_HAS_INLINE from the Makefile and adding the PACE
