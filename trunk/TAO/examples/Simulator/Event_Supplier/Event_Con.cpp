@@ -137,7 +137,7 @@ Demo_Consumer::open_consumer (RtecEventChannelAdmin::EventChannel_ptr ec,
 }
 
 void
-Demo_Consumer::disconnect_push_consumer (CORBA::Environment &ACE_TRY_ENV)
+Demo_Consumer::disconnect_push_consumer (CORBA::Environment &)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Consumer received disconnect from channel.\n"));
@@ -169,14 +169,18 @@ Demo_Consumer::push (const RtecEventComm::EventSet &events,
 
           ACE_TRY
             {
+              // Use a temporary int to avoid overload ambiguities with
+              // the enum.
+              int kind = events[i].data.any_value.type()->kind (ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+
               cout << "ID: " << events[i].data.any_value.type()->id(ACE_TRY_ENV) << endl;
               ACE_TRY_CHECK;
               cout << "Name: " << events[i].data.any_value.type()->name(ACE_TRY_ENV) << endl;
               ACE_TRY_CHECK;
               cout << "member_count: " << events[i].data.any_value.type()->member_count(ACE_TRY_ENV) << endl;
               ACE_TRY_CHECK;
-              cout << "TCKind: " << events[i].data.any_value.type()->kind(ACE_TRY_ENV) << endl;
-              ACE_TRY_CHECK;
+              cout << "TCKind: " << kind << endl;
 
               if (_tc_Navigation->equal (events[i].data.any_value.type(), ACE_TRY_ENV))
                 {
