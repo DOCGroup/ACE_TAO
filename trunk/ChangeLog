@@ -1,3 +1,17 @@
+Fri Jul 26 10:11:41 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/messaging.mpb:
+        * bin/MakeProjectCreator/config/messaging_only.mpb:
+
+          Set up a new base project that just contains information about
+          the Messaging library.
+
+        * bin/MakeProjectCreator/modules/GNUProjectCreator.pm:
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Allow the file lists to contain names of files that correspond
+          to relative directories.
+
 Fri Jul 26 06:40:12 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/OS_String.inl: Added casts of the input parameter to

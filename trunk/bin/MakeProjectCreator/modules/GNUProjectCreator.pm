@@ -86,7 +86,7 @@ sub fill_value {
           my($dname) = dirname($item);
 
           $item =~ s/\.[^\.]+$//;
-          if ($dname ne ".") {
+          if ($dname ne "." && $dname !~ /^\.\.\//) {
             $vpath{$dname} = 1;
           }
           $value .= "$crlf  $item" . ($i != $#arr ? " \\" : "");
@@ -158,6 +158,21 @@ sub fill_value {
       if ($name ne "default") {
         $value = "compclean";
         last;
+      }
+    }
+  }
+  elsif ($name eq "notdirfiles") {
+    $value = "\$(notdir \$(FILES))";
+    foreach my $name (keys %$names) {
+      my($comps) = $$names{$name};
+      foreach my $key (keys %$comps) {
+        my($arr) = $$comps{$key};
+        foreach my $file (@$arr) {
+          if ($file =~ /^\.\.\//) {
+            $value = "\$(FILES)";
+            last;
+          }
+        }
       }
     }
   }
