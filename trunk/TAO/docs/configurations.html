@@ -137,28 +137,43 @@ bgcolor="#ffffff">
       <table border=2 width="90%" cellspacing="2" cellpadding="0">
 	<tr>
 	  <th>Typical Use</th>
-	  <td>A brief description of the scenario and its typical use.</td>
+	  <td>This configuration spawns a new thread to serve requests
+              from a new connection.  It's best to use when there can
+              be multiple connections active simultaneously and each
+              request takes considerable amount of time to serve.
 	</tr>
 
 	<tr>
 	  <th>Number Threads</th>
-	  <td>The number of threads used by ORB-related activities.</td>
+	  <td>1 plus the number of connections.</td>
 	</tr>
 
 	<tr>
 	  <th>Thread Creator</th>
-	  <td>Identifies the creator of the threads discussed above.</td>
+	  <td>Programmer must set up the main thread which is
+              responsible to create new threads for new connections.</td>
 	</tr>
 
 	<tr>
 	  <th>Resource Location</th>
-	  <td>Where information on various resources is stored.</td>
+	  <td>Process-wise.</td>
 	</tr>
 
 	<tr>
 	  <th>Thread task</th>
-	  <td>Describes what task is undertaken for each thread.</td>
+	  <td>The main thread handles new connections and spawns new
+              threads for them.  Other threads handle requests for
+              established connections.</td>
 	</tr>
+
+        <tr>
+	  <th>Options</th>
+	  <td>
+	    <code>TAO_Resource_Manager</code>: <code>-ORBresources global</code><br>
+	    <code>TAO_Server_Strategy_Factory</code>: <code>-ORBconcurrency thread-per-connection</code>
+	  </td>
+	</tr>
+
       </table>
       </p>
 
@@ -168,27 +183,38 @@ bgcolor="#ffffff">
       <table border=2 width="90%" cellspacing="2" cellpadding="0">
 	<tr>
 	  <th>Typical Use</th>
-	  <td>A brief description of the scenario and its typical use.</td>
+	  <td>In this configuration, there are multiple ORB each
+              running in its own thread.  Each thread handles requests
+              reactively.  It's good for use cases that require
+              different priorities for various ORB.</td>
 	</tr>
 
 	<tr>
 	  <th>Number Threads</th>
-	  <td>The number of threads used by ORB-related activities.</td>
+	  <td>The number of ORBs.</td>
 	</tr>
 
 	<tr>
 	  <th>Thread Creator</th>
-	  <td>Identifies the creator of the threads discussed above.</td>
+	  <td>The main process (thread).</td>
 	</tr>
 
 	<tr>
 	  <th>Resource Location</th>
-	  <td>Where information on various resources is stored.</td>
+	  <td>Thread specific.</td>
 	</tr>
 
 	<tr>
 	  <th>Thread task</th>
-	  <td>Describes what task is undertaken for each thread.</td>
+	  <td>Service the requests from associating ORB.</td>
+	</tr>
+
+        <tr>
+	  <th>Options</th>
+	  <td>
+	    <code>TAO_Resource_Manager</code>: <code>-ORBresources tss</code><br>
+	    <code>TAO_Server_Strategy_Factory</code>: <code>-ORBconcurrency reactive</code>
+	  </td>
 	</tr>
       </table>
       </p>
@@ -200,28 +226,41 @@ bgcolor="#ffffff">
       <table border=2 width="90%" cellspacing="2" cellpadding="0">
 	<tr>
 	  <th>Typical Use</th>
-	  <td>A brief description of the scenario and its typical use.</td>
+	  <td>This gives you diverse priorities and also connections
+              that won't interfere with each others.</td>
 	</tr>
 
 	<tr>
 	  <th>Number Threads</th>
-	  <td>The number of threads used by ORB-related activities.</td>
+	  <td>Number of ORBs plus number of connections.</td>
 	</tr>
 
 	<tr>
 	  <th>Thread Creator</th>
-	  <td>Identifies the creator of the threads discussed above.</td>
+	  <td>Main threads creates threads running ORBs.  They, in
+              turns, create connection handling threads.</td>
 	</tr>
 
 	<tr>
 	  <th>Resource Location</th>
-	  <td>Where information on various resources is stored.</td>
+	  <td>Thread specific.</td>
 	</tr>
 
 	<tr>
 	  <th>Thread task</th>
-	  <td>Describes what task is undertaken for each thread.</td>
+	  <td>There are ORB threads which handle connection requests
+              and handler threads which service requests form
+              establiched connections.</td>
 	</tr>
+
+        <tr>
+	  <th>Options</th>
+	  <td>
+	    <code>TAO_Resource_Manager</code>: <code>-ORBresources tss</code><br>
+	    <code>TAO_Server_Strategy_Factory</code>: <code>-ORBconcurrency thread-per-connection</code>
+	  </td>
+	</tr>
+
       </table>
       </p>
 
