@@ -1,3 +1,8 @@
+Wed Mar 06 17:06:43 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Cached_Accept_Conn_Test.cpp:
+	* tests/Cached_Conn_Test.cpp: Replaced main with ACE_TMAIN.
+
 Wed Mar  6 14:43:34 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.h: Reverted my previous "fix" to the argv argument type.
