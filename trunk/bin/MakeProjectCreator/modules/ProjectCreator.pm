@@ -170,6 +170,7 @@ sub new {
   $self->{'dollar_special'}        = $self->dollar_special();
   $self->{'exclude'}               = $exclude;
   $self->{'generate_ins'}          = $genins;
+  $self->{'addtemp_state'}         = undef;
   $self->reset_generating_types();
 
   return $self;
@@ -429,6 +430,10 @@ sub parse_line {
               delete $self->{$key};
               $self->{'defaulted'}->{$key} = 0;
             }
+            if (defined $self->{'addtemp_state'}) {
+              $self->restore_state($self->{'addtemp_state'}, 'addtemp');
+              $self->{'addtemp_state'} = undef;
+            }
             $self->{'assign'}               = {};
             $self->{'verbatim'}             = {};
             $self->{'verbatim_accessed'}    = {$self->{'pctype'} => {}};
@@ -654,6 +659,13 @@ sub handle_unknown_assignment {
 
   ## If $type is not defined, then we are skipping this section
   if (defined $type) {
+    ## Save the addtemp state if we haven't done so before
+    if (!defined $self->{'addtemp_state'}) {
+      my(%state) = $self->save_state('addtemp');
+      $self->{'addtemp_state'} = \%state;
+    }
+
+    ## Now modify the addtemp values
     $self->information("'$values[1]' was used as a template modifier.");
     if ($values[0] eq 'assign_add') {
       $values[0] = 1;
