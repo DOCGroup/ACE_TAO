@@ -1340,8 +1340,17 @@ TAO_GIOP_Message_Lite::send_error (TAO_Transport *transport)
 
   ACE_HANDLE which = transport->handle ();
 
-  int result = transport->send ((const u_char *)error_message,
-                                TAO_GIOP_LITE_HEADER_LEN);
+  ACE_Data_Block data_block (TAO_GIOP_LITE_HEADER_LEN,
+                             ACE_Message_Block::MB_DATA,
+                             error_message,
+                             0,
+                             0,
+                             ACE_Message_Block::DONT_DELETE,
+                             0);
+  ACE_Message_Block message_block(&data_block);
+  message_block.wr_ptr (TAO_GIOP_LITE_HEADER_LEN);
+
+  int result = transport->send (&message_block);
   if (result == -1)
     {
       if (TAO_debug_level > 0)

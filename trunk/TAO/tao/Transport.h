@@ -101,10 +101,16 @@ typedef ACE_Message_Queue<ACE_NULL_SYNCH> TAO_Transport_Buffering_Queue;
  *
  * <H4>Conclusions:</H4> The outgoing data path consist in several
  * components:
+ *
  * - A queue of pending messages
  * - A message currently being transmitted
- * - A per-message waiting
- * 
+ * - A per-transport 'send strategy' to choose between blocking on
+ *   write, blocking on the reactor or blockin on leader/follower.
+ * - A per-message 'waiting object'
+ * - A per-meessage timeout
+ *
+ * The Transport object provides a single method to send messages
+ * (send_message ()).
  *   
  * <H3>The incoming data path:</H3>
  *
@@ -131,139 +137,56 @@ public:
   /// destructor
   virtual ~TAO_Transport (void);
 
-  /// The tag, each concrete class will have a specific tag value.
+  /// Return the protocol tag.
+  /**
+   * The OMG assigns unique tags (a 32-bit unsigned number) to each
+   * protocol.  New protocol tags can be obtained free of charge from
+   * the OMG, check the documents in corbafwd.h for more details.
+   */
   CORBA::ULong tag (void) const;
-
-  /// Call the corresponding connection handler's <close>
-  /// method.
-  virtual void close_connection (void) = 0;
-
-  /// Idles the corresponding connection handler.
-  virtual int idle (void) = 0;
-
-  /// This method provides a way to gain access to the underlying file
-  /// handle used by the reactor.
-  virtual ACE_HANDLE handle (void) = 0;
-
-  /// This method provides a way to gain access to the underlying event
-  /// handler used by the reactor.
-  virtual ACE_Event_Handler *event_handler (void) = 0;
-
-  virtual ssize_t send (const ACE_Message_Block *mblk,
-                        const ACE_Time_Value *s = 0,
-                        size_t *bytes_transferred = 0) = 0;
-
-  // Write the complete Message_Block chain to the connection.
-  // @@ The ACE_Time_Value *s is just a place holder for now.  It is
-  // not clear this this is the best place to specify this.  The actual
-  // timeout values will be kept in the Policies.
-
-  /// Write the contents of the buffer of length len to the connection.
-  virtual ssize_t send (const u_char *buf,
-                        size_t len,
-                        const ACE_Time_Value *s = 0) = 0;
-
-  /**
-   * Read len bytes from into buf.
-   * @@ The ACE_Time_Value *s is just a place holder for now.  It is
-   * not clear this this is the best place to specify this.  The actual
-   * timeout values will be kept in the Policies.
-   */
-  virtual ssize_t recv (char *buf,
-                        size_t len,
-                        const ACE_Time_Value *s = 0) = 0;
-
-  /// Fill into <output> the right headers to make a request.
-  virtual void start_request (TAO_ORB_Core *orb_core,
-                              TAO_Target_Specification &spec,
-                              TAO_OutputCDR &output,
-                              CORBA::Environment &ACE_TRY_ENV =
-                              TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
-
-  /// Fill into <output> the right headers to make a locate request.
-  virtual void start_locate (TAO_ORB_Core *orb_core,
-                             TAO_Target_Specification &spec,
-                             TAO_Operation_Details &opdetails,
-                             TAO_OutputCDR &output,
-                             CORBA::Environment &ACE_TRY_ENV =
-                             TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
-
-  /**
-   * Depending on the concurrency strategy used by the transport it
-   * may be required to setup state to receive a reply before the
-   * request is sent.
-   * Using this method, instead of send(), allows the transport (and
-   * wait strategy) to take appropiate action.
-   */
-  virtual int send_request (TAO_Stub *stub,
-                            TAO_ORB_Core *orb_core,
-                            TAO_OutputCDR &stream,
-                            int twoway,
-                            ACE_Time_Value *max_time_wait) = 0;
-
-  /// This is a request for the transport object to write a request
-  /// header before it sends out a request
-  /**
-   * @todo: Bala shouldn't this be <write_request_header> or maybe
-   *   <init_request_header>, or <prepare_request_header>? Nothing is
-   *   really sent at this point, right?
-   */
-  virtual CORBA::Boolean send_request_header (TAO_Operation_Details &opd,
-                                              TAO_Target_Specification &spec,
-                                              TAO_OutputCDR &msg) = 0;
-
-  /// This method formats the stream and then sends the message on the
-  /// transport.
-  virtual int send_message (TAO_OutputCDR &stream,
-                            TAO_Stub *stub = 0,
-                            int twoway = 1,
-                            ACE_Time_Value *max_time_wait = 0) = 0;
 
   /// Access the ORB that owns this connection.
   TAO_ORB_Core *orb_core (void) const;
 
-  /// Get the TMS used by this Transport object.
+  /// Get the TAO_Tranport_Mux_Strategy used by this object.
+  /**
+   * The role of the TAO_Transport_Mux_Strategy is described in more
+   * detail in that class' documentation.  Enough is to say that the
+   * class is used to control how many threads can have pending
+   * requests over the same connection. Multiplexing multiple threads
+   * over the same connection conserves resources and is almost
+   * required for AMI, but having only one pending request per
+   * connection is more efficient and reduces the possibilities of
+   * priority inversions.
+   */
   TAO_Transport_Mux_Strategy *tms (void) const;
 
-  /// Return the Wait strategy used by the Transport.
+  /// Return the TAO_Wait_Strategy used by this object.
+  /**
+   * The role of the TAO_Wait_Strategy is described in more detail in
+   * that class' documentation. Enough is to say that the ORB can wait
+   * for a reply blocking on read(), using the Reactor to wait for
+   * multiple events concurrently or using the Leader/Followers
+   * protocol.
+   */
   TAO_Wait_Strategy *wait_strategy (void) const;
 
+  /// Send a request or queue it for later.
+  /**
+   * If the right policies are set queue the request for later.
+   * Otherwise, or if the queue size has reached the configured
+   * limits, start draining the queue.
+   *
+   * If any data is to be sent it blocks until the queue is completely
+   * drained.
+   *
+   * @todo: this routine will probably go away as part of the
+   * reorganization to support non-blocking writes.
+   */
   ssize_t send_or_buffer (TAO_Stub *stub,
                           int two_way,
                           const ACE_Message_Block *mblk,
                           const ACE_Time_Value *s = 0);
-
-  /**
-   * Read and process the message on the connection. If <block> is 1,
-   * then reply is read in a blocking manner. Once the message has
-   * been successfully read, the message is processed by delegating
-   * the responsibility to the underlying messaging object.
-   */
-  virtual int read_process_message (ACE_Time_Value *max_wait_time = 0,
-                                    int block = 0) = 0;
-
-  /**
-   * Register the handler with the reactor. Will be called by the Wait
-   * Strategy if Reactor is used  for that strategy.
-   */
-  virtual int register_handler (void) = 0;
-
-  //@{ @name Control connection lifecycle
-
-  /// These methods are routed through the TMS object. The TMS
-  /// strategies implement them correctly.
-
-  /// Request has been just sent, but the reply is not received. Idle
-  /// the transport now.
-  virtual int idle_after_send (void);
-
-  /// Request is sent and the reply is received. Idle the transport
-  /// now.
-  virtual int idle_after_reply (void);
-
-  //@}
 
   /**
    * Return the TSS leader follower condition variable used in the
@@ -309,6 +232,242 @@ public:
    * @todo: shouldn't this be automated?
    */
   void dequeue_all (void);
+
+  /**
+   * @name Control connection lifecycle
+   *
+   * These methods are routed through the TMS object. The TMS
+   * strategies implement them correctly.
+   */
+  //@{
+
+  /// Request has been just sent, but the reply is not received. Idle
+  /// the transport now.
+  virtual int idle_after_send (void);
+
+  /// Request is sent and the reply is received. Idle the transport
+  /// now.
+  virtual int idle_after_reply (void);
+
+  //@}
+
+  /** @name Template methods
+   *
+   * The Transport class uses the Template Method Pattern to implement
+   * the protocol specific functionality.
+   * Implementors of a pluggable protocol should override the 
+   * following methods with the semantics documented below.
+   */
+  //@{
+
+  /// Call the corresponding connection handler's <close>
+  /// method.
+  virtual void close_connection (void) = 0;
+
+  /// The connection is now idle, i.e. not in used by any ORB thread.
+  /// The protocol can take advantage of this to recycle the
+  /// connection immediately or as an indication that it can be safely
+  /// removed from the connection cache.
+  ///
+  /// @todo Bala: this looks like a generic method to me.  IMHO TAO's
+  /// connection cache should only know about Transport objects, and
+  /// this method can be implemented in the base class!
+  virtual int idle (void) = 0;
+
+  /// Return the file descriptor used for this connection.
+  /**
+   * @todo Someday we should be able to support protocols that do not
+   * have or use file descriptors. But this will require implementing
+   * non-reactive concurrency models for some connections.  Really
+   * hard to do.  Meanwhile, look at the SHMIOP protocol for an
+   * example on how to use file descriptors for signalling while the
+   * actual data is transfer via shared memory (where there are no
+   * file descriptors.)
+   */
+  virtual ACE_HANDLE handle (void) = 0;
+
+  /// Return the event handler used to receive notifications from the
+  /// Reactor.
+  /**
+   * Normally a concrete TAO_Transport object has-a ACE_Event_Handler
+   * member that function as an adapter between the ACE_Reactor
+   * framework and the TAO pluggable protocol framework.
+   * In all the protocols implemented so far this role is fullfilled
+   * by an instance of ACE_Svc_Handler.
+   * 
+   * @todo Since we only use a limited functionality of
+   * ACE_Svc_Handler we could probably implement a generic
+   * adapter class (TAO_Transport_Event_Handler or something), this
+   * will reduce footprint and simplify the process of implementing a
+   * pluggable protocol.
+   */
+  virtual ACE_Event_Handler *event_handler (void) = 0;
+
+  /// Write the complete Message_Block chain to the connection.
+  /**
+   * Often the implementation simply forwards the arguments to the
+   * underlying ACE_Svc_Handler class.  Using the code factored out
+   * into ACE.
+   *
+   * Be careful with protocols that perform non-trivial
+   * transformations of the data, such as SSLIOP or protocols that
+   * compress the stream.
+   *
+   * @param mblk contains the data that must be sent.  For each
+   * message block in the cont() chain all the data between rd_ptr()
+   * and wr_ptr() should be delivered to the remote peer.
+   *
+   * @param timeout is the maximum time that the application is
+   * willing to wait for the data to be sent, useful in platforms that
+   * implement timed writes.
+   * The timeout value is obtained from the policies set by the
+   * application.
+   *
+   * @param bytes_transferred should return the total number of bytes
+   * successfully transferred before the connection blocked.  This is
+   * required because in some platforms and/or protocols multiple
+   * system calls may be required to send the chain of message
+   * blocks.  The first few calls can work successfully, but the final
+   * one can fail or signal a flow control situation (via EAGAIN).
+   * In this case the ORB expects the function to return -1, errno to
+   * be appropriately set and this argument to return the number of
+   * bytes already on the OS I/O subsystem.
+   *
+   */
+  virtual ssize_t send (const ACE_Message_Block *mblk,
+                        const ACE_Time_Value *timeout = 0,
+                        size_t *bytes_transferred = 0) = 0;
+
+  // Read len bytes from into buf.
+  /**
+   * @param buffer ORB allocated buffer where the data should be 
+   * @@ The ACE_Time_Value *s is just a place holder for now.  It is
+   * not clear this this is the best place to specify this.  The actual
+   * timeout values will be kept in the Policies.
+   */
+  virtual ssize_t recv (char *buffer,
+                        size_t len,
+                        const ACE_Time_Value *timeout = 0) = 0;
+
+  /// Fill into <output> the right headers to make a request.
+  /**
+   * @todo Bala: in the good old days it was decided that the
+   * pluggable protocol framework would not raise exceptions.
+   */
+  virtual void start_request (TAO_ORB_Core *orb_core,
+                              TAO_Target_Specification &spec,
+                              TAO_OutputCDR &output,
+                              CORBA::Environment &ACE_TRY_ENV =
+                              TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+
+  /// Fill into <output> the right headers to make a locate request.
+  /**
+   * @todo Bala: in the good old days it was decided that the
+   * pluggable protocol framework would not raise exceptions.
+   */
+  virtual void start_locate (TAO_ORB_Core *orb_core,
+                             TAO_Target_Specification &spec,
+                             TAO_Operation_Details &opdetails,
+                             TAO_OutputCDR &output,
+                             CORBA::Environment &ACE_TRY_ENV =
+                             TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+
+  /// Prepare the waiting and demuxing strategy to receive a reply for
+  /// a new request.
+  /**
+   * Preparing the ORB to receive the reply only once the request is
+   * completely sent opens the system to some subtle race conditions:
+   * suppose the ORB is running in a multi-threaded configuration,
+   * thread A makes a request while thread B is using the Reactor to
+   * process all incoming requests.
+   * Thread A could be implemented as follows:
+   * 1) send the request
+   * 2) setup the ORB to receive the reply
+   * 3) wait for the request
+   *
+   * but in this case thread B may receive the reply between step (1)
+   * and (2), and drop it as an invalid or unexpected message.
+   * Consequently the correct implementation is:
+   * 1) setup the ORB to receive the reply
+   * 2) send the request
+   * 3) wait for the reply
+   *
+   * The following method encapsulates this idiom.
+   *
+   * @todo This is generic code, it should be factored out into the
+   * Transport class.
+   */
+  virtual int send_request (TAO_Stub *stub,
+                            TAO_ORB_Core *orb_core,
+                            TAO_OutputCDR &stream,
+                            int twoway,
+                            ACE_Time_Value *max_time_wait) = 0;
+
+  /// This is a request for the transport object to write a request
+  /// header before it sends out a request
+  /**
+   * @todo: Bala shouldn't this be <write_request_header> or maybe
+   *   <init_request_header>, or <prepare_request_header>? Nothing is
+   *   really sent at this point, right?
+   *
+   * @todo: This looks like generic code too.
+   */
+  virtual CORBA::Boolean send_request_header (TAO_Operation_Details &opd,
+                                              TAO_Target_Specification &spec,
+                                              TAO_OutputCDR &msg) = 0;
+
+  /// This method formats the stream and then sends the message on the
+  /// transport.
+  /**
+   * Once the ORB is prepared to receive a reply (see send_request()
+   * above), and all the arguments have been marshaled the CDR stream
+   * must be 'formatted', i.e. the message_size field in the GIOP
+   * header can finally be set to the proper value.
+   *
+   * @todo Another generic method, move to TAO_Transport.
+   */
+  virtual int send_message (TAO_OutputCDR &stream,
+                            TAO_Stub *stub = 0,
+                            int twoway = 1,
+                            ACE_Time_Value *max_time_wait = 0) = 0;
+
+  /// Callback to read incoming data
+  /**
+   * The ACE_Event_Handler adapter invokes this method as part of its
+   * handle_input() operation.
+   *
+   * @todo: the method name is confusing! Calling it handle_input()
+   * would probably make things easier to understand and follow!
+   *
+   * Once a complete message is read the Transport class delegates on
+   * the Messaging layer to invoke the right upcall (on the server) or
+   * the TAO_Reply_Dispatcher (on the client side).
+   *
+   * @param max_wait_time In some cases the I/O is synchronous, e.g. a
+   * thread-per-connection server or when Wait_On_Read is enabled.  In
+   * those cases a maximum read time can be specified.
+   *
+   * @param block Is deprecated and ignored.
+   *
+   */
+  virtual int read_process_message (ACE_Time_Value *max_wait_time = 0,
+                                    int block = 0) = 0;
+
+  /// Register the handler with the reactor. 
+  /**
+   * This method is used by the Wait_On_Reactor strategy. The
+   * transport must register its event handler with the ORB's Reactor.
+   *
+   * @todo: I think this method is pretty much useless, the
+   * connections are *always* registered with the Reactor, except in
+   * thread-per-connection mode.  In that case putting the connection
+   * in the Reactor would produce unpredictable results anyway.
+   */
+  virtual int register_handler (void) = 0;
+
+  //@}
 
 protected:
   /// Remove the first message from the outgoing queue.

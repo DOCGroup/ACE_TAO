@@ -78,13 +78,6 @@ public:
                         const ACE_Time_Value *s = 0,
                         size_t *bytes_transferred = 0);
 
-
-  /// Write the contents of the buffer of length len to the
-  /// connection.
-  virtual ssize_t send (const u_char *buf,
-                        size_t len,
-                        const ACE_Time_Value *s = 0);
-
   /// Read len bytes from into buf.
   virtual ssize_t recv (char *buf,
                         size_t len,

@@ -99,16 +99,6 @@ TAO_SHMIOP_Transport::send (const ACE_Message_Block *message_block,
 }
 
 ssize_t
-TAO_SHMIOP_Transport::send (const u_char *buf,
-                            size_t len,
-                            const ACE_Time_Value *max_wait_time)
-{
-  return this->service_handler ()->peer ().send (buf,
-                                                 len,
-                                                 max_wait_time);
-}
-
-ssize_t
 TAO_SHMIOP_Transport::recv (char *buf,
                             size_t len,
                             const ACE_Time_Value *max_wait_time)
