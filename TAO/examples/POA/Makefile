@@ -14,7 +14,6 @@ DIRS  = Generic_Servant \
         RootPOA \
         Reference_Counted_Servant \
 	Adapter_Activator \
-	DSI \
 	Default_Servant \
 	Explicit_Activation \
 	FindPOA \
@@ -35,6 +34,14 @@ endif
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+
+ifeq ($(corba_messaging),1)
+
+DIRS += \
+	DSI
+
+endif # corba_messaging
+
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nested.GNU

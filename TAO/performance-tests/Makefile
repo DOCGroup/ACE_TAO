@@ -15,7 +15,6 @@ DIRS  = Cubit \
         Pluggable \
         RTCorba \
 	Latency \
-	Callback \
 	Throughput
 
 ifndef TAO_ROOT
@@ -28,6 +27,15 @@ endif
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+
+ifeq ($(corba_messaging),1)
+
+DIRS += \
+	Callback
+
+endif # corba_messaging
+
+
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nested.GNU
