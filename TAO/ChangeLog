@@ -1,3 +1,10 @@
+Mon Sep 15 13:22:37 MST 2003 Trevor Fields <fields_t@ociweb.com>
+
+        * orbsvcs/performance-tests/RTEvent/lib/RTServer_Setup.cpp:
+
+          Fixed passing of ACE_ENV_ARG_PARAMETER to super class.
+          It was using the the declaration macro instead of parameter.
+
 Mon Sep 15 15:50:35 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	* tao/RTScheduling/RTScheduler.pidl: 
