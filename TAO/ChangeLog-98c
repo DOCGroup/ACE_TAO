@@ -3,6 +3,17 @@ Fri Oct 17 15:43:04 1997    <nw1@CHA-CHA>
 	* tao/connect.h: Added template instantiation supression directive
  	  for Win32.  VC was complaining about duplicate symbols definition.
 
+Fri Oct 17 06:25:23 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/{boa,roa}.*: Merged class ROA into class
+ 	CORBA_BOA. Hopefully everything still works ;-)
+
+	* docs/releasenotes.html: Quick update for new TODO list.  Will be
+ 	updated within the next day or so with dates, too.
+
+	* tao/{server_factory,orbobj,Orb_Core}.cpp: Corrected incorrect
+ 	explicit template instantiations and added missing ones.
+
 Thu Oct 16 23:48:04 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.0.12, released Thu Oct 16 23:48:04 1997.

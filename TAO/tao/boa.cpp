@@ -22,7 +22,6 @@
 // protocol modules!  This is an implementation shortcut only.
 
 #include "tao/iioporb.h"
-#include "tao/roa.h"
 #endif  /* 0 */
 
 #include "tao/corba.h"
@@ -34,6 +33,152 @@ DEFINE_GUID (IID_BOA,
 #if !defined (__ACE_INLINE__) 
 #  include "boa.i"
 #endif
+
+// CORBA_BOA::init() is used in get_boa() and get_named_boa() in order
+// to initialize the OA.  It was originally part of ROA, and may no
+// longer be useful.
+CORBA::BOA_ptr
+CORBA_BOA::init (CORBA::ORB_ptr parent,
+                 ACE_INET_Addr &,
+                 CORBA::Environment &env)
+{
+  env.clear ();
+  TAO_ORB_Core *p = TAO_ORB_Core_instance ();
+
+  if (p->root_poa ())
+    {
+      env.exception (new CORBA_INITIALIZE (CORBA::COMPLETED_NO));
+      return 0;
+    }
+
+  CORBA::BOA_ptr rp;
+  ACE_NEW_RETURN (rp, CORBA_BOA (parent, env), 0);
+  p->root_poa (rp);
+
+  return rp;
+}
+
+CORBA_BOA::CORBA_BOA (CORBA::ORB_ptr owning_orb,
+                      CORBA::Environment &)
+  : do_exit_ (CORBA::B_FALSE), 
+    orb_ (owning_orb),
+    call_count_ (0),
+    skeleton_ (0)
+{
+  TAO_Server_Strategy_Factory *f = orb_->server_factory ();
+  TAO_ORB_Core* p = TAO_ORB_Core_instance ();
+  
+  this->objtable_ = f->create_object_table ();
+
+  // @@ What is this doing here?  Why is it setting the root poa based
+  // on whether objtable_ is non-zero?  (cjc)
+  if (this->objtable_ != 0)
+    p->root_poa (this);
+}
+
+CORBA_BOA::~CORBA_BOA (void)
+{
+}
+
+// Create an objref
+
+CORBA::Object_ptr
+CORBA_BOA::create (CORBA::OctetSeq &key,
+             CORBA::String type_id,
+             CORBA::Environment &env)
+{
+  CORBA::String id;
+  IIOP_Object *data;
+
+  if (type_id)
+    id = CORBA::string_copy (type_id);
+  else
+    id = 0;
+
+  IIOP::Version ver (IIOP::MY_MAJOR, IIOP::MY_MINOR);
+  // Cast below de-warns on Sun's C++
+  const ACE_INET_Addr& addr = orb_->params ()->addr ();
+  CORBA::String h = (char*)addr.get_host_name ();
+
+  data = new IIOP_Object (id, IIOP::ProfileBody (ver,
+						 h,
+						 addr.get_port_number (),
+						 key));
+  if (data != 0)
+    env.clear ();
+  else
+    {
+      env.exception (new CORBA_NO_MEMORY (CORBA::COMPLETED_NO));
+      return 0;
+    }
+
+  // Return the CORBA::Object_ptr interface to this objref.
+  CORBA::Object_ptr new_obj;
+
+  if (data->QueryInterface (IID_CORBA_Object,
+			    (void**)&new_obj) != NOERROR)
+    env.exception (new CORBA::INTERNAL (CORBA::COMPLETED_NO));
+
+  data->Release ();
+  return new_obj;
+}
+
+// Return the key fed into an object at creation time.
+
+CORBA::OctetSeq *
+CORBA_BOA::get_key (CORBA::Object_ptr,
+                    CORBA::Environment &env)
+{
+  // XXX implement me ! ... must have been created by this OA.
+  env.exception (new CORBA_IMP_LIMIT (CORBA::COMPLETED_NO));
+  return 0;
+}
+
+// Used by method code to ask the OA to shut down.
+void
+CORBA_BOA::please_shutdown (CORBA::Environment &env)
+{
+  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, boa_mon, lock_));
+
+  env.clear ();
+  do_exit_ = CORBA::B_TRUE;
+}
+
+// Used by non-method code to tell the OA to shut down.
+void
+CORBA_BOA::clean_shutdown (CORBA::Environment &env)
+{
+  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, boa_mon, lock_));
+
+  env.clear ();
+
+  if (call_count_ != 0)
+    {
+      dmsg ("called clean_shutdown with requests outstanding");
+      env.exception (new CORBA::BAD_INV_ORDER (CORBA::COMPLETED_NO));
+      return;
+    }
+
+  // Here we need to tell all the endpoints to shut down...
+}
+
+// For BOA -- BOA operations for which we provide the vtable entry
+void
+CORBA_BOA::register_dir (dsi_handler handler,
+                         void *ctx,
+                         CORBA::Environment &env)
+{
+  if (handler == 0)
+    {
+      env.exception (new CORBA::BAD_PARAM (CORBA::COMPLETED_NO));
+      return;
+    }
+
+  skeleton_ = handler;
+  context_ = ctx;
+
+  env.clear ();
+}
 
 // A "Named BOA" is used in bootstrapping some part of the ORB since
 // it's name-to-address binding is managed by the OS.  Examples of
@@ -65,16 +210,16 @@ CORBA_BOA::get_named_boa (CORBA::ORB_ptr orb,
 
     if (orb->QueryInterface (IID_IIOP_ORB, (void **) &internet) == NOERROR) 
       {
-        ROA* tcp_oa;
+        CORBA::BOA_ptr tcp_oa;
 
         internet->Release ();
 
-        // ROA initialization with name specified; it'll come from
+        // BOA initialization with name specified; it'll come from
         // /etc/services if it's not a port number.
 
         ACE_INET_Addr boa_name (name, (ACE_UINT32) INADDR_ANY);
 
-        tcp_oa = ROA::init (orb, boa_name, env);
+        tcp_oa = CORBA::BOA::init (orb, boa_name, env);
 
         if (env.exception () != 0) 
           return 0;
@@ -105,7 +250,7 @@ CORBA_BOA::get_boa (CORBA::ORB_ptr orb,
 
     if (orb->QueryInterface (IID_IIOP_ORB, (void **) &internet) == NOERROR) 
       {
-        ROA* tcp_oa;
+        CORBA::BOA_ptr tcp_oa;
 
         internet->Release ();
 
@@ -113,7 +258,7 @@ CORBA_BOA::get_boa (CORBA::ORB_ptr orb,
 
         ACE_INET_Addr anonymous ((u_short) 0, (ACE_UINT32) INADDR_ANY);
 
-        tcp_oa = ROA::init (orb, anonymous, env);
+        tcp_oa = CORBA::BOA::init (orb, anonymous, env);
 
         if (env.exception () != 0) 
           return 0;
@@ -184,6 +329,8 @@ CORBA_BOA::handle_request (TAO_GIOP_RequestHeader hdr,
                            TAO_Dispatch_Context *some_info,
                            CORBA::Environment &env)
 {
+  ACE_UNUSED_ARG (some_info);
+  
   IIOP_ServerRequest svr_req (&request_body, this->orb (), this);
 
   svr_req.opname_ = hdr.operation; // why are we copying this when we can just pass in
@@ -283,4 +430,41 @@ CORBA_BOA::handle_request (TAO_GIOP_RequestHeader hdr,
     }
 }
 
+// IUnknown calls
+ULONG __stdcall
+CORBA_BOA::AddRef (void)
+{
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, boa_mon, com_lock_, 0));
+  return ++refcount_;
+}
 
+ULONG __stdcall
+CORBA_BOA::Release (void)
+{
+  {
+    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, boa_mon, com_lock_, 0));
+
+    if (--refcount_ != 0)
+      return refcount_;
+  }
+
+  delete this;
+  return 0;
+}
+
+HRESULT __stdcall
+CORBA_BOA::QueryInterface (REFIID riid,
+                           void **ppv)
+{
+  *ppv = 0;
+
+  if (IID_BOA == riid
+      || IID_IUnknown == riid)
+    *ppv = this;
+
+  if (*ppv == 0)
+    return ResultFromScode (E_NOINTERFACE);
+
+ (void) AddRef ();
+  return NOERROR;
+}

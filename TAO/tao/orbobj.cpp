@@ -19,7 +19,6 @@
 #include "tao/iioporb.h"		// XXX
 #include "tao/params.h"
 #include "tao/boa.h"
-#include "tao/roa.h"
 #include "tao/nvlist.h"
 #include "tao/debug.h"
 #endif /* 0 */
@@ -489,8 +488,6 @@ CORBA_ORB::BOA_init (int &argc,
 	i++;
     }
   
-  //    ACE_MT (ACE_GUARD (ACE_Thread_Mutex, roa_mon, lock_));
-
   if (oc->root_poa ())
     {
       env.exception (new CORBA::INITIALIZE (CORBA::COMPLETED_NO));
@@ -513,7 +510,7 @@ CORBA_ORB::BOA_init (int &argc,
   (void) ACE_Thread::keycreate (&req_key_);
 #endif /* ROA_NEEDS_REQ_KEY */
     
-  ACE_NEW_RETURN (rp, ROA (this, env), 0);
+  ACE_NEW_RETURN (rp, CORBA::BOA (this, env), 0);
   oc->root_poa (rp);
 
   return rp;

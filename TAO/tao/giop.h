@@ -292,6 +292,10 @@ private:
   CORBA::ULong my_request_id;
 
   ACE_Thread_Mutex lock_;
+  // This lock covers the mutable info in all IIOP objref data,
+  // namely the forwarded-to objref.  It must be held when a client
+  // thread is reading or modifying that data, to prevent one from
+  // overwriting data the other's reading or writing.
 
   u_char buffer [CDR::DEFAULT_BUFSIZE];
   CDR stream;
