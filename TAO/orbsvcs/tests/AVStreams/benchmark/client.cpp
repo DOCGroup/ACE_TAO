@@ -218,12 +218,14 @@ Client::svc (void)
 
   if (GLOBALS::instance ()->parse_args (this->argc_,this->argv_) == -1)
     return -1;
-  TAO_TRY
+  ACE_DECLARE_NEW_CORBA_ENV;
+
+  ACE_TRY
     {
       this->orb_manager_.init (this->argc_,
                                this->argv_,
-                               TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                               ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       if (this->task_id_ == 0)
         {
@@ -260,8 +262,8 @@ Client::svc (void)
 
       // activate the client MMDevice with the ORB
       this->orb_manager_.activate (this->client_mmdevice_,
-                                   TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                   ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       if (this->bind_to_server () == -1)
         ACE_ERROR_RETURN ((LM_ERROR, 
@@ -274,20 +276,20 @@ Client::svc (void)
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) All threads finished, starting tests.\n"));
 
       ACE_Time_Value tv (0);
-      this->orb_manager_.run (TAO_TRY_ENV,&tv);
-      TAO_CHECK_ENV;
+      this->orb_manager_.run (ACE_TRY_ENV,&tv);
+      ACE_TRY_CHECK;
       AVStreams::streamQoS_var the_qos (new AVStreams::streamQoS);
       AVStreams::flowSpec_var the_flows (new AVStreams::flowSpec);
       // Bind the client and server mmdevices.
 
       timer.start ();
       this->streamctrl_.bind_devs
-        (this->client_mmdevice_->_this (TAO_TRY_ENV),
+        (this->client_mmdevice_->_this (),
          this->server_mmdevice_.in (),
          the_qos.inout (),
          the_flows.in (),
-         TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       timer.stop ();
       timer.elapsed_time (tv1);
@@ -345,12 +347,13 @@ Client::svc (void)
       ACE_DEBUG ((LM_DEBUG,"(%P|%t) Thruput for block size is:%d\t%f Mb/s \n",
                   buffer_siz,total_data/(total_time*1024.0*1024.0)));
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("streamctrl.bind_devs:");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"streamctrl.bind_devs:");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
   
   return 0;
 }
@@ -358,7 +361,8 @@ Client::svc (void)
 int
 Client::bind_to_server (void)
 {
-  TAO_TRY
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       /*
 	CORBA::Object_var naming_obj =
@@ -369,8 +373,8 @@ Client::bind_to_server (void)
 	-1);
 	CosNaming::NamingContext_var naming_context =
 	CosNaming::NamingContext::_narrow (naming_obj.in (),
-	TAO_TRY_ENV);
-	TAO_CHECK_ENV;
+	ACE_TRY_ENV);
+	ACE_TRY_CHECK;
       */
 
       // Initialize the naming services
@@ -386,25 +390,26 @@ Client::bind_to_server (void)
       server_mmdevice_name [0].id = CORBA::string_dup ("Bench_Server_MMDevice");
       CORBA::Object_var server_mmdevice_obj =
         my_name_client_->resolve (server_mmdevice_name,
-                                 TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                 ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       this->server_mmdevice_ =
         AVStreams::MMDevice::_narrow (server_mmdevice_obj.in (),
-                                      TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                      ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (this->server_mmdevice_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " could not resolve Server_Mmdevice in Naming service <%s>\n"),
                           -1);
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("Command_Handler::resolve_reference");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Command_Handler::resolve_reference\n");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) MMDevice successfully resolved.\n"));
   return 0;
@@ -418,23 +423,25 @@ Client::establish_stream (void)
   AVStreams::flowSpec_var the_flows (new AVStreams::flowSpec);
   // Bind the client and server mmdevices.
 
-  TAO_TRY
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       this->streamctrl_.bind_devs
-        (this->client_mmdevice_->_this (TAO_TRY_ENV),
+        (this->client_mmdevice_->_this (),
          this->server_mmdevice_.in (),
          the_qos.inout (),
          the_flows.in (),
-         TAO_TRY_ENV);
+         ACE_TRY_ENV);
       
-      TAO_CHECK_ENV;
+      ACE_TRY_CHECK;
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("streamctrl.bind_devs:");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "streamctrl.bind_devs:");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
