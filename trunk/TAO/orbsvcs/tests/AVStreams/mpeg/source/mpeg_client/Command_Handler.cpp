@@ -757,13 +757,13 @@ Command_Handler::fast_forward (void)
                                                          TAO_TRY_ENV);
             TAO_CHECK_ENV;
             if (result == (CORBA::B_FALSE))
-              return -1;
-            ACE_DEBUG ((LM_DEBUG,"(%P|%t) fast_forward success \n"));
+              return CORBA::B_FALSE;
+            ACE_DEBUG ((LM_DEBUG,"(%P|%t) fast_forward done \n"));
           }
         TAO_CATCHANY
           {
             TAO_TRY_ENV.print_exception ("video_control_->fast_forward_video (..)");
-            return -1;
+            return CORBA::B_FALSE;
           }
         TAO_ENDTRY;
         start_timer();
@@ -771,7 +771,7 @@ Command_Handler::fast_forward (void)
   }
   tmp = CmdDONE;
   CmdWrite(&tmp, 1);
-  return 0;
+  return CORBA::B_TRUE;
 }
 
 
@@ -779,8 +779,63 @@ CORBA::Boolean
 Command_Handler::fast_backward (void)
                                 
 {
-  ::fb ();
-  return 0;
+  //  ::fb ();
+  //  return 0;
+  unsigned char tmp;
+  Video_Control::FBpara_var para (new Video_Control::FBpara);
+  /*
+  fprintf(stderr, "CTR: FB . . .\n");
+  */
+  if (shared->live) {
+    beep();
+  }
+  else {
+    this->stop_playing();
+    if (shared->nextGroup >= shared->totalGroups)
+      shared->nextGroup = shared->totalGroups - 1;
+    if (videoSocket >= 0 && shared->nextGroup >= 0)
+    {
+      NewCmd(CmdFB);
+      shared->needHeader = 0;
+      shared->framesPerSecond = shared->config.fbFPS /
+			     shared->patternSize;
+      shared->usecPerFrame = (int)(1000000.0 / (float)shared->config.fbFPS) *
+			     shared->patternSize;
+
+      shared->VStimeAdvance =
+	  max(shared->config.VStimeAdvance, DEFAULT_VStimeAdvance) * 1000;
+      if (shared->VStimeAdvance < shared->usecPerFrame)
+	shared->VStimeAdvance = shared->usecPerFrame;
+
+      para->VStimeAdvance = shared->VStimeAdvance;
+      para->sn = shared->cmdsn;
+      para->nextGroup = shared->nextGroup;
+      para->usecPerFrame = shared->usecPerFrame;
+      para->framesPerSecond = shared->framesPerSecond;
+      startTime = get_usec();
+        TAO_TRY
+          {
+            CORBA::Boolean result;
+            result = this->video_control_->fast_backward (para.in (),
+                                                          TAO_TRY_ENV);
+            TAO_CHECK_ENV;
+            if (result == (CORBA::B_FALSE))
+              return CORBA::B_FALSE;
+            ACE_DEBUG ((LM_DEBUG,"(%P|%t) fast_backward done \n"));
+          }
+        TAO_CATCHANY
+          {
+            TAO_TRY_ENV.print_exception ("video_control_->fast_forward_video (..)");
+            return CORBA::B_FALSE;
+          }
+        TAO_ENDTRY;
+
+        start_timer();
+    }
+  }
+  tmp = CmdDONE;
+  CmdWrite(&tmp, 1);
+  return CORBA::B_TRUE;
 }
 
 
