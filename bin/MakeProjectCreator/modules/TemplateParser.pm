@@ -583,6 +583,11 @@ sub handle_foreach {
         $errorString = 'ERROR: The foreach variable can not be ' .
                        'named when dealing with custom types';
       }
+      elsif ($val =~ /^grouped_.*_file\->/ || $val =~ /^grouped_.*files$/) {
+        $status = 0;
+        $errorString = 'ERROR: The foreach variable can not be ' .
+                       'named when dealing with grouped files';
+      }
     }
 
     push(@{$self->{'sstack'}}, $name);

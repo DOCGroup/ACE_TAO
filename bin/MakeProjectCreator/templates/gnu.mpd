@@ -62,6 +62,15 @@ FILES = \
 #       Include macros and targets
 #----------------------------------------------------------------------------
 <%marker(macros)%>
+<%if(libs)%>
+<%if(exename)%>LDLIBS<%endif%><%if(sharedname)%>ACE_SHLIBS<%endif%>  =<%foreach(libs)%> -l<%lib%><%endfor%>
+<%endif%>
+<%if(lit_libs)%>
+<%if(exename)%>LDLIBS<%endif%><%if(sharedname)%>ACE_SHLIBS<%endif%> +=<%foreach(lit_libs)%> -l<%lit_lib%><%endfor%>
+<%endif%>
+<%if(defaultlibs)%>
+<%if(exename)%>LDLIBS<%endif%><%if(sharedname)%>ACE_SHLIBS<%endif%> +=<%foreach(defaultlibs)%> -l<%defaultlib%><%endfor%>
+<%endif%>
 <%if(!exename)%>
 <%if(avoids)%>
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
@@ -169,8 +178,6 @@ endif
 <%endif%>
 <%endif%>
 
-ACE_SHLIBS =<%foreach(defaultlibs)%> -l<%defaultlib%><%endfor%>
-
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 <%if(exename)%>
 <%if(tao)%>
@@ -258,7 +265,6 @@ endif
 <%endfor%>
 <%endif%>
 <%endif%>
-ACELIB =<%foreach(defaultlibs)%> -l<%defaultlib%><%endfor%>
 
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
@@ -331,13 +337,6 @@ LDFLAGS      +=<%foreach(libpaths)%> -L<%libpath%><%endfor%>
 <%if(idlflags)%>
 TAO_IDLFLAGS += <%idlflags%>
 <%endif%>
-<%endif%>
-<%if(libs)%>
-
-<%if(exename)%>LDLIBS<%endif%><%if(sharedname)%>ACE_SHLIBS<%endif%>  =<%foreach(libs)%> -l<%lib%><%endfor%><%if(sharedname)%> $(ACELIB)<%endif%>
-<%endif%>
-<%if(lit_libs)%>
-<%if(exename)%>LDLIBS<%endif%><%if(sharedname)%>ACE_SHLIBS<%endif%> +=<%foreach(lit_libs)%> -l<%lit_lib%><%endfor%>
 <%endif%>
 #----------------------------------------------------------------------------
 #       Local targets
