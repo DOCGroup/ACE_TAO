@@ -1,3 +1,9 @@
+Fri Jan 15 21:10:25 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/CORBA_macros.h: Made sure ACE_CORBA_HAS_EXCEPTIONS always
+	  gets set properly.  Added ACE_ADPOT_CORBA_ENV to reuse a
+	  existing CORBA::Environment variable.
+
 Fri Jan 15 17:05:12 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Log_Record: Factored out the redundant formatting code.  The
@@ -27,10 +33,6 @@ Fri Jan 15 14:40:26 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 	  methods so that they use select() to avoid spinning if no data
  	  is available.  Thanks to Mike Goldman <whig@by.net> for this
  	  fix.
-
-Fri Jan 15 14:23:57 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-	* ace/Service_Repository.cpp (fini): Fixed a typo.
 
 Fri Jan 15 10:47:26 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
