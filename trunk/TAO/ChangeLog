@@ -1,3 +1,14 @@
+Tue Jul 23 16:20:39 2002  Steve Huston  <shuston@riverace.com>
+
+        * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp (is_full_i):
+          Cast this->cur_count_ to size_t to compare to high_water_mark_.
+          Corresponds to a ACE_Message_Queue change I made to ACE yesterday.
+
+        * examples/Simulator/Event_Supplier/DualEC_Sup.{h cpp}
+          (DualEC_Supplier::run_orb, run_nav_thread, run_weap_thread):
+          Change return type from void * to ACE_THR_FUNC_RETURN to match
+          corresponding change in ACE.
+
 Tue Jul 23 12:47:45 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* tests/AMH_Exceptions/client.cpp (main):

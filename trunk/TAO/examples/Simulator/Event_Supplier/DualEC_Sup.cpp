@@ -318,7 +318,7 @@ DualEC_Supplier::run_orb (void *)
 
 // Run navigation event generation thread.
 
-void *
+ACE_THR_FUNC_RETURN
 DualEC_Supplier::run_nav_thread (void *arg)
 {
   DualEC_Supplier * sup =
@@ -400,7 +400,7 @@ DualEC_Supplier::run_nav_thread (void *arg)
 
 // Run weapons event generation thread.
 
-void *
+ACE_THR_FUNC_RETURN
 DualEC_Supplier::run_weap_thread (void *arg)
 {
   DualEC_Supplier * sup =

@@ -92,10 +92,10 @@ private:
   static ACE_THR_FUNC_RETURN run_orb (void *);
   // Run the orb event loop.
 
-  static void * run_nav_thread (void *arg);
+  static ACE_THR_FUNC_RETURN run_nav_thread (void *arg);
   // Run navigation event generation thread.
 
-  static void * run_weap_thread (void *arg);
+  static ACE_THR_FUNC_RETURN run_weap_thread (void *arg);
   // Run weapons event generation thread.
 
   int create_schedulers (void);
