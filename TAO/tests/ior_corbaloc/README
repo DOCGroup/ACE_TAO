@@ -3,10 +3,9 @@
 This is test to exercise the corbaloc: and corbaname: style URL.  
 The simple way to test is to run the run_test.pl.
 
-The corbaloc: and corbaname: URL syntax is documented in 
-Chapter 13.6.7 "Object URLs", of the CORBA 2.4.2 specification:
+The corbaloc: and corbaname: URL syntax is documented in Chapter
+13.6.7 "Object URLs", of the CORBA 2.4.2 specification:
 ftp://ftp.omg.org/pub/docs/formal/01-02-01.pdf
-
 
 To test manually:
 
