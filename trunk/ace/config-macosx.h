@@ -14,7 +14,7 @@
 # include "ace/config-g++-common.h"
 #endif /* __GNUG__ */
 
-//#undef ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
+#undef ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 
 #if defined (ACE_HAS_PENTIUM)
 # undef ACE_HAS_PENTIUM

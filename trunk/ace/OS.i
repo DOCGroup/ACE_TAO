@@ -11072,7 +11072,12 @@ ACE_OS::llseek (ACE_HANDLE handle, ACE_LOFF_T offset, int whence)
   ACE_OSCALL_RETURN (::lseek64 (handle, offset, whence), ACE_LOFF_T, -1);
 #elif defined (ACE_HAS_LLSEEK)
   # if defined (ACE_WIN32)
-    ACE_OSCALL_RETURN (::_lseeki64 (int (handle), offset, whence), ACE_LOFF_T, -1);
+  LARGE_INTEGER li;
+  li.QuadPart = offset;
+  li.LowPart = ::SetFilePointer (handle, li.LowPart, &li.HighPart, whence);
+  if (li.LowPart == 0xFFFFFFFF && GetLastError() != NO_ERROR)
+    li.QuadPart = -1;
+  return li.QuadPart;
   # else
     ACE_OSCALL_RETURN (::llseek (handle, offset, whence), ACE_LOFF_T, -1);
   # endif /* WIN32 */
