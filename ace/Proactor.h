@@ -66,8 +66,13 @@ public:
 		    ACE_Handler *handler);
   // This method is called when the timer is canceled
 
+  int deletion (TIMER_QUEUE &timer_queue,
+                ACE_Handler *handler,
+                const void *arg);
+  // This method is called when the timer queue is destroyed and
+  // the timer is still contained in it
+
 protected:
-    
   int proactor (ACE_Proactor &proactor);
   // Set the proactor. This will fail, if one is already set!
 

@@ -1,3 +1,117 @@
+Tue Jun  3 18:16:02 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* ace/Timer_Queue.*:
+
+	  Templatized ACE_Event_Handler_Handle_Timeout_Upcall with LOCK
+		
+	  Added deletion() to Upcall Functors.  This gets called if there
+	  are any nodes in a queue and the queue's destructor is called
+
+	* ace/Timer_Queue_T.*:
+
+	  Changed iterator accessor to public
+
+	  Removed two template parameters from ACE_Timer_Node_T so only 
+	  EVENT is left.  Added accessors instead of using friendships, and 
+	  deleted the constructor (use set() instead)
+
+	  Changed iterator into a general iterator (with first(), next(), 
+	  isdone() and item () methods) 
+	  
+	  Added remove_first () method that removes and returns the earliest
+	  timer in the queue
+	  
+	  Added ACE_Free_List support
+
+	* ace/Timer_Heap*:
+
+	  Added upcall functor deletion() support
+
+	  Added remove_first () method that removes and returns the earliest
+	  timer in the queue
+	  
+	* ace/Timer_List*:
+
+	  Changed to double-linked circular list and changed the timer_id to 
+	  be a pointer to the node (like it is in Timer Wheel and Timer Hash)
+
+	  Added upcall functor deletion() support
+
+	  Added remove_first () method that removes and returns the earliest
+	  timer in the queue
+	  
+	  Added check for timer_id of -1 so we don't try to delete the error 
+	  code if it is passed into cancel
+
+	  Changed Timer_List_Iterator_T constructor parameter from list to 
+	  listParm to resolve a conflict with STL.  Thanks to Todd Barkalow 
+	  <barkate@louisville.stortek.com> for this fix
+
+	* ace/Timer_Wheel*:
+
+	  Added HighRes timer support
+
+	  Added upcall functor deletion() support
+
+	  Added earliest_pos_ variable to keep track of the list with the 
+	  earliest node
+
+	  Created an expire that is specialized for ACE_Timer_Wheel
+
+	  Added remove_first () method that removes and returns the earliest
+	  timer in the queue
+	  
+	  Added check for timer_id of -1 so we don't try to delete the error 
+	  code if it is passed into cancel
+
+	* ace/Timer_Hash*:
+
+	  Added Timer Hash Queue - This is a class that can take another 
+	  timer queue type (Timer List, Timer Heap...) as a template 
+	  parameter (BUCKET) and then do an intermediate hash of a timer to 
+	  determine which queue among a table of timer queues to put the
+	  timer into.  ACE_Timer_Hash is typedefed to the Timer List version 
+	  and ACE_Timer_Hash_Heap is typedefed to the Timer Heap version
+
+	  Added HighRes timer support
+
+	  Added upcall functor deletion() support
+
+	  Created an expire that is specialized for ACE_Timer_Hash
+
+	  Added remove_first () method that removes and returns the earliest
+	  timer in the queue
+	  
+	  Added check for timer_id of -1 so we don't try to delete the error 
+	  code if it is passed into cancel
+
+	* ace/Free_List.*
+
+	  Added ACE_Free_List<T> and ACE_Locked_Free_List<T, LOCK>.  These 
+	  are used to maintain free lists of nodes. ACE_Free_List is a 
+	  abstract class where ACE_Locked_Free_List is a concrete one that
+	  has a mutex parameter (LOCK).  
+
+	* ace/OS.h:
+
+	  Added ACE_DEFAULT_TIMER_HASH_TABLE_SIZE constant
+
+	  Added ACE_DEFAULT_FREE_LIST_* constants
+
+	* ace/Proactor.*:
+
+	  Added deletion() to Upcall Functors.  This gets called if there
+	  are any nodes in a queue and the queue's destructor is called.  
+
+	* tests/Timer_Queue_Test.cpp:
+
+	  Added HighRes timer support
+
+	  Changed the array of timer queues into a list (to more easily 
+	  add/remove/comment out an entry)
+
+	  Added some more performance tests with randomization
+
 Tue Jun  3 00:26:06 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.h: Changed the access protection for ACE_cond_t,

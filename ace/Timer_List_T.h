@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 // ============================================================================
 //
 // = LIBRARY
@@ -26,26 +24,33 @@ class ACE_Timer_List_T;
 template <class TYPE, class FUNCTOR, class LOCK>
 class ACE_Timer_List_Iterator_T : public ACE_Timer_Queue_Iterator_T <TYPE, FUNCTOR, LOCK>
   // = TITLE
-  //     Iterates over an <ACE_Timer_Queue>.
+  //     Iterates over an <ACE_Timer_List>.
   //
   // = DESCRIPTION
-  //     This is a special type of iterator that "advances" by moving
-  //     the head of the timer queue up by one every time.
+  //     This is a generic iterator that can be used to visit every
+  //     node of a timer queue.  
 {
 public:
   ACE_Timer_List_Iterator_T (ACE_Timer_List_T<TYPE, FUNCTOR, LOCK> &);
   // Constructor.
 
-  virtual int next (ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *&timer_node, 
-                    const ACE_Time_Value &cur_time);
-  // Pass back the next <timer_node> that hasn't been seen yet, if its
-  // <time_value_> <= <cur_time>.  In addition, moves the timer queue
-  // forward by one node.  Returns 0 when all <timer_nodes> have been
-  // seen, else 1.
+  virtual void first (void);
+  // Positions the iterator at the earliest node in the Timer Queue
+
+  virtual void next (void);
+  // Positions the iterator at the next node in the Timer Queue
+
+  virtual int isdone (void);
+  // Returns true when there are no more nodes in the sequence
+
+  virtual ACE_Timer_Node_T<TYPE> *item (void);
+  // Returns the node at the current position in the sequence
 
 protected:
   ACE_Timer_List_T<TYPE, FUNCTOR, LOCK> &timer_list_;
   // Pointer to the <ACE_Timer_List> that we are iterating over.
+
+  ACE_Timer_Node_T<TYPE> *position_;
 };
 
 template <class TYPE, class FUNCTOR, class LOCK>
@@ -79,10 +84,12 @@ public:
   // Type inherited from 
 
   // = Initialization and termination methods.
-  ACE_Timer_List_T (FUNCTOR *upcall_functor = 0);
+  ACE_Timer_List_T (FUNCTOR *upcall_functor = 0, 
+                    ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = 0);
   // Default constructor. <upcall_functor> is the instance of the
   // FUNCTOR to be used by the list. If <upcall_functor> is 0, a
-  // default FUNCTOR will be created.
+  // default FUNCTOR will be created.  <freelist> the freelist of
+  // timer nodes.  If 0, then a default freelist will be created.
 
   virtual ~ACE_Timer_List_T (void);
   // Destructor
@@ -127,31 +134,29 @@ public:
   // 0 then the <functor> will be invoked.  Returns 1 if cancellation
   // succeeded and 0 if the <timer_id> wasn't found.
 
-  virtual void dump (void) const;
-  // Dump the state of an object.
-
-protected:
-  virtual ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *alloc_node (void);
-  // Factory method that allocates a new node (uses operator new).
-
-  virtual void free_node (ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *);
-  // Factory method that frees a previously allocated node (uses
-  // operator delete).
-
-private:
-  int timer_id (void);
-  // Returns a timer id that uniquely identifies this timer.  This id
-  // can be used to cancel a timer via the <cancel (int)> method.  The
-  // timer id returned from this method will never == -1 to avoid
-  // conflicts with other failure return values.
-
-  virtual void reschedule (ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *);
-  // Reschedule an "interval" <ACE_Timer_Node>.
-
   virtual ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, LOCK> &iter (void);
   // Returns a pointer to this <ACE_Timer_Queue>'s iterator.
 
-  ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *head_; 
+  virtual ACE_Timer_Node_T<TYPE> *remove_first (void);
+  // Removes the earliest node from the queue and returns it
+
+  virtual void dump (void) const;
+  // Dump the state of an object.
+
+  virtual void reschedule (ACE_Timer_Node_T<TYPE> *);
+  // Reschedule an "interval" <ACE_Timer_Node>.  This should be private 
+  // but for now it needs to be public for <ACE_Timer_Hash_T>
+
+protected:
+/*  virtual ACE_Timer_Node_T<TYPE> *alloc_node (void);
+  // Factory method that allocates a new node (uses operator new).
+
+  virtual void free_node (ACE_Timer_Node_T<TYPE> *);
+  // Factory method that frees a previously allocated node (uses
+  // operator delete).
+*/
+private:
+  ACE_Timer_Node_T<TYPE> *head_; 
   // Pointer to linked list of <ACE_Timer_Handles>.
 
   LIST_ITERATOR iterator_;

@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
 
 // ============================================================================
 //
@@ -10,7 +9,7 @@
 //    Timer_Queue_T.h
 //
 // = AUTHOR
-//    Doug Schmidt and Irfan Pyarali
+//    Doug Schmidt, Irfan Pyarali, and Darrell Brunsch
 // 
 // ============================================================================
 
@@ -18,67 +17,85 @@
 #define ACE_TIMER_QUEUE_T_H
 
 #include "ace/Time_Value.h"
-
-// Forward declarations.
-template <class TYPE, class FUNCTOR, class LOCK>
-class ACE_Timer_Queue_T;
-
-template <class TYPE, class FUNCTOR, class LOCK>
-class ACE_Timer_List_T;
-
-template <class TYPE, class FUNCTOR, class LOCK>
-class ACE_Timer_List_Iterator_T;
-
-template <class TYPE, class FUNCTOR, class LOCK>
-class ACE_Timer_Heap_T;
-
-template <class TYPE, class FUNCTOR, class LOCK>
-class ACE_Timer_Heap_Iterator_T;
-
-template <class TYPE, class FUNCTOR, class LOCK>
-class ACE_Timer_Wheel_T;
-
-template <class TYPE, class FUNCTOR, class LOCK>
-class ACE_Timer_Wheel_Iterator_T;
+#include "ace/Free_List.h"
 
 // This should be nested within the ACE_Timer_Queue class but some C++
 // compilers still don't like this...
 
-template <class TYPE, class FUNCTOR, class LOCK>
+template <class TYPE>
 class ACE_Timer_Node_T
   // = TITLE
   //     Maintains the state associated with a Timer entry.
 {
-  // = The use of friends should be replaced with accessors...
-  friend class ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>;
-  friend class ACE_Timer_List_T<TYPE, FUNCTOR, LOCK>;
-  friend class ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, LOCK>;
-  friend class ACE_Timer_Heap_T<TYPE, FUNCTOR, LOCK>;
-  friend class ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, LOCK>;
-  friend class ACE_Timer_Wheel_T<TYPE, FUNCTOR, LOCK>;
-  friend class ACE_Timer_Wheel_Iterator_T<TYPE, FUNCTOR, LOCK>;
+public:
+  ACE_Timer_Node_T ();
+  // Default constructor
 
-  // = Initialization methods.
-  ACE_Timer_Node_T (const TYPE &type, 
-		    const void *a, 
-		    const ACE_Time_Value &t, 
-		    const ACE_Time_Value &i, 
-		    ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *n, 
-		    long timer_id);
-  // Constructor.
+  void set (const TYPE &type, 
+            const void *a, 
+            const ACE_Time_Value &t, 
+            const ACE_Time_Value &i, 
+            ACE_Timer_Node_T<TYPE> *n, 
+            long timer_id);
+  // singly linked list 
 
-  ACE_Timer_Node_T (const TYPE &type, 
-		    const void *a, 
-		    const ACE_Time_Value &t, 
-		    const ACE_Time_Value &i, 
-		    ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *p,
-                    ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *n, 
-		    long timer_id);
-  // Constructor for the doubly linked list version.
+  void set (const TYPE &type, 
+            const void *a, 
+            const ACE_Time_Value &t, 
+            const ACE_Time_Value &i, 
+            ACE_Timer_Node_T<TYPE> *p,
+            ACE_Timer_Node_T<TYPE> *n, 
+            long timer_id);
+  // doubly linked list version
 
+  // = Accessors 
+  
+  TYPE &get_type (void);
+  // get the type
+  
+  void set_type (TYPE &type);
+  // set the type
 
-  ACE_Timer_Node_T (void);
-  // Default constructor.
+  const void *get_act (void);
+  // get the act
+
+  void set_act (void *act);
+  // set the act
+
+  ACE_Time_Value &get_timer_value (void);
+  // get the timer value
+
+  void set_timer_value (ACE_Time_Value timer_value);
+  // set the timer value
+
+  ACE_Time_Value &get_interval (void);
+  // get the timer interval
+
+  void set_interval (ACE_Time_Value interval);
+  // set the timer interval
+
+  ACE_Timer_Node_T<TYPE> *get_prev (void);
+  // get the previous pointer
+
+  void set_prev (ACE_Timer_Node_T<TYPE> *prev);
+  // set the previous pointer
+
+  ACE_Timer_Node_T<TYPE> *get_next (void);
+  // get the next pointer
+
+  void set_next (ACE_Timer_Node_T<TYPE> *next);
+  // set the next pointer
+  
+  long get_timer_id (void);
+  // get the timer_id
+
+  void set_timer_id (long timer_id);
+  // set the timer_id
+
+  void dump (void) const;
+  // Dump the state of an TYPE.
+
+private:
   
   TYPE type_;
   // Type of object stored in the Queue
@@ -93,33 +110,29 @@ class ACE_Timer_Node_T
   // If this is a periodic timer this holds the time until the next
   // timeout.
 
-  ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *prev_;
+  ACE_Timer_Node_T<TYPE> *prev_;
   // Pointer to previous timer.
 
-  ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *next_;
+  ACE_Timer_Node_T<TYPE> *next_;
   // Pointer to next timer.
   
   long timer_id_;
   // Id of this timer (used to cancel timers before they expire).
-
-  ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
-
-  void dump (void) const;
-  // Dump the state of an TYPE.
 };
 
 template <class TYPE, class FUNCTOR, class LOCK>
 class ACE_Timer_Queue_Iterator_T
   // = TITLE
-  //     Generic interfae for iterating over a subclass of
+  //     Generic interface for iterating over a subclass of
   //     <ACE_Timer_Queue>.
   //
   // = DESCRIPTION
-  //     This is a special type of iterator that "advances" by moving
-  //     the head of the timer queue up by one every time.
+  //     This is a generic iterator that can be used to visit every
+  //     node of a timer queue.  Be aware that it isn't guaranteed
+  //     that the transversal will be in order of timeout values.  
 {
 public:
+
   // = Initialization and termination methods.
   ACE_Timer_Queue_Iterator_T (void);
   // Constructor.
@@ -127,12 +140,17 @@ public:
   virtual ~ACE_Timer_Queue_Iterator_T (void);
   // Destructor.
 
-  virtual int next (ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *&timer_node,
-		    const ACE_Time_Value &cur_time) = 0;
-  // Pass back the next <timer_node> that hasn't been seen yet, if its
-  // <time_value_> <= <cur_time>.  In addition, moves the timer queue
-  // forward by one node.  Returns 0 when all <timer_nodes> have been
-  // seen, else 1.
+  virtual void first (void) = 0;
+  // Positions the iterator at the earliest node in the Timer Queue
+
+  virtual void next (void) = 0;
+  // Positions the iterator at the next node in the Timer Queue
+
+  virtual int isdone (void) = 0;
+  // Returns true when there are no more nodes in the sequence
+
+  virtual ACE_Timer_Node_T<TYPE> *item (void) = 0;
+  // Returns the node at the current position in the sequence
 };
 
 template <class TYPE, class FUNCTOR, class LOCK>
@@ -146,14 +164,17 @@ class ACE_Timer_Queue_T
   //      and <ACE_Timer_Heap>.
 {
 public: 
+
   typedef ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, LOCK> ITERATOR;
   // Type of Iterator
 
   // = Initialization and termination methods.
-  ACE_Timer_Queue_T (FUNCTOR *upcall_functor = 0);
+  ACE_Timer_Queue_T (FUNCTOR *upcall_functor = 0, 
+                     ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = 0);
   // Default constructor. <upcall_functor> is the instance of the
   // FUNCTOR to be used by the queue. If <upcall_functor> is 0, Timer
-  // Queue will create a default FUNCTOR.
+  // Queue will create a default FUNCTOR.  <freelist> the freelist of
+  // timer nodes.  If 0, then a default freelist will be created.
 
   virtual ~ACE_Timer_Queue_T (void);
   // Destructor - make virtual for proper destruction of inherited
@@ -232,45 +253,51 @@ public:
   FUNCTOR &upcall_functor (void);
   // Accessor to the upcall functor
 
+  virtual ITERATOR &iter (void) = 0;
+  // Returns a pointer to this <ACE_Timer_Queue>'s iterator.
+
+  virtual ACE_Timer_Node_T<TYPE> *remove_first (void) = 0;
+  // Removes the earliest node from the queue and returns it
+
   virtual void dump (void) const;
   // Dump the state of a object.
 
-  ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
-
 protected:
-
   virtual void upcall (TYPE &type,
 		       const void *act,
 		       const ACE_Time_Value &cur_time);
   // This method will call the <functor> with the <type>, <act> and
   // <time>
 
-  virtual void reschedule (ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *) = 0;
+  virtual void reschedule (ACE_Timer_Node_T<TYPE> *) = 0;
   // Reschedule an "interval" <ACE_Timer_Node>.
 
-  virtual ITERATOR &iter (void) = 0;
-  // Returns a pointer to this <ACE_Timer_Queue>'s iterator.
-
-  virtual ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *alloc_node (void) = 0;
+  virtual ACE_Timer_Node_T<TYPE> *alloc_node (void);
   // Factory method that allocates a new node.
 
-  virtual void free_node (ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *) = 0;
+  virtual void free_node (ACE_Timer_Node_T<TYPE> *);
   // Factory method that frees a previously allocated node.
 
   LOCK mutex_; 
   // Synchronization variable for <ACE_Timer_Queue>.
 
+  ACE_Free_List<ACE_Timer_Node_T<TYPE> > *free_list_;
+  // Class that implements a free list
+
   ACE_Time_Value (*gettimeofday_)(void);
   // Pointer to function that returns the current time of day.
 
-  FUNCTOR &upcall_functor_;
+  FUNCTOR *upcall_functor_;
   // Upcall functor
 
   int delete_upcall_functor_;
   // To delete or not to delete is the question?
 
+  int delete_free_list_;
+  // Flag to delete only if the class created the <free_list_>
+
 private:
+  
   ACE_Time_Value timeout_;
   // Returned by <calculate_timeout>.
 

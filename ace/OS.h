@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
 
 // ============================================================================
 //
@@ -121,7 +120,16 @@
 
 // Defaults for ACE Timer Wheel
 #define ACE_DEFAULT_TIMER_WHEEL_SIZE 1024
-#define ACE_DEFAULT_TIMER_WHEEL_RESOLUTION 1000
+#define ACE_DEFAULT_TIMER_WHEEL_RESOLUTION 100
+
+// Default size for ACE Timer Hash table
+#define ACE_DEFAULT_TIMER_HASH_TABLE_SIZE 1024
+
+// Defaults for the ACE Free List
+#define ACE_DEFAULT_FREE_LIST_PREALLOC 0
+#define ACE_DEFAULT_FREE_LIST_LWM 0
+#define ACE_DEFAULT_FREE_LIST_HWM 25000
+#define ACE_DEFAULT_FREE_LIST_INC 100
 
 // Here are all ACE-specific global declarations needed throughout
 // ACE.
