@@ -165,9 +165,10 @@ print STDERR "Starting client\n";
 
 my $ret = do_test();
 
-if ($ret != 0) {
-  $COMB->TerminateWaitKill(5);
-  $SERV->TerminateWaitKill(5);
-}
+# Regardless of the return value, ensure that the processes
+# are terminated before exiting
+$CLI->TerminateWaitKill(5);
+$COMB->TerminateWaitKill(5);
+$SERV->TerminateWaitKill(5);
 
 exit $ret;
