@@ -1,3 +1,9 @@
+Mon Aug 10 10:51:08 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/Cubit/TAO/DII_Cubit/client.cpp: 
+	  Removed signed/unsigned comparison, thanks to David for pointing
+	  this out.
+
 Mon Aug 10 09:13:17 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Log/Logger_i.cpp: added missing

@@ -982,9 +982,6 @@ DII_Cubit_Client::run (void)
   // loop counter.
   CORBA::ULong i;
 
-  // op_array_ cursor.
-  CORBA::ULong j;
-
   // Make a timer and an elapsed time holder.
   ACE_Profile_Timer dii_timer;
   ACE_Profile_Timer::ACE_Elapsed_Time dii_elapsed_time;
@@ -992,7 +989,7 @@ DII_Cubit_Client::run (void)
   // Order and format of test calls matches that of SII (IDL) tests
   // for easy comparison.
 
-  for (j = 0; j < NUMBER_OF_TESTS; j++)
+  for (int j = 0; j < NUMBER_OF_TESTS; j++)
     {
       this->call_count_ = 0;
       this->error_count_ = 0;
