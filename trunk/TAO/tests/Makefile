@@ -51,7 +51,8 @@ DIRS  = CDR \
 	Smart_Proxies \
 	Single_Read \
 	QtTests \
-	Multiple
+	Multiple \
+	LongWrites
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

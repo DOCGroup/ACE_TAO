@@ -1,3 +1,22 @@
+Fri Jan 26 17:33:32 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Makefile:
+        * tests/README:
+        * tests/LongWrites/Coordinator.cpp:
+        * tests/LongWrites/Coordinator.h:
+        * tests/LongWrites/Makefile:
+        * tests/LongWrites/README:
+        * tests/LongWrites/Receiver.cpp:
+        * tests/LongWrites/Receiver.h:
+        * tests/LongWrites/Sender.cpp:
+        * tests/LongWrites/Sender.h:
+        * tests/LongWrites/Test.idl:
+        * tests/LongWrites/client.cpp:
+        * tests/LongWrites/run_test.pl:
+        * tests/LongWrites/server.cpp:
+          New regression test for bug #132, do not attempt to run it now,
+          it is still failing
+
 Fri Jan 26 16:39:50 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * examples/Content_Server/SMI_Iterator/Iterator_Factory_i.h:
