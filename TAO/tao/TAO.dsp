@@ -502,8 +502,6 @@ SOURCE=.\IIOP_Connector.cpp
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
-# PROP Exclude_From_Build 1
-
 !ENDIF 
 
 # End Source File
@@ -538,8 +536,6 @@ SOURCE=.\IIOP_Transport.cpp
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-# PROP Exclude_From_Build 1
 
 !ENDIF 
 
@@ -847,8 +843,6 @@ SOURCE=.\Profile_Transport_Resolver.cpp
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-# PROP Exclude_From_Build 1
 
 !ENDIF 
 

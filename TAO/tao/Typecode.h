@@ -31,7 +31,10 @@
 #include "tao/Arg_Traits_T.h"
 #include "tao/OBV_Constants.h"
 #include "tao/corbafwd.h"
+
 #include "ace/Unbounded_Queue.h"
+#include "ace/Synch_Traits.h"
+#include "ace/Thread_Mutex.h"
 
 // Forward declarations.
 class TAO_InputCDR;
