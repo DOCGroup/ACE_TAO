@@ -23,7 +23,7 @@ static const char *TAO_Connect_Timeprobe_Description[] =
 
 enum
 {
-  // Timeprobe description table start key 
+  // Timeprobe description table start key
   TAO_SERVER_CONNECTION_HANDLER_SEND_RESPONSE_START = 300,
   TAO_SERVER_CONNECTION_HANDLER_SEND_RESPONSE_END,
 
@@ -529,9 +529,20 @@ TAO_Client_Connection_Handler::open (void *)
 
   ACE_Reactor *r = TAO_ORB_Core_instance ()->reactor ();
 
-  // Now we must register ourselves with the reactor for input events
-  // which will detect GIOP Reply messages and EOF conditions.
-  r->register_handler (this, ACE_Event_Handler::READ_MASK);
+  ACE_thread_t rid;
+  r->owner (&rid);
+  // Get reactor's owner thread id.
+
+  if (ACE_Thread::self() == rid)
+    // Only register the handle if we are running reactively.
+    {
+      this->reactive_ = 1;
+      // Now we must register ourselves with the reactor for input events
+      // which will detect GIOP Reply messages and EOF conditions.
+      r->register_handler (this, ACE_Event_Handler::READ_MASK);
+    }
+  else
+      this->reactive_ = 0;
 
   // For now, we just return success
   return 0;
@@ -540,11 +551,14 @@ TAO_Client_Connection_Handler::open (void *)
 int
 TAO_Client_Connection_Handler::close (u_long flags)
 {
-  ACE_Reactor *r = TAO_ORB_Core_instance ()->reactor ();
+  if (this->reactive_)
+    {
+      ACE_Reactor *r = TAO_ORB_Core_instance ()->reactor ();
 
-  // Now we must register ourselves with the reactor for input events
-  // which will detect GIOP Reply messages and EOF conditions.
-  r->remove_handler (this, ACE_Event_Handler::DONT_CALL);
+      // Now we must register ourselves with the reactor for input events
+      // which will detect GIOP Reply messages and EOF conditions.
+      r->remove_handler (this, ACE_Event_Handler::DONT_CALL);
+    }
 
   return BASECLASS::close (flags);
 }
@@ -575,7 +589,7 @@ TAO_Client_Connection_Handler::send_request (TAO_OutputCDR &stream,
   if (!success)
     return -1;
 
-  if (is_twoway)
+  if (is_twoway && this->reactive_)
     {
       // Go into a loop, waiting until it's safe to try to read
       // something on the soket.  The handle_input() method doesn't
