@@ -7,6 +7,7 @@
 #include "tao/Timeprobe.h"
 #include "tao/Object_KeyC.h"
 #include "tao/debug.h"
+#include "tao/Pluggable.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Invocation.i"
@@ -68,7 +69,7 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (TAO_Stub *stub,
                                           TAO_ORB_Core* orb_core)
   : stub_ (stub),
     opname_ (operation),
-    my_request_id_ (0),
+    request_id_ (0),
     out_stream_ (buffer, sizeof buffer, /* ACE_CDR::DEFAULT_BUFSIZE */
                  TAO_ENCAP_BYTE_ORDER,
                  orb_core->output_cdr_buffer_allocator (),
@@ -76,6 +77,13 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (TAO_Stub *stub,
     orb_core_ (orb_core),
     transport_ (0)
 {
+  // @@ Alex: this code here is broken, this is not the right way to
+  //    initialize the request_id, please fix it I know it is not your
+  //    fault. (coryan)
+
+  // @@ I am commenting this out. We will use the RMS object as a
+  //    factory to give us the unique request ids. (alex)
+
   // @@ TODO The comments here are scary, can someone please give me a
   // warm fuzzy feeling about this (coryan).
 
@@ -84,14 +92,15 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (TAO_Stub *stub,
   // it will compile on multiple platforms through the magic of ACE
   // :-/
 
+
   //assert (sizeof (CORBA::ULong) == sizeof (ACE_thread_t));
-  ACE_thread_t me = ACE_OS::thr_self ();
+  // ACE_thread_t me = ACE_OS::thr_self ();
 
   // Copy in only as many bytes are valid, or only as many as we have
   // room for, whichever is less.  -------> What a friggin' HACK!?!?!
-  ACE_OS::memcpy (&this->my_request_id_,
-                  &me,
-                  ACE_MIN (sizeof (me), sizeof (this->my_request_id_)));
+  // ACE_OS::memcpy (&this->my_request_id_,
+  //             &me,
+  //              ACE_MIN (sizeof (me), sizeof (this->my_request_id_)));
 }
 
 TAO_GIOP_Invocation::~TAO_GIOP_Invocation (void)
@@ -180,13 +189,16 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
 
   // Loop until a connection is established or there aren't any more
   // profiles to try.
- for (;;)
+  for (;;)
     {
-      // Get the current profile...
+      // Get the current profile.
       this->profile_ = this->stub_->profile_in_use ();
+
+      // Get the transport object.
 
       if (this->transport_ != 0)
         this->transport_->idle ();
+
       int result = conn_reg->connect (this->stub_, this->transport_);
       if (result == 0)
         break;
@@ -201,6 +213,22 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
           CORBA::COMPLETED_NO));
     }
 
+  // Init the input message states in the transport object.
+  // This is necessary for the round trip call only. But it is ok to
+  // do this in all cases.
+  // @@ Alex: I think we should keep the "reading" state (message_size
+  //    and offset) separate from the writing state, i.e. those
+  //    variables should only be set by the handle_input() method and
+  //    its friends...
+  // @@ Carlos: I didnt quite understand this. What are the writing
+  //    states do we have now? (Alex).
+  this->transport_->message_size (0);
+  this->transport_->message_received (0);
+
+  // Obtain unique request id from the RMS.
+  this->request_id_ = this->transport_->request_id ();
+
+  // Obtain object key.
   const TAO_ObjectKey& key = this->profile_->object_key();
 
   ACE_TIMEPROBE (TAO_GIOP_INVOCATION_START_CONNECT);
@@ -247,6 +275,9 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
   // this message, then patched shortly before it's sent).
   static CORBA::Principal_ptr principal = 0;
 
+  // @@ TODO: the service context list should be kept in the ORB, or
+  //    maybe in TSS storage... that is required for interceptors to
+  //    work.
   // This static is only used to write into the CDR stream, once we
   // have real service context (needed for the messaging spec) this
   // will have to be a parameter.
@@ -256,8 +287,11 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
     {
     case TAO_GIOP::Request:
 
+      // @@ Alex: could you move this to the GIOP module? I think we
+      //    should keep as little knowledge about GIOP as possible
+      //    here...
       this->write_request_header (svc_ctx,
-                                  this->my_request_id_,
+                                  this->request_id_,
                                   is_roundtrip,
                                   key,
                                   this->opname_,
@@ -265,7 +299,10 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
       break;
 
     case TAO_GIOP::LocateRequest:
-      this->out_stream_ << this->my_request_id_;
+      // @@ Alex: could you move this to the GIOP module? I think we
+      //    should keep as little knowledge about GIOP as possible
+      //    here...
+      this->out_stream_ << this->request_id_;
       this->out_stream_ << key;
       break;
 
@@ -339,6 +376,8 @@ TAO_GIOP_Invocation::write_request_header
 }
 
 
+// @@ Does this comment make sense?. We dont wait for reply, right?
+// (alex)
 // Send request, block until any reply comes back, and unmarshal reply
 // parameters as appropriate.
 
@@ -352,6 +391,12 @@ TAO_GIOP_Invocation::invoke (CORBA::Boolean is_roundtrip,
     ACE_THROW_RETURN (CORBA::INTERNAL (),
                       TAO_INVOKE_EXCEPTION);
 
+  // @@ Alex: the <is_roundtrip> flag will be tricky when we move to
+  //    AMI: now it is used both to indicate the the CORBA request in
+  //    a twoway and that the send_request() operation should block.
+  //    Even for oneways: with AMI it is possible to wait for a
+  //    response (empty) for oneways, just to make sure that they
+  //    arrive, there are policies to control that.
   int result =
     this->transport_->send_request (this->orb_core_,
                                     this->out_stream_,
@@ -375,6 +420,8 @@ TAO_GIOP_Invocation::invoke (CORBA::Boolean is_roundtrip,
     {
       // send_request () closed the connection, we just have to forget
       // about the hint.
+      this->transport_ = 0;
+
       this->profile_->reset_hint ();
 
       return TAO_INVOKE_RESTART;
@@ -592,7 +639,7 @@ int
 TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
                                     CORBA::ULong except_count,
                                     CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::Exception))
+  ACE_THROW_SPEC ((CORBA::Exception))
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_GIOP_INVOCATION_INVOKE_START);
 
@@ -667,10 +714,33 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
 
 int
 TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  int retval = TAO_GIOP_Invocation::invoke (1, ACE_TRY_ENV);
+  // Give the CDR stream for reading the input.
+  this->transport_->input_cdr_stream (&this->inp_stream_);
+
+  // Register a reply dispatcher for this invocation. Use the
+  // preallocated reply dispatcher.
+
+  // Init reply dispatcher.
+  this->rd_.request_id (this->request_id_);
+
+  // Bind.
+  int retval = this->transport_->bind_reply_dispatcher (this->request_id_,
+                                                        &this->rd_);
+  if (retval == -1)
+    {
+      // @@ What is the right way to handle this error?
+      this->close_connection ();
+      ACE_THROW_RETURN (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE,
+                                         CORBA::COMPLETED_NO),
+                        TAO_INVOKE_EXCEPTION);
+    }
+
+  // Just send the request, without trying to wait for the reply.
+  retval = TAO_GIOP_Invocation::invoke (1, ACE_TRY_ENV);
   ACE_CHECK_RETURN (retval);
+
   if (retval != TAO_INVOKE_OK)
     return retval;
 
@@ -710,217 +780,76 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
   // (explicitly coded) handlers called.  We assume a POSIX.1c/C/C++
   // environment.
 
-  // @@ Fred: if it makes sense to have a wrapper for send_request on
-  //    the TAO_Transport class then it should also make sense to have
-  //    one for recv_request(), right?
-  TAO_GIOP::Message_Type m = TAO_GIOP::recv_request (this->transport_,
-                                                     this->inp_stream_,
-                                                     this->orb_core_);
+  // Get the reply status.
 
-  // suspend was called in TAO_Client_Connection_Handler::handle_input
-  this->transport_->resume_connection (this->orb_core_->reactor ());
+  // @@ Alex: I botched last time, we also need to obtain the
+  //    ServiceContextList and other fields from the wait_for_reply()
+  //    call.
 
-  switch (m)
+  //    I am reading all reply context, reply status etc and putting
+  //    them in the Reply Dispatcher object, so that Invocation class
+  //    can read it later. (Alex).
+
+  // @@ Alex: How did we choose the wait_strategy?  The problem is to
+  //    do it in such a way that does *not* require a dynamic memory
+  //    allocation for the critical path [this *IS* the critical]
+  //    I would like to obtain the object from the stack, but I don't
+  //    know how.
+
+  //    Right now, I have hard coded this in the Consructor of the
+  //    Transport class. We can get this from the
+  //    Client_Strategy_Factory or something later. (Alex).
+
+  // Wait for the reply. We should wait till we receive the reply
+  // fully.
+  // @@ Check for return value -1 here !!! (Alex).
+  int reply_error = this->transport_->wait_for_reply ();
+
+  if (reply_error == -1)
     {
-    case TAO_GIOP::Reply:
-      // The reply is handled at the end of this switch() statement.
-      break;
-
-    case TAO_GIOP::CloseConnection:
-      // Try the same profile again, but open a new connection.
-      // If that fails then we go to the next profile.
-      this->profile_->reset_hint ();
-      return TAO_INVOKE_RESTART;
-
-    case TAO_GIOP::Request:
-    case TAO_GIOP::CancelRequest:
-    case TAO_GIOP::LocateRequest:
-    case TAO_GIOP::LocateReply:
-    default:
-      // These are all illegal messages to find.  If found, they could
-      // be indicative of client bugs (lost track of input stream) or
-      // server bugs; maybe the request was acted on, maybe not, we
-      // can't tell.
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "TAO: (%P|%t) illegal GIOP message (%s) "
-                    "in response to my Request!\n",
-                    TAO_GIOP::message_name (m)));
-      // FALLTHROUGH
-
-    case TAO_GIOP::MessageError:
-      // @@ Maybe the transport should be closed by recv_request?
-      // FALLTHROUGH
-
-    case TAO_GIOP::CommunicationError:
-      // Couldn't read it for some reason... exception's set already,
-      // so just tell the other end about the trouble (closing the
-      // connection) and return.
-      // FALLTHROUGH
-
-    case TAO_GIOP::EndOfFile:
-      // In all those cases the message was (apparently) sent, but we
-      // couldn't read the reply. To satisfy the "at most once"
-      // semantics of CORBA we must raise an exception at this point
-      // and *not* try to transparently restart the request.
-
-      // We must also reset the state of this object, because the next
-      // invocation may perfectly work.
       this->close_connection ();
-
-      ACE_THROW_RETURN (CORBA::COMM_FAILURE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE),
+      ACE_THROW_RETURN (CORBA::COMM_FAILURE (TAO_DEFAULT_MINOR_CODE,
+                                             CORBA::COMPLETED_MAYBE),
                         TAO_INVOKE_EXCEPTION);
     }
 
-  // Note: we only get here if the status was TAO_GIOP::Reply...
+  // @@ Alex: the old version of this had some error handling code,
+  //    like:  this->profile_->reset_hint ()
+  //    Can you make sure we don't forget to do that on exceptions
+  //    and/or errors.
+  //    BTW, think about native exceptions where if the exception is
+  //    raised in the wait_for_reply() method you won't get a chance
+  //    to do that kind of error handling.  Do you really need
+  //    exceptions in the transport objects?
 
-  // Process reply message.  Again, due to the single threading in
-  // this code, only the reply to this request is allowed to be coming
-  // back.
-  //
-  // NOTE: if the response really _isn't_ for this thread, it's now
-  // treated as an error in which synchronization can't be recovered.
-  // There might be cases where it _could_ be recovered ... e.g. maybe
-  // for some reason the previous call couldn't pick up its response.
-  // It'd be worth investigating (and handling) any such cases.
-  //
-  // NOTE: since this implementation supports no ORB services
-  // (notably, the transaction service, which is the only one that's
-  // currently defined), the reply context is discarded.  Normally
-  // it'd be fed, component at a time, to the relevant services.
-  //
-  // NOTE: As security support kicks in, this is the right place to
-  // verify a digital signature, if that is required in this
-  // particular runtime security environment.  How to know if that's
-  // the case?  It's likely that standard Internet IPSEC
-  // infrastructure (RFC 1825 through 1827, and successors) will be
-  // used to enforce many security policies; integrity and privacy
-  // guarantees may be provided by the network, and need no support
-  // here.
-
-
-  // @@ Here is a big difference between GIOP 1.[01] and GIOP 1.2, the
-  // order of the reply_ctx and the request_id fields!
-
-  TAO_GIOP_ServiceContextList reply_ctx;
-  CORBA::ULong request_id;
-  CORBA::ULong reply_status; // TAO_GIOP_ReplyStatusType
-
-  this->inp_stream_ >> reply_ctx;
-  if (!this->inp_stream_.good_bit ())
-    {
-      // @@ Fred: Do we really want to close the connection here? This
-      //    is a problem, but we haven't lost synchronization with the
-      //    server or anything.
-      this->transport_->close_connection ();
-      ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE),
-                        TAO_INVOKE_EXCEPTION);
-    }
-
-  if (!this->inp_stream_.read_ulong (request_id)
-      || request_id != this->my_request_id_
-      || !this->inp_stream_.read_ulong (reply_status)
-      || reply_status > TAO_GIOP_LOCATION_FORWARD)
-    {
-      // @@ Fred: Do we really want to close the connection here? This
-      //    is a problem, but we haven't lost synchronization with the
-      //    server or anything.
-      this->transport_->close_connection ();
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "TAO: (%P|%t) bad Response header\n"));
-      ACE_THROW_RETURN (CORBA::COMM_FAILURE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE),
-                        TAO_INVOKE_EXCEPTION);
-    }
-
-  // If there was no exception, let the caller parse the normal
-  // response.  Otherwise parse and handle the response; we always
-  // know how to deal with the standard exceptions, and the caller
-  // provides a list of allowed user-defined exceptions so that we
-  // know how to unmarshal those too (without IFR consultation).
-  //
-  // When requests are forwarded, we just store the revised profile
-  // data in this objref structure.  The expectation is that the call
-  // will be reissued until someone gives up on a forwarding chain,
-  // and that other calls will reap the benefit of the forwarding work
-  // by this thread.
-  //
-  // NOTE: should ensure that from here on, all system exceptions
-  // return COMPLETED_YES status ... even ones reported by code which
-  // we call.
-
-
-  // @@ We must validate the reply_status variable, if it is not one
-  // of the values listed in this switch statement we should:
-  //  1) The and MessageError message back to the server
-  //  2) Raise a COMM_FAILURE exception
+  CORBA::ULong reply_status = this->rd_.reply_status ();
 
   switch (reply_status)
     {
     case TAO_GIOP_NO_EXCEPTION:
+      // Return so that the STUB can demarshal the reply.
       return TAO_INVOKE_OK;
-      // NOTREACHED
+      // NOT REACHED.
 
     case TAO_GIOP_USER_EXCEPTION:
+      // Return so that the STUB can demarshal the user exception.
       return TAO_INVOKE_EXCEPTION;
-      // NOTREACHED
+      // NOTREACHED.
 
     case TAO_GIOP_SYSTEM_EXCEPTION:
       {
-        // @@ TODO This code is not exception safe. Notice how on
-        // every exit path we have to invoke TAO_GIOP::send_error,
-        // this should be handled by the destructor of some class;
-        // which is disabled on the normal exit paths.
-        // Plus <buf> should be stored in a CORBA::String_var
-
-        CORBA::String_var buf;
-
-        // Pull the exception ID out of the marshaling buffer.
-        if (this->inp_stream_.read_string (buf.inout ()) == 0)
-          {
-            // @@ Why do we close the connection. Only the request
-            //    failed, but the connection seems to be still
-            //    valid!
-            this->transport_->close_connection ();
-            ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE),
-                              TAO_INVOKE_EXCEPTION);
-          }
-
-        CORBA_Exception *exception =
-          TAO_Exceptions::create_system_exception (buf.in (),
-                                                   ACE_TRY_ENV);
-        ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);
-
-        if (exception == 0)
-          {
-            if (TAO_debug_level > 0)
-              ACE_ERROR ((LM_ERROR,
-                          "TAO: (%P|%t) Received Reply "
-                          "with SYSTEM_EXCEPTION status."
-                          "But unknown or invalid exception.\n"));
-            ACE_NEW_RETURN (exception,
-                            CORBA::UNKNOWN,
-                            TAO_INVOKE_EXCEPTION);
-          }
-        // @@ We can clearly use compiled marshaling in this
-        //    case. All system exceptions are guaranteed to
-        //    have the same fields (according to the spec).
-        this->inp_stream_.decode (exception->_type (),
-                                  &exception, 0,
-                                  ACE_TRY_ENV);
-        ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);
-
-        // @@ Think about a better way to raise the exception here,
-        // maybe we need some more macros?
-        ACE_TRY_ENV.exception (exception);
+        // Demarshal the system exception and raise it!
         return TAO_INVOKE_EXCEPTION;
       }
-      // NOTREACHED
+      // NOTREACHED.
 
     case TAO_GIOP_LOCATION_FORWARD:
+      // Handle the forwarding and return so the stub restarts the
+      // request!
       return this->location_forward (this->inp_stream_, ACE_TRY_ENV);
+      // NOT REACHED.
     }
-
-  return TAO_INVOKE_EXCEPTION;
+  return 0;
 }
 
 // ****************************************************************
@@ -929,7 +858,7 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
 
 int
 TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // @@ TODO This method is very similar to invoke_i(), we should try
   //    to refactor them.
@@ -967,9 +896,13 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
   //    received? But what about oneways?
   this->stub_->set_valid_profile ();
 
-  TAO_GIOP::Message_Type m = TAO_GIOP::recv_request (this->transport_,
+  TAO_GIOP_Version version;
+
+  TAO_GIOP::Message_Type m = TAO_GIOP::recv_message (this->transport_,
                                                      this->inp_stream_,
-                                                     this->orb_core_);
+                                                     this->orb_core_,
+                                                     version,
+                                                     1);
 
   this->transport_->resume_connection (this->orb_core_->reactor ());
   // suspend was called in TAO_Client_Connection_Handler::handle_input
@@ -1021,7 +954,8 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
 
       this->close_connection ();
 
-      ACE_THROW_RETURN (CORBA::COMM_FAILURE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE),
+      ACE_THROW_RETURN (CORBA::COMM_FAILURE (TAO_DEFAULT_MINOR_CODE,
+                                             CORBA::COMPLETED_MAYBE),
                         TAO_INVOKE_EXCEPTION);
     }
 
@@ -1031,7 +965,7 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
   CORBA::ULong locate_status; // TAO_GIOP_LocateStatusType
 
   if (!this->inp_stream_.read_ulong (request_id)
-      || request_id != this->my_request_id_
+      || request_id != this->request_id_
       || !this->inp_stream_.read_ulong (locate_status))
     {
       // @@ Fred: Do we really want to close the connection here? This
@@ -1040,7 +974,8 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
       this->transport_->close_connection ();
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG, "TAO: (%P|%t) bad Response header\n"));
-      ACE_THROW_RETURN (CORBA::COMM_FAILURE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE),
+      ACE_THROW_RETURN (CORBA::COMM_FAILURE (TAO_DEFAULT_MINOR_CODE,
+                                             CORBA::COMPLETED_MAYBE),
                         TAO_INVOKE_EXCEPTION);
     }
 
@@ -1050,7 +985,8 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
       break;
 
     case TAO_GIOP_UNKNOWN_OBJECT:
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
+      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (TAO_DEFAULT_MINOR_CODE,
+                                                 CORBA::COMPLETED_YES),
                         TAO_INVOKE_EXCEPTION);
       // NOTREACHED
 

@@ -32,6 +32,9 @@ public:
 
   // = The Simple_Server methods.
   void test_method (CORBA::Environment&);
+
+  CORBA::Long get_number (CORBA::Environment&);
+
   void shutdown (CORBA::Environment&);
 
 private:

@@ -33,7 +33,7 @@
 // ============================================================================
 
 #ifndef TAO_GIOP_H
-#  define TAO_GIOP_H
+#define TAO_GIOP_H
 
 #include "tao/corbafwd.h"
 #include "tao/Sequence.h"
@@ -298,6 +298,10 @@ class TAO_Export TAO_GIOP
   ACE_CLASS_IS_NAMESPACE (TAO_GIOP);
 
 public:
+
+  static const CORBA::ULong tao_specific_message_types;
+  // Number of TAO specific message types = 3.
+
   enum Message_Type
   {
     // = DESCRIPTION
@@ -305,15 +309,20 @@ public:
     //   really a message type, but needed to bring that information
     //   back somehow.
 
-    CommunicationError = -2,    // Invalid request.
-    EndOfFile = -1,             // "discovered" by either.
+    // = TAO specific message types.
+    CommunicationError = -3,    // Invalid request.
+    EndOfFile = -2,             // "discovered" by either.
+    ShortRead = -1,             // "discovered" by either.
+
+    // = GIOP message types.
     Request = 0,                // sent by client.
     Reply = 1,                  // by server.
     CancelRequest = 2,          // by client.
     LocateRequest = 3,          // by client.
     LocateReply = 4,            // by server.
     CloseConnection = 5,        // by server.
-    MessageError = 6            // by both.
+    MessageError = 6,           // by both.
+    Fragment = 7                // by both.
   };
 
   static void close_connection (TAO_Transport *transport,
@@ -330,10 +339,16 @@ public:
                                       TAO_ORB_Core* orb_core);
   // Send message, returns TRUE if success, else FALSE.
 
-  static TAO_GIOP::Message_Type recv_request (TAO_Transport *transport,
+  static TAO_GIOP::Message_Type recv_message (TAO_Transport *transport,
                                               TAO_InputCDR &msg,
-                                              TAO_ORB_Core *orb_core);
-  // Reads message, returns message type from header.
+                                              TAO_ORB_Core *orb_core,
+                                              TAO_GIOP_Version &version,
+                                              int block);
+  // Reads message and returns message type from header.
+  // For reading the header, this call is *not* non-blocking. But for
+  // reading the rest of the message, it is non-blocking. Flag <block>
+  // is to force blocking for the full reply. This is useful when we
+  // want to do nothing other than wait for the reply.
 
   static void dump_msg (const char *label,
                         const u_char *ptr,
