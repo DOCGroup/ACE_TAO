@@ -1,3 +1,4 @@
+/* -*- C++ -*- */
 // $Id$
 
 // ===========================================================
@@ -26,34 +27,38 @@
 class Server_i
 {
   // = TITLE
-  //    The class defines the server for the chat. It sets up the Orb manager and registers
-  //    the Broadcaster servant object.
+  //    The class defines the server for the chat. It sets up the Orb
+  //    manager and registers the Broadcaster servant object.
 
 public:
- Server_i(char *ior_file_name);
- // Constructor
+  // = Initialization and termination methods.
+ Server_i (void);
+ // Constructor.
 
- ~Server_i();
- // Destructor
+ ~Server_i (void);
+ // Destructor.
 
  int init (int argc,
 	    char *argv[],
 	    CORBA::Environment &env);
- // initialize the server
+ // Initialize the server.
 
  int run (CORBA::Environment &env);
- // run the orb
+ // Run the ORB.
 
 private:
+  int parse_args (int argc, char *argv[]);
+  // Parses the command line arguments.
 
-  int writeIOR(const char* ior);
-  // writes the server ior to a file, for the clients to pick up later.
+  int write_IOR (const char *ior);
+  // Writes the server ior to a file, for the clients to pick up
+  // later.
 
   char *ior_file_name_;
   // The file name to save the ior to.
 
   TAO_ORB_Manager orb_manager_;
-  // the tao orb manager object
+  // The tao orb manager object.
 
   Broadcaster_i broadcaster_i_;
   // The servant object registered with the orb.

@@ -20,31 +20,31 @@
 #include "Broadcaster_i.h"
 
 int
-Broadcaster_i::Receiver_Data::operator == (const Receiver_Data &receiver_data) const
+Broadcaster_i::Receiver_Data::operator == (const Broadcaster_i::Receiver_Data &receiver_data) const
 {
   // The <_is_equivalent> function checks if the _var and _ptr objects
   // are the same.  NOTE: this call might not behave well on other
   // ORBs since <_is_equivalent> isn't guaranteed to differentiate
   // object references.
-  return this->receiver_.in()->_is_equivalent (receiver_data.receiver_)
+  return this->receiver_->_is_equivalent (receiver_data.receiver_.in ())
     && this->nickname_ == receiver_data.nickname_;
 }
 
 Broadcaster_i::Broadcaster_i (void)
 {
+  // No-op
 }
 
 Broadcaster_i::~Broadcaster_i (void)
 {
+  // No-op
 }
 
 void
 Broadcaster_i::add (Receiver_ptr receiver,
-		    const char *nickname,
-                    CORBA::Environment &environment)
+                    const char *nickname,
+                    CORBA::Environment &TAO_TRY_ENV)
 {
-  // @@ Please check and make sure that you fully qualify the
-  // Receiver_Data class with Broadcaster_i.
   Broadcaster_i::Receiver_Data receiver_data;
 
   // Store the client information.
@@ -53,9 +53,9 @@ Broadcaster_i::add (Receiver_ptr receiver,
 
   // Insert the Receiver reference to the set
   if (receiver_set_.insert (receiver_data) == -1)
-    // Raise exception
-    environment.exception (new Broadcaster::CannotAdd
-			   ("failed to add to the receiver set\n"));
+    TAO_TRY_ENV.exception (new Broadcaster::CannotAdd
+                           ("failed to add to the receiver set\n"));
+
   // Tell everyone which person just joined the chat.
   ACE_CString broadcast_string =
     ACE_CString ("**** ")
@@ -63,34 +63,36 @@ Broadcaster_i::add (Receiver_ptr receiver,
     + ACE_CString (" has joined the chat ****\n");
 
   this->broadcast (broadcast_string.fast_rep (),
-		   environment);
+                   TAO_TRY_ENV);
 }
 
 void
 Broadcaster_i::remove (Receiver_ptr receiver,
-                       CORBA::Environment &environment)
+                       CORBA::Environment &TAO_TRY_ENV)
 {
-  Receiver_Data receiver_data_to_remove;
+  Broadcaster_i::Receiver_Data receiver_data_to_remove;
 
+  // Go through the list of <Receiver_Data> to find which registered client
+  // wants to be removed.
   for (RECEIVER_SET_ITERATOR iter = this->receiver_set_.begin ();
        iter != this->receiver_set_.end ();
        iter++)
     {
-      // @@ Please put the comment about "non-portability" here, as
-      // well!
+      // The <_is_equivalent> function checks if the _var and _ptr objects
+      // are the same.  NOTE: this call might not behave well on other
+      // ORBs since <_is_equivalent> isn't guaranteed to differentiate
+      // object references.
       if ((*iter).receiver_.in ()->_is_equivalent (receiver) == 1)
-	{
-	  receiver_data_to_remove = *iter;
-	  break;
-	}
+        {
+          receiver_data_to_remove = *iter;
+          break;
+        }
     }
 
   // Remove the reference from our list.
-
   if (this->receiver_set_.remove (receiver_data_to_remove) == -1)
-    // Raise exception.
-    environment.exception(new Broadcaster::CannotRemove
-			  ("failed to remove from receiver set\n"));
+    TAO_TRY_ENV.exception(new Broadcaster::CannotRemove
+                          ("failed to remove from receiver set\n"));
 
   // Tell everyone, which person left the chat.
   ACE_CString broadcast_string = "**** "
@@ -99,13 +101,13 @@ Broadcaster_i::remove (Receiver_ptr receiver,
     + " ****\n";
 
   this->broadcast (broadcast_string.fast_rep (),
-		   environment);
+                   TAO_TRY_ENV);
 }
 
 void
 Broadcaster_i::say (Receiver_ptr receiver,
-		    const char *text,
-		    CORBA::Environment &TAO_TRY_ENV)
+                    const char *text,
+                    CORBA::Environment &TAO_TRY_ENV)
 {
   TAO_TRY
     {
@@ -117,20 +119,19 @@ Broadcaster_i::say (Receiver_ptr receiver,
            iter != this->receiver_set_.end ();
            iter++)
         {
-	  // @@ Please add comment here....
+           // The <_is_equivalent> function checks if the _var and
+           // _ptr objects are the same.  NOTE: this call might not
+           // behave well on other ORBs since <_is_equivalent> isn't
+           // guaranteed to differentiate object references.
           if ((*iter).receiver_.in ()->_is_equivalent (receiver) == 1)
-	    {
-	      sender_nickname = (*iter).nickname_;
-	    }
+	    sender_nickname = (*iter).nickname_;
         }
 
       // Broadcast the message to all registered clients
       ACE_CString broadcast_string ("[" + sender_nickname + "] " + text);
 
-      // @@ Please be consistent in your use of env vs. environment.
-      // In fact, I recommend you use the TAO macro TAO_TRY_ENV.
       this->broadcast (broadcast_string.fast_rep (),
-		       env);
+                       TAO_TRY_ENV);
     }
   TAO_CATCHANY
     {
@@ -141,7 +142,7 @@ Broadcaster_i::say (Receiver_ptr receiver,
 
 void
 Broadcaster_i::broadcast (const char *text,
-			  CORBA::Environment &_tao_environment)
+                          CORBA::Environment &TAO_TRY_ENV)
 {
   // Broadcast the message to all registered clients.
 
@@ -149,12 +150,25 @@ Broadcaster_i::broadcast (const char *text,
        iter != this->receiver_set_.end ();
        iter++)
     {
-      // @@ You need to put in an exception handling check here for the
-      // case where something fails.  I'm not sure what you should do,
-      // but you should probably print a message indicating which
-      // exception occurred and then keep processing the other
-      // receivers.
-      (*iter).receiver_->message (text,
-				  _tao_environment);
+      TAO_TRY
+        {
+          (*iter).receiver_->message (text,
+                                      TAO_TRY_ENV);
+        }
+      TAO_CATCHANY
+        {
+          TAO_TRY_ENV.print_exception ("Failed to send a message\n");
+        }
+      TAO_ENDTRY;
     }
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Unbounded_Set<Broadcaster_i::Receiver_Data>;
+template class ACE_Unbounded_Set_Iterator<Broadcaster_i::Receiver_Data>;
+template class ACE_Node<Broadcaster_i::Receiver_Data>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Unbounded_Set<Broadcaster_i::Receiver_Data>
+#pragma instantiate ACE_Unbounded_Set_Iterator<Broadcaster_i::Receiver_Data>
+#pragma instantiate ACE_Node<Broadcaster_i::Receiver_Data>
+#endif /* ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA */
