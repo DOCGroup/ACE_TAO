@@ -1112,14 +1112,14 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                         ACE_TEXT_FormatMessage (FORMAT_MESSAGE_ALLOCATE_BUFFER
                                                   | FORMAT_MESSAGE_MAX_WIDTH_MASK
                                                   | FORMAT_MESSAGE_FROM_SYSTEM,
-                                                  NULL,
+                                                  0,
                                                   errno,
                                                   MAKELANGID (LANG_NEUTRAL,
                                                               SUBLANG_DEFAULT),
                                                               // Default language
                                                   (ACE_TCHAR *) &lpMsgBuf,
                                                   0,
-                                                  NULL);
+                                                  0);
 # endif /* ACE_HAS_PHARLAP */
 
                         // If we don't get a valid response from
@@ -1184,14 +1184,14 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                         ACE_TEXT_FormatMessage (FORMAT_MESSAGE_ALLOCATE_BUFFER
                                                   | FORMAT_MESSAGE_MAX_WIDTH_MASK
                                                   | FORMAT_MESSAGE_FROM_SYSTEM,
-                                                  NULL,
+                                                  0,
                                                   errno,
                                                   MAKELANGID (LANG_NEUTRAL,
                                                               SUBLANG_DEFAULT),
                                                               // Default language
                                                   (ACE_TCHAR *) &lpMsgBuf,
                                                   0,
-                                                  NULL);
+                                                  0);
 # endif /* ACE_HAS_PHARLAP */
 
                         // If we don't get a valid response from

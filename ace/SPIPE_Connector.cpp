@@ -71,8 +71,8 @@ ACE_SPIPE_Connector::connect (ACE_SPIPE_Stream &new_io,
   if (handle != ACE_INVALID_HANDLE)
     return ::SetNamedPipeHandleState (handle,
                                       &pipe_mode,
-                                      NULL,
-                                      NULL);
+                                      0,
+                                      0);
 #endif
   return handle == ACE_INVALID_HANDLE ? -1 : 0;
 }

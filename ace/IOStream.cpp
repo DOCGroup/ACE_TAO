@@ -99,7 +99,7 @@ ACE_Streambuf::recv_timeout (ACE_Time_Value *tv)
       recv_timeout_ = &recv_timeout_value_;
     }
   else
-    recv_timeout_ = NULL;
+    recv_timeout_ = 0;
 
   return rval;
 }
@@ -477,7 +477,7 @@ ACE_Streambuf::ACE_Streambuf (u_int streambuf_size, int io_mode)
     put_mode_ (2),
     mode_ (io_mode),
     streambuf_size_ (streambuf_size),
-    recv_timeout_ (NULL)
+    recv_timeout_ (0)
 {
  (void)reset_get_buffer ();
  (void)reset_put_buffer ();
@@ -553,7 +553,7 @@ ACE_Streambuf::reset_get_buffer (char *newBuffer,
   if (newBuffer)
     {
       if (streambuf_size_ != _streambuf_size)
-        return NULL;
+        return 0;
       this->eback_saved_ = newBuffer;
     }
   else
@@ -602,7 +602,7 @@ ACE_Streambuf::reset_put_buffer (char *newBuffer,
   if (newBuffer)
     {
       if (streambuf_size_ != _streambuf_size)
-        return NULL;
+        return 0;
       this->pbase_saved_ = newBuffer;
     }
   else

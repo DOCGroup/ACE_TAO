@@ -130,7 +130,7 @@ get_reg_value (const ACE_TCHAR *key,
                                         KEY_READ, &ifkey) != ERROR_SUCCESS)
             continue;
 
-          if (ACE_TEXT_RegQueryValueEx (ifkey, name, 0, NULL,
+          if (ACE_TEXT_RegQueryValueEx (ifkey, name, 0, 0,
                                         (u_char*) (buffer + total),
                                         &size) != ERROR_SUCCESS)
             {

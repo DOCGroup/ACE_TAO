@@ -1195,7 +1195,7 @@ ACE_Pagefile_Memory_Pool::map (int &first_time,
                                       SECURITY_DESCRIPTOR_REVISION);
       ::SetSecurityDescriptorDacl (&sd,
                                    TRUE,
-                                   NULL,
+                                   0,
                                    FALSE);
       sa.nLength = sizeof (SECURITY_ATTRIBUTES);
       sa.lpSecurityDescriptor = &sd;
@@ -1208,7 +1208,7 @@ ACE_Pagefile_Memory_Pool::map (int &first_time,
 #if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
                                       &sa,
 #else
-                                      NULL,
+                                      0,
 #endif /* (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) */
                                       PAGE_READWRITE | SEC_RESERVE,
                                       0,
