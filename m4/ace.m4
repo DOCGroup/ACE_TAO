@@ -67,14 +67,17 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
    case "${enableval}" in
     yes)
       AC_DEFINE(ACE_HAS_IPV6)
+      ace_user_enable_ipv6=yes
       ;;
     no)
+      ace_user_enable_ipv6=no
       ;;
     *)
       AC_MSG_ERROR([bad value ${enableval} for --enable-ipv6])
       ;;
    esac
   ],)
+ AM_CONDITIONAL([BUILD_IPV6], [test X$ace_user_enable_ipv6 = Xyes])
 
  AC_ARG_ENABLE([log-msg-prop],
   AS_HELP_STRING(--enable-log-msg-prop,enable threads inheriting ACE_Log_Msg properties from parent thread [[[yes]]]),
