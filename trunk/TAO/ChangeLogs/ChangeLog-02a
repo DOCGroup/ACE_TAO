@@ -1,3 +1,35 @@
+Mon Apr 09 16:02:31 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Portable_Interceptors/Request_Interceptor_Flow/Client_ORBInitializer.cpp:
+	* tests/Portable_Interceptors/Request_Interceptor_Flow/Client_ORBInitializer.h:
+	* tests/Portable_Interceptors/Request_Interceptor_Flow/Client_Request_Interceptor.cpp:
+	* tests/Portable_Interceptors/Request_Interceptor_Flow/Client_Request_Interceptor.h:
+	* tests/Portable_Interceptors/Request_Interceptor_Flow/Makefile:
+	* tests/Portable_Interceptors/Request_Interceptor_Flow/Makefile.bor:
+	* tests/Portable_Interceptors/Request_Interceptor_Flow/README:
+	* tests/Portable_Interceptors/Request_Interceptor_Flow/Request_Interceptor.cpp:
+	* tests/Portable_Interceptors/Request_Interceptor_Flow/Request_Interceptor.h:
+	* tests/Portable_Interceptors/Request_Interceptor_Flow/Request_Interceptor_Flow.dsw:
+	* tests/Portable_Interceptors/Request_Interceptor_Flow/Server_ORBInitializer.cpp:
+	* tests/Portable_Interceptors/Request_Interceptor_Flow/Server_ORBInitializer.h:
+	* tests/Portable_Interceptors/Request_Interceptor_Flow/Server_Request_Interceptor.cpp:
+	* tests/Portable_Interceptors/Request_Interceptor_Flow/Server_Request_Interceptor.h:
+	* tests/Portable_Interceptors/Request_Interceptor_Flow/client.bor:
+	* tests/Portable_Interceptors/Request_Interceptor_Flow/client.cpp:
+	* tests/Portable_Interceptors/Request_Interceptor_Flow/client.dsp:
+	* tests/Portable_Interceptors/Request_Interceptor_Flow/server.bor:
+	* tests/Portable_Interceptors/Request_Interceptor_Flow/server.cpp:
+	* tests/Portable_Interceptors/Request_Interceptor_Flow/server.dsp:
+	* tests/Portable_Interceptors/Request_Interceptor_Flow/test.idl:
+	* tests/Portable_Interceptors/Request_Interceptor_Flow/test_i.cpp:
+	* tests/Portable_Interceptors/Request_Interceptor_Flow/test_i.h:
+
+	  New test that verifies request interceptor flow is correct under
+	  various canned scenarios.  These canned scenarios correspond to
+	  the ones described in the Portable Interceptor specification.
+	  Currently this test relies on visual inspection to determine if
+	  a problem exists, rather than automatically.
+
 Mon Apr  9 17:38:16 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * examples/TypeCode_Creation/TypeCode_Creation.dsp:
