@@ -28,13 +28,11 @@
 static void
 randomize_array (int array[], size_t size)
 {
-  size_t i;
-
   ACE_OS::srand (ACE_OS::time (0L));
 
   // Randomize the array.
 
-  for (i = 0; i < size; i++)
+  for (size_t i = 0; i < size; i++)
     {
       int index = ACE_OS::rand() % size--;
       int temp = array [index];
@@ -235,7 +233,7 @@ test_performance (ACE_Timer_Queue *tq,
 
   timer.start ();
 
-  for (i = max_iterations - 1; i >= 0; i--)
+  for (i = 0; i < max_iterations; i++)
     tq->cancel (timer_ids[i]);
 
   ACE_ASSERT (tq->is_empty ());
