@@ -484,9 +484,13 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
       ACE_INET_Addr a(addr);
 
       int found_a_port = 0;
-      u_short last_port = requested_port + this->port_span_;
+      ACE_UINT32 last_port = requested_port + this->port_span_ - 1;
+      if (last_port > ACE_MAX_DEFAULT_PORT)
+        {
+          last_port = ACE_MAX_DEFAULT_PORT;
+        }
 
-      for (u_short p = requested_port; p < last_port; p++)
+      for (ACE_UINT32 p = requested_port; p <= last_port; p++)
         {
           if (TAO_debug_level > 5)
             ACE_DEBUG ((LM_DEBUG,
@@ -494,7 +498,7 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
                         ACE_TEXT ("trying to listen on port %d\n"), p));
 
           // Now try to actually open on that port
-          a.set_port_number (p);
+          a.set_port_number ((u_short)p);
           if (this->base_acceptor_.open (a,
                                          reactor,
                                          this->creation_strategy_,
