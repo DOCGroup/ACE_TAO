@@ -1,14 +1,14 @@
 
 #
 # Makefile for building the Time_Service_Clerk
-# 
+#
 
 NAME = Time_Service_Clerk
-  
+
 OBJFILES = \
 	$(OBJDIR)\Time_Service_Clerk.obj \
 	$(OBJDIR)\Clerk_i.obj
-  
+
 CFLAGS = \
 	$(ACE_CFLAGS) \
 	$(TAO_CFLAGS) \
@@ -17,6 +17,7 @@ CFLAGS = \
 	$(TAO_SVC_UTILS_CFLAGS) \
 	$(TAO_NAMING_CFLAGS) \
 	$(TAO_TIME_CFLAGS) \
+	$(TAO_MESSAGING_CFLAGS) \
 	$(TAO_VALUETYPE_CFLAGS) \
 	$(TAO_IORINTERCEPTOR_CFLAGS) \
 	$(TAO_ORT_CFLAGS)
@@ -29,6 +30,7 @@ LIBFILES = \
 	$(TAO_SVC_UTILS_LIB) \
 	$(TAO_NAMING_LIB) \
 	$(TAO_TIME_LIB) \
+	$(TAO_MESSAGING_LIB) \
 	$(TAO_VALUETYPE_LIB) \
 	$(TAO_IORINTERCEPTOR_LIB) \
 	$(TAO_ORT_LIB)
