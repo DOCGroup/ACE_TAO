@@ -13,7 +13,14 @@ Sun Dec 15 13:01:17 1996  David L. Levine  <levine@cs.wustl.edu>
 	  SOLINK step back to creating real .so files, because it
 	  seems to be necessary, sometimes, for template instantiation
 
+	* netsvcs/lib/Makefile: removed /pkg/gnu/lib dependencies.  Thanks
+	  to Per Andersson for pointing this out.
+
 	* netsvcs/lib/Server_Logging_Handler.cpp: removed ACE_INLINE's
+
+	* netsvcs/servers/svc.conf: changed _make_ACE_Logger() to
+	  _make_ACE_Logging_Strategy() svc.conf.  Thanks to Per Andersson
+	  for pointing this out.
 
 	* tests/MM_Shared_Memory_Test.cpp: declare shm_key as char[]
 	  instead of char *, so that the string gets put into the data
