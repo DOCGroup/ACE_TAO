@@ -22,8 +22,8 @@ $BASE_DIR='/home/bugzilla/.www-docs/auto_compile_logs';
 	      'tango_Exceptions'
 	      );
 
-# After customizing the variables above, you must uncomment the following code
-print "HTTP/1.0 200 OK\n";
+# After customizing the variables above, you must remove or comment
+# out the following code
 print "Content-Type: text/html\n\n";
 print "Error: You must customize this script before installation\n";
 exit (0);
@@ -37,7 +37,6 @@ $title = $ENV{QUERY_STRING};
 @matches = grep {/^$title$/} @KNOWN_DIRS;
 
 if ($#matches == -1) {
-    print "HTTP/1.0 404 Not Found\n";
     print "Content-Type: text/html\n\n";
     print "Error: Unknown config: $title\n";
     exit (0);
@@ -49,7 +48,6 @@ $dir = $title;
 
 if (!opendir (DIR, "$BASE_DIR/$dir"))
 {
-    print "HTTP/1.0 404 Not Found\n";
     print "Content-Type: text/html\n\n";
     print "Error Could not open $dir<br>$!";
     exit (1);
