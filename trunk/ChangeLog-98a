@@ -1,3 +1,9 @@
+Wed Dec 17 11:37:07 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
+
+	* examples/OS/Process/Makefile: Removed inclusion of
+	  rules.lib.GNU. Thanks to Avi Nash <anash@RedBrick.Com> for
+	  noticing this.
+
 Tue Dec 16 22:09:42 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Time_Value_Test.cpp: restored #include test_config.h,
@@ -24,7 +30,7 @@ Tue Dec 16 21:00:49 1997  Chris Gill  <cdgill@tango.cs.wustl.edu>
 
         Single Threaded port of ACE to pSOSim - first checkin
 
-        * psosim/Makefile: (new) make file for new psosim directory - 
+        * psosim/Makefile: (new) make file for new psosim directory -
           builds the configured simulator components
 
         * psosim/drv_conf.c: (new) board driver configuration code for simulator
