@@ -1,3 +1,8 @@
+Tue Jan 14 16:37:44 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/tests/Security/Crash_Test/run_test.pl: The timeout was
+	  adjusted.   
+
 Tue Jan 14 15:10:53 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/driver/drv_args.cpp:
