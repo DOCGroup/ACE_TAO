@@ -1,3 +1,11 @@
+Tue Aug 31 14:38:19 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/OS_NS_errno.h:
+	* ace/os_include/os_errno.h: Include config-lite.h instead of
+	  config-all.h to minimize re-includes.
+
+	* ace/OS_NS_errno.inl: Include config-all.h to pick up ACE_TRACE.
+
 Tue Aug 31 08:36:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-hpux-11.00.h:
