@@ -127,6 +127,9 @@ main (int, char *[])
   ACE_Thread_Manager::instance ()->wait ();
 #endif /* !ACE_LACKS_EXEC */
 #else
+  ACE_UNUSED_ARG (client);
+  ACE_UNUSED_ARG (server);
+
   ACE_DEBUG ((LM_DEBUG, 
 	      "SPIPE is not supported on this platform\n"));
 #endif /* ACE_HAS_STREAM_PIPES || ACE_WIN32 */
