@@ -423,9 +423,14 @@ private:
 
 private:
 
-  CORBA::Policy *parse_policy (CORBA::PolicyType ptype);
-  // Helper method used to retrieve a given policy type
-  // from the policy list.
+  void parse_policies (void);
+  // Helper method used to parse the policies.
+
+  void exposed_priority_model (CORBA::Policy_ptr policy);
+  
+  void exposed_priority_banded_connection (CORBA::Policy_ptr policy);
+
+  void exposed_client_protocol (CORBA::Policy_ptr policy);
 
 private:
 
@@ -435,13 +440,12 @@ private:
   // are asked about a given policy.
 
   TAO_PriorityModelPolicy *priority_model_policy_;
-  CORBA::Boolean is_priority_model_policy_parsed_;
 
   TAO_PriorityBandedConnectionPolicy *priority_banded_connection_policy_;
-  CORBA::Boolean is_priority_banded_policy_parsed_;
 
   TAO_ClientProtocolPolicy *client_protocol_policy_;
-  CORBA::Boolean is_client_protocol_policy_parsed_;
+
+  CORBA::Boolean are_policies_parsed_;
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 private:

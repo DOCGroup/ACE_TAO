@@ -4,6 +4,7 @@
 ACE_INLINE
 TAO_MProfile::TAO_MProfile (CORBA::ULong sz)
   :  policy_list_ (0),
+     is_policy_list_initialized_ (0),
      forward_from_(0),
      pfiles_ (0),
      current_ (0),
@@ -275,12 +276,31 @@ TAO_MProfile::policy_list (CORBA::PolicyList *policy_list)
 ACE_INLINE CORBA::PolicyList* 
 TAO_MProfile::policy_list (void) 
 {
-  if (this->policy_list_ == 0)
+  
+  // Here we use Double-Checked Loking to
+  // avoid to create more then one policy list 
+  // if more thread try to get a policy for
+  // the first time, at the same time.
+  
+  if (this->is_policy_list_initialized_)
+    return this->policy_list_;
+  else
     {
-      this->create_policy_list ();
-      // Init Policy.
-      this->rewind ();
-      this->get_next ()->policies ();
+      ACE_Guard<ACE_Recursive_Thread_Mutex> guard (this->mutex_);
+      if (this->policy_list_ == 0)
+        {
+          this->create_policy_list ();
+          // Init Policy.
+          this->get_current_profile ()->policies ();
+          // Right now all the profile share the same
+          // policies, so any profile can be picked up
+          // to parse the policy. 
+          // So we pick the current profile, so that no
+          // state is changed in the MProfile.
+
+          this->is_policy_list_initialized_ = 1;
+        }
     }
   return this->policy_list_;
+  
 }  

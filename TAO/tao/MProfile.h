@@ -20,7 +20,7 @@
 #ifndef TAO_MPROFILE_H
 #define TAO_MPROFILE_H
 #include "ace/pre.h"
-
+#include "ace/Synch.h"
 #include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -175,6 +175,12 @@ protected:
 
   CORBA::PolicyList *policy_list_;
   // Stores the policy list for the profile of this MProfile.
+
+  CORBA::Boolean is_policy_list_initialized_;
+
+  ACE_Recursive_Thread_Mutex mutex_;
+  // Mutex used to make sure that only one policy list
+  // is created.
 
 protected:
   TAO_Profile **pfiles (void) const;

@@ -6,6 +6,7 @@
 #include "tao/MessagingC.h"
 #include "tao/Policy_Factory.h"
 #include "tao/Stub.h"
+#include "tao/debug.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/Profile.i"
@@ -24,12 +25,13 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
 {
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
-  // @@ Angelo: using assert will crash the program, that is *NOT* the
-  // behavior we want, not in a production system.  We should log the
-  // error (if we had systematic logging in TAO, otherwise an
-  // ACE_DEBUG will have to do), and continue executing!
-
-  ACE_ASSERT (policy_list != 0);
+  if (policy_list == 0)
+    {
+      if (TAO_debug_level)
+        ACE_DEBUG ((LM_DEBUG, 
+                    ACE_TEXT ("TAO_Profile::policies: Null Policy List!\n")));
+      return;
+    }
 
   Messaging::PolicyValue pv;
   Messaging::PolicyValueSeq policy_value_seq;
@@ -72,25 +74,23 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
       //out_CDR.reset ();
     }
 
-  // @@ Angelo: may want to give this variable another name, to avoid
-  // confusion.
-  TAO_OutputCDR out_CDR;
+  TAO_OutputCDR out_cdr;
   // Now we have to embedd the Messaging::PolicyValueSeq into
   // a TaggedComponent.
 
   IOP::TaggedComponent tagged_component;
   tagged_component.tag = Messaging::TAG_POLICIES;
 
-  out_CDR << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER);
-  out_CDR << policy_value_seq;
+  out_cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER);
+  out_cdr << policy_value_seq;
 
-  length = out_CDR.total_length ();
+  length = out_cdr.total_length ();
 
   tagged_component.component_data.length (length);
   buf = tagged_component.component_data.get_buffer ();
 
   int i_length;
-  for (const ACE_Message_Block *iterator = out_CDR.begin ();
+  for (const ACE_Message_Block *iterator = out_cdr.begin ();
        iterator != 0;
        iterator = iterator->cont ())
     {
@@ -106,8 +106,7 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
   // Eventually we add the TaggedComponent to the TAO_TaggedComponents
   // member variable.
   tagged_components_.set_component (tagged_component);
-  // @@ Angelo: never forget your this->
-  are_policies_parsed_ = 1;
+  this->are_policies_parsed_ = 1;
 
 #else /* TAO_HAS_CORBA_MESSAGING == 1 */
 
@@ -124,15 +123,7 @@ TAO_Profile::policies (void)
 
   CORBA::PolicyList *policies = this->stub_->base_profiles ().policy_list ();
 
-  // @@ Angelo: the following code does not seem to be thread safe.
-  //    Two threads could call this routine simulatenously and you
-  //    would leak memory like a hog.
-  //    If there are good reasons why that cannot happen please
-  //    document them, if not then please make the code thread safe, a
-  //    regular guard will do.
-
-  if (!are_policies_parsed_
-      && (policies->length () == 0))
+  if (!this->are_policies_parsed_)
     // None has already parsed the policies.
     {
       IOP::TaggedComponent tagged_component;
@@ -145,19 +136,19 @@ TAO_Profile::policies (void)
           const CORBA::Octet *buf =
             tagged_component.component_data.get_buffer ();
 
-          TAO_InputCDR in_CDR (ACE_reinterpret_cast (const char*, buf),
+          TAO_InputCDR in_cdr (ACE_reinterpret_cast (const char*, buf),
                                tagged_component.component_data.length ());
 
           // Extract the Byte Order
           CORBA::Boolean byte_order;
-          if ((in_CDR >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+          if ((in_cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
               return *(stub_->base_profiles ().policy_list ());
-          in_CDR.reset_byte_order (ACE_static_cast(int, byte_order));
+          in_cdr.reset_byte_order (ACE_static_cast(int, byte_order));
 
           // Now we take out the Messaging::PolicyValueSeq out from the
           // CDR.
           Messaging::PolicyValueSeq policy_value_seq;
-          in_CDR >> policy_value_seq;
+          in_cdr >> policy_value_seq;
 
           // Here we extract the Messaging::PolicyValue out of the sequence
           // and we convert those into the proper CORBA::Policy
@@ -178,13 +169,13 @@ TAO_Profile::policies (void)
                 {
                   buf = policy_value_seq[i].pvalue.get_buffer ();
 
-                  TAO_InputCDR in_CDR (ACE_reinterpret_cast (const char*, buf),
+                  TAO_InputCDR in_cdr (ACE_reinterpret_cast (const char*, buf),
                                        policy_value_seq[i].pvalue.length ());
 
-                  in_CDR >> ACE_InputCDR::to_boolean (byte_order);
-                  in_CDR.reset_byte_order (ACE_static_cast(int, byte_order));
+                  in_cdr >> ACE_InputCDR::to_boolean (byte_order);
+                  in_cdr.reset_byte_order (ACE_static_cast(int, byte_order));
 
-                  policy->_tao_decode (in_CDR);
+                  policy->_tao_decode (in_cdr);
                   (*policies)[i] = policy;
                 }
               else
@@ -193,33 +184,13 @@ TAO_Profile::policies (void)
                   // policies that TAO doesn't support, so as specified
                   // by the RT-CORBA spec. ptc/99-05-03 we just ignore
                   // this un-understood policies.
-                  // @@ Angelo: in this case we may still want to log
-                  // the problem (just use ACE_DEBUG right now if
-                  // TAO_debug_level is high enough).
+                  
+                  if (TAO_debug_level >= 5)
+                    ACE_DEBUG ((LM_DEBUG,
+                                ACE_TEXT ("The IOR contains Unsupported Policies.\n")));
+
                 }
             }
-        }
-      else
-        {
-          // @@ Marina, what should happen here?
-          // @@ Angelo: I find it easier to read code like this:
-          //
-          // if (!condition)
-          //   return; // Nothing bad happenned
-          // foo;
-          // bar;
-          //
-          // than code like this:
-          //
-          // if (condition)
-          //   {
-          //     foo;
-          //     bar;
-          //   }
-          // specially when the numbers of <foos> and <bars> is really
-          // high.
-          // In this case I think the code would be a *lot* more
-          // readable if you did that.
         }
 
     }
@@ -232,9 +203,6 @@ TAO_Profile::policies (void)
 void
 TAO_Profile::the_stub (TAO_Stub *stub)
 {
-  // @@ Angelo: Can the stub for a profile change?  When?  What about
-  // race conditions?  If it cannot change: shouldn't it be set in the
-  // constructor or something?
   this->stub_ = stub;
 }
 
