@@ -75,7 +75,7 @@ extern void             DRV_init ();
 extern void             DRV_parse_args (long, char **);
 extern void             DRV_usage ();
 
-extern void             DRV_pre_proc (char *myfile);
+extern void             DRV_pre_proc (const char *myfile);
 
 extern void             DRV_cpp_init ();
 extern void             DRV_cpp_putarg (const char *str);

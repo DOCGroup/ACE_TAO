@@ -302,7 +302,7 @@ static char     tmp_ifile[128];
  * Pass input through preprocessor
  */
 void
-DRV_pre_proc(char *myfile)
+DRV_pre_proc(const char *myfile)
 {
   long  readfromstdin = I_FALSE;
   char  catbuf[512];
