@@ -149,7 +149,7 @@ public:
    * @return Sum of second field (in milliseconds) and microsecond field
    *         (in milliseconds).  Note that this method can overflow if
    *         the second and microsecond field values are large, so use
-   *         the msec (unsigned long long &ms) method instead.
+   *         the msec (ACE_UINT64 &ms) method instead.
    *
    * @note The semantics of this method differs from the sec() and
    *       usec() methods.  There is no analogous "millisecond"
@@ -166,7 +166,7 @@ public:
    *       usec() methods.  There is no analogous "millisecond"
    *       component in an ACE_Time_Value.
    */
-  void msec (unsigned long long &ms) const;
+  void msec (ACE_UINT64 &ms) const;
 
 #endif /*ACE_LACKS_LONLONG_T */
 

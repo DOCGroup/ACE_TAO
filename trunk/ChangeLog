@@ -1,3 +1,13 @@
+Thu Sep 09 18:29:17 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Time_Value.h (msec):
+	* ace/Time_Value.inl (msec):
+
+	  Even though MSVC++ 6 supports 64 bit integers, it does not
+	  support the "long long" syntax.  Instead it supports its own
+	  "__int64" built-in type.  Use "ACE_UINT64" instead of "unsigned
+	  long long".  Fixes syntax errors exhibited by MSVC++ 6.
+
 Thu Sep  9 16:40:27 2004  Steve Huston  <shuston@riverace.com>
 
 	* apps/Gateway/Gateway/Connection_Handler.cpp:
