@@ -19,6 +19,7 @@
 // ============================================================================
 
 #include "test_config.h"
+#include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
 
 ACE_RCSID(tests, SString_Test, "$Id$")
@@ -143,6 +144,13 @@ main (int, ACE_TCHAR *[])
     // Clear
     s0.clear();
     ACE_ASSERT (s0.length() == 0);
+
+    // Rep
+    ACE_Auto_Basic_Array_Ptr<char> s (s1.rep ());
+    ACE_ASSERT (ACE_OS::strlen (s.get ()) == s1.length ());
+
+    ACE_CString s7 (s.get ());
+    ACE_ASSERT (s1 == s7);
   }
 
   {
