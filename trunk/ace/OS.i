@@ -6,10 +6,6 @@
 #define ACE_INLINE
 #endif /* ACE_HAS_INLINED_OSCALLS */
 
-// Don't put this in the class since it will expand the size!  Also,
-// can't make this an enum due to compiler bugs on some platforms...
-static const long ONE_SECOND = 1000000L;
-
 #if !defined (ACE_HAS_STRERROR)
 #if defined (ACE_HAS_SYS_ERRLIST)
 extern char *sys_errlist[];
@@ -100,96 +96,9 @@ typedef const struct timespec * ACE_TIMESPEC_PTR;
 #include /**/ <malloc.h>
 #endif /* ACE_LACKS_MALLOC_H */
 
-#if !defined (ACE_WIN32)
-
-#if !defined (ACE_LACKS_RPC_H)
-#include /**/ <rpc/rpc.h>
-#endif /* ACE_LACKS_RPC_H */
-
-
-// Matthew Stevens 7-10-95 Fix GNU GCC 2.7 for memchr() problem.
-#if defined (ACE_HAS_GNU_CSTRING_H)
-// Define this file to keep /usr/include/memory.h from being included.
-#include /**/ <cstring>
-#else
-#if defined (VXWORKS)
-#include /**/ <string.h>
-#else
-#include /**/ <memory.h>
-#endif /* VXWORKS */
-#endif /* ACE_HAS_GNU_CSTRING_H */
-
-// These prototypes are chronically lacking from many versions of
-// UNIX.
-extern "C" int t_getname (int, struct netbuf *, int);
-extern "C" int isastream (int);
-extern "C" int getrusage (int who, struct rusage *rusage);
-
-#if defined (ACE_LACKS_SYSCALL)
-extern "C" int syscall (int, ACE_HANDLE, struct rusage *);
-#endif /* ACE_LACKS_SYSCALL */
-
-#if defined (ACE_LACKS_MKTEMP)
-extern "C" char *mktemp (char *);
-#endif /* ACE_LACKS_MKTEMP */
-
-// The following are #defines and #includes that must be visible for
-// ACE to compile it's OS wrapper class implementation correctly.  We
-// put them inside of here to reduce compiler overhead if we're not
-// inlining...
-
-#if defined (ACE_HAS_THR_C_FUNC)
-// This is necessary to work around nasty problems with MVS C++.
-extern "C" void ace_mutex_lock_cleanup_adapter (void *args);
-#define ACE_PTHREAD_CLEANUP_PUSH(A) pthread_cleanup_push (ace_mutex_lock_cleanup_adapter, (void *) A);
-#else
-#define ACE_PTHREAD_CLEANUP_PUSH(A) pthread_cleanup_push (ACE_OS::mutex_lock_cleanup, (void *) A);
-#endif /* ACE_HAS_THR_C_FUNC */
-
-#if defined (ACE_HAS_REGEX)
-#include /**/ <regexpr.h>
-#endif /* ACE_HAS_REGEX */
-
-#if defined (ACE_HAS_SYSINFO)
-#include /**/ <sys/systeminfo.h>
-#endif /* ACE_HAS_SYS_INFO */
-
-#if defined (ACE_HAS_SYSCALL_H)
-#include /**/ <sys/syscall.h>
-#endif /* ACE_HAS_SYSCALL_H */
-
-#if defined (UNIXWARE)	/* See strcasecmp, below */
-#include /**/ <ctype.h>
-#endif /* UNIXWARE */
-
-// Adapt the weird threading and synchronization routines (which don't
-// return -1 normally) so that they return -1 and work correctly with
-// the ACE_OSCALL macros.
-#if defined (VXWORKS)
-#define ACE_ADAPT_RETVAL(OP,RESULT) ((RESULT = (OP)) != OK ? (errno = RESULT, -1) : 0)
-#else
-#define ACE_ADAPT_RETVAL(OP,RESULT) ((RESULT = (OP)) != 0 ? (errno = RESULT, -1) : 0)
-#endif /* VXWORKS */
-
-#if defined (ACE_HAS_SIGNAL_SAFE_OS_CALLS)
-// The following two macros ensure that system calls are properly
-// restarted (if necessary) when interrupts occur.
-#define ACE_OSCALL(OP,TYPE,FAILVALUE,RESULT) \
-  do \
-    RESULT = (TYPE) OP; \
-  while (RESULT == FAILVALUE && errno == EINTR && ACE_LOG_MSG->restart ())
-#define ACE_OSCALL_RETURN(OP,TYPE,FAILVALUE) \
-  do { \
-    TYPE ace_result_; \
-    do \
-      ace_result_ = (TYPE) OP; \
-    while (ace_result_ == FAILVALUE && errno == EINTR && ACE_LOG_MSG->restart ()); \
-    return ace_result_; \
-  } while (0)
-#else
-#define ACE_OSCALL_RETURN(OP,TYPE,FAILVALUE) do { TYPE ace_result_ = FAILVALUE; ace_result_ = ace_result_; return OP; } while (0)
-#define ACE_OSCALL(OP,TYPE,FAILVALUE,RESULT) do { RESULT = (TYPE) OP; } while (0)
-#endif /* ACE_HAS_SIGNAL_SAFE_OS_CALLS */
+// Don't put this in the class since it will expand the size!  Also,
+// can't make this an enum due to compiler bugs on some platforms...
+static const long ONE_SECOND = 1000000L;
 
 // Initializes the ACE_Time_Value object.
 
@@ -346,6 +255,97 @@ operator != (const ACE_Time_Value &tv1,
   // ACE_TRACE ("operator !=");
   return !(tv1 == tv2);
 }
+
+#if !defined (ACE_WIN32)
+
+#if !defined (ACE_LACKS_RPC_H)
+#include /**/ <rpc/rpc.h>
+#endif /* ACE_LACKS_RPC_H */
+
+
+// Matthew Stevens 7-10-95 Fix GNU GCC 2.7 for memchr() problem.
+#if defined (ACE_HAS_GNU_CSTRING_H)
+// Define this file to keep /usr/include/memory.h from being included.
+#include /**/ <cstring>
+#else
+#if defined (VXWORKS)
+#include /**/ <string.h>
+#else
+#include /**/ <memory.h>
+#endif /* VXWORKS */
+#endif /* ACE_HAS_GNU_CSTRING_H */
+
+// These prototypes are chronically lacking from many versions of
+// UNIX.
+extern "C" int t_getname (int, struct netbuf *, int);
+extern "C" int isastream (int);
+extern "C" int getrusage (int who, struct rusage *rusage);
+
+#if defined (ACE_LACKS_SYSCALL)
+extern "C" int syscall (int, ACE_HANDLE, struct rusage *);
+#endif /* ACE_LACKS_SYSCALL */
+
+#if defined (ACE_LACKS_MKTEMP)
+extern "C" char *mktemp (char *);
+#endif /* ACE_LACKS_MKTEMP */
+
+// The following are #defines and #includes that must be visible for
+// ACE to compile it's OS wrapper class implementation correctly.  We
+// put them inside of here to reduce compiler overhead if we're not
+// inlining...
+
+#if defined (ACE_HAS_THR_C_FUNC)
+// This is necessary to work around nasty problems with MVS C++.
+extern "C" void ace_mutex_lock_cleanup_adapter (void *args);
+#define ACE_PTHREAD_CLEANUP_PUSH(A) pthread_cleanup_push (ace_mutex_lock_cleanup_adapter, (void *) A);
+#else
+#define ACE_PTHREAD_CLEANUP_PUSH(A) pthread_cleanup_push (ACE_OS::mutex_lock_cleanup, (void *) A);
+#endif /* ACE_HAS_THR_C_FUNC */
+
+#if defined (ACE_HAS_REGEX)
+#include /**/ <regexpr.h>
+#endif /* ACE_HAS_REGEX */
+
+#if defined (ACE_HAS_SYSINFO)
+#include /**/ <sys/systeminfo.h>
+#endif /* ACE_HAS_SYS_INFO */
+
+#if defined (ACE_HAS_SYSCALL_H)
+#include /**/ <sys/syscall.h>
+#endif /* ACE_HAS_SYSCALL_H */
+
+#if defined (UNIXWARE)	/* See strcasecmp, below */
+#include /**/ <ctype.h>
+#endif /* UNIXWARE */
+
+// Adapt the weird threading and synchronization routines (which don't
+// return -1 normally) so that they return -1 and work correctly with
+// the ACE_OSCALL macros.
+#if defined (VXWORKS)
+#define ACE_ADAPT_RETVAL(OP,RESULT) ((RESULT = (OP)) != OK ? (errno = RESULT, -1) : 0)
+#else
+#define ACE_ADAPT_RETVAL(OP,RESULT) ((RESULT = (OP)) != 0 ? (errno = RESULT, -1) : 0)
+#endif /* VXWORKS */
+
+#if defined (ACE_HAS_SIGNAL_SAFE_OS_CALLS)
+// The following two macros ensure that system calls are properly
+// restarted (if necessary) when interrupts occur.
+#define ACE_OSCALL(OP,TYPE,FAILVALUE,RESULT) \
+  do \
+    RESULT = (TYPE) OP; \
+  while (RESULT == FAILVALUE && errno == EINTR && ACE_LOG_MSG->restart ())
+#define ACE_OSCALL_RETURN(OP,TYPE,FAILVALUE) \
+  do { \
+    TYPE ace_result_; \
+    do \
+      ace_result_ = (TYPE) OP; \
+    while (ace_result_ == FAILVALUE && errno == EINTR && ACE_LOG_MSG->restart ()); \
+    return ace_result_; \
+  } while (0)
+#else
+#define ACE_OSCALL_RETURN(OP,TYPE,FAILVALUE) do { TYPE ace_result_ = FAILVALUE; ace_result_ = ace_result_; return OP; } while (0)
+#define ACE_OSCALL(OP,TYPE,FAILVALUE,RESULT) do { RESULT = (TYPE) OP; } while (0)
+#endif /* ACE_HAS_SIGNAL_SAFE_OS_CALLS */
 
 ACE_INLINE int 
 ACE_OS::chdir (const char *path)
