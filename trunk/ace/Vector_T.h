@@ -39,7 +39,7 @@ const size_t ACE_VECTOR_DEFAULT_SIZE = 32;
  * reference counted smart pointers (see ACE_Ptr&lt;T&gt;) with this
  * template class.
  */
-template<class T, const size_t DEFAULT_SIZE = ACE_VECTOR_DEFAULT_SIZE>
+template<class T, size_t DEFAULT_SIZE = ACE_VECTOR_DEFAULT_SIZE>
 class ACE_Vector : public ACE_Array<T>
 {
 public:
