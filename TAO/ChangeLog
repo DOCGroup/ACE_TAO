@@ -1,3 +1,10 @@
+Sun Mar 13 20:16:43 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Thread_Lane_Resources.cpp:
+	* tao/Transport.cpp (provide_handler): 
+
+	  Fixed unused variable warnings in g++ builds.
+
 Sat Mar 12 13:24:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ImR_Client/ImR_Client_Adapter_Impl.{h,cpp}:

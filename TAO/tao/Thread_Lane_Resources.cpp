@@ -543,7 +543,6 @@ TAO_Thread_Lane_Resources::cleanup_rw_transports (void)
       (*handler)->release_os_resources ();
 
       // #REFCOUNT# related to the handler set decreases.
-      ACE_Event_Handler::Reference_Count cnt =
-        (*handler)->transport ()->remove_reference ();
+      (*handler)->transport ()->remove_reference ();
     }
 }
