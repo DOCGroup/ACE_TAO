@@ -6549,7 +6549,7 @@ extern "C" ACE_Export void ace_mutex_lock_cleanup_adapter (void *args);
 #     define ACE_MAIN_OBJECT_MANAGER \
         ACE_OS_Object_Manager ace_os_object_manager; \
         ACE_Object_Manager ace_object_manager;
-#   endif /* ! ACE_HAS_MINIMAL_ACE_OS */
+#   endif /* ! ACE_MAIN_OBJECT_MANAGER */
 
 #   if defined (ACE_PSOSIM)
 // PSOSIM root lacks the standard argc, argv command line parameters,
