@@ -145,13 +145,13 @@ module ImplementationRepository
                           in StartupOptions options)
       raises (AlreadyRegistered, NotFound);
 
-    // Update the <options> to specify how the <server> should be
-    // restarted when a client asks for it.  Will register the server
-    // if not already registered.
-    // The <AlreadyRegistered> exception is raised when <server> has
-    // already been registered with a different activator.
-    // The <NotFound> exception is raised when the activator specified
-    // in the options is not registered.
+    /// Update the <options> to specify how the <server> should be
+    /// restarted when a client asks for it.  Will register the server
+    /// if not already registered.
+    /// The <AlreadyRegistered> exception is raised when <server> has
+    /// already been registered with a different activator.
+    /// The <NotFound> exception is raised when the activator specified
+    /// in the options is not registered.
     void reregister_server (in string server,
                             in StartupOptions options)
                             raises(AlreadyRegistered, NotFound);

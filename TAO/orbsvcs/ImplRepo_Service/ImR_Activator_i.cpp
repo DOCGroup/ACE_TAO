@@ -43,7 +43,7 @@ ImR_Activator_i::init_with_orb(CORBA::ORB_ptr orb, const Options& opts ACE_ENV_A
     if (CORBA::is_nil(obj.in ()))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-        "Unable to resolve_initial_references(\"ImplRepoService\")\n"), -1);
+        "Unable to resolve_initial_references \"ImplRepoService\"\n"), -1);
     }
     locator_ = ImplementationRepository::Locator::_narrow (obj.in() ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
