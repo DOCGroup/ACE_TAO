@@ -1,5 +1,9 @@
 Tue Oct 20 07:43:56 1998  David L. Levine  <levine@cs.wustl.edu>
 
+        * include/makeinclude/platform_irix6.x_g++.GNU: added
+          LIBS += -lpthread.  Thanks to Peter Nordlund <petern@nada.kth.se>
+          for reporting that it is needed.
+
         * tests/MT_Reactor_Timer_Test.cpp (handle_exception,
           handle_timeout): added ACE_UNUSED_ARG's.
 
