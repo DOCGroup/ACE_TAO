@@ -26,6 +26,8 @@ unlink $iorfile_6;
 
 $SV = Process::Create ($EXEPREFIX."server$Process::EXE_EXT");
 
+# In this example all the files are written out at the same time. So  make a
+# check only for the first file
 if (ACE::waitforfile_timed ($iorfile_1, 5) == -1) {
   print STDERR "ERROR: cannot find file <$iorfile>\n";
   $SV->Kill (); $SV->TimedWait (1);

@@ -1,3 +1,8 @@
+Fri Jun 11 19:26:30 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/POA/TIE/run_test.pl: Made a change to be on par with
+	Carlos's latest standard. 
+
 Fri Jun 11 19:08:45 1999  John Heitmann  <jwh1@cs.wustl.edu>
 
 	* TAO/examples/POA/DSI/run_test.pl:
