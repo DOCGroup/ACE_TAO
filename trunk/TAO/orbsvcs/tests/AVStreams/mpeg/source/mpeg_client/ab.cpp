@@ -229,8 +229,8 @@ void ABprocess(int dataSocket)
     }
     else {  /* discard mode packet stream, read all bytes */
       bytes = PACKET_SIZE;
-      //ACE_DEBUG ((LM_DEBUG,"(%P|%t) ABprocess: waiting for %d sized packet\n",bytes));
       len = read(dataSocket, (char *)packet, bytes);
+      //      ACE_DEBUG ((LM_DEBUG,"(%P|%t) ABprocess: got a %d sized packet\n",len));
       if (exit_tag) exit_on_kill();
       if (len == -1) {
 	if (errno == EINTR || errno == EWOULDBLOCK || errno == EAGAIN) {

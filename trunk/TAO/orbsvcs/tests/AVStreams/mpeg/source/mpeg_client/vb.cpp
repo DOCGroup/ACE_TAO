@@ -374,6 +374,7 @@ void VBprocess(int initSocket, int normalSocket)
       len = read(dataSocket, tmp_buf, -conn_tag);
       memcpy((char *)&msghd, tmp_buf, sizeof(msghd));
     }
+    //    ACE_DEBUG ((LM_DEBUG, "(%P|%t) vb: Got a packet of length = %d\n", len));
     if (exit_tag) exit_on_kill();
     if (len == -1) {
       if (errno == EWOULDBLOCK || errno == EAGAIN) {
