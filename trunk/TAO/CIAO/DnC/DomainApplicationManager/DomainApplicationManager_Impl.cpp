@@ -129,16 +129,16 @@ get_plan_info (void)
 
       if (! matched)
         {
+          // Check if there is a corresponding NodeManager instance existing
+          // If not present return false
+          if (this->deployment_config_.get_node_manager
+              (this->plan_.instance [index].node) == 0)
+            return 0; /* Failure */
+
           // Add this unique node_name to the list of NodeManager names
           this->node_manager_names_.push_back
             (CORBA::string_dup
              (this->plan_.instance [index].node));
-
-          // Check if there is a corresponding NodeManager instance existing
-          // If not present return false to indicate failure
-          if (this->deployment_config_.get_node_manager
-              (this->plan_.instance [index].node) == 0)
-            return 0; /* Failure */
 
           // Increment the number of plans
           ++ num_plans;
