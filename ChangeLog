@@ -1,3 +1,9 @@
+Tue Aug 17 17:42:16 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* bin/MakeProjectCreator/config/rtcosscheduler.mpb:
+
+	  Changed to inherit from orbsvcslib.
+
 Tue Aug 17 09:50:46 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* bin/MakeProjectCreator/config/ciao_servant.mpb:
