@@ -1,3 +1,12 @@
+Tue Sep 28 11:01:00 2004  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+
+          Added a new method make_secure_profile () and restored the signature
+          of make_profile () to conform to an interface defined in
+          Transport_Connector.h. Added exception checking macro calls.
+
 Mon Sep 27 21:01:12 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* tests/Sequence_Unit_Tests/bounded_string_sequence.hpp:
