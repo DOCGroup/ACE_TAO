@@ -1498,7 +1498,9 @@ generate (CommandLine const& cl,
 {
   fs::ofstream ofs;
 
-  if (!file_path.empty ())
+  string file_name (file_path.empty () ? "" : file_path.leaf ());
+
+  if (!file_name.empty ())
   {
     string file_name (file_path.leaf ());
 
@@ -1720,6 +1722,12 @@ generate (CommandLine const& cl,
   }
 
   {
+    if (cl.get_value ("lem-force-all", false) && !file_name.empty ())
+    {
+      os << "#include \"" << file_name << '\"' << endl;
+    }
+
+
     Traversal::TranslationUnit unit;
 
     // Layer 1

@@ -1,17 +1,24 @@
+Mon Mar  8 14:57:39 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CIDLC/ExecutorMappingGenerator.cpp:
+
+	  Added inclusion of the source file when compiling with
+	  --lem-force-all option.
+
 Mon Mar  8 13:54:16 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* NEWS:
 
 	  Added a NEWS file which tracks user visible changes between
 	  every beta. Thanks to Olli Savia and Gary Duzan for motivating
-	  this. 		
+	  this.
 
 Wed Mar  3 14:30:53 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantHeaderGenerator.cpp:
         * CIDLC/ServantSourceGenerator.cpp:
-        
-          Added code generation for operations corresponding to 
+
+          Added code generation for operations corresponding to
           attributes in facets and supported interfaces. Thanks to
           Praveen K Sharma <psharma@bbn.com> for reporting the bug.
           This closes [BUGID:1756].
@@ -20,13 +27,13 @@ Tue Mar  2 19:50:50 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* DnC/Node/NodeApplicationManager_Impl.h:
 
-	  Added @@Tao comments. 
+	  Added @@Tao comments.
 
 Tue Mar  2 15:08:39 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantSourceGenerator.cpp:
-        
-          Fixed code generation in the body of an operation. This 
+
+          Fixed code generation in the body of an operation. This
           body just delegates to the executor, so we have to
           generate the argument list again (just the names, not
           the types), but we don't have to generate the raises
