@@ -50,7 +50,7 @@ public:
   static int cleanup (void *object,
                       ACE_CLEANUP_FUNC cleanup_hook,
                       void *param,
-                      ACE_hthread_t thread_handle = (ACE_hthread_t) -1);
+                      int thread_lifetime = 0);
   // Register an object (or array) for cleanup at program or thread
   // termination.
   // "cleanup_hook" points to a (global, or static member) function that
@@ -60,11 +60,11 @@ public:
   // function; the first parameter is the object (or array) to be deleted.
   // "cleanup_hook", for example, may delete the object (or array), and then
   // it may set the object (or array) address to 0.
-  // If "thread_handle" is not -1, then cleanup is registered for termination
-  // of the thread identified by the handle.  If "thread_handle" is -1,
-  // then the registration is for termination of the process.
-  // For OS's that do not have processes, -1 indicates indicates the current
-  // thread.
+  // If "thread_lifetime" is non-zero, then cleanup is registered for
+  // termination of the current thread.  If "thread_lifetime" is 0, then the
+  // registration is for termination of the process.
+  // For OS's that do not have processes, this parameter is ignored;
+  // i.e., cleanup is registered for termination of the current thread.
   // Returns 0 on success, non-zero on failure: -1 if virtual memory is
   // exhausted or 1 if the object (or arrayt) had already been registered.
 
@@ -89,7 +89,7 @@ private:
   // Keeps track of all the register objects.
 
   int cleanup_i (void *object, ACE_CLEANUP_FUNC cleanup_hook, void *param,
-                 ACE_hthread_t thread_handle = (ACE_hthread_t) -1);
+                 int thread_lifetime = 0);
   // Register an object or array for deletion at program termination.
   // See description of static version above for return values.
 
