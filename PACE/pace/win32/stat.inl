@@ -27,7 +27,7 @@ pace_chmod (const char * path, pace_mode_t mode)
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
-pace_fchmod (int fildes, pace_mode_t mode)
+pace_fchmod (PACE_HANDLE fildes, pace_mode_t mode)
 {
   PACE_UNUSED_ARG (fildes);
   PACE_UNUSED_ARG (mode);
@@ -38,9 +38,12 @@ pace_fchmod (int fildes, pace_mode_t mode)
 #if (PACE_HAS_POSIX_FS_UOF)
 PACE_INLINE
 int
-pace_fstat (int fildes, pace_stat_s * buf)
+pace_fstat (PACE_HANDLE fildes, pace_stat_s * buf)
 {
-  return _fstat (fildes, buf);
+  PACE_UNUSED_ARG (fildes);
+  PACE_UNUSED_ARG (buf);
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
+  /*  return _fstat (fildes, buf); */
 }
 #endif /* PACE_HAS_POSIX_FS_UOF */
 
