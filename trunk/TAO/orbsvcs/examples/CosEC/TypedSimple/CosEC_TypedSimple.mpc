@@ -1,0 +1,12 @@
+project(*Consumer) : event, taoserver {
+  source_files {
+    Consumer.cpp
+    Country_i.cpp
+  }
+}
+
+project(*Supplier) : event, taoserver {
+  source_files {
+    Supplier.cpp
+  }
+}

@@ -5,7 +5,7 @@ project(TAO_IDL_EXE) : aceexe, taoversion, core, tao_output {
   libs     += TAO_IDL_BE TAO_IDL_FE
   includes += include be_include fe 
   install   = $(ACE_ROOT)/bin
-  after    += TAO_IDL_BE TAO_IDL_FE gperf_exe
+  after    += TAO_IDL_BE TAO_IDL_FE gperf
   idlpreprocessor = 1
 
   Source_Files {

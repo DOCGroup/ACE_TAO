@@ -1,24 +1,28 @@
-project(CosEvent) : orbsvcslib, messaging, core, naming {
-  sharedname   = TAO_CosEvent
-  idlflags    += -Wb,export_macro=TAO_Event_Export -Wb,export_include=CosEvent/event_export.h
-  // Set both DLL flags because of the shared idl files
-  dynamicflags = TAO_EVENT_BUILD_DLL TAO_NOTIFY_BUILD_DLL
-  tagchecks    = CosEvent
-  // Add this include path for precompiled headers
-  includes    += $(TAO_ROOT)/orbsvcs/orbsvcs
+project(CosEvent) : cosevent, orbsvcslib, messaging, core, naming {
+  avoids += ec_typed_events
+}
+
+project(CosEvent) : cosevent, orbsvcslib, messaging, core, naming, ifr_client, dynamicinterface {
+  requires += ec_typed_events
+  macros      += TAO_HAS_TYPED_EVENT_CHANNEL
 
   IDL_Files {
-    CosEventComm.idl
-    CosEventChannelAdmin.idl
+    CosTypedEventComm.idl
+    CosTypedEventChannelAdmin.idl
   }
 
   Source_Files(ORBSVCS_COMPONENTS) {
     CosEvent {
-      CosEventCommC.cpp
-      CosEventCommS.cpp
-      CosEventChannelAdminC.cpp
-      CosEventChannelAdminS.cpp
-      CosEvent
+      CosTypedEventCommC.cpp
+      CosTypedEventChannelAdminC.cpp
+      CosTypedEventCommS.cpp
+      CosTypedEventChannelAdminS.cpp
+      CosEvent/CEC_TypedEvent.cpp
+      CosEvent/CEC_TypedEventChannel.cpp
+      CosEvent/CEC_TypedProxyPushConsumer.cpp
+      CosEvent/CEC_TypedConsumerAdmin.cpp
+      CosEvent/CEC_TypedSupplierAdmin.cpp
+      CosEvent/CEC_DynamicImplementation.cpp
     }
   }
 }

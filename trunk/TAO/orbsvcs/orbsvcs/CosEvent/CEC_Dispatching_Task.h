@@ -1,3 +1,4 @@
+// $Id$
 // -*- C++ -*-
 
 //=============================================================================
@@ -26,7 +27,9 @@
 
 #include "orbsvcs/CosEvent/event_export.h"
 #include "CEC_ProxyPushSupplier.h"
-
+#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
+#include "CEC_TypedEvent.h"
+#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
 /**
  * @class TAO_CEC_Dispatching_Task
@@ -47,6 +50,12 @@ public:
   virtual void push (TAO_CEC_ProxyPushSupplier *proxy,
                      CORBA::Any& event
                      ACE_ENV_ARG_DECL);
+
+#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
+  virtual void invoke (TAO_CEC_ProxyPushSupplier *proxy,
+                       TAO_CEC_TypedEvent& typed_event
+                       ACE_ENV_ARG_DECL);
+#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
 private:
   /// An per-task allocator
@@ -111,6 +120,33 @@ private:
   /// The event
   CORBA::Any event_;
 };
+
+// ****************************************************************
+
+#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
+class TAO_Event_Export TAO_CEC_Invoke_Command : public TAO_CEC_Dispatch_Command
+{
+public:
+  /// Constructor
+  TAO_CEC_Invoke_Command (TAO_CEC_ProxyPushSupplier* proxy,
+                          TAO_CEC_TypedEvent& typed_event,
+                          ACE_Data_Block* data_block,
+                          ACE_Allocator *mb_allocator);
+
+  /// Destructor
+  virtual ~TAO_CEC_Invoke_Command (void);
+
+  /// Command callback
+  virtual int execute (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+
+private:
+  /// The proxy
+  TAO_CEC_ProxyPushSupplier* proxy_;
+
+  /// The event
+  TAO_CEC_TypedEvent typed_event_;
+};
+#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
 #if defined (__ACE_INLINE__)
 #include "CEC_Dispatching_Task.i"
