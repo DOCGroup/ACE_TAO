@@ -1,5 +1,6 @@
 // $Id$
 
+#include "ace/ACE.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Task.h"
 #include "ace/Sched_Params.h"

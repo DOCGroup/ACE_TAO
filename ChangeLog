@@ -1,3 +1,27 @@
+Mon May  3 18:12:30 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/TMCast/MTQueue.hpp: Remove 'mutable' from the mutex_ member.
+	  Visual Age C++ says you can only 'mutable' a non-reference member.
+
+	* ace/TMCast/TransactionController.hpp: Added #include
+	  "ace/OS_NS_string.h" so Visual Age C++ can find ACE_OS::memcpy().
+	  Added #include <typeinfo> to enable typeid operator.
+
+	* Kokyu/tests/DSRT_MIF/MIF.cpp: Added #include "ace/ACE.h" so Visual
+	  Age C++ can see ACE::is_prime().
+
+	* Kokyu/tests/EDF/test.cpp: Added #include "ace/OS_NS_sys_time.h" so
+	  Visual Age C++ can see ACE_OS::gettimeofday().
+
+	* ASNMP/asnmp/octet.cpp (to_string_hex): Instead of using separate
+	  #if/#endif blocks for fmt, one for WIN32, and one for __unix, use
+	  #if WIN32, #else. __unix wasn't defined for Visual Age C++ 6.
+
+	* apps/JAWS/clients/Blobby/Blob.cpp:
+	* apps/JAWS/clients/Blobby/Blob_Handler.cpp: Added #include
+	  "ace/OS_NS_string.h" so Visual Age C++ can see ACE_OS:: string
+	  methods.
+
 Mon May  3 13:13:00 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/config/mfc.mpb:
