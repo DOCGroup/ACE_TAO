@@ -3,6 +3,12 @@ illustrate how to program with standard CORBA using TAO.  The
 individual directories contain READMEs on how to run the following
 examples:
 
+        . Advanced 
+
+          Contains example code from "Advanced CORBA Programming with 
+          C++" by Michi Henning and Steve Vinoski with slight 
+          adaptations for TAO.
+
         . Borland 
 
           This directory illustrates how to write a Borland C++
