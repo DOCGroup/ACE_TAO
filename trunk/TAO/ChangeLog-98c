@@ -1,3 +1,9 @@
+Wed Feb 18 11:57:24 1998  Chris Cleeland  <cleeland@merengue.cs.wustl.edu>
+
+	* tests/Cubit/TAO/MT_Cubit/Makefile (LDLIBS): Removed -lposix4
+ 	from the LDLIBS.  Thanks to Bob Olson <olson@mcs.anl.gov> for
+ 	reporting this.
+
 Wed Feb 18 02:58:40 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/Naming_Service/Naming_Service.cpp (IOR_Multicast): Make
