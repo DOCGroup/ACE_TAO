@@ -73,7 +73,7 @@ PLATFORM_QT_LDFLAGS=-L$(QTDIR)/lib
 
 OCFLAGS += -O3
 
-PIC     = -KPIC
+PIC     = -fPIC
 AR      = ar
 ARFLAGS = rsuv
 RANLIB  = @true
