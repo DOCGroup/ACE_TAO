@@ -400,7 +400,8 @@ class ACE_Malloc_FIFO_Iterator_T;
  *
  * This class can be configured flexibly with different
  * MEMORY_POOL strategies and different types of ACE_LOCK
- * strategies.
+ * strategies that support the @a ACE_Thread_Mutex and @a
+ * ACE_Process_Mutex constructor API.   
  */
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB>
 class ACE_Malloc_T

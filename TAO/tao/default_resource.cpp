@@ -753,7 +753,7 @@ TAO_Default_Resource_Factory::get_reactor (void)
                   ACE_Reactor (this->allocate_reactor_impl (), 1),
                   0);
 
-  if (!reactor->initialized ())
+  if (reactor->initialized () == 0)
     {
       delete reactor;
       reactor = 0;
