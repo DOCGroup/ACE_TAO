@@ -1,118 +1,123 @@
+Mon Oct 12 09:52:46 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Naming/CosNaming_i.cpp (TAO_NamingContext ctor):
+          reordered initializers to match declaration order.
+
 Sun Oct 11 23:18:19 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/Event_Manip.h: 
-	* orbsvcs/orbsvcs/Event/Event_Manip.i: 
-	* orbsvcs/orbsvcs/Event/Event_Manip.cpp: 
-	* orbsvcs/orbsvcs/Event/Dispatching_Modules.h: 
-	* orbsvcs/orbsvcs/Event/Dispatching_Modules.i: 
-	* orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp: 
-	* orbsvcs/orbsvcs/Event/Event_Channel.h: 
-	* orbsvcs/orbsvcs/Event/Event_Channel.i: 
-	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
-	* orbsvcs/orbsvcs/Event/CORBA_Utils_T.h: 
-	* orbsvcs/orbsvcs/Event/CORBA_Utils_T.i: 
-	* orbsvcs/orbsvcs/Event/CORBA_Utils_T.cpp: 
-	* orbsvcs/orbsvcs/Event/Memory_Pools.h: 
-	* orbsvcs/orbsvcs/Event/Memory_Pools.i: 
-	* orbsvcs/orbsvcs/Event/Memory_Pools.cpp: 
-	  Implemented a new class to manage event life time.  There are
-	  two components to the new strategy: a reference counted version
-	  of the EventSet buffer and a smart pointer to a single event in
-	  the buffer.
-	  This new strategy allowed us to go down from 6 memory copies to
-	  1 copies for events received remotely (and 2 for local events).
-	  Since the copies were nested and the Event structure can be
-	  quite complicated this reduced the number of memory allocations
-	  significantly.
-	  The old CORBA_Utils classes are no longer needed.
+        * orbsvcs/orbsvcs/Event/Event_Manip.h:
+        * orbsvcs/orbsvcs/Event/Event_Manip.i:
+        * orbsvcs/orbsvcs/Event/Event_Manip.cpp:
+        * orbsvcs/orbsvcs/Event/Dispatching_Modules.h:
+        * orbsvcs/orbsvcs/Event/Dispatching_Modules.i:
+        * orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp:
+        * orbsvcs/orbsvcs/Event/Event_Channel.h:
+        * orbsvcs/orbsvcs/Event/Event_Channel.i:
+        * orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+        * orbsvcs/orbsvcs/Event/CORBA_Utils_T.h:
+        * orbsvcs/orbsvcs/Event/CORBA_Utils_T.i:
+        * orbsvcs/orbsvcs/Event/CORBA_Utils_T.cpp:
+        * orbsvcs/orbsvcs/Event/Memory_Pools.h:
+        * orbsvcs/orbsvcs/Event/Memory_Pools.i:
+        * orbsvcs/orbsvcs/Event/Memory_Pools.cpp:
+          Implemented a new class to manage event life time.  There are
+          two components to the new strategy: a reference counted version
+          of the EventSet buffer and a smart pointer to a single event in
+          the buffer.
+          This new strategy allowed us to go down from 6 memory copies to
+          1 copies for events received remotely (and 2 for local events).
+          Since the copies were nested and the Event structure can be
+          quite complicated this reduced the number of memory allocations
+          significantly.
+          The old CORBA_Utils classes are no longer needed.
 
-	* orbsvcs/orbsvcs/Event/Event_Channel.h: 
-	* orbsvcs/orbsvcs/Event/Event_Channel.i: 
-	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
-	  Fixed a problem with correlation, if a consumer was expecting
-	  A&B and a supplier sent A, A, B the consumer received two copies
-	  of A.
+        * orbsvcs/orbsvcs/Event/Event_Channel.h:
+        * orbsvcs/orbsvcs/Event/Event_Channel.i:
+        * orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+          Fixed a problem with correlation, if a consumer was expecting
+          A&B and a supplier sent A, A, B the consumer received two copies
+          of A.
 
-	* orbsvcs/tests/EC_Basic/EC_Basic.h: 
-	* orbsvcs/tests/EC_Basic/EC_Basic.i: 
-	* orbsvcs/tests/EC_Basic/EC_Basic.cpp: 
-	  Added a new correlation test.
+        * orbsvcs/tests/EC_Basic/EC_Basic.h:
+        * orbsvcs/tests/EC_Basic/EC_Basic.i:
+        * orbsvcs/tests/EC_Basic/EC_Basic.cpp:
+          Added a new correlation test.
 
-	* orbsvcs/orbsvcs/Makefile: 
-	* orbsvcs/Event_Service/Makefile: 
-	* orbsvcs/tests/EC_Multiple/Makefile: 
-	* orbsvcs/tests/EC_Basic/Makefile: 
-	* orbsvcs/tests/EC_Mcast/Makefile: 
-	* orbsvcs/tests/EC_Custom_Marshal/Makefile: 
-	  Updated the dependencies.
+        * orbsvcs/orbsvcs/Makefile:
+        * orbsvcs/Event_Service/Makefile:
+        * orbsvcs/tests/EC_Multiple/Makefile:
+        * orbsvcs/tests/EC_Basic/Makefile:
+        * orbsvcs/tests/EC_Mcast/Makefile:
+        * orbsvcs/tests/EC_Custom_Marshal/Makefile:
+          Updated the dependencies.
 
-	* orbsvcs/tests/EC_Basic/README: 
-	* orbsvcs/tests/EC_Mcast/README: 
-	  The README file was out of date.
+        * orbsvcs/tests/EC_Basic/README:
+        * orbsvcs/tests/EC_Mcast/README:
+          The README file was out of date.
 
-	* docs/releasenotes/TODO.html: 
-	  Updated the task corresponding to this change.
+        * docs/releasenotes/TODO.html:
+          Updated the task corresponding to this change.
 
 1998-10-11  Marina Igorevna Spivak  <marina@mambo.cs.wustl.edu>
 
-	* orbsvcs/Naming_Service/Naming_Service.{h, cpp}, README: Added a
-	command line option to specify how long a service should run
-	before shutting down.  This is useful for running purify,
-	quantify, or avoiding having explicitly kill the process.
+        * orbsvcs/Naming_Service/Naming_Service.{h, cpp}, README: Added a
+        command line option to specify how long a service should run
+        before shutting down.  This is useful for running purify,
+        quantify, or avoiding having explicitly kill the process.
 
-	* orbsvcs/orbsvcs/CosNaming_i.{h,cpp}:
-	Removed several memory allocations (in <get_context>, and
-	<resolve>).
-	Factored some common code out into <populate_binding> function.
-	Cleaned up some code and got rid of <bind_new_context_helper>.
-	Changed TAO_NamingContext to contain a pointer to the hash map
-	rather than actual object to allow command line option of choosing
-	the size of hash map allocated upon creation (rather than using
-	the default size).
+        * orbsvcs/orbsvcs/CosNaming_i.{h,cpp}:
+        Removed several memory allocations (in <get_context>, and
+        <resolve>).
+        Factored some common code out into <populate_binding> function.
+        Cleaned up some code and got rid of <bind_new_context_helper>.
+        Changed TAO_NamingContext to contain a pointer to the hash map
+        rather than actual object to allow command line option of choosing
+        the size of hash map allocated upon creation (rather than using
+        the default size).
 
 Sun Oct 11 17:59:32 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* examples/Callback_Quoter/Client_i.cpp (CLient_i::run ()):
-	changed the argument wrongly passed to the unregister_callback
-	from Consumer_var to Consumer_var.in ().
+        * examples/Callback_Quoter/Client_i.cpp (CLient_i::run ()):
+        changed the argument wrongly passed to the unregister_callback
+        from Consumer_var to Consumer_var.in ().
 
 Sun Oct 11 17:09:16 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
-	* tao/POAC.cpp:
-	* tao/PolicyC.cpp:
-	* tao/DynAnyC.cpp:
-	* tao/CurrentC.cpp:
-	  Optimized _narrow() it does not need to call _create_stub() on
-	  the collocated case, using the CORBA::Object stub is good
-	  enough.
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * tao/POAC.cpp:
+        * tao/PolicyC.cpp:
+        * tao/DynAnyC.cpp:
+        * tao/CurrentC.cpp:
+          Optimized _narrow() it does not need to call _create_stub() on
+          the collocated case, using the CORBA::Object stub is good
+          enough.
 
 1998-10-11  Marina Igorevna Spivak  <marina@mambo.cs.wustl.edu>
 
-	* orbsvcs/Naming_Service/Naming_Service.h : change the order of
-	data member declarations to match initialization order in
-	constructors in .cpp file.
+        * orbsvcs/Naming_Service/Naming_Service.h : change the order of
+        data member declarations to match initialization order in
+        constructors in .cpp file.
 
 1998-10-10  Marina Igorevna Spivak  <marina@mambo.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.{h, cpp}: Updated
-	TAO_Naming_Server to take in and pass on a parameter specifying
-	the size for the naming cotexts' hash tables.
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.{h, cpp}: Updated
+        TAO_Naming_Server to take in and pass on a parameter specifying
+        the size for the naming cotexts' hash tables.
 
-	* orbsvcs/Naming_Service/Naming_Service.{h, cpp}, README: Added a
-	command line option to specify size of hash tables
-	allocated upon creation of naming contexts.
+        * orbsvcs/Naming_Service/Naming_Service.{h, cpp}, README: Added a
+        command line option to specify size of hash tables
+        allocated upon creation of naming contexts.
 
 Sat Oct 10 22:31:00 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* examples/Callback_Quoter/Client_i.cpp:
-	 added the part where the consumer keys in information.
+        * examples/Callback_Quoter/Client_i.cpp:
+         added the part where the consumer keys in information.
 
 Sat Oct 10 16:19:11 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/CDR/tc.cpp:
-	  This file was still referencing CORBA::_tc_Bounds and
-	  CORBA::_tc_BadKind
+        * tests/CDR/tc.cpp:
+          This file was still referencing CORBA::_tc_Bounds and
+          CORBA::_tc_BadKind
 
 1998-10-10  Marina Igorevna Spivak  <marina@mambo.cs.wustl.edu>
 
