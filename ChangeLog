@@ -1,15 +1,20 @@
+Tue Aug 26 16:32:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/RW_Mutex.h:
+          Fixed incorrect doxygen file tag
+
 Tue Aug 26 11:22:41 UTC 2003  Justin Michel <michel_j@ociweb.com>
 
         * bin/MakeProjectCreator/templates/vc7.mpd:
-        
+
           Projects should default to optimization=0. This prevented the
-        tao_idl project from compiling.
+          tao_idl project from compiling.
 
 Tue Aug 26 11:10:45 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/CDR_Stream.i:
 
-          Changed the logic of the checks for return value in 
+          Changed the logic of the checks for return value in
           insertion and extraction of bounded (w)strings. If the
           bound_ member value of the helper construct was 0, the
           operator could incorrectly return 0 after a successfull
@@ -20,7 +25,7 @@ Tue Aug 26 11:10:45 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 Tue Aug 26 09:55:19 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* Kokyu/Kokyu_defs.{cpp,h,i}: Added operator != for ConfigInfo to
-	  satisfy RH71_Explicit_Templates build. 
+	  satisfy RH71_Explicit_Templates build.
 
 Tue Aug 26 09:21:44 2003  Chad Elliott  <elliott_c@ociweb.com>
 
