@@ -8,6 +8,13 @@
 #include "QuoterS.h"
 #include <string>
 
+#if defined(_MSC_VER)
+#if (_MSC_VER >= 1200)
+#pragma warning(push)
+#endif /* _MSC_VER >= 1200 */
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
+
 class Quoter_Stock_i
   : public virtual POA_Quoter::Stock,
     public virtual PortableServer::RefCountServantBase
@@ -27,5 +34,8 @@ private:
   CORBA::Double price_;
 };
 
-#endif /* TAO_TUTORIAL_QUOTER_SIMPLE_IMPROVEDSERVER_STOCK_I_H */
+#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#pragma warning(pop)
+#endif /* _MSC_VER */
 
+#endif /* TAO_TUTORIAL_QUOTER_SIMPLE_IMPROVEDSERVER_STOCK_I_H */

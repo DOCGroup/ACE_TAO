@@ -1,3 +1,28 @@
+Wed Jun 28 12:19:36 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* docs/tutorials/Quoter/Naming_Service/Naming_Service.dsw:
+	* docs/tutorials/Quoter/Naming_Service/client.cpp:
+	* docs/tutorials/Quoter/Naming_Service/client.dsp:
+	* docs/tutorials/Quoter/Naming_Service/index.html:
+	* docs/tutorials/Quoter/Naming_Service/server.cpp:
+	* docs/tutorials/Quoter/Naming_Service/server.dsp:
+	* docs/tutorials/Quoter/Simple/Simple.dsw:
+	* docs/tutorials/Quoter/Simple/Client/client.cpp:
+	* docs/tutorials/Quoter/Simple/Client/client.dsp:
+	* docs/tutorials/Quoter/Simple/Impl-Repo/server.cpp:
+	* docs/tutorials/Quoter/Simple/Impl-Repo/server.dsp:
+	* docs/tutorials/Quoter/Simple/ImprovedServer/Stock_Factory_i.h:
+	* docs/tutorials/Quoter/Simple/ImprovedServer/Stock_i.h:
+	* docs/tutorials/Quoter/Simple/ImprovedServer/improvedserver.dsp:
+	* docs/tutorials/Quoter/Simple/ImprovedServer/server.cpp:
+	* docs/tutorials/Quoter/Simple/Persistent/index.html:
+	* docs/tutorials/Quoter/Simple/Persistent/server.cpp:
+	* docs/tutorials/Quoter/Simple/Persistent/server.dsp:
+	* docs/tutorials/Quoter/Simple/Server/server.cpp:
+	* docs/tutorials/Quoter/Simple/Server/server.dsp:
+	  Add project files for MSVC.
+	  Fixed several minor problems detected by the MSVC compiler.
+
 Wed Jun 28 14:00:33 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp:
