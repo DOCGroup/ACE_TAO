@@ -167,6 +167,30 @@ namespace CIAO
         DOMNodeIterator* iter,
         Deployment::AssemblyPropertyMapping& acd);
 
+      /// process spe element
+      void process_spe (DOMDocument* doc,
+        DOMNodeIterator* iter,
+        Deployment::SubcomponentPortEndpoint& spe);
+
+      /// process spr element
+      void process_spr (DOMDocument* doc,
+        DOMNodeIterator* iter,
+        Deployment::SubcomponentPropertyReference& spr);
+
+      /// process attributes for spe
+      void process_attributes_for_spe (DOMNamedNodeMap* named_node_map,
+        DOMDocument* doc,
+        DOMNodeIterator* iter,
+        int value,
+        Deployment::SubcomponentPortEndpoint& spe);
+
+      /// process attributes for spr
+      void process_attributes_for_spr (DOMNamedNodeMap* named_node_map,
+        DOMDocument* doc,
+        DOMNodeIterator* iter,
+        int value,
+        Deployment::SubcomponentPropertyReference& spr);
+
       /// process attributes for property
       void process_attributes_for_property (DOMNamedNodeMap* named_node_map,
         DOMDocument* doc,
@@ -198,6 +222,35 @@ namespace CIAO
      /// process CPR type
      void process_ref_type (const XMLCh* name,
        Deployment::ComponentPackageReference& sid_ref);
+
+     /// process acd name
+     void process_acd_name (const XMLCh* name,
+       Deployment::AssemblyConnectionDescription& acd);
+
+     /// process apm name
+     void process_apm_name (const XMLCh* name,
+       Deployment::AssemblyPropertyMapping& apm);
+
+     /// process apm external name
+     void process_apm_ext_name (const XMLCh* name,
+       Deployment::AssemblyPropertyMapping& apm);
+
+     /// process spe name
+     void process_spe_name (const XMLCh* name,
+       Deployment::SubcomponentPortEndpoint& spe);
+
+     /// process spr name
+     void process_spr_name (const XMLCh* name,
+       Deployment::SubcomponentPropertyReference& spr);
+
+     /// process IDREFS
+     void process_refs (DOMNamedNodeMap* named_node_map);
+
+     /// update spe refs
+     void update_spe_refs (Deployment::ComponentAssemblyDescription& cad);
+
+     /// update spr refs
+     void update_spr_refs (Deployment::ComponentAssemblyDescription& cad);
 
     private:
 
