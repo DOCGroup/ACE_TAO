@@ -85,32 +85,34 @@ Test_Exception::dii_req_invoke (CORBA::Request_ptr req
 
       if (user_ex.exception () >>= oops)
         {
+          const char *reason = oops->reason.in ();
+          CORBA::ULong mod_value = oops->input;
+
           if (TAO_debug_level > 0)
             {
-              const char *reason = oops->reason.in ();
-
-              if (reason == 0)
-                {
-                  reason = "nil";
-                }
-
               ACE_DEBUG ((LM_DEBUG,
                           "Test_Exception::dii_req_invoke - "
                           "expected user exception"
                           " (%s,%d)\n", 
                           reason, 
-                          oops->input));
+                          mod_value));
             }
 
-          this->inout_ = this->in_ * 2;
-          this->out_ = this->in_ * 3;
-          this->ret_ = this->in_ * 4;
+          if (reason != 0 && mod_value == 1)
+            {
+              this->inout_ = this->in_ * 2;
+              this->out_ = this->in_ * 3;
+              this->ret_ = this->in_ * 4;
+            }
         }
       else if (user_ex.exception () >>= bad_boy)
         {
           ACE_PRINT_EXCEPTION ((*bad_boy),
                                "Test_Exception::dii_req_invoke - "
                                "unexpected (but known) user exception\n");
+
+          // Since 'BadBoy' is not in the exception list the DII request,
+          // it should not be caught explicityly. See comment below.
           this->inout_ = this->in_ * 5;
           this->out_ = this->in_ * 5;
           this->ret_ = this->in_ * 5;
@@ -126,16 +128,43 @@ Test_Exception::dii_req_invoke (CORBA::Request_ptr req
     }
   ACE_CATCH (CORBA::UNKNOWN, ex)
     {
-      if (TAO_debug_level > 0)
+      // 'BadBoy' should be caught here. This happens when the IN arg == 2.
+      // Otherwise we don't set the other arg values so the validity
+      // check will flag the error.
+      if (this->in_ % 3 == 2)
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      "Test_Exception::dii_req_invoke - "
-                      "expected CORBA::UNKNOWN\n"));
-        }
+          this->inout_ = this->in_ * 2;
+          this->out_ = this->in_ * 3;
+          this->ret_ = this->in_ * 4;
 
-      this->inout_ = this->in_ * 2;
-      this->out_ = this->in_ * 3;
-      this->ret_ = this->in_ * 4;
+          if (TAO_debug_level > 0)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "Test_Exception::dii_req_invoke - "
+                          "expected CORBA::UNKNOWN\n"));
+            }
+        }
+      else if (this->in_ % 3 == 1)
+        {
+          // We caught UNKNOWN when we should have caught Ooops.
+          if (TAO_debug_level > 0)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "Test_Exception::run_sii_test - "
+                          "caught unknown exception - "
+                          "expected known user exception\n"));
+            }
+        }
+      else
+        {
+          // We caught UNKNOWN when we should have caught nothing.
+          if (TAO_debug_level > 0)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "Test_Exception::run_sii_test - "
+                          "caught unexpected uknown exception\n"));
+            }
+        }
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -145,9 +174,7 @@ int
 Test_Exception::init_parameters (Param_Test_ptr
                                  ACE_ENV_ARG_DECL_NOT_USED)
 {
-  Generator *gen = GENERATOR::instance (); // value generator
-
-  this->in_ = gen->gen_short ();
+  this->in_ = 0;
   this->inout_ =  0;
   return 0;
 }
@@ -176,26 +203,60 @@ Test_Exception::run_sii_test (Param_Test_ptr objref
     }
   ACE_CATCH (Param_Test::Ooops, ex)
     {
+      const char *reason = ex.reason.in ();
+
+      if (reason == 0)
+        {
+          return -1;
+        }
+
+      CORBA::ULong mod_value = ex.input;
+
+      // We should be catching Ooops only when this is true.
+      if (mod_value != 1)
+        {
+          return -1;
+        }
+
       if (TAO_debug_level > 0)
         {
-          const char *reason = ex.reason.in ();
-          if (reason == 0)
-            reason = "nil";
           ACE_DEBUG ((LM_DEBUG,
                       "Test_Exception::run_sii_test - "
                       "expected user exception"
                       " (%s,%d)\n", 
                       reason, 
-                      ex.input));
+                      mod_value));
         }
 
+      // These weren't passed back because of the exception. We
+      // set them here to the 'correct' values so the validity
+      // check won't return an error.
       this->inout_ = this->in_ * 2;
       this->out_ = this->in_ * 3;
       this->ret_ = this->in_ * 4;
-      return -1;
+      return 0;
     }
   ACE_CATCH (CORBA::UNKNOWN, ex)
     {
+      // 'BadBoy' should be caught here, since generated code for
+      // Param_Test::test_exception() knows nothing about it.
+      // 'Ooops' however, should not be caught here. 'BadBoy'
+      // is thrown by the servant when the IN argument == 2.
+      int d = this->in_ % 3;
+
+      if (d != 2)
+        {
+          if (d == 1 && TAO_debug_level > 0)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "Test_Exception::run_sii_test - "
+                          "caught unknown exception - "
+                          "expected known user exception\n"));
+            }
+
+          return -1;
+        }
+
       if (TAO_debug_level > 0)
         {
           ACE_PRINT_EXCEPTION (ex,
@@ -203,6 +264,9 @@ Test_Exception::run_sii_test (Param_Test_ptr objref
                                "expected system exception\n");
         }
 
+      // These weren't passed back because of the exception. We
+      // set them here to the 'correct' values so the validity
+      // check won't return an error.
       this->inout_ = this->in_ * 2;
       this->out_ = this->in_ * 3;
       this->ret_ = this->in_ * 4;
@@ -210,13 +274,17 @@ Test_Exception::run_sii_test (Param_Test_ptr objref
     }
   ACE_CATCH (Param_Test::BadBoy, ex)
     {
+      // We shouldn't end up here. See comment above.
       ACE_PRINT_EXCEPTION (ex,
                            "Test_Exception::run_sii_test - "
                            "unexpected user exception\n");
+
+      return -1;
     }
   ACE_ENDTRY;
 
-  return -1;
+  // Normal reply - no exception thrown.
+  return 0;
 }
 
 CORBA::Boolean
