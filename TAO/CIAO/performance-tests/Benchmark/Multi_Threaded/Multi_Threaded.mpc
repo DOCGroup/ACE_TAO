@@ -5,7 +5,7 @@ project (Multi_Threaded_client) : ciao_client, valuetype , strategies{
   after += RoundTripClient_stub
   libs += RoundTripClient_stub Benchmark_stub
   libpaths += ..
-  includes += ../RoundTripClient/
+  includes += ../RoundTripClient
 
   IDL_Files {
   }
