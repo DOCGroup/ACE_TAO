@@ -25,23 +25,6 @@
  *         email: scen@cse.ogi.edu
  */
 #include "ace/OS.h"
-#include <sys/types.h>
-#include <sys/uio.h>
-#include <unistd.h>
-#include <netdb.h>
-#include <string.h>
-#include <stdlib.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <netinet/tcp.h>
-#include <arpa/inet.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <time.h>
-#include <sys/time.h>
-#include <stdio.h>
-#include <errno.h>
-#include <signal.h>
 
 #include "include/common.h"
 #include "mpeg_shared/routine.h"
@@ -2051,7 +2034,7 @@ static void on_exit_routine(void)
   /*
   fprintf(stderr, "A VS session terminated.\n");
   */
-  if (getpeername(VIDEO_SINGLETON::instance ()->serviceSocket,
+  if (ACE_OS::getpeername(VIDEO_SINGLETON::instance ()->serviceSocket,
                   (struct sockaddr *)&peeraddr_in, &size) == 0 &&
       peeraddr_in.sin_family == AF_INET) {
     if (strncmp(inet_ntoa(peeraddr_in.sin_addr), "129.95.50", 9)) {
@@ -2059,7 +2042,7 @@ static void on_exit_routine(void)
       time_t val =ACE_OS::time (NULL);
       char * buf = ACE_OS::ctime (&VIDEO_SINGLETON::instance ()->start_time);
       
-      hp = gethostbyaddr((char *)&(peeraddr_in.sin_addr), 4, AF_INET);
+      hp = ACE_OS::gethostbyaddr((char *)&(peeraddr_in.sin_addr), 4, AF_INET);
       buf[strlen(buf)-1] = 0;
       printf("%s: %s %3dm%02ds %dP %s\n",
              buf,
