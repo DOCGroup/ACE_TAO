@@ -1,5 +1,5 @@
 // $Id$
-
+#define ACE_BUILD_DLL
 #include "ace/Stats.h"
 
 #if !defined (__ACE_INLINE__)
@@ -12,7 +12,14 @@
 //    on the stack, and construct it in, each function that needs it.
 // 2) To avoid warnings from some compilers, split the 0x100000000ull
 //    constant into two pieces.
+
+// @@ David, do we need an ACE_UINT64_LITERAL(X) macro here?
+
+# if defined (ACE_WIN32)
+static const ACE_UINT64 ACE_STATS_INTERNAL_OFFSET = 0x100000000ui64;
+# else
 static const ACE_UINT64 ACE_STATS_INTERNAL_OFFSET = 0x10000ull * 0x10000ull;
+# endif
 #endif /* ! ACE_LACKS_LONGLONG_T */
 
 ACE_UINT32
