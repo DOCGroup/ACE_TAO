@@ -13,8 +13,10 @@ namespace CIAO
             typename EXEC,
             typename COMP>
   Dynamic_Component_Servant<COMP_SERVANT, COMP_EXEC, COMP_EXEC_VAR, EXEC, COMP>
-    ::Dynamic_Component_Servant (EXEC *exe, Components::CCMHome_ptr home)
-      :Dynamic_Component_Servant_Base (),
+    ::Dynamic_Component_Servant 
+        (EXEC *exe, Components::CCMHome_ptr home,
+         Session_Container *c)
+      :Dynamic_Component_Servant_Base (c),
        executor_ (EXEC::_duplicate (exe),
        home_ (Components::CCMHome::_duplicate (home.in ())))
   {
