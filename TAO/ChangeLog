@@ -1,3 +1,21 @@
+Mon Mar 31 12:20:31 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/Collocation_Tests/Client_Task.cpp:
+	* tests/Collocation_Tests/Client_Task.h:
+	* tests/Collocation_Tests/Collocated_Test.cpp:
+	* tests/Collocation_Tests/Hello.cpp:
+	* tests/Collocation_Tests/Hello.h:
+	* tests/Collocation_Tests/Makefile:
+	* tests/Collocation_Tests/Server_Task.cpp:
+	* tests/Collocation_Tests/Server_Task.h:
+	* tests/Collocation_Tests/run_test.pl: Restructured the test to
+	  work under different values of -ORBCollocation and multiple
+	  ORB's. Thanks to Priyanka for helping me to trace the problem
+	  with the first version of this test. 
+
+	* tao/ORB_Core.cpp: Cosmetic fixes.
+
+
 Mon Mar 31 12:03:51 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/IOP_IORC.{h,cpp,i}: Regenerated the files
