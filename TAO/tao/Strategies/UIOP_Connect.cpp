@@ -13,6 +13,7 @@
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/Messaging_Policy_i.h"
 #include "UIOP_Endpoint.h"
+#include "tao/Base_Connection_Property.h"
 
 #if !defined (__ACE_INLINE__)
 # include "UIOP_Connect.i"
