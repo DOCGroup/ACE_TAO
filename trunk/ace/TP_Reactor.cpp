@@ -199,6 +199,16 @@ ACE_TP_Reactor::dispatch_i (ACE_Time_Value *max_wait_time,
       this->ready_set_.ex_mask_.reset ();
       this->state_changed_ = 0;
     }
+  else
+    {
+      // This is a hack... somewhere, under certain conditions (which
+      // I don't understand...) the mask will have all of its bits clear,
+      // yet have a size_ > 0. This is an attempt to remedy the affect,
+      // without knowing why it happens.
+      this->ready_set_.rd_mask_.sync (this->ready_set_.rd_mask_.max_set ());
+      this->ready_set_.wr_mask_.sync (this->ready_set_.wr_mask_.max_set ());
+      this->ready_set_.ex_mask_.sync (this->ready_set_.ex_mask_.max_set ());
+    }
 
   int active_handle_count = this->wait_for_multiple_events (this->ready_set_,
                                                             max_wait_time);
@@ -277,7 +287,7 @@ ACE_TP_Reactor::dispatch_i (ACE_Time_Value *max_wait_time,
   {
     ACE_Handle_Set_Iterator handle_iter (this->ready_set_.wr_mask_);
 
-    while ((handle = handle_iter ()) != ACE_INVALID_HANDLE && !found_io)
+    while (!found_io && (handle = handle_iter ()) != ACE_INVALID_HANDLE)
       {
         if (this->is_suspended_i (handle))
           continue;
@@ -298,7 +308,7 @@ ACE_TP_Reactor::dispatch_i (ACE_Time_Value *max_wait_time,
     {
       ACE_Handle_Set_Iterator handle_iter (this->ready_set_.ex_mask_);
 
-      while ((handle = handle_iter ()) != ACE_INVALID_HANDLE && !found_io)
+      while (!found_io && (handle = handle_iter ()) != ACE_INVALID_HANDLE)
         {
           if (this->is_suspended_i (handle))
             continue;
@@ -319,7 +329,7 @@ ACE_TP_Reactor::dispatch_i (ACE_Time_Value *max_wait_time,
     {
       ACE_Handle_Set_Iterator handle_iter (this->ready_set_.rd_mask_);
 
-      while ((handle = handle_iter ()) != ACE_INVALID_HANDLE && !found_io)
+      while (!found_io && (handle = handle_iter ()) != ACE_INVALID_HANDLE)
         {
           if (this->is_suspended_i (handle))
             continue;
