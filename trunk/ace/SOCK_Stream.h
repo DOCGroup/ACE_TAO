@@ -36,23 +36,51 @@ class ACE_Export ACE_SOCK_Stream : public ACE_SOCK_IO
   //     class.
   //
   // = NOTES
+  //     <buf> is the buffer to write from or receive into.
   //
-  //     The "_n" I/O methods keep looping until all the data has been
-  //     transferred.  These methods also work for sockets in
+  //     <len> is the number of bytes to transfer.
+  //
+  //     The <timeout> parameter in the following methods indicates
+  //     how long to blocking trying to transfer data.  If <timeout>
+  //     == 0, then the call behaves as a normal send/recv call, i.e.,
+  //     for blocking sockets, the call will block until action is
+  //     possible; for non-blocking sockets, EWOULDBLOCK will be
+  //     returned if no action is immediately possible.
+  //
+  //     If <timeout> != 0, the call will wait until the relative time
+  //     specified in *<timeout> elapses.
+  //
+  //     Methods with <iovec> parameter are I/O vector variants of the I/O
+  //     operations.
+  //
+  //     The "*_n()" I/O methods keep looping until all the data has
+  //     been transferred.  These methods also work for sockets in
   //     non-blocking mode i.e., they keep looping on EWOULDBLOCK.
   //     <timeout> is used to make sure we keep making progress, i.e.,
   //     the same timeout value is used for every I/O operation in the
-  //     loop and the timeout is not counted down.  If the transfer
-  //     times out, the number of bytes transferred so far are
-  //     returned.
+  //     loop and the timeout is not counted down.
   //
-  //     Errors are reported by -1 and 0 return values.
+  //     The return values for the "*_n()" methods losely match the
+  //     return values from the non "_n" methods and are specified as
+  //     follows:
+  // 
+  //      - On complete transfer, the number of bytes transferred is returned.
+  //      - On timeout, -1 is returned, errno == ETIME.
+  //      - On error, -1 is returned, errno is set to appropriate error.
+  //      - On EOF, 0 is returned, errno is irrelevant.
+  // 
+  //      On partial transfers, i.e., if any data is transferred
+  //      before timeout/error/EOF, <bytes_transferred> will contain
+  //      the number of bytes transferred.
   //
-  //     Methods with the extra <flags> argument will always result in
-  //     <send> getting called. Methods without the extra <flags>
-  //     argument will result in <send> getting called on Win32
-  //     platforms, and <write> getting called on non-Win32 platforms.
+  //      Errors are reported by -1 and 0 return values.  Check
+  //      <errno> to find out what occurred.
   //
+  //      Methods with the extra <flags> argument will always result
+  //      in <send> getting called. Methods without the extra <flags>
+  //      argument will result in <send> getting called on Win32
+  //      platforms, and <write> getting called on non-Win32
+  //      platforms.
 public:
   // Initialization and termination methods.
   ACE_SOCK_Stream (void);

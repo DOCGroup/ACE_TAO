@@ -1,3 +1,9 @@
+Sat May 27 14:59:08 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/SOCK_Stream.h: Improved the documentation of recv_n() et al.
+	  Thanks to Sami Aario <saempylae@hotmail.com> for this
+ 	  suggestion.
+
 Sat May 27 01:07:01 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/config-win32-common.h:
@@ -1289,9 +1295,9 @@ Thu May 11 02:04:58 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
           - On EOF, 0 is returned, errno is irrelevant.
 
           On partial transfers, i.e., if any data is transferred before
-          timeout/error/EOF, <bytes_transferred> will contain the number
-          of bytes transferred.  These return values now close match the
-          return values from the non "_n" methods.
+ 	  timeout/error/EOF, <bytes_transferred> will contain the number
+ 	  of bytes transferred.  These return values now closely match the
+ 	  return values from the non "_n" methods.
 
           Thanks to Douglas Schmidt, Chris Cleeland, Steve Huston, James
           Hu, and Rich Seibel for helping out!
