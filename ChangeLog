@@ -1,3 +1,72 @@
+Fri Apr 30 18:11:35 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* PACE:
+
+	  Removed PACE from the ACE CVS module.  It is no longer
+	  maintained.
+
+	* configure.ac:
+
+	  Do not define ACE_HAS_ANSI_CASTS if the compiler supports ANSI
+	  C++ casts.  ACE now requires that support.  If the compiler does
+	  not support ANSI C++ casts, issue an error message accordingly.
+
+	* m4/config_h.m4 (ACE_PREP_CONFIG_HEADER):
+
+	  Removed template for ACE_HAS_ANSI_CASTS macro.  It is no longer
+	  used.
+
+	* ace/README:
+
+	  Removed description for ACE_HAS_ANSI_CASTS macro.  It is no
+	  longer used since compilers that do not support ANSI C++ casts
+	  are no longer supported.
+
+	* ace/config-lite.h:
+
+	  Removed ACE cast macros that wrap C style casts, i.e those used
+	  when ACE_HAS_ANSI_CASTS is not defined.  ACE now requires
+	  compilers that support ANSI C++ casts (e.g. static_cast<>,
+	  etc).
+
+	  Documented ACE cast macros as deprecated.
+
+	* ace/config-win32-msvc.h:
+
+	  Do not support the MSVC++ 5 configuration header.  MSVC++ 5 is
+	  no longer supported.
+
+	* ace/config-win32-msvc-5.h:
+
+	  Removed this configuration header.  MSVC++ 5 has not been
+	  supported for quite some time.
+
+	* ace/config-borland-common.h:
+	* ace/config-chorus.h:
+	* ace/config-cray.h:
+	* ace/config-cxx-common.h:
+	* ace/config-g++-common.h:
+	* ace/config-hpux-10.x-hpc++.h:
+	* ace/config-hpux-11.00.h:
+	* ace/config-icc-common.h:
+	* ace/config-integritySCA.h:
+	* ace/config-macosx-panther.h:
+	* ace/config-macosx.h:
+	* ace/config-openvms.h:
+	* ace/config-osf1-4.0.h:
+	* ace/config-qnx-rtp-62x.h:
+	* ace/config-sunos5.5.h:
+	* ace/config-sunos5.6.h:
+	* ace/config-tandem-nsk-mips-v2.h:
+	* ace/config-unixware-7.1.0.udk.h:
+	* ace/config-win32-ghs.h:
+	* ace/config-win32-msvc-6.h:
+	* ace/config-win32-msvc-7.h:
+	* ace/config-win32-visualage.h:
+
+	  Removed all references to the deprecated ACE_HAS_ANSI_CASTS
+	  macro.
+
 Fri Apr 30 14:20:41 2004  Steve Huston  <shuston@riverace.com>
 
 	* include/makeinclude/platform_aix_g++.GNU: For AIX 5.x, changed the
@@ -6,7 +75,7 @@ Fri Apr 30 14:20:41 2004  Steve Huston  <shuston@riverace.com>
 	  by applications. Thanks very much to Randy Hammon
 	  <randy@trancekat.com> for this fix!
 	  Also, if rtti=0, add -DACE_LACKS_RTTI to CFLAGS in addition to adding
-	  -fno-rtti. Also changed the rrti default from 0 to 1.
+	  -fno-rtti. Also changed the rtti default from 0 to 1.
 
 	* THANKS: Added Randy Hammon to the Hall of Fame.
 

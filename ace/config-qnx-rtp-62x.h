@@ -1,6 +1,6 @@
 // -*- C++ -*-
 // $Id$
-// The following configuration file is designed to work for QNX RTP 621 
+// The following configuration file is designed to work for QNX RTP 621
 // GNU C++ and the POSIX (pthread) threads package. You can get QNX
 // RTP at http://get.qnx.com
 #ifndef ACE_CONFIG_QNX_RTP_62x_H
@@ -20,7 +20,6 @@
 // if you ACE to use it.
 //#define ACE_HAS_ALLOCA
 #define ACE_HAS_ALLOCA_H
-#define ACE_HAS_ANSI_CASTS
 #define ACE_HAS_AUTOMATIC_INIT_FINI
 #define ACE_HAS_CLOCK_GETTIME
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
@@ -122,8 +121,8 @@
 #define ACE_LACKS_WCSNICMP
 #define ACE_LACKS_WCSDUP
 
-// The default value of FD_SETSIZE is 32, but actually x86 NTO 
-// supports at least 1024 descriptors in fd_set. 
+// The default value of FD_SETSIZE is 32, but actually x86 NTO
+// supports at least 1024 descriptors in fd_set.
 #if defined( FD_SETSIZE )
 #undef FD_SETSIZE
 #endif

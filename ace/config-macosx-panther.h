@@ -83,8 +83,6 @@
 
 #define ACE_HAS_SIN_LEN
 
-#define ACE_HAS_ANSI_CASTS
-
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
 //#define ACE_HAS_SYSV_IPC
 
@@ -175,11 +173,11 @@
 #define TCSETS TIOCSETA
 
 #define ACE_HAS_SEMUN
-#define ACE_HAS_SIGINFO_T 
-#define ACE_LACKS_SIGINFO_H 
-#define ACE_HAS_UCONTEXT_T 
-#define ACE_HAS_GETIFADDRS 
-#define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES 
+#define ACE_HAS_SIGINFO_T
+#define ACE_LACKS_SIGINFO_H
+#define ACE_HAS_UCONTEXT_T
+#define ACE_HAS_GETIFADDRS
+#define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 #define ACE_LACKS_UNNAMED_SEMAPHORE
 
 // dlcompat package (not part of base Darwin) is needed for dlopen().
