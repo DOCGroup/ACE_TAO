@@ -5,9 +5,9 @@
 
 module CosTime
 {
-  // =TITLE
+  // = TITLE
   //  CosTime Module
-
+  //
   // = DESCRIPTION
   // This module has all the interfaces, and associated enum
   // and exception declarations for the time service.
