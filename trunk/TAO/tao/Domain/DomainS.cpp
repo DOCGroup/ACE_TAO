@@ -39,8 +39,8 @@
 #include "tao/PortableServer/ServerInterceptorAdapter.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
-#include "ace/Dynamic_Service.h"
 #include "tao/IFR_Client/IFR_ExtendedC.h"
+#include "ace/Dynamic_Service.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus
@@ -933,18 +933,10 @@ TAO_ServerRequestInfo_CORBA_ConstructionPolicy_make_domain_manager::arguments (A
 
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
 
-  TAO_IFR_Client_Adapter *adapter =
-    ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
-        TAO_ORB_Core::ifr_client_adapter_name ()
-      );
-
   parameter_list->length (2);
   CORBA::ULong len = 0;
 
-  adapter->interfacedef_any_insert (
-      (*parameter_list)[len].argument,
-      this->object_type_
-    );
+    (*parameter_list)[len].argument <<= this->object_type_;
   (*parameter_list)[len].mode = CORBA::PARAM_IN;
   len++;
     (*parameter_list)[len].argument <<= CORBA::Any::from_boolean (this->constr_policy_);

@@ -69,7 +69,10 @@ class TAO_PortableServer_Export TAO_ObjectReferenceTemplate
   virtual CORBA::Object_ptr make_object (
       const char * repository_id,
       const PortableInterceptor::ObjectId & id
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ));
 
   void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
