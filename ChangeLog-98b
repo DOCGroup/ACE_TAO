@@ -1,32 +1,41 @@
+Wed Jun 24 10:23:27 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/make_release: 1) inserted /pkg/gnu/bin at head of
+          PATH, if it exists.  That way, cvs diff will use GNU diff.
+          Thanks to Doug for tripping over that.
+          2) changed grep -E to egrep.
+
 Wed Jun 24 10:02:14 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/ASX/Event_Server/Transceiver/transceiver.cpp
- 	  (parse_args): Fixed a warning about control reaching the end of
- 	  a method.  Thanks to David Levine for reporting this.
+        * examples/ASX/Event_Server/Transceiver/transceiver.cpp
+          (parse_args): Fixed a warning about control reaching the end of
+          a method.  Thanks to David Levine for reporting this.
 
-	* .cvsignore: Added "build" to make CVS happy.  Thanks to 
-	  David for this info.
+        * .cvsignore: Added "build" to make CVS happy.  Thanks to
+          David for this info.
 
         * ace/CLASSIX: Reran "make depend."
 
 Wed Jun 24 13:34:32 EET DST 1998 Wei Chiang <chiang@horizon.ntc.nokia.com>
 
         * tests/CLASSIX/*
-	  Attached "CLASSIX_" to all the file names in this directory
-	  Added Imakefile
+          Attached "CLASSIX_" to all the file names in this directory
+          Added Imakefile
 
-	* ace/CLASSIX/CLASSIX_Select_Reactor.* 
-	  test/CLASSIX/CLD_Connector_Test.cpp
-	  get_current_info() is now renamed to current_info() in compliant with 	  ACE_Reactor_Impl class.
+        * ace/CLASSIX/CLASSIX_Select_Reactor.*
+          test/CLASSIX/CLD_Connector_Test.cpp
+          get_current_info() is now renamed to current_info() in compliant
+          with ACE_Reactor_Impl class.
 
 Wed Jun 24 08:17:25 EET DST 1998 Wei Chiang <chiang@horizon.ntc.nokia.com>
 
-	* Renamed ace/CLASSIX/CLASSIX_Reactor.* to ace/CLASSIX/CLASSIX_Select_R          eactor.* and adjst other files accordingly.
+        * Renamed ace/CLASSIX/CLASSIX_Reactor.* to
+          ace/CLASSIX/CLASSIX_Select_Reactor.* and adujsted other files
+          accordingly.
 
         * ace/CLASSIX/CLASSIX_Reactor.*
           make naming reference consistenet: all the references to
           ACE_CLASSIX_Reactor are now to ACE_CLASSIX_Select_Reactor
- 
 
 Wed Jun 24 02:39:35 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -34,16 +43,16 @@ Wed Jun 24 02:39:35 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Wed Jun 24 00:00:44 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/ASX/Event_Server/Transceiver/transceiver.cpp: Cleaned
- 	  up the Event_Transceiver code a bit.
+        * examples/ASX/Event_Server/Transceiver/transceiver.cpp: Cleaned
+          up the Event_Transceiver code a bit.
 
-	* examples/ASX/Event_Server/Event_Server/event_server.cpp (main):
- 	  Cleaned up the code a bit.
+        * examples/ASX/Event_Server/Event_Server/event_server.cpp (main):
+          Cleaned up the code a bit.
 
 
 Wed Jun 24 06:54:00 EET DST 1998 Wei Chiang <chiang@horizon.ntc.nokia.com>
 
-	* Attached "CLASSIX_" to all the file names in ace/CLASSIX.
+        * Attached "CLASSIX_" to all the file names in ace/CLASSIX.
 
         * Modified include statments in ace/CLASSIX/* to reflect the
           name changes.
@@ -52,36 +61,36 @@ Wed Jun 24 06:54:00 EET DST 1998 Wei Chiang <chiang@horizon.ntc.nokia.com>
 
         * ace/CLASSIX/CLASSIX_Reactor.h:
           ACE_CLASSIX_Reactor_Notify is now derived from ACE_Reactor_Notify
-	  The private data member, select_reactor_, is now an
-          ACE_CLASSIX_Reactor class instead of an ACE_Select_Reactor class. 
+          The private data member, select_reactor_, is now an
+          ACE_CLASSIX_Reactor class instead of an ACE_Select_Reactor class.
 
         * ace/CLASSIX/CLASSIX_Reactor.cpp:
- 	  in open() 
-	  uses ACE_dynamic_cast() to cast <theReactor>
+          in open()
+          uses ACE_dynamic_cast() to cast <theReactor>
           parameter from  ACE_Reactor_Impl to ACE_CLASSIX_Reactor
 
 Tue Jun 23 22:18:42 1998  Douglas C. Schmidt  <schmidt@cumbia.cs.wustl.edu>
 
-	* examples/Mem_Map/file-reverse/file-reverse.cpp: Fixed a minor
- 	  bug where the program would ungraciously core dump if the file
- 	  given on the command-line doesn't exist.  Thanks to William
- 	  S. Lear <rael@dejanews.com> for reporting this.
+        * examples/Mem_Map/file-reverse/file-reverse.cpp: Fixed a minor
+          bug where the program would ungraciously core dump if the file
+          given on the command-line doesn't exist.  Thanks to William
+          S. Lear <rael@dejanews.com> for reporting this.
 
 Tue Jun 23 20:33:30 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Synch.h (ACE_Adaptive_Lock): Added ACE_Export.
+        * ace/Synch.h (ACE_Adaptive_Lock): Added ACE_Export.
 
 Tue Jun 23 18:59:31 1998  Steve Huston  <shuston@riverace.com>
 
-	* ace/Acceptor.cpp (ACE_Strategy_Acceptor<>::resume()): Don't
-	  suspend() the object; resume() it - looked like a cut/paste error.
+        * ace/Acceptor.cpp (ACE_Strategy_Acceptor<>::resume()): Don't
+          suspend() the object; resume() it - looked like a cut/paste error.
 
 Tue Jun 23 16:41:35 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Synch.{h,cpp} (class ACE_Adaptive_Lock): Added the new Lock
-	  class which allows its subclass to determine the actual locking
-	  mechanism it uses at run time.  Notice that all subclasses must
-	  provide their own contructor/destructor implementation.
+        * ace/Synch.{h,cpp} (class ACE_Adaptive_Lock): Added the new Lock
+          class which allows its subclass to determine the actual locking
+          mechanism it uses at run time.  Notice that all subclasses must
+          provide their own contructor/destructor implementation.
 
 Tue Jun 23 06:40:35 1998  David L. Levine  <levine@cs.wustl.edu>
 
