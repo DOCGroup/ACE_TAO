@@ -524,8 +524,9 @@ would load all the options listed within "".
       The transport cache allows only specified number of
       connections-per-QoS property to be added to connection
       cache. Threads not getting the connections will wait for the 
-      connections to be released. This options works only for Muxed
-      connection strategy.
+      connections to be released. This options is more useful for
+      transports using a muxed connection strategy and want control on
+      the number of connections that are created by the active threads.
   </TD>
 </TR>
 <TR>
