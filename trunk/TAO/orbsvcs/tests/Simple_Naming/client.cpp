@@ -289,6 +289,11 @@ MT_Test::svc (void)
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Unexpected exception in MT test");
+      // This debug statement works around a IRIX/MIPSPro 7.3 bug (it
+      // fails with optimize=1 debug=0; but works with any other
+      // settings for those flags).
+      ACE_DEBUG ((LM_DEBUG, "MT_Test(%t) - bind[3] %d\n",
+                  test_name_.length ()));
       return -1;
     }
   ACE_ENDTRY;
@@ -411,8 +416,11 @@ MT_Test::execute (TAO_Naming_Client &root_context)
 
   if (status == -1)
     return -1;
-  else
-    return this->wait ();
+
+  status = this->wait ();
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) MT_Test::execute - result = %d\n", status));
+  return status;
 }
 
 int
