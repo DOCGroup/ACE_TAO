@@ -1,3 +1,7 @@
+Fri Jul 27 12:58:51 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Transport.cpp: Removed a debug statement.
+
 Fri Jul 27 12:25:49 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Transport.cpp: Reverted the change made in this Wed Jul 25
