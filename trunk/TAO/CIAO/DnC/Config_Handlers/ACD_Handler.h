@@ -34,44 +34,40 @@ using xercesc::DOMNodeIterator;
 using xercesc::DOMNode;
 using xercesc::DOMNodeFilter;
 
-namespace Config_Handler
+namespace CIAO
 {
-  class ACD_Handler
+  namespace Config_Handler
   {
-  public:
-
-    ACD_Handler (DOMDocument* doc, unsigned long filter_);
-
-    ACD_Handler (DOMNodeIterator* iter, bool release = false);
-
-    ~ACD_Handler();
-
-    void process_AssemblyConnectionDescription ();
-
-    void process_name (const XMLCh* name);
-
-  public:
-
-    ::Deployment::AssemblyConnectionDescription const&
-    acd ()
+    class ACD_Handler
     {
-      return *acd_;
-    }
+    public:
 
-  private:
+      ACD_Handler (DOMDocument* doc, unsigned long filter_);
 
-    DOMDocumentTraversal* traverse_;
+      ACD_Handler (DOMNodeIterator* iter, bool release = false);
 
-    DOMNode* root_;
+      ~ACD_Handler();
 
-    unsigned long filter_;
+      void process_AssemblyConnectionDescription
+      (::Deployment::AssemblyConnectionDescription &acd);
 
-    DOMNodeIterator* iter_;
+      void process_name (const XMLCh* name, 
+                         ::Deployment::AssemblyConnectionDescription &acd);
 
-    bool release_;
+    private:
 
-    ::Deployment::AssemblyConnectionDescription_var acd_;
-  };
+      DOMDocumentTraversal* traverse_;
+
+      DOMNode* root_;
+
+      unsigned long filter_;
+
+      DOMNodeIterator* iter_;
+
+      bool release_;
+
+    };
+  }
 }
 
 #include /**/ "ace/post.h"

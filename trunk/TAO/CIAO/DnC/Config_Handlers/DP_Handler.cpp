@@ -8,7 +8,7 @@
 #include "ace/Log_Msg.h"
 
 #include "Property_Handler.h"
-#include "CID_Handler.h"
+#include "CompIntfDesc_Handler.h"
 #include "MDD_Handler.h"
 #include "IDD_Handler.h"
 #include "PCD_Handler.h"

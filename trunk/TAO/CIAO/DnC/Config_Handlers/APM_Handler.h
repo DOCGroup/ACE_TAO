@@ -34,46 +34,43 @@ using xercesc::DOMNodeIterator;
 using xercesc::DOMNode;
 using xercesc::DOMNodeFilter;
 
-namespace Config_Handler
+namespace CIAO
 {
-  class APM_Handler
+  namespace Config_Handler
   {
-  public:
-
-    APM_Handler (DOMDocument* doc, unsigned long filter_);
-
-    APM_Handler (DOMNodeIterator* iter, bool release = false);
-
-    ~APM_Handler();
-
-    void process_AssemblyPropertyMapping ();
-
-    void process_name (const XMLCh* name);
-
-    void process_externalName (const XMLCh* name);
-
-  public:
-
-    ::Deployment::AssemblyPropertyMapping const&
-    apm ()
+    class APM_Handler
     {
-      return *apm_;
-    }
+    public:
 
-  private:
+      APM_Handler (DOMDocument* doc, unsigned long filter_);
 
-    DOMDocumentTraversal* traverse_;
+      APM_Handler (DOMNodeIterator* iter, bool release = false);
 
-    DOMNode* root_;
+      ~APM_Handler();
 
-    unsigned long filter_;
+      void process_AssemblyPropertyMapping
+      (::Deployment::AssemblyPropertyMapping &apm);
 
-    DOMNodeIterator* iter_;
+      void process_name (const XMLCh* name,
+      ::Deployment::AssemblyPropertyMapping &apm);
 
-    bool release_;
+      void process_externalName (const XMLCh* name,
+      ::Deployment::AssemblyPropertyMapping &apm);
 
-    ::Deployment::AssemblyPropertyMapping_var apm_;
-  };
+    private:
+
+      DOMDocumentTraversal* traverse_;
+
+      DOMNode* root_;
+
+      unsigned long filter_;
+
+      DOMNodeIterator* iter_;
+
+      bool release_;
+
+    };
+  }
 }
 
 #include /**/ "ace/post.h"
