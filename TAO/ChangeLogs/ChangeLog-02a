@@ -1,3 +1,14 @@
+Thu Nov  9 20:07:55 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Connection_Cache_Manager.cpp:
+	* tao/Cache_Entries.inl: Fixed a problem for multi-threaded case.
+	
+	* tao/IIOP_Connect.cpp:
+	* tao/UIOP_Connect.cpp:
+	* tao/SHMIOP_Connect.cpp: Minor cosmetic changes.
+
+	* tao/default_resource.h: Fixed a compile error.
+
 Thu Nov  9 17:54:21 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:

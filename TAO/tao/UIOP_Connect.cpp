@@ -1,71 +1,71 @@
 // $Id$
 
+#include "tao/UIOP_Connect.h"
 
-#include "tao/IIOP_Connect.h"
-#include "tao/Timeprobe.h"
+#if TAO_HAS_UIOP == 1
+
+#include "tao/UIOP_Transport.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
 #include "tao/CDR.h"
-#include "tao/Messaging_Policy_i.h"
-#include "tao/GIOP_Message_Lite.h"
-#include "tao/GIOP_Message_Acceptors.h"
+#include "tao/Timeprobe.h"
 #include "tao/Server_Strategy_Factory.h"
-#include "tao/IIOP_Transport.h"
-#include "tao/IIOP_Endpoint.h"
-#include "tao/Connection_Cache_Manager.h"
+#include "tao/Messaging_Policy_i.h"
+#include "tao/UIOP_Endpoint.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/IIOP_Connect.i"
+# include "tao/UIOP_Connect.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(tao, IIOP_Connect, "$Id$")
+ACE_RCSID(tao, UIOP_Connect, "$Id$")
 
-
+#include "tao/GIOP_Message_Acceptors.h"
+#include "tao/GIOP_Message_Lite.h"
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
-static const char *TAO_IIOP_Connect_Timeprobe_Description[] =
+static const char *TAO_UIOP_Connect_Timeprobe_Description[] =
 {
-  "IIOP_Server_Connection_Handler::handle_input - start",
-  "IIOP_Server_Connection_Handler::handle_input - end",
+  "UIOP_Server_Connection_Handler::handle_input - start",
+  "UIOP_Server_Connection_Handler::handle_input - end",
 
-  "IIOP_Server_Connection_Handler::handle_locate - start",
-  "IIOP_Server_Connection_Handler::handle_locate - end",
+  "UIOP_Server_Connection_Handler::handle_locate - start",
+  "UIOP_Server_Connection_Handler::handle_locate - end",
 
-  "IIOP_Server_Connection_Handler::receive_request - end",
+  "UIOP_Server_Connection_Handler::receive_request - end",
 
-  "IIOP_Client_Connection_Handler::send_request - start",
-  "IIOP_Client_Connection_Handler::send_request - end"};
+  "UIOP_Client_Connection_Handler::send_request - start",
+  "UIOP_Client_Connection_Handler::send_request - end"
+};
 
 enum
 {
   // Timeprobe description table start key
-  TAO_IIOP_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_START = 300,
-  TAO_IIOP_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_END,
+  TAO_UIOP_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_START = 1400,
+  TAO_UIOP_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_END,
 
-  TAO_IIOP_SERVER_CONNECTION_HANDLER_HANDLE_LOCATE_START,
-  TAO_IIOP_SERVER_CONNECTION_HANDLER_HANDLE_LOCATE_END,
+  TAO_UIOP_SERVER_CONNECTION_HANDLER_HANDLE_LOCATE_START,
+  TAO_UIOP_SERVER_CONNECTION_HANDLER_HANDLE_LOCATE_END,
 
-  TAO_IIOP_SERVER_CONNECTION_HANDLER_RECEIVE_REQUEST_END,
+  TAO_UIOP_SERVER_CONNECTION_HANDLER_RECEIVE_REQUEST_END,
 
-  TAO_IIOP_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_START,
-  TAO_IIOP_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_END
+  TAO_UIOP_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_START,
+  TAO_UIOP_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_END
 };
 
 // Setup Timeprobes
-ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_IIOP_Connect_Timeprobe_Description,
-                                  TAO_IIOP_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_START);
+ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_UIOP_Connect_Timeprobe_Description,
+                                  TAO_UIOP_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_START);
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
-TAO_IIOP_Server_Connection_Handler::TAO_IIOP_Server_Connection_Handler (ACE_Thread_Manager *t)
-  : TAO_IIOP_SVC_HANDLER (t, 0 , 0),
+TAO_UIOP_Server_Connection_Handler::TAO_UIOP_Server_Connection_Handler (ACE_Thread_Manager *t)
+  : TAO_UIOP_SVC_HANDLER (t, 0, 0),
     TAO_Connection_Handler (0),
     transport_ (this, 0),
-    acceptor_factory_ (0),
     refcount_ (1),
-    tcp_properties_ (0)
+    uiop_properties_ (0)
 {
   // This constructor should *never* get called, it is just here to
   // make the compiler happy: the default implementation of the
@@ -75,19 +75,17 @@ TAO_IIOP_Server_Connection_Handler::TAO_IIOP_Server_Connection_Handler (ACE_Thre
   ACE_ASSERT (this->orb_core () != 0);
 }
 
-
-TAO_IIOP_Server_Connection_Handler::TAO_IIOP_Server_Connection_Handler (TAO_ORB_Core *orb_core,
-                                                                        CORBA::Boolean flag,
+TAO_UIOP_Server_Connection_Handler::TAO_UIOP_Server_Connection_Handler (TAO_ORB_Core *orb_core,
+                                                                        CORBA::Boolean lite_flag,
                                                                         void *arg)
-  : TAO_IIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
+  : TAO_UIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
     TAO_Connection_Handler (orb_core),
     transport_ (this, orb_core),
-    acceptor_factory_ (0),
     refcount_ (1),
-    tcp_properties_ (ACE_static_cast
-                     (TAO_IIOP_Properties *, arg))
+    uiop_properties_ (ACE_static_cast
+                      (TAO_UIOP_Properties *, arg))
 {
-  if (flag)
+  if (lite_flag)
     {
       ACE_NEW (this->acceptor_factory_,
                TAO_GIOP_Message_Lite (orb_core));
@@ -99,8 +97,7 @@ TAO_IIOP_Server_Connection_Handler::TAO_IIOP_Server_Connection_Handler (TAO_ORB_
     }
 }
 
-
-TAO_IIOP_Server_Connection_Handler::~TAO_IIOP_Server_Connection_Handler (void)
+TAO_UIOP_Server_Connection_Handler::~TAO_UIOP_Server_Connection_Handler (void)
 {
   delete this->acceptor_factory_;
 
@@ -118,39 +115,23 @@ TAO_IIOP_Server_Connection_Handler::~TAO_IIOP_Server_Connection_Handler (void)
 }
 
 int
-TAO_IIOP_Server_Connection_Handler::open (void*)
+TAO_UIOP_Server_Connection_Handler::open (void*)
 {
   if (this->set_socket_option (this->peer (),
-                               this->tcp_properties_->send_buffer_size,
-                               this->tcp_properties_->recv_buffer_size) == -1)
+                               uiop_properties_->send_buffer_size,
+                               uiop_properties_->recv_buffer_size) == -1)
     return -1;
 
-#if !defined (ACE_LACKS_TCP_NODELAY)
+   // Called by the <Strategy_Acceptor> when the handler is completely
+  // connected.
+  ACE_UNIX_Addr addr;
 
-  if (this->peer ().set_option (ACE_IPPROTO_TCP,
-                                TCP_NODELAY,
-                                (void *) &tcp_properties_->no_delay,
-                                sizeof (int)) == -1)
-    return -1;
-#endif /* ! ACE_LACKS_TCP_NODELAY */
-
-  // Called by the <Strategy_Acceptor> when the handler is
-  // completely connected.
-  ACE_INET_Addr addr;
-
-  char client[MAXHOSTNAMELEN + 16];
-
-  // Get the peername.
   if (this->peer ().get_remote_addr (addr) == -1)
     return -1;
 
-  // Verify that we can resolve the peer hostname.
-  else if (addr.addr_to_string (client, sizeof (client)) == -1)
-    return -1;
+  // Construct an  UIOP_Endpoint object
+  TAO_UIOP_Endpoint endpoint (addr);
 
-  // Construct an  IIOP_Endpoint object
-  TAO_IIOP_Endpoint endpoint (addr,
-                              0);
 
   // Construct a property object
   TAO_Base_Connection_Property prop (&endpoint);
@@ -167,18 +148,16 @@ TAO_IIOP_Server_Connection_Handler::open (void*)
     }
 
   if (TAO_debug_level > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) IIOP connection from client")
-                  ACE_TEXT ("<%s> on %d\n"),
-                  client, this->peer ().get_handle ()));
-    }
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("TAO (%P|%t) UIOP connection from client ")
+                ACE_TEXT ("<%s> on %d\n"),
+                addr.get_path_name (), this->peer ().get_handle ()));
 
   return 0;
 }
 
 int
-TAO_IIOP_Server_Connection_Handler::activate (long flags,
+TAO_UIOP_Server_Connection_Handler::activate (long flags,
                                               int n_threads,
                                               int force_active,
                                               long priority,
@@ -191,13 +170,13 @@ TAO_IIOP_Server_Connection_Handler::activate (long flags,
 {
   if (TAO_orbdebug)
     ACE_DEBUG  ((LM_DEBUG,
-                 ACE_TEXT ("TAO (%P|%t) IIOP_Server_Connection_Handler::activate %d ")
-                 ACE_TEXT ("threads, flags = %d\n"),
+                 "TAO (%P|%t) UIOP_Server_Connection_Handler::activate"
+                 " %d threads, flags = %d\n",
                  n_threads,
                  flags,
                  THR_BOUND));
 
-  return TAO_IIOP_SVC_HANDLER::activate (flags,
+  return TAO_UIOP_SVC_HANDLER::activate (flags,
                                          n_threads,
                                          force_active,
                                          priority,
@@ -210,14 +189,13 @@ TAO_IIOP_Server_Connection_Handler::activate (long flags,
 }
 
 int
-TAO_IIOP_Server_Connection_Handler::handle_close (ACE_HANDLE handle,
+TAO_UIOP_Server_Connection_Handler::handle_close (ACE_HANDLE handle,
                                                   ACE_Reactor_Mask rm)
 {
   if (TAO_orbdebug)
     ACE_DEBUG  ((LM_DEBUG,
-                 ACE_TEXT ("TAO (%P|%t) ")
-                 ACE_TEXT ("IIOP_Server_Connection_Handler::handle_close ")
-                 ACE_TEXT ("(%d, %d)\n"),
+                 "TAO (%P|%t) UIOP_Server_Connection_Handler::handle_close"
+                 " (%d, %d)\n",
                  handle,
                  rm));
 
@@ -232,55 +210,54 @@ TAO_IIOP_Server_Connection_Handler::handle_close (ACE_HANDLE handle,
       // Decrement the reference count
       this->decr_ref_count ();
 
-      //return TAO_IIOP_SVC_HANDLER::handle_close (handle, rm);
+      //return TAO_UIOP_SVC_HANDLER::handle_close (handle, rm);
     }
 
   return 0;
 }
 
 int
-TAO_IIOP_Server_Connection_Handler::svc (void)
+TAO_UIOP_Server_Connection_Handler::svc (void)
 {
   // This method is called when an instance is "activated", i.e.,
   // turned into an active object.  Presumably, activation spawns a
   // thread with this method as the "worker function".
-
   // Call the implementation here
   return this->svc_i ();
 }
 
 int
-TAO_IIOP_Server_Connection_Handler::handle_input (ACE_HANDLE h)
+TAO_UIOP_Server_Connection_Handler::handle_input (ACE_HANDLE h)
 {
   return this->handle_input_i (h);
 }
 
 int
-TAO_IIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
+TAO_UIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
                                                     ACE_Time_Value *max_wait_time)
 {
   this->refcount_++;
 
-  int result = this->acceptor_factory_->handle_input (this->transport (),
-                                                      this->orb_core (),
-                                                      this->transport_.message_state_,
-                                                      max_wait_time);
+  int result =
+    this->acceptor_factory_->handle_input (this->transport (),
+                                           this->orb_core (),
+                                           this->transport_.message_state_,
+                                           max_wait_time);
 
   if (result == -1 && TAO_debug_level > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - %p\n"),
-                  ACE_TEXT ("IIOP_Server_Connection_Handler::handle_input, ")
-                  ACE_TEXT ("handle_input")));
+                  "TAO (%P|%t) - %p\n",
+                  "TAO_UIOP_Server_Connection_Handler::handle_input, "
+                  "handle_input"));
     }
 
   if (result == 0 || result == -1)
     {
       --this->refcount_;
       if (this->refcount_ == 0)
-          this->decr_ref_count ();
-
-      //this->TAO_IIOP_SVC_HANDLER::handle_close ();
+        this->decr_ref_count ();
+        // this->TAO_UIOP_SVC_HANDLER::handle_close ();
       return result;
     }
 
@@ -306,6 +283,7 @@ TAO_IIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
 
   // Reset the message state.
   this->transport_.message_state_.reset (0);
+
   result =
     this->acceptor_factory_->process_client_message (this->transport (),
                                                      this->orb_core (),
@@ -318,46 +296,45 @@ TAO_IIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
   --this->refcount_;
   if (this->refcount_ == 0)
     this->decr_ref_count ();
-  //this->TAO_IIOP_SVC_HANDLER::handle_close ();
+  // this->TAO_UIOP_SVC_HANDLER::handle_close ();
 
   return result;
 }
 
 ACE_HANDLE
-TAO_IIOP_Server_Connection_Handler::fetch_handle (void)
+TAO_UIOP_Server_Connection_Handler::fetch_handle (void)
 {
   return this->get_handle ();
 }
 
+
 // ****************************************************************
 
-TAO_IIOP_Client_Connection_Handler::
-TAO_IIOP_Client_Connection_Handler (ACE_Thread_Manager* t)
-  : TAO_IIOP_SVC_HANDLER (t, 0, 0),
-    TAO_Connection_Handler (0),
+TAO_UIOP_Client_Connection_Handler::
+TAO_UIOP_Client_Connection_Handler (ACE_Thread_Manager * /* t */)
+  : TAO_Connection_Handler (0),
     transport_ (this, 0),
-    tcp_properties_ (0)
+    uiop_properties_ (0)
 {
   // This constructor should *never* get called.  See comments in .h
   ACE_ASSERT (this->orb_core () != 0);
 }
 
-TAO_IIOP_Client_Connection_Handler::
-TAO_IIOP_Client_Connection_Handler (ACE_Thread_Manager *t,
+TAO_UIOP_Client_Connection_Handler::
+TAO_UIOP_Client_Connection_Handler (ACE_Thread_Manager *t,
                                     TAO_ORB_Core* orb_core,
                                     CORBA::Boolean flag,
                                     void *arg)
-  : TAO_IIOP_SVC_HANDLER (t, 0 ,0),
+  : TAO_UIOP_SVC_HANDLER (t, 0, 0),
     TAO_Connection_Handler (orb_core),
     transport_ (this, orb_core),
-    tcp_properties_ (ACE_static_cast
-                     (TAO_IIOP_Properties *, arg))
+    uiop_properties_ (ACE_static_cast
+                      (TAO_UIOP_Properties *, arg))
 {
-  // Set the lite flag in the client transport
   this->transport_.use_lite (flag);
 }
 
-TAO_IIOP_Client_Connection_Handler::~TAO_IIOP_Client_Connection_Handler (void)
+TAO_UIOP_Client_Connection_Handler::~TAO_UIOP_Client_Connection_Handler (void)
 {
   // If the socket has not already been closed.
   if (this->get_handle () != ACE_INVALID_HANDLE)
@@ -365,7 +342,6 @@ TAO_IIOP_Client_Connection_Handler::~TAO_IIOP_Client_Connection_Handler (void)
       // Cannot deal with errors, and therefore they are ignored.
       this->transport_.send_buffered_messages ();
 
-      // Close the socket
       this->peer ().close ();
     }
   else
@@ -373,9 +349,7 @@ TAO_IIOP_Client_Connection_Handler::~TAO_IIOP_Client_Connection_Handler (void)
       // Dequeue messages and delete message blocks.
       this->transport_.dequeue_all ();
     }
-
 }
-
 
 // @@ Should I do something here to enable non-blocking?? (Alex).
 // @@ Alex: I don't know if this is the place to do it, but the way to
@@ -386,50 +360,32 @@ TAO_IIOP_Client_Connection_Handler::~TAO_IIOP_Client_Connection_Handler (void)
 //    needed or not.
 
 int
-TAO_IIOP_Client_Connection_Handler::open (void *)
+TAO_UIOP_Client_Connection_Handler::open (void *)
 {
   if (this->set_socket_option (this->peer (),
-                               tcp_properties_->send_buffer_size,
-                               tcp_properties_->recv_buffer_size)
-      == -1)
+                               uiop_properties_->send_buffer_size,
+                               uiop_properties_->recv_buffer_size) == -1)
     return -1;
-
-#if !defined (ACE_LACKS_TCP_NODELAY)
-
-  if (this->peer ().set_option (ACE_IPPROTO_TCP,
-                                TCP_NODELAY,
-                                (void *) &tcp_properties_->no_delay,
-                                sizeof (int)) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("NODELAY failed\n")),
-                      -1);
-#endif /* ! ACE_LACKS_TCP_NODELAY */
 
   // Called by the <Strategy_Acceptor> when the handler is completely
   // connected.
-  ACE_INET_Addr addr;
+  ACE_UNIX_Addr addr;
 
   if (this->peer ().get_remote_addr (addr) == -1)
     return -1;
 
   if (TAO_debug_level > 0)
-    {
-      char server[MAXHOSTNAMELEN + 16];
-
-      (void) addr.addr_to_string (server, sizeof (server));
-
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) IIOP connection to server ")
-                  ACE_TEXT ("<%s> on %d\n"),
-                  server, this->peer ().get_handle ()));
-    }
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("TAO (%P|%t) UIOP connection to server ")
+                ACE_TEXT ("<%s> on %d\n"),
+                addr.get_path_name (), this->peer ().get_handle ()));
 
   // Register the handler with the Reactor if necessary.
   return this->transport ()->wait_strategy ()->register_handler ();
 }
 
 int
-TAO_IIOP_Client_Connection_Handler::close (u_long)
+TAO_UIOP_Client_Connection_Handler::close (u_long /* flags */)
 {
   this->destroy ();
 
@@ -437,7 +393,7 @@ TAO_IIOP_Client_Connection_Handler::close (u_long)
 }
 
 int
-TAO_IIOP_Client_Connection_Handler::handle_input (ACE_HANDLE)
+TAO_UIOP_Client_Connection_Handler::handle_input (ACE_HANDLE)
 {
   int r = this->transport ()->handle_client_input ();
   if (r == -1)
@@ -446,20 +402,18 @@ TAO_IIOP_Client_Connection_Handler::handle_input (ACE_HANDLE)
 }
 
 int
-TAO_IIOP_Client_Connection_Handler::handle_input_i (ACE_HANDLE,
+TAO_UIOP_Client_Connection_Handler::handle_input_i (ACE_HANDLE,
                                                     ACE_Time_Value *)
 {
   ACE_NOTSUP_RETURN (-1);
 }
 
-
 int
-TAO_IIOP_Client_Connection_Handler::handle_timeout (const ACE_Time_Value &,
+TAO_UIOP_Client_Connection_Handler::handle_timeout (const ACE_Time_Value &,
                                                     const void *)
 {
   // This method is called when buffering timer expires.
   //
-
   ACE_Time_Value *max_wait_time = 0;
 
   TAO_Stub *stub = 0;
@@ -475,7 +429,7 @@ TAO_IIOP_Client_Connection_Handler::handle_timeout (const ACE_Time_Value &,
 }
 
 int
-TAO_IIOP_Client_Connection_Handler::handle_close (ACE_HANDLE handle,
+TAO_UIOP_Client_Connection_Handler::handle_close (ACE_HANDLE handle,
                                                   ACE_Reactor_Mask rm)
 {
   // @@ Alex: we need to figure out if the transport decides to close
@@ -485,17 +439,20 @@ TAO_IIOP_Client_Connection_Handler::handle_close (ACE_HANDLE handle,
   //    in turn take appropiate action (such as sending exceptions to
   //    all waiting reply handlers).
 
-  if (TAO_debug_level > 0)
+  if (TAO_orbdebug)
     ACE_DEBUG  ((LM_DEBUG,
-                 ACE_TEXT ("TAO (%P|%t) IIOP_Client_Connection_Handler::")
-                 ACE_TEXT ("handle_close (%d, %d)\n"), handle, rm));
+                 ACE_TEXT ("TAO (%P|%t) ")
+                 ACE_TEXT ("UIOP_Client_Connection_Handler::handle_close")
+                 ACE_TEXT (" (%d, %d)\n"),
+                 handle,
+                 rm));
 
   // Deregister this handler with the ACE_Reactor.
   return this->handle_cleanup ();
 }
 
 int
-TAO_IIOP_Client_Connection_Handler::handle_close_i (ACE_HANDLE handle,
+TAO_UIOP_Client_Connection_Handler::handle_close_i (ACE_HANDLE handle,
                                                     ACE_Reactor_Mask rm)
 {
   // @@ Alex: we need to figure out if the transport decides to close
@@ -507,17 +464,19 @@ TAO_IIOP_Client_Connection_Handler::handle_close_i (ACE_HANDLE handle,
 
   if (TAO_debug_level > 0)
     ACE_DEBUG  ((LM_DEBUG,
-                 ACE_TEXT ("TAO (%P|%t) IIOP_Client_Connection_Handler::")
-                 ACE_TEXT ("handle_close_i (%d, %d)\n"), handle, rm));
+                 ACE_TEXT ("TAO (%P|%t) ")
+                 ACE_TEXT ("IIOP_Client_Connection_Handler::")
+                 ACE_TEXT ("handle_close_i (%d, %d)\n"),
+                 handle,
+                 rm));
 
-  // Deregister this handler with the ACE_Reactor.
   return this->handle_cleanup ();
 }
 
 int
-TAO_IIOP_Client_Connection_Handler::handle_cleanup (void)
+TAO_UIOP_Client_Connection_Handler::handle_cleanup (void)
 {
-  // Call the implementation.
+    // Call the implementation.
   if (this->reactor ())
     {
       // Make sure there are no timers.
@@ -527,27 +486,26 @@ TAO_IIOP_Client_Connection_Handler::handle_cleanup (void)
   // Now do the decerment of the ref count
   this->decr_ref_count ();
 
-
   return 0;
 }
 
 
 ACE_HANDLE
-TAO_IIOP_Client_Connection_Handler::fetch_handle (void)
+TAO_UIOP_Client_Connection_Handler::fetch_handle (void)
 {
   return this->get_handle ();
 }
-
-
 
 // ****************************************************************
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
+template class ACE_Svc_Handler<ACE_LSOCK_STREAM, ACE_NULL_SYNCH>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+#pragma instantiate ACE_Svc_Handler<ACE_LSOCK_STREAM, ACE_NULL_SYNCH>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#endif /*TAO_HAS_UIOP == 1*/

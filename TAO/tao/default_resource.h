@@ -67,7 +67,7 @@ public:
   // = Type of Reactor
   enum
   {
-    TAO_REACTOR_SELECT_MT, // Use ACE_Token
+    TAO_REACTOR_SELECT_MT // Use ACE_Token
   };
 
   // = Reactor mappings strategy

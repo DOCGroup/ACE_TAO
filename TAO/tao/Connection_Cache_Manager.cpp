@@ -52,6 +52,11 @@ TAO_Connection_Cache_Manager::bind_i (TAO_Cache_ExtId &ext_id,
 {
   // Get the entry too
   HASH_MAP_ENTRY *entry = 0;
+
+  // When it comes for bind we know the handler is going to be busy
+  // and is marked for a partcular thread. So, mark it busy
+  int_id.recycle_state (ACE_RECYCLABLE_BUSY);
+
   int retval = this->cache_map_.bind (ext_id,
                                       int_id,
                                       entry);
@@ -60,10 +65,11 @@ TAO_Connection_Cache_Manager::bind_i (TAO_Cache_ExtId &ext_id,
       // The entry has been added to cache succesfully
       // Add the cache_map_entry to the handler
       int_id.handler () ->cache_map_entry (entry);
+
     }
   else if (retval == 1)
     {
-      if (TAO_debug_level > 5 && retval != 0)
+      if (TAO_debug_level > 4 && retval != 0)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) TAO_Connection_Cache_Manager::bind_i")
@@ -80,11 +86,10 @@ TAO_Connection_Cache_Manager::bind_i (TAO_Cache_ExtId &ext_id,
       if (retval == 0)
         {
           int_id.handler ()->cache_map_entry (entry);
-          int_id.recycle_state (ACE_RECYCLABLE_BUSY);
         }
     }
 
-  if (TAO_debug_level > 6 && retval != 0)
+  if (TAO_debug_level > 5 && retval != 0)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) TAO_Connection_Cache_Manager::bind_i")
@@ -127,6 +132,9 @@ TAO_Connection_Cache_Manager::find_i (const TAO_Cache_ExtId &key,
             {
               // We have a succesful entry
               value = entry->int_id_;
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P |%t) index in find <%d> \n"),
+                          entry->ext_id_.index ()));
               return 0;
             }
         }
@@ -136,7 +144,7 @@ TAO_Connection_Cache_Manager::find_i (const TAO_Cache_ExtId &key,
     }
 
   // If we are here then it is an error
-  if (TAO_debug_level > 5 && retval != 0)
+  if (TAO_debug_level > 4 && retval != 0)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) TAO_Connection_Cache_Manager::find_i")
@@ -192,7 +200,7 @@ TAO_Connection_Cache_Manager::make_idle_i (HASH_MAP_ENTRY *&entry)
 
       entry = new_entry;
     }
-  else if (TAO_debug_level > 5 && retval != 0)
+  else if (TAO_debug_level > 0 && retval != 0)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) TAO_Connection_Cache_Manager::make_idle_i")
@@ -219,7 +227,7 @@ TAO_Connection_Cache_Manager::mark_closed_i (HASH_MAP_ENTRY *&entry)
 
       entry = new_entry;
     }
-    else if (TAO_debug_level > 5 && retval != 0)
+    else if (TAO_debug_level > 0 && retval != 0)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) TAO_Connection_Cache_Manager::make_idle_i")
