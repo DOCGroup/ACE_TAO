@@ -29,11 +29,7 @@
 #include <stdlib.h>
 #include <float.h>
 #include <string.h>
-#include <strings.h>
 #include <math.h>
-#ifndef linux
-#include <ieeefp.h>
-#endif
 #include "hist.h"
 
 hist_t *head_hist, *tail_hist;
@@ -49,7 +45,7 @@ hist_t *histogram(char *name, unsigned int num_bins, double first,
     fprintf(stderr, "unable to allocate memory for histogram : %s", name);
     exit(-1);
   }
-  bzero(hist->hs, sizeof(unsigned int) * (num_bins+2));
+  memset(hist->hs, 0, sizeof(unsigned int) * (num_bins+2));
   hist->name = name;
   hist->num_bins = num_bins;
   hist->first = first;
@@ -297,114 +293,12 @@ void add_histogram(HIST dest, HIST source) {
 }
 
 double histfloor(double x) {
+
+#ifdef WIN32
+  return floor(x);
+#else
   return((long long)x);
+#endif
+
 }
 
-
-hist_t *read_hist(FILE *f) {
-#define MAXLINESIZE 512
-#define MODE_HEADER         0
-#define MODE_NEGINF         1
-#define MODE_BODY           2
-#define MODE_BETWEEN        3
-#define MODE_OUTLIERS_FIRST 4
-#define MODE_OUTLIERS       5
-  char s[MAXLINESIZE];
-  char *name;
-  int conseclf; /* consecutive linefeeds */
-  double mean, variance, first, last, trash, bin, icatch, minimum, maximum;
-  int mode, num_bins, count, preo, posto, i;
-  HIST h;
-
-  conseclf = 0;
-  mode = MODE_HEADER;
-  num_bins = 0;
-  variance = 0;
-  mean = 0;
-  first = 0;
-  last = 0;
-
-  do {
-     if (!fgets(s,MAXLINESIZE,f)) return(NULL);
-  } while (strncmp(s,"\t\t\t\tHistogram ",14));
-
-  name = (char *) malloc(strlen(&s[14]));
-  memcpy(name, &s[14], strlen(&s[14]) - 1);
-
-     /* TODO: get name of histogram */
-
-  do {
-     if (!fgets(s,MAXLINESIZE,f)) break;
-     if (s[0] == '\n') {
-        conseclf++;
-     } else { /* strlen(s) is > 1 */
-        switch (mode) {
-        case MODE_HEADER:
-              /* parse something in header */
-           if (strncmp(s,"mean: ",6)==0) {
-              sscanf(s,"mean: %lf",&mean);
-           } else if(strncmp(s,"variance: ",10)==0) {
-              sscanf(s,"variance: %lf",&variance);
-           } else if(strncmp(s,"minimum: ",9)==0) {
-              sscanf(s,"minimum: %lf",&minimum);
-           } else if(strncmp(s,"maximum: ",9)==0) {
-              sscanf(s,"maximum: %lf",&maximum);
-           } else if(strncmp(s,"num_bins: ",10)==0) {
-              sscanf(s,"num_bins: %d %lf %lf",&num_bins,&first,&last);
-           } else if(strncmp(s,"\t      Low",10)==0) {
-              mode = MODE_NEGINF;
-           }
-           break;
-        case MODE_NEGINF:
-              /*
-              // this line should contain the -infinity and the first bound
-              // we want to get to the outlier count
-              */
-           sscanf(s,"%lf - %lf : %d %lf %lf",&trash,&trash,&preo,&trash,&trash);
-           h = histogram(name,num_bins,first,last);
-           mode = MODE_BODY;
-           break;
-        case MODE_BODY:
-           sscanf(s,"%lf - %lf : %d %lf %lf",&bin,&icatch,&count,&trash,&trash);
-           if(finite(icatch)) {
-              for(i=0;i<count;i++)
-                 record(bin,h);
-           } else {
-              posto = count;
-              mode = MODE_BETWEEN;
-           }
-           break;
-        case MODE_BETWEEN:
-           if (strncmp(s,"outliers:",9)==0) {
-              mode = MODE_OUTLIERS_FIRST;
-           }
-           break;
-        case MODE_OUTLIERS_FIRST:
-           set_outer(10000,h);
-           mode = MODE_OUTLIERS;
-        case MODE_OUTLIERS:
-           if(sscanf(s,"%lf",&icatch))
-              record(icatch,h);
-           break;
-        default:
-           break;
-        } /* end of switch(mode) */
-        conseclf = 0;
-     } /* end of else for strlen<=1 */
-  } while (conseclf < 2);
-
-  if (mode == MODE_BETWEEN) {
-        /* no explicity listed outliers */
-     for(i=0;i<preo;i++)
-        record(minimum,h);
-     for(i=0;i<posto;i++)
-        record(maximum,h);
-  }
-
-  set_min(h, minimum);
-  set_max(h, maximum);
-  set_mean(h, mean);
-  set_variance(h, variance);
-
-  return(h);
-}
