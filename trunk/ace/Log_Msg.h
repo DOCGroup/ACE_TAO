@@ -386,7 +386,7 @@ private:
   static void close (void);
   // For cleanup, at program termination.
 
-  friend void ACE_OS::cleanup_tss ();
+  friend void ACE_OS::cleanup_tss (const u_int);
 };
 
 // #if defined (__ACE_INLINE__)

@@ -4181,9 +4181,10 @@ public:
   static void mutex_lock_cleanup (void *mutex);
   // Handle asynchronous thread cancellation cleanup.
 
-  static void cleanup_tss ();
-  // Call TSS destructors for the current thread.  For private use of
-  // ACE_Object_Manager only.
+  static void cleanup_tss (const u_int main_thread);
+  // Call TSS destructors for the current thread.  If the current
+  // thread is the main thread, then the argument must be 1.
+  // For private use of ACE_Object_Manager and ACE_Thread_Adapter only.
 
 private:
   ACE_OS (void);
