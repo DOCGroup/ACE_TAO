@@ -46,7 +46,21 @@ public class NavigationVisComp extends Panel implements VisComp
     }
     if (navigation_ != null)
     {            
+      navigation_.roll = (navigation_.roll > 180 || navigation_.roll < -180) ? 
+	0 :  navigation_.roll;
+      navigation_.pitch = (navigation_.pitch > 90 || navigation_.pitch < -90) ? 
+	0 :  navigation_.pitch;
       alt_hor_.update_display (navigation_.roll, navigation_.pitch);
+
+      navigation_.pitch = (navigation_.position_latitude > 90 || navigation_.position_latitude < -90) ? 
+	0 :  navigation_.position_latitude;
+      navigation_.pitch = (navigation_.position_longitude > 100 || navigation_.position_longitude < 00) ? 
+	0 :  navigation_.position_longitude;
+      navigation_.pitch = (navigation_.altitude > 90 || navigation_.altitude < -90) ? 
+	0 :  navigation_.altitude;
+      navigation_.pitch = (navigation_.heading > 180 || navigation_.heading < -180) ? 
+	0 :  navigation_.heading;
+
       pos_.update_display (navigation_.position_latitude, 
 			   navigation_.position_longitude, 
 			   navigation_.altitude, 
