@@ -12,7 +12,9 @@ DIRS  =	CosEC \
 	RtEC \
 	Notify \
 	Log \
-	Security
+	Security \
+	ORT \
+	PSS
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
