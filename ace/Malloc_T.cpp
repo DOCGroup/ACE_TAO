@@ -82,6 +82,7 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::dump (void) const
   this->memory_pool_.dump ();
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("cb_ptr_ = %x"), this->cb_ptr_));
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
+  this->cb_ptr_->dump ();
 #if defined (ACE_HAS_MALLOC_STATS)
   if (this->cb_ptr_ != 0)
     this->cb_ptr_->malloc_stats_.dump ();
