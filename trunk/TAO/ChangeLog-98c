@@ -1,3 +1,8 @@
+Tue Dec 01 13:55:24 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/POA/Generic_Servant/client.cpp: Changed to add native
+ 	  exception handling.
+
 Tue Dec  1 12:33:50 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/tests/Simulator/DOVEMIB/Makefile
