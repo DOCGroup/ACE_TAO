@@ -1,17 +1,24 @@
+Mon Jan 19 16:18:15 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/DLL_ORB/Test_Client_Module_Export.h:
+        * tests/DLL_ORB/Test_Server_Module_Export.h:
+          Added check for TAO_AS_STATIC_LIBS for setting the export flags for
+          proper building of static libraries.
+
 Sun Jan 18 15:17:52 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/StringSeqA.h:
         * tao/StringSeqC.h:
-        
+
           Move declaration of Any operators from *A.h file to *C.h file.
           This move will enable the compiler to find the Any operators
           if the (w)string sequence is used as an operation parameter
           (in which case interceptors require the Any insertion operator).
           In the future, subsetting of interceptors will eliminate this
           problem.
-          
+
         * tao/tao.mpc:
-        
+
           Added StringSeqA.cpp to the source file list.
 
 Sun Jan 18 10:11:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
