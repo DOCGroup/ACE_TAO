@@ -1953,7 +1953,8 @@ ACE::bind_port (ACE_HANDLE handle,
 
 int
 ACE::daemonize (const char pathname[],
-                int close_all_handles)
+                int close_all_handles,
+                const char program_name[])
 {
   ACE_TRACE ("ACE::daemonize");
 #if !defined (ACE_LACKS_FORK)
@@ -1969,14 +1970,16 @@ ACE::daemonize (const char pathname[],
 
   ACE_OS::signal (SIGHUP, SIG_IGN);
 
-  pid = ACE_OS::fork ();
+  pid = ACE_OS::fork (program_name);
 
   if (pid != 0)
     ACE_OS::exit (0); // First child terminates.
 
   // Second child continues.
 
-  ACE_OS::chdir (pathname); // change working directory.
+  if (pathname != 0)
+    // change working directory.
+    ACE_OS::chdir (pathname); 
 
   ACE_OS::umask (0); // clear our file mode creation mask.
 
