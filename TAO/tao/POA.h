@@ -295,6 +295,14 @@ protected:
 
   int validate_server_protocol (void);
 
+#if (TAO_HAS_RT_CORBA == 1)
+
+  int validate_client_protocol (RTCORBA::ClientProtocolPolicy_ptr);
+
+  int validate_priority_bands (RTCORBA::PriorityBandedConnectionPolicy_ptr);
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
   PortableServer::ThreadPolicyValue thread_;
 
   PortableServer::LifespanPolicyValue lifespan_;
