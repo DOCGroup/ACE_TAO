@@ -50,6 +50,8 @@ objtable.cpp
 	C++
 optable.cpp
 	C++
+Orb_Core.cpp
+	C++
 orbobj.cpp
 	C++
 params.cpp
@@ -63,6 +65,8 @@ roa.cpp
 server_factory.cpp
 	C++
 svrrqst.cpp
+	C++
+tao_internals.cpp
 	C++
 tc_const.cpp
 	C++
