@@ -1,3 +1,13 @@
+Thu Mar 23 17:02:46 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/AMI/Makefile:
+	* examples/Buffered_AMI/Makefile: Updated dependencies. Thanks to
+	  Jeff for reporting this.
+
+Thu Mar 23 15:38:23 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Accept_State.cpp: Fixed a typo.
+
 Thu Mar 23 14:48:12 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
