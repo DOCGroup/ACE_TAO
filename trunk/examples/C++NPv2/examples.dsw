@@ -3,7 +3,34 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
+Project: "Configurable_Logging_Server"=".\Configurable_Logging_Server.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name SLD
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "Reactor_Logging_Server"=".\Reactor_Logging_Server.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "SLD"=".\SLD.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
