@@ -206,7 +206,7 @@ ACE::hash_pjw (const ACE_USHORT16 *str)
 // that falls under the following license:
 /*-
  * Copyright (c) 1991, 1993
- *	The Regents of the University of California.  All rights reserved.
+ *      The Regents of the University of California.  All rights reserved.
  *
  * This code is derived from software contributed to Berkeley by
  * James W. Williams of NASA Goddard Space Flight Center.
@@ -221,8 +221,8 @@ ACE::hash_pjw (const ACE_USHORT16 *str)
  *    documentation and/or other materials provided with the distribution.
  * 3. All advertising materials mentioning features or use of this software
  *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
+ *      This product includes software developed by the University of
+ *      California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -299,10 +299,10 @@ u_long ACE::crctab[] =
 // Compute a POSIX 1003.2 checksum.  The routine takes an string and
 // computes the CRC for it (it stops on the first '\0' character).
 
-u_long 
+u_long
 ACE::crc32 (const char *string)
 {
-#define	COMPUTE(var, ch) (var) = (var) << 8 ^ crctab[(var) >> 24 ^ (ch)]
+#define COMPUTE(var, ch) (var) = (var) << 8 ^ crctab[(var) >> 24 ^ (ch)]
 
   register u_long crc = 0;
 
@@ -497,7 +497,7 @@ ACE::ldfind (const char filename[],
           // because it is permissible to specify 'the current
           // directory' as an empty entry.  So, we introduce the
           // following special code to cope with this:
-              
+
           // Look at each dynamic lib directory in the search path.
           char *nextholder = 0;
           const char *path_entry = ACE_OS::strsplit_r
@@ -521,7 +521,7 @@ ACE::ldfind (const char filename[],
               // that the loop condition will still work.
               if (path_entry[0] == '\0')
                 path_entry = ".";
-              
+
               // First, try matching the filename *without* adding a
               // prefix.
               ACE_OS::sprintf (pathname, "%s%c%s%s",
@@ -605,12 +605,12 @@ ACE::send (ACE_HANDLE handle, size_t n, ...)
 {
   ACE_TRACE ("ACE_SOCK_IO::send");
 
-  va_list argp;  
+  va_list argp;
   size_t total_tuples = n / 2;
   iovec *iovp;
 #if defined (ACE_HAS_ALLOCA)
   iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
-#else 
+#else
   ACE_NEW_RETURN (iovp, iovec[total_tuples], -1);
 #endif /* !defined (ACE_HAS_ALLOCA) */
 
@@ -641,7 +641,7 @@ ACE::recv (ACE_HANDLE handle, size_t n, ...)
 {
   ACE_TRACE ("ACE_SOCK_IO::recv");
 
-  va_list argp;  
+  va_list argp;
   size_t total_tuples = n / 2;
   iovec *iovp;
 #if defined (ACE_HAS_ALLOCA)
@@ -830,7 +830,7 @@ ACE::read_n (ACE_HANDLE handle,
   return bytes_read;
 }
 
-int 
+int
 ACE::enter_recv_timedwait (ACE_HANDLE handle,
                            const ACE_Time_Value *timeout,
                            int &val)
@@ -870,12 +870,12 @@ ACE::enter_recv_timedwait (ACE_HANDLE handle,
     }
 }
 
-void 
+void
 ACE::leave_recv_timedwait (ACE_HANDLE handle,
                            const ACE_Time_Value *timeout,
                            int val)
 {
-  if (timeout != 0 
+  if (timeout != 0
       && ACE_BIT_DISABLED (val, ACE_NONBLOCK))
     {
       // We need to stash errno here because ACE::clr_flags() may
@@ -889,7 +889,7 @@ ACE::leave_recv_timedwait (ACE_HANDLE handle,
     }
 }
 
-int 
+int
 ACE::enter_send_timedwait (ACE_HANDLE handle,
                            const ACE_Time_Value* timeout,
                            int &val)
@@ -908,7 +908,7 @@ ACE::enter_send_timedwait (ACE_HANDLE handle,
   // of time do we put it in non-blocking mode
 
   switch (ACE_OS::select (int (handle) + 1,
-                          (fd_set *) 0, 
+                          (fd_set *) 0,
                           (fd_set *) handle_set,
                           (fd_set *) 0,
                           timeout))
@@ -932,7 +932,7 @@ ACE::enter_send_timedwait (ACE_HANDLE handle,
     }
 }
 
-void 
+void
 ACE::leave_send_timedwait (ACE_HANDLE handle,
                            const ACE_Time_Value *timeout,
                            int val)
@@ -954,7 +954,7 @@ ACE::leave_send_timedwait (ACE_HANDLE handle,
 ssize_t
 ACE::sendto (ACE_HANDLE handle,
              const char *buf,
-             int len, 
+             int len,
              int flags,
              const struct sockaddr *addr,
              int addrlen,
@@ -975,7 +975,7 @@ ACE::sendto (ACE_HANDLE handle,
   int val;
   if (ACE::enter_send_timedwait (handle, timeout, val) == -1)
     return -1;
-  else 
+  else
     {
       int bytes_written = ACE_OS::sendto (handle, buf, len, flags, addr, addrlen);
       ACE::leave_send_timedwait (handle, timeout, val);
@@ -985,7 +985,7 @@ ACE::sendto (ACE_HANDLE handle,
 }
 
 ssize_t
-ACE::sendmsg (ACE_HANDLE handle, 
+ACE::sendmsg (ACE_HANDLE handle,
               const struct msghdr *msg,
               int flags,
               const ACE_Time_Value *timeout)
@@ -994,7 +994,7 @@ ACE::sendmsg (ACE_HANDLE handle,
 #if defined (ACE_HAS_SENDMSG_TIMEDWAIT)
   if (timeout == 0)
      return ACE_OS::sendmsg (handle, msg, flags);
-  else 
+  else
     {
       ACE_Time_Value copy = *timeout;
       copy += ACE_OS::gettimeofday ();
@@ -1005,7 +1005,7 @@ ACE::sendmsg (ACE_HANDLE handle,
   int val;
   if (ACE::enter_send_timedwait (handle, timeout, val) == -1)
     return -1;
-  else 
+  else
     {
       int bytes_written = ACE_OS::sendmsg (handle, msg, flags);
       ACE::leave_send_timedwait (handle, timeout, val);
@@ -1034,7 +1034,7 @@ ACE::readv (ACE_HANDLE handle,
   int val;
   if (ACE::enter_recv_timedwait (handle, timeout, val) == -1)
      return -1;
-  else 
+  else
     {
       ssize_t bytes_read = ACE_OS::readv (handle, iov, iovcnt);
       ACE::leave_recv_timedwait (handle, timeout, val);
@@ -1241,7 +1241,7 @@ ACE::handle_timed_complete (ACE_HANDLE h,
                           rd_handles,
                           wr_handles,
                           0,
-			  timeout);
+                          timeout);
 #endif /* ACE_WIN32 */
 
   // If we failed to connect within the time period allocated by the
@@ -1425,9 +1425,6 @@ ACE::bind_port (ACE_HANDLE handle)
 // Make the current process a UNIX daemon.  This is based on Stevens
 // code from APUE.
 
-// Make the current process a UNIX daemon.  This is based on Stevens
-// code from APUE.
-
 int
 ACE::daemonize (const char pathname[],
                 int close_all_handles)
@@ -1465,6 +1462,8 @@ ACE::daemonize (const char pathname[],
   return 0;
 #else
   ACE_UNUSED_ARG (pathname);
+  ACE_UNUSED_ARG (close_all_handles);
+
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_WIN32 */
 }
@@ -1497,7 +1496,7 @@ ACE::set_handle_limit (int new_limit)
   ACE_TRACE ("ACE::set_handle_limit");
 #if defined (RLIMIT_NOFILE)
   struct rlimit rl;
-  
+
   if (ACE_OS::getrlimit (RLIMIT_NOFILE, &rl) != -1)
     {
       int max_handles = rl.rlim_cur;
@@ -1611,7 +1610,7 @@ ACE::send (ACE_HANDLE handle,
 #if defined (ACE_HAS_SEND_TIMEDWAIT)
   if (timeout == 0)
     return ACE::send (handle, buf, n, flags);
-  else 
+  else
     {
       ACE_Time_Value copy = *timeout;
       copy += ACE_OS::gettimeofday();
@@ -1623,7 +1622,7 @@ ACE::send (ACE_HANDLE handle,
 
   if (ACE::enter_send_timedwait (handle, timeout, val) == -1)
     return -1;
-  else 
+  else
     {
       ssize_t bytes_written = ACE::send (handle, buf, n, flags);
       ACE::leave_send_timedwait (handle, timeout, val);
@@ -1654,7 +1653,7 @@ ACE::send (ACE_HANDLE handle,
 
   if (ACE::enter_send_timedwait (handle, timeout, val) == -1)
     return -1;
-  else 
+  else
     {
       ssize_t bytes_written = ACE::send (handle, buf, n);
       ACE::leave_send_timedwait (handle, timeout, val);
@@ -1676,7 +1675,7 @@ ACE::send_n (ACE_HANDLE handle,
   // Actual number of bytes written in each <send> attempt.
   ssize_t i = 0;
 
-  for (bytes_written = 0; 
+  for (bytes_written = 0;
        bytes_written < n;
        bytes_written += i)
     {
@@ -1692,7 +1691,7 @@ ACE::send_n (ACE_HANDLE handle,
 ssize_t
 ACE::recvfrom (ACE_HANDLE handle,
                char *buf,
-               int len, 
+               int len,
                int flags,
                struct sockaddr *addr,
                int *addrlen,
@@ -1713,7 +1712,7 @@ ACE::recvfrom (ACE_HANDLE handle,
   int val;
   if (ACE::enter_recv_timedwait (handle, timeout, val) == -1)
      return -1;
-  else 
+  else
     {
       int bytes_read = ACE_OS::recvfrom (handle, buf, len, flags, addr, addrlen);
       ACE::leave_recv_timedwait (handle, timeout, val);
@@ -1732,7 +1731,7 @@ ACE::recvmsg (ACE_HANDLE handle,
 #if defined (ACE_HAS_RECVMSG_TIMEDWAIT)
   if (timeout == 0)
      return ACE_OS::recvmsg (handle, msg, flags);
-  else 
+  else
     {
       ACE_Time_Value copy = *timeout;
       copy += ACE_OS::gettimeofday ();
@@ -1743,7 +1742,7 @@ ACE::recvmsg (ACE_HANDLE handle,
   int val;
   if (ACE::enter_recv_timedwait (handle, timeout, val) == -1)
     return -1;
-  else 
+  else
     {
       int bytes_read = ACE_OS::recvmsg (handle, msg, flags);
       ACE::leave_recv_timedwait (handle, timeout, val);
@@ -1762,7 +1761,7 @@ ACE::recv (ACE_HANDLE handle,
 #if defined (ACE_HAS_READ_TIMEDWAIT)
   if (timeout == 0)
      return ACE::recv (handle, buf, n);
-  else 
+  else
     {
       ACE_Time_Value copy = *timeout;
       copy += ACE_OS::gettimeofday ();
@@ -1783,7 +1782,7 @@ ACE::recv (ACE_HANDLE handle,
 #endif /* ACE_HAS_READ_TIMEDWAIT */
 }
 
-ssize_t 
+ssize_t
 ACE::recv (ACE_HANDLE handle,
            void *buf,
            size_t len,
