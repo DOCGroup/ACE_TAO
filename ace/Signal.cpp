@@ -474,6 +474,10 @@ ACE_Sig_Adapter::ACE_Sig_Adapter (ACE_Sig_Handler_Ex sig_func,
   // ACE_TRACE ("ACE_Sig_Adapter::ACE_Sig_Adapter");
 }
 
+ACE_Sig_Adapter::~ACE_Sig_Adapter ()
+{
+}
+
 int
 ACE_Sig_Adapter::sigkey (void)
 {

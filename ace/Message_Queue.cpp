@@ -12,6 +12,19 @@
 
 ACE_RCSID(ace, Message_Queue, "$Id$")
 
+
+ACE_Message_Queue_Base::~ACE_Message_Queue_Base (void)
+{
+}
+
+int
+ACE_Message_Queue_Base::state (void)
+{
+  ACE_TRACE ("ACE_Message_Queue_Base::state");
+
+  return this->state_;
+}
+
 #if defined (VXWORKS)
 
 ////////////////////////////////
