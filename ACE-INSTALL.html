@@ -322,11 +322,9 @@ supported by the DOC group, Riverace, or OCI. <P>
       Intel, Alpha, and PowerPC platforms.  If you use a RedHat 5.x
       distribution, it's best to use RedHat 5.1 or later.  ACE works
       without any modifications on RedHat 5.1 and later, and on
-      Debian 2.1 on both Intel and Alpha.  Make <A
-      HREF="#unix">symbolic links</A> to the
-      <code>include/makeinclude/platform_linux.GNU</code>
-      and <code>ace/config-linux.h</code> as your
-      platform_macros.GNU and config.h files, respectively.  The same
+      Debian 2.1 on both Intel and Alpha.  Use the
+      <code>platform_linux.GNU</code> and <code>ace/config-linux.h</code>
+      in your platform_macros.GNU and config.h files, respectively.  The same
       files can be used on PowerPC, with LinuxPPC
       1999 (R5), with glibc 2.1.1.<p>
 
@@ -749,9 +747,7 @@ supported by the DOC group, Riverace, or OCI. <P>
       binaries, see the tests directory. The tests_pharlap_msvc.lnk
       file is a LinkLoc commands file that the ACE tests are built
       with. It is likely that local sites may need to adjust this file
-      for their target environment.  <p> If you have any fixes or
-      suggestions for improving this port, please contact <a
-      href="mailto:shuston@riverace.com">Steve Huston</a>. <P>
+      for their target environment.<P>
 
 <li><strong>Mac OS X (10.2.x)</strong><p>
 
@@ -859,74 +855,6 @@ If you use the GNU GCC g++ compiler please note the following:
   <LI>Make sure that the linker invoked by gcc produces code
       that initializes static objects.  Please see gcc's
       documentation for using <CODE>collect2</CODE>.<P>
-
-  <LI>By default, gcc (thru version 2.7.2, at least) uses
-      implicit template instantiation.  Besides wasting space, this
-      breaks the use of ACE_Singleton: instead of one singleton
-      instance, there could be one instance per object (.o) file that
-      "sees" the template.  Therefore, we have overridden this default
-      in ACE by enabling the -fno-implicit-templates option to CCFLAGS
-      in all include/makeinclude/platform_*.GNU files that set CXX to
-      g++.<P>
-
-  <LI>The disadvantage of this approach is that you must
-      add template specializations for all templates that your
-      application uses to your own code.  (The ACE libraries are
-      self-contained: you don't need to add the templates that they
-      use internally.)  Examples of template specializations occur in
-      quite a few ACE .cpp files; see the end of <A
-      HREF="apps/Gateway/Gateway/Connection_Handler.cpp">apps/Gateway/Gateway/Connection_Handler.cpp</A>
-      for one example.  An easy way to figure out what template
-      instantiations are need is to try to build your executable and
-      pipe the output through c++filt.  The linker will report the
-      missing instantiations as undefined symbols.  Iteration may be
-      necessary, if the template instantiations themselves reference
-      other templates.<P>
-
-  <LI>Alternatively, you could use the <A NAME="repo">-frepo</A>
-option available with
-      recent egcs versions (2.90 and later, I think) instead of
-      -fno-implicit-templates.  (Patches for earlier g++ versions
-      might be available from
-      <a href="ftp://ftp.cygnus.com/pub/g++/">Cygnus</a>.)
-      ACE readily supports this option for
-      application code: to enable it just add <code>repo=1</code> to
-      your <code>make</code> invocation, or to your
-      <code>include/makeinclude/platform_macros.GNU</code>.<p>
-
-      The size of the ACE library is typically reduced by about
-      25 percent with repo=1, compared to the default with
-      -fno-implicit-templates.  This savings results from not
-      instantiating unused classes, and from not instantiating
-      unused member functions of those template classes which are
-      instantiated.<p>
-
-      However, repo=1 requires care if your application creates libraries,
-      in order to avoid multiple instantiations.  We avoid the problem
-      in ACE (and TAO) by including all of the ACE object files into
-      other ACE (and TAO) libraries.  Please see the g++ FAQ and gcc
-      manual for more information on the -frepo option.<p>
-
-      Furthermore, it appears that g++ may have problems instantiating
-      all templates properly with -frepo.  We have worked around these
-      problems (by using explicit instantiations even with ACE_HAS_GNU_REPO)
-      with egcs 1.1.2.  A quick try with g++ 2.95 showed more problems,
-      so we don't support repo=1 with that g++ version, yet.<p>
-
-  <li>The implementation of templates for g++ version 2.8
-      eliminates the restriction against static data members in
-      template classes.<p>
-
-  <li>A final alternative is to
-      remove the <code>-fno-implicit-templates</code> option from the
-      CCFLAGS macro in your include/makeinclude/platform_macros.GNU,
-      and thereby use the default g++ implicit template
-      instantiation.<P>
-
-  <LI>Thanks to Thilo Kielmann &lt<A
-      HREF="mailto:kielmann@informatik.uni-siegen.de">kielmann@informatik.uni-siegen.de</A>&gt;
-      for reporting the problem with ACE_Singleton on g++, and for
-      helping to find and implement these solutions.<P>
 
   <LI>On VxWorks only, g++ (thru version 2.9.6, distributed
       with Tornado 2.2/VxWorks 5.5), for x86 targets,
@@ -1221,12 +1149,6 @@ per-platform configuration method:</P>
       % setenv ACE_ROOT $cwd
       </code></pre>
 
-  <LI>Edit the $ACE_ROOT/ace/OS.h file to update things like default
-      hostname and port numbers you'd like the programs in the
-      $ACE_ROOT/{apps,tests} directories to use by default.  Note,
-      however that you can normally skip this step because the
-      defaults are typically fine for most systems. <P>
-
   <LI>Create a configuration file, <code>$ACE_ROOT/ace/config.h</code>,
       that includes the appropriate platform/compiler-specific
       header configurations from the ACE source directory. For example:
@@ -1311,8 +1233,8 @@ and delete all *.obj, *.dll, *.lib, *.ilk, *.pdb, *.idb, *.ncb, *.opt,
 and *.exp files in order to start over from scratch (the Clean command
 in MSVC may not do this).  <P>
 
-ACE contains project files for Microsoft Visual C++ 5.0 or later
-(*.dsw) and IBM's VisualAge C++ compiler (*.icc).  There are also
+ACE contains project files for Microsoft Visual C++ 5.0 and 6.0 (*.dsp/.dsw)
+and Visual C++ .NET 2003 (*.vcproj/.sln).  There are also
 Makefile.bor files to compile ACE, the ACE one-button tests, and TAO
 with Borland C++ Builder. <P>
 
@@ -1480,7 +1402,7 @@ with these compilers but probably not without a bit of effort. <P>
       <BR>
       <CODE>#include "ace/config-win32.h"</CODE><BR>
       <BR>
-  <LI>Now load up the project file for ACE (ACE_ROOT\ace\ace.dsw). <BR>
+  <LI>Now load the workspace file for ACE (ACE_ROOT\ace\ace.dsw). <BR>
       <BR>
   <LI>Each project will contain several different configurations.  These
       are a mixture of Debug/Release, MFC/Non-MFC, and Static/Dynamic
@@ -1492,7 +1414,7 @@ with these compilers but probably not without a bit of effort. <P>
       different configurations, or use <code>ace/config.h</code> to
       tweak with the default settings on NT.<BR>
       <STRONG>Note:</STRONG> If you
-      use the dynamic libraries, make sure you include ACE_ROOT\bin
+      use the dynamic libraries, make sure you include ACE_ROOT\lib
       in your PATH whenever you run programs that uses ACE.  Otherwise
       you may experience problems finding ace.dll or aced.dll.<BR>
       <BR>
@@ -2721,17 +2643,8 @@ well, try 'make realclean'.<p>
 <UL>
   <LI><A
       HREF="docs/ACE-porting.html">Porting ACE and TAO to a New OS Platform</A>
-  <LI><A HREF="http://www.cs.wustl.edu/~othman/aceconf">Using GNU's
-      Autoconf with ACE</A>
-    <UL>
-      <LI>This support is currently a work-in-progress, and is
-          hence disabled.  It will be completed and re-enabled as
-          soon as someone funds the work to do so.
-    </UL>
-  </LI>
   <LI><A HREF="#Non-static Object Manager">Non-static ACE_Object_Manager</A>
   <LI><A HREF="#cloning">Cloning the Source Tree</A>
-  <LI><A HREF="#corba">Building CORBA Versions of ACE</A>
   <LI><A HREF="#mvs">Additional Build Tips for MVS</A>
   <LI><A HREF="#flags">Makefile Flags</A>
   <LI><A HREF="http://www.cs.wustl.edu/~levine/CVS.html">Version Control</A>
@@ -2746,7 +2659,9 @@ as a static object, can be instantiated on the stack of the main
 program thread, or can be explicitly instantiated and destroyed by the
 application with <code>ACE::init ()</code> and <code>ACE::fini
 ()</code>.  The comments in the <a href="ace/Object_Manager.h">header
-file, <code>ace/Object_Manager.h</code></a> provide more detail.<P>
+file, <code>ace/Object_Manager.h</code></a>, as well as Section 1.6.3 in
+<a href="http://www.riverace.com/docs">The ACE Programmer's Guide</a>
+provide more detail.<P>
 
 <strong><blink><font color="#ff0000">NOTE:</font></blink></strong>
 Special requirements are imposed on applications if the
