@@ -178,17 +178,12 @@ Defaulting Behavior
    staticname is assigned the sharedname value (the same applies if
    staticname is specified and sharedname is not)
 
-6) If a target name is not listed (exename, sharedname or staticname)
-
-   it is assumed that the target is a library and the name chosen matches
-   the name of the current directory
-
-7) If pch_header is not specified and a header file matches *_pch.h
+6) If pch_header is not specified and a header file matches *_pch.h
 
    it is assumed to be the precompiled header file (the same applies to
    pch_source)
 
-8) If -relative is not used to set ACE_ROOT and the ACE_ROOT environment
+7) If -relative is not used to set ACE_ROOT and the ACE_ROOT environment
    variable is set
 
    it will be used to set the relative value for ACE_ROOT.  If -relative is

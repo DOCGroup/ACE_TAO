@@ -708,8 +708,7 @@ sub add_idl_generated {
 
 
 sub generate_default_target_names {
-  my($self)   = shift;
-  my($base)   = shift;
+  my($self) = shift;
 
   if (!$self->exe_target()) {
     my($sharedname) = $self->get_assignment('sharedname');
@@ -722,12 +721,6 @@ sub generate_default_target_names {
         !defined $self->get_assignment('sharedname')) {
       $self->process_assignment('sharedname', $staticname);
       $sharedname = $staticname;
-    }
-    if (!defined $sharedname) {
-      $self->process_assignment('sharedname', $base);
-    }
-    if (!defined $staticname) {
-      $self->process_assignment('staticname', $base);
     }
   }
 }
@@ -1129,15 +1122,14 @@ sub add_source_corresponding_component_files {
 
 
 sub generate_defaults {
-  my($self)   = shift;
-  my($base)   = $self->base_directory();
+  my($self) = shift;
 
   ## Generate default project name
   if (!defined $self->get_assignment('project_name')) {
-    $self->process_assignment('project_name', $base);
+    $self->process_assignment('project_name', $self->base_directory());
   }
 
-  $self->generate_default_target_names($base);
+  $self->generate_default_target_names();
 
   my(@files) = $self->generate_default_file_list();
   $self->generate_default_pch_filenames(\@files);
