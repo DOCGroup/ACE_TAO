@@ -307,8 +307,18 @@ be_visitor_union_branch_cdr_op_ci::visit_interface (be_interface *node)
     case TAO_CodeGen::TAO_CDR_OUTPUT:
       if (node->is_defined ())
         {
-          *os << "result = _tao_union."
-              << f->local_name () << " ()->marshal (strm);";
+          if (f->is_abstract ())
+            {
+              *os << "(strm << _tao_union." 
+                  << f->local_name () << " ());";
+            }
+          else
+            {
+              *os << "CORBA::Object::marshal (" << be_idt << be_idt_nl
+                  << "_tao_union." << f->local_name () << " ()," << be_nl
+                  << "strm" << be_uidt_nl
+                  << ");" << be_uidt;
+            }
         }
       else
         {
