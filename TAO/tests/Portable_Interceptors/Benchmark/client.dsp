@@ -93,6 +93,14 @@ SOURCE=.\client.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Client_ORBInitializer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Interceptor_Type.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\interceptors.cpp
 # End Source File
 # Begin Source File
@@ -107,6 +115,14 @@ SOURCE=.\testC.cpp
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
+# Begin Source File
+
+SOURCE=.\Client_ORBInitializer.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Interceptor_Type.h
+# End Source File
 # Begin Source File
 
 SOURCE=.\interceptors.h
