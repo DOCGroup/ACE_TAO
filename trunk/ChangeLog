@@ -1,3 +1,8 @@
+Fri Jan 30 19:33:49 UTC 2004  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* include/makeinclude/platform_linux.GNU: Allow user to override
+	  OCFLAGS in platform_macros.GNU file.
+
 Fri Jan 30 10:30:26 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/bor.mpd:
