@@ -1,3 +1,8 @@
+Sun Jun  6 17:08:57 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/GIOP.cpp:
+	  More @@ comments addressed.
+
 Sun Jun  6 16:14:50 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/performance-tests/Pluggable/PP_Test_Client.h:
