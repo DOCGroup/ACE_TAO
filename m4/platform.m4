@@ -9,7 +9,7 @@ dnl       to define.
 dnl 
 dnl -------------------------------------------------------------------------
 
-dnl  Copyright (C) 1998, 1999  Ossama Othman
+dnl  Copyright (C) 1998, 1999, 2000  Ossama Othman
 dnl
 dnl  All Rights Reserved
 dnl
@@ -145,6 +145,28 @@ dnl FIXME: "FSU" isn't a platform!  We need to move this somewhere.
     AC_DEFINE(ACE_HAS_BIG_FD_SET) dnl FIXME: We need a test for this!
     AC_DEFINE(ACE_UINT64_FORMAT_SPECIFIER, "%Lu")
     AC_DEFINE(ACE_TIMER_SKEW, (1000 * 10))
+
+    AC_EGREP_CPP([PRE_2_2_0_LINUX_KERNEL],
+      [
+#if !defined (ACE_DEFAULT_SELECT_REACTOR_SIZE)
+#  include <linux/version.h>
+
+/* Macro used to compute LINUX_VERSION_CODE in <linux/version.h>
+   header.  Older kernels didn't define this macro. */
+#  ifndef KERNEL_VERSION
+#    define KERNEL_VERSION(a,b,c) (((a) << 16) + ((b) << 8) + (c))
+#  endif
+
+/* Pre-2.2.x kernels limited the maximum number of file descriptors
+   for non-root processes to 256. */
+#  if LINUX_VERSION_CODE < KERNEL_VERSION (2,2,0)
+     PRE_2_2_0_LINUX_KERNEL
+#  endif  /* LINUX_VERSION_CODE < KERNEL_VERSION (2,2,0) */
+#endif /* ACE_DEFAULT_SELECT_REACTOR_SIZE */
+      ],
+      [
+       AC_DEFINE(ACE_DEFAULT_SELECT_REACTOR_SIZE, 256)
+      ],)
     ;;
   *lynxos*)
     AC_DEFINE(_POSIX_THREADS_CALLS)
