@@ -9,12 +9,18 @@ ifndef PACE_ROOT
   PACE_ROOT = $(ACE_ROOT)/pace
 endif # ! PACE_ROOT
 
+ifndef static_libs_only
+  ifndef shared_libs_only
+    static_libs_only = 1
+  endif # shared_libs_only
+endif # static_libs_only
+
 ifeq ($(PACE_SYSNAME),)
   PACE_SYSNAME = $(shell uname -s)
 endif # ! PACE_SYSNAME
 
 VPATH:=common:arpa:config:netinet:sys
-INCLDIRS = -I$(PACE_ROOT)
+CFLAGS += -Dsunos
 
 # List of platforms and uname -s values
 # =====================================
@@ -37,7 +43,8 @@ INCLDIRS = -I$(PACE_ROOT)
 #ifeq ($(PACE_SYSNAME),SunOS || $(PACE_SYSNAME),Linux)
 ifeq ($(PACE_SYSNAME),SunOS)
 VPATH :=.:posix:$(VPATH)
-INCLDIRS += -I$(PACE_ROOT)/pace/posix
+#INCLDIRS += -I$(PACE_ROOT)/pace/posix
+INCLDIRS += -I/usr/include -I$(PACE_ROOT)/pace/posix
 endif
 
 #----------------------------------------------------------------------------
@@ -59,10 +66,13 @@ PSRC=$(addsuffix .c,$(BIN))
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 ACELIB =
+INCLDIRS += -I$(PACE_ROOT)
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
+
+VLDLIBS := -L$(PACE_ROOT)/pace -lPACE
 
 ifndef SOEXT
   SOEXT=so

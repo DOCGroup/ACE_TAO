@@ -98,7 +98,7 @@ extern "C" {
                                   size_t number_of_items,
                                   FILE * stream);
 
-  PACE_INLINE int pace_trylockfile (FILE * file);
+  PACE_INLINE int pace_ftrylockfile (FILE * file);
   /* Requires PACE_HAS_REENTRANT. */
 
   PACE_INLINE void pace_funlockfile (FILE * file);

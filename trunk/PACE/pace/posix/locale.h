@@ -16,8 +16,6 @@
 #ifndef PACE_LOCALE_H
 #define PACE_LOCALE_H
 
-#include "pace/defines.h"
-
 #if defined (PACE_HAS_CPLUSPLUS)
 extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
