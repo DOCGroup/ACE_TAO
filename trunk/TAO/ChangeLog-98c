@@ -1,3 +1,9 @@
+Mon Aug 24 14:36:52 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Environment.cpp: 
+	  When the ORB is getting destroyed the Environment created with
+	  it should *not* pop itself from the environment stack.
+
 Mon Aug 24 14:00:43 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
 	* orbsvcs/tests/Property/run_test.pl: New file. Script to execute
