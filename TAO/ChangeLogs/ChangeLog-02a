@@ -1,3 +1,13 @@
+Mon Apr 29 11:28:59 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
+
+	* orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
+	* orbsvcs/IFR_Service/IFR_Service.cpp:
+	* orbsvcs/IFR_Service/Makefile.IFR_Service:
+	* orbsvcs/orbsvcs/IFRService/Makefile.IFRService:
+	  Fixed the compilation errors for unused environment 
+	  variables.
+	  Also updated the dependencies.
+
 Mon Apr 29 06:41:53 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Strategies/DIOP_Connector.cpp: Fixed a typo. This was

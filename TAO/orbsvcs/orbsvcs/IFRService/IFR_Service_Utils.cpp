@@ -126,7 +126,7 @@ TAO_IFR_Server::init_with_orb (int argc,
 int
 TAO_IFR_Server::fini (void)
 {
-  ACE_TRY
+  ACE_TRY_NEW_ENV
     {
       this->root_poa_->destroy (1,
                                 1
@@ -140,7 +140,6 @@ TAO_IFR_Server::fini (void)
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
   return 0;
 }
 
