@@ -202,6 +202,36 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Arg_Traits_T.h \
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/Any.h \
+  $(TAO_ROOT)/tao/Var_Size_Argument_T.h \
+  $(TAO_ROOT)/tao/Var_Size_Argument_T.inl \
+  $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp \
+  $(TAO_ROOT)/tao/Any.i \
+  $(TAO_ROOT)/tao/Exception.h \
+  $(TAO_ROOT)/tao/Exception.i \
+  $(TAO_ROOT)/tao/IOP_CodecC.i \
+  $(TAO_ROOT)/tao/IOPC.i \
+  $(TAO_ROOT)/tao/TimeBaseC.h \
+  $(TAO_ROOT)/tao/TimeBaseC.i \
+  $(TAO_ROOT)/tao/PolicyC.h \
+  $(TAO_ROOT)/tao/CurrentC.h \
+  $(TAO_ROOT)/tao/CurrentC.i \
+  $(TAO_ROOT)/tao/PolicyC.i \
+  $(TAO_ROOT)/tao/Encodable.h \
+  $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i \
+  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
+  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
+  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.h \
+  $(TAO_ROOT)/tao/PI_ForwardC.h \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
+  $(TAO_ROOT)/tao/PI_ForwardC.i \
+  $(TAO_ROOT)/tao/DynamicC.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Impl.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
+  $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
@@ -269,37 +299,7 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
-  $(TAO_ROOT)/tao/Exception.h \
-  $(TAO_ROOT)/tao/Exception.i \
-  $(TAO_ROOT)/tao/tckind.h \
   $(TAO_ROOT)/tao/Typecode.i \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.h \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.inl \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp \
-  $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/IOP_CodecC.i \
-  $(TAO_ROOT)/tao/IOPC.i \
-  $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  $(TAO_ROOT)/tao/PolicyC.h \
-  $(TAO_ROOT)/tao/CurrentC.h \
-  $(TAO_ROOT)/tao/CurrentC.i \
-  $(TAO_ROOT)/tao/PolicyC.i \
-  $(TAO_ROOT)/tao/Encodable.h \
-  $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i \
-  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
-  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
-  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
-  $(TAO_ROOT)/tao/PortableInterceptorC.h \
-  $(TAO_ROOT)/tao/PI_ForwardC.h \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
-  $(TAO_ROOT)/tao/PI_ForwardC.i \
-  $(TAO_ROOT)/tao/DynamicC.h \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
-  $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i \
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
@@ -467,6 +467,36 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Arg_Traits_T.h \
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/Any.h \
+  $(TAO_ROOT)/tao/Var_Size_Argument_T.h \
+  $(TAO_ROOT)/tao/Var_Size_Argument_T.inl \
+  $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp \
+  $(TAO_ROOT)/tao/Any.i \
+  $(TAO_ROOT)/tao/Exception.h \
+  $(TAO_ROOT)/tao/Exception.i \
+  $(TAO_ROOT)/tao/IOP_CodecC.i \
+  $(TAO_ROOT)/tao/IOPC.i \
+  $(TAO_ROOT)/tao/TimeBaseC.h \
+  $(TAO_ROOT)/tao/TimeBaseC.i \
+  $(TAO_ROOT)/tao/PolicyC.h \
+  $(TAO_ROOT)/tao/CurrentC.h \
+  $(TAO_ROOT)/tao/CurrentC.i \
+  $(TAO_ROOT)/tao/PolicyC.i \
+  $(TAO_ROOT)/tao/Encodable.h \
+  $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i \
+  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
+  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
+  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.h \
+  $(TAO_ROOT)/tao/PI_ForwardC.h \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
+  $(TAO_ROOT)/tao/PI_ForwardC.i \
+  $(TAO_ROOT)/tao/DynamicC.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Impl.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
+  $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
@@ -534,37 +564,7 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
-  $(TAO_ROOT)/tao/Exception.h \
-  $(TAO_ROOT)/tao/Exception.i \
-  $(TAO_ROOT)/tao/tckind.h \
   $(TAO_ROOT)/tao/Typecode.i \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.h \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.inl \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp \
-  $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/IOP_CodecC.i \
-  $(TAO_ROOT)/tao/IOPC.i \
-  $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  $(TAO_ROOT)/tao/PolicyC.h \
-  $(TAO_ROOT)/tao/CurrentC.h \
-  $(TAO_ROOT)/tao/CurrentC.i \
-  $(TAO_ROOT)/tao/PolicyC.i \
-  $(TAO_ROOT)/tao/Encodable.h \
-  $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i \
-  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
-  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
-  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
-  $(TAO_ROOT)/tao/PortableInterceptorC.h \
-  $(TAO_ROOT)/tao/PI_ForwardC.h \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
-  $(TAO_ROOT)/tao/PI_ForwardC.i \
-  $(TAO_ROOT)/tao/DynamicC.h \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
-  $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i \
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
@@ -902,8 +902,12 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/DynamicC.h \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
   $(TAO_ROOT)/tao/Any.h \
+  $(TAO_ROOT)/tao/Var_Size_Argument_T.h \
+  $(TAO_ROOT)/tao/Argument.h \
+  $(TAO_ROOT)/tao/Var_Size_Argument_T.inl \
+  $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp \
+  $(TAO_ROOT)/tao/Arg_Traits_T.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/Message_Block.i \
@@ -911,6 +915,12 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/Message_Block_T.i \
   $(ACE_ROOT)/ace/Message_Block_T.cpp \
   $(ACE_ROOT)/ace/CDR_Stream.i \
+  $(TAO_ROOT)/tao/Any.i \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Impl.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
+  $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
@@ -923,19 +933,9 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Exception.h \
   $(TAO_ROOT)/tao/Exception.i \
   $(TAO_ROOT)/tao/Object_Argument_T.h \
-  $(TAO_ROOT)/tao/Argument.h \
   $(TAO_ROOT)/tao/Object_Argument_T.inl \
   $(TAO_ROOT)/tao/Object_Argument_T.cpp \
-  $(TAO_ROOT)/tao/Arg_Traits_T.h \
-  $(TAO_ROOT)/tao/tckind.h \
   $(TAO_ROOT)/tao/Typecode.i \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.h \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.inl \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp \
-  $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
-  $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i \
   $(TAO_ROOT)/tao/CDR.h \
   $(TAO_ROOT)/tao/CDR.i \
@@ -1124,8 +1124,12 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/DynamicC.h \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
   $(TAO_ROOT)/tao/Any.h \
+  $(TAO_ROOT)/tao/Var_Size_Argument_T.h \
+  $(TAO_ROOT)/tao/Argument.h \
+  $(TAO_ROOT)/tao/Var_Size_Argument_T.inl \
+  $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp \
+  $(TAO_ROOT)/tao/Arg_Traits_T.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/OS_String.h \
@@ -1143,6 +1147,12 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/Malloc_Base.h \
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
+  $(TAO_ROOT)/tao/Any.i \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Impl.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
+  $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
@@ -1213,19 +1223,9 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Exception.h \
   $(TAO_ROOT)/tao/Exception.i \
   $(TAO_ROOT)/tao/Object_Argument_T.h \
-  $(TAO_ROOT)/tao/Argument.h \
   $(TAO_ROOT)/tao/Object_Argument_T.inl \
   $(TAO_ROOT)/tao/Object_Argument_T.cpp \
-  $(TAO_ROOT)/tao/Arg_Traits_T.h \
-  $(TAO_ROOT)/tao/tckind.h \
   $(TAO_ROOT)/tao/Typecode.i \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.h \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.inl \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp \
-  $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
-  $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i \
   $(TAO_ROOT)/tao/CDR.h \
   $(TAO_ROOT)/tao/CDR.i \
@@ -1555,6 +1555,36 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Arg_Traits_T.h \
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/Any.h \
+  $(TAO_ROOT)/tao/Var_Size_Argument_T.h \
+  $(TAO_ROOT)/tao/Var_Size_Argument_T.inl \
+  $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp \
+  $(TAO_ROOT)/tao/Any.i \
+  $(TAO_ROOT)/tao/Exception.h \
+  $(TAO_ROOT)/tao/Exception.i \
+  $(TAO_ROOT)/tao/IOP_CodecC.i \
+  $(TAO_ROOT)/tao/IOPC.i \
+  $(TAO_ROOT)/tao/TimeBaseC.h \
+  $(TAO_ROOT)/tao/TimeBaseC.i \
+  $(TAO_ROOT)/tao/PolicyC.h \
+  $(TAO_ROOT)/tao/CurrentC.h \
+  $(TAO_ROOT)/tao/CurrentC.i \
+  $(TAO_ROOT)/tao/PolicyC.i \
+  $(TAO_ROOT)/tao/Encodable.h \
+  $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i \
+  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
+  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
+  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.h \
+  $(TAO_ROOT)/tao/PI_ForwardC.h \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
+  $(TAO_ROOT)/tao/PI_ForwardC.i \
+  $(TAO_ROOT)/tao/DynamicC.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Impl.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
+  $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
@@ -1622,37 +1652,7 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
-  $(TAO_ROOT)/tao/Exception.h \
-  $(TAO_ROOT)/tao/Exception.i \
-  $(TAO_ROOT)/tao/tckind.h \
   $(TAO_ROOT)/tao/Typecode.i \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.h \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.inl \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp \
-  $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/IOP_CodecC.i \
-  $(TAO_ROOT)/tao/IOPC.i \
-  $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  $(TAO_ROOT)/tao/PolicyC.h \
-  $(TAO_ROOT)/tao/CurrentC.h \
-  $(TAO_ROOT)/tao/CurrentC.i \
-  $(TAO_ROOT)/tao/PolicyC.i \
-  $(TAO_ROOT)/tao/Encodable.h \
-  $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i \
-  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
-  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
-  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
-  $(TAO_ROOT)/tao/PortableInterceptorC.h \
-  $(TAO_ROOT)/tao/PI_ForwardC.h \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
-  $(TAO_ROOT)/tao/PI_ForwardC.i \
-  $(TAO_ROOT)/tao/DynamicC.h \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
-  $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i \
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
@@ -1885,6 +1885,36 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Arg_Traits_T.h \
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/Any.h \
+  $(TAO_ROOT)/tao/Var_Size_Argument_T.h \
+  $(TAO_ROOT)/tao/Var_Size_Argument_T.inl \
+  $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp \
+  $(TAO_ROOT)/tao/Any.i \
+  $(TAO_ROOT)/tao/Exception.h \
+  $(TAO_ROOT)/tao/Exception.i \
+  $(TAO_ROOT)/tao/IOP_CodecC.i \
+  $(TAO_ROOT)/tao/IOPC.i \
+  $(TAO_ROOT)/tao/TimeBaseC.h \
+  $(TAO_ROOT)/tao/TimeBaseC.i \
+  $(TAO_ROOT)/tao/PolicyC.h \
+  $(TAO_ROOT)/tao/CurrentC.h \
+  $(TAO_ROOT)/tao/CurrentC.i \
+  $(TAO_ROOT)/tao/PolicyC.i \
+  $(TAO_ROOT)/tao/Encodable.h \
+  $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i \
+  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
+  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
+  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.h \
+  $(TAO_ROOT)/tao/PI_ForwardC.h \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
+  $(TAO_ROOT)/tao/PI_ForwardC.i \
+  $(TAO_ROOT)/tao/DynamicC.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Impl.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
+  $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
@@ -1952,37 +1982,7 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
-  $(TAO_ROOT)/tao/Exception.h \
-  $(TAO_ROOT)/tao/Exception.i \
-  $(TAO_ROOT)/tao/tckind.h \
   $(TAO_ROOT)/tao/Typecode.i \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.h \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.inl \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp \
-  $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/IOP_CodecC.i \
-  $(TAO_ROOT)/tao/IOPC.i \
-  $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  $(TAO_ROOT)/tao/PolicyC.h \
-  $(TAO_ROOT)/tao/CurrentC.h \
-  $(TAO_ROOT)/tao/CurrentC.i \
-  $(TAO_ROOT)/tao/PolicyC.i \
-  $(TAO_ROOT)/tao/Encodable.h \
-  $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i \
-  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
-  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
-  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
-  $(TAO_ROOT)/tao/PortableInterceptorC.h \
-  $(TAO_ROOT)/tao/PI_ForwardC.h \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
-  $(TAO_ROOT)/tao/PI_ForwardC.i \
-  $(TAO_ROOT)/tao/DynamicC.h \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
-  $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i \
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
@@ -2252,8 +2252,12 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/DynamicC.h \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
   $(TAO_ROOT)/tao/Any.h \
+  $(TAO_ROOT)/tao/Var_Size_Argument_T.h \
+  $(TAO_ROOT)/tao/Argument.h \
+  $(TAO_ROOT)/tao/Var_Size_Argument_T.inl \
+  $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp \
+  $(TAO_ROOT)/tao/Arg_Traits_T.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/OS_String.h \
@@ -2271,6 +2275,12 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/Malloc_Base.h \
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
+  $(TAO_ROOT)/tao/Any.i \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Impl.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
+  $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
@@ -2341,19 +2351,9 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Exception.h \
   $(TAO_ROOT)/tao/Exception.i \
   $(TAO_ROOT)/tao/Object_Argument_T.h \
-  $(TAO_ROOT)/tao/Argument.h \
   $(TAO_ROOT)/tao/Object_Argument_T.inl \
   $(TAO_ROOT)/tao/Object_Argument_T.cpp \
-  $(TAO_ROOT)/tao/Arg_Traits_T.h \
-  $(TAO_ROOT)/tao/tckind.h \
   $(TAO_ROOT)/tao/Typecode.i \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.h \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.inl \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp \
-  $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
-  $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i \
   $(TAO_ROOT)/tao/CDR.h \
   $(TAO_ROOT)/tao/CDR.i \
@@ -2644,6 +2644,36 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Arg_Traits_T.h \
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/Any.h \
+  $(TAO_ROOT)/tao/Var_Size_Argument_T.h \
+  $(TAO_ROOT)/tao/Var_Size_Argument_T.inl \
+  $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp \
+  $(TAO_ROOT)/tao/Any.i \
+  $(TAO_ROOT)/tao/Exception.h \
+  $(TAO_ROOT)/tao/Exception.i \
+  $(TAO_ROOT)/tao/IOP_CodecC.i \
+  $(TAO_ROOT)/tao/IOPC.i \
+  $(TAO_ROOT)/tao/TimeBaseC.h \
+  $(TAO_ROOT)/tao/TimeBaseC.i \
+  $(TAO_ROOT)/tao/PolicyC.h \
+  $(TAO_ROOT)/tao/CurrentC.h \
+  $(TAO_ROOT)/tao/CurrentC.i \
+  $(TAO_ROOT)/tao/PolicyC.i \
+  $(TAO_ROOT)/tao/Encodable.h \
+  $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i \
+  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
+  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
+  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.h \
+  $(TAO_ROOT)/tao/PI_ForwardC.h \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
+  $(TAO_ROOT)/tao/PI_ForwardC.i \
+  $(TAO_ROOT)/tao/DynamicC.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Impl.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
+  $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
@@ -2711,37 +2741,7 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
-  $(TAO_ROOT)/tao/Exception.h \
-  $(TAO_ROOT)/tao/Exception.i \
-  $(TAO_ROOT)/tao/tckind.h \
   $(TAO_ROOT)/tao/Typecode.i \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.h \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.inl \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp \
-  $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/IOP_CodecC.i \
-  $(TAO_ROOT)/tao/IOPC.i \
-  $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  $(TAO_ROOT)/tao/PolicyC.h \
-  $(TAO_ROOT)/tao/CurrentC.h \
-  $(TAO_ROOT)/tao/CurrentC.i \
-  $(TAO_ROOT)/tao/PolicyC.i \
-  $(TAO_ROOT)/tao/Encodable.h \
-  $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i \
-  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
-  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
-  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
-  $(TAO_ROOT)/tao/PortableInterceptorC.h \
-  $(TAO_ROOT)/tao/PI_ForwardC.h \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
-  $(TAO_ROOT)/tao/PI_ForwardC.i \
-  $(TAO_ROOT)/tao/DynamicC.h \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
-  $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i \
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \

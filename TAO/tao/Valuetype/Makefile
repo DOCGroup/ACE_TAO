@@ -343,8 +343,16 @@ endif
   $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/DynamicC.h \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
   $(TAO_ROOT)/tao/Any.h \
+  $(TAO_ROOT)/tao/Var_Size_Argument_T.h \
+  $(TAO_ROOT)/tao/Var_Size_Argument_T.inl \
+  $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp \
+  $(TAO_ROOT)/tao/Any.i \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Impl.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
+  $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
@@ -354,15 +362,7 @@ endif
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
-  $(TAO_ROOT)/tao/tckind.h \
   $(TAO_ROOT)/tao/Typecode.i \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.h \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.inl \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp \
-  $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
-  $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i \
   $(TAO_ROOT)/tao/DynamicC.i \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
@@ -730,18 +730,18 @@ endif
   $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/DynamicC.h \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
   $(TAO_ROOT)/tao/Any.h \
-  $(TAO_ROOT)/tao/Typecode.h \
-  $(TAO_ROOT)/tao/tckind.h \
-  $(TAO_ROOT)/tao/Typecode.i \
   $(TAO_ROOT)/tao/Var_Size_Argument_T.h \
   $(TAO_ROOT)/tao/Var_Size_Argument_T.inl \
   $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp \
   $(TAO_ROOT)/tao/Any.i \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Impl.h \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
+  $(TAO_ROOT)/tao/Typecode.h \
+  $(TAO_ROOT)/tao/Typecode.i \
   $(TAO_ROOT)/tao/Marshal.i \
   $(TAO_ROOT)/tao/DynamicC.i \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
@@ -1091,8 +1091,16 @@ endif
   $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/DynamicC.h \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
   $(TAO_ROOT)/tao/Any.h \
+  $(TAO_ROOT)/tao/Var_Size_Argument_T.h \
+  $(TAO_ROOT)/tao/Var_Size_Argument_T.inl \
+  $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp \
+  $(TAO_ROOT)/tao/Any.i \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Impl.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
+  $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
@@ -1102,15 +1110,7 @@ endif
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
-  $(TAO_ROOT)/tao/tckind.h \
   $(TAO_ROOT)/tao/Typecode.i \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.h \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.inl \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp \
-  $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
-  $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i \
   $(TAO_ROOT)/tao/DynamicC.i \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
@@ -1588,6 +1588,11 @@ endif
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(TAO_ROOT)/tao/Any.h \
+  $(TAO_ROOT)/tao/Var_Size_Argument_T.h \
+  $(TAO_ROOT)/tao/Argument.h \
+  $(TAO_ROOT)/tao/Var_Size_Argument_T.inl \
+  $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp \
+  $(TAO_ROOT)/tao/Arg_Traits_T.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/OS_String.h \
@@ -1605,13 +1610,13 @@ endif
   $(ACE_ROOT)/ace/Malloc_Base.h \
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
-  $(TAO_ROOT)/tao/Typecode.h \
-  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
-  $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/ACE.h \
-  $(ACE_ROOT)/ace/Flag_Manip.h \
-  $(ACE_ROOT)/ace/Flag_Manip.i \
+  $(TAO_ROOT)/tao/Any.i \
+  ValueBase.h valuetype_export.h Value_VarOut_T.h Value_VarOut_T.inl \
+  Value_VarOut_T.cpp \
+  $(ACE_ROOT)/ace/Synch_T.h \
+  $(ACE_ROOT)/ace/Synch.h \
+  $(ACE_ROOT)/ace/Auto_Event.h \
+  $(ACE_ROOT)/ace/Event.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/os_include/os_dirent.h \
@@ -1644,57 +1649,12 @@ endif
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Handle_Ops.h \
-  $(ACE_ROOT)/ace/Handle_Ops.i \
-  $(ACE_ROOT)/ace/Lib_Find.h \
-  $(ACE_ROOT)/ace/Lib_Find.i \
-  $(ACE_ROOT)/ace/Init_ACE.h \
-  $(ACE_ROOT)/ace/Init_ACE.i \
-  $(ACE_ROOT)/ace/Sock_Connect.h \
-  $(ACE_ROOT)/ace/Sock_Connect.i \
-  $(ACE_ROOT)/ace/ACE.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
-  $(ACE_ROOT)/ace/Functor_T.i \
-  $(ACE_ROOT)/ace/Functor_T.cpp \
-  $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
-  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
-  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
-  $(ACE_ROOT)/ace/Guard_T.h \
-  $(ACE_ROOT)/ace/Guard_T.inl \
-  $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
-  $(ACE_ROOT)/ace/Unbounded_Queue.h \
-  $(ACE_ROOT)/ace/Node.h \
-  $(ACE_ROOT)/ace/Node.cpp \
-  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
-  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.inl \
-  $(TAO_ROOT)/tao/Exception.h \
-  $(TAO_ROOT)/tao/Exception.i \
-  $(TAO_ROOT)/tao/Object_Argument_T.h \
-  $(TAO_ROOT)/tao/Argument.h \
-  $(TAO_ROOT)/tao/Object_Argument_T.inl \
-  $(TAO_ROOT)/tao/Object_Argument_T.cpp \
-  $(TAO_ROOT)/tao/Arg_Traits_T.h \
-  $(TAO_ROOT)/tao/tckind.h \
-  $(TAO_ROOT)/tao/Typecode.i \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.h \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.inl \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp \
-  $(TAO_ROOT)/tao/Any.i \
-  ValueBase.h valuetype_export.h Value_VarOut_T.h Value_VarOut_T.inl \
-  Value_VarOut_T.cpp \
-  $(ACE_ROOT)/ace/Synch_T.h \
-  $(ACE_ROOT)/ace/Synch.h \
-  $(ACE_ROOT)/ace/Auto_Event.h \
-  $(ACE_ROOT)/ace/Event.h \
   $(ACE_ROOT)/ace/Event.inl \
   $(ACE_ROOT)/ace/Auto_Event.inl \
   $(ACE_ROOT)/ace/Barrier.h \
   $(ACE_ROOT)/ace/Condition_Thread_Mutex.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Condition_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Barrier.inl \
   $(ACE_ROOT)/ace/Condition_Recursive_Thread_Mutex.h \
@@ -1726,20 +1686,30 @@ endif
   $(ACE_ROOT)/ace/Reverse_Lock_T.h \
   $(ACE_ROOT)/ace/Reverse_Lock_T.inl \
   $(ACE_ROOT)/ace/Reverse_Lock_T.cpp \
+  $(ACE_ROOT)/ace/Guard_T.h \
+  $(ACE_ROOT)/ace/Guard_T.inl \
+  $(ACE_ROOT)/ace/Guard_T.cpp \
   $(ACE_ROOT)/ace/TSS_T.h \
   $(ACE_ROOT)/ace/TSS_T.inl \
   $(ACE_ROOT)/ace/TSS_T.cpp \
   $(ACE_ROOT)/ace/Thread.h \
   $(ACE_ROOT)/ace/Thread_Adapter.h \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
   $(ACE_ROOT)/ace/Thread_Adapter.inl \
   $(ACE_ROOT)/ace/Thread.i \
+  $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/Condition_T.h \
   $(ACE_ROOT)/ace/Condition_T.inl \
   $(ACE_ROOT)/ace/Condition_T.cpp \
   $(ACE_ROOT)/ace/Synch_T.i \
   $(ACE_ROOT)/ace/Synch_T.cpp \
+  $(TAO_ROOT)/tao/Object_Argument_T.h \
+  $(TAO_ROOT)/tao/Object_Argument_T.inl \
+  $(TAO_ROOT)/tao/Object_Argument_T.cpp \
   ValueBase.inl AbstractBase.h AbstractBase.inl Sequence_T.h \
   Sequence_T.inl Sequence_T.cpp ValueFactory.h ValueFactory.inl
 

@@ -1,3 +1,34 @@
+Wed Sep 10 18:12:58 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Makefile.tao:
+	* tao/BiDir_GIOP/Makefile:
+	* tao/Domain/Makefile:
+	* tao/DynamicAny/Makefile:
+	* tao/DynamicInterface/Makefile:
+	* tao/IFR_Client/Makefile:
+	* tao/IORInterceptor/Makefile:
+	* tao/IORManipulation/Makefile:
+	* tao/IORTable/Makefile:
+	* tao/Messaging/Makefile:
+	* tao/ObjRefTemplate/Makefile:
+	* tao/PortableServer/Makefile:
+	* tao/RTCORBA/Makefile:
+	* tao/RTPortableServer/Makefile:
+	* tao/RTScheduling/Makefile:
+	* tao/Strategies/Makefile:
+	* tao/TypeCodeFactory/Makefile:
+	* tao/Valuetype/Makefile: Updated dependencies.
+	
+	* tao/DynamicAny/DynAny_i.cpp:
+	* tao/DynamicAny/DynArray_i.cpp:
+	* tao/DynamicAny/DynCommon.cpp:
+	* tao/DynamicAny/DynEnum_i.cpp:
+	* tao/DynamicAny/DynSequence_i.cpp:
+	* tao/DynamicAny/DynStruct_i.cpp:
+	* tao/DynamicAny/DynUnion_i.cpp:
+	* tao/DynamicAny/DynamicAnyC.h:  Adde missing includes to get them
+	  compiling with g++.
+
 Tue Sep  9 20:00:12 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_interface/direct_proxy_impl_sh.cpp:

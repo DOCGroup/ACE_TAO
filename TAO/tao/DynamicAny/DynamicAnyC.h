@@ -39,6 +39,7 @@
 #error "You should not include DynamicAnyC.h directly, use DynamicAny.h"
 #endif /* !TAO_DYNAMICANY_SAFE_INCLUDE */
 
+#include "tao/Typecode.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

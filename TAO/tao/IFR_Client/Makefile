@@ -206,10 +206,12 @@ endif
   $(TAO_ROOT)/tao/Object_Argument_T.inl \
   $(TAO_ROOT)/tao/Object_Argument_T.cpp \
   $(TAO_ROOT)/tao/Arg_Traits_T.h \
-  $(TAO_ROOT)/tao/tckind.h \
   $(TAO_ROOT)/tao/Typecode.i \
   $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/Any.h \
+  $(TAO_ROOT)/tao/Var_Size_Argument_T.h \
+  $(TAO_ROOT)/tao/Var_Size_Argument_T.inl \
+  $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/Message_Block.i \
@@ -217,9 +219,6 @@ endif
   $(ACE_ROOT)/ace/Message_Block_T.i \
   $(ACE_ROOT)/ace/Message_Block_T.cpp \
   $(ACE_ROOT)/ace/CDR_Stream.i \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.h \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.inl \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp \
   $(TAO_ROOT)/tao/Any.i \
   $(TAO_ROOT)/tao/NVList.i \
   $(TAO_ROOT)/tao/Object.h \
@@ -285,6 +284,7 @@ endif
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/DynamicC.h \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Impl.h \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
@@ -569,10 +569,12 @@ endif
   $(TAO_ROOT)/tao/Object_Argument_T.inl \
   $(TAO_ROOT)/tao/Object_Argument_T.cpp \
   $(TAO_ROOT)/tao/Arg_Traits_T.h \
-  $(TAO_ROOT)/tao/tckind.h \
   $(TAO_ROOT)/tao/Typecode.i \
   $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/Any.h \
+  $(TAO_ROOT)/tao/Var_Size_Argument_T.h \
+  $(TAO_ROOT)/tao/Var_Size_Argument_T.inl \
+  $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/Message_Block.i \
@@ -580,9 +582,6 @@ endif
   $(ACE_ROOT)/ace/Message_Block_T.i \
   $(ACE_ROOT)/ace/Message_Block_T.cpp \
   $(ACE_ROOT)/ace/CDR_Stream.i \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.h \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.inl \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp \
   $(TAO_ROOT)/tao/Any.i \
   $(TAO_ROOT)/tao/NVList.i \
   $(TAO_ROOT)/tao/Object.h \
@@ -648,6 +647,7 @@ endif
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/DynamicC.h \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Impl.h \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
@@ -932,10 +932,12 @@ endif
   $(TAO_ROOT)/tao/Object_Argument_T.inl \
   $(TAO_ROOT)/tao/Object_Argument_T.cpp \
   $(TAO_ROOT)/tao/Arg_Traits_T.h \
-  $(TAO_ROOT)/tao/tckind.h \
   $(TAO_ROOT)/tao/Typecode.i \
   $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/Any.h \
+  $(TAO_ROOT)/tao/Var_Size_Argument_T.h \
+  $(TAO_ROOT)/tao/Var_Size_Argument_T.inl \
+  $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/Message_Block.i \
@@ -943,9 +945,6 @@ endif
   $(ACE_ROOT)/ace/Message_Block_T.i \
   $(ACE_ROOT)/ace/Message_Block_T.cpp \
   $(ACE_ROOT)/ace/CDR_Stream.i \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.h \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.inl \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp \
   $(TAO_ROOT)/tao/Any.i \
   $(TAO_ROOT)/tao/NVList.i \
   $(TAO_ROOT)/tao/Object.h \
@@ -1011,6 +1010,7 @@ endif
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/DynamicC.h \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Impl.h \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
@@ -1296,10 +1296,12 @@ endif
   $(TAO_ROOT)/tao/Object_Argument_T.inl \
   $(TAO_ROOT)/tao/Object_Argument_T.cpp \
   $(TAO_ROOT)/tao/Arg_Traits_T.h \
-  $(TAO_ROOT)/tao/tckind.h \
   $(TAO_ROOT)/tao/Typecode.i \
   $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/Any.h \
+  $(TAO_ROOT)/tao/Var_Size_Argument_T.h \
+  $(TAO_ROOT)/tao/Var_Size_Argument_T.inl \
+  $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/Message_Block.i \
@@ -1307,9 +1309,6 @@ endif
   $(ACE_ROOT)/ace/Message_Block_T.i \
   $(ACE_ROOT)/ace/Message_Block_T.cpp \
   $(ACE_ROOT)/ace/CDR_Stream.i \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.h \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.inl \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp \
   $(TAO_ROOT)/tao/Any.i \
   $(TAO_ROOT)/tao/NVList.i \
   $(TAO_ROOT)/tao/Object.h \
@@ -1375,6 +1374,7 @@ endif
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/DynamicC.h \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Impl.h \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
@@ -1708,10 +1708,12 @@ endif
   $(TAO_ROOT)/tao/Object_Argument_T.inl \
   $(TAO_ROOT)/tao/Object_Argument_T.cpp \
   $(TAO_ROOT)/tao/Arg_Traits_T.h \
-  $(TAO_ROOT)/tao/tckind.h \
   $(TAO_ROOT)/tao/Typecode.i \
   $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/Any.h \
+  $(TAO_ROOT)/tao/Var_Size_Argument_T.h \
+  $(TAO_ROOT)/tao/Var_Size_Argument_T.inl \
+  $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/Message_Block.i \
@@ -1719,9 +1721,6 @@ endif
   $(ACE_ROOT)/ace/Message_Block_T.i \
   $(ACE_ROOT)/ace/Message_Block_T.cpp \
   $(ACE_ROOT)/ace/CDR_Stream.i \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.h \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.inl \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp \
   $(TAO_ROOT)/tao/Any.i \
   $(TAO_ROOT)/tao/NVList.i \
   $(TAO_ROOT)/tao/Object.h \
@@ -1787,6 +1786,7 @@ endif
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/DynamicC.h \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Impl.h \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
@@ -1872,38 +1872,8 @@ endif
   $(ACE_ROOT)/ace/Lock_Adapter_T.inl \
   $(ACE_ROOT)/ace/Lock_Adapter_T.cpp \
   $(TAO_ROOT)/tao/ORB_Core.i \
-  $(TAO_ROOT)/tao/Invocation.h \
-  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
-  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
-  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
-  $(TAO_ROOT)/tao/LF_Invocation_Event.h \
-  $(TAO_ROOT)/tao/LF_Event.h \
-  $(TAO_ROOT)/tao/LF_Event.inl \
-  $(TAO_ROOT)/tao/LF_Invocation_Event.inl \
-  $(TAO_ROOT)/tao/GIOP_Message_Version.h \
-  $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
-  $(TAO_ROOT)/tao/operation_details.h \
-  $(TAO_ROOT)/tao/Service_Context.h \
-  $(TAO_ROOT)/tao/Service_Context.inl \
-  $(TAO_ROOT)/tao/target_specification.h \
-  $(TAO_ROOT)/tao/target_specification.i \
-  $(TAO_ROOT)/tao/operation_details.i \
-  $(TAO_ROOT)/tao/Transport.h \
-  $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
-  $(TAO_ROOT)/tao/Cache_Entries.h \
-  $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
-  $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
-  $(ACE_ROOT)/ace/Recyclable.h \
-  $(ACE_ROOT)/ace/Recyclable.inl \
-  $(TAO_ROOT)/tao/Cache_Entries.inl \
-  $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
-  $(TAO_ROOT)/tao/Transport_Timer.h \
-  $(TAO_ROOT)/tao/Incoming_Message_Queue.h \
-  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
-  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
-  $(TAO_ROOT)/tao/Incoming_Message_Queue.inl \
-  $(TAO_ROOT)/tao/Transport.inl \
-  $(TAO_ROOT)/tao/Invocation.i \
+  $(TAO_ROOT)/tao/Invocation_Adapter.h \
+  $(TAO_ROOT)/tao/Invocation_Utils.h \
   $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/MProfile.h \
   $(TAO_ROOT)/tao/MProfile.i \

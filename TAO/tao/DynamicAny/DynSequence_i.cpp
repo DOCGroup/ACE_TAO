@@ -4,6 +4,7 @@
 #include "DynSequence_i.h"
 #include "DynAnyFactory.h"
 #include "tao/Marshal.h"
+#include "tao/Any_Unknown_IDL_Type.h"
 
 ACE_RCSID (DynamicAny,
            DynSequence_i,
@@ -135,7 +136,7 @@ TAO_DynSequence_i::_narrow (CORBA::Object_ptr _tao_objref
     {
       return 0;
     }
-  
+
   return dynamic_cast<TAO_DynSequence_i *> (_tao_objref);
 }
 

@@ -4,6 +4,7 @@
 #include "DynStruct_i.h"
 #include "DynAnyFactory.h"
 #include "tao/Marshal.h"
+#include "tao/Any_Unknown_IDL_Type.h"
 
 ACE_RCSID (DynamicAny,
            DynStruct_i,
@@ -155,7 +156,7 @@ TAO_DynStruct_i::init (CORBA::TypeCode_ptr tc
                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->component_count_ = 
+  this->component_count_ =
     unaliased_tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -189,7 +190,7 @@ TAO_DynStruct_i::_narrow (CORBA::Object_ptr _tao_objref
     {
       return 0;
     }
-  
+
   return dynamic_cast<TAO_DynStruct_i *> (_tao_objref);
 }
 
@@ -304,9 +305,9 @@ TAO_DynStruct_i::get_members (ACE_ENV_SINGLE_ARG_DECL)
   DynamicAny::NameValuePairSeq_var safe_retval = members;
   CORBA::Any_var temp;
   CORBA::TypeCode_var unaliased_tc;
-  
+
   if (this->type_->kind_ == CORBA::tk_alias)
-    { 
+    {
       unaliased_tc =
         TAO_DynAnyFactory::strip_alias (this->type_.in ()
                                         ACE_ENV_ARG_PARAMETER);
@@ -557,7 +558,7 @@ TAO_DynStruct_i::from_any (const CORBA::Any & any
         }
 
       CORBA::TypeCode_var field_tc;
-      CORBA::TypeCode_var unaliased = 
+      CORBA::TypeCode_var unaliased =
         this->type_.in ()->unalias (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
