@@ -2172,11 +2172,13 @@ ACE_CACHE_CHECK([for ANSI C++ cast support],
    ])
   ],
   [
-   AC_DEFINE([ACE_HAS_ANSI_CASTS])
    if test "$ace_cv_lib_rtti" != yes; then
      AC_DEFINE([ACE_LACKS_RTTI])
    fi
-  ],)
+  ],
+  [
+   AC_MSG_ERROR([ACE requires a C++ compiler that supports ANSI C++ casts.])
+  ])
 
 dnl Check for explicit C++ constructor support
 ACE_CACHE_CHECK([for explicit C++ constructor support],
