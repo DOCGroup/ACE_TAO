@@ -1,3 +1,12 @@
+Wed Jun 23 09:26:39 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+	  Changed a couple of instances of ACE_dynamic_cast 
+	  to ACE_reinterpret_cast in generated code. I had earlier
+	  changed these from ACE_static_cast mistakenly to
+	  ACE_dynamic_cast. Thanks to David for setting me 
+	  straight.
+
 Wed Jun 23 00:42:05 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/Simple/time-date: Fixed warnings in the code.
