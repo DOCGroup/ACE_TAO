@@ -23,15 +23,16 @@
 #include "test_config.h"
 #include "ace/Profile_Timer.h"
 #include "ace/Get_Opt.h"
+#include "ace/Thread_Manager.h"
 #include "ace/Reactor.h"
 #include "ace/WFMO_Reactor.h"
 #include "ace/Select_Reactor.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Synch.h"
 
-#if defined (ACE_HAS_THREADS) 
+#if defined (ACE_HAS_THREADS)
 
-// Number of client (user) threads 
+// Number of client (user) threads
 static long opt_nthreads = 1;
 
 // Number of notify calls
@@ -54,7 +55,7 @@ public:
   // The Handler callbacks.
 };
 
-int 
+int
 Handler::handle_exception (ACE_HANDLE handle)
 {
   ACE_UNUSED_ARG (handle);
@@ -63,10 +64,10 @@ Handler::handle_exception (ACE_HANDLE handle)
 }
 
 // Execute the client tests.
-void * 
+void *
 client (void *arg)
 {
-  // Number of client (user) threads 
+  // Number of client (user) threads
   static ACE_Atomic_Op<ACE_Thread_Mutex, long> thread_counter = opt_nthreads;
 
   // To pass or not to pass is the question
@@ -74,7 +75,7 @@ client (void *arg)
   if (!opt_pass_notify_data)
     handler = 0;
   else
-    handler = (Handler *) arg;     
+    handler = (Handler *) arg;
 
   for (int i = 0; i < opt_nloops; i++)
     ACE_Reactor::instance ()->notify (handler);
@@ -90,7 +91,7 @@ void
 create_reactor (void)
 {
   ACE_Reactor_Impl *impl = 0;
-  
+
   if (opt_wfmo_reactor)
     {
 #if defined (ACE_WIN32)
@@ -131,10 +132,10 @@ print_results (ACE_Profile_Timer::ACE_Elapsed_Time &et)
 	      "\t\treal time = %f secs \n\t\tuser time = %f secs \n\t\tsystem time = %f secs\n\n",
 	      et.real_time,
 	      et.user_time,
-	      et.system_time));  
+	      et.system_time));
 }
 
-int 
+int
 main (int argc, char *argv[])
 {
   ACE_START_TEST ("Notify_Performance_Test");
@@ -165,12 +166,12 @@ main (int argc, char *argv[])
 
   // Manage memory automagically.
   auto_ptr<ACE_Reactor> reactor (ACE_Reactor::instance ());
-  auto_ptr<ACE_Reactor_Impl> impl; 
+  auto_ptr<ACE_Reactor_Impl> impl;
 
   // If we are using other that the default implementation, we must
   // clean up.
   if (opt_select_reactor || opt_wfmo_reactor)
-    impl = ACE_Reactor::instance ()->implementation ();  
+    impl = ACE_Reactor::instance ()->implementation ();
 
   // Callback object
   Handler handler;
@@ -182,16 +183,16 @@ main (int argc, char *argv[])
        (void *) &handler,
        THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "thread create failed"));
-  
+
   // Timer business
   ACE_Profile_Timer timer;
   timer.start ();
-  
+
   // Run event loop
   ACE_Reactor::instance()->run_event_loop ();
-  
+
   timer.stop ();
-  
+
   ACE_Profile_Timer::ACE_Elapsed_Time et;
   timer.elapsed_time (et);
 
@@ -199,7 +200,7 @@ main (int argc, char *argv[])
   print_results (et);
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) waiting for the worker threads...\n"));
-  
+
   // Wait for all worker to get done.
   ACE_Thread_Manager::instance ()->wait ();
 
@@ -233,5 +234,3 @@ main (int, char *[])
   return 0;
 }
 #endif /* ACE_HAS_THREADS */
-
-
