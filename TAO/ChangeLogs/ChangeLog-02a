@@ -1,3 +1,9 @@
+Sat Mar  3 10:42:01 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Portable_Interceptors/ForwardRequest/Server_Request_Interceptor.cpp (forward_references): 
+
+	  Fixed an exception specification.
+
 Sat Mar 03 02:10:00 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PortableServer/ServerRequestInfo.cpp:

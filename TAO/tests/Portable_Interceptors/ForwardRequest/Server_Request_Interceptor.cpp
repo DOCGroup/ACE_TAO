@@ -22,6 +22,7 @@ Server_Request_Interceptor::forward_references (
   CORBA::Object_ptr obj1,
   CORBA::Object_ptr obj2,
   CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (CORBA::is_nil (obj1) || CORBA::is_nil (obj2))
     ACE_THROW (CORBA::INV_OBJREF (
