@@ -1,8 +1,6 @@
+/* $Id$ */
 /*
  * Send random bits file
- $Header: /disk6/WebStone-2.0/src/RCS/nsapi-send.c,v 1.4 1996/04/24 23:54:19 
-scha
-n Exp schan $
  * Once this service function is installed, any file with the extension
  * "dyn-send" will be serviced with this function.  An optional query
  * string may be passed to alter the amount of data in the response.

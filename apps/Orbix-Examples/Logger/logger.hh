@@ -1,6 +1,6 @@
-
 #ifndef logger_hh
 #define logger_hh
+/* $Id$ */
 
 #include <CORBA.h>
 

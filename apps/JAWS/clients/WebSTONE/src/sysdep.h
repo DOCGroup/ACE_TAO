@@ -1,7 +1,8 @@
 #ifndef __SYSDEP_H__
 #define __SYSDEP_H__
+/* $Id$ */
 /**************************************************************************
- * $Header$                                                                *
+ *                                                                        *
  *               Copyright (C) 1995 Silicon Graphics, Inc.                *
  *                                                                        *
  *  These coded instructions, statements, and computer programs were      *
