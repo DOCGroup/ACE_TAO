@@ -6,7 +6,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue (ACE_Message_Block *&first_item,
                                            ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::notification_strategy");
-  return this->dequeue (first_item, timeout);
+  return this->dequeue_head (first_item, timeout);
 }
 
 template <ACE_SYNCH_DECL> ACE_INLINE ACE_Notification_Strategy *
