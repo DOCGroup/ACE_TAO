@@ -238,14 +238,14 @@ public:
   char *end (void) const;
   // Return a pointer to 1 past the end of the data in a message.
 
-  char *rd_ptr (void);
+  char *rd_ptr (void) const;
   // Get the read pointer.
   void rd_ptr (char *ptr);
   // Set the read pointer to <ptr>.
   void rd_ptr (size_t n);
   // Set the read pointer ahead <n> bytes.
 
-  char *wr_ptr (void);
+  char *wr_ptr (void) const;
   // Get the write pointer.
   void wr_ptr (char *ptr);
   // Set the write pointer to <ptr>.

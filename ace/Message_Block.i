@@ -198,7 +198,7 @@ ACE_Message_Block::base (char *msg_data,
 #endif /* 0 */
 
 ACE_INLINE char *
-ACE_Message_Block::rd_ptr (void)
+ACE_Message_Block::rd_ptr (void) const
 {
   ACE_TRACE ("ACE_Message_Block::rd_ptr");
   return this->rd_ptr_;
@@ -243,7 +243,7 @@ ACE_Message_Block::rd_ptr (size_t n)
 }
 
 ACE_INLINE char *
-ACE_Message_Block::wr_ptr (void)
+ACE_Message_Block::wr_ptr (void) const
 {
   ACE_TRACE ("ACE_Message_Block::wr_ptr");
   return this->wr_ptr_;
