@@ -27,7 +27,7 @@ if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
 
 $CL->Spawn (60);
 
-$client = $CL->WaitKill (120);
+$client = $CL->WaitKill (480);
 
 if ($client != 0) {
     print STDERR "ERROR: client returned $client1\n";
@@ -42,7 +42,7 @@ if ($server != 0) {
 }
 
 @files= <core.*>;
-unlink (@files);
+#unlink (@files);
 unlink $iorfile;
 
 exit $status;

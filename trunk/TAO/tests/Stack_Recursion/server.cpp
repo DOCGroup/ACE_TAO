@@ -66,7 +66,7 @@ main (int argc, char *argv[])
 
       Sender *sender_impl;
       ACE_NEW_RETURN (sender_impl,
-                      Sender,
+                      Sender (orb.in ()),
                       1);
       PortableServer::ServantBase_var receiver_owner_transfer(sender_impl);
 
@@ -93,6 +93,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       Server_Task server_task (orb.in (),
+                               sender_impl,
                                ACE_Thread_Manager::instance ());
 
       if (server_task.activate (THR_NEW_LWP | THR_JOINABLE, 4, 1) == -1)
