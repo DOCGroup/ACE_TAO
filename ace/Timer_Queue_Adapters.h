@@ -15,10 +15,10 @@
 // ============================================================================
 
 #if !defined (ACE_TIMER_QUEUE_ADAPTERS_H)
-#define ACE_TIMER_QUEUE_ADAPTERS_H
+# define ACE_TIMER_QUEUE_ADAPTERS_H
 
-#include "ace/Task.h"
-#include "ace/Signal.h"
+# include "ace/Task.h"
+# include "ace/Signal.h"
 
 template <class TQ>
 class ACE_Export ACE_Async_Timer_Queue_Adapter : public ACE_Event_Handler
@@ -91,7 +91,16 @@ class ACE_Export ACE_Thread_Timer_Queue_Adapter : public ACE_Task_Base
   //   (IMHO) the effort and portability problems discourage their
   //   use.
 public:
+
   typedef TQ TIMER_QUEUE;
+  // Trait for the underlying queue type.
+
+# if defined (ACE_HAS_DEFERRED_TIMER_COMMANDS)
+
+  enum COMMAND_ENQUEUE_POSITION {HEAD, TAIL};
+  // Typedef for the position at which to enqueue a deferred execution command.
+
+# endif /* ACE_HAS_DEFERRED_TIMER_COMMANDS */
 
   ACE_Thread_Timer_Queue_Adapter (ACE_Thread_Manager * = ACE_Thread_Manager::instance ());
   // Creates the timer queue.  Activation of the task is the user's
@@ -137,7 +146,34 @@ public:
   // that only a single thread is ever spawned.  Otherwise, too many
   // weird things can happen...
 
+# if defined (ACE_HAS_DEFERRED_TIMER_COMMANDS)
+
+  int enqueue_command (ACE_Command_Base *command_, 
+                       COMMAND_ENQUEUE_POSITION pos = TAIL);
+  // Enqueues a command object for execution just before waiting on the next
+  // timer event. This allows deferred execution of commands that cannot
+  // be performed in the timer event handler context, such as registering 
+  // or cancelling timers on platforms where the timer queue mutex is not
+  // recursive.
+
+# endif /* ACE_HAS_DEFERRED_TIMER_COMMANDS */
+
 private:
+
+# if defined (ACE_HAS_DEFERRED_TIMER_COMMANDS)
+
+  int dispatch_commands (void);
+  // Dispatches all command objects enqueued in the most 
+  // recent event handler context.
+
+  ACE_Unbounded_Queue<ACE_Command_Base *> command_queue_;
+  // Queue of commands for deferred execution.
+
+  ACE_SYNCH_MUTEX command_mutex_;
+  // The mutual exclusion mechanism for the command queue.
+
+# endif /* ACE_HAS_DEFERRED_TIMER_COMMANDS */
+
   TQ timer_queue_;
   // The underlying Timer_Queue.
 
@@ -158,16 +194,16 @@ private:
   // Thread id of our active object task.
 };
 
-#if defined (__ACE_INLINE__)
-#include "ace/Timer_Queue_Adapters.i"
-#endif /* __ACE_INLINE__ */
+# if defined (__ACE_INLINE__)
+#  include "ace/Timer_Queue_Adapters.i"
+# endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Timer_Queue_Adapters.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+# if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
+#  include "ace/Timer_Queue_Adapters.cpp"
+# endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Timer_Queue_Adapters.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+# if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
+#  pragma implementation ("Timer_Queue_Adapters.cpp")
+# endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* ACE_TIMER_QUEUE_ADAPTERS_H */
