@@ -1,3 +1,9 @@
+Wed Jun  9 21:45:24 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Svc_Handler.cpp (dump): Fixed a typo -- I wasn't
+	  comparing the pointer to 0, I was comparing the
+	  ACE_Time_Value!
+
 Wed Jun  9 21:10:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
 	* ace/config-psos-diab-ppc.h: added ACE_HAS_NONCONST_SELECT_TIMEVAL
