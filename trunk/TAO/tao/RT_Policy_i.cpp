@@ -408,6 +408,111 @@ TAO_TCP_Properties::_tao_decode (TAO_InputCDR &in_cdr)
 
 // ****************************************************************
 
+TAO_Unix_Domain_Properties::TAO_Unix_Domain_Properties
+(CORBA::Long send_buffer_size,
+ CORBA::Long recv_buffer_size)
+  : send_buffer_size_ (send_buffer_size),
+    recv_buffer_size_ (recv_buffer_size)
+{
+}
+
+TAO_Unix_Domain_Properties::~TAO_Unix_Domain_Properties (void)
+{
+}
+
+CORBA::Long
+TAO_Unix_Domain_Properties::send_buffer_size (CORBA::Environment &)
+  ACE_THROW_SPEC (())
+{
+  return this->send_buffer_size_;
+}
+
+void
+TAO_Unix_Domain_Properties::send_buffer_size (CORBA::Long send_buffer_size,
+                                              CORBA::Environment &)
+  ACE_THROW_SPEC (())
+{
+  this->send_buffer_size_ = send_buffer_size;
+}
+
+CORBA::Long
+TAO_Unix_Domain_Properties::recv_buffer_size (CORBA::Environment &)
+  ACE_THROW_SPEC (())
+{
+  return this->recv_buffer_size_;
+}
+
+void
+TAO_Unix_Domain_Properties::recv_buffer_size (CORBA::Long recv_buffer_size,
+                                              CORBA::Environment &)
+  ACE_THROW_SPEC (())
+{
+  this->recv_buffer_size_ = recv_buffer_size;
+}
+
+// ****************************************************************
+
+TAO_SMEM_Properties::TAO_SMEM_Properties (CORBA::Long preallocate_buffer_size,
+                                          const char * mmap_filename,
+                                          const char * mmap_lockname)
+  : preallocate_buffer_size_ (preallocate_buffer_size),
+    mmap_filename_ (mmap_filename),
+    mmap_lockname_ (mmap_lockname)
+{
+}
+
+TAO_SMEM_Properties::~TAO_SMEM_Properties (void)
+{
+}
+
+
+CORBA::Long
+TAO_SMEM_Properties::preallocate_buffer_size (CORBA::Environment &)
+  ACE_THROW_SPEC (())
+{
+  return this->preallocate_buffer_size_;
+}
+
+void
+TAO_SMEM_Properties::preallocate_buffer_size (CORBA::Long preallocate_buffer_size,
+                                              CORBA::Environment &)
+  ACE_THROW_SPEC (())
+{
+  this->preallocate_buffer_size_ = preallocate_buffer_size;
+}
+
+char *
+TAO_SMEM_Properties::mmap_filename (CORBA::Environment &)
+  ACE_THROW_SPEC (())
+{
+  return this->mmap_filename_.rep ();
+}
+
+void
+TAO_SMEM_Properties::mmap_filename (const char * mmap_filename,
+                                    CORBA::Environment &)
+  ACE_THROW_SPEC (())
+{
+  this->mmap_filename_.set (mmap_filename);
+}
+
+char *
+TAO_SMEM_Properties::mmap_lockname (CORBA::Environment &)
+  ACE_THROW_SPEC (())
+{
+  return this->mmap_lockname_.rep ();
+}
+
+void
+TAO_SMEM_Properties::mmap_lockname (const char * mmap_lockname,
+                                    CORBA::Environment &)
+  ACE_THROW_SPEC (())
+{
+  this->mmap_lockname_.set (mmap_lockname);
+}
+
+// ****************************************************************
+
 TAO_ServerProtocolPolicy::TAO_ServerProtocolPolicy (const
                                                     RTCORBA::ProtocolList &protocols)
   : RTCORBA::ServerProtocolPolicy (),
@@ -563,7 +668,7 @@ TAO_ClientProtocolPolicy::_tao_decode (TAO_InputCDR &in_cdr)
 {
   CORBA::ULong length;
   CORBA::Boolean is_read_ok = in_cdr >> length;
-  
+
   this->protocols_.length (length);
 
   for (CORBA::ULong i = 0; (i < length) && is_read_ok; i++)
@@ -571,23 +676,23 @@ TAO_ClientProtocolPolicy::_tao_decode (TAO_InputCDR &in_cdr)
       is_read_ok = in_cdr >> this->protocols_[i].protocol_type;
 
       this->protocols_[i].orb_protocol_properties =
-        TAO_Protocol_Properties_Factory::create_orb_protocol_property 
+        TAO_Protocol_Properties_Factory::create_orb_protocol_property
         (this->protocols_[i].protocol_type);
 
       this->protocols_[i].transport_protocol_properties =
-        TAO_Protocol_Properties_Factory::create_transport_protocol_property 
+        TAO_Protocol_Properties_Factory::create_transport_protocol_property
         (this->protocols_[i].protocol_type);
-      
-      if (is_read_ok 
+
+      if (is_read_ok
           && (this->protocols_[i].orb_protocol_properties.ptr () == 0))
         is_read_ok =
           this->protocols_[i].orb_protocol_properties->_tao_decode (in_cdr);
-      
+
       if (is_read_ok
           && (this->protocols_[i].transport_protocol_properties.ptr () == 0))
         is_read_ok =
           this->protocols_[i].transport_protocol_properties->_tao_decode (in_cdr);
-      
+
     }
 
   return is_read_ok;
@@ -602,16 +707,16 @@ TAO_GIOP_Properties::~TAO_GIOP_Properties (void)
 {
 }
 
-CORBA::Boolean 
+CORBA::Boolean
 TAO_GIOP_Properties::_tao_encode (TAO_OutputCDR &out_cdr)
 {
   ACE_UNUSED_ARG (out_cdr);
   return 1;
 }
 
-CORBA::Boolean 
+CORBA::Boolean
 TAO_GIOP_Properties::_tao_decode (TAO_InputCDR &in_cdr)
-{ 
+{
   ACE_UNUSED_ARG (in_cdr);
   return 1;
 }

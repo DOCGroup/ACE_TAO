@@ -1,5 +1,5 @@
---- orig/RTCORBAC.h	Thu Jun 15 13:59:40 2000
-+++ RTCORBAC.h	Fri Jun  9 13:00:53 2000
+--- orig/RTCORBAC.h	Sat May 20 22:29:17 2000
++++ RTCORBAC.h	Fri Aug 18 20:19:34 2000
 @@ -1,4 +1,4 @@
 -/* -*- C++ -*- $Id$ */
 +/* -*- C++ -*- $Id$ */
@@ -692,9 +692,9 @@
 +    // CDR Encoder/Decoder methods.
 +
 +    virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
-+    
++
 +    virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
-+   
++
    protected:
      ProtocolProperties (void);
      virtual ~ProtocolProperties (void);
@@ -908,8 +908,320 @@
      virtual const char* _interface_repository_id (void) const;
  
    protected:
-@@ -1385,7 +1399,7 @@
+@@ -1383,9 +1397,319 @@
  
+ #endif /* end #if !defined */
+ 
++
++
++#if !defined (_RTCORBA_UNIXDOMAINPROTOCOLPROPERTIES___PTR_CH_)
++#define _RTCORBA_UNIXDOMAINPROTOCOLPROPERTIES___PTR_CH_
++
++  class UnixDomainProtocolProperties;
++  typedef UnixDomainProtocolProperties *UnixDomainProtocolProperties_ptr;
++
++#endif /* end #if !defined */
++
++
++#if !defined (_RTCORBA_UNIXDOMAINPROTOCOLPROPERTIES___VAR_CH_)
++#define _RTCORBA_UNIXDOMAINPROTOCOLPROPERTIES___VAR_CH_
++
++  class TAO_Export UnixDomainProtocolProperties_var : public TAO_Base_var
++  {
++  public:
++    UnixDomainProtocolProperties_var (void); // default constructor
++    UnixDomainProtocolProperties_var (UnixDomainProtocolProperties_ptr p) : ptr_ (p) {}
++    UnixDomainProtocolProperties_var (const UnixDomainProtocolProperties_var &); // copy constructor
++    ~UnixDomainProtocolProperties_var (void); // destructor
++
++    UnixDomainProtocolProperties_var &operator= (UnixDomainProtocolProperties_ptr);
++    UnixDomainProtocolProperties_var &operator= (const UnixDomainProtocolProperties_var &);
++    UnixDomainProtocolProperties_ptr operator-> (void) const;
++
++    operator const UnixDomainProtocolProperties_ptr &() const;
++    operator UnixDomainProtocolProperties_ptr &();
++    // in, inout, out, _retn
++    UnixDomainProtocolProperties_ptr in (void) const;
++    UnixDomainProtocolProperties_ptr &inout (void);
++    UnixDomainProtocolProperties_ptr &out (void);
++    UnixDomainProtocolProperties_ptr _retn (void);
++    UnixDomainProtocolProperties_ptr ptr (void) const;
++
++  private:
++    UnixDomainProtocolProperties_ptr ptr_;
++    // Unimplemented - prevents widening assignment.
++    UnixDomainProtocolProperties_var (const TAO_Base_var &rhs);
++    UnixDomainProtocolProperties_var &operator= (const TAO_Base_var &rhs);
++  };
++
++
++#endif /* end #if !defined */
++
++
++#if !defined (_RTCORBA_UNIXDOMAINPROTOCOLPROPERTIES___OUT_CH_)
++#define _RTCORBA_UNIXDOMAINPROTOCOLPROPERTIES___OUT_CH_
++
++  class TAO_Export UnixDomainProtocolProperties_out
++  {
++  public:
++    UnixDomainProtocolProperties_out (UnixDomainProtocolProperties_ptr &);
++    UnixDomainProtocolProperties_out (UnixDomainProtocolProperties_var &);
++    UnixDomainProtocolProperties_out (const UnixDomainProtocolProperties_out &);
++    UnixDomainProtocolProperties_out &operator= (const UnixDomainProtocolProperties_out &);
++    UnixDomainProtocolProperties_out &operator= (const UnixDomainProtocolProperties_var &);
++    UnixDomainProtocolProperties_out &operator= (UnixDomainProtocolProperties_ptr);
++    operator UnixDomainProtocolProperties_ptr &();
++    UnixDomainProtocolProperties_ptr &ptr (void);
++    UnixDomainProtocolProperties_ptr operator-> (void);
++
++  private:
++    UnixDomainProtocolProperties_ptr &ptr_;
++  };
++
++
++#endif /* end #if !defined */
++
++
++#if !defined (_RTCORBA_UNIXDOMAINPROTOCOLPROPERTIES_CH_)
++#define _RTCORBA_UNIXDOMAINPROTOCOLPROPERTIES_CH_
++
++class TAO_Export UnixDomainProtocolProperties: public virtual ProtocolProperties
++  {
++  public:
++  #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
++    typedef UnixDomainProtocolProperties_ptr _ptr_type;
++    typedef UnixDomainProtocolProperties_var _var_type;
++  #endif /* ! __GNUC__ || g++ >= 2.8 */
++
++    // the static operations
++    static UnixDomainProtocolProperties_ptr _duplicate (UnixDomainProtocolProperties_ptr obj);
++    static UnixDomainProtocolProperties_ptr _narrow (
++        CORBA::Object_ptr obj,
++        CORBA::Environment &ACE_TRY_ENV =
++          TAO_default_environment ()
++      );
++    static UnixDomainProtocolProperties_ptr _unchecked_narrow (
++        CORBA::Object_ptr obj,
++        CORBA::Environment &ACE_TRY_ENV =
++          TAO_default_environment ()
++      );
++    static UnixDomainProtocolProperties_ptr _nil (void)
++      {
++        return (UnixDomainProtocolProperties_ptr)0;
++      }
++
++    virtual CORBA::Long send_buffer_size (
++        CORBA::Environment &ACE_TRY_ENV =
++          TAO_default_environment ()
++      )
++      ACE_THROW_SPEC ((
++        CORBA::SystemException
++      )) = 0;
++
++    virtual void send_buffer_size (
++        CORBA::Long send_buffer_size,
++        CORBA::Environment &ACE_TRY_ENV =
++          TAO_default_environment ()
++      )
++      ACE_THROW_SPEC ((
++        CORBA::SystemException
++      )) = 0;
++
++    virtual CORBA::Long recv_buffer_size (
++        CORBA::Environment &ACE_TRY_ENV =
++          TAO_default_environment ()
++      )
++      ACE_THROW_SPEC ((
++        CORBA::SystemException
++      )) = 0;
++
++    virtual void recv_buffer_size (
++        CORBA::Long recv_buffer_size,
++        CORBA::Environment &ACE_TRY_ENV =
++          TAO_default_environment ()
++      )
++      ACE_THROW_SPEC ((
++        CORBA::SystemException
++      )) = 0;
++
++    virtual void *_tao_QueryInterface (ptr_arith_t type);
++
++    virtual const char* _interface_repository_id (void) const;
++
++  protected:
++    UnixDomainProtocolProperties (void);
++    virtual ~UnixDomainProtocolProperties (void);
++  private:
++    UnixDomainProtocolProperties (const UnixDomainProtocolProperties &);
++    void operator= (const UnixDomainProtocolProperties &);
++  };
++
++
++#endif /* end #if !defined */
++
++
++#if !defined (_RTCORBA_SHAREDMEMORYPROTOCOLPROPERTIES___PTR_CH_)
++#define _RTCORBA_SHAREDMEMORYPROTOCOLPROPERTIES___PTR_CH_
++
++  class SharedMemoryProtocolProperties;
++  typedef SharedMemoryProtocolProperties *SharedMemoryProtocolProperties_ptr;
++
++#endif /* end #if !defined */
++
++
++#if !defined (_RTCORBA_SHAREDMEMORYPROTOCOLPROPERTIES___VAR_CH_)
++#define _RTCORBA_SHAREDMEMORYPROTOCOLPROPERTIES___VAR_CH_
++
++  class TAO_Export SharedMemoryProtocolProperties_var : public TAO_Base_var
++  {
++  public:
++    SharedMemoryProtocolProperties_var (void); // default constructor
++    SharedMemoryProtocolProperties_var (SharedMemoryProtocolProperties_ptr p) : ptr_ (p) {}
++    SharedMemoryProtocolProperties_var (const SharedMemoryProtocolProperties_var &); // copy constructor
++    ~SharedMemoryProtocolProperties_var (void); // destructor
++
++    SharedMemoryProtocolProperties_var &operator= (SharedMemoryProtocolProperties_ptr);
++    SharedMemoryProtocolProperties_var &operator= (const SharedMemoryProtocolProperties_var &);
++    SharedMemoryProtocolProperties_ptr operator-> (void) const;
++
++    operator const SharedMemoryProtocolProperties_ptr &() const;
++    operator SharedMemoryProtocolProperties_ptr &();
++    // in, inout, out, _retn
++    SharedMemoryProtocolProperties_ptr in (void) const;
++    SharedMemoryProtocolProperties_ptr &inout (void);
++    SharedMemoryProtocolProperties_ptr &out (void);
++    SharedMemoryProtocolProperties_ptr _retn (void);
++    SharedMemoryProtocolProperties_ptr ptr (void) const;
++
++  private:
++    SharedMemoryProtocolProperties_ptr ptr_;
++    // Unimplemented - prevents widening assignment.
++    SharedMemoryProtocolProperties_var (const TAO_Base_var &rhs);
++    SharedMemoryProtocolProperties_var &operator= (const TAO_Base_var &rhs);
++  };
++
++
++#endif /* end #if !defined */
++
++
++#if !defined (_RTCORBA_SHAREDMEMORYPROTOCOLPROPERTIES___OUT_CH_)
++#define _RTCORBA_SHAREDMEMORYPROTOCOLPROPERTIES___OUT_CH_
++
++  class TAO_Export SharedMemoryProtocolProperties_out
++  {
++  public:
++    SharedMemoryProtocolProperties_out (SharedMemoryProtocolProperties_ptr &);
++    SharedMemoryProtocolProperties_out (SharedMemoryProtocolProperties_var &);
++    SharedMemoryProtocolProperties_out (const SharedMemoryProtocolProperties_out &);
++    SharedMemoryProtocolProperties_out &operator= (const SharedMemoryProtocolProperties_out &);
++    SharedMemoryProtocolProperties_out &operator= (const SharedMemoryProtocolProperties_var &);
++    SharedMemoryProtocolProperties_out &operator= (SharedMemoryProtocolProperties_ptr);
++    operator SharedMemoryProtocolProperties_ptr &();
++    SharedMemoryProtocolProperties_ptr &ptr (void);
++    SharedMemoryProtocolProperties_ptr operator-> (void);
++
++  private:
++    SharedMemoryProtocolProperties_ptr &ptr_;
++  };
++
++
++#endif /* end #if !defined */
++
++
++#if !defined (_RTCORBA_SHAREDMEMORYPROTOCOLPROPERTIES_CH_)
++#define _RTCORBA_SHAREDMEMORYPROTOCOLPROPERTIES_CH_
++
++class TAO_Export SharedMemoryProtocolProperties: public virtual ProtocolProperties
++  {
++  public:
++  #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
++    typedef SharedMemoryProtocolProperties_ptr _ptr_type;
++    typedef SharedMemoryProtocolProperties_var _var_type;
++  #endif /* ! __GNUC__ || g++ >= 2.8 */
++
++    // the static operations
++    static SharedMemoryProtocolProperties_ptr _duplicate (SharedMemoryProtocolProperties_ptr obj);
++    static SharedMemoryProtocolProperties_ptr _narrow (
++        CORBA::Object_ptr obj,
++        CORBA::Environment &ACE_TRY_ENV =
++          TAO_default_environment ()
++      );
++    static SharedMemoryProtocolProperties_ptr _unchecked_narrow (
++        CORBA::Object_ptr obj,
++        CORBA::Environment &ACE_TRY_ENV =
++          TAO_default_environment ()
++      );
++    static SharedMemoryProtocolProperties_ptr _nil (void)
++      {
++        return (SharedMemoryProtocolProperties_ptr)0;
++      }
++
++    virtual CORBA::Long preallocate_buffer_size (
++        CORBA::Environment &ACE_TRY_ENV =
++          TAO_default_environment ()
++      )
++      ACE_THROW_SPEC ((
++        CORBA::SystemException
++      )) = 0;
++
++    virtual void preallocate_buffer_size (
++        CORBA::Long preallocate_buffer_size,
++        CORBA::Environment &ACE_TRY_ENV =
++          TAO_default_environment ()
++      )
++      ACE_THROW_SPEC ((
++        CORBA::SystemException
++      )) = 0;
++
++    virtual char * mmap_filename (
++        CORBA::Environment &ACE_TRY_ENV =
++          TAO_default_environment ()
++      )
++      ACE_THROW_SPEC ((
++        CORBA::SystemException
++      )) = 0;
++
++    virtual void mmap_filename (
++        const char * mmap_filename,
++        CORBA::Environment &ACE_TRY_ENV =
++          TAO_default_environment ()
++      )
++      ACE_THROW_SPEC ((
++        CORBA::SystemException
++      )) = 0;
++
++    virtual char * mmap_lockname (
++        CORBA::Environment &ACE_TRY_ENV =
++          TAO_default_environment ()
++      )
++      ACE_THROW_SPEC ((
++        CORBA::SystemException
++      )) = 0;
++
++    virtual void mmap_lockname (
++        const char * mmap_lockname,
++        CORBA::Environment &ACE_TRY_ENV =
++          TAO_default_environment ()
++      )
++      ACE_THROW_SPEC ((
++        CORBA::SystemException
++      )) = 0;
++
++    virtual void *_tao_QueryInterface (ptr_arith_t type);
++
++    virtual const char* _interface_repository_id (void) const;
++
++  protected:
++    SharedMemoryProtocolProperties (void);
++    virtual ~SharedMemoryProtocolProperties (void);
++  private:
++    SharedMemoryProtocolProperties (const SharedMemoryProtocolProperties &);
++    void operator= (const SharedMemoryProtocolProperties &);
++  };
++
++
++#endif /* end #if !defined */
++
    struct Protocol;
    class Protocol_var;
 -  
@@ -917,7 +1229,7 @@
    struct TAO_Export Protocol
    {
  
-@@ -1405,18 +1419,18 @@
+@@ -1405,18 +1729,18 @@
      Protocol_var (Protocol *);
      Protocol_var (const Protocol_var &); // copy constructor
      ~Protocol_var (void); // destructor
@@ -940,7 +1252,7 @@
      const Protocol &in (void) const;
      Protocol &inout (void);
      Protocol *&out (void);
-@@ -1438,7 +1452,7 @@
+@@ -1438,7 +1762,7 @@
      operator Protocol *&();
      Protocol *&ptr (void);
      Protocol *operator-> (void);
@@ -949,7 +1261,7 @@
    private:
      Protocol *&ptr_;
      // assignment from T_var not allowed
-@@ -1447,7 +1461,7 @@
+@@ -1447,7 +1771,7 @@
  
  
  #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
@@ -958,7 +1270,7 @@
  #if !defined (__TAO_UNBOUNDED_SEQUENCE_RTCORBA_PROTOCOLLIST_CH_)
  #define __TAO_UNBOUNDED_SEQUENCE_RTCORBA_PROTOCOLLIST_CH_
  
-@@ -1455,9 +1469,9 @@
+@@ -1455,9 +1779,9 @@
      {
      public:
        // = Initialization and termination methods.
@@ -970,7 +1282,7 @@
        _TAO_Unbounded_Sequence_RTCORBA_ProtocolList (CORBA::ULong maximum,
          CORBA::ULong length,
          Protocol *data,
-@@ -1474,7 +1488,7 @@
+@@ -1474,7 +1798,7 @@
        virtual void _allocate_buffer (CORBA::ULong length);
        virtual void _deallocate_buffer (void);
        // Implement the TAO_Base_Sequence methods (see Sequence.h)
@@ -979,7 +1291,7 @@
        Protocol *get_buffer (CORBA::Boolean orphan = 0);
        const Protocol *get_buffer (void) const;
        void replace (CORBA::ULong max,
-@@ -1486,32 +1500,32 @@
+@@ -1486,32 +1810,32 @@
  #endif /* end #if !defined */
  
  
@@ -1021,7 +1333,7 @@
        CORBA::Boolean release=0
      );
      ProtocolList (const ProtocolList &); // copy ctor
-@@ -1523,7 +1537,7 @@
+@@ -1523,7 +1847,7 @@
  #endif /* ! __GNUC__ || g++ >= 2.8 */
  
    };
@@ -1030,7 +1342,7 @@
  #endif /* end #if !defined */
  
  
-@@ -1541,19 +1555,19 @@
+@@ -1541,19 +1865,19 @@
      ProtocolList_var (ProtocolList *);
      ProtocolList_var (const ProtocolList_var &); // copy constructor
      ~ProtocolList_var (void); // destructor
@@ -1054,7 +1366,7 @@
      const ProtocolList &in (void) const;
      ProtocolList &inout (void);
      ProtocolList *&out (void);
-@@ -1583,7 +1597,7 @@
+@@ -1583,7 +1907,7 @@
      ProtocolList *&ptr (void);
      ProtocolList *operator-> (void);
      Protocol &operator[] (CORBA::ULong index);
@@ -1063,7 +1375,7 @@
    private:
      ProtocolList *&ptr_;
      // assignment from T_var not allowed
-@@ -1601,7 +1615,7 @@
+@@ -1601,7 +1925,7 @@
  
    class ServerProtocolPolicy;
    typedef ServerProtocolPolicy *ServerProtocolPolicy_ptr;
@@ -1072,7 +1384,7 @@
  #endif /* end #if !defined */
  
  
-@@ -1615,14 +1629,14 @@
+@@ -1615,14 +1939,14 @@
      ServerProtocolPolicy_var (ServerProtocolPolicy_ptr);
      ServerProtocolPolicy_var (const ServerProtocolPolicy_var &); // copy constructor
      ~ServerProtocolPolicy_var (void); // destructor
@@ -1090,7 +1402,7 @@
      ServerProtocolPolicy_ptr in (void) const;
      ServerProtocolPolicy_ptr &inout (void);
      ServerProtocolPolicy_ptr &out (void);
-@@ -1655,7 +1669,7 @@
+@@ -1655,7 +1979,7 @@
      operator ServerProtocolPolicy_ptr &();
      ServerProtocolPolicy_ptr &ptr (void);
      ServerProtocolPolicy_ptr operator-> (void);
@@ -1099,7 +1411,7 @@
    private:
      ServerProtocolPolicy_ptr &ptr_;
    };
-@@ -1679,12 +1693,12 @@
+@@ -1679,12 +2003,12 @@
      static ServerProtocolPolicy_ptr _duplicate (ServerProtocolPolicy_ptr obj);
      static ServerProtocolPolicy_ptr _narrow (
          CORBA::Object_ptr obj,
@@ -1114,7 +1426,7 @@
            TAO_default_environment ()
        );
      static ServerProtocolPolicy_ptr _nil (void)
-@@ -1693,7 +1707,7 @@
+@@ -1693,7 +2017,7 @@
        }
  
      virtual RTCORBA::ProtocolList * protocols (
@@ -1123,7 +1435,7 @@
            TAO_default_environment ()
        )
        ACE_THROW_SPEC ((
-@@ -1701,7 +1715,7 @@
+@@ -1701,7 +2025,7 @@
        )) = 0;
  
      virtual void *_tao_QueryInterface (ptr_arith_t type);
@@ -1132,7 +1444,7 @@
      virtual const char* _interface_repository_id (void) const;
  
    protected:
-@@ -1723,7 +1737,7 @@
+@@ -1723,7 +2047,7 @@
  
    class ClientProtocolPolicy;
    typedef ClientProtocolPolicy *ClientProtocolPolicy_ptr;
@@ -1141,7 +1453,7 @@
  #endif /* end #if !defined */
  
  
-@@ -1737,14 +1751,14 @@
+@@ -1737,14 +2061,14 @@
      ClientProtocolPolicy_var (ClientProtocolPolicy_ptr);
      ClientProtocolPolicy_var (const ClientProtocolPolicy_var &); // copy constructor
      ~ClientProtocolPolicy_var (void); // destructor
@@ -1159,7 +1471,7 @@
      ClientProtocolPolicy_ptr in (void) const;
      ClientProtocolPolicy_ptr &inout (void);
      ClientProtocolPolicy_ptr &out (void);
-@@ -1777,7 +1791,7 @@
+@@ -1777,7 +2101,7 @@
      operator ClientProtocolPolicy_ptr &();
      ClientProtocolPolicy_ptr &ptr (void);
      ClientProtocolPolicy_ptr operator-> (void);
@@ -1168,7 +1480,7 @@
    private:
      ClientProtocolPolicy_ptr &ptr_;
    };
-@@ -1801,12 +1815,12 @@
+@@ -1801,12 +2125,12 @@
      static ClientProtocolPolicy_ptr _duplicate (ClientProtocolPolicy_ptr obj);
      static ClientProtocolPolicy_ptr _narrow (
          CORBA::Object_ptr obj,
@@ -1183,7 +1495,7 @@
            TAO_default_environment ()
        );
      static ClientProtocolPolicy_ptr _nil (void)
-@@ -1815,7 +1829,7 @@
+@@ -1815,7 +2139,7 @@
        }
  
      virtual RTCORBA::ProtocolList * protocols (
@@ -1192,7 +1504,7 @@
            TAO_default_environment ()
        )
        ACE_THROW_SPEC ((
-@@ -1823,7 +1837,7 @@
+@@ -1823,7 +2147,7 @@
        )) = 0;
  
      virtual void *_tao_QueryInterface (ptr_arith_t type);
@@ -1201,7 +1513,7 @@
      virtual const char* _interface_repository_id (void) const;
  
    protected:
-@@ -1843,7 +1857,7 @@
+@@ -1843,7 +2167,7 @@
  
    class Current;
    typedef Current *Current_ptr;
@@ -1210,7 +1522,7 @@
  #endif /* end #if !defined */
  
  
-@@ -1857,14 +1871,14 @@
+@@ -1857,14 +2181,14 @@
      Current_var (Current_ptr);
      Current_var (const Current_var &); // copy constructor
      ~Current_var (void); // destructor
@@ -1228,7 +1540,7 @@
      Current_ptr in (void) const;
      Current_ptr &inout (void);
      Current_ptr &out (void);
-@@ -1897,7 +1911,7 @@
+@@ -1897,7 +2221,7 @@
      operator Current_ptr &();
      Current_ptr &ptr (void);
      Current_ptr operator-> (void);
@@ -1237,7 +1549,7 @@
    private:
      Current_ptr &ptr_;
    };
-@@ -1921,12 +1935,12 @@
+@@ -1921,12 +2245,12 @@
      static Current_ptr _duplicate (Current_ptr obj);
      static Current_ptr _narrow (
          CORBA::Object_ptr obj,
@@ -1252,7 +1564,7 @@
            TAO_default_environment ()
        );
      static Current_ptr _nil (void)
-@@ -1935,7 +1949,7 @@
+@@ -1935,7 +2259,7 @@
        }
  
      virtual RTCORBA::Priority the_priority (
@@ -1261,7 +1573,7 @@
            TAO_default_environment ()
        )
        ACE_THROW_SPEC ((
-@@ -1944,7 +1958,7 @@
+@@ -1944,7 +2268,7 @@
  
      virtual void the_priority (
          RTCORBA::Priority the_priority,
@@ -1270,7 +1582,7 @@
            TAO_default_environment ()
        )
        ACE_THROW_SPEC ((
-@@ -1952,7 +1966,7 @@
+@@ -1952,7 +2276,7 @@
        )) = 0;
  
      virtual void *_tao_QueryInterface (ptr_arith_t type);
@@ -1279,7 +1591,7 @@
      virtual const char* _interface_repository_id (void) const;
  
    protected:
-@@ -1972,7 +1986,7 @@
+@@ -1972,7 +2296,7 @@
  
    class Mutex;
    typedef Mutex *Mutex_ptr;
@@ -1288,7 +1600,7 @@
  #endif /* end #if !defined */
  
  
-@@ -1986,14 +2000,14 @@
+@@ -1986,14 +2310,14 @@
      Mutex_var (Mutex_ptr);
      Mutex_var (const Mutex_var &); // copy constructor
      ~Mutex_var (void); // destructor
@@ -1306,7 +1618,7 @@
      Mutex_ptr in (void) const;
      Mutex_ptr &inout (void);
      Mutex_ptr &out (void);
-@@ -2026,7 +2040,7 @@
+@@ -2026,7 +2350,7 @@
      operator Mutex_ptr &();
      Mutex_ptr &ptr (void);
      Mutex_ptr operator-> (void);
@@ -1315,7 +1627,7 @@
    private:
      Mutex_ptr &ptr_;
    };
-@@ -2050,12 +2064,12 @@
+@@ -2050,12 +2374,12 @@
      static Mutex_ptr _duplicate (Mutex_ptr obj);
      static Mutex_ptr _narrow (
          CORBA::Object_ptr obj,
@@ -1330,7 +1642,7 @@
            TAO_default_environment ()
        );
      static Mutex_ptr _nil (void)
-@@ -2064,7 +2078,7 @@
+@@ -2064,7 +2388,7 @@
        }
  
      virtual void lock (
@@ -1339,7 +1651,7 @@
            TAO_default_environment ()
        )
        ACE_THROW_SPEC ((
-@@ -2072,7 +2086,7 @@
+@@ -2072,7 +2396,7 @@
        )) = 0;
  
      virtual void unlock (
@@ -1348,7 +1660,7 @@
            TAO_default_environment ()
        )
        ACE_THROW_SPEC ((
-@@ -2081,7 +2095,7 @@
+@@ -2081,7 +2405,7 @@
  
      virtual CORBA::Boolean try_lock (
          TimeBase::TimeT max_wait,
@@ -1357,7 +1669,7 @@
            TAO_default_environment ()
        )
        ACE_THROW_SPEC ((
-@@ -2089,7 +2103,7 @@
+@@ -2089,7 +2413,7 @@
        )) = 0;
  
      virtual void *_tao_QueryInterface (ptr_arith_t type);
@@ -1366,7 +1678,7 @@
      virtual const char* _interface_repository_id (void) const;
  
    protected:
-@@ -2103,13 +2117,12 @@
+@@ -2103,13 +2427,12 @@
  
  #endif /* end #if !defined */
  
@@ -1381,7 +1693,7 @@
  #endif /* end #if !defined */
  
  
-@@ -2123,14 +2136,14 @@
+@@ -2123,14 +2446,14 @@
      RTORB_var (RTORB_ptr);
      RTORB_var (const RTORB_var &); // copy constructor
      ~RTORB_var (void); // destructor
@@ -1399,7 +1711,7 @@
      RTORB_ptr in (void) const;
      RTORB_ptr &inout (void);
      RTORB_ptr &out (void);
-@@ -2163,7 +2176,7 @@
+@@ -2163,7 +2486,7 @@
      operator RTORB_ptr &();
      RTORB_ptr &ptr (void);
      RTORB_ptr operator-> (void);
@@ -1408,7 +1720,7 @@
    private:
      RTORB_ptr &ptr_;
    };
-@@ -2187,12 +2200,12 @@
+@@ -2187,12 +2510,12 @@
      static RTORB_ptr _duplicate (RTORB_ptr obj);
      static RTORB_ptr _narrow (
          CORBA::Object_ptr obj,
@@ -1423,7 +1735,7 @@
            TAO_default_environment ()
        );
      static RTORB_ptr _nil (void)
-@@ -2201,7 +2214,7 @@
+@@ -2201,7 +2524,7 @@
        }
  
      virtual RTCORBA::Mutex_ptr create_mutex (
@@ -1432,7 +1744,7 @@
            TAO_default_environment ()
        )
        ACE_THROW_SPEC ((
-@@ -2210,7 +2223,7 @@
+@@ -2210,7 +2533,7 @@
  
      virtual void destroy_mutex (
          RTCORBA::Mutex_ptr the_mutex,
@@ -1441,7 +1753,7 @@
            TAO_default_environment ()
        )
        ACE_THROW_SPEC ((
-@@ -2241,7 +2254,7 @@
+@@ -2241,7 +2564,7 @@
          TAO_InputCDR &,
          CORBA::Environment &);
  
@@ -1450,7 +1762,7 @@
  
  
      // = TAO extension
-@@ -2249,7 +2262,7 @@
+@@ -2249,7 +2572,7 @@
  
    }; // exception RTCORBA::RTORB::InvalidThreadpool
  
@@ -1459,7 +1771,7 @@
  #endif /* end #if !defined */
  
    virtual RTCORBA::ThreadpoolId create_threadpool (
-@@ -2260,7 +2273,7 @@
+@@ -2260,7 +2583,7 @@
        CORBA::Boolean allow_request_buffering,
        CORBA::ULong max_buffered_requests,
        CORBA::ULong max_request_buffer_size,
@@ -1468,7 +1780,7 @@
          TAO_default_environment ()
      )
      ACE_THROW_SPEC ((
-@@ -2274,7 +2287,7 @@
+@@ -2274,7 +2597,7 @@
        CORBA::Boolean allow_request_buffering,
        CORBA::ULong max_buffered_requests,
        CORBA::ULong max_request_buffer_size,
@@ -1477,7 +1789,7 @@
          TAO_default_environment ()
      )
      ACE_THROW_SPEC ((
-@@ -2283,7 +2296,7 @@
+@@ -2283,7 +2606,7 @@
  
    virtual void destroy_threadpool (
        RTCORBA::ThreadpoolId threadpool,
@@ -1486,7 +1798,7 @@
          TAO_default_environment ()
      )
      ACE_THROW_SPEC ((
-@@ -2294,7 +2307,7 @@
+@@ -2294,7 +2617,7 @@
    virtual RTCORBA::PriorityModelPolicy_ptr create_priority_model_policy (
        RTCORBA::PriorityModel priority_model,
        RTCORBA::Priority server_priority,
@@ -1495,7 +1807,7 @@
          TAO_default_environment ()
      )
      ACE_THROW_SPEC ((
-@@ -2303,7 +2316,7 @@
+@@ -2303,7 +2626,7 @@
  
    virtual RTCORBA::ThreadpoolPolicy_ptr create_threadpool_policy (
        RTCORBA::ThreadpoolId threadpool,
@@ -1504,7 +1816,7 @@
          TAO_default_environment ()
      )
      ACE_THROW_SPEC ((
-@@ -2312,7 +2325,7 @@
+@@ -2312,7 +2635,7 @@
  
    virtual RTCORBA::PriorityBandedConnectionPolicy_ptr create_priority_banded_connection_policy (
        const RTCORBA::PriorityBands & priority_bands,
@@ -1513,7 +1825,7 @@
          TAO_default_environment ()
      )
      ACE_THROW_SPEC ((
-@@ -2320,7 +2333,7 @@
+@@ -2320,7 +2643,7 @@
      )) = 0;
  
    virtual RTCORBA::PrivateConnectionPolicy_ptr create_private_connection_policy (
@@ -1522,7 +1834,7 @@
          TAO_default_environment ()
      )
      ACE_THROW_SPEC ((
-@@ -2329,7 +2342,7 @@
+@@ -2329,7 +2652,7 @@
  
    virtual RTCORBA::ServerProtocolPolicy_ptr create_server_protocol_policy (
        const RTCORBA::ProtocolList & protocols,
@@ -1531,7 +1843,7 @@
          TAO_default_environment ()
      )
      ACE_THROW_SPEC ((
-@@ -2338,7 +2351,7 @@
+@@ -2338,7 +2661,7 @@
  
    virtual RTCORBA::ClientProtocolPolicy_ptr create_client_protocol_policy (
        const RTCORBA::ProtocolList & protocols,
@@ -1540,7 +1852,7 @@
          TAO_default_environment ()
      )
      ACE_THROW_SPEC ((
-@@ -2346,7 +2359,7 @@
+@@ -2346,7 +2669,7 @@
      )) = 0;
  
    virtual void *_tao_QueryInterface (ptr_arith_t type);
@@ -1549,7 +1861,7 @@
    virtual const char* _interface_repository_id (void) const;
  
  protected:
-@@ -2360,7 +2373,6 @@
+@@ -2360,7 +2683,6 @@
  
  #endif /* end #if !defined */
  
@@ -1557,7 +1869,7 @@
  }
  TAO_NAMESPACE_CLOSE // module RTCORBA
  
-@@ -2402,7 +2414,7 @@
+@@ -2402,7 +2724,7 @@
  
  #endif /* _TAO_CDR_OP_RTCORBA_ThreadpoolLanes_H_ */
  
@@ -1566,7 +1878,7 @@
  TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, RTCORBA::PriorityModel &);
  TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const RTCORBA::PriorityBand &);
  TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, RTCORBA::PriorityBand &);
-@@ -2432,6 +2444,8 @@
+@@ -2432,6 +2754,8 @@
  #if defined(_MSC_VER) && (_MSC_VER >= 1200)
  #pragma warning(pop)
  #endif /* _MSC_VER */

@@ -936,6 +936,165 @@ const char* RTCORBA::GIOPProtocolProperties::_interface_repository_id (void) con
   return "IDL:omg.org/RTCORBA/GIOPProtocolProperties:1.0";
 }
 
+// default constructor
+RTCORBA::UnixDomainProtocolProperties::UnixDomainProtocolProperties (void)
+{}
+
+// destructor
+RTCORBA::UnixDomainProtocolProperties::~UnixDomainProtocolProperties (void)
+{}
+
+RTCORBA::UnixDomainProtocolProperties_ptr RTCORBA::UnixDomainProtocolProperties::_narrow (
+    CORBA::Object_ptr obj,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return UnixDomainProtocolProperties::_unchecked_narrow (obj, ACE_TRY_ENV);
+}
+
+RTCORBA::UnixDomainProtocolProperties_ptr RTCORBA::UnixDomainProtocolProperties::_unchecked_narrow (
+    CORBA::Object_ptr obj,
+    CORBA::Environment &
+  )
+{
+  if (CORBA::is_nil (obj))
+    return UnixDomainProtocolProperties::_nil ();
+  return
+      ACE_reinterpret_cast
+        (
+          UnixDomainProtocolProperties_ptr,
+            obj->_tao_QueryInterface
+              (
+                ACE_reinterpret_cast
+                  (
+                    ptr_arith_t,
+                    &UnixDomainProtocolProperties::_narrow
+                  )
+              )
+        );
+}
+
+RTCORBA::UnixDomainProtocolProperties_ptr
+RTCORBA::UnixDomainProtocolProperties::_duplicate (UnixDomainProtocolProperties_ptr obj)
+{
+  if (!CORBA::is_nil (obj))
+    obj->_add_ref ();
+  return obj;
+}
+
+void *RTCORBA::UnixDomainProtocolProperties::_tao_QueryInterface (ptr_arith_t type)
+{
+  void *retv = 0;
+  if (type == ACE_reinterpret_cast
+    (ptr_arith_t,
+      &RTCORBA::UnixDomainProtocolProperties::_narrow))
+    retv = ACE_reinterpret_cast (void*, this);
+  else if (type == ACE_reinterpret_cast
+    (ptr_arith_t,
+      &RTCORBA::ProtocolProperties::_narrow))
+    retv = ACE_reinterpret_cast
+      (
+        void *,
+        ACE_static_cast
+          (
+            RTCORBA::ProtocolProperties_ptr,
+            this
+          )
+      );
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+    retv = ACE_reinterpret_cast (void *,
+      ACE_static_cast (CORBA::Object_ptr, this));
+
+  if (retv)
+    this->_add_ref ();
+  return retv;
+}
+
+const char* RTCORBA::UnixDomainProtocolProperties::_interface_repository_id (void) const
+{
+  return "IDL:omg.org/RTCORBA/UnixDomainProtocolProperties:1.0";
+}
+
+
+// default constructor
+RTCORBA::SharedMemoryProtocolProperties::SharedMemoryProtocolProperties (void)
+{}
+
+// destructor
+RTCORBA::SharedMemoryProtocolProperties::~SharedMemoryProtocolProperties (void)
+{}
+
+RTCORBA::SharedMemoryProtocolProperties_ptr RTCORBA::SharedMemoryProtocolProperties::_narrow (
+    CORBA::Object_ptr obj,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return SharedMemoryProtocolProperties::_unchecked_narrow (obj, ACE_TRY_ENV);
+}
+
+RTCORBA::SharedMemoryProtocolProperties_ptr RTCORBA::SharedMemoryProtocolProperties::_unchecked_narrow (
+    CORBA::Object_ptr obj,
+    CORBA::Environment &
+  )
+{
+  if (CORBA::is_nil (obj))
+    return SharedMemoryProtocolProperties::_nil ();
+  return
+      ACE_reinterpret_cast
+        (
+          SharedMemoryProtocolProperties_ptr,
+            obj->_tao_QueryInterface
+              (
+                ACE_reinterpret_cast
+                  (
+                    ptr_arith_t,
+                    &SharedMemoryProtocolProperties::_narrow
+                  )
+              )
+        );
+}
+
+RTCORBA::SharedMemoryProtocolProperties_ptr
+RTCORBA::SharedMemoryProtocolProperties::_duplicate (SharedMemoryProtocolProperties_ptr obj)
+{
+  if (!CORBA::is_nil (obj))
+    obj->_add_ref ();
+  return obj;
+}
+
+void *RTCORBA::SharedMemoryProtocolProperties::_tao_QueryInterface (ptr_arith_t type)
+{
+  void *retv = 0;
+  if (type == ACE_reinterpret_cast
+    (ptr_arith_t,
+      &RTCORBA::SharedMemoryProtocolProperties::_narrow))
+    retv = ACE_reinterpret_cast (void*, this);
+  else if (type == ACE_reinterpret_cast
+    (ptr_arith_t,
+      &RTCORBA::ProtocolProperties::_narrow))
+    retv = ACE_reinterpret_cast
+      (
+        void *,
+        ACE_static_cast
+          (
+            RTCORBA::ProtocolProperties_ptr,
+            this
+          )
+      );
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+    retv = ACE_reinterpret_cast (void *,
+      ACE_static_cast (CORBA::Object_ptr, this));
+
+  if (retv)
+    this->_add_ref ();
+  return retv;
+}
+
+const char* RTCORBA::SharedMemoryProtocolProperties::_interface_repository_id (void) const
+{
+  return "IDL:omg.org/RTCORBA/SharedMemoryProtocolProperties:1.0";
+}
+
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
 
@@ -1861,6 +2020,20 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const RTCORBA::PriorityB
     template class TAO_Object_Manager<RTCORBA::GIOPProtocolProperties,RTCORBA::GIOPProtocolProperties_var>;
   #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
   #  pragma instantiate TAO_Object_Manager<RTCORBA::GIOPProtocolProperties,RTCORBA::GIOPProtocolProperties_var>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+    template class TAO_Object_Manager<RTCORBA::UnixDomainProtocolProperties,RTCORBA::UnixDomainProtocolProperties_var>;
+  #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+  #  pragma instantiate TAO_Object_Manager<RTCORBA::UnixDomainProtocolProperties,RTCORBA::UnixDomainProtocolProperties_var>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+    template class TAO_Object_Manager<RTCORBA::SharedMemoryProtocolProperties,RTCORBA::SharedMemoryProtocolProperties_var>;
+  #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+  #  pragma instantiate TAO_Object_Manager<RTCORBA::SharedMemoryProtocolProperties,RTCORBA::SharedMemoryProtocolProperties_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
