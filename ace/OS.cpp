@@ -6287,7 +6287,7 @@ ACE_Object_Manager_Base::shutting_down_i ()
 
 extern "C"
 void
-ACE_OS_Object_Manager_Internal_Exit_Hook ()
+ACE_OS_Object_Manager_Internal_Exit_Hook (void)
 {
   if (ACE_OS_Object_Manager::instance_)
     ACE_OS_Object_Manager::instance ()->fini ();
@@ -6413,7 +6413,7 @@ ACE_OS_Object_Manager::init (void)
           ACE_OS::socket_init (ACE_WSOCK_VERSION);
 
           // Register the exit hook, for use by ACE_OS::exit ().
-          ACE_OS::set_exit_hook (ACE_OS_Object_Manager_Internal_Exit_Hook);
+          ACE_OS::set_exit_hook (&ACE_OS_Object_Manager_Internal_Exit_Hook);
         }
 
       // Finally, indicate that the ACE_OS_Object_Manager instance has
