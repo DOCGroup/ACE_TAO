@@ -186,17 +186,18 @@ main (int, char *[])
 
   run_test (A,B,R,W);
 
-  const char *cl = 
-    ".." ACE_DIRECTORY_SEPARATOR_STR_A
-    "netsvcs" ACE_DIRECTORY_SEPARATOR_STR_A
-    "servers" ACE_DIRECTORY_SEPARATOR_STR_A
-    "main" ACE_PLATFORM_EXE_SUFFIX
-    " -f " ACE_PLATFORM "tokens.conf";
+  LPCTSTR cl = 
+    __TEXT ("..") ACE_DIRECTORY_SEPARATOR_STR
+    __TEXT ("netsvcs") ACE_DIRECTORY_SEPARATOR_STR
+    __TEXT ("servers") ACE_DIRECTORY_SEPARATOR_STR
+    __TEXT ("main") ACE_PLATFORM_EXE_SUFFIX
+    __TEXT (" -f ") ACE_PLATFORM
+    __TEXT ("tokens.conf");
 
   ACE_Process_Options options;
   options.command_line (cl);
 
-  ACE_DEBUG ((LM_DEBUG, "Forking %s.\n", cl));
+  ACE_DEBUG ((LM_DEBUG, "Forking Token Service.\n"));
 
   // Start up the token server.
   ACE_Process new_process;

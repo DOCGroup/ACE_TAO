@@ -98,9 +98,9 @@ main (int argc, char *argv[])
 
       ACE_Process_Options options;
       if (close_pipe == 0)
-	options.command_line ("Pipe_Test" ACE_PLATFORM_EXE_SUFFIX " -c -d");
+	options.command_line (__TEXT ("Pipe_Test") ACE_PLATFORM_EXE_SUFFIX __TEXT (" -c -d"));
       else
-	options.command_line ("Pipe_Test" ACE_PLATFORM_EXE_SUFFIX " -c");
+	options.command_line (__TEXT ("Pipe_Test") ACE_PLATFORM_EXE_SUFFIX __TEXT (" -c"));
       
       for (int i = 0; i < ::iterations; i++)
 	{
