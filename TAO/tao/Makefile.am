@@ -1005,9 +1005,7 @@ libTAO_PortableServer_la_SOURCES = \
   PortableServer/Operation_Table.cpp \
   PortableServer/Operation_Table_Binary_Search.cpp \
   PortableServer/Operation_Table_Dynamic_Hash.cpp \
-  PortableServer/Operation_Table_Factory.cpp \
   PortableServer/Operation_Table_Linear_Search.cpp \
-  PortableServer/Operation_Table_Parameters.cpp \
   PortableServer/Operation_Table_Perfect_Hash.cpp \
   PortableServer/PICurrent_Guard.cpp \
   PortableServer/POAManager.cpp \
@@ -1175,9 +1173,7 @@ nobase_include_HEADERS += \
   PortableServer/Operation_Table.h \
   PortableServer/Operation_Table_Binary_Search.h \
   PortableServer/Operation_Table_Dynamic_Hash.h \
-  PortableServer/Operation_Table_Factory.h \
   PortableServer/Operation_Table_Linear_Search.h \
-  PortableServer/Operation_Table_Parameters.h \
   PortableServer/Operation_Table_Perfect_Hash.h \
   PortableServer/PICurrent_Guard.h \
   PortableServer/POAManager.h \
