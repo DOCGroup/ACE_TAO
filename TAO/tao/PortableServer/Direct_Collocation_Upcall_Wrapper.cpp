@@ -9,6 +9,8 @@
 #include "tao/Abstract_Servant_Base.h"
 #include "tao/SystemException.h"
 #include "tao/ORB_Constants.h"
+#include "tao/Object.h"
+#include "tao/Environment.h"
 
 ACE_RCSID (PortableServer,
            Direct_Collocation_Upcall_Wrapper,
