@@ -1,3 +1,9 @@
+Tue Nov 30 16:33:08 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Makefile.am:
+
+	  Add replace_key.cpp to FTRT_EventChannel sources.
+
 Tue Nov 30 11:42:50 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any_Arg_Traits.h:
