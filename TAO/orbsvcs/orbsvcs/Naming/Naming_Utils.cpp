@@ -290,3 +290,9 @@ TAO_Naming_Client::~TAO_Naming_Client (void)
 {
   // Do nothing
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class ACE_Auto_Basic_Ptr<TAO_Naming_Context>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+  #pragma instantiate ACE_Auto_Basic_Ptr<TAO_Naming_Context>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
