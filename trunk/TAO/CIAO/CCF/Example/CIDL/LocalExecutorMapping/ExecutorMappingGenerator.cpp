@@ -930,8 +930,8 @@ generate (CommandLine const& cl,
     }
   }
 
-  std::ostream& os = ofs.is_open () 
-    ? static_cast<std::ostream&> (ofs) 
+  std::ostream& os = ofs.is_open ()
+    ? static_cast<std::ostream&> (ofs)
     : static_cast<std::ostream&> (std::cout);
 
   // Set auto-indentation for os

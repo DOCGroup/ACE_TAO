@@ -65,7 +65,7 @@ Legend:
 
 @@ IDL feature: constant declaration; depends on 3
 
-@@ IDL feature: built-in types
+%% IDL feature: built-in types
 
 @@ IDL feature: sequences; depends on 2,3
 

@@ -17,7 +17,7 @@ module M2
   {
     attribute long l;
     attribute M::I i;
-    void foo (in long l, inout boolean b, out long ol, in M::I i);
+    void foo (in long l, inout boolean b, out long ol, in M::I i, out unsigned long long ull);
     factory new (in long l);
   };
 };
