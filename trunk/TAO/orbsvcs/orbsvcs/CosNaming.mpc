@@ -31,4 +31,8 @@ project(CosNaming) : orbsvcslib, core, messaging, svc_utils, iortable {
       Naming/Transient_Naming_Context.cpp
     }
   }
+  
+  Header_Files {
+	Naming/naming_export.h
+  }
 }
