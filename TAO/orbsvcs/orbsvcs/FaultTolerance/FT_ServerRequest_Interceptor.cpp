@@ -81,7 +81,7 @@ namespace TAO
       ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
 
-    if (ACE_OS::strcmp (op.in (), 
+    if (ACE_OS::strcmp (op.in (),
       "tao_update_object_group") == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -218,7 +218,7 @@ namespace TAO
       ri->arguments (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
 
-    if (param->length () > 2 ||
+    if (param->length () > 1 ||
         param->length () == 0)
       ACE_THROW (CORBA::TRANSIENT ());
 
