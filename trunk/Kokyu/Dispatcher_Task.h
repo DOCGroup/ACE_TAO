@@ -10,8 +10,8 @@
  * Chris Gill, Carlos O'Ryan and other members of the DOC group.
  */
 
-#ifndef TAO_DISPATCHER_TASK_H
-#define TAO_DISPATCHER_TASK_H
+#ifndef DISPATCHER_TASK_H
+#define DISPATCHER_TASK_H
 #include "ace/pre.h"
 #include "ace/Task.h"
 #include "ace/Lock_Adapter_T.h"

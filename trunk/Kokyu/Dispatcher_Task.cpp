@@ -146,10 +146,10 @@ void Dispatch_Queue_Item::init_i (const QoSDescriptor& qos_info)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Locked_Data_Block<ACE_Lock_Adapter<TAO_SYNCH_MUTEX> >;
+template class ACE_Locked_Data_Block<ACE_Lock_Adapter<ACE_SYNCH_MUTEX> >;
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Locked_Data_Block<ACE_Lock_Adapter<TAO_SYNCH_MUTEX> >
+#pragma instantiate ACE_Locked_Data_Block<ACE_Lock_Adapter<ACE_SYNCH_MUTEX> >
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
