@@ -17,19 +17,15 @@ VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 
-#### If ACE_COMPONENTS was set and doesn't contain Other and Token, don't
+#### If the ACE library wasn't built with Token and Other components, don't
 #### try to build the server.
-ifdef ACE_COMPONENTS
-  ifeq (Other,$(findstring Other,$(ACE_COMPONENTS)))
-    ifeq (Token,$(findstring Token,$(ACE_COMPONENTS)))
-      BIN = main
-      LSRC = $(addsuffix .cpp,$(BIN))
-    endif # Token
-  endif # Other
-else  # ! ACE_COMPONENTS
-  BIN = main
-  LSRC = $(addsuffix .cpp,$(BIN))
-endif # ! ACE_COMPONENTS
+ACE_BUILD_COMPONENTS := $(shell $(ACE_ROOT)/bin/ace_components --ace)
+ifeq (Other,$(findstring Other,$(ACE_BUILD_COMPONENTS)))
+  ifeq (Token,$(findstring Token,$(ACE_BUILD_COMPONENTS)))
+    BIN = main
+    LSRC = $(addsuffix .cpp,$(BIN))
+  endif # ! Token
+endif # ! Other
 
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
